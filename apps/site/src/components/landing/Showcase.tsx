@@ -259,16 +259,19 @@ function ShowcaseRoot({ label, children, className }: Props) {
         style={{ "--tray-h": item.hue } as CSSProperties}
         className="use-case-tile relative order-1 grid min-h-[400px] place-items-center overflow-hidden rounded-[28px] px-5 py-14 transition-[background-color] duration-500 @2xl:px-10 @4xl:order-2 @4xl:min-h-[480px]"
       >
-        {/* Quiet on purpose: the demo is the subject, and the list moves on by itself. */}
-        <button
-          type="button"
-          onClick={replay}
-          aria-label={t`Replay`}
-          title={t`Replay`}
-          className="absolute end-3.5 top-3.5 z-10 grid size-9 place-items-center rounded-full bg-plate/80 text-ink edge-drop transition-[background-color,scale] duration-150 ease-out active:scale-[0.94] hoverable:hover:bg-plate focus-visible:outline-2 focus-visible:outline-ring"
-        >
-          <RotateCcw aria-hidden="true" className="size-3.5" />
-        </button>
+        {/* Quiet on purpose: the demo is the subject, and the list moves on by itself. With reduced
+           motion a demo shows finished, so there is nothing to replay. */}
+        {!still && (
+          <button
+            type="button"
+            onClick={replay}
+            aria-label={t`Replay`}
+            title={t`Replay`}
+            className="absolute end-3.5 top-3.5 z-10 grid size-9 place-items-center rounded-full bg-plate/80 text-ink edge-drop transition-[background-color,scale] duration-150 ease-out active:scale-[0.94] hoverable:hover:bg-plate focus-visible:outline-2 focus-visible:outline-ring"
+          >
+            <RotateCcw aria-hidden="true" className="size-3.5" />
+          </button>
+        )}
         <StageContext.Provider value={stage}>
           <AnimatePresence mode="wait" initial={false}>
             <motion.div

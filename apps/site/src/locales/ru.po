@@ -868,7 +868,7 @@ msgid "Added 11 cards to Kubernetes."
 msgstr "Добавил 11 карточек в колоду «Kubernetes»."
 
 msgid "Added 12 cards to Chemistry."
-msgstr "Добавил 12 карточек в колоду «Химия»."
+msgstr "Добавлено 12 карточек в колоду «Химия»."
 
 msgid "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
 msgstr "Добавил 14 карточек в «Биологию» с определениями со слайдов. Пропустил «диффузию», она у тебя уже есть."
@@ -889,10 +889,10 @@ msgid "Added 2 cards to Spanish. Skipped la huelga: you have that card."
 msgstr "Добавлено 2 карточки в колоду «Испанский». Пропущено la huelga: эта карточка у тебя уже есть."
 
 msgid "Added 20 cards to NCLEX pharmacology."
-msgstr "Добавил 20 карточек в колоду «Фармакология NCLEX»."
+msgstr "Добавлено 20 карточек в колоду «Фармакология NCLEX»."
 
 msgid "Added 26 cards to Pharmacology."
-msgstr "Добавил 26 карточек в колоду «Фармакология»."
+msgstr "Добавлено 26 карточек в колоду «Фармакология»."
 
 msgid "Added 4 cards to your Biology deck."
 msgstr "Добавил 4 карточки в твою колоду «Биология»."

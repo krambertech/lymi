@@ -344,14 +344,14 @@ msgstr "1 November 2026"
 msgid "10 min"
 msgstr "10 min"
 
+msgid "10 words from Italian A2"
+msgstr "10 words from Italian A2"
+
 msgid "12 cards due, about five minutes"
 msgstr "12 cards due, about five minutes"
 
 msgid "12 Spanish cards are due, about five minutes. Quick warm-up first?"
 msgstr "12 Spanish cards are due, about five minutes. Quick warm-up first?"
-
-msgid "12 words from Spanish B1"
-msgstr "12 words from Spanish B1"
 
 msgid "120 cards"
 msgstr "120 cards"
@@ -494,9 +494,6 @@ msgstr "A class deck, Estonian A2 · Tuesdays, gets three new cards after today�
 msgid "A clever fix made from whatever is at hand"
 msgstr "A clever fix made from whatever is at hand"
 
-msgid "A conversation with your words"
-msgstr "A conversation with your words"
-
 msgid "A course or lesson"
 msgstr "A course or lesson"
 
@@ -511,6 +508,9 @@ msgstr "A deck in four sections. Greetings is done, Numbers and time is 82% know
 
 msgid "A deck other people still study remains without your account name until its last member leaves. Its content, including personal information you wrote into cards, remains visible to those members. Other owners may retain invitation and Activity records concerning you. Publisher accounts require a deletion request by email. Contact us if retained shared content contains personal information you want erased."
 msgstr "A deck other people still study remains without your account name until its last member leaves. Its content, including personal information you wrote into cards, remains visible to those members. Other owners may retain invitation and Activity records concerning you. Publisher accounts require a deletion request by email. Contact us if retained shared content contains personal information you want erased."
+
+msgid "A dialogue in voice mode"
+msgstr "A dialogue in voice mode"
 
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "A false friend. Embarrassed is avergonzado."
@@ -858,6 +858,9 @@ msgstr "Added 12 cards to Chemistry."
 msgid "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
 msgstr "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
 
+msgid "Added 14 cards to Italian A2. Skipped 6 you have."
+msgstr "Added 14 cards to Italian A2. Skipped 6 you have."
+
 msgid "Added 14 cards to Pharmacology, each with its mechanism from your notes."
 msgstr "Added 14 cards to Pharmacology, each with its mechanism from your notes."
 
@@ -902,6 +905,9 @@ msgstr "Added 7 cards with their stress. I skipped <0>вокза́л</0>, which 
 
 msgid "Added 7 cards with their stress. I skipped <0>квито́к</0>, which you already have."
 msgstr "Added 7 cards with their stress. I skipped <0>квито́к</0>, which you already have."
+
+msgid "Added 8 cards to Biochemistry."
+msgstr "Added 8 cards to Biochemistry."
 
 msgid "Added 8 cards to Biology"
 msgstr "Added 8 cards to Biology"
@@ -1186,6 +1192,9 @@ msgstr "Ask for cards"
 msgid "Ask Gemini for flashcards from your notes, a PDF or a web page. They land in Lymi, where cards you remember come back later and the ones you forget come back sooner."
 msgstr "Ask Gemini for flashcards from your notes, a PDF or a web page. They land in Lymi, where cards you remember come back later and the ones you forget come back sooner."
 
+msgid "Ask Grok Bot to explain a hard topic in plain words, then keep the key steps as cards."
+msgstr "Ask Grok Bot to explain a hard topic in plain words, then keep the key steps as cards."
+
 msgid "Ask what to review."
 msgstr "Ask what to review."
 
@@ -1287,6 +1296,9 @@ msgstr "Binds a receptor and switches it on"
 
 msgid "Bio + available: how much of the dose your body can use."
 msgstr "Bio + available: how much of the dose your body can use."
+
+msgid "Biochemistry"
+msgstr "Biochemistry"
 
 msgid "Biology"
 msgstr "Biology"
@@ -1556,6 +1568,9 @@ msgstr "Cards outside a section"
 msgid "Cards you wrote"
 msgstr "Cards you wrote"
 
+msgid "Carries electrons onward"
+msgstr "Carries electrons onward"
+
 msgid "Carries sugar around the plant"
 msgstr "Carries sugar around the plant"
 
@@ -1610,9 +1625,6 @@ msgstr "ChatGPT flashcards with spaced repetition · Lymi"
 
 msgid "ChatGPT makes the cards. Lymi brings them back."
 msgstr "ChatGPT makes the cards. Lymi brings them back."
-
-msgid "ChatGPT takes this week’s words from Lymi and starts a conversation that uses each one. Switch to voice to hear them and say them out loud."
-msgstr "ChatGPT takes this week’s words from Lymi and starts a conversation that uses each one. Switch to voice to hear them and say them out loud."
 
 msgid "ChatGPT’s own flashcards flip, shuffle and mark what you know. None of them decide when you see a card again. Lymi does: a card you remember waits longer each time, and one you forget comes back sooner."
 msgstr "ChatGPT’s own flashcards flip, shuffle and mark what you know. None of them decide when you see a card again. Lymi does: a card you remember waits longer each time, and one you forget comes back sooner."
@@ -2132,6 +2144,9 @@ msgstr "Driving"
 msgid "Driving tests"
 msgstr "Driving tests"
 
+msgid "Drop an episode’s transcript in the folder. Gemini picks the words you don’t have yet and adds a card for each."
+msgstr "Drop an episode’s transcript in the folder. Gemini picks the words you don’t have yet and adds a card for each."
+
 msgid "Drugs, how they work and what to watch for."
 msgstr "Drugs, how they work and what to watch for."
 
@@ -2444,6 +2459,12 @@ msgstr "Expensive; also dear"
 msgid "Expensive; dear"
 msgstr "Expensive; dear"
 
+msgid "Explain it, then card it"
+msgstr "Explain it, then card it"
+
+msgid "Explain the Krebs cycle simply, then make cards for the key steps."
+msgstr "Explain the Krebs cycle simply, then make cards for the key steps."
+
 msgid "Explaining your code aloud, line by line, until the bug shows itself"
 msgstr "Explaining your code aloud, line by line, until the bug shows itself"
 
@@ -2737,6 +2758,9 @@ msgstr "From a PDF in the folder"
 
 msgid "From a photo of your notes"
 msgstr "From a photo of your notes"
+
+msgid "From a podcast episode"
+msgstr "From a podcast episode"
 
 msgid "From a post on X"
 msgstr "From a post on X"
@@ -3479,6 +3503,9 @@ msgstr "In the order you learn them, one section at a time."
 msgid "In this folder"
 msgstr "In this folder"
 
+msgid "In voice mode, ChatGPT takes your words from Lymi and plays out a scene with you, so you hear each one and say it back."
+msgstr "In voice mode, ChatGPT takes your words from Lymi and plays out a scene with you, so you hear each one and say it back."
+
 msgid "In voice mode, Claude can quiz you from your decks while you walk or cook. You answer out loud, and your reviews stay in Lymi."
 msgstr "In voice mode, Claude can quiz you from your decks while you walk or cook. You answer out loud, and your reviews stay in Lymi."
 
@@ -3599,6 +3626,9 @@ msgstr "It’s raining, so I want to *take a taxi*."
 msgid "It’s why a half-read chapter keeps nagging at you."
 msgstr "It’s why a half-read chapter keeps nagging at you."
 
+msgid "Italian"
+msgstr "Italian"
+
 msgid "Italiano · phrase"
 msgstr "Italiano · phrase"
 
@@ -3645,6 +3675,9 @@ msgstr "JLPT N5 and N4: the words for each level"
 
 msgid "Join link"
 msgstr "Join link"
+
+msgid "Joins oxaloacetate to start the cycle"
+msgstr "Joins oxaloacetate to start the cycle"
 
 msgid "Journey"
 msgstr "Journey"
@@ -3916,11 +3949,11 @@ msgstr "Let’s go into *town*!"
 msgid "Let’s meet again *tomorrow*."
 msgstr "Let’s meet again *tomorrow*."
 
+msgid "Let’s practise a dialogue with my Italian words."
+msgstr "Let’s practise a dialogue with my Italian words."
+
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Let’s practise. Use the German words from my deck."
-
-msgid "Let’s talk in Spanish using my words from this week."
-msgstr "Let’s talk in Spanish using my words from this week."
 
 msgid "library"
 msgstr "library"
@@ -4149,6 +4182,9 @@ msgstr "Make flashcards from this lecture."
 
 msgid "Make flashcards from this page."
 msgstr "Make flashcards from this page."
+
+msgid "Make Italian cards from this episode. Skip the words I know."
+msgstr "Make Italian cards from this episode. Skip the words I know."
 
 msgid "Make me a Portuguese deck for a week in Lisbon, a section a day."
 msgstr "Make me a Portuguese deck for a week in Lisbon, a section a day."
@@ -6143,6 +6179,9 @@ msgstr "The everyday thanks. Suur aitäh is a big one."
 msgid "The facial nerve: muscles of facial expression and taste on the front two-thirds of the tongue"
 msgstr "The facial nerve: muscles of facial expression and taste on the front two-thirds of the tongue"
 
+msgid "The facial nerve."
+msgstr "The facial nerve."
+
 msgid "The free evening after work"
 msgstr "The free evening after work"
 
@@ -6160,6 +6199,9 @@ msgstr "The girl"
 
 msgid "The goods are in the *warehouse*."
 msgstr "The goods are in the *warehouse*."
+
+msgid "The grocery shopping"
+msgstr "The grocery shopping"
 
 msgid "The h is silent: hoy sounds like oy."
 msgstr "The h is silent: hoy sounds like oy."
@@ -6659,6 +6701,9 @@ msgstr "To pull"
 msgid "To read"
 msgstr "To read"
 
+msgid "To rent"
+msgstr "To rent"
+
 msgid "to run"
 msgstr "to run"
 
@@ -6743,6 +6788,9 @@ msgstr "Train"
 
 msgid "Train station"
 msgstr "Train station"
+
+msgid "Transcript"
+msgstr "Transcript"
 
 msgid "Transcript · Spanish lesson"
 msgstr "Transcript · Spanish lesson"

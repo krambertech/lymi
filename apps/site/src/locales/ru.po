@@ -344,14 +344,14 @@ msgstr "1 ноября 2026 года"
 msgid "10 min"
 msgstr "10 мин"
 
+msgid "10 words from Italian A2"
+msgstr "10 слов из Italian A2"
+
 msgid "12 cards due, about five minutes"
 msgstr "12 карточек к повторению, примерно пять минут"
 
 msgid "12 Spanish cards are due, about five minutes. Quick warm-up first?"
 msgstr "К повторению 12 карточек по испанскому, примерно пять минут. Сначала короткая разминка?"
-
-msgid "12 words from Spanish B1"
-msgstr "12 слов из Spanish B1"
 
 msgid "120 cards"
 msgstr "120 карточек"
@@ -494,9 +494,6 @@ msgstr "После сегодняшнего урока в колоде груп�
 msgid "A clever fix made from whatever is at hand"
 msgstr "Смекалистое решение из подручных средств"
 
-msgid "A conversation with your words"
-msgstr "Разговор с твоими словами"
-
 msgid "A course or lesson"
 msgstr "Курсы и занятия"
 
@@ -511,6 +508,9 @@ msgstr "Колода из четырёх разделов. Раздел «При
 
 msgid "A deck other people still study remains without your account name until its last member leaves. Its content, including personal information you wrote into cards, remains visible to those members. Other owners may retain invitation and Activity records concerning you. Publisher accounts require a deletion request by email. Contact us if retained shared content contains personal information you want erased."
 msgstr "Колода, которую ещё изучают другие, остаётся без имени твоего аккаунта, пока не выйдет последний участник. Её содержимое, включая персональную информацию, которую ты вписал в карточки, остаётся видимым этим участникам. Другие владельцы могут хранить записи приглашений и Активности, касающиеся тебя. Для удаления аккаунта издателя нужен запрос по электронной почте. Обратись к нам, если сохранённый общий контент содержит персональную информацию, которую ты хочешь стереть."
+
+msgid "A dialogue in voice mode"
+msgstr "Диалог в голосовом режиме"
 
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "Не путай с английским embarrassed: «смущённый» — это avergonzado."
@@ -858,6 +858,9 @@ msgstr "Добавил 12 карточек в колоду «Химия»."
 msgid "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
 msgstr "Добавил 14 карточек в «Биологию» с определениями со слайдов. Пропустил «диффузию», она у тебя уже есть."
 
+msgid "Added 14 cards to Italian A2. Skipped 6 you have."
+msgstr "Добавлено 14 карточек в Italian A2. Пропущено 6, которые у тебя уже есть."
+
 msgid "Added 14 cards to Pharmacology, each with its mechanism from your notes."
 msgstr "Добавил 14 карточек в «Фармакологию», к каждой — механизм действия из твоих заметок."
 
@@ -902,6 +905,9 @@ msgstr "Добавил 7 карточек с ударениями. Пропус�
 
 msgid "Added 7 cards with their stress. I skipped <0>квито́к</0>, which you already have."
 msgstr "Добавил 7 карточек с ударениями. Пропустил <0>квито́к</0>, он у тебя уже есть."
+
+msgid "Added 8 cards to Biochemistry."
+msgstr "Добавлено 8 карточек в «Биохимию»."
 
 msgid "Added 8 cards to Biology"
 msgstr "Добавлено 8 карточек в «Биологию»"
@@ -1186,6 +1192,9 @@ msgstr "Попроси карточки"
 msgid "Ask Gemini for flashcards from your notes, a PDF or a web page. They land in Lymi, where cards you remember come back later and the ones you forget come back sooner."
 msgstr "Попроси Gemini сделать флеш-карточки из заметок, PDF или веб-страницы. Они попадут в Lymi, где карточки, которые ты помнишь, будут возвращаться позже, а забытые — раньше."
 
+msgid "Ask Grok Bot to explain a hard topic in plain words, then keep the key steps as cards."
+msgstr "Попроси Grok Bot простыми словами объяснить сложную тему, а главные шаги сохрани как карточки."
+
 msgid "Ask what to review."
 msgstr "Спроси, что повторить."
 
@@ -1287,6 +1296,9 @@ msgstr "Связывается с рецептором и активирует �
 
 msgid "Bio + available: how much of the dose your body can use."
 msgstr "Био + доступный: сколько из дозы твой организм может использовать."
+
+msgid "Biochemistry"
+msgstr "Биохимия"
 
 msgid "Biology"
 msgstr "Биология"
@@ -1556,6 +1568,9 @@ msgstr "Карточки без раздела"
 msgid "Cards you wrote"
 msgstr "Твои карточки"
 
+msgid "Carries electrons onward"
+msgstr "Переносит электроны дальше"
+
 msgid "Carries sugar around the plant"
 msgstr "Разносит сахара по растению"
 
@@ -1610,9 +1625,6 @@ msgstr "Флеш-карточки из ChatGPT с интервальным по�
 
 msgid "ChatGPT makes the cards. Lymi brings them back."
 msgstr "ChatGPT делает карточки. Lymi их возвращает."
-
-msgid "ChatGPT takes this week’s words from Lymi and starts a conversation that uses each one. Switch to voice to hear them and say them out loud."
-msgstr "ChatGPT берёт из Lymi слова этой недели и начинает разговор, где звучит каждое. Переключись на голос, чтобы услышать их и произнести вслух."
 
 msgid "ChatGPT’s own flashcards flip, shuffle and mark what you know. None of them decide when you see a card again. Lymi does: a card you remember waits longer each time, and one you forget comes back sooner."
 msgstr "Свои карточки ChatGPT умеет переворачивать, перемешивать и отмечать выученными. Но ни одна из этих функций не решает, когда ты снова увидишь карточку. А Lymi решает: карточка, которую ты помнишь, каждый раз ждёт дольше, а забытая возвращается раньше."
@@ -2132,6 +2144,9 @@ msgstr "Вождение"
 msgid "Driving tests"
 msgstr "Экзамены на права"
 
+msgid "Drop an episode’s transcript in the folder. Gemini picks the words you don’t have yet and adds a card for each."
+msgstr "Положи в папку транскрипт выпуска. Gemini выберет слова, которых у тебя ещё нет, и добавит карточку для каждого."
+
 msgid "Drugs, how they work and what to watch for."
 msgstr "Препараты, как они действуют и на что обращать внимание."
 
@@ -2444,6 +2459,12 @@ msgstr "Дорогой; а ещё милый"
 msgid "Expensive; dear"
 msgstr "Дорогой; милый"
 
+msgid "Explain it, then card it"
+msgstr "Сначала объяснение, потом карточки"
+
+msgid "Explain the Krebs cycle simply, then make cards for the key steps."
+msgstr "Объясни простыми словами цикл Кребса, а потом сделай карточки для главных шагов."
+
 msgid "Explaining your code aloud, line by line, until the bug shows itself"
 msgstr "Объяснять код вслух строка за строкой, пока ошибка не найдётся"
 
@@ -2737,6 +2758,9 @@ msgstr "Из PDF в папке"
 
 msgid "From a photo of your notes"
 msgstr "Из фото заметок"
+
+msgid "From a podcast episode"
+msgstr "Из выпуска подкаста"
 
 msgid "From a post on X"
 msgstr "Из поста в X"
@@ -3479,6 +3503,9 @@ msgstr "В том порядке, в котором ты их учишь: раз
 msgid "In this folder"
 msgstr "В этой папке"
 
+msgid "In voice mode, ChatGPT takes your words from Lymi and plays out a scene with you, so you hear each one and say it back."
+msgstr "В голосовом режиме ChatGPT берёт твои слова из Lymi и разыгрывает с тобой сценку: ты слышишь каждое слово и произносишь его сам."
+
 msgid "In voice mode, Claude can quiz you from your decks while you walk or cook. You answer out loud, and your reviews stay in Lymi."
 msgstr "В голосовом режиме Claude погоняет тебя по твоим колодам, пока ты гуляешь или готовишь. Отвечаешь вслух, а повторения остаются в Lymi."
 
@@ -3599,6 +3626,9 @@ msgstr "Идёт дождь, так что я хочу взять *такси*."
 msgid "It’s why a half-read chapter keeps nagging at you."
 msgstr "Вот почему недочитанная глава не даёт покоя."
 
+msgid "Italian"
+msgstr "Итальянский"
+
 msgid "Italiano · phrase"
 msgstr "Italiano · фраза"
 
@@ -3645,6 +3675,9 @@ msgstr "JLPT N5 и N4: лексика для каждого уровня"
 
 msgid "Join link"
 msgstr "Ссылка для присоединения"
+
+msgid "Joins oxaloacetate to start the cycle"
+msgstr "Соединяется с оксалоацетатом и запускает цикл"
 
 msgid "Journey"
 msgstr "Путешествие"
@@ -3916,11 +3949,11 @@ msgstr "Пойдём в *город*!"
 msgid "Let’s meet again *tomorrow*."
 msgstr "Увидимся *завтра*."
 
+msgid "Let’s practise a dialogue with my Italian words."
+msgstr "Давай потренируем диалог с моими итальянскими словами."
+
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Давай попрактикуемся. Используй немецкие слова из моей колоды."
-
-msgid "Let’s talk in Spanish using my words from this week."
-msgstr "Давай поговорим по-испански с моими словами этой недели."
 
 msgid "library"
 msgstr "библиотека"
@@ -4149,6 +4182,9 @@ msgstr "Сделай карточки по этой лекции."
 
 msgid "Make flashcards from this page."
 msgstr "Сделай карточки по этой странице."
+
+msgid "Make Italian cards from this episode. Skip the words I know."
+msgstr "Сделай итальянские карточки из этого выпуска. Слова, которые я знаю, пропусти."
 
 msgid "Make me a Portuguese deck for a week in Lisbon, a section a day."
 msgstr "Составь мне португальскую колоду на неделю в Лиссабоне, по разделу на день."
@@ -6143,6 +6179,9 @@ msgstr "Обычное «спасибо». Suur aitäh — «большое сп
 msgid "The facial nerve: muscles of facial expression and taste on the front two-thirds of the tongue"
 msgstr "Лицевой нерв: мимические мышцы и вкус на передних двух третях языка"
 
+msgid "The facial nerve."
+msgstr "Лицевой."
+
 msgid "The free evening after work"
 msgstr "Свободный вечер после работы"
 
@@ -6160,6 +6199,9 @@ msgstr "Девочка"
 
 msgid "The goods are in the *warehouse*."
 msgstr "Товар на *складе*."
+
+msgid "The grocery shopping"
+msgstr "Покупка продуктов"
 
 msgid "The h is silent: hoy sounds like oy."
 msgstr "H не читается: hoy звучит как «ой»."
@@ -6659,6 +6701,9 @@ msgstr "Тянуть"
 msgid "To read"
 msgstr "Читать"
 
+msgid "To rent"
+msgstr "Арендовать"
+
 msgid "to run"
 msgstr "бежать"
 
@@ -6743,6 +6788,9 @@ msgstr "Поезд"
 
 msgid "Train station"
 msgstr "Вокзал"
+
+msgid "Transcript"
+msgstr "Транскрипт"
 
 msgid "Transcript · Spanish lesson"
 msgstr "Транскрипт · урок испанского"

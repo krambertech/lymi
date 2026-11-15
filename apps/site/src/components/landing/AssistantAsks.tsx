@@ -15,7 +15,11 @@ export interface Ask {
   attachment?: ReactNode;
   ask: ReactNode;
   /** What came back from Lymi. Only what the tools really do. */
-  result: ReactNode;
+  result?: ReactNode;
+  /** A whole scene in place of the chat exchange, such as a spoken conversation. */
+  scene?: ReactNode;
+  /** How long it plays, in ms, when it needs longer than the default. */
+  dwell?: number;
 }
 
 interface Props {
@@ -76,8 +80,9 @@ export function AssistantAsks({ assistant, hue, label, asks }: Props) {
           title={item.use}
           description={item.body}
           hue={hue}
+          dwell={item.dwell}
         >
-          <Exchange assistant={assistant} item={item} />
+          {item.scene ?? <Exchange assistant={assistant} item={item} />}
         </Showcase.Item>
       ))}
     </Showcase>

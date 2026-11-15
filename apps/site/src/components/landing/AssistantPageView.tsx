@@ -5,6 +5,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import {
   AtSign,
   AudioLines,
+  BookOpen,
   CalendarRange,
   Camera,
   Car,
@@ -15,6 +16,7 @@ import {
   LifeBuoy,
   MessagesSquare,
   Mic,
+  Podcast,
   Repeat,
   SquareTerminal,
 } from "lucide-react";
@@ -47,6 +49,7 @@ import {
   SlippingResult,
 } from "./AssistantPieces";
 import { AssistantSignature } from "./AssistantSignature";
+import { VoiceScene } from "./AssistantVoice";
 import { ASSISTANT_PAGES, type AssistantKey } from "./assistant-pages";
 import { CopyAddress } from "./ConnectSteps";
 import { Wide } from "./FeatureSection";
@@ -168,23 +171,33 @@ function useContent(key: AssistantKey): Content {
           {
             id: "talk",
             icon: <AudioLines aria-hidden="true" />,
-            use: <Trans>A conversation with your words</Trans>,
+            use: <Trans>A dialogue in voice mode</Trans>,
             body: (
               <Trans>
-                ChatGPT takes this week’s words from Lymi and starts a conversation that uses each
-                one. Switch to voice to hear them and say them out loud.
+                In voice mode, ChatGPT takes your words from Lymi and plays out a scene with you, so
+                you hear each one and say it back.
               </Trans>
             ),
-            ask: <Trans>Let’s talk in Spanish using my words from this week.</Trans>,
-            result: (
-              <ConversationResult
-                voice
-                lang="es"
-                source={<Trans>12 words from Spanish B1</Trans>}
-                lines={[
-                  { who: "assistant", text: "¿Qué piensas de la huelga de ayer?" },
-                  { who: "you", text: "Ojalá termine pronto." },
-                  { who: "assistant", text: "¡Bien dicho! ¿Y qué pide el sindicato?" },
+            ask: <Trans>Let’s practise a dialogue with my Italian words.</Trans>,
+            dwell: 10000,
+            scene: (
+              <VoiceScene
+                source={<Trans>10 words from Italian A2</Trans>}
+                words={["prenotato", "tavolo", "ordinare", "conto"]}
+                turns={[
+                  { who: "you", text: t`Let’s practise a dialogue with my Italian words.` },
+                  {
+                    who: "assistant",
+                    lang: "it",
+                    text: "Certo! Sei al ristorante. Buonasera, ha prenotato?",
+                  },
+                  { who: "you", lang: "it", text: "Sì, ho prenotato un tavolo per due." },
+                  {
+                    who: "assistant",
+                    lang: "it",
+                    text: "Perfetto, prego. Volete ordinare subito?",
+                  },
+                  { who: "you", lang: "it", text: "Sì, e poi il conto, per favore." },
                 ]}
               />
             ),
@@ -398,14 +411,16 @@ function useContent(key: AssistantKey): Content {
               </Trans>
             ),
             ask: <Trans>Quiz me on the cranial nerves I keep missing.</Trans>,
-            result: (
-              <ConversationResult
-                voice
+            dwell: 10000,
+            scene: (
+              <VoiceScene
                 source={<Trans>6 cards from Anatomy</Trans>}
-                lines={[
+                turns={[
+                  { who: "you", text: t`Quiz me on the cranial nerves I keep missing.` },
                   { who: "assistant", text: t`Which nerve moves your tongue?` },
                   { who: "you", text: t`The hypoglossal.` },
                   { who: "assistant", text: t`Right. And which one closes your eyelids?` },
+                  { who: "you", text: t`The facial nerve.` },
                 ]}
               />
             ),
@@ -603,6 +618,29 @@ function useContent(key: AssistantKey): Content {
                   },
                 ]}
                 note={<Trans>Added 12 cards to Chemistry.</Trans>}
+              />
+            ),
+          },
+          {
+            id: "episode",
+            icon: <Podcast aria-hidden="true" />,
+            use: <Trans>From a podcast episode</Trans>,
+            body: (
+              <Trans>
+                Drop an episode’s transcript in the folder. Gemini picks the words you don’t have
+                yet and adds a card for each.
+              </Trans>
+            ),
+            attachment: <Attached name="episodio-12.srt" hint={<Trans>Transcript</Trans>} />,
+            ask: <Trans>Make Italian cards from this episode. Skip the words I know.</Trans>,
+            result: (
+              <CardsResult
+                lang="it"
+                cards={[
+                  { label: t`Italian`, term: "la spesa", meaning: t`The grocery shopping` },
+                  { label: t`Italian`, term: "affittare", meaning: t`To rent` },
+                ]}
+                note={<Trans>Added 14 cards to Italian A2. Skipped 6 you have.</Trans>}
               />
             ),
           },
@@ -828,6 +866,32 @@ function useContent(key: AssistantKey): Content {
                 name={t`Biology`}
                 count={<Trans>48 cards</Trans>}
                 sections={[t`Cells`, t`Genetics`, t`Evolution`]}
+              />
+            ),
+          },
+          {
+            id: "explain",
+            icon: <BookOpen aria-hidden="true" />,
+            use: <Trans>Explain it, then card it</Trans>,
+            body: (
+              <Trans>
+                Ask Grok Bot to explain a hard topic in plain words, then keep the key steps as
+                cards.
+              </Trans>
+            ),
+            ask: <Trans>Explain the Krebs cycle simply, then make cards for the key steps.</Trans>,
+            result: (
+              <CardsResult
+                lang="en"
+                cards={[
+                  {
+                    label: t`Biochemistry`,
+                    term: "Acetyl-CoA",
+                    meaning: t`Joins oxaloacetate to start the cycle`,
+                  },
+                  { label: t`Biochemistry`, term: "NADH", meaning: t`Carries electrons onward` },
+                ]}
+                note={<Trans>Added 8 cards to Biochemistry.</Trans>}
               />
             ),
           },

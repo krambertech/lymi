@@ -1798,19 +1798,19 @@ html:has(.deck-cards[open]) {
 .landing-dwell[data-paused] {
   animation-play-state: paused;
 }
-/* A voice reply: a few bars that rise and fall while the assistant is speaking. Each bar starts at
-   its own delay so they never move in step. Still under reduced motion. */
-.voice-bar {
+/* A voice scene's wave: while someone talks, its bars rise and fall, each from its own delay so they
+   never move in step. At rest, and under reduced motion, it holds the shape of a voice. */
+.voice-wave {
   transform-origin: center;
 }
 @media (prefers-reduced-motion: no-preference) {
-  .voice-bar {
-    animation: voice-bar 0.9s ease-in-out infinite alternate;
+  [data-speaking] > .voice-wave {
+    animation: voice-wave 0.8s ease-in-out infinite alternate;
   }
 }
-@keyframes voice-bar {
+@keyframes voice-wave {
   from {
-    transform: scaleY(0.45);
+    transform: scaleY(0.25);
   }
   to {
     transform: scaleY(1);

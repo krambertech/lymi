@@ -140,12 +140,16 @@ export default function Onboarding() {
   };
 
   /** Runs a save that ends Welcome, holding the trail and the buttons until it answers. */
+  // A ref, since a second tap can arrive before the first one's state is drawn.
+  const working = useRef(false);
   const leave = async (run: () => Promise<void>) => {
-    if (flow.status === "working") return;
+    if (working.current) return;
+    working.current = true;
     send({ type: "begin", job: "leave" });
     try {
       await run();
     } finally {
+      working.current = false;
       send({ type: "end", to: null });
     }
   };
@@ -235,7 +239,8 @@ export default function Onboarding() {
 
   // Not now leaves the choice unanswered, so the first AI action asks again.
   const allowAi = async () => {
-    if (flow.status === "working") return;
+    if (working.current) return;
+    working.current = true;
     setError(null);
     send({ type: "begin", job: "ai" });
     try {
@@ -244,6 +249,8 @@ export default function Onboarding() {
       setError(t`Couldn’t save. Check your connection and try again.`);
       send({ type: "end", to: null });
       return;
+    } finally {
+      working.current = false;
     }
     setMissing(null);
     finishStep("ai", false);

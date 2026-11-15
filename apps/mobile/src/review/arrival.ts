@@ -18,3 +18,14 @@ export function arrival(state: Arrival, event: ArrivalEvent): Arrival {
       return state.kind === "fresh" ? state : FRESH;
   }
 }
+
+/**
+ * The grade Undo offers after the server refused one. A refused grade was never held, so it can no
+ * longer be taken back; a later grade still can.
+ */
+export function afterRefusal<T extends { grade: unknown }>(
+  last: T | null,
+  refused: unknown,
+): T | null {
+  return last?.grade === refused ? null : last;
+}

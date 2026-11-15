@@ -78,7 +78,7 @@ import { Lantern } from "../brand/lantern";
 import { holdCard, onCardEdited } from "../card/edited";
 import { useDay, useSections } from "../data/queries";
 import { spokenInterval } from "../i18n/interval";
-import { arrival, FRESH } from "../review/arrival";
+import { afterRefusal, arrival, FRESH } from "../review/arrival";
 import { CardNotes } from "../review/card-notes";
 import { ScrollFade, useScrollEdges } from "../review/card-scroll";
 import { CardLine, FIT_STEPS, typeAt, useFitStep } from "../review/card-type";
@@ -303,12 +303,12 @@ function Run({
     return true;
   });
 
-  /** One step back: the last graded card returns revealed, and its grade leaves the day. */
+  /** One step back: the last graded card returns revealed, and its grade leaves the day. Answers whether it did. */
   const undo = () => {
     const last = lastGraded;
-    if (!last) return;
+    if (!last) return false;
     const taken = flow.undo();
-    if (!taken) return;
+    if (!taken) return false;
     haptics.tick();
     setLastGraded(null);
     setAidState({
@@ -331,6 +331,7 @@ function Run({
         t`Couldn’t take back your grade for “${{ term: isolate(term) }}”. It still counts.`,
       );
     });
+    return true;
   };
   const swipe = useUndoSwipe({ enabled: !!lastGraded && !ended, onUndo: undo });
 
@@ -531,6 +532,7 @@ function Run({
     const term = item.card.term;
     void graded.answered.then((refused) => {
       if (!refused) return;
+      setLastGraded((last) => afterRefusal(last, graded.record));
       Alert.alert(
         refused === "gone"
           ? t`Couldn’t save your grade for “${{ term: isolate(term) }}”. The card is no longer in your decks.`

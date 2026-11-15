@@ -81,6 +81,7 @@ export default function SmartAdd() {
   const step = state.step;
   // Bumped by every read, Show terms and move by hand, so an answer knows whether it still applies.
   const attempts = useRef(0);
+  const asking = useRef(false);
   const go = (to: "input" | "writing" | "questions" | "list") => {
     attempts.current++;
     send({ type: "go", step: to });
@@ -301,7 +302,9 @@ export default function SmartAdd() {
 
   /** The answers' drops leave the list unticked, but still on it, so nothing goes unseen. */
   const showTerms = async () => {
-    if (state.step !== "questions" || state.showing !== null) return;
+    // A ref, since a second tap can arrive before the first one's state is drawn.
+    if (state.step !== "questions" || asking.current) return;
+    asking.current = true;
     const attempt = ++attempts.current;
     send({ type: "show", attempt });
     try {
@@ -330,6 +333,8 @@ export default function SmartAdd() {
       if (attempts.current !== attempt) return;
       setError(errorMessage(failure));
       send({ type: "settled", attempt, step: "questions" });
+    } finally {
+      asking.current = false;
     }
   };
 

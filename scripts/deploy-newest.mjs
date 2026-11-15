@@ -21,11 +21,14 @@ export function shouldDeploy({ ours, live, contains }) {
   return { deploy: true };
 }
 
-/** Whether `ancestor` is in `commit`'s history, fetching `commit` when the clone lacks it. */
+/**
+ * Whether `ancestor` is in `commit`'s history, fetching `commit` when the clone lacks it. The fetch stays
+ * shallow, since a history too short to reach `ancestor` only turns the answer into a deploy.
+ */
 export function gitContains(commit, ancestor, git = runGit) {
   if (
     git(["cat-file", "-e", `${commit}^{commit}`]) !== 0 &&
-    git(["fetch", "--quiet", "origin", commit]) !== 0
+    git(["fetch", "--quiet", "--depth=50", "origin", commit]) !== 0
   ) {
     return null;
   }
@@ -38,10 +41,16 @@ function runGit(args) {
   return spawnSync("git", args, { stdio: "ignore", timeout: 60_000 }).status;
 }
 
+/** The live version's commit, or null for a tag that is not a full SHA and so must not reach git. */
+export function commitTag(health) {
+  const tag = health?.version?.tag;
+  return typeof tag === "string" && /^[0-9a-f]{40}$/.test(tag) ? tag : null;
+}
+
 async function liveTag(url) {
   try {
     const response = await fetch(url, { signal: AbortSignal.timeout(10_000) });
-    return response.ok ? ((await response.json())?.version?.tag ?? null) : null;
+    return response.ok ? commitTag(await response.json()) : null;
   } catch {
     return null;
   }

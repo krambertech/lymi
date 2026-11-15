@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import { execFileSync } from "node:child_process";
 import test from "node:test";
-import { gitContains, shouldDeploy } from "./deploy-newest.mjs";
+import { commitTag, gitContains, shouldDeploy } from "./deploy-newest.mjs";
 
 const never = () => assert.fail("no comparison expected");
 
@@ -46,4 +46,13 @@ test("fetches a live commit the clone lacks, and gives up when it cannot", () =>
     gitContains("live", "ours", () => 1),
     null,
   );
+});
+
+test("takes only a full commit SHA from the live version", () => {
+  const sha = "09a48f2148ddb926b19df6ee1c06cc2fd80ed509";
+  assert.equal(commitTag({ version: { tag: sha } }), sha);
+  assert.equal(commitTag({ version: { tag: "--upload-pack=touch /tmp/x" } }), null);
+  assert.equal(commitTag({ version: { tag: "09a48f2" } }), null);
+  assert.equal(commitTag({ version: {} }), null);
+  assert.equal(commitTag(null), null);
 });

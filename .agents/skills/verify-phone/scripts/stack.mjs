@@ -114,11 +114,14 @@ async function stimIos() {
   const watchdog = setInterval(() => {
     if (!stalledProbes(child.pid)) return;
     stalled = true;
-    for (const { pid } of descendants(child.pid)) {
-      try {
-        process.kill(Number(pid), "SIGTERM");
-      } catch {}
-    }
+    // A failed `ps` here would throw out of the timer, end `start` and leave Xcode running.
+    try {
+      for (const { pid } of descendants(child.pid)) {
+        try {
+          process.kill(Number(pid), "SIGTERM");
+        } catch {}
+      }
+    } catch {}
     child.kill("SIGTERM");
   }, 15_000);
   const code = await new Promise((resolve) => child.on("close", resolve));

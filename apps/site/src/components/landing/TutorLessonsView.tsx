@@ -3,21 +3,24 @@ import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
-import { AssistantMarksWithMore } from "./AssistantMarks";
+import { AssistantMarksWithMore, WorksWith } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
 import { FeatureSection, SectionTitle } from "./FeatureSection";
+import { FreeBadge } from "./FreeBadge";
 import { TUTOR_LESSONS_QUESTIONS } from "./faq";
-import { GuideSteps } from "./GuideSteps";
 import { Hero } from "./Hero";
+import { HintField } from "./JapaneseAi";
 import { LandingLayout } from "./LandingLayout";
+import { BENTO_HUES, Examples, LanguageBento, Meanings, Tile } from "./LanguageBento";
+import { DetailsSection, ReturnSection, TogetherSection } from "./LanguageSections";
 import { LEARNING_LANGUAGES, type LearningLanguage } from "./language-cards";
 import { type Material, MaterialToCards, Pick } from "./MaterialToCards";
 import { Questions } from "./Questions";
-import { ReviewDemo } from "./ReviewDemo";
 import { SignUpSection } from "./SignUpSection";
+import { OldDecksTile } from "./StudyTiles";
 
 export const TUTOR_LESSONS_TITLE = msg`Turn your tutor lessons into flashcards · Lymi`;
-export const TUTOR_LESSONS_BLURB = msg`After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, where you review them between lessons. Free.`;
+export const TUTOR_LESSONS_BLURB = msg`After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free.`;
 
 const byId = (id: LearningLanguage["id"]) =>
   LEARNING_LANGUAGES.find((l) => l.id === id) as LearningLanguage;
@@ -29,37 +32,6 @@ const ADDED: SampleCard = {
   language: "es",
   meaning: msg`To miss someone or something`,
 };
-
-const REVIEW: SampleCard[] = [
-  {
-    label: msg`Español`,
-    term: "echar de menos",
-    language: "es",
-    meaning: msg`To miss someone or something`,
-    example: "Echo de menos a mi familia.",
-  },
-  {
-    label: msg`Deutsch`,
-    term: "Feierabend",
-    language: "de",
-    meaning: msg`The end of the working day, and the free time after it`,
-    example: "Endlich Feierabend!",
-  },
-  {
-    label: msg`Español`,
-    term: "aprovechar",
-    language: "es",
-    meaning: msg`To make the most of something`,
-    example: "Hay que aprovechar el buen tiempo.",
-  },
-  {
-    label: msg`Español`,
-    term: "soler",
-    language: "es",
-    meaning: msg`To usually do something`,
-    example: "Suelo desayunar a las ocho.",
-  },
-];
 
 function Bubble({ from, children }: { from: "tutor" | "you"; children: ReactNode }) {
   return from === "tutor" ? (
@@ -236,10 +208,31 @@ function LessonChat({ mark }: { mark: (i: number, text: ReactNode) => ReactNode 
       <Bubble from="you">Uf, estoy muy embarazada…</Bubble>
       <Bubble from="tutor">¡Cuidado! {mark(1, "Embarazada")} no es «embarrassed».</Bubble>
       <Bubble from="tutor">En el bar: «{mark(2, "¿Me pones un café?")}»</Bubble>
-      <Bubble from="tutor">{mark(3, "Ojalá")} nos vemos el viernes.</Bubble>
+      <Bubble from="tutor">{mark(3, "Ojalá")} nos veamos el viernes.</Bubble>
     </div>
   );
 }
+
+/** Two cards from the deck a tutor shares. */
+const TUTOR_DECK = [
+  { term: "madrugar", meaning: msg`To get up early` },
+  { term: "ojalá", meaning: msg`Hopefully` },
+];
+
+const EXAMPLES = [
+  {
+    text: "Mañana madrugo para ir al trabajo.",
+    translation: msg`Tomorrow I’m getting up early for work.`,
+  },
+  { text: "Ojalá nos veamos el viernes.", translation: msg`I hope we see each other on Friday.` },
+];
+
+/** One word's meaning in each language Lymi writes meanings in; data, so never translated. */
+const MEANINGS = [
+  { language: "English", lang: "en", meaning: "To get up early" },
+  { language: "Українська", lang: "uk", meaning: "Рано вставати" },
+  { language: "Русский", lang: "ru", meaning: "Рано вставать" },
+];
 
 /** For the learner who books lessons with a tutor and loses the words between them. */
 export function TutorLessonsView() {
@@ -248,13 +241,16 @@ export function TutorLessonsView() {
       page="tutorLessons"
       hero={
         <Hero
+          badge={<FreeBadge />}
           title={<Trans>Keep every word from your tutor lessons.</Trans>}
           lede={
             <Trans>
-              Send the lesson chat, a transcript or a photo of your notebook to your AI assistant.
-              It adds the new words to Lymi, and you review them between lessons.
+              Paste the lesson chat or snap your notes. Lymi turns the new words into cards with a
+              native voice, ready to review before the next lesson.
             </Trans>
           }
+          secondary={{ href: "#material", label: <Trans>See how it works</Trans> }}
+          after={<WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />}
           cards={HERO_CARDS}
           behind={(front) => (
             <LessonChat mark={(i, text) => <Pick on={front === HERO_IDS[i]}>{text}</Pick>} />
@@ -262,7 +258,11 @@ export function TutorLessonsView() {
         />
       }
     >
-      <section aria-labelledby="material-title" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
+      <section
+        id="material"
+        aria-labelledby="material-title"
+        className="scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20"
+      >
         <div className="mx-auto max-w-[1040px]">
           <div id="material-title">
             <SectionTitle>
@@ -271,8 +271,8 @@ export function TutorLessonsView() {
           </div>
           <p className="mt-5 max-w-[52ch] text-md text-pretty text-ink-secondary">
             <Trans>
-              Your assistant picks out the new words, keeps the meanings from the lesson and skips
-              the ones already in your deck.
+              Paste the chat or a transcript, or add a photo, in Smart add. Lymi picks out the new
+              words, keeps the meanings from the lesson and skips the ones already in your deck.
             </Trans>
           </p>
           <div className="mt-12">
@@ -280,87 +280,6 @@ export function TutorLessonsView() {
           </div>
         </div>
       </section>
-
-      <GuideSteps
-        id="guide"
-        title={<Trans>How it works</Trans>}
-        lede={
-          <Trans>
-            It works the same for a lesson on italki, on Preply or with a tutor you meet in person.
-          </Trans>
-        }
-        steps={[
-          {
-            id: "connect",
-            title: <Trans>Connect your AI assistant</Trans>,
-            body: (
-              <Trans>
-                Add Lymi to Claude, Grok or another assistant.{" "}
-                <a
-                  href="#connect"
-                  className="text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
-                >
-                  It takes three steps
-                </a>
-                . No assistant?{" "}
-                <a
-                  href="#guide-without"
-                  className="text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
-                >
-                  Start another way
-                </a>
-                .
-              </Trans>
-            ),
-          },
-          {
-            id: "collect",
-            title: <Trans>Copy the chat or take a photo</Trans>,
-            body: (
-              <Trans>
-                Copy the lesson chat or transcript, export your shared notes, or take a photo of
-                your notebook or your tutor’s whiteboard.
-              </Trans>
-            ),
-          },
-          {
-            id: "send",
-            title: <Trans>Send it to your assistant</Trans>,
-            body: (
-              <Trans>
-                Paste the text or attach the photo and ask: “Add the new words to my Spanish deck in
-                Lymi.” Say which deck, or ask it to make one.
-              </Trans>
-            ),
-          },
-          {
-            id: "check",
-            title: <Trans>Check the cards in Lymi</Trans>,
-            body: (
-              <Trans>
-                The new cards are in your deck, and words you already have are skipped. Fix or
-                archive any card.
-              </Trans>
-            ),
-          },
-          {
-            id: "review",
-            title: <Trans>Review a few minutes a day</Trans>,
-            body: (
-              <Trans>
-                Open Today on your phone or laptop and go over the words before your next lesson.
-              </Trans>
-            ),
-          },
-        ]}
-        note={
-          <Trans>
-            Lymi doesn’t connect to tutoring sites. Smart add is in beta and reads up to 5 lessons a
-            day.
-          </Trans>
-        }
-        withoutAssistant
-      />
 
       <FeatureSection
         tinted
@@ -409,18 +328,83 @@ export function TutorLessonsView() {
         />
       </FeatureSection>
 
-      <FeatureSection
-        demoFirst
+      <ReturnSection
+        lang="es"
+        term={() => "madrugar"}
         title={<Trans>Review a few minutes a day.</Trans>}
         body={
           <Trans>
-            One card at a time, graded in a tap, even offline. Words you know wait longer, and the
-            ones you miss come back sooner.
+            Each time you remember a word, Lymi waits longer before showing it again. Forget it, and
+            it comes back soon. You arrive at the next lesson still knowing the last one.
           </Trans>
         }
-      >
-        <ReviewDemo cards={REVIEW} />
-      </FeatureSection>
+      />
+
+      <TogetherSection
+        name={msg`Spanish with my tutor`}
+        language="es"
+        cards={TUTOR_DECK}
+        body={
+          <Trans>
+            Your tutor can make the deck and send you its join link. Every card they add after a
+            lesson reaches you, and you keep your own schedule.
+          </Trans>
+        }
+      />
+
+      <DetailsSection title={<Trans>Built for language lessons.</Trans>}>
+        <LanguageBento layout="wide">
+          <Tile
+            wide
+            hue={BENTO_HUES[0]}
+            title={<Trans>Examples you can hear</Trans>}
+            body={
+              <Trans>
+                Every example comes with a translation, and a native voice reads the whole sentence.
+              </Trans>
+            }
+          >
+            <Examples lang="es" examples={EXAMPLES} />
+          </Tile>
+          <Tile
+            hue={BENTO_HUES[1]}
+            title={<Trans>Meanings in your language</Trans>}
+            body={
+              <Trans>
+                AI writes meanings in English, Ukrainian or Russian, and Lymi itself is in all
+                three.
+              </Trans>
+            }
+          >
+            <Meanings lang="es" term="madrugar" meanings={MEANINGS} />
+          </Tile>
+          <Tile
+            hue={BENTO_HUES[2]}
+            title={<Trans>A hint for the word that won’t stick</Trans>}
+            body={
+              <Trans>
+                Press Draft and AI suggests a hint for a word you keep forgetting. Peek at it in
+                review before you turn the card.
+              </Trans>
+            }
+          >
+            <div className="grid gap-2">
+              <p
+                lang="es"
+                className="rounded-md bg-plate px-4 py-3 text-xl font-medium text-ink edge"
+              >
+                embarazada
+              </p>
+              <HintField pressed drafted>
+                <Trans>
+                  Sounds like “embarrassed” but means pregnant: the mix-up is the embarrassing part.
+                </Trans>
+              </HintField>
+            </div>
+          </Tile>
+          <OldDecksTile />
+        </LanguageBento>
+      </DetailsSection>
 
       <Questions title={<Trans>Common questions.</Trans>} items={TUTOR_LESSONS_QUESTIONS} />
 

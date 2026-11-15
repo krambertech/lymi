@@ -2,16 +2,20 @@ import { msg } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ArrowRight, RotateCcw, Star } from "lucide-react";
 import { Added, AssistantChat } from "./AssistantChat";
+import { WorksWith } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
 import { FeatureSection } from "./FeatureSection";
+import { FreeBadge } from "./FreeBadge";
 import { MEDICINE_QUESTIONS } from "./faq";
 import { Hero } from "./Hero";
 import type { HandCard } from "./hand-cards";
 import { ImportDemo } from "./ImportDemo";
 import { LandingLayout } from "./LandingLayout";
-import { ReturnSection } from "./LanguageSections";
+import { BENTO_HUES, LanguageBento, Tile } from "./LanguageBento";
+import { DetailsSection, ReturnSection } from "./LanguageSections";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
+import { DeckStyle, DiagramTile, TagReview } from "./StudyTiles";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const MEDICINE_TITLE = msg`Lymi for medical students · Flashcards with spaced repetition`;
@@ -66,6 +70,7 @@ const METFORMIN: SampleCard = {
 
 /** A medical student's semester: anatomy, drugs, bugs and numbers, each its own deck. */
 export function MedicineView() {
+  const { t } = useLingui();
   const subjects: UseCase[] = [
     {
       id: "anatomy",
@@ -110,13 +115,16 @@ export function MedicineView() {
       page="medicine"
       hero={
         <Hero
+          badge={<FreeBadge />}
           title={<Trans>Flashcards for medical school.</Trans>}
           lede={
             <Trans>
-              Turn your lecture notes into cards, and Lymi plans when to review each one. It’s free,
-              and your Anki decks come with you.
+              Snap your lecture slides or drop in the PDF, and Lymi makes the cards. Your Anki decks
+              come with you, review history and all.
             </Trans>
           }
+          secondary={{ href: "#lecture", label: <Trans>See how it works</Trans> }}
+          after={<WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />}
           cards={HAND}
         />
       }
@@ -148,14 +156,15 @@ export function MedicineView() {
       </FeatureSection>
 
       <FeatureSection
+        id="lecture"
         demoFirst
         tinted
         title={<Trans>Turn a lecture into cards.</Trans>}
         body={
           <Trans>
-            Send your lecture notes or slides to Claude, ChatGPT, Gemini or Grok and it adds the
-            cards, each with what the lecture said. When Lymi’s AI fills in a meaning, it marks what
-            it wrote, so it’s never mistaken for your notes.
+            Drop the slides into Smart add, or send them to Claude, ChatGPT, Gemini or Grok. Each
+            card keeps what the lecture said, and anything Lymi’s AI fills in is marked, so it’s
+            never mistaken for your notes.
           </Trans>
         }
       >
@@ -199,17 +208,64 @@ export function MedicineView() {
         }
       />
 
-      <FeatureSection
-        title={<Trans>Mark what’s high-yield.</Trans>}
-        body={
-          <Trans>
-            Mark a card important and Lymi shows it more often, without changing its due date. The
-            cards you keep forgetting gather in Often forgotten, a round of their own.
-          </Trans>
-        }
-      >
-        <FocusDemo />
-      </FeatureSection>
+      <DetailsSection title={<Trans>Built for medical school.</Trans>}>
+        <LanguageBento layout="wide">
+          <Tile
+            wide
+            hue={BENTO_HUES[0]}
+            title={<Trans>Go over one block before the exam</Trans>}
+            body={
+              <Trans>
+                Your Anki tags come along. Pick one, such as a block or a system, and review just
+                those cards.
+              </Trans>
+            }
+          >
+            <TagReview
+              tags={[
+                [t`Cardiology`, 212],
+                [t`Renal`, 148],
+                [t`Neuro`, 236],
+              ]}
+            />
+          </Tile>
+          <DiagramTile hue={BENTO_HUES[1]} />
+          <Tile
+            hue={BENTO_HUES[2]}
+            title={<Trans>Mark what’s high-yield</Trans>}
+            body={
+              <Trans>
+                Mark a card important and Lymi shows it more often. The cards you keep forgetting
+                gather in Often forgotten, a round of their own.
+              </Trans>
+            }
+          >
+            <FocusDemo />
+          </Tile>
+          <Tile
+            hue={BENTO_HUES[3]}
+            title={<Trans>AI follows your deck’s style</Trans>}
+            body={
+              <Trans>
+                Tell a deck how to write, such as “Use the clinical meaning”. AI follows it and
+                matches the cards you wrote.
+              </Trans>
+            }
+          >
+            <DeckStyle
+              instructions={
+                <Trans>Instructions: Use the clinical meaning. Mechanism second.</Trans>
+              }
+              term="metformin"
+              meaning={
+                <Trans>
+                  First-line drug for type 2 diabetes. Lowers the glucose the liver makes.
+                </Trans>
+              }
+            />
+          </Tile>
+        </LanguageBento>
+      </DetailsSection>
 
       <Questions
         title={<Trans>Questions from medical students.</Trans>}

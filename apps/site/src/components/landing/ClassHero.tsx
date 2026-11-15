@@ -6,6 +6,9 @@ import { motion, useInView, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
+import { WorksWith } from "./AssistantMarks";
+import { FreeBadge } from "./FreeBadge";
+import { OriginBadge } from "./OriginBadge";
 import { appear, EASE, usePlayback } from "./playback";
 
 /** The class in every teachers page demo: six faces shown, twelve learners in all. */
@@ -117,13 +120,17 @@ export function ClassHero() {
   return (
     <div className="mx-auto grid max-w-[1120px] items-center gap-14 px-5 pt-12 pb-20 @2xl:px-10 @4xl:min-h-[700px] @4xl:grid-cols-[minmax(0,1fr)_minmax(0,460px)] @4xl:gap-16 @4xl:pt-14">
       <div className="min-w-0 max-w-[560px]">
+        <div className="mb-6 flex flex-wrap items-center gap-2 *:mb-0">
+          <FreeBadge />
+          <OriginBadge />
+        </div>
         <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[4.25rem] @4xl:leading-[1.02]">
           <Trans>One deck for your whole class.</Trans>
         </h1>
         <p className="mt-6 max-w-[42ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
           <Trans>
-            Build the course in sections, share one link, and add what you taught after every
-            lesson. Each learner reviews on their own schedule.
+            Snap your lesson notes into cards, build the course in sections and share one link. Each
+            learner reviews on their own schedule.
           </Trans>
         </p>
         <div className="mt-8 flex flex-wrap gap-2">
@@ -133,6 +140,9 @@ export function ClassHero() {
           <a href="#course" className={buttonClass("ghost", "lg")}>
             <Trans>How sections work</Trans>
           </a>
+        </div>
+        <div className="mt-6">
+          <WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />
         </div>
       </div>
 

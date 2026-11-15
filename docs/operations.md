@@ -119,7 +119,7 @@ pnpm moderate show <report-id>
 | Action | When | What happens |
 | --- | --- | --- |
 | `dismiss` | Nothing breaks the rules | The report closes; nothing changes |
-| `archive_card` | One card is the problem | The card leaves every member's deck, and its owner cannot restore it |
+| `archive_card` | One card is the problem | The card leaves every member's deck, and its owner cannot restore it, alone or with its section or import |
 | `archive_deck` | The deck itself is the problem | The deck leaves every member's Library, its join link and invitations stop working, and its owner cannot restore it |
 | `suspend_sharing` | The owner shares abuse, or keeps coming back | Every deck they share is archived for good, and they can no longer turn on a join link or invite anyone |
 
@@ -127,7 +127,7 @@ pnpm moderate show <report-id>
 pnpm moderate resolve <report-id> archive_card --apply
 ```
 
-Settling a report settles the other open reports about the same card, deck or owner. `archive_deck` and `suspend_sharing` are refused when the owner publishes to Explore: fix or withdraw a published deck with the publishing key instead. A learner who reports the same thing again while it is open adds their reason and note to the open report, with no second email, so read the note again before settling. The owner sees the archive in Activity as Lymi's, with no reporter named. Reply to the reporter by email when the action matters to them. To lift a suspension, delete its `sharing_suspensions` row and the owner can share again; archived decks stay archived.
+Settling a report settles the other open reports about the same card, deck or owner. If a settle fails or stops partway, run the same command again: repeating an archive or suspension is harmless, and only a different action is refused. `archive_deck` and `suspend_sharing` are refused when the owner publishes to Explore: fix or withdraw a published deck with the publishing key instead. A learner who reports the same thing again while it is open adds their reason and note to the open report, with no second email, so read the note again before settling. The owner sees the archive in Activity as Lymi's, with no reporter named. Reply to the reporter by email when the action matters to them. To lift a suspension, delete its `sharing_suspensions` row and the owner can share again; archived decks stay archived.
 
 ## A deleted account's Apple grant was not revoked
 

@@ -137,15 +137,45 @@ async function linkByToken(db: Db, token: string) {
   return row ?? null;
 }
 
+type Link = NonNullable<Awaited<ReturnType<typeof linkByToken>>>;
+
+/**
+ * What a token opens: nothing, a link the owner turned off, an archived deck, a named invitation
+ * its address already used, or an open door. Every reader of a link asks this, never the columns.
+ */
+export function invitationState(link: Link | null) {
+  if (!link) return "invalid" as const;
+  if (link.revokedAt) return "off" as const;
+  if (link.deckArchivedAt) return "archived" as const;
+  if (link.kind === "named" && link.acceptedAt) return "spent" as const;
+  return "open" as const;
+}
+
+/** Whether the viewer owns or studies the deck now, which is all a spent invitation still serves. */
+async function inDeck(db: Db, link: Link, userId: string | null) {
+  if (!userId) return false;
+  if (link.ownerId === userId) return true;
+  const deckId = link.deckId;
+  const [member] = await db
+    .select({ id: schema.deckMembers.id })
+    .from(schema.deckMembers)
+    .where(
+      and(
+        eq(schema.deckMembers.deckId, deckId),
+        eq(schema.deckMembers.userId, userId),
+        isNull(schema.deckMembers.removedAt),
+      ),
+    );
+  return Boolean(member);
+}
+
 /**
  * True when the token could still let somebody in, whoever they turn out to be. The sign-in
  * hold asks this, before anybody has said who they are; a named invitation's address is
  * checked later, in `joinThroughLink`.
  */
 export async function joinLinkAdmits(db: Db, token: string): Promise<boolean> {
-  const link = await linkByToken(db, token);
-  if (!link || link.revokedAt || link.deckArchivedAt) return false;
-  return link.kind !== "named" || !link.acceptedAt;
+  return invitationState(await linkByToken(db, token)) === "open";
 }
 
 /** What the join page may show this viewer while the link works, and nothing once it does not. */
@@ -155,6 +185,7 @@ export async function previewJoin(
   viewerId: string | null,
 ): Promise<JoinPreviewOut> {
   const link = await linkByToken(db, token);
+  const state = invitationState(link);
   const deck = link && {
     id: link.deckId,
     name: link.deckName,
@@ -163,20 +194,27 @@ export async function previewJoin(
     shownOwner: link.ownerName,
     archivedAt: link.deckArchivedAt,
   };
-  return previewDoor(db, deck, Boolean(link?.revokedAt), viewerId);
+  const closed =
+    state === "off" || (state === "spent" && !(link && (await inDeck(db, link, viewerId))));
+  return previewDoor(db, deck, closed, viewerId);
 }
 
 /**
  * Join the deck a working link points to. Repeats are safe; a learner the owner removed is
  * refused, and a link that is off or on an archived deck admits nobody. A named invitation
- * admits only the address it names, so a learner signed in as somebody else is told which.
+ * admits only the address it names, so a learner signed in as somebody else is told which, and
+ * once used it only answers somebody still in the deck.
  */
 export async function joinThroughLink(ctx: ServiceContext, token: string) {
   const link = await linkByToken(ctx.db, token);
-  if (!link || link.revokedAt || link.deckArchivedAt) {
+  const state = invitationState(link);
+  if (
+    !link ||
+    !(state === "open" || (state === "spent" && (await inDeck(ctx.db, link, ctx.userId))))
+  ) {
     throw new ServiceError("not_found", "This join link does not work");
   }
-  if (link.kind === "named") {
+  if (link.kind === "named" && state === "open") {
     const [caller] = await ctx.db
       .select({ email: schema.user.email })
       .from(schema.user)

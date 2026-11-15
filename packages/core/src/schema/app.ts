@@ -438,7 +438,7 @@ export const pushSubscriptions = sqliteTable(
 /**
  * Who may study a deck besides its owner, and what they may do in it. The owner is
  * `decks.user_id` and has no row here. Leaving or being removed keeps the row and sets
- * `removed_at`; `removed_by = 'owner'` blocks the join link until a named invitation.
+ * `removed_at`; `removed_by = 'owner'` keeps them out for good: no link or invitation admits them.
  * Roles beyond `learner` are stored for later and not yet granted anywhere. ADR 0011.
  */
 export const deckMembers = sqliteTable(

@@ -19,6 +19,7 @@ import {
 import { getSettings, updateSettings } from "./settings";
 import { insights } from "./stats";
 import { learner, testDb } from "./test-db";
+import { batchRacedBy, racedBy } from "./test-race";
 
 let db: Db;
 let dispose: () => Promise<void>;
@@ -405,10 +406,130 @@ describe("a day with nothing due", () => {
     expect((await streak(ctx)).current).toBe(2);
   });
 
+  it("confirms today found in the current zone though it opened in another", async () => {
+    const { ctx } = await setup(10, []);
+    // A zone whose date is not today's UTC date right now, as after the learner travelled.
+    const away = new Date().getUTCHours() >= 10 ? "Pacific/Kiritimati" : "Pacific/Pago_Pago";
+    await db.insert(schema.reviewDays).values({
+      id: newId(),
+      userId: ctx.userId,
+      date: today(),
+      goal: 10,
+      timezone: away,
+    });
+
+    expect(await checkToday(ctx)).toMatchObject({ attempts: 0, outcome: "nothing_due" });
+  });
+
+  it("stays protected when cards added after the visit are graded below the goal", async () => {
+    const { ctx } = await setup(2, []);
+    expect(await checkToday(ctx)).toMatchObject({ outcome: "nothing_due" });
+    const deck = await createDeck(ctx, { name: "Later", defaultLanguage: "et" });
+    const added = await addCards(ctx, [
+      { deckId: deck.id, term: "esimene" },
+      { deckId: deck.id, term: "teine" },
+      { deckId: deck.id, term: "kolmas" },
+    ]);
+    const [a, b] = added.flatMap((o) => (o.status === "added" ? [o.card.id] : []));
+    if (!a || !b) throw new Error("no cards");
+
+    expect((await grade(ctx, a, 3, new Date())).day).toMatchObject({
+      attempts: 1,
+      outcome: "nothing_due",
+    });
+    expect((await grade(ctx, b, 3, new Date())).day).toMatchObject({
+      attempts: 2,
+      outcome: "goal_met",
+    });
+  });
+
   it("does not confirm a day that still has cards to review", async () => {
     const { ctx } = await setup(10, ["kaksteist"]);
 
     expect(await checkToday(ctx)).toMatchObject({ outcome: "open" });
+  });
+});
+
+describe("a grade that lands while the day is being settled", () => {
+  /** A learner whose cards are not due, so opening Lymi finds nothing to review. */
+  async function nothingDue(goal: number) {
+    const { ctx, cards } = await setup(goal, ["hiljem", "homme"]);
+    const [card, other] = cards;
+    if (!card || !other) throw new Error("no cards");
+    await db
+      .update(schema.cardStates)
+      .set({ due: later(30 * 86_400) })
+      .where(eq(schema.cardStates.userId, ctx.userId));
+    return { ctx, card, other };
+  }
+
+  const stored = async (ctx: ServiceContext) => {
+    const [row] = await db
+      .select()
+      .from(schema.reviewDays)
+      .where(and(eq(schema.reviewDays.userId, ctx.userId), eq(schema.reviewDays.date, today())));
+    return row;
+  };
+
+  it("never confirms nothing due over a grade that landed after the visit read the day", async () => {
+    const { ctx, card } = await nothingDue(1);
+    const visit = racedBy(ctx, schema.reviewDays, () => grade(ctx, card.id, 3, new Date()));
+
+    expect(await checkToday(visit)).toMatchObject({ attempts: 1, outcome: "goal_met" });
+    expect(await stored(ctx)).toMatchObject({ outcome: "goal_met", zeroDueConfirmedAt: null });
+  });
+
+  it("settles a grade on the attempts that are there when it writes", async () => {
+    const { ctx, card, other } = await nothingDue(2);
+    await checkToday(ctx);
+    const first = racedBy(ctx, schema.reviewDays, () => grade(ctx, other.id, 3, new Date()));
+
+    const { day } = await grade(first, card.id, 3, new Date());
+    expect(day).toMatchObject({ attempts: 2, outcome: "goal_met" });
+    expect(await stored(ctx)).toMatchObject({ outcome: "goal_met" });
+  });
+
+  it("keeps the goal a day was met against when a grade meets it during a goal change", async () => {
+    const { ctx, cards } = await setup(2, ["üks", "kaks"]);
+    const [a, b] = cards;
+    if (!a || !b) throw new Error("no cards");
+    await grade(ctx, a.id, 3, later(-60));
+    const raising = racedBy(ctx, schema.reviewDays, () => grade(ctx, b.id, 3, new Date()));
+
+    await updateSettings(raising, { dailyGoal: 5 });
+    expect(await stored(ctx)).toMatchObject({ goal: 2, outcome: "goal_met" });
+  });
+
+  it("settles an Undo on the day as it is when the Undo lands, not as it read it", async () => {
+    const { ctx, card, other } = await nothingDue(2);
+    const { reviewId } = await grade(ctx, card.id, 3, new Date());
+    if (!reviewId) throw new Error("no review");
+    // The Undo read the day as exhausted; another grade meets the goal before it lands.
+    const undo = batchRacedBy(ctx, () => grade(ctx, other.id, 3, new Date()));
+
+    expect(await undoReview(undo, reviewId)).toMatchObject({ attempts: 1, outcome: "exhausted" });
+    expect(await stored(ctx)).toMatchObject({ outcome: "exhausted" });
+  });
+
+  it("settles a grade on the day as it is when the grade lands, not as it read it", async () => {
+    const { ctx, card, other } = await nothingDue(2);
+    const { reviewId } = await grade(ctx, card.id, 3, later(-60));
+    if (!reviewId) throw new Error("no review");
+    // The grade read the day as exhausted; an Undo and a visit make it nothing due before it lands.
+    const late = batchRacedBy(
+      ctx,
+      async () => {
+        await undoReview(ctx, reviewId);
+        await checkToday(ctx);
+      },
+      (statements) => statements.length > 2,
+    );
+
+    expect((await grade(late, other.id, 3, new Date())).day).toMatchObject({
+      attempts: 1,
+      outcome: "exhausted",
+    });
+    expect(await stored(ctx)).toMatchObject({ outcome: "exhausted" });
   });
 });
 

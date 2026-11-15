@@ -20,6 +20,15 @@ import {
   systemPreferences,
   Tray,
 } from "electron";
+import {
+  type Auth,
+  type AuthEvent,
+  auth,
+  HANDED_BACK,
+  hasCookie,
+  offersSignIn,
+  UNKNOWN,
+} from "./auth-state.js";
 import { SCHEME, sessionChange } from "./callback.js";
 import { windowColours } from "./colours.gen.js";
 import { handBack } from "./hand-back.js";
@@ -63,9 +72,7 @@ let panelStale = false;
 let main: BrowserWindow | null = null;
 let prefs: Preferences;
 let due: number | null = null;
-let signedIn = true;
-// Whether the window session holds a session cookie, which decides the window's size.
-let hasSession = false;
+let signIn: Auth = UNKNOWN;
 let sessionRead = () => {};
 const sessionKnown = new Promise<void>((resolve) => {
   sessionRead = resolve;
@@ -115,10 +122,10 @@ async function openMain(path?: string) {
     main.focus();
     return;
   }
-  const url = productUrl(hasSession ? (path ?? "/today") : "/login");
+  const url = productUrl(hasCookie(signIn) ? (path ?? "/today") : "/login");
   if (!url) return;
   main = new BrowserWindow({
-    ...(hasSession ? APP_SIZE : SIGN_IN_SIZE),
+    ...(hasCookie(signIn) ? APP_SIZE : SIGN_IN_SIZE),
     minWidth: 380,
     // The page draws a 40 px title bar on every screen; the traffic lights sit centred in it.
     titleBarStyle: "hidden",
@@ -127,7 +134,7 @@ async function openMain(path?: string) {
     backgroundColor: colours().canvas,
     webPreferences: webPreferences(),
   });
-  fitMain(hasSession, false);
+  fitMain(hasCookie(signIn), false);
   keepToProduct(main);
   main.once("ready-to-show", () => main?.show());
   // Full screen hides the traffic lights, so the page shows its Lymi tile again.
@@ -172,15 +179,22 @@ function fitMain(signedInNow: boolean, animate: boolean) {
   );
 }
 
+/** The one place the sign-in state changes; answers whether it did. */
+function setAuth(event: AuthEvent) {
+  const before = signIn;
+  signIn = auth(signIn, event);
+  if (signIn.status === before.status) return false;
+  renderTray();
+  const now = hasCookie(signIn);
+  if (before.status !== "unknown" && now !== hasCookie(before)) sessionChanged(now);
+  return true;
+}
+
 /**
  * Signing in or out, in a window or through the browser: the window changes size, and a window
  * still on the sign-in form goes on to where the learner was headed.
  */
 function sessionChanged(now: boolean) {
-  if (now === hasSession) return;
-  hasSession = now;
-  signedIn = now;
-  renderTray();
   if (!main || main.isDestroyed()) return;
   fitMain(now, main.isVisible());
   if (!now) return;
@@ -265,7 +279,7 @@ async function refreshDue() {
   if (!url) return;
   try {
     const res = await ses.fetch(url, { credentials: "include" });
-    signedIn = res.status !== 401;
+    setAuth({ type: "answered", status: res.status });
     if (!res.ok) throw new Error(String(res.status));
     const decks = (await res.json()) as { due: number }[];
     due = decks.reduce((sum, d) => sum + d.due, 0);
@@ -299,7 +313,7 @@ function renderTray() {
   tray.setToolTip(due ? `Lymi · ${due} due` : "Lymi");
   tray.setContextMenu(
     Menu.buildFromTemplate([
-      ...(signedIn
+      ...(!offersSignIn(signIn)
         ? []
         : [{ label: "Sign in…", click: () => void openMain() }, { type: "separator" as const }]),
       { label: "Add a card", accelerator: prefs.shortcut, click: () => void showPanel() },
@@ -466,7 +480,7 @@ async function askToRetrySignIn() {
 
 const finishSignIn = handBack({
   complete: (link) => completeSignIn(link, PRODUCT_URL, ses),
-  signedIn: () => hasSession,
+  signedIn: () => hasCookie(signIn),
   askToRetry: askToRetrySignIn,
   // The browser that handed the link back is signed in, so no provider needs naming again.
   retry: () => requestSignIn(PRODUCT_URL),
@@ -479,7 +493,7 @@ async function onLink(link: string) {
   await sessionKnown;
   if (!(await finishSignIn(link))) return;
   // The browser is in front; Lymi comes forward with the learner signed in.
-  sessionChanged(true);
+  setAuth(HANDED_BACK);
   await openMain();
   app.focus({ steal: true });
 }
@@ -564,7 +578,6 @@ async function start() {
   }
   refreshMenus();
   createPanel();
-  void refreshDue();
   setInterval(() => void refreshDue(), DUE_EVERY_MS);
   powerMonitor.on("resume", () => void refreshDue());
   watchForUpdates((next) => {
@@ -575,17 +588,17 @@ async function start() {
   // Signing in or out in a window adds or removes the session cookie, and the window, the tray and
   // the panel follow. The daily refresh rewrites it in place, an overwrite then an insert, and
   // changes nothing.
-  hasSession = (await ses.cookies.get({ url: PRODUCT_URL })).some(
+  const present = (await ses.cookies.get({ url: PRODUCT_URL })).some(
     (cookie) =>
       sessionChange(false, { name: cookie.name, cause: "inserted", removed: false }) === true,
   );
-  signedIn = hasSession;
+  setAuth({ type: "read", present });
   sessionRead();
+  // Asked once the cookie is known, so a 401 at launch is not lost to the read.
+  void refreshDue();
   let settle: ReturnType<typeof setTimeout> | undefined;
   ses.cookies.on("changed", (_event, cookie, cause, removed) => {
-    const next = sessionChange(hasSession, { name: cookie.name, cause, removed });
-    if (next === null) return;
-    sessionChanged(next);
+    if (!setAuth({ type: "cookie", name: cookie.name, cause, removed })) return;
     clearTimeout(settle);
     settle = setTimeout(() => {
       void refreshDue();
@@ -604,7 +617,7 @@ async function start() {
         rmSync(file);
         return command === "open" ? void openMain() : runCommand(command as MenuCommand);
       }
-      if (!signedIn) return void requestSignIn(PRODUCT_URL);
+      if (offersSignIn(signIn)) return void requestSignIn(PRODUCT_URL);
       void showPanel();
       console.log(
         `panel ${panel?.getMediaSourceId()} tray "${tray?.getTitle()}" accessibility ${systemPreferences.isTrustedAccessibilityClient(false)}`,

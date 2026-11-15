@@ -1323,7 +1323,7 @@ describe("importing an Anki package", () => {
     // A failure that lands after the chunk read the file, and before its batch.
     await db
       .update(schema.imports)
-      .set({ status: "failed", failure: "stalled" })
+      .set({ status: "failed", failure: "internal" })
       .where(eq(schema.imports.id, id));
 
     const late = await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);

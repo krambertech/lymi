@@ -206,9 +206,10 @@ export async function previewJoin(
 export async function joinThroughLink(ctx: ServiceContext, token: string) {
   const link = await linkByToken(ctx.db, token);
   const state = invitationState(link);
-  const admits =
-    state === "open" || (state === "spent" && (await inDeck(ctx.db, link.deckId, ctx.userId)));
-  if (!link || !admits) {
+  if (
+    !link ||
+    !(state === "open" || (state === "spent" && (await inDeck(ctx.db, link.deckId, ctx.userId))))
+  ) {
     throw new ServiceError("not_found", "This join link does not work");
   }
   if (link.kind === "named" && state === "open") {

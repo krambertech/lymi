@@ -332,6 +332,11 @@ async function flushQueued(): Promise<Flushed> {
     }
     // Grades made before this write go first, so the server sees one timeline.
     result.graded += await flushGrades(new Date(entry.at).toISOString()).catch(() => 0);
+    // The learner can leave while the grades send, and the next one's session must not carry this.
+    if (claim !== mine) {
+      result.stopped = true;
+      break;
+    }
     try {
       const value = await sendWithin(entry.write);
       remove(entry.key);

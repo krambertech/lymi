@@ -1,6 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { canPlayExample } from "@lymi/core";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef } from "react";
 import { api, type Card } from "../lib/api";
 import { playAlone } from "../lib/now-playing";
 import { captureAnalytics } from "../lib/telemetry";
@@ -15,16 +15,59 @@ type Control = "speaker" | "sentence";
 type Played = { url: string; audio: HTMLAudioElement; objectUrl: string };
 
 /**
+ * The example's clip, for the address it was pressed for. A new address, from the next card or an
+ * edit, reads as idle, so a load left behind never holds the button.
+ */
+export type ExampleClip =
+  | { status: "idle" }
+  | { status: "loading"; url: string }
+  | { status: "playing"; url: string }
+  /** Today's new example audio is used up. */
+  | { status: "limited"; url: string }
+  | { status: "failed"; url: string };
+
+export type ExampleClipEvent =
+  | { type: "load"; url: string }
+  | { type: "play"; url: string }
+  | { type: "stop"; url: string }
+  | { type: "limit"; url: string }
+  | { type: "fail"; url: string };
+
+const IDLE: ExampleClip = { status: "idle" };
+
+/** A press for an address already loading changes nothing; every other event names its own. */
+export function exampleClip(state: ExampleClip, event: ExampleClipEvent): ExampleClip {
+  switch (event.type) {
+    case "load":
+      return state.status === "loading" && state.url === event.url
+        ? state
+        : { status: "loading", url: event.url };
+    case "play":
+      return { status: "playing", url: event.url };
+    case "stop":
+      return state.status === "playing" && state.url === event.url ? IDLE : state;
+    case "limit":
+      return { status: "limited", url: event.url };
+    case "fail":
+      return { status: "failed", url: event.url };
+  }
+}
+
+/** The clip as it stands for this address. */
+export function clipFor(state: ExampleClip, url: string): ExampleClip {
+  return state.status !== "idle" && state.url === url ? state : IDLE;
+}
+
+/**
  * Reads the card's example aloud on a press, making its clip the first time; it never plays on its
  * own. Null when the example cannot be spoken.
  */
 export function useExampleAudio(card: SpokenCard, surface: Surface) {
   const { t } = useLingui();
   const played = useRef<Played | null>(null);
-  const [state, setState] = useState<"idle" | "loading" | "playing">("idle");
-  const [error, setError] = useState<string | null>(null);
-  const [limited, setLimited] = useState<string | null>(null);
+  const [clip, dispatch] = useReducer(exampleClip, IDLE);
   const url = api.exampleAudioUrl(card.id, card.updatedAt);
+  const shownClip = clipFor(clip, url);
   // The example on screen now, which a load that settles late checks before it plays.
   const shown = useRef(url);
   shown.current = url;
@@ -51,9 +94,7 @@ export function useExampleAudio(card: SpokenCard, surface: Surface) {
   if (!canPlayExample(card)) return null;
 
   const play = async (control: Control) => {
-    if (state === "loading") return;
-    setError(null);
-    setLimited(null);
+    if (shownClip.status === "loading") return;
     const pressed = performance.now();
     const waited = () => Math.min(60_000, Math.round(performance.now() - pressed));
     const kept = played.current?.url === url ? played.current : null;
@@ -67,11 +108,10 @@ export function useExampleAudio(card: SpokenCard, surface: Surface) {
     try {
       let audio = kept?.audio;
       if (!audio) {
-        setState("loading");
+        dispatch({ type: "load", url });
         const response = await fetch(url, { credentials: "include" });
         if (response.status === 429) {
-          setState("idle");
-          setLimited(t`Today’s new example audio is used up. Examples you’ve played still play.`);
+          dispatch({ type: "limit", url });
           report("limited");
           return;
         }
@@ -84,21 +124,32 @@ export function useExampleAudio(card: SpokenCard, surface: Surface) {
         }
         audio = new Audio(objectUrl);
         // Ended, or paused because the term's clip started.
-        for (const done of ["ended", "pause"]) audio.addEventListener(done, () => setState("idle"));
+        for (const done of ["ended", "pause"])
+          audio.addEventListener(done, () => dispatch({ type: "stop", url }));
         played.current = { url, audio, objectUrl };
       }
       audio.currentTime = 0;
       await playAlone(audio);
-      setState("playing");
+      dispatch({ type: "play", url });
       report("played");
     } catch {
-      setState("idle");
-      setError(t`Couldn’t play the example. Try again in a moment.`);
+      dispatch({ type: "fail", url });
       report("failed");
     }
   };
 
-  return { state, error, limited, play: (control: Control = "speaker") => void play(control) };
+  const state: "idle" | "loading" | "playing" =
+    shownClip.status === "loading" || shownClip.status === "playing" ? shownClip.status : "idle";
+  return {
+    state,
+    error:
+      shownClip.status === "failed" ? t`Couldn’t play the example. Try again in a moment.` : null,
+    limited:
+      shownClip.status === "limited"
+        ? t`Today’s new example audio is used up. Examples you’ve played still play.`
+        : null,
+    play: (control: Control = "speaker") => void play(control),
+  };
 }
 
 export type ExampleAudio = NonNullable<ReturnType<typeof useExampleAudio>>;

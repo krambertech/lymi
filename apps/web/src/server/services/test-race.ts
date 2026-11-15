@@ -46,3 +46,28 @@ export function racedBy(
     }),
   };
 }
+
+/**
+ * The context with its first `batch` that `when` picks held back until `rival` has run, so a test
+ * can land another writer between a service's read and its batched write.
+ */
+export function batchRacedBy(
+  ctx: ServiceContext,
+  rival: () => Promise<unknown>,
+  when: (statements: Parameters<Db["batch"]>[0]) => boolean = () => true,
+): ServiceContext {
+  let raced = false;
+  const batch = async (statements: Parameters<Db["batch"]>[0]) => {
+    if (!raced && when(statements)) {
+      raced = true;
+      await rival();
+    }
+    return ctx.db.batch(statements);
+  };
+  return {
+    ...ctx,
+    db: new Proxy(ctx.db, {
+      get: (db, key, receiver) => (key === "batch" ? batch : Reflect.get(db, key, receiver)),
+    }),
+  };
+}

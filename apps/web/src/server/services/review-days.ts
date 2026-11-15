@@ -146,8 +146,13 @@ export async function settleDay(
   now = new Date(),
   known: { nothingDue?: boolean; isToday?: boolean } = {},
 ): Promise<DayProgress> {
-  let current = day;
   for (let attempt = 0; ; attempt++) {
+    // Decided from the row as it is now: the caller's copy predates the grade or Undo it settles.
+    const [current] = await ctx.db
+      .select()
+      .from(schema.reviewDays)
+      .where(eq(schema.reviewDays.id, day.id));
+    if (!current) throw notFound("Review day");
     const attempts = await attemptsOn(ctx, current.id);
     const progress = (outcome: Outcome) => ({
       date: current.date,
@@ -188,12 +193,6 @@ export async function settleDay(
       )
       .returning({ id: schema.reviewDays.id });
     if (landed.length) return progress(outcome);
-    const [fresh] = await ctx.db
-      .select()
-      .from(schema.reviewDays)
-      .where(eq(schema.reviewDays.id, current.id));
-    if (!fresh) throw notFound("Review day");
-    current = fresh;
     if (attempt + 1 >= SETTLE_TRIES) return progress(current.outcome);
   }
 }

@@ -275,6 +275,13 @@ describe("nextOutcome", () => {
     expect(nextOutcome(day({ nothingLeft: true, attempts: 1 }), "visit")).toBe("exhausted");
   });
 
+  it("never leaves a day with attempts as nothing due", () => {
+    const confirmed = { outcome: "nothing_due" as const, zeroDueConfirmed: true, attempts: 1 };
+    expect(nextOutcome(day(confirmed), "grade")).toBe("open");
+    expect(nextOutcome(day(confirmed), "undo")).toBe("open");
+    expect(nextOutcome(day({ ...confirmed, attempts: 0 }), "undo")).toBe("nothing_due");
+  });
+
   it("reopens only on undo, to nothing due when a visit confirmed it", () => {
     expect(nextOutcome(day({ outcome: "goal_met", attempts: 2 }), "grade")).toBe("goal_met");
     expect(nextOutcome(day({ outcome: "goal_met", attempts: 2 }), "undo")).toBe("open");

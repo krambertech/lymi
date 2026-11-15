@@ -19,7 +19,7 @@ import {
 import { getSettings, updateSettings } from "./settings";
 import { insights } from "./stats";
 import { learner, testDb } from "./test-db";
-import { racedBy } from "./test-race";
+import { batchRacedBy, racedBy } from "./test-race";
 
 let db: Db;
 let dispose: () => Promise<void>;
@@ -465,6 +465,38 @@ describe("a grade that lands while the day is being settled", () => {
     const { day } = await grade(first, card.id, 3, new Date());
     expect(day).toMatchObject({ attempts: 2, outcome: "goal_met" });
     expect(await stored(ctx)).toMatchObject({ outcome: "goal_met" });
+  });
+
+  it("settles an Undo on the day as it is when the Undo lands, not as it read it", async () => {
+    const { ctx, card, other } = await nothingDue(2);
+    const { reviewId } = await grade(ctx, card.id, 3, new Date());
+    if (!reviewId) throw new Error("no review");
+    // The Undo read the day as exhausted; another grade meets the goal before it lands.
+    const undo = batchRacedBy(ctx, () => grade(ctx, other.id, 3, new Date()));
+
+    expect(await undoReview(undo, reviewId)).toMatchObject({ attempts: 1, outcome: "exhausted" });
+    expect(await stored(ctx)).toMatchObject({ outcome: "exhausted" });
+  });
+
+  it("settles a grade on the day as it is when the grade lands, not as it read it", async () => {
+    const { ctx, card, other } = await nothingDue(2);
+    const { reviewId } = await grade(ctx, card.id, 3, later(-60));
+    if (!reviewId) throw new Error("no review");
+    // The grade read the day as exhausted; an Undo and a visit make it nothing due before it lands.
+    const late = batchRacedBy(
+      ctx,
+      async () => {
+        await undoReview(ctx, reviewId);
+        await checkToday(ctx);
+      },
+      (statements) => statements.length > 2,
+    );
+
+    expect((await grade(late, other.id, 3, new Date())).day).toMatchObject({
+      attempts: 1,
+      outcome: "exhausted",
+    });
+    expect(await stored(ctx)).toMatchObject({ outcome: "exhausted" });
   });
 });
 

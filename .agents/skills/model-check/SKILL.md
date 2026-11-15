@@ -64,7 +64,7 @@ Replays live in `packages/client/src/writes.test.ts`: "sends nothing after a sig
 
 **Rule:** opening Lymi confirms a day as nothing due only while no grade has landed, and once every request has its answer, today's `review_days.outcome` is the one its reviews call for, so no grade or Undo is lost. A day already confirmed may gain reviews and stay `nothing_due` below the goal, as [docs/review.md](../../../docs/review.md) says; it moves to `goal_met` or `exhausted` once it earns them. **Harm:** a day the learner reviewed only protects the streak instead of counting, or counts a goal it no longer meets, and Today shows a state the server no longer holds.
 
-The invariants are `ConfirmsOnlyWithoutGrades` and `NoLostUpdate` in [`models/ReviewDay.tla`](models/ReviewDay.tla). [`models/ReviewDay.cfg`](models/ReviewDay.cfg) checks two grades, one Undo of a grade made earlier, and one visit (opening Lymi), on a day with a goal of two and no cards due, starting with or without that earlier grade. Each request reads and writes in separate statements, and any of them may never be sent.
+The invariants are `ConfirmsOnlyWithoutGrades` and `NoLostUpdate` in [`models/ReviewDay.tla`](models/ReviewDay.tla). [`models/ReviewDay.cfg`](models/ReviewDay.cfg) checks two grades, one Undo of any grade that has landed, and one visit (opening Lymi), on a day with a goal of two and no cards due, starting with or without a grade made earlier. Each request reads and writes in separate statements, and any of them may never be sent.
 
 | Model step | Code |
 | --- | --- |
@@ -77,7 +77,7 @@ The invariants are `ConfirmsOnlyWithoutGrades` and `NoLostUpdate` in [`models/Re
 | `Counts` | `attemptsOn` and `drawableCount` in `settleDay`, then `nextOutcome` in `packages/core/src/streak.ts` (before 1164, the same rules inlined in `settleDay`) |
 | `Writes`, `Rereads` | `settleDay`'s compare-and-set update, and the next try when it misses, up to `SETTLE_TRIES` |
 
-Two constants are the guards; the default config turns both on and describes the code at `253cd1a37` on `main`. It holds: 105,573 distinct states in about a second, and 116,599 with one card due.
+Two constants are the guards; the default config turns both on and describes the code at `253cd1a37` on `main`. It holds: 283,161 distinct states in a few seconds, and 286,312 with one card due.
 
 | Constant | Code | Off |
 | --- | --- | --- |
@@ -91,6 +91,8 @@ Both `FALSE` is the code before 1164, at `0d80e817a`, where both rules break. Th
 - A grade reads the day as done; an Undo and a visit rightly confirm it nothing due; the grade lands with nothing left to review and writes nothing for the same reason: `nothing_due` where `nextOutcome` calls for `exhausted`, so a day that should count only protects the streak. Breaks `NoLostUpdate`.
 
 Their replays are in `apps/web/src/server/services/review-days.test.ts` under "a grade that lands while the day is being settled".
+
+`NoLostUpdate` holds a day with no reviews to `nothing_due` once confirmed and `open` otherwise, so an Undo that reopens a confirmed day breaks it.
 
 **See it fail.** Set `CompareAndSet` or `ReadsDayFirst` to `FALSE` in a copy of the config. `Tries` is `SETTLE_TRIES`; within these bounds the rule still holds with `1`, so the bound on retries is not what keeps it.
 

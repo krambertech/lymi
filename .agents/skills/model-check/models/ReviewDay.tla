@@ -36,12 +36,11 @@ Drawable(a) == IF a >= Due THEN 0 ELSE Due - a
 Settled(a) ==
   IF a >= Goal THEN "goal_met" ELSE IF a > 0 /\ Drawable(a) = 0 THEN "exhausted" ELSE "open"
 
-\* The day may already hold one grade from earlier, made on this device or another. Undo takes
-\* that one back, so with none there is no Undo to send.
+\* The day may already hold one grade from earlier, made on this device or another.
 Init ==
   /\ attempts \in {0, 1}
   /\ outcome = Settled(attempts) /\ zeroDue = FALSE
-  /\ pc = [r \in Requests |-> IF Kind(r) = "undo" /\ attempts = 0 THEN "done" ELSE First(r)]
+  /\ pc = [r \in Requests |-> First(r)]
   /\ seen = [r \in Requests |-> [outcome |-> "open", zeroDue |-> FALSE]]
   /\ counted = [r \in Requests |-> 0]
   /\ dueSeen = [r \in Requests |-> 0]
@@ -98,11 +97,13 @@ GradeLands(r) ==
   /\ Go(r, Settle)
   /\ UNCHANGED <<outcome, zeroDue, seen, counted, dueSeen, tries, lateConfirm>>
 
-\* restoreIfLatest takes the earlier grade back.
+\* restoreIfLatest takes back a grade that has landed, the earlier one or one from this run;
+\* with none, it writes nothing and undoReview throws.
 UndoLands(r) ==
   /\ pc[r] = "restore"
-  /\ attempts' = attempts - 1
-  /\ Go(r, Settle)
+  /\ IF attempts > 0
+       THEN attempts' = attempts - 1 /\ Go(r, Settle)
+       ELSE UNCHANGED attempts /\ Go(r, "done")
   /\ UNCHANGED <<outcome, zeroDue, seen, counted, dueSeen, tries, lateConfirm>>
 
 \* main's checkToday: with nothing due, it counts attempts itself and confirms an empty open day.
@@ -170,14 +171,14 @@ Next ==
 
 Spec == Init /\ [][Next]_vars
 
-\* What a day's attempts call for once nothing is in flight. A day with no attempts may be open
-\* or confirmed as nothing due; a confirmed day keeps that protection while reviews below the goal
+\* What a day's attempts call for once nothing is in flight. A day with no attempts is nothing due
+\* once a visit confirmed it, and open otherwise; a confirmed day keeps that protection while reviews below the goal
 \* leave cards to do (docs/review.md), and moves on once it meets the goal or runs out.
 Expected ==
   IF attempts >= Goal THEN {"goal_met"}
   ELSE IF attempts > 0 /\ Drawable(attempts) = 0 THEN {"exhausted"}
   ELSE IF attempts > 0 THEN {"open"} \cup (IF zeroDue THEN {"nothing_due"} ELSE {})
-  ELSE {"open", "nothing_due"}
+  ELSE IF zeroDue THEN {"nothing_due"} ELSE {"open"}
 
 ConfirmsOnlyWithoutGrades == ~lateConfirm
 NoLostUpdate == Quiet => outcome \in Expected

@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
+import type { SiteLinkPlace } from "../../lib/analytics";
 import { Section } from "./Section";
 
 interface Props {
@@ -49,7 +50,7 @@ interface WideProps {
   /** A link on to the rest, at the end of the heading's row on wide screens. */
   action?: ReactNode;
   /** The section's place for `site_link_followed`. */
-  nav?: string | undefined;
+  nav?: SiteLinkPlace | undefined;
   children: ReactNode;
 }
 

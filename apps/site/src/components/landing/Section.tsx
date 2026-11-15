@@ -1,5 +1,6 @@
 import { clsx } from "clsx";
 import { type CSSProperties, createContext, type ReactNode, useContext, useId } from "react";
+import type { SiteLinkPlace } from "../../lib/analytics";
 
 /** The page's gutter: the same at every section, so edges line up down the page. */
 export const GUTTER = "px-5 @2xl:px-10";
@@ -18,6 +19,8 @@ const SPACING = {
   default: "py-16 @4xl:py-20",
   end: "pt-4 pb-16 @4xl:pt-6 @4xl:pb-20",
   ruled: "border-t border-edge py-16 @4xl:py-24",
+  /** A section that is one plate of its own, such as the API's night plate, needs little room. */
+  tight: "py-4 @4xl:py-8",
 } as const;
 
 interface SectionProps {
@@ -28,9 +31,11 @@ interface SectionProps {
    */
   surface?: "canvas" | "plate" | "nested" | undefined;
   /** The place `site_link_followed` reports for links inside, read by the analytics listener. */
-  nav?: string | undefined;
+  nav?: SiteLinkPlace | undefined;
   /** Leaves the column and gutter to the children, for rows that scroll to the screen's edge. */
   bleed?: boolean | undefined;
+  /** Clips what spills sideways, such as a demo's shadows, so the page never scrolls across. */
+  clip?: boolean | undefined;
   /**
    * "end" is the closing section, which sits closer to what came before it. "ruled" opens a new
    * part of a reference page, such as an exam's decks, with a rule and more room above.
@@ -49,6 +54,7 @@ function SectionRoot({
   surface = "canvas",
   nav,
   bleed,
+  clip,
   spacing = "default",
   children,
 }: SectionProps) {
@@ -63,6 +69,7 @@ function SectionRoot({
           "scroll-mt-8",
           !bleed && GUTTER,
           SPACING[spacing],
+          clip && "overflow-x-clip",
           surface === "plate" && "bg-plate",
           surface === "nested" && "bg-plate-nested",
         )}

@@ -17,9 +17,11 @@ interface Props {
   /** A page's own preview image, in place of the site's. */
   shareImagePath?: string | undefined;
   shareImageAlt?: string | undefined;
+  /** False for a page for the people building the site, so their visits stay out of analytics. */
+  analytics?: boolean | undefined;
 }
 
-const { title, description, canonicalPath, localizedPage, alternatePaths, shareImagePath, shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what you learn.”" } = Astro.props;
+const { title, description, canonicalPath, localizedPage, alternatePaths, shareImagePath, analytics = true, shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what you learn.”" } = Astro.props;
 const alternates: Partial<Record<Locale, string>> | undefined =
   alternatePaths ??
   (localizedPage &&
@@ -88,13 +90,13 @@ const locale = Astro.currentLocale ?? "en";
     <script is:inline set:html={giftScript()} />
     <slot name="head" />
   </head>
-  <body>
+  <body data-analytics={analytics ? undefined : "off"}>
     <slot />
     <script>
       import { startAnalytics } from "../lib/analytics";
       import { pauseLoopsOffscreen } from "../lib/offscreen";
       pauseLoopsOffscreen();
-      startAnalytics();
+      if (document.body.dataset.analytics !== "off") startAnalytics();
     </script>
   </body>
 </html>

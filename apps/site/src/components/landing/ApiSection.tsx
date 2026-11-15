@@ -338,7 +338,7 @@ function Pipeline() {
 /** The public API on a night plate: the claim and its two links, then the pipeline it opens. */
 export function ApiSection() {
   return (
-    <section data-nav="landing" className="px-5 py-4 @2xl:px-10 @4xl:py-8">
+    <Section nav="landing" spacing="tight">
       <div
         data-theme="dark"
         className="mx-auto max-w-[1040px] overflow-hidden rounded-[24px] bg-sheet p-7 text-ink edge @2xl:p-10"
@@ -371,6 +371,6 @@ export function ApiSection() {
           <Pipeline />
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

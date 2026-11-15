@@ -7,7 +7,8 @@ import {
 import { POSTHOG_PROJECT_TOKEN } from "@lymi/core/telemetry";
 import { productUrl } from "./origins";
 
-type SiteLinkPlace = AnalyticsProperties<"site_link_followed">["place"];
+/** Where on a page a followed link sat, as `data-nav` names it. */
+export type SiteLinkPlace = AnalyticsProperties<"site_link_followed">["place"];
 
 /**
  * Cookieless visitor analytics. A link the visitor follows carries where the visit began, so the

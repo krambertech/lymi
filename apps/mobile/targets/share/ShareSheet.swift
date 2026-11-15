@@ -8,6 +8,15 @@ enum Line: Equatable {
   case problem(String)
 }
 
+/// Where the sheet is in adding its card. Only `editing` takes a new add or a move to another deck,
+/// so a second tap while the sheet closes cannot add twice and a late language guess cannot replace
+/// the Added line.
+enum Phase: Equatable {
+  case editing
+  case adding
+  case added
+}
+
 @MainActor @Observable
 final class ShareModel {
   let state: ShareState?
@@ -19,7 +28,8 @@ final class ShareModel {
   var deckId: String?
   var enrich: Bool
   var line: Line?
-  var pending = false
+  private(set) var phase = Phase.editing
+  var pending: Bool { phase == .adding }
   /// Set once the deck glows for the move to the term's language.
   var moved = false
   private var chosenByHand = false
@@ -47,10 +57,11 @@ final class ShareModel {
   private(set) var unavailable: String?
 
   var canAdd: Bool {
-    unavailable == nil && !pending && !term.trimmingCharacters(in: .whitespaces).isEmpty
+    unavailable == nil && phase == .editing && !term.trimmingCharacters(in: .whitespaces).isEmpty
   }
 
   func choose(_ id: String) {
+    guard phase == .editing else { return }
     chosenByHand = true
     deckId = id
     if case .moved = line { line = nil }
@@ -61,7 +72,7 @@ final class ShareModel {
     guard unavailable == nil, decks.count > 1, let api else { return }
     let source = self.source
     guard let id = await api.chooseDeck(term: term, source: source),
-      !chosenByHand, id != deckId, let target = decks.first(where: { $0.id == id })
+      phase == .editing, !chosenByHand, id != deckId, let target = decks.first(where: { $0.id == id })
     else { return }
     withAnimation(.easeOut(duration: 0.25)) {
       deckId = id
@@ -72,11 +83,10 @@ final class ShareModel {
 
   /// True once the card is added, so the sheet can close.
   func add() async -> Bool {
-    guard let api, let deck, !pending else { return false }
+    guard let api, let deck, phase == .editing else { return false }
     let text = term.trimmingCharacters(in: .whitespaces)
     guard !text.isEmpty else { return false }
-    pending = true
-    defer { pending = false }
+    phase = .adding
     do {
       let outcome = try await api.addCard(
         deckId: deck.id, term: text, meaning: meaning.trimmingCharacters(in: .whitespaces),
@@ -85,9 +95,11 @@ final class ShareModel {
       switch outcome {
       case .added(let term):
         line = .added(term: term, deck: deck.name)
+        phase = .added
         return true
       case .skipped(let term, let deckName):
         line = .skipped(term: term, deck: deckName)
+        phase = .editing
         return false
       }
     } catch let error as ShareError {
@@ -99,9 +111,11 @@ final class ShareModel {
         case .failed: "failed"
         }
       line = .problem(strings[key])
+      phase = .editing
       return false
     } catch {
       line = .problem(strings["failed"])
+      phase = .editing
       return false
     }
   }

@@ -7,10 +7,11 @@ import {
   type PasswordProblem,
   passwordProblem,
 } from "@lymi/core";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { haptics } from "../theme/haptics";
 import { appleSignInCancelled, requestAppleCredential, useAppleAvailable } from "./apple";
 import { API_URL, authClient } from "./client";
+import { claim, type Pending, release } from "./door-pending";
 
 /**
  * Where the door is. `doors` offers the ways in; `code` asks for the code a new account is
@@ -78,7 +79,9 @@ export function useSignIn() {
   const [email, setEmailValue] = useState("");
   const [password, setPasswordValue] = useState("");
   const [code, setCodeValue] = useState("");
-  const [pending, setPending] = useState<"apple" | "google" | "form" | "resend" | null>(null);
+  const [pending, setPending] = useState<Pending | null>(null);
+  // Read by the handlers, which a second tap reaches before the screen draws the first.
+  const held = useRef<Pending | null>(null);
   const appleAvailable = useAppleAvailable();
   const [socialError, setSocialError] = useState<string | null>(null);
   const [formError, setFormError] = useState<string | null>(null);
@@ -88,6 +91,19 @@ export function useSignIn() {
     code?: string;
   }>({});
   const [notice, setNotice] = useState<Notice | null>(null);
+
+  function take(on: Pending) {
+    const next = claim(held.current, on);
+    if (!next) return false;
+    held.current = next;
+    setPending(next);
+    return true;
+  }
+
+  function letGo(on: Pending) {
+    held.current = release(held.current, on);
+    setPending(held.current);
+  }
 
   function clear() {
     setSocialError(null);
@@ -101,9 +117,8 @@ export function useSignIn() {
   }
 
   async function google() {
-    if (pending) return;
+    if (!take("google")) return;
     clear();
-    setPending("google");
     try {
       // The session lands in SecureStore when the browser comes back; the guard then opens Today.
       const res = await authClient.signIn.social({ provider: "google", callbackURL: "/" });
@@ -113,14 +128,13 @@ export function useSignIn() {
         setSocialError(t`Couldn’t reach the sign-in service. Check your connection and try again.`),
       );
     } finally {
-      setPending(null);
+      letGo("google");
     }
   }
 
   async function apple() {
-    if (pending) return;
+    if (!take("apple")) return;
     clear();
-    setPending("apple");
     try {
       const { authorizationCode: _, ...idToken } = await requestAppleCredential();
       const res = await authClient.signIn.social({ provider: "apple", idToken });
@@ -130,7 +144,7 @@ export function useSignIn() {
         fail(() => setSocialError(t`Sign-in didn’t finish. Try again.`));
       }
     } finally {
-      setPending(null);
+      letGo("apple");
     }
   }
 
@@ -195,13 +209,13 @@ export function useSignIn() {
   }
 
   async function submit() {
-    if (pending) return;
+    if (held.current) return;
     clear();
     const address = email.trim();
     if (!address.includes("@")) {
       return fail(() => setFieldErrors({ email: i18n._(INVALID_EMAIL) }));
     }
-    setPending("form");
+    take("form");
     try {
       if (step === "sign-up") await signUp(address);
       else if (step === "code") await confirm(address);
@@ -210,13 +224,13 @@ export function useSignIn() {
     } catch (error) {
       fail(() => setFormError(i18n._(messageFor(error as Failure))));
     } finally {
-      setPending(null);
+      letGo("form");
     }
   }
 
   async function resend() {
+    if (!take("resend")) return;
     clear();
-    setPending("resend");
     try {
       const address = email.trim();
       await sendCode(address);
@@ -224,7 +238,7 @@ export function useSignIn() {
     } catch (error) {
       fail(() => setFormError(i18n._(messageFor(error as Failure))));
     } finally {
-      setPending(null);
+      letGo("resend");
     }
   }
 

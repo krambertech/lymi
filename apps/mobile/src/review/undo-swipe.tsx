@@ -25,10 +25,20 @@ const TILT = 6;
 const ARRIVE_MS = 320;
 const ARRIVE_EASE = Easing.bezier(0.23, 1, 0.32, 1);
 
-/** A swipe from the start edge (anywhere on the card on Android) takes back the last grade. `onUndo` runs once the card has landed. */
-export function useUndoSwipe({ enabled, onUndo }: { enabled: boolean; onUndo: () => void }) {
+/**
+ * A swipe from the start edge (anywhere on the card on Android) takes back the last grade. `onUndo`
+ * runs once the card has landed and answers whether it took a grade back; when it did not, the card
+ * springs back into place.
+ */
+export function useUndoSwipe({ enabled, onUndo }: { enabled: boolean; onUndo: () => boolean }) {
   const { width } = useWindowDimensions();
   const x = useSharedValue(0);
+  // The latest render's, since a refused grade can land while the card slides off.
+  const latest = useRef(onUndo);
+  latest.current = onUndo;
+  const land = () => {
+    if (!latest.current()) x.value = withSpring(0, BACK);
+  };
   const dir = I18nManager.isRTL ? -1 : 1;
   const gesture = Gesture.Pan()
     .enabled(enabled)
@@ -43,7 +53,7 @@ export function useUndoSwipe({ enabled, onUndo }: { enabled: boolean; onUndo: ()
         x.value = withTiming(
           width,
           { duration: 200, easing: Easing.out(Easing.quad), reduceMotion: ALWAYS },
-          () => scheduleOnRN(onUndo),
+          () => scheduleOnRN(land),
         );
       } else {
         x.value = withSpring(0, BACK);

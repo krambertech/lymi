@@ -155,11 +155,15 @@ export function flowReducer(flow: FlowState, event: FlowEvent): FlowState {
     }
     case "settled": {
       const { last, outcome } = event;
-      if (!last.listed || (outcome !== "refused" && outcome !== "gone")) return flow;
+      if (outcome !== "refused" && outcome !== "gone") return flow;
       if (flow.undone.has(last.grade.reviewedAt)) return flow;
+      // The server holds no such grade, so Undo has nothing to take back.
+      const kept = flow.last?.grade.reviewedAt === last.grade.reviewedAt ? null : flow.last;
+      if (!last.listed) return kept === flow.last ? flow : { ...flow, last: kept };
       const key = cardKey(last.item);
       return {
         ...flow,
+        last: kept,
         cards: {
           graded: withoutKey(flow.cards.graded, key),
           returned: outcome === "refused" ? withKey(flow.cards.returned, key) : flow.cards.returned,

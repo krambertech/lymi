@@ -56,7 +56,7 @@ export function EstonianView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<EstonianStartup />}
-          title={<Trans>Estonian flashcards with word forms and audio.</Trans>}
+          title={<Trans>Estonian words you’ll remember.</Trans>}
           lede={
             <Trans>
               Learn Estonian words in a few minutes a day, from <span lang="et">tere</span> to the

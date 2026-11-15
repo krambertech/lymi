@@ -66,7 +66,7 @@ export function PolishView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<LanguageName lang="pl">Polski</LanguageName>}
-          title={<Trans>Polish flashcards with word forms and false friends.</Trans>}
+          title={<Trans>Polish words you’ll remember.</Trans>}
           lede={
             locale === "en" ? (
               <Trans>

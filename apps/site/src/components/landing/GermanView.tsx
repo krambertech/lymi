@@ -65,7 +65,7 @@ export function GermanView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<LanguageName lang="de">Deutsch</LanguageName>}
-          title={<Trans>German flashcards with der, die and das.</Trans>}
+          title={<Trans>German words you’ll remember.</Trans>}
           lede={
             <Trans>
               Learn German words in a few minutes a day, every noun with its der, die or das. A

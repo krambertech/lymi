@@ -33,7 +33,7 @@ const UKRAINIAN: StressPage = {
   added: { label: msg`Українська · new`, term: "по́дорож", meaning: msg`Journey` },
   enrich: <EnrichUkrainian />,
   copy: {
-    headline: <Trans>Ukrainian flashcards with stress marks and audio.</Trans>,
+    headline: <Trans>Ukrainian words you’ll remember.</Trans>,
     lede: (
       <Trans>
         Keep the words from your lessons and your books in one place. Each card marks its stress

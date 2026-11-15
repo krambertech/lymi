@@ -65,7 +65,7 @@ export function SpanishView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<LanguageName lang="es">Español</LanguageName>}
-          title={<Trans>Spanish flashcards with el, la and audio.</Trans>}
+          title={<Trans>Spanish words you’ll remember.</Trans>}
           lede={
             <Trans>
               Learn the Spanish words you’ll use most, a few minutes a day. A native voice reads

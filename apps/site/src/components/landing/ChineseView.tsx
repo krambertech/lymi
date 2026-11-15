@@ -55,7 +55,7 @@ export function ChineseView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<LanguageName lang="zh">中文</LanguageName>}
-          title={<Trans>Chinese flashcards with pinyin and audio.</Trans>}
+          title={<Trans>Chinese words you’ll remember.</Trans>}
           lede={
             <Trans>
               Keep the words from your lessons, your books and Pleco in one place. Each card shows

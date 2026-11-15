@@ -47,7 +47,7 @@ export function JapaneseView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<LanguageName lang="ja">日本語</LanguageName>}
-          title={<Trans>Japanese flashcards with readings and audio.</Trans>}
+          title={<Trans>Japanese words you’ll remember.</Trans>}
           narrow
           lede={
             <Trans>

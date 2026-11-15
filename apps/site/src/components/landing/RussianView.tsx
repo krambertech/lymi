@@ -33,7 +33,7 @@ const RUSSIAN: StressPage = {
   added: { label: msg`Русский · new`, term: "биле́т", meaning: msg`Ticket` },
   enrich: <EnrichRussian />,
   copy: {
-    headline: <Trans>Russian flashcards with stress marks and audio.</Trans>,
+    headline: <Trans>Russian words you’ll remember.</Trans>,
     lede: (
       <Trans>
         Keep the words from your lessons and your books in one place. Each card marks its stress

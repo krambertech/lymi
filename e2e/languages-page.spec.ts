@@ -45,7 +45,7 @@ test("a language learner can reach the languages pages and turn notes and cards 
     await expect(
       page.getByRole("heading", {
         level: 1,
-        name: "Estonian flashcards with word forms and audio.",
+        name: "Estonian words you’ll remember.",
       }),
     ).toBeVisible();
     await expect(page.locator('link[rel="canonical"]')).toHaveAttribute(

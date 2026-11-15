@@ -1388,11 +1388,11 @@ msgstr "Шахматы · новая"
 msgid "Chinese"
 msgstr "Китайский"
 
-msgid "Chinese flashcards with pinyin and audio."
-msgstr "Флеш-карточки для китайского с пиньинем и озвучкой."
-
 msgid "Chinese font"
 msgstr "Китайский шрифт"
+
+msgid "Chinese words you’ll remember."
+msgstr "Китайские слова, которые ты запомнишь."
 
 msgid "Choose a grade to move to the next card."
 msgstr "Выбери оценку, чтобы перейти к следующей карточке."
@@ -1942,9 +1942,6 @@ msgstr "Эстонский A1 · осенний курс"
 msgid "Estonian A2 · Tuesdays"
 msgstr "Эстонский A2 · по вторникам"
 
-msgid "Estonian flashcards with word forms and audio."
-msgstr "Флеш-карточки для эстонского с формами слов и озвучкой."
-
 msgid "Estonian startup"
 msgstr "Эстонский стартап"
 
@@ -1956,6 +1953,9 @@ msgstr "1000 самых частотных эстонских слов"
 
 msgid "Estonian words change their shape: <0>vesi</0>, <1>vee</1>, <2>vett</2>. Learn the three forms with each word and the other cases follow from them. The verb deck has them on every card, and AI adds them to the words you save."
 msgstr "Эстонские слова меняют форму: <0>vesi</0>, <1>vee</1>, <2>vett</2>. Учи каждое слово вместе с тремя основными формами, и остальные падежи сложатся из них. В колоде глаголов они есть на каждой карточке, а к словам, которые ты сохраняешь, их добавляет AI."
+
+msgid "Estonian words you’ll remember."
+msgstr "Эстонские слова, которые ты запомнишь."
 
 msgid "Even to my boss?"
 msgstr "Даже начальнику?"
@@ -2377,9 +2377,6 @@ msgstr "Немецкий A2 · по вторникам"
 msgid "German at the Doctor does the same for booking an appointment and saying what’s wrong. Applying for citizenship? The Einbürgerungstest page has the Leben in Deutschland questions and your state’s questions as free decks."
 msgstr "Колода «Немецкий: у врача» так же поможет записаться к врачу и рассказать, что болит. Подаёшь на гражданство? На странице Einbürgerungstest есть вопросы Leben in Deutschland и вопросы твоей земли в бесплатных колодах."
 
-msgid "German flashcards with der, die and das."
-msgstr "Флеш-карточки для немецкого с der, die и das."
-
 msgid "German for Renting a Home has the words and phrases for finding a flat in Germany: the advert, the viewing, the deposit and the lease. Hear each one before you go."
 msgstr "В колоде «Немецкий для аренды жилья» есть слова и фразы, чтобы найти квартиру в Германии: объявление, просмотр, залог и договор аренды. Послушай каждую, прежде чем идти."
 
@@ -2394,6 +2391,9 @@ msgstr "Дорожные знаки Германии: все знаки StVO"
 
 msgid "German Top 100 Verbs starts with <0>sein</0>, <1>haben</1> and <2>werden</2>, the verbs you’ll use most. German Top 1000 Words goes on to the thousand most common words, fifty at a time."
 msgstr "Колода «Немецкий: 100 самых частых глаголов» начинается с глаголов <0>sein</0>, <1>haben</1> и <2>werden</2>, которые понадобятся тебе чаще всего. Колода «Немецкий: 1000 самых частых слов» ведёт дальше, по пятьдесят слов за раз."
+
+msgid "German words you’ll remember."
+msgstr "Немецкие слова, которые ты запомнишь."
 
 msgid "Germany"
 msgstr "Германия"
@@ -3103,8 +3103,8 @@ msgstr "Японский"
 msgid "Japanese 1 · Mondays"
 msgstr "Японский 1 · по понедельникам"
 
-msgid "Japanese flashcards with readings and audio."
-msgstr "Флеш-карточки для японского с чтениями и озвучкой."
+msgid "Japanese words you’ll remember."
+msgstr "Японские слова, которые ты запомнишь."
 
 msgctxt "exam"
 msgid "JLPT"
@@ -4177,9 +4177,6 @@ msgstr "Польский меняет окончание слова, а иног
 msgid "Polish citizenship asks for Polish at B1. Since 1 July 2025 a post-secondary school certificate no longer shows it, so most people take the state B1 exam. The A1, A2 and B1 decks follow the state exams’ topics, one level after another."
 msgstr "Для польского гражданства нужен польский на уровне B1. С 1 июля 2025 года свидетельство послесредней школы больше его не подтверждает, поэтому большинство сдаёт государственный экзамен B1. Колоды A1, A2 и B1 идут по темам государственных экзаменов, уровень за уровнем."
 
-msgid "Polish flashcards with word forms and false friends."
-msgstr "Флеш-карточки для польского с формами слов и ложными друзьями."
-
 msgid "Polish for Offices and Paperwork has 50 words and phrases for offices in Poland: the queue ticket, the window, the forms, PESEL and the residence card. Hear each one before you go."
 msgstr "Колода «Польский: учреждения и документы» — это 50 слов и фраз для польских учреждений: талончик в очередь, окошко, бланки, PESEL и вид на жительство. Послушай каждую, прежде чем идти."
 
@@ -4191,6 +4188,9 @@ msgstr "Дорожные знаки Польши для теории"
 
 msgid "Polish road signs: every sign, by its picture"
 msgstr "Дорожные знаки Польши: каждый знак по изображению"
+
+msgid "Polish words you’ll remember."
+msgstr "Польские слова, которые ты запомнишь."
 
 msgid "Polski · new"
 msgstr "Polski · новая"
@@ -4527,8 +4527,8 @@ msgstr "Перебирать кому-то волосы пальцами"
 msgid "Russian"
 msgstr "Русский"
 
-msgid "Russian flashcards with stress marks and audio."
-msgstr "Флеш-карточки для русского с ударениями и озвучкой."
+msgid "Russian words you’ll remember."
+msgstr "Русские слова, которые ты запомнишь."
 
 msgid "Russian writes <0>за́мок</0>, a castle, and <1>замо́к</1>, a lock, the same way. Only the stress tells them apart. Lymi keeps each as its own card, with its own stress and its own sound."
 msgstr "<0>За́мок</0>, крепость, и <1>замо́к</1> на двери пишутся одинаково. Различает их только ударение. Lymi держит каждое слово на отдельной карточке, со своим ударением и своим звучанием."
@@ -4885,11 +4885,11 @@ msgstr "Испанский B1 · по четвергам"
 msgid "Spanish Essentials has the phrases for a trip or your first weeks in Spain: greetings, cafés, trains and asking for help. Hear each one before you go."
 msgstr "В колоде «Испанский: самое нужное» есть фразы для поездки или первых недель в Испании: приветствия, кафе, поезда и просьбы о помощи. Послушай каждую, прежде чем ехать."
 
-msgid "Spanish flashcards with el, la and audio."
-msgstr "Флеш-карточки для испанского с el, la и озвучкой."
-
 msgid "Spanish Top 100 Verbs starts with <0>ser</0>, <1>estar</1> and <2>tener</2>, the verbs you’ll use most. Spanish Top 1000 Words goes on to the thousand most common words, fifty at a time."
 msgstr "Колода «Испанский: 100 самых употребительных глаголов» начинается с глаголов <0>ser</0>, <1>estar</1> и <2>tener</2>, которые понадобятся тебе чаще всего. Колода «Испанский: 1000 самых употребительных слов» ведёт дальше, по пятьдесят слов за раз."
+
+msgid "Spanish words you’ll remember."
+msgstr "Испанские слова, которые ты запомнишь."
 
 msgid "Split a deck into sections, one per unit. Learners start with the first, and the next opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can start the next section early."
 msgstr "Раздели колоду на разделы, по одному на тему. Ученики начинают с первого, а следующий открывается, когда они выучат бо́льшую часть предыдущего, так что шестая тема никого не застанет в первый же день. Кто идёт быстрее, может начать следующий раздел раньше."
@@ -5985,8 +5985,8 @@ msgstr "Теория ПДР Украины"
 msgid "Ukrainian driving theory: the rules and every sign"
 msgstr "Теория ПДР Украины: правила и все знаки"
 
-msgid "Ukrainian flashcards with stress marks and audio."
-msgstr "Флеш-карточки для украинского с ударениями и озвучкой."
+msgid "Ukrainian words you’ll remember."
+msgstr "Украинские слова, которые ты запомнишь."
 
 msgid "Ukrainian writes <0>за́мок</0>, a castle, and <1>замо́к</1>, a lock, the same way. Only the stress tells them apart. Lymi keeps each as its own card, with its own stress and its own sound."
 msgstr "В украинском <0>за́мок</0>, крепость, и <1>замо́к</1>, на двери, пишутся одинаково. Различает их только ударение. Lymi держит каждое слово на отдельной карточке, со своим ударением и своим звучанием."

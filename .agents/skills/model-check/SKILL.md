@@ -62,9 +62,9 @@ Replays live in `packages/client/src/writes.test.ts`: "sends nothing after a sig
 
 ## Review day
 
-**Rule:** once every request has its answer, today's `review_days.outcome` is the one its reviews call for, so a day with reviews never ends `nothing_due` and no grade or Undo is lost. **Harm:** the streak counts a day the learner did not finish, or drops one they did, and Today shows a goal state the server no longer holds.
+**Rule:** opening Lymi confirms a day as nothing due only while no grade has landed, and once every request has its answer, today's `review_days.outcome` is the one its reviews call for, so no grade or Undo is lost. A day already confirmed may gain reviews and stay `nothing_due` below the goal, as [docs/review.md](../../../docs/review.md) says; it moves to `goal_met` or `exhausted` once it earns them. **Harm:** a day the learner reviewed only protects the streak instead of counting, or counts a goal it no longer meets, and Today shows a state the server no longer holds.
 
-The invariants are `NothingDueOnlyWithoutAttempts` and `NoLostUpdate` in [`models/ReviewDay.tla`](models/ReviewDay.tla). [`models/ReviewDay.cfg`](models/ReviewDay.cfg) checks two grades, one Undo of a grade made earlier, and one visit (opening Lymi), on a day with a goal of two and no cards due, starting with or without that earlier grade. Each request reads and writes in separate statements, and any of them may never be sent.
+The invariants are `ConfirmsOnlyWithoutGrades` and `NoLostUpdate` in [`models/ReviewDay.tla`](models/ReviewDay.tla). [`models/ReviewDay.cfg`](models/ReviewDay.cfg) checks two grades, one Undo of a grade made earlier, and one visit (opening Lymi), on a day with a goal of two and no cards due, starting with or without that earlier grade. Each request reads and writes in separate statements, and any of them may never be sent.
 
 | Model step | Code |
 | --- | --- |
@@ -77,19 +77,18 @@ The invariants are `NothingDueOnlyWithoutAttempts` and `NoLostUpdate` in [`model
 | `Counts` | `attemptsOn` and `drawableCount` in `settleDay`, then `nextOutcome` in `packages/core/src/streak.ts` (before 1164, the same rules inlined in `settleDay`) |
 | `Writes`, `Rereads` | `settleDay`'s compare-and-set update, and the next try when it misses, up to `SETTLE_TRIES` |
 
-Three constants are the guards; the default config turns all three on and describes `main` with pull request 1164 at `55573043b`. It holds: 105,573 distinct states in about a second, and 116,599 with one card due.
+Two constants are the guards; the default config turns both on and describes `main` with pull request 1164 (its head `55573043b` less the `nextOutcome` clamp it is dropping). It holds: 105,573 distinct states in about a second, and 116,599 with one card due.
 
 | Constant | Code | Off |
 | --- | --- | --- |
-| `CompareAndSet` | `settleDay`'s update lands only over the outcome, goal and attempts it decided from | `NothingDueOnlyWithoutAttempts` breaks |
+| `CompareAndSet` | `settleDay`'s update lands only over the outcome, goal and attempts it decided from | `ConfirmsOnlyWithoutGrades` breaks |
 | `ReadsDayFirst` | each try in `settleDay` selects the day row rather than deciding from its caller's copy | `NoLostUpdate` breaks |
-| `NoNothingDueWithAttempts` | `nextOutcome` turns a kept `nothing_due` into `open` once there are attempts | Still holds within these bounds; it guards states the model leaves out |
 
-All three `FALSE` is the code before 1164, where both rules break. The paths TLC found there, each replayed on a local D1 before 1164 fixed them:
+Both `FALSE` is the code before 1164, where both rules break. The paths TLC found there, each replayed on a local D1 before 1164 fixed them:
 
-- A grade lands while opening Lymi confirms the day as nothing due: the visit writes `nothing_due` over a day with one review.
-- Undo of an earlier grade reads the day; another grade then meets the goal; the Undo lands and, deciding the outcome it read, writes nothing: `goal_met` with one review of two.
-- A grade reads the day as done; an Undo and a visit make it nothing due; the grade lands and writes nothing for the same reason: `nothing_due` with one review.
+- A grade lands while opening Lymi confirms the day as nothing due: the visit writes `nothing_due` over a grade that had landed. Breaks `ConfirmsOnlyWithoutGrades`.
+- Undo of an earlier grade reads the day; another grade then meets the goal; the Undo lands and, deciding the outcome it read, writes nothing: `goal_met` with one review of two. Breaks `NoLostUpdate`.
+- A grade reads the day as done; an Undo and a visit rightly confirm it nothing due; the grade lands with nothing left to review and writes nothing for the same reason: `nothing_due` where `nextOutcome` calls for `exhausted`, so a day that should count only protects the streak. Breaks `NoLostUpdate`.
 
 Their replays are in `apps/web/src/server/services/review-days.test.ts` under "a grade that lands while the day is being settled".
 

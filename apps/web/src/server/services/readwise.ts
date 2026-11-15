@@ -1,5 +1,5 @@
 import { CARD_LIMITS, languageKey } from "@lymi/core";
-import { and, desc, eq, inArray, isNotNull, isNull, lt, lte, or } from "@lymi/core/db";
+import { and, desc, eq, inArray, isNotNull, isNull, lt, lte, or, sql } from "@lymi/core/db";
 import type { ReadwiseBook, ReadwiseConnection } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
 import { schema } from "../db";
@@ -440,8 +440,10 @@ async function pull(
     const language = languages.get(b.user_book_id) ?? null;
     const before = known.get(b.user_book_id);
     if (before && !language) return [];
-    // A book newly known to be in a language the learner studies is followed without asking.
-    const followed = Boolean(language && decks.get(languageKey(language)));
+    // A book newly known to be in a language the learner studies is followed without asking,
+    // unless the learner already chose for it.
+    const chosen = before?.everFollowed === true;
+    const followed = chosen ? before.followed : Boolean(language && decks.get(languageKey(language)));
     return [
       {
         userId: ctx.userId,
@@ -450,8 +452,8 @@ async function pull(
         author: b.author ?? null,
         language,
         followed,
-        pending: followed,
-        everFollowed: followed,
+        pending: chosen ? before.pending : followed,
+        everFollowed: chosen || followed,
         highlights: before?.highlights ?? live(b).length,
         createdAt: before?.createdAt ?? started,
         updatedAt: started,
@@ -520,11 +522,12 @@ async function pull(
         .values(b)
         .onConflictDoUpdate({
           target: [schema.readwiseBooks.userId, schema.readwiseBooks.bookId],
+          // A follow or unfollow the learner saved while this pull read wins over the guess.
           set: {
             language: b.language,
-            followed: b.followed,
-            pending: b.pending,
-            everFollowed: b.everFollowed,
+            followed: sql`case when ${schema.readwiseBooks.everFollowed} then ${schema.readwiseBooks.followed} else excluded.followed end`,
+            pending: sql`case when ${schema.readwiseBooks.everFollowed} then ${schema.readwiseBooks.pending} else excluded.pending end`,
+            everFollowed: sql`${schema.readwiseBooks.everFollowed} or excluded.ever_followed`,
             updatedAt: started,
           },
         }),
@@ -585,11 +588,23 @@ async function runPull(
     .returning();
   // Another pull holds the connection; whatever this one would read, that one reads.
   if (!row) return null;
+  // Only the pull holding the lease writes, and what it learned applies only to the token it read
+  // with; when a new token was pasted meanwhile, it just hands the lease back.
+  const leased = and(
+    eq(schema.readwiseConnections.userId, ctx.userId),
+    eq(schema.readwiseConnections.pullingUntil, row.pullingUntil ?? started),
+  );
   const write = (values: Partial<ReadwiseConnection>) =>
-    ctx.db
-      .update(schema.readwiseConnections)
-      .set({ ...values, pullingUntil: null, updatedAt: new Date() })
-      .where(eq(schema.readwiseConnections.userId, ctx.userId));
+    runBatch(ctx.db, [
+      ctx.db
+        .update(schema.readwiseConnections)
+        .set({ ...values, pullingUntil: null, updatedAt: new Date() })
+        .where(and(leased, eq(schema.readwiseConnections.tokenCipher, row.tokenCipher))),
+      ctx.db
+        .update(schema.readwiseConnections)
+        .set({ pullingUntil: null })
+        .where(leased),
+    ]);
   let result: PullResult;
   try {
     const read = await pull(readwiseContext(ctx), deps, row, started);

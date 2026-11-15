@@ -314,6 +314,11 @@ async function flushQueued(): Promise<Flushed> {
   const dropped = new Set<string>();
   const hold = (w: Write) => held.add(entitiesOf(w).own);
   for (const entry of read()) {
+    // The learner left during the last send: nothing more of theirs goes out, grades included.
+    if (claim !== mine) {
+      result.stopped = true;
+      break;
+    }
     const { own, needs } = entitiesOf(entry.write);
     const ids = [own, ...needs.filter(Boolean)];
     if (ids.some((id) => dropped.has(id))) {
@@ -388,7 +393,7 @@ async function flushQueued(): Promise<Flushed> {
       }
     }
   }
-  if (!result.stopped) result.graded += await flushGrades().catch(() => 0);
+  if (!result.stopped && claim === mine) result.graded += await flushGrades().catch(() => 0);
   return result;
 }
 

@@ -464,6 +464,19 @@ describe("flushing", () => {
     expect(calls).toEqual(["add a"]);
   });
 
+  it("sends no grades once the learner left during a send", async () => {
+    answers.push(offline, offline);
+    await w.submit(add("a"), "a");
+    await w.submit(add("b", "other"), "b");
+    answers.push(() => {
+      w.unclaimWrites();
+      return { ok: true };
+    });
+    flushGrades.mockClear();
+    expect((await w.flushWrites()).stopped).toBe(true);
+    expect(flushGrades).toHaveBeenCalledTimes(1);
+  });
+
   it("keeps the queue but holds it while no learner is signed in", async () => {
     answers.push(offline);
     await w.submit(add("a"), "a");

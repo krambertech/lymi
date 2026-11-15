@@ -29,7 +29,7 @@ import { SignUpSection } from "./SignUpSection";
 import { WordFieldHero } from "./WordFieldHero";
 
 export const LANGUAGES_TITLE = msg`Lymi for language learning · Keep the words from every lesson`;
-export const LANGUAGES_BLURB = msg`Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards Lymi brings back just as they start to fade.`;
+export const LANGUAGES_BLURB = msg`Keep the words and phrases from lessons, tutors and reading. Photograph your notes, and your assistant turns them into cards you review in Lymi.`;
 
 const SPANISH_ADDED: SampleCard = {
   label: msg`Español · new`,
@@ -210,7 +210,7 @@ function LanguagePage(props: PageProps) {
         <AssistantChat conversation={props.conversation} />
       </FeatureSection>
 
-      <Questions title={<Trans>Questions before you start.</Trans>} items={props.questions} />
+      <Questions title={<Trans>Common questions.</Trans>} items={props.questions} />
 
       <SignUpSection title={props.joinTitle} />
     </LandingLayout>
@@ -240,7 +240,7 @@ export function LanguagesView() {
       heroLede={
         <Trans>
           The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it
-          in a few seconds, hear how it’s said, and Lymi brings it back just as it starts to fade.
+          in a few seconds, hear how it’s said, and Lymi brings it back until you know it.
         </Trans>
       }
       notebooks={[LEARNING_LANGUAGES.find((l) => l.id === "fr") as LearningLanguage]}
@@ -248,8 +248,8 @@ export function LanguagesView() {
       handLanguages={LEARNING_LANGUAGES}
       handBody={
         <Trans>
-          Every card says its word aloud, in its own language. The back keeps the line that makes it
-          stick: the false friend, the gender, the tone that changes the meaning.
+          Every card says its word aloud, in its own language. The back holds the note that helps
+          you remember it: the false friend, the gender, the tone that changes the meaning.
         </Trans>
       }
       conversation={[

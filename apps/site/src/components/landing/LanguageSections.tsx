@@ -104,12 +104,12 @@ interface ReturnProps {
 export function ReturnSection({ lang, term, title, body }: ReturnProps) {
   return (
     <Wide
-      title={title ?? <Trans>It comes back just as it starts to fade.</Trans>}
+      title={title ?? <Trans>The gaps grow as you learn.</Trans>}
       body={
         body ?? (
           <Trans>
-            Each time you remember a word, Lymi waits a little longer before showing it again. A few
-            minutes a day is enough, and the words you learned months ago stay with you.
+            Each time you remember a word, Lymi waits longer before showing it again. Forget it, and
+            it comes back soon.
           </Trans>
         )
       }
@@ -144,7 +144,7 @@ interface VoiceProps extends ComponentProps<typeof VoiceTiles> {
 /** Words to tap and hear in the native voice that reads every card. */
 export function VoiceSection({ title, body, words, lang, folder }: VoiceProps) {
   return (
-    <Wide title={title ?? <Trans>Hear how it’s really said.</Trans>} body={body}>
+    <Wide title={title ?? <Trans>Hear each word said aloud.</Trans>} body={body}>
       <VoiceTiles words={words} lang={lang} folder={folder} />
     </Wide>
   );
@@ -153,7 +153,7 @@ export function VoiceSection({ title, body, words, lang, folder }: VoiceProps) {
 /** One word typed, and the rest of its card filled in by AI. */
 export function EnrichSection({ body, children }: { body: ReactNode; children: ReactNode }) {
   return (
-    <FeatureSection title={<Trans>Type one word. Get a whole card.</Trans>} body={body}>
+    <FeatureSection title={<Trans>Type a word. AI fills in the rest.</Trans>} body={body}>
       {children}
     </FeatureSection>
   );
@@ -179,7 +179,7 @@ export function OwnAiSection({ body, attachment, ask, card, added, waiting, api 
   return (
     <FeatureSection
       id="ai"
-      title={<Trans>Bring your own AI.</Trans>}
+      title={<Trans>Connect your AI assistant.</Trans>}
       body={body}
       after={
         api ? (
@@ -237,7 +237,7 @@ export function TogetherSection({ name, language, cards, body }: TogetherProps) 
   return (
     <FeatureSection
       demoFirst
-      title={<Trans>Learning is more fun together.</Trans>}
+      title={<Trans>Share a deck with your class.</Trans>}
       body={
         body ?? (
           <Trans>
@@ -260,10 +260,7 @@ export function TogetherSection({ name, language, cards, body }: TogetherProps) 
 /** The language's own small touches, gathered in a bento. */
 export function DetailsSection({ title, children }: { title: ReactNode; children: ReactNode }) {
   return (
-    <Wide
-      title={title}
-      body={<Trans>The small things that matter once you’re a few weeks in.</Trans>}
-    >
+    <Wide title={title} body={<Trans>Details that help once you’re past the basics.</Trans>}>
       {children}
     </Wide>
   );

@@ -65,7 +65,7 @@ export function SpanishView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<LanguageName lang="es">Español</LanguageName>}
-          title={<Trans>The flashcard app that gets Spanish.</Trans>}
+          title={<Trans>Spanish flashcards with el, la and audio.</Trans>}
           lede={
             <Trans>
               Learn the Spanish words you’ll use most, a few minutes a day. A native voice reads
@@ -85,12 +85,12 @@ export function SpanishView({ decks, locale }: Props) {
       }
     >
       <Wide
-        title={<Trans>The ending doesn’t always tell.</Trans>}
+        title={<Trans>El or la, on every noun.</Trans>}
         body={
           <Trans>
-            Most Spanish nouns ending in -o are masculine and most ending in -a are feminine, until{" "}
-            <Es>el día</Es> and <Es>la mano</Es>. The ready-made decks keep every noun with its el
-            or la, and AI notes the gender wherever the ending hides it.
+            Most Spanish nouns ending in -o are masculine and most ending in -a are feminine, but
+            not <Es>el día</Es> or <Es>la mano</Es>. The ready-made decks keep every noun with its
+            el or la, and AI notes the gender when the ending doesn’t match.
           </Trans>
         }
       >
@@ -105,8 +105,8 @@ export function SpanishView({ decks, locale }: Props) {
           body={
             <Trans>
               Spanish Top 100 Verbs starts with <Es>ser</Es>, <Es>estar</Es> and <Es>tener</Es>, the
-              verbs most sentences lean on. Spanish Top 1000 Words goes on to the thousand most
-              common words, fifty at a time.
+              verbs you’ll use most. Spanish Top 1000 Words goes on to the thousand most common
+              words, fifty at a time.
             </Trans>
           }
           after={
@@ -129,7 +129,7 @@ export function SpanishView({ decks, locale }: Props) {
 
       {steps.length > 1 && (
         <StartSection
-          title={<Trans>Start with A1. Keep going.</Trans>}
+          title={<Trans>Start with A1.</Trans>}
           body={
             <Trans>
               Free decks from A1 to B1, one everyday topic at a time. Take A1, then A2 and B1. Each
@@ -144,7 +144,7 @@ export function SpanishView({ decks, locale }: Props) {
       {essentials && (
         <FeatureSection
           demoFirst
-          title={<Trans>Ready for your first day there.</Trans>}
+          title={<Trans>Ready for your first day in Spain.</Trans>}
           body={
             <Trans>
               Spanish Essentials has the phrases for a trip or your first weeks in Spain: greetings,
@@ -245,12 +245,12 @@ export function SpanishView({ decks, locale }: Props) {
         />
       )}
 
-      <Questions title={<Trans>Questions before you start.</Trans>} items={SPANISH_QUESTIONS} />
+      <Questions title={<Trans>Common questions.</Trans>} items={SPANISH_QUESTIONS} />
 
       <SignUpSection
         title={
           <Trans>
-            Start with <Es>hola</Es> tonight.
+            Start with <Es>hola</Es>.
           </Trans>
         }
       />

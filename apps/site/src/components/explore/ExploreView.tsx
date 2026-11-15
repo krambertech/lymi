@@ -14,9 +14,7 @@ export function ExploreHeading({ locale }: LocaleProps) {
         <Trans>Flashcard decks, ready to learn</Trans>
       </h1>
       <p className="mx-auto mt-5 max-w-[42ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
-        <Trans>
-          Add one and learn it for free — Lymi brings each card back just as it starts to fade.
-        </Trans>
+        <Trans>Pick one, add it for free, and start reviewing.</Trans>
       </p>
     </Localized>
   );

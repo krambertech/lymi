@@ -125,7 +125,7 @@ function Reading({ material, inView }: { material: Material; inView: boolean }) 
           )}
           {landed.length === 0 && (
             <p className="py-10 text-center text-sm text-ink-muted">
-              <Trans>New cards land here.</Trans>
+              <Trans>New cards appear here.</Trans>
             </p>
           )}
         </div>

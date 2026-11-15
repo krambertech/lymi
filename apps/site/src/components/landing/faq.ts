@@ -35,7 +35,7 @@ export const LANGUAGES_QUESTIONS: Question[] = [
   {
     id: "ai",
     question: msg`Does the AI write my cards?`,
-    answer: msg`Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes on a card counts as yours, so check it.`,
+    answer: msg`Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes doesn’t get that label, so check it.`,
   },
   {
     id: "anki",
@@ -268,7 +268,7 @@ export const JAPANESE_QUESTIONS: Question[] = [
   {
     id: "known",
     question: msg`How does Lymi know I know a word?`,
-    answer: msg`When its card reaches Known in your reviews. From then on the reading steps aside, on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it.`,
+    answer: msg`When its card reaches Known in your reviews. From then on the reading is hidden on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it.`,
   },
   {
     id: "voice",
@@ -292,7 +292,7 @@ export const ASSISTANTS_QUESTIONS: Question[] = [
   {
     id: "wrong",
     question: msg`What if it gets something wrong?`,
-    answer: msg`Fix it on the card in Lymi. What your assistant writes counts as yours, so look over new cards after it adds them.`,
+    answer: msg`Fix it on the card in Lymi. Look over new cards after your assistant adds them.`,
   },
   {
     id: "privacy",
@@ -320,7 +320,7 @@ export const TEACHERS_QUESTIONS: Question[] = [
   {
     id: "subjects",
     question: msg`Is it only for languages?`,
-    answer: msg`No. A card can hold anything worth remembering: a term, a date, a formula, a chord. Language cards can also be said aloud.`,
+    answer: msg`No. A card can hold anything you want to remember: a term, a date, a formula, a chord. Language cards can also be said aloud.`,
   },
   {
     id: "size",
@@ -377,7 +377,7 @@ export const EINBUERGERUNGSTEST_QUESTIONS: Question[] = [
 const AI_MARKED: Question = {
   id: "ai",
   question: msg`Does the AI write my cards?`,
-  answer: msg`Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes on a card counts as yours, so check it.`,
+  answer: msg`Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes doesn’t get that label, so check it.`,
 };
 
 export const MEDICINE_QUESTIONS: Question[] = [

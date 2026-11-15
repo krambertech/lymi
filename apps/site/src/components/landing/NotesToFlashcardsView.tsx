@@ -276,8 +276,8 @@ export function NotesToFlashcardsView() {
           title={<Trans>Turn your notes into flashcards.</Trans>}
           lede={
             <Trans>
-              Send a PDF, a photo of your notebook or typed notes to your AI assistant. The key
-              terms land in Lymi as cards, and each one comes back just as it starts to fade.
+              Send a PDF, a photo of your notebook or typed notes to your AI assistant. It adds the
+              key terms to Lymi as cards for you to review.
             </Trans>
           }
           visual={
@@ -448,10 +448,7 @@ export function NotesToFlashcardsView() {
         <ReviewDemo cards={review} />
       </FeatureSection>
 
-      <Questions
-        title={<Trans>Questions before you start.</Trans>}
-        items={NOTES_TO_FLASHCARDS_QUESTIONS}
-      />
+      <Questions title={<Trans>Common questions.</Trans>} items={NOTES_TO_FLASHCARDS_QUESTIONS} />
 
       <SignUpSection title={<Trans>Start with today’s notes.</Trans>} />
     </LandingLayout>

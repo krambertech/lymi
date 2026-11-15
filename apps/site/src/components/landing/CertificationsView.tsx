@@ -135,25 +135,25 @@ export function CertificationsView() {
       page="certifications"
       hero={
         <Hero
-          title={<Trans>Study for the certification. Keep what it taught you.</Trans>}
+          title={<Trans>Flashcards for your certification exam.</Trans>}
           lede={
             <Trans>
               Turn your study guide into cards and review a few minutes a day. Lymi brings each term
-              back just as it starts to fade, from the first chapter to exam day and after.
+              back until you know it, and you can keep reviewing after the exam.
             </Trans>
           }
           cards={HAND}
         />
       }
     >
-      <UseCases title={<Trans>For the exam you’re booked on.</Trans>} items={fields} />
+      <UseCases title={<Trans>For the exam you’re studying for.</Trans>} items={fields} />
 
       <FeatureSection
         title={<Trans>Turn a study guide into cards.</Trans>}
         body={
           <Trans>
-            Send a chapter to Claude, ChatGPT, Gemini or Grok and ask for the key terms. Each one
-            lands in your deck with the guide’s definition, ready for tonight’s review.
+            Send a chapter to Claude, ChatGPT, Gemini or Grok and ask for the key terms. It adds
+            each one to your deck with the guide’s definition.
           </Trans>
         }
         after={<AssistantMarksWithMore />}
@@ -195,10 +195,7 @@ export function CertificationsView() {
         <ReviewDemo cards={REVIEW} />
       </FeatureSection>
 
-      <Questions
-        title={<Trans>Questions before you start.</Trans>}
-        items={CERTIFICATIONS_QUESTIONS}
-      />
+      <Questions title={<Trans>Common questions.</Trans>} items={CERTIFICATIONS_QUESTIONS} />
 
       <SignUpSection title={<Trans>Start with chapter one.</Trans>} />
     </LandingLayout>

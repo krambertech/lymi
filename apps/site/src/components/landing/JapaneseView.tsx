@@ -197,7 +197,7 @@ export function JapaneseView({ decks, locale }: Props) {
       <SignUpSection
         title={
           <Trans>
-            Start with <span lang="ja">あ</span>.
+            Your first kana is <span lang="ja">あ</span>.
           </Trans>
         }
       />

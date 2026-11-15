@@ -3289,6 +3289,9 @@ msgstr "Learn Russian vocabulary with flashcards · Lymi"
 msgid "Learn Spanish vocabulary with flashcards · Lymi"
 msgstr "Learn Spanish vocabulary with flashcards · Lymi"
 
+msgid "Learn the alphabet, then your first words."
+msgstr "Learn the alphabet, then your first words."
+
 msgid "Learn the same deck together"
 msgstr "Learn the same deck together"
 
@@ -3297,6 +3300,9 @@ msgstr "Learn the Spanish words you’ll use most, a few minutes a day. A native
 
 msgid "Learn Ukrainian vocabulary with flashcards · Lymi"
 msgstr "Learn Ukrainian vocabulary with flashcards · Lymi"
+
+msgid "Learn your first HSK 1 words."
+msgstr "Learn your first HSK 1 words."
 
 msgid "Learned once, never revisited"
 msgstr "Learned once, never revisited"
@@ -4924,9 +4930,6 @@ msgstr "Start with <0>hola</0>."
 msgid "Start with <0>tere</0>."
 msgstr "Start with <0>tere</0>."
 
-msgid "Start with <0>あ</0>."
-msgstr "Start with <0>あ</0>."
-
 msgid "Start with a free deck."
 msgstr "Start with a free deck."
 
@@ -5416,8 +5419,8 @@ msgstr "The part of a cell that releases energy from food"
 msgid "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 msgstr "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 
-msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back until you know it."
-msgstr "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back until you know it."
+msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back less often as you learn it."
+msgstr "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back less often as you learn it."
 
 msgid "The pinyin left is what you haven’t learned yet."
 msgstr "The pinyin left is what you haven’t learned yet."
@@ -5928,8 +5931,8 @@ msgstr "Turn your notes into cards."
 msgid "Turn your notes into flashcards."
 msgstr "Turn your notes into flashcards."
 
-msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back until you know it, and you can keep reviewing after the exam."
-msgstr "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back until you know it, and you can keep reviewing after the exam."
+msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back less often as you learn it. You can keep reviewing after the exam."
+msgstr "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back less often as you learn it. You can keep reviewing after the exam."
 
 msgid "Turn your tutor lessons into flashcards · Lymi"
 msgstr "Turn your tutor lessons into flashcards · Lymi"
@@ -6579,6 +6582,12 @@ msgstr "Your assistant reads the file, picks out the terms and adds them in one 
 
 msgid "Your cards, as you learn them"
 msgstr "Your cards, as you learn them"
+
+msgid "Your first kana is <0>あ</0>."
+msgstr "Your first kana is <0>あ</0>."
+
+msgid "Your first word is <0>tere</0>."
+msgstr "Your first word is <0>tere</0>."
 
 msgid "Your goal, your streak"
 msgstr "Your goal, your streak"

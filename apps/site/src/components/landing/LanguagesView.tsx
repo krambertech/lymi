@@ -240,7 +240,7 @@ export function LanguagesView() {
       heroLede={
         <Trans>
           The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it
-          in a few seconds, hear how it’s said, and Lymi brings it back until you know it.
+          in a few seconds, hear how it’s said, and Lymi brings it back less often as you learn it.
         </Trans>
       }
       notebooks={[LEARNING_LANGUAGES.find((l) => l.id === "fr") as LearningLanguage]}

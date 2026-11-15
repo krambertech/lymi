@@ -224,7 +224,7 @@ export function ChineseView({ decks, locale }: Props) {
 
       <Questions title={<Trans>Common questions.</Trans>} items={CHINESE_QUESTIONS} />
 
-      <SignUpSection title={<Trans>Start with HSK&nbsp;1.</Trans>} />
+      <SignUpSection title={<Trans>Learn your first HSK&nbsp;1 words.</Trans>} />
     </LandingLayout>
   );
 }

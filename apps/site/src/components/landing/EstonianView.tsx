@@ -208,7 +208,7 @@ export function EstonianView({ decks, locale }: Props) {
       <SignUpSection
         title={
           <Trans>
-            Start with <span lang="et">tere</span>.
+            Your first word is <span lang="et">tere</span>.
           </Trans>
         }
       />

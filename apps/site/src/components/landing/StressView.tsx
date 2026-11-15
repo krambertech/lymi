@@ -156,7 +156,7 @@ export function StressView({ page, decks, locale }: Props) {
 
       <Questions title={<Trans>Common questions.</Trans>} items={page.questions} />
 
-      <SignUpSection title={<Trans>Start with the alphabet.</Trans>} />
+      <SignUpSection title={<Trans>Learn the alphabet, then your first words.</Trans>} />
     </LandingLayout>
   );
 }

@@ -3289,6 +3289,9 @@ msgstr "Російські слова на флешкартках · Lymi"
 msgid "Learn Spanish vocabulary with flashcards · Lymi"
 msgstr "Іспанські слова на флешкартках · Lymi"
 
+msgid "Learn the alphabet, then your first words."
+msgstr "Вивчи абетку, а потім перші слова."
+
 msgid "Learn the same deck together"
 msgstr "Вчіть одну колоду разом"
 
@@ -3297,6 +3300,9 @@ msgstr "Вчи іспанські слова, які знадобляться н
 
 msgid "Learn Ukrainian vocabulary with flashcards · Lymi"
 msgstr "Українські слова на флешкартках · Lymi"
+
+msgid "Learn your first HSK 1 words."
+msgstr "Вивчи перші слова HSK 1."
 
 msgid "Learned once, never revisited"
 msgstr "Без повторень"
@@ -4924,9 +4930,6 @@ msgstr "Почни з <0>hola</0>."
 msgid "Start with <0>tere</0>."
 msgstr "Почни з <0>tere</0>."
 
-msgid "Start with <0>あ</0>."
-msgstr "Почни з <0>あ</0>."
-
 msgid "Start with a free deck."
 msgstr "Почни з безкоштовної колоди."
 
@@ -5416,8 +5419,8 @@ msgstr "Частина клітини, що вивільняє енергію з
 msgid "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 msgstr "Застосунок на телефоні запитує дозвіл, перш ніж надсилати твій власний вміст до AI. У вебзастосунку, через API-ключі й підключені застосунки AI працює, доки вибір для облікового запису не зроблено. Вимкнути AI-сервіси можна в розділі Ти на телефоні або в Налаштуваннях у вебзастосунку. Явне вимкнення зупиняє нову AI-обробку твого вмісту в усьому Lymi, зокрема у фоновому режимі й через підключені застосунки. Збережені текст та аудіо залишаються, а додавати картки вручну й повторювати їх можна й далі. Для аудіо спільних та опублікованих карток діє вибір власника."
 
-msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back until you know it."
-msgstr "Фраза, яку репетитор написав у чаті, слово з роману, яке довелося шукати двічі. Збережи його за кілька секунд, послухай вимову, і Lymi повертатиме його, доки ти його не запам’ятаєш."
+msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back less often as you learn it."
+msgstr "Фраза, яку репетитор написав у чаті, слово з роману, яке довелося шукати двічі. Збережи його за кілька секунд, послухай вимову, і Lymi повертатиме його дедалі рідше, що краще ти його знаєш."
 
 msgid "The pinyin left is what you haven’t learned yet."
 msgstr "Піньїнь лишився тільки над тим, чого ти ще не знаєш."
@@ -5928,8 +5931,8 @@ msgstr "Зроби з нотаток картки."
 msgid "Turn your notes into flashcards."
 msgstr "Перетвори свої нотатки на картки."
 
-msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back until you know it, and you can keep reviewing after the exam."
-msgstr "Перетвори навчальний посібник на картки й повторюй кілька хвилин на день. Lymi повертатиме кожен термін, доки ти його не запам’ятаєш, а після іспиту можна повторювати далі."
+msgid "Turn your study guide into cards and review a few minutes a day. Lymi brings each term back less often as you learn it. You can keep reviewing after the exam."
+msgstr "Перетвори навчальний посібник на картки й повторюй кілька хвилин на день. Lymi повертає кожен термін дедалі рідше, що краще ти його знаєш. Після іспиту можна повторювати далі."
 
 msgid "Turn your tutor lessons into flashcards · Lymi"
 msgstr "Уроки з репетитором у картки · Lymi"
@@ -6579,6 +6582,12 @@ msgstr "Асистент читає файл, вибирає терміни й �
 
 msgid "Your cards, as you learn them"
 msgstr "Твої картки, у міру вивчення"
+
+msgid "Your first kana is <0>あ</0>."
+msgstr "Твоя перша кана — <0>あ</0>."
+
+msgid "Your first word is <0>tere</0>."
+msgstr "Твоє перше слово — <0>tere</0>."
 
 msgid "Your goal, your streak"
 msgstr "Твоя мета й дні поспіль"

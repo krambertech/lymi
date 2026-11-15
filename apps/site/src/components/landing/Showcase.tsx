@@ -1,4 +1,4 @@
-import { Trans } from "@lingui/react/macro";
+import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { RotateCcw } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
@@ -86,6 +86,7 @@ interface Props {
 }
 
 function ShowcaseRoot({ label, children, className }: Props) {
+  const { t } = useLingui();
   const items = Children.toArray(children)
     .filter((child): child is ReactElement<ItemProps> => isValidElement(child))
     .filter((child) => child.type === ShowcaseItem)
@@ -231,13 +232,15 @@ function ShowcaseRoot({ label, children, className }: Props) {
         style={{ "--tray-h": item.hue } as CSSProperties}
         className="use-case-tile relative order-1 grid min-h-[400px] place-items-center overflow-hidden px-5 py-14 transition-[background-color] duration-500 @2xl:px-10 @4xl:order-2 @4xl:min-h-[460px]"
       >
+        {/* Quiet on purpose: the demo is the subject, and it replays by itself. */}
         <button
           type="button"
           onClick={() => setReplays((n) => n + 1)}
-          className="absolute end-3.5 top-3.5 z-10 flex h-8 items-center gap-1.5 rounded-full bg-plate/85 ps-2.5 pe-3 text-xs font-medium text-ink-secondary edge transition-[color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:text-ink"
+          aria-label={t`Replay`}
+          title={t`Replay`}
+          className="absolute end-3 top-3 z-10 grid size-8 place-items-center rounded-full text-ink-muted transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.94] hoverable:hover:bg-plate/70 hoverable:hover:text-ink-secondary focus-visible:outline-2 focus-visible:outline-ring"
         >
           <RotateCcw aria-hidden="true" className="size-3.5" />
-          <Trans>Replay</Trans>
         </button>
         <StageContext.Provider value={stage}>
           <AnimatePresence mode="wait" initial={false}>

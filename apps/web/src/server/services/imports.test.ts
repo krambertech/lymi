@@ -1314,6 +1314,25 @@ describe("importing an Anki package", () => {
     expect(JSON.stringify(entry)).not.toContain("imports/");
   });
 
+  it("writes no chunk once the import has failed", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    // A failure that lands after the chunk read the file, and before its batch.
+    await db
+      .update(schema.imports)
+      .set({ status: "failed", failure: "stalled" })
+      .where(eq(schema.imports.id, id));
+
+    const late = await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);
+    expect(late.pictures).toEqual([]);
+    expect(await cardsOf(ctx)).toEqual([]);
+    const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, id));
+    expect(row).toMatchObject({ status: "failed", written: 0 });
+  });
+
   it("writes a chunk once even when its step runs again", async () => {
     const ctx = await fresh();
     const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));

@@ -667,9 +667,9 @@ export type PendingPicture = {
 };
 
 /**
- * Writes one stored chunk as one D1 batch. Every statement runs only while the import's
- * `written` count still equals this chunk, and the last one moves it on, so the chunk lands
- * whole or not at all and a retry after it landed writes nothing.
+ * Writes one stored chunk as one D1 batch. Every statement runs only while the import is still
+ * importing and its `written` count equals this chunk, and the last one moves it on, so the chunk
+ * lands whole or not at all and a retry after it landed writes nothing.
  */
 export async function writeChunk<Note>(
   ctx: ServiceContext,
@@ -681,7 +681,9 @@ export async function writeChunk<Note>(
   const row = work.row;
   const names = new Map(work.summary.decks.map((d) => [d.key, deckName(d.name)]));
   const now = new Date();
-  const guard = sql`exists (select 1 from imports where id = ${row.id} and written = ${chunk})`;
+  // A failed or cancelled import stays as it stopped: a chunk still running writes nothing.
+  const guard = sql`exists (select 1 from imports
+    where id = ${row.id} and written = ${chunk} and status = 'importing')`;
 
   // Terms added by earlier chunks are now cards, so the lookup covers them; `seen` covers this chunk.
   const iterator = importedCards(work, chunk);
@@ -944,7 +946,7 @@ export async function writeChunk<Note>(
     );
   statements.push(
     sql`update imports set written = ${chunk + 1}, counts = ${JSON.stringify(counts)}, updated_at = ${now.getTime()}
-      where id = ${row.id} and written = ${chunk}`,
+      where id = ${row.id} and written = ${chunk} and status = 'importing'`,
   );
 
   const results = await batchStatements(db, statements);

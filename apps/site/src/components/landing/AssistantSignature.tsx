@@ -1,9 +1,11 @@
 import { plural } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
+import { clsx } from "clsx";
 import { AtSign, Check, Repeat } from "lucide-react";
 import { motion, useInView } from "motion/react";
-import { type CSSProperties, type ReactNode, type Ref, useRef } from "react";
+import { type CSSProperties, type ReactNode, type Ref, useContext, useRef } from "react";
 import { Lantern } from "../Lantern";
+import { BACKDROPS, BackdropContext } from "./AssistantChatDemo";
 import { AssistantMark, type AssistantName } from "./AssistantMarks";
 import { ASSISTANT_PAGES, type AssistantKey } from "./assistant-pages";
 import { FeatureSection } from "./FeatureSection";
@@ -30,13 +32,14 @@ function Tray({
   children: ReactNode;
   innerRef: Ref<HTMLDivElement>;
 }) {
+  const backdrop = useContext(BackdropContext);
   return (
     <div
       ref={innerRef}
       role="img"
       aria-label={label}
       style={{ "--tray-h": hue } as CSSProperties}
-      className="use-case-tile mx-auto flex w-full max-w-[480px] flex-col gap-3 rounded-[28px] p-5 @2xl:p-7"
+      className={clsx("mx-auto flex w-full max-w-[480px] flex-col gap-3", BACKDROPS[backdrop])}
     >
       {children}
     </div>
@@ -332,7 +335,6 @@ export function AssistantSignature({ assistant }: { assistant: AssistantKey }) {
       return (
         <FeatureSection
           demoFirst
-          tinted
           title={<Trans>Lymi in your ChatGPT sidebar.</Trans>}
           body={
             <Trans>
@@ -348,7 +350,6 @@ export function AssistantSignature({ assistant }: { assistant: AssistantKey }) {
       return (
         <FeatureSection
           demoFirst
-          tinted
           title={<Trans>Your decks, right in the chat.</Trans>}
           body={
             <Trans>
@@ -365,7 +366,6 @@ export function AssistantSignature({ assistant }: { assistant: AssistantKey }) {
       return (
         <FeatureSection
           demoFirst
-          tinted
           title={<Trans>Cards from your terminal.</Trans>}
           body={
             <Trans>
@@ -381,7 +381,6 @@ export function AssistantSignature({ assistant }: { assistant: AssistantKey }) {
       return (
         <FeatureSection
           demoFirst
-          tinted
           title={<Trans>Your review, on a routine.</Trans>}
           body={
             <Trans>

@@ -2,15 +2,47 @@ import "@fontsource/caveat/500.css";
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { FileText, Link2 } from "lucide-react";
+import {
+  AtSign,
+  CalendarRange,
+  Camera,
+  ClipboardCheck,
+  FileText,
+  FolderOpen,
+  Globe,
+  LifeBuoy,
+  MessagesSquare,
+  Repeat,
+  Sparkle,
+  SquareTerminal,
+} from "lucide-react";
 import type { ReactNode } from "react";
 import { PRODUCT_ORIGIN, signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
 import { type Ask, AssistantAsks } from "./AssistantAsks";
-import { AssistantChatDemo, type MadeCard } from "./AssistantChatDemo";
+import {
+  AssistantChatDemo,
+  BackdropContext,
+  type MadeCard,
+  useBackdropPreview,
+} from "./AssistantChatDemo";
 import { AssistantConnect, type ConnectStep } from "./AssistantConnect";
 import { AssistantMark, type AssistantName } from "./AssistantMarks";
+import {
+  Attached,
+  CardsResult,
+  CodeChip,
+  DeckResult,
+  DueResult,
+  FolderChip,
+  HintResult,
+  LinkChip,
+  PagePhoto,
+  Post,
+  RoutineChip,
+  SlippingResult,
+} from "./AssistantPieces";
 import { AssistantSignature } from "./AssistantSignature";
 import { ASSISTANT_PAGES, type AssistantKey } from "./assistant-pages";
 import { CopyAddress } from "./ConnectSteps";
@@ -67,61 +99,6 @@ function Lockup({ name }: { name: AssistantName }) {
   );
 }
 
-/** A photo of a textbook page, as the learner sent it. */
-function PagePhoto({ lines }: { lines: readonly string[] }) {
-  return (
-    <div className="w-[168px] rotate-[2deg] rounded-md bg-canvas px-3.5 pt-2 pb-3 edge-drop">
-      <p className="text-2xs text-ink-muted">
-        <Trans>p. 112</Trans>
-      </p>
-      <ul className="notes-hand mt-0.5 text-lg leading-[1.1] text-ink-secondary">
-        {lines.map((line) => (
-          <li key={line}>{line}</li>
-        ))}
-      </ul>
-    </div>
-  );
-}
-
-/** A file or a link sent with the ask, as a chip. */
-function Attached({ icon, name, hint }: { icon: ReactNode; name: string; hint: ReactNode }) {
-  return (
-    <span className="flex w-fit items-center gap-2.5 rounded-xl bg-plate py-2 ps-2 pe-4 edge-drop">
-      <span className="grid size-8 place-items-center rounded-lg bg-plate-nested text-ink-secondary [&_svg]:size-4">
-        {icon}
-      </span>
-      <span className="flex flex-col">
-        <span className="text-sm font-medium text-ink">{name}</span>
-        <span className="text-2xs text-ink-muted">{hint}</span>
-      </span>
-    </span>
-  );
-}
-
-/** A post on X, quoted in the chat. */
-function Post({ text }: { text: string }) {
-  return (
-    <div className="w-[260px] rounded-xl bg-plate p-3 edge-drop">
-      <p className="flex items-center gap-1.5 text-2xs text-ink-muted">
-        <Link2 aria-hidden="true" className="size-3" />
-        <Trans>Post on X</Trans>
-      </p>
-      <p lang="es" className="mt-1 text-sm text-pretty text-ink">
-        {text}
-      </p>
-    </div>
-  );
-}
-
-/** What Lymi did with something, in a reply: a word set apart in the learner's own text. */
-function Words({ children, lang }: { children: ReactNode; lang: string }) {
-  return (
-    <span lang={lang} className="font-medium">
-      {children}
-    </span>
-  );
-}
-
 function useContent(key: AssistantKey): Content {
   const { t } = useLingui();
   const biology = msg`Biology`;
@@ -141,7 +118,12 @@ function useContent(key: AssistantKey): Content {
           </Trans>
         ),
         demo: {
-          attachment: <PagePhoto lines={["chlorophyll", "stomata", "glucose", "chloroplast"]} />,
+          attachment: (
+            <PagePhoto
+              lines={["chlorophyll", "stomata", "glucose", "chloroplast"]}
+              page={<Trans>p. 112</Trans>}
+            />
+          ),
           ask: <Trans>Make flashcards from this page.</Trans>,
           reply: <Trans>Added 4 cards to your Biology deck.</Trans>,
           cards: [
@@ -157,39 +139,92 @@ function useContent(key: AssistantKey): Content {
         asks: [
           {
             id: "photo",
+            icon: <Camera aria-hidden="true" />,
             use: <Trans>From a photo of your notes</Trans>,
-            ask: <Trans>Make cards from this page. Skip the ones I already have.</Trans>,
-            did: <Trans>Added 9 cards to Biology and skipped 3 you had</Trans>,
+            body: (
+              <Trans>
+                Snap a page of notes or a textbook. ChatGPT reads it, skips the cards you already
+                have and adds the rest.
+              </Trans>
+            ),
+            attachment: (
+              <PagePhoto lines={["xylem", "phloem", "stomata"]} page={<Trans>p. 114</Trans>} />
+            ),
+            ask: <Trans>Make cards from this page. Skip the ones I have.</Trans>,
+            result: (
+              <CardsResult
+                lang="en"
+                cards={[
+                  { label: t`Biology`, term: "Xylem", meaning: t`Carries water up from the roots` },
+                  { label: t`Biology`, term: "Phloem", meaning: t`Carries sugar around the plant` },
+                ]}
+                note={<Trans>Skipped Stomata: you have that card.</Trans>}
+              />
+            ),
           },
           {
             id: "chat",
+            icon: <MessagesSquare aria-hidden="true" />,
             use: <Trans>From the chat you just had</Trans>,
-            ask: <Trans>Turn what we just went over into a deck.</Trans>,
-            did: <Trans>Made Photosynthesis: 14 cards</Trans>,
+            body: (
+              <Trans>
+                Worked through a topic with ChatGPT? Turn the whole conversation into a deck, with a
+                section for each part.
+              </Trans>
+            ),
+            ask: <Trans>Turn what we just covered into a deck, a section per topic.</Trans>,
+            result: (
+              <DeckResult
+                name={t`Photosynthesis`}
+                count={<Trans>14 cards</Trans>}
+                sections={[t`Light reactions`, t`Calvin cycle`, t`Leaves`]}
+              />
+            ),
           },
           {
             id: "exam",
+            icon: <ClipboardCheck aria-hidden="true" />,
             use: <Trans>For an exam</Trans>,
-            ask: <Trans>Make cards for the 20 drugs on my NCLEX list, with their class.</Trans>,
-            did: <Trans>Added 20 cards to NCLEX pharmacology</Trans>,
+            body: (
+              <Trans>
+                Hand ChatGPT the list you’ll be tested on and get a card for each item, with the
+                detail the exam asks about.
+              </Trans>
+            ),
+            attachment: <Attached name="NCLEX drug list.pdf" hint={<Trans>3 pages</Trans>} />,
+            ask: <Trans>Make a card for each drug, with its class.</Trans>,
+            result: (
+              <CardsResult
+                lang="en"
+                cards={[
+                  { label: t`Pharmacology`, term: "Metoprolol", meaning: t`Beta blocker` },
+                  { label: t`Pharmacology`, term: "Lisinopril", meaning: t`ACE inhibitor` },
+                ]}
+                note={<Trans>Added 20 cards to NCLEX pharmacology.</Trans>}
+              />
+            ),
           },
           {
-            id: "due",
-            use: <Trans>To plan tonight</Trans>,
-            ask: <Trans>What should I review tonight?</Trans>,
-            did: <Trans>18 cards due, about six minutes</Trans>,
-          },
-          {
-            id: "missed",
+            id: "slip",
+            icon: <Repeat aria-hidden="true" />,
             use: <Trans>For the ones that slip</Trans>,
+            body: (
+              <Trans>
+                ChatGPT can read your review history, so it knows which cards you keep forgetting
+                and can drill just those.
+              </Trans>
+            ),
             ask: <Trans>Quiz me on the Spanish words I keep missing.</Trans>,
-            did: <Trans>Found the 7 cards you forgot most this month</Trans>,
-          },
-          {
-            id: "tag",
-            use: <Trans>To tidy a deck</Trans>,
-            ask: <Trans>Tag everything from chapter 4 “exam”.</Trans>,
-            did: <Trans>Tagged 31 cards “exam”</Trans>,
+            result: (
+              <SlippingResult
+                lang="es"
+                words={[
+                  { term: "la huelga", meaning: t`The strike`, forgot: <Trans>forgot 4×</Trans> },
+                  { term: "el sindicato", meaning: t`The union`, forgot: <Trans>forgot 3×</Trans> },
+                  { term: "ojalá", meaning: t`I hope`, forgot: <Trans>forgot 3×</Trans> },
+                ]}
+              />
+            ),
           },
         ],
         gap: {
@@ -296,39 +331,104 @@ function useContent(key: AssistantKey): Content {
         asks: [
           {
             id: "pdf",
+            icon: <FileText aria-hidden="true" />,
             use: <Trans>From a long PDF</Trans>,
+            body: (
+              <Trans>
+                Give Claude a whole chapter or lecture. It picks the terms worth learning and writes
+                each card.
+              </Trans>
+            ),
+            attachment: <Attached name="Chapter 12.pdf" hint={<Trans>64 pages</Trans>} />,
             ask: <Trans>Make cards from the key terms in this chapter.</Trans>,
-            did: <Trans>Added 26 cards to Pharmacology</Trans>,
+            result: (
+              <CardsResult
+                lang="en"
+                cards={[
+                  {
+                    label: t`Pharmacology`,
+                    term: "Agonist",
+                    meaning: t`Binds a receptor and switches it on`,
+                  },
+                  {
+                    label: t`Pharmacology`,
+                    term: "Half-life",
+                    meaning: t`Time for the level to halve`,
+                  },
+                ]}
+                note={<Trans>Added 26 cards to Pharmacology.</Trans>}
+              />
+            ),
           },
           {
             id: "project",
+            icon: <FolderOpen aria-hidden="true" />,
             use: <Trans>From a whole course</Trans>,
-            ask: <Trans>Build a deck from this Project’s files, one section per lecture.</Trans>,
-            did: <Trans>Made Constitutional Law: 64 cards in 8 sections</Trans>,
+            body: (
+              <Trans>
+                In a Project with your course files, Claude can build one deck with a section for
+                each lecture.
+              </Trans>
+            ),
+            attachment: (
+              <FolderChip
+                name={t`Constitutional Law`}
+                files={["Lecture 1.pdf", "Lecture 2.pdf", "Lecture 3.pdf"]}
+              />
+            ),
+            ask: <Trans>Build a deck from this Project, one section per lecture.</Trans>,
+            result: (
+              <DeckResult
+                name={t`Constitutional Law`}
+                count={<Trans>64 cards</Trans>}
+                sections={[t`Lecture 1`, t`Lecture 2`, t`Lecture 3`]}
+                more={5}
+              />
+            ),
           },
           {
             id: "code",
+            icon: <SquareTerminal aria-hidden="true" />,
             use: <Trans>While you code</Trans>,
-            ask: <Trans>Make cards for the Rust ownership rules we hit today.</Trans>,
-            did: <Trans>Added 7 cards to Rust</Trans>,
-          },
-          {
-            id: "missed",
-            use: <Trans>Before an exam</Trans>,
-            ask: <Trans>Quiz me on the cases I keep forgetting.</Trans>,
-            did: <Trans>Found the 6 cards you forgot most this month</Trans>,
+            body: (
+              <Trans>
+                In Claude Code, turn what you just learned into cards without leaving the terminal.
+              </Trans>
+            ),
+            attachment: (
+              <CodeChip
+                name="main.rs"
+                lines={['let s = String::from("hi");', "take(s);", 'println!("{s}"); // error']}
+              />
+            ),
+            ask: <Trans>Make cards for the ownership rules we hit today.</Trans>,
+            result: (
+              <CardsResult
+                lang="en"
+                cards={[
+                  { label: "Rust", term: "Move", meaning: t`Ownership passes to the new owner` },
+                  { label: "Rust", term: "Borrow", meaning: t`Use a value without taking it` },
+                ]}
+              />
+            ),
           },
           {
             id: "hint",
+            icon: <LifeBuoy aria-hidden="true" />,
             use: <Trans>For a hard card</Trans>,
+            body: (
+              <Trans>
+                Ask Claude for a memory trick on the cards you keep missing. It adds a hint you see
+                before the card turns over.
+              </Trans>
+            ),
             ask: <Trans>Add a memory trick to the cards I missed this week.</Trans>,
-            did: <Trans>Added hints to 5 cards</Trans>,
-          },
-          {
-            id: "deck",
-            use: <Trans>To check in</Trans>,
-            ask: <Trans>How is my Anatomy deck doing?</Trans>,
-            did: <Trans>212 cards: 31 due, 140 known</Trans>,
+            result: (
+              <HintResult
+                term="Bioavailability"
+                hint={<Trans>Bio + available: how much of the dose your body can use.</Trans>}
+              />
+            ),
           },
         ],
         gap: {
@@ -427,39 +527,95 @@ function useContent(key: AssistantKey): Content {
         asks: [
           {
             id: "pdf",
+            icon: <FileText aria-hidden="true" />,
             use: <Trans>From a PDF in the folder</Trans>,
+            body: (
+              <Trans>
+                Gemini CLI reads the files where you run it. Point it at a lecture and get cards
+                from the key terms.
+              </Trans>
+            ),
+            attachment: <Attached name="lecture-4.pdf" hint={<Trans>In this folder</Trans>} />,
             ask: <Trans>Make cards from the key terms in lecture-4.pdf.</Trans>,
-            did: <Trans>Added 12 cards to Chemistry</Trans>,
-          },
-          {
-            id: "doc",
-            use: <Trans>From your notes</Trans>,
-            ask: <Trans>Make cards from my biology notes, one per term.</Trans>,
-            did: <Trans>Added 15 cards to Biology</Trans>,
+            result: (
+              <CardsResult
+                lang="en"
+                cards={[
+                  {
+                    label: t`Chemistry`,
+                    term: "Isomer",
+                    meaning: t`Same formula, different structure`,
+                  },
+                  {
+                    label: t`Chemistry`,
+                    term: "Chiral",
+                    meaning: t`Not the same as its mirror image`,
+                  },
+                ]}
+                note={<Trans>Added 12 cards to Chemistry.</Trans>}
+              />
+            ),
           },
           {
             id: "web",
+            icon: <Globe aria-hidden="true" />,
             use: <Trans>From a web page</Trans>,
+            body: (
+              <Trans>Give Gemini a link. It reads the page and turns its terms into cards.</Trans>
+            ),
+            attachment: <LinkChip url="kubernetes.io/docs/concepts" />,
             ask: <Trans>Make cards from the terms on this page.</Trans>,
-            did: <Trans>Added 9 cards to Chemistry</Trans>,
+            result: (
+              <CardsResult
+                lang="en"
+                cards={[
+                  { label: "Kubernetes", term: "Pod", meaning: t`The smallest unit you deploy` },
+                  { label: "Kubernetes", term: "Node", meaning: t`A machine that runs pods` },
+                ]}
+              />
+            ),
           },
           {
             id: "due",
+            icon: <SquareTerminal aria-hidden="true" />,
             use: <Trans>Before you start work</Trans>,
+            body: (
+              <Trans>
+                Ask what’s due before you open your editor, and get through it in a few minutes.
+              </Trans>
+            ),
             ask: <Trans>What’s due in Lymi today?</Trans>,
-            did: <Trans>18 cards due, about six minutes</Trans>,
+            result: (
+              <DueResult
+                count={18}
+                time={<Trans>due · about six minutes</Trans>}
+                decks={[
+                  { name: "Kubernetes", due: 9 },
+                  { name: t`Chemistry`, due: 6 },
+                  { name: t`Spanish`, due: 3 },
+                ]}
+              />
+            ),
           },
           {
             id: "plan",
+            icon: <CalendarRange aria-hidden="true" />,
             use: <Trans>For test prep</Trans>,
+            body: (
+              <Trans>
+                Ask for a whole deck with a plan. Gemini builds it in sections you can take one week
+                at a time.
+              </Trans>
+            ),
             ask: <Trans>Make me an SAT vocabulary deck, a section a week.</Trans>,
-            did: <Trans>Made SAT words: 120 cards in 6 sections</Trans>,
-          },
-          {
-            id: "cli",
-            use: <Trans>From your terminal</Trans>,
-            ask: <Trans>Add the terms from this README to my Kubernetes deck.</Trans>,
-            did: <Trans>Added 11 cards to Kubernetes</Trans>,
+            result: (
+              <DeckResult
+                name={t`SAT words`}
+                count={<Trans>120 cards</Trans>}
+                sections={[t`Week 1`, t`Week 2`, t`Week 3`]}
+                more={3}
+              />
+            ),
           },
         ],
         gap: {
@@ -528,7 +684,10 @@ function useContent(key: AssistantKey): Content {
         ),
         demo: {
           attachment: (
-            <Post text="Los precios del alquiler vuelven a subir y la huelga por la vivienda llega a tres ciudades." />
+            <Post
+              lang="es"
+              text="Los precios del alquiler vuelven a subir y la huelga por la vivienda llega a tres ciudades."
+            />
           ),
           ask: <Trans>Make Spanish flashcards from this post.</Trans>,
           reply: <Trans>Added 4 cards to your Spanish deck.</Trans>,
@@ -545,43 +704,103 @@ function useContent(key: AssistantKey): Content {
         asks: [
           {
             id: "post",
+            icon: <AtSign aria-hidden="true" />,
             use: <Trans>From a post on X</Trans>,
-            ask: <Trans>Turn this thread into cards.</Trans>,
-            did: <Trans>Added 8 cards to Economics</Trans>,
-          },
-          {
-            id: "routine",
-            use: <Trans>Every morning</Trans>,
-            ask: <Trans>Every day at 8, tell me what’s due in Lymi.</Trans>,
-            did: <Trans>Today: 12 cards due, about five minutes</Trans>,
-          },
-          {
-            id: "folder",
-            use: <Trans>While you’re away</Trans>,
-            ask: <Trans>Go through my lecture notes and make cards from each file.</Trans>,
-            did: <Trans>Made Biology: 48 cards in 6 sections</Trans>,
-          },
-          {
-            id: "talk",
-            use: <Trans>After you practise</Trans>,
-            ask: <Trans>Save the new Spanish words from our chat.</Trans>,
-            did: <Trans>Added 6 cards to Spanish</Trans>,
-          },
-          {
-            id: "forget",
-            use: <Trans>For the ones that slip</Trans>,
-            ask: <Trans>Which words do I keep forgetting?</Trans>,
-            did: (
+            body: (
               <Trans>
-                Three keep slipping: <Words lang="es">la huelga, la vivienda, el sindicato</Words>
+                Tag Grok Bot under a post on X and it turns the words worth keeping into cards.
               </Trans>
+            ),
+            attachment: (
+              <Post
+                lang="es"
+                text="Los sindicatos convocan una huelga general por el precio de la vivienda."
+              />
+            ),
+            ask: <Trans>Turn this post into cards.</Trans>,
+            result: (
+              <CardsResult
+                lang="es"
+                cards={[
+                  { label: t`Spanish`, term: "el sindicato", meaning: t`The union` },
+                  {
+                    label: t`Spanish`,
+                    term: "convocar",
+                    meaning: t`To call (a strike, a meeting)`,
+                  },
+                ]}
+                note={<Trans>Skipped la huelga: you have that card.</Trans>}
+              />
             ),
           },
           {
-            id: "team",
-            use: <Trans>For your team</Trans>,
-            ask: <Trans>Add the terms from today’s onboarding thread to our glossary deck.</Trans>,
-            did: <Trans>Added 12 cards to Team glossary</Trans>,
+            id: "routine",
+            icon: <Repeat aria-hidden="true" />,
+            use: <Trans>Every morning</Trans>,
+            body: (
+              <Trans>
+                Set a routine and Grok Bot checks Lymi each morning: what’s due, and how long it
+                will take.
+              </Trans>
+            ),
+            attachment: <RoutineChip when={<Trans>Every day at 8:00</Trans>} />,
+            ask: <Trans>Tell me what’s due in Lymi.</Trans>,
+            result: (
+              <DueResult
+                count={12}
+                time={<Trans>due · about five minutes</Trans>}
+                decks={[
+                  { name: t`Spanish`, due: 8 },
+                  { name: t`Economics`, due: 4 },
+                ]}
+              />
+            ),
+          },
+          {
+            id: "away",
+            icon: <FolderOpen aria-hidden="true" />,
+            use: <Trans>While you’re away</Trans>,
+            body: (
+              <Trans>
+                Grok Bot works on its own cloud computer. Hand it a folder of notes and come back to
+                a finished deck.
+              </Trans>
+            ),
+            attachment: (
+              <FolderChip
+                name={t`Biology notes`}
+                files={["cells.md", "genetics.md", "evolution.md"]}
+              />
+            ),
+            ask: <Trans>Make cards from each of these files.</Trans>,
+            result: (
+              <DeckResult
+                name={t`Biology`}
+                count={<Trans>48 cards</Trans>}
+                sections={[t`Cells`, t`Genetics`, t`Evolution`]}
+              />
+            ),
+          },
+          {
+            id: "slip",
+            icon: <Sparkle aria-hidden="true" />,
+            use: <Trans>For the ones that slip</Trans>,
+            body: (
+              <Trans>
+                Grok Bot can read your review history and drill the words you keep forgetting.
+              </Trans>
+            ),
+            ask: <Trans>Which words do I keep forgetting?</Trans>,
+            result: (
+              <SlippingResult
+                lang="es"
+                words={[
+                  { term: "la huelga", meaning: t`The strike`, forgot: <Trans>forgot 4×</Trans> },
+                  { term: "la vivienda", meaning: t`Housing`, forgot: <Trans>forgot 3×</Trans> },
+                  { term: "ojalá", meaning: t`I hope`, forgot: <Trans>forgot 3×</Trans> },
+                ]}
+              />
+            ),
           },
         ],
         gap: {
@@ -721,46 +940,55 @@ function Hero({ assistant }: { assistant: AssistantKey }) {
 
 /** A page for people who already use one assistant: what to ask it, and how Lymi keeps the rest. */
 export function AssistantPageView({ assistant }: { assistant: AssistantKey }) {
+  const { t } = useLingui();
   const page = ASSISTANT_PAGES[assistant];
   const content = useContent(assistant);
+  const backdrop = useBackdropPreview();
 
   return (
-    <LandingLayout page={page.page} hero={<Hero assistant={assistant} />}>
-      <Wide
-        title={content.asksTitle}
-        body={
-          <Trans>
-            Once Lymi is connected, ask in your own words. The assistant finds the right deck and
-            tells you what it changed.
-          </Trans>
-        }
-      >
-        <AssistantAsks assistant={page.name} hue={page.hue} asks={content.asks} />
-      </Wide>
+    <BackdropContext.Provider value={backdrop}>
+      <LandingLayout page={page.page} hero={<Hero assistant={assistant} />}>
+        <Wide
+          title={content.asksTitle}
+          body={
+            <Trans>
+              Once Lymi is connected, ask in your own words. The assistant finds the right deck and
+              tells you what it changed.
+            </Trans>
+          }
+        >
+          <AssistantAsks
+            assistant={page.name}
+            hue={page.hue}
+            label={t`What to ask ${page.name}`}
+            asks={content.asks}
+          />
+        </Wide>
 
-      <Wide title={content.gap.title} body={content.gap.body}>
-        <ReturnLane
-          lang={content.gap.lang}
-          term={() => <span lang={content.gap.lang}>{content.gap.term}</span>}
+        <Wide title={content.gap.title} body={content.gap.body}>
+          <ReturnLane
+            lang={content.gap.lang}
+            term={() => <span lang={content.gap.lang}>{content.gap.term}</span>}
+          />
+        </Wide>
+
+        <AssistantSignature assistant={assistant} />
+
+        <AssistantConnect
+          title={content.connect.title}
+          note={content.connect.note}
+          steps={content.connect.steps}
+          guide={page.guide}
+          name={page.name}
+          listing={page.listing}
         />
-      </Wide>
 
-      <AssistantSignature assistant={assistant} />
+        <Questions title={content.faqTitle} items={page.questions} />
 
-      <AssistantConnect
-        title={content.connect.title}
-        note={content.connect.note}
-        steps={content.connect.steps}
-        guide={page.guide}
-        name={page.name}
-        listing={page.listing}
-      />
+        <OtherAssistants current={assistant} title={<Trans>Use a different assistant?</Trans>} />
 
-      <Questions title={content.faqTitle} items={page.questions} />
-
-      <OtherAssistants current={assistant} title={<Trans>Use a different assistant?</Trans>} />
-
-      <SignUpSection title={content.signUp} />
-    </LandingLayout>
+        <SignUpSection title={content.signUp} />
+      </LandingLayout>
+    </BackdropContext.Provider>
   );
 }

@@ -350,14 +350,17 @@ msgstr "12 карток на повторення, приблизно п’ят�
 msgid "12 Spanish cards are due, about five minutes. Quick warm-up first?"
 msgstr "На повторення чекають 12 карток з іспанської, приблизно п’ять хвилин. Спершу коротка розминка?"
 
+msgid "120 cards"
+msgstr "120 карток"
+
 msgid "135–145 mmol/L in adults"
 msgstr "135–145 ммоль/л у дорослих"
 
+msgid "14 cards"
+msgstr "14 карток"
+
 msgid "17."
 msgstr "17."
-
-msgid "18 cards due, about six minutes"
-msgstr "18 карток до повторення, хвилин на шість"
 
 msgid "18 cards in 3 decks"
 msgstr "18 карток у 3 колодах"
@@ -383,14 +386,14 @@ msgstr "Версія 2025 року"
 msgid "2026 edition"
 msgstr "Видання 2026 року"
 
-msgid "212 cards: 31 due, 140 known"
-msgstr "212 карток: 31 до повторення, 140 засвоєно"
-
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 питань, 15 для складання. Вивчити — 300."
 
 msgid "3 of 4 chosen"
 msgstr "Обрано 3 з 4"
+
+msgid "3 pages"
+msgstr "3 сторінки"
 
 msgid "3 reviews saved"
 msgstr "3 повторення збережено"
@@ -419,6 +422,9 @@ msgstr "4 дні"
 msgid "40 and 60 questions. 120 of 200 points to pass."
 msgstr "40 і 60 питань. 120 з 200 балів для складання."
 
+msgid "48 cards"
+msgstr "48 карток"
+
 msgid "48 pages"
 msgstr "48 сторінок"
 
@@ -427,6 +433,12 @@ msgstr "500 футів (близько 150 м) в обидва боки"
 
 msgid "60% in reading, writing and listening, and 60% in speaking."
 msgstr "60% у читанні, письмі й аудіюванні та 60% у говорінні."
+
+msgid "64 cards"
+msgstr "64 картки"
+
+msgid "64 pages"
+msgstr "64 сторінки"
 
 msgid "80% to pass. Questions from the official handbook."
 msgstr "80% правильних, щоб скласти. Питання за офіційним посібником."
@@ -567,6 +579,9 @@ msgstr "Туга за кимось або чимось, чого вже нема
 msgid "A Lymi deck"
 msgstr "Колода в Lymi"
 
+msgid "A machine that runs pods"
+msgstr "Машина, на якій працюють поди"
+
 msgid "A major chord with a minor seventh, built on the fifth note of the key"
 msgstr "Мажорний акорд із малою септимою, побудований на п’ятому ступені тональності"
 
@@ -690,6 +705,9 @@ msgstr "Дані облікового запису: електронна адр�
 msgid "Accounting"
 msgstr "Бухгалтерія"
 
+msgid "ACE inhibitor"
+msgstr "Інгібітор АПФ"
+
 msgid "Actions"
 msgstr "Дії"
 
@@ -807,12 +825,6 @@ msgstr "Додай нові слова з сьогоднішнього урок�
 msgid "Add the terms from README.md to my Kubernetes deck."
 msgstr "Додай терміни з README.md у мою колоду «Kubernetes»."
 
-msgid "Add the terms from this README to my Kubernetes deck."
-msgstr "Додай терміни з цього README у мою колоду «Kubernetes»."
-
-msgid "Add the terms from today’s onboarding thread to our glossary deck."
-msgstr "Додай терміни з сьогоднішнього треду про онбординг у нашу колоду-глосарій."
-
 msgid "Add to Lymi"
 msgstr "Додати в Lymi"
 
@@ -822,17 +834,11 @@ msgstr "Додано"
 msgid "Added 1 card, with an example and a hint"
 msgstr "Додано 1 картку з прикладом і підказкою"
 
-msgid "Added 11 cards to Kubernetes"
-msgstr "Додано 11 карток у колоду «Kubernetes»"
-
 msgid "Added 11 cards to Kubernetes."
 msgstr "Додано 11 карток у колоду «Kubernetes»."
 
-msgid "Added 12 cards to Chemistry"
-msgstr "Додано 12 карток у колоду «Хімія»"
-
-msgid "Added 12 cards to Team glossary"
-msgstr "Додано 12 карток у колоду «Глосарій команди»"
+msgid "Added 12 cards to Chemistry."
+msgstr "Додано 12 карток у колоду «Хімія»."
 
 msgid "Added 14 cards to Biology, with the slides’ definitions. I skipped “diffusion”, which you already have."
 msgstr "Додав 14 карток у «Біологію» з визначеннями зі слайдів. Пропустив «дифузію», бо вона в тебе вже є."
@@ -840,17 +846,14 @@ msgstr "Додав 14 карток у «Біологію» з визначенн
 msgid "Added 14 cards to Pharmacology, each with its mechanism from your notes."
 msgstr "Додав 14 карток у «Фармакологію», до кожної — механізм дії з твоїх нотаток."
 
-msgid "Added 15 cards to Biology"
-msgstr "Додано 15 карток у колоду «Біологія»"
-
 msgid "Added 18 cards to Security+, each with the guide’s definition."
 msgstr "Додав 18 карток у Security+, до кожної — визначення з посібника."
 
-msgid "Added 20 cards to NCLEX pharmacology"
-msgstr "Додано 20 карток у колоду «Фармакологія NCLEX»"
+msgid "Added 20 cards to NCLEX pharmacology."
+msgstr "Додано 20 карток у колоду «Фармакологія NCLEX»."
 
-msgid "Added 26 cards to Pharmacology"
-msgstr "Додано 26 карток у колоду «Фармакологія»"
+msgid "Added 26 cards to Pharmacology."
+msgstr "Додано 26 карток у колоду «Фармакологія»."
 
 msgid "Added 4 cards to your Biology deck."
 msgstr "Додано 4 картки в колоду «Біологія»."
@@ -873,14 +876,8 @@ msgstr "Додано 6 карток до Estonian A2"
 msgid "Added 6 cards to Japanese, with readings. I skipped <0>電車</0>, which you already have."
 msgstr "Додано 6 карток до японської колоди, з читаннями. <0>電車</0> пропущено: ця картка в тебе вже є."
 
-msgid "Added 6 cards to Spanish"
-msgstr "Додано 6 карток у колоду з іспанської"
-
 msgid "Added 7 cards to Estonian. I skipped <0>palun</0>, which you already have."
 msgstr "Додав 7 карток в Estonian. <0>Palun</0> пропустив: ця картка в тебе вже є."
-
-msgid "Added 7 cards to Rust"
-msgstr "Додано 7 карток у колоду «Rust»"
 
 msgid "Added 7 cards with pinyin. I skipped <0>地铁</0>, which you already have."
 msgstr "Готово: 7 карток із піньїнем. <0>地铁</0> пропущено, це слово в тебе вже є."
@@ -894,20 +891,11 @@ msgstr "Додав 7 карток із наголосами. Пропустив 
 msgid "Added 8 cards to Biology"
 msgstr "Додано 8 карток до «Біології»"
 
-msgid "Added 8 cards to Economics"
-msgstr "Додано 8 карток у колоду «Економіка»"
-
 msgid "Added 8 cards to German, each with its article. I skipped <0>die Miete</0>, which you already have."
 msgstr "Додав 8 карток до німецької, кожну з артиклем. <0>die Miete</0> пропустив, бо ця картка в тебе вже є."
 
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Додав 8 карток у колоду «Іспанська». Пропустив «ojalá»: така картка в тебе вже є."
-
-msgid "Added 9 cards to Biology and skipped 3 you had"
-msgstr "Додано 9 карток у колоду «Біологія», 3 наявні пропущено"
-
-msgid "Added 9 cards to Chemistry"
-msgstr "Додано 9 карток у колоду «Хімія»"
 
 msgid "Added 9 cards to Polish. I skipped <0>sklep</0>, which you already have."
 msgstr "Додав 9 карток до польської. <0>sklep</0> пропустив — ця картка в тебе вже є."
@@ -920,9 +908,6 @@ msgstr "Додав 9 карток до іспанської. <0>la cuenta</0> п
 
 msgid "Added after this week’s lesson"
 msgstr "Додано після уроку цього тижня"
-
-msgid "Added hints to 5 cards"
-msgstr "Додано підказки до 5 карток"
 
 msgid "Added hints to 6 cards in Japanese"
 msgstr "Додано підказки до 6 карток у «Японській»"
@@ -950,9 +935,6 @@ msgstr "Після сьогоднішнього уроку"
 
 msgid "After you learn something new, you start noticing it everywhere"
 msgstr "Коли дізнаєшся щось нове, починаєш помічати це всюди"
-
-msgid "After you practise"
-msgstr "Після практики"
 
 msgid "AI"
 msgstr "AI"
@@ -1171,8 +1153,14 @@ msgstr "Зі змінами від 30 січня 2026 року"
 msgid "Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you just had. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
 msgstr "Попроси ChatGPT зробити флешкартки з фото нотаток, сторінки підручника чи щойно завершеного чату. Вони потраплять у Lymi, а інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
 
+msgid "Ask Claude for a memory trick on the cards you keep missing. It adds a hint you see before the card turns over."
+msgstr "Попроси Claude придумати підказку для карток, які тобі не даються. Він додасть підказку, яку ти бачиш, перш ніж перевернути картку."
+
 msgid "Ask Claude for flashcards from a long PDF, a lecture or a whole Project. They land in Lymi, and spaced repetition brings each one back just as it starts to fade."
 msgstr "Попроси Claude зробити флешкартки з великого PDF, лекції чи цілого проєкту. Вони потраплять у Lymi, а інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
+
+msgid "Ask for a whole deck with a plan. Gemini builds it in sections you can take one week at a time."
+msgstr "Попроси цілу колоду з планом. Gemini збере її з розділів, які можна проходити по тижню."
 
 msgid "Ask for cards"
 msgstr "Попроси картки"
@@ -1182,6 +1170,9 @@ msgstr "Попроси Gemini зробити флешкартки з нотат�
 
 msgid "Ask what to review."
 msgstr "Запитай, що повторити."
+
+msgid "Ask what’s due before you open your editor, and get through it in a few minutes."
+msgstr "Запитай, що чекає на повторення, перш ніж відкрити редактор, і впорайся за кілька хвилин."
 
 msgid "Asked both ways"
 msgstr "Питання в обидва боки"
@@ -1243,9 +1234,6 @@ msgstr "Банк"
 msgid "Bank president"
 msgstr "Директор банку"
 
-msgid "Before an exam"
-msgstr "Перед іспитом"
-
 msgid "Before the test"
 msgstr "Перед тестом"
 
@@ -1257,6 +1245,9 @@ msgstr "Почалася 1618 року з <0>Празької дефенестр
 
 msgid "Beta"
 msgstr "Бета"
+
+msgid "Beta blocker"
+msgstr "Бета-блокатор"
 
 msgid "Bicycle"
 msgstr "Велосипед"
@@ -1273,6 +1264,9 @@ msgstr "Зв’язується з рецептором і блокує його
 msgid "Binds a receptor and switches it on"
 msgstr "Зв’язується з рецептором і активує його"
 
+msgid "Bio + available: how much of the dose your body can use."
+msgstr "Біо + доступний: скільки з дози твій організм може використати."
+
 msgid "Biology"
 msgstr "Біологія"
 
@@ -1281,6 +1275,9 @@ msgstr "Біологія · нова"
 
 msgid "Biology · week 6"
 msgstr "Біологія · тиждень 6"
+
+msgid "Biology notes"
+msgstr "Нотатки з біології"
 
 msgid "Book"
 msgstr "Книжка"
@@ -1345,8 +1342,8 @@ msgstr "Збери курс із розділів і поділися ним і�
 msgid "Build a course in sections, share it with one link, and add what you taught after every lesson. Each learner reviews on their own schedule."
 msgstr "Створи курс із розділів, поділися ним через одне посилання й додавай вивчене після кожного уроку. Кожен учень повторює у своєму темпі."
 
-msgid "Build a deck from this Project’s files, one section per lecture."
-msgstr "Збери колоду з файлів цього проєкту, по розділу на кожну лекцію."
+msgid "Build a deck from this Project, one section per lecture."
+msgstr "Збери колоду з цього проєкту, по розділу на лекцію."
 
 msgid "Build the course in order."
 msgstr "Вибудуй курс крок за кроком."
@@ -1386,6 +1383,9 @@ msgstr "Теоретичний іспит DMV у Каліфорнії: прав�
 
 msgid "California Driver’s Handbook © California DMV, licensed CC BY-NC 4.0."
 msgstr "California Driver’s Handbook © California DMV, ліцензія CC BY-NC 4.0."
+
+msgid "Calvin cycle"
+msgstr "Цикл Кальвіна"
 
 msgid "Can a card have a picture?"
 msgstr "Чи може картка мати зображення?"
@@ -1517,6 +1517,12 @@ msgstr "Картки без розділу"
 msgid "Cards you wrote"
 msgstr "Твої картки"
 
+msgid "Carries sugar around the plant"
+msgstr "Розносить цукри по рослині"
+
+msgid "Carries water up from the roots"
+msgstr "Піднімає воду від коренів"
+
 msgid "Castle"
 msgstr "Замок (фортеця)"
 
@@ -1536,6 +1542,9 @@ msgstr "transport-klityny.pdf"
 msgid "cell-transport.pdf · page 12 of 30"
 msgstr "transport-klityny.pdf · сторінка 12 з 30"
 
+msgid "Cells"
+msgstr "Клітини"
+
 msgid "Certifications"
 msgstr "Сертифікації"
 
@@ -1547,6 +1556,9 @@ msgstr "Що нового"
 
 msgid "Changelog · Lymi"
 msgstr "Що нового в Lymi"
+
+msgid "ChatGPT can read your review history, so it knows which cards you keep forgetting and can drill just those."
+msgstr "ChatGPT бачить історію твоїх повторень, тож знає, які картки ти постійно забуваєш, і може ганяти тебе саме по них."
 
 msgid "ChatGPT flashcards with spaced repetition · Lymi"
 msgstr "Флешкартки з ChatGPT та інтервальне повторення · Lymi"
@@ -1760,6 +1772,9 @@ msgstr "підключено"
 
 msgid "Connecting an assistant"
 msgstr "Як підключити асистента"
+
+msgid "Constitutional Law"
+msgstr "Конституційне право"
 
 msgid "Continue with Apple"
 msgstr "Продовжити з Apple"
@@ -2060,6 +2075,12 @@ msgstr "Препарати, як вони діють і на що зважати
 msgid "Due"
 msgstr "Коли повторювати"
 
+msgid "due · about five minutes"
+msgstr "на повторення · приблизно п’ять хвилин"
+
+msgid "due · about six minutes"
+msgstr "на повторення · хвилин на шість"
+
 msgid "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
 msgstr "Кожна колода рахує свої питання як «Нові», «У вивченні» та «Засвоєні», тож ще до дати тесту видно, яку частину каталогу ти вже знаєш."
 
@@ -2213,9 +2234,6 @@ msgstr "Вечір"
 msgid "Every *person* is different."
 msgstr "Кожна *людина* інша."
 
-msgid "Every assistant that works with Lymi"
-msgstr "Усі асистенти, що працюють із Lymi"
-
 msgid "Every card in the deck"
 msgstr "Усі картки колоди"
 
@@ -2230,9 +2248,6 @@ msgstr "Кожна картка вимовляє своє слово мовою 
 
 msgid "Every day"
 msgstr "Щодня"
-
-msgid "Every day at 8, tell me what’s due in Lymi."
-msgstr "Щодня о 8 кажи мені, що чекає на повторення в Lymi."
 
 msgid "Every day at 8:00"
 msgstr "Щодня о 8:00"
@@ -2311,6 +2326,9 @@ msgstr "Усе готове й під рукою, перш ніж почати"
 
 msgid "Everything the test can ask."
 msgstr "Усе, про що може спитати тест."
+
+msgid "Evolution"
+msgstr "Еволюція"
 
 msgid "Exam prep"
 msgstr "Підготовка до іспитів"
@@ -2525,20 +2543,17 @@ msgstr "Для тестів на громадянство Німеччини, С
 msgid "For the ones that slip"
 msgstr "Для того, що забувається"
 
-msgid "For your team"
-msgstr "Для команди"
-
 msgid "Forgot"
 msgstr "Не пам’ятаю"
 
+msgid "forgot 3×"
+msgstr "забуто 3×"
+
+msgid "forgot 4×"
+msgstr "забуто 4×"
+
 msgid "Format from 11 April 2026"
 msgstr "Формат від 11 квітня 2026 року"
-
-msgid "Found the 6 cards you forgot most this month"
-msgstr "Знайдено 6 карток, які цього місяця забувалися найчастіше"
-
-msgid "Found the 7 cards you forgot most this month"
-msgstr "Знайдено 7 карток, які цього місяця забувалися найчастіше"
 
 msgid "Four ways to ask"
 msgstr "Чотири способи питати"
@@ -2648,9 +2663,6 @@ msgstr "Зі щойно завершеного чату"
 msgid "From your notes"
 msgstr "З твоїх нотаток"
 
-msgid "From your terminal"
-msgstr "З термінала"
-
 msgid "Full setup guide"
 msgstr "Повна інструкція з підключення"
 
@@ -2660,6 +2672,9 @@ msgstr "Фурігана, піньїнь, наголоси."
 msgid "Future, “I”"
 msgstr "Майбутній час, «я»"
 
+msgid "Gemini CLI reads the files where you run it. Point it at a lecture and get cards from the key terms."
+msgstr "Gemini CLI читає файли в папці, де ти його запускаєш. Вкажи на лекцію — і отримаєш картки з ключових термінів."
+
 msgid "Gemini flashcards with spaced repetition · Lymi"
 msgstr "Флешкартки з Gemini та інтервальне повторення · Lymi"
 
@@ -2668,6 +2683,9 @@ msgstr "Gemini створює картки. Lymi їх повертає."
 
 msgid "Gemini’s flashcards and quizzes show what you know today. Nothing brings a card back next week. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
 msgstr "Флешкартки й тести Gemini показують, що ти знаєш сьогодні. Але ніщо не поверне картку наступного тижня. Це робить Lymi: кожна картка повертається саме тоді, коли починає забуватися, і щоразу, як ти її згадуєш, пауза довшає."
+
+msgid "Genetics"
+msgstr "Генетика"
 
 msgid "Genitive"
 msgstr "Родовий"
@@ -2723,8 +2741,14 @@ msgstr "Як дістатися"
 msgid "Give a deck instructions, or let AI follow the way you already write your cards."
 msgstr "Дай колоді інструкції або дозволь AI писати так, як ти вже пишеш картки."
 
+msgid "Give Claude a whole chapter or lecture. It picks the terms worth learning and writes each card."
+msgstr "Дай Claude цілий розділ чи лекцію. Він вибере терміни, які варто вивчити, і напише кожну картку."
+
 msgid "Give each account only the access its task needs"
 msgstr "Давай кожному обліковому запису лише той доступ, що потрібен для його завдання"
+
+msgid "Give Gemini a link. It reads the page and turns its terms into cards."
+msgstr "Дай Gemini посилання. Він прочитає сторінку й перетворить її терміни на картки."
 
 msgid "Give it Lymi’s client ID"
 msgstr "Вкажи client ID Lymi"
@@ -2743,9 +2767,6 @@ msgstr "Охоче"
 
 msgid "Go home"
 msgstr "На головну"
-
-msgid "Go through my lecture notes and make cards from each file."
-msgstr "Пройдися моїми конспектами лекцій і зроби картки з кожного файлу."
 
 msgid "Goal reached"
 msgstr "Мету досягнуто"
@@ -2800,6 +2821,9 @@ msgstr "Привітання"
 msgid "Grok Bot can check Lymi on a schedule. Make it a routine, and each morning it tells you what’s due and warms you up on the words that keep slipping. Its cloud computer keeps running when your laptop is closed."
 msgstr "Grok Bot може перевіряти Lymi за розкладом. Зроби це рутиною, і щоранку він казатиме, що чекає на повторення, і розминатиме тебе на словах, які постійно вилітають з голови. Його хмарний комп’ютер працює, навіть коли ноутбук закритий."
 
+msgid "Grok Bot can read your review history and drill the words you keep forgetting."
+msgstr "Grok Bot бачить історію твоїх повторень і ганяє тебе по словах, які ти постійно забуваєш."
+
 msgid "Grok Bot can write flashcards, but it has no deck of its own and nothing that brings a card back later. Connect Lymi and Grok Bot adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade."
 msgstr "Grok Bot уміє писати флешкартки, але не має власної колоди й нічого, що повертало б картку згодом. Підключи Lymi, і Grok Bot додаватиме картки у твої колоди, де інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
 
@@ -2818,11 +2842,17 @@ msgstr "Флешкартки з Grok Bot та інтервальне повто�
 msgid "Grok Bot has no flashcards of its own and nothing that brings a word back later. Lymi does: each card returns as it starts to fade, and the gap grows every time you remember it."
 msgstr "У Grok Bot немає власних флешкарток і нічого, що повертало б слово згодом. Це робить Lymi: кожна картка повертається саме тоді, коли починає забуватися, і щоразу, як ти її згадуєш, пауза довшає."
 
+msgid "Grok Bot works on its own cloud computer. Hand it a folder of notes and come back to a finished deck."
+msgstr "Grok Bot працює на власному хмарному комп’ютері. Дай йому папку з нотатками — і повернешся до готової колоди."
+
 msgid "habeas corpus"
 msgstr "habeas corpus"
 
 msgid "Hand"
 msgstr "Рука"
+
+msgid "Hand ChatGPT the list you’ll be tested on and get a card for each item, with the detail the exam asks about."
+msgstr "Дай ChatGPT список того, що буде на іспиті, і отримай картку на кожен пункт — з тими деталями, про які питають."
 
 msgid "Happy New *Year*!"
 msgstr "З Новим *роком*!"
@@ -3125,6 +3155,9 @@ msgstr "Завтра в мене *запис*."
 msgid "I have lots of *friends*."
 msgstr "У мене багато *друзів*."
 
+msgid "I hope"
+msgstr "Сподіваюся"
+
 msgid "I hope so; if only"
 msgstr "Сподіваюся; якби ж то"
 
@@ -3287,6 +3320,9 @@ msgstr "Важлива"
 msgid "In a bar in Spain, you ask them to “put” you one."
 msgstr "В іспанському барі каву просять «поставити»."
 
+msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
+msgstr "У проєкті з файлами курсу Claude може зібрати одну колоду з розділом на кожну лекцію."
+
 msgid "In Bavaria and Austria it’s a Semmel."
 msgstr "У Баварії та Австрії кажуть Semmel."
 
@@ -3295,6 +3331,9 @@ msgstr "У ChatGPT відкрий Plugins, натисни +, потім Add cust
 
 msgid "In Chinese, one character can have more than one sound. <0>行</0> is háng in <1>银行</1>, a bank, and xíng in <2>不行</2>, no good. Lymi treats each sound as its own word, with its own card and its own pinyin."
 msgstr "У китайській один ієрогліф може мати кілька звучань. <0>行</0> — це háng у <1>银行</1>, «банк», і xíng у <2>不行</2>, «не годиться». Lymi вважає кожне звучання окремим словом, із власною карткою та власним піньїнем."
+
+msgid "In Claude Code, turn what you just learned into cards without leaving the terminal."
+msgstr "У Claude Code перетворюй щойно вивчене на картки, не виходячи з термінала."
 
 msgid "In Claude, open Settings, then Connectors, and choose Add custom connector. Paste this address and leave the rest empty."
 msgstr "У Claude відкрий Settings, потім Connectors, і вибери Add custom connector. Встав цю адресу, а решту полів залиш порожніми."
@@ -3708,9 +3747,21 @@ msgstr "Навчальні листи: коли картки готові, а т
 msgid "Learning is more fun together."
 msgstr "Разом учитися веселіше."
 
+msgid "Leaves"
+msgstr "Листки"
+
 msgctxt "deck tag"
 msgid "Leben in Deutschland test"
 msgstr "Тест Leben in Deutschland"
+
+msgid "Lecture 1"
+msgstr "Лекція 1"
+
+msgid "Lecture 2"
+msgstr "Лекція 2"
+
+msgid "Lecture 3"
+msgstr "Лекція 3"
 
 msgid "Lecture 4 · Cell transport"
 msgstr "Лекція 4 · Транспорт у клітині"
@@ -3747,6 +3798,9 @@ msgstr "Попрактикуймося. Використовуй німецьк�
 
 msgid "library"
 msgstr "бібліотека"
+
+msgid "Light reactions"
+msgstr "Світлові реакції"
 
 msgid "Lingering at the table after a meal"
 msgstr "Засидітися за столом після їжі"
@@ -3880,18 +3934,6 @@ msgstr "Lymi використовує OpenAI, Anthropic і Cloudflare Workers AI
 msgid "Lymi with AI assistants"
 msgstr "Lymi з AI-асистентами"
 
-msgid "Lymi with ChatGPT"
-msgstr "Lymi з ChatGPT"
-
-msgid "Lymi with Claude"
-msgstr "Lymi з Claude"
-
-msgid "Lymi with Gemini"
-msgstr "Lymi з Gemini"
-
-msgid "Lymi with Grok Bot"
-msgstr "Lymi з Grok Bot"
-
 msgid "Lymi works for anything you want to remember."
 msgstr "Lymi підходить для всього, що хочеш запам’ятати."
 
@@ -3916,23 +3958,11 @@ msgstr "macOS 13 або новіша"
 msgid "Made <0>Lisboa a dois</0>: 42 cards in 5 sections"
 msgstr "Створено колоду <0>Lisboa a dois</0>: 42 картки в 5 розділах"
 
-msgid "Made Biology: 48 cards in 6 sections"
-msgstr "Створено колоду «Біологія»: 48 карток у 6 розділах"
-
 msgid "Made by Lymi"
 msgstr "Від Lymi"
 
 msgid "Made by Ukrainians"
 msgstr "Створено українцями"
-
-msgid "Made Constitutional Law: 64 cards in 8 sections"
-msgstr "Створено колоду «Конституційне право»: 64 картки у 8 розділах"
-
-msgid "Made Photosynthesis: 14 cards"
-msgstr "Створено колоду «Фотосинтез»: 14 карток"
-
-msgid "Made SAT words: 120 cards in 6 sections"
-msgstr "Створено колоду «Лексика SAT»: 120 карток у 6 розділах"
 
 msgid "Main navigation"
 msgstr "Основна навігація"
@@ -3940,17 +3970,17 @@ msgstr "Основна навігація"
 msgid "Mainland voice"
 msgstr "Голос материкового Китаю"
 
+msgid "Make a card for each drug, with its class."
+msgstr "Зроби картку на кожен препарат, з його класом."
+
 msgid "Make a deck for the class and send its join link. Every card you add after a lesson reaches everyone who joined, and each person keeps their own schedule."
 msgstr "Створи колоду для групи й надішли посилання для приєднання. Кожна картка, яку ти додаси після уроку, з’явиться в усіх, хто приєднався, а розклад повторень у кожного свій."
 
-msgid "Make cards for the 20 drugs on my NCLEX list, with their class."
-msgstr "Зроби картки на 20 препаратів із мого списку до NCLEX, з фармакологічною групою кожного."
+msgid "Make cards for the ownership rules we hit today."
+msgstr "Зроби картки з правил володіння, на які ми сьогодні натрапили."
 
-msgid "Make cards for the Rust ownership rules we hit today."
-msgstr "Зроби картки з правил володіння в Rust, на які ми сьогодні натрапили."
-
-msgid "Make cards from my biology notes, one per term."
-msgstr "Зроби картки з моїх нотаток з біології, по одній на термін."
+msgid "Make cards from each of these files."
+msgstr "Зроби картки з кожного з цих файлів."
 
 msgid "Make cards from the key terms in lecture-4.pdf."
 msgstr "Зроби картки з ключових термінів у lecture-4.pdf."
@@ -3964,7 +3994,7 @@ msgstr "Зроби картки з нових термінів у цьому PDF
 msgid "Make cards from the terms on this page."
 msgstr "Зроби картки з термінів на цій сторінці."
 
-msgid "Make cards from this page. Skip the ones I already have."
+msgid "Make cards from this page. Skip the ones I have."
 msgstr "Зроби картки з цієї сторінки. Ті, що в мене вже є, пропусти."
 
 msgid "Make cards from this."
@@ -4487,14 +4517,23 @@ msgstr "Інші застосунки"
 msgid "Other exams"
 msgstr "Інші іспити"
 
+msgid "Other MCP apps"
+msgstr "Інші MCP-застосунки"
+
 msgid "Other subjects"
 msgstr "Інші теми"
 
 msgid "Our *team* won!"
 msgstr "Наша *команда* виграла!"
 
+msgid "Ownership passes to the new owner"
+msgstr "Володіння переходить до нового власника"
+
 msgid "p. 112"
 msgstr "с. 112"
+
+msgid "p. 114"
+msgstr "с. 114"
 
 msgid "Page not found"
 msgstr "Сторінку не знайдено"
@@ -4564,6 +4603,9 @@ msgstr "Телефон; дзвінок"
 
 msgid "Photo"
 msgstr "Фото"
+
+msgid "Photosynthesis"
+msgstr "Фотосинтез"
 
 msgid "phrase"
 msgstr "фраза"
@@ -4857,9 +4899,6 @@ msgstr "Мати добре нунчі — відчувати настрій, п
 msgid "Quickstart"
 msgstr "Швидкий старт"
 
-msgid "Quiz me on the cases I keep forgetting."
-msgstr "Перевір мене на справах, які я постійно забуваю."
-
 msgid "quiz me on the ones I miss"
 msgstr "перевір мене на словах, які я забуваю"
 
@@ -4962,6 +5001,9 @@ msgstr "Договір оренди"
 
 msgid "Repetition that works."
 msgstr "Повторення, яке працює."
+
+msgid "Replay"
+msgstr "Ще раз"
 
 msgid "Replay pronunciation"
 msgstr "Послухати ще раз"
@@ -5083,11 +5125,11 @@ msgstr "Читається так само, а слово інше."
 msgid "Sample twice as fast as the highest frequency"
 msgstr "Дискретизуй із частотою, удвічі вищою за максимальну"
 
+msgid "SAT words"
+msgstr "Слова для SAT"
+
 msgid "Save “Feierabend” to my German deck."
 msgstr "Збережи «Feierabend» у мою колоду німецької."
-
-msgid "Save the new Spanish words from our chat."
-msgstr "Збережи нові іспанські слова з нашої розмови."
 
 msgid "Say it"
 msgstr "Вимова"
@@ -5218,6 +5260,9 @@ msgstr "Ser кажуть про те, хто і що: soy de Valencia, я з В�
 msgid "Service providers and international transfers"
 msgstr "Постачальники послуг і міжнародне передавання"
 
+msgid "Set a routine and Grok Bot checks Lymi each morning: what’s due, and how long it will take."
+msgstr "Налаштуй рутину, і Grok Bot щоранку перевірятиме Lymi: що чекає на повторення і скільки часу це займе."
+
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
 msgstr "Сім карток: чотири з фінської, дві шахові й одна з тієї статті про обробку сигналів."
 
@@ -5339,6 +5384,12 @@ msgstr "Перейти до завантаження"
 msgid "Skip to the updates"
 msgstr "Перейти до оновлень"
 
+msgid "Skipped la huelga: you have that card."
+msgstr "Пропущено la huelga: ця картка в тебе вже є."
+
+msgid "Skipped Stomata: you have that card."
+msgstr "Пропущено Stomata: ця картка в тебе вже є."
+
 msgid "Slides or a PDF"
 msgstr "Слайди чи PDF"
 
@@ -5359,6 +5410,9 @@ msgstr "Розумне додавання в бета-версії, тому ч�
 
 msgid "Smart add sends the photos, PDFs or text you provide, with relevant deck context, to Anthropic to read. Cloudflare Workers AI checks the resulting terms and, when requested, compares them with your answer. We save the cards you choose, not the original lesson files."
 msgstr "Розумне додавання надсилає надані тобою фото, PDF або текст із доречним контекстом колод до Anthropic для читання. Cloudflare Workers AI перевіряє знайдені терміни й за запитом порівнює їх із твоєю відповіддю. Ми зберігаємо вибрані тобою картки, а не початкові файли уроку."
+
+msgid "Snap a page of notes or a textbook. ChatGPT reads it, skips the cards you already have and adds the rest."
+msgstr "Сфотографуй сторінку нотаток чи підручника. ChatGPT прочитає її, пропустить картки, які в тебе вже є, і додасть решту."
 
 msgid "So-so"
 msgstr "Так собі"
@@ -5597,14 +5651,14 @@ msgstr "Шведи кажуть так і про каву, і про робоч�
 msgid "table"
 msgstr "стіл"
 
-msgid "Tag everything from chapter 4 “exam”."
-msgstr "Постав на все з глави 4 тег «іспит»."
-
 msgid "Tag everything that’s on Friday’s anatomy exam."
 msgstr "Познач тегом усе, що буде на іспиті з анатомії в п’ятницю."
 
 msgid "Tag Grok Bot on a post, hand it an article, or let it work through your notes while you’re away. The cards land in Lymi, and spaced repetition brings each one back just as it starts to fade."
 msgstr "Познач Grok Bot під дописом, дай йому статтю або доручи пройтися твоїми нотатками, поки тебе немає. Картки потраплять у Lymi, а інтервальне повторення поверне кожну саме тоді, коли вона почне забуватися."
+
+msgid "Tag Grok Bot under a post on X and it turns the words worth keeping into cards."
+msgstr "Познач Grok Bot під дописом в X, і він перетворить слова, які варто запам’ятати, на картки."
 
 msgid "Tag: {verb}"
 msgstr "Тег: {verb}"
@@ -5674,6 +5728,9 @@ msgstr "Команда"
 
 msgid "Technology"
 msgstr "Технології"
+
+msgid "Tell me what’s due in Lymi."
+msgstr "Скажи, що чекає на повторення в Lymi."
 
 msgid "Ten minutes between meetings."
 msgstr "Десять хвилин між зустрічами."
@@ -6059,6 +6116,9 @@ msgstr "Дрібниці, які стають важливими вже за к�
 msgid "The small words every sentence is built from."
 msgstr "Маленькі слова, з яких складається кожне речення."
 
+msgid "The smallest unit you deploy"
+msgstr "Найменша одиниця, яку розгортаєш"
+
 msgid "The soup *is* cold."
 msgstr "Суп *холодний*."
 
@@ -6079,6 +6139,9 @@ msgstr "Тисяча найуживаніших естонських слів, �
 
 msgid "The three you missed most this week: “ojalá”, “madrugar” and “tener ganas de”."
 msgstr "Три, які цього тижня не згадувалися найчастіше: «ojalá», «madrugar» і «tener ganas de»."
+
+msgid "The union"
+msgstr "Профспілка"
 
 msgid "The verbs you’ll use most, each with its three forms and an example."
 msgstr "Дієслова, які знадобляться найчастіше, кожне з трьома формами й прикладом."
@@ -6218,9 +6281,6 @@ msgstr "Ця політика охоплює сайт Lymi, застосунки
 msgid "Three keep slipping: <0>aufhören, Schnapsidee, die Gewerkschaft</0>"
 msgstr "Три слова не тримаються: <0>aufhören, Schnapsidee, die Gewerkschaft</0>"
 
-msgid "Three keep slipping: <0>la huelga, la vivienda, el sindicato</0>"
-msgstr "Три слова постійно забуваються: <0>la huelga, la vivienda, el sindicato</0>"
-
 msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 msgstr "Ось три, що двічі не згадалися: дифузія, мітохондрія і рибосома."
 
@@ -6284,6 +6344,9 @@ msgstr "Бронювати"
 msgid "To buy"
 msgstr "Купувати"
 
+msgid "To call (a strike, a meeting)"
+msgstr "Скликати (страйк, збори)"
+
 msgid "To change (trains, buses)"
 msgstr "Пересідати (з потяга, автобуса)"
 
@@ -6298,9 +6361,6 @@ msgstr "Пересісти на іншу лінію (метро, потяг)"
 
 msgid "To change trains"
 msgstr "Пересідати на інший потяг"
-
-msgid "To check in"
-msgstr "Щоб глянути, як справи"
 
 msgid "to come"
 msgstr "приходити"
@@ -6377,9 +6437,6 @@ msgstr "Сумувати за кимось чи чимось"
 msgid "To not be able to be bothered"
 msgstr "Ліньки; не хочеться нічого робити"
 
-msgid "To plan tonight"
-msgstr "Щоб спланувати вечір"
-
 msgid "To pull"
 msgstr "Тягнути"
 
@@ -6410,9 +6467,6 @@ msgstr "Брати"
 msgid "To take a taxi"
 msgstr "Взяти таксі"
 
-msgid "To tidy a deck"
-msgstr "Щоб навести лад у колоді"
-
 msgid "To usually do something"
 msgstr "Зазвичай щось робити"
 
@@ -6424,9 +6478,6 @@ msgstr "Сьогодні"
 
 msgid "Today, 8:00 · checked Lymi"
 msgstr "Сьогодні, 8:00 · перевірено Lymi"
-
-msgid "Today: 12 cards due, about five minutes"
-msgstr "Сьогодні: 12 карток на повторення, приблизно п’ять хвилин"
 
 msgid "Today’s page from my textbook. Add the new words to my Japanese deck."
 msgstr "Сьогоднішня сторінка з мого підручника. Додай нові слова до моєї японської колоди."
@@ -6544,14 +6595,14 @@ msgstr "Перевернути картку назад"
 msgid "Turn the card over"
 msgstr "Перевернути картку"
 
-msgid "Turn this thread into cards."
-msgstr "Зроби картки з цієї гілки."
+msgid "Turn this post into cards."
+msgstr "Зроби картки з цього допису."
 
 msgid "Turn tonight’s lecture into cards."
 msgstr "Перетвори сьогоднішню лекцію на картки."
 
-msgid "Turn what we just went over into a deck."
-msgstr "Зроби колоду з того, що ми щойно розібрали."
+msgid "Turn what we just covered into a deck, a section per topic."
+msgstr "Зроби з того, що ми щойно розібрали, колоду — по розділу на тему."
 
 msgid "Turn your class notes into cards."
 msgstr "Перетвори конспект на картки."
@@ -6640,6 +6691,9 @@ msgstr "Тест на громадянство США"
 
 msgid "Use a different assistant?"
 msgstr "Користуєшся іншим асистентом?"
+
+msgid "Use a value without taking it"
+msgstr "Користуватися значенням, не забираючи його"
 
 msgid "Use cases"
 msgstr "Для чого"
@@ -6730,6 +6784,9 @@ msgstr "Ми давні *друзі*."
 
 msgid "Weather"
 msgstr "Погода"
+
+msgid "Web page"
+msgstr "Вебсторінка"
 
 msgid "Website visits, and where visitors click and scroll, are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
 msgstr "Відвідування сайту, а також те, куди відвідувачі натискають і як далеко гортають, підраховуються без постійного ідентифікатора пристрою: використовується щоденний код відвідувача, утворений з IP-адреси та даних браузера. Відомості про джерело переходу й кампанію можуть передаватися посиланнями до реєстрації. Звіти про помилки містять очищені технічні дані, країну та ідентифікатор облікового запису або застосунку; вони надсилаються й після заперечення проти продуктової аналітики. Журнали хостингу й узагальнені показники швидкодії також допомагають підтримувати роботу та безпеку Lymi."
@@ -6829,6 +6886,10 @@ msgstr "О котрій відчиняється *банк*?"
 
 msgid "What time is the next *train*?"
 msgstr "О котрій наступний *поїзд*?"
+
+#. placeholder {0}: page.name
+msgid "What to ask {0}"
+msgstr "Що можна попросити в {0}"
 
 msgid "What we collect and why"
 msgstr "Які дані ми збираємо й навіщо"
@@ -7054,6 +7115,9 @@ msgstr "Робота й навчання"
 
 msgid "Work, a job (informal, Mexico)"
 msgstr "Робота (розмовне, Мексика)"
+
+msgid "Worked through a topic with ChatGPT? Turn the whole conversation into a deck, with a section for each part."
+msgstr "Розібрали тему з ChatGPT? Перетвори всю розмову на колоду з розділом на кожну частину."
 
 msgid "Works offline"
 msgstr "Працює без інтернету"

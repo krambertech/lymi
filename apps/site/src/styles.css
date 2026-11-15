@@ -1342,6 +1342,24 @@ html:has(.deck-cards[open]) {
   background: oklch(0.34 0.065 var(--tray-h, 235));
 }
 
+/* An assistant's colour as a soft pool of light under its demo, with no edge: the tray's hue,
+   fading into the page. */
+.assistant-spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.assistant-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: -12% -18%;
+  z-index: -1;
+  background: radial-gradient(closest-side, oklch(0.93 0.06 var(--tray-h, 235)), transparent);
+  pointer-events: none;
+}
+[data-theme="dark"] .assistant-spotlight::before {
+  background: radial-gradient(closest-side, oklch(0.32 0.07 var(--tray-h, 235)), transparent);
+}
+
 /* A shelf's colour beside its name in the Explore menu: its tray's hue, strong enough to tell apart. */
 .shelf-swatch {
   flex: none;

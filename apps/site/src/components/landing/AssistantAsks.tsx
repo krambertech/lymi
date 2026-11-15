@@ -1,42 +1,35 @@
-import { clsx } from "clsx";
-import { AnimatePresence, motion, useInView } from "motion/react";
-import { type CSSProperties, type ReactNode, useRef, useState } from "react";
-import { Lantern } from "../Lantern";
+import { motion } from "motion/react";
+import type { ReactNode } from "react";
 import { AssistantMark, type AssistantName } from "./AssistantMarks";
-import { EASE, useHold, useStill } from "./playback";
+import { EASE } from "./playback";
+import { Showcase, useShowcaseStage } from "./Showcase";
 
 export interface Ask {
   id: string;
+  icon: ReactNode;
   /** What it is for, in a few words: the item's name in the list. */
   use: ReactNode;
+  /** The use case in a sentence or two, open while the item plays. */
+  body: ReactNode;
+  /** What the learner sends with the request: a photo, a file, a post. */
+  attachment?: ReactNode;
   ask: ReactNode;
-  /** What Lymi did, as the assistant reports it. Only what the tools really do. */
-  did: ReactNode;
+  /** What came back from Lymi. Only what the tools really do. */
+  result: ReactNode;
 }
 
 interface Props {
   assistant: AssistantName;
   hue: number;
+  /** The list's name for screen readers. */
+  label: string;
   asks: readonly Ask[];
 }
 
-/** How long each exchange stays: it plays in about 1.6 s, then there's time to read it. */
-const DWELL_MS = 4600;
-
-/** One exchange on the tray: the request, the assistant using Lymi, and what Lymi did. */
-function Exchange({
-  assistant,
-  item,
-  still,
-  play,
-}: {
-  assistant: AssistantName;
-  item: Ask;
-  still: boolean;
-  /** On screen: it waits to play until then, though its words are in the page from the start. */
-  play: boolean;
-}) {
-  const shown = still || play;
+/** One exchange on the stage: what was sent, the request, and what came back. */
+function Exchange({ assistant, item }: { assistant: AssistantName; item: Ask }) {
+  const { playing, still } = useShowcaseStage();
+  const shown = still || playing;
   const step = (delay: number) => ({
     initial: still ? false : { opacity: 0, y: 10, filter: "blur(6px)" },
     animate: shown
@@ -44,103 +37,49 @@ function Exchange({
       : { opacity: 0, y: 10, filter: "blur(6px)" },
     transition: { duration: 0.45, ease: EASE, delay: still ? 0 : delay },
   });
+  const lead = item.attachment ? 0.5 : 0;
   return (
-    <div className="flex w-full max-w-[400px] flex-col gap-3">
-      <motion.p
-        {...step(0.1)}
-        className="ms-10 w-fit max-w-[85%] self-end rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-pretty text-canvas"
-      >
-        {item.ask}
-      </motion.p>
-      <motion.div {...step(0.7)} className="flex items-start gap-2.5">
-        <span className="grid size-8 shrink-0 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4">
+    <div className="flex w-full max-w-[420px] flex-col gap-3">
+      <div className="flex flex-col items-end gap-2">
+        {item.attachment && <motion.div {...step(0.15)}>{item.attachment}</motion.div>}
+        <motion.p
+          {...step(0.15 + lead)}
+          className="ms-10 w-fit max-w-[85%] rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-pretty text-canvas"
+        >
+          {item.ask}
+        </motion.p>
+      </div>
+      <div className="flex items-start gap-2.5">
+        <motion.span
+          {...step(0.8 + lead)}
+          className="grid size-8 shrink-0 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4"
+        >
           <AssistantMark name={assistant} />
-        </span>
-        <p className="flex min-w-0 items-start gap-2 rounded-xl bg-plate px-3.5 py-2.5 text-md text-pretty text-ink edge-drop">
-          <Lantern className="mt-0.5 size-5 shrink-0" />
-          <span>{item.did}</span>
-        </p>
-      </motion.div>
+        </motion.span>
+        <motion.div {...step(1.15 + lead)} className="min-w-0 flex-1">
+          {item.result}
+        </motion.div>
+      </div>
     </div>
   );
 }
 
-/**
- * Things to ask this assistant: one exchange at a time on its tray, beside the list of what each is
- * for. It moves on by itself until the visitor picks one.
- */
-export function AssistantAsks({ assistant, hue, asks }: Props) {
-  const still = useStill();
-  const root = useRef<HTMLDivElement>(null);
-  const inView = useInView(root, { amount: 0.5 });
-  const hold = useHold();
-  const [index, setIndex] = useState(0);
-  const [picked, setPicked] = useState(false);
-  const auto = !still && !picked;
-  const paused = !inView || hold.held;
-  const item = asks[index] as Ask;
-
+/** Things to ask this assistant, as timed slides with the exchange on the stage. */
+export function AssistantAsks({ assistant, hue, label, asks }: Props) {
   return (
-    <div
-      ref={root}
-      className="mt-12 grid gap-8 @4xl:mt-14 @4xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] @4xl:gap-14"
-    >
-      <div
-        {...hold.handlers}
-        style={{ "--tray-h": hue } as CSSProperties}
-        className="use-case-tile grid min-h-[240px] place-items-center rounded-[28px] p-6 @2xl:p-10 @4xl:min-h-[320px]"
-      >
-        <AnimatePresence mode="wait" initial={false}>
-          <motion.div
-            key={item.id}
-            exit={{ opacity: 0, y: -8, filter: "blur(6px)", transition: { duration: 0.3 } }}
-            className="flex w-full justify-center"
-          >
-            <Exchange assistant={assistant} item={item} still={still} play={inView} />
-          </motion.div>
-        </AnimatePresence>
-      </div>
-
-      <ul {...hold.handlers} className="grid content-start @4xl:pt-1">
-        {asks.map((each, i) => {
-          const on = i === index;
-          return (
-            <li key={each.id}>
-              <span
-                aria-hidden="true"
-                className="relative block h-0.5 overflow-hidden rounded-full bg-edge"
-              >
-                {on &&
-                  (auto ? (
-                    <span
-                      key={`${each.id}-fill`}
-                      data-paused={paused || undefined}
-                      onAnimationEnd={() => setIndex((n) => (n + 1) % asks.length)}
-                      style={{ animationDuration: `${DWELL_MS}ms` }}
-                      className="landing-dwell absolute inset-0 rounded-full bg-ink ltr:origin-left rtl:origin-right"
-                    />
-                  ) : (
-                    <span className="absolute inset-0 rounded-full bg-ink" />
-                  ))}
-              </span>
-              <button
-                type="button"
-                aria-pressed={on}
-                onClick={() => {
-                  setPicked(true);
-                  setIndex(i);
-                }}
-                className={clsx(
-                  "block w-full py-3.5 text-start text-lg font-medium tracking-[-0.015em] transition-colors duration-200",
-                  on ? "text-ink" : "text-ink-secondary hoverable:hover:text-ink",
-                )}
-              >
-                {each.use}
-              </button>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <Showcase label={label} className="mt-12 @4xl:mt-14">
+      {asks.map((item) => (
+        <Showcase.Item
+          key={item.id}
+          id={item.id}
+          icon={item.icon}
+          title={item.use}
+          description={item.body}
+          hue={hue}
+        >
+          <Exchange assistant={assistant} item={item} />
+        </Showcase.Item>
+      ))}
+    </Showcase>
   );
 }

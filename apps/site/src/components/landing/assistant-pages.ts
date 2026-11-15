@@ -19,8 +19,6 @@ export interface AssistantPage {
   /** The search result's title and description. */
   title: MessageDescriptor;
   blurb: MessageDescriptor;
-  /** How another assistant's page links here. */
-  linkLabel: MessageDescriptor;
   /** Answered on the page and repeated in its structured data. */
   questions: readonly Question[];
 }
@@ -33,7 +31,6 @@ export const ASSISTANT_PAGES: Record<AssistantKey, AssistantPage> = {
     guide: "/docs/mcp/grok#grok-bot",
     title: msg`Grok Bot flashcards with spaced repetition · Lymi`,
     blurb: msg`Connect Grok Bot to Lymi and turn posts on X, articles and notes into flashcards, even on a routine. Lymi brings each card back just as it starts to fade.`,
-    linkLabel: msg`Lymi with Grok Bot`,
     questions: [
       {
         id: "can",
@@ -74,7 +71,6 @@ export const ASSISTANT_PAGES: Record<AssistantKey, AssistantPage> = {
     guide: "/docs/mcp/claude",
     title: msg`Claude flashcards with spaced repetition · Lymi`,
     blurb: msg`Connect Claude to Lymi and turn PDFs, lecture notes and chats into flashcards. Lymi brings each card back just as it starts to fade. Free.`,
-    linkLabel: msg`Lymi with Claude`,
     questions: [
       {
         id: "can",
@@ -110,7 +106,6 @@ export const ASSISTANT_PAGES: Record<AssistantKey, AssistantPage> = {
     guide: "/docs/mcp/chatgpt",
     title: msg`ChatGPT flashcards with spaced repetition · Lymi`,
     blurb: msg`Connect ChatGPT to Lymi and turn photos of notes, textbook pages and chats into flashcards. Lymi brings each card back just as it starts to fade. Free.`,
-    linkLabel: msg`Lymi with ChatGPT`,
     questions: [
       {
         id: "can",
@@ -146,7 +141,6 @@ export const ASSISTANT_PAGES: Record<AssistantKey, AssistantPage> = {
     guide: "/docs/mcp/gemini",
     title: msg`Gemini flashcards with spaced repetition · Lymi`,
     blurb: msg`Connect Gemini to Lymi and turn notes, PDFs and web pages into flashcards. Lymi brings each card back just as it starts to fade. Free.`,
-    linkLabel: msg`Lymi with Gemini`,
     questions: [
       {
         id: "can",

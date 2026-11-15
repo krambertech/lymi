@@ -48,7 +48,7 @@ The invariant is `NoCrossSend` in [`models/WriteQueue.tla`](models/WriteQueue.tl
 | `SessionEnds` | the session ending, with `unclaimWrites` in the cleanup of `Sync`'s effect |
 | `Drops` | `dropWrites` in `writes.ts`, called from `apps/mobile/src/app/(tabs)/you/index.tsx`, `delete-account.tsx` and `delete-code.tsx` |
 
-The model describes the code at `0d80e817a` on `main`. A request takes its session when it leaves (`config.headers()` in `packages/client/src/api/request.ts`), and the flush loop awaits `flushGrades` before each send, so the learner can change between two sends of one flush. The model keeps both facts; do not merge those steps.
+The model describes the code at `253cd1a37` on `main`. A request takes its session when it leaves (`config.headers()` in `packages/client/src/api/request.ts`), and the flush loop awaits `flushGrades` before each send, so the learner can change between two sends of one flush. The model keeps both facts; do not merge those steps.
 
 Replays live in `packages/client/src/writes.test.ts`: "sends nothing after a sign-out", "does not put a write back when the learner signed out", "stops a flush that was mid-way when the learner left" and "keeps the queue but holds it".
 
@@ -77,14 +77,14 @@ The invariants are `ConfirmsOnlyWithoutGrades` and `NoLostUpdate` in [`models/Re
 | `Counts` | `attemptsOn` and `drawableCount` in `settleDay`, then `nextOutcome` in `packages/core/src/streak.ts` (before 1164, the same rules inlined in `settleDay`) |
 | `Writes`, `Rereads` | `settleDay`'s compare-and-set update, and the next try when it misses, up to `SETTLE_TRIES` |
 
-Two constants are the guards; the default config turns both on and describes `main` with pull request 1164 (its head `55573043b` less the `nextOutcome` clamp it is dropping). It holds: 105,573 distinct states in about a second, and 116,599 with one card due.
+Two constants are the guards; the default config turns both on and describes the code at `253cd1a37` on `main`. It holds: 105,573 distinct states in about a second, and 116,599 with one card due.
 
 | Constant | Code | Off |
 | --- | --- | --- |
 | `CompareAndSet` | `settleDay`'s update lands only over the outcome, goal and attempts it decided from | `ConfirmsOnlyWithoutGrades` breaks |
 | `ReadsDayFirst` | each try in `settleDay` selects the day row rather than deciding from its caller's copy | `NoLostUpdate` breaks |
 
-Both `FALSE` is the code before 1164, where both rules break. The paths TLC found there, each replayed on a local D1 before 1164 fixed them:
+Both `FALSE` is the code before 1164, at `0d80e817a`, where both rules break. The paths TLC found there, each replayed on a local D1 before 1164 fixed them:
 
 - A grade lands while opening Lymi confirms the day as nothing due: the visit writes `nothing_due` over a grade that had landed. Breaks `ConfirmsOnlyWithoutGrades`.
 - Undo of an earlier grade reads the day; another grade then meets the goal; the Undo lands and, deciding the outcome it read, writes nothing: `goal_met` with one review of two. Breaks `NoLostUpdate`.

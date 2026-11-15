@@ -1,4 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
+import { clsx } from "clsx";
 import type { CSSProperties } from "react";
 import { SectionTitle } from "./FeatureSection";
 import { BENTO_HUES } from "./LanguageBento";
@@ -37,7 +38,15 @@ export function LanguageLinks() {
             </Trans>
           </p>
         </div>
-        <ul className="mt-10 grid grid-cols-2 gap-2.5 @2xl:grid-cols-4">
+        <ul
+          className={clsx(
+            "mt-10 grid grid-cols-2 gap-2.5",
+            // Rows stay even: six links sit three to a row, eight four to a row.
+            links.length % 3 === 0 && links.length % 4 !== 0
+              ? "@2xl:grid-cols-3"
+              : "@2xl:grid-cols-4",
+          )}
+        >
           {links.map((link, i) => (
             <li key={link.language}>
               <a

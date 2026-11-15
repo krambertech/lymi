@@ -14,7 +14,7 @@ import {
 const DRIVING = EXAMS.find((exam) => exam.id === "ukraine-driving");
 
 const EXAMPLES = [
-  { text: "Зу́стрінемося на вокза́лі.", translation: msg`We’ll meet at the station.` },
+  { text: "Зустрі́немося на вокза́лі.", translation: msg`We’ll meet at the station.` },
   { text: "У неді́лю я відпочива́ю.", translation: msg`On Sunday I rest.` },
 ];
 

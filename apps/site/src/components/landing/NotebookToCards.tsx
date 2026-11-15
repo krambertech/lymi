@@ -97,10 +97,12 @@ export function NotebookToCards({ lang, heading, rows, cards, skipped }: Props) 
             transition={{ duration: 0.5, ease: EASE }}
             className="flex items-baseline justify-between gap-3 rounded-lg bg-plate px-4 py-3.5 edge"
           >
-            <span lang={lang} className="truncate text-xl font-medium text-ink">
+            <span lang={lang} className="shrink-0 text-xl font-medium text-ink">
               {card.term}
             </span>
-            <span className="shrink-0 text-md text-ink-secondary">{i18n._(card.meaning)}</span>
+            <span className="min-w-0 text-end text-md text-pretty text-ink-secondary">
+              {i18n._(card.meaning)}
+            </span>
           </motion.div>
         ))}
         <motion.p

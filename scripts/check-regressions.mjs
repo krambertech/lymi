@@ -21,7 +21,7 @@ export function claimProblems(file, source) {
     for (const claim of RETIRED_CLAIMS) {
       if (claim.test(line))
         found.push(
-          `${file}:${index + 1}: cards come back as they start to fade, at about 90% recall, not just before the learner forgets; say "just as it starts to fade" (#1117)`,
+          `${file}:${index + 1}: cards come back as they start to fade, at about 90% recall, not just before the learner forgets; say what the schedule does: remembered cards wait longer, forgotten ones come back sooner (#1117)`,
         );
     }
   }

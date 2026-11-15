@@ -47,7 +47,7 @@ export function JapaneseView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<LanguageName lang="ja">日本語</LanguageName>}
-          title={<Trans>The flashcard app that gets Japanese.</Trans>}
+          title={<Trans>Japanese words you’ll remember.</Trans>}
           narrow
           lede={
             <Trans>
@@ -93,7 +93,7 @@ export function JapaneseView({ decks, locale }: Props) {
         <StartSection
           title={
             <Trans>
-              Start at <span lang="ja">あ</span>. Keep going.
+              Start at <span lang="ja">あ</span>.
             </Trans>
           }
           body={
@@ -192,12 +192,12 @@ export function JapaneseView({ decks, locale }: Props) {
         />
       )}
 
-      <Questions title={<Trans>Questions before you start.</Trans>} items={JAPANESE_QUESTIONS} />
+      <Questions title={<Trans>Common questions.</Trans>} items={JAPANESE_QUESTIONS} />
 
       <SignUpSection
         title={
           <Trans>
-            Start with <span lang="ja">あ</span> tonight.
+            Your first kana is <span lang="ja">あ</span>.
           </Trans>
         }
       />

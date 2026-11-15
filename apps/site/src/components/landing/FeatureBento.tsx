@@ -304,8 +304,8 @@ export function FeatureBento() {
         />
         <CompactTile
           hue={350}
-          title={<Trans>Your data is yours</Trans>}
-          body={<Trans>Export any deck, any time.</Trans>}
+          title={<Trans>Export your decks</Trans>}
+          body={<Trans>Download the decks you own, any time.</Trans>}
           Demo={ExportTile}
         />
       </ul>

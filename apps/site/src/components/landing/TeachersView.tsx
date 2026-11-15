@@ -65,7 +65,7 @@ export function TeachersView() {
 
   return (
     <LandingLayout page="teachers" hero={<ClassHero />}>
-      <UseCases title={<Trans>Teach anything worth remembering.</Trans>} items={subjects} />
+      <UseCases title={<Trans>For any subject you teach.</Trans>} items={subjects} />
 
       <FeatureSection
         id="course"
@@ -98,7 +98,7 @@ export function TeachersView() {
       <ReturnSection
         lang="et"
         term={() => "tere"}
-        title={<Trans>Repetition that works.</Trans>}
+        title={<Trans>Every learner on their own schedule.</Trans>}
         body={
           <Trans>
             Each time a learner remembers a card, Lymi waits a little longer before showing it

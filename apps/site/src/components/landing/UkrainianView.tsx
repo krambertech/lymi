@@ -4,8 +4,10 @@ import type { PublicDeckSummary } from "@lymi/core/catalog";
 import type { ReactNode } from "react";
 import type { Locale } from "../../lib/routes";
 import { UKRAINIAN_QUESTIONS } from "./faq";
+import { NotebookToCards } from "./NotebookToCards";
 import { type StressPage, StressView } from "./StressView";
 import { EnrichUkrainian } from "./UkrainianAi";
+import { UkrainianBento } from "./UkrainianBento";
 import {
   UKRAINIAN_CLASS_CARDS,
   UKRAINIAN_EXAMPLES,
@@ -32,6 +34,25 @@ const UKRAINIAN: StressPage = {
   questions: UKRAINIAN_QUESTIONS,
   added: { label: msg`Українська · new`, term: "по́дорож", meaning: msg`Journey` },
   enrich: <EnrichUkrainian />,
+  notebook: (
+    <NotebookToCards
+      lang="uk"
+      heading={["Українська · вівторок", "A2"]}
+      rows={[
+        { term: "пересадка", gloss: msg`change of trains`, card: 0 },
+        { term: "запізнюватися", gloss: msg`to be late`, card: 1 },
+        { term: "дякую" },
+        { term: "неділя", gloss: msg`Sunday`, card: 2 },
+      ]}
+      cards={[
+        { term: "переса́дка", meaning: msg`Change of trains` },
+        { term: "запі́знюватися", meaning: msg`To be late` },
+        { term: "неді́ля", meaning: msg`Sunday` },
+      ]}
+      skipped="дякую"
+    />
+  ),
+  bento: <UkrainianBento />,
   copy: {
     headline: <Trans>Ukrainian words you’ll remember.</Trans>,
     lede: (
@@ -86,6 +107,7 @@ const UKRAINIAN: StressPage = {
       </Trans>
     ),
     allDecks: <Trans>All Ukrainian decks</Trans>,
+    details: <Trans>Built with Ukrainian in mind.</Trans>,
   },
 };
 

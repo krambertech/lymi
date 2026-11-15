@@ -2,8 +2,10 @@ import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { clsx } from "clsx";
+import { EXAMS, examPath } from "../../lib/exams";
 import type { Locale } from "../../lib/routes";
 import { addUrl } from "../deck/DeckView";
+import { ArrowLink } from "./ArrowLink";
 import { Attachment } from "./AssistantChat";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { JAPANESE_QUESTIONS } from "./faq";
@@ -30,6 +32,8 @@ import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
 
 const KANA = "read-japanese-kana";
+
+const EXAM = EXAMS.find((exam) => exam.id === "jlpt");
 
 interface Props {
   /** Every published Japanese deck in this locale, beginner decks first. */
@@ -104,6 +108,13 @@ export function JapaneseView({ decks, locale }: Props) {
           }
           steps={steps}
           lang="ja"
+          after={
+            EXAM && (
+              <ArrowLink href={examPath(EXAM, locale)}>
+                <Trans>Studying for the JLPT N5 or N4</Trans>
+              </ArrowLink>
+            )
+          }
         />
       )}
 

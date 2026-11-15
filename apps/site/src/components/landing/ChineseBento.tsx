@@ -2,7 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { Tile } from "./JapaneseBento";
+import { BENTO_HUES, LanguageBento, Tile } from "./LanguageBento";
 import { Pinyin } from "./Pinyin";
 import { useStill } from "./playback";
 
@@ -108,8 +108,9 @@ function ToneMarks() {
 /** Chinese learners' own needs, each in a line and a small picture. */
 export function ChineseBento() {
   return (
-    <div className="mt-12 grid gap-2.5 @3xl:grid-cols-2 @4xl:mt-16">
+    <LanguageBento>
       <Tile
+        hue={BENTO_HUES[0]}
         title={<Trans>Simplified or traditional</Trans>}
         body={
           <Trans>
@@ -121,6 +122,7 @@ export function ChineseBento() {
         <Scripts />
       </Tile>
       <Tile
+        hue={BENTO_HUES[1]}
         title={<Trans>Type tones as numbers</Trans>}
         body={
           <Trans>
@@ -130,6 +132,6 @@ export function ChineseBento() {
       >
         <ToneMarks />
       </Tile>
-    </div>
+    </LanguageBento>
   );
 }

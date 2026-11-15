@@ -430,6 +430,7 @@ export const analyticsEvents = {
       "hero",
       "landing",
       "assistant_pages",
+      "languages_hub",
     ]),
     // A public site path without its locale prefix, never a query or a hash.
     target: z

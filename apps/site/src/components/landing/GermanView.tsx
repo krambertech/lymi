@@ -10,6 +10,7 @@ import { FeatureSection, Wide } from "./FeatureSection";
 import { GERMAN_QUESTIONS } from "./faq";
 import { GenderTiles } from "./GenderTiles";
 import { EnrichGerman } from "./GermanAi";
+import { GermanBento } from "./GermanBento";
 import {
   GERMAN_CLASS_CARDS,
   GERMAN_EXAMPLES,
@@ -23,9 +24,11 @@ import {
 import { LandingLayout } from "./LandingLayout";
 import { LanguageDecks } from "./LanguageDecks";
 import {
+  DetailsSection,
   EnrichSection,
   LanguageHero,
   LanguageName,
+  NotesSection,
   OwnAiSection,
   ReturnSection,
   StartSection,
@@ -33,6 +36,7 @@ import {
   VoiceSection,
 } from "./LanguageSections";
 import { addDeckUrl, pathSteps } from "./language-decks";
+import { type NotebookCard, type NotebookRow, NotebookToCards } from "./NotebookToCards";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
 
@@ -43,6 +47,19 @@ const RENTING_DECK = "german-for-renting-a-home";
 const DOCTOR_DECK = "german-at-the-doctor";
 
 const De = ({ children }: { children: ReactNode }) => <span lang="de">{children}</span>;
+
+const NOTEBOOK_ROWS: NotebookRow[] = [
+  { term: "die Wohnung", gloss: msg`flat`, card: 0 },
+  { term: "die Miete", gloss: msg`rent`, card: 1 },
+  { term: "danke" },
+  { term: "kündigen", gloss: msg`to give notice`, card: 2 },
+];
+
+const NOTEBOOK_CARDS: [NotebookCard, NotebookCard, NotebookCard] = [
+  { term: "die Wohnung", meaning: msg`Flat; apartment` },
+  { term: "die Miete", meaning: msg`Rent` },
+  { term: "kündigen", meaning: msg`To give notice` },
+];
 
 interface Props {
   /** Every published German deck in this locale, those a beginner starts from first. */
@@ -97,7 +114,7 @@ export function GermanView({ decks, locale }: Props) {
         <GenderTiles groups={GERMAN_GENDERS} locale={locale} lang="de" folder="german" />
       </Wide>
 
-      <ReturnSection lang="de" term={() => "das Fenster"} />
+      <ReturnSection lang="de" term={() => "der Tag"} />
 
       {verbs && (
         <FeatureSection
@@ -199,6 +216,16 @@ export function GermanView({ decks, locale }: Props) {
         <EnrichGerman locale={locale} />
       </EnrichSection>
 
+      <NotesSection>
+        <NotebookToCards
+          lang="de"
+          heading={["Deutsch · Dienstag", "A2"]}
+          rows={NOTEBOOK_ROWS}
+          cards={NOTEBOOK_CARDS}
+          skipped="danke"
+        />
+      </NotesSection>
+
       <OwnAiSection
         body={
           <Trans>
@@ -224,6 +251,10 @@ export function GermanView({ decks, locale }: Props) {
       />
 
       <TogetherSection name={msg`Tuesday German class`} language="de" cards={GERMAN_CLASS_CARDS} />
+
+      <DetailsSection title={<Trans>Built with German in mind.</Trans>}>
+        <GermanBento />
+      </DetailsSection>
 
       {decks.length > 0 && (
         <LanguageDecks

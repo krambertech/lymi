@@ -12,9 +12,11 @@ import { POLISH_QUESTIONS } from "./faq";
 import { LandingLayout } from "./LandingLayout";
 import { LanguageDecks } from "./LanguageDecks";
 import {
+  DetailsSection,
   EnrichSection,
   LanguageHero,
   LanguageName,
+  NotesSection,
   OwnAiSection,
   ReturnSection,
   StartSection,
@@ -23,7 +25,9 @@ import {
 } from "./LanguageSections";
 import { LookAlikes } from "./LookAlikes";
 import { addDeckUrl, pathSteps } from "./language-decks";
+import { type NotebookCard, type NotebookRow, NotebookToCards } from "./NotebookToCards";
 import { EnrichPolish } from "./PolishAi";
+import { PolishBento } from "./PolishBento";
 import { PolishForms } from "./PolishForms";
 import {
   lookAlikesFor,
@@ -42,6 +46,19 @@ const OFFICE_DECK = "polish-for-offices-and-paperwork";
 const B1_DECK = "polish-b1-vocabulary";
 
 const Pl = ({ children }: { children: ReactNode }) => <span lang="pl">{children}</span>;
+
+const NOTEBOOK_ROWS: NotebookRow[] = [
+  { term: "sklep", gloss: msg`shop`, card: 0 },
+  { term: "pociąg", gloss: msg`train`, card: 1 },
+  { term: "dziękuję" },
+  { term: "spóźnienie", gloss: msg`delay`, card: 2 },
+];
+
+const NOTEBOOK_CARDS: [NotebookCard, NotebookCard, NotebookCard] = [
+  { term: "sklep", meaning: msg`Shop` },
+  { term: "pociąg", meaning: msg`Train` },
+  { term: "spóźnienie", meaning: msg`Delay` },
+];
 
 interface Props {
   /** Every published Polish deck in this locale, those a beginner starts from first. */
@@ -204,6 +221,16 @@ export function PolishView({ decks, locale }: Props) {
         <EnrichPolish locale={locale} />
       </EnrichSection>
 
+      <NotesSection>
+        <NotebookToCards
+          lang="pl"
+          heading={["Polski · wtorek", "A2"]}
+          rows={NOTEBOOK_ROWS}
+          cards={NOTEBOOK_CARDS}
+          skipped="dziękuję"
+        />
+      </NotesSection>
+
       <OwnAiSection
         body={
           <Trans>
@@ -228,6 +255,10 @@ export function PolishView({ decks, locale }: Props) {
       />
 
       <TogetherSection name={msg`Thursday Polish class`} language="pl" cards={POLISH_CLASS_CARDS} />
+
+      <DetailsSection title={<Trans>Built with Polish in mind.</Trans>}>
+        <PolishBento />
+      </DetailsSection>
 
       {decks.length > 0 && (
         <LanguageDecks

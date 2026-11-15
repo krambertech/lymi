@@ -2,26 +2,9 @@ import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, Search } from "lucide-react";
 import { useInView } from "motion/react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { BENTO_HUES, LanguageBento, Tile } from "./LanguageBento";
 import { useStill } from "./playback";
-
-export function Tile({
-  title,
-  body,
-  children,
-}: {
-  title: ReactNode;
-  body: ReactNode;
-  children: ReactNode;
-}) {
-  return (
-    <div className="flex flex-col gap-2 rounded-xl bg-plate-nested p-6 edge-inset @2xl:p-7">
-      <h3 className="text-xl font-medium tracking-[-0.02em] text-ink">{title}</h3>
-      <p className="max-w-[40ch] text-md text-pretty text-ink-secondary">{body}</p>
-      <div className="mt-auto pt-5">{children}</div>
-    </div>
-  );
-}
 
 const SHAPES = ["骨", "直", "令"];
 
@@ -77,8 +60,9 @@ function Shapes() {
 /** Japanese learners' own needs, each in a line and a small picture. */
 export function JapaneseBento() {
   return (
-    <div className="mt-12 grid gap-2.5 @3xl:grid-cols-2 @4xl:mt-16">
+    <LanguageBento>
       <Tile
+        hue={BENTO_HUES[0]}
         title={<Trans>Kanji in Japanese shapes</Trans>}
         body={
           <Trans>
@@ -91,6 +75,7 @@ export function JapaneseBento() {
       </Tile>
 
       <Tile
+        hue={BENTO_HUES[1]}
         title={<Trans>Search by sound</Trans>}
         body={
           <Trans>
@@ -118,6 +103,7 @@ export function JapaneseBento() {
       </Tile>
 
       <Tile
+        hue={BENTO_HUES[2]}
         title={<Trans>Readings only where you need them</Trans>}
         body={
           <Trans>
@@ -151,6 +137,7 @@ export function JapaneseBento() {
       </Tile>
 
       <Tile
+        hue={BENTO_HUES[3]}
         title={<Trans>Bring your Anki deck</Trans>}
         body={
           <Trans>
@@ -161,7 +148,7 @@ export function JapaneseBento() {
       >
         <ul className="grid gap-1.5 text-md text-ink">
           {[
-            <Trans key="r">Word recordings</Trans>,
+            <Trans key="r">Word and example recordings</Trans>,
             <Trans key="p">Pitch accent</Trans>,
             <Trans key="f">Readings</Trans>,
           ].map((item) => (
@@ -174,6 +161,6 @@ export function JapaneseBento() {
           ))}
         </ul>
       </Tile>
-    </div>
+    </LanguageBento>
   );
 }

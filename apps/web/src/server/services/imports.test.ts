@@ -1261,6 +1261,36 @@ describe("importing an Anki package", () => {
     void addedToImported;
   });
 
+  it("keeps a card Lymi took down while the import was archived out of its restore", async () => {
+    const ctx = await fresh();
+    const { id } = await runImport(ctx, "current.apkg");
+    const gatto = await card(ctx, "il gatto");
+    await archiveImport(ctx, id);
+    // A report resolved by archiving the card, which was already archived with the import.
+    await db.insert(schema.contentReports).values({
+      id: `report-${ctx.userId}`,
+      ownerId: ctx.userId,
+      deckId: gatto.deckId,
+      cardId: gatto.id,
+      target: "card",
+      reason: "offensive",
+      snapshot: {},
+      localDate: "2026-11-15",
+      resolvedAt: new Date(),
+      action: "archive_card",
+    });
+
+    await restoreImport(ctx, id);
+
+    expect((await card(ctx, "il gatto")).archivedAt).not.toBeNull();
+    expect((await card(ctx, "il cane")).archivedAt).toBeNull();
+    const audited = await db
+      .select({ id: schema.auditLog.entityId })
+      .from(schema.auditLog)
+      .where(and(eq(schema.auditLog.entityId, gatto.id), eq(schema.auditLog.action, "restore")));
+    expect(audited).toEqual([]);
+  });
+
   it("audits every write as the learner and lists the import", async () => {
     const ctx = await fresh();
     const { id } = await runImport(ctx, "current.apkg");
@@ -1282,6 +1312,25 @@ describe("importing an Anki package", () => {
     ]);
     const [entry] = imports;
     expect(JSON.stringify(entry)).not.toContain("imports/");
+  });
+
+  it("writes no chunk once the import has failed", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
+    // A failure that lands after the chunk read the file, and before its batch.
+    await db
+      .update(schema.imports)
+      .set({ status: "failed", failure: "internal" })
+      .where(eq(schema.imports.id, id));
+
+    const late = await writeImportChunk(ctx, id, 0, decks, env.IMPORTS);
+    expect(late.pictures).toEqual([]);
+    expect(await cardsOf(ctx)).toEqual([]);
+    const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, id));
+    expect(row).toMatchObject({ status: "failed", written: 0 });
   });
 
   it("writes a chunk once even when its step runs again", async () => {

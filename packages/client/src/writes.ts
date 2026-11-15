@@ -20,7 +20,7 @@ import { waitsToSend } from "./api/request";
 import { online } from "./cache";
 import { clientConfig, type KeyValueStore } from "./config";
 import { flushOutbox as flushGrades } from "./grades";
-import { claimQueued, WRITE_PREFIX } from "./queued";
+import { claimQueued, dropQueued, WRITE_PREFIX } from "./queued";
 import { cacheLookup, localCard, patchCard, rebase, showWrite } from "./write-projections";
 
 /**
@@ -280,18 +280,36 @@ export interface Flushed {
   retryAt: number | null;
 }
 
-let claimed = false;
+/** Whose queue this is. Nothing sends while unclaimed, so one learner's writes never ride another's session. */
+type Claim = { kind: "unclaimed" } | { kind: "claimed"; userId: string };
+const UNCLAIMED: Claim = { kind: "unclaimed" };
+let claim: Claim = UNCLAIMED;
 
 /** Lets the queue flush once it is known to be this learner's; `claimQueued` drops another's. */
 export function claimWrites(userId: string) {
   claimQueued(userId);
   cache = null;
-  claimed = true;
+  claim = { kind: "claimed", userId };
+}
+
+/** The learner is gone but may be back: the queue stays on the device and nothing sends until the next claim. */
+export function unclaimWrites() {
+  claim = UNCLAIMED;
+  clearTimeout(timer);
+}
+
+/** A sign-out that leaves nothing behind: the stored queues, this runtime's copy and any retry. */
+export function dropWrites() {
+  unclaimWrites();
+  dropQueued();
+  cache = null;
+  changed();
 }
 
 async function flushQueued(): Promise<Flushed> {
   const result: Flushed = { sent: 0, waited: 0, graded: 0, stopped: false, retryAt: null };
-  if (!claimed) return { ...result, stopped: true };
+  const mine = claim;
+  if (mine.kind === "unclaimed") return { ...result, stopped: true };
   const held = new Set<string>();
   const dropped = new Set<string>();
   const hold = (w: Write) => held.add(entitiesOf(w).own);
@@ -327,6 +345,11 @@ async function flushQueued(): Promise<Flushed> {
         }
       }
     } catch (err) {
+      // Signed out while this was in the air: its failure must not put the write back.
+      if (claim !== mine) {
+        result.stopped = true;
+        break;
+      }
       const status = err instanceof ApiError ? err.status : -1;
       // Offline, a session that lapsed or a release too old: nothing else can land until that changes.
       if (status === 0 || waitsToSend(status)) {
@@ -398,7 +421,7 @@ function serial<T>(task: () => Promise<T>): Promise<T> {
 export function flushWrites(): Promise<Flushed> {
   return serial(flushQueued).then((flushed) => {
     clearTimeout(timer);
-    if (flushed.retryAt !== null) {
+    if (flushed.retryAt !== null && claim.kind === "claimed") {
       timer = setTimeout(() => void flushWrites(), Math.max(0, flushed.retryAt - Date.now()));
     }
     for (const listener of flushListeners) listener(flushed);
@@ -586,7 +609,7 @@ async function queued(written: Promise<Written<Result>>): Promise<{ queued: bool
 export function resetWriteCache() {
   cache = null;
   client = null;
-  claimed = false;
+  claim = UNCLAIMED;
   awaited.clear();
   settled.clear();
   clearTimeout(timer);

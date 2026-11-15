@@ -1,8 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { outboxSize } from "@lymi/client/grades";
-import { dropQueued } from "@lymi/client/queued";
-import { flushWrites, pendingWrites } from "@lymi/client/writes";
+import { dropWrites, flushWrites, pendingWrites } from "@lymi/client/writes";
 import { useRouter } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
 import { useState } from "react";
@@ -249,7 +248,7 @@ function SignOut() {
     // The stored session is cleared before the request, so an unreachable Worker still signs out.
     await authClient.signOut().catch(() => undefined);
     // The root forgets the rest of this learner once the session is gone, as the web does.
-    dropQueued();
+    dropWrites();
     setSigningOut(false);
   };
   // Work made offline lives only on this phone until it lands, so losing it is never the default.

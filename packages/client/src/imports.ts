@@ -137,13 +137,38 @@ export async function uploadInParts(
   }
 }
 
-/** An upload in this app. It outlives the import screen, so moving around the app does not stop it. */
-export type UploadState = {
-  sent: number;
-  total: number;
-  status: "sending" | "joining" | "failed";
-  error?: string | undefined;
-};
+/**
+ * An upload in this app. It outlives the import screen, so moving around the app does not stop it.
+ * An upload that finished or was stopped has no state: its import says the rest.
+ */
+export type UploadState =
+  | { status: "sending"; sent: number; total: number }
+  /** Every part arrived and the server is putting the file together. */
+  | { status: "joining"; sent: number; total: number }
+  | { status: "failed"; sent: number; total: number; error: string };
+
+export type UploadEvent =
+  | { type: "progressed"; sent: number }
+  | { type: "sentAll" }
+  | { type: "failed"; error: string }
+  | { type: "retried" };
+
+/** Every move an upload can make; an event its state does not allow changes nothing. */
+export function uploadReducer(state: UploadState, event: UploadEvent): UploadState {
+  const { sent, total } = state;
+  switch (event.type) {
+    case "progressed":
+      return state.status === "sending" ? { status: "sending", sent: event.sent, total } : state;
+    case "sentAll":
+      return state.status === "sending" ? { status: "joining", sent: total, total } : state;
+    case "failed":
+      return state.status === "failed"
+        ? state
+        : { status: "failed", sent, total, error: event.error };
+    case "retried":
+      return state.status === "failed" ? { status: "sending", sent, total } : state;
+  }
+}
 
 type Entry = { state: UploadState; file: UploadSource; controller: AbortController };
 
@@ -154,16 +179,27 @@ function emit() {
   for (const listener of listeners) listener();
 }
 
-function set(id: string, state: UploadState) {
-  const entry = entries.get(id);
-  if (!entry) return;
-  entry.state = state;
+/** Starts a run of its own; whatever ran for this import before is stopped and no longer heard. */
+function begin(id: string, file: UploadSource, sent: number): Entry {
+  entries.get(id)?.controller.abort();
+  const entry: Entry = {
+    file,
+    controller: new AbortController(),
+    state: { status: "sending", sent, total: file.size },
+  };
+  entries.set(id, entry);
   emit();
+  return entry;
 }
 
-async function run(id: string, qc: QueryClient, from: number) {
-  const entry = entries.get(id);
-  if (!entry) return;
+async function run(id: string, entry: Entry, qc: QueryClient, from: number) {
+  // A run that was stopped or replaced says nothing more: the entry is its successor's.
+  const live = () => entries.get(id) === entry;
+  const step = (event: UploadEvent) => {
+    if (!live()) return;
+    entry.state = uploadReducer(entry.state, event);
+    emit();
+  };
   const { file, controller } = entry;
   const key = importQuery(id).queryKey;
   try {
@@ -175,21 +211,17 @@ async function run(id: string, qc: QueryClient, from: number) {
       {
         signal: controller.signal,
         from,
-        onProgress: ({ sent, total }) => set(id, { sent, total, status: "sending" }),
+        onProgress: ({ sent }) => step({ type: "progressed", sent }),
       },
     );
-    set(id, { sent: file.size, total: file.size, status: "joining" });
-    qc.setQueryData(key, await api.completeImport(id));
+    step({ type: "sentAll" });
+    const joined = await api.completeImport(id);
+    if (!live()) return;
+    qc.setQueryData(key, joined);
     entries.delete(id);
     emit();
   } catch (err) {
-    if (controller.signal.aborted) return;
-    set(id, {
-      sent: entry.state.sent,
-      total: file.size,
-      status: "failed",
-      error: errorMessage(err),
-    });
+    step({ type: "failed", error: errorMessage(err) });
   }
 }
 
@@ -201,13 +233,7 @@ export async function startUpload(
 ): Promise<Import> {
   const created = await api.startImport(file, source);
   qc.setQueryData(importQuery(created.id).queryKey, created);
-  entries.set(created.id, {
-    file,
-    controller: new AbortController(),
-    state: { sent: 0, total: file.size, status: "sending" },
-  });
-  emit();
-  void run(created.id, qc, 1);
+  void run(created.id, begin(created.id, file, 0), qc, 1);
   return created;
 }
 
@@ -216,26 +242,16 @@ export async function startUpload(
  * Parts go one at a time, so the parts that arrived are always the first ones.
  */
 export function resumeUpload(item: Import, file: UploadSource, qc: QueryClient) {
-  entries.get(item.id)?.controller.abort();
-  entries.set(item.id, {
-    file,
-    controller: new AbortController(),
-    state: { sent: 0, total: file.size, status: "sending" },
-  });
-  emit();
-  void run(item.id, qc, item.upload.received + 1);
+  void run(item.id, begin(item.id, file, 0), qc, item.upload.received + 1);
 }
 
+/** Sends a failed upload's remaining parts; an upload still going is left alone. */
 export function retryUpload(id: string, qc: QueryClient) {
-  const entry = entries.get(id);
-  if (!entry) return;
-  const from =
-    Math.floor(
-      entry.state.sent / (qc.getQueryData<Import>(importQuery(id).queryKey)?.upload.partBytes ?? 1),
-    ) + 1;
-  entry.controller = new AbortController();
-  set(id, { ...entry.state, status: "sending", error: undefined });
-  void run(id, qc, from);
+  const failed = entries.get(id);
+  if (failed?.state.status !== "failed") return;
+  const partBytes = qc.getQueryData<Import>(importQuery(id).queryKey)?.upload.partBytes ?? 1;
+  const from = Math.floor(failed.state.sent / partBytes) + 1;
+  void run(id, begin(id, failed.file, failed.state.sent), qc, from);
 }
 
 export function stopUpload(id: string) {
@@ -249,13 +265,17 @@ export function uploading() {
   return [...entries.values()].some((entry) => entry.state.status !== "failed");
 }
 
+export function uploadState(id: string): UploadState | null {
+  return entries.get(id)?.state ?? null;
+}
+
 export function useUpload(id: string): UploadState | null {
   return useSyncExternalStore(
     (listener) => {
       listeners.add(listener);
       return () => listeners.delete(listener);
     },
-    () => entries.get(id)?.state ?? null,
+    () => uploadState(id),
     () => null,
   );
 }

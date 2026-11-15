@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { api } from "@lymi/client/api";
 import { deletionQuery } from "@lymi/client/queries";
-import { dropQueued } from "@lymi/client/queued";
+import { dropWrites } from "@lymi/client/writes";
 import type { AccountDeletionOut } from "@lymi/core";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useRouter } from "expo-router";
@@ -166,7 +166,7 @@ function Confirm({ apple }: { apple: boolean }) {
     },
     onSuccess: async () => {
       await authClient.signOut().catch(() => undefined);
-      dropQueued();
+      dropWrites();
     },
   });
   const nativeApple = apple && appleAvailable;

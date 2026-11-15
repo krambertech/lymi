@@ -3,7 +3,7 @@ import { api } from "@lymi/client/api";
 import { cacheWarmer } from "@lymi/client/cache";
 import { retireGrades } from "@lymi/client/grades";
 import { afterFlush, startDayTurn } from "@lymi/client/sync";
-import { claimWrites, flushWrites, onFlushed, onNotice } from "@lymi/client/writes";
+import { claimWrites, flushWrites, onFlushed, onNotice, unclaimWrites } from "@lymi/client/writes";
 import { isolate } from "@lymi/core";
 import { onlineManager, useQueryClient } from "@tanstack/react-query";
 import { addNetworkStateListener } from "expo-network";
@@ -46,6 +46,8 @@ export function Sync({ learnerId }: { learnerId: string }) {
       if (state.isConnected) flush();
     });
     return () => {
+      // Signed out or another learner next: the queue waits for whoever claims it.
+      unclaimWrites();
       stopFollowing();
       front.remove();
       network.remove();

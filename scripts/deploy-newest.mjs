@@ -34,7 +34,8 @@ export function gitContains(commit, ancestor, git = runGit) {
 }
 
 function runGit(args) {
-  return spawnSync("git", args, { stdio: "ignore" }).status;
+  // A fetch stuck on the network times out to null, which deploys rather than failing the build.
+  return spawnSync("git", args, { stdio: "ignore", timeout: 60_000 }).status;
 }
 
 async function liveTag(url) {

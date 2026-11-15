@@ -11,6 +11,7 @@ CONSTANTS Grades, Undos, Visits, \* the requests, as sets of names
           Due,        \* cards drawableCount finds before any grade today
           CompareAndSet, \* settleDay writes only over the outcome and attempts it read, and reads again
           ReadsDayFirst, \* settleDay reads the day row itself rather than deciding from its caller's copy
+          NoNothingDueWithAttempts, \* nextOutcome turns a kept nothing_due into open once there are attempts
           Tries          \* SETTLE_TRIES
 
 Requests == Grades \cup Undos \cup Visits
@@ -68,8 +69,10 @@ NextOutcome(r, a) ==
   IN IF a >= Goal THEN "goal_met"
      ELSE IF nothingLeft /\ a > 0 THEN "exhausted"
      ELSE IF change = "visit" /\ nothingLeft /\ a = 0 /\ seen[r].outcome = "open" THEN "nothing_due"
-     ELSE IF change = "undo" THEN (IF seen[r].zeroDue THEN "nothing_due" ELSE "open")
-     ELSE seen[r].outcome
+     ELSE LET kept == IF change = "undo"
+                        THEN (IF seen[r].zeroDue THEN "nothing_due" ELSE "open")
+                        ELSE seen[r].outcome
+          IN IF NoNothingDueWithAttempts /\ kept = "nothing_due" /\ a > 0 THEN "open" ELSE kept
 
 Unchanged(r) == UNCHANGED <<outcome, zeroDue, attempts, counted, dueSeen, tries>>
 

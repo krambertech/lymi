@@ -10,7 +10,7 @@ Each model is a small TLA+ description of one flow, checked by TLC over every or
 | Model | Rule | On `main` |
 | --- | --- | --- |
 | [Write queue](#write-queue) | A learner's queued write is never sent on another learner's session | Holds |
-| [Review day](#review-day) | Once every request is answered, the day's outcome is the one its reviews call for | Breaks; see the section |
+| [Review day](#review-day) | Once every request is answered, the day's outcome is the one its reviews call for | Holds since pull request 1164 |
 
 ## Run a check
 
@@ -19,7 +19,7 @@ Each model is a small TLA+ description of one flow, checked by TLC over every or
 .agents/skills/model-check/scripts/check.sh ReviewDay
 ```
 
-It needs Java 11 or later (`brew install openjdk`, or set `JAVA`). The first run downloads TLC 1.7.4 to `~/.cache/lymi` and checks its SHA-256; set `TLA2TOOLS` to use a jar you already have. A pass prints `distinct states found` and no `violated` line. A broken rule prints `Invariant <Name> is violated` with the steps. To check another configuration, copy the model's `.cfg`, change a constant and pass the copy as the second argument.
+It needs Java 11 or later (`brew install openjdk`, or set `JAVA`). The first run downloads TLC 1.7.4 to `~/.cache/lymi` and checks its SHA-256; set `TLA2TOOLS` to use a jar you already have. A pass prints `distinct states found`, no `violated` line, and exits 0. A broken rule prints `Invariant <Name> is violated` with the steps, and exits 12. To check another configuration, copy the model's `.cfg`, change a constant and pass the copy's path, relative or absolute, as the second argument.
 
 To read a result as a chart or as a path in plain words, use the pstack statechart skill on the model's `.tla`, its `.cfg` and its `.view.mjs`. It is installed per machine and its commands change between releases, so take them from that skill.
 
@@ -72,27 +72,27 @@ The invariants are `NothingDueOnlyWithoutAttempts` and `NoLostUpdate` in [`model
 | `GradeLands` | `gradeCard`'s batch: the card state and the review row |
 | `UndoLands` | `restoreIfLatest` |
 | `VisitCountsDue` | `drawableCount` at the top of `checkToday` |
-| `VisitCounts`, `VisitConfirms` | `checkToday` on `main`: `attemptsOn`, then the update to `nothing_due` |
-| `ReadsAgain` | a select of the day row at the top of `settleDay`, which no commit has yet |
-| `Counts` | `attemptsOn` and `drawableCount` in `settleDay`, then `nextOutcome` in `packages/core/src/streak.ts` or the rules inlined on `main` |
-| `Writes`, `Rereads` | `settleDay`'s update, and on #1164 its re-read when the compare-and-set misses, up to `SETTLE_TRIES` |
+| `VisitCounts`, `VisitConfirms` | `checkToday` before pull request 1164: `attemptsOn`, then the update to `nothing_due` |
+| `ReadsAgain` | the select of the day row at the top of each try in `settleDay` |
+| `Counts` | `attemptsOn` and `drawableCount` in `settleDay`, then `nextOutcome` in `packages/core/src/streak.ts` (before 1164, the same rules inlined in `settleDay`) |
+| `Writes`, `Rereads` | `settleDay`'s compare-and-set update, and the next try when it misses, up to `SETTLE_TRIES` |
 
-Three constants choose the code the model describes:
+Three constants are the guards; the default config turns all three on and describes `main` with pull request 1164 at `55573043b`. It holds: 105,573 distinct states in about a second, and 116,599 with one card due.
 
-| `CompareAndSet` | `ReadsDayFirst` | Code | Result |
-| --- | --- | --- | --- |
-| `FALSE` | `FALSE` | `main` at `0d80e817a`; the default config | Both rules break |
-| `TRUE` | `FALSE` | pull request 1164 at `b3cf33538` | `NoLostUpdate` and `NothingDueOnlyWithoutAttempts` break |
-| `TRUE` | `TRUE` | 1164 plus a select of the day row at the top of `settleDay` | Holds: 105,573 distinct states in about a second |
+| Constant | Code | Off |
+| --- | --- | --- |
+| `CompareAndSet` | `settleDay`'s update lands only over the outcome, goal and attempts it decided from | `NothingDueOnlyWithoutAttempts` breaks |
+| `ReadsDayFirst` | each try in `settleDay` selects the day row rather than deciding from its caller's copy | `NoLostUpdate` breaks |
+| `NoNothingDueWithAttempts` | `nextOutcome` turns a kept `nothing_due` into `open` once there are attempts | Still holds within these bounds; it guards states the model leaves out |
 
-The paths TLC finds, each replayed on a local D1:
+All three `FALSE` is the code before 1164, where both rules break. The paths TLC found there, each replayed on a local D1 before 1164 fixed them:
 
-- A grade lands while opening Lymi confirms the day as nothing due: the visit writes `nothing_due` over a day with one review. Broken on `main`, fixed by 1164.
-- Undo of an earlier grade reads the day; another grade then meets the goal; the Undo lands and, finding the outcome it decided equal to the one it read, writes nothing: `goal_met` with one review of two. Broken on `main` and on 1164.
-- A grade reads the day as done; an Undo and a visit make it nothing due; the grade lands and writes nothing for the same reason: `nothing_due` with one review. Broken on `main` and on 1164.
+- A grade lands while opening Lymi confirms the day as nothing due: the visit writes `nothing_due` over a day with one review.
+- Undo of an earlier grade reads the day; another grade then meets the goal; the Undo lands and, deciding the outcome it read, writes nothing: `goal_met` with one review of two.
+- A grade reads the day as done; an Undo and a visit make it nothing due; the grade lands and writes nothing for the same reason: `nothing_due` with one review.
 
-`settleDay` decides from its caller's copy of the row, read before the grade or Undo landed, and returns without writing when the new outcome equals that stale one, so the compare-and-set never runs. The replays are not in the repository yet, because they fail until the fix lands; add them to `apps/web/src/server/services/review-days.test.ts` with the fix.
+Their replays are in `apps/web/src/server/services/review-days.test.ts` under "a grade that lands while the day is being settled".
 
-**See it fail.** With `CompareAndSet` and `ReadsDayFirst` both `TRUE` the rule holds; setting either to `FALSE` breaks it. `Tries` is `SETTLE_TRIES`; within these bounds the rule still holds with `1`, so the bound on retries is not what keeps it.
+**See it fail.** Set `CompareAndSet` or `ReadsDayFirst` to `FALSE` in a copy of the config. `Tries` is `SETTLE_TRIES`; within these bounds the rule still holds with `1`, so the bound on retries is not what keeps it.
 
 **Leaves out:** changing the goal (`applyGoalToToday`), midnight and the zone, grade replays (`duplicate` in `gradeCard`), more than two grades and one Undo, cards that become due during the day, and `drawableCount` read at a different moment from `attemptsOn`.

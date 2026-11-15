@@ -1,4 +1,4 @@
-import { and, eq, inArray, sql } from "@lymi/core/db";
+import { and, eq, inArray, type SQL, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import { selectIn } from "./batch";
 import { type ServiceContext, ServiceError } from "./context";
@@ -64,6 +64,13 @@ export async function takenDownCards(db: Db, ids: readonly string[]): Promise<Se
   );
   return new Set(rows.map((row) => row.cardId).filter((id): id is string => !!id));
 }
+
+/**
+ * The condition every card restore writes into its `WHERE`, so no restore, of one card or of a
+ * section or import, brings back a card Lymi archived after a report.
+ */
+export const notTakenDown: SQL = sql`not exists (select 1 from content_reports
+  where content_reports.card_id = cards.id and content_reports.action = 'archive_card')`;
 
 export function takenDown(what: "deck" | "card") {
   return new ServiceError(

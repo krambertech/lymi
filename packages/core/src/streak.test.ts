@@ -4,6 +4,7 @@ import {
   daySatisfied,
   daysReviewed,
   keepsRun,
+  nextOutcome,
   runDates,
   type StreakDay,
   streakLength,
@@ -246,5 +247,47 @@ describe("the day rule", () => {
       "2026-03-01",
       "2026-02-28",
     ]);
+  });
+});
+
+describe("nextOutcome", () => {
+  const day = (over: Partial<Parameters<typeof nextOutcome>[0]> = {}) => ({
+    outcome: "open" as const,
+    goal: 3,
+    attempts: 0,
+    zeroDueConfirmed: false,
+    nothingLeft: false,
+    ...over,
+  });
+
+  it("meets the goal on its attempt, from any outcome", () => {
+    expect(nextOutcome(day({ attempts: 3 }), "grade")).toBe("goal_met");
+    expect(nextOutcome(day({ attempts: 3, outcome: "nothing_due" }), "check")).toBe("goal_met");
+  });
+
+  it("exhausts a day with attempts and nothing left below the goal", () => {
+    expect(nextOutcome(day({ attempts: 1, nothingLeft: true }), "grade")).toBe("exhausted");
+  });
+
+  it("confirms nothing due only on a visit to an open day with no attempts", () => {
+    expect(nextOutcome(day({ nothingLeft: true }), "visit")).toBe("nothing_due");
+    expect(nextOutcome(day({ nothingLeft: true }), "check")).toBe("open");
+    expect(nextOutcome(day({ nothingLeft: true, attempts: 1 }), "visit")).toBe("exhausted");
+  });
+
+  it("keeps a confirmed nothing-due day protected until grades earn more", () => {
+    const confirmed = { outcome: "nothing_due" as const, zeroDueConfirmed: true, attempts: 1 };
+    expect(nextOutcome(day(confirmed), "grade")).toBe("nothing_due");
+    expect(nextOutcome(day(confirmed), "undo")).toBe("nothing_due");
+    expect(nextOutcome(day({ ...confirmed, attempts: 3 }), "grade")).toBe("goal_met");
+    expect(nextOutcome(day({ ...confirmed, nothingLeft: true }), "grade")).toBe("exhausted");
+  });
+
+  it("reopens only on undo, to nothing due when a visit confirmed it", () => {
+    expect(nextOutcome(day({ outcome: "goal_met", attempts: 2 }), "grade")).toBe("goal_met");
+    expect(nextOutcome(day({ outcome: "goal_met", attempts: 2 }), "undo")).toBe("open");
+    expect(
+      nextOutcome(day({ outcome: "goal_met", attempts: 0, zeroDueConfirmed: true }), "undo"),
+    ).toBe("nothing_due");
   });
 });

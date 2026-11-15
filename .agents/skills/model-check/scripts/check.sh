@@ -4,6 +4,8 @@ set -eu
 here=$(cd "$(dirname "$0")/.." && pwd)
 model=${1:-WriteQueue}
 config=${2:-$here/models/$model.cfg}
+# The run happens in a scratch folder, so a config given by a relative path is resolved first.
+config=$(cd "$(dirname "$config")" && pwd)/$(basename "$config")
 version=1.7.4
 sum=936a262061c914694dfd669a543be24573c45d5aa0ff20a8b96b23d01e050e88
 jar=${TLA2TOOLS:-${XDG_CACHE_HOME:-$HOME/.cache}/lymi/tla2tools-$version.jar}

@@ -1,7 +1,8 @@
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import type { AssistantName } from "./AssistantMarks";
-import { AssistantAvatar, LearnerBubble } from "./ChatParts";
+import { Speaker } from "./AssistantPieces";
+import { LearnerBubble } from "./ChatParts";
 import { EASE } from "./playback";
 import { Showcase, useShowcaseStage } from "./Showcase";
 
@@ -15,7 +16,12 @@ export interface Ask {
   /** What the learner sends with the request: a photo, a file, a post. */
   attachment?: ReactNode;
   ask: ReactNode;
-  /** What came back from Lymi. Only what the tools really do. */
+  /** What the assistant says back, in its own message. */
+  reply?: ReactNode;
+  /**
+   * What Lymi holds afterwards, under the lantern: cards, a deck, a due count. Only what the
+   * tools really do. Without a reply it draws its own rows, as a quiz does.
+   */
   result?: ReactNode;
   /** A whole scene in place of the chat exchange, such as a spoken conversation. */
   scene?: ReactNode;
@@ -31,7 +37,11 @@ interface Props {
   asks: readonly Ask[];
 }
 
-/** One exchange on the stage: what was sent, the request, and what came back. */
+/**
+ * One exchange on the stage. Every row shows who it comes from: the learner's request in a dark
+ * bubble on the right, the assistant's message beside its mark, then Lymi's cards beside the
+ * lantern, so a message never reads as a card or a card as a message.
+ */
 function Exchange({ assistant, item }: { assistant: AssistantName; item: Ask }) {
   const { playing, still } = useShowcaseStage();
   const shown = still || playing;
@@ -49,12 +59,23 @@ function Exchange({ assistant, item }: { assistant: AssistantName; item: Ask }) 
         {item.attachment && <motion.div {...step(0.15)}>{item.attachment}</motion.div>}
         <LearnerBubble {...step(0.15 + lead)}>{item.ask}</LearnerBubble>
       </div>
-      <div className="flex items-start gap-2.5">
-        <AssistantAvatar name={assistant} {...step(0.8 + lead)} />
-        <motion.div {...step(1.15 + lead)} className="min-w-0 flex-1">
-          {item.result}
+      {item.reply && (
+        <motion.div {...step(0.8 + lead)} className="flex items-start gap-2.5">
+          <Speaker who="assistant" assistant={assistant} />
+          <p className="w-fit max-w-[92%] rounded-2xl rounded-ss-md bg-plate px-4 py-2.5 text-md text-pretty text-ink edge-drop">
+            {item.reply}
+          </p>
         </motion.div>
-      </div>
+      )}
+      {item.result &&
+        (item.reply ? (
+          <motion.div {...step(1.5 + lead)} className="flex items-start gap-2.5">
+            <Speaker who="lymi" assistant={assistant} />
+            <div className="min-w-0 flex-1">{item.result}</div>
+          </motion.div>
+        ) : (
+          <motion.div {...step(0.8 + lead)}>{item.result}</motion.div>
+        ))}
     </div>
   );
 }

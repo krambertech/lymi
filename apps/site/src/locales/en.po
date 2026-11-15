@@ -882,6 +882,12 @@ msgstr "Added 14 cards to Pharmacology, each with its mechanism from your notes.
 msgid "Added 18 cards to Security+, each with the guide’s definition."
 msgstr "Added 18 cards to Security+, each with the guide’s definition."
 
+msgid "Added 2 cards to Biology. Skipped Stomata: you have that card."
+msgstr "Added 2 cards to Biology. Skipped Stomata: you have that card."
+
+msgid "Added 2 cards to Spanish. Skipped la huelga: you have that card."
+msgstr "Added 2 cards to Spanish. Skipped la huelga: you have that card."
+
 msgid "Added 20 cards to NCLEX pharmacology."
 msgstr "Added 20 cards to NCLEX pharmacology."
 
@@ -933,6 +939,9 @@ msgstr "Added 8 cards to German, each with its article. I skipped <0>die Miete</
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 
+msgid "Added 9 cards to Kubernetes."
+msgstr "Added 9 cards to Kubernetes."
+
 msgid "Added 9 cards to Polish. I skipped <0>sklep</0>, which you already have."
 msgstr "Added 9 cards to Polish. I skipped <0>sklep</0>, which you already have."
 
@@ -942,11 +951,17 @@ msgstr "Added 9 cards to Spanish. I skipped “ojalá”, which you already have
 msgid "Added 9 cards to Spanish. I skipped <0>la cuenta</0>, which you already have."
 msgstr "Added 9 cards to Spanish. I skipped <0>la cuenta</0>, which you already have."
 
+msgid "Added a memory trick to the 4 cards you missed."
+msgstr "Added a memory trick to the 4 cards you missed."
+
 msgid "Added after this week’s lesson"
 msgstr "Added after this week’s lesson"
 
 msgid "Added hints to 6 cards in Japanese"
 msgstr "Added hints to 6 cards in Japanese"
+
+msgid "Added Move and Borrow to your Rust deck."
+msgstr "Added Move and Borrow to your Rust deck."
 
 msgid "Added to Chess, with the meaning and an example."
 msgstr "Added to Chess, with the meaning and an example."
@@ -1413,6 +1428,9 @@ msgstr "Building something of your own? Lymi has a full API. <0>Read the API doc
 
 msgid "Building your own app instead? The <0>API reference</0> covers the same reads and writes."
 msgstr "Building your own app instead? The <0>API reference</0> covers the same reads and writes."
+
+msgid "Built Constitutional Law with a section for each lecture."
+msgstr "Built Constitutional Law with a section for each lecture."
 
 msgid "Built for exam prep."
 msgstr "Built for exam prep."
@@ -2164,6 +2182,9 @@ msgstr "Don’t drink coffee before *bed*."
 
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Don’t take down a fence until you know why it was put up"
+
+msgid "Done. Biology has a section for each file."
+msgstr "Done. Biology has a section for each file."
 
 msgid "Download for Mac"
 msgstr "Download for Mac"
@@ -3012,6 +3033,9 @@ msgstr "Good luck! Literally, “into the wolf’s mouth”"
 msgid "Good morning"
 msgstr "Good morning"
 
+msgid "Good morning. Here’s today in Lymi."
+msgstr "Good morning. Here’s today in Lymi."
+
 msgid "Goodbye"
 msgstr "Goodbye"
 
@@ -3146,6 +3170,9 @@ msgstr "Here’s chapter 4 of my Security+ guide. Add the key terms."
 
 msgid "Here’s the chat from today’s lesson with Marta. Add the new phrases."
 msgstr "Here’s the chat from today’s lesson with Marta. Add the new phrases."
+
+msgid "Here’s today in Lymi."
+msgstr "Here’s today in Lymi."
 
 msgid "Hi"
 msgstr "Hi"
@@ -4219,11 +4246,17 @@ msgstr "macOS 13 or later"
 msgid "Made <0>Lisboa a dois</0>: 42 cards in 5 sections"
 msgstr "Made <0>Lisboa a dois</0>: 42 cards in 5 sections"
 
+msgid "Made a Photosynthesis deck with a section for each topic."
+msgstr "Made a Photosynthesis deck with a section for each topic."
+
 msgid "Made by Lymi"
 msgstr "Made by Lymi"
 
 msgid "Made by Ukrainians"
 msgstr "Made by Ukrainians"
+
+msgid "Made SAT words with a section for each week."
+msgstr "Made SAT words with a section for each week."
 
 msgid "Main navigation"
 msgstr "Main navigation"
@@ -5699,12 +5732,6 @@ msgstr "Skip to the download"
 msgid "Skip to the updates"
 msgstr "Skip to the updates"
 
-msgid "Skipped la huelga: you have that card."
-msgstr "Skipped la huelga: you have that card."
-
-msgid "Skipped Stomata: you have that card."
-msgstr "Skipped Stomata: you have that card."
-
 msgid "Slides and PDFs"
 msgstr "Slides and PDFs"
 
@@ -6556,6 +6583,9 @@ msgstr "There’s a *park* near the station."
 
 msgid "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
 msgstr "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
+
+msgid "These three keep slipping. Let’s start with la huelga."
+msgstr "These three keep slipping. Let’s start with la huelga."
 
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."

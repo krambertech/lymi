@@ -438,6 +438,14 @@ export const analyticsEvents = {
       .regex(/^\/[a-z0-9/-]*$/)
       .max(120),
   }),
+  site_showcase_steered: z.object({
+    action: z.enum(["picked", "replayed"]),
+    // The Showcase item's id, such as `routine`, never its text.
+    item: z
+      .string()
+      .regex(/^[a-z0-9-]+$/)
+      .max(40),
+  }),
   ready_decks_narrowed: z.object({
     topic: z.enum(["all", "language", "test"]),
     // A catalogue language's tag, never what the learner typed.
@@ -748,6 +756,7 @@ export const analyticsProducers = {
   public_deck_viewed: ["browser"],
   add_to_lymi_clicked: ["browser"],
   site_link_followed: ["browser"],
+  site_showcase_steered: ["browser"],
   ready_decks_narrowed: ["browser"],
   origin_badge_shown: ["browser"],
   mac_download_started: ["worker"],

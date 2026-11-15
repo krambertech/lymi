@@ -87,6 +87,12 @@ describe("analytics privacy contract", () => {
     expect(
       eventProperties("site_link_followed", { place: "footer", target: "/explore?q=word" }),
     ).toBeNull();
+    expect(
+      eventProperties("site_showcase_steered", { action: "replayed", item: "routine" }, "browser"),
+    ).toEqual({ action: "replayed", item: "routine" });
+    expect(
+      eventProperties("site_showcase_steered", { action: "picked", item: "Every morning" }),
+    ).toBeNull();
     // The phone sends its own openings, screens and review legs; outcomes stay the server's.
     expect(eventProperties("app_opened", { backlog: "1-20" }, "phone")).toEqual({
       backlog: "1-20",

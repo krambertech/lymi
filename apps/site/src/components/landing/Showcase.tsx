@@ -1,4 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
+import { captureAnalytics } from "@lymi/client/analytics";
+import type { AnalyticsProperties } from "@lymi/core/analytics";
 import { clsx } from "clsx";
 import { RotateCcw } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
@@ -16,12 +18,12 @@ import {
   useState,
 } from "react";
 import { trayStyle } from "../../lib/tray";
-import { EASE, useHold, useStill } from "./playback";
+import { EASE, useStill } from "./playback";
 
 /*
- * Timed slides of use cases in one block: a list of uses on one side, the playing one's demo on a
- * tinted stage on the other. Any demo goes on the stage; the block owns the timing, the progress
- * line on the divider, keyboard use, Replay, pausing and reduced motion.
+ * Timed slides of use cases: a list of uses on the page beside a tinted tray that plays the current
+ * one's demo. Any demo goes on the tray; the block owns the timing, the timer on the divider under
+ * the playing item, keyboard use, Replay and reduced motion.
  *
  *   <Showcase label={t`Things to ask Claude`}>
  *     <Showcase.Item id="pdf" icon={<FileText />} title="From a long PDF" description="…" hue={25}>
@@ -31,17 +33,18 @@ import { EASE, useHold, useStill } from "./playback";
  */
 
 interface ItemProps {
+  /** Lowercase letters, digits and hyphens: it is sent with `site_showcase_steered`. */
   id: string;
   /** A small icon or key before the title. */
   icon?: ReactNode;
   title: ReactNode;
   /** The use case in a sentence or two, open while the item plays. */
   description: ReactNode;
-  /** The stage's tray hue while this item plays. */
+  /** The tray's hue while this item plays. */
   hue: number;
   /** How long the item plays before the next, in ms: its demo, then time to read the result. */
   dwell?: number;
-  /** The demo. It mounts when the item comes up and again on Replay. */
+  /** The demo. It mounts when the item comes up, and again when it is picked or played again. */
   children: ReactNode;
 }
 
@@ -51,7 +54,7 @@ function ShowcaseItem(_: ItemProps): null {
 }
 
 interface Stage {
-  /** The stage is on screen and the visitor hasn't asked for reduced motion: demos may move. */
+  /** The tray is on screen and the visitor hasn't asked for reduced motion: demos may move. */
   playing: boolean;
   /** Reduced motion: a demo shows its finished state at once. */
   still: boolean;
@@ -59,7 +62,7 @@ interface Stage {
 
 const StageContext = createContext<Stage>({ playing: true, still: false });
 
-/** For a demo on the stage: whether to play now, or to show itself finished. */
+/** For a demo on the tray: whether to play now, or to show itself finished. */
 export function useShowcaseStage(): Stage {
   return useContext(StageContext);
 }
@@ -77,6 +80,8 @@ function usePageHidden() {
   }, []);
   return hidden;
 }
+
+type Steer = AnalyticsProperties<"site_showcase_steered">["action"];
 
 interface Props {
   /** The list's name for screen readers, such as "Things to ask Claude". */
@@ -98,39 +103,38 @@ function ShowcaseRoot({ label, children, className }: Props) {
   const root = useRef<HTMLDivElement>(null);
   // It waits until most of the block is on screen, so the first demo starts where you can see it.
   const inView = useInView(root, { amount: 0.5 });
-  const hold = useHold();
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const [index, setIndex] = useState(0);
-  const [picked, setPicked] = useState(false);
-  const [replays, setReplays] = useState(0);
+  // It moves on by itself, round the list again and again, until the visitor picks an item.
+  const [auto, setAuto] = useState(true);
+  // Counts picks and replays, so the demo and its timer start over even on the same item.
+  const [run, setRun] = useState(0);
+  // Keyboard focus in the list holds the timer, so the selection never moves away from it.
+  const [keys, setKeys] = useState(false);
 
   const item = items[index] as ItemProps;
-  const auto = !still && !picked;
-  const paused = !inView || hidden || hold.held;
+  const timed = !still && auto;
+  const held = keys || !inView || hidden;
   const stage: Stage = { playing: inView && !hidden, still };
 
-  /**
-   * The playing item's timer: it fills over the item's dwell and moves the block on when it ends.
-   * Picked by hand, it stays full; with reduced motion there is no timer at all.
-   */
-  const timer = (each: ItemProps, className: string, fill: string) =>
-    auto ? (
-      <span
-        key={`${each.id}-${replays}`}
-        data-paused={paused || undefined}
-        onAnimationEnd={() => setIndex((n) => (n + 1) % items.length)}
-        style={{ animationDuration: `${each.dwell ?? DWELL_MS}ms` }}
-        className={clsx(className, fill)}
-      />
-    ) : (
-      <span className={className} />
-    );
+  const steer = (action: Steer, id: string) =>
+    captureAnalytics("site_showcase_steered", { action, item: id });
 
-  const select = (i: number, focus: boolean) => {
+  const advance = () => setIndex((index + 1) % items.length);
+
+  const select = (i: number, byKey: boolean) => {
     const next = (i + items.length) % items.length;
-    setPicked(true);
     setIndex(next);
-    if (focus) tabs.current[next]?.focus();
+    setAuto(false);
+    setRun((n) => n + 1);
+    if (byKey) tabs.current[next]?.focus();
+    // Arrow keys step through items on the way to one, so only a click or Enter counts as a pick.
+    else steer("picked", (items[next] as ItemProps).id);
+  };
+
+  const replay = () => {
+    setRun((n) => n + 1);
+    steer("replayed", item.id);
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -151,9 +155,8 @@ function ShowcaseRoot({ label, children, className }: Props) {
   return (
     <div
       ref={root}
-      {...hold.handlers}
       className={clsx(
-        "grid overflow-hidden rounded-[28px] bg-plate edge @4xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)]",
+        "grid gap-6 @4xl:grid-cols-[minmax(0,0.85fr)_minmax(0,1.15fr)] @4xl:gap-14",
         className,
       )}
     >
@@ -162,7 +165,11 @@ function ShowcaseRoot({ label, children, className }: Props) {
         aria-label={label}
         aria-orientation="vertical"
         onKeyDown={onKeyDown}
-        className="order-2 flex flex-col @4xl:order-1"
+        onFocus={(e) => setKeys(e.target.matches(":focus-visible"))}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setKeys(false);
+        }}
+        className="order-2 flex flex-col @4xl:order-1 @4xl:justify-center"
       >
         {items.map((each, i) => {
           const on = i === index;
@@ -179,17 +186,36 @@ function ShowcaseRoot({ label, children, className }: Props) {
               aria-controls={`${base}-panel`}
               tabIndex={on ? 0 : -1}
               onClick={() => select(i, false)}
-              className="group relative block w-full border-b border-edge px-6 py-5 text-start last:border-b-0 @4xl:py-7 focus-visible:outline-2 focus-visible:-outline-offset-4 focus-visible:outline-ring @2xl:px-8"
+              className="group relative block w-full py-4 text-start focus-visible:outline-2 focus-visible:outline-ring @4xl:py-5"
             >
+              <span aria-hidden="true" className="absolute inset-x-0 bottom-0 h-px bg-edge" />
+              {on && (
+                // The divider under the playing item is its timer; with no timer it stays full.
+                <span aria-hidden="true" className="absolute inset-x-0 -bottom-px h-0.5">
+                  {timed ? (
+                    <span
+                      key={`${each.id}-${run}`}
+                      data-paused={held || undefined}
+                      onAnimationEnd={advance}
+                      style={{ animationDuration: `${each.dwell ?? DWELL_MS}ms` }}
+                      className="landing-dwell absolute inset-0 bg-ink ltr:origin-left rtl:origin-right"
+                    />
+                  ) : (
+                    <span className="absolute inset-0 bg-ink" />
+                  )}
+                </span>
+              )}
               <span className="flex items-center gap-3.5">
                 {each.icon && (
-                  // While its item plays, the icon takes the stage's tint, so the two read as one.
+                  // While its item plays, the icon takes the tray's tint, so the two read as one.
                   <span
                     aria-hidden="true"
                     style={trayStyle(each.hue)}
                     className={clsx(
-                      "grid size-8 shrink-0 place-items-center rounded-lg transition-[background-color,color] duration-500 [&_svg]:size-4",
-                      on ? "use-case-tile text-ink" : "bg-plate-nested text-ink-secondary",
+                      "grid size-8 shrink-0 place-items-center rounded-lg transition-[background-color,color] duration-200 [&_svg]:size-4",
+                      on
+                        ? "use-case-tile text-ink"
+                        : "bg-plate-nested/60 text-ink-muted hoverable:group-hover:bg-plate-nested hoverable:group-hover:text-ink",
                     )}
                   >
                     {each.icon}
@@ -197,8 +223,8 @@ function ShowcaseRoot({ label, children, className }: Props) {
                 )}
                 <span
                   className={clsx(
-                    "min-w-0 text-lg font-medium tracking-[-0.02em] text-balance transition-colors duration-200 @2xl:text-xl",
-                    on ? "text-ink" : "text-ink-secondary hoverable:group-hover:text-ink",
+                    "min-w-0 text-lg font-medium tracking-[-0.02em] text-balance transition-colors duration-200",
+                    on ? "text-ink" : "text-ink-muted hoverable:group-hover:text-ink",
                   )}
                 >
                   {each.title}
@@ -221,19 +247,6 @@ function ShowcaseRoot({ label, children, className }: Props) {
                   </span>
                 </span>
               </span>
-              {on && (
-                // The progress line runs along the divider under the playing item.
-                <span
-                  aria-hidden="true"
-                  className="absolute inset-x-0 -bottom-px h-0.5 overflow-hidden"
-                >
-                  {timer(
-                    each,
-                    "absolute inset-0 bg-ink ltr:origin-left rtl:origin-right",
-                    "landing-dwell",
-                  )}
-                </span>
-              )}
             </button>
           );
         })}
@@ -244,22 +257,25 @@ function ShowcaseRoot({ label, children, className }: Props) {
         id={`${base}-panel`}
         aria-labelledby={`${base}-tab-${item.id}`}
         style={trayStyle(item.hue)}
-        className="use-case-tile relative order-1 grid min-h-[400px] place-items-center overflow-hidden px-5 py-14 transition-[background-color] duration-500 @2xl:px-10 @4xl:order-2 @4xl:min-h-[460px]"
+        className="use-case-tile relative order-1 grid min-h-[400px] place-items-center overflow-hidden rounded-[28px] px-5 py-14 transition-[background-color] duration-500 @2xl:px-10 @4xl:order-2 @4xl:min-h-[480px]"
       >
-        {/* Quiet on purpose: the demo is the subject, and it replays by itself. */}
-        <button
-          type="button"
-          onClick={() => setReplays((n) => n + 1)}
-          aria-label={t`Replay`}
-          title={t`Replay`}
-          className="absolute end-3 top-3 z-10 grid size-8 place-items-center rounded-full text-ink-muted transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.94] hoverable:hover:bg-plate/70 hoverable:hover:text-ink-secondary focus-visible:outline-2 focus-visible:outline-ring"
-        >
-          <RotateCcw aria-hidden="true" className="size-3.5" />
-        </button>
+        {/* Quiet on purpose: the demo is the subject, and the list moves on by itself. With reduced
+           motion a demo shows finished, so there is nothing to replay. */}
+        {!still && (
+          <button
+            type="button"
+            onClick={replay}
+            aria-label={t`Replay`}
+            title={t`Replay`}
+            className="absolute end-3.5 top-3.5 z-10 grid size-9 place-items-center rounded-full bg-plate/80 text-ink edge-drop transition-[background-color,scale] duration-150 ease-out active:scale-[0.94] hoverable:hover:bg-plate focus-visible:outline-2 focus-visible:outline-ring"
+          >
+            <RotateCcw aria-hidden="true" className="size-3.5" />
+          </button>
+        )}
         <StageContext.Provider value={stage}>
           <AnimatePresence mode="wait" initial={false}>
             <motion.div
-              key={`${item.id}-${replays}`}
+              key={`${item.id}-${run}`}
               initial={still ? false : { opacity: 0, y: 8, filter: "blur(6px)" }}
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -8, filter: "blur(6px)", transition: { duration: 0.25 } }}

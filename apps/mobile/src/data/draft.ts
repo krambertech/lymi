@@ -11,3 +11,11 @@ export function openDraft(
   const clean = (draft.trim() || null) === saved;
   return clean ? { draft: current ?? "", saved: current } : { draft, saved };
 }
+
+/**
+ * The baseline after a save was refused: back to what was saved before it, unless a newer save has
+ * moved it since. Without this the refused text reads as saved, and saving it again does nothing.
+ */
+export function refusedDraft<T extends string | null>(saved: T, attempted: T, before: T): T {
+  return saved === attempted ? before : saved;
+}

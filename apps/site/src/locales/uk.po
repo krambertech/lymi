@@ -882,6 +882,12 @@ msgstr "Додав 14 карток у «Фармакологію», до кож�
 msgid "Added 18 cards to Security+, each with the guide’s definition."
 msgstr "Додав 18 карток у Security+, до кожної — визначення з посібника."
 
+msgid "Added 2 cards to Biology. Skipped Stomata: you have that card."
+msgstr "Додано 2 картки до колоди «Біологія». Пропущено Stomata: ця картка в тебе вже є."
+
+msgid "Added 2 cards to Spanish. Skipped la huelga: you have that card."
+msgstr "Додано 2 картки до колоди «Іспанська». Пропущено la huelga: ця картка в тебе вже є."
+
 msgid "Added 20 cards to NCLEX pharmacology."
 msgstr "Додано 20 карток у колоду «Фармакологія NCLEX»."
 
@@ -933,6 +939,9 @@ msgstr "Додав 8 карток до німецької, кожну з арт�
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Додав 8 карток у колоду «Іспанська». Пропустив «ojalá»: така картка в тебе вже є."
 
+msgid "Added 9 cards to Kubernetes."
+msgstr "Додано 9 карток до колоди «Kubernetes»."
+
 msgid "Added 9 cards to Polish. I skipped <0>sklep</0>, which you already have."
 msgstr "Додав 9 карток до польської. <0>sklep</0> пропустив — ця картка в тебе вже є."
 
@@ -942,11 +951,17 @@ msgstr "Додав 9 карток в «Іспанську». Пропустив 
 msgid "Added 9 cards to Spanish. I skipped <0>la cuenta</0>, which you already have."
 msgstr "Додав 9 карток до іспанської. <0>la cuenta</0> пропустив, бо ця картка в тебе вже є."
 
+msgid "Added a memory trick to the 4 cards you missed."
+msgstr "Додано підказки для запам’ятовування до 4 карток, на яких були помилки."
+
 msgid "Added after this week’s lesson"
 msgstr "Додано після уроку цього тижня"
 
 msgid "Added hints to 6 cards in Japanese"
 msgstr "Додано підказки до 6 карток у «Японській»"
+
+msgid "Added Move and Borrow to your Rust deck."
+msgstr "Move і Borrow додано до твоєї колоди «Rust»."
 
 msgid "Added to Chess, with the meaning and an example."
 msgstr "Готово: картка в колоді «Шахи», зі значенням і прикладом."
@@ -1413,6 +1428,9 @@ msgstr "Створюєш щось своє? У Lymi є повноцінний AP
 
 msgid "Building your own app instead? The <0>API reference</0> covers the same reads and writes."
 msgstr "Пишеш власний застосунок? У <0>довіднику API</0> є ті самі читання й зміни."
+
+msgid "Built Constitutional Law with a section for each lecture."
+msgstr "Готова колода «Конституційне право» з розділом для кожної лекції."
 
 msgid "Built for exam prep."
 msgstr "Створено для підготовки до іспитів."
@@ -2164,6 +2182,9 @@ msgstr "Не пий каву перед *сном*."
 
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не зноси паркан, доки не зрозумієш, навіщо його поставили"
+
+msgid "Done. Biology has a section for each file."
+msgstr "Готово. У «Біології» є розділ для кожного файлу."
 
 msgid "Download for Mac"
 msgstr "Завантажити для Mac"
@@ -3012,6 +3033,9 @@ msgstr "Щасти! Дослівно — «у вовчу пащу»"
 msgid "Good morning"
 msgstr "Доброго ранку"
 
+msgid "Good morning. Here’s today in Lymi."
+msgstr "Доброго ранку. Ось твій день у Lymi."
+
 msgid "Goodbye"
 msgstr "До побачення"
 
@@ -3146,6 +3170,9 @@ msgstr "Ось розділ 4 мого посібника з Security+. Дода
 
 msgid "Here’s the chat from today’s lesson with Marta. Add the new phrases."
 msgstr "Ось чат із сьогоднішнього уроку з Мартою. Додай нові фрази."
+
+msgid "Here’s today in Lymi."
+msgstr "Ось твій день у Lymi."
 
 msgid "Hi"
 msgstr "Привіт"
@@ -4219,11 +4246,17 @@ msgstr "macOS 13 або новіша"
 msgid "Made <0>Lisboa a dois</0>: 42 cards in 5 sections"
 msgstr "Створено колоду <0>Lisboa a dois</0>: 42 картки в 5 розділах"
 
+msgid "Made a Photosynthesis deck with a section for each topic."
+msgstr "Готова колода «Фотосинтез» з розділом для кожної теми."
+
 msgid "Made by Lymi"
 msgstr "Від Lymi"
 
 msgid "Made by Ukrainians"
 msgstr "Створено українцями"
+
+msgid "Made SAT words with a section for each week."
+msgstr "Готова колода «Слова для SAT» з розділом на кожен тиждень."
 
 msgid "Main navigation"
 msgstr "Основна навігація"
@@ -5699,12 +5732,6 @@ msgstr "Перейти до завантаження"
 msgid "Skip to the updates"
 msgstr "Перейти до оновлень"
 
-msgid "Skipped la huelga: you have that card."
-msgstr "Пропущено la huelga: ця картка в тебе вже є."
-
-msgid "Skipped Stomata: you have that card."
-msgstr "Пропущено Stomata: ця картка в тебе вже є."
-
 msgid "Slides and PDFs"
 msgstr "Слайди й PDF"
 
@@ -6556,6 +6583,9 @@ msgstr "Біля вокзалу є *парк*."
 
 msgid "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
 msgstr "Ці кроки — для Gemini CLI, який працює будь-де. У застосунку Gemini Google відкриває користувацькі застосунки лише дорослим у США й лише англійською."
+
+msgid "These three keep slipping. Let’s start with la huelga."
+msgstr "Ці три постійно вислизають. Почнімо з la huelga."
 
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "Вони відповідають джерелу {source} ({edition}), дослівно як в іспиті. Переклади й пояснення написав Lymi; він не пов’язаний з {authority} і не може гарантувати, що ти складеш іспит."

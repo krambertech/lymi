@@ -12,7 +12,7 @@ import type { JoinPreviewOut } from "@lymi/core";
 import { isolate } from "@lymi/core";
 import { onlineManager, useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, Redirect, useRouter } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useState } from "react";
 import { View } from "react-native";
 import { useSession } from "../auth/client";
 import { letGoOfLink, noteLink } from "../auth/held-link";
@@ -27,7 +27,7 @@ import { Button, Icon, Text } from "../ui/primitives";
 import { Screen } from "../ui/screen";
 import { Skeleton } from "../ui/skeleton";
 import { welcomeWith } from "../welcome/gate";
-import { isPromised, promiseJoin, takeJoin } from "./join-intent";
+import { isPromised, promiseJoin, type Resume, resume, resumeStep, takeJoin } from "./join-intent";
 
 /** A join link someone shared, or "Add to Lymi" on a published deck's public page. */
 export type Arrival =
@@ -44,7 +44,8 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
   const { t } = useLingui();
   const router = useRouter();
   const qc = useQueryClient();
-  const signedIn = Boolean(useSession().data);
+  const session = useSession();
+  const signedIn = Boolean(session.data);
   const published = arrival.kind === "publication";
   const preview = useQuery(
     published ? addPreviewQuery(arrival.slug) : joinPreviewQuery(arrival.token),
@@ -118,24 +119,31 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
       } else open(deckId);
     },
     onError: (err) => {
+      setResume({ type: "settled" });
       setFailed(describe(err));
       void preview.refetch();
     },
   });
 
   const key = published ? `add:${arrival.slug}` : `link:${arrival.token}`;
-  // Back from sign-up for this link, the deck was already shown: it joins behind a loading state
-  // rather than appearing a second time.
-  const [resuming] = useState(() => isPromised(key));
-  // Back from sign-in for this link: join at once, as the web does, rather than ask twice.
-  const resumed = useRef(false);
+  // Back from sign-in for this link, the deck was already shown: it joins at once, as the web does,
+  // behind a loading state rather than appearing a second time.
+  const [resuming, setResume] = useReducer(
+    resume,
+    key,
+    (k): Resume => (isPromised(k) ? { status: "waiting" } : { status: "none" }),
+  );
+  const viewer = preview.data?.viewer;
+  const sessionState = session.isPending ? "pending" : signedIn ? "in" : "out";
   useEffect(() => {
-    const viewer = preview.data?.viewer;
-    if (resumed.current || !viewer || viewer === "signed-out") return;
-    resumed.current = true;
+    if (resuming.status !== "waiting") return;
+    const step = resumeStep(sessionState, viewer, preview);
+    if (step === "wait") return;
     // Taken whoever signed in, so a promise never waits for a later visit to the same link.
-    if (takeJoin(key) && viewer === "visitor") join.mutate();
-  }, [key, preview.data?.viewer, join]);
+    const joins = step !== "show" && takeJoin(key) && step === "join";
+    setResume({ type: joins ? "join" : "show" });
+    if (joins) join.mutate();
+  }, [resuming.status, sessionState, viewer, preview, key, join]);
 
   const signIn = () => {
     const path = published
@@ -167,10 +175,7 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
       </Screen>
     );
   }
-  const viewer = preview.data?.viewer;
-  const joining =
-    resuming && !failed && (!viewer || viewer === "visitor" || viewer === "signed-out");
-  if (!preview.data || joining) {
+  if (!preview.data || resuming.status !== "none") {
     return (
       <Screen title="" back={back} header={<LoadingHeader />}>
         <View />

@@ -10,8 +10,8 @@ Each model is a small TLA+ description of one flow, checked by TLC over every or
 | Model | Rule | On `main` |
 | --- | --- | --- |
 | [Write queue](#write-queue) | A learner's queued write is never sent on another learner's session | Holds |
-| [Review day](#review-day) | Once every request is answered, the day's outcome is the one its reviews call for | Breaks; see the section |
-| [Import writes](#import-writes) | Once an import is failed, cancelled or done, no chunk adds a card | Breaks; pull request 1164 fixes it |
+| [Review day](#review-day) | Once every request is answered, the day's outcome is the one its reviews call for | Holds since pull request 1164 |
+| [Import writes](#import-writes) | Once an import is failed, cancelled or done, no chunk adds a card | Holds since pull request 1164 |
 
 ## Run a check
 
@@ -21,7 +21,7 @@ Each model is a small TLA+ description of one flow, checked by TLC over every or
 .agents/skills/model-check/scripts/check.sh ImportWrites
 ```
 
-It needs Java 11 or later (`brew install openjdk`, or set `JAVA`). The first run downloads TLC 1.7.4 to `~/.cache/lymi` and checks its SHA-256; set `TLA2TOOLS` to use a jar you already have. A pass prints `distinct states found` and no `violated` line. A broken rule prints `Invariant <Name> is violated` with the steps. To check another configuration, copy the model's `.cfg`, change a constant and pass the copy as the second argument.
+It needs Java 11 or later (`brew install openjdk`, or set `JAVA`). The first run downloads TLC 1.7.4 to `~/.cache/lymi` and checks its SHA-256; set `TLA2TOOLS` to use a jar you already have. A pass prints `distinct states found`, no `violated` line, and exits 0. A broken rule prints `Invariant <Name> is violated` with the steps, and exits 12. To check another configuration, copy the model's `.cfg`, change a constant and pass the copy's path, relative or absolute, as the second argument.
 
 To read a result as a chart or as a path in plain words, use the pstack statechart skill on the model's `.tla`, its `.cfg` and its `.view.mjs`. It is installed per machine and its commands change between releases, so take them from that skill.
 
@@ -50,7 +50,7 @@ The invariant is `NoCrossSend` in [`models/WriteQueue.tla`](models/WriteQueue.tl
 | `SessionEnds` | the session ending, with `unclaimWrites` in the cleanup of `Sync`'s effect |
 | `Drops` | `dropWrites` in `writes.ts`, called from `apps/mobile/src/app/(tabs)/you/index.tsx`, `delete-account.tsx` and `delete-code.tsx` |
 
-The model describes the code at `0d80e817a` on `main`. A request takes its session when it leaves (`config.headers()` in `packages/client/src/api/request.ts`), and the flush loop awaits `flushGrades` before each send, so the learner can change between two sends of one flush. The model keeps both facts; do not merge those steps.
+The model describes the code at `253cd1a37` on `main`. A request takes its session when it leaves (`config.headers()` in `packages/client/src/api/request.ts`), and the flush loop awaits `flushGrades` before each send, so the learner can change between two sends of one flush. The model keeps both facts; do not merge those steps.
 
 Replays live in `packages/client/src/writes.test.ts`: "sends nothing after a sign-out", "does not put a write back when the learner signed out", "stops a flush that was mid-way when the learner left" and "keeps the queue but holds it".
 
@@ -64,9 +64,9 @@ Replays live in `packages/client/src/writes.test.ts`: "sends nothing after a sig
 
 ## Review day
 
-**Rule:** once every request has its answer, today's `review_days.outcome` is the one its reviews call for, so a day with reviews never ends `nothing_due` and no grade or Undo is lost. **Harm:** the streak counts a day the learner did not finish, or drops one they did, and Today shows a goal state the server no longer holds.
+**Rule:** opening Lymi confirms a day as nothing due only while no grade has landed, and once every request has its answer, today's `review_days.outcome` is the one its reviews call for, so no grade or Undo is lost. A day already confirmed may gain reviews and stay `nothing_due` below the goal, as [docs/review.md](../../../docs/review.md) says; it moves to `goal_met` or `exhausted` once it earns them. **Harm:** a day the learner reviewed only protects the streak instead of counting, or counts a goal it no longer meets, and Today shows a state the server no longer holds.
 
-The invariants are `NothingDueOnlyWithoutAttempts` and `NoLostUpdate` in [`models/ReviewDay.tla`](models/ReviewDay.tla). [`models/ReviewDay.cfg`](models/ReviewDay.cfg) checks two grades, one Undo of a grade made earlier, and one visit (opening Lymi), on a day with a goal of two and no cards due, starting with or without that earlier grade. Each request reads and writes in separate statements, and any of them may never be sent.
+The invariants are `ConfirmsOnlyWithoutGrades` and `NoLostUpdate` in [`models/ReviewDay.tla`](models/ReviewDay.tla). [`models/ReviewDay.cfg`](models/ReviewDay.cfg) checks two grades, one Undo of any grade that has landed, and one visit (opening Lymi), on a day with a goal of two and no cards due, starting with or without a grade made earlier. Each request reads and writes in separate statements, and any of them may never be sent.
 
 | Model step | Code |
 | --- | --- |
@@ -74,28 +74,29 @@ The invariants are `NothingDueOnlyWithoutAttempts` and `NoLostUpdate` in [`model
 | `GradeLands` | `gradeCard`'s batch: the card state and the review row |
 | `UndoLands` | `restoreIfLatest` |
 | `VisitCountsDue` | `drawableCount` at the top of `checkToday` |
-| `VisitCounts`, `VisitConfirms` | `checkToday` on `main`: `attemptsOn`, then the update to `nothing_due` |
-| `ReadsAgain` | a select of the day row at the top of `settleDay`, which no commit has yet |
-| `Counts` | `attemptsOn` and `drawableCount` in `settleDay`, then `nextOutcome` in `packages/core/src/streak.ts` or the rules inlined on `main` |
-| `Writes`, `Rereads` | `settleDay`'s update, and on #1164 its re-read when the compare-and-set misses, up to `SETTLE_TRIES` |
+| `VisitCounts`, `VisitConfirms` | `checkToday` before pull request 1164: `attemptsOn`, then the update to `nothing_due` |
+| `ReadsAgain` | the select of the day row at the top of each try in `settleDay` |
+| `Counts` | `attemptsOn` and `drawableCount` in `settleDay`, then `nextOutcome` in `packages/core/src/streak.ts` (before 1164, the same rules inlined in `settleDay`) |
+| `Writes`, `Rereads` | `settleDay`'s compare-and-set update, and the next try when it misses, up to `SETTLE_TRIES` |
 
-Three constants choose the code the model describes:
+Two constants are the guards; the default config turns both on and describes the code at `253cd1a37` on `main`. It holds: 283,161 distinct states in a few seconds, and 286,312 with one card due.
 
-| `CompareAndSet` | `ReadsDayFirst` | Code | Result |
-| --- | --- | --- | --- |
-| `FALSE` | `FALSE` | `main` at `0d80e817a`; the default config | Both rules break |
-| `TRUE` | `FALSE` | pull request 1164 at `b3cf33538` | `NoLostUpdate` and `NothingDueOnlyWithoutAttempts` break |
-| `TRUE` | `TRUE` | 1164 plus a select of the day row at the top of `settleDay` | Holds: 105,573 distinct states in about a second |
+| Constant | Code | Off |
+| --- | --- | --- |
+| `CompareAndSet` | `settleDay`'s update lands only over the outcome, goal and attempts it decided from | `ConfirmsOnlyWithoutGrades` breaks |
+| `ReadsDayFirst` | each try in `settleDay` selects the day row rather than deciding from its caller's copy | `NoLostUpdate` breaks |
 
-The paths TLC finds, each replayed on a local D1:
+Both `FALSE` is the code before 1164, at `0d80e817a`, where both rules break. The paths TLC found there, each replayed on a local D1 before 1164 fixed them:
 
-- A grade lands while opening Lymi confirms the day as nothing due: the visit writes `nothing_due` over a day with one review. Broken on `main`, fixed by 1164.
-- Undo of an earlier grade reads the day; another grade then meets the goal; the Undo lands and, finding the outcome it decided equal to the one it read, writes nothing: `goal_met` with one review of two. Broken on `main` and on 1164.
-- A grade reads the day as done; an Undo and a visit make it nothing due; the grade lands and writes nothing for the same reason: `nothing_due` with one review. Broken on `main` and on 1164.
+- A grade lands while opening Lymi confirms the day as nothing due: the visit writes `nothing_due` over a grade that had landed. Breaks `ConfirmsOnlyWithoutGrades`.
+- Undo of an earlier grade reads the day; another grade then meets the goal; the Undo lands and, deciding the outcome it read, writes nothing: `goal_met` with one review of two. Breaks `NoLostUpdate`.
+- A grade reads the day as done; an Undo and a visit rightly confirm it nothing due; the grade lands with nothing left to review and writes nothing for the same reason: `nothing_due` where `nextOutcome` calls for `exhausted`, so a day that should count only protects the streak. Breaks `NoLostUpdate`.
 
-`settleDay` decides from its caller's copy of the row, read before the grade or Undo landed, and returns without writing when the new outcome equals that stale one, so the compare-and-set never runs. The replays are not in the repository yet, because they fail until the fix lands; add them to `apps/web/src/server/services/review-days.test.ts` with the fix.
+Their replays are in `apps/web/src/server/services/review-days.test.ts` under "a grade that lands while the day is being settled".
 
-**See it fail.** With `CompareAndSet` and `ReadsDayFirst` both `TRUE` the rule holds; setting either to `FALSE` breaks it. `Tries` is `SETTLE_TRIES`; within these bounds the rule still holds with `1`, so the bound on retries is not what keeps it.
+`NoLostUpdate` holds a day with no reviews to `nothing_due` once confirmed and `open` otherwise, so an Undo that reopens a confirmed day breaks it.
+
+**See it fail.** Set `CompareAndSet` or `ReadsDayFirst` to `FALSE` in a copy of the config. `Tries` is `SETTLE_TRIES`; within these bounds the rule still holds with `1`, so the bound on retries is not what keeps it.
 
 **Leaves out:** changing the goal (`applyGoalToToday`), midnight and the zone, grade replays (`duplicate` in `gradeCard`), more than two grades and one Undo, cards that become due during the day, and `drawableCount` read at a different moment from `attemptsOn`.
 
@@ -115,11 +116,10 @@ The invariants are `NoCardsAfterEnd` and `ArchiveCoversEveryCard` in [`models/Im
 | `CancelReads`, `CancelWrites` | `cancelImport`, which refuses once the import is importing |
 | `ArchiveReads`, `ArchiveWrites` | `archiveImport` in `import-writer.ts`, which archives the cards the import added so far |
 
-The default config describes `main` at `0d80e817a` (`ChunkChecksStatus = FALSE`): the rule breaks in five steps. The stall check fails a slow import between a chunk's reads and its batch; the batch checks only `written`, so it lands and adds the chunk's cards to a failed import. With an archive between them, the late cards stay active. Both paths were replayed on a local D1 with `writeImportChunk` held before its batch: on `main` ten cards landed in the failed import and nine stayed active after the archive.
+The default config describes `main` at `253cd1a37`, where pull request 1164 added `status = 'importing'` to `writeChunk`'s guard and to its last update (`ChunkChecksStatus = TRUE`). The rule holds: 321 distinct states with two chunks, 653 with four.
 
-`ChunkChecksStatus = TRUE` describes pull request 1164 at `b3cf33538`, whose guard adds `status = 'importing'` to every statement of the batch. The rule holds: 321 distinct states with two chunks, 653 with four, and the same replays write no card. The replays are not in the repository; pull request 1164 adds "writes no chunk once the import has failed" to `imports.test.ts`, which covers the first path.
+Before 1164, at `0d80e817a` (`ChunkChecksStatus = FALSE`), the rule broke in five steps. The stall check failed a slow import between a chunk's reads and its batch; the batch checked only `written`, so it landed and added the chunk's cards to a failed import. With an archive between them, the late cards stayed active. Both paths were replayed on a local D1 with `writeImportChunk` held before its batch: ten cards landed in the failed import and nine stayed active after the archive; with the guard, none. "writes no chunk once the import has failed" in `apps/web/src/server/services/imports.test.ts` replays the first path.
 
-**See it fail.** `ChunkChecksStatus` is the only guard the rule rests on: with it, no other actor's order matters, because the batch checks the status in the same statement that writes.
+**See it fail.** Set `ChunkChecksStatus` to `FALSE` in a copy of the config. It is the only guard the rule rests on: with it, no other actor's order matters, because the batch checks the status in the same statement that writes.
 
 **Leaves out:** the pictures and recordings step (`attachImportPictures`), which can still store media on cards a chunk added before the import ended; a run handing over to the next; a step retried by Workflows, which the `written` guard makes harmless; restore after archive; and more than one run or four chunks.
-

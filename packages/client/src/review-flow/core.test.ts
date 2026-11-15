@@ -506,6 +506,30 @@ describe("archiving during a review", () => {
 });
 
 describe("Undo", () => {
+  it("offers nothing to take back once the server refused the grade", () => {
+    const review = new Review(draw(["a"]), round(["a", "b"]));
+    const last = review.grade();
+    review.settle(last, "refused");
+    expect(review.flow.last).toBeNull();
+    expect(review.view.current?.card.id).toBe("b");
+    expect(review.view.position).toBe(1);
+  });
+
+  it("keeps a later grade to take back when an earlier one is refused", () => {
+    const review = new Review(draw(["a"]), round(["a", "b"]));
+    const first = review.grade();
+    const second = review.grade();
+    review.settle(first, "refused");
+    expect(review.flow.last).toBe(second);
+  });
+
+  it("offers nothing to take back in the day's draw once the grade is gone", () => {
+    const review = new Review(draw(["a", "b"]));
+    const last = review.grade();
+    review.settle(last, "gone");
+    expect(review.flow.last).toBeNull();
+  });
+
   it("brings the last card back on screen", () => {
     const review = new Review(draw(["a", "b"]));
     const last = review.grade();

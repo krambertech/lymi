@@ -18,7 +18,7 @@ import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useRef, useState } from "react";
 import { TextInput, View } from "react-native";
 import { useDeckExits } from "../../../data/decks";
-import { openDraft } from "../../../data/draft";
+import { openDraft, refusedDraft } from "../../../data/draft";
 import { languageName } from "../../../data/languages";
 import { usePurposes } from "../../../data/purposes";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
@@ -73,7 +73,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const sectionCount = useSections(owner ? deck.id : undefined).data?.sections.length ?? 0;
   const tagCount = useQuery({ ...deckTagsQuery(deck.id), enabled: owner }).data?.tags.length;
 
-  const save = async (patch: DeckPatch) => {
+  const save = async (patch: DeckPatch, refused?: () => void) => {
     setSaved("saving");
     setError(null);
     try {
@@ -81,6 +81,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
       void qc.invalidateQueries({ queryKey: ["decks"] });
       setSaved("saved");
     } catch (e) {
+      refused?.();
       setSaved(null);
       setError(errorMessage(e));
     }
@@ -98,20 +99,29 @@ function Settings({ deck }: { deck: DeckSummary }) {
       setError(name.trim() ? t`Keep the name under 80 characters.` : t`Give the deck a name.`);
       return;
     }
+    const before = kept.current.name;
     kept.current.name = parsed.data;
-    void save({ name: parsed.data });
+    void save({ name: parsed.data }, () => {
+      kept.current.name = refusedDraft(kept.current.name, parsed.data, before);
+    });
   };
   const commitDescription = () => {
     const next = description.trim() || null;
     if (next === kept.current.description) return;
+    const before = kept.current.description;
     kept.current.description = next;
-    void save({ description: next });
+    void save({ description: next }, () => {
+      kept.current.description = refusedDraft(kept.current.description, next, before);
+    });
   };
   const commitInstructions = () => {
     const next = instructions.trim() || null;
     if (next === kept.current.instructions) return;
+    const before = kept.current.instructions;
     kept.current.instructions = next;
-    void save({ enrichInstructions: next });
+    void save({ enrichInstructions: next }, () => {
+      kept.current.instructions = refusedDraft(kept.current.instructions, next, before);
+    });
   };
   const { archive, leave } = useDeckExits(deck);
   const purposes = usePurposes();

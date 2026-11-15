@@ -28,7 +28,8 @@ const steps = {
   VisitCountsDue: by(() => "counts the cards due"),
   Reads: by(() => "reads the day"),
   GradeLands: by(() => "is saved"),
-  UndoLands: () => "Undo takes the earlier grade back",
+  UndoLands: (from, to) =>
+    to.attempts < from.attempts ? "Undo takes a grade back" : "Undo finds no grade to take back",
   VisitCounts: by(() => "counts the reviews"),
   VisitConfirms: () => "opening Lymi marks the day nothing due",
   Counts: by(() => "counts the reviews"),

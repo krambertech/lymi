@@ -17,6 +17,7 @@ import { drawableBySection } from "./draw";
 import { deckAccess, memberOf, ownedDeck } from "./members";
 import { askedSql, stateStatementsForDeck, taughtFirstSql } from "./modes";
 import { getSettings } from "./settings";
+import { notTakenDown } from "./takedowns";
 
 type Statement = Parameters<Db["batch"]>[0][number];
 
@@ -470,6 +471,7 @@ export async function restoreSection(ctx: ServiceContext, id: string) {
         and(
           eq(schema.cards.sectionId, id),
           eq(schema.cards.archivedAt, at),
+          notTakenDown,
           sql`exists (select 1 from sections where ${stillArchived})`,
         ),
       ),

@@ -380,6 +380,87 @@ describe("pulls that would overlap", () => {
   });
 });
 
+describe("a pull overtaken while it reads", () => {
+  const connection = async (userId: string) => {
+    const [row] = await db
+      .select()
+      .from(schema.readwiseConnections)
+      .where(eq(schema.readwiseConnections.userId, userId));
+    return row;
+  };
+
+  it("leaves a token pasted meanwhile active when Readwise refuses the old one", async () => {
+    const ctx = await reader("rw-repasted");
+    await connectReadwise(ctx, depsWith(), DEV_READWISE_TOKEN);
+    const revoked: ReadwiseApi = {
+      ...createFakeReadwiseApi(),
+      exportPage: async () => {
+        await connectReadwise(ctx, depsWith(), DEV_READWISE_TOKEN);
+        throw new ReadwiseRefused();
+      },
+    };
+    await pullReadwiseNow(ctx, depsWith(revoked));
+    expect(await connection(ctx.userId)).toMatchObject({ status: "active", pullingUntil: null });
+  });
+
+  it("keeps the lease of a pull that took over once its own ran out", async () => {
+    const ctx = await reader("rw-lease");
+    await connectReadwise(ctx, depsWith(), DEV_READWISE_TOKEN);
+    const theirs = later(600_000);
+    const fake = createFakeReadwiseApi();
+    const slow: ReadwiseApi = {
+      ...fake,
+      exportPage: async (token, options) => {
+        await db
+          .update(schema.readwiseConnections)
+          .set({ pullingUntil: theirs })
+          .where(eq(schema.readwiseConnections.userId, ctx.userId));
+        return fake.exportPage(token, options);
+      },
+    };
+    await pullReadwiseNow(ctx, depsWith(slow));
+    expect((await connection(ctx.userId))?.pullingUntil?.getTime()).toBe(theirs.getTime());
+  });
+});
+
+describe("a book the learner chose before Lymi knew its language", () => {
+  const book = async (userId: string, bookId: string) => {
+    const [row] = await db
+      .select()
+      .from(schema.readwiseBooks)
+      .where(and(eq(schema.readwiseBooks.userId, userId), eq(schema.readwiseBooks.bookId, bookId)));
+    return row;
+  };
+
+  it("stays followed once the pull places it in a language with no deck", async () => {
+    const ctx = await reader("rw-chosen-follow");
+    await connectReadwise(ctx, { ...depsWith(), languages: null }, DEV_READWISE_TOKEN);
+    await updateReadwise(ctx, { books: [{ id: "9002", followed: true }] });
+
+    await pullReadwiseNow(ctx, depsWith());
+    expect(await book(ctx.userId, "9002")).toMatchObject({
+      language: "et",
+      followed: true,
+      everFollowed: true,
+    });
+  });
+
+  it("stays unfollowed once the pull places it in a language the learner studies", async () => {
+    const ctx = await reader("rw-chosen-unfollow");
+    await connectReadwise(ctx, { ...depsWith(), languages: null }, DEV_READWISE_TOKEN);
+    await updateReadwise(ctx, { books: [{ id: "9001", followed: true }] });
+    await updateReadwise(ctx, { books: [{ id: "9001", followed: false }] });
+
+    await pullReadwiseNow(ctx, depsWith(), { followed: true });
+    expect(await book(ctx.userId, "9001")).toMatchObject({
+      language: "it",
+      followed: false,
+      everFollowed: true,
+    });
+    expect(await cardsOf(ctx.userId)).toHaveLength(0);
+  });
+});
+
 describe("a book turned off and on again", () => {
   it("brings only highlights made after it was turned back on", async () => {
     const ctx = await reader("rw-refollow");

@@ -1,8 +1,8 @@
 ---- MODULE ReviewDay ----
 \* Today's review_days row on the server, apps/web/src/server/services/review-days.ts and the
 \* grade in review.ts, with the rules in packages/core/src/streak.ts.
-\* Rule: once every request is answered, the day's outcome is the one its attempts call for:
-\* a day with attempts never ends "nothing_due", and no grade or undo is lost.
+\* Rules: a visit confirms nothing due only while no grade has landed, and once every request
+\* is answered, the day's outcome is the one its attempts call for: no grade or undo is lost.
 \* Each D1 statement is one step; the requests interleave between statements.
 EXTENDS Naturals, FiniteSets
 
@@ -24,9 +24,10 @@ VARIABLES outcome,  \* review_days.outcome
           seen,     \* the day row each request last read: [outcome, zeroDue]
           counted,  \* the attempts each request last counted
           dueSeen,  \* checkToday's drawableCount, read before the day row
-          tries
+          tries,
+          lateConfirm \* a visit confirmed nothing due over a grade that had landed
 
-vars == <<outcome, zeroDue, attempts, pc, seen, counted, dueSeen, tries>>
+vars == <<outcome, zeroDue, attempts, pc, seen, counted, dueSeen, tries, lateConfirm>>
 
 \* drawableCount: a graded card leaves today's draw until its grade is taken back.
 Drawable(a) == IF a >= Due THEN 0 ELSE Due - a
@@ -35,16 +36,16 @@ Drawable(a) == IF a >= Due THEN 0 ELSE Due - a
 Settled(a) ==
   IF a >= Goal THEN "goal_met" ELSE IF a > 0 /\ Drawable(a) = 0 THEN "exhausted" ELSE "open"
 
-\* The day may already hold one grade from earlier, made on this device or another. Undo takes
-\* that one back, so with none there is no Undo to send.
+\* The day may already hold one grade from earlier, made on this device or another.
 Init ==
   /\ attempts \in {0, 1}
   /\ outcome = Settled(attempts) /\ zeroDue = FALSE
-  /\ pc = [r \in Requests |-> IF Kind(r) = "undo" /\ attempts = 0 THEN "done" ELSE First(r)]
+  /\ pc = [r \in Requests |-> First(r)]
   /\ seen = [r \in Requests |-> [outcome |-> "open", zeroDue |-> FALSE]]
   /\ counted = [r \in Requests |-> 0]
   /\ dueSeen = [r \in Requests |-> 0]
   /\ tries = [r \in Requests |-> 0]
+  /\ lateConfirm = FALSE
 
 Row == [outcome |-> outcome, zeroDue |-> zeroDue]
 Go(r, to) == pc' = [pc EXCEPT ![r] = to]
@@ -71,14 +72,14 @@ NextOutcome(r, a) ==
      ELSE IF change = "undo" THEN (IF seen[r].zeroDue THEN "nothing_due" ELSE "open")
      ELSE seen[r].outcome
 
-Unchanged(r) == UNCHANGED <<outcome, zeroDue, attempts, counted, dueSeen, tries>>
+Unchanged(r) == UNCHANGED <<outcome, zeroDue, attempts, counted, dueSeen, tries, lateConfirm>>
 
 \* checkToday: drawableCount first.
 VisitCountsDue(r) ==
   /\ pc[r] = "due"
   /\ dueSeen' = [dueSeen EXCEPT ![r] = Drawable(attempts)]
   /\ Go(r, "read")
-  /\ UNCHANGED <<outcome, zeroDue, attempts, seen, counted, tries>>
+  /\ UNCHANGED <<outcome, zeroDue, attempts, seen, counted, tries, lateConfirm>>
 
 \* The day row: openDay in a grade, the select in undoReview and checkToday.
 Reads(r) ==
@@ -94,14 +95,16 @@ GradeLands(r) ==
   /\ pc[r] = "insert"
   /\ attempts' = attempts + 1
   /\ Go(r, Settle)
-  /\ UNCHANGED <<outcome, zeroDue, seen, counted, dueSeen, tries>>
+  /\ UNCHANGED <<outcome, zeroDue, seen, counted, dueSeen, tries, lateConfirm>>
 
-\* restoreIfLatest takes the earlier grade back.
+\* restoreIfLatest takes back a grade that has landed, the earlier one or one from this run;
+\* with none, it writes nothing and undoReview throws.
 UndoLands(r) ==
   /\ pc[r] = "restore"
-  /\ attempts' = attempts - 1
-  /\ Go(r, Settle)
-  /\ UNCHANGED <<outcome, zeroDue, seen, counted, dueSeen, tries>>
+  /\ IF attempts > 0
+       THEN attempts' = attempts - 1 /\ Go(r, Settle)
+       ELSE UNCHANGED attempts /\ Go(r, "done")
+  /\ UNCHANGED <<outcome, zeroDue, seen, counted, dueSeen, tries, lateConfirm>>
 
 \* main's checkToday: with nothing due, it counts attempts itself and confirms an empty open day.
 VisitCounts(r) ==
@@ -110,11 +113,12 @@ VisitCounts(r) ==
        THEN /\ counted' = [counted EXCEPT ![r] = attempts]
             /\ Go(r, IF attempts = 0 /\ seen[r].outcome = "open" THEN "confirm" ELSE Settle)
        ELSE UNCHANGED counted /\ Go(r, Settle)
-  /\ UNCHANGED <<outcome, zeroDue, attempts, seen, dueSeen, tries>>
+  /\ UNCHANGED <<outcome, zeroDue, attempts, seen, dueSeen, tries, lateConfirm>>
 
 VisitConfirms(r) ==
   /\ pc[r] = "confirm"
   /\ outcome' = "nothing_due" /\ zeroDue' = TRUE
+  /\ lateConfirm' = (lateConfirm \/ attempts > 0)
   /\ Go(r, "done")
   /\ UNCHANGED <<attempts, seen, counted, dueSeen, tries>>
 
@@ -131,7 +135,7 @@ Counts(r) ==
   /\ counted' = [counted EXCEPT ![r] = attempts]
   /\ LET next == IF CompareAndSet THEN NextOutcome(r, attempts) ELSE MainOutcome(r, attempts)
      IN Go(r, IF next = seen[r].outcome THEN "done" ELSE "write")
-  /\ UNCHANGED <<outcome, zeroDue, attempts, seen, dueSeen, tries>>
+  /\ UNCHANGED <<outcome, zeroDue, attempts, seen, dueSeen, tries, lateConfirm>>
 
 \* settleDay's update. With CompareAndSet it lands only over the outcome and attempts it read.
 Writes(r) ==
@@ -142,8 +146,9 @@ Writes(r) ==
      IN IF lands
           THEN /\ outcome' = next
                /\ zeroDue' = (zeroDue \/ (CompareAndSet /\ confirming))
+               /\ lateConfirm' = (lateConfirm \/ (CompareAndSet /\ confirming /\ attempts > 0))
                /\ Go(r, "done")
-          ELSE UNCHANGED <<outcome, zeroDue>> /\ Go(r, "reread")
+          ELSE UNCHANGED <<outcome, zeroDue, lateConfirm>> /\ Go(r, "reread")
   /\ UNCHANGED <<attempts, seen, counted, dueSeen, tries>>
 
 \* A write that did not land reads the day again, and gives up after Tries.
@@ -152,7 +157,7 @@ Rereads(r) ==
   /\ seen' = [seen EXCEPT ![r] = Row]
   /\ tries' = [tries EXCEPT ![r] = @ + 1]
   /\ Go(r, IF tries[r] + 1 >= Tries THEN "done" ELSE "count")
-  /\ UNCHANGED <<outcome, zeroDue, attempts, counted, dueSeen>>
+  /\ UNCHANGED <<outcome, zeroDue, attempts, counted, dueSeen, lateConfirm>>
 
 \* Every request has its answer, or was never sent.
 Quiet == \A r \in Requests : pc[r] \in {"done", First(r)}
@@ -166,13 +171,15 @@ Next ==
 
 Spec == Init /\ [][Next]_vars
 
-\* What a day's attempts call for once nothing is in flight. A day with no attempts may be open
-\* or confirmed as nothing due, whichever the last visit found.
+\* What a day's attempts call for once nothing is in flight. A day with no attempts is nothing due
+\* once a visit confirmed it, and open otherwise; a confirmed day keeps that protection while reviews below the goal
+\* leave cards to do (docs/review.md), and moves on once it meets the goal or runs out.
 Expected ==
   IF attempts >= Goal THEN {"goal_met"}
-  ELSE IF attempts > 0 THEN (IF Drawable(attempts) = 0 THEN {"exhausted"} ELSE {"open"})
-  ELSE {"open", "nothing_due"}
+  ELSE IF attempts > 0 /\ Drawable(attempts) = 0 THEN {"exhausted"}
+  ELSE IF attempts > 0 THEN {"open"} \cup (IF zeroDue THEN {"nothing_due"} ELSE {})
+  ELSE IF zeroDue THEN {"nothing_due"} ELSE {"open"}
 
-NothingDueOnlyWithoutAttempts == Quiet => (attempts > 0 => outcome # "nothing_due")
+ConfirmsOnlyWithoutGrades == ~lateConfirm
 NoLostUpdate == Quiet => outcome \in Expected
 ====

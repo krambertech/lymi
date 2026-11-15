@@ -1,5 +1,12 @@
 import type { DeviceTimezoneInput, ReviewTimezoneInput } from "@lymi/core";
-import { daySatisfied, newId, type StreakDay, summariseStreak } from "@lymi/core";
+import {
+  type DayChange,
+  daySatisfied,
+  newId,
+  nextOutcome,
+  type StreakDay,
+  summariseStreak,
+} from "@lymi/core";
 import { and, eq, isNotNull, isNull, ne, sql } from "@lymi/core/db";
 import type { ReviewDay } from "@lymi/core/schema";
 import { schema } from "../db";
@@ -110,47 +117,84 @@ export async function openDay(
 }
 
 /** Accepted attempts on a day: its reviews less the ones taken back. */
+const acceptedAttempts = (dayId: string) =>
+  sql<number>`(select count(*) from reviews
+    left join review_undos on review_undos.review_id = reviews.id
+    where reviews.review_day_id = ${dayId} and review_undos.review_id is null)`;
+
 async function attemptsOn(ctx: ServiceContext, dayId: string): Promise<number> {
   const [{ n } = { n: 0 }] = await ctx.db
-    .select({ n: sql<number>`count(*)` })
-    .from(schema.reviews)
-    .leftJoin(schema.reviewUndos, eq(schema.reviewUndos.reviewId, schema.reviews.id))
-    .where(and(eq(schema.reviews.reviewDayId, dayId), isNull(schema.reviewUndos.reviewId)));
+    .select({ n: acceptedAttempts(dayId) })
+    .from(schema.reviewDays)
+    .where(eq(schema.reviewDays.id, dayId));
   return n;
 }
 
+/** Writers that keep overtaking each other give up and report the day as last read. */
+const SETTLE_TRIES = 4;
+
 /**
- * Work out where a day stands after something changed it. A grade or a lower goal can only
- * complete a day; Undo can reopen one, back to "nothing due" if that was confirmed first.
+ * Work out where a day stands after something changed it, by `nextOutcome`'s rules. The write
+ * lands only while the outcome, goal and attempts it was decided from still hold; when another
+ * grade, undo or visit moved one of them first, the day is read again and decided again.
  * Exhaustion is judged only for today, because only today's queue is the day's queue.
  */
 export async function settleDay(
   ctx: ServiceContext,
   day: ReviewDay,
-  change: "grade" | "undo" | "goal" | "check",
+  change: DayChange,
   now = new Date(),
+  known: { nothingDue?: boolean; isToday?: boolean } = {},
 ): Promise<DayProgress> {
-  const attempts = await attemptsOn(ctx, day.id);
-  const isToday = day.date === dateFormatter(day.timezone).format(now);
-  const empty =
-    isToday &&
-    attempts > 0 &&
-    attempts < day.goal &&
-    (await drawableCount(ctx, { now, zone: day.timezone })) === 0;
-
-  let outcome: Outcome;
-  if (attempts >= day.goal) outcome = "goal_met";
-  else if (empty) outcome = "exhausted";
-  else if (change === "undo") outcome = day.zeroDueConfirmedAt ? "nothing_due" : "open";
-  else outcome = day.outcome;
-
-  if (outcome !== day.outcome) {
-    await ctx.db
-      .update(schema.reviewDays)
-      .set({ outcome, updatedAt: now })
+  for (let attempt = 0; ; attempt++) {
+    // Decided from the row as it is now: the caller's copy predates the grade or Undo it settles.
+    const [current] = await ctx.db
+      .select()
+      .from(schema.reviewDays)
       .where(eq(schema.reviewDays.id, day.id));
+    if (!current) throw notFound("Review day");
+    const attempts = await attemptsOn(ctx, current.id);
+    const progress = (outcome: Outcome) => ({
+      date: current.date,
+      attempts,
+      goal: current.goal,
+      outcome,
+    });
+    const isToday = known.isToday ?? current.date === dateFormatter(current.timezone).format(now);
+    const nothingLeft =
+      isToday &&
+      attempts < current.goal &&
+      (attempts > 0 || change === "visit") &&
+      (attempt === 0 && known.nothingDue !== undefined
+        ? known.nothingDue
+        : (await drawableCount(ctx, { now, zone: current.timezone })) === 0);
+    const outcome = nextOutcome(
+      {
+        outcome: current.outcome,
+        goal: current.goal,
+        attempts,
+        zeroDueConfirmed: current.zeroDueConfirmedAt !== null,
+        nothingLeft,
+      },
+      change,
+    );
+    if (outcome === current.outcome) return progress(outcome);
+    const confirming = change === "visit" && outcome === "nothing_due";
+    const landed = await ctx.db
+      .update(schema.reviewDays)
+      .set({ outcome, ...(confirming ? { zeroDueConfirmedAt: now } : {}), updatedAt: now })
+      .where(
+        and(
+          eq(schema.reviewDays.id, current.id),
+          eq(schema.reviewDays.outcome, current.outcome),
+          eq(schema.reviewDays.goal, current.goal),
+          sql`${acceptedAttempts(current.id)} = ${attempts}`,
+        ),
+      )
+      .returning({ id: schema.reviewDays.id });
+    if (landed.length) return progress(outcome);
+    if (attempt + 1 >= SETTLE_TRIES) return progress(current.outcome);
   }
-  return { date: day.date, attempts, goal: day.goal, outcome };
 }
 
 /**
@@ -183,14 +227,8 @@ export async function checkToday(ctx: ServiceContext, reported?: string | undefi
     return { date, attempts: 0, goal: settings.dailyGoal, outcome: "open" as const };
   }
   const day = existing ?? (await openDay(ctx, date, zone, settings.dailyGoal));
-  if (due === 0 && (await attemptsOn(ctx, day.id)) === 0 && day.outcome === "open") {
-    await ctx.db
-      .update(schema.reviewDays)
-      .set({ zeroDueConfirmedAt: now, outcome: "nothing_due", updatedAt: now })
-      .where(eq(schema.reviewDays.id, day.id));
-    return { date, attempts: 0, goal: day.goal, outcome: "nothing_due" as const };
-  }
-  return settleDay(ctx, day, "check", now);
+  // The day was found by today's date in the current zone, even when it opened in another.
+  return settleDay(ctx, day, "visit", now, { nothingDue: due === 0, isToday: true });
 }
 
 /**
@@ -206,11 +244,13 @@ export async function applyGoalToToday(ctx: ServiceContext, goal: number) {
     .from(schema.reviewDays)
     .where(and(eq(schema.reviewDays.userId, ctx.userId), eq(schema.reviewDays.date, date)));
   if (!day || daySatisfied(day.outcome) || day.goal === goal) return;
-  await ctx.db
+  // A grade that completed the day since it was read keeps the goal it was measured against.
+  const [moved] = await ctx.db
     .update(schema.reviewDays)
     .set({ goal, updatedAt: new Date() })
-    .where(eq(schema.reviewDays.id, day.id));
-  await settleDay(ctx, { ...day, goal }, "goal");
+    .where(and(eq(schema.reviewDays.id, day.id), eq(schema.reviewDays.outcome, day.outcome)))
+    .returning();
+  if (moved) await settleDay(ctx, moved, "goal");
 }
 
 /** What a grade replaced, so Undo can restore it exactly. */

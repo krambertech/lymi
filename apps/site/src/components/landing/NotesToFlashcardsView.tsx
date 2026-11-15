@@ -4,21 +4,23 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
-import { AssistantMarksWithMore } from "./AssistantMarks";
+import { AssistantMarksWithMore, WorksWith } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
 import { FeatureSection, SectionTitle } from "./FeatureSection";
+import { FreeBadge } from "./FreeBadge";
 import { NOTES_TO_FLASHCARDS_QUESTIONS } from "./faq";
-import { GuideSteps } from "./GuideSteps";
 import { Hero } from "./Hero";
 import { HeroLiftOff, type HeroWord } from "./HeroScenes";
 import { LandingLayout } from "./LandingLayout";
+import { BENTO_HUES, LanguageBento, Tile } from "./LanguageBento";
+import { DetailsSection, ReturnSection, TogetherSection } from "./LanguageSections";
 import { type Material, MaterialToCards, Pick } from "./MaterialToCards";
 import { Questions } from "./Questions";
-import { ReviewDemo } from "./ReviewDemo";
 import { SignUpSection } from "./SignUpSection";
+import { DiagramTile, OldDecksTile, PdfTile, TagReview } from "./StudyTiles";
 
 export const NOTES_TO_FLASHCARDS_TITLE = msg`Turn notes and PDFs into flashcards · Lymi`;
-export const NOTES_TO_FLASHCARDS_BLURB = msg`Send class notes, a PDF or a photo of your notebook to your AI assistant, and it adds the key terms to Lymi as flashcards with spaced repetition. Free.`;
+export const NOTES_TO_FLASHCARDS_BLURB = msg`Snap your class notes or drop in a PDF, and Lymi turns the key terms into flashcards with spaced repetition. Your AI assistant can add them too. Free.`;
 
 /** A study term is written in the page's language, so every field is a message. */
 interface StudyWord {
@@ -68,29 +70,6 @@ const OSMOSIS: StudySample = {
   term: msg`osmosis`,
   meaning: msg`Water moving through a membrane toward the side with more dissolved substance`,
 };
-
-const REVIEW: StudySample[] = [
-  {
-    label: msg`Biology`,
-    term: msg`diffusion`,
-    meaning: msg`Particles spreading from where there are more of them to where there are fewer`,
-  },
-  {
-    label: msg`Economics`,
-    term: msg`opportunity cost`,
-    meaning: msg`What you give up by choosing one option over the next best one`,
-  },
-  {
-    label: msg`History`,
-    term: msg`Peace of Westphalia`,
-    meaning: msg`The 1648 treaties that ended the Thirty Years’ War`,
-  },
-  {
-    label: msg`Law`,
-    term: msg`habeas corpus`,
-    meaning: msg`The right to have a court decide whether someone is lawfully detained`,
-  },
-];
 
 /** A lecture's slides, a page of handwritten notes and typed notes, each read into its deck. */
 const MATERIALS: Material[] = [
@@ -256,11 +235,16 @@ function RevisionNotes({ mark }: { mark: (i: number, text: ReactNode) => ReactNo
   );
 }
 
+/** Two cards in the study group's shared deck. */
+const STUDY_GROUP_CARDS = [
+  { term: msg`osmosis`, meaning: msg`Water moving across a membrane` },
+  { term: msg`mitosis`, meaning: msg`A cell dividing in two` },
+];
+
 /** For the student with a folder of notes and slides and a test coming. */
 export function NotesToFlashcardsView() {
   const { t, i18n } = useLingui();
   const osmosis = { ...OSMOSIS, term: i18n._(OSMOSIS.term) };
-  const review = REVIEW.map((card) => ({ ...card, term: i18n._(card.term) }));
   const words: HeroWord[] = HAND.map((card) => ({
     id: card.id,
     term: i18n._(card.term),
@@ -273,13 +257,16 @@ export function NotesToFlashcardsView() {
       page="notesToFlashcards"
       hero={
         <Hero
+          badge={<FreeBadge />}
           title={<Trans>Turn your notes into flashcards.</Trans>}
           lede={
             <Trans>
-              Send a PDF, a photo of your notebook or typed notes to your AI assistant. It adds the
-              key terms to Lymi as cards for you to review.
+              Snap a page of notes or drop in a PDF. Lymi picks out the key terms and makes the
+              cards, ready to review.
             </Trans>
           }
+          secondary={{ href: "#material", label: <Trans>See how it works</Trans> }}
+          after={<WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />}
           visual={
             <HeroLiftOff
               words={words}
@@ -290,7 +277,11 @@ export function NotesToFlashcardsView() {
         />
       }
     >
-      <section aria-labelledby="material-title" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
+      <section
+        id="material"
+        aria-labelledby="material-title"
+        className="scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20"
+      >
         <div className="mx-auto max-w-[1040px]">
           <div id="material-title">
             <SectionTitle>
@@ -299,8 +290,8 @@ export function NotesToFlashcardsView() {
           </div>
           <p className="mt-5 max-w-[52ch] text-md text-pretty text-ink-secondary">
             <Trans>
-              Your assistant picks out the terms, keeps the definitions from your notes and skips
-              the ones already in your deck.
+              Drop them into Smart add. Lymi picks out the terms, keeps the definitions from your
+              notes and skips the ones already in your deck. No assistant needed.
             </Trans>
           </p>
           <div className="mt-12">
@@ -309,86 +300,9 @@ export function NotesToFlashcardsView() {
         </div>
       </section>
 
-      <GuideSteps
-        id="guide"
-        title={<Trans>How it works</Trans>}
-        steps={[
-          {
-            id: "connect",
-            title: <Trans>Connect your AI assistant</Trans>,
-            body: (
-              <Trans>
-                Add Lymi to Claude, Grok or another assistant.{" "}
-                <a
-                  href="#connect"
-                  className="text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
-                >
-                  It takes three steps
-                </a>
-                . No assistant?{" "}
-                <a
-                  href="#guide-without"
-                  className="text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
-                >
-                  Start another way
-                </a>
-                .
-              </Trans>
-            ),
-          },
-          {
-            id: "send",
-            title: <Trans>Send your notes</Trans>,
-            body: (
-              <Trans>
-                Attach the PDF or the photo, or paste the text, in a chat with your assistant.
-              </Trans>
-            ),
-          },
-          {
-            id: "ask",
-            title: <Trans>Ask for cards</Trans>,
-            body: (
-              <Trans>
-                For example: “Add the key terms from this lecture to my Biology deck in Lymi, with
-                the definitions from the notes.” Ask for one section at a time when the file is
-                long.
-              </Trans>
-            ),
-          },
-          {
-            id: "check",
-            title: <Trans>Check the cards in Lymi</Trans>,
-            body: (
-              <Trans>
-                The new cards are in your deck, and terms you already have are skipped. Fix or
-                archive any card.
-              </Trans>
-            ),
-          },
-          {
-            id: "review",
-            title: <Trans>Review a few minutes a day</Trans>,
-            body: (
-              <Trans>
-                Open Today on your phone or laptop. Lymi schedules each card with spaced repetition,
-                so you review less and remember longer.
-              </Trans>
-            ),
-          },
-        ]}
-        note={
-          <Trans>
-            Smart add is in beta and reads up to 5 lessons a day. A diagram can go on a card as its
-            picture.
-          </Trans>
-        }
-        withoutAssistant
-      />
-
       <FeatureSection
         tinted
-        title={<Trans>Send a whole lecture at once.</Trans>}
+        title={<Trans>Or send it from your AI assistant.</Trans>}
         body={
           <Trans>
             Your assistant reads the file, picks out the terms and adds them in one go. Later it can
@@ -435,18 +349,51 @@ export function NotesToFlashcardsView() {
         />
       </FeatureSection>
 
-      <FeatureSection
-        demoFirst
-        title={<Trans>Test yourself, then check.</Trans>}
+      <ReturnSection
+        lang={i18n.locale}
+        term={() => t`ATP`}
+        title={<Trans>Review less, remember longer.</Trans>}
         body={
           <Trans>
-            Try to recall the definition before Lymi shows it, then grade how well you remembered.
-            Hard cards return sooner; easy ones wait.
+            Each time you remember a card, Lymi waits longer before showing it again. Forget it, and
+            it comes back soon. A few minutes a day before the test beats a night of cramming.
           </Trans>
         }
-      >
-        <ReviewDemo cards={review} />
-      </FeatureSection>
+      />
+
+      <TogetherSection
+        name={msg`Biology study group`}
+        language={i18n.locale}
+        cards={STUDY_GROUP_CARDS.map((card) => ({ ...card, term: i18n._(card.term) }))}
+        body={
+          <Trans>
+            Make one deck for your study group and share its link. Everyone gets each new card as
+            it’s added, and keeps their own schedule.
+          </Trans>
+        }
+      />
+
+      <DetailsSection title={<Trans>Built for studying.</Trans>}>
+        <LanguageBento layout="wide">
+          <Tile
+            wide
+            hue={BENTO_HUES[0]}
+            title={<Trans>Go over one lecture before the test</Trans>}
+            body={<Trans>Tag cards by lecture, pick one tag and review just those cards.</Trans>}
+          >
+            <TagReview
+              tags={[
+                [t`Lecture 4`, 18],
+                [t`Lecture 5`, 23],
+                [t`Lecture 6`, 14],
+              ]}
+            />
+          </Tile>
+          <PdfTile files={[t`cell-transport.pdf`, t`lecture-5-slides.pdf`]} />
+          <DiagramTile />
+          <OldDecksTile />
+        </LanguageBento>
+      </DetailsSection>
 
       <Questions title={<Trans>Common questions.</Trans>} items={NOTES_TO_FLASHCARDS_QUESTIONS} />
 

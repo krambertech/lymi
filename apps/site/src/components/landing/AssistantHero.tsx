@@ -8,6 +8,8 @@ import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
 import { AssistantMark } from "./AssistantMarks";
+import { FreeBadge } from "./FreeBadge";
+import { OriginBadge } from "./OriginBadge";
 import { appear, EASE, usePlayback } from "./playback";
 
 const WORD_MS = 2200;
@@ -191,6 +193,10 @@ export function AssistantHero() {
   return (
     <div className="mx-auto grid max-w-[1120px] items-center gap-14 px-5 pt-12 pb-20 @2xl:px-10 @4xl:min-h-[700px] @4xl:grid-cols-[minmax(0,1fr)_minmax(0,460px)] @4xl:gap-16 @4xl:pt-14">
       <div className="min-w-0 max-w-[560px]">
+        <div className="mb-6 flex flex-wrap items-center gap-2 *:mb-0">
+          <FreeBadge />
+          <OriginBadge />
+        </div>
         <Headline />
         <p className="mt-6 max-w-[40ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
           <Trans>

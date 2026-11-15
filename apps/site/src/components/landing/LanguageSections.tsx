@@ -278,9 +278,21 @@ export function NotesSection({ children }: { children: ReactNode }) {
 }
 
 /** The language's own small touches, gathered in a bento. */
-export function DetailsSection({ title, children }: { title: ReactNode; children: ReactNode }) {
+export function DetailsSection({
+  title,
+  body,
+  children,
+}: {
+  title: ReactNode;
+  /** Replaces the language pages' line, which reads oddly on pages that aren't about studying. */
+  body?: ReactNode;
+  children: ReactNode;
+}) {
   return (
-    <Wide title={title} body={<Trans>Details that help once you’re past the basics.</Trans>}>
+    <Wide
+      title={title}
+      body={body ?? <Trans>Details that help once you’re past the basics.</Trans>}
+    >
       {children}
     </Wide>
   );

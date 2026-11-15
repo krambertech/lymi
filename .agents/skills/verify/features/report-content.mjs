@@ -48,6 +48,9 @@ export default async function drive({ page, step, api, expect }) {
   });
 
   await step("Grade keys pressed in review's Report leave the card alone", async () => {
+    // Every card due, so the shared deck has one to review whatever day the persona is on.
+    const due = await page.request.post("/api/dev/due", { data: { count: "all" } });
+    expect(due.ok()).toBe(true);
     await page.goto(`/review?deck=${shared.id}`);
     const grades = page.getByRole("group", { name: "Choose a recall grade" });
     await page.getByRole("button", { name: "Reveal the card" }).click();

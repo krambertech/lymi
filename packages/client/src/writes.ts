@@ -314,6 +314,11 @@ async function flushQueued(): Promise<Flushed> {
   const dropped = new Set<string>();
   const hold = (w: Write) => held.add(entitiesOf(w).own);
   for (const entry of read()) {
+    // The learner left during the last send: nothing more of theirs goes out, grades included.
+    if (claim !== mine) {
+      result.stopped = true;
+      break;
+    }
     const { own, needs } = entitiesOf(entry.write);
     const ids = [own, ...needs.filter(Boolean)];
     if (ids.some((id) => dropped.has(id))) {
@@ -332,6 +337,11 @@ async function flushQueued(): Promise<Flushed> {
     }
     // Grades made before this write go first, so the server sees one timeline.
     result.graded += await flushGrades(new Date(entry.at).toISOString()).catch(() => 0);
+    // The learner can leave while the grades send, and the next one's session must not carry this.
+    if (claim !== mine) {
+      result.stopped = true;
+      break;
+    }
     try {
       const value = await sendWithin(entry.write);
       remove(entry.key);
@@ -383,7 +393,7 @@ async function flushQueued(): Promise<Flushed> {
       }
     }
   }
-  if (!result.stopped) result.graded += await flushGrades().catch(() => 0);
+  if (!result.stopped && claim === mine) result.graded += await flushGrades().catch(() => 0);
   return result;
 }
 

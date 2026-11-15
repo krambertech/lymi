@@ -449,6 +449,34 @@ describe("flushing", () => {
     expect(calls).toEqual(["add a"]);
   });
 
+  it("stops a flush that was mid-way when the learner left", async () => {
+    answers.push(offline);
+    await w.submit(add("a"), "a");
+    let release: (() => void) | undefined;
+    flushGrades.mockImplementationOnce(
+      () => new Promise<number>((resolve) => (release = () => resolve(0))),
+    );
+    const flushing = w.flushWrites();
+    await vi.waitFor(() => expect(release).toBeDefined());
+    w.unclaimWrites();
+    release?.();
+    expect((await flushing).stopped).toBe(true);
+    expect(calls).toEqual(["add a"]);
+  });
+
+  it("sends no grades once the learner left during a send", async () => {
+    answers.push(offline, offline);
+    await w.submit(add("a"), "a");
+    await w.submit(add("b", "other"), "b");
+    answers.push(() => {
+      w.unclaimWrites();
+      return { ok: true };
+    });
+    flushGrades.mockClear();
+    expect((await w.flushWrites()).stopped).toBe(true);
+    expect(flushGrades).toHaveBeenCalledTimes(1);
+  });
+
   it("keeps the queue but holds it while no learner is signed in", async () => {
     answers.push(offline);
     await w.submit(add("a"), "a");

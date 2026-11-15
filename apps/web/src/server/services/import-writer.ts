@@ -31,7 +31,6 @@ import {
   termKey,
 } from "@lymi/core";
 import { and, eq, inArray, isNotNull, isNull, ne, or, sql } from "@lymi/core/db";
-import { notTakenDown } from "./takedowns";
 import type { Import } from "@lymi/core/schema";
 import { type BatchStatement, batchStatements } from "../batch";
 import { schema } from "../db";
@@ -46,6 +45,7 @@ import { notFound, type ServiceContext, ServiceError } from "./context";
 import { stateStatementsForCards } from "./modes";
 import { MAX_RECORDING_BYTES, storeExampleRecording, storeRecording } from "./recordings";
 import { syncTagStatements } from "./tags";
+import { notTakenDown } from "./takedowns";
 
 /**
  * The one writer every source shares. It maps imported cards onto decks, cards, states,

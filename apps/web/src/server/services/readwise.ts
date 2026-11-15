@@ -443,7 +443,9 @@ async function pull(
     // A book newly known to be in a language the learner studies is followed without asking,
     // unless the learner already chose for it.
     const chosen = before?.everFollowed === true;
-    const followed = chosen ? before.followed : Boolean(language && decks.get(languageKey(language)));
+    const followed = chosen
+      ? before.followed
+      : Boolean(language && decks.get(languageKey(language)));
     return [
       {
         userId: ctx.userId,
@@ -600,10 +602,7 @@ async function runPull(
         .update(schema.readwiseConnections)
         .set({ ...values, pullingUntil: null, updatedAt: new Date() })
         .where(and(leased, eq(schema.readwiseConnections.tokenCipher, row.tokenCipher))),
-      ctx.db
-        .update(schema.readwiseConnections)
-        .set({ pullingUntil: null })
-        .where(leased),
+      ctx.db.update(schema.readwiseConnections).set({ pullingUntil: null }).where(leased),
     ]);
   let result: PullResult;
   try {

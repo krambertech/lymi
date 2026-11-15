@@ -8,7 +8,6 @@ import type {
 } from "@lymi/core";
 import { deckProgress, newId, sectionsToStart } from "@lymi/core";
 import { and, asc, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
-import { notTakenDown } from "./takedowns";
 import { type Db, schema } from "../db";
 import { track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
@@ -18,6 +17,7 @@ import { drawableBySection } from "./draw";
 import { deckAccess, memberOf, ownedDeck } from "./members";
 import { askedSql, stateStatementsForDeck, taughtFirstSql } from "./modes";
 import { getSettings } from "./settings";
+import { notTakenDown } from "./takedowns";
 
 type Statement = Parameters<Db["batch"]>[0][number];
 

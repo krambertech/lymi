@@ -9,7 +9,7 @@
     "build": "vite build && pnpm design:build",
     "preview": "vite preview",
     "deploy": "vite build && wrangler deploy -c dist/lymi/wrangler.json",
-    "deploy:ci": "node ../../scripts/apply-migrations-ci.mjs && wrangler deploy -c dist/lymi/wrangler.json --tag \"$WORKERS_CI_COMMIT_SHA\"",
+    "deploy:ci": "node ../../scripts/apply-migrations-ci.mjs && node ../../scripts/deploy-newest.mjs https://my.lymi.app/api/health -- wrangler deploy -c dist/lymi/wrangler.json --tag \"$WORKERS_CI_COMMIT_SHA\"",
     "deploy:check": "wrangler deploy --dry-run -c dist/lymi/wrangler.json",
     "typecheck": "tsc -p tsconfig.json && tsc -p tsconfig.worker.json",
     "test": "vitest run --passWithNoTests",

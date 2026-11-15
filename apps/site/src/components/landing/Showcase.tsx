@@ -66,6 +66,23 @@ export function useShowcaseStage(): Stage {
 
 const DWELL_MS = 6000;
 
+/** Where the playing item shows its time: a ring round its icon, a line inside it, or the divider. */
+export type ShowcaseProgress = "ring" | "inset" | "divider";
+
+/**
+ * While the progress style is being chosen, `?progress=ring|inset|divider` switches it on a local
+ * dev server. A built page always uses the prop.
+ */
+function useProgressPreview(chosen: ShowcaseProgress): ShowcaseProgress {
+  const [progress, setProgress] = useState(chosen);
+  useEffect(() => {
+    if (!import.meta.env.DEV) return;
+    const asked = new URLSearchParams(window.location.search).get("progress");
+    if (asked === "ring" || asked === "inset" || asked === "divider") setProgress(asked);
+  }, []);
+  return progress;
+}
+
 /** Whether the page is in a background tab, where nothing should move on unseen. */
 function usePageHidden() {
   const [hidden, setHidden] = useState(false);
@@ -83,10 +100,13 @@ interface Props {
   label: string;
   children: ReactNode;
   className?: string | undefined;
+  /** Where the playing item shows how long it has left. */
+  progress?: ShowcaseProgress | undefined;
 }
 
-function ShowcaseRoot({ label, children, className }: Props) {
+function ShowcaseRoot({ label, children, className, progress: chosen = "ring" }: Props) {
   const { t } = useLingui();
+  const progress = useProgressPreview(chosen);
   const items = Children.toArray(children)
     .filter((child): child is ReactElement<ItemProps> => isValidElement(child))
     .filter((child) => child.type === ShowcaseItem)
@@ -108,6 +128,23 @@ function ShowcaseRoot({ label, children, className }: Props) {
   const auto = !still && !picked;
   const paused = !inView || hidden || hold.held;
   const stage: Stage = { playing: inView && !hidden, still };
+
+  /**
+   * The playing item's timer: it fills over the item's dwell and moves the block on when it ends.
+   * Picked by hand, it stays full; with reduced motion there is no timer at all.
+   */
+  const timer = (each: ItemProps, className: string, fill: string) =>
+    auto ? (
+      <span
+        key={`${each.id}-${replays}`}
+        data-paused={paused || undefined}
+        onAnimationEnd={() => setIndex((n) => (n + 1) % items.length)}
+        style={{ animationDuration: `${each.dwell ?? DWELL_MS}ms` }}
+        className={clsx(className, fill)}
+      />
+    ) : (
+      <span className={className} />
+    );
 
   const select = (i: number, focus: boolean) => {
     const next = (i + items.length) % items.length;
@@ -168,12 +205,50 @@ function ShowcaseRoot({ label, children, className }: Props) {
                 {each.icon && (
                   <span
                     aria-hidden="true"
-                    className={clsx(
-                      "grid size-8 shrink-0 place-items-center rounded-lg edge transition-colors duration-200 [&_svg]:size-4",
-                      on ? "bg-plate text-ink" : "bg-plate-nested text-ink-secondary",
-                    )}
+                    className="relative grid size-8 shrink-0 place-items-center"
                   >
-                    {each.icon}
+                    <span
+                      className={clsx(
+                        "grid size-8 place-items-center edge transition-colors duration-200 [&_svg]:size-4",
+                        progress === "ring" ? "rounded-full" : "rounded-lg",
+                        on ? "bg-plate text-ink" : "bg-plate-nested text-ink-secondary",
+                      )}
+                    >
+                      {each.icon}
+                    </span>
+                    {progress === "ring" && on && (
+                      // The ring sits just outside the icon's edge and fills clockwise from the top.
+                      <svg
+                        viewBox="0 0 40 40"
+                        className="absolute -inset-1 size-10 -rotate-90 text-ink"
+                      >
+                        <circle
+                          cx="20"
+                          cy="20"
+                          r="18.5"
+                          pathLength={100}
+                          className="fill-none stroke-current stroke-[1.75] opacity-15"
+                        />
+                        <circle
+                          key={`${each.id}-${replays}-${auto}`}
+                          cx="20"
+                          cy="20"
+                          r="18.5"
+                          pathLength={100}
+                          data-paused={auto && paused ? true : undefined}
+                          onAnimationEnd={
+                            auto ? () => setIndex((n) => (n + 1) % items.length) : undefined
+                          }
+                          style={
+                            auto ? { animationDuration: `${each.dwell ?? DWELL_MS}ms` } : undefined
+                          }
+                          className={clsx(
+                            "fill-none stroke-current stroke-[1.75] [stroke-dasharray:100] [stroke-linecap:round]",
+                            auto ? "showcase-ring" : "[stroke-dashoffset:0]",
+                          )}
+                        />
+                      </svg>
+                    )}
                   </span>
                 )}
                 <span
@@ -200,26 +275,37 @@ function ShowcaseRoot({ label, children, className }: Props) {
                   >
                     {each.description}
                   </span>
+                  {progress === "inset" && on && (
+                    // A short line of its own under the description, clear of the block's edges.
+                    <span
+                      aria-hidden="true"
+                      className={clsx(
+                        "relative mt-4 block h-0.5 max-w-[44ch] overflow-hidden rounded-full bg-edge",
+                        each.icon && "ms-[46px]",
+                      )}
+                    >
+                      {timer(
+                        each,
+                        "absolute inset-0 rounded-full bg-ink ltr:origin-left rtl:origin-right",
+                        "landing-dwell",
+                      )}
+                    </span>
+                  )}
                 </span>
               </span>
-              {/* The progress line runs along the divider under the playing item. */}
-              <span
-                aria-hidden="true"
-                className="absolute inset-x-0 -bottom-px h-0.5 overflow-hidden"
-              >
-                {on &&
-                  (auto ? (
-                    <span
-                      key={`${each.id}-${replays}`}
-                      data-paused={paused || undefined}
-                      onAnimationEnd={() => setIndex((n) => (n + 1) % items.length)}
-                      style={{ animationDuration: `${each.dwell ?? DWELL_MS}ms` }}
-                      className="landing-dwell absolute inset-0 bg-ink ltr:origin-left rtl:origin-right"
-                    />
-                  ) : (
-                    <span className="absolute inset-0 bg-ink" />
-                  ))}
-              </span>
+              {progress === "divider" && on && (
+                // The progress line runs along the divider under the playing item.
+                <span
+                  aria-hidden="true"
+                  className="absolute inset-x-0 -bottom-px h-0.5 overflow-hidden"
+                >
+                  {timer(
+                    each,
+                    "absolute inset-0 bg-ink ltr:origin-left rtl:origin-right",
+                    "landing-dwell",
+                  )}
+                </span>
+              )}
             </button>
           );
         })}

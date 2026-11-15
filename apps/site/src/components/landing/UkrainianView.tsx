@@ -33,7 +33,7 @@ const UKRAINIAN: StressPage = {
   added: { label: msg`Українська · new`, term: "по́дорож", meaning: msg`Journey` },
   enrich: <EnrichUkrainian />,
   copy: {
-    headline: <Trans>The flashcard app that gets Ukrainian.</Trans>,
+    headline: <Trans>Ukrainian words you’ll remember.</Trans>,
     lede: (
       <Trans>
         Keep the words from your lessons and your books in one place. Each card marks its stress
@@ -49,9 +49,9 @@ const UKRAINIAN: StressPage = {
     ),
     returning: (
       <Trans>
-        A card shows its stress mark until you know the word, then the word as Ukrainians write it.
-        Each time you remember it, Lymi waits a little longer before showing it again. Turning the
-        card over always shows the mark.
+        A card shows its stress mark until you know the word. After that it shows the word the way
+        Ukrainians write it, without the mark. Each time you remember it, Lymi waits a little longer
+        before showing it again. Turning the card over always shows the mark.
       </Trans>
     ),
     enrich: (
@@ -69,7 +69,7 @@ const UKRAINIAN: StressPage = {
     ),
     start: (
       <Trans>
-        Free decks from the letters to everyday words. Read the alphabet, then take A1 and A2. Each
+        Free decks from the letters to everyday words. Start with the alphabet, then A1 and A2. Each
         day adds a few new words to your reviews.
       </Trans>
     ),

@@ -30,12 +30,12 @@ export const ASSISTANT_PAGES: Record<AssistantKey, AssistantPage> = {
     hue: 280,
     guide: "/docs/mcp/grok#grok-bot",
     title: msg`Grok Bot flashcards with spaced repetition · Lymi`,
-    blurb: msg`Connect Grok Bot to Lymi and turn posts on X, articles and notes into flashcards, even on a routine. Lymi brings each card back just as it starts to fade.`,
+    blurb: msg`Connect Grok Bot to Lymi and turn posts on X, articles and notes into flashcards, even on a routine. Lymi schedules every review with spaced repetition.`,
     questions: [
       {
         id: "can",
         question: msg`Can Grok Bot make flashcards?`,
-        answer: msg`Grok Bot can write flashcards, but it has no deck of its own and nothing that brings a card back later. Connect Lymi and Grok Bot adds its cards to your decks, where spaced repetition brings each one back just as it starts to fade.`,
+        answer: msg`Grok Bot can write flashcards, but it has no deck of its own and nothing that brings a card back later. Connect Lymi and Grok Bot adds its cards to your decks, where spaced repetition schedules each one: cards you remember come back later, the ones you forget sooner.`,
       },
       {
         id: "routine",
@@ -70,12 +70,12 @@ export const ASSISTANT_PAGES: Record<AssistantKey, AssistantPage> = {
     hue: 25,
     guide: "/docs/mcp/claude",
     title: msg`Claude flashcards with spaced repetition · Lymi`,
-    blurb: msg`Connect Claude to Lymi and turn PDFs, lecture notes and chats into flashcards. Lymi brings each card back just as it starts to fade. Free.`,
+    blurb: msg`Connect Claude to Lymi and turn PDFs, lecture notes and chats into flashcards. Lymi schedules every review with spaced repetition. Free.`,
     questions: [
       {
         id: "can",
         question: msg`Can Claude make flashcards?`,
-        answer: msg`Yes. Claude writes good flashcards and can even build a quiz in an artifact. It has no deck that brings cards back on a schedule, so they stay in that chat. Connect Lymi and Claude adds them to your decks, where spaced repetition brings each one back just as it starts to fade.`,
+        answer: msg`Yes. Claude writes good flashcards and can even build a quiz in an artifact. It has no deck that brings cards back on a schedule, so they stay in that chat. Connect Lymi and Claude adds them to your decks, where spaced repetition schedules each one: cards you remember come back later, the ones you forget sooner.`,
       },
       {
         id: "free",
@@ -105,12 +105,12 @@ export const ASSISTANT_PAGES: Record<AssistantKey, AssistantPage> = {
     hue: 150,
     guide: "/docs/mcp/chatgpt",
     title: msg`ChatGPT flashcards with spaced repetition · Lymi`,
-    blurb: msg`Connect ChatGPT to Lymi and turn photos of notes, textbook pages and chats into flashcards. Lymi brings each card back just as it starts to fade. Free.`,
+    blurb: msg`Connect ChatGPT to Lymi and turn photos of notes, textbook pages and chats into flashcards. Lymi schedules every review with spaced repetition. Free.`,
     questions: [
       {
         id: "can",
         question: msg`Can ChatGPT make flashcards?`,
-        answer: msg`Yes. ChatGPT makes flashcards you can flip, shuffle and mark as known. It doesn’t decide when you see each card again. Connect Lymi and the cards go to your decks, where spaced repetition brings each one back just as it starts to fade.`,
+        answer: msg`Yes. ChatGPT makes flashcards you can flip, shuffle and mark as known. It doesn’t decide when you see each card again. Connect Lymi and the cards go to your decks, where spaced repetition schedules each one: cards you remember come back later, the ones you forget sooner.`,
       },
       {
         id: "plans",
@@ -140,12 +140,12 @@ export const ASSISTANT_PAGES: Record<AssistantKey, AssistantPage> = {
     hue: 235,
     guide: "/docs/mcp/gemini",
     title: msg`Gemini flashcards with spaced repetition · Lymi`,
-    blurb: msg`Connect Gemini to Lymi and turn notes, PDFs and web pages into flashcards. Lymi brings each card back just as it starts to fade. Free.`,
+    blurb: msg`Connect Gemini to Lymi and turn notes, PDFs and web pages into flashcards. Lymi schedules every review with spaced repetition. Free.`,
     questions: [
       {
         id: "can",
         question: msg`Can Gemini make flashcards?`,
-        answer: msg`Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them from your sources. They don’t come back on a schedule. Connect Lymi and Gemini adds them to your decks, where spaced repetition brings each one back just as it starts to fade.`,
+        answer: msg`Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them from your sources. They don’t come back on a schedule. Connect Lymi and Gemini adds them to your decks, where spaced repetition schedules each one: cards you remember come back later, the ones you forget sooner.`,
       },
       {
         id: "where",

@@ -127,7 +127,7 @@ function Heading() {
   return (
     <div className="max-w-[440px]">
       <SectionTitle>
-        <Trans>Bring your own AI.</Trans>
+        <Trans>Connect your AI assistant.</Trans>
       </SectionTitle>
       <p className="mt-5 text-md text-pretty text-ink-secondary">
         <Trans>

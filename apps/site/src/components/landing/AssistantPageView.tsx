@@ -113,8 +113,8 @@ function useContent(key: AssistantKey): Content {
         lead: (
           <Trans>
             Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you
-            just had. They land in Lymi, and spaced repetition brings each one back just as it
-            starts to fade.
+            just had. They land in Lymi, where cards you remember come back later and the ones you
+            forget come back sooner.
           </Trans>
         ),
         demo: {
@@ -232,8 +232,8 @@ function useContent(key: AssistantKey): Content {
           body: (
             <Trans>
               ChatGPT’s own flashcards flip, shuffle and mark what you know. None of them decide
-              when you see a card again. Lymi does: each card returns as it starts to fade, and the
-              gap grows every time you remember it.
+              when you see a card again. Lymi does: a card you remember waits longer each time, and
+              one you forget comes back sooner.
             </Trans>
           ),
           term: "Stomata",
@@ -289,7 +289,7 @@ function useContent(key: AssistantKey): Content {
         lead: (
           <Trans>
             Ask Claude for flashcards from a long PDF, a lecture or a whole Project. They land in
-            Lymi, and spaced repetition brings each one back just as it starts to fade.
+            Lymi, where cards you remember come back later and the ones you forget come back sooner.
           </Trans>
         ),
         demo: {
@@ -436,7 +436,7 @@ function useContent(key: AssistantKey): Content {
           body: (
             <Trans>
               Claude can quiz you today, but it has no deck that remembers you next week. Lymi does:
-              each card returns as it starts to fade, and the gap grows every time you remember it.
+              a card you remember waits longer each time, and one you forget comes back sooner.
             </Trans>
           ),
           term: "Agonist",
@@ -492,8 +492,8 @@ function useContent(key: AssistantKey): Content {
         headline: <Trans>Create and practise flashcards with Gemini.</Trans>,
         lead: (
           <Trans>
-            Ask Gemini for flashcards from your notes, a PDF or a web page. They land in Lymi, and
-            spaced repetition brings each one back just as it starts to fade.
+            Ask Gemini for flashcards from your notes, a PDF or a web page. They land in Lymi, where
+            cards you remember come back later and the ones you forget come back sooner.
           </Trans>
         ),
         demo: {
@@ -623,8 +623,8 @@ function useContent(key: AssistantKey): Content {
           body: (
             <Trans>
               Gemini’s flashcards and quizzes show what you know today. Nothing brings a card back
-              next week. Lymi does: each card returns as it starts to fade, and the gap grows every
-              time you remember it.
+              next week. Lymi does: a card you remember waits longer each time, and one you forget
+              comes back sooner.
             </Trans>
           ),
           term: "Isomer",
@@ -678,8 +678,8 @@ function useContent(key: AssistantKey): Content {
         lead: (
           <Trans>
             Tag Grok Bot on a post, hand it an article, or let it work through your notes while
-            you’re away. The cards land in Lymi, and spaced repetition brings each one back just as
-            it starts to fade.
+            you’re away. The cards land in Lymi, where cards you remember come back later and the
+            ones you forget come back sooner.
           </Trans>
         ),
         demo: {
@@ -808,8 +808,8 @@ function useContent(key: AssistantKey): Content {
           body: (
             <Trans>
               Grok Bot has no flashcards of its own and nothing that brings a word back later. Lymi
-              does: each card returns as it starts to fade, and the gap grows every time you
-              remember it.
+              does: a card you remember waits longer each time, and one you forget comes back
+              sooner.
             </Trans>
           ),
           term: "subir",

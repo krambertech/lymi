@@ -17,7 +17,7 @@ import { ReviewDemo } from "./ReviewDemo";
 import { SignUpSection } from "./SignUpSection";
 
 export const TUTOR_LESSONS_TITLE = msg`Turn your tutor lessons into flashcards · Lymi`;
-export const TUTOR_LESSONS_BLURB = msg`After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, which brings each one back just as it starts to fade. Free.`;
+export const TUTOR_LESSONS_BLURB = msg`After a lesson on italki, Preply or with a private tutor, send the chat, notes or a photo of your notebook to your AI assistant. It adds the new words to Lymi, where you review them between lessons. Free.`;
 
 const byId = (id: LearningLanguage["id"]) =>
   LEARNING_LANGUAGES.find((l) => l.id === id) as LearningLanguage;
@@ -252,7 +252,7 @@ export function TutorLessonsView() {
           lede={
             <Trans>
               Send the lesson chat, a transcript or a photo of your notebook to your AI assistant.
-              Lymi keeps every new word and brings it back just as it starts to fade.
+              It adds the new words to Lymi, and you review them between lessons.
             </Trans>
           }
           cards={HERO_CARDS}
@@ -348,8 +348,7 @@ export function TutorLessonsView() {
             title: <Trans>Review a few minutes a day</Trans>,
             body: (
               <Trans>
-                Open Today on your phone or laptop. Lymi shows each word again just as it starts to
-                fade, so the next lesson starts where the last one ended.
+                Open Today on your phone or laptop and go over the words before your next lesson.
               </Trans>
             ),
           },
@@ -423,10 +422,7 @@ export function TutorLessonsView() {
         <ReviewDemo cards={REVIEW} />
       </FeatureSection>
 
-      <Questions
-        title={<Trans>Questions before you start.</Trans>}
-        items={TUTOR_LESSONS_QUESTIONS}
-      />
+      <Questions title={<Trans>Common questions.</Trans>} items={TUTOR_LESSONS_QUESTIONS} />
 
       <SignUpSection title={<Trans>Keep the words from your next lesson.</Trans>} />
     </LandingLayout>

@@ -66,7 +66,7 @@ export function PolishView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<LanguageName lang="pl">Polski</LanguageName>}
-          title={<Trans>The flashcard app that gets Polish.</Trans>}
+          title={<Trans>Polish words you’ll remember.</Trans>}
           lede={
             locale === "en" ? (
               <Trans>
@@ -127,7 +127,7 @@ export function PolishView({ decks, locale }: Props) {
 
       {steps.length > 1 && (
         <StartSection
-          title={<Trans>Start with A1. Keep going.</Trans>}
+          title={<Trans>Start with A1.</Trans>}
           body={
             <Trans>
               Free decks that follow the topics of Poland’s state exams. Take A1, then A2, with the
@@ -244,12 +244,12 @@ export function PolishView({ decks, locale }: Props) {
         />
       )}
 
-      <Questions title={<Trans>Questions before you start.</Trans>} items={POLISH_QUESTIONS} />
+      <Questions title={<Trans>Common questions.</Trans>} items={POLISH_QUESTIONS} />
 
       <SignUpSection
         title={
           <Trans>
-            Start with <Pl>dzień dobry</Pl> tonight.
+            Start with <Pl>dzień dobry</Pl>.
           </Trans>
         }
       />

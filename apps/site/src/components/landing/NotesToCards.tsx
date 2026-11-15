@@ -281,7 +281,7 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
             </AnimatePresence>
             {read < 0 && (
               <p className="py-10 text-center text-sm text-ink-muted">
-                <Trans>The cards from this page will land here.</Trans>
+                <Trans>The cards from this page will appear here.</Trans>
               </p>
             )}
           </div>

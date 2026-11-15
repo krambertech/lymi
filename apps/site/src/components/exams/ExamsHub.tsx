@@ -19,7 +19,7 @@ import { ExamReview } from "./ExamReview";
 
 export const EXAMS_TITLE = msg`Citizenship, language and driving test prep with flashcards · Lymi`;
 export const EXAMS_BLURB = msg`Flashcards for the Einbürgerungstest, the US, Canadian, Czech and Spanish citizenship tests, Goethe, HSK, JLPT and TOPIK vocabulary, and driving theory. In the exam’s language, with a translation alongside. Free.`;
-export const EXAMS_HEADING = msg`Learn the questions once. Keep them until exam day.`;
+export const EXAMS_HEADING = msg`Review every question until you know the answer.`;
 
 /** Explore's tray hues, skipping violet and amber, so each exam's tile keeps its own colour. */
 const HUES = [4, 0, 2, 3, 1, 7, 6];
@@ -85,12 +85,11 @@ export function ExamsHub({ counts }: Props) {
 
         <div id="how" className="scroll-mt-6">
           <RightMoment
-            title={<Trans>Cramming fades. Spacing lasts.</Trans>}
+            title={<Trans>Spread your practice over time.</Trans>}
             body={
               <Trans>
-                Spaced repetition asks each question again just as it starts to fade, and every time
-                you remember, the next gap grows. Lymi uses your grade to decide when each question
-                comes back.
+                Spaced repetition asks each question again after a gap, and every time you remember,
+                the next gap grows. Lymi uses your grade to decide when each question comes back.
               </Trans>
             }
           />
@@ -112,7 +111,7 @@ export function ExamsHub({ counts }: Props) {
 
         <DeckNotQuiz />
 
-        <Questions title={<Trans>Questions before you start.</Trans>} items={EXAMS_QUESTIONS} />
+        <Questions title={<Trans>Common questions.</Trans>} items={EXAMS_QUESTIONS} />
 
         <SignUpSection title={<Trans>Start with your exam’s deck.</Trans>} />
       </main>
@@ -426,12 +425,12 @@ function DeckNotQuiz() {
     <section className="px-5 py-16 @2xl:px-10 @4xl:py-20">
       <div className="mx-auto max-w-[1040px]">
         <SectionTitle>
-          <Trans>A deck, not a quiz.</Trans>
+          <Trans>How a deck differs from a quiz.</Trans>
         </SectionTitle>
         <p className="mt-5 max-w-[56ch] text-md text-pretty text-ink-secondary">
           <Trans>
-            A practice quiz tells you how you did today. A deck keeps track of every question, so
-            the review you do tomorrow is the one you need.
+            A practice quiz tells you how you did today. A deck keeps track of every question and
+            plans when you see each one again.
           </Trans>
         </p>
         <div className="mt-10 overflow-hidden rounded-xl bg-plate edge">

@@ -4,6 +4,15 @@ import { defineConfig } from "vitest/config";
 // The modules here that import nothing native, run in Node.
 export default defineConfig({
   plugins: [
+    // Metro compiles catalogs; no test reads one, but `vitest --changed` parses every import it can
+    // reach, catalogs included.
+    {
+      name: "po-catalogs",
+      enforce: "pre",
+      transform(_code, id) {
+        if (id.endsWith(".po")) return "export const messages = {};";
+      },
+    },
     {
       name: "lingui-macros",
       enforce: "pre",

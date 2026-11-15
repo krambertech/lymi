@@ -230,8 +230,10 @@ function ShowcaseRoot({ label, children, className }: Props) {
                     aria-hidden="true"
                     style={{ "--tray-h": each.hue } as CSSProperties}
                     className={clsx(
-                      "grid size-8 shrink-0 place-items-center rounded-lg transition-[background-color,color] duration-500 [&_svg]:size-4",
-                      on ? "use-case-tile text-ink" : "bg-plate-nested/60 text-ink-muted",
+                      "grid size-8 shrink-0 place-items-center rounded-lg transition-[background-color,color] duration-200 [&_svg]:size-4",
+                      on
+                        ? "use-case-tile text-ink"
+                        : "bg-plate-nested/60 text-ink-muted hoverable:group-hover:bg-plate-nested hoverable:group-hover:text-ink",
                     )}
                   >
                     {each.icon}

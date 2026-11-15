@@ -2,13 +2,14 @@ import { useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
 import { isolate } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import type { Card } from "../lib/api";
 import { errorMessage } from "../lib/api";
 import { addInput, refreshAfterCardWrite, savePicture } from "../lib/card-writes";
 import { useOverlayShape } from "../lib/device";
 import { createMoreChosen, rememberCreateMore, rememberDeck } from "../lib/last-deck";
 import { decksQuery } from "../lib/queries";
+import { sheetPhase } from "../lib/sheet-phase";
 import { shortQuote } from "../lib/short-quote";
 import {
   CardForm,
@@ -40,7 +41,9 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
   const qc = useQueryClient();
   const decks = useQuery(decksQuery);
   const shape = useOverlayShape(open);
-  const [pending, setPending] = useState(false);
+  const [phase, dispatch] = useReducer(sheetPhase, { status: open ? "editing" : "closed" });
+  if (open && phase.status === "closed") dispatch({ type: "open" });
+  if (!open && phase.status === "editing") dispatch({ type: "close" });
   const [createMore, setCreateMore] = useState(createMoreChosen);
   // The form as it stood, so a sheet closed by mistake can come back with Undo.
   const draft = useRef<CardFormDraft | null>(null);
@@ -49,7 +52,10 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
   const [pictureFor, setPictureFor] = useState<Card | null>(null);
   const [pictureMissing, setPictureMissing] = useState<Card | null>(null);
 
-  const close = (keepWork: boolean) => {
+  const close = (keepWork: boolean, saved = false) => {
+    // A save in flight holds the sheet until it answers.
+    if (phase.status === "saving" && !saved) return;
+    dispatch({ type: "close", saved });
     const work = draft.current;
     draft.current = null;
     // A brought-back draft is for the one reopening Undo makes, not every opening after it.
@@ -71,7 +77,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
   };
 
   const submit = async (values: CardFormValues): Promise<CardFormOutcome | undefined> => {
-    setPending(true);
+    dispatch({ type: "save" });
     try {
       const { outcome, queued } = await writes.addCard(addInput(values));
       if (outcome.status === "skipped") {
@@ -98,7 +104,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
       const term = shortQuote(outcome.card.term);
       setPictureMissing(pictureError ? outcome.card : null);
       if (createMore) return { status: "added", term, pictureError };
-      close(false);
+      close(false, true);
       if (!pictureError) {
         toast.add({
           title: queued
@@ -123,7 +129,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
     } catch (e) {
       return { status: "failed", message: errorMessage(e) };
     } finally {
-      setPending(false);
+      dispatch({ type: "settle" });
     }
   };
 
@@ -158,7 +164,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
             sectionId={sectionId}
             term={term}
             draft={open ? restored?.draft : undefined}
-            pending={pending}
+            pending={phase.status === "saving"}
             layout={shape === "desktop" ? "whole" : "chips"}
             createMore={createMore}
             onCreateMoreChange={(on) => {

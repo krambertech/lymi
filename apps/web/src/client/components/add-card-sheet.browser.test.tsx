@@ -111,3 +111,39 @@ test("the sheet closes once the card is added, while the deck's list is still re
     .element(page.getByRole("list", { name: "Deck" }))
     .toHaveTextContent("la nebbia: C’è la nebbia stamattina.");
 });
+
+test("a sheet dismissed while its card saves stays until the card is in, with nothing to undo", async () => {
+  let land = () => {};
+  vi.spyOn(writes, "addCard").mockImplementation(
+    () =>
+      new Promise((resolve) => {
+        land = () => resolve({ outcome: { status: "added", card: added }, queued: false });
+      }),
+  );
+  vi.spyOn(api, "deckCards").mockResolvedValue([]);
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client.setQueryData(["tags"], []);
+  await render(
+    <QueryClientProvider client={client}>
+      <I18nProvider i18n={i18n}>
+        <Toaster aria-label="Notifications" closeLabel="Dismiss" timeout={0} />
+        <Sheet />
+      </I18nProvider>
+    </QueryClientProvider>,
+  );
+  const sheet = page.getByRole("dialog", { name: "Add a card" });
+  await userEvent.fill(sheet.getByRole("textbox", { name: "Term", exact: true }), "la nebbia");
+  await userEvent.fill(sheet.getByRole("textbox", { name: "Meaning", exact: true }), "the fog");
+  await sheet.getByRole("button", { name: /^Add to / }).click();
+  await userEvent.keyboard("{Escape}");
+
+  await expect.element(sheet).toBeInTheDocument();
+  const notifications = page.getByRole("region", { name: "Notifications" });
+  expect(notifications.element().textContent).not.toContain("Card discarded");
+
+  land();
+  await expect.element(sheet).not.toBeInTheDocument();
+  await expect.poll(() => notifications.element().textContent).toContain("Added “la nebbia”");
+  expect(notifications.element().textContent).not.toContain("Card discarded");
+  expect(writes.addCard).toHaveBeenCalledTimes(1);
+});

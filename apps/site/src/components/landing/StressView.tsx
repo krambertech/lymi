@@ -105,7 +105,7 @@ export function StressView({ page, decks, locale }: Props) {
         <StressPairs pairs={page.pairs} lang={page.lang} />
       </Wide>
 
-      <Wide title={<Trans>The mark leaves as you learn.</Trans>} body={page.copy.returning}>
+      <Wide title={<Trans>The stress mark fades as you learn.</Trans>} body={page.copy.returning}>
         <ReturnLane
           lang={page.lang}
           term={(known) => (
@@ -136,7 +136,7 @@ export function StressView({ page, decks, locale }: Props) {
 
       {steps.length > 0 && (
         <StartSection
-          title={<Trans>Start with the alphabet. Keep going.</Trans>}
+          title={<Trans>Start with the alphabet.</Trans>}
           body={page.copy.start}
           steps={steps}
           lang={page.lang}
@@ -165,9 +165,9 @@ export function StressView({ page, decks, locale }: Props) {
         />
       )}
 
-      <Questions title={<Trans>Questions before you start.</Trans>} items={page.questions} />
+      <Questions title={<Trans>Common questions.</Trans>} items={page.questions} />
 
-      <SignUpSection title={<Trans>Start with the alphabet tonight.</Trans>} />
+      <SignUpSection title={<Trans>Learn the alphabet, then your first words.</Trans>} />
     </LandingLayout>
   );
 }

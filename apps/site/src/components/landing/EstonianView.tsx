@@ -56,7 +56,7 @@ export function EstonianView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<EstonianStartup />}
-          title={<Trans>The flashcard app that gets Estonian.</Trans>}
+          title={<Trans>Estonian words you’ll remember.</Trans>}
           lede={
             <Trans>
               Learn Estonian words in a few minutes a day, from <span lang="et">tere</span> to the
@@ -96,7 +96,7 @@ export function EstonianView({ decks, locale }: Props) {
         <StartSection
           title={
             <Trans>
-              Start with <span lang="et">tere</span>. Keep going.
+              Start with <span lang="et">tere</span>.
             </Trans>
           }
           body={
@@ -203,12 +203,12 @@ export function EstonianView({ decks, locale }: Props) {
         />
       )}
 
-      <Questions title={<Trans>Questions before you start.</Trans>} items={ESTONIAN_QUESTIONS} />
+      <Questions title={<Trans>Common questions.</Trans>} items={ESTONIAN_QUESTIONS} />
 
       <SignUpSection
         title={
           <Trans>
-            Start with <span lang="et">tere</span> tonight.
+            Your first word is <span lang="et">tere</span>.
           </Trans>
         }
       />

@@ -82,7 +82,7 @@ export function GermanView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<LanguageName lang="de">Deutsch</LanguageName>}
-          title={<Trans>The flashcard app that gets German.</Trans>}
+          title={<Trans>German words you’ll remember.</Trans>}
           lede={
             <Trans>
               Learn German words in a few minutes a day, every noun with its der, die or das. A
@@ -122,8 +122,8 @@ export function GermanView({ decks, locale }: Props) {
           body={
             <Trans>
               German Top 100 Verbs starts with <De>sein</De>, <De>haben</De> and <De>werden</De>,
-              the verbs most sentences lean on. German Top 1000 Words goes on to the thousand most
-              common words, fifty at a time.
+              the verbs you’ll use most. German Top 1000 Words goes on to the thousand most common
+              words, fifty at a time.
             </Trans>
           }
           after={
@@ -140,7 +140,7 @@ export function GermanView({ decks, locale }: Props) {
 
       {steps.length > 1 && (
         <StartSection
-          title={<Trans>Start with A1. Keep going.</Trans>}
+          title={<Trans>Start with A1.</Trans>}
           body={
             <Trans>
               Free decks from A1 to B1, by the topics of everyday life in Germany: home, work, the
@@ -271,12 +271,12 @@ export function GermanView({ decks, locale }: Props) {
         />
       )}
 
-      <Questions title={<Trans>Questions before you start.</Trans>} items={GERMAN_QUESTIONS} />
+      <Questions title={<Trans>Common questions.</Trans>} items={GERMAN_QUESTIONS} />
 
       <SignUpSection
         title={
           <Trans>
-            Start with <De>Guten Tag</De> tonight.
+            Start with <De>Guten Tag</De>.
           </Trans>
         }
       />

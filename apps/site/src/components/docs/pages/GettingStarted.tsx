@@ -48,8 +48,8 @@ export function GettingStarted() {
           <StepTitle>Check what the AI filled</StepTitle>
           <p>
             If AI services are allowed, Lymi can enrich missing fields according to the deck’s
-            settings. A badge marks each field Lymi’s AI wrote. Edit anything that does not fit;
-            text you wrote stays yours.
+            settings. A badge marks each field Lymi’s AI wrote. Edit anything that does not fit.
+            Lymi never changes text you wrote.
           </p>
         </div>
       </Steps>

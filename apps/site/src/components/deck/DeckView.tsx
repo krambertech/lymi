@@ -396,10 +396,7 @@ export function DeckHero({
           )}
         </div>
         <p className="mx-auto mt-4 max-w-[46ch] text-sm text-pretty text-ink-muted">
-          <Trans>
-            Lymi is a flashcard app: it brings each card back just as it starts to fade. Free to
-            use.
-          </Trans>
+          <Trans>Lymi is a free flashcard app with spaced repetition.</Trans>
         </p>
         {exam && <ExamPageLink locale={locale} exam={exam} className="mt-3" />}
         {spread.length > 0 && <DeckSpread deck={deck} cards={spread} />}
@@ -449,7 +446,8 @@ export function DeckHowItWorks({ locale, cue }: LocaleProps & { cue: RecallCue }
       title: <Trans>Review a few minutes a day</Trans>,
       body: (
         <Trans>
-          Choose how many cards a day. Lymi brings each one back just as it starts to fade.
+          Choose how many cards a day. Cards you remember come back later, and the ones you forget
+          come back sooner.
         </Trans>
       ),
     },

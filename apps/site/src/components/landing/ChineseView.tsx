@@ -59,7 +59,7 @@ export function ChineseView({ decks, locale }: Props) {
       hero={
         <LanguageHero
           kicker={<LanguageName lang="zh">中文</LanguageName>}
-          title={<Trans>The flashcard app that gets Chinese.</Trans>}
+          title={<Trans>Chinese words you’ll remember.</Trans>}
           lede={
             <Trans>
               Keep the words from your lessons, your books and Pleco in one place. Each card shows
@@ -96,8 +96,8 @@ export function ChineseView({ decks, locale }: Props) {
         body={
           <Trans>
             A card shows pinyin over its word until the card is Known. In the examples on your
-            cards, pinyin leaves each character you’ve learned, and stays where a character sounds
-            different.
+            cards, pinyin disappears from each character you’ve learned, but stays where that
+            character has a different sound.
           </Trans>
         }
       >
@@ -117,7 +117,7 @@ export function ChineseView({ decks, locale }: Props) {
 
       <FeatureSection
         demoFirst
-        title={<Trans>Your words, not a course.</Trans>}
+        title={<Trans>Make cards from your own lessons.</Trans>}
         body={
           <Trans>
             Lymi has no course of its own. Snap your notes or paste a transcript, and the new words
@@ -178,7 +178,7 @@ export function ChineseView({ decks, locale }: Props) {
 
       {steps.length > 0 && (
         <StartSection
-          title={<Trans>Start with HSK&nbsp;1. Keep going.</Trans>}
+          title={<Trans>Start with HSK&nbsp;1.</Trans>}
           body={
             <Trans>
               Free decks for the first two HSK levels. Take HSK&nbsp;1, then HSK&nbsp;2. Each day
@@ -233,9 +233,9 @@ export function ChineseView({ decks, locale }: Props) {
         />
       )}
 
-      <Questions title={<Trans>Questions before you start.</Trans>} items={CHINESE_QUESTIONS} />
+      <Questions title={<Trans>Common questions.</Trans>} items={CHINESE_QUESTIONS} />
 
-      <SignUpSection title={<Trans>Start with HSK&nbsp;1 tonight.</Trans>} />
+      <SignUpSection title={<Trans>Learn your first HSK&nbsp;1 words.</Trans>} />
     </LandingLayout>
   );
 }

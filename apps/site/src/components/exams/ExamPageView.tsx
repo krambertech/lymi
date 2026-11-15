@@ -375,8 +375,7 @@ function ExamPlanContent({ several }: { several: boolean }) {
       title: <Trans>Review a few minutes a day</Trans>,
       body: (
         <Trans>
-          Each question comes back just as it starts to fade, and the ones you get wrong come back
-          sooner.
+          Questions you get right come back later. The ones you get wrong come back sooner.
         </Trans>
       ),
     },

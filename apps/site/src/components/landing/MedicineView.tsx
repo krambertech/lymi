@@ -86,7 +86,7 @@ export function MedicineView() {
     {
       id: "lab-values",
       title: <Trans>Lab values</Trans>,
-      body: <Trans>The ranges you’re expected to know cold.</Trans>,
+      body: <Trans>The reference ranges you need to know.</Trans>,
       card: {
         label: msg`Lab values`,
         term: "serum potassium",
@@ -110,11 +110,11 @@ export function MedicineView() {
       page="medicine"
       hero={
         <Hero
-          title={<Trans>Keep the nerves, the drugs and the numbers.</Trans>}
+          title={<Trans>Flashcards for medical school.</Trans>}
           lede={
             <Trans>
-              Lymi brings each fact back just as it starts to fade, so a few minutes a day carries
-              it to your exams and onto the ward. Free, and your Anki decks come with you.
+              Turn your lecture notes into cards, and Lymi plans when to review each one. It’s free,
+              and your Anki decks come with you.
             </Trans>
           }
           cards={HAND}
@@ -150,7 +150,7 @@ export function MedicineView() {
       <FeatureSection
         demoFirst
         tinted
-        title={<Trans>Turn tonight’s lecture into cards.</Trans>}
+        title={<Trans>Turn a lecture into cards.</Trans>}
         body={
           <Trans>
             Send your lecture notes or slides to Claude, ChatGPT, Gemini or Grok and it adds the
@@ -203,8 +203,8 @@ export function MedicineView() {
         title={<Trans>Mark what’s high-yield.</Trans>}
         body={
           <Trans>
-            Mark a card important and it comes up four times as often, while its schedule stays the
-            same. The cards you keep forgetting gather in Often forgotten, a round of their own.
+            Mark a card important and Lymi shows it more often, without changing its due date. The
+            cards you keep forgetting gather in Often forgotten, a round of their own.
           </Trans>
         }
       >
@@ -216,7 +216,7 @@ export function MedicineView() {
         items={MEDICINE_QUESTIONS}
       />
 
-      <SignUpSection title={<Trans>Start with tonight’s lecture.</Trans>} />
+      <SignUpSection title={<Trans>Start with your next lecture.</Trans>} />
     </LandingLayout>
   );
 }

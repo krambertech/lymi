@@ -146,13 +146,13 @@ export function SendAnything() {
       <div className="mx-auto max-w-[1120px] px-5 @2xl:px-10">
         <div id="send-title">
           <SectionTitle>
-            <Trans>Send it anything.</Trans>
+            <Trans>Send it what you have.</Trans>
           </SectionTitle>
         </div>
         <p className="mt-5 max-w-[52ch] text-md text-pretty text-ink-secondary">
           <Trans>
             A photo of the board, your tutor’s message, a lesson transcript, the book on your
-            nightstand. Your assistant picks out what’s worth keeping and adds it to Lymi.
+            nightstand. Your assistant picks out the new words and adds them to Lymi.
           </Trans>
         </p>
       </div>

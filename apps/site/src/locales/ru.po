@@ -4838,6 +4838,9 @@ msgstr "Вставь client ID из инструкции в поле OAuth Clien
 msgid "Paste the lesson chat or snap your notes. Lymi turns the new words into cards with a native voice, ready to review before the next lesson."
 msgstr "Вставь чат урока или сфотографируй заметки. Lymi превратит новые слова в карточки с голосом носителя, готовые к повторению перед следующим уроком."
 
+msgid "Pause"
+msgstr "Пауза"
+
 msgid "PDF"
 msgstr "PDF"
 
@@ -4934,6 +4937,9 @@ msgstr "Тональное ударение"
 msgid "Platform, track"
 msgstr "Путь, платформа"
 
+msgid "Play"
+msgstr "Воспроизвести"
+
 #. placeholder {0}: w.term
 msgid "Play {0}"
 msgstr "Воспроизвести {0}"
@@ -4942,6 +4948,9 @@ msgstr "Воспроизвести {0}"
 #. placeholder {1}: w.reading
 msgid "Play {0}, {1}"
 msgstr "Воспроизвести {0}, {1}"
+
+msgid "Play again"
+msgstr "Ещё раз"
 
 msgid "Play pronunciation"
 msgstr "Послушать произношение"
@@ -5310,9 +5319,6 @@ msgstr "Аренда"
 
 msgid "Rental agreement"
 msgstr "Договор аренды"
-
-msgid "Replay"
-msgstr "Ещё раз"
 
 msgid "Replay pronunciation"
 msgstr "Послушать ещё раз"

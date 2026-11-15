@@ -12,6 +12,12 @@ TanStack Query owns reads and caches. Shared API, query and response modules hav
 
 API payloads come from the Zod schemas in `packages/core/src/types.ts`; parse with the schema and infer its type. Use `interface Props` for React props and `type` for unions and small shapes.
 
+## Give a flow one state
+
+A flow with steps or phases holds one value: a union tagged by `status` or `kind`, whose members carry only the fields that state has. Its moves live in one pure reducer with a declared return type and no `default`, so a new state or event fails to compile until the reducer handles it; an event the current state does not allow returns the state unchanged. Unit-test the reducer and keep the hook or store to wiring effects. `packages/client/src/review-flow` and `uploadReducer` in `packages/client/src/imports.ts` are the models.
+
+Async work that something newer can replace checks that it still owns the state before it writes. On the server, an update that moves a status names the status it leaves in its `WHERE`.
+
 ## Localize whole sentences
 
 English is the source message: `<Trans>` in JSX, `t` from `useLingui()` for attributes and handlers, `msg` for module constants, and `<Plural>` or `plural` for counts.

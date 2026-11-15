@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { api, refusalCode } from "@lymi/client/api";
 import { meQuery } from "@lymi/client/queries";
-import { dropQueued } from "@lymi/client/queued";
+import { dropWrites } from "@lymi/client/writes";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { useState } from "react";
@@ -30,7 +30,7 @@ export default function DeleteCode() {
     // The server ended every session; signing out here lets the root forget this learner.
     onSuccess: async () => {
       await authClient.signOut().catch(() => undefined);
-      dropQueued();
+      dropWrites();
     },
   });
   const deleteError = (() => {

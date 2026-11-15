@@ -425,6 +425,41 @@ describe("flushing", () => {
     expect(calls).toEqual(["add a"]);
   });
 
+  it("sends nothing after a sign-out, even when a retry was waiting", async () => {
+    vi.useFakeTimers();
+    answers.push(fail(503));
+    await w.submit(add("a"), "a");
+    w.dropWrites();
+    expect(w.pendingWrites()).toBe(0);
+    await vi.advanceTimersByTimeAsync(w.backoff(1));
+    expect(calls).toEqual(["add a"]);
+    expect((await w.flushWrites()).stopped).toBe(true);
+    vi.useRealTimers();
+  });
+
+  it("does not put a write back when the learner signed out while it was in the air", async () => {
+    answers.push(() => {
+      w.dropWrites();
+      throw new ApiError(503, "status 503");
+    });
+    await w.submit(add("a"), "a");
+    expect([...store.keys()]).toEqual([]);
+    w.claimWrites("someone-else");
+    await w.flushWrites();
+    expect(calls).toEqual(["add a"]);
+  });
+
+  it("keeps the queue but holds it while no learner is signed in", async () => {
+    answers.push(offline);
+    await w.submit(add("a"), "a");
+    w.unclaimWrites();
+    await w.flushWrites();
+    expect(calls).toEqual(["add a"]);
+    w.claimWrites("me");
+    await w.flushWrites();
+    expect(calls).toEqual(["add a", "add a"]);
+  });
+
   it("drops another learner's queue when a different account signs in", async () => {
     answers.push(offline);
     await w.submit(add("a"), "a");

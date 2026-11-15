@@ -29,7 +29,14 @@ function DeleteAccountRoute() {
   const refetchOnPublisher = (error: unknown) => {
     if (refusalCode(error) === "publisher") void summary.refetch();
   };
-  const send = useMutation({ mutationFn: api.sendDeletionCode, onError: refetchOnPublisher });
+  // Kept apart from the mutation, whose data empties on every resend: once a code went out, the
+  // code step stays, whatever a later resend does.
+  const [sentTo, setSentTo] = useState<string | null>(null);
+  const send = useMutation({
+    mutationFn: api.sendDeletionCode,
+    onSuccess: (sent) => setSentTo(sent.sentTo),
+    onError: refetchOnPublisher,
+  });
 
   const remove = useMutation({
     mutationFn: (code: string) => api.deleteAccount({ code }),
@@ -79,7 +86,7 @@ function DeleteAccountRoute() {
         onRetry={() => void summary.refetch()}
         retrying={summary.isFetching}
         onExportLibrary={() => setExporting(true)}
-        sentTo={send.data?.sentTo ?? null}
+        sentTo={sentTo}
         onSendCode={() => {
           if (!send.isPending) send.mutate();
         }}

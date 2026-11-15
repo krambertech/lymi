@@ -1342,6 +1342,24 @@ html:has(.deck-cards[open]) {
   background: oklch(0.34 0.065 var(--tray-h, 235));
 }
 
+/* An assistant's colour as a soft pool of light under its demo, with no edge: the tray's hue,
+   fading into the page. */
+.assistant-spotlight {
+  position: relative;
+  isolation: isolate;
+}
+.assistant-spotlight::before {
+  content: "";
+  position: absolute;
+  inset: -12% -18%;
+  z-index: -1;
+  background: radial-gradient(closest-side, oklch(0.93 0.06 var(--tray-h, 235)), transparent);
+  pointer-events: none;
+}
+[data-theme="dark"] .assistant-spotlight::before {
+  background: radial-gradient(closest-side, oklch(0.32 0.07 var(--tray-h, 235)), transparent);
+}
+
 /* A shelf's colour beside its name in the Explore menu: its tray's hue, strong enough to tell apart. */
 .shelf-swatch {
   flex: none;
@@ -1779,6 +1797,24 @@ html:has(.deck-cards[open]) {
 /* A stage holds still only while the visitor is pointing at it or tabbing through it. */
 .landing-dwell[data-paused] {
   animation-play-state: paused;
+}
+/* A voice scene's wave: while someone talks, its bars rise and fall, each from its own delay so they
+   never move in step. At rest, and under reduced motion, it holds the shape of a voice. */
+.voice-wave {
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: no-preference) {
+  [data-speaking] > .voice-wave {
+    animation: voice-wave 0.8s ease-in-out infinite alternate;
+  }
+}
+@keyframes voice-wave {
+  from {
+    transform: scaleY(0.25);
+  }
+  to {
+    transform: scaleY(1);
+  }
 }
 /* The moment AI writes a field. Its badge arrives first, so you know who is writing; then one wide,
    soft light drifts across the field just ahead of the words as they write themselves in. It fades in

@@ -8,7 +8,7 @@ import { SectionTitle } from "./FeatureSection";
 
 const MCP_URL = `${PRODUCT_ORIGIN}/mcp`;
 
-function CopyAddress() {
+export function CopyAddress() {
   const { t } = useLingui();
   const [copied, setCopied] = useState(false);
 

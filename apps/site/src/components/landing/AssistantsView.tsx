@@ -8,6 +8,7 @@ import { ASSISTANTS_QUESTIONS } from "./faq";
 import { LandingLayout } from "./LandingLayout";
 import { BENTO_HUES, CheckList, LanguageBento, Tile } from "./LanguageBento";
 import { DetailsSection, ReturnSection } from "./LanguageSections";
+import { OtherAssistants } from "./OtherAssistants";
 import { PracticeChat } from "./PracticeChat";
 import { Questions } from "./Questions";
 import { SendAnything } from "./SendAnything";
@@ -85,6 +86,8 @@ export function AssistantsView() {
   return (
     <LandingLayout page="assistants" hero={<AssistantHero />}>
       <SendAnything />
+
+      <OtherAssistants title={<Trans>Pick your assistant.</Trans>} />
 
       <ConnectSteps />
 

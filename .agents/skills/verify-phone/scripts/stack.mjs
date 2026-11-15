@@ -7,6 +7,11 @@ import { randomBytes } from "node:crypto";
 import { existsSync, mkdirSync, openSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { dirname, resolve } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
+import {
+  descendants,
+  pipeHolders,
+  stalledProbes,
+} from "../../../../apps/mobile/scripts/xcode-stall.mjs";
 
 export const root = resolve(dirname(fileURLToPath(import.meta.url)), "../../../..");
 const web = resolve(root, "apps/web");
@@ -38,7 +43,9 @@ function devVars() {
 }
 
 function migrate() {
-  const run = (args) => execFileSync("pnpm", args, { cwd: root, stdio: "pipe" });
+  // A fresh D1 prints over a megabyte of migration log, past execFileSync's default buffer.
+  const run = (args) =>
+    execFileSync("pnpm", args, { cwd: root, stdio: "pipe", maxBuffer: Number.POSITIVE_INFINITY });
   try {
     run(["db:migrate"]);
   } catch {
@@ -90,6 +97,44 @@ function stim(args, env) {
   }
 }
 
+/**
+ * Runs `stim ios` under the stall watchdog `pnpm dev-client` has: a native build whose compiler probes
+ * block for a minute never finishes, though its log keeps saying it is compiling.
+ */
+async function stimIos() {
+  const child = spawn("pnpm", ["exec", "stim", "ios", "--json"], {
+    cwd: mobile,
+    stdio: ["ignore", "pipe", "inherit"],
+  });
+  let stdout = "";
+  child.stdout.on("data", (chunk) => {
+    stdout += chunk;
+  });
+  let stalled = false;
+  const watchdog = setInterval(() => {
+    if (!stalledProbes(child.pid)) return;
+    stalled = true;
+    for (const { pid } of descendants(child.pid)) {
+      try {
+        process.kill(Number(pid), "SIGTERM");
+      } catch {}
+    }
+    child.kill("SIGTERM");
+  }, 15_000);
+  const code = await new Promise((resolve) => child.on("close", resolve));
+  clearInterval(watchdog);
+  if (stalled) {
+    throw new Error(
+      `Xcode stalled at CreateBuildDescription: pipes cannot grow, so its compiler probes block.
+  Processes holding the most pipes: ${pipeHolders()}. Ask before quitting the top one, then stop and start again.`,
+    );
+  }
+  // A launch that timed out on a loaded Mac still names the device it installed on.
+  const facts = stdout.trim() ? JSON.parse(stdout) : null;
+  if (code === 0 || facts?.udid) return facts;
+  throw new Error(`stim ios failed with exit code ${code}: ${stdout.trim()}`);
+}
+
 async function start() {
   const existing = readRecord();
   if (existing) {
@@ -117,11 +162,13 @@ async function start() {
 
   const env = { EXPO_PUBLIC_API_URL: worker };
   // Metro keeps the environment it started with, so one left from another run may point at another Worker.
-  if (stim(["start"], env).alreadyRunning) {
+  // Its transform cache keys global.css on that file alone, so a cached compile can lack classes and
+  // tokens added since and draw them unstyled; a run for proof compiles it afresh.
+  if (stim(["start", "--reset-cache"], env).alreadyRunning) {
     stim(["stop"]);
-    stim(["start"], env);
+    stim(["start", "--reset-cache"], env);
   }
-  const phone = stim(["ios"]);
+  const phone = await stimIos();
   const { name } = Object.values(JSON.parse(xcrun(["simctl", "list", "devices", "--json"])).devices)
     .flat()
     .find((d) => d.udid === phone.udid);

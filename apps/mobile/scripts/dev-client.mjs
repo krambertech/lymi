@@ -1,11 +1,12 @@
 // Installs the shared Simulator dev client into one simulator and opens it on this worktree's Metro.
 // Builds it only when no worktree has built this fingerprint yet; docs/local-dev.md has the workflow.
-import { execFileSync, spawn, spawnSync } from "node:child_process";
+import { execFileSync, spawn } from "node:child_process";
 import { existsSync, mkdirSync, readFileSync, rmSync, statSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
 import { homedir } from "node:os";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
+import { pipeHolders, stalledProbes } from "./xcode-stall.mjs";
 
 const require = createRequire(import.meta.url);
 const provider = require("./build-cache-provider.cjs");
@@ -101,8 +102,7 @@ async function build() {
   return entry;
 }
 
-// Xcode's build service reads its compiler probes only after they exit. When the Mac's pipe memory
-// is used up, pipes stop growing past 16 KB, the probes block writing, and the build waits forever.
+// xcode-stall.mjs says why a build can stall for good.
 async function xcodebuild(args, env) {
   for (let attempt = 1; ; attempt++) {
     const child = spawn("xcodebuild", args, { cwd: root, env, stdio: "inherit" });
@@ -123,58 +123,6 @@ async function xcodebuild(args, env) {
       throw new Error("Xcode stalled three times; free pipe memory and run again.");
     console.warn(`! Retrying the build (attempt ${attempt + 1} of 3)`);
   }
-}
-
-// A failed probe skips one watchdog tick rather than killing the build.
-function stalledProbes(xcodebuildPid) {
-  try {
-    const rows = ps(["-A", "-o", "pid=,ppid=,etime="]).map(([pid, ppid, etime]) => ({
-      pid,
-      ppid,
-      etime,
-    }));
-    const services = new Set(
-      rows.filter((row) => row.ppid === String(xcodebuildPid)).map((r) => r.pid),
-    );
-    const slow = rows.filter((row) => services.has(row.ppid) && minutes(row.etime) >= 1);
-    if (slow.length === 0) return false;
-    // Full command lines only for the few candidates: all of them together can exceed a megabyte.
-    return ps(["-o", "command=", "-p", slow.map((row) => row.pid).join(",")]).some((command) =>
-      command.join(" ").includes("clang -v -E -dM"),
-    );
-  } catch (error) {
-    console.warn(`! Skipped a stall check: ${error.message}`);
-    return false;
-  }
-}
-
-function ps(args) {
-  return execFileSync("ps", args, { encoding: "utf8", maxBuffer: 64 << 20 })
-    .trim()
-    .split("\n")
-    .filter(Boolean)
-    .map((line) => line.trim().split(/\s+/));
-}
-
-function minutes(etime) {
-  const [clock, days = "0"] = etime.split("-").reverse();
-  const [s = 0, m = 0, h = 0] = clock.split(":").reverse().map(Number);
-  return Number(days) * 1440 + h * 60 + m + s / 60;
-}
-
-function pipeHolders() {
-  const lsof = spawnSync("lsof", ["-n", "-F", "pct"], { encoding: "utf8", maxBuffer: 256 << 20 });
-  const counts = new Map();
-  let name = "";
-  for (const line of lsof.stdout.split("\n")) {
-    if (line.startsWith("c")) name = line.slice(1);
-    if (line === "tPIPE") counts.set(name, (counts.get(name) ?? 0) + 1);
-  }
-  return [...counts]
-    .sort((a, b) => b[1] - a[1])
-    .slice(0, 3)
-    .map(([command, count]) => `${command} (${count})`)
-    .join(", ");
 }
 
 // One native build at a time on the Mac: a second worktree waits, then finds the first one's app.

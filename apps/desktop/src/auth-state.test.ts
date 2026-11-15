@@ -37,4 +37,10 @@ describe("whether the Mac app is signed in", () => {
     expect(auth(out, { type: "answered", status: 200 })).toBe(out);
     expect(offersSignIn(UNKNOWN)).toBe(false);
   });
+
+  it("keeps a refused session refused while the server fails", () => {
+    const refused = run({ type: "read", present: true }, { type: "answered", status: 401 });
+    expect(auth(refused, { type: "answered", status: 503 })).toBe(refused);
+    expect(auth(refused, { type: "answered", status: 200 })).toEqual({ status: "in" });
+  });
 });

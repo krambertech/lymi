@@ -40,6 +40,8 @@ export function auth(state: Auth, event: AuthEvent): Auth {
     }
     case "answered":
       if (!hasCookie(state)) return state;
-      return event.status === 401 ? { status: "refused" } : { status: "in" };
+      if (event.status === 401) return { status: "refused" };
+      // Only a success proves the session; a 5xx during a deploy keeps what was known.
+      return event.status < 300 ? { status: "in" } : state;
   }
 }

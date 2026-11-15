@@ -151,9 +151,11 @@ export function invitationState(link: Link | null) {
   return "open" as const;
 }
 
-/** Whether the viewer studies the deck now, which is all a spent invitation still lets them do. */
-async function inDeck(db: Db, deckId: string, userId: string | null) {
+/** Whether the viewer owns or studies the deck now, which is all a spent invitation still serves. */
+async function inDeck(db: Db, link: Link, userId: string | null) {
   if (!userId) return false;
+  if (link.ownerId === userId) return true;
+  const deckId = link.deckId;
   const [member] = await db
     .select({ id: schema.deckMembers.id })
     .from(schema.deckMembers)
@@ -193,7 +195,7 @@ export async function previewJoin(
     archivedAt: link.deckArchivedAt,
   };
   const closed =
-    state === "off" || (state === "spent" && !(await inDeck(db, link?.deckId ?? "", viewerId)));
+    state === "off" || (state === "spent" && !(link && (await inDeck(db, link, viewerId))));
   return previewDoor(db, deck, closed, viewerId);
 }
 
@@ -208,7 +210,7 @@ export async function joinThroughLink(ctx: ServiceContext, token: string) {
   const state = invitationState(link);
   if (
     !link ||
-    !(state === "open" || (state === "spent" && (await inDeck(ctx.db, link.deckId, ctx.userId))))
+    !(state === "open" || (state === "spent" && (await inDeck(ctx.db, link, ctx.userId))))
   ) {
     throw new ServiceError("not_found", "This join link does not work");
   }

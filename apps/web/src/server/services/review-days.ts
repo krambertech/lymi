@@ -144,7 +144,7 @@ export async function settleDay(
   day: ReviewDay,
   change: DayChange,
   now = new Date(),
-  known: { nothingDue?: boolean } = {},
+  known: { nothingDue?: boolean; isToday?: boolean } = {},
 ): Promise<DayProgress> {
   let current = day;
   for (let attempt = 0; ; attempt++) {
@@ -155,7 +155,7 @@ export async function settleDay(
       goal: current.goal,
       outcome,
     });
-    const isToday = current.date === dateFormatter(current.timezone).format(now);
+    const isToday = known.isToday ?? current.date === dateFormatter(current.timezone).format(now);
     const nothingLeft =
       isToday &&
       attempts < current.goal &&
@@ -228,7 +228,8 @@ export async function checkToday(ctx: ServiceContext, reported?: string | undefi
     return { date, attempts: 0, goal: settings.dailyGoal, outcome: "open" as const };
   }
   const day = existing ?? (await openDay(ctx, date, zone, settings.dailyGoal));
-  return settleDay(ctx, day, "visit", now, { nothingDue: due === 0 });
+  // The day was found by today's date in the current zone, even when it opened in another.
+  return settleDay(ctx, day, "visit", now, { nothingDue: due === 0, isToday: true });
 }
 
 /**

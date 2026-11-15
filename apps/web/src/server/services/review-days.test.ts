@@ -406,6 +406,21 @@ describe("a day with nothing due", () => {
     expect((await streak(ctx)).current).toBe(2);
   });
 
+  it("confirms today found in the current zone though it opened in another", async () => {
+    const { ctx } = await setup(10, []);
+    // A zone whose date is not today's UTC date right now, as after the learner travelled.
+    const away = new Date().getUTCHours() >= 10 ? "Pacific/Kiritimati" : "Pacific/Pago_Pago";
+    await db.insert(schema.reviewDays).values({
+      id: newId(),
+      userId: ctx.userId,
+      date: today(),
+      goal: 10,
+      timezone: away,
+    });
+
+    expect(await checkToday(ctx)).toMatchObject({ attempts: 0, outcome: "nothing_due" });
+  });
+
   it("does not confirm a day that still has cards to review", async () => {
     const { ctx } = await setup(10, ["kaksteist"]);
 

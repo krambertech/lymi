@@ -42,7 +42,7 @@ import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
 import { aiAllowedFor, requireAi } from "./ai-consent";
 import { type AnalyticsEvent, track } from "./analytics";
-import { auditStatement } from "./audit";
+import { auditStatement, auditStatementWhen } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
 import { type CardView, presentCard, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -1365,12 +1365,15 @@ function archiveWrite(
         .update(schema.cards)
         .set({ archivedAt, updatedAt: new Date() })
         .where(archivedAt ? eq(schema.cards.id, id) : and(eq(schema.cards.id, id), notTakenDown)),
-      auditStatement(ctx, {
-        entity: "card",
-        action: archivedAt ? "archive" : "restore",
-        id,
-        deckId: current.deckId,
-      }),
+      archivedAt
+        ? auditStatement(ctx, { entity: "card", action: "archive", id, deckId: current.deckId })
+        : // A takedown that landed after the check above refused the restore, so nothing is logged.
+          auditStatementWhen(
+            ctx,
+            { entity: "card", action: "restore", id, deckId: current.deckId },
+            schema.cards,
+            sql`${schema.cards.id} = ${id} and ${schema.cards.archivedAt} is null`,
+          ),
     ],
     states: archivedAt === null,
     reports: archivedAt

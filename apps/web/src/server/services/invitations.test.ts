@@ -445,6 +445,7 @@ describe("inviting one person by name", () => {
     });
     await expect(joinThroughLink(anna, token)).rejects.toThrow(notFound);
     expect((await listDecks(anna)).map((d) => d.id)).not.toContain(deck.id);
+    expect(await previewJoin(db, token, kateryna.userId)).toMatchObject({ status: "live" });
   });
 
   it("a cancelled invitation stops working and leaves the list", async () => {

@@ -35,21 +35,25 @@ export type ExampleClipEvent =
 
 const IDLE: ExampleClip = { status: "idle" };
 
-/** A press for an address already loading changes nothing; every other event names its own. */
+/**
+ * A press for an address already loading changes nothing, and an answer for one address never
+ * replaces another's load.
+ */
 export function exampleClip(state: ExampleClip, event: ExampleClipEvent): ExampleClip {
+  const otherLoading = state.status === "loading" && state.url !== event.url;
   switch (event.type) {
     case "load":
       return state.status === "loading" && state.url === event.url
         ? state
         : { status: "loading", url: event.url };
     case "play":
-      return { status: "playing", url: event.url };
+      return otherLoading ? state : { status: "playing", url: event.url };
     case "stop":
       return state.status === "playing" && state.url === event.url ? IDLE : state;
     case "limit":
-      return { status: "limited", url: event.url };
+      return otherLoading ? state : { status: "limited", url: event.url };
     case "fail":
-      return { status: "failed", url: event.url };
+      return otherLoading ? state : { status: "failed", url: event.url };
   }
 }
 

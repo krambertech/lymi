@@ -296,7 +296,11 @@ function Login() {
     } catch {
       outcome = { errors: { form: offline() } };
     }
-    if (!outcome) return;
+    // The page is moving on; the form settles as it did, so a page brought back from history works.
+    if (!outcome) {
+      dispatch({ type: "fail", attempt, errors: {} });
+      return;
+    }
     dispatch(
       "notice" in outcome
         ? { type: "send", attempt, notice: outcome.notice }

@@ -52,4 +52,7 @@ test("a clip's end from an earlier example leaves the current one's state alone"
   const playing = exampleClip({ status: "idle" }, { type: "play", url: "b" });
   expect(exampleClip(playing, { type: "stop", url: "a" })).toBe(playing);
   expect(clipFor({ status: "loading", url: "a" }, "b")).toEqual({ status: "idle" });
+  const loadingB = { status: "loading", url: "b" } as const;
+  expect(exampleClip(loadingB, { type: "fail", url: "a" })).toBe(loadingB);
+  expect(exampleClip(loadingB, { type: "limit", url: "a" })).toBe(loadingB);
 });

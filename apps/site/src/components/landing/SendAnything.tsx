@@ -4,8 +4,9 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { type ReactNode, useRef } from "react";
-import { SectionTitle } from "./FeatureSection";
+import { Pick } from "./Pick";
 import { EASE, usePlayback } from "./playback";
+import { GUTTER, Section, SectionHeader } from "./Section";
 
 /** Each source lights its word, then its card slides out from under it, one after another. */
 const STEP_MS = 650;
@@ -19,18 +20,6 @@ const BEATS = {
   mark3: 2150,
   card3: 2600,
 };
-
-/** The word the assistant picked, lit once the source has been read. */
-function Pick({ on, children }: { on: boolean; children: ReactNode }) {
-  return (
-    <mark
-      data-on={on}
-      className="rounded-xs bg-transparent bg-[linear-gradient(var(--color-amber-soft),var(--color-amber-soft))] bg-no-repeat px-0.5 text-inherit transition-[background-size] duration-500 ease-out [background-size:0%_100%] [box-decoration-break:clone] data-[on=true]:[background-size:100%_100%] motion-reduce:transition-none"
-    >
-      {children}
-    </mark>
-  );
-}
 
 interface Source {
   id: string;
@@ -142,19 +131,18 @@ export function SendAnything() {
   const { at } = usePlayback(BEATS, inView, still);
 
   return (
-    <section aria-labelledby="send-title" className="py-16 @4xl:py-20">
-      <div className="mx-auto max-w-[1120px] px-5 @2xl:px-10">
-        <div id="send-title">
-          <SectionTitle>
-            <Trans>Send it what you have.</Trans>
-          </SectionTitle>
-        </div>
-        <p className="mt-5 max-w-[52ch] text-md text-pretty text-ink-secondary">
-          <Trans>
-            A photo of the board, your tutor’s message, a lesson transcript, the book on your
-            nightstand. Your assistant picks out the new words and adds them to Lymi.
-          </Trans>
-        </p>
+    <Section labelledBy="send-title" bleed>
+      <div className={clsx("mx-auto max-w-[1120px]", GUTTER)}>
+        <SectionHeader
+          id="send-title"
+          title={<Trans>Send it what you have.</Trans>}
+          body={
+            <Trans>
+              A photo of the board, your tutor’s message, a lesson transcript, the book on your
+              nightstand. Your assistant picks out the new words and adds them to Lymi.
+            </Trans>
+          }
+        />
       </div>
 
       {/* A row on wide screens; on a phone it scrolls sideways with the next source peeking in. */}
@@ -204,6 +192,6 @@ export function SendAnything() {
           );
         })}
       </ul>
-    </section>
+    </Section>
   );
 }

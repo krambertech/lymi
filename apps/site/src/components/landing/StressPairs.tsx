@@ -5,6 +5,7 @@ import { Volume2 } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { EASE, useStill } from "./playback";
+import { WordPicker } from "./WordPicker";
 
 /** One spelling, and the words its stress makes of it. */
 export interface StressPair {
@@ -107,32 +108,17 @@ export function StressPairs({ pairs, lang }: Props) {
         ))}
       </div>
 
-      <div className="mt-6 flex flex-wrap justify-center gap-1.5">
-        {pairs.map((p, i) => (
-          <button
-            key={p.word}
-            type="button"
-            lang={lang}
-            aria-pressed={i === pairAt}
-            onClick={() => {
-              heldUntil.current = Date.now() + HOLD_MS;
-              setPairAt(i);
-              setFormAt(0);
-            }}
-            className="relative h-9 rounded-full px-3.5 text-md text-ink-muted transition-colors duration-200 hoverable:hover:text-ink aria-pressed:text-ink"
-          >
-            {i === pairAt && (
-              <motion.span
-                layoutId={`${lang}-stress-pair`}
-                transition={
-                  still ? { duration: 0 } : { type: "spring", duration: 0.45, bounce: 0.15 }
-                }
-                className="absolute inset-0 rounded-full bg-plate edge"
-              />
-            )}
-            <span className="relative">{p.word}</span>
-          </button>
-        ))}
+      <div className="mt-6">
+        <WordPicker
+          words={pairs.map((p) => p.word)}
+          lang={lang}
+          at={pairAt}
+          onPick={(i) => {
+            heldUntil.current = Date.now() + HOLD_MS;
+            setPairAt(i);
+            setFormAt(0);
+          }}
+        />
       </div>
     </div>
   );

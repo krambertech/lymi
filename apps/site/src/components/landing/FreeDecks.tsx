@@ -6,7 +6,7 @@ import type { Locale } from "../../lib/routes";
 import { trayHues } from "../../lib/tray";
 import { DeckTile } from "../explore/DeckTile";
 import { ArrowLink } from "./ArrowLink";
-import { SectionTitle } from "./FeatureSection";
+import { Section, SectionHeader } from "./Section";
 
 /** As many placeholders as the row shows before scrolling, so nothing moves when the decks arrive. */
 const PLACEHOLDERS = 5;
@@ -35,28 +35,26 @@ export function FreeDecks() {
   const hues = trayHues(decks ?? []);
 
   return (
-    <section data-nav="landing" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
-      <div className="mx-auto flex max-w-[1040px] flex-wrap items-end justify-between gap-6">
-        <div className="max-w-[620px]">
-          <SectionTitle>
-            <Trans>Start with a free deck.</Trans>
-          </SectionTitle>
-          <p className="mt-5 text-md text-pretty text-ink-secondary">
-            <Trans>
-              Ready-made decks, from first words in a new language to citizenship tests and the
-              periodic table. Add one in a tap.
-            </Trans>
-          </p>
-        </div>
-        <ArrowLink href={explorePath(locale)} size="md">
-          <Trans>All free decks</Trans>
-        </ArrowLink>
-      </div>
+    <Section nav="landing">
+      <SectionHeader
+        title={<Trans>Start with a free deck.</Trans>}
+        body={
+          <Trans>
+            Ready-made decks, from first words in a new language to citizenship tests and the
+            periodic table. Add one in a tap.
+          </Trans>
+        }
+        action={
+          <ArrowLink href={explorePath(locale)} size="md">
+            <Trans>All free decks</Trans>
+          </ArrowLink>
+        }
+      />
 
       {decks?.length !== 0 && (
         <ul
           aria-busy={decks === null}
-          className="mx-auto mt-12 flex max-w-[1040px] snap-x snap-mandatory gap-5 overflow-x-auto pb-4"
+          className="mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto pb-4"
         >
           {decks
             ? decks.map((deck, i) => (
@@ -75,6 +73,6 @@ export function FreeDecks() {
               ))}
         </ul>
       )}
-    </section>
+    </Section>
   );
 }

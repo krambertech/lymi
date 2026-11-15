@@ -3,6 +3,7 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
+import { Section } from "./Section";
 
 interface Props {
   title: ReactNode;
@@ -39,11 +40,11 @@ export function SignUpSection({ title, note }: Props) {
   }, []);
 
   return (
-    <section id="sign-up" className="scroll-mt-8 px-5 pt-4 pb-16 @2xl:px-10 @4xl:pt-6 @4xl:pb-20">
+    <Section id="sign-up" spacing="end">
       <div
         ref={plate}
         data-lit={lit || undefined}
-        className="signup-plate mx-auto max-w-[1040px] rounded-2xl bg-plate-nested px-7 py-16 text-center edge-inset @2xl:px-12 @4xl:px-16 @4xl:py-20"
+        className="signup-plate rounded-2xl bg-plate-nested px-7 py-16 text-center edge-inset @2xl:px-12 @4xl:px-16 @4xl:py-20"
       >
         <span aria-hidden="true" className="signup-pool" />
         <div className="relative">
@@ -72,6 +73,6 @@ export function SignUpSection({ title, note }: Props) {
           )}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

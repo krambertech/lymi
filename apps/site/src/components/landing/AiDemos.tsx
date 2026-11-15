@@ -4,7 +4,7 @@ import { clsx } from "clsx";
 import { Check, Copy, Sparkle, Volume2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
-import { Pick } from "./MaterialToCards";
+import { Pick } from "./Pick";
 import { EASE, usePlayback, useStill } from "./playback";
 
 export interface DemoProps {

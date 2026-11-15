@@ -1,6 +1,7 @@
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
-import { AssistantMark, type AssistantName } from "./AssistantMarks";
+import type { AssistantName } from "./AssistantMarks";
+import { AssistantAvatar, LearnerBubble } from "./ChatParts";
 import { EASE } from "./playback";
 import { Showcase, useShowcaseStage } from "./Showcase";
 
@@ -46,20 +47,10 @@ function Exchange({ assistant, item }: { assistant: AssistantName; item: Ask }) 
     <div className="flex w-full max-w-[420px] flex-col gap-3">
       <div className="flex flex-col items-end gap-2">
         {item.attachment && <motion.div {...step(0.15)}>{item.attachment}</motion.div>}
-        <motion.p
-          {...step(0.15 + lead)}
-          className="ms-10 w-fit max-w-[85%] rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-pretty text-canvas"
-        >
-          {item.ask}
-        </motion.p>
+        <LearnerBubble {...step(0.15 + lead)}>{item.ask}</LearnerBubble>
       </div>
       <div className="flex items-start gap-2.5">
-        <motion.span
-          {...step(0.8 + lead)}
-          className="grid size-8 shrink-0 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4"
-        >
-          <AssistantMark name={assistant} />
-        </motion.span>
+        <AssistantAvatar name={assistant} {...step(0.8 + lead)} />
         <motion.div {...step(1.15 + lead)} className="min-w-0 flex-1">
           {item.result}
         </motion.div>

@@ -4,6 +4,7 @@ import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { adjective, noun, phrase, verb } from "./hand-cards";
 import type { PathStep, VoiceWord } from "./japanese";
+import type { FormKind, FormSlot, FormWord } from "./WordForms";
 
 /**
  * The Estonian page's words. Terms and their forms are Estonian and never translated; meanings
@@ -158,16 +159,21 @@ export const ESTONIAN_EXAMPLES: Record<string, Example[]> = {
   ],
 };
 
-export type FormKind = "noun" | "verb";
+/** Each form's name, with the questions Estonian courses teach a noun's forms by. */
+export const ESTONIAN_FORM_SLOTS = {
+  noun: [
+    { asks: "kes? mis?", name: msg`Nominative` },
+    { asks: "kelle? mille?", name: msg`Genitive` },
+    { asks: "keda? mida?", name: msg`Partitive` },
+  ],
+  verb: [
+    { asks: "-ma", name: msg`ma-infinitive` },
+    { asks: "-da", name: msg`da-infinitive` },
+    { asks: "ma …", name: msg`Present, “I”` },
+  ],
+} as const satisfies Record<FormKind, readonly FormSlot[]>;
 
-/** A word and the three forms a learner keeps with it, as Estonian courses teach them. */
-export interface FormWord {
-  term: string;
-  kind: FormKind;
-  meaning: MessageDescriptor;
-  forms: [string, string, string];
-}
-
+/** Words and the three forms a learner keeps with each, as Estonian courses teach them. */
 export const FORM_WORDS: FormWord[] = [
   { term: "vesi", kind: "noun", meaning: msg`Water`, forms: ["vesi", "vee", "vett"] },
   { term: "sõber", kind: "noun", meaning: msg`Friend`, forms: ["sõber", "sõbra", "sõpra"] },

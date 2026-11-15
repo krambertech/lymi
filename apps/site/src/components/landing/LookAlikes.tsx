@@ -1,10 +1,10 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { EASE, useStill } from "./playback";
 import type { LookAlike } from "./polish";
+import { WordPicker } from "./WordPicker";
 
 const BEAT_MS = 1500;
 const FIRST_MS = 700;
@@ -123,7 +123,7 @@ export function LookAlikes({ words, reader }: Props) {
         </div>
       </div>
 
-      <div className="mt-6 flex flex-wrap justify-center gap-1.5">
+      <div className="mt-6 flex flex-wrap items-center justify-center gap-1.5">
         <button
           type="button"
           onClick={play}
@@ -132,32 +132,15 @@ export function LookAlikes({ words, reader }: Props) {
         >
           <Volume2 aria-hidden="true" className="size-4" />
         </button>
-        {words.map((w, i) => (
-          <button
-            key={w.id}
-            type="button"
-            lang="pl"
-            aria-pressed={i === at}
-            onClick={() => {
-              heldUntil.current = Date.now() + HOLD_MS;
-              setBeat(i * 2 + 1);
-            }}
-            className={clsx(
-              "relative h-9 rounded-full px-3.5 text-md text-ink-muted transition-colors duration-200 hoverable:hover:text-ink aria-pressed:text-ink",
-            )}
-          >
-            {i === at && (
-              <motion.span
-                layoutId="look-alike"
-                transition={
-                  still ? { duration: 0 } : { type: "spring", duration: 0.45, bounce: 0.15 }
-                }
-                className="absolute inset-0 rounded-full bg-plate edge"
-              />
-            )}
-            <span className="relative">{w.term}</span>
-          </button>
-        ))}
+        <WordPicker
+          words={words.map((w) => w.term)}
+          lang="pl"
+          at={at}
+          onPick={(i) => {
+            heldUntil.current = Date.now() + HOLD_MS;
+            setBeat(i * 2 + 1);
+          }}
+        />
       </div>
     </div>
   );

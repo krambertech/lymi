@@ -6,13 +6,14 @@ import type { Locale } from "../../lib/routes";
 import { Attachment } from "./AssistantChat";
 import { EnrichEstonian, NotesToCardsEstonian } from "./EstonianAi";
 import { EstonianBento } from "./EstonianBento";
-import { EstonianForms } from "./EstonianForms";
 import {
   ESTONIAN_CLASS_CARDS,
   ESTONIAN_EXAMPLES,
+  ESTONIAN_FORM_SLOTS,
   ESTONIAN_PAGE_HAND,
   ESTONIAN_PATH,
   ESTONIAN_VOICE_WORDS,
+  FORM_WORDS,
 } from "./estonian";
 import { Wide } from "./FeatureSection";
 import { ESTONIAN_QUESTIONS } from "./faq";
@@ -33,6 +34,7 @@ import { addDeckUrl, pathSteps } from "./language-decks";
 import { EstonianStartup } from "./OriginBadge";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
+import { WordForms } from "./WordForms";
 
 export const ESTONIAN_TITLE = msg`Learn Estonian vocabulary with flashcards · Lymi`;
 export const ESTONIAN_BLURB = msg`A free flashcard app for Estonian, made by an Estonian startup. Every card is read by a native Estonian voice, every word comes with its three forms, and free decks take you from tere to the 1000 most common words.`;
@@ -89,7 +91,7 @@ export function EstonianView({ decks, locale }: Props) {
           </Trans>
         }
       >
-        <EstonianForms />
+        <WordForms lang="et" words={FORM_WORDS} slots={ESTONIAN_FORM_SLOTS} />
       </Wide>
 
       {steps.length > 1 && (

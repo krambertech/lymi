@@ -1,10 +1,11 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Check, Copy } from "lucide-react";
-import { type ReactNode, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { PRODUCT_ORIGIN } from "../../lib/origins";
 import { Lantern } from "../Lantern";
 import { AssistantMarks } from "./AssistantMarks";
-import { SectionTitle } from "./FeatureSection";
+import { Section, SectionHeader } from "./Section";
+import { type Step, Steps } from "./Steps";
 
 const MCP_URL = `${PRODUCT_ORIGIN}/mcp`;
 
@@ -48,13 +49,6 @@ export function CopyAddress() {
   );
 }
 
-interface Step {
-  id: string;
-  title: ReactNode;
-  body: ReactNode;
-  after: ReactNode;
-}
-
 /** What step three looks like in Lymi: the one question it asks. */
 function AllowPreview() {
   return (
@@ -88,7 +82,11 @@ export function ConnectSteps() {
       id: "add",
       title: <Trans>Add it to your assistant</Trans>,
       body: <Trans>Pick your assistant for its steps.</Trans>,
-      after: <AssistantMarks compact />,
+      after: (
+        <div className="[&_a]:size-10 [&_ul]:justify-start [&_ul]:gap-1.5">
+          <AssistantMarks compact />
+        </div>
+      ),
     },
     {
       id: "allow",
@@ -99,41 +97,11 @@ export function ConnectSteps() {
   ];
 
   return (
-    <section
-      id="connect"
-      aria-labelledby="connect-title"
-      className="scroll-mt-8 bg-plate-nested px-5 py-16 @2xl:px-10 @4xl:py-20"
-    >
-      <div className="mx-auto max-w-[1040px]">
-        <div id="connect-title">
-          <SectionTitle>
-            <Trans>Connect in three steps.</Trans>
-          </SectionTitle>
-        </div>
-        {/* Rows are shared across the columns, so the three visuals sit on one line however the copy wraps. */}
-        <ol className="mt-10 grid gap-4 @3xl:grid-cols-3 @3xl:grid-rows-[auto_1fr_auto] @3xl:gap-x-4 @3xl:gap-y-0">
-          {steps.map((step, i) => (
-            <li
-              key={step.id}
-              className="grid min-w-0 gap-3 rounded-2xl bg-plate p-5 edge @3xl:row-span-3 @3xl:grid-rows-subgrid @3xl:gap-0"
-            >
-              <h3 className="flex items-center gap-3 text-lg font-medium tracking-[-0.02em] text-ink">
-                <span
-                  aria-hidden="true"
-                  className="grid size-7 shrink-0 place-items-center rounded-full bg-plate-nested text-sm text-ink-secondary tabular-nums"
-                >
-                  {i + 1}
-                </span>
-                {step.title}
-              </h3>
-              <p className="text-md text-pretty text-ink-secondary @3xl:mt-2">{step.body}</p>
-              <div className="mt-3 [&_a]:size-10 [&_ul]:justify-start [&_ul]:gap-1.5 @3xl:mt-6">
-                {step.after}
-              </div>
-            </li>
-          ))}
-        </ol>
+    <Section id="connect" surface="nested" labelledBy="connect-title">
+      <SectionHeader id="connect-title" title={<Trans>Connect in three steps.</Trans>} />
+      <div className="mt-10">
+        <Steps steps={steps} />
       </div>
-    </section>
+    </Section>
   );
 }

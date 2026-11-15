@@ -2,20 +2,14 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { FileText } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
-import {
-  type CSSProperties,
-  type PointerEvent,
-  type ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type PointerEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { localizedPath } from "../../lib/routes";
+import { trayStyle } from "../../lib/tray";
 import { Lantern } from "../Lantern";
 import { ArrowLink } from "./ArrowLink";
 import { AssistantMark, type AssistantName } from "./AssistantMarks";
-import { SectionTitle } from "./FeatureSection";
 import { EASE, useStill } from "./playback";
+import { SectionTitle } from "./Section";
 
 interface Ask {
   id: string;
@@ -168,7 +162,7 @@ function AskBubble({ ask: item, mirrored }: { ask: Ask; mirrored?: boolean }) {
     <div className={clsx("flex items-end gap-2.5", mirrored && "flex-row-reverse")}>
       <Avatar name={item.from} />
       <div
-        style={{ "--tray-h": item.hue } as CSSProperties}
+        style={trayStyle(item.hue)}
         className={clsx(
           "use-case-tile rounded-[20px] px-4 py-3 shadow-[var(--glass-drop)]",
           mirrored ? "rounded-ee-md" : "rounded-es-md",

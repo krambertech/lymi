@@ -1,13 +1,15 @@
-import { Trans } from "@lingui/react/macro";
-import { clsx } from "clsx";
-import { ArrowRight } from "lucide-react";
 import { type ReactNode, useState } from "react";
-import { signUpUrl } from "../../lib/origins";
-import { buttonClass } from "../Button";
 import { HandOfCards } from "./HandOfCards";
+import {
+  HeroActions,
+  HeroBadges,
+  HeroFrame,
+  HeroLede,
+  type HeroLink,
+  HeroTitle,
+} from "./HeroParts";
 import { HeroGround } from "./HeroScenes";
 import type { HandCard } from "./hand-cards";
-import { OriginBadge } from "./OriginBadge";
 
 interface Props {
   title: ReactNode;
@@ -19,7 +21,7 @@ interface Props {
   /** A scene of its own in place of the hand of cards. */
   visual?: ReactNode;
   /** A quieter second way in, beside Get started. */
-  secondary?: { href: string; label: ReactNode } | undefined;
+  secondary?: HeroLink | undefined;
   /** A small line under the actions. */
   after?: ReactNode;
   /** A pill above the title, shown to everyone, beside the origin badge when one shows. */
@@ -40,52 +42,19 @@ export function Hero({
 }: Props) {
   const [front, setFront] = useState<string>();
   return (
-    <div
-      className={clsx(
-        "mx-auto grid max-w-[1120px] items-center gap-8 px-5 pt-12 pb-16 @2xl:px-10 @4xl:pt-14 @5xl:min-h-[700px] @5xl:gap-14",
-        // A scene holds its own ground, so it needs less room than the fan and leaves more to the title.
-        visual || behind
-          ? "@5xl:grid-cols-[minmax(0,1fr)_minmax(0,420px)] @6xl:grid-cols-[minmax(0,1fr)_minmax(0,470px)]"
-          : "@5xl:grid-cols-[minmax(0,1fr)_minmax(0,460px)] @6xl:grid-cols-[minmax(0,1fr)_minmax(0,540px)]",
-      )}
-    >
-      <div className="min-w-0 max-w-[540px]">
-        {badge ? (
-          // The origin badge brings its own bottom margin; in the row the row owns it.
-          <div className="mb-6 flex flex-wrap items-center gap-2 *:mb-0">
-            {badge}
-            <OriginBadge />
-          </div>
-        ) : (
-          <OriginBadge />
-        )}
-        <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[4.25rem] @4xl:leading-[0.98]">
-          {title}
-        </h1>
-        <p className="mt-6 max-w-[44ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
-          {lede}
-        </p>
-        <div data-nav="hero">
-          <div className="mt-8 flex flex-wrap items-center gap-3">
-            <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-              <Trans>Get started</Trans>
-            </a>
-            {secondary && (
-              <a href={secondary.href} className={buttonClass("ghost", "lg")}>
-                {secondary.label}
-                <ArrowRight
-                  aria-hidden="true"
-                  data-icon="inline-end"
-                  className="rtl:-scale-x-100"
-                />
-              </a>
-            )}
-          </div>
-          {after && <div className="mt-8">{after}</div>}
-        </div>
-      </div>
-
-      {visual ??
+    <HeroFrame
+      // A scene holds its own ground, so it needs less room than the fan and leaves more to the title.
+      visualWidth={visual || behind ? 420 : 540}
+      copy={
+        <>
+          <HeroBadges>{badge}</HeroBadges>
+          <HeroTitle>{title}</HeroTitle>
+          <HeroLede>{lede}</HeroLede>
+          <HeroActions secondary={secondary} after={after} />
+        </>
+      }
+      visual={
+        visual ??
         (behind ? (
           <HeroGround material={behind(front)}>
             <div className="relative col-span-8 col-start-5 row-span-2 row-start-2">
@@ -94,7 +63,8 @@ export function Hero({
           </HeroGround>
         ) : (
           <HandOfCards cards={cards} layout={layout} />
-        ))}
-    </div>
+        ))
+      }
+    />
   );
 }

@@ -4,7 +4,6 @@ import { RotateCcw } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import {
   Children,
-  type CSSProperties,
   createContext,
   isValidElement,
   type KeyboardEvent,
@@ -16,6 +15,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { trayStyle } from "../../lib/tray";
 import { EASE, useHold, useStill } from "./playback";
 
 /*
@@ -186,7 +186,7 @@ function ShowcaseRoot({ label, children, className }: Props) {
                   // While its item plays, the icon takes the stage's tint, so the two read as one.
                   <span
                     aria-hidden="true"
-                    style={{ "--tray-h": each.hue } as CSSProperties}
+                    style={trayStyle(each.hue)}
                     className={clsx(
                       "grid size-8 shrink-0 place-items-center rounded-lg transition-[background-color,color] duration-500 [&_svg]:size-4",
                       on ? "use-case-tile text-ink" : "bg-plate-nested text-ink-secondary",
@@ -243,7 +243,7 @@ function ShowcaseRoot({ label, children, className }: Props) {
         role="tabpanel"
         id={`${base}-panel`}
         aria-labelledby={`${base}-tab-${item.id}`}
-        style={{ "--tray-h": item.hue } as CSSProperties}
+        style={trayStyle(item.hue)}
         className="use-case-tile relative order-1 grid min-h-[400px] place-items-center overflow-hidden px-5 py-14 transition-[background-color] duration-500 @2xl:px-10 @4xl:order-2 @4xl:min-h-[460px]"
       >
         {/* Quiet on purpose: the demo is the subject, and it replays by itself. */}

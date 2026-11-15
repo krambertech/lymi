@@ -1,12 +1,14 @@
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { ChevronRight, List } from "lucide-react";
+import { List } from "lucide-react";
 import { isExamShelf } from "../../lib/exams";
 import { explorePath, type Shelf, type ShelfRoute, shelfPath, shelfRoute } from "../../lib/explore";
 import type { Locale } from "../../lib/routes";
 import { trayHue } from "../../lib/tray";
+import { Breadcrumb } from "../Breadcrumb";
 import { ExamPageLink } from "../exams/ExamPageLink";
 import { Localized } from "../Localized";
 import { Questions } from "../landing/Questions";
+import { Section, SectionTitle } from "../landing/Section";
 import { DeckTile } from "./DeckTile";
 import { shelfLabel } from "./explore-labels";
 import type { ShelfCopy } from "./shelf-copy";
@@ -36,26 +38,14 @@ function ShelfHeroContent({
   shelf,
   copy,
 }: LocaleProps & { shelf: Shelf; copy: ShelfCopy }) {
-  const { i18n, t } = useLingui();
+  const { i18n } = useLingui();
   const cards = shelf.decks.reduce((sum, deck) => sum + deck.cardCount, 0);
   return (
     <div className="mx-auto max-w-[1120px] px-5 pt-8 pb-2 @2xl:px-10 @4xl:pt-12">
-      <nav aria-label={t`Breadcrumb`}>
-        <ol className="flex flex-wrap items-center gap-1.5 text-sm text-ink-muted">
-          <li>
-            <a
-              href={explorePath(locale)}
-              className="rounded-xs font-medium text-ink-secondary transition-colors duration-150 hoverable:hover:text-ink"
-            >
-              <Trans>Explore</Trans>
-            </a>
-          </li>
-          <li aria-hidden="true">
-            <ChevronRight className="size-3.5 text-ink-faint rtl:-scale-x-100" />
-          </li>
-          <li aria-current="page">{shelfLabel(i18n, shelf)}</li>
-        </ol>
-      </nav>
+      <Breadcrumb
+        parent={{ href: explorePath(locale), label: <Trans>Explore</Trans> }}
+        here={shelfLabel(i18n, shelf)}
+      />
       <h1 className="mt-5 max-w-[18ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance text-ink @4xl:text-[4rem]">
         {copy.title}
       </h1>
@@ -110,21 +100,16 @@ export function ShelfAbout({
 }: LocaleProps & { copy: ShelfCopy; heading: string }) {
   return (
     <Localized locale={locale}>
-      <section aria-labelledby="about-title" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
-        <div className="mx-auto max-w-[1040px]">
-          <h2
-            id="about-title"
-            className="text-3xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-4xl"
-          >
-            {heading}
-          </h2>
-          <div className="mt-5 grid max-w-[62ch] gap-3 text-md text-pretty text-ink-secondary">
-            {copy.about.map((paragraph) => (
-              <p key={paragraph}>{paragraph}</p>
-            ))}
-          </div>
+      <Section labelledBy="about-title">
+        <SectionTitle id="about-title" size="sm">
+          {heading}
+        </SectionTitle>
+        <div className="mt-5 grid max-w-[62ch] gap-3 text-md text-pretty text-ink-secondary">
+          {copy.about.map((paragraph) => (
+            <p key={paragraph}>{paragraph}</p>
+          ))}
         </div>
-      </section>
+      </Section>
       <Questions title={<Trans>Questions</Trans>} items={copy.questions} />
     </Localized>
   );

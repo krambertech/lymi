@@ -1,18 +1,9 @@
-import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
-import { Check, LoaderCircle } from "lucide-react";
 import { motion, useInView } from "motion/react";
-import {
-  type CSSProperties,
-  createContext,
-  type ReactNode,
-  useContext,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { Lantern } from "../Lantern";
-import { AssistantMark, type AssistantName } from "./AssistantMarks";
+import { createContext, type ReactNode, useContext, useEffect, useRef, useState } from "react";
+import { trayStyle } from "../../lib/tray";
+import type { AssistantName } from "./AssistantMarks";
+import { AssistantAvatar, LearnerBubble, ToolCall, UsingLymi } from "./ChatParts";
 import { appear, EASE, usePlayback, useStill } from "./playback";
 
 export interface MadeCard {
@@ -92,55 +83,30 @@ export function AssistantChatDemo({
       ref={ref}
       role="img"
       aria-label={label}
-      style={{ "--tray-h": hue } as CSSProperties}
+      style={trayStyle(hue)}
       className={clsx("mx-auto flex w-full max-w-[480px] flex-col gap-4", BACKDROPS[backdrop])}
     >
       <div className="flex flex-col items-end gap-2">
         <motion.div initial={false} animate={appear(at("attach"))} transition={move}>
           {attachment}
         </motion.div>
-        <motion.p
-          className="max-w-[85%] rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-pretty text-canvas"
-          initial={false}
-          animate={appear(at("ask"))}
-          transition={move}
-        >
+        <LearnerBubble initial={false} animate={appear(at("ask"))} transition={move}>
           {ask}
-        </motion.p>
+        </LearnerBubble>
       </div>
 
       <div className="flex items-start gap-2.5">
         {/* The assistant arrives with its turn, not before the learner has asked anything. */}
-        <motion.span
-          className="grid size-8 shrink-0 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4"
+        <AssistantAvatar
+          name={assistant}
           initial={false}
           animate={appear(at("calling"))}
           transition={move}
-        >
-          <AssistantMark name={assistant} />
-        </motion.span>
+        />
         <div className="flex min-w-0 flex-1 flex-col items-start gap-2 pt-0.5">
-          <motion.p
-            className="flex h-8 items-center gap-2 rounded-full bg-plate ps-1 pe-3 text-sm text-ink-secondary edge"
-            initial={false}
-            animate={appear(at("calling"))}
-            transition={move}
-          >
-            <span className="grid size-6 place-items-center rounded-full bg-plate-nested">
-              <Lantern className="size-4" />
-            </span>
-            {at("called") ? (
-              <>
-                <Trans>Used Lymi</Trans>
-                <Check aria-hidden="true" className="size-4 text-success" />
-              </>
-            ) : (
-              <>
-                <Trans>Using Lymi</Trans>
-                <LoaderCircle aria-hidden="true" className="size-4 animate-spin text-ink-muted" />
-              </>
-            )}
-          </motion.p>
+          <ToolCall initial={false} animate={appear(at("calling"))} transition={move}>
+            <UsingLymi done={at("called")} />
+          </ToolCall>
           <motion.p
             className="text-md text-pretty text-ink"
             initial={false}

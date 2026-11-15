@@ -10,8 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { signUpUrl } from "../../lib/origins";
-import { buttonClass } from "../Button";
+import { HeroActions, HeroLede, HeroTitle } from "./HeroParts";
 import type { FieldLanguage, WordFrame } from "./hero-words";
 
 /** Long enough to read the language's name and glance at a word or two. */
@@ -278,22 +277,16 @@ export function WordFieldHero({ frames, label, lede }: Props) {
       </div>
 
       <div className="relative max-w-[780px] text-center">
-        <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[4.5rem] @4xl:leading-[1.04]">
+        <HeroTitle>
           <span className="sr-only">{label}</span>
           <span aria-hidden="true">
             <FrameKey.Provider value={{ language: frame.language, animate: index > 0 }}>
               <Headline language={frame.language} />
             </FrameKey.Provider>
           </span>
-        </h1>
-        <p className="mx-auto mt-7 max-w-[46ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
-          {lede}
-        </p>
-        <div className="mt-9">
-          <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Get started</Trans>
-          </a>
-        </div>
+        </HeroTitle>
+        <HeroLede centered>{lede}</HeroLede>
+        <HeroActions centered />
       </div>
     </div>
   );

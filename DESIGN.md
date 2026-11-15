@@ -47,6 +47,7 @@ Read the guide for the component or interaction you are changing.
 | Timing, choreography, reduced motion | [motion.md](docs/design/system/motion.md) |
 | The lantern, the flame, the wordmark, the app icon | [brand.md](docs/design/system/brand.md) |
 | Words on the screen | [voice.md](docs/design/system/voice.md) |
+| A lymi.app page: its heroes, sections and demos | [components.md](docs/design/system/components.md#marketing-site-appssite) |
 | The `/docs` site | [docs-site.md](docs/design/system/docs-site.md) |
 | The phone app: tabs, capture, how screens arrive, which sheet a task gets, review gestures, haptics, widgets | [phone.md](docs/design/system/phone.md) |
 

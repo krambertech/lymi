@@ -1,9 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ComponentProps, type ReactNode, useState } from "react";
-import { signUpUrl } from "../../lib/origins";
 import { localizedPath } from "../../lib/routes";
-import { buttonClass } from "../Button";
 import { ArrowLink } from "./ArrowLink";
 import { Added, AssistantChat } from "./AssistantChat";
 import { AssistantMarksWithMore } from "./AssistantMarks";
@@ -12,6 +10,7 @@ import { DeckPath } from "./DeckPath";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { type Example, HandExamples } from "./HandExamples";
 import { HandOfCards } from "./HandOfCards";
+import { HeroActions, HeroFrame, HeroLede, HeroTitle } from "./HeroParts";
 import type { HandCard } from "./hand-cards";
 import { ReturnLane } from "./ReturnLane";
 import { SharedDeckDemo } from "./SharedDeckDemo";
@@ -58,35 +57,27 @@ export function LanguageHero({
     <div className="relative overflow-x-clip">
       {/* The lantern's light, pooled behind the hand. */}
       <span aria-hidden="true" className="language-pool pointer-events-none absolute inset-0" />
-      <div className="relative mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-12 pb-20 @2xl:px-10 @4xl:pt-20 @5xl:min-h-[660px] @5xl:grid-cols-[minmax(0,1fr)_minmax(0,500px)] @5xl:gap-14">
-        <div className="min-w-0 max-w-[560px]">
-          {kicker}
-          <h1
-            className={`${narrow ? "max-w-[460px]" : "max-w-[480px]"} text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[3.5rem] @4xl:leading-[1.02]`}
-          >
-            {title}
-          </h1>
-          <p className="mt-6 max-w-[44ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
-            {lede}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-2.5">
-            <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-              <Trans>Get started</Trans>
-            </a>
-            {start && (
-              <a href={start.href} className={buttonClass("secondary", "lg")}>
-                {start.label}
-              </a>
-            )}
+      <HeroFrame
+        visualWidth={500}
+        copy={
+          <>
+            {kicker}
+            <div className={narrow ? "max-w-[460px]" : "max-w-[480px]"}>
+              <HeroTitle size="page">{title}</HeroTitle>
+            </div>
+            <HeroLede>{lede}</HeroLede>
+            <HeroActions secondary={start && { ...start, variant: "secondary" }} />
+          </>
+        }
+        visual={
+          <div className="relative pt-24 pb-4">
+            <HandExamples front={front} examples={examples} lang={lang} />
+            <div className="relative">
+              <HandOfCards cards={cards} layout="side" onFront={setFront} quiet ordered />
+            </div>
           </div>
-        </div>
-        <div className="relative pt-24 pb-4">
-          <HandExamples front={front} examples={examples} lang={lang} />
-          <div className="relative">
-            <HandOfCards cards={cards} layout="side" onFront={setFront} quiet ordered />
-          </div>
-        </div>
-      </div>
+        }
+      />
     </div>
   );
 }

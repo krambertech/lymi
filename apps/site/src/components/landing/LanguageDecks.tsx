@@ -1,12 +1,13 @@
 import { Trans } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
+import { clsx } from "clsx";
 import type { ReactNode } from "react";
 import { shelfPath } from "../../lib/explore";
 import type { Locale } from "../../lib/routes";
 import { trayHues } from "../../lib/tray";
 import { DeckTile } from "../explore/DeckTile";
 import { ArrowLink } from "./ArrowLink";
-import { SectionTitle } from "./FeatureSection";
+import { COLUMN, GUTTER, Section, SectionHeader } from "./Section";
 
 interface Props {
   decks: PublicDeckSummary[];
@@ -23,19 +24,18 @@ export function LanguageDecks({ decks, locale, shelf, body, all }: Props) {
   const hues = trayHues(decks);
 
   return (
-    <section aria-labelledby="decks-title" className="py-16 @4xl:py-20">
-      <div className="mx-auto flex max-w-[1040px] flex-wrap items-end justify-between gap-6 px-5 @2xl:px-10">
-        <div className="max-w-[560px]">
-          <div id="decks-title">
-            <SectionTitle>
-              <Trans>Explore ready-made decks.</Trans>
-            </SectionTitle>
-          </div>
-          <p className="mt-5 text-md text-pretty text-ink-secondary">{body}</p>
-        </div>
-        <ArrowLink href={shelfPath({ kind: "languages", name: shelf }, locale)} size="md">
-          {all}
-        </ArrowLink>
+    <Section labelledBy="decks-title" bleed>
+      <div className={clsx(COLUMN, GUTTER)}>
+        <SectionHeader
+          id="decks-title"
+          title={<Trans>Explore ready-made decks.</Trans>}
+          body={body}
+          action={
+            <ArrowLink href={shelfPath({ kind: "languages", name: shelf }, locale)} size="md">
+              {all}
+            </ArrowLink>
+          }
+        />
       </div>
 
       <ul className="mx-auto mt-12 flex max-w-[1040px] snap-x snap-mandatory gap-5 overflow-x-auto scroll-px-5 px-5 pb-4 @2xl:scroll-px-10 @2xl:px-10">
@@ -45,6 +45,6 @@ export function LanguageDecks({ decks, locale, shelf, body, all }: Props) {
           </li>
         ))}
       </ul>
-    </section>
+    </Section>
   );
 }

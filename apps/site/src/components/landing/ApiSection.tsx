@@ -15,6 +15,7 @@ import { type ComponentType, type ReactNode, useEffect, useRef, useState } from 
 import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
 import { EASE, useStill } from "./playback";
+import { SectionTitle } from "./Section";
 
 interface Stop {
   id: string;
@@ -344,9 +345,11 @@ export function ApiSection() {
       >
         <div className="flex flex-col gap-6 @4xl:flex-row @4xl:items-start @4xl:justify-between">
           <div>
-            <h2 className="max-w-[16ch] text-3xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-4xl">
-              <Trans>Open by design.</Trans>
-            </h2>
+            <div className="max-w-[16ch]">
+              <SectionTitle size="sm">
+                <Trans>Open by design.</Trans>
+              </SectionTitle>
+            </div>
             <p className="mt-4 max-w-[46ch] text-md text-pretty text-ink-secondary">
               <Trans>
                 Lymi has a public API with keys you can limit. Add cards from a shortcut, a

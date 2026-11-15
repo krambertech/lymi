@@ -3,11 +3,12 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { AtSign, Check, Repeat } from "lucide-react";
 import { motion, useInView } from "motion/react";
-import { type CSSProperties, type ReactNode, type Ref, useContext, useRef } from "react";
+import { type ReactNode, type Ref, useContext, useRef } from "react";
+import { trayStyle } from "../../lib/tray";
 import { Lantern } from "../Lantern";
 import { BACKDROPS, BackdropContext } from "./AssistantChatDemo";
-import { AssistantMark, type AssistantName } from "./AssistantMarks";
 import { ASSISTANT_PAGES, type AssistantKey } from "./assistant-pages";
+import { AssistantAvatar, LearnerBubble, ToolCall } from "./ChatParts";
 import { FeatureSection } from "./FeatureSection";
 import { appear, EASE, usePlayback, useStill } from "./playback";
 
@@ -38,19 +39,11 @@ function Tray({
       ref={innerRef}
       role="img"
       aria-label={label}
-      style={{ "--tray-h": hue } as CSSProperties}
+      style={trayStyle(hue)}
       className={clsx("mx-auto flex w-full max-w-[480px] flex-col gap-3", BACKDROPS[backdrop])}
     >
       {children}
     </div>
-  );
-}
-
-function Avatar({ name }: { name: AssistantName }) {
-  return (
-    <span className="grid size-8 shrink-0 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4">
-      <AssistantMark name={name} />
-    </span>
   );
 }
 
@@ -95,25 +88,20 @@ function ChatgptSidebar({ hue }: { hue: number }) {
           ))}
         </ul>
       </motion.div>
-      <motion.p
-        className="mt-2 flex items-center gap-1.5 self-end rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-canvas"
-        initial={false}
-        animate={appear(at("mention"))}
-        transition={move}
-      >
+      <LearnerBubble initial={false} animate={appear(at("mention"))} transition={move}>
         <span className="inline-flex items-center gap-0.5 rounded-md bg-canvas/15 px-1.5 py-0.5 text-sm">
           <AtSign aria-hidden="true" className="size-3.5" />
           <Trans>Spanish</Trans>
-        </span>
+        </span>{" "}
         <Trans>quiz me on the ones I miss</Trans>
-      </motion.p>
+      </LearnerBubble>
       <motion.div
         className="flex items-start gap-2.5"
         initial={false}
         animate={appear(at("answer"))}
         transition={move}
       >
-        <Avatar name="ChatGPT" />
+        <AssistantAvatar name="ChatGPT" />
         <p className="pt-1 text-md text-pretty text-ink">
           <Trans>
             Seven keep slipping. First one: how do you say <i>the strike</i>?
@@ -157,21 +145,16 @@ function ClaudeView({ hue }: { hue: number }) {
       innerRef={ref}
       label={t`Asked how the Anatomy deck is doing, Claude shows a Lymi view: 212 cards, 31 due today, 140 known, 41 learning and 31 new.`}
     >
-      <motion.p
-        className="self-end rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-canvas"
-        initial={false}
-        animate={appear(at("ask"))}
-        transition={move}
-      >
+      <LearnerBubble initial={false} animate={appear(at("ask"))} transition={move}>
         <Trans>How is my Anatomy deck doing?</Trans>
-      </motion.p>
+      </LearnerBubble>
       <motion.div
         className="flex items-start gap-2.5"
         initial={false}
         animate={appear(at("view"))}
         transition={move}
       >
-        <Avatar name="Claude" />
+        <AssistantAvatar name="Claude" />
         <div className="min-w-0 flex-1 rounded-2xl bg-plate p-4 edge-drop">
           <div className="flex items-center justify-between gap-3">
             <p className="flex items-center gap-2 text-md font-medium text-ink">
@@ -288,24 +271,16 @@ function GrokRoutine({ hue }: { hue: number }) {
           <span className="block size-5 translate-x-4 rounded-full bg-plate rtl:-translate-x-4" />
         </span>
       </motion.div>
-      <motion.p
-        className="flex h-8 w-fit items-center gap-2 rounded-full bg-plate ps-1 pe-3 text-sm text-ink-secondary edge"
-        initial={false}
-        animate={appear(at("ran"))}
-        transition={move}
-      >
-        <span className="grid size-6 place-items-center rounded-full bg-plate-nested">
-          <Lantern className="size-4" />
-        </span>
+      <ToolCall initial={false} animate={appear(at("ran"))} transition={move}>
         <Trans>Today, 8:00 · checked Lymi</Trans>
-      </motion.p>
+      </ToolCall>
       <motion.div
         className="flex items-start gap-2.5"
         initial={false}
         animate={appear(at("due"))}
         transition={move}
       >
-        <Avatar name="Grok Bot" />
+        <AssistantAvatar name="Grok Bot" />
         <p className="pt-1 text-md text-pretty text-ink">
           <Trans>12 Spanish cards are due, about five minutes. Quick warm-up first?</Trans>
         </p>
@@ -316,7 +291,7 @@ function GrokRoutine({ hue }: { hue: number }) {
         animate={appear(at("quiz"))}
         transition={move}
       >
-        <Avatar name="Grok Bot" />
+        <AssistantAvatar name="Grok Bot" />
         <p className="pt-1 text-md text-pretty text-ink">
           <Trans>
             How do you say <i>the strike</i>?

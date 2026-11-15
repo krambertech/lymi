@@ -1,7 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
-import { Check, ChevronRight, List } from "lucide-react";
+import { Check, List } from "lucide-react";
 import type { ReactNode } from "react";
 import {
   EINBUERGERUNGSTEST,
@@ -13,12 +13,13 @@ import {
 } from "../../lib/exams";
 import { pageI18n } from "../../lib/i18n";
 import type { Locale } from "../../lib/routes";
+import { Breadcrumb } from "../Breadcrumb";
 import { buttonClass } from "../Button";
 import { addUrl } from "../deck/DeckView";
 import { Localized } from "../Localized";
-import { SectionTitle } from "../landing/FeatureSection";
 import type { Question } from "../landing/faq";
 import { Questions } from "../landing/Questions";
+import { Section, SectionTitle } from "../landing/Section";
 import { DeckShowcase } from "./DeckShowcase";
 
 export const EINBUERGERUNGSTEST_TITLE = msg`Einbürgerungstest and Leben in Deutschland: questions and answers in English · Lymi`;
@@ -156,28 +157,6 @@ function SampleCard({ exam }: { exam: Exam }) {
   );
 }
 
-function Breadcrumb({ locale, here }: LocaleProps & { here: string }) {
-  const { t } = useLingui();
-  return (
-    <nav aria-label={t`Breadcrumb`}>
-      <ol className="flex flex-wrap items-center gap-1.5 text-sm text-ink-muted">
-        <li>
-          <a
-            href={examsPath(locale)}
-            className="rounded-xs font-medium text-ink-secondary transition-colors duration-150 hoverable:hover:text-ink"
-          >
-            <Trans>Exam prep</Trans>
-          </a>
-        </li>
-        <li aria-hidden="true">
-          <ChevronRight className="size-3.5 text-ink-faint rtl:-scale-x-100" />
-        </li>
-        <li aria-current="page">{here}</li>
-      </ol>
-    </nav>
-  );
-}
-
 /** The exam by its own name, the deck most people add first, and one of its real questions. */
 export function ExamHero({
   locale,
@@ -201,7 +180,10 @@ function ExamHeroContent({
   return (
     <div className="mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-8 pb-14 @2xl:px-10 @4xl:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] @4xl:gap-16 @4xl:pt-12 @4xl:pb-20">
       <div>
-        <Breadcrumb locale={locale} here={i18n._(exam.name)} />
+        <Breadcrumb
+          parent={{ href: examsPath(locale), label: <Trans>Exam prep</Trans> }}
+          here={i18n._(exam.name)}
+        />
         <h1 className="mt-5 max-w-[20ch] text-4xl leading-[1.02] font-medium tracking-[-0.04em] text-balance text-ink @xl:text-5xl @xl:leading-[0.98] @4xl:text-[3.75rem]">
           {i18n._(exam.heading)}
         </h1>
@@ -248,37 +230,30 @@ export function ExamFacts({ locale, exam }: ExamProps) {
 function ExamFactsContent({ exam, children }: { exam: Exam; children?: ReactNode }) {
   const { i18n } = useLingui();
   return (
-    <section aria-labelledby="format-title" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
-      <div className="mx-auto max-w-[1040px]">
-        <h2
-          id="format-title"
-          className="text-3xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-4xl"
-        >
-          <Trans>What the test looks like</Trans>
-        </h2>
-        <dl className="mt-8 grid gap-x-8 gap-y-6 @xl:grid-cols-2 @4xl:grid-cols-4">
-          {exam.facts?.map((fact) => (
-            <div
-              key={fact.value + fact.label.id}
-              className="grid content-start gap-1 border-t border-edge pt-4"
-            >
-              <dt className="order-2 text-md text-pretty text-ink-secondary">
-                {i18n._(fact.label)}
-              </dt>
-              <dd className="order-1 text-5xl font-medium tracking-[-0.04em] text-ink tabular-nums">
-                {fact.value}
-              </dd>
-            </div>
-          ))}
-        </dl>
-        {(exam.factsNote || children) && (
-          <div className="mt-8 grid max-w-[62ch] gap-3 text-md text-pretty text-ink-secondary">
-            {exam.factsNote && <p>{i18n._(exam.factsNote)}</p>}
-            {children}
+    <Section labelledBy="format-title">
+      <SectionTitle id="format-title" size="sm">
+        <Trans>What the test looks like</Trans>
+      </SectionTitle>
+      <dl className="mt-8 grid gap-x-8 gap-y-6 @xl:grid-cols-2 @4xl:grid-cols-4">
+        {exam.facts?.map((fact) => (
+          <div
+            key={fact.value + fact.label.id}
+            className="grid content-start gap-1 border-t border-edge pt-4"
+          >
+            <dt className="order-2 text-md text-pretty text-ink-secondary">{i18n._(fact.label)}</dt>
+            <dd className="order-1 text-5xl font-medium tracking-[-0.04em] text-ink tabular-nums">
+              {fact.value}
+            </dd>
           </div>
-        )}
-      </div>
-    </section>
+        ))}
+      </dl>
+      {(exam.factsNote || children) && (
+        <div className="mt-8 grid max-w-[62ch] gap-3 text-md text-pretty text-ink-secondary">
+          {exam.factsNote && <p>{i18n._(exam.factsNote)}</p>}
+          {children}
+        </div>
+      )}
+    </Section>
   );
 }
 
@@ -306,24 +281,16 @@ function EinbuergerungstestFormatNotes() {
 export function ExamDecks({ locale, decks }: LocaleProps & { decks: PublicDeckSummary[] }) {
   return (
     <Localized locale={locale}>
-      <section
-        id="decks"
-        aria-labelledby="decks-title"
-        className="scroll-mt-6 border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-24"
-      >
-        <div className="mx-auto max-w-[1040px]">
-          <SectionTitle>
-            <span id="decks-title">
-              <Plural value={decks.length} one="Your deck" other="Your decks" />
-            </span>
-          </SectionTitle>
-          <div className="mt-10 grid gap-5">
-            {decks.map((deck) => (
-              <DeckShowcase key={deck.slug} deck={deck} locale={locale} />
-            ))}
-          </div>
+      <Section id="decks" labelledBy="decks-title" spacing="ruled">
+        <SectionTitle id="decks-title">
+          <Plural value={decks.length} one="Your deck" other="Your decks" />
+        </SectionTitle>
+        <div className="mt-10 grid gap-5">
+          {decks.map((deck) => (
+            <DeckShowcase key={deck.slug} deck={deck} locale={locale} />
+          ))}
         </div>
-      </section>
+      </Section>
     </Localized>
   );
 }
@@ -391,25 +358,20 @@ function ExamPlanContent({ several }: { several: boolean }) {
     },
   ];
   return (
-    <section aria-labelledby="plan-title" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
-      <div className="mx-auto max-w-[1040px]">
-        <h2
-          id="plan-title"
-          className="text-3xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-4xl"
-        >
-          <Trans>From now until your test date</Trans>
-        </h2>
-        <ol className="mt-8 grid gap-x-10 gap-y-7 @2xl:grid-cols-3">
-          {steps.map((step, index) => (
-            <li key={step.id} className="border-t border-edge pt-5">
-              <p className="text-sm text-ink-muted tabular-nums">{index + 1}</p>
-              <h3 className="mt-1 text-lg font-medium tracking-[-0.02em] text-ink">{step.title}</h3>
-              <p className="mt-1.5 text-md text-pretty text-ink-secondary">{step.body}</p>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </section>
+    <Section labelledBy="plan-title">
+      <SectionTitle id="plan-title" size="sm">
+        <Trans>From now until your test date</Trans>
+      </SectionTitle>
+      <ol className="mt-8 grid gap-x-10 gap-y-7 @2xl:grid-cols-3">
+        {steps.map((step, index) => (
+          <li key={step.id} className="border-t border-edge pt-5">
+            <p className="text-sm text-ink-muted tabular-nums">{index + 1}</p>
+            <h3 className="mt-1 text-lg font-medium tracking-[-0.02em] text-ink">{step.title}</h3>
+            <p className="mt-1.5 text-md text-pretty text-ink-secondary">{step.body}</p>
+          </li>
+        ))}
+      </ol>
+    </Section>
   );
 }
 

@@ -3,10 +3,11 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { AnimatePresence, motion, useInView } from "motion/react";
-import { type CSSProperties, type ReactNode, useRef, useState } from "react";
+import { type ReactNode, useRef, useState } from "react";
+import { trayStyle } from "../../lib/tray";
 import { type DemoProps, LeadDemo, LessonDemo, VoiceDemo, WordDemo } from "./AiDemos";
-import { SectionTitle } from "./FeatureSection";
 import { EASE, useHold, useStill } from "./playback";
+import { Section, SectionHeader } from "./Section";
 
 interface StageItem {
   id: string;
@@ -59,26 +60,21 @@ const SWAP_MS = 400;
 
 function Shell({ children }: { children: ReactNode }) {
   return (
-    <section data-nav="landing" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
-      <div className="mx-auto max-w-[1040px]">
-        <div className="max-w-[640px]">
-          <SectionTitle>
-            <Trans>AI does the busywork. You do the remembering.</Trans>
-          </SectionTitle>
-          <p className="mt-5 text-md text-pretty text-ink-secondary">
-            <Trans>
-              AI turns your notes into cards and fills in what you leave out, the way you set it up.
-              It never changes what you wrote, and everything it adds is marked.
-            </Trans>
-          </p>
-        </div>
-        {children}
-      </div>
-    </section>
+    <Section nav="landing">
+      <SectionHeader
+        title={<Trans>AI does the busywork. You do the remembering.</Trans>}
+        body={
+          <Trans>
+            AI turns your notes into cards and fills in what you leave out, the way you set it up.
+            It never changes what you wrote, and everything it adds is marked.
+          </Trans>
+        }
+      />
+      {children}
+    </Section>
   );
 }
 
-/** One item at a time: it moves on by itself until the visitor picks one. */
 function useStage() {
   const still = useStill();
   const root = useRef<HTMLDivElement>(null);
@@ -131,7 +127,7 @@ function Tray({ stage, className }: { stage: Stage; className?: string }) {
   return (
     <div
       {...stage.hold.handlers}
-      style={{ "--tray-h": item.hue } as CSSProperties}
+      style={trayStyle(item.hue)}
       className={clsx(
         "use-case-tile relative grid place-items-center overflow-hidden rounded-[24px] p-6 transition-[background-color] duration-700 ease-out",
         className,

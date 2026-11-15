@@ -1,0 +1,13 @@
+---
+import ComponentsPage from "../components/islands/ComponentsPage";
+import BaseLayout from "../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Site components · Lymi"
+  description="The shared pieces lymi.app pages are built from, rendered live."
+  canonicalPath="/components"
+>
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+  <ComponentsPage client:load />
+</BaseLayout>

@@ -59,3 +59,13 @@ These belong to one feature and are listed so nothing is drawn twice.
 ## Views
 
 `views/` holds the screens as prop-driven components, so the design page and the component tests can render them with sample data. A view takes data and callbacks as props and never fetches; its route does. Views lay out by container query ([layout.md](layout.md#container-queries)).
+
+## Marketing site: apps/site
+
+The pages on lymi.app share their own set of components under `apps/site/src/components`, shown live with sample content, a theme switch and a phone width at [lymi.app/components](https://lymi.app/components). That page is unlisted: it is left out of the sitemap and marked `noindex`. Build a new page from these before writing a section by hand, and add a component to the gallery in `gallery/ComponentGallery.tsx` when a page needs a new one.
+
+- The frame: `LandingLayout` around a hero and a stack of sections, closed by `Questions` and `SignUpSection`.
+- Heroes: `Hero`, `LanguageHero`, or `HeroFrame` with `HeroBadges`, `HeroTitle`, `HeroLede` and `HeroActions` for a hero with its own visual. `HeroActions` always leads with Get started and reports its links as the `hero` place.
+- Sections: `FeatureSection` puts one claim beside its demo, `Wide` puts the heading above a demo the column's width, and `Section` with `SectionHeader` covers the rest. `SectionTitle` has one size for a pitch and `sm` for reference pages such as an exam.
+- Building blocks: `UseCases`, `Assurances`, `Steps`, `LanguageBento` with `Tile`, `ArrowLink`, `Breadcrumb`, `FreeBadge`, `WorksWith`. A tray takes its colour from `trayStyle` in `lib/tray.ts`.
+- Demo pieces: `AssistantChat`, `LearnerBubble`, `AssistantAvatar`, `ToolCall`, `WordPicker`, `WordForms`, `SpokenWords`, `Pick`, `ReturnLane`.

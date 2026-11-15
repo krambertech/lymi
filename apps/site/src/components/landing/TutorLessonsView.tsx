@@ -5,7 +5,7 @@ import type { ReactNode } from "react";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore, WorksWith } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
-import { FeatureSection, SectionTitle } from "./FeatureSection";
+import { FeatureSection, Wide } from "./FeatureSection";
 import { FreeBadge } from "./FreeBadge";
 import { TUTOR_LESSONS_QUESTIONS } from "./faq";
 import { Hero } from "./Hero";
@@ -14,7 +14,8 @@ import { LandingLayout } from "./LandingLayout";
 import { BENTO_HUES, Examples, LanguageBento, Meanings, Tile } from "./LanguageBento";
 import { DetailsSection, ReturnSection, TogetherSection } from "./LanguageSections";
 import { LEARNING_LANGUAGES, type LearningLanguage } from "./language-cards";
-import { type Material, MaterialToCards, Pick } from "./MaterialToCards";
+import { type Material, MaterialToCards } from "./MaterialToCards";
+import { Pick } from "./Pick";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
 import { OldDecksTile } from "./StudyTiles";
@@ -258,28 +259,20 @@ export function TutorLessonsView() {
         />
       }
     >
-      <section
+      <Wide
         id="material"
-        aria-labelledby="material-title"
-        className="scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20"
+        title={<Trans>Turn your lesson into cards.</Trans>}
+        body={
+          <Trans>
+            Paste the chat or a transcript, or add a photo, in Smart add. Lymi picks out the new
+            words, keeps the meanings from the lesson and skips the ones already in your deck.
+          </Trans>
+        }
       >
-        <div className="mx-auto max-w-[1040px]">
-          <div id="material-title">
-            <SectionTitle>
-              <Trans>Turn your lesson into cards.</Trans>
-            </SectionTitle>
-          </div>
-          <p className="mt-5 max-w-[52ch] text-md text-pretty text-ink-secondary">
-            <Trans>
-              Paste the chat or a transcript, or add a photo, in Smart add. Lymi picks out the new
-              words, keeps the meanings from the lesson and skips the ones already in your deck.
-            </Trans>
-          </p>
-          <div className="mt-12">
-            <MaterialToCards materials={MATERIALS} />
-          </div>
+        <div className="mt-12">
+          <MaterialToCards materials={MATERIALS} />
         </div>
-      </section>
+      </Wide>
 
       <FeatureSection
         tinted

@@ -10,7 +10,7 @@ import { ArrowLink } from "./ArrowLink";
 import { Added, AssistantChat, type Turn } from "./AssistantChat";
 import { AssistantMarks, AssistantMarksWithMore } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
-import { FeatureSection, SectionTitle } from "./FeatureSection";
+import { FeatureSection } from "./FeatureSection";
 import { LANGUAGES_QUESTIONS, type Question } from "./faq";
 import { HandOfCards } from "./HandOfCards";
 import { WORD_FRAMES, type WordFrame } from "./hero-words";
@@ -25,6 +25,7 @@ import {
 } from "./language-cards";
 import { NotesToCards } from "./NotesToCards";
 import { Questions } from "./Questions";
+import { Section, SectionHeader } from "./Section";
 import { SharedDeckDemo } from "./SharedDeckDemo";
 import { SignUpSection } from "./SignUpSection";
 import { WordFieldHero } from "./WordFieldHero";
@@ -58,33 +59,29 @@ interface PageProps {
 /** The notes photographed into cards, with the assistants that can do the reading. */
 function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
   return (
-    <section aria-labelledby="notes-title" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
-      <div className="mx-auto max-w-[1040px]">
-        <div className="mx-auto max-w-[640px] text-center">
-          <div id="notes-title">
-            <SectionTitle>
-              <Trans>Turn your notes into cards.</Trans>
-            </SectionTitle>
-          </div>
-          <p className="mx-auto mt-5 max-w-[50ch] text-md text-pretty text-ink-secondary">
-            <Trans>
-              Take a photo of your notebook or the whiteboard. Lymi reads the handwriting, adds the
-              new words to your deck and leaves out the ones you already have. Your assistant can do
-              the same from a chat.
-            </Trans>
-          </p>
-          <div className="mt-6">
+    <Section labelledBy="notes-title">
+      <SectionHeader
+        id="notes-title"
+        align="center"
+        title={<Trans>Turn your notes into cards.</Trans>}
+        body={
+          <Trans>
+            Take a photo of your notebook or the whiteboard. Lymi reads the handwriting, adds the
+            new words to your deck and leaves out the ones you already have. Your assistant can do
+            the same from a chat.
+          </Trans>
+        }
+        after={
+          <div className="grid justify-items-center gap-5">
             <AssistantMarks compact />
-          </div>
-          <div className="mt-5">
             <TutorLessonsLink />
           </div>
-        </div>
-        <div className="mt-12">
-          <NotesToCards notebooks={notebooks} />
-        </div>
+        }
+      />
+      <div className="mt-12">
+        <NotesToCards notebooks={notebooks} />
       </div>
-    </section>
+    </Section>
   );
 }
 

@@ -97,6 +97,9 @@ export const englishOnlyPaths: readonly string[] = [
   ...apiReferencePaths,
 ];
 
+/** Pages for the people building the site, kept out of the sitemap and out of search. */
+export const unlistedPaths: readonly string[] = ["/components"];
+
 /** The locales a page exists in: a language's page is missing where `offersLanguage` says no. */
 export function pageLocales(page: LocalizedPage): Locale[] {
   const tag = LANGUAGE_PAGE_TAGS.find((each) => LANGUAGE_PAGES[each].page === page);

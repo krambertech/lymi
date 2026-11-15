@@ -1,7 +1,7 @@
 import { radius } from "@lymi/design";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { Pick } from "./MaterialToCards";
+import { Pick } from "./Pick";
 import { EASE, useStill } from "./playback";
 
 /** A word as the hero's card shows it, already in the page's language. */

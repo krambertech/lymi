@@ -1,15 +1,13 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { Braces, Check, LoaderCircle } from "lucide-react";
+import { Braces } from "lucide-react";
 import { AnimatePresence, motion, useInView, useReducedMotion } from "motion/react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
-import { signUpUrl } from "../../lib/origins";
-import { buttonClass } from "../Button";
-import { Lantern } from "../Lantern";
 import { AssistantMark } from "./AssistantMarks";
+import { LearnerBubble, ToolCall, UsingLymi } from "./ChatParts";
 import { FreeBadge } from "./FreeBadge";
-import { OriginBadge } from "./OriginBadge";
+import { HeroActions, HeroBadges, HeroFrame, HeroLede, heroTitleClass } from "./HeroParts";
 import { appear, EASE, usePlayback } from "./playback";
 
 const WORD_MS = 2200;
@@ -46,7 +44,7 @@ function Headline() {
     <h1
       ref={ref}
       aria-label={t`Make cards with Claude, ChatGPT, Gemini, Grok, Codex or anything`}
-      className="text-5xl font-medium tracking-[-0.038em] text-ink @4xl:text-[4.25rem]"
+      className={heroTitleClass()}
     >
       <span aria-hidden="true" className="block leading-[1.05]">
         <Trans>Make cards with</Trans>
@@ -119,37 +117,14 @@ function Conversation() {
               ))}
             </ul>
           </motion.div>
-          <motion.p
-            className="rounded-md bg-ink px-3.5 py-2 text-md text-canvas"
-            initial={false}
-            animate={appear(at("ask"))}
-            transition={move}
-          >
+          <LearnerBubble initial={false} animate={appear(at("ask"))} transition={move}>
             <Trans>Make cards from this.</Trans>
-          </motion.p>
+          </LearnerBubble>
         </div>
 
-        <motion.p
-          className="flex h-8 items-center gap-2 self-start rounded-full bg-plate-nested ps-1 pe-3 text-sm text-ink-secondary"
-          initial={false}
-          animate={appear(at("calling"))}
-          transition={move}
-        >
-          <span className="grid size-6 place-items-center rounded-full bg-plate">
-            <Lantern className="size-4" />
-          </span>
-          {at("called") ? (
-            <>
-              <Trans>Used Lymi</Trans>
-              <Check aria-hidden="true" className="size-4 text-success" />
-            </>
-          ) : (
-            <>
-              <Trans>Using Lymi</Trans>
-              <LoaderCircle aria-hidden="true" className="size-4 animate-spin text-ink-muted" />
-            </>
-          )}
-        </motion.p>
+        <ToolCall on="plate" initial={false} animate={appear(at("calling"))} transition={move}>
+          <UsingLymi done={at("called")} />
+        </ToolCall>
 
         <motion.p
           className="text-md text-ink"
@@ -191,30 +166,23 @@ function Conversation() {
 
 export function AssistantHero() {
   return (
-    <div className="mx-auto grid max-w-[1120px] items-center gap-14 px-5 pt-12 pb-20 @2xl:px-10 @4xl:min-h-[700px] @4xl:grid-cols-[minmax(0,1fr)_minmax(0,460px)] @4xl:gap-16 @4xl:pt-14">
-      <div className="min-w-0 max-w-[560px]">
-        <div className="mb-6 flex flex-wrap items-center gap-2 *:mb-0">
-          <FreeBadge />
-          <OriginBadge />
-        </div>
-        <Headline />
-        <p className="mt-6 max-w-[40ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
-          <Trans>
-            Send your assistant a photo of your notes. It adds the cards to Lymi, and you review
-            them there.
-          </Trans>
-        </p>
-        <div className="mt-8 flex flex-wrap gap-2">
-          <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Get started</Trans>
-          </a>
-          <a href="#connect" className={buttonClass("ghost", "lg")}>
-            <Trans>How to connect</Trans>
-          </a>
-        </div>
-      </div>
-
-      <Conversation />
-    </div>
+    <HeroFrame
+      copy={
+        <>
+          <HeroBadges>
+            <FreeBadge />
+          </HeroBadges>
+          <Headline />
+          <HeroLede>
+            <Trans>
+              Send your assistant a photo of your notes. It adds the cards to Lymi, and you review
+              them there.
+            </Trans>
+          </HeroLede>
+          <HeroActions secondary={{ href: "#connect", label: <Trans>How to connect</Trans> }} />
+        </>
+      }
+      visual={<Conversation />}
+    />
   );
 }

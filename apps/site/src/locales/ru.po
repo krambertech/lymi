@@ -882,6 +882,12 @@ msgstr "Добавил 14 карточек в «Фармакологию», к �
 msgid "Added 18 cards to Security+, each with the guide’s definition."
 msgstr "Добавил 18 карточек в Security+, к каждой — определение из пособия."
 
+msgid "Added 2 cards to Biology. Skipped Stomata: you have that card."
+msgstr "Добавлено 2 карточки в колоду «Биология». Пропущено Stomata: эта карточка у тебя уже есть."
+
+msgid "Added 2 cards to Spanish. Skipped la huelga: you have that card."
+msgstr "Добавлено 2 карточки в колоду «Испанский». Пропущено la huelga: эта карточка у тебя уже есть."
+
 msgid "Added 20 cards to NCLEX pharmacology."
 msgstr "Добавил 20 карточек в колоду «Фармакология NCLEX»."
 
@@ -933,6 +939,9 @@ msgstr "Добавил 8 карточек в немецкий, каждую с �
 msgid "Added 8 cards to Spanish. I skipped “ojalá”, which you already have."
 msgstr "Добавил 8 карточек в колоду «Испанский». Пропустил «ojalá»: такая карточка у тебя уже есть."
 
+msgid "Added 9 cards to Kubernetes."
+msgstr "Добавлено 9 карточек в колоду «Kubernetes»."
+
 msgid "Added 9 cards to Polish. I skipped <0>sklep</0>, which you already have."
 msgstr "Добавил 9 карточек в польский. <0>sklep</0> пропустил — эта карточка у тебя уже есть."
 
@@ -942,11 +951,17 @@ msgstr "Добавил 9 карточек в «Испанский». Пропу�
 msgid "Added 9 cards to Spanish. I skipped <0>la cuenta</0>, which you already have."
 msgstr "Добавил 9 карточек в испанский. <0>la cuenta</0> пропустил, потому что эта карточка у тебя уже есть."
 
+msgid "Added a memory trick to the 4 cards you missed."
+msgstr "Добавлены подсказки для запоминания к 4 карточкам, на которых были ошибки."
+
 msgid "Added after this week’s lesson"
 msgstr "Добавлено после урока на этой неделе"
 
 msgid "Added hints to 6 cards in Japanese"
 msgstr "Добавлены подсказки к 6 карточкам в «Японском»"
+
+msgid "Added Move and Borrow to your Rust deck."
+msgstr "Move и Borrow добавлены в твою колоду «Rust»."
 
 msgid "Added to Chess, with the meaning and an example."
 msgstr "Готово: карточка в колоде «Шахматы», со значением и примером."
@@ -1413,6 +1428,9 @@ msgstr "Делаешь что-то своё? У Lymi есть полноценн
 
 msgid "Building your own app instead? The <0>API reference</0> covers the same reads and writes."
 msgstr "Пишешь своё приложение? В <0>справочнике API</0> есть те же чтения и изменения."
+
+msgid "Built Constitutional Law with a section for each lecture."
+msgstr "Готова колода «Конституционное право» с разделом для каждой лекции."
 
 msgid "Built for exam prep."
 msgstr "Сделано для подготовки к экзаменам."
@@ -2164,6 +2182,9 @@ msgstr "Не пей кофе перед *сном*."
 
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не сноси забор, пока не поймёшь, зачем его поставили"
+
+msgid "Done. Biology has a section for each file."
+msgstr "Готово. В «Биологии» есть раздел для каждого файла."
 
 msgid "Download for Mac"
 msgstr "Скачать для Mac"
@@ -3012,6 +3033,9 @@ msgstr "Удачи! Дословно — «в пасть волку»"
 msgid "Good morning"
 msgstr "Доброе утро"
 
+msgid "Good morning. Here’s today in Lymi."
+msgstr "Доброе утро. Вот твой день в Lymi."
+
 msgid "Goodbye"
 msgstr "До свидания"
 
@@ -3146,6 +3170,9 @@ msgstr "Вот глава 4 моего пособия по Security+. Добав
 
 msgid "Here’s the chat from today’s lesson with Marta. Add the new phrases."
 msgstr "Вот чат с сегодняшнего урока с Мартой. Добавь новые фразы."
+
+msgid "Here’s today in Lymi."
+msgstr "Вот твой день в Lymi."
 
 msgid "Hi"
 msgstr "Привет"
@@ -4219,11 +4246,17 @@ msgstr "macOS 13 или новее"
 msgid "Made <0>Lisboa a dois</0>: 42 cards in 5 sections"
 msgstr "Создана колода <0>Lisboa a dois</0>: 42 карточки в 5 разделах"
 
+msgid "Made a Photosynthesis deck with a section for each topic."
+msgstr "Готова колода «Фотосинтез» с разделом для каждой темы."
+
 msgid "Made by Lymi"
 msgstr "От Lymi"
 
 msgid "Made by Ukrainians"
 msgstr "Сделано украинцами"
+
+msgid "Made SAT words with a section for each week."
+msgstr "Готова колода «Слова для SAT» с разделом на каждую неделю."
 
 msgid "Main navigation"
 msgstr "Основная навигация"
@@ -5699,12 +5732,6 @@ msgstr "Перейти к загрузке"
 msgid "Skip to the updates"
 msgstr "Перейти к обновлениям"
 
-msgid "Skipped la huelga: you have that card."
-msgstr "Пропустил la huelga: эта карточка у тебя уже есть."
-
-msgid "Skipped Stomata: you have that card."
-msgstr "Пропустил Stomata: эта карточка у тебя уже есть."
-
 msgid "Slides and PDFs"
 msgstr "Слайды и PDF"
 
@@ -6556,6 +6583,9 @@ msgstr "Возле вокзала есть *парк*."
 
 msgid "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
 msgstr "Эти шаги для Gemini CLI, который работает где угодно. В приложении Gemini Google открывает пользовательские приложения только для взрослых в США и на английском."
+
+msgid "These three keep slipping. Let’s start with la huelga."
+msgstr "Эти три всё время ускользают. Начнём с la huelga."
 
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "Они соответствуют источнику {source} ({edition}), дословно как на экзамене. Переводы и пояснения написал Lymi; он не связан с {authority} и не может гарантировать, что ты сдашь экзамен."

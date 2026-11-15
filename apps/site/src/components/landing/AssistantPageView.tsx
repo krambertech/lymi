@@ -157,6 +157,7 @@ function useContent(key: AssistantKey): Content {
               <PagePhoto lines={["xylem", "phloem", "stomata"]} page={<Trans>p. 114</Trans>} />
             ),
             ask: <Trans>Make cards from this page. Skip the ones I have.</Trans>,
+            reply: <Trans>Added 2 cards to Biology. Skipped Stomata: you have that card.</Trans>,
             result: (
               <CardsResult
                 lang="en"
@@ -164,7 +165,6 @@ function useContent(key: AssistantKey): Content {
                   { label: t`Biology`, term: "Xylem", meaning: t`Carries water up from the roots` },
                   { label: t`Biology`, term: "Phloem", meaning: t`Carries sugar around the plant` },
                 ]}
-                note={<Trans>Skipped Stomata: you have that card.</Trans>}
               />
             ),
           },
@@ -213,6 +213,7 @@ function useContent(key: AssistantKey): Content {
               </Trans>
             ),
             ask: <Trans>Turn what we just covered into a deck, a section per topic.</Trans>,
+            reply: <Trans>Made a Photosynthesis deck with a section for each topic.</Trans>,
             result: (
               <DeckResult
                 name={t`Photosynthesis`}
@@ -233,6 +234,7 @@ function useContent(key: AssistantKey): Content {
             ),
             attachment: <Attached name="NCLEX drug list.pdf" hint={<Trans>3 pages</Trans>} />,
             ask: <Trans>Make a card for each drug, with its class.</Trans>,
+            reply: <Trans>Added 20 cards to NCLEX pharmacology.</Trans>,
             result: (
               <CardsResult
                 lang="en"
@@ -240,7 +242,6 @@ function useContent(key: AssistantKey): Content {
                   { label: t`Pharmacology`, term: "Metoprolol", meaning: t`Beta blocker` },
                   { label: t`Pharmacology`, term: "Lisinopril", meaning: t`ACE inhibitor` },
                 ]}
-                note={<Trans>Added 20 cards to NCLEX pharmacology.</Trans>}
               />
             ),
           },
@@ -255,6 +256,7 @@ function useContent(key: AssistantKey): Content {
               </Trans>
             ),
             ask: <Trans>Quiz me on the Spanish words I keep missing.</Trans>,
+            reply: <Trans>These three keep slipping. Let’s start with la huelga.</Trans>,
             result: (
               <SlippingResult
                 lang="es"
@@ -381,6 +383,7 @@ function useContent(key: AssistantKey): Content {
             ),
             attachment: <Attached name="Chapter 12.pdf" hint={<Trans>64 pages</Trans>} />,
             ask: <Trans>Make cards from the key terms in this chapter.</Trans>,
+            reply: <Trans>Added 26 cards to Pharmacology.</Trans>,
             result: (
               <CardsResult
                 lang="en"
@@ -396,7 +399,6 @@ function useContent(key: AssistantKey): Content {
                     meaning: t`Time for the level to halve`,
                   },
                 ]}
-                note={<Trans>Added 26 cards to Pharmacology.</Trans>}
               />
             ),
           },
@@ -442,6 +444,7 @@ function useContent(key: AssistantKey): Content {
               />
             ),
             ask: <Trans>Build a deck from this Project, one section per lecture.</Trans>,
+            reply: <Trans>Built Constitutional Law with a section for each lecture.</Trans>,
             result: (
               <DeckResult
                 name={t`Constitutional Law`}
@@ -467,6 +470,7 @@ function useContent(key: AssistantKey): Content {
               />
             ),
             ask: <Trans>Make cards for the ownership rules we hit today.</Trans>,
+            reply: <Trans>Added Move and Borrow to your Rust deck.</Trans>,
             result: (
               <CardsResult
                 lang="en"
@@ -488,6 +492,7 @@ function useContent(key: AssistantKey): Content {
               </Trans>
             ),
             ask: <Trans>Add a memory trick to the cards I missed this week.</Trans>,
+            reply: <Trans>Added a memory trick to the 4 cards you missed.</Trans>,
             result: (
               <HintResult
                 term="Bioavailability"
@@ -602,6 +607,7 @@ function useContent(key: AssistantKey): Content {
             ),
             attachment: <Attached name="lecture-4.pdf" hint={<Trans>In this folder</Trans>} />,
             ask: <Trans>Make cards from the key terms in lecture-4.pdf.</Trans>,
+            reply: <Trans>Added 12 cards to Chemistry.</Trans>,
             result: (
               <CardsResult
                 lang="en"
@@ -617,7 +623,6 @@ function useContent(key: AssistantKey): Content {
                     meaning: t`Not the same as its mirror image`,
                   },
                 ]}
-                note={<Trans>Added 12 cards to Chemistry.</Trans>}
               />
             ),
           },
@@ -633,6 +638,7 @@ function useContent(key: AssistantKey): Content {
             ),
             attachment: <Attached name="episodio-12.srt" hint={<Trans>Transcript</Trans>} />,
             ask: <Trans>Make Italian cards from this episode. Skip the words I know.</Trans>,
+            reply: <Trans>Added 14 cards to Italian A2. Skipped 6 you have.</Trans>,
             result: (
               <CardsResult
                 lang="it"
@@ -640,7 +646,6 @@ function useContent(key: AssistantKey): Content {
                   { label: t`Italian`, term: "la spesa", meaning: t`The grocery shopping` },
                   { label: t`Italian`, term: "affittare", meaning: t`To rent` },
                 ]}
-                note={<Trans>Added 14 cards to Italian A2. Skipped 6 you have.</Trans>}
               />
             ),
           },
@@ -653,6 +658,7 @@ function useContent(key: AssistantKey): Content {
             ),
             attachment: <LinkChip url="kubernetes.io/docs/concepts" />,
             ask: <Trans>Make cards from the terms on this page.</Trans>,
+            reply: <Trans>Added 9 cards to Kubernetes.</Trans>,
             result: (
               <CardsResult
                 lang="en"
@@ -673,6 +679,7 @@ function useContent(key: AssistantKey): Content {
               </Trans>
             ),
             ask: <Trans>What’s due in Lymi today?</Trans>,
+            reply: <Trans>Here’s today in Lymi.</Trans>,
             result: (
               <DueResult
                 count={18}
@@ -696,6 +703,7 @@ function useContent(key: AssistantKey): Content {
               </Trans>
             ),
             ask: <Trans>Make me an SAT vocabulary deck, a section a week.</Trans>,
+            reply: <Trans>Made SAT words with a section for each week.</Trans>,
             result: (
               <DeckResult
                 name={t`SAT words`}
@@ -806,6 +814,7 @@ function useContent(key: AssistantKey): Content {
               />
             ),
             ask: <Trans>Turn this post into cards.</Trans>,
+            reply: <Trans>Added 2 cards to Spanish. Skipped la huelga: you have that card.</Trans>,
             result: (
               <CardsResult
                 lang="es"
@@ -817,7 +826,6 @@ function useContent(key: AssistantKey): Content {
                     meaning: t`To call (a strike, a meeting)`,
                   },
                 ]}
-                note={<Trans>Skipped la huelga: you have that card.</Trans>}
               />
             ),
           },
@@ -833,6 +841,7 @@ function useContent(key: AssistantKey): Content {
             ),
             attachment: <RoutineChip when={<Trans>Every day at 8:00</Trans>} />,
             ask: <Trans>Tell me what’s due in Lymi.</Trans>,
+            reply: <Trans>Good morning. Here’s today in Lymi.</Trans>,
             result: (
               <DueResult
                 count={12}
@@ -861,6 +870,7 @@ function useContent(key: AssistantKey): Content {
               />
             ),
             ask: <Trans>Make cards from each of these files.</Trans>,
+            reply: <Trans>Done. Biology has a section for each file.</Trans>,
             result: (
               <DeckResult
                 name={t`Biology`}
@@ -880,6 +890,7 @@ function useContent(key: AssistantKey): Content {
               </Trans>
             ),
             ask: <Trans>Explain the Krebs cycle simply, then make cards for the key steps.</Trans>,
+            reply: <Trans>Added 8 cards to Biochemistry.</Trans>,
             result: (
               <CardsResult
                 lang="en"
@@ -891,7 +902,6 @@ function useContent(key: AssistantKey): Content {
                   },
                   { label: t`Biochemistry`, term: "NADH", meaning: t`Carries electrons onward` },
                 ]}
-                note={<Trans>Added 8 cards to Biochemistry.</Trans>}
               />
             ),
           },

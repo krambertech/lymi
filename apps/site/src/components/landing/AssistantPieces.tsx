@@ -125,16 +125,30 @@ export interface MiniCard {
   meaning: string;
 }
 
-/** Cards that landed in a deck, side by side, with a note such as what was skipped. */
-export function CardsResult({
-  cards,
-  lang,
-  note,
+/**
+ * Who a row in a demo comes from, in the gutter beside it: the assistant's mark beside its
+ * messages, the lantern beside what Lymi holds.
+ */
+export function Speaker({
+  who,
+  assistant,
 }: {
-  cards: readonly MiniCard[];
-  lang: string;
-  note?: ReactNode;
+  who: "assistant" | "lymi" | null;
+  assistant: AssistantName;
 }) {
+  if (!who) return <span aria-hidden="true" className="size-8 shrink-0" />;
+  return (
+    <span
+      aria-hidden="true"
+      className="mt-1 grid size-8 shrink-0 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4"
+    >
+      {who === "assistant" ? <AssistantMark name={assistant} /> : <Lantern className="!size-5" />}
+    </span>
+  );
+}
+
+/** Cards that landed in a deck, side by side. What was skipped goes in the assistant's reply. */
+export function CardsResult({ cards, lang }: { cards: readonly MiniCard[]; lang: string }) {
   return (
     <div className="grid gap-2">
       <ul className="grid grid-cols-2 gap-2">
@@ -151,7 +165,6 @@ export function CardsResult({
           </li>
         ))}
       </ul>
-      {note && <p className="text-xs text-ink-secondary">{note}</p>}
     </div>
   );
 }
@@ -208,11 +221,9 @@ export function DueResult({
   decks: readonly { name: string; due: number }[];
 }) {
   return (
-    <div className="flex items-center gap-4 rounded-2xl bg-plate p-3.5 edge-drop">
-      <div className="grid shrink-0 place-items-center">
-        <Lantern className="size-9" />
-      </div>
-      <div className="min-w-0 flex-1">
+    // The lantern beside the row already says this is Lymi, so the count stands alone.
+    <div className="rounded-2xl bg-plate px-4 py-3 edge-drop">
+      <div className="min-w-0">
         <p className="flex items-baseline gap-2">
           <span className="text-3xl font-medium tracking-[-0.03em] text-ink tabular-nums">
             {count}
@@ -278,7 +289,6 @@ export function ConversationResult({
   lang,
   source,
 }: {
-  /** Its mark goes beside each of its turns that follows the learner's, as a chat groups them. */
   assistant: AssistantName;
   lines: readonly Line[];
   /** The language the lines are in, when it is not the page's. */
@@ -295,13 +305,13 @@ export function ConversationResult({
   const { at } = usePlayback(beats, playing, still);
   return (
     <div className="flex flex-col gap-2.5">
-      {/* The cards Lymi handed over, as a pill the height of the assistant's mark beside it. */}
-      <p className="flex h-8 w-fit max-w-full min-w-0 items-center gap-2 rounded-full bg-plate ps-1 pe-3 text-xs text-ink-secondary edge-drop">
-        <span className="grid size-6 shrink-0 place-items-center rounded-full bg-plate-nested">
-          <Lantern className="size-4" />
-        </span>
-        <span className="truncate">{source}</span>
-      </p>
+      {/* The cards Lymi handed over, beside the lantern like every other thing Lymi holds. */}
+      <div className="flex items-start gap-2.5">
+        <Speaker who="lymi" assistant={assistant} />
+        <p className="mt-1 flex h-8 w-fit max-w-full min-w-0 items-center rounded-full bg-plate px-3.5 text-xs text-ink-secondary edge-drop">
+          <span className="truncate">{source}</span>
+        </p>
+      </div>
       <ol lang={lang} className="flex flex-col gap-2">
         {lines.map((line, i) => (
           <motion.li
@@ -309,19 +319,24 @@ export function ConversationResult({
             initial={false}
             animate={appear(at(`turn${i}`))}
             transition={{ duration: still ? 0 : 0.45, ease: EASE }}
-            className={
-              line.who === "assistant"
-                ? "relative w-fit max-w-[92%] rounded-2xl rounded-ss-md bg-plate px-4 py-2.5 text-md text-pretty text-ink edge-drop"
-                : "w-fit max-w-[85%] self-end rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-pretty text-canvas"
-            }
+            className={line.who === "assistant" ? "flex items-start gap-2.5" : "flex justify-end"}
           >
-            {line.who === "assistant" && lines[i - 1]?.who === "you" && (
-              // In the exchange's gutter, where its first mark sits: 32 px mark plus 10 px gap.
-              <span className="absolute -start-[42px] top-1 grid size-8 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4">
-                <AssistantMark name={assistant} />
+            {line.who === "assistant" ? (
+              <>
+                {/* Its mark starts each run of its turns, as a chat groups them. */}
+                <Speaker
+                  who={lines[i - 1]?.who === "assistant" ? null : "assistant"}
+                  assistant={assistant}
+                />
+                <span className="w-fit max-w-[92%] rounded-2xl rounded-ss-md bg-plate px-4 py-2.5 text-md text-pretty text-ink edge-drop">
+                  {line.text}
+                </span>
+              </>
+            ) : (
+              <span className="ms-10 w-fit max-w-[85%] rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-pretty text-canvas">
+                {line.text}
               </span>
             )}
-            {line.text}
           </motion.li>
         ))}
       </ol>

@@ -107,6 +107,22 @@ const phoneOperations = [
   "DELETE /api/keys/{id}",
   "GET /api/connected-apps",
   "DELETE /api/connected-apps/{id}",
+  "GET /api/readwise",
+  "POST /api/readwise",
+  "PATCH /api/readwise",
+  "DELETE /api/readwise",
+  "POST /api/readwise/pull",
+  "POST /api/cards/batch",
+  "PATCH /api/cards/batch",
+  "POST /api/cards/archive",
+  "POST /api/cards/{id}/enrich",
+  "PATCH /api/cards/{id}/image",
+  "POST /api/cards/{id}/image/archive",
+  "PUT /api/settings/onboarding",
+  "PUT /api/settings/ai-consent",
+  "PUT /api/decks/{id}/cards/section",
+  "GET /api/decks/{id}/tags",
+  "PUT /api/decks/{id}/preferences",
 ];
 
 // The phone's calls the document hides, Better Auth, the photo, audio, feedback, and join links and
@@ -149,6 +165,21 @@ const closedOnPurpose = [
   // Capture says where an added card went, so a new outcome needs a version gate first.
   "POST /api/cards 200 .status",
   "POST /api/cards 201 .status",
+  // Each card in a batch reports how it went, with the same outcomes; a new one needs a version gate first.
+  "POST /api/cards/batch 200 .results[].status",
+  "POST /api/cards/batch 200 .results[].code",
+  "POST /api/cards/batch 200 .results[].enrichmentStatus",
+  "PATCH /api/cards/batch 200 .results[].status",
+  "PATCH /api/cards/batch 200 .results[].code",
+  "PATCH /api/cards/batch 200 .results[].enrichmentStatus",
+  "POST /api/cards/archive 200 .results[].status",
+  "POST /api/cards/archive 200 .results[].code",
+  // The Readwise page shows one state per connection status; a new one needs a version gate first.
+  "GET /api/readwise 200 .connection.status",
+  "POST /api/readwise 200 .connection.status",
+  "PATCH /api/readwise 200 .connection.status",
+  "POST /api/readwise/pull 200 .connection.status",
+  "DELETE /api/readwise 200 .ok",
 ];
 
 let app: TestApp;

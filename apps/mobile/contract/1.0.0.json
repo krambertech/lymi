@@ -4650,6 +4650,110 @@
       "required": true
      }
     ]
+   },
+   "patch": {
+    "operationId": "patchApiCardsByIdImage",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Card"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "409": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "version": {
+          "anyOf": [
+           {
+            "type": "string",
+            "maxLength": 64
+           },
+           {
+            "type": "null"
+           }
+          ]
+         }
+        },
+        "required": [
+         "description"
+        ]
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
    }
   },
   "/api/cards/{id}/image/{imageId}": {
@@ -6699,6 +6803,1607 @@
      }
     ]
    }
+  },
+  "/api/readwise": {
+   "get": {
+    "operationId": "getApiReadwise",
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ReadwiseState"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    }
+   },
+   "post": {
+    "operationId": "postApiReadwise",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ReadwiseState"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "503": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "token": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 200
+         }
+        },
+        "required": [
+         "token"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "operationId": "patchApiReadwise",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ReadwiseState"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "books": {
+          "maxItems": 1000,
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string",
+             "minLength": 1
+            },
+            "followed": {
+             "type": "boolean"
+            },
+            "language": {
+             "type": "string",
+             "minLength": 1,
+             "maxLength": 12
+            }
+           },
+           "required": [
+            "id"
+           ]
+          }
+         },
+         "decks": {
+          "type": "object",
+          "propertyNames": {
+           "type": "string",
+           "minLength": 1,
+           "maxLength": 12
+          },
+          "additionalProperties": {
+           "type": "string",
+           "minLength": 1
+          }
+         }
+        }
+       }
+      }
+     }
+    }
+   },
+   "delete": {
+    "operationId": "deleteApiReadwise",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Ok"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "session": []
+     }
+    ]
+   }
+  },
+  "/api/readwise/pull": {
+   "post": {
+    "operationId": "postApiReadwisePull",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ReadwiseState"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "503": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "session": []
+     }
+    ]
+   }
+  },
+  "/api/cards/batch": {
+   "post": {
+    "operationId": "postApiCardsBatch",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "anyOf": [
+          {
+           "$ref": "#/components/schemas/AddCardsResult"
+          },
+          {
+           "$ref": "#/components/schemas/TerseCardsResult"
+          }
+         ]
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "in": "query",
+      "name": "response",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "full",
+        "terse"
+       ]
+      }
+     },
+     {
+      "in": "query",
+      "name": "publisherOverlap",
+      "schema": {
+       "type": "string",
+       "const": "true"
+      }
+     },
+     {
+      "in": "query",
+      "name": "from",
+      "schema": {
+       "type": "string",
+       "const": "lesson"
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "cards": {
+          "minItems": 1,
+          "maxItems": 200,
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "id": {
+             "type": "string",
+             "pattern": "^[0-9a-z]{16,40}$"
+            },
+            "deckId": {
+             "type": "string",
+             "minLength": 1
+            },
+            "term": {
+             "type": "string",
+             "minLength": 1,
+             "maxLength": 500
+            },
+            "meaning": {
+             "type": "string",
+             "maxLength": 2000
+            },
+            "pronunciation": {
+             "type": "string",
+             "maxLength": 200
+            },
+            "exampleTranslation": {
+             "type": "string",
+             "maxLength": 250
+            },
+            "notes": {
+             "type": "string",
+             "maxLength": 2000
+            },
+            "hint": {
+             "type": "string",
+             "maxLength": 200
+            },
+            "language": {
+             "anyOf": [
+              {
+               "type": "string",
+               "minLength": 2,
+               "maxLength": 12,
+               "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$"
+              },
+              {
+               "type": "null"
+              }
+             ]
+            },
+            "source": {
+             "type": "string",
+             "maxLength": 200
+            },
+            "directions": {
+             "anyOf": [
+              {
+               "type": "string",
+               "enum": [
+                "recognition",
+                "production",
+                "both"
+               ]
+              },
+              {
+               "type": "null"
+              }
+             ]
+            },
+            "reviewModes": {
+             "anyOf": [
+              {
+               "minItems": 1,
+               "maxItems": 4,
+               "type": "array",
+               "items": {
+                "$ref": "#/components/schemas/ReviewMode"
+               }
+              },
+              {
+               "type": "null"
+              }
+             ]
+            },
+            "meaningSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "exampleSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "exampleTranslationSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "pronunciationSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "notesSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "hintSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "hook": {
+             "deprecated": true,
+             "type": "string",
+             "maxLength": 200
+            },
+            "hookSource": {
+             "deprecated": true,
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "sectionId": {
+             "anyOf": [
+              {
+               "type": "string",
+               "minLength": 1
+              },
+              {
+               "type": "null"
+              }
+             ]
+            },
+            "enrich": {
+             "type": "boolean"
+            }
+           },
+           "required": [
+            "deckId",
+            "term"
+           ]
+          }
+         }
+        },
+        "required": [
+         "cards"
+        ]
+       }
+      }
+     }
+    }
+   },
+   "patch": {
+    "operationId": "patchApiCardsBatch",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "anyOf": [
+          {
+           "$ref": "#/components/schemas/EditCardsResult"
+          },
+          {
+           "$ref": "#/components/schemas/TerseCardsResult"
+          }
+         ]
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "in": "query",
+      "name": "response",
+      "schema": {
+       "type": "string",
+       "enum": [
+        "full",
+        "terse"
+       ]
+      }
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "cards": {
+          "minItems": 1,
+          "maxItems": 200,
+          "type": "array",
+          "items": {
+           "type": "object",
+           "properties": {
+            "term": {
+             "type": "string",
+             "minLength": 1,
+             "maxLength": 500
+            },
+            "meaning": {
+             "type": "string",
+             "maxLength": 2000
+            },
+            "pronunciation": {
+             "type": "string",
+             "maxLength": 200
+            },
+            "exampleTranslation": {
+             "type": "string",
+             "maxLength": 250
+            },
+            "notes": {
+             "type": "string",
+             "maxLength": 2000
+            },
+            "hint": {
+             "type": "string",
+             "maxLength": 200
+            },
+            "language": {
+             "anyOf": [
+              {
+               "type": "string",
+               "minLength": 2,
+               "maxLength": 12,
+               "pattern": "^[a-zA-Z]{2,3}(-[a-zA-Z0-9]{2,8})*$"
+              },
+              {
+               "type": "null"
+              }
+             ]
+            },
+            "source": {
+             "type": "string",
+             "maxLength": 200
+            },
+            "directions": {
+             "anyOf": [
+              {
+               "type": "string",
+               "enum": [
+                "recognition",
+                "production",
+                "both"
+               ]
+              },
+              {
+               "type": "null"
+              }
+             ]
+            },
+            "reviewModes": {
+             "anyOf": [
+              {
+               "minItems": 1,
+               "maxItems": 4,
+               "type": "array",
+               "items": {
+                "$ref": "#/components/schemas/ReviewMode"
+               }
+              },
+              {
+               "type": "null"
+              }
+             ]
+            },
+            "meaningSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "exampleSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "exampleTranslationSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "pronunciationSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "notesSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "hintSource": {
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "hook": {
+             "deprecated": true,
+             "type": "string",
+             "maxLength": 200
+            },
+            "hookSource": {
+             "deprecated": true,
+             "type": "string",
+             "enum": [
+              "lesson",
+              "manual"
+             ]
+            },
+            "sectionId": {
+             "anyOf": [
+              {
+               "type": "string",
+               "minLength": 1
+              },
+              {
+               "type": "null"
+              }
+             ]
+            },
+            "deckId": {
+             "type": "string",
+             "minLength": 1
+            },
+            "cardId": {
+             "type": "string",
+             "minLength": 1
+            }
+           },
+           "required": [
+            "cardId"
+           ]
+          }
+         }
+        },
+        "required": [
+         "cards"
+        ]
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/cards/archive": {
+   "post": {
+    "operationId": "postApiCardsArchive",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/ArchiveCardsResult"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "cardIds": {
+          "minItems": 1,
+          "maxItems": 200,
+          "type": "array",
+          "items": {
+           "type": "string",
+           "minLength": 1
+          }
+         }
+        },
+        "required": [
+         "cardIds"
+        ]
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/cards/{id}/enrich": {
+   "post": {
+    "operationId": "postApiCardsByIdEnrich",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Card"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "503": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
+  },
+  "/api/cards/{id}/image/archive": {
+   "post": {
+    "operationId": "postApiCardsByIdImageArchive",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Card"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "409": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "version": {
+          "anyOf": [
+           {
+            "type": "string",
+            "maxLength": 64
+           },
+           {
+            "type": "null"
+           }
+          ]
+         }
+        }
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
+  },
+  "/api/settings/onboarding": {
+   "put": {
+    "operationId": "putApiSettingsOnboarding",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Settings"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "learningKind": {
+          "anyOf": [
+           {
+            "type": "string",
+            "enum": [
+             "language",
+             "test",
+             "subject",
+             "other"
+            ]
+           },
+           {
+            "type": "null"
+           }
+          ]
+         },
+         "learningLanguage": {
+          "anyOf": [
+           {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 60
+           },
+           {
+            "type": "null"
+           }
+          ]
+         },
+         "dailyGoal": {
+          "anyOf": [
+           {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 200
+           },
+           {
+            "type": "null"
+           }
+          ]
+         },
+         "from": {
+          "type": "string",
+          "enum": [
+           "today"
+          ]
+         }
+        },
+        "required": [
+         "learningKind",
+         "learningLanguage",
+         "dailyGoal"
+        ]
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/settings/ai-consent": {
+   "put": {
+    "operationId": "putApiSettingsAiConsent",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Settings"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "security": [
+     {
+      "session": []
+     }
+    ],
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "allowed": {
+          "type": "boolean"
+         },
+         "version": {
+          "type": "number",
+          "const": 1
+         },
+         "updated_at": {
+          "type": "integer",
+          "exclusiveMinimum": 0,
+          "maximum": 9007199254740991
+         },
+         "place": {
+          "type": "string",
+          "enum": [
+           "welcome",
+           "add",
+           "smart_add",
+           "speech",
+           "hint",
+           "enrich",
+           "settings"
+          ]
+         }
+        },
+        "required": [
+         "allowed",
+         "version",
+         "updated_at"
+        ]
+       }
+      }
+     }
+    }
+   }
+  },
+  "/api/decks/{id}/cards/section": {
+   "put": {
+    "operationId": "putApiDecksByIdCardsSection",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Sections"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "cardIds": {
+          "minItems": 1,
+          "maxItems": 500,
+          "type": "array",
+          "items": {
+           "type": "string",
+           "minLength": 1
+          }
+         },
+         "sectionId": {
+          "anyOf": [
+           {
+            "type": "string",
+            "minLength": 1
+           },
+           {
+            "type": "null"
+           }
+          ]
+         }
+        },
+        "required": [
+         "cardIds",
+         "sectionId"
+        ]
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
+  },
+  "/api/decks/{id}/tags": {
+   "get": {
+    "operationId": "getApiDecksByIdTags",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/DeckTags"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
+  },
+  "/api/decks/{id}/preferences": {
+   "put": {
+    "operationId": "putApiDecksByIdPreferences",
+    "responses": {
+     "200": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Deck"
+        }
+       }
+      }
+     },
+     "400": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "401": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "403": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "404": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     },
+     "429": {
+      "content": {
+       "application/json": {
+        "schema": {
+         "$ref": "#/components/schemas/Error"
+        }
+       }
+      }
+     }
+    },
+    "requestBody": {
+     "required": true,
+     "content": {
+      "application/json": {
+       "schema": {
+        "type": "object",
+        "properties": {
+         "pronunciationDisplay": {
+          "$ref": "#/components/schemas/PronunciationDisplay"
+         }
+        },
+        "required": [
+         "pronunciationDisplay"
+        ]
+       }
+      }
+     }
+    },
+    "parameters": [
+     {
+      "schema": {
+       "type": "string"
+      },
+      "in": "path",
+      "name": "id",
+      "required": true
+     }
+    ]
+   }
   }
  },
  "components": {
@@ -8136,6 +9841,38 @@
      "updatedAt"
     ]
    },
+   "DeckTags": {
+    "type": "object",
+    "properties": {
+     "archived": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/DeckTag"
+      }
+     }
+    },
+    "required": [
+     "tags",
+     "archived"
+    ]
+   },
+   "DeckTag": {
+    "type": "object",
+    "properties": {
+     "name": {
+      "type": "string"
+     },
+     "cards": {
+      "type": "integer",
+      "minimum": -9007199254740991,
+      "maximum": 9007199254740991
+     }
+    },
+    "required": [
+     "name",
+     "cards"
+    ]
+   },
    "Join": {
     "type": "object",
     "properties": {
@@ -8758,6 +10495,265 @@
        "term",
        "existing",
        "deckName"
+      ]
+     }
+    ]
+   },
+   "AddCardsResult": {
+    "type": "object",
+    "properties": {
+     "results": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/AddCardOutcome"
+      }
+     }
+    },
+    "required": [
+     "results"
+    ]
+   },
+   "TerseCardsResult": {
+    "type": "object",
+    "properties": {
+     "results": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/TerseCardOutcome"
+      }
+     }
+    },
+    "required": [
+     "results"
+    ]
+   },
+   "TerseCardOutcome": {
+    "type": "object",
+    "properties": {
+     "id": {
+      "type": "string"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "added",
+       "skipped",
+       "updated",
+       "archived",
+       "restored",
+       "error"
+      ]
+     },
+     "enrichmentStatus": {
+      "anyOf": [
+       {
+        "type": "string",
+        "enum": [
+         "working",
+         "failed"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "term": {
+      "type": "string"
+     },
+     "deckId": {
+      "type": "string"
+     },
+     "deckName": {
+      "type": "string"
+     },
+     "normalized": {
+      "type": "array",
+      "items": {
+       "type": "string",
+       "enum": [
+        "term",
+        "pronunciation"
+       ],
+       "x-lymi-open": true
+      }
+     },
+     "code": {
+      "type": "string",
+      "enum": [
+       "not_found",
+       "forbidden",
+       "invalid",
+       "conflict",
+       "unavailable"
+      ]
+     },
+     "error": {
+      "type": "string"
+     }
+    },
+    "required": [
+     "id",
+     "status"
+    ]
+   },
+   "EditCardsResult": {
+    "type": "object",
+    "properties": {
+     "results": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/EditCardOutcome"
+      }
+     }
+    },
+    "required": [
+     "results"
+    ]
+   },
+   "EditCardOutcome": {
+    "oneOf": [
+     {
+      "type": "object",
+      "properties": {
+       "id": {
+        "type": "string"
+       },
+       "status": {
+        "type": "string",
+        "const": "updated"
+       },
+       "card": {
+        "$ref": "#/components/schemas/Card"
+       },
+       "normalized": {
+        "type": "array",
+        "items": {
+         "type": "string",
+         "enum": [
+          "term",
+          "pronunciation"
+         ],
+         "x-lymi-open": true
+        }
+       }
+      },
+      "required": [
+       "id",
+       "status",
+       "card"
+      ]
+     },
+     {
+      "type": "object",
+      "properties": {
+       "id": {
+        "type": "string"
+       },
+       "status": {
+        "type": "string",
+        "const": "error"
+       },
+       "code": {
+        "type": "string",
+        "enum": [
+         "not_found",
+         "forbidden",
+         "invalid",
+         "conflict",
+         "unavailable"
+        ]
+       },
+       "error": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "id",
+       "status",
+       "code",
+       "error"
+      ]
+     }
+    ]
+   },
+   "ArchiveCardsResult": {
+    "type": "object",
+    "properties": {
+     "results": {
+      "type": "array",
+      "items": {
+       "$ref": "#/components/schemas/ArchiveCardOutcome"
+      }
+     }
+    },
+    "required": [
+     "results"
+    ]
+   },
+   "ArchiveCardOutcome": {
+    "oneOf": [
+     {
+      "type": "object",
+      "properties": {
+       "id": {
+        "type": "string"
+       },
+       "status": {
+        "type": "string",
+        "const": "archived"
+       }
+      },
+      "required": [
+       "id",
+       "status"
+      ]
+     },
+     {
+      "type": "object",
+      "properties": {
+       "id": {
+        "type": "string"
+       },
+       "status": {
+        "type": "string",
+        "const": "restored"
+       }
+      },
+      "required": [
+       "id",
+       "status"
+      ]
+     },
+     {
+      "type": "object",
+      "properties": {
+       "id": {
+        "type": "string"
+       },
+       "status": {
+        "type": "string",
+        "const": "error"
+       },
+       "code": {
+        "type": "string",
+        "enum": [
+         "not_found",
+         "forbidden",
+         "invalid",
+         "conflict",
+         "unavailable"
+        ]
+       },
+       "error": {
+        "type": "string"
+       }
+      },
+      "required": [
+       "id",
+       "status",
+       "code",
+       "error"
       ]
      }
     ]
@@ -10177,6 +12173,148 @@
      "scope",
      "createdAt",
      "updatedAt"
+    ]
+   },
+   "ReadwiseState": {
+    "type": "object",
+    "properties": {
+     "connection": {
+      "anyOf": [
+       {
+        "$ref": "#/components/schemas/Readwise"
+       },
+       {
+        "type": "null"
+       }
+      ]
+     }
+    },
+    "required": [
+     "connection"
+    ]
+   },
+   "Readwise": {
+    "type": "object",
+    "properties": {
+     "tokenHint": {
+      "type": "string"
+     },
+     "status": {
+      "type": "string",
+      "enum": [
+       "active",
+       "refused",
+       "unreadable"
+      ]
+     },
+     "lastPull": {
+      "anyOf": [
+       {
+        "type": "object",
+        "properties": {
+         "at": {
+          "type": "string",
+          "format": "date-time",
+          "pattern": "^(?:(?:\\d\\d[2468][048]|\\d\\d[13579][26]|\\d\\d0[48]|[02468][048]00|[13579][26]00)-02-29|\\d{4}-(?:(?:0[13578]|1[02])-(?:0[1-9]|[12]\\d|3[01])|(?:0[469]|11)-(?:0[1-9]|[12]\\d|30)|(?:02)-(?:0[1-9]|1\\d|2[0-8])))T(?:(?:[01]\\d|2[0-3]):[0-5]\\d:[0-5]\\d(?:\\.\\d+)?(?:Z))$"
+         },
+         "highlights": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+         },
+         "cards": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+         },
+         "skipped": {
+          "type": "integer",
+          "minimum": -9007199254740991,
+          "maximum": 9007199254740991
+         }
+        },
+        "required": [
+         "at",
+         "highlights",
+         "cards",
+         "skipped"
+        ]
+       },
+       {
+        "type": "null"
+       }
+      ]
+     },
+     "languages": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "language": {
+         "type": "string"
+        },
+        "deckId": {
+         "type": [
+          "string",
+          "null"
+         ]
+        }
+       },
+       "required": [
+        "language",
+        "deckId"
+       ]
+      }
+     },
+     "books": {
+      "type": "array",
+      "items": {
+       "type": "object",
+       "properties": {
+        "id": {
+         "type": "string"
+        },
+        "title": {
+         "type": "string"
+        },
+        "author": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "language": {
+         "type": [
+          "string",
+          "null"
+         ]
+        },
+        "followed": {
+         "type": "boolean"
+        },
+        "highlights": {
+         "type": "integer",
+         "minimum": -9007199254740991,
+         "maximum": 9007199254740991
+        }
+       },
+       "required": [
+        "id",
+        "title",
+        "author",
+        "language",
+        "followed",
+        "highlights"
+       ]
+      }
+     }
+    },
+    "required": [
+     "tokenHint",
+     "status",
+     "lastPull",
+     "languages",
+     "books"
     ]
    },
    "Import": {

@@ -1,30 +1,19 @@
 import { Trans } from "@lingui/react/macro";
-import { ArrowRight, Check } from "lucide-react";
-import type { ReactNode } from "react";
-import { Tile } from "./JapaneseBento";
+import { Check } from "lucide-react";
+import { BENTO_HUES, BothWays, LanguageBento, Meanings, Tile } from "./LanguageBento";
 
-/** One card's meaning in each language the ready-made decks are written in; data, so never translated. */
 const MEANINGS = [
   { language: "English", lang: "en", meaning: "Dear; expensive" },
   { language: "Русский", lang: "ru", meaning: "Дорогой" },
   { language: "Українська", lang: "uk", meaning: "Дорогий" },
 ];
 
-/** A front, as the card shows it before the turn. */
-function Face({ label, children }: { label: ReactNode; children: ReactNode }) {
-  return (
-    <div className="grid min-h-[104px] content-between gap-3 rounded-md bg-plate p-3.5 edge">
-      <span className="text-xs font-medium text-ink-muted">{label}</span>
-      <span className="text-2xl font-medium tracking-[-0.02em] text-ink">{children}</span>
-    </div>
-  );
-}
-
 /** Estonian learners' own needs, each in a line and a small picture. */
 export function EstonianBento() {
   return (
-    <div className="mt-12 grid gap-2.5 @3xl:grid-cols-2 @4xl:mt-16">
+    <LanguageBento>
       <Tile
+        hue={BENTO_HUES[0]}
         title={<Trans>Meanings in your language</Trans>}
         body={
           <Trans>
@@ -33,30 +22,11 @@ export function EstonianBento() {
           </Trans>
         }
       >
-        <div aria-hidden="true" className="rounded-md bg-plate edge">
-          <p
-            lang="et"
-            className="border-b border-edge px-3.5 py-3 text-xl font-medium tracking-[-0.02em] text-ink"
-          >
-            kallis
-          </p>
-          {MEANINGS.map((m) => (
-            <p
-              key={m.lang}
-              className="flex items-baseline justify-between gap-3 px-3.5 py-2.5 not-last:border-b not-last:border-edge"
-            >
-              <span lang={m.lang} className="text-md text-ink">
-                {m.meaning}
-              </span>
-              <span lang={m.lang} className="text-sm text-ink-muted">
-                {m.language}
-              </span>
-            </p>
-          ))}
-        </div>
+        <Meanings lang="et" term="kallis" meanings={MEANINGS} />
       </Tile>
 
       <Tile
+        hue={BENTO_HUES[1]}
         title={<Trans>Asked both ways</Trans>}
         body={
           <Trans>
@@ -65,18 +35,11 @@ export function EstonianBento() {
           </Trans>
         }
       >
-        <div aria-hidden="true" className="grid grid-cols-[1fr_auto_1fr] items-center gap-2">
-          <Face label={<Trans>What does it mean?</Trans>}>
-            <span lang="et">Tere!</span>
-          </Face>
-          <ArrowRight className="size-4 text-ink-muted rtl:-scale-x-100" />
-          <Face label={<Trans>How do you say it?</Trans>}>
-            <Trans>Hello!</Trans>
-          </Face>
-        </div>
+        <BothWays lang="et" term="Tere!" meaning={<Trans>Hello!</Trans>} />
       </Tile>
 
       <Tile
+        hue={BENTO_HUES[2]}
         title={<Trans>Every letter counts</Trans>}
         body={
           <Trans>
@@ -106,6 +69,7 @@ export function EstonianBento() {
       </Tile>
 
       <Tile
+        hue={BENTO_HUES[3]}
         title={<Trans>Bring your Anki deck</Trans>}
         body={
           <Trans>
@@ -129,6 +93,6 @@ export function EstonianBento() {
           ))}
         </ul>
       </Tile>
-    </div>
+    </LanguageBento>
   );
 }

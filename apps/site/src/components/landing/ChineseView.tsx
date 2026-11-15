@@ -3,7 +3,9 @@ import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import type { ReactNode } from "react";
+import { EXAMS, examPath } from "../../lib/exams";
 import type { Locale } from "../../lib/routes";
+import { ArrowLink } from "./ArrowLink";
 import { Attachment } from "./AssistantChat";
 import { EnrichChinese, NotesToCardsChinese, PlecoImport } from "./ChineseAi";
 import { ChineseBento } from "./ChineseBento";
@@ -37,6 +39,8 @@ import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
 
 const Zh = ({ children }: { children: ReactNode }) => <span lang="zh-Hans">{children}</span>;
+
+const EXAM = EXAMS.find((exam) => exam.id === "hsk");
 
 interface Props {
   /** Every published Chinese deck in this locale, those a beginner starts from first. */
@@ -183,6 +187,13 @@ export function ChineseView({ decks, locale }: Props) {
           }
           steps={steps}
           lang="zh-Hans"
+          after={
+            EXAM && (
+              <ArrowLink href={examPath(EXAM, locale)}>
+                <Trans>Studying for HSK 1 or HSK 2</Trans>
+              </ArrowLink>
+            )
+          }
         />
       )}
 

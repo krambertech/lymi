@@ -20,7 +20,15 @@ import {
   systemPreferences,
   Tray,
 } from "electron";
-import { type Auth, type AuthEvent, auth, hasCookie, offersSignIn, UNKNOWN } from "./auth-state.js";
+import {
+  type Auth,
+  type AuthEvent,
+  auth,
+  HANDED_BACK,
+  hasCookie,
+  offersSignIn,
+  UNKNOWN,
+} from "./auth-state.js";
 import { SCHEME, sessionChange } from "./callback.js";
 import { windowColours } from "./colours.gen.js";
 import { handBack } from "./hand-back.js";
@@ -485,7 +493,7 @@ async function onLink(link: string) {
   await sessionKnown;
   if (!(await finishSignIn(link))) return;
   // The browser is in front; Lymi comes forward with the learner signed in.
-  sessionChanged(true);
+  setAuth(HANDED_BACK);
   await openMain();
   app.focus({ steal: true });
 }

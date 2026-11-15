@@ -19,6 +19,17 @@ export type AuthEvent =
 
 export const UNKNOWN: Auth = { status: "unknown" };
 
+/**
+ * A browser hand-back that traded its link for a session. It counts at once, since the cookie's own
+ * change event can land after the window opens.
+ */
+export const HANDED_BACK: AuthEvent = {
+  type: "cookie",
+  name: SESSION_COOKIE,
+  cause: "inserted",
+  removed: false,
+};
+
 /** Whether the window holds a session cookie, which decides its size. */
 export const hasCookie = (state: Auth) => state.status === "in" || state.status === "refused";
 

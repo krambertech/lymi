@@ -73,8 +73,8 @@ export interface DayFacts {
 /**
  * Where a day stands after a change. Attempts reaching the goal meet it; attempts with nothing left
  * exhaust it; a visit to a day with no attempts and nothing left confirms it as nothing due. Only
- * Undo reopens a day, back to nothing due when a visit confirmed that first, and a day with
- * attempts is never nothing due.
+ * Undo reopens a day, back to nothing due when a visit confirmed that first. A confirmed day keeps
+ * protecting the streak when cards added later are graded below the goal.
  */
 export function nextOutcome(day: DayFacts, change: DayChange): ReviewDayOutcome {
   if (day.attempts >= day.goal) return "goal_met";
@@ -82,9 +82,8 @@ export function nextOutcome(day: DayFacts, change: DayChange): ReviewDayOutcome 
   if (change === "visit" && day.nothingLeft && day.attempts === 0 && day.outcome === "open") {
     return "nothing_due";
   }
-  const kept = change === "undo" ? (day.zeroDueConfirmed ? "nothing_due" : "open") : day.outcome;
-  // A day with attempts was never one with nothing due, whatever a visit confirmed before them.
-  return kept === "nothing_due" && day.attempts > 0 ? "open" : kept;
+  if (change === "undo") return day.zeroDueConfirmed ? "nothing_due" : "open";
+  return day.outcome;
 }
 
 /** A day the run survives: it counted, or a confirmed nothing-due day protected it. */

@@ -17,7 +17,7 @@ import { inviteByEmail, turnOnJoinLink } from "./invitations";
 import { join } from "./members";
 import { archiveSection, createSection, restoreSection } from "./sections";
 import { learner, testDb } from "./test-db";
-import { racedBy } from "./test-race";
+import { batchRacedBy, racedBy } from "./test-race";
 
 type ReportEnv = Pick<Bindings, "PRODUCT_URL" | "EMAIL" | "SESSIONS">;
 const env = {
@@ -263,6 +263,34 @@ describe("moderation", () => {
     });
     await resolveContentReport(operator, operators, id, "archive_card");
     expect((await getCard(member, card.id)).archivedAt).not.toBeNull();
+  });
+
+  it("keeps a card archived when a takedown lands while its owner restores it", async () => {
+    const { owner, deck, card } = await sharedDeck();
+    await archiveCard(owner, card.id);
+    // The takedown lands after the restore checked for one and before its write.
+    const restoring = batchRacedBy(owner, () =>
+      db.insert(schema.contentReports).values({
+        id: `late-${card.id}`,
+        ownerId: owner.userId,
+        deckId: deck.id,
+        cardId: card.id,
+        target: "card",
+        reason: "offensive",
+        snapshot: {},
+        localDate: "2026-11-16",
+        resolvedAt: new Date(),
+        action: "archive_card",
+      }),
+    );
+
+    await restoreCard(restoring, card.id);
+    expect((await getCard(owner, card.id)).archivedAt).not.toBeNull();
+    const restored = await db
+      .select({ id: schema.auditLog.id })
+      .from(schema.auditLog)
+      .where(and(eq(schema.auditLog.entityId, card.id), eq(schema.auditLog.action, "restore")));
+    expect(restored).toEqual([]);
   });
 
   it("leaves the content alone on dismiss", async () => {

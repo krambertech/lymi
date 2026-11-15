@@ -167,8 +167,8 @@ export async function ownedDeck(ctx: ServiceContext, deckId: string) {
 
 /**
  * Become a member of a deck. A repeat join repairs missing states without duplicating the
- * membership or audit. A member the owner removed is refused until a named invitation
- * clears the block. The join lands in the owner's Activity.
+ * membership or audit. A member the owner removed is refused for good. The join lands in the
+ * owner's Activity.
  */
 export async function join(
   ctx: ServiceContext,

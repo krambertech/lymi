@@ -317,7 +317,10 @@ export async function resolveContentReport(
     .from(schema.contentReports)
     .where(eq(schema.contentReports.id, id));
   if (!report) throw notFound("Report");
-  if (report.resolvedAt) {
+  // Resolving again with the same action redoes the act, which repeats safely: a Worker stopped
+  // between the claim and the archive leaves the report claimed and the content still up.
+  const again = report.resolvedAt !== null && report.action === action && action !== "dismiss";
+  if (report.resolvedAt && !again) {
     throw new ServiceError("conflict", `This report was already resolved: ${report.action}`);
   }
   if (action === "archive_card" && !report.cardId) {
@@ -359,7 +362,7 @@ export async function resolveContentReport(
       and(isNull(schema.contentReports.resolvedAt), or(eq(schema.contentReports.id, id), same)),
     )
     .returning({ id: schema.contentReports.id, createdAt: schema.contentReports.createdAt });
-  if (!settled.some((row) => row.id === id)) {
+  if (!again && !settled.some((row) => row.id === id)) {
     const [after] = await ctx.db
       .select({ action: schema.contentReports.action })
       .from(schema.contentReports)

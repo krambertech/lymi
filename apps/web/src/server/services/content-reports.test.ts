@@ -246,6 +246,25 @@ describe("moderation", () => {
     expect((await getCard(member, card.id)).archivedAt).not.toBeNull();
   });
 
+  it("finishes an archive that stopped after its claim when resolved again the same way", async () => {
+    const { member, card } = await sharedDeck();
+    const { id } = await reportContent(member, env, {
+      target: { kind: "card", cardId: card.id },
+      reason: "offensive",
+    });
+    // As a Worker stopped between claiming the report and archiving the card leaves it.
+    await db
+      .update(schema.contentReports)
+      .set({ resolvedAt: new Date(), action: "archive_card" })
+      .where(eq(schema.contentReports.id, id));
+
+    await expect(resolveContentReport(operator, operators, id, "dismiss")).rejects.toMatchObject({
+      code: "conflict",
+    });
+    await resolveContentReport(operator, operators, id, "archive_card");
+    expect((await getCard(member, card.id)).archivedAt).not.toBeNull();
+  });
+
   it("leaves the content alone on dismiss", async () => {
     const { owner, member, card } = await sharedDeck();
     const { id } = await reportContent(member, env, {

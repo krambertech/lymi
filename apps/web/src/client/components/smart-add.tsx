@@ -6,7 +6,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
 import { Camera, Check, ChevronRight, FileText, Hourglass, Images, Type, X } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { useEffect, useId, useMemo, useReducer, useRef, useState } from "react";
 import {
   api,
   type DeckSummary,
@@ -17,6 +17,7 @@ import {
 } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useDesktop } from "../lib/device";
+import { smartAddFlow } from "../lib/smart-add-flow";
 import { Button, IconButton } from "./button";
 import { Chip } from "./chip";
 import { InfoTip } from "./info-tip";
@@ -32,8 +33,6 @@ import { RadioGroup } from "./ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
 import { toast } from "./ui/toast";
-
-type Step = "input" | "reading" | "questions" | "list";
 
 interface Page {
   id: string;
@@ -113,7 +112,10 @@ function SmartAdd({
   onClose: () => void;
 }) {
   const { t } = useLingui();
-  const [step, setStep] = useState<Step>("input");
+  const [flow, dispatch] = useReducer(smartAddFlow, { step: "input" });
+  const step = flow.step;
+  // Each read is an attempt; its late answers carry the number and land only while it is current.
+  const attempts = useRef(0);
   const [pages, setPages] = useState<Page[]>([]);
   const [text, setText] = useState("");
   const [deckId, setDeckId] = useState(fixedDeck);
@@ -123,11 +125,9 @@ function SmartAdd({
   const [error, setError] = useState<string>();
   const [terms, setTerms] = useState<LessonTerm[]>([]);
   const [questions, setQuestions] = useState<LessonQuestion[]>([]);
-  const [finished, setFinished] = useState(false);
   const [answers, setAnswers] = useState<number[]>([]);
   /** The learner's own answer per question, used when its option is chosen. */
   const [ownAnswers, setOwnAnswers] = useState<string[]>([]);
-  const [ownDrops, setOwnDrops] = useState<Set<string>>(() => new Set());
   const stop = useRef<AbortController | null>(null);
   // Read fresh each time Smart add opens: another tab or the phone may have read since.
   const access = useQuery({
@@ -166,10 +166,9 @@ function SmartAdd({
     if (atLimit) return;
     setError(undefined);
     setTerms([]);
-    setOwnDrops(new Set());
     setQuestions([]);
-    setFinished(false);
-    setStep("reading");
+    const attempt = ++attempts.current;
+    dispatch({ type: "read", attempt });
     const controller = new AbortController();
     stop.current = controller;
     const form = new FormData();
@@ -195,15 +194,13 @@ function SmartAdd({
         },
         controller.signal,
       );
-      setFinished(true);
+      dispatch({ type: "finish", attempt });
       void qc.invalidateQueries({ queryKey: LESSON_ACCESS });
       // A beat on the finished scan, so the last words land before the screen moves on.
-      setTimeout(() => {
-        setStep(asked.length > 0 ? "questions" : "list");
-      }, 700);
+      setTimeout(() => dispatch({ type: "advance", attempt, asked: asked.length > 0 }), 700);
     } catch (failure) {
       if (controller.signal.aborted) return;
-      setStep("input");
+      dispatch({ type: "fail", attempt });
       void qc.invalidateQueries({ queryKey: LESSON_ACCESS });
       // The footer says the limit is reached; an error line under it would only repeat it.
       const code = refusalCode(failure);
@@ -222,12 +219,12 @@ function SmartAdd({
     questions.forEach((q, i) => {
       for (const id of q.options[answers[i] ?? q.default]?.drop ?? []) out.add(id);
     });
-    for (const id of ownDrops) out.add(id);
+    if (flow.step === "list") for (const id of flow.ownDrops) out.add(id);
     return out;
-  }, [questions, answers, ownDrops]);
+  }, [questions, answers, flow]);
 
   /** Each question answered in the learner's own words is checked against the list. */
-  const applyOwnAnswers = async () => {
+  const applyOwnAnswers = async (): Promise<Set<string>> => {
     const candidates = terms
       .filter((term) => !term.existing)
       .map((term) => ({ id: term.id, term: term.term, gloss: term.gloss }));
@@ -236,11 +233,11 @@ function SmartAdd({
         ? [{ question: q.question, answer: ownAnswers[i].trim() }]
         : [],
     );
-    if (asked.length === 0 || candidates.length === 0) return;
+    if (asked.length === 0 || candidates.length === 0) return new Set();
     const results = await Promise.all(
       asked.map((a) => api.answerLesson({ ...a, terms: candidates.slice(0, 200) })),
     );
-    setOwnDrops(new Set(results.flatMap((r) => r.drop)));
+    return new Set(results.flatMap((r) => r.drop));
   };
 
   const add = async (chosen: LessonTerm[]) => {
@@ -318,10 +315,10 @@ function SmartAdd({
               pages={pages.map((page) => ({ id: page.id, url: page.url, name: page.file.name }))}
               text={text}
               found={terms.filter((term) => !term.existing).length}
-              finished={finished}
+              finished={flow.step === "reading" && flow.finished}
               onStop={() => {
                 stop.current?.abort();
-                setStep("input");
+                dispatch({ type: "stop" });
               }}
             />
           )}
@@ -336,10 +333,11 @@ function SmartAdd({
               onOwnAnswer={(index, value) =>
                 setOwnAnswers((all) => all.map((a, i) => (i === index ? value : a)))
               }
-              onBack={() => setStep("input")}
+              onBack={() => dispatch({ type: "back" })}
               onNext={async () => {
-                await applyOwnAnswers();
-                setStep("list");
+                if (flow.step !== "questions") return;
+                const { attempt } = flow;
+                dispatch({ type: "checked", attempt, ownDrops: await applyOwnAnswers() });
               }}
             />
           )}
@@ -350,9 +348,7 @@ function SmartAdd({
               onDeckChange={setDeckId}
               terms={terms}
               dropped={dropped}
-              onBack={() => {
-                setStep(questions.length > 0 ? "questions" : "input");
-              }}
+              onBack={() => dispatch({ type: "back" })}
               onAdd={add}
             />
           )}

@@ -421,6 +421,32 @@ describe("inviting one person by name", () => {
     expect(await joinLinkAdmits(db, token)).toBe(false);
   });
 
+  it("once spent, opens the deck only for somebody still in it", async () => {
+    const { deck } = await sharedDeck("Kasutatud");
+    const mail = outbox();
+    await inviteByEmail(kateryna, deck.id, "anna@lymi.test", mail.send);
+    const token = mail.sent[0]?.token;
+    if (!token) throw new Error("no token");
+    await joinThroughLink(anna, token);
+
+    // Following the message again is harmless while Anna studies the deck.
+    expect(await previewJoin(db, token, anna.userId)).toMatchObject({
+      status: "live",
+      deckId: deck.id,
+    });
+    await expect(joinThroughLink(anna, token)).resolves.toMatchObject({ deckId: deck.id });
+
+    // Once she leaves, the spent invitation lets nobody in, as the sign-in hold already says.
+    await leave(anna, deck.id);
+    expect(await joinLinkAdmits(db, token)).toBe(false);
+    expect(await previewJoin(db, token, anna.userId)).toMatchObject({
+      status: "off",
+      deckId: null,
+    });
+    await expect(joinThroughLink(anna, token)).rejects.toThrow(notFound);
+    expect((await listDecks(anna)).map((d) => d.id)).not.toContain(deck.id);
+  });
+
   it("a cancelled invitation stops working and leaves the list", async () => {
     const { deck } = await sharedDeck("Tühistatud");
     const mail = outbox();

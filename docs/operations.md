@@ -119,7 +119,7 @@ pnpm moderate show <report-id>
 | Action | When | What happens |
 | --- | --- | --- |
 | `dismiss` | Nothing breaks the rules | The report closes; nothing changes |
-| `archive_card` | One card is the problem | The card leaves every member's deck, and its owner cannot restore it |
+| `archive_card` | One card is the problem | The card leaves every member's deck, and its owner cannot restore it, alone or with its section or import |
 | `archive_deck` | The deck itself is the problem | The deck leaves every member's Library, its join link and invitations stop working, and its owner cannot restore it |
 | `suspend_sharing` | The owner shares abuse, or keeps coming back | Every deck they share is archived for good, and they can no longer turn on a join link or invite anyone |
 

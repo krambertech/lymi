@@ -15,6 +15,7 @@ import { createDeck, listDecks, restoreDeck } from "./decks";
 import { clearLocalEmailOutbox, latestLocalEmail } from "./email";
 import { inviteByEmail, turnOnJoinLink } from "./invitations";
 import { join } from "./members";
+import { archiveSection, createSection, restoreSection } from "./sections";
 import { learner, testDb } from "./test-db";
 
 type ReportEnv = Pick<Bindings, "PRODUCT_URL" | "EMAIL" | "SESSIONS">;
@@ -193,6 +194,21 @@ describe("moderation", () => {
     await expect(resolveContentReport(operator, operators, id, "dismiss")).rejects.toMatchObject({
       code: "conflict",
     });
+  });
+
+  it("keeps a card taken down while its section was archived out of the section's restore", async () => {
+    const { owner, member, deck, card } = await sharedDeck();
+    const section = await createSection(owner, deck.id, { name: "Swearing", cardIds: [card.id] });
+    const { id } = await reportContent(member, env, {
+      target: { kind: "card", cardId: card.id },
+      reason: "offensive",
+    });
+    await archiveSection(owner, section.id, { cards: "archive" });
+
+    await resolveContentReport(operator, operators, id, "archive_card");
+    await restoreSection(owner, section.id);
+
+    expect((await getCard(owner, card.id)).archivedAt).not.toBeNull();
   });
 
   it("leaves the content alone on dismiss", async () => {

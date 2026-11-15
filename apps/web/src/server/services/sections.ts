@@ -8,6 +8,7 @@ import type {
 } from "@lymi/core";
 import { deckProgress, newId, sectionsToStart } from "@lymi/core";
 import { and, asc, eq, isNotNull, isNull, type SQL, sql } from "@lymi/core/db";
+import { notTakenDown } from "./takedowns";
 import { type Db, schema } from "../db";
 import { track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
@@ -470,6 +471,7 @@ export async function restoreSection(ctx: ServiceContext, id: string) {
         and(
           eq(schema.cards.sectionId, id),
           eq(schema.cards.archivedAt, at),
+          notTakenDown,
           sql`exists (select 1 from sections where ${stillArchived})`,
         ),
       ),

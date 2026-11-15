@@ -1261,6 +1261,36 @@ describe("importing an Anki package", () => {
     void addedToImported;
   });
 
+  it("keeps a card Lymi took down while the import was archived out of its restore", async () => {
+    const ctx = await fresh();
+    const { id } = await runImport(ctx, "current.apkg");
+    const gatto = await card(ctx, "il gatto");
+    await archiveImport(ctx, id);
+    // A report resolved by archiving the card, which was already archived with the import.
+    await db.insert(schema.contentReports).values({
+      id: `report-${ctx.userId}`,
+      ownerId: ctx.userId,
+      deckId: gatto.deckId,
+      cardId: gatto.id,
+      target: "card",
+      reason: "offensive",
+      snapshot: {},
+      localDate: "2026-11-15",
+      resolvedAt: new Date(),
+      action: "archive_card",
+    });
+
+    await restoreImport(ctx, id);
+
+    expect((await card(ctx, "il gatto")).archivedAt).not.toBeNull();
+    expect((await card(ctx, "il cane")).archivedAt).toBeNull();
+    const audited = await db
+      .select({ id: schema.auditLog.entityId })
+      .from(schema.auditLog)
+      .where(and(eq(schema.auditLog.entityId, gatto.id), eq(schema.auditLog.action, "restore")));
+    expect(audited).toEqual([]);
+  });
+
   it("audits every write as the learner and lists the import", async () => {
     const ctx = await fresh();
     const { id } = await runImport(ctx, "current.apkg");

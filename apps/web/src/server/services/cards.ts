@@ -56,7 +56,7 @@ import {
 } from "./modes";
 import { bumped } from "./revisions";
 import { syncTagStatements } from "./tags";
-import { takenDown, takenDownCards } from "./takedowns";
+import { notTakenDown, takenDown, takenDownCards } from "./takedowns";
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the
@@ -1364,7 +1364,7 @@ function archiveWrite(
       ctx.db
         .update(schema.cards)
         .set({ archivedAt, updatedAt: new Date() })
-        .where(eq(schema.cards.id, id)),
+        .where(archivedAt ? eq(schema.cards.id, id) : and(eq(schema.cards.id, id), notTakenDown)),
       auditStatement(ctx, {
         entity: "card",
         action: archivedAt ? "archive" : "restore",

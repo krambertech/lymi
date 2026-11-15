@@ -31,6 +31,7 @@ import {
   termKey,
 } from "@lymi/core";
 import { and, eq, inArray, isNotNull, isNull, ne, or, sql } from "@lymi/core/db";
+import { notTakenDown } from "./takedowns";
 import type { Import } from "@lymi/core/schema";
 import { type BatchStatement, batchStatements } from "../batch";
 import { schema } from "../db";
@@ -1124,13 +1125,14 @@ export async function restoreImport(ctx: ServiceContext, id: string) {
         eq(schema.cards.importId, id),
         eq(schema.cards.userId, userId),
         eq(schema.cards.archivedAt, new Date(at)),
+        notTakenDown,
       ),
     );
   await batchStatements(db, [
     sql`update decks set archived_at = null, updated_at = ${now}
       where import_id = ${id} and user_id = ${userId} and archived_at = ${at}`,
     sql`update cards set archived_at = null, updated_at = ${now}
-      where import_id = ${id} and user_id = ${userId} and archived_at = ${at}`,
+      where import_id = ${id} and user_id = ${userId} and archived_at = ${at} and ${notTakenDown}`,
     ...stateStatementsForCards(db, JSON.stringify(restored.map((c) => c.id)), new Date(now)),
     sql`insert into audit_log (id, user_id, actor, action, entity, entity_id, payload, created_at)
       select lower(hex(randomblob(10))), ${userId}, ${actor}, 'restore', 'card', value, ${JSON.stringify({ importId: id })}, ${now}

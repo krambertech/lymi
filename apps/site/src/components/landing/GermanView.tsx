@@ -97,7 +97,7 @@ export function GermanView({ decks, locale }: Props) {
         <GenderTiles groups={GERMAN_GENDERS} locale={locale} lang="de" folder="german" />
       </Wide>
 
-      <ReturnSection lang="de" term={() => "das Fenster"} />
+      <ReturnSection lang="de" term={() => "der Tag"} />
 
       {verbs && (
         <FeatureSection

@@ -76,6 +76,39 @@ function useWaiting(root: { current: Element | null }, still: boolean) {
   return waiting && !still;
 }
 
+/** The narrowest stop, and the least room between two, on a wide screen. */
+const MIN_STOP = 96;
+const STOP_GAP = 24;
+
+/**
+ * How wide each stop is across a wide screen: as wide as the card's widest face, so a long word
+ * never runs into the next stop. When six stops that wide can't fit with room between them, the
+ * lane takes its stacked phone layout instead.
+ */
+function useStopWidth(
+  root: { current: HTMLElement | null },
+  faces: { current: (HTMLElement | null)[] },
+) {
+  const [fit, setFit] = useState({ stop: MIN_STOP, across: true });
+  useEffect(() => {
+    const lane = root.current;
+    if (!lane) return;
+    const measure = () => {
+      const widest = Math.max(0, ...faces.current.map((face) => face?.offsetWidth ?? 0));
+      const stop = Math.max(MIN_STOP, Math.ceil(widest));
+      const across = STOPS.length * stop + (STOPS.length - 1) * STOP_GAP <= lane.clientWidth;
+      setFit((prev) => (prev.stop === stop && prev.across === across ? prev : { stop, across }));
+    };
+    measure();
+    // The face's width changes once its web font arrives.
+    document.fonts?.ready.then(measure);
+    const observer = new ResizeObserver(measure);
+    observer.observe(lane);
+    return () => observer.disconnect();
+  }, [root, faces]);
+  return fit;
+}
+
 /** The streak's flame, lit at each review. */
 function FlameMark({ className, style }: { className: string; style?: CSSProperties }) {
   const { left, top, right, bottom } = FLAME_BOUNDS;
@@ -109,6 +142,8 @@ export function ReturnLane({ term, lang }: Props) {
   const seen = useInView(root, { amount: 0.4, once: true });
   const waiting = useWaiting(root, still);
   const lines = useRef<(HTMLSpanElement | null)[]>([]);
+  const faces = useRef<(HTMLSpanElement | null)[]>([]);
+  const { stop: stopWidth, across } = useStopWidth(root, faces);
   const [timeline, setTimeline] = useState<Timeline>(PHONE);
   const [play, setPlay] = useState(false);
   const label = (day: number) => (day === 0 ? t`Today` : t`Day ${day}`);
@@ -181,8 +216,26 @@ export function ReturnLane({ term, lang }: Props) {
   const span = STOPS[total - 1]?.day ?? 0;
 
   return (
-    <div ref={root} className="mt-10 @3xl:mt-12 @4xl:mt-16">
-      <div className="@3xl:hidden">
+    <div ref={root} className="relative mt-10 @3xl:mt-12 @4xl:mt-16">
+      {/* Both faces at their natural width, out of sight, to size the stops by. */}
+      <div
+        aria-hidden="true"
+        className="invisible absolute start-0 top-0 flex h-0 w-max overflow-hidden"
+      >
+        {[false, true].map((known, i) => (
+          <span
+            key={String(known)}
+            ref={(el) => {
+              faces.current[i] = el;
+            }}
+            lang={lang}
+            className="grid min-w-[92px] px-3 text-[22px] leading-[1.6] font-medium whitespace-nowrap @5xl:text-[26px]"
+          >
+            {term(known)}
+          </span>
+        ))}
+      </div>
+      <div className={clsx(across && "@3xl:hidden")}>
         <div className="flex items-center gap-4">
           <span
             lang={lang}
@@ -250,9 +303,9 @@ export function ReturnLane({ term, lang }: Props) {
       </div>
 
       <ol
-        // A stop is 96px wide; the space between two stops is 24px plus a share of what is left.
-        style={{ "--stop": "96px" } as CSSProperties}
-        className="hidden @3xl:flex"
+        // A stop is as wide as the card's widest face; the space between two is 24px plus a share of what is left.
+        style={{ "--stop": `${stopWidth}px` } as CSSProperties}
+        className={clsx("hidden", across && "@3xl:flex")}
         aria-label={t`One card’s reviews over seven weeks`}
       >
         {STOPS.map((stop, i) => {

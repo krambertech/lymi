@@ -2,8 +2,9 @@ import type { MessageDescriptor } from "@lingui/core";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight, Check, Volume2 } from "lucide-react";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import { type Exam, examPath } from "../../lib/exams";
+import { trayStyle } from "../../lib/tray";
 
 /** The tray hues a language bento walks through, from Explore's shelf colours; violet is AI's. */
 export const BENTO_HUES = [235, 150, 25, 350] as const;
@@ -24,7 +25,7 @@ export function Tile({
 }) {
   return (
     <div
-      style={{ "--tray-h": hue } as CSSProperties}
+      style={trayStyle(hue)}
       className={clsx(
         "use-case-tile flex min-w-0 flex-col gap-2 rounded-[20px] p-6 @2xl:p-7",
         wide && "@3xl:col-span-full",

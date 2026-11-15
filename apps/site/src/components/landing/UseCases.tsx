@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 import type { SampleCard } from "./cards";
+import { Section } from "./Section";
 
 export interface UseCase {
   id: string;
@@ -101,52 +102,47 @@ function CardStack({ card, shape }: { card: SampleCard; shape: Shape }) {
 /** What people keep in Lymi as a bento of trays, each with a real card and, where one exists, a page of its own. */
 export function UseCases({ title, items }: Props) {
   return (
-    <section aria-labelledby="use-cases-title" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
-      <div className="mx-auto max-w-[1040px]">
-        <h2
-          id="use-cases-title"
-          className="max-w-[20ch] text-4xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-5xl @4xl:max-w-none"
-        >
-          {title}
-        </h2>
+    <Section>
+      <Section.Header measure="full">
+        <Section.Title>{title}</Section.Title>
+      </Section.Header>
 
-        <ul className="mt-12 grid gap-3 @xl:grid-cols-2 @2xl:gap-4 @4xl:grid-cols-3">
-          {items.map((item, index) => {
-            const shape = SHAPES[index] ?? "small";
-            return (
-              <li
-                id={`use-case-${item.id}`}
-                key={item.id}
-                data-hue={HUES[index % HUES.length]}
-                className={clsx(
-                  "use-case-tile relative flex flex-col overflow-hidden rounded-2xl p-6 @2xl:p-7 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-ring",
-                  TILE[shape],
+      <ul className="mt-12 grid gap-3 @xl:grid-cols-2 @2xl:gap-4 @4xl:grid-cols-3">
+        {items.map((item, index) => {
+          const shape = SHAPES[index] ?? "small";
+          return (
+            <li
+              id={`use-case-${item.id}`}
+              key={item.id}
+              data-hue={HUES[index % HUES.length]}
+              className={clsx(
+                "use-case-tile relative flex flex-col overflow-hidden rounded-2xl p-6 @2xl:p-7 has-[a:focus-visible]:outline-2 has-[a:focus-visible]:outline-offset-2 has-[a:focus-visible]:outline-ring",
+                TILE[shape],
+              )}
+            >
+              <div className="pb-7 @2xl:pb-8">
+                <h3 className="text-xl font-medium tracking-[-0.02em] text-ink">{item.title}</h3>
+                <p className="mt-2 max-w-[34ch] text-sm text-pretty text-ink-secondary">
+                  {item.body}
+                </p>
+                {item.link && (
+                  <a
+                    href={item.link.href}
+                    className="group mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink after:absolute after:inset-0 after:z-10 focus-visible:outline-none"
+                  >
+                    {item.link.label}
+                    <ArrowRight
+                      aria-hidden="true"
+                      className="size-4 transition-transform duration-200 ease-out hoverable:group-hover:translate-x-0.5"
+                    />
+                  </a>
                 )}
-              >
-                <div className="pb-7 @2xl:pb-8">
-                  <h3 className="text-xl font-medium tracking-[-0.02em] text-ink">{item.title}</h3>
-                  <p className="mt-2 max-w-[34ch] text-sm text-pretty text-ink-secondary">
-                    {item.body}
-                  </p>
-                  {item.link && (
-                    <a
-                      href={item.link.href}
-                      className="group mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink after:absolute after:inset-0 after:z-10 focus-visible:outline-none"
-                    >
-                      {item.link.label}
-                      <ArrowRight
-                        aria-hidden="true"
-                        className="size-4 transition-transform duration-200 ease-out hoverable:group-hover:translate-x-0.5"
-                      />
-                    </a>
-                  )}
-                </div>
-                <CardStack card={item.card} shape={shape} />
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </section>
+              </div>
+              <CardStack card={item.card} shape={shape} />
+            </li>
+          );
+        })}
+      </ul>
+    </Section>
   );
 }

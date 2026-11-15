@@ -15,6 +15,7 @@ import { type ComponentType, type ReactNode, useEffect, useRef, useState } from 
 import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
 import { EASE, useStill } from "./playback";
+import { Section } from "./Section";
 
 interface Stop {
   id: string;
@@ -337,16 +338,16 @@ function Pipeline() {
 /** The public API on a night plate: the claim and its two links, then the pipeline it opens. */
 export function ApiSection() {
   return (
-    <section data-nav="landing" className="px-5 py-4 @2xl:px-10 @4xl:py-8">
+    <Section nav="landing" spacing="tight">
       <div
         data-theme="dark"
         className="mx-auto max-w-[1040px] overflow-hidden rounded-[24px] bg-sheet p-7 text-ink edge @2xl:p-10"
       >
         <div className="flex flex-col gap-6 @4xl:flex-row @4xl:items-start @4xl:justify-between">
           <div>
-            <h2 className="max-w-[16ch] text-3xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-4xl">
+            <Section.Title size="sm" measure={16}>
               <Trans>Open by design.</Trans>
-            </h2>
+            </Section.Title>
             <p className="mt-4 max-w-[46ch] text-md text-pretty text-ink-secondary">
               <Trans>
                 Lymi has a public API with keys you can limit. Add cards from a shortcut, a
@@ -370,6 +371,6 @@ export function ApiSection() {
           <Pipeline />
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

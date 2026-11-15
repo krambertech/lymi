@@ -2,20 +2,14 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { FileText } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
-import {
-  type CSSProperties,
-  type PointerEvent,
-  type ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type PointerEvent, type ReactNode, useEffect, useRef, useState } from "react";
 import { localizedPath } from "../../lib/routes";
+import { trayStyle } from "../../lib/tray";
 import { Lantern } from "../Lantern";
 import { ArrowLink } from "./ArrowLink";
 import { AssistantMark, type AssistantName } from "./AssistantMarks";
-import { SectionTitle } from "./FeatureSection";
 import { EASE, useStill } from "./playback";
+import { Section } from "./Section";
 
 interface Ask {
   id: string;
@@ -126,9 +120,9 @@ function Heading() {
   const { i18n } = useLingui();
   return (
     <div className="max-w-[440px]">
-      <SectionTitle>
+      <Section.Title>
         <Trans>Connect your AI assistant.</Trans>
-      </SectionTitle>
+      </Section.Title>
       <p className="mt-5 text-md text-pretty text-ink-secondary">
         <Trans>
           Connect Claude, ChatGPT, Gemini or Grok once. Then make cards, build decks and get quizzed
@@ -168,7 +162,7 @@ function AskBubble({ ask: item, mirrored }: { ask: Ask; mirrored?: boolean }) {
     <div className={clsx("flex items-end gap-2.5", mirrored && "flex-row-reverse")}>
       <Avatar name={item.from} />
       <div
-        style={{ "--tray-h": item.hue } as CSSProperties}
+        style={trayStyle(item.hue)}
         className={clsx(
           "use-case-tile rounded-[20px] px-4 py-3 shadow-[var(--glass-drop)]",
           mirrored ? "rounded-ee-md" : "rounded-es-md",
@@ -261,7 +255,7 @@ export function AssistantSection() {
   const rows = Array.from({ length: to - from + 1 }, (_, i) => from + i);
 
   return (
-    <section data-nav="landing" className="overflow-x-clip px-5 py-16 @2xl:px-10 @4xl:py-20">
+    <Section nav="landing" clip>
       <div className="mx-auto grid max-w-[480px] items-center gap-10 @4xl:max-w-[1040px] @4xl:grid-cols-[minmax(0,440px)_minmax(0,1fr)] @4xl:gap-16">
         <Heading />
         <div
@@ -304,6 +298,6 @@ export function AssistantSection() {
           </AnimatePresence>
         </div>
       </div>
-    </section>
+    </Section>
   );
 }

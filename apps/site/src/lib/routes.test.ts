@@ -14,6 +14,7 @@ import {
   localizedPath,
   localizedRuntimePages,
   pageLocales,
+  unlistedPaths,
 } from "./routes";
 
 // Keys only; the Astro pages are never loaded.
@@ -50,7 +51,11 @@ const routes = new Set([...allRoutes].filter((route) => !isRuntime(route)));
 describe("public routes", () => {
   it("declares every English page as translated or deliberately English only", () => {
     const english = [...routes].filter((route) => !translatedPrefix.test(route));
-    const declared = new Set<string>([...Object.values(localizedPages), ...englishOnlyPaths]);
+    const declared = new Set<string>([
+      ...Object.values(localizedPages),
+      ...englishOnlyPaths,
+      ...unlistedPaths,
+    ]);
     expect(english.filter((route) => !declared.has(route))).toEqual([]);
   });
 
@@ -109,7 +114,13 @@ describe("public routes", () => {
       changelogSlugs.map((slug) => changelogUpdatePath(slug, locale)),
     );
     const reference = API_RESOURCES.map((r) => `/docs/api/${r.slug}`);
-    expect(new Set(listed)).toEqual(new Set([...routes, ...updates, ...reference]));
+    const listable = [...routes].filter((route) => !unlistedPaths.includes(route));
+    expect(new Set(listed)).toEqual(new Set([...listable, ...updates, ...reference]));
+  });
+
+  it("keeps pages for the people building the site out of the sitemap", async () => {
+    const sitemap = await GET().text();
+    for (const path of unlistedPaths) expect(sitemap).not.toContain(`lymi.app${path}<`);
   });
 });
 

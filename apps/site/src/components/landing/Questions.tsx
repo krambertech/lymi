@@ -1,8 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { ArrowLink } from "./ArrowLink";
-import { SectionTitle } from "./FeatureSection";
 import type { Question } from "./faq";
+import { Section } from "./Section";
 
 interface Props {
   title: ReactNode;
@@ -13,11 +13,11 @@ interface Props {
 export function Questions({ title, items }: Props) {
   const { i18n } = useLingui();
   return (
-    <section className="px-5 py-16 @2xl:px-10 @4xl:py-20">
-      <div className="mx-auto grid max-w-[1040px] gap-10 @4xl:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] @4xl:gap-20">
-        <div className="max-w-[440px]">
-          <SectionTitle>{title}</SectionTitle>
-        </div>
+    <Section>
+      <div className="grid gap-10 @4xl:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] @4xl:gap-20">
+        <Section.Header measure="narrow">
+          <Section.Title>{title}</Section.Title>
+        </Section.Header>
         <dl className="border-t border-edge">
           {items.map((item) => (
             <div key={item.id} className="border-b border-edge py-6">
@@ -36,6 +36,6 @@ export function Questions({ title, items }: Props) {
           ))}
         </dl>
       </div>
-    </section>
+    </Section>
   );
 }

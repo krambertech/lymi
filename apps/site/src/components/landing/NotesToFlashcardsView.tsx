@@ -5,16 +5,17 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore, WorksWith } from "./AssistantMarks";
+import { CardsHero } from "./CardsHero";
 import type { SampleCard } from "./cards";
-import { FeatureSection, SectionTitle } from "./FeatureSection";
+import { FeatureSection, Wide } from "./FeatureSection";
 import { FreeBadge } from "./FreeBadge";
 import { NOTES_TO_FLASHCARDS_QUESTIONS } from "./faq";
-import { Hero } from "./Hero";
 import { HeroLiftOff, type HeroWord } from "./HeroScenes";
 import { LandingLayout } from "./LandingLayout";
 import { BENTO_HUES, LanguageBento, Tile } from "./LanguageBento";
 import { DetailsSection, ReturnSection, TogetherSection } from "./LanguageSections";
-import { type Material, MaterialToCards, Pick } from "./MaterialToCards";
+import { type Material, MaterialToCards } from "./MaterialToCards";
+import { Pick } from "./Pick";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
 import { DiagramTile, OldDecksTile, PdfTile, TagReview } from "./StudyTiles";
@@ -256,7 +257,7 @@ export function NotesToFlashcardsView() {
     <LandingLayout
       page="notesToFlashcards"
       hero={
-        <Hero
+        <CardsHero
           badge={<FreeBadge />}
           title={<Trans>Turn your notes into flashcards.</Trans>}
           lede={
@@ -277,28 +278,20 @@ export function NotesToFlashcardsView() {
         />
       }
     >
-      <section
+      <Wide
         id="material"
-        aria-labelledby="material-title"
-        className="scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20"
+        title={<Trans>Slides, photos or typed notes.</Trans>}
+        body={
+          <Trans>
+            Drop them into Smart add. Lymi picks out the terms, keeps the definitions from your
+            notes and skips the ones already in your deck. No assistant needed.
+          </Trans>
+        }
       >
-        <div className="mx-auto max-w-[1040px]">
-          <div id="material-title">
-            <SectionTitle>
-              <Trans>Slides, photos or typed notes.</Trans>
-            </SectionTitle>
-          </div>
-          <p className="mt-5 max-w-[52ch] text-md text-pretty text-ink-secondary">
-            <Trans>
-              Drop them into Smart add. Lymi picks out the terms, keeps the definitions from your
-              notes and skips the ones already in your deck. No assistant needed.
-            </Trans>
-          </p>
-          <div className="mt-12">
-            <MaterialToCards materials={MATERIALS} />
-          </div>
+        <div className="mt-12">
+          <MaterialToCards materials={MATERIALS} />
         </div>
-      </section>
+      </Wide>
 
       <FeatureSection
         tinted

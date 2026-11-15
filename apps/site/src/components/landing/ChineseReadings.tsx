@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { XING_WORDS } from "./chinese";
 import { EASE, useStill } from "./playback";
+import { WordPicker } from "./WordPicker";
 
 const STEP_MS = 2000;
 const FIRST_MS = 500;
@@ -107,31 +108,16 @@ export function ChineseReadings() {
         <span className="font-medium text-amber-text">{word.pinyin}</span> · {i18n._(word.meaning)}
       </p>
 
-      <div className="mt-6 flex flex-wrap justify-center gap-1.5">
-        {XING_WORDS.map((w, i) => (
-          <button
-            key={w.word}
-            type="button"
-            lang="zh-Hans"
-            aria-pressed={i === at}
-            onClick={() => {
-              heldUntil.current = Date.now() + HOLD_MS;
-              setAt(i);
-            }}
-            className="relative h-9 rounded-full px-3.5 text-md text-ink-muted transition-colors duration-200 hoverable:hover:text-ink aria-pressed:text-ink"
-          >
-            {i === at && (
-              <motion.span
-                layoutId="zh-word"
-                transition={
-                  still ? { duration: 0 } : { type: "spring", duration: 0.45, bounce: 0.15 }
-                }
-                className="absolute inset-0 rounded-full bg-plate edge"
-              />
-            )}
-            <span className="relative">{w.word}</span>
-          </button>
-        ))}
+      <div className="mt-6">
+        <WordPicker
+          words={XING_WORDS.map((w) => w.word)}
+          lang="zh-Hans"
+          at={at}
+          onPick={(i) => {
+            heldUntil.current = Date.now() + HOLD_MS;
+            setAt(i);
+          }}
+        />
       </div>
     </div>
   );

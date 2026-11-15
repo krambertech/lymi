@@ -3,6 +3,7 @@ import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { HI_WORDS } from "./japanese";
 import { EASE, useStill } from "./playback";
+import { WordPicker } from "./WordPicker";
 
 const STEP_MS = 1700;
 /** The first change comes soon after the stage is in view, so it never reads as a still picture. */
@@ -116,32 +117,16 @@ export function KanjiReadings() {
         · {i18n._(word.meaning)}
       </p>
 
-      <div className="mt-6 flex flex-wrap justify-center gap-1.5">
-        {HI_WORDS.map((w, i) => (
-          <button
-            key={w.word}
-            type="button"
-            lang="ja"
-            aria-pressed={i === at}
-            onClick={() => {
-              heldUntil.current = Date.now() + HOLD_MS;
-              setAt(i);
-            }}
-            className="relative h-9 rounded-full px-3.5 text-md text-ink-muted transition-colors duration-200 hoverable:hover:text-ink aria-pressed:text-ink"
-          >
-            {/* One highlight that slides from word to word rather than blinking between them. */}
-            {i === at && (
-              <motion.span
-                layoutId="kanji-word"
-                transition={
-                  still ? { duration: 0 } : { type: "spring", duration: 0.45, bounce: 0.15 }
-                }
-                className="absolute inset-0 rounded-full bg-plate edge"
-              />
-            )}
-            <span className="relative">{w.word}</span>
-          </button>
-        ))}
+      <div className="mt-6">
+        <WordPicker
+          words={HI_WORDS.map((w) => w.word)}
+          lang="ja"
+          at={at}
+          onPick={(i) => {
+            heldUntil.current = Date.now() + HOLD_MS;
+            setAt(i);
+          }}
+        />
       </div>
     </div>
   );

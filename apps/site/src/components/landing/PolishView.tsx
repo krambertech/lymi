@@ -28,18 +28,20 @@ import { addDeckUrl, pathSteps } from "./language-decks";
 import { type NotebookCard, type NotebookRow, NotebookToCards } from "./NotebookToCards";
 import { EnrichPolish } from "./PolishAi";
 import { PolishBento } from "./PolishBento";
-import { PolishForms } from "./PolishForms";
 import {
   lookAlikesFor,
   OFFICE_WORDS,
   POLISH_CLASS_CARDS,
   POLISH_EXAMPLES,
+  POLISH_FORM_SLOTS,
+  POLISH_FORM_WORDS,
   POLISH_PATH,
   POLISH_VOICE_WORDS,
   polishHand,
 } from "./polish";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
+import { WordForms } from "./WordForms";
 
 const FIRST_DECK = "polish-a1-vocabulary";
 const OFFICE_DECK = "polish-for-offices-and-paperwork";
@@ -136,7 +138,7 @@ export function PolishView({ decks, locale }: Props) {
             </Trans>
           }
         >
-          <PolishForms />
+          <WordForms lang="pl" words={POLISH_FORM_WORDS} slots={POLISH_FORM_SLOTS} />
         </Wide>
       )}
 

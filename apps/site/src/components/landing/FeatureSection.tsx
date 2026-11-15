@@ -1,5 +1,7 @@
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
+import type { SiteLinkPlace } from "../../lib/analytics";
+import { Section } from "./Section";
 
 interface Props {
   id?: string | undefined;
@@ -14,63 +16,54 @@ interface Props {
   tinted?: boolean | undefined;
 }
 
-export function SectionTitle({ children }: { children: ReactNode }) {
-  return (
-    <h2 className="text-4xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-5xl">
-      {children}
-    </h2>
-  );
-}
-
 /** One claim beside the demo that proves it. */
 export function FeatureSection({ id, title, body, after, children, demoFirst, tinted }: Props) {
   return (
-    <section
-      id={id}
-      className={clsx("scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20", tinted && "bg-plate")}
-    >
+    <Section id={id} surface={tinted ? "plate" : "canvas"}>
       <div
         className={clsx(
-          "mx-auto grid max-w-[1040px] items-center gap-12 @4xl:gap-20",
+          "grid items-center gap-12 @4xl:gap-20",
           demoFirst
             ? "@4xl:grid-cols-[minmax(0,1.14fr)_minmax(0,0.86fr)]"
             : "@4xl:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)]",
         )}
       >
-        <div className={clsx("max-w-[440px]", demoFirst && "@4xl:order-2 @4xl:justify-self-end")}>
-          <SectionTitle>{title}</SectionTitle>
-          <p className="mt-5 text-md text-pretty text-ink-secondary">{body}</p>
-          {after && <div className="mt-8">{after}</div>}
+        <div className={clsx(demoFirst && "@4xl:order-2 @4xl:justify-self-end")}>
+          <Section.Header measure="narrow">
+            <Section.Title>{title}</Section.Title>
+            <Section.Body>{body}</Section.Body>
+            {after && <Section.After>{after}</Section.After>}
+          </Section.Header>
         </div>
         <div className={clsx("min-w-0 py-4", demoFirst ? "@4xl:order-1 @4xl:pr-6" : "@4xl:pl-6")}>
           {children}
         </div>
       </div>
-    </section>
+    </Section>
   );
 }
 
-/** A section with its title and copy above a wide demo. */
-export function Wide({
-  id,
-  title,
-  body,
-  children,
-}: {
-  id?: string;
+interface WideProps {
+  id?: string | undefined;
   title: ReactNode;
   body: ReactNode;
+  /** A link on to the rest, at the end of the heading's row on wide screens. */
+  action?: ReactNode;
+  /** The section's place for `site_link_followed`. */
+  nav?: SiteLinkPlace | undefined;
   children: ReactNode;
-}) {
+}
+
+/** A section with its title and copy above a wide demo. */
+export function Wide({ id, title, body, action, nav, children }: WideProps) {
   return (
-    <section id={id} className="scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20">
-      <div className="mx-auto max-w-[1040px]">
-        <div className="max-w-[640px]">
-          <SectionTitle>{title}</SectionTitle>
-          <p className="mt-5 text-md text-pretty text-ink-secondary">{body}</p>
-        </div>
-        {children}
-      </div>
-    </section>
+    <Section id={id} nav={nav}>
+      <Section.Header>
+        <Section.Title>{title}</Section.Title>
+        <Section.Body>{body}</Section.Body>
+        {action && <Section.Action>{action}</Section.Action>}
+      </Section.Header>
+      {children}
+    </Section>
   );
 }

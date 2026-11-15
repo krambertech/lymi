@@ -1,15 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { useInView } from "motion/react";
-import {
-  type ComponentType,
-  type CSSProperties,
-  type ReactNode,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
+import { type ComponentType, type ReactNode, useEffect, useRef, useState } from "react";
 import { localizedPath } from "../../lib/routes";
+import { trayStyle } from "../../lib/tray";
 import { ArrowLink } from "./ArrowLink";
 import {
   ExportTile,
@@ -26,7 +20,7 @@ import {
   type TileDemoProps,
 } from "./BentoTiles";
 import { ClassScene } from "./ClassScene";
-import { SectionTitle } from "./FeatureSection";
+import { Section } from "./Section";
 
 /**
  * When a tile's demo plays. "view": once, the first time most of it is on screen. "hover": while it
@@ -96,7 +90,7 @@ function Tile({ trigger, hue, title, body, Demo, layout, className }: TileProps)
   return (
     <li
       ref={ref}
-      style={{ "--tray-h": hue } as CSSProperties}
+      style={trayStyle(hue)}
       className={clsx(
         "use-case-tile flex min-w-0 flex-col gap-4 overflow-hidden rounded-[20px] p-5",
         className,
@@ -134,7 +128,7 @@ function CompactTile({ hue, title, body, Demo }: CompactProps) {
   return (
     <li
       ref={ref}
-      style={{ "--tray-h": hue } as CSSProperties}
+      style={trayStyle(hue)}
       className="use-case-tile col-span-1 flex min-w-0 flex-col justify-between gap-4 overflow-hidden rounded-[20px] p-4 @xl:p-5 @4xl:col-span-3"
     >
       <div className="min-w-0">
@@ -152,19 +146,17 @@ function CompactTile({ hue, title, body, Demo }: CompactProps) {
 
 function Frame({ children }: { children: ReactNode }) {
   return (
-    <section data-nav="landing" className="px-5 py-16 @2xl:px-10 @4xl:py-20">
-      <div className="mx-auto max-w-[1040px]">
-        <div className="max-w-[620px]">
-          <SectionTitle>
-            <Trans>Small things, done well.</Trans>
-          </SectionTitle>
-          <p className="mt-5 text-md text-pretty text-ink-secondary">
-            <Trans>Details you notice after a week of reviews.</Trans>
-          </p>
-        </div>
-        {children}
-      </div>
-    </section>
+    <Section nav="landing">
+      <Section.Header>
+        <Section.Title>
+          <Trans>Small things, done well.</Trans>
+        </Section.Title>
+        <Section.Body>
+          <Trans>Details you notice after a week of reviews.</Trans>
+        </Section.Body>
+      </Section.Header>
+      {children}
+    </Section>
   );
 }
 
@@ -248,7 +240,7 @@ export function FeatureBento() {
     <Frame>
       <ul className="mt-10 grid grid-cols-2 gap-3 @4xl:mt-12 @4xl:grid-cols-12 @4xl:grid-rows-[232px_232px_auto_auto]">
         <li
-          style={{ "--tray-h": 150 } as CSSProperties}
+          style={trayStyle(150)}
           className="use-case-tile col-span-2 flex min-w-0 flex-col overflow-hidden rounded-[20px] p-5 @4xl:col-span-6 @4xl:row-span-2"
         >
           <SharingCopy />

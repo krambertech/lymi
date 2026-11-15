@@ -1,4 +1,5 @@
 import { type PublicDeckSummary, trayHue } from "@lymi/core/catalog";
+import type { CSSProperties } from "react";
 
 export { TRAY_HUES, trayHue } from "@lymi/core/catalog";
 
@@ -10,4 +11,9 @@ export { TRAY_HUES, trayHue } from "@lymi/core/catalog";
  */
 export function trayHues(decks: readonly PublicDeckSummary[]): number[] {
   return decks.map((deck) => trayHue(deck.slug));
+}
+
+/** Colours a `use-case-tile` tray, or anything else tinted by `--tray-h`, with one hue. */
+export function trayStyle(hue: number): CSSProperties {
+  return { "--tray-h": hue } as CSSProperties;
 }

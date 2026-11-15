@@ -21,8 +21,7 @@ import {
   SquareTerminal,
 } from "lucide-react";
 import type { ReactNode } from "react";
-import { PRODUCT_ORIGIN, signUpUrl } from "../../lib/origins";
-import { buttonClass } from "../Button";
+import { PRODUCT_ORIGIN } from "../../lib/origins";
 import { Lantern } from "../Lantern";
 import { type Ask, AssistantAsks } from "./AssistantAsks";
 import {
@@ -31,7 +30,7 @@ import {
   type MadeCard,
   useBackdropPreview,
 } from "./AssistantChatDemo";
-import { AssistantConnect, type ConnectStep } from "./AssistantConnect";
+import { AssistantConnect } from "./AssistantConnect";
 import { AssistantMark, type AssistantName } from "./AssistantMarks";
 import {
   Attached,
@@ -53,11 +52,13 @@ import { VoiceScene } from "./AssistantVoice";
 import { ASSISTANT_PAGES, type AssistantKey } from "./assistant-pages";
 import { CopyAddress } from "./ConnectSteps";
 import { Wide } from "./FeatureSection";
+import { Hero } from "./Hero";
 import { LandingLayout } from "./LandingLayout";
 import { OtherAssistants } from "./OtherAssistants";
 import { Questions } from "./Questions";
 import { ReturnLane } from "./ReturnLane";
 import { SignUpSection } from "./SignUpSection";
+import type { Step } from "./Steps";
 
 interface SampleCard {
   label: MessageDescriptor;
@@ -80,7 +81,7 @@ interface Content {
   asksTitle: ReactNode;
   asks: readonly Ask[];
   gap: { title: ReactNode; body: ReactNode; term: string; lang: string };
-  connect: { title: ReactNode; note: ReactNode; steps: readonly ConnectStep[] };
+  connect: { title: ReactNode; note: ReactNode; steps: readonly Step[] };
   faqTitle: ReactNode;
   signUp: ReactNode;
 }
@@ -88,7 +89,7 @@ interface Content {
 /** The lockup above each headline: Lymi beside the assistant, so the page says whose it is. */
 function Lockup({ name }: { name: AssistantName }) {
   return (
-    <p className="flex items-center gap-2.5 text-md font-medium text-ink-secondary">
+    <p className="mb-7 flex items-center gap-2.5 text-md font-medium text-ink-secondary">
       <span className="grid size-9 place-items-center rounded-xl bg-plate edge-drop">
         <Lantern className="size-6" />
       </span>
@@ -1015,7 +1016,7 @@ function Command({ text }: { text: string }) {
   );
 }
 
-function Hero({ assistant }: { assistant: AssistantKey }) {
+function AssistantPageHero({ assistant }: { assistant: AssistantKey }) {
   const { i18n } = useLingui();
   const { name, hue, listing } = ASSISTANT_PAGES[assistant];
   const content = useContent(assistant);
@@ -1026,42 +1027,32 @@ function Hero({ assistant }: { assistant: AssistantKey }) {
   }));
 
   return (
-    <div className="mx-auto grid max-w-[1120px] items-center gap-14 px-5 pt-12 pb-20 @2xl:px-10 @4xl:min-h-[680px] @4xl:grid-cols-[minmax(0,1fr)_minmax(0,480px)] @4xl:gap-16 @4xl:pt-14">
-      <div className="min-w-0 max-w-[560px]">
+    <Hero visualWidth={480}>
+      <Hero.Copy>
         <Lockup name={name} />
-        <h1 className="mt-7 text-5xl leading-[1.04] font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[3.75rem]">
-          {content.headline}
-        </h1>
-        <p className="mt-6 max-w-[42ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
-          {content.lead}
-        </p>
-        <div className="mt-8 flex flex-wrap gap-2">
-          <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Get started</Trans>
-          </a>
-          {listing ? (
-            <a href={listing} className={buttonClass("secondary", "lg")}>
-              <Trans>Add Lymi to {name}</Trans>
-            </a>
-          ) : (
-            <a href="#connect" className={buttonClass("ghost", "lg")}>
-              <Trans>Connect {name}</Trans>
-            </a>
-          )}
-        </div>
-      </div>
-
-      <AssistantChatDemo
-        assistant={name}
-        hue={hue}
-        attachment={content.demo.attachment}
-        ask={content.demo.ask}
-        reply={content.demo.reply}
-        cards={cards}
-        lang={content.demo.lang}
-        label={content.demo.label}
-      />
-    </div>
+        <Hero.Title size="page">{content.headline}</Hero.Title>
+        <Hero.Lede>{content.lead}</Hero.Lede>
+        <Hero.Actions
+          secondary={
+            listing
+              ? { href: listing, label: <Trans>Add Lymi to {name}</Trans>, variant: "secondary" }
+              : { href: "#connect", label: <Trans>Connect {name}</Trans> }
+          }
+        />
+      </Hero.Copy>
+      <Hero.Visual>
+        <AssistantChatDemo
+          assistant={name}
+          hue={hue}
+          attachment={content.demo.attachment}
+          ask={content.demo.ask}
+          reply={content.demo.reply}
+          cards={cards}
+          lang={content.demo.lang}
+          label={content.demo.label}
+        />
+      </Hero.Visual>
+    </Hero>
   );
 }
 
@@ -1074,7 +1065,7 @@ export function AssistantPageView({ assistant }: { assistant: AssistantKey }) {
 
   return (
     <BackdropContext.Provider value={backdrop}>
-      <LandingLayout page={page.page} hero={<Hero assistant={assistant} />}>
+      <LandingLayout page={page.page} hero={<AssistantPageHero assistant={assistant} />}>
         <Wide
           title={content.asksTitle}
           body={

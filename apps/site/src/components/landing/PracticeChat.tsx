@@ -2,7 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { Check } from "lucide-react";
 import { motion, useInView, useReducedMotion } from "motion/react";
 import { type ReactNode, useRef } from "react";
-import { Lantern } from "../Lantern";
+import { LearnerBubble, ToolCall } from "./ChatParts";
 import { appear, EASE, usePlayback } from "./playback";
 
 const BEATS = { ask: 200, read: 900, question: 1900, answer: 3400, correction: 4900 };
@@ -19,28 +19,19 @@ export function PracticeChat() {
   const inView = useInView(ref, { amount: 0.35 });
   const { at } = usePlayback(BEATS, inView, still);
   const move = { duration: still ? 0 : 0.5, ease: EASE };
-  const you = "self-end max-w-[85%] rounded-md bg-ink px-3.5 py-2 text-md text-canvas";
   const them = "self-start max-w-[88%] rounded-md bg-plate-nested px-3.5 py-2 text-md text-ink";
 
   return (
     <div ref={ref} className="mx-auto flex w-full max-w-[460px] flex-col gap-3">
       <div className="flex flex-col gap-3 rounded-2xl bg-plate p-4 edge @2xl:p-5">
-        <motion.p className={you} initial={false} animate={appear(at("ask"))} transition={move}>
+        <LearnerBubble initial={false} animate={appear(at("ask"))} transition={move}>
           <Trans>Let’s practise. Use the German words from my deck.</Trans>
-        </motion.p>
+        </LearnerBubble>
 
-        <motion.p
-          className="flex h-8 items-center gap-2 self-start rounded-full bg-plate-nested ps-1 pe-3 text-sm text-ink-secondary"
-          initial={false}
-          animate={appear(at("read"))}
-          transition={move}
-        >
-          <span className="grid size-6 place-items-center rounded-full bg-plate">
-            <Lantern className="size-4" />
-          </span>
+        <ToolCall on="plate" initial={false} animate={appear(at("read"))} transition={move}>
           <Trans>Read your German deck</Trans>
           <Check aria-hidden="true" className="size-4 text-success" />
-        </motion.p>
+        </ToolCall>
 
         <motion.p
           lang="de"
@@ -52,15 +43,9 @@ export function PracticeChat() {
           Gut! Wann hast du heute <Deck>Feierabend</Deck>?
         </motion.p>
 
-        <motion.p
-          lang="de"
-          className={you}
-          initial={false}
-          animate={appear(at("answer"))}
-          transition={move}
-        >
+        <LearnerBubble lang="de" initial={false} animate={appear(at("answer"))} transition={move}>
           Um sechs. Dann ich höre auf.
-        </motion.p>
+        </LearnerBubble>
 
         <motion.div
           className={them}

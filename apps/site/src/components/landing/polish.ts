@@ -5,6 +5,7 @@ import type { HandCard } from "./hand-cards";
 import { noun, phrase, verb } from "./hand-cards";
 import type { PathStep, VoiceWord } from "./japanese";
 import type { EditionWord } from "./language-decks";
+import type { FormKind, FormSlot, FormWord } from "./WordForms";
 
 /**
  * The Polish page's words. Terms are Polish and never translated. Meanings are the published
@@ -271,21 +272,37 @@ export const POLISH_EXAMPLES: Record<string, Example[]> = {
   ],
 };
 
-/** A word and the three forms a learner keeps with it, as the decks' notes list them. */
-export interface PolishFormWord {
-  term: string;
-  kind: "noun" | "verb";
-  meaning: string;
-  forms: [string, string, string];
-}
+/** Each form's name, with the questions Polish courses teach a noun's cases by. */
+export const POLISH_FORM_SLOTS = {
+  noun: [
+    { asks: "kto? co?", name: msg`Nominative` },
+    { asks: "kogo? czego?", name: msg`Genitive` },
+    { asks: "o kim? o czym?", name: msg`Locative` },
+  ],
+  verb: [
+    { asks: "co robić?", name: msg`Imperfective` },
+    { asks: "co zrobić?", name: msg`Perfective` },
+    { asks: "ja …", name: msg`Future, “I”` },
+  ],
+} as const satisfies Record<FormKind, readonly FormSlot[]>;
 
-export const POLISH_FORM_WORDS: PolishFormWord[] = [
-  { term: "pies", kind: "noun", meaning: "Dog", forms: ["pies", "psa", "psie"] },
-  { term: "miasto", kind: "noun", meaning: "Town; city", forms: ["miasto", "miasta", "mieście"] },
-  { term: "ręka", kind: "noun", meaning: "Hand", forms: ["ręka", "ręki", "ręce"] },
-  { term: "robić", kind: "verb", meaning: "To do; to make", forms: ["robić", "zrobić", "zrobię"] },
-  { term: "brać", kind: "verb", meaning: "To take", forms: ["brać", "wziąć", "wezmę"] },
-  { term: "mówić", kind: "verb", meaning: "To say", forms: ["mówić", "powiedzieć", "powiem"] },
+export const POLISH_FORM_WORDS: FormWord[] = [
+  { term: "pies", kind: "noun", meaning: msg`Dog`, forms: ["pies", "psa", "psie"] },
+  {
+    term: "miasto",
+    kind: "noun",
+    meaning: msg`Town; city`,
+    forms: ["miasto", "miasta", "mieście"],
+  },
+  { term: "ręka", kind: "noun", meaning: msg`Hand`, forms: ["ręka", "ręki", "ręce"] },
+  {
+    term: "robić",
+    kind: "verb",
+    meaning: msg`To do; to make`,
+    forms: ["robić", "zrobić", "zrobię"],
+  },
+  { term: "brać", kind: "verb", meaning: msg`To take`, forms: ["brać", "wziąć", "wezmę"] },
+  { term: "mówić", kind: "verb", meaning: msg`To say`, forms: ["mówić", "powiedzieć", "powiem"] },
 ];
 
 /** Phrases from Polish for Offices and Paperwork, with each edition's meaning. */

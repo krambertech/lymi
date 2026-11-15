@@ -31,18 +31,6 @@ export interface Material {
   render: (lit: (i: number) => boolean) => ReactNode;
 }
 
-/** The term the assistant picked, highlighted once it has been read. */
-export function Pick({ on, children }: { on: boolean; children: ReactNode }) {
-  return (
-    <mark
-      data-on={on}
-      className="rounded-xs bg-transparent bg-[linear-gradient(var(--color-amber-soft),var(--color-amber-soft))] bg-no-repeat px-0.5 text-inherit transition-[background-size] duration-500 ease-out [background-size:0%_100%] [box-decoration-break:clone] data-[on=true]:[background-size:100%_100%] motion-reduce:transition-none"
-    >
-      {children}
-    </mark>
-  );
-}
-
 function Row({ card, lang }: { card: MaterialCard; lang: string | undefined }) {
   const { i18n } = useLingui();
   const term = typeof card.term === "string" ? card.term : i18n._(card.term);

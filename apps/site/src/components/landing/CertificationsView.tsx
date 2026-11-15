@@ -2,11 +2,11 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Added, AssistantChat } from "./AssistantChat";
 import { AssistantMarksWithMore, WorksWith } from "./AssistantMarks";
+import { CardsHero } from "./CardsHero";
 import type { SampleCard } from "./cards";
 import { FeatureSection } from "./FeatureSection";
 import { FreeBadge } from "./FreeBadge";
 import { CERTIFICATIONS_QUESTIONS } from "./faq";
-import { Hero } from "./Hero";
 import type { HandCard } from "./hand-cards";
 import { LandingLayout } from "./LandingLayout";
 import { BENTO_HUES, LanguageBento, Tile } from "./LanguageBento";
@@ -115,7 +115,7 @@ export function CertificationsView() {
     <LandingLayout
       page="certifications"
       hero={
-        <Hero
+        <CardsHero
           badge={<FreeBadge />}
           title={<Trans>Flashcards for your certification exam.</Trans>}
           lede={

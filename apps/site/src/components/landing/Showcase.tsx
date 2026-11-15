@@ -6,7 +6,6 @@ import { RotateCcw } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import {
   Children,
-  type CSSProperties,
   createContext,
   isValidElement,
   type KeyboardEvent,
@@ -18,6 +17,7 @@ import {
   useRef,
   useState,
 } from "react";
+import { trayStyle } from "../../lib/tray";
 import { EASE, useStill } from "./playback";
 
 /*
@@ -210,7 +210,7 @@ function ShowcaseRoot({ label, children, className }: Props) {
                   // While its item plays, the icon takes the tray's tint, so the two read as one.
                   <span
                     aria-hidden="true"
-                    style={{ "--tray-h": each.hue } as CSSProperties}
+                    style={trayStyle(each.hue)}
                     className={clsx(
                       "grid size-8 shrink-0 place-items-center rounded-lg transition-[background-color,color] duration-200 [&_svg]:size-4",
                       on
@@ -256,7 +256,7 @@ function ShowcaseRoot({ label, children, className }: Props) {
         role="tabpanel"
         id={`${base}-panel`}
         aria-labelledby={`${base}-tab-${item.id}`}
-        style={{ "--tray-h": item.hue } as CSSProperties}
+        style={trayStyle(item.hue)}
         className="use-case-tile relative order-1 grid min-h-[400px] place-items-center overflow-hidden rounded-[28px] px-5 py-14 transition-[background-color] duration-500 @2xl:px-10 @4xl:order-2 @4xl:min-h-[480px]"
       >
         {/* Quiet on purpose: the demo is the subject, and the list moves on by itself. With reduced

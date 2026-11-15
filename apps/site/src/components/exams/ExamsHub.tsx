@@ -8,10 +8,12 @@ import { EXAMS, type Exam, examPath } from "../../lib/exams";
 import { openLymiUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { Assurances } from "../landing/Assurances";
-import { FeatureSection, SectionTitle } from "../landing/FeatureSection";
+import { FeatureSection } from "../landing/FeatureSection";
 import { EXAMS_QUESTIONS } from "../landing/faq";
+import { Hero } from "../landing/Hero";
 import { Questions } from "../landing/Questions";
 import { RightMoment } from "../landing/RightMoment";
+import { Section } from "../landing/Section";
 import { SignUpSection } from "../landing/SignUpSection";
 import { SiteFooter } from "../landing/SiteFooter";
 import { SiteNav } from "../landing/SiteNav";
@@ -39,7 +41,7 @@ export function ExamsHub({ counts }: Props) {
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
       <header className="shelf-hero over-tint" data-hue="3">
         <SiteNav openAppUrl={openAppUrl} current="exams" />
-        <Hero exams={reviewable} />
+        <ExamsHero exams={reviewable} />
       </header>
 
       <main className="relative">
@@ -121,7 +123,7 @@ export function ExamsHub({ counts }: Props) {
   );
 }
 
-function Hero({ exams }: { exams: readonly Exam[] }) {
+function ExamsHero({ exams }: { exams: readonly Exam[] }) {
   const { i18n } = useLingui();
   return (
     <div className="mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-10 pb-16 @2xl:px-10 @4xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] @4xl:gap-16 @4xl:pt-16 @4xl:pb-24">
@@ -129,16 +131,16 @@ function Hero({ exams }: { exams: readonly Exam[] }) {
         <p className="text-sm font-medium text-ink-secondary">
           <Trans>Exam prep</Trans>
         </p>
-        <h1 className="mt-4 max-w-[15ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance text-ink @4xl:text-[4.25rem]">
-          {i18n._(EXAMS_HEADING)}
-        </h1>
-        <p className="mt-6 max-w-[48ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
+        <div className="mt-4">
+          <Hero.Title measure={15}>{i18n._(EXAMS_HEADING)}</Hero.Title>
+        </div>
+        <Hero.Lede>
           <Trans>
             Ready decks for citizenship, language and driving theory tests after a move. Each holds
             what the exam asks in its own language, with a translation alongside, and brings back
             what you get wrong until it sticks.
           </Trans>
-        </p>
+        </Hero.Lede>
         <div className="mt-8 flex flex-wrap gap-2">
           <a href="#exams" className={buttonClass("secondary", "lg")}>
             <Trans>Find your exam</Trans>
@@ -155,38 +157,29 @@ function Hero({ exams }: { exams: readonly Exam[] }) {
 
 function ExamPicker({ exams, counts }: { exams: readonly Exam[]; counts: Record<string, number> }) {
   return (
-    <section
-      id="exams"
-      aria-labelledby="exams-title"
-      className="scroll-mt-6 px-5 pt-20 pb-16 @2xl:px-10 @4xl:pt-28"
-    >
-      <div className="mx-auto max-w-[1040px]">
-        <h2
-          id="exams-title"
-          className="text-4xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-5xl"
-        >
-          <Trans>Pick your exam.</Trans>
-        </h2>
-        <ExamGroup
-          group="citizenship"
-          title={<Trans>Citizenship tests</Trans>}
-          exams={exams}
-          counts={counts}
-        />
-        <ExamGroup
-          group="language"
-          title={<Trans>Language exams</Trans>}
-          exams={exams}
-          counts={counts}
-        />
-        <ExamGroup
-          group="driving"
-          title={<Trans>Driving tests</Trans>}
-          exams={exams}
-          counts={counts}
-        />
-      </div>
-    </section>
+    <Section id="exams">
+      <Section.Title>
+        <Trans>Pick your exam.</Trans>
+      </Section.Title>
+      <ExamGroup
+        group="citizenship"
+        title={<Trans>Citizenship tests</Trans>}
+        exams={exams}
+        counts={counts}
+      />
+      <ExamGroup
+        group="language"
+        title={<Trans>Language exams</Trans>}
+        exams={exams}
+        counts={counts}
+      />
+      <ExamGroup
+        group="driving"
+        title={<Trans>Driving tests</Trans>}
+        exams={exams}
+        counts={counts}
+      />
+    </Section>
   );
 }
 
@@ -422,54 +415,54 @@ function DeckNotQuiz() {
     },
   ];
   return (
-    <section className="px-5 py-16 @2xl:px-10 @4xl:py-20">
-      <div className="mx-auto max-w-[1040px]">
-        <SectionTitle>
+    <Section>
+      <Section.Header>
+        <Section.Title>
           <Trans>How a deck differs from a quiz.</Trans>
-        </SectionTitle>
-        <p className="mt-5 max-w-[56ch] text-md text-pretty text-ink-secondary">
+        </Section.Title>
+        <Section.Body>
           <Trans>
             A practice quiz tells you how you did today. A deck keeps track of every question and
             plans when you see each one again.
           </Trans>
-        </p>
-        <div className="mt-10 overflow-hidden rounded-xl bg-plate edge">
-          <div
-            aria-hidden="true"
-            className="hidden grid-cols-3 gap-4 bg-plate-nested px-5 py-3 text-sm font-medium text-ink-secondary @2xl:grid"
-          >
-            <span />
-            <span>
-              <Trans>A practice quiz</Trans>
-            </span>
-            <span className="text-ink">
-              <Trans>A Lymi deck</Trans>
-            </span>
-          </div>
-          <ul>
-            {rows.map((row) => (
-              <li
-                key={row.id}
-                className="grid gap-3 border-t border-edge px-5 py-5 first:border-t-0 @2xl:grid-cols-3 @2xl:gap-4 @2xl:first:border-t"
-              >
-                <p className="font-medium text-ink">{row.topic}</p>
-                <p className="text-ink-secondary">
-                  <span className="block text-xs tracking-[0.06em] text-ink-muted uppercase @2xl:sr-only">
-                    <Trans>A practice quiz</Trans>
-                  </span>
-                  {row.quiz}
-                </p>
-                <p className="text-ink">
-                  <span className="block text-xs tracking-[0.06em] text-ink-muted uppercase @2xl:sr-only">
-                    <Trans>A Lymi deck</Trans>
-                  </span>
-                  {row.deck}
-                </p>
-              </li>
-            ))}
-          </ul>
+        </Section.Body>
+      </Section.Header>
+      <div className="mt-10 overflow-hidden rounded-xl bg-plate edge">
+        <div
+          aria-hidden="true"
+          className="hidden grid-cols-3 gap-4 bg-plate-nested px-5 py-3 text-sm font-medium text-ink-secondary @2xl:grid"
+        >
+          <span />
+          <span>
+            <Trans>A practice quiz</Trans>
+          </span>
+          <span className="text-ink">
+            <Trans>A Lymi deck</Trans>
+          </span>
         </div>
+        <ul>
+          {rows.map((row) => (
+            <li
+              key={row.id}
+              className="grid gap-3 border-t border-edge px-5 py-5 first:border-t-0 @2xl:grid-cols-3 @2xl:gap-4 @2xl:first:border-t"
+            >
+              <p className="font-medium text-ink">{row.topic}</p>
+              <p className="text-ink-secondary">
+                <span className="block text-xs tracking-[0.06em] text-ink-muted uppercase @2xl:sr-only">
+                  <Trans>A practice quiz</Trans>
+                </span>
+                {row.quiz}
+              </p>
+              <p className="text-ink">
+                <span className="block text-xs tracking-[0.06em] text-ink-muted uppercase @2xl:sr-only">
+                  <Trans>A Lymi deck</Trans>
+                </span>
+                {row.deck}
+              </p>
+            </li>
+          ))}
+        </ul>
       </div>
-    </section>
+    </Section>
   );
 }

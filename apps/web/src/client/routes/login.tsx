@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { passwordProblem } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { z } from "zod";
 import { safeProductReturnPath } from "../../shared/origins";
 import { identifyApp } from "../components/app-mark";
@@ -19,6 +19,7 @@ import {
 } from "../lib/auth";
 import { desktop } from "../lib/desktop";
 import { useDocumentTitle } from "../lib/document-title";
+import { type FormErrors, type LoginFlow, loginFlow, type SentNotice } from "../lib/login-flow";
 import { passwordMessage } from "../lib/password-copy";
 import { clearPersistedLearnerState } from "../lib/persisted";
 import { minutesUntilRetry, tooManyAttempts } from "../lib/retry-after";
@@ -91,8 +92,6 @@ function verificationCallback(search: string): string {
   return `/login?${params.toString()}`;
 }
 
-type Notice = { title: ReactNode; body: ReactNode; actions?: ReactNode };
-
 function Login() {
   const { t, i18n } = useLingui();
   const queryClient = useQueryClient();
@@ -107,20 +106,18 @@ function Login() {
     returnTo: rawReturnTo,
   } = search;
   const returnTo = safeProductReturnPath(rawReturnTo);
-  const [mode, setMode] = useState<LoginMode>(openOn ?? "sign-in");
+  const [flow, dispatch] = useReducer(
+    loginFlow,
+    openOn,
+    (mode): LoginFlow => ({ status: "form", mode: mode ?? "sign-in", errors: {} }),
+  );
+  const { mode } = flow;
+  const attempts = useRef(0);
   const [email, setEmail] = useState(known ?? "");
   const [password, setPassword] = useState("");
   const [busy, setBusy] = useState<"google" | "apple" | null>(null);
-  const [submitting, setSubmitting] = useState(false);
-  const [failed, setFailed] = useState<string | null>(null);
   /** A provider failure belongs beside the sign-in buttons. */
   const [socialFailed, setSocialFailed] = useState<string | null>(null);
-  const [emailError, setEmailError] = useState<string | null>(null);
-  const [passwordError, setPasswordError] = useState<string | null>(null);
-  const [notice, setNotice] = useState<Notice | null>(null);
-  const [resending, setResending] = useState(false);
-  /** The learner already has an account, so the notice must not talk about creating one. */
-  const [needsConfirming, setNeedsConfirming] = useState(false);
   const issue = issueFor(error);
   useDocumentTitle(
     mode === "sign-up"
@@ -163,18 +160,9 @@ function Login() {
     })();
   }, [verify, error, clientId, queryClient, returnTo]);
 
-  function clearMessages() {
-    setFailed(null);
-    setSocialFailed(null);
-    setEmailError(null);
-    setPasswordError(null);
-  }
-
   function switchTo(next: LoginMode) {
-    setMode(next);
-    setNotice(null);
-    setNeedsConfirming(false);
-    clearMessages();
+    dispatch({ type: "switch", mode: next });
+    setSocialFailed(null);
   }
 
   /** Every learner-typed failure a credential call can return, as one sentence. */
@@ -201,28 +189,31 @@ function Login() {
     }
   }
 
-  function checkInbox(address: string, resend: () => void | Promise<void>, again = false): Notice {
-    return {
-      title: again ? <Trans>Sent again</Trans> : <Trans>Check your inbox</Trans>,
-      body: needsConfirming ? (
-        <Trans>If {address} isn’t confirmed yet, a confirmation link is on the way.</Trans>
-      ) : (
-        <Trans>Check {address}. A message is on the way with the next step.</Trans>
-      ),
-      actions: (
-        <>
-          <Button size="sm" variant="secondary" loading={resending} onClick={() => void resend()}>
-            <Trans>Send it again</Trans>
-          </Button>
-          <Button size="sm" variant="ghost" onClick={() => switchTo("sign-in")}>
-            <Trans>Back to sign in</Trans>
-          </Button>
-        </>
-      ),
-    };
+  const offline = () => t`Couldn’t reach Lymi. Check your connection and try again.`;
+
+  /** What a submit came to: the form's errors, a notice, or nothing while the page moves on. */
+  type Outcome = { errors: FormErrors } | { notice: SentNotice } | null;
+
+  /** Sends the confirmation link, answering with the failure to show, if any. */
+  async function sendVerification(address: string): Promise<string | null> {
+    try {
+      const res = await authClient.sendVerificationEmail({
+        email: address,
+        callbackURL: verificationCallback(window.location.search),
+      });
+      return res.error ? messageFor(res.error) : null;
+    } catch {
+      return offline();
+    }
   }
 
-  async function signUp(values: CredentialValues) {
+  async function resend(address: string) {
+    dispatch({ type: "resend" });
+    const error = await sendVerification(address);
+    dispatch(error ? { type: "resend-fail", error } : { type: "resent" });
+  }
+
+  async function signUp(values: CredentialValues): Promise<Outcome> {
     const res = await authClient.signUp.email(
       {
         email: values.email,
@@ -234,39 +225,14 @@ function Login() {
     );
     if (res.error) {
       const message = messageFor(res.error);
-      if (res.error.code?.startsWith("PASSWORD_")) setPasswordError(message);
-      else if (res.error.code === "INVALID_EMAIL") setEmailError(message);
-      else setFailed(message);
-      return;
+      if (res.error.code?.startsWith("PASSWORD_")) return { errors: { password: message } };
+      if (res.error.code === "INVALID_EMAIL") return { errors: { email: message } };
+      return { errors: { form: message } };
     }
-    setNeedsConfirming(false);
-    setNotice(checkInbox(values.email, () => resendVerification(values)));
+    return { notice: { kind: "confirm", address: values.email, again: false, known: false } };
   }
 
-  async function resendVerification(values: CredentialValues, first = false) {
-    setResending(!first);
-    try {
-      const res = await authClient.sendVerificationEmail({
-        email: values.email,
-        callbackURL: verificationCallback(window.location.search),
-      });
-      if (res.error) {
-        setNotice(null);
-        setFailed(messageFor(res.error));
-        return;
-      }
-    } catch {
-      setNotice(null);
-      setFailed(t`Couldn’t reach Lymi. Check your connection and try again.`);
-      return;
-    } finally {
-      setResending(false);
-    }
-    clearMessages();
-    setNotice(checkInbox(values.email, () => resendVerification(values), !first));
-  }
-
-  async function signIn(values: CredentialValues) {
+  async function signIn(values: CredentialValues): Promise<Outcome> {
     clearPersistedLearnerState({ keepQueued: true });
     const res = await authClient.signIn.email({
       email: values.email,
@@ -274,50 +240,37 @@ function Login() {
     });
     if (res.error) {
       if (res.error.code === "EMAIL_NOT_VERIFIED") {
-        setNeedsConfirming(true);
-        await resendVerification(values, true);
-        return;
+        const error = await sendVerification(values.email);
+        if (error) return { errors: { form: error } };
+        return { notice: { kind: "confirm", address: values.email, again: false, known: true } };
       }
-      setFailed(messageFor(res.error));
-      return;
+      return { errors: { form: messageFor(res.error) } };
     }
     queryClient.clear();
-    if (followOAuthRedirect(res.data)) return;
+    if (followOAuthRedirect(res.data)) return null;
     window.location.assign(returnTo);
+    return null;
   }
 
-  async function forgot(values: CredentialValues) {
+  async function forgot(values: CredentialValues): Promise<Outcome> {
     const res = await authClient.requestPasswordReset({
       email: values.email,
       // The address rides along so the page can hand it to a password manager.
       redirectTo: `/reset-password?${new URLSearchParams({ email: values.email })}`,
     });
-    if (res.error) {
-      setFailed(messageFor(res.error));
-      return;
-    }
-    const address = values.email;
-    setNotice({
-      title: <Trans>Check your inbox</Trans>,
-      body: (
-        <Trans>
-          If {address} has a Lymi password, a reset link is on the way. It works for one hour.
-        </Trans>
-      ),
-      actions: (
-        <Button size="sm" variant="ghost" onClick={() => switchTo("sign-in")}>
-          <Trans>Back to sign in</Trans>
-        </Button>
-      ),
-    });
+    if (res.error) return { errors: { form: messageFor(res.error) } };
+    return { notice: { kind: "reset", address: values.email } };
   }
 
   async function submit(values: CredentialValues) {
-    if (busy || submitting) return;
-    clearMessages();
+    if (busy || flow.status !== "form") return;
+    setSocialFailed(null);
     const address = values.email.trim();
     if (!address.includes("@")) {
-      setEmailError(t`Enter an email address, like you@example.com.`);
+      dispatch({
+        type: "show",
+        errors: { email: t`Enter an email address, like you@example.com.` },
+      });
       return;
     }
     // Signing in checks nothing: an old password that no longer meets the rule must still
@@ -325,25 +278,80 @@ function Login() {
     if (mode === "sign-up") {
       const problem = passwordProblem(values.password, address);
       if (problem) {
-        setPasswordError(i18n._(passwordMessage(problem)));
+        dispatch({ type: "show", errors: { password: i18n._(passwordMessage(problem)) } });
         return;
       }
     }
-    setSubmitting(true);
+    const attempt = ++attempts.current;
+    dispatch({ type: "submit", attempt });
+    let outcome: Outcome;
     try {
       const credentials = { email: address, password: values.password };
-      if (mode === "sign-up") await signUp(credentials);
-      else if (mode === "forgot") await forgot(credentials);
-      else await signIn(credentials);
+      outcome =
+        mode === "sign-up"
+          ? await signUp(credentials)
+          : mode === "forgot"
+            ? await forgot(credentials)
+            : await signIn(credentials);
     } catch {
-      setFailed(t`Couldn’t reach Lymi. Check your connection and try again.`);
-    } finally {
-      setSubmitting(false);
+      outcome = { errors: { form: offline() } };
     }
+    if (!outcome) return;
+    dispatch(
+      "notice" in outcome
+        ? { type: "send", attempt, notice: outcome.notice }
+        : { type: "fail", attempt, errors: outcome.errors },
+    );
+  }
+
+  function noticeFor(notice: SentNotice, resending: boolean) {
+    const back = (
+      <Button size="sm" variant="ghost" onClick={() => switchTo("sign-in")}>
+        <Trans>Back to sign in</Trans>
+      </Button>
+    );
+    const address = notice.address;
+    if (notice.kind === "reset") {
+      return {
+        title: <Trans>Check your inbox</Trans>,
+        body: (
+          <Trans>
+            If {address} has a Lymi password, a reset link is on the way. It works for one hour.
+          </Trans>
+        ),
+        actions: back,
+      };
+    }
+    return {
+      title: notice.again ? <Trans>Sent again</Trans> : <Trans>Check your inbox</Trans>,
+      body: notice.known ? (
+        <Trans>If {address} isn’t confirmed yet, a confirmation link is on the way.</Trans>
+      ) : (
+        <Trans>Check {address}. A message is on the way with the next step.</Trans>
+      ),
+      actions: (
+        <>
+          <Button
+            size="sm"
+            variant="secondary"
+            loading={resending}
+            onClick={() => void resend(address)}
+          >
+            <Trans>Send it again</Trans>
+          </Button>
+          {back}
+        </>
+      ),
+    };
+  }
+
+  function clearMessages() {
+    setSocialFailed(null);
+    dispatch({ type: "show", errors: {} });
   }
 
   async function social(provider: "google" | "apple") {
-    if (busy || submitting) return;
+    if (busy || flow.status === "submitting") return;
     // Google refuses an app's window, so the Mac app signs in in the browser, which hands back.
     const mac = desktop();
     if (mac?.signIn) {
@@ -369,25 +377,25 @@ function Login() {
       app={app}
       mode={mode}
       onModeChange={switchTo}
-      pending={busy ?? (submitting ? "form" : undefined)}
+      pending={busy ?? (flow.status === "submitting" ? "form" : undefined)}
       email={email}
       onEmailChange={(value) => {
         setEmail(value);
-        setEmailError(null);
+        if (flow.status === "form" && flow.errors.email)
+          dispatch({ type: "show", errors: { ...flow.errors, email: undefined } });
       }}
       password={password}
       onPasswordChange={(value) => {
         setPassword(value);
-        setPasswordError(null);
+        if (flow.status === "form" && flow.errors.password)
+          dispatch({ type: "show", errors: { ...flow.errors, password: undefined } });
       }}
       onSubmit={submit}
-      notice={notice ?? undefined}
+      notice={flow.status === "sent" ? noticeFor(flow.notice, flow.resending) : undefined}
       errors={{
         // The door's own failure: a Google attempt, or a callback that came back refused.
         door: socialFailed ?? (issue ? i18n._(issue) : undefined),
-        form: failed,
-        email: emailError,
-        password: passwordError,
+        ...(flow.status === "form" ? flow.errors : {}),
       }}
       onGoogle={() => social("google")}
       onApple={() => social("apple")}

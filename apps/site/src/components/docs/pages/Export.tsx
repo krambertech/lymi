@@ -6,8 +6,9 @@ export function Export() {
     <div className="doc-prose">
       <Lead>
         Take one deck or your whole library out of Lymi, with its pictures, due dates and review
-        history. An Anki package opens in Anki and Mochi. A Lymi file imports back into Lymi with
-        nothing lost, so you can move to another account or keep a copy of your own.
+        history. An Anki package opens in Anki and Mochi. A Lymi file keeps Lymi’s card fields,
+        media and review history for importing later. Sections and series are not recreated by the
+        importer yet.
       </Lead>
 
       <H2>Export in three steps</H2>
@@ -31,7 +32,8 @@ export function Export() {
         <div>
           <StepTitle>Download the file</StepTitle>
           <p>
-            Lymi writes the file on its server. A deck takes a few seconds; a large library with
+            Anki packages and Lymi files are written on the server. A spreadsheet is made on your
+            device and downloads directly. A deck usually takes a few seconds; a large library with
             many pictures takes longer, and you can close the app while it works. When the file is
             ready, press <strong>Download</strong>. The file also waits in <strong>Activity</strong>{" "}
             for a day.
@@ -39,16 +41,22 @@ export function Export() {
         </div>
       </Steps>
 
+      <p>
+        In the phone app, open <strong>Export library</strong> in <strong>You</strong>, or{" "}
+        <strong>Export deck</strong> from a deck’s menu. Tap a format to start, then choose{" "}
+        <strong>Save or share</strong> when it is ready.
+      </p>
+
       <H2>What each format holds</H2>
       <Defs
         items={[
           {
             term: "Anki package (.apkg)",
-            def: "One note per card with its term, meaning, pronunciation, example, notes and tags. A card asked both ways has two Anki cards. Each card keeps its due date, its memory state and every review you graded, and its picture and any pronunciation Lymi generated come along as media.",
+            def: "One note per card with its term, meaning, pronunciation, example, notes and tags. A card asked both ways has two Anki cards. Each card keeps its due date, its memory state and every review you graded, and its picture, recordings and any pronunciation Lymi generated come along as media.",
           },
           {
             term: "Lymi file (.zip)",
-            def: "Everything Lymi stores about your cards: every field and where it came from, tags, review modes, pictures with their descriptions, due dates and the full review history. Importing it into Lymi gives back the same decks and cards.",
+            def: "Card fields and learning progress: every field and where it came from, tags, review modes, pictures with their descriptions, due dates and the full review history. The importer restores the cards into decks, but does not recreate sections or series.",
           },
           {
             term: "Spreadsheet (.csv)",
@@ -80,21 +88,15 @@ export function Export() {
 
       <H2>Import a Lymi file</H2>
       <p>
-        Open <strong>Settings</strong>, choose <strong>Lymi</strong> under <strong>Import</strong>,
-        and choose the <code>.zip</code> file without unzipping it. The import shows what comes
-        across before it writes anything, like an import from Anki. Words you already have in the
-        same language are skipped, and past reviews show in Insights without counting toward today’s
-        goal.
-      </p>
-      <p>
-        Sections and series are kept in the file but do not come back yet; the cards arrive in their
-        decks without them.
+        Choose <strong>Lymi</strong> under Import and select the original <code>.zip</code> file.
+        The <a href="/docs/import-from-lymi">Lymi import guide</a> explains the preview, what comes
+        back and the limits.
       </p>
 
       <H2>Shared decks</H2>
       <p>
-        You can export a deck you joined. The file holds the deck’s cards with your own due dates
-        and your own review history, never another learner’s.
+        Only decks you own can be exported. A library export leaves out decks shared with you. Your
+        own decks include your due dates and review history, never another learner’s.
       </p>
 
       <H2>If something goes wrong</H2>

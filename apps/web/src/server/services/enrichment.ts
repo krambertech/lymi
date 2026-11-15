@@ -9,13 +9,23 @@ import {
   missingReadings,
   newId,
   normalizeCardText,
+  readingWithoutPitch,
   unsetFields,
+  withPitch,
 } from "@lymi/core";
 import { eventLanguages } from "@lymi/core/analytics";
 import { and, desc, eq, inArray, isNull, ne, notInArray, or, type SQL, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
-import type { TextProvider } from "../ai";
+import type { TextModel, TextProvider } from "../ai";
 import { type Db, schema } from "../db";
+import {
+  PITCH_EFFORT,
+  PITCH_INSTRUCTIONS,
+  PITCH_PROMPT_VERSION,
+  PITCH_REPLY_SCHEMA,
+  pitchInput,
+  readPitchReply,
+} from "../enrichment/pitch";
 import {
   cardBrief,
   chunked,
@@ -30,7 +40,7 @@ import {
   readReply,
   type Sample,
 } from "../enrichment/prompt";
-import { addsExampleReadings } from "../languages";
+import { addsExampleReadings, enrichmentModel } from "../languages";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
@@ -196,9 +206,18 @@ async function samplesFor(db: Db, deck: DeckRow, exclude: readonly string[]): Pr
 }
 
 /** The model's reply for a run of cards, or an empty list when it answers with nothing usable. */
-async function askProvider(provider: TextProvider, input: string): Promise<Filled[]> {
+async function askProvider(
+  provider: TextProvider,
+  input: string,
+  model: TextModel | undefined,
+): Promise<Filled[]> {
   return readReply(
-    await provider.complete({ instructions: ENRICHMENT_INSTRUCTIONS, input, schema: REPLY_SCHEMA }),
+    await provider.complete({
+      instructions: ENRICHMENT_INSTRUCTIONS,
+      input,
+      schema: REPLY_SCHEMA,
+      ...model,
+    }),
   );
 }
 
@@ -280,8 +299,11 @@ export async function enrichCards(
     addReadings: mayAddReadings(card, decks.get(card.deckId)),
   }));
 
-  let filled = new Map<string, Filled>();
+  const filled = new Map<string, Filled>();
   const briefs: DeckBrief[] = [];
+  // A failed call's cards stay `working`, so the step's retry asks only for them.
+  const retrying = new Set<string>();
+  let failure: { reason: unknown } | undefined;
   const asked = (ask: (typeof asks)[number]) => ask.mayFill.length > 0 || ask.addReadings !== null;
   if (asks.some(asked)) {
     for (const deck of deckRows) {
@@ -299,14 +321,35 @@ export async function enrichCards(
       );
     }
     const { meaningLanguage } = await getSettings(ctx);
-    const input = enrichmentInput(
-      meaningLanguage,
-      briefs,
-      asks.flatMap((ask) =>
-        asked(ask) ? [cardBrief(ask.card, ask.mayFill, ask.addReadings !== null)] : [],
-      ),
+    // A run can mix languages, and one call has one model.
+    const byModel = new Map<TextModel | undefined, typeof asks>();
+    for (const ask of asks.filter(asked)) {
+      const language = ask.card.language ?? decks.get(ask.card.deckId)?.defaultLanguage;
+      const model = enrichmentModel(language);
+      byModel.set(model, [...(byModel.get(model) ?? []), ask]);
+    }
+    const groups = [...byModel];
+    const replies = await Promise.allSettled(
+      groups.map(([model, group]) => {
+        const deckIds = new Set(group.map((ask) => ask.card.deckId));
+        const input = enrichmentInput(
+          meaningLanguage,
+          briefs.filter((brief) => deckIds.has(brief.id)),
+          group.map((ask) => cardBrief(ask.card, ask.mayFill, ask.addReadings !== null)),
+        );
+        return askProvider(provider, input, model);
+      }),
     );
-    filled = new Map((await askProvider(provider, input)).map((card) => [card.id, card]));
+    const lost = replies.flatMap((reply) => (reply.status === "rejected" ? [reply] : []));
+    if (lost[0] && lost.length === replies.length) throw lost[0].reason;
+    failure = lost[0];
+    for (const [at, reply] of replies.entries()) {
+      if (reply.status === "fulfilled") {
+        for (const card of reply.value) filled.set(card.id, card);
+      } else {
+        for (const ask of groups[at]?.[1] ?? []) retrying.add(ask.card.id);
+      }
+    }
   }
 
   const now = new Date();
@@ -314,6 +357,7 @@ export async function enrichCards(
   const attempted = new Map<string, EnrichmentWrite>();
   let skipped = 0;
   for (const { card, mayFill: allowed, addReadings } of asks) {
+    if (retrying.has(card.id)) continue;
     const reply = filled.get(card.id);
     const write = reply ? enrichmentWrite(card, reply, allowed, addReadings) : {};
     if (reply) {
@@ -403,7 +447,110 @@ export async function enrichCards(
     has_style: briefs.some((deck) => deck.style),
     ...(rows.length ? { languages: eventLanguages(languages) } : {}),
   });
+  if (failure) throw failure.reason;
   return { enriched: rows.length };
+}
+
+/**
+ * Adds a pitch accent to the AI's Readings on Japanese cards a run just filled, in a deck that lets
+ * the AI fill the Reading, and to a term written only in kana, which then gains one. A Reading the
+ * learner, a lesson or an import wrote stays theirs. The model takes seconds, so each write
+ * carries its own test that the Reading is still the one it read. docs/card-writing.md.
+ */
+export async function fillPitchAccents(
+  ctx: ServiceContext,
+  cardIds: readonly string[],
+  provider: TextProvider,
+): Promise<{ filled: number }> {
+  const { db, userId } = ctx;
+  const cards = await selectIn(cardIds, (ids) =>
+    db
+      .select()
+      .from(schema.cards)
+      .where(and(eq(schema.cards.userId, userId), inArray(schema.cards.id, ids))),
+  );
+  const deckRows = await selectIn([...new Set(cards.map((card) => card.deckId))], (ids) =>
+    db
+      .select({
+        id: schema.decks.id,
+        defaultLanguage: schema.decks.defaultLanguage,
+        purpose: schema.decks.purpose,
+        enrichFields: schema.decks.enrichFields,
+      })
+      .from(schema.decks)
+      .where(inArray(schema.decks.id, ids)),
+  );
+  const decks = new Map(deckRows.map((deck) => [deck.id, deck]));
+  const asks = cards.flatMap((card) => {
+    const deck = decks.get(card.deckId);
+    const fields = deckEnrichFields(deck?.enrichFields, deck?.defaultLanguage, deck?.purpose);
+    if (!fields.includes("pronunciation")) return [];
+    if (card.pronunciation && card.pronunciationSource !== "ai") return [];
+    const reading = readingWithoutPitch(card);
+    return reading === null ? [] : [{ card, reading }];
+  });
+  if (asks.length === 0) return { filled: 0 };
+  const accents = readPitchReply(
+    await provider.complete({
+      instructions: PITCH_INSTRUCTIONS,
+      input: pitchInput(
+        asks.map(({ card, reading }) => ({ id: card.id, term: card.term, reading })),
+      ),
+      schema: PITCH_REPLY_SCHEMA,
+      effort: PITCH_EFFORT,
+    }),
+  );
+  const now = new Date();
+  const writes = asks.flatMap(({ card, reading }) => {
+    const accent = accents.get(card.id);
+    if (accent === undefined) return [];
+    const pronunciation = withPitch(reading, accent);
+    if (pronunciation === reading) return [];
+    return [
+      db
+        .update(schema.cards)
+        .set({
+          pronunciation,
+          pronunciationSource: "ai",
+          revision: sql`revision + 1`,
+          updatedAt: now,
+        })
+        .where(
+          and(
+            eq(schema.cards.id, card.id),
+            eq(schema.cards.userId, userId),
+            card.pronunciation === null
+              ? isNull(schema.cards.pronunciation)
+              : eq(schema.cards.pronunciation, card.pronunciation),
+          ),
+        )
+        .returning({
+          id: schema.cards.id,
+          deckId: schema.cards.deckId,
+          pronunciation: schema.cards.pronunciation,
+        }),
+    ];
+  });
+  const [firstWrite, ...restWrites] = writes;
+  const landed = firstWrite ? (await db.batch([firstWrite, ...restWrites])).flat() : [];
+  const [firstRow, ...restRows] = landed.map(({ id, deckId, pronunciation }) =>
+    auditStatement(ctx, {
+      entity: "card",
+      action: "enrich",
+      id,
+      deckId,
+      details: { pronunciation },
+    }),
+  );
+  if (firstRow) await db.batch([firstRow, ...restRows]);
+  track(ctx.analytics, {
+    name: "pitch_accent_filled",
+    outcome: landed.length ? "filled" : "empty",
+    count: landed.length,
+    asked: asks.length,
+    prompt_version: PITCH_PROMPT_VERSION,
+  });
+  return { filled: landed.length };
 }
 
 /** A card whose run gives up ends at `failed`, so the screen stops waiting on it. */
@@ -490,8 +637,7 @@ export async function runState(
  * never start.
  */
 export async function queueEnrichment(
-  db: Db,
-  userId: string,
+  { db, userId, analytics }: ServiceContext,
   cardIds: string[],
   queue: EnrichmentQueue,
   trigger: NonNullable<EnrichRunParams["trigger"]> = "add",
@@ -500,12 +646,30 @@ export async function queueEnrichment(
   try {
     await queue.create({ id, params: { userId, cardIds, trigger } });
     return true;
-  } catch {
+  } catch (error) {
     // The same add sent twice at once can race for the run's name; the one that lost is answered.
     if ((await runState(queue, id)) === "live") return true;
+    console.error(
+      JSON.stringify({
+        event: "enrichment_not_queued",
+        trigger,
+        error: error instanceof Error ? error.name : "unknown",
+      }),
+    );
     // An edit's run was only to translate; a fill under way belongs to another run.
-    if (trigger !== "edit") await failEnrichment(db, userId, cardIds);
-    await failTranslations(db, userId, cardIds);
+    if (trigger !== "edit") {
+      await failEnrichment(db, userId, cardIds);
+      track(analytics, {
+        name: "enrichment_finished",
+        outcome: "failed",
+        count: cardIds.length,
+        trigger,
+      });
+    }
+    const failed = await failTranslations(db, userId, cardIds);
+    if (failed > 0) {
+      track(analytics, { name: "example_translated", outcome: "failed", count: failed, trigger });
+    }
     return false;
   }
 }

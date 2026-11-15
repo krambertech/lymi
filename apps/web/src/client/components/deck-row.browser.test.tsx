@@ -44,7 +44,7 @@ test("a joined deck names its owner and an owned deck names nobody", async () =>
 
   // A deck shared by link keeps the letter plate: only publishing makes a photo public.
   expect(ownerLine(joined)?.querySelector("img")).toBeNull();
-  expect(ownerLine(joined)?.querySelector(".bg-plate-2")).not.toBeNull();
+  expect(ownerLine(joined)?.querySelector(".bg-plate-nested")).not.toBeNull();
 });
 
 test("a deck added from Explore draws its publisher's mark", async () => {
@@ -90,6 +90,6 @@ test("a deck added from Explore draws its publisher's mark", async () => {
   // Lymi's own decks get the lantern tile rather than an "L" on a plate.
   const lymi = page.getByRole("link", { name: /Eesti keel, B1/ }).element();
   expect(ownerLine(lymi)?.querySelector("svg")).not.toBeNull();
-  expect(ownerLine(lymi)?.querySelector(".bg-plate-2")).toBeNull();
+  expect(ownerLine(lymi)?.querySelector(".bg-plate-nested")).toBeNull();
   expect(lymi.textContent).toContain("Shared by Lymi");
 });

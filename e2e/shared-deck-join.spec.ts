@@ -79,8 +79,8 @@ test("an owner shares a deck and a classmate joins through the link", async ({
 
     // A new account lands on Today with the deck ready to review.
     await expect(classmate).toHaveURL(/\/today$/);
-    await expect(classmate.getByText(`${deckName} is ready.`, { exact: false })).toBeVisible();
-    await classmate.getByRole("link", { name: /^Review/ }).click();
+    await expect(classmate.getByRole("heading", { name: deckName, exact: true })).toBeVisible();
+    await classmate.getByRole("link", { name: /^Start your first review/ }).click();
     await expect(classmate).toHaveURL(new RegExp(`/review\\?deck=${deckId}$`));
     await expect(classmate.getByLabel(/ card for (tere hommikust|good morning)$/)).toBeVisible();
   });
@@ -109,6 +109,7 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     await expect(menu.getByRole("menuitem")).toHaveText([
       "About this deck",
       "Select cards",
+      "Report deck",
       "Leave deck",
     ]);
     // A member selects to review chosen cards; changing them stays the owner's.
@@ -122,13 +123,13 @@ test("an owner shares a deck and a classmate joins through the link", async ({
     await classmate.keyboard.press("Escape");
     await toolbar.getByRole("button", { name: "Stop selecting" }).click();
 
-    // The important mark is the member's own, so it is the one item their card menu holds.
+    // The important mark is the member's own, and reporting is the one other thing they can do.
     await classmate.getByText("tere hommikust", { exact: true }).click();
     await expect(classmate.getByRole("button", { name: "Edit card" })).toHaveCount(0);
     await classmate.getByRole("button", { name: "Card options" }).click();
     await expect(
       classmate.getByRole("menu", { name: "Card options" }).getByRole("menuitem"),
-    ).toHaveText(["Mark important"]);
+    ).toHaveText(["Mark important", "Report card"]);
     await classmate.keyboard.press("Escape");
     await classmate.keyboard.press("Escape");
 
@@ -197,7 +198,7 @@ test("an owner turns the join link off and a member leaves", async ({
 
   await test.step("opening the link again changes nothing", async () => {
     await classmate.goto(joinUrl);
-    await expect(classmate.getByText("You are already in this deck.")).toBeVisible();
+    await expect(classmate.getByText("You’re already in this deck.")).toBeVisible();
     await expect(classmate.getByRole("link", { name: "Open deck" })).toBeVisible();
     const again = await classmate.request.post(`/api/join/${joinUrl.split("/").at(-1)}`, {
       headers: { "content-type": "application/json" },

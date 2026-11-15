@@ -14,7 +14,7 @@ export function Figure({ caption, children, plate = true, className }: Props) {
   return (
     <figure className={clsx("my-6", className)}>
       <div className={clsx(plate && "rounded-md bg-plate p-4 edge sm:p-5")}>{children}</div>
-      <figcaption className="mt-2.5 max-w-[60ch] text-sm text-muted">{caption}</figcaption>
+      <figcaption className="mt-2.5 max-w-[60ch] text-sm text-ink-muted">{caption}</figcaption>
     </figure>
   );
 }

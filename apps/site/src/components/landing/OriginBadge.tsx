@@ -31,7 +31,7 @@ function Badge({
   return (
     <p
       className={clsx(
-        "edge mb-6 h-8 w-fit items-center gap-2 rounded-full bg-plate ps-2.5 pe-3.5 text-sm font-medium text-text",
+        "edge mb-6 h-8 w-fit items-center gap-2 rounded-full bg-plate ps-2.5 pe-3.5 text-sm font-medium text-ink",
         always ? "flex" : ["hidden", SHOWN[origin]],
       )}
     >

@@ -19,9 +19,9 @@ export function AuthNotice({ tone, children, title, role, className }: Props) {
       role={role}
       className={clsx(
         "flex items-start gap-3 rounded-md p-4 text-start",
-        tone === "success" && "bg-good-soft",
+        tone === "success" && "bg-success-soft",
         tone === "danger" && "bg-danger-soft",
-        tone === "neutral" && "bg-plate-2",
+        tone === "neutral" && "bg-plate-nested",
         className,
       )}
     >
@@ -30,18 +30,18 @@ export function AuthNotice({ tone, children, title, role, className }: Props) {
         strokeWidth={1.75}
         className={clsx(
           "mt-0.5 size-5 shrink-0",
-          tone === "success" && "text-good",
+          tone === "success" && "text-success",
           tone === "danger" && "text-danger",
-          tone === "neutral" && "text-muted",
+          tone === "neutral" && "text-ink-muted",
         )}
       />
       <div className="min-w-0">
-        {title && <p className="text-base font-medium text-text">{title}</p>}
+        {title && <p className="text-base font-medium text-ink">{title}</p>}
         <div
           className={clsx(
             "text-sm leading-relaxed",
             title && "mt-1",
-            tone === "danger" ? "text-danger" : "text-text-2",
+            tone === "danger" ? "text-danger" : "text-ink-secondary",
           )}
         >
           {children}

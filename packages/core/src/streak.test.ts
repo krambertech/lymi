@@ -1,5 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { bestStreak, daysReviewed, type StreakDay, streakLength, summariseStreak } from "./streak";
+import {
+  bestStreak,
+  daySatisfied,
+  daysReviewed,
+  keepsRun,
+  runDates,
+  type StreakDay,
+  streakLength,
+  summariseStreak,
+} from "./streak";
 
 const addDays = (date: string, n: number) =>
   new Date(Date.parse(`${date}T00:00:00Z`) + n * 86_400_000).toISOString().slice(0, 10);
@@ -189,5 +198,53 @@ describe("summariseStreak", () => {
       longest: 3,
       restDays: ["2026-03-03"],
     });
+  });
+});
+
+describe("the day rule", () => {
+  const day = (date: string, outcome: StreakDay["outcome"], satisfied = false): StreakDay => ({
+    date,
+    attempts: 0,
+    goal: 25,
+    satisfied,
+    outcome,
+  });
+
+  it("counts a met or exhausted day, and nothing else", () => {
+    expect(daySatisfied("goal_met")).toBe(true);
+    expect(daySatisfied("exhausted")).toBe(true);
+    expect(daySatisfied("nothing_due")).toBe(false);
+    expect(daySatisfied("open")).toBe(false);
+    expect(daySatisfied(null)).toBe(false);
+  });
+
+  it("keeps the run through a counted or nothing-due day", () => {
+    expect(keepsRun(day("2026-03-01", "goal_met", true))).toBe(true);
+    expect(keepsRun(day("2026-03-01", "nothing_due"))).toBe(true);
+    expect(keepsRun(day("2026-03-01", "open"))).toBe(false);
+    expect(keepsRun(undefined)).toBe(false);
+  });
+
+  it("draws the run across counted and rest days, skipping a nothing-due day", () => {
+    const days = [
+      day("2026-02-28", "open"),
+      day("2026-03-01", "goal_met", true),
+      day("2026-03-02", "nothing_due"),
+      day("2026-03-03", "open"),
+      day("2026-03-04", "goal_met", true),
+    ];
+    expect([...runDates(days, ["2026-03-03"], { date: "2026-03-05", outcome: "open" })]).toEqual([
+      "2026-03-04",
+      "2026-03-03",
+      "2026-03-01",
+    ]);
+  });
+
+  it("starts from today once today counts, across a month's end", () => {
+    const days = [day("2026-02-28", "goal_met", true), day("2026-03-01", "exhausted", true)];
+    expect([...runDates(days, [], { date: "2026-03-01", outcome: "exhausted" })]).toEqual([
+      "2026-03-01",
+      "2026-02-28",
+    ]);
   });
 });

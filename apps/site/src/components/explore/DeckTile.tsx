@@ -49,20 +49,20 @@ export function DeckTile({
       )}
       <h3
         lang={deck.meaningLanguage}
-        className="mt-3.5 text-lg leading-tight font-medium tracking-[-0.025em] text-balance text-text"
+        className="mt-3.5 text-lg leading-tight font-medium tracking-[-0.025em] text-balance text-ink"
       >
         {deck.name}
       </h3>
-      <p lang={deck.meaningLanguage} className="mt-1 line-clamp-2 text-sm text-text-2">
+      <p lang={deck.meaningLanguage} className="mt-1 line-clamp-2 text-sm text-ink-secondary">
         {deck.summary}
       </p>
-      <p className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-muted tabular-nums">
+      <p className="mt-2 flex flex-wrap items-center gap-x-1.5 gap-y-1 text-xs text-ink-muted tabular-nums">
         <span>
           <Plural value={deck.cardCount} one="# card" other="# cards" />
         </span>
         {deck.sectionCount > 0 && (
           <>
-            <span aria-hidden="true" className="text-faint">
+            <span aria-hidden="true" className="text-ink-faint">
               ·
             </span>
             <span>

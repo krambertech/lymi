@@ -40,14 +40,14 @@ export function UpdateLymi({ state }: { state: UpdateRequired }) {
           <Lantern size={120} />
         </Animated.View>
         <Animated.View entering={arrive(160)} className="items-center gap-2">
-          <Text className="text-3xl font-medium text-text" accessibilityRole="header">
+          <Text className="text-3xl font-medium text-ink" accessibilityRole="header">
             {t`Update Lymi`}
           </Text>
-          <Text className="text-center text-md text-text-2">
+          <Text className="text-center text-md text-ink-secondary">
             {t`This version of the app is out of date. Update it to keep reviewing.`}
           </Text>
           {waiting && (
-            <Text className="text-center text-md text-text-2">
+            <Text className="text-center text-md text-ink-secondary">
               {t`Your unsent reviews and cards are saved on this phone. They send after the update.`}
             </Text>
           )}

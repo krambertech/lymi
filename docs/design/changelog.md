@@ -23,7 +23,7 @@ The Ukrainian and Russian files are transcreated from the English with the [tran
 Every update shows one picture, in a 16:10 tray in one of the eight Explore hues, stepped from the oldest update so neighbours differ and a new update repaints nothing. Every picture has the same shape, so the list keeps one rhythm and any picture can stand in for the update elsewhere. A figure is scaled down to fit its tray; a screenshot is placed by percentages, so it crops the same on a phone as on a desktop. Choose, in order:
 
 1. **A screenshot**, only when the screen itself impresses or explains: a redesigned screen, or one part of a screen that shows the change at a glance. A screen that is mostly empty, or that needs the text to make sense, is not one.
-2. **A figure**, for everything else: a landing demo or a drawing made for the update, listed in `changelog-figures.ts` and drawn by `ChangelogFigure` at 460 px wide. A drawing uses the product's own components and words, shows one moment, and leaves out anything the update does not mention.
+2. **A figure**, for everything else: a landing demo or a drawing made for the update, listed in `changelog-figures.ts` and drawn by `ChangelogFigure` at 460 px wide. A drawing uses the product's own components and words, shows one moment, and leaves out anything the update does not mention. A large launch can be a scene instead: a short loop drawn at the tray's own 660 by 412, named in `CHANGELOG_SCENES`, that holds its last beat under reduced motion.
 
 ### Screenshots
 

@@ -30,7 +30,7 @@ interface MarkProps {
 /** An icon in a fixed square, so a column of marks lines up whatever the glyph. */
 export function Mark({
   icon: Icon,
-  iconClass = "text-muted",
+  iconClass = "text-ink-muted",
   size = "md",
   className,
   style,

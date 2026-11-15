@@ -62,6 +62,7 @@ const owned = {
   role: "owner" as const,
   owner: { id: "user-1", name: "Kateryna", avatarUrl: null, former: false },
   published: false,
+  pronunciationDisplay: "adaptive" as const,
 };
 
 const deck: Awaited<ReturnType<typeof getDeck>> = {
@@ -100,10 +101,11 @@ const card: CardView = {
   exampleTranslation: null,
   exampleTranslationSource: null,
   exampleTranslationStale: false,
+  exampleRecorded: false,
   exampleTranslationStatus: null,
   notes: null,
-  hook: null,
-  hookSource: null,
+  hint: null,
+  hintSource: null,
   language: "it",
   tags: [],
   source: null,
@@ -292,6 +294,8 @@ describe("Lymi MCP server", () => {
       analyticsConsentUpdatedAt: null,
       aiConsent: null,
       aiConsentUpdatedAt: null,
+      sessionReplay: null,
+      learningEmails: null,
       dailyGoalChosenAt: null,
       reviewTimezone: null,
       reviewTimezoneMode: "automatic",
@@ -366,6 +370,8 @@ describe("Lymi MCP server", () => {
       analyticsConsentUpdatedAt: null,
       aiConsent: null,
       aiConsentUpdatedAt: null,
+      sessionReplay: null,
+      learningEmails: null,
       dailyGoalChosenAt: null,
       reviewTimezone: null,
       reviewTimezoneMode: "automatic",
@@ -424,6 +430,8 @@ describe("Lymi MCP server", () => {
       analyticsConsentUpdatedAt: null,
       aiConsent: null,
       aiConsentUpdatedAt: null,
+      sessionReplay: null,
+      learningEmails: null,
       dailyGoalChosenAt: null,
       reviewTimezone: null,
       reviewTimezoneMode: "automatic",
@@ -579,7 +587,7 @@ describe("Lymi MCP server", () => {
 
   it("summarises a mentioned deck like get_deck, not as every card's fields", async () => {
     const rows = Array.from({ length: 365 }, (_, i) => ({
-      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hook: "h".repeat(300) },
+      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hint: "h".repeat(300) },
       state: null,
     }));
     services.getDeck.mockResolvedValue(deck);
@@ -720,6 +728,20 @@ describe("Lymi MCP server", () => {
       undefined,
     );
     expect(res.structuredContent).toMatchObject({ id: "card-1", term: "sbrigarsi" });
+  });
+
+  it("returns a card's hint under its old name too, for a client that kept the old schema", async () => {
+    services.updateCard.mockResolvedValue({ ...card, hint: "Sbrigati!", hintSource: "manual" });
+    const client = await connect("write");
+    const res = await client.callTool({
+      name: "update_card",
+      arguments: { cardId: "card-1", hint: "Sbrigati!" },
+    });
+    expect(res.structuredContent).toMatchObject({
+      hint: "Sbrigati!",
+      hintSource: "manual",
+    });
+    expect(res.structuredContent).not.toHaveProperty("hook");
   });
 
   it("archives many cards in one call and reports each card's outcome in order", async () => {
@@ -1230,7 +1252,7 @@ describe("Lymi MCP server", () => {
 
   it("summarises a large deck in a few kilobytes and points to search_cards for the rest", async () => {
     const rows = Array.from({ length: 365 }, (_, i) => ({
-      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hook: "h".repeat(300) },
+      card: { ...card, id: `card-${i}`, notes: "n".repeat(300), hint: "h".repeat(300) },
       state: null,
     }));
     services.getDeck.mockResolvedValue(deck);
@@ -1381,6 +1403,30 @@ describe("Lymi MCP server", () => {
     expect(schema).not.toContain("$ref");
     expect(schema).not.toContain("$defs");
     expect(schema).not.toContain("definitions");
+  });
+
+  it("names the assistant on every tool call it records", async () => {
+    const captured: unknown[] = [];
+    const server = buildMcpServer({
+      ctx: {
+        db: {} as Db,
+        userId: "user-1",
+        actor: "mcp",
+        analytics: { writeDataPoint: () => {}, capture: (event) => captured.push(event) },
+      },
+      scope: "read",
+      resourceMetadataUrl: "https://my.lymi.app/.well-known/oauth-protected-resource/mcp",
+      assistant: "chatgpt",
+    });
+    const [clientSide, serverSide] = InMemoryTransport.createLinkedPair();
+    const client = new Client({ name: "test", version: "0.0.0" });
+    await Promise.all([server.connect(serverSide), client.connect(clientSide)]);
+
+    await client.callTool({ name: "list_decks", arguments: {} });
+
+    expect(captured).toContainEqual(
+      expect.objectContaining({ name: "mcp_tool", tool: "list_decks", assistant: "chatgpt" }),
+    );
   });
 
   it("rejects a batch the schema does not allow before any service runs", async () => {

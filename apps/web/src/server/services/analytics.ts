@@ -32,7 +32,9 @@ export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEven
                 ? `${event.client}:${event.confirmed_with}`
                 : event.name === "export_started"
                   ? `${event.format}:${event.scope}`
-                  : "";
+                  : event.name === "apple_revocation_attempted"
+                    ? `${event.outcome}:${event.reason ?? ""}`
+                    : "";
   const value =
     event.name === "card_added" || event.name === "enrichment_finished"
       ? event.count
@@ -84,9 +86,6 @@ export function textCallReporter(dataset: AnalyticsWriter | undefined, span: AiS
 }
 
 const SPEECH_VENDORS = {
-  "gemini-api": "google",
-  "google-gemini": "google",
-  "google-chirp": "google",
   openai: "openai",
   elevenlabs: "elevenlabs",
 } as const satisfies Record<SpeechCall["provider"], string>;
@@ -97,13 +96,8 @@ export function trackSpeechCall(
   call: SpeechCall,
   span: "pronunciation" | "example_audio" = "pronunciation",
 ): void {
-  // A failed call is not billed, except a Gemini reply whose audio was then refused.
-  const cost =
-    call.error && call.outputTokens === undefined ? undefined : speechCallCost(call.model, call);
-  const tokens = (value: number | undefined) =>
-    value === undefined ? undefined : Math.round(value);
-  const output = tokens(call.outputTokens);
-  const input = tokens(call.inputTokens);
+  // A failed call is not billed.
+  const cost = call.error ? undefined : speechCallCost(call.model, call);
   track(dataset, {
     name: "$ai_generation",
     $ai_trace_id: crypto.randomUUID(),
@@ -111,8 +105,6 @@ export function trackSpeechCall(
     $ai_span_name: span,
     $ai_provider: SPEECH_VENDORS[call.provider],
     $ai_model: call.model,
-    ...(input !== undefined ? { $ai_input_tokens: input } : {}),
-    ...(output !== undefined ? { $ai_output_tokens: output } : {}),
     characters: call.characters,
     $ai_latency: call.latencyMs / 1000,
     $ai_is_error: call.error,

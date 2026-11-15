@@ -116,8 +116,7 @@ export function Sidebar({
         className,
       )}
     >
-      {/* In the Mac app the traffic lights take the lockup's place, level with the screen's bar. */}
-      <div className="mx-3 mt-[var(--rail-lockup-top,2rem)] mb-6 flex h-10 shrink-0 items-center gap-1 px-2.5">
+      <div className="mx-3 mt-[var(--rail-lockup-top,2rem)] mb-(--rail-lockup-gap,1.5rem) flex h-10 shrink-0 items-center gap-1 px-2.5">
         <TileLockup size="rail" className="me-auto" />
         {streak}
         {onSearch && (
@@ -156,7 +155,9 @@ export function Sidebar({
           {groups.series.map(({ series: group, decks: inSeries }) =>
             inSeries.length > 0 ? (
               <Fragment key={group.id}>
-                <RailHeading className="truncate">{group.name}</RailHeading>
+                <RailHeading dir="auto" className="truncate">
+                  {group.name}
+                </RailHeading>
                 {inSeries.map(deckRow)}
               </Fragment>
             ) : null,
@@ -212,10 +213,15 @@ export function AppShell({
       {sidebar && <div className="sticky top-0 h-dvh shrink-0 self-start">{sidebar}</div>}
       <main
         className={clsx(
-          "@container flex min-w-0 flex-1 flex-col pt-safe px-safe",
+          "@container flex min-w-0 flex-1 flex-col px-safe",
           fill && "min-h-0 overflow-y-auto",
         )}
       >
+        {/* The top inset as a strip that stays put, so on the Mac nothing scrolls up into the title bar. */}
+        <div
+          aria-hidden="true"
+          className="pointer-events-none sticky top-0 z-(--z-sticky) h-(--inset-top) shrink-0 mac:bg-canvas"
+        />
         {children}
       </main>
       {nav && (
@@ -272,19 +278,18 @@ export function TileLockup({
 }) {
   const { tile, word } = LOCKUP[size];
   return (
-    // `data-brand-tile`: the Mac app's traffic lights take this place, so it hides there.
-    <span data-brand-tile className={clsx("flex items-center gap-2.5", className)}>
+    <span className={clsx("flex items-center gap-2.5", className)}>
       {/* On the bar the tile sits on the canvas, which in the dark room is the tile's own colour. */}
       <AppTile size={tile} title="Lymi" className={size === "bar" ? "edge" : undefined} />
       {/* The phone's bar holds the tile alone: the wordmark read as a second title over the screen's own. */}
-      {size === "rail" && <Wordmark size={word} className="text-text" />}
+      {size === "rail" && <Wordmark size={word} className="text-ink" />}
     </span>
   );
 }
 
 // `screen-back` lets a screen that colours its header retint the hover.
 const backClass =
-  "screen-back -ms-2.5 inline-flex h-11 min-w-11 max-w-[65%] items-center gap-0.5 rounded-sm pe-2.5 ps-1 text-md text-text-2 transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 hoverable:hover:bg-plate-2 hoverable:hover:text-text [&_svg]:size-[22px] [&_svg]:shrink-0";
+  "screen-back -ms-2.5 inline-flex h-11 min-w-11 max-w-[65%] items-center gap-0.5 rounded-sm pe-2.5 ps-1 text-md text-ink-secondary transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 hoverable:hover:bg-plate-nested hoverable:hover:text-ink [&_svg]:size-[22px] [&_svg]:shrink-0";
 
 /** Back to the screen above, named, so a card says which deck it returns to. */
 export function BackButton({
@@ -329,7 +334,7 @@ export function Page({
     <div
       ref={ref}
       className={clsx(
-        "mx-auto flex w-full flex-1 flex-col px-5 pt-5 pb-safe-nav @3xl/shell:px-8 @3xl/shell:pb-12 @3xl/shell:pt-8",
+        "mx-auto flex w-full flex-1 flex-col px-5 pt-5 pb-safe-nav @3xl/shell:px-8 @3xl/shell:pb-12 @3xl/shell:pt-(--page-top,2rem)",
         width === "md" ? "max-w-2xl" : "max-w-(--column)",
         className,
       )}
@@ -361,10 +366,10 @@ export function PageHeader({
     <header className={clsx("pb-5 @3xl:pb-7", className)}>
       {eyebrow}
       <div className="flex min-h-10 flex-wrap items-center justify-between gap-x-3 gap-y-2">
-        <h1 className="min-w-0 text-2xl font-medium text-text">{title}</h1>
+        <h1 className="min-w-0 text-2xl font-medium text-ink">{title}</h1>
         {actions && <div className="flex items-center gap-1.5">{actions}</div>}
       </div>
-      {sub && <div className="mt-1.5 text-sm text-muted tabular-nums">{sub}</div>}
+      {sub && <div className="mt-1.5 text-sm text-ink-muted tabular-nums">{sub}</div>}
       {children}
     </header>
   );

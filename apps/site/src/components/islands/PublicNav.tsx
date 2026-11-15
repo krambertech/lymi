@@ -1,7 +1,6 @@
-import { I18nProvider } from "@lingui/react";
-import { pageI18n } from "../../lib/i18n";
 import { openLymiUrl } from "../../lib/origins";
 import type { LocalizedPage } from "../../lib/routes";
+import { Localized } from "../Localized";
 import { SiteNav } from "../landing/SiteNav";
 
 interface Props {
@@ -15,8 +14,8 @@ interface Props {
  */
 export default function PublicNav({ locale, current }: Props) {
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
+    <Localized locale={locale}>
       <SiteNav openAppUrl={openLymiUrl()} current={current} signUpHref={null} />
-    </I18nProvider>
+    </Localized>
   );
 }

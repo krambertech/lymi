@@ -1,6 +1,6 @@
 /**
  * The seven lights: the last seven days as the lantern's glass, seen small. Each light shows one
- * of these levels, with `--light-1`, `--light-2` and `--amber` as its colours; streak.md.
+ * of these levels, with `--lit-low`, `--lit-high` and `--amber` as its colours; streak.md.
  */
 export type LightLevel = 0 | 1 | 2 | 3;
 

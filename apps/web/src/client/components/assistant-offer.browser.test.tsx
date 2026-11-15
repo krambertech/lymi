@@ -7,6 +7,7 @@ import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import type { ConnectedApp } from "../lib/api";
 import { AssistantOffer, useAssistantOffer } from "./assistant-offer";
+import { StaticNavProvider } from "./nav-link";
 
 i18n.load("en", messages);
 i18n.activate("en");
@@ -26,7 +27,9 @@ function renderWith(apps: ConnectedApp[]) {
   return render(
     <QueryClientProvider client={new QueryClient()}>
       <I18nProvider i18n={i18n}>
-        <Harness />
+        <StaticNavProvider path="/today">
+          <Harness />
+        </StaticNavProvider>
       </I18nProvider>
     </QueryClientProvider>,
   );
@@ -35,15 +38,15 @@ function renderWith(apps: ConnectedApp[]) {
 beforeEach(() => localStorage.clear());
 afterEach(() => vi.restoreAllMocks());
 
-test("offers each assistant's guide while no app is connected", async () => {
+test("offers each assistant's page in Settings while no app is connected", async () => {
   await renderWith([]);
   await expect.element(page.getByText("Connect your AI assistant")).toBeVisible();
   await expect
     .element(page.getByRole("link", { name: "Connect Claude" }))
-    .toHaveAttribute("href", expect.stringContaining("/docs/mcp/claude"));
+    .toHaveAttribute("href", "/settings/apps/claude");
   await expect
-    .element(page.getByRole("link", { name: "Connect", exact: true }))
-    .toHaveAttribute("href", expect.stringMatching(/\/docs\/mcp$/));
+    .element(page.getByRole("link", { name: /^Connect your AI assistant/ }))
+    .toHaveAttribute("href", "/settings#apps");
 });
 
 test("dismissing hides the card on this device and keeps the menu row", async () => {

@@ -1,0 +1,42 @@
+# Library search: an empty field closes on a tap away, a field with text keeps the search open.
+appId: app.lymi
+name: Search
+---
+- runFlow: _open.yaml
+- tapOn: "Library"
+- extendedWaitUntil:
+    visible: "New deck"
+    timeout: 20000
+- tapOn: "Search"
+- extendedWaitUntil:
+    visible: "Search decks and cards"
+    timeout: 10000
+- takeScreenshot: 01-empty
+# The screen above an empty field holds nothing, so any point above the keyboard is empty space.
+- tapOn:
+    point: "50%,30%"
+- extendedWaitUntil:
+    visible: "New deck"
+    timeout: 10000
+- assertNotVisible: "Search decks and cards"
+- takeScreenshot: 02-closed
+- tapOn: "Search"
+- extendedWaitUntil:
+    visible: "Search decks and cards"
+    timeout: 10000
+- inputText: "${MISS}"
+- extendedWaitUntil:
+    visible: "No decks or cards match.*"
+    timeout: 20000
+# Above the centred empty state, clear of its Clear search.
+- tapOn:
+    point: "50%,10%"
+- assertVisible: "Search decks and cards"
+- assertVisible: "No decks or cards match.*"
+- takeScreenshot: 03-kept
+- tapOn: "Close search"
+- extendedWaitUntil:
+    visible: "New deck"
+    timeout: 10000
+- assertNotVisible: "Search decks and cards"
+- takeScreenshot: 04-closed

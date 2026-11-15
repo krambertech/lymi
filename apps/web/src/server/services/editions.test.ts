@@ -588,22 +588,22 @@ describe("a learner's pinned edition", () => {
     expect(englishSections.sections.map((s) => s.name)).toEqual(["Greetings"]);
   });
 
-  it("shows the deck's own hooks to a reader of the original, and none in another edition", async () => {
-    const deck = await estonian("hooked");
+  it("shows the deck's own hints to a reader of the original, and none in another edition", async () => {
+    const deck = await estonian("hinted");
     await publishUkrainian(deck);
     await db
       .update(schema.cards)
-      .set({ hook: "Tere sounds like 'there'", hookSource: "manual" })
+      .set({ hint: "Tere sounds like 'there'", hintSource: "manual" })
       .where(eq(schema.cards.deckId, deck.deckId));
-    await addPublishedDeck(anna, "hooked", "uk");
-    await addPublishedDeck(bohdan, "hooked");
-    const hooks = async (ctx: ServiceContext) =>
-      (await listDeckCards(ctx, deck.deckId)).map((row) => [row.card.hook, row.card.hookSource]);
-    expect(await hooks(anna)).toEqual([
+    await addPublishedDeck(anna, "hinted", "uk");
+    await addPublishedDeck(bohdan, "hinted");
+    const hints = async (ctx: ServiceContext) =>
+      (await listDeckCards(ctx, deck.deckId)).map((row) => [row.card.hint, row.card.hintSource]);
+    expect(await hints(anna)).toEqual([
       [null, null],
       [null, null],
     ]);
-    expect(await hooks(bohdan)).toEqual([
+    expect(await hints(bohdan)).toEqual([
       ["Tere sounds like 'there'", "manual"],
       ["Tere sounds like 'there'", "manual"],
     ]);
@@ -672,7 +672,7 @@ describe("a learner's pinned edition", () => {
     const deck = await estonian("held-edition");
     await publishUkrainian(deck);
     await withdrawEdition(lymi, deck.deckId, "uk", publishers);
-    // What the sign-in hook does with a day-old cookie: the deck, rather than nothing.
+    // What the sign-in hint does with a day-old cookie: the deck, rather than nothing.
     const added = await addPublishedDeck(bohdan, "held-edition", "uk", {
       fallBackToOriginal: true,
     });

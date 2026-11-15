@@ -1,11 +1,11 @@
 import { Trans } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
-import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { shelfPath } from "../../lib/explore";
 import type { Locale } from "../../lib/routes";
 import { trayHues } from "../../lib/tray";
 import { DeckTile } from "../explore/DeckTile";
+import { ArrowLink } from "./ArrowLink";
 import { SectionTitle } from "./FeatureSection";
 
 interface Props {
@@ -23,7 +23,7 @@ export function LanguageDecks({ decks, locale, shelf, body, all }: Props) {
   const hues = trayHues(decks);
 
   return (
-    <section aria-labelledby="decks-title" className="border-b border-edge py-20 @4xl:py-28">
+    <section aria-labelledby="decks-title" className="py-16 @4xl:py-20">
       <div className="mx-auto flex max-w-[1040px] flex-wrap items-end justify-between gap-6 px-5 @2xl:px-10">
         <div className="max-w-[560px]">
           <div id="decks-title">
@@ -31,15 +31,11 @@ export function LanguageDecks({ decks, locale, shelf, body, all }: Props) {
               <Trans>Explore ready-made decks.</Trans>
             </SectionTitle>
           </div>
-          <p className="mt-5 text-md text-pretty text-text-2">{body}</p>
+          <p className="mt-5 text-md text-pretty text-ink-secondary">{body}</p>
         </div>
-        <a
-          href={shelfPath({ kind: "languages", name: shelf }, locale)}
-          className="inline-flex items-center gap-1.5 rounded-xs text-md font-medium text-text-2 hoverable:hover:text-text"
-        >
+        <ArrowLink href={shelfPath({ kind: "languages", name: shelf }, locale)} size="md">
           {all}
-          <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
-        </a>
+        </ArrowLink>
       </div>
 
       <ul className="mx-auto mt-12 flex max-w-[1040px] snap-x snap-mandatory gap-5 overflow-x-auto scroll-px-5 px-5 pb-4 @2xl:scroll-px-10 @2xl:px-10">

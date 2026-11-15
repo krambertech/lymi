@@ -1,153 +1,198 @@
 import "@fontsource/caveat/500.css";
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { openLymiUrl } from "../../lib/origins";
-import { buttonClass } from "../Button";
-import { ApiConnections } from "./ApiConnections";
 import { AssistantHero } from "./AssistantHero";
 import { ConnectSteps } from "./ConnectSteps";
-import type { SampleCard } from "./cards";
-import { EnrichDemo } from "./EnrichDemo";
 import { FeatureSection } from "./FeatureSection";
 import { ASSISTANTS_QUESTIONS } from "./faq";
+import { LandingLayout } from "./LandingLayout";
+import { BENTO_HUES, CheckList, LanguageBento, Tile } from "./LanguageBento";
+import { DetailsSection, ReturnSection } from "./LanguageSections";
 import { PracticeChat } from "./PracticeChat";
 import { Questions } from "./Questions";
-import { ReviewDemo } from "./ReviewDemo";
 import { SendAnything } from "./SendAnything";
 import { SignUpSection } from "./SignUpSection";
-import { SiteFooter } from "./SiteFooter";
-import { SiteNav } from "./SiteNav";
 
 export const ASSISTANTS_TITLE = msg`Make cards with Claude, ChatGPT, Gemini or Grok · Lymi`;
-export const ASSISTANTS_BLURB = msg`Send Claude, ChatGPT, Gemini or Grok a photo of your notes. The cards land in Lymi, which brings each one back right before you’d forget.`;
+export const ASSISTANTS_BLURB = msg`Send Claude, ChatGPT, Gemini or Grok a photo of your notes. It adds the cards to Lymi, where you review them.`;
 
-/** The hero's cards, back for a review. */
-const GERMAN_REVIEW: SampleCard[] = [
-  {
-    label: msg`Deutsch · verb`,
-    term: "aufhören",
-    language: "de",
-    meaning: msg`To stop`,
-    example: "Ich höre jetzt auf.",
-  },
-  {
-    label: msg`Deutsch · noun`,
-    term: "Feierabend",
-    language: "de",
-    meaning: msg`The free evening after work`,
-    example: "Schönen Feierabend!",
-  },
-  {
-    label: msg`Deutsch · noun`,
-    term: "das Mädchen",
-    language: "de",
-    meaning: msg`The girl`,
-    example: "Das Mädchen liest ein Buch.",
-  },
-  {
-    label: msg`Deutsch · noun`,
-    term: "Schnapsidee",
-    language: "de",
-    meaning: msg`A bad idea that seemed good`,
-    example: "Das war eine Schnapsidee.",
-  },
-];
+/** A question in the chat and the small due view an assistant answers with. */
+function DueInChat() {
+  return (
+    <div
+      aria-hidden="true"
+      className="grid gap-2 @3xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] @3xl:items-start"
+    >
+      <p className="justify-self-end rounded-2xl rounded-ee-sm bg-ink px-4 py-2.5 text-md text-canvas @3xl:col-start-1">
+        <Trans>What’s due tonight?</Trans>
+      </p>
+      <div className="grid gap-1.5 rounded-md bg-plate p-4 edge">
+        <p className="flex items-baseline justify-between text-md font-medium text-ink">
+          <Trans>Due tonight</Trans>
+          <span className="tabular-nums text-amber-text">24</span>
+        </p>
+        <p className="flex items-baseline justify-between text-md text-ink-secondary">
+          <Trans>German</Trans>
+          <span className="tabular-nums">14</span>
+        </p>
+        <p className="flex items-baseline justify-between text-md text-ink-secondary">
+          <Trans>Spanish</Trans>
+          <span className="tabular-nums">10</span>
+        </p>
+      </div>
+    </div>
+  );
+}
 
-const TYPED: SampleCard = {
-  label: msg`Deutsch · noun`,
-  term: "Feierabend",
-  language: "de",
-  meaning: msg`The free evening after work`,
-  example: "Schönen Feierabend!",
-  say: "FY-er-ah-bent",
-};
+/** Activity's rows for writes that came from an assistant. */
+function ActivityRows() {
+  return (
+    <ul aria-hidden="true" className="grid gap-2">
+      {[
+        <Trans key="c">Claude added 14 cards to Biology</Trans>,
+        <Trans key="g">ChatGPT changed 2 cards in German</Trans>,
+      ].map((row) => (
+        <li key={row.key} className="rounded-md bg-plate px-4 py-3 text-md text-ink edge">
+          {row}
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+/** The consent screen's two rows as `consent-view.tsx` draws them: read always on, write switched off. */
+function Scopes() {
+  return (
+    <ul aria-hidden="true" className="grid gap-2">
+      <li className="flex items-center justify-between gap-3 rounded-md bg-plate px-4 py-3 text-md text-ink edge">
+        <Trans>See your decks and cards</Trans>
+        <span className="shrink-0 text-sm text-ink-muted">
+          <Trans>Always</Trans>
+        </span>
+      </li>
+      <li className="flex items-center justify-between gap-3 rounded-md bg-plate px-4 py-3 text-md text-ink edge">
+        <Trans>Add, edit and archive cards</Trans>
+        <span className="flex h-5 w-9 shrink-0 items-center rounded-full bg-plate-nested px-0.5 edge-strong">
+          <span className="size-4 rounded-full bg-ink-faint" />
+        </span>
+      </li>
+    </ul>
+  );
+}
 
 /** The page for people who already use an AI assistant: it makes the cards, Lymi keeps them. */
 export function AssistantsView() {
-  const openAppUrl = openLymiUrl();
-
   return (
-    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
-      <header>
-        <SiteNav openAppUrl={openAppUrl} current="assistants" />
-        <AssistantHero />
-      </header>
+    <LandingLayout page="assistants" hero={<AssistantHero />}>
+      <SendAnything />
 
-      <main>
-        <SendAnything />
+      <ConnectSteps />
 
-        <FeatureSection
-          demoFirst
-          title={<Trans>Then review them in Lymi.</Trans>}
-          body={
-            <Trans>
-              Recall the word before you look, then say how well you knew it. Hard cards come back
-              sooner, easy ones wait.
-            </Trans>
-          }
-        >
-          <ReviewDemo cards={GERMAN_REVIEW} />
-        </FeatureSection>
+      <FeatureSection
+        title={<Trans>Practise with your own words.</Trans>}
+        body={
+          <Trans>
+            Your assistant can read your decks. Ask it for a conversation that uses the words you’re
+            learning, and it corrects you as you go.
+          </Trans>
+        }
+      >
+        <PracticeChat />
+      </FeatureSection>
 
-        <FeatureSection
-          title={<Trans>Practise with your own words.</Trans>}
-          body={
-            <Trans>
-              Your assistant can read your decks. Ask it for a conversation that uses the words
-              you’re learning, and it corrects you as you go.
-            </Trans>
-          }
-        >
-          <PracticeChat />
-        </FeatureSection>
+      <ReturnSection
+        lang="de"
+        term={() => "Tschüss"}
+        title={<Trans>Then review them in Lymi.</Trans>}
+        body={
+          <Trans>
+            Your assistant makes the cards; Lymi decides when you see them. Remember a card and it
+            waits longer, forget it and it comes back soon. Assistants can never grade for you.
+          </Trans>
+        }
+      />
 
-        <FeatureSection
-          demoFirst
-          tinted
-          title={<Trans>No chat? Type the word.</Trans>}
-          body={
-            <Trans>
-              Lymi’s own AI fills in the meaning, an example and how to say it. It marks what it
-              wrote and never overwrites yours.
-            </Trans>
-          }
-        >
-          <EnrichDemo card={TYPED} />
-        </FeatureSection>
+      <DetailsSection
+        title={<Trans>Built for working with AI.</Trans>}
+        body={
+          <Trans>
+            Building your own app instead? The{" "}
+            <a
+              href="/docs/api"
+              className="font-medium text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
+            >
+              API reference
+            </a>{" "}
+            covers the same reads and writes.
+          </Trans>
+        }
+      >
+        <LanguageBento layout="wide">
+          <Tile
+            wide
+            hue={BENTO_HUES[0]}
+            title={<Trans>What’s due, in the chat</Trans>}
+            body={
+              <Trans>
+                Ask what’s waiting and your assistant shows it right in the chat. Then open Lymi to
+                review.
+              </Trans>
+            }
+          >
+            <DueInChat />
+          </Tile>
+          <Tile
+            hue={BENTO_HUES[1]}
+            title={<Trans>Skills for the jobs you repeat</Trans>}
+            body={
+              <Trans>
+                The Lymi plugin gives your assistant a skill for each. It installs in Claude, Claude
+                Code, Codex, Cursor and Gemini CLI.
+              </Trans>
+            }
+          >
+            <CheckList
+              items={[
+                <Trans key="l">Turn a lesson into cards</Trans>,
+                <Trans key="t">Fix and tidy cards</Trans>,
+                <Trans key="p">Practise in conversation</Trans>,
+                <Trans key="w">A weekly check-in</Trans>,
+              ]}
+            />
+          </Tile>
+          <Tile
+            hue={BENTO_HUES[2]}
+            title={<Trans>Activity shows what it did</Trans>}
+            body={
+              <Trans>
+                Every card an assistant adds or changes shows up in Activity, with the app that sent
+                it.
+              </Trans>
+            }
+          >
+            <ActivityRows />
+          </Tile>
+          <Tile
+            hue={BENTO_HUES[3]}
+            title={<Trans>Read-only if you prefer</Trans>}
+            body={
+              <Trans>
+                Turn off write access when you connect, and your assistant can read your decks but
+                change nothing.
+              </Trans>
+            }
+          >
+            <Scopes />
+          </Tile>
+        </LanguageBento>
+      </DetailsSection>
 
-        <FeatureSection
-          title={<Trans>Or build your own.</Trans>}
-          body={
-            <Trans>
-              Lymi has a public API. Add a word from a shortcut on your phone, bring in a list from
-              a spreadsheet, or show what’s due on your own site.
-            </Trans>
-          }
-          after={
-            <div className="flex flex-wrap gap-2">
-              <a href="/docs" className={buttonClass("secondary")}>
-                <Trans>See how it works</Trans>
-              </a>
-              <a href="/docs/api" className={buttonClass("ghost")}>
-                <Trans>API reference</Trans>
-              </a>
-            </div>
-          }
-        >
-          <ApiConnections />
-        </FeatureSection>
+      <Questions
+        title={<Trans>Questions before you connect.</Trans>}
+        items={ASSISTANTS_QUESTIONS}
+      />
 
-        <ConnectSteps />
-
-        <Questions
-          title={<Trans>Questions before you connect.</Trans>}
-          items={ASSISTANTS_QUESTIONS}
-        />
-
-        <SignUpSection title={<Trans>Bring your assistant to Lymi.</Trans>} />
-      </main>
-
-      <SiteFooter openAppUrl={openAppUrl} page="assistants" />
-    </div>
+      <SignUpSection title={<Trans>Bring your assistant to Lymi.</Trans>} />
+    </LandingLayout>
   );
 }

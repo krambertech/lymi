@@ -10,7 +10,7 @@ export const FORM_FIELDS = [
   "example",
   "exampleTranslation",
   "notes",
-  "hook",
+  "hint",
   "source",
 ] as const;
 export type FormField = (typeof FORM_FIELDS)[number];
@@ -23,7 +23,7 @@ export const EMPTY_FORM: FormValues = {
   example: "",
   exampleTranslation: "",
   notes: "",
-  hook: "",
+  hint: "",
   source: "",
 };
 
@@ -35,7 +35,7 @@ export function formValues(card: Card): FormValues {
     example: card.example ?? "",
     exampleTranslation: card.exampleTranslation ?? "",
     notes: card.notes ?? "",
-    hook: card.hook ?? "",
+    hint: card.hint ?? "",
     source: card.source ?? "",
   };
 }
@@ -43,7 +43,7 @@ export function formValues(card: Card): FormValues {
 /** One field's new text as a patch; a field the AI wrote becomes the learner's once changed. */
 function fieldPatch(field: FormField, value: string): CardPatch {
   if (field === "term" || field === "source") return { [field]: value };
-  if (field === "hook") return { hook: value, ...(value ? { hookSource: "manual" as const } : {}) };
+  if (field === "hint") return { hint: value, ...(value ? { hintSource: "manual" as const } : {}) };
   if (field === "exampleTranslation") {
     return {
       exampleTranslation: value,

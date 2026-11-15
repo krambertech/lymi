@@ -1,5 +1,5 @@
 import type { DeviceTimezoneInput, ReviewTimezoneInput } from "@lymi/core";
-import { newId, type StreakDay, summariseStreak } from "@lymi/core";
+import { daySatisfied, newId, type StreakDay, summariseStreak } from "@lymi/core";
 import { and, eq, isNotNull, isNull, ne, sql } from "@lymi/core/db";
 import type { ReviewDay } from "@lymi/core/schema";
 import { schema } from "../db";
@@ -24,8 +24,6 @@ export interface DayProgress {
   goal: number;
   outcome: Outcome;
 }
-
-const satisfies = (outcome: Outcome) => outcome === "goal_met" || outcome === "exhausted";
 
 /**
  * The zone that decides where a day begins. The first zone a client reports becomes the
@@ -164,6 +162,16 @@ export async function checkToday(ctx: ServiceContext, reported?: string | undefi
   const zone = await reviewZone(ctx, reported);
   const settings = await getSettings(ctx);
   const now = new Date();
+  // An integration's call is not the learner opening Lymi.
+  if (ctx.actor === "user") {
+    await ctx.db
+      .insert(schema.learnerOpenings)
+      .values({ userId: ctx.userId, openedAt: now })
+      .onConflictDoUpdate({
+        target: schema.learnerOpenings.userId,
+        set: { openedAt: now },
+      });
+  }
   const date = dateFormatter(zone).format(now);
   const due = await drawableCount(ctx, { now, zone });
   const [existing] = await ctx.db
@@ -197,7 +205,7 @@ export async function applyGoalToToday(ctx: ServiceContext, goal: number) {
     .select()
     .from(schema.reviewDays)
     .where(and(eq(schema.reviewDays.userId, ctx.userId), eq(schema.reviewDays.date, date)));
-  if (!day || satisfies(day.outcome) || day.goal === goal) return;
+  if (!day || daySatisfied(day.outcome) || day.goal === goal) return;
   await ctx.db
     .update(schema.reviewDays)
     .set({ goal, updatedAt: new Date() })
@@ -358,12 +366,15 @@ function recordStreakChange(ctx: ServiceContext, today: string, zone: string): v
  * attempt or a nothing-due confirmation. Pre-goal reviews have no day row and keep their old
  * meaning, so history from before goals still reads as the streak it was.
  */
-export async function streak(ctx: ServiceContext, opts: { zone?: string | undefined } = {}) {
+export async function streak(
+  ctx: ServiceContext,
+  opts: { zone?: string | undefined; now?: Date | undefined } = {},
+) {
   const zone = await reviewZone(ctx, opts.zone);
   const fmt = dateFormatter(zone);
   const settings = await getSettings(ctx);
   const list = await streakDays(ctx, fmt);
-  const today = fmt.format(new Date());
+  const today = fmt.format(opts.now ?? new Date());
   const todayDay = list.find((d) => d.date === today);
 
   return {
@@ -441,7 +452,7 @@ export async function streakDays(
       date: row.date,
       attempts: attempts + (d?.attempts ?? 0),
       goal: row.goal,
-      satisfied: satisfies(row.outcome) || !!d?.satisfied,
+      satisfied: daySatisfied(row.outcome) || !!d?.satisfied,
       outcome: row.outcome,
     });
   }

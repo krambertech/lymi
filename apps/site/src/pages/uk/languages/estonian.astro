@@ -1,44 +1,16 @@
 ---
 import EstonianPage from "../../../components/islands/EstonianPage";
 import { ESTONIAN_BLURB, ESTONIAN_TITLE } from "../../../components/landing/EstonianView";
-import { SHARE_IMAGE_ALT } from "../../../components/landing/LandingView";
-import BaseLayout from "../../../layouts/BaseLayout.astro";
-import { pageI18n } from "../../../lib/i18n";
+import MarketingLayout from "../../../layouts/MarketingLayout.astro";
 import { resolveEstonianDecks } from "../../../lib/public-catalog";
-import { localizedPath } from "../../../lib/routes";
-import { marketingPage } from "../../../lib/structured-data";
 
 export const prerender = false;
 
 const locale = "uk";
 const page = await resolveEstonianDecks(Astro, locale);
 if (page instanceof Response) return page;
-const i18n = pageI18n(locale);
-const title = i18n._(ESTONIAN_TITLE);
-const description = i18n._(ESTONIAN_BLURB);
-const shareImageAlt = i18n._(SHARE_IMAGE_ALT);
-const path = localizedPath("estonian", locale);
-
-const structuredData = marketingPage({
-  name: title,
-  description,
-  path,
-  i18n,
-});
 ---
 
-<BaseLayout
-  title={title}
-  description={description}
-  canonicalPath={path}
-  localizedPage="estonian"
-  shareImageAlt={shareImageAlt}
->
-  <script
-    slot="head"
-    is:inline
-    type="application/ld+json"
-    set:html={JSON.stringify(structuredData).replaceAll("<", "\\u003c")}
-  />
+<MarketingLayout page="estonian" title={ESTONIAN_TITLE} blurb={ESTONIAN_BLURB} locale={locale}>
   <EstonianPage client:load locale={locale} decks={page.decks} />
-</BaseLayout>
+</MarketingLayout>

@@ -18,7 +18,7 @@ export function Added({ children, card }: AddedProps) {
   return (
     <>
       <span className="flex items-start gap-1.5">
-        <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-good" />
+        <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-success" />
         <span>{children}</span>
       </span>
       <span className="mt-2.5 block rounded-sm bg-amber-soft px-3 py-2">
@@ -27,11 +27,11 @@ export function Added({ children, card }: AddedProps) {
         </span>
         <span
           lang={card.language}
-          className="mt-1 block text-md font-medium tracking-[-0.024em] text-text"
+          className="mt-1 block text-md font-medium tracking-[-0.024em] text-ink"
         >
           {card.term}
         </span>
-        <span className="mt-0.5 block text-xs text-text-2">{i18n._(card.meaning)}</span>
+        <span className="mt-0.5 block text-xs text-ink-secondary">{i18n._(card.meaning)}</span>
       </span>
     </>
   );
@@ -53,8 +53,8 @@ export function Attachment({ name, kind, photo }: AttachmentProps) {
         <Icon aria-hidden="true" className="size-4" />
       </span>
       <span className="min-w-0">
-        <span className="block truncate text-xs font-medium text-text">{name}</span>
-        <span className="block text-2xs text-muted">{kind}</span>
+        <span className="block truncate text-xs font-medium text-ink">{name}</span>
+        <span className="block text-2xs text-ink-muted">{kind}</span>
       </span>
     </span>
   );
@@ -103,8 +103,8 @@ export function AssistantChat({ conversation = defaultConversation() }: Props) {
           className={clsx(
             "px-3.5 py-2.5 text-sm edge",
             turn.from === "you"
-              ? "max-w-[82%] self-end bg-plate-2 text-text"
-              : "max-w-[88%] self-start bg-plate text-text-2",
+              ? "max-w-[82%] self-end bg-plate-nested text-ink"
+              : "max-w-[88%] self-start bg-plate text-ink-secondary",
           )}
           style={{ borderRadius: 14 }}
         >

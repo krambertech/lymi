@@ -111,7 +111,7 @@ export interface PersonaCard {
   section?: string;
   /** Who added it. `mcp` and `api` cards show up in Activity. */
   createdBy?: Actor;
-  hook?: string;
+  hint?: string;
   /** Marked important by the learner. */
   important?: boolean;
   /** A picture from `pictures.ts`, by its key. */
@@ -300,7 +300,7 @@ const ARRIVALS: PersonaCard[] = [
   },
 ];
 
-/** A newer lesson with pictures, important cards and memory hooks. */
+/** A newer lesson with pictures, important cards and hints. */
 const CASA: PersonaCard[] = lesson("Lezione 15", [
   { term: "la finestra", meaning: "the window", picture: "la finestra", important: true },
   { term: "la porta", meaning: "the door", picture: "la porta" },
@@ -308,11 +308,11 @@ const CASA: PersonaCard[] = lesson("Lezione 15", [
   {
     term: "il cassetto della cucina",
     meaning: "the kitchen drawer",
-    hook: "A cassette tape hidden among the spoons.",
+    hint: "A cassette tape hidden among the spoons.",
     important: true,
   },
   { term: "il divano", meaning: "the sofa", important: true },
-  { term: "lo specchio", meaning: "the mirror", hook: "Spec-chio: you inspect yourself in it." },
+  { term: "lo specchio", meaning: "the mirror", hint: "Spec-chio: you inspect yourself in it." },
   { term: "il tappeto", meaning: "the rug" },
   { term: "le scale", meaning: "the stairs", important: true },
   { term: "il bagno", meaning: "the bathroom" },
@@ -587,6 +587,60 @@ const A2_UK = ukrainian([
   { term: "квиток", pronunciation: "квито́к", meaning: "ticket" },
 ]);
 
+/** Russian decks under the slugs Lymi will publish them as, Core Russian Words first, so Welcome reorders them. */
+const russian = (cards: PersonaCard[]): PersonaCard[] =>
+  cards.map((card) => ({ ...card, language: "ru", meaningSource: "lesson" as const }));
+
+const CORE_RU = russian([
+  { term: "только", pronunciation: "то́лько", meaning: "only" },
+  { term: "если", pronunciation: "е́сли", meaning: "if" },
+]);
+
+const ALPHABET_RU = russian([
+  { term: "Ё ё", meaning: "yo" },
+  { term: "Ы ы", meaning: "y" },
+  { term: "да", meaning: "yes" },
+]);
+
+const A1_RU = russian([
+  { term: "спасибо", pronunciation: "спаси́бо", meaning: "thank you" },
+  { term: "замок", pronunciation: "замо́к", meaning: "lock" },
+  { term: "молоко", pronunciation: "молоко́", meaning: "milk", example: "Я пью молоко́ у́тром." },
+]);
+
+const polish = (cards: PersonaCard[]): PersonaCard[] =>
+  cards.map((card) => ({ ...card, language: "pl", meaningSource: "lesson" as const }));
+
+const CORE_PL = polish([
+  { term: "człowiek", meaning: "person" },
+  { term: "praca", meaning: "work; job" },
+]);
+
+const A1_PL = polish([
+  { term: "dzień dobry", meaning: "hello (polite); good morning" },
+  { term: "sklep", meaning: "shop", notes: "Not склеп, a crypt." },
+  { term: "muzyka", pronunciation: "mùzyka", meaning: "music" },
+]);
+
+const A2_PL = polish([
+  { term: "dynia", meaning: "pumpkin" },
+  { term: "drużyna", meaning: "team" },
+]);
+
+const OFFICE_PL = polish([
+  { term: "Gdzie mogę pobrać numerek?", meaning: "Where can I get a queue ticket?" },
+  { term: "karta pobytu", meaning: "residence card" },
+]);
+
+/** A Polish deck's Ukrainian edition, keyed by the original's meanings as the persona type asks. */
+const polishEdition = (name: string, summary: string, meanings: Record<string, string>) => ({
+  language: "uk",
+  name,
+  summary,
+  description: summary,
+  meanings,
+});
+
 export const personas: Persona[] = [
   {
     id: "fresh",
@@ -603,7 +657,7 @@ export const personas: Persona[] = [
     group: "Everyday",
     name: "Kateryna",
     description:
-      "A little of everything: three weeks in, a series, pictures, important cards, hooks, cards from an assistant, a deck shared by Noor and one from Explore.",
+      "A little of everything: three weeks in, a series, pictures, important cards, hints, cards from an assistant, a deck shared by Noor and one from Explore.",
     appLanguage: "en",
     // Misses 18 and 7 days ago are rest days; 13 and 5 fall within a week of one and break the run, so the streak (4) and the best run (7) differ.
     reviewDays: [21, 20, 19, 17, 16, 15, 14, 12, 11, 10, 9, 8, 6, 4, 3, 2, 1],
@@ -787,7 +841,7 @@ export const personas: Persona[] = [
     group: "Together",
     name: "Lymi",
     description:
-      "The publisher account. Estonian, Finnish, driving, Japanese, Chinese and Ukrainian decks; one in English and Ukrainian editions.",
+      "The publisher account. Estonian, Finnish, driving, Japanese, Chinese, Ukrainian, Russian and Polish decks; the Estonian and Polish ones also in Ukrainian editions.",
     appLanguage: "en",
     reviewDays: [],
     dueNow: 0,
@@ -1033,6 +1087,140 @@ export const personas: Persona[] = [
           tags: ["beginner"],
           publisher: "Lymi",
           meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Core Russian Words",
+        description: "The small words every sentence is built from.",
+        defaultLanguage: "ru",
+        introducedDaysAgo: 4,
+        cards: CORE_RU,
+        publication: {
+          slug: "core-russian-words",
+          summary: "The small words every sentence is built from.",
+          category: "languages",
+          tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Russian A1 Vocabulary",
+        description: "Words for A1.",
+        defaultLanguage: "ru",
+        introducedDaysAgo: 2,
+        cards: A1_RU,
+        publication: {
+          slug: "russian-a1-vocabulary",
+          summary: "Words for A1.",
+          category: "languages",
+          tags: ["beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Read the Russian Alphabet",
+        description: "Every letter with its sound.",
+        defaultLanguage: "ru",
+        introducedDaysAgo: 1,
+        cards: ALPHABET_RU,
+        publication: {
+          slug: "russian-alphabet",
+          summary: "Every letter with its sound.",
+          category: "languages",
+          tags: ["beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+        },
+      },
+      {
+        name: "Core Polish Words",
+        description: "Beginner nouns, verbs and adjectives with the forms you need.",
+        defaultLanguage: "pl",
+        introducedDaysAgo: 4,
+        cards: CORE_PL,
+        publication: {
+          slug: "core-polish-words",
+          summary: "Beginner nouns, verbs and adjectives with the forms you need.",
+          category: "languages",
+          tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+          editions: [
+            polishEdition("Польська: базові слова", "Базові польські слова з потрібними формами.", {
+              człowiek: "людина",
+              praca: "робота",
+            }),
+          ],
+        },
+      },
+      {
+        name: "Polish for Offices and Paperwork",
+        description: "Words and phrases for offices and paperwork in Poland.",
+        defaultLanguage: "pl",
+        introducedDaysAgo: 3,
+        cards: OFFICE_PL,
+        publication: {
+          slug: "polish-for-offices-and-paperwork",
+          summary: "Words and phrases for offices and paperwork in Poland.",
+          category: "languages",
+          tags: ["conversation"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+          editions: [
+            polishEdition(
+              "Польська: установи й документи",
+              "Слова й фрази для установ і документів у Польщі.",
+              {
+                "Gdzie mogę pobrać numerek?": "Де можна взяти талончик у черзі?",
+                "karta pobytu": "посвідка на проживання",
+              },
+            ),
+          ],
+        },
+      },
+      {
+        name: "Polish A2 Vocabulary",
+        description: "Words for A2.",
+        defaultLanguage: "pl",
+        introducedDaysAgo: 2,
+        cards: A2_PL,
+        publication: {
+          slug: "polish-a2-vocabulary",
+          summary: "Words for A2.",
+          category: "languages",
+          tags: ["core-words"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+          editions: [
+            polishEdition("Польська A2: слова за темами", "Слова для A2.", {
+              dynia: "гарбуз",
+              drużyna: "команда",
+            }),
+          ],
+        },
+      },
+      {
+        name: "Polish A1 Vocabulary",
+        description: "Words for A1.",
+        defaultLanguage: "pl",
+        introducedDaysAgo: 1,
+        cards: A1_PL,
+        publication: {
+          slug: "polish-a1-vocabulary",
+          summary: "Words for A1.",
+          category: "languages",
+          tags: ["beginner"],
+          publisher: "Lymi",
+          meaningLanguage: "en",
+          editions: [
+            polishEdition("Польська A1: слова за темами", "Слова для A1.", {
+              "dzień dobry": "добрий день",
+              sklep: "магазин",
+              muzyka: "музика",
+            }),
+          ],
         },
       },
     ],

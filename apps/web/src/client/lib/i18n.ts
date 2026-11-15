@@ -66,9 +66,11 @@ export function isBareShell(pathname: string): boolean {
     pathname === "/reset-password" ||
     pathname === "/consent" ||
     pathname.startsWith("/join/") ||
+    pathname.startsWith("/flip/") ||
+    pathname.startsWith("/unsubscribe/") ||
     pathname.startsWith("/add/") ||
     pathname.startsWith("/design") ||
-    pathname === "/emails"
+    pathname.startsWith("/emails")
   );
 }
 

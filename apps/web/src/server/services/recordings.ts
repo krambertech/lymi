@@ -1,3 +1,4 @@
+import { sameExample } from "@lymi/core";
 import { and, eq, isNull, or } from "@lymi/core/db";
 import { schema } from "../db";
 import { auditStatementWhen } from "./audit";
@@ -29,6 +30,29 @@ export function recordingFormat(bytes: Uint8Array): RecordingFormat | null {
   return null;
 }
 
+/** A clip's bytes as an object under the card's folder, or null for one that is not a recording. */
+async function putRecording(
+  bucket: R2Bucket,
+  cardId: string,
+  folder: "recorded" | "example-recorded",
+  bytes: Uint8Array | null,
+): Promise<{ key: string; format: RecordingFormat } | null> {
+  const format = bytes && recordingFormat(bytes);
+  if (!bytes || !format || bytes.byteLength === 0 || bytes.byteLength > MAX_RECORDING_BYTES) {
+    return null;
+  }
+  const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes.slice()));
+  const fingerprint = [...digest.subarray(0, 16)]
+    .map((byte) => byte.toString(16).padStart(2, "0"))
+    .join("");
+  const key = `cards/${cardId}/${folder}/${fingerprint}.${format.extension}`;
+  await bucket.put(key, bytes, {
+    httpMetadata: { contentType: format.contentType, cacheControl: "private, max-age=31536000" },
+    customMetadata: { source: "import" },
+  });
+  return { key, format };
+}
+
 /**
  * Stores an imported recording as the card's audio, which nothing replaces afterwards. A card
  * that already has a recording keeps it without reading the clip, so a retried step changes
@@ -46,26 +70,13 @@ export async function storeRecording(
     .where(and(eq(schema.cards.id, cardId), eq(schema.cards.userId, ctx.userId)));
   if (!card) return "skipped";
   if (card.audioSource === "recorded") return "kept";
-  const bytes = await load();
-  const format = bytes && recordingFormat(bytes);
-  if (!bytes || !format || bytes.byteLength === 0 || bytes.byteLength > MAX_RECORDING_BYTES) {
-    return "skipped";
-  }
-
-  const digest = new Uint8Array(await crypto.subtle.digest("SHA-256", bytes.slice()));
-  const fingerprint = [...digest.subarray(0, 16)]
-    .map((byte) => byte.toString(16).padStart(2, "0"))
-    .join("");
-  const key = `cards/${cardId}/recorded/${fingerprint}.${format.extension}`;
-  await bucket.put(key, bytes, {
-    httpMetadata: { contentType: format.contentType, cacheControl: "private, max-age=31536000" },
-    customMetadata: { source: "import" },
-  });
-  const stored = and(eq(schema.cards.id, cardId), eq(schema.cards.audioKey, key))!;
+  const put = await putRecording(bucket, cardId, "recorded", await load());
+  if (!put) return "skipped";
+  const stored = and(eq(schema.cards.id, cardId), eq(schema.cards.audioKey, put.key))!;
   await ctx.db.batch([
     ctx.db
       .update(schema.cards)
-      .set({ audioKey: key, audioSource: "recorded", updatedAt: new Date() })
+      .set({ audioKey: put.key, audioSource: "recorded", updatedAt: new Date() })
       .where(
         and(
           eq(schema.cards.id, cardId),
@@ -80,7 +91,62 @@ export async function storeRecording(
         action: "set_audio",
         id: cardId,
         deckId: card.deckId,
-        details: { format: format.extension },
+        details: { format: put.format.extension },
+      },
+      schema.cards,
+      stored,
+    ),
+  ]);
+  return "stored";
+}
+
+/**
+ * Stores an imported clip of the example as its recording, which its play control plays instead
+ * of generated speech, on the same terms as `storeRecording`. A card that no longer says `said`,
+ * the sentence the clip was imported with, has nothing to play it beside, so the clip is skipped.
+ */
+export async function storeExampleRecording(
+  ctx: ServiceContext,
+  cardId: string,
+  said: string | undefined,
+  load: () => Promise<Uint8Array | null>,
+  bucket: R2Bucket,
+): Promise<"stored" | "kept" | "skipped"> {
+  const [card] = await ctx.db
+    .select({
+      deckId: schema.cards.deckId,
+      language: schema.cards.language,
+      example: schema.cards.example,
+      exampleRecordingKey: schema.cards.exampleRecordingKey,
+    })
+    .from(schema.cards)
+    .where(and(eq(schema.cards.id, cardId), eq(schema.cards.userId, ctx.userId)));
+  if (!card) return "skipped";
+  if (card.exampleRecordingKey) return "kept";
+  if (!card.example || !sameExample(card.language, card.example, said)) return "skipped";
+  const put = await putRecording(bucket, cardId, "example-recorded", await load());
+  if (!put) return "skipped";
+  const stored = and(eq(schema.cards.id, cardId), eq(schema.cards.exampleRecordingKey, put.key))!;
+  await ctx.db.batch([
+    ctx.db
+      .update(schema.cards)
+      .set({ exampleRecordingKey: put.key, updatedAt: new Date() })
+      .where(
+        and(
+          eq(schema.cards.id, cardId),
+          eq(schema.cards.userId, ctx.userId),
+          eq(schema.cards.example, card.example),
+          isNull(schema.cards.exampleRecordingKey),
+        ),
+      ),
+    auditStatementWhen(
+      ctx,
+      {
+        entity: "card",
+        action: "set_audio",
+        id: cardId,
+        deckId: card.deckId,
+        details: { kind: "example", format: put.format.extension },
       },
       schema.cards,
       stored,

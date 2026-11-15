@@ -1,5 +1,5 @@
 import { env, waitUntil } from "cloudflare:workers";
-import type { PublicDeckOut, PublicDeckSummary } from "@lymi/core/catalog";
+import { offersDeck, type PublicDeckOut, type PublicDeckSummary } from "@lymi/core/catalog";
 import {
   countDeckPageView,
   listPublicDeckPlaces,
@@ -73,11 +73,29 @@ export async function resolveDeckPage(
     astro.response.status = status;
     return { status, locale, slug };
   }
+  // A deck teaching a language this locale doesn't offer has only its other pages; old links go to English.
+  if (!offersDeck(locale, result.deck)) {
+    const location = new URL(
+      deckPath(slug, "en") + new URL(astro.request.url).search,
+      astro.request.url,
+    );
+    return new Response(null, {
+      status: 301,
+      headers: { location: location.toString(), "cache-control": MISSING_CACHE_CONTROL },
+    });
+  }
   const [related, places] = await Promise.all([
     listRelatedDecks(db, slug, { language: locale, limit: RELATED_ON_PAGE }),
     listPublicDeckPlaces(db, locale).catch(linksFailed(slug, locale)),
   ]);
-  const links = places ? await neighbourLinks(places, result.deck, related, locale) : NO_LINKS;
+  const links = places
+    ? await neighbourLinks(
+        places.filter((place) => offersDeck(locale, place)),
+        result.deck,
+        related,
+        locale,
+      )
+    : NO_LINKS;
   const etag = deckEtag({
     slug: result.deck.slug,
     content: deckContentHash(result.deck, related, links),

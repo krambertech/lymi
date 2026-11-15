@@ -19,6 +19,7 @@ import { canonicalOrigins, decideOriginRoute, responseForOriginDecision } from "
 import { requireStrongPassword } from "./password-rules";
 import {
   leaveOutExampleReadings,
+  leaveOutPitchAccent,
   leaveOutTranslationField,
   requireSupportedPhone,
 } from "./phone-clients";
@@ -27,13 +28,16 @@ import { authenticate } from "./principal";
 import { account } from "./routes/account";
 import { activity } from "./routes/activity";
 import { add, addOpen } from "./routes/add";
+import { ankiConnect } from "./routes/anki-connect";
 import { audio } from "./routes/audio";
 import { avatar } from "./routes/avatar";
 import { cards } from "./routes/cards";
 import { connectedApps } from "./routes/connected-apps";
+import { contentReports, moderation } from "./routes/content-reports";
 import { decks } from "./routes/decks";
 import { email } from "./routes/email";
 import { emailEvents } from "./routes/email-events";
+import { emailLinks } from "./routes/email-links";
 import { explore } from "./routes/explore";
 import { exports as exportRoutes } from "./routes/exports";
 import { feedback } from "./routes/feedback";
@@ -45,6 +49,7 @@ import { languages } from "./routes/languages";
 import { lessonReads } from "./routes/lessons";
 import { publicMedia } from "./routes/public-media";
 import { push } from "./routes/push";
+import { readwise } from "./routes/readwise";
 import { reports } from "./routes/reports";
 import { review } from "./routes/review";
 import { deckSections, sections } from "./routes/sections";
@@ -193,6 +198,7 @@ app.get("/api/health", describe({ hide: true }), (c) =>
 // A phone release too old for this API is told to update before anything else answers it.
 app.use("/api/*", requireSupportedPhone);
 app.use("/api/*", leaveOutExampleReadings);
+app.use("/api/*", leaveOutPitchAccent);
 app.use("/api/*", leaveOutTranslationField);
 
 // Better Auth owns everything under /api/auth. The credential endpoints are metered first.
@@ -267,6 +273,12 @@ if (import.meta.env.DEV || import.meta.env.LYMI_APP_PREVIEW) {
 
 // Resend's delivery reports are signed, not sent with a session.
 app.route("/api/email/events", emailEvents);
+
+// An email's links are signed, and open on a phone that has never signed in.
+app.route("/api/email", emailLinks);
+
+// AnkiConnect clients send the key in the body, so this door authenticates itself.
+app.route("/api/anki-connect", ankiConnect);
 
 // Everything else under /api needs a session cookie or an API key. What the caller may then
 // do is declared on each route with describe(): writes need the write scope, learner-only
@@ -355,12 +367,15 @@ app.route("/api/tags", tags);
 app.route("/api/reports", reports);
 app.route("/api/keys", keys);
 app.route("/api/connected-apps", connectedApps);
+app.route("/api/readwise", readwise);
 app.route("/api/push", push);
 app.route("/api/audio", audio);
 app.route("/api/avatar", avatar);
 app.route("/api/imports", imports);
 app.route("/api/exports", exportRoutes);
 app.route("/api/feedback", feedback);
+app.route("/api/content-reports", contentReports);
+app.route("/api/moderation", moderation);
 app.route("/api/activity", activity);
 app.route("/api/explore", explore);
 

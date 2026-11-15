@@ -74,8 +74,8 @@ export function WordPlace({
           <Volume2 />
         </IconButton>
       </h1>
-      <p className="text-md text-text">{word.meaning}</p>
-      <p className="text-base text-text-2" lang="it">
+      <p className="text-md text-ink">{word.meaning}</p>
+      <p className="text-base text-ink-secondary" lang="it">
         {word.example}
       </p>
     </article>
@@ -97,12 +97,12 @@ export function WordRows({
             type="button"
             onClick={() => onOpen(w)}
             aria-current={openTerm === w.term ? "true" : undefined}
-            className="flex h-12 w-full items-center gap-3 px-4 text-start text-base transition-colors duration-150 hoverable:hover:bg-hover aria-[current]:bg-plate-2"
+            className="flex h-12 w-full items-center gap-3 px-4 text-start text-base transition-colors duration-150 hoverable:hover:bg-plate-hover aria-[current]:bg-plate-nested"
           >
-            <span className="font-medium text-text" lang="it">
+            <span className="font-medium text-ink" lang="it">
               {w.term}
             </span>
-            <span className="truncate text-text-2">{w.meaning}</span>
+            <span className="truncate text-ink-secondary">{w.meaning}</span>
           </button>
         </li>
       ))}
@@ -169,16 +169,16 @@ export function StreakPlaceScene() {
                   <h2
                     id={titleId}
                     tabIndex={-1}
-                    className="flex items-baseline gap-2 text-text outline-none"
+                    className="flex items-baseline gap-2 text-ink outline-none"
                   >
                     <span className="text-3xl font-semibold leading-none tabular-nums">12</span>
                     <span className="text-md font-medium">days in a row</span>
                   </h2>
-                  <p className="mt-1.5 text-sm text-text-2">Today’s goal is reached.</p>
+                  <p className="mt-1.5 text-sm text-ink-secondary">Today’s goal is reached.</p>
                 </div>
               </div>
-              <div className="edge flex items-center gap-3 rounded-lg bg-plate-2 p-4">
-                <span className="flex-1 text-base text-text">{goal} reviews a day</span>
+              <div className="edge flex items-center gap-3 rounded-lg bg-plate-nested p-4">
+                <span className="flex-1 text-base text-ink">{goal} reviews a day</span>
                 <IconButton
                   label="Change daily goal"
                   size="sm"
@@ -200,7 +200,9 @@ export function StreakPlaceScene() {
                 }
                 onClose={close}
               />
-              <p className="text-sm text-text-2">How many reviews keep the streak each day.</p>
+              <p className="text-sm text-ink-secondary">
+                How many reviews keep the streak each day.
+              </p>
               <GoalPicker value={goal} onValueChange={setGoal} />
             </div>
           )}

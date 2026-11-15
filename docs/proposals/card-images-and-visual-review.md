@@ -24,7 +24,7 @@ The term remains required because it identifies the card in Library, search, Act
 
 The editor has one Picture section with upload, paste, device selection, description, replace, archive, and restore. API and MCP clients may upload bytes or provide a public HTTP or HTTPS URL.
 
-A remote URL is an ingestion command, not stored display content. Lymi fetches it once, rejects private network destinations and unsafe formats, removes metadata, stores a private normalized copy, and serves it through an authenticated versioned URL. A failed replacement leaves the existing image untouched.
+Lymi fetches a remote URL once during ingestion rather than storing it as the display URL. It rejects private network destinations and unsafe formats, removes metadata, stores a private normalized copy, and serves it through an authenticated versioned URL. A failed replacement leaves the existing image untouched.
 
 Review shows the cue alone before reveal, then emphasizes the target and keeps the other core field as context. Missing image content never blocks eligible text review or grading. Offline caches are bounded and cleared on sign-out or account change.
 

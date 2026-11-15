@@ -88,7 +88,7 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
         </Trans>
       );
     case "deck_added":
-      return <Trans>Made the deck {{ deck: isolate(deck) }}</Trans>;
+      return <Trans>Created the deck {{ deck: isolate(deck) }}</Trans>;
     case "deck_edited":
       return <Trans>Edited the deck {{ deck: isolate(deck) }}</Trans>;
     case "deck_archived":
@@ -96,7 +96,7 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
     case "deck_restored":
       return <Trans>Restored the deck {{ deck: isolate(deck) }}</Trans>;
     case "series_added":
-      return <Trans>Made the series {{ name: isolate(name) }}</Trans>;
+      return <Trans>Created the series {{ name: isolate(name) }}</Trans>;
     case "series_edited":
       return <Trans>Edited the series {{ name: isolate(name) }}</Trans>;
     case "series_deleted":
@@ -106,7 +106,7 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
     case "section_added":
       return (
         <Trans>
-          Made the section {{ name: isolate(name) }} in {{ deck: isolate(deck) }}
+          Created the section {{ name: isolate(name) }} in {{ deck: isolate(deck) }}
         </Trans>
       );
     case "section_edited":
@@ -294,6 +294,8 @@ interface RowProps {
   entry: ActivityEntry;
   time: string;
   first: boolean;
+  /** Off on an app's own page, which already says whose writes these are. */
+  caller?: boolean;
   /** Opens the list's one sheet on this row's cards. */
   onCards: (entry: ActivityEntry, meta: string) => void;
   /** Opens the list's export sheet on this row's file. */
@@ -305,12 +307,12 @@ interface RowProps {
  * cards in a sheet over the list; an import opens its page and an export its sheet, as on the web;
  * a deck opens in Library.
  */
-function ActivityRow({ entry, time, first, onCards, onExport }: RowProps) {
+function ActivityRow({ entry, time, first, caller: named = true, onCards, onExport }: RowProps) {
   const p = usePalette();
   const router = useRouter();
   const caller = useCaller()(entry);
   const file = entry.import ?? entry.export;
-  const meta = [namesCaller(entry) ? isolate(caller) : null, isolate(file?.fileName), time]
+  const meta = [named && namesCaller(entry) ? isolate(caller) : null, isolate(file?.fileName), time]
     .filter(Boolean)
     .join(" · ");
   const hasCards = entry.cards.length > 0;
@@ -328,15 +330,15 @@ function ActivityRow({ entry, time, first, onCards, onExport }: RowProps) {
 
   const face = (
     <View className="min-h-[72px] flex-row items-center gap-3 py-3 ps-4 pe-4">
-      <View className="size-9 items-center justify-center rounded-full bg-plate-2">
-        <Icon name={MARK_ICONS[activityMark(entry.kind)]} size={17} colour={p["text-2"]} />
+      <View className="size-9 items-center justify-center rounded-full bg-plate-nested">
+        <Icon name={MARK_ICONS[activityMark(entry.kind)]} size={17} colour={p["ink-secondary"]} />
       </View>
       <View className="flex-1 gap-1">
-        <Text className="text-md font-medium text-text" numberOfLines={3}>
+        <Text className="text-md font-medium text-ink" numberOfLines={3}>
           <Sentence entry={entry} />
         </Text>
         <FileChip entry={entry} />
-        <Text className="text-sm text-muted" numberOfLines={1}>
+        <Text className="text-sm text-ink-muted" numberOfLines={1}>
           {meta}
         </Text>
       </View>
@@ -432,10 +434,10 @@ function CardsSheet({
     >
       {entry && (
         <View className="gap-1 px-4 pb-1">
-          <Text className="text-lg font-medium text-text" accessibilityRole="header">
+          <Text className="text-lg font-medium text-ink" accessibilityRole="header">
             <Sentence entry={entry} />
           </Text>
-          <Text className="text-sm text-muted">{meta}</Text>
+          <Text className="text-sm text-ink-muted">{meta}</Text>
         </View>
       )}
       <SheetGroup>{rows(cards.slice(0, PEEK))}</SheetGroup>
@@ -450,17 +452,17 @@ function CardRow({ card, onPress }: { card: ActivityCard; onPress: () => void })
   const face = (
     <View className="min-h-[52px] flex-row items-center gap-3 py-2.5 ps-4 pe-3.5">
       <View className="flex-1 gap-0.5">
-        <Text className="text-md font-medium text-text" numberOfLines={1}>
+        <Text className="text-md font-medium text-ink" numberOfLines={1}>
           {card.term}
         </Text>
         {card.meaning && (
-          <Text className="text-sm text-muted" numberOfLines={1}>
+          <Text className="text-sm text-ink-muted" numberOfLines={1}>
             {card.meaning}
           </Text>
         )}
       </View>
       {card.archived && <Chip size="sm">{t`Archived`}</Chip>}
-      {!card.deckArchived && <Icon name="forward" size={18} colour={p.faint} />}
+      {!card.deckArchived && <Icon name="forward" size={18} colour={p["ink-faint"]} />}
     </View>
   );
   if (card.deckArchived) return face;
@@ -511,6 +513,8 @@ interface Props {
   loadingMore: boolean;
   moreFailed: boolean;
   onMore: () => void;
+  /** Only one app's writes, opened from that app's page; `onClear` shows everything again. */
+  filter?: { name: string | null; onClear: () => void } | undefined;
 }
 
 export function ActivityView({
@@ -525,24 +529,29 @@ export function ActivityView({
   loadingMore,
   moreFailed,
   onMore,
+  filter,
 }: Props) {
   const { t, i18n } = useLingui();
-  // One sheet for the whole list, so a page of rows does not mount a sheet each.
-  const [chosen, setChosen] = useState<{ entry: ActivityEntry; meta: string } | null>(null);
-  const [open, setOpen] = useState(false);
-  const [file, setFile] = useState<ActivityEntry | null>(null);
-  const [exportOpen, setExportOpen] = useState(false);
+  const sheets = useRowSheets();
   const p = usePalette();
+  const only = filter && (
+    <View className="flex-row flex-wrap items-center gap-x-3 gap-y-1 px-1">
+      <Text className="text-base text-ink-secondary">
+        {filter.name ? t`Only what ${{ app: isolate(filter.name) }} did` : t`Only one app’s writes`}
+      </Text>
+      <Button label={t`Show everything`} variant="ghost" size="sm" onPress={filter.onClear} />
+    </View>
+  );
   if (offline) {
     return (
       <View className="items-center gap-3 pt-20">
-        <View className="size-16 items-center justify-center rounded-full bg-plate-2">
-          <Icon name="activity" size={28} colour={p["text-2"]} strokeWidth={1.75} />
+        <View className="size-16 items-center justify-center rounded-full bg-plate-nested">
+          <Icon name="activity" size={28} colour={p["ink-secondary"]} strokeWidth={1.75} />
         </View>
-        <Text className="text-center text-lg font-medium text-text">
+        <Text className="text-center text-lg font-medium text-ink">
           {t`Activity needs a connection`}
         </Text>
-        <Text className="max-w-72 text-center text-base text-text-2">
+        <Text className="max-w-72 text-center text-base text-ink-secondary">
           {t`It loads as soon as you’re back online.`}
         </Text>
       </View>
@@ -551,7 +560,7 @@ export function ActivityView({
   if (failed && !entries) {
     return (
       <Plate className="items-start gap-3 p-5">
-        <Text className="text-md font-medium text-text">{t`Couldn’t load Activity`}</Text>
+        <Text className="text-md font-medium text-ink">{t`Couldn’t load Activity`}</Text>
         <Button label={t`Try again`} onPress={onRetry} loading={retrying} />
       </Plate>
     );
@@ -565,7 +574,7 @@ export function ActivityView({
         <Plate className="gap-5 p-4">
           {[0, 1].map((i) => (
             <View key={i} className="flex-row gap-3">
-              <View className="size-9 rounded-full bg-plate-2" />
+              <View className="size-9 rounded-full bg-plate-nested" />
               <View className="flex-1 gap-2">
                 <Skeleton width="80%" height={16} />
                 <Skeleton width="40%" height={12} />
@@ -576,15 +585,29 @@ export function ActivityView({
       </View>
     );
   }
+  if (entries.length === 0 && filter) {
+    return (
+      <>
+        {only}
+        <Plate className="p-4">
+          <Text className="text-base text-ink-secondary">
+            {filter.name
+              ? t`Nothing from ${{ app: isolate(filter.name) }} yet. What it adds, edits or archives shows here.`
+              : t`Nothing from this app yet. What it adds, edits or archives shows here.`}
+          </Text>
+        </Plate>
+      </>
+    );
+  }
   if (entries.length === 0) {
     // An empty Activity is the good news that nothing landed unseen, so it asks for nothing.
     return (
       <View className="items-center gap-3 pt-20">
-        <View className="size-16 items-center justify-center rounded-full bg-plate-2">
-          <Icon name="activity" size={28} colour={p["text-2"]} strokeWidth={1.75} />
+        <View className="size-16 items-center justify-center rounded-full bg-plate-nested">
+          <Icon name="activity" size={28} colour={p["ink-secondary"]} strokeWidth={1.75} />
         </View>
-        <Text className="text-center text-lg font-medium text-text">{t`No activity yet`}</Text>
-        <Text className="max-w-72 text-center text-base text-text-2">
+        <Text className="text-center text-lg font-medium text-ink">{t`No activity yet`}</Text>
+        <Text className="max-w-72 text-center text-base text-ink-secondary">
           {t`Changes from AI apps, imports, AI enrichment and shared decks show up here.`}
         </Text>
       </View>
@@ -601,9 +624,10 @@ export function ActivityView({
   });
   return (
     <>
+      {only}
       {days.map((day) => (
         <View key={day.key} className="gap-2">
-          <Text className="px-1 text-base font-medium text-muted" accessibilityRole="header">
+          <Text className="px-1 text-base font-medium text-ink-muted" accessibilityRole="header">
             {day.label}
           </Text>
           <Plate className="overflow-hidden">
@@ -614,39 +638,112 @@ export function ActivityView({
                 entry={entry}
                 time={time.format(new Date(entry.at))}
                 first={i === 0}
-                onCards={(entry, meta) => {
-                  setChosen({ entry, meta });
-                  setOpen(true);
-                }}
-                onExport={(entry) => {
-                  setFile(entry);
-                  setExportOpen(true);
-                }}
+                onCards={sheets.onCards}
+                onExport={sheets.onExport}
               />
             ))}
           </Plate>
         </View>
       ))}
       <Foot hasMore={hasMore} loading={loadingMore} failed={moreFailed} onMore={onMore} />
-      <CardsSheet
-        entry={chosen?.entry ?? null}
-        meta={chosen?.meta ?? ""}
-        open={open}
-        onOpenChange={setOpen}
-      />
-      {file?.export && (
-        <ExportSheet
-          key={file.group}
-          open={exportOpen}
-          onOpenChange={setExportOpen}
-          initial={file.export}
-          scope={
-            file.deck && file.export.deckId
-              ? { kind: "deck", deckId: file.export.deckId, deckName: file.deck.name }
-              : { kind: "library" }
-          }
+      {sheets.sheets}
+    </>
+  );
+}
+
+/**
+ * The list's one cards sheet and one export sheet, so a page of rows does not mount a sheet each.
+ * `onCardsOpened` hears a row open its cards.
+ */
+function useRowSheets(onCardsOpened?: () => void) {
+  const [chosen, setChosen] = useState<{ entry: ActivityEntry; meta: string } | null>(null);
+  const [open, setOpen] = useState(false);
+  const [file, setFile] = useState<ActivityEntry | null>(null);
+  const [exportOpen, setExportOpen] = useState(false);
+  return {
+    onCards: (entry: ActivityEntry, meta: string) => {
+      setChosen({ entry, meta });
+      setOpen(true);
+      onCardsOpened?.();
+    },
+    onExport: (entry: ActivityEntry) => {
+      setFile(entry);
+      setExportOpen(true);
+    },
+    sheets: (
+      <>
+        <CardsSheet
+          entry={chosen?.entry ?? null}
+          meta={chosen?.meta ?? ""}
+          open={open}
+          onOpenChange={setOpen}
         />
-      )}
+        {file?.export && (
+          <ExportSheet
+            key={file.group}
+            open={exportOpen}
+            onOpenChange={setExportOpen}
+            initial={file.export}
+            scope={
+              file.deck && file.export.deckId
+                ? { kind: "deck", deckId: file.export.deckId, deckName: file.deck.name }
+                : { kind: "library" }
+            }
+          />
+        )}
+      </>
+    ),
+  };
+}
+
+/**
+ * One app's rows on one plate, for its page under Apps: each says its day and time, since there are
+ * no day headings, and none repeats the app's name. `foot` closes the plate, such as a link to the
+ * whole of Activity.
+ */
+export function ActivityList({
+  entries,
+  today,
+  zone,
+  foot,
+  onCardsOpened,
+}: {
+  entries: ActivityEntry[];
+  today: string | undefined;
+  zone: string | undefined;
+  foot?: ReactNode;
+  onCardsOpened?: () => void;
+}) {
+  const { t, i18n } = useLingui();
+  const sheets = useRowSheets(onCardsOpened);
+  const time = new Intl.DateTimeFormat(i18n.locale, {
+    timeStyle: "short",
+    ...(zone ? { timeZone: zone } : {}),
+  });
+  const days = byDay(entries, i18n.locale, {
+    today: t`Today`,
+    yesterday: t`Yesterday`,
+    todayKey: today ?? "",
+  });
+  return (
+    <>
+      <Plate className="overflow-hidden">
+        {days.flatMap((day, d) =>
+          day.entries.map((entry, i) => (
+            <ActivityRow
+              key={entry.group}
+              entry={entry}
+              time={`${day.label} · ${time.format(new Date(entry.at))}`}
+              first={d === 0 && i === 0}
+              caller={false}
+              onCards={sheets.onCards}
+              onExport={sheets.onExport}
+            />
+          )),
+        )}
+        {foot && <View className="border-t border-edge">{foot}</View>}
+      </Plate>
+      {sheets.sheets}
     </>
   );
 }
@@ -680,7 +777,7 @@ function Foot({
           <ActivityIndicator accessibilityLabel={t`Loading more`} />
         )
       ) : (
-        <Text className="text-base text-muted" accessibilityLiveRegion="polite">
+        <Text className="text-base text-ink-muted" accessibilityLiveRegion="polite">
           {t`That’s everything.`}
         </Text>
       )}

@@ -33,6 +33,7 @@ const editing: SectionEditing = {
   onRename: vi.fn(),
   onAddCard: vi.fn(),
   onManage: vi.fn(),
+  several: true,
   onDropCards: vi.fn(),
 };
 

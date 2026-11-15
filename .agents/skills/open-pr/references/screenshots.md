@@ -1,6 +1,6 @@
 # Visual evidence for UI PRs
 
-[`AGENTS.md`](../../../../AGENTS.md) requires attached visual evidence for every rendered UI change. This file is how to capture and attach it.
+How to capture and attach the visual evidence [`AGENTS.md`](../../../../AGENTS.md) requires for every rendered UI change.
 
 ## Choose the evidence
 
@@ -10,7 +10,7 @@
 
 ## Save files
 
-- Use the available browser or visual-verification tools to reach the real state, then explicitly save each image to a PNG file outside the repository. A screenshot returned only inside a browser-tool result cannot be uploaded later.
+- Reach the real state with a browser or visual-verification tool, then save each image to a PNG file outside the repository. A screenshot returned only inside a browser-tool result cannot be uploaded later.
 - Prefer a browser tool that returns a local path. Otherwise use Playwright's `page.screenshot({ path })` against the already-running local app. Use a temporary directory and descriptive filenames such as `deck-phone-after.png`.
 - Confirm every expected file exists and is a valid non-empty image before creating the PR.
 

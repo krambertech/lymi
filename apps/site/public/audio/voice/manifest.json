@@ -1,0 +1,30 @@
+{
+  "feierabend": {
+    "term": "Feierabend",
+    "language": "de",
+    "provider": "elevenlabs",
+    "model": "eleven_v4",
+    "voice": "FTNCalFNG5bRnkkaP5Ug"
+  },
+  "komorebi": {
+    "term": "木漏れ日",
+    "language": "ja",
+    "provider": "elevenlabs",
+    "model": "eleven_v4",
+    "voice": "vzIXwvf41vKosKu00hYj"
+  },
+  "saudade": {
+    "term": "saudade",
+    "language": "pt-BR",
+    "provider": "elevenlabs",
+    "model": "eleven_v4",
+    "voice": "Qrdut83w0Cr152Yb4Xn3"
+  },
+  "nunchi": {
+    "term": "눈치",
+    "language": "ko",
+    "provider": "elevenlabs",
+    "model": "eleven_v4",
+    "voice": "s07IwTCOrCDCaETjUVjx"
+  }
+}

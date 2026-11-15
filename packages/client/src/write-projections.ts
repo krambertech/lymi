@@ -112,8 +112,8 @@ export function localCard(w: Extract<Write, { kind: "card.add" }>, lookup: Looku
     exampleTranslationStale: false,
     exampleTranslationStatus: null,
     notes: input.notes ?? null,
-    hook: input.hook || null,
-    hookSource: input.hook ? (input.hookSource ?? "manual") : null,
+    hint: input.hint || null,
+    hintSource: input.hint ? (input.hintSource ?? "manual") : null,
     language: input.language === undefined ? (deck?.defaultLanguage ?? null) : input.language,
     tags: input.tags ?? [],
     source: input.source ?? null,
@@ -222,6 +222,8 @@ function onDecks(decks: DeckSummary[], w: Write, lookup: Lookup): DeckSummary[] 
       return decks.some((d) => d.id === w.input.id) ? decks : [...decks, localDeck(w, lookup)];
     case "deck.update":
       return decks.map((d) => (d.id === w.id ? patchDeck(d, w.patch) : d));
+    case "deck.preferences":
+      return decks.map((d) => (d.id === w.id ? { ...d, ...w.preferences } : d));
     case "deck.archive":
       return decks.filter((d) => d.id !== w.id);
     case "deck.restore": {

@@ -1,8 +1,10 @@
+import { API_RESOURCES } from "@lymi/core/api-resources";
 import { describe, expect, it } from "vitest";
 import { GET } from "../pages/sitemap-pages.xml";
 import { changelogSlugs, changelogUpdatePath } from "./changelog-paths";
 import { LANGUAGE_PAGE_TAGS, LANGUAGE_PAGES, languageOfPage } from "./language-pages";
 import {
+  apiReferenceRoute,
   englishOnlyPaths,
   isRuntimePage,
   type LocalizedPage,
@@ -11,6 +13,7 @@ import {
   localizedPages,
   localizedPath,
   localizedRuntimePages,
+  pageLocales,
 } from "./routes";
 
 // Keys only; the Astro pages are never loaded.
@@ -69,7 +72,11 @@ describe("public routes", () => {
   it("has every page rendered per request in every locale, and nothing else dynamic", () => {
     expect([...runtimePaths].filter((path) => !allRoutes.has(path))).toEqual([]);
     const undeclared = [...allRoutes].filter(
-      (route) => route.includes("[") && !runtimePaths.has(route) && !contentPaths.has(route),
+      (route) =>
+        route.includes("[") &&
+        !runtimePaths.has(route) &&
+        !contentPaths.has(route) &&
+        route !== apiReferenceRoute,
     );
     expect(undeclared).toEqual([]);
   });
@@ -78,7 +85,7 @@ describe("public routes", () => {
     expect([...contentPaths].filter((path) => !allRoutes.has(path))).toEqual([]);
   });
 
-  it("serves each supported language's page from the language route in every locale", () => {
+  it("serves each language's page from the language route in every locale", () => {
     for (const tag of LANGUAGE_PAGE_TAGS) {
       const { page } = LANGUAGE_PAGES[tag];
       expect(languageOfPage(page)).toBe(tag);
@@ -101,6 +108,16 @@ describe("public routes", () => {
     const updates = locales.flatMap((locale) =>
       changelogSlugs.map((slug) => changelogUpdatePath(slug, locale)),
     );
-    expect(new Set(listed)).toEqual(new Set([...routes, ...updates]));
+    const reference = API_RESOURCES.map((r) => `/docs/api/${r.slug}`);
+    expect(new Set(listed)).toEqual(new Set([...routes, ...updates, ...reference]));
+  });
+});
+
+describe("pageLocales", () => {
+  it("leaves a language's page out of the locales that aren't offered it", () => {
+    expect(pageLocales("russian")).toEqual(["en"]);
+    expect(pageLocales("ukrainian")).toEqual(["en", "ru"]);
+    expect(pageLocales("japanese")).toEqual(["en", "uk", "ru"]);
+    expect(pageLocales("languages")).toEqual(["en", "uk", "ru"]);
   });
 });

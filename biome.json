@@ -169,6 +169,25 @@
       "plugins": ["./biome-plugins/no-sql-lower.grit"]
     },
     {
+      "includes": ["apps/web/**", "packages/**", "!**/*.test.ts"],
+      "plugins": ["./biome-plugins/no-redirect-error.grit"]
+    },
+    {
+      "includes": [
+        "apps/mobile/**",
+        "packages/client/src/**",
+        "packages/core/src/**",
+        "!packages/client/src/cache.ts",
+        "!**/*.test.ts",
+        "!**/*.test.tsx"
+      ],
+      "plugins": ["./biome-plugins/no-navigator-online.grit"]
+    },
+    {
+      "includes": ["apps/mobile/src/**"],
+      "plugins": ["./biome-plugins/notice-plain-text.grit"]
+    },
+    {
       "includes": [
         "packages/core/src/**",
         "packages/client/src/**",

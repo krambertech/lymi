@@ -16,7 +16,7 @@ interface Props {
 
 export function SectionTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="text-4xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-5xl">
+    <h2 className="text-4xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-5xl">
       {children}
     </h2>
   );
@@ -27,10 +27,7 @@ export function FeatureSection({ id, title, body, after, children, demoFirst, ti
   return (
     <section
       id={id}
-      className={clsx(
-        "scroll-mt-8 border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28",
-        tinted && "bg-plate",
-      )}
+      className={clsx("scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20", tinted && "bg-plate")}
     >
       <div
         className={clsx(
@@ -42,7 +39,7 @@ export function FeatureSection({ id, title, body, after, children, demoFirst, ti
       >
         <div className={clsx("max-w-[440px]", demoFirst && "@4xl:order-2 @4xl:justify-self-end")}>
           <SectionTitle>{title}</SectionTitle>
-          <p className="mt-5 text-md text-pretty text-text-2">{body}</p>
+          <p className="mt-5 text-md text-pretty text-ink-secondary">{body}</p>
           {after && <div className="mt-8">{after}</div>}
         </div>
         <div className={clsx("min-w-0 py-4", demoFirst ? "@4xl:order-1 @4xl:pr-6" : "@4xl:pl-6")}>
@@ -66,11 +63,11 @@ export function Wide({
   children: ReactNode;
 }) {
   return (
-    <section id={id} className="scroll-mt-8 border-b border-edge px-5 py-20 @2xl:px-10 @4xl:py-28">
+    <section id={id} className="scroll-mt-8 px-5 py-16 @2xl:px-10 @4xl:py-20">
       <div className="mx-auto max-w-[1040px]">
         <div className="max-w-[640px]">
           <SectionTitle>{title}</SectionTitle>
-          <p className="mt-5 text-md text-pretty text-text-2">{body}</p>
+          <p className="mt-5 text-md text-pretty text-ink-secondary">{body}</p>
         </div>
         {children}
       </div>

@@ -2,7 +2,7 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type GoalStatus, useDailyGoal } from "@lymi/client/daily-goal";
 import { shownOutcome } from "@lymi/client/review-day";
-import type { StreakOut } from "@lymi/core";
+import { daySatisfied, runDates, type StreakOut } from "@lymi/core";
 import { useNavigation } from "expo-router";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ScrollView, View, type ViewStyle } from "react-native";
@@ -17,9 +17,6 @@ import { Icon, IconButton, Plate, Text } from "../ui/primitives";
 import { Skeleton } from "../ui/skeleton";
 import { useStreakStart } from "../ui/streak-start";
 import { OnGlass } from "../ui/surface";
-
-const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
-  outcome === "goal_met" || outcome === "exhausted";
 
 /**
  * The streak, as a sheet over whatever opened it: the run with one plain line about today, today
@@ -36,6 +33,8 @@ export default function Streak() {
     <OnGlass>
       <ScrollView
         keyboardShouldPersistTaps="handled"
+        // Without this it takes a tap on the calendar's arrows whenever the month pager is scrolling.
+        disableScrollViewPanResponder
         style={{ backgroundColor: frost }}
         contentContainerClassName="px-5 pt-8 pb-12"
       >
@@ -87,25 +86,14 @@ function StreakPanel({
   };
   const { current, today } = summary;
   const start = useStreakStart(summary.longest);
-  const done = satisfied(today.outcome);
+  const done = daySatisfied(today.outcome);
   const byDate = useMemo(() => new Map(summary.days.map((d) => [d.date, d])), [summary.days]);
   const rest = useMemo(() => new Set(summary.restDays), [summary.restDays]);
   // The days of the current run, drawn in from its first one when the streak opens.
-  const run = useMemo(() => {
-    const dates = new Set<string>();
-    const keeps = (date: string) => {
-      const d = byDate.get(date);
-      return rest.has(date) || (!!d && (d.satisfied || d.outcome === "nothing_due"));
-    };
-    for (
-      let day = done ? today.date : addDays(today.date, -1);
-      keeps(day);
-      day = addDays(day, -1)
-    ) {
-      if (byDate.get(day)?.satisfied || rest.has(day)) dates.add(day);
-    }
-    return dates;
-  }, [byDate, rest, done, today.date]);
+  const run = useMemo(
+    () => runDates(summary.days, summary.restDays, today),
+    [summary.days, summary.restDays, today],
+  );
   const firstMonth = summary.days[0]?.date.slice(0, 7) ?? today.date.slice(0, 7);
   const status =
     today.outcome === "goal_met"
@@ -113,7 +101,7 @@ function StreakPanel({
       : today.outcome === "exhausted"
         ? t`You’re done for today.`
         : shownOutcome(today.outcome, due) === "nothing_due"
-          ? t`Nothing due today, so your streak is safe.`
+          ? t`Nothing due today, so your streak carries on.`
           : rest.has(addDays(today.date, -1))
             ? t`Yesterday was a rest day. Reach today’s goal to keep it going.`
             : current > 0
@@ -137,20 +125,20 @@ function StreakPanel({
           {current > 0 ? (
             <View className="flex-row items-baseline gap-2.5">
               <Text
-                className="text-5xl font-semibold text-text"
+                className="text-5xl font-semibold text-ink"
                 style={{ fontVariant: ["tabular-nums"] }}
               >
                 {current}
               </Text>
-              <Text className="text-lg font-medium text-text-2">
+              <Text className="text-lg font-medium text-ink-secondary">
                 {plural(current, { one: "day in a row", other: "days in a row" })}
               </Text>
             </View>
           ) : (
-            <Text className="text-2xl font-semibold text-text">{start}</Text>
+            <Text className="text-2xl font-semibold text-ink">{start}</Text>
           )}
         </View>
-        <Text className="text-base text-text-2">{status}</Text>
+        <Text className="text-base text-ink-secondary">{status}</Text>
       </View>
 
       <Plate className="overflow-hidden">
@@ -160,7 +148,7 @@ function StreakPanel({
               {done && <DoneMark />}
               {/* "of" holds only up to the goal; a round past it counts on and still names the goal. */}
               <Text
-                className="text-md font-medium text-text"
+                className="text-md font-medium text-ink"
                 style={{ fontVariant: ["tabular-nums"] }}
               >
                 {today.attempts > today.goal
@@ -195,7 +183,7 @@ function StreakPanel({
         onChange={goal.change}
       />
 
-      <Plate className="px-3 pt-2 pb-3">
+      <Plate className="pt-2 pb-3">
         <StreakCalendar
           days={byDate}
           today={today.date}
@@ -226,9 +214,9 @@ function GoalLine({ connected, status }: { connected: boolean; status: GoalStatu
       <Icon
         name={status === "saved" ? "check" : "alert"}
         size={16}
-        colour={status === "saved" ? p.muted : p.danger}
+        colour={status === "saved" ? p["ink-muted"] : p.danger}
       />
-      <Text className={`text-base ${status === "saved" ? "text-muted" : "text-danger"}`}>
+      <Text className={`text-base ${status === "saved" ? "text-ink-muted" : "text-danger"}`}>
         {line}
       </Text>
     </View>
@@ -253,7 +241,7 @@ function GoalTrack({ today, label }: { today: StreakOut["today"]; label: string 
       accessibilityRole="progressbar"
       accessibilityLabel={label}
       accessibilityValue={{ min: 0, max: today.goal, now: reached }}
-      className="h-1.5 overflow-hidden rounded-full bg-plate-2"
+      className="h-1.5 overflow-hidden rounded-full bg-plate-nested"
       style={{ boxShadow: `inset 0 0 0 1px ${p.edge}` } as ViewStyle}
     >
       <View
@@ -274,10 +262,10 @@ function Figure({ icon, value, label }: { icon: IconName; value: number; label: 
       accessibilityLabel={`${label}: ${value}`}
     >
       <View className="flex-row items-center gap-1.5">
-        <Icon name={icon} size={14} colour={p.muted} />
-        <Text className="text-sm text-muted">{label}</Text>
+        <Icon name={icon} size={14} colour={p["ink-muted"]} />
+        <Text className="text-sm text-ink-muted">{label}</Text>
       </View>
-      <Text className="text-md font-medium text-text" style={{ fontVariant: ["tabular-nums"] }}>
+      <Text className="text-md font-medium text-ink" style={{ fontVariant: ["tabular-nums"] }}>
         {value}
       </Text>
     </View>

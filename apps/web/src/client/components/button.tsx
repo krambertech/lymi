@@ -38,9 +38,10 @@ const iconSide =
 
 const variants: Record<ButtonVariant, string> = {
   primary: "key-light bg-amber text-amber-ink hoverable:hover:bg-amber-hover",
-  secondary: "edge bg-plate text-text hoverable:hover:veil",
-  // `hover`, not `plate-2`: in the light room plate-2 is the rail, so the fill vanished there.
-  ghost: "bg-transparent text-text-2 hoverable:hover:bg-hover hoverable:hover:text-text",
+  secondary: "edge bg-plate text-ink hoverable:hover:veil",
+  // `hover`, not `plate-nested`: in the light room plate-nested is the rail, so the fill vanished there.
+  ghost:
+    "bg-transparent text-ink-secondary hoverable:hover:bg-plate-hover hoverable:hover:text-ink",
   danger: "bg-danger-soft text-danger hoverable:hover:bg-danger hoverable:hover:text-canvas",
 };
 
@@ -52,6 +53,9 @@ const sizes: Record<ButtonSize, string> = {
   // Today's one full-width action: Review, or what stands in for it when nothing is due.
   xl: "h-16 px-(--btn-px) [--btn-px:20px] text-lg [&_svg]:size-5",
 };
+
+/** A menu trigger opens on a press or an arrow key, not only a click, so an inert control drops these too. */
+const noOpen = { onPointerDown: undefined, onMouseDown: undefined, onKeyDown: undefined };
 
 /**
  * A button is never taken away for being unable to run yet. `disabled` drops it out of the
@@ -85,7 +89,6 @@ export function Button({
         type: render ? undefined : "button",
         className: clsx(base, iconSide, variants[variant], sizes[size], className),
         "aria-busy": loading || undefined,
-        "aria-disabled": inert || undefined,
         onClick: (e) => {
           if (inert) {
             e.preventDefault();
@@ -116,7 +119,9 @@ export function Button({
           </>
         ),
       },
-      rest,
+      inert ? { ...rest, ...noOpen } : rest,
+      // Last, so a caller's `aria-disabled={false}` cannot announce a busy button as available.
+      { "aria-disabled": inert || undefined },
     ),
   });
 }
@@ -134,7 +139,7 @@ interface IconButtonProps extends ComponentProps<"button"> {
 const iconVariants: Record<ButtonVariant, string> = {
   ...variants,
   // An icon on a plate sits a step quieter than a label would.
-  secondary: cn(variants.secondary, "text-text-2"),
+  secondary: cn(variants.secondary, "text-ink-secondary"),
 };
 
 const iconSizes: Record<IconButtonSize, string> = {
@@ -188,6 +193,7 @@ export function IconButton({
               onClick?.(e);
             }}
             {...rest}
+            {...(inert ? noOpen : undefined)}
           />
         }
       >

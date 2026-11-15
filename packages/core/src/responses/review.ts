@@ -98,7 +98,7 @@ const DrawCardOut = z
     card: CardOut,
     modes: z.array(DrawModeOut).meta({ description: "In the order they are introduced" }),
     slipping: slipping.meta({
-      description: "Often forgotten: review offers a hook for it when it has none",
+      description: "Often forgotten: review offers a hint for it when it has none",
     }),
   })
   .meta({ id: "DrawCard" });
@@ -148,10 +148,10 @@ export const GradeOut = z
       .meta({ description: "True when an older or equal review already existed" }),
     due: Timestamp,
     state: z.number().int(),
-    reviewId: z
-      .string()
-      .nullable()
-      .meta({ description: "The attempt, for Undo. Null when the grade was a duplicate." }),
+    reviewId: z.string().nullable().meta({
+      description:
+        "The attempt, for Undo. On a duplicate, the stored attempt when this same grade landed earlier; otherwise null.",
+    }),
     day: ReviewDayProgress,
   })
   .meta({ id: "GradeResult" });

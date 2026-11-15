@@ -1,6 +1,6 @@
 # Deck filters
 
-A deck page's **Filter** opens one sheet: State and Due on its first level, with **Any section** and **Any tag** each opening a level of its own. Each tap changes a draft that the count under the title answers, **Reset filters** clears the draft, ✓ (**Apply filters**) applies it and Close leaves the filters as they were. While the list is filtered, the Filter pill shows how many filters are on. What the filters show is reviewed as on the web: **Select cards**, **Select all**, then **Review N due** or **Review all N** in the selection's Actions menu.
+A deck page's **Filter** opens one sheet: State and Due on its first level, with **Any section** and **Any tag** each opening a level of its own. Each tap changes a draft that the count under the title answers, **Reset filters** clears the draft, ✓ (**Apply filters**) applies it and Cancel leaves the filters as they were. While the list is filtered, the Filter pill shows how many filters are on. What the filters show is reviewed as on the web: **Select cards**, **Select all**, then **Review N due** or **Review all N** in the selection's Actions menu.
 
 ## Reach
 

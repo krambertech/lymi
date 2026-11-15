@@ -9,6 +9,7 @@ import {
   clearLocalEmailOutbox,
   latestLocalEmail,
   renderTransactionalEmail,
+  sendAccountEmail,
   sendOperatorTestEmail,
   sendTransactionalEmail,
 } from "./email";
@@ -118,14 +119,14 @@ describe("transactional email", () => {
         language: "et",
       },
     });
-    expect(message.subject).toBe("Maria Kask invited you to study Estonian A2");
+    expect(message.subject).toBe("Maria Kask invited you to join Estonian A2");
     expect(message.html).toContain("Estonian · 214 cards");
     expect(message.html).toContain(">MK<");
-    expect(message.html).toMatch(/>Maria Kask<\/span><br\/?>invited you to study this deck/);
+    expect(message.html).toMatch(/>Maria Kask<\/span><br\/?>invited you to join this deck/);
     expect(message.html).toContain("/brand/email/lockup-light.png");
     expect(message.html).toContain(hues.tray.light[trayHue("deck-1")] ?? "the deck's tray colour");
     expect(message.text).toMatch(
-      /^Maria Kask invited you to study this deck\n\nEstonian A2\nEstonian · 214 cards\n\nYou review/,
+      /^Maria Kask invited you to join this deck\n\nEstonian A2\nEstonian · 214 cards\n\nYou review/,
     );
   });
 
@@ -168,7 +169,7 @@ describe("transactional email", () => {
       url: "https://my.lymi.app/join/token",
       invitation: { deckId: "d", deckName: "Verbs\nweek 2", ownerName: "Maria", cards: 1 },
     });
-    expect(message.subject).toBe("Maria invited you to study Verbs week 2");
+    expect(message.subject).toBe("Maria invited you to join Verbs week 2");
   });
 
   it("hides the night picture inline, so a client without styles shows only the day one", async () => {
@@ -346,6 +347,19 @@ describe("transactional email", () => {
       }),
     );
     expect(JSON.stringify(log.mock.calls)).not.toContain("Private provider detail");
+  });
+
+  it("logs why an account email was not sent, and lets the sign-in carry on", async () => {
+    const ctx = await person("Account email");
+    const log = vi.spyOn(console, "error").mockImplementation(() => undefined);
+    const { env } = fakeEnv(
+      "https://my.lymi.app",
+      vi.fn().mockRejectedValue(new Error("Private provider detail")),
+    );
+    await sendAccountEmail(ctx, env, { kind: "test", to: "learner@example.com", language: "en" });
+    expect(log).toHaveBeenLastCalledWith(
+      JSON.stringify({ event: "account_email_not_sent", kind: "test", error: "ServiceError" }),
+    );
   });
 
   it("sends through Resend once its key is set, tagging the kind and leaving the binding alone", async () => {

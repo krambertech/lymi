@@ -1,26 +1,14 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { gradeStore, recordGrade, retireGrades } from "@lymi/client/grades";
+import { useDailyGoal } from "@lymi/client/daily-goal";
+import { nextCards, reminderChoices } from "@lymi/client/first-review";
 import { readingsFadedField, useKnownReadings } from "@lymi/client/known-readings";
 import { useRecallClock } from "@lymi/client/recall-clock";
-import { drawState, reviewItem, stateBefore } from "@lymi/client/review-draw";
-import {
-  drawableLeft,
-  forgottenRound,
-  legFinish,
-  type Offer,
-  type RoundAsk,
-  reviewEnd,
-  roundWalk,
-  streakAsOf,
-  streakWith,
-} from "@lymi/client/review-end";
+import { type Offer, streakAsOf, streakWith } from "@lymi/client/review-end";
+import { type ReviewPlatform, useReviewFlow } from "@lymi/client/review-flow";
 import { writes } from "@lymi/client/writes";
 import {
   CHOSEN_LIMIT,
   canPlayPronunciation,
-  countedRating,
-  type Drawn,
-  drawKey,
   gradeAllowed,
   isolate,
   modeKey,
@@ -29,55 +17,54 @@ import {
   ROUNDS,
   type Round,
 } from "@lymi/core";
-import type { ReviewScopeKind } from "@lymi/core/analytics";
-import { ReviewSessionTracker } from "@lymi/core/analytics-review-session";
 import { lanternFor } from "@lymi/design";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import {
-  useCallback,
-  useEffect,
-  useId,
-  useMemo,
-  useRef,
-  useState,
-  useSyncExternalStore,
-} from "react";
+import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { Button } from "../components/button";
 import { CardMenu } from "../components/card-menu";
 import { CardPlace } from "../components/card-place";
 import { EditCardSheet } from "../components/edit-card-sheet";
+import {
+  type FanCard,
+  type FirstEndLeft,
+  FirstReviewTitle,
+  FirstStreakNote,
+  firstEndParts,
+  firstReviewOpen,
+  firstReviewTeaches,
+  type PlanStep,
+  rememberFirstReview,
+  useReminder,
+} from "../components/first-plan";
+import { ComesBack, CueTip, GradesTip, useComesBack } from "../components/first-review";
 import { GRADES } from "../components/grade";
-import { HookEditor } from "../components/hook-editor";
+import { HintEditor } from "../components/hint-editor";
 import { AID_KEY, aidSteps, aidTaken } from "../components/recall-aid";
+import { ReportDialog } from "../components/report-dialog";
 import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
-import { api, type Card, deviceTimezone, errorMessage, type QueueItem, scopeKey } from "../lib/api";
+import { api, type Card, errorMessage, scopeKey } from "../lib/api";
 import { usePrefetchPictures } from "../lib/card-images";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useMouse, useWide } from "../lib/device";
 import { useDocumentTitle } from "../lib/document-title";
+import { isGuiding } from "../lib/first-run";
 import { lastInputWasKey } from "../lib/last-input";
 import { playAlone } from "../lib/now-playing";
-import {
-  decksQuery,
-  drawQuery,
-  queueQuery,
-  sectionsQuery,
-  seriesQuery,
-  streakQuery,
-} from "../lib/queries";
-import { recordReveal, useRevealHint } from "../lib/reveal-hint";
-import { stepReviewLeg } from "../lib/review-leg";
+import { insightsQuery, roundsQuery, sectionsQuery, streakQuery } from "../lib/queries";
+import { recordReveal, useRevealNudge } from "../lib/reveal-nudge";
 import { itemKey } from "../lib/review-modes";
 import { shortQuote } from "../lib/short-quote";
+import { WEB_DAY } from "../lib/streak";
 import { captureAnalytics } from "../lib/telemetry";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { useWordHistory } from "../lib/use-word-history";
 import {
   GradeBar,
+  REVEAL_TAP_GUARD_MS,
   ReviewCard,
   ReviewComplete,
   ReviewError,
@@ -123,8 +110,6 @@ export const Route = createFileRoute("/review")({
   component: ReviewPage,
 });
 
-/** How long after the reveal a tap on the card still counts as the reveal's. */
-const REVEAL_TAP_GUARD_MS = 400;
 /** The grade strip, where focus goes when a sheet over the card closes. */
 const GRADES_ID = "review-grades";
 const gradesFocus = () => {
@@ -135,55 +120,18 @@ const gradesFocus = () => {
   return false;
 };
 
-/** Pictures of this many cards after the current one are fetched ahead. */
-const LOOKAHEAD = 3;
-const NO_GRADES: never[] = [];
-/** Local grades a fetch can fall behind by before the draw data is refreshed. */
-const REFRESH_AFTER = 20;
-
-type Pinned = { cardId: string; mode: string };
-
-/**
- * A stretch of one day's review, ADR 0021: the draw, which stops at `until` when it began below the
- * goal, or a fixed list, which is a round from Today or the forgotten cards chosen at an end.
- */
-type Leg = { date: string; from: number } & (
-  | { kind: "draw"; until: number | null }
-  | { kind: "today"; size: number }
-  | { kind: "forgotten"; items: Drawn[] }
-);
-
-/** Where the last end screen left the day, or where it stood when the page opened. */
-type Mark = { attempts: number; satisfied: boolean };
-
-const gradedKey = (item: Pick<QueueItem, "card" | "mode">) =>
-  drawKey(item.card.id, modeKey(item.mode));
-
-/** A list leg's cards by key: graded, sent to the end by a refused grade, or out because the card is gone. */
-type LegCards = {
-  graded: ReadonlySet<string>;
-  returned: ReadonlySet<string>;
-  dropped: ReadonlySet<string>;
+const WEB: ReviewPlatform = {
+  track(event) {
+    if (event.name === "review_session_finished") captureAnalytics(event.name, event);
+    if (event.name === "review_session_abandoned") captureAnalytics(event.name, event);
+  },
+  newId: () => crypto.randomUUID(),
+  onForeground: WEB_DAY.onForeground,
+  onExit(gone) {
+    window.addEventListener("pagehide", gone);
+    return () => window.removeEventListener("pagehide", gone);
+  },
 };
-const NO_LEG_CARDS: LegCards = { graded: new Set(), returned: new Set(), dropped: new Set() };
-
-const withKey = (keys: ReadonlySet<string>, key: string) => new Set(keys).add(key);
-const withoutKey = (keys: ReadonlySet<string>, key: string) => {
-  const next = new Set(keys);
-  next.delete(key);
-  return next;
-};
-
-/** What is left of a list leg, with the cards a refused grade sent back at the end. */
-function leftInLeg<T>(items: readonly T[], cards: LegCards, key: (item: T) => string): T[] {
-  const left = items.filter(
-    (item) => !cards.graded.has(key(item)) && !cards.dropped.has(key(item)),
-  );
-  return [
-    ...left.filter((item) => !cards.returned.has(key(item))),
-    ...left.filter((item) => cards.returned.has(key(item))),
-  ];
-}
 
 /** A review of another deck or series starts over, so nothing from this one carries into it. */
 function ReviewPage() {
@@ -201,28 +149,21 @@ function Review() {
   const navigate = useNavigate();
   const add = useAddCard();
   const reduce = useReduceMotion();
-  // The draw also feeds the header's count, so it loads in a round too.
-  const draw = useQuery(drawQuery(scope));
-  // A round from Today, or cards chosen on a deck page, is a fixed list rather than a draw, walked in order.
+  const flow = useReviewFlow(scope, round, cards, WEB);
+  const { data, state, left, mark, current, until, stopped, position: done, decks } = flow;
   const listed = !!round || !!cards;
-  const listScope: ReviewScopeKind = cards ? "chosen" : "round";
-  const roundQueue = useQuery({ ...queueQuery(scope, round, cards), enabled: listed });
-  const decks = useQuery(decksQuery);
-  const seriesList = useQuery({ ...seriesQuery, enabled: !!series });
   const streak = useQuery(streakQuery);
-  const grades = useSyncExternalStore(gradeStore.subscribe, gradeStore.snapshot, () => NO_GRADES);
-  // The card on screen stays put while a refetch lands; only a grade moves it.
-  const [pinned, setPinned] = useState<Pinned | null>(null);
-  const [now, setNow] = useState(() => new Date());
+  // Settled once, on the streak as this review opened, so its own grades never change the answer.
+  const sessionFirst = useRef<boolean | null>(null);
+  const resumedFirst = useRef(false);
+  const reviewedCards = useRef<FanCard[]>([]);
+  if (sessionFirst.current === null && streak.data && !streak.isFetching) {
+    const hand = firstReviewOpen(streak.data);
+    resumedFirst.current = !!hand;
+    reviewedCards.current = hand ?? [];
+    sessionFirst.current = isGuiding(streak.data) || !!hand;
+  }
   const [revealed, setRevealed] = useState(false);
-  const [done, setDone] = useState(0);
-  const [chosenLeg, setLeg] = useState<Leg | null>(null);
-  const [mark, setMark] = useState<Mark | null>(null);
-  // Left by X: the stretch waits behind the end screen, and Continue picks it up again.
-  const [paused, setPaused] = useState(false);
-  const [legCards, setLegCards] = useState<LegCards>(NO_LEG_CARDS);
-  // Grades this page has recorded that the server has not answered yet.
-  const [sending, setSending] = useState(0);
   const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
   // Tied to the queue item, so a failure never carries onto the next card's button.
   const [audioError, setAudioError] = useState<{ item: string; message: string } | null>(null);
@@ -233,18 +174,16 @@ function Review() {
   // Where focus goes when the button holding it unmounts: the grades after a reveal, the next card after a grade.
   const [focusGrades, setFocusGrades] = useState(false);
   const [focusReveal, setFocusReveal] = useState(false);
-  // Whether the card on screen offers a hook, decided as it arrives and held until its grade.
+  // Whether the card on screen offers a hint, decided as it arrives and held until its grade.
   const [cardOffer, setCardOffer] = useState({ key: "", offer: false, parked: false });
   // How far into the card's aids the learner went before the reveal, and whether they asked to see
   // them after it, held for the card on screen.
   const [aidState, setAidState] = useState({ key: "", taken: 0, shown: false, animate: true });
   // Presses of a locked grade's key, counted per card so an earlier card's never show its tip.
   const [lockedNudge, setLockedNudge] = useState({ key: "", presses: 0 });
-  // The card whose hook is being written, so the editor never outlives its card.
-  const [hookFor, setHookFor] = useState<string | null>(null);
+  // The card whose hint is being written, so the editor never outlives its card.
+  const [hintFor, setHintFor] = useState<string | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  // Cards archived from review, gone from it at once rather than when the draw is fetched again.
-  const [archived, setArchived] = useState<ReadonlySet<string>>(() => new Set());
   // Marks set in this review, shown at once rather than when the draw is fetched again.
   const [marks, setMarks] = useState<ReadonlyMap<string, boolean>>(() => new Map());
   const [editing, setEditing] = useState<Card | null>(null);
@@ -252,83 +191,9 @@ function Review() {
   const mouse = useMouse();
   const wide = useWide();
 
-  // The persisted cache can predate the last grade, so the first card waits for this mount's fetch.
-  const settled = draw.isFetchedAfterMount || draw.fetchStatus !== "fetching";
-  const data = useMemo(() => {
-    const fetched = settled ? draw.data : undefined;
-    if (!fetched || archived.size === 0) return fetched;
-    return { ...fetched, cards: fetched.cards.filter((c) => !archived.has(c.card.id)) };
-  }, [settled, draw.data, archived]);
-  const state = useMemo(
-    () => (data ? drawState(data, grades, now, deck, LOOKAHEAD) : undefined),
-    [data, grades, now, deck],
-  );
-  const pinnedItem = data && state && pinned ? reviewItem(data, state.log, pinned) : null;
-  // Past midnight, yesterday's data does not know yesterday's grades moved the schedule, so a new card waits for today's.
-  const staleDay = !!data && !!state && data.day.date !== state.day.date && draw.isFetching;
-  const drawn =
-    pinnedItem ??
-    (data && state?.next && !staleDay ? reviewItem(data, state.log, state.next) : null);
-
-  // A leg belongs to its day, so one left open past midnight gives way to a fresh one.
-  const leg = chosenLeg && state && chosenLeg.date === state.day.date ? chosenLeg : null;
-  // Like the draw, the round's list and the day's streak wait for this mount's fetch, so a leg is sized and judged from now.
-  const roundData =
-    roundQueue.isFetchedAfterMount || roundQueue.fetchStatus !== "fetching"
-      ? roundQueue.data
-      : undefined;
-  const roundItems = roundData?.items;
-  const streakSettled = streak.isFetchedAfterMount || streak.fetchStatus !== "fetching";
-  const today = streak.data?.today;
-  const scoped = !!deck || !!series;
-  // The first leg is Today's round or the draw, which stops at the goal only for the whole day below it.
-  useEffect(() => {
-    if (leg || !data || !state || !streakSettled || (listed && !roundData)) return;
-    const { attempts } = state;
-    setMark({
-      attempts,
-      satisfied:
-        attempts >= data.goal ||
-        (today?.date === state.day.date &&
-          (today.outcome === "goal_met" || today.outcome === "exhausted")),
-    });
-    setLegCards(NO_LEG_CARDS);
-    setPaused(false);
-    const base = { date: state.day.date, from: attempts };
-    // The queue serves a round a page at a time, so the leg is sized by the round's total, not the first page.
-    if (listed && roundData) setLeg({ ...base, kind: "today", size: roundData.total });
-    else
-      setLeg({ ...base, kind: "draw", until: !scoped && attempts < data.goal ? data.goal : null });
-  }, [listed, roundData, leg, data, state, streakSettled, today, scoped]);
-
-  const drawLeg = leg?.kind === "draw" ? leg : null;
-  const until = drawLeg?.until ?? null;
-  // A goal lowered on another device meanwhile stops the stretch there instead.
-  const atStop =
-    until !== null && !!data && !!state && state.attempts >= Math.min(until, data.goal);
-  const listLeft: QueueItem[] =
-    leg?.kind === "today"
-      ? leftInLeg(roundItems ?? [], legCards, gradedKey)
-      : leg?.kind === "forgotten" && data && state
-        ? leftInLeg(leg.items, legCards, (d) => drawKey(d.cardId, d.mode)).flatMap(
-            (d) => reviewItem(data, state.log, d) ?? [],
-          )
-        : [];
-  const current: QueueItem | null =
-    !leg || paused ? null : drawLeg ? (atStop ? null : drawn) : (listLeft[0] ?? null);
   const currentItemKey = current ? itemKey(current) : undefined;
-  const scopeSections = useQuery({ ...sectionsQuery(deck ?? ""), enabled: !!section });
-  const scopeSection = section
-    ? scopeSections.data?.sections.find((s) => s.id === section)
-    : undefined;
-  const scopeName = section
-    ? scopeSection?.name
-    : deck
-      ? decks.data?.find((d) => d.id === deck)?.name
-      : series
-        ? seriesList.data?.find((s) => s.id === series)?.name
-        : undefined;
-  const currentDeck = current ? decks.data?.find((d) => d.id === current.card.deckId) : undefined;
+  const { scopeName } = flow;
+  const currentDeck = current ? decks?.find((d) => d.id === current.card.deckId) : undefined;
   // The draw carries the section's id alone; its name comes from the deck's own list, cached per deck.
   const sectionId = current?.card.sectionId ?? null;
   const sections = useQuery({
@@ -338,258 +203,17 @@ function Review() {
   const sectionName = sectionId
     ? sections.data?.sections.find((s) => s.id === sectionId)?.name
     : undefined;
-  const hint = useRevealHint(
+  const nudge = useRevealNudge(
     current ? `${current.stateId}-${done}` : undefined,
     revealed,
     streak.data?.reviewedDays,
   );
-  usePrefetchPictures(drawLeg ? (state?.upcoming ?? []) : listLeft, 0);
+  usePrefetchPictures(flow.upcoming, 0);
 
-  // Cards the draw still holds, the number Today shows; a forgotten card owed a return stays in it.
-  const left = useMemo(
-    () => (data && state ? drawableLeft(data, state, deck) : 0),
-    [data, state, deck],
-  );
-  // What the header counts: today's attempts to the goal's stop, and a stretch's own otherwise.
-  const legDone = !leg || !state ? 0 : drawLeg ? state.attempts - leg.from : legCards.graded.size;
-  const legSize = !leg
-    ? 0
-    : leg.kind === "today"
-      ? leg.size - legCards.dropped.size
-      : leg.kind === "forgotten"
-        ? leg.items.length - legCards.dropped.size
-        : legDone + left;
-  // The refetch asked for once this leg's page in hand ran out; a new leg forgets it.
-  const [ask, setAsk] = useState<(RoundAsk & { leg: Leg }) | null>(null);
-  // The queue serves a round a page at a time, so an emptied page asks for the round again, and the
-  // end waits while it loads. The round is walked once every card in it is graded or dropped, or
-  // when that fetch lands with nothing left for it. Offline or failed, the end shows unwalked.
-  const roundState =
-    leg?.kind === "today"
-      ? roundWalk({
-          size: leg.size,
-          done: legCards.graded.size + legCards.dropped.size,
-          left: current ? 1 : listLeft.length,
-          ask: ask?.leg === leg ? ask : null,
-          fetch: {
-            updatedAt: roundQueue.dataUpdatedAt,
-            idle: roundQueue.fetchStatus === "idle",
-            failed: roundQueue.isError || roundQueue.fetchStatus === "paused",
-          },
-        })
-      : null;
-  // A forgotten round holds every card from the start, so it is walked once none is left to show.
-  const walked = roundState
-    ? roundState.walked
-    : leg?.kind === "forgotten" && !current && listLeft.length === 0;
-  const roundOwed = !!roundState?.owed && !current;
-  const askRound = !!roundState?.refetch && !current;
-  useEffect(() => {
-    if (!askRound || !leg) return;
-    setAsk({
-      leg,
-      at: roundQueue.dataUpdatedAt,
-      done: legCards.graded.size + legCards.dropped.size,
-    });
-    void roundQueue.refetch();
-  }, [askRound, leg, roundQueue.dataUpdatedAt, legCards, roundQueue.refetch]);
-
-  // A pinned card a refetch no longer holds, such as one archived meanwhile, gives way.
-  const repin = !!state?.next && !staleDay && (!pinned || !pinnedItem);
-  useEffect(() => {
-    if (repin && state?.next) setPinned({ cardId: state.next.cardId, mode: state.next.mode });
-  }, [repin, state?.next]);
-
-  // Sent grades from an earlier day are no longer in any draw.
-  const fetchedDayStart = draw.data?.day.start;
-  useEffect(() => {
-    if (fetchedDayStart) retireGrades(fetchedDayStart);
-  }, [fetchedDayStart]);
-
-  // A new local day resets the order and the count; returning to the page catches a timer that slept.
-  const dayEnd = state?.day.end.getTime();
-  useEffect(() => {
-    const onVisible = () => {
-      if (document.visibilityState !== "visible") return;
-      setNow(new Date());
-      if (dayEnd !== undefined && Date.now() >= dayEnd) {
-        void qc.invalidateQueries({ queryKey: ["queue"] });
-      }
-    };
-    document.addEventListener("visibilitychange", onVisible);
-    return () => document.removeEventListener("visibilitychange", onVisible);
-  }, [dayEnd, qc]);
-  useEffect(() => {
-    if (dayEnd === undefined) return;
-    const wait = Math.min(Math.max(dayEnd - Date.now(), 0) + 50, 2_147_483_647);
-    const timer = window.setTimeout(() => {
-      setNow(new Date());
-      void qc.invalidateQueries({ queryKey: ["queue"] });
-    }, wait);
-    return () => window.clearTimeout(timer);
-  }, [dayEnd, qc]);
-
-  // An empty draw is confirmed by a fetch begun after the last change, or taken as is offline.
-  const lastChange = Math.max(0, ...grades.map((g) => new Date(g.reviewedAt).getTime()));
   const exhausted = !!data && !state?.next;
-  const unreachable = draw.fetchStatus === "paused" || draw.isError;
-  // Confirmed stays confirmed through a background refetch, so the end never blinks out and replays.
-  const confirmed = !!data && data.fetchedAt >= lastChange;
-  const stopped =
-    !!leg && !!data && !!state && !current && (paused || !drawLeg || atStop || exhausted);
-  const ending = paused ? "left" : atStop ? "goal" : "empty";
-  const forgottenItems = useMemo(
-    () => (stopped && data && state ? forgottenRound(data, state, deck) : []),
-    [stopped, data, state, deck],
-  );
-  // An empty draw waits for a fetch begun after the last grade, so the heading never changes once shown.
-  const checking =
-    stopped &&
-    !paused &&
-    (left === 0 || (!!drawLeg && !atStop)) &&
-    !confirmed &&
-    !(unreachable && !draw.isFetching);
-  useEffect(() => {
-    if (checking && !unreachable && !draw.isFetching) void draw.refetch();
-  }, [checking, unreachable, draw.isFetching, draw.refetch]);
-  // The end waits for the last grades to land, so a refusal never takes back an end already shown.
-  const landing = sending > 0 && !unreachable;
-  // A scoped end names its deck or series and weighs the decks outside it, so it waits for them.
-  // The persisted list can predate this visit, so it waits for this mount's fetch like the draw.
-  const decksLoading =
-    (scoped && !decks.isFetchedAfterMount && decks.fetchStatus === "fetching") ||
-    (!!series && !seriesList.data && seriesList.fetchStatus === "fetching") ||
-    (!!section && !scopeSections.isFetchedAfterMount && scopeSections.fetchStatus === "fetching");
-  const result = useMemo(
-    () =>
-      stopped && !checking && !landing && !roundOwed && !decksLoading && mark && data && state
-        ? reviewEnd({
-            stretch: !drawLeg ? "list" : scoped ? "scope" : "day",
-            ending,
-            goal: data.goal,
-            from: mark.attempts,
-            attempts: state.attempts,
-            satisfiedBefore: mark.satisfied,
-            left,
-            confirmed,
-            elsewhere: !scoped
-              ? 0
-              : decks.data && (!section || scopeSection)
-                ? decks.data
-                    .filter((d) => (series ? d.seriesId !== series : d.id !== deck))
-                    .reduce((n, d) => n + d.due, 0) +
-                  // The rest of a section's deck is its other sections.
-                  (section && scopeSection
-                    ? Math.max(
-                        0,
-                        (decks.data.find((d) => d.id === deck)?.due ?? 0) - scopeSection.due,
-                      )
-                    : 0)
-                : null,
-            forgotten: forgottenItems.length,
-          })
-        : null,
-    [
-      stopped,
-      checking,
-      landing,
-      roundOwed,
-      decksLoading,
-      mark,
-      drawLeg,
-      ending,
-      data,
-      state,
-      left,
-      confirmed,
-      scoped,
-      series,
-      deck,
-      section,
-      scopeSection,
-      forgottenItems,
-      decks.data,
-    ],
-  );
-  // Running out offline, or after a failed refresh, proves nothing about the day unless the goal is met.
-  const unconfirmed = result === "unchecked";
-  const end = result === "unchecked" ? null : result;
-  const sessionTracker = useRef<ReviewSessionTracker | null>(null);
-  if (!sessionTracker.current)
-    sessionTracker.current = new ReviewSessionTracker(
-      (event) => {
-        if (event.name === "review_session_finished") captureAnalytics(event.name, event);
-        if (event.name === "review_session_abandoned") captureAnalytics(event.name, event);
-      },
-      () => crypto.randomUUID(),
-    );
-  const sessionFirst = useRef<boolean | null>(null);
-  useEffect(() => {
-    if (sessionFirst.current === null && streakSettled && streak.data)
-      sessionFirst.current = streak.data.reviewedDays === 0 && streak.data.today.attempts === 0;
-    const tracker = sessionTracker.current;
-    if (!tracker || !leg || sessionFirst.current === null) return;
-    const key = `${leg.date}:${leg.kind}:${leg.from}`;
-    const scope: ReviewScopeKind =
-      leg.kind === "forgotten"
-        ? "round"
-        : leg.kind === "today"
-          ? listScope
-          : section
-            ? "section"
-            : deck
-              ? "deck"
-              : series
-                ? "series"
-                : "day";
-    stepReviewLeg(tracker, {
-      key,
-      snapshot: { cardsDone: legDone, cardCount: legSize, first: sessionFirst.current, scope },
-      presentedCount:
-        drawLeg && leg.kind === "draw" && leg.until !== null
-          ? Math.min(legSize, leg.until - leg.from)
-          : legSize,
-      presenting: !!current && !paused,
-      stopped,
-      paused,
-      finished: legFinish(
-        result,
-        ending,
-        drawLeg ? { stretch: "day", confirmed } : { stretch: "list", walked },
-      ),
-    });
-  }, [
-    leg,
-    current,
-    paused,
-    stopped,
-    result,
-    ending,
-    confirmed,
-    walked,
-    legDone,
-    legSize,
-    drawLeg,
-    streakSettled,
-    streak.data,
-    listScope,
-    section,
-    deck,
-    series,
-  ]);
-  const sessionMount = useRef(0);
-  useEffect(() => {
-    const mount = ++sessionMount.current;
-    const leaving = () => sessionTracker.current?.abandon("pagehide");
-    window.addEventListener("pagehide", leaving);
-    return () => {
-      window.removeEventListener("pagehide", leaving);
-      queueMicrotask(() => {
-        if (sessionMount.current === mount) sessionTracker.current?.abandon("navigation");
-      });
-    };
-  }, []);
-  const failed = listed ? roundQueue.isError && !roundQueue.data : draw.isError && !draw.data;
+  const unconfirmed = flow.end === "unchecked";
+  const end = flow.end === "unchecked" ? null : flow.end;
+  const { failed } = flow;
 
   const counts = !!end?.satisfied;
   const attempts = state?.attempts;
@@ -620,41 +244,25 @@ function Review() {
     if (!frozen) setHeld(before);
   }, [frozen, before]);
 
-  /** Past this end screen: the next one reports what changes from here. */
-  const moveOn = (attempts: number) => {
-    // The pressed button fades out for a moment, and while it holds focus Space would not reach the card.
-    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
-    const satisfied = !!mark?.satisfied || !!end?.satisfied;
-    setMark({ attempts, satisfied });
-    setHeld({
-      week: streak.data && streakAsOf(streak.data, attempts, satisfied),
-      lantern: lanternFor(streak.data),
-    });
-    setPaused(false);
-    setPinned(null);
-    setRevealed(false);
-    setAnimateNextCard(true);
-    setAnimateReveal(true);
-  };
-
   const onOffer = (offer: Offer) => {
-    if (!data || !state) return;
-    if (offer.kind === "continue" && offer.to === "resume") {
-      moveOn(state.attempts);
-      return;
-    }
-    // The day's draw is a review without a scope, which starts over from where the day stands.
-    if (offer.kind === "continue" && scoped) {
+    const taken = flow.offer(offer);
+    if (!taken) return;
+    if (taken.to === "day") {
       void navigate({ to: "/review" });
       return;
     }
-    const base = { date: state.day.date, from: state.attempts };
-    moveOn(state.attempts);
-    setLegCards(NO_LEG_CARDS);
-    if (offer.kind === "forgotten") setLeg({ ...base, kind: "forgotten", items: forgottenItems });
-    else setLeg({ ...base, kind: "draw", until: state.attempts < data.goal ? data.goal : null });
-    // The round is over, so a reload continues the day rather than walking it again.
-    if (listed) {
+    // The pressed button fades out for a moment, and while it holds focus Space would not reach the card.
+    if (document.activeElement instanceof HTMLElement) document.activeElement.blur();
+    setHeld({
+      week: streak.data && streakAsOf(streak.data, taken.mark.attempts, taken.mark.satisfied),
+      lantern: lanternFor(streak.data),
+    });
+    setRevealed(false);
+    setAnimateNextCard(true);
+    setAnimateReveal(true);
+    // The round is over, so a reload continues the day rather than walking it again. Chosen cards
+    // stay in the URL, because they key the page and dropping them would remount the next leg.
+    if (round && !(offer.kind === "continue" && offer.to === "resume")) {
       void navigate({
         to: "/review",
         search: {
@@ -762,17 +370,10 @@ function Review() {
     }
   }, [audioState, current, revealed, stopAudio, t, watchAudio]);
 
-  const invalidateReviewData = useCallback(() => {
-    qc.invalidateQueries({ queryKey: ["decks"] });
-    qc.invalidateQueries({ queryKey: ["rounds"] });
-    qc.invalidateQueries({ queryKey: ["streak"] });
-    qc.invalidateQueries({ queryKey: ["insights"] });
-  }, [qc]);
-
   const showing = current ? `${itemKey(current)}-${done}` : "";
   const recallTimes = useRecallClock(showing || null, revealed);
   const knownReadings = useKnownReadings();
-  const writingHook = !!showing && hookFor === showing;
+  const writingHint = !!showing && hintFor === showing;
   const revealedAt = useRef(0);
   useEffect(() => {
     if (revealed) revealedAt.current = performance.now();
@@ -792,12 +393,11 @@ function Review() {
     setRevealedFor(showing);
     if (revealed) setRevealed(false);
   }
-  const hook = current?.card.hook ?? null;
-  const hookSource = current?.card.hookSource ?? null;
-  const steps = useMemo(() => aidSteps({ hook, hookSource }), [hook, hookSource]);
+  const hint = current?.card.hint ?? null;
+  const steps = useMemo(() => aidSteps({ hint }), [hint]);
   const taken = aidState.key === showing ? aidState.taken : 0;
   const shownAfter = aidState.key === showing && aidState.shown;
-  // Only a step taken before the reveal is help with recall; seeing the hook after it is not.
+  // Only a step taken before the reveal is help with recall; seeing the hint after it is not.
   const aid = aidTaken(steps, taken);
   // This mode's grades earlier today: on a second try Easy counts as Good, ADR 0031.
   const gradedToday = useMemo(() => {
@@ -806,6 +406,28 @@ function Review() {
     return state.log.filter((e) => e.cardId === current.card.id && e.mode === key);
   }, [current, state]);
   const repeat = gradedToday.length > 0;
+
+  // The account's first review teaches itself: each tip once, bound to the card it first showed on.
+  const [tipsOff, setTipsOff] = useState(false);
+  const [tipFor, setTipFor] = useState<{ first?: string; returned?: string; grades?: string }>({});
+  const [teaches] = useState(firstReviewTeaches);
+  const tipsOn =
+    !!current && !!sessionFirst.current && !resumedFirst.current && teaches && !tipsOff;
+  const owns = (key: string | undefined) => key === undefined || key === showing;
+  const firstTip = tipsOn && !revealed && !repeat && done === 0 && owns(tipFor.first);
+  const returnedTip =
+    tipsOn && !revealed && gradedToday.some((e) => e.rating === 1) && owns(tipFor.returned);
+  const comesBack = useComesBack(current?.next, state?.day.end);
+  const gradesTip = tipsOn && revealed && !!comesBack && owns(tipFor.grades);
+  if (firstTip && tipFor.first === undefined) setTipFor((t) => ({ ...t, first: showing }));
+  if (returnedTip && tipFor.returned === undefined) setTipFor((t) => ({ ...t, returned: showing }));
+  if (gradesTip && tipFor.grades === undefined) setTipFor((t) => ({ ...t, grades: showing }));
+  // After the first grade, the card gives way to a screen that says when it comes back.
+  const [cameBack, setCameBack] = useState<{
+    card: FanCard;
+    rating: Rating;
+    back: NonNullable<typeof comesBack>;
+  } | null>(null);
   const takeAid = useCallback(
     (input: "keyboard" | "pointer") => {
       if (revealed || taken >= steps.length) return;
@@ -825,7 +447,7 @@ function Review() {
 
   const onGrade = useCallback(
     (rating: Rating, input: "keyboard" | "pointer" = "pointer") => {
-      if (!revealed || !current || !data || !state) return;
+      if (!revealed || !current) return;
       // Easy means recall without help, so after a peek its key only says why, and grades nothing.
       if (!gradeAllowed(rating, aid)) {
         setLockedNudge((n) => ({
@@ -834,94 +456,66 @@ function Review() {
         }));
         return;
       }
-      const item = current;
-      const runningShort = state.upcoming.length <= LOOKAHEAD;
-      const recorded = recordGrade({
-        cardId: item.card.id,
-        mode: item.mode,
-        rating: countedRating(rating, repeat),
-        reviewedAt: new Date().toISOString(),
-        stateBefore: repeat
-          ? stateBefore(data, state.log, item.card.id, item.mode)
-          : item.fsrsState,
-        timezone: deviceTimezone(),
+      const graded = flow.grade(current, rating, {
         ...(aid ? { aid } : {}),
         ...recallTimes(),
-        ...readingsFadedField(qc, item.card),
+        ...readingsFadedField(qc, current.card),
       });
+      if (!graded) return;
       // Grading from the strip or the speaker keeps focus on the next card, so keyboard and screen
       // reader users don't drop to the page body.
       setFocusReveal(!!document.activeElement?.closest("[data-grade-strip], [data-audio]"));
-      const listed = !!leg && !drawLeg;
-      if (listed) setLegCards((c) => ({ ...c, graded: withKey(c.graded, gradedKey(item)) }));
-      setSending((n) => n + 1);
       setAnimateNextCard(input !== "keyboard");
       setRevealed(false);
-      setNow(new Date());
-      setPinned(null);
-      setDone((n) => n + 1);
-
-      void recorded
-        .then((outcome) => {
-          invalidateReviewData();
-          if (outcome === "queued") return;
-          if (outcome === "refused" || outcome === "gone") {
-            const key = gradedKey(item);
-            const term = shortQuote(item.card.term);
-            if (listed) {
-              setLegCards((c) => ({
-                graded: withoutKey(c.graded, key),
-                returned: outcome === "refused" ? withKey(c.returned, key) : c.returned,
-                dropped: outcome === "gone" ? withKey(c.dropped, key) : c.dropped,
-              }));
-            }
-            toast.add({
-              type: "error",
-              title:
-                outcome === "gone"
-                  ? t`Couldn’t save your grade for “${{ term: isolate(term) }}”. The card is no longer in your decks.`
-                  : t`Couldn’t save your grade for “${{ term: isolate(term) }}”. You’ll see it again.`,
-            });
-          }
-          // A dropped grade leaves the fetched data behind, and so does a long run of sent ones.
-          const behind = gradeStore
-            .snapshot()
-            .filter((g) => new Date(g.reviewedAt).getTime() >= data.fetchedAt).length;
-          if (outcome !== "sent" || behind >= REFRESH_AFTER || runningShort) {
-            void qc.invalidateQueries({ queryKey: ["queue"] });
-          }
-        })
-        .finally(() => setSending((n) => n - 1));
+      const term = shortQuote(current.card.term);
+      void graded.answered.then((refused) => {
+        if (!refused) return;
+        toast.add({
+          type: "error",
+          title:
+            refused === "gone"
+              ? t`Couldn’t save your grade for “${{ term: isolate(term) }}”. The card is no longer in your decks.`
+              : t`Couldn’t save your grade for “${{ term: isolate(term) }}”. You’ll see it again.`,
+        });
+      });
     },
-    [
-      revealed,
-      current,
-      data,
-      state,
-      aid,
-      repeat,
-      showing,
-      recallTimes,
-      leg,
-      drawLeg,
-      invalidateReviewData,
-      qc,
-      t,
-    ],
+    [revealed, current, aid, showing, recallTimes, flow.grade, qc, t],
   );
 
-  // Leaving mid-stretch ends on the success screen, unless nothing was added since the last one.
+  const grade = useCallback(
+    (rating: Rating, input: "keyboard" | "pointer") => {
+      if (
+        current &&
+        gradeAllowed(rating, aid) &&
+        !reviewedCards.current.some((card) => card.term === current.card.term)
+      )
+        reviewedCards.current.push(current.card);
+      if (sessionFirst.current && teaches) rememberFirstReview(reviewedCards.current);
+      if (gradesTip && comesBack && current && gradeAllowed(rating, aid))
+        setCameBack({ card: current.card, rating, back: comesBack });
+      onGrade(rating, input);
+    },
+    [gradesTip, comesBack, current, aid, onGrade, teaches],
+  );
+
+  // The first review's end while it shows, read by the key handler, which outlives renders.
+  const firstEndKeys = useRef<{ advance?: (() => void) | undefined; close: () => void } | null>(
+    null,
+  );
+
+  // Leaving mid-leg ends on the success screen, unless nothing was added since the last one.
   const leave = useCallback(() => {
-    if (current && mark && attempts !== undefined && attempts > mark.attempts) setPaused(true);
-    else void navigate({ to: "/today" });
-  }, [current, mark, attempts, navigate]);
+    setCameBack(null);
+    if (!flow.pause()) void navigate({ to: "/today" });
+  }, [flow.pause, navigate]);
 
   useEffect(() => {
     const onKey = (e: KeyboardEvent) => {
       // A sheet over the review handles its own keys, Escape included.
       if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
-      if (add.open || writingHook || menuOpen || editing || placeOpen) return;
+      if (add.open || writingHint || menuOpen || editing || placeOpen) return;
       if (e.key === "Escape") {
+        firstEndKeys.current?.close();
         leave();
         return;
       }
@@ -929,6 +523,26 @@ function Review() {
       const control = target?.closest(
         "button, a, input, textarea, select, [contenteditable='true']",
       );
+      if (cameBack) {
+        // The grade just pressed keeps focus for as long as the card takes to leave.
+        const own = control && !control.closest("[data-grade-strip]");
+        if (!own && (e.key === " " || e.key === "Enter")) {
+          e.preventDefault();
+          setCameBack(null);
+        }
+        return;
+      }
+      const advance = firstEndKeys.current?.advance;
+      if (
+        advance &&
+        (e.key === " " || e.key === "Enter") &&
+        !control &&
+        !target?.closest("[role='radio']")
+      ) {
+        e.preventDefault();
+        advance();
+        return;
+      }
       // The aid's key also reaches the card's reveal button, where grading from the strip leaves
       // focus, and the aid's own buttons; matched by its place, so every keyboard layout has it.
       if (current && e.code === AID_KEY.code) {
@@ -956,45 +570,47 @@ function Review() {
           setAnimateReveal(false);
           setFocusGrades(false);
           setRevealed(true);
-        } else onGrade(3, "keyboard");
+        } else grade(3, "keyboard");
       }
       if (g) {
         e.preventDefault();
-        onGrade(g.rating, "keyboard");
+        grade(g.rating, "keyboard");
       }
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [
     revealed,
-    onGrade,
+    grade,
+    cameBack,
     takeAid,
     showAid,
     leave,
     add.open,
-    writingHook,
+    writingHint,
     menuOpen,
     editing,
     placeOpen,
     current,
   ]);
 
-  // A card often forgotten, or forgotten twice today, with no hook offers one, in a deck the learner
+  // A card often forgotten, or forgotten twice today, with no hint offers one, in a deck the learner
   // owns, since only the owner changes its cards. It waits for the card's deck, which a deck list
   // cached before the deck existed lacks, and once decided it holds, so a refetch never moves it mid-card.
   if (cardOffer.key !== showing && (!current || currentDeck)) {
     const stuck = !!current?.slipping || gradedToday.filter((e) => e.rating === 1).length >= 2;
     setCardOffer({
       key: showing,
-      offer: stuck && !current?.card.hook && currentDeck?.role === "owner",
+      offer: stuck && !current?.card.hint && currentDeck?.role === "owner",
       parked: false,
     });
   }
   const offer = cardOffer.key === showing && cardOffer.offer;
   const owned = currentDeck?.role === "owner";
-  // Writing a hook parks the offer, and the panel fades, so it never stands beside the editor.
+  const [reporting, setReporting] = useState(false);
+  // Writing a hint parks the offer, and the panel fades, so it never stands beside the editor.
   // Where focus goes as the menu closes: the grades, unless the chosen row opened something that
-  // takes focus itself, such as the hook editor, the card editor or the card's place.
+  // takes focus itself, such as the hint editor, the card editor or the card's place.
   const menuHandsFocus = useRef(false);
   const menuFinalFocus = () => {
     if (menuHandsFocus.current) {
@@ -1003,31 +619,13 @@ function Review() {
     }
     return gradesFocus();
   };
-  const openHook = () => {
-    setHookFor(showing);
+  const openHint = () => {
+    setHintFor(showing);
     setCardOffer((held) => ({ ...held, parked: true }));
   };
-  const closeHook = () => {
-    setHookFor(null);
+  const closeHint = () => {
+    setHintFor(null);
     gradesFocus();
-  };
-
-  // Out of review at once, and out of a round's count, offline too; the write queues like a grade.
-  const setArchivedLocally = (cardId: string, gone: boolean) => {
-    const keys =
-      leg?.kind === "today"
-        ? (roundItems ?? []).filter((item) => item.card.id === cardId).map(gradedKey)
-        : leg?.kind === "forgotten"
-          ? leg.items.filter((d) => d.cardId === cardId).map((d) => drawKey(d.cardId, d.mode))
-          : [];
-    setArchived((ids) => (gone ? withKey(ids, cardId) : withoutKey(ids, cardId)));
-    setLegCards((c) => ({
-      ...c,
-      dropped: keys.reduce(
-        (set, key) => (gone ? withKey(set, key) : withoutKey(set, key)),
-        c.dropped,
-      ),
-    }));
   };
 
   const importantOf = (card: Card) => marks.get(card.id) ?? card.important;
@@ -1046,11 +644,11 @@ function Review() {
     if (!current) return;
     const card = current.card;
     const archivedTerm = shortQuote(card.term);
-    setArchivedLocally(card.id, true);
+    flow.archive(card.id);
     try {
       await writes.archiveCard(card.id);
     } catch (e) {
-      setArchivedLocally(card.id, false);
+      flow.restore(card.id);
       toast.add({ type: "error", title: errorMessage(e) });
       return;
     }
@@ -1063,7 +661,7 @@ function Review() {
           toast.close(`archived-${card.id}`);
           try {
             await writes.restoreCard(card.id);
-            setArchivedLocally(card.id, false);
+            flow.restore(card.id);
           } catch (e) {
             toast.add({ type: "error", title: errorMessage(e) });
           }
@@ -1077,7 +675,7 @@ function Review() {
   // On touch the revealed card is the menu's handle: a tap opens it. A tap this soon after the
   // reveal is the reveal's own tap doubled, not a second one.
   const openFromCard = (e: React.MouseEvent<HTMLElement>) => {
-    if (mouse || !revealed || writingHook) return;
+    if (mouse || !revealed || writingHint) return;
     // A tap in a portal, such as the drawer's own backdrop, still bubbles here through React.
     if (!e.currentTarget.contains(e.target as Node)) return;
     if (performance.now() - revealedAt.current < REVEAL_TAP_GUARD_MS) return;
@@ -1093,14 +691,14 @@ function Review() {
       open={menuOpen}
       onOpenChange={setMenuOpen}
       visible={mouse}
-      hasHook={!!current.card.hook}
+      hasHint={!!current.card.hint}
       important={importantOf(current.card)}
       onImportantChange={(important) => void markImportant(current.card, important)}
       canEdit={owned}
       finalFocus={menuFinalFocus}
-      onHook={() => {
+      onHint={() => {
         menuHandsFocus.current = true;
-        openHook();
+        openHint();
       }}
       onEdit={() => {
         menuHandsFocus.current = true;
@@ -1111,6 +709,7 @@ function Review() {
         openPlace();
       }}
       onArchive={() => void archiveCurrent()}
+      onReport={currentDeck && !owned ? () => setReporting(true) : undefined}
     />
   );
 
@@ -1119,6 +718,72 @@ function Review() {
       <Trans>Done</Trans>
     </Button>
   );
+
+  // Once: after Review more cards, the next end is an ordinary one.
+  const firstEndOver = useRef(false);
+  const firstEnd = !!sessionFirst.current && teaches && !firstEndOver.current && !!end;
+  const [endStep, setEndStep] = useState<PlanStep>("summary");
+  const forecast = useQuery({ ...insightsQuery(30), enabled: firstEnd });
+  const rounds = useQuery({ ...roundsQuery, enabled: firstEnd });
+  const reminder = useReminder(firstEnd);
+  const dailyGoal = useDailyGoal();
+  // Held here, because a finished day's streak keeps the goal it was finished against.
+  const [chosenGoal, setChosenGoal] = useState<number | undefined>(undefined);
+  const goalFailed = dailyGoal.status === "error";
+  const endGoal = (goalFailed ? undefined : chosenGoal) ?? data?.goal ?? 25;
+  const next = nextCards(forecast.data?.forecast, endGoal);
+  const [choices] = useState(() => reminderChoices(new Date()));
+  const [part, setPart] = useState(choices.part);
+  const goalAtEnd = useRef<number | undefined>(undefined);
+  if (firstEnd && data) goalAtEnd.current ??= data.goal;
+  const endLeft = useRef(false);
+  // A card added from the last screen is reviewed like any other, and that end is an ordinary one.
+  if (endLeft.current && !end) firstEndOver.current = true;
+  const leaveFirstEnd = (left: FirstEndLeft) => {
+    const r = reminder.reminder;
+    // The sheet opens over the last screen, which stays until a card brings the review back.
+    if (left !== "add_cards") firstEndOver.current = true;
+    if (endLeft.current) return;
+    endLeft.current = true;
+    rememberFirstReview(null);
+    captureAnalytics("first_review_end_left", {
+      step: endStep,
+      left,
+      goal: endGoal,
+      goal_changed: endGoal !== goalAtEnd.current,
+      reminder:
+        r === "on"
+          ? "on"
+          : r === "denied"
+            ? "blocked"
+            : r === "install" || r === "none"
+              ? "unavailable"
+              : "off",
+      tips_skipped: tipsOff,
+    });
+  };
+  const firstParts = firstEnd
+    ? firstEndParts({
+        step: endStep,
+        onStep: setEndStep,
+        cards: reviewedCards.current,
+        next,
+        fresh: !!next && next.count <= (rounds.data?.new ?? 0),
+        goal: endGoal,
+        goalFailed,
+        onGoal: (n) => {
+          setChosenGoal(n);
+          dailyGoal.change(n);
+        },
+        control: reminder,
+        times: choices.times,
+        part,
+        onPart: setPart,
+      })
+    : null;
+  firstEndKeys.current = firstEnd
+    ? { advance: firstParts?.advance, close: () => leaveFirstEnd("closed") }
+    : null;
 
   return (
     <div className="relative mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col overflow-x-clip px-4 @3xl:overflow-x-visible pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">
@@ -1130,11 +795,19 @@ function Review() {
             : (data?.goal ?? 0)
         }
         animateCount={animateNextCard}
-        round={leg && until === null ? { done: legDone, size: legSize } : undefined}
+        round={
+          flow.progress && until === null
+            ? { done: flow.progress.done, size: flow.progress.total }
+            : undefined
+        }
         streak={streakNow}
-        complete={!!end}
+        complete={!!end && !cameBack}
         loading={!data && !failed}
-        onClose={leave}
+        onClose={() => {
+          if (firstEnd) leaveFirstEnd("closed");
+          leave();
+        }}
+        steps={firstParts?.steps}
       />
 
       {/* While the end waits for the last grade to land, the room stays empty rather than drawing a card. */}
@@ -1142,7 +815,7 @@ function Review() {
 
       {failed && (
         <ReviewError
-          retry={() => (listed ? roundQueue.refetch() : draw.refetch())}
+          retry={flow.retry}
           action={
             <Button variant="ghost" render={<Link to="/today" />}>
               <Trans>Back</Trans>
@@ -1155,7 +828,7 @@ function Review() {
         <ReviewError
           title={<Trans>Couldn’t check for more cards</Trans>}
           body={<Trans>Your grades are saved. Check your connection and try again.</Trans>}
-          retry={() => draw.refetch()}
+          retry={flow.refetchDraw}
           action={
             <Button variant="ghost" render={<Link to="/today" />}>
               <Trans>Done</Trans>
@@ -1166,7 +839,7 @@ function Review() {
 
       {/* The card steps back as the end arrives, popped out of the flow so the two overlap. */}
       <AnimatePresence mode="popLayout" initial={false}>
-        {end && data && state && (
+        {end && !cameBack && data && state && (
           <motion.div
             key="end"
             className="flex min-h-0 flex-1 flex-col"
@@ -1182,7 +855,51 @@ function Review() {
               lanternFrom={held.lantern.out ? "out" : (held.lantern.progress ?? "brand")}
               focusOnMount
               onOffer={onOffer}
-              done={doneLink}
+              done={
+                firstEnd
+                  ? (variant) => (
+                      <Button
+                        variant={variant}
+                        size="lg"
+                        className="w-full"
+                        render={<Link to="/today" />}
+                        onClick={() => leaveFirstEnd("done")}
+                      >
+                        <Trans>Done</Trans>
+                      </Button>
+                    )
+                  : doneLink
+              }
+              {...(firstEnd && {
+                pinned: true,
+                title: <FirstReviewTitle stopped={!end.satisfied} />,
+                runNote: (
+                  <FirstStreakNote
+                    left={end.satisfied ? 0 : Math.min(data.goal - state.attempts, left)}
+                  />
+                ),
+                beat: firstParts?.beat,
+                foot: firstParts?.foot,
+                burst: endStep === "bye" ? 1 : 0,
+                continueLabel: <Trans>Review more cards</Trans>,
+                more: (
+                  <Button
+                    size="lg"
+                    className="w-full"
+                    onClick={() => {
+                      leaveFirstEnd("add_cards");
+                      add.openCard(deck);
+                    }}
+                  >
+                    <Plus data-icon="inline-start" aria-hidden="true" />
+                    <Trans>Add more cards</Trans>
+                  </Button>
+                ),
+                onOffer: (offer: Offer) => {
+                  leaveFirstEnd(offer.kind === "forgotten" ? "forgotten" : "more_cards");
+                  onOffer(offer);
+                },
+              })}
               addCards={
                 <Button size="lg" className="w-full" onClick={() => add.openCard(deck)}>
                   <Plus data-icon="inline-start" aria-hidden="true" />
@@ -1192,7 +909,23 @@ function Review() {
             />
           </motion.div>
         )}
-        {current && (
+        {cameBack && (
+          <motion.div
+            key="came-back"
+            className="flex min-h-0 flex-1 flex-col"
+            exit={{ opacity: 0, transition: { duration: 0.14 } }}
+          >
+            <ComesBack
+              {...cameBack}
+              onNext={() => setCameBack(null)}
+              onSkip={() => {
+                setTipsOff(true);
+                setCameBack(null);
+              }}
+            />
+          </motion.div>
+        )}
+        {current && !cameBack && (
           <motion.div
             key="cards"
             className="relative flex min-h-0 flex-1 flex-col"
@@ -1215,6 +948,7 @@ function Review() {
                 currentDeck && {
                   name: currentDeck.name,
                   language: currentDeck.defaultLanguage ?? null,
+                  pronunciationDisplay: currentDeck.pronunciationDisplay,
                 }
               }
               section={sectionName}
@@ -1222,7 +956,22 @@ function Review() {
               revealed={revealed}
               animateReveal={animateReveal}
               animateIn={animateNextCard}
-              hint={hint}
+              nudge={nudge}
+              cueTip={
+                firstTip || returnedTip ? (
+                  <CueTip
+                    key="cue-tip"
+                    kind={firstTip ? "first" : "returned"}
+                    cue={current.mode.cue}
+                    onSkip={() => setTipsOff(true)}
+                  />
+                ) : undefined
+              }
+              cover={
+                gradesTip ? (
+                  <GradesTip key="grades-tip" onSkip={() => setTipsOff(true)} />
+                ) : undefined
+              }
               focusOnMount={focusReveal}
               onReveal={() => {
                 recordReveal();
@@ -1242,12 +991,12 @@ function Review() {
                       delay: animateReveal ? (reduce ? 0.7 : 0.95) : 0.5,
                       animate: animateReveal,
                       parked: cardOffer.parked,
-                      onOpen: openHook,
+                      onOpen: openHint,
                     }
                   : undefined
               }
               aid={
-                steps.length > 0 && !writingHook
+                steps.length > 0 && !writingHint
                   ? {
                       steps,
                       taken,
@@ -1264,14 +1013,14 @@ function Review() {
                   <span className="enter-fade">{cardMenu}</span>
                 ) : undefined
               }
-              hookEditor={
-                writingHook ? (
-                  <HookEditor
+              hintEditor={
+                writingHint ? (
+                  <HintEditor
                     card={current.card}
-                    onCancel={closeHook}
+                    onCancel={closeHint}
                     onSaved={() => {
-                      closeHook();
-                      // Written after the reveal, it shows at once where Show hook would have put it.
+                      closeHint();
+                      // Written after the reveal, it shows at once where Show hint would have put it.
                       setAidState({
                         key: showing,
                         taken,
@@ -1302,7 +1051,7 @@ function Review() {
               next={current.next}
               aid={aid}
               lockedNudge={lockedNudge.key === showing ? lockedNudge.presses : 0}
-              onGrade={(rating) => onGrade(rating, "pointer")}
+              onGrade={(rating) => grade(rating, "pointer")}
             />
           </motion.div>
         )}
@@ -1321,6 +1070,14 @@ function Review() {
             titleId={placeTitleId}
             onPlayAudio={canPlayPronunciation(current.card) ? playAudio : undefined}
             onClose={closePlace}
+            onReport={
+              !owned
+                ? () => {
+                    closePlace();
+                    setReporting(true);
+                  }
+                : undefined
+            }
             owner={
               owned
                 ? {
@@ -1343,9 +1100,17 @@ function Review() {
           />
         </CardPlace>
       )}
+      {current && currentDeck && !owned && (
+        <ReportDialog
+          open={reporting}
+          onOpenChange={setReporting}
+          target={{ kind: "card", cardId: current.card.id }}
+          name={current.card.term}
+        />
+      )}
       <EditCardSheet
         card={editing}
-        decks={decks.data}
+        decks={decks}
         onOpenChange={(open) => !open && setEditing(null)}
         onReopen={(card) => setEditing(card)}
         finalFocus={gradesFocus}

@@ -11,7 +11,7 @@ import type { ServiceContext } from "./context";
 import { chooseDeck } from "./deck-choice";
 import { createDeck } from "./decks";
 import type { EnrichmentQueue } from "./enrichment";
-import { hookDraftFor } from "./hook-draft";
+import { hintDraftFor } from "./hint-draft";
 import { assertCanCheckAnswers, assertCanReadLessons } from "./lessons";
 import { learner, testDb } from "./test-db";
 
@@ -28,7 +28,7 @@ const queue = (): EnrichmentQueue & { create: ReturnType<typeof vi.fn> } => ({
   create: vi.fn(async () => undefined),
 });
 const model = () => {
-  const complete = vi.fn(async () => ({ language: "et", hook: "a hook" }));
+  const complete = vi.fn(async () => ({ language: "et", hint: "a hint" }));
   return { provider: { provider: "openai", model: "test", complete } as TextProvider, complete };
 };
 const reader: LessonReader = {
@@ -63,7 +63,7 @@ describe("updateAiConsent", () => {
     expect((await answer(ctx, true, now - 2000)).aiConsent).toBe(true);
     expect((await answer(ctx, false, now - 3000)).aiConsent).toBe(true);
     expect((await answer(ctx, false, now)).aiConsent).toBe(false);
-    await updateAiConsent(ctx, { allowed: false, version: 1, updated_at: now + 1, place: "hook" });
+    await updateAiConsent(ctx, { allowed: false, version: 1, updated_at: now + 1, place: "hint" });
     expect(capture.mock.calls.map(([event]) => event.name)).toEqual([
       "ai_consent_granted",
       "ai_consent_withdrawn",
@@ -140,7 +140,7 @@ describe("enrichment", () => {
 });
 
 describe("other AI requests", () => {
-  it("drafts no hook, chooses no deck and reads no lesson from a phone without a yes", async () => {
+  it("drafts no hint, chooses no deck and reads no lesson from a phone without a yes", async () => {
     const ctx = await learner(db, "ai-consent-other-1", "Kateryna");
     const eesti = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
     await createDeck(ctx, { name: "Idioms", defaultLanguage: "en" });
@@ -150,7 +150,7 @@ describe("other AI requests", () => {
     if (added?.status !== "added") throw new Error("not added");
     const { provider, complete } = model();
 
-    await expect(hookDraftFor(phone(ctx), added.card.id, provider)).rejects.toMatchObject(refused);
+    await expect(hintDraftFor(phone(ctx), added.card.id, provider)).rejects.toMatchObject(refused);
     expect(await chooseDeck(phone(ctx), { term: "rahulik" }, provider)).toEqual({
       deckId: null,
       language: null,

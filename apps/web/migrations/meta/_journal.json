@@ -442,6 +442,90 @@
       "when": 1792833054483,
       "tag": "0062_famous_wolf_cub",
       "breakpoints": true
+    },
+    {
+      "idx": 63,
+      "version": "6",
+      "when": 1792837073201,
+      "tag": "0063_tired_hawkeye",
+      "breakpoints": true
+    },
+    {
+      "idx": 64,
+      "version": "6",
+      "when": 1792837074232,
+      "tag": "0064_guard_studied_decks",
+      "breakpoints": true
+    },
+    {
+      "idx": 65,
+      "version": "6",
+      "when": 1792855561021,
+      "tag": "0065_fresh_talon",
+      "breakpoints": true
+    },
+    {
+      "idx": 66,
+      "version": "6",
+      "when": 1792869534080,
+      "tag": "0066_regular_thor_girl",
+      "breakpoints": true
+    },
+    {
+      "idx": 67,
+      "version": "6",
+      "when": 1792869557119,
+      "tag": "0067_stiff_devos",
+      "breakpoints": true
+    },
+    {
+      "idx": 68,
+      "version": "6",
+      "when": 1792928827234,
+      "tag": "0068_cooing_medusa",
+      "breakpoints": true
+    },
+    {
+      "idx": 69,
+      "version": "6",
+      "when": 1792935476719,
+      "tag": "0069_review_aid_hint",
+      "breakpoints": true
+    },
+    {
+      "idx": 70,
+      "version": "6",
+      "when": 1792941343717,
+      "tag": "0070_review_aid_hint_again",
+      "breakpoints": true
+    },
+    {
+      "idx": 71,
+      "version": "6",
+      "when": 1792948822533,
+      "tag": "0071_pale_solo",
+      "breakpoints": true
+    },
+    {
+      "idx": 72,
+      "version": "6",
+      "when": 1793129480893,
+      "tag": "0072_lying_ink",
+      "breakpoints": true
+    },
+    {
+      "idx": 73,
+      "version": "6",
+      "when": 1793531161752,
+      "tag": "0073_gigantic_alice",
+      "breakpoints": true
+    },
+    {
+      "idx": 74,
+      "version": "6",
+      "when": 1793537198079,
+      "tag": "0074_normal_sunspot",
+      "breakpoints": true
     }
   ]
 }

@@ -8,6 +8,7 @@ import {
   pinyinTermReading,
   readingTokens,
 } from "@lymi/core/pinyin";
+import { TERRA } from "./terra";
 import type { LanguagePrompts } from "./types";
 
 /** Particles, which dictionaries write unmarked even as a word of their own. */
@@ -79,6 +80,7 @@ export function tonedExample(text: string): boolean {
 export const chinese = {
   tag: "zh",
   enrich: {
+    model: TERRA,
     guide: {
       notes:
         "Never the pinyin, which is the pronunciation. Noun: Measure word: *本*, *一本书*. Usage: a near-synonym learners mix (*二 / 两*, *会 / 能*), or for a word of two or more characters, what each means (Characters: 电 electric, 脑 brain).",
@@ -88,7 +90,7 @@ export const chinese = {
 Why: the meaning says 行 is read xíng here, not háng. Every example carries pinyin after each word, one you write as much as the learner's, with 不 in its citation tone. A card with addReadings gets its own example back that way, with nothing else changed.`,
   },
   lesson: "pinyin over, under or beside the hanzi, in tone marks or tone numbers (xuéxí, xue2xi2)",
-  hook: "Most words join two or more characters whose own meanings build the word's: 电脑 is electric + brain, 火车 is fire + vehicle. Try that route first. A sound-alike follows the pinyin syllable by syllable. Never write hanzi or pinyin in the hook.",
+  hint: "Most words join two or more characters whose own meanings build the word's: 电脑 is electric + brain, 火车 is fire + vehicle. Try that route first. A sound-alike follows the pinyin syllable by syllable. Never write hanzi or pinyin in the hook.",
   checks: [
     {
       field: "pronunciation",

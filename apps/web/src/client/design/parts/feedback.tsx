@@ -5,7 +5,6 @@ import { ErrorTip } from "../../components/error-tip";
 import { InfoTip } from "../../components/info-tip";
 import { Notice } from "../../components/notice";
 import { Progress } from "../../components/progress";
-import { Skeleton } from "../../components/skeleton";
 import {
   createToastManager,
   ToastList,
@@ -118,33 +117,10 @@ export const feedback: Group = {
       ),
     },
     {
-      slug: "skeleton",
-      name: "Skeleton",
-      source: "components/skeleton.tsx",
-      note: "Holds the loaded shape, so nothing jumps when the data lands. It stops shimmering under reduced motion.",
-      Demo: () => (
-        <Variants
-          items={[
-            {
-              label: "A list loading",
-              note: "A title line, then rows at their real height.",
-              render: () => (
-                <div className="grid w-full gap-2">
-                  <Skeleton className="h-9 w-2/3" />
-                  <Skeleton className="h-11" />
-                  <Skeleton className="h-11" />
-                </div>
-              ),
-            },
-          ]}
-        />
-      ),
-    },
-    {
       slug: "notice",
       name: "Notice",
       source: "components/notice.tsx",
-      note: "A short notice inside a screen: a title and at most one line more. Neutral on plate-2 says something worth knowing; warning on amber-soft says an action is out of reach for now and sits above the controls it disables, which stay in view and disabled. It is announced once.",
+      note: "A short notice inside a screen: a title and at most one line more. Neutral on plate-nested says something worth knowing; warning on amber-soft says an action is out of reach for now and sits above the controls it disables, which stay in view and disabled. It is announced once.",
       Demo: () => (
         <Variants
           items={[

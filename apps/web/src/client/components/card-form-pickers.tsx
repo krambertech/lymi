@@ -220,27 +220,27 @@ export function TagsChip({
         />
         <ComboboxEmpty className="grid justify-items-center gap-1 px-5 py-6 text-center">
           <span
-            className="mb-2 grid size-10 place-items-center rounded-full bg-plate-2 text-text-2"
+            className="mb-2 grid size-10 place-items-center rounded-full bg-plate-nested text-ink-secondary"
             aria-hidden="true"
           >
             <Tag className="size-[18px]" strokeWidth={1.75} />
           </span>
-          <span className="text-base font-medium text-text">{t`No tags yet`}</span>
-          <span className="max-w-[28ch] text-sm text-text-2">
+          <span className="text-base font-medium text-ink">{t`No tags yet`}</span>
+          <span className="max-w-[28ch] text-sm text-ink-secondary">
             {t`Type a name above, then press Enter to tag this card.`}
           </span>
         </ComboboxEmpty>
         <ComboboxList>
           {(option: TagOption) =>
             option.note ? (
-              <ComboboxItem key="note" value={option} disabled className="text-text-2">
+              <ComboboxItem key="note" value={option} disabled className="text-ink-secondary">
                 <span className="flex-1 whitespace-normal">{option.name}</span>
               </ComboboxItem>
             ) : option.create ? (
               <ComboboxItem
                 key={`+${option.name}`}
                 value={option}
-                icon={<Plus className="size-4 text-text-2" />}
+                icon={<Plus className="size-4 text-ink-secondary" />}
               >
                 <span className="flex-1 truncate">
                   {bidi(
@@ -312,7 +312,7 @@ export function ModesChip({
     onChange(same ? null : next);
   };
   const label = !value
-    ? t`How it's asked`
+    ? t`How it’s asked`
     : value.length === 1
       ? modeName(value[0] as ReviewModeKey)
       : t`${plural(value.length, { one: "Asked # way", other: "Asked # ways" })}`;
@@ -328,7 +328,7 @@ export function ModesChip({
               type="button"
               className={fieldChipClassName(!!value)}
               aria-label={
-                value ? t`How it's asked: ${names(value.map(modeName))}` : t`How it's asked`
+                value ? t`How it’s asked: ${names(value.map(modeName))}` : t`How it’s asked`
               }
               aria-invalid={invalid || undefined}
             >
@@ -339,7 +339,7 @@ export function ModesChip({
           }
         />
       </WithTip>
-      <DropdownMenuContent aria-label={t`How it's asked`} className="w-72">
+      <DropdownMenuContent aria-label={t`How it’s asked`} className="w-72">
         <DropdownMenuCheckboxItem
           checked={!value}
           onCheckedChange={(on) => {
@@ -349,7 +349,7 @@ export function ModesChip({
         >
           <span className="min-w-0">
             <span className="block">{t`Same as the deck`}</span>
-            <span className="block text-sm text-muted">{names(deckModes.map(modeName))}</span>
+            <span className="block text-sm text-ink-muted">{names(deckModes.map(modeName))}</span>
           </span>
         </DropdownMenuCheckboxItem>
         <DropdownMenuSeparator />
@@ -363,7 +363,7 @@ export function ModesChip({
           >
             <span className="min-w-0">
               <span className="block">{modeName(key)}</span>
-              <span className="block text-sm text-muted [overflow-wrap:anywhere]">
+              <span className="block text-sm text-ink-muted [overflow-wrap:anywhere]">
                 {key.startsWith("image_") && !pictureDescribed
                   ? t`Asked once the picture has a description.`
                   : blurb(key)}

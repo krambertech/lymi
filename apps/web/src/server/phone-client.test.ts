@@ -1,6 +1,6 @@
 import { configureClient, type KeyValueStore } from "@lymi/client";
 import { api, type Draw } from "@lymi/client/api";
-import { flushOutbox, outboxSize, recordGrade } from "@lymi/client/grades";
+import { flushOutbox, outboxSize, recordGrade, undoGrade } from "@lymi/client/grades";
 import { streakWith } from "@lymi/client/review-day";
 import { drawState } from "@lymi/client/review-draw";
 import { resetUpdateRequired, updateRequired } from "@lymi/client/update-required";
@@ -18,6 +18,8 @@ let app: TestApp;
 let learner: Session;
 let deckId: string;
 let offline = false;
+/** The Worker answers, but the response never reaches the phone. */
+let lost = false;
 /** Changes a response on its way to the client, as a newer Worker's would differ. */
 let rewrite: ((path: string, body: Record<string, unknown>) => void) | null = null;
 
@@ -67,6 +69,7 @@ beforeAll(async () => {
     expect(url.origin).toBe(PHONE_ORIGIN);
     expect(init?.credentials).toBe("omit");
     const response = await app.fetch(`${url.pathname}${url.search}`, init);
+    if (lost) throw new TypeError("Network request failed");
     if (!rewrite || !response.ok) return response;
     const body = (await response.json()) as Record<string, unknown>;
     rewrite(url.pathname, body);
@@ -118,6 +121,20 @@ describe("the phone's shared client against the Worker", () => {
     expect(outboxSize()).toBe(0);
     const streak = await api.streak();
     expect(streak.today.attempts).toBe(2);
+  });
+
+  it("takes back a grade the Worker stored though its response never arrived", async () => {
+    const before = (await api.streak()).today.attempts;
+    const grade = await nextGrade();
+    lost = true;
+    expect(await recordGrade(grade)).toBe("queued");
+    lost = false;
+    expect((await api.streak()).today.attempts).toBe(before + 1);
+
+    expect(await undoGrade(grade)).toBe("undone");
+
+    expect((await api.streak()).today.attempts).toBe(before);
+    expect(outboxSize()).toBe(0);
   });
 
   it("turns 426 into Update Lymi and keeps a grade made after it for the updated app", async () => {

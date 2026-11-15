@@ -1,10 +1,12 @@
 import { useLingui } from "@lingui/react/macro";
+import { cn } from "cn";
 import { type ReactNode, useEffect, useState } from "react";
 import {
   acceleratorFrom,
   desktop,
   type MacPreferences,
   type MacSetting,
+  type MacUpdate,
   shortcutLabel,
 } from "../lib/desktop";
 import { Button } from "./button";
@@ -36,12 +38,25 @@ export function ThisMacSection() {
     load();
     // Accessibility is switched on in System Settings, so coming back here reads it again.
     window.addEventListener("focus", load);
-    return () => window.removeEventListener("focus", load);
+    const stopUpdates = bridge.onUpdate?.((update) =>
+      setPrefs((current) => current && { ...current, update }),
+    );
+    return () => {
+      window.removeEventListener("focus", load);
+      stopUpdates?.();
+    };
   }, [bridge]);
 
   if (!bridge || !prefs) return null;
   const keys = shortcutLabel(prefs.shortcut);
   const version = prefs.version;
+  const updateLines: Record<MacUpdate | "unknown", string> = {
+    unknown: t`Version ${version}.`,
+    checking: t`Version ${version}. Checking for updates…`,
+    current: t`Version ${version}. Up to date.`,
+    downloading: t`Version ${version}. Downloading an update…`,
+    ready: t`An update is ready. It installs when Lymi restarts.`,
+  };
 
   async function save<K extends MacSetting>(key: K, value: MacPreferences[K]) {
     if (!bridge) return;
@@ -78,7 +93,15 @@ export function ThisMacSection() {
     >
       <div className="grid gap-2">
         <div className="edge grid rounded-md bg-plate">
+          <Row label={t`Lymi for Mac`} description={updateLines[prefs.update ?? "unknown"]}>
+            {prefs.update === "ready" && bridge.restartToUpdate && (
+              <Button size="sm" variant="primary" onClick={() => bridge.restartToUpdate?.()}>
+                {t`Restart to update`}
+              </Button>
+            )}
+          </Row>
           <Row
+            className="border-t border-edge"
             label={t`Quick add`}
             description={
               recording
@@ -92,7 +115,10 @@ export function ThisMacSection() {
               onKeyDown={recording ? onRecordKey : undefined}
               onBlur={() => setRecording(false)}
               aria-label={t`Quick add shortcut: ${keys}. Change`}
-              className="min-w-24 tabular-nums"
+              className={cn(
+                "min-w-24 tabular-nums",
+                recording && "outline-2 outline-offset-2 outline-ring",
+              )}
             >
               {recording ? t`Press keys` : keys}
             </Button>
@@ -103,7 +129,7 @@ export function ThisMacSection() {
               description={
                 prefs.showInMenuBar
                   ? t`The lantern opens Lymi, quick add and review from the top of the screen.`
-                  : t`Lymi stays in the Dock instead, so it is always one click away.`
+                  : t`Lymi stays in the Dock instead.`
               }
               checked={prefs.showInMenuBar}
               onChange={(on) => void save("showInMenuBar", on)}
@@ -141,24 +167,27 @@ export function ThisMacSection() {
           />
         </div>
         {error && <InlineError>{error}</InlineError>}
-        <p className="text-sm text-muted">{t`Lymi for Mac ${version}`}</p>
       </div>
     </SettingsGroup>
   );
 }
 
+// Every row's name, so a row with a button reads the same as one with a switch.
+const LABEL = "text-base font-medium text-ink";
+
 interface RowProps {
   label: string;
   description: string;
-  children: ReactNode;
+  children?: ReactNode;
+  className?: string;
 }
 
-function Row({ label, description, children }: RowProps) {
+function Row({ label, description, children, className }: RowProps) {
   return (
-    <div className="flex items-center gap-3 px-4 py-3.5">
+    <div className={cn("flex items-center gap-3 px-4 py-3.5", className)}>
       <div className="grid min-w-0 flex-1 gap-0.5">
-        <p className="text-base text-text">{label}</p>
-        <p className="text-sm text-muted">{description}</p>
+        <p className={LABEL}>{label}</p>
+        <p className="text-sm text-ink-muted">{description}</p>
       </div>
       {children}
     </div>
@@ -182,10 +211,14 @@ function SwitchRow({ label, description, checked, disabled, onChange, action }: 
       className="relative gap-3 border-t border-edge px-4 py-3.5"
     >
       <FieldContent className="gap-0.5">
-        <FieldLabel className="text-base text-text">{label}</FieldLabel>
+        {/* Stretched over the row, so a click on the sentence flips the switch too. */}
+        <FieldLabel className={cn(LABEL, "after:absolute after:inset-0 after:content-['']")}>
+          {label}
+        </FieldLabel>
         <FieldDescription>{description}</FieldDescription>
+        {/* Under the sentence it answers, so the switch keeps the column the others line up on. */}
+        {action && <div className="relative mt-2 w-fit">{action}</div>}
       </FieldContent>
-      {action}
       <Switch
         className="self-center"
         checked={checked}

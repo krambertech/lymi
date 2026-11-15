@@ -1,8 +1,9 @@
 ---
 import onestLatin from "@fontsource-variable/onest/files/onest-latin-wght-normal.woff2?url";
 import onestCyrillic from "@lymi/design/fonts/onest-cyrillic-wght-normal.woff2?url";
+import { giftScript } from "../lib/free-gift";
 import { originScript } from "../lib/origin-badge";
-import { type Locale, type LocalizedPage, localizedPath } from "../lib/routes";
+import { type Locale, type LocalizedPage, localizedPath, pageLocales } from "../lib/routes";
 import "../styles.css";
 
 interface Props {
@@ -21,11 +22,8 @@ interface Props {
 const { title, description, canonicalPath, localizedPage, alternatePaths, shareImagePath, shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what you learn.”" } = Astro.props;
 const alternates: Partial<Record<Locale, string>> | undefined =
   alternatePaths ??
-  (localizedPage && {
-    en: localizedPath(localizedPage, "en"),
-    uk: localizedPath(localizedPage, "uk"),
-    ru: localizedPath(localizedPage, "ru"),
-  });
+  (localizedPage &&
+    Object.fromEntries(pageLocales(localizedPage).map((each) => [each, localizedPath(localizedPage, each)])));
 const site = Astro.site ?? "https://lymi.app";
 const canonical = new URL(canonicalPath, site).toString();
 // The site's image is rendered by scripts/icons.sh from the brand geometry.
@@ -87,6 +85,7 @@ const locale = Astro.currentLocale ?? "en";
       } catch (e) {}
     </script>
     <script is:inline set:html={originScript(locale)} />
+    <script is:inline set:html={giftScript()} />
     <slot name="head" />
   </head>
   <body>

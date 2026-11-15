@@ -2,6 +2,24 @@
 
 Lymi uses a small set of Playwright journeys to prove that the browser, Worker, authentication, D1 persistence, deck and card creation, and FSRS review path work together. The suite runs entirely against local Cloudflare bindings. It never uses production data or AI credentials.
 
+## Review coverage
+
+Choose the rows the change can affect. Feature verification proves the learner's outcome; interface review checks the quality and accessibility of the changed experience; automated gates check the contracts they execute. Reuse evidence across them instead of driving the same state repeatedly.
+
+| When the change touches | Check | Owning guidance |
+| --- | --- | --- |
+| A learner flow or its recovery | Complete the affected path and confirm stored state; cover the changed failure, offline, retry or resume paths | [verify](../.agents/skills/verify/SKILL.md) and its feature recipes |
+| Controls, forms or overlays | Names, labels, keyboard and focus behavior, validation, pending submission and duplicate actions | [review-ui checks](../.agents/skills/review-ui/references/checks.md#interaction-and-accessibility) |
+| Layout, content or themes | The viewports, input methods, themes, locales and data states selected by the diff | [review-ui coverage](../.agents/skills/review-ui/SKILL.md#choose-the-coverage) |
+| Motion, assets, loading or repeated work | Reduced motion, layout stability and cleanup; measure claims about speed or responsiveness | [review-ui checks](../.agents/skills/review-ui/references/checks.md#components-and-performance) and [motion](../.agents/skills/review-ui/references/checks.md#motion) |
+| API, persistence or shared client behavior | Validation, authorization, audit, compatibility and retry behavior at the cheapest layer that observes the change | [Test layers](#where-a-test-goes), [Workers runtime](#workers-runtime-tests) and [phone contracts](#the-phone-app) |
+| Public pages or their routing | Titles, descriptions, canonical links, indexing and share previews, including redirects between origins | [Site structure](site-structure.md) and the affected site's E2E assertions |
+| Build configuration, developer tooling or public assets | Production excludes developer controls, private fixtures and secrets; origin and package boundaries still hold | `pnpm check:boundaries` and [deployment checks](site-structure.md#build-configuration-and-release-checks) |
+| Measured behavior | The product question, event owner, allowed properties, privacy, failure and duplicate paths | [Analytics](analytics.md) |
+| Native or installed-phone behavior | The affected feature on the phone, supported API contracts and any release or device-specific checks | [verify-phone](../.agents/skills/verify-phone/SKILL.md) and [phone releases](phone-release.md) |
+
+For a launch or release sweep, include shared entry points, initial loading, fonts and theme initialization, and public landing pages even when the final diff is narrow. Keep ordinary PR review scoped to the change. Record relevant checks and missing evidence in the PR's existing Verification section, distinguishing source inspection, browser or Simulator observation, and real-device checks; emulation does not establish hardware behavior.
+
 ## Commands
 
 ```bash
@@ -9,6 +27,7 @@ pnpm verify:changed   # push gate: static checks on everything, tests for what c
 pnpm verify           # full gate: check, build, typecheck, every test on every instance
 pnpm test:watch       # save gate: the unit project and desktop Chromium in watch mode
 pnpm test             # unit tests and the CI impact rules
+pnpm test:workers     # outgoing fetches in workerd against a stubbed upstream
 pnpm test:e2e         # Chromium desktop and an iPhone-sized WebKit browser
 pnpm test:e2e:chromium # Chromium desktop only
 pnpm test:e2e:ui      # Playwright's interactive UI
@@ -32,19 +51,19 @@ pnpm exec playwright install chromium webkit
 E2E_PORT=4183 pnpm test:e2e:chromium
 ```
 
-Specs import `test` and `expect` from `e2e/test.ts`, not from `@playwright/test`. Its `test` sets `--seq-filter: none` in every page, so the end of a review rises and fades without its blur: on a CI runner with no GPU, WebKit stalls while the end screen animates that blur on several parts at once. The motion, its timing and tap-to-finish stay under test. It also hides the developer tools' edge tab, which learners never see and which covers a row's options button at the edge of a phone screen; the login page's Dev sign-in form is separate and stays.
+Specs import `test` and `expect` from `e2e/test.ts`, not from `@playwright/test`. Its `test` sets `--seq-filter: none` in every page, so the end of a review rises and fades without its blur: on a CI runner with no GPU, WebKit stalls while the end screen animates that blur on several parts at once. The motion, its timing and tap-to-finish stay under test. It also hides the developer tools' edge tab, which learners never see and which covers a row's options button at the edge of a phone screen; the login page's Dev sign-in form is separate and stays. And it sets `window.lymiNoFirstReview`, a flag rather than storage so journeys can still assert that storage stays empty, because nearly every journey starts on a new account and would otherwise walk the first review's tips and end; `e2e/first-review.spec.ts` clears it to test them.
 
 A site page's controls are static HTML until their Astro island hydrates, and a click before then is lost. A journey calls `waitForIslands(page)` from `e2e/test.ts` before its first click on a site control.
 
-Every page runs under `prefers-reduced-motion: reduce`, the product's own quieter twin, and an assertion gets fifteen seconds on CI rather than Playwright's five. Both are measured rather than assumed: on 2026-09-16 the same commit failed 10 Chromium tests in 20.3 minutes under reduced motion and 24 in 27.4 at full motion, and the suite that takes 7.7 minutes on a developer's machine takes three times that on a runner with no GPU, which is the same reason `timeout` already doubles there. A journey that needs full motion sets `test.use({ reducedMotion: "no-preference" })` and says why.
+Every page runs under `prefers-reduced-motion: reduce`, the product's reduced-motion mode, and an assertion gets fifteen seconds on CI rather than Playwright's five. Both are measured: full motion fails more than twice as many Chromium tests as reduced motion on the same commit, and the suite runs about three times slower on a runner with no GPU than on a developer's machine, which is also why `timeout` doubles there. A journey that needs full motion sets `test.use({ reducedMotion: "no-preference" })` and says why.
 
-Analytics never initialize on loopback origins, so journeys need no analytics fixture; secondary browser windows still open through `newTestContext`. The SDK payload test intercepts `/ingest` in the browser, so the Worker never forwards to the production project.
+Analytics never initialize on loopback origins, so journeys need no analytics fixture; secondary browser windows still open through `newTestContext`. The SDK payload test intercepts `/ingest` in the browser, so the Worker never forwards to the production project. Playwright's WebKit gives a routed `navigator.sendBeacon` request no body, so the page-leave test also keeps a copy of each beacon's URL and body in the page and checks that the beacon carrying `$pageleave` reached `/ingest`.
 
-A journey whose subject is not authentication starts already signed in. `startAsTestLearner` in `e2e/auth.ts` establishes that account's session once through the same email endpoints the form posts to, restores its cookies into the journey's browser context, and keeps the stored session for the rest of the run, so an account two journeys share pays for creation once. A journey that then reads a screen names it; one that seeds through the API navigates itself, because rendering Today on the way costs it a screen it never reads. A journey whose setup depends on the day names Today as well: its load is what reports the device zone and opens today's row, so a goal set before it belongs to no day yet. The store lives in the Playwright process alone, so it cannot outlast the D1 and KV that the server rebuilds on every run: a session from an earlier run, schema or auth configuration is never restored at all. Measured on 2026-09-18 with back-to-back runs on one machine, the same 62 Chromium tests spent 340 seconds through the form and 286 from a stored session; the suite's wall clock moves less than that, because building both applications and starting three servers dominates it.
+A journey whose subject is not authentication starts already signed in. `startAsTestLearner` in `e2e/auth.ts` establishes that account's session once through the same email endpoints the form posts to, restores its cookies into the journey's browser context, and keeps the stored session for the rest of the run, so an account two journeys share pays for creation once. A journey that then reads a screen names it; one that seeds through the API navigates itself, because rendering Today on the way costs it a screen it never reads. A journey whose setup depends on the day names Today as well: its load is what reports the device zone and opens today's row, so a goal set before it belongs to no day yet. The store lives in the Playwright process alone, so it cannot outlast the D1 and KV that the server rebuilds on every run: a session from an earlier run, schema or auth configuration is never restored at all. On 2026-09-18 the same 62 Chromium tests spent 340 seconds through the form and 286 from a stored session; the wall clock moves less, because building both applications and starting three servers dominates it.
 
 Six journeys keep driving the form, because arriving is their subject: the deep link that survives sign-in, which also proves the account being created on first use; the second learner on one browser, whose subject is the persisted cache that signing in throws away; both password journeys; the classmate who signs up from a join link; and the visitor who signs up from a published deck's add page. `signInAsTestLearner` and `createAccountThroughDevForm` are theirs.
 
-The journeys run one at a time. They share a single Vite dev server, a single Worker and a single D1, and only the accounts are keyed per test: `e2eEmail` in `e2e/settings.mjs` keys one by test, project, retry and repeat. Three workers were tried on 2026-09-16 and 49 of 63 Chromium tests failed, every one of them a signed-in journey whose screen never mounted inside the expect budget while the tests that touch no account passed. Parallel journeys need a backend per worker, or a served build in place of the dev server, before the worker count is worth raising again.
+The journeys run one at a time. They share a single Vite dev server, a single Worker and a single D1, and only the accounts are keyed per test: `e2eEmail` in `e2e/settings.mjs` keys one by test, project, retry and repeat. With three workers, most signed-in journeys never mount their screen inside the expect budget, while the tests that touch no account pass. Parallel journeys need a backend per worker, or a served build in place of the dev server, before the worker count is worth raising again.
 
 ## What runs when
 
@@ -52,23 +71,26 @@ The closer a change is to shipping, the more runs. Every test still runs in ever
 
 | Check | Save | Push | Pull request | Main |
 | --- | --- | --- | --- | --- |
-| Biome, interface strings, migration safety, TypeScript | — | all | all | all |
-| Production build and deployment boundaries | — | on handover | yes | yes |
+| Biome, interface strings, migration safety, TypeScript | - | all | all | all |
+| Production build and deployment boundaries | - | on handover | yes | yes |
 | Unit, service and route tests | changed graph | changed graph | all | all |
+| Workers-runtime tests | - | when server or core changed | when server or core changed | all |
 | Component tests, desktop Chromium | changed graph | changed graph | all | all |
-| Component tests, touch Chromium and WebKit | — | — | when the diff reaches the primitives | all |
-| Journeys | — | by hand when a screen changed | Chromium on production-affecting diffs | Chromium and WebKit |
-| Deployment package dry runs | — | — | production-affecting diffs | both |
-
-The Mac app in `apps/desktop` is tested only where it differs from the web. The contract between it and the page is the types in `packages/client/src/desktop.ts`, so a mismatch fails `pnpm typecheck`. Its rules live in modules that import nothing from Electron (`origin.ts`, `settings.ts`, `callback.ts`, `term.ts`), whose unit tests run with `pnpm test`. The pages only it shows have component tests with a stand-in for the app (`routes/desktop.add.browser.test.tsx`, `components/this-mac-section.browser.test.tsx`), and the server's side of its sign-in is `server/desktop-sign-in.test.ts`. The Desktop workflow packages the app when a pull request changes `apps/desktop` and launches it on a Mac runner; `scripts/launch-check.js` passes once a product page has the bridge.
+| Component tests, touch Chromium and WebKit | - | - | when the diff reaches the primitives | all |
+| Journeys | - | by hand when a screen changed | Chromium on production-affecting diffs | Chromium and WebKit |
+| Deployment package dry runs | - | - | production-affecting diffs | both |
 
 - **Save** is `pnpm test:watch`: Vitest watch mode on the `unit` project and the `desktop` component instance. A save reruns the tests that import what changed.
 - **Push** is `pnpm verify:changed`: the static checks on everything, then `vitest run --changed` against the merge base with `origin/main` in each workspace, with component tests on desktop Chromium. `scripts/verify-changed.mjs` lists the steps.
 - **Pull request** and **Main** run `pnpm verify` in CI's `quality` job, with the component instances and journeys that `scripts/ci-plan.mjs` selects.
 
-`scripts/test-plan.mjs` owns two path lists, and both gates read it. A diff that reaches `components/ui/`, a `*.browser.test.tsx` file or `design/forced-states.tsx` needs every component instance: the primitives adapt to the device, and nothing else can break the touch shape. A diff that reaches a file the tests depend on without importing it, such as a migration, a `.po` catalog, a stylesheet, the test setup or a workspace config, hands over to the full gate, because `vitest --changed` follows imports and would miss it. Add a path to that list when a test starts depending on one.
+A change is production-affecting when `requiresE2E` in `scripts/e2e-impact.mjs` selects its paths. Before pushing one, also run `pnpm deploy:check` and `pnpm test:e2e:chromium`, or the full `pnpm test:e2e` when WebKit, mobile, PWA, navigation, caching, focus, touch, sheets or dialogs are at risk. Report each browser's result separately: a Chromium pass is not cross-browser evidence.
 
-`LYMI_COMPONENT_INSTANCES` names the component instances to run, comma-separated from `desktop`, `touch` and `touch-webkit`; unset runs all three, and an unknown name fails the run. Workers Builds keeps `pnpm verify` as its build command, so production still fails closed on the full gate.
+`scripts/test-plan.mjs` owns two path lists, and both gates read it. A diff that reaches `components/ui/`, a `*.browser.test.tsx` file or `apps/web/src/client/design/forced-states.tsx` needs every component instance: the primitives adapt to the device, and nothing else can break the touch shape. A diff that reaches a file the tests depend on without importing it, such as a migration, a `.po` catalog, a stylesheet, the test setup or a workspace config, hands over to the full gate, because `vitest --changed` follows imports and would miss it. Add a path to that list when a test starts depending on one.
+
+`LYMI_COMPONENT_INSTANCES` names the component instances to run, comma-separated from `desktop`, `touch` and `touch-webkit`; unset runs all three, and an unknown name fails the run. Workers Builds runs no tests, so a merge to `main` deploys whether or not its CI run passes.
+
+The Mac app in `apps/desktop` is tested only where it differs from the web. The contract between it and the page is the types in `packages/client/src/desktop.ts`, so a mismatch fails `pnpm typecheck`. Its rules live in modules that import nothing from Electron (`origin.ts`, `settings.ts`, `callback.ts`, `hand-back.ts`, `term.ts`), whose unit tests run with `pnpm test`. The pages only it shows have component tests with a stand-in for the app (`routes/desktop.add.browser.test.tsx`, `components/this-mac-section.browser.test.tsx`), and the server's side of its sign-in is `server/desktop-sign-in.test.ts`. The Desktop workflow packages the app when a pull request changes `apps/desktop` and launches it on a Mac runner; `apps/desktop/scripts/launch-check.js` passes once a product page has the bridge.
 
 ## Where a test goes
 
@@ -101,7 +123,7 @@ To decline a journey in review, point at the list: a test that proves none of th
 
 ## Component tests in real browsers
 
-Files named `*.browser.test.tsx` run in Vitest browser mode, as the `components` project in `apps/web/vite.config.ts`. Each test runs three times: desktop Chromium at 1280 px with a fine pointer, and Chromium and WebKit as a 390 px touch device. A test reads `inject("machine")` to know which shape to expect, so one file proves both shapes of an adaptive component. `pnpm test` runs them after the unit tests, so the browsers must be installed. A pull request runs the `desktop` instance unless its diff reaches the primitives; `main` runs all three. Workers Builds sets `WORKERS_CI=1` and has no browsers, so the production build skips this project and relies on GitHub CI, which runs it before merge:
+Files named `*.browser.test.tsx` run in Vitest browser mode, as the `components` project in `apps/web/vite.config.ts`. Each test runs three times: desktop Chromium at 1280 px with a fine pointer, and Chromium and WebKit as a 390 px touch device. A test reads `inject("machine")` to know which shape to expect, so one file proves both shapes of an adaptive component. `pnpm test` runs them after the unit tests, so the browsers must be installed. Workers Builds sets `WORKERS_CI=1` and has no browsers, so the production build skips this project and relies on GitHub CI, which runs it before merge:
 
 ```bash
 pnpm exec playwright install chromium webkit
@@ -136,9 +158,9 @@ The pure-function tests next to them need no database and stay that way.
 
 The browser job is a matrix of Playwright shards, each a separate runner with its own checkout, dev server, Workers and D1. Playwright assigns tests to shards by file, so a spec whose tests share an account still lands whole in one shard and the per-test account keying holds. `e2eShardCount` in `scripts/ci-plan.mjs` owns the count and the matrix reads it from the plan. Three was measured on 2026-09-18: the cross-browser run on `main` took 19 minutes as one job, and each shard pays the same 61 seconds of `scripts/e2e-server.mjs` setup before its share of the tests, so a fourth shard buys less than it costs in runner minutes. The matrix does not fail fast, because a summary that names every failing shard is worth the minutes the others spend finishing.
 
-Sharding is not the same lever as `workers`, which stays at one for the reason above: a shard has its own server and D1, where a second worker would share them.
+`workers` stays at one even with shards: a shard has its own server and D1, where a second worker would share them.
 
-A newer run supersedes an older one on every branch, `main` included. Only one run per concurrency group may wait, so queued pushes to `main` used to cancel each other before either started and neither commit was verified; superseding the older run verifies the newest commit instead. A shard's `timeout-minutes` is a safety net rather than a budget: a job that reaches it is reported as cancelled, which reads as a mysterious red rather than a slow suite.
+A newer run supersedes an older one on every branch, `main` included. Only one run per concurrency group may wait, so two queued pushes to `main` would cancel each other before either started; superseding the older run verifies the newest commit instead. A shard's `timeout-minutes` is a safety net rather than a budget: a job that reaches it is reported as cancelled, which reads as a mysterious red rather than a slow suite.
 
 `scripts/ci-plan.mjs` selects the browser and deployment coverage from the event and changed paths. Its policy is ordinary tested JavaScript rather than logic hidden only in workflow YAML:
 
@@ -152,9 +174,7 @@ A newer run supersedes an older one on every branch, `main` included. Only one r
 
 Every run writes a final summary with its selected browser and component coverage and the outcome of each job and gate. A green Chromium pull request is deliberately labelled as Chromium evidence, not as full cross-browser evidence.
 
-Comment `/e2e` on a pull request to force a run without adding a label. The command accepts only the repository owner and only branches in this repository. A newer commit cancels an obsolete in-progress run.
-
-`Guardrail review` holds a pull request that may loosen one of Lymi's own checks until Kateryna approves its head commit, and a later push needs approval again. `scripts/guardrail-review.mjs` names each loosening in the check: an added `biome-ignore`, `@ts-expect-error`, `@ts-ignore`, `@ts-nocheck`, `eslint-disable` or `check-styling: allow` without a reason in its tool's syntax; an exclusion added to `biome.json`, or a rule or plugin there removed, rescoped to fewer files, relaxed or turned off; a deleted lint plugin; a `check` or `check:*` script deleted, or a step dropped from it or from a script it calls through pnpm; a deleted file that one of them runs; a row removed or reworded in the enforced-rules table in `AGENTS.md`; and any change to the gate's own workflow, script or test. Tightening passes without review: a new rule, plugin, check, step or table row, a stricter level, a wider scope, or an exclusion removed once its files are migrated. Where the detector cannot tell which way a change goes, as with an edit to a plugin's pattern, a check's code or a rule's options, it holds the change and says so. GitHub refuses an approval of one's own pull request, so on a pull request opened from Kateryna's account a review whose own line reads `/approve-guardrails` approves the commit it was left on; an agent never posts it. A push is judged by the default branch's workflow through `pull_request_target`, every run takes the detector from the pull request's base and only diffs the pull request, so a pull request cannot loosen the gate that judges it; the gate therefore runs only once it is on `main`. `node scripts/guardrail-review.mjs` lists what a branch loosens before its pull request opens.
+Comment `/e2e` on a pull request to force a run without adding a label. The command accepts only the repository owner and only branches in this repository.
 
 Every shard uploads a small `e2e-shard-outcome-<n>` artifact, and the final check downloads them all so the run summary carries a row per shard, the combined pass count, and the file, line and title of every failing test. `scripts/e2e-shard-outcome.mjs` builds that record from the JSON report that the shared Playwright config writes on CI. A shard whose browser install or dependency step broke is recorded as a failure rather than a skip, so the table never reads as a deliberate exclusion.
 
@@ -170,13 +190,31 @@ The `site-preview` GitHub environment holds `CLOUDFLARE_ACCOUNT_ID` and a narrow
 
 The `app-preview` environment holds `CLOUDFLARE_ACCOUNT_ID`, `CLOUDFLARE_APP_PREVIEW_TOKEN` and `LYMI_APP_PREVIEW_AUTH_SECRET`. Its token is limited to Worker Scripts, D1, KV and R2 edit access. Each affected same-repository pull request gets a `lymi-app-pr-<number>` Worker with matching disposable storage, a stable `preview-lymi-app-pr-<number>` URL and per-pull-request auth/access keys derived from the root secret. CI applies migrations, rebuilding the preview database from empty when they no longer apply to it (a rebase that renumbers a migration re-runs it under its new filename), uploads without a production deployment, verifies the exact health version, follows the protected entry link, signs in the synthetic learner and confirms seeded decks. Closing the pull request cancels its in-flight CI run, so a late preview deploy cannot recreate what the close workflow removes. That workflow empties the preview bucket, then removes only resources whose names are derived from that validated pull request number. Dispatch `App preview cleanup` with the number to repeat a failed cleanup.
 
-Use `pnpm verify` as each Workers Builds build command. Use each package's `deploy:ci` script as its deploy command, backed by a custom Workers Builds API token with D1 edit access. Both scripts apply pending remote migrations before activating a Worker version; this keeps either independently deployed Worker from reaching production against an older schema. The migration step is safe to retry when both builds start for the same shared-schema commit. This duplicates the base gate on production deployments, but makes each independent Cloudflare pipeline fail closed instead of deploying while GitHub CI is red.
+Use `pnpm run build` as each Workers Builds build command: the full `pnpm verify` outgrew the build container and was killed partway through the web tests, so GitHub CI is the only test gate. Use each package's `deploy:ci` script as its deploy command, backed by a custom Workers Builds API token with D1 edit access. Both scripts apply pending remote migrations before activating a Worker version; this keeps either independently deployed Worker from reaching production against an older schema. The migration step is safe to retry when both builds start for the same shared-schema commit.
 
 The product project also sets `POSTHOG_CLI_API_KEY` as a secret build variable: a PostHog personal API key scoped to project 292417 with `error tracking write` and `organization read`, the same key the phone uploads with ([phone-release.md](phone-release.md)). Its build uploads the browser and Worker source maps and deletes them; a failed upload fails the build, and `pnpm check:boundaries` fails if a map would ship. Without the key the build warns and deploys with unreadable stacks. [operations.md](operations.md#a-deploy-fails-at-the-source-map-upload) says how to ship while PostHog is down.
 
-Committed migrations are immutable production history. `pnpm db:generate` creates the SQL and Drizzle snapshots and updates `scripts/migration-manifest.json`; do not edit those generated files by hand. `pnpm check:migrations` runs Drizzle's migration consistency check, verifies the immutable filenames and checksums, and generates into a temporary directory to catch a schema change whose migration was forgotten. Generate a new migration after syncing with `origin/main`; never reuse a number from another branch.
+Committed migrations are immutable production history. `pnpm db:generate` creates the SQL and Drizzle snapshots and updates `scripts/migration-manifest.json`; change the schema and generate again rather than editing them. `pnpm check:migrations` runs Drizzle's migration consistency check, verifies the immutable filenames and checksums, and generates into a temporary directory to catch a schema change whose migration was forgotten. Generate a new migration after syncing with `origin/main`; never reuse a number from another branch.
 
-Each Worker exposes its Cloudflare version ID, deployment timestamp and optional commit tag from `/api/health`. After Workers Builds activates versions, `pnpm deploy:health` checks both canonical domains and identifies the versions serving traffic. A successful build page without these active-version checks is not deployment evidence.
+Each Worker exposes its Cloudflare version ID, deployment timestamp and optional commit tag from `/api/health`. After Workers Builds activates versions, `pnpm deploy:health` checks both canonical domains and identifies the versions serving traffic. Before calling production verified, compare its active tag with the intended commit. A successful build page without these active-version checks is not deployment evidence.
+
+## Bugs a pattern can catch
+
+When a review finds a bug whose shape a search can spot, add the search so the next one fails `pnpm check` instead of waiting for a reviewer. A pattern inside one file is a Grit plugin in `biome-plugins/`, scoped in `biome.json`; a pattern across files, such as a key spelled in two modules, is a check in `scripts/check-regressions.mjs` with a test in its `.test.mjs`. Each message names the pull request that found the bug. Logic bugs, races and wrong copy beyond a known false claim stay with regression tests.
+
+## Guardrail review
+
+`Guardrail review` holds a pull request that may loosen one of Lymi's own checks until Kateryna approves its head commit, and a later push needs approval again. `scripts/guardrail-review.mjs` names each loosening in the check: an added `biome-ignore`, `@ts-expect-error`, `@ts-ignore`, `@ts-nocheck`, `eslint-disable` or `check-styling: allow` without a reason in its tool's syntax; an exclusion added to `biome.json`, or a rule or plugin there removed, rescoped to fewer files, relaxed or turned off; a deleted lint plugin; a `check:*` script, or another check `pnpm verify` runs, deleted or with a step dropped from it or from a script it calls through pnpm; a deleted file that one of them runs; and any change to the gate's own workflow, script or test.
+
+Tightening passes without review: a new rule, plugin, check or step, a stricter level, a wider scope, or an exclusion removed once its files are migrated. Where the detector cannot tell which way a change goes, as with an edit to a plugin's pattern, a check's code or a rule's options, it holds the change and says so. `node scripts/guardrail-review.mjs` lists what a branch loosens before its pull request opens.
+
+GitHub refuses an approval of one's own pull request, so on a pull request opened from Kateryna's account a review whose own line reads `/approve-guardrails` approves the commit it was left on; an agent never posts it. A push is judged by the default branch's workflow through `pull_request_target`, and every run takes the detector from the pull request's base and only diffs the pull request, so a pull request cannot loosen the gate that judges it.
+
+## Workers-runtime tests
+
+`apps/web/vitest.workers.config.ts` runs `*.workers.test.ts` files inside workerd with the production Worker's compatibility date and flags, and answers every outgoing request from a stub upstream in that config. Node accepts request options that workerd refuses: `redirect: "error"` once passed typecheck, lint, the unit tests and the deployment dry run, then failed every AI and audio call in production. `outgoing-fetch.workers.test.ts` drives every outgoing fetch the Worker makes with request options, from the AI providers to picture import, email, PostHog and Apple, through the real `fetch` and `Request`; it proves the call leaves and comes back, not how a provider behaves.
+
+Add a case there, and an answer to the stub, for any new outgoing fetch or any new use of an API only Workers provides. `biome-plugins/no-redirect-error.grit` catches the one option known to break; this project catches the next one. `scripts/test-plan.mjs` runs it in `pnpm verify:changed` and on pull requests that reach `apps/web/src/server/` or `packages/core/`, and `pnpm verify` and every push to `main` run it always.
 
 ## Route tests through the Worker's fetch handler
 
@@ -207,7 +245,7 @@ Then, with a listener on `127.0.0.1:8765` and a PKCE verifier in hand:
 3. Exchange the code at `/api/auth/oauth2/token` with `grant_type=authorization_code`, the verifier and the same `resource`.
 4. Call `/mcp` with `Authorization: Bearer` and the `accept: application/json, text/event-stream` header. Responses arrive as one SSE `data:` line.
 
-The consent is remembered per client and learner, so a second authorize goes straight to the code. Disconnect the client from the You screen to see the consent screen again.
+The consent is remembered per client and learner, so a second authorize goes straight to the code. Disconnect the client in Settings to see the consent screen again.
 
 ## The phone app
 
@@ -256,14 +294,14 @@ A freeze that changes a successful response also asks whether the phone's kept q
 
 The journey is a smoke test and stays one flow. A behaviour it could cover belongs in the layer that can see it: a rule in a unit test, an answer in a route test, the client's handling of it in `phone-client.test.ts`. Add a step only for something that exists solely in the native build, such as a session surviving a relaunch.
 
-`.github/workflows/phone.yml` runs it on GitHub's `macos-26` runner, which is free for a public repository. It fingerprints the native inputs with `@expo/fingerprint` and caches the Simulator build under that hash, so a run without a native change only re-bundles the JavaScript into the cached app, starts the Worker, boots a Simulator and runs the flow. A failed flow runs once more and reports a pass on retry as a warning. A failed run keeps Maestro's screenshots, its JUnit report and the Worker log for seven days.
+`.github/workflows/phone.yml` runs it on GitHub's `macos-26` runner, which is free for a public repository. It fingerprints the native inputs with `@expo/fingerprint` and caches the Simulator build under that hash, so a run without a native change only re-bundles the JavaScript into the cached app, starts the Worker, boots a Simulator and runs the flow. The Worker is a build with the personas (`LYMI_APP_PREVIEW=1`) served by `wrangler dev`, because Vite's dev Worker dropped requests for minutes beside the Simulator on that runner. A failed flow runs once more and reports a pass on retry as a warning. A failed run keeps Maestro's screenshots, its JUnit report, the Worker log and the runner's memory for seven days.
 
 To run it on your Mac, build the Release app against a local Worker, install it on your own Simulator, and run the script with that Worker's port:
 
 ```bash
 cd apps/mobile
 EXPO_PUBLIC_API_URL=http://localhost:5241 LANG=en_US.UTF-8 npx expo run:ios --configuration Release --device <udid> --no-bundler
-API_URL=http://localhost:5241 DEVICE=<udid> pnpm e2e
+API_URL=http://localhost:5241 DEVICE=<udid> pnpm --filter @lymi/mobile e2e
 ```
 
 Maestro needs Java 17 or later on `JAVA_HOME`.
@@ -272,9 +310,9 @@ Maestro needs Java 17 or later on `JAVA_HOME`.
 
 | Check | Pull request | Main | Promote | Monday |
 | --- | --- | --- | --- | --- |
-| Unit, typecheck, contract, client against the Worker | all | all | all | — |
-| Contract against production's `/api/openapi.json` | — | — | — | yes |
-| Smoke journey | by hand | — | must pass | yes |
+| Unit, typecheck, contract, client against the Worker | all | all | all | - |
+| Contract against production's `/api/openapi.json` | - | - | - | yes |
+| Smoke journey | by hand | - | must pass | yes |
 
 A pull request that touches only the web or the Worker runs the same Linux checks as one that touches the phone: the contract is what an installed app depends on, and it costs seconds. Start the journey by hand from the Actions tab, on the `Phone` workflow, when a pull request changes something native or the sign-in path.
 
@@ -288,7 +326,7 @@ A pull request that touches only the web or the Worker runs the same Linux check
 4. Review and grade the due card.
 5. Reload and confirm the persisted result.
 
-Keep this path real. Use accessible roles and labels, do not mock Lymi's own APIs, do not use fixed sleeps, and do not add test-only application routes. Prefer public APIs for setup that is not the behavior under test. A new journey needs one of the reasons under Where a test goes, or a critical learner outcome the canonical path cannot express, named here.
+Keep this path real: find controls by accessible roles and labels, call Lymi's own APIs unmocked, wait on what the page shows rather than a fixed sleep, and add no test-only application routes. Set up what is not the behavior under test through public APIs. A new journey needs one of the reasons under Where a test goes, or a critical learner outcome the canonical path cannot express, named here.
 
 `e2e/deck-creation.spec.ts` owns deck and card creation: validation, routing and persistence, deck targeting, duplicate handling, optional meanings, archived-deck protection, and responsive controls from 320 px phone layouts through wide desktop. Each scenario, browser project, retry, and repeat up to `--repeat-each=10` has its own learner account so one test cannot inherit another test's data.
 

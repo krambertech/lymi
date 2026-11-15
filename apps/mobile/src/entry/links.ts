@@ -1,3 +1,4 @@
+import { ReminderMessage } from "@lymi/core";
 import type { AnalyticsProperties } from "@lymi/core/analytics";
 
 // iOS's own entry points open the app by link, so a signed-out learner's is held through sign-in
@@ -14,6 +15,7 @@ const ENTRIES: readonly string[] = [
   "shortcut",
   "quick_action",
   "widget",
+  "reminder",
 ] satisfies Entry[];
 
 export function entryLink(place: Place, entry: Entry): string {
@@ -25,4 +27,14 @@ export function entryOf(pathname: string, from: unknown): EntryOpened | undefine
   if (typeof from !== "string" || !ENTRIES.includes(from)) return undefined;
   const place = (Object.keys(ROUTES) as Place[]).find((p) => ROUTES[p] === pathname);
   return place && { entry: from as Entry, place };
+}
+
+/** Where a reminder's tap goes; the link names its message for `reminder_opened`. */
+export function reminderLink(message: ReminderMessage | undefined) {
+  return message ? (`/review?from=reminder&reminder=${message}` as const) : "/review?from=reminder";
+}
+
+/** The message a reminder's link names, read from the route's params. */
+export function reminderOf(from: unknown, reminder: unknown): ReminderMessage | undefined {
+  return from === "reminder" ? ReminderMessage.safeParse(reminder).data : undefined;
 }

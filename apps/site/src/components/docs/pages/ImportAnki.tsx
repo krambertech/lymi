@@ -44,8 +44,8 @@ export function ImportAnki() {
           <ul>
             <li>
               <strong>The language of each deck.</strong> Anki does not store a language, so Lymi
-              guesses from the deck name. Lymi needs the language to find duplicates and to say
-              words out loud.
+              uses the deck name and its cards. Lymi needs the language to find duplicates and to
+              say words out loud.
             </li>
             <li>
               <strong>How a card will look.</strong> Lymi shows one of your cards as it will arrive.
@@ -113,11 +113,11 @@ export function ImportAnki() {
           },
           {
             term: "Recordings",
-            def: "A recording of the word itself, such as a Word Audio field, becomes the card’s audio. Lymi plays it instead of reading the term aloud, and keeps it when you edit the card, unless you change the word itself. MP3, M4A, AAC and WAV clips up to 2 MB come across.",
+            def: "A recording of the word itself, such as a Word Audio field, becomes the card’s audio. Lymi plays it instead of reading the term aloud, and keeps it when you edit the card, unless you change the word itself. A recording of the example sentence, such as a Sentence Audio field, plays from the example’s play button and stays until you change the sentence. MP3, M4A, AAC and WAV clips up to 2 MB come across.",
           },
           {
             term: "Pitch accent and translations",
-            def: "A pitch accent field becomes one line of notes, such as はꜜし [1]. A translation of the example sentence becomes the example’s translation. An example longer than 250 characters moves to the notes with its translation.",
+            def: "A pitch accent field that matches the card’s reading goes in the Reading and shows as a chart under the term. Any other pitch accent becomes one line of notes, such as はꜜし [1]. A translation of the example sentence becomes the example’s translation. An example longer than 250 characters moves to the notes with its translation.",
           },
           {
             term: "Review history",
@@ -133,8 +133,8 @@ export function ImportAnki() {
       <H2>What stays behind</H2>
       <ul>
         <li>
-          <strong>Other audio.</strong> Sentence clips and any second clip of a word stay behind,
-          and so does a recording in another format, such as Ogg. Lymi reads those terms aloud
+          <strong>Other audio.</strong> Any second clip of a word or sentence stays behind, and so
+          does a recording in another format, such as Ogg. Lymi reads those terms and examples aloud
           itself. The preview counts what is left out.
         </li>
         <li>
@@ -194,7 +194,9 @@ export function ImportAnki() {
       <H3>Lymi can’t read the file</H3>
       <p>
         Export again from Anki as <strong>Anki Deck Package (.apkg)</strong> and choose that file. A
-        text export or a spreadsheet cannot be imported yet.
+        plain text list can be brought through{" "}
+        <a href="/docs/import-from-quizlet">Quizlet and text lists</a>, but it will not include
+        Anki’s media or review history.
       </p>
       <H3>The upload stopped</H3>
       <p>

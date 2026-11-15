@@ -2,7 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { AppLanguage, ImportSource } from "@lymi/core";
-import { Download, ShieldCheck, Trash2 } from "lucide-react";
+import { ArrowUpRight, Download, ShieldCheck, Trash2 } from "lucide-react";
 import type { ReactElement, ReactNode } from "react";
 import { AccountGroup } from "../components/account-section";
 import { Button } from "../components/button";
@@ -36,6 +36,8 @@ export interface SettingsProps {
   onExportLibrary?: (() => void) | undefined;
   /** A link to the page that deletes the account, drawn as its button. */
   deleteAccountLink?: ReactElement | undefined;
+  /** The account's privacy choices, above the policy link. */
+  privacyChoices?: ReactNode;
 }
 
 /** Each language in its own name, so a learner can find theirs whatever is active. */
@@ -67,6 +69,7 @@ export function SettingsView({
   importLink,
   onExportLibrary,
   deleteAccountLink,
+  privacyChoices,
 }: SettingsProps) {
   const { t, i18n } = useLingui();
   return (
@@ -147,6 +150,7 @@ export function SettingsView({
         title={t`Privacy`}
         description={t`What Lymi keeps, who helps provide it, and the choices you have.`}
       >
+        {privacyChoices}
         <Button
           variant="secondary"
           className="justify-self-start"
@@ -154,6 +158,7 @@ export function SettingsView({
         >
           <ShieldCheck data-icon="inline-start" aria-hidden="true" />
           <Trans>Privacy policy</Trans>
+          <ArrowUpRight data-icon="inline-end" aria-hidden="true" />
         </Button>
       </SettingsGroup>
 
@@ -161,7 +166,7 @@ export function SettingsView({
         <SettingsGroup
           id="delete-account"
           title={t`Delete account`}
-          description={t`Delete your account, private cards and review history. Members keep shared decks.`}
+          description={t`Delete your account, private cards and review history. Members keep their own copy of shared decks.`}
         >
           <Button variant="danger" className="justify-self-start" render={deleteAccountLink}>
             <Trash2 data-icon="inline-start" aria-hidden="true" />

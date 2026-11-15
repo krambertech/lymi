@@ -3,7 +3,7 @@ import { z } from "zod";
 import { ENRICHMENT_INSTRUCTIONS } from "./prompt";
 
 /** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const STYLE_PROMPT_VERSION = 3;
+export const STYLE_PROMPT_VERSION = 4;
 
 /** A topic needs more proof than a habit, because a wrong one skews every card. */
 export const TOPIC_MIN_CARDS = 12;
@@ -18,7 +18,7 @@ const DEFAULTS = ENRICHMENT_INSTRUCTIONS.slice(
   .replace("## Fields", "")
   .trim();
 
-export const STYLE_INSTRUCTIONS = `You read the cards a learner wrote in one deck of Lymi, a vocabulary app, and write a short note about the deck for another AI. That AI fills empty fields on the deck's new cards. It already follows the defaults below, the deck's language guide and the owner's instructions. Tell it only what these cards show that it would otherwise get wrong.
+export const STYLE_INSTRUCTIONS = `You read the cards a learner wrote in one deck of Lymi, a flashcard app, and write a short note about the deck for another AI. That AI fills empty fields on the deck's new cards. It already follows the defaults below, the deck's language guide and the owner's instructions. Tell it only what these cards show that it would otherwise get wrong.
 
 ## Input
 A JSON object:

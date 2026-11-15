@@ -29,6 +29,7 @@ import {
   touchRowClassName,
   useListName,
 } from "./overlay-list";
+import { usePortalContainer } from "./portal-container";
 
 // shadcn's Combobox in the machine's shape: a panel under the box on a desktop, a drawer on touch. ADR 0017.
 
@@ -189,7 +190,7 @@ function ComboboxTrigger({
       : cn(
           controlBase,
           controlSize,
-          "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-popup-open:not-aria-invalid:edge-2",
+          "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-popup-open:not-aria-invalid:edge-strong",
           className,
         );
   const chevron = look === "box" && <TriggerChevron />;
@@ -242,7 +243,7 @@ function ComboboxValue({ placeholder, className, children }: ValueProps) {
       <ComboboxPrimitive.Value
         placeholder={
           placeholder == null ? undefined : (
-            <span data-placeholder="" className="text-muted">
+            <span data-placeholder="" className="text-ink-muted">
               {placeholder}
             </span>
           )
@@ -279,8 +280,9 @@ function AnchoredContent({
 }: ContentProps) {
   const { open } = useCombobox("ComboboxContent");
   const name = useListName(label, open);
+  const container = usePortalContainer();
   return (
-    <ComboboxPrimitive.Portal>
+    <ComboboxPrimitive.Portal container={container}>
       <ComboboxPrimitive.Positioner
         className="isolate z-(--z-popup) outline-none"
         side={side}
@@ -394,7 +396,7 @@ function ComboboxInput({
         shape === "desktop" ? "border-b border-edge" : "mx-1 mb-1 rounded-md edge",
       )}
     >
-      <Icon className="size-4 shrink-0 text-muted" aria-hidden="true" />
+      <Icon className="size-4 shrink-0 text-ink-muted" aria-hidden="true" />
       <ComboboxPrimitive.Input
         ref={ref}
         data-slot="combobox-input"
@@ -417,7 +419,7 @@ function ComboboxInput({
         placeholder={placeholder}
         className={cn(
           controlSize,
-          "min-w-0 flex-1 bg-transparent text-text outline-none placeholder:text-muted",
+          "min-w-0 flex-1 bg-transparent text-ink outline-none placeholder:text-ink-muted",
           className,
         )}
       />
@@ -436,7 +438,7 @@ function ComboboxEmpty({
   return (
     <ComboboxPrimitive.Empty
       data-slot="combobox-empty"
-      className={cn("px-3.5 py-3 text-base text-pretty text-muted empty:p-0", className)}
+      className={cn("px-3.5 py-3 text-base text-pretty text-ink-muted empty:p-0", className)}
     >
       {children}
     </ComboboxPrimitive.Empty>
@@ -523,7 +525,10 @@ function ComboboxItemHint({
   children: React.ReactNode;
 }) {
   return (
-    <span data-slot="combobox-item-hint" className={cn("shrink-0 text-xs text-muted", className)}>
+    <span
+      data-slot="combobox-item-hint"
+      className={cn("shrink-0 text-xs text-ink-muted", className)}
+    >
       {children}
     </span>
   );
@@ -565,7 +570,7 @@ function ComboboxLabel({
   return (
     <ComboboxPrimitive.GroupLabel
       data-slot="combobox-label"
-      className={cn("px-2.5 py-1.5 text-xs text-muted", className)}
+      className={cn("px-2.5 py-1.5 text-xs text-ink-muted", className)}
     >
       {children}
     </ComboboxPrimitive.GroupLabel>

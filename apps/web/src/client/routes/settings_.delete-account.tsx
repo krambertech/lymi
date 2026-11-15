@@ -25,19 +25,15 @@ function DeleteAccountRoute() {
   const navigate = useNavigate();
   const [exporting, setExporting] = useState(false);
 
-  const send = useMutation({
-    mutationFn: api.sendDeletionCode,
-    onError: (error) => {
-      // A deck published since the page loaded: the summary says so instead of the form.
-      if (refusalCode(error) === "publisher") void summary.refetch();
-    },
-  });
+  // A refusal means the account joined the publisher list since the page loaded; the summary says so.
+  const refetchOnPublisher = (error: unknown) => {
+    if (refusalCode(error) === "publisher") void summary.refetch();
+  };
+  const send = useMutation({ mutationFn: api.sendDeletionCode, onError: refetchOnPublisher });
 
   const remove = useMutation({
     mutationFn: (code: string) => api.deleteAccount({ code }),
-    onError: (error) => {
-      if (refusalCode(error) === "publisher") void summary.refetch();
-    },
+    onError: refetchOnPublisher,
     onSuccess: async () => {
       // The server already ended every session; this clears the cookie and the stored language.
       await signOut().catch(() => undefined);

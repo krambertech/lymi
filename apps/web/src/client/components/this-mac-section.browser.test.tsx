@@ -1,6 +1,6 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-import type { DesktopBridge, MacPreferences } from "@lymi/client/desktop";
+import type { DesktopBridge, MacPreferences, MacUpdate } from "@lymi/client/desktop";
 import { afterEach, beforeEach, expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
@@ -102,4 +102,32 @@ test("offers System Settings until macOS allows reading the selection", async ()
   renderSection();
   await userEvent.click(page.getByRole("button", { name: "Open System Settings" }));
   expect(app.allowAccessibility).toHaveBeenCalledOnce();
+});
+
+test("shows the version, and offers a restart once the app has downloaded an update", async () => {
+  let announce: (update: MacUpdate) => void = () => {};
+  const restartToUpdate = vi.fn();
+  Object.assign(window.lymiDesktop ?? {}, {
+    version: 3,
+    restartToUpdate,
+    onUpdate: (listener: (update: MacUpdate) => void) => {
+      announce = listener;
+      return () => {};
+    },
+  });
+  prefs = { ...prefs, update: "current" };
+  renderSection();
+  await expect.element(page.getByText("Version 0.0.1. Up to date.")).toBeVisible();
+  await expect
+    .element(page.getByRole("button", { name: "Restart to update" }))
+    .not.toBeInTheDocument();
+
+  announce("ready");
+  await userEvent.click(page.getByRole("button", { name: "Restart to update" }));
+  expect(restartToUpdate).toHaveBeenCalledOnce();
+});
+
+test("an app from before updates were reported shows only its version", async () => {
+  renderSection();
+  await expect.element(page.getByText("Version 0.0.1.", { exact: true })).toBeVisible();
 });

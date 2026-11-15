@@ -251,6 +251,54 @@
     {
       "name": "0062_famous_wolf_cub.sql",
       "sha256": "266ce1cb06f1aa56c51dfbc9107087d475dd91b23c68020a85165be34aaf1a59"
+    },
+    {
+      "name": "0063_tired_hawkeye.sql",
+      "sha256": "3b80fbcf2709add59bab682b8a06a55ee1b00e2aaac8adaa30223206875c0fa5"
+    },
+    {
+      "name": "0064_guard_studied_decks.sql",
+      "sha256": "6e4744d2330de2ca0d552e2ea6cdbbdccad95ae0514d26af9bdbf68f1dd56cdb"
+    },
+    {
+      "name": "0065_fresh_talon.sql",
+      "sha256": "d6bccf81926876832b549c25281ee50f09d5ba82faf61ae153020e8411bc6eca"
+    },
+    {
+      "name": "0066_regular_thor_girl.sql",
+      "sha256": "1866aee57145e40a422e7aea42804620677406bf976da4ce1d33c2dd525fe78d"
+    },
+    {
+      "name": "0067_stiff_devos.sql",
+      "sha256": "2f6a1d650887e0d19e310f2721c23246e90b1489f94813ce09d4e563c8728df9"
+    },
+    {
+      "name": "0068_cooing_medusa.sql",
+      "sha256": "cf7ac811b3962a2f9a9a4485c5cd83e3ba7f42ff90e3a1be4f4b36186ba06ca9"
+    },
+    {
+      "name": "0069_review_aid_hint.sql",
+      "sha256": "47e4c279e3bec9641aefb537ef31c7600df04441b35e98e162ebc829f5a2bdf9"
+    },
+    {
+      "name": "0070_review_aid_hint_again.sql",
+      "sha256": "196da4e028b09862a0b0d01916d1715ecd402fd2107e90f4bc855202230a76da"
+    },
+    {
+      "name": "0071_pale_solo.sql",
+      "sha256": "6ccc7488de90d8e1dd499ac1dd10b04f41b3f0f43d4abd30f77c496912f6229d"
+    },
+    {
+      "name": "0072_lying_ink.sql",
+      "sha256": "87a46bec21bb9a46526eb41b8d27ab724a55bc95da7f5b5e21f214b26c277088"
+    },
+    {
+      "name": "0073_gigantic_alice.sql",
+      "sha256": "05d4dda56fbafbba0066488872b9c0685ecaf1fbeec299d26617bee9c382cb8f"
+    },
+    {
+      "name": "0074_normal_sunspot.sql",
+      "sha256": "020042e39e27dc49172bd89c27850315ddaabcebdec9bf3577a57c891014969a"
     }
   ]
 }

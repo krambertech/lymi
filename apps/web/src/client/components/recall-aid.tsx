@@ -1,25 +1,24 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import type { FieldSource, ReviewAid } from "@lymi/core";
+import type { ReviewAid } from "@lymi/core";
 import { EASE_OUT } from "@lymi/design";
 import { clsx } from "clsx";
-import { Anchor, type LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { motion } from "motion/react";
 import { type MouseEvent, useState } from "react";
 import type { Card } from "../lib/api";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { Button } from "./button";
-import { SourceChip } from "./chip";
+import { HintIcon } from "./hint-icon";
 
 /**
  * One step of help before the reveal. Steps come in the order review offers them, so a later
- * aid such as a hint is one more entry after the hook, taken with the same control and key.
+ * aid, such as the term's first letters, is one more entry after the hint, taken with the same control and key.
  */
 export interface AidStep {
   aid: ReviewAid;
   text: string;
-  source: FieldSource | null;
 }
 
 /**
@@ -30,19 +29,19 @@ const STEPS: Record<
   ReviewAid,
   { take: MessageDescriptor; show: MessageDescriptor; name: MessageDescriptor; icon: LucideIcon }
 > = {
-  hook: {
-    take: msg`Peek at your hook`,
-    show: msg`Show hook`,
-    name: msg`Memory hook:`,
-    icon: Anchor,
+  hint: {
+    take: msg`Peek at your hint`,
+    show: msg`Show hint`,
+    name: msg`Hint:`,
+    icon: HintIcon,
   },
 };
 
 /** The key that takes the next step, matched by its place so every keyboard layout reaches it. */
 export const AID_KEY = { code: "KeyH", label: "H" } as const;
 
-export function aidSteps(card: Pick<Card, "hook" | "hookSource">): AidStep[] {
-  return card.hook ? [{ aid: "hook", text: card.hook, source: card.hookSource }] : [];
+export function aidSteps(card: Pick<Card, "hint">): AidStep[] {
+  return card.hint ? [{ aid: "hint", text: card.hint }] : [];
 }
 
 /** The aid a grade records: the furthest step taken. */
@@ -57,7 +56,7 @@ interface NextProps {
 
 /**
  * The quiet control at the foot of an unrevealed card that takes the next step, as quiet as Show
- * hook, since recall comes first; the card stacks it over its reveal button, so a tap on it never
+ * hint, since recall comes first; the card stacks it over its reveal button, so a tap on it never
  * turns the card. Once every step is taken it stays as an invisible, inert placeholder, so the cue
  * keeps its room and glides rather than jumps.
  */
@@ -117,7 +116,7 @@ export function RecallAidShow({ steps, animate, onShow }: ShowProps) {
       transition={{ duration: reduce ? 0.2 : 0.26, delay: 0.12, ease: EASE_OUT }}
       onAnimationComplete={() => setReady(true)}
     >
-      {/* Pulled to the start edge, so its anchor stands where the hook's will. */}
+      {/* Pulled to the start edge, so its life buoy stands where the hint's will. */}
       <Button
         variant="ghost"
         size="sm"
@@ -152,7 +151,8 @@ export function RecallAidShown({ steps, taken, animate }: ShownProps) {
       ? { opacity: 0 }
       : { opacity: 0, y: 4, filter: "blur(4px)" };
   return (
-    <div className="grid gap-2">
+    // 5 px centres the first line in Show hint's 32 px, so the hint lands where the control stood.
+    <div className="grid gap-2 pt-[5px]">
       {steps.slice(0, taken).map((step) => (
         // Blur settles to `none` rather than `blur(0)`, which Safari rasterises soft.
         <motion.div
@@ -168,21 +168,16 @@ export function RecallAidShown({ steps, taken, animate }: ShownProps) {
   );
 }
 
-/** One aid as text: its icon, what it says, and the AI badge while the AI's words are unchanged. */
+/** One aid as text: its icon and what it says. Who wrote it is the card page's to say, not review's. */
 function AidLine({ step }: { step: AidStep }) {
   const { i18n } = useLingui();
   const { name, icon: Icon } = STEPS[step.aid];
   return (
-    <p className="flex items-start gap-2 text-md leading-snug text-text-2">
-      <Icon className="mt-[3px] size-4 shrink-0 text-muted" aria-hidden="true" />
+    <p className="flex items-start gap-2 text-md leading-snug text-ink-secondary">
+      <Icon className="mt-[3px] size-4 shrink-0 text-ink-muted" aria-hidden="true" />
       <span className="min-w-0 [overflow-wrap:anywhere]">
         <span className="sr-only">{i18n._(name)} </span>
         {step.text}
-        {step.source === "ai" && (
-          <span className="ms-2 inline-flex -translate-y-px align-middle">
-            <SourceChip source="ai" field="hook" size="xs" />
-          </span>
-        )}
       </span>
     </p>
   );

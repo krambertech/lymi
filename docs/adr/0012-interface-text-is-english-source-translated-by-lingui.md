@@ -3,7 +3,7 @@ status: accepted
 date: 2026-09-12
 ---
 
-# Interface text is English source in the code, translated through Lingui catalogs
+# Lingui translates English source messages
 
 The English sentence in a component is the message. Lingui macros (`<Trans>`, `t`, `plural`, `msg`) mark it, `lingui extract` writes it into one `.po` catalog per locale, and untranslated messages fall back to English. Nobody invents a key. Adding a string is one edit in one file, and `pnpm i18n:check` inside `pnpm verify` fails when a string was added without extracting or, once a locale is live, left untranslated.
 

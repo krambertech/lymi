@@ -26,8 +26,8 @@ describe("the style prompt", () => {
       .slice(0, 16);
     // Raise STYLE_PROMPT_VERSION with any change to what the model reads, then update both.
     expect({ STYLE_PROMPT_VERSION, hash }).toEqual({
-      STYLE_PROMPT_VERSION: 3,
-      hash: "be8cd6403e7e1a0f",
+      STYLE_PROMPT_VERSION: 4,
+      hash: "bb2e51f04bacdbec",
     });
   });
 

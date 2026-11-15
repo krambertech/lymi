@@ -25,7 +25,7 @@ interface Props {
 }
 
 /**
- * The one illustration in Lymi: a storm lantern you carry. The metal is --metal (ink in the
+ * The one illustration in Lymi: a storm lantern you carry. The metal is --lantern-metal (ink in the
  * light room, ivory in the dark one), the glass is opaque so the mark sits on any surface,
  * and the flame is the only pure accent.
  */
@@ -43,7 +43,7 @@ export function Lantern({
 }: Props) {
   const lit = variant !== "unlit";
   const cls = clsx(
-    "lantern shrink-0 select-none text-metal",
+    "lantern shrink-0 select-none text-lantern-metal",
     !title && "pointer-events-none",
     className,
     flicker && "lantern-flicker",
@@ -56,7 +56,8 @@ export function Lantern({
   const a11y = title ? { role: "img" as const } : { "aria-hidden": true as const };
 
   return (
-    <svg viewBox="0 0 120 120" className={cls} style={style} {...a11y}>
+    // The page marks a flickering lantern `data-offscreen` before React hydrates it.
+    <svg viewBox="0 0 120 120" className={cls} style={style} suppressHydrationWarning {...a11y}>
       {title && <title>{title}</title>}
       <g className="lantern-body">{LANTERN_PARTS(lit)}</g>
     </svg>

@@ -1,9 +1,22 @@
-import type { DeckEnrichField, DeckInput, DeckPurpose, NewDeckInput } from "@lymi/core";
-import { deckEnrichFields, deckPurpose, newDeckEnrichFields, newId } from "@lymi/core";
+import type {
+  DeckEnrichField,
+  DeckInput,
+  DeckPreferencesInput,
+  DeckPurpose,
+  NewDeckInput,
+} from "@lymi/core";
+import {
+  deckEnrichFields,
+  deckPurpose,
+  newDeckEnrichFields,
+  newId,
+  readingEngine,
+} from "@lymi/core";
 import { and, asc, desc, eq, isNotNull, isNull, sql } from "@lymi/core/db";
 import { schema } from "../db";
 import { FORMER_OWNER_ID } from "./account-deletion";
 import { track } from "./analytics";
+import { recordFirstDeck } from "./analytics-deck";
 import { audit } from "./audit";
 import { type CardView, presentCards } from "./card-view";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -14,6 +27,7 @@ import {
   memberOf,
   ownedDeck,
   ownerAvatar,
+  ownPreferences,
   publisherColumns,
   publisherOf,
 } from "./members";
@@ -28,6 +42,7 @@ import {
 import { bumped } from "./revisions";
 import { activeSeries, deckOrder, effectiveSeriesId, nextDeckPosition } from "./series-access";
 import { getSettings } from "./settings";
+import { assertDeckRestorable } from "./takedowns";
 
 const CHANNEL = { user: "app", api: "api", mcp: "mcp" } as const;
 
@@ -66,6 +81,7 @@ export async function listDecks(
       ownerName: schema.user.name,
       memberRole: schema.deckMembers.role,
       meaningLanguage: schema.deckMembers.meaningLanguage,
+      pronunciationDisplay: schema.deckPreferences.pronunciationDisplay,
       editionName: schema.deckLocalizations.name,
       editionDescription: schema.deckLocalizations.description,
       ...publisherColumns,
@@ -74,6 +90,7 @@ export async function listDecks(
     .innerJoin(schema.user, eq(schema.user.id, schema.decks.userId))
     .leftJoin(schema.deckPublications, livePublication)
     .leftJoin(schema.userAvatars, ownerAvatar)
+    .leftJoin(schema.deckPreferences, ownPreferences(userId))
     .leftJoin(
       schema.deckMembers,
       and(
@@ -127,6 +144,7 @@ export async function listDecks(
         ...deck,
         name: editionName ?? deck.name,
         description: editionDescription ?? deck.description,
+        pronunciationDisplay: deck.pronunciationDisplay ?? "adaptive",
         reviewModes: deckModes(deck.directions),
         purpose: owner ? deckPurpose(deck.purpose, deck.defaultLanguage) : null,
         enrichFields: deckEnrichFields(deck.enrichFields, deck.defaultLanguage, deck.purpose),
@@ -183,6 +201,7 @@ export async function createDeck(ctx: ServiceContext, { id: chosen, ...input }: 
     ...(seriesId ? { position: await nextDeckPosition(ctx, seriesId) } : {}),
   });
   await audit(ctx, { entity: "deck", action: "create", id, details: input });
+  recordFirstDeck(ctx, { created: id });
   if (input.purpose) trackPurpose(ctx, input.purpose, true);
   if (input.enrichFields !== undefined || input.enrichInstructions?.trim()) {
     trackEnrichmentChoice(
@@ -319,6 +338,38 @@ export async function updateDeck(ctx: ServiceContext, id: string, patch: DeckPat
   return getDeck(ctx, id);
 }
 
+/** The caller's own choices for a deck, owner or member, which change it for nobody else. */
+export async function setDeckPreferences(
+  ctx: ServiceContext,
+  id: string,
+  input: DeckPreferencesInput,
+) {
+  const { db, userId } = ctx;
+  const deck = await deckAccess(ctx, id);
+  if (input.pronunciationDisplay === deck.pronunciationDisplay) return deck;
+  const now = new Date();
+  await db
+    .insert(schema.deckPreferences)
+    .values({ deckId: id, userId, pronunciationDisplay: input.pronunciationDisplay })
+    .onConflictDoUpdate({
+      target: [schema.deckPreferences.deckId, schema.deckPreferences.userId],
+      set: { pronunciationDisplay: input.pronunciationDisplay, updatedAt: now },
+    });
+  await audit(ctx, { entity: "deck", action: "set_preferences", id, details: input });
+  const engine = readingEngine(deck.defaultLanguage);
+  const channel = CHANNEL[ctx.actor as keyof typeof CHANNEL];
+  if (engine && channel) {
+    track(ctx.analytics, {
+      name: "pronunciation_display_set",
+      display: input.pronunciationDisplay,
+      notation: engine,
+      owner: deck.role === "owner",
+      channel,
+    });
+  }
+  return getDeck(ctx, id);
+}
+
 /** The purpose an owner gave a deck, as its fixed category, never the deck's text. */
 function trackPurpose(ctx: ServiceContext, purpose: DeckPurpose, created: boolean) {
   const channel = CHANNEL[ctx.actor as keyof typeof CHANNEL];
@@ -355,6 +406,7 @@ async function setDeckArchived(ctx: ServiceContext, id: string, archivedAt: Date
   const deck = await ownedDeck(ctx, id);
   // Already there changes nothing, so a replayed archive neither moves the date nor logs twice.
   if ((deck.archivedAt === null) === (archivedAt === null)) return { ok: true as const };
+  if (archivedAt === null) await assertDeckRestorable(db, id, deck.owner.id);
   const result = await db
     .update(schema.decks)
     .set({ archivedAt, updatedAt: new Date() })

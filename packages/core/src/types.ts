@@ -161,6 +161,20 @@ export const SectionProgression = z.enum(SECTION_PROGRESSIONS).meta({
 });
 export type SectionProgression = z.infer<typeof SectionProgression>;
 
+/** Where review draws the term's pronunciation. Each learner's own, per deck. */
+export const PRONUNCIATION_DISPLAYS = ["adaptive", "separate"] as const;
+export const PronunciationDisplay = z.enum(PRONUNCIATION_DISPLAYS).meta({
+  ...OPEN,
+  id: "PronunciationDisplay",
+  description:
+    "Where review shows the term's furigana, pinyin, Jyutping, reading or stress marks. adaptive, the default: drawn on the term, before the reveal only until the card is Known. separate: never on the term, and on its own line with the answer.",
+});
+export type PronunciationDisplay = z.infer<typeof PronunciationDisplay>;
+
+/** The caller's own choices for one deck, which never change it for anyone else. */
+export const DeckPreferencesInput = z.object({ pronunciationDisplay: PronunciationDisplay });
+export type DeckPreferencesInput = z.infer<typeof DeckPreferencesInput>;
+
 /**
  * An id the caller chose for what it creates, in `newId`'s alphabet. Sending the same create
  * again returns what the first one made instead of making a second, so an offline write replays safely.
@@ -578,8 +592,8 @@ export const CARD_LIMITS = {
   example: 2000,
   notes: 2000,
   source: 200,
-  // A hook is a phrase that leads back to the answer, never a paragraph.
-  hook: 200,
+  // A hint is a phrase that leads back to the answer, never a paragraph.
+  hint: 200,
 } as const;
 
 /** How many tags a card may carry, and how long each may be. */
@@ -641,10 +655,10 @@ export const CardInput = z.object({
     .max(CARD_LIMITS.notes)
     .optional()
     .meta({ description: `${NOTES_FORMAT} The limit counts the Markdown source.` }),
-  hook: z
+  hint: z
     .string()
     .trim()
-    .max(CARD_LIMITS.hook, "Keep the hook under 200 characters.")
+    .max(CARD_LIMITS.hint, "Keep the hint under 200 characters.")
     .optional()
     .meta({
       description:
@@ -671,7 +685,20 @@ export const CardInput = z.object({
   exampleTranslationSource: StatedFieldSource.optional(),
   pronunciationSource: StatedFieldSource.optional(),
   notesSource: StatedFieldSource.optional(),
-  hookSource: StatedFieldSource.optional(),
+  hintSource: StatedFieldSource.optional(),
+  hook: z
+    .string()
+    .trim()
+    .max(CARD_LIMITS.hint, "Keep the hint under 200 characters.")
+    .optional()
+    .meta({
+      deprecated: true,
+      description: "The old name of `hint`, used when `hint` is left out.",
+    }),
+  hookSource: StatedFieldSource.optional().meta({
+    deprecated: true,
+    description: "The old name of `hintSource`, used when `hintSource` is left out.",
+  }),
   sectionId: z.string().min(1).nullable().optional().meta({
     description:
       "An active section of the card's deck. Null or left out: no section. Moving a card to another deck clears it.",
@@ -682,6 +709,24 @@ export const CardInput = z.object({
   }),
 });
 export type CardInput = z.infer<typeof CardInput>;
+
+/** A card write under the current names: `hook` and `hookSource` stand in for a `hint` left out. */
+export function withHint<
+  T extends {
+    hint?: string | null | undefined;
+    hintSource?: unknown;
+    hook?: string | undefined;
+    hookSource?: unknown;
+  },
+>({ hook, hookSource, ...input }: T): Omit<T, "hook" | "hookSource"> {
+  return {
+    ...input,
+    ...(input.hint === undefined && hook !== undefined ? { hint: hook } : {}),
+    ...(input.hintSource === undefined && hookSource !== undefined
+      ? { hintSource: hookSource }
+      : {}),
+  };
+}
 
 export const DeckChoiceInput = z.object({
   term: z.string().trim().min(1, "Type the term.").max(CARD_LIMITS.term),
@@ -706,7 +751,7 @@ export const cardLimits = {
   exampleTranslation: CardInput.shape.exampleTranslation.unwrap().maxLength,
   notes: CardInput.shape.notes.unwrap().maxLength,
   source: CardInput.shape.source.unwrap().maxLength,
-  hook: CardInput.shape.hook.unwrap().maxLength,
+  hint: CardInput.shape.hint.unwrap().maxLength,
 } satisfies Record<string, number | null>;
 
 /** A learner's own answer to a Smart add question, checked against the terms on the list. */
@@ -739,6 +784,9 @@ export type CardsInput = z.infer<typeof CardsInput>;
 export const ActivityQuery = z.object({
   cursor: z.string().min(1).optional(),
   limit: z.coerce.number().int().min(1).max(200).optional(),
+  app: z.string().min(1).max(500).optional().meta({
+    description: "Only the writes of one connected app, API key or source, such as `readwise`",
+  }),
 });
 export type ActivityQuery = z.infer<typeof ActivityQuery>;
 
@@ -821,16 +869,20 @@ export const ResponseShapeQuery = z.object({ response: ResponseShape.optional() 
  * What helped a recall before the reveal, in the order review offers them, so a later step such as
  * a hint joins the end. Easy means recall without help, so no aided grade may be Easy.
  */
-export const REVIEW_AIDS = ["hook"] as const;
+export const REVIEW_AIDS = ["hint"] as const;
 export const ReviewAid = z.enum(REVIEW_AIDS).meta({
   id: "ReviewAid",
-  description: "hook: the learner peeked at the card's memory hook before the reveal.",
+  description: "hint: the learner peeked at the card's hint before the reveal.",
 });
 export type ReviewAid = z.infer<typeof ReviewAid>;
 
 /** Whether a grade may follow what the learner used before the reveal: every grade but an aided Easy. */
 export const gradeAllowed = (rating: number, aid: ReviewAid | null | undefined) =>
   !aid || rating !== FsrsRating.Easy;
+
+/** A grade's aid under its current name; `hook` is what `hint` was called before. */
+export const gradeAid = (aid: ReviewAid | "hook" | undefined): ReviewAid | undefined =>
+  aid === "hook" ? "hint" : aid;
 
 /** Easy on a mode already graded today counts as Good: a second try is no sign of ease, ADR 0031. */
 export const countedRating = (rating: Rating, repeat: boolean): Rating =>
@@ -856,9 +908,19 @@ export const GradeInput = z
     reviewedAt: z.coerce.date().optional(),
     /** The device zone, used only to set the review zone the first time one is reported. */
     timezone: z.string().max(64).optional(),
-    aid: ReviewAid.optional().meta({
-      description: "What the learner used before the reveal. Left out, the recall was unaided.",
-    }),
+    aid: z
+      .union([
+        ReviewAid,
+        z.literal("hook").meta({
+          deprecated: true,
+          description:
+            "The old name of `hint`, still accepted from an older app or a queued grade.",
+        }),
+      ])
+      .optional()
+      .meta({
+        description: "What the learner used before the reveal. Left out, the recall was unaided.",
+      }),
     recallMs: ReviewTime.optional().meta({
       description:
         "Milliseconds the cue was on screen in the foreground before the reveal, or before the grade when there was no reveal. Left out when unknown or over 10 minutes.",
@@ -876,7 +938,7 @@ export const GradeInput = z
     message: "Say which review mode was graded.",
     path: ["mode"],
   })
-  .refine((grade) => gradeAllowed(grade.rating, grade.aid), {
+  .refine((grade) => gradeAllowed(grade.rating, gradeAid(grade.aid)), {
     message: "Easy means recall without help, so a grade with an aid cannot be Easy.",
     path: ["rating"],
   });
@@ -976,7 +1038,8 @@ export const AI_CONSENT_PLACES = [
   "add",
   "smart_add",
   "speech",
-  "hook",
+  "hint",
+  "enrich",
   "settings",
 ] as const;
 export const AiConsentInput = z.object({
@@ -1017,6 +1080,9 @@ export const SettingsPatch = z.object({
   /** The language of the interface and reminders. Meanings follow it. */
   appLanguage: AppLanguage.optional(),
   dailyGoal: DailyGoal.optional(),
+  /** Whether the web app may record how the learner moves through it. */
+  sessionReplay: z.boolean().optional(),
+  learningEmails: z.boolean().optional(),
 });
 export type SettingsPatch = z.infer<typeof SettingsPatch>;
 
@@ -1027,7 +1093,7 @@ export type UndoInput = z.infer<typeof UndoInput>;
 /** Daily reminders run on quarter-hour boundaries so one shared cron can deliver them. */
 export const ReminderTime = z
   .string()
-  .regex(/^([01]\d|2[0-3]):(00|15|30|45)$/, "Choose a time on a 15-minute boundary");
+  .regex(/^([01]\d|2[0-3]):(00|15|30|45)$/, "Choose 00, 15, 30 or 45 minutes.");
 export type ReminderTime = z.infer<typeof ReminderTime>;
 
 const PushEndpoint = z
@@ -1052,7 +1118,7 @@ export const TimeZone = z
     } catch {
       return false;
     }
-  }, "Use an IANA timezone such as Europe/Tallinn");
+  }, "Use an IANA timezone, such as Europe/Tallinn.");
 
 /** A visible page reporting its device zone. Moves the review day only while the mode is automatic. */
 export const DeviceTimezoneInput = z.object({ timezone: TimeZone });
@@ -1088,6 +1154,54 @@ export const ApiKeyInput = z.object({
 });
 export type ApiKeyInput = z.infer<typeof ApiKeyInput>;
 
+export const ReadwiseTokenInput = z.object({
+  token: z.string().trim().min(1, "Paste your Readwise token.").max(200),
+});
+export type ReadwiseTokenInput = z.infer<typeof ReadwiseTokenInput>;
+
+export const ReadwisePatchInput = z.object({
+  books: z
+    .array(
+      z.object({
+        id: z.string().min(1),
+        followed: z.boolean().optional(),
+        language: z.string().min(1).max(12).optional().meta({
+          description:
+            "For a book Lymi could not place: a primary subtag one of the learner's decks teaches",
+        }),
+      }),
+    )
+    .max(1000)
+    .optional(),
+  decks: z
+    .record(z.string().min(1).max(12), z.string().min(1))
+    .optional()
+    .meta({ description: "A deck per language, keyed by primary subtag" }),
+});
+export type ReadwisePatchInput = z.infer<typeof ReadwisePatchInput>;
+
 export const apiKeyLimits = {
   name: ApiKeyInput.shape.name.maxLength,
 } satisfies Record<string, number | null>;
+
+/**
+ * One call in the AnkiConnect protocol, which Yomitan and other reading tools speak. Lymi answers
+ * it at `/api/anki-connect`, with a Lymi key in `key`. `multi` nests further calls in `params`.
+ */
+export const AnkiConnectCall = z.object({
+  action: z.string(),
+  version: z.number().int().optional(),
+  params: z.record(z.string(), z.unknown()).optional(),
+  key: z.string().optional(),
+});
+export type AnkiConnectCall = z.infer<typeof AnkiConnectCall>;
+
+/** A note as an AnkiConnect client sends it: fields by name, holding the client's HTML. */
+export const AnkiConnectNote = z.object({
+  deckName: z.string(),
+  modelName: z.string(),
+  fields: z.record(z.string(), z.string()),
+  tags: z.array(z.string()).optional(),
+  options: z.object({ allowDuplicate: z.boolean().optional() }).optional(),
+});
+export type AnkiConnectNote = z.infer<typeof AnkiConnectNote>;

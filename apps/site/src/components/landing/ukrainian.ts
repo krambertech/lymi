@@ -1,4 +1,5 @@
 import { msg } from "@lingui/core/macro";
+import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { noun, phrase } from "./hand-cards";
 import type { PathStep, VoiceWord } from "./japanese";
@@ -44,28 +45,52 @@ export const UKRAINIAN_HAND: HandCard[] = [
 ];
 
 /** Sentences that use the front card's word, drawn faintly behind the hand; the word sits between asterisks. */
-export const UKRAINIAN_EXAMPLES: Record<string, string[]> = {
+export const UKRAINIAN_EXAMPLES: Record<string, Example[]> = {
   "zamok-castle": [
-    "Стари́й *за́мок* на горі́.",
-    "Цей *за́мок* ду́же стари́й.",
-    "*За́мок* відкри́тий для тури́стів.",
+    { text: "Стари́й *за́мок* на горі́.", meaning: msg`The old *castle* on the hill.` },
+    { text: "Цей *за́мок* ду́же стари́й.", meaning: msg`This *castle* is very old.` },
+    { text: "*За́мок* відкри́тий для тури́стів.", meaning: msg`The *castle* is open to tourists.` },
   ],
   "zamok-lock": [
-    "*Замо́к* на две́рях злама́вся.",
-    "Я купи́в нови́й *замо́к*.",
-    "Цей *замо́к* не відчиня́ється.",
+    { text: "*Замо́к* на две́рях злама́вся.", meaning: msg`The *lock* on the door is broken.` },
+    { text: "Я купи́в нови́й *замо́к*.", meaning: msg`I bought a new *lock*.` },
+    { text: "Цей *замо́к* не відчиня́ється.", meaning: msg`This *lock* won’t open.` },
   ],
-  doroha: ["*Доро́га* веде́ до мі́ста.", "Ця *доро́га* ду́же до́вга.", "*Доро́га* додо́му займа́є годи́ну."],
+  doroha: [
+    { text: "*Доро́га* веде́ до мі́ста.", meaning: msg`The *road* leads to the city.` },
+    { text: "Ця *доро́га* ду́же до́вга.", meaning: msg`This *road* is very long.` },
+    { text: "*Доро́га* додо́му займа́є годи́ну.", meaning: msg`The *way* home takes an hour.` },
+  ],
   nedilia: [
-    "*Неді́ля* — вихідни́й день.",
-    "Насту́пна *неді́ля* бу́де те́плою.",
-    "*Неді́ля* — мій улю́блений день.",
+    { text: "*Неді́ля* — вихідни́й день.", meaning: msg`*Sunday* is a day off.` },
+    { text: "Насту́пна *неді́ля* бу́де те́плою.", meaning: msg`Next *Sunday* will be warm.` },
+    { text: "*Неді́ля* — мій улю́блений день.", meaning: msg`*Sunday* is my favourite day.` },
   ],
-  diakuiu: ["*Дя́кую* за допомо́гу!", "*Дя́кую*, все до́бре.", "Ще раз *дя́кую*!"],
-  yabluko: ["Я з'їв *я́блуко*.", "Це *я́блуко* ду́же соло́дке.", "Дай мені́ *я́блуко*, будь ла́ска."],
-  voda: ["*Вода́* ду́же холо́дна.", "Де тут *вода́*?", "Ця *вода́* чи́ста."],
-  ranok: ["До́брий *ра́нок*!", "*Ра́нок* був со́нячний.", "Ко́жен *ра́нок* я п'ю ка́ву."],
-  knyzhka: ["Це моя́ *кни́жка*.", "*Кни́жка* лежи́ть на столі́.", "Ця *кни́жка* ду́же ціка́ва."],
+  diakuiu: [
+    { text: "*Дя́кую* за допомо́гу!", meaning: msg`*Thanks* for your help!` },
+    { text: "*Дя́кую*, все до́бре.", meaning: msg`*Thanks*, everything’s fine.` },
+    { text: "Ще раз *дя́кую*!", meaning: msg`*Thanks* again!` },
+  ],
+  yabluko: [
+    { text: "Я з'їв *я́блуко*.", meaning: msg`I ate an *apple*.` },
+    { text: "Це *я́блуко* ду́же соло́дке.", meaning: msg`This *apple* is very sweet.` },
+    { text: "Дай мені́ *я́блуко*, будь ла́ска.", meaning: msg`Give me an *apple*, please.` },
+  ],
+  voda: [
+    { text: "*Вода́* ду́же холо́дна.", meaning: msg`The *water* is very cold.` },
+    { text: "Де тут *вода́*?", meaning: msg`Where’s the *water*?` },
+    { text: "Ця *вода́* чи́ста.", meaning: msg`This *water* is clean.` },
+  ],
+  ranok: [
+    { text: "До́брий *ра́нок*!", meaning: msg`Good *morning*!` },
+    { text: "*Ра́нок* був со́нячний.", meaning: msg`The *morning* was sunny.` },
+    { text: "Ко́жен *ра́нок* я п'ю ка́ву.", meaning: msg`I drink coffee every *morning*.` },
+  ],
+  knyzhka: [
+    { text: "Це моя́ *кни́жка*.", meaning: msg`This is my *book*.` },
+    { text: "*Кни́жка* лежи́ть на столі́.", meaning: msg`The *book* is on the table.` },
+    { text: "Ця *кни́жка* ду́же ціка́ва.", meaning: msg`This *book* is really interesting.` },
+  ],
 };
 
 /** Words that only their stress tells apart, each form with its clip. */

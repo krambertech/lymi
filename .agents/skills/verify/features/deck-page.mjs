@@ -101,14 +101,15 @@ export default async function drive({ page, step, api, expect }) {
     return { deck: { id: deck.id, total: deck.total, due: deck.due } };
   });
 
-  await step("Filtering to Due today leaves the deck's due cards", async () => {
+  await step("Filtering Due to Today leaves the deck's due cards", async () => {
     await page.getByRole("button", { name: "Filter", exact: true }).click();
-    await page.getByRole("menuitemradio", { name: "Due today", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Due", exact: true }).click();
+    await page.getByRole("menuitemradio", { name: /^Today\b/ }).click();
     await page.keyboard.press("Escape");
     if (deck.due > 0) await expect(rows).toHaveCount(deck.due);
     else
       await expect(page.getByText("No cards match these filters", { exact: true })).toBeVisible();
-    await page.getByRole("button", { name: "Remove filter: Due today", exact: true }).click();
+    await page.getByRole("button", { name: "Remove filter: Due: Today", exact: true }).click();
     await expect(rows).toHaveCount(deck.total);
   });
 
@@ -138,6 +139,7 @@ export default async function drive({ page, step, api, expect }) {
     const due = waiting.filter((r) => new Date(r.state.due).getTime() < dayEnd).length;
     await page.keyboard.press("Escape");
     await page.getByRole("button", { name: "Filter", exact: true }).click();
+    await page.getByRole("menuitem", { name: "Tags", exact: true }).click();
     await page.getByRole("menuitemcheckbox", { name: /^money\b/ }).click();
     await page.keyboard.press("Escape");
     await expect(rows).toHaveCount(tagged.length);
@@ -159,7 +161,7 @@ export default async function drive({ page, step, api, expect }) {
   });
 
   await step("A search with no match says so in the list's place, and clears", async () => {
-    await page.getByRole("button", { name: "Remove filter: Tag: money", exact: true }).click();
+    await page.getByRole("button", { name: "Remove filter: Tags: money", exact: true }).click();
     // On a phone the field waits behind the top bar's search button.
     const field = page.getByRole("textbox", { name: "Search this deck" });
     if (!(await field.isVisible())) {
@@ -174,9 +176,10 @@ export default async function drive({ page, step, api, expect }) {
   await step("Another deck opens without this deck's filters", async () => {
     const other = decks.find((d) => d.id !== deck.id);
     await page.getByRole("button", { name: "Filter", exact: true }).click();
-    await page.getByRole("menuitemcheckbox", { name: "Known", exact: true }).click();
+    await page.getByRole("menuitem", { name: "State", exact: true }).click();
+    await page.getByRole("menuitemcheckbox", { name: /^Known\b/ }).click();
     await page.keyboard.press("Escape");
-    await expect(page.getByRole("button", { name: "Remove filter: Known" })).toBeVisible();
+    await expect(page.getByRole("button", { name: "Remove filter: State: Known" })).toBeVisible();
     await page.goto(`/library/${other.id}`);
     await expect(page.getByRole("heading", { level: 1, name: other.name })).toBeVisible();
     await expect(page.getByRole("button", { name: /^Remove filter/ })).toHaveCount(0);
@@ -187,7 +190,8 @@ export default async function drive({ page, step, api, expect }) {
 
   await step("Review takes the chosen cards as a round", async () => {
     await page.getByRole("button", { name: "Filter", exact: true }).click();
-    await page.getByRole("menuitemcheckbox", { name: "Known", exact: true }).click();
+    await page.getByRole("menuitem", { name: "State", exact: true }).click();
+    await page.getByRole("menuitemcheckbox", { name: /^Known\b/ }).click();
     await page.keyboard.press("Escape");
     await page.getByRole("button", { name: "Deck options", exact: true }).click();
     await page.getByRole("menuitem", { name: "Select cards", exact: true }).click();

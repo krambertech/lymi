@@ -90,7 +90,9 @@ test("reuses exact existing preview resources", async () => {
   const calls = [];
   const fetchImpl = async (url, init = {}) => {
     calls.push([url, init.method ?? "GET"]);
-    if (url.endsWith("/workers/scripts/lymi-app-pr-105/settings")) return response({});
+    if (url.endsWith("/workers/scripts/lymi-app-pr-105/subdomain")) {
+      return response({ enabled: true, previews_enabled: true });
+    }
     if (url.endsWith("/workers/subdomain")) return response({ subdomain: "example" });
     if (url.includes("/d1/database?")) {
       return response([{ name: "lymi-app-pr-105-db", uuid: "db-id" }]);
@@ -111,14 +113,14 @@ test("reuses exact existing preview resources", async () => {
     fetchImpl,
   });
   assert.equal(result.previewUrl, "https://preview-lymi-app-pr-105.example.workers.dev");
-  assert.equal(result.workerExists, true);
+  assert.equal(result.workerReady, true);
   assert.equal(calls.filter(([, method]) => method === "POST").length, 0);
 });
 
 test("creates preview KV without an account-restricted jurisdiction", async () => {
   let namespaceBody;
   const fetchImpl = async (url, init = {}) => {
-    if (url.endsWith("/workers/scripts/lymi-app-pr-105/settings")) {
+    if (url.endsWith("/workers/scripts/lymi-app-pr-105/subdomain")) {
       return response(null, 404);
     }
     if (url.endsWith("/workers/subdomain")) return response({ subdomain: "example" });
@@ -138,7 +140,30 @@ test("creates preview KV without an account-restricted jurisdiction", async () =
 
   const result = await ensurePreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
   assert.deepEqual(namespaceBody, { title: "lymi-app-pr-105-sessions" });
-  assert.equal(result.workerExists, false);
+  assert.equal(result.workerReady, false);
+});
+
+test("redeploys a Worker whose first deploy stopped before preview URLs were enabled", async () => {
+  const fetchImpl = async (url) => {
+    if (url.endsWith("/workers/scripts/lymi-app-pr-105/settings")) return response({});
+    if (url.endsWith("/workers/scripts/lymi-app-pr-105/subdomain")) {
+      return response({ enabled: false, previews_enabled: false });
+    }
+    if (url.endsWith("/workers/subdomain")) return response({ subdomain: "example" });
+    if (url.includes("/d1/database?")) {
+      return response([{ name: "lymi-app-pr-105-db", uuid: "db-id" }]);
+    }
+    if (url.includes("/storage/kv/namespaces?")) {
+      return response([{ title: "lymi-app-pr-105-sessions", id: "kv-id" }]);
+    }
+    if (url.includes("/r2/buckets?")) {
+      return response({ buckets: [{ name: "lymi-app-pr-105-audio" }] });
+    }
+    throw new Error(`Unexpected ${url}`);
+  };
+
+  const result = await ensurePreviewInfrastructure({ accountId, token, prNumber: 105, fetchImpl });
+  assert.equal(result.workerReady, false);
 });
 
 test("cleanup empties the bucket, then deletes only the exact pull request resources", async () => {

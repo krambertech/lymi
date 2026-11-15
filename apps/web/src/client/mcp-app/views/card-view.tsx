@@ -1,5 +1,5 @@
 import { Trans, useLingui } from "@lingui/react/macro";
-import { stripReadings } from "@lymi/core/reading";
+import { pronunciationText, stripReadings } from "@lymi/core/reading";
 import { ExternalLink } from "lucide-react";
 import { productLinks, type ViewCard } from "../../../shared/mcp-app";
 import { Button } from "../../components/button";
@@ -16,7 +16,7 @@ export function CardView({ card }: { card: ViewCard }) {
   const rows: {
     label: string;
     text: string | null;
-    field: "example" | "exampleTranslation" | "pronunciation" | "hook" | null;
+    field: "example" | "exampleTranslation" | "pronunciation" | "hint" | null;
     ai: boolean;
     lang?: string | undefined;
   }[] = [
@@ -36,11 +36,11 @@ export function CardView({ card }: { card: ViewCard }) {
     },
     {
       label: t`Pronunciation`,
-      text: card.pronunciation,
+      text: pronunciationText(card),
       field: "pronunciation",
       ai: card.pronunciationSource === "ai",
     },
-    { label: t`Hook`, text: card.hook, field: "hook", ai: card.hookSource === "ai" },
+    { label: t`Hint`, text: card.hint, field: "hint", ai: card.hintSource === "ai" },
     { label: t`Picture`, text: card.image?.description ?? null, field: null, ai: false },
     { label: t`Source`, text: card.source, field: null, ai: false },
   ];
@@ -60,11 +60,11 @@ export function CardView({ card }: { card: ViewCard }) {
         </Button>
       }
     >
-      <p className="flex flex-wrap items-center gap-2 text-text-2">
+      <p className="flex flex-wrap items-center gap-2 text-ink-secondary">
         {card.meaning ? (
           <span>{card.meaning}</span>
         ) : (
-          <span className="text-muted">{t`No meaning yet`}</span>
+          <span className="text-ink-muted">{t`No meaning yet`}</span>
         )}
         {card.meaningSource === "ai" && <SourceChip source="ai" field="meaning" size="xs" />}
       </p>
@@ -72,11 +72,11 @@ export function CardView({ card }: { card: ViewCard }) {
         <dl className="grid grid-cols-[auto_1fr] gap-x-4 gap-y-2 text-sm">
           {shown.map((row) => (
             <div key={row.label} className="contents">
-              <dt className="flex items-center gap-1.5 text-muted">
+              <dt className="flex items-center gap-1.5 text-ink-muted">
                 {row.label}
                 {row.ai && row.field && <SourceChip source="ai" field={row.field} size="xs" />}
               </dt>
-              <dd className="min-w-0 text-text" lang={row.lang}>
+              <dd className="min-w-0 text-ink" lang={row.lang}>
                 {row.text}
               </dd>
             </div>

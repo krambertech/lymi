@@ -50,10 +50,10 @@ export function Switch({ checked, onCheckedChange, accessibilityLabel, disabled 
       accessibilityRole="switch"
       accessibilityLabel={accessibilityLabel ?? field?.label}
       accessibilityState={{ checked, disabled: !!off }}
-      className={`h-[30px] w-[50px] justify-center rounded-full p-[3px] ${checked ? "bg-amber" : "border border-edge-2 bg-plate-2"} ${off && !field ? "opacity-45" : ""}`}
+      className={`h-[30px] w-[50px] justify-center rounded-full p-[3px] ${checked ? "bg-amber" : "border border-edge-strong bg-plate-nested"} ${off && !field ? "opacity-45" : ""}`}
     >
       <Animated.View
-        className={`size-6 rounded-full ${checked ? "bg-amber-ink" : dark ? "bg-muted" : "border border-edge-2 bg-plate"}`}
+        className={`size-6 rounded-full ${checked ? "bg-amber-ink" : dark ? "bg-ink-muted" : "border border-edge-strong bg-plate"}`}
         style={[thumb, checked ? null : { marginStart: -1 }]}
       />
     </Pressable>

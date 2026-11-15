@@ -31,7 +31,7 @@ export interface RowMenuProps {
   onPressIn?: () => void;
   /** What VoiceOver reads for the row; the native preview view hides the row's own text from it. */
   label: string;
-  /** What the row is to VoiceOver; a heading does nothing on a tap. */
+  /** What the row is to VoiceOver; a heading does nothing on a tap unless it has `onPress`. */
   kind?: "link" | "button" | "heading";
   /** Rows, or groups of rows split by iOS's separators; the removal goes last on its own. */
   items: RowMenuItem[] | RowMenuItem[][];
@@ -76,7 +76,9 @@ export function RowMenu({
       accessible
       accessibilityRole={heading ? "header" : kind}
       accessibilityLabel={unisolate(label)}
-      onAccessibilityTap={heading ? undefined : tap ? () => tap() : () => router.push(href)}
+      onAccessibilityTap={
+        heading ? onPress && (() => tap?.()) : tap ? () => tap() : () => router.push(href)
+      }
       accessibilityActions={flat.map((i) => ({ name: i.id, label: i.label }))}
       onAccessibilityAction={(e) => {
         const item = flat.find((i) => i.id === e.nativeEvent.actionName);

@@ -17,10 +17,11 @@ name: Library
 - assertVisible: "${DECK}"
 - assertVisible: "Search this deck"
 - takeScreenshot: 02-deck
-# Centred, so the row is not under the tab bar when it is tapped.
+# Centred, so the row is not under the tab bar when it is tapped. The row can sit in the deck's last section, a long scroll away.
 - scrollUntilVisible:
     element: "${TERM}, .*"
     centerElement: true
+    timeout: 45000
 - tapOn: "${TERM}, .*"
 - extendedWaitUntil:
     visible: "Details"

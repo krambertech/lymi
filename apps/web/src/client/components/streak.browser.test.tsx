@@ -5,7 +5,7 @@ import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import { streak } from "../design/mock";
-import { StreakButton } from "./streak";
+import { StreakButton, StreakPanel } from "./streak";
 
 i18n.load("en", messages);
 i18n.activate("en");
@@ -46,3 +46,39 @@ test(
     await expect.element(page.getByRole("dialog")).not.toBeInTheDocument();
   },
 );
+
+const nothingDue = {
+  ...streak,
+  today: { ...streak.today, attempts: 0, outcome: "nothing_due" as const },
+};
+
+test("a day confirmed as nothing due says so while nothing is due", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <StreakButton variant="card" summary={nothingDue} due={0} onOpen={() => {}} />
+    </I18nProvider>,
+  );
+  await expect
+    .element(page.getByText("Nothing due today, so your streak carries on."))
+    .toBeVisible();
+});
+
+test("the card reads as open once cards are due on a day confirmed as nothing due", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <StreakButton variant="card" summary={nothingDue} due={3} onOpen={() => {}} />
+    </I18nProvider>,
+  );
+  await expect.element(page.getByText(/reviews? to today’s goal/)).toBeVisible();
+  await expect.element(page.getByText(/^Nothing due today/)).not.toBeInTheDocument();
+});
+
+test("the panel reads as open once cards are due on a day confirmed as nothing due", async () => {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <StreakPanel summary={nothingDue} due={3} />
+    </I18nProvider>,
+  );
+  await expect.element(page.getByText("Every grade counts toward today’s goal.")).toBeVisible();
+  await expect.element(page.getByText(/^Nothing due today/)).not.toBeInTheDocument();
+});

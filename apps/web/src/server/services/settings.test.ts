@@ -55,6 +55,33 @@ describe("daily goal", () => {
   });
 });
 
+describe("session replay", () => {
+  it("is on until the learner turns it off, records each change once, and refuses integrations", async () => {
+    const who = await learner(db, "replay", "Replay");
+    const events: AnalyticsEvent[] = [];
+    const ctx: ServiceContext = {
+      ...who,
+      analytics: { writeDataPoint: () => {}, capture: (event) => events.push(event) },
+    };
+    expect((await getSettings(ctx)).sessionReplay).toBeNull();
+    expect((await updateSettings(ctx, { sessionReplay: false })).sessionReplay).toBe(false);
+    await updateSettings(ctx, { sessionReplay: false });
+    expect((await updateSettings(ctx, { sessionReplay: true })).sessionReplay).toBe(true);
+    expect(events.filter((e) => e.name === "session_replay_set")).toMatchObject([
+      { name: "session_replay_set", on: false },
+      { name: "session_replay_set", on: true },
+    ]);
+    const audits = await db
+      .select()
+      .from(schema.auditLog)
+      .where(eq(schema.auditLog.userId, who.userId));
+    expect(audits.filter((a) => a.action === "replay.choice")).toHaveLength(2);
+    await expect(
+      updateSettings({ ...ctx, actor: "mcp" }, { sessionReplay: false }),
+    ).rejects.toMatchObject({ code: "forbidden" });
+  });
+});
+
 describe("reading settings", () => {
   it("writes nothing, and the defaults it returns match a stored row", async () => {
     const reader = await learner(db, "reader", "Reader");

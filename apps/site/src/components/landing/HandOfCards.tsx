@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { modeOf } from "@lymi/core";
+import { offersLanguage } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
 import {
@@ -9,6 +10,7 @@ import {
   useCallback,
   useEffect,
   useLayoutEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -137,7 +139,7 @@ function FanCard({
   const cueText = cue === "meaning" ? meaning : card.term;
 
   const header = (
-    <p className="flex min-h-4 items-center justify-between gap-2 text-xs font-medium tracking-[0.06em] text-muted uppercase">
+    <p className="flex min-h-4 items-center justify-between gap-2 text-xs font-medium tracking-[0.06em] text-ink-muted uppercase">
       <span>
         {source && <span lang={card.sourceLanguage}>{source}</span>}
         {source && kind && " · "}
@@ -182,7 +184,7 @@ function FanCard({
       <p
         lang={cue === "term" ? card.language : undefined}
         dir="auto"
-        className="whitespace-pre-line mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-text [overflow-wrap:anywhere]"
+        className="whitespace-pre-line mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-ink [overflow-wrap:anywhere]"
         style={{ "--term": cueStep(cueText) } as CSSProperties}
       >
         {cue === "term" && card.furigana ? (
@@ -204,12 +206,12 @@ function FanCard({
   const termDetails = (
     <>
       {card.reading && (
-        <p lang={card.language} className="mt-1.5 text-md text-text-2">
+        <p lang={card.language} className="mt-1.5 text-md text-ink-secondary">
           {card.reading}
         </p>
       )}
       {(card.pronunciation || audible) && (
-        <p className="mt-2.5 flex min-h-8 items-center gap-2.5 text-md text-muted">
+        <p className="mt-2.5 flex min-h-8 items-center gap-2.5 text-md text-ink-muted">
           {card.pronunciation && <span className="hand-ipa truncate">{card.pronunciation}</span>}
           {audible && (
             <button
@@ -221,9 +223,9 @@ function FanCard({
                 onPlay(card);
               }}
               className={clsx(
-                "relative inline-flex size-8 shrink-0 items-center justify-center rounded-full edge bg-plate transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover",
+                "relative inline-flex size-8 shrink-0 items-center justify-center rounded-full edge bg-plate transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-hover",
                 "before:absolute before:-inset-1.5 before:content-[''] [&_svg]:size-4",
-                playing ? "text-text" : "text-text-2",
+                playing ? "text-ink" : "text-ink-secondary",
                 !front && "invisible",
               )}
             >
@@ -242,7 +244,7 @@ function FanCard({
         <p
           lang={card.language}
           dir="auto"
-          className="whitespace-pre-line text-[min(28px,calc(var(--cw)*0.092))] leading-[1.15] font-medium tracking-[-0.02em] text-balance text-text [overflow-wrap:anywhere]"
+          className="whitespace-pre-line text-[min(28px,calc(var(--cw)*0.092))] leading-[1.15] font-medium tracking-[-0.02em] text-balance text-ink [overflow-wrap:anywhere]"
         >
           {card.furigana ? (
             <Furigana term={card.term} reading={card.furigana} lang={card.language} />
@@ -252,27 +254,27 @@ function FanCard({
         </p>
         {termDetails}
         {picture && (
-          <p className="whitespace-pre-line mt-1.5 text-md text-pretty text-text-2 [overflow-wrap:anywhere]">
+          <p className="whitespace-pre-line mt-1.5 text-md text-pretty text-ink-secondary [overflow-wrap:anywhere]">
             {meaning}
           </p>
         )}
       </>
     ) : picture ? (
       <>
-        <p className="whitespace-pre-line text-[min(24px,calc(var(--cw)*0.08))] leading-[1.25] font-medium text-pretty text-text [overflow-wrap:anywhere]">
+        <p className="whitespace-pre-line text-[min(24px,calc(var(--cw)*0.08))] leading-[1.25] font-medium text-pretty text-ink [overflow-wrap:anywhere]">
           {meaning}
         </p>
         <p
           lang={card.language}
           dir="auto"
-          className="whitespace-pre-line mt-1.5 text-md text-text-2 [overflow-wrap:anywhere]"
+          className="whitespace-pre-line mt-1.5 text-md text-ink-secondary [overflow-wrap:anywhere]"
         >
           {card.term}
         </p>
         {termDetails}
       </>
     ) : (
-      <p className="whitespace-pre-line text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-text [overflow-wrap:anywhere]">
+      <p className="whitespace-pre-line text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-ink [overflow-wrap:anywhere]">
         {meaning}
       </p>
     );
@@ -302,7 +304,7 @@ function FanCard({
           {cueFor(false)}
           {cue === "term" && termDetails}
           <p
-            className="hand-hint mt-auto text-base text-muted"
+            className="hand-hint mt-auto text-base text-ink-muted"
             data-shown={hint ? true : undefined}
           >
             {hint}
@@ -324,15 +326,17 @@ function FanCard({
               className="hand-answer-picture mt-3"
             />
           )}
-          <div className="mt-auto border-t border-edge-2 pt-3.5">
+          <div className="mt-auto border-t border-edge-strong pt-3.5">
             {answer}
             {card.forms && (
-              <p lang={card.language} className="mt-1.5 text-md text-text-2 italic">
+              <p lang={card.language} className="mt-1.5 text-md text-ink-secondary italic">
                 {card.forms}
               </p>
             )}
             {card.note && (
-              <p className="mt-2 text-[0.84375rem] leading-[1.45] text-muted">{say(card.note)}</p>
+              <p className="mt-2 text-[0.84375rem] leading-[1.45] text-ink-muted">
+                {say(card.note)}
+              </p>
             )}
           </div>
         </div>
@@ -370,8 +374,11 @@ function spoken(card: HandCard, say: (d: string | MessageDescriptor) => string) 
 interface Props {
   /** A vertical page can deal from its own field. Changing them tosses the hand and deals again. */
   cards?: readonly HandCard[] | undefined;
-  /** A fan shows the range of a mixed hand; a stack keeps one language's cards squared up. */
-  layout?: "fan" | "stack" | undefined;
+  /**
+   * A fan shows the range of a mixed hand; a stack keeps one language's cards squared up. A side
+   * stack steps the cards behind out to one side, leaving room above and below.
+   */
+  layout?: "fan" | "stack" | "side" | undefined;
   /** Hold these from the first render, so the hand is in the server's HTML and needs no script to be there. */
   dealt?: readonly HandCard[] | undefined;
   /** Deal each card once; after the last, this takes the hand's place and can deal them again. */
@@ -390,7 +397,7 @@ interface Props {
  * much a card can hold. The deal plays once per session; after that the hand is simply there.
  */
 export function HandOfCards({
-  cards = HAND_CARDS,
+  cards: passed,
   layout = "fan",
   dealt: given,
   finale,
@@ -399,6 +406,11 @@ export function HandOfCards({
   ordered,
 }: Props) {
   const { t, i18n } = useLingui();
+  // Only the landing's mixed hand drops a language the page doesn't offer; a deck page's cards are its own.
+  const cards = useMemo(
+    () => passed ?? HAND_CARDS.filter((card) => offersLanguage(i18n.locale, card.language)),
+    [passed, i18n.locale],
+  );
   const [hand, setHand] = useState<Dealt[]>(() =>
     (given ?? []).map((card, key) => ({ key, card })),
   );
@@ -654,7 +666,7 @@ export function HandOfCards({
               "ghost",
               "sm",
               clsx(
-                "font-normal text-muted before:absolute before:-inset-2 before:content-[''] hoverable:hover:bg-transparent hoverable:hover:text-text-2",
+                "font-normal text-ink-muted before:absolute before:-inset-2 before:content-[''] hoverable:hover:bg-transparent hoverable:hover:text-ink-secondary",
                 quiet && "not-focus-visible:sr-only",
               ),
             )}
@@ -663,7 +675,7 @@ export function HandOfCards({
           </button>
         )}
         {turned > 0 && phase !== "done" && !quiet && (
-          <p className="text-xs text-muted tabular-nums" aria-hidden="true">
+          <p className="text-xs text-ink-muted tabular-nums" aria-hidden="true">
             <Plural value={turned} one="# turned" other="# turned" />
           </p>
         )}

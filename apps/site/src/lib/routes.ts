@@ -1,4 +1,6 @@
-import { LANGUAGE_PAGES, type LanguagePageName } from "./language-pages";
+import { API_RESOURCES } from "@lymi/core/api-resources";
+import { offersLanguage } from "@lymi/core/catalog";
+import { LANGUAGE_PAGE_TAGS, LANGUAGE_PAGES, type LanguagePageName } from "./language-pages";
 
 /** Each supported language's page, which `/languages/[language]` renders. */
 const languagePages = Object.fromEntries(
@@ -52,11 +54,22 @@ export const localizedContentPages = ["/changelog/[slug]"] as const;
 export const locales = ["en", "uk", "ru"] as const;
 export type Locale = (typeof locales)[number];
 
+/** One API reference page per resource, which `/docs/api/[resource]` renders. */
+export const apiReferenceRoute = "/docs/api/[resource]";
+const apiReferencePaths = API_RESOURCES.map((r) => `/docs/api/${r.slug}`);
+
 /** Terms, support and developer documentation stay in English on purpose. */
-export const englishOnlyPaths = [
+export const englishOnlyPaths: readonly string[] = [
   "/terms",
   "/support",
   "/docs",
+  "/docs/getting-started",
+  "/docs/smart-add",
+  "/docs/decks",
+  "/docs/import",
+  "/docs/import-from-quizlet",
+  "/docs/import-from-lymi",
+  "/docs/readwise",
   "/docs/quickstart",
   "/docs/mobile",
   "/docs/cards",
@@ -73,10 +86,18 @@ export const englishOnlyPaths = [
   "/docs/mcp/gemini",
   "/docs/mcp/cursor",
   "/docs/mcp/grok",
+  "/docs/yomitan",
   "/docs/authentication",
   "/docs/api",
   "/docs/recipes",
-] as const;
+  ...apiReferencePaths,
+];
+
+/** The locales a page exists in: a language's page is missing where `offersLanguage` says no. */
+export function pageLocales(page: LocalizedPage): Locale[] {
+  const tag = LANGUAGE_PAGE_TAGS.find((each) => LANGUAGE_PAGES[each].page === page);
+  return locales.filter((locale) => offersLanguage(locale, tag));
+}
 
 export function localizedPath(page: LocalizedPage, locale: string): string {
   const path = localizedPages[page];

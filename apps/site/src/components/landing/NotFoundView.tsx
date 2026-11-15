@@ -80,13 +80,13 @@ export function NotFoundView({ locale }: Props) {
 
   const top = (
     <>
-      <p className="text-xs font-medium tracking-[0.06em] text-muted uppercase">
+      <p className="text-xs font-medium tracking-[0.06em] text-ink-muted uppercase">
         HTTP · {i18n._(noun)}
       </p>
-      <p className="mt-3 text-[calc(var(--cw)*0.3)] leading-none font-medium tracking-[-0.04em] text-text tabular-nums">
+      <p className="mt-3 text-[calc(var(--cw)*0.3)] leading-none font-medium tracking-[-0.04em] text-ink tabular-nums">
         404
       </p>
-      <p className="hand-ipa mt-2.5 text-md text-muted">/ˌfɔːr.oʊˈfɔːr/</p>
+      <p className="hand-ipa mt-2.5 text-md text-ink-muted">/ˌfɔːr.oʊˈfɔːr/</p>
     </>
   );
 
@@ -117,7 +117,7 @@ export function NotFoundView({ locale }: Props) {
                 <div className="hand-face text-start" aria-hidden="true">
                   {top}
                   <p
-                    className="hand-hint mt-auto text-base text-muted"
+                    className="hand-hint mt-auto text-base text-ink-muted"
                     data-shown={hint || undefined}
                   >
                     {finePointer ? t`Click to turn it over` : t`Tap to turn it over`}
@@ -125,10 +125,10 @@ export function NotFoundView({ locale }: Props) {
                 </div>
                 <div className="hand-face hand-back text-start" aria-hidden="true">
                   {top}
-                  <p className="mt-auto border-t border-edge-2 pt-3.5 text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-text">
+                  <p className="mt-auto border-t border-edge-strong pt-3.5 text-[min(20px,calc(var(--cw)*0.066))] leading-[1.35] text-pretty text-ink">
                     {meaning}
                   </p>
-                  <p className="mt-2 text-[0.84375rem] leading-[1.45] text-muted">
+                  <p className="mt-2 text-[0.84375rem] leading-[1.45] text-ink-muted">
                     <Trans>You learned this one in context.</Trans>
                   </p>
                 </div>
@@ -137,7 +137,7 @@ export function NotFoundView({ locale }: Props) {
           </div>
         </div>
 
-        <h1 className="mt-8 text-3xl font-medium tracking-[-0.02em] text-balance text-text">
+        <h1 className="mt-8 text-3xl font-medium tracking-[-0.02em] text-balance text-ink">
           <Trans>Page not found</Trans>
         </h1>
         <a href={homeHref} className={buttonClass("primary", "md", "mt-6")}>

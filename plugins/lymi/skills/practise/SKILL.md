@@ -29,4 +29,4 @@ In a quiz, ask one question at a time and wait for the answer before revealing i
 
 End when the chosen set is covered, the agreed time is up, or the learner wants to stop. Summarise difficulties actually observed; a smooth round does not need invented problem cards. Offer another round, review in Lymi, or help through [tend-cards](../tend-cards/SKILL.md) when useful.
 
-Practice uses read tools. Saving a hook, example or correction is a separate action the learner must request or agree to; a wrong answer alone does not authorise a card edit.
+Practice uses read tools. Saving a hint, example or correction is a separate action the learner must request or agree to; a wrong answer alone does not authorise a card edit.

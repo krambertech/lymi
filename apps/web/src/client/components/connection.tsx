@@ -81,12 +81,14 @@ export function AppIdentityLine({ app, className }: { app: AppIdentity; classNam
   return (
     <span
       className={clsx(
-        "edge inline-flex max-w-full items-center gap-1.5 rounded-full bg-plate-2 px-2.5 py-1 text-xs",
-        app.recognised ? "text-text-2" : "text-muted",
+        "edge inline-flex max-w-full items-center gap-1.5 rounded-full bg-plate-nested px-2.5 py-1 text-xs",
+        app.recognised ? "text-ink-secondary" : "text-ink-muted",
         className,
       )}
     >
-      {app.recognised && <ShieldCheck className="size-3.5 shrink-0 text-good" aria-hidden="true" />}
+      {app.recognised && (
+        <ShieldCheck className="size-3.5 shrink-0 text-success" aria-hidden="true" />
+      )}
       <span className="sr-only">
         {app.recognised ? <Trans>Recognised app at</Trans> : <Trans>Identified by</Trans>}{" "}
       </span>

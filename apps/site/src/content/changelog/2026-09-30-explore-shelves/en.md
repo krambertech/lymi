@@ -11,5 +11,4 @@ Each language’s Explore lists only the decks you can read in it: decks explain
 
 ### Fixes and improvements
 
-- Deck colours read clearly in dark mode.
 - Line breaks in card text show on deck pages.

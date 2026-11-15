@@ -1,10 +1,10 @@
 # Type
 
-Onest is the interface family, self-hosted as a variable font declared for weights 400–600, with Latin, Latin extended and Cyrillic files. Scripts it does not cover use the language-specific system faces below. The term on the card is the largest thing on any screen.
+Onest is the interface family, self-hosted as a variable font declared for weights 400–600, with Latin, Latin extended and Cyrillic files. Scripts it does not cover use the language-specific system faces below. Review gives the card’s term the largest content text.
 
 ## The scale
 
-Use the Tailwind size classes below; the role names are what DESIGN.md's frontmatter calls them. Never an arbitrary size such as `text-[15px]`: the scale is set in rem so it follows the reader's default font size, and a px value breaks that. Sizes here are px at the 16 px default.
+Use the Tailwind size classes below; each has a role name for talking about it. Never an arbitrary size such as `text-[15px]`: the scale is set in rem so it follows the reader's default font size, and a px value breaks that. Sizes here are px at the 16 px default.
 
 | Role | Class | Size | Weight | Where |
 | --- | --- | --- | --- | --- |
@@ -21,7 +21,7 @@ Use the Tailwind size classes below; the role names are what DESIGN.md's frontma
 | caption | `text-xs` | 12 | 500 | Chips, uppercase labels, timestamps |
 | kbd | `text-2xs` | 11 | 600 | Keyboard hints, the AI badge |
 
-The scale is hand-tuned rather than a ratio: text sizes climb by 1 to 1.5 px from 11 to 17, display sizes by about 1.2 to 1.27 from 20 to 46, and the count that ends a review alone goes to 60 and 72. On any touch screen a form control's text is 16 px (`text-[1rem]` through `controlSize`) so iOS does not zoom on focus; see [forms.md](forms.md).
+The scale uses smaller increments for reading sizes, 1–1.5 px from 11 to 17, and ratios of roughly 1.2–1.27 for display sizes from 20 to 46. Review completion counts use 60 and 72 px. Touch form text is the 16 px exception, applied through `controlSize` as `text-[1rem]` ([forms.md](forms.md#the-control-box)).
 
 ```tsx
 // Correct: a section heading
@@ -39,12 +39,11 @@ The scale is hand-tuned rather than a ratio: text sizes climb by 1 to 1.5 px fro
 
 - Headings track −0.02em (`tracking-[-0.02em]`), the word −0.03em, body never.
 - Tabular figures (`tabular-nums`) on figures that line up in a column, never on a control whose label happens to hold a digit: Onest's tabular 1 carries side bearings wide enough to pull "Lezione 12" apart. `Button` leaves them off for that reason.
-- Uppercase only at 12 px (`text-xs`), tracked +0.06em, weight 500, in `muted`.
-- Curly quotes and the ellipsis character in copy: “ ” ’ …, never straight quotes or three dots.
+- Uppercase only at 12 px (`text-xs`), tracked +0.06em, weight 500, in `ink-muted`.
 
 ## Long words
 
-A term or meaning long enough to wrap carries the `hyphenate` utility (`hyphens: auto` with at least three letters each side of the break) and the text's own `lang`, so a German compound breaks at a joint rather than anywhere. A cue or target too long for its review card steps down the scale at most twice before the card scrolls.
+A term or meaning long enough to wrap carries the `hyphenate` utility (`hyphens: auto` with at least three letters each side of the break) and the text's own `lang`, so a German compound breaks at a joint rather than anywhere. A cue or target too long for its review card, or with a word or reading wider than one line, steps down the scale at most twice before the card scrolls. A word or reading still wider than the line at the smallest step takes `overlong-text`: balanced lines, and a reading that wraps over its text.
 
 ## Languages, readings and stress
 
@@ -52,7 +51,7 @@ Content carries its own language, independent of the app language. Pass the card
 
 Use `TermText` for a card's term and `ExampleText` for its example, both in `components/term-text.tsx` and the phone's `ui/term-text.tsx`. They draw the language's reading above the text, stress in place, or plain text; a screen never parses or draws those marks itself. [CONTEXT.md](../../../CONTEXT.md#content) owns what Reading and Stress mean and when review shows them.
 
-Readings are secondary text at weight 400, with no tracking. Kana readings are half the text's size, at least 10 px; readings in letters are 0.4 of it, at least 10 px and at most the 15.5 px lede, with space between syllables. Jyutping tone numbers are raised without growing the line. Hiding a reading keeps its room, including when Known readings fade from an example, so reveal changes what can be read without reflowing the line. Stress marks replace the plain term in place instead of taking a separate line. Native wrapping, Dynamic Type and screen-reader behavior belong in [phone.md](phone.md#components).
+Readings are secondary text at weight 400, with no tracking. Kana readings are half the text's size, at least 10 px; readings in letters are 0.4 of it, at least 10 px and at most the 15.5 px lede, with space between syllables. Jyutping tone numbers are raised without growing the line. Hiding a reading preserves its layout space, so reveal changes what can be read without reflowing the line. A Known reading faded from an example keeps its height and gives up its width, so a long reading leaves no gap around its word. Stress marks replace the plain term in place instead of taking a separate line. Native wrapping, Dynamic Type and screen-reader behavior belong in [phone.md](phone.md#components).
 
 ## Text direction
 
@@ -67,9 +66,9 @@ On the phone, `Text` takes `lang` for writing direction and script faces; a stan
 `font-mono` is a system monospace stack, with nothing downloaded, and it has two jobs:
 
 - Code on the docs site.
-- Strings in the app that are proofread character by character rather than read: an API key, a client's hostname, a header name in copy. Onest draws 0 and O, and 1 and l, too alike for a secret where a mistyped character is a silent 401.
+- Text that must be checked character by character, such as an API key, client hostname or HTTP header name. Monospace distinguishes characters such as 0 and O, or 1 and l, more clearly than Onest.
 
-Nothing else uses it: not numbers, not code-like labels, not UI text. The design system page sets its state annotations in it for the same reason as the docs, so a note about a component never reads as part of the component.
+The design system page sets its state annotations in it for the same reason as the docs, so a note about a component never reads as part of the component. Numbers, code-like labels and other interface text stay in Onest.
 
 ## Wordmark
 

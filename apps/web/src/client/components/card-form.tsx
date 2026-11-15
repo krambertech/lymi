@@ -4,6 +4,7 @@ import {
   CARD_LIMITS,
   CardInput,
   cardLimits,
+  drawsTermReading,
   EXAMPLE_LENGTH,
   exampleShown,
   hasReadings,
@@ -13,17 +14,16 @@ import {
   markedTerm,
   modeKey,
   modeOf,
+  pitchPattern,
   pronunciationName,
   type ReviewModeKey,
   revealsAnswer,
   shownLength,
-  termShowsPronunciation,
 } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
 import {
   AlertCircle,
-  Anchor,
   AudioLines,
   Check,
   Image as ImageIcon,
@@ -49,8 +49,10 @@ import { LanguageChip, ModesChip, SectionChip, TagsChip } from "./card-form-pick
 import { acceptsPictureFile, CardPictureField, type PictureDraft } from "./card-picture-field";
 import { SourceChip } from "./chip";
 import { FieldChipButton, FieldChipRow } from "./field-chip";
+import { HintIcon } from "./hint-icon";
 import { Kbd } from "./kbd";
 import { useStaticNav } from "./nav-link";
+import { PitchChart } from "./pitch-chart";
 import { ExampleText, TermText } from "./term-text";
 import { Checkbox } from "./ui/checkbox";
 import { Field, FieldDescription, FieldError, FieldLabel, FieldLegend, FieldSet } from "./ui/field";
@@ -68,7 +70,7 @@ export interface CardFormValues {
   /** Empty with an example leaves the AI to translate it, where the deck lets it. */
   exampleTranslation: string;
   notes: string;
-  hook: string;
+  hint: string;
   source: string;
   tags: string[];
   language: string | null;
@@ -91,6 +93,18 @@ export interface CardFormDraft extends CardFormValues {
   /** Whether the learner picked the language, rather than it following the deck. */
   languageChosen: boolean;
 }
+
+/** Whether a draft holds anything the learner typed or chose for this card, so discarding it offers Undo. */
+export const draftHasWork = (d: CardFormDraft) =>
+  !!(
+    d.term ||
+    d.meaning ||
+    d.example ||
+    d.notes ||
+    d.pronunciation ||
+    d.hint ||
+    d.picture.kind !== "none"
+  );
 
 interface CardFormBase {
   /** Only decks the learner owns take a card. */
@@ -125,8 +139,8 @@ export interface AddCardFormProps extends CardFormBase {
   onRetryPicture?: (() => void) | undefined;
 }
 
-/** The field the card editor opens at: the cue's, the picture, or the hook. */
-export type EditFocus = "term" | "meaning" | "picture" | "hook";
+/** The field the card editor opens at: the cue's, the picture, or the hint. */
+export type EditFocus = "term" | "meaning" | "picture" | "hint";
 
 export interface EditCardFormProps extends CardFormBase {
   mode: "edit";
@@ -143,11 +157,11 @@ const NEARLY_FULL = 0.9;
 type Notice = { kind: "ok" | "warn" | "dup"; text: string };
 
 /** A field a chip adds to the form. Tags, the section and how it is asked are choices instead. */
-type Extra = "notes" | "example" | "pronunciation" | "source" | "picture" | "hook";
+type Extra = "notes" | "example" | "pronunciation" | "source" | "picture" | "hint";
 /** What a chip in the row stands for. */
 type ChipKey = Extra | "tags";
 
-const EXTRAS: Extra[] = ["notes", "example", "pronunciation", "source", "picture", "hook"];
+const EXTRAS: Extra[] = ["notes", "example", "pronunciation", "source", "picture", "hint"];
 /** The order for a deck with no cards to count, after the fields its AI may fill. */
 const BASE_ORDER: ChipKey[] = ["notes", "tags", "source", "example", "pronunciation", "picture"];
 
@@ -158,7 +172,7 @@ const FIELD_OF: Record<string, Extra> = {
   exampleTranslation: "example",
   pronunciation: "pronunciation",
   notes: "notes",
-  hook: "hook",
+  hint: "hint",
   source: "source",
 };
 
@@ -239,7 +253,7 @@ export function CardForm(props: CardFormProps) {
     draft?.exampleTranslation ?? card?.exampleTranslation ?? "",
   );
   const [notes, setNotes] = useState(draft?.notes ?? card?.notes ?? "");
-  const [hook, setHook] = useState(draft?.hook ?? card?.hook ?? "");
+  const [hint, setHint] = useState(draft?.hint ?? card?.hint ?? "");
   const [source, setSource] = useState(draft?.source ?? card?.source ?? "");
   const [tags, setTags] = useState<string[]>(draft?.tags ?? card?.tags ?? []);
   // Until the learner picks one, a new card takes its deck's language.
@@ -263,14 +277,14 @@ export function CardForm(props: CardFormProps) {
     example,
     pronunciation,
     source,
-    hook,
+    hint,
     picture: picture.kind === "none" ? "" : "picture",
   };
   // A field once shown stays until the next card, even emptied to be rewritten, so it never
   // vanishes from under the caret; the fields a card already holds start shown.
   const [shown, setShown] = useState<Extra[]>(() => {
     const start = EXTRAS.filter((key) => text[key].trim());
-    if (focus === "picture" || focus === "hook") {
+    if (focus === "picture" || focus === "hint") {
       if (!start.includes(focus)) start.push(focus);
     }
     return start;
@@ -336,7 +350,7 @@ export function CardForm(props: CardFormProps) {
   // Japanese and Chinese call a term's pronunciation its reading, and Russian its stress.
   const named = pronunciationName(language);
   const termCard = { term: term.trim(), language, pronunciation };
-  const termDrawn = termShowsPronunciation(termCard);
+  const termDrawn = drawsTermReading(termCard) || markedTerm(termCard) !== null;
   // A Stress that is not the term with marks added draws nothing, so say so while it is typed.
   const stressMissed =
     named === "stress" &&
@@ -346,7 +360,8 @@ export function CardForm(props: CardFormProps) {
   const deckModes = (current?.reviewModes ?? []).map(modeKey);
   const hasPicture = picture.kind !== "none";
 
-  const chipKeys: ChipKey[] = adding ? [...BASE_ORDER] : [...BASE_ORDER, "hook"];
+  // Adding keeps the hint at the row's end, since a hint is mostly for a card that keeps failing.
+  const chipKeys: ChipKey[] = adding ? [...BASE_ORDER] : [...BASE_ORDER, "hint"];
   // The deck's cards as the deck page last read them; without them the AI's fields lead.
   // biome-ignore lint/correctness/useExhaustiveDependencies: read once per deck, so chips stay put
   const order = useMemo(
@@ -367,7 +382,7 @@ export function CardForm(props: CardFormProps) {
     example: example.trim(),
     exampleTranslation: example.trim() ? translation.trim() : "",
     notes: notes.trim(),
-    hook: hook.trim(),
+    hint: hint.trim(),
     source: source.trim(),
     tags,
     language,
@@ -435,7 +450,7 @@ export function CardForm(props: CardFormProps) {
           example: t`Keep the example under 250 characters.`,
           exampleTranslation: t`Keep the translation under 250 characters.`,
           notes: t`Keep the notes under 2000 characters.`,
-          hook: t`Keep the hook under 200 characters.`,
+          hint: t`Keep the hint under 200 characters.`,
           source: t`Keep the source under 200 characters.`,
           tags: t`Use up to 20 tags of 40 characters or fewer.`,
           reviewModes: t`Choose at least one way to be asked.`,
@@ -491,7 +506,7 @@ export function CardForm(props: CardFormProps) {
     setExample("");
     setTranslation("");
     setNotes("");
-    setHook("");
+    setHint("");
     setModes(null);
     setPicture({ kind: "none" });
     setDescription("");
@@ -527,11 +542,11 @@ export function CardForm(props: CardFormProps) {
           role="status"
           className={cn(
             "flex items-start gap-1.5 text-sm empty:hidden",
-            notice?.kind === "warn" ? "text-text" : "text-text-2",
+            notice?.kind === "warn" ? "text-ink" : "text-ink-secondary",
           )}
         >
           {notice?.kind === "ok" && (
-            <Check className="mt-0.5 size-3.5 shrink-0 text-good" aria-hidden="true" />
+            <Check className="mt-0.5 size-3.5 shrink-0 text-success" aria-hidden="true" />
           )}
           {notice?.kind === "warn" && (
             <AlertCircle className="mt-0.5 size-3.5 shrink-0 text-danger" aria-hidden="true" />
@@ -558,7 +573,7 @@ export function CardForm(props: CardFormProps) {
         maxLength={cardLimits.meaning ?? undefined}
         value={meaning}
         rows={1}
-        className="min-h-11 py-2.5 leading-normal md:min-h-10"
+        className={ONE_LINE}
         onChange={(e) => {
           setMeaning(e.target.value);
           clear("meaning");
@@ -607,9 +622,11 @@ export function CardForm(props: CardFormProps) {
     set: (value: string) => void,
     limit: number | null,
     options: {
-      long?: boolean;
+      /** A text area that starts one line tall, or several for notes; it grows as it wraps. */
+      lines?: "one" | "several";
       enterAdds?: boolean;
       description?: ReactNode;
+      placeholder?: string;
       /** The length the limit counts, where it is not every character typed. */
       length?: number;
       /** Where the limit counts less than is typed, the most that can be typed. */
@@ -632,24 +649,30 @@ export function CardForm(props: CardFormProps) {
       <Field key={key} data-extra={key}>
         <FieldLabel aside={roomLeft(value, limit, options.length)}>{label}</FieldLabel>
         {options.description}
-        {options.long && options.chin !== undefined ? (
+        {options.lines && options.chin !== undefined ? (
           // One box: the field and its chin hover and take focus together, with a seam between them.
-          <div className="overflow-hidden rounded-md bg-plate edge transition-[box-shadow] duration-150 focus-within:edge-2 hoverable:hover:edge-2 has-aria-invalid:shadow-[0_0_0_1px_var(--danger)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring">
+          <div className="overflow-hidden rounded-md bg-plate edge transition-[box-shadow] duration-150 focus-within:edge-strong hoverable:hover:edge-strong has-aria-invalid:shadow-[0_0_0_1px_var(--danger)] has-focus-visible:outline-2 has-focus-visible:outline-offset-2 has-focus-visible:outline-ring">
             <Textarea
               maxLength={maxLength}
               value={value}
-              rows={2}
-              className="min-h-[68px] rounded-none bg-transparent shadow-none! outline-none"
+              placeholder={options.placeholder}
+              rows={options.lines === "one" ? 1 : 2}
+              className={cn(
+                options.lines === "one" ? ONE_LINE : "min-h-[68px]",
+                "rounded-none bg-transparent shadow-none! outline-none",
+              )}
               onChange={(e) => change(e.target.value)}
+              onKeyDown={options.enterAdds ? submitOnEnter : undefined}
             />
             {options.chin}
           </div>
-        ) : options.long ? (
+        ) : options.lines ? (
           <Textarea
             maxLength={maxLength}
             value={value}
-            rows={2}
-            className={options.enterAdds ? undefined : "min-h-[68px]"}
+            placeholder={options.placeholder}
+            rows={options.lines === "one" ? 1 : 2}
+            className={options.lines === "one" ? ONE_LINE : "min-h-[68px]"}
             onChange={(e) => change(e.target.value)}
             onKeyDown={options.enterAdds ? submitOnEnter : undefined}
           />
@@ -657,6 +680,7 @@ export function CardForm(props: CardFormProps) {
           <Input
             maxLength={maxLength}
             value={value}
+            placeholder={options.placeholder}
             autoComplete="off"
             onChange={(e) => change(e.target.value)}
           />
@@ -681,15 +705,15 @@ export function CardForm(props: CardFormProps) {
       key="reading-preview"
       aria-hidden="true"
       lang={language ?? undefined}
-      className="grid gap-1.5 rounded-lg bg-plate-2 px-3 py-2.5"
+      className="grid gap-1.5 rounded-lg bg-plate-nested px-3 py-2.5"
     >
       {termDrawn && (
-        <p className="text-lg font-medium text-text">
+        <p className="text-lg font-medium text-ink">
           <TermText card={termCard} />
         </p>
       )}
       {exampleDrawn && (
-        <p className="text-md text-text-2 [overflow-wrap:anywhere]">
+        <p className="text-md text-ink-secondary [overflow-wrap:anywhere]">
           <ExampleText text={example} lang={language ?? undefined} />
         </p>
       )}
@@ -729,9 +753,9 @@ export function CardForm(props: CardFormProps) {
   const translationChin = (
     <div
       data-extra="exampleTranslation"
-      className="flex items-start gap-2.5 border-edge border-t bg-plate-2 px-3.5 py-2"
+      className="flex items-start gap-2.5 border-edge border-t bg-plate-nested px-3.5 py-2"
     >
-      <Languages aria-hidden="true" className="mt-[5px] size-4 shrink-0 text-muted" />
+      <Languages aria-hidden="true" className="mt-[5px] size-4 shrink-0 text-ink-muted" />
       <textarea
         id={translationId}
         aria-label={t`Translation`}
@@ -743,7 +767,7 @@ export function CardForm(props: CardFormProps) {
         placeholder={aiTranslates ? t`AI translates it after you save` : t`Add a translation`}
         className={cn(
           controlText,
-          "min-h-0 w-full resize-none bg-transparent leading-relaxed text-text-2 outline-none placeholder:text-muted [field-sizing:content]",
+          "min-h-0 w-full resize-none bg-transparent leading-relaxed text-ink-secondary outline-none placeholder:text-ink-muted [field-sizing:content]",
         )}
         onChange={(e) => {
           setTranslation(e.target.value);
@@ -756,7 +780,7 @@ export function CardForm(props: CardFormProps) {
         </span>
       )}
       {roomLeft(translation, cardLimits.exampleTranslation) && (
-        <span className="mt-0.5 shrink-0 text-sm text-muted">
+        <span className="mt-0.5 shrink-0 text-sm text-ink-muted">
           {roomLeft(translation, cardLimits.exampleTranslation)}
         </span>
       )}
@@ -772,10 +796,11 @@ export function CardForm(props: CardFormProps) {
   );
 
   const extraField: Record<Extra, () => ReactNode> = {
-    notes: () => textField("notes", t`Notes`, notes, setNotes, cardLimits.notes, { long: true }),
+    notes: () =>
+      textField("notes", t`Notes`, notes, setNotes, cardLimits.notes, { lines: "several" }),
     example: () =>
       textField("example", t`Example`, example, changeExample, EXAMPLE_LENGTH, {
-        long: true,
+        lines: "one",
         length: shownLength(example),
         maxLength: cardLimits.example,
         chin: example.trim() || translation ? translationChin : null,
@@ -789,26 +814,29 @@ export function CardForm(props: CardFormProps) {
         setPronunciation,
         cardLimits.pronunciation,
         {
-          description: stressMissed && (
-            <FieldDescription>
-              {t`Review shows the stress only when it’s the term with a stress mark added, as in за́мок.`}
-            </FieldDescription>
-          ),
+          description:
+            pitchPattern({ language, pronunciation }) !== null ? (
+              <PitchChart card={termCard} className="pt-1 text-md" />
+            ) : (
+              stressMissed && (
+                <FieldDescription>
+                  {t`Review shows the stress only when it’s the term with a stress mark added, as in за́мок.`}
+                </FieldDescription>
+              )
+            ),
         },
       ),
     source: () => textField("source", t`Source`, source, setSource, cardLimits.source),
-    hook: () =>
-      // Two lines, so a long hook can be read on a phone; it is one phrase, so Enter is done with it.
-      textField("hook", t`Memory hook`, hook, setHook, CARD_LIMITS.hook, {
-        long: true,
+    hint: () =>
+      // One phrase, so Enter is done with it; it wraps so a long hint can be read whole.
+      textField("hint", t`Hint`, hint, setHint, CARD_LIMITS.hint, {
+        lines: "one",
         enterAdds: true,
-        description: (
-          <FieldDescription>{t`A short phrase that helps you remember it.`}</FieldDescription>
-        ),
+        placeholder: t`A sound-alike, or something to picture`,
       }),
     picture: () => (
       <div key="picture" data-extra="picture" className="grid gap-1.5">
-        <span className="text-sm font-medium text-text-2">
+        <span className="text-sm font-medium text-ink-secondary">
           <Trans>Picture</Trans>
         </span>
         <CardPictureField
@@ -837,7 +865,7 @@ export function CardForm(props: CardFormProps) {
     pronunciation: { icon: AudioLines, label: pronunciationLabel },
     source: { icon: Library, label: t`Source` },
     picture: { icon: ImageIcon, label: t`Picture` },
-    hook: { icon: Anchor, label: t`Memory hook` },
+    hint: { icon: HintIcon, label: t`Hint` },
   };
   const chipFor = (key: ChipKey) => {
     if (key === "tags")
@@ -912,6 +940,7 @@ export function CardForm(props: CardFormProps) {
           pictureDescribed={hasPicture && !!description.trim()}
           invalid={!!invalid.reviewModes}
         />
+        {adding && chipFor("hint")}
       </FieldChipRow>
       {/* A choice's refusal has no field to sit under, so it sits under the row of chips. */}
       <FieldError className="-mt-3">{invalid.tags ?? invalid.reviewModes}</FieldError>
@@ -938,7 +967,7 @@ export function CardForm(props: CardFormProps) {
         {adding && onCreateMoreChange && (
           <Field orientation="horizontal" className="me-auto w-auto gap-2">
             <Checkbox checked={!!createMore} onCheckedChange={onCreateMoreChange} />
-            <FieldLabel className="text-sm whitespace-nowrap text-text-2">{t`Create more`}</FieldLabel>
+            <FieldLabel className="text-sm whitespace-nowrap text-ink-secondary">{t`Create more`}</FieldLabel>
           </Field>
         )}
         {!chips && (
@@ -975,6 +1004,8 @@ export function CardForm(props: CardFormProps) {
 }
 
 const ECHO_MS = 600;
+/** A text area as tall as an input until its text wraps. */
+const ONE_LINE = "min-h-11 py-2.5 leading-normal md:min-h-10";
 
 /** Enter adds the card from a one-line field; Shift Enter breaks the line. */
 function submitOnEnter(e: React.KeyboardEvent<HTMLTextAreaElement>) {

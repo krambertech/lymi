@@ -9,13 +9,14 @@ import { FIRST_TOUCH_HEADER, parseFirstTouch } from "@lymi/core/analytics";
 import { and, eq, sql } from "@lymi/core/db";
 import { type BetterAuthPlugin, betterAuth } from "better-auth";
 import { drizzleAdapter } from "better-auth/adapters/drizzle";
-import { getOAuthState } from "better-auth/api";
+import { createAuthMiddleware, getOAuthState, getSessionFromCtx } from "better-auth/api";
 import { emailOTP } from "better-auth/plugins/email-otp";
 import { jwt } from "better-auth/plugins/jwt";
 import { cookiePrefix } from "../shared/cookies";
 import { appleIdTokenVerifier } from "./apple-id-token";
 import { appleClientSecret, appleKeyOf } from "./apple-revoke";
 import { fetchClientMetadataResource } from "./cimd-fetch";
+import { consentEvent } from "./consent-analytics";
 import type { Db } from "./db";
 import { schema } from "./db";
 import { type Bindings, DEV_EMAIL_DOMAIN, devToolsEnabled } from "./env";
@@ -389,10 +390,11 @@ export function createAuth(
           // learner in; the join or add page then says why.
           after: async (session, context) => {
             const headers = headersOf(context);
+            const mac = macSignIn(headers?.get("user-agent") ?? null);
             await trackProductEvent(
               env,
               session.userId,
-              { name: "signed_in" },
+              { name: "signed_in", ...(mac && { client: "mac", via: mac }) },
               waitUntil,
               analyticsContextFor(db, session.userId, headers),
             );
@@ -437,6 +439,26 @@ export function createAuth(
           },
         },
       },
+    },
+    hooks: {
+      after: createAuthMiddleware(async (ctx) => {
+        if (ctx.path !== "/oauth2/consent") return;
+        // The consent is already saved; analytics must never turn the answer into a 500.
+        try {
+          const event = consentEvent(ctx.body, ctx.context.returned, env.PUBLIC_SITE_URL);
+          const userId = event && (await getSessionFromCtx(ctx))?.user.id;
+          if (!event || !userId) return;
+          await trackProductEvent(
+            env,
+            userId,
+            event,
+            waitUntil,
+            analyticsContextFor(db, userId, headersOf(ctx)),
+          );
+        } catch {
+          console.error("Consent analytics failed");
+        }
+      }),
     },
     advanced: {
       cookiePrefix: cookiePrefix(env.PRODUCT_URL),
@@ -600,4 +622,14 @@ function headersOf(context: GenericEndpointContext | null): Headers | undefined 
  */
 function asPlugin(plugin: unknown): BetterAuthPlugin {
   return plugin as BetterAuthPlugin;
+}
+
+/**
+ * How a session was made for the Mac app, by its user agent: the app's token trade after the
+ * browser's hand-off names itself, and its window is Electron's browser under Lymi's name.
+ */
+export function macSignIn(userAgent: string | null): "browser" | "window" | null {
+  if (!userAgent) return null;
+  if (userAgent.startsWith("Lymi for Mac/")) return "browser";
+  return /\bLymi\/\S+ .*\bElectron\//.test(userAgent) ? "window" : null;
 }

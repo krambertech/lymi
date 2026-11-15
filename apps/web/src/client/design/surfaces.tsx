@@ -7,6 +7,7 @@ import { Progress } from "../components/progress";
 import { RunStrip } from "../components/run-strip";
 import { Segmented } from "../components/segmented";
 import { SevenLights } from "../components/seven-lights";
+import { Rule, Rules } from "./do-dont";
 import { Doc, Pair, Sub } from "./frame";
 
 const WEEK = [12, 0, 30, 50, 44, 51, 31];
@@ -16,7 +17,7 @@ const MONTH = "000000001111101110111110111110"
 
 /** A name under a specimen, in the room's own muted ink. */
 function Caption({ children }: { children: ReactNode }) {
-  return <span className="text-xs text-muted">{children}</span>;
+  return <span className="text-xs text-ink-muted">{children}</span>;
 }
 
 function Labelled({ label, children }: { label: ReactNode; children: ReactNode }) {
@@ -50,11 +51,11 @@ export function Surfaces() {
                 </div>
               </Labelled>
               <Labelled label="Field · never lifts">
-                <div className="edge grid h-11 items-center rounded-md bg-plate px-3.5 text-sm text-muted [--lift:0_0_#0000]">
+                <div className="edge grid h-11 items-center rounded-md bg-plate px-3.5 text-sm text-ink-muted [--lift:0_0_#0000]">
                   Search
                 </div>
               </Labelled>
-              <Labelled label="Chosen · bg-chosen in a track">
+              <Labelled label="Chosen · bg-plate-chosen in a track">
                 <Segmented
                   size="sm"
                   label="Theme"
@@ -74,7 +75,7 @@ export function Surfaces() {
 
       <Sub
         title="Hover"
-        note="Something with a fill and a hairline strengthens to edge-2 and lays veil over its own fill, so it darkens from whatever fill it has. Something with no fill at rest fills with bg-hover."
+        note="Something with a fill and a hairline strengthens to edge-strong and lays veil over its own fill, so it darkens from whatever fill it has. Something with no fill at rest fills with bg-plate-hover."
       >
         <Pair>
           {() => (
@@ -82,15 +83,15 @@ export function Surfaces() {
               <Labelled label="Plate · rest, then hovered">
                 <div className="grid gap-2">
                   <div className="edge h-12 rounded-lg bg-plate" />
-                  <div className="edge-2 veil h-12 rounded-lg bg-plate" />
+                  <div className="edge-strong veil h-12 rounded-lg bg-plate" />
                 </div>
               </Labelled>
               <Labelled label="Ghost · rest, then hovered">
                 <div className="grid gap-2">
-                  <div className="grid h-12 items-center rounded-md px-3 text-sm text-text-2">
+                  <div className="grid h-12 items-center rounded-md px-3 text-sm text-ink-secondary">
                     Cancel
                   </div>
-                  <div className="grid h-12 items-center rounded-md bg-hover px-3 text-sm text-text">
+                  <div className="grid h-12 items-center rounded-md bg-plate-hover px-3 text-sm text-ink">
                     Cancel
                   </div>
                 </div>
@@ -116,9 +117,9 @@ export function Surfaces() {
                   <div
                     className={clsx(
                       "flex h-10 items-center rounded-sm px-2.5 text-base",
-                      state === "current" && "edge-inset bg-rail-chosen text-text",
-                      state === "hovered" && "bg-rail-hover text-text",
-                      state === "rest" && "text-text-2",
+                      state === "current" && "edge-inset bg-rail-chosen text-ink",
+                      state === "hovered" && "bg-rail-hover text-ink",
+                      state === "rest" && "text-ink-secondary",
                     )}
                   >
                     {name}
@@ -142,7 +143,7 @@ export function Surfaces() {
                   <Lantern className="-my-3 -ms-3 size-20" progress={0.6} flicker glow />
                   <span className="grid gap-1">
                     <span className="text-4xl font-medium leading-none tabular-nums">9</span>
-                    <span className="text-md text-text-2">cards due today</span>
+                    <span className="text-md text-ink-secondary">cards due today</span>
                   </span>
                 </div>
                 <Button variant="primary" size="lg" className="w-full">
@@ -186,6 +187,59 @@ export function Surfaces() {
             </div>
           )}
         </Pair>
+      </Sub>
+      <Sub title="Do and don’t" note="surfaces.md says which background each thing gets.">
+        <Rules>
+          <Rule kind="do" title="Put related rows in one panel.">
+            <div className="edge w-full max-w-72 divide-y divide-edge rounded-lg bg-plate">
+              {["Daily goal", "Reminders", "Theme"].map((r) => (
+                <div key={r} className="px-4 py-3 text-base">
+                  {r}
+                </div>
+              ))}
+            </div>
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Put panels inside a panel."
+            note="Group them with a heading and space instead."
+          >
+            <div className="edge grid w-full max-w-72 gap-2 rounded-xl bg-plate p-3">
+              {["Daily goal", "Reminders", "Theme"].map((r) => (
+                <div key={r} className="edge rounded-lg bg-plate px-4 py-3 text-base">
+                  {r}
+                </div>
+              ))}
+            </div>
+          </Rule>
+          <Rule kind="do" title="Use the edge utility.">
+            <div className="edge grid h-24 w-full max-w-60 place-items-center rounded-xl bg-plate text-base">
+              Italian with Giulia
+            </div>
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Write your own drop shadow."
+            note="It looks heavy by day and muddy at night. edge is right in both themes."
+          >
+            <div
+              className="grid h-24 w-full max-w-60 place-items-center rounded-xl bg-plate text-base"
+              style={{ boxShadow: "0 14px 32px var(--scrim)" }}
+            >
+              Italian with Giulia
+            </div>
+          </Rule>
+          <Rule kind="do" title="Make inner corners smaller than outer ones.">
+            <div className="edge rounded-xl bg-plate p-2">
+              <div className="h-14 w-44 rounded-md bg-plate-nested" />
+            </div>
+          </Rule>
+          <Rule kind="dont" title="Use the same corner size inside and out.">
+            <div className="edge rounded-xl bg-plate p-2">
+              <div className="h-14 w-44 rounded-xl bg-plate-nested" />
+            </div>
+          </Rule>
+        </Rules>
       </Sub>
     </Doc>
   );

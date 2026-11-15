@@ -30,8 +30,20 @@ describe("llmsTxt", () => {
   });
 
   it("names every import source and every assistant guide", () => {
-    expect(text).toContain("Anki or Mochi");
-    for (const name of ["Claude", "ChatGPT", "Gemini", "Cursor", "Grok"]) {
+    for (const name of [
+      "Anki",
+      "Mochi",
+      "Noji",
+      "Pleco",
+      "Quizlet",
+      "Yomitan",
+      "Readwise",
+      "Claude",
+      "ChatGPT",
+      "Gemini",
+      "Cursor",
+      "Grok",
+    ]) {
       expect(text).toContain(name);
     }
   });

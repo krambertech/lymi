@@ -14,7 +14,6 @@ import {
 } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Href } from "expo-router";
-import { openBrowserAsync } from "expo-web-browser";
 import { useEffect, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
@@ -26,7 +25,6 @@ import { captureEvent } from "../telemetry/posthog";
 import { Button, Text } from "../ui/primitives";
 import { BarButton, BarText } from "../ui/screen";
 import { useSystemBack } from "../ui/system-back";
-import { CONNECT_DOCS } from "../welcome/assistant-offer";
 import { setAfterWelcome, useWelcomeDeck, welcomeWith } from "../welcome/gate";
 import {
   Arrive,
@@ -176,7 +174,9 @@ export default function Onboarding() {
               ? (`/smart-add?deck=${lessonDeck}` as Href)
               : answers.own === "import"
                 ? "/import"
-                : undefined,
+                : answers.own === "assistant"
+                  ? "/you/apps"
+                  : undefined,
       );
     } catch (e) {
       setError(
@@ -200,8 +200,6 @@ export default function Onboarding() {
     );
     finishStep("start", false);
     endWelcome();
-    // The assistant's guide is on the web, over Today with its guide.
-    if (answers.kind === "own" && answers.own === "assistant") void openBrowserAsync(CONNECT_DOCS);
   };
 
   const startJoined = async () => {

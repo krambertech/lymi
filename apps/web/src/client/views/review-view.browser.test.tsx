@@ -1,13 +1,13 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
-import { knownReadings } from "@lymi/core";
+import { knownReadings, type PronunciationDisplay } from "@lymi/core";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { useState } from "react";
 import { expect, test, vi } from "vitest";
 import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
-import { HookOffer, type HookOfferProps } from "../components/hook-offer";
+import { HintOffer, type HintOfferProps } from "../components/hint-offer";
 import { aidSteps } from "../components/recall-aid";
 import { queueItem, queueItemPicture } from "../design/mock";
 import type { QueueItem } from "../lib/api";
@@ -22,7 +22,7 @@ const item = (card: Partial<QueueItem["card"]>): QueueItem => ({
   card: { ...queueItem.card, ...card },
 });
 
-test("a revealed card shows its source, not its tags, and marks only what the AI wrote", async () => {
+test("a revealed card shows its source, not its tags, and never who wrote it", async () => {
   await render(
     <I18nProvider i18n={i18n}>
       <ReviewCard
@@ -41,32 +41,11 @@ test("a revealed card shows its source, not its tags, and marks only what the AI
 
   expect(page.getByRole("list", { name: "Tags" }).elements()).toHaveLength(0);
   const card = page.getByRole("region", { name: /Recognition card/ }).element();
-  expect(card.textContent).toContain("AI wrote part of this card");
+  expect(card.textContent).not.toContain("AI");
   expect(card.textContent).toContain("Lesson 14");
   expect(card.textContent).not.toContain("verbs");
   expect(card.textContent).not.toContain("from lesson");
   expect(card.textContent).not.toContain("by you");
-});
-
-test("several AI-written fields share one AI chip", async () => {
-  await render(
-    <I18nProvider i18n={i18n}>
-      <ReviewCard
-        item={item({
-          meaningSource: "ai",
-          example: "Meie maja on madal.",
-          exampleSource: "ai",
-          pronunciation: "ˈmeie ˈmaja",
-          pronunciationSource: "ai",
-        })}
-        revealed
-        animateReveal={false}
-        onReveal={noop}
-      />
-    </I18nProvider>,
-  );
-
-  expect(page.getByText("AI wrote part of this card").elements()).toHaveLength(1);
 });
 
 test("the learner's own text and no source carry no chip", async () => {
@@ -132,11 +111,16 @@ const shown = (text: string) =>
     .elements()
     .filter((el) => !el.closest("[aria-hidden='true']") && el.checkVisibility());
 
-async function reviewCue(card: Partial<QueueItem["card"]>, fsrsState: number) {
+async function reviewCue(
+  card: Partial<QueueItem["card"]>,
+  fsrsState: number,
+  front?: PronunciationDisplay,
+) {
   const cue = (revealed: boolean) => (
     <I18nProvider i18n={i18n}>
       <ReviewCard
         item={{ ...item(card), fsrsState }}
+        deck={{ name: "汉语", language: "zh", pronunciationDisplay: front }}
         revealed={revealed}
         animateReveal={false}
         onReveal={noop}
@@ -175,6 +159,47 @@ test("a New or Learning Chinese card draws its pinyin over each character on the
   await reveal();
   await expect.poll(() => shown("to hurry up, to get a move on")).toHaveLength(1);
   expect(pinyinShown()).toEqual(["xué", "xí"]);
+});
+
+test("a Chinese card shows its pinyin as its own line once the learner turns adaptive pronunciation off", async () => {
+  const { reveal } = await reviewCue(
+    { term: "学习", language: "zh", pronunciation: "xuéxí" },
+    1,
+    "separate",
+  );
+  expect(pinyinShown()).toEqual([]);
+  expect(pinyinLine()).toHaveLength(0);
+  await reveal();
+  await expect.poll(pinyinLine).toHaveLength(1);
+  expect(pinyinShown()).toEqual([]);
+});
+
+test("a Japanese card charts its pitch under the term only after the reveal", async () => {
+  const { reveal } = await reviewCue(
+    { term: "図書館", language: "ja", pronunciation: "としょかん [2]" },
+    2,
+  );
+  const chart = () =>
+    page
+      .getByRole("img", { name: "としょかん, pitch falls after sound 2" })
+      .elements()
+      .filter((el) => !el.closest("[aria-hidden='true']") && el.checkVisibility());
+  expect(chart()).toHaveLength(0);
+  await reveal();
+  expect(chart()).toHaveLength(1);
+  expect(shown("としょかん [2]")).toHaveLength(0);
+  expect(document.querySelector("rt")?.checkVisibility({ visibilityProperty: true })).toBe(false);
+});
+
+test("the chart stands in for a pronunciation line the learner keeps separate", async () => {
+  const { reveal } = await reviewCue(
+    { term: "図書館", language: "ja", pronunciation: "としょかん [2]" },
+    2,
+    "separate",
+  );
+  await reveal();
+  expect(shown("としょかん")).toHaveLength(0);
+  await expect.element(page.getByRole("img", { name: /pitch falls after sound 2/ })).toBeVisible();
 });
 
 test("一点儿 gives 儿 to the erhua syllable before it", async () => {
@@ -384,10 +409,10 @@ test("the head names the deck alone, and the mode only for a picture", async () 
   expect(picture).toContain("ET");
 });
 
-test("the hook offer waits for the reveal, then opens from the foot of the card", async () => {
+test("the hint offer waits for the reveal, then opens from the foot of the card", async () => {
   const opened = vi.fn();
   const shown = vi.fn();
-  const offer: HookOfferProps = {
+  const offer: HintOfferProps = {
     delay: 0,
     animate: false,
     parked: false,
@@ -399,20 +424,20 @@ test("the hook offer waits for the reveal, then opens from the foot of the card"
       <ReviewCard item={item({})} revealed={false} onReveal={noop} offer={offer} />
     </I18nProvider>,
   );
-  expect(page.getByRole("button", { name: /Try a memory hook/ }).elements()).toHaveLength(0);
+  expect(page.getByRole("button", { name: /Try a hint/ }).elements()).toHaveLength(0);
 
   await screen.rerender(
     <I18nProvider i18n={i18n}>
       <ReviewCard item={item({})} revealed animateReveal={false} onReveal={noop} offer={offer} />
     </I18nProvider>,
   );
-  const button = page.getByRole("button", { name: /Try a memory hook/ });
+  const button = page.getByRole("button", { name: /Try a hint/ });
   await expect.element(button).toBeVisible();
   await expect.poll(() => shown.mock.calls.length).toBeGreaterThan(0);
   // A screen reader hears of it once it can be seen.
   await expect
     .poll(() => page.getByRole("status").element().textContent)
-    .toContain("You can add a memory hook.");
+    .toContain("You can add a hint.");
   await button.click();
   expect(opened).toHaveBeenCalled();
 });
@@ -421,17 +446,136 @@ test("a tap where the offer will be, before it has arrived, opens nothing", asyn
   const opened = vi.fn();
   await render(
     <I18nProvider i18n={i18n}>
-      <HookOffer delay={60} animate parked={false} onOpen={opened} onShown={noop} />
+      <HintOffer delay={60} animate parked={false} onOpen={opened} onShown={noop} />
     </I18nProvider>,
   );
-  const offer = page.getByRole("button", { name: /Try a memory hook/, includeHidden: true });
+  const offer = page.getByRole("button", { name: /Try a hint/, includeHidden: true });
   await expect.element(offer).toHaveAttribute("inert");
   // Forced, because Playwright rightly waits on an inert control; the tap still lands where it is.
   await offer.click({ force: true });
   expect(opened).not.toHaveBeenCalled();
 });
 
-const hooked = item({ hook: "Speed up the brigade", hookSource: "ai", notes: "Reflexive." });
+/** A card on a phone's width, with the speaker a term's last letters hold on to. */
+async function renderCue(
+  card: Partial<QueueItem["card"]>,
+  mode = queueItem.mode,
+  revealed = false,
+) {
+  await render(
+    <I18nProvider i18n={i18n}>
+      <div className="flex h-[720px] w-[393px] flex-col">
+        <ReviewCard
+          item={{ ...item(card), mode }}
+          revealed={revealed}
+          animateReveal={false}
+          onReveal={noop}
+          onPlayAudio={noop}
+        />
+      </div>
+    </I18nProvider>,
+  );
+  const text = page.getByRole("region").element().querySelector<HTMLElement>("p[data-fit-words]");
+  if (!text) throw new Error("the card drew no cue");
+  return {
+    size: () => getComputedStyle(text).fontSize,
+    reading: () => text.querySelector("rt"),
+    /** How far the term's reading, or the whole cue without one, runs past the end of its box. */
+    past: () => {
+      const end = text.getBoundingClientRect().right;
+      const drawn = text.querySelector("rt") ?? text;
+      return drawn.getBoundingClientRect().right - end;
+    },
+  };
+}
+
+/** A reading's text, one entry for each line it draws on. */
+function readingLines(reading: Element | null) {
+  const node = reading?.firstChild;
+  if (!(node instanceof Text)) throw new Error("the term drew no reading");
+  const lines: { top: number; text: string }[] = [];
+  const range = document.createRange();
+  for (let at = 0; at < node.length; at++) {
+    range.setStart(node, at);
+    range.setEnd(node, at + 1);
+    const top = range.getClientRects()[0]?.top ?? 0;
+    const line = lines.at(-1);
+    if (line && Math.abs(line.top - top) < 4) line.text += node.data[at];
+    else lines.push({ top, text: node.data[at] ?? "" });
+  }
+  return lines.map((line) => line.text);
+}
+
+const japanese = { language: "ja", pronunciation: "とうきょうとっきょきょかきょくちょう" };
+
+test("a word that fits the line keeps the cue's largest size", async () => {
+  const { size } = await renderCue({ term: "Kraftfahrzeug", language: "de" });
+  await expect.poll(size).toBe("38px");
+});
+
+test("a word wider than the line steps the cue down the type scale", async () => {
+  const { size } = await renderCue({
+    term: "Kraftfahrzeughaftpflichtversicherung",
+    language: "de",
+  });
+  await expect.poll(size).toBe("24px");
+});
+
+test("a term too wide for the answer's line sizes the card before its reveal", async () => {
+  const { size } = await renderCue(
+    { term: "Kraftfahrzeughaftpflichtversicherung", language: "de", meaning: "car insurance" },
+    { cue: "meaning", target: "term" },
+  );
+  await expect.poll(size).toBe("24px");
+});
+
+test("a reading wider than the line steps the cue down and stays in its box", async () => {
+  const { size, past } = await renderCue({ ...japanese, term: "東京特許許可局長" });
+  await expect.poll(size).toBe("30px");
+  expect(past()).toBeLessThanOrEqual(0);
+});
+
+test("a reading too long for the smallest size wraps inside its box", async () => {
+  const { size, past, reading } = await renderCue({
+    term: "東京特許許可局長今日急遽許可却下",
+    language: "ja",
+    pronunciation: `${japanese.pronunciation}きょうきゅうきょきょかきゃっかとうきょう`,
+  });
+  await expect.poll(size).toBe("24px");
+  expect(past()).toBeLessThanOrEqual(0);
+  // A second line never opens on a small kana, which belongs with the kana before it.
+  const lines = readingLines(reading());
+  expect(lines.length).toBeGreaterThan(1);
+  for (const line of lines) expect(line).not.toMatch(/^[ゃゅょっ]/);
+});
+
+test("a reading that fits stays centred on its text's line beside an overlong cue", async () => {
+  const { size } = await renderCue(
+    {
+      term: "食べる",
+      language: "ja",
+      pronunciation: "たべる",
+      meaning: "Kraftfahrzeughaftpflichtversicherungsgesellschaft",
+    },
+    { cue: "meaning", target: "term" },
+    true,
+  );
+  await expect.poll(size).toBe("24px");
+  const ruby = page.getByRole("region").element().querySelector("ruby");
+  const [base, kana] = [ruby?.firstChild, ruby?.nextSibling];
+  const reading = ruby?.querySelector("rt");
+  if (!base || !kana || !reading) throw new Error("the term drew no reading");
+  const box = (node: Node) => {
+    const range = document.createRange();
+    range.selectNodeContents(node);
+    return range.getBoundingClientRect();
+  };
+  const middle = (rect: DOMRect) => rect.left + rect.width / 2;
+  expect(Math.abs(box(base).bottom - box(kana).bottom)).toBeLessThan(2);
+  expect(Math.abs(middle(box(base)) - middle(box(reading)))).toBeLessThan(1);
+});
+
+const hinted = item({ hint: "Speed up the brigade", hintSource: "ai", notes: "Reflexive." });
 
 /** A card as review holds it: the aid steps taken live in the page, the card only draws them. */
 function PeekHarness({
@@ -487,54 +631,54 @@ const visible = (text: string) => () =>
       (el) => el.checkVisibility({ visibilityProperty: true }) && !el.closest("[role=status]"),
     );
 
-test("a peek shows the hook under the cue and says it aloud, without turning the card", async () => {
+test("a peek shows the hint under the cue and says it aloud, without turning the card", async () => {
   const onReveal = vi.fn();
-  await render(<PeekHarness card={hooked} onReveal={onReveal} />);
+  await render(<PeekHarness card={hinted} onReveal={onReveal} />);
   const card = page.getByRole("region", { name: /Recognition card/ });
   const status = card.getByRole("status");
   await expect.element(status).toHaveTextContent("");
 
-  await card.getByRole("button", { name: /Peek at your hook/ }).click();
-  await expect.element(status).toHaveTextContent("Memory hook: Speed up the brigade");
+  await card.getByRole("button", { name: /Peek at your hint/ }).click();
+  await expect.element(status).toHaveTextContent("Hint: Speed up the brigade");
   expect(onReveal).not.toHaveBeenCalled();
-  // The measuring copy holds the hook too, hidden; the peeked one is on show.
+  // The measuring copy holds the hint too, hidden; the peeked one is on show.
   await expect.poll(() => visible("Speed up the brigade")().length).toBe(1);
   // One step and it is taken, so nothing is left to press.
-  expect(card.getByRole("button", { name: /Peek at your hook/ }).elements()).toHaveLength(0);
+  expect(card.getByRole("button", { name: /Peek at your hint/ }).elements()).toHaveLength(0);
 });
 
-test("a peeked hook stays in its place under the cue through the reveal", async () => {
-  const card = hooked;
+test("a peeked hint stays in its place under the cue through the reveal", async () => {
+  const card = hinted;
   const { rerender } = await render(<PeekHarness card={card} onReveal={noop} />);
-  await page.getByRole("button", { name: /Peek at your hook/ }).click();
+  await page.getByRole("button", { name: /Peek at your hint/ }).click();
   await expect.poll(() => visible("Speed up the brigade")().length).toBe(1);
   const cue = page.getByText("sbrigarsi", { exact: true }).element();
-  const [hook] = visible("Speed up the brigade")();
-  if (!hook) throw new Error("no hook on show");
-  const offset = () => hook.getBoundingClientRect().top - cue.getBoundingClientRect().top;
+  const [hint] = visible("Speed up the brigade")();
+  if (!hint) throw new Error("no hint on show");
+  const offset = () => hint.getBoundingClientRect().top - cue.getBoundingClientRect().top;
   const before = offset();
 
   await rerender(<PeekHarness card={card} onReveal={noop} revealed />);
   await expect.element(page.getByText("Reflexive.")).toBeVisible();
   // The same line, not a second copy among the notes, at the same distance from the cue.
-  expect(hook.isConnected).toBe(true);
-  expect(visible("Speed up the brigade")()).toEqual([hook]);
+  expect(hint.isConnected).toBe(true);
+  expect(visible("Speed up the brigade")()).toEqual([hint]);
   expect(offset()).toBe(before);
   const notes = page.getByText("Reflexive.").element();
-  expect(hook.compareDocumentPosition(notes) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
-  expect(page.getByRole("button", { name: /Show hook/ }).elements()).toHaveLength(0);
+  expect(hint.compareDocumentPosition(notes) & Node.DOCUMENT_POSITION_FOLLOWING).toBeTruthy();
+  expect(page.getByRole("button", { name: /Show hint/ }).elements()).toHaveLength(0);
 });
 
-test("revealed without a peek, the hook waits for Show hook, which puts it under the cue", async () => {
+test("revealed without a peek, the hint waits for Show hint, which puts it under the cue", async () => {
   const onShow = vi.fn();
-  await render(<PeekHarness card={hooked} onReveal={noop} revealed onShow={onShow} />);
+  await render(<PeekHarness card={hinted} onReveal={noop} revealed onShow={onShow} />);
   const card = page.getByRole("region", { name: /Recognition card/ });
   await expect.poll(() => card.getByRole("status").element().textContent).toMatch(/^Answer:/);
   expect(visible("Speed up the brigade")()).toHaveLength(0);
 
-  const show = card.getByRole("button", { name: /Show hook/ });
+  const show = card.getByRole("button", { name: /Show hint/ });
   await expect.element(show).toBeVisible();
-  // The control stands in the hook's place: after the cue, before the rule and the answer.
+  // The control stands in the hint's place: after the cue, before the rule and the answer.
   const cue = page.getByText("sbrigarsi", { exact: true }).element();
   const notes = page.getByText("Reflexive.").element();
   expect(
@@ -547,36 +691,33 @@ test("revealed without a peek, the hook waits for Show hook, which puts it under
   await show.click();
   expect(onShow).toHaveBeenCalledOnce();
   await expect.poll(() => visible("Speed up the brigade")().length).toBe(1);
-  await expect
-    .element(card.getByRole("status"))
-    .toHaveTextContent("Memory hook: Speed up the brigade");
-  expect(card.getByRole("button", { name: /Show hook/ }).elements()).toHaveLength(0);
-  expect(card.element().textContent).toContain("AI hook");
+  await expect.element(card.getByRole("status")).toHaveTextContent("Hint: Speed up the brigade");
+  expect(card.getByRole("button", { name: /Show hint/ }).elements()).toHaveLength(0);
+  // The hint is the AI's, but review never says who wrote it.
+  expect(card.element().textContent).not.toContain("AI");
 });
 
 test("a quick second tap on the peek does not turn the card", async () => {
   const onReveal = vi.fn();
-  await render(<PeekHarness card={hooked} onReveal={onReveal} />);
+  await render(<PeekHarness card={hinted} onReveal={onReveal} />);
   const card = page.getByRole("region", { name: /Recognition card/ });
-  await card.getByRole("button", { name: /Peek at your hook/ }).dblClick();
-  await expect
-    .element(card.getByRole("status"))
-    .toHaveTextContent("Memory hook: Speed up the brigade");
+  await card.getByRole("button", { name: /Peek at your hint/ }).dblClick();
+  await expect.element(card.getByRole("status")).toHaveTextContent("Hint: Speed up the brigade");
   expect(onReveal).not.toHaveBeenCalled();
 });
 
-test("Show hook cannot be pressed until it has arrived, so a doubled reveal tap shows nothing", async () => {
+test("Show hint cannot be pressed until it has arrived, so a doubled reveal tap shows nothing", async () => {
   const onShow = vi.fn();
   await render(
     <I18nProvider i18n={i18n}>
       <div className="flex h-[640px] flex-col">
         <ReviewCard
-          item={hooked}
+          item={hinted}
           revealed
           animateReveal
           onReveal={noop}
           aid={{
-            steps: aidSteps(hooked.card),
+            steps: aidSteps(hinted.card),
             taken: 0,
             shown: false,
             animate: true,
@@ -593,27 +734,27 @@ test("Show hook cannot be pressed until it has arrived, so a doubled reveal tap 
   expect(arriving?.classList.contains("pointer-events-none")).toBe(true);
   await expect.poll(() => document.querySelector("[data-aid]")?.closest("[inert]")).toBeNull();
   expect(onShow).not.toHaveBeenCalled();
-  await page.getByRole("button", { name: /Show hook/ }).click();
+  await page.getByRole("button", { name: /Show hint/ }).click();
   expect(onShow).toHaveBeenCalledTimes(1);
 });
 
-test("a card without a hook has no peek control, and none after the reveal", async () => {
-  const bare = item({ hook: null, hookSource: null });
+test("a card without a hint has no peek control, and none after the reveal", async () => {
+  const bare = item({ hint: null, hintSource: null });
   const { rerender } = await render(<PeekHarness card={bare} onReveal={noop} />);
   await expect.element(page.getByRole("button", { name: "Reveal the card" })).toBeInTheDocument();
-  expect(page.getByRole("button", { name: /Peek at your hook/ }).elements()).toHaveLength(0);
+  expect(page.getByRole("button", { name: /Peek at your hint/ }).elements()).toHaveLength(0);
   await rerender(<PeekHarness card={bare} onReveal={noop} revealed />);
   await expect.poll(() => page.getByRole("status").element().textContent).toMatch(/^Answer:/);
-  expect(page.getByRole("button", { name: /Show hook/ }).elements()).toHaveLength(0);
+  expect(page.getByRole("button", { name: /Show hint/ }).elements()).toHaveLength(0);
 });
 
-const WHY = "You can’t choose Easy after peeking at your hook.";
+const WHY = "You can’t choose Easy after peeking at your hint.";
 
 test("after a peek Easy keeps its slot, locked: a press says why and grades nothing", async () => {
   const onGrade = vi.fn();
   await render(
     <I18nProvider i18n={i18n}>
-      <GradeBar revealed aid="hook" onGrade={onGrade} />
+      <GradeBar revealed aid="hint" onGrade={onGrade} />
     </I18nProvider>,
   );
   const easy = page.getByRole("button", { name: "Easy, locked" });
@@ -638,7 +779,7 @@ test("after a peek Easy keeps its slot, locked: a press says why and grades noth
 test("Easy's key after a peek shows the same reason each time it is pressed", async () => {
   const bar = (nudge: number) => (
     <I18nProvider i18n={i18n}>
-      <GradeBar revealed aid="hook" lockedNudge={nudge} onGrade={noop} />
+      <GradeBar revealed aid="hint" lockedNudge={nudge} onGrade={noop} />
     </I18nProvider>
   );
   const { rerender } = await render(bar(0));
@@ -651,7 +792,7 @@ test("Easy's key after a peek shows the same reason each time it is pressed", as
 test("the hover tooltip stands aside while the tip says why", async () => {
   await render(
     <I18nProvider i18n={i18n}>
-      <GradeBar revealed aid="hook" onGrade={noop} />
+      <GradeBar revealed aid="hint" onGrade={noop} />
     </I18nProvider>,
   );
   const easy = page.getByRole("button", { name: "Easy, locked" });

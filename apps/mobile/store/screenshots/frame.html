@@ -20,26 +20,26 @@
     --w: 1320px;
     --h: 2868px;
     --canvas: oklch(0.975 0.004 80);
-    --text: oklch(0.2 0.016 55);
-    --text-2: oklch(0.38 0.016 55);
+    --ink: oklch(0.2 0.016 55);
+    --ink-secondary: oklch(0.38 0.016 55);
     --edge: oklch(0.2 0.03 60 / 0.1);
-    --pool: oklch(0.9 0.09 78 / 0.5);
+    --lantern-pool: oklch(0.9 0.09 78 / 0.5);
     }
   /* Google Play allows at most 1:2, so its size is wider than an iPhone screen. */
   [data-size="play"] { --w: 1440px; --h: 2880px; }
   [data-size="feature"] { --w: 1024px; --h: 500px; }
   [data-theme="dark"] {
     --canvas: oklch(0.17 0.008 62);
-    --text: oklch(0.95 0.01 85);
-    --text-2: oklch(0.8 0.014 75);
+    --ink: oklch(0.95 0.01 85);
+    --ink-secondary: oklch(0.8 0.014 75);
     --edge: oklch(1 0 0 / 0.07);
-    --pool: oklch(0.78 0.15 74 / 0.18);
+    --lantern-pool: oklch(0.78 0.15 74 / 0.18);
   }
   * { box-sizing: border-box; margin: 0; }
   html, body { width: var(--w); height: var(--h); overflow: hidden; }
   body {
     background: var(--canvas);
-    color: var(--text);
+    color: var(--ink);
     font-family: "Onest", system-ui, sans-serif;
     position: relative;
   }
@@ -71,7 +71,7 @@
     background-position: calc(var(--w) * var(--i) * -1) 0;
   }
   [data-style="panorama"][data-index="4"],
-  [data-style="panorama"][data-index="5"] { --text: oklch(0.96 0.01 85); --edge: oklch(1 0 0 / 0.12); }
+  [data-style="panorama"][data-index="5"] { --ink: oklch(0.96 0.01 85); --edge: oklch(1 0 0 / 0.12); }
 
   /* Glow: a soft round light behind each screen. */
   [data-style="glow"] body::before {

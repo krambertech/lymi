@@ -1,5 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { noun, verb } from "./hand-cards";
 
@@ -56,55 +57,69 @@ export const JAPANESE_HAND: HandCard[] = [
  * Sentences that use the front card's word, drawn faintly behind the hand. The marked run, between
  * asterisks, is the word as the sentence bends it: 食べ in 食べたい.
  */
-export const HAND_EXAMPLES: Record<string, string[]> = {
+export const HAND_EXAMPLES: Record<string, Example[]> = {
   densha: [
-    "*電車*で会社に行きます。",
-    "次の*電車*は何時ですか。",
-    "*電車*が少し遅れています。",
-    "毎朝、*電車*の中で本を読みます。",
+    { text: "*電車*で会社に行きます。", meaning: msg`I go to work by *train*.` },
+    { text: "次の*電車*は何時ですか。", meaning: msg`What time is the next *train*?` },
+    { text: "*電車*が少し遅れています。", meaning: msg`The *train* is running a little late.` },
+    {
+      text: "毎朝、*電車*の中で本を読みます。",
+      meaning: msg`Every morning I read a book on the *train*.`,
+    },
   ],
   tomodachi: [
-    "*友達*と映画を見ました。",
-    "日本人の*友達*がいます。",
-    "週末、*友達*の家に行きます。",
-    "昔からの*友達*です。",
+    { text: "*友達*と映画を見ました。", meaning: msg`I watched a film with a *friend*.` },
+    { text: "日本人の*友達*がいます。", meaning: msg`I have a Japanese *friend*.` },
+    {
+      text: "週末、*友達*の家に行きます。",
+      meaning: msg`I’m going to a *friend’s* house this weekend.`,
+    },
+    { text: "昔からの*友達*です。", meaning: msg`We’re old *friends*.` },
   ],
   taberu: [
-    "朝ご飯を*食べ*ましたか。",
-    "お寿司が*食べ*たいです。",
-    "一緒に*食べ*ませんか。",
-    "何を*食べる*？",
+    { text: "朝ご飯を*食べ*ましたか。", meaning: msg`Did you *eat* breakfast?` },
+    { text: "お寿司が*食べ*たいです。", meaning: msg`I want to *eat* sushi.` },
+    { text: "一緒に*食べ*ませんか。", meaning: msg`Shall we *eat* together?` },
+    { text: "何を*食べる*？", meaning: msg`What are you going to *eat*?` },
   ],
   ashita: [
-    "*明日*は雨が降るそうです。",
-    "*明日*、また会いましょう。",
-    "*明日*の朝、早く起きます。",
-    "じゃあ、また*明日*。",
+    { text: "*明日*は雨が降るそうです。", meaning: msg`They say it’ll rain *tomorrow*.` },
+    { text: "*明日*、また会いましょう。", meaning: msg`Let’s meet again *tomorrow*.` },
+    { text: "*明日*の朝、早く起きます。", meaning: msg`I’m getting up early *tomorrow* morning.` },
+    { text: "じゃあ、また*明日*。", meaning: msg`See you *tomorrow*, then.` },
   ],
   mainichi: [
-    "*毎日*、日本語を勉強しています。",
-    "*毎日*少しずつ覚えます。",
-    "父は*毎日*走っています。",
-    "*毎日*が楽しいです。",
+    { text: "*毎日*、日本語を勉強しています。", meaning: msg`I study Japanese *every day*.` },
+    { text: "*毎日*少しずつ覚えます。", meaning: msg`I learn a little *every day*.` },
+    { text: "父は*毎日*走っています。", meaning: msg`My dad runs *every day*.` },
+    { text: "*毎日*が楽しいです。", meaning: msg`*Every day* is fun.` },
   ],
   kouen: [
-    "*公園*を散歩します。",
-    "駅の近くに*公園*があります。",
-    "子供たちが*公園*で遊んでいます。",
-    "*公園*で待っています。",
+    { text: "*公園*を散歩します。", meaning: msg`I take a walk in the *park*.` },
+    { text: "駅の近くに*公園*があります。", meaning: msg`There’s a *park* near the station.` },
+    {
+      text: "子供たちが*公園*で遊んでいます。",
+      meaning: msg`The children are playing in the *park*.`,
+    },
+    { text: "*公園*で待っています。", meaning: msg`I’ll be waiting in the *park*.` },
   ],
   yomu: [
-    "本を*読む*のが好きです。",
-    "毎晩、漫画を*読み*ます。",
-    "この漢字は何と*読み*ますか。",
-    "新聞を*読ん*でいます。",
+    { text: "本を*読む*のが好きです。", meaning: msg`I like *reading* books.` },
+    { text: "毎晩、漫画を*読み*ます。", meaning: msg`I *read* manga every night.` },
+    { text: "この漢字は何と*読み*ますか。", meaning: msg`How do you *read* this kanji?` },
+    { text: "新聞を*読ん*でいます。", meaning: msg`I’m *reading* the newspaper.` },
   ],
-  a: ["*あ*さ", "*あ*め", "*あ*りがとう", "*あ*した"],
+  a: [
+    { text: "*あ*さ", meaning: msg`morning` },
+    { text: "*あ*め", meaning: msg`rain` },
+    { text: "*あ*りがとう", meaning: msg`thank you` },
+    { text: "*あ*した", meaning: msg`tomorrow` },
+  ],
   denwa: [
-    "後で*電話*します。",
-    "*電話*番号を教えてください。",
-    "母から*電話*がありました。",
-    "*電話*に出られません。",
+    { text: "後で*電話*します。", meaning: msg`I’ll *call* you later.` },
+    { text: "*電話*番号を教えてください。", meaning: msg`Can I have your *phone* number?` },
+    { text: "母から*電話*がありました。", meaning: msg`I got a *call* from my mum.` },
+    { text: "*電話*に出られません。", meaning: msg`I can’t get to the *phone*.` },
   ],
 };
 

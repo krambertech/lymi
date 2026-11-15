@@ -67,7 +67,7 @@ export const navigation: Group = {
             },
             {
               label: "No AI assistant connected",
-              note: "A card above the learner offers the setup guides until an app connects. Its dismiss shows on hover and hides it on this device; the learner menu keeps a Connect AI assistant row beside Docs until an app connects.",
+              note: "A card above the learner offers the setup guides until an app connects. Point at it and the marks spread apart. Its dismiss shows on hover and hides it on this device; the learner menu keeps a Connect AI assistant row beside Docs until an app connects.",
               render: () => (
                 <RailScene
                   path="/today"

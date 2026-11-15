@@ -1,3 +1,4 @@
+import { API_RESOURCES } from "@lymi/core/api-resources";
 import { describe, expect, it } from "vitest";
 import { openApiCorsOrigin } from "./openapi";
 import { testApp } from "./test-app";
@@ -33,5 +34,21 @@ describe("OpenAPI document", () => {
       const schema = operation.responses["403"]?.content?.["application/json"]?.schema;
       expect({ route, schema }).toEqual({ route, schema: { $ref: "#/components/schemas/Error" } });
     }
+  }, 60_000);
+
+  it("tags every operation with one resource the reference has a page for", async () => {
+    const app = await testApp();
+    const response = await app.fetch("/api/openapi.json", {});
+    const document = (await response.json()) as {
+      paths: Record<string, Record<string, { tags?: string[] }>>;
+    };
+    const resources = new Set(API_RESOURCES.map((r) => r.name));
+    const untagged = Object.entries(document.paths)
+      .flatMap(([path, operations]) =>
+        Object.entries(operations).map(([method, op]) => ({ route: `${method} ${path}`, op })),
+      )
+      .filter(({ op }) => op.tags?.length !== 1 || !resources.has(op.tags[0] ?? ""))
+      .map(({ route }) => route);
+    expect(untagged).toEqual([]);
   }, 60_000);
 });

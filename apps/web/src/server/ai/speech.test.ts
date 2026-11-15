@@ -1,52 +1,36 @@
 import { describe, expect, it } from "vitest";
-import { chirpLocale, createSpeechProviders, geminiLocale, openAiSupportsLanguage } from "./speech";
-import { nativeSpeechVoice } from "./speech-voices";
+import { createSpeechProviders, openAiSupportsLanguage, voiceLocale } from "./speech";
+import { NATIVE_SPEECH_VOICES, nativeSpeechVoice } from "./speech-voices";
 
-const env = {
-  GOOGLE_CLOUD_TTS_CREDENTIALS: "configured",
-  OPENAI_API_KEY: "openai-key",
-};
+const env = { OPENAI_API_KEY: "openai-key", ELEVENLABS_API_KEY: "eleven-key" };
 
 function names(providers: ReturnType<typeof createSpeechProviders>) {
   return providers.map((provider) => provider.provider);
 }
 
 describe("speech provider routing", () => {
-  it("normalizes Estonian, Ukrainian, and regional Chirp locales", () => {
-    expect(chirpLocale("et")).toBe("et-EE");
-    expect(chirpLocale("uk-UA")).toBe("uk-UA");
-    expect(chirpLocale("en_GB")).toBe("en-GB");
-    expect(chirpLocale("zh")).toBe("cmn-CN");
-  });
-
-  it("returns null outside Chirp's published language list", () => {
-    expect(chirpLocale("cy")).toBeNull();
-    expect(chirpLocale("not-a-language")).toBeNull();
-  });
-
-  it("keeps a published Gemini region and fills a default for a bare language", () => {
-    expect(geminiLocale("et")).toBe("et-EE");
-    expect(geminiLocale("pt-pt")).toBe("pt-PT");
-    expect(geminiLocale("pt")).toBe("pt-BR");
-    expect(geminiLocale("es-419")).toBe("es-419");
-    expect(geminiLocale("en-NZ")).toBe("en-US");
-    expect(geminiLocale("tl")).toBe("fil-PH");
-    expect(geminiLocale("cy")).toBeNull();
+  it("keeps a published region and fills a default for a bare language", () => {
+    expect(voiceLocale("et")).toBe("et-EE");
+    expect(voiceLocale("pt-pt")).toBe("pt-PT");
+    expect(voiceLocale("pt")).toBe("pt-BR");
+    expect(voiceLocale("es-419")).toBe("es-419");
+    expect(voiceLocale("en-NZ")).toBe("en-US");
+    expect(voiceLocale("tl")).toBe("fil-PH");
+    expect(voiceLocale("cy")).toBeNull();
   });
 
   it("speaks traditional Chinese with the Taiwan voice and simplified with the mainland one", () => {
     for (const tag of ["zh-TW", "zh-Hant", "zh-HK", "zh-Hant-HK", "zh_MO"])
-      expect(geminiLocale(tag)).toBe("cmn-TW");
+      expect(voiceLocale(tag)).toBe("cmn-TW");
     for (const tag of ["zh", "zh-CN", "zh-Hans", "zh-Hans-TW", "zh-SG"])
-      expect(geminiLocale(tag)).toBe("cmn-CN");
+      expect(voiceLocale(tag)).toBe("cmn-CN");
     expect(nativeSpeechVoice("cmn-CN")?.name).toMatch(/Amy/);
     expect(nativeSpeechVoice("cmn-TW")?.name).toMatch(/Ling/);
   });
 
   it("speaks every Cantonese tag, zh-yue too, in Hong Kong Cantonese with Aki", () => {
     for (const tag of ["yue", "yue-HK", "yue-Hans", "zh-yue", "zh-yue-HK", "zh_yue"]) {
-      expect(geminiLocale(tag)).toBe("yue-HK");
-      expect(chirpLocale(tag)).toBe("yue-HK");
+      expect(voiceLocale(tag)).toBe("yue-HK");
     }
     expect(nativeSpeechVoice("yue-HK")?.voice).toBe("xDISamJf8LV5rG5A2te1");
   });
@@ -66,46 +50,7 @@ describe("speech provider routing", () => {
     expect(openAiSupportsLanguage("gu-IN")).toBe(false);
   });
 
-  it("prefers Gemini, then OpenAI, then Chirp", () => {
-    expect(names(createSpeechProviders(env, "et"))).toEqual([
-      "google-gemini",
-      "openai",
-      "google-chirp",
-    ]);
-  });
-
-  it("uses only OpenAI when Google is not configured", () => {
-    expect(
-      names(createSpeechProviders({ ...env, GOOGLE_CLOUD_TTS_CREDENTIALS: "" }, "et")),
-    ).toEqual(["openai"]);
-  });
-
-  it("uses Gemini for a language neither Chirp nor OpenAI covers", () => {
-    expect(names(createSpeechProviders(env, "am"))).toEqual(["google-gemini"]);
-  });
-
-  it("uses OpenAI for a language outside both Google lists", () => {
-    expect(names(createSpeechProviders(env, "cy"))).toEqual(["openai"]);
-  });
-
-  it("returns no provider when no vendor covers the language", () => {
-    expect(createSpeechProviders(env, "eo")).toEqual([]);
-  });
-  it("uses the AI Studio API instead of Cloud Gemini when its key is configured", () => {
-    const configured = { ...env, GEMINI_API_KEY: "gemini-key" };
-    for (const language of ["et", "uk", "ru", "cs", "pl", "he", "ka", "sr", "en"]) {
-      const providers = createSpeechProviders(configured, language);
-      expect(providers[0]).toMatchObject({
-        provider: "gemini-api",
-        voice: "Kore",
-        extension: "wav",
-      });
-      expect(names(providers)).not.toContain("google-gemini");
-    }
-  });
-
-  it("routes native voices first and leaves Gemini as their fallback", () => {
-    const configured = { ...env, GEMINI_API_KEY: "gemini-key", ELEVENLABS_API_KEY: "eleven-key" };
+  it("puts a native voice first and backs it up with OpenAI", () => {
     for (const language of [
       "et-EE",
       "uk",
@@ -119,52 +64,63 @@ describe("speech provider routing", () => {
       "no",
       "sv",
     ]) {
-      expect(names(createSpeechProviders(configured, language))).toEqual([
-        "elevenlabs",
-        "gemini-api",
-        "openai",
-        "google-chirp",
-      ]);
+      expect(names(createSpeechProviders(env, language))).toEqual(["elevenlabs", "openai"]);
     }
-    expect(createSpeechProviders(configured, "et")[0]?.voice).toBe("jGja51dd7gcoK0zkxeyg");
-    expect(createSpeechProviders(configured, "ko-KR")[0]?.voice).toBe("s07IwTCOrCDCaETjUVjx");
-    expect(createSpeechProviders(configured, "vi-VN")[0]?.voice).toBe("aN7cv9yXNrfIR87bDmyD");
-    expect(createSpeechProviders(configured, "nb-NO")[0]?.voice).toBe("uNsWM1StCcpydKYOjKyu");
-    expect(createSpeechProviders(configured, "sv-SE")[0]?.voice).toBe("kPdGSxhZAqy4bmPAf9iJ");
-    expect(createSpeechProviders(configured, "pt-PT")[0]?.provider).toBe("gemini-api");
-    for (const language of [
-      "cs",
-      "pl",
-      "nn",
-      "lv",
-      "lt",
-      "he",
-      "hi",
-      "ro",
-      "sr",
-      "es",
-      "is",
-      "tr",
-      "en",
-      "ka",
-      "hy",
-      "ta",
-      "tl",
-    ]) {
-      expect(createSpeechProviders(configured, language)[0]?.provider).toBe("gemini-api");
+    expect(createSpeechProviders(env, "et")[0]?.voice).toBe("jGja51dd7gcoK0zkxeyg");
+    expect(createSpeechProviders(env, "nb-NO")[0]?.voice).toBe("uNsWM1StCcpydKYOjKyu");
+  });
+
+  it("gives the languages Gemini spoke alone a native voice", () => {
+    for (const language of ["bn", "ceb", "gu", "ka", "ml", "mn", "my", "or", "pa", "ps", "te"]) {
+      expect(names(createSpeechProviders(env, language))).toEqual(["elevenlabs"]);
     }
   });
 
-  it("allows a voice override or Gemini default without adding a credential", () => {
-    const configured = { GEMINI_API_KEY: "gemini-key", ELEVENLABS_API_KEY: "eleven-key" };
+  it("gives languages without a tagged voice a neighbouring language's", () => {
+    expect(createSpeechProviders(env, "lb")[0]?.voice).toBe(NATIVE_SPEECH_VOICES.de?.voice);
+    expect(createSpeechProviders(env, "sd")[0]?.voice).toBe(NATIVE_SPEECH_VOICES.ur?.voice);
+  });
+
+  it("speaks English and languages without a native voice with OpenAI", () => {
+    for (const language of ["en", "en-GB", "pt-PT", "sl", "lt", "lv", "is", "hy", "cy"]) {
+      expect(names(createSpeechProviders(env, language))).toEqual(["openai"]);
+    }
+  });
+
+  it("tries OpenAI for the languages neither vendor lists", () => {
+    for (const language of ["am", "eu", "ht", "kok", "la", "mai", "mg", "si", "sq"]) {
+      expect(names(createSpeechProviders(env, language))).toEqual(["openai"]);
+    }
+  });
+
+  it("leaves out a vendor without its key", () => {
+    expect(names(createSpeechProviders({ ...env, ELEVENLABS_API_KEY: "" }, "et"))).toEqual([
+      "openai",
+    ]);
+    expect(names(createSpeechProviders({ ...env, OPENAI_API_KEY: "" }, "et"))).toEqual([
+      "elevenlabs",
+    ]);
+  });
+
+  it("returns no provider when no vendor covers the language", () => {
+    expect(createSpeechProviders(env, "eo")).toEqual([]);
+  });
+
+  it("gives every native voice a language the chain can reach", () => {
+    for (const tag of Object.keys(NATIVE_SPEECH_VOICES)) {
+      expect(voiceLocale(tag), tag).not.toBeNull();
+    }
+  });
+
+  it("allows a voice override and turning a native voice off", () => {
     const override = {
-      ...configured,
+      ...env,
       ELEVENLABS_SPEECH_VOICES: '{"cs": "jGja51dd7gcoK0zkxeyg", "pl": null}',
     };
     expect(createSpeechProviders(override, "cs")[0]?.voice).toBe("jGja51dd7gcoK0zkxeyg");
-    expect(createSpeechProviders(override, "pl")[0]?.provider).toBe("gemini-api");
+    expect(createSpeechProviders(override, "pl")[0]?.provider).toBe("openai");
     expect(
-      createSpeechProviders({ ...configured, ELEVENLABS_SPEECH_VOICES: "invalid" }, "et")[0]?.voice,
+      createSpeechProviders({ ...env, ELEVENLABS_SPEECH_VOICES: "invalid" }, "et")[0]?.voice,
     ).toBe("jGja51dd7gcoK0zkxeyg");
   });
 });

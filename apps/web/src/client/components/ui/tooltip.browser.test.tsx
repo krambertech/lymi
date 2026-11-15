@@ -58,7 +58,7 @@ describe("Tooltip", () => {
       expect(popup?.getAttribute("aria-hidden")).toBe("true");
       expect(popup?.getAttribute("role")).toBeNull();
       const probe = document.body.appendChild(document.createElement("div"));
-      probe.className = "bg-text";
+      probe.className = "bg-ink";
       expect(popup && getComputedStyle(popup).backgroundColor).toBe(
         getComputedStyle(probe).backgroundColor,
       );

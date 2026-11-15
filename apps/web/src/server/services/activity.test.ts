@@ -392,3 +392,25 @@ describe("paging", () => {
     expect(new Set(halves).size).toBe(1);
   });
 });
+
+describe("one app's activity", () => {
+  it("lists only the writes that app made", async () => {
+    const deck = await createDeck(kateryna, { name: "Lettura", defaultLanguage: "it" });
+    const readwise: ServiceContext = {
+      ...kateryna,
+      actor: "system",
+      client: "readwise",
+      clientName: "Readwise",
+    };
+    await addCards(readwise, [{ deckId: deck.id, term: "vetri" }]);
+    await addCards(claude, [{ deckId: deck.id, term: "finestra" }]);
+
+    const page = await listActivity(kateryna, { app: "readwise" });
+    expect(page.entries.map((e) => [e.kind, e.app, e.cards.map((c) => c.term)])).toEqual([
+      ["cards_added", "Readwise", ["vetri"]],
+    ]);
+    const claudes = await listActivity(kateryna, { app: "cl-1" });
+    expect(claudes.entries.every((e) => e.actor === "mcp")).toBe(true);
+    expect(claudes.entries.some((e) => e.cards.some((c) => c.term === "finestra"))).toBe(true);
+  });
+});

@@ -17,6 +17,7 @@ import {
 import { EXAMPLE_NOTATION, type ReadingEngine, readingEngine, stressRules } from "./languages";
 import { pinyinExampleSegments, pinyinKey, pinyinPairs, pinyinTermReading } from "./pinyin";
 import { addsStress, markedForm, missingStress, stressKey } from "./stress";
+import type { PronunciationDisplay } from "./types";
 
 /** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
@@ -52,6 +53,9 @@ function syllableEngine(language: string | null | undefined): SyllableEngine | n
   return (engine && SYLLABLE_ENGINES[engine]) ?? null;
 }
 
+/** A Reading's pitch accent after its kana, `としょかん [2]`, which `./pitch` reads. */
+const PITCH = /\s*(?:\[\d{1,2}\]\s*)+$/u;
+
 /** Characters a reading is drawn over: kanji, their iteration marks, and the counter ヶ. */
 const BASE = /[\p{Script=Han}〆ヵヶ]/u;
 /** Characters a reading is written in. */
@@ -70,7 +74,7 @@ const isBase = (char: string) => BASE.test(char);
 const isKana = (char: string) => KANA.test(char) && !isBase(char);
 
 /** Kana that join the mora before them rather than make their own: きょ is one mora. */
-const SMALL_KANA = /[ゃゅょぁぃぅぇぉゎャュョァィゥェォヮ]/;
+export const SMALL_KANA = /[ゃゅょぁぃぅぇぉゎャュョァィゥェォヮ]/;
 
 /** How many morae a stretch of kana holds, as a pitch accent counts them. */
 export function moraCount(text: string): number {
@@ -90,14 +94,44 @@ export function foldReading(reading: string): string {
   return toHiragana(reading.normalize("NFC").replace(/[\s・]/g, ""));
 }
 
-/** A Japanese card's pronunciation when it is a kana reading, never IPA, romaji or a hint. */
+/** Whether text is kana alone, as a Japanese Reading is. */
+export function isKanaText(text: string): boolean {
+  return KANA_TEXT.test(text);
+}
+
+/** Text without the pitch accent after its kana. */
+export function withoutPitch(text: string): string {
+  return text.replace(PITCH, "");
+}
+
+/**
+ * A Japanese card's pronunciation when it is a kana reading, never IPA, romaji or a hint, and
+ * without its pitch accent, so duplicates, furigana and audio read the kana alone.
+ */
 export function kanaReading(card: {
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): string | null {
   const reading = card.pronunciation?.normalize("NFC").trim();
   if (readingEngine(card.language) !== "furigana" || !reading) return null;
-  return KANA_TEXT.test(reading) ? reading : null;
+  const kana = withoutPitch(reading);
+  return KANA_TEXT.test(kana) ? kana : null;
+}
+
+/** The pronunciation as a line of text: a chart draws a Japanese Reading's pitch accent, never the line. */
+export function pronunciationText(card: {
+  language?: string | null | undefined;
+  pronunciation?: string | null | undefined;
+}): string | null {
+  return kanaReading(card) ?? card.pronunciation ?? null;
+}
+
+/** Whether a new pronunciation says what the card's says, as a pitch accent alone leaves it. */
+export function sameSpokenReading(
+  card: { language?: string | null | undefined; pronunciation?: string | null | undefined },
+  pronunciation: string | null,
+): boolean {
+  return pronunciationText(card) === pronunciationText({ ...card, pronunciation });
 }
 
 /**
@@ -275,13 +309,39 @@ export function markedTerm(card: {
   );
 }
 
-/** Whether the term as drawn shows the card's pronunciation, over it or in place, so no screen repeats it as a line. */
+/**
+ * Whether the term as drawn shows the card's pronunciation, over it, in place or as its own kana,
+ * so no screen repeats it as a line.
+ */
 export function termShowsPronunciation(card: {
   term: string;
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
 }): boolean {
-  return termReading(card) !== null || markedTerm(card) !== null;
+  const kana = kanaReading(card);
+  return (
+    termReading(card) !== null ||
+    markedTerm(card) !== null ||
+    (kana !== null && foldReading(kana) === foldReading(card.term))
+  );
+}
+
+/**
+ * Whether review draws the term's pronunciation on the term: adaptive draws it always on the answer
+ * and before the reveal until the card is Known; separate never does, and gives it its own line.
+ */
+export function cueShowsPronunciation({
+  revealed,
+  known,
+  display,
+}: {
+  revealed: boolean;
+  known: boolean;
+  /** Undefined from a deck cached before the choice existed, which reads as adaptive. */
+  display: PronunciationDisplay | undefined;
+}): boolean {
+  if (display === "separate") return false;
+  return revealed || !known;
 }
 
 /** Whether a drawn reading is written in letters, as pinyin and Jyutping are, so it needs room from the reading beside it. */

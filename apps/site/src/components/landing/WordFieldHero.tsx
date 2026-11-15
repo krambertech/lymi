@@ -247,7 +247,7 @@ export function WordFieldHero({ frames, label, lede }: Props) {
                 onPointerEnter={() => setHeld(true)}
                 onPointerLeave={() => setHeld(false)}
                 className={clsx(
-                  "floating-word group absolute -translate-1/2 font-medium tracking-[-0.02em] whitespace-nowrap text-text",
+                  "floating-word group absolute -translate-1/2 font-medium tracking-[-0.02em] whitespace-nowrap text-ink",
                   slot.size,
                   "@max-3xl:text-2xl!",
                 )}
@@ -268,7 +268,7 @@ export function WordFieldHero({ frames, label, lede }: Props) {
                     {word.term}
                   </span>
                 </span>
-                <span className="pointer-events-none absolute start-1/2 top-full z-10 mt-2 -translate-x-1/2 rounded-sm bg-plate px-2.5 py-1 text-sm font-normal tracking-normal whitespace-nowrap text-text-2 opacity-0 edge transition-opacity duration-150 group-hover:opacity-100">
+                <span className="pointer-events-none absolute start-1/2 top-full z-10 mt-2 -translate-x-1/2 rounded-sm bg-plate px-2.5 py-1 text-sm font-normal tracking-normal whitespace-nowrap text-ink-secondary opacity-0 edge transition-opacity duration-150 group-hover:opacity-100">
                   {i18n._(word.meaning)}
                 </span>
               </motion.span>
@@ -278,7 +278,7 @@ export function WordFieldHero({ frames, label, lede }: Props) {
       </div>
 
       <div className="relative max-w-[780px] text-center">
-        <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.5rem] @4xl:leading-[1.04]">
+        <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[4.5rem] @4xl:leading-[1.04]">
           <span className="sr-only">{label}</span>
           <span aria-hidden="true">
             <FrameKey.Provider value={{ language: frame.language, animate: index > 0 }}>
@@ -286,7 +286,7 @@ export function WordFieldHero({ frames, label, lede }: Props) {
             </FrameKey.Provider>
           </span>
         </h1>
-        <p className="mx-auto mt-7 max-w-[46ch] text-lg text-pretty text-text-2 @2xl:text-xl">
+        <p className="mx-auto mt-7 max-w-[46ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
           {lede}
         </p>
         <div className="mt-9">

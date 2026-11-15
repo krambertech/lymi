@@ -12,7 +12,7 @@ export const SHORTCUTS: [string, MessageDescriptor][] = [
   ["N", msg`Add a card`],
   ["R", msg`Start review`],
   ["/", msg`Search`],
-  [AID_KEY.label, msg`Peek at or show your hook`],
+  [AID_KEY.label, msg`Peek at or show your hint`],
   ["Space", msg`Show the meaning, then Good`],
   ["1 – 4", msg`Forgot, Hard, Good, Easy`],
   ["Esc", msg`Leave review or close a sheet`],
@@ -33,7 +33,7 @@ export function ShortcutsDialog({ open, onClose }: { open: boolean; onClose: () 
               <dt>
                 <Kbd className="h-6 px-2 text-xs">{k}</Kbd>
               </dt>
-              <dd className="text-text-2">{i18n._(what)}</dd>
+              <dd className="text-ink-secondary">{i18n._(what)}</dd>
             </div>
           ))}
         </dl>

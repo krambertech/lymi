@@ -21,8 +21,8 @@ export function SettingsGroup({ title, description, className, children, ...rest
       {...rest}
     >
       <div className="grid gap-1">
-        <h2 className="text-md font-medium text-text">{title}</h2>
-        {description && <p className="max-w-[60ch] text-sm text-muted">{description}</p>}
+        <h2 className="text-md font-medium text-ink">{title}</h2>
+        {description && <p className="max-w-[60ch] text-sm text-ink-muted">{description}</p>}
       </div>
       {children}
     </section>

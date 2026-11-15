@@ -1,0 +1,61 @@
+# Hints in review: Show hint glides the answer down for a long hint, no AI badge shows, and Draft is one button from first draft to saved.
+appId: app.lymi
+name: Hints in review
+---
+- runFlow: _open.yaml
+- openLink: lymi://review?deck=${GLIDE_DECK}
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- takeScreenshot: 01-cue
+# Above Peek at the foot, and below the cue's speaker.
+- tapOn:
+    point: "50%,62%"
+- extendedWaitUntil:
+    visible: "^Good.*"
+    timeout: 10000
+- waitForAnimationToEnd
+- takeScreenshot: 02-revealed
+# The revealed card is one element to VoiceOver, so Show hint, under the one-line cue, is tapped where it sits.
+- tapOn:
+    point: "24%,52%"
+- waitForAnimationToEnd
+- takeScreenshot: 03-hint-shown
+- tapOn: "^Good.*"
+- extendedWaitUntil:
+    visible: "^Done$"
+    timeout: 20000
+- tapOn: "^Done$"
+- openLink: lymi://review?deck=${OFFER_DECK}
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- tapOn:
+    point: "50%,62%"
+- extendedWaitUntil:
+    visible: "^Good.*"
+    timeout: 10000
+# The offer rises half a second after the reveal, inside the card's one element, so it is tapped where it lands.
+- waitForAnimationToEnd
+- tapOn:
+    point: "50%,81%"
+# The hint sheet is native, so Maestro's hierarchy leaves its contents out: Draft, at the field's foot, and ✓ are tapped where they sit.
+- waitForAnimationToEnd
+- takeScreenshot: 04-sheet-empty
+- tapOn:
+    point: "19%,54%"
+- takeScreenshot: 05-drafting
+# The loader turns until the draft lands.
+- waitForAnimationToEnd:
+    timeout: 60000
+- takeScreenshot: 06-drafted
+- tapOn:
+    point: "19%,54%"
+- takeScreenshot: 07-drafting-again
+- waitForAnimationToEnd:
+    timeout: 60000
+- takeScreenshot: 07b-drafted-again
+- tapOn:
+    point: "89%,40%"
+- waitForAnimationToEnd
+- takeScreenshot: 08-saved-under-cue

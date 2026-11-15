@@ -25,11 +25,11 @@ export function ReadyDecks({ decks }: { decks: PublicDeckSummary[] }) {
         </View>
       )}
       <View className="gap-2 p-5">
-        <Text className="text-xl font-medium text-text" accessibilityRole="header">
+        <Text className="text-xl font-medium text-ink" accessibilityRole="header">
           {t`Start with a ready-made deck`}
         </Text>
-        <Text className="text-base text-text-2">
-          {t`Decks from Lymi. Add one to study it in your language.`}
+        <Text className="text-base text-ink-secondary">
+          {t`Decks from Lymi. Add one to review it in your language.`}
         </Text>
         <View className="pt-3">
           <Button

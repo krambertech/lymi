@@ -2,12 +2,18 @@
 import ShelfMissing from "../../../components/explore/ShelfMissing.astro";
 import LanguagePage from "../../../components/languages/LanguagePage.astro";
 import { MISSING_CACHE_CONTROL } from "../../../lib/deck-page";
-import { languageOfPage } from "../../../lib/language-pages";
+import { LANGUAGE_PAGES, languageOfPage } from "../../../lib/language-pages";
+import { offersLanguage } from "@lymi/core/catalog";
 import { resolveLanguageDecks } from "../../../lib/public-catalog";
+import { localizedPath } from "../../../lib/routes";
 
 export const prerender = false;
 
 const language = languageOfPage(Astro.params.language ?? "");
+// This locale doesn't offer every language (`offersLanguage` in @lymi/core/catalog); those pages exist in English only.
+if (language && !offersLanguage("ru", language)) {
+  return Astro.redirect(localizedPath(LANGUAGE_PAGES[language].page, "en"), 301);
+}
 const page = language ? await resolveLanguageDecks(Astro, "ru", language) : null;
 if (page instanceof Response) return page;
 if (!page) {

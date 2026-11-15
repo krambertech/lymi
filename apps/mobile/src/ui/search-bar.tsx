@@ -1,5 +1,5 @@
 import { useLingui } from "@lingui/react/macro";
-import { type ReactNode, useEffect, useState } from "react";
+import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Platform, Pressable, TextInput, View } from "react-native";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
@@ -33,7 +33,7 @@ export function ClearText({ value, onClear }: { value: string; onClear: () => vo
       hitSlop={8}
       className="size-7 items-center justify-center"
     >
-      <Icon name="close" size={18} colour={p.muted} />
+      <Icon name="close" size={18} colour={p["ink-muted"]} />
     </Pressable>
   );
 }
@@ -42,7 +42,8 @@ export function ClearText({ value, onClear }: { value: string; onClear: () => vo
  * Search sits at the foot of the screen and rides on the keyboard, as iOS 26's own search does: a
  * glass field, then a round glass close. Put it last inside a KeyboardRoom, under the results.
  * Every search on the phone uses it, so they read as one; a control that narrows the results, such
- * as a filter, goes in `after`, between the field and close.
+ * as a filter, goes in `after`, between the field and close. A tap away from an empty field closes
+ * the search, as it does on the web.
  */
 export function SearchBar({
   value,
@@ -61,6 +62,13 @@ export function SearchBar({
 }) {
   const { t } = useLingui();
   const p = usePalette();
+  // Closing blurs the field as the screen leaves, which must not close it a second time.
+  const closed = useRef(false);
+  const close = () => {
+    if (closed.current) return;
+    closed.current = true;
+    onCancel();
+  };
   return (
     <View className="flex-row items-center gap-2.5 px-4 pt-2 pb-2">
       <GlassSurface
@@ -75,13 +83,19 @@ export function SearchBar({
           paddingHorizontal: 14,
         }}
       >
-        <Icon name="search" size={18} colour={p.muted} />
+        <Icon name="search" size={18} colour={p["ink-muted"]} />
         <TextInput
           autoFocus
           value={value}
           onChangeText={onChange}
+          onFocus={() => {
+            closed.current = false;
+          }}
+          onBlur={() => {
+            if (!value.trim()) close();
+          }}
           placeholder={placeholder}
-          placeholderTextColor={p.muted}
+          placeholderTextColor={p["ink-muted"]}
           accessibilityLabel={placeholder}
           // What is searched is mostly in the language being learned, which the dictionary gets wrong.
           autoCapitalize="none"
@@ -89,15 +103,15 @@ export function SearchBar({
           spellCheck={false}
           returnKeyType="search"
           clearButtonMode="while-editing"
-          selectionColor={p.text}
-          className="flex-1 font-sans text-text"
+          selectionColor={p.ink}
+          className="flex-1 font-sans text-ink"
           style={{ fontSize: 17 }}
           maxFontSizeMultiplier={inputCap(17)}
         />
         <ClearText value={value} onClear={() => onChange("")} />
       </GlassSurface>
       {after}
-      <GlassButton icon="close" label={t`Close search`} onPress={onCancel} />
+      <GlassButton icon="close" label={t`Close search`} onPress={close} />
     </View>
   );
 }

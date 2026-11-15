@@ -71,7 +71,7 @@ export function DeckPath({ steps, lang }: Props) {
                 aria-hidden="true"
                 className={clsx(
                   "absolute start-[19px] top-10 h-full w-0.5 rounded-full transition-colors duration-500 @4xl:start-10 @4xl:top-[19px] @4xl:h-0.5 @4xl:w-[calc(100%-40px+32px)]",
-                  i < active ? "bg-amber" : "bg-edge-2",
+                  i < active ? "bg-amber" : "bg-edge-strong",
                 )}
               />
             )}
@@ -79,17 +79,17 @@ export function DeckPath({ steps, lang }: Props) {
               aria-hidden="true"
               className={clsx(
                 "relative z-10 grid size-10 place-items-center rounded-full text-sm font-semibold tabular-nums transition-colors duration-500",
-                i <= active ? "bg-amber text-amber-ink" : "bg-canvas text-muted edge-2",
+                i <= active ? "bg-amber text-amber-ink" : "bg-canvas text-ink-muted edge-strong",
               )}
             >
               {i + 1}
             </span>
             <div className="min-w-0 @4xl:mt-5">
-              <h3 className="text-xl font-medium tracking-[-0.02em] text-text">{step.name}</h3>
-              <p className="mt-0.5 text-sm text-muted tabular-nums">
+              <h3 className="text-xl font-medium tracking-[-0.02em] text-ink">{step.name}</h3>
+              <p className="mt-0.5 text-sm text-ink-muted tabular-nums">
                 <Plural value={step.count} one="# card" other="# cards" />
               </p>
-              <p className="mt-3 max-w-[34ch] text-md text-pretty text-text-2">
+              <p className="mt-3 max-w-[34ch] text-md text-pretty text-ink-secondary">
                 {i18n._(step.about)}
               </p>
 
@@ -118,7 +118,7 @@ export function DeckPath({ steps, lang }: Props) {
                       <span
                         lang={lang}
                         className={clsx(
-                          "font-medium text-text",
+                          "font-medium text-ink",
                           stacked
                             ? "max-w-full truncate leading-tight"
                             : "text-[34px] leading-[1.55]",
@@ -133,7 +133,7 @@ export function DeckPath({ steps, lang }: Props) {
                       </span>
                       <span
                         className={clsx(
-                          "max-w-full truncate text-sm text-text-2",
+                          "max-w-full truncate text-sm text-ink-secondary",
                           !stacked && "mb-2",
                         )}
                       >

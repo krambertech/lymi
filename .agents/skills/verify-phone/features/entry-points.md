@@ -1,6 +1,6 @@
 # Entry points
 
-iOS's ways into the app from outside it: the controls for Control Center, the Lock Screen and the Action button, Siri, Shortcuts and Spotlight, and the app icon's long-press actions (#546). Each opens the app on a link that names the screen and the entry point (`apps/mobile/src/entry/links.ts`), so a learner who is signed out lands on sign-in and then continues. Add a card is the exception: it saves a card from Shortcuts, Siri, Spotlight or the Action button without opening the app, and continues in Add a word only when signed out or offline.
+iOS's ways into the app from outside it: the controls for Control Center, the Lock Screen and the Action button, Siri, Shortcuts and Spotlight, and the app icon's long-press actions. Each opens the app on a link that names the screen and the entry point (`apps/mobile/src/entry/links.ts`), so a learner who is signed out lands on sign-in and then continues. Add a card is the exception: it saves a card from Shortcuts, Siri, Spotlight or the Action button without opening the app, and continues in Add a word only when signed out or offline.
 
 ## Reach
 

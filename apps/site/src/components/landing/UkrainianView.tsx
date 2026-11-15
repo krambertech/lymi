@@ -4,8 +4,10 @@ import type { PublicDeckSummary } from "@lymi/core/catalog";
 import type { ReactNode } from "react";
 import type { Locale } from "../../lib/routes";
 import { UKRAINIAN_QUESTIONS } from "./faq";
+import { NotebookToCards } from "./NotebookToCards";
 import { type StressPage, StressView } from "./StressView";
 import { EnrichUkrainian } from "./UkrainianAi";
+import { UkrainianBento } from "./UkrainianBento";
 import {
   UKRAINIAN_CLASS_CARDS,
   UKRAINIAN_EXAMPLES,
@@ -32,8 +34,27 @@ const UKRAINIAN: StressPage = {
   questions: UKRAINIAN_QUESTIONS,
   added: { label: msg`Українська · new`, term: "по́дорож", meaning: msg`Journey` },
   enrich: <EnrichUkrainian />,
+  notebook: (
+    <NotebookToCards
+      lang="uk"
+      heading={["Українська · вівторок", "A2"]}
+      rows={[
+        { term: "пересадка", gloss: msg`change of trains`, card: 0 },
+        { term: "запізнюватися", gloss: msg`to be late`, card: 1 },
+        { term: "дякую" },
+        { term: "неділя", gloss: msg`Sunday`, card: 2 },
+      ]}
+      cards={[
+        { term: "переса́дка", meaning: msg`Change of trains` },
+        { term: "запі́знюватися", meaning: msg`To be late` },
+        { term: "неді́ля", meaning: msg`Sunday` },
+      ]}
+      skipped="дякую"
+    />
+  ),
+  bento: <UkrainianBento />,
   copy: {
-    headline: <Trans>The flashcard app that gets Ukrainian.</Trans>,
+    headline: <Trans>Ukrainian words you’ll remember.</Trans>,
     lede: (
       <Trans>
         Keep the words from your lessons and your books in one place. Each card marks its stress
@@ -49,9 +70,9 @@ const UKRAINIAN: StressPage = {
     ),
     returning: (
       <Trans>
-        A card shows its stress mark until you know the word, then the word as Ukrainians write it.
-        Each time you remember it, Lymi waits a little longer before showing it again. Turning the
-        card over always shows the mark.
+        A card shows its stress mark until you know the word. After that it shows the word the way
+        Ukrainians write it, without the mark. Each time you remember it, Lymi waits a little longer
+        before showing it again. Turning the card over always shows the mark.
       </Trans>
     ),
     enrich: (
@@ -69,7 +90,7 @@ const UKRAINIAN: StressPage = {
     ),
     start: (
       <Trans>
-        Free decks from the letters to everyday words. Read the alphabet, then take A1 and A2. Each
+        Free decks from the letters to everyday words. Start with the alphabet, then A1 and A2. Each
         day adds a few new words to your reviews.
       </Trans>
     ),
@@ -86,6 +107,7 @@ const UKRAINIAN: StressPage = {
       </Trans>
     ),
     allDecks: <Trans>All Ukrainian decks</Trans>,
+    details: <Trans>Built with Ukrainian in mind.</Trans>,
   },
 };
 

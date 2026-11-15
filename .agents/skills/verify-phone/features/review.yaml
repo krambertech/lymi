@@ -29,7 +29,13 @@ name: Review
 # The phone keeps today's count with the review on the device, so a persona reset leaves it as it was.
 - assertVisible: "\\d+( of \\d+)? reviews today"
 - takeScreenshot: 03-review-done
-- tapOn: "^Done$"
+# A phone that has not put the reminder question yet ends on Next and the question. reminder-ask.md
+- tapOn: "^(Done|Next)$"
+- runFlow:
+    when:
+      visible: "When should we remind you.*"
+    commands:
+      - tapOn: "Not now"
 - scrollUntilVisible:
     element: "Also on your list"
 - assertVisible: "Forgotten today. 1.*"

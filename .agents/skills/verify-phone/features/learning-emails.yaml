@@ -1,0 +1,17 @@
+# Learning emails: the switch on the You tab reaches the account.
+appId: app.lymi
+name: Learning emails
+---
+- runFlow: _open.yaml
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "Learning emails"
+- takeScreenshot: 01-on
+# The row's text and its switch share the label; only the switch is checked.
+- tapOn:
+    text: "Learning emails"
+    checked: true
+- assertVisible:
+    text: "Learning emails"
+    checked: false
+- takeScreenshot: 02-off

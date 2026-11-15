@@ -34,6 +34,8 @@ interface ActionMenuProps {
   disabled?: boolean;
   /** What a tap does, so the menu opens only on a long press, as capture's does. */
   onPrimaryAction?: () => void;
+  /** A `row` glyph's square to tap, in points, where the row has room for more than its 32. */
+  target?: number;
 }
 
 /**
@@ -48,16 +50,17 @@ export function ActionMenu({
   items,
   disabled = false,
   onPrimaryAction,
+  target = 32,
 }: ActionMenuProps) {
   const p = usePalette();
   const room = useRoom();
   const groups = (Array.isArray(items[0]) ? items : [items]) as MenuItem[][];
   const bar = look !== "row";
-  const glyph = look === "primary" ? p["amber-ink"] : look === "row" ? p.muted : p.text;
+  const glyph = look === "primary" ? p["amber-ink"] : look === "row" ? p["ink-muted"] : p.ink;
   return (
     // A fixed box that React Native lays out: a self-measuring host keeps a stale place when the
     // list around it moves, and its button drifts off its row.
-    <Host colorScheme={room} style={{ width: bar ? 40 : 32, height: bar ? 40 : 32 }}>
+    <Host colorScheme={room} style={{ width: bar ? 40 : target, height: bar ? 40 : target }}>
       <Menu
         {...(onPrimaryAction ? { onPrimaryAction } : {})}
         label={
@@ -65,7 +68,7 @@ export function ActionMenu({
             assetName={symbolOf(TRIGGERS[symbol])}
             size={bar ? 18 : 16}
             color={glyph}
-            modifiers={[frame({ width: bar ? 24 : 32, height: bar ? 24 : 32 })]}
+            modifiers={[frame({ width: bar ? 24 : target, height: bar ? 24 : target })]}
           />
         }
         modifiers={[
@@ -87,7 +90,7 @@ export function ActionMenu({
                 key={item.label}
                 role={item.destructive ? "destructive" : "default"}
                 // Ink on ordinary rows and red on a removal, so an amber button's tint stays on the button.
-                modifiers={[tint(item.destructive ? p.danger : p.text)]}
+                modifiers={[tint(item.destructive ? p.danger : p.ink)]}
                 onPress={item.onSelect}
               >
                 <Label

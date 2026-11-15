@@ -34,12 +34,12 @@ export function Segmented<T extends string>({
   });
   return (
     <View
-      className={`flex-row rounded-lg p-1 ${glass ? "bg-glass-plate" : "bg-plate-2"}`}
+      className={`flex-row rounded-lg p-1 ${glass ? "bg-glass-plate" : "bg-plate-nested"}`}
       accessibilityRole="radiogroup"
       accessibilityLabel={label}
     >
       <Animated.View
-        className={`absolute top-1 bottom-1 rounded-md border border-edge ${glass ? "bg-glass-chosen" : "bg-chosen"}`}
+        className={`absolute top-1 bottom-1 rounded-md border border-edge ${glass ? "bg-glass-chosen" : "bg-plate-chosen"}`}
         style={[{ left: 0 }, plate]}
       />
       {options.map((o) => (
@@ -55,7 +55,7 @@ export function Segmented<T extends string>({
           className="h-11 flex-1 items-center justify-center px-2"
         >
           <Text
-            className={`text-md font-medium ${value === o.value ? "text-text" : "text-muted"}`}
+            className={`text-md font-medium ${value === o.value ? "text-ink" : "text-ink-muted"}`}
             numberOfLines={1}
             // Options share one row, so a deck's name grows only as far as it still reads whole.
             maxFontSizeMultiplier={1.3}

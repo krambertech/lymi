@@ -1,33 +1,30 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { Gift, KeyRound, WifiOff } from "lucide-react";
-import { openLymiUrl } from "../../lib/origins";
+import { explorePath } from "../../lib/explore";
 import { localizedPath } from "../../lib/routes";
-import { buttonClass } from "../Button";
-import { ApiConnections } from "./ApiConnections";
-import { AssistantChat } from "./AssistantChat";
-import { AssistantMarksWithMore } from "./AssistantMarks";
-import { Assurances } from "./Assurances";
+import { AiGallery } from "./AiGallery";
+import { ApiSection } from "./ApiSection";
+import { WorksWith } from "./AssistantMarks";
+import { AssistantSection } from "./AssistantSection";
 import { USE_CASE_CARDS } from "./cards";
-import { EnrichDemo } from "./EnrichDemo";
-import { FeatureSection } from "./FeatureSection";
+import { FeatureBento } from "./FeatureBento";
+import { Wide } from "./FeatureSection";
+import { FreeBadge } from "./FreeBadge";
+import { FreeDecks } from "./FreeDecks";
+import { Furigana } from "./Furigana";
 import { Hero } from "./Hero";
-import { ImportDemo } from "./ImportDemo";
-import { ReviewDemo } from "./ReviewDemo";
-import { RightMoment } from "./RightMoment";
+import { LandingLayout } from "./LandingLayout";
+import { ReturnLane } from "./ReturnLane";
 import { SignUpSection } from "./SignUpSection";
-import { SiteFooter } from "./SiteFooter";
-import { SiteNav } from "./SiteNav";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const LANDING_TITLE = msg`Lymi · Flashcard app with spaced repetition`;
-export const LANDING_BLURB = msg`Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and the card comes back before you forget. Free to use.`;
+export const LANDING_BLURB = msg`Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and Lymi decides when you see it again. Free to use.`;
 export const SHARE_IMAGE_ALT = msg`The Lymi lantern and wordmark above the English line “Keep what you learn.”`;
 
 /** The public front door: a hand of real cards to turn over, then how Lymi keeps them. */
-export function LandingView({ productOrigin }: { productOrigin?: string | undefined } = {}) {
+export function LandingView() {
   const { i18n } = useLingui();
-  const openAppUrl = openLymiUrl(productOrigin);
   const useCases: UseCase[] = [
     {
       id: "languages",
@@ -64,151 +61,49 @@ export function LandingView({ productOrigin }: { productOrigin?: string | undefi
   ];
 
   return (
-    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
-      <header>
-        <SiteNav openAppUrl={openAppUrl} />
+    <LandingLayout
+      page="landing"
+      hero={
         <Hero
-          title={<Trans>Keep what you learn.</Trans>}
+          badge={<FreeBadge />}
+          title={<Trans>Flashcards for the AI era.</Trans>}
           lede={
             <Trans>
-              Save a word, a term or an idea as a flashcard. Lymi shows it again right before you’d
-              forget. Free to use.
+              Make cards from your notes, lessons and photos with AI. Remember what you learn with
+              reviews that adapt to you.
             </Trans>
           }
+          secondary={{
+            href: explorePath(i18n.locale),
+            label: <Trans>Browse free decks</Trans>,
+          }}
+          after={<WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />}
         />
-      </header>
+      }
+    >
+      <UseCases title={<Trans>For anything you’re learning.</Trans>} items={useCases} />
 
-      <main>
-        <UseCases title={<Trans>For anything you’re learning.</Trans>} items={useCases} />
-
-        <RightMoment
-          title={<Trans>Review less, remember longer.</Trans>}
-          body={
-            <Trans>
-              Remember a card, and Lymi waits longer before showing it again. Forget it, and it
-              comes back soon.
-            </Trans>
-          }
+      <Wide
+        title={<Trans>Review less, remember longer.</Trans>}
+        body={
+          <Trans>
+            Each time you remember a card, Lymi waits longer before showing it again. Forget it, and
+            it comes back soon. Once you know a word, Lymi hides its reading too.
+          </Trans>
+        }
+      >
+        <ReturnLane
+          lang="ja"
+          term={(known) => <Furigana term="花見" reading="はなみ" lang="ja" hidden={known} />}
         />
+      </Wide>
 
-        <FeatureSection
-          id="how-it-works"
-          title={<Trans>Remember first, then check.</Trans>}
-          body={
-            <Trans>
-              Try to recall the meaning, then show it. Pick how well you knew it. Hard cards come
-              back sooner, easy ones later.
-            </Trans>
-          }
-        >
-          <ReviewDemo />
-        </FeatureSection>
-
-        <FeatureSection
-          demoFirst
-          title={<Trans>A full flashcard in seconds.</Trans>}
-          body={
-            <Trans>
-              Type the term, and AI adds the meaning, an example and the pronunciation. It never
-              changes what you typed, and everything it wrote is marked.
-            </Trans>
-          }
-        >
-          <EnrichDemo />
-        </FeatureSection>
-
-        <FeatureSection
-          title={<Trans>Make flashcards in ChatGPT, Claude or Gemini.</Trans>}
-          body={
-            <Trans>
-              Ask your AI assistant to add a card while you chat. It shows up in Lymi, ready to
-              review.
-            </Trans>
-          }
-          after={<AssistantMarksWithMore />}
-        >
-          <AssistantChat />
-        </FeatureSection>
-
-        <FeatureSection
-          demoFirst
-          tinted
-          title={<Trans>Connect your own tools.</Trans>}
-          body={
-            <Trans>
-              Lymi has a public API. Add cards from a phone shortcut or a spreadsheet, or show
-              what’s due on your own site.
-            </Trans>
-          }
-          after={
-            <div className="flex flex-wrap gap-2">
-              <a href="/docs" className={buttonClass("secondary")}>
-                <Trans>Read the docs</Trans>
-              </a>
-              <a href="/docs/api" className={buttonClass("ghost")}>
-                <Trans>API reference</Trans>
-              </a>
-            </div>
-          }
-        >
-          <ApiConnections />
-        </FeatureSection>
-
-        <FeatureSection
-          title={<Trans>Bring your existing decks.</Trans>}
-          body={
-            <Trans>
-              Import your flashcards from Anki or Mochi. Decks, pictures and review history come
-              too, so nothing you’ve learned starts over.
-            </Trans>
-          }
-          after={
-            <div className="flex flex-wrap gap-2">
-              <a href="/docs/import-from-anki" className={buttonClass("secondary")}>
-                <Trans>Moving from Anki</Trans>
-              </a>
-              <a href="/docs/import-from-mochi" className={buttonClass("secondary")}>
-                <Trans>Moving from Mochi</Trans>
-              </a>
-            </div>
-          }
-        >
-          <ImportDemo />
-        </FeatureSection>
-
-        <Assurances
-          label={<Trans>Free, works offline, and yours</Trans>}
-          items={[
-            {
-              id: "free",
-              icon: Gift,
-              title: <Trans>Free</Trans>,
-              body: <Trans>Lymi costs nothing. No trial, and no payment details to sign up.</Trans>,
-            },
-            {
-              id: "offline",
-              icon: WifiOff,
-              title: <Trans>Works offline</Trans>,
-              body: (
-                <Trans>
-                  Review and add cards without a connection. Everything syncs when you’re back
-                  online.
-                </Trans>
-              ),
-            },
-            {
-              id: "your-data",
-              icon: KeyRound,
-              title: <Trans>Your data is yours</Trans>,
-              body: <Trans>Export any deck to Anki, with its pictures and review history.</Trans>,
-            },
-          ]}
-        />
-
-        <SignUpSection title={<Trans>Start learning</Trans>} />
-      </main>
-
-      <SiteFooter openAppUrl={openAppUrl} page="landing" />
-    </div>
+      <AiGallery />
+      <AssistantSection />
+      <FeatureBento />
+      <ApiSection />
+      <FreeDecks />
+      <SignUpSection title={<Trans>Start learning</Trans>} />
+    </LandingLayout>
   );
 }

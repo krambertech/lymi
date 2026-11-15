@@ -27,7 +27,7 @@ const FIELDS: { name: string; type: string; note: string }[] = [
     note: "Anything else worth keeping. Markdown: **bold**, *italic*, ++underline++, ~~strikethrough~~, links such as [text](https://example.com) or <https://example.com> (http, https or mailto), and lists starting with - or 1. Anything else, HTML included, shows as typed.",
   },
   {
-    name: "hook",
+    name: "hint",
     type: "string",
     note: "A short association that leads back to the answer without giving any of it away. Review shows it under the cue: the learner can peek at it before the reveal, which rules out Easy, or show it after. Up to 200 characters.",
   },
@@ -41,7 +41,12 @@ const FIELDS: { name: string; type: string; note: string }[] = [
   {
     name: "directions",
     type: '"recognition" | "production" | "both" | null',
-    note: "Overrides the deck for this card.",
+    note: "Legacy form of reviewModes. Overrides the deck for this card.",
+  },
+  {
+    name: "reviewModes",
+    type: "{ cue, target }[] | null",
+    note: "Cue and target pairs. null follows the deck. Picture cues belong on individual cards.",
   },
   {
     name: "meaningSource",
@@ -64,9 +69,9 @@ const FIELDS: { name: string; type: string; note: string }[] = [
     note: "Where the pronunciation came from.",
   },
   {
-    name: "hookSource",
+    name: "hintSource",
     type: '"lesson" | "ai" | "manual"',
-    note: "Where the hook came from.",
+    note: "Where the hint came from.",
   },
   {
     name: "enrich",
@@ -85,14 +90,14 @@ export function Cards() {
     <div className="doc-prose">
       <Lead>
         A deck holds cards. A card holds one term and everything you know about it. Scheduling is
-        per direction, so the same card can be easy to recognise and hard to produce.
+        per review mode, so the same card can be easy to recognise and hard to produce.
       </Lead>
 
       <H2>Decks</H2>
       <p>
-        A deck is a name and two defaults. <code>defaultLanguage</code> prefills the language on
-        every card added to it, and <code>directions</code> decides which way its cards are asked.
-        Only the name is required.
+        A deck has a name and defaults for new cards. <code>defaultLanguage</code> prefills the
+        language on every card added to it, and <code>directions</code> decides which way its cards
+        are asked. Only the name is required.
       </p>
       <Code
         lang="json"
@@ -125,8 +130,8 @@ export function Cards() {
         <tbody>
           {FIELDS.map((f) => (
             <tr key={f.name}>
-              <Td className="whitespace-nowrap font-mono text-sm text-text">{f.name}</Td>
-              <Td className="font-mono text-xs text-muted">{f.type}</Td>
+              <Td className="whitespace-nowrap font-mono text-sm text-ink">{f.name}</Td>
+              <Td className="font-mono text-xs text-ink-muted">{f.type}</Td>
               <Td>{f.note}</Td>
             </tr>
           ))}
@@ -232,8 +237,10 @@ export function Cards() {
         skipped against the first.
       </p>
 
-      <H2>Directions decide how often you see a card</H2>
-      <p>Each direction gets its own schedule, so one card can hold two of them.</p>
+      <H2>Review modes decide what a card asks</H2>
+      <p>
+        Each review mode gets its own schedule, but only one mode of a card comes up on a given day.
+      </p>
       <Defs
         items={[
           {
@@ -246,15 +253,17 @@ export function Cards() {
           },
           {
             term: <code>both</code>,
-            def: "Two schedules for one card, asked independently.",
+            def: "Two schedules for one card, with at most one mode asked each day.",
           },
         ]}
       />
       <p>
-        A card without <code>directions</code> follows its deck. Setting the field on a card
-        overrides the deck for that card alone. A new deck is <code>recognition</code> unless you
-        say otherwise, so pass <code>directions</code> when you create one if you want both ways
-        round.
+        Use <code>reviewModes</code> for cue and target pairs, such as{" "}
+        <code>{'{"cue":"term","target":"meaning"}'}</code>. A card’s modes override its deck’s.
+        Picture modes belong on individual cards and need a described picture. The older{" "}
+        <code>directions</code> field is still accepted. A card without an override follows its
+        deck. Set <code>reviewModes</code> explicitly when creating a deck if you want to choose how
+        its cards are asked.
       </p>
 
       <H2>Reviews are scheduled with FSRS</H2>

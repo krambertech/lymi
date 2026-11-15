@@ -138,7 +138,7 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
         </Trans>
       );
     case "deck_added":
-      return <Trans>Made the deck {{ deck: isolate(deck) }}</Trans>;
+      return <Trans>Created the deck {{ deck: isolate(deck) }}</Trans>;
     case "deck_edited":
       return <Trans>Edited the deck {{ deck: isolate(deck) }}</Trans>;
     case "deck_archived":
@@ -146,7 +146,7 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
     case "deck_restored":
       return <Trans>Restored the deck {{ deck: isolate(deck) }}</Trans>;
     case "series_added":
-      return <Trans>Made the series {{ name: isolate(name) }}</Trans>;
+      return <Trans>Created the series {{ name: isolate(name) }}</Trans>;
     case "series_edited":
       return <Trans>Edited the series {{ name: isolate(name) }}</Trans>;
     case "series_deleted":
@@ -156,7 +156,7 @@ function Sentence({ entry }: { entry: ActivityEntry }) {
     case "section_added":
       return (
         <Trans>
-          Made the section {{ name: isolate(name) }} in {{ deck: isolate(deck) }}
+          Created the section {{ name: isolate(name) }} in {{ deck: isolate(deck) }}
         </Trans>
       );
     case "section_edited":
@@ -282,6 +282,8 @@ function useCaller() {
 interface RowProps {
   entry: ActivityEntry;
   time: string;
+  /** Off on an app's own page, which already says whose writes these are. */
+  caller?: boolean | undefined;
   /** Wraps the row in a link when pressing it opens something. */
   link: ((className: string, children: ReactNode) => ReactNode) | null;
   deckLink: (deckId: string, className: string, children: ReactNode) => ReactNode;
@@ -291,7 +293,7 @@ interface RowProps {
 const ROW =
   "group flex w-full min-h-[72px] items-center gap-3 px-4 py-3 text-start hoverable:hover:veil group-first/row:rounded-t-xl";
 
-function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
+function ActivityRow({ entry, time, caller: named = true, link, deckLink, cardLink }: RowProps) {
   const { t } = useLingui();
   const caller = useCaller()(entry);
   const reduceMotion = useReduceMotion();
@@ -299,9 +301,11 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
   const cardsId = useId();
   const Icon = MARK_ICONS[activityMark(entry.kind)];
   const file = entry.import ?? entry.export;
-  const meta = [namesCaller(entry) ? isolate(caller) : null, isolate(file?.fileName), time].filter(
-    Boolean,
-  );
+  const meta = [
+    named && namesCaller(entry) ? isolate(caller) : null,
+    isolate(file?.fileName),
+    time,
+  ].filter(Boolean);
   const expandable = entry.cards.length > 0;
   // The one row whose action is on the row itself, because the file is what it offers.
   const download = entry.export?.status === "done" ? entry.export.downloadUrl : null;
@@ -309,7 +313,7 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
   const face = (
     <>
       <span
-        className="edge-inset grid size-9 shrink-0 place-items-center rounded-full bg-plate-2 text-text-2 [&_svg]:size-4"
+        className="edge-inset grid size-9 shrink-0 place-items-center rounded-full bg-plate-nested text-ink-secondary [&_svg]:size-4"
         aria-hidden="true"
       >
         <Icon />
@@ -324,7 +328,7 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
           {entry.export && <ExportChip item={entry.export} />}
         </span>
         {/* Only the file name gives way; the time is the one part that must stay readable. */}
-        <span className="flex min-w-0 gap-1 text-sm text-muted tabular-nums">
+        <span className="flex min-w-0 gap-1 text-sm text-ink-muted tabular-nums">
           {meta.length > 1 && <span className="truncate">{meta.slice(0, -1).join(" · ")}</span>}
           {meta.length > 1 && <span className="shrink-0">·</span>}
           <span className="shrink-0">{meta.at(-1)}</span>
@@ -407,7 +411,7 @@ function ActivityRow({ entry, time, link, deckLink, cardLink }: RowProps) {
                 <li>
                   {deckLink(
                     entry.deck.id,
-                    "group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-text-2 transition-[background-color] duration-150 hoverable:hover:veil",
+                    "group flex items-center gap-3 rounded-md px-3 py-2.5 text-sm text-ink-secondary transition-[background-color] duration-150 hoverable:hover:veil",
                     <>
                       <span className="flex-1">
                         <Plural
@@ -435,7 +439,7 @@ function CardRow({ card, link }: { card: ActivityCard; link: CardLink }) {
     <>
       <span className="grid min-w-0 flex-1 gap-0.5">
         <bdi className="truncate text-base font-medium">{card.term}</bdi>
-        {card.meaning && <bdi className="truncate text-sm text-muted">{card.meaning}</bdi>}
+        {card.meaning && <bdi className="truncate text-sm text-ink-muted">{card.meaning}</bdi>}
       </span>
       {card.archived && <Chip size="sm">{t`Archived`}</Chip>}
     </>
@@ -480,6 +484,13 @@ export interface ActivityViewProps {
   importLink: (item: Import, className: string, children: ReactNode) => ReactNode;
   deckLink: (deckId: string, className: string, children: ReactNode) => ReactNode;
   cardLink: CardLink;
+  /** Only one app's writes, opened from that app's page; `clear` shows everything again. */
+  filter?:
+    | {
+        name: string | null;
+        clear: (className: string, children: ReactNode) => ReactNode;
+      }
+    | undefined;
 }
 
 /**
@@ -500,6 +511,7 @@ export function ActivityView({
   importLink,
   deckLink,
   cardLink,
+  filter,
 }: ActivityViewProps) {
   const { t, i18n } = useLingui();
   const foot = useRef<HTMLParagraphElement>(null);
@@ -527,6 +539,21 @@ export function ActivityView({
     // No action in the header: Activity is a log of what happened, and importing starts in
     // Settings. The empty state still offers it, because there it teaches the screen.
     <Screen title={t`Activity`} width="md" back={{ label: t`Today`, to: "/today" }}>
+      {filter && (
+        <div className="-mt-2 mb-5 flex flex-wrap items-center gap-x-3 gap-y-1 text-sm text-ink-secondary">
+          <span>
+            {filter.name ? (
+              <Trans>Only what {{ app: isolate(filter.name) }} did</Trans>
+            ) : (
+              <Trans>Only one app’s writes</Trans>
+            )}
+          </span>
+          {filter.clear(
+            "font-medium text-ink underline underline-offset-4",
+            <Trans>Show everything</Trans>,
+          )}
+        </div>
+      )}
       {error && !entries ? (
         <ErrorState title={t`Couldn’t load Activity`} onRetry={onRetry} retrying={retrying} />
       ) : !entries ? (
@@ -535,6 +562,17 @@ export function ActivityView({
           <Skeleton className="ms-1 h-4 w-20 rounded-full" />
           <Skeleton className="h-[145px] rounded-xl" />
         </div>
+      ) : entries.length === 0 && filter ? (
+        <p className="edge rounded-xl bg-plate px-4 py-4 text-base text-ink-secondary">
+          {filter.name ? (
+            <Trans>
+              Nothing from {{ app: isolate(filter.name) }} yet. What it adds, edits or archives
+              shows here.
+            </Trans>
+          ) : (
+            <Trans>Nothing from this app yet. What it adds, edits or archives shows here.</Trans>
+          )}
+        </p>
       ) : entries.length === 0 ? (
         // Not a start panel: an empty Activity is not a screen to fill, it is the good news that
         // nothing landed unseen. It says what the screen is for and asks for nothing.
@@ -547,7 +585,7 @@ export function ActivityView({
         <div className="grid gap-6">
           {days.map((day) => (
             <section key={day.key} aria-labelledby={`day-${day.key}`} className="grid gap-2">
-              <h2 id={`day-${day.key}`} className="px-1 text-sm font-medium text-muted">
+              <h2 id={`day-${day.key}`} className="px-1 text-sm font-medium text-ink-muted">
                 {day.label}
               </h2>
               <ul className="edge grid rounded-xl bg-plate">
@@ -590,7 +628,7 @@ export function ActivityView({
                 {moreFailed ? <Trans>Try again</Trans> : <Trans>Show more</Trans>}
               </Button>
             ) : (
-              <p ref={foot} tabIndex={-1} role="status" className="text-sm text-muted">
+              <p ref={foot} tabIndex={-1} role="status" className="text-sm text-ink-muted">
                 <Trans>That’s everything.</Trans>
               </p>
             )}
@@ -598,6 +636,64 @@ export function ActivityView({
         </div>
       )}
     </Screen>
+  );
+}
+
+/**
+ * One app's rows in one plate, for its page in Settings: each says its day and time, since there
+ * are no day headings, and none repeats the app's name. `foot` closes the plate, such as a link to
+ * the whole of Activity.
+ */
+export function ActivityList({
+  entries,
+  today,
+  zone,
+  foot,
+  deckLink,
+  cardLink,
+}: {
+  entries: ActivityEntry[];
+  today?: string | undefined;
+  zone?: string | undefined;
+  foot?: ReactNode;
+  deckLink: (deckId: string, className: string, children: ReactNode) => ReactNode;
+  cardLink: CardLink;
+}) {
+  const { t, i18n } = useLingui();
+  const time = new Intl.DateTimeFormat(i18n.locale, {
+    timeStyle: "short",
+    ...(zone ? { timeZone: zone } : {}),
+  });
+  const days = byDay(entries, i18n.locale, {
+    today: t`Today`,
+    yesterday: t`Yesterday`,
+    todayKey: today ?? "",
+  });
+  return (
+    <ul className="edge grid rounded-xl bg-plate">
+      {days.flatMap((day) =>
+        day.entries.map((entry) => {
+          const deck = entry.deck;
+          const when = time.format(new Date(entry.at));
+          return (
+            <ActivityRow
+              key={entry.group}
+              entry={entry}
+              time={`${day.label} · ${when}`}
+              caller={false}
+              link={
+                deck && !deck.archived && entry.cards.length === 0
+                  ? (className, children) => deckLink(deck.id, className, children)
+                  : null
+              }
+              deckLink={deckLink}
+              cardLink={cardLink}
+            />
+          );
+        }),
+      )}
+      {foot && <li className="group/row border-t border-edge">{foot}</li>}
+    </ul>
   );
 }
 

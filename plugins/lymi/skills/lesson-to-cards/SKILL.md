@@ -11,7 +11,7 @@ The learner wants to remember what the lesson taught without spending the evenin
 
 A request to add cards authorises saving them; a request to inspect what is worth keeping calls for a preview without writes. Resolve unclear text in a photo or transcript with the learner, or leave it out and say so: uncertain extraction should not become a confidently saved term.
 
-Call `list_decks` for the destination and `meaningLanguage`. Honour the learner's named deck; a matching language helps choose a destination but does not override their choice. Ask when the destination is ambiguous. If the deck has lesson sections, use `list_sections` to find the appropriate one. Plan any new deck or section here, and create it only when saving is authorised.
+Call `list_decks` for the destination and `meaningLanguage`. Honour the learner's named deck; a matching language helps choose a destination but does not override their choice. Ask when the destination is ambiguous. If the deck has lesson sections, use `list_sections` to find the one this lesson belongs to. Plan any new deck or section here, and create it only when saving is authorised.
 
 ## Extract the cards
 

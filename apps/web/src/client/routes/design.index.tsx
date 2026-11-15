@@ -1,7 +1,4 @@
-import { createFileRoute, redirect } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
+import { Overview } from "../design/home";
 
-export const Route = createFileRoute("/design/")({
-  beforeLoad: () => {
-    throw redirect({ to: "/design/$page", params: { page: "brand" }, replace: true });
-  },
-});
+export const Route = createFileRoute("/design/")({ component: Overview });

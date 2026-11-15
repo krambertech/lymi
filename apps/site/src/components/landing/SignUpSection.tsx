@@ -39,11 +39,11 @@ export function SignUpSection({ title, note }: Props) {
   }, []);
 
   return (
-    <section id="sign-up" className="scroll-mt-8 px-5 py-20 @2xl:px-10 @4xl:py-28">
+    <section id="sign-up" className="scroll-mt-8 px-5 pt-4 pb-16 @2xl:px-10 @4xl:pt-6 @4xl:pb-20">
       <div
         ref={plate}
         data-lit={lit || undefined}
-        className="signup-plate mx-auto max-w-[1040px] rounded-2xl bg-plate-2 px-7 py-16 text-center edge-inset @2xl:px-12 @4xl:px-16 @4xl:py-20"
+        className="signup-plate mx-auto max-w-[1040px] rounded-2xl bg-plate-nested px-7 py-16 text-center edge-inset @2xl:px-12 @4xl:px-16 @4xl:py-20"
       >
         <span aria-hidden="true" className="signup-pool" />
         <div className="relative">
@@ -56,10 +56,10 @@ export function SignUpSection({ title, note }: Props) {
               className="size-full"
             />
           </span>
-          <h2 className="mx-auto max-w-[16ch] text-4xl font-medium tracking-[-0.035em] text-balance text-text @2xl:text-5xl">
+          <h2 className="mx-auto max-w-[16ch] text-4xl font-medium tracking-[-0.035em] text-balance text-ink @2xl:text-5xl">
             {title}
           </h2>
-          <p className="mx-auto mt-5 max-w-[44ch] text-lg text-pretty text-text-2">
+          <p className="mx-auto mt-5 max-w-[44ch] text-lg text-pretty text-ink-secondary">
             <Trans>Lymi is free to use, and your first card takes a minute.</Trans>
           </p>
           <div className="mt-9">
@@ -68,7 +68,7 @@ export function SignUpSection({ title, note }: Props) {
             </a>
           </div>
           {note && (
-            <p className="mx-auto mt-9 max-w-[52ch] text-sm text-pretty text-muted">{note}</p>
+            <p className="mx-auto mt-9 max-w-[52ch] text-sm text-pretty text-ink-muted">{note}</p>
           )}
         </div>
       </div>

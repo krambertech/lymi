@@ -21,6 +21,7 @@ import Svg, { Path } from "react-native-svg";
 import { useSessionHeaders } from "../auth/client";
 import { useAiConsent } from "../privacy/ai-consent";
 import { ALWAYS, timed, useReduceMotion } from "../theme/motion";
+import { usePalette } from "../theme/palette";
 import { IconButton, Text } from "../ui/primitives";
 
 /** Long enough for speech the server makes on first ask; past it, the play counts as failed. */
@@ -224,7 +225,7 @@ export function useTipLayer() {
         <Animated.View
           entering={FadeIn.duration(150).reduceMotion(ALWAYS)}
           exiting={FadeOut.duration(100).reduceMotion(ALWAYS)}
-          className="absolute rounded-lg bg-text px-3 py-2"
+          className="absolute rounded-lg bg-ink px-3 py-2"
           style={tip.place}
         >
           <Text className="text-sm text-canvas">{tip.text}</Text>
@@ -257,8 +258,12 @@ export function useSoundError(error: string | null) {
   const tips = useContext(TipContext);
   const anchor = useRef<View>(null);
   const shake = useSharedValue(0);
+  // Only a failure that happens here is said; a button drawn already failed, as on a graded copy, stays quiet.
+  const said = useRef(error);
 
   useEffect(() => {
+    if (error === said.current) return;
+    said.current = error;
     if (!error) return;
     anchor.current?.measureInWindow((x, y, width, height) =>
       tips?.show(error, { x, y, width, height }),
@@ -285,6 +290,7 @@ export function SpeakerButton({
   quiet?: boolean;
 }) {
   const reduce = useReduceMotion();
+  const p = usePalette();
   const { anchor, style, tips } = useSoundError(error);
 
   return (
@@ -301,8 +307,13 @@ export function SpeakerButton({
           reach={12}
           // A clip voiced before is preloaded, so a load here is speech being made.
           busy={state === "loading"}
+          // A quiet speaker is a bare glyph in muted, a size down, so the term's stays the card's main one.
           glyph={(ink, size) => (
-            <Speaker ink={ink} size={size} playing={state === "playing" && !reduce} />
+            <Speaker
+              ink={quiet && !error ? p["ink-muted"] : ink}
+              size={quiet ? size - 1 : size}
+              playing={state === "playing" && !reduce}
+            />
           )}
           onPress={() => {
             tips?.hide();

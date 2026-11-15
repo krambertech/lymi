@@ -17,16 +17,16 @@ export function RestDayBanner({ current, onDismiss, className }: Props) {
   return (
     <div
       className={clsx(
-        "enter-fade flex items-center gap-4 rounded-xl bg-plate-2 py-3.5 ps-5 pe-3 @3xl:ps-6",
+        "enter-fade flex items-center gap-4 rounded-xl bg-plate-nested py-3.5 ps-5 pe-3 @3xl:ps-6",
         className,
       )}
     >
       <RestGlyph />
       <div className="grid min-w-0 flex-1 gap-0.5">
-        <p className="text-md font-medium text-text">
+        <p className="text-md font-medium text-ink">
           <Trans>Yesterday was a rest day</Trans>
         </p>
-        <p className="text-sm text-text-2">
+        <p className="text-sm text-ink-secondary">
           <Plural
             value={current}
             one="Your #-day streak carries on."

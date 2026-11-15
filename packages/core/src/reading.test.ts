@@ -2,6 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   addsReadingsOnly,
   alignReading,
+  cueShowsPronunciation,
   exampleReadings,
   exampleSegments,
   formatReadings,
@@ -540,5 +541,25 @@ describe("toneRuns", () => {
     expect(toneRuns("xuéxí")).toEqual([{ text: "xuéxí", tone: false }]);
     expect(toneRuns("たべる")).toEqual([{ text: "たべる", tone: false }]);
     expect(toneRuns("3")).toEqual([{ text: "3", tone: false }]);
+  });
+});
+
+describe("cueShowsPronunciation", () => {
+  const shows = (display: "adaptive" | "separate" | undefined, known: boolean, revealed: boolean) =>
+    cueShowsPronunciation({ display, known, revealed });
+
+  it("draws it on the term until the card is Known, and on the answer, by default", () => {
+    expect(shows("adaptive", false, false)).toBe(true);
+    expect(shows("adaptive", true, false)).toBe(false);
+    expect(shows("adaptive", true, true)).toBe(true);
+    expect(shows(undefined, false, false)).toBe(true);
+    expect(shows(undefined, true, true)).toBe(true);
+  });
+
+  it("never draws it on the term once the learner shows it separately", () => {
+    for (const known of [false, true]) {
+      expect(shows("separate", known, false)).toBe(false);
+      expect(shows("separate", known, true)).toBe(false);
+    }
   });
 });

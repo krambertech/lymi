@@ -358,7 +358,7 @@ function cards(
       ...(rng() < 0.25 && { source: `Lesson ${1 + Math.floor(rng() * 60)}` }),
       ...(rng() < 0.017 && { important: true }),
       ...(rng() < 0.0035 && {
-        hook: `Sounds like ${word()}, picture a ${pick(ADJECTIVES)} ${pick(NOUNS)}.`,
+        hint: `Sounds like ${word()}, picture a ${pick(ADJECTIVES)} ${pick(NOUNS)}.`,
       }),
       ...(sections.length > 0 && rng() < 0.95 && { section: pick(sections) }),
       // Cards arrive over the deck's life, most of them early.

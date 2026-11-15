@@ -25,11 +25,11 @@ function over(top: string, bottom: string) {
 
 function room(p: (typeof palette)["light" | "dark"]): WidgetRoom {
   return {
-    ink: p.text,
-    muted: p.muted,
+    ink: p.ink,
+    muted: p["ink-muted"],
     canvas: p.canvas,
-    pool: over(p.pool, p.canvas),
-    lights: [p["plate-2"], p["light-1"], p["light-2"], p.amber],
+    pool: over(p["lantern-pool"], p.canvas),
+    lights: [p["plate-nested"], p["lit-low"], p["lit-high"], p.amber],
   };
 }
 

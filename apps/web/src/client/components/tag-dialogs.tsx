@@ -154,7 +154,7 @@ export function MergeTagDialog({ tag, tags, onOpenChange, onMerge }: MergeProps)
             <li key={tagKey(other.name)} className="border-edge not-first:border-t">
               <button type="button" className={row} onClick={() => onMerge(other)}>
                 <span className="min-w-0 flex-1 truncate">{other.name}</span>
-                <span className="shrink-0 text-sm text-muted tabular-nums">
+                <span className="shrink-0 text-sm text-ink-muted tabular-nums">
                   {i18n.number(other.cards)}
                 </span>
               </button>

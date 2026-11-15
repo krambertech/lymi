@@ -25,11 +25,11 @@ describe("saving Edit card", () => {
   });
 
   it("clears a field the learner emptied, but never the term", () => {
-    const card = { ...opened, example: "Sbrigati!", hook: "sbrigo" };
-    expect(editPatch(card, { example: " ", hook: "", term: "" })).toEqual({
+    const card = { ...opened, example: "Sbrigati!", hint: "sbrigo" };
+    expect(editPatch(card, { example: " ", hint: "", term: "" })).toEqual({
       example: "",
       exampleSource: "manual",
-      hook: "",
+      hint: "",
     });
   });
 

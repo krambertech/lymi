@@ -1,6 +1,6 @@
 # Create a deck
 
-A deck is created from one sheet: its name and how its cards are asked, plus what it is for once a pull request adds that question. Creating it lands the learner in the empty deck.
+A deck is created from one sheet: its name, purpose and review modes, with a language when the purpose is language learning. Creating it lands the learner in the empty deck.
 
 ## Reach
 
@@ -12,7 +12,7 @@ A deck is created from one sheet: its name and how its cards are asked, plus wha
 
 ## End state
 
-The page is `/library/<id>` for a deck `/api/decks` lists with `role` owner and `total` 0, and Library reads one deck more than the seed's three.
+The page is `/library/<id>` for a deck `/api/decks` lists with `role` owner and `total` 0, and Library reads one more deck than the initial `/api/decks` response. Use the measured starting count rather than hard-coding a persona total.
 
 ## Gotchas
 

@@ -107,7 +107,7 @@ test("an unchanged document is compatible", () => {
 
 test("a response may gain fields and the API may gain endpoints", () => {
   const next = documentWith({
-    card: { properties: { hook: { type: "string" } } },
+    card: { properties: { hint: { type: "string" } } },
     draw: { properties: { goal: { type: "integer" } }, required: ["goal"] },
   });
   next.paths["/api/insights"] = { get: { responses: { 200: { description: "New" } } } };

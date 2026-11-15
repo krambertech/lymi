@@ -1,5 +1,5 @@
 {
-  "about": "Invented cases for the ru module's lesson, hook and check slots, led by the stress homographs; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. Kateryna, a fluent Russian reader, reviews these with russian.ts.",
+  "about": "Invented cases for the ru module's lesson, hint and check slots, led by the stress homographs; no learner's data. Its enrich slot is evaluated through enrichment/evaluation.json. Kateryna, a fluent Russian reader, reviews these with russian.ts.",
   "lesson": [
     {
       "term": "замок",
@@ -127,7 +127,7 @@
       "reading": "А́ист"
     }
   ],
-  "hook": [
+  "hint": [
     {
       "term": "замок",
       "meaning": "lock",

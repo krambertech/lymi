@@ -18,17 +18,17 @@ export const PILL_NAV = [
 export function PillNav() {
   const { t, i18n } = useLingui();
   const item =
-    "relative inline-flex h-11 select-none items-center gap-2 rounded-full px-4.5 text-base font-medium text-muted transition-[color,scale] duration-150 ease-out [-webkit-touch-callout:none] active:scale-[0.97] motion-reduce:active:scale-100 hoverable:hover:text-text [&.active]:text-text [&_svg]:size-5";
+    "relative inline-flex h-11 select-none items-center gap-2 rounded-full px-4.5 text-base font-medium text-ink-muted transition-[color,scale] duration-150 ease-out [-webkit-touch-callout:none] active:scale-[0.97] motion-reduce:active:scale-100 hoverable:hover:text-ink [&.active]:text-ink [&_svg]:size-5";
   return (
     <nav
       aria-label={t`Main`}
-      // A plate-2 track under the glass, so the chosen tab's plate stands out by day as well.
-      className="glass pointer-events-auto relative flex gap-1 rounded-full p-1.5 [--glass-fill:color-mix(in_oklab,var(--plate-2)_86%,transparent)] [--plate:var(--plate-2)]"
+      // A plate-nested track under the glass, so the chosen tab's plate stands out by day as well.
+      className="glass pointer-events-auto relative flex gap-1 rounded-full p-1.5 [--glass-fill:color-mix(in_oklab,var(--plate-nested)_86%,transparent)] [--plate:var(--plate-nested)]"
     >
       <SlidingPlate
         chosen='[aria-current="page"]'
         attribute="aria-current"
-        className="edge inset-y-1.5 rounded-full bg-chosen"
+        className="edge inset-y-1.5 rounded-full bg-plate-chosen"
       />
       {PILL_NAV.map((n) => (
         <NavLink key={n.to} to={n.to} exact={n.exact} className={item}>

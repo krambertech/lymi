@@ -53,6 +53,13 @@ export function useReminder() {
       store(on ? FIRST_TIME : undefined);
       if (on) setPermission(await askPermission());
     },
+    /** Turns it on at a time the learner chose; it stays off when iOS refuses. */
+    turnOnAt: async (at: string) => {
+      const answer = await askPermission();
+      setPermission(answer);
+      if (answer === "granted") store(at);
+      return answer;
+    },
   };
 }
 
@@ -100,7 +107,7 @@ export function Blocked() {
   const { t } = useLingui();
   return (
     <View className="gap-3 px-4">
-      <Text className="text-base text-text-2">
+      <Text className="text-base text-ink-secondary">
         {t`Notifications are off for Lymi. Turn them on in Settings to get the reminder.`}
       </Text>
       <View className="flex-row">

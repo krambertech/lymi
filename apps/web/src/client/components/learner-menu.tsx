@@ -104,7 +104,7 @@ export function LearnerMenu({
                 )}
               >
                 <Avatar name={name} src={photo.src} pending={photo.pending || !name} size={34} />
-                <span className="min-w-0 flex-1 truncate text-base text-text">{short}</span>
+                <span className="min-w-0 flex-1 truncate text-base text-ink">{short}</span>
               </button>
             ) : (
               <button
@@ -131,8 +131,8 @@ export function LearnerMenu({
           {name && (
             <>
               <div className="grid gap-0.5 px-2.5 pb-2 pt-1.5">
-                <span className="truncate text-base font-medium text-text">{name}</span>
-                {email && <span className="truncate text-xs text-muted">{email}</span>}
+                <span className="truncate text-base font-medium text-ink">{name}</span>
+                {email && <span className="truncate text-xs text-ink-muted">{email}</span>}
               </div>
               <DropdownMenuSeparator />
             </>

@@ -69,7 +69,7 @@ export function DeckAiCard({ deck, onSave }: Props) {
                 checked={deck.enrichFields.includes(field)}
                 onCheckedChange={(on) => toggle(field, on)}
               />
-              <FieldLabel className="text-base text-text">{labels[field]}</FieldLabel>
+              <FieldLabel className="text-base text-ink">{labels[field]}</FieldLabel>
             </Field>
           ))}
         </div>
@@ -89,13 +89,13 @@ export function DeckAiCard({ deck, onSave }: Props) {
       {style ? (
         // Closed by default: it runs on its own, so it is there to check rather than to read.
         <details className="group">
-          <summary className="flex cursor-pointer list-none items-center gap-2 rounded-sm text-sm text-text-2 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&::-webkit-details-marker]:hidden">
+          <summary className="flex cursor-pointer list-none items-center gap-2 rounded-sm text-sm text-ink-secondary focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring [&::-webkit-details-marker]:hidden">
             <span>{t`Learned from your cards`}</span>
             <SourceChip source="ai" size="xs" />
-            <span className="ms-auto text-xs text-muted">{t`Automatic`}</span>
+            <span className="ms-auto text-xs text-ink-muted">{t`Automatic`}</span>
             <ChevronDown
               aria-hidden="true"
-              className="size-4 shrink-0 text-muted transition-transform duration-150 group-open:rotate-180"
+              className="size-4 shrink-0 text-ink-muted transition-transform duration-150 group-open:rotate-180"
             />
           </summary>
           <div className="mt-2 grid gap-2">
@@ -104,9 +104,9 @@ export function DeckAiCard({ deck, onSave }: Props) {
               // biome-ignore lint/a11y/noNoninteractiveTabindex: a scrolling box needs focus so a keyboard can scroll it
               tabIndex={0}
               aria-label={t`Learned from your cards`}
-              className="max-h-48 overflow-y-auto rounded-md bg-plate-2 px-3 py-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+              className="max-h-48 overflow-y-auto rounded-md bg-plate-nested px-3 py-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
             >
-              <CardNotes source={style} className="text-sm text-text-2" />
+              <CardNotes source={style} className="text-sm text-ink-secondary" />
             </section>
             <FieldDescription>
               {t`AI keeps this up to date from the cards you write. Your instructions come first.`}

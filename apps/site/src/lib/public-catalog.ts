@@ -1,8 +1,8 @@
-import { env } from "cloudflare:workers";
+import { env, waitUntil } from "cloudflare:workers";
 import { languageDecks } from "@lymi/client/welcome";
-import type { SupportedTag } from "@lymi/core";
 import {
   hasShelfPage,
+  offersDeck,
   type PublicDeckSummary,
   type Shelf,
   type ShelfKind,
@@ -13,13 +13,23 @@ import {
 } from "@lymi/core/catalog";
 import { listPublicCatalog, listPublicDeckSlugs } from "@lymi/core/catalog/server";
 import { drizzle } from "@lymi/core/db";
-import type { AstroGlobal } from "astro";
+import type { APIContext, AstroGlobal } from "astro";
 import { DECK_CACHE_CONTROL, etagMatches } from "./deck-page";
 import { EXAM_DECKS, type ListedExam, listedExams } from "./exams";
 import { catalogContentHash, catalogEtag, shelfPath } from "./explore";
-import { LANGUAGE_PAGES } from "./language-pages";
+import { featuredDecks } from "./featured-decks";
+import { LANGUAGE_PAGES, type LanguagePageTag } from "./language-pages";
+import { menuShelves } from "./menu-shelves";
 import { type Locale, locales } from "./routes";
 import type { SitemapShelf } from "./sitemap";
+
+/** This locale's catalogue without the decks it doesn't offer. */
+async function catalogIn(
+  db: Parameters<typeof listPublicCatalog>[0],
+  locale: Locale,
+): Promise<PublicDeckSummary[]> {
+  return (await listPublicCatalog(db, locale)).filter((deck) => offersDeck(locale, deck));
+}
 
 export interface ExplorePage {
   locale: Locale;
@@ -35,7 +45,7 @@ export async function resolveExplorePage(
   astro: AstroGlobal,
   locale: Locale,
 ): Promise<ExplorePage | Response> {
-  const decks = await listPublicCatalog(drizzle(env.DB), locale);
+  const decks = await catalogIn(drizzle(env.DB), locale);
   const headers = astro.response.headers;
   headers.set("content-type", "text/html; charset=utf-8");
   const etag = catalogEtag({
@@ -52,6 +62,63 @@ export async function resolveExplorePage(
     });
   }
   return { locale, decks };
+}
+
+/**
+ * The Explore menu's shelves as JSON, for `?locale=` or English. Prerendered pages carry the nav,
+ * so it reads the live catalogue here and is cached like Explore.
+ */
+export async function menuShelvesResponse(context: APIContext): Promise<Response> {
+  const asked = context.url.searchParams.get("locale");
+  const locale: Locale = locales.find((each) => each === asked) ?? "en";
+  const shelves = menuShelves(await catalogIn(drizzle(env.DB), locale), locale);
+  const etag = catalogEtag({
+    content: catalogContentHash([], shelves),
+    locale,
+    version: env.CF_VERSION_METADATA?.id,
+    page: "menu-shelves",
+  });
+  const headers = { "cache-control": DECK_CACHE_CONTROL, etag };
+  if (etagMatches(context.request.headers.get("if-none-match"), etag)) {
+    return new Response(null, { status: 304, headers });
+  }
+  return Response.json(shelves, { headers });
+}
+
+/**
+ * The homepage's free decks as JSON, for `?locale=` or English. The homepage is prerendered, so it
+ * reads them after loading. Every visit asks, so one copy per locale and release is kept at the edge
+ * for as long as a browser keeps it.
+ */
+export async function featuredDecksResponse(context: APIContext): Promise<Response> {
+  const asked = context.url.searchParams.get("locale");
+  const locale: Locale = locales.find((each) => each === asked) ?? "en";
+  const version = env.CF_VERSION_METADATA?.id;
+  const key = new Request(
+    `${context.url.origin}/explore/featured.json?locale=${locale}&version=${version ?? "dev"}`,
+  );
+  // The site's types are the browser's, which lack the Workers runtime's default cache.
+  const edge = typeof caches === "undefined" ? undefined : (caches as { default?: Cache }).default;
+  let response = await edge?.match(key);
+  if (!response) {
+    const decks = featuredDecks(await catalogIn(drizzle(env.DB), locale));
+    const etag = catalogEtag({
+      content: catalogContentHash(decks),
+      locale,
+      version,
+      page: "featured",
+    });
+    response = Response.json(decks, { headers: { "cache-control": DECK_CACHE_CONTROL, etag } });
+    if (edge) waitUntil(edge.put(key, response.clone()));
+  }
+  const etag = response.headers.get("etag") ?? "";
+  if (etagMatches(context.request.headers.get("if-none-match"), etag)) {
+    return new Response(null, {
+      status: 304,
+      headers: { "cache-control": DECK_CACHE_CONTROL, etag },
+    });
+  }
+  return response;
 }
 
 export interface ShelfPage {
@@ -80,7 +147,7 @@ export async function resolveShelfPage(
   if (!SHELF_KINDS.includes(kind)) return null;
   const route = { kind: kind as ShelfKind, name };
   const db = drizzle(env.DB);
-  const catalogs = await Promise.all(locales.map((each) => listPublicCatalog(db, each)));
+  const catalogs = await Promise.all(locales.map((each) => catalogIn(db, each)));
   const shelvesIn = Object.fromEntries(
     locales.map((each, at) => [each, shelvesOf(catalogs[at] ?? [])]),
   ) as Record<Locale, Shelf[]>;
@@ -121,7 +188,7 @@ export async function resolveShelfPage(
 /** Every shelf page there is, with its address in the locales that have it and its decks, for the sitemap. */
 export async function shelfPagePaths(): Promise<SitemapShelf[]> {
   const db = drizzle(env.DB);
-  const catalogs = await Promise.all(locales.map((each) => listPublicCatalog(db, each)));
+  const catalogs = await Promise.all(locales.map((each) => catalogIn(db, each)));
   const byRoute = new Map<string, { paths: Partial<Record<Locale, string>>; slugs: Set<string> }>();
   locales.forEach((each, at) => {
     for (const shelf of shelvesOf(catalogs[at] ?? [])) {
@@ -154,10 +221,7 @@ export async function resolveExamsPage(
   page: string,
 ): Promise<ExamsPage | Response> {
   const db = drizzle(env.DB);
-  const [catalogue, slugs] = await Promise.all([
-    listPublicCatalog(db, locale),
-    listPublicDeckSlugs(db),
-  ]);
+  const [catalogue, slugs] = await Promise.all([catalogIn(db, locale), listPublicDeckSlugs(db)]);
   const exams = listedExams(catalogue);
   const updated = Object.fromEntries(
     slugs
@@ -188,7 +252,7 @@ export async function resolveExamsPage(
 
 export interface LanguageDecksPage {
   locale: Locale;
-  language: SupportedTag;
+  language: LanguagePageTag;
   /** The language's decks, those a beginner starts from first, as Welcome offers them. */
   decks: PublicDeckSummary[];
 }
@@ -200,7 +264,7 @@ async function resolveTaughtDecks(
   language: string,
   page: string,
 ): Promise<PublicDeckSummary[] | Response> {
-  const decks = languageDecks(await listPublicCatalog(drizzle(env.DB), locale), language);
+  const decks = languageDecks(await catalogIn(drizzle(env.DB), locale), language);
   const headers = astro.response.headers;
   headers.set("content-type", "text/html; charset=utf-8");
   const etag = catalogEtag({
@@ -227,7 +291,7 @@ async function resolveTaughtDecks(
 export async function resolveLanguageDecks(
   astro: AstroGlobal,
   locale: Locale,
-  language: SupportedTag,
+  language: LanguagePageTag,
 ): Promise<LanguageDecksPage | Response> {
   const decks = await resolveTaughtDecks(astro, locale, language, LANGUAGE_PAGES[language].page);
   return decks instanceof Response ? decks : { locale, language, decks };

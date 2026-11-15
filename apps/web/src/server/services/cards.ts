@@ -25,12 +25,15 @@ import {
   normaliseTerm,
   normalizeCardText,
   readingKey,
+  sameExample,
   sameReading,
+  sameSpokenReading,
   speechInputs,
   stripReadings,
   TEXT_MODES,
   termKey,
   wantsTranslation,
+  withHint,
 } from "@lymi/core";
 import { eventLanguages, TYPED_CARD_FIELDS, type TypedCardField } from "@lymi/core/analytics";
 import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
@@ -53,6 +56,7 @@ import {
 } from "./modes";
 import { bumped } from "./revisions";
 import { syncTagStatements } from "./tags";
+import { takenDown, takenDownCards } from "./takedowns";
 
 /**
  * What happened to one card in an add. A duplicate is skipped, never rejected, and the
@@ -68,20 +72,24 @@ type Sources = {
   exampleTranslationSource?: FieldSource | null | undefined;
   pronunciationSource?: FieldSource | null | undefined;
   notesSource?: FieldSource | null | undefined;
-  hookSource?: FieldSource | null | undefined;
+  hintSource?: FieldSource | null | undefined;
 };
 /**
  * A card write from inside the server, which may record Lymi's own AI as a field's source. No
  * caller can claim it; routes parse `CardInput`.
  */
-export type ServerCardInput = Omit<CardInput, keyof Sources> & Sources;
-type Cleared = "meaning" | "pronunciation" | "hook";
+export type ServerCardInput = Omit<CardInput, keyof Sources> &
+  Sources & {
+    /** The source's own id, such as `readwise:<highlight id>`, so a later pull finds the card. */
+    externalId?: string | undefined;
+  };
+type Cleared = "meaning" | "pronunciation" | "hint";
 export type ServerCardPatch = Omit<CardPatch, keyof Sources | Cleared> &
   Sources & {
     /** Null clears a field back to never set, which a split and Undo need. */
     meaning?: string | null | undefined;
     pronunciation?: string | null | undefined;
-    hook?: string | null | undefined;
+    hint?: string | null | undefined;
     /** The revision the card held this text at, for a write that puts earlier text back. */
     revision?: number | undefined;
   };
@@ -89,7 +97,7 @@ type ServerCardEdit = Omit<CardEditInput, keyof Sources | Cleared> &
   Sources & {
     meaning?: string | null | undefined;
     pronunciation?: string | null | undefined;
-    hook?: string | null | undefined;
+    hint?: string | null | undefined;
     revision?: number | undefined;
   };
 
@@ -100,11 +108,71 @@ export type AddCardsOptions = {
   fromLesson?: boolean;
   /** The Mac app's quick-add panel, so `cards_added` tells its cards from the app's own. */
   entry?: "desktop_panel" | undefined;
+  /** A Readwise pull, for the same reason. */
+  fromReadwise?: boolean;
+  /** An AnkiConnect client such as Yomitan, so `cards_added` tells its cards from other API calls. */
+  fromAnkiConnect?: boolean;
 };
 
 /** Only the learner in the app enriches unless asked; an integration opts in per card. */
 function wantsEnrichment(input: ServerCardInput, actor: Actor): boolean {
   return input.enrich ?? actor === "user";
+}
+
+type HeldCard = { card: Card; deckName: string };
+
+/** The learner's active cards under these term keys. Several can share a key: homographs told apart by their readings. */
+async function heldCards(db: Db, userId: string, terms: string[]) {
+  const rows = await selectIn([...new Set(terms)], (keys) =>
+    db
+      .select({ card: schema.cards, deckName: schema.decks.name })
+      .from(schema.cards)
+      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+      .where(
+        and(
+          eq(schema.cards.userId, userId),
+          isNull(schema.cards.archivedAt),
+          inArray(schema.cards.normalizedTerm, keys),
+        ),
+      ),
+  );
+  const held = new Map<string, HeldCard[]>();
+  for (const row of rows) holdCard(held, row);
+  return held;
+}
+
+function holdCard(held: Map<string, HeldCard[]>, row: HeldCard) {
+  const key = duplicateKey(row.card.language, row.card.normalizedTerm);
+  held.set(key, [...(held.get(key) ?? []), row]);
+}
+
+/**
+ * Which of these terms `addCards` would skip as a duplicate, found without writing anything, so a
+ * client can ask before it adds. ADR 0004.
+ */
+export async function duplicatesAmong(
+  { db, userId }: ServiceContext,
+  inputs: { term: string; language: string | null; pronunciation?: string | undefined }[],
+): Promise<boolean[]> {
+  const prepared = inputs.map(({ language, ...text }) => {
+    const { fields } = normalizeCardText(language, text);
+    return {
+      language,
+      key: termKey(language, fields.term),
+      reading: readingKey({ term: fields.term, language, pronunciation: fields.pronunciation }),
+    };
+  });
+  const held = await heldCards(
+    db,
+    userId,
+    prepared.map((p) => p.key),
+  );
+  return prepared.map(
+    ({ language, key, reading }) =>
+      held
+        .get(duplicateKey(language, key))
+        ?.some((row) => sameReading(readingKey(row.card), reading)) ?? false,
+  );
 }
 
 /** One card. Same rule as the batch, one outcome. */
@@ -131,11 +199,12 @@ export async function addCard(
  */
 export async function addCards(
   ctx: ServiceContext,
-  inputs: ServerCardInput[],
+  received: ServerCardInput[],
   enrichment?: EnrichmentQueue | null,
   options: AddCardsOptions = {},
 ): Promise<AddCardOutcome[]> {
   const { db, userId, actor } = ctx;
+  const inputs = received.map((card) => withHint(card));
   if (inputs.length === 0) return [];
   // Without the learner's yes the card is saved as typed and nothing leaves for the AI.
   const enrichAllowed =
@@ -194,27 +263,12 @@ export async function addCards(
     return { input, deck, language, key: termKey(language, input.term), normalized };
   });
 
-  const terms = prepared.flatMap((p) => (p.deck ? [p.key] : []));
-  const existingRows = await selectIn([...new Set(terms)], (keys) =>
-    db
-      .select({ card: schema.cards, deckName: schema.decks.name })
-      .from(schema.cards)
-      .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
-      .where(
-        and(
-          eq(schema.cards.userId, userId),
-          isNull(schema.cards.archivedAt),
-          inArray(schema.cards.normalizedTerm, keys),
-        ),
-      ),
+  const existing = await heldCards(
+    db,
+    userId,
+    prepared.flatMap((p) => (p.deck ? [p.key] : [])),
   );
-  // Several cards can share a key: homographs told apart by their readings.
-  const existing = new Map<string, { card: Card; deckName: string }[]>();
-  const hold = (row: { card: Card; deckName: string }) => {
-    const key = duplicateKey(row.card.language, row.card.normalizedTerm);
-    existing.set(key, [...(existing.get(key) ?? []), row]);
-  };
-  for (const row of existingRows) hold(row);
+  const hold = (row: HeldCard) => holdCard(existing, row);
 
   const now = new Date();
   const outcomes: RawOutcome[] = [];
@@ -287,7 +341,7 @@ export async function addCards(
         input.example && input.exampleTranslation ? exampleFingerprint(input.example) : null,
       exampleTranslationStatus: null,
       notes: input.notes ?? null,
-      hook: input.hook || null,
+      hint: input.hint || null,
       language,
       tags: input.tags ?? [],
       source: input.source ?? null,
@@ -295,19 +349,20 @@ export async function addCards(
       reviewModeKeys: modes?.reviewModeKeys ?? null,
       imageVersion: null,
       importId: null,
-      externalId: null,
+      externalId: input.externalId ?? null,
       sectionId: input.sectionId ?? null,
       meaningSource: input.meaningSource ?? (input.meaning ? "manual" : null),
       exampleSource: input.exampleSource ?? (input.example ? "manual" : null),
       pronunciationSource: input.pronunciationSource ?? (input.pronunciation ? "manual" : null),
       notesSource: input.notesSource ?? (input.notes ? "manual" : null),
-      hookSource: input.hook ? (input.hookSource ?? "manual") : null,
-      hookDraft: null,
+      hintSource: input.hint ? (input.hintSource ?? "manual") : null,
+      hintDraft: null,
       enrichmentStatus: null,
       enrichmentFields: null,
       audioKey: null,
       audioSource: null,
       audioApprovedKey: null,
+      exampleRecordingKey: null,
       createdBy: actor,
       archivedAt: null,
       createdAt: now,
@@ -317,7 +372,7 @@ export async function addCards(
     if (card.example) filled.add("example");
     if (card.pronunciation) filled.add("pronunciation");
     if (card.notes) filled.add("notes");
-    if (card.hook) filled.add("hook");
+    if (card.hint) filled.add("hint");
     if (card.source) filled.add("source");
     if (card.tags.length) filled.add("tags");
     if (card.sectionId) filled.add("section");
@@ -372,11 +427,15 @@ export async function addCards(
     const source =
       actor === "mcp"
         ? "ai_mcp"
-        : actor === "api"
-          ? "api"
-          : options.fromLesson
-            ? "lesson"
-            : "typed";
+        : options.fromAnkiConnect
+          ? "anki_connect"
+          : actor === "api"
+            ? "api"
+            : options.fromLesson
+              ? "lesson"
+              : options.fromReadwise
+                ? "readwise"
+                : "typed";
     const converted = outcomes.filter((o) => o.status === "added" && o.normalized?.length).length;
     track(ctx.analytics, {
       name: "cards_added",
@@ -402,7 +461,7 @@ export async function addCards(
   if (
     enrichment &&
     enriching.length > 0 &&
-    !(await queueEnrichment(db, userId, enriching, enrichment, "add", runId))
+    !(await queueEnrichment(ctx, enriching, enrichment, "add", runId))
   ) {
     for (const outcome of outcomes) {
       if (outcome.status === "added" && enriching.includes(outcome.card.id)) {
@@ -664,7 +723,7 @@ const aiWrote = (card: Card) =>
     card.exampleTranslationSource,
     card.notesSource,
     card.pronunciationSource,
-    card.hookSource,
+    card.hintSource,
   ].includes("ai");
 
 /**
@@ -794,7 +853,7 @@ export async function requestEnrichment(
     .update(schema.cards)
     .set({ ...working, ...reopened })
     .where(and(eq(schema.cards.id, id), eq(schema.cards.userId, userId)));
-  const queued = await queueEnrichment(db, userId, [id], enrichment, "card");
+  const queued = await queueEnrichment(ctx, [id], enrichment, "card");
   return presentCard(
     db,
     {
@@ -868,7 +927,7 @@ export async function updateCard(
   patch: ServerCardPatch,
   enrichment?: EnrichmentQueue | null,
 ) {
-  const edit = { ...patch, cardId: id };
+  const edit = { ...withHint(patch), cardId: id };
   const lookups = await editLookups(ctx, [edit], enrichment);
   const now = new Date();
   const write = editWrite(ctx, lookups, edit, now);
@@ -887,7 +946,7 @@ async function queueTranslations(
 ) {
   const ids = writes.filter((write) => write.translate && !failed.has(write.id)).map((w) => w.id);
   if (enrichment && ids.length > 0) {
-    await queueEnrichment(ctx.db, ctx.userId, ids, enrichment, "edit");
+    await queueEnrichment(ctx, ids, enrichment, "edit");
   }
 }
 
@@ -902,7 +961,7 @@ export type EditCardOutcome =
  */
 export async function updateCards(
   ctx: ServiceContext,
-  edits: CardEditInput[],
+  received: CardEditInput[],
   /** Tags the edits take off that are archived rather than dropped, for Restore. */
   options: {
     archiveTags?: readonly string[];
@@ -910,6 +969,7 @@ export async function updateCards(
   } = {},
 ): Promise<EditCardOutcome[]> {
   const { db, userId } = ctx;
+  const edits = received.map((edit) => withHint(edit));
   if (edits.length === 0) return [];
   const lookups = await editLookups(ctx, edits, options.enrichment);
   const now = new Date();
@@ -1146,25 +1206,32 @@ function editWrite(
     current.audioSource === "recorded"
       ? normalizedTerm !== termKey(language, current.term)
       : pronunciationChanged ||
-        speechInputs(current.language).some(
-          (field) => patch[field] !== undefined && patch[field] !== current[field],
-        );
+        speechInputs(current.language).some((field) => {
+          const sent = patch[field];
+          if (sent === undefined || sent === current[field]) return false;
+          // A chart reads the pitch accent; the voice reads the kana.
+          return field !== "pronunciation" || !sameSpokenReading(current, sent);
+        });
+  // An example's recording says its sentence, so only a new sentence drops it. Cleared whatever
+  // this read saw, so a clip an import stores meanwhile never outlives the edit. CONTEXT.md, Recording.
+  const exampleRecordingStale =
+    patch.example !== undefined && !sameExample(language, current.example, patch.example);
   // The translation's source is written with its text, in `translationAfter`, never on its own.
   const { reviewModes, directions: _legacy, exampleTranslationSource: _stated, ...fields } = patch;
-  const hook = patch.hook === undefined ? current.hook : patch.hook || null;
+  const hint = patch.hint === undefined ? current.hint : patch.hint || null;
   // Changing a field's text changes where it came from, so an AI fill an app rewrites loses its badge.
   const sources = {
     meaningSource: sourceAfter(patch.meaning, patch.meaningSource),
     exampleSource: sourceAfter(patch.example, patch.exampleSource),
     pronunciationSource: sourceAfter(patch.pronunciation, patch.pronunciationSource),
     notesSource: sourceAfter(patch.notes, patch.notesSource),
-    // Only a hook has a source, whatever the caller said about one that is not there. A hook saved
+    // Only a hint has a source, whatever the caller said about one that is not there. A hint saved
     // exactly as the AI drafted it is the AI's, whoever pressed Save.
-    hookSource: !hook
+    hintSource: !hint
       ? null
-      : patch.hook !== undefined && hook === current.hookDraft
+      : patch.hint !== undefined && hint === current.hintDraft
         ? ("ai" as const)
-        : sourceAfter(patch.hook, patch.hookSource),
+        : sourceAfter(patch.hint, patch.hintSource),
   };
   const translation = translationAfter(ctx, lookups, current, patch, deckId);
   // A draft fits the text it was drafted for, so a new term or meaning sends the next one back to the AI.
@@ -1179,7 +1246,7 @@ function editWrite(
     .update(schema.cards)
     .set({
       ...fields,
-      hook,
+      hint,
       ...sources,
       ...translation.set,
       ...(modes ?? {}),
@@ -1187,7 +1254,8 @@ function editWrite(
       ...(revision === undefined ? bumped("card", patch, current) : { revision }),
       normalizedTerm,
       ...(audioStale ? { audioKey: null, audioSource: null } : {}),
-      ...(draftStale ? { hookDraft: null } : {}),
+      ...(exampleRecordingStale ? { exampleRecordingKey: null } : {}),
+      ...(draftStale ? { hintDraft: null } : {}),
       updatedAt: now,
     })
     .where(eq(schema.cards.id, id));
@@ -1210,8 +1278,8 @@ function editWrite(
     language: patch.language === undefined ? current.language : patch.language,
     normalized: text.normalized,
     reports:
-      hook && !current.hook && sources.hookSource
-        ? { name: "hook_added", source: sources.hookSource }
+      hint && !current.hint && sources.hintSource
+        ? { name: "hint_added", source: sources.hintSource }
         : undefined,
   };
 }
@@ -1244,7 +1312,8 @@ export function restoreCards(ctx: ServiceContext, ids: readonly string[]) {
 
 async function setArchived(ctx: ServiceContext, id: string, archivedAt: Date | null) {
   const cards = await visibleCards(ctx, [id]);
-  const write = archiveWrite(ctx, cards, id, archivedAt);
+  const removed = archivedAt ? new Set<string>() : await takenDownCards(ctx.db, [id]);
+  const write = archiveWrite(ctx, cards, id, archivedAt, removed);
   if (!write) return;
   await runBatch(ctx.db, batchOf(ctx.db, [write], new Date()));
   reportWrites(ctx, [write], new Set());
@@ -1256,11 +1325,12 @@ async function setArchivedMany(
   archivedAt: Date | null,
 ): Promise<ArchiveCardOutcome[]> {
   const cards = await visibleCards(ctx, ids);
+  const removed = archivedAt ? new Set<string>() : await takenDownCards(ctx.db, ids);
   const now = new Date();
   const writes: CardWrite[] = [];
   const refusals = ids.map((id) =>
     refusalOf(id, () => {
-      const write = archiveWrite(ctx, cards, id, archivedAt);
+      const write = archiveWrite(ctx, cards, id, archivedAt, removed);
       if (write) writes.push(write);
     }),
   );
@@ -1281,11 +1351,13 @@ function archiveWrite(
   cards: Map<string, Card>,
   id: string,
   archivedAt: Date | null,
+  removed: ReadonlySet<string>,
 ): CardWrite | null {
   const current = cards.get(id);
   if (!current) throw notFound("Card");
   assertOwner(ctx, current);
   if ((current.archivedAt === null) === (archivedAt === null)) return null;
+  if (archivedAt === null && removed.has(id)) throw takenDown("card");
   return {
     id,
     statements: [

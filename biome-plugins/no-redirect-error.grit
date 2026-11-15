@@ -1,0 +1,4 @@
+JsPropertyObjectMember() as $member where {
+  $member <: r"(?s)[\"']?redirect[\"']?\s*:\s*[\"']error[\"']",
+  register_diagnostic(span=$member, message="Workers throws on redirect: 'error', so this fetch fails in production while tests in Node pass. Use redirect: 'manual' and check the response for a 3xx status and its Location header yourself.")
+}

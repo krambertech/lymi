@@ -17,6 +17,10 @@ export const APPROVE_COMMAND = "/approve-guardrails";
 
 const PACKAGE_FILE = /^(?:(?:apps|packages)\/[^/]+\/)?package\.json$/;
 const GUARDRAIL_SCRIPT = /^check(?::.+)?$/;
+// The root `verify` is the gate, and a check-named step of it, such as `i18n:check`, is a check too.
+const CHECK_STEP = /^pnpm ((?:[\w-]+:)*check(?::[\w-]+)*)$/;
+// CI runs these itself rather than through a package script.
+const CI_CHECK_FILES = ["scripts/check-pr-title.mjs"];
 const RUN_FILE = /\.(?:[cm]?[jt]sx?|sh|py|grit)$/;
 // Generated files carry their tool's suppressions, and prose only quotes them.
 const UNSCANNED = /(?:^|\/)(?:worker-configuration\.d\.ts|migrations\/)|\.gen\.|\.md$/;
@@ -93,26 +97,6 @@ function parseJson(text) {
   }
 }
 
-function enforcedRules(text) {
-  const match = /^## Enforced rules\n([\s\S]*?)(?=^## |(?![\s\S]))/m.exec(text ?? "");
-  return match?.[1];
-}
-
-/** The scripts and files named in the table's Check column. */
-function tableChecks(text) {
-  const scripts = [];
-  const files = [];
-  for (const row of (enforcedRules(text) ?? "").split("\n")) {
-    const check = row.trim().startsWith("|") ? row.split("|").at(-2) : undefined;
-    for (const [, code] of check?.matchAll(/`([^`]+)`/g) ?? []) {
-      const script = /^pnpm ([\w:-]+)$/.exec(code)?.[1];
-      if (script) scripts.push(script);
-      else if (code.includes("/") && RUN_FILE.test(code)) files.push(code);
-    }
-  }
-  return { scripts, files };
-}
-
 function readPackages(tree) {
   const packages = new Map();
   for (const path of tree.list().filter((candidate) => PACKAGE_FILE.test(candidate))) {
@@ -164,11 +148,17 @@ export function guardrailScripts(tree) {
       if (GUARDRAIL_SCRIPT.test(name)) queue.push([path, name]);
     }
   }
-  const table = tableChecks(tree.read("AGENTS.md"));
-  for (const name of table.scripts) queue.push(["package.json", name]);
-
   const scripts = new Map();
-  const files = new Map(table.files.map((file) => [file, "named in the enforced-rules table"]));
+  const verify = packages.get("package.json")?.scripts.verify;
+  if (verify !== undefined) {
+    scripts.set("package.json verify", { path: "package.json", name: "verify", command: verify });
+    for (const step of commandSteps(verify)) {
+      const name = CHECK_STEP.exec(step)?.[1];
+      if (name) queue.push(["package.json", name]);
+    }
+  }
+
+  const files = new Map(CI_CHECK_FILES.map((file) => [file, "run by CI"]));
   while (queue.length > 0) {
     const [path, name] = queue.shift();
     const key = `${path} ${name}`;
@@ -339,12 +329,6 @@ function commandSteps(command) {
   return command.split("&&").map((step) => step.trim().replace(/\s+/g, " "));
 }
 
-function tableRows(section) {
-  return (section ?? "")
-    .split("\n")
-    .filter((row) => row.trim().startsWith("|") && !/^\|[\s|:-]+\|$/.test(row.trim()));
-}
-
 /**
  * Lists each change in a diff that may loosen a guardrail; additions and removed exclusions pass. `changes`
  * is `parseDiff` output; `base` and `head` read either tree as `{ read(path) => text | undefined, list() => paths }`.
@@ -405,20 +389,6 @@ export function guardrailChanges({ changes, base, head }) {
     else if (runFiles.has(path)) named = `\`${path}\`, ${runFiles.get(path)}`;
     if (!named) continue;
     found.push(status === "deleted" ? `Deletes ${named}` : `Changes ${named}; ${UNSURE}`);
-  }
-
-  const baseTable = enforcedRules(base.read("AGENTS.md"));
-  const headTable = enforcedRules(head.read("AGENTS.md"));
-  if (baseTable !== undefined && headTable === undefined) {
-    found.push("Removes the enforced-rules table from `AGENTS.md`");
-  } else {
-    const kept = tableRows(headTable);
-    for (const row of tableRows(baseTable).filter((item) => !kept.includes(item))) {
-      const rule = row.split("|")[1]?.trim() ?? row;
-      found.push(
-        `Removes or rewords the enforced-rules row \`${rule.slice(0, 80)}\` in \`AGENTS.md\``,
-      );
-    }
   }
 
   return [...new Set(found)];

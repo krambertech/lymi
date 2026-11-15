@@ -5,7 +5,7 @@ import { clsx } from "clsx";
 import { FileText, Tag } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { type ReactNode, useMemo, useRef } from "react";
-import { Field } from "./JapaneseAi";
+import { Field, HintField } from "./JapaneseAi";
 import { Pinyin } from "./Pinyin";
 import { appear, EASE, usePlayback, useStill } from "./playback";
 
@@ -15,7 +15,7 @@ const Zh = ({ children, className }: { children: ReactNode; className?: string }
   </span>
 );
 
-const ENRICH_BEATS = { typed: 900, reading: 1600, example: 2400, hook: 3200 };
+const ENRICH_BEATS = { typed: 900, reading: 1600, example: 2400, draft: 3300, hint: 3800 };
 
 /** A word typed after a lesson; AI fills each empty field and marks it, and known characters lose their pinyin. */
 export function EnrichChinese() {
@@ -26,9 +26,9 @@ export function EnrichChinese() {
   const { at } = usePlayback(beats, inView, still);
 
   return (
-    <div ref={root} className="grid gap-2 rounded-xl bg-plate-2 p-3 edge-inset @2xl:p-4">
+    <div ref={root} className="grid gap-2 rounded-xl bg-plate-nested p-3 edge-inset @2xl:p-4">
       <Field label={<Trans>Term</Trans>}>
-        <Zh className="min-h-[1.4em] text-2xl font-medium text-text">
+        <Zh className="min-h-[1.4em] text-2xl font-medium text-ink">
           {at("typed") ? "换乘" : "换"}
         </Zh>
       </Field>
@@ -36,25 +36,23 @@ export function EnrichChinese() {
         <motion.span
           initial={false}
           animate={appear(at("reading"))}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           huànchéng
         </motion.span>
       </Field>
       <Field label={<Trans>Meaning</Trans>}>
-        <span className="min-h-[1.5em] text-md text-text">
+        <span className="min-h-[1.5em] text-md text-ink">
           <Trans>To change lines (metro, trains)</Trans>
-        </span>
-        <span className="text-xs text-muted">
-          <Trans>From your lesson</Trans>
         </span>
       </Field>
       <Field label={<Trans>Example</Trans>} wrote={at("example")}>
         <motion.span
           initial={false}
           animate={appear(at("example"))}
-          className="min-h-[2.2em] text-[26px] leading-[1.9] text-text"
+          className="min-h-[2.2em] text-2xl leading-[1.9] text-ink"
         >
+          {/* The term's size, not the other fields': any smaller and each syllable's pinyin spaces its character out. */}
           <Zh>
             <Pinyin
               term="我们在这里换乘二号线。"
@@ -63,23 +61,17 @@ export function EnrichChinese() {
             />
           </Zh>
         </motion.span>
-        <span className="text-xs text-muted">
+        <span className="text-xs text-ink-muted">
           <Trans>
             No pinyin over <Zh>我们在这里</Zh>: you know those characters.
           </Trans>
         </span>
       </Field>
-      <Field label={<Trans>Memory hook</Trans>} wrote={at("hook")}>
-        <motion.span
-          initial={false}
-          animate={appear(at("hook"))}
-          className="min-h-[1.5em] text-md text-text"
-        >
-          <Trans>
-            <Zh>换</Zh> to swap, <Zh>乘</Zh> to ride: you swap the line you ride.
-          </Trans>
-        </motion.span>
-      </Field>
+      <HintField pressed={at("draft")} drafted={at("hint")}>
+        <Trans>
+          <Zh>换</Zh> to swap, <Zh>乘</Zh> to ride: you swap the line you ride.
+        </Trans>
+      </HintField>
     </div>
   );
 }
@@ -154,10 +146,10 @@ export function NotesToCardsChinese() {
             transition={{ duration: 0.5, ease: EASE }}
             className="flex items-end justify-between gap-3 rounded-lg bg-plate px-4 py-2 edge"
           >
-            <Zh className="text-[26px] leading-[1.7] font-medium whitespace-nowrap text-text">
+            <Zh className="text-[26px] leading-[1.7] font-medium whitespace-nowrap text-ink">
               <Pinyin term={card.term} pinyin={card.pinyin} />
             </Zh>
-            <span className="mb-2 truncate text-md text-text-2">{i18n._(card.meaning)}</span>
+            <span className="mb-2 truncate text-md text-ink-secondary">{i18n._(card.meaning)}</span>
           </motion.li>
         ))}
       </ul>
@@ -236,14 +228,14 @@ export function PlecoImport() {
         className="grid items-start gap-5 @3xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] @3xl:gap-10"
       >
         <div aria-hidden="true" className="rounded-xl bg-plate p-4 edge">
-          <p className="flex items-center gap-2 border-b border-edge pb-3 text-sm text-text-2">
-            <FileText className="size-4 text-muted" />
+          <p className="flex items-center gap-2 border-b border-edge pb-3 text-sm text-ink-secondary">
+            <FileText className="size-4 text-ink-muted" />
             pleco-flashcards.txt
           </p>
           <div className="mt-3 grid gap-1 text-sm leading-7 @2xl:text-md">
             {PLECO_EXPORT.map(({ category, cards: lines }) => (
               <div key={category.id} className="grid gap-1">
-                <p className="text-muted">
+                <p className="text-ink-muted">
                   {"// "}
                   {i18n._(category)}
                 </p>
@@ -258,11 +250,11 @@ export function PlecoImport() {
                         reading(i) && "bg-amber-soft",
                       )}
                     >
-                      <Zh className="text-text">
+                      <Zh className="text-ink">
                         {line.term}[{line.traditional}]
                       </Zh>
-                      <span className="text-text-2">{line.numbers}</span>
-                      <span className="text-muted">{i18n._(line.definition)}</span>
+                      <span className="text-ink-secondary">{line.numbers}</span>
+                      <span className="text-ink-muted">{i18n._(line.definition)}</span>
                     </p>
                   );
                 })}
@@ -280,18 +272,20 @@ export function PlecoImport() {
               className="rounded-lg bg-plate px-4 pt-2 pb-3 edge"
             >
               <div className="flex items-end justify-between gap-3">
-                <Zh className="text-[28px] leading-[1.7] font-medium text-text">
+                <Zh className="text-[28px] leading-[1.7] font-medium text-ink">
                   <Pinyin term={card.term} pinyin={card.pinyin} />
                 </Zh>
-                <span className="mb-2 truncate text-md text-text-2">{i18n._(card.definition)}</span>
+                <span className="mb-2 truncate text-md text-ink-secondary">
+                  {i18n._(card.definition)}
+                </span>
               </div>
               <div className="flex flex-wrap items-center gap-1.5 text-xs">
-                <span className="inline-flex items-center gap-1 rounded-full bg-plate-2 px-2 py-0.5 text-text-2 edge-inset">
+                <span className="inline-flex items-center gap-1 rounded-full bg-plate-nested px-2 py-0.5 text-ink-secondary edge-inset">
                   <Tag aria-hidden="true" className="size-3" />
                   {i18n._(card.category)}
                 </span>
                 {card.traditional !== card.term && (
-                  <span className="rounded-full bg-plate-2 px-2 py-0.5 text-text-2 edge-inset">
+                  <span className="rounded-full bg-plate-nested px-2 py-0.5 text-ink-secondary edge-inset">
                     <Trans>
                       Note: <span lang="zh-Hant">{card.traditional}</span>
                     </Trans>

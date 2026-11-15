@@ -13,7 +13,8 @@ import {
   missingReadings,
 } from "@lymi/core";
 import { promptHash } from "../ai/prompt-hash";
-import { addsExampleReadings, languagePrompts } from "../languages";
+import type { TextModel } from "../ai/types";
+import { addsExampleReadings, enrichmentModel, languagePrompts } from "../languages";
 import { type CaseExpectations, type CheckResult, checkCard, ruleKey, tally } from "./checks";
 import { GUIDED_LANGUAGES, languageGuide } from "./languages";
 import {
@@ -51,10 +52,16 @@ export type FixtureDeck = {
   cases: FixtureCase[];
 };
 
-/** One model call: its deck, the cases it carried and what came back. */
-export type Call = { deck: string; input: string; cases: string[]; reply: Filled[] };
+/** One model call: its deck, the model asked, the cases it carried and what came back. */
+export type Call = {
+  deck: string;
+  model?: string;
+  input: string;
+  cases: string[];
+  reply: Filled[];
+};
 
-/** A live run as `--record` keeps it: every reply, with the prompt and the model that wrote them. */
+/** A live run as `--record` keeps it: every reply, with the prompt and the default model; a call names its own. */
 export type RecordedRun = {
   version: number;
   hash: string;
@@ -65,10 +72,11 @@ export type RecordedRun = {
 
 export const RUNS_DIR = new URL("./runs/", import.meta.url);
 
-/** Everything the model reads besides the cards, so a run recorded against other text is stale. */
+/** Everything the model reads besides the cards and which model reads it, so a run recorded otherwise is stale. */
 export function enrichmentPromptHash(): string {
   const guides = GUIDED_LANGUAGES.map(languageGuide);
-  return promptHash({ ENRICHMENT_INSTRUCTIONS, REPLY_SCHEMA, guides });
+  const models = GUIDED_LANGUAGES.map(enrichmentModel);
+  return promptHash({ ENRICHMENT_INSTRUCTIONS, REPLY_SCHEMA, guides, models });
 }
 
 export function newRun(model: string, calls: Call[]): RecordedRun {
@@ -129,7 +137,11 @@ function addsReadings(deck: FixtureDeck, item: FixtureCase): boolean {
 }
 
 /** The requests the service would make for a deck: one per wave of cards, all with the same deck. */
-export function requests(deck: FixtureDeck): { input: string; cases: string[] }[] {
+export function requests(deck: FixtureDeck): {
+  input: string;
+  cases: string[];
+  model: TextModel | undefined;
+}[] {
   const brief = deckBrief({
     id: deck.id,
     name: deck.name,
@@ -148,6 +160,7 @@ export function requests(deck: FixtureDeck): { input: string; cases: string[] }[
       ),
     ),
     cases: wave.map((item) => item.id),
+    model: enrichmentModel(deck.language),
   }));
 }
 

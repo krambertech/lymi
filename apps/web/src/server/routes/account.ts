@@ -8,16 +8,21 @@ import {
 } from "@lymi/core";
 import { Hono } from "hono";
 import { appleIdTokenVerifier } from "../apple-id-token";
-import { appleKeyOf, revokeAppleGrant } from "../apple-revoke";
+import { type AppleClients, appleClientsOf } from "../apple-revoke";
+import type { Db } from "../db";
+import { publisherEmails } from "../env";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
 import { erasePostHogPerson } from "../posthog";
 import {
+  copyFormerDecks,
   type DeletionLeftovers,
   deleteAccount,
   deleteExportFiles,
   deleteImportFiles,
   deletionSummary,
+  reportSkippedAppleRevocation,
+  revokeAfterDeletion,
   sendDeletionCode,
   sendTransactionalEmail,
 } from "../services";
@@ -34,10 +39,10 @@ account.get(
     tags: ["Account"],
     summary: "What deleting the account takes",
     learnerOnly: true,
-    description: `${LEARNER_ONLY} Counts what goes, names the decks that stay for the people studying them, and says how the delete is confirmed.`,
+    description: `${LEARNER_ONLY} Counts what goes, names the decks the people studying them will keep as copies, and says how the delete is confirmed.`,
     ok: { schema: AccountDeletionOut, description: "What a delete would take" },
   }),
-  async (c) => c.json(await deletionSummary(ctxOf(c))),
+  async (c) => c.json(await deletionSummary(ctxOf(c), publisherEmails(c.env))),
 );
 
 account.post(
@@ -46,7 +51,7 @@ account.post(
     tags: ["Account"],
     summary: "Email a code to delete the account",
     learnerOnly: true,
-    description: `${LEARNER_ONLY} Sends a six-digit code to the account's email, good for 15 minutes; a new one replaces the last. 409 \`code_sent\` within a minute of the last code, \`code_limit\` after five codes in a day; 409 \`publisher\` for an account that publishes decks.`,
+    description: `${LEARNER_ONLY} Sends a six-digit code to the account's email, good for 15 minutes; a new one replaces the last. 409 \`code_sent\` within a minute of the last code, \`code_limit\` after five codes in a day; 409 \`publisher\` for one of Lymi's own publisher accounts.`,
     ok: { schema: DeletionCodeOut, description: "Where the code went" },
     errors: [409, 503],
   }),
@@ -59,7 +64,7 @@ account.delete(
     tags: ["Account"],
     summary: "Delete the account",
     learnerOnly: true,
-    description: `${LEARNER_ONLY} Final. Deletes the account and everything it holds, signs it out everywhere and emails the address that it happened. Decks other people study stay for them. Confirm with the emailed \`code\`, or with a fresh Sign in with Apple for an account that uses one. 400 \`code_wrong\` or \`code_expired\`; 403 \`apple_mismatch\`; 409 \`publisher\`.`,
+    description: `${LEARNER_ONLY} Final. Deletes the account and everything it holds, signs it out everywhere and emails the address that it happened. Each person who studies one of its unarchived decks gets a private copy, and published decks leave Explore. Confirm with the emailed \`code\`, or with a fresh Sign in with Apple for an account that uses one. 400 \`code_wrong\` or \`code_expired\`; 403 \`apple_mismatch\`; 409 \`publisher\` for one of Lymi's own publisher accounts.`,
     ok: { schema: OkOut, description: "Deleted" },
     errors: [400, 409],
   }),
@@ -75,11 +80,14 @@ account.delete(
       const { internalAdapter } = await auth.$context;
       await internalAdapter.deleteUserSessions(userId);
     };
+    const appleClients = appleClientsOf(c.env);
     const leftovers = await deleteAccount(ctx, confirmation, {
       client,
       request: c.req.raw,
       verifyApple: verify ? (token, nonce) => verify(token, nonce) : null,
       endSessions,
+      appleClients,
+      publishers: publisherEmails(c.env),
     });
     // PostHog's copy goes with the person, so the count lives in the Worker's own dataset.
     track(c.env.EVENTS, {
@@ -87,10 +95,12 @@ account.delete(
       client,
       confirmed_with: leftovers.confirmedWith,
       kept_decks: leftovers.keptDecks,
+      published_decks: leftovers.publishedDecks,
     });
     c.executionCtx.waitUntil(
-      clearLeftovers(c.env, ctx.userId, leftovers, {
+      clearLeftovers(c.env, ctx.db, ctx.userId, leftovers, {
         appleCode: "apple" in confirmation ? confirmation.apple.authorizationCode : undefined,
+        appleClients,
         send: (input) => sendTransactionalEmail(ctx, c.env, input),
         endSessions,
       }),
@@ -102,15 +112,29 @@ account.delete(
 /** Storage the database cannot cascade into, the services that keep a copy, and the goodbye. */
 async function clearLeftovers(
   env: AppEnv["Bindings"],
+  db: Db,
   userId: string,
   leftovers: DeletionLeftovers,
   extra: {
     appleCode: string | undefined;
+    appleClients: AppleClients | null;
     send: (input: Parameters<typeof sendTransactionalEmail>[2]) => Promise<unknown>;
     endSessions: (userId: string) => Promise<void>;
   },
 ) {
-  const appleKey = appleKeyOf(env);
+  const apple = leftovers.appleRevocation;
+  if (apple?.status === "skipped" && apple.reason) {
+    reportSkippedAppleRevocation(env.EVENTS, apple.reason);
+  }
+  // The goodbye waits for the first try, so it can tell an Apple account whose grant is still
+  // live to remove Lymi itself; the cron keeps retrying either way.
+  const appleOutcome =
+    apple?.status === "pending"
+      ? revokeAfterDeletion(db, userId, extra.appleCode, {
+          clients: extra.appleClients,
+          events: env.EVENTS,
+        }).catch(() => "failed" as const)
+      : Promise.resolve(apple ? ("skipped" as const) : null);
   await Promise.allSettled([
     leftovers.sessionsEnded ? Promise.resolve() : extra.endSessions(userId),
     ...chunks(leftovers.privateImages, 1000).map((keys) => env.PRIVATE_IMAGES.delete(keys)),
@@ -118,12 +142,16 @@ async function clearLeftovers(
     ...leftovers.imports.map((row) => deleteImportFiles(env.IMPORTS, row)),
     ...leftovers.exports.map((row) => deleteExportFiles(env.EXPORTS, row)),
     erasePostHogPerson(env, userId),
-    appleKey && extra.appleCode ? revokeAppleGrant(appleKey, extra.appleCode) : Promise.resolve(),
-    extra.send({
-      kind: "account-deleted",
-      to: leftovers.email,
-      language: leftovers.language,
-    }),
+    // The cron finishes the copies; this makes the first ones without waiting for it.
+    leftovers.keptDecks > 0 ? copyFormerDecks(db, env.EVENTS) : Promise.resolve(),
+    appleOutcome.then((outcome) =>
+      extra.send({
+        kind: "account-deleted",
+        to: leftovers.email,
+        language: leftovers.language,
+        removeApple: outcome !== null && outcome !== "revoked",
+      }),
+    ),
   ]);
 }
 

@@ -12,19 +12,21 @@ import {
   newDeckEnrichFields,
   normalizeCardText,
 } from "@lymi/core";
-import { and, eq, isNull, sql } from "@lymi/core/db";
+import { and, eq, inArray, isNull, sql } from "@lymi/core/db";
 import { stripPinyin } from "@lymi/core/pinyin";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { createDb, type Db, schema } from "../db";
 import { centralDirectory, ZipSegment } from "../exports/zip";
 import { CallBudget, CallBudgetSpent } from "../imports/call-budget";
-import { bytesSource } from "../imports/files";
+import { bytesSource, ImportFileError } from "../imports/files";
+import { nextWriteStep, writeImport } from "../imports/write-run";
 import type { AnalyticsEvent } from "./analytics";
 import { analyticsContextFor } from "./analytics-context";
 import { pronunciationAudio } from "./audio";
-import { addCards, archiveCard, updateCard } from "./cards";
+import { addCards, archiveCard, showCard, updateCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
+import { exampleAudio } from "./example-audio";
 import { attachPictures, type ImportWork, type PendingPicture } from "./import-writer";
 import {
   archiveImport,
@@ -39,12 +41,12 @@ import {
   finishImport,
   getImport,
   IMPORT_STALL_MS,
+  type ImportResume,
   type ImportRunParams,
   type ImportView,
   inspectImport,
   listImports,
   NOTES_PER_CHUNK,
-  nextWriteStep,
   PICTURES_PER_STEP,
   prepareImportDecks,
   previewImportChoices,
@@ -133,7 +135,12 @@ async function writeAll(
   },
   onStep: (item: ImportView) => void = () => {},
 ) {
-  const pictures = { stored: 0, skipped: 0, recordings: { stored: 0, skipped: 0 } };
+  const pictures = {
+    stored: 0,
+    skipped: 0,
+    recordings: { stored: 0, skipped: 0 },
+    exampleRecordings: { stored: 0, skipped: 0 },
+  };
   let handled = 0;
   const { progress } = await getImport(ctx, id);
   for (let chunk = 0; chunk < progress.chunks; chunk++) {
@@ -147,6 +154,8 @@ async function writeAll(
       pictures.skipped += done.skipped;
       pictures.recordings.stored += done.recordings.stored;
       pictures.recordings.skipped += done.recordings.skipped;
+      pictures.exampleRecordings.stored += done.exampleRecordings.stored;
+      pictures.exampleRecordings.skipped += done.exampleRecordings.skipped;
       pending = pending.slice(PICTURES_PER_STEP);
       onStep(await getImport(ctx, id));
     }
@@ -464,6 +473,74 @@ describe("importing a Pleco export", () => {
   });
 });
 
+describe("an import that brings the account's first decks", () => {
+  it("finishes the welcome deck step once, and a later import or deck adds nothing", async () => {
+    const events: AnalyticsEvent[] = [];
+    const work: Promise<void>[] = [];
+    const ctx = {
+      ...(await fresh()),
+      analytics: {
+        capture: (e: AnalyticsEvent) => events.push(e),
+        writeDataPoint: () => {},
+        later: (run: () => Promise<void>) => {
+          work.push(run());
+        },
+      },
+    };
+    const deckFinishes = async () => {
+      await Promise.all(work.splice(0));
+      return events.filter((e) => e.name === "welcome_step_finished");
+    };
+    const finished = [{ name: "welcome_step_finished", step_name: "deck", skipped: false }];
+    await runImport(ctx, "current.apkg");
+    expect(
+      (await db.select().from(schema.decks).where(eq(schema.decks.userId, ctx.userId))).length,
+    ).toBeGreaterThan(1);
+    expect(await deckFinishes()).toEqual(finished);
+    await runImport(ctx, "flash.txt", NO_CHOICES, plecoExport());
+    await createDeck(ctx, { name: "Mine" });
+    expect(await deckFinishes()).toEqual(finished);
+  });
+
+  it("finishes the step when the import's smallest deck id was inserted a second after a sibling", async () => {
+    const events: AnalyticsEvent[] = [];
+    const queued: (() => Promise<void>)[] = [];
+    const ctx = {
+      ...(await fresh()),
+      analytics: {
+        capture: (e: AnalyticsEvent) => events.push(e),
+        writeDataPoint: () => {},
+        // Held back, so the decks' stored times can be set as a slow import would leave them.
+        later: (run: () => Promise<void>) => {
+          queued.push(run);
+        },
+      },
+    };
+    await runImport(ctx, "current.apkg");
+    const decks = await db
+      .select({ id: schema.decks.id })
+      .from(schema.decks)
+      .where(eq(schema.decks.userId, ctx.userId))
+      .orderBy(schema.decks.id);
+    expect(decks.length).toBeGreaterThan(1);
+    // `created_at` keeps whole seconds and ids made in one millisecond sort at random, so the
+    // smallest id can land in the next second while its siblings share the one before.
+    const second = 1_798_000_000_000;
+    await db
+      .update(schema.decks)
+      .set({ createdAt: new Date(second) })
+      .where(eq(schema.decks.userId, ctx.userId));
+    await db
+      .update(schema.decks)
+      .set({ createdAt: new Date(second + 1000) })
+      .where(eq(schema.decks.id, decks[0]?.id ?? ""));
+    await Promise.all(queued.splice(0).map((run) => run()));
+    expect(events.filter((e) => e.name === "welcome_step_finished")).toEqual([
+      { name: "welcome_step_finished", step_name: "deck", skipped: false },
+    ]);
+  });
+});
+
 describe("importing an HSK-shaped Anki deck", () => {
   it("writes Chinese cards with pinyin Readings, notes and recordings, counting converted tones", async () => {
     const events: AnalyticsEvent[] = [];
@@ -473,8 +550,18 @@ describe("importing an HSK-shaped Anki deck", () => {
     };
     // The file's pinyin fields say which decks are Chinese, so no language is chosen.
     const { preview, result } = await runImport(ctx, "hsk.apkg");
-    expect(preview).toMatchObject({ added: 9, recordings: 6, soundsLeftOut: 2 });
-    expect(result.counts).toMatchObject({ added: 9, recordings: 6, readingsConverted: 1 });
+    expect(preview).toMatchObject({
+      added: 9,
+      recordings: 6,
+      exampleRecordings: 2,
+      soundsLeftOut: 0,
+    });
+    expect(result.counts).toMatchObject({
+      added: 9,
+      recordings: 6,
+      exampleRecordings: 2,
+      readingsConverted: 1,
+    });
     expect(await card(ctx, "东西")).toMatchObject({ language: "zh", pronunciation: "dōng xi" });
     expect(await card(ctx, "學習")).toMatchObject({ language: "zh-Hant", notes: "我学习中文。" });
     expect((await card(ctx, "il cane")).language).not.toMatch(/^zh/);
@@ -485,7 +572,13 @@ describe("importing an HSK-shaped Anki deck", () => {
     expect(bank.notes).toBe("銀行\nnoun\n我去銀行。");
     expect(bank.exampleTranslation).toBe("I am going to the bank.");
     expect(events).toContainEqual(
-      expect.objectContaining({ name: "import_finished", source: "anki", readings_converted: 1 }),
+      expect.objectContaining({
+        name: "import_finished",
+        source: "anki",
+        readings_converted: 1,
+        example_recordings: 2,
+        example_recordings_skipped: 0,
+      }),
     );
   });
 });
@@ -529,8 +622,13 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     const [row] = await db.select().from(schema.cards).where(eq(schema.cards.id, cardId));
     return { key: row?.audioKey ?? null, source: row?.audioSource ?? null };
   };
+  const exampleRecording = async (cardId: string) => {
+    const [row] = await db.select().from(schema.cards).where(eq(schema.cards.id, cardId));
+    return row?.exampleRecordingKey ?? null;
+  };
+  const noAllowance = { left: async () => 60, spend: async () => undefined };
 
-  it("keeps each term's recording, a pitch line and the translation, and leaves the rest out", async () => {
+  it("keeps each term's and example's recording, a pitch accent and the translation, and leaves the rest out", async () => {
     const ctx = await fresh();
     const { id } = await upload(ctx, "kaishi.apkg", fixture("kaishi.apkg"));
     await inspectImport(ctx, id, env.IMPORTS);
@@ -544,23 +642,29 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
       added: 3,
       recordings: 2,
       recordingsSkipped: 1,
-      soundsLeftOut: 2,
-      audio: 2,
+      exampleRecordings: 2,
+      exampleRecordingsSkipped: 0,
+      soundsLeftOut: 0,
+      audio: 0,
       pitchSkipped: 1,
     });
     expect(result.counts).toMatchObject({
       added: 3,
       recordings: 2,
       recordingsSkipped: 1,
-      soundsLeftOut: 2,
+      exampleRecordings: 2,
+      exampleRecordingsSkipped: 0,
+      soundsLeftOut: 0,
       pitchSkipped: 1,
     });
 
     const hashi = await card(ctx, "箸");
-    expect(hashi.notes).toBe("Counted with 膳\nはꜜし [1]");
+    expect(hashi.pronunciation).toBe("はし [1]");
+    expect(hashi.notes).toBe("Counted with 膳");
     expect(hashi.exampleTranslation).toBe("I eat with chopsticks.");
     const sakura = await card(ctx, "桜");
-    expect(sakura.notes).toBe("さくら [0]");
+    expect(sakura.pronunciation).toBe("さくら [0]");
+    expect(sakura.notes).toBeNull();
     expect(sakura.exampleTranslation).toBe("The cherry blossoms bloomed.");
     const neko = await card(ctx, "猫");
     expect(neko.notes).toBeNull();
@@ -572,11 +676,84 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     const stored = await env.AUDIO.get(clip.key as string);
     expect(stored?.httpMetadata?.contentType).toBe("audio/mpeg");
     await stored?.body.cancel();
+    const sentence = await exampleRecording(hashi.id);
+    expect(sentence).toMatch(new RegExp(`^cards/${hashi.id}/example-recorded/[0-9a-f]{32}\\.mp3$`));
+    expect(sentence).not.toBe(clip.key);
+    expect(await exampleRecording(neko.id)).toBeNull();
     const audit = await db
       .select()
       .from(schema.auditLog)
       .where(and(eq(schema.auditLog.entityId, hashi.id), eq(schema.auditLog.action, "set_audio")));
-    expect(audit).toHaveLength(1);
+    expect(audit).toHaveLength(2);
+  });
+
+  it("plays the example's recording, keeps it through a reading fix and drops it for a new sentence", async () => {
+    const ctx = await fresh();
+    await runImport(ctx, "kaishi.apkg");
+    const hashi = await card(ctx, "箸");
+    const sentence = await exampleRecording(hashi.id);
+    expect(sentence).not.toBeNull();
+    const view = await showCard(ctx, hashi.id);
+    expect(view.exampleRecorded).toBe(true);
+    expect(view).not.toHaveProperty("exampleRecordingKey");
+
+    const played = await exampleAudio(
+      ctx,
+      hashi.id,
+      { bucket: env.AUDIO, providers: () => [] },
+      noAllowance,
+    );
+    if (!("clip" in played)) throw new Error("no clip");
+    expect(played.clip.key).toBe(sentence);
+    await played.clip.body.cancel();
+
+    await updateCard(ctx, hashi.id, { example: "箸[はし]で 食[た]べます。" });
+    expect(await exampleRecording(hashi.id)).toBe(sentence);
+
+    await updateCard(ctx, hashi.id, { example: "箸で食べました。" });
+    expect(await exampleRecording(hashi.id)).toBeNull();
+    expect((await showCard(ctx, hashi.id)).exampleRecorded).toBe(false);
+    // The term's recording says the word, which is unchanged.
+    expect((await recorded(hashi.id)).source).toBe("recorded");
+  });
+
+  it("gives a card an earlier import brought its example's recording once, and only for the same sentence", async () => {
+    const ctx = await fresh();
+    await runImport(ctx, "kaishi.apkg");
+    const hashi = await card(ctx, "箸");
+    const sakura = await card(ctx, "桜");
+    const kept = await exampleRecording(hashi.id);
+    await db
+      .update(schema.cards)
+      .set({ exampleRecordingKey: null })
+      .where(inArray(schema.cards.id, [hashi.id, sakura.id]));
+    // 桜's sentence is the learner's own now, so the file's clip would say the wrong thing.
+    await updateCard(ctx, sakura.id, { example: "桜が散りました。" });
+
+    const first = await runImport(ctx, "kaishi.apkg");
+    expect(first.preview).toMatchObject({ existing: 3, exampleRecordings: 1 });
+    expect(first.result.counts).toMatchObject({
+      exampleRecordings: 1,
+      exampleRecordingsSkipped: 0,
+    });
+    expect(await exampleRecording(hashi.id)).toBe(kept);
+    expect(await exampleRecording(sakura.id)).toBeNull();
+
+    // A sentence the learner cleared stays cleared, so no clip is promised for it.
+    await updateCard(ctx, sakura.id, { example: "" });
+    const cleared = await runImport(ctx, "kaishi.apkg");
+    expect(cleared.preview).toMatchObject({ exampleRecordings: 0 });
+    expect(cleared.result.counts).toMatchObject({
+      exampleRecordings: 0,
+      exampleRecordingsSkipped: 0,
+    });
+    expect(await exampleRecording(sakura.id)).toBeNull();
+
+    // The same file again reads no clip and changes nothing.
+    const again = await runImport(ctx, "kaishi.apkg");
+    expect(again.preview).toMatchObject({ existing: 3, exampleRecordings: 0, recordings: 0 });
+    expect(again.result.counts).toMatchObject({ exampleRecordings: 0, recordings: 0 });
+    expect(await exampleRecording(hashi.id)).toBe(kept);
   });
 
   it("plays a recording without a speech provider, keeps it through edits and drops it for a new term", async () => {
@@ -621,6 +798,35 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     expect(await recorded(sakura.id)).toEqual({ key: null, source: null });
   });
 
+  it("stores no clip for a sentence the learner changed while the import ran", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "Changed", defaultLanguage: "ja" });
+    const [added] = await addCards(ctx, [
+      { deckId: deck.id, term: "箸", example: "箸で食べました。" },
+    ]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const clip = new Uint8Array([0x49, 0x44, 0x33, ...new Array(61).fill(3)]);
+    const file = {
+      adapter: { media: async () => async () => clip },
+    } as unknown as ImportWork<unknown>;
+    const totals = await attachPictures(
+      ctx,
+      file,
+      bytesSource(new Uint8Array()),
+      [
+        {
+          cardId: added.card.id,
+          name: "sentence.mp3",
+          kind: "exampleRecording",
+          example: "箸で食べます。",
+        },
+      ],
+      { audio: env.AUDIO },
+    );
+    expect(totals.exampleRecordings).toEqual({ stored: 0, skipped: 1 });
+    expect(await exampleRecording(added.card.id)).toBeNull();
+  });
+
   it("leaves out a clip the file cannot give back, and goes on with the import", async () => {
     const ctx = await fresh();
     const deck = await createDeck(ctx, { name: "Damaged", defaultLanguage: "ja" });
@@ -629,7 +835,7 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     const damaged = {
       adapter: {
         media: async () => async () => {
-          throw new Error("A zstd frame is damaged");
+          throw new ImportFileError("damaged", "A zstd frame is damaged");
         },
       },
     } as unknown as ImportWork<unknown>;
@@ -642,6 +848,29 @@ describe("importing a Kaishi-shaped Japanese deck", () => {
     );
     expect(totals.recordings).toEqual({ stored: 0, skipped: 1 });
     expect(await recorded(added.card.id)).toEqual({ key: null, source: null });
+  });
+
+  it("fails the step when storage cannot give a clip back, so its retry can store it", async () => {
+    const ctx = await fresh();
+    const deck = await createDeck(ctx, { name: "Unreachable", defaultLanguage: "ja" });
+    const [added] = await addCards(ctx, [{ deckId: deck.id, term: "犬" }]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const unreachable = {
+      adapter: {
+        media: async () => async () => {
+          throw new Error("R2 is unavailable");
+        },
+      },
+    } as unknown as ImportWork<unknown>;
+    await expect(
+      attachPictures(
+        ctx,
+        unreachable,
+        bytesSource(new Uint8Array()),
+        [{ cardId: added.card.id, name: "inu.mp3", kind: "recording" }],
+        { audio: env.AUDIO },
+      ),
+    ).rejects.toThrow("R2 is unavailable");
   });
 
   it("gives a card an earlier import brought its recording in place of generated speech", async () => {
@@ -725,7 +954,7 @@ describe("importing an Anki package", () => {
       .select({ objectKey: schema.imports.objectKey })
       .from(schema.imports)
       .where(eq(schema.imports.id, id));
-    expect(await objectsUnder(row[0]?.objectKey as string)).toBe(0);
+    expect(row[0]?.objectKey).toBeNull();
   });
 
   it("gives the same result for the legacy and the current container", async () => {
@@ -1104,17 +1333,29 @@ describe("counting what was written", () => {
 });
 
 describe("nextWriteStep", () => {
+  const limits = { steps: 900, calls: 1000 };
+  const at = { chunk: 5, chunks: 90, pending: 0, steps: 20, calls: 400, costliest: 100 };
   it("writes chunks, stores their pictures, then finishes", () => {
-    expect(nextWriteStep({ chunk: 0, chunks: 2, pending: 0, steps: 2 })).toBe("cards");
-    expect(nextWriteStep({ chunk: 1, chunks: 2, pending: 120, steps: 3 })).toBe("pictures");
-    expect(nextWriteStep({ chunk: 2, chunks: 2, pending: 20, steps: 9 })).toBe("pictures");
-    expect(nextWriteStep({ chunk: 2, chunks: 2, pending: 0, steps: 10 })).toBe("finish");
+    const start = { steps: 2, calls: 10, costliest: 0 };
+    expect(nextWriteStep({ ...start, chunk: 0, chunks: 2, pending: 0 }, limits)).toBe("cards");
+    expect(nextWriteStep({ ...start, chunk: 1, chunks: 2, pending: 120 }, limits)).toBe("pictures");
+    expect(nextWriteStep({ ...start, chunk: 2, chunks: 2, pending: 20 }, limits)).toBe("pictures");
+    expect(nextWriteStep({ ...start, chunk: 2, chunks: 2, pending: 0 }, limits)).toBe("finish");
   });
   it("hands over to a new run before the step budget runs out", () => {
-    expect(nextWriteStep({ chunk: 5, chunks: 90, pending: 0, steps: 897 }, 900)).toBe("cards");
-    expect(nextWriteStep({ chunk: 5, chunks: 90, pending: 0, steps: 898 }, 900)).toBe("hand over");
-    expect(nextWriteStep({ chunk: 5, chunks: 90, pending: 40, steps: 898 }, 900)).toBe("hand over");
-    expect(nextWriteStep({ chunk: 90, chunks: 90, pending: 0, steps: 899 }, 900)).toBe("finish");
+    expect(nextWriteStep({ ...at, steps: 897 }, limits)).toBe("cards");
+    expect(nextWriteStep({ ...at, steps: 898 }, limits)).toBe("hand over");
+    expect(nextWriteStep({ ...at, steps: 898, pending: 40 }, limits)).toBe("hand over");
+    expect(nextWriteStep({ ...at, steps: 899, chunk: 90 }, limits)).toBe("finish");
+  });
+  it("hands over while the next step has room for twice the costliest so far", () => {
+    expect(nextWriteStep({ ...at, calls: 799 }, limits)).toBe("cards");
+    expect(nextWriteStep({ ...at, calls: 800 }, limits)).toBe("hand over");
+    expect(nextWriteStep({ ...at, calls: 800, pending: 40 }, limits)).toBe("hand over");
+    expect(nextWriteStep({ ...at, calls: 999, chunk: 90 }, limits)).toBe("finish");
+  });
+  it("writes once before handing over, however much reading the file cost", () => {
+    expect(nextWriteStep({ ...at, calls: 990, costliest: 0 }, limits)).toBe("cards");
   });
 });
 
@@ -1256,7 +1497,10 @@ function png(width: number, height: number) {
 }
 
 /** A Lymi export of `count` cards, each with its own picture. */
-async function pictureDeck(count: number) {
+/** A Lymi file of `count` cards, every `every`th of them with a picture. */
+async function pictureDeck(count: number, every = 1) {
+  const pictured = (i: number) => i % every === 0;
+  const pictures = Array.from({ length: count }, (_, i) => i).filter(pictured);
   const encoder = new TextEncoder();
   const segment = new ZipSegment(0);
   const manifest: LymiFileManifest = {
@@ -1278,7 +1522,7 @@ async function pictureDeck(count: number) {
         createdAt: CREATED,
       },
     ],
-    counts: { decks: 1, cards: count, reviews: 0, pictures: count, sounds: 0 },
+    counts: { decks: 1, cards: count, reviews: 0, pictures: pictures.length, sounds: 0 },
   };
   const cards = Array.from(
     { length: count },
@@ -1297,7 +1541,9 @@ async function pictureDeck(count: number) {
       meaningSource: null,
       exampleSource: null,
       reviewModes: null,
-      picture: { file: `media/c${i}.png`, description: "Blue", width: 24, height: 24 },
+      picture: pictured(i)
+        ? { file: `media/c${i}.png`, description: "Blue", width: 24, height: 24 }
+        : null,
       archivedAt: null,
       createdAt: CREATED,
       states: [],
@@ -1310,7 +1556,7 @@ async function pictureDeck(count: number) {
     true,
   );
   const picture = png(24, 24);
-  for (let i = 0; i < count; i++) await segment.add(`media/c${i}.png`, picture, false);
+  for (const i of pictures) await segment.add(`media/c${i}.png`, picture, false);
   const directory = centralDirectory(segment.records, segment.length);
   return new Uint8Array(Buffer.concat([segment.bytes(), directory]));
 }
@@ -1421,6 +1667,46 @@ describe("importing a deck of many pictures", () => {
   });
 });
 
+describe("an ended import's files", () => {
+  const keyOf = async (id: string) => {
+    const [row] = await db
+      .select({ objectKey: schema.imports.objectKey })
+      .from(schema.imports)
+      .where(eq(schema.imports.id, id));
+    return row?.objectKey;
+  };
+
+  it("clears the key once they are gone", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    expect(await keyOf(id)).not.toBeNull();
+    await cancelImport(ctx, id, env.IMPORTS);
+    expect(await keyOf(id)).toBeNull();
+  });
+
+  it("stay for the sweep when R2 refuses the delete", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    const key = (await keyOf(id)) as string;
+    const refusing = new Proxy(env.IMPORTS, {
+      get(target, property) {
+        if (property === "delete")
+          return async () => Promise.reject(new Error("R2 is unavailable"));
+        const value = Reflect.get(target, property);
+        return typeof value === "function" ? value.bind(target) : value;
+      },
+    });
+
+    await failImport(db, id, "unrecognized", refusing);
+    expect(await keyOf(id)).toBe(key);
+    expect(await env.IMPORTS.head(key)).not.toBeNull();
+
+    await expireImports(db, env.IMPORTS);
+    expect(await keyOf(id)).toBeNull();
+    expect(await env.IMPORTS.head(key)).toBeNull();
+  });
+});
+
 describe("a picture step that fails", () => {
   it("records no progress, and its retry counts each picture and recording once", async () => {
     const ctx = await fresh();
@@ -1453,7 +1739,12 @@ describe("a picture step that fails", () => {
       { ...storage, audio: env.AUDIO },
       3,
     );
-    expect(retried).toEqual({ stored: 2, skipped: 0, recordings: { stored: 1, skipped: 0 } });
+    expect(retried).toEqual({
+      stored: 2,
+      skipped: 0,
+      recordings: { stored: 1, skipped: 0 },
+      exampleRecordings: { stored: 0, skipped: 0 },
+    });
     expect((await getImport(ctx, id)).progress.media.done).toBe(3);
     const images = await db
       .select({ id: schema.cardImages.id })
@@ -1523,6 +1814,100 @@ describe("a stalled write", () => {
   });
 });
 
+describe("failed import analytics", () => {
+  it("sends the cron's expired reason to the waiting import's owner", async () => {
+    const ctx = await fresh();
+    const events: { userId: string; event: AnalyticsEvent }[] = [];
+    const waiting = await startImport(ctx, { fileName: "later.apkg", byteSize: 100 }, env.IMPORTS);
+    await db
+      .update(schema.imports)
+      .set({ updatedAt: new Date(Date.now() - 4 * DAY) })
+      .where(eq(schema.imports.id, waiting.id));
+    await expireImports(db, env.IMPORTS, new Date(), (userId) => ({
+      capture: (e: AnalyticsEvent) => events.push({ userId, event: e }),
+      writeDataPoint: () => {},
+    }));
+    expect(await getImport(ctx, waiting.id)).toMatchObject({
+      status: "failed",
+      failure: "expired",
+    });
+    const mine = events.filter((item) => item.userId === ctx.userId).map((item) => item.event);
+    expect(mine).toContainEqual(
+      expect.objectContaining({
+        name: "import_finished",
+        source: "anki",
+        adapter: "anki",
+        outcome: "failed",
+        failure: "expired",
+      }),
+    );
+    expect(mine).toContainEqual(
+      expect.objectContaining({ name: "import_failed", source: "anki", failure: "expired" }),
+    );
+  });
+
+  it("sends internal when the cron fails a stalled write", async () => {
+    const ctx = await fresh();
+    const events: AnalyticsEvent[] = [];
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const now = Date.now();
+    await db
+      .update(schema.imports)
+      .set({ updatedAt: new Date(now - IMPORT_STALL_MS - 60_000) })
+      .where(eq(schema.imports.id, id));
+    await expireImports(db, env.IMPORTS, new Date(now), {
+      capture: (e: AnalyticsEvent) => {
+        if (e.name === "import_finished" || e.name === "import_failed") events.push(e);
+      },
+      writeDataPoint: () => {},
+    });
+    expect(await getImport(ctx, id)).toMatchObject({ status: "failed", failure: "internal" });
+    expect(events).toContainEqual(
+      expect.objectContaining({
+        name: "import_finished",
+        outcome: "failed",
+        failure: "internal",
+      }),
+    );
+    expect(events).toContainEqual(
+      expect.objectContaining({ name: "import_failed", failure: "internal" }),
+    );
+  });
+
+  it("sends the workflow's failure reason on both events", async () => {
+    const ctx = await fresh();
+    const events: AnalyticsEvent[] = [];
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const failure = await failRun(
+      db,
+      id,
+      new Error("damaged"),
+      env.IMPORTS,
+      new CallBudget(),
+      {
+        capture: (e: AnalyticsEvent) => events.push(e),
+        writeDataPoint: () => {},
+      },
+      async () => {},
+    );
+    expect(failure).toBe("damaged");
+    expect(events).toContainEqual(
+      expect.objectContaining({
+        name: "import_finished",
+        outcome: "failed",
+        failure: "damaged",
+      }),
+    );
+    expect(events).toContainEqual(
+      expect.objectContaining({ name: "import_failed", failure: "damaged" }),
+    );
+  });
+});
+
 describe("a write that runs out of calls", () => {
   it("stops before the cap, marks the import failed and reports it at once", async () => {
     const events: AnalyticsEvent[] = [];
@@ -1571,7 +1956,16 @@ describe("a write that runs out of calls", () => {
       status: "failed",
       failure: "internal",
     });
-    expect(events.map((e) => e.name)).toContain("import_failed");
+    expect(events).toContainEqual(
+      expect.objectContaining({
+        name: "import_finished",
+        outcome: "failed",
+        failure: "internal",
+      }),
+    );
+    expect(events).toContainEqual(
+      expect.objectContaining({ name: "import_failed", failure: "internal" }),
+    );
     expect(reported).toEqual([stopped]);
     // Recording the failure stayed inside the cap.
     expect(budget.used).toBeLessThanOrEqual(budget.limit);
@@ -1653,5 +2047,139 @@ describe("a write that runs out of calls", () => {
     expect(failure).toBe("damaged");
     expect(await getImport(ctx, id)).toMatchObject({ status: "failed", failure: "damaged" });
     expect(reported).toEqual([]);
+  });
+});
+
+describe("a write handed over to fresh runs", () => {
+  /** One Workflow instance's steps: each runs once, and a replay gets back what it returned. */
+  function instance() {
+    const results = new Map<string, unknown>();
+    return async <T>(name: string, work: () => Promise<T>): Promise<T> => {
+      if (!results.has(name)) results.set(name, structuredClone(await work()));
+      return structuredClone(results.get(name)) as T;
+    };
+  }
+
+  it("hands the rest over before the call budget runs out, and writes every card and picture once", async () => {
+    const events: AnalyticsEvent[] = [];
+    const analytics = { capture: (e: AnalyticsEvent) => events.push(e), writeDataPoint: () => {} };
+    const learnerCtx = await fresh();
+    // Past one chunk, with pictures in both, so runs hand over between chunks and between pictures.
+    const count = NOTES_PER_CHUNK + 60;
+    const pictured = count / 4;
+    const { id } = await upload(learnerCtx, "pictures.zip", await pictureDeck(count, 4));
+    await inspectImport(learnerCtx, id, env.IMPORTS);
+    await confirmImport(learnerCtx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+
+    // Far below Cloudflare's cap, so the import takes several runs.
+    const limit = 400;
+    const reserve = 20;
+    let params: ImportRunParams = {
+      importId: id,
+      userId: learnerCtx.userId,
+      actor: learnerCtx.actor,
+      phase: "write",
+    };
+    let handedOver: ImportRunParams[] = [];
+    const run = (step: ReturnType<typeof instance>, budget: CallBudget) =>
+      writeImport(params, {
+        ctx: { ...learnerCtx, db: createDb(budget.wrap(env.DB)), analytics },
+        uploads: budget.wrap(env.IMPORTS),
+        storage: {
+          bucket: budget.wrap(env.PRIVATE_IMAGES),
+          images: budget.wrap(env.IMAGES),
+          audio: budget.wrap(env.AUDIO),
+        },
+        budget,
+        step,
+        handOver: async (resume) => {
+          handedOver.push({ ...params, resume });
+        },
+      });
+
+    const resumes: ImportResume[] = [];
+    let runs = 0;
+    let used = 0;
+    const done: number[] = [];
+    for (;;) {
+      runs++;
+      const step = instance();
+      const budget = new CallBudget(limit, reserve);
+      const outcome = await run(step, budget);
+      used += budget.used;
+      expect(budget.used).toBeLessThan(limit - reserve);
+      if (outcome === "done") break;
+
+      // Replayed, the instance makes the same decisions from what its steps recorded, so it
+      // writes nothing again and starts no second run.
+      const replay = new CallBudget(limit, reserve);
+      expect(await run(step, replay)).toBe("handed over");
+      expect(replay.used).toBe(0);
+      expect(handedOver).toHaveLength(1);
+
+      const view = await getImport(learnerCtx, id);
+      expect(view.status).toBe("importing");
+      done.push(view.progress.media.done);
+      params = handedOver[0] as ImportRunParams;
+      if (params.resume) resumes.push(params.resume);
+      handedOver = [];
+    }
+
+    expect(resumes.some((resume) => resume.pending.length > 0)).toBe(true);
+    expect(resumes.some((resume) => resume.pending.length === 0)).toBe(true);
+    // No single run could have written it.
+    expect(used).toBeGreaterThan(limit - reserve);
+    for (let i = 1; i < done.length; i++) expect(done[i]).toBeGreaterThan(done[i - 1] as number);
+
+    const terms = (await cardsOf(learnerCtx)).map((c) => c.term);
+    expect(terms).toHaveLength(count);
+    expect(new Set(terms)).toEqual(new Set(Array.from({ length: count }, (_, i) => `parola ${i}`)));
+    const images = await db
+      .select({ cardId: schema.cardImages.cardId })
+      .from(schema.cardImages)
+      .where(eq(schema.cardImages.userId, learnerCtx.userId));
+    expect(images).toHaveLength(pictured);
+    expect(new Set(images.map((row) => row.cardId)).size).toBe(pictured);
+
+    // The learner sees one import, finished with every card and picture.
+    const imports = await listImports(learnerCtx);
+    expect(imports.map((item) => item.id)).toEqual([id]);
+    expect(await getImport(learnerCtx, id)).toMatchObject({
+      status: "done",
+      counts: { added: count, pictures: pictured, picturesSkipped: 0 },
+      progress: { media: { done: pictured, total: pictured } },
+    });
+    const finished = events.filter((e) => e.name === "import_finished");
+    expect(finished).toEqual([expect.objectContaining({ outcome: "done", write_runs: runs })]);
+  }, 120_000);
+
+  it("leaves write_runs out when a run was handed over before runs were counted", async () => {
+    const events: AnalyticsEvent[] = [];
+    const analytics = { capture: (e: AnalyticsEvent) => events.push(e), writeDataPoint: () => {} };
+    const ctx = { ...(await fresh()), analytics };
+    const { id } = await upload(ctx, "pictures.zip", await pictureDeck(2));
+    await inspectImport(ctx, id, env.IMPORTS);
+    await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
+    const budget = new CallBudget();
+    const resume = { chunk: 0, pending: [], pictures: { stored: 0, skipped: 0 }, handled: 0 };
+    const params: ImportRunParams = {
+      importId: id,
+      userId: ctx.userId,
+      actor: ctx.actor,
+      phase: "write",
+      resume,
+    };
+    const outcome = await writeImport(params, {
+      ctx,
+      uploads: env.IMPORTS,
+      storage: { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
+      budget,
+      step: instance(),
+      handOver: async () => {},
+    });
+    expect(outcome).toBe("done");
+    const finished = events.find((e) => e.name === "import_finished");
+    expect(finished).toMatchObject({ outcome: "done", card_count: 2 });
+    expect(finished).not.toHaveProperty("write_runs");
   });
 });

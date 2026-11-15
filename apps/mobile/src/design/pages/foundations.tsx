@@ -22,12 +22,12 @@ function Swatch({ token, note }: { token: keyof Palette; note: string }) {
         style={{ backgroundColor: p[token] }}
       />
       <View className="flex-1 gap-0.5">
-        <Text className="text-sm font-medium text-text" style={MONO}>
+        <Text className="text-sm font-medium text-ink" style={MONO}>
           {token}
         </Text>
-        <Text className="text-sm text-muted">{note}</Text>
+        <Text className="text-sm text-ink-muted">{note}</Text>
       </View>
-      <Text className="text-xs text-muted" style={MONO}>
+      <Text className="text-xs text-ink-muted" style={MONO}>
         {p[token]}
       </Text>
     </View>
@@ -62,10 +62,10 @@ export function Colour() {
                     ["canvas", "The room: the page itself"],
                     ["sheet", "What rises over the room: a sheet, lighter at night"],
                     ["plate", "A thing in the room: a card, a row group, a control"],
-                    ["plate-2", "A well in a plate: a chip, a track"],
-                    ["chosen", "The chosen option riding in a plate-2 track"],
+                    ["plate-nested", "A well in a plate: a chip, a track"],
+                    ["plate-chosen", "The chosen option riding in a plate-nested track"],
                     ["edge", "The hairline every plate carries"],
-                    ["edge-2", "A stronger edge: focus, a pressed plate"],
+                    ["edge-strong", "A stronger edge: focus, a pressed plate"],
                   ]}
                 />
               ),
@@ -84,10 +84,10 @@ export function Colour() {
               render: () => (
                 <Swatches
                   items={[
-                    ["text", "The term, a title, what the screen is about"],
-                    ["text-2", "Supporting prose, a secondary label, a ghost button"],
-                    ["muted", "Metadata, a hint, a placeholder"],
-                    ["faint", "Decoration that is not a word"],
+                    ["ink", "The term, a title, what the screen is about"],
+                    ["ink-secondary", "Supporting prose, a secondary label, a ghost button"],
+                    ["ink-muted", "Metadata, a hint, a placeholder"],
+                    ["ink-faint", "Decoration that is not a word"],
                   ]}
                 />
               ),
@@ -142,7 +142,7 @@ export function Colour() {
                 <Swatches
                   items={[
                     ["grade-forgot", "Forgot, and every error"],
-                    ["good", "Good, and a success"],
+                    ["success", "Good, and a success"],
                     ["ai", "What the AI wrote, on its badge only"],
                   ]}
                 />
@@ -182,7 +182,7 @@ export function Type() {
             note: use,
             render: () => (
               <Text
-                className={`${step} ${size >= 20 ? "font-medium" : ""} text-text`}
+                className={`${step} ${size >= 20 ? "font-medium" : ""} text-ink`}
                 numberOfLines={1}
                 maxFontSizeMultiplier={1}
               >
@@ -246,8 +246,8 @@ export function Icons() {
                 <View className="flex-row flex-wrap">
                   {ICON_SET.map((name) => (
                     <View key={name} className="w-1/4 items-center gap-1.5 py-3">
-                      <Icon name={name} size={22} colour={p.text} />
-                      <Text className="text-xs text-muted" style={MONO}>
+                      <Icon name={name} size={22} colour={p.ink} />
+                      <Text className="text-xs text-ink-muted" style={MONO}>
                         {name}
                       </Text>
                     </View>
@@ -275,8 +275,8 @@ export function Icons() {
             note,
             render: () => (
               <View className="flex-row items-center gap-2">
-                <Icon name="deck" size={size} colour={p["text-2"]} />
-                <Text className={`${step} text-text`}>Lezione 12</Text>
+                <Icon name="deck" size={size} colour={p["ink-secondary"]} />
+                <Text className={`${step} text-ink`}>Lezione 12</Text>
               </View>
             ),
           }))}
@@ -354,8 +354,8 @@ export function Surfaces() {
               note: "A card, a row group, a panel. Switch the room to see the lift.",
               render: () => (
                 <Plate className="p-4">
-                  <Text className="text-md font-medium text-text">Lezione 12</Text>
-                  <Text className="text-base text-muted">24 cards · 6 due</Text>
+                  <Text className="text-md font-medium text-ink">Lezione 12</Text>
+                  <Text className="text-base text-ink-muted">24 cards · 6 due</Text>
                 </Plate>
               ),
             },
@@ -364,8 +364,8 @@ export function Surfaces() {
               note: "Set into its plate: a track, a chip’s ground.",
               render: () => (
                 <Plate className="p-4">
-                  <View className="h-11 justify-center rounded-md bg-plate-2 px-3">
-                    <Text className="text-base text-text-2">A well in a plate</Text>
+                  <View className="h-11 justify-center rounded-md bg-plate-nested px-3">
+                    <Text className="text-base text-ink-secondary">A well in a plate</Text>
                   </View>
                 </Plate>
               ),
@@ -410,8 +410,8 @@ export function Surfaces() {
                     <OnGlass>
                       <View className="gap-3">
                         <Plate className="p-4">
-                          <Text className="text-md font-medium text-text">Daily goal</Text>
-                          <Text className="text-base text-muted">50 reviews a day</Text>
+                          <Text className="text-md font-medium text-ink">Daily goal</Text>
+                          <Text className="text-base text-ink-muted">50 reviews a day</Text>
                         </Plate>
                         <Segmented
                           label="Daily goal"

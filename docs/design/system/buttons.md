@@ -1,6 +1,6 @@
 # Buttons
 
-`Button` and `IconButton` in `apps/web/src/client/components/button.tsx`. The design system's Actions page shows every variant live, and the public site's copy in `apps/site/src/components/Button.tsx` draws the same variants with the same light and lift.
+`Button` and `IconButton` in `apps/web/src/client/components/button.tsx`. The design system's Actions page shows every variant live, and the public site's copy in `apps/site/src/components/Button.tsx` uses matching variants and surface treatments.
 
 ## Which control
 
@@ -23,10 +23,10 @@ What does pressing it do?
 
 ## Button variants
 
-Variants: `primary`, `secondary`, `ghost`, `danger`. Nothing else exists; an unlisted variant is a bug, not an option. **The default is `secondary`**, so leave `variant` off for an ordinary action.
+Variants: `primary`, `secondary`, `ghost`, `danger`. Nothing else exists. **The default is `secondary`**, so leave `variant` off for an ordinary action.
 
-- `primary` is the one thing to press on the view: amber on `amber-ink`. **One per view.** Two primaries means the screen has no hierarchy, and amber stops meaning act. It carries `key-light`, a soft fall of light along its top ([surfaces.md](surfaces.md#lit-and-set-in)).
-- `secondary` is every other action: a plate with an edge. This is the default. Like every plate it lifts at night and hovers with `veil` over its fill ([surfaces.md](surfaces.md#hover)).
+- `primary` is the one thing to press on the view: an amber fill with `amber-ink` text. **One per view**, so the main action remains clear. It carries `key-light`, the shared top highlight ([surfaces.md](surfaces.md#lit-and-set-in)).
+- `secondary` is every other action: a plate with an edge. Like every plate it lifts in dark theme and hovers with `veil` over its fill ([surfaces.md](surfaces.md#hover)).
 - `ghost` is a way out or a quiet action beside others: Cancel, the safe choice in a question ("Keep member"), Clear filters, a sort button in a toolbar. No plate until hovered.
 - `danger` archives, deletes, revokes or removes. Soft red until hovered, and its label names the consequence ("Revoke key").
 
@@ -77,12 +77,12 @@ In a screen's top bar every control is a square ghost `IconButton` at 40 px, exc
 
 Every button has default, hover, focus, active and disabled, and `loading` where a request runs.
 
-- Hover uses the `hoverable:` variant (`hoverable:hover:bg-hover`), so a touch screen never keeps a stuck hover. Never write a bare `hover:` on a control.
+- Hover uses the `hoverable:` variant (`hoverable:hover:bg-plate-hover`), so a touch screen never keeps a stuck hover. Never write a bare `hover:` on a control.
 - Press scales to 0.97 over 150 ms. Nothing moves up on press.
 - `loading` keeps the button's width, shows a spinner and swallows a second press.
 - `kbd="N"` shows a keyboard hint beside the label, on desktop only.
 
-**A button is never taken away for being unable to run yet.** `disabled` drops it out of the tab order and tells a screen reader nothing about what is missing, so a greyed-out submit leaves the learner with no way to ask. Forms stay pressable and validate on submit ([forms.md](forms.md)). Use `aria-disabled` when pressing cannot do anything, mid-request or with no handler: it keeps the button focusable and announced while swallowing the press.
+**Keep incomplete forms submittable so validation can explain what is missing.** A `disabled` submit button is removed from the tab order and prevents that feedback. Forms stay pressable and validate on submit ([forms.md](forms.md)). Use `aria-disabled` when pressing cannot do anything, mid-request or with no handler: it keeps the button focusable and announced while swallowing the press. That holds for a menu's trigger too: the menu stays closed. A button works out `aria-disabled` itself while `loading`, so a caller's value cannot announce it as available.
 
 ```tsx
 // Correct

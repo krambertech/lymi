@@ -1,113 +1,150 @@
+import { ArrowRight } from "lucide-react";
+import type { ReactNode } from "react";
 import { Lantern } from "../../Lantern";
-import { Code } from "../Code";
-import { OPENAPI_URL, ORIGIN } from "../origin";
-import { Defs, H2, Lead, NextLinks, Note } from "../Prose";
+import type { DocPath } from "../nav";
+import { H2, NextLinks } from "../Prose";
+
+function Hero() {
+  return (
+    <header className="mb-10 flex items-start gap-5">
+      <Lantern variant="lit" flicker glow className="size-16 shrink-0" />
+      <div className="min-w-0">
+        <h1 className="text-4xl font-medium tracking-[-0.025em] text-balance text-ink">
+          Lymi docs
+        </h1>
+        <p className="!mb-0 !mt-3 max-w-[56ch] text-lg text-ink-secondary">
+          Learn how to add and organize cards, review what you are learning, and connect Lymi to the
+          tools you already use.
+        </p>
+      </div>
+    </header>
+  );
+}
+
+/** One way in: a name, a line on who it is for, and a glimpse of what using it looks like. */
+function Path({
+  to,
+  title,
+  blurb,
+  children,
+}: {
+  to: DocPath;
+  title: string;
+  blurb: string;
+  children: ReactNode;
+}) {
+  return (
+    <a
+      href={to}
+      className="doc-plain group flex flex-col overflow-hidden rounded-lg bg-plate transition-colors duration-150 edge hoverable:hover:bg-plate-nested md:row-span-2 md:grid md:grid-rows-subgrid md:gap-0"
+    >
+      <div className="flex min-h-32 items-center border-b border-edge bg-plate-nested/60 px-4 py-4">
+        {children}
+      </div>
+      <div className="px-4 py-3.5">
+        <p className="!mb-0.5 flex items-center gap-1.5 font-medium text-ink">
+          {title}
+          <ArrowRight
+            className="size-4 text-ink-faint transition-transform duration-150 group-hover:translate-x-0.5 group-hover:text-ink"
+            aria-hidden="true"
+          />
+        </p>
+        <p className="!mb-0 text-base text-ink-muted">{blurb}</p>
+      </div>
+    </a>
+  );
+}
+
+/** The cards share two rows, so every preview and every title starts on the same line. */
+function Paths() {
+  return (
+    <div className="mb-12 grid gap-3 md:grid-cols-3 md:grid-rows-[auto_auto] md:gap-y-0">
+      <Path
+        to="/docs/mcp"
+        title="Connect an assistant"
+        blurb="Claude, ChatGPT, Gemini, Cursor or Grok, signed in as you."
+      >
+        <p className="!mb-0 rounded-md rounded-ee-xs bg-plate px-3 py-2 text-base text-ink edge">
+          Add these five words to my Italian deck
+        </p>
+      </Path>
+      <Path
+        to="/docs/quickstart"
+        title="Write a script"
+        blurb="An API key, curl and your first card in two minutes."
+      >
+        <code className="block w-full !bg-transparent !p-0 font-mono !text-xs leading-relaxed text-ink-secondary">
+          <span className="font-semibold text-ink">curl</span> -X POST /api/cards
+          <br />
+          -H "x-api-key: $LYMI_KEY"
+        </code>
+      </Path>
+      <Path
+        to="/docs/import"
+        title="Import and export"
+        blurb="Bring decks from another app or a word list, or take yours out."
+      >
+        <span className="flex flex-wrap gap-1.5">
+          {["Anki", "Mochi", "Noji", "Pleco", "Quizlet"].map((app) => (
+            <span key={app} className="rounded-full bg-plate px-2.5 py-1 text-sm text-ink edge">
+              {app}
+            </span>
+          ))}
+        </span>
+      </Path>
+    </div>
+  );
+}
 
 export function Overview() {
   return (
     <div className="doc-prose">
-      <Lead>
-        Lymi keeps the cards you are learning and asks you about them again at the right time. An
-        assistant or a script can do anything you do by hand, over the same API the app uses.
-      </Lead>
-
-      <div className="mb-10 flex items-center gap-4 rounded-lg bg-plate p-4 edge">
-        <Lantern variant="lit" flicker glow className="size-14 shrink-0" />
-        <p className="!mb-0 text-base text-text-2">
-          Add a card once, wherever you meet it. Lymi keeps it and brings it back before you forget.
-        </p>
-      </div>
-
-      <H2>Two ways in</H2>
-      <p>
-        Pick by who is calling. An assistant such as Claude or ChatGPT signs in as you, over OAuth,
-        and never sees a key. A script you wrote uses an API key.
-      </p>
-
-      <Defs
-        items={[
-          {
-            term: "MCP",
-            def: (
-              <>
-                An assistant connects to <code>/mcp</code> and asks you to sign in once. Best for
-                “add these five cards to my Italian deck” in the middle of a conversation.
-              </>
-            ),
-          },
-          {
-            term: "API key",
-            def: (
-              <>
-                A header on every request, made in Settings. Best for curl, cron jobs, a shortcut on
-                your phone, and anything you run yourself.
-              </>
-            ),
-          },
-        ]}
-      />
-
-      <H2>The API has its own origin</H2>
-      <p>
-        The guides live on the public website, while the API and MCP server stay with the product.
-        There is no version in the path.
-      </p>
-      <Code lang="text" code={ORIGIN} label="Base URL" />
-      <p>
-        The machine-readable description of every route lives at{" "}
-        <a href={OPENAPI_URL}>{OPENAPI_URL}</a>. The <a href="/docs/api">API reference</a> is that
-        document, rendered.
-      </p>
-
-      <H2>What an integration may do</H2>
-      <p>
-        A key or a connected assistant can read your decks and cards, add and edit them, and archive
-        or restore them. Three things are yours alone, from the app, whatever the scope:
-      </p>
-      <ul>
-        <li>
-          <strong>Grading a review.</strong> Only you can say whether you remembered a card.
-        </li>
-        <li>
-          <strong>Managing API keys.</strong> A key can never mint or revoke another key.
-        </li>
-        <li>
-          <strong>Deleting anything.</strong> There is no delete. Archiving hides a card and
-          restoring brings it back with its schedule intact.
-        </li>
-      </ul>
-
-      <Note title="Nothing lands unseen">
-        A card added over the API carries <code>createdBy: "api"</code>, and one added over MCP
-        carries <code>createdBy: "mcp"</code>. Every write is recorded in the audit log with the
-        actor that made it, so you can always tell your own typing from a script’s.
-      </Note>
-
-      <H2>Where to go next</H2>
+      <Hero />
+      <Paths />
+      <H2>Use Lymi</H2>
       <NextLinks
         items={[
           {
-            to: "/docs/mcp",
-            title: "Connect an assistant",
-            blurb: "Sign Claude or ChatGPT in to your own decks.",
+            to: "/docs/getting-started",
+            title: "Getting started",
+            blurb: "Choose a deck, add your first cards and begin a review.",
           },
           {
-            to: "/docs/quickstart",
-            title: "Quickstart",
-            blurb: "Make a key and add a card in about two minutes.",
+            to: "/docs/decks",
+            title: "Decks and sharing",
+            blurb: "Organize cards with sections, series and tags, or share a deck.",
           },
           {
-            to: "/docs/cards",
-            title: "Decks and cards",
-            blurb: "The shape of a card, and what happens when you add one twice.",
+            to: "/docs/mobile",
+            title: "Lymi on your phone",
+            blurb: "Add the web app to your home screen.",
           },
           {
-            to: "/docs/api",
-            title: "API reference",
-            blurb: "Every route, parameter and response.",
+            to: "/docs/scheduling",
+            title: "Review scheduling",
+            blurb: "When a card returns and how Lymi chooses what comes next.",
           },
         ]}
       />
+      <H2>Connect your tools</H2>
+      <NextLinks
+        items={[
+          {
+            to: "/docs/yomitan",
+            title: "Yomitan",
+            blurb: "Turn dictionary lookups into cards while you read.",
+          },
+          {
+            to: "/docs/readwise",
+            title: "Readwise",
+            blurb: "Turn new highlights from reading apps into cards.",
+          },
+        ]}
+      />
+      <p>
+        The <a href="/docs/api">API reference</a> lists routes, parameters and responses. Technical
+        card fields and language formats live in the API section.
+      </p>
     </div>
   );
 }

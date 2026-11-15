@@ -1,0 +1,40 @@
+# Report a shared deck from About this deck, then one of its cards from the card's page.
+appId: app.lymi
+name: Report a shared deck or card
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/deck-settings?id=${DECK_ID}
+- extendedWaitUntil:
+    visible: "Shared with you"
+    timeout: 20000
+- scrollUntilVisible:
+    element: "Report deck"
+- takeScreenshot: 01-about
+- tapOn: "Report deck"
+- extendedWaitUntil:
+    visible: "Hateful or offensive"
+    timeout: 20000
+- tapOn: "Send report"
+- assertVisible: "Choose what.s wrong with it."
+- tapOn: "Spam or a scam"
+- takeScreenshot: 02-report-sheet
+- tapOn: "Send report"
+- extendedWaitUntil:
+    visible: "Report sent. We.ll look within a day."
+    timeout: 20000
+- takeScreenshot: 03-sent
+- openLink: lymi://library/card/${CARD_ID}?deck=${DECK_ID}
+- extendedWaitUntil:
+    visible: "Card options"
+    timeout: 20000
+- tapOn: "Card options"
+- tapOn: "Report card"
+- extendedWaitUntil:
+    visible: "Hateful or offensive"
+    timeout: 20000
+- tapOn: "Hateful or offensive"
+- tapOn: "Send report"
+- extendedWaitUntil:
+    visible: "Report sent. We.ll look within a day."
+    timeout: 20000
+- takeScreenshot: 04-card-sent

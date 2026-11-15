@@ -11,7 +11,7 @@ import {
   newId,
   sourceOfFileName,
 } from "@lymi/core";
-import { and, desc, eq, inArray, isNull, lt, or, sql } from "@lymi/core/db";
+import { and, desc, eq, inArray, isNotNull, isNull, lt, or, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
@@ -80,28 +80,12 @@ export type ImportResume = {
   pictures: MediaTotals;
   /** Pictures and recordings handled so far; absent in a run handed over before it was kept. */
   handled?: number | undefined;
+  /** This run's number in the write, from 1; absent in a run handed over before it was kept. */
+  run?: number | undefined;
 };
 
 /** Pictures stored per Workflow step. */
 export const PICTURES_PER_STEP = 50;
-
-/**
- * Steps one write run takes before it hands over to a new run. Lymi is on Cloudflare's paid
- * plan, which caps an instance at 10,000 steps; a collection with many pictures can pass that,
- * so a run stops short and the next run starts where it stopped.
- */
-export const STEPS_PER_RUN = 9000;
-
-/** What a write run does next, from where it is and how many steps it has taken. */
-export function nextWriteStep(
-  state: { chunk: number; chunks: number; pending: number; steps: number },
-  budget = STEPS_PER_RUN,
-): "pictures" | "cards" | "finish" | "hand over" {
-  if (state.pending === 0 && state.chunk >= state.chunks) return "finish";
-  // Room is kept for the hand-over itself and for a failure step.
-  if (state.steps + 2 >= budget) return "hand over";
-  return state.pending > 0 ? "pictures" : "cards";
-}
 
 function adapterFor(source: string): SourceAdapter<unknown> {
   const adapter = ADAPTERS.find((a) => a.source === source);
@@ -549,10 +533,12 @@ export async function attachImportPictures(
     attached = await attachPictures(ctx, work, file, pending, storage);
   } else {
     const recordings = pending.filter((item) => item.kind === "recording").length;
+    const exampleRecordings = pending.filter((item) => item.kind === "exampleRecording").length;
     attached = {
       stored: 0,
-      skipped: pending.length - recordings,
+      skipped: pending.length - recordings - exampleRecordings,
       recordings: { stored: 0, skipped: recordings },
+      exampleRecordings: { stored: 0, skipped: exampleRecordings },
     };
   }
   await ctx.db.run(sql`update imports set media_done = max(media_done, ${handled}),
@@ -561,12 +547,13 @@ export async function attachImportPictures(
   return attached;
 }
 
-/** Marks the import done with its picture totals, and deletes the file. */
+/** Marks the import done with its picture totals and the runs it took, when known, and deletes the file. */
 export async function finishImport(
   ctx: ServiceContext,
   id: string,
   pictures: MediaTotals,
   uploads: R2Bucket,
+  runs?: number,
 ) {
   const row = await ownedImport(ctx, id);
   if (row.status !== "importing") return;
@@ -575,6 +562,8 @@ export async function finishImport(
   counts.picturesSkipped = pictures.skipped;
   counts.recordings = pictures.recordings?.stored ?? 0;
   counts.recordingsSkipped = pictures.recordings?.skipped ?? 0;
+  counts.exampleRecordings = pictures.exampleRecordings?.stored ?? 0;
+  counts.exampleRecordingsSkipped = pictures.exampleRecordings?.skipped ?? 0;
   const now = new Date();
   const eligible = and(eq(schema.imports.id, id), eq(schema.imports.status, "importing"))!;
   const [, completed] = await ctx.db.batch([
@@ -604,6 +593,8 @@ export async function finishImport(
     outcome: "done",
     recordings: counts.recordings,
     recordings_skipped: counts.recordingsSkipped,
+    example_recordings: counts.exampleRecordings,
+    example_recordings_skipped: counts.exampleRecordingsSkipped,
     sounds_left_out: counts.soundsLeftOut,
     pictures: counts.pictures,
     pictures_skipped: counts.picturesSkipped,
@@ -611,8 +602,9 @@ export async function finishImport(
       ? { readings_converted: counts.readingsConverted }
       : {}),
     ...(row.confirmedAt ? { write_seconds: secondsSince(row.confirmedAt, now) } : {}),
+    ...(runs !== undefined ? { write_runs: runs } : {}),
   });
-  await deleteImportFiles(uploads, row);
+  await releaseImportFiles(ctx.db, uploads, row);
 }
 
 /** Whole seconds from `from` to `to`, within what an event's count holds. */
@@ -645,9 +637,10 @@ export async function failImport(
     source: row.source,
     card_count,
     outcome: "failed",
+    failure,
   });
-  track(analytics, { name: "import_failed", source: row.source, card_count });
-  await deleteImportFiles(uploads, row);
+  track(analytics, { name: "import_failed", source: row.source, card_count, failure });
+  await releaseImportFiles(db, uploads, row);
 }
 
 /** The learner's way out before anything is written. */
@@ -673,16 +666,19 @@ export async function cancelImport(ctx: ServiceContext, id: string, uploads: R2B
       ),
     auditStatement(ctx, { entity: "import", action: "cancel", id }),
   ]);
-  await deleteImportFiles(uploads, row);
+  await releaseImportFiles(ctx.db, uploads, row);
   return getImport(ctx, id);
 }
 
-/** Deletes the upload, any unfinished multipart upload and the stored note chunks. */
+/**
+ * Deletes the upload, any unfinished multipart upload and the stored note chunks. False when R2
+ * refused, so the caller keeps the key for the sweep.
+ */
 export async function deleteImportFiles(
   uploads: R2Bucket,
   row: Pick<Import, "objectKey" | "uploadId">,
-) {
-  if (!row.objectKey) return;
+): Promise<boolean> {
+  if (!row.objectKey) return true;
   try {
     if (row.uploadId)
       await uploads
@@ -700,22 +696,37 @@ export async function deleteImportFiles(
       cursor = page.truncated ? page.cursor : undefined;
     } while (cursor);
     for (let i = 0; i < keys.length; i += 1000) await uploads.delete(keys.slice(i, i + 1000));
+    return true;
   } catch {
-    // The expiry sweep tries again; the key itself is never logged.
+    // The key itself is never logged.
     console.error("Deleting an import's files failed");
-    return;
+    return false;
   }
 }
 
+/** Deletes an ended import's files and clears its key; a refused delete keeps it for the sweep. */
+async function releaseImportFiles(
+  db: Db,
+  uploads: R2Bucket,
+  row: Pick<Import, "id" | "objectKey" | "uploadId">,
+) {
+  if (!row.objectKey || !(await deleteImportFiles(uploads, row))) return;
+  await db
+    .update(schema.imports)
+    .set({ objectKey: null, uploadId: null, updatedAt: new Date() })
+    .where(eq(schema.imports.id, row.id));
+}
+
 /**
- * Gives up on imports left waiting, so no upload stays in R2, and fails writes that stalled.
- * Run from the cron trigger, which reports any stalled write.
+ * Gives up on imports left waiting, so no upload stays in R2, fails writes that stalled, and
+ * retries files an ended import could not delete. Run from the cron trigger, which reports any
+ * stalled write.
  */
 export async function expireImports(
   db: Db,
   uploads: R2Bucket,
   now = new Date(),
-  analytics?: AnalyticsWriter,
+  analytics?: AnalyticsWriter | ((userId: string) => AnalyticsWriter),
 ) {
   const before = (ms: number) => lt(schema.imports.updatedAt, new Date(now.getTime() - ms));
   const stale = await db
@@ -739,9 +750,24 @@ export async function expireImports(
       row.id,
       row.status === "importing" ? "internal" : "expired",
       uploads,
-      analytics,
+      typeof analytics === "function" ? analytics(row.userId) : analytics,
     );
   }
+  const left = await db
+    .select({
+      id: schema.imports.id,
+      objectKey: schema.imports.objectKey,
+      uploadId: schema.imports.uploadId,
+    })
+    .from(schema.imports)
+    .where(
+      and(
+        inArray(schema.imports.status, ["done", "failed", "cancelled"]),
+        isNotNull(schema.imports.objectKey),
+      ),
+    )
+    .limit(50);
+  for (const row of left) await releaseImportFiles(db, uploads, row);
   return { expired: stale.length - stalled, stalled };
 }
 

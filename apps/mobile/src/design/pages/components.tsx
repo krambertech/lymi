@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { View } from "react-native";
-import { AiCardChip, Chip, SourceChip, StateChip } from "../../ui/chip";
+import { Chip, SourceChip, StateChip } from "../../ui/chip";
 import { DueCount } from "../../ui/due-count";
 import {
   Field,
@@ -15,6 +15,7 @@ import {
 import { FieldChip, FieldChipFace, FieldChipRow } from "../../ui/field-chip";
 import { GRADES, GradeMark } from "../../ui/grade";
 import { Select, SelectTrigger } from "../../ui/menu";
+import { Notice } from "../../ui/notice";
 import {
   Button,
   type ButtonVariant,
@@ -208,7 +209,7 @@ export function Forms() {
               render: () => (
                 <View className="gap-4">
                   <Field>
-                    <FieldLabel aside={<Text className="text-sm text-muted">Optional</Text>}>
+                    <FieldLabel aside={<Text className="text-sm text-ink-muted">Optional</Text>}>
                       Meaning
                     </FieldLabel>
                     <Input placeholder="Leave it empty and the AI fills it in" />
@@ -480,7 +481,7 @@ export function Labels() {
                     <View key={state} className="flex-row items-center gap-1.5">
                       <StateIcon state={state} size={16} />
                       <Text
-                        className="text-base text-text"
+                        className="text-base text-ink"
                         style={{ fontVariant: ["tabular-nums"] }}
                       >
                         {n}
@@ -505,7 +506,7 @@ export function Labels() {
               note: "Beside a field’s label: the mark and one word, with the whole sentence for VoiceOver.",
               render: () => (
                 <View className="flex-row items-center gap-1.5">
-                  <Text className="text-sm font-medium text-text-2">Meaning</Text>
+                  <Text className="text-sm font-medium text-ink-secondary">Meaning</Text>
                   <SourceChip source="ai" field="meaning" badge />
                 </View>
               ),
@@ -517,15 +518,6 @@ export function Labels() {
                   <SourceChip source="ai" field="meaning" />
                   <SourceChip source="lesson" field="example" />
                   <SourceChip source="manual" field="meaning" />
-                </Row>
-              ),
-            },
-            {
-              label: "A whole card",
-              note: "Under a review’s answer, once, when any shown field is the AI’s.",
-              render: () => (
-                <Row>
-                  <AiCardChip />
                 </Row>
               ),
             },
@@ -580,6 +572,37 @@ export function Feedback() {
   return (
     <>
       <Sub
+        title="Notice"
+        note="A message inside a screen, which stays until its state changes. VoiceOver hears it as it appears."
+        source="src/ui/notice.tsx"
+      >
+        <Variants
+          items={[
+            { label: "Neutral", render: () => <Notice>The deck owner removed this link.</Notice> },
+            {
+              label: "Good, with a title",
+              render: () => (
+                <Notice tone="good" icon="email" title="Check your email">
+                  We sent a code to learner@example.com.
+                </Notice>
+              ),
+            },
+            {
+              label: "Warning",
+              render: () => <Notice tone="warning">Smart add is near today’s limit.</Notice>,
+            },
+            {
+              label: "Danger",
+              render: () => (
+                <Notice tone="danger" title="Couldn’t send your feedback">
+                  Your message is still here. Try again.
+                </Notice>
+              ),
+            },
+          ]}
+        />
+      </Sub>
+      <Sub
         title="Progress"
         note="The session’s track: eight points, inside the card’s width, in ink. Its label is read, not shown."
         source="src/ui/progress.tsx"
@@ -604,7 +627,7 @@ export function Feedback() {
               label: "The AI writing a meaning",
               render: () => (
                 <View className="gap-2">
-                  <Text className="text-lg font-medium text-text">parlare</Text>
+                  <Text className="text-lg font-medium text-ink">parlare</Text>
                   <Skeleton width="62%" height={10} />
                 </View>
               ),

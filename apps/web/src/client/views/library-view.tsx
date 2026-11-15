@@ -352,8 +352,8 @@ export function LibraryView({
   };
 
   const emptySeries = (s: Series) => (
-    <div className="flex min-h-[72px] w-full flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl border border-dashed border-edge-2 px-5 py-3">
-      <p className="max-w-sm text-sm text-text-2">
+    <div className="flex min-h-[72px] w-full flex-wrap items-center justify-between gap-x-4 gap-y-2 rounded-xl border border-dashed border-edge-strong px-5 py-3">
+      <p className="max-w-sm text-sm text-ink-secondary">
         {onSetSeriesDecks ? (
           <Trans>Drag decks here to add them to this series.</Trans>
         ) : (
@@ -515,7 +515,7 @@ export function LibraryView({
           renderSeriesFoot={seriesReview}
           renderEmptySeries={emptySeries}
           looseTarget={
-            <p className="flex min-h-[72px] w-full items-center justify-center rounded-xl border border-dashed border-edge-2 px-5 text-center text-sm text-text-2">
+            <p className="flex min-h-[72px] w-full items-center justify-center rounded-xl border border-dashed border-edge-strong px-5 text-center text-sm text-ink-secondary">
               <Trans>Drop a deck here to take it out of its series.</Trans>
             </p>
           }
@@ -554,7 +554,7 @@ function SearchField({
   return (
     <div className={clsx("relative min-w-0", className)}>
       <Search
-        className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-muted"
+        className="pointer-events-none absolute start-3 top-1/2 size-4 -translate-y-1/2 text-ink-muted"
         aria-hidden="true"
       />
       <Input

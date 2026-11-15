@@ -36,7 +36,7 @@ export default function SeriesName() {
     <OnGlass>
       <FormHeader close={{ label: t`Close`, onPress: () => router.back() }} title={t`Series`} />
       {form.mode === "missing" && (
-        <Text className="px-5 pt-3 pb-6 text-base text-muted">{t`This series is no longer here.`}</Text>
+        <Text className="px-5 pt-3 pb-6 text-base text-ink-muted">{t`This series is no longer here.`}</Text>
       )}
     </OnGlass>
   );
@@ -110,18 +110,18 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
             if (error) setError(null);
           }}
           placeholder={t`Learn Estonian`}
-          placeholderTextColor={p.muted}
+          placeholderTextColor={p["ink-muted"]}
           accessibilityLabel={t`Name`}
           accessibilityHint={error ?? undefined}
           returnKeyType={series || deck ? "done" : "next"}
           onSubmitEditing={submit}
-          selectionColor={p.text}
-          className="min-h-12 py-1.5 font-sans font-medium text-text"
+          selectionColor={p.ink}
+          className="min-h-12 py-1.5 font-sans font-medium text-ink"
           style={{ fontSize: 28, letterSpacing: -0.56 }}
           maxFontSizeMultiplier={inputCap(28)}
         />
         {!online && (
-          <Text className="pt-2 text-base text-muted">
+          <Text className="pt-2 text-base text-ink-muted">
             {t`Changing series needs a connection.`}
           </Text>
         )}

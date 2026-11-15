@@ -103,15 +103,15 @@ function FilterLine({
   return (
     <View className="flex-row items-center justify-between gap-4">
       <View className="flex-1 gap-0.5">
-        <Text className="text-xl font-medium text-text" accessibilityRole="header">
+        <Text className="text-xl font-medium text-ink" accessibilityRole="header">
           {label}
         </Text>
-        <Text className="text-base text-muted">
+        <Text className="text-base text-ink-muted">
           {plural(shelf.decks.length, { one: "# deck", other: "# decks" })}
         </Text>
       </View>
       <Press onPress={onClear} accessibilityRole="button" className="h-11 justify-center ps-2">
-        <Text className="text-base font-medium text-text-2">{t`All shelves`}</Text>
+        <Text className="text-base font-medium text-ink-secondary">{t`All shelves`}</Text>
       </Press>
     </View>
   );

@@ -51,6 +51,7 @@ export type AuditEvent =
       details?: Details;
     }
   | { entity: "deck"; action: "turn_on_join_link" | "turn_off_join_link"; id: string }
+  | { entity: "deck"; action: "set_preferences"; id: string; details?: Details }
   | { entity: "series"; action: Change | "reorder"; id: string; details?: Details }
   | {
       entity: "section";
@@ -81,6 +82,8 @@ type AccountAction =
   | "onboarding.finish"
   | "analytics.consent"
   | "ai.consent"
+  | "replay.choice"
+  | "email.learning_choice"
   | "analytics.review_start"
   | "rename"
   | "avatar.upload"
@@ -88,6 +91,7 @@ type AccountAction =
   | "avatar.google_refresh"
   | "send_transactional_email"
   | "send_feedback"
+  | "report_content"
   | "retire_unproved_password";
 
 type Details = Record<string, unknown>;

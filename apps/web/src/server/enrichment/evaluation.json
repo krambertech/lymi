@@ -933,13 +933,19 @@
           "id": "zh-en-04",
           "term": "行",
           "meaning": "row; line of business",
-          "expect": { "pronunciation": { "oneOf": ["háng"] } }
+          "expect": {
+            "example": { "includes": ["háng"], "excludes": ["xíng"] },
+            "pronunciation": { "oneOf": ["háng"] }
+          }
         },
         {
           "id": "zh-en-05",
           "term": "行",
           "meaning": "to walk; OK",
-          "expect": { "pronunciation": { "oneOf": ["xíng"] } }
+          "expect": {
+            "example": { "includes": ["xíng"], "excludes": ["háng"] },
+            "pronunciation": { "oneOf": ["xíng"] }
+          }
         },
         {
           "id": "zh-en-06",
@@ -950,19 +956,28 @@
           "id": "zh-en-07",
           "term": "行长",
           "meaning": "bank president",
-          "expect": { "pronunciation": { "oneOf": ["hángzhǎng", "háng zhǎng"] } }
+          "expect": {
+            "example": { "includes": ["háng", "zhǎng"] },
+            "pronunciation": { "oneOf": ["hángzhǎng", "háng zhǎng"] }
+          }
         },
         {
           "id": "zh-en-08",
           "term": "长",
           "meaning": "long",
-          "expect": { "pronunciation": { "oneOf": ["cháng"] } }
+          "expect": {
+            "example": { "includes": ["cháng"], "excludes": ["zhǎng"] },
+            "pronunciation": { "oneOf": ["cháng"] }
+          }
         },
         {
           "id": "zh-en-09",
           "term": "长",
           "meaning": "to grow",
-          "expect": { "pronunciation": { "oneOf": ["zhǎng"] } }
+          "expect": {
+            "example": { "includes": ["zhǎng"], "excludes": ["cháng"] },
+            "pronunciation": { "oneOf": ["zhǎng"] }
+          }
         },
         {
           "id": "zh-en-10",
@@ -976,25 +991,37 @@
           "id": "zh-en-11",
           "term": "还",
           "meaning": "still; also",
-          "expect": { "pronunciation": { "oneOf": ["hái"] } }
+          "expect": {
+            "example": { "includes": ["hái"], "excludes": ["huán"] },
+            "pronunciation": { "oneOf": ["hái"] }
+          }
         },
         {
           "id": "zh-en-12",
           "term": "还",
           "meaning": "to give back",
-          "expect": { "pronunciation": { "oneOf": ["huán"] } }
+          "expect": {
+            "example": { "includes": ["huán"], "excludes": ["hái"] },
+            "pronunciation": { "oneOf": ["huán"] }
+          }
         },
         {
           "id": "zh-en-13",
           "term": "东西",
           "meaning": "thing",
-          "expect": { "pronunciation": { "oneOf": ["dōngxi", "dōng xi"] } }
+          "expect": {
+            "example": { "includes": ["xi]"], "excludes": ["xī"] },
+            "pronunciation": { "oneOf": ["dōngxi", "dōng xi"] }
+          }
         },
         {
           "id": "zh-en-14",
           "term": "东西",
           "meaning": "east and west",
-          "expect": { "pronunciation": { "oneOf": ["dōngxī", "dōng xī"] } }
+          "expect": {
+            "example": { "includes": ["xī"] },
+            "pronunciation": { "oneOf": ["dōngxī", "dōng xī"] }
+          }
         },
         {
           "id": "zh-en-15",
@@ -1018,6 +1045,7 @@
           "id": "zh-en-18",
           "term": "一起",
           "expect": {
+            "example": { "includes": ["yī"], "excludes": ["yì"] },
             "meaning": { "includes": ["together"] },
             "pronunciation": { "oneOf": ["yīqǐ", "yī qǐ"] }
           }
@@ -1025,7 +1053,11 @@
         {
           "id": "zh-en-19",
           "term": "不是",
-          "expect": { "meaning": "filled", "pronunciation": { "oneOf": ["bùshì", "bù shì"] } }
+          "expect": {
+            "example": { "includes": ["bù"], "excludes": ["bú"] },
+            "meaning": "filled",
+            "pronunciation": { "oneOf": ["bùshì", "bù shì"] }
+          }
         },
         {
           "id": "zh-en-20",
@@ -1155,7 +1187,10 @@
           "id": "zh-tw-04",
           "term": "長",
           "meaning": "long",
-          "expect": { "pronunciation": { "oneOf": ["cháng"] } }
+          "expect": {
+            "example": { "includes": ["cháng"], "excludes": ["zhǎng"] },
+            "pronunciation": { "oneOf": ["cháng"] }
+          }
         }
       ]
     },
@@ -2683,6 +2718,157 @@
       ]
     },
     {
+      "id": "pl-en",
+      "name": "Polish basics",
+      "language": "pl",
+      "meaningLanguage": "en",
+      "fields": ["meaning", "example", "notes", "pronunciation"],
+      "samples": [],
+      "cases": [
+        {
+          "id": "pl-en-01",
+          "term": "muzyka",
+          "expect": {
+            "meaning": { "includes": ["music"] },
+            "pronunciation": { "oneOf": ["mùzyka"] }
+          }
+        },
+        {
+          "id": "pl-en-02",
+          "term": "matematyka",
+          "expect": {
+            "meaning": { "includes": ["math"] },
+            "pronunciation": { "oneOf": ["matemàtyka"] }
+          }
+        },
+        {
+          "id": "pl-en-03",
+          "term": "fizyka",
+          "expect": {
+            "meaning": { "includes": ["physics"] },
+            "pronunciation": { "oneOf": ["fìzyka"] }
+          }
+        },
+        {
+          "id": "pl-en-04",
+          "term": "gramatyka",
+          "expect": {
+            "meaning": { "includes": ["grammar"] },
+            "pronunciation": { "oneOf": ["gramàtyka"] }
+          }
+        },
+        {
+          "id": "pl-en-05",
+          "term": "polityka",
+          "expect": {
+            "meaning": { "includes": ["politic"] },
+            "pronunciation": { "oneOf": ["polìtyka"] }
+          }
+        },
+        {
+          "id": "pl-en-06",
+          "term": "technika",
+          "expect": { "pronunciation": { "oneOf": ["tèchnika"] } }
+        },
+        {
+          "id": "pl-en-07",
+          "term": "fabryka",
+          "expect": {
+            "meaning": { "includes": ["factory"] },
+            "pronunciation": { "oneOf": ["fàbryka"] }
+          }
+        },
+        {
+          "id": "pl-en-08",
+          "term": "Ameryka",
+          "expect": {
+            "meaning": { "includes": ["America"] },
+            "pronunciation": { "oneOf": ["Amèryka"] }
+          }
+        },
+        {
+          "id": "pl-en-09",
+          "term": "Afryka",
+          "expect": {
+            "meaning": { "includes": ["Africa"] },
+            "pronunciation": { "oneOf": ["Àfryka"] }
+          }
+        },
+        {
+          "id": "pl-en-10",
+          "term": "byliśmy",
+          "expect": {
+            "meaning": { "includes": ["we were"] },
+            "pronunciation": { "oneOf": ["bỳliśmy"] }
+          }
+        },
+        {
+          "id": "pl-en-11",
+          "term": "zrobilibyśmy",
+          "expect": { "pronunciation": { "oneOf": ["zrobìlibyśmy"] } }
+        },
+        {
+          "id": "pl-en-12",
+          "term": "czterysta",
+          "expect": {
+            "meaning": { "includes": ["four hundred"] },
+            "pronunciation": { "oneOf": ["cztèrysta"] }
+          }
+        },
+        {
+          "id": "pl-en-13",
+          "term": "uniwersytet",
+          "expect": { "meaning": { "includes": ["university"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "pl-en-14",
+          "term": "telefon",
+          "expect": { "meaning": { "includes": ["phone"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "pl-en-15",
+          "term": "szkoła",
+          "expect": { "meaning": { "includes": ["school"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "pl-en-16",
+          "term": "dziękuję",
+          "expect": { "meaning": { "includes": ["thank"] }, "pronunciation": "empty" }
+        },
+        {
+          "id": "pl-en-17",
+          "term": "żółw",
+          "expect": {
+            "meaning": { "includes": ["turtle"] },
+            "notes": { "excludes": ["False friend"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "pl-en-18",
+          "term": "ósmy",
+          "expect": { "meaning": { "includes": ["eighth"] }, "pronunciation": "empty" }
+        },
+        { "id": "pl-en-19", "term": "zrobiłbym", "expect": { "pronunciation": "empty" } },
+        {
+          "id": "pl-en-21",
+          "term": "zrobiłabym",
+          "expect": { "pronunciation": { "oneOf": ["zrobìłabym"] } }
+        },
+        {
+          "id": "pl-en-22",
+          "term": "motyka",
+          "expect": { "meaning": { "includes": ["hoe"] }, "pronunciation": "empty" }
+        },
+        { "id": "pl-en-23", "term": "papryka", "expect": { "pronunciation": "empty" } },
+        {
+          "id": "pl-en-20",
+          "term": "szczęście",
+          "expect": { "meaning": { "includes": ["happiness", "luck"] }, "pronunciation": "empty" }
+        }
+      ]
+    },
+    {
       "id": "pl-uk",
       "name": "Польська для карти поляка",
       "language": "pl",
@@ -2745,6 +2931,76 @@
           "id": "pl-uk-10",
           "term": "Gdzie jest dworzec?",
           "expect": { "meaning": { "includes": ["вокзал"] }, "example": "empty" }
+        },
+        {
+          "id": "pl-uk-11",
+          "term": "sklep",
+          "expect": {
+            "meaning": { "includes": ["магазин"] },
+            "notes": { "includes": ["склеп"] },
+            "pronunciation": "empty"
+          }
+        },
+        {
+          "id": "pl-uk-12",
+          "term": "dynia",
+          "expect": { "meaning": { "includes": ["гарбуз"] }, "notes": { "includes": ["дин"] } }
+        },
+        {
+          "id": "pl-uk-13",
+          "term": "arbuz",
+          "expect": { "meaning": { "includes": ["кавун"] }, "notes": { "includes": ["гарбуз"] } }
+        },
+        {
+          "id": "pl-uk-14",
+          "term": "owoce",
+          "expect": { "meaning": { "includes": ["фрукт"] }, "notes": { "includes": ["овоч"] } }
+        },
+        {
+          "id": "pl-uk-15",
+          "term": "magazyn",
+          "expect": { "meaning": { "includes": ["склад"] }, "notes": { "includes": ["магазин"] } }
+        },
+        {
+          "id": "pl-uk-16",
+          "term": "drużyna",
+          "expect": { "meaning": { "includes": ["команд"] }, "notes": { "includes": ["дружин"] } }
+        },
+        {
+          "id": "pl-uk-17",
+          "term": "pensja",
+          "expect": { "meaning": { "includes": ["зарплат"] }, "notes": { "includes": ["пенсі"] } }
+        },
+        {
+          "id": "pl-uk-18",
+          "term": "tęsknić",
+          "expect": {
+            "meaning": { "includes": ["сумува"] },
+            "notes": { "excludes": ["по ", "по)", "по,", "по.", "по»"] }
+          }
+        },
+        {
+          "id": "pl-uk-21",
+          "term": "dzwonić",
+          "expect": { "meaning": { "includes": ["дзвон"] }, "notes": { "includes": ["do"] } }
+        },
+        {
+          "id": "pl-uk-22",
+          "term": "recepta",
+          "expect": { "meaning": { "includes": ["рецепт"] } }
+        },
+        {
+          "id": "pl-uk-19",
+          "term": "muzyka",
+          "expect": {
+            "meaning": { "includes": ["музик"] },
+            "pronunciation": { "oneOf": ["mùzyka"] }
+          }
+        },
+        {
+          "id": "pl-uk-20",
+          "term": "byliśmy",
+          "expect": { "pronunciation": { "oneOf": ["bỳliśmy"] } }
         }
       ]
     },

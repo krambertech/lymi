@@ -2,26 +2,9 @@ import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, Search } from "lucide-react";
 import { useInView } from "motion/react";
-import { type ReactNode, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { BENTO_HUES, LanguageBento, Tile } from "./LanguageBento";
 import { useStill } from "./playback";
-
-export function Tile({
-  title,
-  body,
-  children,
-}: {
-  title: ReactNode;
-  body: ReactNode;
-  children: ReactNode;
-}) {
-  return (
-    <div className="flex flex-col gap-2 rounded-xl bg-plate-2 p-6 edge-inset @2xl:p-7">
-      <h3 className="text-xl font-medium tracking-[-0.02em] text-text">{title}</h3>
-      <p className="max-w-[40ch] text-md text-pretty text-text-2">{body}</p>
-      <div className="mt-auto pt-5">{children}</div>
-    </div>
-  );
-}
 
 const SHAPES = ["骨", "直", "令"];
 
@@ -49,7 +32,7 @@ function Shapes() {
             <span
               lang="zh-Hans"
               className={clsx(
-                "kanji-zh absolute text-muted transition-opacity duration-300",
+                "kanji-zh absolute text-ink-muted transition-opacity duration-300",
                 !chinese && "opacity-0",
               )}
             >
@@ -58,14 +41,14 @@ function Shapes() {
             <span
               lang="ja"
               className={clsx(
-                "absolute text-text transition-opacity duration-300",
+                "absolute text-ink transition-opacity duration-300",
                 chinese && "opacity-0",
               )}
             >
               {kanji}
             </span>
           </span>
-          <span className={clsx("text-xs", chinese ? "text-muted" : "text-amber-text")}>
+          <span className={clsx("text-xs", chinese ? "text-ink-muted" : "text-amber-text")}>
             {chinese ? <Trans>Chinese font</Trans> : <Trans>Japanese</Trans>}
           </span>
         </div>
@@ -77,8 +60,9 @@ function Shapes() {
 /** Japanese learners' own needs, each in a line and a small picture. */
 export function JapaneseBento() {
   return (
-    <div className="mt-12 grid gap-2.5 @3xl:grid-cols-2 @4xl:mt-16">
+    <LanguageBento>
       <Tile
+        hue={BENTO_HUES[0]}
         title={<Trans>Kanji in Japanese shapes</Trans>}
         body={
           <Trans>
@@ -91,6 +75,7 @@ export function JapaneseBento() {
       </Tile>
 
       <Tile
+        hue={BENTO_HUES[1]}
         title={<Trans>Search by sound</Trans>}
         body={
           <Trans>
@@ -101,16 +86,16 @@ export function JapaneseBento() {
       >
         <div aria-hidden="true" className="rounded-md bg-plate edge">
           <p className="flex items-center gap-2.5 border-b border-edge px-3.5 py-3 text-md">
-            <Search className="size-4 text-muted" />
-            <span lang="ja" className="text-text">
+            <Search className="size-4 text-ink-muted" />
+            <span lang="ja" className="text-ink">
               デンシャ
             </span>
           </p>
           <p className="flex items-baseline justify-between gap-3 px-3.5 py-3">
-            <span lang="ja" className="text-xl font-medium text-text">
+            <span lang="ja" className="text-xl font-medium text-ink">
               電車
             </span>
-            <span lang="ja" className="text-sm text-muted">
+            <span lang="ja" className="text-sm text-ink-muted">
               でんしゃ
             </span>
           </p>
@@ -118,6 +103,7 @@ export function JapaneseBento() {
       </Tile>
 
       <Tile
+        hue={BENTO_HUES[2]}
         title={<Trans>Readings only where you need them</Trans>}
         body={
           <Trans>
@@ -129,7 +115,7 @@ export function JapaneseBento() {
         <p
           aria-hidden="true"
           lang="ja"
-          className="rounded-md bg-plate px-4 py-3 text-2xl leading-[2.2] text-text edge"
+          className="rounded-md bg-plate px-4 py-3 text-2xl leading-[2.2] text-ink edge"
         >
           <ruby>
             毎日<rt className="invisible text-[0.45em]">まいにち</rt>
@@ -151,22 +137,23 @@ export function JapaneseBento() {
       </Tile>
 
       <Tile
+        hue={BENTO_HUES[3]}
         title={<Trans>Bring your Anki deck</Trans>}
         body={
           <Trans>
-            Coming from a deck like Kaishi 1.5k? Word recordings stay on the cards, and pitch accent
-            and sentence translations come along as notes.
+            Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards,
+            and sentence translations come along too.
           </Trans>
         }
       >
-        <ul className="grid gap-1.5 text-md text-text">
+        <ul className="grid gap-1.5 text-md text-ink">
           {[
-            <Trans key="r">Word recordings</Trans>,
+            <Trans key="r">Word and example recordings</Trans>,
             <Trans key="p">Pitch accent</Trans>,
             <Trans key="f">Readings</Trans>,
           ].map((item) => (
             <li key={item.key} className="flex items-center gap-2.5">
-              <span className="grid size-5 place-items-center rounded-full bg-good-soft text-good">
+              <span className="grid size-5 place-items-center rounded-full bg-success-soft text-success">
                 <Check aria-hidden="true" className="size-3" strokeWidth={3} />
               </span>
               {item}
@@ -174,6 +161,6 @@ export function JapaneseBento() {
           ))}
         </ul>
       </Tile>
-    </div>
+    </LanguageBento>
   );
 }

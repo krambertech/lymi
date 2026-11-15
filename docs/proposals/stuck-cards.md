@@ -4,9 +4,9 @@ date: 2026-10-11
 decision: Part 1 accepted as ADR 0031; part 2 is exploration
 ---
 
-# Stuck cards: later returns, and a different way in
+# Later returns and aids for often-forgotten cards
 
-A learner who forgets a card should meet it again once, after long enough that the second try tests memory rather than the screen a minute ago, and a card that still will not stick should get a new way in rather than another repeat. Today neither holds: a forgotten card is back after about five cards, can come back four times in one review, and a grade of Easy on that repeat stretches its schedule by about 60%.
+A forgotten card should return once, after enough other attempts to test recall beyond the recent reveal. Repeated misses should offer a recall aid rather than more immediate repeats. Today neither holds: a forgotten card is back after about five cards, can come back four times in one review, and a grade of Easy on that repeat stretches its schedule by about 60%.
 
 Part 1 changes the returns and is decided in [ADR 0031](../adr/0031-a-forgotten-card-returns-once-after-a-while.md). Part 2, drills for cards that stay stuck, is not decided.
 
@@ -34,15 +34,15 @@ For cards that stay stuck, Anki suspends a card after 8 lapses and its manual sa
 - Retrieving a word's meaning from a different sentence each time beat a constant sentence, after 24 hours too, and more so when spaced; learners again judged the constant cue better.
 - LLM-generated keyword mnemonics were rated as imageable, coherent and useful as human ones (Lee, McNichols and Lan, EMNLP Findings 2024).
 
-**Our own history.** [ADR 0025](../adr/0025-the-ai-proposes-card-changes-that-apply-only-when-accepted.md) had the AI diagnose why a card was often forgotten; it was withdrawn because the diagnoses were rarely right. A drill that works without a correct diagnosis is the safer bet.
+**Previous decision.** [ADR 0025](../adr/0025-the-ai-proposes-card-changes-that-apply-only-when-accepted.md) had the AI diagnose why a card was often forgotten; it was withdrawn because the diagnoses were rarely right. The proposed drills would work without depending on a correct diagnosis.
 
-## Part 1: one return, after a while
+## Part 1: one return after 20 attempts
 
-- Only Forgot owes a return. Hard is a recall, so a card graded Hard waits for tomorrow like any other.
+- Only Forgot schedules a return. Hard is a recall, so a card graded Hard waits for tomorrow like any other.
 - A forgotten mode returns once, after 20 other attempts, ±2. At the 20 seconds an attempt the simulation assumes, that is about the 10 minutes Anki uses.
-- A return is never served before its gap. When the review runs out first, the card waits in Review forgotten, which is now the re-review: SuperMemo's final drill, offered rather than forced.
+- A return is never served before its gap. When the review runs out first, the card waits in Review forgotten, as an optional re-review, similar to SuperMemo's final drill.
 - Easy on a mode already graded today counts as Good. All four grades stay on screen, so there is nothing new to explain; the second try just earns no bonus.
-- A card forgotten twice today offers a hook when it has none, as an often-forgotten card already does, so the second miss leads to a new angle rather than a third repeat.
+- A card forgotten twice today offers a hook when it has none, as an often-forgotten card already does, giving the learner an association to try at the next review.
 
 ### Simulation
 
@@ -61,7 +61,7 @@ The old rule spent a fifth of the goal on returns, mostly within a minute of the
 
 ## Part 2: drills for stuck cards (exploration)
 
-A card that is forgotten again on its return is not helped by a fourth look, and a card forgotten day after day is the learner's real frustration. The leaning is a ladder that gives each new failure a different way in, rather than the same card again: the first miss returns as in part 1; the second try offers a hint when the card has no hook; a second miss offers a hook; a card often forgotten across days opens with both on offer. Review forgotten, and the Often forgotten round on Today, are where this happens. The ways in:
+For repeated misses, the current leaning is to offer progressively more recall help: the first miss returns as in part 1; the second try offers a hint when the card has no hook; a second miss offers a hook; a card often forgotten across days opens with both on offer. Review forgotten, and the Often forgotten round on Today, are where this happens. The options are:
 
 1. **A hint that fades.** The first letters of the answer, fewer on each try, as the second review aid after the hook; a hinted grade cannot be Easy, like a hooked one. It needs no AI and has the strongest evidence here. `REVIEW_AIDS` was shaped for it.
 2. **A fresh sentence.** The AI writes a new example around the term for each drill, so recall stops leaning on the one sentence on the card. It needs a check that the sentence uses the term in the card's meaning.

@@ -13,11 +13,11 @@ name: Example translation and audio
 - extendedWaitUntil:
     visible: ".*${TERM}. Tap to reveal"
     timeout: 30000
-- assertNotVisible: ".*\\(${TRANSLATION}\\).*"
+- assertNotVisible: ".*${TRANSLATION}.*"
 - tapOn:
     point: "50%,80%"
 - assertVisible: "^Good.*"
-- assertVisible: ".*\\(${TRANSLATION}\\).*"
+- assertVisible: ".*${TRANSLATION}.*"
 - takeScreenshot: 01-review-translation
 # The revealed card is one VoiceOver element, so its speaker is pressed on the card page instead.
 - tapOn: "End review"
@@ -26,7 +26,7 @@ name: Example translation and audio
     timeout: 20000
 - tapOn: "${TERM}.*"
 - extendedWaitUntil:
-    visible: ".*\\(${TRANSLATION}\\).*"
+    visible: ".*${TRANSLATION}.*"
     timeout: 20000
 # With a speech key the clip plays for a second; a local Worker without one answers 503 and a toast says so.
 - tapOn: "Play example"
@@ -49,7 +49,7 @@ name: Example translation and audio
 - tapOn:
     point: "50%,80%"
 - assertVisible: ".*${JA_SPOKEN}.*"
-- assertVisible: ".*\\(${JA_TRANSLATION}\\).*"
+- assertVisible: ".*${JA_TRANSLATION}.*"
 - takeScreenshot: 03-review-japanese
 - tapOn: "End review"
 - extendedWaitUntil:
@@ -57,7 +57,7 @@ name: Example translation and audio
     timeout: 20000
 - tapOn: "${JA_TERM}.*"
 - extendedWaitUntil:
-    visible: ".*\\(${JA_TRANSLATION}\\).*"
+    visible: ".*${JA_TRANSLATION}.*"
     timeout: 20000
 - assertVisible: "Play example"
 - takeScreenshot: 04-card-page-japanese
@@ -70,7 +70,7 @@ name: Example translation and audio
 - tapOn: "${WORDS}.*"
 - tapOn: "${UK_TERM}.*"
 - extendedWaitUntil:
-    visible: ".*\\(${UK_TRANSLATION}\\).*"
+    visible: ".*${UK_TRANSLATION}.*"
     timeout: 20000
 - takeScreenshot: 05-card-page-ukrainian
 # Back by Library, since the card page also names its deck in Details.
@@ -102,7 +102,7 @@ name: Example translation and audio
 - tapOn: "${IT_DECK}.*"
 - tapOn: "${IT_TERM}.*"
 - extendedWaitUntil:
-    visible: ".*\\(${IT_TRANSLATION}\\).*"
+    visible: ".*${IT_TRANSLATION}.*"
     timeout: 20000
 - takeScreenshot: 08-card-page-ai
 - tapOn: "^Example.*"
@@ -125,7 +125,7 @@ name: Example translation and audio
 - extendedWaitUntil:
     visible: ".*Dov.*il pane oggi\\?.*"
     timeout: 20000
-- assertNotVisible: ".*\\(${IT_TRANSLATION}\\).*"
+- assertNotVisible: ".*${IT_TRANSLATION}.*"
 - takeScreenshot: 11-card-page-saved
 # Typing an empty example key by key keeps the field focused as its chin appears, and the chin
 # takes typing the same way: the example's input never moves to a new parent.

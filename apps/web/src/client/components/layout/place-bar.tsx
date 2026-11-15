@@ -80,9 +80,9 @@ export function PlaceBar({ parent, returnsTo, actions, status, onClose, back, ti
         </IconButton>
       )}
       {title ? (
-        <div className="min-w-0 flex-1 truncate text-lg font-medium text-text">{title}</div>
+        <div className="min-w-0 flex-1 truncate text-lg font-medium text-ink">{title}</div>
       ) : (
-        <span className="min-w-0 flex-1 truncate text-sm text-muted">{parent}</span>
+        <span className="min-w-0 flex-1 truncate text-sm text-ink-muted">{parent}</span>
       )}
       {status}
       {actions}

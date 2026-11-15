@@ -42,6 +42,7 @@ import {
 import { type CallToolResult, McpServer } from "@modelcontextprotocol/server";
 import { z } from "zod";
 import type { McpView, ViewCard, ViewDeckResult, ViewDueResult } from "../../shared/mcp-app";
+import type { AssistantClient } from "../assistant-client";
 import {
   addCards,
   archiveCard,
@@ -119,12 +120,14 @@ export interface McpPrincipal {
   /** The learner's app language, which the views are written in. English when unknown. */
   appLanguage?: AppLanguage | undefined;
   reportError?: ((error: unknown, tool: string) => Promise<void>) | undefined;
+  /** Which recognised assistant holds the token, for analytics only. */
+  assistant?: AssistantClient | undefined;
 }
 
 /** How many of a deck's newest cards `get_deck` names; `search_cards` pages through the rest. */
 export const DECK_PREVIEW_LIMIT = 15;
 
-const INSTRUCTIONS = `Lymi keeps one learner's vocabulary: decks of cards, each card a term with its meaning, example and pronunciation, reviewed with spaced repetition. You add and tend cards; the learner reviews them in the app, and you never grade a review.
+const INSTRUCTIONS = `Lymi is a flashcard app. It keeps one learner's decks of cards, each card a term with its meaning, example and pronunciation, reviewed with spaced repetition. You add and edit cards; the learner reviews them in the app, and you never grade a review.
 
 Start with list_decks. It names the decks, their languages and the language meanings are written in. Its languages map says how each deck language writes a card's pronunciation and example; write those fields in that format.
 
@@ -140,7 +143,7 @@ A series is an optional, ordered group of the learner's own decks that they revi
 
 A section is an optional, ordered part of one deck, such as one lesson. Every learner of the deck sees its sections; only the owner changes them. Create one with create_section, and move many cards at once with move_cards_to_section or give a card its section in add_cards and update_card. To turn lessons into sections, page through the deck's cards with search_cards and its deckId, group them by source, create a section per lesson in lesson order, and move each group in. How sections open is the deck's sectionProgression. automatic, the default: each learner reviews the first section, and the next opens by itself once every card of the current one has come up and 80% are Known. manual: the next section becomes ready then, and the learner starts it in the app. open: every section is open at once. A learner can start a later section early in the app, and a card they already started always stays in review.
 
-Archive is the only removal, and restore undoes it. Nothing is deleted.`;
+Archive is the only removal for cards, decks and sections, and restore undoes it. Only delete_series deletes anything, and it cannot be undone.`;
 
 /**
  * A fresh server per request. Stateless: tools read and write through the same service
@@ -1122,6 +1125,7 @@ async function runTool(
       tool,
       outcome,
       duration_ms: Math.min(3_600_000, Math.max(0, performance.now() - started)),
+      ...(principal.assistant && { assistant: principal.assistant }),
     });
   }
 }
@@ -1173,7 +1177,7 @@ const CardOut = z.object({
     .boolean()
     .describe("True when the translation was written for an earlier example"),
   notes: z.string().nullable().describe("Markdown source in the notes subset"),
-  hook: z
+  hint: z
     .string()
     .nullable()
     .describe(
@@ -1204,7 +1208,7 @@ const CardOut = z.object({
   exampleTranslationSource: FieldSource.nullable(),
   pronunciationSource: FieldSource.nullable(),
   notesSource: FieldSource.nullable(),
-  hookSource: FieldSource.nullable(),
+  hintSource: FieldSource.nullable(),
   enrichmentStatus: EnrichmentStatus.nullable().describe(
     "Set while Lymi is filling the card's empty fields, and null once it settles",
   ),
@@ -1236,7 +1240,7 @@ function cardOut(card: CardView): CardOut {
     exampleTranslation: card.exampleTranslation,
     exampleTranslationStale: card.exampleTranslationStale,
     notes: card.notes,
-    hook: card.hook,
+    hint: card.hint,
     language: card.language,
     tags: card.tags,
     source: card.source,
@@ -1257,7 +1261,7 @@ function cardOut(card: CardView): CardOut {
     exampleTranslationSource: card.exampleTranslationSource,
     pronunciationSource: card.pronunciationSource,
     notesSource: card.notesSource,
-    hookSource: card.hookSource,
+    hintSource: card.hintSource,
     enrichmentStatus: card.enrichmentStatus,
     archivedAt: card.archivedAt ? card.archivedAt.toISOString() : null,
     createdAt: card.createdAt.toISOString(),

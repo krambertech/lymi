@@ -251,16 +251,16 @@ export function Lantern({
         <Group transform={drawn}>
           <Path
             path={BAIL}
-            color={p.metal}
+            color={p["lantern-metal"]}
             style="stroke"
             strokeWidth={LANTERN_BAIL.strokeWidth}
             strokeCap="round"
           />
-          <Rounded shape={LANTERN_GLASS} color={p.glass} />
+          <Rounded shape={LANTERN_GLASS} color={p["lantern-glass"]} />
           <Group opacity={unlitOpacity}>
-            <Rounded shape={LANTERN_GLASS} color={p["glass-unlit"]} />
+            <Rounded shape={LANTERN_GLASS} color={p["lantern-glass-unlit"]} />
           </Group>
-          <Path path={UNLIT} color={p["edge-2"]} opacity={emberOpacity} />
+          <Path path={UNLIT} color={p["edge-strong"]} opacity={emberOpacity} />
           {glow && (
             <Group opacity={haloOpacity} transform={haloTransform} origin={vec(HALO.x, HALO.y)}>
               <Circle cx={HALO.x} cy={HALO.y} r={HALO.r}>
@@ -286,17 +286,17 @@ export function Lantern({
             )}
             <Path path={OUTER} color={p.amber} />
             <Group transform={coreTransform} origin={vec(60, FLAME_CORE_BASE)}>
-              <Path path={CORE} color={p["flame-core"]} />
+              <Path path={CORE} color={p["lantern-flame"]} />
             </Group>
           </Group>
           {FRAME.map((s) =>
             s.path ? (
               <Group key={s.d}>
-                <Path path={s.path} color={p.metal} />
+                <Path path={s.path} color={p["lantern-metal"]} />
                 {s.stroke && (
                   <Path
                     path={s.path}
-                    color={p.metal}
+                    color={p["lantern-metal"]}
                     style="stroke"
                     strokeWidth={s.strokeWidth}
                     strokeJoin="round"
@@ -304,7 +304,7 @@ export function Lantern({
                 )}
               </Group>
             ) : (
-              <Rounded key={`${s.x}-${s.y}`} shape={s} color={p.metal} />
+              <Rounded key={`${s.x}-${s.y}`} shape={s} color={p["lantern-metal"]} />
             ),
           )}
         </Group>

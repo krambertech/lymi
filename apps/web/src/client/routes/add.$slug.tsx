@@ -61,7 +61,7 @@ function Add() {
       return t`This deck is no longer published.`;
     }
     if (err instanceof ApiError && err.status === 403) {
-      return t`You cannot add this deck.`;
+      return t`You can’t add this deck.`;
     }
     return t`Couldn’t add the deck. Check your connection and try again.`;
   };
@@ -131,7 +131,7 @@ function Add() {
           <button
             type="button"
             onClick={() => hold.mutate("dev")}
-            className="mt-10 rounded-sm px-2 py-1 text-xs text-faint transition-colors duration-150 hoverable:hover:text-muted"
+            className="mt-10 rounded-sm px-2 py-1 text-xs text-ink-faint transition-colors duration-150 hoverable:hover:text-ink-muted"
           >
             Dev sign-in
           </button>

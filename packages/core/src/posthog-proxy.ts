@@ -2,7 +2,8 @@ import { POSTHOG_HOST } from "./telemetry";
 
 export const POSTHOG_PROXY_PATH = "/ingest";
 
-const CAPTURE_PATHS = new Set(["/e/", "/i/v0/e/", "/batch/", "/capture/"]);
+// `/s/` takes session replay snapshots.
+const CAPTURE_PATHS = new Set(["/e/", "/i/v0/e/", "/batch/", "/capture/", "/s/"]);
 const COUNTRY = /^[A-Z]{2}$/;
 
 type Event = { properties?: Record<string, unknown> };

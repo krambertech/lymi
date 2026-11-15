@@ -17,6 +17,7 @@ import {
   signInWithApple,
   signInWithGoogle,
 } from "../lib/auth";
+import { desktop } from "../lib/desktop";
 import { useDocumentTitle } from "../lib/document-title";
 import { passwordMessage } from "../lib/password-copy";
 import { clearPersistedLearnerState } from "../lib/persisted";
@@ -343,6 +344,13 @@ function Login() {
 
   async function social(provider: "google" | "apple") {
     if (busy || submitting) return;
+    // Google refuses an app's window, so the Mac app signs in in the browser, which hands back.
+    const mac = desktop();
+    if (mac?.signIn) {
+      clearMessages();
+      mac.signIn(provider);
+      return;
+    }
     setBusy(provider);
     clearMessages();
     clearPersistedLearnerState({ keepQueued: true });
@@ -427,7 +435,7 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
       <button
         type="button"
         onClick={() => setOpen(true)}
-        className="mt-10 rounded-sm px-2 py-1 text-xs text-faint transition-colors duration-150 hoverable:hover:text-muted"
+        className="mt-10 rounded-sm px-2 py-1 text-xs text-ink-faint transition-colors duration-150 hoverable:hover:text-ink-muted"
       >
         Dev sign-in
       </button>
@@ -444,7 +452,7 @@ function DevSignIn({ returnTo }: { returnTo: string }) {
         void go("in");
       }}
     >
-      <p className="text-xs font-medium text-muted">Dev sign-in (localhost only)</p>
+      <p className="text-xs font-medium text-ink-muted">Dev sign-in (localhost only)</p>
       <Input
         value={email}
         onChange={(e) => setEmail(e.target.value)}

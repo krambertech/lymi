@@ -19,14 +19,14 @@ export function OddsBars({ rows, caption }: { rows: Row[]; caption: string }) {
           <tr key={r.label}>
             <th
               scope="row"
-              className="w-24 py-1.5 pe-3 text-start font-normal text-text tabular-nums"
+              className="w-24 py-1.5 pe-3 text-start font-normal text-ink tabular-nums"
             >
               {r.label}
             </th>
             <td className="py-1.5" aria-hidden="true">
-              <div className="h-2 rounded-full bg-plate-2">
+              <div className="h-2 rounded-full bg-plate-nested">
                 <div
-                  className="h-2 rounded-full bg-text"
+                  className="h-2 rounded-full bg-ink"
                   style={{
                     width: `${Math.max(0.6, (r.odds / max) * 100).toFixed(2)}%`,
                     opacity: r.odds === 1 ? 1 : 0.55,
@@ -34,7 +34,7 @@ export function OddsBars({ rows, caption }: { rows: Row[]; caption: string }) {
                 />
               </div>
             </td>
-            <td className="w-16 py-1.5 ps-3 text-end tabular-nums text-text-2">{r.value}</td>
+            <td className="w-16 py-1.5 ps-3 text-end tabular-nums text-ink-secondary">{r.value}</td>
           </tr>
         ))}
       </tbody>

@@ -92,7 +92,7 @@ function Consent() {
     const target = redirectTargetOf(res.data);
     if (!target) {
       setBusy(null);
-      setError(t`The app did not say where to go next. Try again from the app.`);
+      setError(t`The app didn’t say where to go next. Try again from the app.`);
       return;
     }
     // Show the ending first, then hand off. An http(s) redirect leaves this page at once; a

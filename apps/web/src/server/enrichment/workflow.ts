@@ -9,6 +9,7 @@ import {
   enrichmentContext,
   failEnrichment,
   failTranslations,
+  fillPitchAccents,
   type LearnStyleOptions,
   learnDeckStyles,
   settleEnrichment,
@@ -18,6 +19,7 @@ import {
 import { aiWithdrawn } from "../services/ai-consent";
 import { textCallReporter, track } from "../services/analytics";
 import { analyticsContextFor } from "../services/analytics-context";
+import { PITCH_MODEL } from "./pitch";
 import { CARDS_PER_CALL, chunked } from "./prompt";
 
 const STEP = {
@@ -95,6 +97,36 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
         this.env,
         textCallReporter(analytics, "example_translation"),
       );
+      const accents = createTextProvider(
+        { ...this.env, OPENAI_TEXT_MODEL: PITCH_MODEL },
+        textCallReporter(analytics, "pitch_accent"),
+      );
+      // An accent is extra: a failure is reported once and the cards stay as they landed.
+      const pitch = async (index: number, ids: string[]) => {
+        if (!accents) return;
+        try {
+          await step.do(`pitch ${index}`, STEP, async () => {
+            if (await aiWithdrawn(db, params.userId)) return;
+            await analytics.run(() => fillPitchAccents(ctx, ids, accents));
+          });
+        } catch (err) {
+          await step
+            .do(`pitch fail ${index}`, STEP, async () => {
+              track(analytics, {
+                name: "pitch_accent_filled",
+                outcome: "failed",
+                count: ids.length,
+              });
+              await analytics.flush();
+              await reportServerException(this.env, err, {
+                route: "pitch-accent",
+                method: "WORKFLOW",
+                userId: params.userId,
+              });
+            })
+            .catch(() => {});
+        }
+      };
       const trigger = params.trigger ?? "add";
       // A translation reads the example a fill just wrote, so each wave is translated once it lands.
       const translate = async (index: number, ids: string[]) => {
@@ -163,6 +195,7 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
           });
         }
         await translate(index, ids);
+        await pitch(index, ids);
       }
       await learn("style", { skip: first });
     } finally {

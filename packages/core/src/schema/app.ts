@@ -19,6 +19,7 @@ import {
   type EditionCardField,
   LOCALIZATION_PROVENANCES,
   LOCALIZATION_STATUSES,
+  PRONUNCIATION_DISPLAYS,
   PUBLICATION_CATEGORIES,
   type PublicationTag,
   REVIEW_AIDS,
@@ -207,14 +208,15 @@ export const cards = sqliteTable(
     exampleTranslationOf: text("example_translation_of"),
     /** Set while the AI is translating the example, and cleared once it settles. */
     exampleTranslationStatus: text("example_translation_status", { enum: ["working", "failed"] }),
-    /** A memory hook. Not an edition field, so writing one leaves `revision` and every edition alone. */
-    hook: text("hook"),
-    hookSource: text("hook_source", { enum: ["lesson", "ai", "manual"] }),
+    /** A hint. Not an edition field, so writing one leaves `revision` and every edition alone. */
+    // The columns keep their first name, so a deploy never meets a Worker that reads the other one.
+    hint: text("hook"),
+    hintSource: text("hook_source", { enum: ["lesson", "ai", "manual"] }),
     /**
-     * The hook the AI drafted for the owner's editor, kept until the term or meaning changes; empty
-     * when it had none. Saving exactly this text marks the hook as the AI's.
+     * The hint the AI drafted for the owner's editor, kept until the term or meaning changes; empty
+     * when it had none. Saving exactly this text marks the hint as the AI's.
      */
-    hookDraft: text("hook_draft"),
+    hintDraft: text("hook_draft"),
     /** Set while an enrichment job is outstanding, and cleared once it settles. */
     enrichmentStatus: text("enrichment_status", { enum: ["working", "failed"] }),
     /** The fields the outstanding run may fill, so a screen holds space for those alone. */
@@ -228,6 +230,8 @@ export const cards = sqliteTable(
     audioSource: text("audio_source", { enum: ["generated", "recorded"] }),
     /** Retired: recordings follow their deck without approval. Nothing reads it; a later migration drops it. */
     audioApprovedKey: text("audio_approved_key"),
+    /** R2 key of the example's recording an import brought, which its play control plays; null without one. */
+    exampleRecordingKey: text("example_recording_key"),
     /** Who added the card. Activity filters on this without parsing the audit log. */
     createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] })
       .notNull()
@@ -326,6 +330,10 @@ export const userSettings = sqliteTable("user_settings", {
   /** Whether Lymi may send the learner's content to AI services. Null until they answer; the phone treats it as no. */
   aiConsent: integer("ai_consent", { mode: "boolean" }),
   aiConsentUpdatedAt: integer("ai_consent_updated_at", { mode: "timestamp_ms" }),
+  /** Whether the web app may replay how the learner moves through it. Null means yes; Settings turns it off. */
+  sessionReplay: integer("session_replay", { mode: "boolean" }),
+  /** Whether Lymi may send learning emails. Null means yes; Settings or an email's unsubscribe turns it off. */
+  learningEmails: integer("learning_emails", { mode: "boolean" }),
   /** The language meanings are written in. Written from the app language, never on its own. */
   meaningLanguage: text("meaning_language").notNull().default("en"),
   /** Recall attempts that satisfy a learner-local day's streak goal. 50 is the suggestion. */
@@ -348,6 +356,31 @@ export const userSettings = sqliteTable("user_settings", {
   learningLanguage: text("learning_language"),
   ...timestamps,
 });
+
+/** When a learner's own client last opened Lymi. Web push stops a week after it. */
+export const learnerOpenings = sqliteTable("learner_openings", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  openedAt: integer("opened_at", { mode: "timestamp_ms" }).notNull(),
+});
+
+/**
+ * One step of the learning email series, claimed before it sends. `anchor` is the learner-local
+ * day the series counts from, so a learner who returns and lapses again gets the steps again.
+ */
+export const learningEmails = sqliteTable(
+  "learning_emails",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    kind: text("kind").notNull(),
+    anchor: text("anchor").notNull(),
+    sentAt: integer("sent_at", { mode: "timestamp_ms" }).notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.kind, t.anchor] })],
+);
 
 export const analyticsReviewStarts = sqliteTable("analytics_review_starts", {
   key: text("key").primaryKey(),
@@ -717,6 +750,27 @@ export const importantCards = sqliteTable(
   ],
 );
 
+/** One learner's own choices for a deck, owner or member. No row means every default. */
+export const deckPreferences = sqliteTable(
+  "deck_preferences",
+  {
+    deckId: text("deck_id")
+      .notNull()
+      .references(() => decks.id, { onDelete: "cascade" }),
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    pronunciationDisplay: text("pronunciation_display", { enum: PRONUNCIATION_DISPLAYS })
+      .notNull()
+      .default("adaptive"),
+    ...timestamps,
+  },
+  (t) => [
+    primaryKey({ columns: [t.deckId, t.userId] }),
+    index("deck_preferences_user_idx").on(t.userId),
+  ],
+);
+
 /** Append-only review history. Never updated, never deleted. */
 export const reviews = sqliteTable(
   "reviews",
@@ -966,6 +1020,8 @@ export const auditLog = sqliteTable(
     index("audit_user_idx").on(t.userId, t.createdAt),
     // Activity reads everything but the grades, which outnumber the rest many times over.
     index("audit_activity_idx").on(t.userId, t.createdAt).where(sql`entity <> 'review'`),
+    // An app's page reads only that app's rows; grades never show there, as in `audit_activity_idx`.
+    index("audit_app_idx").on(t.userId, t.actorClient, t.createdAt).where(sql`entity <> 'review'`),
   ],
 );
 
@@ -989,6 +1045,62 @@ export const accountDeletions = sqliteTable("account_deletions", {
     .notNull()
     .default(sql`(unixepoch() * 1000)`),
 });
+
+/**
+ * A deleted account's deck that each member is getting as a private copy, which the cron works
+ * through a few members at a time. The deck waits under the former owner until the last copy.
+ */
+export const formerDeckCopies = sqliteTable("former_deck_copies", {
+  deckId: text("deck_id")
+    .primaryKey()
+    .references(() => decks.id, { onDelete: "cascade" }),
+  createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+});
+
+/** Which new row copies which old one, for the length of one member's copy batch. */
+export const deckCopyIds = sqliteTable(
+  "deck_copy_ids",
+  {
+    oldId: text("old_id").notNull(),
+    userId: text("user_id").notNull(),
+    newId: text("new_id").notNull(),
+  },
+  (t) => [primaryKey({ columns: [t.oldId, t.userId] })],
+);
+
+export const APPLE_REVOCATION_STATUSES = ["pending", "revoked", "failed", "skipped"] as const;
+export const APPLE_REVOCATION_REASONS = [
+  "no_key",
+  "no_token",
+  "exchange",
+  "revoke",
+  "lost",
+] as const;
+
+/**
+ * A deleted account's Sign in with Apple grant, from the delete until Apple confirms it revoked,
+ * so a revoke that failed or never ran is retried or left on record. Not a foreign key, since the
+ * user row goes in the same batch. Holds no address or name.
+ */
+export const appleRevocations = sqliteTable(
+  "apple_revocations",
+  {
+    /** The deleted user's id, as in `account_deletions`. */
+    id: text("id").primaryKey(),
+    status: text("status", { enum: APPLE_REVOCATION_STATUSES }).notNull(),
+    /** Why the last attempt did not revoke, or why none could be made. */
+    reason: text("reason", { enum: APPLE_REVOCATION_REASONS }),
+    /** Whose client id the token was issued to: the phone app's or the web's Services ID. */
+    client: text("client", { enum: ["app", "web"] }).notNull(),
+    /** Apple's refresh token, sealed with the Sign in with Apple key; cleared once settled. */
+    token: text("token"),
+    attempts: integer("attempts").notNull().default(0),
+    nextAttemptAt: integer("next_attempt_at", { mode: "timestamp_ms" }),
+    createdAt: integer("created_at", { mode: "timestamp_ms" }).notNull(),
+    settledAt: integer("settled_at", { mode: "timestamp_ms" }),
+  },
+  (t) => [index("apple_revocations_due_idx").on(t.status, t.nextAttemptAt)],
+);
 
 /**
  * Deleted cards whose audio folder in R2 still needs clearing, which the cron works through. Not a
@@ -1099,3 +1211,128 @@ export const lessonReads = sqliteTable(
   },
   (t) => [index("lesson_reads_user_day_idx").on(t.userId, t.localDate)],
 );
+
+/**
+ * A learner's report of a deck or card someone else wrote. The content is copied in as it was
+ * reported, so an edit or erasure afterwards cannot hide what was reported. Resolved by a Lymi
+ * operator; the owner never learns who reported.
+ */
+export const contentReports = sqliteTable(
+  "content_reports",
+  {
+    id: text("id").primaryKey(),
+    /** Null once the reporter deletes their account; the report itself still stands. */
+    reporterId: text("reporter_id").references(() => user.id, { onDelete: "set null" }),
+    /** The deck's owner when it was reported. Null once their account is deleted. */
+    ownerId: text("owner_id").references(() => user.id, { onDelete: "set null" }),
+    /** Null once the deck is erased, as account deletion can; the snapshot keeps what it held. */
+    deckId: text("deck_id").references(() => decks.id, { onDelete: "set null" }),
+    /** Null for a report on the whole deck, or once the card is erased. */
+    cardId: text("card_id").references(() => cards.id, { onDelete: "set null" }),
+    /** Whether the card was the subject, kept apart from `cardId` so an erased card stays a card report. */
+    target: text("target", { enum: ["deck", "card"] }).notNull(),
+    reason: text("reason", {
+      enum: ["offensive", "sexual", "harassment", "spam", "other"],
+    }).notNull(),
+    /** What the reporter wrote, as written. Private: never logged, audited or sent to analytics. */
+    note: text("note"),
+    /** The deck's name, its owner's name, and the card's text as they were when reported, as JSON. */
+    snapshot: text("snapshot", { mode: "json" }).notNull(),
+    /** The reporter's local date, which the daily cap counts. */
+    localDate: text("local_date").notNull(),
+    resolvedAt: integer("resolved_at", { mode: "timestamp_ms" }),
+    action: text("action", {
+      enum: ["dismiss", "archive_card", "archive_deck", "suspend_sharing"],
+    }),
+    createdAt: integer("created_at", { mode: "timestamp_ms" })
+      .notNull()
+      .default(sql`(unixepoch() * 1000)`),
+  },
+  (t) => [
+    index("content_reports_open_idx").on(t.resolvedAt, t.createdAt),
+    index("content_reports_reporter_day_idx").on(t.reporterId, t.localDate),
+    index("content_reports_deck_idx").on(t.deckId, t.action),
+    index("content_reports_card_idx").on(t.cardId, t.action),
+    index("content_reports_owner_idx").on(t.ownerId),
+  ],
+);
+
+export type ContentReport = typeof contentReports.$inferSelect;
+
+/**
+ * An account a Lymi operator stopped from sharing after a report. Its shared decks were archived
+ * and it can neither turn on a join link nor invite anyone; its own learning is untouched.
+ */
+export const sharingSuspensions = sqliteTable("sharing_suspensions", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  /** The report that led to it. */
+  reportId: text("report_id").references(() => contentReports.id, { onDelete: "set null" }),
+  createdAt: integer("created_at", { mode: "timestamp_ms" })
+    .notNull()
+    .default(sql`(unixepoch() * 1000)`),
+});
+
+/**
+ * A learner's Readwise connection: the token they pasted, encrypted, and where the hourly pull
+ * stands. Deleted on Disconnect; the cards it added stay. docs/proposals/readwise-highlights.md.
+ */
+export const readwiseConnections = sqliteTable("readwise_connections", {
+  userId: text("user_id")
+    .primaryKey()
+    .references(() => user.id, { onDelete: "cascade" }),
+  /** AES-GCM under a key derived from the auth secret; never sent to a client. */
+  tokenCipher: text("token_cipher").notNull(),
+  /** The token's last four characters, so Settings can show which one is in use. */
+  tokenHint: text("token_hint").notNull(),
+  /**
+   * `refused` once Readwise turns the token down, `unreadable` once Lymi can't open it after the auth
+   * secret changed; either way pulls stop until a token is pasted again.
+   */
+  status: text("status", { enum: ["active", "refused", "unreadable"] }).notNull(),
+  /** Each language's deck, keyed by primary subtag, such as `{ "et": "<deck id>" }`. */
+  decks: text("decks", { mode: "json" }).$type<Record<string, string>>().notNull(),
+  /** Highlights updated after this are what the next pull asks for. */
+  pulledThrough: integer("pulled_through", { mode: "timestamp_ms" }).notNull(),
+  /** Readwise's page cursor when a pull stopped at its page cap, so the next one carries on. */
+  pullCursor: text("pull_cursor"),
+  /** When the pull that left the cursor began, which `pulledThrough` moves to once it is done. */
+  pullCursorFrom: integer("pull_cursor_from", { mode: "timestamp_ms" }),
+  nextPullAt: integer("next_pull_at", { mode: "timestamp_ms" }).notNull(),
+  /** Held while a pull runs, so the cron, Check now and a follow never pull at once. */
+  pullingUntil: integer("pulling_until", { mode: "timestamp_ms" }),
+  lastPullAt: integer("last_pull_at", { mode: "timestamp_ms" }),
+  lastPullHighlights: integer("last_pull_highlights").notNull().default(0),
+  lastPullCards: integer("last_pull_cards").notNull().default(0),
+  lastPullSkipped: integer("last_pull_skipped").notNull().default(0),
+  ...timestamps,
+});
+
+/** A book or article in the learner's Readwise, with the language its highlights are in. */
+export const readwiseBooks = sqliteTable(
+  "readwise_books",
+  {
+    userId: text("user_id")
+      .notNull()
+      .references(() => user.id, { onDelete: "cascade" }),
+    /** Readwise's `user_book_id`. */
+    bookId: text("book_id").notNull(),
+    title: text("title").notNull(),
+    author: text("author"),
+    /** Null until its highlights say, or when they are in no one language. */
+    language: text("language"),
+    /** Whether its new highlights become cards. */
+    followed: integer("followed", { mode: "boolean" }).notNull(),
+    /** Followed for the first time since the last pull, so its highlights since connecting are read in full. */
+    pending: integer("pending", { mode: "boolean" }).notNull().default(false),
+    /** Once followed, turning it back on brings only new highlights. */
+    everFollowed: integer("ever_followed", { mode: "boolean" }).notNull().default(false),
+    highlights: integer("highlights").notNull().default(0),
+    ...timestamps,
+  },
+  (t) => [primaryKey({ columns: [t.userId, t.bookId] })],
+);
+
+export type ReadwiseConnection = typeof readwiseConnections.$inferSelect;
+export type ReadwiseBook = typeof readwiseBooks.$inferSelect;

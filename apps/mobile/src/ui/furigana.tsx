@@ -93,6 +93,33 @@ function FadingRuby(props: Props) {
 /** The largest a reading in letters is drawn, the lede's size, so a big cue's pinyin stays quiet. */
 const LETTERS_MAX = 15.5;
 
+/** The sizes a run of text and its readings are drawn at, with the room the readings take over it. */
+function useRubyMetrics(
+  segments: readonly ReadingSegment[],
+  className: string | undefined,
+  style: Props["style"],
+  maxFontSizeMultiplier: number | undefined,
+) {
+  const { fontScale } = useWindowDimensions();
+  const resolved = useResolveClassNames(className ?? "");
+  const flat = StyleSheet.flatten([resolved, style]);
+  const size = flat.fontSize ?? 17;
+  const drawn = fitType(size, fontScale, maxFontSizeMultiplier).drawn;
+  // Half the text's drawn size and never under 10 pt, as the web's `rt`; letters 0.4 of it, capped at the lede.
+  const letters = segments.some((segment) => segment.reading && lettersReading(segment.reading));
+  const readingSize = letters
+    ? Math.min(
+        Math.max(10, drawn * 0.4),
+        fitType(LETTERS_MAX, fontScale, maxFontSizeMultiplier).drawn,
+      )
+    : Math.max(10, drawn / 2);
+  const slot = Math.ceil(readingSize * 1.2);
+  const line = Math.ceil(((flat.lineHeight ?? size * 1.2) * drawn) / size);
+  return { drawn, readingSize, slot, line };
+}
+
+const KNOWN_READING = { opacity: 0, width: 0, overflow: "hidden" } as const;
+
 /** A Jyutping tone number's size against its syllable's. */
 const TONE_SCALE = 0.7;
 
@@ -116,21 +143,13 @@ function Ruby({
     () => furiganaBoxes(tail ? [...segments, { text: tail.text, tail: true }] : segments),
     [segments, tail],
   );
-  const { fontScale } = useWindowDimensions();
-  const resolved = useResolveClassNames(className ?? "");
-  const flat = StyleSheet.flatten([resolved, style]);
-  const size = flat.fontSize ?? 17;
-  const drawn = fitType(size, fontScale, maxFontSizeMultiplier).drawn;
-  // Half the text's drawn size and never under 10 pt, as the web's `rt`; letters 0.4 of it, capped at the lede.
-  const letters = segments.some((segment) => segment.reading && lettersReading(segment.reading));
-  const readingSize = letters
-    ? Math.min(
-        Math.max(10, drawn * 0.4),
-        fitType(LETTERS_MAX, fontScale, maxFontSizeMultiplier).drawn,
-      )
-    : Math.max(10, drawn / 2);
-  const slot = Math.ceil(readingSize * 1.2);
-  const pitch = slot + Math.ceil(((flat.lineHeight ?? size * 1.2) * drawn) / size);
+  const { drawn, readingSize, slot, line } = useRubyMetrics(
+    segments,
+    className,
+    style,
+    maxFontSizeMultiplier,
+  );
+  const pitch = slot + line;
   // The boxes run the way the language does, which a row would not: it follows the app's direction.
   const rtl = textDirection(lang) === "rtl";
   const keep = useClamp(boxes.length, lines, drawn * ELLIPSIS_EM, rtl);
@@ -148,7 +167,7 @@ function Ruby({
   );
   const readingText = (run: string, size: number, lineHeight: number, inset = 0) => (
     <Text
-      className="text-text-2"
+      className="text-ink-secondary"
       style={{
         fontSize: size,
         lineHeight,
@@ -221,7 +240,8 @@ function Ruby({
               // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
               <View key={j} className="shrink items-center">
                 {run.known ? (
-                  <View style={{ opacity: 0 }}>{reading(run.reading)}</View>
+                  // Its height only, so a long reading leaves no gap around a word the learner knows.
+                  <View style={KNOWN_READING}>{reading(run.reading)}</View>
                 ) : fade ? (
                   <Animated.View style={fade}>{reading(run.reading)}</Animated.View>
                 ) : (

@@ -1,8 +1,9 @@
 # Lymi
 
-A private-first vocabulary app with a storm lantern. Collect cards from language lessons, let AI enrich them, and remember them with spaced repetition.
+Lymi is a flashcard app for remembering what you learn, in any subject. Create cards by hand, from notes and files, or through connected tools. AI can fill missing fields, and spaced repetition schedules reviews.
 
-- [PRODUCT.md](PRODUCT.md): who it is for, what it is, how it should feel
+- [PRODUCT.md](PRODUCT.md): who it is for, what it does on each surface, how it should feel
+- [docs/review.md](docs/review.md): how a review, the daily goal and the streak work
 - [DESIGN.md](DESIGN.md): the rules every screen follows, indexing the system files in `docs/design/system` and the feature design in `docs/design`
 - [design.lymi.app](https://design.lymi.app): the design system rendered with the real components; also `/design` on the local dev server
 - [docs/stack.md](docs/stack.md): the technical decisions and why
@@ -19,7 +20,7 @@ A private-first vocabulary app with a storm lantern. Collect cards from language
 
 ## Run it
 
-Requires Node 22 and pnpm 10.
+Requires Node 22.19 or later and pnpm 10.
 
 ```bash
 pnpm install
@@ -41,7 +42,7 @@ apps/web          Product deployable: Vite React PWA client + Hono Worker
   src/client      Routes, views, components, styles, and the /design page
   src/server      Hono app, auth, API, static asset fallback
   migrations      Drizzle-generated SQL for D1
-apps/mobile       Phone app: Expo React Native, demo data for now (see its README)
+apps/mobile       iPhone app: Expo React Native (see its README)
 apps/desktop      Mac app: Electron shell around the product (see its README)
 packages/core     Drizzle schema, Zod types, FSRS scheduling. Shared by the web and the phone app.
 packages/client   API client, query options, grade and write outboxes, review draw. Shared by both clients.
@@ -54,8 +55,9 @@ scripts           Brand assets (brand.mjs) and icon generation (icons.sh)
 ```bash
 pnpm verify:changed # push gate: static checks, then the tests the change affects
 pnpm verify       # full gate: check, i18n:check, build, typecheck, test
-pnpm check        # Biome lint + format check, then check:design
-pnpm check:design # DESIGN.md and the phone's values match packages/design; design docs name real components
+pnpm check        # lint, formatting, design, styling, regression, cache, agent-doc and phone-symbol checks
+pnpm check:regressions # bug patterns that reached pull requests before: dead shadows, undefined CSS properties, storage keys spelled twice, retired claims
+pnpm check:design # the phone's values match packages/design; DESIGN.md keeps no tokens in its frontmatter; design docs name real components
 pnpm build        # production build
 pnpm fix          # Biome, writing fixes
 pnpm i18n:extract # pull new interface strings into the uk and ru catalogs
@@ -78,6 +80,28 @@ pnpm run deploy:site # deploy the public Worker; user-owned production action
 pnpm run deploy:product # deploy the product Worker; user-owned production action
 ```
 
+## Generated files
+
+Edit the source and re-run its generator, because the next run overwrites a hand edit.
+
+| Generated | Regenerate after | With |
+| --- | --- | --- |
+| everything under `migrations/`, `scripts/migration-manifest.json` | a schema change | `pnpm db:generate` |
+| `packages/core/src/schema/auth.ts` | a Better Auth config change | `pnpm --filter @lymi/web auth:schema` |
+| both `worker-configuration.d.ts` files | a Wrangler binding change | that workspace's `cf-typegen` |
+| `apps/web/src/client/routeTree.gen.ts` | adding or renaming a file in `apps/web/src/client/routes` | `pnpm dev` or `pnpm build`, through the TanStack Router plugin |
+| `packages/core/simulation/results.json` | changing the draw, the scheduler or a year-long simulation | `pnpm --filter @lymi/core simulate` |
+| `packages/design/src/tokens.gen.ts`, `packages/design/uniwind.gen.css`, `apps/desktop/src/colours.gen.ts` | changing `packages/design/tokens.css` | `node scripts/check-design-docs.mjs --write` |
+| `packages/design/fonts/onest-cyrillic-wght-normal.woff2` | updating `@fontsource-variable/onest` | `python3 packages/design/scripts/onest-stress.py` (needs `pip install fonttools brotli`) |
+| `apps/mobile/assets/symbols/` | changing `apps/mobile/src/ui/icons.tsx` or the lantern in `packages/design/src/lantern.ts` | `pnpm --filter @lymi/mobile symbols` (needs `brew install swiftdraw`) |
+| `apps/desktop/assets/trayTemplate.png`, `trayTemplate@2x.png` | changing `tray.svg` | `pnpm --filter @lymi/desktop tray-icon` (needs `rsvg-convert`) |
+| `apps/desktop/assets/icon.png`, `icon.icns` | changing `icon.svg` | `pnpm --filter @lymi/desktop app-icon` (needs `rsvg-convert`) |
+| `apps/desktop/assets/dmg-background.tiff` | changing the download window | `pnpm --filter @lymi/desktop dmg-background` |
+| the clips in `apps/site/public/audio/hand/` | changing a landing card's term | `pnpm --filter @lymi/site hand:audio` (with `OPENAI_API_KEY`) |
+| recorded live runs in `apps/web/src/server/enrichment/runs/` | any change to what the enrichment model reads or which model reads it | `pnpm --filter @lymi/web eval:enrichment --record` (with `OPENAI_API_KEY` and `AI_GATEWAY_TOKEN`) |
+
+For the phone's frozen API contracts, follow [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md).
+
 ## First deploy checklist
 
 1. `wrangler login`
@@ -85,7 +109,7 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 3. `wrangler r2 bucket create lymi-audio` and `wrangler r2 bucket create lymi-private-images`, and enable Cloudflare Images for the Images binding
 4. `wrangler kv namespace create SESSIONS` and paste the id
 5. In Google Cloud, authorize `https://my.lymi.app` and the callback `https://my.lymi.app/api/auth/callback/google`. Configure [Sign in with Apple](docs/phone-release.md#sign-in-with-apple) for the web and iPhone.
-6. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`, `AI_GATEWAY_TOKEN`
+6. `wrangler secret put BETTER_AUTH_SECRET`, `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `OPENAI_API_KEY`, `AI_GATEWAY_TOKEN`. Rotating `BETTER_AUTH_SECRET` later makes every learner paste their Readwise token again.
 7. Generate one VAPID key pair, then add `VAPID_PUBLIC_KEY`, `VAPID_PRIVATE_KEY`, and `VAPID_SUBJECT` with `wrangler secret put`
 8. In Resend, verify `lymi.app`, add a webhook to `https://my.lymi.app/api/email/events` for bounced and complained events, then add `RESEND_API_KEY` and `RESEND_WEBHOOK_SECRET` with `wrangler secret put`; until the key exists, email goes through the Cloudflare binding
 9. Configure separate Workers Builds projects for `apps/site` and `apps/web`, and confirm the `lymi.app` and `my.lymi.app` custom domains are ready in Cloudflare
@@ -95,7 +119,7 @@ pnpm run deploy:product # deploy the product Worker; user-owned production actio
 
 After initial setup, each Cloudflare Workers Builds project runs its package's `deploy:ci` script with a D1-enabled build token so pending migrations succeed before a new Worker version becomes active. Both scripts safely retry if the other build is applying the same shared migration. Migration files already merged to `main` are immutable; create a new migration after syncing rather than renaming or replacing an existing one.
 
-See [docs/site-structure.md](docs/site-structure.md) for the origin contract, cutover prerequisites and production smoke checks.
+See [docs/site-structure.md](docs/site-structure.md) for origin routing, build configuration and deployment checks.
 
 ## License
 

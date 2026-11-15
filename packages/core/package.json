@@ -20,6 +20,7 @@
     "./posthog-proxy": "./src/posthog-proxy.ts",
     "./simulation": "./simulation/index.ts",
     "./analytics": "./src/analytics.ts",
+    "./api-resources": "./src/api-resources.ts",
     "./analytics-review-session": "./src/analytics-review-session.ts"
   },
   "scripts": {

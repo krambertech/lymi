@@ -11,9 +11,9 @@ A good card asks one thing and has one normal answer. Everything else on it is o
 3. **Production has one right answer.** When a meaning fits more than one term, add a short cue in parentheses so only this term fits: "думать (размышлять)" for mõtlema, "думать (считать)" for arvama. A card with two right answers marks the learner wrong for knowing the other one.
 4. **The term is the citation form, in the deck's fixed shape.** Estonian verbs carry their three principal forms ("jooma · juua · joon"), a German noun carries its article. The shape is the same for every card of that kind in the deck, and the forms are copied as the lesson prints them.
 5. **The example is one short sentence in the language being learned, where every other word is easier than the term, at most 250 characters as shown.** It shows the word in use; it is not what the learner recalls. Its translation goes in its own field, never in brackets after it or in the notes, and is one natural sentence in the meaning language that uses the card's meaning for the term.
-6. **Nothing on the cue side gives the answer away.** An example, note or hook that spells the term turns production into reading.
+6. **Nothing on the cue side gives the answer away.** An example, note or hint that spells the term turns production into reading.
 7. **Look-alikes get a contrast line on both cards.** Similar words and near-synonyms learned together are the most common cause of forgetting. One line ("Сравни: *arvama*, считать") is cheaper than splitting the lesson.
-8. **A hook is for a word that keeps failing, not for every card.** Mnemonics help when chosen, so the learner writes one, often when review offers it for an often-forgotten card. A hook leads back to the term without spelling it.
+8. **A hint is for a card that keeps failing, not for every card.** It helps when the learner chose it, so the learner writes one, often when review offers it for an often-forgotten card. A hint leads back to the term without spelling it.
 9. **A card that keeps failing is split or rewritten, not given more notes.**
 10. **One format per deck.** The same term shape, the same meaning style and the same note labels on every card, so the deck reads as one voice and the AI can copy it.
 
@@ -22,7 +22,8 @@ A good card asks one thing and has one normal answer. Everything else on it is o
 A Japanese card is shaped by its language, with no setting of its own:
 
 - **Term**: the dictionary form, written as natives write it: 食べる, 学校, and kana alone for a word normally written in kana, such as ありがとう or たくさん.
-- **Reading**: the term's reading in hiragana, たべる, stored as the pronunciation and drawn over the kanji as furigana. Empty for a term written only in kana. No romaji.
+- **Reading**: the term's reading in hiragana, たべる, stored as the pronunciation and drawn over the kanji as furigana. No romaji.
+- **Pitch accent**: the word's Tokyo accent in square brackets after the reading: たべる [2], the mora the voice falls after, and ともだち [0] for no fall. A card shows one accent, so the AI writes the most common, in its own step after a fill. The step runs only in a deck that lets the AI fill the Reading, and only on a Reading the AI wrote or a term written only in kana, so a Reading a person typed stays as it is; an import may keep a second, かんがえる [4][3], and the chart draws the first. It is why a term written only in kana still has a Reading, ありがとう [2]. Review charts it under the term after the reveal, in place of the term's furigana; examples carry none. A reading sent with a downstep, としょꜜかん, stores as としょかん [2]. Furigana, duplicates and audio ignore it, and a phone release older than `PITCH_ACCENT_SINCE` receives the Reading without it.
 - A term sent with its reading inline, `食[た]べる`, is stored as the term 食べる with the Reading たべる when every kanji has a kana reading and no other pronunciation was sent; anything else is stored as written.
 - **Notes**: the word type alone on the first line, "Ichidan verb", then "Polite: *食べます*" and a transitive or intransitive pair when there is one; a special counter, a suru noun's "With する: *勉強する*", a particle trap, or for a word of two or more kanji "Characters: 果 fruit, 物 thing".
 - **Example**: one short sentence with a reading in square brackets after each run of kanji, and none over kana: `毎朝[まいあさ]パンを食[た]べます。`. A reading over a longer stretch, Anki's `食べます[たべます]`, is read the same way.
@@ -85,9 +86,8 @@ Notes labels are written here in English; a card writes them in its meaning lang
 - **Swedish**, **Norwegian** (`nb`, `nn`; a plain `no` means Bokmål), **Danish** and **Dutch**: notes give a noun's article where the term lacks it, its Definite and Plural, and a verb's Present, Past and Supine or Perfect; Dutch gives a strong verb's Past and "Perfect: *is gekomen*" and a separable prefix, *op|bellen*. Nynorsk cards use Nynorsk forms. A word told apart only by pitch accent says which, "Accent 2: *anden*, the spirit".
 - **Danish** pronunciation is IPA as Den Danske Ordbog writes it, with stød and without the letters that are not said: hus ˈhuˀs.
 - **Icelandic** notes give Gender, Genitive and Plural, and a strong verb's Past and Participle; þ, ð, æ and ö stay as written.
-- **Polish** notes give "Perfective: *zrobić*", "Present: *robię, robisz*", a gender the ending hides, a genitive that changes the stem and an irregular or masculine-personal plural, "Plural: *studenci*"; for a Ukrainian or Russian reader, a false friend, *dywan*, a carpet. A word not stressed on the second-to-last syllable gets the term with a grave accent on that vowel as its pronunciation: mùzyka, never an acute, which turns o into the letter ó.
+- **Polish** notes give "Perfective: *zrobić*", "Present: *robię, robisz*", a gender the ending hides, a genitive that changes the stem and an irregular or masculine-personal plural, "Plural: *studenci*"; for a Ukrainian or Russian reader, a false friend, *dywan*, a carpet. Where Polish only looks like Ukrainian, the notes also give the case or preposition that differs, *tęsknić za domem*, not по. A word not stressed on the second-to-last syllable gets the term with a grave accent on that vowel as its pronunciation, as one composed letter: mùzyka, never an acute, which turns o into the letter ó.
 - **Czech** keeps háček, čárka and ů; notes give "Perfective: *udělat*", "Present: *dělám*", a hidden gender, the Genitive and an irregular "Plural: *lidé*".
-
 - **German** notes give a noun's Plural, a strong verb's Present only when the vowel changes, Past and "Perfect: *ist gefahren*", a separable prefix, *ein|kaufen*, and a fixed preposition with its case; the term keeps its article, and duplicates still compare it.
 - **French** pronunciation is IPA, with each liaison in a phrase marked ‿; notes give a gender the article hides, an irregular Plural, an adjective's irregular "Feminine: *belle*", a verb's irregular Present, its Participle, and a "With *être*" line.
 - **Spanish** and **Italian** keep every written accent, *árbol*, *città*. Spanish notes give "Present: *tengo, tienes*", an irregular Preterite, a hidden gender and the word Spain or Latin America says instead. Italian notes give an irregular Present and Participle, "Past with *essere*: *sono venuto*" and an irregular "Plural: *le uova*"; a word stressed before its second-to-last syllable gets the term with a grave accent as its pronunciation, telèfono.
@@ -128,7 +128,7 @@ The reading belongs in the pronunciation and an example in the example field; an
 1. What the lesson marks first: glossed, bold, highlighted, underlined, drilled, or written in by hand.
 2. Then frequent, useful words the learner does not have.
 3. A term already in the learner's decks is skipped (ADR 0004). A second card for the same word is added only for a clearly different sense, with its own cue.
-4. Page furniture is never a card: headings, row numbers, transcriptions, mnemonics columns, exercise instructions. A reading the lesson prints beside a term, such as furigana or a kana gloss, goes on that term's card as its pronunciation.
+4. Page furniture is never a card: headings, row numbers, transcriptions, memory-aid columns, exercise instructions. A reading the lesson prints beside a term, such as furigana or a kana gloss, goes on that term's card as its pronunciation.
 
 ## Examples
 

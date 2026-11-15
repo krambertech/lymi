@@ -9,7 +9,7 @@ interface Props {
   hidden?: boolean | undefined;
 }
 
-/** Runs of text with their readings drawn over them, as furigana over kanji; a known run's reading keeps its room unseen. */
+/** Runs of text with their readings drawn over them, as furigana over kanji; a known run's reading keeps its height unseen and no width, so a long one leaves no gap around its word. */
 export function Furigana({ segments, lang, hidden }: Props) {
   return segments.map((segment, index) =>
     segment.reading === undefined ? (
@@ -31,19 +31,30 @@ export function Furigana({ segments, lang, hidden }: Props) {
             (hidden || segment.known) && "invisible opacity-0",
           )}
         >
-          {toneRuns(segment.reading).map((run, at) =>
-            run.tone ? (
-              // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
-              <span key={at} data-tone>
-                {run.text}
-              </span>
-            ) : (
-              run.text
-            ),
+          {segment.known ? (
+            <span className="inline-block w-0 overflow-hidden whitespace-nowrap align-top">
+              <ReadingRuns reading={segment.reading} />
+            </span>
+          ) : (
+            <ReadingRuns reading={segment.reading} />
           )}
         </rt>
         <rp>)</rp>
       </ruby>
+    ),
+  );
+}
+
+/** A reading, with each Jyutping tone number in its own raised run. */
+function ReadingRuns({ reading }: { reading: string }) {
+  return toneRuns(reading).map((run, at) =>
+    run.tone ? (
+      // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+      <span key={at} data-tone>
+        {run.text}
+      </span>
+    ) : (
+      run.text
     ),
   );
 }

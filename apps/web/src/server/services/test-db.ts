@@ -50,8 +50,8 @@ function statementsIn(file: string): string[] {
 async function boot(before?: string): Promise<MigratingTestDb> {
   const proxy = await getPlatformProxy<TestBindings>({
     configPath: `${appDir}wrangler.jsonc`,
-    // No `.env` files. Wrangler still reads `.dev.vars` on its own; nothing here uses it.
-    envFiles: [],
+    // An empty env file, because Wrangler reads `.dev.vars` whenever `envFiles` is empty and its keys change what tests see.
+    envFiles: ["/dev/null"],
     persist: false,
     // Workers AI is remote only; tests never call it, and connecting to it doubles every boot.
     remoteBindings: false,

@@ -17,7 +17,7 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
   ja: { voice: "vzIXwvf41vKosKu00hYj", name: "Hiroki - Calm and Precise" },
   ko: { voice: "s07IwTCOrCDCaETjUVjx", name: "Hyunbin - Diplomatic, Clear and Measured" },
   nl: { voice: "YUdpWWny7k5yb4QCeweX", name: "Ruth - Warm and Dynamic Narrator" },
-  // Oslo; chosen over Gemini, Olaf, Martin and Maja E, docs/proposals/long-tail-languages.md.
+  // Oslo; chosen over Olaf, Martin and Maja E, docs/proposals/long-tail-languages.md.
   nb: { voice: "uNsWM1StCcpydKYOjKyu", name: "Mia Starset - Clear and Friendly" },
   pl: { voice: "H5xTcsAIeS5RAykjz57a", name: "Alex - Warm Storyteller" },
   "pt-BR": { voice: "Qrdut83w0Cr152Yb4Xn3", name: "Paulo - Expressive and Confident" },
@@ -25,42 +25,54 @@ export const NATIVE_SPEECH_VOICES: Readonly<Record<string, NativeVoice>> = {
   // Stresses the U+0301 syllable in 37 of 40 marked words and sounds native, PR #864.
   ru: { voice: "3EuKHIEZbSzrHGNmdYsx", name: "Nikolay" },
   sr: { voice: "g8TYYIFt2Qo27yGQmTYq", name: "Jovana - Warm Serbian Narrator" },
-  // Stockholm; chosen over Gemini, Sanna Hartfield and Adam Composer, docs/proposals/long-tail-languages.md.
+  // Stockholm; chosen over Sanna Hartfield and Adam Composer, docs/proposals/long-tail-languages.md.
   sv: { voice: "kPdGSxhZAqy4bmPAf9iJ", name: "Evelina - Calm, Clear and Engaging" },
   tr: { voice: "RXCCWbOxP7Hisa63Xsv5", name: "Adam - Calm, Relaxing and Informative" },
   // Stresses the U+0301 syllable in 8 of 8 marked words and chosen by ear, PR #864; named by ID, which Lymi's key can't read a name for.
   uk: { voice: "2OXYbN1uGomXXJtv9Dq6", name: "2OXYbN1uGomXXJtv9Dq6" },
-  // Northern; chosen over Gemini and four native voices, docs/proposals/long-tail-languages.md.
+  // Northern; chosen over four native voices, docs/proposals/long-tail-languages.md.
   vi: { voice: "aN7cv9yXNrfIR87bDmyD", name: "Ninh Đôn - Deep and Warm" },
   cmn: { voice: "bhJUNIXWQQ94l8eI2VUf", name: "Amy - Friendly, Young and Natural" },
   // Traditional tags speak with a Taiwan voice; chosen on 一 and 不 sandhi and 行 háng/xíng, PR #869.
   "cmn-TW": { voice: "Z8Aisvg1z70p27kGvkZZ", name: "Ling - Steady, Calm and Grounded" },
   // Hong Kong Cantonese, 23 of 24 trap syllables in two takes; docs/proposals/cantonese.md, Voice.
   yue: { voice: "xDISamJf8LV5rG5A2te1", name: "Aki - Deep and Suspenseful" },
+  // Each was the clearest neutral voice tagged for its language and said two test words back to a transcriber.
+  af: { voice: "mxSIkjxibsst7DTmY6M9", name: "Annabel - Afrikaans" },
+  az: { voice: "BQgh92MxG7QAtCA8wY7O", name: "Ibrahim Mammadli - Podcast" },
+  bg: { voice: "406EiNlYvqFqcz3vsnOm", name: "Peter K - Warm, Round, and Smooth" },
+  bn: { voice: "5WbDBNLwAg4h26Km0GgQ", name: "Arfa - Sweet Love Story Narrator" },
+  ca: { voice: "22wGiua3VrViwSfoX1vU", name: "Núria - Catala" },
+  ceb: { voice: "D8TuWQEXN52BAdnzubRD", name: "Jake - Casual" },
+  fa: { voice: "RBEKbcQ62sKk2tsmPsAU", name: "Sara - Neutral Persian Female" },
+  fil: { voice: "DxICOrDlizHfox9uSCDm", name: "Kuya Pedro Penduko - Gentle Storyteller" },
+  gu: { voice: "6dUn0LOxdDTsxwitRcli", name: "Leelaben - Soothing Gujarati Narrator" },
+  hr: { voice: "ZLYZToA7aDsMbHwM9AOr", name: "Luka - Calm, Narrative" },
+  hu: { voice: "M336tBVZHWWiWb4R54ui", name: "David - Deep, Soothing and Sincere" },
+  id: { voice: "RWiGLY9uXI70QL540WNd", name: "Putra - Smooth, Clear and Engaging" },
+  ka: { voice: "pg9wApCtix8nqBiwE84Y", name: "Nina - Educational" },
+  kn: { voice: "UeUC009F3NYPIArcZmq0", name: "Srivatsa - Kannada Narration" },
+  ml: { voice: "OVkoEbwxsYHiSRMFV9t3", name: "Samitha - Warm Malayalam Narrator" },
+  mn: { voice: "KQhNCZcXa4AKEt3GoAdo", name: "Bilguun - Calm" },
+  mr: { voice: "4mCfn38CsM9hGLvDrPxv", name: "Sujata - Clear Marathi Audiobook" },
+  ms: { voice: "NpVSXJvYSdIbjOaMbShj", name: "Jawid Iqbal Anwar - News Anchor" },
+  my: { voice: "NBISYoQ4SVxq8eZxoHlV", name: "Su - Calm" },
+  ne: { voice: "ljCTqT1biPnI7ZjS5gyi", name: "Sarita - Nepali" },
+  or: { voice: "foG6Z7LGrkqvUz7pYqJy", name: "Manohar - Casual Odia Podcast Host" },
+  pa: { voice: "fBXc7vfuym7wUXyB57Eo", name: "Jaskirat - Expressive Punjabi Storyteller" },
+  ps: { voice: "zHPHAoaYvoRg7Pu3lOMr", name: "NK - Pashto" },
+  sk: { voice: "Zai7B4Aol2bJtneyq0L1", name: "Luki Zajo - Lively, Deep and Focused" },
+  sw: { voice: "ezWcjzmShLr2IarIA07u", name: "Mohammed - Swahili Local" },
+  ta: { voice: "gqFUMFHCD2nbbcYVtPGB", name: "Nila - Calm, Wise and Clear" },
+  te: { voice: "GGBhcpAgpjSrBIr5MQwR", name: "Vijaya - Authentic Telugu Explainer" },
+  th: { voice: "xYmBpJREC3WfqEFpbPvO", name: "Songkran - Calm & Humble" },
+  ur: { voice: "vH5LP38dcYJ3CIbC2rKX", name: "Amjid - Urdu Documentary Narrator" },
+  // No voice is tagged for these, so a neighbouring language's speaks them; each passed the same check.
+  jv: { voice: "RWiGLY9uXI70QL540WNd", name: "Putra - Smooth, Clear and Engaging" },
+  lb: { voice: "FTNCalFNG5bRnkkaP5Ug", name: "Otto - Casual and Normal" },
+  lo: { voice: "xYmBpJREC3WfqEFpbPvO", name: "Songkran - Calm & Humble" },
+  sd: { voice: "vH5LP38dcYJ3CIbC2rKX", name: "Amjid - Urdu Documentary Narrator" },
 };
-
-const DEFAULT_NATIVE_SPEECH_LANGUAGES = new Set([
-  "ar",
-  "pt-BR",
-  "cmn-CN",
-  "cmn-TW",
-  "da",
-  "nl",
-  "et",
-  "fi",
-  "fr",
-  "de",
-  "el",
-  "it",
-  "ja",
-  "ko",
-  "nb",
-  "ru",
-  "sv",
-  "uk",
-  "vi",
-  "yue",
-]);
 
 export function nativeSpeechVoice(locale: string, overrides?: string): NativeVoice | null {
   let configured: Record<string, unknown> = {};
@@ -71,7 +83,7 @@ export function nativeSpeechVoice(locale: string, overrides?: string): NativeVoi
         configured = parsed as Record<string, unknown>;
       }
     } catch {
-      // A malformed optional voice map must not prevent Gemini or a stored clip from playing.
+      // A malformed optional voice map must not prevent OpenAI or a stored clip from playing.
     }
   }
   const root = locale.split("-")[0] ?? locale;
@@ -83,9 +95,6 @@ export function nativeSpeechVoice(locale: string, overrides?: string): NativeVoi
     if (typeof voice === "string" && /^[a-zA-Z0-9]{16,64}$/.test(voice)) {
       return { voice, name: "Configured voice" };
     }
-  }
-  if (!DEFAULT_NATIVE_SPEECH_LANGUAGES.has(locale) && !DEFAULT_NATIVE_SPEECH_LANGUAGES.has(root)) {
-    return null;
   }
   return NATIVE_SPEECH_VOICES[locale] ?? NATIVE_SPEECH_VOICES[root] ?? null;
 }

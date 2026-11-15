@@ -2,8 +2,8 @@ import type { Persona, PersonaCard } from "./personas";
 
 /**
  * The `japanese` persona: real Japanese words with English meanings, so furigana, kana readings,
- * katakana and the Japanese voice can be looked at. A term's reading is its pronunciation; an
- * example carries readings inline, `食[た]べる`.
+ * katakana and the Japanese voice can be looked at. A term's reading is its pronunciation, some
+ * with a pitch accent; an example carries readings inline, `食[た]べる`.
  */
 
 type Row = [term: string, reading: string | null, meaning: string, example?: string];
@@ -21,16 +21,16 @@ const section = (name: string, tags: string[], rows: Row[]): PersonaCard[] =>
   }));
 
 const NOUNS: Row[] = [
-  ["水", "みず", "water", "水[みず]を一杯[いっぱい]ください。"],
-  ["山", "やま", "mountain"],
+  ["水", "みず [0]", "water", "水[みず]を一杯[いっぱい]ください。"],
+  ["山", "やま [2]", "mountain"],
   ["川", "かわ", "river"],
   ["空", "そら", "sky"],
-  ["雨", "あめ", "rain", "明日[あした]は雨[あめ]です。"],
+  ["雨", "あめ [1]", "rain", "明日[あした]は雨[あめ]です。"],
   ["雪", "ゆき", "snow"],
   ["花", "はな", "flower"],
   ["木", "き", "tree"],
-  ["犬", "いぬ", "dog"],
-  ["猫", "ねこ", "cat"],
+  ["犬", "いぬ [2]", "dog"],
+  ["猫", "ねこ [1]", "cat"],
   ["魚", "さかな", "fish"],
   ["肉", "にく", "meat"],
   ["卵", "たまご", "egg"],
@@ -39,16 +39,16 @@ const NOUNS: Row[] = [
   ["朝ご飯", "あさごはん", "breakfast"],
   ["昼ご飯", "ひるごはん", "lunch"],
   ["晩ご飯", "ばんごはん", "dinner"],
-  ["学校", "がっこう", "school"],
-  ["先生", "せんせい", "teacher"],
+  ["学校", "がっこう [0]", "school"],
+  ["先生", "せんせい [3]", "teacher"],
   ["学生", "がくせい", "student"],
-  ["友達", "ともだち", "friend", "友達[ともだち]と映画[えいが]を見[み]ました。"],
+  ["友達", "ともだち [0]", "friend", "友達[ともだち]と映画[えいが]を見[み]ました。"],
   ["家族", "かぞく", "family"],
-  ["電車", "でんしゃ", "train"],
-  ["駅", "えき", "station", "駅[えき]はどこですか。"],
+  ["電車", "でんしゃ [0]", "train"],
+  ["駅", "えき [1]", "station", "駅[えき]はどこですか。"],
   ["道", "みち", "road; way"],
   ["店", "みせ", "shop"],
-  ["本", "ほん", "book"],
+  ["本", "ほん [1]", "book"],
   ["新聞", "しんぶん", "newspaper"],
   ["手紙", "てがみ", "letter"],
   ["時計", "とけい", "clock; watch"],

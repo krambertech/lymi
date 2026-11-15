@@ -68,6 +68,18 @@ describe("analytics privacy contract", () => {
       badge: "estonia",
     });
     expect(eventProperties("origin_badge_shown", { badge: "estonia" }, "worker")).toBeNull();
+    expect(
+      eventProperties("site_link_followed", { place: "footer", target: "/exams/jlpt" }, "browser"),
+    ).toEqual({ place: "footer", target: "/exams/jlpt" });
+    expect(
+      eventProperties("site_link_followed", { place: "hero", target: "/explore" }, "browser"),
+    ).toEqual({ place: "hero", target: "/explore" });
+    expect(
+      eventProperties("site_link_followed", { place: "landing", target: "/docs/api" }, "browser"),
+    ).toEqual({ place: "landing", target: "/docs/api" });
+    expect(
+      eventProperties("site_link_followed", { place: "footer", target: "/explore?q=word" }),
+    ).toBeNull();
     // The phone sends its own openings, screens and review legs; outcomes stay the server's.
     expect(eventProperties("app_opened", { backlog: "1-20" }, "phone")).toEqual({
       backlog: "1-20",
@@ -75,6 +87,18 @@ describe("analytics privacy contract", () => {
     expect(
       eventProperties("review_graded", { mode: "term_to_meaning", grade: 4 }, "phone"),
     ).toBeNull();
+    // A reminder fires on the phone, so only the phone knows one was planned.
+    const planned = { backlog: "1-20", reminders: 7, days_ahead: 1 };
+    expect(eventProperties("reminder_scheduled", planned, "phone")).toEqual(planned);
+    expect(eventProperties("reminder_scheduled", planned, "browser")).toBeNull();
+    expect(eventProperties("reminder_scheduled", planned, "worker")).toBeNull();
+    expect(
+      eventProperties("entry_opened", { entry: "reminder", place: "review" }, "phone"),
+    ).toEqual({ entry: "reminder", place: "review" });
+    expect(
+      eventProperties("app_opened", { entry: "email", from_email: "deck-invitation" }, "browser"),
+    ).toEqual({ entry: "email", from_email: "deck-invitation" });
+    expect(eventProperties("app_opened", { from_email: "newsletter" }, "browser")).toBeNull();
     expect(eventProperties("origin_badge_shown", { badge: "estonia" }, "phone")).toBeNull();
     expect(eventProperties("origin_badge_shown", { badge: "Europe/Tallinn" })).toBeNull();
     // A tag's name is the learner's own text, so only how it was added leaves the browser.
@@ -97,15 +121,15 @@ describe("analytics privacy contract", () => {
     expect(
       eventProperties("pronunciation_played", { outcome: "failed", revealed: true }, "worker"),
     ).toBeNull();
-    // A draft is the learner's own press, and neither the hook nor the card leaves the device.
+    // A draft is the learner's own press, and neither the hint nor the card leaves the device.
     expect(
       eventProperties(
-        "hook_drafted",
-        { outcome: "drafted", wait_ms: 1800, hook: "ВОИН" },
+        "hint_drafted",
+        { outcome: "drafted", wait_ms: 1800, hint: "ВОИН" },
         "browser",
       ),
     ).toEqual({ outcome: "drafted", wait_ms: 1800 });
-    expect(eventProperties("hook_drafted", { outcome: "none", wait_ms: 900 }, "worker")).toBeNull();
+    expect(eventProperties("hint_drafted", { outcome: "none", wait_ms: 900 }, "worker")).toBeNull();
     expect(
       eventProperties(
         "cards_tagged",
@@ -170,6 +194,13 @@ describe("analytics privacy contract", () => {
     const cost = textCallCost("gpt-6-luna", { input: 1_000_000, cached: 500_000, output: 200_000 });
     expect(cost?.input).toBeCloseTo(0.055);
     expect(cost?.output).toBeCloseTo(0.1);
+    const terra = textCallCost("gpt-6.1-terra", {
+      input: 1_000_000,
+      cached: 500_000,
+      output: 200_000,
+    });
+    expect(terra?.input).toBeCloseTo(0.525);
+    expect(terra?.output).toBeCloseTo(1);
     expect(textCallCost("unpriced-model", { input: 10, output: 10 })).toBeUndefined();
     const short = textCallCost("claude-haiku-5-5", { input: 100_000, output: 10_000 });
     expect(short?.input).toBeCloseTo(0.01);
@@ -177,26 +208,14 @@ describe("analytics privacy contract", () => {
     const long = textCallCost("claude-haiku-5-5", { input: 200_000, output: 10_000 });
     expect(long?.input).toBeCloseTo(0.1);
     expect(long?.output).toBeCloseTo(0.025);
-    expect(speechCallCost("chirp-3-hd", { characters: 1_000 })).toEqual({ input: 0.03, output: 0 });
     expect(speechCallCost("eleven_v4", { characters: 1_000 })?.input).toBeCloseTo(0.08);
-    const gemini = speechCallCost("gemini-3.1-flash-tts-preview", {
-      characters: 6,
-      inputTokens: 100,
-      outputTokens: 50,
-    });
-    expect(gemini?.input).toBeCloseTo(0.0001);
-    expect(gemini?.output).toBeCloseTo(0.001);
-    expect(
-      speechCallCost("gemini-3.1-flash-tts-preview", { characters: 6, audioSeconds: 2 })?.output,
-    ).toBeCloseTo(0.001);
-    expect(speechCallCost("gemini-3.1-flash-tts-preview", { characters: 6 })).toBeUndefined();
     expect(speechCallCost("gpt-4o-mini-tts", { characters: 6 })).toBeUndefined();
     const speech = {
       $ai_trace_id: "0b9d5d8e-4c1f-4d43-9a5b-3f0c2b6f1e11",
       $ai_session_id: null,
       $ai_span_name: "pronunciation",
-      $ai_provider: "google",
-      $ai_model: "chirp-3-hd",
+      $ai_provider: "elevenlabs",
+      $ai_model: "eleven_v4",
       characters: 6,
       $ai_total_cost_usd: 0.00018,
       $ai_latency: 0.4,
@@ -214,7 +233,7 @@ describe("analytics privacy contract", () => {
     expect(analyticsPath("/share", "product")).toBe("/share");
     expect(analyticsPath("/series-order", "product")).toBe("/series-order");
     expect(analyticsPath("/api-keys", "product")).toBe("/api-keys");
-    expect(analyticsPath("/connected-apps", "product")).toBe("/connected-apps");
+    expect(analyticsPath("/settings/claude", "product")).toBe("/settings/:item");
     expect(analyticsPath("/reset-password/token", "product")).toBe("/other");
     expect(analyticsPath("/you", "product")).toBe("/you");
     expect(analyticsPath("/uk/explore/eesti-a1", "public")).toBe("/uk/explore/eesti-a1");
@@ -331,5 +350,39 @@ describe("analytics privacy contract", () => {
         "browser",
       ),
     ).toEqual({ pathname: "/", utm_medium: "social" });
+  });
+});
+
+describe("import failure properties", () => {
+  it("keeps a known failure reason on a failed import and drops an unknown one", () => {
+    const finished = {
+      source: "anki",
+      card_count: 0,
+      adapter: "anki",
+      outcome: "failed",
+      failure: "expired",
+    };
+    expect(eventProperties("import_finished", finished, "worker")).toEqual(finished);
+    expect(
+      eventProperties(
+        "import_failed",
+        { source: "anki", card_count: 2, failure: "internal" },
+        "worker",
+      ),
+    ).toEqual({
+      source: "anki",
+      card_count: 2,
+      failure: "internal",
+    });
+    expect(
+      eventProperties("import_finished", { ...finished, failure: "timeout" }, "worker"),
+    ).toBeNull();
+    expect(
+      eventProperties(
+        "import_finished",
+        { source: "anki", card_count: 3, adapter: "anki", outcome: "done" },
+        "worker",
+      ),
+    ).toEqual({ source: "anki", card_count: 3, adapter: "anki", outcome: "done" });
   });
 });

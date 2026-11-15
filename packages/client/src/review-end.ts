@@ -1,12 +1,9 @@
-import { type Drawn, roundOrder, type StreakOut } from "@lymi/core";
+import { type Drawn, daySatisfied, roundOrder, type StreakOut } from "@lymi/core";
 import { emberCount } from "@lymi/design";
 import { streakWith } from "./review-day";
 import { type DrawData, type DrawState, drawCards } from "./review-draw";
 
 export { type DayOutcome, dayOutcome, drawableLeft, streakWith } from "./review-day";
-
-const satisfied = (outcome: StreakOut["today"]["outcome"]) =>
-  outcome === "goal_met" || outcome === "exhausted";
 
 /**
  * The streak as it stood earlier today, from a summary that may count today already: the run and
@@ -18,7 +15,7 @@ export function streakAsOf(
   satisfiedThen: boolean,
 ): StreakOut {
   const now = streakWith(summary, attempts, false);
-  if (satisfiedThen || !satisfied(summary.today.outcome)) return now;
+  if (satisfiedThen || !daySatisfied(summary.today.outcome)) return now;
   const outcome = "open";
   return {
     ...now,

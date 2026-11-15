@@ -41,6 +41,23 @@ describe("OpenAI text provider", () => {
     expect(JSON.parse(String(request.mock.calls[0]?.[1]?.body)).model).toBe("gpt-5-mini");
   });
 
+  it("asks the model a request names, and lets the environment override it", async () => {
+    const request = reply("{}");
+    const calls: string[] = [];
+    await createOpenAiTextProvider({ ...testGateway, OPENAI_API_KEY: "key" }, request, (call) =>
+      calls.push(call.model),
+    ).complete({ instructions: "fill", input: "{}", schema, model: "gpt-6.1-terra" });
+    expect(JSON.parse(String(request.mock.calls[0]?.[1]?.body)).model).toBe("gpt-6.1-terra");
+    expect(calls).toEqual(["gpt-6.1-terra"]);
+
+    const overridden = reply("{}");
+    await createOpenAiTextProvider(
+      { ...testGateway, OPENAI_API_KEY: "key", OPENAI_TEXT_MODEL: "gpt-5-mini" },
+      overridden,
+    ).complete({ instructions: "fill", input: "{}", schema, model: "gpt-6.1-terra" });
+    expect(JSON.parse(String(overridden.mock.calls[0]?.[1]?.body)).model).toBe("gpt-5-mini");
+  });
+
   it("fails a reply that was cut off", async () => {
     const provider = createOpenAiTextProvider(
       { ...testGateway, OPENAI_API_KEY: "key" },

@@ -45,6 +45,7 @@ import {
   renderTransactionalEmail,
   sendEmailPreview,
 } from "../services/email";
+import { composeLearning } from "../services/learning-email";
 import { getSettings } from "../services/settings";
 
 /**
@@ -130,8 +131,13 @@ dev.get(
     return c.json({
       ...message,
       from: `${EMAIL_FROM.name} <${EMAIL_FROM.email}>`,
-      replyTo: kind === "feedback" ? EMAIL_SAMPLES.feedback.feedback?.from : OPERATOR_INBOX,
-      to: kind === "feedback" ? OPERATOR_INBOX : "anna@example.com",
+      replyTo:
+        kind === "feedback"
+          ? EMAIL_SAMPLES.feedback.feedback?.from
+          : kind === "content-report"
+            ? EMAIL_SAMPLES["content-report"].contentReport?.reporter
+            : OPERATOR_INBOX,
+      to: kind === "feedback" || kind === "content-report" ? OPERATOR_INBOX : "anna@example.com",
     });
   },
 );
@@ -156,8 +162,37 @@ dev.post(
       EMAIL_SAMPLES[kind],
       emailOrigins(c.env),
     );
-    await sendEmailPreview(c.env, message, to);
+    // A learning email sends with its unsubscribe pair, because Gmail weighs it when filing mail.
+    await sendEmailPreview(
+      c.env,
+      message,
+      to,
+      kind.startsWith("learning-")
+        ? {
+            "List-Unsubscribe": "<https://my.lymi.app/api/email/unsubscribe/sample>",
+            "List-Unsubscribe-Post": "List-Unsubscribe=One-Click",
+          }
+        : undefined,
+    );
     return c.json({ ok: true });
+  },
+);
+
+/** A learning email for a persona, as the cron would send it, so its links can be opened locally. */
+dev.post(
+  "/emails/learning",
+  describe({ hide: true, open: true }),
+  body(
+    z.object({ as: z.string(), step: z.enum(["first", "how", "nodeck", "next", "back", "last"]) }),
+    "learning email",
+  ),
+  async (c) => {
+    const { as, step } = c.req.valid("json");
+    const persona = personas.find((p) => p.id === as);
+    if (!persona) return c.json({ error: "Unknown persona" }, 400);
+    const { userId } = await signInPersona(c.get("auth"), c.get("db"), persona);
+    const ctx = { db: c.get("db"), userId, actor: "system" as const };
+    return c.json(await composeLearning(c.env, ctx, step, "en", "en", new Date()));
   },
 );
 
@@ -417,9 +452,9 @@ dev.post("/slip", describe({ hide: true, open: true }), body(CountBody, "slip"),
   return c.json({ slipped, counts: await devCounts(ctx) });
 });
 
-const OftenForgottenBody = z.object({ hooked: z.boolean().optional() });
+const OftenForgottenBody = z.object({ hinted: z.boolean().optional() });
 
-// Often-forgotten cards with no hook, so review's offer to write one can be seen and tested.
+// Often-forgotten cards with no hint, so review's offer to write one can be seen and tested.
 dev.post(
   "/often-forgotten",
   describe({ hide: true, open: true }),

@@ -186,7 +186,7 @@ export async function settleLeadIn(
         analytics,
         "lead_in",
       )({
-        provider: "google",
+        provider: "openai",
         model: writer.model,
         inputTokens: usage?.inputTokens ?? 0,
         outputTokens: usage?.outputTokens ?? 0,
@@ -203,7 +203,7 @@ export async function settleLeadIn(
       const failure = error instanceof LeadInError ? error : undefined;
       // A refused reply was billed and kept, so it is not an outage.
       report(failure?.usage, failure?.reason !== "refused");
-      // At temperature 0 a refused reply would come back the same, so it is kept as no lead-in.
+      // Asking again buys much the same reply, so a refused one is kept as no lead-in.
       if (failure?.reason === "refused") return settle("refused", null);
       await record({ status: "failed", retryAt: Date.now() + FAILURE_COOLDOWN_MS });
       reportDecision("failed");

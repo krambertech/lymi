@@ -8,6 +8,8 @@ export interface OutgoingEmail {
   html: string;
   /** Read back from the delivery webhook, so a bounce can be told apart by kind. */
   kind: string;
+  /** The RFC 8058 pair on an email a learner can stop. */
+  headers?: Record<string, string> | undefined;
 }
 
 const RESEND_API = "https://api.resend.com/emails";
@@ -38,6 +40,7 @@ export async function sendWithResend(
         text: email.text,
         html: email.html,
         tags: [{ name: "kind", value: email.kind }],
+        ...(email.headers ? { headers: email.headers } : {}),
       }),
     });
   } catch {

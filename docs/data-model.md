@@ -1,6 +1,6 @@
 # Data model and API
 
-Reference for what is in D1 and what the API returns. Source of truth is `packages/core/src/schema` for tables, `packages/core/src/types.ts` for request bodies and `packages/core/src/responses` for responses. This page describes; it does not decide.
+What is in D1 and what the API returns. The implementation is authoritative: tables are defined in `packages/core/src/schema`, request bodies in `packages/core/src/types.ts` and responses in `packages/core/src/responses`.
 
 ## Entities
 
@@ -34,11 +34,17 @@ erDiagram
   user ||--o{ imports : "brings in"
   user ||--o{ exports : "takes out"
   user ||--o{ feedback : "writes to Lymi"
+  user ||--o{ content_reports : "reports someone else's deck or card"
+  decks ||--o{ content_reports : "reported"
+  user ||--o| sharing_suspensions : "stopped from sharing after a report"
   user ||--o{ lesson_reads : "counts Smart add"
+  user ||--o| readwise_connections : "pulls highlights"
+  user ||--o{ readwise_books : "follows"
   imports ||--o{ cards : "added"
   imports ||--o{ decks : "made"
   user ||--o{ apikey : "personal keys"
   user ||--o{ push_subscriptions : "one per subscribed device"
+  user ||--o| learner_openings : "last opening"
 
   series {
     text id PK
@@ -85,7 +91,7 @@ erDiagram
     text id PK
     text user_id FK
     text deck_id FK
-    text term "the word or phrase"
+    text term "what the card asks about"
     text normalized_term "termKey(language, term), duplicate key"
     text meaning "nullable"
     text pronunciation "nullable, in the language's format, else IPA or a respelling"
@@ -95,9 +101,9 @@ erDiagram
     text example_translation_of "nullable fingerprint of the example it translates"
     text example_translation_status "nullable working | failed"
     text notes "nullable, grammar etc"
-    text hook "nullable memory hook, not an edition field"
+    text hook "nullable hint, not an edition field; the column kept its first name"
     text hook_source "nullable lesson | ai | manual"
-    text hook_draft "nullable, the AI's latest draft for the owner's editor, so a hook saved as it is the AI's"
+    text hook_draft "nullable, the AI's latest draft for the owner's editor, so a hint saved as it is the AI's"
     text language "nullable BCP 47"
     json tags "string array, global per user"
     text source "nullable free text: where it came from"
@@ -110,6 +116,7 @@ erDiagram
     json enrichment_fields "nullable, what the outstanding run may fill"
     text audio_key "nullable R2 key"
     text audio_source "nullable generated | recorded"
+    text example_recording_key "nullable R2 key of the example's recording"
     text audio_approved_key "retired, never read; a later migration drops it"
     json review_modes "nullable mode keys, read only while directions is set"
     text image_version "nullable opaque token of the last picture write"
@@ -237,7 +244,7 @@ erDiagram
     text user_id FK
     text direction
     text mode "mode key; null only on rows an older Worker wrote"
-    int rating "1 Again 2 Hard 3 Good 4 Easy"
+    int rating "1 Forgot 2 Hard 3 Good 4 Easy"
     int state "state before review"
     int elapsed_days
     int scheduled_days
@@ -247,7 +254,7 @@ erDiagram
     text source "web | api | mcp | import"
     text review_day_id FK "nullable: null before daily goals"
     text state_before "nullable JSON card state this grade replaced, for Undo"
-    text aid "nullable hook: what the learner used before the reveal"
+    text aid "nullable hint: what the learner used before the reveal"
     int recall_ms "nullable foreground ms from cue to reveal"
     int grade_ms "nullable foreground ms from reveal to grade"
   }
@@ -292,6 +299,10 @@ erDiagram
     json payload
     int created_at
   }
+  learner_openings {
+    text user_id PK "FK"
+    int opened_at "web push stops a week after it"
+  }
   push_subscriptions {
     text id PK
     text user_id FK
@@ -305,15 +316,15 @@ erDiagram
   }
 ```
 
-All tables carry `created_at` and `updated_at` as millisecond integers. Ids are 19-character strings, time-prefixed so they sort by creation. Learning content is never deleted by the app: decks and cards archive, while reviews and audit rows are permanent. Push subscriptions are device capabilities, not learning content, and are deleted when the learner turns reminders off or the push service reports that the subscription has expired.
+Application timestamps use millisecond integers; the schema defines which timestamps each table carries. Application ids are time-prefixed 19-character strings. Cards and decks support archive and restore. Ordinary review history is append-only, but account deletion and content moderation have separate erasure rules. Push subscriptions are device capabilities and are deleted when reminders are disabled or the subscription expires.
 
-The `user`, `session`, `account`, `verification` and `apikey` tables belong to Better Auth and are generated, not hand-written. Every app table has `user_id` so a second user is a policy change, not a migration.
+The `user`, `session`, `account`, `verification` and `apikey` tables belong to Better Auth and are generated, not hand-written. Application rows are scoped through user ownership or parent and membership relationships. Review schedules and history belong to each learner, including when deck content is shared.
 
 Expired auth rows go on a schedule, not only with their account. Each cron run (`services/auth-retention.ts`) deletes up to 500 `verification` rows past `expires_at` and up to 500 `session` rows more than a day past `expires_at`, which takes the IP address and user agent with them. The session's day of grace exists because deleting a session sets `session_id` to null on its OAuth access tokens, and the provider checks a token's session only when it has one, so an unbound token would answer again until its own hour ran out. Refresh tokens keep their row either way: the provider already drops an expired session from a refresh. KV copies of sessions expire on their own TTL and are not touched.
 
 ### Review days
 
-A review day is one learner-local date measured against its streak goal. Attempts are counted from `reviews` less `review_undos`, never stored as a counter. A grade fixes `review_day_id` when it lands, in the review timezone of that moment, so a later timezone change never moves completed history. `outcome` only moves forward on a grade or a lower goal; Undo recomputes it and can reopen a day. Reviews from before daily goals have no day and still count as a reviewed day. A rest day has no column: the streak summary derives it on every read. The rules are in [the daily review goal proposal](proposals/daily-review-goal-and-rolling-queue.md) and live in `services/review-days.ts`.
+A review day is one learner-local date measured against its streak goal. Attempts are counted from `reviews` less `review_undos`, never stored as a counter. A grade fixes `review_day_id` when it lands, in the review timezone of that moment, so a later timezone change never moves completed history. `outcome` only moves forward on a grade or a lower goal; Undo recomputes it and can reopen a day. Reviews from before daily goals have no day and still count as a reviewed day. A rest day has no column: the streak summary derives it on every read. The rules are in [How a review works](review.md) and live in `services/review-days.ts`.
 
 ### Sections
 
@@ -331,15 +342,23 @@ A deck has at most one `deck_publications` row. Publishing inserts or updates it
 
 `deck_page_views` holds one row per published deck, UTC day and page locale, with the number of requests the site Worker counted for that page. `countDeckPageView` in `packages/core/src/catalog.ts` writes it and counts nothing for a withdrawn or archived deck. Publisher reports read it beside the join audit rows and `reviews`. ADR 0028.
 
-An account that owns a deck with a `deck_publications` row, published or withdrawn, cannot be deleted. `decks.user_id` cascades, so deleting the owner would delete the deck, its cards and every member's `card_states` and `reviews`. The guard is a `BEFORE DELETE` trigger on `user` (migration `0028`) that aborts, which also stops a manual `wrangler d1 execute`; account deletion refuses such an account before it starts. The later alternative is moving published decks to a publisher entity rather than an account.
+The database refuses to delete an account that owns an unarchived deck another active member studies: `decks.user_id` cascades through every member's `card_states` and `reviews`, and only `deleteAccount` gives them copies first. The guard is a `BEFORE DELETE` trigger on `user` (migration `0064`, which replaced `0028`'s guard on published decks), so it also stops a manual `wrangler d1 execute`; archive the deck or delete through the app. The dev persona reset deletes the persona's decks before its account.
 
-Deleting an account (`services/account-deletion.ts`) deletes the `user` row and lets it cascade, after a fresh emailed code in `verification` or a fresh Sign in with Apple. It refuses an account that owns a published deck, published an edition or approved a localization, since `deck_editions.published_by` and each localization's `approved_by` have no delete rule. An owned deck with an active member first moves, with its cards and their `card_images`, to the `former-owner` user, which migration 0051 seeds and which cannot sign in; its series, instructions and the cards' hook drafts are cleared and every invitation revoked, so it stays for its members and nobody can change it. The learner's tags on those cards move to the former owner's tag of the same name, made if missing, because `tags.user_id` cascades. Responses mark the deck with `owner.former`. Open named invitations to the address are revoked, each owner of a deck the learner studied gets a `leave` audit row, and one `account_deletions` row keeps the user id, the client, how it was confirmed, the account's creation time and counts, and nothing that names the person. All of that is one batch; every session, including the KV copies, ends only after it lands. R2 objects the cascade cannot reach (the photo, card pictures, each card's current audio clip, import uploads and export files) are deleted after the response, with the PostHog person and, given the key, the Apple grant. The same batch queues every card that goes in `card_audio_purges`, and the cron clears up to 90 of those cards' `cards/<card_id>/` audio folders a run, recordings and superseded speech included, keeping a card queued while R2 refuses it. A kept deck lasts only while someone studies it: the cron deletes one with no active member, with its pictures, queues its cards' audio, and deletes the former owner's tags left on no card.
+Deleting an account (`services/account-deletion.ts`) deletes the `user` row and lets it cascade, after a fresh emailed code in `verification` or a fresh Sign in with Apple. It refuses one of Lymi's own publisher accounts on `PUBLISHER_EMAILS` with 409 `publisher`, which the summary reports as `blocked`. Its sign-offs on other accounts' content keep their status and lose the name: `deck_editions.published_by` and each localization's `approved_by` are set to null, since they have no delete rule.
+
+An owned, unarchived deck with an active member first moves, with its cards and their `card_images`, to the `former-owner` user, which migration 0051 seeds and which cannot sign in; its series, instructions, publication, editions and the cards' hint drafts go, every invitation is revoked, and a `former_deck_copies` row queues it. `copyFormerDecks` (`services/deck-copies.ts`), run after the response and by the cron, then gives each member one batch, up to 25 members per call, passing over a member whose batch fails: their states caught up, a new private deck with its sections and cards in the edition the member pinned (`deck_copy_ids` maps old ids to new ones for the length of the batch), `card_images` rows sharing the original objects, and the member's `card_states`, `reviews`, `important_cards` and `section_starts` moved onto the copy, then their membership deleted. Tags, audio and the owner's hint drafts are not copied; speech is made again on play. Every statement waits on the membership, so a repeated run writes nothing. A term taken from an edition gets its `normalized_term` from `termKey` in the same batch. The batch reads the decks to keep through a subquery, never a list of ids, so an owner of many studied decks stays within D1's 100 bound parameters. An archived deck, and one nobody else studies, cascades away with the account.
+
+Named invitations to the address are deleted, whatever their state, and so are the account's `apikey` rows, which name it in `reference_id` without a foreign key; each owner of a deck the learner studied gets a `leave` audit row, and one `account_deletions` row keeps the user id, the client, how it was confirmed, the account's creation time and counts, and nothing that names the person. All of that is one batch; every session, including the KV copies, ends only after it lands. R2 objects the cascade cannot reach (the photo, card pictures no other account's row shares, each card's current audio clip, import uploads and export files) are deleted after the response, with the PostHog person.
+
+For an account that signs in with Apple the deletion batch writes an `apple_revocations` row: the phone's fresh authorization code is traded for a refresh token and revoked after the response, or the refresh token web sign-in stored is sealed into the row with a key derived from `APPLE_PRIVATE_KEY`, and the cron retries a refused revoke with backoff for eight attempts before marking it `failed`. A row is `skipped` when no key is configured or nothing could revoke the grant, and the goodbye email then tells the person to remove Lymi in their Apple Account settings.
+
+The deletion batch also queues every card that goes in `card_audio_purges`, and the cron clears up to 90 of those cards' `cards/<card_id>/` audio folders a run, recordings and superseded speech included, keeping a card queued while R2 refuses it. The cron deletes a former owner's deck once no member is left, with the pictures no copy shares, queues its cards' audio, and deletes the former owner's tags left on no card; a deck kept before copies existed waits for its last member to leave.
 
 A published deck's cards carry their pictures and stored pronunciation into public view with the deck; there is no separate approval step. The product Worker serves an object's bytes without authentication at `/public/media/card/<card_id>/<kind>`, and only while the publication, the deck, the card and the asset are all live: an active `card_images` row with a description for a picture, and `cards.audio_key` for stored pronunciation. A speakable card's missing pronunciation is generated there on its first play, within a budget (see [the stack](stack.md#audio-first-play-then-r2)), and a private object key never enters the public projection. Responses use `no-store` so withdrawal, archiving and replacement stop new reads immediately, though browser copies already obtained cannot be recalled. A recording is public with its deck like any other stored pronunciation, and a card whose recording is missing from R2 stays silent rather than generated. The publisher is responsible for the public-use rights of every picture and recording on a deck they publish.
 
 ### Editions
 
-A published deck's own fields are its original edition, in `deck_publications.meaning_language`. Every further edition is one `deck_editions` row plus typed localizations in `series_localizations`, `deck_localizations`, `section_localizations` and `card_localizations`, each unique per `(entity_id, language)` and holding only the fields an edition may change: the deck's name, description and public summary, a section's name, a series' name, and a card's term, meaning, pronunciation, example, example translation and notes. A field left null keeps the original, except the example translation, which a reader of the edition sees only while its row is approved and current and otherwise not at all, since the original's is in another language. A card's own `example_translation` is not text an edition translates, so it never raises `revision`. Everything else — the card's language, tags, picture, audio and review modes, and the deck's ordering and sources — is canonical and shared. An ordinary or community deck writes no rows here. [ADR 0015](adr/0015-published-decks-use-pinned-localized-editions.md).
+A published deck's own fields are its original edition, in `deck_publications.meaning_language`. Every further edition is one `deck_editions` row plus typed localizations in `series_localizations`, `deck_localizations`, `section_localizations` and `card_localizations`, each unique per `(entity_id, language)` and holding only the fields an edition may change: the deck's name, description and public summary, a section's name, a series' name, and a card's term, meaning, pronunciation, example, example translation and notes. A field left null keeps the original, except the example translation, which a reader of the edition sees only while its row is approved and current and otherwise not at all, since the original's is in another language. A card's own `example_translation` is not text an edition translates, so it never raises `revision`. Everything else - the card's language, tags, picture, audio and review modes, and the deck's ordering and sources - is canonical and shared. An ordinary or community deck writes no rows here. [ADR 0015](adr/0015-published-decks-use-pinned-localized-editions.md).
 
 Staleness is a comparison, not a scan. `series`, `decks`, `sections` and `cards` each carry `revision`, raised only by an edit that changes text an edition translates, and each localization stores the `source_revision` it was written from. A row written from a lower revision is stale. `provenance` says who wrote the text and `status` how far it has got; an import lands every row as `draft`, and only a publisher with actor `user` or `api` moves one to `approved`, which also re-reads it against the revision as it stands now. A write-scoped key of the deck's publisher account may approve and publish an edition, which is how Lymi releases its own; an MCP client, an AI job and a read-only key cannot, and the audit row's `actor`, `actor_client` and `actor_client_name` keep an API release apart from a person's and name the key after it is revoked. `publishEdition` refuses an edition with any missing or stale unit and returns what is holding it back. `deck_publications.edition_fields` names the card fields each edition owes, `["meaning"]` by default; a deck whose terms are not in a language being learned adds `term`. It also gates the write: a card localization carrying `term` is refused unless the publication names it, because a localized term on a language deck would replace the prompt with its own answer. A republished publication that leaves the field out keeps what it had, so the gate cannot be widened or narrowed by accident.
 
@@ -347,7 +366,7 @@ A reader sees an edition only through a pin. `deck_members.meaning_language` is 
 
 An edition withdrawn between a signed-out visitor's hold and their sign-in admits them to the original rather than to nothing: the join cookie lasts a day, and `session.create.after` adds with `fallBackToOriginal`. The API refuses an unpublished language outright, because a caller naming one is asking for something that does not exist.
 
-Export is the one read that stays canonical: a member's Lymi or Anki file carries the deck's own words, not their edition. Changing that means threading the overlay through the segmented export writer, which is [issue #103's follow-up](https://github.com/krambertech/lymi/issues/103) rather than part of it.
+Export is the one read that stays canonical: a member's Lymi or Anki file carries the deck's own words, not their edition. Changing that means threading the overlay through the segmented export writer, a follow-up to [issue #103](https://github.com/krambertech/lymi/issues/103).
 
 ### Series
 
@@ -371,7 +390,7 @@ Nothing about a review is stored. `services/draw.ts` loads every asked state due
 
 ### Recall aids
 
-A grade names what helped it as `aid`, today only `hook` for a peek before the reveal, and the grade route refuses an aided Easy with 400, because Easy means recall without help. The column is an enum so a later hint joins it. Undo marks the review undone like any other, so its aid goes with it; the offline outbox stores the aid with the queued grade and sends it on replay.
+A grade names what helped it as `aid`, today only `hint` for a peek before the reveal, and the grade route refuses an aided Easy with 400, because Easy means recall without help. The column is an enum so a later hint joins it. Undo marks the review undone like any other, so its aid goes with it; the offline outbox stores the aid with the queued grade and sends it on replay.
 
 A grade from the app also carries `recallMs`, the time from the cue appearing to the reveal, and `gradeMs`, from the reveal to the grade, in whole milliseconds. `RecallClock` in `packages/client` measures both for the web and the phone and counts only foreground time, pausing on what pauses Query: a hidden tab or a backgrounded app. A time over 10 minutes no longer measures thinking and is left out, a grade with no reveal before it is all recall time, and a peek does not stop the clock. The route refuses a negative, fractional or over-limit time with 400; a grade without them, from an older client, the API, MCP or an import, stores nulls. They ride the outbox and leave with Undo like the aid, and nothing reads them yet: the schedule, the draw, often forgotten and the daily goal are the same with or without them.
 
@@ -397,15 +416,17 @@ A Lymi file brings back what other sources cannot: each card's own language wher
 
 A write's progress counts each chunk of cards and each picture or recording as one unit: `media_total` is counted when the decks are made, and `media_done` moves with every step of pictures, which store six at a time. An import waiting on the learner expires after three days; a write with no step landing for an hour is failed as `internal` by the cron sweep and reported to Error Tracking.
 
-A term's own recording becomes the card's audio: `audio_key` under `cards/<card_id>/recorded/` with `audio_source = 'recorded'`, and a `set_audio` audit row. The adapter picks one clip per note, the first in a field named for audio and not for a sentence, then one in the term, reading or meaning field; a cloze note's clips speak its sentence and are all left out. The writer reads the bytes, keeps MP3, M4A, AAC and WAV up to 2 MB, and counts the rest as `recordingsSkipped`; sentence clips and second clips are `soundsLeftOut`, and an Anki file's `lymi-*-speech` clips, Lymi's own generated speech, are neither. A recording is never regenerated or replaced by `AUDIO_CACHE_VERSION`; an edit that changes the normalised term drops it, and every other edit, the language included, keeps it. Generated speech (`audio_source = 'generated'`) fills only a card without audio, and a re-import puts a recording in place of generated speech without reading clips for cards already recorded. `CardOut.audioSource` lets the apps play a recording on a card with no language (`canPlayPronunciation`). A Lymi file carries recordings in `media/` and no generated speech; an Anki export names them `lymi-<id>-recording` and `lymi-<id>-speech` so either imports back the same way.
+A term's own recording becomes the card's audio: `audio_key` under `cards/<card_id>/recorded/` with `audio_source = 'recorded'`, and a `set_audio` audit row. The adapter picks one clip per note, the first in a field named for audio and not for a sentence, then one in the term, reading or meaning field; a cloze note's clip in a field named for a sentence, or else in the field the cloze is written in, goes to the example, and any other, such as a word's in Back Extra, is left out. The writer reads the bytes, keeps MP3, M4A, AAC and WAV up to 2 MB, and counts the rest as `recordingsSkipped`; second clips, and a sentence clip on a card with no example, are `soundsLeftOut`, and an Anki file's `lymi-*-speech` clips, Lymi's own generated speech, are neither. A recording is never regenerated or replaced by `AUDIO_CACHE_VERSION`; an edit that changes the normalised term drops it, and every other edit, the language included, keeps it. Generated speech (`audio_source = 'generated'`) fills only a card without audio, and a re-import puts a recording in place of generated speech without reading clips for cards already recorded. `CardOut.audioSource` lets the apps play a recording on a card with no language (`canPlayPronunciation`). A Lymi file carries recordings in `media/` and no generated speech; an Anki export names them `lymi-<id>-recording` and `lymi-<id>-speech` so either imports back the same way.
 
-A pitch accent field (`isPitchField`: "Pitch Accent", "PitchPosition") becomes one notes line with the downstep and position, such as `はꜜし [1]`, read from Yomitan's overline and downstep marks; a field of graphs alone is left out and counted as `pitchSkipped`. A field translating the example sentence ("Sentence Meaning", "Sentence-English") becomes the example's translation, on one line. An example longer than 250 characters as shown, or a translation without an example, moves to the end of the notes with its translation rather than being cut. Frequency, rank and sort fields are skipped. Notes from several fields join one per line.
+An example's own recording is `example_recording_key` under `cards/<card_id>/example-recorded/`, with a `set_audio` audit row whose details say `kind: example`. The adapter takes the first clip in a field named for both a sentence and audio, such as Kaishi's Sentence Audio, then one in the example field, so choosing a field as the example in Change fields gives it that field's clip; a card left without an example leaves the clip out. It is kept by the same format and size rules as the term's and counted as `exampleRecordings` and `exampleRecordingsSkipped`. An edit drops it only when `sameExample` says the sentence changed, so a reading, stress or spacing fix keeps it, and a re-import gives one to a card without one whose example is missing or is the file's sentence; a cleared example stays cleared. The clip is stored only while the card still says the sentence it was imported with. The example's play control serves it before any generated clip, free of the daily allowance and the owner's AI choice; a missing object is unavailable rather than replaced. Card responses carry `exampleRecorded` instead of the key, so the apps show the example's play control on a card with no language (`canPlayExample`). A deck copy leaves it behind, account deletion deletes it with the card's audio, and a Lymi file carries it as `media/<id>-example.*`, an Anki export as `lymi-<id>-example-recording.*` in an `Example audio` field.
+
+A pitch accent field (`isPitchField`: "Pitch Accent", "PitchPosition") is read from Yomitan's overline and downstep marks. Where it names the card's Reading, or is a bare position, its positions join the Reading, `はし [1]`; otherwise it stays one notes line, such as `はꜜし [1]`. A field of graphs alone is left out and counted as `pitchSkipped`. A field translating the example sentence ("Sentence Meaning", "Sentence-English") becomes the example's translation, on one line. An example longer than 250 characters as shown, or a translation without an example, moves to the end of the notes with its translation rather than being cut. Frequency, rank and sort fields are skipped. Notes from several fields join one per line.
 
 Archiving an import stamps its own `archived_at` on every card it added that is still active, and on each deck it made that has no active card left; restore clears exactly the rows carrying that moment, so a card the learner archived or a suspended card that arrived archived stays archived.
 
 ### Exports
 
-An export reads the decks the learner can see, archived ones included, or one deck they can see. Cards and pictures are the deck's; states and reviews are the exporting learner's own, and undone reviews are left out. Every export writes a `create` and a `complete` audit row with entity `export`, so Activity lists it. `downloadUrl` is set only while the file exists; object keys never leave the server. `POST /api/exports` takes the read scope, since it reads.
+An export reads only decks the learner owns, archived ones included, or one owned deck. Library exports omit decks owned by someone else. Cards and pictures are the deck's; states and reviews are the exporting learner's own, and undone reviews are left out. Every export writes a `create` and a `complete` audit row with entity `export`, so Activity lists it. `downloadUrl` is set only while the file exists; object keys never leave the server. `POST /api/exports` takes the read scope, since it reads.
 
 ### Feedback
 
@@ -415,13 +436,17 @@ A note a learner sends from the learner menu is stored before it is emailed, so 
 
 `lesson_reads` holds one row per Smart add read and nothing from the lesson: its learner-local date carries the beta's limit of 5 reads a day (`LESSON_READS_PER_DAY`). The row is written just before the model starts, after every other refusal, and deleted when the read fails, so a lesson Lymi couldn't read doesn't count. The insert carries its own count, so two reads started together can't both take the last one. Checking a learner's own answer to a read's question needs a read in the last two hours and adds nothing to the count. Operators have no limit.
 
+### Readwise
+
+`readwise_connections` holds one row per learner who pasted a Readwise token: the token sealed with AES-GCM under a key derived from `BETTER_AUTH_SECRET`, its last four characters, its status (`active`, `refused` or `unreadable`), the deck for each language keyed by primary subtag, and where the hourly pull stands, with Readwise's page cursor when a pull stopped at its ten-page cap so the next one carries on. `readwise_books` holds the learner's Readwise books with the language read from their highlights, or chosen by the learner when Lymi could not tell, and whether Lymi follows them. A book followed for the first time since the last pull is `pending`: the next pull that has a live deck for its language reads all its highlights since connecting, so highlights that arrived while its language was unknown are not lost. `ever_followed` keeps a book turned off and on again to new highlights only. A pull holds `pulling_until` on the connection for up to five minutes, so the cron, Check now and a follow never pull at once and add the same highlight twice. Disconnect deletes both; the cards a pull added keep `created_by` `system` and an `external_id` of `readwise:<highlight id>`, which stops a later pull adding the same highlight twice. Rotating the auth secret makes stored tokens unreadable: the next pull marks each connection `unreadable`, and its page asks the learner to paste the token again rather than saying Readwise refused it.
+
 ### Tags and source
 
-Tags are labels on a card, up to 20 of 40 characters, and the same name is one tag across every deck the learner studies ([proposal](proposals/tags.md)). `tags` holds each owner's names, unique by `tagKey(name)` (NFC, trimmed, lower-cased in JavaScript, since SQLite folds only ASCII), and `card_tags` links a card to its tags in order. The move is expand and contract, in the expand phase: `cards.tags` stays the API's list of names and is written back from `card_tags` in the same batch as every card write (`syncTagStatements` in `services/tags.ts`), so readers and an older Worker during a deploy keep working. Migration 0049 keyed existing tags with SQLite's ASCII-only `lower()`; `scripts/backfill-tag-keys.ts` re-keys them and merges tags that then match, once per database after it. A link keeps `archived_at` when its tag is archived from the card's deck, so Restore puts the tag back where it was; `cards.tags` holds only active links, and putting the tag on the card again makes its link active. A reader of a pinned non-original edition sees no tags until editions name them. Contraction, reading names from `card_tags` and dropping the column, is a later migration. `source` is free text saying where the card came from; it is a label on the card, and a deck is grouped by its sections, not by source. When AI capture arrives, pasted material becomes a `sources` row and cards point at it with `source_id`; the text column stays for hand-added cards.
+Tags are labels on a card, up to 20 of 40 characters, and the same name is one tag across every deck the learner studies ([proposal](proposals/tags.md)). `tags` holds each owner's names, unique by `tagKey(name)` (NFC, trimmed, lower-cased in JavaScript, since SQLite folds only ASCII), and `card_tags` links a card to its tags in order. The move is expand and contract, in the expand phase: `cards.tags` stays the API's list of names and is written back from `card_tags` in the same batch as every card write (`syncTagStatements` in `services/tags.ts`), so readers and an older Worker during a deploy keep working. Migration 0049 keyed existing tags with SQLite's ASCII-only `lower()`; `scripts/backfill-tag-keys.ts` re-keys them and merges tags that then match, once per database after it. A link keeps `archived_at` when its tag is archived from the card's deck, so Restore puts the tag back where it was; `cards.tags` holds only active links, and putting the tag on the card again makes its link active. A reader of a pinned non-original edition sees no tags until editions name them. Contraction, reading names from `card_tags` and dropping the column, is a later migration. `source` is free text saying where the card came from; it is a label on the card, and a deck is grouped by its sections, not by source. Smart add records read limits in `lesson_reads`, not a stored copy of the lesson. Cards retain their source label.
 
 ### Why language is on the card
 
-Decks can mix languages or hold non-vocabulary cards. `cards.language` is nullable. A null language means no audio and no language-specific AI for that card, and everything else works. `decks.default_language` only prefills new cards.
+Decks can mix languages or hold non-vocabulary cards. `cards.language` is nullable. A null language disables generated speech and language-specific behavior; an imported recording can still play. Other card and review features remain available. `decks.default_language` only prefills new cards.
 
 ## API
 
@@ -438,14 +463,12 @@ Three ways in, one shape on the server. A session cookie is the learner in the a
 - A section is its deck's owner's to change; a member gets 403 and a stranger 404. A member reads the same sections with their own standing. Starting a section is learner-only, like grading, so a key or MCP token gets 403.
 - A deck's content is the owner's alone. A member who edits, archives, or adds a card, or changes the deck, gets 403 whatever the credential. Deck responses carry `role` and `owner` so a client can tell.
 - A duplicate (same normalised term and language as an active card anywhere in the learner's decks) is skipped and reported with the existing card, never rejected. Adds return one outcome per card sent. ADR 0004.
-- A grade older than the state's last review is ignored and reported as `duplicate`. This is what makes offline replay safe.
+- A grade older than the state's last review is ignored and reported as `duplicate`. This is what makes offline replay safe. A replay of a grade the server already stored is a `duplicate` that names the stored attempt, so a device whose response was lost can still undo it. A device undoing a grade whose send got no answer sends it again first, so the attempt is undone on the server rather than forgotten on the device. A grade only lands on the state it was scheduled from; one overtaken by another grade reads the state again.
 - A card or deck create may carry its own `id`. The same create sent again returns what the first one made, so an offline write replays once; an id another learner holds is a 409. ADR 0023.
 - Every write appends to `audit_log` with its actor, and every card carries `created_by`, so Activity can show what integrations and the AI wrote. A write by an app or a key also keeps that caller's id and its name as it stood, so revoking a key does not erase it from the log.
-- Archive learning content instead of deleting it. Device push subscriptions are removed when disabled or expired.
 - `language` on a new card defaults to the deck's `default_language` when not given.
 - Validation failures return `400 { error, issues }` with the Zod issues. Missing or bad credentials return `401 { error }`.
 
-## Not decided yet
+## Card fields
 
-- One `meaning` string per card, or multiple senses as rows. Decide before the first deploy with real data.
-- Tags as a JSON column (current) or a table, once search needs them.
+A card has one meaning string. Tags use `tags` and `card_tags`, with the legacy JSON list maintained during the compatibility period described above. These are current schema choices, not open pre-release questions.

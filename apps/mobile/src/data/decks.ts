@@ -63,7 +63,7 @@ export function useDeckExits(deck: DeckSummary | undefined) {
         t`Leave ${{ name: isolate(name) }}?`,
         t`The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there.`,
         [
-          { text: t`Keep studying`, style: "cancel" },
+          { text: t`Stay in deck`, style: "cancel" },
           {
             text: t`Leave deck`,
             style: "destructive",

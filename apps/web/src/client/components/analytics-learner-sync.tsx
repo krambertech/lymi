@@ -7,7 +7,7 @@ import { isBareShell } from "../lib/i18n";
 import { decksQuery, meQuery, settingsQuery } from "../lib/queries";
 import { setTelemetryLearner, setTelemetryOpening } from "../lib/telemetry";
 
-/** Tells analytics who is signed in and whether their account turned analytics off. */
+/** Tells analytics who is signed in and whether their account turned analytics or session replay off. */
 export function AnalyticsLearnerSync() {
   const me = useQuery(meQuery);
   const settings = useQuery({ ...settingsQuery, enabled: me.isSuccess });
@@ -20,7 +20,11 @@ export function AnalyticsLearnerSync() {
       return;
     }
     if (!me.isSuccess || !settings.isSuccess) return;
-    setTelemetryLearner(me.data.id, settings.data.analyticsConsent !== false);
+    setTelemetryLearner(
+      me.data.id,
+      settings.data.analyticsConsent !== false,
+      settings.data.sessionReplay !== false,
+    );
   }, [me.data?.id, me.isSuccess, me.isError, me.error, settings.data, settings.isSuccess]);
   useEffect(() => {
     if (bare) setTelemetryOpening();

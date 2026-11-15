@@ -184,15 +184,15 @@ export function CardPictureField({
               take(e.dataTransfer.files[0]);
             }}
             className={clsx(
-              "rounded-md border border-dashed bg-plate-2 transition-colors duration-150",
+              "rounded-md border border-dashed bg-plate-nested transition-colors duration-150",
               compact
                 ? "flex flex-wrap items-center justify-between gap-x-3 gap-y-2 px-3 py-2"
                 : "grid justify-items-center gap-3 px-4 py-4 text-center",
-              over ? "border-text bg-hover" : "border-edge-2",
+              over ? "border-ink bg-plate-hover" : "border-edge-strong",
             )}
           >
-            <p className="flex items-center gap-2 text-base font-medium text-text">
-              <ImagePlus className="size-[18px] text-muted" aria-hidden="true" />
+            <p className="flex items-center gap-2 text-base font-medium text-ink">
+              <ImagePlus className="size-[18px] text-ink-muted" aria-hidden="true" />
               {desktop ? <Trans>Drop or paste a picture</Trans> : <Trans>Add a picture</Trans>}
             </p>
             <div className={clsx("flex flex-wrap gap-2", !compact && "justify-center")}>
@@ -212,7 +212,7 @@ export function CardPictureField({
               </Button>
             </div>
             {!compact && (
-              <p className="text-xs text-muted">
+              <p className="text-xs text-ink-muted">
                 <Trans>JPEG, PNG, WebP or still GIF, up to 10 MB.</Trans>
               </p>
             )}
@@ -243,7 +243,7 @@ export function CardPictureField({
     <div className="grid gap-4">
       <div className="grid gap-1.5">
         <div className="edge grid grid-cols-[auto_minmax(0,1fr)_auto] items-center gap-3 rounded-md p-2">
-          <div className="grid size-18 place-items-center overflow-hidden rounded-xs bg-plate-2 text-muted">
+          <div className="grid size-18 place-items-center overflow-hidden rounded-xs bg-plate-nested text-ink-muted">
             {value.kind === "current" ? (
               <CardPicture
                 image={value.image}
@@ -258,8 +258,8 @@ export function CardPictureField({
             )}
           </div>
           <div className="grid min-w-0 gap-0.5">
-            <span className="truncate text-base font-medium text-text">{name}</span>
-            {caption && <span className="truncate text-sm text-muted">{caption}</span>}
+            <span className="truncate text-base font-medium text-ink">{name}</span>
+            {caption && <span className="truncate text-sm text-ink-muted">{caption}</span>}
           </div>
           <div className="flex items-center gap-1">
             <IconButton label={t`Replace the picture`} onClick={() => pickRef.current?.click()}>

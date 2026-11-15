@@ -105,7 +105,7 @@ export const streak: Group = {
             {
               label: "The panel",
               render: () => (
-                <div className="edge-2 max-w-[400px] rounded-xl bg-plate p-5">
+                <div className="edge-strong max-w-[400px] rounded-xl bg-plate p-5">
                   <StreakPanel summary={streakSummary} onGoalChange={noop} />
                 </div>
               ),

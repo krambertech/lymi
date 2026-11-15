@@ -77,13 +77,13 @@ export function PictureChoices({ value, onChange, card }: PictureChoicesProps) {
               maxLength={imageLimits.description ?? undefined}
               onChangeText={(description) => onChange({ ...value, description })}
               placeholder={t`Describe what the picture shows without naming the term or the meaning.`}
-              placeholderTextColor={p.muted}
+              placeholderTextColor={p["ink-muted"]}
               accessibilityLabel={t`Description`}
               multiline
               submitBehavior="blurAndSubmit"
               returnKeyType="done"
-              selectionColor={p.text}
-              className="min-h-20 py-3 font-sans text-text"
+              selectionColor={p.ink}
+              className="min-h-20 py-3 font-sans text-ink"
               style={{ fontSize: 17, textAlignVertical: "top" }}
               maxFontSizeMultiplier={inputCap(17)}
             />

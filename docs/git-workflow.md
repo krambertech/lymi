@@ -19,7 +19,7 @@ git rebase origin/main
 git push --force-with-lease
 ```
 
-Commit or stash local changes before rebasing. Use the explicit fetch-and-rebase sequence rather than merging `main` into the branch. `--force-with-lease` protects remote work that appeared after the last fetch.
+Commit or stash local changes first, and rebase rather than merge `main` into the branch. `--force-with-lease` protects remote work that appeared after the last fetch.
 
 ## Name commits and pull requests
 
@@ -31,20 +31,33 @@ type(scope): imperative summary
 
 Allowed types are `feat`, `fix`, `docs`, `refactor`, `test`, `perf`, `build`, `ci`, `chore`, and `revert`. Use a concise lower-case scope such as `web`, `api`, `auth`, `review`, `audio`, `core`, `docs`, `repo`, or `deps`.
 
-Keep the complete title to 72 characters. Start the summary with a lower-case word, use the imperative mood, and omit the final period. Add `!` before the colon for a breaking change.
+Aim for 60 characters and never exceed 72. Start the summary with a lower-case word, use the imperative mood, and omit the final period. Name the concrete outcome in literal language, without metaphors, promotion or issue numbers. Add `!` before the colon for a breaking change.
 
 ```text
 feat(review): add keyboard grading
+fix(auth): preserve deep links after sign-in
 fix(audio): retry failed speech generation
 docs(repo): explain local setup
 feat(api)!: replace the card response shape
 ```
 
-Fixup commits are acceptable while a pull request is in progress because GitHub squashes the branch. The pull request title is the durable commit subject, so make it describe one logical change.
+Fixup commits are fine on an open pull request, because GitHub squashes the branch. The pull request title becomes the commit subject on `main`, so it names one logical change.
+
+## Write the pull request description
+
+Start from [the pull request template](../.github/pull_request_template.md); do not compose a parallel shape from memory. Keep the summary to one short paragraph or at most three bullets and list only checks that ran and their result.
+
+Every rendered UI change keeps the `Screenshots` section with an attached after image of each affected surface and a before image when the surface already existed, attached with `gh --attach` locally or `pnpm pr:media` in a cloud session ([guide](../.agents/skills/open-pr/references/screenshots.md)); attachment failure leaves the pull request blocked rather than review-ready.
+
+Add `Why`, `Risks`, or `Follow-ups` only when material, with one short paragraph or at most three bullets per section. Describe reviewer-relevant behavior and trade-offs, not the implementation journey or a file inventory. Link to an owning decision instead of repeating it. Include raw output only when it explains a failure. Omit decorative emoji, generated-by footers, empty sections, and passing logs already visible in CI.
+
+## Comment on a pull request
+
+An inline review comment raises one actionable defect, its consequence and the smallest useful fix in two or three sentences. Put context that several comments share in one top-level comment. [The open-pr skill](../.agents/skills/open-pr/SKILL.md#leave-pr-comments) says which comments an agent may post without asking.
 
 ## Merge a pull request
 
-Merge with **Squash and merge** after CI passes and review threads are resolved. Confirm that the generated commit title matches the pull request title. GitHub uses the pull request description as the commit body and deletes the branch after merging.
+Merge with **Squash and merge** after CI passes and review threads are resolved, and check that the generated commit title matches the pull request title. GitHub uses the pull request description as the commit body and deletes the branch after merging.
 
 ## Stack pull requests that depend on each other
 
@@ -77,4 +90,4 @@ Change a migration in the layer that adds it. CI takes a layer's base as already
 
 ## Branches from before the history migration
 
-The repository adopted this linear history on 2026-09-06. A branch based on the earlier graph cannot use an ordinary rebase because Git may replay changes that are already on `main`. Start a fresh branch from `origin/main` and transplant only the branch's unique commits or net diff. The recovery tag `archive/pre-linear-history-2026-09-06` retains the previous `main` history.
+Move a branch based on the graph before 2026-09-06, when the repository adopted this linear history, to a fresh branch from `origin/main` with only its unique commits or net diff. An ordinary rebase of it may replay changes already on `main`. The recovery tag `archive/pre-linear-history-2026-09-06` retains the previous `main` history.

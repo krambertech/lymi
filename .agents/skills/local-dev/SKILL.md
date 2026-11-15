@@ -9,19 +9,19 @@ description: Run the Lymi product locally and put it in a chosen state. Use when
 
 ## Start
 
-Use the Browser pane's `preview_start` with the launch configuration named `lymi`. It prefers port 5241 and takes a free port when another worktree holds it; use the port `preview_start` reports. Do not start it through Bash.
+When the Browser pane’s `preview_start` is available, start the `lymi` launch configuration and use its reported port. Otherwise use `node .agents/skills/verify/scripts/server.mjs start`, as described in [verify](../verify/SKILL.md#launch). Both prefer port 5241 and select a free port when needed.
 
 If the server logs a migration error, or `pnpm db:migrate` reports a table that already exists, run `pnpm local db:fresh` and start the server again.
 
 ## Sign in
 
-Navigate the tab to `/api/dev/sign-in?as=<persona>` on that port. The response sets the session cookie and redirects to Today. Never type a password, and never hand a password to the user to type; the persona accounts need none.
+Navigate the tab to `/api/dev/sign-in?as=<persona>` on that port. The response sets the session cookie and redirects to Today. The persona accounts have no password, so never type one or ask the user to.
 
 Pick the persona from the table in [Become a persona](../../../docs/local-dev.md#become-a-persona), or run `pnpm local personas`. Add `returnTo=/library` to land on another screen and `reset=1` to reseed.
 
 ## Change the state
 
-Prefer `pnpm local` from a terminal: it needs no clicks and its output is text you can check. `pnpm local --help` lists the commands.
+Change the state with `pnpm local` from a terminal: it needs no clicks and its output is text you can check. `pnpm local --help` lists the commands.
 
 Use the developer palette when the state is one only its Simulate commands reach. Press the backtick key to open it, or run the same command with `pnpm local <command>`; [Change the state from the palette](../../../docs/local-dev.md#change-the-state-from-the-palette) describes each one.
 

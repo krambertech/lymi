@@ -62,7 +62,7 @@ export function McpCursor() {
       </Steps>
       <p>
         To disconnect for good, remove the <code>lymi</code> entry and revoke the grant under{" "}
-        <strong>Connected apps</strong> in Lymi.
+        <strong>Settings → Apps</strong> in Lymi.
       </p>
 
       <H2>Why the client ID is on lymi.app</H2>

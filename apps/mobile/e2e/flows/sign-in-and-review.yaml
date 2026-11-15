@@ -6,10 +6,21 @@ name: Sign in and review
 - launchApp:
     clearState: true
     clearKeychain: true
+# The welcome screen blooms in, and a tap during the animation can miss.
+- extendedWaitUntil:
+    visible: "Sign in with email"
+    timeout: 30000
+- waitForAnimationToEnd
 - tapOn: "Sign in with email"
-- tapOn:
-    id: "email"
-- inputText: ${EMAIL}
+# The Simulator keyboard sometimes drops characters, so type again until the field holds the whole address.
+- retry:
+    maxRetries: 3
+    commands:
+      - tapOn:
+          id: "email"
+      - eraseText: 40
+      - inputText: ${EMAIL}
+      - assertVisible: ${EMAIL}
 - tapOn:
     id: "password"
 - inputText: ${PASSWORD}
@@ -17,7 +28,8 @@ name: Sign in and review
 # iOS may offer to save the password, and Today stays hidden under the offer until it closes.
 - extendedWaitUntil:
     visible: "Not Now|^Review$"
-    timeout: 30000
+    # The CI Worker's first sign-in can take most of a minute while it warms up.
+    timeout: 90000
 - tapOn:
     text: "Not Now"
     optional: true
@@ -26,8 +38,19 @@ name: Sign in and review
 - repeat:
     times: 3
     commands:
-      - tapOn: ".*Tap to reveal"
-      - tapOn: "^Good$"
-# Ending short of the goal goes straight back to Today.
+      # The cue's speaker sits mid-card and can take a centred tap, so tap low on the card until the grades show.
+      - retry:
+          maxRetries: 2
+          commands:
+            - tapOn:
+                point: "50%,80%"
+            - extendedWaitUntil:
+                visible: "^Good, next in .*"
+                timeout: 10000
+      # A grade button's accessible name carries its next interval, "Good, next in 4 days".
+      - tapOn: "^Good, next in .*"
+# Ending short of the goal shows the day's count, and Done returns to Today.
 - tapOn: "End review"
-- assertVisible: "cards due today"
+- assertVisible: "Review done"
+- tapOn: "^Done$"
+- assertNotVisible: "Review done"

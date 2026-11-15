@@ -1,7 +1,13 @@
 import { captureAnalytics, initAnalytics, visitFirstTouch } from "@lymi/client/analytics";
-import { carryFirstTouch, withoutCarriedFirstTouch } from "@lymi/core/analytics";
+import {
+  type AnalyticsProperties,
+  carryFirstTouch,
+  withoutCarriedFirstTouch,
+} from "@lymi/core/analytics";
 import { POSTHOG_PROJECT_TOKEN } from "@lymi/core/telemetry";
 import { productUrl } from "./origins";
+
+type SiteLinkPlace = AnalyticsProperties<"site_link_followed">["place"];
 
 /**
  * Cookieless visitor analytics. A link the visitor follows carries where the visit began, so the
@@ -27,6 +33,12 @@ export function startAnalytics(): void {
     const slug = internal ? undefined : url.pathname.match(/^\/add\/([a-z0-9-]+)$/)?.[1];
     if (slug && event.type === "click")
       captureAnalytics("add_to_lymi_clicked", { deck_slug: slug });
+    const place = link.closest("[data-nav]")?.getAttribute("data-nav");
+    if (place && internal && event.type === "click")
+      captureAnalytics("site_link_followed", {
+        place: place as SiteLinkPlace,
+        target: url.pathname.replace(/^\/(?:uk|ru)(?=\/|$)/, "") || "/",
+      });
     const touch = visitFirstTouch("public");
     if (touch) link.href = carryFirstTouch(url, touch).toString();
   };

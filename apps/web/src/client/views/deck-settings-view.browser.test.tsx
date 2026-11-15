@@ -1,5 +1,6 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import type { PronunciationDisplay } from "@lymi/core";
 import { expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
@@ -20,13 +21,21 @@ const deck = (over: Partial<DeckSummary> = {}): DeckSummary => ({
   ...over,
 });
 
-const renderSettings = (value: DeckSummary, onSave: (patch: DeckSettingsPatch) => void) =>
+const renderSettings = (
+  value: DeckSummary,
+  onSave: (patch: DeckSettingsPatch) => void,
+  onPronunciationDisplay: (value: PronunciationDisplay) => void = vi.fn(),
+) =>
   render(
     <I18nProvider i18n={i18n}>
       <ShellChrome value={designChrome()}>
         <StaticNavProvider path={`/library/${value.id}/settings`}>
           <div className="@container/shell" style={{ width: 1000 }}>
-            <DeckSettingsView deck={value} onSave={onSave} />
+            <DeckSettingsView
+              deck={value}
+              onSave={onSave}
+              onPronunciationDisplay={onPronunciationDisplay}
+            />
           </div>
         </StaticNavProvider>
       </ShellChrome>
@@ -99,4 +108,43 @@ test("says what the AI will learn while a deck has nothing learned yet", async (
     .toBeVisible();
   expect(page.getByText("AI wrote this").elements()).toHaveLength(0);
   expect(page.getByText("Learned from your cards").elements()).toHaveLength(0);
+});
+
+test("offers adaptive pronunciation on a language that draws it, and turns it off", async () => {
+  const onPronunciationDisplay = vi.fn();
+  await renderSettings(deck({ defaultLanguage: "zh-CN" }), vi.fn(), onPronunciationDisplay);
+  const toggle = page.getByRole("switch", { name: "Adaptive pronunciation" });
+  await expect.element(toggle).toBeChecked();
+  await expect.element(page.getByText(/Pinyin shows over the term/)).toBeVisible();
+  await toggle.click();
+  expect(onPronunciationDisplay).toHaveBeenCalledWith("separate");
+});
+
+test("shows a member their own pronunciation choice", async () => {
+  await renderSettings(
+    deck({
+      role: "learner",
+      defaultLanguage: "ja",
+      pronunciationDisplay: "separate",
+      owner: { id: "u2", name: "Haruka", avatarUrl: null },
+    }),
+    vi.fn(),
+  );
+  await expect
+    .element(page.getByRole("switch", { name: "Adaptive pronunciation" }))
+    .not.toBeChecked();
+  await expect
+    .element(
+      page.getByText(/The reading shows on its own line with the answer, so you read the kanji/),
+    )
+    .toBeVisible();
+  await expect.element(page.getByText(/Only for you/)).toBeVisible();
+});
+
+test("offers no pronunciation choice on a language that draws none", async () => {
+  await renderSettings(deck({ defaultLanguage: "it" }), vi.fn());
+  await expect
+    .element(page.getByText("About this deck").or(page.getByText("Deck settings")).first())
+    .toBeVisible();
+  expect(page.getByRole("switch", { name: "Adaptive pronunciation" }).elements()).toHaveLength(0);
 });

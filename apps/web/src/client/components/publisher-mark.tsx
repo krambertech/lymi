@@ -40,7 +40,7 @@ export function PublisherMark({
     <span
       aria-hidden="true"
       className={clsx(
-        "grid shrink-0 place-items-center rounded-full bg-text font-semibold text-canvas",
+        "grid shrink-0 place-items-center rounded-full bg-ink font-semibold text-canvas",
         className,
       )}
       style={{ width: size, height: size, fontSize: Math.round(size * 0.42) }}

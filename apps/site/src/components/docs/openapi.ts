@@ -47,7 +47,8 @@ export interface Operation {
   summary?: string;
   description?: string;
   tags?: string[];
-  parameters?: Param[];
+  /** Inline, or a `$ref` into `components.parameters` when the generator hoists one. */
+  parameters?: (Param | { $ref: string })[];
   requestBody?: { required?: boolean; content?: Record<string, { schema?: Schema }> };
   responses?: Record<string, Response>;
   security?: Record<string, string[]>[];
@@ -57,7 +58,16 @@ export interface Doc {
   info?: { title?: string; version?: string; description?: string };
   tags?: { name: string; description?: string }[];
   paths?: Record<string, Record<string, Operation>>;
-  components?: { schemas?: Record<string, Schema> };
+  components?: { schemas?: Record<string, Schema>; parameters?: Record<string, Param> };
+}
+
+/** A route's parameters with every `$ref` followed; one that points nowhere is left out. */
+export function paramsOf(op: Operation, doc: Doc): Param[] {
+  return (op.parameters ?? []).flatMap((p) => {
+    if (!("$ref" in p)) return [p];
+    const target = doc.components?.parameters?.[p.$ref.split("/").pop() ?? ""];
+    return target ? [target] : [];
+  });
 }
 
 export const METHODS = ["get", "post", "patch", "put", "delete"] as const;
@@ -225,7 +235,7 @@ function sample(schema: Schema | undefined, defs: Defs, depth = 0): unknown {
  */
 export function curlFor(route: Route, origin: string, doc: Doc): string {
   const { method, path, op } = route;
-  const query = (op.parameters ?? [])
+  const query = paramsOf(op, doc)
     .filter((p) => p.in === "query" && p.required)
     .map((p) => `${p.name}=`)
     .join("&");
@@ -287,4 +297,86 @@ export function variantsOf(schema: Schema): { label?: string; schema: Schema }[]
       ? { label: `${marker[0]}: ${JSON.stringify(marker[1].const)}`, schema: s }
       : { schema: s };
   });
+}
+
+/** The operations tagged with one resource, in document order. */
+export function routesOf(doc: Doc, tag: string): Route[] {
+  return byTag(doc).find((g) => g.name === tag)?.routes ?? [];
+}
+
+/** Named schemas a schema points at, at its top level or, with `deep`, anywhere inside it. */
+function refsIn(schema: Schema | undefined, defs: Defs, deep: boolean): string[] {
+  const out: string[] = [];
+  const visit = (s: Schema | undefined) => {
+    if (!s) return;
+    const name = refName(s);
+    if (name) {
+      if (out.includes(name)) return;
+      out.push(name);
+      if (deep) visit(defs[name]);
+      return;
+    }
+    for (const part of [...(s.anyOf ?? []), ...(s.oneOf ?? []), ...(s.allOf ?? [])]) visit(part);
+    visit(s.items);
+    if (deep) for (const prop of Object.values(s.properties ?? {})) visit(prop);
+  };
+  visit(schema);
+  return out;
+}
+
+/** What a route takes and gives back on success. Error bodies are shared, so they are left out. */
+function schemasOf(route: Route): Schema[] {
+  const success = Object.entries(route.op.responses ?? {})
+    .filter(([code]) => code.startsWith("2"))
+    .map(([, res]) => responseSchema(res));
+  return [...success, bodySchema(route.op)].filter((s): s is Schema => s !== undefined);
+}
+
+/**
+ * Which resource page shows each named schema. A schema a route returns or takes directly
+ * lives with the first resource that does; one only nested inside others lives with the first
+ * resource that reaches it. A schema no route reaches on success, like `Error`, has no home.
+ */
+export function schemaHomes(doc: Doc, defs: Defs, resources: { name: string; slug: string }[]) {
+  const homes = new Map<string, string>();
+  for (const deep of [false, true]) {
+    for (const resource of resources) {
+      for (const route of routesOf(doc, resource.name)) {
+        for (const schema of schemasOf(route)) {
+          for (const name of refsIn(schema, defs, deep)) {
+            if (!homes.has(name)) homes.set(name, resource.slug);
+          }
+        }
+      }
+    }
+  }
+  return homes;
+}
+
+/** A plausible value for a schema, so a response reads as JSON rather than as a type. */
+export function example(schema: Schema | undefined, defs: Defs, depth = 0): unknown {
+  const s = deref(schema, defs);
+  if (s.const !== undefined) return s.const;
+  if (s.enum?.length) return s.enum[0];
+  const union = s.anyOf ?? s.oneOf;
+  if (union) {
+    const first = union.find((u) => u.type !== "null");
+    if (!first) return null;
+    // A named member counts as a step deeper, so a union that names itself still ends.
+    return example(first, { ...defs, ...(s.$defs ?? {}) }, first.$ref ? depth + 1 : depth);
+  }
+  const type = Array.isArray(s.type) ? s.type.find((t) => t !== "null") : s.type;
+  if (type === "array") return depth > 2 ? [] : [example(s.items, defs, depth + 1)];
+  if (type === "object" || s.properties) {
+    if (depth > 2) return {};
+    const out: Record<string, unknown> = {};
+    for (const [key, prop] of Object.entries(s.properties ?? {})) {
+      out[key] = example(prop, { ...defs, ...(s.$defs ?? {}) }, depth + 1);
+    }
+    return out;
+  }
+  if (type === "integer" || type === "number") return 0;
+  if (type === "boolean") return false;
+  if (s.format === "date-time") return "2026-10-25T09:30:00.000Z";
+  return "string";
 }

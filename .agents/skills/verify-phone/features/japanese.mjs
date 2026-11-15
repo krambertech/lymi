@@ -53,7 +53,7 @@ export async function env({ api }) {
   );
   await api(
     "/api/cards/batch",
-    json({ cards: [card(deck.id, TERM, READING, "right angle", EXAMPLE)] }),
+    json({ cards: [card(deck.id, TERM, `${READING} [0]`, "right angle", EXAMPLE)] }),
   );
   // Easy on a new card makes it Known; graded two months ago, it is due again today.
   const known = await api("/api/decks", json({ name: KNOWN_DECK, defaultLanguage: "ja" }));
@@ -98,7 +98,9 @@ export async function env({ api }) {
 export async function check({ api }) {
   const { cards } = await api(`/api/cards?query=${encodeURIComponent(TERM)}`);
   const card = cards.find((c) => c.term === TERM);
-  if (card?.pronunciation !== READING) throw new Error(`“${TERM}” is stored without “${READING}”`);
+  if (card?.pronunciation !== `${READING} [0]`) {
+    throw new Error(`“${TERM}” is stored without “${READING}” and its pitch accent`);
+  }
   if (card.example !== EXAMPLE) throw new Error(`“${TERM}” lost its example’s readings`);
   return card;
 }

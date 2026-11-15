@@ -22,10 +22,15 @@ import type {
 } from "./types";
 import { ukrainian } from "./ukrainian";
 
-export { CONFIGURED as CONFIGURED_LANGUAGES, type LanguageConfig } from "./configured";
+export {
+  CONFIGURED as CONFIGURED_LANGUAGES,
+  type ConfiguredTag,
+  type LanguageConfig,
+} from "./configured";
 export { type TextDirection, textDirection } from "./direction";
 export * from "./names";
 export { EXAMPLE_NOTATION, type ExampleNotation } from "./notation";
+export { fitsLanguage } from "./scripts";
 export type {
   DuplicateRule,
   LanguageFormat,
@@ -37,18 +42,19 @@ export type {
   StressRules,
   SupportedTag,
 } from "./types";
+export { READING_ENGINES } from "./types";
 
 /** Each record keeps its literal type, so a registry elsewhere can follow what a record turns on. */
 export const SUPPORTED_LANGUAGES = {
   ja: japanese,
   zh: chinese,
   uk: ukrainian,
+  ru: russian,
 } as const satisfies Record<SupportedTag, LanguageSupport>;
 
 /** Every record, including one whose language has not yet joined SupportedTag. */
 export const LANGUAGE_RECORDS = {
   ...SUPPORTED_LANGUAGES,
-  ru: russian,
   ta: tamil,
   yue: cantonese,
 } as const satisfies Record<RecordTag, LanguageSupport>;
@@ -130,6 +136,13 @@ export function languageScript(language: string | null | undefined): Script | nu
 export function speechLocale(language: string | null | undefined): string | null {
   const script = languageScript(language);
   return (script && languageSupport(language)?.speech.locales?.[script]) ?? null;
+}
+
+/** Words sent silently before every term of this language, from its record or its configured row, or null. */
+export function speechContext(language: string | null | undefined): string | null {
+  return (
+    languageSupport(language)?.speech.context ?? configuredLanguage(language)?.speechContext ?? null
+  );
 }
 
 /** Whether speech, and the phone's screen reader, says the Reading in place of the term. */

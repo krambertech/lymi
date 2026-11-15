@@ -8,9 +8,9 @@ name: Section heading menu
     visible: "Search this deck"
     timeout: 20000
 - scrollUntilVisible:
-    element: "${SECTION}, .*"
+    element: "${SECTION}, \\d+ cards"
     centerElement: true
-- longPressOn: "${SECTION}, .*"
+- longPressOn: "${SECTION}, \\d+ cards"
 - extendedWaitUntil:
     visible: "Rename section"
     timeout: 10000

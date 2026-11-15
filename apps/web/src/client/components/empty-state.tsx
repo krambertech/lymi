@@ -33,7 +33,7 @@ export function ErrorState({ title, body, onRetry, retrying, action, className }
         <CircleAlert className="size-5" />
       </span>
       <h2 className="text-lg font-medium text-balance">{bidi(title)}</h2>
-      <p className="max-w-[40ch] text-base text-text-2 text-pretty">
+      <p className="max-w-[40ch] text-base text-ink-secondary text-pretty">
         {body ?? <Trans>Check your connection and try again.</Trans>}
       </p>
       {(onRetry || action) && (
@@ -71,13 +71,13 @@ export function EmptySection({ icon, title, body, action, className, ...rest }: 
       {...rest}
     >
       <span
-        className="mb-2 grid size-11 place-items-center rounded-full bg-plate-2 text-text-2 [&_svg]:size-5"
+        className="mb-2 grid size-11 place-items-center rounded-full bg-plate-nested text-ink-secondary [&_svg]:size-5"
         aria-hidden="true"
       >
         {icon}
       </span>
-      <h3 className="text-base font-medium text-text">{bidi(title)}</h3>
-      {body && <p className="max-w-[38ch] text-sm text-muted">{body}</p>}
+      <h3 className="text-base font-medium text-ink">{bidi(title)}</h3>
+      {body && <p className="max-w-[38ch] text-sm text-ink-muted">{body}</p>}
       {action && <div className="mt-3 flex flex-wrap justify-center gap-2">{action}</div>}
     </div>
   );
@@ -99,15 +99,15 @@ interface NoResultsProps {
  */
 export function NoResults({ icon, title, detail, action }: NoResultsProps) {
   return (
-    <section className="mt-2 flex flex-col items-center gap-1.5 rounded-xl border-[1.5px] border-dashed border-edge-2 px-5 py-10 text-center">
+    <section className="mt-2 flex flex-col items-center gap-1.5 rounded-xl border-[1.5px] border-dashed border-edge-strong px-5 py-10 text-center">
       <span
-        className="mb-2 grid size-11 place-items-center rounded-full bg-plate-2 text-text-2 [&_svg]:size-5"
+        className="mb-2 grid size-11 place-items-center rounded-full bg-plate-nested text-ink-secondary [&_svg]:size-5"
         aria-hidden="true"
       >
         {icon}
       </span>
-      <h2 className="text-base font-medium text-balance text-text">{bidi(title)}</h2>
-      {detail && <p className="max-w-[40ch] text-sm text-pretty text-muted">{detail}</p>}
+      <h2 className="text-base font-medium text-balance text-ink">{bidi(title)}</h2>
+      {detail && <p className="max-w-[40ch] text-sm text-pretty text-ink-muted">{detail}</p>}
       {action && <div className="mt-3 flex flex-wrap justify-center gap-2">{action}</div>}
     </section>
   );

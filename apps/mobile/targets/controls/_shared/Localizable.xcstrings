@@ -120,6 +120,23 @@
         }
       }
     },
+    "Couldn’t add the card. Try again.": {
+      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
+      "localizations": {
+        "ru": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не удалось добавить карточку. Попробуй ещё раз."
+          }
+        },
+        "uk": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Не вдалося додати картку. Спробуй ще раз."
+          }
+        }
+      }
+    },
     "Create a deck in Lymi first.": {
       "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
       "localizations": {
@@ -371,23 +388,6 @@
           "stringUnit": {
             "state": "translated",
             "value": "Цієї колоди вже немає в Lymi. Вибери іншу в команді."
-          }
-        }
-      }
-    },
-    "That didn’t work. Try again.": {
-      "comment": "Shown by iOS for Lymi’s controls and intents. The translate skill fills uk and ru.",
-      "localizations": {
-        "ru": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не получилось. Попробуй ещё раз."
-          }
-        },
-        "uk": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "Не вийшло. Спробуй ще раз."
           }
         }
       }

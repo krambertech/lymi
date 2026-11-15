@@ -37,7 +37,7 @@ export function StatPlate({
     <section
       className={clsx(
         "flex flex-col gap-3 rounded-xl p-5",
-        ghost ? "border border-dashed border-edge-2" : "edge bg-plate",
+        ghost ? "border border-dashed border-edge-strong" : "edge bg-plate",
         className,
       )}
     >
@@ -45,17 +45,17 @@ export function StatPlate({
           with a control and one without still line up across the grid. */}
       <div className="flex min-h-[34px] flex-wrap items-center justify-between gap-x-3 gap-y-2">
         {/* h2: the plates sit directly under the page's h1, beside the sections below them. */}
-        <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">{label}</h2>
+        <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-ink-muted">{label}</h2>
         {control}
       </div>
       <p
         className={clsx(
           "text-3xl font-medium leading-[1.1] tracking-[-0.02em] tabular-nums",
-          ghost ? "text-muted" : "text-text",
+          ghost ? "text-ink-muted" : "text-ink",
         )}
       >
         {value}
-        {unit && <span className="ms-1 text-lg font-normal text-muted">{unit}</span>}
+        {unit && <span className="ms-1 text-lg font-normal text-ink-muted">{unit}</span>}
       </p>
       {/* Every plate gives its figure the same box and centres it there, so a short strip
           and a tall chart leave the notes on one line across the grid instead of one plate
@@ -63,7 +63,7 @@ export function StatPlate({
       <div className="flex h-[74px] items-center">{figure}</div>
       {/* A chip row is taller than a line of text; the shared box keeps the two on the
           same baseline across the grid. */}
-      <div className="mt-auto flex min-h-[26px] items-center text-sm text-muted">{note}</div>
+      <div className="mt-auto flex min-h-[26px] items-center text-sm text-ink-muted">{note}</div>
     </section>
   );
 }

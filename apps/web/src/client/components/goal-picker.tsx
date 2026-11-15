@@ -77,8 +77,8 @@ export function GoalPicker({ value, onValueChange, className }: Props) {
           <div key={n}>
             <RadioCard value={String(n)} className={row}>
               <span className="flex flex-1 items-baseline justify-between gap-3">
-                <span className="text-base font-medium text-text">{i18n._(GOAL_NAMES[n])}</span>
-                <span className="text-sm tabular-nums text-text-2">
+                <span className="text-base font-medium text-ink">{i18n._(GOAL_NAMES[n])}</span>
+                <span className="text-sm tabular-nums text-ink-secondary">
                   <Plural value={n} one="# review" other="# reviews" />
                 </span>
               </span>
@@ -87,11 +87,11 @@ export function GoalPicker({ value, onValueChange, className }: Props) {
         ))}
         <RadioCard value={CUSTOM} className={row}>
           <span className="flex min-h-12 flex-1 items-center justify-between gap-3">
-            <span className="text-base font-medium text-text">
+            <span className="text-base font-medium text-ink">
               <Trans>Custom</Trans>
             </span>
             {custom && (
-              <span className="enter-fade flex items-center gap-2 text-sm text-text-2">
+              <span className="enter-fade flex items-center gap-2 text-sm text-ink-secondary">
                 <Input
                   ref={inputRef}
                   type="number"

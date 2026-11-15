@@ -73,12 +73,12 @@ export function AttemptStrip({ tiles, marked, label }: Props) {
               onBlur={() => setActive(null)}
               onKeyDown={(e) => move(e, i)}
               className={clsx(
-                "relative grid aspect-[5/4] min-h-11 cursor-default place-items-center overflow-hidden rounded-xs bg-plate-2",
-                lit && "bg-hover shadow-[0_0_0_1.5px_var(--text)]",
+                "relative grid aspect-[5/4] min-h-11 cursor-default place-items-center overflow-hidden rounded-xs bg-plate-nested",
+                lit && "bg-plate-hover shadow-[0_0_0_1.5px_var(--ink)]",
                 dim && "opacity-40",
               )}
             >
-              <span aria-hidden="true" className="text-sm font-medium tabular-nums text-text">
+              <span aria-hidden="true" className="text-sm font-medium tabular-nums text-ink">
                 {t.card}
               </span>
               {t.missed && (
@@ -107,12 +107,12 @@ export function AttemptStrip({ tiles, marked, label }: Props) {
 /** What the stripes and marks on a tile mean. */
 export function StripLegend({ kinds }: { kinds: Kind[] }) {
   return (
-    <ul className="mt-4 flex list-none flex-wrap gap-x-5 gap-y-2 !ps-0 text-xs text-muted">
+    <ul className="mt-4 flex list-none flex-wrap gap-x-5 gap-y-2 !ps-0 text-xs text-ink-muted">
       {kinds.map((kind) => (
         <li key={kind} className="!m-0 flex items-center gap-1.5">
           <span
             aria-hidden="true"
-            className="relative grid size-4 place-items-center overflow-hidden rounded-[3px] bg-plate-2"
+            className="relative grid size-4 place-items-center overflow-hidden rounded-[3px] bg-plate-nested"
           >
             <KindIcon kind={kind} className="size-2.5 text-state-learning-text" />
             <span className={clsx("absolute inset-x-0 bottom-0 h-[3px]", KIND[kind].stripe)} />

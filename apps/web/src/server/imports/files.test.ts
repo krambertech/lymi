@@ -140,6 +140,15 @@ describe("openZip and readZipEntry", () => {
     });
   });
 
+  it("calls corrupt deflated data damaged", async () => {
+    const header = new Uint8Array(30);
+    header.set([0x50, 0x4b, 0x03, 0x04]);
+    const corrupt = new Uint8Array(40).fill(0xff);
+    const file = bytesSource(new Uint8Array([...header, ...corrupt]));
+    const entry = { name: "a", method: 8, compressedSize: 40, size: 100, offset: 0 };
+    await expect(readZipEntry(file, entry, 1000)).rejects.toMatchObject({ failure: "damaged" });
+  });
+
   it("says what is wrong with a file that is not a usable zip", async () => {
     await expect(
       openZip(bytesSource(new TextEncoder().encode("hello world, not a zip"))),

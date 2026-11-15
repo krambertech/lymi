@@ -50,9 +50,9 @@ const GUIDES: Record<string, FieldGuide> = {
   },
   pl: {
     notes:
-      "Verb: Perfective: *zrobić* (or Imperfective: on a perfective term), Present: *robię, robisz* (a perfective: Future: *zrobię, zrobisz*). Noun: Gender where the ending hides it, Genitive where the stem changes (*pies, psa*), Plural where irregular or masculine-personal (Plural: *studenci*). Usage: the case a verb takes (+ genitive: *bać się psa*), *na* vs *w*, or, for a reader in Ukrainian or Russian, a false friend (False friend: *dywan*, a carpet, not a sofa).",
+      "Verb: Perfective: *zrobić* (or Imperfective: on a perfective term), Present: *robię, robisz* (a perfective: Future: *zrobię, zrobisz*). Noun: Gender where the ending hides it, Genitive where the stem changes (*pies, psa*), Plural where irregular or masculine-personal (Plural: *studenci*). Usage: the case a verb takes (+ genitive: *bać się psa*), or *na* vs *w*. For a reader in Ukrainian or Russian, also a false friend, naming the look-alike and what it means (False friend: *sklep*, a shop, not склеп, a crypt), and a case or preposition that differs from the reader's language: for Ukrainian *dzwonić do mamy* (not мамі), *jechać do pracy* (not на роботу), *pytać o drogę* (not про дорогу); for Russian *tęsknić za domem* (not по). Words that trick both readers: sklep, dynia, owoce, magazyn, dywan, krzesło, czaszka, pensja, plecy, łyżwy; a Ukrainian reader also: arbuz, drużyna, zwyczajnie.",
     pronunciation:
-      "Polish stress is on the second-to-last syllable. Leave pronunciation null, unless the word breaks that rule: then the term with a grave accent on the stressed vowel (mùzyka), because an acute would turn o into the letter ó.",
+      "Polish stress is on the second-to-last syllable. Leave pronunciation null, unless the word breaks that rule: Greek and Latin loanwords in -yka and -ika (muzyka, matematyka, but not motyka or papryka), first and second person plural past forms (byliśmy), conditionals that add a syllable (zrobiłabym, zrobilibyśmy) and a few numerals (czterysta). Then write the term with a grave accent on the stressed vowel as one composed letter (mùzyka, bỳliśmy, zrobìlibyśmy), because an acute would turn o into the letter ó.",
   },
   cs: {
     notes:

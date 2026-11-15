@@ -22,14 +22,14 @@ export function Avatar({ name, size, pending = false }: Props) {
       <Image
         source={{ uri: apiUrl(`/api/avatar/${version}`), headers }}
         style={box}
-        className="border border-edge bg-plate-2"
+        className="border border-edge bg-plate-nested"
         accessible={false}
       />
     );
   }
   return (
-    <View style={box} className="items-center justify-center border border-edge bg-plate-2">
-      <Text className={`font-medium text-text-2 ${size >= 80 ? "text-3xl" : "text-xl"}`}>
+    <View style={box} className="items-center justify-center border border-edge bg-plate-nested">
+      <Text className={`font-medium text-ink-secondary ${size >= 80 ? "text-3xl" : "text-xl"}`}>
         {name?.trim().charAt(0).toUpperCase()}
       </Text>
     </View>

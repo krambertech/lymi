@@ -4,9 +4,9 @@ date: 2026-10-12
 decision: Tags let a learner find and review cards across decks; a card's tags are part of the card, changed only by whoever owns it
 ---
 
-# Tags that find and review cards
+# Tags for finding and reviewing cards
 
-A learner should be able to find and review one slice of everything they study, such as every food word across their Italian deck and their Estonian class deck. Sections and series group cards within one deck or one chain of decks; a tag cuts across them.
+A learner should be able to find and review a set of cards across everything they study, such as every food word across their Italian deck and their Estonian class deck. Sections and series group cards within one deck or one chain of decks; a tag finds related cards across those groups.
 
 Today a tag does almost nothing once typed. Tags are a JSON list of names on each card, up to 20 of 40 characters ([data model](../data-model.md#tags-and-source)). The card form doesn't suggest existing tags, so "verbs" and "Verbs" become two. Tags show on the word screen and the revealed review card, but nothing in the app filters or reviews by them; only API and MCP card search reads them.
 
@@ -19,7 +19,7 @@ Other apps, checked 11 October 2026 from their manuals and forums:
 - **Mochi** shares by copying, so a deck's tags arrive once and later changes never do.
 - **Todoist**, outside flashcards, keeps your own labels apart from labels collaborators add in shared projects. A shared label with the same name as one of yours is treated as yours.
 
-Every flashcard failure comes from two people writing tags on the same card. In Lymi only a card's owner writes to it, and a shared or published deck is one live deck rather than a copy ([ADR 0011](../adr/0011-a-shared-deck-is-one-deck-with-many-learners.md), [ADR 0020](../adr/0020-a-published-deck-admits-anyone-who-adds-it.md)). So a deck's tags stay current, and nothing a learner does can be overwritten.
+The Anki and AnkiHub problems above involve owners and members writing tags on the same card. In Lymi only a card's owner writes to it, and a shared or published deck is one live deck rather than a copy ([ADR 0011](../adr/0011-a-shared-deck-is-one-deck-with-many-learners.md), [ADR 0020](../adr/0020-a-published-deck-admits-anyone-who-adds-it.md)). Members receive the owner's current tags and have no personal tags on those cards that an update could overwrite.
 
 ## Decisions
 
@@ -35,7 +35,7 @@ Every flashcard failure comes from two people writing tags on the same card. In 
 
 ## Not in scope
 
-- **Duplicating a joined or published deck** to own it. A member can't export a deck, and a copy would stop receiving corrections; it needs its own shape.
+- **Duplicating a joined or published deck** to own it. A member can't export a deck, and a copy would stop receiving corrections; copying would need a separate proposal.
 - **Editors changing a deck's tags.** That arrives with the editor role.
 - **Grammar as tags**, such as part of speech. That belongs in card fields if it comes.
 

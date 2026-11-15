@@ -22,6 +22,7 @@ import { type TrayCard, useCoverColour } from "../explore/tray";
 import { usePalette } from "../theme/palette";
 import { EmptyState } from "../ui/empty-state";
 import type { IconName } from "../ui/icons";
+import { Notice } from "../ui/notice";
 import { Button, Icon, Text } from "../ui/primitives";
 import { Screen } from "../ui/screen";
 import { Skeleton } from "../ui/skeleton";
@@ -67,11 +68,11 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
         : t`This join link stopped working. Ask the owner for a new one.`;
     }
     if (err instanceof ApiError && err.status === 403) {
-      if (published) return t`You cannot add this deck.`;
+      if (published) return t`You can’t add this deck.`;
       const invited = refusalDetail(err, "invitedEmail");
       return invited
         ? t`This invitation was sent to ${invited}. Sign in with that address to join.`
-        : t`You cannot join this deck through this link.`;
+        : t`You can’t join this deck through this link.`;
     }
     return published
       ? t`Couldn’t add the deck. Check your connection and try again.`
@@ -274,11 +275,11 @@ function LiveLink({
       : viewer === "member"
         ? published
           ? t`This deck is already in Library.`
-          : t`You are already in this deck.`
+          : t`You’re already in this deck.`
         : viewer === "removed"
           ? published
-            ? t`You were removed from this deck, so you cannot add it again. Your reviews are kept.`
-            : t`You were removed from this deck, so this link cannot add you back. Your reviews are kept.`
+            ? t`You were removed from this deck, so you can’t add it again. Your reviews are kept.`
+            : t`You were removed from this deck, so this link can’t add you back. Your reviews are kept.`
           : null;
 
   const action = deckId ? (
@@ -309,20 +310,24 @@ function LiveLink({
     <View className="items-center gap-5">
       {hand.length > 0 && <DeckHand cards={hand} gathered={false} ground={ground} />}
       <View className="items-center gap-2.5">
-        <Text className="text-sm text-text-2">{byline}</Text>
+        <Text className="text-sm text-ink-secondary">{byline}</Text>
         <Text
-          className="text-center text-2xl font-medium tracking-tight text-text"
+          className="text-center text-2xl font-medium tracking-tight text-ink"
           accessibilityRole="header"
         >
           {deck.name}
         </Text>
-        <Text className="text-center text-sm text-muted">
+        <Text className="text-center text-sm text-ink-muted">
           {language ? t`${language} · ${cards}` : cards}
         </Text>
       </View>
       <View className="gap-3 self-stretch">
-        {note && <Note tone={viewer === "member" ? "good" : "neutral"}>{note}</Note>}
-        {error && <Note tone="danger">{error}</Note>}
+        {note && (
+          <Notice quiet tone={viewer === "member" ? "good" : "neutral"}>
+            {note}
+          </Notice>
+        )}
+        {error && <Notice tone="danger">{error}</Notice>}
         {action}
       </View>
     </View>
@@ -352,30 +357,9 @@ function Assurance({ icon, children }: { icon: IconName; children: string }) {
   return (
     <View className="flex-row items-start gap-3">
       <View className="pt-0.5">
-        <Icon name={icon} size={18} colour={p.muted} />
+        <Icon name={icon} size={18} colour={p["ink-muted"]} />
       </View>
-      <Text className="flex-1 text-base text-text-2">{children}</Text>
-    </View>
-  );
-}
-
-function Note({ tone, children }: { tone: "neutral" | "good" | "danger"; children: string }) {
-  const p = usePalette();
-  const look = {
-    neutral: { box: "bg-plate-2", icon: "alert" as const, ink: p["text-2"] },
-    good: { box: "bg-good-soft", icon: "check" as const, ink: p.good },
-    danger: { box: "bg-danger-soft", icon: "alert" as const, ink: p.danger },
-  }[tone];
-  return (
-    <View
-      className={`flex-row items-start gap-2.5 rounded-md px-3.5 py-3 ${look.box}`}
-      accessibilityRole={tone === "danger" ? "alert" : undefined}
-      accessibilityLiveRegion="polite"
-    >
-      <View className="pt-0.5">
-        <Icon name={look.icon} size={16} colour={look.ink} />
-      </View>
-      <Text className="flex-1 text-base text-text">{children}</Text>
+      <Text className="flex-1 text-base text-ink-secondary">{children}</Text>
     </View>
   );
 }
@@ -403,7 +387,7 @@ function DeadLink({
       ? t`This join link is turned off`
       : status === "archived"
         ? t`This deck is archived`
-        : t`This join link does not work`;
+        : t`This join link doesn’t work`;
   const line = published
     ? status === "off"
       ? t`Nobody new can add it.`
@@ -420,7 +404,7 @@ function DeadLink({
       kind="start"
       icon={status === "off" ? "linkOff" : status === "archived" ? "archive" : "noMatch"}
       title={title}
-      body={deckId ? `${line} ${t`You are still in the deck.`}` : line}
+      body={deckId ? `${line} ${t`You’re still in the deck.`}` : line}
       action={
         deckId
           ? { label: t`Open deck`, onPress: () => onOpen(deckId) }

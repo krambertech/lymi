@@ -1,3 +1,4 @@
+import { INTERNAL_ACCOUNT_IDS } from "@lymi/core/analytics";
 import { afterEach, beforeEach, expect, it, vi } from "vitest";
 
 type Payload = {
@@ -9,6 +10,15 @@ type Payload = {
 };
 type Options = {
   before_send: (event: Payload) => Payload | null;
+  enable_heatmaps?: boolean;
+  capture_pageleave?: boolean;
+  session_recording?: {
+    maskAllInputs?: boolean;
+    maskTextSelector?: string;
+    blockSelector?: string;
+    maskCapturedNetworkRequestFn?: (request: { name: string }) => { name: string };
+    maskAttributeFn?: (name: string, value: string) => string;
+  };
   api_host: string;
   persistence: string;
   cookieless_mode?: string;
@@ -30,7 +40,8 @@ const sdk = vi.hoisted(() => {
         distinct_id: cookieless ? "$posthog_cookieless" : id,
         email: "never@example.com",
         $raw_user_agent: "Test/1.0",
-        $current_url: "https://my.lymi.app/private?token=secret",
+        // The SDK lets an event name its own address, as web vitals do.
+        $current_url: properties.$current_url ?? "https://my.lymi.app/private?token=secret",
         ...(cookieless ? { $cookieless_mode: true } : {}),
       },
     });
@@ -53,12 +64,16 @@ const sdk = vi.hoisted(() => {
       id = next;
       capture("$identify", { $anon_distinct_id: anonymous, $set: props });
     }),
+    startSessionRecording: vi.fn(),
+    stopSessionRecording: vi.fn(),
     captureException: vi.fn((_error: unknown, properties: Record<string, unknown> = {}) =>
       capture("$exception", { $exception_list: [], ...properties }),
     ),
   };
 });
 vi.mock("posthog-js/no-external", () => ({ default: sdk }));
+vi.mock("posthog-js/dist/posthog-recorder", () => ({}));
+vi.mock("posthog-js/dist/web-vitals", () => ({}));
 let cookieWrites: string[];
 let analytics: typeof import("./analytics");
 
@@ -66,6 +81,7 @@ async function load(url: string, referrer = "https://example.com/private") {
   vi.resetModules();
   vi.stubGlobal("location", new URL(url));
   const document = Object.assign(new EventTarget(), {
+    querySelector: () => null,
     documentElement: { lang: "uk" },
     referrer,
     visibilityState: "visible",
@@ -163,10 +179,41 @@ it("tags an error with its route pattern and the release that threw it", async (
 it("names the handler that caught an error and drops any other label", async () => {
   await load("https://my.lymi.app/review");
   analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
-  analytics.reportBrowserException(new TypeError("private"), "rejection");
-  expect(sdk.sent.at(-1)?.properties).toMatchObject({ caught_by: "rejection" });
+  analytics.reportBrowserException(new TypeError("private"), "router");
+  expect(sdk.sent.at(-1)?.properties).toMatchObject({ caught_by: "router" });
   sdk.captureException(new TypeError("private"), { caught_by: "private label" });
   expect(sdk.sent.at(-1)?.properties).not.toHaveProperty("caught_by");
+});
+
+const thrown = (frames: Record<string, unknown>[], value = "private", synthetic = false) => ({
+  $exception_list: [
+    { type: "TypeError", value, mechanism: { synthetic }, stacktrace: { type: "raw", frames } },
+  ],
+});
+const extensionFrame = { filename: "chrome-extension://abcdef/inpage.js", function: "send" };
+const lymiFrame = { filename: "https://my.lymi.app/assets/index-abcd.js", function: "save" };
+
+it("drops what an extension throws on the page but keeps Lymi's own errors", async () => {
+  await load("https://my.lymi.app/review");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  const sent = () => sdk.sent.filter((event) => event.event === "$exception").length;
+  const before = sent();
+  sdk.capture("$exception", { ...thrown([extensionFrame]), caught_by: "window" });
+  sdk.capture("$exception", {
+    ...thrown([extensionFrame], "Failed to fetch"),
+    caught_by: "rejection",
+  });
+  sdk.capture("$exception", { ...thrown([]), caught_by: "rejection" });
+  // A rejected non-error's stack is the reporting code's own, even though it is Lymi's bundle.
+  sdk.capture("$exception", { ...thrown([lymiFrame], "private", true), caught_by: "rejection" });
+  expect(sent()).toBe(before);
+
+  sdk.capture("$exception", { ...thrown([extensionFrame, lymiFrame]), caught_by: "window" });
+  sdk.capture("$exception", { ...thrown([{ chunk_id: "chunk-1" }]), caught_by: "rejection" });
+  sdk.capture("$exception", { ...thrown([], "Load failed"), caught_by: "rejection" });
+  sdk.capture("$exception", { ...thrown([extensionFrame]), caught_by: "react" });
+  sdk.capture("$exception", { ...thrown([]), caught_by: "router" });
+  expect(sent()).toBe(before + 5);
 });
 
 it("counts a signed-out visitor anonymously and joins them to the account they create", async () => {
@@ -201,6 +248,55 @@ it("names a reminder as the way in, and opens without a backlog when none is kno
   expect(opened?.properties).toMatchObject({ entry: "reminder" });
   expect(opened?.properties).not.toHaveProperty("backlog");
   expect(String(replaceState.mock.calls[0]?.[2])).toBe("https://my.lymi.app/review?deck=italian");
+});
+
+it("names the email a link came from, and drops only that mark", async () => {
+  await load("https://my.lymi.app/today?from=email-deck-invitation&deck=italian", "");
+  const replaceState = vi.fn();
+  vi.stubGlobal("history", { state: null, replaceState });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  const [opened] = sdk.sent.filter((e) => e.event === "app_opened");
+  expect(opened?.properties).toMatchObject({ entry: "email", from_email: "deck-invitation" });
+  expect(String(replaceState.mock.calls[0]?.[2])).toBe("https://my.lymi.app/today?deck=italian");
+});
+
+it("ignores an email kind Lymi does not send", async () => {
+  await load("https://my.lymi.app/today?from=email-nonsense", "");
+  const replaceState = vi.fn();
+  vi.stubGlobal("history", { state: null, replaceState });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  const [opened] = sdk.sent.filter((e) => e.event === "app_opened");
+  expect(opened?.properties).toMatchObject({ entry: "direct" });
+  expect(opened?.properties).not.toHaveProperty("from_email");
+  expect(replaceState).not.toHaveBeenCalled();
+});
+
+it("counts which reminder message was opened, and drops it from the address", async () => {
+  await load("https://my.lymi.app/review?lymi_entry=reminder&lymi_reminder=to_goal", "");
+  const replaceState = vi.fn();
+  vi.stubGlobal("history", { state: null, replaceState });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  const opened = sdk.sent.filter((e) => e.event === "reminder_opened");
+  expect(opened.map((e) => e.properties)).toEqual([
+    expect.objectContaining({ message: "to_goal", client: "web" }),
+  ]);
+  expect(String(replaceState.mock.calls[0]?.[2])).toBe("https://my.lymi.app/review");
+});
+
+it("sends no reminder_opened for a link without a message it knows", async () => {
+  await load("https://my.lymi.app/review?lymi_entry=reminder&lymi_reminder=streak", "");
+  vi.stubGlobal("history", { state: null, replaceState: vi.fn() });
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  expect(sdk.sent.filter((e) => e.event === "reminder_opened")).toEqual([]);
+  expect(sdk.sent.filter((e) => e.event === "app_opened")).toHaveLength(1);
 });
 
 it("resets identity when another account signs in", async () => {
@@ -260,4 +356,174 @@ it("does not initialize in development or previews", async () => {
   analytics.captureAnalytics("add_to_lymi_clicked", { deck_slug: "eesti-a1" });
   expect(sdk.init).not.toHaveBeenCalled();
   expect(sdk.sent).toEqual([]);
+});
+
+type Preloaded = { _POSTHOG_REMOTE_CONFIG?: Record<string, { config: unknown }> };
+const recorderLoaded = () => new Promise((resolve) => setTimeout(resolve));
+
+it("records the product only once the account allows it, and stops on opt-out", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  expect((window as Preloaded)._POSTHOG_REMOTE_CONFIG?.phc_test).toMatchObject({
+    config: { sessionRecording: { endpoint: "/s/" } },
+  });
+  expect(sdk.options()?.session_recording).toMatchObject({
+    maskAllInputs: true,
+    maskTextSelector: "*",
+    blockSelector: expect.stringContaining("img"),
+  });
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).not.toHaveBeenCalled();
+  analytics.setAnalyticsLearner("account-1", true, true);
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).toHaveBeenCalledTimes(1);
+  analytics.setAnalyticsLearner("account-1", false, true);
+  expect(sdk.stopSessionRecording).toHaveBeenCalledTimes(1);
+});
+
+it("stops recording when the learner turns session replay off, and keeps their events", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsLearner("account-1", true, false);
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).not.toHaveBeenCalled();
+  analytics.setAnalyticsLearner("account-1", true, true);
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).toHaveBeenCalledTimes(1);
+  analytics.setAnalyticsLearner("account-1", true, false);
+  expect(sdk.stopSessionRecording).toHaveBeenCalledTimes(1);
+  expect(
+    analytics.captureAnalytics("welcome_step_viewed", { step_name: "goal", skipped: false }),
+  ).toBe(true);
+  const before = sdk.sent.length;
+  sdk.capture("$snapshot", { $snapshot_data: [], $session_id: "session" });
+  expect(sdk.sent).toHaveLength(before);
+});
+
+it("sends a snapshot with only its recording and keeps tokens out of recorded addresses", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsLearner("account-1", true, true);
+  sdk.capture("$snapshot", {
+    $snapshot_data: [{ type: 2 }],
+    $snapshot_bytes: 10,
+    $session_id: "session",
+    $window_id: "window",
+    $lib: "web",
+    $lib_version: "1",
+  });
+  const snapshot = sdk.sent.at(-1);
+  expect(snapshot?.event).toBe("$snapshot");
+  expect(snapshot?.properties).toEqual({
+    $snapshot_data: [{ type: 2 }],
+    $snapshot_bytes: 10,
+    $session_id: "session",
+    $window_id: "window",
+    $lib: "web",
+    $lib_version: "1",
+    token: "phc_test",
+    distinct_id: "account-1",
+  });
+  const mask = sdk.options()?.session_recording?.maskCapturedNetworkRequestFn;
+  expect(mask?.({ name: "https://my.lymi.app/join/secret-token?ref=x" }).name).toBe(
+    "https://my.lymi.app/join/:item",
+  );
+  const attribute = sdk.options()?.session_recording?.maskAttributeFn;
+  expect(attribute?.("aria-label", "Options for Kateryna")).toBe("********************");
+  expect(attribute?.("class", "grid gap-1")).toBe("grid gap-1");
+  analytics.setAnalyticsLearner("account-1", false);
+  const before = sdk.sent.length;
+  sdk.capture("$snapshot", { $snapshot_data: [], $session_id: "session" });
+  expect(sdk.sent).toHaveLength(before);
+});
+
+it("never records a signed-out visitor or an internal account", async () => {
+  await load("https://my.lymi.app/login");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsLearner(undefined);
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).not.toHaveBeenCalled();
+  const [internal] = INTERNAL_ACCOUNT_IDS;
+  analytics.setAnalyticsLearner(internal, true, true);
+  await recorderLoaded();
+  expect(sdk.startSessionRecording).not.toHaveBeenCalled();
+  const before = sdk.sent.length;
+  sdk.capture("$snapshot", { $snapshot_data: [], $session_id: "session" });
+  expect(sdk.sent).toHaveLength(before);
+});
+
+it("never records the public site", async () => {
+  await load("https://lymi.app/");
+  analytics.initAnalytics({ token: "phc_test", surface: "public", enabled: true });
+  await recorderLoaded();
+  expect((window as Preloaded)._POSTHOG_REMOTE_CONFIG).toBeUndefined();
+  expect(sdk.startSessionRecording).not.toHaveBeenCalled();
+  const before = sdk.sent.length;
+  sdk.capture("$snapshot", { $snapshot_data: [], $session_id: "session" });
+  expect(sdk.sent).toHaveLength(before);
+});
+
+it("keeps only the route and numbers from page leaves, web vitals and site heatmaps", async () => {
+  await load("https://lymi.app/explore/eesti-a1?token=secret", "");
+  vi.stubGlobal("window", Object.assign(new EventTarget(), { innerWidth: 1280, innerHeight: 720 }));
+  analytics.initAnalytics({ token: "phc_test", surface: "public", enabled: true });
+  expect(sdk.options()).toMatchObject({ enable_heatmaps: true, capture_pageleave: true });
+  sdk.capture("$pageleave", {
+    $prev_pageview_pathname: "/explore/eesti-a1?token=secret",
+    $prev_pageview_duration: 42.5,
+    $prev_pageview_max_scroll_percentage: 0.8,
+    $prev_pageview_last_content: 900,
+  });
+  expect(sdk.sent.at(-1)?.properties).toMatchObject({
+    pathname: "/explore/eesti-a1",
+    $pathname: "/explore/eesti-a1",
+    $prev_pageview_duration: 42.5,
+    $prev_pageview_max_scroll_percentage: 0.8,
+  });
+  expect(sdk.sent.at(-1)?.properties).not.toHaveProperty("$prev_pageview_last_content");
+  sdk.capture("$web_vitals", {
+    $current_url: "https://lymi.app/explore/eesti-a1?token=secret",
+    $web_vitals_LCP_value: 1800,
+    $web_vitals_LCP_event: { attribution: { element: "h1.private" } },
+  });
+  expect(sdk.sent.at(-1)?.properties).toMatchObject({
+    pathname: "/explore/eesti-a1",
+    $web_vitals_LCP_value: 1800,
+  });
+  expect(sdk.sent.at(-1)?.properties).not.toHaveProperty("$web_vitals_LCP_event");
+  sdk.capture("$$heatmap", {
+    $heatmap_data: {
+      "https://lymi.app/explore/eesti-a1?token=secret": [
+        { x: 10, y: 20, target_fixed: false, type: "click" },
+      ],
+    },
+  });
+  expect(sdk.sent.at(-1)?.properties).toMatchObject({
+    $heatmap_data: {
+      "https://lymi.app/explore/eesti-a1": [{ x: 10, y: 20, target_fixed: false, type: "click" }],
+    },
+    $viewport_width: 1280,
+    $viewport_height: 720,
+  });
+  expect(JSON.stringify(sdk.sent)).not.toContain("secret");
+});
+
+it("leaves heatmaps to the public site", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  expect(sdk.options()?.enable_heatmaps).toBe(false);
+});
+
+it("links events and errors to the recording only while the session is recorded", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  analytics.setAnalyticsLearner("account-1", true, false);
+  sdk.capture("welcome_step_viewed", { step_name: "goal", skipped: false, $session_id: "s1" });
+  sdk.capture("$exception", { $exception_list: [], $session_id: "s1" });
+  expect(sdk.sent.slice(-2).map((e) => e.properties.$session_id)).toEqual([undefined, undefined]);
+  analytics.setAnalyticsLearner("account-1", true, true);
+  await recorderLoaded();
+  sdk.capture("welcome_step_viewed", { step_name: "goal", skipped: false, $session_id: "s1" });
+  sdk.capture("$exception", { $exception_list: [], $session_id: "s1" });
+  expect(sdk.sent.slice(-2).map((e) => e.properties.$session_id)).toEqual(["s1", "s1"]);
 });

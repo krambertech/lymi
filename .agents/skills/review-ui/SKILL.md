@@ -1,6 +1,6 @@
 ---
 name: review-ui
-description: Review Lymi UI changes for intended behavior, interaction and accessibility, relevant responsive, theme, and state coverage, visual-system fit, motion, and evidenced component or performance risk. Use for a frontend diff, pull request, component, screen, or flow that affects what a learner sees or does. Skip backend, data, tooling, and documentation changes with no interface effect.
+description: Review Lymi UI changes for behavior, interaction and accessibility, responsive, theme and state coverage, visual-system fit, motion, and component or performance risk. Use for a frontend diff, pull request, component, screen or flow that changes what a learner sees or does; skip backend, data, tooling and documentation changes with no interface effect.
 ---
 
 # Review Lymi UI

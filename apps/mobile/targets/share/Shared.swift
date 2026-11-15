@@ -63,7 +63,7 @@ struct Strings {
     "noText": "Select a word or phrase, then share it to Lymi.",
     "unreachable": "Lymi can’t be reached. Check your connection and try again.",
     "update": "Update Lymi to add words from other apps.",
-    "failed": "That didn’t work. Try again.",
+    "failed": "Couldn’t add the card. Try again.",
   ]
 
   subscript(_ key: String, term term: String = "", deck deck: String = "") -> String {

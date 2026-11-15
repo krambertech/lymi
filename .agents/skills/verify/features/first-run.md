@@ -1,6 +1,6 @@
 # First run
 
-Today for an account that has never reviewed: a dashed guide with three steps (Create a deck, Add cards, Finish your first review), then ways to create a first deck and ready-made decks in the heading **Explore ready-made decks about …**. The first visit sets the account up on a goal of 25. `/welcome` lands on Today.
+Today for an account that has never reviewed: a dashed guide with three steps (Create a deck, Add cards, Finish your first review), then ways to create a first deck and ready-made decks in the heading **Explore ready-made decks about …**. Once a deck has cards, one plate naming it and holding **Start your first review** replaces the steps. The first visit sets the account up on a goal of 25. `/welcome` lands on Today.
 
 ## Reach
 
@@ -12,7 +12,7 @@ Any account with no reviews, on `/today`. A published deck's add page or a join 
 
 ## End state
 
-On arrival `/api/settings` has an `onboardedAt` and a `dailyGoal` of 25, and the guide reads **0 of 3 done**. Adding the deck opens `/review?deck=<id>`. Back on Today the guide is gone and Today's due card shows instead.
+On arrival `/api/settings` has an `onboardedAt` and a `dailyGoal` of 25, and the guide reads **0 of 3 done**. Adding the deck opens `/review?deck=<id>`. A deck with cards and no grade yet shows the plate, without **of 3 done**, and **Start your first review** opens `/review?deck=<id>`. Back on Today after a grade the guide is gone and Today's due card shows instead.
 
 ## Gotchas
 

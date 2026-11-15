@@ -13,24 +13,24 @@ export function LanternStill({ size }: { size: number }) {
       <Path
         d={LANTERN_BAIL.d}
         fill="none"
-        stroke={p.metal}
+        stroke={p["lantern-metal"]}
         strokeWidth={LANTERN_BAIL.strokeWidth}
         strokeLinecap="round"
       />
-      <Rounded shape={LANTERN_GLASS} fill={p["glass-unlit"]} />
-      <Path d={EMBER.d} fill={p["edge-2"]} />
+      <Rounded shape={LANTERN_GLASS} fill={p["lantern-glass-unlit"]} />
+      <Path d={EMBER.d} fill={p["edge-strong"]} />
       {LANTERN_FRAME.map((s) =>
         s.d ? (
           <Path
             key={s.d}
             d={s.d}
-            fill={p.metal}
-            stroke={s.stroke ? p.metal : undefined}
+            fill={p["lantern-metal"]}
+            stroke={s.stroke ? p["lantern-metal"] : undefined}
             strokeWidth={s.strokeWidth}
             strokeLinejoin="round"
           />
         ) : (
-          <Rounded key={`${s.x}-${s.y}`} shape={s} fill={p.metal} />
+          <Rounded key={`${s.x}-${s.y}`} shape={s} fill={p["lantern-metal"]} />
         ),
       )}
     </Svg>

@@ -35,7 +35,7 @@ export const LANGUAGES_QUESTIONS: Question[] = [
   {
     id: "ai",
     question: msg`Does the AI write my cards?`,
-    answer: msg`Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes on a card counts as yours, so check it.`,
+    answer: msg`Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes doesn’t get that label, so check it.`,
   },
   {
     id: "anki",
@@ -75,6 +75,93 @@ export const ESTONIAN_QUESTIONS: Question[] = [
   ...COMMON,
 ];
 
+export const POLISH_QUESTIONS: Question[] = [
+  {
+    id: "audio",
+    question: msg`Can Lymi say Polish words aloud?`,
+    answer: msg`Yes. Every card is read by a native Polish AI voice. Press play on any card to hear it.`,
+  },
+  {
+    id: "ukrainian",
+    question: msg`Can I learn Polish from Ukrainian or Russian?`,
+    answer: msg`Yes. The ready-made Polish decks have meanings in Ukrainian and Russian as well as English, and their notes say where a Polish word only looks like a Ukrainian or Russian one. Lymi itself is in both languages.`,
+  },
+  {
+    id: "b1",
+    question: msg`Will it get me to the B1 certificate?`,
+    answer: msg`The A1, A2 and B1 decks follow the topics of Poland’s state exams, so they cover the words the B1 exam expects. They are not an official word list, and the exam also tests listening, reading, writing and speaking.`,
+  },
+  {
+    id: "stress",
+    question: msg`Does Lymi show where the stress falls?`,
+    answer: msg`Most Polish words stress the second syllable from the end, so their cards leave it out. A word that breaks the rule, such as muzyka, shows its stress when you turn the card: mùzyka.`,
+  },
+  {
+    id: "class",
+    question: msg`Can my class use it together?`,
+    answer: msg`Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added.`,
+  },
+  ...COMMON,
+];
+
+export const SPANISH_QUESTIONS: Question[] = [
+  {
+    id: "audio",
+    question: msg`Can Lymi say Spanish words aloud?`,
+    answer: msg`Yes. Every card is read by a native Spanish AI voice. Press play on any card to hear it.`,
+  },
+  {
+    id: "variety",
+    question: msg`Is it the Spanish of Spain or of Latin America?`,
+    answer: msg`The ready-made decks use the Spanish of Spain, such as zumo and coche. When you add a word, AI notes where Latin America says it differently, such as carro.`,
+  },
+  {
+    id: "ukrainian",
+    question: msg`Can I learn Spanish from Ukrainian or Russian?`,
+    answer: msg`Yes. The ready-made Spanish decks have meanings in Ukrainian and Russian as well as English. Lymi itself is in both languages.`,
+  },
+  {
+    id: "frequency",
+    question: msg`Where should I start?`,
+    answer: msg`With A1 if Spanish is new to you, or with Spanish Top 100 Verbs and Spanish Top 1000 Words if you’d rather learn the words you’ll hear most first. You can take both at once.`,
+  },
+  {
+    id: "class",
+    question: msg`Can my class use it together?`,
+    answer: msg`Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added.`,
+  },
+  ...COMMON,
+];
+
+export const GERMAN_QUESTIONS: Question[] = [
+  {
+    id: "audio",
+    question: msg`Can Lymi say German words aloud?`,
+    answer: msg`Yes. Every card is read by a native German AI voice. Press play on any card to hear it.`,
+  },
+  {
+    id: "articles",
+    question: msg`Does every noun come with der, die or das?`,
+    answer: msg`Yes. Every noun in the ready-made German decks comes with its article. When you add a noun yourself, AI writes its plural in the notes, and a strong verb gets its past forms.`,
+  },
+  {
+    id: "ukrainian",
+    question: msg`Can I learn German from Ukrainian or Russian?`,
+    answer: msg`Yes. The ready-made German decks have meanings in Ukrainian and Russian as well as English. Lymi itself is in both languages.`,
+  },
+  {
+    id: "b1",
+    question: msg`Will it get me to B1?`,
+    answer: msg`The A1, A2 and B1 decks cover the everyday topics each level expects, from home and work to the doctor and paperwork. They are not an official word list, and an exam also tests listening, reading, writing and speaking.`,
+  },
+  {
+    id: "class",
+    question: msg`Can my class use it together?`,
+    answer: msg`Yes. Whoever makes the cards shares the deck’s join link, and everyone who joins gets each new card as it’s added.`,
+  },
+  ...COMMON,
+];
+
 export const CHINESE_QUESTIONS: Question[] = [
   {
     id: "script",
@@ -99,7 +186,36 @@ export const CHINESE_QUESTIONS: Question[] = [
   {
     id: "anki",
     question: msg`Can I bring my Anki deck?`,
-    answer: msg`Yes. Cards keep their pinyin, their schedule and their word recordings. Sentence recordings stay behind.`,
+    answer: msg`Yes. Cards keep their pinyin, their schedule and their recordings, both the word’s and the example’s.`,
+  },
+  ...COMMON,
+];
+
+export const RUSSIAN_QUESTIONS: Question[] = [
+  {
+    id: "stress",
+    question: msg`Does Lymi show where the stress falls?`,
+    answer: msg`Yes. A card shows its word with a stress mark until the card is Known, then the word as books print it. Turning a card over always shows the mark, and the examples on your cards keep theirs.`,
+  },
+  {
+    id: "homographs",
+    question: msg`What about words spelled the same?`,
+    answer: msg`Each stress is its own word. за́мок, a castle, and замо́к, a lock, are two cards, each with its own stress and its own sound.`,
+  },
+  {
+    id: "yo",
+    question: msg`What about ё?`,
+    answer: msg`Books often print ё as е. Add ежик from such a book and Lymi shows ёжик on the card until you know it, the dots marking the stress as an accent would.`,
+  },
+  {
+    id: "review",
+    question: msg`What does a card ask me?`,
+    answer: msg`One way at a time: the Russian for its meaning, or the meaning for the Russian. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type.`,
+  },
+  {
+    id: "anki",
+    question: msg`Can I bring my Anki deck?`,
+    answer: msg`Yes. Cards keep their schedule and their recordings, both the word’s and the example’s.`,
   },
   ...COMMON,
 ];
@@ -128,7 +244,7 @@ export const UKRAINIAN_QUESTIONS: Question[] = [
   {
     id: "anki",
     question: msg`Can I bring my Anki deck?`,
-    answer: msg`Yes. Cards keep their schedule and their word recordings.`,
+    answer: msg`Yes. Cards keep their schedule and their recordings, both the word’s and the example’s.`,
   },
   ...COMMON,
 ];
@@ -152,7 +268,7 @@ export const JAPANESE_QUESTIONS: Question[] = [
   {
     id: "known",
     question: msg`How does Lymi know I know a word?`,
-    answer: msg`When its card reaches Known in your reviews. From then on the reading steps aside, on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it.`,
+    answer: msg`When its card reaches Known in your reviews. From then on the reading is hidden on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it.`,
   },
   {
     id: "voice",
@@ -162,7 +278,7 @@ export const JAPANESE_QUESTIONS: Question[] = [
   {
     id: "anki",
     question: msg`Can I bring my Anki deck?`,
-    answer: msg`Yes. Cards keep their readings, their schedule and their word recordings. Sentence recordings stay behind.`,
+    answer: msg`Yes. Cards keep their readings, pitch accent, schedule and recordings, both the word’s and the example’s.`,
   },
   ...COMMON,
 ];
@@ -176,7 +292,7 @@ export const ASSISTANTS_QUESTIONS: Question[] = [
   {
     id: "wrong",
     question: msg`What if it gets something wrong?`,
-    answer: msg`Fix it on the card in Lymi. What your assistant writes counts as yours, so look over new cards after it adds them.`,
+    answer: msg`Fix it on the card in Lymi. Look over new cards after your assistant adds them.`,
   },
   {
     id: "privacy",
@@ -204,7 +320,7 @@ export const TEACHERS_QUESTIONS: Question[] = [
   {
     id: "subjects",
     question: msg`Is it only for languages?`,
-    answer: msg`No. A card can hold anything worth remembering: a term, a date, a formula, a chord. Language cards can also be said aloud.`,
+    answer: msg`No. A card can hold anything you want to remember: a term, a date, a formula, a chord. Language cards can also be said aloud.`,
   },
   {
     id: "size",
@@ -261,7 +377,7 @@ export const EINBUERGERUNGSTEST_QUESTIONS: Question[] = [
 const AI_MARKED: Question = {
   id: "ai",
   question: msg`Does the AI write my cards?`,
-  answer: msg`Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes on a card counts as yours, so check it.`,
+  answer: msg`Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes doesn’t get that label, so check it.`,
 };
 
 export const MEDICINE_QUESTIONS: Question[] = [
@@ -278,7 +394,6 @@ export const MEDICINE_QUESTIONS: Question[] = [
   },
   AI_MARKED,
   OFFLINE,
-  ...COMMON,
 ];
 
 export const CERTIFICATIONS_QUESTIONS: Question[] = [
@@ -294,13 +409,12 @@ export const CERTIFICATIONS_QUESTIONS: Question[] = [
   },
   AI_MARKED,
   OFFLINE,
-  ...COMMON,
 ];
 
-const VIA_ASSISTANT_PLANS: Question = {
+const WHICH_ASSISTANTS: Question = {
   id: "which-assistant",
   question: msg`Which assistants can add cards?`,
-  answer: msg`Claude, Claude Code, Codex, Gemini CLI, Cursor and Grok can add cards. ChatGPT connects in developer mode, and OpenAI lets it add cards only on Business, Enterprise and Education plans.`,
+  answer: msg`Claude, Claude Code, ChatGPT, Codex, Gemini, Cursor and Grok can add cards. Other apps that support MCP can connect too.`,
   link: { href: "/docs/mcp", label: msg`Connecting an assistant` },
 };
 
@@ -309,31 +423,29 @@ export const TUTOR_LESSONS_QUESTIONS: Question[] = [
     id: "tutor-sites",
     question: msg`Does Lymi connect to italki or Preply?`,
     answer: msg`No. Lymi doesn’t read your lessons on any tutoring site. You copy the chat or notes, or take a photo. Then Smart add or your assistant turns them into cards.`,
+    link: { href: "/docs/smart-add", label: msg`How Smart add works` },
   },
   {
     id: "tutor-share",
     question: msg`Can my tutor add cards for me?`,
     answer: msg`Yes. Your tutor can make a deck and send you its join link. Every card they add after a lesson reaches you, and you keep your own schedule.`,
   },
-  VIA_ASSISTANT_PLANS,
+  WHICH_ASSISTANTS,
   AI_MARKED,
-  OFFLINE,
-  ...COMMON,
 ];
 
 export const NOTES_TO_FLASHCARDS_QUESTIONS: Question[] = [
   {
     id: "upload",
     question: msg`Can I upload a PDF to Lymi directly?`,
-    answer: msg`Yes, with Smart add. Add up to 3 PDFs or 10 photos, or paste the text, and tick the terms you want. It’s in beta, so it reads up to 5 lessons a day.`,
+    answer: msg`Yes, with Smart add. Add up to 10 files, including up to 3 PDFs, or paste the text, and tick the terms you want. It’s in beta, so it reads up to 5 lessons a day.`,
+    link: { href: "/docs/smart-add", label: msg`How Smart add works` },
   },
   {
     id: "material",
     question: msg`Who can see the cards I make?`,
     answer: msg`Only you, unless you share the deck. Cards made from your notes stay in your account.`,
   },
-  VIA_ASSISTANT_PLANS,
+  WHICH_ASSISTANTS,
   AI_MARKED,
-  OFFLINE,
-  ...COMMON,
 ];

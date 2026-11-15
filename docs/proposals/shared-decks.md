@@ -12,7 +12,7 @@ issues:
 
 An owner shares one private deck link. A classmate can inspect the deck, sign in, join once, and study it on their own schedule. Later owner edits reach every member, while review state and history stay private to each learner.
 
-The central rule is: the group shares the material; each person owns their learning. [ADR 0011](../adr/0011-a-shared-deck-is-one-deck-with-many-learners.md) owns the data and access model.
+Members share the owner's content while keeping separate schedules and review history. [ADR 0011](../adr/0011-a-shared-deck-is-one-deck-with-many-learners.md) owns the data and access model.
 
 ## V0 behavior
 

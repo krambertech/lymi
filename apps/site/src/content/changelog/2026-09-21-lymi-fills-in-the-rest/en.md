@@ -4,7 +4,7 @@ summary: Add just the term, and Lymi fills in the meaning, an example, the pronu
 figure: enrich
 ---
 
-Adding a card is now as quick as typing the term. Within a few seconds, Lymi fills in what’s missing: the meaning, an example, the pronunciation and the language. While it works, the empty fields shimmer, then fill in without a reload.
+Adding a card is now as quick as typing the term. Within a few seconds, Lymi fills in what’s missing: the meaning, an example, the pronunciation and the language.
 
 Lymi never changes text that’s already there. Everything it wrote carries a small violet AI badge, so you always know what came from your lesson and what didn’t. Edit a field and it becomes yours, and the badge goes.
 

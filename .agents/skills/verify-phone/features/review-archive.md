@@ -1,6 +1,6 @@
 # Archive in review
 
-A learner archives the card in front of them from its menu: the card leaves the review at once and a toast at the screen's foot says **Card archived** with **Undo**, ten seconds long. The toast's place is phone.md "After an action".
+A learner archives the card in front of them from its menu: the card leaves the review at once and a toast at the screen's foot says **Card archived** with **Undo**, ten seconds long. [phone.md](../../../../docs/design/system/phone.md#after-an-action) sets the toast's place.
 
 ## Reach
 

@@ -1,7 +1,9 @@
 import { z } from "zod";
 import { DECK_PURPOSES } from "./enrichment";
-import { LANGUAGE_RECORDS, languageKey, type RecordTag } from "./languages";
-import { AI_CONSENT_PLACES, ReviewAid, ReviewModeKey } from "./types";
+import { ImportFailure } from "./import";
+import { LANGUAGE_RECORDS, languageKey, READING_ENGINES, type RecordTag } from "./languages";
+import { ReminderMessage } from "./reminders";
+import { AI_CONSENT_PLACES, PRONUNCIATION_DISPLAYS, ReviewAid, ReviewModeKey } from "./types";
 
 export const ANALYTICS_SCHEMA_VERSION = 1;
 export const INTERNAL_ACCOUNT_IDS = new Set([
@@ -10,6 +12,7 @@ export const INTERNAL_ACCOUNT_IDS = new Set([
   "Ke5PiWMwvkod6tYTzX5oUWi3gz5haGuI",
 ]);
 export { ANALYTICS_CONSENT_VERSION } from "./types";
+export { ReminderMessage };
 /** Carries the visit's first touch with a sign-up request, since no cookie does. */
 export const FIRST_TOUCH_HEADER = "x-lymi-first-touch";
 /** The phone's lists whose rows open a context menu on a long press. */
@@ -28,6 +31,7 @@ export const CONTEXT_MENU_ACTIONS = [
   "open",
   "review",
   "add_card",
+  "select_cards",
   "play",
   "important",
   "edit",
@@ -37,12 +41,27 @@ export const CONTEXT_MENU_ACTIONS = [
   "start_section",
   "rename_section",
   "reorder_sections",
+  "archive_section",
   "add_to_library",
   "restore",
 ] as const;
 export type ContextMenuAction = (typeof CONTEXT_MENU_ACTIONS)[number];
 export const AnalyticsLocale = z.enum(["en", "uk", "ru"]);
 /** What a review leg was opened for. */
+/** The assistant an MCP call or grant came from, by its recognised client; any other client is `other`. */
+export const ASSISTANT_CLIENTS = [
+  "chatgpt",
+  "claude",
+  "codex",
+  "cursor",
+  "gemini",
+  "gemini_cli",
+  "grok",
+  "zed",
+  "other",
+] as const;
+const assistant = z.enum(ASSISTANT_CLIENTS);
+
 export const REVIEW_SCOPES = ["day", "deck", "series", "section", "round", "chosen"] as const;
 export type ReviewScopeKind = (typeof REVIEW_SCOPES)[number];
 const session = { session_id: z.uuid(), scope: z.enum(REVIEW_SCOPES).optional() };
@@ -64,7 +83,7 @@ export const TYPED_CARD_FIELDS = [
   "example",
   "pronunciation",
   "notes",
-  "hook",
+  "hint",
   "source",
   "tags",
   "section",
@@ -72,7 +91,7 @@ export const TYPED_CARD_FIELDS = [
 ] as const;
 export type TypedCardField = (typeof TYPED_CARD_FIELDS)[number];
 /** The fields a chip adds to the web card form. */
-const FORM_FIELDS = ["notes", "example", "pronunciation", "source", "picture", "hook"] as const;
+const FORM_FIELDS = ["notes", "example", "pronunciation", "source", "picture", "hint"] as const;
 /** Every email Lymi sends, by kind; the recipient and body never leave the Worker. */
 export const EMAIL_KINDS = [
   "test",
@@ -84,8 +103,16 @@ export const EMAIL_KINDS = [
   "reset-google-account",
   "deck-invitation",
   "feedback",
+  "content-report",
   "delete-account-code",
   "account-deleted",
+  "learning-first",
+  "learning-how",
+  "learning-nodeck",
+  "learning-new",
+  "learning-due",
+  "learning-back",
+  "learning-last",
 ] as const;
 const EmailKind = z.enum(EMAIL_KINDS);
 const slug = z
@@ -104,6 +131,8 @@ const source = z.enum([
   "typed",
   "lesson",
   "api",
+  "readwise",
+  "anki_connect",
   "unknown",
 ]);
 const step = z.enum([
@@ -135,6 +164,12 @@ const source_fields = {
   utm_campaign: campaign.optional().catch(undefined),
 };
 export const Attribution = z.object({ first_landing_page: path, ...source_fields });
+/** How long the previous page was open, in seconds, and how far down it was scrolled, from 0 to 1. */
+const page_leave_fields = {
+  $prev_pageview_duration: z.number().min(0).max(86_400).optional().catch(undefined),
+  $prev_pageview_max_scroll_percentage: z.number().min(0).max(1).optional().catch(undefined),
+};
+const vital = z.number().min(0).max(600_000).optional().catch(undefined);
 export const Backlog = z.enum(["0", "1-20", "21-100", "100+"]);
 export type Backlog = z.infer<typeof Backlog>;
 
@@ -144,12 +179,25 @@ export function backlogOf(due: number): Backlog {
 }
 /** Added to a reminder's link so the app it opens can say a reminder brought the learner. */
 export const REMINDER_ENTRY = { key: "lymi_entry", value: "reminder" } as const;
+/** Added beside it to name which of the day's messages was opened. */
+export const REMINDER_MESSAGE_KEY = "lymi_reminder";
+/** Added to an email's link as `from=email-<kind>`, since Lymi tracks no opens or clicks. */
+export const EMAIL_ENTRY_KEY = "from";
+const EMAIL_ENTRY_PREFIX = "email-";
+
+/** The kind of email a link names, ignoring a kind Lymi does not send. */
+export function emailEntryOf(params: URLSearchParams): z.infer<typeof EmailKind> | undefined {
+  const from = params.get(EMAIL_ENTRY_KEY);
+  if (!from?.startsWith(EMAIL_ENTRY_PREFIX)) return;
+  return EmailKind.safeParse(from.slice(EMAIL_ENTRY_PREFIX.length)).data;
+}
 
 type TextPrice = { input: number; cachedInput: number; output: number };
 
 /** USD per million tokens, from the vendors' price lists, so a call's cost never waits on PostHog's table. */
 const TEXT_PRICES: Record<string, TextPrice & { longPrompt?: TextPrice & { above: number } }> = {
   "gpt-6-luna": { input: 0.1, cachedInput: 0.01, output: 0.5 },
+  "gpt-6.1-terra": { input: 1, cachedInput: 0.05, output: 5 },
   // Anthropic prices a Haiku 5.5 prompt over 100,000 tokens, cache reads included, at five times.
   "claude-haiku-5-5": {
     input: 0.1,
@@ -157,7 +205,6 @@ const TEXT_PRICES: Record<string, TextPrice & { longPrompt?: TextPrice & { above
     output: 0.5,
     longPrompt: { above: 100_000, input: 0.5, cachedInput: 0.05, output: 2.5 },
   },
-  "gemini-2.5-flash-lite": { input: 0.1, cachedInput: 0.01, output: 0.4 },
 };
 
 /** A text call's cost in USD, or nothing for a model without a known price. */
@@ -176,44 +223,17 @@ export function textCallCost(
   };
 }
 const usd = z.number().nonnegative().max(1000);
-type SpeechPrice =
-  | { perCharacter: number }
-  | { inputToken: number; audioToken: number; audioTokensPerSecond: number };
+// USD per million characters; OpenAI is absent because its speech endpoint returns no usage.
+const SPEECH_PRICES: Record<string, number> = { eleven_v4: 80 };
 
-// USD per million characters or tokens; OpenAI is absent because its speech endpoint returns no usage.
-const SPEECH_PRICES: Record<string, SpeechPrice> = {
-  "gemini-3.1-flash-tts-preview": { inputToken: 1, audioToken: 20, audioTokensPerSecond: 25 },
-  "chirp-3-hd": { perCharacter: 30 },
-  eleven_v4: { perCharacter: 80 },
-};
-
-/**
- * A speech call's cost in USD, or nothing for a model without a known price or a call missing the
- * usage its price needs. Audio tokens come from the call, or from the clip's length.
- */
+/** A speech call's cost in USD, or nothing for a model without a known price. */
 export function speechCallCost(
   model: string,
-  usage: {
-    characters: number;
-    inputTokens?: number | undefined;
-    outputTokens?: number | undefined;
-    audioSeconds?: number | undefined;
-  },
+  usage: { characters: number },
 ): { input: number; output: number } | undefined {
   const price = SPEECH_PRICES[model];
-  if (!price) return;
-  if ("perCharacter" in price)
-    return { input: (usage.characters * price.perCharacter) / 1e6, output: 0 };
-  const audioTokens =
-    usage.outputTokens ??
-    (usage.audioSeconds === undefined
-      ? undefined
-      : usage.audioSeconds * price.audioTokensPerSecond);
-  if (audioTokens === undefined) return;
-  return {
-    input: ((usage.inputTokens ?? 0) * price.inputToken) / 1e6,
-    output: (audioTokens * price.audioToken) / 1e6,
-  };
+  if (price === undefined) return;
+  return { input: (usage.characters * price) / 1e6, output: 0 };
 }
 
 /** The scheduler's card state before a grade, by its number in ts-fsrs. */
@@ -241,16 +261,46 @@ export const COMMAND_MENU_COMMANDS = [
 ] as const;
 
 export const analyticsEvents = {
-  $pageview: z.object({ pathname: path, ...source_fields }),
+  $pageview: z.object({ pathname: path, ...source_fields, ...page_leave_fields }),
+  $pageleave: z.object({ pathname: path, ...page_leave_fields }),
+  $web_vitals: z.object({
+    pathname: path,
+    $web_vitals_LCP_value: vital,
+    $web_vitals_FCP_value: vital,
+    $web_vitals_INP_value: vital,
+    $web_vitals_CLS_value: vital,
+  }),
+  $$heatmap: z.object({
+    $heatmap_data: z.record(
+      z.string().max(300),
+      z
+        .array(
+          z.object({
+            x: z.number(),
+            y: z.number(),
+            target_fixed: z.boolean(),
+            type: z.enum(["click", "rageclick", "mousemove"]),
+          }),
+        )
+        .max(500),
+    ),
+    $viewport_width: z.number().int().min(0).max(20_000),
+    $viewport_height: z.number().int().min(0).max(20_000),
+  }),
   app_opened: z.object({
-    entry: z.enum(["reminder", "link", "direct"]).optional(),
+    entry: z.enum(["reminder", "email", "link", "direct"]).optional(),
+    from_email: EmailKind.optional(),
     backlog: Backlog.optional(),
   }),
   onboarding_finished: z.object({
     kind: z.enum(["language", "test", "subject", "other", "skipped", "joined", "today"]),
   }),
   signed_up: Attribution.extend({ method: z.enum(["google", "apple", "email"]) }),
-  signed_in: z.object({}),
+  signed_in: z.object({
+    /** A Mac app session, and whether it came through the browser's hand-off or the app's window. */
+    client: z.literal("mac").optional(),
+    via: z.enum(["browser", "window"]).optional(),
+  }),
   review_graded: z.object({
     mode: ReviewModeKey,
     grade: z.number().int().min(1).max(4),
@@ -270,17 +320,28 @@ export const analyticsEvents = {
   }),
   streak_ended: z.object({ streak_days: count }),
   rest_day_used: z.object({ streak_days: count }),
-  hook_added: z.object({ source: z.enum(["lesson", "ai", "manual"]) }),
+  hint_added: z.object({ source: z.enum(["lesson", "ai", "manual"]) }),
   cards_archived: z.object({
     origin: z.enum(["typed", "api", "ai_mcp", "import", "other"]),
     count,
     ai_written: count,
   }),
-  reminder_sent: z.object({ backlog: Backlog }),
+  reminder_sent: z.object({ backlog: Backlog, message: ReminderMessage }),
+  reminder_opened: z.object({ message: ReminderMessage, client: z.enum(["web", "phone"]) }),
+  reminder_scheduled: z.object({
+    backlog: Backlog,
+    reminders: count,
+    /** Calendar days from now to the next reminder, 0 for later today. */
+    days_ahead: z.number().int().min(0).max(30),
+  }),
   email_sent: z.object({ kind: EmailKind, language: z.enum(["en", "uk", "ru"]) }),
   email_failed: z.object({ kind: EmailKind, error_class: z.string().max(40) }),
   email_bounced: z.object({ kind: EmailKind.optional() }),
   email_complained: z.object({ kind: EmailKind.optional() }),
+  email_unsubscribed: z.object({
+    kind: EmailKind.optional(),
+    via: z.enum(["one_click", "footer", "settings", "bounce", "complaint"]),
+  }),
   review_session_finished: z.object({
     ...session,
     card_count: count,
@@ -295,6 +356,14 @@ export const analyticsEvents = {
     reason: z.enum(["left", "navigation", "pagehide"]),
   }),
   first_session_started: z.object({ deck_slug: slug }),
+  first_review_end_left: z.object({
+    step: z.enum(["summary", "goal", "remind", "bye"]),
+    left: z.enum(["done", "more_cards", "forgotten", "add_cards", "closed"]),
+    goal: count,
+    goal_changed: z.boolean(),
+    reminder: z.enum(["on", "off", "blocked", "unavailable"]),
+    tips_skipped: z.boolean(),
+  }),
   cards_added: z.object({
     source,
     count,
@@ -323,23 +392,51 @@ export const analyticsEvents = {
     outcome: z.enum(["done", "failed"]),
     recordings: count.optional(),
     recordings_skipped: count.optional(),
+    example_recordings: count.optional(),
+    example_recordings_skipped: count.optional(),
     sounds_left_out: count.optional(),
     pictures: count.optional(),
     pictures_skipped: count.optional(),
     write_seconds: count.optional(),
+    /** Workflow runs the write took, each handing the rest to the next before its call budget ran out. */
+    write_runs: count.optional(),
     /** New cards whose Reading was converted, such as pinyin tone numbers to marks. */
     readings_converted: count.optional(),
+    /** Why the import failed, when outcome is failed. */
+    failure: ImportFailure.optional(),
   }),
-  import_failed: z.object({ source, card_count: count }),
+  import_failed: z.object({ source, card_count: count, failure: ImportFailure.optional() }),
   export_started: z.object({
     format: z.enum(["lymi", "anki"]),
     scope: z.enum(["deck", "library"]),
   }),
   daily_goal_set: z.object({ value: z.number().int().min(1).max(200), is_change: z.boolean() }),
+  session_replay_set: z.object({ on: z.boolean() }),
   reminder_prompt_shown: z.object({}),
   reminder_prompt_accepted: z.object({}),
+  reminder_ask_left: z.object({
+    answer: z.enum(["remind", "not_now", "closed"]),
+    part: z.enum(["morning", "lunch", "evening"]),
+    reminder: z.enum(["on", "off"]),
+  }),
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
   add_to_lymi_clicked: z.object({ deck_slug: slug }),
+  site_link_followed: z.object({
+    place: z.enum([
+      "use_cases_menu",
+      "explore_menu",
+      "phone_menu",
+      "footer",
+      "hero",
+      "landing",
+      "languages_hub",
+    ]),
+    // A public site path without its locale prefix, never a query or a hash.
+    target: z
+      .string()
+      .regex(/^\/[a-z0-9/-]*$/)
+      .max(120),
+  }),
   ready_decks_narrowed: z.object({
     topic: z.enum(["all", "language", "test"]),
     // A catalogue language's tag, never what the learner typed.
@@ -360,6 +457,16 @@ export const analyticsEvents = {
   }),
   deck_added: z.object({ deck_slug: slug }),
   deck_joined: z.object({}),
+  content_reported: z.object({
+    target: z.enum(["deck", "card"]),
+    reason: z.enum(["offensive", "sexual", "harassment", "spam", "other"]),
+    has_note: z.boolean(),
+  }),
+  content_report_resolved: z.object({
+    action: z.enum(["dismiss", "archive_card", "archive_deck", "suspend_sharing"]),
+    target: z.enum(["deck", "card"]),
+    hours: z.number().int().min(0).max(8760),
+  }),
   section_opened: z.object({
     how: z.enum(["auto", "ready", "early"]),
     position: z.number().int().min(1).max(1_000),
@@ -369,7 +476,10 @@ export const analyticsEvents = {
     tool: z.string().regex(/^[a-z_]{1,80}$/),
     outcome: z.enum(["success", "error"]),
     duration_ms: z.number().nonnegative().max(3_600_000),
+    assistant: assistant.optional(),
   }),
+  app_connected: z.object({ assistant, write: z.boolean() }),
+  app_connect_failed: z.object({ assistant, reason: z.enum(["declined", "error"]) }),
   enrichment_finished: z.object({
     outcome: z.enum(["enriched", "empty", "failed"]),
     count,
@@ -381,6 +491,12 @@ export const analyticsEvents = {
     prompt_version: z.number().int().positive().max(1000).optional(),
     has_style: z.boolean().optional(),
     languages: languageList.optional(),
+  }),
+  pitch_accent_filled: z.object({
+    outcome: z.enum(["filled", "empty", "failed"]),
+    count,
+    asked: count.optional(),
+    prompt_version: z.number().int().positive().max(1000).optional(),
   }),
   example_translated: z.object({
     outcome: z.enum(["translated", "empty", "failed"]),
@@ -421,11 +537,36 @@ export const analyticsEvents = {
     created: z.boolean(),
     channel: z.enum(["app", "api", "mcp"]),
   }),
+  pronunciation_display_set: z.object({
+    display: z.enum(PRONUNCIATION_DISPLAYS),
+    notation: z.enum(READING_ENGINES),
+    owner: z.boolean(),
+    channel: z.enum(["app", "api", "mcp"]),
+  }),
   lesson_read_limited: z.object({}),
   ai_consent_shown: z.object({ place: z.enum(AI_CONSENT_PLACES) }),
   ai_consent_granted: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
   ai_consent_declined: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
   ai_consent_withdrawn: z.object({ place: z.enum(AI_CONSENT_PLACES).optional() }),
+  readwise_connected: z.object({
+    /** Books and articles in the learner's Readwise, and how many Lymi follows. */
+    books: count,
+    followed: count,
+    languages: count,
+    reconnected: z.boolean(),
+  }),
+  readwise_disconnected: z.object({}),
+  readwise_pulled: z.object({
+    trigger: z.enum(["schedule", "manual"]),
+    outcome: z.enum(["done", "refused", "unreadable", "limited", "failed"]),
+    highlights: count,
+    cards: count,
+    skipped: count,
+    duplicates: count,
+  }),
+  anki_connect_refused: z.object({
+    reason: z.enum(["deck", "note_type", "language", "term", "read_only"]),
+  }),
   lesson_read: z.object({
     client: z.enum(["web", "phone"]),
     pages: count,
@@ -444,15 +585,17 @@ export const analyticsEvents = {
       "enrich",
       "example_translation",
       "deck_style",
-      "hook",
+      "hint",
       "import_languages",
       "deck_choice",
       "lesson_read",
+      "readwise_languages",
       "pronunciation",
       "example_audio",
       "lead_in",
+      "pitch_accent",
     ]),
-    $ai_provider: z.enum(["openai", "anthropic", "google", "elevenlabs"]),
+    $ai_provider: z.enum(["openai", "anthropic", "elevenlabs"]),
     $ai_model: z.string().regex(/^[\w.:/-]{1,80}$/),
     // A speech call priced by characters reports no tokens.
     $ai_input_tokens: tokens.optional(),
@@ -473,7 +616,7 @@ export const analyticsEvents = {
     count: count.optional(),
   }),
   entry_opened: z.object({
-    entry: z.enum(["control", "shortcut", "quick_action", "widget"]),
+    entry: z.enum(["control", "shortcut", "quick_action", "widget", "reminder"]),
     place: z.enum(["add", "review", "search"]),
   }),
   tag_added: z.object({
@@ -484,11 +627,20 @@ export const analyticsEvents = {
     field: z.enum(FORM_FIELDS),
     form: z.enum(["add", "edit"]),
   }),
-  deck_filter_added: z.object({ kind: z.enum(["state", "due", "section", "tag"]) }),
+  deck_filter_added: z.object({
+    kind: z.enum(["state", "due", "section", "tag", "important"]),
+  }),
   changelog_opened: z.object({ from: z.enum(["learner_menu"]) }),
   library_searched: z.object({ matches: z.enum(["1", "2-5", "6+"]) }),
+  app_page_viewed: z.object({ app: z.enum(["readwise", "yomitan", "claude", "chatgpt", "other"]) }),
+  app_activity_opened: z.object({
+    app: z.enum(["readwise", "yomitan", "claude", "chatgpt", "other"]),
+    how: z.enum(["card", "all"]),
+  }),
   section_go_to: z.object({}),
-  hook_drafted: z.object({
+  section_page_opened: z.object({ from: z.enum(["tile", "heading", "step", "sections"]) }),
+  sections_opened: z.object({ from: z.enum(["deck", "settings"]) }),
+  hint_drafted: z.object({
     outcome: z.enum(["drafted", "none", "failed"]),
     wait_ms: z.number().int().nonnegative().max(60_000),
   }),
@@ -503,6 +655,8 @@ export const analyticsEvents = {
     outcome: z.enum(["played", "failed", "limited"]),
     surface: z.enum(["review", "card"]),
     wait_ms: z.number().int().nonnegative().max(60_000).optional(),
+    // Optional because earlier releases send none.
+    control: z.enum(["speaker", "sentence", "action"]).optional(),
   }),
   lead_in_decided: z.object({
     language: z.string().regex(/^[a-z]{2,3}$/),
@@ -530,6 +684,13 @@ export const analyticsEvents = {
     client: z.enum(["web", "phone"]),
     confirmed_with: z.enum(["email", "apple"]),
     kept_decks: count,
+    published_decks: count.optional(),
+  }),
+  former_deck_copied: z.object({ cards: count }),
+  apple_revocation_attempted: z.object({
+    outcome: z.enum(["revoked", "retrying", "failed", "skipped"]),
+    reason: z.enum(["no_key", "no_token", "exchange", "revoke", "lost"]).optional(),
+    attempt: z.number().int().min(0),
   }),
 } as const;
 export type AnalyticsName = keyof typeof analyticsEvents;
@@ -543,6 +704,9 @@ export type ProductAnalyticsEvent = {
 export type AnalyticsProducer = "browser" | "phone" | "worker";
 export const analyticsProducers = {
   $pageview: ["browser", "phone"],
+  $pageleave: ["browser"],
+  $web_vitals: ["browser"],
+  $$heatmap: ["browser"],
   app_opened: ["browser", "phone"],
   signed_up: ["worker"],
   signed_in: ["worker"],
@@ -551,17 +715,21 @@ export const analyticsProducers = {
   review_undone: ["worker"],
   streak_ended: ["worker"],
   rest_day_used: ["worker"],
-  hook_added: ["worker"],
+  hint_added: ["worker"],
   cards_archived: ["worker"],
   reminder_sent: ["worker"],
+  reminder_scheduled: ["phone"],
+  reminder_opened: ["browser", "phone"],
   command_menu_run: ["browser"],
   email_sent: ["worker"],
   email_failed: ["worker"],
   email_bounced: ["worker"],
   email_complained: ["worker"],
+  email_unsubscribed: ["worker"],
   review_session_finished: ["browser", "phone"],
   review_session_abandoned: ["browser", "phone"],
   first_session_started: ["worker"],
+  first_review_end_left: ["browser"],
   cards_added: ["worker"],
   card_added: ["worker"],
   welcome_step_viewed: ["browser", "phone"],
@@ -572,19 +740,27 @@ export const analyticsProducers = {
   import_failed: ["worker"],
   export_started: ["worker"],
   daily_goal_set: ["worker"],
-  reminder_prompt_shown: ["browser"],
-  reminder_prompt_accepted: ["browser"],
+  session_replay_set: ["worker"],
+  reminder_prompt_shown: ["browser", "phone"],
+  reminder_prompt_accepted: ["browser", "phone"],
+  reminder_ask_left: ["phone"],
   public_deck_viewed: ["browser"],
   add_to_lymi_clicked: ["browser"],
+  site_link_followed: ["browser"],
   ready_decks_narrowed: ["browser"],
   origin_badge_shown: ["browser"],
   mac_download_started: ["worker"],
   context_menu_action: ["phone"],
   deck_added: ["worker"],
   deck_joined: ["worker"],
+  content_reported: ["worker"],
+  content_report_resolved: ["worker"],
   section_opened: ["worker"],
   mcp_tool: ["worker"],
+  app_connected: ["worker"],
+  app_connect_failed: ["worker"],
   enrichment_finished: ["worker"],
+  pitch_accent_filled: ["worker"],
   example_translated: ["worker"],
   deck_style_learned: ["worker"],
   ai_text_corrected: ["worker"],
@@ -594,6 +770,10 @@ export const analyticsProducers = {
   ai_consent_granted: ["worker"],
   ai_consent_declined: ["worker"],
   ai_consent_withdrawn: ["worker"],
+  readwise_connected: ["worker"],
+  readwise_disconnected: ["worker"],
+  readwise_pulled: ["worker"],
+  anki_connect_refused: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser", "phone"],
@@ -601,8 +781,12 @@ export const analyticsProducers = {
   deck_filter_added: ["browser", "phone"],
   changelog_opened: ["browser"],
   library_searched: ["browser"],
+  app_page_viewed: ["browser", "phone"],
+  app_activity_opened: ["browser", "phone"],
   section_go_to: ["phone"],
-  hook_drafted: ["browser", "phone"],
+  section_page_opened: ["phone"],
+  sections_opened: ["phone"],
+  hint_drafted: ["browser", "phone"],
   pronunciation_played: ["browser", "phone"],
   example_audio_played: ["browser", "phone"],
   lead_in_decided: ["worker"],
@@ -610,8 +794,11 @@ export const analyticsProducers = {
   cards_tagged: ["browser", "phone"],
   deck_enrichment_changed: ["worker"],
   deck_purpose_set: ["worker"],
+  pronunciation_display_set: ["worker"],
   entry_opened: ["phone"],
   account_deleted: ["worker"],
+  former_deck_copied: ["worker"],
+  apple_revocation_attempted: ["worker"],
 } satisfies Record<AnalyticsName, readonly AnalyticsProducer[]>;
 
 export function eventProperties(
@@ -656,6 +843,8 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/import",
     "/add",
     "/join",
+    "/flip",
+    "/unsubscribe",
     "/desktop",
     // Phone screens without a web page of their own.
     "/you",
@@ -665,7 +854,6 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     "/share",
     "/series-order",
     "/api-keys",
-    "/connected-apps",
   ];
   const base = routes.find((route) => path === route || path.startsWith(`${route}/`));
   return base ? (path === base ? base : `${base}/:item`) : "/other";

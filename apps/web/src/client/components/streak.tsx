@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import type { StreakOut } from "@lymi/core";
+import { shownOutcome } from "@lymi/client/review-day";
+import { daySatisfied, runDates, type StreakOut } from "@lymi/core";
 import { streakFlameFor } from "@lymi/design";
 import { clsx } from "clsx";
 import { CalendarCheck, Check, type LucideIcon, Pencil, Trophy } from "lucide-react";
@@ -20,9 +21,6 @@ import { Dialog, DialogContent, usePlaceShape } from "./ui/dialog";
 export type StreakSummary = StreakOut;
 
 export { lastDays, StreakWeek } from "./streak-week";
-
-const satisfied = (outcome: StreakSummary["today"]["outcome"]) =>
-  outcome === "goal_met" || outcome === "exhausted";
 
 /** Yesterday fell short and the run carried on through it: the morning after a rest day. */
 export function restedYesterday(summary: StreakSummary): boolean {
@@ -82,7 +80,7 @@ function GoalTrack({
             "aria-valuenow": reached,
           }
         : { "aria-hidden": true })}
-      className={clsx("well block h-1.5 overflow-hidden rounded-full bg-plate-2", className)}
+      className={clsx("well block h-1.5 overflow-hidden rounded-full bg-plate-nested", className)}
     >
       <i
         className="streak-fill lit block h-full origin-left rounded-full bg-amber rtl:origin-right"
@@ -105,17 +103,17 @@ function CardFace({ summary, status }: { summary: StreakSummary; status: string 
           {current > 0 ? (
             <>
               <RollingNumber value={current} className="text-3xl font-medium leading-none" />
-              <span className="text-md font-medium text-text-2">
+              <span className="text-md font-medium text-ink-secondary">
                 <Plural value={current} one="day in a row" other="days in a row" />
               </span>
             </>
           ) : (
-            <span className="text-xl font-medium tracking-[-0.01em] text-text">
+            <span className="text-xl font-medium tracking-[-0.01em] text-ink">
               <StreakStart summary={summary} />
             </span>
           )}
         </span>
-        <span className="text-sm text-text-2 tabular-nums">{status}</span>
+        <span className="text-sm text-ink-secondary tabular-nums">{status}</span>
       </span>
       <SevenLights
         days={week.attempts}
@@ -130,18 +128,18 @@ function CardFace({ summary, status }: { summary: StreakSummary; status: string 
 }
 
 /** One line on where today stands against the streak: what is left, or that the day counts. */
-export function useTodayStatus(summary: StreakSummary | undefined): string {
+export function useTodayStatus(summary: StreakSummary | undefined, due: number): string {
   const { t } = useLingui();
   if (!summary) return "";
   const { today } = summary;
-  switch (today.outcome) {
+  switch (shownOutcome(today.outcome, due)) {
     case "goal_met":
       return t`Daily goal reached.`;
     case "exhausted":
       return t`You’re done for today.`;
     case "nothing_due":
       return summary.current > 0
-        ? t`Nothing due today, so your streak is safe.`
+        ? t`Nothing due today, so your streak carries on.`
         : t`Nothing due today.`;
     default: {
       const left = Math.max(today.goal - today.attempts, 0);
@@ -154,11 +152,11 @@ export function useTodayStatus(summary: StreakSummary | undefined): string {
 function Figure({ icon: Icon, value, label }: { icon: LucideIcon; value: number; label: string }) {
   return (
     <div className="grid gap-0.5 px-4 py-3.5 not-first:border-s not-first:border-edge">
-      <dt className="flex items-center gap-1.5 text-xs text-muted">
+      <dt className="flex items-center gap-1.5 text-xs text-ink-muted">
         <Icon className="size-3.5 shrink-0" aria-hidden="true" />
         {label}
       </dt>
-      <dd className="text-md font-medium text-text">
+      <dd className="text-md font-medium text-ink">
         <RollingNumber value={value} />
       </dd>
     </div>
@@ -167,6 +165,8 @@ function Figure({ icon: Icon, value, label }: { icon: LucideIcon; value: number;
 
 export interface StreakPanelProps {
   summary: StreakSummary;
+  /** Cards due today, which make a day confirmed as nothing due read as open. */
+  due?: number | undefined;
   onGoalChange?: ((goal: number) => void) | undefined;
   /** "Saved" after a goal change lands, or the error that stopped it. */
   goalStatus?: "saving" | "saved" | "error" | undefined;
@@ -185,6 +185,7 @@ export interface StreakPanelProps {
  */
 export function StreakPanel({
   summary,
+  due = 0,
   onGoalChange,
   goalStatus,
   titleId,
@@ -201,22 +202,14 @@ export function StreakPanel({
   const { current, today } = summary;
   // A dialog or sheet names the view in its bar; a whole screen's bar is only the way back.
   const titleInBar = usePlaceShape() !== "screen";
-  const done = satisfied(today.outcome);
+  const done = daySatisfied(today.outcome);
   const flame = streakFlameFor(summary);
   const byDate = useMemo(() => new Map(summary.days.map((d) => [d.date, d])), [summary.days]);
   const rest = useMemo(() => new Set(summary.restDays), [summary.restDays]);
-  const run = useMemo(() => {
-    const dates = new Set<string>();
-    const keeps = (date: string) => {
-      const d = byDate.get(date);
-      return rest.has(date) || (!!d && (d.satisfied || d.outcome === "nothing_due"));
-    };
-    let day = done ? today.date : addDays(today.date, -1);
-    for (; keeps(day); day = addDays(day, -1)) {
-      if (byDate.get(day)?.satisfied || rest.has(day)) dates.add(day);
-    }
-    return dates;
-  }, [byDate, rest, done, today.date]);
+  const run = useMemo(
+    () => runDates(summary.days, summary.restDays, today),
+    [summary.days, summary.restDays, today],
+  );
   const firstMonth = summary.days[0]?.date.slice(0, 7) ?? today.date.slice(0, 7);
 
   // Only a change of view moves focus; comparing views, not counting runs, survives StrictMode's double effect.
@@ -240,7 +233,7 @@ export function StreakPanel({
           title={titleInBar ? goalTitle : undefined}
           onClose={onClose}
           status={
-            <p className="min-h-5 text-sm text-muted" role="status">
+            <p className="min-h-5 text-sm text-ink-muted" role="status">
               {goalStatus === "saved" && (
                 <span className="enter-fade inline-flex items-center gap-1.5">
                   <Check className="size-4" aria-hidden="true" />
@@ -255,8 +248,8 @@ export function StreakPanel({
             </p>
           }
         />
-        {!titleInBar && <div className="text-xl font-medium text-text">{goalTitle}</div>}
-        <p className="text-sm text-text-2">
+        {!titleInBar && <div className="text-xl font-medium text-ink">{goalTitle}</div>}
+        <p className="text-sm text-ink-secondary">
           <Trans>Choose how many reviews to do each day. Every grade counts, even Forgot.</Trans>
         </p>
         <GoalPicker value={summary.goal} onValueChange={(n) => onGoalChange?.(n)} />
@@ -269,9 +262,9 @@ export function StreakPanel({
       ? t`Daily goal reached.`
       : today.outcome === "exhausted"
         ? t`You’re done for today.`
-        : today.outcome === "nothing_due"
+        : shownOutcome(today.outcome, due) === "nothing_due"
           ? current > 0
-            ? t`Nothing due today, so your streak is safe.`
+            ? t`Nothing due today, so your streak carries on.`
             : t`Nothing due today.`
           : restedYesterday(summary)
             ? t`Yesterday was a rest day. Every grade counts toward today’s goal.`
@@ -291,7 +284,7 @@ export function StreakPanel({
       )}
       <header className="grid gap-1.5">
         {/* The flame sits on the number's line, the words on its baseline. */}
-        <h2 id={titleId} tabIndex={-1} className="flex items-center gap-3 text-text outline-none">
+        <h2 id={titleId} tabIndex={-1} className="flex items-center gap-3 text-ink outline-none">
           <Flame className="h-11 w-[35px] shrink-0" state={flame} flicker={flame === "full"} />
           {current > 0 ? (
             <span className="flex items-baseline gap-2.5">
@@ -299,7 +292,7 @@ export function StreakPanel({
                 value={current}
                 className="text-5xl font-semibold leading-none tracking-tight"
               />
-              <span className="text-lg font-medium text-text-2">
+              <span className="text-lg font-medium text-ink-secondary">
                 <Plural value={current} one="day in a row" other="days in a row" />
               </span>
             </span>
@@ -309,14 +302,14 @@ export function StreakPanel({
             </span>
           )}
         </h2>
-        <p className="text-sm text-text-2">{status}</p>
+        <p className="text-sm text-ink-secondary">{status}</p>
       </header>
 
-      <section className="grid rounded-lg bg-plate-2" aria-label={t`Today`}>
+      <section className="grid rounded-lg bg-plate-nested" aria-label={t`Today`}>
         <div className="grid gap-2.5 px-4 py-3.5">
           <div className="flex items-center gap-2">
             {/* The goal is named whether or not the day is done, so the bar below has a number to mean. */}
-            <span className="flex flex-1 items-center gap-1.5 text-base font-medium tabular-nums text-text">
+            <span className="flex flex-1 items-center gap-1.5 text-base font-medium tabular-nums text-ink">
               {done && <Check className="size-4 shrink-0 text-amber-mark" aria-hidden="true" />}
               {/* "of" only holds up to the goal; a round past it counts on and still names what it passed. */}
               {today.attempts > today.goal ? (
@@ -372,6 +365,8 @@ export function StreakPanel({
 
 export interface StreakButtonProps {
   summary: StreakSummary | undefined;
+  /** Cards due today, which make a day confirmed as nothing due read as open. */
+  due?: number | undefined;
   variant: StreakFace;
   className?: string | undefined;
   /** Opens the app's one streak place. Without it the button opens a place of its own, as on the design page. */
@@ -379,12 +374,12 @@ export interface StreakButtonProps {
 }
 
 /** The pill in the chrome, or the card on Today. Every face opens the same place. */
-export function StreakButton({ summary, variant, className, onOpen }: StreakButtonProps) {
+export function StreakButton({ summary, due = 0, variant, className, onOpen }: StreakButtonProps) {
   const { t } = useLingui();
   const [ownOpen, setOwnOpen] = useState(false);
   const rail = variant === "rail";
   const card = variant === "card";
-  const status = useTodayStatus(summary);
+  const status = useTodayStatus(summary, due);
 
   if (!summary) {
     return (
@@ -411,14 +406,14 @@ export function StreakButton({ summary, variant, className, onOpen }: StreakButt
   const face = card
     ? clsx(
         // A wide single-column card puts the week beside the run; the desktop column stacks them again.
-        "edge grid w-full grid-cols-1 content-between @xl:grid-cols-[minmax(0,1fr)_auto] @xl:items-center @xl:gap-x-6 @3xl:grid-cols-none @3xl:items-stretch gap-4 rounded-xl bg-plate p-5 text-start text-text transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:veil",
+        "edge grid w-full grid-cols-1 content-between @xl:grid-cols-[minmax(0,1fr)_auto] @xl:items-center @xl:gap-x-6 @3xl:grid-cols-none @3xl:items-stretch gap-4 rounded-xl bg-plate p-5 text-start text-ink transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.98] motion-reduce:active:scale-100 hoverable:hover:edge-strong hoverable:hover:veil",
         className,
       )
     : clsx(
-        "relative inline-flex shrink-0 items-center rounded-full font-semibold text-text transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100",
+        "relative inline-flex shrink-0 items-center rounded-full font-semibold text-ink transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100",
         rail
           ? "h-8 gap-1.5 px-2.5 text-sm before:absolute before:-inset-1.5 before:content-[''] hoverable:hover:bg-rail-hover"
-          : "h-10 gap-2 px-2.5 text-base before:absolute before:inset-x-0 before:-inset-y-1 before:content-[''] hoverable:hover:bg-hover",
+          : "h-10 gap-2 px-2.5 text-base before:absolute before:inset-x-0 before:-inset-y-1 before:content-[''] hoverable:hover:bg-plate-hover",
         className,
       );
 
@@ -437,7 +432,9 @@ export function StreakButton({ summary, variant, className, onOpen }: StreakButt
           <PillFace summary={summary} variant={variant} />
         )}
       </button>
-      {!onOpen && <StreakPlace open={ownOpen} onOpenChange={setOwnOpen} summary={summary} />}
+      {!onOpen && (
+        <StreakPlace open={ownOpen} onOpenChange={setOwnOpen} summary={summary} due={due} />
+      )}
     </>
   );
 }

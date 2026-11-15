@@ -10,6 +10,7 @@ import {
   languageSupport,
   pronunciationGuide,
   pronunciationName,
+  speechContext,
   speechInputs,
   speechLocale,
   stressRules,
@@ -45,11 +46,13 @@ describe("languageSupport", () => {
 });
 
 describe("supportedLanguage", () => {
-  it("finds Japanese and Chinese, and leaves out Russian until it joins SupportedTag", () => {
+  it("finds each supported language, and leaves out Tamil until it joins SupportedTag", () => {
     expect(supportedLanguage("ja-JP")?.tag).toBe("ja");
     expect(supportedLanguage("zh-Hant-TW")?.tag).toBe("zh");
+    expect(supportedLanguage("uk-UA")?.tag).toBe("uk");
+    expect(supportedLanguage("ru")?.tag).toBe("ru");
     expect(supportedLanguage("zh-yue")).toBeNull();
-    expect(supportedLanguage("ru")).toBeNull();
+    expect(supportedLanguage("ta")).toBeNull();
   });
 });
 
@@ -213,6 +216,14 @@ describe("languageFormat for Russian", () => {
   });
   it("names a script for every language it publishes", () => {
     for (const format of LANGUAGE_FORMATS) expect(format.scripts.length).toBeGreaterThan(0);
+  });
+});
+
+describe("speechContext", () => {
+  it("names the words a voice hears first, from a record or a configured row", () => {
+    expect(speechContext("uk")).toBe("Українською:");
+    expect(speechContext("pl-PL")).toBe("Po polsku:");
+    expect(speechContext("de")).toBeNull();
   });
 });
 

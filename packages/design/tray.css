@@ -129,7 +129,7 @@
   line-height: 1.3;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: var(--muted);
+  color: var(--ink-muted);
 }
 .deck-tray-term {
   display: -webkit-box;
@@ -143,7 +143,7 @@
   line-height: 1.02;
   letter-spacing: -0.03em;
   overflow-wrap: anywhere;
-  color: var(--text);
+  color: var(--ink);
 }
 .deck-tray-meaning {
   display: -webkit-box;
@@ -152,15 +152,15 @@
   overflow: hidden;
   margin-top: auto;
   padding-top: calc(var(--cw) * 0.06);
-  border-top: 1px solid var(--edge-2);
+  border-top: 1px solid var(--edge-strong);
   font-size: max(0.75rem, calc(var(--cw) * 0.074));
   line-height: 1.3;
-  color: var(--text-2);
+  color: var(--ink-secondary);
 }
 /* A term recalled under the rule reads as the answer, a step firmer than a meaning there. */
 .deck-tray-meaning[data-target="term"] {
   font-weight: 500;
-  color: var(--text);
+  color: var(--ink);
 }
 
 /* A picture cue fills the card above the rule at its own shape, on the start edge like the text

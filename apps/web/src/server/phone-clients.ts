@@ -1,12 +1,15 @@
 import {
   CLIENT_HEADER,
   compareVersions,
+  drawsTermReading,
   isClientVersion,
   type PhonePlatform,
   parseClientHeader,
+  pronunciationText,
   type ReadingEngine,
   readingEngine,
   stripReadings,
+  termShowsPronunciation,
   UPDATE_REQUIRED,
 } from "@lymi/core";
 import type { Context, MiddlewareHandler } from "hono";
@@ -110,6 +113,51 @@ export const leaveOutExampleReadings: MiddlewareHandler<AppEnv> = async (c, next
   const headers = new Headers(c.res.headers);
   headers.delete("content-length");
   c.res = new Response(JSON.stringify(withoutExampleReadings(JSON.parse(text), engines)), {
+    status: c.res.status,
+    headers,
+  });
+};
+
+/** The first phone release that charts a Japanese Reading's pitch accent. docs/card-writing.md. */
+export const PITCH_ACCENT_SINCE: ShownSince = { ios: "0.0.11", android: "0.0.11" };
+
+/** A pitch accent after kana as it reads in JSON, so a response without any skips the parse. */
+const PITCH_AFTER_KANA = /[\p{Script=Hiragana}\p{Script=Katakana}ー]\s*\[\d{1,2}\]/u;
+
+/** A JSON value with the pitch accent taken out of every Japanese card's Reading. */
+export function withoutPitchAccent(value: unknown): unknown {
+  if (Array.isArray(value)) return value.map(withoutPitchAccent);
+  if (!value || typeof value !== "object") return value;
+  const out: Record<string, unknown> = {};
+  for (const [key, item] of Object.entries(value)) out[key] = withoutPitchAccent(item);
+  const { term, pronunciation, language } = out;
+  if (typeof pronunciation === "string" && typeof language === "string") {
+    const reading = pronunciationText({ language, pronunciation });
+    // These releases show a Reading that repeats a kana term as a line of its own.
+    const repeats =
+      reading !== pronunciation &&
+      typeof term === "string" &&
+      termShowsPronunciation({ term, language, pronunciation }) &&
+      !drawsTermReading({ term, language, pronunciation });
+    out.pronunciation = repeats ? null : reading;
+  }
+  return out;
+}
+
+/**
+ * Takes the pitch accent out of every JSON answer to a phone release that would refuse the Reading
+ * and show it as text, without furigana. The stored Reading keeps it, since a phone sends only the
+ * fields a learner changed. ADR 0032.
+ */
+export const leaveOutPitchAccent: MiddlewareHandler<AppEnv> = async (c, next) => {
+  await next();
+  if (!c.get("phone") || clientSupports(c, PITCH_ACCENT_SINCE)) return;
+  if (!c.res.headers.get("content-type")?.includes("application/json")) return;
+  const text = await c.res.clone().text();
+  if (!PITCH_AFTER_KANA.test(text)) return;
+  const headers = new Headers(c.res.headers);
+  headers.delete("content-length");
+  c.res = new Response(JSON.stringify(withoutPitchAccent(JSON.parse(text))), {
     status: c.res.status,
     headers,
   });

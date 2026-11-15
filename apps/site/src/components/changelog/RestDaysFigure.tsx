@@ -13,7 +13,7 @@ function Flame() {
       <path d="M12 1C7 9 2 14 2 21a10 10 0 0 0 20 0c0-7-5-12-10-20Z" fill="var(--amber)" />
       <path
         d="M12 15c-2.5 3.5-5 5.5-5 8.5a5 5 0 0 0 10 0c0-3-2.5-5-5-8.5Z"
-        fill="var(--flame-core)"
+        fill="var(--lantern-flame)"
       />
     </svg>
   );
@@ -34,18 +34,18 @@ export function RestDaysFigure() {
     <div aria-hidden="true" className="mx-auto max-w-[400px] rounded-xl bg-plate p-5 edge">
       <div className="flex items-end gap-3">
         <Flame />
-        <span className="text-5xl leading-none font-medium tracking-[-0.03em] text-text">11</span>
-        <span className="pb-1 text-base text-text-2">
+        <span className="text-5xl leading-none font-medium tracking-[-0.03em] text-ink">11</span>
+        <span className="pb-1 text-base text-ink-secondary">
           <Trans>days in a row</Trans>
         </span>
       </div>
-      <p className="mt-2 text-sm text-text-2">
+      <p className="mt-2 text-sm text-ink-secondary">
         <Trans>Yesterday was a rest day.</Trans>
       </p>
       <div className="mt-5 grid grid-cols-7 gap-y-2 text-center">
         {weekdays.map((name, index) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: narrow weekday names repeat, so the index is the identity
-          <span key={index} className="pb-1 text-xs text-muted">
+          <span key={index} className="pb-1 text-xs text-ink-muted">
             {name}
           </span>
         ))}
@@ -70,8 +70,8 @@ export function RestDaysFigure() {
                     className={clsx(
                       "relative size-8 rounded-full",
                       day === "lit" && "border-2 border-amber bg-plate",
-                      day === "today" && "border-2 border-edge-2",
-                      day === "later" && "border border-dashed border-edge-2",
+                      day === "today" && "border-2 border-edge-strong",
+                      day === "later" && "border border-dashed border-edge-strong",
                     )}
                   />
                 )}

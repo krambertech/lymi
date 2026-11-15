@@ -54,6 +54,21 @@ describe("startDecks", () => {
     ]);
   });
 
+  it("offers a Polish beginner A1, then A2, then the core words, though Polish is only configured", () => {
+    const catalog = [
+      deck("core-polish-words", "pl"),
+      deck("polish-for-offices-and-paperwork", "pl"),
+      deck("polish-a2-vocabulary", "pl"),
+      deck("polish-a1-vocabulary", "pl"),
+    ];
+    expect(slugs(catalog, "pl")).toEqual([
+      "polish-a1-vocabulary",
+      "polish-a2-vocabulary",
+      "core-polish-words",
+      "polish-for-offices-and-paperwork",
+    ]);
+  });
+
   it("fills a missing beginner deck's place with the language's next deck in Explore's order", () => {
     const catalog = [
       deck("travel-japanese"),

@@ -8,8 +8,7 @@ export function Mobile() {
   return (
     <div className="doc-prose">
       <Lead>
-        A Lymi app for iPhone and Android is planned, but it is not in the App Store or Google Play
-        yet. Until then, add Lymi to your home screen. It opens from its own icon, without the
+        Add the Lymi web app to your phone’s home screen. It opens from its own icon, without the
         browser around it, and keeps the same cards you see on a computer.
       </Lead>
 
@@ -128,17 +127,12 @@ export function Mobile() {
         reminder on again.
       </p>
 
-      <Note title="When the app arrives">
-        The Lymi app will use the same account. Sign in and your decks, cards and review history are
-        already there.
-      </Note>
-
       <NextLinks
         items={[
           {
             to: "/docs/cards",
             title: "Decks and cards",
-            blurb: "How a card is shaped, and what counts as a duplicate.",
+            blurb: "Technical card fields and duplicate rules.",
           },
           {
             to: "/docs/import-from-anki",

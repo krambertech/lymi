@@ -33,8 +33,8 @@ export default function Email() {
           className="-ms-1.5 h-11 flex-row items-center gap-1 pe-2"
           accessibilityRole="link"
         >
-          <Icon name="back" size={20} colour={p.text} />
-          <Text className="text-md font-medium text-text-2">{t`Back`}</Text>
+          <Icon name="back" size={20} colour={p.ink} />
+          <Text className="text-md font-medium text-ink-secondary">{t`Back`}</Text>
         </Press>
       </View>
       <EmailContent door={door} />

@@ -51,7 +51,7 @@ export function Wordmark({ size = 24, flame = false, className, title }: Wordmar
       {flame && (
         <g className="flame">
           <path d={WORDMARK.flame} fill="var(--amber)" />
-          <path d={WORDMARK.flameCore} fill="var(--flame-core)" />
+          <path d={WORDMARK.flameCore} fill="var(--lantern-flame)" />
         </g>
       )}
     </svg>
@@ -113,16 +113,18 @@ export function Lockup({
       width={width * k}
       height={h * k}
       className={clsx(
-        "lantern shrink-0 select-none overflow-visible text-text",
+        "lantern shrink-0 select-none overflow-visible text-ink",
         flicker && "lantern-flicker",
         className,
       )}
       style={style}
       role="img"
       aria-label={title}
+      // The page marks a flickering lantern `data-offscreen` before React hydrates it.
+      suppressHydrationWarning
     >
       <g
-        className={clsx("lantern-body text-metal", glow && "glow")}
+        className={clsx("lantern-body text-lantern-metal", glow && "glow")}
         transform={`translate(${lanternX} ${lanternY}) scale(${s})`}
         style={{ height: L }}
       >
@@ -166,7 +168,7 @@ export function AppTile({ size = 28, glow = true, className, title }: AppTilePro
     <span
       data-theme="dark"
       className={clsx(
-        "grid shrink-0 place-items-center overflow-hidden bg-canvas text-metal",
+        "grid shrink-0 place-items-center overflow-hidden bg-canvas text-lantern-metal",
         className,
       )}
       style={{

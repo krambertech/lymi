@@ -30,11 +30,34 @@ export const SOURCES: { source: ImportSource; detail: MessageDescriptor }[] = [
 /** A file the learner picked: its bytes are read a part at a time while it uploads. */
 export type Picked = { file: File; name: string; size: number };
 
-/** iOS's file picker over every file, since Anki's and Mochi's types are not registered on the phone. */
-export async function pickFile(): Promise<Picked | null> {
-  const picked = await File.pickFileAsync();
-  if (picked.canceled) return null;
-  return { file: picked.result, name: picked.result.name, size: picked.result.size };
+/** The picker's answers that are no failure: the learner closed it, or tapped again while it opened. */
+const NOT_FAILURES = new Set([
+  "ERR_FILE_PICKING_CANCELLED",
+  "ERR_PICKER_CANCELLED",
+  "ERR_PICKING_IN_PROGRESS",
+]);
+
+/**
+ * iOS's file picker over every file, since Anki's and Mochi's types are not registered on the phone.
+ * Null is a cancel, or a failure already told through `onRefused`. The type argument selects
+ * expo-file-system's older call, because its options call turns every picker error into a cancel.
+ */
+export async function pickFile(onRefused: (message: string) => void): Promise<Picked | null> {
+  let file: File;
+  try {
+    file = (await File.pickFileAsync(undefined, "*/*")) as File;
+  } catch (error) {
+    if (!NOT_FAILURES.has((error as { code?: string }).code ?? "")) {
+      onRefused(i18n._(msg`Couldn’t open Files. Try again.`));
+    }
+    return null;
+  }
+  try {
+    return { file, name: file.name, size: file.size };
+  } catch {
+    onRefused(i18n._(msg`Couldn’t open that file. Try again, or choose another one.`));
+    return null;
+  }
 }
 
 /** A picked file as the shared upload reads it: each part's bytes straight from the file. */

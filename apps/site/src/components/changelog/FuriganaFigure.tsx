@@ -10,7 +10,7 @@ function Ruby({ text, reading, known }: { text: string; reading: string; known?:
         className={
           known
             ? "invisible text-[max(0.5em,0.625rem)] font-normal tracking-normal"
-            : "text-[max(0.5em,0.625rem)] font-normal tracking-normal text-text-2"
+            : "text-[max(0.5em,0.625rem)] font-normal tracking-normal text-ink-secondary"
         }
       >
         {reading}
@@ -23,19 +23,19 @@ function Ruby({ text, reading, known }: { text: string; reading: string; known?:
 export function FuriganaFigure() {
   return (
     <div aria-hidden="true" className="mx-auto max-w-[400px] rounded-xl bg-plate p-5 edge">
-      <p className="flex items-center gap-1.5 text-xs text-muted">
+      <p className="flex items-center gap-1.5 text-xs text-ink-muted">
         <BookOpen className="size-3.5" />
         Japanese N5
       </p>
-      <p lang="ja" className="mt-6 text-5xl font-medium text-text">
+      <p lang="ja" className="mt-6 text-5xl font-medium text-ink">
         <Ruby text="食" reading="た" />
         べる
       </p>
       <div className="my-4 h-px bg-edge" />
-      <p className="text-xl text-text">
+      <p className="text-xl text-ink">
         <Trans>to eat</Trans>
       </p>
-      <p lang="ja" className="mt-3 text-xl leading-loose text-text-2">
+      <p lang="ja" className="mt-3 text-xl leading-loose text-ink-secondary">
         <Ruby text="毎朝" reading="まいあさ" known />
         パンを
         <Ruby text="食" reading="た" />

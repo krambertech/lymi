@@ -2,6 +2,7 @@ import {
   CardWithStateOut,
   DeckInput,
   DeckOut,
+  DeckPreferencesInput,
   DeckSummaryOut,
   EditionApprovalInput,
   EditionImportInput,
@@ -27,7 +28,7 @@ import type { AppEnv } from "../index";
 import { limitInvitationSends } from "../invitation-rate-limit";
 import { leadInDependencies } from "../lead-ins";
 import { clientSupports, EXAMPLE_TRANSLATION_SINCE } from "../phone-clients";
-import { ownerAnalytics } from "../posthog";
+import { ownerAnalytics, reportServerException } from "../posthog";
 import {
   approveEdition,
   archiveDeck,
@@ -49,6 +50,7 @@ import {
   publishEdition,
   removeMember,
   restoreDeck,
+  setDeckPreferences,
   turnOffJoinLink,
   turnOnJoinLink,
   updateDeck,
@@ -143,6 +145,20 @@ decks.patch(
   },
 );
 
+decks.put(
+  "/:id/preferences",
+  describe({
+    tags: ["Decks"],
+    summary: "Set your preferences for a deck",
+    description:
+      "The caller's own choices for a deck they own or study, such as whether the front of a card shows the term's pronunciation. They change the deck for nobody else. Needs the write scope.",
+    ok: { schema: DeckOut, description: "The deck with the caller's preferences" },
+    errors: [400, 404],
+  }),
+  body(DeckPreferencesInput, "preferences"),
+  async (c) => c.json(await setDeckPreferences(ctxOf(c), c.req.param("id"), c.req.valid("json"))),
+);
+
 decks.post(
   "/:id/archive",
   describe({
@@ -170,7 +186,7 @@ decks.post(
 decks.post(
   "/:id/leave",
   describe({
-    tags: ["Decks"],
+    tags: ["Sharing"],
     summary: "Leave a shared deck",
     learnerOnly: true,
     description:
@@ -190,7 +206,7 @@ const MEMBERS =
 decks.get(
   "/:id/members",
   describe({
-    tags: ["Decks"],
+    tags: ["Sharing"],
     summary: "List a deck's members",
     learnerOnly: true,
     description: `${MEMBERS} The owner is not in the list; the deck's \`owner\` names them.`,
@@ -203,7 +219,7 @@ decks.get(
 decks.delete(
   "/:id/members/:memberId",
   describe({
-    tags: ["Decks"],
+    tags: ["Sharing"],
     summary: "Remove a member from a deck",
     learnerOnly: true,
     description:
@@ -222,7 +238,7 @@ const INVITATIONS =
 decks.get(
   "/:id/invitations",
   describe({
-    tags: ["Decks"],
+    tags: ["Sharing"],
     summary: "List a deck's open invitations",
     learnerOnly: true,
     description: `${INVITATIONS} Only invitations nobody has accepted or cancelled are listed.`,
@@ -235,7 +251,7 @@ decks.get(
 decks.post(
   "/:id/invitations",
   describe({
-    tags: ["Decks"],
+    tags: ["Sharing"],
     summary: "Invite somebody to a deck",
     learnerOnly: true,
     description:
@@ -274,7 +290,7 @@ decks.post(
 decks.delete(
   "/:id/invitations/:invitationId",
   describe({
-    tags: ["Decks"],
+    tags: ["Sharing"],
     summary: "Cancel an invitation",
     learnerOnly: true,
     description: `${INVITATIONS} Its link stops working. An invitation already accepted is not found.`,
@@ -291,7 +307,7 @@ const JOIN_LINK =
 decks.get(
   "/:id/join-link",
   describe({
-    tags: ["Decks"],
+    tags: ["Sharing"],
     summary: "Get a deck's join link",
     learnerOnly: true,
     description: JOIN_LINK,
@@ -307,7 +323,7 @@ decks.get(
 decks.post(
   "/:id/join-link",
   describe({
-    tags: ["Decks"],
+    tags: ["Sharing"],
     summary: "Turn on a deck's join link",
     learnerOnly: true,
     description: `${JOIN_LINK} Returns the link that is already on, if there is one.`,
@@ -324,7 +340,7 @@ decks.post(
 decks.delete(
   "/:id/join-link",
   describe({
-    tags: ["Decks"],
+    tags: ["Sharing"],
     summary: "Turn off a deck's join link",
     learnerOnly: true,
     description: `${JOIN_LINK} Members stay. The URL never works again; turning it on makes a new one.`,
@@ -344,7 +360,7 @@ const PUBLICATION =
 decks.get(
   "/:id/publication",
   describe({
-    tags: ["Decks"],
+    tags: ["Publishing"],
     summary: "Get a deck's publication",
     description: PUBLICATION,
     ok: { schema: PublicationOut, description: "The publication, or null" },
@@ -357,7 +373,7 @@ decks.get(
 decks.put(
   "/:id/publication",
   describe({
-    tags: ["Decks"],
+    tags: ["Publishing"],
     summary: "Publish a deck",
     description: `${PUBLICATION} Publishing again updates the public page and brings a withdrawn deck back.`,
     ok: { schema: PublicationOut, description: "The publication" },
@@ -379,7 +395,9 @@ decks.put(
           analytics: ownerAnalytics(c.env, ctx.db, (work) => c.executionCtx.waitUntil(work)),
         },
         { slug: input.slug, limit: PUBLISHED_AUDIO_ON_PUBLISH },
-      ).catch(() => undefined),
+      ).catch((error: unknown) =>
+        reportServerException(c.env, error, { route: "decks/publish-audio", method: "PUT" }),
+      ),
     );
     return c.json(publicationOut(c.env.PRODUCT_URL, publication));
   },
@@ -388,7 +406,7 @@ decks.put(
 decks.delete(
   "/:id/publication",
   describe({
-    tags: ["Decks"],
+    tags: ["Publishing"],
     summary: "Withdraw a published deck",
     description: `${PUBLICATION} Members keep studying it; nobody new can add it, and it leaves Explore and the sitemap. With \`redirectTo\`, its public page sends visitors to that deck with a permanent redirect; a target that is not published is refused. Withdrawing a withdrawn deck again sets or moves its redirect. Publishing it again brings it back and drops the redirect.`,
     ok: { schema: PublicationOut, description: "The withdrawn publication" },
@@ -419,7 +437,7 @@ function editionLanguage(value: string | undefined) {
 decks.get(
   "/:id/editions",
   describe({
-    tags: ["Decks"],
+    tags: ["Publishing"],
     summary: "List a deck's editions",
     description: `${EDITION} Each says how much of it is signed off, how much has gone stale, and what is holding it back.`,
     ok: { schema: EditionsOut, description: "Every edition of the deck" },
@@ -431,7 +449,7 @@ decks.get(
 decks.put(
   "/:id/editions/:language",
   describe({
-    tags: ["Decks"],
+    tags: ["Publishing"],
     summary: "Write an edition's text",
     description: `${EDITION} Every row lands as a draft against the text it was written from, so text sent over a signed-off row is signed off again. One call takes at most 500 cards; send a longer edition in parts, and each part adds to the same edition. Nothing reaches learners until the edition is published.`,
     ok: { schema: EditionOut, description: "Where the edition stands now" },
@@ -453,7 +471,7 @@ decks.put(
 decks.post(
   "/:id/editions/:language/approval",
   describe({
-    tags: ["Decks"],
+    tags: ["Publishing"],
     summary: "Sign off an edition's text",
     description: `${EDITION} It is signed off against the text as it stands now; an empty body signs off the whole edition. An MCP client cannot, and neither can a read-only key.`,
     ok: { schema: EditionOut, description: "Where the edition stands now" },
@@ -475,7 +493,7 @@ decks.post(
 decks.put(
   "/:id/editions/:language/publication",
   describe({
-    tags: ["Decks"],
+    tags: ["Publishing"],
     summary: "Publish an edition",
     description: `${EDITION} An edition missing text, or written from text that has since changed, is refused with what is holding it back.`,
     ok: { schema: EditionOut, description: "The published edition" },
@@ -495,7 +513,7 @@ decks.put(
 decks.delete(
   "/:id/editions/:language/publication",
   describe({
-    tags: ["Decks"],
+    tags: ["Publishing"],
     summary: "Withdraw an edition",
     description: `${EDITION} Nobody new can add it; the learners who pinned it keep reading it.`,
     ok: { schema: EditionOut, description: "The withdrawn edition" },

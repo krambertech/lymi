@@ -17,9 +17,9 @@ export function McpGrok() {
       <Code lang="text" label="MCP server URL" code={`${ORIGIN}/mcp`} />
 
       <p>
-        Custom connectors are on Grok’s paid plans. Once connected, ask Grok to add the cards from a
-        lesson, list what is due, or find a card. What it can and cannot do is on{" "}
-        <a href="/docs/mcp">Connect an assistant</a>.
+        On a team account, an admin may need to enable the connector first. Once connected, ask Grok
+        to add the cards from a lesson, list what is due, or find a card. What it can and cannot do
+        is on <a href="/docs/mcp">Connect an assistant</a>.
       </p>
 
       <H2>Grok</H2>
@@ -55,8 +55,8 @@ export function McpGrok() {
       <ul>
         <li>
           <strong>“Invalid redirect URI”.</strong> Grok signed in from a callback address Lymi does
-          not list. Write to <a href="mailto:hello@lymi.app">hello@lymi.app</a> with the address in
-          the error, and Lymi will add it.
+          not list. Write to <a href="mailto:hello@lymi.app">hello@lymi.app</a> with the callback
+          address in the error so it can be checked. Do not send a token or the full sign-in URL.
         </li>
         <li>
           <strong>Grok never asks for a client ID.</strong> It tried to register itself and Lymi

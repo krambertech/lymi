@@ -23,6 +23,7 @@ import {
   touchRowClassName,
   useListName,
 } from "./overlay-list";
+import { usePortalContainer } from "./portal-container";
 
 /*
  * shadcn's Select, in the shape of the machine: a list anchored under its box on a desktop, the
@@ -165,7 +166,7 @@ function SelectTrigger({
       : cn(
           controlBase,
           controlSize,
-          "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-open:not-aria-invalid:edge-2 data-placeholder:text-muted",
+          "flex items-center gap-2 ps-3.5 pe-3 text-start select-none data-open:not-aria-invalid:edge-strong data-placeholder:text-ink-muted",
           className,
         );
   const chevron = look === "box" && <TriggerChevron />;
@@ -269,8 +270,9 @@ function AnchoredContent({
   const ref = React.useRef<HTMLDivElement>(null);
   const refs = useMergedRefs(ref, refProp);
   const hover = useFluidHover(ref, { items: OPTION, dividers: '[data-slot="select-separator"]' });
+  const container = usePortalContainer();
   return (
-    <SelectPrimitive.Portal>
+    <SelectPrimitive.Portal container={container}>
       <SelectPrimitive.Positioner
         className="isolate z-(--z-popup) outline-none"
         side={side}
@@ -418,7 +420,7 @@ function SelectLabel({
 }) {
   const { shape } = useSelect("SelectLabel");
   const labelId = React.useContext(GroupLabelContext);
-  const classes = cn("px-2.5 py-1.5 text-xs text-muted", className);
+  const classes = cn("px-2.5 py-1.5 text-xs text-ink-muted", className);
   return shape === "desktop" ? (
     <SelectPrimitive.GroupLabel data-slot="select-label" className={classes}>
       {children}
@@ -448,7 +450,7 @@ function Described({ name, description }: { name: React.ReactNode; description: 
   return (
     <>
       {name}
-      <span className="block text-sm whitespace-normal text-muted">{description}</span>
+      <span className="block text-sm whitespace-normal text-ink-muted">{description}</span>
     </>
   );
 }

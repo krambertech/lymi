@@ -33,7 +33,7 @@ export function Skeleton({
   }, [reduce, x]);
   const sweep = useAnimatedStyle(() => ({ transform: [{ translateX: `${x.value * 100}%` }] }));
   return (
-    <View className="overflow-hidden rounded-xs bg-plate-2" style={{ width, height }}>
+    <View className="overflow-hidden rounded-xs bg-plate-nested" style={{ width, height }}>
       {!reduce && (
         <Animated.View
           className="absolute inset-0"

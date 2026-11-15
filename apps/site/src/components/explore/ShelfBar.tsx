@@ -164,10 +164,12 @@ export function ShelfBar({ shelves }: { shelves: readonly Shelf[] }) {
       <a
         href={`#${shelfId(shelf.key)}`}
         onClick={(event) => jump(event, shelf.key)}
-        className="flex min-h-10 items-center justify-between gap-3 rounded-sm px-2.5 text-md font-medium text-text transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring pointer-coarse:min-h-12"
+        className="flex min-h-10 items-center justify-between gap-3 rounded-sm px-2.5 text-md font-medium text-ink transition-colors duration-150 hoverable:hover:bg-plate-hover focus-visible:outline-2 focus-visible:-outline-offset-2 focus-visible:outline-ring pointer-coarse:min-h-12"
       >
         {label}
-        <span className="text-sm font-normal text-muted tabular-nums">{shelf.decks.length}</span>
+        <span className="text-sm font-normal text-ink-muted tabular-nums">
+          {shelf.decks.length}
+        </span>
       </a>
     </li>
   );
@@ -182,12 +184,12 @@ export function ShelfBar({ shelves }: { shelves: readonly Shelf[] }) {
         <button
           type="button"
           popoverTarget={listId}
-          className={`${chipClass} shrink-0 bg-transparent text-text shadow-[inset_0_0_0_1px_var(--edge-2)] hoverable:hover:bg-hover`}
+          className={`${chipClass} shrink-0 bg-transparent text-ink shadow-[inset_0_0_0_1px_var(--edge-strong)] hoverable:hover:bg-plate-hover`}
         >
-          <List aria-hidden="true" className="size-4 text-muted" />
+          <List aria-hidden="true" className="size-4 text-ink-muted" />
           <Trans>All shelves</Trans>
         </button>
-        <span aria-hidden="true" className="h-6 w-px shrink-0 bg-edge-2" />
+        <span aria-hidden="true" className="h-6 w-px shrink-0 bg-edge-strong" />
         <ul
           ref={row}
           data-fade={edges.end || undefined}
@@ -202,10 +204,12 @@ export function ShelfBar({ shelves }: { shelves: readonly Shelf[] }) {
                   data-shelf={shelf.key}
                   aria-current={on ? "location" : undefined}
                   onClick={(event) => jump(event, shelf.key)}
-                  className={`${chipClass} ${on ? "bg-text text-canvas" : "bg-plate-2 text-text hoverable:hover:bg-hover active:bg-hover"}`}
+                  className={`${chipClass} ${on ? "bg-ink text-canvas" : "bg-plate-nested text-ink hoverable:hover:bg-plate-hover active:bg-plate-hover"}`}
                 >
                   {shelfLabel(i18n, shelf)}
-                  <span className={`text-sm tabular-nums ${on ? "text-canvas/60" : "text-muted"}`}>
+                  <span
+                    className={`text-sm tabular-nums ${on ? "text-canvas/60" : "text-ink-muted"}`}
+                  >
                     {shelf.decks.length}
                   </span>
                 </a>
@@ -220,7 +224,7 @@ export function ShelfBar({ shelves }: { shelves: readonly Shelf[] }) {
             type="button"
             onClick={() => nudge(-1)}
             aria-label={t`Earlier shelves`}
-            className="grid size-9 place-items-center rounded-full bg-plate text-text edge transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="grid size-9 place-items-center rounded-full bg-plate text-ink edge transition-colors duration-150 hoverable:hover:bg-plate-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             <ChevronLeft aria-hidden="true" className="size-4 rtl:-scale-x-100" />
           </button>
@@ -228,7 +232,7 @@ export function ShelfBar({ shelves }: { shelves: readonly Shelf[] }) {
             type="button"
             onClick={() => nudge(1)}
             aria-label={t`Later shelves`}
-            className="grid size-9 place-items-center rounded-full bg-plate text-text edge transition-colors duration-150 hoverable:hover:bg-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+            className="grid size-9 place-items-center rounded-full bg-plate text-ink edge transition-colors duration-150 hoverable:hover:bg-plate-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
           >
             <ChevronRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
           </button>
@@ -242,13 +246,13 @@ export function ShelfBar({ shelves }: { shelves: readonly Shelf[] }) {
         className="shelf-list"
         aria-label={t`All shelves`}
       >
-        <p className="px-2.5 pt-3 pb-1 text-sm text-muted">
+        <p className="px-2.5 pt-3 pb-1 text-sm text-ink-muted">
           <Trans>Languages</Trans>
         </p>
         <ul className="shelf-list-columns">{languages.map(listLink)}</ul>
         {others.length > 0 && (
           <>
-            <p className="px-2.5 pt-4 pb-1 text-sm text-muted">
+            <p className="px-2.5 pt-4 pb-1 text-sm text-ink-muted">
               <Trans>Subjects</Trans>
             </p>
             <ul className="shelf-list-columns">{others.map(listLink)}</ul>

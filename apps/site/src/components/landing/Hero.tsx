@@ -1,5 +1,6 @@
 import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
+import { ArrowRight } from "lucide-react";
 import { type ReactNode, useState } from "react";
 import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
@@ -17,10 +18,26 @@ interface Props {
   behind?: ((front: string | undefined) => ReactNode) | undefined;
   /** A scene of its own in place of the hand of cards. */
   visual?: ReactNode;
+  /** A quieter second way in, beside Get started. */
+  secondary?: { href: string; label: ReactNode } | undefined;
+  /** A small line under the actions. */
+  after?: ReactNode;
+  /** A pill above the title, shown to everyone, beside the origin badge when one shows. */
+  badge?: ReactNode;
 }
 
 /** The headline, one action, and a hand of cards to turn over. */
-export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
+export function Hero({
+  title,
+  lede,
+  cards,
+  layout,
+  behind,
+  visual,
+  secondary,
+  after,
+  badge,
+}: Props) {
   const [front, setFront] = useState<string>();
   return (
     <div
@@ -33,15 +50,38 @@ export function Hero({ title, lede, cards, layout, behind, visual }: Props) {
       )}
     >
       <div className="min-w-0 max-w-[540px]">
-        <OriginBadge />
-        <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-text @4xl:text-[4.25rem] @4xl:leading-[0.98]">
+        {badge ? (
+          // The origin badge brings its own bottom margin; in the row the row owns it.
+          <div className="mb-6 flex flex-wrap items-center gap-2 *:mb-0">
+            {badge}
+            <OriginBadge />
+          </div>
+        ) : (
+          <OriginBadge />
+        )}
+        <h1 className="text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[4.25rem] @4xl:leading-[0.98]">
           {title}
         </h1>
-        <p className="mt-6 max-w-[44ch] text-lg text-pretty text-text-2 @2xl:text-xl">{lede}</p>
-        <div className="mt-8">
-          <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-            <Trans>Get started</Trans>
-          </a>
+        <p className="mt-6 max-w-[44ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">
+          {lede}
+        </p>
+        <div data-nav="hero">
+          <div className="mt-8 flex flex-wrap items-center gap-3">
+            <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
+              <Trans>Get started</Trans>
+            </a>
+            {secondary && (
+              <a href={secondary.href} className={buttonClass("ghost", "lg")}>
+                {secondary.label}
+                <ArrowRight
+                  aria-hidden="true"
+                  data-icon="inline-end"
+                  className="rtl:-scale-x-100"
+                />
+              </a>
+            )}
+          </div>
+          {after && <div className="mt-8">{after}</div>}
         </div>
       </div>
 

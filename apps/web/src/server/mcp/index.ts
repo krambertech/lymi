@@ -1,6 +1,7 @@
 import { requireMcpAuth } from "@better-auth/mcp";
 import { AppLanguage } from "@lymi/core";
 import { createMcpHandler } from "agents/mcp/server";
+import { assistantClientOf } from "../assistant-client";
 import type { Auth } from "../auth";
 import type { Db } from "../db";
 import { type Bindings, publisherEmails } from "../env";
@@ -67,6 +68,7 @@ export async function authorizeMcpClaims(
           | "APP_PREVIEW"
           | "CF_VERSION_METADATA"
           | "PUBLISHER_EMAILS"
+          | "PUBLIC_SITE_URL"
         >
       >;
   },
@@ -116,6 +118,7 @@ export async function authorizeMcpClaims(
     enrichment: enrichmentQueue(deps.env),
     publishers: publisherEmails(deps.env),
     appLanguage: AppLanguage.catch("en").parse(appLanguage),
+    assistant: assistantClientOf(clientId, deps.env.PUBLIC_SITE_URL),
   };
 }
 

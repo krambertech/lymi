@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
+import { Sparkle } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { type ReactNode, useMemo, useRef } from "react";
 import { appear, EASE, usePlayback, useStill } from "./playback";
@@ -36,7 +37,7 @@ export function Field({
         filling && "shadow-[inset_0_0_0_1px_var(--color-ai),0_0_0_4px_var(--color-ai-soft)]",
       )}
     >
-      <span className="flex items-center justify-between text-xs font-medium text-muted">
+      <span className="flex items-center justify-between text-xs font-medium text-ink-muted">
         {label}
         {wrote !== undefined && <AiMark on={wrote} />}
       </span>
@@ -45,13 +46,53 @@ export function Field({
   );
 }
 
+/**
+ * The hint field as the card form shows it: enrichment leaves it empty, and Draft asks the AI
+ * for one. `pressed` shows the press, `drafted` swaps the button for the hint and its AI mark.
+ */
+export function HintField({
+  pressed,
+  drafted,
+  children,
+}: {
+  pressed: boolean;
+  drafted: boolean;
+  children: ReactNode;
+}) {
+  return (
+    <Field label={<Trans>Hint</Trans>} wrote={drafted}>
+      <span className="grid min-h-[1.5em] items-center">
+        <span
+          aria-hidden={drafted}
+          className={clsx(
+            "col-start-1 row-start-1 inline-flex h-7 items-center gap-1.5 justify-self-start rounded-md px-2.5 text-xs font-medium text-ink edge transition-[opacity,transform,background-color] duration-200",
+            pressed ? "scale-95 bg-plate-hover" : "bg-plate",
+            drafted && "invisible opacity-0",
+          )}
+        >
+          <Sparkle className="size-3.5 text-ai" aria-hidden="true" />
+          <Trans>Draft</Trans>
+        </span>
+        <motion.span
+          initial={false}
+          animate={appear(drafted)}
+          className="col-start-1 row-start-1 text-md text-ink"
+        >
+          {children}
+        </motion.span>
+      </span>
+    </Field>
+  );
+}
+
 const ENRICH_BEATS = {
   typed: 1000,
   reading: 1700,
   meaning: 2400,
   example: 3100,
-  hook: 3800,
-  known: 5200,
+  draft: 4000,
+  hint: 4500,
+  known: 5500,
 };
 
 /** A word typed after a lesson; the AI fills each empty field, then the words already known lose their readings. */
@@ -66,9 +107,9 @@ export function EnrichJapanese() {
     clsx("transition-[opacity,visibility] duration-500", on && "invisible opacity-0");
 
   return (
-    <div ref={root} className="grid gap-2 rounded-xl bg-plate-2 p-3 edge-inset @2xl:p-4">
+    <div ref={root} className="grid gap-2 rounded-xl bg-plate-nested p-3 edge-inset @2xl:p-4">
       <Field label={<Trans>Term</Trans>}>
-        <span lang="ja" className="min-h-[1.4em] text-2xl font-medium text-text">
+        <span lang="ja" className="min-h-[1.4em] text-2xl font-medium text-ink">
           {at("typed") ? "乗り換える" : "乗り換"}
         </span>
       </Field>
@@ -77,7 +118,7 @@ export function EnrichJapanese() {
           lang="ja"
           initial={false}
           animate={appear(at("reading"))}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           のりかえる
         </motion.span>
@@ -86,7 +127,7 @@ export function EnrichJapanese() {
         <motion.span
           initial={false}
           animate={appear(at("meaning"))}
-          className="min-h-[1.5em] text-md text-text"
+          className="min-h-[1.5em] text-md text-ink"
         >
           <Trans>To change (trains, buses)</Trans>
         </motion.span>
@@ -96,28 +137,28 @@ export function EnrichJapanese() {
           lang="ja"
           initial={false}
           animate={appear(at("example"))}
-          className="min-h-[2.2em] text-lg leading-[2.2] text-text"
+          className="min-h-[2.2em] text-md leading-[2.2] text-ink"
         >
           <ruby>
-            次<rt className={clsx("text-[0.5em] text-text-2", fade(known))}>つぎ</rt>
+            次<rt className={clsx("text-[0.5em] text-ink-secondary", fade(known))}>つぎ</rt>
           </ruby>
           の
           <ruby>
-            駅<rt className={clsx("text-[0.5em] text-text-2", fade(known))}>えき</rt>
+            駅<rt className={clsx("text-[0.5em] text-ink-secondary", fade(known))}>えき</rt>
           </ruby>
           で
           <ruby>
-            乗<rt className="text-[0.5em] text-text-2">の</rt>
+            乗<rt className="text-[0.5em] text-ink-secondary">の</rt>
           </ruby>
           り
           <ruby>
-            換<rt className="text-[0.5em] text-text-2">か</rt>
+            換<rt className="text-[0.5em] text-ink-secondary">か</rt>
           </ruby>
           えます。
         </motion.span>
         <span
           className={clsx(
-            "text-xs text-muted transition-opacity duration-500",
+            "text-xs text-ink-muted transition-opacity duration-500",
             !known && "opacity-0",
           )}
         >
@@ -127,18 +168,12 @@ export function EnrichJapanese() {
           </Trans>
         </span>
       </Field>
-      <Field label={<Trans>Memory hook</Trans>} wrote={at("hook")}>
-        <motion.span
-          initial={false}
-          animate={appear(at("hook"))}
-          className="min-h-[1.5em] text-md text-text"
-        >
-          <Trans>
-            <span lang="ja">乗る</span> to get on, plus <span lang="ja">換える</span> to swap: you
-            get on a different train.
-          </Trans>
-        </motion.span>
-      </Field>
+      <HintField pressed={at("draft")} drafted={at("hint")}>
+        <Trans>
+          <span lang="ja">乗る</span> to get on, plus <span lang="ja">換える</span> to swap: you get
+          on a different train.
+        </Trans>
+      </HintField>
     </div>
   );
 }
@@ -227,20 +262,20 @@ export function PageToCards() {
           >
             <span
               lang="ja"
-              className="text-[26px] leading-[1.7] font-medium whitespace-nowrap text-text"
+              className="text-[26px] leading-[1.7] font-medium whitespace-nowrap text-ink"
             >
               {card.term.map(([kanji, reading]) =>
                 reading ? (
                   <ruby key={kanji}>
                     {kanji}
-                    <rt className="text-[0.45em] text-text-2">{reading}</rt>
+                    <rt className="text-[0.45em] text-ink-secondary">{reading}</rt>
                   </ruby>
                 ) : (
                   kanji
                 ),
               )}
             </span>
-            <span className="mb-2 truncate text-md text-text-2">{card.meaning}</span>
+            <span className="mb-2 truncate text-md text-ink-secondary">{card.meaning}</span>
           </motion.li>
         ))}
       </ul>

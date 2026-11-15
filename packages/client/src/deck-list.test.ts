@@ -10,6 +10,7 @@ import {
   liveFilters,
   noFilters,
   retag,
+  scopedFilters,
   splitForms,
   tagEdits,
   tagPicker,
@@ -130,7 +131,13 @@ describe("tags", () => {
 });
 
 describe("live filters", () => {
-  const filters = { states: [], due: null, sections: ["s1", "gone", ""], tags: ["food", "old"] };
+  const filters = {
+    states: [],
+    due: null,
+    sections: ["s1", "gone", ""],
+    tags: ["food", "old"],
+    important: false,
+  };
 
   it("drops the tags and sections the deck no longer has, keeping No section", () => {
     expect(liveFilters(filters, new Set(["food"]), new Set(["s1"]))).toEqual({
@@ -338,5 +345,27 @@ describe("chosenReview", () => {
       { id: "tonight", due: true },
       { id: "later", due: false },
     ]);
+  });
+});
+
+describe("scopedFilters", () => {
+  const ids = (list: DeckRow[]) => list.map((r) => r.card.id);
+
+  it("leaves a deck's filters as they are", () => {
+    const filters = { ...noFilters, sections: ["s4"] };
+    expect(scopedFilters(filters, {})).toBe(filters);
+  });
+
+  it("keeps a section's list to its section whatever else is chosen", () => {
+    const filters = scopedFilters(
+      { ...noFilters, states: ["known"], sections: ["s4"] },
+      { sectionId: "s5" },
+    );
+    expect(ids(filterRows(rows, filters, "", now, sections))).toEqual(["dueLaterToday"]);
+  });
+
+  it("lists the cards with no section under the empty id", () => {
+    const filters = scopedFilters(noFilters, { sectionId: "" });
+    expect(ids(filterRows(rows, filters, "", now, sections))).toEqual(["fresh"]);
   });
 });

@@ -1,9 +1,10 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { ArrowRight } from "lucide-react";
+import { clsx } from "clsx";
 import { useId } from "react";
 import { localizedPath } from "../../lib/routes";
+import { ArrowLink } from "./ArrowLink";
 
 type Gradient = {
   from: [x: number, y: number];
@@ -22,6 +23,7 @@ export type AssistantName =
   | "Codex"
   | "Gemini"
   | "Grok"
+  | "Cursor"
   | "Other apps";
 
 type Assistant = {
@@ -35,7 +37,7 @@ type Assistant = {
 
 /**
  * Each assistant links to its guide under /docs/mcp. Claude, Claude Code and MCP paths are
- * from simple-icons (CC0); OpenAI, Codex, Gemini and Grok from lobe-icons (MIT).
+ * from simple-icons (CC0); OpenAI, Codex, Gemini, Grok and Cursor from lobe-icons (MIT).
  */
 const ASSISTANTS: readonly Assistant[] = [
   {
@@ -107,6 +109,11 @@ const ASSISTANTS: readonly Assistant[] = [
     path: "M9.27 15.29l7.978-5.897c.391-.29.95-.177 1.137.272.98 2.369.542 5.215-1.41 7.169-1.951 1.954-4.667 2.382-7.149 1.406l-2.711 1.257c3.889 2.661 8.611 2.003 11.562-.953 2.341-2.344 3.066-5.539 2.388-8.42l.006.007c-.983-4.232.242-5.924 2.75-9.383.06-.082.12-.164.179-.248l-3.301 3.305v-.01L9.267 15.292M7.623 16.723c-2.792-2.67-2.31-6.801.071-9.184 1.761-1.763 4.647-2.483 7.166-1.425l2.705-1.25a7.808 7.808 0 00-1.829-1A8.975 8.975 0 005.984 5.83c-2.533 2.536-3.33 6.436-1.962 9.764 1.022 2.487-.653 4.246-2.34 6.022-.599.63-1.199 1.259-1.682 1.925l7.62-6.815",
   },
   {
+    name: "Cursor",
+    guide: "/docs/mcp/cursor",
+    path: "M22.106 5.68L12.5.135a.998.998 0 00-.998 0L1.893 5.68a.84.84 0 00-.419.726v11.186c0 .3.16.577.42.727l9.607 5.547a.999.999 0 00.998 0l9.608-5.547a.84.84 0 00.42-.727V6.407a.84.84 0 00-.42-.726zm-.603 1.176L12.228 22.92c-.063.108-.228.064-.228-.061V12.34a.59.59 0 00-.295-.51l-9.11-5.26c-.107-.062-.063-.228.062-.228h18.55c.264 0 .428.286.296.514z",
+  },
+  {
     name: "Other apps",
     label: msg`Other apps`,
     guide: "/docs/mcp",
@@ -115,12 +122,17 @@ const ASSISTANTS: readonly Assistant[] = [
 ];
 
 /** A vendor's colour is a quotation: it fills the mark and never the plate around it. */
-function Mark({ assistant }: { assistant: Assistant }) {
+function Mark({ assistant, small }: { assistant: Assistant; small?: boolean | undefined }) {
   const id = useId();
   const layers = assistant.brand === undefined ? ["currentColor"] : [assistant.brand].flat();
 
   return (
-    <svg aria-hidden="true" viewBox="0 0 24 24" className="size-5 shrink-0" fillRule="evenodd">
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 24 24"
+      className={clsx("shrink-0", small ? "size-4" : "size-5")}
+      fillRule="evenodd"
+    >
       <defs>
         {layers.map((paint, i) =>
           typeof paint === "string" ? null : (
@@ -164,7 +176,7 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
   const { t, i18n } = useLingui();
   if (compact) {
     return (
-      // Four to a row, so seven marks wrap four and three instead of leaving one alone.
+      // Four to a row, so eight marks fill two even rows.
       <ul
         aria-label={t`Connect an assistant`}
         className="grid grid-cols-[repeat(4,2.75rem)] justify-center gap-2"
@@ -177,7 +189,7 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
                 href={assistant.guide}
                 aria-label={name}
                 title={name}
-                className="edge grid size-11 place-items-center rounded-full bg-plate text-text transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover"
+                className="edge grid size-11 place-items-center rounded-full bg-plate text-ink transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-hover"
               >
                 <Mark assistant={assistant} />
               </a>
@@ -193,7 +205,7 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
         <li key={assistant.name}>
           <a
             href={assistant.guide}
-            className="edge flex h-11 items-center gap-2.5 rounded-md bg-plate ps-3 pe-3.5 text-sm text-text transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-hover"
+            className="edge flex h-11 items-center gap-2.5 rounded-md bg-plate ps-3 pe-3.5 text-sm text-ink transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-hover"
           >
             <Mark assistant={assistant} />
             {assistant.label ? i18n._(assistant.label) : assistant.name}
@@ -204,19 +216,41 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
   );
 }
 
+/** A quiet line of the assistants Lymi works in, each opening its setup guide. */
+export function WorksWith({ names }: { names: readonly AssistantName[] }) {
+  const label = useId();
+  const assistants = names.flatMap((name) => ASSISTANTS.filter((a) => a.name === name));
+  return (
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink-muted">
+      <span id={label}>
+        <Trans>Works with</Trans>
+      </span>
+      <ul aria-labelledby={label} className="flex flex-wrap items-center gap-x-4 gap-y-2">
+        {assistants.map((assistant) => (
+          <li key={assistant.name} className="flex">
+            <a
+              href={assistant.guide}
+              className="inline-flex items-center gap-1.5 rounded-xs text-ink-secondary hoverable:hover:text-ink"
+            >
+              <Mark assistant={assistant} small />
+              {assistant.name}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
+
 /** The marks, then a link to the assistants page. */
 export function AssistantMarksWithMore() {
   const { i18n } = useLingui();
   return (
     <>
       <AssistantMarks />
-      <a
-        href={localizedPath("assistants", i18n.locale)}
-        className="mt-5 inline-flex items-center gap-1.5 rounded-xs text-sm font-medium text-text-2 hoverable:hover:text-text"
-      >
+      <ArrowLink href={localizedPath("assistants", i18n.locale)} className="mt-5">
         <Trans>Lymi with AI assistants</Trans>
-        <ArrowRight aria-hidden="true" className="size-4 rtl:-scale-x-100" />
-      </a>
+      </ArrowLink>
     </>
   );
 }

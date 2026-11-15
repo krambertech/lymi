@@ -1,7 +1,6 @@
-import { I18nProvider } from "@lingui/react";
 import type { ComponentType } from "react";
 import type { ChangelogFigureName } from "../../lib/changelog-figures";
-import { pageI18n } from "../../lib/i18n";
+import { Localized } from "../Localized";
 import { AssistantChat } from "../landing/AssistantChat";
 import { EnrichDemo } from "../landing/EnrichDemo";
 import { ImportDemo } from "../landing/ImportDemo";
@@ -10,15 +9,21 @@ import { LibraryDemo } from "../landing/LibraryDemo";
 import { ReviewDemo } from "../landing/ReviewDemo";
 import { SeriesDemo } from "../landing/SeriesDemo";
 import { ActivityFigure } from "./ActivityFigure";
+import { CantoneseTamilFigure } from "./CantoneseTamilFigure";
 import { CommandMenuFigure } from "./CommandMenuFigure";
 import { DeckAiFigure } from "./DeckAiFigure";
 import { DeleteAccountFigure } from "./DeleteAccountFigure";
+import { ExampleFigure } from "./ExampleFigure";
+import { FilterFieldsFigure } from "./FilterFieldsFigure";
 import { FuriganaFigure } from "./FuriganaFigure";
+import { HighlightCardFigure } from "./HighlightCardFigure";
 import { HookFigure } from "./HookFigure";
 import { ImportantFigure } from "./ImportantFigure";
 import { ImportSourcesFigure } from "./ImportSourcesFigure";
 import { JapaneseCardFigure } from "./JapaneseCardFigure";
+import { MacBookFigure } from "./MacFigure";
 import { PinyinFigure } from "./PinyinFigure";
+import { PitchAccentFigure } from "./PitchAccentFigure";
 import { RestDaysFigure } from "./RestDaysFigure";
 import { ReviewChosenFigure } from "./ReviewChosenFigure";
 import { SignInAppleFigure } from "./SignInAppleFigure";
@@ -53,6 +58,12 @@ const FIGURES: Record<ChangelogFigureName, ComponentType> = {
   "command-menu": CommandMenuFigure,
   "japanese-card": JapaneseCardFigure,
   pinyin: PinyinFigure,
+  "filter-fields": FilterFieldsFigure,
+  "highlight-card": HighlightCardFigure,
+  "cantonese-tamil": CantoneseTamilFigure,
+  example: ExampleFigure,
+  mac: MacBookFigure,
+  "pitch-accent": PitchAccentFigure,
 };
 
 interface Props {
@@ -64,8 +75,8 @@ interface Props {
 export default function ChangelogFigure({ figure, locale }: Props) {
   const Figure = FIGURES[figure];
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
+    <Localized locale={locale}>
       <Figure />
-    </I18nProvider>
+    </Localized>
   );
 }

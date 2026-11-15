@@ -6,7 +6,7 @@ decision: none
 
 # Chinese
 
-A beginner learning Mandarin should find that Lymi just works, as it now does for Japanese: hanzi arrive with pinyin, pinyin fades as words are learned, audio says the word right, and an HSK deck from Anki or a Pleco export arrives whole. Chinese is the second [supported language](supported-languages.md) and is that proposal's slice 5; this file holds only what is particular to Chinese. Not decided: polyphones in audio, the HSK 3 deck and traditional editions, and the order of Chinese's slices (see Open questions).
+Mandarin cards should show pinyin over hanzi, fade that help as words become Known, and use the intended spoken reading. Imports should preserve the content of an HSK Anki deck or Pleco export. Chinese is the second [supported language](supported-languages.md) and is that proposal's slice 5; this file holds only what is particular to Chinese. Not decided: polyphones in audio, the HSK 3 deck and traditional editions, and the order of Chinese's slices (see Open questions).
 
 ## Evidence
 
@@ -33,7 +33,7 @@ No HSK Anki deck or Pleco export has been test-imported yet.
 - **Audio.** Spoken from the hanzi, which voices read with sandhi; they read pinyin text poorly. Traditional tags speak with the Taiwan voice. A recording from an import is never replaced.
 - **Prompts.** The zh module's enrich slot writes example pinyin with a worked example, and the AI adds it to a learner's example only when the text without brackets is unchanged. Fixtures lead with the traps: 行, 长, 还, 东西, erhua, and 一 and 不 in citation tones.
 - **Import.** From an HSK Anki deck: the pinyin field becomes the Reading without its tone-colour markup, a numbered pinyin field beside it is dropped, a traditional-form field becomes a notes line, and sentence pinyin becomes inline readings when it fits one syllable per character. A Pleco export (lines of `简体[繁體]`, pinyin and definition under `//` category lines) gets its own adapter under `apps/web/src/server/imports/`: the term in the script the learner picks, the other script as a notes line, and each category as a tag.
-- **Page.** The showpiece is the 行 pair: a Known 银行 fading 行 háng in 行长 but not 行 xíng in 不行.
+- **Page.** The page demonstrates the 行 pair: a Known 银行 fading 行 háng in 行长 but not 行 xíng in 不行.
 - **Left out.** Tone colour, which fails the bespoke-feature rule's first test; zhuyin; script conversion; stroke order and writing; measure-word drills; typed or handwritten answers; sentence audio.
 
 ## Delivery
@@ -45,7 +45,7 @@ Each slice builds on supported-languages slices 1–4: the record index, `TermTe
 3. The zh prompt module, reviewed by a fluent reader, with a recorded run.
 4. Example pinyin fading over Known characters on the web and the phone. The Worker strips the notation from older phones until the minimum supported version draws it.
 5. Import fidelity: test-import one HSK Anki deck and one Pleco export, then the Anki field mapping and the Pleco adapter.
-6. A beginner's start, the page and the `LanguageOut` entry: Welcome offers a Chinese learner HSK 1, then HSK 2, and an HSK 3 deck once open question 2 settles it; the page view and showpiece go through `LANGUAGE_PAGES` and `LanguagePage.astro`; `zh` joins `SupportedTag`.
+6. A beginner's start, the page and the `LanguageOut` entry: Welcome offers a Chinese learner HSK 1, then HSK 2, and an HSK 3 deck once open question 2 settles it; the page view and demonstration go through `LANGUAGE_PAGES` and `LanguagePage.astro`; `zh` joins `SupportedTag`.
 
 ## Instrumentation
 

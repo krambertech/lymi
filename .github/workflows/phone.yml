@@ -37,6 +37,8 @@ jobs:
       - uses: actions/setup-node@v5
         with:
           node-version-file: .nvmrc
+          # This job installs no pnpm, so the packageManager field must not turn on pnpm caching.
+          package-manager-cache: false
       - name: Check production against the frozen releases
         run: node scripts/check-phone-contract.mjs https://my.lymi.app/api/openapi.json
 
@@ -114,14 +116,29 @@ jobs:
           /usr/libexec/PlistBuddy -c "Add :EXUpdatesEnabled bool false" build/Lymi.app/Expo.plist
           codesign --force --sign - --preserve-metadata=identifier,entitlements,flags build/Lymi.app
 
+      # A built Worker under plain wrangler, not Vite's dev server: beside the Simulator on this
+      # runner, Vite's dev Worker dropped requests for minutes. The preview flag keeps the personas.
       - name: Start the local Worker
         working-directory: apps/web
         run: |
-          printf '%s\n' "PRODUCT_URL=$API_URL" "PUBLIC_SITE_URL=http://localhost:4321" \
-            "BETTER_AUTH_SECRET=lymi-phone-e2e-secret-at-least-thirty-two-characters" \
-            "GOOGLE_CLIENT_ID=" "GOOGLE_CLIENT_SECRET=" "OPENAI_API_KEY=" > .dev.vars
-          pnpm db:migrate
-          nohup pnpm dev --port 5241 --strictPort > "$RUNNER_TEMP/worker.log" 2>&1 &
+          LYMI_APP_PREVIEW=1 pnpm exec vite build
+          node -e '
+            const fs = require("fs");
+            const config = JSON.parse(fs.readFileSync("dist/lymi/wrangler.json", "utf8"));
+            // The generated paths would make wrangler reload the source config and production vars.
+            delete config.configPath;
+            delete config.userConfigPath;
+            // Workers AI is remote only and CI has no Cloudflare token; the journey never calls it.
+            delete config.ai;
+            config.routes = [];
+            config.vars = { ...config.vars, PRODUCT_URL: process.env.API_URL, PUBLIC_SITE_URL: "http://localhost:4321" };
+            fs.writeFileSync("dist/lymi/wrangler.phone.json", JSON.stringify(config));
+          '
+          printf '%s\n' "BETTER_AUTH_SECRET=lymi-phone-e2e-secret-at-least-thirty-two-characters" \
+            "GOOGLE_CLIENT_ID=" "GOOGLE_CLIENT_SECRET=" "OPENAI_API_KEY=" > dist/lymi/.dev.vars
+          pnpm exec wrangler d1 migrations apply lymi --local --persist-to .wrangler/phone
+          nohup pnpm exec wrangler dev --config dist/lymi/wrangler.phone.json --port 5241 \
+            --persist-to .wrangler/phone > "$RUNNER_TEMP/worker.log" 2>&1 &
           for _ in $(seq 1 90); do curl -fsS "$API_URL/api/health" > /dev/null && exit 0; sleep 2; done
           cat "$RUNNER_TEMP/worker.log"; exit 1
 
@@ -156,6 +173,11 @@ jobs:
           apps/mobile/e2e/run.sh
           echo "::warning title=Phone journey::Passed only on retry"
 
+      - name: Record the runner's memory
+        if: failure()
+        run: |
+          { vm_stat; memory_pressure -Q; ps -Ao rss,comm -m | head -15; } > "$RUNNER_TEMP/memory.txt" 2>&1 || true
+
       - name: Keep the evidence
         if: failure()
         uses: actions/upload-artifact@v4
@@ -166,3 +188,4 @@ jobs:
             ~/.maestro/tests
             ${{ runner.temp }}/maestro.xml
             ${{ runner.temp }}/worker.log
+            ${{ runner.temp }}/memory.txt

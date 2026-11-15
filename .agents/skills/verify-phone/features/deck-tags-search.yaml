@@ -1,0 +1,36 @@
+# Past fifteen tags, Find a tag opens the phone's search; its rows act as the page's do.
+appId: app.lymi
+name: Deck tags, Find a tag
+---
+- runFlow: _open.yaml
+- openLink: lymi://library/tags?id=${DECK_ID}
+- extendedWaitUntil:
+    visible: "In use"
+    timeout: 20000
+- tapOn: "Find a tag"
+- extendedWaitUntil:
+    visible: "Close search"
+    timeout: 10000
+- inputText: "ba"
+- extendedWaitUntil:
+    visible: "banca, .*"
+    timeout: 10000
+- hideKeyboard
+- takeScreenshot: 01-found
+- tapOn: "Options for banca"
+- tapOn: "Archive"
+- extendedWaitUntil:
+    visible: "Archived “banca” from .*"
+    timeout: 20000
+- assertVisible: "Archived tags"
+- takeScreenshot: 02-archived-in-search
+- tapOn: "Undo"
+- extendedWaitUntil:
+    visible: "banca, .*"
+    timeout: 20000
+- tapOn: "Find a tag"
+- inputText: "zz"
+- extendedWaitUntil:
+    visible: "No tags match “bazz”"
+    timeout: 10000
+- takeScreenshot: 03-no-match

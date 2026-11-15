@@ -75,16 +75,16 @@ export default function SeriesDecks() {
           className="flex-1"
           contentContainerClassName="gap-3 px-5 pt-3 pb-10"
         >
-          <Text className="px-1 text-base text-text-2">
+          <Text className="px-1 text-base text-ink-secondary">
             {decks.length === 0
               ? t`No decks of your own yet. Only decks you create can go in a series.`
               : t`Review these decks together, in this order.`}
           </Text>
           {form.mode === "missing" && (
-            <Text className="px-1 text-base text-muted">{t`This series is no longer here.`}</Text>
+            <Text className="px-1 text-base text-ink-muted">{t`This series is no longer here.`}</Text>
           )}
           {!online && (
-            <Text className="px-1 text-base text-muted">
+            <Text className="px-1 text-base text-ink-muted">
               {t`Changing series needs a connection.`}
             </Text>
           )}
@@ -118,15 +118,15 @@ export default function SeriesDecks() {
                       }
                     >
                       <View
-                        className={`size-[22px] items-center justify-center rounded-full border ${inIt ? "border-text bg-text" : "border-edge-2"}`}
+                        className={`size-[22px] items-center justify-center rounded-full border ${inIt ? "border-ink bg-ink" : "border-edge-strong"}`}
                       >
                         {inIt && <Icon name="check" size={14} colour={p.canvas} strokeWidth={3} />}
                       </View>
                       <View className="flex-1 gap-0.5">
-                        <Text className="text-md text-text" numberOfLines={1}>
+                        <Text className="text-md text-ink" numberOfLines={1}>
                           {deckName}
                         </Text>
-                        <Text className="text-sm text-muted" numberOfLines={1}>
+                        <Text className="text-sm text-ink-muted" numberOfLines={1}>
                           {waiting
                             ? t`Waiting to reach Lymi`
                             : elsewhere

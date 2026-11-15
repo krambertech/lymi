@@ -1,6 +1,6 @@
 # Lead-ins
 
-A lead-in is the few words a speech engine hears before a term, so it says the sense the learner means. A Japanese card holds はし for a bridge, but はし is also chopsticks and an edge, each with its own pitch. Sent alone, the kana gives the voice nothing to choose with. With 川を渡る sent first, it says the bridge. The lead-in goes to ElevenLabs v4 as `previous_text`, which shapes the delivery but is never spoken, so the clip still holds only the term.
+A [lead-in](../CONTEXT.md) is the few words a speech engine hears before a term, so it says the sense the learner means. A Japanese card holds はし for a bridge, but はし is also chopsticks and an edge, each with its own pitch. Sent alone, the kana gives the voice nothing to choose with. With 川を渡る sent first, it says the bridge. The lead-in goes to ElevenLabs v4 as `previous_text`, which shapes the delivery but is never spoken, so the clip still holds only the term.
 
 Lead-ins exist only where they help: Japanese is the one language with a policy, and ElevenLabs v4 is the one voice they were auditioned on. Other languages and providers speak the term alone and never reach a model. [The Japanese proposal](proposals/japanese.md) has the listening tests behind this.
 
@@ -16,7 +16,7 @@ flowchart TD
   Rules -- "no: loanword, sentence,<br/>long reading, no meaning" --> Kana["Kana alone"]
   Rules -- yes --> Clef{"Clef: does another common word<br/>share this reading?"}
   Clef -- "score under 0.4" --> Kana
-  Clef -- "0.4 or above,<br/>or no answer" --> Writer{"Gemini writes a lead-in"}
+  Clef -- "0.4 or above,<br/>or no answer" --> Writer{"Luna writes a lead-in"}
   Writer -- "lead-in passes<br/>policy.accepts()" --> Lead["Kana with previous_text"]
   Writer -- "none needed, refused<br/>or call failed" --> Kana
   Kana --> Done
@@ -30,11 +30,11 @@ flowchart TD
 | 時計 とけい, clock | pass | 0.23 | Kana alone; no writer call |
 | コーヒー, coffee | loanword | not asked | Kana alone; no model call |
 
-The scores come from the evaluation run on 19 October 2026. Other languages, and voices other than ElevenLabs v4, skip the whole flow and speak the term alone.
+The scores come from the evaluation below.
 
 The free rules live in the policy because they depend on the language. A katakana loanword rarely shares its reading with another word, and a reading over 8 kana is a compound or a phrase that carries its own context. The decision model answers one yes-or-no question per card. The writer is told to return no lead-in for sentences, greetings and time words, and its reply must pass the policy's checks: at most 16 characters, Japanese script only, no repeat of the term or its reading, and no generic word such as とても that fits every sense.
 
-When Clef is down or gives no score, the writer decides alone, as it did before there was a decision model. Missing a homophone is the worse mistake, because the learner hears the wrong word. A unique word flagged by mistake costs one writer call, and the writer can still answer that none is needed.
+When Clef is down or gives no score, the writer decides alone. Missing a homophone is the worse mistake, because the learner hears the wrong word. A unique word flagged by mistake costs one writer call, and the writer can still answer that none is needed.
 
 ## What is stored and when it is asked again
 
@@ -46,13 +46,13 @@ When Clef is down or gives no score, the writer decides alone, as it did before 
 | Another play while one is deciding | Nothing; that play answers 503 "being prepared" | Once the lease ends, at most 45 seconds |
 | A stored record that no longer parses or passes the checks | Treated as a miss | On the next play |
 
-A refused reply is kept as no lead-in rather than retried, because at temperature 0 the writer returns the same answer. Bump the policy's `version` after loosening its instructions or checks, and every card of that language is decided again on its next play.
+A refused reply is kept as no lead-in rather than retried, because asking again buys much the same answer. Bump the policy's `version` after loosening its instructions or checks, and every card of that language is decided again on its next play.
 
 The decision's identity and the lead-in text are part of the ElevenLabs audio key, so a new lead-in makes a new clip. A term, reading or meaning edit clears the card's generated audio. When every speech provider fails, a Japanese card falls back to its kana-only clip from before lead-ins. A recording an import brought never reaches a model. Stored-only preloads read a stored decision and clip but never buy either. A published Japanese deck keeps its stored kana-only clips: the public route and the hourly job voice only cards without audio, so a card gains its lead-in when its owner plays or edits it.
 
 ## Cost and time on a first play
 
-On a first play the learner can wait for up to three calls in a row: Clef (about 0.5 seconds, 2.5-second deadline), the writer (4-second deadline) and the speech call. The deadlines leave room for speech inside the phone's 12-second wait. Replays read R2 and call nothing. The writer makes one attempt, with no retry, and at most 768 output tokens, including a 512-token reasoning allowance. Clef runs on the Workers AI allowance. [Gemini pricing](https://ai.google.dev/gemini-api/docs/pricing), checked on 18 October 2026, is $0.10 per million input tokens and $0.40 per million output tokens; the pilot cost about $0.20 per 1,000 writer calls, before speech and storage.
+On a first play the learner can wait for up to three calls in a row: Clef (about 0.5 seconds, 2.5-second deadline), the writer (4-second deadline) and the speech call. The deadlines leave room for speech inside the phone's 12-second wait. Replays read R2 and call nothing. The writer makes one attempt, with no retry, at low reasoning effort, and at most 768 output tokens including reasoning. Clef runs on the Workers AI allowance. [OpenAI pricing](https://developers.openai.com/api/docs/pricing), checked on 1 November 2026, is $0.10 per million input tokens and $0.50 per million output tokens for `gpt-6-luna`.
 
 ## Measure it
 
@@ -63,10 +63,10 @@ On a first play the learner can wait for up to three calls in a row: Clef (about
 The policy is `apps/web/src/server/lead-ins/japanese.ts`. After changing its question, threshold, instructions or checks:
 
 1. Bump `version`.
-2. Run `pnpm --filter @lymi/web eval:lead-ins --language ja`. It needs a Wrangler login with Workers AI access, and `--write` also calls the writer, which needs `GEMINI_API_KEY` and the AI Gateway variables in `.dev.vars`.
+2. Run `pnpm --filter @lymi/web eval:lead-ins --language ja`. It needs a Wrangler login with Workers AI access, and `--write` also calls the writer, which needs `OPENAI_API_KEY` and `AI_GATEWAY_TOKEN` in `.dev.vars`.
 3. Check that every ambiguous case is still flagged before you accept more flagged clear cases.
 
-On 19 October 2026 the 50 cases in `apps/web/src/server/lead-ins/evaluation.json` scored an AUC of 0.99, with 29 of 29 ambiguous readings flagged and 4 of 21 clear ones flagged at 0.4, in three identical runs. A native speaker has not reviewed those labels yet.
+At commit `b5a3b8003`, the 50 cases in `apps/web/src/server/lead-ins/evaluation.json` scored an AUC of 0.99, with 29 of 29 ambiguous readings flagged and 4 of 21 clear ones flagged at 0.4, in three identical runs. A native speaker has not reviewed those labels yet.
 
 ## Add a language
 

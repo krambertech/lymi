@@ -27,7 +27,7 @@ describe("addInput", () => {
         reviewModes: ["meaning_to_term"],
         sectionId: "s1",
         language: "it",
-        hook: "a seat",
+        hint: "a seat",
       }),
     ).toEqual({
       deckId: "d1",
@@ -35,8 +35,8 @@ describe("addInput", () => {
       language: "it",
       reviewModes: [{ cue: "meaning", target: "term" }],
       sectionId: "s1",
-      hook: "a seat",
-      hookSource: "manual",
+      hint: "a seat",
+      hintSource: "manual",
     });
     expect(addInput({ deckId: "d1", term: "x", reviewModes: null })).not.toHaveProperty(
       "reviewModes",

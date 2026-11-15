@@ -134,7 +134,7 @@ function Row({
         <span className="truncate text-md font-medium" lang={language ?? undefined}>
           {name}
         </span>
-        <span className="truncate text-sm text-muted tabular-nums">{detail}</span>
+        <span className="truncate text-sm text-ink-muted tabular-nums">{detail}</span>
       </span>
       <Button
         size="sm"

@@ -38,7 +38,7 @@ export default async function drive({ page, step, api, expect }) {
     await main.getByRole("link", { name: /^Lange Karten/ }).click();
     await main.getByRole("button", { name: /der Hund/ }).click();
     await expect(page.getByText("Der Hund schläft.", { exact: true })).toBeVisible();
-    await expect(page.getByText("(The dog is sleeping.)", { exact: true })).toBeVisible();
+    await expect(page.getByText("The dog is sleeping.", { exact: true })).toBeVisible();
     const card = await stored();
     expect(card).toMatchObject({
       exampleTranslation: "The dog is sleeping.",
@@ -83,7 +83,7 @@ export default async function drive({ page, step, api, expect }) {
       .fill("The dog barks loudly.");
     await sheet.getByRole("button", { name: /^Save/ }).click();
     await expect(sheet).toBeHidden();
-    await expect(page.getByText("(The dog barks loudly.)", { exact: true })).toBeVisible();
+    await expect(page.getByText("The dog barks loudly.", { exact: true })).toBeVisible();
     await expect(page.getByText(/Translated from an earlier example/)).toHaveCount(0);
     const card = await stored();
     expect(card).toMatchObject({

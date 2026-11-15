@@ -83,7 +83,7 @@ const phoneOperations = [
   "PATCH /api/cards/{id}",
   "POST /api/cards/{id}/archive",
   "POST /api/cards/{id}/restore",
-  "POST /api/cards/{id}/hook-draft",
+  "POST /api/cards/{id}/hint-draft",
   "PUT /api/cards/{id}/important",
   "PUT /api/cards/{id}/image",
   "GET /api/cards/{id}/image/{imageId}",

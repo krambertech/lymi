@@ -6,13 +6,14 @@ import {
   canEnrich,
   canPlayPronunciation,
   type DeckEnrichField,
-  deserializeState,
   drawsTermReading,
   type EnrichedField,
-  type FsrsCard,
   isolate,
   type KnownReadings,
+  pitchPattern,
+  pronunciationText,
   type ReviewMode,
+  readFsrs,
   termShowsPronunciation,
 } from "@lymi/core";
 import { notesToText } from "@lymi/core/notes";
@@ -23,6 +24,7 @@ import {
   ArrowDown,
   ArrowUp,
   ChevronRight,
+  Flag,
   FolderInput,
   Image as ImageIcon,
   type LucideIcon,
@@ -40,10 +42,11 @@ import { CardNotes } from "../components/card-notes";
 import { CardPicture } from "../components/card-picture";
 import { Chip, SourceChip, StateChip } from "../components/chip";
 import { languageName } from "../components/deck-fields";
-import { ExampleAudioButton } from "../components/example-audio";
+import { ExampleAudioButton, useExampleAudio } from "../components/example-audio";
 import { ExampleLines } from "../components/example-lines";
 import { GRADES, GradeMark, Mark } from "../components/grade";
 import { PlaceBar } from "../components/layout/place-bar";
+import { PitchChart } from "../components/pitch-chart";
 import { ReviewTimeline } from "../components/review-timeline";
 import { Skeleton } from "../components/skeleton";
 import { TermText } from "../components/term-text";
@@ -87,7 +90,9 @@ const fieldName: Record<string, MessageDescriptor> = {
   example: msg`the example`,
   exampleTranslation: msg`the example’s translation`,
   notes: msg`the notes`,
-  hook: msg`the memory hook`,
+  hint: msg`the hint`,
+  // An edit logged before the rename names the field `hook`.
+  hook: msg`the hint`,
   source: msg`the source`,
   language: msg`the language`,
   tags: msg`the tags`,
@@ -110,7 +115,8 @@ const changedTo: Record<string, (value: string) => MessageDescriptor> = {
   example: (value) => msg`Example changed to “${value}”`,
   exampleTranslation: (value) => msg`Translation changed to “${value}”`,
   notes: (value) => msg`Notes changed to “${value}”`,
-  hook: (value) => msg`Memory hook changed to “${value}”`,
+  hint: (value) => msg`Hint changed to “${value}”`,
+  hook: (value) => msg`Hint changed to “${value}”`,
 };
 
 const eventIcon: Record<WordEvent["kind"], LucideIcon> = {
@@ -243,6 +249,8 @@ export interface WordProps {
   owner?: WordOwnerActions | undefined;
   /** The learner's own mark, so a member of a shared deck sets it too. */
   onImportantChange?: ((important: boolean) => void) | undefined;
+  /** Someone else's card: the learner can report it to Lymi. */
+  onReport?: (() => void) | undefined;
   /** Every deck the word could move to. The menu lists them by name. */
   decks?: { id: string; name: string }[] | undefined;
   onPlayAudio?: (() => void) | undefined;
@@ -250,17 +258,6 @@ export interface WordProps {
   titleId?: string | undefined;
   /** True while a field is being edited or the Move sheet is open, so the holder does not remount it. */
   onBusyChange?: ((busy: boolean) => void) | undefined;
-}
-
-/** The FSRS memory model, or null for a state that has none yet. */
-function readFsrs(state: CardState | null): FsrsCard | null {
-  if (!state) return null;
-  try {
-    const card = deserializeState(state.fsrs);
-    return typeof card.stability === "number" ? card : null;
-  } catch {
-    return null;
-  }
 }
 
 /** When a mode is back, as the schedule table says it, with the date once it is days away. */
@@ -321,7 +318,7 @@ function ReadField({
       {/* The badge belongs to the label, not to the far edge of the panel. Only the AI has one:
           the learner's own words and the lesson's are the ordinary case and need no mark. */}
       <div className="flex min-h-[17px] flex-wrap items-center gap-2">
-        <span className="text-sm font-medium text-text-2">{label}</span>
+        <span className="text-sm font-medium text-ink-secondary">{label}</span>
         {aside}
       </div>
       {working ? (
@@ -335,7 +332,7 @@ function ReadField({
             lang={lang}
             className={clsx(
               "hyphenate whitespace-pre-line text-md leading-relaxed [overflow-wrap:anywhere]",
-              empty ? "text-muted" : "text-text",
+              empty ? "text-ink-muted" : "text-ink",
             )}
           >
             {value}
@@ -354,7 +351,7 @@ function PictureSection({ card, modes }: { card: Card; modes?: ReviewMode[] | un
   if (!image && !pictureReview) return null;
   return (
     <section className="grid gap-2">
-      <span className="text-sm font-medium text-text-2">
+      <span className="text-sm font-medium text-ink-secondary">
         <Trans>Picture</Trans>
       </span>
       {/* One plate, so the picture and what it says read as one thing. */}
@@ -364,11 +361,9 @@ function PictureSection({ card, modes }: { card: Card; modes?: ReviewMode[] | un
             <CardPicture image={image} maxHeight="min(20dvh, 140px)" className="rounded-xs" />
             {image.description ? (
               // Wraps to the picture's width instead of widening the card.
-              <p className="w-0 min-w-full text-sm leading-relaxed text-text">
-                {image.description}
-              </p>
+              <p className="w-0 min-w-full text-sm leading-relaxed text-ink">{image.description}</p>
             ) : (
-              <p className="w-0 min-w-full text-sm text-muted">
+              <p className="w-0 min-w-full text-sm text-ink-muted">
                 {pictureOnly ? (
                   <Trans>
                     No description yet. Picture review needs one, so this card is asked without its
@@ -386,7 +381,7 @@ function PictureSection({ card, modes }: { card: Card; modes?: ReviewMode[] | un
             )}
           </>
         ) : (
-          <p className="text-sm text-muted">
+          <p className="text-sm text-ink-muted">
             {pictureOnly ? (
               <Trans>No picture yet, so this card is asked without one.</Trans>
             ) : (
@@ -419,12 +414,14 @@ export function WordView({
   onClose,
   owner,
   onImportantChange,
+  onReport,
   decks,
   onPlayAudio,
   titleId,
   onBusyChange,
 }: WordProps) {
   const { t, i18n } = useLingui();
+  const exampleSound = useExampleAudio(card, "card");
   const now = new Date();
   const states = record?.states;
   const reviews = record?.reviews;
@@ -488,6 +485,8 @@ export function WordView({
     () => termShowsPronunciation({ ...card, term: forms.word }),
     [card, forms.word],
   );
+  const shownPronunciation = useMemo(() => pronunciationText(card), [card]);
+  const pitched = useMemo(() => pitchPattern(card) !== null, [card]);
   const readingOver = useMemo(
     () => drawsTermReading({ ...card, term: forms.word }),
     [card, forms.word],
@@ -548,7 +547,7 @@ export function WordView({
         </>
       )}
       {/* The mark is the learner's own; every other item writes the card, so a member gets only the mark. */}
-      {(owner || onImportantChange) && (
+      {(owner || onImportantChange || onReport) && (
         <DropdownMenu>
           <DropdownMenuTrigger
             render={
@@ -582,6 +581,15 @@ export function WordView({
                 <Trans>Move to section…</Trans>
               </DropdownMenuItem>
             )}
+            {onReport && (
+              <>
+                <DropdownMenuSeparator />
+                <DropdownMenuItem onClick={onReport}>
+                  <Flag />
+                  <Trans>Report card</Trans>
+                </DropdownMenuItem>
+              </>
+            )}
             {owner && (
               <>
                 <DropdownMenuSeparator />
@@ -611,7 +619,7 @@ export function WordView({
           <span className="hyphenate min-w-0 break-words" lang={card.language ?? undefined}>
             <TermText card={{ ...card, term: forms.word }} />
             {forms.forms && (
-              <span className="font-normal text-text-2">
+              <span className="font-normal text-ink-secondary">
                 {" · "}
                 {forms.forms}
               </span>
@@ -629,15 +637,16 @@ export function WordView({
             </IconButton>
           )}
         </h1>
+        <PitchChart card={card} className="text-lg" />
         {card.pronunciation && reading && card.pronunciationSource !== "ai" ? (
           // A reading drawn over the term needs this line only for a screen reader; stress drawn in
           // place is the heading's own text, so it needs none.
-          readingOver && <p className="sr-only">{card.pronunciation}</p>
+          readingOver && <p className="sr-only">{shownPronunciation}</p>
         ) : card.pronunciation ? (
-          <p className="flex flex-wrap items-center gap-1.5 text-md text-muted">
+          <p className="flex flex-wrap items-center gap-1.5 text-md text-ink-muted">
             {(!reading || readingOver) && (
-              <span className={reading ? "sr-only" : "[overflow-wrap:anywhere]"}>
-                {card.pronunciation}
+              <span className={reading || pitched ? "sr-only" : "[overflow-wrap:anywhere]"}>
+                {shownPronunciation}
               </span>
             )}
             {card.pronunciationSource === "ai" && (
@@ -651,10 +660,10 @@ export function WordView({
             </p>
           )
         )}
-        <p className="flex flex-wrap items-center gap-x-1.5 text-sm text-muted">
+        <p className="flex flex-wrap items-center gap-x-1.5 text-sm text-ink-muted">
           {[
             card.important ? (
-              <span key="important" className="inline-flex items-center gap-1 text-text-2">
+              <span key="important" className="inline-flex items-center gap-1 text-ink-secondary">
                 <Star className="size-3.5 fill-current text-amber-mark" aria-hidden="true" />
                 <Trans>Important</Trans>
               </span>
@@ -726,12 +735,13 @@ export function WordView({
             working={waiting("example")}
           >
             {card.example && (
-              <div className="grid gap-1">
+              <div className="grid gap-1.5">
                 <ExampleLines
                   example={card.example}
                   language={card.language}
                   known={knownReadings}
                   translation={translation || null}
+                  translating={translating}
                   // A badge by the label would claim the example; only the translation is the AI's.
                   badge={
                     translationByAi &&
@@ -739,16 +749,10 @@ export function WordView({
                       <SourceChip source="ai" field="exampleTranslation" size="xs" />
                     )
                   }
-                  className="hyphenate whitespace-pre-line text-md leading-relaxed text-text [overflow-wrap:anywhere]"
-                  after={<ExampleAudioButton card={card} surface="card" />}
+                  speaker={exampleSound && <ExampleAudioButton sound={exampleSound} />}
                 />
-                {translating && !translation && (
-                  <div className="flex items-center text-base leading-relaxed" aria-hidden="true">
-                    <Skeleton className="h-3 w-2/3 rounded-sm" />
-                  </div>
-                )}
                 {owner && translation && card.exampleTranslationStale && (
-                  <p className="text-sm text-muted">
+                  <p className="text-sm text-ink-muted">
                     <Trans>Translated from an earlier example. Edit it to match.</Trans>
                   </p>
                 )}
@@ -761,26 +765,26 @@ export function WordView({
             label={t`Notes`}
             aside={card.notesSource === "ai" && <SourceChip source="ai" field="notes" size="xs" />}
           >
-            <CardNotes source={card.notes} className="text-md leading-relaxed text-text" />
+            <CardNotes source={card.notes} className="text-md leading-relaxed text-ink" />
           </ReadField>
         ) : (
           waiting("notes") && <ReadField label={t`Notes`} value="" working />
         )}
-        {card.hook && (
+        {card.hint && (
           <ReadField
-            label={t`Memory hook`}
-            aside={card.hookSource === "ai" && <SourceChip source="ai" field="hook" size="xs" />}
-            value={card.hook}
+            label={t`Hint`}
+            aside={card.hintSource === "ai" && <SourceChip source="ai" field="hint" size="xs" />}
+            value={card.hint}
           />
         )}
         {/* One quiet line, only here: a row that says "No meaning yet" is already saying enough. */}
         {owner && card.enrichmentStatus === "failed" && (
-          <p className="flex flex-wrap items-center gap-x-2 text-sm text-muted">
+          <p className="flex flex-wrap items-center gap-x-2 text-sm text-ink-muted">
             <Trans>Couldn’t enrich this card.</Trans>
             <button
               type="button"
               onClick={owner.onEnrich}
-              className="-my-2.5 min-h-11 rounded-xs text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current"
+              className="-my-2.5 min-h-11 rounded-xs text-sm text-ink-secondary underline decoration-edge-strong underline-offset-3 transition-colors hoverable:hover:text-ink hoverable:hover:decoration-current"
             >
               <Trans>Try again</Trans>
             </button>
@@ -789,12 +793,12 @@ export function WordView({
         {owner &&
           card.enrichmentStatus !== "failed" &&
           card.exampleTranslationStatus === "failed" && (
-            <p className="flex flex-wrap items-center gap-x-2 text-sm text-muted">
+            <p className="flex flex-wrap items-center gap-x-2 text-sm text-ink-muted">
               <Trans>Couldn’t translate the example.</Trans>
               <button
                 type="button"
                 onClick={owner.onEnrich}
-                className="-my-2.5 min-h-11 rounded-xs text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current"
+                className="-my-2.5 min-h-11 rounded-xs text-sm text-ink-secondary underline decoration-edge-strong underline-offset-3 transition-colors hoverable:hover:text-ink hoverable:hover:decoration-current"
               >
                 <Trans>Try again</Trans>
               </button>
@@ -814,12 +818,12 @@ export function WordView({
                     setMoving(false);
                     owner?.onMove?.(d.id);
                   }}
-                  className="edge flex h-12 w-full items-center justify-between gap-3 rounded-md bg-plate px-4 text-start text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-2 hoverable:hover:veil"
+                  className="edge flex h-12 w-full items-center justify-between gap-3 rounded-md bg-plate px-4 text-start text-base transition-[background-color,box-shadow] duration-150 hoverable:hover:edge-strong hoverable:hover:veil"
                 >
                   <span dir="auto" className="truncate font-medium">
                     {d.name}
                   </span>
-                  <ChevronRight className="size-4 shrink-0 text-faint" aria-hidden="true" />
+                  <ChevronRight className="size-4 shrink-0 text-ink-faint" aria-hidden="true" />
                 </button>
               </li>
             ))}
@@ -828,11 +832,11 @@ export function WordView({
       </Dialog>
 
       <section className="grid gap-4 border-t border-edge pt-5">
-        <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
+        <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-ink-muted">
           <Trans>Schedule</Trans>
         </h2>
         {started.length === 0 ? (
-          <p className="text-sm text-text-2">
+          <p className="text-sm text-ink-secondary">
             <Trans>Not reviewed yet. It comes up in your next review.</Trans>
           </p>
         ) : (
@@ -847,7 +851,7 @@ export function WordView({
             )}
             <table className="w-full border-collapse text-sm tabular-nums">
               <thead>
-                <tr className="border-b border-edge text-xs text-muted">
+                <tr className="border-b border-edge text-xs text-ink-muted">
                   <th scope="col" className="pe-3 pb-2 text-start font-medium">
                     <Trans>Mode</Trans>
                   </th>
@@ -876,12 +880,12 @@ export function WordView({
                         <>
                           <td className="py-2.5 pe-3">
                             {next.when}
-                            {next.date && <span className="block text-muted">{next.date}</span>}
+                            {next.date && <span className="block text-ink-muted">{next.date}</span>}
                           </td>
                           <td className="py-2.5 text-end">
                             {i18n.number(fsrs.reps)}
                             {fsrs.lapses > 0 && (
-                              <span className="block text-muted">
+                              <span className="block text-ink-muted">
                                 <Plural
                                   value={fsrs.lapses}
                                   one="Forgotten once"
@@ -893,10 +897,10 @@ export function WordView({
                         </>
                       ) : (
                         <>
-                          <td className="py-2.5 pe-3 text-muted">
+                          <td className="py-2.5 pe-3 text-ink-muted">
                             <Trans>Not started</Trans>
                           </td>
-                          <td className="py-2.5 text-end text-muted">{i18n.number(0)}</td>
+                          <td className="py-2.5 text-end text-ink-muted">{i18n.number(0)}</td>
                         </>
                       )}
                     </tr>
@@ -910,7 +914,7 @@ export function WordView({
 
       {record && (
         <section className="grid gap-4 border-t border-edge pt-5">
-          <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-muted">
+          <h2 className="text-xs font-medium uppercase tracking-[0.06em] text-ink-muted">
             <Trans>History</Trans>
           </h2>
           <ol className="grid gap-3">
@@ -926,7 +930,7 @@ export function WordView({
                 ) : (
                   <Mark
                     icon={eventIcon[item.event.kind]}
-                    iconClass="text-text-2"
+                    iconClass="text-ink-secondary"
                     className="row-span-2 self-start"
                   />
                 )}
@@ -937,8 +941,10 @@ export function WordView({
                     <span>{item.event.text}</span>
                   )}
                 </p>
-                <span className="whitespace-nowrap text-sm text-muted">{dayLabel(item.at)}</span>
-                <p className="col-span-2 col-start-2 text-sm text-muted">
+                <span className="whitespace-nowrap text-sm text-ink-muted">
+                  {dayLabel(item.at)}
+                </span>
+                <p className="col-span-2 col-start-2 text-sm text-ink-muted">
                   {item.kind === "review"
                     ? t`${i18n._(modeLabel(item.review.mode))} · ${item.next}`
                     : item.event.actor}
@@ -946,7 +952,7 @@ export function WordView({
               </li>
             ))}
             {history.length === 0 && (
-              <li className="text-sm text-muted">
+              <li className="text-sm text-ink-muted">
                 <Trans>No history yet.</Trans>
               </li>
             )}
@@ -958,7 +964,7 @@ export function WordView({
                 focusOlderRef.current = true;
                 setOlderShown(true);
               }}
-              className="-my-2.5 min-h-11 justify-self-start rounded-xs text-sm text-text-2 underline decoration-edge-2 underline-offset-3 transition-colors hoverable:hover:text-text hoverable:hover:decoration-current"
+              className="-my-2.5 min-h-11 justify-self-start rounded-xs text-sm text-ink-secondary underline decoration-edge-strong underline-offset-3 transition-colors hoverable:hover:text-ink hoverable:hover:decoration-current"
             >
               <Plural
                 value={history.length - HISTORY_ROWS}

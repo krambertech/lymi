@@ -1,6 +1,8 @@
 # Overlays
 
-Every overlay takes the shape of the machine it is on: anchored or centred on a desktop, a drawer from the bottom edge on touch. The primitives in `apps/web/src/client/components/ui` hold both shapes behind shadcn's part names, so a call site never asks which machine it is on ([ADR 0017](../../adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md)).
+Overlay layout follows the input device: anchored or centred on a desktop, a drawer from the bottom edge on touch. The primitives in `apps/web/src/client/components/ui` hold both shapes behind shadcn's part names, so a call site never asks which machine it is on ([ADR 0017](../../adr/0017-interface-primitives-are-shadcn-components-on-base-ui.md)).
+
+Every primitive but the toast portals through `usePortalContainer()` in `components/ui/portal-container.tsx`. The app leaves it unset, so overlays render into `body`; a `/design` canvas passes a layer carrying its own `data-theme` and `data-motion`, so an opened menu, list or drawer matches the canvas's switches. A new primitive with a portal passes the same container.
 
 ## Which overlay
 
@@ -10,16 +12,16 @@ What is opening?
  ├── A form the learner asked for (New deck, Edit card) → a sheet: Dialog, kind "moment"
  ├── A question before something that cannot be undone → a question: Dialog, kind "moment"
  │     (only when Undo is impossible; otherwise act at once and offer Undo in a toast)
- ├── A page read over the current screen (a word, the streak) → a place: Dialog kind="place", open state in the URL
+ ├── A page read over the current screen (a card, the streak) → a place: Dialog kind="place", open state in the URL
  ├── What just happened, after the fact → toast
  ├── Finding something or running a command from the keyboard → the command palette (⌘K)
  ├── The name of an icon control → Tooltip, which IconButton already does
  └── Why one control failed, or cannot act (a pronunciation that would not play, Easy after a peek) → a tip over that control (ErrorTip)
 ```
 
-**A modal that asks a question is a last resort; Undo replaces confirmation.** A sheet is not that modal: it is a form the learner asked for.
+**Undo replaces confirmation**, so a question is a last resort. A sheet is not a question: it is a form the learner asked for.
 
-"Desktop" means `DESKTOP_QUERY` in `lib/device.ts`, `(min-width: 768px) and (hover: hover) and (pointer: fine)`, read by `useOverlayShape` as the overlay opens and held until it closes. The pointer counts as well as the width, so a tablet held in two hands still gets the drawer at 900 px. The shape is frozen while it is open, because crossing the breakpoint mid-edit would remount the form and take the half-typed word with it.
+Use `DESKTOP_QUERY` from `lib/device.ts`: `(min-width: 768px) and (hover: hover) and (pointer: fine)`. `useOverlayShape` reads it on open and holds the result until close. This gives touch tablets drawers even at wide sizes and prevents a resize from remounting a partially completed form.
 
 ## Questions
 
@@ -46,7 +48,7 @@ A question is a centred dialog on a desktop with its actions in a row, the prima
 
 ## Sheets
 
-On touch a sheet is a drawer that rises from the bottom edge and can be swiped away. Its title stays pinned at its top and its actions at its foot. When the software keyboard rises, the drawer shortens to the room above the keys and only the fields between scroll, so the title and the action are always in sight. On a desktop a panel pinned to the bottom of a 1400 px window is a phone pattern nobody finished, so the same sheet is a centred dialog. The forms inside know nothing about either shape.
+Touch sheets open as dismissible bottom drawers. Pin the title above the scrolling fields and actions below them. When the keyboard opens, reduce the drawer to the available height so title and actions remain visible. On desktop use a centred dialog. Form content uses the same components in either layout.
 
 A centred dialog that holds a task with steps, such as Smart add, keeps one height for every step and scrolls only its middle: `DialogContent scroll="body"` holds the frame still, `PlaceBar` stays at the top, the actions stay at the foot, and `DialogBody` is the part that scrolls. A short question or form scrolls as one and leaves `scroll` at its default.
 
@@ -54,28 +56,30 @@ No field takes focus as the drawer opens: the drawer settles first, and the keyb
 
 ## Places
 
-A place is a page that opens over the screen the learner was on: a word, the streak. It looks like a page, so its open state lives in the address (`?streak`, `?card`): the system back gesture closes it, and a reload or a shared link reopens it.
+A place is a page that opens over the screen the learner was on: a card, the streak. It looks like a page, so its open state lives in the address (`?streak`, `?card`): the system back gesture closes it, and a reload or a shared link reopens it.
 
 - On touch it fills the screen, arrives from the end edge and leaves by back, which names the screen under it. The phone has no X anywhere, and the motion says how to leave: from the side means back, from below means a drawer to swipe down.
 - On a desktop the same place is a side sheet at the end edge (`placement="end"`), a centred dialog, or a panel beside its list when both fit, and ends in an X.
 
 The phone app keeps this rule with iOS's own navigation: a place is pushed from the side, a sheet rises from below, and a review covers the screen ([phone.md](phone.md#how-a-screen-arrives)).
 
-`PlaceBar` in `components/layout/place-bar.tsx` is its first line in every shape and reads the shape from the `Dialog` around it. A view inside a place, such as the daily goal in the streak, puts its own back in the same slot. In a dialog or sheet the bar can carry the view's own title, as the streak and its daily goal do; on the whole screen the bar is only the way back. The rules with pictures are on the design system's Layout page.
+`PlaceBar` in `components/layout/place-bar.tsx` is its first line in every shape and reads the shape from the `Dialog` around it. A view inside a place, such as the daily goal in the streak, puts its own back in the same slot. In a dialog or sheet the bar can carry the view's own title, as the streak and its daily goal do; on the whole screen the bar is only the way back. The rules with pictures are on the design system's Screens and places page.
 
 ## Menus
 
-On a desktop a menu is anchored to its trigger. On touch the same rows rise in a drawer from the bottom edge, where the thumb is, and swipe away. The rows keep their menu roles and arrow keys in both shapes, and a keyboard hint is left out of the drawer because there is no keyboard to hint at. `DropdownMenu` holds both shapes; use shadcn's parts.
+Desktop menus anchor to their trigger. Touch menus use a bottom drawer with the same rows, menu roles and arrow-key support, without keyboard shortcut hints. `DropdownMenu` provides both layouts through the shared parts.
 
 A menu's surface, like a popover's and a list's, is the slight `glass` ([surfaces.md](surfaces.md#on-glass)); a dialog or a drawer stays solid.
 
-`DropdownMenuItem` variants: `default` and `destructive`, for Archive, Remove or Leave. Nothing else exists. A destructive row that can be undone acts at once and offers Undo in a toast; one that cannot opens a question.
+`DropdownMenuItem` has two variants: `default`, and `destructive` for Archive, Remove or Leave. A destructive row that can be undone acts at once and offers Undo in a toast; one that cannot opens a question.
+
+A checkbox row keeps its tick in the start slot, so checked and unchecked rows line up; one with its own icon, such as Important among Filter's fields, puts the icon there and the tick at the end, where the rows beside it have their chevron.
 
 Menu rows do not scale on press. The hover is one fill that slides between rows ([motion.md](motion.md#hover)).
 
 ## Command palette
 
-⌘K (Ctrl K elsewhere) opens the command menu on a desktop: one field over a list of cards, decks, places and actions, top-anchored at 12% of the window and 620 px wide. The developer palette on backtick is the same shell in its graphite skin. Both draw with `components/ui/command-palette.tsx`, which owns the frame, the field, the list's keys and the row; each palette brings only its rows.
+⌘K on Mac or Ctrl K elsewhere opens the desktop command menu. It has one search field above cards, decks, destinations and actions, positioned 12% from the top at 620 px wide. The backtick developer palette uses the same `components/ui/command-palette.tsx` frame with graphite styling. Each palette supplies its own rows.
 
 - Focus stays in the field. Arrows move the highlight and wrap, Enter runs the row, ⌘Enter runs its second action, and Escape closes. An Enter that confirms an input method's word is not a run.
 - A palette with pages, like the developer palette, passes `onBack`: Escape empties the field first, then leaves the page, and Backspace in an empty field leaves it too; Escape closes only from the first page.
@@ -116,5 +120,5 @@ Toasts keep shadcn's default motion: they rise from below the edge and restack o
 - The drawer rises from the bottom edge over 450 ms on the drawer curve (`--ease-drawer`), follows the finger while it is dragged, and leaves in up to 320 ms, shorter the harder it was flicked.
 - A place on touch is the same drawer turned on its side: it arrives from the end edge over the same 450 ms, follows a swipe toward that edge, and leaves the way it came.
 - The centred dialog arrives with a card's 6 px rise over 200 ms and leaves in 140 ms, faster than it came.
-- On a desktop a menu grows out of the corner nearest its trigger, scale 0.94 to 1 over 140 ms, leaving in 100, because a menu belongs to its trigger; a list that slides in from somewhere else reads as a panel that happened to land there.
+- Desktop menus scale from 0.94 to 1 over 140 ms, from the corner nearest the trigger, and close in 100 ms. Keep the transform origin aligned with the trigger.
 - Under reduced motion the phone drawer and the toast crossfade with no travel.

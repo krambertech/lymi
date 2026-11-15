@@ -4,7 +4,7 @@ export const start = "/today";
 
 export default async function drive({ page, step, api, expect }) {
   await step("Today greets a new account with the guide and sets it up on 25", async () => {
-    await expect(page.getByRole("heading", { name: /^Welcome, / })).toBeVisible();
+    await expect(page.getByRole("heading", { name: /^Welcome(, | to Lymi$)/ })).toBeVisible();
     // The count shows from a wider screen; on a phone it is only in the page.
     await expect(page.getByText("0 of 3 done")).toBeAttached();
     await expect(page.getByRole("heading", { name: "Create your first deck" })).toBeVisible();
@@ -35,6 +35,11 @@ export default async function drive({ page, step, api, expect }) {
       if (await reveal.isVisible()) await reveal.click();
       const good = page.getByRole("button", { name: /^Good/ });
       if (await good.isVisible()) await good.click();
+      // The first review's own steps; docs/design/onboarding.md "The first review".
+      for (const name of [/^Next card/, /^Next$/, /^Not now$/]) {
+        const step = page.getByRole("button", { name });
+        if (await step.isVisible()) await step.click();
+      }
       await page.waitForTimeout(300);
     }
     await expect(done).toBeVisible();
@@ -44,7 +49,7 @@ export default async function drive({ page, step, api, expect }) {
   await step("Back on Today the guide has gone", async () => {
     await page.goto("/today");
     await expect(page.getByRole("heading", { level: 1, name: "Today", exact: true })).toBeVisible();
-    await expect(page.getByRole("heading", { name: /^Welcome, / })).toHaveCount(0);
+    await expect(page.getByRole("heading", { name: /^Welcome(, | to Lymi$)/ })).toHaveCount(0);
     return { deckId };
   });
 }

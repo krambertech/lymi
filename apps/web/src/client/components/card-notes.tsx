@@ -16,7 +16,7 @@ function Inlines({ nodes }: { nodes: readonly NoteInline[] }) {
           title={node.title}
           target="_blank"
           rel="noopener noreferrer"
-          className="text-text underline decoration-edge-2 underline-offset-2 hoverable:hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+          className="text-ink underline decoration-edge-strong underline-offset-2 hoverable:hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
         >
           <Inlines nodes={node.children} />
         </a>
@@ -54,7 +54,7 @@ function Blocks({ blocks }: { blocks: readonly NoteBlock[] }) {
       >
         {block.items.map((item, j) => (
           // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
-          <li key={j} className="ps-[0.25em] marker:text-muted">
+          <li key={j} className="ps-[0.25em] marker:text-ink-muted">
             <Blocks blocks={item} />
           </li>
         ))}

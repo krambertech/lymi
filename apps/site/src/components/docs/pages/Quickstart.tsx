@@ -74,7 +74,8 @@ print(r.json())`,
 }`}
           />
           <p>
-            A <code>401</code> here means the key is wrong or revoked. Nothing else can cause it.
+            A <code>401</code> here means the key is wrong or revoked. Copy the key again or make a
+            new one in Settings.
           </p>
         </div>
 
@@ -185,10 +186,10 @@ print(r.json()["status"])  # "added" or "skipped"`,
         <div>
           <StepTitle>Read the outcome</StepTitle>
           <p>
-            You get <code>201</code> with <code>status: "added"</code> and the whole card. If that
-            term is already in one of your decks you get <code>200</code> with{" "}
-            <code>status: "skipped"</code> and the card that already holds it. Adding the same term
-            twice is never an error.
+            You get <code>201</code> with <code>status: "added"</code> and the card. The response
+            below shows a subset of its fields. If that term is already in one of your decks you get{" "}
+            <code>200</code> with <code>status: "skipped"</code> and the card that already holds it.
+            Adding the same term twice is never an error.
           </p>
           <Code
             label="Response · 201"

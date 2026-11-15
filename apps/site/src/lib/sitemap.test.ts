@@ -28,6 +28,8 @@ describe("runtimeSitemap", () => {
       updatedAt: new Date(updatedAt),
       meaningLanguage: "en",
       editions: [],
+      category: null,
+      language: null,
     });
     const xml = runtimeSitemap(
       [
@@ -53,6 +55,8 @@ describe("runtimeSitemap", () => {
       updatedAt: new Date(updatedAt),
       meaningLanguage: "en",
       editions: [],
+      category: null,
+      language: null,
     });
     const xml = runtimeSitemap(
       [
@@ -93,12 +97,21 @@ describe("runtimeSitemap", () => {
 
   it("lists every locale of each deck with its alternates and last change", () => {
     const xml = runtimeSitemap([
-      { slug: "everyday-estonian", updatedAt: new Date(0), meaningLanguage: "en", editions: [] },
+      {
+        slug: "everyday-estonian",
+        updatedAt: new Date(0),
+        meaningLanguage: "en",
+        editions: [],
+        category: null,
+        language: null,
+      },
       {
         slug: "road-signs",
         updatedAt: new Date("2026-09-10T00:00:00Z"),
         meaningLanguage: "en",
         editions: [],
+        category: null,
+        language: null,
       },
     ]);
     for (const path of Object.values(deckPaths("everyday-estonian"))) {
@@ -116,7 +129,14 @@ describe("runtimeSitemap", () => {
 
   it("lists a deck only in the locales whose Explore lists it", () => {
     const xml = runtimeSitemap([
-      { slug: "english-a1", updatedAt: new Date(0), meaningLanguage: "uk", editions: ["ru"] },
+      {
+        slug: "english-a1",
+        updatedAt: new Date(0),
+        meaningLanguage: "uk",
+        editions: ["ru"],
+        category: null,
+        language: null,
+      },
     ]);
     expect(locs(xml).filter((loc) => loc?.includes("english-a1"))).toEqual([
       "https://lymi.app/uk/explore/english-a1",
@@ -128,9 +148,34 @@ describe("runtimeSitemap", () => {
     expect(deck).not.toContain("x-default");
   });
 
+  it("lists a language deck only in the locales that offer its language", () => {
+    const deck = (slug: string, language: string) => ({
+      slug,
+      updatedAt: new Date(0),
+      meaningLanguage: "en",
+      editions: ["uk", "ru"],
+      category: "languages",
+      language,
+    });
+    const xml = runtimeSitemap([deck("russian-alphabet", "ru"), deck("ukrainian-alphabet", "uk")]);
+    expect(locs(xml).filter((loc) => loc?.includes("alphabet"))).toEqual([
+      "https://lymi.app/explore/russian-alphabet",
+      "https://lymi.app/explore/ukrainian-alphabet",
+      "https://lymi.app/ru/explore/ukrainian-alphabet",
+    ]);
+    expect(entry(xml, "/explore/ukrainian-alphabet")).not.toContain('hreflang="uk"');
+  });
+
   it("leaves out a deck no locale's Explore lists", () => {
     const xml = runtimeSitemap([
-      { slug: "deutsch", updatedAt: new Date(0), meaningLanguage: "de", editions: [] },
+      {
+        slug: "deutsch",
+        updatedAt: new Date(0),
+        meaningLanguage: "de",
+        editions: [],
+        category: null,
+        language: null,
+      },
     ]);
     expect(xml).not.toContain("deutsch");
   });

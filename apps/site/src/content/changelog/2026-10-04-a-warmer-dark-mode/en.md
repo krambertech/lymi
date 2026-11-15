@@ -1,6 +1,6 @@
 ---
 title: A warmer dark mode
-summary: In dark mode, cards and panels sit gently above the page and catch the lantern’s light.
+summary: Cards and panels stand out from the page in dark mode.
 screenshot:
   frame: window
   alt: Today in dark mode, with the lantern’s light pooling on its panel and the plates sitting just above the page.
@@ -10,7 +10,7 @@ screenshot:
     theme: dark
 ---
 
-Dark mode has more depth. Cards and panels now sit slightly above the page, as if the lantern were lighting them, while the light theme stays flat and calm. Progress bars and the seven lights look lit from inside, and the lantern on Today throws a soft pool of light. Selected tabs and options are easier to spot in the dark.
+Cards and panels now stand out from the page in dark mode, and selected tabs and options are easier to spot.
 
 ### Fixes and improvements
 

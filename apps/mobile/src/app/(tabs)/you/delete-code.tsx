@@ -41,7 +41,7 @@ export default function DeleteCode() {
       case "code_expired":
         return t`This code has expired. Send a new one.`;
       case "publisher":
-        return t`Other people study what this account published, so it can’t be deleted here. Write to hello@lymi.app to delete it.`;
+        return t`This is a Lymi publisher account. It publishes the decks in Explore, so it can’t be deleted here. Write to hello@lymi.app to delete it.`;
       default:
         return t`Couldn’t delete your account. Check your connection and try again.`;
     }
@@ -68,7 +68,7 @@ export default function DeleteCode() {
         contentContainerClassName="gap-5 px-5 pt-2 pb-6"
         keyboardShouldPersistTaps="handled"
       >
-        <Text className="px-1 text-base text-text-2">
+        <Text className="px-1 text-base text-ink-secondary">
           {address ? t`Sent to ${address}. It works for 15 minutes.` : t`It works for 15 minutes.`}
         </Text>
         <Field disabled={remove.isPending}>

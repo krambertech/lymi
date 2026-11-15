@@ -38,7 +38,7 @@ export function QuickActionsSync() {
     ]).catch((e: unknown) => console.warn("quick actions", e));
   }, [t]);
 
-  // A stable callback: the hook replays the launching action whenever its callback changes.
+  // A stable callback: the hint replays the launching action whenever its callback changes.
   useQuickActionCallback(openAction);
   return null;
 }

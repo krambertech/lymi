@@ -6,9 +6,11 @@ import { useEffect, useState } from "react";
 import { AccountSection } from "../components/account-section";
 import { AiServicesSection } from "../components/ai-services-section";
 import { ApiKeysSection } from "../components/api-keys-section";
-import { ConnectedAppsSection } from "../components/connected-apps-section";
+import { AppsSection } from "../components/apps-section";
 import { ExportSheet } from "../components/export-sheet";
+import { LearningEmailsChoice } from "../components/learning-emails-choice";
 import { NotificationsSection } from "../components/notifications-section";
+import { ReplayChoice } from "../components/replay-choice";
 import { ThisMacSection } from "../components/this-mac-section";
 import { api, type Settings } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
@@ -69,6 +71,7 @@ function SettingsRoute() {
       account={<AccountSection name={me.data?.name} email={me.data?.email} />}
       onExportLibrary={() => setExporting(true)}
       deleteAccountLink={<Link to="/settings/delete-account" />}
+      privacyChoices={<ReplayChoice />}
       importLink={(source, className, children) => (
         <Link to={`/import/${source}`} className={className}>
           {children}
@@ -82,8 +85,9 @@ function SettingsRoute() {
     >
       <ThisMacSection />
       <NotificationsSection />
+      <LearningEmailsChoice />
       <AiServicesSection />
-      <ConnectedAppsSection />
+      <AppsSection />
       <ApiKeysSection />
       <ExportSheet
         open={exporting}

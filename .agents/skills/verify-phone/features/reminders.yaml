@@ -1,0 +1,25 @@
+# Daily reminder: turn it on, allow notifications, and see the time. Firing one is in reminders.md.
+appId: app.lymi
+name: Daily reminder
+---
+- runFlow: _open.yaml
+- tapOn: "You"
+- scrollUntilVisible:
+    element: "Remind me to review"
+- runFlow:
+    when:
+      notVisible: "Time"
+    commands:
+      - tapOn:
+          text: "Remind me to review"
+          index: 0
+      - extendedWaitUntil:
+          visible: "Allow|Time"
+          timeout: 8000
+      - tapOn:
+          text: "Allow"
+          optional: true
+- extendedWaitUntil:
+    visible: "Time"
+    timeout: 8000
+- takeScreenshot: 01-reminder-on

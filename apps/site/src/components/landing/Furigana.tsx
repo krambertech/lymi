@@ -30,7 +30,7 @@ export function Furigana({ term, reading, lang, hidden }: Props) {
         <rt
           aria-hidden="true"
           className={clsx(
-            "text-[0.45em] font-normal tracking-normal text-text-2 transition-[opacity,visibility] duration-500 ease-out motion-reduce:transition-none",
+            "text-[0.45em] font-normal tracking-normal text-ink-secondary transition-[opacity,visibility] duration-500 ease-out motion-reduce:transition-none",
             hidden && "invisible opacity-0",
           )}
         >

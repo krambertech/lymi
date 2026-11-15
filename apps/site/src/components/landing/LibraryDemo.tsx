@@ -9,47 +9,26 @@ import { Lantern } from "../Lantern";
 interface LibraryDeck {
   id: string;
   title: MessageDescriptor;
-  by: MessageDescriptor;
-  firstParty?: boolean;
-  sections: number;
   cards: number;
 }
 
+/** Real decks on Explore's Estonian shelf; Lymi publishes every deck there. */
 const DECKS: LibraryDeck[] = [
-  {
-    id: "first-steps",
-    title: msg`Estonian A1: first steps`,
-    by: msg`Made by Lymi`,
-    firstParty: true,
-    sections: 6,
-    cards: 180,
-  },
-  {
-    id: "work",
-    title: msg`Estonian for work`,
-    by: msg`Kadri Tamm, tutor`,
-    sections: 8,
-    cards: 260,
-  },
-  {
-    id: "citizenship",
-    title: msg`Words for the citizenship exam`,
-    by: msg`Anna Kask, language school`,
-    sections: 5,
-    cards: 140,
-  },
+  { id: "everyday", title: msg`Everyday Estonian`, cards: 99 },
+  { id: "verbs", title: msg`Estonian Top 100 Verbs`, cards: 100 },
+  { id: "words", title: msg`Estonian Top 1000 Words`, cards: 1000 },
 ];
 
-/** Decks other teachers published, each ready to add to a class as it is. */
+/** Ready-made decks from the library, each added as it is. */
 export function LibraryDemo() {
   const { t, i18n } = useLingui();
   const [added, setAdded] = useState<string[]>([]);
 
   return (
     <div className="mx-auto w-full max-w-[460px] rounded-2xl bg-plate p-4 edge @2xl:p-5">
-      <div className="flex h-11 items-center gap-2.5 rounded-md bg-plate-2 px-3.5">
-        <Search aria-hidden="true" className="size-4 text-muted" />
-        <span className="text-md text-text">Eesti</span>
+      <div className="flex h-11 items-center gap-2.5 rounded-md bg-plate-nested px-3.5">
+        <Search aria-hidden="true" className="size-4 text-ink-muted" />
+        <span className="text-md text-ink">Eesti</span>
       </div>
 
       <ul className="mt-3 flex flex-col">
@@ -62,14 +41,13 @@ export function LibraryDemo() {
               className="flex items-center gap-3 border-b border-edge py-3.5 last:border-b-0"
             >
               <div className="min-w-0 flex-1">
-                <p className="truncate text-md font-medium text-text">{title}</p>
-                <p className="mt-0.5 flex min-w-0 items-center gap-1.5 text-xs text-muted">
-                  {deck.firstParty && <Lantern className="size-3.5 shrink-0" />}
-                  <span className="min-w-0 truncate">{i18n._(deck.by)}</span>
-                </p>
-                <p className="mt-1 text-xs text-muted tabular-nums">
-                  <Plural value={deck.sections} one="# section" other="# sections" /> ·{" "}
-                  <Plural value={deck.cards} one="# card" other="# cards" />
+                <p className="truncate text-md font-medium text-ink">{title}</p>
+                <p className="mt-0.5 flex min-w-0 items-center gap-1.5 text-xs text-ink-muted tabular-nums">
+                  <Lantern className="size-3.5 shrink-0" />
+                  <span className="min-w-0 truncate">
+                    <Trans>Made by Lymi</Trans> ·{" "}
+                    <Plural value={deck.cards} one="# card" other="# cards" />
+                  </span>
                 </p>
               </div>
               <button
@@ -84,8 +62,8 @@ export function LibraryDemo() {
                 className={clsx(
                   "flex h-9 shrink-0 items-center gap-1.5 rounded-md px-3 text-sm transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97]",
                   isAdded
-                    ? "bg-good-soft text-good"
-                    : "bg-plate text-text edge hoverable:hover:bg-hover",
+                    ? "bg-success-soft text-success"
+                    : "bg-plate text-ink edge hoverable:hover:bg-plate-hover",
                 )}
               >
                 {isAdded ? (

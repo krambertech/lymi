@@ -1,6 +1,6 @@
 /** The elements that loop forever. Each one pauses while it is off screen; `styles.css` holds the pause. */
 const LOOPS =
-  ".lantern-flicker, .deck-spread-float, .deck-finale-pool, .floating-word, .hand-drift";
+  ".lantern-flicker, .deck-spread-float, .deck-finale-pool, .floating-word, .hand-drift, .landing-ring";
 
 export function pauseLoopsOffscreen() {
   const visibility = new IntersectionObserver((entries) => {

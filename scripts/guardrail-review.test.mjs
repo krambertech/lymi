@@ -9,22 +9,7 @@ import {
   unexplainedSuppression,
 } from "./guardrail-review.mjs";
 
-const AGENTS = [
-  "# Lymi",
-  "",
-  "## Enforced rules",
-  "",
-  "| Rule | Check |",
-  "| --- | --- |",
-  "| Tokens only | `pnpm check:styling` |",
-  "| Strings extracted | `pnpm i18n:check` |",
-  "| Titles follow the shape | `scripts/check-pr-title.mjs` in CI |",
-  "",
-  "## Concise writing",
-  "",
-  "Write less.",
-  "",
-].join("\n");
+const AGENTS = "# Lymi\n\n## Start here\n\nWrite less.\n";
 
 const BIOME = {
   files: { includes: ["**", "!**/dist"] },
@@ -48,6 +33,8 @@ const MANIFEST = {
     check: "biome check . && pnpm check:styling && pnpm --filter @lymi/mobile symbols:check",
     "check:styling": "node scripts/check-styling.mjs",
     "i18n:check": "pnpm i18n:extract && git diff --exit-code",
+    verify: "pnpm check && pnpm i18n:check && pnpm build && pnpm test",
+    build: "pnpm -r build",
     "i18n:extract": "pnpm -r --filter @lymi/web i18n:extract",
     test: "pnpm -r test",
   },
@@ -385,9 +372,10 @@ test("guardrailScripts follows pnpm calls across packages to the files they run"
     "package.json check:styling",
     "package.json i18n:check",
     "package.json i18n:extract",
+    "package.json verify",
   ]);
   assert.deepEqual(Object.fromEntries(files), {
-    "scripts/check-pr-title.mjs": "named in the enforced-rules table",
+    "scripts/check-pr-title.mjs": "run by CI",
     "scripts/check-styling.mjs": "run by `check:styling`",
     "apps/mobile/scripts/symbols.mjs": "run by `symbols:check`",
   });
@@ -432,6 +420,25 @@ test("removing a check or a step from one is held", () => {
   );
 });
 
+test("dropping a step from verify is held, and adding one passes", () => {
+  assert.deepEqual(
+    guardrails(["package.json"], {
+      "package.json": scripts((all) => {
+        all.verify = "pnpm check && pnpm build && pnpm test";
+      }),
+    }),
+    ["Drops or rewrites `pnpm i18n:check` in `verify` in `package.json`"],
+  );
+  assert.deepEqual(
+    guardrails(["package.json"], {
+      "package.json": scripts((all) => {
+        all.verify += " && pnpm test:workers";
+      }),
+    }),
+    [],
+  );
+});
+
 test("a script outside the checks is not a guardrail", () => {
   assert.deepEqual(
     guardrails(["apps/web/package.json"], {
@@ -445,38 +452,12 @@ test("a script outside the checks is not a guardrail", () => {
 
 test("a file a check runs is held when it changes or goes", () => {
   assert.deepEqual(guardrails(["scripts/check-styling.mjs", "scripts/check-pr-title.mjs"]), [
-    "Changes `scripts/check-pr-title.mjs`, named in the enforced-rules table; the gate cannot tell whether that loosens it",
+    "Changes `scripts/check-pr-title.mjs`, run by CI; the gate cannot tell whether that loosens it",
     "Changes `scripts/check-styling.mjs`, run by `check:styling`; the gate cannot tell whether that loosens it",
   ]);
   assert.deepEqual(
     guardrails([{ path: "apps/mobile/scripts/symbols.mjs", status: "deleted", added: [] }]),
     ["Deletes `apps/mobile/scripts/symbols.mjs`, run by `symbols:check`"],
-  );
-});
-
-test("the enforced-rules table may gain rows, but not lose or reword them", () => {
-  const row = "| Titles follow the shape | `scripts/check-pr-title.mjs` in CI |\n";
-  assert.deepEqual(
-    guardrails(["AGENTS.md"], {
-      "AGENTS.md": AGENTS.replace(
-        row,
-        `${row}| Docs point at real files | \`pnpm check:docs\` |\n`,
-      ),
-    }),
-    [],
-  );
-  assert.deepEqual(guardrails(["AGENTS.md"], { "AGENTS.md": AGENTS.replace(row, "") }), [
-    "Removes or rewords the enforced-rules row `Titles follow the shape` in `AGENTS.md`",
-  ]);
-  assert.deepEqual(
-    guardrails(["AGENTS.md"], {
-      "AGENTS.md": AGENTS.replace("Tokens only", "Tokens, mostly"),
-    }),
-    ["Removes or rewords the enforced-rules row `Tokens only` in `AGENTS.md`"],
-  );
-  assert.deepEqual(
-    guardrails(["AGENTS.md"], { "AGENTS.md": AGENTS.replace("## Enforced rules", "## Rules") }),
-    ["Removes the enforced-rules table from `AGENTS.md`"],
   );
 });
 

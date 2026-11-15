@@ -6,14 +6,20 @@ import {
   type Attribution,
   analyticsPath,
   type Backlog,
+  EMAIL_ENTRY_KEY,
+  emailEntryOf,
   eventProperties,
   firstTouch,
   INTERNAL_ACCOUNT_IDS,
   REMINDER_ENTRY,
+  REMINDER_MESSAGE_KEY,
+  ReminderMessage,
 } from "@lymi/core/analytics";
 import { POSTHOG_PROXY_PATH } from "@lymi/core/posthog-proxy";
 import { exceptionProperties } from "@lymi/core/telemetry";
 import posthog from "posthog-js/no-external";
+// The SDK loads its web-vitals reader from PostHog's servers unless it is bundled here.
+import "posthog-js/dist/web-vitals";
 
 export const ANALYTICS_READY = "lymi:analytics-ready";
 // Read at load, before client-side navigation rewrites the address and the referrer stops applying.
@@ -24,6 +30,7 @@ let surface: "public" | "product" = "product";
 let initialized = false;
 let learner: string | undefined;
 let accountAllowed = false;
+let replayAllowed = false;
 let accountChecked = false;
 let identifySent: string | undefined;
 let lastPage: string | undefined;
@@ -34,6 +41,33 @@ let pageSource: Omit<Attribution, "first_landing_page"> | undefined;
 let entryPending = true;
 let directEntry = false;
 let release: string | undefined;
+let replay: "off" | "loading" | "on" = "off";
+
+/**
+ * Session replay for the product. The free plan holds 10,000 web recordings a month; lower
+ * `sampleRate` before traffic outgrows it. PostHog's remote config is never fetched, so the SDK
+ * reads this one instead.
+ */
+const REPLAY_CONFIG = {
+  hasFeatureFlags: false,
+  sessionRecording: { endpoint: "/s/", sampleRate: "1.00", minimumDurationMilliseconds: 2000 },
+};
+const SNAPSHOT_PROPERTIES = [
+  "$snapshot_data",
+  "$snapshot_bytes",
+  "$session_id",
+  "$window_id",
+  "$lib",
+  "$lib_version",
+] as const;
+// A recording never shows these, and they can carry a card's words or a name.
+const HIDDEN_ATTRIBUTES = new Set([
+  "aria-label",
+  "aria-description",
+  "aria-valuetext",
+  "title",
+  "alt",
+]);
 
 /** Where this page load's visit began, for the sign-up request to carry to the server. */
 export function visitFirstTouch(on: "public" | "product" = surface): Attribution | undefined {
@@ -67,35 +101,59 @@ function forget(): void {
   opening = undefined;
 }
 
-const fromReminder = (url: string) =>
-  new URL(url).searchParams.get(REMINDER_ENTRY.key) === REMINDER_ENTRY.value;
+type ArrivalEntry = Pick<AnalyticsProperties<"app_opened">, "entry" | "from_email">;
+
+function markedEntry(url: string): ArrivalEntry | undefined {
+  const params = new URL(url).searchParams;
+  if (params.get(REMINDER_ENTRY.key) === REMINDER_ENTRY.value) return { entry: "reminder" };
+  const kind = emailEntryOf(params);
+  return kind && { entry: "email", from_email: kind };
+}
 
 /**
- * How this page load began: a reminder's link, a link from another site, or neither. The address
- * still carries a reminder's mark after sign-in, which returns to it.
+ * How this page load began: a reminder's or an email's link, a link from another site, or neither.
+ * The address still carries the mark after sign-in, which returns to it.
  */
-function arrivalEntry(): "reminder" | "link" | "direct" {
+function arrivalEntry(): ArrivalEntry {
   try {
-    if ((arrival && fromReminder(arrival.url)) || fromReminder(location.href)) return "reminder";
+    const marked = (arrival && markedEntry(arrival.url)) ?? markedEntry(location.href);
+    if (marked) return marked;
   } catch {
-    return "direct";
+    return { entry: "direct" };
   }
-  return visitFirstTouch("product")?.referrer ? "link" : "direct";
+  return { entry: visitFirstTouch("product")?.referrer ? "link" : "direct" };
+}
+
+/** Which of the day's messages this page load came from; a link from before they had names has none. */
+function arrivalMessage(): ReminderMessage | undefined {
+  try {
+    for (const url of [arrival?.url, location.href]) {
+      if (!url || markedEntry(url)?.entry !== "reminder") continue;
+      return ReminderMessage.safeParse(new URL(url).searchParams.get(REMINDER_MESSAGE_KEY)).data;
+    }
+  } catch {
+    /* No message costs one opening in the per-message count. */
+  }
+  return undefined;
 }
 
 function sendOpening(): void {
   if (openingSent || !opening || !learner || identifySent !== learner) return;
-  if (!captureAnalytics("app_opened", { entry: arrivalEntry(), ...opening })) return;
+  const message = arrivalMessage();
+  if (!captureAnalytics("app_opened", { ...arrivalEntry(), ...opening })) return;
+  if (message) captureAnalytics("reminder_opened", { message, client: "web" });
   openingSent = true;
-  dropReminderMark();
+  dropEntryMark();
 }
 
-/** Once the opening is counted, a reload of the same address is not another reminder. */
-function dropReminderMark(): void {
+/** Once the opening is counted, a reload of the same address is not another arrival by that link. */
+function dropEntryMark(): void {
   try {
     const url = new URL(location.href);
-    if (!fromReminder(url.href)) return;
-    url.searchParams.delete(REMINDER_ENTRY.key);
+    const marked = markedEntry(url.href);
+    if (!marked) return;
+    url.searchParams.delete(marked.entry === "email" ? EMAIL_ENTRY_KEY : REMINDER_ENTRY.key);
+    url.searchParams.delete(REMINDER_MESSAGE_KEY);
     history.replaceState(history.state, "", url);
   } catch {
     /* The mark only costs a duplicate opening on reload. */
@@ -128,6 +186,13 @@ export function initAnalytics(options: {
     pageSource = source;
   }
   try {
+    if (surface === "product") {
+      const preloaded = window as { _POSTHOG_REMOTE_CONFIG?: Record<string, { config: unknown }> };
+      preloaded._POSTHOG_REMOTE_CONFIG = {
+        ...preloaded._POSTHOG_REMOTE_CONFIG,
+        [options.token as string]: { config: REPLAY_CONFIG },
+      };
+    }
     posthog.init(options.token as string, {
       api_host: `${location.origin}${POSTHOG_PROXY_PATH}`,
       ui_host: "https://eu.posthog.com",
@@ -137,13 +202,33 @@ export function initAnalytics(options: {
       person_profiles: "identified_only",
       autocapture: false,
       capture_pageview: false,
-      capture_pageleave: false,
+      capture_pageleave: true,
       capture_exceptions: false,
-      capture_performance: false,
+      capture_performance: { web_vitals: true, network_timing: false },
+      // Where public visitors click and scroll; the product has session replay instead.
+      enable_heatmaps: surface === "public",
       capture_dead_clicks: false,
       save_campaign_params: false,
       save_referrer: false,
+      // Started once the account allows it. Every word, input and picture is masked: a recording
+      // shows layout, clicks and scrolling only.
       disable_session_recording: true,
+      session_recording: {
+        maskAllInputs: true,
+        maskTextSelector: "*",
+        blockSelector: "img, picture, video, canvas, svg image",
+        maskAttributeFn: (name, value) =>
+          HIDDEN_ATTRIBUTES.has(name) ? "*".repeat(value.length) : value,
+        // A recorded address keeps only its route, so tokens and IDs in it never leave.
+        maskCapturedNetworkRequestFn: (request) => {
+          try {
+            const url = new URL(request.name, location.origin);
+            return { ...request, name: url.origin + analyticsPath(url.pathname, surface) };
+          } catch {
+            return { ...request, name: location.origin };
+          }
+        },
+      },
       disable_surveys: true,
       disable_external_dependency_loading: true,
       advanced_disable_flags: true,
@@ -155,9 +240,17 @@ export function initAnalytics(options: {
         delete event.$set_once;
         delete event.$unset;
         const ui_locale = AnalyticsLocale.catch("en").parse(document.documentElement.lang);
+        // While a session is recorded, its ID lets PostHog open the recording from an event or error.
+        const sessionId = event.properties.$session_id;
+        const recorded =
+          replay === "on" && recordable() && typeof sessionId === "string"
+            ? { $session_id: sessionId }
+            : {};
         if (event.event === "$exception") {
+          const exception = exceptionProperties(event.properties);
+          if (GLOBAL_HANDLERS.has(event.properties.caught_by) && !fromLymi(exception)) return null;
           event.properties = {
-            ...exceptionProperties(event.properties),
+            ...exception,
             token: options.token,
             distinct_id:
               surface === "product" && learner && allowed() ? posthog.get_distinct_id() : "browser",
@@ -171,10 +264,22 @@ export function initAnalytics(options: {
             schema_version: ANALYTICS_SCHEMA_VERSION,
             $geoip_disable: true,
             $process_person_profile: false,
+            ...recorded,
           };
           return event;
         }
         if (!allowed()) return null;
+        if (event.event === "$snapshot") {
+          if (!recordable()) return null;
+          const snapshot: Record<string, unknown> = {};
+          for (const key of SNAPSHOT_PROPERTIES) snapshot[key] = event.properties[key];
+          event.properties = {
+            ...snapshot,
+            token: options.token,
+            distinct_id: posthog.get_distinct_id(),
+          };
+          return event;
+        }
         let properties: Record<string, unknown> | null;
         if (event.event === "$set" && learner && accountAllowed) {
           properties = {
@@ -197,11 +302,22 @@ export function initAnalytics(options: {
                   },
                 }
               : null;
-        } else properties = eventProperties(event.event, event.properties, "browser");
+        } else
+          properties = eventProperties(
+            event.event,
+            sdkEventProperties(event.event, event.properties) ?? event.properties,
+            "browser",
+          );
         if (!properties) return null;
         const cookieless = event.properties.$cookieless_mode === true;
         event.properties = {
           ...properties,
+          ...(event.event === "$pageleave" || event.event === "$web_vitals"
+            ? {
+                $pathname: properties.pathname,
+                $current_url: `${location.origin}${properties.pathname}`,
+              }
+            : {}),
           ...(event.event === "$pageview"
             ? {
                 $pathname: properties.pathname,
@@ -229,6 +345,7 @@ export function initAnalytics(options: {
           ui_locale,
           schema_version: ANALYTICS_SCHEMA_VERSION,
           $geoip_disable: true,
+          ...recorded,
         };
         return event;
       },
@@ -241,6 +358,7 @@ export function initAnalytics(options: {
 }
 
 function applyState(): void {
+  applyReplay();
   if (!initialized || !allowed()) {
     ready = false;
     return;
@@ -263,6 +381,38 @@ function applyState(): void {
   }
 }
 
+/** Replay records signed-in learners only: a signed-out visitor has no setting to object with. */
+function recordable(): boolean {
+  return (
+    surface === "product" &&
+    allowed() &&
+    replayAllowed &&
+    !!learner &&
+    !INTERNAL_ACCOUNT_IDS.has(learner)
+  );
+}
+
+/** The recorder is a chunk of its own, loaded only when a product page may be recorded. */
+function applyReplay(): void {
+  if (!initialized || surface !== "product") return;
+  if (!recordable()) {
+    if (replay === "on") posthog.stopSessionRecording();
+    replay = "off";
+    return;
+  }
+  if (replay !== "off") return;
+  replay = "loading";
+  import("posthog-js/dist/posthog-recorder")
+    .then(() => {
+      if (replay !== "loading" || !recordable()) return;
+      replay = "on";
+      posthog.startSessionRecording();
+    })
+    .catch(() => {
+      replay = "off";
+    });
+}
+
 function identifyLearner(): void {
   if (surface !== "product" || !allowed() || !learner || identifySent === learner) return;
   posthog.identify(learner, {
@@ -274,11 +424,17 @@ function identifyLearner(): void {
 }
 
 /** The product reports who is signed in and whether their account turned analytics off. */
-export function setAnalyticsLearner(id: string | undefined, permitted = false): void {
+export function setAnalyticsLearner(
+  id: string | undefined,
+  permitted = false,
+  /** Whether the account left session replay on in Settings. */
+  replay = false,
+): void {
   if ((learner && learner !== id) || (identifySent && !permitted)) forget();
   learner = id;
   accountChecked = true;
   accountAllowed = permitted;
+  replayAllowed = replay;
   if (initialized) applyState();
 }
 
@@ -308,9 +464,75 @@ export function capturePageview(pathname: string): void {
   directEntry = false;
 }
 
+/** The route of an address the SDK reports, or undefined when it can't be read. */
+function routeOf(url: unknown): string | undefined {
+  try {
+    return analyticsPath(new URL(String(url), location.origin).pathname, surface);
+  } catch {
+    return undefined;
+  }
+}
+
+/**
+ * PostHog's own page-leave, web-vitals and heatmap events name full addresses; these keep only the
+ * route, so the catalog's allowlist can take the rest.
+ */
+function sdkEventProperties(
+  name: string,
+  properties: Record<string, unknown>,
+): Record<string, unknown> | undefined {
+  if (name === "$pageleave")
+    return {
+      ...properties,
+      pathname: routeOf(properties.$prev_pageview_pathname ?? location.pathname),
+    };
+  if (name === "$web_vitals") return { ...properties, pathname: routeOf(properties.$current_url) };
+  if (name !== "$$heatmap") return undefined;
+  const data: Record<string, unknown[]> = {};
+  const given = properties.$heatmap_data;
+  if (given && typeof given === "object")
+    for (const [url, points] of Object.entries(given)) {
+      const route = routeOf(url);
+      if (route && Array.isArray(points))
+        data[`${location.origin}${route}`] = [
+          ...(data[`${location.origin}${route}`] ?? []),
+          ...points,
+        ];
+    }
+  return {
+    $heatmap_data: data,
+    $viewport_width: Math.round(window.innerWidth),
+    $viewport_height: Math.round(window.innerHeight),
+  };
+}
+
 /** Which handler caught a browser error, so a report without a stack still says where it surfaced. */
 export type CaughtBy = "window" | "rejection" | "router" | "react";
 const CAUGHT_BY = new Set<unknown>(["window", "rejection", "router", "react"] satisfies CaughtBy[]);
+
+const GLOBAL_HANDLERS = new Set<unknown>(["window", "rejection"] satisfies CaughtBy[]);
+const LYMI_ASSET = "https://my.lymi.app/assets/";
+
+/**
+ * Whether an error the page's global handlers caught came from Lymi: a frame in Lymi's own bundle,
+ * or a runtime network or chunk failure message. Extensions and injected scripts throw on the page
+ * too, with neither. A thrown non-error gets a synthetic stack of the reporting code itself.
+ */
+function fromLymi(properties: Record<string, unknown>): boolean {
+  const exceptions = properties.$exception_list as {
+    value: string;
+    mechanism: { synthetic: boolean };
+    stacktrace: { frames: { filename?: string; chunk_id?: string }[] };
+  }[];
+  return exceptions.some(
+    (exception) =>
+      (exception.stacktrace.frames.length === 0 && exception.value !== "Unexpected error") ||
+      (!exception.mechanism.synthetic &&
+        exception.stacktrace.frames.some(
+          (frame) => frame.chunk_id || frame.filename?.startsWith(LYMI_ASSET),
+        )),
+  );
+}
 
 export function reportBrowserException(error: unknown, caughtBy?: CaughtBy): void {
   if (!initialized) return;

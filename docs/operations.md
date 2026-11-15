@@ -1,16 +1,16 @@
 # Operations
 
-Production alerts email k.porshnieva@gmail.com from Cloudflare and PostHog. Every alert links to its section below: what it means, then what to check first. [The stack](stack.md#analytics-workers-analytics-engine-and-posthog-eu) says why monitoring is split this way.
+Production alerts email k.porshnieva@gmail.com from Cloudflare and PostHog. Content reports from learners go to hello@lymi.app and are handled under [A content report arrives](#a-content-report-arrives); [app-review.md](app-review.md) is what App Review and Google Play are told about it. Every alert links to its section below: what it means, then what to check first. [The stack](stack.md#analytics-workers-analytics-engine-and-posthog-eu) says why monitoring is split this way.
 
 ## What watches production
 
-The 15-minute cron runs a canary on the production Worker (`apps/web/src/server/canary.ts`). It calls D1, KV, R2, the public site's health endpoint, OpenAI text, the Anthropic lesson reader and Workers AI the way a learner's request would. Every hour it also calls each configured speech provider once with "ok", in English or, for ElevenLabs, which has no native English voice, in Estonian, and asks the lead-in writer for one Japanese word's lead-in, because Google admits only keys that already used Gemini 2.5. Each service gets one verdict per run, after one retry, so a single dropped request does not alert.
+The 15-minute cron runs a canary on the production Worker (`apps/web/src/server/canary.ts`). It calls D1, KV, R2, the public site's health endpoint, OpenAI text, the Anthropic lesson reader and Workers AI the way a learner's request would. Every hour it also calls each configured speech provider once with "ok", in English, or in Estonian for ElevenLabs, which has no native English voice. Each service gets one verdict per run, after one retry, so a single dropped request does not alert.
 
 Every real call to an outside service records its outcome too: `meteredFetch` and `metered` in `apps/web/src/server/dependency-health.ts`, covering AI text, the lesson reader, Workers AI, speech, email and web push. Both write to the `lymi_health` Analytics Engine dataset, which holds no account, card or request content.
 
 | Field | Holds |
 | --- | --- |
-| `index1` | The dependency: `d1`, `kv`, `r2`, `site`, `openai_text`, `anthropic`, `workers_ai`, `elevenlabs`, `gemini_text`, `gemini_speech`, `google_speech`, `openai_speech`, `email`, `web_push` |
+| `index1` | The dependency: `d1`, `kv`, `r2`, `site`, `openai_text`, `anthropic`, `workers_ai`, `elevenlabs`, `openai_speech`, `email`, `web_push` |
 | `blob1` | `call` for one attempt, `check` for the canary's verdict |
 | `blob2` | `ok`, `gone`, `limited`, `rejected`, `failed`, `timeout` or `unreachable` |
 | `blob3` | HTTP status class, or `none` |
@@ -49,7 +49,7 @@ WHERE "accountTag" = 'ce6da857aeb521aa2730848a194b8866' AND "blob1" = 'check'
 SELECT count() AS "value" FROM "events"."analyticsEngine"."lymi_health"
 WHERE "accountTag" = 'ce6da857aeb521aa2730848a194b8866' AND "blob1" = 'call' AND "blob4" = 'traffic'
   AND "blob2" IN ('rejected', 'failed', 'timeout', 'unreachable')
-  AND "index1" NOT IN ('elevenlabs', 'gemini_text', 'gemini_speech', 'google_speech', 'openai_speech')
+  AND "index1" NOT IN ('elevenlabs', 'openai_speech')
 ```
 
 ## First steps for any alert
@@ -66,7 +66,7 @@ WHERE "accountTag" = 'ce6da857aeb521aa2730848a194b8866' AND "blob1" = 'call' AND
 
 ## A production check is failing
 
-The canary could not use a service after a retry. `unreachable` means the request never got an answer, which is a code or configuration fault more often than an outage: 17 October 2026 was a `redirect` option Workers rejects. `rejected` means our request is wrong or a key was revoked; `failed` means the vendor or AI Gateway answered with an error. Check the vendor's status page and AI Gateway's logs, then the last deploy.
+The canary could not use a service after a retry. `unreachable` means the request never got an answer, which is a code or configuration fault more often than an outage, such as a `redirect` option Workers rejects. `rejected` means our request is wrong or a key was revoked; `failed` means the vendor or AI Gateway answered with an error. Check the vendor's status page and AI Gateway's logs, then the last deploy.
 
 ## Production checks stopped
 
@@ -74,7 +74,7 @@ The canary has not reported for 45 minutes, so the cron, the Worker or Analytics
 
 ## Outside calls are failing for learners
 
-Real requests are failing against a dependency, which the breakdown above names. If the canary is passing, the failure is specific to some input, such as one file type in imports. Speech and the Japanese lead-in (`gemini_text`) are left out because each failed attempt falls through to the next provider or to kana-only speech; a learner sees a speech failure only when every provider fails, which [Server errors](#server-errors) catches as a 503 from `/api/audio/:cardId`.
+Real requests are failing against a dependency, which the breakdown above names. If the canary is passing, the failure is specific to some input, such as one file type in imports. Speech is left out because each failed attempt falls through to the next provider; a learner sees a speech failure only when every provider fails, which [Server errors](#server-errors) catches as a 503 from `/api/audio/:cardId`.
 
 ## Server errors
 
@@ -98,13 +98,40 @@ The product build uploads its source maps to PostHog, and a failed upload fails 
 
 ## AI calls are failing
 
-`$ai_generation` events with `$ai_is_error` are piling up: enrichment, hook drafts, deck choice, import language detection or lesson reads. Pronunciation, example audio and the Japanese lead-in are left out, because a failed speech attempt falls through to the next provider and a failed lead-in to kana-only speech. Example translations are in: a run that gives up leaves the card saying "Couldn’t translate the example". Learners see empty drafts, failed enrichment and "Try again". Follow [A production check is failing](#a-production-check-is-failing).
+`$ai_generation` events with `$ai_is_error` are piling up: enrichment, hint drafts, deck choice, import language detection or lesson reads. Pronunciation, example audio and the Japanese lead-in are left out, because a failed speech attempt falls through to the next provider and a failed lead-in to kana-only speech. Example translations are in: a run that gives up leaves the card saying "Couldn’t translate the example". Learners see empty drafts, failed enrichment and "Try again". Follow [A production check is failing](#a-production-check-is-failing).
+
+Lead-ins have their own log instead: Japanese term audio logs `lead_in_resolved` with `outcome: cached|cooldown|unambiguous|written|no_fragment|refused|failed|invalid_cache`, its policy's `language`, the writer model, and generation latency and input/output token counts on successful replies. No text, reading, meaning, card or owner identifier enters this log. A failed context call has a 24-hour cooldown and an interrupted one 5 minutes; concurrent generation returns unavailable for up to 45 seconds rather than buying a duplicate ([lead-ins](lead-ins.md#what-is-stored-and-when-it-is-asked-again)). `pronunciation_lease_release_failed` names a storage failure without the private object key.
 
 ## Nobody reviewed yesterday
 
 A whole day passed without a graded review. Open the product and review a card; if that works, check grade delivery in the phone and web outboxes and the `review_graded` event in PostHog before assuming learners stopped.
 
-Japanese term audio logs `lead_in_resolved` with `outcome: cached|cooldown|unambiguous|written|no_fragment|refused|failed|invalid_cache`, its policy's `language`, the writer model, and generation latency and input/output token counts on successful replies. No text, reading, meaning, card or owner identifier enters this log. A failed context call has a 24-hour cooldown and an interrupted one 5 minutes; concurrent generation returns unavailable for up to 45 seconds rather than purchasing a duplicate. `pronunciation_lease_release_failed` names a storage failure without the private object key.
+## A content report arrives
+
+A learner reported a deck or card someone else wrote ([Report](../CONTEXT.md)). The email to hello@lymi.app carries the content as it read when reported, the reason, the reporter's note and the report's id, and replying reaches the reporter. Lymi tells reporters and [App Review](app-review.md) that every report is read within a day, so act the same day.
+
+```bash
+pnpm moderate show <report-id>
+```
+
+`pnpm moderate list` shows every open report, oldest first; a report whose email never arrived is still there. Each command needs `LYMI_API_KEY`, a write-scoped key on an account in `OPERATOR_EMAILS`. Then settle it with one of:
+
+| Action | When | What happens |
+| --- | --- | --- |
+| `dismiss` | Nothing breaks the rules | The report closes; nothing changes |
+| `archive_card` | One card is the problem | The card leaves every member's deck, and its owner cannot restore it |
+| `archive_deck` | The deck itself is the problem | The deck leaves every member's Library, its join link and invitations stop working, and its owner cannot restore it |
+| `suspend_sharing` | The owner shares abuse, or keeps coming back | Every deck they share is archived for good, and they can no longer turn on a join link or invite anyone |
+
+```bash
+pnpm moderate resolve <report-id> archive_card --apply
+```
+
+Settling a report settles the other open reports about the same card, deck or owner. `archive_deck` and `suspend_sharing` are refused when the owner publishes to Explore: fix or withdraw a published deck with the publishing key instead. A learner who reports the same thing again while it is open adds their reason and note to the open report, with no second email, so read the note again before settling. The owner sees the archive in Activity as Lymi's, with no reporter named. Reply to the reporter by email when the action matters to them. To lift a suspension, delete its `sharing_suspensions` row and the owner can share again; archived decks stay archived.
+
+## A deleted account's Apple grant was not revoked
+
+The `apple-revocations` cron job failed, or `apple_revocation_attempted` shows `outcome=failed`. Apple requires the grant to end with the account, and `apple_revocations` keeps one row per deleted Apple account with its `status`, `reason`, `client` and `attempts`, and no address or name. `revoke` means Apple refused eight revokes over about a day and a half, so check the Sign in with Apple key secrets and Apple's status. `exchange` means Apple refused the phone's one-use code, and `lost` means the code expired before it was traded or a sealed token no longer opens after a key change. The person was told in the goodbye email to remove Lymi under Sign in with Apple, so a failed row needs no contact; read the rows with `wrangler d1 execute lymi --remote --command "select status, reason, client, attempts, created_at from apple_revocations where status = 'failed'"`.
 
 ## The stress backfill
 

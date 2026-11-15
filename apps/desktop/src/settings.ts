@@ -1,3 +1,5 @@
+import type { ThemeChoice } from "@lymi/client/desktop";
+
 /** What the learner sets for this Mac. They live on the Mac, not the account, so each Mac keeps its own. */
 export interface Preferences {
   shortcut: string;
@@ -6,6 +8,8 @@ export interface Preferences {
   /** The cards due beside the lantern. Off until the learner asks for it. */
   showDue: boolean;
   fillSelection: boolean;
+  /** The page's theme, kept here so a window can open in it before any page has loaded. */
+  theme: ThemeChoice;
 }
 
 export const DEFAULT_SHORTCUT = "Control+Alt+L";
@@ -14,7 +18,11 @@ export const DEFAULTS: Preferences = {
   showInMenuBar: true,
   showDue: false,
   fillSelection: true,
+  theme: "system",
 };
+
+export const isTheme = (value: unknown): value is ThemeChoice =>
+  value === "light" || value === "dark" || value === "system";
 
 /**
  * A global shortcut must hold ⌘ or ⌃ and one key. ⌥ alone is how a Mac types accents, so ⌥E as a
@@ -48,5 +56,6 @@ export function parsePreferences(saved: unknown): Preferences {
     showInMenuBar: flag("showInMenuBar"),
     showDue: flag("showDue"),
     fillSelection: flag("fillSelection"),
+    theme: isTheme(value.theme) ? value.theme : DEFAULTS.theme,
   };
 }

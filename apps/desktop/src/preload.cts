@@ -39,7 +39,7 @@ ipcRenderer.on("window:full-screen", (_event, on: ToPage["window:full-screen"]) 
 });
 
 const bridge = {
-  version: 1,
+  version: 4,
   hidePanel: () => send("panel:hide"),
   resizePanel: (height) => send("panel:resize", height),
   setPanelBackground: (color) => send("panel:background", color),
@@ -52,6 +52,16 @@ const bridge = {
   setRecordingShortcut: (on) => send("prefs:recording", on),
   onNavigate: (listener) => held("app:navigate", listener),
   onMenuCommand: (listener) => held("menu:command", listener),
+  signIn: (provider) => send("app:sign-in", provider),
+  restartToUpdate: () => send("app:restart-to-update"),
+  setTheme: (theme) => send("app:theme", theme),
+  onUpdate: (listener) => {
+    const relay = (_event: unknown, update: ToPage["app:update"]) => listener(update);
+    ipcRenderer.on("app:update", relay);
+    return () => {
+      ipcRenderer.removeListener("app:update", relay);
+    };
+  },
 } satisfies DesktopBridge;
 
 contextBridge.exposeInMainWorld("lymiDesktop", bridge);

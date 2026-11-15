@@ -316,7 +316,7 @@ export function PersonaAvatar({
       <span
         aria-hidden="true"
         className={clsx(
-          "grid place-items-center rounded-full bg-plate-2 font-semibold leading-none text-text-2",
+          "grid place-items-center rounded-full bg-plate-nested font-semibold leading-none text-ink-secondary",
           className,
         )}
       >

@@ -489,6 +489,23 @@ describe("bulk edits and archives", () => {
     expect(states.length).toBeGreaterThan(0);
   });
 
+  it("restores as many cards as a bulk call carries", async () => {
+    const ctx = await learner(db, "bulk-restore-101", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });
+    // One past D1's 100 bound parameters; more cards only slow a busy runner past the timeout.
+    const ids = await addTerms(
+      ctx,
+      deck.id,
+      Array.from({ length: 101 }, (_, i) => `parola ${i}`),
+    );
+    await archiveCards(ctx, ids);
+
+    const outcomes = await restoreCards(ctx, ids);
+
+    expect(outcomes.filter((outcome) => outcome.status === "restored")).toHaveLength(101);
+    expect((await showCard(ctx, ids[100] as string)).archivedAt).toBeNull();
+  }, 60_000);
+
   it("reduces an add to the card's id and enrichment, the existing card's when skipped", async () => {
     const ctx = await learner(db, "bulk-terse-1", "Kateryna");
     const deck = await createDeck(ctx, { name: "Italiano", defaultLanguage: "it" });

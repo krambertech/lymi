@@ -1,0 +1,48 @@
+# Pitch accent: no chart on the cue, a chart under the term after the reveal, one chart for a
+# Reading with two accents, and the chart in place of the Reading's text on the card page.
+appId: app.lymi
+name: Pitch accent
+---
+- runFlow: _open.yaml
+- tapOn: "Library"
+- tapOn: "${DECK}.*"
+- waitForAnimationToEnd
+- tapOn:
+    text: "^Review.*"
+    retryTapIfNoChange: true
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 30000
+- assertNotVisible: ".*pitch falls after sound.*"
+- takeScreenshot: 01-cue
+- tapOn:
+    point: "50%,80%"
+- extendedWaitUntil:
+    visible: "^Good.*"
+    timeout: 20000
+- assertVisible: ".*pitch falls after sound.*"
+- takeScreenshot: 02-revealed
+- tapOn: "^Good.*"
+- extendedWaitUntil:
+    visible: ".*Tap to reveal"
+    timeout: 20000
+- tapOn:
+    point: "50%,80%"
+- extendedWaitUntil:
+    visible: "^Good.*"
+    timeout: 20000
+- assertVisible: ".*pitch falls after sound.*"
+- takeScreenshot: 03-revealed-second
+- tapOn: "End review"
+- extendedWaitUntil:
+    visible: "Done"
+    timeout: 20000
+- tapOn: "Done"
+- extendedWaitUntil:
+    visible: "${TERM}.*"
+    timeout: 20000
+- tapOn: "${TERM}.*"
+- extendedWaitUntil:
+    visible: ".*${READING}, pitch falls after sound 2.*"
+    timeout: 20000
+- takeScreenshot: 04-card-page

@@ -297,18 +297,38 @@ describe("anki adapter", () => {
       });
     });
 
-    it("keeps each word's recording and leaves the sentence's out", async () => {
+    it("keeps each word's recording and gives the sentence's to the example", async () => {
       const { cards } = await hsk();
       expect(
-        cards.filter((c) => c.recording).map((c) => [c.fields.term, c.recording, c.soundsLeftOut]),
+        cards
+          .filter((c) => c.recording)
+          .map((c) => [c.fields.term, c.recording, c.exampleRecording ?? null, c.soundsLeftOut]),
       ).toEqual([
-        ["银行", "hsk_yinhang.mp3", 1],
-        ["一点儿", "hsk_yidianr.mp3", 0],
-        ["学习", "hsk_xuexi.mp3", 0],
-        ["很", "hsk_hen.mp3", 0],
-        ["东西", "hsk_dongxi.mp3", 1],
-        ["你好", "hsk_nihao.mp3", 0],
+        ["银行", "hsk_yinhang.mp3", "hsk_yinhang_s.mp3", 0],
+        ["一点儿", "hsk_yidianr.mp3", null, 0],
+        ["学习", "hsk_xuexi.mp3", null, 0],
+        ["很", "hsk_hen.mp3", null, 0],
+        ["东西", "hsk_dongxi.mp3", "hsk_dongxi_s.mp3", 0],
+        ["你好", "hsk_nihao.mp3", null, 0],
       ]);
+    });
+
+    it("leaves a sentence's clip out of a card the learner gave no example", async () => {
+      const { summary, notes } = await anki.inspect(file("kaishi.apkg"));
+      const note = [...notes].find((n) => n.fields.includes("[sound:kaishi_hashi_sentence.mp3]"));
+      const type = summary.noteTypes.find((t) => t.key === note?.type);
+      if (!note || !type) throw new Error("no note with a sentence clip");
+      const read = (roles: SourceSummary["noteTypes"][number]["roles"]) =>
+        anki.cards(note, summary, { languages: {}, roles: { [type.key]: roles } })[0];
+
+      expect(read(type.roles)).toMatchObject({
+        exampleRecording: "kaishi_hashi_sentence.mp3",
+        soundsLeftOut: 0,
+      });
+      const without = read(type.roles.map((role) => (role === "example" ? "skip" : role)));
+      expect(without?.fields.example).toBeUndefined();
+      expect(without?.exampleRecording).toBeUndefined();
+      expect(without?.soundsLeftOut).toBe(1);
     });
 
     it("leaves a deck of no language as it always was", async () => {

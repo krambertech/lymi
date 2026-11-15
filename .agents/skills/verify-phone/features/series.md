@@ -17,4 +17,5 @@ The heading leaves Library. `/api/series` no longer holds the series, and `/api/
 ## Gotchas
 
 - No persona seeds a series, so the check fails loudly if one ever does under the same name.
+- The series is made after the app opens, so the flow pulls Library to refresh, then scrolls the series' menu to the middle, clear of the tab bar a tap would otherwise land on.
 - The alert is iOS's own, so its buttons are found by their text like any other control.

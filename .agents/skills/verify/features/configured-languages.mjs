@@ -10,8 +10,15 @@ export default async function drive({ page, base, step, api, expect }) {
   };
   const find = async (term) =>
     (await api(`/api/cards?term=${encodeURIComponent(term)}`)).cards.find((c) => c.term === term);
-  const settled = (terms) => async () =>
-    (await Promise.all(terms.map(find))).map((card) => card?.enrichmentStatus ?? null);
+  const enriched = async (terms) => {
+    const statuses = async () =>
+      (await Promise.all(terms.map(find))).map((card) => card?.enrichmentStatus ?? null);
+    await expect.poll(statuses, { timeout: 120_000 }).not.toContain("working");
+    expect(
+      await statuses(),
+      "enrichment failed: does apps/web/.dev.vars have OPENAI_API_KEY and AI_GATEWAY_TOKEN?",
+    ).toEqual(terms.map(() => null));
+  };
   let tagalog;
   let georgian;
 
@@ -34,10 +41,16 @@ export default async function drive({ page, base, step, api, expect }) {
       tagalog = await post("/api/decks", { name: "Tagalog", defaultLanguage: "tl" });
       georgian = await post("/api/decks", { name: "ქართული", defaultLanguage: "ka" });
       // Filipino sits at the bar, so its gate may be either way; the deck must match it.
-      expect([[], ["meaning", "example", "notes", "pronunciation"]]).toContainEqual(
-        tagalog.enrichFields,
-      );
-      expect(georgian.enrichFields).toEqual(["meaning", "example", "pronunciation"]);
+      expect([
+        [],
+        ["meaning", "example", "exampleTranslation", "notes", "pronunciation"],
+      ]).toContainEqual(tagalog.enrichFields);
+      expect(georgian.enrichFields).toEqual([
+        "meaning",
+        "example",
+        "exampleTranslation",
+        "pronunciation",
+      ]);
       return { decks: [tagalog, georgian] };
     },
   );
@@ -53,7 +66,7 @@ export default async function drive({ page, base, step, api, expect }) {
         ],
       });
       expect(results.map((r) => r.status)).toEqual(["added", "added"]);
-      await expect.poll(settled(["bahay", "წყალი"]), { timeout: 120_000 }).toEqual([null, null]);
+      await enriched(["bahay", "წყალი"]);
       if (gated) {
         // Below the bar nothing lands unasked; the owner turns fields on, then asks.
         expect((await find("bahay")).meaning).toBeNull();
@@ -61,7 +74,7 @@ export default async function drive({ page, base, step, api, expect }) {
           data: { enrichFields: ["meaning", "pronunciation"] },
         });
         await post(`/api/cards/${(await find("bahay")).id}/enrich`, {});
-        await expect.poll(settled(["bahay"]), { timeout: 120_000 }).toEqual([null]);
+        await enriched(["bahay"]);
       }
       const house = await find("bahay");
       const water = await find("წყალი");
@@ -75,9 +88,9 @@ export default async function drive({ page, base, step, api, expect }) {
 
   await step("Lithuanian keeps its accent mark; Norwegian decks start with notes", async () => {
     const lithuanian = await post("/api/decks", { name: "Lietuvių", defaultLanguage: "lt" });
-    expect(lithuanian.enrichFields).toEqual(["meaning", "example", "notes"]);
+    expect(lithuanian.enrichFields).toEqual(["meaning", "example", "exampleTranslation", "notes"]);
     const norwegian = await post("/api/decks", { name: "Norsk", defaultLanguage: "no" });
-    expect(norwegian.enrichFields).toEqual(["meaning", "example", "notes"]);
+    expect(norwegian.enrichFields).toEqual(["meaning", "example", "exampleTranslation", "notes"]);
     // The learner's own accent mark goes in and must come back unchanged.
     await post("/api/cards/batch", {
       cards: [{ deckId: lithuanian.id, term: "vyras", meaning: "man", pronunciation: "výras" }],
@@ -107,7 +120,7 @@ export default async function drive({ page, base, step, api, expect }) {
     await post("/api/cards/batch", {
       cards: [{ deckId: portugal.id, term: "leite", enrich: true }],
     });
-    await expect.poll(settled(["leite"]), { timeout: 120_000 }).toEqual([null]);
+    await enriched(["leite"]);
     const filled = await find("leite");
     expect(filled.pronunciation).toMatch(/ɨ/);
     expect(filled.pronunciation).not.toMatch(/tʃ/);

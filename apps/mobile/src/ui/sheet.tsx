@@ -115,7 +115,7 @@ export function Sheet({
   const name = (
     <View className="flex-1 items-center">
       <Text
-        className="text-center text-md font-medium text-text"
+        className="text-center text-md font-medium text-ink"
         accessibilityRole="header"
         numberOfLines={1}
       >
@@ -123,7 +123,7 @@ export function Sheet({
       </Text>
       {subtitle && (
         <Text
-          className="text-center text-sm text-muted"
+          className="text-center text-sm text-ink-muted"
           style={{ fontVariant: ["tabular-nums"] }}
           numberOfLines={1}
         >
@@ -157,7 +157,9 @@ export function Sheet({
   const header = heading && (
     <View className="gap-1.5 pb-5">
       {heading}
-      {description && <Text className="px-6 text-center text-base text-muted">{description}</Text>}
+      {description && (
+        <Text className="px-6 text-center text-base text-ink-muted">{description}</Text>
+      )}
     </View>
   );
   const first = (
@@ -267,7 +269,7 @@ export function SheetHeading({ children }: { children: string }) {
   const inset = useContext(SheetInset);
   return (
     <Text
-      className="-mb-1 pt-2 text-md font-semibold text-text"
+      className="-mb-1 pt-2 text-md font-semibold text-ink"
       style={{ paddingStart: inset }}
       accessibilityRole="header"
     >
@@ -280,7 +282,7 @@ export function SheetHeading({ children }: { children: string }) {
 export function SheetNote({ children }: { children: ReactNode }) {
   const inset = useContext(SheetInset);
   return (
-    <Text className="-mt-1 text-sm text-muted" style={{ paddingStart: inset }}>
+    <Text className="-mt-1 text-sm text-ink-muted" style={{ paddingStart: inset }}>
       {children}
     </Text>
   );
@@ -369,21 +371,21 @@ export function SheetRow({
 }: SheetRowProps) {
   const p = usePalette();
   const slot = useContext(GroupMarked);
-  const ink = disabled ? p.muted : destructive ? p.danger : p.text;
+  const ink = disabled ? p["ink-muted"] : destructive ? p.danger : p.ink;
   const mark =
     chosen === undefined
       ? icon && (
           <Icon
             name={icon}
             size={20}
-            colour={disabled ? p.faint : destructive ? p.danger : p["text-2"]}
+            colour={disabled ? p["ink-faint"] : destructive ? p.danger : p["ink-secondary"]}
           />
         )
       : chosen && (
           <Icon
             name={chosen === "mixed" ? "minus" : "check"}
             size={20}
-            colour={p.text}
+            colour={p.ink}
             strokeWidth={2.25}
           />
         );
@@ -397,7 +399,7 @@ export function SheetRow({
       accessibilityState={chosen === undefined ? { disabled } : { checked: chosen, disabled }}
       disabled={disabled}
       className="min-h-[52px] flex-row items-center gap-3 ps-4 pe-3.5"
-      style={({ pressed }) => (pressed || active ? { backgroundColor: p.hover } : null)}
+      style={({ pressed }) => (pressed || active ? { backgroundColor: p["plate-hover"] } : null)}
     >
       {slot && <View className="w-5 items-center">{mark}</View>}
       <View className="flex-1 gap-0.5 py-2.5">
@@ -408,14 +410,14 @@ export function SheetRow({
         >
           {label}
         </Text>
-        {detail && <Text className="text-sm text-muted">{detail}</Text>}
+        {detail && <Text className="text-sm text-ink-muted">{detail}</Text>}
       </View>
       {value !== undefined && (
-        <Text className="text-md text-muted" style={{ fontVariant: ["tabular-nums"] }}>
+        <Text className="text-md text-ink-muted" style={{ fontVariant: ["tabular-nums"] }}>
           {value}
         </Text>
       )}
-      {opens && <Icon name="forward" size={18} colour={p.muted} />}
+      {opens && <Icon name="forward" size={18} colour={p["ink-muted"]} />}
     </Pressable>
   );
 }

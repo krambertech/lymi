@@ -1,6 +1,7 @@
 ---
 import { render } from "astro:content";
 import type { ChangelogUpdate } from "../../lib/changelog";
+import { CHANGELOG_SCENES } from "../../lib/changelog-figures";
 import type { Locale } from "../../lib/routes";
 import ChangelogFigure from "./ChangelogFigure";
 
@@ -18,8 +19,8 @@ const Heading = href ? "h2" : "h1";
 ---
 
 <article class="min-w-0 max-w-[660px]">
-  <Heading class="text-3xl font-medium tracking-[-0.03em] text-balance text-text @2xl:text-4xl">
-    {href ? <a href={href} class="rounded-xs hoverable:hover:text-text-2">{entry.data.title}</a> : entry.data.title}
+  <Heading class="text-3xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-4xl">
+    {href ? <a href={href} class="rounded-xs hoverable:hover:text-ink-secondary">{entry.data.title}</a> : entry.data.title}
   </Heading>
   {
     screenshot && entry.data.screenshot ? (
@@ -43,7 +44,7 @@ const Heading = href ? "h2" : "h1";
     ) : (
       entry.data.figure && (
         <div class="changelog-figure changelog-frame mt-8 rounded-2xl" data-frame="figure" data-hue={hue}>
-          <div class="changelog-stage">
+          <div class="changelog-stage" data-scene={CHANGELOG_SCENES.includes(entry.data.figure) ? "" : undefined}>
             <div class="changelog-stage-content">
               <ChangelogFigure client:visible figure={entry.data.figure} locale={locale} />
             </div>

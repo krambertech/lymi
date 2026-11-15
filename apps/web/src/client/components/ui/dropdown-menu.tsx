@@ -18,6 +18,7 @@ import {
   type Shape,
   touchRowClassName,
 } from "./overlay-list";
+import { usePortalContainer } from "./portal-container";
 
 /*
  * shadcn's Dropdown Menu, in the shape of the machine: anchored to its trigger on a desktop, a
@@ -45,9 +46,11 @@ function useDropdownMenu(part: string) {
 
 const ITEM = '[role="menuitem"], [role="menuitemcheckbox"], [role="menuitemradio"]';
 
+// A row a click focused keeps Base UI's highlight but not its fill: the pointer's fill is the one
+// cursor, and the keyboard's focus brings the fill back.
 const itemClassName = cn(
   listRowClassName,
-  "group/dropdown-menu-item whitespace-nowrap focus-visible:bg-hover data-inset:ps-9 data-[variant=danger]:text-danger data-[variant=danger]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4",
+  "group/dropdown-menu-item whitespace-nowrap focus-visible:bg-plate-hover data-highlighted:not-focus-visible:bg-transparent data-inset:ps-9 data-[variant=danger]:text-danger data-[variant=danger]:[&_svg]:text-danger [&_svg:not([class*='size-'])]:size-4",
 );
 
 /** The drawer's rows are buttons and the anchored ones divs, so a row's ref names their common type. */
@@ -142,10 +145,28 @@ function AnchoredContent({
   ...props
 }: ContentProps) {
   const ref = React.useRef<HTMLDivElement>(null);
-  const refs = useMergedRefs(ref, refProp);
   const hover = useFluidHover(ref, { items: ITEM, dividers: '[role="separator"]' });
+  const { hide, remeasure } = hover;
+  // A menu in steps swaps its rows under a still pointer; the fill waits for the next move.
+  const observe = React.useCallback(
+    (popup: HTMLDivElement | null) => {
+      if (!popup) return;
+      const isRows = (node: Node) =>
+        !(node instanceof HTMLElement && node.classList.contains("fluid-highlight"));
+      const observer = new MutationObserver((records) => {
+        if (!records.some((r) => [...r.addedNodes, ...r.removedNodes].some(isRows))) return;
+        hide();
+        remeasure();
+      });
+      observer.observe(popup, { childList: true });
+      return () => observer.disconnect();
+    },
+    [hide, remeasure],
+  );
+  const refs = useMergedRefs(useMergedRefs(ref, observe), refProp);
+  const container = usePortalContainer();
   return (
-    <MenuPrimitive.Portal>
+    <MenuPrimitive.Portal container={container}>
       <MenuPrimitive.Positioner
         // A popup, not a dropdown layer: a menu can open from inside a sheet, such as a card's options.
         className="isolate z-(--z-popup) outline-none"
@@ -159,7 +180,7 @@ function AnchoredContent({
           data-slot="dropdown-menu-content"
           className={cn(
             // Grows out of the corner nearest its trigger, scale 0.94 to 1 over 140 ms.
-            "glass relative max-h-(--available-height) w-max max-w-(--available-width) min-w-[max(12rem,var(--anchor-width))] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md p-1 text-text outline-none transition-[opacity,scale] duration-140 ease-(--ease-out) data-starting-style:scale-94 data-starting-style:opacity-0 data-ending-style:scale-97 data-ending-style:opacity-0 data-ending-style:duration-100 motion-reduce:data-ending-style:scale-100 motion-reduce:data-starting-style:scale-100",
+            "glass relative max-h-(--available-height) w-max max-w-(--available-width) min-w-[max(12rem,var(--anchor-width))] origin-(--transform-origin) overflow-x-hidden overflow-y-auto rounded-md p-1 text-ink outline-none transition-[opacity,scale] duration-140 ease-(--ease-out) data-starting-style:scale-94 data-starting-style:opacity-0 data-ending-style:scale-97 data-ending-style:opacity-0 data-ending-style:duration-100 motion-reduce:data-ending-style:scale-100 motion-reduce:data-starting-style:scale-100",
             className,
           )}
           {...mergeProps<"div">(
@@ -285,7 +306,7 @@ function DropdownMenuLabel({
   children: React.ReactNode;
 }) {
   const { shape } = useDropdownMenu("DropdownMenuLabel");
-  const classes = cn("px-2.5 py-1.5 text-xs text-muted data-inset:ps-9", className);
+  const classes = cn("px-2.5 py-1.5 text-xs text-ink-muted data-inset:ps-9", className);
   return shape === "desktop" ? (
     <MenuPrimitive.GroupLabel
       data-slot="dropdown-menu-label"
@@ -393,14 +414,46 @@ interface CheckboxItemProps extends RowProps {
     | ((checked: boolean, details?: MenuPrimitive.CheckboxItem.ChangeEventDetails) => void)
     | undefined;
   disabled?: boolean | undefined;
+  /** The row's own icon, which takes the start slot and moves the tick to the end. */
+  icon?: React.ReactNode;
 }
 
 /** A tick in the start slot every row keeps, so checked and unchecked rows line up. */
 function ItemCheck({ checked }: { checked: boolean }) {
   return (
     <span className="pointer-events-none absolute start-2.5 flex size-4 items-center justify-center">
-      {checked && <Check className="text-text!" strokeWidth={2.5} aria-hidden="true" />}
+      {checked && <Check className="text-ink!" strokeWidth={2.5} aria-hidden="true" />}
     </span>
+  );
+}
+
+/** A checkbox row's start slot and end: the tick alone, or the row's icon with the tick at the end. */
+function CheckboxParts({
+  checked,
+  icon,
+  children,
+}: {
+  checked: boolean;
+  icon: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  if (!icon)
+    return (
+      <>
+        <ItemCheck checked={checked} />
+        {children}
+      </>
+    );
+  return (
+    <>
+      <span className="pointer-events-none absolute start-2.5 flex size-4 items-center justify-center">
+        {icon}
+      </span>
+      {children}
+      <span className="flex size-4 shrink-0 items-center justify-center">
+        {checked && <Check className="text-ink!" strokeWidth={2.5} aria-hidden="true" />}
+      </span>
+    </>
   );
 }
 
@@ -411,6 +464,7 @@ function DropdownMenuCheckboxItem({
   defaultChecked = false,
   onCheckedChange,
   disabled,
+  icon,
   className,
   children,
   ...props
@@ -432,8 +486,9 @@ function DropdownMenuCheckboxItem({
         closeOnClick={false}
         className={cn(itemClassName, "ps-9", className)}
       >
-        <ItemCheck checked={checked} />
-        {children}
+        <CheckboxParts checked={checked} icon={icon}>
+          {children}
+        </CheckboxParts>
       </MenuPrimitive.CheckboxItem>
     );
   }
@@ -457,8 +512,9 @@ function DropdownMenuCheckboxItem({
       data-disabled={disabled ? "" : undefined}
       className={cn(itemClassName, touchRowClassName, "ps-9", className)}
     >
-      <ItemCheck checked={checked} />
-      {children}
+      <CheckboxParts checked={checked} icon={icon}>
+        {children}
+      </CheckboxParts>
     </button>
   );
 }
@@ -628,7 +684,7 @@ function DropdownMenuShortcut({ className, ...props }: React.ComponentProps<"spa
   return (
     <span
       data-slot="dropdown-menu-shortcut"
-      className={cn("ms-auto ps-3 text-xs text-muted", className)}
+      className={cn("ms-auto ps-3 text-xs text-ink-muted", className)}
       {...props}
     />
   );

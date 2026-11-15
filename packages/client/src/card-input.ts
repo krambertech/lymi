@@ -9,7 +9,7 @@ export interface AddValues {
   exampleTranslation?: string | undefined;
   pronunciation?: string | undefined;
   notes?: string | undefined;
-  hook?: string | undefined;
+  hint?: string | undefined;
   source?: string | undefined;
   tags?: string[] | undefined;
   language?: string | null | undefined;
@@ -35,7 +35,7 @@ export function addInput(values: AddValues): CardInput {
       ? { pronunciation: values.pronunciation, pronunciationSource: "manual" as const }
       : {}),
     ...(values.notes ? { notes: values.notes, notesSource: "manual" as const } : {}),
-    ...(values.hook ? { hook: values.hook, hookSource: "manual" as const } : {}),
+    ...(values.hint ? { hint: values.hint, hintSource: "manual" as const } : {}),
     ...(values.source ? { source: values.source } : {}),
     ...(values.tags?.length ? { tags: values.tags } : {}),
     ...(values.reviewModes ? { reviewModes: values.reviewModes.map(modeOf) } : {}),

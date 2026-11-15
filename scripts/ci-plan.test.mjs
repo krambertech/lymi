@@ -130,3 +130,19 @@ test("a plan that runs no browser E2E still offers a matrix the workflow can exp
   assert.equal(plan.runE2E, false);
   assert.ok(JSON.parse(plan.shardMatrix).length > 0);
 });
+
+test("pull requests reaching server or core code run the Workers-runtime tests; main always does", () => {
+  const run = (changedPaths) =>
+    createCiPlan({ eventName: "pull_request", changedPaths }).runWorkersTests;
+  assert.equal(run(["apps/web/src/server/lessons/reader.ts"]), true);
+  assert.equal(run(["packages/core/src/types.ts"]), true);
+  assert.equal(run(["apps/web/src/client/routes/today.tsx"]), false);
+  assert.equal(run(["docs/testing.md"]), false);
+
+  assert.equal(createCiPlan({ eventName: "push" }).runWorkersTests, true);
+  assert.equal(createCiPlan({ eventName: "workflow_dispatch" }).runWorkersTests, true);
+  assert.equal(
+    createCiPlan({ eventName: "workflow_dispatch", manualE2E: false }).runWorkersTests,
+    true,
+  );
+});

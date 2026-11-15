@@ -9,25 +9,38 @@ A change is verified when the feature it touches has been driven in a running pr
 
 ## Pick the features
 
-[`features/`](features) has one entry per learner-facing feature: what it is, how a learner reaches it, how to drive it, the end state that proves it, and its gotchas. Drive every entry the diff can reach. When the diff touches a feature with no entry, write its entry and its `.mjs` recipe in the same pull request.
+[`features/`](features) has one entry per learner-facing feature: what it is, how a learner reaches it, how to drive it, the end state that proves it, and its gotchas. Drive every entry the diff can reach. When the diff touches a feature with no entry, write its entry and its `.mjs` recipe in the same pull request. Every product route needs an entry that names its path, such as `/library/<deck id>`, or a reason in `UNMAPPED_ROUTES` in [`check-agent-docs.mjs`](../../../scripts/check-agent-docs.mjs), and `pnpm check:agent-docs` fails on a route with neither.
 
 | Feature | Entry |
 | --- | --- |
 | Sign in | [sign-in.md](features/sign-in.md) |
 | Review | [review.md](features/review.md) |
 | The day turns at the end of a review | [day-turns.md](features/day-turns.md) |
-| Reveal hint | [reveal-hint.md](features/reveal-hint.md) |
+| First review | [first-review.md](features/first-review.md) |
+| Reveal nudge | [reveal-nudge.md](features/reveal-nudge.md) |
+| Hint | [hint.md](features/hint.md) |
 | Furigana | [furigana.md](features/furigana.md) |
+| Adaptive pronunciation | [adaptive-pronunciation.md](features/adaptive-pronunciation.md) |
 | Add a card | [add-card.md](features/add-card.md) |
+| Smart add | [smart-add.md](features/smart-add.md) |
 | Library and the deck page | [deck-page.md](features/deck-page.md) |
+| Select cards | [select-cards.md](features/select-cards.md) |
 | Create a deck | [new-deck.md](features/new-deck.md) |
 | Deck settings | [deck-settings.md](features/deck-settings.md) |
+| Account name | [account-name.md](features/account-name.md) |
 | Deck invitation | [deck-invitation.md](features/deck-invitation.md) |
+| Learning email | [learning-email.md](features/learning-email.md) |
+| Report a shared deck or card | [report-content.md](features/report-content.md) |
 | Import from Anki | [import.md](features/import.md) |
 | Import from Pleco | [import-pleco.md](features/import-pleco.md) |
+| Import from Quizlet | [import-quizlet.md](features/import-quizlet.md) |
 | Import recordings, pitch and translations | [import-recordings.md](features/import-recordings.md) |
 | Import an HSK-shaped Chinese Anki deck | [import-chinese.md](features/import-chinese.md) |
 | Offline writes | [offline-writes.md](features/offline-writes.md) |
+| Offline grades | [offline-grades.md](features/offline-grades.md) |
+| Apps in Settings and the assistants' pages | [apps.md](features/apps.md) |
+| Readwise highlights | [readwise.md](features/readwise.md) |
+| Yomitan through AnkiConnect | [yomitan.md](features/yomitan.md) |
 | Japanese cards | [japanese.md](features/japanese.md) |
 | Chinese cards | [chinese.md](features/chinese.md) |
 | Cantonese cards | [cantonese.md](features/cantonese.md) |
@@ -40,11 +53,15 @@ A change is verified when the feature it touches has been driven in a running pr
 | Example audio | [example-audio.md](features/example-audio.md) |
 | Example translation | [example-translation.md](features/example-translation.md) |
 | Rest day | [rest-day.md](features/rest-day.md) |
+| Daily reminder | [reminders.md](features/reminders.md) |
 | First run | [first-run.md](features/first-run.md) |
 | First run for a Japanese beginner | [first-run-japanese.md](features/first-run-japanese.md) |
 | First run for a Chinese beginner | [first-run-chinese.md](features/first-run-chinese.md) |
 | First run for a Ukrainian beginner | [first-run-ukrainian.md](features/first-run-ukrainian.md) |
+| First run for a Russian beginner | [first-run-russian.md](features/first-run-russian.md) |
+| First run for a Polish beginner | [first-run-polish.md](features/first-run-polish.md) |
 | AI services | [ai-services.md](features/ai-services.md) |
+| Assistant offer | [assistant-offer.md](features/assistant-offer.md) |
 
 ## Launch
 
@@ -70,9 +87,9 @@ The runner opens Chromium at 1280 px with a pointer, or at 393 px with touch und
 
 ## Evidence
 
-Every step leaves three files: the screenshot, the ARIA snapshot of `main`, and a second read of stored state, which is `/api/dev/state` plus whatever the step read from the product API to prove its end state. `verdict.md` beside them lists the doctor's result, each step as ok or FAIL with the error, and every console error and 5xx response. A run on a page that logs errors is not a clean pass even when every step is ok; say what they were.
+Every step leaves three files: the screenshot, the ARIA snapshot of `main`, and a second read of stored state, which is `/api/dev/state` plus whatever the step read from the product API to prove its end state. `verdict.md` beside them lists the doctor's result, each step with its error, and every console error and 5xx response. A step is FAIL when the page or the API answered with something else, and TIMEOUT when Playwright waited out its limit for a page, control or element; load from other sessions can cause a TIMEOUT, so rerun that feature alone before calling it a bug. A run on a page that logs errors is not a clean pass even when every step is ok; say what they were.
 
-Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-<where>[-phone]-<sha>/` when the project folder exists, else to the temp directory, so it outlives the worktree and the server. Name the folder in the pull request's Verification section and attach the screenshots a reviewer needs. Persona data is local and seeded, so the files carry no private content; never drive a real account to produce them.
+Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-<where>[-phone]-<sha>/` when the project folder exists, else to the temp directory, so it outlives the worktree and the server. Name the folder in the pull request's Verification section and attach the screenshots a reviewer needs; [Proof matches the change](../../../AGENTS.md#before-you-push) says when a run is the proof and what else it needs. Persona data is local and seeded, so the files carry no private content; never drive a real account to produce them.
 
 ## Cleanup
 

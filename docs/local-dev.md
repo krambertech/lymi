@@ -1,6 +1,6 @@
 # Local development
 
-How to run the product on this machine and put it into any state worth looking at, whether you are a person at the keyboard or an agent driving a browser. Everything here exists only while `PRODUCT_URL` is a loopback address; production answers 404 to all of it.
+How to run the product on this machine and put it into any state worth looking at. Everything here exists only while `PRODUCT_URL` is a loopback address; production answers 404 to all of it.
 
 ## Start the server
 
@@ -11,13 +11,19 @@ pnpm db:migrate
 pnpm --filter @lymi/web dev --port 5241
 ```
 
-`pnpm dev` runs the product and the public website together. The product alone is enough for most work, and the `.claude/launch.json` entry named `lymi` starts it on port 5241, or on a free port when another worktree already holds 5241. A loopback `PRODUCT_URL` follows whichever port the request arrived on, so `.dev.vars` needs no per-worktree edit. Browsers share cookies across ports, so a loopback server prefixes its cookies with its port (`lymi-5241.session_token`) and parallel worktrees keep separate sessions.
+`pnpm dev` runs the product and the public website together. The website reads the product's local D1, so `pnpm db:migrate` prepares both. The product alone is enough for most work, and the `.claude/launch.json` entry named `lymi` starts it on port 5241, or on a free port when another worktree already holds 5241. A loopback `PRODUCT_URL` follows whichever port the request arrived on, so `.dev.vars` needs no per-worktree edit. Browsers share cookies across ports, so a loopback server prefixes its cookies with its port (`lymi-5241.session_token`) and parallel worktrees keep separate sessions.
 
 If `pnpm db:migrate` fails with "table already exists" or a migration name it has never seen, the local D1 was built from another branch. `pnpm local db:fresh` moves it aside and applies every migration again. Nothing in that directory is production data.
 
 ## Run tests while you work
 
 `pnpm test:watch` runs the product's Vitest in watch mode on the `unit` project and the desktop Chromium component instance. A save reruns only the tests that import what changed, and no other browser starts. Before a push, `pnpm verify:changed` adds the static checks; [`docs/testing.md`](testing.md) has what runs at each gate.
+
+## Keys for model evaluations
+
+The evaluations (`eval:enrichment`, `eval:style`, `eval:lead-ins --write` and `eval:stress`) call vendors through the `lymi` AI Gateway: they read keys from `apps/web/.dev.vars` and the gateway URL from `wrangler.jsonc`, and a missing key stops them with every missing name. `AI_GATEWAY_TOKEN` is an authentication token for the `lymi` gateway, made under AI Gateway in the Cloudflare dashboard; `OPENAI_API_KEY` is the vendor's own key.
+
+Keep real values in the main checkout's `apps/web/.dev.vars`. `.worktreeinclude` copies that file into each worktree Claude Code creates, and unit tests and `cf-typegen` ignore it, so its keys never change what they see.
 
 ## Become a persona
 
@@ -32,17 +38,17 @@ No password is typed anywhere. The server creates the account on first use, seed
 | Persona | Account | Starts with |
 | --- | --- | --- |
 | `fresh` | Fresh | Nothing. The first-run screens. |
-| `learner` | Kateryna | A little of everything. Three weeks in: Lezione 12, Verbi and Portuguese as before, plus the series Italiano A2 (Casa and In città) with three pictures, five important cards and two memory hooks, Noor's shared Lisboa a dois, and Everyday Finnish from Explore. 9 due, a 4-day streak with a longer best run and two rest days, three cards an assistant added today, one archived deck and one archived card. |
+| `learner` | Kateryna | A little of everything. Three weeks in: Lezione 12, Verbi and Portuguese, plus the series Italiano A2 (Casa and In città) with three pictures, five important cards and two hints, Noor's shared Lisboa a dois, and Everyday Finnish from Explore. 9 due, a 4-day streak with a longer best run and two rest days, three cards an assistant added today, one archived deck and one archived card. |
 | `streak` | Sanna | Fourteen days running and nothing due. The flame is lit, small and still. |
 | `rested` | Leena | Eleven days running through two rest days, the last one yesterday, and 9 due. Today opens on the rest-day banner. |
 | `backlog` | Marco | A month away: four decks, 60 cards, all due. |
 | `long` | Ingrid | Six German cards asked both ways, all due: a sentence as the term, a dictionary-length meaning, and a card with every field at its limit. |
 | `polyglot` | Оксана | Ukrainian interface and meanings. Italian, Finnish, and a deck with no language. |
-| `heavy` | Vera | Four years of daily study, to profile at scale: 27 decks from 0 to 4,500 cards (11,900 in all), three series, a 2,250-card deck in 24 sections, two decks asked both ways, three archived decks, about 200 important cards and 40 hooks, about 112,000 reviews and 400 due. It seeds in about 40 seconds. On the phone, **Dev sign-in as heavy** signs in as it. |
+| `heavy` | Vera | Four years of daily study, to profile at scale: 27 decks from 0 to 4,500 cards (11,900 in all), three series, a 2,250-card deck in 24 sections, two decks asked both ways, three archived decks, about 200 important cards and 40 hints, about 112,000 reviews and 400 due. It seeds in about 40 seconds. On the phone, **Dev sign-in as heavy** signs in as it. |
 | `japanese` | Mika | Five months of Japanese with English meanings: 169 real words and sentences in JLPT sections, kanji with kana readings, kana-only words, katakana loanwords, examples with inline furigana, and a numbers deck asked both ways. |
 | `shared` | Noor | Owns Lisboa a dois with four learners (Kateryna, Tomás and the companion accounts Ana and Pedro), a waiting invitation to mira@example.com and its join link on. A learner in Ana's deck, with Everyday Estonian added in its Ukrainian edition. |
 | `joining` | Tomás | Joined Noor's deck through its link and has not got set up. Signing in without `returnTo` opens `/welcome?deck=<id>`, the Welcome that arriving from a join link opens. |
-| `publisher` | Lymi | The publisher account: one Estonian deck in three sections, published as `everyday-estonian` with an English original and a signed-off Ukrainian edition, beside Finnish and driving decks and five small Japanese decks under production's slugs, so Welcome's Japanese offer can be seen. |
+| `publisher` | Lymi | The publisher account: one Estonian deck in three sections, published as `everyday-estonian` with an English original and a signed-off Ukrainian edition, beside Finnish and driving decks and small Japanese, Chinese, Ukrainian, Russian and Polish decks under production's slugs, so Welcome's beginner offers and the language pages can be seen; the Polish ones have Ukrainian editions too. |
 
 Shared decks are written down once, on the owner's deck, so seeding either side makes sure the other account exists: seeding Noor joins Kateryna, Tomás, Ana and Pedro, and reseeding Kateryna rejoins Noor's deck. A member persona whose account holds nothing yet is seeded first. The product grants members only the learner role so far ([ADR 0011](adr/0011-a-shared-deck-is-one-deck-with-many-learners.md)).
 
@@ -54,7 +60,7 @@ To see a published deck's public page, seed the `publisher` persona, then build 
 
 To publish a deck of your own instead, add `PUBLISHER_EMAILS=learner@lymi.local` to `apps/web/.dev.vars` and call `PUT /api/decks/<id>/publication`. Another edition takes three calls: `PUT /api/decks/<id>/editions/uk` writes its text, `POST /api/decks/<id>/editions/uk/approval` signs it off, and `PUT /api/decks/<id>/editions/uk/publication` puts it on the page. `GET /api/decks/<id>/editions` says what is still missing or stale. One write takes at most 500 cards, and further writes add to the same edition; `node scripts/publish-edition.mjs` sends a longer edition in parts and publishes it only once every part has landed. `DELETE /api/decks/<id>/publication` withdraws a deck, and `?redirectTo=<slug>` makes its public page send visitors to another published deck with a 301 (`node scripts/withdraw-deck.mjs` wraps it); publishing it again brings it back. `GET /api/reports/decks` reports adds, first reviews, returning learners and page views for every deck you have published.
 
-A real account signed in locally through Google works with every tool below too; it just has no persona of its own, so seeding it loads `learner` unless another persona is named.
+A real account signed in locally through Google works with every tool below too; it has no persona of its own, so seeding it loads `learner` unless another persona is named.
 
 ## Change the state from the palette
 
@@ -67,7 +73,7 @@ A small tab on the end edge of every product screen shows the current persona's 
 - **Account**: Reseed puts the account back to its persona's starting data; switching persona does not. Empty this account removes everything. Both run on a second press and never appear in Recent.
 - **View and Open**: English, Ukrainian or Russian, which the meaning language follows; system, light or dark; a sign-in link to the current screen as the current persona; `/design`, `/emails` and the API docs.
 
-The server owns the list of commands at `/api/dev/commands`, so the palette and `pnpm local` show the same ones, and each row shows the id that runs it from a terminal. Each command refreshes the queries behind the screen, so Today, Library and Insights update without a reload. The palette is compiled into the Vite dev server only; a production build has no trace of it.
+The server owns the list of commands at `/api/dev/commands`, so the palette and `pnpm local` show the same ones, and each row shows the id that runs it from a terminal. Each command refreshes the queries behind the screen, so Today, Library and Insights update without a reload.
 
 ## Change the state from a terminal
 
@@ -180,6 +186,10 @@ xcrun simctl install <udid> ios/build/release/Build/Products/Release-iphonesimul
 
 A JavaScript change needs no native build: `npx expo export:embed --platform ios --dev false --bytecode --entry-file node_modules/expo-router/entry.js --bundle-output <dir>/main.jsbundle --assets-dest <dir>` writes a new `main.jsbundle` to copy into the app before the three steps above. Sign in with **Dev sign-in as heavy** to measure at a devoted learner's size. Release Hermes has no sampling profiler; `sample <pid> 5` samples every thread of the running app with native symbols, and `performance.now()` marks logged with `console.error` reach `xcrun simctl spawn <udid> log stream`. Reinstall the dev client with `stim ios` before running verify-phone.
 
+## Connect Readwise without an account
+
+On a loopback or preview server, the token `lymi-dev-readwise-0000` reaches a fake Readwise with three invented books (Italian, Estonian, English) instead of readwise.io. Paste it in Settings → Apps → Readwise. A book's language comes from the AI, so without `AI_GATEWAY_URL` and `AI_GATEWAY_TOKEN` every book stays unknown until a later pull reads it again.
+
 ## Call the routes directly
 
 The palette and the CLI use these. They sit under `/api/dev`, outside the OpenAPI document.
@@ -198,61 +208,19 @@ The palette and the CLI use these. They sit under `/api/dev`, outside the OpenAP
 | `POST /api/dev/recall` `{ count, rating? }` | Grades that many due cards through the review service, Good unless `rating` says otherwise. |
 | `POST /api/dev/goal` | Grades Good until today's goal is met, going past the due cards when they run out. |
 | `POST /api/dev/slip` `{ count }` | Gives that many cards four lapses in six reviews on past review days, so they are often forgotten. |
-| `POST /api/dev/often-forgotten` `{ hooked? }` | Replaces the deck Tricky Estonian with two often-forgotten cards with no memory hook, due now, so review offers one, and, unless `hooked` is false, a card that already has a hook, due now, so review shows the peek. |
+| `POST /api/dev/often-forgotten` `{ hinted? }` | Replaces the deck Tricky Estonian with two often-forgotten cards with no hint, due now, so review offers one, and, unless `hinted` is false, a card that already has a hint, due now, so review shows the peek. |
 | `POST /api/dev/due` `{ count: n \| "all" }` | Makes exactly `count` cards due now and moves the rest to tomorrow or later. |
 | `POST /api/dev/cards/<id>/enriched` `{ fields }` | Marks the card's `meaning`, `example` or `pronunciation` as written by the enrichment, so the AI badge shows without a vendor key. |
 | `GET /api/dev/mcp-host?view=<view>` | The MCP Apps view in a stand-in host, answered by the real MCP server as the signed-in account. `view` is `card`, `deck`, `due`, `insights`, `streak` or `home`; `theme`, `locale` and `width` are optional. Beside the frame it lists what the view told the host, such as a link it opened. `home` takes `deeplink=/card/<id>`. The view is built once per server start, so restart the server after changing it. |
 | `POST /api/dev/outbox` `{ to }` | The last account email sent to that address, so a confirmation or reset link can be opened without a real inbox. |
-| `GET /api/dev/emails/render?kind=&language=` | One email kind rendered with its sample data; the `/emails` page draws every kind with it, in both rooms and at phone width. |
+| `GET /api/dev/emails/render?kind=&language=` | One email kind rendered with its sample data; the `/emails` page draws every kind with it, in both themes and at phone width. |
 
 Seeding goes through the same services as the app and the API, so decks and cards carry audit rows and scheduling state. The review history is then replayed through the real scheduler in memory and written back in one go. The same persona seeds the same grades every time.
 
-## How the gate works
+## Two gates keep dev tools out of production
 
-Two gates, one at build time and one at run time. The Worker imports the `/api/dev` routes only inside an `import.meta.env.DEV` branch, so a production build contains none of the routes, the persona fixtures, the fixed password, or the seed and reset services. At run time, `devToolsEnabled` in `apps/web/src/server/env.ts` is true only when `PRODUCT_URL` has a loopback hostname. It decides whether the routes answer, whether a `@lymi.local` address may create an account, and whether that address skips the confirmation email. Email and password sign-in itself is no longer local-only: it is how anyone without a Google account gets in. Production's `PRODUCT_URL` is `https://my.lymi.app`, so even a build that carried the routes would answer 404.
+One gate works at build time and one at run time. The Worker imports the `/api/dev` routes only inside an `import.meta.env.DEV` branch, so a production build contains none of the routes, the persona fixtures, the fixed password, or the seed and reset services. At run time, `devToolsEnabled` in `apps/web/src/server/env.ts` is true only when `PRODUCT_URL` has a loopback hostname. It decides whether the routes answer, whether a `@lymi.local` address may create an account, and whether that address skips the confirmation email. Email and password sign-in is not gated: it is how anyone without a Google account gets in. Production's `PRODUCT_URL` is `https://my.lymi.app`, so even a build that carried the routes would answer 404.
 
 The client side is gated the same way. The palette and the boot guard that drops the persisted query cache when the persona changes are dynamic imports behind `import.meta.env.DEV`, so the production bundle never includes them. Sign-out and every sign-in path clear the same persisted state through `clearPersistedLearnerState`, so a real account signed in after a persona never inherits its cache or queued grades.
 
 The Playwright suite runs the product through Vite with a loopback `PRODUCT_URL`, so the routes exist there too. The tests do not use them: `docs/testing.md` keeps the canonical journey on the public flows.
-
-## Reading analytics
-
-The production product Worker writes aggregate points to `lymi_events` and `lymi_requests`. Query them through the [Analytics Engine SQL API](https://developers.cloudflare.com/analytics/analytics-engine/sql-api/) with an account token that has Analytics Read permission. `_sample_interval` weights rows when Cloudflare samples them. These metrics contain no learner identifier, so sign-ins below are a count of events, not distinct daily active learners.
-
-In `lymi_requests`, `index1` is the caller: `user` for a session, `api` for an API key, `mcp` for an authorized MCP call, `anon` for a request refused with 401, and `public` for a route that runs before authentication and never identifies the caller, such as `/api/auth/*`, `/api/join/*` and `/public/media/*`. `blob1` is the route pattern, or `unmatched` when no route answered. `blob2` is the method, `blob3` the status class, and `blob4` the phone release from `x-lymi-client`, such as `ios 1.2.0`, or `none` for the web, API keys and MCP. A release below the minimum version gets only 426, counted as `public` and `4xx`.
-
-Daily sign-ins:
-
-```sql
-SELECT toStartOfDay(timestamp) AS day, SUM(_sample_interval) AS sign_ins
-FROM lymi_events
-WHERE index1 = 'signed_in' AND timestamp > NOW() - INTERVAL '30' DAY
-GROUP BY day ORDER BY day DESC
-```
-
-Reviews by mode each week:
-
-```sql
-SELECT toStartOfWeek(timestamp) AS week, blob1 AS mode, SUM(_sample_interval) AS reviews
-FROM lymi_events
-WHERE index1 = 'review_graded' AND timestamp > NOW() - INTERVAL '90' DAY
-GROUP BY week, mode ORDER BY week DESC, mode
-```
-
-API and MCP requests by route:
-
-```sql
-SELECT index1 AS actor, blob1 AS route, SUM(_sample_interval) AS calls
-FROM lymi_requests
-WHERE index1 IN ('api', 'mcp') AND timestamp > NOW() - INTERVAL '30' DAY
-GROUP BY actor, route ORDER BY calls DESC
-```
-
-Phone releases still calling, to choose a minimum version:
-
-```sql
-SELECT blob4 AS release, blob3 AS status, SUM(_sample_interval) AS calls
-FROM lymi_requests
-WHERE blob4 != 'none' AND timestamp > NOW() - INTERVAL '30' DAY
-GROUP BY release, status ORDER BY release DESC
-```

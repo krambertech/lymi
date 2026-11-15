@@ -23,7 +23,7 @@ export function NewCardsRow({ deckId, deckName, count, actor, when }: NewCards) 
     <NavLink
       to="/library/$deckId"
       params={{ deckId }}
-      className="edge flex items-center gap-3 rounded-lg bg-plate px-4 py-3 transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 hoverable:hover:edge-2 hoverable:hover:veil"
+      className="edge flex items-center gap-3 rounded-lg bg-plate px-4 py-3 transition-[background-color,box-shadow,scale] duration-150 ease-out active:scale-[0.97] motion-reduce:active:scale-100 hoverable:hover:edge-strong hoverable:hover:veil"
     >
       <Chip>
         <StateIcon state="new" className="size-3" />
@@ -31,11 +31,11 @@ export function NewCardsRow({ deckId, deckName, count, actor, when }: NewCards) 
       </Chip>
       <span className="flex min-w-0 flex-1 flex-col gap-0.5 @xl:flex-row @xl:items-baseline @xl:justify-between @xl:gap-3">
         <span className="truncate text-md font-medium">{deckName}</span>
-        <span className="truncate text-sm text-muted">
+        <span className="truncate text-sm text-ink-muted">
           {actor} · {when}
         </span>
       </span>
-      <ChevronRight className="size-[18px] shrink-0 text-faint" aria-hidden="true" />
+      <ChevronRight className="size-[18px] shrink-0 text-ink-faint" aria-hidden="true" />
     </NavLink>
   );
 }

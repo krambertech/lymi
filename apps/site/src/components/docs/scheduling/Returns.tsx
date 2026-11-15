@@ -11,7 +11,7 @@ export function ReturnGaps({ gap, jitter }: { gap: number; jitter: number }) {
   return (
     <ol className="grid list-none gap-3 !ps-0" aria-label="How long a forgotten card waits">
       <li className="!m-0 grid gap-1.5 sm:grid-cols-[9rem_1fr] sm:items-center sm:gap-4">
-        <p className="!m-0 flex items-center gap-1.5 text-sm text-text">
+        <p className="!m-0 flex items-center gap-1.5 text-sm text-ink">
           <X aria-hidden="true" strokeWidth={2.5} className="size-3.5 text-grade-forgot" />
           Forgot
         </p>
@@ -26,11 +26,11 @@ export function ReturnGaps({ gap, jitter }: { gap: number; jitter: number }) {
               aria-hidden="true"
               className={clsx(
                 cell,
-                j < gap - jitter ? "bg-edge-2" : "border border-dashed border-edge-2",
+                j < gap - jitter ? "bg-edge-strong" : "border border-dashed border-edge-strong",
               )}
             />
           ))}
-          <ArrowRight aria-hidden="true" className="mx-1 size-3.5 text-faint" />
+          <ArrowRight aria-hidden="true" className="mx-1 size-3.5 text-ink-faint" />
           <span
             aria-hidden="true"
             className="flex items-center gap-1 rounded-xs bg-state-learning-soft px-1.5 py-0.5 text-xs font-medium text-state-learning-text"
@@ -38,17 +38,17 @@ export function ReturnGaps({ gap, jitter }: { gap: number; jitter: number }) {
             <CornerDownLeft className="size-3" />
             Return
           </span>
-          <span aria-hidden="true" className="ms-1 text-xs tabular-nums text-muted">
+          <span aria-hidden="true" className="ms-1 text-xs tabular-nums text-ink-muted">
             {gap} ± {jitter}
           </span>
         </div>
       </li>
       <li className="!m-0 grid gap-1.5 sm:grid-cols-[9rem_1fr] sm:items-center sm:gap-4">
-        <p className="!m-0 flex items-center gap-1.5 text-sm text-text">
+        <p className="!m-0 flex items-center gap-1.5 text-sm text-ink">
           <X aria-hidden="true" strokeWidth={2.5} className="size-3.5 text-grade-forgot" />
           Forgot again
         </p>
-        <p className="!m-0 flex items-center gap-1.5 text-sm text-muted">
+        <p className="!m-0 flex items-center gap-1.5 text-sm text-ink-muted">
           <Moon aria-hidden="true" className="size-3.5" />
           Back tomorrow
         </p>
@@ -92,12 +92,12 @@ export function SlotPattern({
             // biome-ignore lint/suspicious/noArrayIndexKey: slots are positions
             key={i}
             aria-label={`Draw ${i + 1}: ${name(s)}`}
-            className="relative !m-0 grid aspect-[3/4] place-items-center overflow-hidden rounded-xs bg-plate-2"
+            className="relative !m-0 grid aspect-[3/4] place-items-center overflow-hidden rounded-xs bg-plate-nested"
           >
             {s.oldest ? (
-              <Hourglass aria-hidden="true" className="size-3.5 text-text-2" />
+              <Hourglass aria-hidden="true" className="size-3.5 text-ink-secondary" />
             ) : s.newSlot ? (
-              <Sprout aria-hidden="true" className="size-3.5 text-text-2" />
+              <Sprout aria-hidden="true" className="size-3.5 text-ink-secondary" />
             ) : null}
             <span
               aria-hidden="true"
@@ -109,22 +109,22 @@ export function SlotPattern({
           </li>
         ))}
       </ol>
-      <ul className="mt-4 flex list-none flex-wrap gap-x-5 gap-y-2 !ps-0 text-xs text-muted">
+      <ul className="mt-4 flex list-none flex-wrap gap-x-5 gap-y-2 !ps-0 text-xs text-ink-muted">
         <li className="!m-0 flex items-center gap-1.5">
           <span
             aria-hidden="true"
-            className="relative size-4 overflow-hidden rounded-[3px] bg-plate-2"
+            className="relative size-4 overflow-hidden rounded-[3px] bg-plate-nested"
           >
             <span className="absolute inset-x-0 bottom-0 h-[3px] bg-state-known" />
           </span>
           Review, weighted by recall
         </li>
         <li className="!m-0 flex items-center gap-1.5">
-          <Sprout aria-hidden="true" className="size-3.5 text-text-2" />
+          <Sprout aria-hidden="true" className="size-3.5 text-ink-secondary" />
           New card, weighted toward recent
         </li>
         <li className="!m-0 flex items-center gap-1.5">
-          <Hourglass aria-hidden="true" className="size-3.5 text-text-2" />
+          <Hourglass aria-hidden="true" className="size-3.5 text-ink-secondary" />
           Oldest unseen card
         </li>
       </ul>

@@ -1,13 +1,15 @@
-import { I18nProvider } from "@lingui/react";
-import type { SupportedTag } from "@lymi/core";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import type { ComponentType } from "react";
-import { pageI18n } from "../../lib/i18n";
+import type { LanguagePageTag } from "../../lib/language-pages";
 import type { Locale } from "../../lib/routes";
 import { ChineseView } from "../landing/ChineseView";
+import { GermanView } from "../landing/GermanView";
 import { JapaneseView } from "../landing/JapaneseView";
+import { PolishView } from "../landing/PolishView";
+import { RussianView } from "../landing/RussianView";
+import { SpanishView } from "../landing/SpanishView";
 import { UkrainianView } from "../landing/UkrainianView";
-import { Queries } from "./Queries";
+import { Island } from "./Island";
 
 interface ViewProps {
   locale: Locale;
@@ -15,24 +17,26 @@ interface ViewProps {
   decks: PublicDeckSummary[];
 }
 
-/** Each supported language's own view; one island holds them all, so a page's file needs no import of its own. */
+/** Each language page's own view; one island holds them all, so a page's file needs no import of its own. */
 const VIEWS = {
   ja: JapaneseView,
   zh: ChineseView,
   uk: UkrainianView,
-} satisfies Record<SupportedTag, ComponentType<ViewProps>>;
+  ru: RussianView,
+  pl: PolishView,
+  es: SpanishView,
+  de: GermanView,
+} satisfies Record<LanguagePageTag, ComponentType<ViewProps>>;
 
 interface Props extends ViewProps {
-  language: SupportedTag;
+  language: LanguagePageTag;
 }
 
 export default function LanguageView({ language, locale, decks }: Props) {
   const View = VIEWS[language];
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
-      <Queries>
-        <View decks={decks} locale={locale} />
-      </Queries>
-    </I18nProvider>
+    <Island locale={locale}>
+      <View decks={decks} locale={locale} />
+    </Island>
   );
 }

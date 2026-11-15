@@ -1,7 +1,6 @@
-import type { I18n } from "@lingui/core";
-import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type ApiKeySummary, api, errorMessage } from "@lymi/client/api";
+import { YOMITAN_KEY_NAME } from "@lymi/client/apps";
 import { keysQuery } from "@lymi/client/queries";
 import { ApiKeyInput, apiKeyLimits, isolate, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
@@ -23,6 +22,7 @@ import { Sheet, SheetError, SheetHeading, SheetNote } from "../../../ui/sheet";
 import { Skeleton } from "../../../ui/skeleton";
 import { toast } from "../../../ui/toast-host";
 import { DocRow } from "../../../you/doc-row";
+import { lastUsed, shortDate } from "../../../you/key-dates";
 
 /** Personal API keys for scripts, as the web's Settings has them. phone.md "Navigation", ADR 0036. */
 export default function ApiKeys() {
@@ -59,15 +59,16 @@ export default function ApiKeys() {
       ],
     );
 
-  // The new key has its own plate above; listing it as well reads as two keys.
-  const rest = (keys.data ?? []).filter((k) => k.id !== fresh?.id);
+  // The new key has its own plate above; listing it as well reads as two keys. Yomitan's key lives
+  // on Yomitan's page, as on the web.
+  const rest = (keys.data ?? []).filter((k) => k.id !== fresh?.id && k.name !== YOMITAN_KEY_NAME);
   const empty = keys.isSuccess && rest.length === 0;
 
   return (
     <Screen
       title={t`API keys`}
       back={{ label: t`You`, to: "/you" }}
-      description={t`For scripts and curl. For AI apps, use Connected apps instead.`}
+      description={t`For scripts and curl. For AI assistants, use Apps instead.`}
       actions={<BarButton icon="plus" label={t`New key`} onPress={() => setMaking(true)} />}
     >
       {fresh && (
@@ -111,7 +112,7 @@ export default function ApiKeys() {
         </Plate>
       )}
 
-      <Text className="-mt-4 px-1 text-base text-muted">
+      <Text className="-mt-4 px-1 text-base text-ink-muted">
         {t`Read lists decks and cards. Read and write also adds, edits and archives them. A key never grades reviews.`}
       </Text>
 
@@ -170,12 +171,12 @@ function KeyRow({
     >
       <View className="flex-1 gap-1">
         <View className="flex-row flex-wrap items-center gap-2">
-          <Text className="shrink text-md font-medium text-text" numberOfLines={1}>
+          <Text className="shrink text-md font-medium text-ink" numberOfLines={1}>
             {name}
           </Text>
           <Chip size="sm">{item.scope === "write" ? t`Read and write` : t`Read`}</Chip>
         </View>
-        <Text className="text-sm text-muted" numberOfLines={2}>
+        <Text className="text-sm text-ink-muted" numberOfLines={2}>
           {item.start ? `${item.start}… · ` : ""}
           {t`${used} · created ${created}`}
         </Text>
@@ -209,17 +210,17 @@ function FreshKey({
   return (
     <Plate className="gap-3 p-4">
       <View className="flex-row items-start gap-3">
-        <View className="size-9 items-center justify-center rounded-full bg-good-soft">
-          <Icon name="keys" size={18} colour={p.good} />
+        <View className="size-9 items-center justify-center rounded-full bg-success-soft">
+          <Icon name="keys" size={18} colour={p.success} />
         </View>
-        <Text className="flex-1 text-base text-text" accessibilityLiveRegion="polite">
+        <Text className="flex-1 text-base text-ink" accessibilityLiveRegion="polite">
           {t`${{ name: isolate(name) }} is ready. Copy it now. You won’t see it again.`}
         </Text>
       </View>
-      <View className="rounded-md bg-plate-2 px-3 py-2.5">
+      <View className="rounded-md bg-plate-nested px-3 py-2.5">
         <Text
           selectable
-          className="text-sm text-text"
+          className="text-sm text-ink"
           style={{ fontFamily: "Menlo" }}
           accessibilityLabel={t`API key for ${name}`}
         >
@@ -324,22 +325,4 @@ function NewKeySheet({
       {error && <SheetError>{error}</SheetError>}
     </Sheet>
   );
-}
-
-function lastUsed(i18n: I18n, iso: string | null): string {
-  if (!iso) return i18n._(msg`never used`);
-  const ms = Date.now() - new Date(iso).getTime();
-  const m = Math.round(ms / 60_000);
-  if (m < 1) return i18n._(msg`used just now`);
-  if (m < 60) return i18n._(msg`used ${m} min ago`);
-  const h = Math.round(m / 60);
-  if (h < 24) return i18n._(msg`used ${h} h ago`);
-  const d = Math.round(h / 24);
-  if (d < 14) return i18n._(msg`used ${d} d ago`);
-  const date = shortDate(i18n, iso);
-  return i18n._(msg`used ${date}`);
-}
-
-function shortDate(i18n: I18n, iso: string): string {
-  return i18n.date(new Date(iso), { day: "numeric", month: "short" });
 }

@@ -1,6 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { warmCache } from "@lymi/client/cache";
-import { claimWrites, flushWrites, onNotice } from "@lymi/client/writes";
+import { afterFlush } from "@lymi/client/sync";
+import { claimWrites, flushWrites, onFlushed, onNotice } from "@lymi/client/writes";
 import { isolate } from "@lymi/core";
 import type { QueryClient } from "@tanstack/react-query";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
@@ -46,7 +47,7 @@ import { publicSiteUrl } from "../lib/origins";
 import { useRouteFocus } from "../lib/page-focus";
 import { decksQuery, meQuery, seriesQuery, settingsQuery, streakQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
-import { Streak, StreakPlace, useSettleToday } from "../lib/streak";
+import { Streak, StreakPlace, useDayTurn, useSettleToday } from "../lib/streak";
 import { capturePageview } from "../lib/telemetry";
 import { toggleTheme } from "../lib/theme";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
@@ -148,6 +149,7 @@ function Shell() {
   });
   const leave = useSignOut();
   useSettleToday(!bare && !panel && me.isSuccess);
+  useDayTurn(!bare && !panel && me.isSuccess);
   useRouteFocus();
 
   const appLanguage = settings.data?.appLanguage;
@@ -206,14 +208,8 @@ function Shell() {
   useEffect(() => {
     if (!learnerId) return;
     claimWrites(learnerId);
-    const flush = () => {
-      void flushWrites().then((flushed) => {
-        if (flushed.sent > 0) void queryClient.invalidateQueries({ queryKey: ["decks"] });
-        if (flushed.sent + flushed.graded > 0) {
-          void queryClient.invalidateQueries({ queryKey: ["queue"] });
-        }
-      });
-    };
+    const stopFollowing = onFlushed((flushed) => afterFlush(queryClient, flushed));
+    const flush = () => void flushWrites();
     const onVisible = () => {
       if (document.visibilityState === "visible") flush();
     };
@@ -221,6 +217,7 @@ function Shell() {
     window.addEventListener("online", flush);
     document.addEventListener("visibilitychange", onVisible);
     return () => {
+      stopFollowing();
       window.removeEventListener("online", flush);
       document.removeEventListener("visibilitychange", onVisible);
     };

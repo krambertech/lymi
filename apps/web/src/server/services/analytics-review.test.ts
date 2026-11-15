@@ -71,6 +71,7 @@ it("adds, joins and activates a published deck once, without private fields", as
     { name: "first_session_started", deck_slug: "analytics-example" },
   ]);
   expect(events.filter((event) => event.name === "welcome_step_finished")).toEqual([
+    { name: "welcome_step_finished", step_name: "deck", skipped: false },
     { name: "welcome_step_finished", step_name: "review", skipped: false },
   ]);
   expect(events.filter((event) => event.name === "review_graded")).toHaveLength(1);

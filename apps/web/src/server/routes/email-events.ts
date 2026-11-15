@@ -4,7 +4,7 @@ import { deliveryProblem, verifyResendWebhook } from "../email/resend";
 import { describe } from "../http";
 import type { AppEnv } from "../index";
 import { trackProductEvent } from "../posthog";
-import { accountIdForEmail } from "../services";
+import { accountIdForEmail, stopLearningEmails } from "../services";
 import { analyticsContextFor } from "../services/analytics-context";
 
 /**
@@ -59,11 +59,21 @@ emailEvents.post("/", describe({ hide: true, open: true }), async (c) => {
   for (const address of problem.to) {
     const userId = await accountIdForEmail(db, address);
     if (!userId) continue;
+    // A bad address or a complaint ends the series; the account's own email is left alone.
+    await stopLearningEmails(
+      c.env,
+      db,
+      userId,
+      kind,
+      problem.type === "bounced" ? "bounce" : "complaint",
+    );
     c.executionCtx.waitUntil(
       trackProductEvent(
         c.env,
         userId,
-        { name: problem.type === "bounced" ? "email_bounced" : "email_complained", kind },
+        problem.type === "bounced"
+          ? { name: "email_bounced", kind }
+          : { name: "email_complained", kind },
         undefined,
         analyticsContextFor(db, userId),
       ),

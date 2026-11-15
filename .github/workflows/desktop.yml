@@ -29,7 +29,13 @@ jobs:
           node-version-file: .nvmrc
           cache: pnpm
       - run: pnpm install --frozen-lockfile --filter "@lymi/desktop..."
-      - run: pnpm --filter @lymi/desktop package
+      - name: Install dmgbuild, which lays out the download window
+        run: |
+          python3 -m venv "$RUNNER_TEMP/dmgbuild"
+          "$RUNNER_TEMP/dmgbuild/bin/pip" install --quiet dmgbuild==1.6.7
+          echo "DMGBUILD=$RUNNER_TEMP/dmgbuild/bin/dmgbuild" >> "$GITHUB_ENV"
+      # Makes the DMG as well as the app, so a broken download window fails here, not at release.
+      - run: pnpm --filter @lymi/desktop make --arch=arm64
       - name: Launch the packaged app
         run: pnpm --filter @lymi/desktop launch-check "$PWD/apps/desktop/out/Lymi-darwin-arm64/Lymi.app"
 
@@ -75,6 +81,12 @@ jobs:
           cache: pnpm
       - if: steps.ready.outputs.ready == 'true'
         run: pnpm install --frozen-lockfile --filter "@lymi/desktop..."
+      - name: Install dmgbuild, which lays out the download window
+        if: steps.ready.outputs.ready == 'true'
+        run: |
+          python3 -m venv "$RUNNER_TEMP/dmgbuild"
+          "$RUNNER_TEMP/dmgbuild/bin/pip" install --quiet dmgbuild==1.6.7
+          echo "DMGBUILD=$RUNNER_TEMP/dmgbuild/bin/dmgbuild" >> "$GITHUB_ENV"
 
       - name: Put the Developer ID certificate and the notary key on the runner
         if: steps.ready.outputs.ready == 'true'

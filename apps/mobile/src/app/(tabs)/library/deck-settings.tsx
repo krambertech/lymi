@@ -1,6 +1,7 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { type DeckSummary, errorMessage } from "@lymi/client/api";
+import { deckTagsQuery } from "@lymi/client/queries";
 import { type DeckPatch, writes } from "@lymi/client/writes";
 import {
   DECK_ENRICH_FIELDS,
@@ -12,7 +13,7 @@ import {
   isolate,
   LANGUAGE_TAGS,
 } from "@lymi/core";
-import { useQueryClient } from "@tanstack/react-query";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useRef, useState } from "react";
 import { TextInput, View } from "react-native";
@@ -21,6 +22,13 @@ import { openDraft } from "../../../data/draft";
 import { languageName } from "../../../data/languages";
 import { usePurposes } from "../../../data/purposes";
 import { useDeckCards, useDecks, useSections } from "../../../data/queries";
+import {
+  AdaptivePronunciationNote,
+  AdaptivePronunciationRow,
+  useAdaptivePronunciation,
+} from "../../../deck/adaptive-pronunciation";
+import { reportHref } from "../../../sharing/report";
+import { captureEvent } from "../../../telemetry/posthog";
 import { usePalette } from "../../../theme/palette";
 import { inputCap, MULTILINE } from "../../../theme/type";
 import { FieldError } from "../../../ui/field";
@@ -60,8 +68,10 @@ function Settings({ deck }: { deck: DeckSummary }) {
   const [saved, setSaved] = useState<"saving" | "saved" | null>(null);
   const [error, setError] = useState<string | null>(null);
   const owner = deck.role === "owner";
+  const pronunciation = useAdaptivePronunciation(deck);
   const router = useRouter();
   const sectionCount = useSections(owner ? deck.id : undefined).data?.sections.length ?? 0;
+  const tagCount = useQuery({ ...deckTagsQuery(deck.id), enabled: owner }).data?.tags.length;
 
   const save = async (patch: DeckPatch) => {
     setSaved("saving");
@@ -214,8 +224,8 @@ function Settings({ deck }: { deck: DeckSummary }) {
       maxLength={deckLimits.name ?? undefined}
       accessibilityLabel={t`Name`}
       returnKeyType="done"
-      selectionColor={p.text}
-      className="min-h-11 py-2 font-sans text-text"
+      selectionColor={p.ink}
+      className="min-h-11 py-2 font-sans text-ink"
       style={{ fontSize: 17 }}
       maxFontSizeMultiplier={inputCap(17)}
     />
@@ -230,11 +240,11 @@ function Settings({ deck }: { deck: DeckSummary }) {
       onSubmitEditing={finishEditing}
       maxLength={deckLimits.description ?? undefined}
       placeholder={t`Cards from Marco’s Tuesday lessons.`}
-      placeholderTextColor={p.muted}
+      placeholderTextColor={p["ink-muted"]}
       accessibilityLabel={t`Description`}
       multiline
-      selectionColor={p.text}
-      className="min-h-11 font-sans text-text"
+      selectionColor={p.ink}
+      className="min-h-11 font-sans text-ink"
       style={MULTILINE}
       maxFontSizeMultiplier={inputCap(17)}
     />
@@ -249,11 +259,11 @@ function Settings({ deck }: { deck: DeckSummary }) {
       onSubmitEditing={finishEditing}
       maxLength={deckLimits.enrichInstructions ?? undefined}
       placeholder={t`Medical French for nurses. Use the clinical meaning.`}
-      placeholderTextColor={p.muted}
+      placeholderTextColor={p["ink-muted"]}
       accessibilityLabel={t`Instructions`}
       multiline
-      selectionColor={p.text}
-      className="min-h-48 font-sans text-text"
+      selectionColor={p.ink}
+      className="min-h-48 font-sans text-ink"
       style={MULTILINE}
       maxFontSizeMultiplier={inputCap(17)}
     />
@@ -273,7 +283,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
       title={owner ? t`Deck settings` : t`About this deck`}
       back={{ label: deck.name, to: `/library/${deck.id}` as Href }}
       actions={
-        <Text className="text-base text-muted" accessibilityLiveRegion="polite">
+        <Text className="text-base text-ink-muted" accessibilityLiveRegion="polite">
           {saved === "saving" ? t`Saving…` : saved === "saved" ? t`Saved` : ""}
         </Text>
       }
@@ -283,7 +293,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
         <>
           <Group title={t`Shared with you`}>
             <Plate className="px-4 py-3.5">
-              <Text className="text-md text-text">
+              <Text className="text-md text-ink">
                 {deck.owner.former
                   ? t`Its owner left Lymi, so nobody can change this deck.`
                   : t`${isolate(deck.owner.name)} owns this deck and writes its cards.`}
@@ -293,6 +303,15 @@ function Settings({ deck }: { deck: DeckSummary }) {
           <Rows>
             <RowFace icon="meaning" label={t`Language`} value={language} end="none" />
             <RowFace icon="modes" label={t`Modes`} value={way?.label} end="none" />
+            {pronunciation && <AdaptivePronunciationRow choice={pronunciation} />}
+          </Rows>
+          {pronunciation && <AdaptivePronunciationNote choice={pronunciation} />}
+          <Rows>
+            <Row
+              icon="report"
+              label={t`Report deck`}
+              onPress={() => router.push(reportHref("deck", deck.id, deck.name))}
+            />
           </Rows>
           <Rows>
             <Row icon="signOut" label={t`Leave deck`} destructive end="none" onPress={leave} />
@@ -324,7 +343,9 @@ function Settings({ deck }: { deck: DeckSummary }) {
             />
             {languageSelect(<RowFace icon="meaning" label={t`Language`} value={language} />)}
             <Row icon="modes" label={t`Modes`} value={way?.label} onPress={() => setAsking(true)} />
+            {pronunciation && <AdaptivePronunciationRow choice={pronunciation} />}
           </Rows>
+          {pronunciation && <AdaptivePronunciationNote choice={pronunciation} />}
           <Group title={t`AI`}>
             <Rows>
               <Row
@@ -410,7 +431,22 @@ function Settings({ deck }: { deck: DeckSummary }) {
                   ? plural(sectionCount, { one: "# section", other: "# sections" })
                   : t`None`
               }
-              onPress={() => router.push(`/library/sections?id=${deck.id}` as Href)}
+              onPress={() => {
+                captureEvent("sections_opened", { from: "settings" });
+                router.push(`/library/${deck.id}/sections` as Href);
+              }}
+            />
+            <Row
+              icon="tags"
+              label={t`Tags`}
+              value={
+                tagCount === undefined
+                  ? undefined
+                  : tagCount > 0
+                    ? plural(tagCount, { one: "# tag", other: "# tags" })
+                    : t`None`
+              }
+              onPress={() => router.push(`/library/tags?id=${deck.id}` as Href)}
             />
           </Rows>
           <Rows>
@@ -432,7 +468,7 @@ function Settings({ deck }: { deck: DeckSummary }) {
 function Group({ title, children }: { title: string; children: ReactNode }) {
   return (
     <View className="gap-2">
-      <Text className="px-1 text-sm font-medium text-muted" accessibilityRole="header">
+      <Text className="px-1 text-sm font-medium text-ink-muted" accessibilityRole="header">
         {title}
       </Text>
       {children}

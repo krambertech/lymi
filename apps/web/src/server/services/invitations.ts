@@ -6,6 +6,7 @@ import { audit, auditStatementWhen } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { previewDoor } from "./deck-door";
 import { join, ownedDeck } from "./members";
+import { assertMayShare } from "./takedowns";
 
 /** 24 random bytes as base64url: 192 bits, so a join link cannot be guessed. */
 const TOKEN_SHAPE = /^[A-Za-z0-9_-]{32}$/;
@@ -59,6 +60,7 @@ export async function turnOnJoinLink(ctx: ServiceContext, deckId: string) {
   if (deck.archivedAt) {
     throw new ServiceError("invalid", "Restore the deck before sharing it");
   }
+  await assertMayShare(ctx);
   const existing = await activeLink(db, deckId);
   if (existing) return existing;
 
@@ -237,6 +239,7 @@ export async function inviteByEmail(
   if (deck.archivedAt) {
     throw new ServiceError("invalid", "Restore the deck before inviting anyone");
   }
+  await assertMayShare(ctx);
   const email = rawEmail.trim().toLowerCase();
 
   const [owner] = await db
@@ -254,7 +257,7 @@ export async function inviteByEmail(
     // biome-ignore lint/plugin: Better Auth stores emails lower-cased, so ASCII-only folding loses nothing here.
     .where(and(eq(schema.deckMembers.deckId, deckId), sql`lower(${schema.user.email}) = ${email}`));
   if (membership && !membership.removedAt) {
-    throw refused("conflict", "They are already studying this deck", "member");
+    throw refused("conflict", "They are already in this deck", "member");
   }
   // Removal is for good, so the message would carry a link the door refuses; a leaver may return.
   if (membership?.removedBy === "owner") {

@@ -2,7 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
-import { Tile } from "./JapaneseBento";
+import { BENTO_HUES, LanguageBento, Tile } from "./LanguageBento";
 import { Pinyin } from "./Pinyin";
 import { useStill } from "./playback";
 
@@ -43,8 +43,8 @@ function Scripts() {
             traditional === (i === 0) && "opacity-55",
           )}
         >
-          <span className="text-xs text-muted">{deck.name}</span>
-          <span lang={deck.lang} className="text-[44px] leading-[1.15] font-medium text-text">
+          <span className="text-xs text-ink-muted">{deck.name}</span>
+          <span lang={deck.lang} className="text-[44px] leading-[1.15] font-medium text-ink">
             {deck.term}
           </span>
           <span className="text-xs text-amber-text">{deck.voice}</span>
@@ -71,10 +71,10 @@ function ToneMarks() {
   return (
     <div ref={root} aria-hidden="true" className="rounded-md bg-plate edge">
       <p className="flex items-baseline justify-between gap-3 border-b border-edge px-3.5 py-2.5">
-        <span className="text-xs text-muted">
+        <span className="text-xs text-ink-muted">
           <Trans>Pinyin</Trans>
         </span>
-        <span className="relative h-7 min-w-[7ch] text-end text-xl text-text">
+        <span className="relative h-7 min-w-[7ch] text-end text-xl text-ink">
           <span
             className={clsx(
               "absolute inset-0 transition-[opacity,filter] duration-300",
@@ -94,10 +94,10 @@ function ToneMarks() {
         </span>
       </p>
       <p className="flex items-center justify-between px-3.5 py-2.5">
-        <span lang="zh-Hans" className="text-[30px] leading-[1.7] font-medium text-text">
+        <span lang="zh-Hans" className="text-[30px] leading-[1.7] font-medium text-ink">
           <Pinyin term="学习" pinyin="xué xí" />
         </span>
-        <span className="text-sm text-text-2">
+        <span className="text-sm text-ink-secondary">
           <Trans>To study</Trans>
         </span>
       </p>
@@ -108,8 +108,9 @@ function ToneMarks() {
 /** Chinese learners' own needs, each in a line and a small picture. */
 export function ChineseBento() {
   return (
-    <div className="mt-12 grid gap-2.5 @3xl:grid-cols-2 @4xl:mt-16">
+    <LanguageBento>
       <Tile
+        hue={BENTO_HUES[0]}
         title={<Trans>Simplified or traditional</Trans>}
         body={
           <Trans>
@@ -121,6 +122,7 @@ export function ChineseBento() {
         <Scripts />
       </Tile>
       <Tile
+        hue={BENTO_HUES[1]}
         title={<Trans>Type tones as numbers</Trans>}
         body={
           <Trans>
@@ -130,6 +132,6 @@ export function ChineseBento() {
       >
         <ToneMarks />
       </Tile>
-    </div>
+    </LanguageBento>
   );
 }

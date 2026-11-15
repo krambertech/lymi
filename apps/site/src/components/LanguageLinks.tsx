@@ -1,7 +1,7 @@
-import { I18nProvider } from "@lingui/react";
 import { useLingui } from "@lingui/react/macro";
-import { pageI18n } from "../lib/i18n";
-import { type Locale, type LocalizedPage, localizedPath } from "../lib/routes";
+import { clsx } from "clsx";
+import { type Locale, type LocalizedPage, localizedPath, pageLocales } from "../lib/routes";
+import { Localized } from "./Localized";
 
 const languages = [
   { locale: "en", label: "English" },
@@ -9,27 +9,37 @@ const languages = [
   { locale: "ru", label: "Русский" },
 ] as const;
 
-/** A fixed page, or the paths of a page rendered per request, such as a published deck. */
-export type LanguageTarget = { page: LocalizedPage } | { paths: Record<Locale, string> };
+/** A fixed page, or a page rendered per request, such as a published deck, by the locales that have it. */
+export type LanguageTarget = { page: LocalizedPage } | { paths: Partial<Record<Locale, string>> };
 
 /** Language names stay in their own language so every visitor can find theirs. */
-export function LanguageLinks(target: LanguageTarget) {
+export function LanguageLinks({
+  className = "mx-auto mt-6 max-w-[1040px]",
+  ...target
+}: LanguageTarget & { className?: string | undefined }) {
   const { t, i18n } = useLingui();
 
   return (
     <nav
       aria-label={t`Language`}
-      className="mx-auto mt-6 flex max-w-[1040px] flex-wrap gap-4 text-xs text-muted"
+      className={clsx("flex flex-wrap gap-4 text-xs text-ink-muted", className)}
     >
       {languages.map(({ locale, label }) => {
+        const href =
+          "paths" in target
+            ? target.paths[locale]
+            : pageLocales(target.page).includes(locale)
+              ? localizedPath(target.page, locale)
+              : undefined;
+        if (!href) return null;
         return (
           <a
             key={locale}
-            href={"paths" in target ? target.paths[locale] : localizedPath(target.page, locale)}
+            href={href}
             hrefLang={locale}
             lang={locale}
             aria-current={i18n.locale === locale ? "page" : undefined}
-            className="rounded-xs hoverable:hover:text-text aria-[current=page]:font-medium aria-[current=page]:text-text"
+            className="rounded-xs hoverable:hover:text-ink aria-[current=page]:font-medium aria-[current=page]:text-ink"
           >
             {label}
           </a>
@@ -41,8 +51,8 @@ export function LanguageLinks(target: LanguageTarget) {
 
 export function LocalizedLanguageLinks({ page, locale }: { page: LocalizedPage; locale: string }) {
   return (
-    <I18nProvider i18n={pageI18n(locale)}>
+    <Localized locale={locale}>
       <LanguageLinks page={page} />
-    </I18nProvider>
+    </Localized>
   );
 }

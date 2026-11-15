@@ -17,5 +17,5 @@ The learner has three more cards, in a new deck named for the set, and one finis
 ## Gotchas
 
 - iOS's Files picker runs outside the app, so the flow drives Quizlet's paste box rather than **Choose file**; the upload, preview and writing are the same for every app.
-- The import is written by the local Worker's Workflow, so the done screen can take several seconds to arrive.
+- The import is written by the local Worker's Workflow, so the flow allows the done screen 90 seconds to arrive.
 - The share sheet is iOS's own, so the flow only waits for it and closes it with a swipe down.

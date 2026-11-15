@@ -45,7 +45,7 @@ export function CardFace({ card, cw }: { card: TrayCard; cw: number }) {
       {card.section && (
         <Text
           numberOfLines={1}
-          className="font-medium uppercase text-muted"
+          className="font-medium uppercase text-ink-muted"
           style={{ fontSize: Math.max(11, cw * 0.054), letterSpacing: 0.6 }}
           maxFontSizeMultiplier={1}
         >
@@ -73,7 +73,7 @@ export function CardFace({ card, cw }: { card: TrayCard; cw: number }) {
       ) : (
         <Text
           numberOfLines={3}
-          className="font-medium text-text"
+          className="font-medium text-ink"
           style={{
             marginTop: cw * 0.06,
             fontSize: size,
@@ -90,12 +90,12 @@ export function CardFace({ card, cw }: { card: TrayCard; cw: number }) {
           marginTop: "auto",
           paddingTop: cw * 0.06,
           borderTopWidth: 1,
-          borderTopColor: p["edge-2"],
+          borderTopColor: p["edge-strong"],
         }}
       >
         <Text
           numberOfLines={2}
-          className={target === "term" ? "font-medium text-text" : "text-text-2"}
+          className={target === "term" ? "font-medium text-ink" : "text-ink-secondary"}
           style={{ fontSize: Math.max(12, cw * 0.074), lineHeight: Math.max(12, cw * 0.074) * 1.3 }}
           maxFontSizeMultiplier={1}
         >

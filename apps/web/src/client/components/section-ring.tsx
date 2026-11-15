@@ -26,7 +26,7 @@ export function SectionRing({ known, total, className }: SectionRingProps) {
       aria-label={t`You know ${knownN} of ${plural(total, { one: "# card", other: "# cards" })}`}
       className={clsx(
         "size-4 shrink-0 rtl:-scale-x-100",
-        share > 0 ? "text-state-known" : "text-muted",
+        share > 0 ? "text-state-known" : "text-ink-muted",
         className,
       )}
     >

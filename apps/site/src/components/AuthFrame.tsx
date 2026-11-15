@@ -13,12 +13,12 @@ interface Props {
 export function AuthFrame({ children, footer, homeHref = "/" }: Props) {
   const { t } = useLingui();
   return (
-    <div className="@container min-h-dvh flex-1 bg-canvas text-text">
+    <div className="@container min-h-dvh flex-1 bg-canvas text-ink">
       <main className="mx-auto flex min-h-dvh w-full flex-col items-center justify-start px-4 pt-[calc(2rem+env(safe-area-inset-top))] pb-[calc(2rem+env(safe-area-inset-bottom))] @xl:px-8 [@media(min-height:720px)]:pt-[calc(0.5rem+env(safe-area-inset-top))] [@media(min-height:720px)]:pb-[calc(0.5rem+env(safe-area-inset-bottom))] [@media(min-height:840px)]:pt-[calc(2rem+env(safe-area-inset-top))] [@media(min-height:840px)]:pb-[calc(2rem+env(safe-area-inset-bottom))]">
         <a
           href={homeHref}
           aria-label={t`Lymi home`}
-          className="mx-auto flex w-fit flex-col items-center rounded-sm px-4 py-2 text-text"
+          className="mx-auto flex w-fit flex-col items-center rounded-sm px-4 py-2 text-ink"
         >
           <Lantern
             className="size-24 [@media(min-height:720px)]:size-18 [@media(min-height:840px)]:size-28"
@@ -35,15 +35,15 @@ export function AuthFrame({ children, footer, homeHref = "/" }: Props) {
           )}
           <nav
             aria-label="Lymi policies and support"
-            className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-muted"
+            className="mt-6 flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm text-ink-muted"
           >
-            <a href="/privacy" className="rounded-xs hoverable:hover:text-text">
+            <a href="/privacy" className="rounded-xs hoverable:hover:text-ink">
               Privacy
             </a>
-            <a href="/terms" className="rounded-xs hoverable:hover:text-text">
+            <a href="/terms" className="rounded-xs hoverable:hover:text-ink">
               Terms
             </a>
-            <a href="/support" className="rounded-xs hoverable:hover:text-text">
+            <a href="/support" className="rounded-xs hoverable:hover:text-ink">
               Support
             </a>
           </nav>

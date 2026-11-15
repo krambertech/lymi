@@ -124,7 +124,7 @@ function FieldLegend({ className, variant = "legend", ...props }: FieldLegendPro
       data-variant={variant}
       className={cn(
         "mb-1.5 p-0 font-medium",
-        variant === "legend" ? "text-base text-text" : "text-sm text-text-2",
+        variant === "legend" ? "text-base text-ink" : "text-sm text-ink-secondary",
         className,
       )}
       {...props}
@@ -247,7 +247,7 @@ function FieldLabel({ className, id, htmlFor, aside, ...props }: FieldLabelProps
       data-slot="field-label"
       htmlFor={htmlFor ?? field?.controlId}
       className={cn(
-        "w-fit text-sm font-medium text-text-2",
+        "w-fit text-sm font-medium text-ink-secondary",
         // A label beside a checkbox, radio or switch presses it, so it takes the control's cursor.
         "group-has-[[role=checkbox],[role=radio],[role=switch]]/field:cursor-pointer group-data-disabled/field:cursor-not-allowed",
         className,
@@ -260,7 +260,7 @@ function FieldLabel({ className, id, htmlFor, aside, ...props }: FieldLabelProps
     <div data-slot="field-label-row" className="flex items-baseline justify-between gap-3">
       {label}
       {/* `ms-auto`: a label hidden with `sr-only` leaves the flex row, and the aside still sits at the end. */}
-      <span data-slot="field-label-aside" className="ms-auto text-xs text-muted">
+      <span data-slot="field-label-aside" className="ms-auto text-xs text-ink-muted">
         {aside}
       </span>
     </div>
@@ -281,7 +281,7 @@ function FieldDescription({ className, id, ...props }: React.ComponentProps<"p">
       className={cn(
         // Under its label in a vertical field it reads as part of the label, so it sits closer than the control does.
         "[[data-orientation=vertical]>[data-slot=field-label]:not(.sr-only)+&]:-mt-1.5 [[data-orientation=vertical]>[data-slot=field-label-row]+&]:-mt-1.5",
-        "text-sm text-muted [&>a]:underline [&>a]:underline-offset-4 hoverable:[&>a:hover]:text-text",
+        "text-sm text-ink-muted [&>a]:underline [&>a]:underline-offset-4 hoverable:[&>a:hover]:text-ink",
         className,
       )}
       {...props}

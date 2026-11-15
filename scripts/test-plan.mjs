@@ -24,6 +24,7 @@ const wideningFiles = new Set([
   "apps/web/tsconfig.json",
   "apps/web/tsconfig.worker.json",
   "apps/web/vite.config.ts",
+  "apps/web/vitest.workers.config.ts",
   "apps/web/wrangler.jsonc",
   "apps/web/drizzle.config.ts",
   "apps/web/src/client/styles.css",
@@ -62,6 +63,16 @@ export function requiresTouchInstances(paths) {
         touchFiles.has(path) ||
         touchPrefixes.some((prefix) => path.startsWith(prefix)),
     )
+  );
+}
+
+// Code that can make an outgoing fetch, which only workerd judges the way production does.
+const workersPrefixes = ["apps/web/src/server/", "packages/core/"];
+
+export function requiresWorkersTests(paths) {
+  return (
+    runsEverything(paths) ||
+    paths.some((path) => workersPrefixes.some((prefix) => path.startsWith(prefix)))
   );
 }
 

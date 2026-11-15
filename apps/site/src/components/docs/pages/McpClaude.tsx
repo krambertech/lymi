@@ -39,9 +39,9 @@ export function McpClaude() {
         <div>
           <StepTitle>Sign in</StepTitle>
           <p>
-            Claude opens Lymi in your browser. Sign in with the Google account your Lymi uses, then
-            approve the connection. Untick <strong>write</strong> on the consent screen if you want
-            Claude to read your decks and nothing more.
+            Claude opens Lymi in your browser. Sign in to your Lymi account, then approve the
+            connection. Untick <strong>write</strong> on the consent screen if you want Claude to
+            read your decks and nothing more.
           </p>
         </div>
         <div>

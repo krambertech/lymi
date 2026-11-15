@@ -18,4 +18,4 @@ No persona has Tamil cards, so the recipe makes decks as `fresh` through `/api/d
 
 - The hidden copy that sizes the card holds the answer before the reveal, so read only visible `rt` outside `[aria-hidden]`.
 - Duplicates compare the term across the learner's decks, so each review deck uses a term no other step added.
-- A Known card that gives its pair must not be due, or it joins the review: grade it Easy a day ago.
+- Grade a Known card that gives its pair Easy a day ago, so it is not due and stays out of the review.

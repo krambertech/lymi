@@ -23,6 +23,7 @@ export type { Import, ImportPreview } from "./imports";
 export type { ApiKeyCreated, ApiKeySummary } from "./keys";
 export type { LessonEvent, LessonQuestion, LessonRead, LessonTerm } from "./lessons";
 export type { PushSubscriptionStatus } from "./push";
+export type { Readwise } from "./readwise";
 export {
   ApiError,
   apiUrl,
@@ -44,7 +45,9 @@ import { accountApi } from "./account";
 import { activityApi } from "./activity";
 import { cardsApi } from "./cards";
 import { connectedAppsApi } from "./connected-apps";
+import { contentReportsApi } from "./content-reports";
 import { decksApi } from "./decks";
+import { emailApi } from "./email";
 import { exploreApi } from "./explore";
 import { exportsApi } from "./exports";
 import { feedbackApi } from "./feedback";
@@ -52,6 +55,7 @@ import { importsApi } from "./imports";
 import { keysApi } from "./keys";
 import { lessonsApi } from "./lessons";
 import { pushApi } from "./push";
+import { readwiseApi } from "./readwise";
 import { reviewApi } from "./review";
 import { sectionsApi } from "./sections";
 import { seriesApi } from "./series";
@@ -65,9 +69,11 @@ export const api = {
   ...activityApi,
   ...cardsApi,
   ...connectedAppsApi,
+  ...contentReportsApi,
   ...decksApi,
   ...exploreApi,
   ...exportsApi,
+  ...readwiseApi,
   ...feedbackApi,
   ...importsApi,
   ...keysApi,
@@ -76,6 +82,7 @@ export const api = {
   ...reviewApi,
   ...sectionsApi,
   ...seriesApi,
+  ...emailApi,
   ...settingsApi,
   ...sharingApi,
   ...statsApi,

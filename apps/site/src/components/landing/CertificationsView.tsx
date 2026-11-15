@@ -1,19 +1,19 @@
 import { msg } from "@lingui/core/macro";
-import { Trans } from "@lingui/react/macro";
-import { openLymiUrl } from "../../lib/origins";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Added, AssistantChat } from "./AssistantChat";
-import { AssistantMarksWithMore } from "./AssistantMarks";
+import { AssistantMarksWithMore, WorksWith } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
 import { FeatureSection } from "./FeatureSection";
+import { FreeBadge } from "./FreeBadge";
 import { CERTIFICATIONS_QUESTIONS } from "./faq";
 import { Hero } from "./Hero";
 import type { HandCard } from "./hand-cards";
+import { LandingLayout } from "./LandingLayout";
+import { BENTO_HUES, LanguageBento, Tile } from "./LanguageBento";
+import { DetailsSection, ReturnSection } from "./LanguageSections";
 import { Questions } from "./Questions";
-import { ReviewDemo } from "./ReviewDemo";
-import { RightMoment } from "./RightMoment";
 import { SignUpSection } from "./SignUpSection";
-import { SiteFooter } from "./SiteFooter";
-import { SiteNav } from "./SiteNav";
+import { OfflineTile, OldDecksTile, PdfTile, TagReview } from "./StudyTiles";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const CERTIFICATIONS_TITLE = msg`Lymi for certification prep · Flashcards with spaced repetition`;
@@ -65,32 +65,9 @@ const LEAST_PRIVILEGE: SampleCard = {
   meaning: msg`Give each account only the access its task needs`,
 };
 
-const REVIEW: SampleCard[] = [
-  {
-    label: msg`Cloud`,
-    term: "RTO",
-    meaning: msg`Recovery time objective: how long a service can be down`,
-  },
-  {
-    label: msg`Security`,
-    term: "SAML",
-    meaning: msg`A standard for signing in once and passing that identity to other services`,
-  },
-  {
-    label: msg`Finance`,
-    term: "duration",
-    meaning: msg`How much a bond’s price moves when interest rates change`,
-  },
-  {
-    label: msg`Project management`,
-    term: "float",
-    meaning: msg`How long a task can slip without delaying the project`,
-  },
-];
-
 /** For the professional booked on an exam: the guide becomes a deck, and review fits the commute. */
 export function CertificationsView() {
-  const openAppUrl = openLymiUrl();
+  const { t } = useLingui();
   const fields: UseCase[] = [
     {
       id: "cloud",
@@ -135,90 +112,97 @@ export function CertificationsView() {
   ];
 
   return (
-    <div className="@container min-h-dvh overflow-x-clip bg-canvas text-text">
-      <header>
-        <SiteNav openAppUrl={openAppUrl} current="certifications" />
+    <LandingLayout
+      page="certifications"
+      hero={
         <Hero
-          title={<Trans>Study for the certification. Keep what it taught you.</Trans>}
+          badge={<FreeBadge />}
+          title={<Trans>Flashcards for your certification exam.</Trans>}
           lede={
             <Trans>
-              Turn your study guide into cards and review a few minutes a day. Lymi brings each term
-              back right before you’d forget it, from the first chapter to exam day and after.
+              Drop in your study guide and Lymi turns each chapter’s key terms into cards. Review a
+              few minutes a day, and keep reviewing after the exam.
             </Trans>
           }
+          secondary={{ href: "#guide", label: <Trans>See how it works</Trans> }}
+          after={<WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />}
           cards={HAND}
         />
-      </header>
+      }
+    >
+      <UseCases title={<Trans>For the exam you’re studying for.</Trans>} items={fields} />
 
-      <main>
-        <UseCases title={<Trans>For the exam you’re booked on.</Trans>} items={fields} />
-
-        <FeatureSection
-          title={<Trans>Turn a study guide into cards.</Trans>}
-          body={
-            <Trans>
-              Send a chapter to Claude, ChatGPT, Gemini or Grok and ask for the key terms. Each one
-              lands in your deck with the guide’s definition, ready for tonight’s review.
-            </Trans>
-          }
-          after={<AssistantMarksWithMore />}
-        >
-          <AssistantChat
-            conversation={[
-              {
-                from: "you",
-                body: <Trans>Here’s chapter 4 of my Security+ guide. Add the key terms.</Trans>,
-              },
-              {
-                from: "them",
-                body: (
-                  <Added card={LEAST_PRIVILEGE}>
-                    <Trans>Added 18 cards to Security+, each with the guide’s definition.</Trans>
-                  </Added>
-                ),
-              },
-              { from: "you", body: <Trans>Which ones do I keep getting wrong?</Trans> },
-              {
-                from: "them",
-                body: <Trans>Three: SAML, CVSS, and the difference between RTO and RPO.</Trans>,
-              },
-            ]}
-          />
-        </FeatureSection>
-
-        <FeatureSection
-          demoFirst
-          tinted
-          title={<Trans>Ten minutes between meetings.</Trans>}
-          body={
-            <Trans>
-              One card at a time, graded in a tap, on your phone or your laptop, even offline. The
-              terms you know wait longer, and the ones you miss come back sooner.
-            </Trans>
-          }
-        >
-          <ReviewDemo cards={REVIEW} />
-        </FeatureSection>
-
-        <RightMoment
-          title={<Trans>Review less, remember longer.</Trans>}
-          body={
-            <Trans>
-              Remember a card, and Lymi waits longer before showing it again. Forget it, and it
-              comes back soon.
-            </Trans>
-          }
+      <FeatureSection
+        id="guide"
+        title={<Trans>Turn a study guide into cards.</Trans>}
+        body={
+          <Trans>
+            Drop a chapter into Smart add, or send it to Claude, ChatGPT, Gemini or Grok and ask for
+            the key terms. Each card keeps the guide’s definition.
+          </Trans>
+        }
+        after={<AssistantMarksWithMore />}
+      >
+        <AssistantChat
+          conversation={[
+            {
+              from: "you",
+              body: <Trans>Here’s chapter 4 of my Security+ guide. Add the key terms.</Trans>,
+            },
+            {
+              from: "them",
+              body: (
+                <Added card={LEAST_PRIVILEGE}>
+                  <Trans>Added 18 cards to Security+, each with the guide’s definition.</Trans>
+                </Added>
+              ),
+            },
+            { from: "you", body: <Trans>Which ones do I keep getting wrong?</Trans> },
+            {
+              from: "them",
+              body: <Trans>Three: SAML, CVSS, and the difference between RTO and RPO.</Trans>,
+            },
+          ]}
         />
+      </FeatureSection>
 
-        <Questions
-          title={<Trans>Questions before you start.</Trans>}
-          items={CERTIFICATIONS_QUESTIONS}
-        />
+      <ReturnSection
+        lang="en"
+        term={() => "SAML"}
+        title={<Trans>Ten minutes between meetings.</Trans>}
+        body={
+          <Trans>
+            Each time you remember a term, Lymi waits longer before showing it again. Forget it, and
+            it comes back soon. A few cards between meetings is enough.
+          </Trans>
+        }
+      />
 
-        <SignUpSection title={<Trans>Start with chapter one.</Trans>} />
-      </main>
+      <DetailsSection title={<Trans>Built for exam prep.</Trans>}>
+        <LanguageBento layout="wide">
+          <Tile
+            wide
+            hue={BENTO_HUES[0]}
+            title={<Trans>One chapter at a time</Trans>}
+            body={<Trans>Tag cards by chapter, pick one tag and review just those cards.</Trans>}
+          >
+            <TagReview
+              tags={[
+                [t`Chapter 3`, 24],
+                [t`Chapter 4`, 18],
+                [t`Chapter 5`, 31],
+              ]}
+            />
+          </Tile>
+          <PdfTile files={[t`security-plus-chapter-4.pdf`, t`practice-exam-notes.pdf`]} />
+          <OfflineTile />
+          <OldDecksTile />
+        </LanguageBento>
+      </DetailsSection>
 
-      <SiteFooter openAppUrl={openAppUrl} page="certifications" />
-    </div>
+      <Questions title={<Trans>Common questions.</Trans>} items={CERTIFICATIONS_QUESTIONS} />
+
+      <SignUpSection title={<Trans>Start with chapter one.</Trans>} />
+    </LandingLayout>
   );
 }

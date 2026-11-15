@@ -33,12 +33,12 @@ export function Flame({ height, state = "lit" }: { height: number; state?: Strea
       >
         {state === "out" ? (
           <G transform={EMBER_AT_FLAME_SIZE}>
-            <Path d={EMBER.d} fill={p["edge-2"]} />
+            <Path d={EMBER.d} fill={p["edge-strong"]} />
           </G>
         ) : (
           <G transform={`translate(60 ${bottom}) scale(${scale}) translate(-60 -${bottom})`}>
             <Path d={FLAME_OUTER.d} fill={p.amber} />
-            <Path d={FLAME_CORE.d} fill={p["flame-core"]} />
+            <Path d={FLAME_CORE.d} fill={p["lantern-flame"]} />
           </G>
         )}
       </Svg>

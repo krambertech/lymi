@@ -1,6 +1,5 @@
 import {
   Activity,
-  Anchor,
   Archive,
   ArchiveRestore,
   ArrowDown,
@@ -32,6 +31,7 @@ import {
   Eye,
   EyeOff,
   FileUp,
+  Flag,
   FolderInput,
   GripVertical,
   Image as ImageIcon,
@@ -42,6 +42,7 @@ import {
   Layers,
   LayoutGrid,
   Library,
+  LifeBuoy,
   Lightbulb,
   Link,
   Link2Off,
@@ -76,6 +77,7 @@ import {
   Star,
   Sun,
   SunMoon,
+  Superscript,
   Tag,
   TextQuote,
   Trash2,
@@ -142,9 +144,11 @@ const ICONS = {
   picture: ImageIcon,
   example: TextQuote,
   pronunciation: Volume2,
+  // Small text over the term, as furigana and pinyin are drawn; the speaker would read as audio.
+  reading: Superscript,
   source: Library,
   notes: NotebookPen,
-  hook: Anchor,
+  hint: LifeBuoy,
   tags: Tag,
   lock: Lock,
   unlock: LockOpen,
@@ -209,11 +213,15 @@ const ICONS = {
   delete: Trash2,
   filter: ListFilter,
   share: Share,
+  report: Flag,
   copy: Copy,
   privacy: ShieldCheck,
 } as const;
 
 export type IconName = keyof typeof ICONS;
+
+/** Raised by this share of its size, so a full ring centres on Onest's capitals; iOS sets them lower in their line than the web, so this is half the web's nudge. */
+const RAISE: Partial<Record<IconName, number>> = { hint: 0.046875 };
 
 export function Icon({
   name,
@@ -230,7 +238,14 @@ export function Icon({
   filled?: boolean;
 }) {
   const Glyph = ICONS[name];
+  const raise = RAISE[name];
   return (
-    <Glyph size={size} color={colour} strokeWidth={strokeWidth} fill={filled ? colour : "none"} />
+    <Glyph
+      size={size}
+      color={colour}
+      strokeWidth={strokeWidth}
+      fill={filled ? colour : "none"}
+      style={raise ? { transform: [{ translateY: -size * raise }] } : undefined}
+    />
   );
 }

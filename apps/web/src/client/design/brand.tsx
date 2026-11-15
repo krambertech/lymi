@@ -1,5 +1,6 @@
 import { Lantern } from "../components/lantern";
 import { AppTile, Lockup, Wordmark } from "../components/logo";
+import { Rule, Rules } from "./do-dont";
 import { DocLink } from "./doc-link";
 import { Doc, Pair, Specimen, Sub } from "./frame";
 
@@ -18,18 +19,18 @@ export function Brand() {
             <div className="flex items-end justify-around gap-4 py-4">
               <figure className="grid justify-items-center gap-3 text-center">
                 <Lantern className="size-24 @2xl:size-28" flicker glow />
-                <figcaption className="text-xs text-muted">
+                <figcaption className="text-xs text-ink-muted">
                   The brand flame. Login, the app icon, public pages.
                 </figcaption>
               </figure>
             </div>
           )}
         </Pair>
-        <p className="text-base text-text-2">
+        <p className="text-base text-ink-secondary">
           Inside the product the flame follows the learner’s day and streak.{" "}
           <DocLink
             to={{ kind: "page", page: "lantern" }}
-            className="font-medium text-text underline decoration-edge-2 underline-offset-4 hoverable:hover:decoration-current"
+            className="font-medium text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
           >
             Lantern
           </DocLink>{" "}
@@ -47,7 +48,7 @@ export function Brand() {
               {[16, 20, 24, 28, 40, 56, 80].map((s) => (
                 <figure key={s} className="grid justify-items-center gap-2">
                   <Lantern style={{ width: s, height: s }} glow={s >= 40} />
-                  <figcaption className="text-2xs text-muted tabular-nums">{s}</figcaption>
+                  <figcaption className="text-2xs text-ink-muted tabular-nums">{s}</figcaption>
                 </figure>
               ))}
             </div>
@@ -94,7 +95,7 @@ export function Brand() {
             [<AppTile key="b" size={64} />, "64 px"],
             [<AppTile key="c" size={28} />, "Sidebar, 28 px"],
             [
-              <div key="d" className="flex items-center gap-2 rounded-sm bg-plate-2 px-3 py-2">
+              <div key="d" className="flex items-center gap-2 rounded-sm bg-plate-nested px-3 py-2">
                 <Lantern className="size-4" />
                 <span className="text-sm">Lymi · Lesson 14</span>
               </div>,
@@ -103,27 +104,51 @@ export function Brand() {
           ].map(([node, label]) => (
             <figure key={String(label)} className="grid justify-items-center gap-3">
               <div className="flex h-[120px] items-end">{node}</div>
-              <figcaption className="text-xs text-muted">{label}</figcaption>
+              <figcaption className="text-xs text-ink-muted">{label}</figcaption>
             </figure>
           ))}
         </Specimen>
       </Sub>
 
-      <Sub title="Don’t">
-        <ul className="grid gap-2 text-base text-text-2 @3xl:grid-cols-2">
-          {[
-            "Don’t put a gradient on any surface. The app icon is the one exception; the lantern is the only thing that glows.",
-            "Don’t colour the metal grey. It is ink in the light room and ivory in the dark one.",
-            "Don’t add a second illustration. The lantern is the one drawing; everything else is a standard control.",
-            "Don’t outline, rotate or bevel the mark. Don’t put it in a circle unless the platform demands one.",
-            "Don’t show two flames at once. If the lantern is on the screen, the wordmark is plain.",
-            "Don’t let amber appear more than twice on a screen: the flame, and the one thing to press.",
-          ].map((t) => (
-            <li key={t} className="edge rounded-md bg-plate px-4 py-3">
-              {t}
-            </li>
-          ))}
-        </ul>
+      <Sub title="Do and don’t" note="brand.md has the full rules.">
+        <Rules>
+          <Rule kind="do" title="Use the plain wordmark next to the lantern.">
+            <Lockup size={36} />
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Show two flames at once."
+            note="Use the lit wordmark only when the lantern isn’t on screen, like a share image."
+          >
+            <Lantern className="size-12" />
+            <Wordmark size={36} flame title="lymi, lit" />
+          </Rule>
+          <Rule kind="do" title="Put the glow around the flame.">
+            <Lantern className="size-16" glow />
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Put the glow around the whole lantern."
+            note="Only the flame glows."
+          >
+            <Lantern
+              className="size-16"
+              style={{ filter: "drop-shadow(0 0 14px var(--lantern-glow))" }}
+            />
+          </Rule>
+          <Rule kind="do" title="Use the lantern as it is drawn.">
+            <Lantern className="size-16" />
+          </Rule>
+          <Rule
+            kind="dont"
+            title="Outline, tilt or frame the lantern."
+            note="It only tilts in the shared launch and pull-to-refresh animation."
+          >
+            <span className="grid size-24 rotate-12 place-items-center rounded-full bg-amber-soft ring-2 ring-edge-strong">
+              <Lantern className="size-14" />
+            </span>
+          </Rule>
+        </Rules>
       </Sub>
     </Doc>
   );

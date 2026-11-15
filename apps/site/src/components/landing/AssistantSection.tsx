@@ -9,7 +9,7 @@ import { Lantern } from "../Lantern";
 import { ArrowLink } from "./ArrowLink";
 import { AssistantMark, type AssistantName } from "./AssistantMarks";
 import { EASE, useStill } from "./playback";
-import { SectionTitle } from "./Section";
+import { Section } from "./Section";
 
 interface Ask {
   id: string;
@@ -120,9 +120,9 @@ function Heading() {
   const { i18n } = useLingui();
   return (
     <div className="max-w-[440px]">
-      <SectionTitle>
+      <Section.Title>
         <Trans>Connect your AI assistant.</Trans>
-      </SectionTitle>
+      </Section.Title>
       <p className="mt-5 text-md text-pretty text-ink-secondary">
         <Trans>
           Connect Claude, ChatGPT, Gemini or Grok once. Then make cards, build decks and get quizzed

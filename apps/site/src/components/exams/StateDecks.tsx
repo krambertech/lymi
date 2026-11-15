@@ -5,7 +5,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useId, useState } from "react";
 import { deckPath } from "../../lib/deck-page";
 import type { Locale } from "../../lib/routes";
-import { Section, SectionTitle } from "../landing/Section";
+import { Section } from "../landing/Section";
 import { DeckShowcase } from "./DeckShowcase";
 
 export interface StateDeck {
@@ -29,10 +29,10 @@ export function StateDecks({ locale, general, states }: Props) {
   const chosen = states.find((state) => state.slug === slug);
 
   return (
-    <Section id="decks" labelledBy="decks-title" spacing="ruled">
-      <SectionTitle id="decks-title">
+    <Section id="decks" spacing="ruled">
+      <Section.Title>
         <Trans>Everything the test can ask.</Trans>
-      </SectionTitle>
+      </Section.Title>
       <p className="mt-4 max-w-[56ch] text-md text-pretty text-ink-secondary">
         <Trans>
           Everyone learns the 300 general questions. Three of the 33 come from the 10 about your

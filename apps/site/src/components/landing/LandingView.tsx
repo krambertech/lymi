@@ -6,13 +6,13 @@ import { AiGallery } from "./AiGallery";
 import { ApiSection } from "./ApiSection";
 import { WorksWith } from "./AssistantMarks";
 import { AssistantSection } from "./AssistantSection";
+import { CardsHero } from "./CardsHero";
 import { USE_CASE_CARDS } from "./cards";
 import { FeatureBento } from "./FeatureBento";
 import { Wide } from "./FeatureSection";
 import { FreeBadge } from "./FreeBadge";
 import { FreeDecks } from "./FreeDecks";
 import { Furigana } from "./Furigana";
-import { Hero } from "./Hero";
 import { LandingLayout } from "./LandingLayout";
 import { ReturnLane } from "./ReturnLane";
 import { SignUpSection } from "./SignUpSection";
@@ -64,7 +64,7 @@ export function LandingView() {
     <LandingLayout
       page="landing"
       hero={
-        <Hero
+        <CardsHero
           badge={<FreeBadge />}
           title={<Trans>Flashcards for the AI era.</Trans>}
           lede={

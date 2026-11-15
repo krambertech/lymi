@@ -10,7 +10,7 @@ import { DeckPath } from "./DeckPath";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { type Example, HandExamples } from "./HandExamples";
 import { HandOfCards } from "./HandOfCards";
-import { HeroActions, HeroFrame, HeroLede, HeroTitle } from "./HeroParts";
+import { Hero } from "./Hero";
 import type { HandCard } from "./hand-cards";
 import { ReturnLane } from "./ReturnLane";
 import { SharedDeckDemo } from "./SharedDeckDemo";
@@ -57,27 +57,24 @@ export function LanguageHero({
     <div className="relative overflow-x-clip">
       {/* The lantern's light, pooled behind the hand. */}
       <span aria-hidden="true" className="language-pool pointer-events-none absolute inset-0" />
-      <HeroFrame
-        visualWidth={500}
-        copy={
-          <>
-            {kicker}
-            <div className={narrow ? "max-w-[460px]" : "max-w-[480px]"}>
-              <HeroTitle size="page">{title}</HeroTitle>
-            </div>
-            <HeroLede>{lede}</HeroLede>
-            <HeroActions secondary={start && { ...start, variant: "secondary" }} />
-          </>
-        }
-        visual={
+      <Hero visualWidth={500}>
+        <Hero.Copy>
+          {kicker}
+          <div className={narrow ? "max-w-[460px]" : "max-w-[480px]"}>
+            <Hero.Title size="page">{title}</Hero.Title>
+          </div>
+          <Hero.Lede>{lede}</Hero.Lede>
+          <Hero.Actions secondary={start && { ...start, variant: "secondary" }} />
+        </Hero.Copy>
+        <Hero.Visual>
           <div className="relative pt-24 pb-4">
             <HandExamples front={front} examples={examples} lang={lang} />
             <div className="relative">
               <HandOfCards cards={cards} layout="side" onFront={setFront} quiet ordered />
             </div>
           </div>
-        }
-      />
+        </Hero.Visual>
+      </Hero>
     </div>
   );
 }

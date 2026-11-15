@@ -1,6 +1,6 @@
 import { clsx } from "clsx";
-import { type ReactNode, useId } from "react";
-import { Section, SectionHeader } from "./Section";
+import type { ReactNode } from "react";
+import { Section } from "./Section";
 
 interface Props {
   id?: string | undefined;
@@ -17,9 +17,8 @@ interface Props {
 
 /** One claim beside the demo that proves it. */
 export function FeatureSection({ id, title, body, after, children, demoFirst, tinted }: Props) {
-  const titleId = useId();
   return (
-    <Section id={id} surface={tinted ? "plate" : "canvas"} labelledBy={titleId}>
+    <Section id={id} surface={tinted ? "plate" : "canvas"}>
       <div
         className={clsx(
           "grid items-center gap-12 @4xl:gap-20",
@@ -29,7 +28,11 @@ export function FeatureSection({ id, title, body, after, children, demoFirst, ti
         )}
       >
         <div className={clsx(demoFirst && "@4xl:order-2 @4xl:justify-self-end")}>
-          <SectionHeader id={titleId} title={title} body={body} after={after} measure="narrow" />
+          <Section.Header measure="narrow">
+            <Section.Title>{title}</Section.Title>
+            <Section.Body>{body}</Section.Body>
+            {after && <Section.After>{after}</Section.After>}
+          </Section.Header>
         </div>
         <div className={clsx("min-w-0 py-4", demoFirst ? "@4xl:order-1 @4xl:pr-6" : "@4xl:pl-6")}>
           {children}
@@ -52,10 +55,13 @@ interface WideProps {
 
 /** A section with its title and copy above a wide demo. */
 export function Wide({ id, title, body, action, nav, children }: WideProps) {
-  const titleId = useId();
   return (
-    <Section id={id} nav={nav} labelledBy={titleId}>
-      <SectionHeader id={titleId} title={title} body={body} action={action} />
+    <Section id={id} nav={nav}>
+      <Section.Header>
+        <Section.Title>{title}</Section.Title>
+        <Section.Body>{body}</Section.Body>
+        {action && <Section.Action>{action}</Section.Action>}
+      </Section.Header>
       {children}
     </Section>
   );

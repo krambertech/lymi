@@ -2,7 +2,7 @@ import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { buttonClass } from "../Button";
 import { ArrowLink } from "./ArrowLink";
-import { Section, SectionHeader } from "./Section";
+import { Section } from "./Section";
 import { type Step, Steps } from "./Steps";
 
 interface Props {
@@ -20,13 +20,12 @@ interface Props {
 /** One assistant's own setup, in the order it asks for things. */
 export function AssistantConnect({ title, note, steps, guide, name, listing }: Props) {
   return (
-    <Section id="connect" surface="nested" labelledBy="connect-title">
-      <SectionHeader
-        id="connect-title"
-        title={title}
-        body={note}
-        after={
-          listing && (
+    <Section id="connect" surface="nested">
+      <Section.Header>
+        <Section.Title>{title}</Section.Title>
+        <Section.Body>{note}</Section.Body>
+        {listing && (
+          <Section.After>
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
               <a href={listing} className={buttonClass("primary", "lg")}>
                 <Trans>Add Lymi to {name}</Trans>
@@ -35,9 +34,9 @@ export function AssistantConnect({ title, note, steps, guide, name, listing }: P
                 <Trans>Or add it by hand:</Trans>
               </p>
             </div>
-          )
-        }
-      />
+          </Section.After>
+        )}
+      </Section.Header>
       <div className="mt-10">
         <Steps steps={steps} />
       </div>

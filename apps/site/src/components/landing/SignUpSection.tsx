@@ -3,7 +3,7 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { signUpUrl } from "../../lib/origins";
 import { buttonClass } from "../Button";
 import { Lantern } from "../Lantern";
-import { Section } from "./Section";
+import { Section, useSectionTitleId } from "./Section";
 
 interface Props {
   title: ReactNode;
@@ -57,9 +57,7 @@ export function SignUpSection({ title, note }: Props) {
               className="size-full"
             />
           </span>
-          <h2 className="mx-auto max-w-[16ch] text-4xl font-medium tracking-[-0.035em] text-balance text-ink @2xl:text-5xl">
-            {title}
-          </h2>
+          <SignUpTitle>{title}</SignUpTitle>
           <p className="mx-auto mt-5 max-w-[44ch] text-lg text-pretty text-ink-secondary">
             <Trans>Lymi is free to use, and your first card takes a minute.</Trans>
           </p>
@@ -74,5 +72,17 @@ export function SignUpSection({ title, note }: Props) {
         </div>
       </div>
     </Section>
+  );
+}
+
+/** The invitation, larger and tighter than a section's heading, under the lamp. */
+function SignUpTitle({ children }: { children: ReactNode }) {
+  return (
+    <h2
+      id={useSectionTitleId()}
+      className="mx-auto max-w-[16ch] text-4xl font-medium tracking-[-0.035em] text-balance text-ink @2xl:text-5xl"
+    >
+      {children}
+    </h2>
   );
 }

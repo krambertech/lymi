@@ -7,7 +7,7 @@ import { type ReactNode, useEffect, useRef, useState } from "react";
 import { AssistantMark } from "./AssistantMarks";
 import { LearnerBubble, ToolCall, UsingLymi } from "./ChatParts";
 import { FreeBadge } from "./FreeBadge";
-import { HeroActions, HeroBadges, HeroFrame, HeroLede, heroTitleClass } from "./HeroParts";
+import { Hero } from "./Hero";
 import { appear, EASE, usePlayback } from "./playback";
 
 const WORD_MS = 2200;
@@ -41,10 +41,9 @@ function Headline() {
   }, [still, inView]);
 
   return (
-    <h1
+    <Hero.Title
       ref={ref}
       aria-label={t`Make cards with Claude, ChatGPT, Gemini, Grok, Codex or anything`}
-      className={heroTitleClass()}
     >
       <span aria-hidden="true" className="block leading-[1.05]">
         <Trans>Make cards with</Trans>
@@ -66,7 +65,7 @@ function Headline() {
           </motion.span>
         </AnimatePresence>
       </span>
-    </h1>
+    </Hero.Title>
   );
 }
 
@@ -166,23 +165,23 @@ function Conversation() {
 
 export function AssistantHero() {
   return (
-    <HeroFrame
-      copy={
-        <>
-          <HeroBadges>
-            <FreeBadge />
-          </HeroBadges>
-          <Headline />
-          <HeroLede>
-            <Trans>
-              Send your assistant a photo of your notes. It adds the cards to Lymi, and you review
-              them there.
-            </Trans>
-          </HeroLede>
-          <HeroActions secondary={{ href: "#connect", label: <Trans>How to connect</Trans> }} />
-        </>
-      }
-      visual={<Conversation />}
-    />
+    <Hero>
+      <Hero.Copy>
+        <Hero.Badges>
+          <FreeBadge />
+        </Hero.Badges>
+        <Headline />
+        <Hero.Lede>
+          <Trans>
+            Send your assistant a photo of your notes. It adds the cards to Lymi, and you review
+            them there.
+          </Trans>
+        </Hero.Lede>
+        <Hero.Actions secondary={{ href: "#connect", label: <Trans>How to connect</Trans> }} />
+      </Hero.Copy>
+      <Hero.Visual>
+        <Conversation />
+      </Hero.Visual>
+    </Hero>
   );
 }

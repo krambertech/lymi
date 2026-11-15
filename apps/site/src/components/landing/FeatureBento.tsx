@@ -20,7 +20,7 @@ import {
   type TileDemoProps,
 } from "./BentoTiles";
 import { ClassScene } from "./ClassScene";
-import { Section, SectionHeader } from "./Section";
+import { Section } from "./Section";
 
 /**
  * When a tile's demo plays. "view": once, the first time most of it is on screen. "hover": while it
@@ -147,10 +147,14 @@ function CompactTile({ hue, title, body, Demo }: CompactProps) {
 function Frame({ children }: { children: ReactNode }) {
   return (
     <Section nav="landing">
-      <SectionHeader
-        title={<Trans>Small things, done well.</Trans>}
-        body={<Trans>Details you notice after a week of reviews.</Trans>}
-      />
+      <Section.Header>
+        <Section.Title>
+          <Trans>Small things, done well.</Trans>
+        </Section.Title>
+        <Section.Body>
+          <Trans>Details you notice after a week of reviews.</Trans>
+        </Section.Body>
+      </Section.Header>
       {children}
     </Section>
   );

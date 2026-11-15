@@ -7,7 +7,7 @@ import type { Locale } from "../../lib/routes";
 import { trayHues } from "../../lib/tray";
 import { DeckTile } from "../explore/DeckTile";
 import { ArrowLink } from "./ArrowLink";
-import { COLUMN, GUTTER, Section, SectionHeader } from "./Section";
+import { COLUMN, GUTTER, Section } from "./Section";
 
 interface Props {
   decks: PublicDeckSummary[];
@@ -24,18 +24,19 @@ export function LanguageDecks({ decks, locale, shelf, body, all }: Props) {
   const hues = trayHues(decks);
 
   return (
-    <Section labelledBy="decks-title" bleed>
+    <Section bleed>
       <div className={clsx(COLUMN, GUTTER)}>
-        <SectionHeader
-          id="decks-title"
-          title={<Trans>Explore ready-made decks.</Trans>}
-          body={body}
-          action={
+        <Section.Header>
+          <Section.Title>
+            <Trans>Explore ready-made decks.</Trans>
+          </Section.Title>
+          <Section.Body>{body}</Section.Body>
+          <Section.Action>
             <ArrowLink href={shelfPath({ kind: "languages", name: shelf }, locale)} size="md">
               {all}
             </ArrowLink>
-          }
-        />
+          </Section.Action>
+        </Section.Header>
       </div>
 
       <ul className="mx-auto mt-12 flex max-w-[1040px] snap-x snap-mandatory gap-5 overflow-x-auto scroll-px-5 px-5 pb-4 @2xl:scroll-px-10 @2xl:px-10">

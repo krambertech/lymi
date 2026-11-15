@@ -4,11 +4,11 @@ import { Trans } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore, WorksWith } from "./AssistantMarks";
+import { CardsHero } from "./CardsHero";
 import type { SampleCard } from "./cards";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { FreeBadge } from "./FreeBadge";
 import { TUTOR_LESSONS_QUESTIONS } from "./faq";
-import { Hero } from "./Hero";
 import { HintField } from "./JapaneseAi";
 import { LandingLayout } from "./LandingLayout";
 import { BENTO_HUES, Examples, LanguageBento, Meanings, Tile } from "./LanguageBento";
@@ -241,7 +241,7 @@ export function TutorLessonsView() {
     <LandingLayout
       page="tutorLessons"
       hero={
-        <Hero
+        <CardsHero
           badge={<FreeBadge />}
           title={<Trans>Keep every word from your tutor lessons.</Trans>}
           lede={

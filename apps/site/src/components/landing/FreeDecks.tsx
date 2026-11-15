@@ -6,7 +6,7 @@ import type { Locale } from "../../lib/routes";
 import { trayHues } from "../../lib/tray";
 import { DeckTile } from "../explore/DeckTile";
 import { ArrowLink } from "./ArrowLink";
-import { Section, SectionHeader } from "./Section";
+import { Section } from "./Section";
 
 /** As many placeholders as the row shows before scrolling, so nothing moves when the decks arrive. */
 const PLACEHOLDERS = 5;
@@ -36,20 +36,22 @@ export function FreeDecks() {
 
   return (
     <Section nav="landing">
-      <SectionHeader
-        title={<Trans>Start with a free deck.</Trans>}
-        body={
+      <Section.Header>
+        <Section.Title>
+          <Trans>Start with a free deck.</Trans>
+        </Section.Title>
+        <Section.Body>
           <Trans>
             Ready-made decks, from first words in a new language to citizenship tests and the
             periodic table. Add one in a tap.
           </Trans>
-        }
-        action={
+        </Section.Body>
+        <Section.Action>
           <ArrowLink href={explorePath(locale)} size="md">
             <Trans>All free decks</Trans>
           </ArrowLink>
-        }
-      />
+        </Section.Action>
+      </Section.Header>
 
       {decks?.length !== 0 && (
         <ul

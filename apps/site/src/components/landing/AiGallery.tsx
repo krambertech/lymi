@@ -7,7 +7,7 @@ import { type ReactNode, useRef, useState } from "react";
 import { trayStyle } from "../../lib/tray";
 import { type DemoProps, LeadDemo, LessonDemo, VoiceDemo, WordDemo } from "./AiDemos";
 import { EASE, useHold, useStill } from "./playback";
-import { Section, SectionHeader } from "./Section";
+import { Section } from "./Section";
 
 interface StageItem {
   id: string;
@@ -61,20 +61,23 @@ const SWAP_MS = 400;
 function Shell({ children }: { children: ReactNode }) {
   return (
     <Section nav="landing">
-      <SectionHeader
-        title={<Trans>AI does the busywork. You do the remembering.</Trans>}
-        body={
+      <Section.Header>
+        <Section.Title>
+          <Trans>AI does the busywork. You do the remembering.</Trans>
+        </Section.Title>
+        <Section.Body>
           <Trans>
             AI turns your notes into cards and fills in what you leave out, the way you set it up.
             It never changes what you wrote, and everything it adds is marked.
           </Trans>
-        }
-      />
+        </Section.Body>
+      </Section.Header>
       {children}
     </Section>
   );
 }
 
+/** One item at a time: it moves on by itself until the visitor picks one. */
 function useStage() {
   const still = useStill();
   const root = useRef<HTMLDivElement>(null);

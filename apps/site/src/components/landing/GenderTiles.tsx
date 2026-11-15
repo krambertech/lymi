@@ -3,7 +3,7 @@ import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import type { Locale } from "../../lib/routes";
 import type { EditionWord } from "./language-decks";
-import { SpokenWords } from "./SpokenWords";
+import { SpokenWords, useClipPlayer } from "./SpokenWords";
 
 /** One gender's nouns, under the article that marks it. */
 export interface GenderGroup {
@@ -25,6 +25,8 @@ interface Props {
 /** Nouns sorted by their article, each with its meaning in this edition and its clip a tap away. */
 export function GenderTiles({ groups, locale, lang, folder }: Props) {
   const { i18n } = useLingui();
+  // One player for every group, so a second tap stops the first clip.
+  const player = useClipPlayer(folder);
   return (
     <div
       className={clsx(
@@ -45,7 +47,7 @@ export function GenderTiles({ groups, locale, lang, folder }: Props) {
             <span className="text-sm text-ink-muted">{i18n._(group.name)}</span>
           </p>
           <div className="mt-4">
-            <SpokenWords words={group.words} locale={locale} lang={lang} folder={folder} />
+            <SpokenWords words={group.words} locale={locale} lang={lang} player={player} />
           </div>
         </section>
       ))}

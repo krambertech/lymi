@@ -8,7 +8,7 @@ import { Breadcrumb } from "../Breadcrumb";
 import { ExamPageLink } from "../exams/ExamPageLink";
 import { Localized } from "../Localized";
 import { Questions } from "../landing/Questions";
-import { Section, SectionTitle } from "../landing/Section";
+import { Section } from "../landing/Section";
 import { DeckTile } from "./DeckTile";
 import { shelfLabel } from "./explore-labels";
 import type { ShelfCopy } from "./shelf-copy";
@@ -100,10 +100,8 @@ export function ShelfAbout({
 }: LocaleProps & { copy: ShelfCopy; heading: string }) {
   return (
     <Localized locale={locale}>
-      <Section labelledBy="about-title">
-        <SectionTitle id="about-title" size="sm">
-          {heading}
-        </SectionTitle>
+      <Section>
+        <Section.Title size="sm">{heading}</Section.Title>
         <div className="mt-5 grid max-w-[62ch] gap-3 text-md text-pretty text-ink-secondary">
           {copy.about.map((paragraph) => (
             <p key={paragraph}>{paragraph}</p>

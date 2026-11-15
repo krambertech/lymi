@@ -19,7 +19,7 @@ import { addUrl } from "../deck/DeckView";
 import { Localized } from "../Localized";
 import type { Question } from "../landing/faq";
 import { Questions } from "../landing/Questions";
-import { Section, SectionTitle } from "../landing/Section";
+import { Section } from "../landing/Section";
 import { DeckShowcase } from "./DeckShowcase";
 
 export const EINBUERGERUNGSTEST_TITLE = msg`Einbürgerungstest and Leben in Deutschland: questions and answers in English · Lymi`;
@@ -230,10 +230,10 @@ export function ExamFacts({ locale, exam }: ExamProps) {
 function ExamFactsContent({ exam, children }: { exam: Exam; children?: ReactNode }) {
   const { i18n } = useLingui();
   return (
-    <Section labelledBy="format-title">
-      <SectionTitle id="format-title" size="sm">
+    <Section>
+      <Section.Title size="sm">
         <Trans>What the test looks like</Trans>
-      </SectionTitle>
+      </Section.Title>
       <dl className="mt-8 grid gap-x-8 gap-y-6 @xl:grid-cols-2 @4xl:grid-cols-4">
         {exam.facts?.map((fact) => (
           <div
@@ -281,10 +281,10 @@ function EinbuergerungstestFormatNotes() {
 export function ExamDecks({ locale, decks }: LocaleProps & { decks: PublicDeckSummary[] }) {
   return (
     <Localized locale={locale}>
-      <Section id="decks" labelledBy="decks-title" spacing="ruled">
-        <SectionTitle id="decks-title">
+      <Section id="decks" spacing="ruled">
+        <Section.Title>
           <Plural value={decks.length} one="Your deck" other="Your decks" />
-        </SectionTitle>
+        </Section.Title>
         <div className="mt-10 grid gap-5">
           {decks.map((deck) => (
             <DeckShowcase key={deck.slug} deck={deck} locale={locale} />
@@ -358,10 +358,10 @@ function ExamPlanContent({ several }: { several: boolean }) {
     },
   ];
   return (
-    <Section labelledBy="plan-title">
-      <SectionTitle id="plan-title" size="sm">
+    <Section>
+      <Section.Title size="sm">
         <Trans>From now until your test date</Trans>
-      </SectionTitle>
+      </Section.Title>
       <ol className="mt-8 grid gap-x-10 gap-y-7 @2xl:grid-cols-3">
         {steps.map((step, index) => (
           <li key={step.id} className="border-t border-edge pt-5">

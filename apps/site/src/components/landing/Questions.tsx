@@ -1,8 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
-import { type ReactNode, useId } from "react";
+import type { ReactNode } from "react";
 import { ArrowLink } from "./ArrowLink";
 import type { Question } from "./faq";
-import { Section, SectionHeader } from "./Section";
+import { Section } from "./Section";
 
 interface Props {
   title: ReactNode;
@@ -12,11 +12,12 @@ interface Props {
 /** Plain answers, all open, so nobody has to click to find out what something costs. */
 export function Questions({ title, items }: Props) {
   const { i18n } = useLingui();
-  const titleId = useId();
   return (
-    <Section labelledBy={titleId}>
+    <Section>
       <div className="grid gap-10 @4xl:grid-cols-[minmax(0,0.82fr)_minmax(0,1.18fr)] @4xl:gap-20">
-        <SectionHeader id={titleId} title={title} measure="narrow" />
+        <Section.Header measure="narrow">
+          <Section.Title>{title}</Section.Title>
+        </Section.Header>
         <dl className="border-t border-edge">
           {items.map((item) => (
             <div key={item.id} className="border-b border-edge py-6">

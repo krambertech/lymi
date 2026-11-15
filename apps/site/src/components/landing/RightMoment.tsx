@@ -1,5 +1,5 @@
 import type { ReactNode } from "react";
-import { Section, SectionHeader } from "./Section";
+import { Section } from "./Section";
 import { WhyItWorks } from "./WhyItWorks";
 
 interface Props {
@@ -11,7 +11,10 @@ interface Props {
 export function RightMoment({ title, body }: Props) {
   return (
     <Section>
-      <SectionHeader title={title} body={body} align="center" />
+      <Section.Header align="center">
+        <Section.Title>{title}</Section.Title>
+        <Section.Body>{body}</Section.Body>
+      </Section.Header>
       <div className="mt-14">
         <WhyItWorks />
       </div>

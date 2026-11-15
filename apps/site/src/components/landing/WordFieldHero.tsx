@@ -10,7 +10,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { HeroActions, HeroLede, HeroTitle } from "./HeroParts";
+import { Hero } from "./Hero";
 import type { FieldLanguage, WordFrame } from "./hero-words";
 
 /** Long enough to read the language's name and glance at a word or two. */
@@ -277,16 +277,16 @@ export function WordFieldHero({ frames, label, lede }: Props) {
       </div>
 
       <div className="relative max-w-[780px] text-center">
-        <HeroTitle>
+        <Hero.Title>
           <span className="sr-only">{label}</span>
           <span aria-hidden="true">
             <FrameKey.Provider value={{ language: frame.language, animate: index > 0 }}>
               <Headline language={frame.language} />
             </FrameKey.Provider>
           </span>
-        </HeroTitle>
-        <HeroLede centered>{lede}</HeroLede>
-        <HeroActions centered />
+        </Hero.Title>
+        <Hero.Lede>{lede}</Hero.Lede>
+        <Hero.Actions />
       </div>
     </div>
   );

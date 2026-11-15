@@ -6,7 +6,7 @@ import { motion, useInView, useReducedMotion } from "motion/react";
 import { type ReactNode, useRef } from "react";
 import { Pick } from "./Pick";
 import { EASE, usePlayback } from "./playback";
-import { GUTTER, Section, SectionHeader } from "./Section";
+import { GUTTER, Section } from "./Section";
 
 /** Each source lights its word, then its card slides out from under it, one after another. */
 const STEP_MS = 650;
@@ -131,18 +131,19 @@ export function SendAnything() {
   const { at } = usePlayback(BEATS, inView, still);
 
   return (
-    <Section labelledBy="send-title" bleed>
+    <Section bleed>
       <div className={clsx("mx-auto max-w-[1120px]", GUTTER)}>
-        <SectionHeader
-          id="send-title"
-          title={<Trans>Send it what you have.</Trans>}
-          body={
+        <Section.Header>
+          <Section.Title>
+            <Trans>Send it what you have.</Trans>
+          </Section.Title>
+          <Section.Body>
             <Trans>
               A photo of the board, your tutor’s message, a lesson transcript, the book on your
               nightstand. Your assistant picks out the new words and adds them to Lymi.
             </Trans>
-          }
-        />
+          </Section.Body>
+        </Section.Header>
       </div>
 
       {/* A row on wide screens; on a phone it scrolls sideways with the next source peeking in. */}

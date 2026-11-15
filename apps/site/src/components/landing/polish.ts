@@ -272,7 +272,6 @@ export const POLISH_EXAMPLES: Record<string, Example[]> = {
   ],
 };
 
-/** A word and the three forms a learner keeps with it, as the decks' notes list them. */
 /** Each form's name, with the questions Polish courses teach a noun's cases by. */
 export const POLISH_FORM_SLOTS = {
   noun: [

@@ -9,6 +9,7 @@ import { ArrowLink } from "../landing/ArrowLink";
 import { Added, AssistantChat, Attachment } from "../landing/AssistantChat";
 import { AssistantMarksWithMore, WorksWith } from "../landing/AssistantMarks";
 import { Assurances } from "../landing/Assurances";
+import { CardsHero } from "../landing/CardsHero";
 import { AssistantAvatar, LearnerBubble, ToolCall, UsingLymi } from "../landing/ChatParts";
 import { SAMPLE_CARDS, type SampleCard, USE_CASE_CARDS } from "../landing/cards";
 import { ESTONIAN_FORM_SLOTS, FORM_WORDS } from "../landing/estonian";
@@ -17,15 +18,14 @@ import { FreeBadge } from "../landing/FreeBadge";
 import { MEDICINE_QUESTIONS } from "../landing/faq";
 import { GERMAN_EXAMPLES, GERMAN_VERBS, germanHand } from "../landing/german";
 import { Hero } from "../landing/Hero";
-import { HeroActions, HeroBadges, HeroFrame, HeroLede, HeroTitle } from "../landing/HeroParts";
 import { BENTO_HUES, CheckList, LanguageBento, Tile } from "../landing/LanguageBento";
 import { LanguageHero, LanguageName } from "../landing/LanguageSections";
 import { Pick } from "../landing/Pick";
 import { Questions } from "../landing/Questions";
 import { ReturnLane } from "../landing/ReturnLane";
-import { Section, SectionHeader, SectionTitle } from "../landing/Section";
+import { Section } from "../landing/Section";
 import { SignUpSection } from "../landing/SignUpSection";
-import { SpokenWords } from "../landing/SpokenWords";
+import { SpokenWords, useClipPlayer } from "../landing/SpokenWords";
 import { Steps } from "../landing/Steps";
 import { UseCases } from "../landing/UseCases";
 import { WordForms } from "../landing/WordForms";
@@ -57,6 +57,11 @@ function PickerSpecimen() {
   return <WordPicker words={words} lang="et" at={at} onPick={setAt} />;
 }
 
+function SpokenWordsSpecimen() {
+  const player = useClipPlayer("german");
+  return <SpokenWords words={GERMAN_VERBS.slice(0, 4)} locale="en" lang="de" player={player} />;
+}
+
 function PickSpecimen() {
   const [on, setOn] = useState(true);
   return (
@@ -83,7 +88,7 @@ const GROUPS: Group[] = [
         name: "A new landing page",
         file: "landing/LandingLayout.tsx",
         use: "The nav over the hero, the sections in <main>, and the footer. Register the page in lib/routes.ts and add its uk and ru routes.",
-        usage: `<LandingLayout page="medicine" hero={<Hero … />}>
+        usage: `<LandingLayout page="medicine" hero={<CardsHero … />}>
   <UseCases title={…} items={…} />
   <FeatureSection title={…} body={…}>{demo}</FeatureSection>
   <Wide title={…} body={…}>{wide demo}</Wide>
@@ -95,7 +100,7 @@ const GROUPS: Group[] = [
         specimen: () => (
           <ol className="grid w-full max-w-[560px] gap-2 text-md">
             {[
-              ["Hero", "Headline, one action, the thing it shows"],
+              ["CardsHero or Hero", "Headline, one action, the thing it shows"],
               ["UseCases", "What people keep in Lymi, as trays"],
               ["FeatureSection / Wide", "One claim each, with the demo that proves it"],
               ["DetailsSection + LanguageBento", "The small things, as tiles"],
@@ -119,14 +124,56 @@ const GROUPS: Group[] = [
     id: "heroes",
     name: "Heroes",
     intro:
-      "The top of a page. Hero and LanguageHero are complete; HeroFrame and its parts build a hero that shows something of its own.",
+      "The top of a page. Hero is the set of parts every hero is made of; CardsHero and LanguageHero are the two ready-made ones.",
     entries: [
       {
         id: "hero",
         name: "Hero",
         file: "landing/Hero.tsx",
-        use: "A page that sells Lymi or one way to use it. A hand of cards by default; `visual` or `behind` for a scene of its own.",
-        usage: `<Hero
+        use: "A hero that shows something of its own. Put the parts inside `Hero.Copy` in this order and leave out the ones you don't need. `Hero.Title` is `display` for a page about Lymi and `page` for one about a single thing; `measure` breaks a headline early. `Hero.Actions` always leads with Get started, and a ghost second link gets an arrow.",
+        usage: `<Hero visualWidth={480}>
+  <Hero.Copy>
+    <Hero.Badges><FreeBadge /></Hero.Badges>
+    <Hero.Title size="page">{headline}</Hero.Title>
+    <Hero.Lede>{lede}</Hero.Lede>
+    <Hero.Actions secondary={{ href: "#connect", label: <Trans>How to connect</Trans> }} />
+  </Hero.Copy>
+  <Hero.Visual>
+    <YourScene />
+  </Hero.Visual>
+</Hero>`,
+        frame: "section",
+        specimen: () => (
+          <Hero>
+            <Hero.Copy>
+              <Hero.Badges>
+                <FreeBadge />
+              </Hero.Badges>
+              <Hero.Title size="page">One deck for your whole class.</Hero.Title>
+              <Hero.Lede>
+                Snap your lesson notes into cards, build the course in sections and share one link.
+              </Hero.Lede>
+              <Hero.Actions
+                secondary={{ href: "#hero", label: "Add a deck", variant: "secondary" }}
+              />
+            </Hero.Copy>
+            <Hero.Visual>
+              <div
+                style={trayStyle(BENTO_HUES[1])}
+                className="use-case-tile grid aspect-[4/3] place-items-center rounded-[20px] text-sm text-ink-secondary"
+              >
+                Your visual
+              </div>
+            </Hero.Visual>
+          </Hero>
+        ),
+      },
+      {
+        id: "cards-hero",
+        name: "CardsHero",
+        file: "landing/CardsHero.tsx",
+        use: "A page that sells Lymi or one way to use it: the copy beside a hand of cards to turn over. `behind` draws what the cards came from; `visual` swaps in a scene of its own.",
+        usage: `<CardsHero
   badge={<FreeBadge />}
   title={<Trans>Flashcards for medical school.</Trans>}
   lede={<Trans>…</Trans>}
@@ -136,11 +183,11 @@ const GROUPS: Group[] = [
 />`,
         frame: "section",
         specimen: () => (
-          <Hero
+          <CardsHero
             badge={<FreeBadge />}
             title="Flashcards for the AI era."
             lede="Make cards from your notes, lessons and photos with AI. Remember what you learn with reviews that adapt to you."
-            secondary={{ href: "#hero", label: "Browse free decks" }}
+            secondary={{ href: "#cards-hero", label: "Browse free decks" }}
             after={<WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />}
           />
         ),
@@ -169,51 +216,6 @@ const GROUPS: Group[] = [
             cards={germanHand("en")}
             examples={GERMAN_EXAMPLES}
             lang="de"
-          />
-        ),
-      },
-      {
-        id: "hero-parts",
-        name: "HeroFrame, HeroTitle, HeroLede, HeroBadges, HeroActions",
-        file: "landing/HeroParts.tsx",
-        use: "A hero with a visual of its own. HeroTitle is `display` for a page about Lymi, `page` for one about a single thing. HeroActions always leads with Get started; a ghost second link gets an arrow.",
-        usage: `<HeroFrame
-  copy={
-    <>
-      <HeroBadges><FreeBadge /></HeroBadges>
-      <HeroTitle size="page">{headline}</HeroTitle>
-      <HeroLede>{lede}</HeroLede>
-      <HeroActions secondary={{ href: "#connect", label: <Trans>How to connect</Trans> }} />
-    </>
-  }
-  visual={<YourScene />}
-/>`,
-        frame: "section",
-        specimen: () => (
-          <HeroFrame
-            copy={
-              <>
-                <HeroBadges>
-                  <FreeBadge />
-                </HeroBadges>
-                <HeroTitle size="page">One deck for your whole class.</HeroTitle>
-                <HeroLede>
-                  Snap your lesson notes into cards, build the course in sections and share one
-                  link.
-                </HeroLede>
-                <HeroActions
-                  secondary={{ href: "#hero-parts", label: "Add a deck", variant: "secondary" }}
-                />
-              </>
-            }
-            visual={
-              <div
-                style={trayStyle(BENTO_HUES[1])}
-                className="use-case-tile grid aspect-[4/3] place-items-center rounded-[20px] text-sm text-ink-secondary"
-              >
-                Your visual
-              </div>
-            }
           />
         ),
       },
@@ -269,41 +271,44 @@ const GROUPS: Group[] = [
       },
       {
         id: "section",
-        name: "Section, SectionHeader, SectionTitle",
+        name: "Section",
         file: "landing/Section.tsx",
-        use: "A section that FeatureSection and Wide don't fit. `surface` is canvas, plate or nested; `spacing` is default, end or ruled. SectionTitle `sm` is for reference pages such as an exam.",
-        usage: `<Section id="connect" surface="nested" labelledBy="connect-title">
-  <SectionHeader
-    id="connect-title"
-    title={<Trans>Connect in three steps.</Trans>}
-    body={<Trans>…</Trans>}
-    action={<ArrowLink href="…">…</ArrowLink>}
-  />
+        use: "A section that FeatureSection and Wide don't fit. Every section has a `Section.Title`, which names it for screen readers. `surface` is canvas, plate or nested; `spacing` is default, end or ruled. `Section.Action` sits at the end of the heading's row on wide screens; `Section.Title` `sm` is for reference pages such as an exam.",
+        usage: `<Section id="connect" surface="nested">
+  <Section.Header>
+    <Section.Title><Trans>Connect in three steps.</Trans></Section.Title>
+    <Section.Body><Trans>…</Trans></Section.Body>
+    <Section.Action><ArrowLink href="…">…</ArrowLink></Section.Action>
+  </Section.Header>
   {content}
 </Section>`,
         frame: "section",
         specimen: () => (
           <>
             <Section surface="plate">
-              <SectionHeader
-                title="On plate, with an action"
-                body="The heading and its line on the start side; the link on to the rest at the end of the row."
-                action={
+              <Section.Header>
+                <Section.Title>On plate, with an action</Section.Title>
+                <Section.Body>
+                  The heading and its line on the start side; the link on to the rest at the end of
+                  the row.
+                </Section.Body>
+                <Section.Action>
                   <ArrowLink href="#section" size="md">
                     All free decks
                   </ArrowLink>
-                }
-              />
+                </Section.Action>
+              </Section.Header>
             </Section>
             <Section surface="nested">
-              <SectionHeader
-                align="center"
-                title="Centred, on nested"
-                body="For a section that stands on its own between two demos."
-              />
+              <Section.Header align="center">
+                <Section.Title>Centred, on nested</Section.Title>
+                <Section.Body>For a section that stands on its own between two demos.</Section.Body>
+              </Section.Header>
             </Section>
             <Section spacing="ruled">
-              <SectionTitle size="sm">Ruled, with the small title</SectionTitle>
+              <Section.Header>
+                <Section.Title size="sm">Ruled, with the small title</Section.Title>
+              </Section.Header>
             </Section>
           </>
         ),
@@ -398,7 +403,7 @@ const GROUPS: Group[] = [
         ),
       },
       {
-        id: "sign-up",
+        id: "sign-up-section",
         name: "SignUpSection",
         file: "landing/SignUpSection.tsx",
         use: "The page's last section and only conversion. The lantern lights the first time it is on screen; it is the one glow a page gets.",
@@ -619,12 +624,13 @@ const GROUPS: Group[] = [
         id: "spoken-words",
         name: "SpokenWords",
         file: "landing/SpokenWords.tsx",
-        use: "Words as a deck lists them, each with its meaning in this edition and its clip a tap away.",
-        usage: `<SpokenWords words={GERMAN_VERBS} locale={locale} lang="de" folder="german" />`,
+        use: "Words as a deck lists them, each with its meaning in this edition and its clip a tap away. Lists on one stage share one `useClipPlayer`, so a second tap stops the first clip.",
+        usage: `const player = useClipPlayer("german");
+<SpokenWords words={GERMAN_VERBS} locale={locale} lang="de" player={player} />`,
         frame: "piece",
         specimen: () => (
           <div className="w-full max-w-[420px] rounded-xl bg-plate p-5 edge">
-            <SpokenWords words={GERMAN_VERBS.slice(0, 4)} locale="en" lang="de" folder="german" />
+            <SpokenWordsSpecimen />
           </div>
         ),
       },
@@ -801,9 +807,12 @@ export function ComponentGallery() {
             className="scroll-mt-20 border-t border-edge pt-16"
           >
             <div className="mx-auto max-w-[1280px] px-5 @2xl:px-10">
-              <SectionTitle id={`${group.id}-title`} size="sm">
+              <h2
+                id={`${group.id}-title`}
+                className="text-3xl font-medium tracking-[-0.03em] text-ink @2xl:text-4xl"
+              >
                 {group.name}
-              </SectionTitle>
+              </h2>
               <p className="mt-4 max-w-[64ch] text-md text-pretty text-ink-secondary">
                 {group.intro}
               </p>

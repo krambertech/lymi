@@ -5,11 +5,11 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { Added, AssistantChat, Attachment } from "./AssistantChat";
 import { AssistantMarksWithMore, WorksWith } from "./AssistantMarks";
+import { CardsHero } from "./CardsHero";
 import type { SampleCard } from "./cards";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { FreeBadge } from "./FreeBadge";
 import { NOTES_TO_FLASHCARDS_QUESTIONS } from "./faq";
-import { Hero } from "./Hero";
 import { HeroLiftOff, type HeroWord } from "./HeroScenes";
 import { LandingLayout } from "./LandingLayout";
 import { BENTO_HUES, LanguageBento, Tile } from "./LanguageBento";
@@ -257,7 +257,7 @@ export function NotesToFlashcardsView() {
     <LandingLayout
       page="notesToFlashcards"
       hero={
-        <Hero
+        <CardsHero
           badge={<FreeBadge />}
           title={<Trans>Turn your notes into flashcards.</Trans>}
           lede={

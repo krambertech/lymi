@@ -3,11 +3,11 @@ import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ArrowRight, RotateCcw, Star } from "lucide-react";
 import { Added, AssistantChat } from "./AssistantChat";
 import { WorksWith } from "./AssistantMarks";
+import { CardsHero } from "./CardsHero";
 import type { SampleCard } from "./cards";
 import { FeatureSection } from "./FeatureSection";
 import { FreeBadge } from "./FreeBadge";
 import { MEDICINE_QUESTIONS } from "./faq";
-import { Hero } from "./Hero";
 import type { HandCard } from "./hand-cards";
 import { ImportDemo } from "./ImportDemo";
 import { LandingLayout } from "./LandingLayout";
@@ -114,7 +114,7 @@ export function MedicineView() {
     <LandingLayout
       page="medicine"
       hero={
-        <Hero
+        <CardsHero
           badge={<FreeBadge />}
           title={<Trans>Flashcards for medical school.</Trans>}
           lede={

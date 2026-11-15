@@ -3,7 +3,7 @@ import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 import type { SampleCard } from "./cards";
-import { Section, SectionHeader } from "./Section";
+import { Section } from "./Section";
 
 export interface UseCase {
   id: string;
@@ -102,8 +102,10 @@ function CardStack({ card, shape }: { card: SampleCard; shape: Shape }) {
 /** What people keep in Lymi as a bento of trays, each with a real card and, where one exists, a page of its own. */
 export function UseCases({ title, items }: Props) {
   return (
-    <Section labelledBy="use-cases-title">
-      <SectionHeader id="use-cases-title" title={title} />
+    <Section>
+      <Section.Header measure="full">
+        <Section.Title>{title}</Section.Title>
+      </Section.Header>
 
       <ul className="mt-12 grid gap-3 @xl:grid-cols-2 @2xl:gap-4 @4xl:grid-cols-3">
         {items.map((item, index) => {

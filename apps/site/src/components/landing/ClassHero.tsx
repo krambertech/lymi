@@ -6,7 +6,7 @@ import { motion, useInView, useReducedMotion } from "motion/react";
 import { useRef } from "react";
 import { WorksWith } from "./AssistantMarks";
 import { FreeBadge } from "./FreeBadge";
-import { HeroActions, HeroBadges, HeroFrame, HeroLede, HeroTitle } from "./HeroParts";
+import { Hero } from "./Hero";
 import { appear, EASE, usePlayback } from "./playback";
 
 /** The class in every teachers page demo: six faces shown, twelve learners in all. */
@@ -116,28 +116,28 @@ function ClassDeck() {
 
 export function ClassHero() {
   return (
-    <HeroFrame
-      copy={
-        <>
-          <HeroBadges>
-            <FreeBadge />
-          </HeroBadges>
-          <HeroTitle>
-            <Trans>One deck for your whole class.</Trans>
-          </HeroTitle>
-          <HeroLede>
-            <Trans>
-              Snap your lesson notes into cards, build the course in sections and share one link.
-              Each learner reviews on their own schedule.
-            </Trans>
-          </HeroLede>
-          <HeroActions
-            secondary={{ href: "#course", label: <Trans>How sections work</Trans> }}
-            after={<WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />}
-          />
-        </>
-      }
-      visual={<ClassDeck />}
-    />
+    <Hero>
+      <Hero.Copy>
+        <Hero.Badges>
+          <FreeBadge />
+        </Hero.Badges>
+        <Hero.Title>
+          <Trans>One deck for your whole class.</Trans>
+        </Hero.Title>
+        <Hero.Lede>
+          <Trans>
+            Snap your lesson notes into cards, build the course in sections and share one link. Each
+            learner reviews on their own schedule.
+          </Trans>
+        </Hero.Lede>
+        <Hero.Actions
+          secondary={{ href: "#course", label: <Trans>How sections work</Trans> }}
+          after={<WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />}
+        />
+      </Hero.Copy>
+      <Hero.Visual>
+        <ClassDeck />
+      </Hero.Visual>
+    </Hero>
   );
 }

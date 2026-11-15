@@ -6,7 +6,7 @@ import { localizedPath } from "../../lib/routes";
 import { trayStyle } from "../../lib/tray";
 import { AssistantMark, type AssistantName } from "./AssistantMarks";
 import { ASSISTANT_KEYS, ASSISTANT_PAGES, type AssistantKey } from "./assistant-pages";
-import { Section } from "./Section";
+import { Section, useSectionTitleId } from "./Section";
 
 interface Props {
   title: ReactNode;
@@ -48,6 +48,15 @@ function Tile({
   );
 }
 
+/** A quieter heading than a pitch's, for a row of links at the foot of the page. */
+function OtherAssistantsTitle({ children }: { children: ReactNode }) {
+  return (
+    <h2 id={useSectionTitleId()} className="text-2xl font-medium tracking-[-0.025em] text-ink">
+      {children}
+    </h2>
+  );
+}
+
 /** Each assistant's own page on its tray, then any other app that speaks MCP. */
 export function OtherAssistants({ title, current }: Props) {
   const { i18n } = useLingui();
@@ -55,7 +64,7 @@ export function OtherAssistants({ title, current }: Props) {
 
   return (
     <Section nav="assistant_pages">
-      <h2 className="text-2xl font-medium tracking-[-0.025em] text-ink">{title}</h2>
+      <OtherAssistantsTitle>{title}</OtherAssistantsTitle>
       <ul
         className={clsx(
           "mt-6 grid gap-3 @2xl:grid-cols-2",

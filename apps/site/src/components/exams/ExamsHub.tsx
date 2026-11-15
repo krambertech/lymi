@@ -10,10 +10,10 @@ import { buttonClass } from "../Button";
 import { Assurances } from "../landing/Assurances";
 import { FeatureSection } from "../landing/FeatureSection";
 import { EXAMS_QUESTIONS } from "../landing/faq";
-import { HeroLede, HeroTitle } from "../landing/HeroParts";
+import { Hero } from "../landing/Hero";
 import { Questions } from "../landing/Questions";
 import { RightMoment } from "../landing/RightMoment";
-import { Section, SectionHeader, SectionTitle } from "../landing/Section";
+import { Section } from "../landing/Section";
 import { SignUpSection } from "../landing/SignUpSection";
 import { SiteFooter } from "../landing/SiteFooter";
 import { SiteNav } from "../landing/SiteNav";
@@ -41,7 +41,7 @@ export function ExamsHub({ counts }: Props) {
     <div className="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
       <header className="shelf-hero over-tint" data-hue="3">
         <SiteNav openAppUrl={openAppUrl} current="exams" />
-        <Hero exams={reviewable} />
+        <ExamsHero exams={reviewable} />
       </header>
 
       <main className="relative">
@@ -123,7 +123,7 @@ export function ExamsHub({ counts }: Props) {
   );
 }
 
-function Hero({ exams }: { exams: readonly Exam[] }) {
+function ExamsHero({ exams }: { exams: readonly Exam[] }) {
   const { i18n } = useLingui();
   return (
     <div className="mx-auto grid max-w-[1120px] items-center gap-12 px-5 pt-10 pb-16 @2xl:px-10 @4xl:grid-cols-[minmax(0,1.05fr)_minmax(0,0.95fr)] @4xl:gap-16 @4xl:pt-16 @4xl:pb-24">
@@ -132,15 +132,15 @@ function Hero({ exams }: { exams: readonly Exam[] }) {
           <Trans>Exam prep</Trans>
         </p>
         <div className="mt-4">
-          <HeroTitle measure={15}>{i18n._(EXAMS_HEADING)}</HeroTitle>
+          <Hero.Title measure={15}>{i18n._(EXAMS_HEADING)}</Hero.Title>
         </div>
-        <HeroLede>
+        <Hero.Lede>
           <Trans>
             Ready decks for citizenship, language and driving theory tests after a move. Each holds
             what the exam asks in its own language, with a translation alongside, and brings back
             what you get wrong until it sticks.
           </Trans>
-        </HeroLede>
+        </Hero.Lede>
         <div className="mt-8 flex flex-wrap gap-2">
           <a href="#exams" className={buttonClass("secondary", "lg")}>
             <Trans>Find your exam</Trans>
@@ -157,35 +157,29 @@ function Hero({ exams }: { exams: readonly Exam[] }) {
 
 function ExamPicker({ exams, counts }: { exams: readonly Exam[]; counts: Record<string, number> }) {
   return (
-    <section
-      id="exams"
-      aria-labelledby="exams-title"
-      className="scroll-mt-6 px-5 pt-20 pb-16 @2xl:px-10 @4xl:pt-28"
-    >
-      <div className="mx-auto max-w-[1040px]">
-        <SectionTitle id="exams-title">
-          <Trans>Pick your exam.</Trans>
-        </SectionTitle>
-        <ExamGroup
-          group="citizenship"
-          title={<Trans>Citizenship tests</Trans>}
-          exams={exams}
-          counts={counts}
-        />
-        <ExamGroup
-          group="language"
-          title={<Trans>Language exams</Trans>}
-          exams={exams}
-          counts={counts}
-        />
-        <ExamGroup
-          group="driving"
-          title={<Trans>Driving tests</Trans>}
-          exams={exams}
-          counts={counts}
-        />
-      </div>
-    </section>
+    <Section id="exams">
+      <Section.Title>
+        <Trans>Pick your exam.</Trans>
+      </Section.Title>
+      <ExamGroup
+        group="citizenship"
+        title={<Trans>Citizenship tests</Trans>}
+        exams={exams}
+        counts={counts}
+      />
+      <ExamGroup
+        group="language"
+        title={<Trans>Language exams</Trans>}
+        exams={exams}
+        counts={counts}
+      />
+      <ExamGroup
+        group="driving"
+        title={<Trans>Driving tests</Trans>}
+        exams={exams}
+        counts={counts}
+      />
+    </Section>
   );
 }
 
@@ -422,15 +416,17 @@ function DeckNotQuiz() {
   ];
   return (
     <Section>
-      <SectionHeader
-        title={<Trans>How a deck differs from a quiz.</Trans>}
-        body={
+      <Section.Header>
+        <Section.Title>
+          <Trans>How a deck differs from a quiz.</Trans>
+        </Section.Title>
+        <Section.Body>
           <Trans>
             A practice quiz tells you how you did today. A deck keeps track of every question and
             plans when you see each one again.
           </Trans>
-        }
-      />
+        </Section.Body>
+      </Section.Header>
       <div className="mt-10 overflow-hidden rounded-xl bg-plate edge">
         <div
           aria-hidden="true"

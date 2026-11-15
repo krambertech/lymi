@@ -25,7 +25,7 @@ import {
 } from "./language-cards";
 import { NotesToCards } from "./NotesToCards";
 import { Questions } from "./Questions";
-import { Section, SectionHeader } from "./Section";
+import { Section } from "./Section";
 import { SharedDeckDemo } from "./SharedDeckDemo";
 import { SignUpSection } from "./SignUpSection";
 import { WordFieldHero } from "./WordFieldHero";
@@ -59,25 +59,25 @@ interface PageProps {
 /** The notes photographed into cards, with the assistants that can do the reading. */
 function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
   return (
-    <Section labelledBy="notes-title">
-      <SectionHeader
-        id="notes-title"
-        align="center"
-        title={<Trans>Turn your notes into cards.</Trans>}
-        body={
+    <Section>
+      <Section.Header align="center">
+        <Section.Title>
+          <Trans>Turn your notes into cards.</Trans>
+        </Section.Title>
+        <Section.Body>
           <Trans>
             Take a photo of your notebook or the whiteboard. Lymi reads the handwriting, adds the
             new words to your deck and leaves out the ones you already have. Your assistant can do
             the same from a chat.
           </Trans>
-        }
-        after={
+        </Section.Body>
+        <Section.After>
           <div className="grid justify-items-center gap-5">
             <AssistantMarks compact />
             <TutorLessonsLink />
           </div>
-        }
-      />
+        </Section.After>
+      </Section.Header>
       <div className="mt-12">
         <NotesToCards notebooks={notebooks} />
       </div>

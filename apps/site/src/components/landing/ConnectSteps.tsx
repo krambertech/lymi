@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 import { PRODUCT_ORIGIN } from "../../lib/origins";
 import { Lantern } from "../Lantern";
 import { AssistantMarks } from "./AssistantMarks";
-import { Section, SectionHeader } from "./Section";
+import { Section } from "./Section";
 import { type Step, Steps } from "./Steps";
 
 const MCP_URL = `${PRODUCT_ORIGIN}/mcp`;
@@ -97,8 +97,12 @@ export function ConnectSteps() {
   ];
 
   return (
-    <Section id="connect" surface="nested" labelledBy="connect-title">
-      <SectionHeader id="connect-title" title={<Trans>Connect in three steps.</Trans>} />
+    <Section id="connect" surface="nested">
+      <Section.Header>
+        <Section.Title>
+          <Trans>Connect in three steps.</Trans>
+        </Section.Title>
+      </Section.Header>
       <div className="mt-10">
         <Steps steps={steps} />
       </div>

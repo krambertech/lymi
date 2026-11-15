@@ -2,7 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { trayStyle } from "../../lib/tray";
 import { BENTO_HUES } from "./LanguageBento";
-import { Section, SectionHeader } from "./Section";
+import { Section } from "./Section";
 import { LANGUAGE_LINKS, linksIn } from "./site-links";
 
 /** Each language's name in itself; data, so never translated. */
@@ -22,16 +22,17 @@ export function LanguageLinks() {
   const { i18n } = useLingui();
   const links = linksIn(LANGUAGE_LINKS, i18n.locale);
   return (
-    <Section nav="languages_hub" labelledBy="language-links-title">
-      <SectionHeader
-        id="language-links-title"
-        title={<Trans>Pick your language.</Trans>}
-        body={
+    <Section nav="languages_hub">
+      <Section.Header>
+        <Section.Title>
+          <Trans>Pick your language.</Trans>
+        </Section.Title>
+        <Section.Body>
           <Trans>
             Each has its own page: the script, the sounds and the free decks that language needs.
           </Trans>
-        }
-      />
+        </Section.Body>
+      </Section.Header>
       <ul
         className={clsx(
           "mt-10 grid grid-cols-2 gap-2.5",

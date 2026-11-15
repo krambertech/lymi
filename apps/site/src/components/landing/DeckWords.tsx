@@ -2,7 +2,7 @@ import { Plural, Trans } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import type { Locale } from "../../lib/routes";
 import { addDeckUrl, type EditionWord } from "./language-decks";
-import { SpokenWords } from "./SpokenWords";
+import { SpokenWords, useClipPlayer } from "./SpokenWords";
 
 interface Props {
   deck: PublicDeckSummary;
@@ -16,6 +16,7 @@ interface Props {
 
 /** A deck as its page lists it: a few of its words or phrases, each in the native voice. */
 export function DeckWords({ deck, words, locale, lang, folder }: Props) {
+  const player = useClipPlayer(folder);
   return (
     <div className="mx-auto max-w-[480px] rounded-xl bg-plate p-5 edge @2xl:p-6">
       <div className="flex items-start justify-between gap-4">
@@ -33,7 +34,7 @@ export function DeckWords({ deck, words, locale, lang, folder }: Props) {
         </a>
       </div>
       <div className="mt-4">
-        <SpokenWords words={words} locale={locale} lang={lang} folder={folder} />
+        <SpokenWords words={words} locale={locale} lang={lang} player={player} />
       </div>
     </div>
   );

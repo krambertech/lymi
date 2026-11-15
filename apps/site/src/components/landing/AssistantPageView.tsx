@@ -52,7 +52,7 @@ import { VoiceScene } from "./AssistantVoice";
 import { ASSISTANT_PAGES, type AssistantKey } from "./assistant-pages";
 import { CopyAddress } from "./ConnectSteps";
 import { Wide } from "./FeatureSection";
-import { HeroActions, HeroFrame, HeroLede, HeroTitle } from "./HeroParts";
+import { Hero } from "./Hero";
 import { LandingLayout } from "./LandingLayout";
 import { OtherAssistants } from "./OtherAssistants";
 import { Questions } from "./Questions";
@@ -1004,7 +1004,7 @@ function Command({ text }: { text: string }) {
   );
 }
 
-function Hero({ assistant }: { assistant: AssistantKey }) {
+function AssistantPageHero({ assistant }: { assistant: AssistantKey }) {
   const { i18n } = useLingui();
   const { name, hue, listing } = ASSISTANT_PAGES[assistant];
   const content = useContent(assistant);
@@ -1015,23 +1015,20 @@ function Hero({ assistant }: { assistant: AssistantKey }) {
   }));
 
   return (
-    <HeroFrame
-      visualWidth={480}
-      copy={
-        <>
-          <Lockup name={name} />
-          <HeroTitle size="page">{content.headline}</HeroTitle>
-          <HeroLede>{content.lead}</HeroLede>
-          <HeroActions
-            secondary={
-              listing
-                ? { href: listing, label: <Trans>Add Lymi to {name}</Trans>, variant: "secondary" }
-                : { href: "#connect", label: <Trans>Connect {name}</Trans> }
-            }
-          />
-        </>
-      }
-      visual={
+    <Hero visualWidth={480}>
+      <Hero.Copy>
+        <Lockup name={name} />
+        <Hero.Title size="page">{content.headline}</Hero.Title>
+        <Hero.Lede>{content.lead}</Hero.Lede>
+        <Hero.Actions
+          secondary={
+            listing
+              ? { href: listing, label: <Trans>Add Lymi to {name}</Trans>, variant: "secondary" }
+              : { href: "#connect", label: <Trans>Connect {name}</Trans> }
+          }
+        />
+      </Hero.Copy>
+      <Hero.Visual>
         <AssistantChatDemo
           assistant={name}
           hue={hue}
@@ -1042,8 +1039,8 @@ function Hero({ assistant }: { assistant: AssistantKey }) {
           lang={content.demo.lang}
           label={content.demo.label}
         />
-      }
-    />
+      </Hero.Visual>
+    </Hero>
   );
 }
 
@@ -1056,7 +1053,7 @@ export function AssistantPageView({ assistant }: { assistant: AssistantKey }) {
 
   return (
     <BackdropContext.Provider value={backdrop}>
-      <LandingLayout page={page.page} hero={<Hero assistant={assistant} />}>
+      <LandingLayout page={page.page} hero={<AssistantPageHero assistant={assistant} />}>
         <Wide
           title={content.asksTitle}
           body={

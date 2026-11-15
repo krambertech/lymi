@@ -5,8 +5,11 @@ import { useEffect, useRef, useState } from "react";
 import type { Locale } from "../../lib/routes";
 import type { EditionWord } from "./language-decks";
 
-/** One clip at a time from `/audio/<folder>/<id>.mp3`, and which one is playing. */
-function usePlayer(folder: string) {
+/**
+ * One clip at a time from `/audio/<folder>/<id>.mp3`, and which one is playing. Lists that sit
+ * side by side share one, so a second tap stops the first clip.
+ */
+export function useClipPlayer(folder: string) {
   const clip = useRef<HTMLAudioElement | null>(null);
   const [playing, setPlaying] = useState<string>();
   useEffect(() => () => clip.current?.pause(), []);
@@ -25,14 +28,14 @@ interface Props {
   locale: Locale;
   /** The language of the words. */
   lang: string;
-  /** The folder under `/audio/` holding each word's clip, named by its id. */
-  folder: string;
+  /** The player from `useClipPlayer`, shared by every list on the stage. */
+  player: ReturnType<typeof useClipPlayer>;
 }
 
 /** Words as a deck lists them, each with its meaning in this edition and its clip a tap away. */
-export function SpokenWords({ words, locale, lang, folder }: Props) {
+export function SpokenWords({ words, locale, lang, player }: Props) {
   const { t } = useLingui();
-  const { play, playing } = usePlayer(folder);
+  const { play, playing } = player;
   return (
     <ul className="flex flex-col">
       {words.map((w) => (

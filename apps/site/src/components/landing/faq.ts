@@ -215,7 +215,7 @@ export const RUSSIAN_QUESTIONS: Question[] = [
   {
     id: "anki",
     question: msg`Can I bring my Anki deck?`,
-    answer: msg`Yes. Cards keep their schedule and their word recordings.`,
+    answer: msg`Yes. Cards keep their schedule and their recordings, both the word’s and the example’s.`,
   },
   ...COMMON,
 ];
@@ -244,7 +244,7 @@ export const UKRAINIAN_QUESTIONS: Question[] = [
   {
     id: "anki",
     question: msg`Can I bring my Anki deck?`,
-    answer: msg`Yes. Cards keep their schedule and their word recordings.`,
+    answer: msg`Yes. Cards keep their schedule and their recordings, both the word’s and the example’s.`,
   },
   ...COMMON,
 ];

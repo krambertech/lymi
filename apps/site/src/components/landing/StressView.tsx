@@ -14,9 +14,11 @@ import type { PathStep, VoiceWord } from "./japanese";
 import { LandingLayout } from "./LandingLayout";
 import { LanguageDecks } from "./LanguageDecks";
 import {
+  DetailsSection,
   EnrichSection,
   LanguageHero,
   LanguageName,
+  NotesSection,
   OwnAiSection,
   StartSection,
   TogetherSection,
@@ -47,6 +49,10 @@ export interface StressPage {
   /** The card an assistant adds from a lesson's notes. */
   added: { label: MessageDescriptor; term: string; meaning: MessageDescriptor };
   enrich: ReactNode;
+  /** Class notes turned into cards by Smart add. */
+  notebook: ReactNode;
+  /** The language's own touches, in tiles. */
+  bento: ReactNode;
   copy: {
     headline: ReactNode;
     lede: ReactNode;
@@ -59,6 +65,7 @@ export interface StressPage {
     voice: ReactNode;
     decks: ReactNode;
     allDecks: ReactNode;
+    details: ReactNode;
   };
 }
 
@@ -111,6 +118,8 @@ export function StressView({ page, decks, locale }: Props) {
 
       <EnrichSection body={page.copy.enrich}>{page.enrich}</EnrichSection>
 
+      <NotesSection>{page.notebook}</NotesSection>
+
       <OwnAiSection
         body={
           <Trans>
@@ -143,6 +152,8 @@ export function StressView({ page, decks, locale }: Props) {
       />
 
       <TogetherSection name={page.className} language={page.lang} cards={page.classCards} />
+
+      <DetailsSection title={page.copy.details}>{page.bento}</DetailsSection>
 
       {decks.length > 0 && (
         <LanguageDecks

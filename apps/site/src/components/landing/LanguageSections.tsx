@@ -124,13 +124,16 @@ interface StartProps {
   body: ReactNode;
   steps: ComponentProps<typeof DeckPath>["steps"];
   lang: string;
+  /** A link under the path, such as the exam the decks lead to. */
+  after?: ReactNode;
 }
 
 /** The free beginner decks in the order to take them. */
-export function StartSection({ title, body, steps, lang }: StartProps) {
+export function StartSection({ title, body, steps, lang, after }: StartProps) {
   return (
     <Wide id="start" title={title} body={body}>
       <DeckPath steps={steps} lang={lang} />
+      {after && <div className="mt-8">{after}</div>}
     </Wide>
   );
 }
@@ -254,6 +257,23 @@ export function TogetherSection({ name, language, cards, body }: TogetherProps) 
     >
       <SharedDeckDemo name={name} language={language} cards={cards} />
     </FeatureSection>
+  );
+}
+
+/** Smart add on a page of class notes: the photo becomes cards with no assistant in between. */
+export function NotesSection({ children }: { children: ReactNode }) {
+  return (
+    <Wide
+      title={<Trans>Turn your class notes into cards.</Trans>}
+      body={
+        <Trans>
+          Take a photo of your notebook or the whiteboard, or drop in a PDF from class. The new
+          words become cards, and the ones you already have are left out. No assistant needed.
+        </Trans>
+      }
+    >
+      {children}
+    </Wide>
   );
 }
 

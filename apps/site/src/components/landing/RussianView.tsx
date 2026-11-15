@@ -4,7 +4,9 @@ import type { PublicDeckSummary } from "@lymi/core/catalog";
 import type { ReactNode } from "react";
 import type { Locale } from "../../lib/routes";
 import { RUSSIAN_QUESTIONS } from "./faq";
+import { NotebookToCards } from "./NotebookToCards";
 import { EnrichRussian } from "./RussianAi";
+import { RussianBento } from "./RussianBento";
 import {
   RUSSIAN_CLASS_CARDS,
   RUSSIAN_EXAMPLES,
@@ -32,6 +34,25 @@ const RUSSIAN: StressPage = {
   questions: RUSSIAN_QUESTIONS,
   added: { label: msg`Русский · new`, term: "биле́т", meaning: msg`Ticket` },
   enrich: <EnrichRussian />,
+  notebook: (
+    <NotebookToCards
+      lang="ru"
+      heading={["Русский · вторник", "A2"]}
+      rows={[
+        { term: "пересадка", gloss: msg`change of trains`, card: 0 },
+        { term: "опаздывать", gloss: msg`to be late`, card: 1 },
+        { term: "спасибо" },
+        { term: "ежик", gloss: msg`hedgehog`, card: 2 },
+      ]}
+      cards={[
+        { term: "переса́дка", meaning: msg`Change of trains` },
+        { term: "опа́здывать", meaning: msg`To be late` },
+        { term: "ёжик", meaning: msg`Hedgehog` },
+      ]}
+      skipped="спасибо"
+    />
+  ),
+  bento: <RussianBento />,
   copy: {
     headline: <Trans>The flashcard app that gets Russian.</Trans>,
     lede: (
@@ -86,6 +107,7 @@ const RUSSIAN: StressPage = {
       </Trans>
     ),
     allDecks: <Trans>All Russian decks</Trans>,
+    details: <Trans>Built with Russian in mind.</Trans>,
   },
 };
 

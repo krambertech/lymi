@@ -15,6 +15,7 @@ import { LANGUAGES_QUESTIONS, type Question } from "./faq";
 import { HandOfCards } from "./HandOfCards";
 import { WORD_FRAMES, type WordFrame } from "./hero-words";
 import { LandingLayout } from "./LandingLayout";
+import { LanguageLinks } from "./LanguageLinks";
 import { ReturnSection } from "./LanguageSections";
 import {
   type LanguageCard,
@@ -67,9 +68,9 @@ function NotesSection({ notebooks }: { notebooks: LearningLanguage[] }) {
           </div>
           <p className="mx-auto mt-5 max-w-[50ch] text-md text-pretty text-ink-secondary">
             <Trans>
-              Take a photo of your notebook or the whiteboard and send it to your assistant. It
-              reads the handwriting, adds the new words to your deck and leaves out the ones you
-              already have.
+              Take a photo of your notebook or the whiteboard. Lymi reads the handwriting, adds the
+              new words to your deck and leaves out the ones you already have. Your assistant can do
+              the same from a chat.
             </Trans>
           </p>
           <div className="mt-6">
@@ -172,6 +173,8 @@ function LanguagePage(props: PageProps) {
       page={props.page}
       hero={<WordFieldHero frames={props.frames} label={props.heroLabel} lede={props.heroLede} />}
     >
+      <LanguageLinks />
+
       <NotesSection notebooks={props.notebooks} />
 
       <HandSection body={props.handBody} hand={props.hand} languages={props.handLanguages} />

@@ -13,9 +13,11 @@ import { GenderTiles } from "./GenderTiles";
 import { LandingLayout } from "./LandingLayout";
 import { LanguageDecks } from "./LanguageDecks";
 import {
+  DetailsSection,
   EnrichSection,
   LanguageHero,
   LanguageName,
+  NotesSection,
   OwnAiSection,
   ReturnSection,
   StartSection,
@@ -23,9 +25,11 @@ import {
   VoiceSection,
 } from "./LanguageSections";
 import { addDeckUrl, pathSteps } from "./language-decks";
+import { type NotebookCard, type NotebookRow, NotebookToCards } from "./NotebookToCards";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
 import { EnrichSpanish } from "./SpanishAi";
+import { SpanishBento } from "./SpanishBento";
 import {
   SPANISH_CLASS_CARDS,
   SPANISH_ESSENTIALS,
@@ -44,6 +48,19 @@ const ESSENTIALS_DECK = "travel-spanish";
 const CCSE = EXAMS.find((exam) => exam.id === "spain");
 
 const Es = ({ children }: { children: ReactNode }) => <span lang="es">{children}</span>;
+
+const NOTEBOOK_ROWS: NotebookRow[] = [
+  { term: "el billete", gloss: msg`ticket`, card: 0 },
+  { term: "madrugar", gloss: msg`to get up early`, card: 1 },
+  { term: "gracias" },
+  { term: "la sobremesa", gloss: msg`talk after a meal`, card: 2 },
+];
+
+const NOTEBOOK_CARDS: [NotebookCard, NotebookCard, NotebookCard] = [
+  { term: "el billete", meaning: msg`Ticket` },
+  { term: "madrugar", meaning: msg`To get up early` },
+  { term: "la sobremesa", meaning: msg`Talk at the table after a meal` },
+];
 
 interface Props {
   /** Every published Spanish deck in this locale, those a beginner starts from first. */
@@ -201,6 +218,16 @@ export function SpanishView({ decks, locale }: Props) {
         <EnrichSpanish locale={locale} />
       </EnrichSection>
 
+      <NotesSection>
+        <NotebookToCards
+          lang="es"
+          heading={["Español · martes", "A2"]}
+          rows={NOTEBOOK_ROWS}
+          cards={NOTEBOOK_CARDS}
+          skipped="gracias"
+        />
+      </NotesSection>
+
       <OwnAiSection
         body={
           <Trans>
@@ -229,6 +256,10 @@ export function SpanishView({ decks, locale }: Props) {
         language="es"
         cards={SPANISH_CLASS_CARDS}
       />
+
+      <DetailsSection title={<Trans>Built with Spanish in mind.</Trans>}>
+        <SpanishBento />
+      </DetailsSection>
 
       {decks.length > 0 && (
         <LanguageDecks

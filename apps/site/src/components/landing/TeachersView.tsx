@@ -17,7 +17,6 @@ import { type UseCase, UseCases } from "./UseCases";
 export const TEACHERS_TITLE = msg`Lymi for teachers · One deck for your whole class`;
 export const TEACHERS_BLURB = msg`Build a course in sections, share it with one link, and add what you taught after every lesson. Each learner reviews on their own schedule.`;
 
-/** The page for tutors and small classes: build the course, share it, keep adding to it. */
 /** A shared deck's People: who joined, and an invitation still waiting. */
 function People() {
   return (
@@ -46,6 +45,7 @@ function People() {
   );
 }
 
+/** The page for tutors and small classes: build the course, share it, keep adding to it. */
 export function TeachersView() {
   const subjects: UseCase[] = [
     {
@@ -136,7 +136,10 @@ export function TeachersView() {
         }
       />
 
-      <DetailsSection title={<Trans>Built for teaching.</Trans>}>
+      <DetailsSection
+        title={<Trans>Built for teaching.</Trans>}
+        body={<Trans>What helps once the class is under way.</Trans>}
+      >
         <LanguageBento layout="wide">
           <Tile
             wide

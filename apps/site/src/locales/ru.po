@@ -761,8 +761,8 @@ msgstr "Добавь новые слова с сегодняшнего урок�
 msgid "Add to Lymi"
 msgstr "Добавить в Lymi"
 
-msgid "Add, edit, archive and restore"
-msgstr "Добавлять, менять, архивировать и восстанавливать"
+msgid "Add, edit and archive cards"
+msgstr "Добавлять, редактировать и архивировать карточки"
 
 msgid "Added"
 msgstr "Добавлено"
@@ -962,6 +962,9 @@ msgstr "Уже есть в колоде, поэтому пропущено"
 
 msgid "Also called the frequency illusion."
 msgstr "Другое название — иллюзия частотности."
+
+msgid "Always"
+msgstr "Всегда"
 
 msgid "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
 msgstr "Файл .apkg или .colpkg из Anki, AnkiDroid или AnkiMobile"
@@ -1226,6 +1229,9 @@ msgstr "Выстрой курс шаг за шагом."
 
 msgid "Building something of your own? Lymi has a full API. <0>Read the API docs</0>"
 msgstr "Делаешь что-то своё? У Lymi есть полноценный API. <0>Документация API</0>"
+
+msgid "Building your own app instead? The <0>API reference</0> covers the same reads and writes."
+msgstr "Пишешь своё приложение? В <0>справочнике API</0> есть те же чтения и изменения."
 
 msgid "Built for exam prep."
 msgstr "Сделано для подготовки к экзаменам."
@@ -3119,7 +3125,7 @@ msgid "Instructions: A1 learners. Short, everyday examples."
 msgstr "Инструкции: ученики уровня A1. Короткие бытовые примеры."
 
 msgid "Instructions: Use the clinical meaning. Mechanism second."
-msgstr "Инструкции: клиническое значение, механизм вторым."
+msgstr "Инструкции: сначала клиническое значение, потом механизм."
 
 msgid "Intel Mac?"
 msgstr "Mac с Intel?"
@@ -3724,7 +3730,7 @@ msgid "marginal cost"
 msgstr "предельные издержки"
 
 msgid "Mark a card important and Lymi shows it more often. The cards you keep forgetting gather in Often forgotten, a round of their own."
-msgstr "Отметь карточку важной, и Lymi будет показывать её чаще. Карточки, которые ты постоянно забываешь, собираются в «Часто забываются» — отдельном круге повторения."
+msgstr "Отметь карточку важной, и Lymi будет показывать её чаще. Карточки, которые ты постоянно забываешь, собираются в «Часто забываются» — отдельный круг повторения."
 
 msgid "Mark important"
 msgstr "Отметить важной"
@@ -4556,9 +4562,6 @@ msgstr "Read Japanese Kana охватывает хирагану и катака
 msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Прочитай значение и сначала вспомни термин, а потом смотри. Попробуй на этих карточках: они из всей колоды."
 
-msgid "Read your decks and cards"
-msgstr "Читать твои колоды и карточки"
-
 msgid "Read your German deck"
 msgstr "Прочитана колода по немецкому"
 
@@ -4854,6 +4857,9 @@ msgstr "До *завтра*!"
 msgid "See you soon"
 msgstr "До встречи"
 
+msgid "See your decks and cards"
+msgstr "Просматривать свои колоды и карточки"
+
 msgid "Select all"
 msgstr "Выбрать все"
 
@@ -5020,8 +5026,8 @@ msgstr "Мелочи, сделанные хорошо."
 msgid "Smart add"
 msgstr "Умное добавление"
 
-msgid "Smart add reads up to 10 photos or 3 PDFs at a time and picks out the terms. No assistant needed."
-msgstr "Умное добавление читает до 10 фото или 3 PDF за раз и выбирает термины. Ассистент не нужен."
+msgid "Smart add reads up to 10 photos and 3 PDFs at a time and picks out the terms. While it’s in beta, it reads up to 5 lessons a day."
+msgstr "Умное добавление читает до 10 фото и 3 PDF за раз и выбирает термины. Пока оно в бета-версии, читает до 5 уроков в день."
 
 msgid "Smart add sends the photos, PDFs or text you provide, with relevant deck context, to Anthropic to read. Cloudflare Workers AI checks the resulting terms and, when requested, compares them with your answer. We save the cards you choose, not the original lesson files."
 msgstr "Умное добавление отправляет предоставленные тобой фото, PDF или текст с подходящим контекстом колод в Anthropic для чтения. Cloudflare Workers AI проверяет найденные термины и по запросу сравнивает их с твоим ответом. Мы сохраняем выбранные тобой карточки, а не исходные файлы урока."
@@ -5641,8 +5647,8 @@ msgstr "Самая длинная цепочка зависимых задач; 
 msgid "The Lymi lantern and wordmark above the English line “Keep what you learn.”"
 msgstr "Фонарь и логотип Lymi над английской надписью «Keep what you learn»."
 
-msgid "The Lymi plugin teaches your assistant four jobs. It installs in Claude, Claude Code, Codex, Cursor and Gemini CLI."
-msgstr "Плагин Lymi учит ассистента четырём делам. Он устанавливается в Claude, Claude Code, Codex, Cursor и Gemini CLI."
+msgid "The Lymi plugin gives your assistant a skill for each. It installs in Claude, Claude Code, Codex, Cursor and Gemini CLI."
+msgstr "Плагин Lymi даёт ассистенту навык для каждого. Он ставится в Claude, Claude Code, Codex, Cursor и Gemini CLI."
 
 msgid "The molecule a cell uses to store and carry energy"
 msgstr "Молекула, в которой клетка хранит и переносит энергию"
@@ -6201,6 +6207,9 @@ msgstr "Перевернуть"
 msgid "Turn notes and PDFs into flashcards · Lymi"
 msgstr "Заметки и PDF в карточки · Lymi"
 
+msgid "Turn off write access when you connect, and your assistant can read your decks but change nothing."
+msgstr "Отключи изменения при подключении — и ассистент сможет читать твои колоды, но ничего не изменит."
+
 msgid "Turn the card back"
 msgstr "Перевернуть карточку обратно"
 
@@ -6281,9 +6290,6 @@ msgstr "Незавершённые дела удерживаются в памя
 
 msgid "United States"
 msgstr "США"
-
-msgid "Untick write when you connect, and your assistant can read your decks but change nothing."
-msgstr "Сними разрешение на запись при подключении, и ассистент сможет читать колоды, но ничего не изменит."
 
 msgid "US citizenship test"
 msgstr "Тест на гражданство США"
@@ -6462,6 +6468,9 @@ msgstr "Что даёт каждая колода для экзамена"
 
 msgid "What goes"
 msgstr "Что удалится"
+
+msgid "What helps once the class is under way."
+msgstr "Что помогает, когда занятия уже идут."
 
 msgid "What if I already use Anki?"
 msgstr "А если я уже пользуюсь Anki?"

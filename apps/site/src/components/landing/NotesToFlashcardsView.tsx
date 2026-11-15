@@ -235,13 +235,13 @@ function RevisionNotes({ mark }: { mark: (i: number, text: ReactNode) => ReactNo
   );
 }
 
-/** For the student with a folder of notes and slides and a test coming. */
 /** Two cards in the study group's shared deck. */
 const STUDY_GROUP_CARDS = [
   { term: msg`osmosis`, meaning: msg`Water moving across a membrane` },
   { term: msg`mitosis`, meaning: msg`A cell dividing in two` },
 ];
 
+/** For the student with a folder of notes and slides and a test coming. */
 export function NotesToFlashcardsView() {
   const { t, i18n } = useLingui();
   const osmosis = { ...OSMOSIS, term: i18n._(OSMOSIS.term) };
@@ -350,8 +350,8 @@ export function NotesToFlashcardsView() {
       </FeatureSection>
 
       <ReturnSection
-        lang="en"
-        term={() => "ATP"}
+        lang={i18n.locale}
+        term={() => t`ATP`}
         title={<Trans>Review less, remember longer.</Trans>}
         body={
           <Trans>

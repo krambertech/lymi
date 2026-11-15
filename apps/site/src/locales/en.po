@@ -761,8 +761,8 @@ msgstr "Add the new words from today’s lesson to my Ukrainian deck."
 msgid "Add to Lymi"
 msgstr "Add to Lymi"
 
-msgid "Add, edit, archive and restore"
-msgstr "Add, edit, archive and restore"
+msgid "Add, edit and archive cards"
+msgstr "Add, edit and archive cards"
 
 msgid "Added"
 msgstr "Added"
@@ -962,6 +962,9 @@ msgstr "Already in your deck, so it’s skipped"
 
 msgid "Also called the frequency illusion."
 msgstr "Also called the frequency illusion."
+
+msgid "Always"
+msgstr "Always"
 
 msgid "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
 msgstr "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
@@ -1226,6 +1229,9 @@ msgstr "Build the course in order."
 
 msgid "Building something of your own? Lymi has a full API. <0>Read the API docs</0>"
 msgstr "Building something of your own? Lymi has a full API. <0>Read the API docs</0>"
+
+msgid "Building your own app instead? The <0>API reference</0> covers the same reads and writes."
+msgstr "Building your own app instead? The <0>API reference</0> covers the same reads and writes."
 
 msgid "Built for exam prep."
 msgstr "Built for exam prep."
@@ -4556,9 +4562,6 @@ msgstr "Read Japanese Kana covers hiragana and katakana, including voiced and co
 msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 
-msgid "Read your decks and cards"
-msgstr "Read your decks and cards"
-
 msgid "Read your German deck"
 msgstr "Read your German deck"
 
@@ -4854,6 +4857,9 @@ msgstr "See you *tomorrow*!"
 msgid "See you soon"
 msgstr "See you soon"
 
+msgid "See your decks and cards"
+msgstr "See your decks and cards"
+
 msgid "Select all"
 msgstr "Select all"
 
@@ -5020,8 +5026,8 @@ msgstr "Small things, done well."
 msgid "Smart add"
 msgstr "Smart add"
 
-msgid "Smart add reads up to 10 photos or 3 PDFs at a time and picks out the terms. No assistant needed."
-msgstr "Smart add reads up to 10 photos or 3 PDFs at a time and picks out the terms. No assistant needed."
+msgid "Smart add reads up to 10 photos and 3 PDFs at a time and picks out the terms. While it’s in beta, it reads up to 5 lessons a day."
+msgstr "Smart add reads up to 10 photos and 3 PDFs at a time and picks out the terms. While it’s in beta, it reads up to 5 lessons a day."
 
 msgid "Smart add sends the photos, PDFs or text you provide, with relevant deck context, to Anthropic to read. Cloudflare Workers AI checks the resulting terms and, when requested, compares them with your answer. We save the cards you choose, not the original lesson files."
 msgstr "Smart add sends the photos, PDFs or text you provide, with relevant deck context, to Anthropic to read. Cloudflare Workers AI checks the resulting terms and, when requested, compares them with your answer. We save the cards you choose, not the original lesson files."
@@ -5641,8 +5647,8 @@ msgstr "The longest chain of dependent tasks; it sets the earliest finish date"
 msgid "The Lymi lantern and wordmark above the English line “Keep what you learn.”"
 msgstr "The Lymi lantern and wordmark above the English line “Keep what you learn.”"
 
-msgid "The Lymi plugin teaches your assistant four jobs. It installs in Claude, Claude Code, Codex, Cursor and Gemini CLI."
-msgstr "The Lymi plugin teaches your assistant four jobs. It installs in Claude, Claude Code, Codex, Cursor and Gemini CLI."
+msgid "The Lymi plugin gives your assistant a skill for each. It installs in Claude, Claude Code, Codex, Cursor and Gemini CLI."
+msgstr "The Lymi plugin gives your assistant a skill for each. It installs in Claude, Claude Code, Codex, Cursor and Gemini CLI."
 
 msgid "The molecule a cell uses to store and carry energy"
 msgstr "The molecule a cell uses to store and carry energy"
@@ -6201,6 +6207,9 @@ msgstr "Turn it over"
 msgid "Turn notes and PDFs into flashcards · Lymi"
 msgstr "Turn notes and PDFs into flashcards · Lymi"
 
+msgid "Turn off write access when you connect, and your assistant can read your decks but change nothing."
+msgstr "Turn off write access when you connect, and your assistant can read your decks but change nothing."
+
 msgid "Turn the card back"
 msgstr "Turn the card back"
 
@@ -6281,9 +6290,6 @@ msgstr "Unfinished tasks stay on your mind more than finished ones"
 
 msgid "United States"
 msgstr "United States"
-
-msgid "Untick write when you connect, and your assistant can read your decks but change nothing."
-msgstr "Untick write when you connect, and your assistant can read your decks but change nothing."
 
 msgid "US citizenship test"
 msgstr "US citizenship test"
@@ -6462,6 +6468,9 @@ msgstr "What every exam deck gives you"
 
 msgid "What goes"
 msgstr "What goes"
+
+msgid "What helps once the class is under way."
+msgstr "What helps once the class is under way."
 
 msgid "What if I already use Anki?"
 msgstr "What if I already use Anki?"

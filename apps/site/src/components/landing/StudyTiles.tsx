@@ -122,8 +122,8 @@ export function PdfTile({ hue = BENTO_HUES[1], files }: { hue?: number; files: s
       title={<Trans>Slides and PDFs</Trans>}
       body={
         <Trans>
-          Smart add reads up to 10 photos or 3 PDFs at a time and picks out the terms. No assistant
-          needed.
+          Smart add reads up to 10 photos and 3 PDFs at a time and picks out the terms. While it’s
+          in beta, it reads up to 5 lessons a day.
         </Trans>
       }
     >

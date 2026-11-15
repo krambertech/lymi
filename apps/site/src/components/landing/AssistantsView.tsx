@@ -1,7 +1,6 @@
 import "@fontsource/caveat/500.css";
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { Check } from "lucide-react";
 import { AssistantHero } from "./AssistantHero";
 import { ConnectSteps } from "./ConnectSteps";
 import { FeatureSection } from "./FeatureSection";
@@ -61,30 +60,22 @@ function ActivityRows() {
   );
 }
 
-/** The two scopes on the consent screen, write left unticked. */
+/** The consent screen's two rows as `consent-view.tsx` draws them: read always on, write switched off. */
 function Scopes() {
   return (
     <ul aria-hidden="true" className="grid gap-2">
-      {[
-        { on: true, label: <Trans key="r">Read your decks and cards</Trans> },
-        { on: false, label: <Trans key="w">Add, edit, archive and restore</Trans> },
-      ].map(({ on, label }) => (
-        <li
-          key={label.key}
-          className="flex items-center gap-3 rounded-md bg-plate px-4 py-3 text-md text-ink edge"
-        >
-          <span
-            className={
-              on
-                ? "grid size-5 place-items-center rounded-sm bg-amber text-amber-ink"
-                : "size-5 rounded-sm bg-plate edge-strong"
-            }
-          >
-            {on && <Check className="size-3.5" strokeWidth={3} />}
-          </span>
-          {label}
-        </li>
-      ))}
+      <li className="flex items-center justify-between gap-3 rounded-md bg-plate px-4 py-3 text-md text-ink edge">
+        <Trans>See your decks and cards</Trans>
+        <span className="shrink-0 text-sm text-ink-muted">
+          <Trans>Always</Trans>
+        </span>
+      </li>
+      <li className="flex items-center justify-between gap-3 rounded-md bg-plate px-4 py-3 text-md text-ink edge">
+        <Trans>Add, edit and archive cards</Trans>
+        <span className="flex h-5 w-9 shrink-0 items-center rounded-full bg-plate-nested px-0.5 edge-strong">
+          <span className="size-4 rounded-full bg-ink-faint" />
+        </span>
+      </li>
     </ul>
   );
 }
@@ -121,7 +112,21 @@ export function AssistantsView() {
         }
       />
 
-      <DetailsSection title={<Trans>Built for working with AI.</Trans>}>
+      <DetailsSection
+        title={<Trans>Built for working with AI.</Trans>}
+        body={
+          <Trans>
+            Building your own app instead? The{" "}
+            <a
+              href="/docs/api"
+              className="font-medium text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
+            >
+              API reference
+            </a>{" "}
+            covers the same reads and writes.
+          </Trans>
+        }
+      >
         <LanguageBento layout="wide">
           <Tile
             wide
@@ -141,7 +146,7 @@ export function AssistantsView() {
             title={<Trans>Skills for the jobs you repeat</Trans>}
             body={
               <Trans>
-                The Lymi plugin teaches your assistant four jobs. It installs in Claude, Claude
+                The Lymi plugin gives your assistant a skill for each. It installs in Claude, Claude
                 Code, Codex, Cursor and Gemini CLI.
               </Trans>
             }
@@ -172,8 +177,8 @@ export function AssistantsView() {
             title={<Trans>Read-only if you prefer</Trans>}
             body={
               <Trans>
-                Untick write when you connect, and your assistant can read your decks but change
-                nothing.
+                Turn off write access when you connect, and your assistant can read your decks but
+                change nothing.
               </Trans>
             }
           >

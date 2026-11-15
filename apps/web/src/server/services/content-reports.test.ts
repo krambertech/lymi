@@ -17,6 +17,7 @@ import { inviteByEmail, turnOnJoinLink } from "./invitations";
 import { join } from "./members";
 import { archiveSection, createSection, restoreSection } from "./sections";
 import { learner, testDb } from "./test-db";
+import { racedBy } from "./test-race";
 
 type ReportEnv = Pick<Bindings, "PRODUCT_URL" | "EMAIL" | "SESSIONS">;
 const env = {
@@ -209,6 +210,40 @@ describe("moderation", () => {
     await restoreSection(owner, section.id);
 
     expect((await getCard(owner, card.id)).archivedAt).not.toBeNull();
+  });
+
+  it("archives nothing when another operator settles the report first", async () => {
+    const { owner, member, card } = await sharedDeck();
+    const { id } = await reportContent(member, env, {
+      target: { kind: "card", cardId: card.id },
+      reason: "spam",
+    });
+    const second = racedBy(operator, schema.contentReports, () =>
+      resolveContentReport(operator, operators, id, "dismiss"),
+    );
+
+    await expect(resolveContentReport(second, operators, id, "archive_card")).rejects.toMatchObject(
+      { code: "conflict" },
+    );
+    expect((await getContentReport(operator, operators, id)).action).toBe("dismiss");
+    expect((await getCard(owner, card.id)).archivedAt).toBeNull();
+  });
+
+  it("reopens the report when archiving fails, so it can be settled again", async () => {
+    const { member, card } = await sharedDeck();
+    const { id } = await reportContent(member, env, {
+      target: { kind: "card", cardId: card.id },
+      reason: "spam",
+    });
+    const failing = racedBy(operator, schema.cards, () => Promise.reject(new Error("D1 down")));
+
+    await expect(resolveContentReport(failing, operators, id, "archive_card")).rejects.toThrow();
+    expect(await getContentReport(operator, operators, id)).toMatchObject({
+      status: "open",
+      action: null,
+    });
+    await resolveContentReport(operator, operators, id, "archive_card");
+    expect((await getCard(member, card.id)).archivedAt).not.toBeNull();
   });
 
   it("leaves the content alone on dismiss", async () => {

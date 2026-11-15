@@ -341,15 +341,6 @@ export async function resolveContentReport(
     );
   }
 
-  const owner: ServiceContext = {
-    db: ctx.db,
-    userId: report.ownerId ?? "",
-    actor: "system",
-  };
-  if (action === "archive_card" && report.cardId) await archiveCard(owner, report.cardId);
-  if (action === "archive_deck" && report.deckId) await archiveDeck(owner, report.deckId);
-  if (action === "suspend_sharing") await suspendSharing(owner, report.id);
-
   const now = new Date();
   // The same content's other open reports are answered by the same act.
   const same =
@@ -360,6 +351,7 @@ export async function resolveContentReport(
         : action === "archive_deck"
           ? eq(schema.contentReports.deckId, report.deckId ?? "")
           : eq(schema.contentReports.ownerId, report.ownerId ?? "");
+  // Claimed before anything is archived, so two operators settling one report never both act.
   const settled = await ctx.db
     .update(schema.contentReports)
     .set({ resolvedAt: now, action })
@@ -367,6 +359,37 @@ export async function resolveContentReport(
       and(isNull(schema.contentReports.resolvedAt), or(eq(schema.contentReports.id, id), same)),
     )
     .returning({ id: schema.contentReports.id, createdAt: schema.contentReports.createdAt });
+  if (!settled.some((row) => row.id === id)) {
+    const [after] = await ctx.db
+      .select({ action: schema.contentReports.action })
+      .from(schema.contentReports)
+      .where(eq(schema.contentReports.id, id));
+    throw new ServiceError("conflict", `This report was already resolved: ${after?.action}`);
+  }
+
+  const owner: ServiceContext = {
+    db: ctx.db,
+    userId: report.ownerId ?? "",
+    actor: "system",
+  };
+  try {
+    if (action === "archive_card" && report.cardId) await archiveCard(owner, report.cardId);
+    if (action === "archive_deck" && report.deckId) await archiveDeck(owner, report.deckId);
+    if (action === "suspend_sharing") await suspendSharing(owner, report.id);
+  } catch (error) {
+    // The act failed, so the reports it claimed are open again for another try.
+    await ctx.db
+      .update(schema.contentReports)
+      .set({ resolvedAt: null, action: null })
+      .where(
+        and(
+          or(eq(schema.contentReports.id, id), same),
+          eq(schema.contentReports.resolvedAt, now),
+          eq(schema.contentReports.action, action),
+        ),
+      );
+    throw error;
+  }
   for (const row of settled) {
     track(ctx.analytics, {
       name: "content_report_resolved",

@@ -257,6 +257,73 @@ export function SlippingResult({
   );
 }
 
+export interface Line {
+  /** Who says it: the assistant, or the learner answering. */
+  who: "assistant" | "you";
+  text: string;
+}
+
+const BARS = [0.5, 0.9, 0.65, 1, 0.55, 0.8, 0.45];
+
+/**
+ * A practice conversation built from the learner's cards: the assistant asks, the learner answers.
+ * With `voice`, it is spoken, so a few bars show the assistant talking.
+ */
+export function ConversationResult({
+  lines,
+  lang,
+  voice,
+  source,
+}: {
+  lines: readonly Line[];
+  /** The language the lines are in, when it is not the page's. */
+  lang?: string;
+  voice?: boolean;
+  /** Which of the learner's cards it used. */
+  source: ReactNode;
+}) {
+  return (
+    <div className="rounded-2xl bg-plate p-3.5 edge-drop">
+      <div className="flex items-center justify-between gap-3">
+        <p className="flex min-w-0 items-center gap-2 text-xs text-ink-secondary">
+          <span className="grid size-6 shrink-0 place-items-center rounded-full bg-plate-nested">
+            <Lantern className="size-4" />
+          </span>
+          <span className="truncate">{source}</span>
+        </p>
+        {voice && (
+          <span aria-hidden="true" className="flex h-5 shrink-0 items-center gap-[3px]">
+            {BARS.map((height, i) => (
+              <span
+                // biome-ignore lint/suspicious/noArrayIndexKey: the bars never move or change.
+                key={i}
+                className="voice-bar w-[3px] rounded-full bg-ink-secondary"
+                style={{ height: `${height * 100}%`, animationDelay: `${i * -0.23}s` }}
+              />
+            ))}
+          </span>
+        )}
+      </div>
+      <ol lang={lang} className="mt-3 flex flex-col gap-2">
+        {lines.map((line) =>
+          line.who === "assistant" ? (
+            <li key={line.text} className="text-md text-pretty text-ink">
+              {line.text}
+            </li>
+          ) : (
+            <li
+              key={line.text}
+              className="w-fit max-w-[85%] self-end rounded-xl bg-plate-nested px-3 py-1.5 text-sm text-ink"
+            >
+              {line.text}
+            </li>
+          ),
+        )}
+      </ol>
+    </div>
+  );
+}
+
 /** A card with the hint the assistant added, shown before the card turns over. */
 export function HintResult({ term, hint }: { term: string; hint: ReactNode }) {
   return (

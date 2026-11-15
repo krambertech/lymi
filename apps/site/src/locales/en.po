@@ -350,6 +350,9 @@ msgstr "12 cards due, about five minutes"
 msgid "12 Spanish cards are due, about five minutes. Quick warm-up first?"
 msgstr "12 Spanish cards are due, about five minutes. Quick warm-up first?"
 
+msgid "12 words from Spanish B1"
+msgstr "12 words from Spanish B1"
+
 msgid "120 cards"
 msgstr "120 cards"
 
@@ -385,6 +388,9 @@ msgstr "2025 version"
 
 msgid "2026 edition"
 msgstr "2026 edition"
+
+msgid "23 metres."
+msgstr "23 metres."
 
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 questions, 15 to pass. 300 to learn."
@@ -428,8 +434,14 @@ msgstr "48 cards"
 msgid "48 pages"
 msgstr "48 pages"
 
+msgid "5 cards from Theory test"
+msgstr "5 cards from Theory test"
+
 msgid "500 feet in either direction"
 msgstr "500 feet in either direction"
+
+msgid "6 cards from Anatomy"
+msgstr "6 cards from Anatomy"
 
 msgid "60% in reading, writing and listening, and 60% in speaking."
 msgstr "60% in reading, writing and listening, and 60% in speaking."
@@ -481,6 +493,9 @@ msgstr "A class deck, Estonian A2 · Tuesdays, gets three new cards after today�
 
 msgid "A clever fix made from whatever is at hand"
 msgstr "A clever fix made from whatever is at hand"
+
+msgid "A conversation with your words"
+msgstr "A conversation with your words"
 
 msgid "A course or lesson"
 msgstr "A course or lesson"
@@ -1237,6 +1252,9 @@ msgstr "Before the test"
 msgid "Before you start work"
 msgstr "Before you start work"
 
+msgid "Before your driving test"
+msgstr "Before your driving test"
+
 msgid "Began in 1618 with the <0>Defenestration of Prague</0>."
 msgstr "Began in 1618 with the <0>Defenestration of Prague</0>."
 
@@ -1559,6 +1577,9 @@ msgstr "ChatGPT flashcards with spaced repetition · Lymi"
 
 msgid "ChatGPT makes the cards. Lymi brings them back."
 msgstr "ChatGPT makes the cards. Lymi brings them back."
+
+msgid "ChatGPT takes this week’s words from Lymi and starts a conversation that uses each one. Switch to voice to hear them and say them out loud."
+msgstr "ChatGPT takes this week’s words from Lymi and starts a conversation that uses each one. Switch to voice to hear them and say them out loud."
 
 msgid "ChatGPT’s own flashcards flip, shuffle and mark what you know. None of them decide when you see a card again. Lymi does: a card you remember waits longer each time, and one you forget comes back sooner."
 msgstr "ChatGPT’s own flashcards flip, shuffle and mark what you know. None of them decide when you see a card again. Lymi does: a card you remember waits longer each time, and one you forget comes back sooner."
@@ -2842,8 +2863,8 @@ msgstr "Greetings"
 msgid "Grok Bot can check Lymi on a schedule. Make it a routine, and each morning it tells you what’s due and warms you up on the words that keep slipping. Its cloud computer keeps running when your laptop is closed."
 msgstr "Grok Bot can check Lymi on a schedule. Make it a routine, and each morning it tells you what’s due and warms you up on the words that keep slipping. Its cloud computer keeps running when your laptop is closed."
 
-msgid "Grok Bot can read your review history and drill the words you keep forgetting."
-msgstr "Grok Bot can read your review history and drill the words you keep forgetting."
+msgid "Grok Bot can see which theory cards you keep missing and quiz you on just those, one question at a time."
+msgstr "Grok Bot can see which theory cards you keep missing and quiz you on just those, one question at a time."
 
 msgid "Grok Bot can write flashcards, but it has no deck of its own and nothing that brings a card back later. Connect Lymi and Grok Bot adds its cards to your decks, where spaced repetition schedules each one: cards you remember come back later, the ones you forget sooner."
 msgstr "Grok Bot can write flashcards, but it has no deck of its own and nothing that brings a card back later. Connect Lymi and Grok Bot adds its cards to your decks, where spaced repetition schedules each one: cards you remember come back later, the ones you forget sooner."
@@ -3392,6 +3413,9 @@ msgstr "In the order you learn them, one section at a time."
 msgid "In this folder"
 msgstr "In this folder"
 
+msgid "In voice mode, Claude can quiz you from your decks while you walk or cook. You answer out loud, and your reviews stay in Lymi."
+msgstr "In voice mode, Claude can quiz you from your decks while you walk or cook. You answer out loud, and your reviews stay in Lymi."
+
 msgid "Injured at the elbow; weak grip and numb little finger"
 msgstr "Injured at the elbow; weak grip and numb little finger"
 
@@ -3816,6 +3840,9 @@ msgstr "Let’s meet again *tomorrow*."
 
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Let’s practise. Use the German words from my deck."
+
+msgid "Let’s talk in Spanish using my words from this week."
+msgstr "Let’s talk in Spanish using my words from this week."
 
 msgid "library"
 msgstr "library"
@@ -4547,6 +4574,9 @@ msgstr "Other subjects"
 msgid "Our *team* won!"
 msgstr "Our *team* won!"
 
+msgid "Out loud, on a walk"
+msgstr "Out loud, on a walk"
+
 msgid "Ownership passes to the new owner"
 msgstr "Ownership passes to the new owner"
 
@@ -4926,11 +4956,17 @@ msgstr "Quick nunchi means sensing a mood before anyone says a word."
 msgid "Quickstart"
 msgstr "Quickstart"
 
+msgid "Quiz me on the cranial nerves I keep missing."
+msgstr "Quiz me on the cranial nerves I keep missing."
+
 msgid "quiz me on the ones I miss"
 msgstr "quiz me on the ones I miss"
 
 msgid "Quiz me on the Spanish words I keep missing."
 msgstr "Quiz me on the Spanish words I keep missing."
+
+msgid "Quiz me on the theory questions I get wrong."
+msgstr "Quiz me on the theory questions I get wrong."
 
 msgid "Quiz me on this week’s Portuguese."
 msgstr "Quiz me on this week’s Portuguese."
@@ -5097,6 +5133,12 @@ msgstr "Right answer"
 
 msgid "right away"
 msgstr "right away"
+
+msgid "Right. And at 50 mph?"
+msgstr "Right. And at 50 mph?"
+
+msgid "Right. And which one closes your eyelids?"
+msgstr "Right. And which one closes your eyelids?"
 
 msgid "Road"
 msgstr "Road"
@@ -5618,6 +5660,9 @@ msgstr "Sticking with something because of what you have already put in"
 msgid "Stop pronunciation"
 msgstr "Stop pronunciation"
 
+msgid "Stopping distance at 30 mph on a dry road?"
+msgstr "Stopping distance at 30 mph on a dry road?"
+
 msgid "Street"
 msgstr "Street"
 
@@ -5977,6 +6022,9 @@ msgstr "The h is silent: hoy sounds like oy."
 
 msgid "The Hradec Králové and Pardubice regions."
 msgstr "The Hradec Králové and Pardubice regions."
+
+msgid "The hypoglossal."
+msgstr "The hypoglossal."
 
 msgid "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
 msgstr "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
@@ -6980,6 +7028,9 @@ msgstr "Which language are the translations in?"
 
 msgid "Which languages can I learn?"
 msgstr "Which languages can I learn?"
+
+msgid "Which nerve moves your tongue?"
+msgstr "Which nerve moves your tongue?"
 
 msgid "Which ones do I keep getting wrong?"
 msgstr "Which ones do I keep getting wrong?"

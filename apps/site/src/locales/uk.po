@@ -350,6 +350,9 @@ msgstr "12 карток на повторення, приблизно п’ят�
 msgid "12 Spanish cards are due, about five minutes. Quick warm-up first?"
 msgstr "На повторення чекають 12 карток з іспанської, приблизно п’ять хвилин. Спершу коротка розминка?"
 
+msgid "12 words from Spanish B1"
+msgstr "12 слів з Spanish B1"
+
 msgid "120 cards"
 msgstr "120 карток"
 
@@ -385,6 +388,9 @@ msgstr "Версія 2025 року"
 
 msgid "2026 edition"
 msgstr "Видання 2026 року"
+
+msgid "23 metres."
+msgstr "Той, хто праворуч."
 
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 питань, 15 для складання. Вивчити — 300."
@@ -428,8 +434,14 @@ msgstr "48 карток"
 msgid "48 pages"
 msgstr "48 сторінок"
 
+msgid "5 cards from Theory test"
+msgstr "5 карток з колоди «Теорія ПДР»"
+
 msgid "500 feet in either direction"
 msgstr "500 футів (близько 150 м) в обидва боки"
+
+msgid "6 cards from Anatomy"
+msgstr "6 карток з колоди «Анатомія»"
 
 msgid "60% in reading, writing and listening, and 60% in speaking."
 msgstr "60% у читанні, письмі й аудіюванні та 60% у говорінні."
@@ -481,6 +493,9 @@ msgstr "Після сьогоднішнього уроку в колоді гр�
 
 msgid "A clever fix made from whatever is at hand"
 msgstr "Кмітливе рішення з підручних засобів"
+
+msgid "A conversation with your words"
+msgstr "Розмова з твоїми словами"
 
 msgid "A course or lesson"
 msgstr "Курси й заняття"
@@ -1237,6 +1252,9 @@ msgstr "Перед тестом"
 msgid "Before you start work"
 msgstr "Перед початком роботи"
 
+msgid "Before your driving test"
+msgstr "Перед іспитом з водіння"
+
 msgid "Began in 1618 with the <0>Defenestration of Prague</0>."
 msgstr "Почалася 1618 року з <0>Празької дефенестрації</0>."
 
@@ -1559,6 +1577,9 @@ msgstr "Флешкартки з ChatGPT та інтервальне повтор
 
 msgid "ChatGPT makes the cards. Lymi brings them back."
 msgstr "ChatGPT створює картки. Lymi їх повертає."
+
+msgid "ChatGPT takes this week’s words from Lymi and starts a conversation that uses each one. Switch to voice to hear them and say them out loud."
+msgstr "ChatGPT бере з Lymi слова цього тижня й починає розмову, де звучить кожне. Перейди на голос, щоб почути їх і сказати вголос."
 
 msgid "ChatGPT’s own flashcards flip, shuffle and mark what you know. None of them decide when you see a card again. Lymi does: a card you remember waits longer each time, and one you forget comes back sooner."
 msgstr "Флешкартки самого ChatGPT можна перевертати, перемішувати й позначати як вивчені. Але жодна з цих функцій не вирішує, коли ти побачиш картку знову. Це робить Lymi: картка, яку ти пам’ятаєш, щоразу чекає довше, а забута повертається раніше."
@@ -2842,8 +2863,8 @@ msgstr "Привітання"
 msgid "Grok Bot can check Lymi on a schedule. Make it a routine, and each morning it tells you what’s due and warms you up on the words that keep slipping. Its cloud computer keeps running when your laptop is closed."
 msgstr "Grok Bot може перевіряти Lymi за розкладом. Зроби це рутиною, і щоранку він казатиме, що чекає на повторення, і розминатиме тебе на словах, які постійно вилітають з голови. Його хмарний комп’ютер працює, навіть коли ноутбук закритий."
 
-msgid "Grok Bot can read your review history and drill the words you keep forgetting."
-msgstr "Grok Bot бачить історію твоїх повторень і ганяє тебе по словах, які ти постійно забуваєш."
+msgid "Grok Bot can see which theory cards you keep missing and quiz you on just those, one question at a time."
+msgstr "Grok Bot бачить, які картки з теорії ти постійно забуваєш, і питає лише їх, по одному питанню."
 
 msgid "Grok Bot can write flashcards, but it has no deck of its own and nothing that brings a card back later. Connect Lymi and Grok Bot adds its cards to your decks, where spaced repetition schedules each one: cards you remember come back later, the ones you forget sooner."
 msgstr "Grok Bot уміє писати флешкартки, але не має власної колоди й нічого, що повертало б картку згодом. Підключи Lymi, і Grok Bot додаватиме картки у твої колоди, де інтервальне повторення плануватиме кожну: картки, які ти пам’ятаєш, повертатимуться пізніше, а забуті — раніше."
@@ -3392,6 +3413,9 @@ msgstr "У тому порядку, в якому ти їх вчиш: розді
 msgid "In this folder"
 msgstr "У цій папці"
 
+msgid "In voice mode, Claude can quiz you from your decks while you walk or cook. You answer out loud, and your reviews stay in Lymi."
+msgstr "У голосовому режимі Claude поганяє тебе по твоїх колодах, поки ти гуляєш чи готуєш. Відповідаєш уголос, а повторення лишаються в Lymi."
+
 msgid "Injured at the elbow; weak grip and numb little finger"
 msgstr "Ушкоджується біля ліктя; слабкий хват і оніміння мізинця"
 
@@ -3816,6 +3840,9 @@ msgstr "Побачимося *завтра*."
 
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Попрактикуймося. Використовуй німецькі слова з моєї колоди."
+
+msgid "Let’s talk in Spanish using my words from this week."
+msgstr "Поговорімо іспанською з моїми словами цього тижня."
 
 msgid "library"
 msgstr "бібліотека"
@@ -4547,6 +4574,9 @@ msgstr "Інші теми"
 msgid "Our *team* won!"
 msgstr "Наша *команда* виграла!"
 
+msgid "Out loud, on a walk"
+msgstr "Уголос, на прогулянці"
+
 msgid "Ownership passes to the new owner"
 msgstr "Володіння переходить до нового власника"
 
@@ -4926,11 +4956,17 @@ msgstr "Мати добре нунчі — відчувати настрій, п
 msgid "Quickstart"
 msgstr "Швидкий старт"
 
+msgid "Quiz me on the cranial nerves I keep missing."
+msgstr "Поганяй мене по черепних нервах, які я забуваю."
+
 msgid "quiz me on the ones I miss"
 msgstr "перевір мене на словах, які я забуваю"
 
 msgid "Quiz me on the Spanish words I keep missing."
 msgstr "Перевір мене на іспанських словах, які я постійно забуваю."
+
+msgid "Quiz me on the theory questions I get wrong."
+msgstr "Поганяй мене по питаннях з теорії, де я помиляюся."
 
 msgid "Quiz me on this week’s Portuguese."
 msgstr "Перевір мене з португальської за цей тиждень."
@@ -5097,6 +5133,12 @@ msgstr "Правильна відповідь"
 
 msgid "right away"
 msgstr "одразу"
+
+msgid "Right. And at 50 mph?"
+msgstr "Так. А якщо там трамвай?"
+
+msgid "Right. And which one closes your eyelids?"
+msgstr "Так. А який закриває повіки?"
 
 msgid "Road"
 msgstr "Дорога (шлях)"
@@ -5618,6 +5660,9 @@ msgstr "Триматися за щось лише через уже вкладе
 msgid "Stop pronunciation"
 msgstr "Зупинити відтворення"
 
+msgid "Stopping distance at 30 mph on a dry road?"
+msgstr "Хто їде першим на рівнозначному перехресті?"
+
 msgid "Street"
 msgstr "Вулиця"
 
@@ -5977,6 +6022,9 @@ msgstr "H не читається: hoy звучить як «ой»."
 
 msgid "The Hradec Králové and Pardubice regions."
 msgstr "Краловоградецький і Пардубицький краї."
+
+msgid "The hypoglossal."
+msgstr "Під’язиковий."
 
 msgid "The JLPT has published no official word list since 2010, so the N5 and N4 decks follow their level from widely used study lists. Neither is an official list."
 msgstr "Від 2010 року JLPT не публікує офіційного списку слів, тож колоди N5 і N4 складено за поширеними навчальними списками свого рівня. Жодна з них не є офіційним списком."
@@ -6980,6 +7028,9 @@ msgstr "Якою мовою переклад?"
 
 msgid "Which languages can I learn?"
 msgstr "Які мови можна вчити?"
+
+msgid "Which nerve moves your tongue?"
+msgstr "Який нерв рухає язиком?"
 
 msgid "Which ones do I keep getting wrong?"
 msgstr "У яких я постійно помиляюся?"

@@ -1798,6 +1798,24 @@ html:has(.deck-cards[open]) {
 .landing-dwell[data-paused] {
   animation-play-state: paused;
 }
+/* A voice reply: a few bars that rise and fall while the assistant is speaking. Each bar starts at
+   its own delay so they never move in step. Still under reduced motion. */
+.voice-bar {
+  transform-origin: center;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .voice-bar {
+    animation: voice-bar 0.9s ease-in-out infinite alternate;
+  }
+}
+@keyframes voice-bar {
+  from {
+    transform: scaleY(0.45);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
 /* The moment AI writes a field. Its badge arrives first, so you know who is writing; then one wide,
    soft light drifts across the field just ahead of the words as they write themselves in. It fades in
    and out on its way, so it never starts or stops on an edge. Only the light moves: the field keeps

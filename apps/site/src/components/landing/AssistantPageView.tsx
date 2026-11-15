@@ -4,16 +4,18 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import {
   AtSign,
+  AudioLines,
   CalendarRange,
   Camera,
+  Car,
   ClipboardCheck,
   FileText,
   FolderOpen,
   Globe,
   LifeBuoy,
   MessagesSquare,
+  Mic,
   Repeat,
-  Sparkle,
   SquareTerminal,
 } from "lucide-react";
 import type { ReactNode } from "react";
@@ -33,6 +35,7 @@ import {
   Attached,
   CardsResult,
   CodeChip,
+  ConversationResult,
   DeckResult,
   DueResult,
   FolderChip,
@@ -159,6 +162,30 @@ function useContent(key: AssistantKey): Content {
                   { label: t`Biology`, term: "Phloem", meaning: t`Carries sugar around the plant` },
                 ]}
                 note={<Trans>Skipped Stomata: you have that card.</Trans>}
+              />
+            ),
+          },
+          {
+            id: "talk",
+            icon: <AudioLines aria-hidden="true" />,
+            use: <Trans>A conversation with your words</Trans>,
+            body: (
+              <Trans>
+                ChatGPT takes this week’s words from Lymi and starts a conversation that uses each
+                one. Switch to voice to hear them and say them out loud.
+              </Trans>
+            ),
+            ask: <Trans>Let’s talk in Spanish using my words from this week.</Trans>,
+            result: (
+              <ConversationResult
+                voice
+                lang="es"
+                source={<Trans>12 words from Spanish B1</Trans>}
+                lines={[
+                  { who: "assistant", text: "¿Qué piensas de la huelga de ayer?" },
+                  { who: "you", text: "Ojalá termine pronto." },
+                  { who: "assistant", text: "¡Bien dicho! ¿Y qué pide el sindicato?" },
+                ]}
               />
             ),
           },
@@ -357,6 +384,29 @@ function useContent(key: AssistantKey): Content {
                   },
                 ]}
                 note={<Trans>Added 26 cards to Pharmacology.</Trans>}
+              />
+            ),
+          },
+          {
+            id: "voice",
+            icon: <Mic aria-hidden="true" />,
+            use: <Trans>Out loud, on a walk</Trans>,
+            body: (
+              <Trans>
+                In voice mode, Claude can quiz you from your decks while you walk or cook. You
+                answer out loud, and your reviews stay in Lymi.
+              </Trans>
+            ),
+            ask: <Trans>Quiz me on the cranial nerves I keep missing.</Trans>,
+            result: (
+              <ConversationResult
+                voice
+                source={<Trans>6 cards from Anatomy</Trans>}
+                lines={[
+                  { who: "assistant", text: t`Which nerve moves your tongue?` },
+                  { who: "you", text: t`The hypoglossal.` },
+                  { who: "assistant", text: t`Right. And which one closes your eyelids?` },
+                ]}
               />
             ),
           },
@@ -782,22 +832,23 @@ function useContent(key: AssistantKey): Content {
             ),
           },
           {
-            id: "slip",
-            icon: <Sparkle aria-hidden="true" />,
-            use: <Trans>For the ones that slip</Trans>,
+            id: "theory",
+            icon: <Car aria-hidden="true" />,
+            use: <Trans>Before your driving test</Trans>,
             body: (
               <Trans>
-                Grok Bot can read your review history and drill the words you keep forgetting.
+                Grok Bot can see which theory cards you keep missing and quiz you on just those, one
+                question at a time.
               </Trans>
             ),
-            ask: <Trans>Which words do I keep forgetting?</Trans>,
+            ask: <Trans>Quiz me on the theory questions I get wrong.</Trans>,
             result: (
-              <SlippingResult
-                lang="es"
-                words={[
-                  { term: "la huelga", meaning: t`The strike`, forgot: <Trans>forgot 4×</Trans> },
-                  { term: "la vivienda", meaning: t`Housing`, forgot: <Trans>forgot 3×</Trans> },
-                  { term: "ojalá", meaning: t`I hope`, forgot: <Trans>forgot 3×</Trans> },
+              <ConversationResult
+                source={<Trans>5 cards from Theory test</Trans>}
+                lines={[
+                  { who: "assistant", text: t`Stopping distance at 30 mph on a dry road?` },
+                  { who: "you", text: t`23 metres.` },
+                  { who: "assistant", text: t`Right. And at 50 mph?` },
                 ]}
               />
             ),

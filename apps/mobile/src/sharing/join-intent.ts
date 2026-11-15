@@ -35,11 +35,13 @@ type Viewer = "signed-out" | "visitor" | "member" | "owner" | "removed";
 export function resumeStep(
   session: "pending" | "in" | "out",
   viewer: Viewer | undefined,
-  failed = false,
+  preview: { isError: boolean; isFetching: boolean } = { isError: false, isFetching: false },
 ) {
+  // A preview whose last load failed and is not loading again cannot catch up, so the deck shows as
+  // it was. While it loads again, an older failure says nothing.
+  const failed = preview.isError && !preview.isFetching;
   if (session === "pending") return failed ? "show" : "wait";
   if (session === "out") return "show";
-  // A preview that failed to load again cannot catch up, so the deck shows as it was.
   if (!viewer || viewer === "signed-out") return failed ? "show" : "wait";
   return viewer === "visitor" ? "join" : "drop";
 }

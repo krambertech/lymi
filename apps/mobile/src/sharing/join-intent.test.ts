@@ -36,7 +36,11 @@ describe("coming back to a promised link", () => {
   });
 
   it("shows the deck when the preview fails to catch up with a new session", () => {
-    expect(resumeStep("in", "signed-out", true)).toBe("show");
+    expect(resumeStep("in", "signed-out", { isError: true, isFetching: false })).toBe("show");
+  });
+
+  it("waits while a preview that failed before loads again after sign-in", () => {
+    expect(resumeStep("in", "signed-out", { isError: true, isFetching: true })).toBe("wait");
   });
 
   it("joins for a visitor and lets the promise go for anyone already in the deck", () => {

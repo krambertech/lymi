@@ -114,11 +114,15 @@ function ShowcaseRoot({ label, children, className }: Props) {
   const [mode, setMode] = useState<Mode>("playing");
   // Counts picks and restarts, so the demo and its timer start over even on the same item.
   const [run, setRun] = useState(0);
+  // Only the Pause button stops the demo itself; a pick holds the timer but plays its demo.
+  const [frozen, setFrozen] = useState(false);
+  // Keyboard focus in the list holds the timer, so the selection never moves away from it.
+  const [keys, setKeys] = useState(false);
 
   const item = items[index] as ItemProps;
   const timed = !still && mode !== "done";
-  const held = mode === "paused" || !inView || hidden;
-  const stage: Stage = { playing: inView && !hidden, still };
+  const held = mode === "paused" || keys || !inView || hidden;
+  const stage: Stage = { playing: inView && !hidden && !frozen, still };
 
   const steer = (action: Steer, id: string) =>
     captureAnalytics("site_showcase_steered", { action, item: id });
@@ -128,23 +132,28 @@ function ShowcaseRoot({ label, children, className }: Props) {
     else setIndex(index + 1);
   };
 
-  const select = (i: number, focus: boolean) => {
+  const select = (i: number, byKey: boolean) => {
     const next = (i + items.length) % items.length;
     setIndex(next);
     setMode("paused");
+    setFrozen(false);
     setRun((n) => n + 1);
-    if (focus) tabs.current[next]?.focus();
-    steer("picked", (items[next] as ItemProps).id);
+    if (byKey) tabs.current[next]?.focus();
+    // Arrow keys step through items on the way to one, so only a click or Enter counts as a pick.
+    else steer("picked", (items[next] as ItemProps).id);
   };
 
   const toggle = () => {
     if (mode === "playing") {
       setMode("paused");
+      setFrozen(true);
       steer("paused", item.id);
     } else if (mode === "paused") {
       setMode("playing");
+      setFrozen(false);
       steer("played", item.id);
     } else {
+      setFrozen(false);
       setIndex(0);
       setRun((n) => n + 1);
       setMode("playing");
@@ -187,6 +196,10 @@ function ShowcaseRoot({ label, children, className }: Props) {
         aria-label={label}
         aria-orientation="vertical"
         onKeyDown={onKeyDown}
+        onFocus={(e) => setKeys(e.target.matches(":focus-visible"))}
+        onBlur={(e) => {
+          if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setKeys(false);
+        }}
         className="order-2 flex flex-col @4xl:order-1 @4xl:justify-center"
       >
         {items.map((each, i) => {

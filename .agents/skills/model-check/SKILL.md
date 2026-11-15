@@ -1,6 +1,6 @@
 ---
 name: model-check
-description: Model-check the few Lymi flows where a wrong order of events loses or leaks data, with TLA+ and TLC. Use when a change touches the offline write queue (packages/client/src/writes.ts, queued.ts, the phone's Sync and sign-out screens) or how the server settles a review day (apps/web/src/server/services/review-days.ts, the grade in review.ts, nextOutcome in packages/core/src/streak.ts).
+description: Model-check the few Lymi flows where a wrong order of events loses or leaks data, with TLA+ and TLC. Use when a change touches the offline write queue (packages/client/src/writes.ts, queued.ts, the phone's Sync and sign-out screens), how the server settles a review day (apps/web/src/server/services/review-days.ts, the grade in review.ts, nextOutcome in packages/core/src/streak.ts), or how an import's write run stops (writeChunk in import-writer.ts, finishImport, failImport, cancelImport, archiveImport and expireImports in imports.ts, imports/write-run.ts).
 ---
 
 # Model-check the flows that can lose data
@@ -11,12 +11,14 @@ Each model is a small TLA+ description of one flow, checked by TLC over every or
 | --- | --- | --- |
 | [Write queue](#write-queue) | A learner's queued write is never sent on another learner's session | Holds |
 | [Review day](#review-day) | Once every request is answered, the day's outcome is the one its reviews call for | Holds since pull request 1164 |
+| [Import writes](#import-writes) | Once an import is failed, cancelled or done, no chunk adds a card | Holds since pull request 1164 |
 
 ## Run a check
 
 ```bash
 .agents/skills/model-check/scripts/check.sh WriteQueue
 .agents/skills/model-check/scripts/check.sh ReviewDay
+.agents/skills/model-check/scripts/check.sh ImportWrites
 ```
 
 It needs Java 11 or later (`brew install openjdk`, or set `JAVA`). The first run downloads TLC 1.7.4 to `~/.cache/lymi` and checks its SHA-256; set `TLA2TOOLS` to use a jar you already have. A pass prints `distinct states found`, no `violated` line, and exits 0. A broken rule prints `Invariant <Name> is violated` with the steps, and exits 12. To check another configuration, copy the model's `.cfg`, change a constant and pass the copy's path, relative or absolute, as the second argument.
@@ -97,3 +99,27 @@ Their replays are in `apps/web/src/server/services/review-days.test.ts` under "a
 **See it fail.** Set `CompareAndSet` or `ReadsDayFirst` to `FALSE` in a copy of the config. `Tries` is `SETTLE_TRIES`; within these bounds the rule still holds with `1`, so the bound on retries is not what keeps it.
 
 **Leaves out:** changing the goal (`applyGoalToToday`), midnight and the zone, grade replays (`duplicate` in `gradeCard`), more than two grades and one Undo, cards that become due during the day, and `drawableCount` read at a different moment from `attemptsOn`.
+
+## Import writes
+
+**Rule:** once an import is failed, cancelled or done, no chunk of its write run adds a card. **Harm:** cards appear in a deck from an import the learner was told had stopped, and after they archive that import the late cards stay active, because the archive covered only the cards that were there.
+
+The invariants are `NoCardsAfterEnd` and `ArchiveCoversEveryCard` in [`models/ImportWrites.tla`](models/ImportWrites.tla). [`models/ImportWrites.cfg`](models/ImportWrites.cfg) checks a run of two chunks against the stall check, the learner's cancel and archive, and the run's own finish, each read and write a separate step.
+
+| Model step | Code |
+| --- | --- |
+| `Confirm` | `confirmImport` in `apps/web/src/server/services/imports.ts`, which starts the Workflow |
+| `RunReads` | `writeImportChunk`'s `readyWork` and `writeChunk`'s reads in `import-writer.ts`, which do not look at the status; the loop is `writeImport` in `apps/web/src/server/imports/write-run.ts` |
+| `ChunkLands` | `writeChunk`'s one batch, every statement under its `guard` |
+| `Finish` | `finishImport`, importing to done only over importing |
+| `FailReads`, `FailWrites` | `expireImports` finding a stalled import, then `failImport`'s read and its update over the status it read; `failRun` takes the same path when a step fails |
+| `CancelReads`, `CancelWrites` | `cancelImport`, which refuses once the import is importing |
+| `ArchiveReads`, `ArchiveWrites` | `archiveImport` in `import-writer.ts`, which archives the cards the import added so far |
+
+The default config describes `main` at `253cd1a37`, where pull request 1164 added `status = 'importing'` to `writeChunk`'s guard and to its last update (`ChunkChecksStatus = TRUE`). The rule holds: 321 distinct states with two chunks, 653 with four.
+
+Before 1164, at `0d80e817a` (`ChunkChecksStatus = FALSE`), the rule broke in five steps. The stall check failed a slow import between a chunk's reads and its batch; the batch checked only `written`, so it landed and added the chunk's cards to a failed import. With an archive between them, the late cards stayed active. Both paths were replayed on a local D1 with `writeImportChunk` held before its batch: ten cards landed in the failed import and nine stayed active after the archive; with the guard, none. "writes no chunk once the import has failed" in `apps/web/src/server/services/imports.test.ts` replays the first path.
+
+**See it fail.** Set `ChunkChecksStatus` to `FALSE` in a copy of the config. It is the only guard the rule rests on: with it, no other actor's order matters, because the batch checks the status in the same statement that writes.
+
+**Leaves out:** the pictures and recordings step (`attachImportPictures`), which can still store media on cards a chunk added before the import ended; a run handing over to the next; a step retried by Workflows, which the `written` guard makes harmless; restore after archive; and more than one run or four chunks.

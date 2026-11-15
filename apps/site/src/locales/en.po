@@ -4838,9 +4838,6 @@ msgstr "Paste the client ID from the setup guide as the OAuth Client ID, then ch
 msgid "Paste the lesson chat or snap your notes. Lymi turns the new words into cards with a native voice, ready to review before the next lesson."
 msgstr "Paste the lesson chat or snap your notes. Lymi turns the new words into cards with a native voice, ready to review before the next lesson."
 
-msgid "Pause"
-msgstr "Pause"
-
 msgid "PDF"
 msgstr "PDF"
 
@@ -4937,9 +4934,6 @@ msgstr "Pitch accent"
 msgid "Platform, track"
 msgstr "Platform, track"
 
-msgid "Play"
-msgstr "Play"
-
 #. placeholder {0}: w.term
 msgid "Play {0}"
 msgstr "Play {0}"
@@ -4948,9 +4942,6 @@ msgstr "Play {0}"
 #. placeholder {1}: w.reading
 msgid "Play {0}, {1}"
 msgstr "Play {0}, {1}"
-
-msgid "Play again"
-msgstr "Play again"
 
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
@@ -5319,6 +5310,9 @@ msgstr "Rent"
 
 msgid "Rental agreement"
 msgstr "Rental agreement"
+
+msgid "Replay"
+msgstr "Replay"
 
 msgid "Replay pronunciation"
 msgstr "Replay pronunciation"

@@ -439,7 +439,7 @@ export const analyticsEvents = {
       .max(120),
   }),
   site_showcase_steered: z.object({
-    action: z.enum(["picked", "paused", "played", "replayed"]),
+    action: z.enum(["picked", "replayed"]),
     // The Showcase item's id, such as `routine`, never its text.
     item: z
       .string()

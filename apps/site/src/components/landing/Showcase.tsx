@@ -2,7 +2,7 @@ import { useLingui } from "@lingui/react/macro";
 import { captureAnalytics } from "@lymi/client/analytics";
 import type { AnalyticsProperties } from "@lymi/core/analytics";
 import { clsx } from "clsx";
-import { Pause, Play, RotateCcw } from "lucide-react";
+import { RotateCcw } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import {
   Children,
@@ -23,7 +23,7 @@ import { EASE, useStill } from "./playback";
 /*
  * Timed slides of use cases: a list of uses on the page beside a tinted tray that plays the current
  * one's demo. Any demo goes on the tray; the block owns the timing, the timer on the divider under
- * the playing item, keyboard use, the one Pause/Play control and reduced motion.
+ * the playing item, keyboard use, Replay and reduced motion.
  *
  *   <Showcase label={t`Things to ask Claude`}>
  *     <Showcase.Item id="pdf" icon={<FileText />} title="From a long PDF" description="…" hue={25}>
@@ -81,12 +81,6 @@ function usePageHidden() {
   return hidden;
 }
 
-/**
- * `playing` moves on by itself, `paused` holds the current item (picking one pauses), and `done`
- * rests on the last item once the list has played through.
- */
-type Mode = "playing" | "paused" | "done";
-
 type Steer = AnalyticsProperties<"site_showcase_steered">["action"];
 
 interface Props {
@@ -111,54 +105,36 @@ function ShowcaseRoot({ label, children, className }: Props) {
   const inView = useInView(root, { amount: 0.5 });
   const tabs = useRef<(HTMLButtonElement | null)[]>([]);
   const [index, setIndex] = useState(0);
-  const [mode, setMode] = useState<Mode>("playing");
-  // Counts picks and restarts, so the demo and its timer start over even on the same item.
+  // It moves on by itself, round the list again and again, until the visitor picks an item.
+  const [auto, setAuto] = useState(true);
+  // Counts picks and replays, so the demo and its timer start over even on the same item.
   const [run, setRun] = useState(0);
-  // Only the Pause button stops the demo itself; a pick holds the timer but plays its demo.
-  const [frozen, setFrozen] = useState(false);
   // Keyboard focus in the list holds the timer, so the selection never moves away from it.
   const [keys, setKeys] = useState(false);
 
   const item = items[index] as ItemProps;
-  const timed = !still && mode !== "done";
-  const held = mode === "paused" || keys || !inView || hidden;
-  const stage: Stage = { playing: inView && !hidden && !frozen, still };
+  const timed = !still && auto;
+  const held = keys || !inView || hidden;
+  const stage: Stage = { playing: inView && !hidden, still };
 
   const steer = (action: Steer, id: string) =>
     captureAnalytics("site_showcase_steered", { action, item: id });
 
-  const advance = () => {
-    if (index >= items.length - 1) setMode("done");
-    else setIndex(index + 1);
-  };
+  const advance = () => setIndex((index + 1) % items.length);
 
   const select = (i: number, byKey: boolean) => {
     const next = (i + items.length) % items.length;
     setIndex(next);
-    setMode("paused");
-    setFrozen(false);
+    setAuto(false);
     setRun((n) => n + 1);
     if (byKey) tabs.current[next]?.focus();
     // Arrow keys step through items on the way to one, so only a click or Enter counts as a pick.
     else steer("picked", (items[next] as ItemProps).id);
   };
 
-  const toggle = () => {
-    if (mode === "playing") {
-      setMode("paused");
-      setFrozen(true);
-      steer("paused", item.id);
-    } else if (mode === "paused") {
-      setMode("playing");
-      setFrozen(false);
-      steer("played", item.id);
-    } else {
-      setFrozen(false);
-      setIndex(0);
-      setRun((n) => n + 1);
-      setMode("playing");
-      steer("replayed", (items[0] as ItemProps).id);
-    }
+  const replay = () => {
+    setRun((n) => n + 1);
+    steer("replayed", item.id);
   };
 
   const onKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
@@ -175,13 +151,6 @@ function ShowcaseRoot({ label, children, className }: Props) {
     e.preventDefault();
     select(to, true);
   };
-
-  const control =
-    mode === "playing"
-      ? { label: t`Pause`, Icon: Pause, solid: true }
-      : mode === "paused"
-        ? { label: t`Play`, Icon: Play, solid: true }
-        : { label: t`Play again`, Icon: RotateCcw, solid: false };
 
   return (
     <div
@@ -290,22 +259,16 @@ function ShowcaseRoot({ label, children, className }: Props) {
         style={{ "--tray-h": item.hue } as CSSProperties}
         className="use-case-tile relative order-1 grid min-h-[400px] place-items-center overflow-hidden rounded-[28px] px-5 py-14 transition-[background-color] duration-500 @2xl:px-10 @4xl:order-2 @4xl:min-h-[480px]"
       >
-        {!still && (
-          // The one control: Pause while it plays, Play once paused or picked, Play again at the end.
-          <button
-            type="button"
-            onClick={toggle}
-            aria-label={control.label}
-            title={control.label}
-            className="absolute end-3.5 top-3.5 z-10 grid size-9 place-items-center rounded-full bg-plate/80 text-ink edge-drop transition-[background-color,scale] duration-150 ease-out active:scale-[0.94] hoverable:hover:bg-plate focus-visible:outline-2 focus-visible:outline-ring"
-          >
-            <control.Icon
-              aria-hidden="true"
-              className="size-3.5"
-              fill={control.solid ? "currentColor" : "none"}
-            />
-          </button>
-        )}
+        {/* Quiet on purpose: the demo is the subject, and the list moves on by itself. */}
+        <button
+          type="button"
+          onClick={replay}
+          aria-label={t`Replay`}
+          title={t`Replay`}
+          className="absolute end-3.5 top-3.5 z-10 grid size-9 place-items-center rounded-full bg-plate/80 text-ink edge-drop transition-[background-color,scale] duration-150 ease-out active:scale-[0.94] hoverable:hover:bg-plate focus-visible:outline-2 focus-visible:outline-ring"
+        >
+          <RotateCcw aria-hidden="true" className="size-3.5" />
+        </button>
         <StageContext.Provider value={stage}>
           <AnimatePresence mode="wait" initial={false}>
             <motion.div

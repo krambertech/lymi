@@ -1,7 +1,11 @@
 import { Trans } from "@lingui/react/macro";
 import { FileText, Folder, LifeBuoy, Link2, Repeat } from "lucide-react";
-import type { ReactNode } from "react";
+import { motion } from "motion/react";
+import { type ReactNode, useMemo } from "react";
 import { Lantern } from "../Lantern";
+import { AssistantMark, type AssistantName } from "./AssistantMarks";
+import { appear, EASE, usePlayback } from "./playback";
+import { useShowcaseStage } from "./Showcase";
 
 /*
  * The things a learner hands an assistant, and what comes back from Lymi, for the demos on the
@@ -121,16 +125,30 @@ export interface MiniCard {
   meaning: string;
 }
 
-/** Cards that landed in a deck, side by side, with a note such as what was skipped. */
-export function CardsResult({
-  cards,
-  lang,
-  note,
+/**
+ * Who a row in a demo comes from, in the gutter beside it: the assistant's mark beside its
+ * messages, the lantern beside what Lymi holds.
+ */
+export function Speaker({
+  who,
+  assistant,
 }: {
-  cards: readonly MiniCard[];
-  lang: string;
-  note?: ReactNode;
+  who: "assistant" | "lymi" | null;
+  assistant: AssistantName;
 }) {
+  if (!who) return <span aria-hidden="true" className="size-8 shrink-0" />;
+  return (
+    <span
+      aria-hidden="true"
+      className="mt-1 grid size-8 shrink-0 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4"
+    >
+      {who === "assistant" ? <AssistantMark name={assistant} /> : <Lantern className="!size-5" />}
+    </span>
+  );
+}
+
+/** Cards that landed in a deck, side by side. What was skipped goes in the assistant's reply. */
+export function CardsResult({ cards, lang }: { cards: readonly MiniCard[]; lang: string }) {
   return (
     <div className="grid gap-2">
       <ul className="grid grid-cols-2 gap-2">
@@ -147,7 +165,6 @@ export function CardsResult({
           </li>
         ))}
       </ul>
-      {note && <p className="text-xs text-ink-secondary">{note}</p>}
     </div>
   );
 }
@@ -204,11 +221,9 @@ export function DueResult({
   decks: readonly { name: string; due: number }[];
 }) {
   return (
-    <div className="flex items-center gap-4 rounded-2xl bg-plate p-3.5 edge-drop">
-      <div className="grid shrink-0 place-items-center">
-        <Lantern className="size-9" />
-      </div>
-      <div className="min-w-0 flex-1">
+    // The lantern beside the row already says this is Lymi, so the count stands alone.
+    <div className="rounded-2xl bg-plate px-4 py-3 edge-drop">
+      <div className="min-w-0">
         <p className="flex items-baseline gap-2">
           <span className="text-3xl font-medium tracking-[-0.03em] text-ink tabular-nums">
             {count}
@@ -264,43 +279,66 @@ export interface Line {
 }
 
 /**
- * A practice conversation in the chat, built from the learner's cards: the assistant asks, the
- * learner answers. A spoken one is a VoiceScene instead.
+ * A practice conversation in the chat, built from the learner's cards: Lymi hands over the cards,
+ * then each turn is its own message, the assistant's on the left and the learner's on the right in
+ * the same dark bubble as their request. A spoken one is a VoiceScene instead.
  */
 export function ConversationResult({
+  assistant,
   lines,
   lang,
   source,
 }: {
+  assistant: AssistantName;
   lines: readonly Line[];
   /** The language the lines are in, when it is not the page's. */
   lang?: string;
   /** Which of the learner's cards it used. */
   source: ReactNode;
 }) {
+  const { playing, still } = useShowcaseStage();
+  // The turns arrive one after another, after the source line the exchange reveals first.
+  const beats = useMemo(
+    () => Object.fromEntries(lines.map((_, i) => [`turn${i}`, 1700 + i * 1200])),
+    [lines],
+  );
+  const { at } = usePlayback(beats, playing, still);
   return (
-    <div className="rounded-2xl bg-plate p-3.5 edge-drop">
-      <p className="flex min-w-0 items-center gap-2 text-xs text-ink-secondary">
-        <span className="grid size-6 shrink-0 place-items-center rounded-full bg-plate-nested">
-          <Lantern className="size-4" />
-        </span>
-        <span className="truncate">{source}</span>
-      </p>
-      <ol lang={lang} className="mt-3 flex flex-col gap-2">
-        {lines.map((line) =>
-          line.who === "assistant" ? (
-            <li key={line.text} className="text-md text-pretty text-ink">
-              {line.text}
-            </li>
-          ) : (
-            <li
-              key={line.text}
-              className="w-fit max-w-[85%] self-end rounded-xl bg-plate-nested px-3 py-1.5 text-sm text-ink"
-            >
-              {line.text}
-            </li>
-          ),
-        )}
+    <div className="flex flex-col gap-2.5">
+      {/* The cards Lymi handed over, beside the lantern like every other thing Lymi holds. */}
+      <div className="flex items-start gap-2.5">
+        <Speaker who="lymi" assistant={assistant} />
+        <p className="mt-1 flex h-8 w-fit max-w-full min-w-0 items-center rounded-full bg-plate px-3.5 text-xs text-ink-secondary edge-drop">
+          <span className="truncate">{source}</span>
+        </p>
+      </div>
+      <ol lang={lang} className="flex flex-col gap-2">
+        {lines.map((line, i) => (
+          <motion.li
+            key={line.text}
+            initial={false}
+            animate={appear(at(`turn${i}`))}
+            transition={{ duration: still ? 0 : 0.45, ease: EASE }}
+            className={line.who === "assistant" ? "flex items-start gap-2.5" : "flex justify-end"}
+          >
+            {line.who === "assistant" ? (
+              <>
+                {/* Its mark starts each run of its turns, as a chat groups them. */}
+                <Speaker
+                  who={lines[i - 1]?.who === "assistant" ? null : "assistant"}
+                  assistant={assistant}
+                />
+                <span className="w-fit max-w-[92%] rounded-2xl rounded-ss-md bg-plate px-4 py-2.5 text-md text-pretty text-ink edge-drop">
+                  {line.text}
+                </span>
+              </>
+            ) : (
+              <span className="ms-10 w-fit max-w-[85%] rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-pretty text-canvas">
+                {line.text}
+              </span>
+            )}
+          </motion.li>
+        ))}
       </ol>
     </div>
   );

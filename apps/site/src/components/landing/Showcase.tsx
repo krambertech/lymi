@@ -231,7 +231,7 @@ function ShowcaseRoot({ label, children, className }: Props) {
                     style={{ "--tray-h": each.hue } as CSSProperties}
                     className={clsx(
                       "grid size-8 shrink-0 place-items-center rounded-lg transition-[background-color,color] duration-500 [&_svg]:size-4",
-                      on ? "use-case-tile text-ink" : "bg-plate-nested text-ink-secondary",
+                      on ? "use-case-tile text-ink" : "bg-plate-nested/60 text-ink-muted",
                     )}
                   >
                     {each.icon}
@@ -240,7 +240,7 @@ function ShowcaseRoot({ label, children, className }: Props) {
                 <span
                   className={clsx(
                     "min-w-0 text-lg font-medium tracking-[-0.02em] text-balance transition-colors duration-200",
-                    on ? "text-ink" : "text-ink-secondary hoverable:group-hover:text-ink",
+                    on ? "text-ink" : "text-ink-muted hoverable:group-hover:text-ink",
                   )}
                 >
                   {each.title}

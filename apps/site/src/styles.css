@@ -1798,21 +1798,6 @@ html:has(.deck-cards[open]) {
 .landing-dwell[data-paused] {
   animation-play-state: paused;
 }
-/* A Showcase item's time as a ring round its icon: the stroke draws in over the item's dwell. */
-.showcase-ring {
-  stroke-dashoffset: 100;
-  animation-name: showcase-ring;
-  animation-timing-function: linear;
-  animation-fill-mode: forwards;
-}
-@keyframes showcase-ring {
-  to {
-    stroke-dashoffset: 0;
-  }
-}
-.showcase-ring[data-paused] {
-  animation-play-state: paused;
-}
 /* The moment AI writes a field. Its badge arrives first, so you know who is writing; then one wide,
    soft light drifts across the field just ahead of the words as they write themselves in. It fades in
    and out on its way, so it never starts or stops on an edge. Only the light moves: the field keeps

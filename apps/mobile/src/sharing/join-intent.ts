@@ -24,3 +24,34 @@ export function takeJoin(key: string, now = Date.now()): boolean {
   promised = null;
   return true;
 }
+
+type Viewer = "signed-out" | "visitor" | "member" | "owner" | "removed";
+
+/**
+ * What a promised link does once the screen knows who is looking: wait for the preview to catch up
+ * with a new session, join, or show the deck. Signed out, the promise cannot be kept here, so the
+ * deck is shown with its button and the promise waits for a later sign-in.
+ */
+export function resumeStep(session: "pending" | "in" | "out", viewer: Viewer | undefined) {
+  if (session === "pending") return "wait";
+  if (session === "out") return "show";
+  if (!viewer || viewer === "signed-out") return "wait";
+  return viewer === "visitor" ? "join" : "drop";
+}
+
+/** Whether the screen holds its loading state for a link coming back to join. */
+export type Resume = { status: "none" } | { status: "waiting" } | { status: "joining" };
+export type ResumeEvent = { type: "show" } | { type: "join" } | { type: "settled" };
+
+export function resume(state: Resume, event: ResumeEvent): Resume {
+  switch (state.status) {
+    case "none":
+      return state;
+    case "waiting":
+      if (event.type === "join") return { status: "joining" };
+      if (event.type === "show") return { status: "none" };
+      return state;
+    case "joining":
+      return event.type === "settled" ? { status: "none" } : state;
+  }
+}

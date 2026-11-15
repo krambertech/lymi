@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { openDraft } from "./draft";
+import { openDraft, refusedDraft } from "./draft";
 
 describe("openDraft", () => {
   it("takes the deck's newer value when the draft is clean", () => {
@@ -17,5 +17,15 @@ describe("openDraft", () => {
       saved: "Added on the web",
     });
     expect(openDraft("Old", "Old", null)).toEqual({ draft: "", saved: null });
+  });
+});
+
+describe("a refused save", () => {
+  it("lets the same text be saved again", () => {
+    expect(refusedDraft("New name", "New name", "Old name")).toBe("Old name");
+  });
+
+  it("keeps a newer save's baseline", () => {
+    expect(refusedDraft("Newest", "New name", "Old name")).toBe("Newest");
   });
 });

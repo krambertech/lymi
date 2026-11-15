@@ -14,7 +14,7 @@ import {
 } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import type { Href } from "expo-router";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useReducer, useRef, useState } from "react";
 import { ScrollView, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { Pool } from "../auth/door-parts";
@@ -37,8 +37,7 @@ import {
   type WelcomeStart,
 } from "../welcome/questions";
 import { endWelcome, finishStep, trackGuide, viewStep } from "../welcome/tracking";
-
-type Step = "hello" | "kind" | "language" | "goal" | "ai" | "start";
+import { HELLO, type Step, welcome } from "../welcome/trail";
 
 const SKIP: OnboardingInput = { learningKind: null, learningLanguage: null, dailyGoal: null };
 
@@ -59,7 +58,8 @@ export default function Onboarding() {
   const decks = useQuery({ ...decksQuery, enabled: !!deckId });
   const joined = deckId ? decks.data?.find((d) => d.id === deckId) : undefined;
   const shortcut = !!joined;
-  const [trail, setTrail] = useState<Step[]>(["hello"]);
+  const [flow, send] = useReducer(welcome, HELLO);
+  const trail = flow.trail;
   const [kind, setKind] = useState<LearningKind | null>(null);
   const [language, setLanguage] = useState<string | null>(null);
   const [goal, setGoal] = useState<number>(STARTING_DAILY_GOAL);
@@ -69,7 +69,7 @@ export default function Onboarding() {
   const scroll = useRef<ScrollView>(null);
   const step = trail.at(-1) ?? "hello";
   const aiChoiceNow = aiChoice(settings.data);
-  const [allowing, setAllowing] = useState(false);
+  const allowing = flow.status === "working" && flow.job === "ai";
 
   useEffect(() => viewStep(step), [step]);
   useEffect(() => {
@@ -91,14 +91,15 @@ export default function Onboarding() {
   });
   const add = useAddDeck(() => {});
   const addFailure = useAddFailure();
-  const busy = save.isPending || add.isPending;
+  const busy = flow.status === "working" && flow.job === "leave";
 
   const move = (to: Step | null) => {
+    if (flow.status === "working") return;
     setMissing(null);
     setError(null);
-    if (to === null) return setTrail((s) => (s.length > 1 ? s.slice(0, -1) : s));
+    if (to === null) return send({ type: "back" });
     finishStep(step, false);
-    setTrail((s) => [...s, to]);
+    send({ type: "next", to });
   };
   // Android's Back steps back through the questions, as the bar's back does, and never past Welcome.
   useSystemBack(() => {
@@ -138,7 +139,19 @@ export default function Onboarding() {
     return id;
   };
 
-  const finish = async (answers: WelcomeStart) => {
+  /** Runs a save that ends Welcome, holding the trail and the buttons until it answers. */
+  const leave = async (run: () => Promise<void>) => {
+    if (flow.status === "working") return;
+    send({ type: "begin", job: "leave" });
+    try {
+      await run();
+    } finally {
+      send({ type: "end", to: null });
+    }
+  };
+
+  const finish = (answers: WelcomeStart) => leave(() => finishWith(answers));
+  const finishWith = async (answers: WelcomeStart) => {
     if (!kind) return;
     setError(null);
     let saving = false;
@@ -202,7 +215,8 @@ export default function Onboarding() {
     endWelcome();
   };
 
-  const startJoined = async () => {
+  const startJoined = () => leave(startJoinedDeck);
+  const startJoinedDeck = async () => {
     if (!joined) return;
     setError(null);
     try {
@@ -221,19 +235,23 @@ export default function Onboarding() {
 
   // Not now leaves the choice unanswered, so the first AI action asks again.
   const allowAi = async () => {
+    if (flow.status === "working") return;
     setError(null);
-    setAllowing(true);
+    send({ type: "begin", job: "ai" });
     try {
       await saveAiChoice(qc, true, "welcome");
-      move("start");
     } catch {
       setError(t`Couldn’t save. Check your connection and try again.`);
-    } finally {
-      setAllowing(false);
+      send({ type: "end", to: null });
+      return;
     }
+    setMissing(null);
+    finishStep("ai", false);
+    send({ type: "end", to: "start" });
   };
 
-  const skip = async () => {
+  const skip = () => leave(skipWelcome);
+  const skipWelcome = async () => {
     setError(null);
     try {
       // Their deck's page, not Today's guide, which is about making a deck of their own.
@@ -289,7 +307,7 @@ export default function Onboarding() {
         <View className="h-14 flex-row items-center px-4">
           {trail.length > 1 && <BarButton icon="back" label={t`Back`} onPress={() => move(null)} />}
           <View className="flex-1" />
-          <BarText label={t`Skip for now`} onPress={() => void (busy ? null : skip())} />
+          <BarText label={t`Skip for now`} onPress={() => void skip()} />
         </View>
       </View>
       <ScrollView

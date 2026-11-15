@@ -38,7 +38,7 @@ import {
 } from "@lymi/design";
 import { useQueryClient } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import {
   AccessibilityInfo,
   Alert,
@@ -78,6 +78,7 @@ import { Lantern } from "../brand/lantern";
 import { holdCard, onCardEdited } from "../card/edited";
 import { useDay, useSections } from "../data/queries";
 import { spokenInterval } from "../i18n/interval";
+import { arrival, FRESH } from "../review/arrival";
 import { CardNotes } from "../review/card-notes";
 import { ScrollFade, useScrollEdges } from "../review/card-scroll";
 import { CardLine, FIT_STEPS, typeAt, useFitStep } from "../review/card-type";
@@ -231,7 +232,8 @@ function Run({
   const [revealed, setRevealed] = useState(false);
   const [lastGraded, setLastGraded] = useState<Graded | null>(null);
   // A card a swipe brought back arrives revealed, with nothing left to play.
-  const [returned, setReturned] = useState(false);
+  const [arrived, arrive] = useReducer(arrival, FRESH);
+  const returned = arrived.kind === "returned";
   // How far into the card's hint the learner went, held for the card on screen: a peek before the
   // reveal is help with recall, and a look after it is not.
   const [aidState, setAidState] = useState({ key: "", peeked: false, shown: false });
@@ -314,14 +316,14 @@ function Run({
       peeked: last.grade.aid === "hint",
       shown: !!last.hint,
     });
-    setReturned(true);
+    arrive({ type: "undo" });
     setRevealed(true);
     const term = last.item.card.term;
     void taken.kept.then(({ kept, stepped }) => {
       if (!kept) return;
       // The server kept the grade, so the review steps forward again unless a new grade came first.
       if (stepped) {
-        setReturned(false);
+        arrive({ type: "moved", by: "kept" });
         setRevealed(false);
         setLastGraded(last);
       }
@@ -339,6 +341,7 @@ function Run({
       router.replace("/review");
       return;
     }
+    arrive({ type: "moved", by: "offer" });
     setRevealed(false);
     setLastGraded(null);
   };
@@ -349,6 +352,7 @@ function Run({
     try {
       await writes.restoreCard(back.id);
       flow.restore(back.id, { cardId: back.id, mode });
+      arrive({ type: "moved", by: "restore" });
       setRevealed(false);
     } catch (e) {
       Alert.alert(
@@ -474,6 +478,7 @@ function Run({
   };
   /** Takes the card out of this review at once; the line that says so offers it back. */
   const archive = async () => {
+    arrive({ type: "moved", by: "archive" });
     setRevealed(false);
     flow.archive(card.id);
     const held: Gone = { card, mode: modeKey(current.mode) };
@@ -519,7 +524,7 @@ function Run({
     // The graded step shows under the next card from the frame it starts to slide in.
     swipe.arrive();
     setLastGraded({ item, grade: graded.record, hint: hintShown ? hint : null, shown: step });
-    setReturned(false);
+    arrive({ type: "moved", by: "grade" });
     setRevealed(false);
     if (reviewsToday + 1 === goal) haptics.success();
 

@@ -13,12 +13,13 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { usePreventRemove } from "expo-router/react-navigation";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useReducer, useRef, useState } from "react";
 import { Alert, ScrollView, type TextInput, View } from "react-native";
 import Animated, { FadeOut, Keyframe } from "react-native-reanimated";
 import { CAPTURE_KEYS, captureStore } from "../data/kept";
 import { useOwnedDecks } from "../data/queries";
 import { useAiConsent } from "../privacy/ai-consent";
+import { flow, START } from "../smart-add/flow";
 import {
   canScan,
   chooseFiles,
@@ -49,8 +50,6 @@ import { GlassPill } from "../ui/glass";
 import { Select } from "../ui/menu";
 import { toast } from "../ui/toast-host";
 
-type Step = "input" | "writing" | "reading" | "questions" | "list";
-
 const LESSON_ACCESS = ["lesson-reads", "access"];
 /** Past the Worker's own 120 s limit on the model, so only a read the server has dropped stops. */
 const QUIET_MS = 130_000;
@@ -78,7 +77,14 @@ export default function SmartAdd() {
   const online = useOnline();
   const { deck: fixedDeck } = useLocalSearchParams<{ deck?: string }>();
   const decks = useOwnedDecks().data ?? [];
-  const [step, setStep] = useState<Step>("input");
+  const [state, send] = useReducer(flow, START);
+  const step = state.step;
+  // Bumped by every read, Show terms and move by hand, so an answer knows whether it still applies.
+  const attempts = useRef(0);
+  const go = (to: "input" | "writing" | "questions" | "list") => {
+    attempts.current++;
+    send({ type: "go", step: to });
+  };
   const [pages, setPages] = useState<Page[]>([]);
   const [text, setText] = useState("");
   const [deckId, setDeckId] = useState(fixedDeck);
@@ -195,7 +201,7 @@ export default function SmartAdd() {
       icon: "example" as const,
       label: t`Text`,
       hint: t`Paste notes or a transcript`,
-      onPress: () => setStep("writing"),
+      onPress: () => go("writing"),
     },
   ];
 
@@ -207,7 +213,7 @@ export default function SmartAdd() {
     if (empty) return;
     // Unchanged material goes back to its list, so looking at the lesson again costs no read.
     if (finished && readOf.current === material) {
-      setStep(questions.length > 0 ? "questions" : "list");
+      go(questions.length > 0 ? "questions" : "list");
       return;
     }
     if (atLimit) return;
@@ -222,7 +228,8 @@ export default function SmartAdd() {
     setEdits(new Map());
     setFinished(false);
     readOf.current = material;
-    setStep("reading");
+    const attempt = ++attempts.current;
+    send({ type: "read", attempt });
     const controller = new AbortController();
     stop.current = controller;
     const last = captureStore.getString(CAPTURE_KEYS.smartAddDeck);
@@ -271,14 +278,15 @@ export default function SmartAdd() {
         new Set(found.filter((term) => term.ticked && !term.existing).map((term) => term.id)),
       );
       // A beat on the finished scan, so the last words land before the screen moves on.
-      setTimeout(() => {
-        if (!controller.signal.aborted) setStep(asked.length > 0 ? "questions" : "list");
-      }, 700);
+      setTimeout(
+        () => send({ type: "settled", attempt, step: asked.length > 0 ? "questions" : "list" }),
+        700,
+      );
     } catch (failure) {
       clearTimeout(idle);
       readOf.current = null;
       if (controller.signal.aborted && !quiet) return;
-      setStep("input");
+      send({ type: "settled", attempt, step: "input" });
       void qc.invalidateQueries({ queryKey: LESSON_ACCESS });
       // The notice says the limit is reached; an error line under it would only repeat it.
       setError(
@@ -293,7 +301,9 @@ export default function SmartAdd() {
 
   /** The answers' drops leave the list unticked, but still on it, so nothing goes unseen. */
   const showTerms = async () => {
-    setPending(true);
+    if (state.step !== "questions" || state.showing !== null) return;
+    const attempt = ++attempts.current;
+    send({ type: "show", attempt });
     try {
       const drops = new Set<string>();
       questions.forEach((q, i) => {
@@ -311,14 +321,15 @@ export default function SmartAdd() {
         );
         for (const id of results.flatMap((r) => r.drop)) drops.add(id);
       }
+      if (attempts.current !== attempt) return;
       setTicked(
         new Set(fresh.filter((term) => term.ticked && !drops.has(term.id)).map((term) => term.id)),
       );
-      setStep("list");
+      send({ type: "settled", attempt, step: "list" });
     } catch (failure) {
+      if (attempts.current !== attempt) return;
       setError(errorMessage(failure));
-    } finally {
-      setPending(false);
+      send({ type: "settled", attempt, step: "questions" });
     }
   };
 
@@ -387,9 +398,9 @@ export default function SmartAdd() {
       case "writing":
         return (
           <FormHeader
-            close={{ ...back, onPress: () => setStep("input") }}
+            close={{ ...back, onPress: () => go("input") }}
             title={t`Lesson text`}
-            action={{ icon: "check", label: t`Done`, onPress: () => setStep("input") }}
+            action={{ icon: "check", label: t`Done`, onPress: () => go("input") }}
           />
         );
       case "reading":
@@ -399,7 +410,7 @@ export default function SmartAdd() {
               label: t`Stop`,
               onPress: () => {
                 stop.current?.abort();
-                setStep("input");
+                go("input");
               },
             }}
             middle={<SmartAddTitle />}
@@ -408,12 +419,12 @@ export default function SmartAdd() {
       case "questions":
         return (
           <FormHeader
-            close={{ ...back, onPress: () => setStep("input") }}
+            close={{ ...back, onPress: () => go("input") }}
             middle={<SmartAddTitle />}
             action={{
               icon: "check",
               label: t`Show terms`,
-              busy: pending,
+              busy: state.step === "questions" && state.showing !== null,
               onPress: () => void showTerms(),
             }}
           />
@@ -423,7 +434,7 @@ export default function SmartAdd() {
           <FormHeader
             close={{
               ...back,
-              onPress: () => setStep(questions.length > 0 ? "questions" : "input"),
+              onPress: () => go(questions.length > 0 ? "questions" : "input"),
             }}
             middle={
               fresh.length > 0 ? (
@@ -492,7 +503,7 @@ export default function SmartAdd() {
                 if (removed) discard(removed.uri);
                 setPages((all) => all.filter((page) => page.id !== id));
               }}
-              onEditText={() => setStep("writing")}
+              onEditText={() => go("writing")}
               onRemoveText={() => setText("")}
               sources={sources}
               error={error}

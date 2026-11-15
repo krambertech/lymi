@@ -3,7 +3,7 @@ import { type AiConsentPlace, aiChoice, saveAiChoice } from "@lymi/client/ai-con
 import { settingsQuery } from "@lymi/client/queries";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { openBrowserAsync } from "expo-web-browser";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useReducer, useRef, useState } from "react";
 import { View } from "react-native";
 import { localizedSiteUrl } from "../auth/client";
 import { captureEvent } from "../telemetry/posthog";
@@ -13,6 +13,7 @@ import { Button, Icon, Text } from "../ui/primitives";
 import { Row, RowFace } from "../ui/row";
 import { Sheet, SheetError, SheetGroup, SheetNote } from "../ui/sheet";
 import { Switch } from "../ui/switch";
+import { CLOSED, consentAsk } from "./consent-ask";
 
 // Lymi sends nothing to an AI service from the phone until the learner allows it here. ADR 0039.
 
@@ -79,38 +80,51 @@ export function useAiConsent(place: AiConsentPlace) {
   const qc = useQueryClient();
   const settings = useQuery(settingsQuery);
   const choice = aiChoice(settings.data);
-  const [open, setOpen] = useState(false);
-  const answer = useRef<boolean>(false);
-  const settle = useRef<((allowed: boolean) => void) | null>(null);
+  const [state, send] = useReducer(consentAsk, CLOSED);
+  const waiting = useRef<((allowed: boolean) => void)[]>([]);
+
+  useEffect(() => {
+    if (state.status !== "closed" || waiting.current.length === 0) return;
+    for (const settle of waiting.current.splice(0)) settle(state.answer);
+  }, [state]);
 
   const ask = useCallback((): Promise<boolean> => {
     if (choice === true) return Promise.resolve(true);
     captureEvent("ai_consent_shown", { place });
-    answer.current = false;
-    setOpen(true);
+    send({ type: "ask" });
     return new Promise((resolve) => {
-      settle.current = resolve;
+      waiting.current.push(resolve);
     });
   }, [choice, place]);
 
+  const allow = async () => {
+    if (state.status !== "open") return;
+    send({ type: "allow" });
+    try {
+      // The server keeps the newest answer, so what it saved decides, not the tap.
+      const saved = await saveAiChoice(qc, true, place);
+      send({ type: "saved", allowed: saved.aiConsent === true });
+    } catch {
+      send({ type: "failed" });
+    }
+  };
+
+  const later = () => {
+    if (state.status !== "open") return;
+    send({ type: "later" });
+    // A failed no changes nothing on the server.
+    void saveAiChoice(qc, false, place).catch(() => undefined);
+  };
+
   const sheet = (
     <AiConsentSheet
-      open={open}
-      onAnswer={async (allowed) => {
-        // A failed yes keeps the sheet up with its error; a failed no changes nothing on the server.
-        // The server keeps the newest answer, so what it saved decides, not the tap.
-        if (allowed) answer.current = (await saveAiChoice(qc, true, place)).aiConsent === true;
-        else {
-          answer.current = false;
-          void saveAiChoice(qc, false, place).catch(() => undefined);
-        }
-        setOpen(false);
-      }}
-      onClose={() => setOpen(false)}
-      onDismiss={() => {
-        settle.current?.(answer.current);
-        settle.current = null;
-      }}
+      open={state.status === "open" || (state.status === "saving" && state.shown)}
+      busy={state.status === "saving"}
+      failed={state.status === "open" && state.failed}
+      onAllow={() => void allow()}
+      onLater={later}
+      onClose={() => send({ type: "close" })}
+      onDismiss={() => send({ type: "dismissed" })}
     />
   );
   return {
@@ -125,29 +139,22 @@ export function useAiConsent(place: AiConsentPlace) {
 
 function AiConsentSheet({
   open,
-  onAnswer,
+  busy,
+  failed,
+  onAllow,
+  onLater,
   onClose,
   onDismiss,
 }: {
   open: boolean;
-  onAnswer: (allowed: boolean) => Promise<void>;
+  busy: boolean;
+  failed: boolean;
+  onAllow: () => void;
+  onLater: () => void;
   onClose: () => void;
   onDismiss: () => void;
 }) {
   const { t } = useLingui();
-  const [busy, setBusy] = useState(false);
-  const [failed, setFailed] = useState(false);
-  const answer = async (allowed: boolean) => {
-    setFailed(false);
-    setBusy(allowed);
-    try {
-      await onAnswer(allowed);
-    } catch {
-      setFailed(true);
-    } finally {
-      setBusy(false);
-    }
-  };
   return (
     <Sheet
       open={open}
@@ -160,11 +167,7 @@ function AiConsentSheet({
       <AiServices />
       <AiDisclosure />
       {failed && <SheetError>{t`Couldn’t save. Check your connection and try again.`}</SheetError>}
-      <ConsentButtons
-        busy={busy}
-        onAllow={() => void answer(true)}
-        onLater={() => void answer(false)}
-      />
+      <ConsentButtons busy={busy} onAllow={onAllow} onLater={onLater} />
     </Sheet>
   );
 }

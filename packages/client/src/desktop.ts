@@ -29,8 +29,8 @@ export interface DesktopBridge {
   signIn?(provider: SignInProvider): void;
   /** Quits and opens the downloaded version. Added in version 3. */
   restartToUpdate?(): void;
-  /** Each change in the app's own update, as `MacPreferences.update`. Added in version 3. */
-  onUpdate?(listener: (update: MacUpdate) => void): () => void;
+  /** Each change in the app's own update, as `MacPreferences.update`; none after a failed check. Added in version 3. */
+  onUpdate?(listener: (update: MacUpdate | undefined) => void): () => void;
   /** The learner's theme, which the app saves for its windows and menus. Added in version 4. */
   setTheme?(theme: ThemeChoice): void;
 }
@@ -57,7 +57,7 @@ export interface MacPreferences {
   accessibility: boolean;
   version: string;
   /** Where the app's own update stands; an unpackaged app and one before version 3 leave it out. */
-  update?: MacUpdate;
+  update?: MacUpdate | undefined;
 }
 
 export type MacUpdate = "checking" | "current" | "downloading" | "ready";
@@ -116,5 +116,5 @@ export interface ToPage {
   "menu:command": MenuCommand;
   "app:navigate": string;
   "window:full-screen": boolean;
-  "app:update": MacUpdate;
+  "app:update": MacUpdate | undefined;
 }

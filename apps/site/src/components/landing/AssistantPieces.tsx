@@ -1,7 +1,10 @@
 import { Trans } from "@lingui/react/macro";
 import { FileText, Folder, LifeBuoy, Link2, Repeat } from "lucide-react";
-import type { ReactNode } from "react";
+import { motion } from "motion/react";
+import { type ReactNode, useMemo } from "react";
 import { Lantern } from "../Lantern";
+import { appear, EASE, usePlayback } from "./playback";
+import { useShowcaseStage } from "./Showcase";
 
 /*
  * The things a learner hands an assistant, and what comes back from Lymi, for the demos on the
@@ -264,8 +267,9 @@ export interface Line {
 }
 
 /**
- * A practice conversation in the chat, built from the learner's cards: the assistant asks, the
- * learner answers. A spoken one is a VoiceScene instead.
+ * A practice conversation in the chat, built from the learner's cards: Lymi hands over the cards,
+ * then each turn is its own message, the assistant's on the left and the learner's on the right in
+ * the same dark bubble as their request. A spoken one is a VoiceScene instead.
  */
 export function ConversationResult({
   lines,
@@ -278,29 +282,37 @@ export function ConversationResult({
   /** Which of the learner's cards it used. */
   source: ReactNode;
 }) {
+  const { playing, still } = useShowcaseStage();
+  // The turns arrive one after another, after the source line the exchange reveals first.
+  const beats = useMemo(
+    () => Object.fromEntries(lines.map((_, i) => [`turn${i}`, 1700 + i * 1200])),
+    [lines],
+  );
+  const { at } = usePlayback(beats, playing, still);
   return (
-    <div className="rounded-2xl bg-plate p-3.5 edge-drop">
+    <div className="flex flex-col gap-2.5">
       <p className="flex min-w-0 items-center gap-2 text-xs text-ink-secondary">
-        <span className="grid size-6 shrink-0 place-items-center rounded-full bg-plate-nested">
+        <span className="grid size-6 shrink-0 place-items-center rounded-full bg-plate edge-drop">
           <Lantern className="size-4" />
         </span>
         <span className="truncate">{source}</span>
       </p>
-      <ol lang={lang} className="mt-3 flex flex-col gap-2">
-        {lines.map((line) =>
-          line.who === "assistant" ? (
-            <li key={line.text} className="text-md text-pretty text-ink">
-              {line.text}
-            </li>
-          ) : (
-            <li
-              key={line.text}
-              className="w-fit max-w-[85%] self-end rounded-xl bg-plate-nested px-3 py-1.5 text-sm text-ink"
-            >
-              {line.text}
-            </li>
-          ),
-        )}
+      <ol lang={lang} className="flex flex-col gap-2">
+        {lines.map((line, i) => (
+          <motion.li
+            key={line.text}
+            initial={false}
+            animate={appear(at(`turn${i}`))}
+            transition={{ duration: still ? 0 : 0.45, ease: EASE }}
+            className={
+              line.who === "assistant"
+                ? "w-fit max-w-[92%] rounded-2xl rounded-ss-md bg-plate px-4 py-2.5 text-md text-pretty text-ink edge-drop"
+                : "w-fit max-w-[85%] self-end rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-pretty text-canvas"
+            }
+          >
+            {line.text}
+          </motion.li>
+        ))}
       </ol>
     </div>
   );

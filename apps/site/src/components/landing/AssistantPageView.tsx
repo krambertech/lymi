@@ -906,6 +906,7 @@ function useContent(key: AssistantKey): Content {
               </Trans>
             ),
             ask: <Trans>Quiz me on the theory questions I get wrong.</Trans>,
+            dwell: 9500,
             result: (
               <ConversationResult
                 source={<Trans>5 cards from Theory test</Trans>}

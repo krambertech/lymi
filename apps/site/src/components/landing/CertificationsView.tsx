@@ -1,16 +1,19 @@
 import { msg } from "@lingui/core/macro";
-import { Trans } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { Added, AssistantChat } from "./AssistantChat";
-import { AssistantMarksWithMore } from "./AssistantMarks";
+import { AssistantMarksWithMore, WorksWith } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
 import { FeatureSection } from "./FeatureSection";
+import { FreeBadge } from "./FreeBadge";
 import { CERTIFICATIONS_QUESTIONS } from "./faq";
 import { Hero } from "./Hero";
 import type { HandCard } from "./hand-cards";
 import { LandingLayout } from "./LandingLayout";
+import { BENTO_HUES, LanguageBento, Tile } from "./LanguageBento";
+import { DetailsSection, ReturnSection } from "./LanguageSections";
 import { Questions } from "./Questions";
-import { ReviewDemo } from "./ReviewDemo";
 import { SignUpSection } from "./SignUpSection";
+import { OfflineTile, OldDecksTile, PdfTile, TagReview } from "./StudyTiles";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const CERTIFICATIONS_TITLE = msg`Lymi for certification prep · Flashcards with spaced repetition`;
@@ -62,31 +65,9 @@ const LEAST_PRIVILEGE: SampleCard = {
   meaning: msg`Give each account only the access its task needs`,
 };
 
-const REVIEW: SampleCard[] = [
-  {
-    label: msg`Cloud`,
-    term: "RTO",
-    meaning: msg`Recovery time objective: how long a service can be down`,
-  },
-  {
-    label: msg`Security`,
-    term: "SAML",
-    meaning: msg`A standard for signing in once and passing that identity to other services`,
-  },
-  {
-    label: msg`Finance`,
-    term: "duration",
-    meaning: msg`How much a bond’s price moves when interest rates change`,
-  },
-  {
-    label: msg`Project management`,
-    term: "float",
-    meaning: msg`How long a task can slip without delaying the project`,
-  },
-];
-
 /** For the professional booked on an exam: the guide becomes a deck, and review fits the commute. */
 export function CertificationsView() {
+  const { t } = useLingui();
   const fields: UseCase[] = [
     {
       id: "cloud",
@@ -135,13 +116,16 @@ export function CertificationsView() {
       page="certifications"
       hero={
         <Hero
+          badge={<FreeBadge />}
           title={<Trans>Flashcards for your certification exam.</Trans>}
           lede={
             <Trans>
-              Turn your study guide into cards and review a few minutes a day. Lymi brings each term
-              back less often as you learn it. You can keep reviewing after the exam.
+              Drop in your study guide and Lymi turns each chapter’s key terms into cards. Review a
+              few minutes a day, and keep reviewing after the exam.
             </Trans>
           }
+          secondary={{ href: "#guide", label: <Trans>See how it works</Trans> }}
+          after={<WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />}
           cards={HAND}
         />
       }
@@ -149,11 +133,12 @@ export function CertificationsView() {
       <UseCases title={<Trans>For the exam you’re studying for.</Trans>} items={fields} />
 
       <FeatureSection
+        id="guide"
         title={<Trans>Turn a study guide into cards.</Trans>}
         body={
           <Trans>
-            Send a chapter to Claude, ChatGPT, Gemini or Grok and ask for the key terms. It adds
-            each one to your deck with the guide’s definition.
+            Drop a chapter into Smart add, or send it to Claude, ChatGPT, Gemini or Grok and ask for
+            the key terms. Each card keeps the guide’s definition.
           </Trans>
         }
         after={<AssistantMarksWithMore />}
@@ -181,19 +166,39 @@ export function CertificationsView() {
         />
       </FeatureSection>
 
-      <FeatureSection
-        demoFirst
-        tinted
+      <ReturnSection
+        lang="en"
+        term={() => "SAML"}
         title={<Trans>Ten minutes between meetings.</Trans>}
         body={
           <Trans>
-            One card at a time, graded in a tap, on your phone or your laptop, even offline. The
-            terms you know wait longer, and the ones you miss come back sooner.
+            Each time you remember a term, Lymi waits longer before showing it again. Forget it, and
+            it comes back soon. A few cards between meetings is enough.
           </Trans>
         }
-      >
-        <ReviewDemo cards={REVIEW} />
-      </FeatureSection>
+      />
+
+      <DetailsSection title={<Trans>Built for exam prep.</Trans>}>
+        <LanguageBento layout="wide">
+          <Tile
+            wide
+            hue={BENTO_HUES[0]}
+            title={<Trans>One chapter at a time</Trans>}
+            body={<Trans>Tag cards by chapter, pick one tag and review just those cards.</Trans>}
+          >
+            <TagReview
+              tags={[
+                [t`Chapter 3`, 24],
+                [t`Chapter 4`, 18],
+                [t`Chapter 5`, 31],
+              ]}
+            />
+          </Tile>
+          <PdfTile files={[t`security-plus-chapter-4.pdf`, t`practice-exam-notes.pdf`]} />
+          <OfflineTile />
+          <OldDecksTile />
+        </LanguageBento>
+      </DetailsSection>
 
       <Questions title={<Trans>Common questions.</Trans>} items={CERTIFICATIONS_QUESTIONS} />
 

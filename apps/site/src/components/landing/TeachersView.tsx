@@ -1,21 +1,49 @@
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
-import { buttonClass } from "../Button";
-import { ApiConnections } from "./ApiConnections";
 import { ClassHero } from "./ClassHero";
 import { FeatureSection } from "./FeatureSection";
 import { TEACHERS_QUESTIONS } from "./faq";
 import { JoinLinkDemo } from "./JoinLinkDemo";
 import { LandingLayout } from "./LandingLayout";
-import { ReturnSection } from "./LanguageSections";
+import { BENTO_HUES, CheckList, LanguageBento, Tile } from "./LanguageBento";
+import { DetailsSection, ReturnSection } from "./LanguageSections";
 import { LibraryDemo } from "./LibraryDemo";
 import { Questions } from "./Questions";
 import { SeriesDemo } from "./SeriesDemo";
 import { SignUpSection } from "./SignUpSection";
+import { DeckStyle } from "./StudyTiles";
 import { type UseCase, UseCases } from "./UseCases";
 
 export const TEACHERS_TITLE = msg`Lymi for teachers · One deck for your whole class`;
 export const TEACHERS_BLURB = msg`Build a course in sections, share it with one link, and add what you taught after every lesson. Each learner reviews on their own schedule.`;
+
+/** A shared deck's People: who joined, and an invitation still waiting. */
+function People() {
+  return (
+    <div aria-hidden="true" className="grid gap-2">
+      <p className="flex items-center justify-between gap-3 rounded-md bg-plate px-4 py-3 text-md edge">
+        <span className="truncate text-ink-muted">anna@example.com</span>
+        <span className="shrink-0 rounded-md bg-amber px-3 py-1 text-sm font-medium text-amber-ink">
+          <Trans>Invite</Trans>
+        </span>
+      </p>
+      <ul className="grid gap-2">
+        {[
+          ["Mari", <Trans key="j">Joined</Trans>],
+          ["Jaan", <Trans key="i">Invited</Trans>],
+        ].map(([name, state]) => (
+          <li
+            key={String(name)}
+            className="flex items-center justify-between gap-3 rounded-md bg-plate px-4 py-3 text-md edge"
+          >
+            <span className="text-ink">{name}</span>
+            <span className="text-ink-muted">{state}</span>
+          </li>
+        ))}
+      </ul>
+    </div>
+  );
+}
 
 /** The page for tutors and small classes: build the course, share it, keep adding to it. */
 export function TeachersView() {
@@ -108,42 +136,77 @@ export function TeachersView() {
         }
       />
 
-      <FeatureSection
-        demoFirst
-        tinted
-        title={<Trans>Fill decks from the tools you already use.</Trans>}
-        body={
-          <Trans>
-            Send a lesson plan to Claude, ChatGPT, Gemini or Grok and it adds the cards for you.
-            Lymi also has a public API, so you can bring in a list from a spreadsheet, add cards
-            from your course platform, or show what’s due on your class site.
-          </Trans>
-        }
-        after={
-          <div className="flex flex-wrap gap-2">
-            <a href="/docs" className={buttonClass("secondary")}>
-              <Trans>See how it works</Trans>
-            </a>
-            <a href="/docs/api" className={buttonClass("ghost")}>
+      <DetailsSection
+        title={<Trans>Built for teaching.</Trans>}
+        body={<Trans>What helps once the class is under way.</Trans>}
+      >
+        <LanguageBento layout="wide">
+          <Tile
+            wide
+            hue={BENTO_HUES[0]}
+            title={<Trans>Start from a ready-made deck</Trans>}
+            body={
+              <Trans>
+                Pick a free deck from the library and send your class its link. Each learner adds it
+                in one tap.
+              </Trans>
+            }
+          >
+            <LibraryDemo />
+          </Tile>
+          <Tile
+            hue={BENTO_HUES[1]}
+            title={<Trans>Invite by email, see who’s in</Trans>}
+            body={
+              <Trans>
+                Invite learners by email as well as by link, and see who has joined the deck.
+              </Trans>
+            }
+          >
+            <People />
+          </Tile>
+          <Tile
+            hue={BENTO_HUES[2]}
+            title={<Trans>AI follows your deck’s style</Trans>}
+            body={
+              <Trans>
+                Tell a deck how to write, and AI matches it and the cards you wrote yourself.
+              </Trans>
+            }
+          >
+            <DeckStyle
+              instructions={<Trans>Instructions: A1 learners. Short, everyday examples.</Trans>}
+              term="kohtuma"
+              lang="et"
+              meaning={<Trans>To meet</Trans>}
+            />
+          </Tile>
+          <Tile
+            hue={BENTO_HUES[3]}
+            title={<Trans>Fill it from your tools</Trans>}
+            body={
+              <Trans>
+                Send a lesson plan to your AI assistant, or use Lymi’s public API from your own
+                tools.
+              </Trans>
+            }
+          >
+            <CheckList
+              items={[
+                <Trans key="s">A word list from a spreadsheet</Trans>,
+                <Trans key="p">Cards from your course platform</Trans>,
+                <Trans key="d">What’s due, on your class site</Trans>,
+              ]}
+            />
+            <a
+              href="/docs/api"
+              className="mt-4 inline-flex text-md font-medium text-ink underline decoration-edge-strong underline-offset-4 hoverable:hover:decoration-current"
+            >
               <Trans>API reference</Trans>
             </a>
-          </div>
-        }
-      >
-        <ApiConnections />
-      </FeatureSection>
-
-      <FeatureSection
-        title={<Trans>Start with a ready-made deck.</Trans>}
-        body={
-          <Trans>
-            Pick a free deck from the library and send your class its link. Each learner adds it in
-            one tap and keeps their own schedule.
-          </Trans>
-        }
-      >
-        <LibraryDemo />
-      </FeatureSection>
+          </Tile>
+        </LanguageBento>
+      </DetailsSection>
 
       <Questions title={<Trans>Questions from teachers.</Trans>} items={TEACHERS_QUESTIONS} />
 

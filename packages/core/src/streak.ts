@@ -55,6 +55,36 @@ export interface StreakDay {
 export const daySatisfied = (outcome: ReviewDayOutcome | null | undefined) =>
   outcome === "goal_met" || outcome === "exhausted";
 
+/** What just happened to a day: a grade, an undo, a new goal, a replayed grade, or a visit. */
+export type DayChange = "grade" | "undo" | "goal" | "check" | "visit";
+
+/** What a day's outcome is decided from, read together so the write can check none moved. */
+export interface DayFacts {
+  outcome: ReviewDayOutcome;
+  goal: number;
+  /** Accepted attempts: reviews less the ones taken back. */
+  attempts: number;
+  /** Whether a visit already confirmed the day as nothing due. */
+  zeroDueConfirmed: boolean;
+  /** The day is today and nothing eligible is left to review. */
+  nothingLeft: boolean;
+}
+
+/**
+ * Where a day stands after a change. Attempts reaching the goal meet it; attempts with nothing left
+ * exhaust it; a visit to a day with no attempts and nothing left confirms it as nothing due. Only
+ * Undo reopens a day, back to nothing due when a visit confirmed that first.
+ */
+export function nextOutcome(day: DayFacts, change: DayChange): ReviewDayOutcome {
+  if (day.attempts >= day.goal) return "goal_met";
+  if (day.nothingLeft && day.attempts > 0) return "exhausted";
+  if (change === "visit" && day.nothingLeft && day.attempts === 0 && day.outcome === "open") {
+    return "nothing_due";
+  }
+  if (change === "undo") return day.zeroDueConfirmed ? "nothing_due" : "open";
+  return day.outcome;
+}
+
 /** A day the run survives: it counted, or a confirmed nothing-due day protected it. */
 export const keepsRun = (day: Pick<StreakDay, "satisfied" | "outcome"> | undefined) =>
   !!day && (day.satisfied || day.outcome === "nothing_due");

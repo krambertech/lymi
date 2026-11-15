@@ -19,6 +19,7 @@ import {
 import { getSettings, updateSettings } from "./settings";
 import { insights } from "./stats";
 import { learner, testDb } from "./test-db";
+import { racedBy } from "./test-race";
 
 let db: Db;
 let dispose: () => Promise<void>;
@@ -409,6 +410,46 @@ describe("a day with nothing due", () => {
     const { ctx } = await setup(10, ["kaksteist"]);
 
     expect(await checkToday(ctx)).toMatchObject({ outcome: "open" });
+  });
+});
+
+describe("a grade that lands while the day is being settled", () => {
+  /** A learner whose cards are not due, so opening Lymi finds nothing to review. */
+  async function nothingDue(goal: number) {
+    const { ctx, cards } = await setup(goal, ["hiljem", "homme"]);
+    const [card, other] = cards;
+    if (!card || !other) throw new Error("no cards");
+    await db
+      .update(schema.cardStates)
+      .set({ due: later(30 * 86_400) })
+      .where(eq(schema.cardStates.userId, ctx.userId));
+    return { ctx, card, other };
+  }
+
+  const stored = async (ctx: ServiceContext) => {
+    const [row] = await db
+      .select()
+      .from(schema.reviewDays)
+      .where(and(eq(schema.reviewDays.userId, ctx.userId), eq(schema.reviewDays.date, today())));
+    return row;
+  };
+
+  it("never confirms nothing due over a grade that landed after the visit read the day", async () => {
+    const { ctx, card } = await nothingDue(1);
+    const visit = racedBy(ctx, schema.reviewDays, () => grade(ctx, card.id, 3, new Date()));
+
+    expect(await checkToday(visit)).toMatchObject({ attempts: 1, outcome: "goal_met" });
+    expect(await stored(ctx)).toMatchObject({ outcome: "goal_met", zeroDueConfirmedAt: null });
+  });
+
+  it("settles a grade on the attempts that are there when it writes", async () => {
+    const { ctx, card, other } = await nothingDue(2);
+    await checkToday(ctx);
+    const first = racedBy(ctx, schema.reviewDays, () => grade(ctx, other.id, 3, new Date()));
+
+    const { day } = await grade(first, card.id, 3, new Date());
+    expect(day).toMatchObject({ attempts: 2, outcome: "goal_met" });
+    expect(await stored(ctx)).toMatchObject({ outcome: "goal_met" });
   });
 });
 

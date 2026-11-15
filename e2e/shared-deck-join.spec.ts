@@ -272,3 +272,62 @@ test("an owner turns the join link off and a member leaves", async ({
 
   await classmate.context().close();
 });
+
+test("a member reporting a card in review grades nothing behind the report", async ({
+  page,
+  browser,
+}, testInfo) => {
+  const classmate = await signedOutPage(browser);
+  let deckId = "";
+
+  await test.step("the owner shares a deck and a member joins through the API", async () => {
+    await startAsTestLearner(page, testInfo, "join-owner");
+    const deck = await page.request.post("/api/decks", {
+      data: { name: `Estonian report ${testInfo.project.name}`, defaultLanguage: "et" },
+    });
+    expect(deck.ok()).toBeTruthy();
+    deckId = ((await deck.json()) as { id: string }).id;
+    const card = await page.request.post("/api/cards", {
+      data: { deckId, term: "head aega", meaning: "goodbye", enrich: false },
+    });
+    expect(card.ok()).toBeTruthy();
+    const on = await page.request.post(`/api/decks/${deckId}/join-link`);
+    expect(on.ok()).toBeTruthy();
+    const joinUrl = ((await on.json()) as { link: { url: string } }).link.url;
+
+    await startAsTestLearner(classmate, testInfo, "join-member");
+    const joined = await classmate.request.post(`/api/join/${joinUrl.split("/").at(-1)}`, {
+      headers: { "content-type": "application/json" },
+    });
+    expect(joined.ok()).toBeTruthy();
+  });
+
+  const card = classmate.getByLabel(/ card for (head aega|goodbye)$/);
+  const grades = classmate.getByRole("group", { name: "Choose a recall grade" });
+  await test.step("the member opens the report from the revealed card's menu", async () => {
+    await classmate.goto(`/review?deck=${deckId}`);
+    await expect(card).toBeVisible();
+    await classmate.keyboard.press("Space");
+    await expect(grades).toBeVisible();
+    // The trigger is only for a screen reader on touch, so it is reached the same way on both.
+    await classmate.getByRole("button", { name: "Card options" }).focus();
+    await classmate.keyboard.press("Enter");
+    await classmate.getByRole("menuitem", { name: "Report card" }).click();
+  });
+
+  await test.step("grade keys pressed in the report leave the card alone", async () => {
+    const report = classmate.getByRole("dialog", { name: /^Report/ });
+    await expect(report).toBeVisible();
+    // Focus on the sheet itself, not a field, which is where a click on its text leaves it.
+    await report.getByText("We read every report within a day.").click();
+    await classmate.keyboard.press("1");
+    await classmate.keyboard.press("Space");
+    await expect(report).toBeVisible();
+    await report.getByRole("button", { name: "Cancel" }).click();
+    await expect(report).toBeHidden();
+    await expect(card).toBeVisible();
+    await expect(grades).toBeVisible();
+  });
+
+  await classmate.context().close();
+});

@@ -3,6 +3,7 @@ import { FileText, Folder, LifeBuoy, Link2, Repeat } from "lucide-react";
 import { motion } from "motion/react";
 import { type ReactNode, useMemo } from "react";
 import { Lantern } from "../Lantern";
+import { AssistantMark, type AssistantName } from "./AssistantMarks";
 import { appear, EASE, usePlayback } from "./playback";
 import { useShowcaseStage } from "./Showcase";
 
@@ -272,10 +273,13 @@ export interface Line {
  * the same dark bubble as their request. A spoken one is a VoiceScene instead.
  */
 export function ConversationResult({
+  assistant,
   lines,
   lang,
   source,
 }: {
+  /** Its mark goes beside each of its turns that follows the learner's, as a chat groups them. */
+  assistant: AssistantName;
   lines: readonly Line[];
   /** The language the lines are in, when it is not the page's. */
   lang?: string;
@@ -291,8 +295,9 @@ export function ConversationResult({
   const { at } = usePlayback(beats, playing, still);
   return (
     <div className="flex flex-col gap-2.5">
-      <p className="flex min-w-0 items-center gap-2 text-xs text-ink-secondary">
-        <span className="grid size-6 shrink-0 place-items-center rounded-full bg-plate edge-drop">
+      {/* The cards Lymi handed over, as a pill the height of the assistant's mark beside it. */}
+      <p className="flex h-8 w-fit max-w-full min-w-0 items-center gap-2 rounded-full bg-plate ps-1 pe-3 text-xs text-ink-secondary edge-drop">
+        <span className="grid size-6 shrink-0 place-items-center rounded-full bg-plate-nested">
           <Lantern className="size-4" />
         </span>
         <span className="truncate">{source}</span>
@@ -306,10 +311,16 @@ export function ConversationResult({
             transition={{ duration: still ? 0 : 0.45, ease: EASE }}
             className={
               line.who === "assistant"
-                ? "w-fit max-w-[92%] rounded-2xl rounded-ss-md bg-plate px-4 py-2.5 text-md text-pretty text-ink edge-drop"
+                ? "relative w-fit max-w-[92%] rounded-2xl rounded-ss-md bg-plate px-4 py-2.5 text-md text-pretty text-ink edge-drop"
                 : "w-fit max-w-[85%] self-end rounded-2xl rounded-ee-md bg-ink px-4 py-2.5 text-md text-pretty text-canvas"
             }
           >
+            {line.who === "assistant" && lines[i - 1]?.who === "you" && (
+              // In the exchange's gutter, where its first mark sits: 32 px mark plus 10 px gap.
+              <span className="absolute -start-[42px] top-1 grid size-8 place-items-center rounded-full bg-plate edge-drop [&_svg]:size-4">
+                <AssistantMark name={assistant} />
+              </span>
+            )}
             {line.text}
           </motion.li>
         ))}

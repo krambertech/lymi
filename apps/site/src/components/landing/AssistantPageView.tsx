@@ -909,6 +909,7 @@ function useContent(key: AssistantKey): Content {
             dwell: 9500,
             result: (
               <ConversationResult
+                assistant="Grok Bot"
                 source={<Trans>5 cards from Theory test</Trans>}
                 lines={[
                   { who: "assistant", text: t`Stopping distance at 30 mph on a dry road?` },

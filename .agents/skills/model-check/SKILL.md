@@ -1,0 +1,98 @@
+---
+name: model-check
+description: Model-check the few Lymi flows where a wrong order of events loses or leaks data, with TLA+ and TLC. Use when a change touches the offline write queue (packages/client/src/writes.ts, queued.ts, the phone's Sync and sign-out screens) or how the server settles a review day (apps/web/src/server/services/review-days.ts, the grade in review.ts, nextOutcome in packages/core/src/streak.ts).
+---
+
+# Model-check the flows that can lose data
+
+Each model is a small TLA+ description of one flow, checked by TLC over every order of its steps within stated bounds. Tests cover the orders someone wrote down; a model covers all of them. A pass covers the model and its bounds, not the whole system.
+
+| Model | Rule | On `main` |
+| --- | --- | --- |
+| [Write queue](#write-queue) | A learner's queued write is never sent on another learner's session | Holds |
+| [Review day](#review-day) | Once every request is answered, the day's outcome is the one its reviews call for | Breaks; see the section |
+
+## Run a check
+
+```bash
+.agents/skills/model-check/scripts/check.sh WriteQueue
+.agents/skills/model-check/scripts/check.sh ReviewDay
+```
+
+It needs Java 11 or later (`brew install openjdk`, or set `JAVA`). The first run downloads TLC 1.7.4 to `~/.cache/lymi` and checks its SHA-256; set `TLA2TOOLS` to use a jar you already have. A pass prints `distinct states found` and no `violated` line. A broken rule prints `Invariant <Name> is violated` with the steps. To check another configuration, copy the model's `.cfg`, change a constant and pass the copy as the second argument.
+
+To read a result as a chart or as a path in plain words, use the pstack statechart skill on the model's `.tla`, its `.cfg` and its `.view.mjs`. It is installed per machine and its commands change between releases, so take them from that skill.
+
+## When a check fails
+
+Read the path as a sequence of things people and the server do. Then replay it against the real code as a test, one call per step, holding a request back where the path interleaves another. The section of each model names where its replays live.
+
+- The replay fails: the code has the bug. Report the path in the code's words and fix the code, or report it to whoever owns the fix.
+- The replay passes: the model is wrong. Find the step that the code does not take, or takes together with another, and correct the model. Do not weaken the rule.
+
+## When you change the covered code
+
+Change the model in the same pull request, so that each step still names one thing the code does in one go: one D1 statement on the server, one synchronous stretch between awaits on the client. Add a variable when the code gains state the rule depends on. Run the check, then record the commit you confirmed in the model's section.
+
+## Write queue
+
+**Rule:** a write one learner queued is never sent on another learner's session. **Harm:** a card or deck made offline by one person lands in the next person's account on a shared phone, and nothing tells either of them.
+
+The invariant is `NoCrossSend` in [`models/WriteQueue.tla`](models/WriteQueue.tla), checked with [`models/WriteQueue.cfg`](models/WriteQueue.cfg): two learners, two writes, three claims. A pass ends with `4618 distinct states found` in under ten seconds.
+
+| Model step | Code |
+| --- | --- |
+| `SyncClaims` | `claimWrites` in `packages/client/src/writes.ts`, `claimQueued` in `packages/client/src/queued.ts`, called from `Sync` in `apps/mobile/src/data/sync.ts` and from `apps/web/src/client/routes/__root.tsx` |
+| `Submit` | `submit` and `put` in `writes.ts` |
+| `FlushStarts`, `FlushStopsOnClaim`, `SendLeavesAny`, `SendLands`, `SendStops`, `SendFails`, `FlushEnds` | `flushQueued` in `writes.ts`: the snapshot of `read()`, the `claim !== mine` checks, `sendWithin`, `remove` and `put` |
+| `SessionEnds` | the session ending, with `unclaimWrites` in the cleanup of `Sync`'s effect |
+| `Drops` | `dropWrites` in `writes.ts`, called from `apps/mobile/src/app/(tabs)/you/index.tsx`, `delete-account.tsx` and `delete-code.tsx` |
+
+The model describes the code at `0d80e817a` on `main`. A request takes its session when it leaves (`config.headers()` in `packages/client/src/api/request.ts`), and the flush loop awaits `flushGrades` before each send, so the learner can change between two sends of one flush. The model keeps both facts; do not merge those steps.
+
+Replays live in `packages/client/src/writes.test.ts`: "sends nothing after a sign-out", "does not put a write back when the learner signed out", "stops a flush that was mid-way when the learner left" and "keeps the queue but holds it".
+
+**See it fail.** Each guard is a constant in the config, and each one set to `FALSE` breaks the rule:
+
+- `ReleasesOnSignOut`: the queue stays claimed and in memory after sign-out, as on `main` before pull request 1156.
+- `ChecksClaimBeforeSend`: a flush that was waiting on grades when the learner left sends its next write on the new learner's session.
+- `ChecksClaimOnFailure`: a request that fails after the next learner claimed the queue writes the first learner's entry back, and the next flush sends it.
+
+**Leaves out:** more than two learners, two writes and three claims; the grades outbox in `packages/client/src/grades.ts`; the retry timer and the web's cross-tab lock; the web's sign-out, which reloads the page; and whether the server accepts a write.
+
+## Review day
+
+**Rule:** once every request has its answer, today's `review_days.outcome` is the one its reviews call for, so a day with reviews never ends `nothing_due` and no grade or Undo is lost. **Harm:** the streak counts a day the learner did not finish, or drops one they did, and Today shows a goal state the server no longer holds.
+
+The invariants are `NothingDueOnlyWithoutAttempts` and `NoLostUpdate` in [`models/ReviewDay.tla`](models/ReviewDay.tla). [`models/ReviewDay.cfg`](models/ReviewDay.cfg) checks two grades, one Undo of a grade made earlier, and one visit (opening Lymi), on a day with a goal of two and no cards due, starting with or without that earlier grade. Each request reads and writes in separate statements, and any of them may never be sent.
+
+| Model step | Code |
+| --- | --- |
+| `Reads` | `openDay` in a grade (`gradeCard` in `apps/web/src/server/services/review.ts`); the day select in `undoReview` and `checkToday` in `review-days.ts` |
+| `GradeLands` | `gradeCard`'s batch: the card state and the review row |
+| `UndoLands` | `restoreIfLatest` |
+| `VisitCountsDue` | `drawableCount` at the top of `checkToday` |
+| `VisitCounts`, `VisitConfirms` | `checkToday` on `main`: `attemptsOn`, then the update to `nothing_due` |
+| `ReadsAgain` | a select of the day row at the top of `settleDay`, which no commit has yet |
+| `Counts` | `attemptsOn` and `drawableCount` in `settleDay`, then `nextOutcome` in `packages/core/src/streak.ts` or the rules inlined on `main` |
+| `Writes`, `Rereads` | `settleDay`'s update, and on #1164 its re-read when the compare-and-set misses, up to `SETTLE_TRIES` |
+
+Three constants choose the code the model describes:
+
+| `CompareAndSet` | `ReadsDayFirst` | Code | Result |
+| --- | --- | --- | --- |
+| `FALSE` | `FALSE` | `main` at `0d80e817a`; the default config | Both rules break |
+| `TRUE` | `FALSE` | pull request 1164 at `b3cf33538` | `NoLostUpdate` and `NothingDueOnlyWithoutAttempts` break |
+| `TRUE` | `TRUE` | 1164 plus a select of the day row at the top of `settleDay` | Holds: 105,573 distinct states in about a second |
+
+The paths TLC finds, each replayed on a local D1:
+
+- A grade lands while opening Lymi confirms the day as nothing due: the visit writes `nothing_due` over a day with one review. Broken on `main`, fixed by 1164.
+- Undo of an earlier grade reads the day; another grade then meets the goal; the Undo lands and, finding the outcome it decided equal to the one it read, writes nothing: `goal_met` with one review of two. Broken on `main` and on 1164.
+- A grade reads the day as done; an Undo and a visit make it nothing due; the grade lands and writes nothing for the same reason: `nothing_due` with one review. Broken on `main` and on 1164.
+
+`settleDay` decides from its caller's copy of the row, read before the grade or Undo landed, and returns without writing when the new outcome equals that stale one, so the compare-and-set never runs. The replays are not in the repository yet, because they fail until the fix lands; add them to `apps/web/src/server/services/review-days.test.ts` with the fix.
+
+**See it fail.** With `CompareAndSet` and `ReadsDayFirst` both `TRUE` the rule holds; setting either to `FALSE` breaks it. `Tries` is `SETTLE_TRIES`; within these bounds the rule still holds with `1`, so the bound on retries is not what keeps it.
+
+**Leaves out:** changing the goal (`applyGoalToToday`), midnight and the zone, grade replays (`duplicate` in `gradeCard`), more than two grades and one Undo, cards that become due during the day, and `drawableCount` read at a different moment from `attemptsOn`.

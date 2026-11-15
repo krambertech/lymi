@@ -33,8 +33,11 @@ const ARRIVE_EASE = Easing.bezier(0.23, 1, 0.32, 1);
 export function useUndoSwipe({ enabled, onUndo }: { enabled: boolean; onUndo: () => boolean }) {
   const { width } = useWindowDimensions();
   const x = useSharedValue(0);
+  // The latest render's, since a refused grade can land while the card slides off.
+  const latest = useRef(onUndo);
+  latest.current = onUndo;
   const land = () => {
-    if (!onUndo()) x.value = withSpring(0, BACK);
+    if (!latest.current()) x.value = withSpring(0, BACK);
   };
   const dir = I18nManager.isRTL ? -1 : 1;
   const gesture = Gesture.Pan()

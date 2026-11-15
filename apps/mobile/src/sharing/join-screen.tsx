@@ -137,13 +137,13 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
   const sessionState = session.isPending ? "pending" : signedIn ? "in" : "out";
   useEffect(() => {
     if (resuming.status !== "waiting") return;
-    const step = resumeStep(sessionState, viewer);
+    const step = resumeStep(sessionState, viewer, preview.isError);
     if (step === "wait") return;
     // Taken whoever signed in, so a promise never waits for a later visit to the same link.
     const joins = step !== "show" && takeJoin(key) && step === "join";
     setResume({ type: joins ? "join" : "show" });
     if (joins) join.mutate();
-  }, [resuming.status, sessionState, viewer, key, join]);
+  }, [resuming.status, sessionState, viewer, preview.isError, key, join]);
 
   const signIn = () => {
     const path = published

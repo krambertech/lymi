@@ -81,9 +81,11 @@ export default function SmartAdd() {
   const step = state.step;
   // Bumped by every read, Show terms and move by hand, so an answer knows whether it still applies.
   const attempts = useRef(0);
-  const asking = useRef(false);
+  // The Show terms under way, cleared by a move by hand so the next tap can start a new one.
+  const asking = useRef<number | null>(null);
   const go = (to: "input" | "writing" | "questions" | "list") => {
     attempts.current++;
+    asking.current = null;
     send({ type: "go", step: to });
   };
   const [pages, setPages] = useState<Page[]>([]);
@@ -303,9 +305,9 @@ export default function SmartAdd() {
   /** The answers' drops leave the list unticked, but still on it, so nothing goes unseen. */
   const showTerms = async () => {
     // A ref, since a second tap can arrive before the first one's state is drawn.
-    if (state.step !== "questions" || asking.current) return;
-    asking.current = true;
+    if (state.step !== "questions" || asking.current !== null) return;
     const attempt = ++attempts.current;
+    asking.current = attempt;
     send({ type: "show", attempt });
     try {
       const drops = new Set<string>();
@@ -334,7 +336,7 @@ export default function SmartAdd() {
       setError(errorMessage(failure));
       send({ type: "settled", attempt, step: "questions" });
     } finally {
-      asking.current = false;
+      if (asking.current === attempt) asking.current = null;
     }
   };
 

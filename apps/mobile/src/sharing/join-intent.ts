@@ -32,10 +32,15 @@ type Viewer = "signed-out" | "visitor" | "member" | "owner" | "removed";
  * with a new session, join, or show the deck. Signed out, the promise cannot be kept here, so the
  * deck is shown with its button and the promise waits for a later sign-in.
  */
-export function resumeStep(session: "pending" | "in" | "out", viewer: Viewer | undefined) {
-  if (session === "pending") return "wait";
+export function resumeStep(
+  session: "pending" | "in" | "out",
+  viewer: Viewer | undefined,
+  failed = false,
+) {
+  if (session === "pending") return failed ? "show" : "wait";
   if (session === "out") return "show";
-  if (!viewer || viewer === "signed-out") return "wait";
+  // A preview that failed to load again cannot catch up, so the deck shows as it was.
+  if (!viewer || viewer === "signed-out") return failed ? "show" : "wait";
   return viewer === "visitor" ? "join" : "drop";
 }
 

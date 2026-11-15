@@ -35,6 +35,10 @@ describe("coming back to a promised link", () => {
     expect(resumeStep("in", undefined)).toBe("wait");
   });
 
+  it("shows the deck when the preview fails to catch up with a new session", () => {
+    expect(resumeStep("in", "signed-out", true)).toBe("show");
+  });
+
   it("joins for a visitor and lets the promise go for anyone already in the deck", () => {
     expect(resumeStep("in", "visitor")).toBe("join");
     expect(resumeStep("in", "member")).toBe("drop");

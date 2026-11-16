@@ -90,12 +90,14 @@ export function EditCardSheet({
     if (!card) return;
     const id = ++attempt.current;
     dispatch({ type: "save" });
+    let saved: Card = card;
     try {
       const patch = cardPatch(card, values);
       const { card: written, queued } = Object.keys(patch).length
         ? await writes.updateCard(card, patch)
         : { card, queued: false };
       dispatch({ type: "written" });
+      saved = written;
       const latest = queued ? written : ((await savePicture(written, values)) ?? written);
       await refreshAfterCardWrite(qc, card.id);
       if (queued) {
@@ -120,7 +122,15 @@ export function EditCardSheet({
         // Closed once the card was written, the sheet has no form left to say this in.
         const term = shortQuote(values.term);
         toast.add({
+          id: "picture-unchanged",
           title: t`Saved “${{ term: isolate(term) }}” without the picture change. ${{ pictureError: message }}`,
+          actionProps: {
+            children: t`Edit card`,
+            onClick: () => {
+              toast.close("picture-unchanged");
+              onReopen(saved);
+            },
+          },
         });
       }
       // Whatever landed before the failure stays; saving again sends only what is still different.

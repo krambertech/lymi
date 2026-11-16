@@ -235,4 +235,6 @@ test("a picture that fails after its sheet closed says so in a toast", async () 
   await expect
     .poll(() => notifications.element().textContent)
     .toContain("without the picture change. Lymi couldn’t archive the picture.");
+  await notifications.getByRole("button", { name: "Edit card" }).click();
+  await expect.element(sheet).toBeInTheDocument();
 });

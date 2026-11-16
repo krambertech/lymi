@@ -4748,6 +4748,9 @@ msgstr "Save time"
 msgid "Saved"
 msgstr "Saved"
 
+msgid "Saved “{term}” without the picture change. {pictureError}"
+msgstr "Saved “{term}” without the picture change. {pictureError}"
+
 msgid "Saved on this device until Lymi can be reached."
 msgstr "Saved on this device until Lymi can be reached."
 

@@ -1,5 +1,6 @@
 import { useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
+import { isolate } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { type ComponentProps, useReducer, useRef, useState } from "react";
 import type { Card, DeckSummary } from "../lib/api";
@@ -7,6 +8,7 @@ import { errorMessage } from "../lib/api";
 import { cardPatch, hasChanges, refreshAfterCardWrite, savePicture } from "../lib/card-writes";
 import { useOverlayShape } from "../lib/device";
 import { sheetPhase } from "../lib/sheet-phase";
+import { shortQuote } from "../lib/short-quote";
 import {
   CardForm,
   type CardFormDraft,
@@ -111,10 +113,19 @@ export function EditCardSheet({
       return undefined;
     } catch (e) {
       // Released first: the refresh waits on refetches a stalled connection may never answer.
-      if (id === attempt.current) dispatch({ type: "settle" });
+      const message = errorMessage(e);
+      if (id === attempt.current) {
+        dispatch({ type: "settle" });
+      } else {
+        // Closed once the card was written, the sheet has no form left to say this in.
+        const term = shortQuote(values.term);
+        toast.add({
+          title: t`Saved “${{ term: isolate(term) }}” without the picture change. ${{ pictureError: message }}`,
+        });
+      }
       // Whatever landed before the failure stays; saving again sends only what is still different.
       await refreshAfterCardWrite(qc, card.id);
-      return { status: "failed", message: errorMessage(e) };
+      return { status: "failed", message };
     } finally {
       // A save the learner closed on and saved again after must not release the newer one.
       if (id === attempt.current) dispatch({ type: "settle" });

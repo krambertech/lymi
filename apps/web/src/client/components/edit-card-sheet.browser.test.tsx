@@ -8,7 +8,7 @@ import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
 import { cards, decks, queueItemPicture } from "../design/mock";
-import { api, type Card } from "../lib/api";
+import { ApiError, api, type Card } from "../lib/api";
 import { decksQuery } from "../lib/queries";
 import { EditCardSheet } from "./edit-card-sheet";
 import { Toaster } from "./ui/toast";
@@ -192,4 +192,47 @@ test("a closed save that answers late leaves a newer save holding the sheet", as
   await expect.element(sheet).toBeInTheDocument();
   const notifications = page.getByRole("region", { name: "Notifications" });
   expect(notifications.element().textContent).not.toContain("Changes discarded");
+});
+
+test("a picture that fails after its sheet closed says so in a toast", async () => {
+  const pictured = queueItemPicture.card as Card;
+  let fail = () => {};
+  vi.spyOn(api, "archiveCardImage").mockReturnValue(
+    new Promise((_, reject) => {
+      fail = () => reject(new ApiError(503, "Lymi couldn’t archive the picture."));
+    }),
+  );
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client.setQueryData(["tags"], []);
+  function Pictured() {
+    const [open, setOpen] = useState<Card | null>(pictured);
+    return (
+      <EditCardSheet
+        card={open}
+        decks={decks}
+        onOpenChange={(next) => !next && setOpen(null)}
+        onReopen={setOpen}
+      />
+    );
+  }
+  await render(
+    <QueryClientProvider client={client}>
+      <I18nProvider i18n={i18n}>
+        <Toaster aria-label="Notifications" closeLabel="Dismiss" timeout={0} />
+        <Pictured />
+      </I18nProvider>
+    </QueryClientProvider>,
+  );
+  const sheet = page.getByRole("dialog", { name: "Edit card" });
+  await sheet.getByRole("button", { name: "Archive the picture" }).click();
+  await sheet.getByRole("button", { name: "Save" }).click();
+  await expect.poll(() => api.archiveCardImage).toHaveBeenCalled();
+  await userEvent.keyboard("{Escape}");
+  await expect.element(sheet).not.toBeInTheDocument();
+
+  fail();
+  const notifications = page.getByRole("region", { name: "Notifications" });
+  await expect
+    .poll(() => notifications.element().textContent)
+    .toContain("without the picture change. Lymi couldn’t archive the picture.");
 });

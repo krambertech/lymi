@@ -7,8 +7,8 @@ import { afterEach, expect, test, vi } from "vitest";
 import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
 import { messages } from "../../locales/en.po";
-import { cards, decks } from "../design/mock";
-import type { Card } from "../lib/api";
+import { cards, decks, queueItemPicture } from "../design/mock";
+import { api, type Card } from "../lib/api";
 import { EditCardSheet } from "./edit-card-sheet";
 import { Toaster } from "./ui/toast";
 
@@ -61,4 +61,45 @@ test("a sheet dismissed while its changes save stays until they land, with nothi
   land();
   await expect.element(sheet).not.toBeInTheDocument();
   expect(notifications.element().textContent).not.toContain("Changes discarded");
+});
+
+test("a sheet whose picture never answers can close once the card is written", async () => {
+  const pictured = queueItemPicture.card as Card;
+  vi.spyOn(writes, "updateCard").mockImplementation(async (_card, patch) => ({
+    card: { ...pictured, ...patch } as Card,
+    queued: false,
+  }));
+  vi.spyOn(api, "archiveCardImage").mockReturnValue(new Promise(() => {}));
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client.setQueryData(["tags"], []);
+  function Pictured() {
+    const [open, setOpen] = useState<Card | null>(pictured);
+    return (
+      <EditCardSheet
+        card={open}
+        decks={decks}
+        onOpenChange={(next) => !next && setOpen(null)}
+        onReopen={setOpen}
+      />
+    );
+  }
+  await render(
+    <QueryClientProvider client={client}>
+      <I18nProvider i18n={i18n}>
+        <Toaster aria-label="Notifications" closeLabel="Dismiss" timeout={0} />
+        <Pictured />
+      </I18nProvider>
+    </QueryClientProvider>,
+  );
+  const sheet = page.getByRole("dialog", { name: "Edit card" });
+  await userEvent.fill(sheet.getByRole("textbox", { name: "Meaning", exact: true }), "Yield");
+  await sheet.getByRole("button", { name: "Archive the picture" }).click();
+  await sheet.getByRole("button", { name: "Save" }).click();
+  await expect.poll(() => api.archiveCardImage).toHaveBeenCalled();
+
+  await userEvent.keyboard("{Escape}");
+  await expect.element(sheet).not.toBeInTheDocument();
+  const notifications = page.getByRole("region", { name: "Notifications" });
+  expect(notifications.element().textContent).not.toContain("Changes discarded");
+  expect(writes.updateCard).toHaveBeenCalledTimes(1);
 });

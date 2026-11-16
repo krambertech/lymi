@@ -12,3 +12,9 @@ test("an answer after the sheet closed changes nothing", () => {
   expect(sheetPhase(closed, { type: "settle" })).toBe(closed);
   expect(sheetPhase(closed, { type: "save" })).toBe(closed);
 });
+
+test("once the card is written, a dismissal closes the sheet", () => {
+  const saving = sheetPhase({ status: "editing" }, { type: "save" });
+  const finishing = sheetPhase(saving, { type: "written" });
+  expect(sheetPhase(finishing, { type: "close" })).toEqual({ status: "closed" });
+});

@@ -54,17 +54,22 @@ export function EditCardSheet({
   if (card && card !== shown) setShown(card);
   const draft = useRef<CardFormDraft | null>(null);
   const [restored, setRestored] = useState<{ draft: CardFormDraft; key: number } | null>(null);
+  // The save the open sheet is waiting on; closing during its picture step lets it go.
+  const attempt = useRef(0);
 
   const close = (keepWork: boolean, saved = false) => {
-    // A save in flight holds the sheet until it answers.
+    // The card write holds the sheet until it answers.
     if (phase.status === "saving" && !saved) return;
+    // Once the card is written, the sheet can go and the save finishes on its own.
+    const written = phase.status === "finishing";
+    if (written) attempt.current++;
     dispatch({ type: "close", saved });
     const work = draft.current;
     const edited = card;
     draft.current = null;
     setRestored(null);
     onOpenChange(false);
-    if (!keepWork || !work || !edited || !hasChanges(edited, work)) return;
+    if (written || !keepWork || !work || !edited || !hasChanges(edited, work)) return;
     toast.add({
       id: "edit-discarded",
       title: t`Changes discarded`,
@@ -81,12 +86,14 @@ export function EditCardSheet({
 
   const submit = async (values: CardFormValues): Promise<CardFormOutcome | undefined> => {
     if (!card) return;
+    const id = ++attempt.current;
     dispatch({ type: "save" });
     try {
       const patch = cardPatch(card, values);
       const { card: written, queued } = Object.keys(patch).length
         ? await writes.updateCard(card, patch)
         : { card, queued: false };
+      dispatch({ type: "written" });
       const latest = queued ? written : ((await savePicture(written, values)) ?? written);
       await refreshAfterCardWrite(qc, card.id);
       if (queued) {
@@ -99,7 +106,8 @@ export function EditCardSheet({
         });
       }
       onSaved?.(latest, patch.deckId ? card.deckId : null);
-      close(false, true);
+      // Closed while the picture was on the way, the sheet is already gone.
+      if (id === attempt.current) close(false, true);
       return undefined;
     } catch (e) {
       // Whatever landed before the failure stays; saving again sends only what is still different.
@@ -125,7 +133,8 @@ export function EditCardSheet({
             card={shown}
             draft={card ? restored?.draft : undefined}
             decks={decks}
-            pending={phase.status === "saving"}
+            pending={phase.status === "saving" || phase.status === "finishing"}
+            held={phase.status === "saving"}
             layout={shape === "desktop" ? "whole" : "chips"}
             focus={focus}
             onCancel={() => close(true)}

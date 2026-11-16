@@ -51,17 +51,22 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
   // A card added without its picture, opened in the edit sheet to try the picture again.
   const [pictureFor, setPictureFor] = useState<Card | null>(null);
   const [pictureMissing, setPictureMissing] = useState<Card | null>(null);
+  // The save the open sheet is waiting on; closing during its picture step lets it go.
+  const attempt = useRef(0);
 
   const close = (keepWork: boolean, saved = false) => {
-    // A save in flight holds the sheet until it answers.
+    // The card write holds the sheet until it answers.
     if (phase.status === "saving" && !saved) return;
+    // Once the card is in, the sheet can go and the save finishes on its own, with nothing to undo.
+    const written = phase.status === "finishing";
+    if (written) attempt.current++;
     dispatch({ type: "close", saved });
     const work = draft.current;
     draft.current = null;
     // A brought-back draft is for the one reopening Undo makes, not every opening after it.
     setRestored(null);
     onOpenChange(false);
-    if (!keepWork || !work || !draftHasWork(work)) return;
+    if (written || !keepWork || !work || !draftHasWork(work)) return;
     toast.add({
       id: "card-discarded",
       title: t`Card discarded`,
@@ -77,6 +82,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
   };
 
   const submit = async (values: CardFormValues): Promise<CardFormOutcome | undefined> => {
+    const id = ++attempt.current;
     dispatch({ type: "save" });
     try {
       const { outcome, queued } = await writes.addCard(addInput(values));
@@ -88,6 +94,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
         };
       }
       rememberDeck(values.deckId);
+      dispatch({ type: "written" });
       // The card is in either way; a refused picture is said beside it, not instead of it.
       let pictureError: string | undefined;
       // A picture is uploaded to the card on the server, so one chosen offline waits for the learner.
@@ -103,8 +110,10 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
       void refreshAfterCardWrite(qc);
       const term = shortQuote(outcome.card.term);
       setPictureMissing(pictureError ? outcome.card : null);
-      if (createMore) return { status: "added", term, pictureError };
-      close(false, true);
+      // Closed while the picture was on the way: the toast below is all that is left to say.
+      const waited = id === attempt.current;
+      if (createMore && waited) return { status: "added", term, pictureError };
+      if (waited) close(false, true);
       if (!pictureError) {
         toast.add({
           title: queued
@@ -164,7 +173,8 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
             sectionId={sectionId}
             term={term}
             draft={open ? restored?.draft : undefined}
-            pending={phase.status === "saving"}
+            pending={phase.status === "saving" || phase.status === "finishing"}
+            held={phase.status === "saving"}
             layout={shape === "desktop" ? "whole" : "chips"}
             createMore={createMore}
             onCreateMoreChange={(on) => {

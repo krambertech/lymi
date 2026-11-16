@@ -135,6 +135,10 @@ test("a sheet dismissed while its card saves stays until the card is in, with no
   await userEvent.fill(sheet.getByRole("textbox", { name: "Term", exact: true }), "la nebbia");
   await userEvent.fill(sheet.getByRole("textbox", { name: "Meaning", exact: true }), "the fog");
   await sheet.getByRole("button", { name: /^Add to / }).click();
+  // Cancel sits beside Add on a desktop; a phone's sheet is dismissed by its edges.
+  const cancel = sheet.getByRole("button", { name: "Cancel", exact: true });
+  if (cancel.elements().length)
+    await expect.element(cancel).toHaveAttribute("aria-disabled", "true");
   await userEvent.keyboard("{Escape}");
 
   await expect.element(sheet).toBeInTheDocument();
@@ -144,6 +148,39 @@ test("a sheet dismissed while its card saves stays until the card is in, with no
   land();
   await expect.element(sheet).not.toBeInTheDocument();
   await expect.poll(() => notifications.element().textContent).toContain("Added “la nebbia”");
+  expect(notifications.element().textContent).not.toContain("Card discarded");
+  expect(writes.addCard).toHaveBeenCalledTimes(1);
+});
+
+test("a sheet whose picture never answers can close once the card is in, adding it once", async () => {
+  vi.spyOn(api, "importCardImage").mockReturnValue(new Promise(() => {}));
+  vi.spyOn(api, "deckCards").mockResolvedValue([]);
+  const client = new QueryClient({ defaultOptions: { queries: { retry: false } } });
+  client.setQueryData(["tags"], []);
+  await render(
+    <QueryClientProvider client={client}>
+      <I18nProvider i18n={i18n}>
+        <Toaster aria-label="Notifications" closeLabel="Dismiss" timeout={0} />
+        <Sheet />
+      </I18nProvider>
+    </QueryClientProvider>,
+  );
+  const sheet = page.getByRole("dialog", { name: "Add a card" });
+  await userEvent.fill(sheet.getByRole("textbox", { name: "Term", exact: true }), "la nebbia");
+  await userEvent.fill(sheet.getByRole("textbox", { name: "Meaning", exact: true }), "the fog");
+  await sheet.getByRole("button", { name: "Picture" }).click();
+  await sheet.getByRole("button", { name: "Paste a link" }).click();
+  await userEvent.fill(
+    sheet.getByRole("textbox", { name: "Link to a picture" }),
+    "https://example.com/fog.jpg",
+  );
+  await sheet.getByRole("button", { name: "Use link" }).click();
+  await sheet.getByRole("button", { name: /^Add to / }).click();
+  await expect.poll(() => api.importCardImage).toHaveBeenCalled();
+
+  await userEvent.keyboard("{Escape}");
+  await expect.element(sheet).not.toBeInTheDocument();
+  const notifications = page.getByRole("region", { name: "Notifications" });
   expect(notifications.element().textContent).not.toContain("Card discarded");
   expect(writes.addCard).toHaveBeenCalledTimes(1);
 });

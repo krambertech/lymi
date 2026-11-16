@@ -6,8 +6,13 @@ const captureAnalytics = vi.hoisted(() => vi.fn());
 vi.mock("./telemetry", () => ({ captureAnalytics }));
 
 const eventProperties = (await import("@lymi/core/analytics")).eventProperties;
-const { reminderProperties, reportFirstReviewEndLeft, resetFirstReviewEndLeftForTests } =
-  await import("./first-review-end");
+const {
+  firstReviewEndSent,
+  reminderProperties,
+  reportFirstReviewEndLeft,
+  resetFirstReviewEndLeftForTests,
+} = await import("./first-review-end");
+const { FIRST_REVIEW_END_LEFT_KEY } = await import("./storage-keys");
 
 const stored = new Map<string, string>();
 
@@ -84,4 +89,19 @@ it("sends first_review_end_left only once, even after a remount", async () => {
   const remounted = await import("./first-review-end");
   remounted.reportFirstReviewEndLeft(payload);
   expect(captureAnalytics).not.toHaveBeenCalled();
+});
+
+it("marks the tab's first review as over once its end is left", () => {
+  expect(firstReviewEndSent()).toBe(false);
+  reportFirstReviewEndLeft(payload);
+  expect(firstReviewEndSent()).toBe(true);
+});
+
+it("sends again once the tab's key is cleared, as a change of learner does", () => {
+  reportFirstReviewEndLeft(payload);
+  // clearPersistedLearnerState removes the key; nothing in memory may outlive it.
+  sessionStorage.removeItem(FIRST_REVIEW_END_LEFT_KEY);
+  expect(firstReviewEndSent()).toBe(false);
+  reportFirstReviewEndLeft(payload);
+  expect(captureAnalytics).toHaveBeenCalledTimes(2);
 });

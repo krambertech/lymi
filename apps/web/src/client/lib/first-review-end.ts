@@ -30,10 +30,8 @@ export function reminderProperties(
   }
 }
 
-let sent = false;
-
-function alreadySent(): boolean {
-  if (sent) return true;
+/** Whether this tab's first review already ended, so a remount opens an ordinary review. */
+export function firstReviewEndSent(): boolean {
   try {
     return sessionStorage.getItem(FIRST_REVIEW_END_LEFT_KEY) !== null;
   } catch {
@@ -41,23 +39,17 @@ function alreadySent(): boolean {
   }
 }
 
-function markSent() {
-  sent = true;
+/** Sends `first_review_end_left` once for this tab's first review, even after a remount. */
+export function reportFirstReviewEndLeft(properties: EndLeft) {
+  if (firstReviewEndSent()) return;
   try {
     sessionStorage.setItem(FIRST_REVIEW_END_LEFT_KEY, "1");
   } catch {}
-}
-
-/** Sends `first_review_end_left` once for this tab's first review, even after a remount. */
-export function reportFirstReviewEndLeft(properties: EndLeft) {
-  if (alreadySent()) return;
-  markSent();
   captureAnalytics("first_review_end_left", properties);
 }
 
 /** Test-only: forget that this tab already sent the event. */
 export function resetFirstReviewEndLeftForTests() {
-  sent = false;
   try {
     sessionStorage.removeItem(FIRST_REVIEW_END_LEFT_KEY);
   } catch {}

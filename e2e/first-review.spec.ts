@@ -133,6 +133,35 @@ test("a reload keeps the first review's end, and Space moves through it", async 
   await expect(page.getByRole("heading", { name: "You’re done for today" })).toBeVisible();
 });
 
+test("after Review forgotten cards, a remount opens an ordinary review, not the plan again", async ({
+  page,
+}, testInfo) => {
+  test.setTimeout(120_000);
+  await startAsTestLearner(page, testInfo, "first-review-forgotten", "/today");
+  await seedDeck(page, 1);
+  await page.goto("/review");
+
+  await page.getByRole("button", { name: "Reveal the card" }).click({ position: { x: 24, y: 24 } });
+  await page.getByRole("button", { name: /^Forgot/ }).click();
+  await page.keyboard.press("Space");
+  await expect(page.getByRole("heading", { name: "You finished your first review" })).toBeVisible();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await page.getByRole("button", { name: "Next", exact: true }).click();
+  await expect(page.getByRole("heading", { name: /^See you/ })).toBeVisible();
+  await page.getByRole("button", { name: "Review 1 forgotten card" }).click();
+  await grade(page);
+  await expect(page.getByRole("heading", { name: "You’re done for today" })).toBeVisible();
+
+  await page.reload();
+  await expect(page.getByRole("heading", { name: "You’re done for today" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "You finished your first review" })).toBeHidden();
+  await page.getByRole("link", { name: "Done" }).click();
+  await expect(page).toHaveURL(/\/today/);
+  await page.goto("/review");
+  await expect(page.getByRole("heading", { name: "You’re done for today" })).toBeVisible();
+  await expect(page.getByRole("heading", { name: "You finished your first review" })).toBeHidden();
+});
+
 test("a phone browser with its bars showing keeps every way on in view", async ({
   page,
 }, testInfo) => {

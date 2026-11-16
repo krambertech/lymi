@@ -51,7 +51,11 @@ import { usePrefetchPictures } from "../lib/card-images";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useMouse, useWide } from "../lib/device";
 import { useDocumentTitle } from "../lib/document-title";
-import { reminderProperties, reportFirstReviewEndLeft } from "../lib/first-review-end";
+import {
+  firstReviewEndSent,
+  reminderProperties,
+  reportFirstReviewEndLeft,
+} from "../lib/first-review-end";
 import { isGuiding } from "../lib/first-run";
 import { lastInputWasKey } from "../lib/last-input";
 import { playAlone } from "../lib/now-playing";
@@ -160,10 +164,12 @@ function Review() {
   const resumedFirst = useRef(false);
   const reviewedCards = useRef<FanCard[]>([]);
   if (sessionFirst.current === null && streak.data && !streak.isFetching) {
-    const hand = firstReviewOpen(streak.data);
+    // A first review whose end this tab already left stays over, even if the streak lags its grades.
+    const over = firstReviewEndSent();
+    const hand = over ? null : firstReviewOpen(streak.data);
     resumedFirst.current = !!hand;
     reviewedCards.current = hand ?? [];
-    sessionFirst.current = isGuiding(streak.data) || !!hand;
+    sessionFirst.current = !over && (isGuiding(streak.data) || !!hand);
   }
   const [revealed, setRevealed] = useState(false);
   const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
@@ -506,7 +512,9 @@ function Review() {
         !reviewedCards.current.some((card) => card.term === current.card.term)
       )
         reviewedCards.current.push(current.card);
-      if (sessionFirst.current && teaches) rememberFirstReview(reviewedCards.current);
+      // Grades after the end (forgotten cards, an added card) keep no hand for a remount to resume.
+      if (sessionFirst.current && teaches && !firstReviewEndSent())
+        rememberFirstReview(reviewedCards.current);
       if (gradesTip && comesBack && current && gradeAllowed(rating, aid))
         setCameBack({ card: current.card, rating, back: comesBack });
       onGrade(rating, input);

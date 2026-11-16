@@ -27,7 +27,10 @@ export function Field({
       <span className="flex items-center justify-between text-xs font-medium text-ink-muted">
         {label}
         {wrote !== undefined && (
-          <span className={clsx("transition-opacity duration-300", !wrote && "opacity-0")}>
+          <span
+            aria-hidden={!wrote}
+            className={clsx("transition-opacity duration-300", !wrote && "opacity-0")}
+          >
             <SourceMark source="ai" />
           </span>
         )}

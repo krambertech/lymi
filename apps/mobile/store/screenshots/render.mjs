@@ -50,7 +50,7 @@ for (const locale of locales) {
     execFileSync("sips", ["-z", "2622", "1206", out("6.9"), "--out", out("6.3")], {
       stdio: "ignore",
     });
-    await render({ ...params, size: "play" }, { width: 1440, height: 2880 }, out("play"));
+    await render({ ...params, size: "play" }, { width: 1440, height: 2560 }, out("play"));
     console.log(`${style}/${locale}/${shot.id}`);
   }
   await render(

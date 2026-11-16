@@ -630,6 +630,7 @@ function termOf(body: unknown) {
     pronunciation: text,
     heading: text,
     handwritten: expect.any(Boolean),
+    seen: expect.any(String),
     keep: expect.toBeOneOf([expect.any(Number), null]),
     ticked: expect.any(Boolean),
     existing: match({ deckName: expect.any(String) }),

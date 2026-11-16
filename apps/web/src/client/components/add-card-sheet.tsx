@@ -138,7 +138,8 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
     } catch (e) {
       return { status: "failed", message: errorMessage(e) };
     } finally {
-      dispatch({ type: "settle" });
+      // A save the learner closed on and saved again after must not release the newer one.
+      if (id === attempt.current) dispatch({ type: "settle" });
     }
   };
 

@@ -110,11 +110,14 @@ export function EditCardSheet({
       if (id === attempt.current) close(false, true);
       return undefined;
     } catch (e) {
+      // Released first: the refresh waits on refetches a stalled connection may never answer.
+      if (id === attempt.current) dispatch({ type: "settle" });
       // Whatever landed before the failure stays; saving again sends only what is still different.
       await refreshAfterCardWrite(qc, card.id);
       return { status: "failed", message: errorMessage(e) };
     } finally {
-      dispatch({ type: "settle" });
+      // A save the learner closed on and saved again after must not release the newer one.
+      if (id === attempt.current) dispatch({ type: "settle" });
     }
   };
 

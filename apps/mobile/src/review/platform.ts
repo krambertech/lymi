@@ -8,6 +8,7 @@ export const PHONE: ReviewPlatform & DayPlatform = {
   track(event) {
     if (event.name === "review_session_finished") captureEvent(event.name, event);
     if (event.name === "review_session_abandoned") captureEvent(event.name, event);
+    if (event.name === "review_session_opened") captureEvent(event.name, event);
   },
   newId: randomUUID,
   onForeground(back) {

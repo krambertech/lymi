@@ -1,4 +1,5 @@
 import { outboxDehydrateOptions } from "@lymi/client/cache";
+import { forgetOpenedReviewSessions } from "@lymi/client/review-flow";
 import type { QueryClient } from "@tanstack/react-query";
 import type {
   PersistedClient,
@@ -97,4 +98,5 @@ export function forgetLearner(qc: QueryClient) {
   forgetCache();
   captureStore.clearAll();
   todayStore.clearAll();
+  forgetOpenedReviewSessions();
 }

@@ -49,8 +49,22 @@ name: Sign in and review
                 timeout: 10000
       # A grade button's accessible name carries its next interval, "Good, next in 4 days".
       - tapOn: "^Good, next in .*"
-# Ending short of the goal shows the day's count, and Done returns to Today.
+# Ending short of the goal shows the day's count. A counted review on a phone iOS has no
+# notification answer for shows Next and the reminder question; `launchApp` clears state and Not
+# now never asks iOS, so a retry usually shows Next again. Done shows when iOS already has an
+# answer or the review didn't count, and returns to Today.
 - tapOn: "End review"
 - assertVisible: "Review done"
-- tapOn: "^Done$"
+- runFlow:
+    when:
+      visible: "^Next$"
+    commands:
+      - tapOn: "^Next$"
+      - assertVisible: "When should we remind you?"
+      - tapOn: "Not now"
+- runFlow:
+    when:
+      visible: "^Done$"
+    commands:
+      - tapOn: "^Done$"
 - assertNotVisible: "Review done"

@@ -47,7 +47,9 @@ function devVars(port) {
 }
 
 function migrate() {
-  const run = (args) => execFileSync("pnpm", args, { cwd: root, stdio: "pipe" });
+  // A fresh D1 prints over a megabyte of migration log, past execFileSync's default buffer.
+  const run = (args) =>
+    execFileSync("pnpm", args, { cwd: root, stdio: "pipe", maxBuffer: Number.POSITIVE_INFINITY });
   try {
     run(["db:migrate"]);
   } catch {

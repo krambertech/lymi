@@ -1,11 +1,14 @@
 import { useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
+import { isolate } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
-import { type ComponentProps, useRef, useState } from "react";
+import { type ComponentProps, useReducer, useRef, useState } from "react";
 import type { Card, DeckSummary } from "../lib/api";
 import { errorMessage } from "../lib/api";
 import { cardPatch, hasChanges, refreshAfterCardWrite, savePicture } from "../lib/card-writes";
 import { useOverlayShape } from "../lib/device";
+import { sheetPhase } from "../lib/sheet-phase";
+import { shortQuote } from "../lib/short-quote";
 import {
   CardForm,
   type CardFormDraft,
@@ -45,20 +48,30 @@ export function EditCardSheet({
   const { t } = useLingui();
   const qc = useQueryClient();
   const shape = useOverlayShape(!!card);
-  const [pending, setPending] = useState(false);
+  const [phase, dispatch] = useReducer(sheetPhase, { status: card ? "editing" : "closed" });
+  if (card && phase.status === "closed") dispatch({ type: "open" });
+  if (!card && phase.status === "editing") dispatch({ type: "close" });
   // Held while the sheet closes, so its contents do not vanish mid-animation.
   const [shown, setShown] = useState(card);
   if (card && card !== shown) setShown(card);
   const draft = useRef<CardFormDraft | null>(null);
   const [restored, setRestored] = useState<{ draft: CardFormDraft; key: number } | null>(null);
+  // The save the open sheet is waiting on; closing during its picture step lets it go.
+  const attempt = useRef(0);
 
-  const close = (keepWork: boolean) => {
+  const close = (keepWork: boolean, saved = false) => {
+    // The card write holds the sheet until it answers.
+    if (phase.status === "saving" && !saved) return;
+    // Once the card is written, the sheet can go and the save finishes on its own.
+    const written = phase.status === "finishing";
+    if (written) attempt.current++;
+    dispatch({ type: "close", saved });
     const work = draft.current;
     const edited = card;
     draft.current = null;
     setRestored(null);
     onOpenChange(false);
-    if (!keepWork || !work || !edited || !hasChanges(edited, work)) return;
+    if (written || !keepWork || !work || !edited || !hasChanges(edited, work)) return;
     toast.add({
       id: "edit-discarded",
       title: t`Changes discarded`,
@@ -75,12 +88,16 @@ export function EditCardSheet({
 
   const submit = async (values: CardFormValues): Promise<CardFormOutcome | undefined> => {
     if (!card) return;
-    setPending(true);
+    const id = ++attempt.current;
+    dispatch({ type: "save" });
+    let saved: Card = card;
     try {
       const patch = cardPatch(card, values);
       const { card: written, queued } = Object.keys(patch).length
         ? await writes.updateCard(card, patch)
         : { card, queued: false };
+      dispatch({ type: "written" });
+      saved = written;
       const latest = queued ? written : ((await savePicture(written, values)) ?? written);
       await refreshAfterCardWrite(qc, card.id);
       if (queued) {
@@ -93,14 +110,35 @@ export function EditCardSheet({
         });
       }
       onSaved?.(latest, patch.deckId ? card.deckId : null);
-      close(false);
+      // Closed while the picture was on the way, the sheet is already gone.
+      if (id === attempt.current) close(false, true);
       return undefined;
     } catch (e) {
+      // Released first: the refresh waits on refetches a stalled connection may never answer.
+      const message = errorMessage(e);
+      if (id === attempt.current) {
+        dispatch({ type: "settle" });
+      } else {
+        // Closed once the card was written, the sheet has no form left to say this in.
+        const term = shortQuote(values.term);
+        toast.add({
+          id: "picture-unchanged",
+          title: t`Saved “${{ term: isolate(term) }}” without the picture change. ${{ pictureError: message }}`,
+          actionProps: {
+            children: t`Edit card`,
+            onClick: () => {
+              toast.close("picture-unchanged");
+              onReopen(saved);
+            },
+          },
+        });
+      }
       // Whatever landed before the failure stays; saving again sends only what is still different.
       await refreshAfterCardWrite(qc, card.id);
-      return { status: "failed", message: errorMessage(e) };
+      return { status: "failed", message };
     } finally {
-      setPending(false);
+      // A save the learner closed on and saved again after must not release the newer one.
+      if (id === attempt.current) dispatch({ type: "settle" });
     }
   };
 
@@ -119,7 +157,8 @@ export function EditCardSheet({
             card={shown}
             draft={card ? restored?.draft : undefined}
             decks={decks}
-            pending={pending}
+            pending={phase.status === "saving" || phase.status === "finishing"}
+            held={phase.status === "saving"}
             layout={shape === "desktop" ? "whole" : "chips"}
             focus={focus}
             onCancel={() => close(true)}

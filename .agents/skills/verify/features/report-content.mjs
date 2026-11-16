@@ -47,6 +47,32 @@ export default async function drive({ page, step, api, expect }) {
     return { opened };
   });
 
+  await step("Grade keys pressed in review's Report leave the card alone", async () => {
+    // Every card due, so the shared deck has one to review whatever day the persona is on.
+    const due = await page.request.post("/api/dev/due", { data: { count: "all" } });
+    expect(due.ok()).toBe(true);
+    await page.goto(`/review?deck=${shared.id}`);
+    const grades = page.getByRole("group", { name: "Choose a recall grade" });
+    await page.getByRole("button", { name: "Reveal the card" }).click();
+    await expect(grades).toBeVisible();
+    const card = page.getByLabel(/ card for /);
+    const shown = await card.getAttribute("aria-label");
+    // On touch the trigger is for a screen reader, so it is reached the same way at both widths.
+    await page.getByRole("button", { name: "Card options" }).focus();
+    await page.keyboard.press("Enter");
+    await page.getByRole("menuitem", { name: "Report card" }).click();
+    // A click on the sheet's text leaves focus on the sheet, not a field.
+    await report.getByText("We read every report within a day.").click();
+    await page.keyboard.press("1");
+    await page.keyboard.press("Space");
+    await expect(report).toBeVisible();
+    await report.getByRole("button", { name: "Cancel" }).click();
+    await expect(report).toBeHidden();
+    await expect(grades).toBeVisible();
+    await expect(card).toHaveAttribute("aria-label", shown);
+    return { shown };
+  });
+
   await step("Lymi got an email about the card", async () => {
     const response = await page.request.post("/api/dev/outbox", {
       data: { to: "hello@lymi.app" },

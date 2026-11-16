@@ -2,13 +2,14 @@ import { useLingui } from "@lingui/react/macro";
 import { writes } from "@lymi/client/writes";
 import { isolate } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useRef, useState } from "react";
+import { useReducer, useRef, useState } from "react";
 import type { Card } from "../lib/api";
 import { errorMessage } from "../lib/api";
 import { addInput, refreshAfterCardWrite, savePicture } from "../lib/card-writes";
 import { useOverlayShape } from "../lib/device";
 import { createMoreChosen, rememberCreateMore, rememberDeck } from "../lib/last-deck";
 import { decksQuery } from "../lib/queries";
+import { sheetPhase } from "../lib/sheet-phase";
 import { shortQuote } from "../lib/short-quote";
 import {
   CardForm,
@@ -40,7 +41,9 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
   const qc = useQueryClient();
   const decks = useQuery(decksQuery);
   const shape = useOverlayShape(open);
-  const [pending, setPending] = useState(false);
+  const [phase, dispatch] = useReducer(sheetPhase, { status: open ? "editing" : "closed" });
+  if (open && phase.status === "closed") dispatch({ type: "open" });
+  if (!open && phase.status === "editing") dispatch({ type: "close" });
   const [createMore, setCreateMore] = useState(createMoreChosen);
   // The form as it stood, so a sheet closed by mistake can come back with Undo.
   const draft = useRef<CardFormDraft | null>(null);
@@ -48,14 +51,22 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
   // A card added without its picture, opened in the edit sheet to try the picture again.
   const [pictureFor, setPictureFor] = useState<Card | null>(null);
   const [pictureMissing, setPictureMissing] = useState<Card | null>(null);
+  // The save the open sheet is waiting on; closing during its picture step lets it go.
+  const attempt = useRef(0);
 
-  const close = (keepWork: boolean) => {
+  const close = (keepWork: boolean, saved = false) => {
+    // The card write holds the sheet until it answers.
+    if (phase.status === "saving" && !saved) return;
+    // Once the card is in, the sheet can go and the save finishes on its own, with nothing to undo.
+    const written = phase.status === "finishing";
+    if (written) attempt.current++;
+    dispatch({ type: "close", saved });
     const work = draft.current;
     draft.current = null;
     // A brought-back draft is for the one reopening Undo makes, not every opening after it.
     setRestored(null);
     onOpenChange(false);
-    if (!keepWork || !work || !draftHasWork(work)) return;
+    if (written || !keepWork || !work || !draftHasWork(work)) return;
     toast.add({
       id: "card-discarded",
       title: t`Card discarded`,
@@ -71,7 +82,8 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
   };
 
   const submit = async (values: CardFormValues): Promise<CardFormOutcome | undefined> => {
-    setPending(true);
+    const id = ++attempt.current;
+    dispatch({ type: "save" });
     try {
       const { outcome, queued } = await writes.addCard(addInput(values));
       if (outcome.status === "skipped") {
@@ -82,6 +94,7 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
         };
       }
       rememberDeck(values.deckId);
+      dispatch({ type: "written" });
       // The card is in either way; a refused picture is said beside it, not instead of it.
       let pictureError: string | undefined;
       // A picture is uploaded to the card on the server, so one chosen offline waits for the learner.
@@ -97,8 +110,10 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
       void refreshAfterCardWrite(qc);
       const term = shortQuote(outcome.card.term);
       setPictureMissing(pictureError ? outcome.card : null);
-      if (createMore) return { status: "added", term, pictureError };
-      close(false);
+      // Closed while the picture was on the way: the toast below is all that is left to say.
+      const waited = id === attempt.current;
+      if (createMore && waited) return { status: "added", term, pictureError };
+      if (waited) close(false, true);
       if (!pictureError) {
         toast.add({
           title: queued
@@ -123,7 +138,8 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
     } catch (e) {
       return { status: "failed", message: errorMessage(e) };
     } finally {
-      setPending(false);
+      // A save the learner closed on and saved again after must not release the newer one.
+      if (id === attempt.current) dispatch({ type: "settle" });
     }
   };
 
@@ -158,7 +174,8 @@ export function AddCardSheet({ open, onOpenChange, deckId, sectionId, term, onCr
             sectionId={sectionId}
             term={term}
             draft={open ? restored?.draft : undefined}
-            pending={pending}
+            pending={phase.status === "saving" || phase.status === "finishing"}
+            held={phase.status === "saving"}
             layout={shape === "desktop" ? "whole" : "chips"}
             createMore={createMore}
             onCreateMoreChange={(on) => {

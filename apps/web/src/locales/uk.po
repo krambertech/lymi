@@ -4748,6 +4748,9 @@ msgstr "Зберегти час"
 msgid "Saved"
 msgstr "Збережено"
 
+msgid "Saved “{term}” without the picture change. {pictureError}"
+msgstr "«{term}» збережено без зміни зображення. {pictureError}"
+
 msgid "Saved on this device until Lymi can be reached."
 msgstr "Збережено на цьому пристрої, доки Lymi не стане доступним."
 

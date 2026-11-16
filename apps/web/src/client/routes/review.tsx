@@ -22,7 +22,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { createFileRoute, Link, useNavigate } from "@tanstack/react-router";
 import { Plus } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useId, useMemo, useReducer, useRef, useState } from "react";
 import { Button } from "../components/button";
 import { CardMenu } from "../components/card-menu";
 import { CardPlace } from "../components/card-place";
@@ -57,6 +57,7 @@ import { playAlone } from "../lib/now-playing";
 import { insightsQuery, roundsQuery, sectionsQuery, streakQuery } from "../lib/queries";
 import { recordReveal, useRevealNudge } from "../lib/reveal-nudge";
 import { itemKey } from "../lib/review-modes";
+import { NO_OVERLAY, reviewOverlay } from "../lib/review-overlay";
 import { shortQuote } from "../lib/short-quote";
 import { WEB_DAY } from "../lib/streak";
 import { captureAnalytics } from "../lib/telemetry";
@@ -183,10 +184,10 @@ function Review() {
   const [lockedNudge, setLockedNudge] = useState({ key: "", presses: 0 });
   // The card whose hint is being written, so the editor never outlives its card.
   const [hintFor, setHintFor] = useState<string | null>(null);
-  const [menuOpen, setMenuOpen] = useState(false);
+  // The menu, card editor or report over the card.
+  const [overlay, setOverlay] = useReducer(reviewOverlay, NO_OVERLAY);
   // Marks set in this review, shown at once rather than when the draw is fetched again.
   const [marks, setMarks] = useState<ReadonlyMap<string, boolean>>(() => new Map());
-  const [editing, setEditing] = useState<Card | null>(null);
   // A mouse gets a visible ⋯, beside the card where there is room and in its head where there is not.
   const mouse = useMouse();
   const wide = useWide();
@@ -374,12 +375,26 @@ function Review() {
   const recallTimes = useRecallClock(showing || null, revealed);
   const knownReadings = useKnownReadings();
   const writingHint = !!showing && hintFor === showing;
+  const menuOpen = overlay.kind === "menu";
+  const editing = overlay.kind === "edit" ? overlay.card : null;
+  const reporting = overlay.kind === "report";
   const revealedAt = useRef(0);
   useEffect(() => {
     if (revealed) revealedAt.current = performance.now();
   }, [revealed]);
   // Only the card on screen opens as a place; a link to another one is left closed.
   const placeOpen = !!current && placeCardId === current.card.id;
+  // What has the keys: the card only when nothing is over it. The hint editor sits on the card,
+  // so the menu can open above it.
+  const layer = add.open
+    ? "add"
+    : placeOpen
+      ? "place"
+      : overlay.kind !== "none"
+        ? overlay.kind
+        : writingHint
+          ? "hint"
+          : "none";
   const placeTitleId = useId();
   const placeHistory = useWordHistory(placeOpen ? placeCardId : null);
   const openPlace = () => {
@@ -513,7 +528,7 @@ function Review() {
     const onKey = (e: KeyboardEvent) => {
       // A sheet over the review handles its own keys, Escape included.
       if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
-      if (add.open || writingHint || menuOpen || editing || placeOpen) return;
+      if (layer !== "none") return;
       if (e.key === "Escape") {
         firstEndKeys.current?.close();
         leave();
@@ -579,20 +594,7 @@ function Review() {
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [
-    revealed,
-    grade,
-    cameBack,
-    takeAid,
-    showAid,
-    leave,
-    add.open,
-    writingHint,
-    menuOpen,
-    editing,
-    placeOpen,
-    current,
-  ]);
+  }, [revealed, grade, cameBack, takeAid, showAid, leave, layer, current]);
 
   // A card often forgotten, or forgotten twice today, with no hint offers one, in a deck the learner
   // owns, since only the owner changes its cards. It waits for the card's deck, which a deck list
@@ -607,7 +609,6 @@ function Review() {
   }
   const offer = cardOffer.key === showing && cardOffer.offer;
   const owned = currentDeck?.role === "owner";
-  const [reporting, setReporting] = useState(false);
   // Writing a hint parks the offer, and the panel fades, so it never stands beside the editor.
   // Where focus goes as the menu closes: the grades, unless the chosen row opened something that
   // takes focus itself, such as the hint editor, the card editor or the card's place.
@@ -683,13 +684,17 @@ function Review() {
     if (target.closest(`button, a, input, textarea, [role="menu"], #${GRADES_ID}`)) return;
     // A press that selected text was a selection, not a tap.
     if (window.getSelection()?.toString()) return;
-    setMenuOpen(true);
+    setOverlay({ type: "open", overlay: { kind: "menu" } });
   };
 
   const cardMenu = current && (
     <CardMenu
       open={menuOpen}
-      onOpenChange={setMenuOpen}
+      onOpenChange={(open) =>
+        setOverlay(
+          open ? { type: "open", overlay: { kind: "menu" } } : { type: "close", kind: "menu" },
+        )
+      }
       visible={mouse}
       hasHint={!!current.card.hint}
       important={importantOf(current.card)}
@@ -702,14 +707,18 @@ function Review() {
       }}
       onEdit={() => {
         menuHandsFocus.current = true;
-        setEditing(current.card);
+        setOverlay({ type: "open", overlay: { kind: "edit", card: current.card } });
       }}
       onView={() => {
         menuHandsFocus.current = true;
         openPlace();
       }}
       onArchive={() => void archiveCurrent()}
-      onReport={currentDeck && !owned ? () => setReporting(true) : undefined}
+      onReport={
+        currentDeck && !owned
+          ? () => setOverlay({ type: "open", overlay: { kind: "report" } })
+          : undefined
+      }
     />
   );
 
@@ -1074,14 +1083,15 @@ function Review() {
               !owned
                 ? () => {
                     closePlace();
-                    setReporting(true);
+                    setOverlay({ type: "open", overlay: { kind: "report" } });
                   }
                 : undefined
             }
             owner={
               owned
                 ? {
-                    onEdit: () => setEditing(current.card),
+                    onEdit: () =>
+                      setOverlay({ type: "open", overlay: { kind: "edit", card: current.card } }),
                     enrichFields: currentDeck.enrichFields,
                     onEnrich: () =>
                       void api
@@ -1103,7 +1113,7 @@ function Review() {
       {current && currentDeck && !owned && (
         <ReportDialog
           open={reporting}
-          onOpenChange={setReporting}
+          onOpenChange={(open) => !open && setOverlay({ type: "close", kind: "report" })}
           target={{ kind: "card", cardId: current.card.id }}
           name={current.card.term}
         />
@@ -1111,8 +1121,8 @@ function Review() {
       <EditCardSheet
         card={editing}
         decks={decks}
-        onOpenChange={(open) => !open && setEditing(null)}
-        onReopen={(card) => setEditing(card)}
+        onOpenChange={(open) => !open && setOverlay({ type: "close", kind: "edit" })}
+        onReopen={(card) => setOverlay({ type: "open", overlay: { kind: "edit", card } })}
         finalFocus={gradesFocus}
       />
     </div>

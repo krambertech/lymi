@@ -112,6 +112,8 @@ interface CardFormBase {
   /** A discarded draft being brought back. */
   draft?: CardFormDraft | undefined;
   pending?: boolean | undefined;
+  /** The card write is running, so the sheet cannot close yet. */
+  held?: boolean | undefined;
   onCancel: () => void;
   onSubmit: (
     values: CardFormValues,
@@ -221,7 +223,7 @@ function chipOrder(
  * docs/design/library-decks-and-cards.md, "Adding and editing a card".
  */
 export function CardForm(props: CardFormProps) {
-  const { decks, draft, pending, onCancel, onSubmit, onDraftChange, layout } = props;
+  const { decks, draft, pending, held, onCancel, onSubmit, onDraftChange, layout } = props;
   const adding = props.mode === "add";
   const {
     deckId,
@@ -974,6 +976,7 @@ export function CardForm(props: CardFormProps) {
           <Button
             variant="ghost"
             onClick={onCancel}
+            aria-disabled={held || undefined}
             className={cn(!onCreateMoreChange && "ms-auto")}
           >
             <Trans>Cancel</Trans>

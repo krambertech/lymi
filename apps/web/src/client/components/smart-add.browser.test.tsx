@@ -121,3 +121,47 @@ test("Show terms keeps focus and shows it is busy while the answer is checked", 
   finish();
   await expect.element(page.getByRole("button", { name: "Add 1 card" })).toBeVisible();
 });
+
+test("Back while an answer is checked stays on the lesson when the check comes back", async () => {
+  let finish = () => {};
+  vi.spyOn(api, "answerLesson").mockImplementation(
+    () => new Promise((resolve) => (finish = () => resolve({ drop: [] }))),
+  );
+  await reachQuestions();
+  await userEvent.click(showTerms());
+  await userEvent.click(page.getByRole("button", { name: "Back" }).last());
+  await expect.element(findTerms()).toBeVisible();
+
+  finish();
+  // The check's answer is a microtask away; the step must not have moved once it settles.
+  await new Promise((resolve) => setTimeout(resolve, 300));
+  await expect.element(findTerms()).toBeVisible();
+  expect(page.getByRole("button", { name: "Add 1 card" }).query()).toBeNull();
+});
+
+test("Stop in the beat after the scan finishes stays on the lesson", async () => {
+  let release = () => {};
+  vi.spyOn(api, "readLesson").mockImplementation(
+    () => new Promise((resolve) => (release = () => resolve(undefined))),
+  );
+  await open();
+  await userEvent.click(page.getByRole("button", { name: /^Text/ }));
+  await userEvent.fill(page.getByLabelText("Lesson text"), "der Hund, the dog");
+  await userEvent.click(page.getByRole("button", { name: "Add text" }));
+  await userEvent.click(findTerms());
+  const stop = page.getByRole("button", { name: "Stop" });
+  await expect.element(stop).toBeVisible();
+
+  // The beat runs on a fake clock, so Stop lands inside it on every device, however slow.
+  vi.useFakeTimers({ toFake: ["setTimeout"] });
+  try {
+    release();
+    for (let i = 0; i < 20; i++) await Promise.resolve();
+    (stop.element() as HTMLElement).click();
+    vi.advanceTimersByTime(1000);
+  } finally {
+    vi.useRealTimers();
+  }
+  await expect.element(findTerms()).toBeVisible();
+  expect(page.getByRole("button", { name: "Stop" }).query()).toBeNull();
+});

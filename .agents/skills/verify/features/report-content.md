@@ -8,11 +8,11 @@ In a deck someone else owns: the deck page's **Deck options** › **Report deck*
 
 ## Drive
 
-[`report-content.mjs`](report-content.mjs), as `learner` on Noor's **Lisboa a dois**: report the deck with a reason and a note, then report its first card, and read the email the local outbox kept.
+[`report-content.mjs`](report-content.mjs), as `learner` on Noor's **Lisboa a dois**: report the deck with a reason and a note, then report its first card, open Report in review and press grade keys on the sheet, and read the email the local outbox kept.
 
 ## End state
 
-The toast says **Report sent. We’ll look within a day.**, the outbox holds an email to hello@lymi.app whose subject names the reason and the card's term, and Kateryna's own **Lezione 12** offers no Report in its menu.
+The toast says **Report sent. We’ll look within a day.**, the outbox holds an email to hello@lymi.app whose subject names the reason and the card's term, Kateryna's own **Lezione 12** offers no Report in its menu, and the review card behind a Report is still ungraded and unchanged once the sheet closes.
 
 ## Gotchas
 

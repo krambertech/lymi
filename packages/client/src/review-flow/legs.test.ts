@@ -384,4 +384,33 @@ describe("review_session_opened", () => {
     legs.step(leg({ done: 0, source: "ready" }));
     expect(events).toMatchObject([opened({ is_first_session: true, source: "ready" })]);
   });
+
+  it("fires again for a deck review after a remount of a Today review with the same leg key", () => {
+    const shared = { key: `${DATE}:draw:0`, done: 0 };
+    legs.setStreak(NEW_LEARNER);
+    legs.step(leg({ ...shared, scope: "day" }));
+    expect(events).toMatchObject([opened({ is_first_session: true, scope: "day" })]);
+    let n = 0;
+    legs = new ReviewLegs(
+      (event) => events.push(event),
+      () => `leg-${++n}`,
+    );
+    legs.setStreak(NEW_LEARNER);
+    legs.step(leg({ ...shared, scope: "deck", target: "deck-1" }));
+    expect(events.filter((event) => event.name === "review_session_opened")).toEqual([
+      opened({ is_first_session: true, scope: "day" }),
+      opened({ is_first_session: true, scope: "deck", session_id: "leg-1" }),
+    ]);
+  });
+
+  it("sends source unknown if the learner leaves before the decks have loaded", () => {
+    legs.setStreak(NEW_LEARNER);
+    legs.step(leg({ done: 0, source: "pending" }));
+    expect(events).toEqual([]);
+    legs.leave();
+    expect(events).toMatchObject([
+      opened({ is_first_session: true, source: "unknown" }),
+      { name: "review_session_abandoned", cards_done: 0, is_first_session: true },
+    ]);
+  });
 });

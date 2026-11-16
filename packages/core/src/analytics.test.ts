@@ -412,7 +412,7 @@ describe("review_session_opened", () => {
     source: "ready",
   };
 
-  it("keeps a known source on the browser or the phone, and drops an unknown one", () => {
+  it("keeps a known source on the browser or the phone, and drops an unrecognised one", () => {
     expect(eventProperties("review_session_opened", base, "browser")).toEqual(base);
     expect(
       eventProperties(
@@ -424,6 +424,9 @@ describe("review_session_opened", () => {
     expect(eventProperties("review_session_opened", { ...base, source: "own" }, "browser")).toEqual(
       { ...base, source: "own" },
     );
+    expect(
+      eventProperties("review_session_opened", { ...base, source: "unknown" }, "browser"),
+    ).toEqual({ ...base, source: "unknown" });
     expect(
       eventProperties("review_session_opened", { ...base, source: "typed" }, "browser"),
     ).toBeNull();

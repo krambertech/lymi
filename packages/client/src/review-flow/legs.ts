@@ -1,6 +1,6 @@
 import type { ProductAnalyticsEvent, ReviewScopeKind } from "@lymi/core/analytics";
 import { ReviewSessionTracker } from "@lymi/core/analytics-review-session";
-import { rememberReviewSessionOpened, reviewSessionAlreadyOpened } from "./opened";
+import { rememberReviewSessionOpened, reviewOpenedKey, reviewSessionAlreadyOpened } from "./opened";
 import type { ReviewSource } from "./source";
 
 /** Where the review stands, as the screen draws it. */
@@ -20,6 +20,8 @@ export interface ReviewLeg {
   finished: "goal" | "empty" | null;
   /** How the cards arrived; `pending` while the decks have not loaded. */
   source?: ReviewSource | "pending";
+  /** The scope's target: a deck, series or section id, or the round or chosen list. */
+  target?: string;
 }
 
 interface StreakDays {
@@ -29,6 +31,7 @@ interface StreakDays {
 
 interface Opened {
   key: string;
+  openedKey: string;
   date: string;
   session_id: string;
   card_count: number;
@@ -84,6 +87,7 @@ export class ReviewLegs {
     paused,
     finished,
     source = "own",
+    target = "",
   }: ReviewLeg): void {
     if (key === null) return;
     const snapshot = { cardsDone: done, cardCount: count, first: before === 0, scope };
@@ -92,7 +96,7 @@ export class ReviewLegs {
     // The leg being closed by a new key is reported under its own day, so the day moves after.
     if (presenting) {
       const sessionId = this.tracker.update(key, snapshot);
-      if (sessionId && date) this.queueOpened(key, date, sessionId, snapshot, source);
+      if (sessionId && date) this.queueOpened(key, date, sessionId, snapshot, source, target);
       else this.rememberSource(key, source);
       this.flushOpened();
     } else if (stopped) {
@@ -122,10 +126,13 @@ export class ReviewLegs {
     session_id: string,
     snapshot: { first: boolean; cardCount: number; cardsDone: number; scope: ReviewScopeKind },
     source: ReviewSource | "pending",
+    target: string,
   ) {
-    if (reviewSessionAlreadyOpened(key)) return;
+    const openedKey = reviewOpenedKey(key, snapshot.scope, target);
+    if (reviewSessionAlreadyOpened(openedKey)) return;
     this.pending = {
       key,
+      openedKey,
       date,
       session_id,
       card_count: Math.max(0, snapshot.cardCount - snapshot.cardsDone),
@@ -144,15 +151,15 @@ export class ReviewLegs {
     if (!pending) return;
     if (!ending && (pending.source === "pending" || !this.streak)) return;
     this.pending = null;
-    if (reviewSessionAlreadyOpened(pending.key)) return;
-    rememberReviewSessionOpened(pending.key);
+    if (reviewSessionAlreadyOpened(pending.openedKey)) return;
+    rememberReviewSessionOpened(pending.openedKey);
     this.send({
       name: "review_session_opened",
       session_id: pending.session_id,
       scope: pending.scope,
       card_count: pending.card_count,
       is_first_session: this.isFirst(pending.first, pending.date),
-      source: pending.source === "pending" ? "own" : pending.source,
+      source: pending.source === "pending" ? "unknown" : pending.source,
     });
   }
 }

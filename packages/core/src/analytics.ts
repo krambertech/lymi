@@ -359,7 +359,7 @@ export const analyticsEvents = {
     ...session,
     card_count: count,
     is_first_session: z.boolean(),
-    source: z.enum(["ready", "import", "own"]),
+    source: z.enum(["ready", "import", "own", "unknown"]),
   }),
   first_session_started: z.object({ deck_slug: slug }),
   first_review_end_left: z.object({

@@ -287,10 +287,16 @@ test("a member reporting a card in review grades nothing behind the report", asy
     });
     expect(deck.ok()).toBeTruthy();
     deckId = ((await deck.json()) as { id: string }).id;
-    const card = await page.request.post("/api/cards", {
-      data: { deckId, term: "head aega", meaning: "goodbye", enrich: false },
-    });
-    expect(card.ok()).toBeTruthy();
+    // Two cards, so a grade that slipped through would move review on to the other one.
+    for (const [term, meaning] of [
+      ["head aega", "goodbye"],
+      ["tere", "hello"],
+    ]) {
+      const card = await page.request.post("/api/cards", {
+        data: { deckId, term, meaning, enrich: false },
+      });
+      expect(card.ok()).toBeTruthy();
+    }
     const on = await page.request.post(`/api/decks/${deckId}/join-link`);
     expect(on.ok()).toBeTruthy();
     const joinUrl = ((await on.json()) as { link: { url: string } }).link.url;
@@ -302,13 +308,15 @@ test("a member reporting a card in review grades nothing behind the report", asy
     expect(joined.ok()).toBeTruthy();
   });
 
-  const card = classmate.getByLabel(/ card for (head aega|goodbye)$/);
+  const card = classmate.getByLabel(/ card for (head aega|goodbye|tere|hello)$/);
   const grades = classmate.getByRole("group", { name: "Choose a recall grade" });
+  let shown: string | null = null;
   await test.step("the member opens the report from the revealed card's menu", async () => {
     await classmate.goto(`/review?deck=${deckId}`);
     await expect(card).toBeVisible();
     await classmate.keyboard.press("Space");
     await expect(grades).toBeVisible();
+    shown = await card.getAttribute("aria-label");
     // The trigger is only for a screen reader on touch, so it is reached the same way on both.
     await classmate.getByRole("button", { name: "Card options" }).focus();
     await classmate.keyboard.press("Enter");
@@ -325,8 +333,8 @@ test("a member reporting a card in review grades nothing behind the report", asy
     await expect(report).toBeVisible();
     await report.getByRole("button", { name: "Cancel" }).click();
     await expect(report).toBeHidden();
-    await expect(card).toBeVisible();
     await expect(grades).toBeVisible();
+    await expect(card).toHaveAttribute("aria-label", shown ?? "");
   });
 
   await classmate.context().close();

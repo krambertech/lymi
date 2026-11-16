@@ -1014,6 +1014,9 @@ msgstr "AI пишет значения на русском, украинском
 msgid "AI writes Ukrainian and a native Ukrainian voice reads it. When a word looks like a Russian one but means something else, the card’s notes say so."
 msgstr "AI пишет по-украински, а читает голос носителя украинского. Если слово похоже на русское, но значит другое, об этом сказано в заметках карточки."
 
+msgid "AI wrote this"
+msgstr "Это написал AI"
+
 msgid "Airport"
 msgstr "Аэропорт"
 
@@ -1739,6 +1742,9 @@ msgstr "Выбери оценку, чтобы перейти к следующе
 
 msgid "Choose a grade to move to the next question."
 msgstr "Выбери оценку, чтобы перейти к следующему вопросу."
+
+msgid "Choose a word"
+msgstr "Выбери слово"
 
 msgid "Choose Authenticate, sign in to Lymi and allow it."
 msgstr "Выбери Authenticate, войди в Lymi и разреши доступ."
@@ -2881,6 +2887,9 @@ msgstr "С сегодняшнего дня до даты теста"
 
 msgid "From the chat you just had"
 msgstr "Из только что прошедшего разговора"
+
+msgid "From the lesson"
+msgstr "С урока"
 
 msgid "From your notes"
 msgstr "Из твоих заметок"
@@ -7736,6 +7745,9 @@ msgstr "Начинаешь с раздела <0>{first}</0>, а следующи
 
 msgid "You start with <0>{first}</0>. When you know most of it, you choose when to start the next."
 msgstr "Начинаешь с раздела <0>{first}</0>. Когда выучишь большую его часть, ты решаешь, когда начать следующий."
+
+msgid "You wrote this"
+msgstr "Это написано тобой"
 
 msgid "You’re welcome"
 msgstr "Не за что"

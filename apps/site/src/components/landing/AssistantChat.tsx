@@ -1,39 +1,41 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { clsx } from "clsx";
-import { Check, FileText, Image } from "lucide-react";
+import { FileText, Image } from "lucide-react";
 import type { ReactNode } from "react";
+import { LearnerBubble, ToolCall, UsingLymi } from "./ChatParts";
 import type { SampleCard } from "./cards";
+import { SmallCard } from "./SmallCard";
 
-export type Turn = { from: "you" | "them"; body: ReactNode };
+export type Turn = {
+  from: "you" | "them";
+  body: ReactNode;
+  /** A file the learner sends with the message: an `Attachment`, shown above the bubble. */
+  attachment?: ReactNode;
+};
 
 interface AddedProps {
   children: ReactNode;
   card: SampleCard;
 }
 
-/** The assistant's confirmation, with the card it added as Lymi will show it. */
+/** The assistant's confirmation: the call to Lymi, what it did, and the card it added. */
 export function Added({ children, card }: AddedProps) {
   const { i18n } = useLingui();
   return (
-    <>
-      <span className="flex items-start gap-1.5">
-        <Check aria-hidden="true" className="mt-0.5 size-4 shrink-0 text-success" />
-        <span>{children}</span>
-      </span>
-      <span className="mt-2.5 block rounded-sm bg-amber-soft px-3 py-2">
-        <span className="block text-xs tracking-[0.06em] text-amber-text uppercase">
-          {i18n._(card.label)}
-        </span>
-        <span
+    <div className="flex flex-col items-start gap-2">
+      <ToolCall>
+        <UsingLymi done />
+      </ToolCall>
+      <p>{children}</p>
+      <ul className="w-full max-w-[280px]">
+        <SmallCard
+          label={i18n._(card.label)}
+          term={card.term}
+          meaning={i18n._(card.meaning)}
           lang={card.language}
-          className="mt-1 block text-md font-medium tracking-[-0.024em] text-ink"
-        >
-          {card.term}
-        </span>
-        <span className="mt-0.5 block text-xs text-ink-secondary">{i18n._(card.meaning)}</span>
-      </span>
-    </>
+        />
+      </ul>
+    </div>
   );
 }
 
@@ -48,7 +50,7 @@ interface AttachmentProps {
 export function Attachment({ name, kind, photo }: AttachmentProps) {
   const Icon = photo ? Image : FileText;
   return (
-    <span className="mb-2 flex items-center gap-2.5 rounded-sm bg-plate py-2 ps-2 pe-3 edge">
+    <span className="flex items-center gap-2.5 rounded-sm bg-plate py-2 ps-2 pe-3 edge">
       <span className="grid size-8 shrink-0 place-items-center rounded-xs bg-amber-soft text-amber-text">
         <Icon aria-hidden="true" className="size-4" />
       </span>
@@ -93,24 +95,27 @@ interface Props {
   conversation?: Turn[] | undefined;
 }
 
+/**
+ * A short scripted chat with an assistant: the learner in ink at the end of the row, the
+ * assistant's answers as plain text, as every chat app sets them.
+ */
 export function AssistantChat({ conversation = defaultConversation() }: Props) {
   return (
     <div className="flex max-w-[460px] flex-col gap-3">
-      {conversation.map((turn, i) => (
-        <div
+      {conversation.map((turn, i) =>
+        turn.from === "you" ? (
           // biome-ignore lint/suspicious/noArrayIndexKey: the script is fixed, so the index is the identity
-          key={i}
-          className={clsx(
-            "px-3.5 py-2.5 text-sm edge",
-            turn.from === "you"
-              ? "max-w-[82%] self-end bg-plate-nested text-ink"
-              : "max-w-[88%] self-start bg-plate text-ink-secondary",
-          )}
-          style={{ borderRadius: 14 }}
-        >
-          {turn.body}
-        </div>
-      ))}
+          <div key={i} className="flex flex-col items-end gap-2">
+            {turn.attachment}
+            <LearnerBubble>{turn.body}</LearnerBubble>
+          </div>
+        ) : (
+          // biome-ignore lint/suspicious/noArrayIndexKey: the script is fixed, so the index is the identity
+          <div key={i} className="max-w-[88%] self-start text-md text-pretty text-ink">
+            {turn.body}
+          </div>
+        ),
+      )}
     </div>
   );
 }

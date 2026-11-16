@@ -6,27 +6,10 @@ import { AnimatePresence, motion } from "motion/react";
 import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { Pick } from "./Pick";
 import { EASE, usePlayback, useStill } from "./playback";
+import { SourceMark } from "./SourceMark";
 
 export interface DemoProps {
   play: boolean;
-}
-
-/**
- * The product's badge on a field AI wrote: `SourceChip size="xs"` in the app, its sparkle and its
- * word on the violet `ai` tokens.
- */
-function AiBadge({ arriving }: { arriving?: boolean }) {
-  return (
-    <span
-      className={clsx(
-        "inline-flex h-[17px] shrink-0 items-center gap-1 rounded-full bg-ai-soft px-1.5 text-2xs font-medium whitespace-nowrap text-ai",
-        arriving && "ai-badge-in",
-      )}
-    >
-      <Sparkle aria-hidden="true" className="size-2.5" />
-      AI
-    </span>
-  );
 }
 
 function Caret() {
@@ -54,7 +37,7 @@ function AiField({ label, children, on }: { label: ReactNode; children: ReactNod
     <div data-on={on} className="ai-sweep rounded-lg bg-plate px-3 py-2 edge">
       <div className="flex h-[17px] items-center justify-between gap-3">
         <span className="text-xs text-ink-muted">{label}</span>
-        {on && <AiBadge arriving />}
+        {on && <SourceMark source="ai" arriving />}
       </div>
       <div data-on={on} className="ai-words mt-0.5 min-h-5 text-sm text-pretty text-ink">
         {children}
@@ -215,7 +198,7 @@ export function LessonDemo({ play }: DemoProps) {
                     <div className="min-w-0 flex-1">
                       <p className="flex items-center justify-between gap-2 text-sm font-medium text-ink">
                         {card.term}
-                        <AiBadge arriving />
+                        <SourceMark source="ai" arriving />
                       </p>
                       <p className="truncate text-xs text-ink-secondary">{i18n._(card.meaning)}</p>
                     </div>
@@ -343,7 +326,7 @@ function LeadRun({ lead, play }: { lead: Lead; play: boolean }) {
             {done ? lead.term : typed(lead.typed, at)}
             {!done && <Caret />}
           </p>
-          {done && <AiBadge arriving />}
+          {done && <SourceMark source="ai" arriving />}
         </div>
         {[
           ["meaning", lead.meaning, "text-ink-secondary"] as const,

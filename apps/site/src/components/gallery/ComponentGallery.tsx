@@ -21,15 +21,17 @@ import { Hero } from "../landing/Hero";
 import { BENTO_HUES, CheckList, LanguageBento, Tile } from "../landing/LanguageBento";
 import { LanguageHero, LanguageName } from "../landing/LanguageSections";
 import { Pick } from "../landing/Pick";
+import { Picker } from "../landing/Picker";
 import { Questions } from "../landing/Questions";
 import { ReturnLane } from "../landing/ReturnLane";
 import { Section } from "../landing/Section";
 import { SignUpSection } from "../landing/SignUpSection";
+import { SmallCard } from "../landing/SmallCard";
+import { SourceMark } from "../landing/SourceMark";
 import { SpokenWords, useClipPlayer } from "../landing/SpokenWords";
 import { Steps } from "../landing/Steps";
 import { UseCases } from "../landing/UseCases";
 import { WordForms } from "../landing/WordForms";
-import { WordPicker } from "../landing/WordPicker";
 
 interface Entry {
   id: string;
@@ -54,7 +56,7 @@ interface Group {
 function PickerSpecimen() {
   const words = ["vesi", "sõber", "käsi", "tuba"];
   const [at, setAt] = useState(0);
-  return <WordPicker words={words} lang="et" at={at} onPick={setAt} />;
+  return <Picker label="Choose a word" options={words} lang="et" at={at} onPick={setAt} />;
 }
 
 function SpokenWordsSpecimen() {
@@ -541,9 +543,9 @@ const GROUPS: Group[] = [
         id: "chat",
         name: "AssistantChat, Added, Attachment",
         file: "landing/AssistantChat.tsx",
-        use: "A short scripted chat with an assistant. Added shows the card it made as Lymi shows it; Attachment is what the learner sent.",
+        use: "A short scripted chat with an assistant: the learner in ink, the assistant's answers as plain text. Added is the call to Lymi, what it did and the card it made; Attachment is what the learner sent.",
         usage: `<AssistantChat conversation={[
-  { from: "you", body: <><Attachment name="IMG_2041.jpg" kind={<Trans>Photo</Trans>} photo />{ask}</> },
+  { from: "you", attachment: <Attachment name="IMG_2041.jpg" kind={<Trans>Photo</Trans>} photo />, body: ask },
   { from: "them", body: <Added card={card}>{reply}</Added> },
 ]} />`,
         frame: "piece",
@@ -552,12 +554,8 @@ const GROUPS: Group[] = [
             conversation={[
               {
                 from: "you",
-                body: (
-                  <>
-                    <Attachment name="Lesson 4.pdf" kind="PDF" />
-                    Add the new words from today’s lesson.
-                  </>
-                ),
+                attachment: <Attachment name="Lesson 4.pdf" kind="PDF" />,
+                body: "Add the new words from today’s lesson.",
               },
               {
                 from: "them",
@@ -599,11 +597,53 @@ const GROUPS: Group[] = [
         ),
       },
       {
-        id: "word-picker",
-        name: "WordPicker",
-        file: "landing/WordPicker.tsx",
-        use: "A row of words that switches a language demo. One highlight slides between them.",
-        usage: `<WordPicker words={WORDS.map((w) => w.term)} lang="et" at={at} onPick={setAt} />`,
+        id: "source-mark",
+        name: "SourceMark",
+        file: "landing/SourceMark.tsx",
+        use: "Where a field's text came from, as the product's badge marks it. AI's violet badge with its sparkle is the only violet on the site; the lesson and the learner's own text are neutral. `arriving` lands it as a field fills in.",
+        usage: `<SourceMark source="ai" arriving />
+<SourceMark source="lesson" />`,
+        frame: "piece",
+        specimen: () => (
+          <div className="flex flex-wrap items-center gap-3">
+            <SourceMark source="ai" />
+            <SourceMark source="lesson" />
+            <SourceMark source="manual" />
+          </div>
+        ),
+      },
+      {
+        id: "small-card",
+        name: "SmallCard",
+        file: "landing/SmallCard.tsx",
+        use: "A card at the size of a chat reply or a tile: white and lifted, its label in the product's uppercase, then the term and its meaning. It is a list item, so put it in a `ul`, and give it motion props to land on its own beat.",
+        usage: `<ul className="grid grid-cols-2 gap-2">
+  <SmallCard label="Suomi · verb" term="kuulua" meaning={…} lang="fi" />
+</ul>`,
+        frame: "piece",
+        specimen: () => (
+          <ul className="grid w-full max-w-[380px] grid-cols-2 gap-2">
+            <SmallCard
+              label="Suomi · verb"
+              term="kuulua"
+              meaning="To belong; to be heard"
+              lang="fi"
+            />
+            <SmallCard
+              label="Suomi · noun"
+              term="sisu"
+              meaning="Grit; stubborn resolve"
+              lang="fi"
+            />
+          </ul>
+        ),
+      },
+      {
+        id: "picker",
+        name: "Picker",
+        file: "landing/Picker.tsx",
+        use: "The one way to switch a demo between a few things, words or names alike. One plate slides between the options. Pass `lang` when the options are words in the language being learned.",
+        usage: `<Picker label={t\`Choose a word\`} options={WORDS.map((w) => w.term)} lang="et" at={at} onPick={setAt} />`,
         frame: "piece",
         specimen: () => <PickerSpecimen />,
       },

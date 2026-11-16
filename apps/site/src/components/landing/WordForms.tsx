@@ -2,8 +2,8 @@ import type { MessageDescriptor } from "@lingui/core";
 import { useLingui } from "@lingui/react/macro";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { type CSSProperties, useEffect, useRef, useState } from "react";
+import { Picker } from "./Picker";
 import { EASE, useStill } from "./playback";
-import { WordPicker } from "./WordPicker";
 
 const STEP_MS = 2400;
 /** The first change comes soon after the stage is in view, so it never reads as a still picture. */
@@ -44,7 +44,7 @@ function sharedStart(forms: readonly string[]): number {
 
 /** A word's three forms side by side, the shared start in ink and the part that changes lit. */
 export function WordForms({ lang, words, slots }: Props) {
-  const { i18n } = useLingui();
+  const { i18n, t } = useLingui();
   const still = useStill();
   const stage = useRef<HTMLDivElement>(null);
   const inView = useInView(stage, { amount: 0.3 });
@@ -139,8 +139,9 @@ export function WordForms({ lang, words, slots }: Props) {
       </p>
 
       <div className="mt-6">
-        <WordPicker
-          words={words.map((w) => w.term)}
+        <Picker
+          label={t`Choose a word`}
+          options={words.map((w) => w.term)}
           lang={lang}
           at={at}
           onPick={(i) => {

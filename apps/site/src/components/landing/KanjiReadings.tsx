@@ -2,8 +2,8 @@ import { useLingui } from "@lingui/react/macro";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { HI_WORDS } from "./japanese";
+import { Picker } from "./Picker";
 import { EASE, useStill } from "./playback";
-import { WordPicker } from "./WordPicker";
 
 const STEP_MS = 1700;
 /** The first change comes soon after the stage is in view, so it never reads as a still picture. */
@@ -25,7 +25,7 @@ function Glyph({ kanji, reading }: { kanji: string; reading: string }) {
 
 /** 日 stays where it is while the word forms around it and the reading over it changes. */
 export function KanjiReadings() {
-  const { i18n } = useLingui();
+  const { i18n, t } = useLingui();
   const still = useStill();
   const stage = useRef<HTMLDivElement>(null);
   const inView = useInView(stage, { amount: 0.25 });
@@ -118,8 +118,9 @@ export function KanjiReadings() {
       </p>
 
       <div className="mt-6">
-        <WordPicker
-          words={HI_WORDS.map((w) => w.word)}
+        <Picker
+          label={t`Choose a word`}
+          options={HI_WORDS.map((w) => w.word)}
           lang="ja"
           at={at}
           onPick={(i) => {

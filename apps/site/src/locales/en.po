@@ -1014,6 +1014,9 @@ msgstr "AI writes meanings in English, Ukrainian or Russian, and Lymi itself is 
 msgid "AI writes Ukrainian and a native Ukrainian voice reads it. When a word looks like a Russian one but means something else, the card’s notes say so."
 msgstr "AI writes Ukrainian and a native Ukrainian voice reads it. When a word looks like a Russian one but means something else, the card’s notes say so."
 
+msgid "AI wrote this"
+msgstr "AI wrote this"
+
 msgid "Airport"
 msgstr "Airport"
 
@@ -1739,6 +1742,9 @@ msgstr "Choose a grade to move to the next card."
 
 msgid "Choose a grade to move to the next question."
 msgstr "Choose a grade to move to the next question."
+
+msgid "Choose a word"
+msgstr "Choose a word"
 
 msgid "Choose Authenticate, sign in to Lymi and allow it."
 msgstr "Choose Authenticate, sign in to Lymi and allow it."
@@ -2881,6 +2887,9 @@ msgstr "From now until your test date"
 
 msgid "From the chat you just had"
 msgstr "From the chat you just had"
+
+msgid "From the lesson"
+msgstr "From the lesson"
 
 msgid "From your notes"
 msgstr "From your notes"
@@ -7736,6 +7745,9 @@ msgstr "You start with <0>{first}</0>, and the next section opens as you learn t
 
 msgid "You start with <0>{first}</0>. When you know most of it, you choose when to start the next."
 msgstr ""
+
+msgid "You wrote this"
+msgstr "You wrote this"
 
 msgid "You’re welcome"
 msgstr "You’re welcome"

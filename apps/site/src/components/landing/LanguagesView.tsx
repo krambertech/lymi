@@ -3,7 +3,6 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { offersLanguage } from "@lymi/core/catalog";
-import { clsx } from "clsx";
 import { type ReactNode, useState } from "react";
 import { type LocalizedPage, localizedPath } from "../../lib/routes";
 import { ArrowLink } from "./ArrowLink";
@@ -24,6 +23,7 @@ import {
   MIXED_HAND,
 } from "./language-cards";
 import { NotesToCards } from "./NotesToCards";
+import { Picker } from "./Picker";
 import { Questions } from "./Questions";
 import { Section } from "./Section";
 import { SharedDeckDemo } from "./SharedDeckDemo";
@@ -118,14 +118,6 @@ function HandSection({
   const { t, i18n } = useLingui();
   const [chosen, setChosen] = useState<LearningLanguage["id"] | null>(null);
   const cards = languages?.find((l) => l.id === chosen)?.hand ?? hand;
-  const pill = (active: boolean) =>
-    clsx(
-      "h-9 rounded-full px-3.5 text-sm transition-colors duration-150",
-      active
-        ? "bg-ink font-medium text-canvas"
-        : "bg-plate text-ink-secondary edge hoverable:hover:bg-plate-hover hoverable:hover:text-ink",
-    );
-
   return (
     <FeatureSection
       demoFirst
@@ -133,28 +125,13 @@ function HandSection({
       body={body}
       after={
         languages && (
-          <fieldset className="m-0 flex min-w-0 flex-wrap gap-1.5 border-0 p-0">
-            <legend className="sr-only">{t`Cards in`}</legend>
-            <button
-              type="button"
-              aria-pressed={chosen === null}
-              onClick={() => setChosen(null)}
-              className={pill(chosen === null)}
-            >
-              <Trans>Every language</Trans>
-            </button>
-            {languages.map((l) => (
-              <button
-                key={l.id}
-                type="button"
-                aria-pressed={chosen === l.id}
-                onClick={() => setChosen(l.id)}
-                className={pill(chosen === l.id)}
-              >
-                {i18n._(l.name)}
-              </button>
-            ))}
-          </fieldset>
+          <Picker
+            label={t`Cards in`}
+            options={[t`Every language`, ...languages.map((l) => i18n._(l.name))]}
+            at={chosen === null ? 0 : languages.findIndex((l) => l.id === chosen) + 1}
+            onPick={(i) => setChosen(i === 0 ? null : (languages[i - 1]?.id ?? null))}
+            align="start"
+          />
         )
       }
     >

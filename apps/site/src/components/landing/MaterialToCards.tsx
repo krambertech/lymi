@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { Check, Copy } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { type ReactNode, useMemo, useRef, useState } from "react";
+import { Picker } from "./Picker";
 import { EASE, usePlayback, useStill } from "./playback";
 
 /** One beat per term: it lights in the material, then its card lands in the deck. */
@@ -136,25 +137,13 @@ export function MaterialToCards({ materials }: { materials: Material[] }) {
   return (
     <div ref={ref} className="flex flex-col gap-6">
       {materials.length > 1 && (
-        <fieldset className="m-0 flex min-w-0 flex-wrap gap-1.5 border-0 p-0">
-          <legend className="sr-only">{t`What you send`}</legend>
-          {materials.map((m) => (
-            <button
-              key={m.id}
-              type="button"
-              aria-pressed={m.id === material.id}
-              onClick={() => setChosen(m.id)}
-              className={clsx(
-                "h-9 rounded-full px-3.5 text-sm transition-colors duration-150",
-                m.id === material.id
-                  ? "bg-ink font-medium text-canvas"
-                  : "bg-plate text-ink-secondary edge hoverable:hover:bg-plate-hover hoverable:hover:text-ink",
-              )}
-            >
-              {i18n._(m.name)}
-            </button>
-          ))}
-        </fieldset>
+        <Picker
+          label={t`What you send`}
+          options={materials.map((m) => i18n._(m.name))}
+          at={materials.indexOf(material)}
+          onPick={(i) => setChosen(materials[i]?.id)}
+          align="start"
+        />
       )}
       <Reading key={material.id} material={material} inView={inView} />
     </div>

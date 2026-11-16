@@ -9,6 +9,7 @@ import { LearnerBubble, ToolCall, UsingLymi } from "./ChatParts";
 import { FreeBadge } from "./FreeBadge";
 import { Hero } from "./Hero";
 import { appear, EASE, usePlayback } from "./playback";
+import { SmallCard } from "./SmallCard";
 
 const WORD_MS = 2200;
 
@@ -136,9 +137,12 @@ function Conversation() {
 
         <ul className="grid grid-cols-2 gap-2">
           {MADE.map((card, i) => (
-            <motion.li
+            <SmallCard
               key={card.term}
-              className="min-w-0 rounded-lg bg-canvas px-3 pt-2 pb-2.5 edge"
+              label={i18n._(card.label)}
+              term={card.term}
+              meaning={i18n._(card.meaning)}
+              lang="de"
               initial={false}
               animate={
                 at("cards")
@@ -146,16 +150,7 @@ function Conversation() {
                   : { opacity: 0, y: 14, scale: 0.96, filter: "blur(6px)" }
               }
               transition={{ ...move, delay: still || !at("cards") ? 0 : i * 0.12 }}
-            >
-              <p className="text-2xs text-ink-muted">{i18n._(card.label)}</p>
-              <p
-                lang="de"
-                className="mt-0.5 truncate text-md font-medium tracking-[-0.015em] text-ink"
-              >
-                {card.term}
-              </p>
-              <p className="truncate text-xs text-ink-secondary">{i18n._(card.meaning)}</p>
-            </motion.li>
+            />
           ))}
         </ul>
       </div>

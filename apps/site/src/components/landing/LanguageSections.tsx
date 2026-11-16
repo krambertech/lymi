@@ -195,15 +195,7 @@ export function OwnAiSection({ body, attachment, ask, card, added, waiting, api 
     >
       <AssistantChat
         conversation={[
-          {
-            from: "you",
-            body: (
-              <>
-                {attachment}
-                {ask}
-              </>
-            ),
-          },
+          { from: "you", attachment, body: ask },
           { from: "them", body: <Added card={card}>{added}</Added> },
           { from: "you", body: <Trans>How many are waiting for me tonight?</Trans> },
           { from: "them", body: waiting },

@@ -122,6 +122,9 @@ const phoneOperations = [
   "PUT /api/settings/ai-consent",
   "PUT /api/decks/{id}/cards/section",
   "GET /api/decks/{id}/tags",
+  "POST /api/decks/{id}/tags/rename",
+  "POST /api/decks/{id}/tags/archive",
+  "POST /api/decks/{id}/tags/restore",
   "PUT /api/decks/{id}/preferences",
 ];
 

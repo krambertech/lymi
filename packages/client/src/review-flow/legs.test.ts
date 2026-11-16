@@ -2,12 +2,23 @@ import type { ProductAnalyticsEvent } from "@lymi/core/analytics";
 import { beforeEach, describe, expect, it } from "vitest";
 import { legFinish, type RoundAsk, type RoundFetch, reviewEnd, roundWalk } from "../review-end";
 import { daysBefore, type ReviewLeg, ReviewLegs } from "./legs";
+import { forgetOpenedReviewSessions } from "./opened";
 
 const DATE = "2026-10-12";
 const NEW_LEARNER = { reviewedDays: 0, today: { date: DATE, attempts: 0 } };
 
 let events: ProductAnalyticsEvent[];
 let legs: ReviewLegs;
+
+const opened = (over: Record<string, unknown> = {}) => ({
+  name: "review_session_opened" as const,
+  session_id: "leg-1",
+  card_count: 10,
+  is_first_session: false,
+  source: "own" as const,
+  scope: "day" as const,
+  ...over,
+});
 
 const leg = (over: Partial<ReviewLeg>): ReviewLeg => ({
   key: `${DATE}:draw:0`,
@@ -25,6 +36,7 @@ const leg = (over: Partial<ReviewLeg>): ReviewLeg => ({
 
 beforeEach(() => {
   events = [];
+  forgetOpenedReviewSessions();
   let n = 0;
   legs = new ReviewLegs(
     (event) => events.push(event),
@@ -41,6 +53,7 @@ describe("review legs on the phone", () => {
     legs.step(leg({ done: 3 }));
     legs.step(leg({ done: 10, presenting: false, stopped: true, finished: "goal" }));
     expect(events).toEqual([
+      opened({ is_first_session: true, scope: "day" }),
       {
         name: "review_session_finished",
         session_id: "leg-1",
@@ -67,6 +80,7 @@ describe("review legs on the phone", () => {
       }),
     );
     expect(events).toMatchObject([
+      opened({ card_count: 3, scope: "chosen" }),
       { name: "review_session_abandoned", reason: "left", scope: "chosen", cards_done: 1 },
     ]);
   });
@@ -75,6 +89,7 @@ describe("review legs on the phone", () => {
     legs.step(leg({ done: 0 }));
     legs.step(leg({ done: 10, presenting: false, stopped: true, finished: "goal" }));
     expect(events).toMatchObject([
+      opened(),
       { name: "review_session_finished", card_count: 10, is_first_session: false },
     ]);
   });
@@ -84,6 +99,7 @@ describe("review legs on the phone", () => {
     legs.step(leg({ done: 4 }));
     legs.leave();
     expect(events).toMatchObject([
+      opened(),
       {
         name: "review_session_abandoned",
         cards_done: 4,
@@ -109,14 +125,19 @@ describe("review legs on the phone", () => {
         paused: true,
       }),
     );
-    expect(events.map((e) => "is_first_session" in e && e.is_first_session)).toEqual([true, false]);
+    expect(events.map((e) => "is_first_session" in e && e.is_first_session)).toEqual([
+      true,
+      true,
+      false,
+      false,
+    ]);
   });
 
   it("is not a first session after reviews earlier today or on an earlier day", () => {
     legs.setStreak({ reviewedDays: 3, today: { date: DATE, attempts: 0 } });
     legs.step(leg({ done: 0 }));
     legs.step(leg({ done: 1, presenting: false, stopped: true, finished: "goal" }));
-    expect(events).toMatchObject([{ is_first_session: false }]);
+    expect(events).toMatchObject([opened(), { is_first_session: false }]);
   });
 });
 
@@ -149,8 +170,11 @@ describe("a round's end", () => {
       }),
     );
     legs.leave();
-    expect(events.map((e) => e.name)).toEqual(["review_session_finished"]);
-    expect(events).toMatchObject([{ card_count: 3, ending: "empty", scope: "round" }]);
+    expect(events.map((e) => e.name)).toEqual(["review_session_opened", "review_session_finished"]);
+    expect(events).toMatchObject([
+      opened({ card_count: 3, scope: "round" }),
+      { card_count: 3, ending: "empty", scope: "round" },
+    ]);
   });
 
   describe("longer than one page", () => {
@@ -183,8 +207,14 @@ describe("a round's end", () => {
       legs.step(pageEnd(SIZE));
       legs.step(pageEnd(SIZE));
       legs.leave();
-      expect(events.map((e) => e.name)).toEqual(["review_session_finished"]);
-      expect(events).toMatchObject([{ card_count: SIZE, ending: "empty", scope: "round" }]);
+      expect(events.map((e) => e.name)).toEqual([
+        "review_session_opened",
+        "review_session_finished",
+      ]);
+      expect(events).toMatchObject([
+        opened({ card_count: SIZE, scope: "round" }),
+        { card_count: SIZE, ending: "empty", scope: "round" },
+      ]);
     });
 
     it("is not finished when the next page fails offline, and leaving reports it abandoned", () => {
@@ -192,6 +222,7 @@ describe("a round's end", () => {
       legs.step(pageEnd(50));
       legs.leave();
       expect(events).toMatchObject([
+        opened({ card_count: SIZE, scope: "round" }),
         {
           name: "review_session_abandoned",
           reason: "navigation",
@@ -209,7 +240,10 @@ describe("a round's end", () => {
       legs.step(long({ done: SIZE - 1 }));
       legs.step(pageEnd(SIZE));
       legs.leave();
-      expect(events.map((e) => e.name)).toEqual(["review_session_finished"]);
+      expect(events.map((e) => e.name)).toEqual([
+        "review_session_opened",
+        "review_session_finished",
+      ]);
     });
   });
 
@@ -267,8 +301,14 @@ describe("a round's end", () => {
       expect(skeleton).toBe(false);
       expect(refetches).toBe(2);
       legs.leave();
-      expect(events.map((e) => e.name)).toEqual(["review_session_finished"]);
-      expect(events).toMatchObject([{ card_count: 79, ending: "empty", scope: "round" }]);
+      expect(events.map((e) => e.name)).toEqual([
+        "review_session_opened",
+        "review_session_finished",
+      ]);
+      expect(events).toMatchObject([
+        opened({ card_count: SIZE, scope: "round" }),
+        { card_count: 79, ending: "empty", scope: "round" },
+      ]);
     });
 
     it("is not finished when that refetch fails, and leaving reports it abandoned", () => {
@@ -279,7 +319,10 @@ describe("a round's end", () => {
       expect(skeleton).toBe(false);
       expect(refetches).toBe(1);
       legs.leave();
-      expect(events).toMatchObject([{ name: "review_session_abandoned", cards_done: 79 }]);
+      expect(events).toMatchObject([
+        opened({ card_count: SIZE, scope: "round" }),
+        { name: "review_session_abandoned", cards_done: 79 },
+      ]);
     });
   });
 
@@ -288,6 +331,7 @@ describe("a round's end", () => {
     legs.step(round({ done: 1 }));
     legs.leave();
     expect(events).toMatchObject([
+      opened({ card_count: 3, scope: "round" }),
       { name: "review_session_abandoned", reason: "navigation", scope: "round", cards_done: 1 },
     ]);
   });
@@ -306,5 +350,67 @@ describe("days reviewed before a leg", () => {
     expect(
       daysBefore({ reviewedDays: 0, today: { date: "2026-10-11", attempts: 0 } }, DATE),
     ).toBeUndefined();
+  });
+});
+
+describe("review_session_opened", () => {
+  it("fires once when a first review opens, even if nothing is graded", () => {
+    legs.setStreak(NEW_LEARNER);
+    legs.step(leg({ done: 0 }));
+    legs.leave();
+    expect(events).toMatchObject([
+      opened({ is_first_session: true, card_count: 10 }),
+      { name: "review_session_abandoned", cards_done: 0, is_first_session: true },
+    ]);
+  });
+
+  it("does not fire again after a remount of the same review", () => {
+    legs.setStreak(NEW_LEARNER);
+    legs.step(leg({ done: 0 }));
+    expect(events).toMatchObject([opened({ is_first_session: true })]);
+    let n = 0;
+    legs = new ReviewLegs(
+      (event) => events.push(event),
+      () => `leg-${++n}`,
+    );
+    legs.setStreak(NEW_LEARNER);
+    legs.step(leg({ done: 0 }));
+    legs.leave();
+    expect(events.filter((event) => event.name === "review_session_opened")).toHaveLength(1);
+  });
+
+  it("names how the cards arrived", () => {
+    legs.setStreak(NEW_LEARNER);
+    legs.step(leg({ done: 0, source: "ready" }));
+    expect(events).toMatchObject([opened({ is_first_session: true, source: "ready" })]);
+  });
+
+  it("fires again for a deck review after a remount of a Today review with the same leg key", () => {
+    const shared = { key: `${DATE}:draw:0`, done: 0 };
+    legs.setStreak(NEW_LEARNER);
+    legs.step(leg({ ...shared, scope: "day" }));
+    expect(events).toMatchObject([opened({ is_first_session: true, scope: "day" })]);
+    let n = 0;
+    legs = new ReviewLegs(
+      (event) => events.push(event),
+      () => `leg-${++n}`,
+    );
+    legs.setStreak(NEW_LEARNER);
+    legs.step(leg({ ...shared, scope: "deck", target: "deck-1" }));
+    expect(events.filter((event) => event.name === "review_session_opened")).toEqual([
+      opened({ is_first_session: true, scope: "day" }),
+      opened({ is_first_session: true, scope: "deck", session_id: "leg-1" }),
+    ]);
+  });
+
+  it("sends source unknown if the learner leaves before the decks have loaded", () => {
+    legs.setStreak(NEW_LEARNER);
+    legs.step(leg({ done: 0, source: "pending" }));
+    expect(events).toEqual([]);
+    legs.leave();
+    expect(events).toMatchObject([
+      opened({ is_first_session: true, source: "unknown" }),
+      { name: "review_session_abandoned", cards_done: 0, is_first_session: true },
+    ]);
   });
 });

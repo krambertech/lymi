@@ -1,5 +1,7 @@
 import type { ProductAnalyticsEvent, ReviewScopeKind } from "@lymi/core/analytics";
 import { ReviewSessionTracker } from "@lymi/core/analytics-review-session";
+import { rememberReviewSessionOpened, reviewOpenedKey, reviewSessionAlreadyOpened } from "./opened";
+import type { ReviewSource } from "./source";
 
 /** Where the review stands, as the screen draws it. */
 export interface ReviewLeg {
@@ -16,11 +18,26 @@ export interface ReviewLeg {
   stopped: boolean;
   paused: boolean;
   finished: "goal" | "empty" | null;
+  /** How the cards arrived; `pending` while the decks have not loaded. */
+  source?: ReviewSource | "pending";
+  /** The scope's target: a deck, series or section id, or the round or chosen list. */
+  target?: string;
 }
 
 interface StreakDays {
   reviewedDays: number;
   today: { date: string; attempts: number };
+}
+
+interface Opened {
+  key: string;
+  openedKey: string;
+  date: string;
+  session_id: string;
+  card_count: number;
+  first: boolean;
+  scope: ReviewScopeKind;
+  source: ReviewSource | "pending";
 }
 
 /** Days reviewed before `date`, when the streak can tell. */
@@ -40,18 +57,22 @@ export class ReviewLegs {
   private readonly tracker: ReviewSessionTracker;
   private streak: StreakDays | undefined;
   private date: string | null = null;
+  private pending: Opened | null = null;
 
-  constructor(send: (event: ProductAnalyticsEvent) => void, id: () => string) {
+  constructor(
+    private readonly send: (event: ProductAnalyticsEvent) => void,
+    id: () => string,
+  ) {
     this.tracker = new ReviewSessionTracker((event) => {
       if (event.name !== "review_session_finished" && event.name !== "review_session_abandoned")
         return;
-      const earlier = this.streak && this.date ? daysBefore(this.streak, this.date) : undefined;
-      send({ ...event, is_first_session: event.is_first_session && earlier === 0 });
+      send({ ...event, is_first_session: this.isFirst(event.is_first_session, this.date) });
     }, id);
   }
 
   setStreak(streak: StreakDays | undefined): void {
     if (streak) this.streak = streak;
+    this.flushOpened();
   }
 
   step({
@@ -65,12 +86,23 @@ export class ReviewLegs {
     stopped,
     paused,
     finished,
+    source = "own",
+    target = "",
   }: ReviewLeg): void {
     if (key === null) return;
     const snapshot = { cardsDone: done, cardCount: count, first: before === 0, scope };
+    // Flush a pending open for the last key first, so a navigation still records that it opened.
+    if (this.pending && this.pending.key !== key) this.flushOpened(true);
     // The leg being closed by a new key is reported under its own day, so the day moves after.
-    if (presenting) this.tracker.update(key, snapshot);
-    else if (stopped) {
+    if (presenting) {
+      const sessionId = this.tracker.update(key, snapshot);
+      if (sessionId && date) this.queueOpened(key, date, sessionId, snapshot, source, target);
+      else this.rememberSource(key, source);
+      this.flushOpened();
+    } else if (stopped) {
+      this.rememberSource(key, source);
+      // Only a real end flushes: running out of a page mid-round is not one.
+      if (paused || finished) this.flushOpened(true);
       this.tracker.update(key, snapshot, false);
       if (paused) this.tracker.abandon("left");
       else if (finished) this.tracker.finish(finished);
@@ -79,6 +111,55 @@ export class ReviewLegs {
   }
 
   leave(reason: "navigation" | "pagehide" = "navigation"): void {
+    this.flushOpened(true);
     this.tracker.abandon(reason);
+  }
+
+  private isFirst(first: boolean, date: string | null): boolean {
+    const earlier = this.streak && date ? daysBefore(this.streak, date) : undefined;
+    return first && earlier === 0;
+  }
+
+  private queueOpened(
+    key: string,
+    date: string,
+    session_id: string,
+    snapshot: { first: boolean; cardCount: number; cardsDone: number; scope: ReviewScopeKind },
+    source: ReviewSource | "pending",
+    target: string,
+  ) {
+    const openedKey = reviewOpenedKey(key, snapshot.scope, target);
+    if (reviewSessionAlreadyOpened(openedKey)) return;
+    this.pending = {
+      key,
+      openedKey,
+      date,
+      session_id,
+      card_count: Math.max(0, snapshot.cardCount - snapshot.cardsDone),
+      first: snapshot.first,
+      scope: snapshot.scope,
+      source,
+    };
+  }
+
+  private rememberSource(key: string, source: ReviewSource | "pending") {
+    if (this.pending?.key === key && source !== "pending") this.pending.source = source;
+  }
+
+  private flushOpened(ending = false) {
+    const pending = this.pending;
+    if (!pending) return;
+    if (!ending && (pending.source === "pending" || !this.streak)) return;
+    this.pending = null;
+    if (reviewSessionAlreadyOpened(pending.openedKey)) return;
+    rememberReviewSessionOpened(pending.openedKey);
+    this.send({
+      name: "review_session_opened",
+      session_id: pending.session_id,
+      scope: pending.scope,
+      card_count: pending.card_count,
+      is_first_session: this.isFirst(pending.first, pending.date),
+      source: pending.source === "pending" ? "unknown" : pending.source,
+    });
   }
 }

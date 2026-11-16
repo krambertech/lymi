@@ -125,6 +125,7 @@ const WEB: ReviewPlatform = {
   track(event) {
     if (event.name === "review_session_finished") captureAnalytics(event.name, event);
     if (event.name === "review_session_abandoned") captureAnalytics(event.name, event);
+    if (event.name === "review_session_opened") captureAnalytics(event.name, event);
   },
   newId: () => crypto.randomUUID(),
   onForeground: WEB_DAY.onForeground,

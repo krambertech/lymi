@@ -1,4 +1,5 @@
 import { dropQueued } from "@lymi/client/queued";
+import { forgetOpenedReviewSessions } from "@lymi/client/review-flow";
 import { clearCardImages } from "./card-images";
 import { clearQueryCache } from "./query-persister";
 import {
@@ -15,7 +16,7 @@ import {
  * What the client keeps for one learner: in IndexedDB, the query cache that survives reloads and
  * offline starts; in localStorage, the outboxes of grades and of card and deck writes made offline, whose they
  * are, how many cards the learner has revealed while the reveal nudge still counts, the deck a card
- * was last added to, the day the rest-day banner was dismissed, whether the offer to connect an AI assistant was, and the local-only marker of which persona the developer last became; in sessionStorage, the first review under way in this tab and its cards; in
+ * was last added to, the day the rest-day banner was dismissed, whether the offer to connect an AI assistant was, and the local-only marker of which persona the developer last became; in sessionStorage, the first review under way in this tab and its cards, and which reviews this tab already reported as opened; in
  * Cache Storage, the card pictures kept for offline review. All of it belongs to whoever was
  * signed in, so it is cleared when the learner changes: on sign-out, and before any sign-in starts.
  */
@@ -40,6 +41,7 @@ export function clearPersistedLearnerState(opts: { keepQueued?: boolean } = {}):
     // components/first-plan.tsx writes it; it would otherwise let the next account resume this one's first review.
     sessionStorage.removeItem(FIRST_REVIEW_KEY);
   } catch {}
+  forgetOpenedReviewSessions();
   if (!opts.keepQueued) dropQueued();
   void clearQueryCache();
   void clearCardImages().catch(() => undefined);

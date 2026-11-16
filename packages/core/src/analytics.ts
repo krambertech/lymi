@@ -355,6 +355,12 @@ export const analyticsEvents = {
     is_first_session: z.boolean(),
     reason: z.enum(["left", "navigation", "pagehide"]),
   }),
+  review_session_opened: z.object({
+    ...session,
+    card_count: count,
+    is_first_session: z.boolean(),
+    source: z.enum(["ready", "import", "own", "unknown"]),
+  }),
   first_session_started: z.object({ deck_slug: slug }),
   first_review_end_left: z.object({
     step: z.enum(["summary", "goal", "remind", "bye"]),
@@ -737,6 +743,7 @@ export const analyticsProducers = {
   email_unsubscribed: ["worker"],
   review_session_finished: ["browser", "phone"],
   review_session_abandoned: ["browser", "phone"],
+  review_session_opened: ["browser", "phone"],
   first_session_started: ["worker"],
   first_review_end_left: ["browser"],
   cards_added: ["worker"],

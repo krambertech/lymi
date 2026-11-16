@@ -7,4 +7,11 @@ export {
   type Mark,
 } from "./core";
 export { daysBefore, type ReviewLeg, ReviewLegs } from "./legs";
+export {
+  forgetOpenedReviewSessions,
+  REVIEW_SESSION_OPENED_KEY,
+  reviewOpenedKey,
+  reviewOpenedTarget,
+} from "./opened";
+export { type ReviewSource, reviewSource } from "./source";
 export { type ReviewFlow, type ReviewPlatform, useReviewFlow } from "./use-review-flow";

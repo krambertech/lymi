@@ -10,10 +10,14 @@ export class ReviewSessionTracker {
     private readonly send: (event: ProductAnalyticsEvent) => void,
     private readonly id: () => string,
   ) {}
-  update(key: string, snapshot: Snapshot, start = true): void {
+  /**
+   * Starts a leg when `start` is true, and returns that new session's id so the caller can
+   * report that it opened. Later updates of the same key return null.
+   */
+  update(key: string, snapshot: Snapshot, start = true): string | null {
     if (this.active && this.active.key !== key) this.abandon("navigation");
-    if (!this.active && (!start || this.finished.has(key))) return;
-    if (!this.active)
+    if (!this.active && (!start || this.finished.has(key))) return null;
+    if (!this.active) {
       this.active = {
         id: this.id(),
         key,
@@ -24,12 +28,14 @@ export class ReviewSessionTracker {
           cardCount: Math.max(0, snapshot.cardCount - snapshot.cardsDone),
         },
       };
-    else
-      this.active.snapshot = {
-        ...snapshot,
-        first: this.active.snapshot.first,
-        cardCount: this.active.snapshot.cardCount,
-      };
+      return this.active.id;
+    }
+    this.active.snapshot = {
+      ...snapshot,
+      first: this.active.snapshot.first,
+      cardCount: this.active.snapshot.cardCount,
+    };
+    return null;
   }
   finish(ending: "goal" | "empty"): void {
     const active = this.active;

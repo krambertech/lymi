@@ -140,16 +140,28 @@ test("Back while an answer is checked stays on the lesson when the check comes b
 });
 
 test("Stop in the beat after the scan finishes stays on the lesson", async () => {
-  vi.spyOn(api, "readLesson").mockResolvedValue(undefined);
+  let release = () => {};
+  vi.spyOn(api, "readLesson").mockImplementation(
+    () => new Promise((resolve) => (release = () => resolve(undefined))),
+  );
   await open();
   await userEvent.click(page.getByRole("button", { name: /^Text/ }));
   await userEvent.fill(page.getByLabelText("Lesson text"), "der Hund, the dog");
   await userEvent.click(page.getByRole("button", { name: "Add text" }));
   await userEvent.click(findTerms());
-  await userEvent.click(page.getByRole("button", { name: "Stop" }));
-  await expect.element(findTerms()).toBeVisible();
+  const stop = page.getByRole("button", { name: "Stop" });
+  await expect.element(stop).toBeVisible();
 
-  // Longer than the beat, so a timer left running would have moved the step by now.
-  await new Promise((resolve) => setTimeout(resolve, 1000));
+  // The beat runs on a fake clock, so Stop lands inside it on every device, however slow.
+  vi.useFakeTimers({ toFake: ["setTimeout"] });
+  try {
+    release();
+    for (let i = 0; i < 20; i++) await Promise.resolve();
+    (stop.element() as HTMLElement).click();
+    vi.advanceTimersByTime(1000);
+  } finally {
+    vi.useRealTimers();
+  }
   await expect.element(findTerms()).toBeVisible();
+  expect(page.getByRole("button", { name: "Stop" }).query()).toBeNull();
 });

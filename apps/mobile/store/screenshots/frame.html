@@ -25,8 +25,8 @@
     --edge: oklch(0.2 0.03 60 / 0.1);
     --lantern-pool: oklch(0.9 0.09 78 / 0.5);
     }
-  /* Google Play allows at most 1:2, so its size is wider than an iPhone screen. */
-  [data-size="play"] { --w: 1440px; --h: 2880px; }
+  /* Google Play takes only 9:16 phone screenshots, so its size is wider and shorter than an iPhone screen. */
+  [data-size="play"] { --w: 1440px; --h: 2560px; --shot-w: 800px; --caption-top: 200px; --shot-top: 620px; }
   [data-size="feature"] { --w: 1024px; --h: 500px; }
   [data-theme="dark"] {
     --canvas: oklch(0.17 0.008 62);
@@ -45,7 +45,7 @@
   }
   .caption {
     position: absolute;
-    top: 300px;
+    top: var(--caption-top, 300px);
     inset-inline: 140px;
     font-weight: 600;
     font-size: 116px;
@@ -57,9 +57,9 @@
   .shot {
     position: absolute;
     display: block;
-    width: 940px;
-    inset-inline-start: calc((var(--w) - 940px) / 2);
-    top: 760px;
+    width: var(--shot-w, 940px);
+    inset-inline-start: calc((var(--w) - var(--shot-w, 940px)) / 2);
+    top: var(--shot-top, 760px);
     border-radius: 99px;
     box-shadow: 0 0 0 4px var(--edge);
   }

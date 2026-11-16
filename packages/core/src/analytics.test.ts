@@ -403,3 +403,30 @@ describe("import failure properties", () => {
     ).toEqual({ source: "anki", card_count: 3, adapter: "anki", outcome: "done" });
   });
 });
+
+describe("review_session_opened", () => {
+  const base = {
+    session_id: "01234567-89ab-4cde-8fab-0123456789ab",
+    card_count: 10,
+    is_first_session: true,
+    source: "ready",
+  };
+
+  it("keeps a known source on the browser or the phone, and drops an unknown one", () => {
+    expect(eventProperties("review_session_opened", base, "browser")).toEqual(base);
+    expect(
+      eventProperties(
+        "review_session_opened",
+        { ...base, source: "import", scope: "day" },
+        "phone",
+      ),
+    ).toEqual({ ...base, source: "import", scope: "day" });
+    expect(eventProperties("review_session_opened", { ...base, source: "own" }, "browser")).toEqual(
+      { ...base, source: "own" },
+    );
+    expect(
+      eventProperties("review_session_opened", { ...base, source: "typed" }, "browser"),
+    ).toBeNull();
+    expect(eventProperties("review_session_opened", base, "worker")).toBeNull();
+  });
+});

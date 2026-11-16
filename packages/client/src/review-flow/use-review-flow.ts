@@ -47,6 +47,7 @@ import {
   startFlow,
 } from "./core";
 import { ReviewLegs } from "./legs";
+import { reviewSource } from "./source";
 
 /** What the review needs from the platform it runs on; keep one per platform, outside any component. */
 export interface ReviewPlatform {
@@ -226,6 +227,11 @@ export function useReviewFlow(
   useEffect(() => legs.current?.setStreak(streak.data), [streak.data]);
   const { key, date, scope: legScope, before, done, count } = legReport;
   const { presenting, stopped, paused, finished } = legReport;
+  const source =
+    reviewSource(
+      [view.current, ...view.upcoming].flatMap((item) => (item ? [item.card] : [])),
+      decks.data,
+    ) ?? "pending";
   useEffect(() => {
     legs.current?.step({
       key,
@@ -238,8 +244,9 @@ export function useReviewFlow(
       stopped,
       paused,
       finished,
+      source,
     });
-  }, [key, date, legScope, before, done, count, presenting, stopped, paused, finished]);
+  }, [key, date, legScope, before, done, count, presenting, stopped, paused, finished, source]);
   // A strict remount closes nothing: the leg is left only if no mount came back by the next tick.
   const mounts = useRef(0);
   useEffect(() => {

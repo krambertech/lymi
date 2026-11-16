@@ -2,8 +2,8 @@ import { useLingui } from "@lingui/react/macro";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
 import { XING_WORDS } from "./chinese";
+import { Picker } from "./Picker";
 import { EASE, useStill } from "./playback";
-import { WordPicker } from "./WordPicker";
 
 const STEP_MS = 2000;
 const FIRST_MS = 500;
@@ -22,7 +22,7 @@ function Glyph({ zh, py }: { zh: string; py: string }) {
 
 /** 行 stays put while words form around it, and the pinyin over it switches between háng and xíng. */
 export function ChineseReadings() {
-  const { i18n } = useLingui();
+  const { i18n, t } = useLingui();
   const still = useStill();
   const stage = useRef<HTMLDivElement>(null);
   const inView = useInView(stage, { amount: 0.25 });
@@ -109,8 +109,9 @@ export function ChineseReadings() {
       </p>
 
       <div className="mt-6">
-        <WordPicker
-          words={XING_WORDS.map((w) => w.word)}
+        <Picker
+          label={t`Choose a word`}
+          options={XING_WORDS.map((w) => w.word)}
           lang="zh-Hans"
           at={at}
           onPick={(i) => {

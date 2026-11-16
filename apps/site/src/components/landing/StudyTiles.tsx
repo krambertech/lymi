@@ -2,6 +2,7 @@ import { Plural, Trans } from "@lingui/react/macro";
 import { FileText, Tag, WifiOff } from "lucide-react";
 import type { ReactNode } from "react";
 import { BENTO_HUES, CheckList, Tile } from "./LanguageBento";
+import { SourceMark } from "./SourceMark";
 
 /** Three tags with their card counts, the middle one picked, and the review that takes just its cards. */
 export function TagReview({ tags }: { tags: readonly [string, number][] }) {
@@ -204,9 +205,7 @@ export function DeckStyle({
           <span lang={lang} className="text-lg font-medium text-ink">
             {term}
           </span>
-          <span className="inline-flex h-[17px] items-center rounded-full bg-ai-soft px-1.5 text-2xs font-semibold text-ai">
-            AI
-          </span>
+          <SourceMark source="ai" />
         </span>
         <span className="text-md text-ink-secondary">{meaning}</span>
       </p>

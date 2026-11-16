@@ -4,8 +4,8 @@ import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { Picker } from "./Picker";
 import { EASE, useStill } from "./playback";
-import { WordPicker } from "./WordPicker";
 
 /** One spelling, and the words its stress makes of it. */
 export interface StressPair {
@@ -109,8 +109,9 @@ export function StressPairs({ pairs, lang }: Props) {
       </div>
 
       <div className="mt-6">
-        <WordPicker
-          words={pairs.map((p) => p.word)}
+        <Picker
+          label={t`Choose a word`}
+          options={pairs.map((p) => p.word)}
           lang={lang}
           at={pairAt}
           onPick={(i) => {

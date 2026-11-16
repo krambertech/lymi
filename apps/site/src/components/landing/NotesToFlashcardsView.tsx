@@ -308,13 +308,11 @@ export function NotesToFlashcardsView() {
           conversation={[
             {
               from: "you",
+              attachment: (
+                <Attachment name={t`cell-transport.pdf`} kind={<Trans>PDF · 30 pages</Trans>} />
+              ),
               body: (
-                <>
-                  <Attachment name={t`cell-transport.pdf`} kind={<Trans>PDF · 30 pages</Trans>} />
-                  <Trans>
-                    Here are the slides from today’s lecture on cells. Add the key terms.
-                  </Trans>
-                </>
+                <Trans>Here are the slides from today’s lecture on cells. Add the key terms.</Trans>
               ),
             },
             {

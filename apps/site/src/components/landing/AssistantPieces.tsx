@@ -6,6 +6,7 @@ import { Lantern } from "../Lantern";
 import { AssistantMark, type AssistantName } from "./AssistantMarks";
 import { appear, EASE, usePlayback } from "./playback";
 import { useShowcaseStage } from "./Showcase";
+import { SmallCard } from "./SmallCard";
 
 /*
  * The things a learner hands an assistant, and what comes back from Lymi, for the demos on the
@@ -153,16 +154,13 @@ export function CardsResult({ cards, lang }: { cards: readonly MiniCard[]; lang:
     <div className="grid gap-2">
       <ul className="grid grid-cols-2 gap-2">
         {cards.map((card) => (
-          <li key={card.term} className="min-w-0 rounded-xl bg-plate px-3 pt-2 pb-2.5 edge-drop">
-            <p className="truncate text-2xs text-ink-muted">{card.label}</p>
-            <p
-              lang={lang}
-              className="mt-0.5 truncate text-md font-medium tracking-[-0.015em] text-ink"
-            >
-              {card.term}
-            </p>
-            <p className="truncate text-xs text-ink-secondary">{card.meaning}</p>
-          </li>
+          <SmallCard
+            key={card.term}
+            label={card.label}
+            term={card.term}
+            meaning={card.meaning}
+            lang={lang}
+          />
         ))}
       </ul>
     </div>

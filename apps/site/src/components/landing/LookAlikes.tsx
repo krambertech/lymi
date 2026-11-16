@@ -2,9 +2,9 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { Volume2 } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { Picker } from "./Picker";
 import { EASE, useStill } from "./playback";
 import type { LookAlike } from "./polish";
-import { WordPicker } from "./WordPicker";
 
 const BEAT_MS = 1500;
 const FIRST_MS = 700;
@@ -132,8 +132,9 @@ export function LookAlikes({ words, reader }: Props) {
         >
           <Volume2 aria-hidden="true" className="size-4" />
         </button>
-        <WordPicker
-          words={words.map((w) => w.term)}
+        <Picker
+          label={t`Choose a word`}
+          options={words.map((w) => w.term)}
           lang="pl"
           at={at}
           onPick={(i) => {

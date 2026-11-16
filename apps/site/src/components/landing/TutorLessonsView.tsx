@@ -289,13 +289,11 @@ export function TutorLessonsView() {
           conversation={[
             {
               from: "you",
+              attachment: (
+                <Attachment name="lesson-with-marta.txt" kind={<Trans>Text · 2 pages</Trans>} />
+              ),
               body: (
-                <>
-                  <Attachment name="lesson-with-marta.txt" kind={<Trans>Text · 2 pages</Trans>} />
-                  <Trans>
-                    Here’s the chat from today’s lesson with Marta. Add the new phrases.
-                  </Trans>
-                </>
+                <Trans>Here’s the chat from today’s lesson with Marta. Add the new phrases.</Trans>
               ),
             },
             {

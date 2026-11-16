@@ -5,6 +5,7 @@ import { trayStyle } from "../../lib/tray";
 import type { AssistantName } from "./AssistantMarks";
 import { AssistantAvatar, LearnerBubble, ToolCall, UsingLymi } from "./ChatParts";
 import { appear, EASE, usePlayback, useStill } from "./playback";
+import { SmallCard } from "./SmallCard";
 
 export interface MadeCard {
   label: string;
@@ -117,9 +118,12 @@ export function AssistantChatDemo({
           </motion.p>
           <ul className="mt-1 grid w-full grid-cols-2 gap-2">
             {cards.map((card, i) => (
-              <motion.li
+              <SmallCard
                 key={card.term}
-                className="min-w-0 rounded-xl bg-plate px-3 pt-2 pb-2.5 edge-drop"
+                label={card.label}
+                term={card.term}
+                meaning={card.meaning}
+                lang={lang}
                 initial={false}
                 animate={
                   at("cards")
@@ -127,16 +131,7 @@ export function AssistantChatDemo({
                     : { opacity: 0, y: 14, scale: 0.96, filter: "blur(6px)" }
                 }
                 transition={{ ...move, delay: still || !at("cards") ? 0 : i * 0.12 }}
-              >
-                <p className="truncate text-2xs text-ink-muted">{card.label}</p>
-                <p
-                  lang={lang}
-                  className="mt-0.5 truncate text-md font-medium tracking-[-0.015em] text-ink"
-                >
-                  {card.term}
-                </p>
-                <p className="truncate text-xs text-ink-secondary">{card.meaning}</p>
-              </motion.li>
+              />
             ))}
           </ul>
         </div>

@@ -5,6 +5,8 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useEffect, useState } from "react";
 import { Button } from "../Button";
 import type { LearningLanguage, NoteLine } from "./language-cards";
+import { Picker } from "./Picker";
+import { SourceMark } from "./SourceMark";
 
 /** One line read per beat, slow enough to follow the box down the page. */
 const READ_MS = 650;
@@ -13,19 +15,6 @@ const SHUTTER_MS = 560;
 const IDLE = -2;
 const SHOOTING = -1;
 const EASE = [0.22, 1, 0.36, 1] as const;
-
-function SourceTag({ ai }: { ai: boolean }) {
-  return (
-    <span
-      className={clsx(
-        "shrink-0 rounded-xs px-1.5 py-px text-xs tracking-[0.06em] uppercase",
-        ai ? "bg-amber-soft text-amber-text" : "bg-plate-nested text-ink-muted",
-      )}
-    >
-      {ai ? <Trans>AI</Trans> : <Trans>Notes</Trans>}
-    </span>
-  );
-}
 
 function Row({ line, language }: { line: NoteLine; language: LearningLanguage }) {
   const { i18n } = useLingui();
@@ -57,7 +46,7 @@ function Row({ line, language }: { line: NoteLine; language: LearningLanguage })
         {meaning && (
           <p className="mt-0.5 flex items-center gap-2 text-sm text-ink-secondary">
             <span className="truncate">{i18n._(meaning)}</span>
-            <SourceTag ai={!line.gloss} />
+            <SourceMark source={line.gloss ? "lesson" : "ai"} />
           </p>
         )}
       </div>
@@ -104,25 +93,12 @@ export function NotesToCards({ notebooks }: { notebooks: LearningLanguage[] }) {
   return (
     <div className="flex flex-col gap-8">
       {notebooks.length > 1 && (
-        <fieldset className="m-0 flex min-w-0 flex-wrap justify-center gap-1.5 border-0 p-0">
-          <legend className="sr-only">{t`Whose notes`}</legend>
-          {notebooks.map((n) => (
-            <button
-              key={n.id}
-              type="button"
-              aria-pressed={n.id === language.id}
-              onClick={() => setChosen(n.id)}
-              className={clsx(
-                "h-9 rounded-full px-3.5 text-sm transition-colors duration-150",
-                n.id === language.id
-                  ? "bg-ink font-medium text-canvas"
-                  : "bg-plate text-ink-secondary edge hoverable:hover:bg-plate-hover hoverable:hover:text-ink",
-              )}
-            >
-              {i18n._(n.name)}
-            </button>
-          ))}
-        </fieldset>
+        <Picker
+          label={t`Whose notes`}
+          options={notebooks.map((n) => i18n._(n.name))}
+          at={notebooks.indexOf(language)}
+          onPick={(i) => setChosen(notebooks[i]?.id ?? language.id)}
+        />
       )}
 
       <div className="grid items-start gap-10 @4xl:grid-cols-[minmax(0,1fr)_minmax(0,1fr)] @4xl:gap-12">

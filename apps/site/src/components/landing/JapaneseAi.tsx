@@ -4,20 +4,7 @@ import { Sparkle } from "lucide-react";
 import { motion, useInView } from "motion/react";
 import { type ReactNode, useMemo, useRef } from "react";
 import { appear, EASE, usePlayback, useStill } from "./playback";
-
-/** The AI's mark on a field it wrote, as the card form shows it. */
-function AiMark({ on }: { on: boolean }) {
-  return (
-    <span
-      className={clsx(
-        "inline-flex h-[17px] items-center rounded-full bg-ai-soft px-1.5 text-2xs font-semibold text-ai transition-opacity duration-300",
-        !on && "opacity-0",
-      )}
-    >
-      AI
-    </span>
-  );
-}
+import { SourceMark } from "./SourceMark";
 
 export function Field({
   label,
@@ -39,7 +26,14 @@ export function Field({
     >
       <span className="flex items-center justify-between text-xs font-medium text-ink-muted">
         {label}
-        {wrote !== undefined && <AiMark on={wrote} />}
+        {wrote !== undefined && (
+          <span
+            aria-hidden={!wrote}
+            className={clsx("transition-opacity duration-300", !wrote && "opacity-0")}
+          >
+            <SourceMark source="ai" />
+          </span>
+        )}
       </span>
       {children}
     </div>

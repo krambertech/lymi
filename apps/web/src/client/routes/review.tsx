@@ -51,6 +51,7 @@ import { usePrefetchPictures } from "../lib/card-images";
 import { refreshAfterCardWrite } from "../lib/card-writes";
 import { useMouse, useWide } from "../lib/device";
 import { useDocumentTitle } from "../lib/document-title";
+import { reminderProperties, reportFirstReviewEndLeft } from "../lib/first-review-end";
 import { isGuiding } from "../lib/first-run";
 import { lastInputWasKey } from "../lib/last-input";
 import { playAlone } from "../lib/now-playing";
@@ -755,19 +756,12 @@ function Review() {
     if (endLeft.current) return;
     endLeft.current = true;
     rememberFirstReview(null);
-    captureAnalytics("first_review_end_left", {
+    reportFirstReviewEndLeft({
       step: endStep,
       left,
       goal: endGoal,
       goal_changed: endGoal !== goalAtEnd.current,
-      reminder:
-        r === "on"
-          ? "on"
-          : r === "denied"
-            ? "blocked"
-            : r === "install" || r === "none"
-              ? "unavailable"
-              : "off",
+      ...reminderProperties(r),
       tips_skipped: tipsOff,
     });
   };

@@ -26,7 +26,8 @@ export type Reminder =
   | "dismissed"
   | "install"
   | "error"
-  | "none";
+  | "unsupported"
+  | "setup_failed";
 
 export interface ReminderControl {
   reminder: Reminder;
@@ -52,7 +53,7 @@ export function useReminder(enabled: boolean): ReminderControl {
       return;
     }
     if (!supportsPush()) {
-      setReminder("none");
+      setReminder("unsupported");
       return;
     }
     if (Notification.permission === "denied") {
@@ -70,7 +71,7 @@ export function useReminder(enabled: boolean): ReminderControl {
         setKey(publicKey);
         setReminder(status?.enabled ? "on" : "off");
       })
-      .catch(() => live && setReminder("none"));
+      .catch(() => live && setReminder("setup_failed"));
     return () => {
       live = false;
     };

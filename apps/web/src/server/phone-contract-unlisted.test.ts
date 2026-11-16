@@ -1,19 +1,30 @@
 import { readdirSync } from "node:fs";
 import { join } from "node:path";
 import { crc32, deflateSync } from "node:zlib";
-import { AddCardsOut, CLIENT_HEADER, DeckOut, formatClientHeader } from "@lymi/core";
+import {
+  AddCardsOut,
+  AI_CONSENT_VERSION,
+  CLIENT_HEADER,
+  CONTENT_REPORT_DAILY_LIMIT,
+  DeckOut,
+  formatClientHeader,
+  LESSON_READS_PER_DAY,
+  newId,
+} from "@lymi/core";
 import { eq } from "@lymi/core/db";
-import { beforeAll, describe, expect, it, vi } from "vitest";
+import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
 import { cookiePrefix } from "../shared/cookies";
+import { testGateway } from "../test/ai-gateway";
+import { handleFetch } from "./app";
 import { schema } from "./db";
 import { latestLocalEmail } from "./services/email";
 import { signUpCookieName } from "./signup-cookie";
-import { json, type Session, type TestApp, testApp } from "./test-app";
+import { json, PRODUCT_URL, type Session, type TestApp, testApp } from "./test-app";
 
 /**
  * The phone's calls the OpenAPI document leaves out, so no freeze in apps/mobile/contract guards
- * them: Better Auth under /api/auth, the photo, pronunciation audio, feedback, join links and the
- * add preview. Each test sends
+ * them: Better Auth under /api/auth, the photo, pronunciation audio, feedback, join links, the
+ * add preview, Smart add's lesson reads and content reports. Each test sends
  * what an installed release sends and checks what that release reads back, so a change here is a
  * phone break that needs a version gate first. ADR 0032.
  */
@@ -26,8 +37,19 @@ const PASSWORD = "lantern-over-the-water-58";
 let app: TestApp;
 
 beforeAll(async () => {
-  app = await testApp({ env: { GOOGLE_CLIENT_ID: "client-id", GOOGLE_CLIENT_SECRET: "secret" } });
+  app = await testApp({
+    env: {
+      GOOGLE_CLIENT_ID: "client-id",
+      GOOGLE_CLIENT_SECRET: "secret",
+      ...testGateway,
+      ANTHROPIC_API_KEY: "key",
+    },
+  });
 }, 60_000);
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
 describe.each(releases)("the phone release %s", (version) => {
   const handle = (name: string) => `${name}-${version.replaceAll(".", "-")}`;
@@ -348,6 +370,230 @@ describe.each(releases)("the phone release %s", (version) => {
       expect(await response.json()).toEqual({ ok: true });
     });
   });
+
+  /** A deck its owner wrote with `cards` cards, joined by a classmate through its link. */
+  async function sharedDeck(name: string, cards: number) {
+    const owner = await app.signUp(handle(`${name}-owner`));
+    const classmate = await app.signUp(handle(`${name}-classmate`));
+    const created = await app.fetch("/api/decks", {
+      ...json({ name: "Eesti slang", defaultLanguage: "et" }),
+      as: owner,
+    });
+    const deckId = DeckOut.parse(await created.json()).id;
+    const added = await app.fetch("/api/cards/batch", {
+      ...json({
+        cards: Array.from({ length: cards }, (_, i) => ({
+          deckId,
+          term: `sõna${i}`,
+          meaning: `word ${i}`,
+        })),
+      }),
+      as: owner,
+    });
+    const cardIds = AddCardsOut.parse(await added.json()).results.map((result) => {
+      if (result.status !== "added") throw new Error("A seeded card was not added");
+      return result.card.id;
+    });
+    const on = await app.fetch(`/api/decks/${deckId}/join-link`, { method: "POST", as: owner });
+    const { link } = (await on.json()) as { link: { url: string } };
+    const joined = await app.fetch(`/api/join/${link.url.split("/").pop()}`, {
+      method: "POST",
+      as: classmate,
+    });
+    if (!joined.ok) throw new Error("The classmate could not join");
+    return { classmate, deckId, cardIds };
+  }
+
+  describe("Smart add", () => {
+    /** The release's yes from the consent sheet; a phone that never answered may not read. */
+    async function allowAi(as: Session) {
+      const response = await app.fetch("/api/settings/ai-consent", {
+        ...fromPhone(
+          json(
+            {
+              allowed: true,
+              version: AI_CONSENT_VERSION,
+              updated_at: Date.now(),
+              place: "smart_add",
+            },
+            { method: "PUT" },
+          ),
+        ),
+        as,
+      });
+      expect(response.status).toBe(200);
+    }
+
+    /** The release's form, sized as Expo's fetch sends it; `apps/mobile/src/smart-add/material.ts`. */
+    async function readLesson(as: Session, fields: Record<string, string>, files: File[] = []) {
+      const form = new FormData();
+      for (const [key, value] of Object.entries(fields)) form.append(key, value);
+      for (const file of files) form.append("file", file);
+      const encoded = new Response(form);
+      const bytes = await encoded.arrayBuffer();
+      const init = fromPhone({
+        method: "POST",
+        body: bytes,
+        headers: {
+          cookie: as.cookie,
+          "content-type": encoded.headers.get("content-type") ?? "",
+          "content-length": String(bytes.byteLength),
+        },
+      });
+      // `app.fetch` waits for deferred work before it answers, and the read is deferred work that
+      // waits for the stream to be drained, so this drains the stream first, as the release does.
+      const deferred: Promise<unknown>[] = [];
+      const executionCtx = {
+        waitUntil: (work: Promise<unknown>) => void deferred.push(work),
+        passThroughOnException: () => {},
+        props: {},
+      } as unknown as ExecutionContext;
+      const response = await handleFetch(
+        new Request(new URL("/api/lesson-reads", PRODUCT_URL), init),
+        app.env,
+        executionCtx,
+      );
+      const text = await response.text();
+      await Promise.all(deferred);
+      return { status: response.status, text };
+    }
+
+    it("reads a lesson into terms and questions, then checks the learner's own answer", async () => {
+      const learner = await app.signUp(handle("lesson"));
+      const deck = await app.fetch("/api/decks", {
+        ...json({ name: "Tund 6", defaultLanguage: "et" }),
+        as: learner,
+      });
+      const deckId = DeckOut.parse(await deck.json()).id;
+      await app.fetch("/api/cards/batch", {
+        ...json({ cards: [{ deckId, term: "tere", meaning: "hello" }] }),
+        as: learner,
+      });
+      await allowAi(learner);
+
+      const before = await app.fetch("/api/lesson-reads/access", fromPhone({ as: learner }));
+      expect(before.status).toBe(200);
+      expect(accessOf(await before.json())).toMatchObject({ limit: LESSON_READS_PER_DAY, used: 0 });
+
+      const reply = {
+        deck: deckId,
+        terms: [
+          lessonTerm("t1", "tere"),
+          lessonTerm("t2", "jooma"),
+          lessonTerm("t3", "sööma"),
+          lessonTerm("t4", "magama"),
+        ],
+        questions: [
+          {
+            question: "Only the nouns?",
+            options: [
+              { label: "Everything", drop: [] },
+              { label: "Only nouns", drop: ["t2", "t3"] },
+            ],
+            default: 0,
+          },
+        ],
+      };
+      vi.stubGlobal("fetch", anthropicReplying(reply));
+      const read = await readLesson(
+        learner,
+        { text: "Tund 6: tere, jooma, sööma, magama", deckId },
+        [new File([await jpegBytes()], "page.jpg", { type: "image/jpeg" })],
+      );
+      expect(read.status).toBe(200);
+      const events = eventsOf(read.text);
+      // The release throws on an error line, so none may arrive on a read that worked.
+      expect(events.map((event) => event.type)).not.toContain("error");
+
+      expect(events.find((event) => event.type === "deck")).toMatchObject({ deckId });
+      const terms = events
+        .filter((event) => event.type === "term")
+        .map((event) => termOf(event.term));
+      expect(terms.map((term) => term.term)).toEqual(["tere", "jooma", "sööma", "magama"]);
+      expect(terms[0]).toMatchObject({ ticked: false, existing: { deckName: "Tund 6" } });
+      expect(terms[1]).toMatchObject({ ticked: true, existing: null });
+
+      const asked = events.find((event) => event.type === "questions");
+      expect(asked).toMatchObject({
+        questions: [
+          {
+            id: expect.any(String),
+            question: "Only the nouns?",
+            options: [
+              { label: "Everything", drop: [] },
+              { label: "Only nouns", drop: ["t2", "t3"] },
+            ],
+            default: 0,
+          },
+        ],
+      });
+
+      const after = await app.fetch("/api/lesson-reads/access", fromPhone({ as: learner }));
+      expect(accessOf(await after.json())).toMatchObject({ used: 1 });
+
+      const answered = await app.fetch("/api/lesson-reads/answers", {
+        ...fromPhone(
+          json({
+            question: "Only the nouns?",
+            answer: "only the verbs",
+            terms: terms.slice(1).map(({ id, term, gloss }) => ({ id, term, gloss })),
+          }),
+        ),
+        as: learner,
+      });
+      expect(answered.status).toBe(200);
+      expect(await answered.json()).toMatchObject({ drop: expect.any(Array) });
+    });
+
+    it("refuses a read past today's limit with the code the release explains", async () => {
+      const learner = await app.signUp(handle("lesson-limit"));
+      await allowAi(learner);
+      await app.db.insert(schema.lessonReads).values(
+        Array.from({ length: LESSON_READS_PER_DAY }, () => ({
+          id: newId(),
+          userId: learner.userId,
+          localDate: new Date().toISOString().slice(0, 10),
+        })),
+      );
+      const access = await app.fetch("/api/lesson-reads/access", fromPhone({ as: learner }));
+      expect(accessOf(await access.json())).toMatchObject({
+        limit: LESSON_READS_PER_DAY,
+        used: LESSON_READS_PER_DAY,
+      });
+
+      const refused = await readLesson(learner, { text: "Tund 7: kass, koer" });
+      const { code } = JSON.parse(refused.text) as { code?: string };
+      expect({ status: refused.status, code }).toEqual({ status: 409, code: "daily_limit" });
+    });
+  });
+
+  describe("a report", () => {
+    it("sends a classmate's report, and refuses one past the day's limit with 409", async () => {
+      const { classmate, deckId, cardIds } = await sharedDeck("report", CONTENT_REPORT_DAILY_LIMIT);
+      const report = (body: unknown) =>
+        app.fetch("/api/content-reports", { ...fromPhone(json(body)), as: classmate });
+
+      // The release closes the sheet on any success and reads nothing back.
+      const deck = await report({ target: { kind: "deck", deckId }, reason: "spam" });
+      expect(deck.status).toBe(200);
+      const [first, ...rest] = cardIds;
+      const card = await report({
+        target: { kind: "card", cardId: first },
+        reason: "offensive",
+        note: "Insults a group of people.",
+      });
+      expect(card.status).toBe(200);
+      for (const cardId of rest.slice(0, -1)) {
+        expect((await report({ target: { kind: "card", cardId }, reason: "other" })).status).toBe(
+          200,
+        );
+      }
+
+      // A 409 is the one failure the release explains, as the day's limit.
+      const over = await report({ target: { kind: "card", cardId: rest.at(-1) }, reason: "spam" });
+      expect(over.status).toBe(409);
+    });
+  });
 });
 
 /** The fields the release reads from a photo; `packages/client/src/api/account.ts`. */
@@ -358,6 +604,81 @@ function avatarOf(body: unknown) {
     revision: expect.any(Number),
   });
   return body as { source: string | null; version: string | null; revision: number };
+}
+
+/** The fields the release reads from today's reads; `apps/mobile/src/smart-add/steps.tsx`. */
+function accessOf(body: unknown) {
+  const daily = {
+    limit: expect.any(Number),
+    used: expect.any(Number),
+    resetsAt: expect.any(String),
+  };
+  expect(body).toMatchObject({ daily: expect.toBeOneOf([expect.objectContaining(daily), null]) });
+  return (body as { daily: { limit: number; used: number; resetsAt: string } | null }).daily;
+}
+
+/** The fields the release reads from a term on the pick list; `apps/mobile/src/smart-add`. */
+function termOf(body: unknown) {
+  const match = (fields: Record<string, unknown>) =>
+    expect.toBeOneOf([expect.objectContaining(fields), null]);
+  const text = expect.toBeOneOf([expect.any(String), null]);
+  expect(body).toMatchObject({
+    id: expect.any(String),
+    term: expect.any(String),
+    gloss: expect.any(String),
+    meaning: text,
+    pronunciation: text,
+    heading: text,
+    handwritten: expect.any(Boolean),
+    keep: expect.toBeOneOf([expect.any(Number), null]),
+    ticked: expect.any(Boolean),
+    existing: match({ deckName: expect.any(String) }),
+    formOf: match({ term: expect.any(String), deckName: expect.any(String) }),
+  });
+  return body as { id: string; term: string; gloss: string };
+}
+
+/** The release splits the read on newlines and parses each line; `packages/client/src/api/lessons.ts`. */
+function eventsOf(text: string) {
+  return text
+    .split("\n")
+    .filter((line) => line.trim())
+    .map((line) => JSON.parse(line) as { type: string; [field: string]: unknown });
+}
+
+/** A term as the reader's model writes it; `services/lessons.test.ts` covers what is made of it. */
+function lessonTerm(id: string, term: string) {
+  return {
+    id,
+    term,
+    kind: "word",
+    meaning: "значение",
+    meaningFromLesson: true,
+    handwritten: false,
+    heading: "2.10",
+    seen: term,
+  };
+}
+
+/** Anthropic behind the AI Gateway, streaming `reply` as the reader's JSON; anything else goes out. */
+function anthropicReplying(reply: unknown): typeof fetch {
+  const real = globalThis.fetch;
+  return async (input, init) => {
+    const url = input instanceof Request ? input.url : String(input);
+    if (!url.startsWith(testGateway.AI_GATEWAY_URL)) return real(input, init);
+    const text = JSON.stringify(reply);
+    const events = [
+      { type: "message_start", message: { usage: { input_tokens: 1000 } } },
+      ...Array.from({ length: Math.ceil(text.length / 40) }, (_, i) => ({
+        type: "content_block_delta",
+        delta: { type: "text_delta", text: text.slice(i * 40, (i + 1) * 40) },
+      })),
+      { type: "message_delta", delta: { stop_reason: "end_turn" }, usage: { output_tokens: 200 } },
+    ];
+    return new Response(events.map((event) => `data: ${JSON.stringify(event)}\n\n`).join(""), {
+      headers: { "content-type": "text/event-stream" },
+    });
+  };
 }
 
 function cookieOf(response: Response): string {

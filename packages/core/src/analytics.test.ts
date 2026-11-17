@@ -85,6 +85,13 @@ describe("analytics privacy contract", () => {
       ),
     ).toEqual({ place: "assistant_pages", target: "/ai-assistants/claude" });
     expect(
+      eventProperties(
+        "site_link_followed",
+        { place: "import_guide", target: "/compare/anki" },
+        "browser",
+      ),
+    ).toEqual({ place: "import_guide", target: "/compare/anki" });
+    expect(
       eventProperties("site_link_followed", { place: "footer", target: "/explore?q=word" }),
     ).toBeNull();
     expect(

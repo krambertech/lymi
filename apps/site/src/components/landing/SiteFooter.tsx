@@ -7,6 +7,7 @@ import { explorePath } from "../../lib/explore";
 import { localizedPath } from "../../lib/routes";
 import { LanguageLinks, type LanguageTarget } from "../LanguageLinks";
 import { Lockup } from "../Logo";
+import { COMPARE_KEYS, COMPARE_PAGES } from "./compare-pages";
 import { EXAM_LINKS, LANGUAGE_LINKS, linksIn, type SiteLink, USE_CASE_LINKS } from "./site-links";
 
 const linkClass = "rounded-xs hoverable:hover:text-ink";
@@ -130,29 +131,33 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
                 <Trans>API reference</Trans>
               </a>
             </li>
-            <li>
-              <a href="/docs/import-from-anki" className={linkClass}>
-                <Trans>Move from Anki</Trans>
-              </a>
-            </li>
-            <li>
-              <a href="/docs/import-from-mochi" className={linkClass}>
-                <Trans>Move from Mochi</Trans>
-              </a>
-            </li>
           </Group>
-          <Group title="Lymi">
-            <li>
-              <a href={localizedPath("changelog", i18n.locale)} className={linkClass}>
-                <Trans>Changelog</Trans>
-              </a>
-            </li>
-            <li>
-              <a href="/support" className={linkClass}>
-                <Trans>Support</Trans>
-              </a>
-            </li>
-          </Group>
+          <div className="grid content-start gap-8">
+            <Group title="Lymi">
+              <li>
+                <a href={localizedPath("changelog", i18n.locale)} className={linkClass}>
+                  <Trans>Changelog</Trans>
+                </a>
+              </li>
+              <li>
+                <a href="/support" className={linkClass}>
+                  <Trans>Support</Trans>
+                </a>
+              </li>
+            </Group>
+            <Group title={<Trans>Switching from</Trans>}>
+              {COMPARE_KEYS.map((key) => (
+                <li key={key}>
+                  <a
+                    href={localizedPath(COMPARE_PAGES[key].page, i18n.locale)}
+                    className={linkClass}
+                  >
+                    {COMPARE_PAGES[key].name}
+                  </a>
+                </li>
+              ))}
+            </Group>
+          </div>
         </div>
       </div>
       <div className="mx-auto mt-14 flex max-w-[1040px] flex-wrap items-center justify-between gap-x-6 gap-y-3 text-xs text-ink-muted">

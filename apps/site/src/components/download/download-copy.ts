@@ -8,6 +8,7 @@ export const DOWNLOAD_BUTTON = msg`Download for Mac`;
 export const DOWNLOAD_REQUIREMENT = msg`macOS 13 or later`;
 export const DOWNLOAD_INTEL = msg`Intel Mac?`;
 export const DOWNLOAD_INTEL_LABEL = msg`Intel Mac? Download for Intel`;
+export const DOWNLOAD_IPHONE = msg`Lymi for iPhone is on the App Store`;
 export const DOWNLOAD_LEDE = msg`Add a card from any app with ⌃⌥L, and open Lymi from the menu bar.`;
 export const DOWNLOAD_STEPS_HEADING = msg`How to install`;
 export const DOWNLOAD_STEPS = [

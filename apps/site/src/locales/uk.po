@@ -443,6 +443,9 @@ msgstr "48 сторінок"
 msgid "5 cards from Theory test"
 msgstr "5 карток з колоди «Теорія ПДР»"
 
+msgid "5 days in a row"
+msgstr "5 днів поспіль"
+
 msgid "500 feet in either direction"
 msgstr "500 футів (близько 150 м) в обидва боки"
 
@@ -1615,6 +1618,9 @@ msgstr "карток додано"
 
 msgid "Cards and review history come with you."
 msgstr "Картки й історія повторень переїжджають із тобою."
+
+msgid "cards due"
+msgstr "карток до повторення"
 
 msgid "Cards from this deck"
 msgstr "Картки з цієї колоди"
@@ -4170,6 +4176,12 @@ msgstr "Lymi для {name}"
 
 msgid "Lymi for certification prep · Flashcards with spaced repetition"
 msgstr "Lymi для підготовки до сертифікації · Картки з інтервальним повторенням"
+
+msgid "Lymi for iPhone"
+msgstr "Lymi для iPhone"
+
+msgid "Lymi for iPhone is on the App Store"
+msgstr "Lymi для iPhone є в App Store"
 
 msgid "Lymi for language learning"
 msgstr "Lymi для вивчення мов"

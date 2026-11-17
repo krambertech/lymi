@@ -6,6 +6,7 @@ export function GET() {
       "User-agent: *",
       "Disallow: /api/",
       "Disallow: /download/mac",
+      "Disallow: /download/iphone",
       "",
       "Sitemap: https://lymi.app/sitemap.xml",
       "",

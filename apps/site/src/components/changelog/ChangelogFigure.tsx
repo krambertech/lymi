@@ -20,6 +20,7 @@ import { HighlightCardFigure } from "./HighlightCardFigure";
 import { HookFigure } from "./HookFigure";
 import { ImportantFigure } from "./ImportantFigure";
 import { ImportSourcesFigure } from "./ImportSourcesFigure";
+import { IPhoneFigure } from "./IPhoneFigure";
 import { JapaneseCardFigure } from "./JapaneseCardFigure";
 import { MacBookFigure } from "./MacFigure";
 import { PinyinFigure } from "./PinyinFigure";
@@ -64,6 +65,7 @@ const FIGURES: Record<ChangelogFigureName, ComponentType> = {
   example: ExampleFigure,
   mac: MacBookFigure,
   "pitch-accent": PitchAccentFigure,
+  iphone: IPhoneFigure,
 };
 
 interface Props {

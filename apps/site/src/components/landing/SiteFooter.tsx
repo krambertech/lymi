@@ -2,6 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
+import { downloadHref } from "../../lib/downloads";
 import { examsPath } from "../../lib/exams";
 import { explorePath } from "../../lib/explore";
 import { localizedPath } from "../../lib/routes";
@@ -74,6 +75,16 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
               className="rounded-sm bg-plate px-3 py-1.5 text-sm font-medium text-ink edge-strong"
             >
               <Trans>Lymi for Mac</Trans>
+            </a>
+            {/* Hidden until the App Store check says the visitor's country sells Lymi. */}
+            <a
+              href={downloadHref("/download/iphone", i18n.locale)}
+              data-app-store=""
+              hidden
+              suppressHydrationWarning
+              className="rounded-sm bg-plate px-3 py-1.5 text-sm font-medium text-ink edge-strong"
+            >
+              <Trans>Lymi for iPhone</Trans>
             </a>
             <a
               href={openAppUrl}

@@ -57,7 +57,7 @@ export default function DeckFeatures({ locale, term, lang }: Props) {
               >
                 <div>
                   <h3 className="text-xl leading-tight font-medium tracking-[-0.02em] text-ink">
-                    <Trans>Each card comes back before you forget it</Trans>
+                    <Trans>Review less, remember longer.</Trans>
                   </h3>
                   <p className="mt-1 max-w-[46ch] text-sm text-pretty text-ink-secondary">
                     <Trans>

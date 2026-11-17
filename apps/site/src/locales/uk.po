@@ -2449,9 +2449,6 @@ msgstr "на повторення · хвилин на шість"
 msgid "Due tonight"
 msgstr "На сьогодні"
 
-msgid "Each card comes back before you forget it"
-msgstr "Кожна картка повертається до того, як забудеться"
-
 msgid "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
 msgstr "Кожна колода рахує свої питання як «Нові», «У вивченні» та «Засвоєні», тож ще до дати тесту видно, яку частину каталогу ти вже знаєш."
 

@@ -2449,9 +2449,6 @@ msgstr "due · about six minutes"
 msgid "Due tonight"
 msgstr "Due tonight"
 
-msgid "Each card comes back before you forget it"
-msgstr "Each card comes back before you forget it"
-
 msgid "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
 msgstr "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
 

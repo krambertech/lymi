@@ -6,7 +6,7 @@ decision: fit FSRS weights per learner on the server and adopt them only when th
 
 # A scheduler tuned to the learner
 
-Every learner gets the same FSRS-6 weights and the same 90% recall level from [`fsrs.ts`](../../packages/core/src/fsrs.ts). A learner who forgets faster than the defaults assume gets intervals that are too long, and nobody can trade reviews for recall. This proposal fits the weights to each learner's own grades, then lets them pick one of three recall levels. [The shaping page](https://claude.ai/artifact/PgJwZQSbK7gY6ho1LZXqpi) has the research, option mockups and a cost calculator. The five questions at the end are not decided.
+Every learner gets the same FSRS-6 weights and the same 90% recall level from [`fsrs.ts`](../../packages/core/src/fsrs.ts). A learner who forgets faster than the defaults assume gets intervals that are too long, and nobody can trade reviews for recall. This proposal fits the weights to each learner's own grades, then lets them pick one of three recall levels. [The shaping page](https://claude.ai/artifact/PgJwZQSbK7gY6ho1LZXqpi) has the research, option mockups and a cost calculator. The four questions at the end are not decided.
 
 **Recall level** is the chance of recalling a card when it comes up, which FSRS calls desired retention. It needs its own term because [CONTEXT.md](../../CONTEXT.md) lists "target" as a word to avoid for the daily goal.
 
@@ -26,9 +26,11 @@ Every learner gets the same FSRS-6 weights and the same 90% recall level from [`
 
 - **Per learner, on the server.** One fit covers all of a learner's decks. Each member of a shared deck is fitted from their own grades. The fit runs in a Cloudflare Workflow step, one learner per step. The phone cannot fit on the device because Hermes has no WebAssembly.
 - **FSRS-6.** The fit matches the 21 weights `ts-fsrs` 5.4.2 schedules with. FSRS-7 is a separate change.
-- **When it runs.** The 15-minute cron queues a learner after an import that brought a log, once they have 64 history items (fsrs-rs fits all weights from 64), then at most monthly or when their review count doubles.
-- **Adopt only a better fit.** The fit leaves out grades with an `aid`, since a hint or a choice is not unaided recall. It scores old and new weights on the newest 20% of reviews and keeps the new weights only when they score better. Weights are clipped to FSRS bounds.
-- **Nothing moves on its own.** A new fit or a new recall level applies from each card's next grade. Due dates never change in bulk, which is the step that buried the Anki learner above.
+- **What it reads.** Each card's grades in order, without undone grades (a `review_undos` row), since an undo and its regrade would otherwise count as two reviews. A hinted grade stays in the card's history, because it reset the interval, but is never a prediction target: a hint is not unaided recall.
+- **When it runs.** The 15-minute cron queues a learner after an import that brought a log, once they have 64 unaided targets (fsrs-rs fits all weights from 64), then at most monthly or when their review count doubles.
+- **Adopt only a better fit.** The fit trains on the older 80% of targets and scores the new and current weights on the newest 20%, which it has not seen. When the new weights score better, it refits on everything and adopts that. Weights are clipped to FSRS bounds.
+- **Due dates never move in bulk.** A new fit or a new recall level changes a card's interval only at its next grade. Bulk rescheduling is the step that buried the Anki learner above.
+- **Retrievability moves at once.** The decay is one of the fitted weights, so an adopted fit changes every card's retrievability immediately. The draw order ([ADR 0019](../adr/0019-the-review-queue-is-a-deterministic-weighted-draw.md)), Insights, the `review_graded` bucket and the load preview all read retrievability with the learner's current weights, so a new fit reorders the queue the same day.
 - **Three recall levels.** "How much to review" offers Fewer reviews (85%), Balanced (90%, the default) and Remember more (95%). Beside them, a preview runs the learner's own cards, weights and recent pace of new cards forward 30 days and shows reviews a day against the daily goal. A higher level shows up as cards waiting at the end of a day, because the goal counts attempts and Lymi never pulls cards forward ([review.md](../review.md)).
 - **Way back.** "Use the standard schedule" returns to default weights and 90%.
 - **Learner data.** Weights and recall level go into export and leave with the account.
@@ -58,5 +60,4 @@ Each goes into [analytics.md](../analytics.md) with its slice.
 1. Three levels at 85%, 90% and 95%, or a wider range? Lean: three.
 2. Where does the choice live? Lean: the streak modal under the daily goal, since both answer "how much a day". The alternative is a Review group in Settings.
 3. Does Lymi say when it tunes the schedule? Lean: one line in Insights, no toast or notification.
-4. After a new fit, rewrite every card's memory state at once, as Anki does, or only from each card's next grade? Lean: from the next grade. Rewriting is cheap today, but at 100,000 learners those writes are the one cost that shows.
-5. Read the weights Anki already fitted when a collection is imported? Lean: yes, if its deck config carries them; otherwise fit from the imported log.
+4. Read the weights Anki already fitted when a collection is imported? Lean: yes, if its deck config carries them; otherwise fit from the imported log.

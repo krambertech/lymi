@@ -524,6 +524,9 @@ msgstr "Схема со слайдов может стать картинкой 
 msgid "A dialogue in voice mode"
 msgstr "Диалог в голосовом режиме"
 
+msgid "A duck asleep in a POT"
+msgstr "Утка застряла в ПАТОке"
+
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "Не путай с английским embarrassed: «смущённый» — это avergonzado."
 
@@ -583,6 +586,9 @@ msgstr "Рутина Grok Bot запускается каждый день в 8:
 
 msgid "A hint for the word that won’t stick"
 msgstr "Подсказка для слова, которое не запоминается"
+
+msgid "A hint for the word you forget"
+msgstr "Подсказка для слова, которое забываешь"
 
 msgid "A hobby"
 msgstr "Хобби"
@@ -2204,6 +2210,12 @@ msgstr "Скачивай свои колоды когда угодно."
 msgid "Draft"
 msgstr "Черновик"
 
+msgid "Draft a hint"
+msgstr "Подготовить подсказку"
+
+msgid "Drafting a hint…"
+msgstr "Готовим подсказку…"
+
 msgid "Drag Lymi to Applications"
 msgstr "Перетащи Lymi в «Программы»"
 
@@ -2239,6 +2251,9 @@ msgstr "Добавь их в Умное добавление. Lymi выбере�
 
 msgid "Drugs, how they work and what to watch for."
 msgstr "Препараты, как они действуют и на что обращать внимание."
+
+msgid "duck"
+msgstr "утка"
 
 msgid "Due"
 msgstr "Когда повторять"
@@ -4585,6 +4600,9 @@ msgstr "Следующая карточка: <0>{0}</0>"
 msgid "Next review in {0}"
 msgstr "Следующее повторение через {0}"
 
+msgid "Next time, the hint shows before the answer."
+msgstr "В следующий раз подсказка появится перед ответом."
+
 msgid "Nice to meet you; thanks in advance"
 msgstr "Приятно познакомиться; заранее спасибо"
 
@@ -4723,6 +4741,10 @@ msgstr "Её часто называют неофициальным девизо
 
 msgid "Often forgotten"
 msgstr "Часто забываются"
+
+msgctxt "One card's label"
+msgid "Often forgotten"
+msgstr "Часто забывается"
 
 msgid "Okay"
 msgstr "Ладно"
@@ -7066,8 +7088,8 @@ msgstr "Две *булочки*, пожалуйста."
 msgid "Type <0>でんしゃ</0> or <1>デンシャ</1> and find <2>電車</2>."
 msgstr "Набери <0>でんしゃ</0> или <1>デンシャ</1> и найдёшь <2>電車</2>."
 
-msgid "Type a word, and AI adds the meaning, an example and a hint. Everything it adds is marked."
-msgstr "Введи слово, и AI добавит значение, пример и подсказку. Всё, что он добавил, помечено."
+msgid "Type a word, and AI adds the meaning, an example and notes. Everything it adds is marked."
+msgstr "Введи слово, и AI добавит значение, пример и заметки. Всё, что он добавил, помечено."
 
 msgid "Type a word. AI fills in the rest."
 msgstr "Набери слово. Остальное допишет AI."
@@ -7262,6 +7284,9 @@ msgstr "А как со словами, которые пишутся одина�
 msgid "What about ё?"
 msgstr "А что с ё?"
 
+msgid "What AI does for your cards"
+msgstr "Что AI делает для твоих карточек"
+
 msgid "What an object’s shape tells you to do with it"
 msgstr "Как форма предмета подсказывает, что с ним делать"
 
@@ -7376,6 +7401,9 @@ msgstr "Новые возможности Lymi и то, что стало луч
 
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "Когда показатель становится целью, он перестаёт быть хорошим показателем"
+
+msgid "When a word won’t stick, AI drafts a short hint that leads you back to it without spelling it out."
+msgstr "Когда слово никак не запоминается, AI готовит короткую подсказку, которая наводит на него, но не называет."
 
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "Когда коллеги уходят с работы, им говорят <0><1>お疲れ様です</1></0>."

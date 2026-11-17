@@ -524,6 +524,9 @@ msgstr "A diagram from your slides can be a card’s picture, and Lymi can ask y
 msgid "A dialogue in voice mode"
 msgstr "A dialogue in voice mode"
 
+msgid "A duck asleep in a POT"
+msgstr "A duck asleep in a POT"
+
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "A false friend. Embarrassed is avergonzado."
 
@@ -583,6 +586,9 @@ msgstr "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi an
 
 msgid "A hint for the word that won’t stick"
 msgstr "A hint for the word that won’t stick"
+
+msgid "A hint for the word you forget"
+msgstr "A hint for the word you forget"
 
 msgid "A hobby"
 msgstr "A hobby"
@@ -2204,6 +2210,12 @@ msgstr "Download the decks you own, any time."
 msgid "Draft"
 msgstr "Draft"
 
+msgid "Draft a hint"
+msgstr "Draft a hint"
+
+msgid "Drafting a hint…"
+msgstr "Drafting a hint…"
+
 msgid "Drag Lymi to Applications"
 msgstr "Drag Lymi to Applications"
 
@@ -2239,6 +2251,9 @@ msgstr "Drop them into Smart add. Lymi picks out the terms, keeps the definition
 
 msgid "Drugs, how they work and what to watch for."
 msgstr "Drugs, how they work and what to watch for."
+
+msgid "duck"
+msgstr "duck"
 
 msgid "Due"
 msgstr "Due"
@@ -4585,6 +4600,9 @@ msgstr "Next card: <0>{0}</0>"
 msgid "Next review in {0}"
 msgstr "Next review in {0}"
 
+msgid "Next time, the hint shows before the answer."
+msgstr "Next time, the hint shows before the answer."
+
 msgid "Nice to meet you; thanks in advance"
 msgstr "Nice to meet you; thanks in advance"
 
@@ -4721,6 +4739,10 @@ msgstr "of the points to pass, at every level"
 msgid "Often called Iceland’s unofficial motto."
 msgstr "Often called Iceland’s unofficial motto."
 
+msgid "Often forgotten"
+msgstr "Often forgotten"
+
+msgctxt "One card's label"
 msgid "Often forgotten"
 msgstr "Often forgotten"
 
@@ -7066,8 +7088,8 @@ msgstr "Two *bread rolls*, please."
 msgid "Type <0>でんしゃ</0> or <1>デンシャ</1> and find <2>電車</2>."
 msgstr "Type <0>でんしゃ</0> or <1>デンシャ</1> and find <2>電車</2>."
 
-msgid "Type a word, and AI adds the meaning, an example and a hint. Everything it adds is marked."
-msgstr "Type a word, and AI adds the meaning, an example and a hint. Everything it adds is marked."
+msgid "Type a word, and AI adds the meaning, an example and notes. Everything it adds is marked."
+msgstr "Type a word, and AI adds the meaning, an example and notes. Everything it adds is marked."
 
 msgid "Type a word. AI fills in the rest."
 msgstr "Type a word. AI fills in the rest."
@@ -7262,6 +7284,9 @@ msgstr "What about words spelled the same?"
 msgid "What about ё?"
 msgstr "What about ё?"
 
+msgid "What AI does for your cards"
+msgstr "What AI does for your cards"
+
 msgid "What an object’s shape tells you to do with it"
 msgstr "What an object’s shape tells you to do with it"
 
@@ -7376,6 +7401,9 @@ msgstr "What’s new in Lymi, and what got better."
 
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "When a measure becomes a target, it stops being a good measure"
+
+msgid "When a word won’t stick, AI drafts a short hint that leads you back to it without spelling it out."
+msgstr "When a word won’t stick, AI drafts a short hint that leads you back to it without spelling it out."
 
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "When colleagues leave, you say <0><1>お疲れ様です</1></0>."

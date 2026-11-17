@@ -1844,3 +1844,15 @@ html:has(.deck-cards[open]) {
     animation: none;
   }
 }
+
+/* A comparison page's header: the other app's colour from the top corner, Lymi's warm light by the icons. */
+.compare-wash {
+  background:
+    radial-gradient(60% 90% at 88% 0%, oklch(0.93 0.06 var(--wash-h) / 0.9), transparent 70%),
+    radial-gradient(50% 80% at 62% 30%, oklch(0.95 0.05 70 / 0.8), transparent 70%);
+}
+[data-theme="dark"] .compare-wash {
+  background:
+    radial-gradient(60% 90% at 88% 0%, oklch(0.32 0.07 var(--wash-h) / 0.9), transparent 70%),
+    radial-gradient(50% 80% at 62% 30%, oklch(0.3 0.05 70 / 0.7), transparent 70%);
+}

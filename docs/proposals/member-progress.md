@@ -30,7 +30,7 @@ When the owner turns the setting on, each current member gets one email in their
 
 ### Published decks never share progress
 
-A [published deck](../../CONTEXT.md) does not offer the setting. Its learners added it from Explore without an owner they know, and its publisher keeps the anonymous [deck report](../adr/0028-publishers-read-aggregate-reports-on-their-published-decks.md).
+A [published deck](../../CONTEXT.md) does not offer the setting. Its learners added it from Explore without an owner they know, and its publisher keeps the anonymous [deck report](../adr/0028-publishers-read-aggregate-reports-on-their-published-decks.md). Publishing a deck that has the setting on turns the setting off first, and the owner stops seeing member progress.
 
 ### What the owner sees
 
@@ -44,7 +44,7 @@ The owner never sees a member's grades, answers, review log, review times, hint 
 
 ### The group view needs no names
 
-Any shared deck, setting on or off, can show the owner which cards the group forgets most in the last 7 days, with counts and no names. It appears only once at least 5 members have studied, so a small deck cannot reveal one person through a total.
+Any shared deck, setting on or off, can show the owner which cards the group forgot most in the last full week, Monday to Sunday, with counts and no names. The owner's own reviews are left out of the counts. It appears only once at least 5 members other than the owner studied that week, so a small deck cannot reveal one person through a total. A fixed week changes once a week, so comparing today's counts with yesterday's cannot show one member's lapse.
 
 ## Evidence
 
@@ -83,11 +83,11 @@ The product question: do owners who turn this on open the view, and do their mem
 - `member_progress_changed`: Worker, when the owner turns the setting on or off, with `on` and a bucketed member count.
 - `member_progress_viewed`: browser or phone, when the owner opens the member view of a deck.
 
-Member retention compares `review_session_opened` for members of decks with the setting on and off.
+Comparing member retention between decks with the setting on and off needs a deck on the data. `review_session_opened` carries no deck, and a Today session mixes decks. Add either a deck property to the review events or a person property that marks members of a deck with the setting on, and choose when building.
 
 ## Delivery
 
-1. Write the ADR that replaces ADR 0011's owner-visibility section.
+1. Write the ADR that replaces ADR 0011's owner-visibility section. In the same change, update the places that repeat the old rule: ADR 0028's restatement of it, the Sharing section of the privacy policy in `apps/site/src/components/PrivacyPolicy.tsx`, and the join-link description in `apps/web/src/client/views/deck-settings-view.tsx`.
 2. Add the setting, the join page and invitation notice, and the email to existing members. Web and phone together, since both join decks.
 3. Design and build the owner's view, web first.
 4. Add the group view for every shared deck.

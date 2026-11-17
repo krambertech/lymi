@@ -6,6 +6,7 @@ import {
   ASSISTANT_OFFER_KEY,
   CREATE_MORE_KEY,
   DEV_PERSONA_KEY,
+  FIRST_REVIEW_END_LEFT_KEY,
   FIRST_REVIEW_KEY,
   LAST_DECK_KEY,
   REST_DISMISSED_KEY,
@@ -16,7 +17,7 @@ import {
  * What the client keeps for one learner: in IndexedDB, the query cache that survives reloads and
  * offline starts; in localStorage, the outboxes of grades and of card and deck writes made offline, whose they
  * are, how many cards the learner has revealed while the reveal nudge still counts, the deck a card
- * was last added to, the day the rest-day banner was dismissed, whether the offer to connect an AI assistant was, and the local-only marker of which persona the developer last became; in sessionStorage, the first review under way in this tab and its cards, and which reviews this tab already reported as opened; in
+ * was last added to, the day the rest-day banner was dismissed, whether the offer to connect an AI assistant was, and the local-only marker of which persona the developer last became; in sessionStorage, the first review under way in this tab and its cards, whether this tab already sent the first review's end event, and which reviews this tab already reported as opened; in
  * Cache Storage, the card pictures kept for offline review. All of it belongs to whoever was
  * signed in, so it is cleared when the learner changes: on sign-out, and before any sign-in starts.
  */
@@ -38,8 +39,9 @@ export function clearPersistedLearnerState(opts: { keepQueued?: boolean } = {}):
     for (const key of KEYS) localStorage.removeItem(key);
   } catch {}
   try {
-    // components/first-plan.tsx writes it; it would otherwise let the next account resume this one's first review.
+    // first-plan.tsx and first-review-end.ts write these; they would otherwise follow the next account.
     sessionStorage.removeItem(FIRST_REVIEW_KEY);
+    sessionStorage.removeItem(FIRST_REVIEW_END_LEFT_KEY);
   } catch {}
   forgetOpenedReviewSessions();
   if (!opts.keepQueued) dropQueued();

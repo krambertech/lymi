@@ -368,6 +368,17 @@ export const analyticsEvents = {
     goal: count,
     goal_changed: z.boolean(),
     reminder: z.enum(["on", "off", "blocked", "unavailable"]),
+    reminder_reason: z
+      .enum([
+        "install_required",
+        "push_unsupported",
+        "setup_failed",
+        "loading",
+        "error",
+        "denied",
+        "off",
+      ])
+      .optional(),
     tips_skipped: z.boolean(),
   }),
   cards_added: z.object({

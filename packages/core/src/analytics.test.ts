@@ -404,6 +404,47 @@ describe("import failure properties", () => {
   });
 });
 
+describe("first_review_end_left", () => {
+  const base = {
+    step: "bye",
+    left: "done",
+    goal: 25,
+    goal_changed: false,
+    tips_skipped: false,
+  };
+
+  it("keeps the reminder enum, adds a known reason, and drops an unknown one", () => {
+    expect(
+      eventProperties("first_review_end_left", { ...base, reminder: "on" }, "browser"),
+    ).toEqual({
+      ...base,
+      reminder: "on",
+    });
+    for (const row of [
+      { reminder: "unavailable", reminder_reason: "install_required" },
+      { reminder: "unavailable", reminder_reason: "push_unsupported" },
+      { reminder: "unavailable", reminder_reason: "setup_failed" },
+      { reminder: "off", reminder_reason: "loading" },
+      { reminder: "off", reminder_reason: "error" },
+      { reminder: "blocked", reminder_reason: "denied" },
+      { reminder: "off", reminder_reason: "off" },
+    ]) {
+      const event = { ...base, ...row };
+      expect(eventProperties("first_review_end_left", event, "browser")).toEqual(event);
+    }
+    expect(
+      eventProperties(
+        "first_review_end_left",
+        { ...base, reminder: "unavailable", reminder_reason: "unknown" },
+        "browser",
+      ),
+    ).toBeNull();
+    expect(
+      eventProperties("first_review_end_left", { ...base, reminder: "on" }, "phone"),
+    ).toBeNull();
+  });
+});
+
 describe("review_session_opened", () => {
   const base = {
     session_id: "01234567-89ab-4cde-8fab-0123456789ab",

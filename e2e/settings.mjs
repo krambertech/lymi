@@ -51,6 +51,7 @@ export const e2eAccounts = [
   "password-reset",
   "first-review",
   "first-review-early",
+  "first-review-forgotten",
   "first-review-reload",
   "first-review-short",
   "sync-replay",

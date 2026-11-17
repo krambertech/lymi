@@ -53,7 +53,7 @@ const WORD_BEATS: Record<string, number> = {
   ...typing(WORD, 250),
   meaning: 1500,
   example: 2500,
-  hint: 3500,
+  notes: 3500,
 };
 
 export function WordDemo({ play }: DemoProps) {
@@ -78,7 +78,7 @@ export function WordDemo({ play }: DemoProps) {
       <AiField label={<Trans>Example</Trans>} on={at("example")}>
         <span lang="de">Nach Feierabend gehe ich joggen.</span>
       </AiField>
-      <AiField label={<Trans>Hint</Trans>} on={at("hint")}>
+      <AiField label={<Trans>Notes</Trans>} on={at("notes")}>
         <Trans>Feier (party) + Abend (evening): the evening that’s yours.</Trans>
       </AiField>
     </div>
@@ -492,6 +492,76 @@ export function VoiceDemo({ play }: DemoProps) {
           </button>
         );
       })}
+    </div>
+  );
+}
+
+/* A hint: a word that won't stick gets a line that leads back to it. */
+
+const HINT_BEATS = { press: 900, drafting: 1050, hint: 2100, next: 3300 };
+
+export function HintDemo({ play }: DemoProps) {
+  const { at } = usePlayback(HINT_BEATS, play, useStill());
+  const drafted = at("hint");
+  return (
+    <div className="grid w-full max-w-[340px] gap-1.5">
+      <div className="rounded-lg bg-plate px-3 py-2.5 edge-strong">
+        <div className="flex h-[17px] items-center justify-between gap-3">
+          <span className="text-xs text-ink-muted">
+            <Trans>Meaning</Trans>
+          </span>
+          <span className="rounded-full bg-amber-soft px-2 text-xs/[17px] font-medium text-ink">
+            <Trans context="One card's label">Often forgotten</Trans>
+          </span>
+        </div>
+        <p className="mt-0.5 text-xl font-medium tracking-[-0.025em] text-ink">
+          <Trans>duck</Trans>
+        </p>
+        <div className="mt-2 border-t border-edge pt-2">
+          <p lang="es" className="text-lg font-medium tracking-[-0.02em] text-ink-secondary">
+            pato
+          </p>
+        </div>
+      </div>
+      {/* The offer and the hint it drafts share one slot, so nothing below moves. */}
+      <div className="grid">
+        <div
+          aria-hidden={drafted}
+          className={clsx(
+            "col-start-1 row-start-1 flex items-center justify-center transition-opacity duration-300 motion-reduce:transition-none",
+            drafted ? "opacity-0" : "opacity-100",
+          )}
+        >
+          <span
+            className={clsx(
+              "inline-flex h-9 items-center gap-1.5 rounded-full bg-plate px-4 text-sm font-medium text-ink edge transition-[scale] duration-150 ease-out",
+              at("press") && !at("drafting") && "scale-[0.96]",
+            )}
+          >
+            <Sparkle aria-hidden="true" className="size-3.5 text-ai" />
+            {at("drafting") ? <Trans>Drafting a hint…</Trans> : <Trans>Draft a hint</Trans>}
+          </span>
+        </div>
+        <div
+          aria-hidden={!drafted}
+          className={clsx(
+            "col-start-1 row-start-1 transition-opacity duration-300 motion-reduce:transition-none",
+            drafted ? "opacity-100" : "opacity-0",
+          )}
+        >
+          <AiField label={<Trans>Hint</Trans>} on={drafted}>
+            <Trans>A duck asleep in a POT</Trans>
+          </AiField>
+        </div>
+      </div>
+      <p
+        className={clsx(
+          "pt-1 text-center text-xs text-ink-secondary transition-opacity duration-300 motion-reduce:transition-none",
+          at("next") ? "opacity-100" : "opacity-0",
+        )}
+      >
+        <Trans>Next time, you can peek at it before the answer.</Trans>
+      </p>
     </div>
   );
 }

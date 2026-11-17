@@ -535,6 +535,9 @@ msgstr "Схема зі слайдів може стати малюнком ка
 msgid "A dialogue in voice mode"
 msgstr "Діалог у голосовому режимі"
 
+msgid "A duck asleep in a POT"
+msgstr "Качка застрягла в ПАТОці"
+
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "Не плутай з англійським embarrassed: «збентежений» — це avergonzado."
 
@@ -594,6 +597,9 @@ msgstr "Рутина Grok Bot запускається щодня о 8:00: пе�
 
 msgid "A hint for the word that won’t stick"
 msgstr "Підказка для слова, яке не запам’ятовується"
+
+msgid "A hint for the word you forget"
+msgstr "Підказка для слова, яке забуваєш"
 
 msgid "A hobby"
 msgstr "Хобі"
@@ -2386,6 +2392,12 @@ msgstr "Завантажуй свої колоди коли завгодно."
 msgid "Draft"
 msgstr "Чернетка"
 
+msgid "Draft a hint"
+msgstr "Підготувати підказку"
+
+msgid "Drafting a hint…"
+msgstr "Готуємо підказку…"
+
 msgid "Drag Lymi to Applications"
 msgstr "Перетягни Lymi до «Програм»"
 
@@ -2421,6 +2433,9 @@ msgstr "Додай їх у Розумне додавання. Lymi вибере 
 
 msgid "Drugs, how they work and what to watch for."
 msgstr "Препарати, як вони діють і на що зважати."
+
+msgid "duck"
+msgstr "качка"
 
 msgid "Due"
 msgstr "Коли повторювати"
@@ -4983,6 +4998,9 @@ msgstr "Наступна картка: <0>{0}</0>"
 msgid "Next review in {0}"
 msgstr "Наступне повторення через {0}"
 
+msgid "Next time, you can peek at it before the answer."
+msgstr "Наступного разу зможеш підглянути її до відповіді."
+
 msgid "Nice to meet you; thanks in advance"
 msgstr "Приємно познайомитися; наперед дякую"
 
@@ -5190,6 +5208,10 @@ msgstr "Її часто називають неофіційним девізом
 
 msgid "Often forgotten"
 msgstr "Часто забуваються"
+
+msgctxt "One card's label"
+msgid "Often forgotten"
+msgstr "Часто забувається"
 
 msgid "Okay"
 msgstr "Гаразд"
@@ -7754,8 +7776,8 @@ msgstr "Набери <0>でんしゃ</0> або <1>デンシャ</1> і знай�
 msgid "Type a word and Lymi fills in a meaning, an example and audio, or snap a page of notes and Smart add picks out the cards. Every field AI wrote is marked."
 msgstr "Введи слово, і Lymi допише значення, приклад та аудіо. Або сфотографуй сторінку нотаток, і Розумне додавання вибере картки. Кожне поле, написане AI, позначене."
 
-msgid "Type a word, and AI adds the meaning, an example and a hint. Everything it adds is marked."
-msgstr "Введи слово, і AI додасть значення, приклад і підказку. Усе, що він додав, позначено."
+msgid "Type a word, and AI adds the meaning, an example and notes. Everything it adds is marked."
+msgstr "Введи слово, і AI додасть значення, приклад і нотатки. Усе, що він додав, позначено."
 
 msgid "Type a word. AI fills in the rest."
 msgstr "Набери слово. Решту допише AI."
@@ -7966,6 +7988,9 @@ msgstr "А як зі словами, що пишуться однаково?"
 msgid "What about ё?"
 msgstr "А як щодо ё?"
 
+msgid "What AI does for your cards"
+msgstr "Що AI робить для твоїх карток"
+
 msgid "What an object’s shape tells you to do with it"
 msgstr "Як форма предмета підказує, що з ним робити"
 
@@ -8095,6 +8120,9 @@ msgstr "Нові можливості Lymi і те, що стало краще."
 
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "Коли показник стає метою, він перестає бути добрим показником"
+
+msgid "When a word won’t stick, AI drafts a short hint that leads you back to it without spelling it out."
+msgstr "Коли слово ніяк не запам’ятовується, AI готує коротку підказку, яка наводить на нього, але не називає."
 
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "Коли колеги йдуть із роботи, їм кажуть <0><1>お疲れ様です</1></0>."

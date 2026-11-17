@@ -40,7 +40,6 @@ export function DeckShowcase({ deck, locale, eyebrow, layout = "wide" }: Props) 
             <span className="deck-tray-paper" data-at="1" />
             <div className="deck-tray-card">
               <PreviewFace
-                kind="deck-tray"
                 {...deck.card}
                 language={deck.language}
                 meaningLanguage={deck.meaningLanguage}

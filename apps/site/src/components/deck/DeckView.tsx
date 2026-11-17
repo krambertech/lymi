@@ -7,9 +7,9 @@ import {
   trayHue,
 } from "@lymi/core/catalog";
 import { ChevronRight } from "lucide-react";
-import type { CSSProperties, ReactNode } from "react";
+import type { ReactNode } from "react";
 import type { DeckLinks } from "../../lib/deck-links";
-import { type DeckCard, deckPath, languageName, type RecallCue } from "../../lib/deck-page";
+import { deckPath, languageName, type RecallCue } from "../../lib/deck-page";
 import { examOfDeck } from "../../lib/exams";
 import { shelfPath } from "../../lib/explore";
 import { openLymiUrl, productUrl } from "../../lib/origins";
@@ -22,7 +22,6 @@ import { shelfLabel, tagLabel } from "../explore/explore-labels";
 import { Localized } from "../Localized";
 import { AppTile } from "../Logo";
 import { SiteFooter } from "../landing/SiteFooter";
-import { PreviewFace } from "./PreviewFace";
 
 interface LocaleProps {
   locale: Locale;
@@ -98,7 +97,13 @@ function PublisherMark({
 }
 
 /** Who made the deck. A catalog card can show the same line. */
-export function DeckByline({ deck }: { deck: PublicDeckOut }) {
+export function DeckByline({
+  deck,
+  align = "center",
+}: {
+  deck: PublicDeckOut;
+  align?: HeroAlign | undefined;
+}) {
   const { i18n } = useLingui();
   const date = useDate();
   const publisher = deck.publisher;
@@ -107,28 +112,38 @@ export function DeckByline({ deck }: { deck: PublicDeckOut }) {
     ? productUrl(publisherAvatarPath(deck.slug, deck.publisherAvatar))
     : null;
   const checked = deck.reviewedAt ? date(deck.reviewedAt) : null;
+  const published = date(deck.publishedAt);
   return (
-    <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md">
+    <p
+      className={`flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md ${align === "start" ? "@4xl:justify-start" : ""}`}
+    >
       <PublisherMark publisher={publisher} photo={photo} locale={i18n.locale} />
       <span className="font-medium text-ink">
         <Trans>By {publisher}</Trans>
       </span>
-      {checked && (
-        <span className="text-ink-muted before:me-2.5 before:text-ink-faint before:content-['·']">
-          <Trans>Checked {checked}</Trans>
-        </span>
-      )}
+      {/* A check by the publisher says more than the day it went up, so it takes the place. */}
+      <span className="text-ink-muted before:me-2.5 before:text-ink-faint before:content-['·']">
+        {checked ? <Trans>Checked {checked}</Trans> : <Trans>Published {published}</Trans>}
+      </span>
     </p>
   );
 }
 
 /** The language the deck teaches or else its subject, and how many cards it holds. */
-export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
+export function DeckFacts({
+  deck,
+  align = "center",
+}: {
+  deck: PublicDeckOut;
+  align?: HeroAlign | undefined;
+}) {
   const { i18n } = useLingui();
   const shelf =
     languageName(taughtLanguage(deck), i18n.locale, { label: true }) ?? deckSubject(i18n, deck);
   return (
-    <p className="flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md text-ink-muted">
+    <p
+      className={`flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md text-ink-muted ${align === "start" ? "@4xl:justify-start" : ""}`}
+    >
       {shelf && (
         <>
           <span>{shelf}</span>
@@ -145,11 +160,14 @@ export function DeckFacts({ deck }: { deck: PublicDeckOut }) {
 }
 
 /** What the deck is about, as plain chips. They lead nowhere until a tag has a page of its own. */
-function DeckTags({ deck }: { deck: PublicDeckOut }) {
+function DeckTags({ deck, align }: { deck: PublicDeckOut; align: HeroAlign }) {
   const { i18n, t } = useLingui();
   if (deck.tags.length === 0) return null;
   return (
-    <ul aria-label={t`Tags`} className="flex flex-wrap justify-center gap-1.5">
+    <ul
+      aria-label={t`Tags`}
+      className={`flex flex-wrap justify-center gap-1.5 ${align === "start" ? "@4xl:justify-start" : ""}`}
+    >
       {deck.tags.map((tag) => (
         <li
           key={tag}
@@ -269,143 +287,80 @@ function DeckNeighboursBody({ deck, links, locale }: DeckProps & { links: DeckLi
   );
 }
 
-/** The last quiet line of the page: how much there is, and when the publisher put it out. */
-export function DeckFooterFacts({ deck, locale }: DeckProps) {
-  return (
-    <Localized locale={locale}>
-      <DeckFooterFactsLine deck={deck} />
-    </Localized>
-  );
-}
+/** Where the hero's words sit: centred over what follows, or level with a card beside them. */
+type HeroAlign = "center" | "start";
 
-function DeckFooterFactsLine({ deck }: { deck: PublicDeckOut }) {
-  const date = useDate();
-  return (
-    <p className="px-5 pb-16 text-center text-sm text-ink-muted @2xl:px-10">
-      <Trans>Published {date(deck.publishedAt)}</Trans>
-    </p>
-  );
-}
-
-// Each card's height and tilt, by place from the start, for spreads of one to five cards.
-const POSES: [number, number][][] = [
-  [[10, -2]],
-  [
-    [24, -3],
-    [4, 3],
-  ],
-  [
-    [30, -4],
-    [4, 2.5],
-    [26, -2],
-  ],
-  [
-    [40, -4.5],
-    [6, 3],
-    [28, -2],
-    [0, 4],
-  ],
-  [
-    [46, -5],
-    [6, 3],
-    [30, -1.5],
-    [0, 4],
-    [40, -3.5],
-  ],
-];
-
-/** A few of the deck's cards floating apart, so the first thing a visitor sees is what they get. */
-function DeckSpread({ deck, cards }: { deck: PublicDeckOut; cards: DeckCard[] }) {
-  const { t } = useLingui();
-  const poses = POSES[cards.length - 1] ?? [];
-  return (
-    <ul aria-label={t`Cards from this deck`} className="deck-spread">
-      {cards.map((card, index) => {
-        const offset = index - (cards.length - 1) / 2;
-        const [lift, tilt] = poses[index] ?? [0, 0];
-        const style = {
-          "--o": offset,
-          "--a": Math.abs(offset),
-          "--y": `${lift}px`,
-          "--r": `${tilt}deg`,
-          "--dur": `${6.5 + ((index * 7) % 5) * 0.6}s`,
-          "--delay": `${-index * 1.3}s`,
-          "--wob": `${index % 2 ? 0.7 : -0.7}deg`,
-        } as CSSProperties;
-        return (
-          <li
-            // biome-ignore lint/suspicious/noArrayIndexKey: a fixed spread; a term can repeat.
-            key={index}
-            className="deck-spread-card"
-            data-outer={Math.abs(offset) > 1 || undefined}
-            style={style}
-          >
-            <div className="deck-spread-float">
-              <article className="deck-spread-face">
-                <PreviewFace
-                  kind="deck-spread"
-                  {...card}
-                  language={deck.language}
-                  meaningLanguage={deck.meaningLanguage}
-                />
-              </article>
-            </div>
-          </li>
-        );
-      })}
-    </ul>
-  );
-}
-
-/** The name, who made it, what it is, the way to add it, and a few of its cards. */
-export function DeckHero({
+/** Who made the deck, its name, what it is, and the way to add it. */
+export function DeckHeroText({
   deck,
   locale,
-  spread,
-  canTry,
-}: DeckProps & { spread: DeckCard[]; canTry: boolean }) {
-  const exam = examOfDeck(deck.slug);
+  align = "center",
+}: DeckProps & {
+  align?: HeroAlign | undefined;
+}) {
   return (
     <Localized locale={locale}>
-      <div className="mx-auto max-w-[1120px] px-5 pt-8 pb-10 text-center @2xl:px-10 @4xl:pt-12 @4xl:pb-16">
-        <DeckByline deck={deck} />
-        <h1
-          lang={deck.meaningLanguage}
-          className="mx-auto mt-4 max-w-[16ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance break-words text-ink @2xl:text-[3.75rem] @4xl:text-[4.5rem]"
-        >
-          {deck.name}
-        </h1>
-        <p
-          lang={deck.meaningLanguage}
-          className="mx-auto mt-5 max-w-[44ch] text-lg text-pretty text-ink-secondary @2xl:text-xl"
-        >
-          {deck.summary}
-        </p>
-        <div className="mt-4 grid justify-items-center gap-4">
-          <DeckFacts deck={deck} />
-          <DeckTags deck={deck} />
-        </div>
-        <div className="mt-7 flex flex-wrap justify-center gap-2">
-          <a href={addUrl(deck.slug, editionOf(deck))} className={buttonClass("primary", "lg")}>
-            <Trans>Add to Lymi</Trans>
-          </a>
-          {canTry && (
-            <a href="#try" className={buttonClass("ghost", "lg")}>
-              <Trans>Try a few cards</Trans>
-            </a>
-          )}
-        </div>
-        <p className="mx-auto mt-4 max-w-[46ch] text-sm text-pretty text-ink-muted">
-          <Trans>Lymi is a free flashcard app with spaced repetition.</Trans>
-        </p>
-        {exam && <ExamPageLink locale={locale} exam={exam} className="mt-3" />}
-        {spread.length > 0 && <DeckSpread deck={deck} cards={spread} />}
-      </div>
+      <DeckHeroWords deck={deck} locale={locale} align={align} />
     </Localized>
   );
 }
 
-/** Three steps from this page to a deck that is learnt, beside a stack of its cards to turn over. */
+function DeckHeroWords({ deck, locale, align }: DeckProps & { align: HeroAlign }) {
+  const exam = examOfDeck(deck.slug);
+  const start = align === "start";
+  return (
+    <div
+      className={
+        start
+          ? "grid justify-items-center text-center @4xl:justify-items-start @4xl:text-start"
+          : "text-center"
+      }
+    >
+      <DeckByline deck={deck} align={align} />
+      <h1
+        lang={deck.meaningLanguage}
+        className={
+          start
+            ? "mt-4 max-w-[16ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance break-words text-ink @2xl:text-[3.5rem] @5xl:text-[4rem]"
+            : "mx-auto mt-4 max-w-[16ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance break-words text-ink @2xl:text-[3.75rem] @4xl:text-[4.5rem]"
+        }
+      >
+        {deck.name}
+      </h1>
+      <p
+        lang={deck.meaningLanguage}
+        className={`${start ? "" : "mx-auto "}mt-5 max-w-[44ch] text-lg text-pretty text-ink-secondary @2xl:text-xl`}
+      >
+        {deck.summary}
+      </p>
+      <div
+        className={`mt-4 grid gap-4 ${start ? "justify-items-center @4xl:justify-items-start" : "justify-items-center"}`}
+      >
+        <DeckFacts deck={deck} align={align} />
+        <DeckTags deck={deck} align={align} />
+      </div>
+      <div
+        className={`mt-7 flex flex-wrap gap-2 ${start ? "justify-center @4xl:justify-start" : "justify-center"}`}
+      >
+        <a href={addUrl(deck.slug, editionOf(deck))} className={buttonClass("primary", "lg")}>
+          <Trans>Add to Lymi</Trans>
+        </a>
+        {/* The full list opens over the page from #cards; the cards to try are already beside this. */}
+        <a href="#cards" className={buttonClass("ghost", "lg")}>
+          <Plural value={deck.cardCount} _1="See the card" other="See all # cards" />
+        </a>
+      </div>
+      <p
+        className={`${start ? "" : "mx-auto "}mt-4 max-w-[46ch] text-sm text-pretty text-ink-muted`}
+      >
+        <Trans>Lymi is a free flashcard app with spaced repetition.</Trans>
+      </p>
+      {exam && <ExamPageLink locale={locale} exam={exam} className="mt-3" />}
+    </div>
+  );
+}
+
+/** Three steps from this page to a deck that is learnt; the cards to try are in the hero. */
 export function DeckHowItWorks({ locale, cue }: LocaleProps & { cue: RecallCue }) {
   const items = [
     {
@@ -420,25 +375,15 @@ export function DeckHowItWorks({ locale, cue }: LocaleProps & { cue: RecallCue }
       title: <Trans>Recall, then turn it over</Trans>,
       body:
         cue === "image" ? (
-          <Trans>
-            Name what the picture shows before you look. Try it on the cards here: they’re from all
-            over the deck.
-          </Trans>
+          <Trans>Name what the picture shows before you look, then turn the card over.</Trans>
         ) : cue === "meaning" ? (
           <Trans>
-            Read the meaning, then try to recall the term before you look. Try it on the cards here:
-            they’re from all over the deck.
+            Read the meaning and recall the term before you look, then turn the card over.
           </Trans>
         ) : cue === "mixed" ? (
-          <Trans>
-            Try to remember the answer before you look. Try it on the cards here: they’re from all
-            over the deck.
-          </Trans>
+          <Trans>Try to remember the answer before you look, then turn the card over.</Trans>
         ) : (
-          <Trans>
-            Try to remember the meaning before you look. Try it on the cards here: they’re from all
-            over the deck.
-          </Trans>
+          <Trans>Try to remember the meaning before you look, then turn the card over.</Trans>
         ),
     },
     {
@@ -461,7 +406,7 @@ export function DeckHowItWorks({ locale, cue }: LocaleProps & { cue: RecallCue }
         >
           <Trans>How it works</Trans>
         </h2>
-        <ol className="mt-8 grid gap-6">
+        <ol className="mt-8 grid gap-6 @3xl:grid-cols-3 @3xl:gap-10">
           {items.map((item, index) => (
             <li key={item.key} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-3">
               <span

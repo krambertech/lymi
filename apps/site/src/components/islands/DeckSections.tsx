@@ -93,33 +93,21 @@ function Sections(props: Omit<Props, "locale">) {
   const first = named[0]?.name ?? "";
   const firstLanguage = named[0]?.nameLanguage ?? props.meaningLanguage;
 
-  if (!inOrder) {
-    return (
-      <section
-        id="sections"
-        aria-labelledby="sections-title"
-        className="scroll-mt-6 border-t border-edge px-5 py-10 text-center @2xl:px-10 @4xl:py-14"
-      >
-        <h2 id="sections-title" className="sr-only">
-          <Trans>Every card in the deck</Trans>
-        </h2>
-        <a
-          href={HASH}
-          onClick={(event) => {
-            event.preventDefault();
-            open(event);
-          }}
-          className={buttonClass("secondary", "lg")}
-        >
-          <Plural value={cardCount} one="See the card" other="See all # cards" />
-          <span aria-hidden="true">
-            <ChevronRight className="rtl:rotate-180" />
-          </span>
-        </a>
-        <CardsView {...props} dialogRef={dialog} />
-      </section>
-    );
-  }
+  const seeAll = (
+    <a
+      href={HASH}
+      onClick={(event) => {
+        event.preventDefault();
+        open(event);
+      }}
+      className={buttonClass("secondary", "lg")}
+    >
+      <Plural value={cardCount} _1="See the card" other="See all # cards" />
+      <span aria-hidden="true">
+        <ChevronRight className="rtl:rotate-180" />
+      </span>
+    </a>
+  );
 
   return (
     <section
@@ -135,33 +123,101 @@ function Sections(props: Omit<Props, "locale">) {
           >
             <Trans>What’s inside</Trans>
           </h2>
-          <a
-            href={HASH}
-            onClick={(event) => {
-              event.preventDefault();
-              open(event);
-            }}
-            className={buttonClass("secondary", "lg")}
-          >
-            <Plural value={cardCount} one="See the card" other="See all # cards" />
-            <span aria-hidden="true">
-              <ChevronRight className="rtl:rotate-180" />
-            </span>
-          </a>
+          {(inOrder || cardCount > PREVIEW_ROWS) && seeAll}
         </div>
-        {inOrder && (
-          <p className="mt-4 max-w-[62ch] text-md text-pretty text-ink-secondary">
+        <p className="mt-4 max-w-[62ch] text-md text-pretty text-ink-secondary">
+          {inOrder ? (
             <Progression
               progression={props.progression}
               first={first}
               firstLanguage={firstLanguage}
             />
-          </p>
-        )}
-        {inOrder && <SectionList {...props} onOpen={open} />}
+          ) : (
+            <Trans>Every card is open from the start, so any of them can come up in review.</Trans>
+          )}
+        </p>
+        {inOrder ? <SectionList {...props} onOpen={open} /> : <CardList {...props} onOpen={open} />}
       </div>
       <CardsView {...props} dialogRef={dialog} />
     </section>
+  );
+}
+
+/** A deck this size or smaller lists every card on the page; a bigger one lists this many. */
+const PREVIEW_ROWS = 12;
+const PREVIEW_SHOWN = 8;
+
+/** A card's first line: a question's options and a list's rest wait for the full list. */
+const firstLine = (text: string) => text.split("\n", 1)[0] ?? text;
+
+/** A deck with no sections lists its first cards, in two columns, read down then across. */
+function CardList({
+  steps,
+  termLanguage,
+  meaningLanguage,
+  cardCount,
+  onOpen,
+}: Omit<Props, "locale"> & { onOpen: Open }) {
+  const all = steps.flatMap((step) => step.cards);
+  const shown = all.length > PREVIEW_ROWS ? all.slice(0, PREVIEW_SHOWN) : all;
+  const more = cardCount - shown.length;
+  const rows = Math.ceil((shown.length + (more > 0 ? 1 : 0)) / 2);
+  return (
+    <ul
+      className="mt-8 grid border-t border-edge @3xl:grid-flow-col @3xl:grid-cols-2 @3xl:grid-rows-(--rows) @3xl:gap-x-12 @4xl:mt-10"
+      style={{ "--rows": `repeat(${rows}, auto)` } as CSSProperties}
+    >
+      {shown.map((card, index) => (
+        <li
+          // biome-ignore lint/suspicious/noArrayIndexKey: terms can repeat; the order is fixed.
+          key={index}
+          className="flex min-h-16 min-w-0 items-center gap-4 border-b border-edge py-3"
+        >
+          {card.image && (
+            <img
+              src={publicMediaUrl(card.image.cardId, "image")}
+              alt=""
+              width={card.image.width}
+              height={card.image.height}
+              loading="lazy"
+              decoding="async"
+              className="h-11 w-auto max-w-16 shrink-0 rounded-xs object-contain outline outline-1 -outline-offset-1 outline-(--image-edge)"
+            />
+          )}
+          <div className="grid min-w-0 flex-1 gap-0.5">
+            <p
+              lang={termLanguage ?? undefined}
+              className="line-clamp-2 text-lg leading-tight font-medium tracking-[-0.012em] text-pretty text-ink"
+            >
+              {firstLine(card.term)}
+            </p>
+            {card.meaning !== null && (
+              <p
+                lang={meaningLanguage}
+                className="line-clamp-2 text-md text-pretty text-ink-secondary"
+              >
+                {firstLine(card.meaning)}
+              </p>
+            )}
+          </div>
+        </li>
+      ))}
+      {more > 0 && (
+        <li className="flex min-h-16 items-center border-b border-edge py-3">
+          <a
+            href={HASH}
+            onClick={(event) => {
+              event.preventDefault();
+              onOpen(event);
+            }}
+            className="inline-flex items-center gap-1 rounded-xs text-lg font-medium tracking-[-0.012em] text-ink hoverable:hover:underline hoverable:hover:underline-offset-4"
+          >
+            <Plural value={more} one="# more card" other="# more cards" />
+            <ChevronRight aria-hidden="true" className="size-5 rtl:rotate-180" />
+          </a>
+        </li>
+      )}
+    </ul>
   );
 }
 
@@ -464,7 +520,7 @@ function CardsView({
               id={`${id}-title`}
               className="text-4xl font-medium tracking-[-0.03em] text-balance text-ink"
             >
-              <Plural value={cardCount} one="The one card" other="All # cards" />
+              <Plural value={cardCount} _1="The one card" other="All # cards" />
             </h2>
             {inOrder && (
               <p className="mt-2 text-md text-ink-secondary">

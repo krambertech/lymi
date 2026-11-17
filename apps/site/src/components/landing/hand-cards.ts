@@ -1,6 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import type { ReviewModeKey } from "@lymi/core";
+import type { NoteBlock } from "@lymi/core/notes";
 
 /**
  * The cards the landing hand deals. Each is something a stranger would be glad to know, and the
@@ -30,6 +31,12 @@ export interface HandCard {
   meaning: string | MessageDescriptor;
   /** The forms a learner keeps with the word, as its notes list them: kallis · kalli · kallist. */
   forms?: string;
+  /** A sentence that uses the term, in the term's language, as a deck's card holds it. */
+  example?: string | undefined;
+  /** The example in the meaning language. */
+  exampleTranslation?: string | undefined;
+  /** A deck card's notes, parsed on the server; drawn in place of `note`. */
+  noteBlocks?: NoteBlock[] | undefined;
   /** One line that makes the term stick: where it comes from, or when it is said. */
   note?: string | MessageDescriptor;
   /** Where the pronunciation plays from, or null for a card without one. Defaults to the clip named by `id`. */

@@ -1,6 +1,7 @@
 ---
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { deckPath, deckPaths, deckSharePath, jsonForScript, recallCue, sectionPath, spreadCards, stackCards } from "../../lib/deck-page";
+import { withNoteBlocks } from "../../lib/deck-notes";
+import { deckPath, deckPaths, deckSharePath, jsonForScript, recallCue, sectionPath, stackCards } from "../../lib/deck-page";
 import { pageI18n } from "../../lib/i18n";
 import { localizedPath } from "../../lib/routes";
 import { deckBreadcrumbs, deckStructuredData } from "../../lib/structured-data";
@@ -13,7 +14,7 @@ import { shelfLabel } from "../explore/explore-labels";
 import { EXPLORE_NAME } from "../explore/explore-meta";
 import { shelfPath } from "../../lib/explore";
 import { deckDescription, deckShareText, deckTitle, MISSING_BLURB, MISSING_TITLE, UNAVAILABLE_BLURB, UNAVAILABLE_TITLE } from "./deck-meta";
-import { addUrl, DeckFooter, DeckFooterFacts, DeckGone, DeckHero, DeckHowItWorks, DeckNeighbours, DeckRelated, editionOf } from "./DeckView";
+import { addUrl, DeckFooter, DeckGone, DeckHeroText, DeckHowItWorks, DeckNeighbours, DeckRelated, editionOf } from "./DeckView";
 
 interface Props {
   page: DeckPage;
@@ -26,7 +27,7 @@ const slug = page.status === 200 ? page.deck.slug : page.slug;
 const paths = deckPaths(slug, page.status === 200 ? page.deck : undefined);
 const deck = page.status === 200 ? page.deck : null;
 const path = deck ? sectionPath(deck) : null;
-const stack = deck ? stackCards(deck) : [];
+const stack = deck ? withNoteBlocks(stackCards(deck)) : [];
 const edition = deck ? editionOf(deck) : undefined;
 const share = deck ? deckShareText(i18n, deck) : null;
 const shelf =
@@ -60,7 +61,28 @@ const shelf =
       <div class="@container min-h-dvh overflow-x-clip bg-canvas text-ink">
         <header class="deck-hero-tint over-tint" data-hue={trayHue(slug)}>
           <PublicNav client:load locale={locale} />
-          <DeckHero deck={page.deck} locale={locale} spread={spreadCards(page.deck)} canTry={stack.length > 0} />
+          {/* The words beside a hand of the deck's own cards to turn over, which most visitors see before they leave. */}
+          <div
+            class:list={[
+              "mx-auto grid max-w-[1120px] items-center gap-10 px-5 pt-8 pb-12 @2xl:px-10 @4xl:gap-16 @4xl:pt-14 @4xl:pb-20",
+              stack.length > 0 && "@4xl:grid-cols-[minmax(0,1fr)_minmax(0,25rem)]",
+            ]}
+          >
+            <DeckHeroText deck={page.deck} locale={locale} align={stack.length > 0 ? "start" : "center"} />
+            {stack.length > 0 && (
+              <div id="try" class="min-w-0">
+                <DeckStack
+                  client:load
+                  locale={locale}
+                  slug={slug}
+                  cards={stack}
+                  termLanguage={page.deck.language}
+                  total={page.deck.cardCount}
+                  addUrl={addUrl(slug, edition)}
+                />
+              </div>
+            )}
+          </div>
         </header>
         <main>
           {path && (
@@ -77,27 +99,14 @@ const shelf =
               steps={path.steps}
             />
           )}
-          <section id="how" aria-labelledby="how-title" class="scroll-mt-6 border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-24">
-            <div class="mx-auto grid max-w-[1040px] items-center gap-12 @4xl:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] @4xl:gap-20">
+          <section id="how" aria-labelledby="how-title" class="scroll-mt-6 border-t border-edge px-5 py-16 @2xl:px-10 @4xl:py-20">
+            <div class="mx-auto max-w-[1040px]">
               <DeckHowItWorks locale={locale} cue={recallCue(stack)} />
-              {stack.length > 0 && (
-                <div id="try" class="min-w-0 scroll-mt-6">
-                  <DeckStack
-                    client:load
-                    locale={locale}
-                    cards={stack}
-                    termLanguage={page.deck.language}
-                    total={page.deck.cardCount}
-                    addUrl={addUrl(slug, edition)}
-                  />
-                </div>
-              )}
             </div>
           </section>
           <DeckRelated decks={page.related} locale={locale} />
           <DeckNeighbours deck={page.deck} links={page.links} locale={locale} />
         </main>
-        <DeckFooterFacts deck={page.deck} locale={locale} />
         <DeckFooter locale={locale} languagePaths={paths} />
       </div>
     </BaseLayout>

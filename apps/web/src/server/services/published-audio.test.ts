@@ -1,4 +1,4 @@
-import { deckPageHand, deckPageSpread } from "@lymi/core/catalog";
+import { deckPageHand } from "@lymi/core/catalog";
 import {
   listPublicDeckSlugs,
   loadPublicDeck,
@@ -126,11 +126,7 @@ describe("published deck audio", () => {
         section.cards.flatMap((card) => (card.meaning ? [{ ...card, meaning: card.meaning }] : [])),
       )
       .filter((cards) => cards.length > 0);
-    const shown = new Set(
-      [...deckPageSpread(page.deck, groups), ...deckPageHand(page.deck, groups)].map(
-        (card) => card.term,
-      ),
-    );
+    const shown = new Set(deckPageHand(page.deck, groups).map((card) => card.term));
     const front = await publicDeckFrontCards(db, "sections");
     const frontTerms = await db
       .select({ id: schema.cards.id, term: schema.cards.term })

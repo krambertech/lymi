@@ -1,18 +1,17 @@
 import { modeOf, type ReviewModeKey } from "@lymi/core";
 import {
-  DECK_PAGE_SPREAD,
   deckPageHand,
-  deckPageSpread,
   offersDeck,
+  type PublicCardDetails,
   type PublicDeckOut,
   type PublicDeckSummary,
   previewMode,
   stableHash,
 } from "@lymi/core/catalog";
+import type { NoteBlock } from "@lymi/core/notes";
 import { HAND_SIZE } from "./hand";
 import { type Locale, locales } from "./routes";
 
-export const SPREAD_SIZE = DECK_PAGE_SPREAD;
 export const STACK_SIZE = HAND_SIZE;
 
 export type DeckCard = {
@@ -26,6 +25,10 @@ export type DeckCard = {
   modes: ReviewModeKey[];
   image?: PublicDeckOut["sections"][number]["cards"][number]["image"];
   audio?: PublicDeckOut["sections"][number]["cards"][number]["audio"];
+  /** What the turned card holds besides its answer; only the cards shown up front carry it. */
+  details?: PublicCardDetails | undefined;
+  /** `details.notes` parsed on the server, so a page's script draws them without a parser. */
+  noteBlocks?: NoteBlock[] | undefined;
 };
 
 export function deckPath(slug: string, locale: Locale): string {
@@ -81,6 +84,7 @@ function sectionsWithMeanings(deck: PublicDeckOut): DeckCard[][] {
                 modes: card.modes,
                 image: card.image,
                 audio: card.audio,
+                details: card.details,
               },
             ]
           : [],
@@ -96,10 +100,6 @@ export function stackCards(deck: PublicDeckOut, size = STACK_SIZE): DeckCard[] {
 /** Each card in its place's mode, so a deck asked more than one way shows each of them. */
 function steppedModes(cards: DeckCard[]): DeckCard[] {
   return cards.map((card, place) => ({ ...card, mode: previewMode(card, place) }));
-}
-
-export function spreadCards(deck: PublicDeckOut, size = SPREAD_SIZE): DeckCard[] {
-  return steppedModes(deckPageSpread(deck, sectionsWithMeanings(deck), size));
 }
 
 export type RecallCue = "term" | "meaning" | "image" | "mixed";
@@ -130,7 +130,8 @@ export function sectionPath(deck: PublicDeckOut): { inOrder: boolean; steps: Sec
     position: section.name === null ? null : ++position,
     name: section.name,
     nameLanguage: section.nameLanguage,
-    cards: section.cards,
+    // The full list shows term and meaning, so the details of the few front cards stay out of it.
+    cards: section.cards.map(({ details: _details, ...card }) => card),
   }));
   return { inOrder: position > 0, steps };
 }

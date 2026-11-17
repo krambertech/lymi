@@ -402,127 +402,6 @@
 
 /* ---- Published deck ---------------------------------------------------- */
 
-/* The opening spread: a few of the deck's cards floating apart, each at its own height and tilt.
-   A phone keeps the middle three and lets the edge cut the outer two; --cw is a card's width. */
-.deck-spread {
-  --cw: 46cqw;
-  --step: 50cqw;
-  --spread: 0.55;
-  position: relative;
-  height: calc(var(--cw) * 1.12 + 56px);
-  margin-top: 2.25rem;
-}
-@container (min-width: 42rem) {
-  .deck-spread {
-    --cw: 26cqw;
-    --step: 30cqw;
-    --spread: 0.8;
-    height: calc(var(--cw) * 1.12 + 70px);
-    margin-top: 3.25rem;
-  }
-}
-@container (min-width: 56rem) {
-  .deck-spread {
-    --cw: min(196px, 17cqw);
-    --step: min(222px, 19.4cqw);
-    --spread: 1;
-    height: calc(var(--cw) * 1.12 + 84px);
-  }
-}
-.deck-spread-card {
-  position: absolute;
-  top: 8px;
-  left: calc(50% - var(--cw) / 2);
-  width: var(--cw);
-  transform: translate(calc(var(--o) * var(--step)), calc(var(--y) * var(--spread)))
-    rotate(var(--r));
-  z-index: calc(10 - var(--a) * 2);
-  animation: deck-deal 1100ms var(--ease-out) calc(var(--a) * 90ms + 120ms) both;
-}
-.deck-spread-card[data-outer] {
-  display: none;
-}
-@container (min-width: 56rem) {
-  .deck-spread-card[data-outer] {
-    display: block;
-  }
-}
-/* Only a start is given, so each card deals from the middle into its own place. */
-@keyframes deck-deal {
-  from {
-    transform: translate(0, 34px) rotate(0deg) scale(0.94);
-  }
-}
-.deck-spread-float {
-  animation: deck-float var(--dur) ease-in-out var(--delay) infinite alternate;
-}
-@keyframes deck-float {
-  to {
-    transform: translateY(-8px) rotate(var(--wob));
-  }
-}
-.deck-spread-face {
-  display: flex;
-  flex-direction: column;
-  aspect-ratio: 1 / 1.12;
-  padding: calc(var(--cw) * 0.085);
-  border-radius: calc(var(--cw) * 0.1);
-  background: var(--plate);
-  box-shadow: 0 0 0 1px var(--edge);
-  text-align: start;
-  transition:
-    transform 380ms var(--ease-out),
-    box-shadow 200ms var(--ease-out);
-}
-@media (hover: hover) and (pointer: fine) {
-  .deck-spread-card:hover .deck-spread-face {
-    transform: translateY(-12px) rotate(calc(var(--r) * -1));
-    box-shadow: 0 0 0 1px var(--edge-strong);
-  }
-}
-.deck-spread-section {
-  font-size: max(0.6875rem, calc(var(--cw) * 0.054));
-  font-weight: 500;
-  line-height: 1.3;
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  color: var(--ink-muted);
-}
-.deck-spread-term {
-  white-space: pre-line;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-  margin-top: calc(var(--cw) * 0.06);
-  /* --t steps down for a long word or cue, as the landing card does; a compound would break mid-letter. */
-  font-size: max(1.25rem, calc(var(--cw) * var(--t, 0.14)));
-  font-weight: 500;
-  line-height: 1.02;
-  letter-spacing: -0.03em;
-  overflow-wrap: anywhere;
-  color: var(--ink);
-}
-.deck-spread-meaning {
-  white-space: pre-line;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 3;
-  overflow: hidden;
-  margin-top: auto;
-  padding-top: calc(var(--cw) * 0.06);
-  border-top: 1px solid var(--edge-strong);
-  font-size: max(0.8125rem, calc(var(--cw) * 0.074));
-  line-height: 1.3;
-  color: var(--ink-secondary);
-}
-
-/* A term recalled under the rule reads as the answer, a step firmer than a meaning there. */
-.deck-spread-meaning[data-target="term"] {
-  font-weight: 500;
-  color: var(--ink);
-}
-
 /* The closing invitation: the lantern lit over its own pool of light, the page's one glow. The
    wick catches when the section first comes into view and the pool opens behind it. */
 .signup-plate {
@@ -733,13 +612,8 @@ html:has(.deck-cards[open]) {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .deck-spread-card,
-  .deck-spread-float,
   .deck-cards[open] {
     animation: none;
-  }
-  .deck-spread-face {
-    transition: none;
   }
 }
 
@@ -976,33 +850,6 @@ html:has(.deck-cards[open]) {
   pointer-events: none;
 }
 
-/* The deck page's hand spreads less than the landing page's, because one deck's cards are one
-   language and a wide fan puts a term the visitor has not been asked next to the one they have.
-   A phone squares them up: at that width a fanned card bleeds off the screen. */
-.deck-hand .hand-stage {
-  --spread: 6deg;
-}
-@media (max-width: 40rem) {
-  .deck-hand .hand-stage {
-    height: calc(var(--ch) + var(--cw) * 0.24);
-  }
-  .deck-hand .hand-card {
-    transform-origin: 50% 100%;
-  }
-  .deck-hand .hand-card[data-place="deck"] {
-    transform: translateX(calc(var(--cw) * 0.3)) rotate(4deg) scale(0.96);
-  }
-  .deck-hand .hand-card[data-place="front"] {
-    transform: none;
-  }
-  .deck-hand .hand-card[data-place="fan"] {
-    transform: translateY(calc(var(--slot) * var(--cw) * 0.05)) scale(calc(1 - var(--slot) * 0.05));
-  }
-  .deck-hand .hand-card[data-place="gone"] {
-    transform: translate(calc(var(--cw) * -0.3), calc(var(--cw) * 0.04)) rotate(-5deg) scale(0.96);
-  }
-}
-
 /* Lesson notes in a hand. Caveat covers Latin and Cyrillic; a Japanese notebook would need a face of its own. */
 .notes-hand {
   font-family: "Caveat", cursive;
@@ -1139,6 +986,12 @@ html:has(.deck-cards[open]) {
   transition-duration: 460ms;
 }
 
+/* The deck page's hand sits beside its words. The cards behind step out only a little, so the
+   stage ends just under them and the turn button stays with the cards rather than below a gap. */
+.deck-hand .hand-stage[data-layout="side"] {
+  height: calc(var(--ch) + var(--cw) * 0.1);
+}
+
 /* The 404's one card, with no fan behind it. */
 .hand-stage[data-layout="single"] {
   height: calc(var(--ch) + var(--cw) * 0.04);
@@ -1223,6 +1076,10 @@ html:has(.deck-cards[open]) {
   border-radius: var(--radius-sm);
   outline: 1px solid var(--image-edge);
   outline-offset: -1px;
+}
+/* Level with the middle of the term's first line, whatever size and leading it is drawn at. */
+.hand-speaker-slot {
+  margin-top: calc((1lh - 2rem) / 2);
 }
 /* Onest has no IPA letters; fall back to faces that do rather than a mix of widths. */
 .hand-ipa {

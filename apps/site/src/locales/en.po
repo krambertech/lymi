@@ -25,6 +25,10 @@ msgstr "“May it come easy”, said to someone at work"
 msgid "“Schönen Feierabend!” wishes someone a good evening off."
 msgstr "“Schönen Feierabend!” wishes someone a good evening off."
 
+#. placeholder {0}: deck.cardCount
+msgid "{0, plural, =1 {See the card} other {See all # cards}}"
+msgstr "{0, plural, =1 {See the card} other {See all # cards}}"
+
 #. placeholder {0}: 6
 #. placeholder {0}: deck.cardCount
 #. placeholder {0}: deck.cards
@@ -94,11 +98,11 @@ msgstr "{0}, next in {1}"
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {# card added} other {# cards added}}"
 
-msgid "{cardCount, plural, one {See the card} other {See all # cards}}"
-msgstr "{cardCount, plural, one {See the card} other {See all # cards}}"
+msgid "{cardCount, plural, =1 {See the card} other {See all # cards}}"
+msgstr "{cardCount, plural, =1 {See the card} other {See all # cards}}"
 
-msgid "{cardCount, plural, one {The one card} other {All # cards}}"
-msgstr "{cardCount, plural, one {The one card} other {All # cards}}"
+msgid "{cardCount, plural, =1 {The one card} other {All # cards}}"
+msgstr "{cardCount, plural, =1 {The one card} other {All # cards}}"
 
 msgid "{cards, plural, one {# card} other {# cards}}"
 msgstr "{cards, plural, one {# card} other {# cards}}"
@@ -163,6 +167,9 @@ msgstr "{learners, plural, one {Reached # learner} other {Reached all # learners
 
 msgid "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when to bring each card back.} one {One more card is waiting. Add the deck, and Lymi chooses when to bring each one back.} other {Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back.}}"
 msgstr "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when to bring each card back.} one {One more card is waiting. Add the deck, and Lymi chooses when to bring each one back.} other {Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back.}}"
+
+msgid "{more, plural, one {# more card} other {# more cards}}"
+msgstr "{more, plural, one {# more card} other {# more cards}}"
 
 msgid "{n, plural, one {# known} other {# known}}"
 msgstr "{n, plural, one {# known} other {# known}}"
@@ -1616,9 +1623,6 @@ msgstr "cards added"
 msgid "Cards and review history come with you."
 msgstr "Cards and review history come with you."
 
-msgid "Cards from this deck"
-msgstr "Cards from this deck"
-
 msgid "Cards from your course platform"
 msgstr "Cards from your course platform"
 
@@ -2423,8 +2427,8 @@ msgstr "Every *person* is different."
 msgid "Every card an assistant adds or changes shows up in Activity, with the app that sent it."
 msgstr "Every card an assistant adds or changes shows up in Activity, with the app that sent it."
 
-msgid "Every card in the deck"
-msgstr "Every card in the deck"
+msgid "Every card is open from the start, so any of them can come up in review."
+msgstr "Every card is open from the start, so any of them can come up in review."
 
 msgid "Every card is read aloud by a native Estonian AI voice, so õ, ü and the long vowels sound the way they should. Tap a word to hear it. If your deck has its own recordings, those play instead."
 msgstr "Every card is read aloud by a native Estonian AI voice, so õ, ü and the long vowels sound the way they should. Tap a word to hear it. If your deck has its own recordings, those play instead."
@@ -4513,8 +4517,8 @@ msgstr "Ñ is a letter of its own: ¡Feliz año nuevo!"
 msgid "Na⁺ − (Cl⁻ + HCO₃⁻); raised in some metabolic acidoses"
 msgstr "Na⁺ − (Cl⁻ + HCO₃⁻); raised in some metabolic acidoses"
 
-msgid "Name what the picture shows before you look. Try it on the cards here: they’re from all over the deck."
-msgstr "Name what the picture shows before you look. Try it on the cards here: they’re from all over the deck."
+msgid "Name what the picture shows before you look, then turn the card over."
+msgstr "Name what the picture shows before you look, then turn the card over."
 
 msgid "Named after William of Ockham, a 14th-century friar."
 msgstr "Named after William of Ockham, a 14th-century friar."
@@ -5144,9 +5148,8 @@ msgstr "public transport"
 msgid "Public transport"
 msgstr "Public transport"
 
-#. placeholder {0}: date(deck.publishedAt)
-msgid "Published {0}"
-msgstr "Published {0}"
+msgid "Published {published}"
+msgstr "Published {published}"
 
 msgid "Pumpkin"
 msgstr "Pumpkin"
@@ -5259,8 +5262,8 @@ msgstr "rain"
 msgid "Read Japanese Kana covers hiragana and katakana, including voiced and combined sounds, the small tsu and the long-vowel mark."
 msgstr "Read Japanese Kana covers hiragana and katakana, including voiced and combined sounds, the small tsu and the long-vowel mark."
 
-msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
-msgstr "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
+msgid "Read the meaning and recall the term before you look, then turn the card over."
+msgstr "Read the meaning and recall the term before you look, then turn the card over."
 
 msgid "Read your German deck"
 msgstr "Read your German deck"
@@ -6967,9 +6970,6 @@ msgstr "Travel, health and opinions, once A1 feels easy."
 msgid "Travel, health and opinions, once HSK 1 feels easy."
 msgstr "Travel, health and opinions, once HSK 1 feels easy."
 
-msgid "Try a few cards"
-msgstr "Try a few cards"
-
 msgid "Try a question"
 msgstr "Try a question"
 
@@ -6979,11 +6979,11 @@ msgstr "Try a word you would find on a card, or the language you are learning. L
 msgid "Try again"
 msgstr "Try again"
 
-msgid "Try to remember the answer before you look. Try it on the cards here: they’re from all over the deck."
-msgstr "Try to remember the answer before you look. Try it on the cards here: they’re from all over the deck."
+msgid "Try to remember the answer before you look, then turn the card over."
+msgstr "Try to remember the answer before you look, then turn the card over."
 
-msgid "Try to remember the meaning before you look. Try it on the cards here: they’re from all over the deck."
-msgstr "Try to remember the meaning before you look. Try it on the cards here: they’re from all over the deck."
+msgid "Try to remember the meaning before you look, then turn the card over."
+msgstr "Try to remember the meaning before you look, then turn the card over."
 
 msgid "Tuesday German class"
 msgstr "Tuesday German class"

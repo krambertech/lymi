@@ -12,10 +12,8 @@ import {
   movedDeckPath,
   productAddPath,
   recallCue,
-  SPREAD_SIZE,
   STACK_SIZE,
   sectionPath,
-  spreadCards,
   stackCards,
 } from "./deck-page";
 
@@ -74,52 +72,6 @@ const sections = (count: number) =>
     })),
   }));
 
-describe("spreadCards", () => {
-  it("takes one card from each of sections spread evenly through the deck, in deck order", () => {
-    const spread = spreadCards(deck({ sections: sections(9) }));
-    expect(spread).toHaveLength(SPREAD_SIZE);
-    expect(spread.map((card) => card.section)).toEqual([
-      "Section 0",
-      "Section 2",
-      "Section 4",
-      "Section 6",
-      "Section 8",
-    ]);
-  });
-
-  it("takes more than one card from a section when the deck has few, and skips cards without a meaning", () => {
-    const spread = spreadCards(deck());
-    expect(spread).toHaveLength(SPREAD_SIZE);
-    expect(spread.map((card) => card.term)).not.toContain("term 1");
-    expect(new Set(spread.map((card) => card.term)).size).toBe(SPREAD_SIZE);
-    expect(spread.map((card) => card.section)).toEqual([
-      "Greetings",
-      "Greetings",
-      "Greetings",
-      "Numbers",
-      null,
-    ]);
-  });
-
-  it("stays the same for a revision and prefers cards short enough to read at a glance", () => {
-    const long = deck({
-      sections: [
-        {
-          name: "Mixed",
-          cards: [
-            { term: "a term far too long to read at a glance", meaning: "long", ...asked },
-            { term: "lühike", meaning: "short", ...asked },
-          ],
-        },
-      ],
-    });
-    expect(spreadCards(long, 1)[0]?.term).toBe("lühike");
-    expect(spreadCards(deck({ sections: sections(9) }))).toEqual(
-      spreadCards(deck({ sections: sections(9) })),
-    );
-  });
-});
-
 describe("stackCards", () => {
   it("draws distinct cards with a meaning from anywhere in the deck, the same for one revision", () => {
     const stack = stackCards(deck({ sections: sections(4) }));
@@ -129,6 +81,44 @@ describe("stackCards", () => {
     expect(stackCards(deck({ sections: sections(4) }))).toEqual(stack);
     expect(stackCards(deck())).not.toEqual(stackCards(deck({ revision: 3 })));
     expect(stackCards(deck()).map((card) => card.term)).not.toContain("term 1");
+  });
+});
+
+describe("card details", () => {
+  const detailed = deck({
+    sections: [
+      {
+        name: "Verbs",
+        cards: [
+          {
+            term: "olema",
+            meaning: "to be",
+            ...asked,
+            details: {
+              pronunciation: "/ˈolema/",
+              example: "Ma olen kodus.",
+              exampleTranslation: "I am at home.",
+              notes: "Forms: *olla*, *on*",
+            },
+          },
+        ],
+      },
+    ],
+  });
+
+  it("turns a hand card over to its pronunciation, example and notes", () => {
+    const [card] = deckHandCards(stackCards(detailed), "et");
+    expect(card).toMatchObject({
+      pronunciation: "/ˈolema/",
+      example: "Ma olen kodus.",
+      exampleTranslation: "I am at home.",
+    });
+  });
+
+  it("keeps the details out of the full list, which shows term and meaning only", () => {
+    const [step] = sectionPath(detailed).steps;
+    expect(step?.cards[0]).not.toHaveProperty("details");
+    expect(step?.cards[0]).toMatchObject({ term: "olema", meaning: "to be" });
   });
 });
 
@@ -173,7 +163,7 @@ describe("preview modes", () => {
   };
 
   it("shows a card with a picture mode by its picture", () => {
-    const [card] = spreadCards(deck({ sections: [{ name: null, cards: [flag] }] }), 1);
+    const [card] = stackCards(deck({ sections: [{ name: null, cards: [flag] }] }), 1);
     expect(card?.mode).toBe("image_to_meaning");
     expect(recallCue(card ? [card] : [])).toBe("image");
   });
@@ -184,13 +174,13 @@ describe("preview modes", () => {
       ...section,
       cards: section.cards.map((card) => ({ ...card, ...both })),
     }));
-    const spread = spreadCards(deck({ sections: cards }), 3);
-    expect(spread.map((card) => card.mode)).toEqual([
+    const stack = stackCards(deck({ sections: cards }), 3);
+    expect(stack.map((card) => card.mode)).toEqual([
       "term_to_meaning",
       "meaning_to_term",
       "term_to_meaning",
     ]);
-    expect(recallCue(spread)).toBe("mixed");
+    expect(recallCue(stack)).toBe("mixed");
   });
 });
 

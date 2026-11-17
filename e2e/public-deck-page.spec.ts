@@ -148,15 +148,19 @@ test("anyone can read a published deck's page, see its sections and cards, and t
 
   await test.step("a visitor turns over each card once, then is asked to keep going in Lymi", async () => {
     const meanings = ["good afternoon", "good evening", "good night", "one coffee, please"];
-    const how = page.locator("#how");
-    await how.scrollIntoViewIfNeeded();
-    const stack = how.getByRole("region", { name: "Turn a few cards over" });
+    const stack = page.locator("#try").getByRole("region", { name: "Turn a few cards over" });
+    const backs: string[] = [];
     for (let turned = 0; turned < meanings.length; turned++) {
       await stack.getByRole("button", { name: "Turn it over" }).click();
       const shown = await stack.locator(".hand-card[data-place='front'] .hand-back").innerText();
       expect(meanings.some((meaning) => shown.includes(meaning))).toBe(true);
+      backs.push(shown);
       await stack.getByRole("button", { name: "Next card" }).click();
     }
+    // A turned card shows what review shows: its example and its notes.
+    const afternoon = backs.find((back) => back.includes("good afternoon"));
+    expect(afternoon).toContain("Tere päevast, kuidas läheb?");
+    expect(afternoon).toContain("Said from noon until evening.");
     await expect(stack.getByText("Keep going in Lymi", { exact: true })).toBeVisible();
     await expect(stack.getByText("One more card is waiting", { exact: false })).toBeVisible();
     await expect(stack.getByRole("link", { name: "Add to Lymi" })).toHaveAttribute("href", addUrl);
@@ -248,15 +252,12 @@ test("without JavaScript the page still shows the deck and its sections", async 
   const page = await context.newPage();
   await page.goto(`${publicSite}${pagePath}`);
   await expect(page.getByRole("heading", { level: 1, name: "Evening Estonian" })).toBeVisible();
-  await expect(page.getByRole("list", { name: "Cards from this deck" })).toContainText(
-    "tere päevast",
-  );
   // The hand is dealt by the server, so its cards and the way into every card need no script.
-  await expect(page.locator("#how .hand-card")).toHaveCount(4);
-  await expect(page.getByRole("link", { name: "See all 5 cards" })).toHaveAttribute(
-    "href",
-    "#cards",
-  );
+  await expect(page.locator("#try .hand-card")).toHaveCount(4);
+  await expect(page.locator("#try")).toContainText("tere päevast");
+  await expect(
+    page.locator("header").getByRole("link", { name: "See all 5 cards" }),
+  ).toHaveAttribute("href", "#cards");
   await expect(page.getByRole("region", { name: "What’s inside" })).toContainText("In the café");
   await context.close();
 });
@@ -291,7 +292,10 @@ test("the card list stops the previous pronunciation and reports playback failur
   });
 
   await page.goto(`${publicSite}${pagePath}`);
-  await page.getByRole("link", { name: "See all 5 cards" }).click();
+  await page
+    .getByRole("region", { name: "What’s inside" })
+    .getByRole("link", { name: "See all 5 cards" })
+    .click();
   const view = page.getByRole("dialog", { name: "All 5 cards" });
   const play = view.getByRole("button", { name: "Play pronunciation" });
 

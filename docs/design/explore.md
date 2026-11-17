@@ -68,6 +68,18 @@ Public pages show up to four decks, one row on desktop and two columns on phone.
 
 List a deck only while it meets the conditions for its own public page to return 200. Withdrawal and archive remove it from cached catalogue pages within five minutes. Validators depend on catalogue content, locale and Worker version, never the requesting account.
 
+## The public deck page
+
+`lymi.app/explore/<slug>` opens on the deck in its tray colour: the byline, name, summary, counts and tags, **Add to Lymi** and **See all N cards**, beside a hand of five of the deck's cards to turn over. On a phone the hand sits under the words. Most visitors leave within seconds of arriving, so the cards to try are in the first screen rather than further down. A deck whose cards have no meaning has no hand, and its words centre.
+
+The byline shows **Checked** with the date the publisher last checked the deck, or **Published** with the date it went up when it was never checked.
+
+`deckPageHand` picks the hand from the revision, so every visitor to one revision sees the same cards. Each card is shown in one of its own review modes. A turned card shows what review shows: the answer, the pronunciation, the example with its translation in an inset block, and the notes, drawn from blocks the server parsed so the page ships no Markdown parser. The speaker sits beside the term's first line, never on a line of its own.
+
+Only the hand's cards carry pronunciation, example, translation and notes (`details` on `PublicDeckOut`); the rest of the deck shows term and meaning only. An edition shows its own approved notes and translation and never falls back to the original's, which are in another language. The original's translation is left out once its example has changed. A long note is cut to about four lines and a list to its first four items, because the card has a fixed height; the whole note is in Lymi.
+
+**What's inside** follows. A deck in sections lists them in order in two columns with **Start here** on the first. A deck without sections lists its first eight cards, or every card when it holds twelve or fewer, with the picture beside a picture card and a last row linking to the rest. **See all N cards** opens every card in a full-screen view at `#cards`, from the hero and from this section. **How it works** follows as three steps in a row, then More like this, then the links to the deck's neighbours and shelf.
+
 ## In the product
 
 Signed-in learners open `my.lymi.app/explore` from the desktop rail or the learner menu in the narrow web layout. The native phone app has an Explore tab. `GET /api/explore` returns `PublicDeckSummary` rows for the learner’s meaning language plus Library membership.

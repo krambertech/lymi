@@ -438,6 +438,7 @@ export const analyticsEvents = {
   }),
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
   add_to_lymi_clicked: z.object({ deck_slug: slug }),
+  public_deck_card_turned: z.object({ deck_slug: slug }),
   site_link_followed: z.object({
     place: z.enum([
       "use_cases_menu",
@@ -773,6 +774,7 @@ export const analyticsProducers = {
   reminder_ask_left: ["phone"],
   public_deck_viewed: ["browser"],
   add_to_lymi_clicked: ["browser"],
+  public_deck_card_turned: ["browser"],
   site_link_followed: ["browser"],
   site_showcase_steered: ["browser"],
   ready_decks_narrowed: ["browser"],

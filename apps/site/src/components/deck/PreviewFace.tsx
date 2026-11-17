@@ -3,8 +3,6 @@ import type { CSSProperties } from "react";
 import { publicMediaUrl } from "../../lib/origins";
 
 interface Props {
-  /** The class family the face is drawn with: the deck page's spread or an Explore tray. */
-  kind: "deck-spread" | "deck-tray";
   term: string;
   meaning: string;
   section: string | null;
@@ -28,7 +26,6 @@ export function cueStep(text: string): number {
  * the meaning or the term, and what the learner recalls under it.
  */
 export function PreviewFace({
-  kind,
   term,
   meaning,
   section,
@@ -45,7 +42,7 @@ export function PreviewFace({
   return (
     <>
       {section && (
-        <p lang={sectionLanguage ?? meaningLanguage} className={`${kind}-section`}>
+        <p lang={sectionLanguage ?? meaningLanguage} className="deck-tray-section">
           {section}
         </p>
       )}
@@ -66,7 +63,7 @@ export function PreviewFace({
       ) : (
         <p
           lang={cueLanguage}
-          className={`${kind}-term`}
+          className="deck-tray-term"
           style={{ "--t": cueStep(cueText) } as CSSProperties}
         >
           {cueText}
@@ -74,7 +71,7 @@ export function PreviewFace({
       )}
       <p
         lang={target === "term" ? (language ?? undefined) : meaningLanguage}
-        className={`${kind}-meaning`}
+        className="deck-tray-meaning"
         data-target={target}
       >
         {target === "term" ? term : meaning}

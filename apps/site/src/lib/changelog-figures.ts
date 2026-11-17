@@ -31,9 +31,10 @@ export const CHANGELOG_FIGURES = [
   "example",
   "mac",
   "pitch-accent",
+  "iphone",
 ] as const;
 
 /** Figures drawn at the tray's own 660 by 412 and running to its edges, rather than standing in it. */
-export const CHANGELOG_SCENES: readonly string[] = ["mac"];
+export const CHANGELOG_SCENES: readonly string[] = ["mac", "iphone"];
 
 export type ChangelogFigureName = (typeof CHANGELOG_FIGURES)[number];

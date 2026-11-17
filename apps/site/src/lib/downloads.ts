@@ -9,26 +9,39 @@ import { POSTHOG_PROXY_PATH } from "@lymi/core/posthog-proxy";
 import { POSTHOG_PROJECT_TOKEN } from "@lymi/core/telemetry";
 import { countsAsPageView } from "./deck-page";
 
-/** Each chip's newest build; the release job overwrites the file, so the address never changes. */
-export const MAC_DOWNLOADS = {
+/** Lymi on the App Store. Apple opens the visitor's own storefront. */
+export const APP_STORE_URL = "https://apps.apple.com/app/id6822912687";
+
+/**
+ * Each download link and where it leads. A Mac link names its chip's newest build, which the
+ * release job overwrites, so the address never changes.
+ */
+export const DOWNLOADS = {
   "/download/mac": {
-    chip: "apple_silicon",
+    event: "mac_download_started",
+    properties: { chip: "apple_silicon" },
     file: "https://downloads.lymi.app/darwin/arm64/Lymi.dmg",
   },
   "/download/mac-intel": {
-    chip: "intel",
+    event: "mac_download_started",
+    properties: { chip: "intel" },
     file: "https://downloads.lymi.app/darwin/x64/Lymi.dmg",
   },
+  "/download/iphone": {
+    event: "iphone_download_started",
+    properties: {},
+    file: APP_STORE_URL,
+  },
 } as const;
-export type MacDownloadPath = keyof typeof MAC_DOWNLOADS;
+export type DownloadPath = keyof typeof DOWNLOADS;
 
-export function macDownload(pathname: string) {
+export function download(pathname: string) {
   const path = pathname.replace(/\/$/, "");
-  return Object.hasOwn(MAC_DOWNLOADS, path) ? MAC_DOWNLOADS[path as MacDownloadPath] : undefined;
+  return Object.hasOwn(DOWNLOADS, path) ? DOWNLOADS[path as DownloadPath] : undefined;
 }
 
 /** The download link with the page's language, which the count reads before the Referer. */
-export function macDownloadHref(path: MacDownloadPath, locale: string): string {
+export function downloadHref(path: DownloadPath, locale: string): string {
   return locale === "en" ? path : `${path}?locale=${locale}`;
 }
 
@@ -57,17 +70,13 @@ export function downloadCapture(
   edge: { timezone?: unknown },
 ): string | undefined {
   const url = new URL(request.url);
-  const download = macDownload(url.pathname);
-  if (!download) return;
+  const link = download(url.pathname);
+  if (!link) return;
   const referrer = request.headers.get("referer");
   const path = sitePath(url, referrer);
   const from = path && analyticsPath(path, "public");
   const touch = firstTouch(url.toString(), referrer ?? "", "public");
-  const properties = eventProperties(
-    "mac_download_started",
-    { ...touch, chip: download.chip, from },
-    "worker",
-  );
+  const properties = eventProperties(link.event, { ...touch, ...link.properties, from }, "worker");
   if (!properties) return;
   const locale =
     AnalyticsLocale.safeParse(url.searchParams.get("locale")).data ??
@@ -75,7 +84,7 @@ export function downloadCapture(
     "en";
   return JSON.stringify({
     api_key: POSTHOG_PROJECT_TOKEN,
-    event: "mac_download_started",
+    event: link.event,
     distinct_id: "$posthog_cookieless",
     properties: {
       ...properties,

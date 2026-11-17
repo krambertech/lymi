@@ -64,15 +64,37 @@ function trimBlock(block: NoteBlock, budget: number): [NoteBlock, number] {
  * runs past it, so a long note would otherwise stop mid-line with nothing to say there was more.
  */
 export function cardNotes(source: string): NoteBlock[] {
+  const blocks = parseNotes(source);
   const kept: NoteBlock[] = [];
   let used = 0;
-  for (const block of parseNotes(source)) {
-    if (used >= NOTE_BUDGET) break;
+  for (const block of blocks) {
+    // Too little room left to start another block says less than the ellipsis does.
+    if (used >= NOTE_BUDGET || (kept.length > 0 && NOTE_BUDGET - used < 40)) break;
     const [trimmed, n] = trimBlock(block, NOTE_BUDGET - used);
     kept.push(trimmed);
     used += n;
   }
+  // A cut that fell between blocks or list items says so too, so a cut note never looks whole.
+  const whole = JSON.stringify(kept) === JSON.stringify(blocks.slice(0, kept.length));
+  const last = kept.at(-1);
+  if ((kept.length < blocks.length || !whole) && last && !endsInEllipsis(last)) {
+    const more: NoteBlock = { type: "paragraph", children: [{ type: "text", value: "…" }] };
+    if (last.type === "list") last.items.push([more]);
+    else kept.push(more);
+  }
   return kept;
+}
+
+/** Whether a block's last text already ends in the ellipsis a cut word leaves. */
+function endsInEllipsis(block: NoteBlock): boolean {
+  if (block.type === "list") {
+    const item = block.items.at(-1);
+    const inner = item?.at(-1);
+    return inner ? endsInEllipsis(inner) : false;
+  }
+  let node = block.children.at(-1);
+  while (node && node.type !== "text" && node.type !== "break") node = node.children.at(-1);
+  return node?.type === "text" && node.value.endsWith("…");
 }
 
 /**

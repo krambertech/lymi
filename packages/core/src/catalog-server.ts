@@ -406,6 +406,7 @@ async function readPublicDeck(
         editionExampleTranslation: sql<string | null>`localization.example_translation`,
         editionNotes: sql<string | null>`localization.notes`,
         editionExample: sql<string | null>`localization.example`,
+        editionCurrent: sql<number>`coalesce(${sql.raw("localization.source_revision")} >= ${cards.revision}, 0)`,
         originalExample: cards.example,
         language: cards.language,
         exampleRecorded: sql<number>`${cards.exampleRecordingKey} is not null`,
@@ -446,14 +447,18 @@ async function readPublicDeck(
         editionExampleTranslation,
         editionNotes,
         editionExample,
+        editionCurrent,
         originalExample,
         language,
         exampleRecorded,
         ...card
       }) => {
         // The original's translation and notes are in its own language, so an edition shows only its own.
+        // An edition's translation counts only while the card is unchanged since, as in the app.
         const translation = wanted
-          ? editionExampleTranslation
+          ? editionCurrent === 1
+            ? editionExampleTranslation
+            : null
           : translationStale({ example, exampleTranslation, exampleTranslationOf })
             ? null
             : exampleTranslation;

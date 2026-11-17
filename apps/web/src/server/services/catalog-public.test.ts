@@ -198,6 +198,10 @@ describe("loadPublicDeck", () => {
     });
     // The edition has no notes for this card, so the English ones stay off the Ukrainian page.
     expect(uk.leib).toEqual({ example: "Leib on värske.", ...heard });
+
+    // Once the card changes after the edition was written, its translation no longer counts.
+    await db.update(schema.cards).set({ revision: 2 }).where(eq(schema.cards.id, first.card.id));
+    expect((await detailsOf("uk")).tere).not.toHaveProperty("exampleTranslation");
   });
 
   it("is unavailable once withdrawn or archived, and missing for an unknown slug", async () => {

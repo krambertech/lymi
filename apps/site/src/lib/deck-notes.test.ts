@@ -22,8 +22,20 @@ describe("cardNotes", () => {
     expect(shown.endsWith("word…")).toBe(true);
   });
 
-  it("keeps a list to its first four items", () => {
+  it("keeps a list to its first four items and marks the cut", () => {
     const [list] = cardNotes("- one\n- two\n- three\n- four\n- five\n- six");
-    expect(list?.type === "list" && list.items).toHaveLength(4);
+    if (list?.type !== "list") throw new Error("Expected a list");
+    expect(list.items).toHaveLength(5);
+    expect(text([list]).endsWith("four …")).toBe(true);
+  });
+
+  it("marks blocks left out after the budget", () => {
+    const blocks = cardNotes(`${"word ".repeat(43)}end.\n\nA second paragraph.`);
+    expect(text(blocks).endsWith("…")).toBe(true);
+    expect(text(blocks)).not.toContain("second");
+  });
+
+  it("adds nothing to a note that fits", () => {
+    expect(text(cardNotes("- one\n- two"))).not.toContain("…");
   });
 });

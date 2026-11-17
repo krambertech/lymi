@@ -55,6 +55,10 @@ if (__DEV__) {
 }
 
 export default function RootLayout() {
+  if (process.env.EXPO_PUBLIC_NOTATION_SPIKE === "1") {
+    const { NotationSpike } = require("../notation-spike/screen") as typeof import("../notation-spike/screen");
+    return <NotationSpike />;
+  }
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
       {/* Today, Library and each deck open as of the last sync, even with no connection. */}

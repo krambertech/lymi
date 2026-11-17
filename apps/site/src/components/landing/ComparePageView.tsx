@@ -22,7 +22,7 @@ import {
   Users,
   WifiOff,
 } from "lucide-react";
-import type { ReactNode } from "react";
+import type { CSSProperties, ReactNode } from "react";
 import { trayStyle } from "../../lib/tray";
 import { ArrowLink } from "./ArrowLink";
 import { CompareMark } from "./CompareMark";
@@ -1071,6 +1071,9 @@ function PointList({ points, iconClass }: { points: readonly Point[]; iconClass:
 
 const GROUPS: readonly Ahead[] = ["lymi", "other", "same"];
 
+/** The import preview's tray: the warm side of the site's tray hues, away from every other app's colour. */
+const IMPORT_HUE = 25;
+
 function GroupTitle({ ahead, name }: { ahead: Ahead; name: string }) {
   switch (ahead) {
     case "lymi":
@@ -1233,6 +1236,17 @@ function CompareHero({ compare }: { compare: CompareKey }) {
   );
 }
 
+/** The light behind the nav and the hero, in the other app's colour and Lymi's. */
+function CompareWash({ hue }: { hue: number }) {
+  return (
+    <div
+      aria-hidden="true"
+      style={{ "--wash-h": hue } as CSSProperties}
+      className="compare-wash pointer-events-none absolute inset-0 -z-10"
+    />
+  );
+}
+
 /** A page for people who already use another flashcard app: how the two compare, honestly. */
 export function ComparePageView({ compare }: { compare: CompareKey }) {
   const page = COMPARE_PAGES[compare];
@@ -1245,8 +1259,12 @@ export function ComparePageView({ compare }: { compare: CompareKey }) {
   );
 
   return (
-    <LandingLayout page={page.page} hero={<CompareHero compare={compare} />}>
-      <Wide title={<Trans>What changes</Trans>} body={content.changes.body}>
+    <LandingLayout
+      page={page.page}
+      hero={<CompareHero compare={compare} />}
+      backdrop={<CompareWash hue={hue} />}
+    >
+      <Wide title={<Trans>What you get with Lymi</Trans>} body={content.changes.body}>
         <PointList points={content.changes.points} iconClass="text-amber-text" />
       </Wide>
 
@@ -1282,13 +1300,13 @@ export function ComparePageView({ compare }: { compare: CompareKey }) {
       </Section>
 
       {"collection" in content.move ? (
-        <FeatureSection
-          title={content.move.title}
-          body={content.move.body}
-          after={guideLink}
-          tinted
-        >
-          <ImportDemo collection={content.move.collection} />
+        <FeatureSection title={content.move.title} body={content.move.body} after={guideLink}>
+          <div
+            style={trayStyle(IMPORT_HUE)}
+            className="use-case-tile grid place-items-center rounded-[24px] px-5 py-10 @2xl:px-10 @2xl:py-14"
+          >
+            <ImportDemo collection={content.move.collection} />
+          </div>
         </FeatureSection>
       ) : (
         <Wide title={content.move.title} body={content.move.body} action={guideLink}>

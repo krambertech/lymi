@@ -7841,6 +7841,10 @@ msgstr "Лексика для рівнів 1 і 2 TOPIK I та рівня 3 TOPI
 msgid "Vocabulary for the first two levels of the Japanese-Language Proficiency Test, with a translation beside each word."
 msgstr "Лексика для перших двох рівнів іспиту з японської мови JLPT, з перекладом біля кожного слова."
 
+#. Between the two app icons, as in the page's heading Lymi vs Anki
+msgid "vs"
+msgstr "чи"
+
 msgid "waiter"
 msgstr "офіціант"
 
@@ -7961,9 +7965,6 @@ msgstr "Що ти *їстимеш*?"
 msgid "What are you learning?"
 msgstr "Що ти вчиш?"
 
-msgid "What changes"
-msgstr "Що зміниться"
-
 msgid "What comes across"
 msgstr "Що перенесеться"
 
@@ -8042,6 +8043,9 @@ msgstr "Що ти бачиш"
 
 msgid "What you compare"
 msgstr "Що порівнюємо"
+
+msgid "What you get with Lymi"
+msgstr "Що ти отримаєш з Lymi"
 
 msgid "What you give up by choosing one option over the next best one"
 msgstr "Те, від чого відмовляєшся, обираючи один варіант замість наступного найкращого"

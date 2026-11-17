@@ -566,8 +566,8 @@ function useContent(key: CompareKey): Content {
               title: <Trans>A schedule for every card</Trans>,
               body: (
                 <Trans>
-                  FSRS schedules every card on your phone and your computer. Cards you remember
-                  wait longer each time, and the ones you forget come back sooner.
+                  FSRS schedules every card on your phone and your computer. Cards you remember wait
+                  longer each time, and the ones you forget come back sooner.
                 </Trans>
               ),
             },

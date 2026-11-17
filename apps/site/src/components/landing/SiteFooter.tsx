@@ -84,7 +84,7 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
             </a>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-x-10 gap-y-8 @2xl:grid-cols-[repeat(6,auto)] @2xl:justify-between @2xl:gap-x-8">
+        <div className="grid grid-cols-2 gap-x-10 gap-y-8 @2xl:grid-cols-[repeat(5,auto)] @2xl:justify-between @2xl:gap-x-8">
           <Group
             title={<Trans>Use cases</Trans>}
             className="col-span-2 @2xl:col-span-1"
@@ -132,27 +132,32 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
               </a>
             </li>
           </Group>
-          <Group title={<Trans>Switching from</Trans>}>
-            {COMPARE_KEYS.map((key) => (
-              <li key={key}>
-                <a href={localizedPath(COMPARE_PAGES[key].page, i18n.locale)} className={linkClass}>
-                  {COMPARE_PAGES[key].name}
+          <div className="grid content-start gap-8">
+            <Group title="Lymi">
+              <li>
+                <a href={localizedPath("changelog", i18n.locale)} className={linkClass}>
+                  <Trans>Changelog</Trans>
                 </a>
               </li>
-            ))}
-          </Group>
-          <Group title="Lymi">
-            <li>
-              <a href={localizedPath("changelog", i18n.locale)} className={linkClass}>
-                <Trans>Changelog</Trans>
-              </a>
-            </li>
-            <li>
-              <a href="/support" className={linkClass}>
-                <Trans>Support</Trans>
-              </a>
-            </li>
-          </Group>
+              <li>
+                <a href="/support" className={linkClass}>
+                  <Trans>Support</Trans>
+                </a>
+              </li>
+            </Group>
+            <Group title={<Trans>Switching from</Trans>}>
+              {COMPARE_KEYS.map((key) => (
+                <li key={key}>
+                  <a
+                    href={localizedPath(COMPARE_PAGES[key].page, i18n.locale)}
+                    className={linkClass}
+                  >
+                    {COMPARE_PAGES[key].name}
+                  </a>
+                </li>
+              ))}
+            </Group>
+          </div>
         </div>
       </div>
       <div className="mx-auto mt-14 flex max-w-[1040px] flex-wrap items-center justify-between gap-x-6 gap-y-3 text-xs text-ink-muted">

@@ -1,48 +1,52 @@
-import { Trans } from "@lingui/react/macro";
-import { Lantern } from "../Lantern";
-import { AppTile } from "../Logo";
+import { useLingui } from "@lingui/react/macro";
 
-// Lighter than the dark screen inside it, so the frame still reads against a dark tray.
-const BEZEL = "oklch(0.24 0.008 60)";
+/** Captures from the App Store listing (apps/mobile/store/screenshots/raw), one set per language. */
+const LOCALES = ["en", "uk", "ru"];
 
-/** An iPhone's Home Screen at night: Lymi's Lantern widget with what is due, and the app's icon. */
+interface PhoneProps {
+  screen: string;
+  width: number;
+  className: string;
+}
+
+/** An iPhone frame around a 1320 by 2868 Simulator capture, with the Dynamic Island drawn over it. */
+function Phone({ screen, width, className }: PhoneProps) {
+  return (
+    <div
+      className={`absolute bg-[linear-gradient(150deg,oklch(0.42_0.004_60),oklch(0.2_0.004_60)_35%,oklch(0.16_0.004_60)_70%,oklch(0.36_0.004_60))] shadow-[inset_0_0_0_1px_oklch(1_0_0/0.14),0_0_0_1px_oklch(0.1_0_0/0.5),0_40px_60px_-28px_oklch(0.15_0.03_60/0.55),0_12px_24px_-12px_oklch(0.15_0.03_60/0.35)] ${className}`}
+      style={{ width, padding: width * 0.032, borderRadius: width * 0.165 }}
+    >
+      <img
+        src={screen}
+        alt=""
+        width={1320}
+        height={2868}
+        // The changelog frame places screenshot images absolutely; this one sits in its phone.
+        className="relative! block aspect-[1320/2868] h-auto w-full"
+        style={{ borderRadius: width * 0.135 }}
+      />
+      <span
+        className="absolute start-1/2 -translate-x-1/2 rounded-full bg-black"
+        style={{ top: width * 0.06, width: width * 0.29, height: width * 0.085 }}
+      />
+    </div>
+  );
+}
+
+/** Three iPhones in a fan: a review card, Today in front, and the streak at night. */
 export function IPhoneFigure() {
+  const { i18n } = useLingui();
+  const locale = LOCALES.includes(i18n.locale) ? i18n.locale : "en";
+  const screen = (name: string) => `/iphone/${locale}/${name}.webp`;
   return (
     <div aria-hidden="true" className="relative h-[412px] w-[660px] overflow-hidden">
-      <div
-        className="absolute start-1/2 top-11 h-[520px] w-[296px] -translate-x-1/2 rounded-[50px] p-3 shadow-[0_0_0_1.5px_oklch(0.4_0.008_60),0_24px_48px_-20px_oklch(0.2_0.03_60/0.5)]"
-        style={{ background: BEZEL }}
-      >
-        <div data-theme="dark" className="relative h-full overflow-hidden rounded-[39px] bg-canvas">
-          <div className="flex h-12 items-center justify-between px-8 text-sm font-semibold text-ink">
-            <span className="tabular-nums">9:41</span>
-            <span className="h-6 w-[80px] rounded-full bg-[oklch(0.08_0_0)]" />
-            <span className="w-[34px]" />
-          </div>
-          <div
-            className="mx-4 mt-3 flex h-[124px] items-center gap-3 rounded-[24px] bg-plate ps-2.5 pe-3.5 edge"
-            style={{
-              backgroundImage:
-                "radial-gradient(110px 110px at 22% 50%, var(--lantern-glow), transparent 80%)",
-            }}
-          >
-            <Lantern glow className="size-[84px] shrink-0" />
-            <div className="flex h-full min-w-0 flex-col py-3.5">
-              <span className="text-[36px] leading-none font-medium tabular-nums text-ink">12</span>
-              <span className="mt-1 text-[13px] leading-tight text-ink-muted">
-                <Trans>cards due</Trans>
-              </span>
-              <span className="mt-auto pt-1 text-xs font-medium text-ink-muted">
-                <Trans>5 days in a row</Trans>
-              </span>
-            </div>
-          </div>
-          <div className="ms-[26px] mt-5 grid w-fit justify-items-center gap-1.5">
-            <AppTile size={62} />
-            <span className="text-xs text-ink">Lymi</span>
-          </div>
-        </div>
-      </div>
+      <Phone
+        screen={screen("review")}
+        width={196}
+        className="start-[92px] top-[70px] -rotate-9 brightness-[0.97]"
+      />
+      <Phone screen={screen("streak")} width={196} className="end-[92px] top-[70px] rotate-9" />
+      <Phone screen={screen("today")} width={224} className="start-[218px] top-[30px] z-10" />
     </div>
   );
 }

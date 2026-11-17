@@ -443,9 +443,6 @@ msgstr "48 страниц"
 msgid "5 cards from Theory test"
 msgstr "5 карточек из колоды «Теория ПДД»"
 
-msgid "5 days in a row"
-msgstr "5 дней подряд"
-
 msgid "500 feet in either direction"
 msgstr "500 футов (около 150 м) в обе стороны"
 
@@ -1618,9 +1615,6 @@ msgstr "карточек добавлено"
 
 msgid "Cards and review history come with you."
 msgstr "Карточки и история повторений переезжают вместе с тобой."
-
-msgid "cards due"
-msgstr "карточек к повторению"
 
 msgid "Cards from this deck"
 msgstr "Карточки из этой колоды"

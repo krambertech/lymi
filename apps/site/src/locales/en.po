@@ -443,9 +443,6 @@ msgstr "48 pages"
 msgid "5 cards from Theory test"
 msgstr "5 cards from Theory test"
 
-msgid "5 days in a row"
-msgstr "5 days in a row"
-
 msgid "500 feet in either direction"
 msgstr "500 feet in either direction"
 
@@ -1618,9 +1615,6 @@ msgstr "cards added"
 
 msgid "Cards and review history come with you."
 msgstr "Cards and review history come with you."
-
-msgid "cards due"
-msgstr "cards due"
 
 msgid "Cards from this deck"
 msgstr "Cards from this deck"

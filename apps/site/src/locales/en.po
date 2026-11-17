@@ -3905,6 +3905,9 @@ msgstr "In the end"
 msgid "In the Grok Bot app, open Connect apps and choose Add a custom connector. Name it Lymi, pick Remote HTTPS and paste this address."
 msgstr "In the Grok Bot app, open Connect apps and choose Add a custom connector. Name it Lymi, pick Remote HTTPS and paste this address."
 
+msgid "In the iPhone’s browser, free"
+msgstr "In the iPhone’s browser, free"
+
 msgid "In the order you learn them, one section at a time."
 msgstr "In the order you learn them, one section at a time."
 
@@ -4268,8 +4271,8 @@ msgstr "Latin for “you shall have the body”."
 msgid "Law"
 msgstr "Law"
 
-msgid "Learn and Test limited without Plus, from €7.99 a month"
-msgstr "Learn and Test limited without Plus, from €7.99 a month"
+msgid "Learn and Test capped on Free and Plus; unlimited with Plus Unlimited, €44.99 a year"
+msgstr "Learn and Test capped on Free and Plus; unlimited with Plus Unlimited, €44.99 a year"
 
 msgid "Learn Chinese vocabulary with flashcards · Lymi"
 msgstr "Learn Chinese vocabulary with flashcards · Lymi"
@@ -7148,8 +7151,8 @@ msgstr "The rules, and every sign by its picture."
 msgid "The same address works everywhere. Nothing to install."
 msgstr "The same address works everywhere. Nothing to install."
 
-msgid "The same cards in the browser, on your phone and in the Mac app, synced, with no app to buy for the iPhone."
-msgstr "The same cards in the browser, on your phone and in the Mac app, synced, with no app to buy for the iPhone."
+msgid "The same cards in your phone’s browser, on your computer and in the Mac app, synced, with nothing to buy."
+msgstr "The same cards in your phone’s browser, on your computer and in the Mac app, synced, with nothing to buy."
 
 msgid "The same cards on your phone, in the browser and in the Mac app, with offline review on the free plan."
 msgstr "The same cards on your phone, in the browser and in the Mac app, with offline review on the free plan."

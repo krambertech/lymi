@@ -114,8 +114,8 @@ function useContent(key: CompareKey): Content {
               title: <Trans>Free on every device</Trans>,
               body: (
                 <Trans>
-                  The same cards in the browser, on your phone and in the Mac app, synced, with no
-                  app to buy for the iPhone.
+                  The same cards in your phone’s browser, on your computer and in the Mac app,
+                  synced, with nothing to buy.
                 </Trans>
               ),
             },
@@ -157,7 +157,7 @@ function useContent(key: CompareKey): Content {
           {
             id: "iphone",
             label: <Trans>On iPhone</Trans>,
-            lymi: <Trans>Free</Trans>,
+            lymi: <Trans>In the iPhone’s browser, free</Trans>,
             other: <Trans>AnkiMobile, a one-off €29.99 ($24.99 in the US)</Trans>,
             ahead: "lymi",
           },
@@ -618,7 +618,11 @@ function useContent(key: CompareKey): Content {
             id: "modes",
             label: <Trans>Studying without paying</Trans>,
             lymi: <Trans>Everything, as much as you like</Trans>,
-            other: <Trans>Learn and Test limited without Plus, from €7.99 a month</Trans>,
+            other: (
+              <Trans>
+                Learn and Test capped on Free and Plus; unlimited with Plus Unlimited, €44.99 a year
+              </Trans>
+            ),
             ahead: "lymi",
           },
           {
@@ -1126,7 +1130,10 @@ function ComparisonTable({ rows, name }: { rows: readonly Row[]; name: string })
       <table className="hidden w-full border-collapse text-start @2xl:table">
         <thead>
           <tr className="border-b border-edge">
-            <th className="w-[26%] px-5 py-3 text-start text-sm font-medium text-ink-muted">
+            <th
+              scope="col"
+              className="w-[26%] px-5 py-3 text-start text-sm font-medium text-ink-muted"
+            >
               <span className="sr-only">
                 <Trans>What you compare</Trans>
               </span>
@@ -1144,7 +1151,7 @@ function ComparisonTable({ rows, name }: { rows: readonly Row[]; name: string })
             <tr>
               <th
                 colSpan={3}
-                scope="colgroup"
+                scope="rowgroup"
                 className="bg-plate-nested px-5 py-2.5 text-start text-sm font-medium text-ink-secondary"
               >
                 <GroupTitle ahead={group.ahead} name={name} />

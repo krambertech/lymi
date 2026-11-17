@@ -3905,6 +3905,9 @@ msgstr "Зрештою"
 msgid "In the Grok Bot app, open Connect apps and choose Add a custom connector. Name it Lymi, pick Remote HTTPS and paste this address."
 msgstr "У застосунку Grok Bot відкрий Connect apps і вибери Add a custom connector. Назви його Lymi, вибери Remote HTTPS і встав цю адресу."
 
+msgid "In the iPhone’s browser, free"
+msgstr "У браузері iPhone, безплатно"
+
 msgid "In the order you learn them, one section at a time."
 msgstr "У тому порядку, в якому ти їх вчиш: розділ за розділом."
 
@@ -4268,8 +4271,8 @@ msgstr "Латиною — «ти матимеш тіло»."
 msgid "Law"
 msgstr "Право"
 
-msgid "Learn and Test limited without Plus, from €7.99 a month"
-msgstr "Learn і Test обмежені без Plus, від 7,99 € на місяць"
+msgid "Learn and Test capped on Free and Plus; unlimited with Plus Unlimited, €44.99 a year"
+msgstr "Learn і Test обмежені на Free і Plus; без обмежень — з Plus Unlimited, 44,99 € на рік"
 
 msgid "Learn Chinese vocabulary with flashcards · Lymi"
 msgstr "Китайські слова на флешкартках · Lymi"
@@ -7148,8 +7151,8 @@ msgstr "Правила й кожен знак за зображенням."
 msgid "The same address works everywhere. Nothing to install."
 msgstr "Одна адреса працює скрізь. Нічого не треба встановлювати."
 
-msgid "The same cards in the browser, on your phone and in the Mac app, synced, with no app to buy for the iPhone."
-msgstr "Ті самі картки в браузері, на телефоні й у застосунку для Mac, синхронізовані. І не треба купувати застосунок для iPhone."
+msgid "The same cards in your phone’s browser, on your computer and in the Mac app, synced, with nothing to buy."
+msgstr "Ті самі картки в браузері телефона, на комп’ютері й у застосунку для Mac — синхронізовані, і нічого не треба купувати."
 
 msgid "The same cards on your phone, in the browser and in the Mac app, with offline review on the free plan."
 msgstr "Ті самі картки на телефоні, у браузері й у застосунку для Mac, а повторення офлайн доступне в безкоштовному плані."

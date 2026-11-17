@@ -68,8 +68,8 @@ function Hand({
   return (
     <div className="deck-hand">
       <HandOfCards
-        // Beside the hero's words, the cards behind step out to one side.
-        layout="side"
+        // A section of its own, centred: the cards behind square up under the front one.
+        layout="stack"
         onTurn={onTurn}
         cards={hand}
         dealt={hand}

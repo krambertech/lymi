@@ -272,23 +272,16 @@ export function stableHash(text: string): number {
 export const DECK_PAGE_HAND = 5;
 
 /**
- * The cards of a deck page's hand: distinct cards from anywhere in the deck, shuffled from the
- * deck's own revision rather than at random, so everyone who loads one revision is served the
- * same page and its ETag stays honest. The product voices these ahead of a first play. #759.
+ * The cards of a deck page's hand: the deck's first cards, in the order a learner meets them, so
+ * a visitor tries what they would learn first and every visitor to one revision gets the same
+ * cards. The product voices these ahead of a first play. #759.
  */
 export function deckPageHand<T>(
-  deck: { slug: string; revision: number },
+  _deck: { slug: string; revision: number },
   groups: readonly (readonly T[])[],
   size = DECK_PAGE_HAND,
 ): T[] {
-  const cards = groups.flat();
-  let seed = stableHash(`${deck.slug}:${deck.revision}:stack`);
-  for (let i = cards.length - 1; i > 0; i--) {
-    seed = (seed * 1103515245 + 12345) >>> 0;
-    const j = seed % (i + 1);
-    [cards[i], cards[j]] = [cards[j] as T, cards[i] as T];
-  }
-  return cards.slice(0, size);
+  return groups.flat().slice(0, size);
 }
 
 /**

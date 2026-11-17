@@ -124,6 +124,18 @@ function FanCard({
   const { t, i18n } = useLingui();
   const [landed, setLanded] = useState(!enter);
   const self = useRef<HTMLDivElement>(null);
+  const backScroll = useRef<HTMLDivElement>(null);
+  const answerRef = useRef<HTMLDivElement>(null);
+
+  // A card too long for its face turns to its answer, with the end of the question still in view.
+  useEffect(() => {
+    const scroller = backScroll.current;
+    const answerAt = answerRef.current;
+    if (!revealed || !scroller || !answerAt) return;
+    scroller.scrollTop = 0;
+    if (scroller.scrollHeight <= scroller.clientHeight) return;
+    scroller.scrollTop = Math.max(answerAt.offsetTop - scroller.offsetTop - 48, 0);
+  }, [revealed]);
 
   useLayoutEffect(() => {
     if (landed) return;
@@ -392,35 +404,39 @@ function FanCard({
     >
       <div ref={flipRef} className="hand-flip">
         <div className="hand-face" aria-hidden={revealed || undefined} inert={revealed}>
-          {header}
-          {cueFor(false)}
-          {cue === "term" && termDetails}
-          <p
-            className="hand-hint mt-auto text-base text-ink-muted"
-            data-shown={hint ? true : undefined}
-          >
-            {hint}
-          </p>
+          <div className="hand-scroll">
+            {header}
+            {cueFor(false)}
+            {cue === "term" && termDetails}
+            <p
+              className="hand-hint mt-auto text-base text-ink-muted"
+              data-shown={hint ? true : undefined}
+            >
+              {hint}
+            </p>
+          </div>
         </div>
         <div className="hand-face hand-back" aria-hidden={!revealed || undefined} inert={!revealed}>
-          {header}
-          {cueFor(true)}
-          {cue === "term" && termDetails}
-          {/* Review shows a text card's picture only once it is turned. */}
-          {!picture && card.image && (
-            <img
-              src={card.image.url}
-              alt={card.image.description}
-              width={card.image.width}
-              height={card.image.height}
-              loading="lazy"
-              decoding="async"
-              className="hand-answer-picture mt-3"
-            />
-          )}
-          <div className="mt-auto border-t border-edge-strong pt-3.5">
-            {answer}
-            {extras}
+          <div ref={backScroll} className="hand-scroll">
+            {header}
+            {cueFor(true)}
+            {cue === "term" && termDetails}
+            {/* Review shows a text card's picture only once it is turned. */}
+            {!picture && card.image && (
+              <img
+                src={card.image.url}
+                alt={card.image.description}
+                width={card.image.width}
+                height={card.image.height}
+                loading="lazy"
+                decoding="async"
+                className="hand-answer-picture mt-3"
+              />
+            )}
+            <div ref={answerRef} className="mt-auto border-t border-edge-strong pt-3.5">
+              {answer}
+              {extras}
+            </div>
           </div>
         </div>
       </div>

@@ -39,10 +39,6 @@ msgstr "{0, plural, one {# карточка} few {# карточки} many {# к
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}}"
 
-#. placeholder {0}: rest.length
-msgid "{0, plural, one {# more section} other {# more sections}}"
-msgstr "{0, plural, one {Ещё # раздел} few {Ещё # раздела} many {Ещё # разделов} other {Ещё # раздела}}"
-
 #. placeholder {0}: 3
 msgid "{0, plural, one {# person} other {# people}}"
 msgstr "{0, plural, one {# человек} few {# человека} many {# человек} other {# человека}}"
@@ -59,10 +55,6 @@ msgstr "{0, plural, one {Выбрано: #} few {Выбрано: #} many {Выб
 #. placeholder {0}: 3
 msgid "{0, plural, one {Add # card} other {Add # cards}}"
 msgstr "{0, plural, one {Добавить # карточку} few {Добавить # карточки} many {Добавить # карточек} other {Добавить # карточки}}"
-
-#. placeholder {0}: step.cards.length - shownCards.length
-msgid "{0, plural, one {One more card in this section, in Lymi.} other {# more cards in this section, in Lymi.}}"
-msgstr "{0, plural, one {Ещё одна карточка этого раздела — в Lymi.} few {Ещё # карточки этого раздела — в Lymi.} many {Ещё # карточек этого раздела — в Lymi.} other {Ещё # карточки этого раздела — в Lymi.}}"
 
 #. placeholder {0}: 2
 msgid "{0, plural, one {Review # due} other {Review # due}}"
@@ -97,12 +89,6 @@ msgstr "{0}, следующее через {1}"
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}}"
-
-msgid "{cardCount, plural, =1 {See the card} other {See all # cards}}"
-msgstr "{cardCount, plural, =1 {Посмотреть карточку} one {Посмотреть все # карточку} few {Посмотреть все # карточки} many {Посмотреть все # карточек} other {Посмотреть все # карточки}}"
-
-msgid "{cardCount, plural, =1 {The one card} other {All # cards}}"
-msgstr "{cardCount, plural, =1 {Единственная карточка} one {Все # карточка} few {Все # карточки} many {Все # карточек} other {Все # карточки}}"
 
 msgid "{cards, plural, one {# card} other {# cards}}"
 msgstr "{cards, plural, one {# карточка} few {# карточки} many {# карточек} other {# карточки}}"
@@ -156,6 +142,9 @@ msgstr "Колоды: {label}"
 msgid "{language} · {name} · {count, plural, one {# free flashcard} other {# free flashcards}}"
 msgstr "{language} · {name} · {count, plural, one {# бесплатная карточка} few {# бесплатные карточки} many {# бесплатных карточек} other {# бесплатной карточки}}"
 
+msgid "{language}, level by level"
+msgstr "{language}: уровень за уровнем"
+
 msgid "{learners, plural, one {# learner} other {# learners}}"
 msgstr "{learners, plural, one {# ученик} few {# ученика} many {# учеников} other {# ученика}}"
 
@@ -167,9 +156,6 @@ msgstr "{learners, plural, one {Доставлено # ученику} few {До
 
 msgid "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when to bring each card back.} one {One more card is waiting. Add the deck, and Lymi chooses when to bring each one back.} other {Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back.}}"
 msgstr "{left, plural, =0 {Это вся колода. Добавь её, и Lymi сама выберет, когда вернуть каждую карточку.} one {Ждёт ещё одна карточка. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} few {Ждут ещё # карточки. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} many {Ждут ещё # карточек. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} other {Ждут ещё # карточки. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.}}"
-
-msgid "{more, plural, one {# more card} other {# more cards}}"
-msgstr "{more, plural, one {Ещё # карточка} few {Ещё # карточки} many {Ещё # карточек} other {Ещё # карточки}}"
 
 msgid "{n, plural, one {# known} other {# known}}"
 msgstr "{n, plural, one {# выучена} few {# выучены} many {# выучено} other {# выучено}}"
@@ -207,6 +193,18 @@ msgstr "{position} из {total}"
 
 msgid "{reviews, plural, one {past review} other {past reviews}}"
 msgstr "{reviews, plural, one {прошлое повторение} few {прошлых повторения} many {прошлых повторений} other {прошлого повторения}}"
+
+msgid "{sections, plural, one {# section} other {# sections}}"
+msgstr "{sections, plural, one {# раздел} few {# раздела} many {# разделов} other {# раздела}}"
+
+msgid "{size} Every section is open, so any card can come up in review."
+msgstr "{size} Все разделы открыты, так что любая карточка может появиться в повторении."
+
+msgid "{size} You start with <0>{first}</0>, and choose when to start the next once you know most of it."
+msgstr "{size} Ты начинаешь с <0>{first}</0> и решаешь, когда браться за следующий, как только будешь знать большую часть."
+
+msgid "{size} You start with <0>{first}</0>, and the next section opens as you learn the one before it."
+msgstr "{size} Ты начинаешь с <0>{first}</0>, а следующий раздел открывается, когда выучишь предыдущий."
 
 msgid "{title} · {decks, plural, one {# free deck} other {# free decks}}"
 msgstr "{title} · {decks, plural, one {# бесплатная колода} few {# бесплатные колоды} many {# бесплатных колод} other {# бесплатной колоды}}"
@@ -850,6 +848,9 @@ msgstr "Добавь слово с сегодняшнего урока. AI на�
 msgid "Add deck"
 msgstr "Добавить колоду"
 
+msgid "Add free deck"
+msgstr "Добавить бесплатную колоду"
+
 msgid "Add from any app"
 msgstr "Добавляй из любого приложения"
 
@@ -1376,9 +1377,6 @@ msgstr "Вернётся через 9 дней."
 msgid "Back online"
 msgstr "Снова в сети"
 
-msgid "Back to {name}"
-msgstr "Назад к {name}"
-
 msgid "Back to Lymi"
 msgstr "На главную Lymi"
 
@@ -1760,6 +1758,9 @@ msgstr "Карточки из заметок и файлов"
 
 msgid "Cards from notes or a PDF"
 msgstr "Карточки из заметок или PDF"
+
+msgid "Cards from this deck"
+msgstr "Карточки из этой колоды"
 
 msgid "Cards from your course platform"
 msgstr "Карточки с платформы курса"
@@ -2433,6 +2434,9 @@ msgstr "к повторению · минут на шесть"
 msgid "Due tonight"
 msgstr "На сегодня"
 
+msgid "Each card comes back before you forget it"
+msgstr "Каждая карточка возвращается до того, как забудется"
+
 msgid "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
 msgstr "Каждая колода считает свои вопросы как «Новые», «В изучении» и «Выученные», поэтому ещё до даты теста видно, какую часть каталога ты уже знаешь."
 
@@ -2666,9 +2670,6 @@ msgstr "Все вопросы теста по граждановедению 202
 
 msgid "Every script"
 msgstr "Любая письменность"
-
-msgid "Every section is open, so any card can come up in review."
-msgstr "Все разделы открыты, так что любая карточка может появиться в повторении."
 
 msgid "Every sign by its picture and German name."
 msgstr "Каждый знак по изображению и немецкому названию."
@@ -3912,9 +3913,6 @@ msgstr "В приложении Grok Bot открой Connect apps и выбер
 msgid "In the iPhone’s browser, free"
 msgstr "В браузере iPhone, бесплатно"
 
-msgid "In the order you learn them, one section at a time."
-msgstr "В том порядке, в котором ты их учишь: раздел за разделом."
-
 msgid "In this folder"
 msgstr "В этой папке"
 
@@ -4487,6 +4485,9 @@ msgstr "Lymi спрашивает, что значит слово, и как е�
 msgid "Lymi changelog"
 msgstr "Что нового в Lymi"
 
+msgid "Lymi decides when each card comes back, keeps your daily goal, and works on your phone and offline."
+msgstr "Lymi решает, когда каждая карточка возвращается, следит за ежедневной целью и работает на телефоне и без сети."
+
 msgid "Lymi for {name}"
 msgstr "Lymi для {name}"
 
@@ -4532,8 +4533,8 @@ msgstr "Lymi на боковой панели ChatGPT."
 msgid "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and Lymi decides when you see it again. Free to use."
 msgstr "Lymi — приложение с флеш-карточками и интервальными повторениями. Добавь слово или термин, AI впишет значение, а Lymi решит, когда показать карточку снова. Бесплатно."
 
-msgid "Lymi is a free flashcard app with spaced repetition."
-msgstr "Lymi — бесплатное приложение с флеш-карточками и интервальными повторениями."
+msgid "Lymi is a free flashcard app. Sign in with Google or an email address, no payment details."
+msgstr "Lymi — бесплатное приложение с флеш-карточками. Войди через Google или электронную почту, без платёжных данных."
 
 msgid "Lymi is free to use, and your first card takes a minute."
 msgstr "Lymi бесплатный, а первая карточка займёт минуту."
@@ -4745,6 +4746,9 @@ msgstr "Значение → слово"
 msgid "Meaning, example, hint, picture and audio"
 msgstr "Значение, пример, подсказка, картинка и аудио"
 
+msgid "Meanings in {meanings}"
+msgstr "Значения: {meanings}"
+
 msgid "Meanings in your language"
 msgstr "Значения на твоём языке"
 
@@ -4828,6 +4832,9 @@ msgstr "Больше 50 000 готовых колод. В Lymi их меньш�
 
 msgid "More than a translation."
 msgstr "Больше, чем перевод."
+
+msgid "More than flipping cards"
+msgstr "Больше, чем перелистывание карточек"
 
 msgid "More updates"
 msgstr "Другие обновления"
@@ -5800,7 +5807,7 @@ msgid "Read Japanese Kana covers hiragana and katakana, including voiced and com
 msgstr "Read Japanese Kana охватывает хирагану и катакану, включая звонкие и составные звуки, маленькую цу и знак долгого гласного."
 
 msgid "Read the meaning and recall the term before you look, then turn the card over."
-msgstr "Прочитай значение, вспомни термин, а потом переверни карточку."
+msgstr "Прочитай значение и вспомни термин, а потом переверни карточку."
 
 msgid "Read your German deck"
 msgstr "Прочитана колода по немецкому"
@@ -5883,6 +5890,9 @@ msgstr "Юридический адрес: Harju maakond, Tallinn, Põhja-Tallin
 
 msgid "Related decks"
 msgstr "Похожие колоды"
+
+msgid "Remember a card and Lymi waits longer before showing it again. Forget it, and it comes back soon. That’s spaced repetition: less reviewing, longer remembering."
+msgstr "Помнишь карточку — Lymi ждёт дольше, прежде чем показать её снова. Забытая карточка скоро вернётся. Это интервальное повторение: меньше повторять, дольше помнить."
 
 msgid "Remembered or Forgot"
 msgstr "«Помню» или «Не помню»"
@@ -6084,12 +6094,6 @@ msgstr "Поиск колод"
 
 msgid "Section"
 msgstr "Раздел"
-
-msgid "Section {position}:"
-msgstr "Раздел {position}:"
-
-msgid "Sections"
-msgstr "Разделы"
 
 msgid "Sections: {list}."
 msgstr "Разделы: {list}."
@@ -6475,6 +6479,9 @@ msgstr "Начни отсюда"
 
 msgid "Start learning"
 msgstr "Начни учиться"
+
+msgid "Start learning <0>{name}</0>"
+msgstr "Начни учить <0>{name}</0>"
 
 msgid "Start reviewing"
 msgstr "Начни повторять"
@@ -7645,6 +7652,9 @@ msgstr "Путешествия, здоровье и мнения — когда 
 msgid "Travel, health and opinions, once HSK 1 feels easy."
 msgstr "Путешествия, здоровье и мнения — когда HSK 1 уже даётся легко."
 
+msgid "Try a few cards"
+msgstr "Попробуй несколько карточек"
+
 msgid "Try a question"
 msgstr "Попробуй вопрос"
 
@@ -8518,12 +8528,6 @@ msgstr "Твоя колода"
 msgid "You rely on add-ons"
 msgstr "Ты не можешь без дополнений"
 
-msgid "You start with <0>{first}</0>, and the next section opens as you learn the one before it."
-msgstr "Начинаешь с раздела <0>{first}</0>, а следующий открывается, как только выучишь предыдущий."
-
-msgid "You start with <0>{first}</0>. When you know most of it, you choose when to start the next."
-msgstr "Начинаешь с раздела <0>{first}</0>. Когда выучишь большую его часть, ты решаешь, когда начать следующий."
-
 msgid "You study for one test, then move on"
 msgstr "Ты готовишься к одному тесту и идёшь дальше"
 
@@ -8541,6 +8545,9 @@ msgstr "Ты хочешь хранить всё на своём компьюте
 
 msgid "You wrote this"
 msgstr "Это написано тобой"
+
+msgid "You’re here"
+msgstr "Ты здесь"
 
 msgid "You’re welcome"
 msgstr "Не за что"

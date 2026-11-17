@@ -9,13 +9,15 @@ interface Props {
   title: ReactNode;
   /** A line under the invitation, for what this page promises that isn't in every account yet. */
   note?: ReactNode;
+  /** In place of Get started: a deck page's own Add, with where it sits for `add_to_lymi_clicked`. */
+  action?: { href: string; label: ReactNode; place?: string } | undefined;
 }
 
 /**
  * The page's one conversion, and the one place the lantern is lit. The wick catches the first time
  * the section is on screen, and the pool of light it throws opens behind it.
  */
-export function SignUpSection({ title, note }: Props) {
+export function SignUpSection({ title, note, action }: Props) {
   const plate = useRef<HTMLDivElement>(null);
   const [lit, setLit] = useState(false);
 
@@ -62,9 +64,19 @@ export function SignUpSection({ title, note }: Props) {
             <Trans>Lymi is free to use, and your first card takes a minute.</Trans>
           </p>
           <div className="mt-9">
-            <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
-              <Trans>Get started</Trans>
-            </a>
+            {action ? (
+              <a
+                href={action.href}
+                data-add={action.place}
+                className={buttonClass("primary", "lg")}
+              >
+                {action.label}
+              </a>
+            ) : (
+              <a href={signUpUrl()} className={buttonClass("primary", "lg")}>
+                <Trans>Get started</Trans>
+              </a>
+            )}
           </div>
           {note && (
             <p className="mx-auto mt-9 max-w-[52ch] text-sm text-pretty text-ink-muted">{note}</p>

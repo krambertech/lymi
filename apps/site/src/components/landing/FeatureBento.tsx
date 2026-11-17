@@ -85,7 +85,7 @@ interface TileProps {
   className?: string;
 }
 
-function Tile({ trigger, hue, title, body, Demo, layout, className }: TileProps) {
+export function Tile({ trigger, hue, title, body, Demo, layout, className }: TileProps) {
   const { ref, play, round } = useTrigger(trigger);
   return (
     <li
@@ -123,7 +123,7 @@ interface CompactProps {
 }
 
 /** A short tile: title, one line, one picture at its foot. Still until pointed at. */
-function CompactTile({ hue, title, body, Demo }: CompactProps) {
+export function CompactTile({ hue, title, body, Demo }: CompactProps) {
   const { ref, play, round } = useTrigger("hover");
   return (
     <li

@@ -7,6 +7,8 @@ import {
 import { POSTHOG_PROJECT_TOKEN } from "@lymi/core/telemetry";
 import { productUrl } from "./origins";
 
+const ADD_PLACES = ["hero", "try", "inside", "closing", "sticky"] as const;
+
 /** Where on a page a followed link sat, as `data-nav` names it. */
 export type SiteLinkPlace = AnalyticsProperties<"site_link_followed">["place"];
 
@@ -32,8 +34,11 @@ export function startAnalytics(): void {
     if (!internal && url.origin !== product) return;
     if (internal && url.pathname === location.pathname && url.hash) return;
     const slug = internal ? undefined : url.pathname.match(/^\/add\/([a-z0-9-]+)$/)?.[1];
-    if (slug && event.type === "click")
-      captureAnalytics("add_to_lymi_clicked", { deck_slug: slug });
+    if (slug && event.type === "click") {
+      const at = link.closest("[data-add]")?.getAttribute("data-add");
+      const place = ADD_PLACES.find((each) => each === at);
+      captureAnalytics("add_to_lymi_clicked", { deck_slug: slug, ...(place ? { place } : {}) });
+    }
     const place = link.closest("[data-nav]")?.getAttribute("data-nav");
     if (place && internal && event.type === "click")
       captureAnalytics("site_link_followed", {

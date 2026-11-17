@@ -1,10 +1,10 @@
 import { type NoteBlock, type NoteInline, parseNotes } from "@lymi/core/notes";
 import type { DeckCard } from "./deck-page";
 
-/** About four lines of a turned card's notes; the rest is in Lymi once the deck is added. */
-const NOTE_BUDGET = 220;
+/** About ten lines of a turned card's notes, which scroll; the rest is in Lymi once the deck is added. */
+const NOTE_BUDGET = 600;
 /** A list keeps this many items on a card. */
-const LIST_ITEMS = 4;
+const LIST_ITEMS = 8;
 
 /** Inline text cut to `budget` characters at a word, ending in an ellipsis when anything went. */
 function trimInlines(nodes: readonly NoteInline[], budget: number): [NoteInline[], number] {

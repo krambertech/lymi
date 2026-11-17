@@ -93,22 +93,12 @@ function sectionsWithMeanings(deck: PublicDeckOut): DeckCard[][] {
     .filter((cards) => cards.length > 0);
 }
 
+/** The hand a visitor tries: the deck's first cards, each asked from its term, as a learner meets it first. */
 export function stackCards(deck: PublicDeckOut, size = STACK_SIZE): DeckCard[] {
-  return steppedModes(deckPageHand(deck, sectionsWithMeanings(deck), size));
-}
-
-/** Each card in its place's mode, so a deck asked more than one way shows each of them. */
-function steppedModes(cards: DeckCard[]): DeckCard[] {
-  return cards.map((card, place) => ({ ...card, mode: previewMode(card, place) }));
-}
-
-export type RecallCue = "term" | "meaning" | "image" | "mixed";
-
-/** What the try-it cards ask from, so the page can say what to recall: one cue, or a mix. */
-export function recallCue(cards: readonly DeckCard[]): RecallCue {
-  const cues = new Set(cards.map((card) => modeOf(card.mode).cue));
-  const [only] = cues;
-  return cues.size === 1 && only ? only : "mixed";
+  return deckPageHand(deck, sectionsWithMeanings(deck), size).map((card) => ({
+    ...card,
+    mode: previewMode(card),
+  }));
 }
 
 export interface SectionStep {
@@ -211,4 +201,21 @@ export const MISSING_CACHE_CONTROL = "public, max-age=60";
 /** JSON for a `<script>` element: `<` is escaped so a card cannot close the element. */
 export function jsonForScript(value: unknown): string {
   return JSON.stringify(value).replaceAll("<", "\\u003c");
+}
+
+/** A level a deck's slug names, such as `a1` or `n5`, for ordering a language's decks into a ladder. */
+const LEVELS = ["a1", "a2", "b1", "b2", "c1", "c2"] as const;
+export function deckLevel(slug: string): number | null {
+  const at = LEVELS.findIndex((level) => new RegExp(`(^|-)${level}(-|$)`).test(slug));
+  return at < 0 ? null : at;
+}
+export const levelName = (at: number) => LEVELS[at]?.toUpperCase() ?? "";
+
+export type RecallCue = "term" | "meaning" | "image" | "mixed";
+
+/** What the try-it cards ask from, so the page can say what to recall: one cue, or a mix. */
+export function recallCue(cards: readonly DeckCard[]): RecallCue {
+  const cues = new Set(cards.map((card) => modeOf(card.mode).cue));
+  const [only] = cues;
+  return cues.size === 1 && only ? only : "mixed";
 }

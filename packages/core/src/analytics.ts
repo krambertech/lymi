@@ -437,7 +437,12 @@ export const analyticsEvents = {
     reminder: z.enum(["on", "off"]),
   }),
   public_deck_viewed: z.object({ deck_slug: slug, locale: AnalyticsLocale }),
-  add_to_lymi_clicked: z.object({ deck_slug: slug }),
+  add_to_lymi_clicked: z.object({
+    deck_slug: slug,
+    // Which Add on a deck page: its hero, the end of its cards to try, its contents, its closing
+    // band or the phone's sticky bar. Absent for an Add elsewhere, such as an exam page.
+    place: z.enum(["hero", "try", "inside", "closing", "sticky"]).optional(),
+  }),
   public_deck_card_turned: z.object({ deck_slug: slug }),
   site_link_followed: z.object({
     place: z.enum([

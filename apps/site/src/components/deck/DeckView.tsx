@@ -1,4 +1,4 @@
-import { Plural, Trans, useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import {
   type PublicDeckOut,
   type PublicDeckSummary,
@@ -9,14 +9,11 @@ import {
 import { ChevronRight } from "lucide-react";
 import type { ReactNode } from "react";
 import type { DeckLinks } from "../../lib/deck-links";
-import { deckPath, languageName, type RecallCue } from "../../lib/deck-page";
-import { examOfDeck } from "../../lib/exams";
+import { deckPath, languageName } from "../../lib/deck-page";
 import { shelfPath } from "../../lib/explore";
 import { openLymiUrl, productUrl } from "../../lib/origins";
 import { type Locale, localizedPath } from "../../lib/routes";
-import { deckSubject } from "../../lib/subjects";
 import { buttonClass } from "../Button";
-import { ExamPageLink } from "../exams/ExamPageLink";
 import { DeckTile } from "../explore/DeckTile";
 import { shelfLabel, tagLabel } from "../explore/explore-labels";
 import { Localized } from "../Localized";
@@ -129,38 +126,8 @@ export function DeckByline({
   );
 }
 
-/** The language the deck teaches or else its subject, and how many cards it holds. */
-export function DeckFacts({
-  deck,
-  align = "center",
-}: {
-  deck: PublicDeckOut;
-  align?: HeroAlign | undefined;
-}) {
-  const { i18n } = useLingui();
-  const shelf =
-    languageName(taughtLanguage(deck), i18n.locale, { label: true }) ?? deckSubject(i18n, deck);
-  return (
-    <p
-      className={`flex flex-wrap items-center justify-center gap-x-2.5 gap-y-1 text-md text-ink-muted ${align === "start" ? "@4xl:justify-start" : ""}`}
-    >
-      {shelf && (
-        <>
-          <span>{shelf}</span>
-          <span aria-hidden="true" className="text-ink-faint">
-            ·
-          </span>
-        </>
-      )}
-      <span>
-        <Plural value={deck.cardCount} one="# card" other="# cards" />
-      </span>
-    </p>
-  );
-}
-
 /** What the deck is about, as plain chips. They lead nowhere until a tag has a page of its own. */
-function DeckTags({ deck, align }: { deck: PublicDeckOut; align: HeroAlign }) {
+export function DeckTags({ deck, align }: { deck: PublicDeckOut; align: HeroAlign }) {
   const { i18n, t } = useLingui();
   if (deck.tags.length === 0) return null;
   return (
@@ -288,146 +255,7 @@ function DeckNeighboursBody({ deck, links, locale }: DeckProps & { links: DeckLi
 }
 
 /** Where the hero's words sit: centred over what follows, or level with a card beside them. */
-type HeroAlign = "center" | "start";
-
-/** Who made the deck, its name, what it is, and the way to add it. */
-export function DeckHeroText({
-  deck,
-  locale,
-  align = "center",
-}: DeckProps & {
-  align?: HeroAlign | undefined;
-}) {
-  return (
-    <Localized locale={locale}>
-      <DeckHeroWords deck={deck} locale={locale} align={align} />
-    </Localized>
-  );
-}
-
-function DeckHeroWords({ deck, locale, align }: DeckProps & { align: HeroAlign }) {
-  const exam = examOfDeck(deck.slug);
-  const start = align === "start";
-  return (
-    <div
-      className={
-        start
-          ? "grid justify-items-center text-center @4xl:justify-items-start @4xl:text-start"
-          : "text-center"
-      }
-    >
-      <DeckByline deck={deck} align={align} />
-      <h1
-        lang={deck.meaningLanguage}
-        className={
-          start
-            ? "mt-4 max-w-[16ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance break-words text-ink @2xl:text-[3.5rem] @5xl:text-[4rem]"
-            : "mx-auto mt-4 max-w-[16ch] text-5xl leading-[0.98] font-medium tracking-[-0.04em] text-balance break-words text-ink @2xl:text-[3.75rem] @4xl:text-[4.5rem]"
-        }
-      >
-        {deck.name}
-      </h1>
-      <p
-        lang={deck.meaningLanguage}
-        className={`${start ? "" : "mx-auto "}mt-5 max-w-[44ch] text-lg text-pretty text-ink-secondary @2xl:text-xl`}
-      >
-        {deck.summary}
-      </p>
-      <div
-        className={`mt-4 grid gap-4 ${start ? "justify-items-center @4xl:justify-items-start" : "justify-items-center"}`}
-      >
-        <DeckFacts deck={deck} align={align} />
-        <DeckTags deck={deck} align={align} />
-      </div>
-      <div
-        className={`mt-7 flex flex-wrap gap-2 ${start ? "justify-center @4xl:justify-start" : "justify-center"}`}
-      >
-        <a href={addUrl(deck.slug, editionOf(deck))} className={buttonClass("primary", "lg")}>
-          <Trans>Add to Lymi</Trans>
-        </a>
-        {/* The full list opens over the page from #cards; the cards to try are already beside this. */}
-        <a href="#cards" className={buttonClass("ghost", "lg")}>
-          <Plural value={deck.cardCount} _1="See the card" other="See all # cards" />
-        </a>
-      </div>
-      <p
-        className={`${start ? "" : "mx-auto "}mt-4 max-w-[46ch] text-sm text-pretty text-ink-muted`}
-      >
-        <Trans>Lymi is a free flashcard app with spaced repetition.</Trans>
-      </p>
-      {exam && <ExamPageLink locale={locale} exam={exam} className="mt-3" />}
-    </div>
-  );
-}
-
-/** Three steps from this page to a deck that is learnt; the cards to try are in the hero. */
-export function DeckHowItWorks({ locale, cue }: LocaleProps & { cue: RecallCue }) {
-  const items = [
-    {
-      key: "add",
-      title: <Trans>Add the deck</Trans>,
-      body: (
-        <Trans>Sign in with Google or an email address, and it joins your Library, free.</Trans>
-      ),
-    },
-    {
-      key: "recall",
-      title: <Trans>Recall, then turn it over</Trans>,
-      body:
-        cue === "image" ? (
-          <Trans>Name what the picture shows before you look, then turn the card over.</Trans>
-        ) : cue === "meaning" ? (
-          <Trans>
-            Read the meaning and recall the term before you look, then turn the card over.
-          </Trans>
-        ) : cue === "mixed" ? (
-          <Trans>Try to remember the answer before you look, then turn the card over.</Trans>
-        ) : (
-          <Trans>Try to remember the meaning before you look, then turn the card over.</Trans>
-        ),
-    },
-    {
-      key: "review",
-      title: <Trans>Review a few minutes a day</Trans>,
-      body: (
-        <Trans>
-          Choose how many cards a day. Cards you remember come back later, and the ones you forget
-          come back sooner.
-        </Trans>
-      ),
-    },
-  ];
-  return (
-    <Localized locale={locale}>
-      <div className="min-w-0">
-        <h2
-          id="how-title"
-          className="text-4xl font-medium tracking-[-0.03em] text-balance text-ink @2xl:text-5xl"
-        >
-          <Trans>How it works</Trans>
-        </h2>
-        <ol className="mt-8 grid gap-6 @3xl:grid-cols-3 @3xl:gap-10">
-          {items.map((item, index) => (
-            <li key={item.key} className="grid grid-cols-[2rem_minmax(0,1fr)] gap-x-3">
-              <span
-                aria-hidden="true"
-                className="grid size-8 place-items-center rounded-full bg-plate-nested text-sm font-semibold text-ink-secondary tabular-nums"
-              >
-                {index + 1}
-              </span>
-              <div className="pt-1">
-                <h3 className="text-lg font-medium tracking-[-0.02em] text-ink">{item.title}</h3>
-                <p className="mt-1 max-w-[40ch] text-md text-pretty text-ink-secondary">
-                  {item.body}
-                </p>
-              </div>
-            </li>
-          ))}
-        </ol>
-      </div>
-    </Localized>
-  );
-}
+export type HeroAlign = "center" | "start";
 
 interface GoneProps extends LocaleProps {
   status: 404 | 410;

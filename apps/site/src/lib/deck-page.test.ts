@@ -11,7 +11,6 @@ import {
   languageName,
   movedDeckPath,
   productAddPath,
-  recallCue,
   STACK_SIZE,
   sectionPath,
   stackCards,
@@ -73,13 +72,17 @@ const sections = (count: number) =>
   }));
 
 describe("stackCards", () => {
-  it("draws distinct cards with a meaning from anywhere in the deck, the same for one revision", () => {
+  it("deals the deck's first cards with a meaning, in order, each asked from its term", () => {
     const stack = stackCards(deck({ sections: sections(4) }));
     expect(stack).toHaveLength(STACK_SIZE);
-    expect(new Set(stack.map((card) => card.term)).size).toBe(STACK_SIZE);
-    expect(new Set(stack.map((card) => card.section)).size).toBeGreaterThan(1);
-    expect(stackCards(deck({ sections: sections(4) }))).toEqual(stack);
-    expect(stackCards(deck())).not.toEqual(stackCards(deck({ revision: 3 })));
+    expect(stack.map((card) => card.term)).toEqual([
+      "s0 term 0",
+      "s0 term 1",
+      "s0 term 2",
+      "s1 term 0",
+      "s1 term 1",
+    ]);
+    expect(stack.every((card) => card.mode === "term_to_meaning")).toBe(true);
     expect(stackCards(deck()).map((card) => card.term)).not.toContain("term 1");
   });
 });
@@ -165,10 +168,9 @@ describe("preview modes", () => {
   it("shows a card with a picture mode by its picture", () => {
     const [card] = stackCards(deck({ sections: [{ name: null, cards: [flag] }] }), 1);
     expect(card?.mode).toBe("image_to_meaning");
-    expect(recallCue(card ? [card] : [])).toBe("image");
   });
 
-  it("steps a deck asked both ways through both modes", () => {
+  it("asks a deck asked both ways from the term first", () => {
     const both = { modes: ["term_to_meaning" as const, "meaning_to_term" as const] };
     const cards = sections(3).map((section) => ({
       ...section,
@@ -177,10 +179,9 @@ describe("preview modes", () => {
     const stack = stackCards(deck({ sections: cards }), 3);
     expect(stack.map((card) => card.mode)).toEqual([
       "term_to_meaning",
-      "meaning_to_term",
+      "term_to_meaning",
       "term_to_meaning",
     ]);
-    expect(recallCue(stack)).toBe("mixed");
   });
 });
 

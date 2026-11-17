@@ -16,21 +16,21 @@ describe("cardNotes", () => {
   });
 
   it("cuts one long paragraph at a word and says there is more", () => {
-    const long = `${"word ".repeat(120)}end`;
+    const long = `${"word ".repeat(300)}end`;
     const shown = text(cardNotes(long));
-    expect(shown.length).toBeLessThanOrEqual(221);
+    expect(shown.length).toBeLessThanOrEqual(601);
     expect(shown.endsWith("word…")).toBe(true);
   });
 
-  it("keeps a list to its first four items and marks the cut", () => {
-    const [list] = cardNotes("- one\n- two\n- three\n- four\n- five\n- six");
+  it("keeps a list to its first eight items and marks the cut", () => {
+    const [list] = cardNotes(Array.from({ length: 10 }, (_, i) => `- item ${i + 1}`).join("\n"));
     if (list?.type !== "list") throw new Error("Expected a list");
-    expect(list.items).toHaveLength(5);
-    expect(text([list]).endsWith("four …")).toBe(true);
+    expect(list.items).toHaveLength(9);
+    expect(text([list]).endsWith("item 8 …")).toBe(true);
   });
 
   it("marks blocks left out after the budget", () => {
-    const blocks = cardNotes(`${"word ".repeat(43)}end.\n\nA second paragraph.`);
+    const blocks = cardNotes(`${"word ".repeat(115)}end.\n\nA second paragraph.`);
     expect(text(blocks).endsWith("…")).toBe(true);
     expect(text(blocks)).not.toContain("second");
   });

@@ -22,6 +22,8 @@ Kateryna accepted this direction on 17 November 2026 from [the shaping page](htt
 
 **Lymi never downloads YouTube or Netflix audio or video.** YouTube's developer policies (III.E.1, III.I.7) and App Store guideline 5.2.3 forbid it, and taking audio or frames from DRM is circumvention ([InfoSoc Art. 6](https://www.legislation.gov.uk/eudr/2001/29/article/6)).
 
+ElevenLabs already voices Lymi's speech, but a recording sends it the learner's own audio for the first time. Before slice 5 or 6 ships, the privacy page names ElevenLabs as the transcriber of recordings and podcast audio, and the processor list says so. Lymi uses ElevenLabs' zero-retention mode if Lymi's plan offers it, and the privacy page states the retention ElevenLabs applies if not.
+
 The official-only rule leaves YouTube with two routes. On a computer, the learner opens the video's transcript, copies it with its timestamps and pastes it. On the phone, the learner records the video with the mic. Sharing a YouTube link alone tells the learner which route to take.
 
 ## How a link becomes a pick list
@@ -46,8 +48,8 @@ flowchart TD
 ```
 
 - **`LessonMaterial` gains `transcript`**: text split into sentences, each with an optional start time in seconds, plus the source's title and URL. Article text, a pasted YouTube transcript, a podcast transcript and a Scribe result all become this shape, so the reader has one new input.
-- **`LessonTermOut` gains `example` and `at`.** `example` is the source sentence holding the term, cut to the 250 characters an example allows ([ADR 0038](../adr/0038-an-example-keeps-its-translation-beside-it.md)). `at` is that sentence's start time, or null. The reader quotes the sentence and never rewrites it.
-- **An added card's example has field source `lesson`**, and enrichment writes its translation. The card's `source` is the URL with the time when the source has one: `https://youtu.be/<id>?t=221`. A URL over the 200-character limit drops its query, then its path, as AnkiConnect's `fittedSource` already does.
+- **`LessonTermOut` gains `example` and `at`.** `example` is the source sentence holding the term ([ADR 0038](../adr/0038-an-example-keeps-its-translation-beside-it.md)). A sentence over the 250 characters an example allows is cut around the term, with an ellipsis at each cut end, so the term always stays in it. `at` is that sentence's start time, or null. The reader quotes the sentence and never rewrites it.
+- **An added card's example has field source `lesson`**, and enrichment writes its translation. The card's `source` is the URL with the time when the source has one: `https://youtu.be/<id>?t=221`. A URL over the 200-character limit drops every query parameter except `t`, then its path, so the moment survives. AnkiConnect's `fittedSource` drops the whole query today and changes to match.
 - **A card shows a source that is a URL as a link**, on web and phone. Today it shows as plain text.
 - **A pasted transcript is detected by its shape.** Lines that alternate a time such as `3:41` with text become timed sentences. Any other paste stays a lesson, as today.
 - **A read counts against the allowance by size**, as the lesson proposal already says: up to 15,000 words or 15 minutes of audio is one read, and the count shows before reading. A long episode shared with a time reads 15 minutes from that time when its transcript has times. Otherwise the learner is told the episode counts as several reads.
@@ -72,15 +74,17 @@ The fix:
 - `addNote` and `addNotes` accept `audio` and `picture` entries with base64 `data`, under the size and format rules `storeMediaFile` already applies.
 - The "Lymi card" note type gains **Sentence audio** and **Picture** fields. Sentence audio becomes the example's recording. **Audio** stays the term's recording, which is what Yomitan sends.
 - `findNotes` understands `added:N`, and `updateNoteFields` and `addTags` change the learner's own card through the card service.
+- `updateNoteFields` applies the Sentence text before the Sentence audio. A new sentence drops the example's recording ([CONTEXT.md](../../CONTEXT.md)'s Recording entry), so the other order would drop the clip asbplayer just sent.
+- `notesInfo` returns the two new fields, because asbplayer reads the sentence back before it updates.
 - Yomitan's app page gets an asbplayer section with the field mapping to choose.
 
 No Lymi model runs, so this costs nothing beyond enrichment.
 
 ## Captured clips stay with the owner
 
-A clip or frame that asbplayer or a recording brings is the learner's private copy ([Austro-Mechana, C-433/20](https://ipkitten.blogspot.com/2022/04/cjeu-rules-that-private-copying-also.html)). That cover ends when other people hear it. **A recording or picture marked `captured` plays and shows only for the deck's owner.** Members of a shared deck and a published deck's public page get generated speech and no picture, with the source link. Imports keep today's rule, because a deck file's clips came with the deck.
+A clip or frame that asbplayer or a recording brings is the learner's private copy ([Austro-Mechana, C-433/20](https://ipkitten.blogspot.com/2022/04/cjeu-rules-that-private-copying-also.html)). That cover ends when other people hear it. **A recording or picture marked `captured` plays and shows only for the deck's owner.** Members of a shared deck and a published deck's public page get generated speech and no picture, with the source link. Clips in another app's deck file, such as an Anki package, keep today's rule, because they came with the deck.
 
-This narrows `CONTEXT.md`'s **Recording** entry ("A recording goes wherever its deck goes") and needs a `captured` flag beside `example_recording_key`, the term's audio and the picture in `docs/data-model.md`. An export carries captured clips, because it goes to their owner.
+This narrows `CONTEXT.md`'s **Recording** entry ("A recording goes wherever its deck goes") and needs a `captured` flag beside `example_recording_key`, the term's audio and the picture in `docs/data-model.md`. A Lymi export carries captured clips with the flag, because it goes to their owner, and a Lymi import keeps the flag. Otherwise exporting and importing a deck again would clear it, and its clips would play for members once the deck is shared.
 
 ## Cost
 

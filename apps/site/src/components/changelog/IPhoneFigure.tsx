@@ -2,20 +2,21 @@ import { Trans } from "@lingui/react/macro";
 import { Lantern } from "../Lantern";
 import { AppTile } from "../Logo";
 
-const BEZEL = "oklch(0.17 0.008 60)";
+// Lighter than the dark screen inside it, so the frame still reads against a dark tray.
+const BEZEL = "oklch(0.24 0.008 60)";
 
 /** An iPhone's Home Screen at night: Lymi's Lantern widget with what is due, and the app's icon. */
 export function IPhoneFigure() {
   return (
     <div aria-hidden="true" className="relative h-[412px] w-[660px] overflow-hidden">
       <div
-        className="absolute start-1/2 top-11 h-[520px] w-[296px] -translate-x-1/2 rounded-[50px] p-3 shadow-[0_0_0_1px_oklch(0.32_0.008_60),0_24px_48px_-20px_oklch(0.2_0.03_60/0.5)]"
+        className="absolute start-1/2 top-11 h-[520px] w-[296px] -translate-x-1/2 rounded-[50px] p-3 shadow-[0_0_0_1.5px_oklch(0.4_0.008_60),0_24px_48px_-20px_oklch(0.2_0.03_60/0.5)]"
         style={{ background: BEZEL }}
       >
         <div data-theme="dark" className="relative h-full overflow-hidden rounded-[39px] bg-canvas">
           <div className="flex h-12 items-center justify-between px-8 text-sm font-semibold text-ink">
             <span className="tabular-nums">9:41</span>
-            <span className="h-6 w-[80px] rounded-full" style={{ background: BEZEL }} />
+            <span className="h-6 w-[80px] rounded-full bg-[oklch(0.08_0_0)]" />
             <span className="w-[34px]" />
           </div>
           <div

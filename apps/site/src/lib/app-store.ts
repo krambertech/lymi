@@ -1,9 +1,16 @@
 /**
  * Countries whose App Store does not sell Lymi yet: the EU, until the trader status in App Store
- * Connect is answered (apps/mobile/store/checklist.md). Empty this once Lymi is on sale there.
+ * Connect is answered (apps/mobile/store/checklist.md). Cloudflare names some EU territories on
+ * their own (Åland, the French overseas regions); they shop in Finland's and France's stores.
+ * Empty this once Lymi is on sale there.
  */
 const NOT_SOLD_IN = new Set(
-  "AT BE BG CY CZ DE DK EE ES FI FR GR HR HU IE IT LT LU LV MT NL PL PT RO SE SI SK".split(" "),
+  [
+    "AT BE BG CY CZ DE DK EE ES FI FR GR HR HU IE IT LT LU LV MT NL PL PT RO SE SI SK",
+    "AX GF GP MF MQ RE YT",
+  ]
+    .join(" ")
+    .split(" "),
 );
 
 /** Whether the App Store sells Lymi in a Cloudflare country code. Unknown countries get the link. */

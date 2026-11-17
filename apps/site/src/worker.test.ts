@@ -105,7 +105,7 @@ describe("the App Store check", () => {
   });
 
   it("hides it in the EU until Lymi is on sale there", async () => {
-    for (const country of ["EE", "DE", "FR", "PL"]) {
+    for (const country of ["EE", "DE", "FR", "PL", "RE", "AX"]) {
       expect((await check(country)).body.available).toBe(false);
     }
   });

@@ -543,6 +543,7 @@ export function HintDemo({ play }: DemoProps) {
           </span>
         </div>
         <div
+          aria-hidden={!drafted}
           className={clsx(
             "col-start-1 row-start-1 transition-opacity duration-300 motion-reduce:transition-none",
             drafted ? "opacity-100" : "opacity-0",

@@ -25,6 +25,8 @@ Every update shows one picture, in a 16:10 tray in one of the eight Explore hues
 1. **A screenshot**, only when the screen itself impresses or explains: a redesigned screen, or one part of a screen that shows the change at a glance. A screen that is mostly empty, or that needs the text to make sense, is not one.
 2. **A figure**, for everything else: a landing demo or a drawing made for the update, listed in `changelog-figures.ts` and drawn by `ChangelogFigure` at 460 px wide. A drawing uses the product's own components and words, shows one moment, and leaves out anything the update does not mention. A large launch can be a scene instead: a short loop drawn at the tray's own 660 by 412, named in `CHANGELOG_SCENES`, that holds its last beat under reduced motion. The screenshot script captures only the web product, so a phone app's scene frames the store listing's Simulator captures from `apps/mobile/store/screenshots/raw`, copied per language to `apps/site/public/iphone`.
 
+A launch that walks through several features can also put a picture inside its text, under the section it shows: a Markdown image beside the update's files, one per language (`en-add.webp`, `uk-add.webp`), with its `alt` translated. Draw it on a transparent ground that fades at the foot, so it sits on the page in both themes. Smaller updates keep to the one picture.
+
 ### Screenshots
 
 A screenshot is taken from the running product by a script, never by hand, so every language and both themes come out the same. The recipe is `screenshot.capture` in `en.md`:

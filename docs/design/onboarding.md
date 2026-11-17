@@ -26,7 +26,7 @@ The account's first review teaches itself once, then ends on a short plan for co
 
 During the review, a note under the first card says what to try and how to see the answer. The first reveal frosts the card after 1.6 s and points at the grades. After the first grade the card gives way to a short screen: the word as the headline, “comes back in 2 days” under it, and every grade with its day, the chosen one lit. **Next card** carries on. A card forgotten in this review says why it is back. **Skip tips** ends all of them. A return of 5 to 10 days reads “in about a week”, because a grade’s fuzz moves the real day by a few days from the preview.
 
-The first grade would end the first review for a reload, so the tab remembers it and the hand of terms in `sessionStorage` until the learner leaves its end. A reload keeps the end and drops the tips; closing the tab loses both.
+The first grade would end the first review for a reload, so the tab remembers it and the hand of terms in `sessionStorage` until the learner leaves its end. A reload keeps the end and drops the tips; closing the tab loses both. Once the learner leaves the end, the tab also remembers that, so grades after it (Review forgotten cards, an added card) and any remount open an ordinary review rather than the plan again, even while the streak still lags those grades.
 
 The end is four screens with one lantern at the top that never moves; only the words and choices under it change, and on a phone the way on stays at the foot.
 

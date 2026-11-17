@@ -9,6 +9,10 @@ export function ImportAnki() {
         cards keep the due dates they had in Anki, so nothing you already learned starts over. Anki
         itself is not changed.
       </Lead>
+      <p data-nav="import_guide">
+        Still deciding? <a href="/compare/anki">See how Lymi and Anki compare</a>, including where
+        Anki does more.
+      </p>
 
       <H2>Import in four steps</H2>
       <Steps>

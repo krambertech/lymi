@@ -8,3 +8,5 @@ export const REST_DISMISSED_KEY = "lymi-rest-dismissed";
 export const ASSISTANT_OFFER_KEY = "lymi-assistant-offer-dismissed";
 /** In sessionStorage: the first review under way in this tab and its cards. */
 export const FIRST_REVIEW_KEY = "lymi-first-review";
+/** In sessionStorage: this tab already sent first_review_end_left for the first review. */
+export const FIRST_REVIEW_END_LEFT_KEY = "lymi-first-review-end-left";

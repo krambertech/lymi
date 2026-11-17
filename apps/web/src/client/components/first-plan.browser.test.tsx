@@ -83,7 +83,7 @@ test("walks time, reminder and goodbye, and repeats what was set", async () => {
   await expect.element(page.getByText("Reminder at 19:00")).toBeVisible();
 });
 
-test.each(["on", "denied", "install", "none"] as const)(
+test.each(["on", "denied", "install", "unsupported", "setup_failed"] as const)(
   "skips the ask when push is %s",
   async (push) => {
     await render(<Flow push={push} />);

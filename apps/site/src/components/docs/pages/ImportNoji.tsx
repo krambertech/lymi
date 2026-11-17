@@ -9,6 +9,10 @@ export function ImportNoji() {
         you already know keep the due dates they had in Noji, so nothing you learned starts over.
         Noji itself is not changed.
       </Lead>
+      <p data-nav="import_guide">
+        Still deciding? <a href="/compare/noji">See how Lymi and Noji compare</a>, including where
+        Noji does more.
+      </p>
 
       <H2>Import in four steps</H2>
       <Steps>

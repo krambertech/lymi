@@ -7,6 +7,10 @@ export function ImportQuizlet() {
         Paste terms and definitions from a Quizlet set you made, or bring a text list with the same
         structure. Pictures, audio and review progress stay behind, so the cards start as new.
       </Lead>
+      <p data-nav="import_guide">
+        Still deciding? <a href="/compare/quizlet">See how Lymi and Quizlet compare</a>, including
+        where Quizlet does more.
+      </p>
       <H2>Copy your set</H2>
       <p>
         On <a href="https://quizlet.com">quizlet.com</a>, open your set, open its <strong>…</strong>{" "}

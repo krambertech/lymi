@@ -1,12 +1,21 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
+import { type LocalizedPage, localizedPath } from "../../lib/routes";
 
 export interface Question {
   id: string;
   question: MessageDescriptor;
   answer: MessageDescriptor;
-  /** A page that answers the question in full, shown under the answer and left out of the schema. */
-  link?: { href: string; label: MessageDescriptor };
+  /**
+   * A page that answers the question in full, shown under the answer and left out of the schema:
+   * a translated page by its key, so each edition links to its own language, or an English-only path.
+   */
+  link?: ({ page: LocalizedPage } | { href: string }) & { label: MessageDescriptor };
+}
+
+/** Where a question's link goes in this page's language. */
+export function questionLinkHref(link: NonNullable<Question["link"]>, locale: string): string {
+  return "page" in link ? localizedPath(link.page, locale) : link.href;
 }
 
 /**
@@ -41,7 +50,7 @@ export const LANGUAGES_QUESTIONS: Question[] = [
     id: "anki",
     question: msg`What if I already use Anki?`,
     answer: msg`Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their cards, tags, pictures and review history, so nothing you already learned starts over.`,
-    link: { href: "/docs/import-from-anki", label: msg`Moving from Anki` },
+    link: { page: "compareAnki", label: msg`Lymi vs Anki` },
   },
   ...COMMON,
 ];

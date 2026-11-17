@@ -85,6 +85,13 @@ describe("analytics privacy contract", () => {
       ),
     ).toEqual({ place: "assistant_pages", target: "/ai-assistants/claude" });
     expect(
+      eventProperties(
+        "site_link_followed",
+        { place: "import_guide", target: "/compare/anki" },
+        "browser",
+      ),
+    ).toEqual({ place: "import_guide", target: "/compare/anki" });
+    expect(
       eventProperties("site_link_followed", { place: "footer", target: "/explore?q=word" }),
     ).toBeNull();
     expect(
@@ -401,6 +408,47 @@ describe("import failure properties", () => {
         "worker",
       ),
     ).toEqual({ source: "anki", card_count: 3, adapter: "anki", outcome: "done" });
+  });
+});
+
+describe("first_review_end_left", () => {
+  const base = {
+    step: "bye",
+    left: "done",
+    goal: 25,
+    goal_changed: false,
+    tips_skipped: false,
+  };
+
+  it("keeps the reminder enum, adds a known reason, and drops an unknown one", () => {
+    expect(
+      eventProperties("first_review_end_left", { ...base, reminder: "on" }, "browser"),
+    ).toEqual({
+      ...base,
+      reminder: "on",
+    });
+    for (const row of [
+      { reminder: "unavailable", reminder_reason: "install_required" },
+      { reminder: "unavailable", reminder_reason: "push_unsupported" },
+      { reminder: "unavailable", reminder_reason: "setup_failed" },
+      { reminder: "off", reminder_reason: "loading" },
+      { reminder: "off", reminder_reason: "error" },
+      { reminder: "blocked", reminder_reason: "denied" },
+      { reminder: "off", reminder_reason: "off" },
+    ]) {
+      const event = { ...base, ...row };
+      expect(eventProperties("first_review_end_left", event, "browser")).toEqual(event);
+    }
+    expect(
+      eventProperties(
+        "first_review_end_left",
+        { ...base, reminder: "unavailable", reminder_reason: "unknown" },
+        "browser",
+      ),
+    ).toBeNull();
+    expect(
+      eventProperties("first_review_end_left", { ...base, reminder: "on" }, "phone"),
+    ).toBeNull();
   });
 });
 

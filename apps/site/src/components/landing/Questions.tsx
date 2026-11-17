@@ -1,7 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
 import { ArrowLink } from "./ArrowLink";
-import type { Question } from "./faq";
+import { type Question, questionLinkHref } from "./faq";
 import { Section } from "./Section";
 
 interface Props {
@@ -27,7 +27,7 @@ export function Questions({ title, items }: Props) {
               <dd className="mt-2 max-w-[60ch] text-md text-pretty text-ink-secondary">
                 <p>{i18n._(item.answer)}</p>
                 {item.link && (
-                  <ArrowLink href={item.link.href} className="mt-2">
+                  <ArrowLink href={questionLinkHref(item.link, i18n.locale)} className="mt-2">
                     {i18n._(item.link.label)}
                   </ArrowLink>
                 )}

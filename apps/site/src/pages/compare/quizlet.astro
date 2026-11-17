@@ -1,0 +1,11 @@
+---
+import ComparePage from "../../components/islands/ComparePage";
+import { COMPARE_PAGES } from "../../components/landing/compare-pages";
+import MarketingLayout from "../../layouts/MarketingLayout.astro";
+
+const { page, title, blurb, questions } = COMPARE_PAGES.quizlet;
+---
+
+<MarketingLayout page={page} title={title} blurb={blurb} questions={questions}>
+  <ComparePage client:load locale={Astro.currentLocale} compare="quizlet" />
+</MarketingLayout>

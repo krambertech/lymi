@@ -368,6 +368,17 @@ export const analyticsEvents = {
     goal: count,
     goal_changed: z.boolean(),
     reminder: z.enum(["on", "off", "blocked", "unavailable"]),
+    reminder_reason: z
+      .enum([
+        "install_required",
+        "push_unsupported",
+        "setup_failed",
+        "loading",
+        "error",
+        "denied",
+        "off",
+      ])
+      .optional(),
     tips_skipped: z.boolean(),
   }),
   cards_added: z.object({
@@ -437,6 +448,7 @@ export const analyticsEvents = {
       "landing",
       "assistant_pages",
       "languages_hub",
+      "import_guide",
     ]),
     // A public site path without its locale prefix, never a query or a hash.
     target: z

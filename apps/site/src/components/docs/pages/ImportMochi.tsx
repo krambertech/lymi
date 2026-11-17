@@ -9,6 +9,10 @@ export function ImportMochi() {
         cards keep the due dates they had in Mochi, so nothing you already learned starts over.
         Mochi itself is not changed.
       </Lead>
+      <p data-nav="import_guide">
+        Still deciding? <a href="/compare/mochi">See how Lymi and Mochi compare</a>, including where
+        Mochi does more.
+      </p>
 
       <H2>Import in four steps</H2>
       <Steps>

@@ -548,7 +548,8 @@ function useContent(key: CompareKey): Content {
         lede: (
           <Trans>
             Quizlet is built for getting through a set before a test. Lymi is built for keeping it
-            afterwards: spaced repetition brings each card back right before you’d forget it.
+            afterwards: spaced repetition brings back the cards you forget sooner and the ones you
+            know later and later.
           </Trans>
         ),
         changes: {
@@ -565,8 +566,8 @@ function useContent(key: CompareKey): Content {
               title: <Trans>A schedule for every card</Trans>,
               body: (
                 <Trans>
-                  FSRS works out when you’d forget each card and brings it back just before, on your
-                  phone or your computer. Cards you know well come back less and less often.
+                  FSRS schedules every card on your phone and your computer. Cards you remember
+                  wait longer each time, and the ones you forget come back sooner.
                 </Trans>
               ),
             },

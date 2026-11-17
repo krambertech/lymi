@@ -3128,8 +3128,8 @@ msgstr "From your notes"
 msgid "FSRS for every card, on every device"
 msgstr "FSRS for every card, on every device"
 
-msgid "FSRS works out when you’d forget each card and brings it back just before, on your phone or your computer. Cards you know well come back less and less often."
-msgstr "FSRS works out when you’d forget each card and brings it back just before, on your phone or your computer. Cards you know well come back less and less often."
+msgid "FSRS schedules every card on your phone and your computer. Cards you remember wait longer each time, and the ones you forget come back sooner."
+msgstr "FSRS schedules every card on your phone and your computer. Cards you remember wait longer each time, and the ones you forget come back sooner."
 
 msgid "FSRS, explained in the docs"
 msgstr "FSRS, explained in the docs"
@@ -5778,8 +5778,8 @@ msgstr "Quizlet has a ready-made set for almost any textbook. Lymi’s library i
 msgid "Quizlet helps you get through a set; Lymi’s spaced repetition helps you keep it. See where each one is ahead, and how to bring your Quizlet sets into Lymi."
 msgstr "Quizlet helps you get through a set; Lymi’s spaced repetition helps you keep it. See where each one is ahead, and how to bring your Quizlet sets into Lymi."
 
-msgid "Quizlet is built for getting through a set before a test. Lymi is built for keeping it afterwards: spaced repetition brings each card back right before you’d forget it."
-msgstr "Quizlet is built for getting through a set before a test. Lymi is built for keeping it afterwards: spaced repetition brings each card back right before you’d forget it."
+msgid "Quizlet is built for getting through a set before a test. Lymi is built for keeping it afterwards: spaced repetition brings back the cards you forget sooner and the ones you know later and later."
+msgstr "Quizlet is built for getting through a set before a test. Lymi is built for keeping it afterwards: spaced repetition brings back the cards you forget sooner and the ones you know later and later."
 
 msgid "Quizlet only exports sets you created. Pictures and audio stay behind either way."
 msgstr "Quizlet only exports sets you created. Pictures and audio stay behind either way."

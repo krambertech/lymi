@@ -3128,8 +3128,8 @@ msgstr "Из твоих заметок"
 msgid "FSRS for every card, on every device"
 msgstr "FSRS для каждой карточки на любом устройстве"
 
-msgid "FSRS works out when you’d forget each card and brings it back just before, on your phone or your computer. Cards you know well come back less and less often."
-msgstr "FSRS рассчитывает, когда ты забудешь каждую карточку, и показывает её незадолго до этого — на телефоне или на компьютере. Хорошо знакомые карточки возвращаются всё реже."
+msgid "FSRS schedules every card on your phone and your computer. Cards you remember wait longer each time, and the ones you forget come back sooner."
+msgstr "FSRS планирует каждую карточку на телефоне и на компьютере. Карточки, которые ты помнишь, каждый раз ждут дольше, а те, что забываешь, возвращаются раньше."
 
 msgid "FSRS, explained in the docs"
 msgstr "FSRS, описан в документации"
@@ -5778,8 +5778,8 @@ msgstr "В Quizlet есть готовый набор почти к любому
 msgid "Quizlet helps you get through a set; Lymi’s spaced repetition helps you keep it. See where each one is ahead, and how to bring your Quizlet sets into Lymi."
 msgstr "Quizlet помогает пройти набор, а интервальное повторение Lymi — удержать его в памяти. Сравни, в чём сильнее каждое приложение и как перенести наборы из Quizlet в Lymi."
 
-msgid "Quizlet is built for getting through a set before a test. Lymi is built for keeping it afterwards: spaced repetition brings each card back right before you’d forget it."
-msgstr "Quizlet создан, чтобы пройти набор перед тестом. Lymi — чтобы удержать его в памяти и после: интервальное повторение возвращает каждую карточку прямо перед тем, как она начнёт забываться."
+msgid "Quizlet is built for getting through a set before a test. Lymi is built for keeping it afterwards: spaced repetition brings back the cards you forget sooner and the ones you know later and later."
+msgstr "Quizlet создан, чтобы пройти набор перед тестом. Lymi — чтобы удержать его в памяти и после: интервальное повторение чаще возвращает карточки, которые ты забываешь, а те, что знаешь, — всё реже."
 
 msgid "Quizlet only exports sets you created. Pictures and audio stay behind either way."
 msgstr "Quizlet экспортирует только наборы, созданные тобой. Картинки и аудио не переносятся в любом случае."

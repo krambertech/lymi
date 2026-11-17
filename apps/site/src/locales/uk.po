@@ -3128,8 +3128,8 @@ msgstr "З твоїх нотаток"
 msgid "FSRS for every card, on every device"
 msgstr "FSRS для кожної картки на всіх пристроях"
 
-msgid "FSRS works out when you’d forget each card and brings it back just before, on your phone or your computer. Cards you know well come back less and less often."
-msgstr "FSRS вираховує, коли ти забудеш кожну картку, і повертає її якраз перед цим — на телефоні чи комп’ютері. Картки, які ти добре знаєш, повертаються дедалі рідше."
+msgid "FSRS schedules every card on your phone and your computer. Cards you remember wait longer each time, and the ones you forget come back sooner."
+msgstr "FSRS планує кожну картку на телефоні й на комп’ютері. Картки, які ти пам’ятаєш, щоразу чекають довше, а ті, що забуваєш, повертаються раніше."
 
 msgid "FSRS, explained in the docs"
 msgstr "FSRS, описаний у документації"
@@ -5778,8 +5778,8 @@ msgstr "У Quizlet є готовий набір майже до будь-яко�
 msgid "Quizlet helps you get through a set; Lymi’s spaced repetition helps you keep it. See where each one is ahead, and how to bring your Quizlet sets into Lymi."
 msgstr "Quizlet допомагає пройти набір, а інтервальне повторення в Lymi — не забути його. Подивись, у чому сильніший кожен і як перенести набори з Quizlet у Lymi."
 
-msgid "Quizlet is built for getting through a set before a test. Lymi is built for keeping it afterwards: spaced repetition brings each card back right before you’d forget it."
-msgstr "Quizlet створений, щоб пройти набір перед тестом. Lymi — щоб пам’ятати його й потім: інтервальне повторення повертає кожну картку якраз перед тим, як ти її забудеш."
+msgid "Quizlet is built for getting through a set before a test. Lymi is built for keeping it afterwards: spaced repetition brings back the cards you forget sooner and the ones you know later and later."
+msgstr "Quizlet створений, щоб пройти набір перед тестом. Lymi — щоб пам’ятати його й потім: інтервальне повторення частіше повертає картки, які ти забуваєш, а ті, що знаєш, — дедалі рідше."
 
 msgid "Quizlet only exports sets you created. Pictures and audio stay behind either way."
 msgstr "Quizlet експортує лише твої власні набори. Зображення й аудіо не переносяться в жодному разі."

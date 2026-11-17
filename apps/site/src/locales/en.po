@@ -4600,8 +4600,8 @@ msgstr "Next card: <0>{0}</0>"
 msgid "Next review in {0}"
 msgstr "Next review in {0}"
 
-msgid "Next time, the hint shows before the answer."
-msgstr "Next time, the hint shows before the answer."
+msgid "Next time, you can peek at it before the answer."
+msgstr "Next time, you can peek at it before the answer."
 
 msgid "Nice to meet you; thanks in advance"
 msgstr "Nice to meet you; thanks in advance"

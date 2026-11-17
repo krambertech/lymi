@@ -118,10 +118,13 @@ function ShowcaseRoot({ label, tray = "end", trayClassName, children, className 
   const [run, setRun] = useState(0);
   // Keyboard focus in the list holds the timer, so the selection never moves away from it.
   const [keys, setKeys] = useState(false);
+  // Focus inside the demo, such as on a Hear button, holds it too, so the demo isn't swapped away
+  // from under the visitor.
+  const [inDemo, setInDemo] = useState(false);
 
   const item = items[index] as ItemProps;
   const timed = !still && auto;
-  const held = keys || !inView || hidden;
+  const held = keys || inDemo || !inView || hidden;
   const stage: Stage = { playing: inView && !hidden, still };
 
   const steer = (action: Steer, id: string) =>
@@ -298,6 +301,10 @@ function ShowcaseRoot({ label, tray = "end", trayClassName, children, className 
               animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
               exit={{ opacity: 0, y: -8, filter: "blur(6px)", transition: { duration: 0.25 } }}
               transition={{ duration: 0.35, ease: EASE }}
+              onFocus={() => setInDemo(true)}
+              onBlur={(e) => {
+                if (!e.currentTarget.contains(e.relatedTarget as Node | null)) setInDemo(false);
+              }}
               className="flex w-full justify-center"
             >
               {item.children}

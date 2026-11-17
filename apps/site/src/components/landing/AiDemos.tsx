@@ -559,7 +559,7 @@ export function HintDemo({ play }: DemoProps) {
           at("next") ? "opacity-100" : "opacity-0",
         )}
       >
-        <Trans>Next time, the hint shows before the answer.</Trans>
+        <Trans>Next time, you can peek at it before the answer.</Trans>
       </p>
     </div>
   );

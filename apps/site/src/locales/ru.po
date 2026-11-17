@@ -4600,8 +4600,8 @@ msgstr "Следующая карточка: <0>{0}</0>"
 msgid "Next review in {0}"
 msgstr "Следующее повторение через {0}"
 
-msgid "Next time, the hint shows before the answer."
-msgstr "В следующий раз подсказка появится перед ответом."
+msgid "Next time, you can peek at it before the answer."
+msgstr "В следующий раз сможешь подсмотреть её до ответа."
 
 msgid "Nice to meet you; thanks in advance"
 msgstr "Приятно познакомиться; заранее спасибо"

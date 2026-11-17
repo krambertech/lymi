@@ -7,6 +7,7 @@ import { explorePath } from "../../lib/explore";
 import { localizedPath } from "../../lib/routes";
 import { LanguageLinks, type LanguageTarget } from "../LanguageLinks";
 import { Lockup } from "../Logo";
+import { COMPARE_KEYS, COMPARE_PAGES } from "./compare-pages";
 import { EXAM_LINKS, LANGUAGE_LINKS, linksIn, type SiteLink, USE_CASE_LINKS } from "./site-links";
 
 const linkClass = "rounded-xs hoverable:hover:text-ink";
@@ -83,7 +84,7 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
             </a>
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-x-10 gap-y-8 @2xl:grid-cols-[repeat(5,auto)] @2xl:justify-between @2xl:gap-x-8">
+        <div className="grid grid-cols-2 gap-x-10 gap-y-8 @2xl:grid-cols-[repeat(6,auto)] @2xl:justify-between @2xl:gap-x-8">
           <Group
             title={<Trans>Use cases</Trans>}
             className="col-span-2 @2xl:col-span-1"
@@ -130,16 +131,15 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
                 <Trans>API reference</Trans>
               </a>
             </li>
-            <li>
-              <a href="/docs/import-from-anki" className={linkClass}>
-                <Trans>Move from Anki</Trans>
-              </a>
-            </li>
-            <li>
-              <a href="/docs/import-from-mochi" className={linkClass}>
-                <Trans>Move from Mochi</Trans>
-              </a>
-            </li>
+          </Group>
+          <Group title={<Trans>Switching from</Trans>}>
+            {COMPARE_KEYS.map((key) => (
+              <li key={key}>
+                <a href={localizedPath(COMPARE_PAGES[key].page, i18n.locale)} className={linkClass}>
+                  {COMPARE_PAGES[key].name}
+                </a>
+              </li>
+            ))}
           </Group>
           <Group title="Lymi">
             <li>

@@ -41,7 +41,7 @@ export const LANGUAGES_QUESTIONS: Question[] = [
     id: "anki",
     question: msg`What if I already use Anki?`,
     answer: msg`Lymi schedules reviews with FSRS, an algorithm Anki also offers, so the timing will feel familiar. What changes is the work around it: a card takes seconds to add, and your assistant can add a whole lesson. Your Anki decks import with their cards, tags, pictures and review history, so nothing you already learned starts over.`,
-    link: { href: "/docs/import-from-anki", label: msg`Moving from Anki` },
+    link: { href: "/compare/anki", label: msg`Lymi vs Anki` },
   },
   ...COMMON,
 ];
@@ -385,7 +385,7 @@ export const MEDICINE_QUESTIONS: Question[] = [
     id: "anki",
     question: msg`Can I bring my Anki decks?`,
     answer: msg`Yes. An Anki package imports with its cards, tags, pictures and review history, so your schedule carries on where it stopped.`,
-    link: { href: "/docs/import-from-anki", label: msg`Moving from Anki` },
+    link: { href: "/compare/anki", label: msg`Lymi vs Anki` },
   },
   {
     id: "pictures",

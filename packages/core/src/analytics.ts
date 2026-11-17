@@ -437,6 +437,7 @@ export const analyticsEvents = {
       "landing",
       "assistant_pages",
       "languages_hub",
+      "import_guide",
     ]),
     // A public site path without its locale prefix, never a query or a hash.
     target: z

@@ -484,6 +484,9 @@ export const analyticsEvents = {
     chip: z.enum(["apple_silicon", "intel"]),
     from: path.optional().catch(undefined),
   }),
+  iphone_download_started: Attribution.partial().extend({
+    from: path.optional().catch(undefined),
+  }),
   context_menu_action: z.object({
     menu: z.enum(CONTEXT_MENU_SURFACES),
     action: z.enum(CONTEXT_MENU_ACTIONS),
@@ -786,6 +789,7 @@ export const analyticsProducers = {
   ready_decks_narrowed: ["browser"],
   origin_badge_shown: ["browser"],
   mac_download_started: ["worker"],
+  iphone_download_started: ["worker"],
   context_menu_action: ["phone"],
   deck_added: ["worker"],
   deck_joined: ["worker"],

@@ -766,6 +766,13 @@
 .changelog-prose h3 ~ ul {
   font-size: var(--text-base);
 }
+/* A picture inside an update's text: framed phones on a transparent ground that fade at the foot. */
+.changelog-prose img {
+  display: block;
+  width: 100%;
+  height: auto;
+  margin-block: 2rem;
+}
 
 /* Inline code. A well in the plate, never a border. */
 .doc-prose :not(pre) > code,

@@ -4506,6 +4506,12 @@ msgstr "Lymi for {name}"
 msgid "Lymi for certification prep · Flashcards with spaced repetition"
 msgstr "Lymi for certification prep · Flashcards with spaced repetition"
 
+msgid "Lymi for iPhone"
+msgstr "Lymi for iPhone"
+
+msgid "Lymi for iPhone is on the App Store"
+msgstr "Lymi for iPhone is on the App Store"
+
 msgid "Lymi for language learning"
 msgstr "Lymi for language learning"
 

@@ -76,8 +76,41 @@ describe("a download link", () => {
     expect(posthog).not.toHaveBeenCalled();
   });
 
+  it("sends the iPhone link to the App Store and counts it", async () => {
+    const response = await open("https://lymi.app/download/iphone");
+    expect(response.status).toBe(302);
+    expect(response.headers.get("location")).toBe("https://apps.apple.com/app/id6822912687");
+    expect(events()).toEqual([expect.objectContaining({ event: "iphone_download_started" })]);
+  });
+
   it("leaves the download page itself to Astro", async () => {
     expect(await (await open("https://lymi.app/download")).text()).toBe("page");
     expect(posthog).not.toHaveBeenCalled();
+  });
+});
+
+describe("the App Store check", () => {
+  async function check(country?: string) {
+    const request = new Request("https://lymi.app/api/app-store");
+    if (country) Object.defineProperty(request, "cf", { value: { country } });
+    const response = await worker.fetch(request, {} as Env, {} as ExecutionContext);
+    const body: { available: boolean } = await response.json();
+    return { cache: response.headers.get("cache-control"), body };
+  }
+
+  it("shows the link where the App Store sells Lymi", async () => {
+    expect(await check("UA")).toEqual({ cache: "private, no-store", body: { available: true } });
+    expect((await check("GB")).body.available).toBe(true);
+    expect((await check("CH")).body.available).toBe(true);
+  });
+
+  it("hides it in the EU until Lymi is on sale there", async () => {
+    for (const country of ["EE", "DE", "FR", "PL", "RE", "AX"]) {
+      expect((await check(country)).body.available).toBe(false);
+    }
+  });
+
+  it("shows it when the country is unknown", async () => {
+    expect((await check()).body.available).toBe(true);
   });
 });

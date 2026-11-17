@@ -2,7 +2,7 @@
 import { Download } from "lucide-react";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { pageI18n } from "../../lib/i18n";
-import { macDownloadHref } from "../../lib/mac-download";
+import { downloadHref } from "../../lib/downloads";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import SiteHeader from "../islands/SiteHeader";
@@ -13,6 +13,7 @@ import {
   DOWNLOAD_HEADING,
   DOWNLOAD_INTEL,
   DOWNLOAD_INTEL_LABEL,
+  DOWNLOAD_IPHONE,
   DOWNLOAD_LEDE,
   DOWNLOAD_REQUIREMENT,
   DOWNLOAD_SKIP,
@@ -57,7 +58,7 @@ const i18n = pageI18n(locale);
       </h1>
       <p class="mt-5 max-w-[36ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">{i18n._(DOWNLOAD_LEDE)}</p>
       <div id="download" class="mt-9 flex flex-col items-center gap-3">
-        <a href={macDownloadHref("/download/mac", locale)} class={buttonClass("primary", "lg")}>
+        <a href={downloadHref("/download/mac", locale)} class={buttonClass("primary", "lg")}>
           <Download aria-hidden="true" data-icon="inline-start" />
           {i18n._(DOWNLOAD_BUTTON)}
         </a>
@@ -65,11 +66,19 @@ const i18n = pageI18n(locale);
           {i18n._(DOWNLOAD_REQUIREMENT)}
           <span aria-hidden="true" class="mx-1">·</span>
           <a
-            href={macDownloadHref("/download/mac-intel", locale)}
+            href={downloadHref("/download/mac-intel", locale)}
             aria-label={i18n._(DOWNLOAD_INTEL_LABEL)}
             class="rounded-xs text-ink-secondary underline decoration-edge-strong underline-offset-4 hoverable:hover:text-ink hoverable:hover:decoration-current"
           >
             {i18n._(DOWNLOAD_INTEL)}
+          </a>
+        </p>
+        <p data-app-store hidden class="text-sm text-ink-muted">
+          <a
+            href={downloadHref("/download/iphone", locale)}
+            class="rounded-xs text-ink-secondary underline decoration-edge-strong underline-offset-4 hoverable:hover:text-ink hoverable:hover:decoration-current"
+          >
+            {i18n._(DOWNLOAD_IPHONE)}
           </a>
         </p>
       </div>

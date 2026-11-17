@@ -3,13 +3,14 @@
 
 import { handle } from "@astrojs/cloudflare/handler";
 import { POSTHOG_PROXY_PATH, proxyPostHog } from "@lymi/core/posthog-proxy";
+import { APP_STORE_CHECK_PATH, onAppStoreIn } from "./lib/app-store";
 import { movedDeckPath, productAddPath } from "./lib/deck-page";
 import {
   countsAsDownload,
+  download,
   downloadCapture,
   downloadCaptureRequest,
-  macDownload,
-} from "./lib/mac-download";
+} from "./lib/downloads";
 import { productUrl, signUpRedirect, signUpUrl } from "./lib/origins";
 
 function json(body: unknown, status = 200): Response {
@@ -46,10 +47,18 @@ export default {
       });
     }
 
+    // Pages are prerendered, so they ask here whether to show their App Store links.
+    if (url.pathname === APP_STORE_CHECK_PATH && request.method === "GET") {
+      return Response.json(
+        { available: onAppStoreIn(request.cf?.country) },
+        { headers: { "cache-control": "private, no-store" } },
+      );
+    }
+
     if (url.pathname.startsWith("/api/")) return json({ error: "Not found" }, 404);
 
-    const download = macDownload(url.pathname);
-    if (download) {
+    const link = download(url.pathname);
+    if (link) {
       const capture =
         countsAsDownload(request) && downloadCapture(request, { timezone: request.cf?.timezone });
       if (capture) {
@@ -58,7 +67,7 @@ export default {
       }
       return new Response(null, {
         status: 302,
-        headers: { location: download.file, "cache-control": "no-store" },
+        headers: { location: link.file, "cache-control": "no-store" },
       });
     }
 

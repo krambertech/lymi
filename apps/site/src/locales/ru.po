@@ -4506,6 +4506,12 @@ msgstr "Lymi для {name}"
 msgid "Lymi for certification prep · Flashcards with spaced repetition"
 msgstr "Lymi для подготовки к сертификации · Карточки с интервальным повторением"
 
+msgid "Lymi for iPhone"
+msgstr "Lymi для iPhone"
+
+msgid "Lymi for iPhone is on the App Store"
+msgstr "Lymi для iPhone есть в App Store"
+
 msgid "Lymi for language learning"
 msgstr "Lymi для изучения языков"
 

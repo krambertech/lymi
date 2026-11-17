@@ -35,6 +35,8 @@ export interface HandCard {
   example?: string | undefined;
   /** The example in the meaning language. */
   exampleTranslation?: string | undefined;
+  /** Where the example plays from, when it can be heard. */
+  exampleAudio?: string | undefined;
   /** A deck card's notes, parsed on the server; drawn in place of `note`. */
   noteBlocks?: NoteBlock[] | undefined;
   /** One line that makes the term stick: where it comes from, or when it is said. */

@@ -30,7 +30,7 @@ import {
   sections,
   userAvatars,
 } from "./schema/app";
-import { SPOKEN_TERM_MAX } from "./terms";
+import { canSpeakExample, SPOKEN_TERM_MAX } from "./terms";
 import {
   type Directions,
   publicationTags,
@@ -405,6 +405,10 @@ async function readPublicDeck(
         notes: cards.notes,
         editionExampleTranslation: sql<string | null>`localization.example_translation`,
         editionNotes: sql<string | null>`localization.notes`,
+        editionExample: sql<string | null>`localization.example`,
+        originalExample: cards.example,
+        language: cards.language,
+        exampleRecorded: sql<number>`${cards.exampleRecordingKey} is not null`,
       })
       .from(cards)
       .leftJoin(
@@ -441,6 +445,10 @@ async function readPublicDeck(
         notes,
         editionExampleTranslation,
         editionNotes,
+        editionExample,
+        originalExample,
+        language,
+        exampleRecorded,
         ...card
       }) => {
         // The original's translation and notes are in its own language, so an edition shows only its own.
@@ -455,6 +463,15 @@ async function readPublicDeck(
         if (details.example && translation?.trim()) details.exampleTranslation = translation.trim();
         const shownNotes = (wanted ? editionNotes : notes)?.trim();
         if (shownNotes) details.notes = shownNotes;
+        // The clip says the original's sentence, so an edition's own sentence goes unvoiced.
+        const ownSentence = !(wanted && editionExample?.trim());
+        if (
+          details.example &&
+          ownSentence &&
+          (exampleRecorded === 1 || canSpeakExample({ example: originalExample, language }))
+        ) {
+          details.exampleAudio = { cardId: card.id };
+        }
         return { ...card, speakable: speakable === 1, details };
       },
     ),

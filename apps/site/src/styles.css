@@ -1077,9 +1077,13 @@ html:has(.deck-cards[open]) {
   outline: 1px solid var(--image-edge);
   outline-offset: -1px;
 }
-/* Level with the middle of the term's first line, whatever size and leading it is drawn at. */
+/* Level with the middle of the term's first line, whatever size and leading it is drawn at. A
+   flex box, so no line of the term's size forms around the button and pushes it down. */
 .hand-speaker-slot {
-  margin-top: calc((1lh - 2rem) / 2);
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  height: 1lh;
 }
 /* Onest has no IPA letters; fall back to faces that do rather than a mix of widths. */
 .hand-ipa {

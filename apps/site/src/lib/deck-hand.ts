@@ -21,6 +21,9 @@ export function deckHandCards(cards: DeckCard[], termLanguage: string | null): H
       ? { exampleTranslation: card.details.exampleTranslation }
       : {}),
     ...(card.noteBlocks ? { noteBlocks: card.noteBlocks } : {}),
+    ...(card.details?.exampleAudio
+      ? { exampleAudio: publicMediaUrl(card.details.exampleAudio.cardId, "example") }
+      : {}),
     audio: card.audio ? publicMediaUrl(card.audio.cardId, "audio") : null,
     image: card.image
       ? {

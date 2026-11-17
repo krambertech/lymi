@@ -26,7 +26,7 @@ export function productUrl(path = "/"): string {
   return new URL(path, PRODUCT_ORIGIN).toString();
 }
 
-export function publicMediaUrl(cardId: string, kind: "image" | "audio"): string {
+export function publicMediaUrl(cardId: string, kind: "image" | "audio" | "example"): string {
   return productUrl(`/public/media/card/${encodeURIComponent(cardId)}/${kind}`);
 }
 

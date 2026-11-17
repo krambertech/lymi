@@ -4989,6 +4989,9 @@ msgstr "Play {0}"
 msgid "Play {0}, {1}"
 msgstr "Play {0}, {1}"
 
+msgid "Play example"
+msgstr "Play example"
+
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
 

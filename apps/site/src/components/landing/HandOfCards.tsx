@@ -28,6 +28,9 @@ const HINT_AFTER_MS = 2400;
 const DEALT_KEY = "lymi-hand-dealt";
 const WIDE = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu;
 
+/** A card's two sounds: its term, and its example when it has one to hear. */
+type Sound = "term" | "example";
+
 interface Dealt {
   key: number;
   card: HandCard;
@@ -95,8 +98,9 @@ interface CardProps {
   /** Arrive from the deck rather than appearing in place. */
   enter: boolean;
   delay: number;
-  playing: boolean;
-  onPlay: (card: HandCard) => void;
+  /** Which of the card's sounds is playing. */
+  playing: Sound | null;
+  onPlay: (card: HandCard, sound: Sound) => void;
   onPress: () => void;
   /** Shown on the front face once a visitor has waited without turning anything. */
   hint?: string | null | undefined;
@@ -209,18 +213,18 @@ function FanCard({
   const speaker = audible ? (
     <button
       type="button"
-      aria-label={playing ? t`Replay pronunciation` : t`Play pronunciation`}
+      aria-label={playing === "term" ? t`Replay pronunciation` : t`Play pronunciation`}
       // It sits inside the term, whose language would otherwise voice the label.
       lang={i18n.locale}
       tabIndex={front ? 0 : -1}
       onClick={(e) => {
         e.stopPropagation();
-        onPlay(card);
+        onPlay(card, "term");
       }}
       className={clsx(
         "hand-speaker relative inline-flex size-8 shrink-0 items-center justify-center rounded-full edge bg-plate text-base tracking-normal transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-hover",
         "before:absolute before:-inset-1.5 before:content-[''] [&_svg]:size-4",
-        playing ? "text-ink" : "text-ink-secondary",
+        playing === "term" ? "text-ink" : "text-ink-secondary",
         !front && "invisible",
       )}
     >
@@ -234,7 +238,7 @@ function FanCard({
     speaker ? (
       <span className="flex items-start gap-2.5">
         <span className="min-w-0">{text}</span>
-        <span className="hand-speaker-slot shrink-0">{speaker}</span>
+        <span className="hand-speaker-slot">{speaker}</span>
       </span>
     ) : (
       text
@@ -263,14 +267,43 @@ function FanCard({
         </p>
       )}
       {card.example && (
-        <div className="hand-example mt-3 rounded-md bg-plate-nested px-3 py-2.5">
-          <p lang={card.language} dir="auto" className="line-clamp-3 text-md text-pretty text-ink">
+        // The app's example block: the sentence over its translation, the speaker in the corner.
+        <div className="hand-example relative mt-3 grid gap-1 rounded-lg bg-plate-nested px-3.5 py-3">
+          <p
+            lang={card.language}
+            dir="auto"
+            className={clsx(
+              "line-clamp-3 text-md leading-relaxed text-pretty text-ink",
+              card.exampleAudio && "pe-7",
+            )}
+          >
             {exampleShown(card.example)}
           </p>
           {card.exampleTranslation && (
-            <p className="mt-0.5 line-clamp-2 text-sm text-pretty text-ink-secondary">
+            <p className="line-clamp-2 text-base text-pretty text-ink-muted">
               {card.exampleTranslation}
             </p>
+          )}
+          {card.exampleAudio && (
+            <span className="absolute end-1.5 top-3 flex h-[1lh] items-center text-md leading-relaxed">
+              <button
+                type="button"
+                lang={i18n.locale}
+                aria-label={t`Play example`}
+                tabIndex={front ? 0 : -1}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onPlay(card, "example");
+                }}
+                className={clsx(
+                  "relative inline-flex size-8 items-center justify-center rounded-full transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-hover",
+                  "before:absolute before:-inset-1.5 before:content-[''] [&_svg]:size-4",
+                  playing === "example" ? "text-ink" : "text-ink-muted",
+                )}
+              >
+                <Volume2 aria-hidden="true" />
+              </button>
+            </span>
           )}
         </div>
       )}
@@ -575,12 +608,16 @@ export function HandOfCards({
     setPlaying(null);
   }, []);
 
-  const play = useCallback((card: HandCard) => {
+  const play = useCallback((card: HandCard, sound: Sound) => {
     audio.current?.pause();
-    const clip = new Audio(card.audio ?? `/audio/hand/${card.id}.mp3`);
+    const source =
+      sound === "example" ? card.exampleAudio : (card.audio ?? `/audio/hand/${card.id}.mp3`);
+    if (!source) return;
+    const clip = new Audio(source);
     audio.current = clip;
-    setPlaying(card.id);
-    const done = () => setPlaying((current) => (current === card.id ? null : current));
+    const key = `${card.id}:${sound}`;
+    setPlaying(key);
+    const done = () => setPlaying((current) => (current === key ? null : current));
     clip.addEventListener("ended", done);
     clip.addEventListener("error", done);
     clip.play().catch(done);
@@ -663,7 +700,7 @@ export function HandOfCards({
             revealed
             enter={false}
             delay={0}
-            playing={false}
+            playing={null}
             onPlay={play}
             onPress={press}
           />
@@ -686,7 +723,11 @@ export function HandOfCards({
               revealed={k === 0 && phase === "back"}
               enter={dealing || key >= dealFrom + size}
               delay={dealing && phase === "dealing" ? DEAL_STAGGER_MS * (size - 1 - k) : 0}
-              playing={k === 0 && playing === card.id}
+              playing={
+                k === 0 && playing?.startsWith(`${card.id}:`)
+                  ? (playing.slice(card.id.length + 1) as Sound)
+                  : null
+              }
               onPlay={play}
               onPress={press}
               hint={

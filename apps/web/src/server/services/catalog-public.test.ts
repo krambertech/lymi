@@ -121,7 +121,11 @@ describe("loadPublicDeck", () => {
     expect(detailed).toHaveLength(DECK_PAGE_HAND);
     for (const card of detailed) {
       const i = card.term.split(" ")[1];
-      expect(card.details).toEqual({ example: `Lause ${i}.`, notes: `NOTE-${i}` });
+      expect(card.details).toEqual({
+        example: `Lause ${i}.`,
+        notes: `NOTE-${i}`,
+        exampleAudio: { cardId: expect.any(String) },
+      });
     }
     // Every other card's text stays off the page.
     const json = JSON.stringify(result);
@@ -171,7 +175,8 @@ describe("loadPublicDeck", () => {
       sourceRevision: 1,
       meaning: "привіт",
       notes: "UK-NOTE",
-      exampleTranslation: "Доброго ранку!",
+      example: "Tere hommikust, sõber!",
+      exampleTranslation: "Доброго ранку, друже!",
     });
     const detailsOf = async (language?: string) => {
       const result = await loadPublicDeck(db, "edition-details", language);
@@ -181,16 +186,18 @@ describe("loadPublicDeck", () => {
       );
     };
 
+    const heard = { exampleAudio: { cardId: expect.any(String) } };
     const en = await detailsOf();
-    expect(en.tere).toEqual({ example: "Tere hommikust!", notes: "EN-NOTE" });
+    expect(en.tere).toEqual({ example: "Tere hommikust!", notes: "EN-NOTE", ...heard });
     const uk = await detailsOf("uk");
+    // The edition's own sentence has no clip: the one stored says the original's.
     expect(uk.tere).toEqual({
-      example: "Tere hommikust!",
-      exampleTranslation: "Доброго ранку!",
+      example: "Tere hommikust, sõber!",
+      exampleTranslation: "Доброго ранку, друже!",
       notes: "UK-NOTE",
     });
     // The edition has no notes for this card, so the English ones stay off the Ukrainian page.
-    expect(uk.leib).toEqual({ example: "Leib on värske." });
+    expect(uk.leib).toEqual({ example: "Leib on värske.", ...heard });
   });
 
   it("is unavailable once withdrawn or archived, and missing for an unknown slug", async () => {

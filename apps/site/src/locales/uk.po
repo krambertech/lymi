@@ -4989,6 +4989,9 @@ msgstr "Відтворити {0}"
 msgid "Play {0}, {1}"
 msgstr "Відтворити {0}, {1}"
 
+msgid "Play example"
+msgstr "Відтворити приклад"
+
 msgid "Play pronunciation"
 msgstr "Послухати вимову"
 

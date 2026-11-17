@@ -1,10 +1,13 @@
 import { canSpeakTerm, LanguageTag } from "@lymi/core";
+import { publicDeckFrontCards } from "@lymi/core/catalog/server";
 import { and, eq, isNull } from "@lymi/core/db";
 import { livePublicationMedia } from "@lymi/core/publication-media";
 import { type Db, schema } from "../db";
+import type { ExampleAllowance } from "../example-audio-rate-limit";
 import type { AnalyticsWriter } from "./analytics";
 import { type AudioDependencies, pronunciationAudio } from "./audio";
 import { ServiceError } from "./context";
+import { exampleAudio } from "./example-audio";
 
 export type PublicMediaKind = "image" | "audio";
 
@@ -73,4 +76,48 @@ export async function publicPronunciation(
       deps,
     ),
   };
+}
+
+/**
+ * The example of a card a published deck page lets a visitor turn over, read aloud: its
+ * recording, its stored clip, or one made while the public budget lasts. Only the hand's cards
+ * show their example on the page, so any other card's sentence stays unheard. The clip is a cache
+ * on the owner's card and follows the owner's choice about AI, as in the app. ADR 0039.
+ */
+export async function publicExampleAudio(
+  db: Db,
+  cardId: string,
+  deps: AudioDependencies & { analytics?: (userId: string) => AnalyticsWriter },
+  allowance: ExampleAllowance,
+): Promise<{ clip: R2ObjectBody } | { retryAfter: number }> {
+  const [card] = await db
+    .select({ slug: schema.deckPublications.slug, ownerId: schema.decks.userId })
+    .from(schema.cards)
+    .innerJoin(schema.decks, eq(schema.decks.id, schema.cards.deckId))
+    .innerJoin(schema.deckPublications, eq(schema.deckPublications.deckId, schema.decks.id))
+    .where(
+      and(
+        eq(schema.cards.id, cardId),
+        eq(schema.deckPublications.status, "published"),
+        isNull(schema.decks.archivedAt),
+        isNull(schema.cards.archivedAt),
+      ),
+    );
+  if (!card || !(await publicDeckFrontCards(db, card.slug)).includes(cardId)) {
+    throw new ServiceError("not_found", "Media not found");
+  }
+  try {
+    return await exampleAudio(
+      { db, userId: card.ownerId, actor: "system", analytics: deps.analytics?.(card.ownerId) },
+      cardId,
+      deps,
+      allowance,
+    );
+  } catch (error) {
+    // A sentence the voice cannot say is simply not public audio.
+    if (error instanceof ServiceError && error.code === "invalid") {
+      throw new ServiceError("not_found", "Media not found");
+    }
+    throw error;
+  }
 }

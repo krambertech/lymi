@@ -26,6 +26,11 @@ const PublicCardDetails = z.object({
   /** The example in the meaning language, only while it still matches the example. */
   exampleTranslation: z.string().optional(),
   notes: z.string().optional(),
+  /**
+   * Set when the example can be heard at `/public/media/card/<cardId>/example`: the original's
+   * own sentence, recorded or short enough to voice. An edition's own sentence has no clip.
+   */
+  exampleAudio: z.object({ cardId: z.string() }).optional(),
 });
 export type PublicCardDetails = z.infer<typeof PublicCardDetails>;
 

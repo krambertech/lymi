@@ -1,16 +1,15 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { clsx } from "clsx";
-import { AnimatePresence, motion, useInView } from "motion/react";
-import { type ReactNode, useRef, useState } from "react";
-import { trayStyle } from "../../lib/tray";
-import { type DemoProps, LeadDemo, LessonDemo, VoiceDemo, WordDemo } from "./AiDemos";
-import { EASE, useHold, useStill } from "./playback";
+import { AudioLines, LifeBuoy, NotebookPen, PencilLine, SlidersHorizontal } from "lucide-react";
+import type { ReactNode } from "react";
+import { type DemoProps, HintDemo, LeadDemo, LessonDemo, VoiceDemo, WordDemo } from "./AiDemos";
 import { Section } from "./Section";
+import { Showcase, useShowcaseStage } from "./Showcase";
 
-interface StageItem {
+interface Item {
   id: string;
+  icon: ReactNode;
   title: MessageDescriptor;
   body: MessageDescriptor;
   /** The tray hue behind the demo, from Explore's shelf colours. */
@@ -20,9 +19,13 @@ interface StageItem {
   dwell: number;
 }
 
-const ITEMS: StageItem[] = [
+/** The tray swaps its demo out before the next one starts, so each dwell allows for it. */
+const SWAP_MS = 400;
+
+const ITEMS: Item[] = [
   {
     id: "notes",
+    icon: <NotebookPen />,
     dwell: 5600,
     title: msg`From your notes`,
     body: msg`Take a photo of your notes or add a PDF. AI picks out the terms worth learning and skips the ones you already have.`,
@@ -31,14 +34,16 @@ const ITEMS: StageItem[] = [
   },
   {
     id: "fill",
+    icon: <PencilLine />,
     dwell: 6400,
     title: msg`A full card in seconds`,
-    body: msg`Type a word, and AI adds the meaning, an example and a hint. Everything it adds is marked.`,
+    body: msg`Type a word, and AI adds the meaning, an example and notes. Everything it adds is marked.`,
     hue: 25,
     Demo: WordDemo,
   },
   {
     id: "lead",
+    icon: <SlidersHorizontal />,
     dwell: 5600,
     title: msg`AI follows your lead`,
     body: msg`Give a deck instructions, or let AI follow the way you already write your cards.`,
@@ -47,18 +52,33 @@ const ITEMS: StageItem[] = [
   },
   {
     id: "voice",
+    icon: <AudioLines />,
     dwell: 4500,
     title: msg`Native AI voice`,
     body: msg`Hear every card read aloud the way a native speaker says it.`,
     hue: 320,
     Demo: VoiceDemo,
   },
+  {
+    id: "hint",
+    icon: <LifeBuoy />,
+    dwell: 4800,
+    title: msg`A hint for the word you forget`,
+    body: msg`When a word won’t stick, AI drafts a short hint that leads you back to it without spelling it out.`,
+    hue: 235,
+    Demo: HintDemo,
+  },
 ];
 
-/** The tray swaps its demo out before the next one starts, so the timer allows for it. */
-const SWAP_MS = 400;
+/** A demo on the tray, playing while the Showcase says it may. */
+function Staged({ Demo }: { Demo: Item["Demo"] }) {
+  const { playing } = useShowcaseStage();
+  return <Demo play={playing} />;
+}
 
-function Shell({ children }: { children: ReactNode }) {
+/** What AI does for a card: the tray on one side, the list of what it does on the other. */
+export function AiGallery() {
+  const { i18n, t } = useLingui();
   return (
     <Section nav="landing">
       <Section.Header>
@@ -72,136 +92,27 @@ function Shell({ children }: { children: ReactNode }) {
           </Trans>
         </Section.Body>
       </Section.Header>
-      {children}
-    </Section>
-  );
-}
-
-/** One item at a time: it moves on by itself until the visitor picks one. */
-function useStage() {
-  const still = useStill();
-  const root = useRef<HTMLDivElement>(null);
-  // It waits until most of the stage is on screen, so the first demo starts where you can see it.
-  const inView = useInView(root, { amount: 0.6 });
-  const hold = useHold();
-  const [index, setIndex] = useState(0);
-  const [picked, setPicked] = useState(false);
-  return {
-    root,
-    inView,
-    hold,
-    paused: !inView || hold.held,
-    index,
-    item: ITEMS[index] as StageItem,
-    auto: !still && !picked,
-    still,
-    pick: (i: number) => {
-      setPicked(true);
-      setIndex(i);
-    },
-    next: () => setIndex((i) => (i + 1) % ITEMS.length),
-  };
-}
-
-type Stage = ReturnType<typeof useStage>;
-
-/** An item's rule: it fills as the dwell timer while the stage runs itself, and stays full once picked. */
-function Rule({ on, stage, id }: { on: boolean; stage: Stage; id: string }) {
-  return (
-    <span aria-hidden="true" className="relative block h-0.5 overflow-hidden rounded-full bg-edge">
-      {on &&
-        (stage.auto ? (
-          <span
-            key={`${id}-fill`}
-            data-paused={stage.paused || undefined}
-            onAnimationEnd={stage.next}
-            style={{ animationDuration: `${stage.item.dwell + SWAP_MS}ms` }}
-            className="landing-dwell absolute inset-0 rounded-full bg-ink ltr:origin-left rtl:origin-right"
-          />
-        ) : (
-          <span className="absolute inset-0 rounded-full bg-ink" />
-        ))}
-    </span>
-  );
-}
-
-function Tray({ stage, className }: { stage: Stage; className?: string }) {
-  const { item, still, inView } = stage;
-  return (
-    <div
-      {...stage.hold.handlers}
-      style={trayStyle(item.hue)}
-      className={clsx(
-        "use-case-tile relative grid place-items-center overflow-hidden rounded-[24px] p-6 transition-[background-color] duration-700 ease-out",
-        className,
-      )}
-    >
-      <AnimatePresence mode="wait" initial={false}>
-        <motion.div
-          key={item.id}
-          initial={still ? false : { opacity: 0, y: 10, filter: "blur(6px)" }}
-          animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          exit={{ opacity: 0, y: -8, filter: "blur(6px)" }}
-          transition={{ duration: 0.4, ease: EASE }}
-          className="flex w-full justify-center"
-        >
-          <item.Demo play={inView} />
-        </motion.div>
-      </AnimatePresence>
-    </div>
-  );
-}
-
-/** What AI does for a card: one demo on a tray, beside a list where only the item on stage shows its line. */
-export function AiGallery() {
-  const { i18n } = useLingui();
-  const stage = useStage();
-  return (
-    <Shell>
-      <div
-        ref={stage.root}
-        className="mt-12 grid gap-8 @4xl:mt-14 @4xl:grid-cols-[minmax(0,1.15fr)_minmax(0,0.85fr)] @4xl:gap-14"
+      <Showcase
+        label={t`What AI does for your cards`}
+        tray="start"
+        // Narrow, the notes demo stacks and is the tallest; the tray holds that height for all five.
+        trayClassName="min-h-[540px] @2xl:min-h-[440px] @4xl:min-h-[480px]"
+        className="mt-12 @4xl:mt-14"
       >
-        {/* Narrow, the notes demo stacks and is the tallest; the tray holds that height for all four. */}
-        <Tray stage={stage} className="min-h-[484px] @2xl:min-h-[340px] @4xl:min-h-[400px]" />
-        <ul {...stage.hold.handlers} className="grid content-start @4xl:pt-2">
-          {ITEMS.map((each, i) => {
-            const on = i === stage.index;
-            return (
-              <li key={each.id}>
-                <Rule on={on} stage={stage} id={each.id} />
-                <button
-                  type="button"
-                  aria-pressed={on}
-                  onClick={() => stage.pick(i)}
-                  className="group block w-full py-4 text-start"
-                >
-                  <span
-                    className={clsx(
-                      "block text-lg font-medium tracking-[-0.015em] transition-colors duration-200",
-                      on ? "text-ink" : "text-ink-secondary hoverable:group-hover:text-ink",
-                    )}
-                  >
-                    {i18n._(each.title)}
-                  </span>
-                  <span
-                    className={clsx(
-                      "grid transition-[grid-template-rows,opacity] duration-300 ease-out motion-reduce:transition-none",
-                      on ? "grid-rows-[1fr] opacity-100" : "grid-rows-[0fr] opacity-0",
-                    )}
-                  >
-                    <span className="overflow-hidden">
-                      <span className="block max-w-[40ch] pt-1.5 pb-1 text-sm text-pretty text-ink-secondary @max-4xl:min-h-[5.5rem]">
-                        {i18n._(each.body)}
-                      </span>
-                    </span>
-                  </span>
-                </button>
-              </li>
-            );
-          })}
-        </ul>
-      </div>
-    </Shell>
+        {ITEMS.map((item) => (
+          <Showcase.Item
+            key={item.id}
+            id={item.id}
+            icon={item.icon}
+            title={i18n._(item.title)}
+            description={i18n._(item.body)}
+            hue={item.hue}
+            dwell={item.dwell + SWAP_MS}
+          >
+            <Staged Demo={item.Demo} />
+          </Showcase.Item>
+        ))}
+      </Showcase>
+    </Section>
   );
 }

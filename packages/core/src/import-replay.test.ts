@@ -2,11 +2,26 @@ import { describe, expect, it } from "vitest";
 import { State } from "./fsrs";
 import { arrivesKnown, replayProgress } from "./import-replay";
 import { guessLanguage } from "./languages";
+import type { Rating } from "./types";
 
 const day = (n: number) => new Date(Date.UTC(2026, 0, 1 + n, 15));
 const now = day(40);
 
 describe("replayProgress", () => {
+  it("keeps the lower grade of two recalls at the same moment, whatever their order", () => {
+    const now = day(20);
+    const replay = (ratings: [Rating, Rating]) =>
+      replayProgress(
+        {
+          mode: "term_to_meaning",
+          reviews: ratings.map((rating) => ({ at: day(10), rating })),
+        },
+        now,
+      ).reviews.map((review) => review.rating);
+    expect(replay([3, 1])).toEqual([1]);
+    expect(replay([1, 3])).toEqual([1]);
+  });
+
   it("runs every grade through Lymi's scheduler and keeps the source's due date", () => {
     const due = day(30);
     const { state, reviews } = replayProgress(

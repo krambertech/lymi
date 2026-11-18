@@ -29,7 +29,8 @@ export function replayProgress(
 ): { state: FsrsCard; reviews: ReplayedReview[] } {
   const grades = progress.reviews
     .filter((review) => review.at.getTime() <= now.getTime())
-    .sort((a, b) => a.at.getTime() - b.at.getTime())
+    // Of two recalls at one moment the lower grade stays, so the file's order cannot change the result.
+    .sort((a, b) => a.at.getTime() - b.at.getTime() || a.rating - b.rating)
     .filter((review, i, all) => i === 0 || review.at.getTime() !== all[i - 1]?.at.getTime());
 
   const reviews: ReplayedReview[] = [];

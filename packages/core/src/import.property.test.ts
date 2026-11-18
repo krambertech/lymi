@@ -170,13 +170,18 @@ describe("imported field properties", () => {
 });
 
 describe("imported progress properties", () => {
+  // Hours on a short grid as well as any moment, so two recalls often share a time.
+  const moment = fc.oneof(
+    fc.integer({ min: NOW - 3 * 365 * DAY_MS, max: NOW + 30 * DAY_MS }),
+    fc.integer({ min: -48, max: 2 }).map((hours) => NOW + hours * 3_600_000),
+  );
   const review = fc.record({
-    at: fc.integer({ min: NOW - 3 * 365 * DAY_MS, max: NOW + 30 * DAY_MS }).map((t) => new Date(t)),
+    at: moment.map((t) => new Date(t)),
     rating: fc.constantFrom<Rating>(1, 2, 3, 4),
   });
   const progress = fc.record({
     mode: fc.constant("term_to_meaning" as const),
-    reviews: fc.uniqueArray(review, { selector: (r) => r.at.getTime(), maxLength: 20 }),
+    reviews: fc.array(review, { maxLength: 20 }),
     due: fc.option(
       fc.integer({ min: NOW - 365 * DAY_MS, max: NOW + 365 * DAY_MS }).map((t) => new Date(t)),
       { nil: undefined },
@@ -209,8 +214,8 @@ describe("imported progress properties", () => {
     fc.assert(
       fc.property(progress, (source) => {
         const { reviews } = replayProgress(source, new Date(NOW));
-        const past = source.reviews.filter((r) => r.at.getTime() <= NOW);
-        expect(reviews).toHaveLength(past.length);
+        const past = new Set(source.reviews.map((r) => r.at.getTime()).filter((t) => t <= NOW));
+        expect(reviews).toHaveLength(past.size);
         for (let i = 1; i < reviews.length; i++) {
           expect(reviews[i]?.reviewedAt.getTime()).toBeGreaterThan(
             reviews[i - 1]?.reviewedAt.getTime() ?? 0,

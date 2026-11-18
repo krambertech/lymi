@@ -10,6 +10,8 @@ The evidence behind the weights in [ADR 0019](../../../docs/adr/0019-the-review-
 
 The year-long studies take about 20 seconds, so their output is committed as `results.json`. `src/simulation.test.ts` fails when `draw.ts`, `fsrs.ts`, `learner.ts`, `year.ts` or the ts-fsrs version change without a rerun, and when the numbers stop saying what the docs page says about them.
 
+Which cards a scheduler change moves is a separate check, `src/fsrs.differential.test.ts`; [testing.md](../../../docs/testing.md#which-schedules-a-scheduler-change-moves) has it.
+
 ```bash
 pnpm --filter @lymi/core simulate
 ```

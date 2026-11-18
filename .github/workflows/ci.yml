@@ -144,6 +144,16 @@ jobs:
           LYMI_COMPONENT_INSTANCES: ${{ needs.plan.outputs.component_instances }}
         run: pnpm test
 
+      # Component tests that passed only on retry, for the summary and the flaky-test issues.
+      - name: Upload component tests that needed a retry
+        if: ${{ !cancelled() }}
+        uses: actions/upload-artifact@v6
+        with:
+          name: component-flaky
+          path: apps/web/test-results/flaky.json
+          if-no-files-found: ignore
+          retention-days: 7
+
       # Outgoing fetches in workerd, which refuses options Node accepts. docs/testing.md.
       - name: Run Workers-runtime tests
         id: workers_test
@@ -201,6 +211,7 @@ jobs:
           --shard=${{ matrix.shard }}/${{ needs.plan.outputs.shards }}
 
       - name: Record shard outcome
+        id: outcome
         if: ${{ !cancelled() }}
         env:
           SHARD: ${{ matrix.shard }}
@@ -223,8 +234,9 @@ jobs:
           if-no-files-found: ignore
           retention-days: 7
 
+      # A test that passed on retry keeps its failed attempt's screenshot and error context too.
       - name: Upload E2E diagnostics
-        if: ${{ !cancelled() && steps.e2e.outcome == 'failure' }}
+        if: ${{ !cancelled() && (steps.e2e.outcome == 'failure' || steps.outcome.outputs.flaky != '0') }}
         uses: actions/upload-artifact@v6
         with:
           name: e2e-diagnostics-shard-${{ matrix.shard }}
@@ -242,6 +254,7 @@ jobs:
     permissions:
       actions: read
       contents: read
+      issues: write
     steps:
       - uses: actions/checkout@v5
 
@@ -253,10 +266,32 @@ jobs:
           merge-multiple: true
           path: shard-outcomes
 
+      - name: Collect component tests that needed a retry
+        # A run whose quality job never uploaded one has nothing to collect, which is no reason to fail the summary.
+        continue-on-error: true
+        uses: actions/download-artifact@v6
+        with:
+          pattern: component-flaky
+          merge-multiple: true
+          path: component-flaky
+
+      # A pass on retry is a failure CI forgave once; on `main` each one opens or updates an issue.
+      - name: File flaky-test issues
+        id: flaky_issues
+        if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+        continue-on-error: true
+        env:
+          GH_TOKEN: ${{ github.token }}
+          SHARD_OUTCOMES_DIR: shard-outcomes
+          COMPONENT_FLAKY_DIR: component-flaky
+        run: node scripts/flaky-issues.mjs
+
       - name: Summarize CI evidence
         env:
           SHARDS: ${{ needs.plan.outputs.shards }}
           SHARD_OUTCOMES_DIR: shard-outcomes
+          COMPONENT_FLAKY_DIR: component-flaky
+          FLAKY_ISSUES: ${{ steps.flaky_issues.outcome == 'success' }}
           COVERAGE: ${{ needs.plan.outputs.coverage }}
           COMPONENT_COVERAGE: ${{ needs.plan.outputs.component_coverage }}
           PLAN_REASON: ${{ needs.plan.outputs.reason }}

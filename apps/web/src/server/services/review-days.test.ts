@@ -19,7 +19,7 @@ import {
 import { getSettings, updateSettings } from "./settings";
 import { insights } from "./stats";
 import { learner, testDb } from "./test-db";
-import { batchRacedBy, racedBy } from "./test-race";
+import { batchRacedBy, insertRacedBy, racedBy } from "./test-race";
 
 let db: Db;
 let dispose: () => Promise<void>;
@@ -498,6 +498,18 @@ describe("a grade that lands while the day is being settled", () => {
 
     await updateSettings(raising, { dailyGoal: 5 });
     expect(await stored(ctx)).toMatchObject({ goal: 2, outcome: "goal_met" });
+  });
+
+  it("opens today on a goal changed after the visit read the settings", async () => {
+    const { ctx } = await setup(10, []);
+    // Today's visit read a goal of 10; the new goal lands before its row does, so there is no row to move.
+    const visit = insertRacedBy(ctx, schema.reviewDays, () =>
+      updateSettings(ctx, { dailyGoal: 4 }),
+    );
+
+    await checkToday(visit);
+    expect(await stored(ctx)).toMatchObject({ goal: 4 });
+    expect((await streak(ctx)).today.goal).toBe(4);
   });
 
   it("settles an Undo on the day as it is when the Undo lands, not as it read it", async () => {

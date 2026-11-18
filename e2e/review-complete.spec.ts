@@ -257,8 +257,10 @@ test("a review left open past midnight gives way to the new day's goal", async (
   await test.step("the first day reaches its goal and continues", async () => {
     await gradeWithKey(page, "3", "1 of 2");
     await gradeWithKey(page, "3", "2 of 2");
-    await expect(heading(page, "Daily goal reached")).toBeVisible();
+    // Tab starts from the heading only once the end has moved focus there; a Tab before that missed Continue.
+    await expect(heading(page, "Daily goal reached")).toBeFocused();
     await page.keyboard.press("Tab");
+    await expect(continueButton(page)).toBeFocused();
     await page.keyboard.press("Enter");
     await gradeWithKey(page, "3", "1 of 12");
   });

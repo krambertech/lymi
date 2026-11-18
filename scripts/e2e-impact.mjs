@@ -42,6 +42,7 @@ const productionFiles = new Set([
   "scripts/ci-summary.mjs",
   "scripts/e2e-impact.mjs",
   "scripts/e2e-shard-outcome.mjs",
+  "scripts/flaky-issues.mjs",
   "scripts/e2e-server.mjs",
   "tsconfig.base.json",
 ]);

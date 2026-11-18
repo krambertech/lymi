@@ -38,7 +38,7 @@ Continue only when the final diff is reviewable, required local checks pass and 
 ## Open or update the PR
 
 - Commit the intended change and push its branch, then create or update the PR from the filled template. For a native stack, use `gh stack submit`, then set the title and body with `gh pr edit`.
-- Start watching the PR as soon as it exists, without asking. In the Claude desktop app, turn on Auto-fix, which wakes the session on CI failures, merge conflicts and review comments. Elsewhere, start the runtime's background PR watcher, or `gh pr checks <number> --watch --required` in the background. An open-PR request is the standing request for that watch. It never extends to merging or auto-merge.
+- Start watching the PR as soon as it exists, without asking. In the Claude desktop app, turn on Auto-fix, which wakes the session on CI failures, merge conflicts and review comments. Elsewhere, start the runtime's background PR watcher. Without one, run `gh pr checks <number> --watch --required` in the background once CI has registered its checks: it exits at once before then, and for good when they finish, so it covers only the current head's checks and nothing after handoff. An open-PR request is the standing request for that watch. It never extends to merging or auto-merge.
 - Attach required images, then read the live PR back and confirm its base, head SHA, title, body, complete diff, image references and URL. Attach the PR to the chat when the runtime supports it.
 - If capture or attachment fails, retain the files and report the exact failure; the PR remains blocked.
 

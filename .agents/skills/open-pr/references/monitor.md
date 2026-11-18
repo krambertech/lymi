@@ -1,6 +1,6 @@
 # Supervise an open PR
 
-Supervise the first automated pipeline until the PR is [review-ready](../SKILL.md). Later human feedback is outside this workflow unless the user asks you to continue.
+Supervise the first automated pipeline until the PR is [review-ready](../SKILL.md). After handoff, a wake from the watch started with the PR, for a CI failure, a conflict or a review comment, continues this workflow under [Respond](#respond), with the same limits on replies to humans. Other later feedback is outside it unless the user asks you to continue.
 
 ## Observe
 
@@ -23,4 +23,4 @@ For product changes, require the independent live verdict specified by [verify](
 
 Report **review-ready** only when [the full gate](../SKILL.md) passes. Include the PR URL, final head, evidence, independent-review outcome, non-blocking findings and any human approval still required. Report **blocked** with the failing state and the decision, permission or external change needed. Keep unresolved disagreement visible; a pending check or missing review never becomes approval by waiting long enough.
 
-Keep the watch started with the PR running after handoff, so a later CI failure, conflict or review comment still reaches the session. Stop it when the PR merges or closes, or the user asks you to stop. Stay quiet while an event requires no action.
+Keep the watch started with the PR running after handoff where the runtime can, as Auto-fix does, so a later CI failure, conflict or review comment still reaches the session. Stop it when the PR merges or closes, or the user asks you to stop. Stay quiet while an event requires no action.

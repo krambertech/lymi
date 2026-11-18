@@ -176,6 +176,15 @@ jobs:
           echo "::warning title=Phone journey::Passed only on retry"
           echo "retried=true" >> "$GITHUB_OUTPUT"
 
+      # The script comes from `main`, since a promoted beta commit can predate it.
+      - name: Check out the flaky-test script
+        if: steps.journey.outputs.retried == 'true' && github.ref == 'refs/heads/main'
+        uses: actions/checkout@v5
+        with:
+          ref: ${{ github.sha }}
+          path: flaky-script
+          sparse-checkout: scripts
+
       - name: File a flaky-test issue
         if: steps.journey.outputs.retried == 'true' && github.ref == 'refs/heads/main'
         continue-on-error: true
@@ -183,7 +192,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
           FLAKY_SHA: ${{ inputs.ref || github.sha }}
           PHONE_ERROR: The first attempt failed; its Maestro output is in this run's log.
-        run: node scripts/flaky-issues.mjs --phone
+        run: node flaky-script/scripts/flaky-issues.mjs --phone
 
       - name: Record the runner's memory
         if: failure()

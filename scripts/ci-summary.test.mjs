@@ -216,3 +216,18 @@ test("a run where nothing needed its retry says so", () => {
   assert.match(summary, /\| Passed only on retry \| None \|/);
   assert.doesNotMatch(summary, /### Passed only on retry/);
 });
+
+test("a flaky test whose issue could not be filed says so", () => {
+  const summary = renderCiSummary(
+    { RUN_E2E: "false", FLAKY_ISSUES: "failure" },
+    [],
+    [
+      {
+        file: "apps/web/src/client/x.browser.test.tsx",
+        title: "x",
+        project: "components (desktop)",
+      },
+    ],
+  );
+  assert.match(summary, /Filing their `flaky test` issues failed/);
+});

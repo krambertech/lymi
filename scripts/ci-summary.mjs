@@ -97,10 +97,13 @@ function renderFlaky(env, shardOutcomes, components) {
     ...components.map((test) => ({ ...test, where: test.file })),
   ];
   if (tests.length === 0) return [];
+  // FLAKY_ISSUES is the filing step's outcome on `main`, and empty on a pull request.
   const filed =
-    env.FLAKY_ISSUES === "true"
+    env.FLAKY_ISSUES === "success"
       ? "Each one has a `flaky test` issue, opened or updated by this run."
-      : "On `main`, each one opens or updates a `flaky test` issue.";
+      : env.FLAKY_ISSUES === "failure"
+        ? "Filing their `flaky test` issues failed; see the flaky-test issues job."
+        : "On `main`, each one opens or updates a `flaky test` issue.";
   return [
     "### Passed only on retry",
     "",

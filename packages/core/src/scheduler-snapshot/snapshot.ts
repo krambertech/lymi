@@ -89,6 +89,8 @@ export function scheduleOf(history: History): Schedule {
     : emptyState(start);
   for (const [at, rating] of history.grades) {
     const now = new Date(at);
+    // The server keeps a grade at or before the last one as a duplicate, without scheduling it.
+    if (card.last_review && now <= card.last_review) continue;
     card = schedule(stored(card), countedRating(rating, sameDay(card.last_review, now)), now).card;
   }
   const buttons = preview(stored(card), new Date(history.previewAt));

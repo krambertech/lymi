@@ -18,6 +18,23 @@ describe("the scheduler on its recorded histories", () => {
     if (summary) assert.fail(`\n${summary}`);
   });
 
+  it("skips a grade at or before the last one, as the server does", () => {
+    const history = (grades: History["grades"]): History => ({
+      start: "2026-01-05T08:00:00Z",
+      grades,
+      previewAt: "2026-01-06T08:00:00Z",
+    });
+    const once = scheduleOf(history([["2026-01-05T08:01:00Z", 3]]));
+    const replayed = scheduleOf(
+      history([
+        ["2026-01-05T08:01:00Z", 3],
+        ["2026-01-05T08:01:00Z", 1],
+        ["2026-01-05T08:00:30Z", 1],
+      ]),
+    );
+    expect(replayed).toEqual(once);
+  });
+
   it("counts Easy on a card already graded that day as Good, as the server does", () => {
     const history = (second: 3 | 4): History => ({
       start: "2026-01-05T08:00:00Z",

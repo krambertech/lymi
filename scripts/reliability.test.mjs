@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { globToRegExp, parseDiff, report, triggered } from "./reliability.mjs";
+import { checklistSource, globToRegExp, parseDiff, report, triggered } from "./reliability.mjs";
 import { ITEMS } from "./reliability-checklist.mjs";
 
 const DIFF = `diff --git a/apps/web/src/server/services/review.ts b/apps/web/src/server/services/review.ts
@@ -23,6 +23,38 @@ test("reads changed files and their added lines from a diff", () => {
     "  return due;",
   ]);
   assert.deepEqual(files.get("docs/old.md"), []);
+});
+
+test("reads lines that look like file headers inside a hunk as content", () => {
+  const diff = `diff --git a/notes.md b/notes.md
+--- a/notes.md
++++ b/notes.md
+@@ -1 +1 @@
+--- an old rule
++++ a new rule
+diff --git a/icon.png b/icon.png
+Binary files a/icon.png and b/icon.png differ
+`;
+  const files = parseDiff(diff);
+  assert.deepEqual([...files.keys()], ["notes.md", "icon.png"]);
+  assert.deepEqual(files.get("notes.md"), ["++ a new rule"]);
+  assert.deepEqual(files.get("icon.png"), []);
+});
+
+test("uses the branch's checklist only when the base has none", () => {
+  const run =
+    (missing) =>
+    (...args) => {
+      if (missing.includes(args[0])) throw new Error(`${args[0]} failed`);
+      return args[0] === "show" ? "export const ITEMS = [];" : "";
+    };
+  assert.equal(checklistSource("origin/main", run([])), "export const ITEMS = [];");
+  assert.equal(checklistSource("origin/main", run(["cat-file"])), null);
+  assert.throws(
+    () => checklistSource("origin/mian", run(["rev-parse"])),
+    /cannot read origin\/mian/,
+  );
+  assert.throws(() => checklistSource("origin/main", run(["show"])), /show failed/);
 });
 
 test("matches globs the way the checklist writes them", () => {

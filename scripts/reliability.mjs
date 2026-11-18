@@ -37,23 +37,29 @@ export function globToRegExp(glob) {
   return new RegExp(`^${source}$`);
 }
 
-/** Each changed file with the lines it adds, from `git diff --unified=0` output. */
+/**
+ * Each changed file with the lines it adds, from `git diff --unified=0` output. File headers are
+ * read only between `diff --git` and the first hunk, so an added `++ x` or removed `-- x` line is
+ * content. A deleted or binary file is listed with no lines.
+ */
 export function parseDiff(text) {
   const files = new Map();
   let current = null;
+  let header = false;
+  const list = (path) => {
+    if (!files.has(path)) files.set(path, []);
+    return path;
+  };
   for (const line of text.split("\n")) {
-    if (line.startsWith("+++ ")) {
+    if (line.startsWith("diff --git ")) {
+      header = true;
+      const named = line.match(/^diff --git a\/.+ b\/(.+)$/);
+      current = named ? list(named[1]) : null;
+    } else if (header && line.startsWith("@@")) header = false;
+    else if (header && line.startsWith("+++ ")) {
       const path = line.slice(4);
-      current = path === "/dev/null" ? null : path.replace(/^b\//, "");
-      if (current && !files.has(current)) files.set(current, []);
-    } else if (line.startsWith("--- ")) {
-      const path = line.slice(4);
-      // A deleted file still changed; it adds no lines.
-      if (path !== "/dev/null") {
-        const old = path.replace(/^a\//, "");
-        if (!files.has(old)) files.set(old, []);
-      }
-    } else if (current && line.startsWith("+")) files.get(current).push(line.slice(1));
+      if (path !== "/dev/null") current = list(path.replace(/^b\//, ""));
+    } else if (!header && current && line.startsWith("+")) files.get(current).push(line.slice(1));
   }
   return files;
 }
@@ -122,12 +128,28 @@ function git(...args) {
   });
 }
 
+/**
+ * The checklist's source on the base branch, or null when the base has no checklist yet. Any other
+ * failure, such as a base that was never fetched, throws rather than trusting the branch's own list.
+ */
+export function checklistSource(base, run) {
+  try {
+    run("rev-parse", "--verify", `${base}^{commit}`);
+  } catch {
+    throw new Error(`reliability: cannot read ${base}; run git fetch origin main first`);
+  }
+  try {
+    run("cat-file", "-e", `${base}:${CHECKLIST}`);
+  } catch {
+    return null;
+  }
+  return run("show", `${base}:${CHECKLIST}`);
+}
+
 /** The checklist as the base branch has it, or the working tree's when the base has none. */
 async function loadItems(base) {
-  let source;
-  try {
-    source = git("show", `${base}:${CHECKLIST}`);
-  } catch {
+  const source = checklistSource(base, git);
+  if (source === null) {
     const { ITEMS } = await import(pathToFileURL(join(root, CHECKLIST)).href);
     return { items: ITEMS, fromBase: false };
   }
@@ -156,6 +178,11 @@ function changedFiles(base) {
 
 if (process.argv[1] && resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
   const base = process.argv[2] ?? "origin/main";
-  const { items, fromBase } = await loadItems(base);
-  console.log(report(triggered(items, changedFiles(base)), { base, fromBase }));
+  try {
+    const { items, fromBase } = await loadItems(base);
+    console.log(report(triggered(items, changedFiles(base)), { base, fromBase }));
+  } catch (error) {
+    console.error(error instanceof Error ? error.message : error);
+    process.exitCode = 1;
+  }
 }

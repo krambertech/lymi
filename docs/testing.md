@@ -202,6 +202,12 @@ Each Worker exposes its Cloudflare version ID, deployment timestamp and optional
 
 When a review finds a bug whose shape a search can spot, add the search so the next one fails `pnpm check` instead of waiting for a reviewer. A pattern inside one file is a Grit plugin in `biome-plugins/`, scoped in `biome.json`; a pattern across files, such as a key spelled in two modules, is a check in `scripts/check-regressions.mjs` with a test in its `.test.mjs`. Each message names the pull request that found the bug. Logic bugs, races and wrong copy beyond a known false claim stay with regression tests.
 
+## Check what broke before
+
+`pnpm reliability` reads the branch's diff against `origin/main` and prints the items of `scripts/reliability-checklist.mjs` it triggers: bug classes that reached `main` or production at least twice, such as a list past D1's 100 bound parameters or a write whose `WHERE` names only the id. Each item has a trigger a diff shows, the question to answer, and the pull requests behind it. **The script loads the checklist from `origin/main`, so a branch cannot loosen the checklist that judges it.** Most changes trigger nothing and none triggers more than a handful, so answer each printed item in the PR's Verification section; [open-pr](../.agents/skills/open-pr/SKILL.md) gives them to the independent reviewer too.
+
+Add an item when a fix repairs a class that already broke once before and no automated check can catch it, with a trigger, an `example` that fires it, and both pull requests. When a search can find the bug outright, move it to [a pattern check](#bugs-a-pattern-can-catch) and delete the item. Sharpen a trigger that fires on changes it has nothing to say about.
+
 ## Workers-runtime tests
 
 `apps/web/vitest.workers.config.ts` runs `*.workers.test.ts` files inside workerd with the production Worker's compatibility date and flags, and answers every outgoing request from a stub upstream in that config. Node accepts request options that workerd refuses: `redirect: "error"` once passed typecheck, lint, the unit tests and the deployment dry run, then failed every AI and audio call in production. `outgoing-fetch.workers.test.ts` drives every outgoing fetch the Worker makes with request options, from the AI providers to picture import, email, PostHog and Apple, through the real `fetch` and `Request`; it proves the call leaves and comes back, not how a provider behaves.

@@ -6,6 +6,7 @@ import {
   formatShift,
   type History,
   type Schedule,
+  scheduleOf,
   schedulesOf,
   summarize,
 } from "./scheduler-snapshot/snapshot";
@@ -15,6 +16,18 @@ describe("the scheduler on its recorded histories", () => {
     const actual = schedulesOf(histories as unknown as Record<string, History>);
     const summary = summarize(differences(schedules as Record<string, Schedule>, actual));
     if (summary) assert.fail(`\n${summary}`);
+  });
+
+  it("counts Easy on a card already graded that day as Good, as the server does", () => {
+    const history = (second: 3 | 4): History => ({
+      start: "2026-01-05T08:00:00Z",
+      grades: [
+        ["2026-01-05T08:01:00Z", 1],
+        ["2026-01-05T08:12:00Z", second],
+      ],
+      previewAt: "2026-01-06T08:00:00Z",
+    });
+    expect(scheduleOf(history(4))).toEqual(scheduleOf(history(3)));
   });
 });
 
@@ -53,6 +66,12 @@ describe("the summary of what moved", () => {
     expect(summary).toMatch(/Forgot\s+0\s+0\s+0$/m);
     expect(summary).toContain("largest x1.200 gaps-001");
     expect(summary).toContain("state Review -> Relearning: 1 (gaps-001)");
+  });
+
+  it("shows a card leaving New as its stability from zero", () => {
+    const fresh = { ...card, state: "New" as const, stability: 0 };
+    const summary = summarize(differences({ "new-001": fresh }, { "new-001": card }));
+    expect(summary).toContain("largest 0 -> 10 new-001");
   });
 
   it("names histories added or dropped since the snapshot", () => {

@@ -1,6 +1,14 @@
-import { deserializeState, emptyState, preview, State, schedule, serializeState } from "../fsrs";
+import {
+  deserializeState,
+  emptyState,
+  type FsrsCard,
+  preview,
+  State,
+  schedule,
+  serializeState,
+} from "../fsrs";
 import { replayProgress } from "../import-replay";
-import type { Rating } from "../types";
+import { countedRating, type Rating } from "../types";
 
 /** A grade and when it was given, to the second. */
 export type GradeAt = [at: string, rating: Rating];
@@ -47,6 +55,16 @@ export function iso(date: Date | number): string {
   return new Date(Math.floor(ms / 1000) * 1000).toISOString().replace(".000Z", "Z");
 }
 
+/** The server's day is the learner's; UTC keeps the snapshot the same on every machine. */
+function sameDay(a: Date | undefined, b: Date): boolean {
+  return !!a && a.toISOString().slice(0, 10) === b.toISOString().slice(0, 10);
+}
+
+/** Read back from storage, as the server reads a card before grading or previewing it. */
+function stored(card: FsrsCard): FsrsCard {
+  return deserializeState(serializeState(card));
+}
+
 function round(value: number): number {
   return Math.round(value * 10 ** DECIMALS) / 10 ** DECIMALS;
 }
@@ -70,10 +88,10 @@ export function scheduleOf(history: History): Schedule {
       ).state
     : emptyState(start);
   for (const [at, rating] of history.grades) {
-    // Stored between grades, as the server stores it.
-    card = schedule(deserializeState(serializeState(card)), rating, new Date(at)).card;
+    const now = new Date(at);
+    card = schedule(stored(card), countedRating(rating, sameDay(card.last_review, now)), now).card;
   }
-  const buttons = preview(card, new Date(history.previewAt));
+  const buttons = preview(stored(card), new Date(history.previewAt));
   return {
     state: State[card.state] as StateName,
     due: iso(card.due),
@@ -107,7 +125,7 @@ export type Differences = {
   removed: string[];
   dates: Record<DateField, Shift[]>;
   states: { id: string; from: StateName; to: StateName }[];
-  stability: { id: string; ratio: number }[];
+  stability: { id: string; from: number; to: number }[];
   difficulty: { id: string; change: number }[];
 };
 
@@ -143,7 +161,7 @@ export function differences(
       moved = true;
     }
     if (Math.abs(now.stability - before.stability) > TOLERANCE) {
-      result.stability.push({ id, ratio: now.stability / before.stability });
+      result.stability.push({ id, from: before.stability, to: now.stability });
       moved = true;
     }
     if (Math.abs(now.difficulty - before.difficulty) > TOLERANCE) {
@@ -221,10 +239,17 @@ export function summarize(diff: Differences): string {
         `  ${LABELS[field].padEnd(10)}${String(shifts.length).padStart(6)}${String(later).padStart(7)}${String(shifts.length - later).padStart(9)}${typical.padStart(11)}   ${top ? `${formatShift(top.ms)} ${top.id}` : ""}`.trimEnd(),
       );
     }
-    const stab = largest(diff.stability, (s) => Math.abs(Math.log(s.ratio)));
+    // A new card has stability 0, so a card leaving New has no ratio and counts as the largest move.
+    const stab = largest(diff.stability, (s) =>
+      s.from > 0 && s.to > 0 ? Math.abs(Math.log(s.to / s.from)) : Number.POSITIVE_INFINITY,
+    );
     if (stab) {
+      const change =
+        stab.from > 0 && stab.to > 0
+          ? `x${(stab.to / stab.from).toFixed(3)}`
+          : `${stab.from} -> ${stab.to}`;
       lines.push(
-        `  ${"stability".padEnd(10)}${String(diff.stability.length).padStart(6)}   largest x${stab.ratio.toFixed(3)} ${stab.id}`,
+        `  ${"stability".padEnd(10)}${String(diff.stability.length).padStart(6)}   largest ${change} ${stab.id}`,
       );
     }
     const diffc = largest(diff.difficulty, (d) => Math.abs(d.change));

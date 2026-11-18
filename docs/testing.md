@@ -198,6 +198,12 @@ Committed migrations are immutable production history. `pnpm db:generate` create
 
 Each Worker exposes its Cloudflare version ID, deployment timestamp and optional commit tag from `/api/health`. After Workers Builds activates versions, `pnpm deploy:health` checks both canonical domains and identifies the versions serving traffic. Before calling production verified, compare its active tag with the intended commit. A successful build page without these active-version checks is not deployment evidence.
 
+## Rules a pure function must keep
+
+A rule that holds for every input is a property test: a `*.property.test.ts` beside the module, using `fast-check` to try a hundred generated inputs on each run and shrink any failure to the smallest one. Write one when a function in `packages/core` has a rule a single example cannot cover: a round trip such as `serializeState` and `deserializeState`, an invariant such as "every field fits its limit", idempotency, or an order that must not depend on the input's order. `fsrs.property.test.ts` and `import.property.test.ts` are the models.
+
+A failure prints a seed and a counterexample. Turn the counterexample into an ordinary regression test beside the fix, so the case stays covered whatever the generator draws next. When a counterexample shows the generator was wrong rather than the code, narrow the generator and say why in a comment. A generator stops strings and arrays at ten items unless it says `size: "max"`, so a property about a limit, such as the 40-character tag, needs it to reach the limit at all. To search harder before a change to the scheduler or an importer, raise `numRuns` with `fc.configureGlobal` in a throwaway file and pass a longer `--testTimeout`; never commit a raised count.
+
 ## Bugs a pattern can catch
 
 When a review finds a bug whose shape a search can spot, add the search so the next one fails `pnpm check` instead of waiting for a reviewer. A pattern inside one file is a Grit plugin in `biome-plugins/`, scoped in `biome.json`; a pattern across files, such as a key spelled in two modules, is a check in `scripts/check-regressions.mjs` with a test in its `.test.mjs`. Each message names the pull request that found the bug. Logic bugs, races and wrong copy beyond a known false claim stay with regression tests.

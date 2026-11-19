@@ -1,10 +1,10 @@
 # Supervise an open PR
 
-Supervise the first automated pipeline until the PR is [review-ready](../SKILL.md). Later human feedback is outside this workflow unless the user asks you to continue.
+Supervise the first automated pipeline until the PR is [review-ready](../SKILL.md). After handoff, a wake from the watch started with the PR, for a CI failure, a conflict or a review comment, continues this workflow under [Respond](#respond), with the same limits on replies to humans. Other later feedback is outside it unless the user asks you to continue.
 
 ## Observe
 
-- Use one watcher per PR: the runtime's PR monitor when available, otherwise `gh pr checks <number> --watch --required`. A required-check watcher does not establish that review bots have finished; inspect their checks and review threads separately. Wait for configured blocking reviews on the current head; advisory reviews do not gate readiness.
+- Use one watcher per PR, started when the PR is created ([Open or update the PR](../SKILL.md#open-or-update-the-pr)): the runtime's PR monitor when available, such as Auto-fix in the Claude desktop app, otherwise `gh pr checks <number> --watch --required` in the background. A required-check watcher does not establish that review bots have finished; inspect their checks and review threads separately. Wait for configured blocking reviews on the current head; advisory reviews do not gate readiness.
 - After each push, observe the new head. Match check results and automated reviews to that SHA; inspect unresolved older findings too when they still apply to the current code.
 - A wake-up or green check is a reason to reassess the gate, not evidence that the whole PR is ready. If the observation mechanism cannot continue, report the missing capability and current state.
 
@@ -24,4 +24,4 @@ For product changes, require the independent live verdict specified by [verify](
 
 Report **review-ready** only when [the full gate](../SKILL.md) passes. Include the PR URL, final head, evidence, independent-review outcome, non-blocking findings and any human approval still required. Report **blocked** with the failing state and the decision, permission or external change needed. Keep unresolved disagreement visible; a pending check or missing review never becomes approval by waiting long enough.
 
-Stop the active watch at handoff or when the PR merges, closes or the user asks you to stop. Keep an ongoing background watch only when requested, using the runtime's background mechanism. Stay quiet while an event requires no action.
+Keep the watch started with the PR running after handoff where the runtime can, as Auto-fix does, so a later CI failure, conflict or review comment still reaches the session. Stop it when the PR merges or closes, or the user asks you to stop. Stay quiet while an event requires no action.

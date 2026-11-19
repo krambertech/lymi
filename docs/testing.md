@@ -224,6 +224,26 @@ A rule that holds for every input is a property test: a `*.property.test.ts` bes
 
 A failure prints a seed and a counterexample. Turn the counterexample into an ordinary regression test beside the fix, so the case stays covered whatever the generator draws next. When a counterexample shows the generator was wrong rather than the code, narrow the generator and say why in a comment. A generator stops strings and arrays at ten items unless it says `size: "max"`, so a property about a limit, such as the 40-character tag, needs it to reach the limit at all. To search harder before a change to the scheduler or an importer, raise `numRuns` with `fc.configureGlobal` in a throwaway file and pass a longer `--testTimeout`; never commit a raised count.
 
+## Which schedules a scheduler change moves
+
+`src/fsrs.differential.test.ts` in `packages/core` plays 264 recorded card histories through the scheduler, reading the card back from storage before each grade and demoting a same-day Easy to Good as the server does, and compares each card's outcome with the approved one: its state, due date, stability, difficulty, and the dates under the four grade buttons. The histories in `src/scheduler-snapshot/histories.json` cover new cards, single grades, steady learners, repeated Forgots, long gaps, same-day repeats, a device clock behind the last grade, and cards brought in through `replayProgress`. The approved outcomes are `schedules.json` beside them, one card per line.
+
+A change that moves any card fails with a summary: how many cards moved and of which kinds, then for the due date and each grade how many moved later or earlier, the median shift and the largest with its card. Dates are compared to the second, and stability and difficulty to four decimals. Float drift big enough to show there also redraws fuzz, so it usually moves dates too.
+
+Fuzz stays on. ts-fsrs seeds it from the review time, the card's review count and its difficulty times stability, and every history fixes its times, so each run draws the same fuzz. A change that moves a card's stability also redraws the fuzz of its later grades, which is why one moved grade can move every grade after it.
+
+When a pull request means to change scheduling, such as a new parameter, retention, learning step or a ts-fsrs upgrade that changes results, approve the new schedules in the same pull request:
+
+```bash
+pnpm --filter @lymi/core schedules
+```
+
+Commit `schedules.json`, paste the test's summary from before the regeneration into the pull request, and let the diff show reviewers every card that moved. A pull request that means to change nothing about scheduling never regenerates: a failure there is the bug.
+
+`pnpm --filter @lymi/core schedules --histories` redraws the histories from their seed. Each history's review times follow the scheduler of the day it was drawn, so redraw only to grow the corpus, in a pull request that does not change the scheduler.
+
+The test sits beside the year-long simulation's fingerprint check in `src/simulation.test.ts` rather than replacing it. The fingerprint asks whether `results.json` is stale, and it also covers the draw and the simulations, which these histories never touch; the snapshot asks which cards a change moved and by how much. A scheduler change runs both commands.
+
 ## Bugs a pattern can catch
 
 When a review finds a bug whose shape a search can spot, add the search so the next one fails `pnpm check` instead of waiting for a reviewer. A pattern inside one file is a Grit plugin in `biome-plugins/`, scoped in `biome.json`; a pattern across files, such as a key spelled in two modules, is a check in `scripts/check-regressions.mjs` with a test in its `.test.mjs`. Each message names the pull request that found the bug. Logic bugs, races and wrong copy beyond a known false claim stay with regression tests.

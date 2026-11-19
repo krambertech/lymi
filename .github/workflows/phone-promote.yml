@@ -58,6 +58,10 @@ jobs:
   smoke:
     needs: plan
     if: needs.plan.outputs.ready == 'true'
+    # A called workflow gets no more than this grants; the journey files an issue when it passes only on retry.
+    permissions:
+      contents: read
+      issues: write
     uses: ./.github/workflows/phone.yml
     with:
       ref: ${{ needs.plan.outputs.commit }}

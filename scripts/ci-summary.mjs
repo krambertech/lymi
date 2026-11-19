@@ -16,6 +16,15 @@ function outcome(value) {
   return labels[value] ?? labels.unknown;
 }
 
+/** The component tests that passed only on retry, written by `apps/web/src/test/flaky-reporter.ts`. */
+export function readComponentFlaky(directory) {
+  try {
+    return JSON.parse(readFileSync(join(directory, "flaky.json"), "utf8"));
+  } catch {
+    return [];
+  }
+}
+
 export function readShardOutcomes(directory) {
   let names;
   try {
@@ -28,6 +37,12 @@ export function readShardOutcomes(directory) {
     .filter((name) => name.endsWith(".json"))
     .map((name) => JSON.parse(readFileSync(join(directory, name), "utf8")))
     .sort((first, second) => first.shard - second.shard);
+}
+
+function flakyCount(shardOutcomes, components) {
+  const journeys = shardOutcomes.reduce((sum, record) => sum + (record.flakyTests?.length ?? 0), 0);
+  const total = journeys + components.length;
+  return total === 0 ? "None" : `${total} ${total === 1 ? "test" : "tests"}, listed below`;
 }
 
 function count(value) {
@@ -74,6 +89,41 @@ function renderShards(env, shardOutcomes) {
   ];
 }
 
+/** Every test that failed and then passed on retry, which a green run would otherwise hide. */
+function renderFlaky(env, shardOutcomes, components) {
+  const journeys = shardOutcomes.flatMap((record) => record.flakyTests ?? []);
+  const tests = [
+    ...journeys.map((test) => ({ ...test, where: `${test.file}:${test.line}` })),
+    ...components.map((test) => ({ ...test, where: test.file })),
+  ];
+  if (tests.length === 0) return [];
+  // FLAKY_ISSUES is the filing step's outcome on `main`, and empty on a pull request.
+  const filed =
+    env.FLAKY_ISSUES === "success"
+      ? "Each one has a `flaky test` issue, opened or updated by this run."
+      : env.FLAKY_ISSUES === "failure"
+        ? "Filing their `flaky test` issues failed; see the flaky-test issues job."
+        : "On `main`, each one opens or updates a `flaky test` issue.";
+  return [
+    "### Passed only on retry",
+    "",
+    `CI retried these once and stayed green, but each failed first. ${filed} Fix the cause or delete the test; never a sleep, a longer timeout, a skip or a retry. docs/testing.md#flaky-tests.`,
+    "",
+    "| Test | Where | Ran on | First failure |",
+    "| --- | --- | --- | --- |",
+    ...tests.map(
+      (test) =>
+        `| ${cell(test.title)} | \`${test.where}\` | ${cell(test.project ?? "")} | ${cell(test.error ?? "")} |`,
+    ),
+    "",
+  ];
+}
+
+/** Table cell text, with the characters that would break the row escaped. */
+function cell(text) {
+  return text.replaceAll("|", "\\|").replaceAll("\n", " ");
+}
+
 export function ciFailures(env) {
   const failures = [];
 
@@ -91,7 +141,7 @@ export function ciFailures(env) {
   return failures;
 }
 
-export function renderCiSummary(env, shardOutcomes = []) {
+export function renderCiSummary(env, shardOutcomes = [], components = []) {
   const coverage = env.COVERAGE || "Not selected";
   const reason =
     env.PLAN_REASON || "An earlier gate stopped before the coverage plan was selected.";
@@ -140,11 +190,13 @@ export function renderCiSummary(env, shardOutcomes = []) {
     `| Deployment boundaries | ${outcome(env.BOUNDARIES_OUTCOME)} |`,
     `| TypeScript | ${outcome(env.TYPECHECK_OUTCOME)} |`,
     `| Unit tests | ${outcome(env.TEST_OUTCOME)} |`,
+    `| Passed only on retry | ${flakyCount(shardOutcomes, components)} |`,
     `| Workers-runtime tests | ${outcome(env.WORKERS_TEST_OUTCOME)} |`,
     `| Product deployment package | ${outcome(env.DEPLOY_PRODUCT_OUTCOME)} |`,
     `| Public-site deployment package | ${outcome(env.DEPLOY_SITE_OUTCOME)} |`,
     "",
     ...renderShards(env, shardOutcomes),
+    ...renderFlaky(env, shardOutcomes, components),
     "A green Chromium pull-request run is not full cross-browser evidence. Chromium + WebKit journeys and every component instance run on every push to `main`; `/e2e` forces the journeys.",
     "",
   ].join("\n");
@@ -156,7 +208,11 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
   }
   appendFileSync(
     process.env.GITHUB_STEP_SUMMARY,
-    renderCiSummary(process.env, readShardOutcomes(process.env.SHARD_OUTCOMES_DIR ?? "")),
+    renderCiSummary(
+      process.env,
+      readShardOutcomes(process.env.SHARD_OUTCOMES_DIR ?? ""),
+      readComponentFlaky(process.env.COMPONENT_FLAKY_DIR ?? ""),
+    ),
   );
 
   const failures = ciFailures(process.env);

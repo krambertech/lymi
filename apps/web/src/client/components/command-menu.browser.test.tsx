@@ -97,9 +97,13 @@ test("a search paused offline says so rather than that nothing matches", async (
 
 test("a failed search still reports itself under the rows that matched", async () => {
   server.search.mockRejectedValue(new Error("boom"));
+  // The add bar under the rows reads "spanish → Spanish" once the deck is known to lack the term,
+  // so the check answers at once and the deck row is named by its start.
+  server.term.mockResolvedValue(null);
   renderMenu(undefined);
   await userEvent.type(field(), "spanish");
-  await expect.element(page.getByRole("option", { name: /Spanish/ })).toBeVisible();
+  await expect.element(page.getByText("→ Spanish")).toBeVisible();
+  await expect.element(page.getByRole("option", { name: /^Spanish/ })).toBeVisible();
   await expect.element(page.getByText(failedSearch)).toBeVisible();
 });
 

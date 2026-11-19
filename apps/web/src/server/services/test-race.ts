@@ -71,3 +71,47 @@ export function batchRacedBy(
     }),
   };
 }
+
+/** A Drizzle builder whose query runs only after `rival`, through whatever chain the service calls on it. */
+function heldBack<T extends object>(builder: T, rival: () => Promise<unknown>): T {
+  return new Proxy(builder, {
+    get: (target, key, receiver) => {
+      const value = Reflect.get(target, key, receiver);
+      if (key === "then") {
+        return (done: (value: unknown) => unknown, fail: (error: unknown) => unknown) =>
+          rival()
+            .then(() => (value as PromiseLike<unknown>["then"]).call(target, (v) => v))
+            .then(done, fail);
+      }
+      if (typeof value !== "function") return value;
+      return (...args: unknown[]) => {
+        const next = value.apply(target, args);
+        return next && typeof next === "object" ? heldBack(next, rival) : next;
+      };
+    },
+  });
+}
+
+/**
+ * The context with its first insert into `table` held back until `rival` has run, so a test can
+ * land another writer between a service's read and the row it creates.
+ */
+export function insertRacedBy(
+  ctx: ServiceContext,
+  table: Table,
+  rival: () => Promise<unknown>,
+): ServiceContext {
+  let raced = false;
+  const insert = ((target: Table) => {
+    const builder = ctx.db.insert(target);
+    if (raced || target !== table) return builder;
+    raced = true;
+    return heldBack(builder, rival);
+  }) as Db["insert"];
+  return {
+    ...ctx,
+    db: new Proxy(ctx.db, {
+      get: (db, key, receiver) => (key === "insert" ? insert : Reflect.get(db, key, receiver)),
+    }),
+  };
+}

@@ -130,7 +130,7 @@ pnpm exec playwright install chromium webkit
 pnpm --filter @lymi/web exec vitest run --project components
 ```
 
-Each browser context asks for reduced motion, for the same reason the journeys do: a toast that changes opacity and height without travelling holds still long enough to be clicked, where one sliding into a stack does not. `forced-states` rewrites both motion queries into `data-motion` selectors, so the specimens that prove the full and reduced forms are unaffected by what the context asks for. A test that drives full motion wraps its subject in `<MotionConfig reducedMotion="never">` and says why. CI retries a failed test once, matching the journeys: these gate the same merges.
+Each browser context asks for reduced motion, for the same reason the journeys do: a toast that changes opacity and height without travelling holds still long enough to be clicked, where one sliding into a stack does not. `forced-states` rewrites both motion queries into `data-motion` selectors, so the specimens that prove the full and reduced forms are unaffected by what the context asks for. A test that drives full motion wraps its subject in `<MotionConfig reducedMotion="never">` and says why. CI retries a failed test once, matching the journeys, and reports a pass on retry as flaky ([Flaky tests](#flaky-tests)).
 
 An instance's files run one after another in the same browser page, so a file can leave state behind for the next. On touch Chromium, `page.viewport()` wider than the device leaves the whole page pinch-zoomed after the size is restored, and a later file can pan that zoomed view; Playwright then aims a click a row off and reports another element intercepting it. The test setup resets the page scale before every file.
 
@@ -176,9 +176,29 @@ Every run writes a final summary with its selected browser and component coverag
 
 Comment `/e2e` on a pull request to force a run without adding a label. The command accepts only the repository owner and only branches in this repository.
 
-Every shard uploads a small `e2e-shard-outcome-<n>` artifact, and the final check downloads them all so the run summary carries a row per shard, the combined pass count, and the file, line and title of every failing test. `scripts/e2e-shard-outcome.mjs` builds that record from the JSON report that the shared Playwright config writes on CI. A shard whose browser install or dependency step broke is recorded as a failure rather than a skip, so the table never reads as a deliberate exclusion.
+Every shard uploads a small `e2e-shard-outcome-<n>` artifact, and the final check downloads them all so the run summary carries a row per shard, the combined pass count, the file, line and title of every failing test, and every test that passed only on retry. `scripts/e2e-shard-outcome.mjs` builds that record from the JSON report that the shared Playwright config writes on CI. A shard whose browser install or dependency step broke is recorded as a failure rather than a skip, so the table never reads as a deliberate exclusion.
 
-A failed shard also retains screenshots, video from the retry, a Playwright trace, and the HTML report as `e2e-diagnostics-shard-<n>` for seven days. Successful shards retain no browser artifacts.
+A failed shard also retains screenshots, video from the retry, a Playwright trace, and the HTML report as `e2e-diagnostics-shard-<n>` for seven days. So does a green shard with a test that passed only on retry: the failed attempt's screenshot and `error-context.md`, which holds the page's accessibility snapshot at the failure, are the evidence for its cause. Other successful shards retain no browser artifacts.
+
+## Flaky tests
+
+A test that fails and then passes on CI's retry is flaky, and a flaky pass is a failure CI forgave once. A silent retry teaches whoever reads the run to rerun instead of fixing, and it hides real races. From 12 October to 18 November 2026, 400 of 1,317 runs with journeys passed a test only on retry. Three tests in `review-complete.spec.ts` made 412 of those 520 passes: two hit a product race, where a goal change that landed while Today opened the day left the day on the old goal, and one pressed Tab before focus arrived.
+
+CI keeps one retry for journeys and component tests, so a flake does not turn `main` red while its cause is found, and nothing about it is silent:
+
+- The run summary has a Passed only on retry row and a table naming each such test, its browser and its first error.
+- On a push to `main`, `scripts/flaky-issues.mjs` opens a `flaky test` issue for each one, comments on the issue already open for it, or reopens a closed one. The phone's smoke journey does the same when it passes only on its second run on `main`.
+- A green shard with a flaky journey keeps its diagnostics, as above.
+
+Fix a flaky test; never make it pass. Read the failed attempt first: the summary names it, and `error-context.md` shows what the page held. Then fix what it shows:
+
+- A race in the product, such as a read and a write that another request can land between: fix the product, with a test that lands the other writer in between, as `racedBy` and `insertRacedBy` in `apps/web/src/server/services/test-race.ts` do.
+- A test that acts before the page is ready for it: wait for the state the next step depends on, such as a response, focus on the control a key press needs, or the row it reads.
+- A test that only fails under a loaded runner: find what it depends on being fast, or move what it proves to a lower layer that is not.
+
+If the cause cannot be found, delete the test, and say in its issue or pull request what it proved and which test, if any, still covers that. Never add a sleep, a longer timeout, a skip, a `fixme` or a retry to make a test pass, and never rerun a red job to get a green one without reading the failure: a job that passes on a rerun is flaky too, and goes in an issue the same way. `biome-plugins/no-flaky-masks.grit` fails `pnpm check` on `waitForTimeout`, retries in `describe.configure`, `slow` and `fixme` under `e2e/`; it cannot tell a longer `setTimeout` from a test that needs one, so that part is review's. A wait that proves something does not happen, such as an event that is never sent, is the one honest sleep, and takes a `biome-ignore` that says so.
+
+A test that times out on your own Mac while other sessions load it is not a CI flake. Run it again alone before calling it a bug, and judge flakiness by CI.
 
 ## Delivery checks
 
@@ -298,7 +318,7 @@ A freeze that changes a successful response also asks whether the phone's kept q
 
 The journey is a smoke test and stays one flow. A behaviour it could cover belongs in the layer that can see it: a rule in a unit test, an answer in a route test, the client's handling of it in `phone-client.test.ts`. Add a step only for something that exists solely in the native build, such as a session surviving a relaunch.
 
-`.github/workflows/phone.yml` runs it on GitHub's `macos-26` runner, which is free for a public repository. It fingerprints the native inputs with `@expo/fingerprint` and caches the Simulator build under that hash, so a run without a native change only re-bundles the JavaScript into the cached app, starts the Worker, boots a Simulator and runs the flow. The Worker is a build with the personas (`LYMI_APP_PREVIEW=1`) served by `wrangler dev`, because Vite's dev Worker dropped requests for minutes beside the Simulator on that runner. A failed flow runs once more and reports a pass on retry as a warning. A failed run keeps Maestro's screenshots, its JUnit report, the Worker log and the runner's memory for seven days.
+`.github/workflows/phone.yml` runs it on GitHub's `macos-26` runner, which is free for a public repository. It fingerprints the native inputs with `@expo/fingerprint` and caches the Simulator build under that hash, so a run without a native change only re-bundles the JavaScript into the cached app, starts the Worker, boots a Simulator and runs the flow. The Worker is a build with the personas (`LYMI_APP_PREVIEW=1`) served by `wrangler dev`, because Vite's dev Worker dropped requests for minutes beside the Simulator on that runner. A failed flow runs once more and reports a pass on retry as a warning, and on `main` as a [flaky test](#flaky-tests) issue. A failed run keeps Maestro's screenshots, its JUnit report, the Worker log and the runner's memory for seven days.
 
 To run it on your Mac, build the Release app against a local Worker, install it on your own Simulator, and run the script with that Worker's port:
 

@@ -13,6 +13,7 @@ import type { BrowserCommand, BrowserInstanceOption } from "vitest/node";
 import { e2eProductUrl, e2eSiteUrl } from "../../e2e/ports.mjs";
 import { e2ePublisherEmails } from "../../e2e/settings.mjs";
 import { mcpApp } from "./mcp-app.build.ts";
+import { FlakyReporter } from "./src/test/flaky-reporter.ts";
 
 const isE2E = process.env.LYMI_E2E === "1";
 const isAppPreview = process.env.LYMI_APP_PREVIEW === "1";
@@ -197,6 +198,10 @@ export default defineConfig({
   // E2E preflights must reach the Worker’s credentialed CORS policy.
   server: { port: 5173, ...(isE2E && { cors: false }) },
   test: {
+    // Naming reporters replaces Vitest's own choice, so CI names the annotations it would have added.
+    ...(process.env.GITHUB_ACTIONS === "true" && {
+      reporters: ["default", "github-actions", new FlakyReporter("test-results/flaky.json")],
+    }),
     projects: (
       [
         {
@@ -245,7 +250,7 @@ export default defineConfig({
             name: "components",
             include: ["src/client/**/*.browser.test.tsx"],
             setupFiles: ["src/client/test/browser-setup.ts"],
-            // These gate the same merges as the journeys, which have always retried once.
+            // One retry on CI, which reports the pass as flaky rather than hiding it. docs/testing.md#flaky-tests.
             retry: process.env.CI ? 1 : 0,
             browser: {
               enabled: true,

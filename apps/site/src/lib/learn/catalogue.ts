@@ -44,7 +44,7 @@ export const STAGES: readonly Stage[] = [
     name: msg`The basics`,
     level: "A1",
     hue: 222,
-    goal: msg`Hear Estonian, count, tell the time, say who you are, tell people what to do and say where you are.`,
+    goal: msg`Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do.`,
     lessons: [
       {
         slug: "haaldus",
@@ -54,6 +54,18 @@ export const STAGES: readonly Stage[] = [
         minutes: 10,
         blurb: msg`A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud.`,
       },
+      { name: msg`Personal pronouns and “to be”`, et: "Mina, sina, tema" },
+      { name: msg`Present tense`, et: "Ma loen" },
+      { name: msg`Negation`, et: "Ei ole" },
+      {
+        slug: "kusimused",
+        name: msg`Questions`,
+        title: msg`Asking questions in Estonian`,
+        et: "Kas? Mis? Kus?",
+        minutes: 10,
+        blurb: msg`A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and the first questions you'll hear. Every sentence is read aloud.`,
+      },
+      { name: msg`Saying where: -s and -l`, et: "Tallinnas, Tartus" },
       {
         slug: "numbrid",
         name: msg`Numbers`,
@@ -64,19 +76,7 @@ export const STAGES: readonly Stage[] = [
       },
       { name: msg`Telling the time`, et: "Mis kell on?" },
       { name: msg`Days of the week`, et: "Esmaspäev, teisipäev" },
-      { name: msg`Personal pronouns and “to be”`, et: "Mina, sina, tema" },
-      { name: msg`Present tense`, et: "Ma loen" },
-      { name: msg`Negation`, et: "Ei ole" },
       { name: msg`Commands`, et: "Istu! Ära istu!" },
-      {
-        slug: "kusimused",
-        name: msg`Questions`,
-        title: msg`Asking questions in Estonian`,
-        et: "Kas? Mis? Kus?",
-        minutes: 10,
-        blurb: msg`A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and the first questions you'll hear. Every sentence is read aloud.`,
-      },
-      { name: msg`Saying where: -s and -l`, et: "Tallinnas, Tartus" },
     ],
   },
   {

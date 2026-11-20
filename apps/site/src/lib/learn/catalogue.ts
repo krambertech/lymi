@@ -100,7 +100,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian conversation practice: meeting someone`,
         et: "Tere! Mina olen Mari.",
         minutes: 10,
-        blurb: msg`Free Estonian conversation practice for beginners: say your name, where you're from, where you live and work, answer yes-or-no questions and ask your own. Every sentence is read aloud.`,
+        blurb: msg`Free Estonian conversation practice for beginners: say your name, where you're from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud.`,
       },
       {
         slug: "numbrid",

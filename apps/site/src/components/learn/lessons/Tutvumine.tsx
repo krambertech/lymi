@@ -318,8 +318,8 @@ function useContent() {
           line: "Kas sa ela Pärnus?",
           why: (
             <Trans>
-              Only <b lang="et">ei</b> takes the ending off. After <b lang="et">kas</b> the verb
-              keeps it: <b lang="et">elad</b>.
+              The verb drops its ending after <b lang="et">ei</b>, not after <b lang="et">kas</b>:{" "}
+              <b lang="et">elad</b>.
             </Trans>
           ),
         },
@@ -421,7 +421,7 @@ function useContent() {
       answer: "töötab",
       why: (
         <Trans>
-          Jaan is <b lang="et">ta</b>, he, so the verb takes{" "}
+          Jaan is <b lang="et">ta</b>, so the verb takes{" "}
           <b lang="et" className="whitespace-nowrap">
             -b
           </b>
@@ -582,8 +582,8 @@ export function TutvumineLesson() {
                 </p>
                 <p>
                   <Trans>
-                    This time Mari's lines are sound only. Tap one to hear it again, or show its
-                    words.
+                    This time Mari's lines are sound only. Tap a line to hear it again, and Show
+                    what Mari said to read it.
                   </Trans>
                 </p>
               </Prose>
@@ -632,7 +632,7 @@ export function TutvumineLesson() {
                 <p>
                   <Trans>
                     Kati writes about herself. Each gap needs one thing you've practised: a form of{" "}
-                    <b lang="et">olema</b>, a verb ending, <b lang="et">ei</b>,{" "}
+                    <b lang="et">olema</b>, a verb ending, the verb after <b lang="et">ei</b>,{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -s
                     </b>{" "}

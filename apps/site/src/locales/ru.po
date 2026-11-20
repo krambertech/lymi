@@ -513,7 +513,7 @@ msgid "<0>price elasticity</0> ?"
 msgstr "<0>эластичность спроса</0> ?"
 
 msgid "<0>Sa oled</0> is you are: this tells Mari she's from Ukraine."
-msgstr "<0>Sa oled</0> — «ты есть»: так ты говоришь, что это Мари из Украины."
+msgstr "<0>Sa oled</0> — «ты есть»: так ты говоришь Мари, что она из Украины."
 
 msgid "<0>Sa</0> takes <1>-d</1>: <2>töötad</2>."
 msgstr "После <0>sa</0> глагол оканчивается на <1>-d</1>: <2>töötad</2>."
@@ -3922,8 +3922,8 @@ msgstr "Бесплатные колоды по темам государстве
 msgid "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 msgstr "Бесплатные колоды, которые проходишь одну за другой. Каждый день несколько новых слов вперемешку с повторениями."
 
-msgid "Free Estonian conversation practice for beginners: say your name, where you're from, where you live and work, answer yes-or-no questions and ask your own. Every sentence is read aloud."
-msgstr "Бесплатная разговорная практика эстонского для начинающих: назови своё имя, откуда ты, где живёшь и работаешь, отвечай на вопросы «да или нет» и задавай свои. Каждое предложение озвучено."
+msgid "Free Estonian conversation practice for beginners: say your name, where you're from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
+msgstr "Бесплатная разговорная практика эстонского для начинающих: скажи, как тебя зовут, откуда ты, где живёшь и работаешь, отвечай на вопросы «да или нет» и задавай свои. Каждый разговор и каждый текст озвучены."
 
 msgid "Free Estonian decks in Lymi"
 msgstr "Бесплатные эстонские колоды в Lymi"
@@ -5500,8 +5500,8 @@ msgstr "Издатель убрал её с публичных страниц Ly
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Редкий, но серьёзный риск — лактоацидоз."
 
-msgid "Jaan is <0>ta</0>, he, so the verb takes <1>-b</1>: <2>töötab</2>."
-msgstr "Яан — это <0>ta</0>, «он», поэтому глагол оканчивается на <1>-b</1>: <2>töötab</2>."
+msgid "Jaan is <0>ta</0>, so the verb takes <1>-b</1>: <2>töötab</2>."
+msgstr "Яан — это <0>ta</0>, поэтому глагол оканчивается на <1>-b</1>: <2>töötab</2>."
 
 msgid "Jaan lives in Pärnu."
 msgstr "Яан живёт в Пярну."
@@ -5580,8 +5580,8 @@ msgstr "Kas sa tuled? Ты придёшь?"
 msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi — партитив от kass, кошка."
 
-msgid "Kati writes about herself. Each gap needs one thing you've practised: a form of <0>olema</0>, a verb ending, <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
-msgstr "Кати пишет о себе. Каждый пропуск — на одно из знакомых правил: форма <0>olema</0>, окончание глагола, <1>ei</1>, <2>-s</2> либо <3>-l</3> или вопросительное слово."
+msgid "Kati writes about herself. Each gap needs one thing you've practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
+msgstr "Кати пишет о себе. Каждый пропуск — на одно из знакомых правил: форма <0>olema</0>, окончание глагола, глагол после <1>ei</1>, <2>-s</2> либо <3>-l</3> или вопросительное слово."
 
 msgid "Keep every word from your tutor lessons."
 msgstr "Сохрани каждое слово с уроков с репетитором."
@@ -7158,9 +7158,6 @@ msgstr "Одно слово с обоими значениями."
 msgid "Only"
 msgstr "Только"
 
-msgid "Only <0>ei</0> takes the ending off. After <1>kas</1> the verb keeps it: <2>elad</2>."
-msgstr "Окончание пропадает только после <0>ei</0>. После <1>kas</1> глагол его сохраняет: <2>elad</2>."
-
 msgid "Only you, unless you share the deck. Cards made from your notes stay in your account."
 msgstr "Только ты, если не поделишься колодой. Карточки из твоих заметок остаются в твоём аккаунте."
 
@@ -8207,7 +8204,7 @@ msgid "Say no"
 msgstr "Ответь «нет»"
 
 msgid "Say no with <0>ei</0> and the verb without its ending: <1>Ma ei tööta. Ei, ma ei ole.</1>"
-msgstr "Отрицай с помощью <0>ei</0> и глагола без окончания: <1>Ma ei tööta. Ei, ma ei ole.</1>"
+msgstr "Чтобы сказать «нет», ставь <0>ei</0>, а глагол — без окончания: <1>Ma ei tööta. Ei, ma ei ole.</1>"
 
 msgid "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "Скажи «о», затем растяни губы, а язык оставь на месте. Похоже на русское «ы»."
@@ -9834,6 +9831,9 @@ msgstr "Транслатив"
 msgid "The union"
 msgstr "Профсоюз"
 
+msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
+msgstr "Глагол теряет окончание после <0>ei</0>, а не после <1>kas</1>: <2>elad</2>."
+
 msgid "The verb without its ending"
 msgstr "Глагол без окончания"
 
@@ -10038,8 +10038,8 @@ msgstr "Услышь час и отступи на полчаса назад, к
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "Эта политика охватывает сайт Lymi, приложения, API и подключённых помощников."
 
-msgid "This time Mari's lines are sound only. Tap one to hear it again, or show its words."
-msgstr "На этот раз реплики Мари только звучат. Нажми на реплику, чтобы услышать её ещё раз, или открой её текст."
+msgid "This time Mari's lines are sound only. Tap a line to hear it again, and Show what Mari said to read it."
+msgstr "На этот раз реплики Мари только звучат. Нажми на реплику, чтобы услышать её ещё раз, а «Показать реплику» — чтобы её прочитать."
 
 msgid "Thousands on AnkiWeb"
 msgstr "Тысячи на AnkiWeb"

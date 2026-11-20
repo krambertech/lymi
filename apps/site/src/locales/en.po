@@ -3922,8 +3922,8 @@ msgstr "Free decks that follow the topics of Poland’s state exams. Take A1, th
 msgid "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 msgstr "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 
-msgid "Free Estonian conversation practice for beginners: say your name, where you're from, where you live and work, answer yes-or-no questions and ask your own. Every sentence is read aloud."
-msgstr "Free Estonian conversation practice for beginners: say your name, where you're from, where you live and work, answer yes-or-no questions and ask your own. Every sentence is read aloud."
+msgid "Free Estonian conversation practice for beginners: say your name, where you're from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
+msgstr "Free Estonian conversation practice for beginners: say your name, where you're from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
 
 msgid "Free Estonian decks in Lymi"
 msgstr "Free Estonian decks in Lymi"
@@ -5500,8 +5500,8 @@ msgstr "Its publisher took it off Lymi’s public pages. Anyone who already adde
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Its rare, serious risk is lactic acidosis."
 
-msgid "Jaan is <0>ta</0>, he, so the verb takes <1>-b</1>: <2>töötab</2>."
-msgstr "Jaan is <0>ta</0>, he, so the verb takes <1>-b</1>: <2>töötab</2>."
+msgid "Jaan is <0>ta</0>, so the verb takes <1>-b</1>: <2>töötab</2>."
+msgstr "Jaan is <0>ta</0>, so the verb takes <1>-b</1>: <2>töötab</2>."
 
 msgid "Jaan lives in Pärnu."
 msgstr "Jaan lives in Pärnu."
@@ -5580,8 +5580,8 @@ msgstr "Kas sa tuled? Are you coming?"
 msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi is the partitive of kass, cat."
 
-msgid "Kati writes about herself. Each gap needs one thing you've practised: a form of <0>olema</0>, a verb ending, <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
-msgstr "Kati writes about herself. Each gap needs one thing you've practised: a form of <0>olema</0>, a verb ending, <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
+msgid "Kati writes about herself. Each gap needs one thing you've practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
+msgstr "Kati writes about herself. Each gap needs one thing you've practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
 
 msgid "Keep every word from your tutor lessons."
 msgstr "Keep every word from your tutor lessons."
@@ -7157,9 +7157,6 @@ msgstr "One word for both."
 
 msgid "Only"
 msgstr "Only"
-
-msgid "Only <0>ei</0> takes the ending off. After <1>kas</1> the verb keeps it: <2>elad</2>."
-msgstr "Only <0>ei</0> takes the ending off. After <1>kas</1> the verb keeps it: <2>elad</2>."
 
 msgid "Only you, unless you share the deck. Cards made from your notes stay in your account."
 msgstr "Only you, unless you share the deck. Cards made from your notes stay in your account."
@@ -9834,6 +9831,9 @@ msgstr "The translative case"
 msgid "The union"
 msgstr "The union"
 
+msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
+msgstr "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
+
 msgid "The verb without its ending"
 msgstr "The verb without its ending"
 
@@ -10038,8 +10038,8 @@ msgstr "This is the one most learners get wrong at first. Listen for the hour, t
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "This policy covers Lymi’s website, apps, API and connected assistants."
 
-msgid "This time Mari's lines are sound only. Tap one to hear it again, or show its words."
-msgstr "This time Mari's lines are sound only. Tap one to hear it again, or show its words."
+msgid "This time Mari's lines are sound only. Tap a line to hear it again, and Show what Mari said to read it."
+msgstr "This time Mari's lines are sound only. Tap a line to hear it again, and Show what Mari said to read it."
 
 msgid "Thousands on AnkiWeb"
 msgstr "Thousands on AnkiWeb"

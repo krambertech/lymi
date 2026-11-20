@@ -1,9 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { captureAnalytics } from "@lymi/client/analytics";
 import { clsx } from "clsx";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, Info } from "lucide-react";
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
-import { lessonBySlug, lessonPath, nextLesson } from "../../lib/learn/catalogue";
+import { lessonBySlug, lessonPath, nextLesson, previousLesson } from "../../lib/learn/catalogue";
 import { finishSection as saveSection, startLesson } from "../../lib/learn/progress";
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
@@ -168,9 +168,14 @@ export function Prose({ children }: { children: ReactNode }) {
   );
 }
 
-/** A small line under an explorer or quiz, for an aside that can be skipped. */
+/** A short note beside the lesson's main line, one that can be skipped: an exception, a comparison. */
 export function Aside({ children }: { children: ReactNode }) {
-  return <p className="max-w-[62ch] text-md text-pretty text-ink-muted">{children}</p>;
+  return (
+    <p className="flex max-w-[62ch] gap-3 rounded-lg border border-edge px-4 py-3 text-md text-pretty text-ink-secondary">
+      <Info aria-hidden="true" className="mt-[0.2em] size-4.5 shrink-0 text-(--form)" />
+      <span className="min-w-0">{children}</span>
+    </p>
+  );
 }
 
 /** Where the reader is in the lesson: segments fill in order up to the section on screen. */
@@ -281,19 +286,26 @@ function NextLesson({
   onFinish: () => void;
 }) {
   const { i18n } = useLingui();
+  const previous = previousLesson(slug);
   const next = nextLesson(slug);
   const number = next?.n;
+  const previousNumber = previous?.n;
+  // The two links share a size; "All lessons" is at the top of the page.
+  const shape = "h-auto w-full flex-col gap-0 py-3 whitespace-normal";
   return (
-    <nav className="flex flex-wrap justify-between gap-3 pt-2 pb-18">
-      <a
-        href={localizedPath("learn", locale)}
-        className={buttonClass("secondary", "lg", "self-end")}
-      >
-        <span className="flex items-center gap-1.5">
-          <ArrowLeft aria-hidden="true" data-icon="inline-start" />
-          <Trans>All lessons</Trans>
-        </span>
-      </a>
+    <nav className="grid gap-3 pt-2 pb-18 sm:grid-cols-2">
+      {previous && (
+        <a
+          href={lessonPath(previous.slug, locale)}
+          className={buttonClass("secondary", "lg", clsx(shape, "items-start text-start"))}
+        >
+          <small className="flex items-center gap-1 text-sm font-normal text-ink-secondary">
+            <ArrowLeft aria-hidden="true" className="size-3.5! rtl:-scale-x-100" />
+            <Trans>Lesson {previousNumber}</Trans>
+          </small>
+          <span>{i18n._(previous.name)}</span>
+        </a>
+      )}
       {next?.slug ? (
         <a
           href={lessonPath(next.slug, locale)}
@@ -301,17 +313,17 @@ function NextLesson({
           className={buttonClass(
             "primary",
             "lg",
-            "ms-auto h-auto flex-col items-end gap-0 py-3 whitespace-normal",
+            clsx(shape, "items-end text-end max-sm:order-first sm:col-start-2"),
           )}
         >
           <small className="flex items-center gap-1 text-sm font-normal opacity-80">
             <Trans>Lesson {number}</Trans>
-            <ArrowRight aria-hidden="true" className="size-3.5!" />
+            <ArrowRight aria-hidden="true" className="size-3.5! rtl:-scale-x-100" />
           </small>
           <span>{i18n._(next.name)}</span>
         </a>
       ) : next ? (
-        <p className="ms-auto grid justify-items-end text-end text-ink-muted">
+        <p className="grid content-center justify-items-end text-end text-ink-muted max-sm:order-first sm:col-start-2">
           <small className="text-sm">
             <Trans>Lesson {number}, coming soon</Trans>
           </small>

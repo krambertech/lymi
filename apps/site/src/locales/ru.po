@@ -4768,6 +4768,9 @@ msgstr "Урок {number} · {minutes} мин"
 msgid "Lesson {number}, coming soon"
 msgstr "Урок {number}, скоро"
 
+msgid "Lesson {previousNumber}"
+msgstr "Урок {previousNumber}"
+
 msgid "Lesson 4"
 msgstr "Урок 4"
 

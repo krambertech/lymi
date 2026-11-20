@@ -161,6 +161,13 @@ export function lessonPath(slug: string, locale: Locale | string): string {
   return `${localizedPath("learn", locale)}/${slug}`;
 }
 
+/** The built lesson before this one. */
+export function previousLesson(slug: string): (PlacedLesson & BuiltLesson) | undefined {
+  const i = LESSONS.findIndex((lesson) => lesson.slug === slug);
+  const before = i > 0 ? LESSONS[i - 1] : undefined;
+  return before?.slug ? (before as PlacedLesson & BuiltLesson) : undefined;
+}
+
 /** The lesson after this one, built or not. */
 export function nextLesson(slug: string): PlacedLesson | undefined {
   const i = LESSONS.findIndex((lesson) => lesson.slug === slug);

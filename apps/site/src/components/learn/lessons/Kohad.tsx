@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { CornerDownRight } from "lucide-react";
 import { useMemo, useState } from "react";
-import { LESSONS } from "../../../lib/learn/catalogue";
+import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import { clipId, clipUrl, KOHAD_PLACES, KOHAD_SENTENCES } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
@@ -341,7 +341,7 @@ type EndingItem = GapItem & { id: Id; where: Where; pair: readonly [string, stri
 
 export function KohadLesson() {
   const { t, i18n } = useLingui();
-  const questions = LESSONS.find((lesson) => lesson.et === "Kas? Mis? Kus?")?.n;
+  const questions = lessonBySlug("kusimused")?.n;
   const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
   const into = LESSONS.find((lesson) => lesson.et === "Majas, majja, majast")?.n;
 
@@ -413,8 +413,15 @@ export function KohadLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          How to say where you are in Estonian: <b lang="et">-s</b> for in, <b lang="et">-l</b> for
-          on and at, and how to answer <b lang="et">kus</b>, where.
+          How to say where you are in Estonian:{" "}
+          <b lang="et" className="whitespace-nowrap">
+            -s
+          </b>{" "}
+          for in,{" "}
+          <b lang="et" className="whitespace-nowrap">
+            -l
+          </b>{" "}
+          for on and at, and how to answer <b lang="et">kus</b>, where.
         </Trans>
       }
       facts={[
@@ -444,15 +451,29 @@ export function KohadLesson() {
       ]}
       recap={[
         <Trans key="1">
-          The ending <b lang="et">-s</b> says in: <b lang="et">Eestis, Tallinnas, koolis</b>.
+          The ending{" "}
+          <b lang="et" className="whitespace-nowrap">
+            -s
+          </b>{" "}
+          says in: <b lang="et">Eestis, Tallinnas, koolis</b>.
         </Trans>,
         <Trans key="2">
-          The ending <b lang="et">-l</b> says on a surface or at an activity:{" "}
-          <b lang="et">laual, tööl</b>.
+          The ending{" "}
+          <b lang="et" className="whitespace-nowrap">
+            -l
+          </b>{" "}
+          says on a surface or at an activity: <b lang="et">laual, tööl</b>.
         </Trans>,
         <Trans key="3">
-          Some places take <b lang="et">-l</b> by habit, such as <b lang="et">turul</b> and names
-          ending in <b lang="et">-maa</b>: <b lang="et">Saaremaal, Saksamaal</b>.
+          Some places take{" "}
+          <b lang="et" className="whitespace-nowrap">
+            -l
+          </b>{" "}
+          by habit, such as <b lang="et">turul</b> and names ending in{" "}
+          <b lang="et" className="whitespace-nowrap">
+            -maa
+          </b>
+          : <b lang="et">Saaremaal, Saksamaal</b>.
         </Trans>,
         <Trans key="4">
           Learn each place together with its ending: <b lang="et">Tallinn, Tallinnas</b>.
@@ -472,8 +493,11 @@ export function KohadLesson() {
                 <p>
                   <Trans>
                     <Word w="Tallinn" /> is the town; <Word w="Tallinnas" /> is in Tallinn. Estonian
-                    says in with an ending, not a word in front: it puts <b lang="et">-s</b> on the
-                    end of the name. I live in Tallinn is <Word w="Ma elan Tallinnas." />
+                    says in with an ending, not a word in front: it puts{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -s
+                    </b>{" "}
+                    on the end of the name. I live in Tallinn is <Word w="Ma elan Tallinnas." />
                   </Trans>
                 </p>
                 <p>
@@ -486,11 +510,17 @@ export function KohadLesson() {
               <InSwitch />
               <Aside>
                 <Trans>
-                  Many words gain a vowel before the <b lang="et">-s</b>, as Tallinn does, and which
-                  vowel is hard to guess for now. So learn each place together with its{" "}
-                  <b lang="et">-s</b> form: <Word w="kool" />, <Word w="koolis" />;{" "}
-                  <Word w="linn" />, <Word w="linnas" />. Lesson {genitive} shows where the vowel
-                  comes from.
+                  Many words gain a vowel before the{" "}
+                  <b lang="et" className="whitespace-nowrap">
+                    -s
+                  </b>
+                  , as Tallinn does, and which vowel is hard to guess for now. So learn each place
+                  together with its{" "}
+                  <b lang="et" className="whitespace-nowrap">
+                    -s
+                  </b>{" "}
+                  form: <Word w="kool" />, <Word w="koolis" />; <Word w="linn" />,{" "}
+                  <Word w="linnas" />. Lesson {genitive} shows where the vowel comes from.
                 </Trans>
               </Aside>
             </>
@@ -549,7 +579,10 @@ export function KohadLesson() {
                 <p>
                   <Trans>
                     Hear a sentence and pick the place. Listen for the word that ends in{" "}
-                    <b lang="et">-s</b>.
+                    <b lang="et" className="whitespace-nowrap">
+                      -s
+                    </b>
+                    .
                   </Trans>
                 </p>
               </Prose>
@@ -582,9 +615,13 @@ export function KohadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The other ending is <b lang="et">-l</b>. It says on a surface:{" "}
-                    <Word w="laual" />, on the table. And it says at an activity, where you're doing
-                    something rather than inside a building: <Word w="tööl" />, at work.
+                    The other ending is{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -l
+                    </b>
+                    . It says on a surface: <Word w="laual" />, on the table. And it says at an
+                    activity, where you're doing something rather than inside a building:{" "}
+                    <Word w="tööl" />, at work.
                   </Trans>
                 </p>
               </Prose>
@@ -603,11 +640,20 @@ export function KohadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A market takes <b lang="et">-l</b> by habit: <Word w="turul" />, at the market.
-                    So do names ending in <b lang="et">-maa</b>: <Word w="Saaremaal" />, on
-                    Saaremaa, and <Word w="Saksamaal" />, in Germany, though English says in there.
-                    A few towns and districts take <b lang="et">-l</b> as well, such as{" "}
-                    <Word w="Otepääl" /> and <Word w="Lasnamäel" />.
+                    A market takes{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -l
+                    </b>{" "}
+                    by habit: <Word w="turul" />, at the market. So do names ending in{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -maa
+                    </b>
+                    : <Word w="Saaremaal" />, on Saaremaa, and <Word w="Saksamaal" />, in Germany,
+                    though English says in there. A few towns and districts take{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -l
+                    </b>{" "}
+                    as well, such as <Word w="Otepääl" /> and <Word w="Lasnamäel" />.
                   </Trans>
                 </p>
               </Prose>
@@ -632,8 +678,19 @@ export function KohadLesson() {
                 <p>
                   <Trans>
                     Each round shows a place. Pick its ending, then hear it in a sentence. Most
-                    towns, buildings and countries take <b lang="et">-s</b>; work, the market and
-                    names ending in <b lang="et">-maa</b> take <b lang="et">-l</b>.
+                    towns, buildings and countries take{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -s
+                    </b>
+                    ; work, the market and names ending in{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -maa
+                    </b>{" "}
+                    take{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -l
+                    </b>
+                    .
                   </Trans>
                 </p>
               </Prose>

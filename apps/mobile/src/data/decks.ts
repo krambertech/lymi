@@ -4,7 +4,7 @@ import { writes } from "@lymi/client/writes";
 import { isolate } from "@lymi/core";
 import { useQueryClient } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
-import { Alert } from "react-native";
+import { alert } from "../ui/alert";
 import { toast } from "../ui/toast-host";
 
 /**
@@ -59,7 +59,7 @@ export function useDeckExits(deck: DeckSummary | undefined) {
   return {
     archive: () => void archive(),
     leave: () =>
-      Alert.alert(
+      alert(
         t`Leave ${{ name: isolate(name) }}?`,
         t`The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there.`,
         [
@@ -73,7 +73,7 @@ export function useDeckExits(deck: DeckSummary | undefined) {
                 void refresh();
                 router.dismissTo("/library" as Href);
               } catch (e) {
-                Alert.alert(t`That didn’t go through`, errorMessage(e));
+                alert(t`That didn’t go through`, errorMessage(e));
               }
             },
           },

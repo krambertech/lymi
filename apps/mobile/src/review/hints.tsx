@@ -8,7 +8,7 @@ import { EASE_OUT } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { GlassView } from "expo-glass-effect";
 import { useEffect, useRef, useState } from "react";
-import { Alert, type LayoutChangeEvent, Pressable, TextInput, View } from "react-native";
+import { type LayoutChangeEvent, Pressable, TextInput, View } from "react-native";
 import Animated, {
   FadeOut,
   Keyframe,
@@ -22,6 +22,7 @@ import { useGlass } from "../theme/glass";
 import { ALWAYS, CROSSFADE, curve, useReduceMotion } from "../theme/motion";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
+import { alert } from "../ui/alert";
 import { Button, Icon, Text } from "../ui/primitives";
 import { Sheet } from "../ui/sheet";
 import { useSheetFocus } from "../ui/sheet-focus";
@@ -278,7 +279,7 @@ export function HintSheet({
     if (!editing || pending) return;
     const hint = text.trim();
     if (!hint) {
-      Alert.alert(t`Write a hint.`);
+      alert(t`Write a hint.`);
       return;
     }
     if (hint === editing.hint) {
@@ -290,7 +291,7 @@ export function HintSheet({
       const { card: written } = await writes.updateCard(editing, { hint, hintSource: "manual" });
       onSaved({ text: written.hint ?? hint, source: written.hintSource ?? "manual" });
     } catch (e) {
-      Alert.alert(t`Couldn’t save the hint.`, e instanceof Error ? e.message : undefined);
+      alert(t`Couldn’t save the hint.`, e instanceof Error ? e.message : undefined);
     } finally {
       setPending(false);
     }

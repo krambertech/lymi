@@ -41,7 +41,6 @@ import { type Href, useLocalSearchParams, useRouter } from "expo-router";
 import { type ReactNode, useEffect, useMemo, useReducer, useRef, useState } from "react";
 import {
   AccessibilityInfo,
-  Alert,
   I18nManager,
   Image,
   Pressable,
@@ -117,6 +116,7 @@ import { haptics } from "../theme/haptics";
 import { ALWAYS, CROSSFADE, curve, curveFn, springAt, useReduceMotion } from "../theme/motion";
 import { usePalette, useRoom } from "../theme/palette";
 import { fitType } from "../theme/type";
+import { alert } from "../ui/alert";
 import { Chip, StateChip } from "../ui/chip";
 import { ExampleLines } from "../ui/example-lines";
 import { Furigana } from "../ui/furigana";
@@ -327,9 +327,7 @@ function Run({
         setRevealed(false);
         setLastGraded(last);
       }
-      Alert.alert(
-        t`Couldn’t take back your grade for “${{ term: isolate(term) }}”. It still counts.`,
-      );
+      alert(t`Couldn’t take back your grade for “${{ term: isolate(term) }}”. It still counts.`);
     });
     return true;
   };
@@ -356,7 +354,7 @@ function Run({
       arrive({ type: "moved", by: "restore" });
       setRevealed(false);
     } catch (e) {
-      Alert.alert(
+      alert(
         t`Couldn’t restore “${isolate(back.term)}”.`,
         e instanceof Error ? e.message : undefined,
       );
@@ -474,7 +472,7 @@ function Run({
       await writes.setImportant(card, value);
     } catch (e) {
       setMarks((m) => new Map(m).set(card.id, !value));
-      Alert.alert(t`Couldn’t save that.`, e instanceof Error ? e.message : undefined);
+      alert(t`Couldn’t save that.`, e instanceof Error ? e.message : undefined);
     }
   };
   /** Takes the card out of this review at once; the line that says so offers it back. */
@@ -494,7 +492,7 @@ function Run({
     } catch (e) {
       toast.close(ARCHIVED_TOAST);
       flow.restore(card.id);
-      Alert.alert(
+      alert(
         t`Couldn’t archive “${isolate(card.term)}”.`,
         e instanceof Error ? e.message : undefined,
       );
@@ -533,7 +531,7 @@ function Run({
     void graded.answered.then((refused) => {
       if (!refused) return;
       setLastGraded((last) => afterRefusal(last, graded.record));
-      Alert.alert(
+      alert(
         refused === "gone"
           ? t`Couldn’t save your grade for “${{ term: isolate(term) }}”. The card is no longer in your decks.`
           : t`Couldn’t save your grade for “${{ term: isolate(term) }}”. You’ll see it again.`,

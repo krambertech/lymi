@@ -72,7 +72,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`How to say no in Estonian`,
         et: "Ei ole",
         minutes: 8,
-        blurb: msg`A free lesson on Estonian negation: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud.`,
       },
       { name: msg`Commands`, et: "Istu! Ära istu!" },
       { name: msg`Questions`, et: "Kas? Mis? Kus?" },

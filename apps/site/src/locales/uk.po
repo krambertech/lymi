@@ -362,8 +362,14 @@ msgstr "<0>Aiko</0> пройшла тиждень 3"
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Дифузія</0>: частинки рухаються від вищої концентрації до нижчої."
 
-msgid "<0>ei {stem}</0>: ei before the verb, and the ending is gone."
-msgstr "<0>ei {stem}</0>: ei перед дієсловом, а закінчення зникло."
+msgid "<0>ei {stem}</0>: <1>ei</1> before the verb, and the ending is gone."
+msgstr "<0>ei {stem}</0>: <1>ei</1> перед дієсловом, а закінчення зникло."
+
+msgid "<0>Ei ole</0> in one word"
+msgstr "<0>Ei ole</0> одним словом"
+
+msgid "<0>Ei</0>, and the verb without its ending."
+msgstr "<0>Ei</0> і дієслово без закінчення."
 
 msgid "<0>Jonas</0> added 4 cards to Week 4"
 msgstr "<0>Jonas</0> додав 4 картки в тиждень 4"
@@ -383,11 +389,17 @@ msgstr "<0>Мексиканська іспанська</0>, <1>розмовні 
 msgid "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
 msgstr "<0>õ ä ö ü</0> — окремі голосні, і найнезвичніша з них <1>õ</1>."
 
+msgid "<0>olen</0> for I, <1>oled</1> for you, <2>on</2> for he, she and they."
+msgstr "<0>olen</0> для «я», <1>oled</1> для «ти», <2>on</2> для «він», «вона» і «вони»."
+
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>альтернативна вартість</0> <1>= чим жертвуєш</1>"
 
 msgid "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 msgstr "<0>Осмос</0>: вода проходить крізь мембрану туди, де більше розчиненої речовини."
+
+msgid "<0>Pole</0> means the same as <1>ei ole</1>. You'll hear both."
+msgstr "<0>Pole</0> означає те саме, що <1>ei ole</1>. Почуєш обидва."
 
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>еластичність попиту</0> ?"
@@ -692,8 +704,8 @@ msgstr "Безкоштовні флешкартки для іспанської.
 msgid "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
 msgstr "Безкоштовний застосунок для вивчення української на картках. Наголос позначено, доки ти не знаєш слово, слова, що різняться лише наголосом, мають окремі картки, а озвучує їх носій мови. Почни з абетки, далі A1 і A2."
 
-msgid "A free lesson on Estonian negation: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
-msgstr "Безкоштовний урок про заперечення в естонській: ei перед дієсловом, однакове для всіх осіб, ei ole і pole, і як відповісти «ні» на питання. Кожне речення озвучене."
+msgid "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
+msgstr "Безкоштовний урок про заперечення в теперішньому часі естонської: ei перед дієсловом, однакове для всіх осіб, ei ole і pole, і як відповісти «ні» на питання. Кожне речення озвучене."
 
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers."
 msgstr "Безкоштовний урок про естонські числа: від нуля до десяти, -teist і -kümmend, сотні й тисячі, а також числа в цінах, віці й номерах телефонів."
@@ -1281,11 +1293,11 @@ msgstr "Усі, однаково часто"
 msgid "All of them, inside real sentences."
 msgstr "Усі правильно, навіть у справжніх реченнях."
 
-msgid "All of them. Ei, and the ending goes."
-msgstr "Усі. Ei, і закінчення зникає."
+msgid "All of them. <0>Ei</0>, and the ending goes."
+msgstr "Усі. <0>Ei</0>, і закінчення зникає."
 
-msgid "All of them. Ei, then the verb from the question."
-msgstr "Усі. Ei, а за ним дієслово з питання."
+msgid "All of them. <0>Ei</0>, then the verb from the question."
+msgstr "Усі. <0>Ei</0>, а за ним дієслово з питання."
 
 msgid "All of them. You can hear length."
 msgstr "Усі правильно. Ти чуєш довготу."
@@ -1474,17 +1486,17 @@ msgstr "Вони п’ють?"
 msgid "Are you *coming* today?"
 msgstr "Ти сьогодні *прийдеш*?"
 
-msgid "Are you eating? To more than one."
-msgstr "Ви їсте? До кількох людей."
+msgid "Are you all eating?"
+msgstr "Ви всі їсте?"
+
+msgid "Are you all waiting?"
+msgstr "Ви всі чекаєте?"
 
 msgid "Are you reading?"
 msgstr "Ти читаєш?"
 
 msgid "Are you tired?"
 msgstr "Ти втомився?"
-
-msgid "Are you waiting? To more than one."
-msgstr "Ви чекаєте? До кількох людей."
 
 msgid "Article and plural, the way you write them"
 msgstr "Артикль і множина, як у твоїх картках"
@@ -2819,14 +2831,8 @@ msgstr "Ei перед дієсловом"
 msgid "Ei ole and pole"
 msgstr "Ei ole і pole"
 
-msgid "Ei ole in one word"
-msgstr "Ei ole одним словом"
-
 msgid "Ei ole in one word."
 msgstr "Ei ole одним словом."
-
-msgid "Ei, and the verb without its ending."
-msgstr "Ei і дієслово без закінчення."
 
 msgid "eight"
 msgstr "вісім"
@@ -2978,8 +2984,8 @@ msgstr "Кожен приклад має переклад і зберігає н
 msgid "Every example comes with a translation, and a native voice reads the whole sentence."
 msgstr "Кожен приклад має переклад, а носійський голос читає все речення."
 
-msgid "Every form of olema becomes ei ole."
-msgstr "Кожна форма olema стає ei ole."
+msgid "Every form of <0>olema</0> becomes <1>ei ole</1>."
+msgstr "Кожна форма <0>olema</0> стає <1>ei ole</1>."
 
 msgid "Every language"
 msgstr "Усі мови"
@@ -4103,8 +4109,8 @@ msgstr "Мені однаково"
 msgid "I don't read"
 msgstr "я не читаю"
 
-msgid "I don't speak Estonian."
-msgstr "Я не говорю естонською."
+msgid "I don't speak Estonian"
+msgstr "я не говорю естонською"
 
 msgid "I don’t understand"
 msgstr "Я не розумію"
@@ -4400,6 +4406,9 @@ msgstr "У застосунку Grok Bot відкрий Connect apps і вибе
 msgid "In the order you learn them, one section at a time."
 msgstr "У тому порядку, в якому ти їх вчиш: розділ за розділом."
 
+msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It's the same for every person, so no is easier than yes."
+msgstr "У теперішньому часі постав <0>ei</0> перед дієсловом і прибери закінчення. Для всіх осіб це однаково, тож «ні» сказати легше, ніж «так»."
+
 msgid "In this folder"
 msgstr "У цій папці"
 
@@ -4570,6 +4579,9 @@ msgstr "список змін Mochi"
 
 msgid "Its forms barely look alike, which is why the card keeps all three."
 msgstr "Його форми майже не схожі одна на одну, тому картка тримає всі три."
+
+msgid "Its ma form is loen."
+msgstr "Форма з ma: loen."
 
 msgid "Its own algorithm, or FSRS in Settings"
 msgstr "Власний алгоритм або FSRS у налаштуваннях"
@@ -5518,8 +5530,8 @@ msgstr "Фармакологія NCLEX"
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Майже. Прислухайся до дієслова в питанні."
 
-msgid "Nearly. Watch for endings that stay after ei."
-msgstr "Майже. Стеж, щоб після ei не лишалося закінчення."
+msgid "Nearly. Watch for endings that stay after <0>ei</0>."
+msgstr "Майже. Стеж, щоб після <0>ei</0> не лишалося закінчення."
 
 msgid "Needed; your cards live on Lymi’s servers"
 msgstr "Потрібен; картки зберігаються на серверах Lymi"
@@ -5639,7 +5651,7 @@ msgid "No, *thanks*."
 msgstr "Ні, *дякую*."
 
 msgid "No, he or she isn't."
-msgstr "Ні, вдома немає."
+msgstr "Ні, не вдома."
 
 msgid "No, I'm not reading."
 msgstr "Ні, я не читаю."
@@ -5871,9 +5883,6 @@ msgstr "Раніше"
 msgid "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
 msgstr "Від olema буде <0>ei ole</0>, або одним словом <1>pole</1>."
 
-msgid "olen for I, oled for you, on for he, she and they."
-msgstr "olen для «я», oled для «ти», on для «він», «вона» і «вони»."
-
 msgid "On iPhone"
 msgstr "На iPhone"
 
@@ -5946,8 +5955,8 @@ msgstr "Одна з двох дзеркальних форм"
 msgid "One of the ten base words."
 msgstr "Одне з десяти базових слів."
 
-msgid "One sentence to keep from today: <0/>"
-msgstr "Речення, яке варто запам’ятати вже сьогодні: <0/>"
+msgid "One sentence to keep from today: <0/>."
+msgstr "Речення, яке варто запам’ятати вже сьогодні: <0/>."
 
 msgid "One shared deck, everyone on their own schedule"
 msgstr "Одна спільна колода, у кожного свій розклад"
@@ -6302,9 +6311,6 @@ msgstr "балів, щоб скласти N5"
 msgid "Poland"
 msgstr "Польща"
 
-msgid "Pole means the same as ei ole. You'll hear both."
-msgstr "Pole означає те саме, що ei ole. Почуєш обидва."
-
 msgid "Policies"
 msgstr "Правила"
 
@@ -6452,9 +6458,6 @@ msgstr "Гарбуз"
 
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don't read."
 msgstr "Став <0>ei</0> перед дієсловом: <1>ma ei loe</1>, я не читаю."
-
-msgid "Put ei before the verb and drop its ending. It's the same for every person, so no is easier than yes."
-msgstr "Постав ei перед дієсловом і прибери закінчення. Для всіх осіб це однаково, тож «ні» сказати легше, ніж «так»."
 
 msgid "Put Lymi’s address in ~/.gemini/settings.json, with the client ID from the setup guide."
 msgstr "Додай адресу Lymi в ~/.gemini/settings.json разом із client ID з інструкції з підключення."
@@ -7259,8 +7262,8 @@ msgstr "Sobre — «над», mesa — «стіл». Буває, що вона �
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Деякі кандзі в китайському шрифті виглядають інакше. Lymi показує твої картки в японському написанні, як у японських книжках."
 
-msgid "Some verbs change inside: lugema, but loen. Don't start from the -ma form. Start from the ma form, and the no follows: <0/>."
-msgstr "Деякі дієслова змінюються всередині: lugema, але loen. Не відштовхуйся від форми на -ma. Бери форму з ma, і заперечення вийде саме: <0/>."
+msgid "Some verbs change inside: <0/>, but <1/>. Don't start from the -ma form. Start from the ma form, and the no follows: <2/>."
+msgstr "Деякі дієслова змінюються всередині: <0/>, але <1/>. Не відштовхуйся від форми на -ma. Бери форму з ma, і заперечення вийде саме: <2/>."
 
 msgid "Someone’s knocking at the *door*."
 msgstr "Хтось стукає в *двері*."
@@ -7562,8 +7565,8 @@ msgstr "Підтримка й пошта: ми зберігаємо надісл
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведи кажуть так і про каву, і про робочий час."
 
-msgid "Switch between jah and ei to turn all six from yes to no. Tap a line to hear it."
-msgstr "Перемкни jah на ei, і всі шість речень стануть запереченнями. Торкнися рядка, щоб послухати."
+msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
+msgstr "Перемкни <0/> на <1/>, і всі шість речень стануть запереченнями. Торкнися рядка, щоб послухати."
 
 msgid "Switching from"
 msgstr "Перехід з"
@@ -7907,9 +7910,6 @@ msgstr "Край криги"
 msgid "The end of the working day"
 msgstr "Кінець робочого дня"
 
-msgid "The ending says who"
-msgstr "Закінчення каже, хто"
-
 msgid "The evening after work"
 msgstr "Вечір після роботи"
 
@@ -7921,6 +7921,9 @@ msgstr "Лицевий нерв: м’язи міміки та смак на п�
 
 msgid "The facial nerve."
 msgstr "Лицевий."
+
+msgid "The form says who"
+msgstr "Форма каже, хто"
 
 msgid "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
 msgstr "Повний каталог BAMF: 300 загальних питань і 10 про твою землю — німецькою, як на тесті, з українським перекладом поруч."
@@ -9685,8 +9688,8 @@ msgstr "ви, до кількох людей"
 msgid "You'll hear it in a word, with a note on how to say it."
 msgstr "Почуєш її в слові й дізнаєшся, як її вимовляти."
 
-msgid "You'll often hear it as one word, <0/>, which means exactly ei ole. Try all three."
-msgstr "Часто його кажуть одним словом, <0/>, і це рівно те саме, що ei ole. Спробуй усі три."
+msgid "You'll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
+msgstr "Часто його кажуть одним словом, <0/>, і це рівно те саме, що <1/>. Спробуй усі три."
 
 msgid "You’re welcome"
 msgstr "Нема за що"

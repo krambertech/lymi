@@ -362,8 +362,14 @@ msgstr "<0>Aiko</0> finished Week 3"
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Diffusion</0>: particles move from high to low concentration."
 
-msgid "<0>ei {stem}</0>: ei before the verb, and the ending is gone."
-msgstr "<0>ei {stem}</0>: ei before the verb, and the ending is gone."
+msgid "<0>ei {stem}</0>: <1>ei</1> before the verb, and the ending is gone."
+msgstr "<0>ei {stem}</0>: <1>ei</1> before the verb, and the ending is gone."
+
+msgid "<0>Ei ole</0> in one word"
+msgstr "<0>Ei ole</0> in one word"
+
+msgid "<0>Ei</0>, and the verb without its ending."
+msgstr "<0>Ei</0>, and the verb without its ending."
 
 msgid "<0>Jonas</0> added 4 cards to Week 4"
 msgstr "<0>Jonas</0> added 4 cards to Week 4"
@@ -383,11 +389,17 @@ msgstr "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgid "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
 msgstr "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
 
+msgid "<0>olen</0> for I, <1>oled</1> for you, <2>on</2> for he, she and they."
+msgstr "<0>olen</0> for I, <1>oled</1> for you, <2>on</2> for he, she and they."
+
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>opportunity cost</0> <1>= what you give up</1>"
 
 msgid "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 msgstr "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
+
+msgid "<0>Pole</0> means the same as <1>ei ole</1>. You'll hear both."
+msgstr "<0>Pole</0> means the same as <1>ei ole</1>. You'll hear both."
 
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>price elasticity</0> ?"
@@ -692,8 +704,8 @@ msgstr "A free flashcard app for Spanish. A native voice reads every card, every
 msgid "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
 msgstr "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
 
-msgid "A free lesson on Estonian negation: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
-msgstr "A free lesson on Estonian negation: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
+msgid "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
+msgstr "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
 
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers."
 msgstr "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers."
@@ -1281,11 +1293,11 @@ msgstr "All of them, equally often"
 msgid "All of them, inside real sentences."
 msgstr "All of them, inside real sentences."
 
-msgid "All of them. Ei, and the ending goes."
-msgstr "All of them. Ei, and the ending goes."
+msgid "All of them. <0>Ei</0>, and the ending goes."
+msgstr "All of them. <0>Ei</0>, and the ending goes."
 
-msgid "All of them. Ei, then the verb from the question."
-msgstr "All of them. Ei, then the verb from the question."
+msgid "All of them. <0>Ei</0>, then the verb from the question."
+msgstr "All of them. <0>Ei</0>, then the verb from the question."
 
 msgid "All of them. You can hear length."
 msgstr "All of them. You can hear length."
@@ -1474,17 +1486,17 @@ msgstr "Are they drinking?"
 msgid "Are you *coming* today?"
 msgstr "Are you *coming* today?"
 
-msgid "Are you eating? To more than one."
-msgstr "Are you eating? To more than one."
+msgid "Are you all eating?"
+msgstr "Are you all eating?"
+
+msgid "Are you all waiting?"
+msgstr "Are you all waiting?"
 
 msgid "Are you reading?"
 msgstr "Are you reading?"
 
 msgid "Are you tired?"
 msgstr "Are you tired?"
-
-msgid "Are you waiting? To more than one."
-msgstr "Are you waiting? To more than one."
 
 msgid "Article and plural, the way you write them"
 msgstr "Article and plural, the way you write them"
@@ -2819,14 +2831,8 @@ msgstr "Ei before the verb"
 msgid "Ei ole and pole"
 msgstr "Ei ole and pole"
 
-msgid "Ei ole in one word"
-msgstr "Ei ole in one word"
-
 msgid "Ei ole in one word."
 msgstr "Ei ole in one word."
-
-msgid "Ei, and the verb without its ending."
-msgstr "Ei, and the verb without its ending."
 
 msgid "eight"
 msgstr "eight"
@@ -2978,8 +2984,8 @@ msgstr "Every example comes with a translation and keeps its stress marks, and a
 msgid "Every example comes with a translation, and a native voice reads the whole sentence."
 msgstr "Every example comes with a translation, and a native voice reads the whole sentence."
 
-msgid "Every form of olema becomes ei ole."
-msgstr "Every form of olema becomes ei ole."
+msgid "Every form of <0>olema</0> becomes <1>ei ole</1>."
+msgstr "Every form of <0>olema</0> becomes <1>ei ole</1>."
 
 msgid "Every language"
 msgstr "Every language"
@@ -4103,8 +4109,8 @@ msgstr "I don’t mind"
 msgid "I don't read"
 msgstr "I don't read"
 
-msgid "I don't speak Estonian."
-msgstr "I don't speak Estonian."
+msgid "I don't speak Estonian"
+msgstr "I don't speak Estonian"
 
 msgid "I don’t understand"
 msgstr "I don’t understand"
@@ -4400,6 +4406,9 @@ msgstr "In the Grok Bot app, open Connect apps and choose Add a custom connector
 msgid "In the order you learn them, one section at a time."
 msgstr "In the order you learn them, one section at a time."
 
+msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It's the same for every person, so no is easier than yes."
+msgstr "In the present tense, put <0>ei</0> before the verb and drop its ending. It's the same for every person, so no is easier than yes."
+
 msgid "In this folder"
 msgstr "In this folder"
 
@@ -4570,6 +4579,9 @@ msgstr "its changelog"
 
 msgid "Its forms barely look alike, which is why the card keeps all three."
 msgstr "Its forms barely look alike, which is why the card keeps all three."
+
+msgid "Its ma form is loen."
+msgstr "Its ma form is loen."
 
 msgid "Its own algorithm, or FSRS in Settings"
 msgstr "Its own algorithm, or FSRS in Settings"
@@ -5518,8 +5530,8 @@ msgstr "NCLEX pharmacology"
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Nearly. Listen for the verb in the question."
 
-msgid "Nearly. Watch for endings that stay after ei."
-msgstr "Nearly. Watch for endings that stay after ei."
+msgid "Nearly. Watch for endings that stay after <0>ei</0>."
+msgstr "Nearly. Watch for endings that stay after <0>ei</0>."
 
 msgid "Needed; your cards live on Lymi’s servers"
 msgstr "Needed; your cards live on Lymi’s servers"
@@ -5871,9 +5883,6 @@ msgstr "Older"
 msgid "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
 msgstr "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
 
-msgid "olen for I, oled for you, on for he, she and they."
-msgstr "olen for I, oled for you, on for he, she and they."
-
 msgid "On iPhone"
 msgstr "On iPhone"
 
@@ -5946,8 +5955,8 @@ msgstr "One of a mirror-image pair"
 msgid "One of the ten base words."
 msgstr "One of the ten base words."
 
-msgid "One sentence to keep from today: <0/>"
-msgstr "One sentence to keep from today: <0/>"
+msgid "One sentence to keep from today: <0/>."
+msgstr "One sentence to keep from today: <0/>."
 
 msgid "One shared deck, everyone on their own schedule"
 msgstr "One shared deck, everyone on their own schedule"
@@ -6302,9 +6311,6 @@ msgstr "points to pass N5"
 msgid "Poland"
 msgstr "Poland"
 
-msgid "Pole means the same as ei ole. You'll hear both."
-msgstr "Pole means the same as ei ole. You'll hear both."
-
 msgid "Policies"
 msgstr "Policies"
 
@@ -6452,9 +6458,6 @@ msgstr "Pumpkin"
 
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don't read."
 msgstr "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don't read."
-
-msgid "Put ei before the verb and drop its ending. It's the same for every person, so no is easier than yes."
-msgstr "Put ei before the verb and drop its ending. It's the same for every person, so no is easier than yes."
 
 msgid "Put Lymi’s address in ~/.gemini/settings.json, with the client ID from the setup guide."
 msgstr "Put Lymi’s address in ~/.gemini/settings.json, with the client ID from the setup guide."
@@ -7259,8 +7262,8 @@ msgstr "Sobre, over, plus mesa, table. It can outlast the meal."
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 
-msgid "Some verbs change inside: lugema, but loen. Don't start from the -ma form. Start from the ma form, and the no follows: <0/>."
-msgstr "Some verbs change inside: lugema, but loen. Don't start from the -ma form. Start from the ma form, and the no follows: <0/>."
+msgid "Some verbs change inside: <0/>, but <1/>. Don't start from the -ma form. Start from the ma form, and the no follows: <2/>."
+msgstr "Some verbs change inside: <0/>, but <1/>. Don't start from the -ma form. Start from the ma form, and the no follows: <2/>."
 
 msgid "Someone’s knocking at the *door*."
 msgstr "Someone’s knocking at the *door*."
@@ -7562,8 +7565,8 @@ msgstr "Support and email: we keep the information you send us so we can respond
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Swedes use it for coffee and working hours alike."
 
-msgid "Switch between jah and ei to turn all six from yes to no. Tap a line to hear it."
-msgstr "Switch between jah and ei to turn all six from yes to no. Tap a line to hear it."
+msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
+msgstr "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 
 msgid "Switching from"
 msgstr "Switching from"
@@ -7907,9 +7910,6 @@ msgstr "The edge of the ice"
 msgid "The end of the working day"
 msgstr "The end of the working day"
 
-msgid "The ending says who"
-msgstr "The ending says who"
-
 msgid "The evening after work"
 msgstr "The evening after work"
 
@@ -7921,6 +7921,9 @@ msgstr "The facial nerve: muscles of facial expression and taste on the front tw
 
 msgid "The facial nerve."
 msgstr "The facial nerve."
+
+msgid "The form says who"
+msgstr "The form says who"
 
 msgid "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
 msgstr "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
@@ -9685,8 +9688,8 @@ msgstr "you, to more than one person"
 msgid "You'll hear it in a word, with a note on how to say it."
 msgstr "You'll hear it in a word, with a note on how to say it."
 
-msgid "You'll often hear it as one word, <0/>, which means exactly ei ole. Try all three."
-msgstr "You'll often hear it as one word, <0/>, which means exactly ei ole. Try all three."
+msgid "You'll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
+msgstr "You'll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 
 msgid "You’re welcome"
 msgstr "You’re welcome"

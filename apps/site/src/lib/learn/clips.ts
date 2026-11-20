@@ -128,10 +128,13 @@ export type Person = (typeof PERSON_ENDINGS)[number][0];
 
 const sentenceCase = (text: string) => `${text.charAt(0).toUpperCase()}${text.slice(1)}.`;
 
+/** The present-tense ending a person takes: -n for ma, -vad for nad. */
+export const endingOf = (person: Person): string =>
+  PERSON_ENDINGS.find(([each]) => each === person)?.[1] ?? "";
+
 /** “Ma loen.”, or with `no`, “Ma ei loe.” */
 export function verbSentence(person: Person, stem: string, no: boolean): string {
-  const ending = PERSON_ENDINGS.find(([each]) => each === person)?.[1] ?? "";
-  return sentenceCase(no ? `${person} ei ${stem}` : `${person} ${stem}${ending}`);
+  return sentenceCase(no ? `${person} ei ${stem}` : `${person} ${stem}${endingOf(person)}`);
 }
 
 /** The verbs the yes-and-no switch flips for all six people. */
@@ -162,17 +165,24 @@ export type OlemaMode = "yes" | "ei ole" | "pole";
 export const olemaSentence = (row: (typeof OLEMA_ROWS)[number], mode: OlemaMode) =>
   `${row.who} ${mode === "yes" ? row.verb : mode} ${row.rest}.`;
 
-/** Yes-or-no questions and the short no that answers each, with two answers that miss. */
+/**
+ * Yes-or-no questions and the short no that answers each. The three misses keep the ending, pick
+ * another verb, or both, so the answer takes the rule and the question's verb together.
+ */
 export const NO_ANSWERS = [
-  { ask: "Kas sa loed?", answer: "Ei loe.", wrong: ["Ei loed.", "Ei ole."] },
-  { ask: "Kas sa töötad?", answer: "Ei tööta.", wrong: ["Ei töötad.", "Ei oota."] },
-  { ask: "Kas te sööte?", answer: "Ei söö.", wrong: ["Ei sööte.", "Ei joo."] },
-  { ask: "Kas ta räägib eesti keelt?", answer: "Ei räägi.", wrong: ["Ei räägib.", "Ei ole."] },
-  { ask: "Kas sa oled väsinud?", answer: "Ei ole.", wrong: ["Ei oled.", "Ei loe."] },
-  { ask: "Kas ta on kodus?", answer: "Ei ole.", wrong: ["Ei on.", "Ei tööta."] },
-  { ask: "Kas nad joovad?", answer: "Ei joo.", wrong: ["Ei joovad.", "Ei söö."] },
-  { ask: "Kas te ootate?", answer: "Ei oota.", wrong: ["Ei ootate.", "Ei ole."] },
-  { ask: "Kas sa õpid?", answer: "Ei õpi.", wrong: ["Ei õpid.", "Ei ela."] },
+  { ask: "Kas sa loed?", answer: "Ei loe.", wrong: ["Ei loed.", "Ei oota.", "Ei ootad."] },
+  { ask: "Kas sa töötad?", answer: "Ei tööta.", wrong: ["Ei töötad.", "Ei joo.", "Ei jood."] },
+  { ask: "Kas te sööte?", answer: "Ei söö.", wrong: ["Ei sööte.", "Ei õpi.", "Ei õpite."] },
+  {
+    ask: "Kas ta räägib eesti keelt?",
+    answer: "Ei räägi.",
+    wrong: ["Ei räägib.", "Ei loe.", "Ei loeb."],
+  },
+  { ask: "Kas sa oled väsinud?", answer: "Ei ole.", wrong: ["Ei oled.", "Ei ela.", "Ei elad."] },
+  { ask: "Kas ta on kodus?", answer: "Ei ole.", wrong: ["Ei on.", "Ei oota.", "Ei ootab."] },
+  { ask: "Kas nad joovad?", answer: "Ei joo.", wrong: ["Ei joovad.", "Ei söö.", "Ei söövad."] },
+  { ask: "Kas te ootate?", answer: "Ei oota.", wrong: ["Ei ootate.", "Ei tööta.", "Ei töötate."] },
+  { ask: "Kas sa õpid?", answer: "Ei õpi.", wrong: ["Ei õpid.", "Ei räägi.", "Ei räägid."] },
 ] as const;
 
 /** Other things the negation lesson says: answers, and a sentence worth keeping. */

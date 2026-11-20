@@ -8,6 +8,7 @@ import { LESSONS } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
+  endingOf,
   FLIP_STEMS,
   NEGATION_VERBS,
   NO_ANSWERS,
@@ -50,12 +51,12 @@ const MEANS: Record<string, MessageDescriptor> = {
 const ASKS: Record<(typeof NO_ANSWERS)[number]["ask"], MessageDescriptor> = {
   "Kas sa loed?": msg`Are you reading?`,
   "Kas sa töötad?": msg`Do you work?`,
-  "Kas te sööte?": msg`Are you eating? To more than one.`,
+  "Kas te sööte?": msg`Are you all eating?`,
   "Kas ta räägib eesti keelt?": msg`Does he or she speak Estonian?`,
   "Kas sa oled väsinud?": msg`Are you tired?`,
   "Kas ta on kodus?": msg`Is he or she at home?`,
   "Kas nad joovad?": msg`Are they drinking?`,
-  "Kas te ootate?": msg`Are you waiting? To more than one.`,
+  "Kas te ootate?": msg`Are you all waiting?`,
   "Kas sa õpid?": msg`Do you study?`,
 };
 
@@ -65,6 +66,7 @@ const GLOSSARY: Glossary = {
   "ei ole": { en: msg`am not, is not, are not`, note: msg`The no of olema, to be.` },
   pole: { en: msg`am not, is not, are not`, note: msg`Ei ole in one word.` },
   olema: { en: msg`to be`, clip: false },
+  lugema: { en: msg`to read`, note: msg`Its ma form is loen.`, clip: false },
   kas: {
     en: msg`a word that turns a sentence into a yes-or-no question`,
     clip: false,
@@ -81,10 +83,10 @@ const GLOSSARY: Glossary = {
   "ma olen väsinud": { en: msg`I'm tired`, show: "Ma olen väsinud" },
   "ma ei ole väsinud": { en: msg`I'm not tired`, show: "Ma ei ole väsinud" },
   "kas sa loed?": { en: msg`Are you reading?`, show: "Kas sa loed?" },
-  "ma ei tea": { en: msg`I don't know`, show: "Ma ei tea." },
+  "ma ei tea": { en: msg`I don't know`, show: "Ma ei tea" },
   "ma ei räägi eesti keelt": {
-    en: msg`I don't speak Estonian.`,
-    show: "Ma ei räägi eesti keelt.",
+    en: msg`I don't speak Estonian`,
+    show: "Ma ei räägi eesti keelt",
   },
 };
 
@@ -137,10 +139,11 @@ function FlipNote({ mode, title, tip }: { mode: string; title: ReactNode; tip: R
   );
 }
 
-const yesParts = (person: Person, stem: string): Parts => {
-  const ending = PERSON_ENDINGS.find(([each]) => each === person)?.[1] ?? "";
-  return [`${person} ${stem}`, ending, ""];
-};
+const yesParts = (person: Person, stem: string): Parts => [
+  `${person} ${stem}`,
+  endingOf(person),
+  "",
+];
 const noParts = (person: Person, stem: string): Parts => [`${person} `, "ei", ` ${stem}`];
 
 /** Six people with one verb, and a switch that turns all six from yes to no at once. */
@@ -188,7 +191,8 @@ function PersonFlip() {
           title={<Trans>One form for all six</Trans>}
           tip={
             <Trans>
-              <span lang="et">ei {stem}</span>: ei before the verb, and the ending is gone.
+              <span lang="et">ei {stem}</span>: <span lang="et">ei</span> before the verb, and the
+              ending is gone.
             </Trans>
           }
         />
@@ -280,20 +284,38 @@ function OlemaFlip() {
       {mode === "yes" ? (
         <FlipNote
           mode={mode}
-          title={<Trans>The ending says who</Trans>}
-          tip={<Trans>olen for I, oled for you, on for he, she and they.</Trans>}
+          title={<Trans>The form says who</Trans>}
+          tip={
+            <Trans>
+              <span lang="et">olen</span> for I, <span lang="et">oled</span> for you,{" "}
+              <span lang="et">on</span> for he, she and they.
+            </Trans>
+          }
         />
       ) : mode === "ei ole" ? (
         <FlipNote
           mode={mode}
           title={<Trans>One form for everyone</Trans>}
-          tip={<Trans>Every form of olema becomes ei ole.</Trans>}
+          tip={
+            <Trans>
+              Every form of <span lang="et">olema</span> becomes <span lang="et">ei ole</span>.
+            </Trans>
+          }
         />
       ) : (
         <FlipNote
           mode={mode}
-          title={<Trans>Ei ole in one word</Trans>}
-          tip={<Trans>Pole means the same as ei ole. You'll hear both.</Trans>}
+          title={
+            <Trans>
+              <span lang="et">Ei ole</span> in one word
+            </Trans>
+          }
+          tip={
+            <Trans>
+              <span lang="et">Pole</span> means the same as <span lang="et">ei ole</span>. You'll
+              hear both.
+            </Trans>
+          }
         />
       )}
     </Panel>
@@ -376,17 +398,23 @@ export function EitusLesson() {
         const yes = verbSentence(person, stem, false);
         const no = verbSentence(person, stem, true);
         const right = bare(no);
-        // Two misses: the person's own ending kept after ei, and another person's ending.
-        const own = PERSON_ENDINGS.find(([each]) => each === person)?.[1] ?? "";
-        const kept = `${right}${own}`;
-        const other = `${right}${person === "ma" ? "b" : "n"}`;
+        // Three misses: the ending kept, another verb, and both, so a pick takes the rule and
+        // the verb heard together.
+        const [otherStem] = NO_QUIZ[(i + 1) % NO_QUIZ.length] ?? [stem];
+        const other = bare(verbSentence(person, otherStem, true));
+        const options = [
+          right,
+          `${right}${endingOf(person)}`,
+          other,
+          `${other}${endingOf(person)}`,
+        ];
         return {
           src: src(yes),
           answer: right,
           said: right,
           reply: src(no),
           options: placed(
-            [right, kept, other].map((option) => ({ id: option, label: option })),
+            options.map((option) => ({ id: option, label: option })),
             i,
           ),
           explain: (
@@ -394,7 +422,9 @@ export function EitusLesson() {
               <span lang="et" className="font-medium text-ink">
                 {bare(yes)} → {no}
               </span>{" "}
-              <Trans>Ei, and the verb without its ending.</Trans>
+              <Trans>
+                <span lang="et">Ei</span>, and the verb without its ending.
+              </Trans>
             </>
           ),
         };
@@ -407,7 +437,7 @@ export function EitusLesson() {
       NO_ANSWERS.map(({ ask, answer, wrong }, i) => ({
         src: src(ask),
         answer: bare(answer),
-        said: answer,
+        said: bare(answer),
         reply: src(answer),
         options: placed(
           [answer, ...wrong].map((option) => ({ id: bare(option), label: bare(option) })),
@@ -431,8 +461,8 @@ export function EitusLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Put ei before the verb and drop its ending. It's the same for every person, so no is
-          easier than yes.
+          In the present tense, put <span lang="et">ei</span> before the verb and drop its ending.
+          It's the same for every person, so no is easier than yes.
         </Trans>
       }
       facts={[
@@ -489,7 +519,8 @@ export function EitusLesson() {
                 </p>
                 <p>
                   <Trans>
-                    Switch between jah and ei to turn all six from yes to no. Tap a line to hear it.
+                    Switch between <Word w="jah" /> and <Word w="ei" /> to turn all six from yes to
+                    no. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -528,8 +559,9 @@ export function EitusLesson() {
               </Panel>
               <Aside>
                 <Trans>
-                  Some verbs change inside: lugema, but loen. Don't start from the -ma form. Start
-                  from the ma form, and the no follows: <Word w="ei loe" />.
+                  Some verbs change inside: <Word w="lugema" />, but <Word w="loen" />. Don't start
+                  from the -ma form. Start from the ma form, and the no follows: <Word w="ei loe" />
+                  .
                 </Trans>
               </Aside>
             </>
@@ -553,9 +585,13 @@ export function EitusLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All of them. Ei, and the ending goes.</Trans>
+                    <Trans>
+                      All of them. <span lang="et">Ei</span>, and the ending goes.
+                    </Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Watch for endings that stay after ei.</Trans>
+                    <Trans>
+                      Nearly. Watch for endings that stay after <span lang="et">ei</span>.
+                    </Trans>
                   ) : (
                     <Trans>Flip the six lines above once more, then come back.</Trans>
                   )
@@ -582,8 +618,8 @@ export function EitusLesson() {
                 </p>
                 <p>
                   <Trans>
-                    You'll often hear it as one word, <Word w="pole" />, which means exactly ei ole.
-                    Try all three.
+                    You'll often hear it as one word, <Word w="pole" />, which means exactly{" "}
+                    <Word w="ei ole" />. Try all three.
                   </Trans>
                 </p>
               </Prose>
@@ -635,7 +671,7 @@ export function EitusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    One sentence to keep from today: <Word w="Ma ei räägi eesti keelt" />
+                    One sentence to keep from today: <Word w="Ma ei räägi eesti keelt" />.
                   </Trans>
                 </p>
               </Prose>
@@ -660,7 +696,9 @@ export function EitusLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All of them. Ei, then the verb from the question.</Trans>
+                    <Trans>
+                      All of them. <span lang="et">Ei</span>, then the verb from the question.
+                    </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Listen for the verb in the question.</Trans>
                   ) : (

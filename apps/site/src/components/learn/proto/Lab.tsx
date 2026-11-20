@@ -70,8 +70,8 @@ const TYPES: readonly { id: string; title: string; when: string; options: readon
     options: [
       {
         id: "A",
-        name: "Text, then quiz",
-        choices: "The text sits on the page like prose. The quiz under it asks one question at a time.",
+        name: "Text, then questions",
+        choices: "The text sits on the page like prose. Under it, every question at once with lettered answers and one Check, the same as listening.",
         view: () => <ReadA />,
       },
       {

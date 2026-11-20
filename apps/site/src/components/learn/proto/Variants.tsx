@@ -6,7 +6,8 @@ import { playInTurn, playSound, stopSound, usePlaying } from "../../../lib/learn
 import { Button } from "../../Button";
 import { Listen } from "../Sound";
 import { Word } from "../Word";
-import { type Recording, type Timeline, TimelinePlayer, useTimeline } from "./Listen2";
+import { QuestionBlock, type Recording, type Timeline, TimelinePlayer, useTimeline } from "./Listen2";
+import { PlayMark } from "../Sound";
 import mariTiming from "./mari-timing.json";
 import {
   DIALOGUE,
@@ -791,41 +792,76 @@ function GlossNote({ glossed }: { glossed: boolean }) {
   );
 }
 
-/** A: the text on the page, read like prose; then the quiz, one question at a time. */
+/** A: the text on the page, read like prose; then every question at once, lettered, and one Check. */
 export function ReadA() {
-  const r = useRounds(MARI_QS.length);
-  const q = MARI_QS[r.round];
   const tl = useTimeline(() => {}, MARI_REC);
+  const [chosen, setChosen] = useState<Record<string, string>>({});
+  const [checked, setChecked] = useState(false);
+  const [note, setNote] = useState<string | null>(null);
+  const right = MARI_QS.filter((q) => chosen[q.id] === q.answer).length;
   return (
     <div className="grid gap-5">
       <div className="grid gap-3">
         <span className="text-sm font-medium text-ink-muted">Mari writes</span>
-        <MariText big glossed={r.finished} tl={tl} />
-        <GlossNote glossed={r.finished} />
+        <MariText big glossed={checked} tl={tl} />
+        <GlossNote glossed={checked} />
         <div className="max-w-md pt-1">
           <TimelinePlayer tl={tl} label="Hear it read" small />
         </div>
       </div>
-      <Card title="What did you read?" aside={<Dots results={r.results} now={r.round} total={MARI_QS.length} />}>
-        {!r.finished && q && (
-          <>
-            <p className="text-xl font-medium">{q.q}</p>
-            <QuestionOptions q={q} picked={r.picked} onPick={(id) => r.pick(id, id === q.answer)} />
-            {r.picked && (
-              <Verdict right={r.picked === q.answer}>
-                <span lang="et" className="text-ink">
-                  {lineById(MARI, q.evidence).et}
-                </span>
-              </Verdict>
-            )}
-            {r.picked && <NextButton last={r.round === MARI_QS.length - 1} onClick={r.next} />}
-          </>
+      <Card
+        title="What did you read?"
+        aside={checked ? <Dots results={MARI_QS.map((q) => chosen[q.id] === q.answer)} now={-1} total={MARI_QS.length} /> : undefined}
+      >
+        <div className="grid w-full gap-6">
+          {MARI_QS.map((q, n) => (
+            <QuestionBlock
+              key={q.id}
+              q={q}
+              n={n + 1}
+              markOf={(id) =>
+                checked
+                  ? id === q.answer
+                    ? "right"
+                    : id === chosen[q.id]
+                      ? "wrong"
+                      : "out"
+                  : chosen[q.id] === id
+                    ? "chosen"
+                    : undefined
+              }
+              onPick={(id) => !checked && setChosen((c) => ({ ...c, [q.id]: id }))}
+            />
+          ))}
+        </div>
+        {note && (
+          <p role="status" className="text-sm text-ink-muted">
+            {note}
+          </p>
         )}
-        {r.finished && (
+        {checked ? (
           <>
-            <Score right={r.results.filter(Boolean).length} total={MARI_QS.length} />
-            <Again onClick={r.restart} />
+            <Score right={right} total={MARI_QS.length} />
+            <Again
+              onClick={() => {
+                setChosen({});
+                setChecked(false);
+              }}
+            />
           </>
+        ) : (
+          <div className="flex w-full justify-end">
+            <Button
+              variant="primary"
+              onClick={() => {
+                if (Object.keys(chosen).length < MARI_QS.length) return setNote("Answer every question first.");
+                setNote(null);
+                setChecked(true);
+              }}
+            >
+              Check
+            </Button>
+          </div>
         )}
       </Card>
     </div>
@@ -1031,11 +1067,9 @@ function MariBubble({ turn, prefix, hideText }: { turn: Extract<Turn, { who: "ma
         <button
           type="button"
           onClick={() => void playSound(src(turn.id), key(prefix, turn.id))}
-          className="flex cursor-pointer items-center gap-2.5 rounded-2xl rounded-es-sm bg-plate-nested px-3.5 py-2.5 text-start"
+          className="flex cursor-pointer items-center gap-3 rounded-2xl rounded-ss-sm bg-plate-nested py-2 ps-2 pe-4 text-start"
         >
-          <span className={clsx("grid size-7 shrink-0 place-items-center rounded-full", playing ? "bg-(--form) text-plate" : "bg-plate text-ink edge-lift")}>
-            {playing ? <Bars /> : <span className="ms-px text-[0.6rem]">▶</span>}
-          </span>
+          <PlayMark playing={playing} />
           {shown ? (
             <span lang="et" className="text-lg font-medium">
               {turn.et}

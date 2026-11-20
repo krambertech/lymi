@@ -1,8 +1,8 @@
 /** Listening, round two: one timeline for the whole passage, all questions at once. Not for shipping. */
 import { clsx } from "clsx";
 import { Check, Pause, Play, RotateCcw, X } from "lucide-react";
-import { type KeyboardEvent, type ReactNode, useRef, useState } from "react";
-import { playSound, stopSound, usePlaying } from "../../../lib/learn/player";
+import { type KeyboardEvent, type ReactNode, useEffect, useRef, useState } from "react";
+import { loudness, playSound, stopSound, usePlaying } from "../../../lib/learn/player";
 import { Button } from "../../Button";
 import { JAAN, JAAN_QS, type Question } from "./data";
 import timing from "./jaan-timing.json";
@@ -57,22 +57,61 @@ export function useTimeline(onHeard: () => void, rec: Recording = JAAN_REC) {
 
 export type Timeline = ReturnType<typeof useTimeline>;
 
+/** The recording's loudness as bars, one group per sentence. */
+function useSentenceBars(rec: Recording, width: number) {
+  const [groups, setGroups] = useState<{ start: number; end: number; bars: number[] }[] | null>(null);
+  useEffect(() => {
+    let live = true;
+    loudness(rec.src)
+      .then(({ bars, lead }) => {
+        if (!live) return;
+        const level = (from: number, to: number) => {
+          const a = Math.max(0, Math.floor((from - lead) / 0.012));
+          const b = Math.min(bars.length, Math.ceil((to - lead) / 0.012));
+          let max = 0;
+          for (let i = a; i < b; i++) max = Math.max(max, bars[i] ?? 0);
+          return max;
+        };
+        setGroups(
+          rec.marks.map((start, i) => {
+            const end = rec.marks[i + 1] ?? rec.duration;
+            // One bar and its gap take about 5 px, and each sentence's gap takes 6 px.
+            const room = Math.max(0, width - 6 * (rec.marks.length - 1));
+            const count = Math.max(3, Math.floor(((end - start) / rec.duration) * (room / 5)));
+            const step = (end - start) / count;
+            return { start, end, bars: Array.from({ length: count }, (_, j) => level(start + j * step, start + (j + 1) * step)) };
+          }),
+        );
+      })
+      .catch(() => {});
+    return () => {
+      live = false;
+    };
+  }, [rec, width]);
+  return groups;
+}
+
+/**
+ * The passage as one recording: play or pause, and its sound drawn as bars, a group per sentence.
+ * A tap on a group plays from that sentence; arrow keys step between sentences.
+ */
 export function TimelinePlayer({ tl, label = "Passage", small }: { tl: Timeline; label?: string; small?: boolean }) {
   const { marks, duration } = tl.rec;
-  const track = useRef<HTMLDivElement>(null);
-  const share = Math.min(1, tl.t / duration);
-  const seekTo = (clientX: number) => {
-    const box = track.current?.getBoundingClientRect();
-    if (!box) return;
-    let at = Math.max(0, Math.min(1, (clientX - box.left) / box.width)) * duration;
-    // A tap close to a sentence's start begins at that sentence.
-    const near = marks.find((m) => Math.abs(m - at) < duration * 0.035);
-    if (near !== undefined) at = near;
-    tl.play(at);
-  };
+  const slider = useRef<HTMLDivElement>(null);
+  const [width, setWidth] = useState(0);
+  useEffect(() => {
+    const el = slider.current;
+    if (!el) return;
+    const observer = new ResizeObserver(() => setWidth(Math.round(el.clientWidth / 8) * 8));
+    observer.observe(el);
+    return () => observer.disconnect();
+  }, []);
+  const groups = useSentenceBars(tl.rec, width);
+  const started = tl.t > 0 || tl.playing;
+  const current = marks.findLastIndex((m) => m <= tl.t + 0.05);
   const onKey = (event: KeyboardEvent) => {
-    if (event.key === "ArrowRight") tl.play(Math.min(duration, tl.t + 2));
-    else if (event.key === "ArrowLeft") tl.play(Math.max(0, tl.t - 2));
+    if (event.key === "ArrowRight") tl.play(marks[Math.min(marks.length - 1, current + 1)] ?? 0);
+    else if (event.key === "ArrowLeft") tl.play(marks[Math.max(0, tl.t - (marks[current] ?? 0) > 1 ? current : current - 1)] ?? 0);
     else return;
     event.preventDefault();
   };
@@ -96,39 +135,45 @@ export function TimelinePlayer({ tl, label = "Passage", small }: { tl: Timeline;
       </button>
       <div className="grid min-w-0 flex-1 gap-1">
         <div
-          ref={track}
+          ref={slider}
           role="slider"
           tabIndex={0}
           aria-label={label}
-          aria-valuemin={0}
-          aria-valuemax={Math.round(duration)}
-          aria-valuenow={Math.round(tl.t)}
-          aria-valuetext={`${clock(tl.t)} of ${clock(duration)}`}
-          onClick={(event) => seekTo(event.clientX)}
+          aria-valuemin={1}
+          aria-valuemax={marks.length}
+          aria-valuenow={Math.max(1, current + 1)}
+          aria-valuetext={`Sentence ${Math.max(1, current + 1)} of ${marks.length}, ${clock(tl.t)}`}
           onKeyDown={onKey}
-          className="relative h-8 cursor-pointer rounded-full focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--ring)"
+          className="flex h-10 gap-1.5 rounded-md focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--ring)"
         >
-          <span className="absolute inset-x-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-edge-strong" />
-          <span
-            className="absolute start-0 top-1/2 h-1.5 -translate-y-1/2 rounded-full bg-(--form)"
-            style={{ width: `${share * 100}%` }}
-          />
-          {marks.slice(1).map((m) => (
-            <span
-              key={m}
+          {(groups ?? marks.map((start, i) => ({ start, end: marks[i + 1] ?? duration, bars: [] as number[] }))).map((g, i) => (
+            <button
+              key={g.start}
+              type="button"
+              tabIndex={-1}
               aria-hidden="true"
-              className="absolute top-1/2 h-3.5 w-0.5 -translate-x-1/2 -translate-y-1/2 rounded-full bg-ink-faint"
-              style={{ insetInlineStart: `${(m / duration) * 100}%` }}
-            />
+              onClick={() => tl.play(g.start)}
+              style={{ flexGrow: g.end - g.start }}
+              className="group flex min-w-0 basis-0 cursor-pointer items-center gap-[2px] overflow-hidden rounded-sm"
+            >
+              {(g.bars.length ? g.bars : Array.from({ length: 8 }, () => 0)).map((v, j) => {
+                const at = g.start + ((j + 0.5) / Math.max(1, g.bars.length || 8)) * (g.end - g.start);
+                const lit = started && at <= tl.t;
+                return (
+                  <i
+                    // biome-ignore lint/suspicious/noArrayIndexKey: a bar's place is its identity
+                    key={j}
+                    className={clsx(
+                      "block min-w-[2px] flex-1 rounded-full transition-colors duration-100",
+                      lit ? "bg-(--form)" : "bg-(--form-faint) group-hover:bg-(--form-soft)",
+                    )}
+                    style={{ height: `${Math.round(18 + 82 * Math.sqrt(v))}%` }}
+                  />
+                );
+              })}
+              <span className="sr-only">Sentence {i + 1}</span>
+            </button>
           ))}
-          <span
-            aria-hidden="true"
-            className={clsx(
-              "absolute top-1/2 size-4 -translate-x-1/2 -translate-y-1/2 rounded-full bg-(--form) ring-3 ring-plate transition-opacity",
-              tl.t === 0 && !tl.playing && "opacity-0",
-            )}
-            style={{ insetInlineStart: `${share * 100}%` }}
-          />
         </div>
         <div className="flex justify-between text-sm text-ink-muted tabular-nums">
           <span>{clock(tl.t)}</span>
@@ -139,10 +184,10 @@ export function TimelinePlayer({ tl, label = "Passage", small }: { tl: Timeline;
   );
 }
 
-type Mark = "right" | "wrong" | "out" | "chosen" | undefined;
+export type LetterMark = "right" | "wrong" | "out" | "chosen" | undefined;
 
 /** An answer with its letter. */
-function Lettered({ letter, label, mark, onPick }: { letter: string; label: ReactNode; mark: Mark; onPick: () => void }) {
+export function Lettered({ letter, label, mark, onPick }: { letter: string; label: ReactNode; mark: LetterMark; onPick: () => void }) {
   const done = mark === "right" || mark === "wrong" || mark === "out";
   return (
     <button
@@ -188,7 +233,7 @@ function Lettered({ letter, label, mark, onPick }: { letter: string; label: Reac
   );
 }
 
-function QuestionBlock({
+export function QuestionBlock({
   q,
   n,
   markOf,
@@ -197,7 +242,7 @@ function QuestionBlock({
 }: {
   q: Question;
   n: number;
-  markOf: (id: string) => Mark;
+  markOf: (id: string) => LetterMark;
   onPick: (id: string) => void;
   footer?: ReactNode;
 }) {

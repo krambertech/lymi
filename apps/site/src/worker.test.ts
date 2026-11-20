@@ -83,6 +83,15 @@ describe("a download link", () => {
     expect(events()).toEqual([expect.objectContaining({ event: "iphone_download_started" })]);
   });
 
+  it("sends the Android link to Google Play and counts it", async () => {
+    const response = await open("https://lymi.app/download/android");
+    expect(response.status).toBe(302);
+    expect(response.headers.get("location")).toBe(
+      "https://play.google.com/store/apps/details?id=app.lymi",
+    );
+    expect(events()).toEqual([expect.objectContaining({ event: "android_download_started" })]);
+  });
+
   it("leaves the download page itself to Astro", async () => {
     expect(await (await open("https://lymi.app/download")).text()).toBe("page");
     expect(posthog).not.toHaveBeenCalled();

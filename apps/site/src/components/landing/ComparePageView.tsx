@@ -114,8 +114,8 @@ function useContent(key: CompareKey): Content {
               title: <Trans>Free on every device</Trans>,
               body: (
                 <Trans>
-                  The same cards in your phone’s browser, on your computer and in the Mac app,
-                  synced, with nothing to buy.
+                  The same cards in the iPhone and Android apps, on your computer and in the Mac
+                  app, synced, with nothing to buy.
                 </Trans>
               ),
             },
@@ -157,7 +157,7 @@ function useContent(key: CompareKey): Content {
           {
             id: "iphone",
             label: <Trans>On iPhone</Trans>,
-            lymi: <Trans>In the iPhone’s browser, free</Trans>,
+            lymi: <Trans>Lymi for iPhone, free</Trans>,
             other: <Trans>AnkiMobile, a one-off €29.99 ($24.99 in the US)</Trans>,
             ahead: "lymi",
           },
@@ -684,9 +684,9 @@ function useContent(key: CompareKey): Content {
           {
             id: "phone",
             label: <Trans>On your phone</Trans>,
-            lymi: <Trans>In the browser, added to your home screen</Trans>,
+            lymi: <Trans>Apps for iPhone and Android</Trans>,
             other: <Trans>Apps for iPhone and Android</Trans>,
-            ahead: "other",
+            ahead: "same",
           },
           {
             id: "notes",
@@ -910,7 +910,7 @@ function useContent(key: CompareKey): Content {
           {
             id: "phone",
             label: <Trans>On your phone</Trans>,
-            lymi: <Trans>In the browser, added to your home screen</Trans>,
+            lymi: <Trans>New apps for iPhone and Android</Trans>,
             other: <Trans>Highly rated iPhone and Android apps</Trans>,
             ahead: "other",
           },
@@ -968,11 +968,11 @@ function useContent(key: CompareKey): Content {
             {
               id: "phone",
               icon: Smartphone,
-              title: <Trans>You want an app from the store</Trans>,
+              title: <Trans>You want a proven phone app</Trans>,
               body: (
                 <Trans>
-                  Noji’s iPhone and Android apps are polished and well rated. Lymi runs in your
-                  phone’s browser for now.
+                  Noji’s iPhone and Android apps are polished and well rated. Lymi’s phone apps came
+                  out in November 2026.
                 </Trans>
               ),
             },

@@ -7,6 +7,7 @@ export function GET() {
       "Disallow: /api/",
       "Disallow: /download/mac",
       "Disallow: /download/iphone",
+      "Disallow: /download/android",
       "",
       "Sitemap: https://lymi.app/sitemap.xml",
       "",

@@ -117,7 +117,7 @@ export function Overview() {
           {
             to: "/docs/mobile",
             title: "Lymi on your phone",
-            blurb: "Add the web app to your home screen.",
+            blurb: "Get the iPhone or Android app.",
           },
           {
             to: "/docs/scheduling",

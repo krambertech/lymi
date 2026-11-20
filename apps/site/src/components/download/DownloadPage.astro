@@ -5,6 +5,7 @@ import { pageI18n } from "../../lib/i18n";
 import { downloadHref } from "../../lib/downloads";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
+import { GetTheAppIn } from "../GetTheApp";
 import SiteHeader from "../islands/SiteHeader";
 import { PageFooter } from "../PageFooter";
 import {
@@ -13,8 +14,9 @@ import {
   DOWNLOAD_HEADING,
   DOWNLOAD_INTEL,
   DOWNLOAD_INTEL_LABEL,
-  DOWNLOAD_IPHONE,
   DOWNLOAD_LEDE,
+  DOWNLOAD_MAC_HEADING,
+  DOWNLOAD_MAC_LEDE,
   DOWNLOAD_REQUIREMENT,
   DOWNLOAD_SKIP,
   DOWNLOAD_STEPS,
@@ -56,34 +58,36 @@ const i18n = pageI18n(locale);
       <h1 class="mt-6 text-5xl font-medium tracking-[-0.038em] text-balance text-ink @4xl:text-[4.25rem] @4xl:leading-[0.98]">
         {i18n._(DOWNLOAD_HEADING)}
       </h1>
-      <p class="mt-5 max-w-[36ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">{i18n._(DOWNLOAD_LEDE)}</p>
-      <div id="download" class="mt-9 flex flex-col items-center gap-3">
-        <a href={downloadHref("/download/mac", locale)} class={buttonClass("primary", "lg")}>
-          <Download aria-hidden="true" data-icon="inline-start" />
-          {i18n._(DOWNLOAD_BUTTON)}
-        </a>
-        <p class="text-sm text-ink-muted">
-          {i18n._(DOWNLOAD_REQUIREMENT)}
-          <span aria-hidden="true" class="mx-1">·</span>
-          <a
-            href={downloadHref("/download/mac-intel", locale)}
-            aria-label={i18n._(DOWNLOAD_INTEL_LABEL)}
-            class="rounded-xs text-ink-secondary underline decoration-edge-strong underline-offset-4 hoverable:hover:text-ink hoverable:hover:decoration-current"
-          >
-            {i18n._(DOWNLOAD_INTEL)}
-          </a>
-        </p>
-        <p data-app-store hidden class="text-sm text-ink-muted">
-          <a
-            href={downloadHref("/download/iphone", locale)}
-            class="rounded-xs text-ink-secondary underline decoration-edge-strong underline-offset-4 hoverable:hover:text-ink hoverable:hover:decoration-current"
-          >
-            {i18n._(DOWNLOAD_IPHONE)}
-          </a>
-        </p>
+      <p class="mt-5 max-w-[40ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">{i18n._(DOWNLOAD_LEDE)}</p>
+      <div id="download" class="mt-9 flex w-full justify-center">
+        <GetTheAppIn locale={locale} />
       </div>
 
-      <section class="mt-20 w-full max-w-[880px] border-t border-edge pt-10 text-start @4xl:mt-24">
+      <section aria-labelledby="mac" class="mt-20 flex w-full max-w-[880px] flex-col items-center border-t border-edge pt-14 @4xl:mt-24">
+        <h2 id="mac" class="text-3xl font-medium tracking-[-0.03em] text-ink @2xl:text-4xl">
+          {i18n._(DOWNLOAD_MAC_HEADING)}
+        </h2>
+        <p class="mt-3 max-w-[36ch] text-base text-pretty text-ink-secondary @2xl:text-lg">{i18n._(DOWNLOAD_MAC_LEDE)}</p>
+        <div class="mt-7 flex flex-col items-center gap-3">
+          <a href={downloadHref("/download/mac", locale)} class={buttonClass("secondary", "lg")}>
+            <Download aria-hidden="true" data-icon="inline-start" />
+            {i18n._(DOWNLOAD_BUTTON)}
+          </a>
+          <p class="text-sm text-ink-muted">
+            {i18n._(DOWNLOAD_REQUIREMENT)}
+            <span aria-hidden="true" class="mx-1">·</span>
+            <a
+              href={downloadHref("/download/mac-intel", locale)}
+              aria-label={i18n._(DOWNLOAD_INTEL_LABEL)}
+              class="rounded-xs text-ink-secondary underline decoration-edge-strong underline-offset-4 hoverable:hover:text-ink hoverable:hover:decoration-current"
+            >
+              {i18n._(DOWNLOAD_INTEL)}
+            </a>
+          </p>
+        </div>
+      </section>
+
+      <section class="mt-14 w-full max-w-[880px] pt-2 text-start">
         <h2 class="sr-only">{i18n._(DOWNLOAD_STEPS_HEADING)}</h2>
         <ol class="grid gap-8 @2xl:grid-cols-3">
           {

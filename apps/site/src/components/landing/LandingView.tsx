@@ -2,6 +2,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { explorePath } from "../../lib/explore";
 import { localizedPath } from "../../lib/routes";
+import { GetTheApp } from "../GetTheApp";
 import { AiGallery } from "./AiGallery";
 import { ApiSection } from "./ApiSection";
 import { WorksWith } from "./AssistantMarks";
@@ -77,7 +78,12 @@ export function LandingView() {
             href: explorePath(i18n.locale),
             label: <Trans>Browse free decks</Trans>,
           }}
-          after={<WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} />}
+          after={
+            <>
+              <GetTheApp />
+              <WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} className="mt-5" />
+            </>
+          }
         />
       }
     >

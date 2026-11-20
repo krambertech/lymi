@@ -12,6 +12,9 @@ import { countsAsPageView } from "./deck-page";
 /** Lymi on the App Store. Apple opens the visitor's own storefront. */
 export const APP_STORE_URL = "https://apps.apple.com/app/id6822912687";
 
+/** Lymi on Google Play. Google opens the listing in the visitor's own language. */
+export const GOOGLE_PLAY_URL = "https://play.google.com/store/apps/details?id=app.lymi";
+
 /**
  * Each download link and where it leads. A Mac link names its chip's newest build, which the
  * release job overwrites, so the address never changes.
@@ -31,6 +34,11 @@ export const DOWNLOADS = {
     event: "iphone_download_started",
     properties: {},
     file: APP_STORE_URL,
+  },
+  "/download/android": {
+    event: "android_download_started",
+    properties: {},
+    file: GOOGLE_PLAY_URL,
   },
 } as const;
 export type DownloadPath = keyof typeof DOWNLOADS;

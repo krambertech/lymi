@@ -97,7 +97,7 @@ export const PAGES: DocPage[] = [
     to: "/docs/mobile",
     nav: "Lymi on your phone",
     title: "Lymi on your phone",
-    blurb: "Add the Lymi web app to your phone’s home screen.",
+    blurb: "Get the iPhone or Android app, or add the web app to your home screen.",
     section: "Using Lymi",
   },
   {

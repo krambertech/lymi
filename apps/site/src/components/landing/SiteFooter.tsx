@@ -88,6 +88,12 @@ export function SiteFooter({ openAppUrl, ...languages }: Props) {
               <Trans>Lymi for iPhone</Trans>
             </a>
             <a
+              href={downloadHref("/download/android", i18n.locale)}
+              className="rounded-sm bg-plate px-3 py-1.5 text-sm font-medium text-ink edge-strong"
+            >
+              <Trans>Lymi for Android</Trans>
+            </a>
+            <a
               href={openAppUrl}
               className="rounded-sm bg-plate px-3 py-1.5 text-sm font-medium text-ink edge-strong"
             >

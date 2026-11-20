@@ -4,7 +4,7 @@ The changelog at `lymi.app/changelog` tells learners what changed in Lymi and wh
 
 ## An update
 
-An update is one folder in `apps/site/src/content/changelog`, named `YYYY-MM-DD-slug`, holding `en.md`, `uk.md` and `ru.md`. The date is the folder's; the slug names the update's page and never changes once published. Each file has a `title`, a one-sentence `summary`, an optional picture and the text. `changelog.test.ts` fails when a language is missing or its headings and list items differ from the English.
+An update is one folder in `apps/site/src/content/changelog`, named `YYYY-MM-DD-slug`, holding `en.md`, `uk.md` and `ru.md`. The date is the folder's; the slug names the update's page and never changes once published. Each file has a `title`, a one-sentence `summary`, an optional picture and the text. A phone app launch adds `stores` (`app-store` or `google-play`, the store named first), which draws the get-the-app plate under the picture. `changelog.test.ts` fails when a language is missing or its headings and list items differ from the English.
 
 The summary stands on its own: it is the page description, the feed item and, once the product shows updates, the notice a learner reads there. The text leads with the change that matters most, gives each further change of its size a `##` heading, and ends with smaller changes under `### Fixes and improvements`.
 

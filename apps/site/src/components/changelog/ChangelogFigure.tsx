@@ -9,6 +9,7 @@ import { LibraryDemo } from "../landing/LibraryDemo";
 import { ReviewDemo } from "../landing/ReviewDemo";
 import { SeriesDemo } from "../landing/SeriesDemo";
 import { ActivityFigure } from "./ActivityFigure";
+import { AndroidFigure } from "./AndroidFigure";
 import { CantoneseTamilFigure } from "./CantoneseTamilFigure";
 import { CommandMenuFigure } from "./CommandMenuFigure";
 import { DeckAiFigure } from "./DeckAiFigure";
@@ -66,6 +67,7 @@ const FIGURES: Record<ChangelogFigureName, ComponentType> = {
   mac: MacBookFigure,
   "pitch-accent": PitchAccentFigure,
   iphone: IPhoneFigure,
+  android: AndroidFigure,
 };
 
 interface Props {

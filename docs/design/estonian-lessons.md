@@ -50,6 +50,7 @@ A lesson file in `components/learn/lessons` holds its glossary, its sections and
 - Every Estonian word in prose is a `Word` with a gloss.
 - Listening only: nothing asks for the microphone.
 - One idea per section. When a rule has two halves, such as -teist and -kümmend, give each half a section and its own explorer, then a section that puts them together.
+- Don't give a section to something an explorer already shows. When one explorer holds every item, such as the seven days on one strip, its detail line explains each item: pressing a day says where its name comes from.
 - Every lesson ends the same way: What to remember in three to five rules, then `LessonWords` on the stage's tray: a card with the first words as chips that opens to the full list, and under it, on the same tray, the way on to Lymi's free Estonian decks. Then the next lesson.
 - English is the source; Ukrainian and Russian are transcreated, and a pronunciation tip compares a sound with the reader's own language where the match is accurate.
 - A teacher checks the Estonian before a lesson launches.

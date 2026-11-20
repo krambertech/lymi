@@ -547,7 +547,7 @@ export const TUTVUMINE_PASSAGES = {
     "Minu sõber Jaan töötab kohvikus.",
     "Ta ei ole kodus, ta on tööl.",
     "Me räägime eesti keelt.",
-    "Ja sina? Kus sina elad?",
+    "Aga sina? Kus sina elad?",
   ],
 } as const;
 

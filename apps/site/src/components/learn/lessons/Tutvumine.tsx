@@ -237,7 +237,8 @@ function useContent() {
           line: "Ma ei tea.",
           why: (
             <Trans>
-              That's I don't know. <b lang="et">Kuidas läheb?</b> asks how you are.
+              <b lang="et">Ma ei tea</b> is I don't know. <b lang="et">Kuidas läheb?</b> asks how
+              you are.
             </Trans>
           ),
         },
@@ -262,7 +263,7 @@ function useContent() {
           line: "Kas sa oled väsinud?",
           why: (
             <Trans>
-              Mari just said she is. Ask why with <b lang="et">miks</b>.
+              Mari just said she's tired. Ask why with <b lang="et">miks</b>.
             </Trans>
           ),
         },
@@ -394,7 +395,7 @@ function useContent() {
       answer: "Tallinnas",
       why: (
         <Trans>
-          Tallinn takes an a and{" "}
+          Tallinn takes an extra a before the{" "}
           <b lang="et" className="whitespace-nowrap">
             -s
           </b>
@@ -435,11 +436,11 @@ function useContent() {
       answer: "tööl",
       why: (
         <Trans>
-          At work takes{" "}
+          <b lang="et">Töö</b>, work, takes{" "}
           <b lang="et" className="whitespace-nowrap">
             -l
           </b>
-          : <b lang="et">tööl</b>.
+          : <b lang="et">tööl</b>, at work.
         </Trans>
       ),
     },
@@ -460,7 +461,7 @@ function useContent() {
     },
     {
       id: "kus",
-      before: "Ja sina?",
+      before: "Aga sina?",
       after: "sina elad?",
       answer: "Kus",
       why: (
@@ -532,7 +533,7 @@ export function TutvumineLesson() {
           <b lang="et">Ma ei tööta. Ei, ma ei ole.</b>
         </Trans>,
         <Trans key="4">
-          Ask yes or no with <b lang="et">kas</b>, and the rest with a question word:{" "}
+          Ask a yes-or-no question with <b lang="et">kas</b>, and any other with a question word:{" "}
           <b lang="et">Kas sa räägid eesti keelt? Kus sa töötad? Miks?</b>
         </Trans>,
         <Trans key="5">
@@ -581,8 +582,8 @@ export function TutvumineLesson() {
                 </p>
                 <p>
                   <Trans>
-                    This time Mari's lines are sound only. Play one again as often as you like, or
-                    show its words.
+                    This time Mari's lines are sound only. Tap one to hear it again, or show its
+                    words.
                   </Trans>
                 </p>
               </Prose>

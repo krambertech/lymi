@@ -455,6 +455,9 @@ msgstr "<0>Kust</0> asks where you're from, not where you live."
 msgid "<0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>: <1>elan, elad, elab, elame, elate, elavad</1>."
 msgstr "<0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>: <1>elan, elad, elab, elame, elate, elavad</1>."
 
+msgid "<0>Ma ei tea</0> is I don't know. <1>Kuidas läheb?</1> asks how you are."
+msgstr "<0>Ma ei tea</0> is I don't know. <1>Kuidas läheb?</1> asks how you are."
+
 msgid "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
 msgstr "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
 
@@ -538,6 +541,9 @@ msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>
 
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> is hello, and Mari is leaving."
+
+msgid "<0>Töö</0>, work, takes <1>-l</1>: <2>tööl</2>, at work."
+msgstr "<0>Töö</0>, work, takes <1>-l</1>: <2>tööl</2>, at work."
 
 msgid "<0>veerand neli</0> is a quarter of the way to four, 3:15. <1>kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>veerand neli</0> is a quarter of the way to four, 3:15. <1>kolmveerand neli</1> is three quarters, 3:45."
@@ -1811,6 +1817,9 @@ msgstr "As with olema, the ending already says who, so ma and sa often go: <0/>.
 msgid "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>kell on kolm</2>."
 msgstr "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>kell on kolm</2>."
 
+msgid "Ask a yes-or-no question with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
+msgstr "Ask a yes-or-no question with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
+
 msgid "Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you just had. They land in Lymi, where cards you remember come back later and the ones you forget come back sooner."
 msgstr "Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you just had. They land in Lymi, where cards you remember come back later and the ones you forget come back sooner."
 
@@ -1849,9 +1858,6 @@ msgstr "Ask what’s waiting and your assistant shows it right in the chat. Then
 
 msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
 msgstr "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
-
-msgid "Ask yes or no with <0>kas</0>, and the rest with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
-msgstr "Ask yes or no with <0>kas</0>, and the rest with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
 
 msgid "Asked both ways"
 msgstr "Asked both ways"
@@ -1912,9 +1918,6 @@ msgstr "at the office"
 
 msgid "at work"
 msgstr "at work"
-
-msgid "At work takes <0>-l</0>: <1>tööl</1>."
-msgstr "At work takes <0>-l</0>: <1>tööl</1>."
 
 msgid "ATP"
 msgstr "ATP"
@@ -6295,11 +6298,11 @@ msgstr "marginal cost"
 msgid "Mari"
 msgstr "Mari"
 
-msgid "Mari just said she is. Ask why with <0>miks</0>."
-msgstr "Mari just said she is. Ask why with <0>miks</0>."
-
 msgid "Mari just said she works a lot. Ask where with <0>kus</0>."
 msgstr "Mari just said she works a lot. Ask where with <0>kus</0>."
+
+msgid "Mari just said she's tired. Ask why with <0>miks</0>."
+msgstr "Mari just said she's tired. Ask why with <0>miks</0>."
 
 msgid "Mari knows your name. <0>Kuidas läheb?</0> asks how you are."
 msgstr "Mari knows your name. <0>Kuidas läheb?</0> asks how you are."
@@ -9072,8 +9075,8 @@ msgstr "Talk: asking Mari"
 msgid "Talk: meeting Mari"
 msgstr "Talk: meeting Mari"
 
-msgid "Tallinn takes an a and <0>-s</0>: <1>Tallinnas</1>."
-msgstr "Tallinn takes an a and <0>-s</0>: <1>Tallinnas</1>."
+msgid "Tallinn takes an extra a before the <0>-s</0>: <1>Tallinnas</1>."
+msgstr "Tallinn takes an extra a before the <0>-s</0>: <1>Tallinnas</1>."
 
 msgid "Tallinn, the capital"
 msgstr "Tallinn, the capital"
@@ -9236,9 +9239,6 @@ msgstr "That's a book."
 
 msgid "That's good morning; Mari is leaving."
 msgstr "That's good morning; Mari is leaving."
-
-msgid "That's I don't know. <0>Kuidas läheb?</0> asks how you are."
-msgstr "That's I don't know. <0>Kuidas läheb?</0> asks how you are."
 
 msgid "That's Jaan."
 msgstr "That's Jaan."
@@ -10038,8 +10038,8 @@ msgstr "This is the one most learners get wrong at first. Listen for the hour, t
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "This policy covers Lymi’s website, apps, API and connected assistants."
 
-msgid "This time Mari's lines are sound only. Play one again as often as you like, or show its words."
-msgstr "This time Mari's lines are sound only. Play one again as often as you like, or show its words."
+msgid "This time Mari's lines are sound only. Tap one to hear it again, or show its words."
+msgstr "This time Mari's lines are sound only. Tap one to hear it again, or show its words."
 
 msgid "Thousands on AnkiWeb"
 msgstr "Thousands on AnkiWeb"

@@ -455,6 +455,9 @@ msgstr "<0>Kust</0> спрашивает, откуда ты, а не где жи
 msgid "<0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>: <1>elan, elad, elab, elame, elate, elavad</1>."
 msgstr "<0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>: <1>elan, elad, elab, elame, elate, elavad</1>."
 
+msgid "<0>Ma ei tea</0> is I don't know. <1>Kuidas läheb?</1> asks how you are."
+msgstr "<0>Ma ei tea</0> — это «я не знаю». <1>Kuidas läheb?</1> — это «Как дела?»."
+
 msgid "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
 msgstr "После <0>ma</0> глагол оканчивается на <1>-n</1>: <2>elan</2>."
 
@@ -474,10 +477,10 @@ msgid "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgstr "<0>Мексиканский испанский</0>, <1>разговорные примеры</1>."
 
 msgid "<0>Mina</0> takes <1>olen</1>: <2>Mina olen Andres</2>."
-msgstr "С <0>mina</0> нужно <1>olen</1>: <2>Mina olen Andres</2>."
+msgstr "После <0>mina</0> идёт <1>olen</1>: <2>Mina olen Andres</2>."
 
 msgid "<0>Mina</0> takes <1>olen</1>."
-msgstr "С <0>mina</0> нужно <1>olen</1>."
+msgstr "После <0>mina</0> идёт <1>olen</1>."
 
 msgid "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
 msgstr "<0>õ ä ö ü</0> — отдельные гласные, и самая непривычная из них <1>õ</1>."
@@ -510,13 +513,13 @@ msgid "<0>price elasticity</0> ?"
 msgstr "<0>эластичность спроса</0> ?"
 
 msgid "<0>Sa oled</0> is you are: this tells Mari she's from Ukraine."
-msgstr "<0>Sa oled</0> — это «ты»: получается, что из Украины Мари."
+msgstr "<0>Sa oled</0> — «ты есть»: так ты говоришь, что это Мари из Украины."
 
 msgid "<0>Sa</0> takes <1>-d</1>: <2>töötad</2>."
 msgstr "После <0>sa</0> глагол оканчивается на <1>-d</1>: <2>töötad</2>."
 
 msgid "<0>Sa</0> takes <1>oled</1>, not <2>on</2>."
-msgstr "С <0>sa</0> нужно <1>oled</1>, а не <2>on</2>."
+msgstr "После <0>sa</0> идёт <1>oled</1>, а не <2>on</2>."
 
 msgid "<0>sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
 msgstr "Перед <0>sada</0> и <1>tuhat</1> «один» не говорят. Сотни пишутся слитно, тысячи отдельно."
@@ -538,6 +541,9 @@ msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сегодня, завтр�
 
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — это «привет», а Мари уже уходит."
+
+msgid "<0>Töö</0>, work, takes <1>-l</1>: <2>tööl</2>, at work."
+msgstr "<0>Töö</0>, «работа», получает <1>-l</1>: <2>tööl</2>, «на работе»."
 
 msgid "<0>veerand neli</0> is a quarter of the way to four, 3:15. <1>kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>veerand neli</0> — четверть пути к четырём, 3:15. <1>kolmveerand neli</1> — три четверти, 3:45."
@@ -1400,7 +1406,7 @@ msgid "After <0>ei</0> the verb loses its ending: <1>ei tööta</1>."
 msgstr "После <0>ei</0> глагол теряет окончание: <1>ei tööta</1>."
 
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
-msgstr "После <0>ei</0> у <1>olema</1> нет окончания: <2>ei ole</2>."
+msgstr "После <0>ei</0> у глагола <1>olema</1> нет окончания: <2>ei ole</2>."
 
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "После урока на italki, Preply или с частным репетитором вставь чат или сфотографируй заметки. Lymi превратит новые слова в карточки, которые ты повторяешь между уроками. Добавить их может и AI-ассистент. Бесплатно."
@@ -1811,6 +1817,9 @@ msgstr "Как и у olema, окончание уже говорит, кто э�
 msgid "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>kell on kolm</2>."
 msgstr "Спрашивай <0>Mis kell on?</0> Ответ — <1>kell on</1> и час: <2>kell on kolm</2>."
 
+msgid "Ask a yes-or-no question with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
+msgstr "Вопрос «да или нет» начинай с <0>kas</0>, а любой другой — с вопросительного слова: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
+
 msgid "Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you just had. They land in Lymi, where cards you remember come back later and the ones you forget come back sooner."
 msgstr "Попроси ChatGPT сделать флеш-карточки из фото заметок, страницы учебника или только что прошедшего разговора. Они попадут в Lymi, где карточки, которые ты помнишь, будут возвращаться позже, а забытые — раньше."
 
@@ -1849,9 +1858,6 @@ msgstr "Спроси, что ждёт повторения, и ассистен�
 
 msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
 msgstr "Спрашивай словом <0>kus</0>, а отвечай предложением или одним словом: <1>Kus sa elad? Tartus.</1>"
-
-msgid "Ask yes or no with <0>kas</0>, and the rest with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
-msgstr "Спрашивай «да или нет» с <0>kas</0>, а остальное — с вопросительным словом: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
 
 msgid "Asked both ways"
 msgstr "Вопросы в обе стороны"
@@ -1912,9 +1918,6 @@ msgstr "в офисе"
 
 msgid "at work"
 msgstr "на работе"
-
-msgid "At work takes <0>-l</0>: <1>tööl</1>."
-msgstr "«На работе» — с <0>-l</0>: <1>tööl</1>."
 
 msgid "ATP"
 msgstr "АТФ"
@@ -6295,11 +6298,11 @@ msgstr "предельные издержки"
 msgid "Mari"
 msgstr "Мари"
 
-msgid "Mari just said she is. Ask why with <0>miks</0>."
-msgstr "Мари только что это сказала. Спроси почему — <0>miks</0>."
-
 msgid "Mari just said she works a lot. Ask where with <0>kus</0>."
-msgstr "Мари только что сказала, что много работает. Спроси где — <0>kus</0>."
+msgstr "Мари только что сказала, что много работает. Чтобы спросить где, скажи <0>kus</0>."
+
+msgid "Mari just said she's tired. Ask why with <0>miks</0>."
+msgstr "Мари только что сказала, что устала. Чтобы спросить почему, скажи <0>miks</0>."
 
 msgid "Mari knows your name. <0>Kuidas läheb?</0> asks how you are."
 msgstr "Мари знает твоё имя. <0>Kuidas läheb?</0> — это «Как дела?»."
@@ -7610,7 +7613,7 @@ msgid "PostHog’s EU cloud receives usage events to help us improve Lymi. In th
 msgstr "Облако PostHog в ЕС получает события использования, чтобы помогать нам улучшать Lymi. В приложениях они связаны с идентификатором аккаунта и содержат действия, количества, оценки повторений, сведения о приложении и устройстве, страну, определённую по IP-адресу, и технические данные использования AI, например модель и стоимость. События не содержат текста карточек, AI-запросов, имён, электронных адресов или учётных данных."
 
 msgid "Practice for lessons {first} to {last}"
-msgstr "Практика к урокам {first}–{last}"
+msgstr "Практика по урокам {first}–{last}"
 
 msgid "Practice parts"
 msgstr "Части для практики"
@@ -8204,7 +8207,7 @@ msgid "Say no"
 msgstr "Ответь «нет»"
 
 msgid "Say no with <0>ei</0> and the verb without its ending: <1>Ma ei tööta. Ei, ma ei ole.</1>"
-msgstr "Говори «нет» с помощью <0>ei</0> и глагола без окончания: <1>Ma ei tööta. Ei, ma ei ole.</1>"
+msgstr "Отрицай с помощью <0>ei</0> и глагола без окончания: <1>Ma ei tööta. Ei, ma ei ole.</1>"
 
 msgid "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "Скажи «о», затем растяни губы, а язык оставь на месте. Похоже на русское «ы»."
@@ -9072,8 +9075,8 @@ msgstr "Разговор: вопросы к Мари"
 msgid "Talk: meeting Mari"
 msgstr "Разговор: знакомство с Мари"
 
-msgid "Tallinn takes an a and <0>-s</0>: <1>Tallinnas</1>."
-msgstr "Таллин получает a перед <0>-s</0>: <1>Tallinnas</1>."
+msgid "Tallinn takes an extra a before the <0>-s</0>: <1>Tallinnas</1>."
+msgstr "У Tallinn перед <0>-s</0> появляется ещё одно a: <1>Tallinnas</1>."
 
 msgid "Tallinn, the capital"
 msgstr "Таллин, столица"
@@ -9236,9 +9239,6 @@ msgstr "Это книга."
 
 msgid "That's good morning; Mari is leaving."
 msgstr "Это «доброе утро», а Мари уходит."
-
-msgid "That's I don't know. <0>Kuidas läheb?</0> asks how you are."
-msgstr "Это «я не знаю». <0>Kuidas läheb?</0> — это «Как дела?»."
 
 msgid "That's Jaan."
 msgstr "Это Яан."
@@ -10038,8 +10038,8 @@ msgstr "Услышь час и отступи на полчаса назад, к
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "Эта политика охватывает сайт Lymi, приложения, API и подключённых помощников."
 
-msgid "This time Mari's lines are sound only. Play one again as often as you like, or show its words."
-msgstr "На этот раз реплики Мари только звучат. Слушай каждую сколько угодно или открой её текст."
+msgid "This time Mari's lines are sound only. Tap one to hear it again, or show its words."
+msgstr "На этот раз реплики Мари только звучат. Нажми на реплику, чтобы услышать её ещё раз, или открой её текст."
 
 msgid "Thousands on AnkiWeb"
 msgstr "Тысячи на AnkiWeb"

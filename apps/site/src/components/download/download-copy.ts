@@ -1,15 +1,16 @@
 import { msg } from "@lingui/core/macro";
 
-export const DOWNLOAD_TITLE = msg`Download Lymi for Mac`;
-export const DOWNLOAD_DESCRIPTION = msg`Lymi for Mac adds a card from any app with ⌃⌥L and lives in the menu bar. For macOS 13 or later.`;
-export const DOWNLOAD_HEADING = msg`Lymi for Mac`;
-export const DOWNLOAD_SKIP = msg`Skip to the download`;
+export const DOWNLOAD_TITLE = msg`Download Lymi`;
+export const DOWNLOAD_DESCRIPTION = msg`Get Lymi for iPhone, Android and Mac. Your decks and progress are the same on every device.`;
+export const DOWNLOAD_HEADING = msg`Get Lymi`;
+export const DOWNLOAD_LEDE = msg`Review and add cards on your phone and your Mac. Your decks and progress are the same everywhere.`;
+export const DOWNLOAD_MAC_HEADING = msg`Lymi for Mac`;
+export const DOWNLOAD_SKIP = msg`Skip to the downloads`;
 export const DOWNLOAD_BUTTON = msg`Download for Mac`;
 export const DOWNLOAD_REQUIREMENT = msg`macOS 13 or later`;
 export const DOWNLOAD_INTEL = msg`Intel Mac?`;
 export const DOWNLOAD_INTEL_LABEL = msg`Intel Mac? Download for Intel`;
-export const DOWNLOAD_IPHONE = msg`Lymi for iPhone is on the App Store`;
-export const DOWNLOAD_LEDE = msg`Add a card from any app with ⌃⌥L, and open Lymi from the menu bar.`;
+export const DOWNLOAD_MAC_LEDE = msg`Add a card from any app with ⌃⌥L, and open Lymi from the menu bar.`;
 export const DOWNLOAD_STEPS_HEADING = msg`How to install`;
 export const DOWNLOAD_STEPS = [
   { title: msg`Open Lymi.dmg`, body: msg`It’s in your Downloads folder.` },

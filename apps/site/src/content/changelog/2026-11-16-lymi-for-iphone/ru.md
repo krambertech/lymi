@@ -2,6 +2,7 @@
 title: Lymi для iPhone
 summary: Lymi теперь есть на iPhone — с виджетами, элементами управления и отправкой в Lymi. Повторяй и добавляй карточки с телефона, с теми же колодами, что и в вебе.
 figure: iphone
+stores: app-store
 ---
 
 Lymi теперь есть на iPhone. [Скачай в App Store](/download/iphone?locale=ru). Войди через аккаунт Lymi или Apple, и там будут твои колоды и прогресс. В странах ЕС приложения в App Store пока нет.

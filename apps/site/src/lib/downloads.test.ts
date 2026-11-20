@@ -76,6 +76,15 @@ describe("downloadCapture", () => {
     expect(event.properties).not.toHaveProperty("chip");
   });
 
+  it("counts the Android link as its own event, with no chip", () => {
+    const event = capture(
+      visit("/download/android?locale=uk", { referer: "https://lymi.app/uk/changelog" }),
+    );
+    expect(event.event).toBe("android_download_started");
+    expect(event.properties).toMatchObject({ from: "/uk/changelog", ui_locale: "uk" });
+    expect(event.properties).not.toHaveProperty("chip");
+  });
+
   it("names a direct visit's landing page and no referring page", () => {
     const event = capture(visit("/download/mac-intel"));
     expect(event.properties.chip).toBe("intel");

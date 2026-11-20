@@ -8,9 +8,19 @@ export function Mobile() {
   return (
     <div className="doc-prose">
       <Lead>
-        Add the Lymi web app to your phone’s home screen. It opens from its own icon, without the
-        browser around it, and keeps the same cards you see on a computer.
+        Lymi has apps for iPhone and Android, with the same cards you see on a computer. You can
+        also add the Lymi web app to your phone’s home screen.
       </Lead>
+
+      <H2>Get the app</H2>
+      <p>
+        Get <a href="/download/iphone">Lymi on the App Store</a> or{" "}
+        <a href="/download/android">Lymi on Google Play</a>, then sign in with your Lymi account.
+        The iPhone app isn’t on the App Store in EU countries yet. There, add the web app instead.
+      </p>
+
+      <H2>Add the web app to your home screen</H2>
+      <p>The web app opens from its own icon, without the browser around it.</p>
 
       <Note title="Lymi can show you the steps">
         Open Lymi on your phone and tap your picture at the top of Today. If the menu has{" "}
@@ -18,7 +28,7 @@ export function Mobile() {
         iPhone it shows the steps below.
       </Note>
 
-      <H2>iPhone and iPad</H2>
+      <H3>iPhone and iPad</H3>
       <Steps>
         <div>
           <StepTitle>Open Lymi in Safari</StepTitle>
@@ -53,7 +63,7 @@ export function Mobile() {
         <strong>Add to Home Screen</strong>.
       </p>
 
-      <H2>Android</H2>
+      <H3>Android</H3>
       <Steps>
         <div>
           <StepTitle>Open Lymi in Chrome</StepTitle>

@@ -1,5 +1,6 @@
 import { EitusLesson } from "../learn/lessons/Eitus";
 import { HaaldusLesson } from "../learn/lessons/Haaldus";
+import { KaskivLesson } from "../learn/lessons/Kaskiv";
 import { KellLesson } from "../learn/lessons/Kell";
 import { KohadLesson } from "../learn/lessons/Kohad";
 import { KusimusedLesson } from "../learn/lessons/Kusimused";
@@ -22,6 +23,7 @@ export const LESSON_VIEWS = {
   kell: KellLesson,
   paevad: PaevadLesson,
   tutvumine: TutvumineLesson,
+  kaskiv: KaskivLesson,
 } as const;
 
 export default function LearnLessonPage({

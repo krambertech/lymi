@@ -3849,6 +3849,256 @@
     "model": "eleven_v4",
     "voice": "WtzwR2kNGVNuaTGaYLfK"
   },
+  "kaskiv/ma-loen": {
+    "text": "Ma loen.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/loe": {
+    "text": "Loe!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ma-ra2a2gin": {
+    "text": "Ma räägin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ra2a2gi": {
+    "text": "Räägi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ma-ootan": {
+    "text": "Ma ootan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/oota": {
+    "text": "Oota!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ma-so2o2n": {
+    "text": "Ma söön.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/so2o2": {
+    "text": "Söö!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ma-joon": {
+    "text": "Ma joon.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/joo": {
+    "text": "Joo!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ma-o3pin": {
+    "text": "Ma õpin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/o3pi": {
+    "text": "Õpi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/istu": {
+    "text": "Istu!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/tule-siia": {
+    "text": "Tule siia!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/kuula": {
+    "text": "Kuula!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/vaata": {
+    "text": "Vaata!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ra2a2gi-aeglasemalt-palun": {
+    "text": "Räägi aeglasemalt, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/a2ra-istu": {
+    "text": "Ära istu!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/a2ra-oota": {
+    "text": "Ära oota!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/a2ra-ra2a2gi": {
+    "text": "Ära räägi!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/a2ra-loe": {
+    "text": "Ära loe!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/a2ra-so2o2": {
+    "text": "Ära söö!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/a2ra-joo": {
+    "text": "Ära joo!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ma-ei-istu": {
+    "text": "Ma ei istu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ma-ei-oota": {
+    "text": "Ma ei oota.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ma-ei-loe": {
+    "text": "Ma ei loe.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ma-ei-joo": {
+    "text": "Ma ei joo.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/istuge": {
+    "text": "Istuge!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/tulge-siia": {
+    "text": "Tulge siia!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/oodake": {
+    "text": "Oodake!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/kuulake": {
+    "text": "Kuulake!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/vaadake": {
+    "text": "Vaadake!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/lugege": {
+    "text": "Lugege!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/a2rge-istuge": {
+    "text": "Ärge istuge!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/a2rge-lugege": {
+    "text": "Ärge lugege!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ra2a2kige-aeglasemalt-palun": {
+    "text": "Rääkige aeglasemalt, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/palun": {
+    "text": "palun",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/a2ra": {
+    "text": "ära",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/siia": {
+    "text": "siia",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/ma-la2hen": {
+    "text": "Ma lähen.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/mine": {
+    "text": "Mine!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/a2rge-oodake": {
+    "text": "Ärge oodake!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/d-mari-1": {
+    "text": "Tere! Oota, ma tulen!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kaskiv/d-sina-1": {
+    "text": "Tere! Istu, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/d-mari-2": {
+    "text": "Aitäh! Kas sa räägid eesti keelt?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kaskiv/d-sina-2": {
+    "text": "Natuke. Räägi aeglasemalt, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/d-mari-3": {
+    "text": "Kas sa jood kohvi või vett?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kaskiv/d-sina-3": {
+    "text": "Kohvi, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kaskiv/d-mari-4": {
+    "text": "Vaata! Jaan tuleb.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kaskiv/d-sina-4": {
+    "text": "Jaan, tule siia!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kit/p-jaan": {
     "text": "Tere! Mina olen Jaan. Ma elan Tartus. Ma olen arst. Mari on minu sõber. Ta ei ole arst, ta on õpetaja. Me räägime eesti keelt.",
     "model": "eleven_v4",

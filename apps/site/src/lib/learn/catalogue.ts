@@ -126,7 +126,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 8,
         blurb: msg`A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud.`,
       },
-      { name: msg`Commands`, et: "Istu! Ära istu!" },
+      {
+        slug: "kaskiv",
+        name: msg`Commands`,
+        title: msg`Estonian imperative: giving commands`,
+        et: "Istu! Ära istu!",
+        minutes: 10,
+        blurb: msg`A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud.`,
+      },
     ],
   },
   {

@@ -2,7 +2,7 @@
 import LearnLessonPage, { LESSON_VIEWS } from "../islands/LearnLessonPage";
 import { SHARE_IMAGE_ALT } from "../landing/LandingView";
 import BaseLayout from "../../layouts/BaseLayout.astro";
-import { lessonBySlug, lessonPath } from "../../lib/learn/catalogue";
+import { LESSON_PAGE_TITLE, lessonBySlug, lessonPath } from "../../lib/learn/catalogue";
 import { pageI18n } from "../../lib/i18n";
 import { isPrelaunch, type Locale } from "../../lib/routes";
 
@@ -15,7 +15,7 @@ const { locale, slug } = Astro.props;
 const lesson = lessonBySlug(slug);
 if (!lesson?.blurb || !(slug in LESSON_VIEWS)) throw new Error(`No lesson page for ${slug}`);
 const i18n = pageI18n(locale);
-const title = `${lesson.et}: ${i18n._(lesson.about)} · Lymi`;
+const title = `${i18n._({ ...LESSON_PAGE_TITLE, values: { title: i18n._(lesson.title ?? lesson.name) } })} · Lymi`;
 const alternatePaths = { en: lessonPath(slug, "en"), uk: lessonPath(slug, "uk"), ru: lessonPath(slug, "ru") };
 ---
 

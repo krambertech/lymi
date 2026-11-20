@@ -1,17 +1,20 @@
+import { Code } from "../Code";
 import { Defs, H2, H3, Lead, NextLinks, Note, Steps, StepTitle } from "../Prose";
 
 /**
  * Written for a learner after a lesson, not for a developer. Every name and number here comes from
- * apps/web/src/client/components/smart-add.tsx, apps/web/src/server/routes/lessons.ts and
- * LESSON_READS_PER_DAY in packages/core; change this page when they change.
+ * apps/web/src/client/components/smart-add.tsx, apps/web/src/server/routes/lessons.ts,
+ * apps/web/src/server/lessons/link.ts and LESSON_READS_PER_DAY in packages/core; change this page
+ * when they change. LymiBot's user agent links to the #lymibot section.
  */
 export function SmartAdd() {
   return (
     <div className="doc-prose">
       <Lead>
-        Smart add turns a lesson into cards. Give it photos of your notebook or a handout, a PDF, or
-        the text of your notes or a lesson chat. Lymi lists the terms it finds, sets aside the ones
-        you already have, and you tick the ones to add. You don’t need an AI assistant for this.
+        Smart add turns a lesson into cards. Give it photos of your notebook or a handout, a PDF,
+        the text of your notes or a lesson chat, or a link to an article. Lymi lists the terms it
+        finds, sets aside the ones you already have, and you tick the ones to add. You don’t need an
+        AI assistant for this.
       </Lead>
 
       <Note title="Smart add is in beta">
@@ -57,6 +60,10 @@ export function SmartAdd() {
             </li>
             <li>
               <strong>Camera</strong> on a phone, one page at a time.
+            </li>
+            <li>
+              <strong>Link</strong> for an article on the web. Paste its address, starting with
+              https://. A link is read on its own, so add it before anything else.
             </li>
           </ul>
           <p>
@@ -116,10 +123,58 @@ export function SmartAdd() {
         lesson gives a translation, the card uses it.
       </p>
 
+      <H2>Reading an article</H2>
+      <p>
+        From a link, Lymi reads the article’s text and lists the words worth learning, each with the
+        sentence it came from. Each card you add keeps that sentence as its example, word for word,
+        and the article’s address as its source. On the card, the source opens the article. Lymi
+        then writes the meaning, the pronunciation and a translation of the sentence.
+      </p>
+      <p>
+        An article of up to 15,000 words counts as one of the day’s lessons. A longer one counts as
+        one for every 15,000 words, and Lymi tells you how many before it reads.
+      </p>
+      <p>Some links Lymi doesn’t read:</p>
+      <ul>
+        <li>
+          A site that asks apps not to read it, in its robots.txt or with a{" "}
+          <code>tdm-reservation</code> header. Lymi says so; copy the text and paste it instead.
+        </li>
+        <li>
+          YouTube, which doesn’t let apps read a video’s captions. Lymi shows the video’s title.
+          Open the video’s transcript on a computer, copy it and paste it as text.
+        </li>
+        <li>Netflix, Disney+ and Spotify, which don’t let apps read what they play.</li>
+        <li>Anything that isn’t a public web page, such as a link to your own network.</li>
+      </ul>
+
+      <H2 id="lymibot">LymiBot</H2>
+      <p>
+        LymiBot is how Lymi reads an article a learner asked Smart add to read. It fetches that one
+        page when the learner presses <strong>Find terms</strong>, and never follows links or crawls
+        a site. It identifies itself as{" "}
+        <code>LymiBot/1.0 (+https://lymi.app/docs/smart-add#lymibot)</code>.
+      </p>
+      <p>
+        LymiBot reads robots.txt first and follows the rules for <code>LymiBot</code>, or for{" "}
+        <code>*</code> when there are none for it. To keep it off your site, add:
+      </p>
+      <Code lang="text" label="robots.txt" code={"User-agent: LymiBot\nDisallow: /"} />
+      <p>
+        It also leaves alone any page that reserves text and data mining with a{" "}
+        <code>tdm-reservation: 1</code> header or meta tag. Lymi doesn’t keep the page: only the
+        sentences behind the cards the learner chooses, with a link back to the article. Questions
+        go to <a href="mailto:hello@lymi.app">hello@lymi.app</a>.
+      </p>
+
       <H2>Limits</H2>
       <ul>
         <li>Up to 10 files in one lesson, of which up to 3 can be PDFs, 20 MB of PDFs in all.</li>
         <li>Up to 100,000 characters of pasted text. Lymi leaves out anything after that.</li>
+        <li>
+          Articles up to 5 MB that load within 10 seconds, and up to 75,000 words, the day’s 5
+          lessons.
+        </li>
         <li>Up to 5 lessons a day while Smart add is in beta.</li>
       </ul>
 
@@ -130,13 +185,15 @@ export function SmartAdd() {
           take a photo.
         </li>
         <li>It doesn’t read audio or video. Paste a transcript instead.</li>
+        <li>It doesn’t follow the links in an article, only the page you paste.</li>
       </ul>
 
       <H2>Privacy</H2>
       <p>
         Lymi sends the photos, PDFs or text you add to Anthropic to read, with what it needs from
-        your decks to spot duplicates. Lymi keeps the cards you choose, not the lesson files. See
-        the <a href="/privacy">privacy policy</a>.
+        your decks to spot duplicates. For a link, Lymi fetches the page itself, converts it to text
+        with Cloudflare, then sends that text. Lymi keeps the cards you choose, not the lesson files
+        or the page. See the <a href="/privacy">privacy policy</a>.
       </p>
 
       <H2>If something goes wrong</H2>

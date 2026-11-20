@@ -441,7 +441,10 @@ export async function addCards(
       name: "cards_added",
       count: groups.length,
       source,
-      ...(source === "typed" ? { fields: TYPED_CARD_FIELDS.filter((f) => filled.has(f)) } : {}),
+      // Smart add names them too, so a card from an article, with its example and link, stands apart.
+      ...(source === "typed" || source === "lesson"
+        ? { fields: TYPED_CARD_FIELDS.filter((f) => filled.has(f)) }
+        : {}),
       ...(converted > 0 ? { normalized: converted } : {}),
       ...(options.entry ? { entry: options.entry } : {}),
     });

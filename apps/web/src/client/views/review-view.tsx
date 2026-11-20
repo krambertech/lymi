@@ -13,6 +13,7 @@ import {
   type Rating,
   type ReviewAid,
   shownTranslation,
+  sourceLink,
   termShowsPronunciation,
   textDirection,
 } from "@lymi/core";
@@ -669,7 +670,7 @@ export function ReviewCard({
   const place = section
     ? { Icon: Signpost, label: t`Section`, name: section }
     : card.source
-      ? { Icon: Library, label: t`Source`, name: card.source }
+      ? { Icon: Library, label: t`Source`, name: sourceLink(card.source)?.site ?? card.source }
       : null;
 
   const audio = (className?: string) =>

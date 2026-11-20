@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import type { LessonQuestion, LessonTerm } from "@lymi/client/api";
+import type { LessonQuestion, LessonTerm, LinkReadRefusal } from "@lymi/client/api";
 import type { LessonAccessOut } from "@lymi/core";
 import { isolate } from "@lymi/core";
 import { PLATE_ARRIVE, PLATE_RISE } from "@lymi/design";
@@ -16,11 +16,12 @@ import { FieldError } from "../ui/field";
 import type { IconName } from "../ui/icons";
 import { Icon, IconButton, Plate, Press, Text } from "../ui/primitives";
 import { Radio } from "../ui/radio";
-import { MAX_FILES, type Page, wordCount } from "./material";
+import { MAX_FILES, type Page, shownLink, wordCount } from "./material";
 import { RollingCount, ScanStage } from "./scan-stage";
 import { Pulse, Swap } from "./swap";
 
 export type Daily = NonNullable<LessonAccessOut["daily"]>;
+export type LongRead = Extract<LinkReadRefusal, { kind: "long_read" }>;
 
 /** About how long a page takes, so the scan moves on while the one request runs. */
 const SECONDS_A_PAGE = 6;
@@ -58,9 +59,15 @@ interface Source {
 export function InputStep({
   pages,
   text,
+  link,
   onRemovePage,
   onEditText,
   onRemoveText,
+  onEditLink,
+  onRemoveLink,
+  longRead,
+  offerTranscript,
+  onPasteTranscript,
   sources,
   error,
   daily,
@@ -68,9 +75,18 @@ export function InputStep({
 }: {
   pages: Page[];
   text: string;
+  /** An article's link, read on its own in place of pages and text. */
+  link: string;
   onRemovePage: (id: string) => void;
   onEditText: () => void;
   onRemoveText: () => void;
+  onEditLink: () => void;
+  onRemoveLink: () => void;
+  /** A long article's count of reads, waiting for the learner to agree. */
+  longRead: LongRead | null;
+  /** A YouTube link was refused: offer to paste the video's transcript instead. */
+  offerTranscript: boolean;
+  onPasteTranscript: () => void;
   sources: Source[];
   error: string | undefined;
   daily: Daily | null;
@@ -79,7 +95,7 @@ export function InputStep({
   const { t } = useLingui();
   const p = usePalette();
   const words = wordCount(text);
-  const empty = pages.length === 0 && words === 0;
+  const empty = pages.length === 0 && words === 0 && !link.trim();
   const atLimit = daily !== null && daily.used >= daily.limit;
   const full = pages.length >= MAX_FILES;
   return (
@@ -88,7 +104,7 @@ export function InputStep({
         <LimitNotice daily={daily} />
       ) : (
         <Text className="px-1 text-base text-ink-secondary">
-          {t`Add the lesson in any form, or several at once. You choose which terms become cards.`}
+          {t`Add the lesson in any form, or a link to an article. You choose which terms become cards.`}
         </Text>
       )}
 
@@ -123,6 +139,31 @@ export function InputStep({
               </Animated.View>
             );
           })}
+          {link.trim() !== "" && (
+            <Animated.View
+              entering={rise(0)}
+              className="flex-row items-center gap-3 py-2.5 ps-3 pe-1.5"
+            >
+              <Tile icon="linkOn" />
+              <Press
+                onPress={onEditLink}
+                accessibilityRole="button"
+                accessibilityHint={t`Edit the link`}
+                className="flex-1"
+              >
+                <Text className="text-md text-ink" numberOfLines={1}>
+                  {shownLink(link)}
+                </Text>
+                <Text className="text-sm text-ink-muted">{t`Link`}</Text>
+              </Press>
+              <IconButton
+                icon="close"
+                size="sm"
+                label={t`Remove the link`}
+                onPress={onRemoveLink}
+              />
+            </Animated.View>
+          )}
           {words > 0 && (
             <Animated.View
               entering={rise(0)}
@@ -153,7 +194,35 @@ export function InputStep({
         </Plate>
       )}
 
-      <View className="gap-2">
+      {longRead && (
+        <View className="flex-row gap-3 rounded-xl bg-plate-nested p-4" accessible>
+          <Icon name="lesson" size={20} colour={p["ink-muted"]} />
+          <View className="flex-1 gap-0.5">
+            <Text className="text-md font-medium text-ink">
+              {t`${plural(longRead.reads, { one: "This article counts as # lesson", other: "This article counts as # lessons" })}`}
+            </Text>
+            <Text className="text-base text-ink-secondary">
+              {t`${plural(longRead.words, { one: "It’s about # word long, and one lesson covers up to 15,000.", other: "It’s about # words long, and one lesson covers up to 15,000." })}`}
+              {longRead.left !== null
+                ? ` ${t`${plural(longRead.left, { one: "You have # lesson left today.", other: "You have # lessons left today." })}`}`
+                : ""}
+            </Text>
+          </View>
+        </View>
+      )}
+
+      {offerTranscript && (
+        <Press
+          onPress={onPasteTranscript}
+          accessibilityRole="button"
+          className="min-h-11 flex-row items-center gap-2 self-start rounded-full bg-plate-nested px-4"
+        >
+          <Icon name="example" size={18} colour={p.ink} />
+          <Text className="text-md font-medium text-ink">{t`Paste the transcript`}</Text>
+        </Press>
+      )}
+
+      <View className={`gap-2 ${link.trim() ? "hidden" : ""}`}>
         {!empty && <Text className="px-1 text-sm font-medium text-ink-muted">{t`Add more`}</Text>}
         <Plate className="overflow-hidden">
           {sources.map((source, i) => {
@@ -288,14 +357,61 @@ export function WritingStep({
   );
 }
 
+/** An article's link, pasted with the keyboard up. */
+export function LinkingStep({
+  link,
+  onChange,
+  onDone,
+  error,
+}: {
+  link: string;
+  onChange: (link: string) => void;
+  onDone: () => void;
+  error: string | undefined;
+}) {
+  const { t } = useLingui();
+  const p = usePalette();
+  return (
+    <View className="gap-2">
+      <TextInput
+        autoFocus
+        value={link}
+        onChangeText={onChange}
+        onSubmitEditing={onDone}
+        placeholder="https://"
+        placeholderTextColor={p["ink-muted"]}
+        accessibilityLabel={t`Article link`}
+        keyboardType="url"
+        textContentType="URL"
+        autoCapitalize="none"
+        autoCorrect={false}
+        returnKeyType="done"
+        selectionColor={p.ink}
+        className="min-h-[52px] rounded-xl border border-edge bg-plate px-4 font-sans text-md text-ink"
+        maxFontSizeMultiplier={inputCap(17)}
+      />
+      {error ? (
+        <FieldError>{error}</FieldError>
+      ) : (
+        <Text className="px-1 text-sm text-ink-muted">
+          {t`Lymi reads the article’s text and gives each card the sentence it came from.`}
+        </Text>
+      )}
+    </View>
+  );
+}
+
 export function ReadingStep({
   pages,
   text,
+  article = false,
   terms,
   finished,
 }: {
   pages: Page[];
   text: string;
+  /** Reading an article from its link, which the server fetches first. */
+  article?: boolean;
   /** The new terms found so far, in the order the model wrote them. */
   terms: LessonTerm[];
   finished: boolean;
@@ -319,7 +435,9 @@ export function ReadingStep({
       ? t`Reading page ${scanned + 1} of ${pages.length}`
       : pages.length > 0
         ? t`Reading the pages`
-        : t`Reading the text`
+        : article
+          ? t`Reading the article`
+          : t`Reading the text`
     : finished
       ? t`Checking your decks for duplicates`
       : t`Choosing the terms worth a card`;
@@ -445,8 +563,11 @@ export function ListStep({
   onToggle,
   onToggleAll,
   onOpen,
+  article = false,
   error,
 }: {
+  /** Read from an article's link, so each term carries its sentence. */
+  article?: boolean;
   fresh: LessonTerm[];
   existing: LessonTerm[];
   ticked: Set<string>;
@@ -463,7 +584,9 @@ export function ListStep({
     return (
       <View className="gap-5">
         <View className="gap-1 px-1">
-          <Text className="text-md font-medium text-ink">{t`Nothing new in this lesson`}</Text>
+          <Text className="text-md font-medium text-ink">
+            {article ? t`Nothing new in this article` : t`Nothing new in this lesson`}
+          </Text>
           <Text className="text-base text-ink-secondary">
             {t`Every term worth a card is already in your decks.`}
           </Text>
@@ -542,6 +665,11 @@ export function ListStep({
                       ? term.gloss
                       : (edit.meaning ?? t`Lymi writes the meaning`)}
                   </Text>
+                  {term.example && (
+                    <Text className="text-sm text-ink-muted" numberOfLines={2}>
+                      {term.example}
+                    </Text>
+                  )}
                   <TermNote term={term} />
                 </View>
               </Pressable>

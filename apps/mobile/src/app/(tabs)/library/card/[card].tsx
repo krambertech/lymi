@@ -11,11 +11,13 @@ import {
   pitchPattern,
   pronunciationText,
   readFsrs,
+  sourceLink,
   termShowsPronunciation,
 } from "@lymi/core";
 import { ARRIVE } from "@lymi/design";
 import { useQuery } from "@tanstack/react-query";
 import { type Href, useLocalSearchParams, useRouter } from "expo-router";
+import { openBrowserAsync } from "expo-web-browser";
 import { type ComponentProps, type ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { AccessibilityInfo, Image, View } from "react-native";
 import Animated, { FadeOut, LinearTransition, ZoomIn } from "react-native-reanimated";
@@ -205,14 +207,32 @@ export default function CardPage() {
     filling && !card[field] && (card.enrichmentFields?.includes(field) ?? true);
   const asked = states.map((st) => i18n._(modeLabel(st.mode))).join(", ");
   // Facts about the card, each named, so nothing has to be guessed from a line of dots.
-  const details: { label: string; value: ReactNode; onPress?: (() => void) | undefined }[] = [
+  const link = sourceLink(card.source);
+  const details: {
+    label: string;
+    value: ReactNode;
+    onPress?: (() => void) | undefined;
+    /** A detail that opens a web page rather than editing the card. */
+    opens?: boolean;
+  }[] = [
     { label: t`Deck`, value: deck?.name ?? "" },
     ...(card.language
       ? [{ label: t`Language`, value: languageName(card.language) }]
       : waiting("language")
         ? [{ label: t`Language`, value: <Skeleton width={64} height={12} /> }]
         : []),
-    ...(card.source ? [{ label: t`Source`, value: card.source }] : []),
+    ...(link
+      ? [
+          {
+            label: t`Source`,
+            value: link.site,
+            opens: true,
+            onPress: () => void openBrowserAsync(link.href),
+          },
+        ]
+      : card.source
+        ? [{ label: t`Source`, value: card.source }]
+        : []),
     ...(asked ? [{ label: t`Asked`, value: asked, onPress: choose("modes") }] : []),
     ...(card.tags.length
       ? [{ label: t`Tags`, value: card.tags.map(isolate).join(", "), onPress: choose("tags") }]
@@ -624,7 +644,7 @@ export default function CardPage() {
               <View className={stackDetails ? "items-start" : "flex-1 items-end"}>
                 {typeof d.value === "string" ? (
                   <Text
-                    className="text-md text-ink"
+                    className={`text-md text-ink ${d.opens ? "underline" : ""}`}
                     numberOfLines={2}
                     style={stackDetails ? undefined : TEXT_END}
                   >
@@ -641,8 +661,8 @@ export default function CardPage() {
             <Press
               key={d.label}
               onPress={d.onPress}
-              accessibilityRole="button"
-              accessibilityHint={t`Edit`}
+              accessibilityRole={d.opens ? "link" : "button"}
+              accessibilityHint={d.opens ? t`Opens the page` : t`Edit`}
               className={row}
             >
               {body}

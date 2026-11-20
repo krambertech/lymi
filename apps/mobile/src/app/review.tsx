@@ -25,6 +25,7 @@ import {
   ROUNDS,
   type Round,
   shownTranslation,
+  sourceLink,
   termShowsPronunciation,
 } from "@lymi/core";
 import {
@@ -1023,7 +1024,7 @@ function CardPlate({
   const place = section
     ? { icon: "section" as const, name: section }
     : card.source
-      ? { icon: "source" as const, name: card.source }
+      ? { icon: "source" as const, name: sourceLink(card.source)?.site ?? card.source }
       : null;
   const canPeek = !revealed && !!hint && !hintShown && !!onPeek;
   const hold =

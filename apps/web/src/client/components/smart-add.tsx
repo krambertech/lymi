@@ -4,7 +4,18 @@ import type { LessonAccessOut } from "@lymi/core";
 import { AI_CONSENT_REQUIRED, isolate } from "@lymi/core";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { cn } from "cn";
-import { Camera, Check, ChevronRight, FileText, Hourglass, Images, Type, X } from "lucide-react";
+import {
+  Camera,
+  Check,
+  ChevronRight,
+  FileText,
+  Hourglass,
+  Images,
+  Link2,
+  Newspaper,
+  Type,
+  X,
+} from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useId, useMemo, useReducer, useRef, useState } from "react";
 import {
@@ -13,6 +24,8 @@ import {
   errorMessage,
   type LessonQuestion,
   type LessonTerm,
+  type LinkReadRefusal,
+  linkReadRefusal,
   refusalCode,
 } from "../lib/api";
 import { refreshAfterCardWrite } from "../lib/card-writes";
@@ -29,6 +42,7 @@ import { RollingCount, type ScanPage, ScanStage } from "./smart-add-scan";
 import { Checkbox } from "./ui/checkbox";
 import { Dialog, DialogBody, DialogContent, usePlaceShape } from "./ui/dialog";
 import { Field, FieldError, FieldLabel, FieldLegend, FieldSet } from "./ui/field";
+import { Input } from "./ui/input";
 import { RadioGroup } from "./ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "./ui/select";
 import { Textarea } from "./ui/textarea";
@@ -88,6 +102,12 @@ export function SmartAddDialog({ open, onOpenChange, deckId, decks }: Props) {
 const LAST_DECK = "lymi:smart-add-deck";
 const LESSON_ACCESS = ["lesson-reads", "access"];
 type Daily = NonNullable<LessonAccessOut["daily"]>;
+type LongRead = Extract<LinkReadRefusal, { kind: "long_read" }>;
+
+/** A link as the list shows it: its site and path, without the scheme. */
+function shownLink(link: string): string {
+  return link.replace(/^https:\/\//i, "").replace(/^www\./i, "");
+}
 
 /** The deck Smart add last wrote to on this device, while it is still the learner's. */
 function lastDeck(decks: DeckSummary[]): string | undefined {
@@ -118,6 +138,13 @@ function SmartAdd({
   const attempts = useRef(0);
   const [pages, setPages] = useState<Page[]>([]);
   const [text, setText] = useState("");
+  const [link, setLink] = useState("");
+  /** The article a link led to, whose address each added card keeps as its source. */
+  const [source, setSource] = useState<{ title: string; url: string } | null>(null);
+  /** A long article's count, waiting for the learner to agree to it. */
+  const [longRead, setLongRead] = useState<LongRead | null>(null);
+  /** A YouTube link was refused, so the input offers to paste its transcript instead. */
+  const [offerTranscript, setOfferTranscript] = useState(false);
   const [deckId, setDeckId] = useState(fixedDeck);
   const qc = useQueryClient();
   const deck = decks.find((d) => d.id === deckId);
@@ -154,17 +181,49 @@ function SmartAdd({
     [],
   );
 
-  const start = async () => {
+  /** What Smart add says about a link it would not read. */
+  const linkMessage = (refusal: LinkReadRefusal): string => {
+    switch (refusal.kind) {
+      case "refused":
+        if (refusal.refused === "youtube") {
+          return refusal.title
+            ? t`YouTube doesn’t let apps read the captions of “${refusal.title}”. Paste its transcript instead.`
+            : t`YouTube doesn’t let apps read its captions. Paste the video’s transcript instead.`;
+        }
+        if (refusal.refused === "drm") {
+          const service = refusal.service ?? t`This service`;
+          return t`${service} doesn’t let apps read what it plays. Paste the text instead.`;
+        }
+        return t`This site doesn’t allow apps to read it. Paste the text instead.`;
+      case "invalid":
+        return t`Paste a link to a public web page. It starts with https://.`;
+      case "too_long":
+        return t`This article is too long for Smart add. Paste the part you want to learn from.`;
+      case "unreadable":
+      case "long_read":
+        return t`Smart add couldn’t read this page. Paste its text instead.`;
+    }
+  };
+
+  const start = async (reads?: number) => {
     if (decks.length === 0) {
       setError(t`Create a deck first, then add a lesson to it.`);
       return;
     }
-    if (!text.trim() && pages.length === 0) {
-      setError(t`Add a photo or PDF of the lesson, or paste its text.`);
+    const article = link.trim();
+    if (!text.trim() && pages.length === 0 && !article) {
+      setError(t`Add a photo or PDF of the lesson, paste its text or a link.`);
+      return;
+    }
+    if (article && !/^https:\/\//i.test(article)) {
+      setError(t`Paste a link to a public web page. It starts with https://.`);
       return;
     }
     if (atLimit) return;
     setError(undefined);
+    setLongRead(null);
+    setOfferTranscript(false);
+    setSource(null);
     setTerms([]);
     setQuestions([]);
     const attempt = ++attempts.current;
@@ -172,18 +231,22 @@ function SmartAdd({
     const controller = new AbortController();
     stop.current = controller;
     const form = new FormData();
-    if (text.trim()) form.set("text", text.trim());
+    if (article) form.set("link", article);
+    else if (text.trim()) form.set("text", text.trim());
+    if (reads) form.set("reads", String(reads));
     if (fixedDeck) form.set("deckId", fixedDeck);
     const hint = lastDeck(decks);
     if (hint) form.set("hint", hint);
-    for (const page of pages)
-      form.append("file", page.kind === "photo" ? await shrink(page.file) : page.file);
+    if (!article)
+      for (const page of pages)
+        form.append("file", page.kind === "photo" ? await shrink(page.file) : page.file);
     let asked: LessonQuestion[] = [];
     try {
       await api.readLesson(
         form,
         (event) => {
           if (event.type === "deck") setDeckId(event.deckId);
+          if (event.type === "source") setSource({ title: event.title, url: event.url });
           if (event.type === "term") setTerms((all) => [...all, event.term]);
           if (event.type === "questions") {
             asked = event.questions;
@@ -202,14 +265,22 @@ function SmartAdd({
       if (controller.signal.aborted) return;
       dispatch({ type: "fail", attempt });
       void qc.invalidateQueries({ queryKey: LESSON_ACCESS });
+      const refusal = linkReadRefusal(failure);
+      if (refusal?.kind === "long_read") {
+        setLongRead(refusal);
+        return;
+      }
+      setOfferTranscript(refusal?.kind === "refused" && refusal.refused === "youtube");
       // The footer says the limit is reached; an error line under it would only repeat it.
       const code = refusalCode(failure);
       setError(
-        code === "daily_limit"
-          ? undefined
-          : code === AI_CONSENT_REQUIRED
-            ? t`AI services are off for your account. Turn them on in Settings to read lessons.`
-            : errorMessage(failure),
+        refusal
+          ? linkMessage(refusal)
+          : code === "daily_limit"
+            ? undefined
+            : code === AI_CONSENT_REQUIRED
+              ? t`AI services are off for your account. Turn them on in Settings to read lessons.`
+              : errorMessage(failure),
       );
     }
   };
@@ -256,7 +327,8 @@ function SmartAdd({
           ...(term.pronunciation
             ? { pronunciation: term.pronunciation, pronunciationSource: "lesson" as const }
             : {}),
-          ...(term.heading ? { source: term.heading } : {}),
+          ...(term.example ? { example: term.example, exampleSource: "lesson" as const } : {}),
+          ...(source ? { source: source.url } : term.heading ? { source: term.heading } : {}),
         })),
       },
       "lesson",
@@ -265,7 +337,9 @@ function SmartAdd({
     const added = results.filter((r) => r.status === "added").length;
     toast.add({
       id: "smart-added",
-      title: t`${plural(added, { one: "Added # card", other: "Added # cards" })} to ${isolate(deck?.name ?? "")}. Lymi is writing their examples.`,
+      title: source
+        ? t`${plural(added, { one: "Added # card", other: "Added # cards" })} to ${isolate(deck?.name ?? "")}. Lymi is filling in the rest.`
+        : t`${plural(added, { one: "Added # card", other: "Added # cards" })} to ${isolate(deck?.name ?? "")}. Lymi is writing their examples.`,
     });
     onClose();
   };
@@ -305,15 +379,34 @@ function SmartAdd({
                 setText(value);
                 setError(undefined);
               }}
+              link={link}
+              onLinkChange={(value) => {
+                setLink(value);
+                setError(undefined);
+                setLongRead(null);
+                setOfferTranscript(false);
+              }}
+              offerTranscript={offerTranscript}
+              onPasteTranscript={() => {
+                setLink("");
+                setError(undefined);
+                setOfferTranscript(false);
+              }}
+              longRead={longRead}
               error={error}
-              onRead={start}
+              onRead={() => start(longRead?.reads)}
               daily={daily}
             />
           )}
           {step === "reading" && (
             <ReadingStep
-              pages={pages.map((page) => ({ id: page.id, url: page.url, name: page.file.name }))}
-              text={text}
+              pages={
+                link
+                  ? []
+                  : pages.map((page) => ({ id: page.id, url: page.url, name: page.file.name }))
+              }
+              text={link ? (source?.title ?? shownLink(link)) : text}
+              article={!!link}
               found={terms.filter((term) => !term.existing).length}
               finished={flow.step === "reading" && flow.finished}
               onStop={() => {
@@ -348,6 +441,7 @@ function SmartAdd({
               onDeckChange={setDeckId}
               terms={terms}
               dropped={dropped}
+              article={!!source}
               onBack={() => dispatch({ type: "back" })}
               onAdd={add}
             />
@@ -416,13 +510,22 @@ function InputStep(props: {
   onPagesChange: (pages: Page[]) => void;
   text: string;
   onTextChange: (text: string) => void;
+  /** An article's link, read on its own in place of pages and text. */
+  link: string;
+  onLinkChange: (link: string) => void;
+  /** A YouTube link was refused: offer to paste the video's transcript instead. */
+  offerTranscript: boolean;
+  onPasteTranscript: () => void;
+  /** A long article's count of reads, waiting for the learner to agree. */
+  longRead: LongRead | null;
   error: string | undefined;
   onRead: () => void;
   /** Today's reads, or null for an account without a limit. */
   daily: Daily | null;
 }) {
-  const { pages, onPagesChange, text, daily } = props;
+  const { pages, onPagesChange, text, link, longRead, daily } = props;
   const atLimit = daily !== null && daily.used >= daily.limit;
+  const tooFewReads = longRead !== null && longRead.left !== null && longRead.left < longRead.reads;
   const { t } = useLingui();
   const desktop = useDesktop();
   const fileRef = useRef<HTMLInputElement>(null);
@@ -431,15 +534,18 @@ function InputStep(props: {
   const textRef = useRef<HTMLTextAreaElement>(null);
   const [over, setOver] = useState(false);
   const [writing, setWriting] = useState(false);
+  const [linking, setLinking] = useState(false);
+  const [draftLink, setDraftLink] = useState(link);
+  const [linkError, setLinkError] = useState<string>();
   const [fileError, setFileError] = useState<string>();
   const limitId = useId();
   const room = MAX_FILES - pages.length;
   const take = useRef<(files: FileList | null) => void>(() => {});
   const words = text.trim() ? text.trim().split(/\s+/).length : 0;
-  const empty = pages.length === 0 && words === 0;
+  const empty = pages.length === 0 && words === 0 && !link;
 
   take.current = (files) => {
-    if (!files?.length || atLimit) return;
+    if (!files?.length || atLimit || link) return;
     const usable = [...files].filter(
       (f) => f.type.startsWith("image/") || f.type === "application/pdf",
     );
@@ -528,6 +634,21 @@ function InputStep(props: {
       hint: t`Paste notes or a transcript`,
       onClick: () => setWriting(true),
     },
+    // A link is read on its own, so it is offered only before anything else is added.
+    ...(pages.length === 0 && words === 0
+      ? [
+          {
+            id: "link",
+            icon: Link2,
+            label: t`Link`,
+            hint: t`An article on the web`,
+            onClick: () => {
+              setDraftLink(link);
+              setLinking(true);
+            },
+          },
+        ]
+      : []),
     ...(desktop
       ? []
       : [
@@ -540,6 +661,61 @@ function InputStep(props: {
           },
         ]),
   ];
+
+  if (linking) {
+    const save = () => {
+      const value = draftLink.trim();
+      if (value && !/^https:\/\/\S+\.\S+/i.test(value)) {
+        setLinkError(t`Paste a link to a public web page. It starts with https://.`);
+        return;
+      }
+      props.onLinkChange(value);
+      setLinking(false);
+    };
+    return (
+      <>
+        <DialogBody className="grid content-start gap-5">
+          <Field invalid={!!linkError}>
+            <FieldLabel>
+              <Trans>Article link</Trans>
+            </FieldLabel>
+            <Input
+              type="url"
+              inputMode="url"
+              autoComplete="off"
+              ref={(el) => el?.focus()}
+              value={draftLink}
+              placeholder="https://"
+              onChange={(e) => {
+                setDraftLink(e.target.value);
+                setLinkError(undefined);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  e.preventDefault();
+                  save();
+                }
+              }}
+            />
+            {linkError ? (
+              <FieldError>{linkError}</FieldError>
+            ) : (
+              <p className="text-sm text-pretty text-ink-muted">
+                <Trans>
+                  Lymi reads the article’s text and gives each card the sentence it came from.
+                </Trans>
+              </p>
+            )}
+          </Field>
+        </DialogBody>
+        <ActionBar>
+          <Button variant="primary" onClick={save}>
+            {draftLink.trim() ? <Trans>Add link</Trans> : <Trans>Back</Trans>}
+          </Button>
+        </ActionBar>
+      </>
+    );
+  }
 
   if (writing) {
     return (
@@ -585,7 +761,8 @@ function InputStep(props: {
         ) : (
           <p className="text-base text-pretty text-ink-secondary">
             <Trans>
-              Add photos, PDFs or text from your lesson. Then choose which terms to add as cards.
+              Add photos, PDFs or text from your lesson, or a link to an article. Then choose which
+              terms to add as cards.
             </Trans>
           </p>
         )}
@@ -615,6 +792,33 @@ function InputStep(props: {
                 </li>
               );
             })}
+            {link && (
+              <li className="flex items-center gap-3 px-3 py-2.5">
+                <IconTile icon={Link2} />
+                <button
+                  type="button"
+                  onClick={() => {
+                    setDraftLink(link);
+                    setLinking(true);
+                  }}
+                  className="grid min-w-0 flex-1 text-start"
+                >
+                  <span className="truncate text-base text-ink" dir="ltr">
+                    {shownLink(link)}
+                  </span>
+                  <span className="text-sm text-ink-muted">
+                    <Trans>Link</Trans>
+                  </span>
+                </button>
+                <IconButton
+                  label={t`Remove the link`}
+                  size="sm"
+                  onClick={() => props.onLinkChange("")}
+                >
+                  <X />
+                </IconButton>
+              </li>
+            )}
             {textItem && (
               <li className="flex items-center gap-3 px-3 py-2.5">
                 <IconTile icon={Type} />
@@ -639,7 +843,32 @@ function InputStep(props: {
             )}
           </ul>
         )}
-        <div className="grid gap-2">
+        {longRead && (
+          <Notice
+            icon={Newspaper}
+            title={t`${plural(longRead.reads, { one: "This article counts as # lesson", other: "This article counts as # lessons" })}`}
+          >
+            {t`${plural(longRead.words, { one: "It’s about # word long, and one lesson covers up to 15,000.", other: "It’s about # words long, and one lesson covers up to 15,000." })}`}{" "}
+            {longRead.left !== null &&
+              t`${plural(longRead.left, { one: "You have # lesson left today.", other: "You have # lessons left today." })}`}
+          </Notice>
+        )}
+
+        {props.offerTranscript && (
+          <Button
+            variant="secondary"
+            className="justify-self-start"
+            onClick={() => {
+              props.onPasteTranscript();
+              setWriting(true);
+            }}
+          >
+            <Type data-icon="inline-start" aria-hidden="true" />
+            <Trans>Paste the transcript</Trans>
+          </Button>
+        )}
+
+        <div className={cn("grid gap-2", link && "hidden")}>
           {!empty && (
             <h3 className="text-sm font-medium text-ink-muted">
               <Trans>Add more</Trans>
@@ -687,7 +916,7 @@ function InputStep(props: {
         note={
           <span className="flex items-center gap-2">
             {daily && <LimitInfo limit={daily.limit} />}
-            {empty
+            {empty || link
               ? undefined
               : words > 0 && pages.length > 0
                 ? t`${plural(pages.length, { one: "# file", other: "# files" })} and text`
@@ -699,11 +928,15 @@ function InputStep(props: {
       >
         <Button
           variant="primary"
-          onClick={props.onRead}
-          aria-disabled={atLimit}
+          onClick={tooFewReads ? undefined : props.onRead}
+          aria-disabled={atLimit || tooFewReads}
           aria-describedby={atLimit ? limitId : undefined}
         >
-          <Trans>Find terms</Trans>
+          {longRead && !tooFewReads ? (
+            t`${plural(longRead.reads, { one: "Read as # lesson", other: "Read as # lessons" })}`
+          ) : (
+            <Trans>Find terms</Trans>
+          )}
         </Button>
       </ActionBar>
     </>
@@ -762,12 +995,15 @@ function IconTile({ icon: Icon }: { icon: typeof FileText }) {
 export function ReadingStep({
   pages,
   text,
+  article = false,
   found,
   finished,
   onStop,
 }: {
   pages: ScanPage[];
   text: string;
+  /** Reading an article from its link, which the server fetches first. */
+  article?: boolean;
   found: number;
   finished: boolean;
   onStop?: () => void;
@@ -790,7 +1026,9 @@ export function ReadingStep({
       ? t`Reading page ${scanned + 1} of ${pages.length}`
       : pages.length > 0
         ? t`Reading the pages`
-        : t`Reading the text`
+        : article
+          ? t`Reading the article`
+          : t`Reading the text`
     : finished
       ? t`Checking your decks for duplicates`
       : t`Finding terms to review`;
@@ -930,6 +1168,7 @@ function ListStep({
   onDeckChange,
   terms,
   dropped,
+  article,
   onBack,
   onAdd,
 }: {
@@ -938,6 +1177,8 @@ function ListStep({
   onDeckChange: (deckId: string) => void;
   terms: LessonTerm[];
   dropped: Set<string>;
+  /** Read from an article's link, so each term carries its sentence. */
+  article: boolean;
   onBack: () => void;
   onAdd: (terms: LessonTerm[]) => Promise<void>;
 }) {
@@ -963,6 +1204,8 @@ function ListStep({
             <p className="text-base text-ink-secondary">
               {existing.length > 0 ? (
                 <Trans>The terms Lymi found are already in your decks. Try another lesson.</Trans>
+              ) : article ? (
+                <Trans>Try another article, or paste the part you want to learn from.</Trans>
               ) : (
                 <Trans>Try a clearer photo or paste the lesson text.</Trans>
               )}
@@ -1039,6 +1282,11 @@ function ListStep({
                       <bdi>{term.term}</bdi>
                     </FieldLabel>
                     <span className="text-sm text-ink-secondary">{term.gloss}</span>
+                    {term.example && (
+                      <span className="line-clamp-2 text-sm text-ink-muted [overflow-wrap:anywhere]">
+                        <bdi>{term.example}</bdi>
+                      </span>
+                    )}
                     <TermNote term={term} />
                   </div>
                 </Field>
@@ -1050,7 +1298,13 @@ function ListStep({
         {existing.length > 0 && <ExistingList terms={existing} />}
 
         <p className="text-sm text-ink-muted">
-          <Trans>After you add them, Lymi writes each card’s example and pronunciation.</Trans>
+          {article ? (
+            <Trans>
+              Each card keeps its sentence and a link to the article. Lymi writes the rest.
+            </Trans>
+          ) : (
+            <Trans>After you add them, Lymi writes each card’s example and pronunciation.</Trans>
+          )}
         </p>
       </DialogBody>
       <ActionBar note={error ? <span className="text-danger">{error}</span> : undefined}>

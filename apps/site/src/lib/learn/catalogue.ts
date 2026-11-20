@@ -71,7 +71,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 8,
         blurb: msg`A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud.`,
       },
-      { name: msg`Questions`, et: "Kas? Mis? Kus?" },
+      {
+        slug: "kusimused",
+        name: msg`Questions`,
+        title: msg`Asking questions in Estonian`,
+        et: "Kas? Mis? Kus?",
+        minutes: 10,
+        blurb: msg`A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and the first questions you'll hear. Every sentence is read aloud.`,
+      },
       { name: msg`Saying where: -s and -l`, et: "Tallinnas, Tartus" },
       {
         slug: "numbrid",

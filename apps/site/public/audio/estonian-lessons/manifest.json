@@ -1024,6 +1024,486 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "olevik/elama": {
+    "text": "elama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/o3ppima": {
+    "text": "õppima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/lugema": {
+    "text": "lugema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/tegema": {
+    "text": "tegema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ra2a2kima": {
+    "text": "rääkima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/to2o2tama": {
+    "text": "töötama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ootama": {
+    "text": "ootama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/armastama": {
+    "text": "armastama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/so2o2ma": {
+    "text": "sööma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/jooma": {
+    "text": "jooma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/elan": {
+    "text": "elan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/elad": {
+    "text": "elad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/elab": {
+    "text": "elab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/elame": {
+    "text": "elame",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/elate": {
+    "text": "elate",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/elavad": {
+    "text": "elavad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/olema": {
+    "text": "olema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/olen": {
+    "text": "olen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/oled": {
+    "text": "oled",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/on": {
+    "text": "on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/oleme": {
+    "text": "oleme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/olete": {
+    "text": "olete",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ma-elan": {
+    "text": "Ma elan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/sa-elad": {
+    "text": "Sa elad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ta-elab": {
+    "text": "Ta elab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/me-elame": {
+    "text": "Me elame",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/te-elate": {
+    "text": "Te elate",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/nad-elavad": {
+    "text": "Nad elavad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ma-o3pin": {
+    "text": "Ma õpin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/sa-o3pid": {
+    "text": "Sa õpid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ta-o3pib": {
+    "text": "Ta õpib",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/me-o3pime": {
+    "text": "Me õpime",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/te-o3pite": {
+    "text": "Te õpite",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/nad-o3pivad": {
+    "text": "Nad õpivad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ma-loen": {
+    "text": "Ma loen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/sa-loed": {
+    "text": "Sa loed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ta-loeb": {
+    "text": "Ta loeb",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/me-loeme": {
+    "text": "Me loeme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/te-loete": {
+    "text": "Te loete",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/nad-loevad": {
+    "text": "Nad loevad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ma-teen": {
+    "text": "Ma teen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/sa-teed": {
+    "text": "Sa teed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ta-teeb": {
+    "text": "Ta teeb",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/me-teeme": {
+    "text": "Me teeme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/te-teete": {
+    "text": "Te teete",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/nad-teevad": {
+    "text": "Nad teevad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ma-ra2a2gin": {
+    "text": "Ma räägin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/sa-ra2a2gid": {
+    "text": "Sa räägid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ta-ra2a2gib": {
+    "text": "Ta räägib",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/me-ra2a2gime": {
+    "text": "Me räägime",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/te-ra2a2gite": {
+    "text": "Te räägite",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/nad-ra2a2givad": {
+    "text": "Nad räägivad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ma-to2o2tan": {
+    "text": "Ma töötan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/sa-to2o2tad": {
+    "text": "Sa töötad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ta-to2o2tab": {
+    "text": "Ta töötab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/me-to2o2tame": {
+    "text": "Me töötame",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/te-to2o2tate": {
+    "text": "Te töötate",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/nad-to2o2tavad": {
+    "text": "Nad töötavad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ma-ootan": {
+    "text": "Ma ootan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/sa-ootad": {
+    "text": "Sa ootad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ta-ootab": {
+    "text": "Ta ootab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/me-ootame": {
+    "text": "Me ootame",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/te-ootate": {
+    "text": "Te ootate",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/nad-ootavad": {
+    "text": "Nad ootavad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ma-armastan": {
+    "text": "Ma armastan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/sa-armastad": {
+    "text": "Sa armastad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ta-armastab": {
+    "text": "Ta armastab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/me-armastame": {
+    "text": "Me armastame",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/te-armastate": {
+    "text": "Te armastate",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/nad-armastavad": {
+    "text": "Nad armastavad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ma-so2o2n": {
+    "text": "Ma söön",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/sa-so2o2d": {
+    "text": "Sa sööd",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ta-so2o2b": {
+    "text": "Ta sööb",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/me-so2o2me": {
+    "text": "Me sööme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/te-so2o2te": {
+    "text": "Te sööte",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/nad-so2o2vad": {
+    "text": "Nad söövad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ma-joon": {
+    "text": "Ma joon",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/sa-jood": {
+    "text": "Sa jood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/ta-joob": {
+    "text": "Ta joob",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/me-joome": {
+    "text": "Me joome",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/te-joote": {
+    "text": "Te joote",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/nad-joovad": {
+    "text": "Nad joovad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/s-elan-tallinnas": {
+    "text": "Ma elan Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/c-elan-tallinnas": {
+    "text": "Elan Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/s-opin-eesti": {
+    "text": "Ma õpin eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/c-opin-eesti": {
+    "text": "Õpin eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/s-mida-teed": {
+    "text": "Mida sa teed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/s-loen-raamatut": {
+    "text": "Ma loen raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/s-raagib-eesti": {
+    "text": "Ta räägib eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/s-ootame-bussi": {
+    "text": "Me ootame bussi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/s-tootab-kodus": {
+    "text": "Ta töötab kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/s-joovad-kohvi": {
+    "text": "Nad joovad kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/s-armastan-sind": {
+    "text": "Ma armastan sind.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/s-raagite-hasti": {
+    "text": "Te räägite väga hästi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/s-soovad-kodus": {
+    "text": "Nad söövad kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "olevik/c-mina-joon": {
+    "text": "Mina joon kohvi, tema joob vett.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kell/mis-kell-on": {
     "text": "Mis kell on?",
     "model": "eleven_v4",

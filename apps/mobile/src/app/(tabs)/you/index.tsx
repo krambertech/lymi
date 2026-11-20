@@ -5,7 +5,7 @@ import { dropWrites, flushWrites, pendingWrites } from "@lymi/client/writes";
 import { useRouter } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
 import { useState } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import { authClient, localizedSiteUrl, siteUrl } from "../../../auth/client";
 import { useDecks, useInsights } from "../../../data/queries";
 import { ExportSheet } from "../../../export/export-sheet";
@@ -13,6 +13,7 @@ import { RunStrip } from "../../../insights/figures";
 import { AiServicesRow } from "../../../privacy/ai-consent";
 import { chooseTheme, savedTheme, type ThemeChoice } from "../../../theme/choice";
 import { usePalette } from "../../../theme/palette";
+import { alert } from "../../../ui/alert";
 import { Select } from "../../../ui/menu";
 import { Icon, Plate, Press, RowArrow, SectionTitle, Text } from "../../../ui/primitives";
 import { Row, RowFace, Rows } from "../../../ui/row";
@@ -258,7 +259,7 @@ function SignOut() {
     const queued = outboxSize() + pendingWrites();
     if (queued === 0) return leave();
     setSigningOut(false);
-    Alert.alert(
+    alert(
       t`Some offline work hasn’t synced`,
       plural(queued, {
         one: "# grade or change made offline is still waiting to reach Lymi. Sign out once you’re back online to keep it.",

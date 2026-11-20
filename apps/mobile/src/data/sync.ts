@@ -8,8 +8,9 @@ import { isolate } from "@lymi/core";
 import { onlineManager, useQueryClient } from "@tanstack/react-query";
 import { addNetworkStateListener } from "expo-network";
 import { useEffect, useMemo } from "react";
-import { Alert, AppState } from "react-native";
+import { AppState } from "react-native";
 import { PHONE } from "../review/platform";
+import { alert } from "../ui/alert";
 import { claimCache } from "./cache";
 import { followDueCounts } from "./forecast";
 import { useDecks, useDraw, useSeriesList } from "./queries";
@@ -94,12 +95,12 @@ export function Sync({ learnerId }: { learnerId: string }) {
         const label = notice.label;
         if (notice.reason === "skipped") {
           const deckName = notice.deckName;
-          Alert.alert(
+          alert(
             t`“${{ label: isolate(label) }}” was already in ${{ deckName: isolate(deckName) }}, so the copy added offline was left out.`,
           );
         } else {
           const reason = notice.message;
-          Alert.alert(
+          alert(
             label
               ? t`A change to “${{ label: isolate(label) }}” made offline couldn’t be saved. ${reason}`
               : t`A change made offline couldn’t be saved. ${reason}`,

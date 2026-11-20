@@ -3834,9 +3834,6 @@ msgstr "Послухати обидва"
 msgid "Hear each word said aloud."
 msgstr "Послухай, як звучить кожне слово."
 
-msgid "Hear Estonian, count, tell the time, say who you are, tell people what to do and say where you are."
-msgstr "Слухай естонську, рахуй, називай час, кажи, хто ти і де ти, і проси інших щось зробити."
-
 msgid "Hear every card read aloud the way a native speaker says it."
 msgstr "Кожну картку можна почути так, як її вимовляє носій мови."
 
@@ -6903,6 +6900,9 @@ msgstr "Скажи «о», потім розтягни губи, а язик з�
 
 msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
 msgstr "Казати, що мусиш, хочеш і любиш робити, розповідати, як минув учорашній день і з ким."
+
+msgid "Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do."
+msgstr "Скажи, хто ти, що робиш і де живеш, запитай і відповідай. Потім лічи, називай час і день тижня і кажи людям, що робити."
 
 msgid "Say yes in Lymi"
 msgstr "Дай згоду в Lymi"

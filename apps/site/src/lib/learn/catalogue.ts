@@ -44,7 +44,7 @@ export const STAGES: readonly Stage[] = [
     name: msg`The basics`,
     level: "A1",
     hue: 222,
-    goal: msg`Hear Estonian, count, tell the time, say who you are, tell people what to do and say where you are.`,
+    goal: msg`Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do.`,
     lessons: [
       {
         slug: "haaldus",
@@ -54,16 +54,6 @@ export const STAGES: readonly Stage[] = [
         minutes: 10,
         blurb: msg`A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud.`,
       },
-      {
-        slug: "numbrid",
-        name: msg`Numbers`,
-        title: msg`Estonian numbers`,
-        et: "Üks, kaks, kolm",
-        minutes: 10,
-        blurb: msg`A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers.`,
-      },
-      { name: msg`Telling the time`, et: "Mis kell on?" },
-      { name: msg`Days of the week`, et: "Esmaspäev, teisipäev" },
       { name: msg`Personal pronouns and “to be”`, et: "Mina, sina, tema" },
       { name: msg`Present tense`, et: "Ma loen" },
       {
@@ -74,9 +64,19 @@ export const STAGES: readonly Stage[] = [
         minutes: 8,
         blurb: msg`A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud.`,
       },
-      { name: msg`Commands`, et: "Istu! Ära istu!" },
       { name: msg`Questions`, et: "Kas? Mis? Kus?" },
       { name: msg`Saying where: -s and -l`, et: "Tallinnas, Tartus" },
+      {
+        slug: "numbrid",
+        name: msg`Numbers`,
+        title: msg`Estonian numbers`,
+        et: "Üks, kaks, kolm",
+        minutes: 10,
+        blurb: msg`A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers.`,
+      },
+      { name: msg`Telling the time`, et: "Mis kell on?" },
+      { name: msg`Days of the week`, et: "Esmaspäev, teisipäev" },
+      { name: msg`Commands`, et: "Istu! Ära istu!" },
     ],
   },
   {

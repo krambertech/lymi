@@ -16,6 +16,9 @@ msgstr ""
 msgid "-n, -d, -b, -me, -te, -vad: each person has its own."
 msgstr "-n, -d, -b, -me, -te, -vad: у кожної особи своє."
 
+msgid "-s or -l?"
+msgstr "-s чи -l?"
+
 msgid "-teist or -kümmend?"
 msgstr "-teist чи -kümmend?"
 
@@ -351,8 +354,14 @@ msgstr "<0/> не має закінчення і підходить і для «
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> — це сто, а <1/> — тисяча, і «один» перед ними не кажуть. Сотні пишуться разом, <2/>, а тисячі окремо: <3/>."
 
+msgid "<0/> is at home. Now answer <1/> six ways: tap a place."
+msgstr "<0/> — це вдома. А тепер дай шість відповідей на <1/>: торкнись місця."
+
 msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 msgstr "<0/> означає і «він», і «вона»: в естонських займенниках немає роду. <1/> — це ще й ввічливе «Ви» до однієї людини, як в українській."
+
+msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
+msgstr "<0/> — це місто, а <1/> — у Таллінні. В естонській «в» — не окреме слово, а закінчення: до кінця назви додають <2>-s</2>. «Я живу в Таллінні» — це <3/>"
 
 msgid "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
 msgstr "<0/> — завтра, <1/> — учора. Додай спереду <2>üle-</2>, і буде на день далі: <3/> — післязавтра, <4/> — позавчора. Обери, який день сьогодні."
@@ -828,6 +837,9 @@ msgstr "Безкоштовний урок про питання в естонс�
 msgid "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad, with ten everyday verbs read aloud."
 msgstr "Безкоштовний урок про естонські дієслова в теперішньому часі: форма на -ma, основа і шість закінчень -n, -d, -b, -me, -te та -vad на десяти щоденних дієсловах, з озвученням."
 
+msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про те, як сказати, де ти: -s означає «в» (Tallinnas, koolis), -l — «на» (laual, tööl), які місця мають яке закінчення і як відповісти на kus, «де». Кожне речення озвучене."
+
 msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
 msgstr "Безкоштовний урок про дні тижня естонською: сім назв, чотири з числами всередині, однолітерні позначення в годинах роботи, а ще täna, homme і eile. Кожне слово озвучене."
 
@@ -903,6 +915,9 @@ msgstr "Машина, на якій працюють поди"
 
 msgid "A major chord with a minor seventh, built on the fifth note of the key"
 msgstr "Мажорний акорд із малою септимою, побудований на п’ятому ступені тональності"
+
+msgid "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there. A few towns and districts take <5>-l</5> as well, such as <6/> and <7/>."
+msgstr "Ринок має <0>-l</0> за традицією: <1/>, на ринку. Так само й назви на <2>-maa</2>: <3/>, на Сааремаа, і навіть <4/>, у Німеччині, хоч українською тут кажемо «в». Ще <5>-l</5> мають деякі міста й райони, як-от <6/> і <7/>."
 
 msgid "A native German AI voice reads every card, so <0>ü</0>, <1>ö</1>, <2>ß</2> and the long words sound the way they should. Tap a word to hear it. If a card has its own recording, that plays instead."
 msgstr "Кожну картку читає AI-голос носія німецької, тож <0>ü</0>, <1>ö</1>, <2>ß</2> і довгі слова звучать як слід. Натисни на слово, щоб послухати. Якщо в картки є власний запис, звучить він."
@@ -1489,6 +1504,12 @@ msgstr "Усі. Ти чуєш, хто що робить."
 msgid "All of them. You know olema."
 msgstr "Усі правильно. Ти знаєш olema."
 
+msgid "All of them. You picked the place in every sentence."
+msgstr "Усі. У кожному реченні місце вибране правильно."
+
+msgid "All of them. You picked the right ending every time."
+msgstr "Усі. Щоразу закінчення вибране правильно."
+
 msgid "All Polish decks"
 msgstr "Усі польські колоди"
 
@@ -1628,6 +1649,9 @@ msgstr "Спершу дай відповідь на всі питання."
 msgid "Answering no"
 msgstr "Як відповісти «ні»"
 
+msgid "Answering where with a place"
+msgstr "Як відповісти, де"
+
 msgid "Answers"
 msgstr "Варіанти відповіді"
 
@@ -1766,6 +1790,9 @@ msgstr "Запитай, що чекає на повторення, перш ні
 msgid "Ask what’s waiting and your assistant shows it right in the chat. Then open Lymi to review."
 msgstr "Спитай, що чекає на повторення, і асистент покаже це просто в чаті. Потім відкрий Lymi, щоб повторити."
 
+msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
+msgstr "Питай словом <0>kus</0>, а відповідай реченням або одним словом: <1>Kus sa elad? Tartus.</1>"
+
 msgid "Asked both ways"
 msgstr "Питання в обидва боки"
 
@@ -1807,6 +1834,18 @@ msgstr "Спочатку над кожним ієрогліфом є піньї�
 
 msgid "at home"
 msgstr "вдома"
+
+msgid "at school, in a school"
+msgstr "у школі"
+
+msgid "at the market"
+msgstr "на ринку"
+
+msgid "at the office"
+msgstr "в офісі"
+
+msgid "at work"
+msgstr "на роботі"
 
 msgid "ATP"
 msgstr "АТФ"
@@ -2863,7 +2902,7 @@ msgid "Do you *like* tea?"
 msgstr "Ти *любиш* чай?"
 
 msgid "Do you drink coffee?"
-msgstr "Ти п'єш каву?"
+msgstr "Ти п’єш каву?"
 
 msgid "Do you have an *appointment* free today?"
 msgstr "У вас є вільний *запис* на сьогодні?"
@@ -3072,6 +3111,9 @@ msgstr "Кожен пропуск стає окремою карткою: при
 msgid "Each has its own page: the script, the sounds and the free decks that language needs."
 msgstr "Для кожної є своя сторінка: письмо, звуки й безкоштовні колоди, які потрібні саме цій мові."
 
+msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
+msgstr "До кожної назви додалося -s, і це -s означає «в». До Tallinn перед ним додалося ще й a."
+
 msgid "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
 msgstr "Кожна частина має ще й мінімум: 38 зі 120 за мовні знання й читання та 19 із 60 за аудіювання."
 
@@ -3080,6 +3122,9 @@ msgstr "У кожного займенника дві форми. Кажи ко�
 
 msgid "Each question as New, Learning or Known"
 msgstr "Кожне питання — нове, у вивченні чи засвоєне"
+
+msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
+msgstr "У кожному раунді — місце. Обери закінчення, а потім послухай речення. Більшість міст, будівель і країн мають <0>-s</0>; робота, ринок і назви на <1>-maa</1> мають <2>-l</2>."
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Кожна держава відтоді сама правила своєю землею: так почався сучасний <0>суверенітет</0>."
@@ -3210,6 +3255,9 @@ msgstr "Українською так само: «Ти живеш у Таллі�
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "Звука õ немає ні в англійській, ні в українській. Скажи «о», але не округлюй губи."
 
+msgid "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Lesson {into} teaches the endings for going into a place and coming out of it."
+msgstr "Українською кажуть «на роботі», але «в школі», і естонською так само: <0/>, але <1/>. Проте так збігається не завжди, тож вчи кожне місце разом із закінченням. Як сказати «в місто» і «з міста», розповідає урок {into}."
+
 msgid "Enjoy your meal"
 msgstr "Смачного"
 
@@ -3233,6 +3281,9 @@ msgstr "Español · фраза"
 
 msgid "Estar is for where and how: estoy en casa, I’m at home."
 msgstr "Estar кажуть про те, де і як: estoy en casa, я вдома."
+
+msgid "Estonia"
+msgstr "Естонія"
 
 msgid "Estonia; Estonian"
 msgstr "Естонія; естонський"
@@ -3575,6 +3626,9 @@ msgstr "Знайти свій іспит"
 
 msgid "Fine, thanks. And you?"
 msgstr "Добре, дякую. А в тебе?"
+
+msgid "Finland"
+msgstr "Фінляндія"
 
 msgid "Finnish has a word for a night with no plans to go out."
 msgstr "У фінській є окреме слово для вечора, коли нікуди не збираєшся."
@@ -4266,6 +4320,12 @@ msgstr "Він чи вона — вчитель."
 msgid "He or she is at home."
 msgstr "Він або вона вдома."
 
+msgid "He or she is at school."
+msgstr "Він або вона в школі."
+
+msgid "He or she is having coffee in a café."
+msgstr "Він або вона п’є каву в кав’ярні."
+
 msgid "He or she is tired."
 msgstr "Він утомився або вона втомилася."
 
@@ -4275,8 +4335,14 @@ msgstr "він чи вона є; вони є"
 msgid "he or she lives"
 msgstr "він чи вона живе"
 
+msgid "He or she lives in Finland."
+msgstr "Він або вона живе у Фінляндії."
+
 msgid "He or she speaks Estonian."
 msgstr "Він чи вона говорить естонською."
+
+msgid "He or she studies at school."
+msgstr "Він або вона вчиться в школі."
 
 msgid "He or she works from home."
 msgstr "Він чи вона працює вдома."
@@ -4325,6 +4391,9 @@ msgstr "День на слух"
 msgid "Hear a question and pick its question word. It's always the first word, so listen to the start."
 msgstr "Послухай питання й обери питальне слово. Воно завжди перше, тож слухай початок."
 
+msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
+msgstr "Послухай речення й обери місце. Слухай слово, яке закінчується на <0>-s</0>."
+
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Послухай речення й обери дієслово з нього. Варіанти відрізняються лише закінченням, тож слухай кінець дієслова."
 
@@ -4360,6 +4429,9 @@ msgstr "Послухай увесь текст"
 
 msgid "Hear where the stress falls."
 msgstr "Почуй, де наголос."
+
+msgid "Hearing the place"
+msgstr "Місце на слух"
 
 msgid "Heart"
 msgstr "Серце"
@@ -4439,8 +4511,14 @@ msgstr "Нотатки з історії"
 msgid "holy; a holiday"
 msgstr "святий; свято"
 
+msgid "home"
+msgstr "дім"
+
 msgid "Hopefully"
 msgstr "Сподіваюся"
+
+msgid "hospital"
+msgstr "лікарня"
 
 msgid "Hour"
 msgstr "Година"
@@ -4509,7 +4587,7 @@ msgid "How many autonomous communities does Spain have?"
 msgstr "Скільки автономних спільнот в Іспанії?"
 
 msgid "How much coffee do you drink?"
-msgstr "Скільки кави ти п'єш?"
+msgstr "Скільки кави ти п’єш?"
 
 msgid "How much demand changes when the price changes"
 msgstr "Наскільки змінюється попит, коли змінюється ціна"
@@ -4524,7 +4602,7 @@ msgid "How much of a dose reaches the blood"
 msgstr "Яка частка дози потрапляє в кров"
 
 msgid "How much water do you drink?"
-msgstr "Скільки води ти п'єш?"
+msgstr "Скільки води ти п’єш?"
 
 msgid "how much, how many"
 msgstr "скільки"
@@ -4552,6 +4630,9 @@ msgstr "Як встановити"
 
 msgid "How to say no in Estonian"
 msgstr "Як сказати «ні» естонською"
+
+msgid "How to say where you are in Estonian: <0>-s</0> for in, <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
+msgstr "Як сказати естонською, де ти: <0>-s</0> означає «в», <1>-l</1> — «на», і як відповісти на <2>kus</2>, де."
 
 msgid "How well-timed reviews change recall"
 msgstr "Як вчасні повторення допомагають пам’ятати"
@@ -4741,8 +4822,17 @@ msgstr "Я люблю польську *музику*."
 msgid "I live"
 msgstr "я живу"
 
+msgid "I live in Estonia."
+msgstr "Я живу в Естонії."
+
+msgid "I live in Finland."
+msgstr "Я живу у Фінляндії."
+
 msgid "I live in Tallinn."
 msgstr "Я живу в Таллінні."
+
+msgid "I live in Tartu."
+msgstr "Я живу в Тарту."
 
 msgid "I live in the *city*."
 msgstr "Я живу в *місті*."
@@ -4807,8 +4897,29 @@ msgstr "Я дивився фільм із *другом*."
 msgid "I won’t buy such an *expensive* phone."
 msgstr "Я не куплю такий *дорогий* телефон."
 
+msgid "I work at a school."
+msgstr "Я працюю в школі."
+
+msgid "I work at home."
+msgstr "Я працюю вдома."
+
 msgid "I work in a *warehouse*."
 msgstr "Я працюю на *складі*."
+
+msgid "I work in a café."
+msgstr "Я працюю в кав’ярні."
+
+msgid "I work in a hospital."
+msgstr "Я працюю в лікарні."
+
+msgid "I work in an office."
+msgstr "Я працюю в офісі."
+
+msgid "I work in Tallinn."
+msgstr "Я працюю в Таллінні."
+
+msgid "I work in town."
+msgstr "Я працюю в місті."
 
 msgid "I’ll *call* you later."
 msgstr "Я тобі *подзвоню* пізніше."
@@ -4824,6 +4935,9 @@ msgstr "Мені 34 роки."
 
 msgid "I'm at home."
 msgstr "Я вдома."
+
+msgid "I'm at work."
+msgstr "Я на роботі."
 
 msgid "I'm from Ukraine."
 msgstr "Я з України."
@@ -4957,6 +5071,12 @@ msgstr "Через {ahead} хвилин буде {next}."
 msgid "In a bar in Spain, you ask them to “put” you one."
 msgstr "В іспанському барі каву просять «поставити»."
 
+msgid "in a café"
+msgstr "у кав’ярні"
+
+msgid "in a hospital"
+msgstr "у лікарні"
+
 msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
 msgstr "У проєкті з файлами курсу Claude може зібрати одну колоду з розділом на кожну лекцію."
 
@@ -4975,8 +5095,14 @@ msgstr "У Claude Code перетворюй щойно вивчене на ка�
 msgid "In Claude, open Settings, then Connectors, and choose Add custom connector. Paste this address and leave the rest empty."
 msgstr "У Claude відкрий Settings, потім Connectors, і вибери Add custom connector. Встав цю адресу, а решту полів залиш порожніми."
 
+msgid "in Estonia"
+msgstr "в Естонії"
+
 msgid "In example sentences, furigana stays over the words you’re still learning and leaves the ones you know."
 msgstr "У прикладах фуриґана лишається над словами, які ти ще вчиш, і зникає над тими, що вже знаєш."
+
+msgid "in Finland"
+msgstr "у Фінляндії"
 
 msgid "In Gemini CLI, /mcp shows Lymi connected. Asked to add the terms from a README to the Kubernetes deck, Gemini uses Lymi and adds 11 cards."
 msgstr "У Gemini CLI команда /mcp показує, що Lymi підключено. Gemini отримує прохання додати терміни з README в колоду «Kubernetes», використовує Lymi й додає 11 карток."
@@ -4984,11 +5110,23 @@ msgstr "У Gemini CLI команда /mcp показує, що Lymi підклю
 msgid "In Gemini CLI, anywhere. In the Gemini app, Google opens custom apps only to personal accounts of adults in the US, in English, with Keep Activity on."
 msgstr "У Gemini CLI — будь-де. У застосунку Gemini Google відкриває користувацькі застосунки лише для особистих акаунтів дорослих у США, англійською мовою і з увімкненим Keep Activity."
 
+msgid "in Germany"
+msgstr "у Німеччині"
+
+msgid "in Lasnamäe"
+msgstr "у Ласнамяе"
+
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "В уроці {pronouns} було дієслово <0/>, «бути»: <1/>, <2/>, <3/>, <4/>. Більшість дієслів мають ті самі закінчення. А там, де в olema стоїть <5/>, у них два власні: <6>-b</6> для «він чи вона» і <7>-vad</7> для «вони»."
 
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "У багатьох реальних наборах даних близько 30% чисел починаються з 1"
+
+msgid "in Otepää"
+msgstr "в Отепяе"
+
+msgid "in Pärnu"
+msgstr "у Пярну"
 
 msgid "In Pärnu"
 msgstr "У Пярну"
@@ -5023,6 +5161,9 @@ msgstr "у Тарту"
 msgid "In Tartu"
 msgstr "У Тарту"
 
+msgid "In Tartu."
+msgstr "У Тарту."
+
 msgid "In the end"
 msgstr "Зрештою"
 
@@ -5032,14 +5173,23 @@ msgstr "У застосунку Grok Bot відкрий Connect apps і вибе
 msgid "In the order you learn them, one section at a time."
 msgstr "У тому порядку, в якому ти їх вчиш: розділ за розділом."
 
+msgid "In the place"
+msgstr "Де?"
+
 msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It's the same for every person, so no is easier than yes."
 msgstr "У теперішньому часі постав <0>ei</0> перед дієсловом і прибери закінчення. Для всіх осіб це однаково, тож «ні» сказати легше, ніж «так»."
 
 msgid "In this folder"
 msgstr "У цій папці"
 
+msgid "in town"
+msgstr "у місті"
+
 msgid "In town, a number comes inside a sentence: a price, a flat, the time. Type the number you hear."
 msgstr "У місті число звучить посеред речення: ціна, номер квартири, час. Введи число, яке чуєш."
+
+msgid "in Ukraine"
+msgstr "в Україні"
 
 msgid "In voice mode, ChatGPT takes your words from Lymi and plays out a scene with you, so you hear each one and say it back."
 msgstr "У голосовому режимі ChatGPT бере твої слова з Lymi й розігрує з тобою сценку: ти чуєш кожне слово і кажеш його сам."
@@ -5049,6 +5199,9 @@ msgstr "У голосовому режимі Claude поганяє тебе по
 
 msgid "In, into, out of"
 msgstr "У чому, у що, з чого"
+
+msgid "In, on and at in Estonian: -s and -l"
+msgstr "«В» і «на» естонською: -s і -l"
 
 msgid "Infinitives: -ma and -da"
 msgstr "Інфінітиви: -ma і -da"
@@ -5167,6 +5320,9 @@ msgstr "Це був дуже *приємний* вечір."
 msgid "It will all work out"
 msgstr "Усе владнається"
 
+msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
+msgstr "Так само з містами, будівлями й більшістю країн. Спробуй на трьох країнах і трьох містах."
+
 msgid "It writes Ukrainian, and a native Ukrainian voice reads it. When a word looks like a Russian one but means something else, the card’s notes say so: неді́ля is Sunday, not a week."
 msgstr "Він пише українською, а читає голос носія української. Коли слово схоже на російське, але означає інше, про це скажуть нотатки картки: неді́ля — це неділя, а не тиждень."
 
@@ -5232,6 +5388,9 @@ msgstr "Видавець прибрав її з публічних сторін�
 
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Рідкісний, але серйозний ризик — лактоацидоз."
+
+msgid "Jaan lives in Pärnu."
+msgstr "Яан живе в Пярну."
 
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
@@ -5440,6 +5599,9 @@ msgstr "Вивчення мов"
 msgid "Languages"
 msgstr "Мови"
 
+msgid "Lasnamäe, a district of Tallinn"
+msgstr "Ласнамяе, район Таллінна"
+
 msgid "Last updated"
 msgstr "Оновлено"
 
@@ -5466,6 +5628,9 @@ msgstr "Learn і Test обмежені на Free і Plus; без обмежен�
 
 msgid "Learn Chinese vocabulary with flashcards · Lymi"
 msgstr "Китайські слова на флешкартках · Lymi"
+
+msgid "Learn each place together with its ending: <0>Tallinn, Tallinnas</0>."
+msgstr "Вчи кожне місце одразу із закінченням: <0>Tallinn, Tallinnas</0>."
 
 msgid "Learn Estonian vocabulary with flashcards · Lymi"
 msgstr "Естонські слова на флешкартках · Lymi"
@@ -5995,11 +6160,17 @@ msgstr "Зроби іспанські флешкартки з цього доп�
 msgid "Making cards with AI"
 msgstr "Створення карток з AI"
 
+msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {genitive} shows where the vowel comes from."
+msgstr "У багатьох слів, як у Tallinn, перед <0>-s</0> з’являється голосна, і яку саме, поки що вгадати важко. Тож вчи кожне місце одразу з <1>-s</1>: <2/>, <3/>; <4/>, <5/>. Звідки береться голосна, пояснює урок {genitive}."
+
 msgid "marginal cost"
 msgstr "граничні витрати"
 
 msgid "Mari"
 msgstr "Марі"
+
+msgid "Mari works in a hospital."
+msgstr "Марі працює в лікарні."
 
 msgid "Mari writes"
 msgstr "Марі пише"
@@ -6024,6 +6195,9 @@ msgstr "Познач найважливіше"
 
 msgid "Markdown notes with links, beside your cards"
 msgstr "Нотатки в Markdown із посиланнями, поруч із картками"
+
+msgid "market"
+msgstr "ринок"
 
 msgid "Marta · Spanish lesson"
 msgstr "Марта · урок іспанської"
@@ -6234,6 +6408,9 @@ msgstr "Перенесення молекул проти градієнта з �
 
 msgid "multiple-choice questions"
 msgstr "питань з варіантами відповіді"
+
+msgid "Mum is at the market."
+msgstr "Мама на ринку."
 
 msgid "music"
 msgstr "музика"
@@ -6647,6 +6824,9 @@ msgstr "міста; у місто"
 msgid "of the wind"
 msgstr "вітру"
 
+msgid "office"
+msgstr "офіс"
+
 msgid "Offline"
 msgstr "Офлайн"
 
@@ -6696,6 +6876,9 @@ msgstr "у понеділок"
 msgid "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
 msgstr "На quizlet.com відкрий свій набір, у меню … вибери Export і натисни Copy text."
 
+msgid "on Saaremaa"
+msgstr "на Сааремаа"
+
 msgid "On Sunday I rest."
 msgstr "У неділю я відпочиваю."
 
@@ -6710,6 +6893,12 @@ msgstr "Повні години"
 
 msgid "On the hour: just its number."
 msgstr "Рівно: лише число години."
+
+msgid "on the table"
+msgstr "на столі"
+
+msgid "on the wall"
+msgstr "на стіні"
 
 msgid "On your phone"
 msgstr "На телефоні"
@@ -6876,6 +7065,9 @@ msgstr "Збудники, забарвлення та що вони спричи
 msgid "osmosis"
 msgstr "осмос"
 
+msgid "Otepää, a small town in the south"
+msgstr "Отепяе, невелике місто на півдні"
+
 msgid "Other apps"
 msgstr "Інші застосунки"
 
@@ -6920,6 +7112,9 @@ msgstr "Сторінку не знайдено · Lymi"
 
 msgid "Park"
 msgstr "Парк"
+
+msgid "Pärnu, a town by the sea"
+msgstr "Пярну, місто біля моря"
 
 msgid "Participles"
 msgstr "Дієприкметники"
@@ -7082,6 +7277,12 @@ msgstr "Тональний наголос"
 
 msgid "Place words: on, under, behind"
 msgstr "Де що: на, під, за"
+
+msgid "Places to work"
+msgstr "Де працювати"
+
+msgid "Places with -l"
+msgstr "Місця з -l"
 
 msgid "Plain text"
 msgstr "Простий текст"
@@ -7514,6 +7715,9 @@ msgstr "дощ"
 msgid "Range"
 msgstr "Діапазон"
 
+msgid "Read both endings above once more, then try again."
+msgstr "Ще раз перечитай про обидва закінчення вище, а потім спробуй знову."
+
 msgid "Read it as it's written"
 msgstr "Читай, як написано"
 
@@ -7767,6 +7971,9 @@ msgstr "Російські слова, які ти запам’ятаєш."
 msgid "Russian writes <0>за́мок</0>, a castle, and <1>замо́к</1>, a lock, the same way. Only the stress tells them apart. Lymi keeps each as its own card, with its own stress and its own sound."
 msgstr "У російській <0>за́мок</0>, фортеця, і <1>замо́к</1> на дверях пишуться однаково. Розрізняє їх лише наголос. Lymi тримає кожне слово на окремій картці, зі своїм наголосом і своїм звучанням."
 
+msgid "Saaremaa, Estonia's largest island"
+msgstr "Сааремаа, найбільший острів Естонії"
+
 msgid "Said before a meal"
 msgstr "Кажуть перед їжею"
 
@@ -7850,7 +8057,7 @@ msgid "Say yes in Lymi"
 msgstr "Дай згоду в Lymi"
 
 msgid "Saying where: -s and -l"
-msgstr "Де: закінчення -s і -l"
+msgstr "Як сказати, де: закінчення -s і -l"
 
 msgid "Scheduling"
 msgstr "Планування повторень"
@@ -8262,6 +8469,9 @@ msgstr "Sobre — «над», mesa — «стіл». Буває, що вона �
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Деякі кандзі в китайському шрифті виглядають інакше. Lymi показує твої картки в японському написанні, як у японських книжках."
 
+msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
+msgstr "Деякі місця мають <0>-l</0> за традицією, як-от <1>turul</1> і назви на <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
+
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Деякі основи змінюються: <0>lugema, loen</0>. Запам’ятовуй кожне дієслово з формою для «я»."
 
@@ -8592,6 +8802,9 @@ msgstr "Шведи кажуть так і про каву, і про робоч�
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 msgstr "Перемкни <0/> на <1/>, і всі шість речень стануть запереченнями. Торкнися рядка, щоб послухати."
 
+msgid "Switch to In the place and watch the last letters change."
+msgstr "Перемкни на «Де?» і дивись, як змінюються кінці слів."
+
 msgid "Switching from"
 msgstr "Перехід з"
 
@@ -8676,6 +8889,9 @@ msgstr "Розмова за столом після їжі"
 msgid "Talk: meeting Mari"
 msgstr "Розмова: знайомство з Марі"
 
+msgid "Tallinn, the capital"
+msgstr "Таллінн, столиця"
+
 msgid "Tallinnas ends in -s, in, which is lesson {where}. Keelt and raamatut are the partitive, lesson {partitive}. For now, learn them as phrases."
 msgstr "Tallinnas закінчується на -s, «у, в», про це розповідає урок {where}. Keelt і raamatut — це партитив, урок {partitive}. Поки що вчи їх як готові фрази."
 
@@ -8691,6 +8907,12 @@ msgstr "Торкнися заповненого пропуску, щоб заб�
 msgid "Tap a letter"
 msgstr "Натисни на літеру"
 
+msgid "Tap a place"
+msgstr "Торкнись місця"
+
+msgid "Tap a place to hear the answer."
+msgstr "Торкнись місця, щоб почути відповідь."
+
 msgid "Tap a question word"
 msgstr "Натисни питальне слово"
 
@@ -8703,6 +8925,9 @@ msgstr "Натисни слово або людину"
 msgid "Tap an ending"
 msgstr "Натисни закінчення"
 
+msgid "Tap the places above once more, then try again."
+msgstr "Ще раз торкнись місць вище, а потім спробуй знову."
+
 msgid "Tap the question words above once more, then try again."
 msgstr "Ще раз понатискай питальні слова вище, а тоді спробуй знову."
 
@@ -8714,6 +8939,9 @@ msgstr "Скотч, запасна деталь і трохи сміливост
 
 msgid "Tartu is a beautiful *city*."
 msgstr "Тарту — гарне *місто*."
+
+msgid "Tartu, a university town"
+msgstr "Тарту, університетське місто"
 
 msgid "tasty"
 msgstr "смачний"
@@ -8928,6 +9156,9 @@ msgstr "У sõpra b стає p: ma ootan sõpra, я чекаю на друга."
 msgid "The basics"
 msgstr "Основи"
 
+msgid "The book is on the table."
+msgstr "Книжка на столі."
+
 msgid "The browning that gives seared, baked and toasted food its flavour"
 msgstr "Підрум’янювання, що надає смаку смаженому, печеному й тостам"
 
@@ -8999,6 +9230,18 @@ msgstr "Край криги"
 
 msgid "The end of the working day"
 msgstr "Кінець робочого дня"
+
+msgid "The ending -l means on or at"
+msgstr "Закінчення -l — це «на»"
+
+msgid "The ending -s means in"
+msgstr "Закінчення -s — це «в»"
+
+msgid "The ending <0>-l</0> says on a surface or at an activity: <1>laual, tööl</1>."
+msgstr "Закінчення <0>-l</0> означає «на», коли йдеться про поверхню або про те, що ти робиш: <1>laual, tööl</1>."
+
+msgid "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
+msgstr "Закінчення <0>-s</0> означає «в»: <1>Eestis, Tallinnas, koolis</1>."
 
 msgid "The ending for ma, I."
 msgstr "Закінчення для ma, «я»."
@@ -9189,6 +9432,9 @@ msgstr "Ту, що відповідає твоєму тесту чи темі. �
 msgid "The ones starting to fade"
 msgstr "Ті, які починають забуватися"
 
+msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you're doing something rather than inside a building: <2/>, at work."
+msgstr "Друге закінчення — <0>-l</0>. Воно означає «на», коли йдеться про поверхню: <1/>, на столі. А ще «на» там, де ти щось робиш, а не просто перебуваєш у будівлі: <2/>, на роботі."
+
 msgid "The output depends on the history of the input"
 msgstr "Результат залежить від того, що було на вході раніше"
 
@@ -9213,11 +9459,20 @@ msgstr "Застосунок на телефоні запитує дозвіл, 
 msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back less often as you learn it."
 msgstr "Фраза, яку репетитор написав у чаті, слово з роману, яке довелося шукати двічі. Збережи його за кілька секунд, послухай вимову, і Lymi повертатиме його дедалі рідше, що краще ти його знаєш."
 
+msgid "The picture is on the wall."
+msgstr "Картина на стіні."
+
 msgid "The pigment that absorbs light"
 msgstr "Пігмент, що поглинає світло"
 
 msgid "The pinyin left is what you haven’t learned yet."
 msgstr "Піньїнь лишився тільки над тим, чого ти ще не знаєш."
+
+msgid "The place"
+msgstr "Назва"
+
+msgid "The place or in the place"
+msgstr "Назва чи «де»"
 
 msgid "The player would pass, if chess allowed it."
 msgstr "Гравець пропустив би хід, якби шахи це дозволяли."
@@ -9468,6 +9723,9 @@ msgstr "вони є"
 msgid "They eat at home."
 msgstr "Вони їдять удома."
 
+msgid "They eat in town."
+msgstr "Вони їдять у місті."
+
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "Вони відповідають джерелу {source} ({edition}), дослівно як в іспиті. Переклади й пояснення написав Lymi; він не пов’язаний з {authority} і не може гарантувати, що ти складеш іспит."
 
@@ -9477,11 +9735,20 @@ msgstr "Вони відповідають джерелу {source}, дослів�
 msgid "they live"
 msgstr "вони живуть"
 
+msgid "They live in Germany."
+msgstr "Вони живуть у Німеччині."
+
 msgid "They say it’ll rain *tomorrow*."
 msgstr "Кажуть, *завтра* буде дощ."
 
 msgid "They stay in Mochi. A card’s first side becomes its term and the rest becomes its meaning, and its first picture comes along."
 msgstr "Вони лишаються в Mochi. Перша сторона картки стає терміном, решта — значенням, а перше зображення переноситься разом із нею."
+
+msgid "They study in Tartu."
+msgstr "Вони вчаться в Тарту."
+
+msgid "They work in an office."
+msgstr "Вони працюють в офісі."
 
 msgid "They're at home."
 msgstr "Вони вдома."
@@ -10261,6 +10528,9 @@ msgstr "Чекаємо на нотатки"
 msgid "Waits for its turn"
 msgstr "Чекає своєї черги"
 
+msgid "wall"
+msgstr "стіна"
+
 msgid "Wash your *hands*."
 msgstr "Помий *руки*."
 
@@ -10297,6 +10567,12 @@ msgstr "Ми не продаємо твої персональні дані, н�
 msgid "we live"
 msgstr "ми живемо"
 
+msgid "We live in Estonia."
+msgstr "Ми живемо в Естонії."
+
+msgid "We live on Saaremaa."
+msgstr "Ми живемо на Сааремаа."
+
 msgid "We need two *chairs*."
 msgstr "Нам потрібні два *стільці*."
 
@@ -10309,6 +10585,9 @@ msgstr "Ми дві години сиділи й розмовляли за ст�
 msgid "we speak"
 msgstr "ми говоримо"
 
+msgid "We study in Tartu."
+msgstr "Ми вчимося в Тарту."
+
 msgid "We update this policy when our practices change. The date above shows the latest revision. We provide additional notice when required by law."
 msgstr "Ми оновлюємо цю політику, коли змінюється наша робота з даними. Дата вгорі показує останню редакцію. Коли цього вимагає закон, ми повідомляємо додатково."
 
@@ -10320,6 +10599,9 @@ msgstr "Ми використовуємо файли cookie й сховище п
 
 msgid "We’ll meet at the station."
 msgstr "Зустрінемося на вокзалі."
+
+msgid "We're at home."
+msgstr "Ми вдома."
 
 msgid "We're friends."
 msgstr "Ми друзі."
@@ -10619,6 +10901,9 @@ msgstr "Де ви живете?"
 msgid "Where do you live?"
 msgstr "Де ти живеш?"
 
+msgid "Where do you work?"
+msgstr "Де ти працюєш?"
+
 msgid "Where does he or she work?"
 msgstr "Де він або вона працює?"
 
@@ -10633,6 +10918,9 @@ msgstr "У чому сильніший кожен застосунок, зокр
 
 msgid "where from"
 msgstr "звідки"
+
+msgid "Where is he or she?"
+msgstr "Де він або вона?"
 
 msgid "Where Lymi does more"
 msgstr "У чому сильніший Lymi"
@@ -10714,6 +11002,9 @@ msgstr "Яка пара країв розташована у Східній Че
 
 msgid "Which part of an IP address names the network"
 msgstr "Яка частина IP-адреси позначає мережу"
+
+msgid "Which place?"
+msgstr "Яке місце?"
 
 msgid "Which plans include Grok Bot?"
 msgstr "У які плани входить Grok Bot?"
@@ -10910,6 +11201,9 @@ msgstr "Над кандзі показано читання каною. Рома
 msgid "Words, meanings or a picture."
 msgstr "Слова, значення чи картинка."
 
+msgid "work"
+msgstr "робота"
+
 msgid "Work"
 msgstr "Робота"
 
@@ -11102,6 +11396,9 @@ msgstr "Ти"
 msgid "you all"
 msgstr "ви"
 
+msgid "You all work in an office."
+msgstr "Ви працюєте в офісі."
+
 msgid "You and someone else."
 msgstr "Ти і ще хтось."
 
@@ -11139,7 +11436,7 @@ msgid "You don’t want an account"
 msgstr "Не хочеш заводити акаунт"
 
 msgid "You drink coffee."
-msgstr "Ти п'єш каву."
+msgstr "Ти п’єш каву."
 
 msgid "You know <0>{term}</0>. Its pinyin goes from the examples on all your cards."
 msgstr "Ти знаєш <0>{term}</0>. Його піньїнь зникає з прикладів на всіх твоїх картках."
@@ -11170,6 +11467,9 @@ msgstr "Ти живеш у Тарту."
 
 msgid "you live, to more than one; polite you live"
 msgstr "ви живете; ввічливе «Ви живете»"
+
+msgid "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."
+msgstr "Ти вже знаєш <0/>, де, з уроку {questions}. Відповідай реченням, а в розмові — просто назвою місця."
 
 msgid "You need *flour* for pancakes."
 msgstr "Для млинців потрібне *борошно*."
@@ -11233,6 +11533,9 @@ msgstr "Почуєш питання з ним і відповідь."
 
 msgid "You'll hear elama with it and who it's for."
 msgstr "Почуєш elama з ним і дізнаєшся, для кого воно."
+
+msgid "You'll hear it in a sentence."
+msgstr "Почуєш його в реченні."
 
 msgid "You'll hear it in a word, with a note on how to say it."
 msgstr "Почуєш її в слові й дізнаєшся, як її вимовляти."

@@ -431,6 +431,73 @@ export const PRESENT_SENTENCES = {
   "c-mina-joon": "Mina joon kohvi, tema joob vett.",
 } as const;
 
+/**
+ * The places of the lesson on -s and -l: each word as a learner meets it, and whole in the form
+ * that says where you are. Checked in ÕS 2025 on Sõnaveeb: Saksamaa, Saaremaa, Otepää and
+ * Lasnamäe take the outer cases.
+ */
+export const KOHAD_PLACES = [
+  { place: "Eesti", where: "Eestis" },
+  { place: "Soome", where: "Soomes" },
+  { place: "Ukraina", where: "Ukrainas" },
+  { place: "Tallinn", where: "Tallinnas" },
+  { place: "Tartu", where: "Tartus" },
+  { place: "Pärnu", where: "Pärnus" },
+  { place: "kodu", where: "kodus" },
+  { place: "kool", where: "koolis" },
+  { place: "kontor", where: "kontoris" },
+  { place: "haigla", where: "haiglas" },
+  { place: "kohvik", where: "kohvikus" },
+  { place: "linn", where: "linnas" },
+  { place: "laud", where: "laual" },
+  { place: "sein", where: "seinal" },
+  { place: "töö", where: "tööl" },
+  { place: "turg", where: "turul" },
+  { place: "Saaremaa", where: "Saaremaal" },
+  { place: "Saksamaa", where: "Saksamaal" },
+  { place: "Otepää", where: "Otepääl" },
+  { place: "Lasnamäe", where: "Lasnamäel" },
+] as const;
+
+/** The sentences of the lesson on -s and -l. */
+export const KOHAD_SENTENCES = {
+  "s-elan-tallinnas": "Ma elan Tallinnas.",
+  "q-elad": "Kus sa elad?",
+  "a-elan-tartus": "Ma elan Tartus.",
+  "a-tartus": "Tartus.",
+  "q-tootad": "Kus sa töötad?",
+  "a-tootan-koolis": "Ma töötan koolis.",
+  "q-on": "Kus ta on?",
+  "a-on-kodus": "Ta on kodus.",
+  "w-kodus": "Ma töötan kodus.",
+  "w-kontoris": "Ma töötan kontoris.",
+  "w-haiglas": "Ma töötan haiglas.",
+  "w-kohvikus": "Ma töötan kohvikus.",
+  "w-linnas": "Ma töötan linnas.",
+  "l-laual": "Raamat on laual.",
+  "l-seinal": "Pilt on seinal.",
+  "l-tool": "Ma olen tööl.",
+  "l-turul": "Ema on turul.",
+  "l-saaremaal": "Me elame Saaremaal.",
+  "l-saksamaal": "Nad elavad Saksamaal.",
+  "h-haiglas": "Mari töötab haiglas.",
+  "h-parnus": "Jaan elab Pärnus.",
+  "h-kodus": "Me oleme kodus.",
+  "h-tartus": "Nad õpivad Tartus.",
+  "h-kohvikus": "Ta joob kohvikus kohvi.",
+  "h-kontoris": "Te töötate kontoris.",
+  "h-soomes": "Ma elan Soomes.",
+  "h-koolis": "Ta õpib koolis.",
+  "h-eestis": "Me elame Eestis.",
+  "h-linnas": "Nad söövad linnas.",
+  "g-eestis": "Ma elan Eestis.",
+  "g-soomes": "Ta elab Soomes.",
+  "g-tartus": "Me õpime Tartus.",
+  "g-tallinnas": "Ma töötan Tallinnas.",
+  "g-koolis": "Ta on koolis.",
+  "g-kontoris": "Nad töötavad kontoris.",
+} as const;
+
 /** The time lesson's words and phrases; each time it says is a clip of its own, by `timeClip`. */
 export const KELL_WORDS = [
   "Mis kell on?",
@@ -526,6 +593,10 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...NEGATION_PHRASES,
   ]),
   kusimused: { ...words(KUSIMUSED_WORDS), ...KUSIMUSED_SENTENCES },
+  kohad: {
+    ...words(["kus", ...KOHAD_PLACES.flatMap(({ place, where }) => [place, where])]),
+    ...KOHAD_SENTENCES,
+  },
   "mina-sina-tema": {
     ...words([
       ...PRONOUNS.flatMap(({ long, short }) => [long, short]),

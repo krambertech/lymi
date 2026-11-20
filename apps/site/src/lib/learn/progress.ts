@@ -20,10 +20,28 @@ function storage(): Storage | null {
   }
 }
 
+/** The stored format; a value written in another format reads as no progress. */
+const VERSION = 1;
+
+const isRecord = (value: unknown): value is Record<string, unknown> =>
+  typeof value === "object" && value !== null && !Array.isArray(value);
+
+/** Keeps only what has the right shape, so a hand-edited or older value can't crash a lesson. */
+export function cleanProgress(raw: unknown): Progress {
+  if (!isRecord(raw) || raw.v !== VERSION) return EMPTY;
+  const lessons: Progress["lessons"] = {};
+  for (const [slug, entry] of Object.entries(isRecord(raw.lessons) ? raw.lessons : {}))
+    if (isRecord(entry) && (entry.state === "started" || entry.state === "done"))
+      lessons[slug] = { state: entry.state };
+  const sections: Record<string, readonly string[]> = {};
+  for (const [slug, list] of Object.entries(isRecord(raw.sections) ? raw.sections : {}))
+    if (Array.isArray(list)) sections[slug] = list.filter((id) => typeof id === "string");
+  return { lessons, sections };
+}
+
 export function readProgress(store: Storage | null = storage()): Progress {
   try {
-    const parsed = JSON.parse(store?.getItem(KEY) ?? "null") as Partial<Progress> | null;
-    return { lessons: parsed?.lessons ?? {}, sections: parsed?.sections ?? {} };
+    return cleanProgress(JSON.parse(store?.getItem(KEY) ?? "null"));
   } catch {
     return EMPTY;
   }
@@ -36,7 +54,7 @@ let writeFailed = false;
 
 function write(next: Progress, store: Storage | null = storage()): void {
   try {
-    store?.setItem(KEY, JSON.stringify(next));
+    store?.setItem(KEY, JSON.stringify({ v: VERSION, ...next }));
   } catch {
     writeFailed = true;
     // A private window or full storage keeps progress for this page only.

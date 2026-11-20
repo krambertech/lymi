@@ -4,7 +4,13 @@ import { useSyncExternalStore } from "react";
  * One sound at a time across a lesson page. A control asks whether its own key is the one playing,
  * so a button, a key or a word shows activity only while its sound plays.
  */
-let audio: HTMLAudioElement | null = null;
+/**
+ * One audio element for the whole page, its source swapped per clip. iOS Safari lets an element
+ * play once a tap has started it, so a later clip in a sequence still plays after the tap is past.
+ */
+let element: HTMLAudioElement | null = null;
+/** Ends the clip playing now: resolves its promise and clears its mark. */
+let finish: (() => void) | null = null;
 /** Bumped by every sound started from outside a sequence, so a running sequence knows to stop. */
 let turn = 0;
 let playingKey: string | null = null;
@@ -14,12 +20,14 @@ const emit = () => {
 };
 
 export function stopSound(): void {
-  audio?.pause();
-  audio = null;
+  const end = finish;
+  finish = null;
+  element?.pause();
   if (playingKey !== null) {
     playingKey = null;
     emit();
   }
+  end?.();
 }
 
 /** Plays `src`, marked as `key`, and resolves when it ends or fails. `onFrame` gets its current time. */
@@ -34,28 +42,35 @@ export function playSound(
 
 function start(src: string, key: string, onFrame?: (seconds: number) => void): Promise<void> {
   stopSound();
-  const sound = new Audio(src);
-  audio = sound;
+  element ??= new Audio();
+  const sound = element;
+  sound.src = src;
   playingKey = key;
   emit();
   return new Promise((resolve) => {
     let frame = 0;
+    let over = false;
     const tick = () => {
       onFrame?.(sound.currentTime);
-      if (!sound.paused) frame = requestAnimationFrame(tick);
+      if (!over) frame = requestAnimationFrame(tick);
     };
     const done = () => {
+      if (over) return;
+      over = true;
       cancelAnimationFrame(frame);
-      if (audio === sound) {
-        audio = null;
+      sound.onended = null;
+      sound.onerror = null;
+      sound.onplay = null;
+      if (finish === done) {
+        finish = null;
         playingKey = null;
         emit();
       }
       resolve();
     };
+    finish = done;
     sound.onended = done;
     sound.onerror = done;
-    sound.onpause = done;
     if (onFrame) sound.onplay = () => (frame = requestAnimationFrame(tick));
     sound.play().catch(done);
   });
@@ -96,7 +111,10 @@ export function loudness(src: string): Promise<{ bars: number[]; seconds: number
   let pending = decoded.get(src);
   if (!pending) {
     pending = fetch(src)
-      .then((response) => response.arrayBuffer())
+      .then((response) => {
+        if (!response.ok) throw new Error(`${src} answered ${response.status}`);
+        return response.arrayBuffer();
+      })
       .then((buffer) => {
         context ??= new AudioContext();
         return context.decodeAudioData(buffer);
@@ -121,6 +139,8 @@ export function loudness(src: string): Promise<{ bars: number[]; seconds: number
         const bars = levels.slice(first, last + 1).map((v) => Math.min(1, v / max));
         return { bars, seconds: bars.length * 0.012, lead: first * 0.012 };
       });
+    // A failed load isn't kept, so the next look tries again.
+    pending.catch(() => decoded.delete(src));
     decoded.set(src, pending);
   }
   return pending;

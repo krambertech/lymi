@@ -596,8 +596,8 @@ msgstr "A diagram from your slides can be a card’s picture, and Lymi can ask y
 msgid "A dialogue in voice mode"
 msgstr "A dialogue in voice mode"
 
-msgid "A double letter is a longer sound, and it makes a different word. <0/> is a hundred; <1/> means send. Consonants work the same way: <2/> is old, and <3/> means into the bath."
-msgstr "A double letter is a longer sound, and it makes a different word. <0/> is a hundred; <1/> means send. Consonants work the same way: <2/> is old, and <3/> means into the bath."
+msgid "A double letter is a longer sound, and it makes a different word. <0/> is a hundred; <1/> means send. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
+msgstr "A double letter is a longer sound, and it makes a different word. <0/> is a hundred; <1/> means send. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 
 msgid "A double letter is longer, and it makes a different word."
 msgstr "A double letter is longer, and it makes a different word."
@@ -611,14 +611,14 @@ msgstr "A false friend. Embarrassed is avergonzado."
 msgid "a federal state."
 msgstr "a federal state."
 
-msgid "A few borrowed words break the rule: <0/>, thank you, puts the stress on its second half."
-msgstr "A few borrowed words break the rule: <0/>, thank you, puts the stress on its second half."
-
 msgid "A few minutes a day"
 msgstr "A few minutes a day"
 
 msgid "A few weeks in"
 msgstr "A few weeks in"
+
+msgid "A few words break the rule: <0/>, thank you, puts the stress on its second half."
+msgstr "A few words break the rule: <0/>, thank you, puts the stress on its second half."
 
 msgid "A first-line drug for type 2 diabetes; it lowers the glucose the liver makes"
 msgstr "A first-line drug for type 2 diabetes; it lowers the glucose the liver makes"
@@ -670,6 +670,9 @@ msgstr "A glass of *water*, please."
 
 msgid "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
 msgstr "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
+
+msgid "a hen"
+msgstr "a hen"
 
 msgid "A hint for the word that won’t stick"
 msgstr "A hint for the word that won’t stick"
@@ -1945,6 +1948,9 @@ msgstr "Carries sugar around the plant"
 
 msgid "Carries water up from the roots"
 msgstr "Carries water up from the roots"
+
+msgid "carry!"
+msgstr "carry!"
 
 msgid "Castle"
 msgstr "Castle"
@@ -3380,9 +3386,6 @@ msgstr "From the lesson"
 msgid "From tuul, wind."
 msgstr "From tuul, wind."
 
-msgid "From vann, bath."
-msgstr "From vann, bath."
-
 msgid "From your notes"
 msgstr "From your notes"
 
@@ -4261,9 +4264,6 @@ msgstr "Intel Mac?"
 
 msgid "Intel Mac? Download for Intel"
 msgstr "Intel Mac? Download for Intel"
-
-msgid "into the bath"
-msgstr "into the bath"
 
 msgid "Invite"
 msgstr "Invite"
@@ -5670,8 +5670,8 @@ msgstr "Older"
 msgid "On iPhone"
 msgstr "On iPhone"
 
-msgid "On Monday, in a week: when things happen"
-msgstr "On Monday, in a week: when things happen"
+msgid "On Monday, in a year: when things happen"
+msgstr "On Monday, in a year: when things happen"
 
 msgid "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
 msgstr "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
@@ -6598,6 +6598,9 @@ msgstr "Said to anyone about to eat, the way French says bon appétit."
 
 msgid "Said to cut a rambling story down to its point."
 msgstr "Said to cut a rambling story down to its point."
+
+msgid "Said to one person, from kandma. Also “of the heel”, from kand."
+msgstr "Said to one person, from kandma. Also “of the heel”, from kand."
 
 msgid "Said to one person."
 msgstr "Said to one person."

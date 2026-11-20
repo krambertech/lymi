@@ -7,7 +7,7 @@ import { numberWords } from "./estonian-numbers";
  */
 export const CLIP_ROOT = "/audio/estonian-lessons";
 
-/** A word's clip id: its letters, with õ ä ö ü spelled out so file names stay ASCII. */
+/** A word's clip id: its letters, with õ ä ö ü š ž spelled out so file names stay ASCII. */
 export function clipId(text: string): string {
   return text
     .toLowerCase()
@@ -15,6 +15,8 @@ export function clipId(text: string): string {
     .replace(/ä/g, "a2")
     .replace(/ö/g, "o2")
     .replace(/ü/g, "u2")
+    .replace(/š/g, "s5")
+    .replace(/ž/g, "z5")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 }
@@ -47,7 +49,8 @@ export const HAALDUS_WORDS = [
   "koli",
   "kooli",
   "vana",
-  "vanna",
+  "kana",
+  "kanna",
   "lina",
   "linna",
   "tule",

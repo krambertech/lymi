@@ -85,7 +85,7 @@ export const STAGES: readonly Stage[] = [
       { et: "Sõbraga, rahata", about: msg`With, without, until, as` },
       { et: "Suurem, kõige suurem", about: msg`Comparing` },
       { et: "Suures majas", about: msg`Adjectives that agree` },
-      { et: "Esmaspäeval, aasta pärast", about: msg`On Monday, in a week: when things happen` },
+      { et: "Esmaspäeval, aasta pärast", about: msg`On Monday, in a year: when things happen` },
       { et: "Arstiks", about: msg`Becoming something` },
     ],
   },

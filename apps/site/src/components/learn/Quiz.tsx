@@ -16,6 +16,7 @@ import {
   type QuizState,
   quizReducer,
   rightCount,
+  shuffledRun,
   startQuiz,
   typedMatches,
 } from "../../lib/learn/quiz";
@@ -115,18 +116,9 @@ interface QuizProps<Item> {
   /** Sounds to play side by side after an answer, under “Hear both”. */
   both?: (item: Item) => readonly string[] | undefined;
   round: (props: RoundProps<Item>) => ReactNode;
-  /** The order of a new run; the first run keeps the first item first so the page renders the same. */
-  order?: (items: readonly Item[]) => readonly Item[];
+  /** A run's order, `pinned` first when given; the first run pins the first item so the page renders the same. */
+  order?: (items: readonly Item[], pinned?: Item) => readonly Item[];
 }
-
-const shuffle = <T,>(list: readonly T[]): T[] => {
-  const out = [...list];
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = Math.floor(Math.random() * (i + 1));
-    [out[i], out[j]] = [out[j] as T, out[i] as T];
-  }
-  return out;
-};
 
 /**
  * Anything that marks the learner right or wrong: a white card with its title on the stage's
@@ -140,7 +132,7 @@ export function Quiz<Item>({
   verdict,
   both,
   round,
-  order = shuffle,
+  order = shuffledRun,
 }: QuizProps<Item>) {
   const { t } = useLingui();
   const { slug, finishSection } = useLesson();
@@ -156,7 +148,7 @@ export function Quiz<Item>({
 
   // Shuffled after the page loads; the first round stays first so the server's page matches.
   useEffect(() => {
-    setList([items[0] as Item, ...order(items.slice(1))]);
+    setList(order(items, items[0]));
   }, [items, order]);
 
   const finished = state.status === "finished" || (total === 1 && state.status === "answered");

@@ -25,6 +25,9 @@ if (!voice) throw new Error("The product has no Estonian voice.");
 const model = process.env.ELEVENLABS_SPEECH_MODEL?.trim() || "eleven_v4";
 const manifest = existsSync(manifestPath) ? JSON.parse(readFileSync(manifestPath, "utf8")) : {};
 const next = {};
+// Saved after every clip, so a run that fails partway doesn't pay for the same clips again.
+const saved = { ...manifest };
+const save = (data) => writeFileSync(manifestPath, `${JSON.stringify(data, null, 2)}\n`);
 let recorded = 0;
 
 for (const [lesson, clips] of Object.entries(CLIPS)) {
@@ -52,6 +55,8 @@ for (const [lesson, clips] of Object.entries(CLIPS)) {
     );
     if (!response.ok) throw new Error(`${name}: ElevenLabs answered ${response.status}`);
     writeFileSync(file, Buffer.from(await response.arrayBuffer()));
+    saved[name] = identity;
+    save(saved);
     recorded += 1;
     console.log(`${name}: ${text}`);
   }
@@ -61,5 +66,5 @@ for (const [lesson, clips] of Object.entries(CLIPS)) {
   }
 }
 
-writeFileSync(manifestPath, `${JSON.stringify(next, null, 2)}\n`);
+save(next);
 console.log(`${recorded} recorded, ${Object.keys(next).length - recorded} unchanged.`);

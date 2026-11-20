@@ -4,7 +4,7 @@ Free, interactive Estonian grammar lessons at `lymi.app/estonian/learn`, in Engl
 
 ## Launch
 
-The lessons are built and reachable but not launched: `learn` is in `prelaunchPages` in `apps/site/src/lib/routes.ts`, so every lesson page and the hub send `noindex`, stay out of the sitemap, and no other page links to them. Launching is removing `learn` from that list, adding the lesson pages to the sitemap, and linking the hub from the Estonian page and the footer.
+The lessons are built and reachable but not launched: `learn` is in `prelaunchPages` in `apps/site/src/lib/routes.ts`, so every lesson page and the hub send `noindex`, stay out of the sitemap, and no other page links to them. Launching is removing `learn` from that list, which also puts every lesson page in the sitemap (`routes.test.ts` checks both states), and linking the hub from the Estonian page and the footer.
 
 ## The course
 

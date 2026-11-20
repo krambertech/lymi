@@ -236,8 +236,8 @@ function Row({ lesson, status }: { lesson: PlacedLesson; status: Status }) {
 function StatusTag({ status }: { status: Status }) {
   if (status === "done")
     return (
-      <span className="inline-flex items-center gap-1.5 text-sm font-medium text-success">
-        <span className="grid size-5 place-items-center rounded-full bg-success text-plate">
+      <span className="inline-flex items-center gap-1.5 text-sm font-medium text-(--form)">
+        <span className="grid size-5 place-items-center rounded-full bg-(--form) text-plate">
           <Check aria-hidden="true" className="size-3" strokeWidth={3} />
         </span>
         <Trans>Done</Trans>

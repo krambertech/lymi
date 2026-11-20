@@ -596,8 +596,8 @@ msgstr "Схема со слайдов может стать картинкой 
 msgid "A dialogue in voice mode"
 msgstr "Диалог в голосовом режиме"
 
-msgid "A double letter is a longer sound, and it makes a different word. <0/> is a hundred; <1/> means send. Consonants work the same way: <2/> is old, and <3/> means into the bath."
-msgstr "Удвоенная буква — это более долгий звук, и с ним получается другое слово. <0/> — это сто, а <1/> — «отправь». С согласными так же: <2/> — старый, а <3/> — «в ванну»."
+msgid "A double letter is a longer sound, and it makes a different word. <0/> is a hundred; <1/> means send. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
+msgstr "Удвоенная буква — это более долгий звук, и с ним получается другое слово. <0/> — это сто, а <1/> — «отправь». С согласными так же: <2/> — курица, а <3/> — «неси» (одному человеку)."
 
 msgid "A double letter is longer, and it makes a different word."
 msgstr "Удвоенная буква звучит дольше, и с ней получается другое слово."
@@ -611,14 +611,14 @@ msgstr "Не путай с английским embarrassed: «смущённы�
 msgid "a federal state."
 msgstr "федеративное государство."
 
-msgid "A few borrowed words break the rule: <0/>, thank you, puts the stress on its second half."
-msgstr "Несколько заимствованных слов нарушают правило: в <0/>, «спасибо», ударение падает на вторую половину."
-
 msgid "A few minutes a day"
 msgstr "Несколько минут в день"
 
 msgid "A few weeks in"
 msgstr "Через несколько недель"
+
+msgid "A few words break the rule: <0/>, thank you, puts the stress on its second half."
+msgstr "Несколько слов нарушают правило: в <0/>, «спасибо», ударение падает на вторую половину."
 
 msgid "A first-line drug for type 2 diabetes; it lowers the glucose the liver makes"
 msgstr "Препарат первой линии при диабете 2 типа; снижает выработку глюкозы печенью"
@@ -670,6 +670,9 @@ msgstr "Стакан *воды*, пожалуйста."
 
 msgid "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
 msgstr "Рутина Grok Bot запускается каждый день в 8:00: проверь, что пора повторить в Lymi, и погоняй меня. Этим утром он нашёл 12 карточек по испанскому, примерно на пять минут, и спросил, как будет «забастовка»."
+
+msgid "a hen"
+msgstr "курица"
 
 msgid "A hint for the word that won’t stick"
 msgstr "Подсказка для слова, которое не запоминается"
@@ -1945,6 +1948,9 @@ msgstr "Разносит сахара по растению"
 
 msgid "Carries water up from the roots"
 msgstr "Поднимает воду от корней"
+
+msgid "carry!"
+msgstr "неси!"
 
 msgid "Castle"
 msgstr "Замок (крепость)"
@@ -3380,9 +3386,6 @@ msgstr "С урока"
 msgid "From tuul, wind."
 msgstr "От tuul — ветер."
 
-msgid "From vann, bath."
-msgstr "От vann — ванна."
-
 msgid "From your notes"
 msgstr "Из твоих заметок"
 
@@ -4261,9 +4264,6 @@ msgstr "Mac с Intel?"
 
 msgid "Intel Mac? Download for Intel"
 msgstr "Mac с Intel? Скачать версию для Intel"
-
-msgid "into the bath"
-msgstr "в ванну"
 
 msgid "Invite"
 msgstr "Пригласить"
@@ -5670,8 +5670,8 @@ msgstr "Раньше"
 msgid "On iPhone"
 msgstr "На iPhone"
 
-msgid "On Monday, in a week: when things happen"
-msgstr "В понедельник, через неделю: когда что-то происходит"
+msgid "On Monday, in a year: when things happen"
+msgstr "В понедельник, через год: когда что-то происходит"
 
 msgid "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
 msgstr "На quizlet.com открой свой набор, выбери Export в меню … и нажми Copy text."
@@ -6598,6 +6598,9 @@ msgstr "Говорят каждому, кто садится есть, — ка�
 
 msgid "Said to cut a rambling story down to its point."
 msgstr "Так говорят, чтобы свести длинную историю к сути."
+
+msgid "Said to one person, from kandma. Also “of the heel”, from kand."
+msgstr "Так говорят одному человеку, от kandma. А ещё «пятки», от kand."
 
 msgid "Said to one person."
 msgstr "Так говорят одному человеку."

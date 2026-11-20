@@ -1,6 +1,7 @@
 import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import {
+  type CSSProperties,
   createContext,
   type ReactNode,
   useCallback,
@@ -12,8 +13,9 @@ import {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
+import { lessonBySlug } from "../../lib/learn/catalogue";
 import { playSound, usePlaying } from "../../lib/learn/player";
-import { useWord } from "./lesson-context";
+import { useLesson, useWord } from "./lesson-context";
 import { PlayButton } from "./Sound";
 
 /** How long a pointer rests on a word before its card opens, so reading past one doesn't cover the text. */
@@ -128,6 +130,8 @@ function Card({
 }) {
   const { i18n, t } = useLingui();
   const { gloss, src, show } = useWord(open.word);
+  // The card is portalled out of the lesson, so it carries the lesson's hue itself.
+  const hue = lessonBySlug(useLesson().slug)?.stage.hue;
   const ref = useRef<HTMLDivElement>(null);
   const [place, setPlace] = useState<{ top: number; left: number; below: boolean } | null>(null);
   const [shown, setShown] = useState(false);
@@ -177,10 +181,10 @@ function Card({
       }}
       data-open={shown && place ? "" : undefined}
       data-below={place?.below ? "" : undefined}
-      style={{ top: place?.top ?? -9999, left: place?.left ?? 0 }}
+      style={{ top: place?.top ?? -9999, left: place?.left ?? 0, "--h": hue } as CSSProperties}
       onPointerEnter={onEnter}
       onPointerLeave={onLeave}
-      className="learn-card grid gap-1.5 rounded-lg bg-plate p-3.5 pt-3 ring-1 ring-edge outline-none"
+      className="learn learn-card grid gap-1.5 rounded-lg bg-plate p-3.5 pt-3 ring-1 ring-edge outline-none"
     >
       <div className="flex items-center gap-2.5">
         <span

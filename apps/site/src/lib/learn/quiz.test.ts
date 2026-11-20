@@ -1,5 +1,12 @@
 import { describe, expect, it } from "vitest";
-import { normalizeTyped, quizReducer, rightCount, startQuiz, typedMatches } from "./quiz";
+import {
+  eachPairFirst,
+  normalizeTyped,
+  quizReducer,
+  rightCount,
+  startQuiz,
+  typedMatches,
+} from "./quiz";
 
 describe("quizReducer", () => {
   it("waits for the sound before it takes an answer", () => {
@@ -52,5 +59,27 @@ describe("typedMatches", () => {
     expect(typedMatches("1.000", ["1000"])).toBe(true);
     expect(typedMatches("4,500", ["4500"])).toBe(true);
     expect(typedMatches("2,026", ["2026"])).toBe(true);
+    expect(typedMatches("3,50 €", ["3.50"])).toBe(true);
+    expect(typedMatches("€3.50", ["3.50"])).toBe(true);
+    expect(typedMatches("3.50eur", ["3.50"])).toBe(true);
+    expect(typedMatches("5-2-0-9-4", ["52094"])).toBe(true);
+    expect(typedMatches("€", ["0"])).toBe(false);
+  });
+});
+
+describe("eachPairFirst", () => {
+  const pairs: [string, string][] = [
+    ["sada", "saada"],
+    ["koli", "kooli"],
+    ["kana", "kanna"],
+  ];
+  const items = pairs.flatMap((pair) => pair.map((w) => ({ w, pair })));
+  it("plays every pair once before any comes back, counting the pinned first item", () => {
+    for (let run = 0; run < 50; run++) {
+      const order = eachPairFirst(items, items[0]);
+      expect(order[0]).toBe(items[0]);
+      expect(new Set(order.slice(0, 3).map((item) => item.pair[0])).size).toBe(3);
+      expect(order).toHaveLength(6);
+    }
   });
 });

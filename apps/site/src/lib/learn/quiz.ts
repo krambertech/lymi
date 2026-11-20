@@ -55,13 +55,51 @@ export function quizReducer(state: QuizState, event: QuizEvent): QuizState {
   }
 }
 
+/** Fisher–Yates: every order equally likely. */
+export function shuffle<T>(list: readonly T[]): T[] {
+  const out = [...list];
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [out[i], out[j]] = [out[j] as T, out[i] as T];
+  }
+  return out;
+}
+
+/** A run's order: `pinned` first when given, the rest shuffled. */
+export function shuffledRun<T>(items: readonly T[], pinned?: T): T[] {
+  return pinned === undefined
+    ? shuffle(items)
+    : [pinned, ...shuffle(items.filter((item) => item !== pinned))];
+}
+
+/**
+ * Items that come in pairs, each pair once before any pair comes back. A pinned first item counts
+ * as its pair's turn.
+ */
+export function eachPairFirst<T extends { pair: readonly [string, string] }>(
+  items: readonly T[],
+  pinned?: T,
+): T[] {
+  const rest = shuffle(items.filter((item) => item !== pinned));
+  const seen = new Set<string>(pinned ? [pinned.pair[0]] : []);
+  const first = rest.filter((item) => !seen.has(item.pair[0]) && !!seen.add(item.pair[0]));
+  const later = rest.filter((item) => !first.includes(item));
+  return [...(pinned ? [pinned] : []), ...first, ...later];
+}
+
 export const rightCount = (state: QuizState): number => state.results.filter(Boolean).length;
 
-/** A typed number, read the way a learner might type it: spaces, a decimal comma, leading zeros. */
+/**
+ * A typed number, read the way a learner might type it: a currency, spaces, dashes between digits,
+ * thousands separators, a decimal comma, leading zeros.
+ */
 export function normalizeTyped(value: string): string {
   return (
     value
+      .toLowerCase()
+      .replace(/€|eur(?:ot|os|o)?\b/g, "")
       .replace(/\s+/g, "")
+      .replace(/(?<=\d)[-‐–]+(?=\d)/g, "")
       // A comma or point before exactly three digits groups thousands: 12,000 and 12.000 are 12000.
       .replace(/[.,](?=\d{3}(?:\D|$))/g, "")
       .replace(",", ".")

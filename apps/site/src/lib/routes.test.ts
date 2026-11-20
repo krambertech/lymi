@@ -3,6 +3,7 @@ import { describe, expect, it } from "vitest";
 import { GET } from "../pages/sitemap-pages.xml";
 import { changelogSlugs, changelogUpdatePath } from "./changelog-paths";
 import { LANGUAGE_PAGE_TAGS, LANGUAGE_PAGES, languageOfPage } from "./language-pages";
+import { LESSON_SLUGS, lessonPath } from "./learn/catalogue";
 import {
   apiReferenceRoute,
   englishOnlyPaths,
@@ -17,6 +18,7 @@ import {
   prelaunchPages,
   unlistedPaths,
 } from "./routes";
+import { pagesSitemap } from "./sitemap";
 
 // Keys only; the Astro pages are never loaded.
 const pageFiles = Object.keys(import.meta.glob("../pages/**/*.astro"));
@@ -122,6 +124,17 @@ describe("public routes", () => {
       (route) => !unlistedPaths.includes(route) && !prelaunch.has(route),
     );
     expect(new Set(listed)).toEqual(new Set([...listable, ...updates, ...reference]));
+  });
+
+  it("lists the lessons once learn launches, and not before", () => {
+    const launched = pagesSitemap([]);
+    const held = pagesSitemap();
+    for (const slug of LESSON_SLUGS)
+      for (const locale of locales) {
+        expect(launched).toContain(`lymi.app${lessonPath(slug, locale)}<`);
+        expect(held).not.toContain(`lymi.app${lessonPath(slug, locale)}<`);
+      }
+    expect(launched).toContain(`lymi.app${localizedPath("learn", "en")}<`);
   });
 
   it("keeps pages that are not launched out of the sitemap", async () => {

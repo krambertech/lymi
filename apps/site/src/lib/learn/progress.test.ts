@@ -34,6 +34,32 @@ describe("lesson progress", () => {
     expect(readProgress(store).lessons.numbrid).toEqual({ state: "done" });
   });
 
+  it("keeps only well-formed progress from storage", () => {
+    const store = memoryStorage();
+    store.setItem(
+      "lymi-estonian-lessons",
+      JSON.stringify({
+        v: 1,
+        lessons: { haaldus: { state: "done" }, numbrid: { state: "finished" }, x: "done" },
+        sections: { haaldus: ["pairs", 3, "spell"], numbrid: "ten" },
+      }),
+    );
+    expect(readProgress(store)).toEqual({
+      lessons: { haaldus: { state: "done" } },
+      sections: { haaldus: ["pairs", "spell"] },
+    });
+    expect(() => finishSection("numbrid", "ten", ["ten"], store)).not.toThrow();
+  });
+
+  it("reads progress in another format as none", () => {
+    const store = memoryStorage();
+    store.setItem(
+      "lymi-estonian-lessons",
+      JSON.stringify({ lessons: { haaldus: { state: "done" } } }),
+    );
+    expect(readProgress(store)).toEqual({ lessons: {}, sections: {} });
+  });
+
   it("reads broken storage as no progress", () => {
     const store = memoryStorage();
     store.setItem("lymi-estonian-lessons", "{not json");

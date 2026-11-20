@@ -2,6 +2,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useCallback, useMemo } from "react";
 import { clipId, clipUrl } from "../../../lib/learn/clips";
+import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Compare, Keys, ListenRows, Panel } from "../Explore";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
@@ -37,7 +38,11 @@ const GLOSSARY: Glossary = {
   koli: { en: msg`junk, clutter` },
   kooli: { en: msg`to school`, note: msg`From kool, school.` },
   vana: { en: msg`old` },
-  vanna: { en: msg`into the bath`, note: msg`From vann, bath.` },
+  kana: { en: msg`a hen` },
+  kanna: {
+    en: msg`carry!`,
+    note: msg`Said to one person, from kandma. Also “of the heel”, from kand.`,
+  },
   lina: { en: msg`linen; a bedsheet` },
   linna: { en: msg`of the town; into town`, note: msg`From linn, town.` },
   tule: { en: msg`come!`, note: msg`Said to one person.` },
@@ -70,7 +75,7 @@ const VOWEL_PAIRS = [
 const LENGTH_PAIRS = [
   ["sada", "saada"],
   ["koli", "kooli"],
-  ["vana", "vanna"],
+  ["kana", "kanna"],
   ["lina", "linna"],
   ["tule", "tuule"],
   ["ma", "maa"],
@@ -258,8 +263,8 @@ export function HaaldusLesson() {
               />
               <Aside>
                 <Trans>
-                  A few borrowed words break the rule: <Word w="aitäh" />, thank you, puts the
-                  stress on its second half.
+                  A few words break the rule: <Word w="aitäh" />, thank you, puts the stress on its
+                  second half.
                 </Trans>
               </Aside>
             </>
@@ -354,8 +359,8 @@ export function HaaldusLesson() {
                   <Trans>
                     A double letter is a longer sound, and it makes a different word.{" "}
                     <Word w="sada" /> is a hundred; <Word w="saada" /> means send. Consonants work
-                    the same way: <Word w="vana" /> is old, and <Word w="vanna" /> means into the
-                    bath.
+                    the same way: <Word w="kana" /> is a hen, and <Word w="kanna" /> tells one
+                    person to carry something.
                   </Trans>
                 </p>
                 <p>
@@ -427,12 +432,4 @@ export function HaaldusLesson() {
       ]}
     />
   );
-}
-
-/** Every pair once before any pair comes back. */
-function eachPairFirst<T extends { pair: readonly [string, string] }>(items: readonly T[]): T[] {
-  const shuffled = [...items].sort(() => Math.random() - 0.5);
-  const seen = new Set<string>();
-  const first = shuffled.filter((item) => !seen.has(item.pair[0]) && !!seen.add(item.pair[0]));
-  return [...first, ...shuffled.filter((item) => !first.includes(item))];
 }

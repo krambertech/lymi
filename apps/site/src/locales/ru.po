@@ -13,6 +13,9 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+msgid "-n, -d, -b, -me, -te, -vad: each person has its own."
+msgstr "-n, -d, -b, -me, -te, -vad: у каждого лица своё."
+
 msgid "-teist or -kümmend?"
 msgstr "-teist или -kümmend?"
 
@@ -329,6 +332,9 @@ msgstr "<0/> {left, plural, one {карточка к повторению} few {
 msgid "<0/> asks about people and <1/> about things: <2/> who is that, <3/> what is that."
 msgstr "<0/> спрашивает о людях, а <1/> о вещах: <2/> кто это, <3/> что это."
 
+msgid "<0/> at the start turns a sentence into a yes-or-no question. Lesson {questions} is about questions."
+msgstr "<0/> в начале превращает предложение в вопрос, на который отвечают «да» или «нет». Вопросам посвящён урок {questions}."
+
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> — это сто, а <1/> — тысяча, и «один» перед ними не говорят. Сотни пишутся слитно, <2/>, а тысячи отдельно: <3/>."
 
@@ -341,8 +347,14 @@ msgstr "<0/> значит твой, это короткое <1/>; откуда �
 msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:30, not 4:30."
 msgstr "<0/> значит «половина», и смотрит вперёд. <1/> — это 3:30, а не 4:30."
 
+msgid "<0/> on its own is no, and <1/> is yes. A fuller answer repeats the verb with ei: asked <2/>, say <3/>. The no has no ending, so the same answer fits whoever is asked."
+msgstr "<0/> само по себе значит «нет», а <1/> — «да». Более полный ответ повторяет глагол с ei: на <2/> отвечай <3/>. В отрицании нет окончания, поэтому тот же ответ подходит, кого бы ни спросили."
+
 msgid "<0/> repeats the verb from the question. Estonians answer like this with every verb, as lesson {negation} on saying no shows."
 msgstr "<0/> повторяет глагол из вопроса. Эстонцы так отвечают с любым глаголом, об этом урок {negation} про отрицание."
+
+msgid "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same for everyone."
+msgstr "<0/>, «быть», устроен так же. <1/> становится <2/>, и <3/> одинаково для всех."
 
 msgid "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 msgstr "<0>-teist</0> образует числа от одиннадцати до девятнадцати, а <1>-kümmend</1> — десятки."
@@ -379,6 +391,15 @@ msgstr "<0>Aiko</0> прошла неделю 3"
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Диффузия</0>: частицы движутся от высокой концентрации к низкой."
 
+msgid "<0>ei {stem}</0>: <1>ei</1> before the verb, and the ending is gone."
+msgstr "<0>ei {stem}</0>: <1>ei</1> перед глаголом, а окончание пропало."
+
+msgid "<0>Ei ole</0> in one word"
+msgstr "<0>Ei ole</0> одним словом"
+
+msgid "<0>Ei</0>, and the verb without its ending."
+msgstr "<0>Ei</0> и глагол без окончания."
+
 msgid "<0>Jonas</0> added 4 cards to Week 4"
 msgstr "<0>Jonas</0> добавил 4 карточки в неделю 4"
 
@@ -403,11 +424,17 @@ msgstr "<0>Мексиканский испанский</0>, <1>разговор�
 msgid "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
 msgstr "<0>õ ä ö ü</0> — отдельные гласные, и самая непривычная из них <1>õ</1>."
 
+msgid "<0>olen</0> for I, <1>oled</1> for you, <2>on</2> for he, she and they."
+msgstr "<0>olen</0> для «я», <1>oled</1> для «ты», <2>on</2> для «он», «она» и «они»."
+
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>альтернативная стоимость</0> <1>= чем жертвуешь</1>"
 
 msgid "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 msgstr "<0>Осмос</0>: вода проходит через мембрану туда, где больше растворённого вещества."
+
+msgid "<0>Pole</0> means the same as <1>ei ole</1>. You'll hear both."
+msgstr "<0>Pole</0> значит то же, что <1>ei ole</1>. Услышишь оба."
 
 msgid "<0>pool</0>, <1>veerand</1> and <2>kolmveerand</2> name the hour that's coming: <3>pool neli</3> is 3:30."
 msgstr "<0>pool</0>, <1>veerand</1> и <2>kolmveerand</2> называют наступающий час: <3>pool neli</3> — это 3:30."
@@ -583,6 +610,9 @@ msgstr "64 карточки"
 msgid "64 pages"
 msgstr "64 страницы"
 
+msgid "8 minutes"
+msgstr "8 минут"
+
 msgid "80% to pass. Questions from the official handbook."
 msgstr "80% правильных, чтобы сдать. Вопросы по официальному пособию."
 
@@ -736,6 +766,9 @@ msgstr "Бесплатные флеш-карточки для испанског
 
 msgid "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
 msgstr "Бесплатное приложение для изучения украинского на карточках. Ударение отмечено, пока ты не знаешь слово, у слов, которые различаются только ударением, отдельные карточки, а озвучивает их носитель языка. Начни с алфавита, потом A1 и A2."
+
+msgid "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
+msgstr "Бесплатный урок об отрицании в эстонском языке в настоящем времени: ei перед глаголом, одно для всех лиц, ei ole и pole, и как ответить «нет» на вопрос. Каждое предложение озвучено."
 
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers."
 msgstr "Бесплатный урок об эстонских числах: от нуля до десяти, -teist и -kümmend, сотни и тысячи, а также числа в ценах, возрасте и номерах телефонов."
@@ -953,6 +986,9 @@ msgstr "Итоги недели"
 
 msgid "A word list from a spreadsheet"
 msgstr "Список слов из таблицы"
+
+msgid "a word that turns a sentence into a yes-or-no question"
+msgstr "слово, которое превращает предложение в вопрос, на который отвечают «да» или «нет»"
 
 msgid "A year has 365 days."
 msgstr "В году 365 дней."
@@ -1236,6 +1272,9 @@ msgstr "Реклама"
 msgid "advantage"
 msgstr "преимущество"
 
+msgid "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
+msgstr "После <0>ei</0> идёт форма с ma без -n: <1>loen</1>, <2>ei loe</2>."
+
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "После урока на italki, Preply или с частным репетитором вставь чат или сфотографируй заметки. Lymi превратит новые слова в карточки, которые ты повторяешь между уроками. Добавить их может и AI-ассистент. Бесплатно."
 
@@ -1350,6 +1389,12 @@ msgstr "Все, одинаково часто"
 msgid "All of them, inside real sentences."
 msgstr "Все верно, даже в настоящих предложениях."
 
+msgid "All of them. <0>Ei</0>, and the ending goes."
+msgstr "Все. <0>Ei</0>, и окончание уходит."
+
+msgid "All of them. <0>Ei</0>, then the verb from the question."
+msgstr "Все. <0>Ei</0>, а за ним глагол из вопроса."
+
 msgid "All of them. You can follow a short exchange."
 msgstr "Все. Ты уже понимаешь короткий разговор."
 
@@ -1416,6 +1461,9 @@ msgstr "Другое название — иллюзия частотности.
 
 msgid "Always"
 msgstr "Всегда"
+
+msgid "am not, is not, are not"
+msgstr "не быть: я не, он не, они не"
 
 msgid "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
 msgstr "Файл .apkg или .colpkg из Anki, AnkiDroid или AnkiMobile"
@@ -1489,6 +1537,9 @@ msgstr "AnkiMobile, разовая покупка за 29,99 € (в США —
 msgid "Answer <0>jah</0> or <1>ei</1>. To a question with olema, say <2>ei ole</2>. Not sure? <3>Ma ei tea.</3>"
 msgstr "Отвечай <0>jah</0> или <1>ei</1>. На вопрос с olema говори <2>ei ole</2>. Не знаешь? <3>Ma ei tea.</3>"
 
+msgid "Answering no"
+msgstr "Как ответить «нет»"
+
 msgid "Answers"
 msgstr "Варианты ответа"
 
@@ -1549,11 +1600,26 @@ msgstr "Колоды бесплатные?"
 msgid "Are these the official questions?"
 msgstr "Это официальные вопросы?"
 
+msgid "Are they drinking?"
+msgstr "Они пьют?"
+
 msgid "Are they working today?"
 msgstr "Они сегодня работают?"
 
 msgid "Are you *coming* today?"
 msgstr "Ты сегодня *придёшь*?"
+
+msgid "Are you all eating?"
+msgstr "Вы все едите?"
+
+msgid "Are you all waiting?"
+msgstr "Вы все ждёте?"
+
+msgid "Are you reading?"
+msgstr "Ты читаешь?"
+
+msgid "Are you tired?"
+msgstr "Ты устал?"
 
 msgid "Article and plural, the way you write them"
 msgstr "Артикль и множественное число, как в твоих карточках"
@@ -2681,6 +2747,12 @@ msgstr "Ты живёшь в Таллине?"
 msgid "Do you speak Estonian?"
 msgstr "Ты говоришь по-эстонски?"
 
+msgid "Do you study?"
+msgstr "Ты учишься?"
+
+msgid "Do you work?"
+msgstr "Ты работаешь?"
+
 msgid "Docs"
 msgstr "Документация"
 
@@ -2692,6 +2764,9 @@ msgstr "Его спрашивают и врач, и банк, и библиот�
 
 msgid "Does every noun come with der, die or das?"
 msgstr "У каждого ли существительного есть der, die или das?"
+
+msgid "Does he or she speak Estonian?"
+msgstr "Он или она говорит по-эстонски?"
 
 msgid "Does it keep õ, ä, ö and ü apart?"
 msgstr "Различает ли Lymi õ, ä, ö и ü?"
@@ -2738,8 +2813,23 @@ msgstr "Сделать дважды — то же самое, что сдела�
 msgid "Don’t drink coffee before *bed*."
 msgstr "Не пей кофе перед *сном*."
 
+msgid "don't drink, doesn't drink"
+msgstr "не пью, не пьёт и т. д."
+
+msgid "don't eat, doesn't eat"
+msgstr "не ем, не ест и т. д."
+
+msgid "don't read, doesn't read"
+msgstr "не читаю, не читает и т. д."
+
+msgid "don't speak, doesn't speak"
+msgstr "не говорю, не говорит и т. д."
+
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не сноси забор, пока не поймёшь, зачем его поставили"
+
+msgid "don't work, doesn't work"
+msgstr "не работаю, не работает и т. д."
 
 msgid "Done"
 msgstr "Пройдено"
@@ -2915,6 +3005,15 @@ msgstr "Eesti · глагол"
 msgid "Effortless grace"
 msgstr "Непринуждённое изящество"
 
+msgid "Ei before the verb"
+msgstr "Ei перед глаголом"
+
+msgid "Ei ole and pole"
+msgstr "Ei ole и pole"
+
+msgid "Ei ole in one word."
+msgstr "Ei ole одним словом."
+
 msgid "eight"
 msgstr "восемь"
 
@@ -3076,6 +3175,9 @@ msgstr "У каждого примера есть перевод и сохран
 
 msgid "Every example comes with a translation, and a native voice reads the whole sentence."
 msgstr "У каждого примера есть перевод, а голос носителя читает всё предложение."
+
+msgid "Every form of <0>olema</0> becomes <1>ei ole</1>."
+msgstr "Любая форма <0>olema</0> становится <1>ei ole</1>."
 
 msgid "Every language"
 msgstr "Все языки"
@@ -3377,6 +3479,9 @@ msgstr "Квартира"
 msgid "Flats in Tallinn are *expensive*."
 msgstr "Квартиры в Таллине *дорогие*."
 
+msgid "Flip the six lines above once more, then come back."
+msgstr "Ещё раз переключи шесть строк выше и возвращайся."
+
 msgid "Flour"
 msgstr "Мука"
 
@@ -3608,8 +3713,14 @@ msgstr "От kool — школа."
 msgid "From linn, town."
 msgstr "От linn — город."
 
+msgid "From lugema, to read."
+msgstr "От lugema, «читать»."
+
 msgid "From now until your test date"
 msgstr "С сегодняшнего дня до даты теста"
+
+msgid "From rääkima, to speak."
+msgstr "От rääkima, «говорить»."
 
 msgid "From the chat you just had"
 msgstr "Из только что прошедшего разговора"
@@ -3963,6 +4074,9 @@ msgstr "Послушай вопрос и выбери вопросительно
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Послушай предложение и выбери глагол из него. Варианты отличаются только окончанием, так что слушай конец глагола."
 
+msgid "Hear a sentence, then pick how to say its no."
+msgstr "Послушай предложение и выбери, как сказать его с отрицанием."
+
 msgid "Hear both"
 msgstr "Послушать оба"
 
@@ -3971,6 +4085,12 @@ msgstr "Послушай, как звучит каждое слово."
 
 msgid "Hear every card read aloud the way a native speaker says it."
 msgstr "Каждую карточку можно услышать так, как её произносит носитель языка."
+
+msgid "Hear the question, then pick the short answer that says no."
+msgstr "Послушай вопрос и выбери короткий ответ «нет»."
+
+msgid "Hear the two questions above once more, then try again."
+msgstr "Ещё раз послушай два вопроса выше и попробуй снова."
 
 msgid "Hear where the stress falls."
 msgstr "Услышь, где ударение."
@@ -4161,6 +4281,9 @@ msgstr "Как подключить"
 msgid "How to install"
 msgstr "Как установить"
 
+msgid "How to say no in Estonian"
+msgstr "Как сказать «нет» по-эстонски"
+
 msgid "How well-timed reviews change recall"
 msgstr "Как своевременные повторения помогают помнить"
 
@@ -4271,6 +4394,12 @@ msgstr "Я не знаю."
 msgid "I don’t mind"
 msgstr "Мне всё равно"
 
+msgid "I don't read"
+msgstr "я не читаю"
+
+msgid "I don't speak Estonian"
+msgstr "я не говорю по-эстонски"
+
 msgid "I don’t understand"
 msgstr "Я не понимаю"
 
@@ -4361,6 +4490,9 @@ msgstr "Я плачу (деньги)"
 msgid "I play in a football *team*."
 msgstr "Я играю в футбольной *команде*."
 
+msgid "I read"
+msgstr "я читаю"
+
 msgid "I read a lot."
 msgstr "Я много читаю."
 
@@ -4378,6 +4510,9 @@ msgstr "Я сплю на *спине*."
 
 msgid "I slept the whole *night*."
 msgstr "Я спал всю *ночь*."
+
+msgid "I speak"
+msgstr "я говорю"
 
 msgid "I study Japanese *every day*."
 msgstr "Я учу японский *каждый день*."
@@ -4463,6 +4598,9 @@ msgstr "Варю *тыквенный* суп."
 msgid "I’m not *doing* anything."
 msgstr "Я ничего не *делаю*."
 
+msgid "I'm not tired"
+msgstr "я не устал"
+
 msgid "I'm reading a book."
 msgstr "Я читаю книгу."
 
@@ -4474,6 +4612,9 @@ msgstr "Я иду гулять с *собакой*."
 
 msgid "I’m thirty *years* old."
 msgstr "Мне тридцать *лет*."
+
+msgid "I'm tired"
+msgstr "я устал"
 
 msgid "Ice, jää, plus edge, äär: four ä in a row."
 msgstr "Лёд — jää, край — äär: четыре ä подряд."
@@ -4597,6 +4738,9 @@ msgstr "В итоге"
 
 msgid "In the Grok Bot app, open Connect apps and choose Add a custom connector. Name it Lymi, pick Remote HTTPS and paste this address."
 msgstr "В приложении Grok Bot открой Connect apps и выбери Add a custom connector. Назови его Lymi, выбери Remote HTTPS и вставь этот адрес."
+
+msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It's the same for every person, so no is easier than yes."
+msgstr "В настоящем времени поставь <0>ei</0> перед глаголом и убери окончание. Для всех лиц это одинаково, так что сказать «нет» проще, чем «да»."
 
 msgid "In this folder"
 msgstr "В этой папке"
@@ -4774,6 +4918,9 @@ msgstr "список изменений Mochi"
 
 msgid "Its forms barely look alike, which is why the card keeps all three."
 msgstr "Его формы почти не похожи друг на друга, поэтому карточка хранит все три."
+
+msgid "Its ma form is loen."
+msgstr "Форма с ma: loen."
 
 msgid "Its own algorithm, or FSRS in Settings"
 msgstr "Свой алгоритм или FSRS в настройках"
@@ -5509,6 +5656,9 @@ msgstr "Сделай карточки по этой лекции."
 msgid "Make flashcards from this page."
 msgstr "Сделай карточки по этой странице."
 
+msgid "Make it no"
+msgstr "Из «да» в «нет»"
+
 msgid "Make Italian cards from this episode. Skip the words I know."
 msgstr "Сделай итальянские карточки из этого выпуска. Слова, которые я знаю, пропусти."
 
@@ -5797,11 +5947,17 @@ msgstr "Природа"
 msgid "NCLEX pharmacology"
 msgstr "Фармакология NCLEX"
 
+msgid "Nearly. Listen for the verb in the question."
+msgstr "Почти. Вслушивайся в глагол в вопросе."
+
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Почти. Послушай ещё раз те, где ошибся."
 
 msgid "Nearly. Tap the endings above once more."
 msgstr "Почти. Ещё раз понажимай окончания выше."
+
+msgid "Nearly. Watch for endings that stay after <0>ei</0>."
+msgstr "Почти. Следи, чтобы после <0>ei</0> не оставалось окончания."
 
 msgid "Needed; your cards live on Lymi’s servers"
 msgstr "Нужен: карточки хранятся на серверах Lymi"
@@ -5926,6 +6082,12 @@ msgstr "Нет, *спасибо*."
 msgid "No, he or she isn't."
 msgstr "Нет, его или её нет."
 
+msgid "No, I'm not reading."
+msgstr "Нет, я не читаю."
+
+msgid "No, I'm not."
+msgstr "Нет, не читаю."
+
 msgid "no, not: the answer to a question with olema"
 msgstr "нет, не: ответ на вопрос с olema"
 
@@ -6030,6 +6192,9 @@ msgstr "Не то."
 
 msgid "Not yet"
 msgstr "Пока нет"
+
+msgid "not; no"
+msgstr "не; нет"
 
 #. placeholder {0}: card.traditional
 msgid "Note: <0>{0}</0>"
@@ -6153,6 +6318,9 @@ msgstr "старый"
 msgid "Older"
 msgstr "Раньше"
 
+msgid "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
+msgstr "У olema будет <0>ei ole</0>, или одним словом <1>pole</1>."
+
 msgid "On iPhone"
 msgstr "На iPhone"
 
@@ -6204,6 +6372,12 @@ msgstr "Одна колода на всю группу"
 msgid "One deck for your whole class."
 msgstr "Одна колода для всей группы."
 
+msgid "One form for all six"
+msgstr "Одна форма на все шесть"
+
+msgid "One form for everyone"
+msgstr "Одна форма для всех"
+
 msgid "One kanji, seven sounds."
 msgstr "Один кандзи, семь звучаний."
 
@@ -6233,6 +6407,9 @@ msgstr "Одно настоящее время для обоих значени�
 
 msgid "One present tense: <0>ma loen</0> is both I read and I'm reading."
 msgstr "Одно настоящее время: <0>ma loen</0> — это и «я читаю вообще», и «я читаю сейчас»."
+
+msgid "One sentence to keep from today: <0/>."
+msgstr "Предложение, которое стоит запомнить уже сегодня: <0/>."
 
 msgid "One shared deck, everyone on their own schedule"
 msgstr "Одна общая колода, у каждого своё расписание"
@@ -6523,8 +6700,8 @@ msgid "Platform, track"
 msgstr "Путь, платформа"
 
 #. placeholder {0}: PRESENT_SENTENCES[each.id]
-#. placeholder {0}: said(each.a)
-#. placeholder {0}: timeDigits(time)
+#. placeholder {0}: bare(no)
+#. placeholder {0}: bare(yes)
 msgid "Play {0}"
 msgstr "Воспроизвести {0}"
 
@@ -6535,6 +6712,9 @@ msgstr "Воспроизвести {0}"
 msgid "Play {0}, {1}"
 msgstr "Воспроизвести {0}, {1}"
 
+msgid "Play {ask}"
+msgstr "Воспроизвести {ask}"
+
 msgid "Play {digits}"
 msgstr "Воспроизвести {digits}"
 
@@ -6543,6 +6723,12 @@ msgstr "Воспроизвести {n}"
 
 msgid "Play {question}"
 msgstr "Воспроизвести {question}"
+
+msgid "Play {said}"
+msgstr "Воспроизвести {said}"
+
+msgid "Play {say}"
+msgstr "Воспроизвести {say}"
 
 msgid "Play {show}"
 msgstr "Воспроизвести {show}"
@@ -6747,6 +6933,9 @@ msgstr "Опубликовано {published}"
 
 msgid "Pumpkin"
 msgstr "Тыква"
+
+msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don't read."
+msgstr "Ставь <0>ei</0> перед глаголом: <1>ma ei loe</1>, я не читаю."
 
 msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
 msgstr "Чтобы спросить «да или нет», поставь <0>kas</0> перед предложением. Больше ничего не двигается: <1>Kas sa elad Tallinnas?</1>"
@@ -7208,6 +7397,9 @@ msgstr "Скажи «и», округлив губы, как в немецком
 msgid "Say it"
 msgstr "Произношение"
 
+msgid "Say no"
+msgstr "Ответь «нет»"
+
 msgid "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "Скажи «о», затем растяни губы, а язык оставь на месте. Похоже на русское «ы»."
 
@@ -7578,6 +7770,9 @@ msgstr "Некоторые кандзи в китайском шрифте вы�
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Некоторые основы меняются: <0>lugema, loen</0>. Запоминай каждый глагол с формой для «я»."
 
+msgid "Some verbs change inside: <0/>, but <1/>. Don't start from the -ma form. Start from the ma form, and the no follows: <2/>."
+msgstr "Некоторые глаголы меняются внутри: <0/>, но <1/>. Не отталкивайся от формы на -ma. Бери форму с ma, и отрицание получится само: <2/>."
+
 msgid "Someone’s knocking at the *door*."
 msgstr "Кто-то стучит в *дверь*."
 
@@ -7895,6 +8090,9 @@ msgstr "Поддержка и почта: мы храним присланную
 
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведы говорят так и о кофе, и о рабочем времени."
+
+msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
+msgstr "Переключи <0/> на <1/>, и все шесть предложений станут отрицаниями. Нажми на строку, чтобы послушать."
 
 msgid "Switching from"
 msgstr "Переход с"
@@ -8301,6 +8499,9 @@ msgstr "Лицевой нерв: мимические мышцы и вкус н�
 msgid "The facial nerve."
 msgstr "Лицевой."
 
+msgid "The form says who"
+msgstr "Форма говорит, кто"
+
 msgid "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
 msgstr "Полный каталог BAMF: 300 общих вопросов и 10 о твоей земле — на немецком, как на тесте, с русским переводом рядом."
 
@@ -8403,6 +8604,12 @@ msgstr "Новый *ковёр* мягкий."
 msgid "The next section opens at 80% known"
 msgstr "Следующий раздел открывается, когда выучено 80%"
 
+msgid "The no is the same for every person: <0>ma ei loe</0>, <1>nad ei loe</1>."
+msgstr "Отрицание одинаково для всех лиц: <0>ma ei loe</0>, <1>nad ei loe</1>."
+
+msgid "The no of olema, to be."
+msgstr "Отрицание olema, «быть»."
+
 msgid "the Noji help centre"
 msgstr "справочный центр Noji"
 
@@ -8499,6 +8706,9 @@ msgstr "Те же карточки в приложениях для iPhone и An
 msgid "The same cards on your phone, in the browser and in the Mac app, with offline review on the free plan."
 msgstr "Одни и те же карточки на телефоне, в браузере и в приложении для Mac, а повторять без интернета можно бесплатно."
 
+msgid "The same for every person."
+msgstr "Одинаково для всех лиц."
+
 msgid "The same in both"
 msgstr "Одинаково в обоих"
 
@@ -8564,6 +8774,9 @@ msgstr "Транслатив"
 
 msgid "The union"
 msgstr "Профсоюз"
+
+msgid "The verb without its ending"
+msgstr "Глагол без окончания"
 
 msgid "The verbs you’ll use most, each with its three forms and an example."
 msgstr "Глаголы, которые понадобятся чаще всего, каждый с тремя формами и примером."
@@ -8820,6 +9033,9 @@ msgstr "чаевые"
 msgid "To agree"
 msgstr "Соглашаться"
 
+msgid "To answer no, say <0>ei</0> or repeat the verb: <1>Kas sa loed? Ei loe.</1>"
+msgstr "Чтобы ответить «нет», скажи <0>ei</0> или повтори глагол: <1>Kas sa loed? Ei loe.</1>"
+
 msgid "To ask a yes-or-no question, put <0/> in front of a sentence. <1/> is you live in Tallinn. <2/> is do you live in Tallinn?"
 msgstr "Чтобы спросить «да или нет», поставь <0/> перед предложением. <1/> значит «ты живёшь в Таллине». <2/> значит «ты живёшь в Таллине?»"
 
@@ -8910,6 +9126,9 @@ msgstr "Хотеть; ждать с нетерпением"
 msgid "To feel; to think"
 msgstr "Чувствовать; считать"
 
+msgid "To find the form that follows ei, take the ma form from lesson {present} and drop the -n. <0/> becomes <1/>, and <2/> becomes <3/>. It works for every verb there. Tap either side to hear it with ma."
+msgstr "Чтобы найти форму после ei, возьми форму с ma из урока {present} и убери -n. <0/> становится <1/>, а <2/> — <3/>. Так со всеми глаголами того урока. Нажми на любую половину, чтобы услышать её с ma."
+
 msgid "to forget"
 msgstr "забывать"
 
@@ -8994,6 +9213,9 @@ msgstr "бежать"
 msgid "To say"
 msgstr "Сказать"
 
+msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don't read. The verb loses its ending, and <3/> is the same whoever you're talking about."
+msgstr "Чтобы сказать «не», поставь <0/> перед глаголом. <1/> — «я читаю», а <2/> — «я не читаю». Глагол теряет окончание, а <3/> одно и то же, о ком бы ни шла речь."
+
 msgid "to school"
 msgstr "в школу"
 
@@ -9002,6 +9224,9 @@ msgstr "Подписывать"
 
 msgid "To sleep; to go to bed"
 msgstr "Спать; ложиться спать"
+
+msgid "to speak"
+msgstr "говорить"
 
 msgid "to speak, to talk"
 msgstr "говорить, разговаривать"
@@ -9353,6 +9578,9 @@ msgstr "Veerand neli: четверть четвёртого, 3:15."
 
 msgid "verb"
 msgstr "глагол"
+
+msgid "Verb"
+msgstr "Глагол"
 
 msgid "Verbs"
 msgstr "Глаголы"
@@ -10004,6 +10232,12 @@ msgstr "да"
 msgid "Yes"
 msgstr "Да"
 
+msgid "Yes has six endings to learn, and no has none. That makes the no the easy half."
+msgstr "У «да» шесть окончаний, которые надо выучить, а у «нет» — ни одного. Так что отрицание — лёгкая половина."
+
+msgid "Yes or no"
+msgstr "Да или нет"
+
 msgid "Yes, actually"
 msgstr "Да нет же, да"
 
@@ -10261,6 +10495,9 @@ msgstr "Услышишь её в слове и узнаешь, как её пр�
 
 msgid "You'll hear these three in your first conversations. Learn them whole, with an answer each, and don't take them apart yet."
 msgstr "Эти три вопроса услышишь в первых же разговорах. Учи их целиком, каждый с ответом, и пока не разбирай на части."
+
+msgid "You'll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
+msgstr "Часто его говорят одним словом, <0/>, и это ровно то же, что <1/>. Попробуй все три."
 
 msgid "You’re here"
 msgstr "Ты здесь"

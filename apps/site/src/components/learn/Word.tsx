@@ -158,9 +158,11 @@ function Card({
     const frame = requestAnimationFrame(() => setShown(true));
     return () => cancelAnimationFrame(frame);
   }, []);
+  // Focus the card once, when it is first placed; scrolling re-places it but must not pull focus back.
+  const placed = !!place;
   useEffect(() => {
-    if (open.keyboard && place) ref.current?.focus({ preventScroll: true });
-  }, [open.keyboard, place]);
+    if (open.keyboard && placed) ref.current?.focus({ preventScroll: true });
+  }, [open.keyboard, placed]);
 
   return (
     <div

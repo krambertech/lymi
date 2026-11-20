@@ -31,11 +31,14 @@ export function readProgress(store: Storage | null = storage()): Progress {
 
 const listeners = new Set<() => void>();
 let snapshot: Progress | null = null;
+/** A write that failed (a private window, full storage) means storage no longer holds this page's progress. */
+let writeFailed = false;
 
 function write(next: Progress, store: Storage | null = storage()): void {
   try {
     store?.setItem(KEY, JSON.stringify(next));
   } catch {
+    writeFailed = true;
     // A private window or full storage keeps progress for this page only.
   }
   snapshot = next;
@@ -48,7 +51,11 @@ const current = () => (snapshot ??= readProgress());
 export function startLesson(slug: string, store?: Storage | null): void {
   // Read storage again, so another tab's progress isn't overwritten; without storage, keep this page's.
   const progress =
-    store !== undefined ? readProgress(store) : storage() ? readProgress() : current();
+    store !== undefined
+      ? readProgress(store)
+      : storage() && !writeFailed
+        ? readProgress()
+        : current();
   if (progress.lessons[slug]) return;
   write({ ...progress, lessons: { ...progress.lessons, [slug]: { state: "started" } } }, store);
 }
@@ -62,7 +69,11 @@ export function finishSection(
 ): { lessonFinished: boolean } {
   // Read storage again, so another tab's progress isn't overwritten; without storage, keep this page's.
   const progress =
-    store !== undefined ? readProgress(store) : storage() ? readProgress() : current();
+    store !== undefined
+      ? readProgress(store)
+      : storage() && !writeFailed
+        ? readProgress()
+        : current();
   const done = progress.sections[slug] ?? [];
   if (done.includes(section)) return { lessonFinished: false };
   const sections = [...done, section];

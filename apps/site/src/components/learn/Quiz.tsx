@@ -172,13 +172,18 @@ export function Quiz<Item>({
     });
     if (section) finishSection(section);
   }, [finished, state, slug, id, total, section, finishSection]);
-  // Focus follows the quiz: Next after an answer, Try again at the score, Listen after a restart.
+  // Focus follows the quiz: Next after an answer, Try again at the score, and Listen when a new
+  // round opens from Next or Try again, unless the round already focused something (the typed input).
+  const advanced = useRef(false);
   useEffect(() => {
     if (state.status === "answered" && total > 1) nextRef.current?.focus({ preventScroll: true });
     if (state.status === "finished") againRef.current?.focus({ preventScroll: true });
-    if (state.status === "asking" && restarted.current) {
+    if (state.status === "asking" && (restarted.current || advanced.current)) {
+      const lost = !document.activeElement || document.activeElement === document.body;
+      if (restarted.current || lost)
+        bodyRef.current?.querySelector("button")?.focus({ preventScroll: true });
       restarted.current = false;
-      bodyRef.current?.querySelector("button")?.focus({ preventScroll: true });
+      advanced.current = false;
     }
   }, [state.status, total]);
 
@@ -262,6 +267,7 @@ export function Quiz<Item>({
                       variant="primary"
                       onClick={() => {
                         setAutoplay(true);
+                        advanced.current = true;
                         dispatch({ type: "next" });
                       }}
                     >

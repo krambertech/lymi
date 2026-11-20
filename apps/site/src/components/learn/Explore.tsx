@@ -65,7 +65,7 @@ export function Keys({ label, items, columns, phoneColumns, empty }: KeysProps) 
         ))}
       </fieldset>
       {/* The live region stays put; only what is inside it is swapped. */}
-      <div aria-live="polite" className="contents">
+      <div aria-live="polite" hidden={!detail}>
         {detail && (
           <div
             key={picked ?? "empty"}

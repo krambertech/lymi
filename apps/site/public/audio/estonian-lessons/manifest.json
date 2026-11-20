@@ -2298,5 +2298,60 @@
     "text": "Kui palju vett sa jood?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kit/p-jaan": {
+    "text": "Tere! Mina olen Jaan. Ma elan Tartus. Ma olen arst. Mari on minu sõber. Ta ei ole arst, ta on õpetaja. Me räägime eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kit/p-mari": {
+    "text": "Tere! Minu nimi on Mari. Ma olen õpetaja. Ma elan Tallinnas. Ma loen palju. Minu vend Peeter ei loe. Ta kuulab muusikat. Kas sina loed palju?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kit/p-peeter": {
+    "text": "Mina olen õpetaja. Minu vend Peeter on arst. Me elame Tallinnas. Peeter ei loe palju. Mina loen iga päev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kit/d-mari-1": {
+    "text": "Tere! Mina olen Mari. Kes sina oled?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kit/d-sina-1": {
+    "text": "Mina olen Jaan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kit/d-mari-2": {
+    "text": "Väga meeldiv! Kas sa elad Tallinnas?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kit/d-sina-2": {
+    "text": "Ei, ma ei ela Tallinnas. Ma elan Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kit/d-mari-3": {
+    "text": "Tartus? Kas sa oled õpetaja?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kit/d-sina-3": {
+    "text": "Ei, ma olen arst.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kit/d-mari-4": {
+    "text": "Tore! Head aega!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "kit/d-sina-4": {
+    "text": "Head aega!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

@@ -35,16 +35,24 @@ export function playSound(
   src: string,
   key: string = src,
   onFrame?: (seconds: number) => void,
+  /** Where to start, in seconds. */
+  from = 0,
 ): Promise<void> {
   turn += 1;
-  return start(src, key, onFrame);
+  return start(src, key, onFrame, from);
 }
 
-function start(src: string, key: string, onFrame?: (seconds: number) => void): Promise<void> {
+function start(
+  src: string,
+  key: string,
+  onFrame?: (seconds: number) => void,
+  from = 0,
+): Promise<void> {
   stopSound();
   element ??= new Audio();
   const sound = element;
-  sound.src = src;
+  if (!sound.src.endsWith(src)) sound.src = src;
+  sound.currentTime = from;
   playingKey = key;
   emit();
   return new Promise((resolve) => {

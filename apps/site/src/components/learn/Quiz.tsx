@@ -292,6 +292,39 @@ export function Quiz<Item>({
   );
 }
 
+/**
+ * The card every marked part sits on: white, its title on the stage's band, an optional mark on the
+ * band's end such as the round dots, and the body.
+ */
+export function QuizCard({
+  title,
+  aside,
+  className,
+  children,
+}: {
+  title: ReactNode;
+  aside?: ReactNode;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className={clsx(
+        "learn-quiz grid grid-cols-1 overflow-hidden rounded-xl bg-plate max-sm:-mx-1",
+        className,
+      )}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-(--tray) px-5 py-3.5 max-sm:px-4">
+        <h3 className="text-lg font-medium">{title}</h3>
+        {aside}
+      </div>
+      <div className="grid grid-cols-1 justify-items-start gap-4 px-5 pt-5 pb-5 max-sm:px-4">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 /** A word or number from a round, to hear again on the score. */
 export interface Recall {
   label: string;
@@ -394,14 +427,33 @@ function RecallChip({ word, ok }: { word: Recall; ok: boolean }) {
 }
 
 function Dots({ state, total }: { state: QuizState; total: number }) {
-  const now = state.status === "finished" ? -1 : state.round;
+  return (
+    <ResultDots
+      results={state.results}
+      now={state.status === "finished" ? -1 : state.round}
+      total={total}
+    />
+  );
+}
+
+/** A dot per round on a white pill: green right, red wrong, ringed for the one now. */
+export function ResultDots({
+  results,
+  now,
+  total,
+}: {
+  results: readonly (boolean | undefined)[];
+  /** The round being answered, or -1. */
+  now: number;
+  total: number;
+}) {
   return (
     <span
       aria-hidden="true"
       className="flex items-center gap-1.5 rounded-full bg-plate px-2.5 py-1.5"
     >
       {Array.from({ length: total }, (_, i) => {
-        const result = state.results[i];
+        const result = results[i];
         return (
           <i
             // biome-ignore lint/suspicious/noArrayIndexKey: one dot per round, in order

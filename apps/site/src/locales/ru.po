@@ -705,7 +705,7 @@ msgid "A free flashcard app for Ukrainian. Each card marks its stress until you 
 msgstr "Бесплатное приложение для изучения украинского на карточках. Ударение отмечено, пока ты не знаешь слово, у слов, которые различаются только ударением, отдельные карточки, а озвучивает их носитель языка. Начни с алфавита, потом A1 и A2."
 
 msgid "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
-msgstr "Бесплатный урок об отрицании в настоящем времени эстонского: ei перед глаголом, одно для всех лиц, ei ole и pole, и как ответить «нет» на вопрос. Каждое предложение озвучено."
+msgstr "Бесплатный урок об отрицании в эстонском языке в настоящем времени: ei перед глаголом, одно для всех лиц, ei ole и pole, и как ответить «нет» на вопрос. Каждое предложение озвучено."
 
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers."
 msgstr "Бесплатный урок об эстонских числах: от нуля до десяти, -teist и -kümmend, сотни и тысячи, а также числа в ценах, возрасте и номерах телефонов."

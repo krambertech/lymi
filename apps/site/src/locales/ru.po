@@ -7639,6 +7639,9 @@ msgstr "Скажи, что пора повторить в Lymi."
 msgid "Telling the time"
 msgstr "Который час"
 
+msgid "Telling the time in Estonian"
+msgstr "Который час по-эстонски"
+
 msgid "Template fields, with small monthly limits on Free"
 msgstr "Поля шаблона, на бесплатном тарифе — небольшой лимит в месяц"
 

@@ -1,7 +1,7 @@
 import { EXAMPLE_LENGTH, fitsExample } from "@lymi/core";
 
 /** Where the term sits in the sentence: as written, by its first form, or by a word's stem. */
-function findTerm(sentence: string, term: string): { start: number; end: number } | null {
+export function findTerm(sentence: string, term: string): { start: number; end: number } | null {
   const text = sentence.toLowerCase();
   const tries = [term, term.split(" · ")[0] ?? ""]
     .map((t) => t.toLowerCase().trim())

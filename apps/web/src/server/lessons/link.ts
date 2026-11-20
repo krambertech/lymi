@@ -178,7 +178,15 @@ async function follow(
     await response.body?.cancel();
     if (hop >= MAX_REDIRECTS) throw new LinkUnreadable("This link redirects too many times.");
     const next = new URL(location, url);
-    if (next.protocol !== "https:" || !publicHost(next.hostname))
+    // A redirect meets the pasted link's rules, so a shortener can't lead to a private host or to
+    // a service Smart add never reads.
+    let kind: LinkKind | null = null;
+    try {
+      kind = classifyLink(next.href);
+    } catch {
+      kind = null;
+    }
+    if (kind?.kind !== "article")
       throw new LinkUnreadable("This link leads somewhere Smart add can't read.");
     url = next;
   }
@@ -308,12 +316,12 @@ export async function fetchArticle(start: URL, request: Fetch = fetch): Promise<
 
 /** The page's text in the charset its header or its own meta tag names, UTF-8 otherwise. */
 function decode(bytes: Uint8Array, contentType: string): string {
-  const declared =
-    /charset=["']?([\w-]+)/i.exec(contentType)?.[1] ??
-    /<meta[^>]+charset=["']?([\w-]+)/i.exec(
-      new TextDecoder("latin1").decode(bytes.subarray(0, 4096)),
-    )?.[1];
   try {
+    const declared =
+      /charset=["']?([\w-]+)/i.exec(contentType)?.[1] ??
+      /<meta[^>]+charset=["']?([\w-]+)/i.exec(
+        new TextDecoder("latin1").decode(bytes.subarray(0, 4096)),
+      )?.[1];
     return new TextDecoder(declared ?? "utf-8").decode(bytes);
   } catch {
     return new TextDecoder("utf-8").decode(bytes);
@@ -415,7 +423,7 @@ export async function pageMarkdown(
       },
     ),
   );
-  if (result.format === "error")
-    throw new Error(`The page could not be converted: ${result.error}`);
+  // The page itself would not convert; an outage throws instead and is not the page's fault.
+  if (result.format === "error") throw new LinkUnreadable("Smart add couldn't read this page.");
   return result.data;
 }

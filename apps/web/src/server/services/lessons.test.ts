@@ -620,6 +620,22 @@ describe("readLink", () => {
     expect(fetched).not.toContain("https://10.0.0.1/admin");
   });
 
+  it("holds a redirect to a pasted link's rules, so a shortener can't reach YouTube or a port", async () => {
+    const ctx = await learner(db, "link-redirect-rules", "Kateryna");
+    for (const location of [
+      "https://www.youtube.com/watch?v=abc",
+      "https://news.example.org:8443/a",
+    ]) {
+      const { deps, fetched } = fakeWeb({
+        [ARTICLE]: { status: 301, headers: { location } },
+      });
+      expect(await refusal(readLink(ctx, ARTICLE, deps, read))).toMatchObject({
+        reason: "link_unreadable",
+      });
+      expect(fetched).not.toContain(location);
+    }
+  });
+
   it("names a YouTube video from oEmbed and fetches nothing else from YouTube", async () => {
     const ctx = await learner(db, "link-youtube", "Kateryna");
     const oembed = `https://www.youtube.com/oembed?format=json&url=${encodeURIComponent("https://youtu.be/abc123?t=40")}`;
@@ -679,6 +695,8 @@ describe("reading an article", () => {
             term("t1", "laulma", { sentence: 2, seen: "The birds are singing." }),
             term("t2", "kevad", { sentence: 0, seen: "Kevad on käes." }),
             term("t3", "turg", { sentence: 3, seen: "turul" }),
+            // A wrong number is not trusted: the sentence that holds the term is used instead.
+            term("t4", "lind", { sentence: 1, seen: "Linnud laulavad aias." }),
           ],
           questions: [],
         }),
@@ -689,6 +707,7 @@ describe("reading an article", () => {
     );
     const byId = Object.fromEntries(read.terms.map((t) => [t.id, t]));
     expect(byId.t1).toMatchObject({ example: "Linnud laulavad aias.", at: null });
+    expect(byId.t4).toMatchObject({ example: "Linnud laulavad aias." });
     expect(byId.t2).toMatchObject({ example: "Kevad on käes.", at: null });
     const cut = byId.t3?.example ?? "";
     expect([...cut].length).toBeLessThanOrEqual(250);
@@ -698,7 +717,11 @@ describe("reading an article", () => {
   });
 
   it("sends the article's title and link before its terms", async () => {
-    const ctx = await learner(db, "article-source", "Kateryna");
+    const events: AnalyticsEvent[] = [];
+    const ctx = {
+      ...(await learner(db, "article-source", "Kateryna")),
+      analytics: { writeDataPoint: () => {}, capture: (e: AnalyticsEvent) => events.push(e) },
+    };
     const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
     const { prepareLesson, streamLesson } = await import("./lessons");
     const material = transcript(["Kevad on käes."]);
@@ -716,13 +739,21 @@ describe("reading an article", () => {
       },
       { deckId: deck.id },
     );
-    const events: unknown[] = [];
-    await streamLesson(lesson, material, undefined, (event) => events.push(event));
-    expect(events.slice(0, 3)).toMatchObject([
+    const sent: unknown[] = [];
+    await streamLesson(lesson, material, undefined, (event) => sent.push(event));
+    expect(sent.slice(0, 3)).toMatchObject([
       { type: "deck" },
       { type: "source", title: "Kevad", url: ARTICLE },
       { type: "term", term: { term: "kevad", example: "Kevad on käes." } },
     ]);
+    expect(events).toContainEqual(
+      expect.objectContaining({
+        name: "lesson_read",
+        material: "article",
+        reads: 1,
+        pasted: false,
+      }),
+    );
   });
 
   it("asks before a long article counts as several reads, then counts them all", async () => {

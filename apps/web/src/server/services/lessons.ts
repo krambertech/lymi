@@ -35,7 +35,7 @@ import {
   Reply,
   replySchema,
 } from "../lessons/prompt";
-import { quoteAround } from "../lessons/quote";
+import { findTerm, quoteAround } from "../lessons/quote";
 import {
   type LessonMaterial,
   type LessonReader,
@@ -245,8 +245,13 @@ export async function readLink(
   try {
     markdown = await deps.toMarkdown(page);
   } catch (error) {
-    console.error("A page could not be converted", error);
-    throw unreadable("Smart add couldn't read this page. Paste the text instead.");
+    if (error instanceof LinkUnreadable)
+      throw unreadable("Smart add couldn't read this page. Paste the text instead.");
+    // Workers AI is down or unconfigured: the page is not at fault, so the learner can try again.
+    console.error("Converting a page failed", {
+      error: error instanceof Error ? error.name : typeof error,
+    });
+    throw new ServiceError("unavailable", "Smart add couldn't read pages just now. Try again.");
   }
   const sentences = markdownSentences(markdown);
   if (sentences.length === 0) throw unreadable("This page has no text Smart add can read.");
@@ -459,7 +464,7 @@ export async function prepareLesson(
     transcript: material.transcript,
     reads,
     analytics: ctx.analytics,
-    pasted: words > 0,
+    pasted: !material.transcript && words > 0,
     client: choice.client ?? "web",
   };
 }
@@ -493,11 +498,14 @@ function exampleOf(
 ): { example: string | null; at: number | null } {
   if (!transcript) return { example: null, at: null };
   const { sentences } = transcript;
-  const head = term.term.split(" · ")[0]?.toLowerCase() ?? "";
+  // A sentence the model named is used only when the term is in it, so a wrong number can't put
+  // another sentence on the card as the lesson's.
+  const holds = (s: { text: string } | undefined) => !!s && findTerm(s.text, term.term) !== null;
+  const numbered = term.sentence ? sentences[term.sentence - 1] : undefined;
   const sentence =
-    (term.sentence ? sentences[term.sentence - 1] : undefined) ??
-    sentences.find((s) => s.text === term.seen) ??
-    (head ? sentences.find((s) => s.text.toLowerCase().includes(head)) : undefined);
+    (holds(numbered) ? numbered : undefined) ??
+    sentences.find((s) => s.text === term.seen && holds(s)) ??
+    sentences.find(holds);
   if (!sentence) return { example: null, at: null };
   return { example: quoteAround(sentence.text, term.term), at: sentence.at };
 }

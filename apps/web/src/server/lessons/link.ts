@@ -145,7 +145,7 @@ export function robotsRules(text: string): Rule[] {
 function encodedPath(path: string): string {
   return path
     .replace(/[^\x21-\x7e]/gu, (c) => encodeURIComponent(c))
-    .replace(/%[\da-f]{2}/gi, (escape) => escape.toUpperCase());
+    .replace(/%[\da-f]{2}/gi, (code) => code.toUpperCase());
 }
 
 function patternMatches(pattern: string, path: string): boolean {

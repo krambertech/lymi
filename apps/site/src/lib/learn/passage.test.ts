@@ -19,18 +19,18 @@ describe("sentenceBars", () => {
   const sound = { lead: 0.1, bars: Array.from({ length: 300 }, (_, i) => (i === 100 ? 1 : 0.2)) };
 
   it("gives each sentence room for its share of the time", () => {
-    const groups = sentenceBars(sound, timing, 212);
+    const groups = sentenceBars(sound, timing, 252);
     expect(groups.map((g) => [g.start, g.end])).toEqual([
       [0, 1],
       [1, 3],
       [3, 4],
     ]);
-    // 212 px less two 6 px gaps leaves 200 px: 40 bars of 5 px, shared 1 : 2 : 1.
+    // 252 px less two 6 px gaps leaves 240 px: 40 bars of 6 px, shared 1 : 2 : 1.
     expect(groups.map((g) => g.bars.length)).toEqual([10, 20, 10]);
   });
 
   it("keeps the loudest step under each bar, so a short peak isn't averaged away", () => {
-    const [, second] = sentenceBars(sound, timing, 212);
+    const [, second] = sentenceBars(sound, timing, 252);
     // Step 100 is at 0.1 + 1.2 = 1.3 s, in the second sentence's second bar (1.1 to 1.2 s is the first).
     expect(Math.max(...(second?.bars ?? []))).toBe(1);
   });

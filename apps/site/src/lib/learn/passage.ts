@@ -23,7 +23,7 @@ export interface SentenceBars {
 }
 
 /** Room each bar takes with its gap, and the gap between sentences, in pixels. */
-const BAR = 5;
+const BAR = 6;
 const SENTENCE_GAP = 6;
 
 /**

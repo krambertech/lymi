@@ -179,8 +179,13 @@ export function PassagePlayer({ passage, label }: { passage: PassageControl; lab
           aria-valuenow={sentenceNumber}
           aria-valuetext={t`Sentence ${sentenceNumber} of ${sentenceCount}, ${time}`}
           onKeyDown={onKey}
-          className="flex h-10 gap-1.5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--ring)"
+          className="relative flex h-10 gap-1.5 rounded-sm focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-(--ring)"
         >
+          {/* The bars stand on a line, so a pause between words reads as quiet, not as missing. */}
+          <span
+            aria-hidden="true"
+            className="pointer-events-none absolute inset-x-0 top-1/2 h-px -translate-y-1/2 bg-edge-strong"
+          />
           {shown.map((group, i) => (
             <SentenceGroup
               // biome-ignore lint/suspicious/noArrayIndexKey: one group per sentence, in order
@@ -219,7 +224,7 @@ function SentenceGroup({
       aria-hidden="true"
       onClick={onPick}
       style={{ flexGrow: span }}
-      className="group flex min-w-0 basis-0 cursor-pointer items-center gap-[2px] overflow-hidden rounded-sm"
+      className="group relative flex min-w-0 basis-0 cursor-pointer items-center justify-between gap-[3px] overflow-hidden rounded-sm"
     >
       {bars.map((level, j) => {
         const at = group.start + ((j + 0.5) / bars.length) * span;
@@ -228,13 +233,14 @@ function SentenceGroup({
             // biome-ignore lint/suspicious/noArrayIndexKey: a bar's place in the sentence is its identity
             key={j}
             className={clsx(
-              "block min-w-[2px] flex-1 rounded-full transition-colors duration-100",
+              "block max-w-[3px] min-w-[2px] flex-1 rounded-full transition-colors duration-100",
               lit >= 0 && at <= lit
                 ? "bg-(--form)"
-                : "bg-(--form-faint) hoverable:group-hover:bg-(--form-soft)",
+                : "bg-ink-faint hoverable:group-hover:bg-ink-muted",
             )}
-            // The square root evens out loud and quiet words, so a soft one still shows.
-            style={{ height: `${Math.round(18 + 82 * Math.sqrt(level))}%` }}
+            // The square root evens out loud and quiet words, so a soft one still shows; a pause
+            // stays a dot on the line.
+            style={{ height: `${Math.round(10 + 60 * Math.sqrt(level))}%` }}
           />
         );
       })}

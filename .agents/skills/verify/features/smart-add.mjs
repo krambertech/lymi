@@ -139,16 +139,27 @@ export default async function drive({ page, step, api, expect }) {
     await dialog.getByRole("button", { name: "Add link" }).click();
   };
 
-  await step("A YouTube link names the video and offers to paste its transcript", async () => {
+  await step("A pasted link waits in the lesson on its own", async () => {
     await open();
     await addLink("https://youtu.be/abc123");
+    await expect(dialog.getByText("youtu.be/abc123")).toBeVisible();
+    await expect(dialog.getByRole("button", { name: /^Photos/ })).toBeHidden();
+    return { link: "https://youtu.be/abc123" };
+  });
+
+  await step("A YouTube link names the video and offers to paste its transcript", async () => {
     await findTerms.click();
     await expect(dialog.getByRole("alert")).toHaveText(
       "YouTube doesn’t let apps read the captions of “Italiano per principianti”. Paste its transcript instead.",
     );
+    await expect(dialog.getByRole("button", { name: "Paste the transcript" })).toBeVisible();
+    return { refused: "youtube" };
+  });
+
+  await step("Paste the transcript opens the lesson text in place of the link", async () => {
     await dialog.getByRole("button", { name: "Paste the transcript" }).click();
     await expect(dialog.getByRole("textbox", { name: "Lesson text" })).toBeFocused();
-    return { refused: "youtube" };
+    return { writing: true };
   });
 
   await step("A long article shows its count of lessons before it is read", async () => {
@@ -158,12 +169,17 @@ export default async function drive({ page, step, api, expect }) {
     await findTerms.click();
     await expect(dialog.getByText("This article counts as 2 lessons")).toBeVisible();
     await expect(dialog.getByText(/You have 5 lessons left today\./)).toBeVisible();
+    await expect(dialog.getByRole("button", { name: "Read as 2 lessons" })).toBeVisible();
+    return { reads: 2 };
+  });
+
+  await step("Agreeing reads the article into terms with their sentences", async () => {
     await dialog.getByRole("button", { name: "Read as 2 lessons" }).click();
     await expect(dialog.getByText(articleTerm.example)).toBeVisible();
     const form = sent.at(-1) ?? "";
     expect(form).toContain('name="reads"');
     expect(form).not.toContain('name="text"');
-    return { reads: 2 };
+    return { example: articleTerm.example };
   });
 
   await step("A card from the article keeps its sentence and link", async () => {

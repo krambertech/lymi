@@ -491,7 +491,8 @@ function choicesFor(time: ClockTime): { choices: ClockTime[]; trap: ClockTime } 
 /** An answer's clock is a picture of its digits, so a screen reader hears only the digits. */
 function ClockChoice({ time }: { time: ClockTime }) {
   return (
-    <span className="flex items-center gap-3 pe-5">
+    // Stacked, so the digits stay clear of the right-or-wrong badge in the card's end corner.
+    <span className="grid justify-items-start gap-1.5 pe-6">
       <Clock time={time} className="size-12" />
       <span className="tabular-nums">{timeDigits(time)}</span>
     </span>

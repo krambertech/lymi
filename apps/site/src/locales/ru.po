@@ -179,8 +179,8 @@ msgstr "{learners, plural, one {Доставлено # ученику} few {До
 msgid "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when to bring each card back.} one {One more card is waiting. Add the deck, and Lymi chooses when to bring each one back.} other {Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back.}}"
 msgstr "{left, plural, =0 {Это вся колода. Добавь её, и Lymi сама выберет, когда вернуть каждую карточку.} one {Ждёт ещё одна карточка. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} few {Ждут ещё # карточки. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} many {Ждут ещё # карточек. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.} other {Ждут ещё # карточки. Добавь колоду, и Lymi сама выберет, когда вернуть каждую.}}"
 
-msgid "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
-msgstr "{lessonCount, plural, one {# урок, скоро} few {# урока, скоро} many {# уроков, скоро} other {# урока, скоро}}"
+msgid "{lessonCount, plural, one {# lesson planned} other {# lessons planned}}"
+msgstr "{lessonCount, plural, one {Запланирован # урок} few {Запланировано # урока} many {Запланировано # уроков} other {Запланировано # урока}}"
 
 msgid "{more, plural, one {and # more} other {and # more}}"
 msgstr "{more, plural, one {и ещё #} few {и ещё #} many {и ещё #} other {и ещё #}}"
@@ -225,8 +225,8 @@ msgstr "{position} из {total}"
 msgid "{reviews, plural, one {past review} other {past reviews}}"
 msgstr "{reviews, plural, one {прошлое повторение} few {прошлых повторения} many {прошлых повторений} other {прошлого повторения}}"
 
-msgid "{right} of {total} right"
-msgstr "{right} из {total} правильно"
+msgid "{right} of {total} correct"
+msgstr "Правильных ответов: {right} из {total}"
 
 msgid "{seconds} s"
 msgstr "{seconds} с"
@@ -329,8 +329,8 @@ msgstr "<0>-teist</0> образует числа от одиннадцати д
 msgid "<0>{0}</0>: <1>{1}</1>"
 msgstr "<0>{0}</0>: <1>{1}</1>"
 
-msgid "<0>{plannedCount}</0> planned, A1 to B1"
-msgstr "Запланировано: <0>{plannedCount}</0>, от A1 до B1"
+msgid "<0>{plannedCount}</0> in the course plan, A1 to B1"
+msgstr "В плане курса — <0>{plannedCount}</0>, от A1 до B1"
 
 msgid "<0>{teen}</0> and -teist: {digit} in the second ten."
 msgstr "<0>{teen}</0> и -teist: {digit} во втором десятке."
@@ -365,8 +365,8 @@ msgstr "<0>Mari</0> прошла неделю 3"
 msgid "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgstr "<0>Мексиканский испанский</0>, <1>разговорные примеры</1>."
 
-msgid "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
-msgstr "<0>õ ä ö ü</0> — отдельные гласные, и самая непривычная из них <1>õ</1>."
+msgid "<0>õ ä ö ü</0> are four separate vowels."
+msgstr "<0>õ ä ö ü</0> — четыре отдельные гласные."
 
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>альтернативная стоимость</0> <1>= чем жертвуешь</1>"
@@ -764,6 +764,9 @@ msgstr "Иностранный язык"
 
 msgid "A notes field on each card"
 msgstr "Поле для заметок в каждой карточке"
+
+msgid "A number from zero to ten."
+msgstr "Число от нуля до десяти."
 
 msgid "A page that isn’t where the link says it is"
 msgstr "Страница, которой нет там, куда ведёт ссылка"
@@ -1245,20 +1248,8 @@ msgstr "Все уроки"
 msgid "All of Explore"
 msgstr "Весь каталог"
 
-msgid "All of them, by ear."
-msgstr "Все верно, на слух."
-
 msgid "All of them, equally often"
 msgstr "Все, одинаково часто"
-
-msgid "All of them, inside real sentences."
-msgstr "Все верно, даже в настоящих предложениях."
-
-msgid "All of them. You can hear length."
-msgstr "Все верно. Ты слышишь долготу."
-
-msgid "All of them. You can hear the difference."
-msgstr "Все верно. Ты слышишь разницу."
 
 msgid "All Polish decks"
 msgstr "Все польские колоды"
@@ -1963,6 +1954,9 @@ msgstr "Поднимает воду от корней"
 
 msgid "carry!"
 msgstr "неси!"
+
+msgid "Cases and verb forms"
+msgstr "Падежи и формы глаголов"
 
 msgid "Castle"
 msgstr "Замок (крепость)"
@@ -2819,14 +2813,14 @@ msgstr "В эстонском есть ещё и третья степень д�
 msgid "Estonian grammar lessons"
 msgstr "Уроки эстонской грамматики"
 
-msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read any word aloud, even one you've never seen."
-msgstr "По-эстонски пишут так, как произносят. Каждую букву читаешь, и каждая звучит одинаково, где бы ни стояла. Зная буквы, ты прочитаешь вслух любое слово, даже совсем новое."
-
 msgid "Estonian numbers"
 msgstr "Числа на эстонском"
 
 msgid "Estonian pronunciation"
 msgstr "Эстонское произношение"
+
+msgid "Estonian spelling usually gives you a good guide to pronunciation. Start by listening to these words."
+msgstr "По написанию эстонского слова обычно можно понять, как его произнести. Для начала послушай эти слова."
 
 msgid "Estonian startup"
 msgstr "Эстонский стартап"
@@ -3317,6 +3311,9 @@ msgstr "Бесплатные эстонские колоды с голосом �
 msgid "Free Estonian grammar lessons · Lymi"
 msgstr "Бесплатные уроки эстонской грамматики · Lymi"
 
+msgid "Free Estonian lessons with audio and quizzes. Start with pronunciation and numbers. More lessons are planned."
+msgstr "Бесплатные уроки эстонского языка с аудио и тестами. Начни с произношения и чисел. Планируем добавить ещё уроки."
+
 msgid "Free flashcard decks: languages, exams and more · Lymi"
 msgstr "Бесплатные карточки: языки, экзамены и не только · Lymi"
 
@@ -3591,15 +3588,6 @@ msgstr "Хорошо"
 msgid "Good *morning*!"
 msgstr "Доброе *утро*!"
 
-msgid "Good ear. Numbers in sentences come fast; try once more."
-msgstr "Хороший слух. В предложениях числа звучат быстро, попробуй ещё раз."
-
-msgid "Good ear. Play the ones you missed once more."
-msgstr "Хороший слух. Переслушай ещё раз те, где были ошибки."
-
-msgid "Good ear. Try a harder range next."
-msgstr "Хороший слух. Дальше попробуй диапазон посложнее."
-
 msgid "Good luck!"
 msgstr "Удачи!"
 
@@ -3675,9 +3663,6 @@ msgstr "С Новым *годом*!"
 
 msgid "Hard"
 msgstr "Трудно"
-
-msgid "Harder grammar"
-msgstr "Сложная грамматика"
 
 msgid "Have a *lovely* weekend!"
 msgstr "*Приятных* выходных!"
@@ -3827,9 +3812,6 @@ msgstr "Как Lymi понимает, что я уже знаю слово?"
 
 msgid "How does the voice know how to read a kanji?"
 msgstr "Откуда голос знает, как читать кандзи?"
-
-msgid "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
-msgstr "Как звучит эстонский: девять гласных, буквы, которые всегда звучат одинаково, и долгота, которая меняет слово."
 
 msgid "How far must other drivers be able to see you for a legal U-turn?"
 msgstr "С какого расстояния другие водители должны тебя видеть, чтобы разворот был разрешён?"
@@ -4262,9 +4244,6 @@ msgstr "В том порядке, в котором ты их учишь: раз
 msgid "In this folder"
 msgstr "В этой папке"
 
-msgid "In town, a number comes inside a sentence: a price, a flat, the time. Type the number you hear."
-msgstr "В городе число звучит посреди фразы: цена, номер квартиры, время. Введи число, которое слышишь."
-
 msgid "In voice mode, ChatGPT takes your words from Lymi and plays out a scene with you, so you hear each one and say it back."
 msgstr "В голосовом режиме ChatGPT берёт твои слова из Lymi и разыгрывает с тобой сценку: ты слышишь каждое слово и произносишь его сам."
 
@@ -4682,17 +4661,20 @@ msgstr "Русские слова на флеш-карточках · Lymi"
 msgid "Learn Spanish vocabulary with flashcards · Lymi"
 msgstr "Испанские слова на флеш-карточках · Lymi"
 
-msgid "Learn ten words, <0>null</0> to <1>kümme</1>. Every other number is built from them."
-msgstr "Выучи десять слов, от <0>null</0> до <1>kümme</1>. Из них строится любое другое число."
-
 msgid "Learn the alphabet, then your first words."
 msgstr "Выучи алфавит, а потом первые слова."
+
+msgid "Learn the nine Estonian vowels and hear how sound length changes a word."
+msgstr "Изучи девять эстонских гласных и послушай, как долгота звука меняет слово."
 
 msgid "Learn the same deck together"
 msgstr "Учите одну колоду вместе"
 
 msgid "Learn the Spanish words you’ll use most, a few minutes a day. A native voice reads every card, and free decks take you from <0>hola</0> to B1."
 msgstr "Учи испанские слова, которые пригодятся чаще всего, несколько минут в день. Каждую карточку читает голос носителя, а бесплатные колоды ведут от <0>hola</0> до B1."
+
+msgid "Learn to say Estonian numbers and recognise them by ear."
+msgstr "Научись называть числа по-эстонски и распознавать их на слух."
 
 msgid "Learn Ukrainian vocabulary with flashcards · Lymi"
 msgstr "Украинские слова на флеш-карточках · Lymi"
@@ -4762,9 +4744,6 @@ msgstr "lecture-5-slides.pdf"
 msgid "Legal bases"
 msgstr "Правовые основания"
 
-msgid "Length takes the most practice. Play the pairs above once more."
-msgstr "Долгота требует больше всего практики. Переслушай пары выше ещё раз."
-
 msgid "Lesson"
 msgstr "Урок"
 
@@ -4777,8 +4756,8 @@ msgstr "Урок {number} · {level}"
 msgid "Lesson {number} · {minutes} min"
 msgstr "Урок {number} · {minutes} мин"
 
-msgid "Lesson {number}, coming soon"
-msgstr "Урок {number}, скоро"
+msgid "Lesson {number}, planned"
+msgstr "Урок {number}, запланирован"
 
 msgid "Lesson {previousNumber}"
 msgstr "Урок {previousNumber}"
@@ -4851,6 +4830,9 @@ msgstr "Послушать"
 
 msgid "Listen first."
 msgstr "Сначала послушай."
+
+msgid "Listen to sentences about prices, ages and everyday situations. Type the number you hear."
+msgstr "Послушай предложения о ценах, возрасте и повседневных ситуациях. Введи число, которое слышишь."
 
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
@@ -5245,14 +5227,14 @@ msgstr "Mochi работает на устройстве без регистра
 msgid "More {language} decks"
 msgstr "Ещё колоды: {language}"
 
-msgid "More are on the way."
-msgstr "Новые уже в работе."
-
 msgid "More decks"
 msgstr "Другие колоды"
 
 msgid "More languages"
 msgstr "Другие языки"
+
+msgid "More lessons are planned."
+msgstr "Планируем добавить ещё уроки."
 
 msgid "More like this"
 msgstr "Похожие колоды"
@@ -5633,17 +5615,8 @@ msgstr "Числа"
 msgid "Numbers and time"
 msgstr "Числа и время"
 
-msgid "Numbers by ear. Ten words and two endings take you to a hundred."
-msgstr "Числа на слух. Десять слов и два окончания доведут тебя до сотни."
-
-msgid "Numbers in sentences take practice. Play each one twice before you type."
-msgstr "Числам в предложениях нужна практика. Послушай каждое дважды, прежде чем писать."
-
-msgid "Numbers in the wild"
-msgstr "Числа в жизни"
-
-msgid "Numbers take practice. Try again, or pick an easier range."
-msgstr "Числам нужна практика. Попробуй ещё раз или выбери диапазон полегче."
+msgid "Numbers in sentences"
+msgstr "Числа в предложениях"
 
 msgid "Õ or o? Ü or u?"
 msgstr "Õ или o? Ü или u?"
@@ -5762,9 +5735,6 @@ msgstr "На единицу больше"
 
 msgid "One of a mirror-image pair"
 msgstr "Одна из пары зеркальных форм"
-
-msgid "One of the ten base words."
-msgstr "Одно из десяти базовых слов."
 
 msgid "One shared deck, everyone on their own schedule"
 msgstr "Одна общая колода, у каждого своё расписание"
@@ -6042,6 +6012,9 @@ msgstr "Где что: на, под, за"
 msgid "Plain text"
 msgstr "Простой текст"
 
+msgid "Planned"
+msgstr "Запланировано"
+
 msgid "Platform, track"
 msgstr "Путь, платформа"
 
@@ -6167,6 +6140,12 @@ msgstr "Пробные тесты"
 
 msgid "practice-exam-notes.pdf"
 msgstr "practice-exam-notes.pdf"
+
+msgid "Practise common Estonian words with spaced repetition."
+msgstr "Распространённые эстонские слова для интервального повторения."
+
+msgid "Practise consonant changes, objects, past tenses and conditional forms."
+msgstr "Упражнения на чередование согласных, дополнения, прошедшие времена и условное наклонение."
 
 msgid "Practise in conversation"
 msgstr "Практика в разговоре"
@@ -6387,9 +6366,6 @@ msgstr "дождь"
 
 msgid "Range"
 msgstr "Диапазон"
-
-msgid "Read it as it's written"
-msgstr "Читай, как написано"
 
 msgid "Read Japanese Kana covers hiragana and katakana, including voiced and combined sounds, the small tsu and the long-vowel mark."
 msgstr "Read Japanese Kana охватывает хирагану и катакану, включая звонкие и составные звуки, маленькую цу и знак долгого гласного."
@@ -6680,9 +6656,6 @@ msgstr "Сохрани «Feierabend» в мою колоду немецкого.
 msgid "Say e with rounded lips, as in German “schön”."
 msgstr "Скажи «э», округлив губы, как в немецком «schön»."
 
-msgid "Say every letter the way it's written."
-msgstr "Произноси каждую букву так, как написано."
-
 msgid "Say i with rounded lips, as in German “über” or French “tu”."
 msgstr "Скажи «и», округлив губы, как в немецком «über» или французском «tu»."
 
@@ -6764,8 +6737,8 @@ msgstr "Посмотреть все карточки"
 msgid "See how it works"
 msgstr "Как это работает"
 
-msgid "See how you did"
-msgstr "Посмотреть результат"
+msgid "See results"
+msgstr "Результаты"
 
 msgid "See the decks"
 msgstr "Посмотреть колоды"
@@ -6895,12 +6868,6 @@ msgstr "Краткие и долгие звуки"
 
 msgid "Short for mina."
 msgstr "Сокращение от mina."
-
-msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
-msgstr "Короткие бесплатные уроки от первых звуков до B1. Нажми на любое слово, чтобы его услышать, и пробуй каждое правило прямо по ходу чтения."
-
-msgid "Short, free lessons in Estonian grammar, from the first sounds to B1. Hear every word, try each idea and check yourself with a quick quiz."
-msgstr "Короткие бесплатные уроки эстонской грамматики, от первых звуков до B1. Слушай каждое слово, пробуй каждое правило и проверяй себя в коротком тесте."
 
 msgid "Shortcut"
 msgstr "Быстрая команда"
@@ -7056,9 +7023,6 @@ msgstr "Кто-то стучит в *дверь*."
 msgid "Something else"
 msgstr "Другое"
 
-msgid "Soon"
-msgstr "Скоро"
-
 msgid "Sorry; excuse me"
 msgstr "Извините; простите"
 
@@ -7121,6 +7085,12 @@ msgstr "Испанские слова, которые ты запомнишь."
 
 msgid "Spell what you hear"
 msgstr "Напиши, что слышишь"
+
+msgid "Spelling and pronunciation"
+msgstr "Написание и произношение"
+
+msgid "Spelling usually gives you a good guide to pronunciation."
+msgstr "По написанию обычно можно понять, как произнести слово."
 
 msgid "spider"
 msgstr "паук"
@@ -7194,6 +7164,9 @@ msgstr "Начни с HSK 1."
 msgid "Start with kana"
 msgstr "Начать с каны"
 
+msgid "Start with pronunciation and numbers. More lessons are planned."
+msgstr "Начни с произношения и чисел. Планируем добавить ещё уроки."
+
 msgid "Start with the alphabet"
 msgstr "Начать с алфавита"
 
@@ -7208,6 +7181,12 @@ msgstr "Начни с колоды своего экзамена."
 
 msgid "Start with your next lecture."
 msgstr "Начни со следующей лекции."
+
+msgid "Start with zero to ten: <0>null</0> to <1>kümme</1>."
+msgstr "Начни с чисел от нуля до десяти: от <0>null</0> до <1>kümme</1>."
+
+msgid "Start with zero to ten. Tap each number to hear it."
+msgstr "Начни с чисел от нуля до десяти. Нажми на каждое число, чтобы его услышать."
 
 msgid "starts a yes-or-no question"
 msgstr "начинает вопрос «да или нет»"
@@ -7254,14 +7233,14 @@ msgstr "Улица"
 msgid "Stress"
 msgstr "Ударение"
 
-msgid "Stress falls on the <0>first syllable</0>. Tap a word to hear it."
-msgstr "Ударение падает на <0>первый слог</0>. Нажми на слово, чтобы его услышать."
-
 msgid "Stress only where it breaks the rule"
 msgstr "Ударение только там, где оно нарушает правило"
 
-msgid "Stress the first syllable."
-msgstr "Ударение — на первом слоге."
+msgid "Stress usually falls on the <0>first syllable</0>. Tap a word to hear it."
+msgstr "Ударение обычно падает на <0>первый слог</0>. Нажми на слово, чтобы его услышать."
+
+msgid "Stress usually falls on the first syllable."
+msgstr "Ударение обычно падает на первый слог."
 
 msgid "Stubborn grit"
 msgstr "Упрямая стойкость"
@@ -7433,6 +7412,9 @@ msgstr "тамильский"
 
 msgid "Tap a vowel"
 msgstr "Нажми на гласную"
+
+msgid "Tap an answer to listen again."
+msgstr "Нажми на ответ, чтобы послушать ещё раз."
 
 msgid "Tap to turn it over"
 msgstr "Коснись, чтобы перевернуть"
@@ -7782,9 +7764,6 @@ msgstr "документация Mochi"
 msgid "The molecule a cell uses to store and carry energy"
 msgstr "Молекула, в которой клетка хранит и переносит энергию"
 
-msgid "The most common words, each brought back on the day you'd forget it."
-msgstr "Самые частые слова, и каждое возвращается как раз тогда, когда ты бы его забыл."
-
 msgid "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 msgstr "Самые полезные слова из списка Goethe-Institut для каждого уровня, каждое существительное с артиклем и множественным числом, с переводом рядом."
 
@@ -7799,6 +7778,9 @@ msgstr "Следующий раздел открывается, когда вы�
 
 msgid "the Noji help centre"
 msgstr "справочный центр Noji"
+
+msgid "The noun after a number changes form: <0/>, <1/>. That form is the partitive, in lesson {partitive}. For now, listen for the number."
+msgstr "Существительное после числительного меняет форму: <0/>, <1/>. Это партитив, о нём пойдёт речь в уроке {partitive}. А пока сосредоточься на числе."
 
 msgid "The object: whole or part"
 msgstr "Дополнение: целое или часть"
@@ -7875,9 +7857,6 @@ msgstr "Право предстать перед судьёй, а не оста�
 msgid "The right to have a court decide whether someone is lawfully detained"
 msgstr "Право на то, чтобы суд решил, законно ли задержан человек"
 
-msgid "The rules that trip most learners up. You know every word by now, so only the rule is new."
-msgstr "Правила, на которых спотыкается большинство учеников. Все слова ты уже знаешь, так что новое здесь только правило."
-
 msgid "The rules the theory test asks about, and every sign of the ПДР by its picture."
 msgstr "Правила, о которых спрашивают на теории, и каждый знак ПДР по изображению."
 
@@ -7931,9 +7910,6 @@ msgstr "Десятки"
 
 msgid "The tens: -kümmend"
 msgstr "Десятки: -kümmend"
-
-msgid "The thing being counted changes too: <0/>, <1/>. That form is the partitive, in lesson {partitive}. For now, listen for the number."
-msgstr "Меняется и то, что считают: <0/>, <1/>. Эта форма — партитив, о ней урок {partitive}. Пока слушай число."
 
 msgid "The Thirty Years’ War"
 msgstr "Тридцатилетняя война"
@@ -8012,12 +7988,6 @@ msgstr "Возле вокзала есть *парк*."
 
 msgid "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
 msgstr "Эти шаги для Gemini CLI, который работает где угодно. В приложении Gemini Google открывает пользовательские приложения только для взрослых в США и на английском."
-
-msgid "These take a few tries. Play the pairs above again."
-msgstr "Тут нужно несколько попыток. Переслушай пары выше ещё раз."
-
-msgid "These ten words build every other number. Tap each one. Two pairs sound alike at first: <0/> and <1/>, <2/> and <3/>."
-msgstr "Из этих десяти слов строится любое другое число. Нажми на каждое. Две пары поначалу звучат похоже: <0/> и <1/>, <2/> и <3/>."
 
 msgid "These three keep slipping. Let’s start with la huelga."
 msgstr "Эти три всё время ускользают. Начнём с la huelga."
@@ -8844,9 +8814,6 @@ msgstr "Как называется эта часть?"
 
 msgid "What it’s for"
 msgstr "Для чего она"
-
-msgid "What number was in it?"
-msgstr "Какое число было во фразе?"
 
 msgid "What should I review tonight?"
 msgstr "Что мне повторить сегодня вечером?"

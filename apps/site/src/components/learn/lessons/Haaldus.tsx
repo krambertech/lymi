@@ -102,12 +102,6 @@ function Syllables({ parts }: { parts: readonly string[] }) {
   );
 }
 
-function Verdict({ share }: { share: number }) {
-  if (share === 1) return <Trans>All of them. You can hear the difference.</Trans>;
-  if (share >= 0.7) return <Trans>Good ear. Play the ones you missed once more.</Trans>;
-  return <Trans>These take a few tries. Play the pairs above again.</Trans>;
-}
-
 export function HaaldusLesson() {
   const { t, i18n } = useLingui();
   const meaning = useCallback(
@@ -186,12 +180,7 @@ export function HaaldusLesson() {
     <LessonView
       slug={SLUG}
       glossary={GLOSSARY}
-      sub={
-        <Trans>
-          How Estonian sounds: nine vowels, letters that always sound the same, and length that
-          changes the word.
-        </Trans>
-      }
+      sub={<Trans>Learn the nine Estonian vowels and hear how sound length changes a word.</Trans>}
       facts={[
         <Trans key="m">10 minutes</Trans>,
         <Trans key="q">2 quizzes</Trans>,
@@ -218,30 +207,29 @@ export function HaaldusLesson() {
         "raamatukogu",
       ]}
       recap={[
-        <Trans key="1">Say every letter the way it's written.</Trans>,
-        <Trans key="2">Stress the first syllable.</Trans>,
+        <Trans key="1">Spelling usually gives you a good guide to pronunciation.</Trans>,
+        <Trans key="2">Stress usually falls on the first syllable.</Trans>,
         <Trans key="3">
-          <b lang="et">õ ä ö ü</b> are vowels of their own, and <b lang="et">õ</b> is the new one.
+          <b lang="et">õ ä ö ü</b> are four separate vowels.
         </Trans>,
         <Trans key="4">A double letter is longer, and it makes a different word.</Trans>,
       ]}
       sections={[
         {
           id: "spelled",
-          title: t`Read it as it's written`,
+          title: t`Spelling and pronunciation`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Estonian is spelled the way it sounds. You say every letter, and each one keeps
-                    its sound wherever it stands. Once you know the letters, you can read any word
-                    aloud, even one you've never seen.
+                    Estonian spelling usually gives you a good guide to pronunciation. Start by
+                    listening to these words.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Stress falls on the <b>first syllable</b>. Tap a word to hear it.
+                    Stress usually falls on the <b>first syllable</b>. Tap a word to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -344,7 +332,6 @@ export function HaaldusLesson() {
                 title={<Trans>Which word did you hear?</Trans>}
                 items={pairItems}
                 rounds={6}
-                verdict={(share) => <Verdict share={share} />}
                 both={(item) => item.options.map((option) => src(option.id))}
                 recall={(item) => ({ label: item.answer, src: item.src })}
                 order={eachPairFirst}
@@ -417,15 +404,6 @@ export function HaaldusLesson() {
                 title={<Trans>One letter or two?</Trans>}
                 items={gapItems}
                 rounds={8}
-                verdict={(share) =>
-                  share === 1 ? (
-                    <Trans>All of them. You can hear length.</Trans>
-                  ) : share >= 0.7 ? (
-                    <Trans>Good ear. Play the ones you missed once more.</Trans>
-                  ) : (
-                    <Trans>Length takes the most practice. Play the pairs above once more.</Trans>
-                  )
-                }
                 both={(item) => item.pair.map(src)}
                 recall={(item) => ({ label: item.word, src: item.src })}
                 order={eachPairFirst}

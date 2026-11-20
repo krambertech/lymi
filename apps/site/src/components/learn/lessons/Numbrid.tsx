@@ -1,7 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Minus, Plus } from "lucide-react";
-import { type ReactNode, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { LESSONS } from "../../../lib/learn/catalogue";
 import { clipUrl, NUMBER_SENTENCES, numberClip } from "../../../lib/learn/clips";
 import { DIGIT_WORDS, numberParts, numberWords } from "../../../lib/learn/estonian-numbers";
@@ -132,7 +132,7 @@ function HowItsBuilt({ n }: { n: number }) {
   const tens = Math.floor(n / 10);
   const teen = DIGIT_WORDS[digit] ?? "";
   const b = "font-medium text-(--form)";
-  if (n <= 10) return <Trans>One of the ten base words.</Trans>;
+  if (n <= 10) return <Trans>A number from zero to ten.</Trans>;
   if (n < 20)
     return (
       <Trans>
@@ -280,20 +280,12 @@ export function NumbridLesson() {
     [i18n],
   );
   const bigs = [100, 150, 200, 365, 999, 1000, 1918, 2026, 4500, 12000];
-  const typedVerdict = (share: number): ReactNode =>
-    share === 1 ? (
-      <Trans>All of them, by ear.</Trans>
-    ) : share >= 0.7 ? (
-      <Trans>Good ear. Try a harder range next.</Trans>
-    ) : (
-      <Trans>Numbers take practice. Try again, or pick an easier range.</Trans>
-    );
 
   return (
     <LessonView
       slug={SLUG}
       glossary={GLOSSARY}
-      sub={<Trans>Numbers by ear. Ten words and two endings take you to a hundred.</Trans>}
+      sub={<Trans>Learn to say Estonian numbers and recognise them by ear.</Trans>}
       facts={[
         <Trans key="m">10 minutes</Trans>,
         <Trans key="q">3 quizzes</Trans>,
@@ -318,8 +310,7 @@ export function NumbridLesson() {
       ]}
       recap={[
         <Trans key="1">
-          Learn ten words, <b lang="et">null</b> to <b lang="et">kümme</b>. Every other number is
-          built from them.
+          Start with zero to ten: <b lang="et">null</b> to <b lang="et">kümme</b>.
         </Trans>,
         <Trans key="2">
           <b lang="et">-teist</b> makes eleven to nineteen, and <b lang="et">-kümmend</b> makes the
@@ -341,11 +332,7 @@ export function NumbridLesson() {
             <>
               <Prose>
                 <p>
-                  <Trans>
-                    These ten words build every other number. Tap each one. Two pairs sound alike at
-                    first: <Word w="kaks" /> and <Word w="kuus" />, <Word w="kaheksa" /> and{" "}
-                    <Word w="üheksa" />.
-                  </Trans>
+                  <Trans>Start with zero to ten. Tap each number to hear it.</Trans>
                 </p>
               </Prose>
               <Panel>
@@ -518,7 +505,6 @@ export function NumbridLesson() {
                 title={<Trans>Type the number you hear</Trans>}
                 items={levelItems[level] ?? []}
                 rounds={6}
-                verdict={typedVerdict}
                 recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}
                 round={(props) => <TypedRound {...props} />}
               />
@@ -527,20 +513,20 @@ export function NumbridLesson() {
         },
         {
           id: "wild",
-          title: t`Numbers in the wild`,
+          title: t`Numbers in sentences`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    In town, a number comes inside a sentence: a price, a flat, the time. Type the
-                    number you hear.
+                    Listen to sentences about prices, ages and everyday situations. Type the number
+                    you hear.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    The thing being counted changes too: <Word w="kolm kassi" />,{" "}
+                    The noun after a number changes form: <Word w="kolm kassi" />,{" "}
                     <Word w="kaksteist eurot" />. That form is the partitive, in lesson {partitive}.
                     For now, listen for the number.
                   </Trans>
@@ -548,20 +534,9 @@ export function NumbridLesson() {
               </Prose>
               <Quiz
                 id="sentences"
-                title={<Trans>What number was in it?</Trans>}
+                title={<Trans>Which number did you hear?</Trans>}
                 items={wildItems}
                 rounds={6}
-                verdict={(share) =>
-                  share === 1 ? (
-                    <Trans>All of them, inside real sentences.</Trans>
-                  ) : share >= 0.7 ? (
-                    <Trans>Good ear. Numbers in sentences come fast; try once more.</Trans>
-                  ) : (
-                    <Trans>
-                      Numbers in sentences take practice. Play each one twice before you type.
-                    </Trans>
-                  )
-                }
                 recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}
                 round={(props) => <TypedRound {...props} />}
               />

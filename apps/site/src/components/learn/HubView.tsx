@@ -22,10 +22,7 @@ export function HubView() {
               <Trans>Estonian grammar lessons</Trans>
             </h1>
             <p className="mt-4 max-w-[40ch] text-[clamp(1.125rem,2vw,1.3125rem)] text-pretty text-ink-secondary">
-              <Trans>
-                Short, free lessons from the first sounds to B1. Tap any word to hear it, and try
-                each idea as you read.
-              </Trans>
+              <Trans>Start with pronunciation and numbers. More lessons are planned.</Trans>
             </p>
           </div>
           <Resume />
@@ -96,7 +93,7 @@ function Resume() {
             <Trans>You've finished every lesson so far</Trans>
           </span>
           <p className="text-2xl/tight font-semibold tracking-tight">
-            <Trans>More are on the way.</Trans>
+            <Trans>More lessons are planned.</Trans>
           </p>
         </>
       )}
@@ -109,7 +106,8 @@ function Resume() {
         </span>
         <span>
           <Trans>
-            <b className="font-semibold text-ink tabular-nums">{plannedCount}</b> planned, A1 to B1
+            <b className="font-semibold text-ink tabular-nums">{plannedCount}</b> in the course
+            plan, A1 to B1
           </Trans>
         </span>
       </p>
@@ -164,11 +162,7 @@ function Stage({ index }: { index: number }) {
             </>
           ) : (
             <span>
-              <Plural
-                value={lessonCount}
-                one="# lesson, coming soon"
-                other="# lessons, coming soon"
-              />
+              <Plural value={lessonCount} one="# lesson planned" other="# lessons planned" />
             </span>
           )}
         </div>
@@ -259,7 +253,7 @@ function StatusTag({ status }: { status: Status }) {
   if (status === "soon")
     return (
       <span className="text-sm text-ink-muted">
-        <Trans>Soon</Trans>
+        <Trans>Planned</Trans>
       </span>
     );
   return (

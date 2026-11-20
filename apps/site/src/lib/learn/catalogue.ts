@@ -60,7 +60,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian personal pronouns and “to be”`,
         et: "Mina, sina, tema",
         minutes: 10,
-        blurb: msg`A free Estonian lesson on personal pronouns, mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud.`,
+        blurb: msg`A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud.`,
       },
       {
         slug: "olevik",
@@ -68,7 +68,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian present tense`,
         et: "Ma loen",
         minutes: 10,
-        blurb: msg`A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad, with ten everyday verbs read aloud.`,
+        blurb: msg`A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud.`,
       },
       {
         slug: "eitus",
@@ -84,7 +84,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Asking questions in Estonian`,
         et: "Kas? Mis? Kus?",
         minutes: 10,
-        blurb: msg`A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and the first questions you'll hear. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud.`,
       },
       {
         slug: "kohad",
@@ -108,7 +108,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian numbers`,
         et: "Üks, kaks, kolm",
         minutes: 10,
-        blurb: msg`A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers.`,
+        blurb: msg`A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud.`,
       },
       {
         slug: "kell",
@@ -116,7 +116,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Telling the time in Estonian`,
         et: "Mis kell on?",
         minutes: 12,
-        blurb: msg`A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that's coming, and minutes past and to. Every time is read aloud.`,
+        blurb: msg`A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud.`,
       },
       {
         slug: "paevad",

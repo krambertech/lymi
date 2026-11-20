@@ -70,12 +70,12 @@ const SENTENCES: readonly {
 }[] = [
   { id: "c-kassid", answers: ["3"], en: msg`I have three cats.` },
   { id: "c-hind", answers: ["12"], en: msg`This costs twelve euros.` },
-  { id: "c-vanus", answers: ["34"], en: msg`I'm 34 years old.` },
+  { id: "c-vanus", answers: ["34"], en: msg`I’m 34 years old.` },
   { id: "c-korter", answers: ["16"], en: msg`My flat is number 16.` },
   { id: "c-aasta", answers: ["365"], en: msg`A year has 365 days.` },
   { id: "c-tund", answers: ["60"], en: msg`An hour has 60 minutes.` },
   { id: "c-klass", answers: ["22"], en: msg`There are 22 pupils in the class.` },
-  { id: "c-telefon", answers: ["52094"], en: msg`A phone number is read digit by digit.` },
+  { id: "c-telefon", answers: ["52094"], en: msg`My number is 5 2 0 9 4.` },
   { id: "c-kohv", answers: ["3.50", "3,50"], en: msg`Coffee costs €3.50.` },
 ];
 
@@ -132,24 +132,24 @@ function HowItsBuilt({ n }: { n: number }) {
   const tens = Math.floor(n / 10);
   const teen = DIGIT_WORDS[digit] ?? "";
   const b = "font-medium text-(--form)";
-  if (n <= 10) return <Trans>One of the ten base words.</Trans>;
+  if (n <= 10) return <Trans>One of the eleven base words.</Trans>;
   if (n < 20)
     return (
       <Trans>
-        <b className={b}>{teen}</b> and -teist: {digit} in the second ten.
+        Built from <b className={b}>{teen}</b> and -teist: {digit} in the second ten.
       </Trans>
     );
-  if (n === 100) return <Trans>Just sada, with no “one” in front.</Trans>;
+  if (n === 100) return <Trans>Sada alone, with no “one” in front.</Trans>;
   if (n % 10 === 0)
     return (
       <Trans>
-        <b className={b}>{tensWord}</b> and -kümmend: {tens} tens.
+        Built from <b className={b}>{tensWord}</b> and -kümmend: {tens} tens.
       </Trans>
     );
   return (
     <Trans>
-      <b className={b}>{tensWord}</b> and -kümmend: {tens} tens, then <b className={b}>{ones}</b> as
-      a word of its own.
+      Built from <b className={b}>{tensWord}</b> and -kümmend: {tens} tens, then{" "}
+      <b className={b}>{ones}</b> as a word of its own.
     </Trans>
   );
 }
@@ -284,16 +284,16 @@ export function NumbridLesson() {
     share === 1 ? (
       <Trans>All of them, by ear.</Trans>
     ) : share >= 0.7 ? (
-      <Trans>Good ear. Try a harder range next.</Trans>
+      <Trans>Most of them. Play the ones you missed once more.</Trans>
     ) : (
-      <Trans>Numbers take practice. Try again, or pick an easier range.</Trans>
+      <Trans>Play each number twice before you type.</Trans>
     );
 
   return (
     <LessonView
       slug={SLUG}
       glossary={GLOSSARY}
-      sub={<Trans>Numbers by ear. Ten words and two endings take you to a hundred.</Trans>}
+      sub={<Trans>Numbers by ear. Eleven words and two endings take you to ninety-nine.</Trans>}
       facts={[
         <Trans key="m">10 minutes</Trans>,
         <Trans key="q">3 quizzes</Trans>,
@@ -318,18 +318,18 @@ export function NumbridLesson() {
       ]}
       recap={[
         <Trans key="1">
-          Learn ten words, <b lang="et">null</b> to <b lang="et">kümme</b>. Every other number is
-          built from them.
+          Learn eleven words, <b lang="et">null</b> to <b lang="et">kümme</b>. Every number up to 99
+          is built from them.
         </Trans>,
         <Trans key="2">
-          <b lang="et">-teist</b> makes eleven to nineteen, and <b lang="et">-kümmend</b> makes the
-          tens.
+          The ending <b lang="et">-teist</b> makes eleven to nineteen, and <b lang="et">-kümmend</b>{" "}
+          makes the tens.
         </Trans>,
         <Trans key="3">
           Tens and ones are separate words: <b lang="et">kakskümmend üks</b>.
         </Trans>,
         <Trans key="4">
-          <b lang="et">sada</b> and <b lang="et">tuhat</b> need no “one”. Hundreds join up;
+          <b lang="et">Sada</b> and <b lang="et">tuhat</b> need no “one”. Hundreds join up;
           thousands stay separate.
         </Trans>,
       ]}
@@ -342,8 +342,8 @@ export function NumbridLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    These ten words build every other number. Tap each one. Two pairs sound alike at
-                    first: <Word w="kaks" /> and <Word w="kuus" />, <Word w="kaheksa" /> and{" "}
+                    These eleven words build every number up to 99. Tap each one. Two pairs sound
+                    alike: <Word w="kaks" /> and <Word w="kuus" />, <Word w="kaheksa" /> and{" "}
                     <Word w="üheksa" />.
                   </Trans>
                 </p>
@@ -373,8 +373,8 @@ export function NumbridLesson() {
                 <p>
                   <Trans>
                     Add <em>-teist</em> to a digit and you have eleven to nineteen:{" "}
-                    <Word w="üksteist" />, <Word w="kaksteist" />, <Word w="kolmteist" />. The
-                    ending comes from “of the second ten”.
+                    <Word w="üksteist" />, <Word w="kaksteist" />, <Word w="kolmteist" />. Word for
+                    word, üksteist is “one of the second ten”.
                   </Trans>
                 </p>
               </Prose>
@@ -432,7 +432,7 @@ export function NumbridLesson() {
                 <p>
                   <Trans>
                     A digit after the tens is a word of its own: <Word w="kakskümmend üks" />,
-                    twenty-one. Slide to any number and hear how it's built.
+                    twenty-one. Slide to any number and hear how it’s built.
                   </Trans>
                 </p>
               </Prose>
@@ -449,9 +449,8 @@ export function NumbridLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    When someone speaks fast, the two endings are easy to mix up.{" "}
-                    <Word w="kaksteist" /> is twelve and <Word w="kakskümmend" /> is twenty. Listen
-                    to how the word ends.
+                    <Word w="Kaksteist" /> is twelve and <Word w="kakskümmend" /> is twenty. Both
+                    start with kaks, so listen to how the word ends.
                   </Trans>
                 </p>
               </Prose>
@@ -475,7 +474,7 @@ export function NumbridLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="sada" /> is a hundred and <Word w="tuhat" /> a thousand, with no “one”
+                    <Word w="Sada" /> is a hundred and <Word w="tuhat" /> a thousand, with no “one”
                     in front of either. Hundreds join into one word, <Word w="kakssada" />, but
                     thousands stay separate: <Word w="kaks tuhat" />.
                   </Trans>
@@ -501,9 +500,7 @@ export function NumbridLesson() {
             <>
               <Prose>
                 <p>
-                  <Trans>
-                    Pick a range, listen, and type the number in digits. Press Enter to check.
-                  </Trans>
+                  <Trans>Pick a range, listen, and type the number in digits.</Trans>
                 </p>
               </Prose>
               <Chips
@@ -534,15 +531,15 @@ export function NumbridLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    In town, a number comes inside a sentence: a price, a flat, the time. Type the
-                    number you hear.
+                    Here each number comes inside a sentence: a price, an age, a phone number. Type
+                    the number you hear.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    The thing being counted changes too: <Word w="kolm kassi" />,{" "}
-                    <Word w="kaksteist eurot" />. That form is the partitive, in lesson {partitive}.
-                    For now, listen for the number.
+                    The word after the number changes too: <Word w="kolm kassi" />,{" "}
+                    <Word w="kaksteist eurot" />. That form is the partitive, which lesson{" "}
+                    {partitive} explains. For now, listen for the number.
                   </Trans>
                 </p>
               </Prose>
@@ -555,11 +552,9 @@ export function NumbridLesson() {
                   share === 1 ? (
                     <Trans>All of them, inside real sentences.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Good ear. Numbers in sentences come fast; try once more.</Trans>
+                    <Trans>Most of them. Play the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>
-                      Numbers in sentences take practice. Play each one twice before you type.
-                    </Trans>
+                    <Trans>Play each sentence twice before you type.</Trans>
                   )
                 }
                 recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}

@@ -143,12 +143,13 @@ export function HaaldusLesson() {
     [t],
   );
 
-  const pairItems = useMemo<ChoiceItem[]>(
+  const pairItems = useMemo<(ChoiceItem & { pair: readonly [string, string] })[]>(
     () =>
       VOWEL_PAIRS.flatMap((pair) =>
         pair.map((word) => ({
           src: src(word),
           answer: word,
+          pair,
           options: pair.map((option) => ({ id: option, label: option, sub: meaning(option) })),
         })),
       ),
@@ -344,6 +345,7 @@ export function HaaldusLesson() {
                 rounds={6}
                 verdict={(share) => <Verdict share={share} />}
                 both={(item) => item.options.map((option) => src(option.id))}
+                order={eachPairFirst}
                 round={(props) => <ChoiceRound {...props} />}
               />
             </>

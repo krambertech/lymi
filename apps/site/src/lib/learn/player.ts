@@ -61,6 +61,8 @@ function start(src: string, key: string, onFrame?: (seconds: number) => void): P
       sound.onended = null;
       sound.onerror = null;
       sound.onplay = null;
+      sound.onplaying = null;
+      sound.onpause = null;
       if (finish === done) {
         finish = null;
         playingKey = null;
@@ -71,6 +73,11 @@ function start(src: string, key: string, onFrame?: (seconds: number) => void): P
     finish = done;
     sound.onended = done;
     sound.onerror = done;
+    // A pause from outside the page (the lock screen, a call) ends the clip too. It is listened for
+    // only once this clip plays, so the pause that stopped the clip before it can't end this one.
+    sound.onplaying = () => {
+      sound.onpause = done;
+    };
     if (onFrame) sound.onplay = () => (frame = requestAnimationFrame(tick));
     sound.play().catch(done);
   });

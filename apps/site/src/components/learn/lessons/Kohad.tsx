@@ -1,4 +1,4 @@
-import type { MessageDescriptor } from "@lingui/core";
+import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
@@ -7,7 +7,7 @@ import { useMemo, useState } from "react";
 import { LESSONS } from "../../../lib/learn/catalogue";
 import { clipId, clipUrl, KOHAD_PLACES, KOHAD_SENTENCES } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
-import { eachPairFirst } from "../../../lib/learn/quiz";
+import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, type KeyItem, Keys, Panel } from "../Explore";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
@@ -74,7 +74,7 @@ const MEANS: Record<Id, MessageDescriptor> = {
   "a-tootan-koolis": msg`I work at a school.`,
   "q-on": msg`Where is he or she?`,
   "a-on-kodus": msg`He or she is at home.`,
-  "w-kodus": msg`I work from home.`,
+  "w-kodus": msg`I work at home.`,
   "w-kontoris": msg`I work in an office.`,
   "w-haiglas": msg`I work in a hospital.`,
   "w-kohvikus": msg`I work in a café.`,
@@ -90,7 +90,7 @@ const MEANS: Record<Id, MessageDescriptor> = {
   "h-kodus": msg`We're at home.`,
   "h-tartus": msg`They study in Tartu.`,
   "h-kohvikus": msg`He or she is having coffee in a café.`,
-  "h-kontoris": msg`You work in an office.`,
+  "h-kontoris": msg`You all work in an office.`,
   "h-soomes": msg`I live in Finland.`,
   "h-koolis": msg`He or she studies at school.`,
   "h-eestis": msg`We live in Estonia.`,
@@ -137,8 +137,11 @@ const MAA_LINES: readonly { q: Id; a: readonly Id[] }[] = [
   { q: "l-saksamaal", a: [] },
 ];
 
-/** “Where are they?”: a sentence, its place, and two other places in a fixed order. */
-const HEARD: readonly { id: Id; where: Where; options: readonly Where[] }[] = [
+/**
+ * “Where are they?”: a sentence, its place, and the first round's two other places, in a fixed
+ * order so the page renders the same on the server. Later rounds draw theirs at random.
+ */
+export const HEARD: readonly { id: Id; where: Where; options: readonly Where[] }[] = [
   { id: "h-haiglas", where: "haiglas", options: ["haiglas", "kohvikus", "koolis"] },
   { id: "h-parnus", where: "Pärnus", options: ["Tartus", "Pärnus", "Tallinnas"] },
   { id: "h-kodus", where: "kodus", options: ["kodus", "koolis", "linnas"] },
@@ -151,8 +154,21 @@ const HEARD: readonly { id: Id; where: Where; options: readonly Where[] }[] = [
   { id: "h-linnas", where: "linnas", options: ["linnas", "kodus", "kontoris"] },
 ];
 
+const isTown = (where: Where) => /^[A-ZÄÖÜÕ]/.test(where);
+
+/** Keyed by town or country against building, so a run hears both kinds early. */
+export const heardPair = (where: Where) => [isTown(where) ? "town" : "building", where] as const;
+
+/** The answer and two other places of its kind at random, in random order. */
+export function threePlaces(answer: Where): Where[] {
+  const kind = HEARD.map((each) => each.where).filter(
+    (each) => each !== answer && isTown(each) === isTown(answer),
+  );
+  return shuffle([answer, ...shuffle(kind).slice(0, 2)]);
+}
+
 /** “-s or -l?”: the place as it stands before the ending, the ending, and its sentence. */
-const ENDINGS: readonly { before: string; ending: "s" | "l"; where: Where; id: Id }[] = [
+export const ENDINGS: readonly { before: string; ending: "s" | "l"; where: Where; id: Id }[] = [
   { before: "Eesti", ending: "s", where: "Eestis", id: "g-eestis" },
   { before: "Soome", ending: "s", where: "Soomes", id: "g-soomes" },
   { before: "Tartu", ending: "s", where: "Tartus", id: "g-tartus" },
@@ -279,8 +295,8 @@ function InSwitch() {
       </ul>
       <p aria-live="polite" className="text-md text-ink-secondary">
         {inside
-          ? t`Each name took -s, and the -s says in. Tallinn took an a as well.`
-          : t`Six places. Switch to In the place and watch the ends.`}
+          ? t`Each name took -s, and the -s says in. Tallinn took an extra a before it.`
+          : t`Switch to In the place and watch the last letters change.`}
       </p>
     </Panel>
   );
@@ -309,6 +325,13 @@ function PlaceButton(props: { src: string; word: React.ReactNode; means: string;
   );
 }
 
+const placeOptions = (options: readonly Where[], i18n: I18n) =>
+  options.map((option) => ({
+    id: option,
+    label: <span lang="et">{option}</span>,
+    sub: i18n._(PLACE_MEANS[option]),
+  }));
+
 type HeardItem = ChoiceItem & { id: Id; pair: readonly [string, string] };
 type EndingItem = GapItem & { id: Id; where: Where; pair: readonly [string, string] };
 
@@ -329,19 +352,22 @@ export function KohadLesson() {
       },
     }));
 
+  // Every round but the first draws its wrong places afresh, so no set of options names the answer.
+  const heardRun = (items: readonly HeardItem[], pinned?: HeardItem): HeardItem[] =>
+    eachPairFirst(items, pinned).map((item) =>
+      item === pinned
+        ? item
+        : { ...item, options: placeOptions(threePlaces(item.answer as Where), i18n) },
+    );
+
   const heardItems = useMemo<HeardItem[]>(
     () =>
       HEARD.map(({ id, where, options }) => ({
         id,
         src: src(id),
         answer: where,
-        // Keyed by town or not, so a run hears both kinds of place first.
-        pair: [/^[A-ZÄÖÜÕ]/.test(where) ? "town" : "place", id] as const,
-        options: options.map((option) => ({
-          id: option,
-          label: <span lang="et">{option}</span>,
-          sub: i18n._(PLACE_MEANS[option]),
-        })),
+        pair: heardPair(where),
+        options: placeOptions(options, i18n),
         explain: (
           <>
             <span lang="et" className="font-medium text-ink">
@@ -383,8 +409,8 @@ export function KohadLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          How to say where you are in Estonian: -s for in, -l for on and at, and how to answer kus,
-          where.
+          How to say where you are in Estonian: <b lang="et">-s</b> for in, <b lang="et">-l</b> for
+          on and at, and how to answer <b lang="et">kus</b>, where.
         </Trans>
       }
       facts={[
@@ -414,50 +440,53 @@ export function KohadLesson() {
       ]}
       recap={[
         <Trans key="1">
-          <b lang="et">-s</b> says in: <b lang="et">Eestis, Tallinnas, koolis</b>.
+          The ending <b lang="et">-s</b> says in: <b lang="et">Eestis, Tallinnas, koolis</b>.
         </Trans>,
         <Trans key="2">
-          <b lang="et">-l</b> says on a surface or at an activity: <b lang="et">laual, tööl</b>.
+          The ending <b lang="et">-l</b> says on a surface or at an activity:{" "}
+          <b lang="et">laual, tööl</b>.
         </Trans>,
         <Trans key="3">
-          Some places take <b lang="et">-l</b> by habit, such as <b lang="et">turul</b> and places
-          ending in -maa: <b lang="et">Saaremaal, Saksamaal</b>.
+          Some places take <b lang="et">-l</b> by habit, such as <b lang="et">turul</b> and names
+          ending in <b lang="et">-maa</b>: <b lang="et">Saaremaal, Saksamaal</b>.
         </Trans>,
         <Trans key="4">
-          Learn each place whole in its where form: <b lang="et">Tallinn, Tallinnas</b>.
+          Learn each place together with its ending: <b lang="et">Tallinn, Tallinnas</b>.
         </Trans>,
         <Trans key="5">
-          Ask with <b lang="et">kus</b>, and answer with the place, or the place alone:{" "}
+          Ask with <b lang="et">kus</b>, and answer with a sentence or the place alone:{" "}
           <b lang="et">Kus sa elad? Tartus.</b>
         </Trans>,
       ]}
       sections={[
         {
           id: "in",
-          title: t`-s means in`,
+          title: t`The ending -s means in`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Estonian has no word for in. It puts <b lang="et">-s</b> on the end of the place
-                    instead. <Word w="Tallinn" /> is the town; <Word w="Tallinnas" /> is in Tallinn.{" "}
-                    <Word w="Ma elan Tallinnas." /> is I live in Tallinn.
+                    <Word w="Tallinn" /> is the town; <Word w="Tallinnas" /> is in Tallinn. Estonian
+                    says in with an ending, not a word in front: it puts <b lang="et">-s</b> on the
+                    end of the name. I live in Tallinn is <Word w="Ma elan Tallinnas." />
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    It works the same for countries, towns and buildings. Try it on six places.
+                    It works the same for towns, buildings and most countries. Try it on three
+                    countries and three towns.
                   </Trans>
                 </p>
               </Prose>
               <InSwitch />
               <Aside>
                 <Trans>
-                  Many words gain a vowel before the -s, as Tallinn does, and which vowel is hard to
-                  guess for now. So learn each place whole in its -s form: <Word w="kool" />,{" "}
-                  <Word w="koolis" />; <Word w="linn" />, <Word w="linnas" />. Lesson {genitive}{" "}
-                  shows where the vowel comes from.
+                  Many words gain a vowel before the <b lang="et">-s</b>, as Tallinn does, and which
+                  vowel is hard to guess for now. So learn each place together with its{" "}
+                  <b lang="et">-s</b> form: <Word w="kool" />, <Word w="koolis" />;{" "}
+                  <Word w="linn" />, <Word w="linnas" />. Lesson {genitive} shows where the vowel
+                  comes from.
                 </Trans>
               </Aside>
             </>
@@ -465,14 +494,14 @@ export function KohadLesson() {
         },
         {
           id: "kus",
-          title: t`Kus? Answering with a place`,
+          title: t`Answering where with a place`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    You met <Word w="kus" />, where, in lesson {questions}. The answer is a place
-                    with -s, in a sentence or on its own. In speech, the place alone is enough.
+                    You met <Word w="kus" />, where, in lesson {questions}. Answer with a sentence
+                    or, in speech, with the place alone.
                   </Trans>
                 </p>
               </Prose>
@@ -486,8 +515,8 @@ export function KohadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Kodus" />, at home, is the one you'll say most. Now answer{" "}
-                    <Word w="Kus sa töötad?" /> six ways: tap a place.
+                    <Word w="Kodus" /> is at home. Now answer <Word w="Kus sa töötad?" /> six ways:
+                    tap a place.
                   </Trans>
                 </p>
               </Prose>
@@ -508,14 +537,15 @@ export function KohadLesson() {
         },
         {
           id: "where-are-they",
-          title: t`Where are they?`,
+          title: t`Hearing the place`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Hear a sentence and pick the place. Listen for the word that ends in -s.
+                    Hear a sentence and pick the place. Listen for the word that ends in{" "}
+                    <b lang="et">-s</b>.
                   </Trans>
                 </p>
               </Prose>
@@ -526,7 +556,7 @@ export function KohadLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All of them. You can hear where someone is.</Trans>
+                    <Trans>All of them. You picked the place in every sentence.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
@@ -534,7 +564,7 @@ export function KohadLesson() {
                   )
                 }
                 recall={(item) => ({ label: item.answer, src: wordSrc(item.answer) })}
-                order={eachPairFirst}
+                order={heardRun}
                 round={(props) => <ChoiceRound {...props} />}
               />
             </>
@@ -542,7 +572,7 @@ export function KohadLesson() {
         },
         {
           id: "on",
-          title: t`-l means on or at`,
+          title: t`The ending -l means on or at`,
           children: (
             <>
               <Prose>
@@ -550,8 +580,7 @@ export function KohadLesson() {
                   <Trans>
                     The other ending is <b lang="et">-l</b>. It says on a surface:{" "}
                     <Word w="laual" />, on the table. And it says at an activity, where you're doing
-                    something rather than inside a building: <Word w="tööl" />, at work. A market
-                    takes -l by habit: <Word w="turul" />.
+                    something rather than inside a building: <Word w="tööl" />, at work.
                   </Trans>
                 </p>
               </Prose>
@@ -570,8 +599,9 @@ export function KohadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Places whose names end in -maa take -l too, even where English says in:{" "}
-                    <Word w="Saaremaal" />, on Saaremaa, and <Word w="Saksamaal" />, in Germany.
+                    A market takes <b lang="et">-l</b> by habit: <Word w="turul" />, at the market.
+                    So do names ending in <b lang="et">-maa</b>: <Word w="Saaremaal" />, on
+                    Saaremaa, and <Word w="Saksamaal" />, in Germany, though English says in there.
                   </Trans>
                 </p>
               </Prose>
@@ -579,8 +609,8 @@ export function KohadLesson() {
               <Aside>
                 <Trans>
                   English says at work and at school alike. Estonian says <Word w="tööl" /> but{" "}
-                  <Word w="koolis" />, so learn each place with its ending. Going into a place and
-                  coming out of it take other endings, in lesson {into}.
+                  <Word w="koolis" />, so learn each place with its ending. Lesson {into} teaches
+                  the endings for going into a place and coming out of it.
                 </Trans>
               </Aside>
             </>
@@ -595,9 +625,9 @@ export function KohadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round shows a place. Pick its ending, then hear it in a sentence.
-                    Countries, towns and buildings take -s; work, the market and places in -maa take
-                    -l.
+                    Each round shows a place. Pick its ending, then hear it in a sentence. Towns,
+                    buildings and most countries take <b lang="et">-s</b>; work, the market and
+                    names ending in <b lang="et">-maa</b> take <b lang="et">-l</b>.
                   </Trans>
                 </p>
               </Prose>
@@ -608,11 +638,13 @@ export function KohadLesson() {
                 rounds={8}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All of them. You know where each place takes you.</Trans>
+                    <Trans>All of them. You picked the right ending every time.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Good. Hear the ones you missed once more.</Trans>
+                    <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>Read the -l places above once more, then try again.</Trans>
+                    <Trans>
+                      Read the places with <b lang="et">-l</b> above once more, then try again.
+                    </Trans>
                   )
                 }
                 recall={(item) => ({ label: item.where, src: wordSrc(item.where) })}

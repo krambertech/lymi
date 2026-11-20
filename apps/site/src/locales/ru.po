@@ -13,14 +13,8 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-msgid "-l means on or at"
-msgstr "-l — это «на»"
-
 msgid "-n, -d, -b, -me, -te, -vad: each person has its own."
 msgstr "-n, -d, -b, -me, -te, -vad: у каждого лица своё."
-
-msgid "-s means in"
-msgstr "-s — это «в»"
 
 msgid "-s or -l?"
 msgstr "-s или -l?"
@@ -345,8 +339,14 @@ msgstr "У <0/> нет окончания, и оно подходит и для 
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> — это сто, а <1/> — тысяча, и «один» перед ними не говорят. Сотни пишутся слитно, <2/>, а тысячи отдельно: <3/>."
 
+msgid "<0/> is at home. Now answer <1/> six ways: tap a place."
+msgstr "<0/> — это дома. А теперь дай шесть ответов на <1/>: нажми на место."
+
 msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 msgstr "<0/> значит и «он», и «она»: у эстонских местоимений нет рода. <1/> — это ещё и вежливое «Вы» к одному человеку, как в русском."
+
+msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
+msgstr "<0/> — это город, а <1/> — в Таллине. В эстонском «в» — не отдельное слово, а окончание: в конец названия добавляют <2>-s</2>. «Я живу в Таллине» — это <3/>"
 
 msgid "<0/> is yes and <1/> is no. When the question asks with olema, to be, the usual no is <2/>: he isn't, I'm not. When you don't know, say <3/>."
 msgstr "<0/> значит да, <1/> значит нет. Если в вопросе есть olema, быть, обычный ответ «нет» — <2/>, то есть «не» вместе с глаголом olema. Если не знаешь, скажи <3/>."
@@ -366,17 +366,8 @@ msgstr "<0/> само по себе значит «нет», а <1/> — «да�
 msgid "<0/> repeats the verb from the question. Estonians answer like this with every verb, as lesson {negation} on saying no shows."
 msgstr "<0/> повторяет глагол из вопроса. Эстонцы так отвечают с любым глаголом, об этом урок {negation} про отрицание."
 
-msgid "<0/>, at home, is the one you'll say most. Now answer <1/> six ways: tap a place."
-msgstr "<0/>, дома, ты будешь говорить чаще всего. А теперь ответь на <1/> шестью способами: нажми на место."
-
 msgid "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same for everyone."
 msgstr "<0/>, «быть», устроен так же. <1/> становится <2/>, и <3/> одинаково для всех."
-
-msgid "<0>-l</0> says on a surface or at an activity: <1>laual, tööl</1>."
-msgstr "<0>-l</0> значит «на»: на поверхности или там, где что-то делаешь: <1>laual, tööl</1>."
-
-msgid "<0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
-msgstr "<0>-s</0> значит «в»: <1>Eestis, Tallinnas, koolis</1>."
 
 msgid "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 msgstr "<0>-teist</0> образует числа от одиннадцати до девятнадцати, а <1>-kümmend</1> — десятки."
@@ -813,8 +804,8 @@ msgstr "Бесплатный урок о вопросах в эстонском:
 msgid "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad, with ten everyday verbs read aloud."
 msgstr "Бесплатный урок об эстонских глаголах в настоящем времени: форма на -ma, основа и шесть окончаний -n, -d, -b, -me, -te и -vad на десяти повседневных глаголах, с озвучкой."
 
-msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus. Every sentence is read aloud."
-msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какое место что берёт и как ответить на kus. Каждое предложение озвучено."
+msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какие места получают какое окончание и как ответить на kus, «где». Каждое предложение озвучено."
 
 msgid "A full card in seconds"
 msgstr "Полная карточка за секунды"
@@ -885,6 +876,9 @@ msgstr "Машина, на которой работают поды"
 
 msgid "A major chord with a minor seventh, built on the fifth note of the key"
 msgstr "Мажорный аккорд с малой септимой, построенный на пятой ступени тональности"
+
+msgid "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there."
+msgstr "Рынок получает <0>-l</0> по традиции: <1/>, на рынке. Так же и названия на <2>-maa</2>: <3/>, на Сааремаа, и даже <4/>, в Германии, хотя по-русски тут говорят «в»."
 
 msgid "A native German AI voice reads every card, so <0>ü</0>, <1>ö</1>, <2>ß</2> and the long words sound the way they should. Tap a word to hear it. If a card has its own recording, that plays instead."
 msgstr "Каждую карточку читает AI-голос носителя немецкого, так что <0>ü</0>, <1>ö</1>, <2>ß</2> и длинные слова звучат как надо. Нажми на слово, чтобы послушать. Если у карточки есть своя запись, звучит она."
@@ -1441,9 +1435,6 @@ msgstr "Все верно. Ты слышишь разницу."
 msgid "All of them. You can hear what a question asks."
 msgstr "Все. Ты слышишь, о чём спрашивают."
 
-msgid "All of them. You can hear where someone is."
-msgstr "Все. Ты слышишь, где кто-то находится."
-
 msgid "All of them. You can hear who it's about."
 msgstr "Все верно. Ты слышишь, о ком речь."
 
@@ -1453,8 +1444,11 @@ msgstr "Все. Ты слышишь, кто что делает."
 msgid "All of them. You know olema."
 msgstr "Все верно. Ты знаешь olema."
 
-msgid "All of them. You know where each place takes you."
-msgstr "Все. Ты знаешь, какое окончание берёт каждое место."
+msgid "All of them. You picked the place in every sentence."
+msgstr "Все. В каждом предложении место выбрано верно."
+
+msgid "All of them. You picked the right ending every time."
+msgstr "Все. Каждый раз окончание выбрано верно."
 
 msgid "All Polish decks"
 msgstr "Все польские колоды"
@@ -1585,6 +1579,9 @@ msgstr "Отвечай <0>jah</0> или <1>ei</1>. На вопрос с olema �
 
 msgid "Answering no"
 msgstr "Как ответить «нет»"
+
+msgid "Answering where with a place"
+msgstr "Как ответить, где"
 
 msgid "Answers"
 msgstr "Варианты ответа"
@@ -1724,8 +1721,8 @@ msgstr "Спроси, что пора повторить, прежде чем о
 msgid "Ask what’s waiting and your assistant shows it right in the chat. Then open Lymi to review."
 msgstr "Спроси, что ждёт повторения, и ассистент покажет это прямо в чате. Потом открой Lymi, чтобы повторить."
 
-msgid "Ask with <0>kus</0>, and answer with the place, or the place alone: <1>Kus sa elad? Tartus.</1>"
-msgstr "Спрашивай через <0>kus</0>, а отвечай местом, можно и одним словом: <1>Kus sa elad? Tartus.</1>"
+msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
+msgstr "Спрашивай словом <0>kus</0>, а отвечай предложением или одним словом: <1>Kus sa elad? Tartus.</1>"
 
 msgid "Asked both ways"
 msgstr "Вопросы в обе стороны"
@@ -3003,8 +3000,8 @@ msgstr "Каждый пропуск станет отдельной карточ
 msgid "Each has its own page: the script, the sounds and the free decks that language needs."
 msgstr "У каждого своя страница: письмо, звуки и бесплатные колоды, которые нужны именно этому языку."
 
-msgid "Each name took -s, and the -s says in. Tallinn took an a as well."
-msgstr "Каждое название получило -s, и это -s значит «в». Tallinn получил ещё и a."
+msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
+msgstr "К каждому названию добавилось -s, и это -s значит «в». К Tallinn перед ним добавилось ещё и a."
 
 msgid "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
 msgstr "У каждой части есть и минимум: 38 из 120 за языковые знания и чтение и 19 из 60 за аудирование."
@@ -3015,8 +3012,8 @@ msgstr "У каждого местоимения две формы. Говори
 msgid "Each question as New, Learning or Known"
 msgstr "Каждый вопрос — новый, в изучении или выученный"
 
-msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Countries, towns and buildings take -s; work, the market and places in -maa take -l."
-msgstr "В каждом раунде — место. Выбери окончание, а потом послушай предложение. Страны, города и здания берут -s; работа, рынок и места на -maa берут -l."
+msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Towns, buildings and most countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
+msgstr "В каждом раунде — место. Выбери окончание, а потом послушай предложение. Города, здания и большинство стран получают <0>-s</0>; работа, рынок и названия на <1>-maa</1> получают <2>-l</2>."
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Каждое государство теперь само правило своей землёй: так начался современный <0>суверенитет</0>."
@@ -3141,8 +3138,8 @@ msgstr "По-русски вопрос часто задают одной инт
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "Звука õ нет ни в английском, ни в русском. Скажи «о», но не округляй губы."
 
-msgid "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Going into a place and coming out of it take other endings, in lesson {into}."
-msgstr "По-русски тоже говорят «на работе», но «в школе», и по-эстонски так же: <0/>, но <1/>. Но совпадает не всегда, поэтому учи каждое место вместе с окончанием. Чтобы сказать «в» место или «из» него, нужны другие окончания, они в уроке {into}."
+msgid "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Lesson {into} teaches the endings for going into a place and coming out of it."
+msgstr "По-русски говорят «на работе», но «в школе», и по-эстонски так же: <0/>, но <1/>. Правда, так совпадает не всегда, поэтому учи каждое место вместе с окончанием. Как сказать «в город» и «из города», объясняет урок {into}."
 
 msgid "Enjoy your meal"
 msgstr "Приятного аппетита"
@@ -3188,9 +3185,6 @@ msgstr "В эстонском есть ещё и третья степень д�
 
 msgid "Estonian grammar lessons"
 msgstr "Уроки эстонской грамматики"
-
-msgid "Estonian has no word for in. It puts <0>-s</0> on the end of the place instead. <1/> is the town; <2/> is in Tallinn. <3/> is I live in Tallinn."
-msgstr "В эстонском нет отдельного слова «в». Вместо него в конце места стоит <0>-s</0>. <1/> — это город, а <2/> — в Таллине. <3/> значит «я живу в Таллине»."
 
 msgid "Estonian has one present tense. <0/> means both I read and I'm reading, and the rest of the sentence tells you which. Here are the verbs in sentences you can use today."
 msgstr "В эстонском одно настоящее время. <0/> значит и «я читаю» вообще, и «я читаю сейчас», а что именно, видно из остального предложения. Вот эти глаголы в предложениях, которые можно использовать уже сегодня."
@@ -4199,8 +4193,8 @@ msgstr "Послушать {0}, {1}"
 msgid "Hear a question and pick its question word. It's always the first word, so listen to the start."
 msgstr "Послушай вопрос и выбери вопросительное слово. Оно всегда первое, так что слушай начало."
 
-msgid "Hear a sentence and pick the place. Listen for the word that ends in -s."
-msgstr "Послушай предложение и выбери место. Слушай слово, которое кончается на -s."
+msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
+msgstr "Послушай предложение и выбери место. Слушай слово, которое кончается на <0>-s</0>."
 
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Послушай предложение и выбери глагол из него. Варианты отличаются только окончанием, так что слушай конец глагола."
@@ -4228,6 +4222,9 @@ msgstr "Ещё раз послушай два вопроса выше и поп�
 
 msgid "Hear where the stress falls."
 msgstr "Услышь, где ударение."
+
+msgid "Hearing the place"
+msgstr "Место на слух"
 
 msgid "Heart"
 msgstr "Сердце"
@@ -4424,8 +4421,8 @@ msgstr "Как установить"
 msgid "How to say no in Estonian"
 msgstr "Как сказать «нет» по-эстонски"
 
-msgid "How to say where you are in Estonian: -s for in, -l for on and at, and how to answer kus, where."
-msgstr "Как сказать по-эстонски, где ты: -s значит «в», -l — «на», и как ответить на kus, где."
+msgid "How to say where you are in Estonian: <0>-s</0> for in, <1>-l</1> for on and at, and how to answer <2>kus</2>, where."
+msgstr "Как сказать по-эстонски, где ты: <0>-s</0> значит «в», <1>-l</1> — «на», и как ответить на <2>kus</2>, где."
 
 msgid "How well-timed reviews change recall"
 msgstr "Как своевременные повторения помогают помнить"
@@ -4693,7 +4690,7 @@ msgstr "Я не куплю такой *дорогой* телефон."
 msgid "I work at a school."
 msgstr "Я работаю в школе."
 
-msgid "I work from home."
+msgid "I work at home."
 msgstr "Я работаю дома."
 
 msgid "I work in a *warehouse*."
@@ -4952,7 +4949,7 @@ msgid "In the order you learn them, one section at a time."
 msgstr "В том порядке, в котором ты их учишь: раздел за разделом."
 
 msgid "In the place"
-msgstr "В месте"
+msgstr "Где?"
 
 msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It's the same for every person, so no is easier than yes."
 msgstr "В настоящем времени поставь <0>ei</0> перед глаголом и убери окончание. Для всех лиц это одинаково, так что сказать «нет» проще, чем «да»."
@@ -5095,8 +5092,8 @@ msgstr "Это был очень *приятный* вечер."
 msgid "It will all work out"
 msgstr "Всё образуется"
 
-msgid "It works the same for countries, towns and buildings. Try it on six places."
-msgstr "Так же со странами, городами и зданиями. Попробуй на шести местах."
+msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
+msgstr "Так же с городами, зданиями и большинством стран. Попробуй на трёх странах и трёх городах."
 
 msgid "It writes Ukrainian, and a native Ukrainian voice reads it. When a word looks like a Russian one but means something else, the card’s notes say so: неді́ля is Sunday, not a week."
 msgstr "Он пишет на украинском, а читает голос носителя украинского. Когда слово похоже на русское, но значит другое, об этом скажут заметки карточки: неді́ля — это воскресенье, а не неделя."
@@ -5353,9 +5350,6 @@ msgstr "Kümne minuti pärast neli: через десять минут четы�
 msgid "Kus with the ending -st, “out of”."
 msgstr "Kus с окончанием -st, «из»."
 
-msgid "Kus? Answering with a place"
-msgstr "Kus? Ответ — место"
-
 msgid "Lab values"
 msgstr "Лабораторные нормы"
 
@@ -5404,8 +5398,8 @@ msgstr "Learn и Test ограничены на Free и Plus; без огран�
 msgid "Learn Chinese vocabulary with flashcards · Lymi"
 msgstr "Китайские слова на флеш-карточках · Lymi"
 
-msgid "Learn each place whole in its where form: <0>Tallinn, Tallinnas</0>."
-msgstr "Учи каждое место целиком, сразу в форме «где»: <0>Tallinn, Tallinnas</0>."
+msgid "Learn each place together with its ending: <0>Tallinn, Tallinnas</0>."
+msgstr "Учи каждое место сразу с окончанием: <0>Tallinn, Tallinnas</0>."
 
 msgid "Learn Estonian vocabulary with flashcards · Lymi"
 msgstr "Эстонские слова на флеш-карточках · Lymi"
@@ -5917,8 +5911,8 @@ msgstr "Сделай из этого поста карточки по испан
 msgid "Making cards with AI"
 msgstr "Создание карточек с AI"
 
-msgid "Many words gain a vowel before the -s, as Tallinn does, and which vowel is hard to guess for now. So learn each place whole in its -s form: <0/>, <1/>; <2/>, <3/>. Lesson {genitive} shows where the vowel comes from."
-msgstr "Многие слова, как Tallinn, получают перед -s ещё и гласную, и какую именно, пока угадать трудно. Поэтому учи каждое место целиком, сразу с -s: <0/>, <1/>; <2/>, <3/>. Откуда берётся гласная, объясняет урок {genitive}."
+msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {genitive} shows where the vowel comes from."
+msgstr "У многих слов, как у Tallinn, перед <0>-s</0> появляется гласная, и какую именно, пока угадать трудно. Поэтому учи каждое место сразу с <1>-s</1>: <2/>, <3/>; <4/>, <5/>. Откуда берётся гласная, объясняет урок {genitive}."
 
 msgid "marginal cost"
 msgstr "предельные издержки"
@@ -6972,9 +6966,6 @@ msgstr "Где что: на, под, за"
 msgid "Places to work"
 msgstr "Где работать"
 
-msgid "Places whose names end in -maa take -l too, even where English says in: <0/>, on Saaremaa, and <1/>, in Germany."
-msgstr "Места, чьё название кончается на -maa, тоже берут -l, даже когда по-русски говорим «в»: <0/>, на Сааремаа, и <1/>, в Германии."
-
 msgid "Places with -l"
 msgstr "Места с -l"
 
@@ -7388,11 +7379,11 @@ msgstr "Read Japanese Kana охватывает хирагану и катака
 msgid "Read signs, news and forms, and join longer sentences."
 msgstr "Читать вывески, новости и бланки и строить длинные предложения."
 
-msgid "Read the -l places above once more, then try again."
-msgstr "Ещё раз перечитай места с -l выше, а потом попробуй снова."
-
 msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Прочитай значение и сначала вспомни термин, а потом смотри. Попробуй на этих карточках: они из всей колоды."
+
+msgid "Read the places with <0>-l</0> above once more, then try again."
+msgstr "Ещё раз перечитай места с <0>-l</0> выше, а потом попробуй снова."
 
 msgid "Read your German deck"
 msgstr "Прочитана колода по немецкому"
@@ -7708,7 +7699,7 @@ msgid "Say yes in Lymi"
 msgstr "Дай согласие в Lymi"
 
 msgid "Saying where: -s and -l"
-msgstr "Где: окончания -s и -l"
+msgstr "Как сказать, где: окончания -s и -l"
 
 msgid "Scheduling"
 msgstr "Планирование повторений"
@@ -8009,9 +8000,6 @@ msgstr "шесть"
 msgid "Six endings"
 msgstr "Шесть окончаний"
 
-msgid "Six places. Switch to In the place and watch the ends."
-msgstr "Шесть мест. Переключи на «В месте» и смотри на концы слов."
-
 msgid "Six pronouns, two forms"
 msgstr "Шесть местоимений, две формы"
 
@@ -8096,8 +8084,8 @@ msgstr "Sobre — «над», mesa — «стол». Бывает, что она
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Некоторые кандзи в китайском шрифте выглядят иначе. Lymi показывает твои карточки в японском написании, как в японских книгах."
 
-msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and places ending in -maa: <2>Saaremaal, Saksamaal</2>."
-msgstr "Некоторые места берут <0>-l</0> по привычке, например <1>turul</1> и места на -maa: <2>Saaremaal, Saksamaal</2>."
+msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
+msgstr "Некоторые места получают <0>-l</0> по традиции, например <1>turul</1> и названия на <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Некоторые основы меняются: <0>lugema, loen</0>. Запоминай каждый глагол с формой для «я»."
@@ -8425,6 +8413,9 @@ msgstr "Шведы говорят так и о кофе, и о рабочем в
 
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 msgstr "Переключи <0/> на <1/>, и все шесть предложений станут отрицаниями. Нажми на строку, чтобы послушать."
+
+msgid "Switch to In the place and watch the last letters change."
+msgstr "Переключи на «Где?» и смотри, как меняются концы слов."
 
 msgid "Switching from"
 msgstr "Переход с"
@@ -8819,6 +8810,18 @@ msgstr "Кромка льда"
 msgid "The end of the working day"
 msgstr "Конец рабочего дня"
 
+msgid "The ending -l means on or at"
+msgstr "Окончание -l — это «на»"
+
+msgid "The ending -s means in"
+msgstr "Окончание -s — это «в»"
+
+msgid "The ending <0>-l</0> says on a surface or at an activity: <1>laual, tööl</1>."
+msgstr "Окончание <0>-l</0> значит «на», когда речь о поверхности или о том, что ты делаешь: <1>laual, tööl</1>."
+
+msgid "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
+msgstr "Окончание <0>-s</0> значит «в»: <1>Eestis, Tallinnas, koolis</1>."
+
 msgid "The ending for ma, I."
 msgstr "Окончание для ma, «я»."
 
@@ -8984,8 +8987,8 @@ msgstr "Ту, что подходит к твоему тесту или теме
 msgid "The ones starting to fade"
 msgstr "Те, которые начинают забываться"
 
-msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you're doing something rather than inside a building: <2/>, at work. A market takes -l by habit: <3/>."
-msgstr "Второе окончание — <0>-l</0>. Оно значит «на» поверхности: <1/>, на столе. А ещё — занятие, где ты что-то делаешь, а не здание, где ты внутри: <2/>, на работе. Рынок берёт -l по привычке: <3/>."
+msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you're doing something rather than inside a building: <2/>, at work."
+msgstr "Второе окончание — <0>-l</0>. Оно значит «на», когда речь о поверхности: <1/>, на столе. А ещё «на» там, где ты что-то делаешь, а не просто находишься в здании: <2/>, на работе."
 
 msgid "The output depends on the history of the input"
 msgstr "Результат зависит от того, что было на входе раньше"
@@ -9015,10 +9018,10 @@ msgid "The pinyin left is what you haven’t learned yet."
 msgstr "Пиньинь остался только над тем, чего ты ещё не знаешь."
 
 msgid "The place"
-msgstr "Место"
+msgstr "Название"
 
 msgid "The place or in the place"
-msgstr "Место или в месте"
+msgstr "Название или «где»"
 
 msgid "The player would pass, if chess allowed it."
 msgstr "Игрок пропустил бы ход, если бы шахматы это позволяли."
@@ -10369,9 +10372,6 @@ msgstr "Где {name} умеет больше"
 msgid "Where *are* you?"
 msgstr "Где *ты*?"
 
-msgid "Where are they?"
-msgstr "Где они?"
-
 msgid "Where are you from?"
 msgstr "Откуда ты?"
 
@@ -10852,6 +10852,9 @@ msgstr "Ты"
 msgid "you all"
 msgstr "вы"
 
+msgid "You all work in an office."
+msgstr "Вы работаете в офисе."
+
 msgid "You and someone else."
 msgstr "Ты и кто-то ещё."
 
@@ -10915,8 +10918,8 @@ msgstr "Ты живёшь в Таллине."
 msgid "you live, to more than one; polite you live"
 msgstr "вы живёте; вежливое «Вы живёте»"
 
-msgid "You met <0/>, where, in lesson {questions}. The answer is a place with -s, in a sentence or on its own. In speech, the place alone is enough."
-msgstr "Ты уже знаешь <0/>, где, из урока {questions}. Ответ — место с -s, в предложении или отдельно. В разговоре хватит одного места."
+msgid "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."
+msgstr "Ты уже знаешь <0/>, где, из урока {questions}. Отвечай предложением, а в разговоре — просто названием места."
 
 msgid "You need *flour* for pancakes."
 msgstr "Для блинов нужна *мука*."
@@ -10959,9 +10962,6 @@ msgstr "Тебе нужно проверенное приложение для �
 
 msgid "You want everything on your own computer"
 msgstr "Ты хочешь хранить всё на своём компьютере"
-
-msgid "You work in an office."
-msgstr "Вы работаете в офисе."
 
 msgid "You wrote this"
 msgstr "Это написано тобой"

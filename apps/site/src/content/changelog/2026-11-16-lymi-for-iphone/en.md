@@ -5,7 +5,7 @@ figure: iphone
 stores: app-store
 ---
 
-Lymi is now on iPhone. [Get it on the App Store](/download/iphone). Sign in with your Lymi account or with Apple, and your decks and progress are there. It isn’t on the App Store in EU countries yet.
+Lymi is now on iPhone. [Get it on the App Store](/download/iphone). Sign in with your Lymi account or with Apple, and your decks and progress are there.
 
 ## Review wherever you are
 

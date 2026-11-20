@@ -5138,6 +5138,9 @@ msgstr "Lymi для подготовки к сертификации · Карт
 msgid "Lymi for iPhone"
 msgstr "Lymi для iPhone"
 
+msgid "Lymi for iPhone isn’t on the App Store in EU countries yet. It should be there in the coming weeks. Until then, <0>email us</0> to try it on TestFlight."
+msgstr "Lymi для iPhone пока нет в App Store в странах ЕС. Он должен появиться там в ближайшие недели. А пока <0>напиши нам</0>, чтобы попробовать его в TestFlight."
+
 msgid "Lymi for language learning"
 msgstr "Lymi для изучения языков"
 

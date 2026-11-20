@@ -21,10 +21,14 @@ export function onAppStoreIn(country: unknown): boolean {
 export const APP_STORE_CHECK_PATH = "/api/app-store";
 const SEEN = "lymi-app-store";
 
-/** Shows the page's hidden App Store links when the visitor's country sells Lymi. */
+/**
+ * Shows the page's hidden App Store links when the visitor's country sells Lymi, and the notes
+ * that say it is not on sale there yet when it does not. A failed check shows neither.
+ */
 export async function showAppStoreLinks(): Promise<void> {
   const links = document.querySelectorAll<HTMLElement>("[data-app-store]");
-  if (links.length === 0) return;
+  const notes = document.querySelectorAll<HTMLElement>("[data-app-store-missing]");
+  if (links.length === 0 && notes.length === 0) return;
   let available: string | null = null;
   try {
     available = sessionStorage.getItem(SEEN);
@@ -42,5 +46,5 @@ export async function showAppStoreLinks(): Promise<void> {
       return;
     }
   }
-  if (available === "true") for (const link of links) link.hidden = false;
+  for (const element of available === "true" ? links : notes) element.hidden = false;
 }

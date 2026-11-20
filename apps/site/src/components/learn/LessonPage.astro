@@ -1,0 +1,31 @@
+---
+import LearnLessonPage, { LESSON_VIEWS } from "../islands/LearnLessonPage";
+import { SHARE_IMAGE_ALT } from "../landing/LandingView";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { lessonBySlug, lessonPath } from "../../lib/learn/catalogue";
+import { pageI18n } from "../../lib/i18n";
+import { isPrelaunch, type Locale } from "../../lib/routes";
+
+interface Props {
+  locale: Locale;
+  slug: string;
+}
+
+const { locale, slug } = Astro.props;
+const lesson = lessonBySlug(slug);
+if (!lesson?.blurb || !(slug in LESSON_VIEWS)) throw new Error(`No lesson page for ${slug}`);
+const i18n = pageI18n(locale);
+const title = `${lesson.et}: ${i18n._(lesson.about)} · Lymi`;
+const alternatePaths = { en: lessonPath(slug, "en"), uk: lessonPath(slug, "uk"), ru: lessonPath(slug, "ru") };
+---
+
+<BaseLayout
+  title={title}
+  description={i18n._(lesson.blurb)}
+  canonicalPath={lessonPath(slug, locale)}
+  alternatePaths={alternatePaths}
+  noindex={isPrelaunch("learn")}
+  shareImageAlt={i18n._(SHARE_IMAGE_ALT)}
+>
+  <LearnLessonPage client:load locale={locale} slug={slug as keyof typeof LESSON_VIEWS} />
+</BaseLayout>

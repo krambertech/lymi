@@ -1,0 +1,12 @@
+---
+import LessonPage from "../../../../components/learn/LessonPage.astro";
+import { LESSON_SLUGS } from "../../../../lib/learn/catalogue";
+
+export function getStaticPaths() {
+  return LESSON_SLUGS.map((lesson) => ({ params: { lesson } }));
+}
+
+const { lesson } = Astro.params;
+---
+
+<LessonPage locale="uk" slug={lesson} />

@@ -464,6 +464,25 @@ export const analyticsEvents = {
       .regex(/^[a-z0-9-]+$/)
       .max(40),
   }),
+  learn_quiz_finished: z.object({
+    // The Estonian lesson's slug and the quiz's id in it, such as `numbrid` and `teist`.
+    lesson: z
+      .string()
+      .regex(/^[a-z0-9-]+$/)
+      .max(40),
+    quiz: z
+      .string()
+      .regex(/^[a-z0-9-]+$/)
+      .max(40),
+    right: z.number().int().min(0).max(50),
+    total: z.number().int().min(1).max(50),
+  }),
+  learn_lesson_finished: z.object({
+    lesson: z
+      .string()
+      .regex(/^[a-z0-9-]+$/)
+      .max(40),
+  }),
   ready_decks_narrowed: z.object({
     topic: z.enum(["all", "language", "test"]),
     // A catalogue language's tag, never what the learner typed.
@@ -779,6 +798,8 @@ export const analyticsProducers = {
   add_to_lymi_clicked: ["browser"],
   site_link_followed: ["browser"],
   site_showcase_steered: ["browser"],
+  learn_quiz_finished: ["browser"],
+  learn_lesson_finished: ["browser"],
   ready_decks_narrowed: ["browser"],
   origin_badge_shown: ["browser"],
   mac_download_started: ["worker"],
@@ -854,7 +875,7 @@ export function analyticsPath(path: string, surface: "public" | "product"): stri
     const clean = path.replace(/^\/(uk|ru)(?=\/|$)/, "") || "/";
     if (/^\/explore\/[a-z0-9-]+(?:\/[a-z0-9-]+)?$/.test(clean)) return path.slice(0, 200);
     if (
-      /^\/(?:docs(?:\/[a-z0-9-]+)*|languages(?:\/[a-z0-9-]+)?|ai-assistants(?:\/[a-z0-9-]+)?|teachers|medicine|certifications|tutor-lessons|notes-to-flashcards|download(?:\/mac(?:-intel)?)?|exams(?:\/[a-z0-9-]+)?|explore|changelog(?:\/[a-z0-9-]+)?|privacy|terms|support|signup|learn(?:\/[a-z0-9-]+)?)?$/.test(
+      /^\/(?:docs(?:\/[a-z0-9-]+)*|languages(?:\/[a-z0-9-]+)?|ai-assistants(?:\/[a-z0-9-]+)?|teachers|medicine|certifications|tutor-lessons|notes-to-flashcards|download(?:\/mac(?:-intel)?)?|exams(?:\/[a-z0-9-]+)?|explore|changelog(?:\/[a-z0-9-]+)?|privacy|terms|support|signup|learn(?:\/[a-z0-9-]+)?|estonian\/learn(?:\/[a-z0-9-]+)?)?$/.test(
         clean,
       )
     )

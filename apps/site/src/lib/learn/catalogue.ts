@@ -124,7 +124,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian imperative: giving commands`,
         et: "Istu! Ära istu!",
         minutes: 10,
-        blurb: msg`A free lesson on the Estonian imperative: the verb's stem as a command (loe!, istu!, tule siia!), ära for don't, the forms for more than one person, and everyday commands such as räägi aeglasemalt, palun. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian imperative: the verb's stem as a command (loe!, istu!, tule siia!), ära for don't, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud.`,
       },
     ],
   },

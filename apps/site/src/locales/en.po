@@ -342,8 +342,8 @@ msgstr "*Tomorrow* is Saturday."
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {due} other {due}}"
 
-msgid "<0/> and <1/> both say no. <2>Ei</2> says what someone doesn't do: <3/>, I'm not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
-msgstr "<0/> and <1/> both say no. <2>Ei</2> says what someone doesn't do: <3/>, I'm not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
+msgid "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn't do: <3/>, I'm not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
+msgstr "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn't do: <3/>, I'm not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
 
 msgid "<0/> asks about people and <1/> about things: <2/> who is that, <3/> what is that."
 msgstr "<0/> asks about people and <1/> about things: <2/> who is that, <3/> what is that."
@@ -864,8 +864,8 @@ msgstr "A free lesson on saying where you are in Estonian: -s for in (Tallinnas,
 msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
 msgstr "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
 
-msgid "A free lesson on the Estonian imperative: the verb's stem as a command (loe!, istu!, tule siia!), ära for don't, the forms for more than one person, and everyday commands such as räägi aeglasemalt, palun. Every sentence is read aloud."
-msgstr "A free lesson on the Estonian imperative: the verb's stem as a command (loe!, istu!, tule siia!), ära for don't, the forms for more than one person, and everyday commands such as räägi aeglasemalt, palun. Every sentence is read aloud."
+msgid "A free lesson on the Estonian imperative: the verb's stem as a command (loe!, istu!, tule siia!), ära for don't, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
+msgstr "A free lesson on the Estonian imperative: the verb's stem as a command (loe!, istu!, tule siia!), ära for don't, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 
 msgid "A full card in seconds"
 msgstr "A full card in seconds"
@@ -3200,11 +3200,11 @@ msgstr "Each gap becomes a card of its own, with the hidden word as the term and
 msgid "Each has its own page: the script, the sounds and the free decks that language needs."
 msgstr "Each has its own page: the script, the sounds and the free decks that language needs."
 
-msgid "Each is the ma form without its <0>-n</0>: <1/>, <2/>; <3/>, <4/> <5/> means here, to this place."
-msgstr "Each is the ma form without its <0>-n</0>: <1/>, <2/>; <3/>, <4/> <5/> means here, to this place."
-
 msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
 msgstr "Each name took -s, and the -s says in. Tallinn took an extra a before it."
+
+msgid "Each of these six everyday commands starts with a verb's stem. Tap one to hear it."
+msgstr "Each of these six everyday commands starts with a verb's stem. Tap one to hear it."
 
 msgid "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
 msgstr "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
@@ -4552,6 +4552,9 @@ msgstr "Hear where the stress falls."
 msgid "Hearing a command"
 msgstr "Hearing a command"
 
+msgid "Hearing ära and ei"
+msgstr "Hearing ära and ei"
+
 msgid "Hearing the place"
 msgstr "Hearing the place"
 
@@ -5076,6 +5079,9 @@ msgstr "I'm from Ukraine."
 msgid "I’m getting up early *tomorrow* morning."
 msgstr "I’m getting up early *tomorrow* morning."
 
+msgid "I'm going"
+msgstr "I'm going"
+
 msgid "I’m going by *train*."
 msgstr "I’m going by *train*."
 
@@ -5126,9 +5132,6 @@ msgstr "I’m not *doing* anything."
 
 msgid "I'm not drinking."
 msgstr "I'm not drinking."
-
-msgid "I'm not reading"
-msgstr "I'm not reading"
 
 msgid "I'm not reading."
 msgstr "I'm not reading."
@@ -5505,8 +5508,8 @@ msgstr "It’s okay"
 msgid "It’s raining, so I want to *take a taxi*."
 msgstr "It’s raining, so I want to *take a taxi*."
 
-msgid "It's the form that follows <0>ei</0> in lesson {negation}: <1/>, I'm not reading. Tap either side of a pair to hear it."
-msgstr "It's the form that follows <0>ei</0> in lesson {negation}: <1/>, I'm not reading. Tap either side of a pair to hear it."
+msgid "It's the form that follows <0>ei</0> in lesson {negation}: <1/>, I don't read. Tap either side of a pair to hear it."
+msgstr "It's the form that follows <0>ei</0> in lesson {negation}: <1/>, I don't read. Tap either side of a pair to hear it."
 
 msgid "It's three o'clock."
 msgstr "It's three o'clock."
@@ -8645,8 +8648,8 @@ msgstr "Snap your lecture slides or drop in the PDF, and Lymi makes the cards. Y
 msgid "Snap your lesson notes into cards, build the course in sections and share one link. Each learner reviews on their own schedule."
 msgstr "Snap your lesson notes into cards, build the course in sections and share one link. Each learner reviews on their own schedule."
 
-msgid "So far every command speaks to one person, someone you'd call <0/>. To more than one, or politely to one, as with <1/> in lesson {pronouns}, the command ends in <2>-ge</2> or <3>-ke</3>: <4/>, <5/>"
-msgstr "So far every command speaks to one person, someone you'd call <0/>. To more than one, or politely to one, as with <1/> in lesson {pronouns}, the command ends in <2>-ge</2> or <3>-ke</3>: <4/>, <5/>"
+msgid "So far every command speaks to one person, someone you'd call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It's the same split as <5>sa</5> and <6/> in lesson {pronouns}."
+msgstr "So far every command speaks to one person, someone you'd call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It's the same split as <5>sa</5> and <6/> in lesson {pronouns}."
 
 msgid "So-so"
 msgstr "So-so"
@@ -9008,11 +9011,8 @@ msgstr "Swedes use it for coffee and working hours alike."
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 msgstr "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 
-msgid "Switch between Do and Don't to hear all six both ways."
-msgstr "Switch between Do and Don't to hear all six both ways."
-
-msgid "Switch the six commands above once more, then try again."
-msgstr "Switch the six commands above once more, then try again."
+msgid "Switch between Do and Don't, and tap a line to hear it."
+msgstr "Switch between Do and Don't, and tap a line to hear it."
 
 msgid "Switch to In the place and watch the last letters change."
 msgstr "Switch to In the place and watch the last letters change."
@@ -9140,14 +9140,17 @@ msgstr "Tap a word or a person"
 msgid "Tap an ending"
 msgstr "Tap an ending"
 
+msgid "Tap the commands above once more, then try again."
+msgstr "Tap the commands above once more, then try again."
+
+msgid "Tap the Do and Don't lines above once more, then try again."
+msgstr "Tap the Do and Don't lines above once more, then try again."
+
 msgid "Tap the places above once more, then try again."
 msgstr "Tap the places above once more, then try again."
 
 msgid "Tap the question words above once more, then try again."
 msgstr "Tap the question words above once more, then try again."
-
-msgid "Tap the six commands above once more, then try again."
-msgstr "Tap the six commands above once more, then try again."
 
 msgid "Tap to turn it over"
 msgstr "Tap to turn it over"
@@ -9836,6 +9839,9 @@ msgstr "The stem is the command"
 msgid "The stem is the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It's the form that follows <3>ei</3>."
 msgstr "The stem is the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It's the form that follows <3>ei</3>."
 
+msgid "The stem is the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+msgstr "The stem is the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+
 msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb's three forms, shows where they come from."
 msgstr "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb's three forms, shows where they come from."
 
@@ -9949,9 +9955,6 @@ msgstr "There is nothing published yet."
 
 msgid "There’s a *park* near the station."
 msgstr "There’s a *park* near the station."
-
-msgid "These six everyday commands are each a verb's stem. Tap one to hear it."
-msgstr "These six everyday commands are each a verb's stem. Tap one to hear it."
 
 msgid "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
 msgstr "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
@@ -10346,8 +10349,8 @@ msgstr "To miss someone or something"
 msgid "To more than one person"
 msgstr "To more than one person"
 
-msgid "To more than one person, or politely to one. <0>Ära</0> becomes <1>ärge</1>."
-msgstr "To more than one person, or politely to one. <0>Ära</0> becomes <1>ärge</1>."
+msgid "To more than one person, or politely to one."
+msgstr "To more than one person, or politely to one."
 
 msgid "To more than one person, or politely, the command ends in <0>-ge</0> or <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"
 msgstr "To more than one person, or politely, the command ends in <0>-ge</0> or <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"

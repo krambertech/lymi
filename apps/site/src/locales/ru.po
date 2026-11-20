@@ -342,8 +342,8 @@ msgstr "*Завтра* суббота."
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
 
-msgid "<0/> and <1/> both say no. <2>Ei</2> says what someone doesn't do: <3/>, I'm not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
-msgstr "<0/> и <1/> оба отрицают. <2>Ei</2> говорит, чего человек не делает: <3/>, я не сажусь. <4>Ära</4> просит этого не делать: <5/> Команда никогда не начинается с <6>ei</6>."
+msgid "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn't do: <3/>, I'm not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
+msgstr "<0/> и <1/> оба отрицают, но каждое по-своему. <2>Ei</2> говорит, чего человек не делает: <3/>, я не сажусь. <4>Ära</4> просит этого не делать: <5/> Команда никогда не начинается с <6>ei</6>."
 
 msgid "<0/> asks about people and <1/> about things: <2/> who is that, <3/> what is that."
 msgstr "<0/> спрашивает о людях, а <1/> о вещах: <2/> кто это, <3/> что это."
@@ -352,7 +352,7 @@ msgid "<0/> at the start turns a sentence into a yes-or-no question. Lesson {que
 msgstr "<0/> в начале превращает предложение в вопрос, на который отвечают «да» или «нет». Вопросам посвящён урок {questions}."
 
 msgid "<0/> becomes <1/>, and the verb takes its <2>-ge</2> form: <3/> Said politely to one person, the sentence to keep is <4/>"
-msgstr "<0/> превращается в <1/>, а глагол берёт форму на <2>-ge</2>: <3/> А для одного человека на «вы» стоит запомнить такую фразу: <4/>"
+msgstr "<0/> превращается в <1/>, а глагол тоже стоит в форме на <2>-ge</2>: <3/> А для одного человека на «вы» стоит запомнить такую фразу: <4/>"
 
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> the irregular one: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "У <0/> нет окончания, и оно подходит и для «он, она», и для «они». Поэтому <1/> — неправильный глагол: у других глаголов окончание есть и здесь, об этом — в уроке {regularVerbs}."
@@ -864,8 +864,8 @@ msgstr "Бесплатный урок эстонского о том, как с�
 msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
 msgstr "Бесплатный урок о днях недели на эстонском: семь названий, четыре с числами внутри, однобуквенные обозначения в часах работы, а ещё täna, homme и eile. Каждое слово озвучено."
 
-msgid "A free lesson on the Estonian imperative: the verb's stem as a command (loe!, istu!, tule siia!), ära for don't, the forms for more than one person, and everyday commands such as räägi aeglasemalt, palun. Every sentence is read aloud."
-msgstr "Бесплатный урок о повелительном наклонении в эстонском языке: основа глагола как команда (loe!, istu!, tule siia!), ära для «не делай», формы для нескольких человек и повседневные просьбы вроде räägi aeglasemalt, palun. Каждое предложение озвучено."
+msgid "A free lesson on the Estonian imperative: the verb's stem as a command (loe!, istu!, tule siia!), ära for don't, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
+msgstr "Бесплатный урок о повелительном наклонении в эстонском языке: основа глагола как команда (loe!, istu!, tule siia!), ära для «не делай», формы на -ge и -ke для нескольких человек или на «вы», повседневные команды вроде räägi aeglasemalt, palun и короткий разговор в кафе. Каждое предложение озвучено."
 
 msgid "A full card in seconds"
 msgstr "Полная карточка за секунды"
@@ -3200,11 +3200,11 @@ msgstr "Каждый пропуск станет отдельной карточ
 msgid "Each has its own page: the script, the sounds and the free decks that language needs."
 msgstr "У каждого своя страница: письмо, звуки и бесплатные колоды, которые нужны именно этому языку."
 
-msgid "Each is the ma form without its <0>-n</0>: <1/>, <2/>; <3/>, <4/> <5/> means here, to this place."
-msgstr "Каждая из них — это форма с ma без <0>-n</0>: <1/>, <2/>; <3/>, <4/> <5/> значит «сюда»."
-
 msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
 msgstr "К каждому названию добавилось -s, и это -s значит «в». К Tallinn перед ним добавилось ещё и a."
+
+msgid "Each of these six everyday commands starts with a verb's stem. Tap one to hear it."
+msgstr "Каждая из этих шести повседневных команд начинается с основы глагола. Нажми на любую, чтобы услышать."
 
 msgid "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
 msgstr "У каждой части есть и минимум: 38 из 120 за языковые знания и чтение и 19 из 60 за аудирование."
@@ -4552,6 +4552,9 @@ msgstr "Услышь, где ударение."
 msgid "Hearing a command"
 msgstr "Команда на слух"
 
+msgid "Hearing ära and ei"
+msgstr "Ära и ei на слух"
+
 msgid "Hearing the place"
 msgstr "Место на слух"
 
@@ -5076,6 +5079,9 @@ msgstr "Я из Украины."
 msgid "I’m getting up early *tomorrow* morning."
 msgstr "*Завтра* я встаю рано."
 
+msgid "I'm going"
+msgstr "я иду"
+
 msgid "I’m going by *train*."
 msgstr "Я еду на *поезде*."
 
@@ -5126,9 +5132,6 @@ msgstr "Я ничего не *делаю*."
 
 msgid "I'm not drinking."
 msgstr "Я не пью."
-
-msgid "I'm not reading"
-msgstr "я не читаю"
 
 msgid "I'm not reading."
 msgstr "Я не читаю."
@@ -5505,7 +5508,7 @@ msgstr "Всё в порядке"
 msgid "It’s raining, so I want to *take a taxi*."
 msgstr "Идёт дождь, так что я хочу взять *такси*."
 
-msgid "It's the form that follows <0>ei</0> in lesson {negation}: <1/>, I'm not reading. Tap either side of a pair to hear it."
+msgid "It's the form that follows <0>ei</0> in lesson {negation}: <1/>, I don't read. Tap either side of a pair to hear it."
 msgstr "Это та же форма, что идёт после <0>ei</0> в уроке {negation}: <1/>, я не читаю. Нажми на любую половину пары, чтобы услышать её."
 
 msgid "It's three o'clock."
@@ -6637,7 +6640,7 @@ msgid "Nearly. Listen to the first word of the ones you missed."
 msgstr "Почти. Там, где была ошибка, послушай первое слово."
 
 msgid "Nearly. Play the ones you missed once more."
-msgstr "Почти. Послушай ещё раз те, где ошибся."
+msgstr "Почти. Послушай ещё раз те, где была ошибка."
 
 msgid "Nearly. Tap the endings above once more."
 msgstr "Почти. Ещё раз понажимай окончания выше."
@@ -7095,7 +7098,7 @@ msgid "One character, two sounds."
 msgstr "Один иероглиф, два чтения."
 
 msgid "One common verb breaks the pattern: <0/>, to go. <1/> is I'm going, but the command is <2/>"
-msgstr "Один частый глагол выбивается из правила: <0/>, «идти». <1/> — это «я иду», а команда — <2/>"
+msgstr "Один частый глагол — исключение: <0/>, «идти». <1/> — это «я иду», а команда — <2/>"
 
 msgid "One deck for a whole class"
 msgstr "Одна колода на всю группу"
@@ -8645,8 +8648,8 @@ msgstr "Сфотографируй слайды лекции или добавь
 msgid "Snap your lesson notes into cards, build the course in sections and share one link. Each learner reviews on their own schedule."
 msgstr "Преврати заметки с урока в карточки, построй курс из разделов и поделись одной ссылкой. Каждый ученик повторяет по своему расписанию."
 
-msgid "So far every command speaks to one person, someone you'd call <0/>. To more than one, or politely to one, as with <1/> in lesson {pronouns}, the command ends in <2>-ge</2> or <3>-ke</3>: <4/>, <5/>"
-msgstr "До сих пор каждая команда обращалась к одному человеку, с которым ты на «ты»: <0/>. Нескольким людям или одному на «вы», как <1/> в уроке {pronouns}, команда заканчивается на <2>-ge</2> или <3>-ke</3>: <4/>, <5/>"
+msgid "So far every command speaks to one person, someone you'd call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It's the same split as <5>sa</5> and <6/> in lesson {pronouns}."
+msgstr "До сих пор каждая команда обращалась к одному человеку, с которым ты на «ты»: <0/>. Нескольким людям или одному на «вы» команда заканчивается на <1>-ge</1> или <2>-ke</2>: <3/> <4/> Это то же деление, что между <5>sa</5> и <6/> в уроке {pronouns}."
 
 msgid "So-so"
 msgstr "Так себе"
@@ -9008,11 +9011,8 @@ msgstr "Шведы говорят так и о кофе, и о рабочем в
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 msgstr "Переключи <0/> на <1/>, и все шесть предложений станут отрицаниями. Нажми на строку, чтобы послушать."
 
-msgid "Switch between Do and Don't to hear all six both ways."
-msgstr "Переключай «Делай» и «Не делай», чтобы услышать все шесть обоими способами."
-
-msgid "Switch the six commands above once more, then try again."
-msgstr "Ещё раз переключи шесть команд выше, а потом попробуй снова."
+msgid "Switch between Do and Don't, and tap a line to hear it."
+msgstr "Переключайся между «Делай» и «Не делай»; нажми на строку, чтобы её услышать."
 
 msgid "Switch to In the place and watch the last letters change."
 msgstr "Переключи на «Где?» и смотри, как меняются концы слов."
@@ -9140,14 +9140,17 @@ msgstr "Нажми на слово или на человека"
 msgid "Tap an ending"
 msgstr "Нажми на окончание"
 
+msgid "Tap the commands above once more, then try again."
+msgstr "Ещё раз нажми на команды выше, а потом попробуй снова."
+
+msgid "Tap the Do and Don't lines above once more, then try again."
+msgstr "Ещё раз послушай строки «Делай» и «Не делай» выше, а потом попробуй снова."
+
 msgid "Tap the places above once more, then try again."
 msgstr "Ещё раз нажми на места выше, а потом попробуй снова."
 
 msgid "Tap the question words above once more, then try again."
 msgstr "Ещё раз понажимай вопросительные слова выше, а потом попробуй снова."
-
-msgid "Tap the six commands above once more, then try again."
-msgstr "Ещё раз нажми на шесть команд выше, а потом попробуй снова."
 
 msgid "Tap to turn it over"
 msgstr "Коснись, чтобы перевернуть"
@@ -9836,6 +9839,9 @@ msgstr "Основа — это команда"
 msgid "The stem is the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It's the form that follows <3>ei</3>."
 msgstr "Основа — это форма с ma без <0>-n</0>: <1>istun</1>, <2>istu</2>. Та же форма идёт после <3>ei</3>."
 
+msgid "The stem is the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+msgstr "Основа — это форма с ma без <0>-n</0>. Из <1/> получается <2/> Из <3/> получается <4/> <5/> значит «сюда»."
+
 msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb's three forms, shows where they come from."
 msgstr "Основа перед окончанием часто меняется: <0/> превращается в <1/> Пока запоминай эти формы целыми словами. Откуда они берутся, рассказывает урок {verbForms} о трёх формах глагола."
 
@@ -9949,9 +9955,6 @@ msgstr "Пока ничего не опубликовано."
 
 msgid "There’s a *park* near the station."
 msgstr "Возле вокзала есть *парк*."
-
-msgid "These six everyday commands are each a verb's stem. Tap one to hear it."
-msgstr "Каждая из этих шести повседневных команд — основа глагола. Нажми на любую, чтобы услышать."
 
 msgid "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
 msgstr "Эти шаги для Gemini CLI, который работает где угодно. В приложении Gemini Google открывает пользовательские приложения только для взрослых в США и на английском."
@@ -10346,8 +10349,8 @@ msgstr "Скучать по кому-то или чему-то"
 msgid "To more than one person"
 msgstr "Нескольким людям"
 
-msgid "To more than one person, or politely to one. <0>Ära</0> becomes <1>ärge</1>."
-msgstr "Нескольким людям или одному на «вы». <0>Ära</0> превращается в <1>ärge</1>."
+msgid "To more than one person, or politely to one."
+msgstr "Нескольким людям или одному на «вы»."
 
 msgid "To more than one person, or politely, the command ends in <0>-ge</0> or <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"
 msgstr "Нескольким людям или на «вы» команда заканчивается на <0>-ge</0> или <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"

@@ -82,7 +82,8 @@ const GLOSSARY: Glossary = {
   ära: { en: msg`don't`, note: msg`Before the stem, to tell one person not to do something.` },
   ärge: { en: msg`don't, to more than one or polite`, clip: false },
   "ma loen": { en: msg`I read`, show: "Ma loen" },
-  "ma ei loe": { en: msg`I'm not reading`, show: "ma ei loe" },
+  "ma ei loe": { en: msg`I don't read`, show: "ma ei loe" },
+  "ma lähen": { en: msg`I'm going`, show: "Ma lähen" },
   "ma ei istu": { en: msg`I'm not sitting down`, show: "ma ei istu" },
   siia: { en: msg`here, to this place`, note: msg`Where someone goes: tule siia, come here.` },
   istun: { en: msg`I sit down`, note: msg`From istuma, to sit.`, clip: false },
@@ -294,12 +295,7 @@ function MoreFlip() {
               on the end
             </Trans>
           }
-          tip={
-            <Trans>
-              To more than one person, or politely to one. <span lang="et">Ära</span> becomes{" "}
-              <span lang="et">ärge</span>.
-            </Trans>
-          }
+          tip={<Trans>To more than one person, or politely to one.</Trans>}
         />
       ) : (
         <FlipNote
@@ -569,7 +565,7 @@ export function KaskivLesson() {
                 <p>
                   <Trans>
                     It's the form that follows <span lang="et">ei</span> in lesson {negation}:{" "}
-                    <Word w="ma ei loe" />, I'm not reading. Tap either side of a pair to hear it.
+                    <Word w="ma ei loe" />, I don't read. Tap either side of a pair to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -583,7 +579,7 @@ export function KaskivLesson() {
               <Aside>
                 <Trans>
                   One common verb breaks the pattern: <Word w="minema" />, to go.{" "}
-                  <Word w="Ma lähen." /> is I'm going, but the command is <Word w="Mine!" />
+                  <Word w="Ma lähen" /> is I'm going, but the command is <Word w="Mine!" />
                 </Trans>
               </Aside>
             </>
@@ -597,7 +593,8 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    These six everyday commands are each a verb's stem. Tap one to hear it.
+                    Each of these six everyday commands starts with a verb's stem. Tap one to hear
+                    it.
                   </Trans>
                 </p>
               </Prose>
@@ -610,9 +607,9 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each is the ma form without its <span lang="et">-n</span>: <Word w="istun" />,{" "}
-                    <Word w="Istu!" />; <Word w="tulen" />, <Word w="Tule siia!" />{" "}
-                    <Word w="Siia" /> means here, to this place.
+                    The stem is the ma form without its <span lang="et">-n</span>.{" "}
+                    <Word w="Istun" /> gives <Word w="Istu!" /> <Word w="Tulen" /> gives{" "}
+                    <Word w="Tule siia!" /> <Word w="Siia" /> means here, to this place.
                   </Trans>
                 </p>
                 <p>
@@ -647,7 +644,7 @@ export function KaskivLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>Tap the six commands above once more, then try again.</Trans>
+                    <Trans>Tap the commands above once more, then try again.</Trans>
                   )
                 }
                 recall={(item) => ({ label: item.said, src: item.src })}
@@ -671,16 +668,16 @@ export function KaskivLesson() {
                   </Trans>
                 </p>
                 <p>
-                  <Trans>Switch between Do and Don't to hear all six both ways.</Trans>
+                  <Trans>Switch between Do and Don't, and tap a line to hear it.</Trans>
                 </p>
               </Prose>
               <AraFlip />
               <Aside>
                 <Trans>
-                  <Word w="Ei" /> and <Word w="ära" /> both say no. <span lang="et">Ei</span> says
-                  what someone doesn't do: <Word w="ma ei istu" />, I'm not sitting down.{" "}
-                  <span lang="et">Ära</span> tells someone not to do it: <Word w="Ära istu!" /> A
-                  command never starts with <span lang="et">ei</span>.
+                  <Word w="Ei" /> and <Word w="ära" /> both mean not, but they do different jobs.{" "}
+                  <span lang="et">Ei</span> says what someone doesn't do: <Word w="ma ei istu" />,
+                  I'm not sitting down. <span lang="et">Ära</span> tells someone not to do it:{" "}
+                  <Word w="Ära istu!" /> A command never starts with <span lang="et">ei</span>.
                 </Trans>
               </Aside>
             </>
@@ -688,7 +685,7 @@ export function KaskivLesson() {
         },
         {
           id: "do-or-dont",
-          title: t`Do, don't or not?`,
+          title: t`Hearing ära and ei`,
           quiz: true,
           children: (
             <>
@@ -714,7 +711,7 @@ export function KaskivLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Listen to the first word of the ones you missed.</Trans>
                   ) : (
-                    <Trans>Switch the six commands above once more, then try again.</Trans>
+                    <Trans>Tap the Do and Don't lines above once more, then try again.</Trans>
                   )
                 }
                 recall={(item) => ({ label: item.said, src: item.src })}
@@ -733,8 +730,7 @@ export function KaskivLesson() {
                 <p>
                   <Trans>
                     So far every command speaks to one person, someone you'd call <Word w="sa" />.
-                    To more than one, or politely to one, as with <Word w="te" /> in lesson{" "}
-                    {pronouns}, the command ends in{" "}
+                    To more than one, or politely to one, the command ends in{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -ge
                     </b>{" "}
@@ -742,7 +738,8 @@ export function KaskivLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -ke
                     </b>
-                    : <Word w="Istuge!" />, <Word w="Oodake!" />
+                    : <Word w="Istuge!" /> <Word w="Oodake!" /> It's the same split as{" "}
+                    <span lang="et">sa</span> and <Word w="te" /> in lesson {pronouns}.
                   </Trans>
                 </p>
                 <p>

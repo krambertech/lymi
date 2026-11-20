@@ -5581,7 +5581,7 @@ msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi — партитив от kass, кошка."
 
 msgid "Kati writes about herself. Each gap needs one thing you've practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
-msgstr "Кати пишет о себе. Каждый пропуск — на одно из знакомых правил: форма <0>olema</0>, окончание глагола, глагол после <1>ei</1>, <2>-s</2> либо <3>-l</3> или вопросительное слово."
+msgstr "Кати пишет о себе. В каждом пропуске — одно из того, что ты уже знаешь: форма <0>olema</0>, окончание глагола, глагол после <1>ei</1>, <2>-s</2> либо <3>-l</3> или вопросительное слово."
 
 msgid "Keep every word from your tutor lessons."
 msgstr "Сохрани каждое слово с уроков с репетитором."
@@ -9073,7 +9073,7 @@ msgid "Talk: meeting Mari"
 msgstr "Разговор: знакомство с Мари"
 
 msgid "Tallinn takes an extra a before the <0>-s</0>: <1>Tallinnas</1>."
-msgstr "У Tallinn перед <0>-s</0> появляется ещё одно a: <1>Tallinnas</1>."
+msgstr "В слове Tallinn перед <0>-s</0> появляется ещё одно a: <1>Tallinnas</1>."
 
 msgid "Tallinn, the capital"
 msgstr "Таллин, столица"
@@ -10038,8 +10038,8 @@ msgstr "Услышь час и отступи на полчаса назад, к
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "Эта политика охватывает сайт Lymi, приложения, API и подключённых помощников."
 
-msgid "This time Mari's lines are sound only. Tap a line to hear it again, and Show what Mari said to read it."
-msgstr "На этот раз реплики Мари только звучат. Нажми на реплику, чтобы услышать её ещё раз, а «Показать реплику» — чтобы её прочитать."
+msgid "This time Mari's lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
+msgstr "На этот раз реплики Мари только звучат. Нажми на реплику, чтобы услышать её ещё раз, или на «Показать реплику: Мари», чтобы её прочитать."
 
 msgid "Thousands on AnkiWeb"
 msgstr "Тысячи на AnkiWeb"

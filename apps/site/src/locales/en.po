@@ -10038,8 +10038,8 @@ msgstr "This is the one most learners get wrong at first. Listen for the hour, t
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "This policy covers Lymi’s website, apps, API and connected assistants."
 
-msgid "This time Mari's lines are sound only. Tap a line to hear it again, and Show what Mari said to read it."
-msgstr "This time Mari's lines are sound only. Tap a line to hear it again, and Show what Mari said to read it."
+msgid "This time Mari's lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
+msgstr "This time Mari's lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
 
 msgid "Thousands on AnkiWeb"
 msgstr "Thousands on AnkiWeb"

@@ -582,7 +582,7 @@ export function TutvumineLesson() {
                 </p>
                 <p>
                   <Trans>
-                    This time Mari's lines are sound only. Tap a line to hear it again, and Show
+                    This time Mari's lines are sound only. Tap a line to hear it again, or tap Show
                     what Mari said to read it.
                   </Trans>
                 </p>

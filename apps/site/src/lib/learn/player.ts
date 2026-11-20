@@ -5,6 +5,8 @@ import { useSyncExternalStore } from "react";
  * so a button, a key or a word shows activity only while its sound plays.
  */
 let audio: HTMLAudioElement | null = null;
+/** Bumped by every sound started from outside a sequence, so a running sequence knows to stop. */
+let turn = 0;
 let playingKey: string | null = null;
 const listeners = new Set<() => void>();
 const emit = () => {
@@ -26,6 +28,11 @@ export function playSound(
   key: string = src,
   onFrame?: (seconds: number) => void,
 ): Promise<void> {
+  turn += 1;
+  return start(src, key, onFrame);
+}
+
+function start(src: string, key: string, onFrame?: (seconds: number) => void): Promise<void> {
   stopSound();
   const sound = new Audio(src);
   audio = sound;
@@ -54,9 +61,13 @@ export function playSound(
   });
 }
 
+/** Plays clips one after another; any other sound started meanwhile ends the sequence. */
 export async function playInTurn(items: readonly { src: string; key: string }[]): Promise<void> {
+  turn += 1;
+  const mine = turn;
   for (const item of items) {
-    await playSound(item.src, item.key);
+    if (turn !== mine) return;
+    await start(item.src, item.key);
     await new Promise((resolve) => setTimeout(resolve, 260));
   }
 }

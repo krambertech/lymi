@@ -277,6 +277,10 @@ describe("analytics privacy contract", () => {
       "/ru/explore/languages/german",
     );
     expect(analyticsPath("/uk/medicine", "public")).toBe("/uk/medicine");
+    expect(analyticsPath("/estonian/learn", "public")).toBe("/estonian/learn");
+    expect(analyticsPath("/ru/estonian/learn/numbrid", "public")).toBe(
+      "/ru/estonian/learn/numbrid",
+    );
     expect(analyticsPath("/certifications", "public")).toBe("/certifications");
     expect(analyticsPath("/tutor-lessons", "public")).toBe("/tutor-lessons");
     expect(analyticsPath("/notes-to-flashcards", "public")).toBe("/notes-to-flashcards");

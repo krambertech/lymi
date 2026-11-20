@@ -25,11 +25,13 @@ interface Open {
   anchor: HTMLElement;
   /** A tap or click keeps it open until the visitor clicks elsewhere. */
   pinned: boolean;
+  /** Opened with Enter or Space: focus moves into the card and back to the word when it closes. */
+  keyboard: boolean;
 }
 
 interface CardControl {
   openAfter: (word: string, anchor: HTMLElement) => void;
-  openNow: (word: string, anchor: HTMLElement) => void;
+  openNow: (word: string, anchor: HTMLElement, keyboard: boolean) => void;
   closeSoon: () => void;
   open: Open | null;
 }
@@ -45,14 +47,17 @@ export function WordCards({ children }: { children: ReactNode }) {
   const openAfter = useCallback(
     (word: string, anchor: HTMLElement) => {
       clear();
-      timer.current = setTimeout(() => setOpen({ word, anchor, pinned: false }), OPEN_AFTER_MS);
+      timer.current = setTimeout(
+        () => setOpen({ word, anchor, pinned: false, keyboard: false }),
+        OPEN_AFTER_MS,
+      );
     },
     [clear],
   );
   const openNow = useCallback(
-    (word: string, anchor: HTMLElement) => {
+    (word: string, anchor: HTMLElement, keyboard: boolean) => {
       clear();
-      setOpen({ word, anchor, pinned: true });
+      setOpen({ word, anchor, pinned: true, keyboard });
     },
     [clear],
   );
@@ -73,8 +78,10 @@ export function WordCards({ children }: { children: ReactNode }) {
     };
     const onKey = (event: KeyboardEvent) => {
       if (event.key !== "Escape") return;
+      const focusInside = !!document.getElementById("learn-card")?.contains(document.activeElement);
       setOpen(null);
-      open.anchor.focus();
+      // Only a card the visitor opened or is in hands focus back; a hover card leaves it alone.
+      if (open.pinned || focusInside) open.anchor.focus();
     };
     document.addEventListener("pointerdown", away);
     document.addEventListener("keydown", onKey);
@@ -96,6 +103,10 @@ export function WordCards({ children }: { children: ReactNode }) {
             onLeave={() => {
               if (!open.pinned) closeSoon();
             }}
+            onFocusOut={() => {
+              setOpen(null);
+              open.anchor.focus();
+            }}
           />,
           document.body,
         )}
@@ -107,10 +118,13 @@ function Card({
   open,
   onEnter,
   onLeave,
+  onFocusOut,
 }: {
   open: Open;
   onEnter: () => void;
   onLeave: () => void;
+  /** Tab moved past the card's last control. */
+  onFocusOut: () => void;
 }) {
   const { i18n, t } = useLingui();
   const { gloss, src, show } = useWord(open.word);
@@ -144,6 +158,9 @@ function Card({
     const frame = requestAnimationFrame(() => setShown(true));
     return () => cancelAnimationFrame(frame);
   }, []);
+  useEffect(() => {
+    if (open.keyboard && place) ref.current?.focus({ preventScroll: true });
+  }, [open.keyboard, place]);
 
   return (
     <div
@@ -151,12 +168,17 @@ function Card({
       ref={ref}
       role="dialog"
       aria-label={show}
+      aria-describedby={gloss ? "learn-card-meaning" : undefined}
+      tabIndex={-1}
+      onBlur={(event) => {
+        if (open.keyboard && !event.currentTarget.contains(event.relatedTarget)) onFocusOut();
+      }}
       data-open={shown && place ? "" : undefined}
       data-below={place?.below ? "" : undefined}
       style={{ top: place?.top ?? -9999, left: place?.left ?? 0 }}
       onPointerEnter={onEnter}
       onPointerLeave={onLeave}
-      className="learn-card grid gap-1.5 rounded-lg bg-plate p-3.5 pt-3 ring-1 ring-edge"
+      className="learn-card grid gap-1.5 rounded-lg bg-plate p-3.5 pt-3 ring-1 ring-edge outline-none"
     >
       <div className="flex items-center gap-2.5">
         <span
@@ -167,8 +189,12 @@ function Card({
         </span>
         {src && <PlayButton src={src} label={t`Play ${show}`} />}
       </div>
-      {gloss && <p className="text-md text-ink">{i18n._(gloss.en)}</p>}
-      {gloss?.note && <p className="text-sm text-ink-muted">{i18n._(gloss.note)}</p>}
+      {gloss && (
+        <div id="learn-card-meaning" className="grid gap-1.5">
+          <p className="text-md text-ink">{i18n._(gloss.en)}</p>
+          {gloss.note && <p className="text-sm text-ink-muted">{i18n._(gloss.note)}</p>}
+        </div>
+      )}
     </div>
   );
 }
@@ -196,6 +222,7 @@ export function Word({ w }: WordProps) {
       data-word={id}
       aria-haspopup="dialog"
       aria-expanded={expanded}
+      aria-controls={expanded ? "learn-card" : undefined}
       data-playing={playing ? "" : undefined}
       className={clsx("learn-word")}
       onPointerEnter={(event) => {
@@ -205,7 +232,7 @@ export function Word({ w }: WordProps) {
         if (event.pointerType === "mouse") cards?.closeSoon();
       }}
       onClick={(event) => {
-        cards?.openNow(w, event.currentTarget);
+        cards?.openNow(w, event.currentTarget, event.detail === 0);
         if (src) void playSound(src);
       }}
     >

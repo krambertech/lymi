@@ -59,12 +59,16 @@ export const rightCount = (state: QuizState): number => state.results.filter(Boo
 
 /** A typed number, read the way a learner might type it: spaces, a decimal comma, leading zeros. */
 export function normalizeTyped(value: string): string {
-  return value
-    .replace(/\s+/g, "")
-    .replace(",", ".")
-    .replace(/^0+(?=\d)/, "")
-    .replace(/\.0+$/, "")
-    .replace(/(\.\d*?)0+$/, "$1");
+  return (
+    value
+      .replace(/\s+/g, "")
+      // A comma or point before exactly three digits groups thousands: 12,000 and 12.000 are 12000.
+      .replace(/[.,](?=\d{3}(?:\D|$))/g, "")
+      .replace(",", ".")
+      .replace(/^0+(?=\d)/, "")
+      .replace(/\.0+$/, "")
+      .replace(/(\.\d*?)0+$/, "$1")
+  );
 }
 
 export function typedMatches(value: string, answers: readonly string[]): boolean {

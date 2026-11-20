@@ -1,5 +1,6 @@
 ---
 import LearnLessonPage, { LESSON_VIEWS } from "../islands/LearnLessonPage";
+import { SHARE_IMAGE_ALT } from "../landing/LandingView";
 import BaseLayout from "../../layouts/BaseLayout.astro";
 import { lessonBySlug, lessonPath } from "../../lib/learn/catalogue";
 import { pageI18n } from "../../lib/i18n";
@@ -24,6 +25,7 @@ const alternatePaths = { en: lessonPath(slug, "en"), uk: lessonPath(slug, "uk"),
   canonicalPath={lessonPath(slug, locale)}
   alternatePaths={alternatePaths}
   noindex={isPrelaunch("learn")}
+  shareImageAlt={i18n._(SHARE_IMAGE_ALT)}
 >
   <LearnLessonPage client:load locale={locale} slug={slug as keyof typeof LESSON_VIEWS} />
 </BaseLayout>

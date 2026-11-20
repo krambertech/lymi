@@ -102,8 +102,8 @@ function Resume() {
       <p className="flex flex-wrap gap-x-4 gap-y-1 border-t border-edge pt-3 text-sm text-ink-muted">
         <span>
           <Trans>
-            <b className="font-semibold text-ink tabular-nums">{doneCount}</b> of {builtCount}{" "}
-            lessons done
+            Lessons done: <b className="font-semibold text-ink tabular-nums">{doneCount}</b> of{" "}
+            {builtCount}
           </Trans>
         </span>
         <span>
@@ -168,7 +168,7 @@ function Stop({ lesson, status }: { lesson: PlacedLesson; status: Status }) {
   const open = status !== "soon";
   const body = (
     <>
-      <span className="relative z-1 grid size-[46px] place-items-center">
+      <span aria-hidden="true" className="relative z-1 grid size-[46px] place-items-center">
         <i
           className={clsx(
             "grid place-items-center rounded-full not-italic transition-transform duration-200",
@@ -204,7 +204,13 @@ function Stop({ lesson, status }: { lesson: PlacedLesson; status: Status }) {
           {i18n._(lesson.about)}
         </span>
       </span>
-      {open && <StatusTag status={status} />}
+      {open ? (
+        <StatusTag status={status} />
+      ) : (
+        <span className="sr-only">
+          <Trans>Coming soon</Trans>
+        </span>
+      )}
     </>
   );
   const row =

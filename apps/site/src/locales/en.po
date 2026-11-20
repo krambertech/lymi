@@ -314,9 +314,6 @@ msgstr "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the t
 msgid "<0>{0}</0>: <1>{1}</1>"
 msgstr "<0>{0}</0>: <1>{1}</1>"
 
-msgid "<0>{doneCount}</0> of {builtCount} lessons done"
-msgstr "<0>{doneCount}</0> of {builtCount} lessons done"
-
 msgid "<0>{plannedCount}</0> planned, A1 to B1"
 msgstr "<0>{plannedCount}</0> planned, A1 to B1"
 
@@ -4759,6 +4756,9 @@ msgstr "Lesson 4"
 msgid "Lesson 4 · getting around"
 msgstr "Lesson 4 · getting around"
 
+msgid "Lessons done: <0>{doneCount}</0> of {builtCount}"
+msgstr "Lessons done: <0>{doneCount}</0> of {builtCount}"
+
 msgid "Let {name} add cards?"
 msgstr "Let {name} add cards?"
 
@@ -4819,8 +4819,8 @@ msgstr "Linna can mean “of the town” or “into the town”. Only how long y
 msgid "Listen"
 msgstr "Listen"
 
-msgid "Listen first, then pick."
-msgstr "Listen first, then pick."
+msgid "Listen first."
+msgstr "Listen first."
 
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
@@ -6556,6 +6556,9 @@ msgstr "Room"
 
 msgid "Roots, trunks, divisions, cords, branches: from C5 to T1."
 msgstr "Roots, trunks, divisions, cords, branches: from C5 to T1."
+
+msgid "Round {roundNumber} of {total}"
+msgstr "Round {roundNumber} of {total}"
 
 msgid "Run /mcp auth lymi. Your browser opens on Lymi. Sign in and allow it."
 msgstr "Run /mcp auth lymi. Your browser opens on Lymi. Sign in and allow it."

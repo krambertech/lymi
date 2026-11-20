@@ -64,23 +64,25 @@ export function Keys({ label, items, columns, phoneColumns, empty }: KeysProps) 
           />
         ))}
       </fieldset>
-      {detail && (
-        <div
-          key={picked ?? "empty"}
-          aria-live="polite"
-          className="learn-swap grid min-h-21 grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-4 gap-y-1 px-1"
-        >
-          <span
-            lang="et"
-            aria-hidden={picked === null}
-            className="min-w-[1.2ch] text-center text-5xl font-semibold text-(--form)"
+      {/* The live region stays put; only what is inside it is swapped. */}
+      <div aria-live="polite" className="contents">
+        {detail && (
+          <div
+            key={picked ?? "empty"}
+            className="learn-swap grid min-h-21 grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-4 gap-y-1 px-1"
           >
-            {big}
-          </span>
-          <span className="text-2xl font-medium">{detail.title}</span>
-          <span className="col-start-2 text-md text-ink-secondary">{detail.tip}</span>
-        </div>
-      )}
+            <span
+              lang="et"
+              aria-hidden={picked === null}
+              className="min-w-[1.2ch] text-center text-5xl font-semibold text-(--form)"
+            >
+              {big}
+            </span>
+            <span className="text-2xl font-medium">{detail.title}</span>
+            <span className="col-start-2 text-md text-ink-secondary">{detail.tip}</span>
+          </div>
+        )}
+      </div>
     </div>
   );
 }

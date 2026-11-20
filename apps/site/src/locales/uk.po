@@ -314,9 +314,6 @@ msgstr "<0>-teist</0> утворює числа від одинадцяти до
 msgid "<0>{0}</0>: <1>{1}</1>"
 msgstr "<0>{0}</0>: <1>{1}</1>"
 
-msgid "<0>{doneCount}</0> of {builtCount} lessons done"
-msgstr "Пройдено уроків: <0>{doneCount}</0> з {builtCount}"
-
 msgid "<0>{plannedCount}</0> planned, A1 to B1"
 msgstr "Заплановано: <0>{plannedCount}</0>, від A1 до B1"
 
@@ -4759,6 +4756,9 @@ msgstr "Урок 4"
 msgid "Lesson 4 · getting around"
 msgstr "Урок 4 · транспорт"
 
+msgid "Lessons done: <0>{doneCount}</0> of {builtCount}"
+msgstr "Пройдено уроків: <0>{doneCount}</0> з {builtCount}"
+
 msgid "Let {name} add cards?"
 msgstr "Дозволити {name} додавати картки?"
 
@@ -4819,8 +4819,8 @@ msgstr "Linna може означати «міста» або «в місто».
 msgid "Listen"
 msgstr "Послухати"
 
-msgid "Listen first, then pick."
-msgstr "Спершу послухай, потім вибери."
+msgid "Listen first."
+msgstr "Спершу прослухай."
 
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
@@ -6556,6 +6556,9 @@ msgstr "Кімната"
 
 msgid "Roots, trunks, divisions, cords, branches: from C5 to T1."
 msgstr "Корінці, стовбури, поділи, пучки, гілки: від C5 до T1."
+
+msgid "Round {roundNumber} of {total}"
+msgstr "Раунд {roundNumber} з {total}"
 
 msgid "Run /mcp auth lymi. Your browser opens on Lymi. Sign in and allow it."
 msgstr "Запусти /mcp auth lymi. У браузері відкриється Lymi. Увійди й дозволь доступ."

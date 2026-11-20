@@ -46,7 +46,9 @@ const current = () => (snapshot ??= readProgress());
 
 /** Marks a lesson started, unless it is already started or done. */
 export function startLesson(slug: string, store?: Storage | null): void {
-  const progress = store === undefined ? current() : readProgress(store);
+  // Read storage again, so another tab's progress isn't overwritten; without storage, keep this page's.
+  const progress =
+    store !== undefined ? readProgress(store) : storage() ? readProgress() : current();
   if (progress.lessons[slug]) return;
   write({ ...progress, lessons: { ...progress.lessons, [slug]: { state: "started" } } }, store);
 }
@@ -58,7 +60,9 @@ export function finishSection(
   allSections: readonly string[],
   store?: Storage | null,
 ): { lessonFinished: boolean } {
-  const progress = store === undefined ? current() : readProgress(store);
+  // Read storage again, so another tab's progress isn't overwritten; without storage, keep this page's.
+  const progress =
+    store !== undefined ? readProgress(store) : storage() ? readProgress() : current();
   const done = progress.sections[slug] ?? [];
   if (done.includes(section)) return { lessonFinished: false };
   const sections = [...done, section];
@@ -78,9 +82,19 @@ export function clearProgress(store?: Storage | null): void {
   write(EMPTY, store);
 }
 
+const fromOtherTab = (event: StorageEvent) => {
+  if (event.key !== KEY) return;
+  snapshot = readProgress();
+  for (const listener of listeners) listener();
+};
+
 function subscribe(listener: () => void): () => void {
+  if (listeners.size === 0) addEventListener("storage", fromOtherTab);
   listeners.add(listener);
-  return () => listeners.delete(listener);
+  return () => {
+    listeners.delete(listener);
+    if (listeners.size === 0) removeEventListener("storage", fromOtherTab);
+  };
 }
 
 /** The visitor's progress; empty while the page renders on the server. */

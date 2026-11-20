@@ -195,7 +195,10 @@ function Builder() {
           aria-label={t`Number`}
           onChange={(event) => set(Number(event.target.value), false)}
           onPointerUp={(event) => set(Number(event.currentTarget.value), true)}
-          onKeyUp={(event) => set(Number(event.currentTarget.value), true)}
+          onKeyUp={(event) => {
+            if (/^(Arrow|Home|End|Page)/.test(event.key))
+              set(Number(event.currentTarget.value), true);
+          }}
           className="h-7 w-full cursor-pointer accent-(--form)"
         />
         <button
@@ -421,7 +424,7 @@ export function NumbridLesson() {
               <ListenRows
                 lead="96px"
                 items={bigs.map((n) => ({
-                  lead: i18n.number(n),
+                  lead: n >= 10000 ? i18n.number(n) : String(n),
                   main: <Spoken n={n} />,
                   src: numberSrc(n),
                   label: t`Play ${n}`,

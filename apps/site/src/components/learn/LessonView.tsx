@@ -130,33 +130,27 @@ function Section({
   children: ReactNode;
 }) {
   const { finishSection } = useLesson();
-  const ref = useRef<HTMLElement>(null);
-  // A reading section counts once its end has scrolled past the top of the screen.
+  const end = useRef<HTMLSpanElement>(null);
+  // A reading section counts once its end has been on screen, however tall the section is.
   useEffect(() => {
-    const node = ref.current;
+    const node = end.current;
     if (!node || quiz) return;
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry && !entry.isIntersecting && entry.boundingClientRect.bottom < 80)
-          finishSection(id);
-        if (entry?.isIntersecting && entry.intersectionRatio > 0.9 && id === "recap")
-          finishSection(id);
-      },
-      { threshold: [0, 0.9] },
-    );
+    const observer = new IntersectionObserver(([entry]) => {
+      if (entry?.isIntersecting) finishSection(id);
+    });
     observer.observe(node);
     return () => observer.disconnect();
   }, [id, quiz, finishSection]);
   return (
     <SectionContext.Provider value={id}>
       <section
-        ref={ref}
         id={id}
         data-section={id}
         className="grid scroll-mt-14 gap-4.5 py-10 not-first:border-t not-first:border-edge max-sm:py-8"
       >
         <h2 className="text-3xl font-semibold tracking-tight max-sm:text-[1.5625rem]">{title}</h2>
         {children}
+        <span ref={end} aria-hidden="true" className="-mt-4.5 h-px" />
       </section>
     </SectionContext.Provider>
   );

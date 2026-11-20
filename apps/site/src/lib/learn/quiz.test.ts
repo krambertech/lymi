@@ -48,5 +48,9 @@ describe("typedMatches", () => {
     expect(typedMatches("10", ["100"])).toBe(false);
     expect(typedMatches("  ", ["0"])).toBe(false);
     expect(typedMatches("0", ["0"])).toBe(true);
+    expect(typedMatches("12,000", ["12000"])).toBe(true);
+    expect(typedMatches("1.000", ["1000"])).toBe(true);
+    expect(typedMatches("4,500", ["4500"])).toBe(true);
+    expect(typedMatches("2,026", ["2026"])).toBe(true);
   });
 });

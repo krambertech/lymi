@@ -2,7 +2,15 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { captureAnalytics } from "@lymi/client/analytics";
 import { clsx } from "clsx";
 import { ArrowRight, Check, Ear, RotateCcw, X } from "lucide-react";
-import { type ReactNode, useContext, useEffect, useReducer, useRef, useState } from "react";
+import {
+  Fragment,
+  type ReactNode,
+  useContext,
+  useEffect,
+  useReducer,
+  useRef,
+  useState,
+} from "react";
 import { playInTurn, playSound } from "../../lib/learn/player";
 import {
   type QuizState,
@@ -142,6 +150,9 @@ export function Quiz<Item>({
   const [list, setList] = useState<readonly Item[]>(items);
   const [autoplay, setAutoplay] = useState(false);
   const nextRef = useRef<HTMLButtonElement>(null);
+  const againRef = useRef<HTMLButtonElement>(null);
+  const bodyRef = useRef<HTMLDivElement>(null);
+  const restarted = useRef(false);
 
   // Shuffled after the page loads; the first round stays first so the server's page matches.
   useEffect(() => {
@@ -161,9 +172,27 @@ export function Quiz<Item>({
     });
     if (section) finishSection(section);
   }, [finished, state, slug, id, total, section, finishSection]);
+  // Focus follows the quiz: Next after an answer, Try again at the score, Listen after a restart.
   useEffect(() => {
     if (state.status === "answered" && total > 1) nextRef.current?.focus({ preventScroll: true });
+    if (state.status === "finished") againRef.current?.focus({ preventScroll: true });
+    if (state.status === "asking" && restarted.current) {
+      restarted.current = false;
+      bodyRef.current?.querySelector("button")?.focus({ preventScroll: true });
+    }
   }, [state.status, total]);
+
+  // One live region for the whole quiz, so a screen reader hears each mark and the score.
+  const right = rightCount(state);
+  const announcement =
+    state.status === "finished"
+      ? t`${right} of ${total} right`
+      : state.status === "answered"
+        ? state.right
+          ? t`Right.`
+          : t`Not this one.`
+        : "";
+  const roundNumber = state.status === "finished" ? total : state.round + 1;
 
   const item = state.status === "finished" ? undefined : list[state.round];
   const extra = item && state.status === "answered" ? both?.(item) : undefined;
@@ -172,15 +201,29 @@ export function Quiz<Item>({
     <div className="learn-quiz grid overflow-hidden rounded-xl bg-plate max-sm:-mx-1">
       <div className="flex flex-wrap items-center justify-between gap-3 bg-(--tray) px-5 py-3.5 max-sm:px-4">
         <h3 className="text-lg font-medium">{title}</h3>
-        {total > 1 && <Dots state={state} total={total} />}
+        {total > 1 && (
+          <>
+            <Dots state={state} total={total} />
+            <span className="sr-only">
+              <Trans>
+                Round {roundNumber} of {total}
+              </Trans>
+            </span>
+          </>
+        )}
       </div>
-      <div className="grid justify-items-start gap-4 px-5 pt-5 pb-5 max-sm:px-4">
+      <p aria-live="polite" className="sr-only">
+        {announcement}
+      </p>
+      <div ref={bodyRef} className="grid justify-items-start gap-4 px-5 pt-5 pb-5 max-sm:px-4">
         {state.status === "finished" ? (
           <>
             <Score right={rightCount(state)} total={total} verdict={verdict} />
             <Button
+              ref={againRef}
               onClick={() => {
                 reported.current = false;
+                restarted.current = true;
                 setList(order(items));
                 setAutoplay(false);
                 dispatch({ type: "restarted" });
@@ -193,13 +236,16 @@ export function Quiz<Item>({
         ) : (
           item !== undefined && (
             <>
-              {round({
-                item,
-                state,
-                heard: () => dispatch({ type: "heard" }),
-                answer: (picked, right) => dispatch({ type: "answered", picked, right }),
-                autoplay,
-              })}
+              {/* Each round mounts fresh, so nothing a round held carries into the next. */}
+              <Fragment key={state.round}>
+                {round({
+                  item,
+                  state,
+                  heard: () => dispatch({ type: "heard" }),
+                  answer: (picked, right) => dispatch({ type: "answered", picked, right }),
+                  autoplay,
+                })}
+              </Fragment>
               {state.status === "answered" && (extra || total > 1) && (
                 <div className="flex w-full flex-wrap items-center justify-end gap-2.5 pt-1">
                   {extra && (
@@ -288,7 +334,7 @@ function useNudge() {
   const [nudged, setNudged] = useState(false);
   const note = nudged ? (
     <p role="status" className="text-sm text-ink-muted">
-      <Trans>Listen first, then pick.</Trans>
+      <Trans>Listen first.</Trans>
     </p>
   ) : null;
   return { nudge: () => setNudged(true), note };
@@ -437,6 +483,7 @@ export interface TypedItem {
 /** Listen, then type. For numbers, prices and times. */
 export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<TypedItem>) {
   const { t } = useLingui();
+  const { nudge, note } = useNudge();
   const [value, setValue] = useState("");
   const input = useRef<HTMLInputElement>(null);
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
@@ -459,12 +506,13 @@ export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<
           input.current?.focus({ preventScroll: true });
         }}
       />
+      {note}
       <form
         className="flex w-full max-w-sm gap-2"
         onSubmit={(event) => {
           event.preventDefault();
           if (done || !value.trim()) return input.current?.focus();
-          heard();
+          if (state.status === "asking" && !state.heard) return nudge();
           answer(value, typedMatches(value, item.answers));
         }}
       >

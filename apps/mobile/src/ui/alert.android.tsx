@@ -6,6 +6,7 @@ import {
   TextButton,
   type TextProps,
 } from "@expo/ui/jetpack-compose";
+import { verticalScroll } from "@expo/ui/jetpack-compose/modifiers";
 import { useLingui } from "@lingui/react/macro";
 import { useSyncExternalStore } from "react";
 import { usePalette, useRoom } from "../theme/palette";
@@ -99,7 +100,8 @@ export function AlertHost() {
         </AlertDialog.Title>
         {shown.message ? (
           <AlertDialog.Text>
-            <Text color={p["ink-secondary"]} style={BODY}>
+            {/* Material caps the text slot's height to keep the buttons on screen but doesn't scroll it, so long text at a large size would be cut off. */}
+            <Text color={p["ink-secondary"]} style={BODY} modifiers={[verticalScroll()]}>
               {shown.message}
             </Text>
           </AlertDialog.Text>

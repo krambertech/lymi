@@ -176,6 +176,9 @@ msgstr "{learners, plural, one {Reached # learner} other {Reached all # learners
 msgid "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when to bring each card back.} one {One more card is waiting. Add the deck, and Lymi chooses when to bring each one back.} other {Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back.}}"
 msgstr "{left, plural, =0 {That’s the whole deck. Add it, and Lymi chooses when to bring each card back.} one {One more card is waiting. Add the deck, and Lymi chooses when to bring each one back.} other {Another # cards are waiting. Add the deck, and Lymi chooses when to bring each one back.}}"
 
+msgid "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
+msgstr "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
+
 msgid "{n, plural, one {# known} other {# known}}"
 msgstr "{n, plural, one {# known} other {# known}}"
 
@@ -2171,9 +2174,6 @@ msgstr "Comes back a few cards later, then after longer gaps"
 
 msgid "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards, and sentence translations come along too."
 msgstr "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards, and sentence translations come along too."
-
-msgid "Coming soon"
-msgstr "Coming soon"
 
 msgid "Common questions."
 msgstr "Common questions."
@@ -6998,6 +6998,9 @@ msgstr "Someone’s knocking at the *door*."
 
 msgid "Something else"
 msgstr "Something else"
+
+msgid "Soon"
+msgstr "Soon"
 
 msgid "Sorry; excuse me"
 msgstr "Sorry; excuse me"

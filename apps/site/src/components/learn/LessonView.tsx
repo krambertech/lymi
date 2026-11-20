@@ -214,13 +214,13 @@ function ReadBar({ title, sections }: { title: string; sections: readonly Lesson
         stuck ? "border-edge" : "border-transparent",
       )}
     >
-      <div className="mx-auto flex max-w-[720px] items-center gap-3.5 px-5 py-2.5">
+      <div className="mx-auto flex max-w-[720px] items-center px-5 py-2.5">
         <span
           lang="et"
           aria-hidden={!stuck}
           className={clsx(
-            "overflow-hidden font-medium text-ellipsis whitespace-nowrap transition-[max-width,opacity] duration-300",
-            stuck ? "max-w-56 opacity-100 max-sm:max-w-28" : "max-w-0 opacity-0",
+            "overflow-hidden font-medium text-ellipsis whitespace-nowrap transition-[max-width,opacity,margin] duration-300",
+            stuck ? "me-3.5 max-w-56 opacity-100 max-sm:max-w-28" : "me-0 max-w-0 opacity-0",
           )}
         >
           {title}
@@ -257,7 +257,7 @@ function ReadBar({ title, sections }: { title: string; sections: readonly Lesson
             );
           })}
         </nav>
-        <span className="text-sm whitespace-nowrap text-ink-muted tabular-nums">
+        <span className="ms-3.5 text-sm whitespace-nowrap text-ink-muted tabular-nums">
           <Trans>
             {doneCount} of {count}
           </Trans>

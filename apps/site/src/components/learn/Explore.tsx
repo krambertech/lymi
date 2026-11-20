@@ -67,19 +67,19 @@ export function Keys({ label, items, columns, phoneColumns, empty }: KeysProps) 
       {/* The live region stays put; only what is inside it is swapped. */}
       <div aria-live="polite" hidden={!detail}>
         {detail && (
-          <div
-            key={picked ?? "empty"}
-            className="learn-swap grid min-h-21 grid-cols-[auto_minmax(0,1fr)] items-baseline gap-x-4 gap-y-1 px-1"
-          >
+          <div key={picked ?? "empty"} className="learn-swap flex min-h-16 items-center gap-4">
+            {/* The letter sits in a tile of its own, so its size never has to line up with the text. */}
             <span
               lang="et"
               aria-hidden={picked === null}
-              className="min-w-[1.2ch] text-center text-5xl font-semibold text-(--form)"
+              className="grid size-16 shrink-0 place-items-center rounded-tile bg-plate pb-1 text-4xl font-semibold text-(--form)"
             >
               {big}
             </span>
-            <span className="text-2xl font-medium">{detail.title}</span>
-            <span className="col-start-2 text-md text-ink-secondary">{detail.tip}</span>
+            <span className="grid min-w-0 gap-0.5">
+              <span className="text-xl font-medium">{detail.title}</span>
+              <span className="text-md text-ink-secondary">{detail.tip}</span>
+            </span>
           </div>
         )}
       </div>

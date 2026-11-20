@@ -1,4 +1,4 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight, Check } from "lucide-react";
 import type { CSSProperties } from "react";
@@ -11,7 +11,7 @@ type Status = "done" | "started" | "ready" | "soon";
 const statusOf = (lesson: PlacedLesson, progress: Progress): Status =>
   !lesson.slug ? "soon" : (progress.lessons[lesson.slug]?.state ?? "ready");
 
-/** The course: where to pick up, then every stage as a line of lessons, done, open or coming. */
+/** The course: where to pick up, then every stage as a table of contents, done, open or coming. */
 export function HubView() {
   return (
     <LearnLayout languages={{ page: "learn" }}>
@@ -30,7 +30,7 @@ export function HubView() {
           </div>
           <Resume />
         </section>
-        <div className="mx-auto grid max-w-[720px] gap-3">
+        <div className="grid">
           {STAGES.map((stage, i) => (
             <Stage key={stage.hue} index={i} />
           ))}
@@ -116,6 +116,7 @@ function Resume() {
   );
 }
 
+/** One stage as a book's contents: its name, goal and progress beside the list of its lessons. */
 function Stage({ index }: { index: number }) {
   const { i18n } = useLingui();
   const progress = useProgress();
@@ -126,109 +127,107 @@ function Stage({ index }: { index: number }) {
     (lesson) => progress.lessons[lesson.slug as string]?.state === "done",
   ).length;
   const builtCount = built.length;
+  const lessonCount = stage.lessons.length;
   const lessons = LESSONS.filter((lesson) => lesson.stage === stage);
   const id = `stage-${index + 1}`;
   return (
     <section
       aria-labelledby={id}
-      className="learn-hue grid gap-1 rounded-xl bg-(--tray) px-5.5 pt-6 pb-3.5 max-sm:-mx-1 max-sm:px-3.5 max-sm:pt-5"
+      className="learn-hue grid gap-10 border-t border-edge py-9 @3xl:grid-cols-[minmax(0,300px)_minmax(0,1fr)] max-@3xl:gap-4 max-@3xl:py-7"
       style={{ "--h": stage.hue } as CSSProperties}
     >
-      <div className="grid gap-2 pb-3.5">
-        <div className="flex flex-wrap items-center gap-2.5">
-          <span className="grid h-6 place-items-center rounded-[7px] bg-plate px-2 text-sm font-semibold text-(--form)">
+      <div className="grid content-start gap-2.5 self-start @3xl:sticky @3xl:top-5">
+        <span>
+          <span className="inline-grid h-6 place-items-center rounded-[7px] bg-(--tray) px-2 text-sm font-semibold text-(--form)">
             {stage.level}
           </span>
-          <h2 id={id} className="text-[1.625rem] leading-tight font-semibold tracking-tight">
-            {i18n._(stage.name)}
-          </h2>
-          <span className="ms-auto text-sm text-ink-muted tabular-nums">
-            {builtCount ? (
-              <Trans>
-                {doneCount} of {builtCount} done
-              </Trans>
-            ) : (
-              <Trans>Coming soon</Trans>
-            )}
-          </span>
+        </span>
+        <h2 id={id} className="text-3xl leading-tight font-semibold tracking-tight">
+          {i18n._(stage.name)}
+        </h2>
+        <p className="text-md text-ink-secondary">{i18n._(stage.goal)}</p>
+        <div className="mt-1 grid gap-1.5 text-sm text-ink-muted tabular-nums">
+          {builtCount ? (
+            <>
+              <span>
+                <Trans>
+                  {doneCount} of {builtCount} done
+                </Trans>
+              </span>
+              <span className="h-1.5 overflow-hidden rounded-full bg-plate-nested">
+                <span
+                  className="block h-full rounded-full bg-(--form) transition-[width] duration-500"
+                  style={{ width: `${(doneCount / builtCount) * 100}%` }}
+                />
+              </span>
+            </>
+          ) : (
+            <span>
+              <Plural
+                value={lessonCount}
+                one="# lesson, coming soon"
+                other="# lessons, coming soon"
+              />
+            </span>
+          )}
         </div>
-        <p className="max-w-[52ch] text-md text-ink-secondary">{i18n._(stage.goal)}</p>
       </div>
-      <ol className="relative m-0 list-none p-0 before:absolute before:inset-y-5.5 before:start-[21px] before:w-1 before:rounded-full before:bg-[color-mix(in_oklab,var(--form)_30%,transparent)]">
+      <ol className="m-0 grid list-none p-0">
         {lessons.map((lesson) => (
-          <Stop key={lesson.n} lesson={lesson} status={statusOf(lesson, progress)} />
+          <Row key={lesson.n} lesson={lesson} status={statusOf(lesson, progress)} />
         ))}
       </ol>
     </section>
   );
 }
 
-function Stop({ lesson, status }: { lesson: PlacedLesson; status: Status }) {
+function Row({ lesson, status }: { lesson: PlacedLesson; status: Status }) {
   const { i18n } = useLingui();
   const open = status !== "soon";
   const body = (
     <>
-      <span aria-hidden="true" className="relative z-1 grid size-[46px] place-items-center">
-        <i
-          className={clsx(
-            "grid place-items-center rounded-full not-italic transition-transform duration-200",
-            open
-              ? "size-10 border-3 border-(--form) text-[15px] font-semibold tabular-nums"
-              : "size-[18px] border-4 border-[color-mix(in_oklab,var(--form)_45%,transparent)] bg-(--tray)",
-            status === "done" ? "bg-(--form) text-plate" : open && "bg-plate text-(--form)",
-            status === "started" && "shadow-[0_0_0_4px_var(--tray),0_0_0_6px_var(--form)]",
-          )}
-        >
-          {status === "done" ? (
-            <Check aria-hidden="true" className="size-4.5" strokeWidth={2.5} />
-          ) : open ? (
-            lesson.n
-          ) : null}
-        </i>
+      <span
+        aria-hidden="true"
+        className={clsx(
+          "text-md font-semibold tabular-nums",
+          open ? "text-(--form)" : "text-ink-muted",
+        )}
+      >
+        {lesson.n}
       </span>
       <span className="min-w-0">
         <span
+          lang="et"
           className={clsx(
-            "block leading-tight tracking-tight",
-            open ? "text-lg font-semibold" : "text-md font-medium text-ink-secondary",
+            "block text-xl leading-tight tracking-tight max-@3xl:text-lg",
+            open ? "font-semibold" : "font-medium text-ink-secondary",
           )}
         >
-          <span className="me-1.5 text-xs font-medium tracking-normal text-ink-muted tabular-nums">
-            {lesson.n}
-          </span>
-          <span lang="et">{lesson.et}</span>
+          {lesson.et}
         </span>
-        <span
-          className={clsx("block", open ? "text-sm text-ink-secondary" : "text-xs text-ink-muted")}
-        >
+        <span className={clsx("block text-md", open ? "text-ink-secondary" : "text-ink-muted")}>
           {i18n._(lesson.about)}
         </span>
       </span>
-      {open ? (
-        <StatusTag status={status} />
-      ) : (
-        <span className="sr-only">
-          <Trans>Coming soon</Trans>
-        </span>
-      )}
+      <StatusTag status={status} />
     </>
   );
   const row =
-    "grid grid-cols-[46px_minmax(0,1fr)_auto] items-center gap-3.5 rounded-tile py-2 pe-2.5";
+    "-mx-3 grid grid-cols-[40px_minmax(0,1fr)_auto] items-center gap-3.5 rounded-tile px-3 py-3.5 max-@3xl:grid-cols-[32px_minmax(0,1fr)_auto] max-@3xl:gap-2.5";
   return (
-    <li>
+    <li className="border-t border-edge first:border-t-0">
       {lesson.slug ? (
         <a
           href={lessonPath(lesson.slug, i18n.locale)}
           className={clsx(
             row,
-            "min-h-15 text-ink no-underline transition-colors duration-150 hoverable:hover:bg-[color-mix(in_oklab,var(--plate)_55%,transparent)] [&:hover_i]:scale-105",
+            "text-ink no-underline transition-colors duration-150 hoverable:hover:bg-plate-nested",
           )}
         >
           {body}
         </a>
       ) : (
-        <div className={clsx(row, "min-h-[46px]")}>{body}</div>
+        <div className={row}>{body}</div>
       )}
     </li>
   );
@@ -237,14 +236,27 @@ function Stop({ lesson, status }: { lesson: PlacedLesson; status: Status }) {
 function StatusTag({ status }: { status: Status }) {
   if (status === "done")
     return (
-      <span className="text-sm font-medium text-ink-secondary">
+      <span className="inline-flex items-center gap-1.5 text-sm font-medium text-success">
+        <span className="grid size-5 place-items-center rounded-full bg-success text-plate">
+          <Check aria-hidden="true" className="size-3" strokeWidth={3} />
+        </span>
         <Trans>Done</Trans>
       </span>
     );
   if (status === "started")
     return (
-      <span className="text-sm font-medium text-(--form)">
+      <span className="inline-flex items-center gap-1.5 text-sm font-medium text-(--form)">
+        <span
+          aria-hidden="true"
+          className="size-4 rounded-full border-2 border-(--form) border-s-transparent border-b-transparent"
+        />
         <Trans>In progress</Trans>
+      </span>
+    );
+  if (status === "soon")
+    return (
+      <span className="text-sm text-ink-muted">
+        <Trans>Soon</Trans>
       </span>
     );
   return (

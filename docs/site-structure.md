@@ -6,7 +6,7 @@ The public `lymi-site` Worker serves the website and documentation at `https://l
 
 | Origin and path | Owner | Purpose |
 | --- | --- | --- |
-| `lymi.app/` | `apps/site` | Prerendered public landing page with interactive React islands. It remains visible whether or not a product session exists. Under the hero’s buttons, a soft **On your phone** pill with the app icon holds small App Store and Google Play buttons, above the Works with line. |
+| `lymi.app/` | `apps/site` | Prerendered public landing page with interactive React islands. It remains visible whether or not a product session exists. Under the hero’s buttons, a white **On your phone** pill with a phone icon holds small App Store and Google Play buttons, above the Works with line. |
 | `lymi.app/languages` | `apps/site` | Prerendered page for anyone learning a language, built from the landing sections with examples across many languages. |
 | `lymi.app/languages/estonian` | `apps/site` | Prerendered page for people learning Estonian, with Estonian cards, notes, conversations and class deck. |
 | `lymi.app/languages/japanese` | `apps/site` Worker | Japanese learning page, rendered per request with current published decks and examples of readings, reviews, capture and pronunciation. |

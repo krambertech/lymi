@@ -70,7 +70,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 10,
         blurb: msg`A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad, with ten everyday verbs read aloud.`,
       },
-      { name: msg`Negation`, et: "Ei ole" },
+      {
+        slug: "eitus",
+        name: msg`Negation`,
+        title: msg`How to say no in Estonian`,
+        et: "Ei ole",
+        minutes: 8,
+        blurb: msg`A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud.`,
+      },
       {
         slug: "kusimused",
         name: msg`Questions`,

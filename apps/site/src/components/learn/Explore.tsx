@@ -178,9 +178,23 @@ export interface RowItem {
 }
 
 /** A list of things to hear on one white plate. A tap anywhere on a row plays it. */
-export function ListenRows({ items, lead }: { items: readonly RowItem[]; lead?: string }) {
+export function ListenRows({
+  items,
+  lead,
+  bare,
+}: {
+  items: readonly RowItem[];
+  lead?: string;
+  /** Inside another surface, such as an open disclosure: no plate of its own. */
+  bare?: boolean | undefined;
+}) {
   return (
-    <ul className="m-0 list-none overflow-hidden rounded-lg bg-plate p-0 ring-1 ring-edge">
+    <ul
+      className={clsx(
+        "m-0 list-none p-0",
+        !bare && "overflow-hidden rounded-lg bg-plate ring-1 ring-edge",
+      )}
+    >
       {items.map((item, i) => (
         // biome-ignore lint/suspicious/noArrayIndexKey: a lesson's list never reorders
         <Row key={i} item={item} lead={lead} />

@@ -4,11 +4,12 @@ import { ListenRows } from "./Explore";
 import { useLesson } from "./lesson-context";
 
 /** The words worth keeping from a lesson, each one to hear. */
-export function WordList({ words }: { words: readonly string[] }) {
+export function WordList({ words, bare }: { words: readonly string[]; bare?: boolean }) {
   const { t, i18n } = useLingui();
   const { slug, glossary } = useLesson();
   return (
     <ListenRows
+      bare={bare}
       items={words.map((word) => {
         const gloss = glossary[word];
         const show = gloss?.show ?? word;

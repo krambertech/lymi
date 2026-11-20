@@ -1,12 +1,13 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { captureAnalytics } from "@lymi/client/analytics";
 import { clsx } from "clsx";
-import { ArrowLeft, ArrowRight } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { lessonBySlug, lessonPath, nextLesson } from "../../lib/learn/catalogue";
-import { finishSection as saveSection, startLesson, useProgress } from "../../lib/learn/progress";
+import { finishSection as saveSection, startLesson } from "../../lib/learn/progress";
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
+import { ArrowLink } from "../landing/ArrowLink";
 import { LearnLayout } from "./LearnLayout";
 import { type Glossary, LessonContext, SectionContext, useLesson } from "./lesson-context";
 import { WordCards } from "./Word";
@@ -65,8 +66,15 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
       <WordCards>
         <LearnLayout languages={{ paths }} hue={lesson.stage.hue}>
           <div className="mx-auto max-w-[720px] px-5">
-            <header className="grid gap-3 pt-7 pb-5">
-              <span className="text-md font-medium text-(--form)">
+            <header className="grid gap-3 pt-5 pb-5">
+              <a
+                href={localizedPath("learn", i18n.locale)}
+                className="relative inline-flex items-center gap-1.5 justify-self-start rounded-xs text-sm font-medium text-ink-secondary before:absolute before:inset-x-0 before:-inset-y-3 hoverable:hover:text-ink"
+              >
+                <ArrowLeft aria-hidden="true" className="size-4 rtl:-scale-x-100" />
+                <Trans>All lessons</Trans>
+              </a>
+              <span className="mt-3 text-md font-medium text-(--form)">
                 <Trans>
                   Lesson {number} · {level}
                 </Trans>
@@ -105,10 +113,24 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
                   <li key={i}>{line}</li>
                 ))}
               </ol>
-              <h3 className="mt-2.5 text-xl font-semibold tracking-tight">
-                <Trans>Words from this lesson</Trans>
-              </h3>
-              <WordList words={words} />
+              <details className="group mt-2 overflow-hidden rounded-lg bg-plate ring-1 ring-edge">
+                <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3.5 text-lg font-medium hoverable:hover:bg-plate-hover [&::-webkit-details-marker]:hidden">
+                  <Trans>Words from this lesson</Trans>
+                  <span className="text-md font-normal text-ink-muted tabular-nums">
+                    {words.length}
+                  </span>
+                  <ChevronDown
+                    aria-hidden="true"
+                    className="ms-auto size-5 text-ink-muted transition-transform duration-200 group-open:rotate-180"
+                  />
+                </summary>
+                <div className="border-t border-edge">
+                  <WordList words={words} bare />
+                </div>
+              </details>
+              <ArrowLink href={localizedPath("estonian", i18n.locale)} size="md">
+                <Trans>Learn the most common Estonian words with Lymi's free decks</Trans>
+              </ArrowLink>
             </Section>
             <NextLesson slug={slug} locale={i18n.locale} onFinish={() => finishSection("recap")} />
           </div>
@@ -170,16 +192,18 @@ export function Aside({ children }: { children: ReactNode }) {
   return <p className="max-w-[62ch] text-md text-pretty text-ink-muted">{children}</p>;
 }
 
+/** Where the reader is in the lesson: segments fill in order up to the section on screen. */
 function ReadBar({ title, sections }: { title: string; sections: readonly LessonSection[] }) {
   const { t } = useLingui();
-  const { slug } = useLesson();
-  const progress = useProgress();
-  const done = progress.sections[slug] ?? [];
-  const doneCount = done.length;
   const count = sections.length;
   const [now, setNow] = useState<string | null>(null);
   const [stuck, setStuck] = useState(false);
   const bar = useRef<HTMLDivElement>(null);
+  const at = Math.max(
+    0,
+    sections.findIndex((section) => section.id === now),
+  );
+  const position = at + 1;
 
   useEffect(() => {
     const nodes = sections
@@ -227,7 +251,6 @@ function ReadBar({ title, sections }: { title: string; sections: readonly Lesson
         </span>
         <nav aria-label={t`Sections`} className="flex min-w-0 flex-1 gap-1">
           {sections.map((section, i) => {
-            const finished = done.includes(section.id);
             return (
               <button
                 key={section.id}
@@ -246,10 +269,10 @@ function ReadBar({ title, sections }: { title: string; sections: readonly Lesson
                 <span
                   className={clsx(
                     "h-[5px] flex-1 rounded-full transition-colors duration-300",
-                    finished
+                    i < at
                       ? "bg-(--form)"
-                      : now === section.id
-                        ? "bg-[color-mix(in_oklab,var(--form)_40%,var(--plate-nested))]"
+                      : i === at
+                        ? "bg-[color-mix(in_oklab,var(--form)_45%,var(--plate-nested))]"
                         : "bg-plate-nested",
                   )}
                 />
@@ -259,7 +282,7 @@ function ReadBar({ title, sections }: { title: string; sections: readonly Lesson
         </nav>
         <span className="ms-3.5 text-sm whitespace-nowrap text-ink-muted tabular-nums">
           <Trans>
-            {doneCount} of {count}
+            {position} of {count}
           </Trans>
         </span>
       </div>

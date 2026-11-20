@@ -145,9 +145,6 @@ msgstr "{decks, plural, one {deck} other {decks}}"
 msgid "{doneCount} of {builtCount} done"
 msgstr "{doneCount} of {builtCount} done"
 
-msgid "{doneCount} of {count}"
-msgstr "{doneCount} of {count}"
-
 msgid "{found, plural, one {# deck} other {# decks}}"
 msgstr "{found, plural, one {# deck} other {# decks}}"
 
@@ -209,6 +206,9 @@ msgstr "{note} Lymi isn’t affiliated with {authority} and can’t promise a pa
 
 msgid "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
+
+msgid "{position} of {count}"
+msgstr "{position} of {count}"
 
 msgid "{position} of {total}"
 msgstr "{position} of {total}"
@@ -4657,6 +4657,9 @@ msgstr "Learn ten words, <0>null</0> to <1>kümme</1>. Every other number is bui
 
 msgid "Learn the alphabet, then your first words."
 msgstr "Learn the alphabet, then your first words."
+
+msgid "Learn the most common Estonian words with Lymi's free decks"
+msgstr "Learn the most common Estonian words with Lymi's free decks"
 
 msgid "Learn the same deck together"
 msgstr "Learn the same deck together"

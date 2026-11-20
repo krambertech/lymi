@@ -145,9 +145,6 @@ msgstr "{decks, plural, one {колода} few {колоды} many {колод} 
 msgid "{doneCount} of {builtCount} done"
 msgstr "Пройдено {doneCount} из {builtCount}"
 
-msgid "{doneCount} of {count}"
-msgstr "{doneCount} из {count}"
-
 msgid "{found, plural, one {# deck} other {# decks}}"
 msgstr "{found, plural, one {# колода} few {# колоды} many {# колод} other {# колоды}}"
 
@@ -209,6 +206,9 @@ msgstr "{note} Lymi не связан с {authority} и не может гара
 
 msgid "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{pictures, plural, one {# карточка переносится с картинкой.} few {# карточки переносятся с картинками.} many {# карточек переносятся с картинками.} other {# карточки переносятся с картинками.}}"
+
+msgid "{position} of {count}"
+msgstr "{position} из {count}"
 
 msgid "{position} of {total}"
 msgstr "{position} из {total}"
@@ -4657,6 +4657,9 @@ msgstr "Выучи десять слов, от <0>null</0> до <1>kümme</1>. �
 
 msgid "Learn the alphabet, then your first words."
 msgstr "Выучи алфавит, а потом первые слова."
+
+msgid "Learn the most common Estonian words with Lymi's free decks"
+msgstr "Учи самые частые эстонские слова с бесплатными колодами Lymi"
 
 msgid "Learn the same deck together"
 msgstr "Учите одну колоду вместе"

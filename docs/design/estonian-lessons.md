@@ -38,7 +38,7 @@ The parts live in `apps/site/src/components/learn`. A new lesson reaches for the
 | `Compare` | Two words drawn as bars on one time scale, one bar per 12 ms, so the longer word takes more room. |
 | `Quiz` with `ChoiceRound`, `GapRound` or `TypedRound` | Anything that marks the learner. A white card with its title on the stage's band, one Listen per round, the answers, a line of feedback, Next, and a score with Try again. A round can't be answered before its sound has played. One flow drives every quiz: `quizReducer` in `apps/site/src/lib/learn/quiz.ts`. |
 
-A lesson file in `components/learn/lessons` holds its glossary, its sections and its recap, and passes them to `LessonView`, which draws the head, the read bar, What to remember, the words and the link to the next lesson.
+A lesson file in `components/learn/lessons` holds its glossary, its sections and its recap, and passes them to `LessonView`, which draws a link back to all lessons, the head, the read bar, What to remember, the words and the link to the next lesson. The read bar shows where the reader is, filling in order up to the section on screen; which sections are done is kept for the hub, not shown in the bar.
 
 ## Writing a lesson
 
@@ -46,7 +46,7 @@ A lesson file in `components/learn/lessons` holds its glossary, its sections and
 - Two or three short paragraphs, then something to touch. Explore first, then answer.
 - Every Estonian word in prose is a `Word` with a gloss.
 - Listening only: nothing asks for the microphone.
-- Every lesson ends the same way: What to remember in three to five rules, the words from the lesson, the next lesson.
+- Every lesson ends the same way: What to remember in three to five rules, the words from the lesson folded into one row that opens to the list, a link to Lymi's free Estonian decks, and the next lesson.
 - English is the source; Ukrainian and Russian are transcreated, and a pronunciation tip compares a sound with the reader's own language where the match is accurate.
 - A teacher checks the Estonian before a lesson launches.
 

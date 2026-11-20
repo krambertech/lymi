@@ -201,7 +201,7 @@ export function Quiz<Item>({
   const extra = item && state.status === "answered" ? both?.(item) : undefined;
 
   return (
-    <div className="learn-quiz grid overflow-hidden rounded-xl bg-plate max-sm:-mx-1">
+    <div className="learn-quiz grid grid-cols-1 overflow-hidden rounded-xl bg-plate max-sm:-mx-1">
       <div className="flex flex-wrap items-center justify-between gap-3 bg-(--tray) px-5 py-3.5 max-sm:px-4">
         <h3 className="text-lg font-medium">{title}</h3>
         {total > 1 && (
@@ -218,7 +218,10 @@ export function Quiz<Item>({
       <p aria-live="polite" className="sr-only">
         {announcement}
       </p>
-      <div ref={bodyRef} className="grid justify-items-start gap-4 px-5 pt-5 pb-5 max-sm:px-4">
+      <div
+        ref={bodyRef}
+        className="grid grid-cols-1 justify-items-start gap-4 px-5 pt-5 pb-5 max-sm:px-4"
+      >
         {state.status === "finished" ? (
           <>
             <Score
@@ -418,7 +421,7 @@ function Dots({ state, total }: { state: QuizState; total: number }) {
 }
 
 /** “Listen first”, shown when an answer is picked before the sound has played. */
-function useNudge() {
+export function useNudge() {
   const [nudged, setNudged] = useState(false);
   const note = nudged ? (
     <p role="status" className="text-sm text-ink-muted">
@@ -429,7 +432,7 @@ function useNudge() {
 }
 
 /** Plays a round's sound as it opens from Next; the first round waits for the learner. */
-function useAutoplay(src: string, autoplay: boolean, round: number) {
+export function useAutoplay(src: string, autoplay: boolean, round: number) {
   // biome-ignore lint/correctness/useExhaustiveDependencies: a new round replays even when its clip is the last one's
   useEffect(() => {
     if (autoplay) void playSound(src);
@@ -588,6 +591,10 @@ export interface TypedItem {
   answers: readonly string[];
   /** The sentence or words it was, shown after the answer. */
   said: ReactNode;
+  /** Whether a typed answer counts, when `answers` can't list every way of typing it, as with times. */
+  matches?: (typed: string) => boolean;
+  /** The field's label and placeholder, when it asks for something other than a number. */
+  prompt?: string;
 }
 
 /** Listen, then type. For numbers, prices and times. */
@@ -623,7 +630,7 @@ export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<
           event.preventDefault();
           if (done || !value.trim()) return input.current?.focus();
           if (state.status === "asking" && !state.heard) return nudge();
-          answer(value, typedMatches(value, item.answers));
+          answer(value, item.matches ? item.matches(value) : typedMatches(value, item.answers));
         }}
       >
         <input
@@ -634,8 +641,8 @@ export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<
           inputMode="decimal"
           autoComplete="off"
           spellCheck={false}
-          aria-label={t`Type the number`}
-          placeholder={t`Type the number`}
+          aria-label={item.prompt ?? t`Type the number`}
+          placeholder={item.prompt ?? t`Type the number`}
           data-mark={done ? (state.right ? "right" : "wrong") : undefined}
           className="learn-answer h-13 min-w-0 flex-1 rounded-tile border border-edge-strong bg-plate px-4 text-2xl font-semibold tabular-nums placeholder:text-md placeholder:font-normal placeholder:text-ink-muted focus:outline-2 focus:outline-offset-1 focus:outline-(--form)"
         />

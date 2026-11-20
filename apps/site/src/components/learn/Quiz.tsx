@@ -114,8 +114,6 @@ interface QuizProps<Item> {
   title: ReactNode;
   items: readonly Item[];
   rounds?: number;
-  /** The line under the score. */
-  verdict?: (share: number) => ReactNode;
   /** What each round asked, to hear again on the score. */
   recall?: (item: Item) => Recall;
   /** Sounds to play side by side after an answer, under “Hear both”. */
@@ -134,7 +132,6 @@ export function Quiz<Item>({
   title,
   items,
   rounds,
-  verdict,
   both,
   recall,
   round,
@@ -189,7 +186,7 @@ export function Quiz<Item>({
   const right = rightCount(state);
   const announcement =
     state.status === "finished"
-      ? t`${right} of ${total} right`
+      ? t`${right} of ${total} correct`
       : state.status === "answered"
         ? state.right
           ? t`Right.`
@@ -224,7 +221,6 @@ export function Quiz<Item>({
             <Score
               right={rightCount(state)}
               total={total}
-              verdict={verdict}
               results={state.results}
               recalled={list.slice(0, total).map((item) => recall?.(item))}
             />
@@ -275,7 +271,7 @@ export function Quiz<Item>({
                         dispatch({ type: "next" });
                       }}
                     >
-                      {state.round + 1 < total ? t`Next` : t`See how you did`}
+                      {state.round + 1 < total ? t`Next` : t`See results`}
                       <ArrowRight aria-hidden="true" data-icon="inline-end" />
                     </Button>
                   )}
@@ -298,26 +294,19 @@ export interface Recall {
 function Score({
   right,
   total,
-  verdict,
   results,
   recalled,
 }: {
   right: number;
   total: number;
-  verdict?: ((share: number) => ReactNode) | undefined;
   results: readonly boolean[];
   recalled: readonly (Recall | undefined)[];
 }) {
   const words = (
     <p className="text-xl font-semibold">
       <Trans>
-        {right} of {total} right
+        {right} of {total} correct
       </Trans>
-      {verdict && (
-        <span className="mt-0.5 block text-md font-normal text-ink-secondary">
-          {verdict(right / total)}
-        </span>
-      )}
     </p>
   );
   return <ScoreWords share={right / total} results={results} recalled={recalled} words={words} />;
@@ -352,6 +341,11 @@ function ScoreWords({
         </span>
         {words}
       </div>
+      {recalled.some(Boolean) && (
+        <p className="text-md text-ink-secondary">
+          <Trans>Tap an answer to listen again.</Trans>
+        </p>
+      )}
       <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
         {recalled.map((word, i) =>
           word ? (

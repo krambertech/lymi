@@ -325,7 +325,7 @@ function NextLesson({
       ) : next ? (
         <p className="grid content-center justify-items-end text-end text-ink-muted max-sm:order-first sm:col-start-2">
           <small className="text-sm">
-            <Trans>Lesson {number}, coming soon</Trans>
+            <Trans>Lesson {number}, planned</Trans>
           </small>
           <span className="text-md font-medium text-ink-secondary">{i18n._(next.name)}</span>
         </p>

@@ -107,10 +107,10 @@ export const STAGES: readonly Stage[] = [
     ],
   },
   {
-    name: msg`Harder grammar`,
+    name: msg`Cases and verb forms`,
     level: "A2",
     hue: 18,
-    goal: msg`The rules that trip most learners up. You know every word by now, so only the rule is new.`,
+    goal: msg`Practise consonant changes, objects, past tenses and conditional forms.`,
     lessons: [
       { name: msg`Consonant gradation`, et: "Jalg, jala" },
       { name: msg`The object: whole or part`, et: "Raamatut või raamatu" },

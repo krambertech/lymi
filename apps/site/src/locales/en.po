@@ -3790,9 +3790,6 @@ msgstr "Hear both"
 msgid "Hear each word said aloud."
 msgstr "Hear each word said aloud."
 
-msgid "Hear Estonian, count, tell the time, say who you are, tell people what to do and say where you are."
-msgstr "Hear Estonian, count, tell the time, say who you are, tell people what to do and say where you are."
-
 msgid "Hear every card read aloud the way a native speaker says it."
 msgstr "Hear every card read aloud the way a native speaker says it."
 
@@ -6826,6 +6823,9 @@ msgstr "Say the long form when the pronoun carries the stress: when it stands al
 
 msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
 msgstr "Say what you must, want and like to do, what you did yesterday, and with whom."
+
+msgid "Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do."
+msgstr "Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do."
 
 msgid "Say yes in Lymi"
 msgstr "Say yes in Lymi"

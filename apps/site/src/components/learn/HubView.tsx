@@ -19,7 +19,7 @@ export function HubView() {
         <section className="grid items-end gap-10 pt-9 pb-12 @3xl:grid-cols-[minmax(0,1.25fr)_minmax(0,1fr)] max-sm:gap-6 max-sm:pt-5 max-sm:pb-8">
           <div>
             <h1 className="text-[clamp(2.75rem,7vw,4.75rem)] leading-[0.98] font-semibold tracking-[-0.04em] text-balance">
-              <Trans>Estonian grammar, one idea at a time</Trans>
+              <Trans>Estonian grammar lessons</Trans>
             </h1>
             <p className="mt-4 max-w-[40ch] text-[clamp(1.125rem,2vw,1.3125rem)] text-pretty text-ink-secondary">
               <Trans>
@@ -61,7 +61,6 @@ function Resume() {
     started ?? built.find((lesson) => progress.lessons[lesson.slug as string]?.state !== "done");
   const begun = built.some((lesson) => progress.lessons[lesson.slug as string]);
   const minutes = next?.minutes;
-  const about = next ? i18n._(next.about) : "";
   const number = next?.n;
   return (
     <div
@@ -74,11 +73,13 @@ function Resume() {
             {begun ? <Trans>Pick up where you left off</Trans> : <Trans>Start here</Trans>}
           </span>
           <p className="text-2xl/tight font-semibold tracking-tight">
-            <span lang="et">{next.et}</span>
+            {i18n._(next.name)}
             <span className="mt-0.5 block text-md font-normal tracking-normal text-ink-secondary">
               <Trans>
-                Lesson {number} · {about} · {minutes} min
+                Lesson {number} · {minutes} min
               </Trans>
+              {" · "}
+              <span lang="et">{next.et}</span>
             </span>
           </p>
           <a
@@ -197,16 +198,18 @@ function Row({ lesson, status }: { lesson: PlacedLesson; status: Status }) {
       </span>
       <span className="min-w-0">
         <span
-          lang="et"
           className={clsx(
             "block text-xl leading-tight tracking-tight max-@3xl:text-lg",
             open ? "font-semibold" : "font-medium text-ink-secondary",
           )}
         >
-          {lesson.et}
+          {i18n._(lesson.name)}
         </span>
-        <span className={clsx("block text-md", open ? "text-ink-secondary" : "text-ink-muted")}>
-          {i18n._(lesson.about)}
+        <span
+          lang="et"
+          className={clsx("block text-md", open ? "text-ink-secondary" : "text-ink-muted")}
+        >
+          {lesson.et}
         </span>
       </span>
       <StatusTag status={status} />

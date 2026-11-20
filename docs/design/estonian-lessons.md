@@ -8,7 +8,7 @@ The lessons are built and reachable but not launched: `learn` is in `prelaunchPa
 
 ## The course
 
-`apps/site/src/lib/learn/catalogue.ts` lists every lesson in order, built or planned, in five stages from A1 to B1. The order follows Estonia's free courses and textbooks, checked in November 2026: commands and the place endings `-s` and `-l` come early as phrases, a short lesson shows that stems change before the genitive needs it, and the verb's three forms come before the past tense. The rules that most learners trip on, consonant gradation and the total object, wait until the words are familiar. A lesson's title is the Estonian a learner can say after it, the same in every locale.
+`apps/site/src/lib/learn/catalogue.ts` lists every lesson in order, built or planned, in five stages from A1 to B1. The order follows Estonia's free courses and textbooks, checked in November 2026: commands and the place endings `-s` and `-l` come early as phrases, a short lesson shows that stems change before the genitive needs it, and the verb's three forms come before the past tense. The rules that most learners trip on, consonant gradation and the total object, wait until the words are familiar. Each lesson has a plain `name` in the reader's language, the words people search for, such as Past tense or The partitive case, and a built lesson has a `title` for its heading and search result, such as Estonian pronunciation. Its `et` is an Estonian phrase from the lesson, shown small beside the name, never instead of it.
 
 ## Colour
 
@@ -35,14 +35,15 @@ The parts live in `apps/site/src/components/learn`. A new lesson reaches for the
 | `Panel` | The tray anything to play with sits on. |
 | `Keys` | A row of sounds to press, with a line under it that explains the last key. Accent keys, for what is new, carry the hue and a dot. A key's word can light part of itself, such as an ending set under its digit. |
 | `Chips` | Pick one of a few. |
+| `Aside` | A short note that can be skipped, such as an exception or a comparison: a bordered callout with an info mark in the stage's ink. |
 | `Compare` | Two words drawn as bars on one time scale, one bar per 12 ms, so the longer word takes more room. |
-| `Quiz` with `ChoiceRound`, `GapRound` or `TypedRound` | Anything that marks the learner. A white card with its title on the stage's band, one Listen per round, the answers, a line of feedback, Next, and a score with Try again. The score lists the run's words as chips to hear again, misses marked, with a sparkle for a full score; give the quiz `recall` so it knows each round's word. A round can't be answered before its sound has played. One flow drives every quiz: `quizReducer` in `apps/site/src/lib/learn/quiz.ts`. |
+| `Quiz` with `ChoiceRound`, `GapRound` or `TypedRound` | Anything that marks the learner. A white card with its title on the stage's band, one Listen per round, the answers, a line of feedback, Next, and a score with Try again. The score lists the run's words as chips to hear again, misses marked, with a sparkle for a full score; give the quiz `recall` so it knows each round's word. A round can't be answered before its sound has played, except a `GapRound` with `listen="after"`, for a gap the sound would give away: the learner picks first and hears the sentence with the answer. Answers in a `ChoiceRound` share a row and grow alike, and a long one takes the room it needs, so labels fit in every locale. One flow drives every quiz: `quizReducer` in `apps/site/src/lib/learn/quiz.ts`. |
 
-A lesson file in `components/learn/lessons` holds its glossary, its sections and its recap, and passes them to `LessonView`, which draws a link back to all lessons, the head, the read bar, What to remember, the words and the link to the next lesson. The read bar shows where the reader is, filling in order up to the section on screen; which sections are done is kept for the hub, not shown in the bar.
+A lesson file in `components/learn/lessons` holds its glossary, its sections and its recap, and passes them to `LessonView`, which draws a link back to all lessons, the head, the read bar, What to remember, the words, and links to the previous and next lessons, the same size. The read bar shows where the reader is, filling in order up to the section on screen; which sections are done is kept for the hub, not shown in the bar.
 
 ## Writing a lesson
 
-- One question per lesson, answered in its title and the line under it.
+- One question per lesson, answered in its heading and the line under it. Name a lesson by its topic, not a pun or a phrase.
 - Two or three short paragraphs, then something to touch. Explore first, then answer.
 - Every Estonian word in prose is a `Word` with a gloss.
 - Listening only: nothing asks for the microphone.

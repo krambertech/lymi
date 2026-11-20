@@ -49,9 +49,10 @@ export function Answer(props: {
   mark: Mark;
   big?: boolean;
   lang?: string;
+  className?: string;
   onPick: () => void;
 }) {
-  const { label, sub, mark, big, lang = "et", onPick } = props;
+  const { label, sub, mark, big, lang = "et", className, onPick } = props;
   const { t } = useLingui();
   return (
     <button
@@ -61,10 +62,12 @@ export function Answer(props: {
       data-mark={mark === "right" || mark === "wrong" ? mark : undefined}
       className={clsx(
         "learn-answer relative flex cursor-pointer flex-col gap-0.5 rounded-tile border border-edge-strong bg-plate text-start transition-[background-color,border-color,opacity,scale] duration-150",
-        big ? "min-w-24 items-center px-5 py-2.5" : "items-start px-3.5 py-3",
+        // The end padding keeps the label clear of the mark in the corner.
+        big ? "min-w-24 items-center px-5 py-2.5" : "items-start py-3 ps-3.5 pe-9",
         mark === undefined && "active:scale-[0.98] hoverable:hover:bg-plate-hover",
         mark !== undefined && "cursor-default",
         mark === "out" && "opacity-50",
+        className,
       )}
     >
       <b
@@ -453,11 +456,13 @@ export function ChoiceRound({ item, state, heard, answer, autoplay }: RoundProps
     <>
       <Listen src={item.src} onPlay={heard} />
       {note}
-      <fieldset className="m-0 grid w-full min-w-0 grid-cols-[repeat(auto-fit,minmax(min(100%,150px),1fr))] gap-2 border-0 p-0">
+      {/* Answers share a row and grow alike; one too long for its share takes the room it needs. */}
+      <fieldset className="m-0 flex w-full min-w-0 flex-wrap gap-2 border-0 p-0">
         <legend className="sr-only">{t`Answers`}</legend>
         {item.options.map((option) => (
           <Answer
             key={option.id}
+            className="grow basis-36"
             label={option.label}
             sub={option.sub}
             mark={
@@ -492,11 +497,30 @@ export interface GapItem {
 }
 
 /** A word with one gap. Listen, then pick what fills it. */
-export function GapRound({ item, state, heard, answer, autoplay }: RoundProps<GapItem>) {
+export function GapRound({
+  item,
+  state,
+  heard,
+  answer,
+  autoplay,
+  listen = "first",
+}: RoundProps<GapItem> & {
+  /**
+   * "first" asks the learner to hear the sentence, then fill the gap. "after" is for a gap the
+   * sound would give away, such as an ending to work out from the grammar: the learner picks
+   * first, and the sentence plays with the answer.
+   */
+  listen?: "first" | "after";
+}) {
   const { t } = useLingui();
   const { nudge, note } = useNudge();
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
-  useAutoplay(item.src, autoplay, round);
+  const pickFirst = listen === "after";
+  useAutoplay(item.src, autoplay && !pickFirst, round);
+  // biome-ignore lint/correctness/useExhaustiveDependencies: each round, including a restart, opens answerable
+  useEffect(() => {
+    if (pickFirst) heard();
+  }, [pickFirst, round]);
   const done = state.status === "answered";
   const picked = done ? state.picked : null;
   const [settled, setSettled] = useState(false);
@@ -510,7 +534,7 @@ export function GapRound({ item, state, heard, answer, autoplay }: RoundProps<Ga
   const { before, after } = item;
   return (
     <>
-      <Listen src={item.src} onPlay={heard} />
+      {(!pickFirst || done) && <Listen src={item.src} onPlay={heard} />}
       {note}
       <p className="sr-only">{t`${before} blank ${after}`}</p>
       <p
@@ -548,6 +572,7 @@ export function GapRound({ item, state, heard, answer, autoplay }: RoundProps<Ga
               if (done) return;
               if (state.status === "asking" && !state.heard) return nudge();
               answer(option, option === item.answer);
+              if (pickFirst) void playSound(item.src);
             }}
           />
         ))}

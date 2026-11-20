@@ -28,6 +28,12 @@ msgstr "«Пусть будет легко» — говорят тому, кто
 msgid "“Schönen Feierabend!” wishes someone a good evening off."
 msgstr "«Schönen Feierabend!» — пожелание хорошо отдохнуть после работы."
 
+msgid "“To have”"
+msgstr "«Иметь»"
+
+msgid "“To like”"
+msgstr "«Нравиться»"
+
 #. placeholder {0}: deck.cardCount
 msgid "{0, plural, =1 {See the card} other {See all # cards}}"
 msgstr "{0, plural, =1 {Посмотреть карточку} one {Посмотреть все # карточку} few {Посмотреть все # карточки} many {Посмотреть все # карточек} other {Посмотреть все # карточки}}"
@@ -235,6 +241,9 @@ msgstr "{title} · {decks, plural, one {# бесплатная колода} few
 
 msgid "{title} · Lymi"
 msgstr "{title} · Lymi"
+
+msgid "{title}: a free lesson with audio"
+msgstr "{title}: бесплатный урок с аудио"
 
 msgid "{total} reviews in {span} days"
 msgstr "{total} повторений за {span} дней"
@@ -1136,7 +1145,7 @@ msgstr "Прописка (регистрация)"
 msgid "adjective"
 msgstr "прилагательное"
 
-msgid "Adjectives that agree"
+msgid "Adjective agreement"
 msgstr "Согласование прилагательных"
 
 msgid "Ads"
@@ -1488,9 +1497,6 @@ msgstr "На вопрос, как дела у колоды «Анатомия»,
 msgid "Asked whether you’d like to win the lottery: “Magari!”"
 msgstr "На вопрос «Хочешь выиграть в лотерею?» — «Magari!»"
 
-msgid "Asking questions"
-msgstr "Как задавать вопросы"
-
 msgid "At A2 you also need 45 of the written points and 15 of the oral ones. At B1 each module passes on its own."
 msgstr "На уровне A2 также нужно 45 баллов за письменную часть и 15 за устную. На B1 каждый модуль сдаётся отдельно."
 
@@ -1538,9 +1544,6 @@ msgstr "Директор банка"
 
 msgid "basket"
 msgstr "корзина"
-
-msgid "Becoming something"
-msgstr "Стать кем-то"
 
 msgid "bed"
 msgstr "кровать"
@@ -2195,17 +2198,26 @@ msgstr "Возвращается через несколько карточек,
 msgid "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards, and sentence translations come along too."
 msgstr "Переходишь с колоды вроде Kaishi 1.5k? Записи слов и тональное ударение остаются на карточках, а переводы предложений переходят вместе с ними."
 
+msgid "Commands"
+msgstr "Повелительное наклонение"
+
 msgid "Common questions."
 msgstr "Частые вопросы."
 
-msgid "Comparing"
-msgstr "Сравнение"
+msgid "Comparatives and superlatives"
+msgstr "Сравнительная и превосходная степень"
+
+msgid "Conditional mood"
+msgstr "Условное наклонение"
 
 msgid "Confirm it’s you"
 msgstr "Подтверди, что это ты"
 
 msgid "Congratulations"
 msgstr "Поздравляю"
+
+msgid "Conjunctions and word order"
+msgstr "Союзы и порядок слов"
 
 msgid "Connect {name}"
 msgstr "Подключить {name}"
@@ -2270,8 +2282,8 @@ msgstr "подключён"
 msgid "Connecting an assistant"
 msgstr "Как подключить ассистента"
 
-msgid "Consonants that soften: the full rule"
-msgstr "Согласные, которые ослабевают: всё правило"
+msgid "Consonant gradation"
+msgstr "Чередование согласных"
 
 msgid "Constitutional Law"
 msgstr "Конституционное право"
@@ -2331,9 +2343,6 @@ msgstr "Уютный"
 
 msgid "Cosy and convivial; good company"
 msgstr "Уютный и душевный; в хорошей компании"
-
-msgid "Counting and “some”: the partitive"
-msgstr "Счёт и «немного»: партитив"
 
 msgid "Create and practise flashcards with ChatGPT."
 msgstr "Создавай и повторяй флеш-карточки с ChatGPT."
@@ -2554,9 +2563,6 @@ msgstr "Собака"
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Сделать дважды — то же самое, что сделать один раз"
 
-msgid "Doing things"
-msgstr "Что ты делаешь"
-
 msgid "Don’t drink coffee before *bed*."
 msgstr "Не пей кофе перед *сном*."
 
@@ -2565,9 +2571,6 @@ msgstr "Не сноси забор, пока не поймёшь, зачем е�
 
 msgid "Done"
 msgstr "Пройдено"
-
-msgid "Done by someone: the impersonal"
-msgstr "Кто-то делает: безличная форма"
 
 msgid "Done. Biology has a section for each file."
 msgstr "Готово. В «Биологии» есть раздел для каждого файла."
@@ -2818,11 +2821,17 @@ msgstr "Эстонский A2 · по вторникам"
 msgid "Estonian also has a third, extra-long length, and the spelling doesn't always show it. <0>Linna</0> means both “of the town” and “into the town”, and the second is held longer. It comes back in later lessons."
 msgstr "В эстонском есть ещё и третья степень долготы, сверхдолгая, и на письме её видно не всегда. <0>Linna</0> значит и «города», и «в город», и во втором значении звук тянется дольше. К этому мы ещё вернёмся в следующих уроках."
 
-msgid "Estonian grammar, one idea at a time"
-msgstr "Эстонская грамматика шаг за шагом"
+msgid "Estonian grammar lessons"
+msgstr "Уроки эстонской грамматики"
 
 msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read any word aloud, even one you've never seen."
 msgstr "По-эстонски пишут так, как произносят. Каждую букву читаешь, и каждая звучит одинаково, где бы ни стояла. Зная буквы, ты прочитаешь вслух любое слово, даже совсем новое."
+
+msgid "Estonian numbers"
+msgstr "Числа на эстонском"
+
+msgid "Estonian pronunciation"
+msgstr "Эстонское произношение"
 
 msgid "Estonian startup"
 msgstr "Эстонский стартап"
@@ -3117,9 +3126,6 @@ msgstr "Огонь"
 
 msgid "First day"
 msgstr "Первый день"
-
-msgid "First words"
-msgstr "Первые слова"
 
 msgid "First-line drug for type 2 diabetes. Lowers the glucose the liver makes."
 msgstr "Препарат первой линии при диабете 2 типа. Снижает выработку глюкозы печенью."
@@ -3672,20 +3678,17 @@ msgstr "С Новым *годом*!"
 msgid "Hard"
 msgstr "Трудно"
 
+msgid "Harder grammar"
+msgstr "Сложная грамматика"
+
 msgid "Have a *lovely* weekend!"
 msgstr "*Приятных* выходных!"
-
-msgid "Have done, had done"
-msgstr "Перфект и плюсквамперфект"
 
 msgid "Have you eaten? A way to say hello"
 msgstr "Ты уже поел? Так здороваются"
 
 msgid "Have you got the *key*?"
 msgstr "У тебя есть *ключ*?"
-
-msgid "Having and not having"
-msgstr "У меня есть и у меня нет"
 
 msgid "He doesn’t *like* rainy days."
 msgstr "Он не *любит* дождливые дни."
@@ -3826,9 +3829,6 @@ msgstr "Как Lymi понимает, что я уже знаю слово?"
 
 msgid "How does the voice know how to read a kanji?"
 msgstr "Откуда голос знает, как читать кандзи?"
-
-msgid "How Estonian sounds"
-msgstr "Как звучит эстонский"
 
 msgid "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
 msgstr "Как звучит эстонский: девять гласных, буквы, которые всегда звучат одинаково, и долгота, которая меняет слово."
@@ -4093,9 +4093,6 @@ msgstr "Я не куплю такой *дорогой* телефон."
 msgid "I work in a *warehouse*."
 msgstr "Я работаю на *складе*."
 
-msgid "I, you, he or she, and olema"
-msgstr "Я, ты, он или она и olema"
-
 msgid "I’ll *call* you later."
 msgstr "Я тебе *позвоню* позже."
 
@@ -4195,6 +4192,9 @@ msgstr "Image Occlusion"
 msgid "Imperfective"
 msgstr "Несовершенный вид"
 
+msgid "Impersonal voice"
+msgstr "Безличная форма"
+
 msgid "Import"
 msgstr "Импорт"
 
@@ -4272,6 +4272,9 @@ msgstr "В голосовом режиме Claude погоняет тебя по
 
 msgid "In, into, out of"
 msgstr "В чём, во что, из чего"
+
+msgid "Infinitives: -ma and -da"
+msgstr "Инфинитивы: -ma и -da"
 
 msgid "Injured at the elbow; weak grip and numb little finger"
 msgstr "Повреждается у локтя; слабый хват и онемение мизинца"
@@ -4469,9 +4472,6 @@ msgstr "Ссылка для присоединения"
 
 msgid "Joined"
 msgstr "В колоде"
-
-msgid "Joining sentences"
-msgstr "Как связывать предложения"
 
 msgid "Joins oxaloacetate to start the cycle"
 msgstr "Соединяется с оксалоацетатом и запускает цикл"
@@ -4770,14 +4770,17 @@ msgstr "Урок"
 msgid "Lesson {number}"
 msgstr "Урок {number}"
 
-msgid "Lesson {number} · {about} · {minutes} min"
-msgstr "Урок {number} · {about} · {minutes} мин"
-
 msgid "Lesson {number} · {level}"
 msgstr "Урок {number} · {level}"
 
+msgid "Lesson {number} · {minutes} min"
+msgstr "Урок {number} · {minutes} мин"
+
 msgid "Lesson {number}, coming soon"
 msgstr "Урок {number}, скоро"
+
+msgid "Lesson {previousNumber}"
+msgstr "Урок {previousNumber}"
 
 msgid "Lesson 4"
 msgstr "Урок 4"
@@ -4833,9 +4836,6 @@ msgstr "Как «о» в слове «сон»."
 msgid "Like the u in “put”."
 msgstr "Как «у» в слове «тут»."
 
-msgid "Liking and needing"
-msgstr "Нравится и нужно"
-
 msgid "linen; a bedsheet"
 msgstr "лён; простыня"
 
@@ -4874,6 +4874,9 @@ msgstr "Давно не виделись"
 
 msgid "Longer gaps, longer memory"
 msgstr "Длиннее перерывы — крепче память"
+
+msgid "Longer sentences"
+msgstr "Сложные предложения"
 
 msgid "Longing"
 msgstr "Тоска"
@@ -5274,9 +5277,6 @@ msgstr "Больше, чем перевод."
 msgid "More than flipping cards"
 msgstr "Больше, чем перелистывание карточек"
 
-msgid "More than one"
-msgstr "Множественное число"
-
 msgid "More updates"
 msgstr "Другие обновления"
 
@@ -5378,6 +5378,9 @@ msgstr "Фармакология NCLEX"
 
 msgid "Needed; your cards live on Lymi’s servers"
 msgstr "Нужен: карточки хранятся на серверах Lymi"
+
+msgid "Negation"
+msgstr "Отрицание"
 
 msgid "Nerves, vessels, muscles and what each one does."
 msgstr "Нервы, сосуды, мышцы и то, что делает каждый из них."
@@ -5626,17 +5629,17 @@ msgstr "Ничего. Lymi бесплатный."
 msgid "noun"
 msgstr "существительное"
 
-msgid "Nouns start to change"
-msgstr "Существительные начинают меняться"
+msgid "Nouns and cases"
+msgstr "Существительные и падежи"
 
 msgid "Number"
 msgstr "Число"
 
+msgid "Numbers"
+msgstr "Числа"
+
 msgid "Numbers and time"
 msgstr "Числа и время"
-
-msgid "Numbers by ear"
-msgstr "Числа на слух"
 
 msgid "Numbers by ear. Ten words and two endings take you to a hundred."
 msgstr "Числа на слух. Десять слов и два окончания доведут тебя до сотни."
@@ -5707,9 +5710,6 @@ msgstr "Раньше"
 
 msgid "On iPhone"
 msgstr "На iPhone"
-
-msgid "On Monday, in a year: when things happen"
-msgstr "В понедельник, через год: когда что-то происходит"
 
 msgid "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
 msgstr "На quizlet.com открой свой набор, выбери Export в меню … и нажми Copy text."
@@ -5915,6 +5915,9 @@ msgstr "Партитив"
 msgid "parts: reading, writing, listening and speaking"
 msgstr "части: чтение, письмо, аудирование и говорение"
 
+msgid "Past tense"
+msgstr "Прошедшее время"
+
 msgid "Paste it into Lymi"
 msgstr "Вставь его в Lymi"
 
@@ -5945,6 +5948,9 @@ msgstr "Пешеходный переход"
 msgid "People, food, time and your first verbs."
 msgstr "Люди, еда, время и первые глаголы."
 
+msgid "Perfect tenses"
+msgstr "Перфект и плюсквамперфект"
+
 msgid "Perfective"
 msgstr "Совершенный вид"
 
@@ -5953,6 +5959,9 @@ msgstr "Человек"
 
 msgid "Personal ID code"
 msgstr "Личный код"
+
+msgid "Personal pronouns and “to be”"
+msgstr "Личные местоимения и «быть»"
 
 msgid "Pharmacology"
 msgstr "Фармакология"
@@ -6035,6 +6044,9 @@ msgstr "Пиньинь исчезает, пока ты учишься."
 msgid "Pitch accent"
 msgstr "Тональное ударение"
 
+msgid "Place words: on, under, behind"
+msgstr "Где что: на, под, за"
+
 msgid "Plain text"
 msgstr "Простой текст"
 
@@ -6085,6 +6097,9 @@ msgstr "Пожалуйста; вот, держи"
 
 msgid "Please; here you go; you’re welcome"
 msgstr "Пожалуйста; вот, держи; не за что"
+
+msgid "Plural"
+msgstr "Множественное число"
 
 msgid "Plural cases"
 msgstr "Падежи во множественном числе"
@@ -6176,8 +6191,8 @@ msgstr "Предпочитай объяснение, которому нужно
 msgid "Pregnant"
 msgstr "Беременная"
 
-msgid "Present tense endings"
-msgstr "Окончания настоящего времени"
+msgid "Present tense"
+msgstr "Настоящее время"
 
 msgid "Present, “I”"
 msgstr "Настоящее время, «я»"
@@ -6404,9 +6419,6 @@ msgstr "Только чтение, если хочешь"
 msgid "Reading"
 msgstr "Чтение"
 
-msgid "Reading real Estonian"
-msgstr "Читаем настоящий эстонский"
-
 msgid "Reading your notes…"
 msgstr "Читаем заметки…"
 
@@ -6480,6 +6492,9 @@ msgstr "Юридический адрес: Harju maakond, Tallinn, Põhja-Tallin
 msgid "Related decks"
 msgstr "Похожие колоды"
 
+msgid "Relative clauses"
+msgstr "Придаточные с «который»"
+
 msgid "Remember a card and Lymi waits longer before showing it again. Forget it, and it comes back soon. That’s spaced repetition: less reviewing, longer remembering."
 msgstr "Помнишь карточку — Lymi ждёт дольше, прежде чем показать её снова. Забытая карточка скоро вернётся. Это интервальное повторение: меньше повторять, дольше помнить."
 
@@ -6506,6 +6521,9 @@ msgstr "Ещё раз"
 
 msgid "Replay pronunciation"
 msgstr "Послушать ещё раз"
+
+msgid "Reported speech"
+msgstr "Косвенная речь"
 
 msgid "Resources"
 msgstr "Ресурсы"
@@ -6693,8 +6711,8 @@ msgstr "Говорить, что нужно, хочется и нравится 
 msgid "Say yes in Lymi"
 msgstr "Дай согласие в Lymi"
 
-msgid "Saying no"
-msgstr "Отрицание"
+msgid "Saying where: -s and -l"
+msgstr "Где: окончания -s и -l"
 
 msgid "Scheduling"
 msgstr "Планирование повторений"
@@ -7228,6 +7246,9 @@ msgstr "Оставайся с {name}, если…"
 msgid "Staying at the table to talk after a meal"
 msgstr "Оставаться за столом и разговаривать после еды"
 
+msgid "Stem changes"
+msgstr "Изменение основы"
+
 msgid "Step by step, after a tutor lesson"
 msgstr "Шаг за шагом после урока с репетитором"
 
@@ -7459,9 +7480,6 @@ msgstr "Скажи колоде, как писать, например «Кли�
 msgid "Tell me what’s due in Lymi."
 msgstr "Скажи, что пора повторить в Lymi."
 
-msgid "Telling someone what to do"
-msgstr "Просьбы и команды"
-
 msgid "Telling the time"
 msgstr "Который час"
 
@@ -7518,6 +7536,9 @@ msgstr "Спасибо; спасибо, друг"
 
 msgid "That chess term you just used, add it to my deck."
 msgstr "Добавь в мою колоду этот шахматный термин."
+
+msgid "The -des and -mata forms"
+msgstr "Формы на -des и -mata"
 
 msgid "The {name} app icon behind Lymi’s"
 msgstr "Значок приложения {name} за значком Lymi"
@@ -7618,6 +7639,9 @@ msgstr "App Store"
 msgid "The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend."
 msgstr "В sõpra b превращается в p: ma ootan sõpra — я жду друга."
 
+msgid "The basics"
+msgstr "Основы"
+
 msgid "The browning that gives seared, baked and toasted food its flavour"
 msgstr "Подрумянивание, которое придаёт вкус жареному, печёному и тостам"
 
@@ -7699,6 +7723,9 @@ msgstr "Полный каталог BAMF: 300 общих вопросов и 10 
 msgid "The gaps grow as you learn."
 msgstr "Чем лучше знаешь, тем длиннее паузы."
 
+msgid "The genitive case"
+msgstr "Родительный падеж"
+
 msgid "The German, Spanish and Czech decks keep questions and answers in the exam’s language, as the exam does; the notes add an English translation and a short explanation."
 msgstr "В немецкой, испанской и чешской колодах вопросы и ответы на языке экзамена, как и на самом экзамене; в заметках есть перевод на английский и короткое пояснение."
 
@@ -7713,9 +7740,6 @@ msgstr "Покупка продуктов"
 
 msgid "The h is silent: hoy sounds like oy."
 msgstr "H не читается: hoy звучит как «ой»."
-
-msgid "The hard middle"
-msgstr "Трудная середина"
 
 msgid "The hedgehog lives in the forest."
 msgstr "Ёжик живёт в лесу."
@@ -7789,14 +7813,14 @@ msgstr "Следующий раздел открывается, когда вы�
 msgid "the Noji help centre"
 msgstr "справочный центр Noji"
 
+msgid "The object: whole or part"
+msgstr "Дополнение: целое или часть"
+
 msgid "The old *castle* on the hill."
 msgstr "Старый *замок* на горе."
 
 msgid "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "Ту, что подходит к твоему тесту или теме. Можно добавить несколько, и Lymi смешает их карточки в одно ежедневное повторение."
-
-msgid "The one that: relative clauses"
-msgstr "Тот, который: определительные придаточные"
 
 msgid "The ones starting to fade"
 msgstr "Те, которые начинают забываться"
@@ -7806,6 +7830,9 @@ msgstr "Результат зависит от того, что было на в
 
 msgid "The part of a cell that releases energy from food"
 msgstr "Часть клетки, которая высвобождает энергию из пищи"
+
+msgid "The partitive case"
+msgstr "Партитив"
 
 msgid "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 msgstr "Приложение на телефоне запрашивает разрешение, прежде чем отправлять твой собственный контент в AI. В веб-приложении, через API-ключи и подключённые приложения AI работает, пока выбор для аккаунта не сделан. Отключить AI-сервисы можно в разделе Ты на телефоне или в Настройках в веб-приложении. Явное отключение останавливает новую AI-обработку твоего контента во всём Lymi, включая фоновую работу и подключённые приложения. Сохранённые текст и аудио остаются, а добавлять карточки вручную и повторять их можно и дальше. Для аудио общих и опубликованных карточек действует выбор владельца."
@@ -7927,10 +7954,10 @@ msgstr "Тридцатилетняя война"
 msgid "The thousand most common Estonian words, fifty at a time."
 msgstr "Тысяча самых частых эстонских слов, по пятьдесят за раз."
 
-msgid "The three key forms of a noun"
+msgid "The three forms of a noun"
 msgstr "Три основные формы существительного"
 
-msgid "The three key forms of a verb"
+msgid "The three forms of a verb"
 msgstr "Три основные формы глагола"
 
 msgid "The three you missed most this week: “ojalá”, “madrugar” and “tener ganas de”."
@@ -7938,6 +7965,9 @@ msgstr "Три, которые на этой неделе чаще всего н
 
 msgid "The train is late."
 msgstr "Поезд опаздывает."
+
+msgid "The translative case"
+msgstr "Транслатив"
 
 msgid "The union"
 msgstr "Профсоюз"
@@ -8013,9 +8043,6 @@ msgstr "Они соответствуют источнику {source}, досл�
 
 msgid "They say it’ll rain *tomorrow*."
 msgstr "Говорят, *завтра* будет дождь."
-
-msgid "They say: reported speech"
-msgstr "Говорят, что: косвенная речь"
 
 msgid "They stay in Mochi. A card’s first side becomes its term and the rest becomes its meaning, and its first picture comes along."
 msgstr "Они останутся в Mochi. Первая сторона карточки станет термином, остальное — значением, а первая картинка перенесётся вместе с ней."
@@ -8148,6 +8175,9 @@ msgstr "Билет"
 
 msgid "Ticket; banknote"
 msgstr "Билет; купюра"
+
+msgid "Time expressions: when things happen"
+msgstr "Выражения времени: когда что происходит"
 
 msgid "Time for the level to halve"
 msgstr "Время, за которое уровень падает вдвое"
@@ -8635,6 +8665,9 @@ msgstr "Обычно"
 msgid "verb"
 msgstr "глагол"
 
+msgid "Verbs and more cases"
+msgstr "Глаголы и новые падежи"
+
 msgid "Version of 5 January 2026"
 msgstr "Версия от 5 января 2026 года"
 
@@ -8937,12 +8970,6 @@ msgstr "Где идёт фотосинтез"
 msgid "Where should I start?"
 msgstr "С чего начать?"
 
-msgid "Where things are"
-msgstr "Где что находится"
-
-msgid "Where you are: -s and -l"
-msgstr "Где ты: -s и -l"
-
 msgid "Where’s the *flour*?"
 msgstr "Где здесь *мука*?"
 
@@ -8994,9 +9021,6 @@ msgstr "В какие планы входит Grok Bot?"
 msgid "Which questions come up"
 msgstr "Какие вопросы попадаются"
 
-msgid "Which verbs take -ma, which take -da"
-msgstr "Какие глаголы берут -ma, а какие -da"
-
 msgid "Which word did you hear?"
 msgstr "Какое слово прозвучало?"
 
@@ -9005,9 +9029,6 @@ msgstr "Какие слова я постоянно забываю?"
 
 msgid "Which words should I ask Marta about on Friday?"
 msgstr "О каких словах спросить Марту в пятницу?"
-
-msgid "While doing, without doing"
-msgstr "Делая, не делая"
 
 msgid "While you code"
 msgstr "Пока пишешь код"
@@ -9030,14 +9051,8 @@ msgstr "Кто его знает?"
 msgid "Who were the first Europeans to reach Canada?"
 msgstr "Кто из европейцев первым добрался до Канады?"
 
-msgid "Whole or part: the object"
-msgstr "Целое или часть: дополнение"
-
 msgid "Whose notes"
 msgstr "Чьи заметки"
-
-msgid "Whose: the genitive"
-msgstr "Чей: генитив"
 
 msgid "Widget"
 msgstr "Виджет"
@@ -9144,9 +9159,6 @@ msgstr "Слова из твоей колоды"
 msgid "Words show their reading in kana over the kanji. The kana deck is the one place with romaji, because there the sound is the answer."
 msgstr "Над кандзи показано чтение каной. Ромадзи есть только в колоде каны, потому что там звучание и есть ответ."
 
-msgid "Words that change inside"
-msgstr "Слова, которые меняются внутри"
-
 msgid "Words, meanings or a picture."
 msgstr "Слова, значения или картинка."
 
@@ -9170,9 +9182,6 @@ msgstr "Работает на любом тарифе Claude, включая Fre
 
 msgid "Works with"
 msgstr "Работает с"
-
-msgid "Would: the conditional"
-msgstr "Бы: условное наклонение"
 
 msgid "Writing"
 msgstr "Письмо"
@@ -9323,9 +9332,6 @@ msgstr "вчера"
 
 msgid "Yesterday was a rest day."
 msgstr "Вчера был день отдыха."
-
-msgid "Yesterday: the simple past"
-msgstr "Вчера: простое прошедшее время"
 
 msgid "You"
 msgstr "Ты"

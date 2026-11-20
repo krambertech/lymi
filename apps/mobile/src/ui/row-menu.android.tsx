@@ -39,7 +39,8 @@ export function RowMenu({
     item.onSelect();
   };
   const heading = kind === "heading";
-  const tap = heading ? undefined : (onPress ?? (() => router.push(href)));
+  // A heading does nothing on a tap unless it has `onPress`, as on iOS; a section's opens its page.
+  const tap = heading ? onPress : (onPress ?? (() => router.push(href)));
   return (
     <View
       accessible

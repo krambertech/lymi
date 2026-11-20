@@ -321,6 +321,9 @@ msgstr "*Завтра* суббота."
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
 
+msgid "<0/> asks about people and <1/> about things: <2/> who is that, <3/> what is that."
+msgstr "<0/> спрашивает о людях, а <1/> о вещах: <2/> кто это, <3/> что это."
+
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> the irregular one: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "У <0/> нет окончания, и оно подходит и для «он, она», и для «они». Поэтому <1/> — неправильный глагол: у других глаголов окончание есть и здесь, об этом — в уроке {regularVerbs}."
 
@@ -330,11 +333,20 @@ msgstr "<0/> — это сто, а <1/> — тысяча, и «один» пер
 msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 msgstr "<0/> значит и «он», и «она»: у эстонских местоимений нет рода. <1/> — это ещё и вежливое «Вы» к одному человеку, как в русском."
 
+msgid "<0/> is yes and <1/> is no. When the question asks with olema, to be, the usual no is <2/>: he isn't, I'm not. When you don't know, say <3/>."
+msgstr "<0/> значит да, <1/> значит нет. Если в вопросе есть olema, быть, обычный ответ «нет» — <2/>, то есть «не» вместе с глаголом olema. Если не знаешь, скажи <3/>."
+
+msgid "<0/> is your, short for <1/>; lesson {genitive} explains the form. <2/> is kus with -st, out of: where from."
+msgstr "<0/> значит твой, это короткое <1/>; откуда эта форма, объясняет урок {genitive}. <2/> — это kus с окончанием -st, «из»: откуда."
+
 msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:30, not 4:30."
 msgstr "<0/> значит «половина», и смотрит вперёд. <1/> — это 3:30, а не 4:30."
 
 msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 msgstr "<0/> значит «быть». Его окончание меняется по лицам: <1/> — «я есть», <2/> — «ты есть». Нажми на окончание."
+
+msgid "<0/> repeats the verb from the question. Estonians answer like this with every verb, as lesson {negation} on saying no shows."
+msgstr "<0/> повторяет глагол из вопроса. Эстонцы так отвечают с любым глаголом, об этом урок {negation} про отрицание."
 
 msgid "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 msgstr "<0>-teist</0> образует числа от одиннадцати до девятнадцати, а <1>-kümmend</1> — десятки."
@@ -376,6 +388,9 @@ msgstr "<0>Jonas</0> добавил 4 карточки в неделю 4"
 
 msgid "<0>Jonas</0> finished Week 2"
 msgstr "<0>Jonas</0> прошёл неделю 2"
+
+msgid "<0>kes</0> asks about people, <1>mis</1> about things."
+msgstr "<0>kes</0> спрашивает о людях, <1>mis</1> о вещах."
 
 msgid "<0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>: <1>elan, elad, elab, elame, elate, elavad</1>."
 msgstr "<0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>: <1>elan, elad, elab, elame, elate, elavad</1>."
@@ -741,6 +756,9 @@ msgstr "Бесплатное приложение для изучения укр
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers."
 msgstr "Бесплатный урок об эстонских числах: от нуля до десяти, -teist и -kümmend, сотни и тысячи, а также числа в ценах, возрасте и номерах телефонов."
 
+msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and the first questions you'll hear. Every sentence is read aloud."
+msgstr "Бесплатный урок о вопросах в эстонском: kas для вопросов «да или нет», ответы jah и ei, вопросительные слова kes, mis, kus, millal, miks, kuidas и kui palju и первые вопросы, которые ты услышишь. Каждое предложение озвучено."
+
 msgid "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad, with ten everyday verbs read aloud."
 msgstr "Бесплатный урок об эстонских глаголах в настоящем времени: форма на -ma, основа и шесть окончаний -n, -d, -b, -me, -te и -vad на десяти повседневных глаголах, с озвучкой."
 
@@ -768,6 +786,9 @@ msgstr "Хобби"
 msgid "a hundred"
 msgstr "сто"
 
+msgid "A kas question falls at the end, like a statement: kas has already said it's a question, so your voice doesn't need to. In speech you'll also hear <0/> at the end instead, a bit like “right?”: <1/>"
+msgstr "Вопрос с kas в конце понижается, как обычное утверждение: kas уже сказал, что это вопрос, поэтому голос повышать не нужно. В разговоре вместо него ещё услышишь <0/> в конце, что-то вроде «да?»: <1/>"
+
 msgid "A language"
 msgstr "Язык"
 
@@ -789,6 +810,12 @@ msgstr "По ссылке, с правами на просмотр и редак
 
 msgid "A link; everyone keeps their own schedule"
 msgstr "По ссылке, у каждого своё расписание"
+
+msgid "a little"
+msgstr "немного"
+
+msgid "A little."
+msgstr "Немного."
 
 msgid "A loaf of *bread*, please."
 msgstr "*Хлеб*, пожалуйста."
@@ -879,6 +906,9 @@ msgstr "четверть"
 
 msgid "A quarter of the way to {next}."
 msgstr "Четверть пути до {next}."
+
+msgid "A question word goes first, and the rest stays as in the statement: <0>Kus sa elad?</0>"
+msgstr "Вопросительное слово ставится первым, а остальное остаётся как в утверждении: <0>Kus sa elad?</0>"
 
 msgid "A question you got wrong"
 msgstr "Вопрос с ошибкой"
@@ -1333,11 +1363,17 @@ msgstr "Все, одинаково часто"
 msgid "All of them, inside real sentences."
 msgstr "Все верно, даже в настоящих предложениях."
 
+msgid "All of them. You can follow a short exchange."
+msgstr "Все. Ты уже понимаешь короткий разговор."
+
 msgid "All of them. You can hear length."
 msgstr "Все верно. Ты слышишь долготу."
 
 msgid "All of them. You can hear the difference."
 msgstr "Все верно. Ты слышишь разницу."
+
+msgid "All of them. You can hear what a question asks."
+msgstr "Все. Ты слышишь, о чём спрашивают."
 
 msgid "All of them. You can hear who it's about."
 msgstr "Все верно. Ты слышишь, о ком речь."
@@ -1469,6 +1505,9 @@ msgstr "Пакет Anki · доступен сутки"
 msgid "AnkiMobile, a one-off €29.99 ($24.99 in the US)"
 msgstr "AnkiMobile, разовая покупка за 29,99 € (в США — 24,99 $)"
 
+msgid "Answer <0>jah</0> or <1>ei</1>. To a question with olema, say <2>ei ole</2>. Not sure? <3>Ma ei tea.</3>"
+msgstr "Отвечай <0>jah</0> или <1>ei</1>. На вопрос с olema говори <2>ei ole</2>. Не знаешь? <3>Ma ei tea.</3>"
+
 msgid "Answers"
 msgstr "Варианты ответа"
 
@@ -1528,6 +1567,9 @@ msgstr "Колоды бесплатные?"
 
 msgid "Are these the official questions?"
 msgstr "Это официальные вопросы?"
+
+msgid "Are they working today?"
+msgstr "Они сегодня работают?"
 
 msgid "Are you *coming* today?"
 msgstr "Ты сегодня *придёшь*?"
@@ -1598,11 +1640,38 @@ msgstr "На вопрос, как дела у колоды «Анатомия»,
 msgid "Asked whether you’d like to win the lottery: “Magari!”"
 msgstr "На вопрос «Хочешь выиграть в лотерею?» — «Magari!»"
 
+msgid "Asking questions in Estonian"
+msgstr "Вопросы в эстонском языке"
+
+msgid "Asks about a person."
+msgstr "Спрашивает о человеке."
+
+msgid "Asks about a place."
+msgstr "Спрашивает о месте."
+
+msgid "Asks about a thing."
+msgstr "Спрашивает о вещи."
+
+msgid "Asks about a time."
+msgstr "Спрашивает о времени."
+
+msgid "Asks about an amount."
+msgstr "Спрашивает о количестве."
+
+msgid "Asks for a reason."
+msgstr "Спрашивает о причине."
+
+msgid "Asks how it's done."
+msgstr "Спрашивает, каким образом."
+
 msgid "At A2 you also need 45 of the written points and 15 of the oral ones. At B1 each module passes on its own."
 msgstr "На уровне A2 также нужно 45 баллов за письменную часть и 15 за устную. На B1 каждый модуль сдаётся отдельно."
 
 msgid "At first, every character has pinyin."
 msgstr "Сначала над каждым иероглифом есть пиньинь."
+
+msgid "at home"
+msgstr "дома"
 
 msgid "ATP"
 msgstr "АТФ"
@@ -1648,6 +1717,12 @@ msgstr "Директор банка"
 
 msgid "basket"
 msgstr "корзина"
+
+msgid "because"
+msgstr "потому что"
+
+msgid "Because I live in Tallinn."
+msgstr "Потому что я живу в Таллине."
 
 msgid "Because the ending already says who, the pronoun can go. Both lines below mean I'm Mari. Estonian can drop the pronoun, but never the verb."
 msgstr "Окончание уже говорит, кто это, поэтому местоимение можно опустить. Обе строки ниже значат «Я Mari». По-русски в настоящем времени опускают «есть», а по-эстонски наоборот: без местоимения можно, без глагола никогда."
@@ -2619,8 +2694,17 @@ msgstr "Соответствуют ли слова экзаменам Goethe?"
 msgid "Do you *like* tea?"
 msgstr "Ты *любишь* чай?"
 
+msgid "Do you drink coffee?"
+msgstr "Ты пьёшь кофе?"
+
 msgid "Do you have an *appointment* free today?"
 msgstr "У вас есть свободная *запись* на сегодня?"
+
+msgid "Do you live in Tallinn?"
+msgstr "Ты живёшь в Таллине?"
+
+msgid "Do you speak Estonian?"
+msgstr "Ты говоришь по-эстонски?"
 
 msgid "Docs"
 msgstr "Документация"
@@ -2903,6 +2987,9 @@ msgstr "Окончания elama"
 
 msgid "Endings of olema"
 msgstr "Окончания olema"
+
+msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
+msgstr "По-русски вопрос часто задают одной интонацией. В эстонском нужно слово kas, а все остальные слова остаются на своих местах. Попробуй на пяти предложениях."
 
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "Звука õ нет ни в английском, ни в русском. Скажи «о», но не округляй губы."
@@ -3258,6 +3345,9 @@ msgstr "Финансы и бухгалтерия"
 msgid "Find your exam"
 msgstr "Найти свой экзамен"
 
+msgid "Fine, thanks. And you?"
+msgstr "Хорошо, спасибо. А у тебя?"
+
 msgid "Finnish has a word for a night with no plans to go out."
 msgstr "В финском есть отдельное слово для вечера, когда никуда не собираешься."
 
@@ -3281,6 +3371,9 @@ msgstr "пять"
 
 msgid "Five look familiar. The four with marks are separate letters, not accents, and swapping one changes the word. <0/> is the one English doesn't have."
 msgstr "Пять выглядят знакомо. Четыре со значками — отдельные буквы, а не разновидности привычных, и если заменить одну, получится другое слово. Самая непривычная из них — <0/>."
+
+msgid "Five sentences. Switch to Question and watch what changes."
+msgstr "Пять предложений. Переключи на «Вопрос» и посмотри, что изменится."
 
 msgid "Fix and tidy cards"
 msgstr "Исправить и упорядочить карточки"
@@ -3574,6 +3667,9 @@ msgstr "От tuul — ветер."
 msgid "From your notes"
 msgstr "Из твоих заметок"
 
+msgid "from, by birth"
+msgstr "родом из"
+
 msgid "FSRS for every card, on every device"
 msgstr "FSRS для каждой карточки на любом устройстве"
 
@@ -3770,6 +3866,9 @@ msgstr "Доброе утро"
 msgid "Good morning. Here’s today in Lymi."
 msgstr "Доброе утро. Вот твой день в Lymi."
 
+msgid "Good. Hear the ones you missed once more."
+msgstr "Хорошо. Послушай ещё раз те, где ошибся."
+
 msgid "Goodbye"
 msgstr "До свидания"
 
@@ -3873,6 +3972,9 @@ msgstr "он или она есть"
 msgid "He or she is a teacher."
 msgstr "Он или она — учитель."
 
+msgid "He or she is at home."
+msgstr "Он или она дома."
+
 msgid "He or she is tired."
 msgstr "Он устал или она устала."
 
@@ -3910,6 +4012,9 @@ msgstr "Послушать {0}"
 #. placeholder {1}: i18n._(f.meaning)
 msgid "Hear {0}, {1}"
 msgstr "Послушать {0}, {1}"
+
+msgid "Hear a question and pick its question word. It's always the first word, so listen to the start."
+msgstr "Послушай вопрос и выбери вопросительное слово. Оно всегда первое, так что слушай начало."
 
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Послушай предложение и выбери глагол из него. Варианты отличаются только окончанием, так что слушай конец глагола."
@@ -4016,8 +4121,17 @@ msgstr "Дом"
 msgid "Housing"
 msgstr "Жильё"
 
+msgid "how"
+msgstr "как"
+
 msgid "How a deck differs from a quiz."
 msgstr "Чем колода отличается от викторины."
+
+msgid "How are you getting on?"
+msgstr "Как живёшь?"
+
+msgid "How are you learning Estonian?"
+msgstr "Как ты учишь эстонский?"
 
 msgid "How do you *read* this kanji?"
 msgstr "Как *читается* этот иероглиф?"
@@ -4027,6 +4141,9 @@ msgstr "Как будет <0>забастовка</0>?"
 
 msgid "How do you say it?"
 msgstr "Как это сказать?"
+
+msgid "How does he or she speak Estonian?"
+msgstr "Как он или она говорит по-эстонски?"
 
 msgid "How does Lymi decide when to show a card again?"
 msgstr "Как Lymi решает, когда снова показать карточку?"
@@ -4061,14 +4178,26 @@ msgstr "Сколько карточек ждёт меня сегодня?"
 msgid "How many autonomous communities does Spain have?"
 msgstr "Сколько автономных сообществ в Испании?"
 
+msgid "How much coffee do you drink?"
+msgstr "Сколько кофе ты пьёшь?"
+
 msgid "How much demand changes when the price changes"
 msgstr "Насколько меняется спрос, когда меняется цена"
+
+msgid "How much do you work?"
+msgstr "Сколько ты работаешь?"
 
 msgid "How much is a *taxi*?"
 msgstr "Сколько стоит *такси*?"
 
 msgid "How much of a dose reaches the blood"
 msgstr "Какая доля дозы попадает в кровь"
+
+msgid "How much water do you drink?"
+msgstr "Сколько воды ты пьёшь?"
+
+msgid "how much, how many"
+msgstr "сколько"
 
 msgid "How sections work"
 msgstr "Как работают разделы"
@@ -4082,6 +4211,9 @@ msgstr "Как устроен Einbürgerungstest, и колода для каж�
 msgid "How the import works"
 msgstr "Как работает импорт"
 
+msgid "How to ask in Estonian: kas for yes or no, seven question words for the rest, and three questions you'll hear in your first week."
+msgstr "Как спрашивать по-эстонски: kas для «да или нет», семь вопросительных слов для всего остального и три вопроса, которые услышишь в первую же неделю."
+
 msgid "How to connect"
 msgstr "Как подключить"
 
@@ -4093,6 +4225,9 @@ msgstr "Как своевременные повторения помогают 
 
 msgid "How you work"
 msgstr "Как ты работаешь"
+
+msgid "How's it going?"
+msgstr "Как дела?"
 
 msgid "How’s it going?"
 msgstr "Как дела?"
@@ -4185,6 +4320,12 @@ msgstr "Я плачу (слёзы)"
 
 msgid "I don’t have a *dog*."
 msgstr "У меня нет *собаки*."
+
+msgid "I don't know"
+msgstr "я не знаю"
+
+msgid "I don't know."
+msgstr "Я не знаю."
 
 msgid "I don’t mind"
 msgstr "Мне всё равно"
@@ -4279,6 +4420,9 @@ msgstr "Я плачу (деньги)"
 msgid "I play in a football *team*."
 msgstr "Я играю в футбольной *команде*."
 
+msgid "I read a lot."
+msgstr "Я много читаю."
+
 msgid "I read, I'm reading"
 msgstr "Я читаю: вообще и сейчас"
 
@@ -4335,6 +4479,9 @@ msgstr "Мне 34 года."
 
 msgid "I'm at home."
 msgstr "Я дома."
+
+msgid "I'm from Ukraine."
+msgstr "Я из Украины."
 
 msgid "I’m getting up early *tomorrow* morning."
 msgstr "*Завтра* я встаю рано."
@@ -4507,6 +4654,15 @@ msgstr "У некоторых глаголов основа меняется. У
 msgid "In summer the *nights* stay light."
 msgstr "Летом *ночи* светлые."
 
+msgid "in Tallinn"
+msgstr "в Таллине"
+
+msgid "In Tallinn."
+msgstr "В Таллине."
+
+msgid "in Tartu"
+msgstr "в Тарту"
+
 msgid "In the end"
 msgstr "В итоге"
 
@@ -4573,6 +4729,9 @@ msgstr "IRCC не публикует свои вопросы. Это трени�
 msgid "Is Grok Bot the same as Grok?"
 msgstr "Grok Bot и Grok — это одно и то же?"
 
+msgid "Is he or she at home?"
+msgstr "Он или она дома?"
+
 msgid "Is it for schools?"
 msgstr "Это для школ?"
 
@@ -4611,6 +4770,9 @@ msgstr "Lymi делает то же самое, но без запущенног
 
 msgid "It doesn’t matter"
 msgstr "Ничего страшного"
+
+msgid "It has no meaning of its own, like a spoken question mark."
+msgstr "Своего значения не имеет, это как знак вопроса вслух."
 
 msgid "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
 msgstr "Это помогает. Колода Read Japanese Kana учит хирагане и катакане, а с ними остальные колоды даются легче."
@@ -4702,6 +4864,9 @@ msgstr "Издатель убрал её с публичных страниц Ly
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Редкий, но серьёзный риск — лактоацидоз."
 
+msgid "Jah, ei, ei ole"
+msgstr "Jah, ei, ei ole"
+
 msgid "Japan"
 msgstr "Япония"
 
@@ -4754,6 +4919,12 @@ msgstr "Кана"
 
 msgid "Kanji in Japanese shapes"
 msgstr "Кандзи в японском написании"
+
+msgid "Kas in front, a question mark at the end. Every other word stays put."
+msgstr "Kas в начале, знак вопроса в конце. Все остальные слова на своих местах."
+
+msgid "Kas makes a question"
+msgstr "Kas делает вопрос"
 
 msgid "Kas sa tuled? Are you coming?"
 msgstr "Kas sa tuled? Ты придёшь?"
@@ -4876,6 +5047,9 @@ msgstr "Kümne — это форма kümme перед minuti pärast."
 msgid "Kümne minuti pärast neli: in ten minutes it's four, 3:50."
 msgstr "Kümne minuti pärast neli: через десять минут четыре, 3:50."
 
+msgid "Kus with the ending -st, “out of”."
+msgstr "Kus с окончанием -st, «из»."
+
 msgid "Lab values"
 msgstr "Лабораторные нормы"
 
@@ -4965,6 +5139,9 @@ msgstr "Учите одну колоду вместе"
 
 msgid "Learn the Spanish words you’ll use most, a few minutes a day. A native voice reads every card, and free decks take you from <0>hola</0> to B1."
 msgstr "Учи испанские слова, которые пригодятся чаще всего, несколько минут в день. Каждую карточку читает голос носителя, а бесплатные колоды ведут от <0>hola</0> до B1."
+
+msgid "Learn three questions whole: <0>Mis su nimi on? Kuidas läheb?</0> and <1>Kust sa pärit oled?</1>"
+msgstr "Три вопроса учи целиком: <0>Mis su nimi on? Kuidas läheb?</0> и <1>Kust sa pärit oled?</1>"
 
 msgid "Learn Ukrainian vocabulary with flashcards · Lymi"
 msgstr "Украинские слова на флеш-карточках · Lymi"
@@ -5133,6 +5310,9 @@ msgstr "Сначала послушай."
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Слушай конец глагола. Поиграй со столом выше и возвращайся."
 
+msgid "Listen to the first word: kas, or which question word."
+msgstr "Слушай первое слово: kas или какое вопросительное слово."
+
 msgid "Listen to the very end of the verb, then try again."
 msgstr "Слушай самый конец глагола и попробуй ещё раз."
 
@@ -5217,6 +5397,9 @@ msgstr "Lymi для подготовки к сертификации · Карт
 
 msgid "Lymi for iPhone"
 msgstr "Lymi для iPhone"
+
+msgid "Lymi for iPhone isn’t on the App Store in EU countries yet. It should be there in the coming weeks. Until then, <0>email us</0> to try it on TestFlight."
+msgstr "Lymi для iPhone пока нет в App Store в странах ЕС. Он должен появиться там в ближайшие недели. А пока <0>напиши нам</0>, чтобы попробовать его в TestFlight."
 
 msgid "Lymi for language learning"
 msgstr "Lymi для изучения языков"
@@ -5310,6 +5493,9 @@ msgstr "AI Lymi · значения и примеры"
 
 msgid "Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes doesn’t get that label, so check it."
 msgstr "AI в Lymi заполняет то, что ты оставляешь пустым, например значение или пример, и помечает каждое такое поле как AI. Текст, который пишет твой ассистент, такой пометки не получает, так что проверь его."
+
+msgid "Ma olen pärit… is I'm from…"
+msgstr "Ma olen pärit… значит «я родом из…»."
 
 msgid "Ma tulen kohe! I’m coming right away!"
 msgstr "Ma tulen kohe! Уже иду!"
@@ -5653,6 +5839,9 @@ msgstr "Мой дорогой"
 msgid "My flat is number 16."
 msgstr "Моя квартира — номер 16."
 
+msgid "My name is Mari."
+msgstr "Меня зовут Мари."
+
 msgid "Ñ is a letter of its own: ¡Feliz año nuevo!"
 msgstr "Ñ считается отдельной буквой: ¡Feliz año nuevo!"
 
@@ -5679,6 +5868,9 @@ msgstr "Природа"
 
 msgid "NCLEX pharmacology"
 msgstr "Фармакология NCLEX"
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Почти. Послушай ещё раз те, где ошибся."
 
 msgid "Nearly. Tap the endings above once more."
 msgstr "Почти. Ещё раз понажимай окончания выше."
@@ -5805,6 +5997,18 @@ msgstr "Нет, *спасибо*."
 
 msgid "No, *thanks*."
 msgstr "Нет, *спасибо*."
+
+msgid "No, he or she isn't."
+msgstr "Нет, его или её нет."
+
+msgid "no, not: the answer to a question with olema"
+msgstr "нет, не: ответ на вопрос с olema"
+
+msgid "no; not"
+msgstr "нет; не"
+
+msgid "No."
+msgstr "Нет."
 
 msgid "No. A card can hold anything you want to remember: a term, a date, a formula, a chord. Language cards can also be said aloud."
 msgstr "Нет. На карточке может быть всё, что ты хочешь запомнить: термин, дата, формула, аккорд. Языковые карточки ещё и можно прослушать."
@@ -5944,6 +6148,9 @@ msgstr "существительное"
 
 msgid "Nouns and cases"
 msgstr "Существительные и падежи"
+
+msgid "Now a short exchange. Hear a question, then pick the answer that fits. A kas question wants yes or no; a question word wants what it asks about, such as a place for kus or a time for millal."
+msgstr "Теперь короткий разговор. Послушай вопрос и выбери ответ, который подходит. На kas отвечают «да» или «нет», а на вопросительное слово — тем, о чём оно спрашивает: местом на kus, временем на millal."
 
 msgid "Now both together. You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
 msgstr "Теперь вместе. Ты сидишь внизу и говоришь с Mari и Jaan напротив. Liis и Kadri сидят по обе стороны от тебя, а Peeter справа. Нажми на слово, чтобы увидеть, кого оно означает, или на человека."
@@ -6189,6 +6396,9 @@ msgstr "Или добавь вручную:"
 msgid "Or send it from your AI assistant."
 msgstr "Или отправь через AI-ассистента."
 
+msgid "or; at the end of a sentence, a bit like “right?”"
+msgstr "или; в конце предложения что-то вроде «да?»"
+
 msgid "Organisms, stains and what they cause."
 msgstr "Возбудители, окраски и что они вызывают."
 
@@ -6401,7 +6611,7 @@ msgstr "Путь, платформа"
 
 #. placeholder {0}: PRESENT_SENTENCES[each.id]
 #. placeholder {0}: PRONOUN_SENTENCES[id]
-#. placeholder {0}: timeDigits(time)
+#. placeholder {0}: said(each.a)
 msgid "Play {0}"
 msgstr "Воспроизвести {0}"
 
@@ -6417,6 +6627,9 @@ msgstr "Воспроизвести {digits}"
 
 msgid "Play {n}"
 msgstr "Воспроизвести {n}"
+
+msgid "Play {question}"
+msgstr "Воспроизвести {question}"
 
 msgid "Play {show}"
 msgstr "Воспроизвести {show}"
@@ -6623,6 +6836,9 @@ msgstr "Опубликовано {0}"
 msgid "Pumpkin"
 msgstr "Тыква"
 
+msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
+msgstr "Чтобы спросить «да или нет», поставь <0>kas</0> перед предложением. Больше ничего не двигается: <1>Kas sa elad Tallinnas?</1>"
+
 msgid "Put Lymi’s address in ~/.gemini/settings.json, with the client ID from the setup guide."
 msgstr "Впиши адрес Lymi в ~/.gemini/settings.json вместе с client ID из инструкции по настройке."
 
@@ -6643,6 +6859,12 @@ msgstr "Четверти тоже смотрят вперёд. <0/> — четв
 
 msgid "Quarters: veerand and kolmveerand"
 msgstr "Четверти: veerand и kolmveerand"
+
+msgid "Question"
+msgstr "Вопрос"
+
+msgid "Question words"
+msgstr "Вопросительные слова"
 
 msgid "Questions"
 msgstr "Вопросы"
@@ -7303,6 +7525,9 @@ msgstr "Сокращение от nemad."
 msgid "Short for sina."
 msgstr "Сокращение от sina."
 
+msgid "Short for sinu."
+msgstr "Короткое от sinu."
+
 msgid "Short for teie."
 msgstr "Сокращение от teie."
 
@@ -7646,6 +7871,12 @@ msgstr "Состояние"
 msgid "State: {learning}"
 msgstr "Состояние: {learning}"
 
+msgid "Statement"
+msgstr "Утверждение"
+
+msgid "Statement or question"
+msgstr "Утверждение или вопрос"
+
 msgid "station"
 msgstr "станция"
 
@@ -7871,6 +8102,9 @@ msgstr "Tallinnas оканчивается на -s, «в», об этом — в
 msgid "Tamil"
 msgstr "тамильский"
 
+msgid "Tap a question word"
+msgstr "Нажми вопросительное слово"
+
 msgid "Tap a vowel"
 msgstr "Нажми на гласную"
 
@@ -7879,6 +8113,9 @@ msgstr "Нажми на слово или на человека"
 
 msgid "Tap an ending"
 msgstr "Нажми на окончание"
+
+msgid "Tap the question words above once more, then try again."
+msgstr "Ещё раз понажимай вопросительные слова выше, а потом попробуй снова."
 
 msgid "Tap to turn it over"
 msgstr "Коснись, чтобы перевернуть"
@@ -7981,6 +8218,12 @@ msgstr "Спасибо; спасибо, друг"
 
 msgid "That chess term you just used, add it to my deck."
 msgstr "Добавь в мою колоду этот шахматный термин."
+
+msgid "That's a book."
+msgstr "Это книга."
+
+msgid "That's Jaan."
+msgstr "Это Яан."
 
 msgid "The -des and -mata forms"
 msgstr "Формы на -des и -mata"
@@ -8516,6 +8759,9 @@ msgstr "Потом повторяй их в Lymi."
 msgid "There are 22 pupils in the class."
 msgstr "В классе 22 ученика."
 
+msgid "There are seven to start with. Tap one to hear it in a question."
+msgstr "Для начала их семь. Нажми на любое, чтобы услышать его в вопросе."
+
 msgid "There are too many *things*."
 msgstr "Слишком много *вещей*."
 
@@ -8572,6 +8818,9 @@ msgstr "Они пьют кофе."
 
 msgid "They're tired."
 msgstr "Они устали."
+
+msgid "They're working today."
+msgstr "Они сегодня работают."
 
 msgid "Things to ask ChatGPT."
 msgstr "О чём попросить ChatGPT."
@@ -8678,6 +8927,9 @@ msgstr "три четверти"
 msgid "Three quarters of the way to {next}."
 msgstr "Три четверти пути до {next}."
 
+msgid "Three questions to know by heart"
+msgstr "Три вопроса наизусть"
+
 msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 msgstr "Вот три, которые дважды не вспомнились: диффузия, митохондрия и рибосома."
 
@@ -8734,6 +8986,12 @@ msgstr "чаевые"
 
 msgid "To agree"
 msgstr "Соглашаться"
+
+msgid "To ask a yes-or-no question, put <0/> in front of a sentence. <1/> is you live in Tallinn. <2/> is do you live in Tallinn?"
+msgstr "Чтобы спросить «да или нет», поставь <0/> перед предложением. <1/> значит «ты живёшь в Таллине». <2/> значит «ты живёшь в Таллине?»"
+
+msgid "To ask for more than yes or no, start with a question word instead of kas. The rest stays as in the statement; only the part you ask about goes. <0/> becomes <1/>, where do you live?"
+msgstr "Чтобы узнать больше, чем «да» или «нет», начни с вопросительного слова вместо kas. Остальное остаётся как в утверждении, уходит только то, о чём спрашиваешь. <0/> становится <1/>, где ты живёшь?"
 
 msgid "To ask the time, say <0/> Word for word, it's “what clock is?” The answer starts with <1/> too: <2/>, it's three o'clock."
 msgstr "Чтобы спросить, который час, скажи <0/> Дословно — «что часы есть?» Ответ тоже начинается с <1/>: <2/>, три часа."
@@ -8939,6 +9197,9 @@ msgstr "работать"
 msgid "To work"
 msgstr "Работать"
 
+msgid "today"
+msgstr "сегодня"
+
 msgid "Today"
 msgstr "Сегодня"
 
@@ -8956,6 +9217,9 @@ msgstr "Завтра"
 
 msgid "Tomorrow I’m getting up early for work."
 msgstr "Завтра я рано встаю на работу."
+
+msgid "Tomorrow."
+msgstr "Завтра."
 
 msgid "Tonight"
 msgstr "Сегодня вечером"
@@ -9105,6 +9369,9 @@ msgstr "Преврати свои заметки в карточки."
 
 msgid "Turn your tutor lessons into flashcards · Lymi"
 msgstr "Уроки с репетитором в карточки · Lymi"
+
+msgid "turns a sentence into a yes-or-no question"
+msgstr "делает из предложения вопрос «да или нет»"
 
 msgid "Tutor lessons"
 msgstr "Уроки с репетитором"
@@ -9387,6 +9654,12 @@ msgstr "Неделя 3"
 msgid "Week 4"
 msgstr "Неделя 4"
 
+msgid "well, fine"
+msgstr "хорошо"
+
+msgid "what"
+msgstr "что"
+
 msgid "What *day* is it today?"
 msgstr "Какой сегодня *день*?"
 
@@ -9429,6 +9702,9 @@ msgstr "Что ты будешь *есть*?"
 msgid "What are you learning?"
 msgstr "Что ты учишь?"
 
+msgid "What are you reading?"
+msgstr "Что ты читаешь?"
+
 msgid "What comes across"
 msgstr "Что перенесётся"
 
@@ -9437,6 +9713,9 @@ msgstr "Что ты *думаешь*?"
 
 msgid "What does a card ask me?"
 msgstr "О чём спрашивает карточка?"
+
+msgid "What does it ask?"
+msgstr "О чём спрашивают?"
 
 msgid "What does it cost?"
 msgstr "Сколько это стоит?"
@@ -9467,6 +9746,9 @@ msgstr "А если я уже пользуюсь Anki?"
 
 msgid "What if it gets something wrong?"
 msgstr "А если он ошибётся?"
+
+msgid "What is that?"
+msgstr "Что это?"
 
 msgid "What is this part called?"
 msgstr "Как называется эта часть?"
@@ -9550,6 +9832,12 @@ msgstr "Что внутри"
 msgid "What’s new in Lymi, and what got better."
 msgstr "Новые возможности Lymi и то, что стало лучше."
 
+msgid "What's your name?"
+msgstr "Как тебя зовут?"
+
+msgid "when"
+msgstr "когда"
+
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "Когда показатель становится целью, он перестаёт быть хорошим показателем"
 
@@ -9558,6 +9846,15 @@ msgstr "Когда слово никак не запоминается, AI го�
 
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "Когда коллеги уходят с работы, им говорят <0><1>お疲れ様です</1></0>."
+
+msgid "When do you eat?"
+msgstr "Когда ты ешь?"
+
+msgid "When do you read?"
+msgstr "Когда ты читаешь?"
+
+msgid "When do you work?"
+msgstr "Когда ты работаешь?"
 
 msgid "When its card reaches Known in your reviews. From then on the reading is hidden on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it."
 msgstr "Когда его карточка в повторениях становится выученной. С этого момента чтение скрыто на этой карточке и в примерах во всех твоих колодах. Забудешь слово — и чтение вернётся, а на обороте карточки оно есть всегда."
@@ -9568,17 +9865,35 @@ msgstr "Когда говорят быстро, эти два окончания
 msgid "When the output depends on the history of the input"
 msgstr "Когда результат зависит от того, что было на входе раньше"
 
+msgid "where"
+msgstr "где"
+
 msgid "Where {name} does more"
 msgstr "Где {name} умеет больше"
 
 msgid "Where *are* you?"
 msgstr "Где *ты*?"
 
+msgid "Where are you from?"
+msgstr "Откуда ты?"
+
+msgid "Where do you all live?"
+msgstr "Где вы живёте?"
+
+msgid "Where do you live?"
+msgstr "Где ты живёшь?"
+
+msgid "Where does he or she work?"
+msgstr "Где он или она работает?"
+
 msgid "Where does Lymi work with Gemini?"
 msgstr "Где Lymi работает с Gemini?"
 
 msgid "Where each app does more, including the rows where it’s {name}. We check these against {name}’s own pages and update them when either app changes."
 msgstr "Где каждое приложение умеет больше, в том числе там, где впереди {name}. Мы сверяем это с собственными страницами {name} и обновляем, когда меняется любое из приложений."
+
+msgid "where from"
+msgstr "откуда"
 
 msgid "Where Lymi does more"
 msgstr "Где Lymi умеет больше"
@@ -9597,6 +9912,9 @@ msgstr "Где станция *метро*?"
 
 msgid "Where’s the *water*?"
 msgstr "Где здесь *вода*?"
+
+msgid "Which answer fits?"
+msgstr "Какой ответ подходит?"
 
 msgid "Which assistants can add cards?"
 msgstr "Какие ассистенты могут добавлять карточки?"
@@ -9652,6 +9970,9 @@ msgstr "Какая часть IP-адреса обозначает сеть"
 msgid "Which plans include Grok Bot?"
 msgstr "В какие планы входит Grok Bot?"
 
+msgid "Which question word?"
+msgstr "Какое вопросительное слово?"
+
 msgid "Which questions come up"
 msgstr "Какие вопросы попадаются"
 
@@ -9670,6 +9991,9 @@ msgstr "Пока пишешь код"
 msgid "While you’re away"
 msgstr "Пока тебя нет"
 
+msgid "who"
+msgstr "кто"
+
 msgid "Who can see the cards I make?"
 msgstr "Кто видит карточки, которые я создаю?"
 
@@ -9682,17 +10006,41 @@ msgstr "О ком это?"
 msgid "Who is responsible"
 msgstr "Кто отвечает за данные"
 
+msgid "Who is that?"
+msgstr "Кто это?"
+
 msgid "Who knows?"
 msgstr "Кто его знает?"
 
+msgid "Who lives in Tartu?"
+msgstr "Кто живёт в Тарту?"
+
+msgid "Who speaks Estonian?"
+msgstr "Кто говорит по-эстонски?"
+
 msgid "Who were the first Europeans to reach Canada?"
 msgstr "Кто из европейцев первым добрался до Канады?"
+
+msgid "Who, what, where"
+msgstr "Кто, что, где"
 
 msgid "Who? Me!"
 msgstr "Кто? Я!"
 
 msgid "Whose notes"
 msgstr "Чьи заметки"
+
+msgid "why"
+msgstr "почему"
+
+msgid "Why are you learning Estonian?"
+msgstr "Почему ты учишь эстонский?"
+
+msgid "Why are you waiting?"
+msgstr "Почему ты ждёшь?"
+
+msgid "Why is he or she learning Estonian?"
+msgstr "Почему он или она учит эстонский?"
 
 msgid "Widget"
 msgstr "Виджет"
@@ -9868,6 +10216,9 @@ msgstr "Да, через Умное добавление. Добавь до 10 �
 msgid "Yes, with tone marks. A card shows pinyin over its word until the card is Known. In the examples on your cards, pinyin leaves each character you’ve learned. Turning a card over always shows it."
 msgstr "Да, со знаками тонов. Карточка показывает пиньинь над своим словом, пока она не выучена. В примерах на твоих карточках пиньинь исчезает с каждого иероглифа, который ты уже знаешь. Когда переворачиваешь карточку, пиньинь виден всегда."
 
+msgid "Yes."
+msgstr "Да."
+
 msgid "Yes. A card can hold one picture, such as a diagram or a slide, and a review can ask from the picture instead of the words."
 msgstr "Да. У карточки может быть одно изображение, например схема или слайд, и повторение может спрашивать по изображению вместо слов."
 
@@ -10018,6 +10369,9 @@ msgstr "Не нужно. Передай карточки в Gemini CLI с под
 msgid "You don’t want an account"
 msgstr "Тебе не нужен аккаунт"
 
+msgid "You drink coffee."
+msgstr "Ты пьёшь кофе."
+
 msgid "You know <0>{term}</0>. Its pinyin goes from the examples on all your cards."
 msgstr "Ты знаешь <0>{term}</0>. Его пиньинь исчезает из примеров на всех твоих карточках."
 
@@ -10036,6 +10390,12 @@ msgstr "Выучено в контексте."
 msgid "you live"
 msgstr "ты живёшь"
 
+msgid "You live in Tallinn, don't you?"
+msgstr "Ты живёшь в Таллине, да?"
+
+msgid "You live in Tallinn."
+msgstr "Ты живёшь в Таллине."
+
 msgid "you live, to more than one; polite you live"
 msgstr "вы живёте; вежливое «Вы живёте»"
 
@@ -10053,6 +10413,9 @@ msgstr "Твоя колода"
 
 msgid "You rely on add-ons"
 msgstr "Ты не можешь без дополнений"
+
+msgid "You speak Estonian."
+msgstr "Ты говоришь по-эстонски."
 
 msgid "You speak very well."
 msgstr "Вы очень хорошо говорите."
@@ -10093,6 +10456,9 @@ msgstr "вы; вежливое «Вы»"
 msgid "you, to one person"
 msgstr "ты"
 
+msgid "You'll hear a question with it, and an answer."
+msgstr "Услышишь вопрос с ним и ответ."
+
 msgid "You'll hear elama with it and who it's for."
 msgstr "Услышишь elama с ним и узнаешь, для кого оно."
 
@@ -10101,6 +10467,9 @@ msgstr "Услышишь её в слове и узнаешь, как её пр�
 
 msgid "You'll hear the form and who it's for."
 msgstr "Услышишь форму и узнаешь, для кого она."
+
+msgid "You'll hear these three in your first conversations. Learn them whole, with an answer each, and don't take them apart yet."
+msgstr "Эти три вопроса услышишь в первых же разговорах. Учи их целиком, каждый с ответом, и пока не разбирай на части."
 
 msgid "You're a good friend."
 msgstr "Ты хороший друг."
@@ -10119,6 +10488,9 @@ msgstr "Не за что"
 
 msgid "You've finished every lesson so far"
 msgstr "Все готовые уроки пройдены"
+
+msgid "your"
+msgstr "твой"
 
 msgid "Your AI assistant adds cards"
 msgstr "Твой AI-ассистент добавляет карточки"

@@ -7050,6 +7050,9 @@ msgstr "Other exams"
 msgid "Other MCP apps"
 msgstr "Other MCP apps"
 
+msgid "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
+msgstr "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
+
 msgid "Other people, not the ones you’re talking to."
 msgstr "Other people, not the ones you’re talking to."
 
@@ -8907,8 +8910,8 @@ msgstr "Tap a word or a person"
 msgid "Tap an ending"
 msgstr "Tap an ending"
 
-msgid "Tap õ, ä and ü above once more, then try again."
-msgstr "Tap õ, ä and ü above once more, then try again."
+msgid "Tap õ, ä and ü in the vowels above once more, then try again."
+msgstr "Tap õ, ä and ü in the vowels above once more, then try again."
 
 msgid "Tap the places above once more, then try again."
 msgstr "Tap the places above once more, then try again."
@@ -9909,8 +9912,8 @@ msgstr "tip"
 msgid "To agree"
 msgstr "To agree"
 
-msgid "To answer no, say <0>ei</0>, or ei with the verb from the question: <1>Kas sa loed? Ei loe.</1>"
-msgstr "To answer no, say <0>ei</0>, or ei with the verb from the question: <1>Kas sa loed? Ei loe.</1>"
+msgid "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
+msgstr "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
 
 msgid "To ask for more than yes or no, start with a question word instead of kas, and leave out the part you ask about. <0/> You live in Tallinn. <1/> Where do you live?"
 msgstr "To ask for more than yes or no, start with a question word instead of kas, and leave out the part you ask about. <0/> You live in Tallinn. <1/> Where do you live?"
@@ -10429,9 +10432,6 @@ msgstr "Unfinished tasks stay on your mind more than finished ones"
 
 msgid "United States"
 msgstr "United States"
-
-msgid "Up to twenty past, minutes count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
-msgstr "Up to twenty past, minutes count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
 
 msgid "US citizenship test"
 msgstr "US citizenship test"

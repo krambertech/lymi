@@ -499,8 +499,8 @@ export function EitusLesson() {
           Olema gives <b lang="et">ei ole</b>, or in one word, <b lang="et">pole</b>.
         </Trans>,
         <Trans key="5">
-          To answer no, say <b lang="et">ei</b>, or ei with the verb from the question:{" "}
-          <b lang="et">Kas sa loed? Ei loe.</b>
+          To answer no, say <b lang="et">ei</b>, or <b lang="et">ei</b> with the verb from the
+          question: <b lang="et">Kas sa loed? Ei loe.</b>
         </Trans>,
       ]}
       sections={[

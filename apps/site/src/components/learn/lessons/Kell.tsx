@@ -731,7 +731,7 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Up to twenty past, minutes count from the hour that has struck.{" "}
+                    Other minutes, up to twenty past, count from the hour that has struck.{" "}
                     <Word w="Kümme minutit kolm läbi" /> is, word for word, “ten minutes, three
                     passed”: 3:10. <Word w="Läbi" /> means through or past, and <Word w="minutit" />{" "}
                     is the partitive of <em>minut</em>, the form after a number; lesson {partitive}{" "}

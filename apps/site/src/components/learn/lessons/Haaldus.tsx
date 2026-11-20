@@ -108,7 +108,7 @@ function Syllables({ parts }: { parts: readonly string[] }) {
 function Verdict({ share }: { share: number }) {
   if (share === 1) return <Trans>All of them. You can hear the difference.</Trans>;
   if (share >= 0.7) return <Trans>Most of them. Play the ones you missed once more.</Trans>;
-  return <Trans>Tap õ, ä and ü above once more, then try again.</Trans>;
+  return <Trans>Tap õ, ä and ü in the vowels above once more, then try again.</Trans>;
 }
 
 export function HaaldusLesson() {

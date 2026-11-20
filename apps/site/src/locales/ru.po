@@ -7050,6 +7050,9 @@ msgstr "Другие экзамены"
 msgid "Other MCP apps"
 msgstr "Другие MCP-приложения"
 
+msgid "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
+msgstr "Остальные минуты, до двадцати после ровного часа, считают от прошедшего часа. <0/> — дословно «десять минут, три прошло»: 3:10. <1/> значит «сквозь» или «прошло», а <2/> — партитив от <3>minut</3>, форма после числа; её объясняет урок {partitive}."
+
 msgid "Other people, not the ones you’re talking to."
 msgstr "Другие люди, не те, с кем ты говоришь."
 
@@ -8907,8 +8910,8 @@ msgstr "Нажми на слово или на человека"
 msgid "Tap an ending"
 msgstr "Нажми на окончание"
 
-msgid "Tap õ, ä and ü above once more, then try again."
-msgstr "Ещё раз нажми на õ, ä и ü выше, потом попробуй снова."
+msgid "Tap õ, ä and ü in the vowels above once more, then try again."
+msgstr "Ещё раз нажми на õ, ä и ü среди гласных выше, потом попробуй снова."
 
 msgid "Tap the places above once more, then try again."
 msgstr "Ещё раз нажми на места выше, а потом попробуй снова."
@@ -9909,8 +9912,8 @@ msgstr "чаевые"
 msgid "To agree"
 msgstr "Соглашаться"
 
-msgid "To answer no, say <0>ei</0>, or ei with the verb from the question: <1>Kas sa loed? Ei loe.</1>"
-msgstr "Чтобы ответить «нет», скажи <0>ei</0> или ei с глаголом из вопроса: <1>Kas sa loed? Ei loe.</1>"
+msgid "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
+msgstr "Чтобы ответить «нет», скажи <0>ei</0> или <1>ei</1> с глаголом из вопроса: <2>Kas sa loed? Ei loe.</2>"
 
 msgid "To ask for more than yes or no, start with a question word instead of kas, and leave out the part you ask about. <0/> You live in Tallinn. <1/> Where do you live?"
 msgstr "Чтобы узнать больше, чем «да» или «нет», начни с вопросительного слова вместо kas, а то, о чём спрашиваешь, убери. <0/> Ты живёшь в Таллине. <1/> Где ты живёшь?"
@@ -10429,9 +10432,6 @@ msgstr "Незавершённые дела удерживаются в памя
 
 msgid "United States"
 msgstr "США"
-
-msgid "Up to twenty past, minutes count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
-msgstr "До двадцати минут после ровного часа минуты считают от прошедшего часа. <0/> — дословно «десять минут, три прошло»: 3:10. <1/> значит «сквозь» или «прошло», а <2/> — партитив от <3>minut</3>, форма после числа; её объясняет урок {partitive}."
 
 msgid "US citizenship test"
 msgstr "Тест на гражданство США"

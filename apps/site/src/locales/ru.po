@@ -4873,8 +4873,8 @@ msgstr "Начато"
 msgid "In Quizlet you choose a set and a study mode. In Lymi you open Today, and spaced repetition has already picked the cards that need you."
 msgstr "В Quizlet ты выбираешь набор и режим. В Lymi открываешь «Сегодня», а интервальное повторение уже отобрало карточки, которым нужно твоё внимание."
 
-msgid "In some verbs the stem changes. <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don't need the rule for that yet. Learn each verb with its I form, the way Estonian dictionaries list it: <3>lugema, loen</3>. Take off -n and the rest is the stem."
-msgstr "У некоторых глаголов основа меняется. У <0/>, «читать», основа <1>loe-</1>, поэтому «я читаю» будет <2/>. Правило для этого пока не нужно. Запоминай каждый глагол вместе с формой для «я», как в эстонских словарях: <3>lugema, loen</3>. Отбрось -n, и остальное будет основой."
+msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don't need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you'll add a third form, <4>lugeda</4>."
+msgstr "У некоторых глаголов основа меняется. У <0/>, «читать», основа <1>loe-</1>, поэтому «я читаю» будет <2/>. Правило для этого пока не нужно. Запоминай каждый глагол вместе с формой для «я»: <3>lugema, loen</3>. Отбрось -n, и остальное будет основой. В уроке {verbForms} добавишь третью форму, <4>lugeda</4>."
 
 msgid "In summer the *nights* stay light."
 msgstr "Летом *ночи* светлые."

@@ -736,7 +736,7 @@ msgid "A clock at {right}"
 msgstr "Годинник показує {right}"
 
 msgid "A command, from istuma, to sit."
-msgstr "Наказовий спосіб від istuma, сідати."
+msgstr "Так кажуть, коли просять сісти; від istuma, сідати."
 
 msgid "A conversation in two voices: the learner picks each reply. Shown first, then sound only for a harder one."
 msgstr "Розмова у два голоси: учень обирає кожну відповідь. Спершу з текстом, потім лише на слух — складніший рівень."
@@ -5670,8 +5670,8 @@ msgstr "Хай вивчене з Gemini лишається з тобою."
 msgid "Keep what you learn with Grok Bot."
 msgstr "Хай вивчене з Grok Bot лишається з тобою."
 
-msgid "Kell kümme: at ten."
-msgstr "Kell kümme: о десятій."
+msgid "Kell on kümme: it's ten. Kell kümme: at ten."
+msgstr "Kell on kümme: зараз десята. Kell kümme: о десятій."
 
 msgid "Key"
 msgstr "Ключ"
@@ -6946,9 +6946,6 @@ msgstr "Õ чи o? Ü чи u?"
 
 msgid "Õ, ä, ö and ü stay exactly as you typed them, so <0>tuli</0>, fire, and <1>tüli</1>, a quarrel, are two different cards."
 msgstr "Õ, ä, ö і ü лишаються саме такими, як ти їх вводиш, тож <0>tuli</0> (вогонь) і <1>tüli</1> (сварка) — дві різні картки."
-
-msgid "o'clock; also at, when it comes before a time"
-msgstr "година; також «о», коли стоїть перед часом"
 
 msgid "of 200 points for level 1"
 msgstr "з 200 балів для рівня 1"

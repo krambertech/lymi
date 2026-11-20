@@ -30,7 +30,7 @@ const GLOSSARY: Glossary = {
     en: msg`on Sunday`,
     note: msg`Pühapäev with the ending that says when, as in esmaspäeval.`,
   },
-  kell: { en: msg`o'clock; also at, when it comes before a time`, note: msg`Kell kümme: at ten.` },
+  kell: { en: msg`clock, watch; o'clock`, note: msg`Kell on kümme: it's ten. Kell kümme: at ten.` },
   kümme: { en: msg`ten` },
   kaksteist: { en: msg`twelve` },
   üksteist: { en: msg`eleven` },

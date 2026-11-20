@@ -5670,8 +5670,8 @@ msgstr "Keep what you learn with Gemini."
 msgid "Keep what you learn with Grok Bot."
 msgstr "Keep what you learn with Grok Bot."
 
-msgid "Kell kümme: at ten."
-msgstr "Kell kümme: at ten."
+msgid "Kell on kümme: it's ten. Kell kümme: at ten."
+msgstr "Kell on kümme: it's ten. Kell kümme: at ten."
 
 msgid "Key"
 msgstr "Key"
@@ -6946,9 +6946,6 @@ msgstr "Õ or o? Ü or u?"
 
 msgid "Õ, ä, ö and ü stay exactly as you typed them, so <0>tuli</0>, fire, and <1>tüli</1>, a quarrel, are two different cards."
 msgstr "Õ, ä, ö and ü stay exactly as you typed them, so <0>tuli</0>, fire, and <1>tüli</1>, a quarrel, are two different cards."
-
-msgid "o'clock; also at, when it comes before a time"
-msgstr "o'clock; also at, when it comes before a time"
 
 msgid "of 200 points for level 1"
 msgstr "of 200 points for level 1"

@@ -6,7 +6,8 @@ import { Island } from "../../islands/Island";
 import { LearnLayout } from "../LearnLayout";
 import { type Glossary, LessonContext } from "../lesson-context";
 import { WordCards } from "../Word";
-import { DialogueA, DialogueB, DialogueC, GapsA, GapsB, GapsC, ListenA, ListenB, ListenC, ReadA, ReadB, ReadC } from "./Variants";
+import { Listen2A, Listen2B } from "./Listen2";
+import { DialogueA, DialogueC, GapsA, GapsB, ReadA, ReadB, ReadC } from "./Variants";
 
 const GLOSSARY: Glossary = {
   õpetaja: { en: msg`teacher`, clip: false },
@@ -27,25 +28,19 @@ const TYPES: readonly { id: string; title: string; when: string; options: readon
   {
     id: "listen",
     title: "1. Listen, then answer",
-    when: "A short passage in one voice, questions in your language.",
+    when: "One recording of the whole passage, all questions at once, answers lettered.",
     options: [
       {
         id: "A",
-        name: "Player, then reveal",
-        choices: "Text hidden until the end. One question at a time. The score shows the text, with the lines you missed marked.",
-        view: () => <ListenA />,
+        name: "Check at the end",
+        choices: "Listen as often as you like, answer every question, then one Check. The text appears after, with the sentences behind missed answers underlined.",
+        view: () => <Listen2A />,
       },
       {
         id: "B",
-        name: "Text on a switch",
-        choices: "Every sentence is its own row to replay. Text toggled by Show text. All questions at once, one Check.",
-        view: () => <ListenB />,
-      },
-      {
-        id: "C",
-        name: "Questions first",
-        choices: "Questions visible before you listen. Each marks as you answer and shows the sentence that held it.",
-        view: () => <ListenC />,
+        name: "Marked as you answer",
+        choices: "Each answer marks at once, with a button to hear the moment that answered it. The text appears once all are answered.",
+        view: () => <Listen2B />,
       },
     ],
   },
@@ -57,27 +52,21 @@ const TYPES: readonly { id: string; title: string; when: string; options: readon
       {
         id: "A",
         name: "Tap a gap",
-        choices: "Options for the open gap sit under the passage. Each gap marks at once and plays its sentence.",
+        choices: "Options for the open gap sit under the passage. Each gap marks at once. No sound until the end, when the whole passage can be heard.",
         view: () => <GapsA />,
       },
       {
         id: "B",
-        name: "Word bank",
-        choices: "One bank of words, two spare. Place them anywhere, take them back, then Check all.",
+        name: "Drag and drop",
+        choices: "Drag words from the bank into the gaps, two spare; drag them out or between gaps, or tap a word then a gap. Check all, then hear the passage.",
         view: () => <GapsB />,
-      },
-      {
-        id: "C",
-        name: "Line by line, by ear",
-        choices: "Hear a sentence, fill its gap; finished lines build up above, each to hear again.",
-        view: () => <GapsC />,
       },
     ],
   },
   {
     id: "read",
     title: "3. Read, then answer",
-    when: "A short text to read; words have their cards; it can be heard too.",
+    when: "A short text to read, and one recording of it. Word meanings open once you have answered, so they can't give answers away.",
     options: [
       {
         id: "A",
@@ -102,24 +91,18 @@ const TYPES: readonly { id: string; title: string; when: string; options: readon
   {
     id: "dialogue",
     title: "4. Dialogue",
-    when: "You play one side. Mari speaks in her own voice (Liis); your lines in Priit's.",
+    when: "Your pick: the chat. Each dialogue sets how much it shows; no translations. Both voices now play at the same loudness.",
     options: [
       {
         id: "A",
-        name: "Chat",
-        choices: "Mari's lines arrive written and spoken. Your replies are picked under the chat; a wrong pick explains why, then Say it.",
+        name: "Words shown",
+        choices: "Mari's lines arrive written and spoken. For early lessons.",
         view: () => <DialogueA />,
       },
       {
         id: "B",
-        name: "Script",
-        choices: "Lines as a script, speaker on the left. Your line is picked where it stands.",
-        view: () => <DialogueB />,
-      },
-      {
-        id: "C",
-        name: "Listen first",
-        choices: "The chat, but Mari's lines arrive as sound only; her words show on request.",
+        name: "Sound only",
+        choices: "Mari's lines arrive as sound; a learner can still ask to see one. For later lessons, as a harder level.",
         view: () => <DialogueC />,
       },
     ],
@@ -216,7 +199,7 @@ export default function Lab() {
                 </div>
                 <h1 className="text-5xl leading-none font-semibold tracking-[-0.03em]">Four new kinds of practice</h1>
                 <p className="max-w-[52ch] text-lg text-ink-secondary">
-                  Each has three options. Switch between them, try them, and tell me a letter for each. The Estonian comes from lessons 1–5: pronouns, olema, the present tense, ei and kas.
+                  Each has two or three options. Switch between them, try them, and tell me a letter for each. The Estonian comes from lessons 1–5: pronouns, olema, the present tense, ei and kas.
                 </p>
                 <nav className="flex flex-wrap gap-x-4 gap-y-1 text-md font-medium">
                   {TYPES.map((t) => (

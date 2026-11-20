@@ -1,11 +1,13 @@
 /** The prototype's options for each new lesson type. Not for shipping. */
 import { clsx } from "clsx";
 import { ArrowRight, Eye, EyeOff, MessageCircle, RotateCcw } from "lucide-react";
-import { type ReactNode, useState } from "react";
-import { playInTurn, playSound, usePlaying } from "../../../lib/learn/player";
+import { type PointerEvent as ReactPointerEvent, type ReactNode, useState } from "react";
+import { playInTurn, playSound, stopSound, usePlaying } from "../../../lib/learn/player";
 import { Button } from "../../Button";
 import { Listen } from "../Sound";
 import { Word } from "../Word";
+import { type Recording, type Timeline, TimelinePlayer, useTimeline } from "./Listen2";
+import mariTiming from "./mari-timing.json";
 import {
   DIALOGUE,
   GAPS,
@@ -339,9 +341,9 @@ function GapSlot({
       data-mark={checked && filled ? (right ? "right" : "wrong") : undefined}
       className={clsx(
         "learn-gap mx-0.5 inline-flex min-w-[3.2ch] cursor-pointer items-baseline justify-center gap-1.5 rounded-t-sm px-1 align-baseline transition-colors",
-        active && !checked && "bg-(--form-soft) [border-bottom-color:var(--form)] [border-bottom-style:solid]",
-        !checked && filled && "text-(--form) [border-bottom-style:solid] [border-bottom-color:var(--form)]",
+        active && !checked && "bg-(--form-soft)",
       )}
+      style={active && !checked ? { borderBottomColor: "var(--form)" } : undefined}
     >
       {checked && filled && !right && <s className="text-[0.7em]">{filled}</s>}
       <span className={clsx(checked && filled && !right && "text-success")}>{checked && filled && !right ? answer :(filled ?? "   ")}</span>
@@ -349,7 +351,7 @@ function GapSlot({
   );
 }
 
-/** A: tap a gap, pick its word under the passage; each gap marks at once and plays its sentence. */
+/** A: tap a gap, pick its word under the passage; each gap marks at once. The passage can be heard at the end. */
 export function GapsA() {
   const [fills, setFills] = useState<Record<string, string>>({});
   const firstOpen = GAPS.find((g) => !fills[g.id])?.id ?? null;
@@ -398,7 +400,6 @@ export function GapsA() {
                 onPick={() => {
                   setFills((f) => ({ ...f, [current.id]: o }));
                   setActive(current.id);
-                  void playSound(src(current.id), key("ga", current.id));
                 }}
               />
             ))}
@@ -407,10 +408,8 @@ export function GapsA() {
       )}
       {done && (
         <>
-          <Score right={right} total={GAPS.length}>
-            Now hear the whole passage.
-          </Score>
-          <PassagePlayer lines={GAPS.map((g) => ({ id: g.id, et: `${g.before} ${g.answer} ${g.after}`, en: g.en }))} prefix="ga" />
+          <Score right={right} total={GAPS.length} />
+          <HearPassage prefix="ga" />
           <Again
             onClick={() => {
               setFills({});
@@ -442,61 +441,189 @@ function BigChip({ label, onPick, used, mark }: { label: string; onPick: () => v
   );
 }
 
+/** The finished passage, read aloud on request. */
+function HearPassage({ prefix }: { prefix: string }) {
+  const playing = GAPS.map((g) => usePlaying(key(prefix, g.id))).some(Boolean);
+  return (
+    <button
+      type="button"
+      onClick={() =>
+        playing ? stopSound() : void playInTurn(GAPS.map((g) => ({ src: src(g.id), key: key(prefix, g.id) })))
+      }
+      className="edge-lift inline-flex h-10 cursor-pointer items-center gap-2.5 rounded-full bg-plate ps-1.5 pe-4 text-md font-medium hoverable:hover:bg-plate-hover"
+    >
+      <span className="grid size-7 place-items-center rounded-full bg-(--form) text-plate">
+        {playing ? <Bars /> : <span className="ms-px text-[0.65rem]">▶</span>}
+      </span>
+      {playing ? "Stop" : "Hear the passage"}
+    </button>
+  );
+}
+
 const BANK = ["loen", "on", "oled", "ei", "elame", "loeb", "olen"];
 
-/** B: a bank of words above the passage; place them, then Check them all. */
+interface Drag {
+  word: string;
+  /** "bank", or the gap it was lifted from. */
+  from: string;
+  x: number;
+  y: number;
+  dx: number;
+  dy: number;
+  moved: boolean;
+}
+
+/** B: drag words from the bank into the gaps (or tap a word, then a gap), then Check them all. */
 export function GapsB() {
   const [fills, setFills] = useState<Record<string, string>>({});
   const [checked, setChecked] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const [active, setActive] = useState<string | null>(null);
+  const [drag, setDrag] = useState<Drag | null>(null);
+  const [over, setOver] = useState<string | null>(null);
   const used = new Set(Object.values(fills));
   const target = active ?? GAPS.find((g) => !fills[g.id])?.id;
   const right = GAPS.filter((g) => fills[g.id] === g.answer).length;
+
+  const gapAt = (x: number, y: number) =>
+    (document.elementFromPoint(x, y)?.closest("[data-gap]") as HTMLElement | null)?.dataset.gap ?? null;
+
+  const place = (word: string, from: string, to: string | null) =>
+    setFills((was) => {
+      const next = { ...was };
+      if (from !== "bank") delete next[from];
+      if (to) {
+        const bumped = next[to];
+        next[to] = word;
+        // Dropped on a filled gap from another gap: the two words swap.
+        if (bumped && from !== "bank") next[from] = bumped;
+      }
+      return next;
+    });
+
+  const lift = (word: string, from: string) => (event: ReactPointerEvent<HTMLElement>) => {
+    if (checked || event.button !== 0) return;
+    const box = event.currentTarget.getBoundingClientRect();
+    event.currentTarget.setPointerCapture(event.pointerId);
+    setDrag({ word, from, x: event.clientX, y: event.clientY, dx: event.clientX - box.left, dy: event.clientY - box.top, moved: false });
+  };
+  const move = (event: ReactPointerEvent) => {
+    if (!drag) return;
+    const moved = drag.moved || Math.hypot(event.clientX - drag.x, event.clientY - drag.y) > 6;
+    setDrag({ ...drag, x: event.clientX, y: event.clientY, moved });
+    if (moved) setOver(gapAt(event.clientX, event.clientY));
+  };
+  const drop = (event: ReactPointerEvent) => {
+    if (!drag) return;
+    const to = gapAt(event.clientX, event.clientY);
+    if (drag.moved) {
+      place(drag.word, drag.from, to);
+      setActive(null);
+    } else if (drag.from === "bank") {
+      // A tap: the word goes to the chosen gap, or the first open one.
+      if (!used.has(drag.word) && target) place(drag.word, "bank", target);
+      setActive(null);
+    } else {
+      // A tap on a filled gap takes its word back and opens that gap.
+      place(drag.word, drag.from, null);
+      setActive(drag.from);
+    }
+    setDrag(null);
+    setOver(null);
+  };
+  const handlers = { onPointerMove: move, onPointerUp: drop, onPointerCancel: () => (setDrag(null), setOver(null)) };
+
   return (
     <Card title="Fill the gaps">
       <div className="grid w-full gap-2 rounded-lg bg-plate-nested p-3">
-        <span className="text-sm text-ink-muted">Words · two are spare</span>
+        <span className="text-sm text-ink-muted">Drag each word to its gap · two are spare</span>
         <div className="flex flex-wrap gap-2">
-          {BANK.map((w) => (
-            <BigChip
-              key={w}
-              label={w}
-              used={used.has(w)}
-              onPick={() => {
-                if (checked || used.has(w) || !target) return;
-                setFills((f) => ({ ...f, [target]: w }));
-                setActive(null);
-              }}
-            />
-          ))}
+          {BANK.map((w) => {
+            const lifted = drag?.moved && drag.word === w;
+            const gone = used.has(w) && !(lifted && drag?.from === "bank");
+            return (
+              <span
+                key={w}
+                lang="et"
+                role="button"
+                tabIndex={gone || checked ? -1 : 0}
+                aria-disabled={gone || undefined}
+                onPointerDown={gone ? undefined : lift(w, "bank")}
+                onKeyDown={(event) => {
+                  if ((event.key === "Enter" || event.key === " ") && !gone && target && !checked) {
+                    event.preventDefault();
+                    place(w, "bank", target);
+                    setActive(null);
+                  }
+                }}
+                {...handlers}
+                className={clsx(
+                  "learn-answer relative min-w-20 touch-none rounded-tile border border-edge-strong bg-plate px-4 py-2 text-center text-2xl font-semibold tracking-tight select-none",
+                  gone || lifted
+                    ? "border-dashed text-transparent"
+                    : "cursor-grab hoverable:hover:bg-plate-hover",
+                )}
+              >
+                {w}
+              </span>
+            );
+          })}
         </div>
       </div>
       <p lang="et" className="max-w-[34ch] text-2xl/[1.75] font-medium tracking-tight max-sm:text-xl/[1.75]">
-        {GAPS.map((g, i) => (
-          <span key={g.id}>
-            {g.before}{" "}
-            <GapSlot
-              label={`Gap ${i + 1}`}
-              answer={g.answer}
-              filled={fills[g.id] ?? null}
-              checked={checked}
-              active={!checked && target === g.id}
-              onClick={() => {
-                if (checked) return;
-                if (fills[g.id]) {
-                  setFills((f) => {
-                    const { [g.id]: _, ...rest } = f;
-                    return rest;
-                  });
+        {GAPS.map((g, i) => {
+          const filled = fills[g.id];
+          const liftedHere = drag?.moved && drag.from === g.id;
+          const isRight = filled === g.answer;
+          return (
+            <span key={g.id}>
+              {g.before}{" "}
+              <span
+                data-gap={g.id}
+                role="button"
+                tabIndex={checked ? -1 : 0}
+                aria-label={`Gap ${i + 1}${filled ? `: ${filled}` : ""}`}
+                aria-pressed={!checked && target === g.id}
+                onPointerDown={filled && !checked ? lift(filled, g.id) : undefined}
+                onClick={() => !filled && !checked && setActive(g.id)}
+                {...handlers}
+                data-mark={checked && filled ? (isRight ? "right" : "wrong") : undefined}
+                className={clsx(
+                  "learn-gap mx-0.5 inline-flex min-w-[3.4ch] touch-none items-baseline justify-center gap-1.5 rounded-t-sm px-1 align-baseline transition-colors select-none",
+                  !checked && "cursor-pointer",
+                  !checked && filled && !liftedHere && "cursor-grab text-(--form)",
+                  (over === g.id || (!drag && !checked && target === g.id)) && "bg-(--form-soft)",
+                )}
+                style={
+                  checked
+                    ? undefined
+                    : filled && !liftedHere
+                      ? { borderBottomStyle: "solid", borderBottomColor: "var(--form)" }
+                      : drag?.moved
+                        ? { borderBottomColor: "var(--form)" }
+                        : undefined
                 }
-                setActive(g.id);
-              }}
-            />{" "}
-            {g.after}{" "}
-          </span>
-        ))}
+              >
+                {checked && filled && !isRight && <s className="text-[0.7em]">{filled}</s>}
+                <span className={clsx(checked && !isRight && "text-success", liftedHere && "opacity-0")}>
+                  {checked && !isRight ? g.answer : (filled ?? "   ")}
+                </span>
+              </span>{" "}
+              {g.after}{" "}
+            </span>
+          );
+        })}
       </p>
+      {drag?.moved && (
+        <span
+          aria-hidden="true"
+          lang="et"
+          className="pointer-events-none fixed z-50 rounded-tile border border-(--form) bg-plate px-4 py-2 text-2xl font-semibold tracking-tight shadow-[var(--learn-pop)]"
+          style={{ left: drag.x - drag.dx, top: drag.y - drag.dy, rotate: "-2deg" }}
+        >
+          {drag.word}
+        </span>
+      )}
       {note && (
         <p role="status" className="text-sm text-ink-muted">
           {note}
@@ -505,19 +632,21 @@ export function GapsB() {
       {checked ? (
         <>
           <Score right={right} total={GAPS.length}>
-            {right < GAPS.length ? "The right word stands where you missed one." : "Every gap right."} Hear the whole passage:
+            {right < GAPS.length ? "The right word stands where you missed one." : "Every gap right."}
           </Score>
-          <PassagePlayer lines={GAPS.map((g) => ({ id: g.id, et: `${g.before} ${g.answer} ${g.after}`, en: g.en }))} prefix="gb" />
-          <Again
-            onClick={() => {
-              setFills({});
-              setChecked(false);
-            }}
-          />
+          <div className="flex flex-wrap gap-2">
+            <HearPassage prefix="gb" />
+            <Again
+              onClick={() => {
+                setFills({});
+                setChecked(false);
+              }}
+            />
+          </div>
         </>
       ) : (
-        <div className="flex w-full justify-between gap-3">
-          <span className="self-center text-sm text-ink-muted">Tap a filled gap to take its word back.</span>
+        <div className="flex w-full items-center justify-between gap-3">
+          <span className="text-sm text-ink-muted">Drag a word out of a gap to take it back.</span>
           <Button
             variant="primary"
             onClick={() => {
@@ -626,28 +755,39 @@ function DoneLine({ id, text }: { id: string; text: string }) {
 
 // ─── 3. Read, then answer ───────────────────────────────────────────────────
 
-function MariText({ big }: { big?: boolean }) {
+const MARI_REC: Recording = { src: "/audio/estonian-lessons/proto/mari.mp3", key: "mari", ...mariTiming };
+
+/** Mari's text. Its words open their cards only once the questions are answered. */
+function MariText({ big, glossed, tl }: { big?: boolean; glossed: boolean; tl: Timeline }) {
+  const W = ({ w }: { w: string }) => (glossed ? <Word w={w} /> : <>{w}</>);
+  const words: Record<string, ReactNode> = {
+    r2: <>Ma olen <W w="õpetaja" />.</>,
+    r4: <>Ma loen <W w="palju" />.</>,
+    r5: <>Minu <W w="vend" /> Peeter ei loe.</>,
+    r6: <>Ta <W w="kuulab" /> <W w="muusikat" />.</>,
+  };
+  const { marks, duration } = MARI_REC;
   return (
     <p lang="et" className={clsx("max-w-[46ch] leading-[1.7] text-ink", big ? "text-2xl max-sm:text-xl" : "text-xl max-sm:text-lg")}>
-      Tere! Minu nimi on Mari. Ma olen <Word w="õpetaja" />. Ma elan Tallinnas. Ma loen <Word w="palju" />. Minu{" "}
-      <Word w="vend" /> Peeter ei loe. Ta <Word w="kuulab" /> <Word w="muusikat" />. Kas sina loed palju?
+      {MARI.map((l, i) => {
+        const now = tl.playing && tl.t >= (marks[i] ?? 0) && tl.t < (marks[i + 1] ?? duration);
+        return (
+          <span key={l.id}>
+            <span className={clsx("rounded-sm transition-colors duration-200 [box-decoration-break:clone]", now && "bg-(--form-soft)")}>
+              {words[l.id] ?? l.et}
+            </span>{" "}
+          </span>
+        );
+      })}
     </p>
   );
 }
 
-function ReadAloud({ prefix }: { prefix: string }) {
-  const playing = MARI.map((l) => usePlaying(key(prefix, l.id))).some(Boolean);
+function GlossNote({ glossed }: { glossed: boolean }) {
   return (
-    <button
-      type="button"
-      onClick={() => void playInTurn(MARI.map((l) => ({ src: src(l.id), key: key(prefix, l.id) })))}
-      className="edge-lift inline-flex h-9 cursor-pointer items-center gap-2 rounded-full bg-plate ps-1.5 pe-3.5 text-sm font-medium hoverable:hover:bg-plate-hover"
-    >
-      <span className="grid size-6.5 place-items-center rounded-full bg-(--form) text-plate">
-        {playing ? <Bars /> : <span className="text-[0.6rem]">▶</span>}
-      </span>
-      Hear it read
-    </button>
+    <p className="text-sm text-ink-muted">
+      {glossed ? "Rest on a coloured word to see what it means." : "Word meanings open once you have answered."}
+    </p>
   );
 }
 
@@ -655,13 +795,15 @@ function ReadAloud({ prefix }: { prefix: string }) {
 export function ReadA() {
   const r = useRounds(MARI_QS.length);
   const q = MARI_QS[r.round];
+  const tl = useTimeline(() => {}, MARI_REC);
   return (
     <div className="grid gap-5">
       <div className="grid gap-3">
         <span className="text-sm font-medium text-ink-muted">Mari writes</span>
-        <MariText big />
-        <div>
-          <ReadAloud prefix="ra" />
+        <MariText big glossed={r.finished} tl={tl} />
+        <GlossNote glossed={r.finished} />
+        <div className="max-w-md pt-1">
+          <TimelinePlayer tl={tl} label="Hear it read" small />
         </div>
       </div>
       <Card title="What did you read?" aside={<Dots results={r.results} now={r.round} total={MARI_QS.length} />}>
@@ -694,15 +836,17 @@ export function ReadA() {
 export function ReadB() {
   const [chosen, setChosen] = useState<Record<string, string>>({});
   const [checked, setChecked] = useState(false);
+  const tl = useTimeline(() => {}, MARI_REC);
   const [note, setNote] = useState<string | null>(null);
   const right = MARI_QS.filter((q) => chosen[q.id] === q.answer).length;
   return (
     <div className="relative left-1/2 grid w-[min(1040px,calc(100vw-40px))] -translate-x-1/2 items-start gap-6 md:grid-cols-[minmax(0,5fr)_minmax(0,6fr)]">
       <div className="grid gap-3 md:sticky md:top-24">
         <span className="text-sm font-medium text-ink-muted">Mari writes</span>
-        <MariText />
-        <div>
-          <ReadAloud prefix="rb" />
+        <MariText glossed={checked} tl={tl} />
+        <GlossNote glossed={checked} />
+        <div className="max-w-md pt-1">
+          <TimelinePlayer tl={tl} label="Hear it read" small />
         </div>
       </div>
       <Card title="What did you read?">
@@ -758,6 +902,7 @@ export function ReadB() {
 export function ReadC() {
   const r = useRounds(MARI_FIND.length);
   const q = MARI_FIND[r.round];
+  const tl = useTimeline(() => {}, MARI_REC);
   return (
     <Card title="Find it in the text" aside={<Dots results={r.results} now={r.round} total={MARI_FIND.length} />}>
       {!r.finished && q && <p className="text-xl font-medium">{q.q}</p>}
@@ -792,6 +937,9 @@ export function ReadC() {
       {r.finished && (
         <>
           <Score right={r.results.filter(Boolean).length} total={MARI_FIND.length} />
+          <div className="w-full max-w-md">
+            <TimelinePlayer tl={tl} label="Hear it read" small />
+          </div>
           <Again onClick={r.restart} />
         </>
       )}
@@ -901,9 +1049,7 @@ function MariBubble({ turn, prefix, hideText }: { turn: Extract<Turn, { who: "ma
             </span>
           )}
         </button>
-        {shown ? (
-          <span className="ps-1 text-sm text-ink-muted">{turn.en}</span>
-        ) : (
+        {shown ? null : (
           <button type="button" onClick={() => setShown(true)} className="cursor-pointer justify-self-start ps-1 text-sm font-medium text-(--form) underline-offset-2 hover:underline">
             Show what she said
           </button>
@@ -1008,7 +1154,7 @@ export function DialogueA() {
   return <Chat prefix="da" />;
 }
 
-/** C: listen first. Mari's lines arrive as sound only; her words show on request. */
+/** The same chat set to sound only: a harder dialogue. Mari's words show on request. */
 export function DialogueC() {
   return <Chat prefix="dc" hideText />;
 }

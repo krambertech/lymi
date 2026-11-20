@@ -5,7 +5,7 @@ import { GooglePlayMark } from "../GetTheApp";
 export function AndroidFigure() {
   return (
     <div aria-hidden="true" className="flex w-[460px] justify-center py-8">
-      <div className="flex w-[400px] items-center gap-5 rounded-xl bg-plate p-5 edge shadow-[0_24px_48px_-28px_oklch(0.25_0.04_60/0.5)]">
+      <div className="flex w-[400px] items-center gap-5 rounded-xl bg-plate p-5 edge-drop">
         <img
           src="/phone/icon.png"
           alt=""

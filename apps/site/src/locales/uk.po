@@ -13,9 +13,6 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
-msgid "-n, -d, -b, -me, -te, -vad: each person has its own."
-msgstr "-n, -d, -b, -me, -te, -vad: у кожної особи своє."
-
 msgid "-s or -l?"
 msgstr "-s чи -l?"
 
@@ -347,17 +344,20 @@ msgstr "*Завтра* субота."
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
-msgid "<0/> asks about people and <1/> about things: <2/> who is that, <3/> what is that."
-msgstr "<0/> питає про людей, а <1/> про речі: <2/> хто це, <3/> що це."
+msgid "<0/> asks about people and <1/> about things: <2/> Who is that? <3/> What is that?"
+msgstr "<0/> питає про людей, а <1/> — про речі: <2/> Хто це? <3/> Що це?"
 
-msgid "<0/> at the start turns a sentence into a yes-or-no question. Lesson {questions} is about questions."
-msgstr "<0/> на початку робить із речення питання, на яке відповідають «так» чи «ні». Питанням присвячено урок {questions}."
+msgid "<0/> at the start turns a sentence into a yes-or-no question. Lesson {questions} covers kas and the question words."
+msgstr "<0/> на початку робить із речення питання, на яке відповідають «так» чи «ні». Про kas і питальні слова розповідає урок {questions}."
 
-msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> the irregular one: other verbs add an ending there too, as lesson {regularVerbs} shows."
-msgstr "<0/> не має закінчення і підходить і для «він, вона», і для «вони». Тому <1/> — неправильне дієслово: інші дієслова й тут мають закінчення, про це розповідає урок {regularVerbs}."
+msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
+msgstr "<0/> не має закінчення і підходить і для «він чи вона», і для «вони». Тому <1/> — неправильне дієслово: інші дієслова й тут мають закінчення, про це розповідає урок {regularVerbs}."
 
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> — це сто, а <1/> — тисяча, і «один» перед ними не кажуть. Сотні пишуться разом, <2/>, а тисячі окремо: <3/>."
+
+msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
+msgstr "<0/> — це сто, а <1/> — «надішли». Подвоєна літера — це довший звук, і з ним виходить інше слово. З приголосними так само: <2/> — курка, а <3/> — «неси» (до однієї людини)."
 
 msgid "<0/> is at home. Now answer <1/> six ways: tap a place."
 msgstr "<0/> — це вдома. А тепер дай шість відповідей на <1/>: торкнись місця."
@@ -371,14 +371,17 @@ msgstr "<0/> — це місто, а <1/> — у Таллінні. В естон
 msgid "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
 msgstr "<0/> — завтра, <1/> — учора. Додай спереду <2>üle-</2>, і буде на день далі: <3/> — післязавтра, <4/> — позавчора. Обери, який день сьогодні."
 
-msgid "<0/> is yes and <1/> is no. When the question asks with olema, to be, the usual no is <2/>: he isn't, I'm not. When you don't know, say <3/>."
-msgstr "<0/> означає так, <1/> означає ні. Якщо в питанні є olema, бути, звичайна відповідь «ні» — <2/>, тобто «не» разом із дієсловом olema. Коли не знаєш, скажи <3/>."
+msgid "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
+msgstr "<0/> — дванадцять, а <1/> — двадцять. Обидва починаються з kaks, тож слухай, як закінчується слово."
 
-msgid "<0/> is your, short for <1/>; lesson {genitive} explains the form. <2/> is kus with -st, out of: where from."
-msgstr "<0/> означає твій, це коротке <1/>; звідки ця форма, пояснює урок {genitive}. <2/> — це kus із закінченням -st, «з»: звідки."
+msgid "<0/> is yes and <1/> is no. When the question asks with olema, to be, the usual no is <2/>: he or she isn’t, I’m not. When you don’t know, say <3/>."
+msgstr "<0/> означає «так», <1/> — «ні». Якщо в питанні є olema, «бути», звичайна відповідь «ні» — <2/>, тобто «не» разом із дієсловом olema. Коли не знаєш, скажи <3/>."
 
-msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:30, not 4:30."
-msgstr "<0/> означає «пів», і дивиться вперед. <1/> — це 3:30, а не 4:30."
+msgid "<0/> is your, short for <1/>; lesson {genitive} explains the form. <2/> swaps the -s of kus for -st, out of: where from."
+msgstr "<0/> означає «твій», це коротке <1/>; звідки ця форма, пояснює урок {genitive}. <2/> — це kus, у якому -s замінили на -st, «з»: звідки."
+
+msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it’s 3:30, not 4:30."
+msgstr "<0/> означає «пів» і дивиться вперед. <1/> — це пів на четверту, тобто 3:30, а не 4:30."
 
 msgid "<0/> means holy, so this is the holy day."
 msgstr "<0/> означає «святий», тож це святий день."
@@ -389,14 +392,14 @@ msgstr "<0/> означає «бути». Його закінчення зале
 msgid "<0/> on its own is no, and <1/> is yes. A fuller answer repeats the verb with ei: asked <2/>, say <3/>. The no has no ending, so the same answer fits whoever is asked."
 msgstr "<0/> саме по собі означає «ні», а <1/> — «так». Повніша відповідь повторює дієслово з ei: на <2/> відповідай <3/>. У запереченні немає закінчення, тож та сама відповідь пасує, кого б не питали."
 
-msgid "<0/> repeats the verb from the question. Estonians answer like this with every verb, as lesson {negation} on saying no shows."
-msgstr "<0/> повторює дієслово з питання. Естонці так відповідають з будь-яким дієсловом, про це урок {negation} про заперечення."
+msgid "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
+msgstr "<0/> повторює дієслово з питання, і так можна відповісти з будь-яким дієсловом: <1>Kas sa loed? Ei loe.</1> Про заперечення розповідає урок {negation}."
+
+msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
+msgstr "<0/> Ти живеш у Таллінні. <1/> Ти живеш у Таллінні? Щоб спитати «так чи ні», постав <2/> перед реченням."
 
 msgid "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same for everyone."
 msgstr "<0/>, «бути», працює так само. <1/> стає <2/>, і <3/> однакове для всіх."
-
-msgid "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
-msgstr "<0>-teist</0> утворює числа від одинадцяти до дев’ятнадцяти, а <1>-kümmend</1> — десятки."
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
@@ -405,21 +408,6 @@ msgstr "<0>{0}</0>: <1>{1}</1>"
 
 msgid "<0>{plannedCount}</0> planned, A1 to B1"
 msgstr "Заплановано: <0>{plannedCount}</0>, від A1 до B1"
-
-msgid "<0>{teen}</0> and -teist: {digit} in the second ten."
-msgstr "<0>{teen}</0> і -teist: {digit} у другому десятку."
-
-msgid "<0>{tensWord}</0> and -kümmend: {tens} tens, then <1>{ones}</1> as a word of its own."
-msgstr "<0>{tensWord}</0> і -kümmend: {tens} × 10, потім <1>{ones}</1> окремим словом."
-
-msgid "<0>{tensWord}</0> and -kümmend: {tens} tens."
-msgstr "<0>{tensWord}</0> і -kümmend: {tens} × 10."
-
-msgid "<0>{words}</0> is {digits}."
-msgstr "<0>{words}</0> — це {digits}."
-
-msgid "<0>{words}</0> is halfway to {next}, so it's {right}."
-msgstr "<0>{words}</0> — пів шляху до {next}, тобто {right}."
 
 msgid "<0>Active transport</0> moves substances against the gradient."
 msgstr "<0>Активний транспорт</0> переносить речовини проти градієнта."
@@ -433,11 +421,11 @@ msgstr "<0>Дифузія</0>: частинки рухаються від вищ
 msgid "<0>E–R</0> on a sign: Monday to Friday."
 msgstr "<0>E–R</0> на вивісці: з понеділка по п’ятницю."
 
-msgid "<0>ei {stem}</0>: <1>ei</1> before the verb, and the ending is gone."
-msgstr "<0>ei {stem}</0>: <1>ei</1> перед дієсловом, а закінчення зникло."
-
 msgid "<0>Ei ole</0> in one word"
 msgstr "<0>Ei ole</0> одним словом"
+
+msgid "<0>Ei</0> before the verb, and the ending is gone: <1>ei {stem}</1>."
+msgstr "<0>Ei</0> перед дієсловом, а закінчення зникло: <1>ei {stem}</1>."
 
 msgid "<0>Ei</0>, and the verb without its ending."
 msgstr "<0>Ei</0> і дієслово без закінчення."
@@ -448,11 +436,8 @@ msgstr "<0>Jonas</0> додав 4 картки в тиждень 4"
 msgid "<0>Jonas</0> finished Week 2"
 msgstr "<0>Jonas</0> пройшов тиждень 2"
 
-msgid "<0>kes</0> asks about people, <1>mis</1> about things."
-msgstr "<0>kes</0> питає про людей, <1>mis</1> про речі."
-
-msgid "<0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>: <1>elan, elad, elab, elame, elate, elavad</1>."
-msgstr "<0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>: <1>elan, elad, elab, elame, elate, elavad</1>."
+msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
+msgstr "<0>Kes</0> питає про людей, <1>mis</1> — про речі."
 
 msgid "<0>marginal cost</0> <1>= cost of 1 more</1>"
 msgstr "<0>граничні витрати</0> <1>= ціна ще 1 шт.</1>"
@@ -463,17 +448,11 @@ msgstr "<0>Mari</0> пройшла тиждень 3"
 msgid "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgstr "<0>Мексиканська іспанська</0>, <1>розмовні приклади</1>."
 
-msgid "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
-msgstr "<0>õ ä ö ü</0> — окремі голосні, і найнезвичніша з них <1>õ</1>."
+msgid "<0>Olen</0> for I, <1>oled</1> for you, <2>on</2> for he or she and for they."
+msgstr "<0>Olen</0> для «я», <1>oled</1> для «ти», <2>on</2> для «він чи вона» і для «вони»."
 
-msgid "<0>olen, oled, on, oleme, olete, on</0>: I am, you are, and so on."
-msgstr "<0>olen, oled, on, oleme, olete, on</0>: «бути» для я, ти, він, ми, ви, вони."
-
-msgid "<0>olen</0> for I, <1>oled</1> for you, <2>on</2> for he, she and they."
-msgstr "<0>olen</0> для «я», <1>oled</1> для «ти», <2>on</2> для «він», «вона» і «вони»."
-
-msgid "<0>on</0> is both he or she is and they are. Only the pronoun tells them apart."
-msgstr "<0>on</0> — і для «він, вона», і для «вони». Розрізнити їх можна лише за займенником."
+msgid "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
+msgstr "<0>On</0> — і «він чи вона є», і «вони є». Розрізнити їх можна лише за займенником."
 
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>альтернативна вартість</0> <1>= чим жертвуєш</1>"
@@ -484,16 +463,16 @@ msgstr "<0>Осмос</0>: вода проходить крізь мембран
 msgid "<0>P suletud</0> on a sign: closed on Sunday."
 msgstr "<0>P suletud</0> на вивісці: у неділю зачинено."
 
-msgid "<0>Pole</0> means the same as <1>ei ole</1>. You'll hear both."
+msgid "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
 msgstr "<0>Pole</0> означає те саме, що <1>ei ole</1>. Почуєш обидва."
 
-msgid "<0>pool</0>, <1>veerand</1> and <2>kolmveerand</2> name the hour that's coming: <3>pool neli</3> is 3:30."
-msgstr "<0>pool</0>, <1>veerand</1> і <2>kolmveerand</2> називають годину, що настає: <3>pool neli</3> — це 3:30."
+msgid "<0>Pool</0>, <1>veerand</1> and <2>kolmveerand</2> name the hour that’s coming: <3>pool neli</3> is 3:30."
+msgstr "<0>Pool</0>, <1>veerand</1> і <2>kolmveerand</2> називають годину, що настає: <3>pool neli</3> — це 3:30."
 
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>еластичність попиту</0> ?"
 
-msgid "<0>sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
+msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
 msgstr "Перед <0>sada</0> і <1>tuhat</1> «один» не кажуть. Сотні пишуться разом, тисячі окремо."
 
 msgid "<0>Sklep</0> is a shop, not a crypt, and <1>dynia</1> is a pumpkin, not a melon. The ready-made decks say in a card’s notes where a Polish word only looks like yours, and AI writes the same note for the words you add."
@@ -502,14 +481,14 @@ msgstr "<0>Sklep</0> — це магазин, а не склеп, а <1>dynia</1
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> — родич давньоруського «сябр», тобто друг. Білоруською й досі кажуть «сябар»."
 
-msgid "<0>ta</0> is both he and she. <1>te</1> is you to a group, and polite you to one person."
-msgstr "<0>ta</0> — і «він», і «вона». <1>te</1> — «ви» до кількох людей і ввічливе «Ви» до однієї."
+msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
+msgstr "<0>Ta</0> — і «він», і «вона». <1>Te</1> — «ви» до кількох людей і ввічливе «Ви» до однієї."
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сьогодні, завтра, учора. <3>Üle-</3> додає ще один день."
 
-msgid "<0>veerand neli</0> is a quarter of the way to four, 3:15. <1>kolmveerand neli</1> is three quarters, 3:45."
-msgstr "<0>veerand neli</0> — чверть шляху до четвертої, 3:15. <1>kolmveerand neli</1> — три чверті, 3:45."
+msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
+msgstr "<0>Veerand neli</0> — чверть шляху до четвертої, 3:15. <1>Kolmveerand neli</1> — три чверті, 3:45."
 
 msgid "<0>за́мок</0> is a castle."
 msgstr "<0>за́мок</0> — це фортеця."
@@ -758,11 +737,8 @@ msgstr "У словнику дієслово стоїть у формі на -ma
 msgid "A dictionary lists a verb in its -ma form: <0>elama</0>, to live. The endings go on its stem, <1>ela-</1>."
 msgstr "У словнику дієслово стоїть у формі на -ma: <0>elama</0>, «жити». Закінчення додаються до основи, <1>ela-</1>."
 
-msgid "A digit after the tens is a word of its own: <0/>, twenty-one. Slide to any number and hear how it's built."
-msgstr "Цифра після десятків — окреме слово: <0/>, двадцять один. Посунь до будь-якого числа й послухай, як воно складається."
-
-msgid "A double letter is a longer sound, and it makes a different word. <0/> is a hundred; <1/> means send. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
-msgstr "Подвоєна літера — це довший звук, і з ним виходить інше слово. <0/> — це сто, а <1/> — «надішли». З приголосними так само: <2/> — курка, а <3/> — «неси» (до однієї людини)."
+msgid "A digit after the tens is a word of its own: <0/>, twenty-one. Slide to any number and hear how it’s built."
+msgstr "Цифра після десятків — окреме слово: <0/>, двадцять один. Посунь повзунок до будь-якого числа й послухай, як воно складається."
 
 msgid "A double letter is longer, and it makes a different word."
 msgstr "Подвоєна літера звучить довше, і з нею виходить інше слово."
@@ -797,11 +773,11 @@ msgstr "Гладка накладка на дверях підказує «шт�
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "Безкоштовна колода містить кожен дорожній знак із правил: за малюнком, із польською назвою та номером."
 
-msgid "A free Estonian lesson on personal pronouns, mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
+msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про особові займенники: mina, sina, tema та інші в повній і короткій формі, а ще дієслово olema, «бути». Кожне речення можна послухати."
 
-msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that's coming, and minutes past and to. Every time is read aloud."
-msgstr "Безкоштовний урок естонської про те, як сказати, котра година: повні години, pool, veerand і kolmveerand, що називають наступну годину, і хвилини до та після. Кожен час озвучено."
+msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
+msgstr "Безкоштовний урок естонської про те, як сказати, котра година: повні години, pool, veerand і kolmveerand, що називають наступну годину, і хвилини до та після. Кожен приклад озвучено."
 
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
 msgstr "Безкоштовний урок естонської вимови: дев’ять голосних з õ, ä, ö та ü, наголос на першому складі й те, як подвоєна літера змінює слово. Кожне слово озвучено."
@@ -833,14 +809,14 @@ msgstr "Безкоштовний застосунок для вивчення у
 msgid "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
 msgstr "Безкоштовний урок про заперечення в естонській мові в теперішньому часі: ei перед дієсловом, однакове для всіх осіб, ei ole і pole, і як відповісти «ні» на питання. Кожне речення озвучене."
 
-msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers."
-msgstr "Безкоштовний урок про естонські числа: від нуля до десяти, -teist і -kümmend, сотні й тисячі, а також числа в цінах, віці й номерах телефонів."
+msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
+msgstr "Безкоштовний урок про естонські числа: від нуля до десяти, -teist і -kümmend, сотні й тисячі, а також числа в цінах, віці й номерах телефонів. Кожне число озвучене."
 
-msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and the first questions you'll hear. Every sentence is read aloud."
-msgstr "Безкоштовний урок про питання в естонській: kas для питань «так чи ні», відповіді jah і ei, питальні слова kes, mis, kus, millal, miks, kuidas і kui palju та перші питання, які ти почуєш. Кожне речення озвучене."
+msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
+msgstr "Безкоштовний урок про питання в естонській: kas для питань «так чи ні», відповіді jah і ei, питальні слова kes, mis, kus, millal, miks, kuidas і kui palju та три повсякденні питання, які вчать цілими. Кожне речення озвучене."
 
-msgid "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad, with ten everyday verbs read aloud."
-msgstr "Безкоштовний урок про естонські дієслова в теперішньому часі: форма на -ma, основа і шість закінчень -n, -d, -b, -me, -te та -vad на десяти щоденних дієсловах, з озвученням."
+msgid "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud."
+msgstr "Безкоштовний урок про естонські дієслова в теперішньому часі: форма на -ma, основа і шість закінчень -n, -d, -b, -me, -te та -vad на десяти щоденних дієсловах. Кожне речення озвучене."
 
 msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про те, як сказати, де ти: -s означає «в» (Tallinnas, koolis), -l — «на» (laual, tööl), які місця мають яке закінчення і як відповісти на kus, «де». Кожне речення озвучене."
@@ -871,9 +847,6 @@ msgstr "Хобі"
 
 msgid "a hundred"
 msgstr "сто"
-
-msgid "A kas question falls at the end, like a statement: kas has already said it's a question, so your voice doesn't need to. In speech you'll also hear <0/> at the end instead, a bit like “right?”: <1/>"
-msgstr "Питання з kas наприкінці знижується, як звичайне речення: kas уже сказав, що це питання, тож голос підвищувати не треба. У розмові замість нього ще почуєш <0/> у кінці, щось на зразок «так?»: <1/>"
 
 msgid "A language"
 msgstr "Мову"
@@ -963,9 +936,6 @@ msgstr "Текст із пропусками й один набір слів: ї
 msgid "A passage with gaps, the open gap's words under it, each marked as it is filled."
 msgstr "Текст із пропусками: слова для відкритого пропуску під ним, кожен перевіряється одразу."
 
-msgid "A phone number is read digit by digit."
-msgstr "Номер телефону читають по одній цифрі."
-
 msgid "A photo of a textbook page goes to ChatGPT with “Make flashcards from this page.” It uses Lymi and adds four cards to a Biology deck: chlorophyll, stomata, glucose and chloroplast."
 msgstr "ChatGPT отримує фото сторінки підручника і прохання «Зроби флешкартки з цієї сторінки». Він використовує Lymi й додає чотири картки в колоду «Біологія»: chlorophyll, stomata, glucose і chloroplast."
 
@@ -1005,8 +975,8 @@ msgstr "чверть"
 msgid "A quarter of the way to {next}."
 msgstr "Чверть шляху до {next}."
 
-msgid "A question word goes first, and the rest stays as in the statement: <0>Kus sa elad?</0>"
-msgstr "Питальне слово стоїть першим, а решта лишається як у твердженні: <0>Kus sa elad?</0>"
+msgid "A question word goes first, and the part you ask about drops out: <0>Kus sa elad?</0>"
+msgstr "Питальне слово стоїть першим, а те, про що питаєш, зникає: <0>Kus sa elad?</0>"
 
 msgid "A question you got wrong"
 msgstr "Питання з помилкою"
@@ -1074,9 +1044,6 @@ msgstr "Підсумок тижня"
 msgid "A word list from a spreadsheet"
 msgstr "Список слів із таблиці"
 
-msgid "a word that turns a sentence into a yes-or-no question"
-msgstr "слово, що робить із речення питання, на яке відповідають «так» чи «ні»"
-
 msgid "A year has 365 days."
 msgstr "У році 365 днів."
 
@@ -1128,8 +1095,8 @@ msgstr "Додати {name} в Lymi"
 msgid "Add {title}"
 msgstr "Додати «{title}»"
 
-msgid "Add <0>-teist</0> to a digit and you have eleven to nineteen: <1/>, <2/>, <3/>. The ending comes from “of the second ten”."
-msgstr "Додай <0>-teist</0> до цифри — і маєш числа від одинадцяти до дев’ятнадцяти: <1/>, <2/>, <3/>. Закінчення походить від «другого десятка»."
+msgid "Add <0>-teist</0> to a digit and you have eleven to nineteen: <1/>, <2/>, <3/>. Word for word, üksteist is “one of the second ten”."
+msgstr "Додай <0>-teist</0> до цифри — і маєш числа від одинадцяти до дев’ятнадцяти: <1/>, <2/>, <3/>. Дослівно üksteist — «один другого десятка»."
 
 msgid "Add a card from any app with ⌃⌥L, and open Lymi from the menu bar."
 msgstr "Додавай картку з будь-якого застосунку клавішами ⌃⌥L і відкривай Lymi зі смуги меню."
@@ -1480,7 +1447,7 @@ msgid "All of them, equally often"
 msgstr "Усі, однаково часто"
 
 msgid "All of them, inside real sentences."
-msgstr "Усі правильно, навіть у справжніх реченнях."
+msgstr "Усі правильно, у справжніх реченнях."
 
 msgid "All of them. <0>Ei</0>, and the ending goes."
 msgstr "Усі. <0>Ei</0>, і закінчення зникає."
@@ -1491,9 +1458,6 @@ msgstr "Усі. <0>Ei</0>, а за ним дієслово з питання."
 msgid "All of them. You can count the week forward."
 msgstr "Усі правильно. Ти вмієш рахувати тиждень уперед."
 
-msgid "All of them. You can follow a short exchange."
-msgstr "Усі. Ти вже розумієш коротку розмову."
-
 msgid "All of them. You can hear length."
 msgstr "Усі правильно. Ти чуєш довготу."
 
@@ -1503,14 +1467,14 @@ msgstr "Усі правильно. Ти чуєш різницю."
 msgid "All of them. You can hear what a question asks."
 msgstr "Усі. Ти чуєш, про що питають."
 
-msgid "All of them. You can hear who it's about."
+msgid "All of them. You can hear who it’s about."
 msgstr "Усі правильно. Ти чуєш, про кого мова."
 
 msgid "All of them. You hear who does it."
-msgstr "Усі. Ти чуєш, хто що робить."
+msgstr "Усі. Ти чуєш, хто це робить."
 
-msgid "All of them. You know olema."
-msgstr "Усі правильно. Ти знаєш olema."
+msgid "All of them. You matched every answer to its question."
+msgstr "Усі. Кожна відповідь пасує до свого питання."
 
 msgid "All of them. You picked the place in every sentence."
 msgstr "Усі. У кожному реченні місце вибране правильно."
@@ -1530,8 +1494,11 @@ msgstr "Усі сім. Ти знаєш тиждень на слух."
 msgid "All shelves"
 msgstr "Усі полиці"
 
-msgid "All six. You can build any verb in this lesson."
-msgstr "Усі шість. Ти можеш утворити будь-яке дієслово з цього уроку."
+msgid "All six. Every ending was right."
+msgstr "Усі шість. Кожне закінчення правильне."
+
+msgid "All six. You matched every pronoun with its ending."
+msgstr "Усі шість. Кожен займенник — зі своїм закінченням."
 
 msgid "All Spanish decks"
 msgstr "Усі іспанські колоди"
@@ -1558,8 +1525,8 @@ msgstr "Алфавіт"
 msgid "Already in your deck, so it’s skipped"
 msgstr "Уже є в колоді, тому пропущено"
 
-msgid "Also “came”: ta tuli, she came."
-msgstr "Ще й «прийшла»: ta tuli — вона прийшла."
+msgid "Also “came”: ta tuli, he or she came."
+msgstr "Ще й «прийшов» чи «прийшла»: ta tuli — він прийшов або вона прийшла."
 
 msgid "Also “other”."
 msgstr "А ще «інший»."
@@ -1648,8 +1615,8 @@ msgstr "Пакет Anki · доступний добу"
 msgid "AnkiMobile, a one-off €29.99 ($24.99 in the US)"
 msgstr "AnkiMobile, разова оплата 29,99 € (у США $24,99)"
 
-msgid "Answer <0>jah</0> or <1>ei</1>. To a question with olema, say <2>ei ole</2>. Not sure? <3>Ma ei tea.</3>"
-msgstr "Відповідай <0>jah</0> або <1>ei</1>. На питання з olema кажи <2>ei ole</2>. Не знаєш? <3>Ma ei tea.</3>"
+msgid "Answer <0>jah</0> or <1>ei</1>. When the question has olema, the no is <2>ei ole</2>. If you don’t know, say <3>Ma ei tea.</3>"
+msgstr "Відповідай <0>jah</0> або <1>ei</1>. Якщо в питанні є olema, «ні» — це <2>ei ole</2>. Якщо не знаєш, кажи <3>Ma ei tea.</3>"
 
 msgid "Answer every question first."
 msgstr "Спершу дай відповідь на всі питання."
@@ -1739,7 +1706,7 @@ msgid "Are you reading?"
 msgstr "Ти читаєш?"
 
 msgid "Are you tired?"
-msgstr "Ти втомився?"
+msgstr "Ти втомився (втомилася)?"
 
 msgid "Article and plural, the way you write them"
 msgstr "Артикль і множина, як у твоїх картках"
@@ -1756,8 +1723,8 @@ msgstr "Зі змінами від 19 лютого 2026 року"
 msgid "As amended on 30 January 2026"
 msgstr "Зі змінами від 30 січня 2026 року"
 
-msgid "As with olema, the ending already says who, so ma and sa often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
-msgstr "Як і в olema, закінчення вже каже, хто це, тому ma і sa часто пропускають: <0/>. Щоб протиставити двох людей, бери повні займенники з уроку {pronouns}: <1/>."
+msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
+msgstr "Як і в olema, закінчення вже каже, хто це, тому ma, sa, me і te часто пропускають: <0/>. Щоб протиставити двох людей, бери повні займенники з уроку {pronouns}: <1/>."
 
 msgid "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>kell on kolm</2>."
 msgstr "Питай <0>Mis kell on?</0> Відповідь — <1>kell on</1> і година: <2>kell on kolm</2>."
@@ -1786,7 +1753,7 @@ msgstr "Попроси Gemini зробити флешкартки з нотат�
 msgid "Ask Grok Bot to explain a hard topic in plain words, then keep the key steps as cards."
 msgstr "Попроси Grok Bot простими словами пояснити складну тему, а головні кроки збережи як картки."
 
-msgid "Ask the time and understand the answer. Halves and quarters count toward the hour that's coming."
+msgid "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
 msgstr "Спитай, котра година, і зрозумій відповідь. Половини й чверті рахують до години, що настає."
 
 msgid "Ask what to review."
@@ -1831,7 +1798,7 @@ msgstr "Питає про кількість."
 msgid "Asks for a reason."
 msgstr "Питає про причину."
 
-msgid "Asks how it's done."
+msgid "Asks how it’s done."
 msgstr "Питає, як саме."
 
 msgid "At A2 you also need 45 of the written points and 15 of the oral ones. At B1 each module passes on its own."
@@ -1903,14 +1870,14 @@ msgstr "бо, тому що"
 msgid "Because I live in Tallinn."
 msgstr "Бо я живу в Таллінні."
 
-msgid "Because the ending already says who, the pronoun can go. Both lines below mean I'm Mari. Estonian can drop the pronoun, but never the verb."
-msgstr "Закінчення вже каже, хто це, тож займенник можна опустити. Обидва рядки нижче означають «Я Mari». В українській часто пропускають «є», а в естонській навпаки: без займенника можна, без дієслова ніколи."
+msgid "Because the ending already says who, the pronoun can go. Both lines below mean I’m Mari. A sentence can drop the pronoun, but not the verb."
+msgstr "Закінчення вже каже, хто це, тож займенник можна опустити. Обидва рядки нижче означають «Я Mari». В українській часто пропускають «є», а в естонському реченні навпаки: без займенника можна, без дієслова — ні."
 
 msgid "bed"
 msgstr "ліжко"
 
-msgid "Before the hour, say how long until the next one. <0/> is “in ten minutes, four”: 3:50."
-msgstr "Перед повною годиною кажуть, скільки лишилося до наступної. <0/> — «через десять хвилин четверта»: 3:50."
+msgid "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
+msgstr "Перед повною годиною кажуть, скільки лишилося до наступної. <0/> — дослівно «через десять хвилин чотири»: 3:50."
 
 msgid "Before the test"
 msgstr "Перед тестом"
@@ -2097,6 +2064,15 @@ msgstr "Створено для викладання."
 
 msgid "Built for working with AI."
 msgstr "Створено для роботи з AI."
+
+msgid "Built from <0>{teen}</0> and -teist: {digit} in the second ten."
+msgstr "Складається з <0>{teen}</0> і -teist: {digit} у другому десятку."
+
+msgid "Built from <0>{tensWord}</0> and -kümmend: {tens} tens, then <1>{ones}</1> as a word of its own."
+msgstr "Складається з <0>{tensWord}</0> і -kümmend: {tens} × 10, потім <1>{ones}</1> окремим словом."
+
+msgid "Built from <0>{tensWord}</0> and -kümmend: {tens} tens."
+msgstr "Складається з <0>{tensWord}</0> і -kümmend: {tens} × 10."
 
 msgid "Built in"
 msgstr "Вбудовано"
@@ -2547,7 +2523,7 @@ msgstr "Натисни, щоб перевернути"
 msgid "Clinical signs"
 msgstr "Клінічні ознаки"
 
-msgid "clock, watch; o'clock"
+msgid "clock, watch; o’clock"
 msgstr "годинник; година"
 
 msgid "Clocking off, and the free evening that follows"
@@ -2987,22 +2963,22 @@ msgstr "Зробити двічі — те саме, що зробити оди�
 msgid "Don’t drink coffee before *bed*."
 msgstr "Не пий каву перед *сном*."
 
-msgid "don't drink, doesn't drink"
+msgid "don’t drink, doesn’t drink"
 msgstr "не п’ю, не п’є тощо"
 
-msgid "don't eat, doesn't eat"
+msgid "don’t eat, doesn’t eat"
 msgstr "не їм, не їсть тощо"
 
-msgid "don't read, doesn't read"
+msgid "don’t read, doesn’t read"
 msgstr "не читаю, не читає тощо"
 
-msgid "don't speak, doesn't speak"
+msgid "don’t speak, doesn’t speak"
 msgstr "не говорю, не говорить тощо"
 
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не зноси паркан, доки не зрозумієш, навіщо його поставили"
 
-msgid "don't work, doesn't work"
+msgid "don’t work, doesn’t work"
 msgstr "не працюю, не працює тощо"
 
 msgid "Done"
@@ -3044,7 +3020,7 @@ msgstr "Перетягни кожне слово в його пропуск аб
 msgid "Drag Lymi to Applications"
 msgstr "Перетягни Lymi до «Програм»"
 
-msgid "Drag the minute hand or pick the minutes, then press play to hear the time. The hour a time is named after lights up."
+msgid "Drag the minute hand or pick the minutes, then tap play to hear the time. The hour a time is named after lights up."
 msgstr "Потягни хвилинну стрілку або вибери хвилини, а тоді натисни кнопку відтворення, щоб почути час. Година, за якою названо час, підсвічується."
 
 msgid "Drink more *water*!"
@@ -3095,6 +3071,9 @@ msgstr "на повторення · хвилин на шість"
 msgid "Due tonight"
 msgstr "На сьогодні"
 
+msgid "Each clock fills in the part of the hour that has gone. Tap one to hear it."
+msgstr "На кожному годиннику зафарбовано частину години, що минула. Натисни будь-який, щоб почути."
+
 msgid "Each deck counts its questions as New, Learning and Known, so you can see how much of the catalogue you have before your test date."
 msgstr "Кожна колода рахує свої питання як «Нові», «У вивченні» та «Засвоєні», тож ще до дати тесту видно, яку частину каталогу ти вже знаєш."
 
@@ -3121,6 +3100,12 @@ msgstr "До кожної назви додалося -s, і це -s означ�
 
 msgid "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
 msgstr "Кожна частина має ще й мінімум: 38 зі 120 за мовні знання й читання та 19 із 60 за аудіювання."
+
+msgid "Each person has its own: -n, -d, -b, -me, -te, -vad."
+msgstr "У кожної особи своє: -n, -d, -b, -me, -te, -vad."
+
+msgid "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
+msgstr "У кожного займенника своє закінчення: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, звідси <1>elan, elad, elab, elame, elate, elavad</1>."
 
 msgid "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
 msgstr "У кожного займенника дві форми. Кажи коротку, <0>ma</0>, а повну, <1>mina</1>, залиш для наголосу."
@@ -3255,7 +3240,7 @@ msgid "English"
 msgstr "Англійська"
 
 msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
-msgstr "Українською так само: «Ти живеш у Таллінні» стає «Чи ти живеш у Таллінні?». Kas працює як чи, а всі інші слова лишаються на місці. Спробуй на п'яти реченнях."
+msgstr "Українською так само: «Ти живеш у Таллінні» стає «Чи ти живеш у Таллінні?». Kas працює як «чи», а всі інші слова лишаються на місці. Спробуй на п’яти реченнях."
 
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "Звука õ немає ні в англійській, ні в українській. Скажи «о», але не округлюй губи."
@@ -3293,7 +3278,7 @@ msgstr "Естонія"
 msgid "Estonia; Estonian"
 msgstr "Естонія; естонський"
 
-msgid "Estonia's capital"
+msgid "Estonia’s capital"
 msgstr "столиця Естонії"
 
 msgid "Estonian"
@@ -3305,20 +3290,20 @@ msgstr "Естонська A1 · осінній курс"
 msgid "Estonian A2 · Tuesdays"
 msgstr "Естонська A2 · щовівторка"
 
-msgid "Estonian also has a third, extra-long length, and the spelling doesn't always show it. <0>Linna</0> means both “of the town” and “into the town”, and the second is held longer. It comes back in later lessons."
-msgstr "В естонській є ще й третій ступінь довготи, наддовгий, і на письмі його видно не завжди. <0>Linna</0> означає і «міста», і «в місто», і в другому значенні звук тягнеться довше. До цього ми ще повернемося в наступних уроках."
+msgid "Estonian also has a third, extra-long length, and the spelling doesn’t always show it. <0>Linna</0> means both “of the town” and “into the town”, and the second is held longer."
+msgstr "В естонській є ще й третій ступінь довготи, наддовгий, і на письмі його видно не завжди. <0>Linna</0> означає і «міста», і «в місто», і в другому значенні звук тягнеться довше."
 
 msgid "Estonian grammar lessons"
 msgstr "Уроки естонської граматики"
 
-msgid "Estonian has one present tense. <0/> means both I read and I'm reading, and the rest of the sentence tells you which. Here are the verbs in sentences you can use today."
-msgstr "В естонській один теперішній час. <0/> означає і «я читаю» взагалі, і «я читаю зараз», а що саме, видно з решти речення. Ось ці дієслова в реченнях, які можна вживати вже сьогодні."
+msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
+msgstr "В естонській один теперішній час. <0/> означає і «я читаю» взагалі, і «я читаю зараз», а що саме, видно з решти речення. Натисни речення, щоб почути його."
 
-msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you'll hear most. Tap any word."
+msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
 msgstr "В естонській шість особових займенників, і кожен має повну й коротку форму з однаковим значенням. <0/> і <1/> — це «я». Коротку, виділену кольором, ти чутимеш найчастіше. Натисни будь-яке слово."
 
-msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read any word aloud, even one you've never seen."
-msgstr "Естонською пишуть так, як вимовляють. Кожну літеру читаєш, і кожна звучить однаково, де б не стояла. Знаючи літери, ти прочитаєш уголос будь-яке слово, навіть зовсім нове."
+msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
+msgstr "Естонською пишуть так, як вимовляють. Кожну літеру читаєш, і кожна звучить однаково, де б не стояла. Знаючи літери, ти прочитаєш уголос і нове слово."
 
 msgid "Estonian numbers"
 msgstr "Числа естонською"
@@ -3656,11 +3641,11 @@ msgstr "Препарат першої лінії при діабеті 2 тип�
 msgid "five"
 msgstr "п’ять"
 
-msgid "Five look familiar. The four with marks are separate letters, not accents, and swapping one changes the word. <0/> is the one English doesn't have."
-msgstr "П’ять виглядають знайомо. Чотири зі значками — окремі літери, а не різновиди звичних, і якщо замінити одну, вийде інше слово. Найнезвичніша з них — <0/>."
+msgid "Five look familiar. The four with marks are separate letters, not accents, and swapping one changes the word. English has no sound like <0/>."
+msgstr "П’ять виглядають знайомо. Чотири зі значками — окремі літери, а не різновиди звичних, і якщо замінити одну, вийде інше слово. Звуку, як <0/>, в українській немає."
 
 msgid "Five sentences. Switch to Question and watch what changes."
-msgstr "П'ять речень. Перемкни на «Питання» й подивись, що зміниться."
+msgstr "П’ять речень. Перемкни на «Питання» й подивись, що зміниться."
 
 msgid "Fix and tidy cards"
 msgstr "Виправити й упорядкувати картки"
@@ -4180,20 +4165,8 @@ msgstr "Добре"
 msgid "Good *morning*!"
 msgstr "Доброго *ранку*!"
 
-msgid "Good ear. Halves and quarters are the ones to replay."
-msgstr "Добрий слух. Половини й чверті варто послухати ще раз."
-
 msgid "Good ear. Listen to how the ones you missed start."
 msgstr "Добрий слух. Послухай, як починаються дні, де були помилки."
-
-msgid "Good ear. Numbers in sentences come fast; try once more."
-msgstr "Добрий слух. У реченнях числа звучать швидко, спробуй ще раз."
-
-msgid "Good ear. Play the ones you missed once more."
-msgstr "Добрий слух. Переслухай ще раз ті, де були помилки."
-
-msgid "Good ear. Try a harder range next."
-msgstr "Добрий слух. Далі спробуй складніший діапазон."
 
 msgid "Good luck!"
 msgstr "Щасти!"
@@ -4206,9 +4179,6 @@ msgstr "Доброго ранку"
 
 msgid "Good morning. Here’s today in Lymi."
 msgstr "Доброго ранку. Ось твій день у Lymi."
-
-msgid "Good. Hear the ones you missed once more."
-msgstr "Добре. Послухай ще раз ті, де помилився."
 
 msgid "Good. Say the week through in your head before you pick."
 msgstr "Добре. Перш ніж обрати, проговори тиждень подумки."
@@ -4320,7 +4290,7 @@ msgid "He or she is a teacher."
 msgstr "Він чи вона — вчитель."
 
 msgid "He or she is at home."
-msgstr "Він або вона вдома."
+msgstr "Він чи вона вдома."
 
 msgid "He or she is at school."
 msgstr "Він або вона в школі."
@@ -4390,8 +4360,11 @@ msgstr "Послухати {0}, {1}"
 msgid "Hear a day"
 msgstr "День на слух"
 
-msgid "Hear a question and pick its question word. It's always the first word, so listen to the start."
+msgid "Hear a question and pick its question word. It always comes first, so listen to the start."
 msgstr "Послухай питання й обери питальне слово. Воно завжди перше, тож слухай початок."
+
+msgid "Hear a question, then pick the answer that fits. A kas question takes yes, no or I don’t know; a question word wants what it asks about, such as a place for kus or a time for millal."
+msgstr "Послухай питання й обери відповідь, яка пасує. На kas відповідають «так», «ні» або «не знаю», а на питальне слово — тим, про що воно питає: місцем на kus, часом на millal."
 
 msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
 msgstr "Послухай речення й обери місце. Слухай слово, яке закінчується на <0>-s</0>."
@@ -4399,7 +4372,7 @@ msgstr "Послухай речення й обери місце. Слухай �
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Послухай речення й обери дієслово з нього. Варіанти відрізняються лише закінченням, тож слухай кінець дієслова."
 
-msgid "Hear a sentence and pick who it's about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
+msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 msgstr "Послухай речення й вибери, про кого воно. Де займенника немає, слухай кінець дієслова. З <0/> відрізнити <1/> від <2/> можна лише за займенником."
 
 msgid "Hear a sentence, then pick how to say its no."
@@ -4468,8 +4441,11 @@ msgstr "Ось нотатки з сьогоднішнього уроку ісп�
 msgid "Here are the slides from today’s lecture on cells. Add the key terms."
 msgstr "Ось слайди з сьогоднішньої лекції про клітини. Додай ключові терміни."
 
-msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. The form behind them comes in lesson {genitive}."
-msgstr "Тут число змінює форму: <0>viis</0> стає <1>viie</1>, <2>kümme</2> — <3>kümne</3>, <4>kakskümmend</4> — <5>kahekümne</5>. Поки що запам’ятай ці три як готові фрази. Звідки ця форма, пояснить урок {genitive}."
+msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
+msgstr "Тут кожне число звучить посеред речення: ціна, вік, номер телефону. Введи число, яке чуєш."
+
+msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
+msgstr "Тут число змінює форму: <0>viis</0> стає <1>viie</1>, <2>kümme</2> — <3>kümne</3>, <4>kakskümmend</4> — <5>kahekümne</5>. Поки що запам’ятай ці три як готові фрази. Цю форму пояснює урок {genitive}."
 
 msgid "Here they are on <0/>, to live. The two new ones are in colour. Tap an ending."
 msgstr "Ось вони на дієслові <0/>, «жити». Два нові виділено кольором. Натисни закінчення."
@@ -4553,7 +4529,7 @@ msgid "How do you say it?"
 msgstr "Як це сказати?"
 
 msgid "How does he or she speak Estonian?"
-msgstr "Як він або вона говорить естонською?"
+msgstr "Як він чи вона говорить естонською?"
 
 msgid "How does Lymi decide when to show a card again?"
 msgstr "Як Lymi вирішує, коли знову показати картку?"
@@ -4621,8 +4597,8 @@ msgstr "Як влаштований Einbürgerungstest, і колода для �
 msgid "How the import works"
 msgstr "Як працює імпорт"
 
-msgid "How to ask in Estonian: kas for yes or no, seven question words for the rest, and three questions you'll hear in your first week."
-msgstr "Як питати естонською: kas для «так чи ні», сім питальних слів для всього іншого і три питання, які почуєш у перший же тиждень."
+msgid "How to ask in Estonian: kas for yes or no, seven question words for the rest, and three everyday questions to learn whole."
+msgstr "Як питати естонською: kas для «так чи ні», сім питальних слів для всього іншого і три повсякденні питання, які вчать цілими."
 
 msgid "How to connect"
 msgstr "Як підключити"
@@ -4641,9 +4617,6 @@ msgstr "Як вчасні повторення допомагають пам’�
 
 msgid "How you work"
 msgstr "Як ти працюєш"
-
-msgid "How's it going?"
-msgstr "Як справи?"
 
 msgid "How’s it going?"
 msgstr "Як справи?"
@@ -4737,19 +4710,19 @@ msgstr "Я плачу (сльози)"
 msgid "I don’t have a *dog*."
 msgstr "У мене немає *собаки*."
 
-msgid "I don't know"
+msgid "I don’t know"
 msgstr "я не знаю"
 
-msgid "I don't know."
+msgid "I don’t know."
 msgstr "Я не знаю."
 
 msgid "I don’t mind"
 msgstr "Мені однаково"
 
-msgid "I don't read"
+msgid "I don’t read"
 msgstr "я не читаю"
 
-msgid "I don't speak Estonian"
+msgid "I don’t speak Estonian"
 msgstr "я не говорю естонською"
 
 msgid "I don’t understand"
@@ -4857,10 +4830,10 @@ msgstr "я читаю"
 msgid "I read a lot."
 msgstr "Я багато читаю."
 
-msgid "I read, I'm reading"
+msgid "I read, I’m reading"
 msgstr "Я читаю: взагалі й зараз"
 
-msgid "I read; I'm reading"
+msgid "I read; I’m reading"
 msgstr "я читаю (взагалі й зараз)"
 
 msgid "I really *like* this book."
@@ -4932,16 +4905,16 @@ msgstr "Я чекатиму в *парку*."
 msgid "I’m *reading* the newspaper."
 msgstr "Я *читаю* газету."
 
-msgid "I'm 34 years old."
+msgid "I’m 34 years old."
 msgstr "Мені 34 роки."
 
-msgid "I'm at home."
+msgid "I’m at home."
 msgstr "Я вдома."
 
 msgid "I'm at work."
 msgstr "Я на роботі."
 
-msgid "I'm from Ukraine."
+msgid "I’m from Ukraine."
 msgstr "Я з України."
 
 msgid "I’m getting up early *tomorrow* morning."
@@ -4974,10 +4947,10 @@ msgstr "Я йду в магазин по хліб."
 msgid "I’m having a cheese *roll*."
 msgstr "Я їм *булочку* з сиром."
 
-msgid "I'm learning Estonian."
+msgid "I’m learning Estonian."
 msgstr "Я вчу естонську."
 
-msgid "I'm Liis, and he's Peeter."
+msgid "I’m Liis, and he’s Peeter."
 msgstr "Я Liis, а він Peeter."
 
 msgid "I’m listening to *music*."
@@ -4986,22 +4959,22 @@ msgstr "Я слухаю *музику*."
 msgid "I’m making *pumpkin* soup."
 msgstr "Варю *гарбузовий* суп."
 
-msgid "I'm Mari."
+msgid "I’m Mari."
 msgstr "Я Mari."
 
 msgid "I’m not *doing* anything."
 msgstr "Я нічого не *роблю*."
 
-msgid "I'm not tired"
-msgstr "я не втомився"
+msgid "I’m not tired"
+msgstr "я не втомився (не втомилася)"
 
-msgid "I'm reading a book."
+msgid "I’m reading a book."
 msgstr "Я читаю книжку."
 
 msgid "I’m reading a fashion *magazine*."
 msgstr "Я читаю *журнал* про моду."
 
-msgid "I'm ready."
+msgid "I’m ready."
 msgstr "Я готовий (готова)."
 
 msgid "I’m taking the *dog* for a walk."
@@ -5010,8 +4983,8 @@ msgstr "Я йду гуляти із *собакою*."
 msgid "I’m thirty *years* old."
 msgstr "Мені тридцять *років*."
 
-msgid "I'm tired"
-msgstr "я втомився"
+msgid "I’m tired"
+msgstr "я втомився (втомилася)"
 
 msgid "Ice, jää, plus edge, äär: four ä in a row."
 msgstr "Лід — jää, край — äär: чотири ä поспіль."
@@ -5067,7 +5040,7 @@ msgstr "Імпортуй у Lymi"
 msgid "Important"
 msgstr "Важлива"
 
-msgid "In {ahead} minutes it's {next}."
+msgid "In {ahead} minutes it’s {next}."
 msgstr "Через {ahead} хвилин буде {next}."
 
 msgid "In a bar in Spain, you ask them to “put” you one."
@@ -5078,6 +5051,9 @@ msgstr "у кав’ярні"
 
 msgid "in a hospital"
 msgstr "у лікарні"
+
+msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
+msgstr "У питанні з kas голос наприкінці знижується, як у звичайному реченні: kas уже каже, що це питання. У розмові замість нього ще почуєш <0/> у кінці, щось на зразок «так?»: <1/>"
 
 msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
 msgstr "У проєкті з файлами курсу Claude може зібрати одну колоду з розділом на кожну лекцію."
@@ -5142,7 +5118,10 @@ msgstr "Розпочато"
 msgid "In Quizlet you choose a set and a study mode. In Lymi you open Today, and spaced repetition has already picked the cards that need you."
 msgstr "У Quizlet ти обираєш набір і режим навчання. У Lymi відкриваєш «Сьогодні», а інтервальне повторення вже вибрало картки, яким потрібна твоя увага."
 
-msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don't need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you'll add a third form, <4>lugeda</4>."
+msgid "In some verbs the stem changes: <0/>, but <1/>. Start from the ma form, not the dictionary form, and the no follows: <2/>."
+msgstr "У деяких дієсловах основа змінюється: <0/>, але <1/>. Бери форму з ma, а не словникову форму на -ma, і заперечення вийде саме: <2/>."
+
+msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don’t need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you’ll add a third form, <4>lugeda</4>."
 msgstr "У деяких дієсловах основа змінюється: <0/>, «читати», має основу <1>loe-</1>, тому «я читаю» буде <2/>. Правило для цього поки не потрібне. Запам’ятовуй кожне дієслово разом із формою для «я»: <3>lugema, loen</3>. Відкинь -n, і решта буде основою. В уроці {verbForms} додаси третю форму, <4>lugeda</4>."
 
 msgid "In summer the *nights* stay light."
@@ -5175,7 +5154,7 @@ msgstr "У застосунку Grok Bot відкрий Connect apps і вибе
 msgid "In the place"
 msgstr "Де?"
 
-msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It's the same for every person, so no is easier than yes."
+msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It’s the same for every person, so no is easier than yes."
 msgstr "У теперішньому часі постав <0>ei</0> перед дієсловом і прибери закінчення. Для всіх осіб це однаково, тож «ні» сказати легше, ніж «так»."
 
 msgid "In this folder"
@@ -5183,9 +5162,6 @@ msgstr "У цій папці"
 
 msgid "in town"
 msgstr "у місті"
-
-msgid "In town, a number comes inside a sentence: a price, a flat, the time. Type the number you hear."
-msgstr "У місті число звучить посеред речення: ціна, номер квартири, час. Введи число, яке чуєш."
 
 msgid "in Ukraine"
 msgstr "в Україні"
@@ -5245,7 +5221,7 @@ msgid "Is Grok Bot the same as Grok?"
 msgstr "Grok Bot і Grok — це одне й те саме?"
 
 msgid "Is he or she at home?"
-msgstr "Він або вона вдома?"
+msgstr "Він чи вона вдома?"
 
 msgid "Is it for schools?"
 msgstr "Це для шкіл?"
@@ -5325,6 +5301,12 @@ msgstr "Так само з містами, будівлями й більшіс�
 msgid "It writes Ukrainian, and a native Ukrainian voice reads it. When a word looks like a Russian one but means something else, the card’s notes say so: неді́ля is Sunday, not a week."
 msgstr "Він пише українською, а читає голос носія української. Коли слово схоже на російське, але означає інше, про це скажуть нотатки картки: неді́ля — це неділя, а не тиждень."
 
+msgid "It’s {digits}: <0>{words}</0>."
+msgstr "Це {digits}: <0>{words}</0>."
+
+msgid "It’s {right}: <0>{words}</0> is halfway to {next}."
+msgstr "Це {right}: <0>{words}</0> — пів шляху до {next}."
+
 msgid "It’s *cosy* in the sauna."
 msgstr "У сауні *затишно*."
 
@@ -5352,7 +5334,7 @@ msgstr "Усе гаразд"
 msgid "It’s raining, so I want to *take a taxi*."
 msgstr "Іде дощ, тож я хочу взяти *таксі*."
 
-msgid "It's three o'clock."
+msgid "It’s three o’clock."
 msgstr "Третя година."
 
 msgid "It’s why a half-read chapter keeps nagging at you."
@@ -5435,9 +5417,6 @@ msgstr "Подорож"
 msgid "junk, clutter"
 msgstr "мотлох, непотріб"
 
-msgid "Just sada, with no “one” in front."
-msgstr "Просто sada, без «один» попереду."
-
 msgid "Just the right amount: not too much, not too little"
 msgstr "Саме стільки, скільки треба: не забагато й не замало"
 
@@ -5451,7 +5430,7 @@ msgid "Kas in front, a question mark at the end. Every other word stays put."
 msgstr "Kas на початку, знак питання в кінці. Усі інші слова на своїх місцях."
 
 msgid "Kas makes a question"
-msgstr "Kas робить питання"
+msgstr "Kas перетворює речення на питання"
 
 msgid "Kas sa tuled? Are you coming?"
 msgstr "Kas sa tuled? Чи ти прийдеш?"
@@ -5571,11 +5550,11 @@ msgstr "Kümme minutit kolm läbi: десять по третій, 3:10."
 msgid "Kümne is the form kümme takes before minuti pärast."
 msgstr "Kümne — це форма kümme перед minuti pärast."
 
-msgid "Kümne minuti pärast neli: in ten minutes it's four, 3:50."
+msgid "Kümne minuti pärast neli: in ten minutes it’s four, 3:50."
 msgstr "Kümne minuti pärast neli: через десять хвилин четверта, 3:50."
 
-msgid "Kus with the ending -st, “out of”."
-msgstr "Kus із закінченням -st, «з»."
+msgid "Kus with its -s swapped for -st, “out of”."
+msgstr "Kus, у якому -s замінили на -st, «з»."
 
 msgid "Lab values"
 msgstr "Лабораторні норми"
@@ -5631,6 +5610,9 @@ msgstr "Китайські слова на флешкартках · Lymi"
 msgid "Learn each place together with its ending: <0>Tallinn, Tallinnas</0>."
 msgstr "Вчи кожне місце одразу із закінченням: <0>Tallinn, Tallinnas</0>."
 
+msgid "Learn eleven words, <0>null</0> to <1>kümme</1>. Every number up to 99 is built from them."
+msgstr "Вивчи одинадцять слів, від <0>null</0> до <1>kümme</1>. З них будується кожне число до 99."
+
 msgid "Learn Estonian vocabulary with flashcards · Lymi"
 msgstr "Естонські слова на флешкартках · Lymi"
 
@@ -5660,9 +5642,6 @@ msgstr "Російські слова на флешкартках · Lymi"
 
 msgid "Learn Spanish vocabulary with flashcards · Lymi"
 msgstr "Іспанські слова на флешкартках · Lymi"
-
-msgid "Learn ten words, <0>null</0> to <1>kümme</1>. Every other number is built from them."
-msgstr "Вивчи десять слів, від <0>null</0> до <1>kümme</1>. З них будується будь-яке інше число."
 
 msgid "Learn the alphabet, then your first words."
 msgstr "Вивчи абетку, а потім перші слова."
@@ -5744,9 +5723,6 @@ msgstr "lecture-5-slides.pdf"
 msgid "Legal bases"
 msgstr "Правові підстави"
 
-msgid "Length takes the most practice. Play the pairs above once more."
-msgstr "Довгота потребує найбільше практики. Переслухай пари вище ще раз."
-
 msgid "Lesson"
 msgstr "Урок"
 
@@ -5810,13 +5786,13 @@ msgstr "Як «а» в слові «мама»."
 msgid "Like the e in “bed”."
 msgstr "Як «е» в слові «село»."
 
-msgid "Like the i in “sit”, never like “ice”."
+msgid "Like the ee in “see”, but short, never like “ice”."
 msgstr "Як «і» в слові «ліс»."
 
 msgid "Like the o in “more”, but short."
 msgstr "Як «о» в слові «сон»."
 
-msgid "Like the u in “put”."
+msgid "Like the oo in “food”, but short."
 msgstr "Як «у» в слові «тут»."
 
 msgid "linen; a bedsheet"
@@ -5831,14 +5807,14 @@ msgstr "Linna може означати «міста» або «в місто».
 msgid "Listen"
 msgstr "Послухати"
 
-msgid "Listen and pick the clock. The others are the usual mix-ups: an hour out, or a quarter the wrong way round."
-msgstr "Послухай і вибери годинник. Решта — звичні плутанини: година не та або чверть не з того боку."
+msgid "Listen and pick the clock. The others are an hour out, or another time named after the same hour, such as 3:15 and 3:45."
+msgstr "Послухай і вибери годинник. На інших — година не та або інший час, названий за тією ж годиною, як 3:15 і 3:45."
 
 msgid "Listen and pick the day. Most of them end the same way, so listen to how each one starts."
 msgstr "Послухай і обери день. Більшість закінчуються однаково, тож слухай, як кожен починається."
 
-msgid "Listen and type the time in digits, such as 3:30 or 3.30. Press Enter to check."
-msgstr "Послухай і введи час цифрами, наприклад 3:30 або 3.30. Натисни Enter, щоб перевірити."
+msgid "Listen and type the time in digits, such as 3:30 or 3.30."
+msgstr "Послухай і введи час цифрами, наприклад 3:30 або 3.30."
 
 msgid "Listen as many times as you like, then answer."
 msgstr "Слухай скільки завгодно, а потім відповідай."
@@ -5846,14 +5822,17 @@ msgstr "Слухай скільки завгодно, а потім відпов
 msgid "Listen first."
 msgstr "Спершу прослухай."
 
+msgid "Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you which hour to count from."
+msgstr "Слухай pool, veerand, kolmveerand, läbi чи pärast: кожне підказує, від якої години рахувати."
+
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Слухай кінець дієслова. Пограйся зі столом вище й повертайся."
 
-msgid "Listen to the first word: kas, or which question word."
-msgstr "Слухай перше слово: kas чи яке питальне слово."
+msgid "Listen to the first word. Kas wants yes or no; a question word wants what it asks about."
+msgstr "Слухай перше слово. На kas відповідають «так» чи «ні», а на питальне слово — тим, про що воно питає."
 
 msgid "Listen to the very end of the verb, then try again."
-msgstr "Слухай самий кінець дієслова й спробуй ще раз."
+msgstr "Слухай кінець дієслова до останнього звуку й спробуй ще раз."
 
 msgid "Listen: meet Jaan"
 msgstr "Слухання: знайомство з Яаном"
@@ -6048,7 +6027,7 @@ msgstr "AI від Lymi · значення й приклади"
 msgid "Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes doesn’t get that label, so check it."
 msgstr "AI у Lymi заповнює те, що ти лишаєш порожнім, як-от значення чи приклад, і позначає кожне таке поле як AI. Текст, який пише твій асистент, такої позначки не має, тож перевір його."
 
-msgid "Ma olen pärit… is I'm from…"
+msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… означає «я родом з…»."
 
 msgid "Ma tulen kohe! I’m coming right away!"
@@ -6378,6 +6357,9 @@ msgstr "Ранок"
 msgid "Most land plants have one."
 msgstr "Вона є в більшості наземних рослин."
 
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Майже всі. Переслухай ще раз ті, де були помилки."
+
 msgid "Most of what Noji keeps for Premium, Lymi gives you on the free plan."
 msgstr "Більшість того, що Noji залишає для Premium, Lymi дає в безкоштовному плані."
 
@@ -6445,7 +6427,10 @@ msgid "My flat is number 16."
 msgstr "Моя квартира — номер 16."
 
 msgid "My name is Mari."
-msgstr "Мене звати Марі."
+msgstr "Мене звати Mari."
+
+msgid "My number is 5 2 0 9 4."
+msgstr "Мій номер — 5 2 0 9 4."
 
 msgid "Ñ is a letter of its own: ¡Feliz año nuevo!"
 msgstr "Ñ є окремою літерою: ¡Feliz año nuevo!"
@@ -6478,7 +6463,7 @@ msgid "Nearly. Listen for the verb in the question."
 msgstr "Майже. Прислухайся до дієслова в питанні."
 
 msgid "Nearly. Play the ones you missed once more."
-msgstr "Майже. Послухай ще раз ті, де помилився."
+msgstr "Майже. Переслухай ті, де були помилки."
 
 msgid "Nearly. Tap the endings above once more."
 msgstr "Майже. Ще раз понатискай закінчення вище."
@@ -6577,7 +6562,7 @@ msgid "No deck at this address · Lymi"
 msgstr "За цією адресою немає колоди · Lymi"
 
 msgid "No ending. Ta on and nad on: he or she is, they are."
-msgstr "Без закінчення. Ta on і nad on: «він, вона» і «вони»."
+msgstr "Без закінчення. Ta on і nad on: «він чи вона є», «вони є»."
 
 msgid "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "В українській такого звуку немає. Найближче до нього російське «ы», трохи схоже й українське «и». Скажи «о», потім розтягни губи, а язик залиш на місці."
@@ -6609,23 +6594,23 @@ msgstr "Ні, *дякую*."
 msgid "No, *thanks*."
 msgstr "Ні, *дякую*."
 
-msgid "No, he or she isn't."
-msgstr "Ні, його або її немає."
+msgid "No, he or she isn’t."
+msgstr "Ні, його чи її немає."
 
-msgid "No, I'm not reading."
+msgid "No, I’m not reading."
 msgstr "Ні, я не читаю."
 
-msgid "No, I'm not."
+msgid "No, I’m not."
 msgstr "Ні, не читаю."
-
-msgid "no, not: the answer to a question with olema"
-msgstr "ні, не: відповідь на питання з olema"
 
 msgid "No, she's a student"
 msgstr "Ні, вона студентка"
 
 msgid "No, she's a teacher"
 msgstr "Ні, вона вчителька"
+
+msgid "no, when the question has olema"
+msgstr "ні, коли в питанні є olema"
 
 msgid "no; not"
 msgstr "ні; не"
@@ -6775,12 +6760,6 @@ msgstr "іменник"
 msgid "Nouns and cases"
 msgstr "Іменники та відмінки"
 
-msgid "Now a short exchange. Hear a question, then pick the answer that fits. A kas question wants yes or no; a question word wants what it asks about, such as a place for kus or a time for millal."
-msgstr "Тепер коротка розмова. Послухай питання й обери відповідь, яка пасує. На kas відповідають «так» чи «ні», а на питальне слово — тим, про що воно питає: місцем на kus, часом на millal."
-
-msgid "Now both together. You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
-msgstr "Тепер разом. Ти сидиш унизу й говориш із Mari та Jaan навпроти. Liis і Kadri сидять обабіч тебе, а Peeter праворуч. Натисни слово, щоб побачити, кого воно означає, або натисни на людину."
-
 msgid "Number"
 msgstr "Число"
 
@@ -6790,20 +6769,14 @@ msgstr "Числа"
 msgid "Numbers and time"
 msgstr "Числа й час"
 
-msgid "Numbers by ear. Ten words and two endings take you to a hundred."
-msgstr "Числа на слух. Десять слів і два закінчення доведуть тебе до сотні."
-
-msgid "Numbers in sentences take practice. Play each one twice before you type."
-msgstr "Числа в реченнях потребують практики. Прослухай кожне двічі, перш ніж писати."
+msgid "Numbers by ear. Eleven words and two endings take you to ninety-nine."
+msgstr "Числа на слух. Одинадцять слів і дві частини, -teist і -kümmend, доведуть тебе до дев’яноста дев’яти."
 
 msgid "Numbers in the wild"
 msgstr "Числа в житті"
 
-msgid "Numbers take practice. Try again, or pick an easier range."
-msgstr "Числа потребують практики. Спробуй ще раз або вибери легший діапазон."
-
-msgid "Õ or o? Ü or u?"
-msgstr "Õ чи o? Ü чи u?"
+msgid "Õ or o, ä or a, ü or u"
+msgstr "Õ чи o, ä чи a, ü чи u"
 
 msgid "Õ, ä, ö and ü stay exactly as you typed them, so <0>tuli</0>, fire, and <1>tüli</1>, a quarrel, are two different cards."
 msgstr "Õ, ä, ö і ü лишаються саме такими, як ти їх вводиш, тож <0>tuli</0> (вогонь) і <1>tüli</1> (сварка) — дві різні картки."
@@ -6899,7 +6872,7 @@ msgstr "У безкоштовному плані"
 msgid "On the hour"
 msgstr "Повні години"
 
-msgid "On the hour: just its number."
+msgid "On the hour: the number alone."
 msgstr "Рівно: лише число години."
 
 msgid "on the table"
@@ -6965,19 +6938,19 @@ msgstr "На одиницю більше"
 msgid "One of a mirror-image pair"
 msgstr "Одна з двох дзеркальних форм"
 
-msgid "One of the ten base words."
-msgstr "Одне з десяти базових слів."
+msgid "One of the eleven base words."
+msgstr "Одне з одинадцяти базових слів."
 
 msgid "One person"
 msgstr "Одна людина"
 
-msgid "One person you're talking to, such as Mari."
+msgid "One person you’re talking to, such as Mari."
 msgstr "Людина, з якою ти говориш, наприклад Mari."
 
 msgid "One present tense for both."
 msgstr "Один теперішній час для обох значень."
 
-msgid "One present tense: <0>ma loen</0> is both I read and I'm reading."
+msgid "One present tense: <0>ma loen</0> is both I read and I’m reading."
 msgstr "Один теперішній час: <0>ma loen</0> — це і «я читаю взагалі», і «я читаю зараз»."
 
 msgid "One sentence to keep from today: <0/>."
@@ -7085,10 +7058,10 @@ msgstr "Інші іспити"
 msgid "Other MCP apps"
 msgstr "Інші MCP-застосунки"
 
-msgid "Other minutes count from the hour that has struck. <0/> is “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is how <3>minut</3> looks after a number."
-msgstr "Інші хвилини рахують від години, що вже минула. <0/> — «десять хвилин, три минуло»: 3:10. <1/> означає «крізь» або «минуло», а <2/> — це <3>minut</3> після числа."
+msgid "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
+msgstr "Інші хвилини, до двадцяти по повній годині, рахують від години, що вже минула. <0/> — дослівно «десять хвилин, три минуло»: 3:10. <1/> означає «крізь» або «минуло», а <2/> — партитив від <3>minut</3>, форма після числа; її пояснює урок {partitive}."
 
-msgid "Other people, not the ones you're talking to."
+msgid "Other people, not the ones you’re talking to."
 msgstr "Інші люди, не ті, з ким ти говориш."
 
 msgid "Other subjects"
@@ -7178,6 +7151,9 @@ msgstr "Пішохідний перехід"
 msgid "Peeter is ta, he, so: on."
 msgstr "Пеетер — це ta, він, тож: on."
 
+msgid "People ask these three when they meet you. Learn them whole, each with an answer, and don’t take them apart yet."
+msgstr "Ці три питання тобі поставлять при зустрічі. Вчи їх цілими, кожне з відповіддю, і поки не розбирай на частини."
+
 msgid "People, food, time and your first verbs."
 msgstr "Люди, їжа, час і перші дієслова."
 
@@ -7229,8 +7205,11 @@ msgstr "Обери безкоштовну колоду в каталозі й н
 msgid "Pick a pair. Both words are drawn on one time scale, so the longer one takes more room."
 msgstr "Вибери пару. Обидва слова показано на одній шкалі часу, тож довше займає більше місця."
 
-msgid "Pick a range, listen, and type the number in digits. Press Enter to check."
-msgstr "Вибери діапазон, послухай і введи число цифрами. Натисни Enter, щоб перевірити."
+msgid "Pick a range, listen, and type the number in digits."
+msgstr "Вибери діапазон, послухай і введи число цифрами."
+
+msgid "Pick each pair above again and hear which word is longer."
+msgstr "Ще раз вибери кожну пару вище й послухай, яке слово довше."
 
 msgid "Pick how much to review a day. A rest day keeps the streak going."
 msgstr "Обери, скільки повторювати щодня. День відпочинку не перериває дні поспіль."
@@ -7356,6 +7335,12 @@ msgstr "Відтворити {word}, сьогодні"
 msgid "Play {word}: {shown}"
 msgstr "Відтворити {word}: {shown}"
 
+msgid "Play each number twice before you type."
+msgstr "Прослухай кожне число двічі, перш ніж писати."
+
+msgid "Play each sentence twice before you type."
+msgstr "Прослухай кожне речення двічі, перш ніж писати."
+
 msgid "Play example"
 msgstr "Відтворити приклад"
 
@@ -7439,6 +7424,9 @@ msgstr "Польські слова, які ти запам’ятаєш."
 
 msgid "Polski · new"
 msgstr "Polski · нова"
+
+msgid "Pool names the coming hour, so the hour you hear is one ahead. Listen for the hour, then step back half an hour."
+msgstr "Почуй годину й відступи на пів години назад, як у «пів на четверту»."
 
 msgid "Pool neli: halfway to four, 3:30."
 msgstr "Pool neli: пів на четверту, 3:30."
@@ -7566,7 +7554,7 @@ msgstr "Püha — святий, päev — день."
 msgid "Pumpkin"
 msgstr "Гарбуз"
 
-msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don't read."
+msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 msgstr "Став <0>ei</0> перед дієсловом: <1>ma ei loe</1>, я не читаю."
 
 msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
@@ -7716,8 +7704,8 @@ msgstr "Quizlet створений, щоб пройти набір перед т
 msgid "Quizlet only exports sets you created. Pictures and audio stay behind either way."
 msgstr "Quizlet експортує лише твої власні набори. Зображення й аудіо не переносяться в жодному разі."
 
-msgid "raamat, book, and kogu, collection."
-msgstr "raamat — книга, kogu — збірка."
+msgid "Raamat, book, and kogu, collection."
+msgstr "Raamat — книга, kogu — збірка."
 
 msgid "rain"
 msgstr "дощ"
@@ -7728,7 +7716,7 @@ msgstr "Діапазон"
 msgid "Read both endings above once more, then try again."
 msgstr "Ще раз перечитай про обидва закінчення вище, а потім спробуй знову."
 
-msgid "Read it as it's written"
+msgid "Read it as it’s written"
 msgstr "Читай, як написано"
 
 msgid "Read Japanese Kana covers hiragana and katakana, including voiced and combined sounds, the small tsu and the long-vowel mark."
@@ -7987,6 +7975,9 @@ msgstr "У російській <0>за́мок</0>, фортеця, і <1>за�
 msgid "Saaremaa, Estonia's largest island"
 msgstr "Сааремаа, найбільший острів Естонії"
 
+msgid "Sada alone, with no “one” in front."
+msgstr "Лише sada, без «один» перед ним."
+
 msgid "Said before a meal"
 msgstr "Кажуть перед їжею"
 
@@ -8035,7 +8026,7 @@ msgstr "Збережи «Feierabend» у мою колоду німецької.
 msgid "Say e with rounded lips, as in German “schön”."
 msgstr "Скажи «е», округливши губи, як у німецькому «schön»."
 
-msgid "Say every letter the way it's written."
+msgid "Say every letter the way it’s written."
 msgstr "Вимовляй кожну літеру так, як написано."
 
 msgid "Say i with rounded lips, as in German “über” or French “tu”."
@@ -8299,7 +8290,7 @@ msgid "Short for sina."
 msgstr "Скорочено від sina."
 
 msgid "Short for sinu."
-msgstr "Коротке від sinu."
+msgstr "Скорочено від sinu."
 
 msgid "Short for teie."
 msgstr "Скорочено від teie."
@@ -8485,9 +8476,6 @@ msgstr "Деякі місця мають <0>-l</0> за традицією, як
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Деякі основи змінюються: <0>lugema, loen</0>. Запам’ятовуй кожне дієслово з формою для «я»."
 
-msgid "Some verbs change inside: <0/>, but <1/>. Don't start from the -ma form. Start from the ma form, and the no follows: <2/>."
-msgstr "Деякі дієслова змінюються всередині: <0/>, але <1/>. Не відштовхуйся від форми на -ma. Бери форму з ma, і заперечення вийде саме: <2/>."
-
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Хтось інший, чоловік чи жінка: одне слово для обох."
 
@@ -8656,9 +8644,6 @@ msgstr "Почни з колоди свого іспиту."
 msgid "Start with your next lecture."
 msgstr "Почни з наступної лекції."
 
-msgid "starts a yes-or-no question"
-msgstr "як «чи»: починає питання «так чи ні»"
-
 msgid "State"
 msgstr "Стан"
 
@@ -8695,8 +8680,8 @@ msgstr "Основа і закінчення"
 msgid "Stem changes"
 msgstr "Зміни основи"
 
-msgid "Stems such as <0>loe-</0> and <1>räägi-</1> follow consonant gradation, which lesson {gradation} explains once you know more words."
-msgstr "Такі основи, як <0>loe-</0> і <1>räägi-</1>, змінюються через чергування приголосних. Його пояснює урок {gradation}, коли ти вже знатимеш більше слів."
+msgid "Stems such as <0>loe-</0> and <1>räägi-</1> lose or change a consonant inside the word. Lesson {gradation} explains the rule, called consonant gradation."
+msgstr "Такі основи, як <0>loe-</0> і <1>räägi-</1>, втрачають або змінюють приголосний усередині слова. Це правило, чергування приголосних, пояснює урок {gradation}."
 
 msgid "Step by step, after a tutor lesson"
 msgstr "Крок за кроком після уроку з репетитором"
@@ -8813,7 +8798,7 @@ msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведи кажуть так і про каву, і про робочий час."
 
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
-msgstr "Перемкни <0/> на <1/>, і всі шість речень стануть запереченнями. Торкнися рядка, щоб послухати."
+msgstr "Перемкни <0/> на <1/>, і всі шість речень стануть заперечними. Натисни рядок, щоб послухати."
 
 msgid "Switch to In the place and watch the last letters change."
 msgstr "Перемкни на «Де?» і дивись, як змінюються кінці слів."
@@ -8905,8 +8890,8 @@ msgstr "Розмова: знайомство з Марі"
 msgid "Tallinn, the capital"
 msgstr "Таллінн, столиця"
 
-msgid "Tallinnas ends in -s, in, which is lesson {where}. Keelt and raamatut are the partitive, lesson {partitive}. For now, learn them as phrases."
-msgstr "Tallinnas закінчується на -s, «у, в», про це розповідає урок {where}. Keelt і raamatut — це партитив, урок {partitive}. Поки що вчи їх як готові фрази."
+msgid "Tallinnas ends in -s, which means in; lesson {where} explains that ending. Keelt and raamatut are in the partitive, a form an object often takes, which lesson {partitive} explains. For now, learn them as phrases."
+msgstr "Tallinnas закінчується на -s, що означає «у, в»; це закінчення пояснює урок {where}. Keelt і raamatut стоять у партитиві, формі, яку часто має додаток; її пояснює урок {partitive}. Поки що вчи їх як готові фрази."
 
 msgid "Tamil"
 msgstr "тамільська"
@@ -8937,6 +8922,9 @@ msgstr "Натисни слово або людину"
 
 msgid "Tap an ending"
 msgstr "Натисни закінчення"
+
+msgid "Tap õ, ä and ü in the vowels above once more, then try again."
+msgstr "Ще раз натисни õ, ä і ü серед голосних вище, потім спробуй знову."
 
 msgid "Tap the places above once more, then try again."
 msgstr "Ще раз торкнись місць вище, а потім спробуй знову."
@@ -9055,14 +9043,14 @@ msgstr "Це питання, хто вона, а вона вже сказала.
 msgid "That chess term you just used, add it to my deck."
 msgstr "Додай у мою колоду цей шаховий термін."
 
-msgid "That's a book."
+msgid "That’s a book."
 msgstr "Це книжка."
 
 msgid "That's good morning; Mari is leaving."
 msgstr "Це «доброго ранку», а Марі йде."
 
-msgid "That's Jaan."
-msgstr "Це Яан."
+msgid "That’s Jaan."
+msgstr "Це Jaan."
 
 msgid "The -des and -mata forms"
 msgstr "Форми на -des і -mata"
@@ -9256,6 +9244,9 @@ msgstr "Закінчення <0>-l</0> означає «на», коли йде�
 msgid "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
 msgstr "Закінчення <0>-s</0> означає «в»: <1>Eestis, Tallinnas, koolis</1>."
 
+msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
+msgstr "З <0>-teist</0> виходять числа від одинадцяти до дев’ятнадцяти, а з <1>-kümmend</1> — десятки."
+
 msgid "The ending for ma, I."
 msgstr "Закінчення для ma, «я»."
 
@@ -9271,14 +9262,11 @@ msgstr "Закінчення для sa, «ти»."
 msgid "The ending for ta, he or she. Olema has on here."
 msgstr "Закінчення для ta, «він чи вона». В olema тут on."
 
-msgid "The ending for te, you to more than one or polite you."
-msgstr "Закінчення для te, «ви», зокрема ввічливе."
+msgid "The ending for te: you, to more than one; polite you."
+msgstr "Закінчення для te: «ви» до кількох людей і ввічливе «Ви»."
 
-msgid "The ending for te, you to more than one."
-msgstr "Закінчення для te, «ви»."
-
-msgid "The ending says who, so ma and sa can go: <0>Elan Tallinnas.</0>"
-msgstr "Закінчення каже, хто це, тому ma і sa можна пропустити: <0>Elan Tallinnas.</0>"
+msgid "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
+msgstr "Закінчення каже, хто це, тому ma, sa, me і te можна пропустити: <0>Elan Tallinnas.</0>"
 
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "Закінчення каже, хто це, тож займенник можна опустити: <0>Olen Mari.</0>"
@@ -9313,6 +9301,9 @@ msgstr "Перші чотири — з числами: <0>esmaspäev</0> — �
 msgid "The form says who"
 msgstr "Форма каже, хто"
 
+msgid "The forms of olema, to be: <0>olen, oled, on, oleme, olete, on</0>."
+msgstr "Форми olema, «бути»: <0>olen, oled, on, oleme, olete, on</0>."
+
 msgid "The fourth day of the week."
 msgstr "Четвертий день тижня."
 
@@ -9346,14 +9337,14 @@ msgstr "H не читається: hoy звучить як «ой»."
 msgid "The hedgehog lives in the forest."
 msgstr "Їжак живе в лісі."
 
-msgid "The hour you hear is the one that's coming. Tap a few and listen."
+msgid "The hour you hear is the one that’s coming. Tap a few and listen."
 msgstr "Година, яку ти чуєш, — та, що настає. Натисни кілька й послухай."
 
 msgid "The hours"
 msgstr "Години"
 
-msgid "The hours are the numbers you already know. Tap one to hear it."
-msgstr "Години — це числа, які ти вже знаєш. Натисни, щоб почути."
+msgid "The hours are the numbers from lesson {numbers}. Tap one to hear it."
+msgstr "Години — це числа з уроку {numbers}. Натисни будь-яку, щоб почути."
 
 msgid "The Hradec Králové and Pardubice regions."
 msgstr "Краловоградецький і Пардубицький краї."
@@ -9384,6 +9375,9 @@ msgstr "Уроки безкоштовні й не потребують акау�
 
 msgid "the letter õ"
 msgstr "літера õ"
+
+msgid "The letters <0>õ ä ö ü</0> are vowels of their own, and English has no sound like <1>õ</1>."
+msgstr "Літери <0>õ ä ö ü</0> — окремі голосні, а звуку <1>õ</1> в українській немає."
 
 msgid "The link is off. Nobody new can join."
 msgstr "Посилання вимкнено. Більше ніхто не зможе приєднатися."
@@ -9463,7 +9457,7 @@ msgstr "Партитив від muusika."
 msgid "The passage"
 msgstr "Текст"
 
-msgid "The people you're talking to, or one person, politely."
+msgid "The people you’re talking to, or one person, politely."
 msgstr "Люди, з якими ти говориш, або одна людина, якщо ввічливо."
 
 msgid "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
@@ -9622,9 +9616,6 @@ msgstr "Десятки"
 msgid "The tens: -kümmend"
 msgstr "Десятки: -kümmend"
 
-msgid "The thing being counted changes too: <0/>, <1/>. That form is the partitive, in lesson {partitive}. For now, listen for the number."
-msgstr "Змінюється й те, що рахують: <0/>, <1/>. Ця форма — партитив, про неї урок {partitive}. Поки що слухай число."
-
 msgid "The third day of the week."
 msgstr "Третій день тижня."
 
@@ -9682,6 +9673,9 @@ msgstr "Дошка"
 msgid "The whole official bank for the test of Czech life and institutions, in Czech as on the test, with a translation next to each."
 msgstr "Уся офіційна база тесту з чеських реалій — чеською, як на тесті, з перекладом поруч."
 
+msgid "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
+msgstr "Слово після числа теж змінюється: <0/>, <1/>. Ця форма — партитив, її пояснює урок {partitive}. Поки що слухай число."
+
 msgid "The words and phrases from each unit of the course."
 msgstr "Слова й фрази з кожної теми курсу."
 
@@ -9715,14 +9709,11 @@ msgstr "Поки що нічого не опубліковано."
 msgid "There’s a *park* near the station."
 msgstr "Біля вокзалу є *парк*."
 
+msgid "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
+msgstr "З цих одинадцяти слів будується кожне число до 99. Натисни на кожне. Дві пари звучать схоже: <0/> і <1/>, <2/> і <3/>."
+
 msgid "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
 msgstr "Ці кроки — для Gemini CLI, який працює будь-де. У застосунку Gemini Google відкриває користувацькі застосунки лише дорослим у США й лише англійською."
-
-msgid "These take a few tries. Play the pairs above again."
-msgstr "Тут потрібно кілька спроб. Переслухай пари вище ще раз."
-
-msgid "These ten words build every other number. Tap each one. Two pairs sound alike at first: <0/> and <1/>, <2/> and <3/>."
-msgstr "З цих десяти слів будується будь-яке інше число. Натисни на кожне. Дві пари спершу звучать схоже: <0/> і <1/>, <2/> і <3/>."
 
 msgid "These three keep slipping. Let’s start with la huelga."
 msgstr "Ці три постійно вислизають. Почнімо з la huelga."
@@ -9763,16 +9754,16 @@ msgstr "Вони вчаться в Тарту."
 msgid "They work in an office."
 msgstr "Вони працюють в офісі."
 
-msgid "They're at home."
+msgid "They’re at home."
 msgstr "Вони вдома."
 
-msgid "They're drinking coffee."
+msgid "They’re drinking coffee."
 msgstr "Вони п’ють каву."
 
-msgid "They're tired."
+msgid "They’re tired."
 msgstr "Вони втомилися."
 
-msgid "They're working today."
+msgid "They’re working today."
 msgstr "Вони сьогодні працюють."
 
 msgid "Things to ask ChatGPT."
@@ -9853,9 +9844,6 @@ msgstr "Це мій *друг* із Китаю."
 msgid "This is the current HSK 2.0 format. The syllabus published in 2025 grows level 1 to 300 words and level 2 to 500."
 msgstr "Це чинний формат HSK 2.0. Програма, опублікована 2025 року, збільшує рівень 1 до 300 слів, а рівень 2 — до 500."
 
-msgid "This is the one most learners get wrong at first. Listen for the hour, then step back half an hour."
-msgstr "Почуй годину й відступи на пів години назад, як у «пів на четверту»."
-
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "Ця політика охоплює сайт Lymi, застосунки, API та підключених помічників."
 
@@ -9881,7 +9869,7 @@ msgid "Three quarters of the way to {next}."
 msgstr "Три чверті шляху до {next}."
 
 msgid "Three questions to know by heart"
-msgstr "Три питання напам'ять"
+msgstr "Три питання напам’ять"
 
 msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 msgstr "Ось три, що двічі не згадалися: дифузія, мітохондрія і рибосома."
@@ -9928,9 +9916,6 @@ msgstr "Час, за який рівень знижується вдвічі"
 msgid "Times"
 msgstr "Час"
 
-msgid "Times take practice. Listen for pool, veerand or kolmveerand first, then the hour."
-msgstr "Час потребує практики. Спершу слухай pool, veerand чи kolmveerand, потім годину."
-
 msgid "Timetable"
 msgstr "Розклад"
 
@@ -9940,16 +9925,13 @@ msgstr "чайові"
 msgid "To agree"
 msgstr "Погоджуватися"
 
-msgid "To answer no, say <0>ei</0> or repeat the verb: <1>Kas sa loed? Ei loe.</1>"
-msgstr "Щоб відповісти «ні», скажи <0>ei</0> або повтори дієслово: <1>Kas sa loed? Ei loe.</1>"
+msgid "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
+msgstr "Щоб відповісти «ні», скажи <0>ei</0> або <1>ei</1> з дієсловом із питання: <2>Kas sa loed? Ei loe.</2>"
 
-msgid "To ask a yes-or-no question, put <0/> in front of a sentence. <1/> is you live in Tallinn. <2/> is do you live in Tallinn?"
-msgstr "Щоб спитати «так чи ні», постав <0/> перед реченням. <1/> означає «ти живеш у Таллінні». <2/> означає «ти живеш у Таллінні?»"
+msgid "To ask for more than yes or no, start with a question word instead of kas, and leave out the part you ask about. <0/> You live in Tallinn. <1/> Where do you live?"
+msgstr "Щоб дізнатися більше, ніж «так» чи «ні», почни з питального слова замість kas, а те, про що питаєш, прибери. <0/> Ти живеш у Таллінні. <1/> Де ти живеш?"
 
-msgid "To ask for more than yes or no, start with a question word instead of kas. The rest stays as in the statement; only the part you ask about goes. <0/> becomes <1/>, where do you live?"
-msgstr "Щоб дізнатися більше, ніж «так» чи «ні», почни з питального слова замість kas. Решта лишається як у твердженні, зникає тільки те, про що питаєш. <0/> стає <1/>, де ти живеш?"
-
-msgid "To ask the time, say <0/> Word for word, it's “what clock is?” The answer starts with <1/> too: <2/>, it's three o'clock."
+msgid "To ask the time, say <0/> Word for word, it’s “what clock is?” The answer starts with <1/> too: <2/>, it’s three o’clock."
 msgstr "Щоб спитати, котра година, скажи <0/> Дослівно — «що годинник є?» Відповідь теж починається з <1/>: <2/>, третя година."
 
 msgid "To ask what day it is, say <0/> To answer, put the day after <1>täna on</1>: <2/>."
@@ -10036,8 +10018,8 @@ msgstr "Хотіти; чекати з нетерпінням"
 msgid "To feel; to think"
 msgstr "Відчувати; вважати"
 
-msgid "To find the form that follows ei, take the ma form from lesson {present} and drop the -n. <0/> becomes <1/>, and <2/> becomes <3/>. It works for every verb there. Tap either side to hear it with ma."
-msgstr "Щоб знайти форму після ei, візьми форму з ma з уроку {present} і прибери -n. <0/> стає <1/>, а <2/> стає <3/>. Так з усіма дієсловами того уроку. Торкнися будь-якої половини, щоб почути її з ma."
+msgid "To find the form that follows ei, take the ma form from lesson {present} and drop the -n. <0/> becomes <1/>, and <2/> becomes <3/>. It works for every verb below. Tap either side to hear it with ma."
+msgstr "Щоб знайти форму після ei, візьми форму з ma з уроку {present} і прибери -n. <0/> стає <1/>, а <2/> стає <3/>. Так з усіма дієсловами нижче. Натисни будь-яку половину, щоб почути її з ma."
 
 msgid "to forget"
 msgstr "забувати"
@@ -10123,7 +10105,7 @@ msgstr "бігти"
 msgid "To say"
 msgstr "Сказати"
 
-msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don't read. The verb loses its ending, and <3/> is the same whoever you're talking about."
+msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 msgstr "Щоб сказати «не», постав <0/> перед дієсловом. <1/> — «я читаю», а <2/> — «я не читаю». Дієслово втрачає закінчення, а <3/> однакове, хоч би про кого йшлося."
 
 msgid "to school"
@@ -10547,9 +10529,6 @@ msgstr "стіна"
 msgid "Wash your *hands*."
 msgstr "Помий *руки*."
 
-msgid "Watch the hour fill up on its way to four."
-msgstr "Подивись, як година заповнюється на шляху до четвертої."
-
 msgid "Water"
 msgstr "Вода"
 
@@ -10616,7 +10595,7 @@ msgstr "Зустрінемося на вокзалі."
 msgid "We're at home."
 msgstr "Ми вдома."
 
-msgid "We're friends."
+msgid "We’re friends."
 msgstr "Ми друзі."
 
 msgid "We’re going into *town*."
@@ -10628,10 +10607,10 @@ msgstr "Ми шукаємо нову *квартиру*."
 msgid "We’re old *friends*."
 msgstr "Ми давні *друзі*."
 
-msgid "We're ready."
+msgid "We’re ready."
 msgstr "Ми готові."
 
-msgid "We're waiting for the bus."
+msgid "We’re waiting for the bus."
 msgstr "Ми чекаємо на автобус."
 
 msgid "Weather"
@@ -10860,7 +10839,7 @@ msgstr "Що всередині"
 msgid "What’s new in Lymi, and what got better."
 msgstr "Нові можливості Lymi і те, що стало краще."
 
-msgid "What's your name?"
+msgid "What’s your name?"
 msgstr "Як тебе звати?"
 
 msgid "when"
@@ -10872,6 +10851,9 @@ msgstr "Коли показник стає метою, він перестає �
 msgid "When a word won’t stick, AI drafts a short hint that leads you back to it without spelling it out."
 msgstr "Коли слово ніяк не запам’ятовується, AI готує коротку підказку, яка наводить на нього, але не називає."
 
+msgid "When are you working?"
+msgstr "Коли ти працюєш?"
+
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "Коли колеги йдуть із роботи, їм кажуть <0><1>お疲れ様です</1></0>."
 
@@ -10881,14 +10863,8 @@ msgstr "Коли ти їси?"
 msgid "When do you read?"
 msgstr "Коли ти читаєш?"
 
-msgid "When do you work?"
-msgstr "Коли ти працюєш?"
-
 msgid "When its card reaches Known in your reviews. From then on the reading is hidden on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it."
 msgstr "Коли його картка в повтореннях стає засвоєною. Відтоді читання приховане на цій картці й у прикладах у всіх твоїх колодах. Забудеш слово — і читання повернеться, а на звороті картки воно є завжди."
-
-msgid "When someone speaks fast, the two endings are easy to mix up. <0/> is twelve and <1/> is twenty. Listen to how the word ends."
-msgstr "Коли говорять швидко, ці два закінчення легко сплутати. <0/> — дванадцять, а <1/> — двадцять. Слухай, як закінчується слово."
 
 msgid "When the output depends on the history of the input"
 msgstr "Коли результат залежить від того, що було на вході раніше"
@@ -10918,7 +10894,7 @@ msgid "Where do you work?"
 msgstr "Де ти працюєш?"
 
 msgid "Where does he or she work?"
-msgstr "Де він або вона працює?"
+msgstr "Де він чи вона працює?"
 
 msgid "Where does Jaan live?"
 msgstr "Де живе Яан?"
@@ -11095,7 +11071,7 @@ msgid "Why are you waiting?"
 msgstr "Чому ти чекаєш?"
 
 msgid "Why is he or she learning Estonian?"
-msgstr "Чому він або вона вчить естонську?"
+msgstr "Чому він чи вона вчить естонську?"
 
 msgid "Widget"
 msgstr "Віджет"
@@ -11163,7 +11139,7 @@ msgstr "Слово → значення"
 msgid "Word and example recordings"
 msgstr "Записи слова й прикладу"
 
-msgid "Word for word: what clock is?"
+msgid "Word for word: “what clock is?”"
 msgstr "Дослівно: «що годинник є?»"
 
 msgid "Word meanings open once you have answered."
@@ -11469,7 +11445,7 @@ msgstr "Вивчено в контексті."
 msgid "you live"
 msgstr "ти живеш"
 
-msgid "You live in Tallinn, don't you?"
+msgid "You live in Tallinn, don’t you?"
 msgstr "Ти живеш у Таллінні, так?"
 
 msgid "You live in Tallinn."
@@ -11499,6 +11475,9 @@ msgstr "Твоя колода"
 msgid "You rely on add-ons"
 msgstr "Ти не можеш без доповнень"
 
+msgid "You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
+msgstr "Ти сидиш унизу й говориш із Mari та Jaan навпроти. Liis і Kadri сидять обабіч тебе, а Peeter праворуч. Натисни слово, щоб побачити, кого воно означає, або натисни на людину."
+
 msgid "You speak Estonian."
 msgstr "Ти говориш естонською."
 
@@ -11526,25 +11505,22 @@ msgstr "Це написано тобою"
 msgid "You, the one speaking."
 msgstr "Ти — той, хто говорить."
 
-msgid "you, to more than one person"
-msgstr "ви, до кількох людей"
-
 msgid "you, to more than one; polite you"
 msgstr "ви; ввічливе «Ви»"
 
 msgid "you, to one person"
 msgstr "ти"
 
-msgid "You'll hear a question with it, and an answer."
+msgid "You’ll hear a question with it, and an answer."
 msgstr "Почуєш питання з ним і відповідь."
 
-msgid "You'll hear elama with it and who it's for."
+msgid "You’ll hear elama with it and who it’s for."
 msgstr "Почуєш elama з ним і дізнаєшся, для кого воно."
 
 msgid "You'll hear it in a sentence."
 msgstr "Почуєш його в реченні."
 
-msgid "You'll hear it in a word, with a note on how to say it."
+msgid "You’ll hear it in a word, with a note on how to say it."
 msgstr "Почуєш її в слові й дізнаєшся, як її вимовляти."
 
 msgid "You'll hear it, and where its name comes from."
@@ -11553,34 +11529,31 @@ msgstr "Почуєш його і дізнаєшся, звідки назва."
 msgid "You'll hear the day it stands for."
 msgstr "Почуєш день, який вона позначає."
 
-msgid "You'll hear the form and who it's for."
+msgid "You’ll hear the form and who it’s for."
 msgstr "Почуєш форму й дізнаєшся, для кого вона."
-
-msgid "You'll hear these three in your first conversations. Learn them whole, with an answer each, and don't take them apart yet."
-msgstr "Ці три питання почуєш у перших же розмовах. Вчи їх цілими, кожне з відповіддю, і поки не розбирай на частини."
 
 msgid "You'll hear what day it is today. Pick the day that comes next."
 msgstr "Почуєш, який сьогодні день. Обери, який буде завтра."
 
-msgid "You'll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
+msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "Часто його кажуть одним словом, <0/>, і це рівно те саме, що <1/>. Спробуй усі три."
 
 msgid "You're a doctor, arst."
 msgstr "Ти лікар, arst."
 
-msgid "You're a good friend."
+msgid "You’re a good friend."
 msgstr "Ти добрий друг."
 
-msgid "You're all doing great."
+msgid "You’re all doing great."
 msgstr "Ви молодці."
 
-msgid "You're doing great."
+msgid "You’re doing great."
 msgstr "Ти молодець."
 
 msgid "You’re here"
 msgstr "Ти тут"
 
-msgid "You're teachers."
+msgid "You’re teachers."
 msgstr "Ви вчителі."
 
 msgid "You’re welcome"

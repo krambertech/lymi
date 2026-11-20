@@ -568,7 +568,7 @@ export const KASKIV_MORE = [
 ] as const;
 
 /** Words and lines the commands lesson says outside its lists. */
-export const KASKIV_WORDS = ["palun", "ära", "siia", "Ma lähen.", "Mine!"] as const;
+export const KASKIV_WORDS = ["palun", "ära", "siia", "Ma lähen.", "Mine!", "Ärge oodake!"] as const;
 
 /**
  * At a café with Mari: her lines in the second voice, the learner's in the main one. Words from

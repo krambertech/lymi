@@ -44,22 +44,23 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Söö!": msg`Eat.`,
   "Joo!": msg`Drink.`,
   "Õpi!": msg`Study.`,
-  "Ära istu!": msg`Don't sit down.`,
-  "Ära oota!": msg`Don't wait.`,
-  "Ära räägi!": msg`Don't speak.`,
-  "Ära loe!": msg`Don't read.`,
-  "Ära söö!": msg`Don't eat.`,
-  "Ära joo!": msg`Don't drink.`,
-  "Ma ei istu.": msg`I'm not sitting down.`,
-  "Ma ei oota.": msg`I'm not waiting.`,
-  "Ma ei loe.": msg`I'm not reading.`,
-  "Ma ei joo.": msg`I'm not drinking.`,
+  "Ära istu!": msg`Don’t sit down.`,
+  "Ära oota!": msg`Don’t wait.`,
+  "Ära räägi!": msg`Don’t speak.`,
+  "Ära loe!": msg`Don’t read.`,
+  "Ära söö!": msg`Don’t eat.`,
+  "Ära joo!": msg`Don’t drink.`,
+  "Ma ei istu.": msg`I’m not sitting down.`,
+  "Ma ei oota.": msg`I’m not waiting.`,
+  "Ma ei loe.": msg`I’m not reading.`,
+  "Ma ei joo.": msg`I’m not drinking.`,
   "Istuge!": msg`Sit down. To more than one, or polite.`,
   "Oodake!": msg`Wait. To more than one, or polite.`,
   "Lugege!": msg`Read. To more than one, or polite.`,
-  "Ärge lugege!": msg`Don't read. To more than one, or polite.`,
+  "Ärge lugege!": msg`Don’t read. To more than one, or polite.`,
+  "Ärge oodake!": msg`Don’t wait. To more than one, or polite.`,
   "Rääkige aeglasemalt, palun.": msg`Speak more slowly, please. To more than one, or polite.`,
-  "Ma lähen.": msg`I'm going.`,
+  "Ma lähen.": msg`I’m going.`,
   "Mine!": msg`Go.`,
 };
 
@@ -79,12 +80,12 @@ const GLOSSARY: Glossary = {
   ),
   palun: { en: msg`please` },
   ei: { en: msg`not; no`, clip: false },
-  ära: { en: msg`don't`, note: msg`Before the stem, to tell one person not to do something.` },
-  ärge: { en: msg`don't, to more than one or polite`, clip: false },
+  ära: { en: msg`don’t`, note: msg`Before the stem, to tell one person not to do something.` },
+  ärge: { en: msg`don’t, to more than one or polite`, clip: false },
   "ma loen": { en: msg`I read`, show: "Ma loen" },
-  "ma ei loe": { en: msg`I don't read`, show: "ma ei loe" },
-  "ma lähen": { en: msg`I'm going`, show: "Ma lähen" },
-  "ma ei istu": { en: msg`I'm not sitting down`, show: "ma ei istu" },
+  "ma ei loe": { en: msg`I don’t read`, show: "ma ei loe" },
+  "ma lähen": { en: msg`I’m going`, show: "Ma lähen" },
+  "ma ei istu": { en: msg`I’m not sitting down`, show: "ma ei istu" },
   siia: { en: msg`here, to this place`, note: msg`Where someone goes: tule siia, come here.` },
   istun: { en: msg`I sit down`, note: msg`From istuma, to sit.`, clip: false },
   tulen: { en: msg`I come`, note: msg`From tulema, to come.`, clip: false },
@@ -93,7 +94,7 @@ const GLOSSARY: Glossary = {
   te: { en: msg`you, to more than one; polite you`, clip: false },
 };
 
-/** A stretch of a line, lit in the stage's hue when it is what changed. */
+/** A stretch of a line, lit in the stage’s hue when it is what changed. */
 type Piece = readonly [text: string, lit: boolean];
 
 /** A command to more than one, with each -ge or -ke lit: “Ärge lugege!” */
@@ -139,7 +140,7 @@ function FlipLine({
       >
         <span className="inline-block">
           {pieces.map(([text, lit], i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: a line's pieces never reorder
+            // biome-ignore lint/suspicious/noArrayIndexKey: a line’s pieces never reorder
             <span key={i} className={clsx(lit && "text-(--form)")}>
               {text}
             </span>
@@ -204,7 +205,7 @@ function PairWord({ src, children }: { src: string; children: ReactNode }) {
   );
 }
 
-/** Six commands, switched together between do and don't. */
+/** Six commands, switched together between do and don’t. */
 function AraFlip() {
   const { t } = useLingui();
   const [no, setNo] = useState(false);
@@ -212,10 +213,10 @@ function AraFlip() {
   return (
     <Panel>
       <Chips
-        label={t`Do or don't`}
+        label={t`Do or don’t`}
         items={[
           { label: t({ message: "Do", context: "command" }), value: "yes" },
-          { label: t({ message: "Don't", context: "command" }), value: "no" },
+          { label: t({ message: "Don’t", context: "command" }), value: "no" },
         ]}
         value={mode}
         onPick={(value) => setNo(value === "no")}
@@ -236,7 +237,7 @@ function AraFlip() {
           }
           tip={
             <Trans>
-              The stem doesn't change: <span lang="et">istu</span>, <span lang="et">ära istu</span>.
+              The stem doesn’t change: <span lang="et">istu</span>, <span lang="et">ära istu</span>.
             </Trans>
           }
         />
@@ -300,10 +301,10 @@ function MoreFlip() {
       ) : (
         <FlipNote
           mode={mode}
-          title={<Trans>The stem alone</Trans>}
+          title={<Trans>To one person</Trans>}
           tip={
             <Trans>
-              To one person you'd call <span lang="et">sa</span>.
+              Someone you’d call <span lang="et">sa</span>.
             </Trans>
           }
         />
@@ -326,7 +327,7 @@ export function threeCommands(answer: string): string[] {
   return shuffle([answer, ...shuffle(others).slice(0, 2)]);
 }
 
-/** The first round's options, fixed so the page renders the same on the server. */
+/** The first round’s options, fixed so the page renders the same on the server. */
 const firstOptions = (i: number): string[] => {
   const three = [0, 3, 5].map((step) => ASKED[(i + step) % ASKED.length] as string);
   const turn = i % 3;
@@ -336,11 +337,11 @@ const firstOptions = (i: number): string[] => {
 type Kind = "do" | "dont" | "not";
 const KINDS: readonly Kind[] = ["do", "dont", "not"];
 
-/** What a stem says as a command, a don't, or a statement with ei. */
+/** What a stem says as a command, a don’t, or a statement with ei. */
 export const heardAs = (stem: string, kind: Kind) =>
   kind === "do" ? commandTo(stem) : kind === "dont" ? commandTo(stem, true) : notSentence(stem);
 
-/** “Do, don't or not?”: each stem heard three ways, keyed by the way. */
+/** “Do, don’t or not?”: each stem heard three ways, keyed by the way. */
 export const HEARD = KASKIV_HEARD.flatMap((stem) =>
   KINDS.map((kind) => ({
     stem,
@@ -350,7 +351,7 @@ export const HEARD = KASKIV_HEARD.flatMap((stem) =>
   })),
 );
 
-/** The three ways in a turned order, so the first round's answer isn't always in one place. */
+/** The three ways in a turned order, so the first round’s answer isn’t always in one place. */
 const turned = (i: number): Kind[] => {
   const turn = i % 3;
   return [...KINDS.slice(turn), ...KINDS.slice(0, turn)];
@@ -360,12 +361,17 @@ type AskedItem = ChoiceItem & { said: string; pair: readonly [string, string] };
 type HeardItem = ChoiceItem & { said: string; stem: string; pair: readonly [string, string] };
 
 const askedOptions = (options: readonly string[], i18n: I18n) =>
-  options.map((option) => ({ id: option, label: i18n._(MEANS[option] as MessageDescriptor) }));
+  options.map((option) => ({
+    id: option,
+    label: <span lang={i18n.locale}>{i18n._(MEANS[option] as MessageDescriptor)}</span>,
+  }));
 
 const heardOptions = (stem: string, kinds: readonly Kind[], i18n: I18n) =>
   kinds.map((kind) => ({
     id: kind,
-    label: i18n._(MEANS[heardAs(stem, kind)] as MessageDescriptor),
+    label: (
+      <span lang={i18n.locale}>{i18n._(MEANS[heardAs(stem, kind)] as MessageDescriptor)}</span>
+    ),
   }));
 
 /** The sentence and its meaning, after an answer. */
@@ -442,7 +448,7 @@ export function KaskivLesson() {
         { line: line("d-sina-1"), right: true },
         {
           line: "Tere! Ma istun, palun.",
-          why: t`Ma istun says that you're sitting down. To ask her, use the stem: istu.`,
+          why: t`Ma istun says that you’re sitting down. To ask her, use the stem: istu.`,
         },
       ],
     },
@@ -467,11 +473,11 @@ export function KaskivLesson() {
         { line: line("d-sina-3"), right: true },
         {
           line: "Joo kohvi!",
-          why: t`That tells Mari to drink coffee. She asked what you'd like.`,
+          why: t`That tells Mari to drink coffee. She asked what you’d like.`,
         },
         {
           line: "Ära joo vett!",
-          why: t`That tells Mari not to drink water. She asked what you'd like.`,
+          why: t`That tells Mari not to drink water. She asked what you’d like.`,
         },
       ],
     },
@@ -482,7 +488,7 @@ export function KaskivLesson() {
       replies: [
         {
           line: "Jaan, tuleb siia!",
-          why: t`Tuleb says that he's coming. To call him over, use the stem: tule.`,
+          why: t`Tuleb says that he’s coming. To call him over, use the stem: tule.`,
         },
         { line: line("d-sina-4"), right: true },
         { line: "Jaan, ära tule siia!", why: t`That tells Jaan not to come.` },
@@ -496,7 +502,7 @@ export function KaskivLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          To tell someone what to do, say the verb's stem: <span lang="et">Istu!</span> is sit down.
+          To tell someone what to do, say the verb’s stem: <span lang="et">Istu!</span> is sit down.
           To tell them not to, put <span lang="et">ära</span> before it:{" "}
           <span lang="et">Ära istu!</span>
         </Trans>
@@ -522,17 +528,17 @@ export function KaskivLesson() {
       ]}
       recap={[
         <Trans key="1">
-          To tell one person what to do, say the verb's stem: <b lang="et">Loe! Istu!</b>
+          To tell one person what to do, say the verb’s stem: <b lang="et">Loe! Istu!</b>
         </Trans>,
         <Trans key="2">
           The stem is the ma form without its <b lang="et">-n</b>: <b lang="et">istun</b>,{" "}
-          <b lang="et">istu</b>. It's the form that follows <b lang="et">ei</b>.
+          <b lang="et">istu</b>. It’s the form that follows <b lang="et">ei</b>.
         </Trans>,
         <Trans key="3">
-          To say don't, put <b lang="et">ära</b> before the stem: <b lang="et">Ära istu!</b>
+          To say don’t, put <b lang="et">ära</b> before the stem: <b lang="et">Ära istu!</b>
         </Trans>,
         <Trans key="4">
-          <b lang="et">Ei</b> says what someone doesn't do; <b lang="et">ära</b> tells them not to:{" "}
+          <b lang="et">Ei</b> says what someone doesn’t do; <b lang="et">ära</b> tells them not to:{" "}
           <b lang="et">Ma ei istu. Ära istu!</b>
         </Trans>,
         <Trans key="5">
@@ -556,7 +562,7 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To tell one person what to do, Estonian uses the verb's stem with nothing after
+                    To tell one person what to do, Estonian uses the verb’s stem with nothing after
                     it. Take the ma form from lesson {present} and drop the{" "}
                     <span lang="et">-n</span>. <Word w="Ma loen" /> is I read, and <Word w="Loe!" />{" "}
                     tells one person to read.
@@ -564,8 +570,8 @@ export function KaskivLesson() {
                 </p>
                 <p>
                   <Trans>
-                    It's the form that follows <span lang="et">ei</span> in lesson {negation}:{" "}
-                    <Word w="ma ei loe" />, I don't read. Tap either side of a pair to hear it.
+                    It’s the form that follows <span lang="et">ei</span> in lesson {negation}:{" "}
+                    <Word w="ma ei loe" />, I don’t read. Tap either side of a pair to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -579,7 +585,7 @@ export function KaskivLesson() {
               <Aside>
                 <Trans>
                   One common verb breaks the pattern: <Word w="minema" />, to go.{" "}
-                  <Word w="Ma lähen" /> is I'm going, but the command is <Word w="Mine!" />
+                  <Word w="Ma lähen" /> is I’m going, but the command is <Word w="Mine!" />
                 </Trans>
               </Aside>
             </>
@@ -593,7 +599,7 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each of these six everyday commands starts with a verb's stem. Tap one to hear
+                    Each of these six everyday commands starts with a verb’s stem. Tap one to hear
                     it.
                   </Trans>
                 </p>
@@ -656,27 +662,27 @@ export function KaskivLesson() {
         },
         {
           id: "ara",
-          title: t`Ära means don't`,
+          title: t`Ära means don’t`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
                     To tell someone not to do something, put <Word w="ära" /> before the stem.{" "}
-                    <Word w="Istu!" /> is sit down, and <Word w="Ära istu!" /> is don't sit down.
+                    <Word w="Istu!" /> is sit down, and <Word w="Ära istu!" /> is don’t sit down.
                     The stem stays as it is.
                   </Trans>
                 </p>
                 <p>
-                  <Trans>Switch between Do and Don't, and tap a line to hear it.</Trans>
+                  <Trans>Switch between Do and Don’t, and tap a line to hear it.</Trans>
                 </p>
               </Prose>
               <AraFlip />
               <Aside>
                 <Trans>
                   <Word w="Ei" /> and <Word w="ära" /> both mean not, but they do different jobs.{" "}
-                  <span lang="et">Ei</span> says what someone doesn't do: <Word w="ma ei istu" />,
-                  I'm not sitting down. <span lang="et">Ära</span> tells someone not to do it:{" "}
+                  <span lang="et">Ei</span> says what someone doesn’t do: <Word w="ma ei istu" />,
+                  I’m not sitting down. <span lang="et">Ära</span> tells someone not to do it:{" "}
                   <Word w="Ära istu!" /> A command never starts with <span lang="et">ei</span>.
                 </Trans>
               </Aside>
@@ -699,7 +705,7 @@ export function KaskivLesson() {
               </Prose>
               <Quiz
                 id="do-or-dont"
-                title={<Trans>Do, don't or not?</Trans>}
+                title={<Trans>Do, don’t or not?</Trans>}
                 items={heardItems}
                 rounds={6}
                 verdict={(share) =>
@@ -711,7 +717,7 @@ export function KaskivLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Listen to the first word of the ones you missed.</Trans>
                   ) : (
-                    <Trans>Tap the Do and Don't lines above once more, then try again.</Trans>
+                    <Trans>Tap the Do and Don’t lines above once more, then try again.</Trans>
                   )
                 }
                 recall={(item) => ({ label: item.said, src: item.src })}
@@ -729,7 +735,7 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    So far every command speaks to one person, someone you'd call <Word w="sa" />.
+                    So far every command speaks to one person, someone you’d call <Word w="sa" />.
                     To more than one, or politely to one, the command ends in{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -ge
@@ -738,7 +744,7 @@ export function KaskivLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -ke
                     </b>
-                    : <Word w="Istuge!" /> <Word w="Oodake!" /> It's the same split as{" "}
+                    : <Word w="Istuge!" /> <Word w="Oodake!" /> It’s the same split as{" "}
                     <span lang="et">sa</span> and <Word w="te" /> in lesson {pronouns}.
                   </Trans>
                 </p>
@@ -746,7 +752,7 @@ export function KaskivLesson() {
                   <Trans>
                     The stem often changes before the ending: <Word w="Loe!" /> becomes{" "}
                     <Word w="Lugege!" /> Learn these as whole words for now. Lesson {verbForms}, on
-                    a verb's three forms, shows where they come from.
+                    a verb’s three forms, shows where they come from.
                   </Trans>
                 </p>
               </Prose>
@@ -758,8 +764,12 @@ export function KaskivLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -ge
                     </b>{" "}
-                    form: <Word w="Ärge lugege!" /> Said politely to one person, the sentence to
-                    keep is <Word w="Rääkige aeglasemalt, palun." />
+                    or{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -ke
+                    </b>{" "}
+                    form: <Word w="Ärge lugege!" /> <Word w="Ärge oodake!" /> Said politely to one
+                    person, the sentence to keep is <Word w="Rääkige aeglasemalt, palun." />
                   </Trans>
                 </p>
               </Prose>
@@ -785,7 +795,7 @@ export function KaskivLesson() {
                 title={<Trans>Talk: at a café</Trans>}
                 part={
                   <Trans>
-                    You're at a café, and Mari comes in. She speaks first; pick what you say back.
+                    You’re at a café, and Mari comes in. She speaks first; pick what you say back.
                   </Trans>
                 }
                 them={t`Mari`}

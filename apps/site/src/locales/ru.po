@@ -339,7 +339,7 @@ msgstr "*Завтра* суббота."
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {карточка к повторению} few {карточки к повторению} many {карточек к повторению} other {карточки к повторению}}"
 
-msgid "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn't do: <3/>, I'm not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
+msgid "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn’t do: <3/>, I’m not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
 msgstr "<0/> и <1/> оба отрицают, но каждое по-своему. <2>Ei</2> говорит, чего человек не делает: <3/>, я не сажусь. <4>Ära</4> просит этого не делать: <5/> Команда никогда не начинается с <6>ei</6>."
 
 msgid "<0/> asks about people and <1/> about things: <2/> Who is that? <3/> What is that?"
@@ -348,8 +348,8 @@ msgstr "<0/> спрашивает о людях, а <1/> — о вещах: <2/>
 msgid "<0/> at the start turns a sentence into a yes-or-no question. Lesson {questions} covers kas and the question words."
 msgstr "<0/> в начале превращает предложение в вопрос, на который отвечают «да» или «нет». О kas и вопросительных словах рассказывает урок {questions}."
 
-msgid "<0/> becomes <1/>, and the verb takes its <2>-ge</2> form: <3/> Said politely to one person, the sentence to keep is <4/>"
-msgstr "<0/> превращается в <1/>, а глагол тоже стоит в форме на <2>-ge</2>: <3/> А для одного человека на «вы» стоит запомнить такую фразу: <4/>"
+msgid "<0/> becomes <1/>, and the verb takes its <2>-ge</2> or <3>-ke</3> form: <4/> <5/> Said politely to one person, the sentence to keep is <6/>"
+msgstr "<0/> превращается в <1/>, а глагол тоже стоит в форме на <2>-ge</2> или <3>-ke</3>: <4/> <5/> А для одного человека на «вы» стоит запомнить такую фразу: <6/>"
 
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> не имеет окончания и подходит и для «он или она», и для «они». Поэтому <1/> — неправильный глагол: у других глаголов окончание есть и здесь, об этом — в уроке {regularVerbs}."
@@ -437,7 +437,7 @@ msgstr "<0>Ei ole</0> одним словом"
 msgid "<0>Ei</0> before the verb, and the ending is gone: <1>ei {stem}</1>."
 msgstr "<0>Ei</0> перед глаголом, а окончание пропало: <1>ei {stem}</1>."
 
-msgid "<0>Ei</0> says what someone doesn't do; <1>ära</1> tells them not to: <2>Ma ei istu. Ära istu!</2>"
+msgid "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to: <2>Ma ei istu. Ära istu!</2>"
 msgstr "<0>Ei</0> говорит, чего человек не делает; <1>ära</1> просит этого не делать: <2>Ma ei istu. Ära istu!</2>"
 
 msgid "<0>Ei</0>, and the verb without its ending."
@@ -840,7 +840,7 @@ msgstr "Бесплатный урок эстонского о том, как с�
 msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
 msgstr "Бесплатный урок о днях недели на эстонском: семь названий, четыре с числами внутри, однобуквенные обозначения в часах работы, а ещё täna, homme и eile. Каждое слово озвучено."
 
-msgid "A free lesson on the Estonian imperative: the verb's stem as a command (loe!, istu!, tule siia!), ära for don't, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
+msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Бесплатный урок о повелительном наклонении в эстонском языке: основа глагола как команда (loe!, istu!, tule siia!), ära для «не делай», формы на -ge и -ke для нескольких человек или на «вы», повседневные команды вроде räägi aeglasemalt, palun и короткий разговор в кафе. Каждое предложение озвучено."
 
 msgid "A full card in seconds"
@@ -1703,7 +1703,7 @@ msgstr "Приложения, которые ты подключаешь чер�
 msgid "Ära istu tells her not to sit down."
 msgstr "Ära istu просит её не садиться."
 
-msgid "Ära means don't"
+msgid "Ära means don’t"
 msgstr "Ära значит «не делай»"
 
 msgid "Archive card"
@@ -2920,7 +2920,7 @@ msgstr "Нужно ли сначала знать кану?"
 msgid "Do I need to read kana first?"
 msgstr "Нужно ли сначала научиться читать кану?"
 
-msgid "Do or don't"
+msgid "Do or don’t"
 msgstr "Делай или не делай"
 
 msgid "Do the words match the Goethe exams?"
@@ -2947,7 +2947,7 @@ msgstr "Ты учишься?"
 msgid "Do you work?"
 msgstr "Ты работаешь?"
 
-msgid "Do, don't or not?"
+msgid "Do, don’t or not?"
 msgstr "Команда, запрет или отрицание?"
 
 msgid "Docs"
@@ -3010,11 +3010,11 @@ msgstr "Собака"
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Сделать дважды — то же самое, что сделать один раз"
 
-msgid "don't"
+msgid "don’t"
 msgstr "не делай"
 
 msgctxt "command"
-msgid "Don't"
+msgid "Don’t"
 msgstr "Не делай"
 
 msgid "Don’t drink coffee before *bed*."
@@ -3023,43 +3023,46 @@ msgstr "Не пей кофе перед *сном*."
 msgid "don’t drink, doesn’t drink"
 msgstr "не пью, не пьёт и т. д."
 
-msgid "Don't drink."
+msgid "Don’t drink."
 msgstr "Не пей."
 
 msgid "don’t eat, doesn’t eat"
 msgstr "не ем, не ест и т. д."
 
-msgid "Don't eat."
+msgid "Don’t eat."
 msgstr "Не ешь."
 
 msgid "don’t read, doesn’t read"
 msgstr "не читаю, не читает и т. д."
 
-msgid "Don't read."
+msgid "Don’t read."
 msgstr "Не читай."
 
-msgid "Don't read. To more than one, or polite."
+msgid "Don’t read. To more than one, or polite."
 msgstr "Не читайте. Нескольким людям или на «вы»."
 
-msgid "Don't sit down."
+msgid "Don’t sit down."
 msgstr "Не садись."
 
 msgid "don’t speak, doesn’t speak"
 msgstr "не говорю, не говорит и т. д."
 
-msgid "Don't speak."
+msgid "Don’t speak."
 msgstr "Не говори."
 
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Не сноси забор, пока не поймёшь, зачем его поставили"
 
-msgid "Don't wait."
+msgid "Don’t wait."
 msgstr "Не жди."
+
+msgid "Don’t wait. To more than one, or polite."
+msgstr "Не ждите. Нескольким людям или на «вы»."
 
 msgid "don’t work, doesn’t work"
 msgstr "не работаю, не работает и т. д."
 
-msgid "don't, to more than one or polite"
+msgid "don’t, to more than one or polite"
 msgstr "не делайте: нескольким людям или на «вы»"
 
 msgid "Done"
@@ -3182,7 +3185,7 @@ msgstr "У каждого своя страница: письмо, звуки и
 msgid "Each name took -s, and the -s says in. Tallinn took an extra a before it."
 msgstr "К каждому названию добавилось -s, и это -s значит «в». К Tallinn перед ним добавилось ещё и a."
 
-msgid "Each of these six everyday commands starts with a verb's stem. Tap one to hear it."
+msgid "Each of these six everyday commands starts with a verb’s stem. Tap one to hear it."
 msgstr "Каждая из этих шести повседневных команд начинается с основы глагола. Нажми на любую, чтобы услышать."
 
 msgid "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
@@ -4848,9 +4851,6 @@ msgstr "Я не знаю."
 msgid "I don’t mind"
 msgstr "Мне всё равно"
 
-msgid "I don't read"
-msgstr "я не читаю"
-
 msgid "I don’t read"
 msgstr "я не читаю"
 
@@ -5055,7 +5055,7 @@ msgstr "Я из Украины."
 msgid "I’m getting up early *tomorrow* morning."
 msgstr "*Завтра* я встаю рано."
 
-msgid "I'm going"
+msgid "I’m going"
 msgstr "я иду"
 
 msgid "I’m going by *train*."
@@ -5082,7 +5082,7 @@ msgstr "Иду в кино с *другом*."
 msgid "I’m going to the shop for bread."
 msgstr "Я иду в магазин за хлебом."
 
-msgid "I'm going."
+msgid "I’m going."
 msgstr "Я иду."
 
 msgid "I’m having a cheese *roll*."
@@ -5106,22 +5106,22 @@ msgstr "Я Mari."
 msgid "I’m not *doing* anything."
 msgstr "Я ничего не *делаю*."
 
-msgid "I'm not drinking."
+msgid "I’m not drinking."
 msgstr "Я не пью."
 
-msgid "I'm not reading."
+msgid "I’m not reading."
 msgstr "Я не читаю."
 
-msgid "I'm not sitting down"
+msgid "I’m not sitting down"
 msgstr "я не сажусь"
 
-msgid "I'm not sitting down."
+msgid "I’m not sitting down."
 msgstr "Я не сажусь."
 
 msgid "I’m not tired"
 msgstr "я не устал (не устала)"
 
-msgid "I'm not waiting."
+msgid "I’m not waiting."
 msgstr "Я не жду."
 
 msgid "I’m reading a book."
@@ -5493,7 +5493,7 @@ msgstr "Всё в порядке"
 msgid "It’s raining, so I want to *take a taxi*."
 msgstr "Идёт дождь, так что я хочу взять *такси*."
 
-msgid "It's the form that follows <0>ei</0> in lesson {negation}: <1/>, I don't read. Tap either side of a pair to hear it."
+msgid "It’s the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
 msgstr "Это та же форма, что идёт после <0>ei</0> в уроке {negation}: <1/>, я не читаю. Нажми на любую половину пары, чтобы услышать её."
 
 msgid "It’s three o’clock."
@@ -6192,7 +6192,7 @@ msgstr "AI Lymi · значения и примеры"
 msgid "Lymi’s AI fills in what you leave empty, like a meaning or an example, and marks each field it wrote as AI. Text your assistant writes doesn’t get that label, so check it."
 msgstr "AI в Lymi заполняет то, что ты оставляешь пустым, например значение или пример, и помечает каждое такое поле как AI. Текст, который пишет твой ассистент, такой пометки не получает, так что проверь его."
 
-msgid "Ma istun says that you're sitting down. To ask her, use the stem: istu."
+msgid "Ma istun says that you’re sitting down. To ask her, use the stem: istu."
 msgstr "Ma istun значит, что садишься ты. Чтобы попросить её, скажи основу: istu."
 
 msgid "Ma olen pärit… is I’m from…"
@@ -7073,7 +7073,7 @@ msgstr "Глава за главой"
 msgid "One character, two sounds."
 msgstr "Один иероглиф, два чтения."
 
-msgid "One common verb breaks the pattern: <0/>, to go. <1/> is I'm going, but the command is <2/>"
+msgid "One common verb breaks the pattern: <0/>, to go. <1/> is I’m going, but the command is <2/>"
 msgstr "Один частый глагол — исключение: <0/>, «идти». <1/> — это «я иду», а команда — <2/>"
 
 msgid "One deck for a whole class"
@@ -8642,7 +8642,7 @@ msgstr "Сфотографируй слайды лекции или добавь
 msgid "Snap your lesson notes into cards, build the course in sections and share one link. Each learner reviews on their own schedule."
 msgstr "Преврати заметки с урока в карточки, построй курс из разделов и поделись одной ссылкой. Каждый ученик повторяет по своему расписанию."
 
-msgid "So far every command speaks to one person, someone you'd call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It's the same split as <5>sa</5> and <6/> in lesson {pronouns}."
+msgid "So far every command speaks to one person, someone you’d call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It’s the same split as <5>sa</5> and <6/> in lesson {pronouns}."
 msgstr "До сих пор каждая команда обращалась к одному человеку, с которым ты на «ты»: <0/>. Нескольким людям или одному на «вы» команда заканчивается на <1>-ge</1> или <2>-ke</2>: <3/> <4/> Это то же деление, что между <5>sa</5> и <6/> в уроке {pronouns}."
 
 msgid "So-so"
@@ -8668,6 +8668,9 @@ msgstr "Некоторые основы меняются: <0>lugema, loen</0>. �
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Кто-то другой, мужчина или женщина: одно слово для обоих."
+
+msgid "Someone you’d call <0>sa</0>."
+msgstr "Тому, с кем ты на «ты»: <0>sa</0>."
 
 msgid "Someone’s knocking at the *door*."
 msgstr "Кто-то стучит в *дверь*."
@@ -8999,7 +9002,7 @@ msgstr "Шведы говорят так и о кофе, и о рабочем в
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 msgstr "Переключи <0/> на <1/>, и все шесть предложений станут отрицательными. Нажми на строку, чтобы послушать."
 
-msgid "Switch between Do and Don't, and tap a line to hear it."
+msgid "Switch between Do and Don’t, and tap a line to hear it."
 msgstr "Переключайся между «Делай» и «Не делай»; нажми на строку, чтобы её услышать."
 
 msgid "Switch to In the place and watch the last letters change."
@@ -9134,7 +9137,7 @@ msgstr "Ещё раз нажми на õ, ä и ü среди гласных в�
 msgid "Tap the commands above once more, then try again."
 msgstr "Ещё раз нажми на команды выше, а потом попробуй снова."
 
-msgid "Tap the Do and Don't lines above once more, then try again."
+msgid "Tap the Do and Don’t lines above once more, then try again."
 msgstr "Ещё раз послушай строки «Делай» и «Не делай» выше, а потом попробуй снова."
 
 msgid "Tap the places above once more, then try again."
@@ -9263,10 +9266,10 @@ msgstr "Это значит, что медленнее говоришь ты. Ч
 msgid "That tells Jaan not to come."
 msgstr "Так ты просишь Яана не подходить."
 
-msgid "That tells Mari not to drink water. She asked what you'd like."
+msgid "That tells Mari not to drink water. She asked what you’d like."
 msgstr "Так ты просишь Мари не пить воду. А она спрашивала, что будешь ты."
 
-msgid "That tells Mari to drink coffee. She asked what you'd like."
+msgid "That tells Mari to drink coffee. She asked what you’d like."
 msgstr "Так ты говоришь Мари пить кофе. А она спрашивала, что будешь ты."
 
 msgid "That’s a book."
@@ -9827,19 +9830,19 @@ msgstr "Пар в сауне"
 msgid "The stem alone"
 msgstr "Только основа"
 
-msgid "The stem doesn't change: <0>istu</0>, <1>ära istu</1>."
+msgid "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 msgstr "Основа не меняется: <0>istu</0>, <1>ära istu</1>."
 
 msgid "The stem is the command"
 msgstr "Основа — это команда"
 
-msgid "The stem is the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It's the form that follows <3>ei</3>."
+msgid "The stem is the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
 msgstr "Основа — это форма с ma без <0>-n</0>: <1>istun</1>, <2>istu</2>. Та же форма идёт после <3>ei</3>."
 
 msgid "The stem is the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
 msgstr "Основа — это форма с ma без <0>-n</0>. Из <1/> получается <2/> Из <3/> получается <4/> <5/> значит «сюда»."
 
-msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb's three forms, shows where they come from."
+msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
 msgstr "Основа перед окончанием часто меняется: <0/> превращается в <1/> Пока запоминай эти формы целыми словами. Откуда они берутся, рассказывает урок {verbForms} о трёх формах глагола."
 
 msgid "The stress mark fades as you learn."
@@ -10343,8 +10346,8 @@ msgstr "Нескольким людям или на «вы» команда за
 msgid "To not be able to be bothered"
 msgstr "Лень; неохота ничего делать"
 
-msgid "To one person you'd call <0>sa</0>."
-msgstr "Одному человеку, с которым ты на «ты»: <0>sa</0>."
+msgid "To one person"
+msgstr "Одному человеку"
 
 msgid "To pull"
 msgstr "Тянуть"
@@ -10364,7 +10367,7 @@ msgstr "бежать"
 msgid "To say"
 msgstr "Сказать"
 
-msgid "To say don't, put <0>ära</0> before the stem: <1>Ära istu!</1>"
+msgid "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
 msgstr "Чтобы сказать «не делай», ставь <0>ära</0> перед основой: <1>Ära istu!</1>"
 
 msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
@@ -10397,16 +10400,16 @@ msgstr "Брать"
 msgid "To take a taxi"
 msgstr "Взять такси"
 
-msgid "To tell one person what to do, Estonian uses the verb's stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
+msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
 msgstr "Чтобы сказать одному человеку, что делать, эстонский берёт основу глагола и ничего к ней не добавляет. Возьми форму с ma из урока {present} и убери <0>-n</0>. <1/> — это «я читаю», а <2/> просит одного человека читать."
 
-msgid "To tell one person what to do, say the verb's stem: <0>Loe! Istu!</0>"
+msgid "To tell one person what to do, say the verb’s stem: <0>Loe! Istu!</0>"
 msgstr "Чтобы сказать одному человеку, что делать, скажи основу глагола: <0>Loe! Istu!</0>"
 
-msgid "To tell someone not to do something, put <0/> before the stem. <1/> is sit down, and <2/> is don't sit down. The stem stays as it is."
+msgid "To tell someone not to do something, put <0/> before the stem. <1/> is sit down, and <2/> is don’t sit down. The stem stays as it is."
 msgstr "Чтобы попросить кого-то чего-то не делать, ставь <0/> перед основой. <1/> — это «садись», а <2/> — «не садись». Основа остаётся прежней."
 
-msgid "To tell someone what to do, say the verb's stem: <0>Istu!</0> is sit down. To tell them not to, put <1>ära</1> before it: <2>Ära istu!</2>"
+msgid "To tell someone what to do, say the verb’s stem: <0>Istu!</0> is sit down. To tell them not to, put <1>ära</1> before it: <2>Ära istu!</2>"
 msgstr "Чтобы сказать, что делать, произнеси основу глагола: <0>Istu!</0> — это «садись». Чтобы сказать, чего не делать, поставь перед ней <1>ära</1>: <2>Ära istu!</2>"
 
 msgid "To usually do something"
@@ -10546,7 +10549,7 @@ msgstr "Японский, группа по вторникам"
 msgid "Tuesday Ukrainian class"
 msgstr "Украинский, группа по вторникам"
 
-msgid "Tuleb says that he's coming. To call him over, use the stem: tule."
+msgid "Tuleb says that he’s coming. To call him over, use the stem: tule."
 msgstr "Tuleb значит, что он идёт. Чтобы позвать его, скажи основу: tule."
 
 msgid "Turn a few cards over"
@@ -11842,7 +11845,7 @@ msgstr "Ты хороший друг."
 msgid "You’re all doing great."
 msgstr "Вы молодцы."
 
-msgid "You're at a café, and Mari comes in. She speaks first; pick what you say back."
+msgid "You’re at a café, and Mari comes in. She speaks first; pick what you say back."
 msgstr "Ты в кафе, и заходит Мари. Она говорит первой; выбирай, что ответить."
 
 msgid "You’re doing great."

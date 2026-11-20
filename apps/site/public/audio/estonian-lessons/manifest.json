@@ -3804,6 +3804,11 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "kaskiv/a2rge-oodake": {
+    "text": "Ärge oodake!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kaskiv/d-mari-1": {
     "text": "Tere! Oota, ma tulen!",
     "model": "eleven_v4",

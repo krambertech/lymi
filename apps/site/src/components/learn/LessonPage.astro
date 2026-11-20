@@ -15,7 +15,7 @@ const { locale, slug } = Astro.props;
 const lesson = lessonBySlug(slug);
 if (!lesson?.blurb || !(slug in LESSON_VIEWS)) throw new Error(`No lesson page for ${slug}`);
 const i18n = pageI18n(locale);
-const title = `${i18n._({ ...LESSON_PAGE_TITLE, values: { title: i18n._(lesson.title ?? lesson.name) } })} · Lymi`;
+const title = `${i18n._({ ...LESSON_PAGE_TITLE, values: { title: i18n._(lesson.title) } })} · Lymi`;
 const alternatePaths = { en: lessonPath(slug, "en"), uk: lessonPath(slug, "uk"), ru: lessonPath(slug, "ru") };
 ---
 

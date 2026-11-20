@@ -81,7 +81,7 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
                 <span lang="et">{lesson.et}</span>
               </span>
               <h1 className="text-[clamp(2.75rem,7vw,4.25rem)] leading-none font-semibold tracking-[-0.035em] text-balance">
-                {i18n._(lesson.title ?? lesson.name)}
+                {i18n._(lesson.title)}
               </h1>
               <p className="max-w-[44ch] text-[clamp(1.125rem,2vw,1.3125rem)] text-pretty text-ink-secondary">
                 {sub}

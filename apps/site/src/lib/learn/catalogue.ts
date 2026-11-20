@@ -2,19 +2,32 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { type Locale, localizedPath } from "../routes";
 
-/** A lesson that is built has a slug, which is also its path; the rest are planned. */
-export interface Lesson {
-  slug?: string;
+interface LessonBase {
   /** The topic in plain words, as people search for it: the lesson's name in lists and links. */
   name: MessageDescriptor;
-  /** A built lesson's heading and search title, such as “Estonian pronunciation”. */
-  title?: MessageDescriptor;
   /** An Estonian phrase from the lesson, the same in every locale, shown beside the name. */
   et: string;
-  minutes?: number;
-  /** A built lesson's description for search and link previews. */
-  blurb?: MessageDescriptor;
 }
+
+/** A built lesson: its slug is also its path, and its title leads its page and search result. */
+export interface BuiltLesson extends LessonBase {
+  slug: string;
+  /** The heading and search title, with “Estonian” in it, such as “Estonian pronunciation”. */
+  title: MessageDescriptor;
+  minutes: number;
+  /** The description for search and link previews. */
+  blurb: MessageDescriptor;
+}
+
+/** A lesson that is planned but not built. */
+export interface PlannedLesson extends LessonBase {
+  slug?: undefined;
+  title?: undefined;
+  minutes?: undefined;
+  blurb?: undefined;
+}
+
+export type Lesson = BuiltLesson | PlannedLesson;
 
 export interface Stage {
   name: MessageDescriptor;
@@ -126,11 +139,8 @@ export const STAGES: readonly Stage[] = [
 /** A built lesson's page title in search results, before “· Lymi”. */
 export const LESSON_PAGE_TITLE = msg({ message: "{title}: a free lesson with audio" });
 
-export interface PlacedLesson extends Lesson {
-  /** Its number in the course, from 1. */
-  n: number;
-  stage: Stage;
-}
+/** A lesson with its number in the course, from 1, and its stage. */
+export type PlacedLesson = Lesson & { n: number; stage: Stage };
 
 export const LESSONS: readonly PlacedLesson[] = STAGES.flatMap((stage) => stage.lessons).map(
   (lesson, i) => ({
@@ -143,8 +153,8 @@ export const LESSONS: readonly PlacedLesson[] = STAGES.flatMap((stage) => stage.
 /** The slugs of the lessons that are built, which `/estonian/learn/[lesson]` renders. */
 export const LESSON_SLUGS = LESSONS.flatMap((lesson) => (lesson.slug ? [lesson.slug] : []));
 
-export function lessonBySlug(slug: string): PlacedLesson | undefined {
-  return LESSONS.find((lesson) => lesson.slug === slug);
+export function lessonBySlug(slug: string): (PlacedLesson & BuiltLesson) | undefined {
+  return LESSONS.find((lesson): lesson is PlacedLesson & BuiltLesson => lesson.slug === slug);
 }
 
 export function lessonPath(slug: string, locale: Locale | string): string {

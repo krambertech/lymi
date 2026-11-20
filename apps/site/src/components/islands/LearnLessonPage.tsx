@@ -1,3 +1,4 @@
+import { EitusLesson } from "../learn/lessons/Eitus";
 import { HaaldusLesson } from "../learn/lessons/Haaldus";
 import { KellLesson } from "../learn/lessons/Kell";
 import { KusimusedLesson } from "../learn/lessons/Kusimused";
@@ -10,6 +11,7 @@ import { Island } from "./Island";
 export const LESSON_VIEWS = {
   haaldus: HaaldusLesson,
   numbrid: NumbridLesson,
+  eitus: EitusLesson,
   kusimused: KusimusedLesson,
   olevik: OlevikLesson,
   kell: KellLesson,

@@ -794,6 +794,511 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "eitus/ma-loen": {
+    "text": "Ma loen.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-loe": {
+    "text": "Ma ei loe.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-loed": {
+    "text": "Sa loed.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-ei-loe": {
+    "text": "Sa ei loe.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-loeb": {
+    "text": "Ta loeb.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-ei-loe": {
+    "text": "Ta ei loe.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/me-loeme": {
+    "text": "Me loeme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/me-ei-loe": {
+    "text": "Me ei loe.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/te-loete": {
+    "text": "Te loete.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/te-ei-loe": {
+    "text": "Te ei loe.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-loevad": {
+    "text": "Nad loevad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-ei-loe": {
+    "text": "Nad ei loe.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ra2a2gin": {
+    "text": "Ma räägin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-ra2a2gi": {
+    "text": "Ma ei räägi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-ra2a2gid": {
+    "text": "Sa räägid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-ei-ra2a2gi": {
+    "text": "Sa ei räägi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-ra2a2gib": {
+    "text": "Ta räägib.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-ei-ra2a2gi": {
+    "text": "Ta ei räägi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/me-ra2a2gime": {
+    "text": "Me räägime.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/me-ei-ra2a2gi": {
+    "text": "Me ei räägi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/te-ra2a2gite": {
+    "text": "Te räägite.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/te-ei-ra2a2gi": {
+    "text": "Te ei räägi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-ra2a2givad": {
+    "text": "Nad räägivad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-ei-ra2a2gi": {
+    "text": "Nad ei räägi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-to2o2tan": {
+    "text": "Ma töötan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-to2o2ta": {
+    "text": "Ma ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-to2o2tad": {
+    "text": "Sa töötad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-ei-to2o2ta": {
+    "text": "Sa ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-to2o2tab": {
+    "text": "Ta töötab.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-ei-to2o2ta": {
+    "text": "Ta ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/me-to2o2tame": {
+    "text": "Me töötame.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/me-ei-to2o2ta": {
+    "text": "Me ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/te-to2o2tate": {
+    "text": "Te töötate.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/te-ei-to2o2ta": {
+    "text": "Te ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-to2o2tavad": {
+    "text": "Nad töötavad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-ei-to2o2ta": {
+    "text": "Nad ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-so2o2n": {
+    "text": "Ma söön.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-so2o2": {
+    "text": "Ma ei söö.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-so2o2d": {
+    "text": "Sa sööd.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-ei-so2o2": {
+    "text": "Sa ei söö.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-so2o2b": {
+    "text": "Ta sööb.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-ei-so2o2": {
+    "text": "Ta ei söö.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/me-so2o2me": {
+    "text": "Me sööme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/me-ei-so2o2": {
+    "text": "Me ei söö.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/te-so2o2te": {
+    "text": "Te sööte.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/te-ei-so2o2": {
+    "text": "Te ei söö.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-so2o2vad": {
+    "text": "Nad söövad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-ei-so2o2": {
+    "text": "Nad ei söö.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-elan": {
+    "text": "Ma elan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-ela": {
+    "text": "Ma ei ela.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-o3pin": {
+    "text": "Ma õpin.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-o3pi": {
+    "text": "Ma ei õpi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-teen": {
+    "text": "Ma teen.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-tee": {
+    "text": "Ma ei tee.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ootan": {
+    "text": "Ma ootan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-oota": {
+    "text": "Ma ei oota.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-armastan": {
+    "text": "Ma armastan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-armasta": {
+    "text": "Ma ei armasta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-joon": {
+    "text": "Ma joon.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-joo": {
+    "text": "Ma ei joo.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-ootad": {
+    "text": "Sa ootad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-ei-oota": {
+    "text": "Sa ei oota.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-joob": {
+    "text": "Ta joob.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-ei-joo": {
+    "text": "Ta ei joo.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-elavad": {
+    "text": "Nad elavad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-ei-ela": {
+    "text": "Nad ei ela.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-olen-va2sinud": {
+    "text": "Ma olen väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-ole-va2sinud": {
+    "text": "Ma ei ole väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-pole-va2sinud": {
+    "text": "Ma pole väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-oled-valmis": {
+    "text": "Sa oled valmis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-ei-ole-valmis": {
+    "text": "Sa ei ole valmis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/sa-pole-valmis": {
+    "text": "Sa pole valmis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-on-kodus": {
+    "text": "Ta on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-ei-ole-kodus": {
+    "text": "Ta ei ole kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ta-pole-kodus": {
+    "text": "Ta pole kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-on-o3petajad": {
+    "text": "Nad on õpetajad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-ei-ole-o3petajad": {
+    "text": "Nad ei ole õpetajad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/nad-pole-o3petajad": {
+    "text": "Nad pole õpetajad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/kas-sa-loed": {
+    "text": "Kas sa loed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ei-loe": {
+    "text": "Ei loe.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/kas-sa-to2o2tad": {
+    "text": "Kas sa töötad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ei-to2o2ta": {
+    "text": "Ei tööta.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/kas-te-so2o2te": {
+    "text": "Kas te sööte?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ei-so2o2": {
+    "text": "Ei söö.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/kas-ta-ra2a2gib-eesti-keelt": {
+    "text": "Kas ta räägib eesti keelt?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ei-ra2a2gi": {
+    "text": "Ei räägi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/kas-sa-oled-va2sinud": {
+    "text": "Kas sa oled väsinud?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ei-ole": {
+    "text": "Ei ole.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/kas-ta-on-kodus": {
+    "text": "Kas ta on kodus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/kas-nad-joovad": {
+    "text": "Kas nad joovad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ei-joo": {
+    "text": "Ei joo.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/kas-te-ootate": {
+    "text": "Kas te ootate?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ei-oota": {
+    "text": "Ei oota.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/kas-sa-o3pid": {
+    "text": "Kas sa õpid?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ei-o3pi": {
+    "text": "Ei õpi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ei": {
+    "text": "Ei.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/jah": {
+    "text": "Jah.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ei-ma-ei-loe": {
+    "text": "Ei, ma ei loe.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/pole": {
+    "text": "Pole.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-tea": {
+    "text": "Ma ei tea.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "eitus/ma-ei-ra2a2gi-eesti-keelt": {
+    "text": "Ma ei räägi eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kusimused/kas": {
     "text": "kas",
     "model": "eleven_v4",

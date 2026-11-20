@@ -8,7 +8,7 @@ The lessons are built and reachable but not launched: `learn` is in `prelaunchPa
 
 ## The course
 
-`apps/site/src/lib/learn/catalogue.ts` lists every lesson in order, built or planned, in five stages from A1 to B1. The order follows Estonia's free courses and textbooks, checked in November 2026: commands and the place endings `-s` and `-l` come early as phrases, a short lesson shows that stems change before the genitive needs it, and the verb's three forms come before the past tense. The rules that most learners trip on, consonant gradation and the total object, wait until the words are familiar. A lesson's title is the Estonian a learner can say after it, the same in every locale.
+`apps/site/src/lib/learn/catalogue.ts` lists every lesson in order, built or planned, in five stages from A1 to B1. The order follows Estonia's free courses and textbooks, checked in November 2026: commands and the place endings `-s` and `-l` come early as phrases, a short lesson shows that stems change before the genitive needs it, and the verb's three forms come before the past tense. The rules that most learners trip on, consonant gradation and the total object, wait until the words are familiar. Each lesson has a plain `name` in the reader's language, the words people search for, such as Past tense or The partitive case, and a built lesson has a `title` for its heading and search result, such as Estonian pronunciation. Its `et` is an Estonian phrase from the lesson, shown small beside the name, never instead of it.
 
 ## Colour
 
@@ -42,7 +42,7 @@ A lesson file in `components/learn/lessons` holds its glossary, its sections and
 
 ## Writing a lesson
 
-- One question per lesson, answered in its title and the line under it.
+- One question per lesson, answered in its heading and the line under it. Name a lesson by its topic, not a pun or a phrase.
 - Two or three short paragraphs, then something to touch. Explore first, then answer.
 - Every Estonian word in prose is a `Word` with a gloss.
 - Listening only: nothing asks for the microphone.

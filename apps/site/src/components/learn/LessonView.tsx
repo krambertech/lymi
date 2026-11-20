@@ -77,12 +77,11 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
                 <Trans>
                   Lesson {number} · {level}
                 </Trans>
+                {" · "}
+                <span lang="et">{lesson.et}</span>
               </span>
-              <h1
-                lang="et"
-                className="text-[clamp(2.75rem,7vw,4.25rem)] leading-none font-semibold tracking-[-0.035em]"
-              >
-                {lesson.et}
+              <h1 className="text-[clamp(2.75rem,7vw,4.25rem)] leading-none font-semibold tracking-[-0.035em] text-balance">
+                {i18n._(lesson.title ?? lesson.name)}
               </h1>
               <p className="max-w-[44ch] text-[clamp(1.125rem,2vw,1.3125rem)] text-pretty text-ink-secondary">
                 {sub}
@@ -96,7 +95,7 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
             </header>
           </div>
           <ReadBar
-            title={lesson.et}
+            title={i18n._(lesson.name)}
             sections={[...sections, { id: "recap", title: t`What to remember`, children: null }]}
           />
           <div className="mx-auto max-w-[720px] px-5">
@@ -281,6 +280,7 @@ function NextLesson({
   locale: string;
   onFinish: () => void;
 }) {
+  const { i18n } = useLingui();
   const next = nextLesson(slug);
   const number = next?.n;
   return (
@@ -308,16 +308,14 @@ function NextLesson({
             <Trans>Lesson {number}</Trans>
             <ArrowRight aria-hidden="true" className="size-3.5!" />
           </small>
-          <span lang="et">{next.et}</span>
+          <span>{i18n._(next.name)}</span>
         </a>
       ) : next ? (
         <p className="ms-auto grid justify-items-end text-end text-ink-muted">
           <small className="text-sm">
             <Trans>Lesson {number}, coming soon</Trans>
           </small>
-          <span lang="et" className="text-md font-medium text-ink-secondary">
-            {next.et}
-          </span>
+          <span className="text-md font-medium text-ink-secondary">{i18n._(next.name)}</span>
         </p>
       ) : null}
     </nav>

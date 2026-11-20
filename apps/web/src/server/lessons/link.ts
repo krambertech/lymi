@@ -211,7 +211,7 @@ async function bounded(response: Response, limit: number): Promise<Uint8Array | 
   return out;
 }
 
-/** What robots.txt allows on one origin; a 4xx means no rules, a 5xx or no answer refuses. */
+/** What robots.txt allows on one origin; a 4xx means no rules, and a 5xx or a 429 refuses. */
 async function robotsFor(request: Fetch, origin: URL, signal: AbortSignal): Promise<Rule[] | null> {
   let response: Response;
   try {
@@ -220,9 +220,11 @@ async function robotsFor(request: Fetch, origin: URL, signal: AbortSignal): Prom
       signal,
     }));
   } catch (error) {
-    if (signal.aborted)
-      throw new LinkUnreadable("This page took too long to answer.", { cause: error });
-    return null;
+    if (error instanceof LinkUnreadable) throw error;
+    throw new LinkUnreadable(
+      signal.aborted ? "This page took too long to answer." : "Smart add couldn't reach this page.",
+      { cause: error },
+    );
   }
   if (response.status >= 400 && response.status < 500 && response.status !== 429) {
     await response.body?.cancel();

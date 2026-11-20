@@ -549,6 +549,28 @@ describe("readLink", () => {
     }
   });
 
+  it("treats a failing robots.txt as a refusal and an unreachable site as unreadable", async () => {
+    const ctx = await learner(db, "link-robots-down", "Kateryna");
+    const { deps } = fakeWeb({
+      "https://news.example.org/robots.txt": { status: 503 },
+      [ARTICLE]: { body: articleHtml(["Kevad on käes."]) },
+    });
+    expect(await refusal(readLink(ctx, ARTICLE, deps, read))).toMatchObject({
+      reason: "link_refused",
+      details: { refused: "robots" },
+    });
+    const offline = {
+      ...deps,
+      request: async () => {
+        throw new TypeError("Network connection lost.");
+      },
+    };
+    expect(await refusal(readLink(ctx, ARTICLE, offline, read))).toMatchObject({
+      reason: "link_unreadable",
+      message: "Smart add couldn't reach this page.",
+    });
+  });
+
   it("refuses a page that reserves text and data mining by header or meta tag", async () => {
     const ctx = await learner(db, "link-tdm", "Kateryna");
     for (const page of [

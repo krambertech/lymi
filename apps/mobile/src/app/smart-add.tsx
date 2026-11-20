@@ -40,7 +40,6 @@ import {
   InputStep,
   LinkingStep,
   ListStep,
-  type LongRead,
   OWN_ANSWER,
   QuestionsStep,
   ReadingStep,
@@ -103,10 +102,13 @@ export default function SmartAdd() {
   const [linkError, setLinkError] = useState<string>();
   /** The article a link led to, whose address each added card keeps as its source. */
   const [source, setSource] = useState<{ title: string; url: string } | null>(null);
-  /** A long article's count, waiting for the learner to agree to it. */
-  const [longRead, setLongRead] = useState<LongRead | null>(null);
-  /** A YouTube link was refused, so the input offers to paste its transcript instead. */
-  const [offerTranscript, setOfferTranscript] = useState(false);
+  /**
+   * Why the last link was not read: a long article waits for the learner to agree to its count of
+   * lessons, and a YouTube video offers to paste its transcript instead.
+   */
+  const [refusal, setRefusal] = useState<LinkReadRefusal | null>(null);
+  const longRead = refusal?.kind === "long_read" ? refusal : null;
+  const offerTranscript = refusal?.kind === "refused" && refusal.refused === "youtube";
   const [deckId, setDeckId] = useState(fixedDeck);
   const deck = decks.find((d) => d.id === deckId);
   const [error, setError] = useState<string>();
@@ -274,8 +276,7 @@ export default function SmartAdd() {
       return;
     }
     if (value !== link) {
-      setLongRead(null);
-      setOfferTranscript(false);
+      setRefusal(null);
       setError(undefined);
     }
     setLink(value);
@@ -300,8 +301,7 @@ export default function SmartAdd() {
       return;
     }
     setError(undefined);
-    setLongRead(null);
-    setOfferTranscript(false);
+    setRefusal(null);
     setSource(null);
     setTerms([]);
     setQuestions([]);
@@ -369,18 +369,15 @@ export default function SmartAdd() {
       if (controller.signal.aborted && !quiet) return;
       send({ type: "settled", attempt, step: "input" });
       void qc.invalidateQueries({ queryKey: LESSON_ACCESS });
-      const refusal = quiet ? null : linkReadRefusal(failure);
-      if (refusal?.kind === "long_read") {
-        setLongRead(refusal);
-        return;
-      }
-      setOfferTranscript(refusal?.kind === "refused" && refusal.refused === "youtube");
+      const declined = quiet ? null : linkReadRefusal(failure);
+      setRefusal(declined);
+      if (declined?.kind === "long_read") return;
       // The notice says the limit is reached; an error line under it would only repeat it.
       setError(
         quiet
           ? t`Couldn’t read the lesson. Try again.`
-          : refusal
-            ? linkMessage(refusal)
+          : declined
+            ? linkMessage(declined)
             : refusalCode(failure) === "daily_limit"
               ? undefined
               : errorMessage(failure),
@@ -616,15 +613,14 @@ export default function SmartAdd() {
               }}
               onRemoveLink={() => {
                 setLink("");
-                setLongRead(null);
-                setOfferTranscript(false);
+                setRefusal(null);
                 setError(undefined);
               }}
               longRead={longRead}
               offerTranscript={offerTranscript}
               onPasteTranscript={() => {
                 setLink("");
-                setOfferTranscript(false);
+                setRefusal(null);
                 setError(undefined);
                 go("writing");
               }}

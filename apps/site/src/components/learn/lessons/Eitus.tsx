@@ -68,24 +68,24 @@ const GLOSSARY: Glossary = {
   olema: { en: msg`to be`, clip: false },
   lugema: { en: msg`to read`, note: msg`Its ma form is loen.`, clip: false },
   kas: {
-    en: msg`a word that turns a sentence into a yes-or-no question`,
+    en: msg`turns a sentence into a yes-or-no question`,
     clip: false,
   },
   loen: { en: msg`I read`, note: msg`From lugema, to read.`, clip: clipId("Ma loen.") },
   räägin: { en: msg`I speak`, note: msg`From rääkima, to speak.`, clip: clipId("Ma räägin.") },
   "ma loen": { en: msg`I read`, show: "Ma loen" },
-  "ma ei loe": { en: msg`I don't read`, show: "Ma ei loe" },
-  "ei loe": { en: msg`don't read, doesn't read` },
-  "ei räägi": { en: msg`don't speak, doesn't speak` },
-  "ei tööta": { en: msg`don't work, doesn't work` },
-  "ei söö": { en: msg`don't eat, doesn't eat` },
-  "ei joo": { en: msg`don't drink, doesn't drink` },
-  "ma olen väsinud": { en: msg`I'm tired`, show: "Ma olen väsinud" },
-  "ma ei ole väsinud": { en: msg`I'm not tired`, show: "Ma ei ole väsinud" },
+  "ma ei loe": { en: msg`I don’t read`, show: "Ma ei loe" },
+  "ei loe": { en: msg`don’t read, doesn’t read` },
+  "ei räägi": { en: msg`don’t speak, doesn’t speak` },
+  "ei tööta": { en: msg`don’t work, doesn’t work` },
+  "ei söö": { en: msg`don’t eat, doesn’t eat` },
+  "ei joo": { en: msg`don’t drink, doesn’t drink` },
+  "ma olen väsinud": { en: msg`I’m tired`, show: "Ma olen väsinud" },
+  "ma ei ole väsinud": { en: msg`I’m not tired`, show: "Ma ei ole väsinud" },
   "kas sa loed?": { en: msg`Are you reading?`, show: "Kas sa loed?" },
-  "ma ei tea": { en: msg`I don't know`, show: "Ma ei tea" },
+  "ma ei tea": { en: msg`I don’t know`, show: "Ma ei tea" },
   "ma ei räägi eesti keelt": {
-    en: msg`I don't speak Estonian`,
+    en: msg`I don’t speak Estonian`,
     show: "Ma ei räägi eesti keelt",
   },
 };
@@ -191,8 +191,8 @@ function PersonFlip() {
           title={<Trans>One form for all six</Trans>}
           tip={
             <Trans>
-              <span lang="et">ei {stem}</span>: <span lang="et">ei</span> before the verb, and the
-              ending is gone.
+              <span lang="et">Ei</span> before the verb, and the ending is gone:{" "}
+              <span lang="et">ei {stem}</span>.
             </Trans>
           }
         />
@@ -200,7 +200,7 @@ function PersonFlip() {
         <FlipNote
           mode={mode}
           title={<Trans>Six endings</Trans>}
-          tip={<Trans>-n, -d, -b, -me, -te, -vad: each person has its own.</Trans>}
+          tip={<Trans>Each person has its own: -n, -d, -b, -me, -te, -vad.</Trans>}
         />
       )}
     </Panel>
@@ -287,8 +287,8 @@ function OlemaFlip() {
           title={<Trans>The form says who</Trans>}
           tip={
             <Trans>
-              <span lang="et">olen</span> for I, <span lang="et">oled</span> for you,{" "}
-              <span lang="et">on</span> for he, she and they.
+              <span lang="et">Olen</span> for I, <span lang="et">oled</span> for you,{" "}
+              <span lang="et">on</span> for he or she and for they.
             </Trans>
           }
         />
@@ -312,7 +312,7 @@ function OlemaFlip() {
           }
           tip={
             <Trans>
-              <span lang="et">Pole</span> means the same as <span lang="et">ei ole</span>. You'll
+              <span lang="et">Pole</span> means the same as <span lang="et">ei ole</span>. You’ll
               hear both.
             </Trans>
           }
@@ -462,7 +462,7 @@ export function EitusLesson() {
       sub={
         <Trans>
           In the present tense, put <span lang="et">ei</span> before the verb and drop its ending.
-          It's the same for every person, so no is easier than yes.
+          It’s the same for every person, so no is easier than yes.
         </Trans>
       }
       facts={[
@@ -485,7 +485,7 @@ export function EitusLesson() {
       ]}
       recap={[
         <Trans key="1">
-          Put <b lang="et">ei</b> before the verb: <b lang="et">ma ei loe</b>, I don't read.
+          Put <b lang="et">ei</b> before the verb: <b lang="et">ma ei loe</b>, I don’t read.
         </Trans>,
         <Trans key="2">
           After <b lang="et">ei</b> comes the ma form without its -n: <b lang="et">loen</b>,{" "}
@@ -499,7 +499,7 @@ export function EitusLesson() {
           Olema gives <b lang="et">ei ole</b>, or in one word, <b lang="et">pole</b>.
         </Trans>,
         <Trans key="5">
-          To answer no, say <b lang="et">ei</b> or repeat the verb:{" "}
+          To answer no, say <b lang="et">ei</b>, or ei with the verb from the question:{" "}
           <b lang="et">Kas sa loed? Ei loe.</b>
         </Trans>,
       ]}
@@ -513,8 +513,8 @@ export function EitusLesson() {
                 <p>
                   <Trans>
                     To say not, put <Word w="ei" /> before the verb. <Word w="Ma loen" /> is I read,
-                    and <Word w="Ma ei loe" /> is I don't read. The verb loses its ending, and{" "}
-                    <Word w="ei" /> is the same whoever you're talking about.
+                    and <Word w="Ma ei loe" /> is I don’t read. The verb loses its ending, and{" "}
+                    <Word w="ei" /> is the same whoever you’re talking about.
                   </Trans>
                 </p>
                 <p>
@@ -544,9 +544,9 @@ export function EitusLesson() {
                 <p>
                   <Trans>
                     To find the form that follows ei, take the ma form from lesson {present} and
-                    drop the -n. <Word w="loen" /> becomes <Word w="ei loe" />, and{" "}
+                    drop the -n. <Word w="Loen" /> becomes <Word w="ei loe" />, and{" "}
                     <Word w="räägin" /> becomes <Word w="ei räägi" />. It works for every verb
-                    there. Tap either side to hear it with ma.
+                    below. Tap either side to hear it with ma.
                   </Trans>
                 </p>
               </Prose>
@@ -559,8 +559,8 @@ export function EitusLesson() {
               </Panel>
               <Aside>
                 <Trans>
-                  Some verbs change inside: <Word w="lugema" />, but <Word w="loen" />. Don't start
-                  from the -ma form. Start from the ma form, and the no follows: <Word w="ei loe" />
+                  In some verbs the stem changes: <Word w="lugema" />, but <Word w="loen" />. Start
+                  from the ma form, not the dictionary form, and the no follows: <Word w="ei loe" />
                   .
                 </Trans>
               </Aside>
@@ -618,7 +618,7 @@ export function EitusLesson() {
                 </p>
                 <p>
                   <Trans>
-                    You'll often hear it as one word, <Word w="pole" />, which means exactly{" "}
+                    You’ll often hear it as one word, <Word w="pole" />, which means exactly{" "}
                     <Word w="ei ole" />. Try all three.
                   </Trans>
                 </p>
@@ -648,24 +648,24 @@ export function EitusLesson() {
                   en={<Trans>Are you reading?</Trans>}
                   answers={[
                     { say: "Ei.", en: <Trans>No.</Trans> },
-                    { say: "Ei loe.", en: <Trans>No, I'm not.</Trans> },
-                    { say: "Ei, ma ei loe.", en: <Trans>No, I'm not reading.</Trans> },
+                    { say: "Ei loe.", en: <Trans>No, I’m not.</Trans> },
+                    { say: "Ei, ma ei loe.", en: <Trans>No, I’m not reading.</Trans> },
                   ]}
                 />
                 <Exchange
                   ask="Kas ta on kodus?"
                   en={<Trans>Is he or she at home?</Trans>}
                   answers={[
-                    { say: "Ei ole.", en: <Trans>No, he or she isn't.</Trans> },
-                    { say: "Pole.", en: <Trans>No, he or she isn't.</Trans> },
-                    { say: "Ma ei tea.", en: <Trans>I don't know.</Trans> },
+                    { say: "Ei ole.", en: <Trans>No, he or she isn’t.</Trans> },
+                    { say: "Pole.", en: <Trans>No, he or she isn’t.</Trans> },
+                    { say: "Ma ei tea.", en: <Trans>I don’t know.</Trans> },
                   ]}
                 />
               </Panel>
               <Aside>
                 <Trans>
                   <Word w="Kas" /> at the start turns a sentence into a yes-or-no question. Lesson{" "}
-                  {questions} is about questions.
+                  {questions} covers kas and the question words.
                 </Trans>
               </Aside>
               <Prose>

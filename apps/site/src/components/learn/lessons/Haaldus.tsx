@@ -32,7 +32,7 @@ const GLOSSARY: Glossary = {
   säng: { en: msg`bed` },
   sang: { en: msg`handle, as on a bucket` },
   tüli: { en: msg`a quarrel` },
-  tuli: { en: msg`fire`, note: msg`Also “came”: ta tuli, she came.` },
+  tuli: { en: msg`fire`, note: msg`Also “came”: ta tuli, he or she came.` },
   sada: { en: msg`a hundred` },
   saada: { en: msg`send!`, note: msg`Also “to get”, from saama.` },
   koli: { en: msg`junk, clutter` },
@@ -49,14 +49,17 @@ const GLOSSARY: Glossary = {
   tuule: { en: msg`of the wind`, note: msg`From tuul, wind.` },
   kool: { en: msg`school` },
   tee: { en: msg`road; tea`, note: msg`One word for both.` },
-  te: { en: msg`you, to more than one person` },
+  te: { en: msg`you, to more than one; polite you` },
   kass: { en: msg`cat` },
-  kas: { en: msg`starts a yes-or-no question`, note: msg`Kas sa tuled? Are you coming?` },
+  kas: {
+    en: msg`turns a sentence into a yes-or-no question`,
+    note: msg`Kas sa tuled? Are you coming?`,
+  },
   maa: { en: msg`land, country; the ground` },
   ma: { en: msg`I`, note: msg`Short for mina.` },
   linn: { en: msg`town, city` },
-  tallinn: { en: msg`Estonia's capital`, show: "Tallinn" },
-  raamatukogu: { en: msg`library`, note: msg`raamat, book, and kogu, collection.` },
+  tallinn: { en: msg`Estonia’s capital`, show: "Tallinn" },
+  raamatukogu: { en: msg`library`, note: msg`Raamat, book, and kogu, collection.` },
   tere: { en: msg`hello` },
   aitäh: { en: msg`thank you` },
   jah: { en: msg`yes` },
@@ -104,8 +107,8 @@ function Syllables({ parts }: { parts: readonly string[] }) {
 
 function Verdict({ share }: { share: number }) {
   if (share === 1) return <Trans>All of them. You can hear the difference.</Trans>;
-  if (share >= 0.7) return <Trans>Good ear. Play the ones you missed once more.</Trans>;
-  return <Trans>These take a few tries. Play the pairs above again.</Trans>;
+  if (share >= 0.7) return <Trans>Most of them. Play the ones you missed once more.</Trans>;
+  return <Trans>Tap õ, ä and ü above once more, then try again.</Trans>;
 }
 
 export function HaaldusLesson() {
@@ -122,9 +125,9 @@ export function HaaldusLesson() {
     () => [
       { v: "a", word: "aken", tip: t`Like the a in “father”, but short.` },
       { v: "e", word: "ema", tip: t`Like the e in “bed”.` },
-      { v: "i", word: "isa", tip: t`Like the i in “sit”, never like “ice”.` },
+      { v: "i", word: "isa", tip: t`Like the ee in “see”, but short, never like “ice”.` },
       { v: "o", word: "onu", tip: t`Like the o in “more”, but short.` },
-      { v: "u", word: "uks", tip: t`Like the u in “put”.` },
+      { v: "u", word: "uks", tip: t`Like the oo in “food”, but short.` },
       {
         v: "õ",
         word: "õun",
@@ -218,25 +221,26 @@ export function HaaldusLesson() {
         "raamatukogu",
       ]}
       recap={[
-        <Trans key="1">Say every letter the way it's written.</Trans>,
+        <Trans key="1">Say every letter the way it’s written.</Trans>,
         <Trans key="2">Stress the first syllable.</Trans>,
         <Trans key="3">
-          <b lang="et">õ ä ö ü</b> are vowels of their own, and <b lang="et">õ</b> is the new one.
+          The letters <b lang="et">õ ä ö ü</b> are vowels of their own, and English has no sound
+          like <b lang="et">õ</b>.
         </Trans>,
         <Trans key="4">A double letter is longer, and it makes a different word.</Trans>,
       ]}
       sections={[
         {
           id: "spelled",
-          title: t`Read it as it's written`,
+          title: t`Read it as it’s written`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
                     Estonian is spelled the way it sounds. You say every letter, and each one keeps
-                    its sound wherever it stands. Once you know the letters, you can read any word
-                    aloud, even one you've never seen.
+                    its sound wherever it stands. Once you know the letters, you can read a new word
+                    aloud.
                   </Trans>
                 </p>
                 <p>
@@ -281,7 +285,7 @@ export function HaaldusLesson() {
                 <p>
                   <Trans>
                     Five look familiar. The four with marks are separate letters, not accents, and
-                    swapping one changes the word. <Word w="õ" /> is the one English doesn't have.
+                    swapping one changes the word. English has no sound like <Word w="õ" />.
                   </Trans>
                 </p>
               </Prose>
@@ -292,7 +296,7 @@ export function HaaldusLesson() {
                   phoneColumns={5}
                   empty={{
                     title: t`Tap a vowel`,
-                    tip: t`You'll hear it in a word, with a note on how to say it.`,
+                    tip: t`You’ll hear it in a word, with a note on how to say it.`,
                   }}
                   items={vowels.map(({ v, word, tip, accent }) => {
                     const at = word.indexOf(v);
@@ -326,7 +330,7 @@ export function HaaldusLesson() {
         },
         {
           id: "pairs",
-          title: t`Õ or o? Ü or u?`,
+          title: t`Õ or o, ä or a, ü or u`,
           quiz: true,
           children: (
             <>
@@ -334,7 +338,7 @@ export function HaaldusLesson() {
                 <p>
                   <Trans>
                     Mix these up and you say another word: <Word w="kõrv" /> is an ear and{" "}
-                    <Word w="korv" /> a basket. <Word w="üks" /> is one and <Word w="uks" /> a door.
+                    <Word w="korv" /> a basket. <Word w="Üks" /> is one and <Word w="uks" /> a door.
                     Listen and pick the word you hear.
                   </Trans>
                 </p>
@@ -361,10 +365,10 @@ export function HaaldusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A double letter is a longer sound, and it makes a different word.{" "}
-                    <Word w="sada" /> is a hundred; <Word w="saada" /> means send. Consonants work
-                    the same way: <Word w="kana" /> is a hen, and <Word w="kanna" /> tells one
-                    person to carry something.
+                    <Word w="Sada" /> is a hundred; <Word w="saada" /> means send. A double letter
+                    is a longer sound, and it makes a different word. Consonants work the same way:{" "}
+                    <Word w="kana" /> is a hen, and <Word w="kanna" /> tells one person to carry
+                    something.
                   </Trans>
                 </p>
                 <p>
@@ -393,9 +397,9 @@ export function HaaldusLesson() {
               </Panel>
               <Aside>
                 <Trans>
-                  Estonian also has a third, extra-long length, and the spelling doesn't always show
+                  Estonian also has a third, extra-long length, and the spelling doesn’t always show
                   it. <i lang="et">Linna</i> means both “of the town” and “into the town”, and the
-                  second is held longer. It comes back in later lessons.
+                  second is held longer.
                 </Trans>
               </Aside>
             </>
@@ -421,9 +425,9 @@ export function HaaldusLesson() {
                   share === 1 ? (
                     <Trans>All of them. You can hear length.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Good ear. Play the ones you missed once more.</Trans>
+                    <Trans>Most of them. Play the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>Length takes the most practice. Play the pairs above once more.</Trans>
+                    <Trans>Pick each pair above again and hear which word is longer.</Trans>
                   )
                 }
                 both={(item) => item.pair.map(src)}

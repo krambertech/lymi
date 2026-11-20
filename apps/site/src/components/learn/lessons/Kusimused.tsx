@@ -30,20 +30,20 @@ const MEANS: Record<Id, MessageDescriptor> = {
   "q-kodus": msg`Is he or she at home?`,
   "s-kohv": msg`You drink coffee.`,
   "q-kohv": msg`Do you drink coffee?`,
-  "s-tootavad": msg`They're working today.`,
+  "s-tootavad": msg`They’re working today.`,
   "q-tootavad": msg`Are they working today?`,
-  "c-voi": msg`You live in Tallinn, don't you?`,
+  "c-voi": msg`You live in Tallinn, don’t you?`,
   "a-jah": msg`Yes.`,
   "a-ei": msg`No.`,
-  "a-ei-ole": msg`No, he or she isn't.`,
-  "a-ei-tea": msg`I don't know.`,
+  "a-ei-ole": msg`No, he or she isn’t.`,
+  "a-ei-tea": msg`I don’t know.`,
   "q-kes": msg`Who is that?`,
-  "a-kes": msg`That's Jaan.`,
+  "a-kes": msg`That’s Jaan.`,
   "q-mis": msg`What is that?`,
-  "a-mis": msg`That's a book.`,
+  "a-mis": msg`That’s a book.`,
   "q-kus": msg`Where do you live?`,
   "a-kus": msg`In Tallinn.`,
-  "q-millal": msg`When do you work?`,
+  "q-millal": msg`When are you working?`,
   "a-millal": msg`Tomorrow.`,
   "q-miks": msg`Why are you learning Estonian?`,
   "a-miks": msg`Because I live in Tallinn.`,
@@ -51,12 +51,12 @@ const MEANS: Record<Id, MessageDescriptor> = {
   "a-kuidas": msg`I read a lot.`,
   "q-kui-palju": msg`How much coffee do you drink?`,
   "a-kui-palju": msg`A little.`,
-  "q-nimi": msg`What's your name?`,
+  "q-nimi": msg`What’s your name?`,
   "a-nimi": msg`My name is Mari.`,
-  "q-laheb": msg`How's it going?`,
+  "q-laheb": msg`How’s it going?`,
   "a-laheb": msg`Fine, thanks. And you?`,
   "q-parit": msg`Where are you from?`,
-  "a-parit": msg`I'm from Ukraine.`,
+  "a-parit": msg`I’m from Ukraine.`,
   "w-kes-tartus": msg`Who lives in Tartu?`,
   "w-kes-raagib": msg`Who speaks Estonian?`,
   "w-mis-teed": msg`What are you doing?`,
@@ -88,7 +88,7 @@ const QUESTION_WORDS: readonly {
   { word: "kus", means: msg`where`, asks: msg`Asks about a place.`, q: "q-kus", a: "a-kus" },
   { word: "millal", means: msg`when`, asks: msg`Asks about a time.`, q: "q-millal", a: "a-millal" },
   { word: "miks", means: msg`why`, asks: msg`Asks for a reason.`, q: "q-miks", a: "a-miks" },
-  { word: "kuidas", means: msg`how`, asks: msg`Asks how it's done.`, q: "q-kuidas", a: "a-kuidas" },
+  { word: "kuidas", means: msg`how`, asks: msg`Asks how it’s done.`, q: "q-kuidas", a: "a-kuidas" },
   {
     word: "kui palju",
     means: msg`how much, how many`,
@@ -170,21 +170,21 @@ const GLOSSARY: Glossary = {
   miks: { en: msg`why` },
   kuidas: { en: msg`how` },
   "kui palju": { en: msg`how much, how many` },
-  kust: { en: msg`where from`, note: msg`Kus with the ending -st, “out of”.` },
+  kust: { en: msg`where from`, note: msg`Kus with its -s swapped for -st, “out of”.` },
   jah: { en: msg`yes` },
   ei: { en: msg`no; not` },
   "ei ole": {
-    en: msg`no, not: the answer to a question with olema`,
+    en: msg`no, when the question has olema`,
     clip: "a-ei-ole",
   },
-  "ma ei tea": { en: msg`I don't know`, clip: "a-ei-tea" },
+  "ma ei tea": { en: msg`I don’t know`, clip: "a-ei-tea" },
   täna: { en: msg`today` },
   homme: { en: msg`tomorrow` },
   kodus: { en: msg`at home` },
   sest: { en: msg`because` },
   natuke: { en: msg`a little` },
   hästi: { en: msg`well, fine` },
-  pärit: { en: msg`from, by birth`, note: msg`Ma olen pärit… is I'm from…` },
+  pärit: { en: msg`from, by birth`, note: msg`Ma olen pärit… is I’m from…` },
   tallinnas: { en: msg`in Tallinn`, show: "Tallinnas" },
   tartus: { en: msg`in Tartu`, show: "Tartus" },
   või: { en: msg`or; at the end of a sentence, a bit like “right?”` },
@@ -380,7 +380,7 @@ function AskWords() {
               <Trans>Tap a question word</Trans>
             </span>
             <span className="text-md text-ink-secondary">
-              <Trans>You'll hear a question with it, and an answer.</Trans>
+              <Trans>You’ll hear a question with it, and an answer.</Trans>
             </span>
           </p>
         )}
@@ -456,7 +456,7 @@ export function KusimusedLesson() {
       sub={
         <Trans>
           How to ask in Estonian: kas for yes or no, seven question words for the rest, and three
-          questions you'll hear in your first week.
+          everyday questions to learn whole.
         </Trans>
       }
       facts={[
@@ -488,15 +488,15 @@ export function KusimusedLesson() {
           <b lang="et">Kas sa elad Tallinnas?</b>
         </Trans>,
         <Trans key="2">
-          Answer <b lang="et">jah</b> or <b lang="et">ei</b>. To a question with olema, say{" "}
-          <b lang="et">ei ole</b>. Not sure? <b lang="et">Ma ei tea.</b>
+          Answer <b lang="et">jah</b> or <b lang="et">ei</b>. When the question has olema, the no is{" "}
+          <b lang="et">ei ole</b>. If you don’t know, say <b lang="et">Ma ei tea.</b>
         </Trans>,
         <Trans key="3">
-          A question word goes first, and the rest stays as in the statement:{" "}
+          A question word goes first, and the part you ask about drops out:{" "}
           <b lang="et">Kus sa elad?</b>
         </Trans>,
         <Trans key="4">
-          <b lang="et">kes</b> asks about people, <b lang="et">mis</b> about things.
+          <b lang="et">Kes</b> asks about people, <b lang="et">mis</b> about things.
         </Trans>,
         <Trans key="5">
           Learn three questions whole: <b lang="et">Mis su nimi on? Kuidas läheb?</b> and{" "}
@@ -512,9 +512,9 @@ export function KusimusedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To ask a yes-or-no question, put <Word w="kas" /> in front of a sentence.{" "}
-                    <Word w="Sa elad Tallinnas." /> is you live in Tallinn.{" "}
-                    <Word w="Kas sa elad Tallinnas?" /> is do you live in Tallinn?
+                    <Word w="Sa elad Tallinnas." /> You live in Tallinn.{" "}
+                    <Word w="Kas sa elad Tallinnas?" /> Do you live in Tallinn? To ask a yes-or-no
+                    question, put <Word w="kas" /> in front of the sentence.
                   </Trans>
                 </p>
                 <p>
@@ -527,10 +527,9 @@ export function KusimusedLesson() {
               <KasSwitch />
               <Aside>
                 <Trans>
-                  A kas question falls at the end, like a statement: kas has already said it's a
-                  question, so your voice doesn't need to. In speech you'll also hear{" "}
-                  <Word w="või" /> at the end instead, a bit like “right?”:{" "}
-                  <Word w="Sa elad Tallinnas või?" />
+                  In a kas question your voice falls at the end, as in a statement: kas already says
+                  it’s a question. In speech you’ll also hear <Word w="või" /> at the end instead, a
+                  bit like “right?”: <Word w="Sa elad Tallinnas või?" />
                 </Trans>
               </Aside>
             </>
@@ -544,9 +543,9 @@ export function KusimusedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="jah" /> is yes and <Word w="ei" /> is no. When the question asks with
-                    olema, to be, the usual no is <Word w="ei ole" />: he isn't, I'm not. When you
-                    don't know, say <Word w="ma ei tea" />.
+                    <Word w="Jah" /> is yes and <Word w="ei" /> is no. When the question asks with
+                    olema, to be, the usual no is <Word w="ei ole" />: he or she isn’t, I’m not.
+                    When you don’t know, say <Word w="ma ei tea" />.
                   </Trans>
                 </p>
               </Prose>
@@ -565,8 +564,9 @@ export function KusimusedLesson() {
               />
               <Aside>
                 <Trans>
-                  <Word w="ei ole" /> repeats the verb from the question. Estonians answer like this
-                  with every verb, as lesson {negation} on saying no shows.
+                  <Word w="Ei ole" /> repeats the verb from the question, and any verb can answer
+                  this way: <i lang="et">Kas sa loed? Ei loe.</i> Lesson {negation} covers saying
+                  no.
                 </Trans>
               </Aside>
             </>
@@ -580,10 +580,9 @@ export function KusimusedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To ask for more than yes or no, start with a question word instead of kas. The
-                    rest stays as in the statement; only the part you ask about goes.{" "}
-                    <Word w="Sa elad Tallinnas." /> becomes <Word w="Kus sa elad?" />, where do you
-                    live?
+                    To ask for more than yes or no, start with a question word instead of kas, and
+                    leave out the part you ask about. <Word w="Sa elad Tallinnas." /> You live in
+                    Tallinn. <Word w="Kus sa elad?" /> Where do you live?
                   </Trans>
                 </p>
                 <p>
@@ -593,8 +592,8 @@ export function KusimusedLesson() {
               <AskWords />
               <Aside>
                 <Trans>
-                  <Word w="kes" /> asks about people and <Word w="mis" /> about things:{" "}
-                  <Word w="Kes see on?" /> who is that, <Word w="Mis see on?" /> what is that.
+                  <Word w="Kes" /> asks about people and <Word w="mis" /> about things:{" "}
+                  <Word w="Kes see on?" /> Who is that? <Word w="Mis see on?" /> What is that?
                 </Trans>
               </Aside>
             </>
@@ -609,8 +608,8 @@ export function KusimusedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a question and pick its question word. It's always the first word, so
-                    listen to the start.
+                    Hear a question and pick its question word. It always comes first, so listen to
+                    the start.
                   </Trans>
                 </p>
               </Prose>
@@ -643,8 +642,8 @@ export function KusimusedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    You'll hear these three in your first conversations. Learn them whole, with an
-                    answer each, and don't take them apart yet.
+                    People ask these three when they meet you. Learn them whole, each with an
+                    answer, and don’t take them apart yet.
                   </Trans>
                 </p>
               </Prose>
@@ -657,8 +656,8 @@ export function KusimusedLesson() {
               />
               <Aside>
                 <Trans>
-                  <Word w="su" /> is your, short for <Word w="sinu" />; lesson {genitive} explains
-                  the form. <Word w="kust" /> is kus with -st, out of: where from.
+                  <Word w="Su" /> is your, short for <Word w="sinu" />; lesson {genitive} explains
+                  the form. <Word w="Kust" /> swaps the -s of kus for -st, out of: where from.
                 </Trans>
               </Aside>
             </>
@@ -673,9 +672,9 @@ export function KusimusedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Now a short exchange. Hear a question, then pick the answer that fits. A kas
-                    question wants yes or no; a question word wants what it asks about, such as a
-                    place for kus or a time for millal.
+                    Hear a question, then pick the answer that fits. A kas question takes yes, no or
+                    I don’t know; a question word wants what it asks about, such as a place for kus
+                    or a time for millal.
                   </Trans>
                 </p>
               </Prose>
@@ -686,11 +685,14 @@ export function KusimusedLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All of them. You can follow a short exchange.</Trans>
+                    <Trans>All of them. You matched every answer to its question.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Good. Hear the ones you missed once more.</Trans>
+                    <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>Listen to the first word: kas, or which question word.</Trans>
+                    <Trans>
+                      Listen to the first word. Kas wants yes or no; a question word wants what it
+                      asks about.
+                    </Trans>
                   )
                 }
                 recall={(item) => ({ label: said(item.q), src: item.src })}

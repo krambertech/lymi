@@ -2,11 +2,12 @@ import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { errorMessage } from "@lymi/client/api";
 import { useRouter } from "expo-router";
-import { Alert, ScrollView, useWindowDimensions, View } from "react-native";
+import { ScrollView, useWindowDimensions, View } from "react-native";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { useSeriesList } from "../data/queries";
 import { useSeriesActions } from "../data/series";
 import { useOnline } from "../streak/goal-picker";
+import { alert } from "../ui/alert";
 import { DragList } from "../ui/drag-list";
 import { FormHeader } from "../ui/form-header";
 import { Plate, Text } from "../ui/primitives";
@@ -27,8 +28,8 @@ export default function SeriesOrder() {
   const insets = useSafeAreaInsets();
   const save = (next: string[]) => {
     if (next.join() === ids.join()) return;
-    // A series write has no place on screen to say it failed, so iOS says it.
-    order.mutate(next, { onError: (e) => Alert.alert(t`That didn’t go through`, errorMessage(e)) });
+    // A series write has no place on screen to say it failed, so an alert says it.
+    order.mutate(next, { onError: (e) => alert(t`That didn’t go through`, errorMessage(e)) });
   };
   const shift = (at: number, by: -1 | 1) => {
     const next = [...ids];

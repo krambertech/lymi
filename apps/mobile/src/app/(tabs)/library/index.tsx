@@ -4,7 +4,7 @@ import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
 import { isolate, unisolate } from "@lymi/core";
 import { type Href, useRouter } from "expo-router";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import { languageName } from "../../../data/languages";
 import { useArchivedDecks, useDecks, useSeriesList } from "../../../data/queries";
 import { useSeriesActions } from "../../../data/series";
@@ -12,6 +12,7 @@ import { useOnline } from "../../../streak/goal-picker";
 import { haptics } from "../../../theme/haptics";
 import { usePalette } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
+import { alert } from "../../../ui/alert";
 import { EmptyState } from "../../../ui/empty-state";
 import { ListRow, ListRowFace, listRowLabel } from "../../../ui/list-row";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
@@ -191,26 +192,26 @@ function SeriesMenu({ series: s, decks, count }: { series: Series; decks: number
   const actions = useSeriesActions();
   const seriesName = s.name;
   const online = useOnline();
-  // A series write has no place on screen to say it failed, so iOS says it.
-  const failed = (e: unknown) => Alert.alert(t`That didn’t go through`, errorMessage(e));
+  // A series write has no place on screen to say it failed, so an alert says it.
+  const failed = (e: unknown) => alert(t`That didn’t go through`, errorMessage(e));
   // Series writes go straight to the Worker, so offline the menu says so instead of waiting.
   const needsConnection = (then: () => void) => () =>
-    online ? then() : Alert.alert(t`Changing series needs a connection.`);
+    online ? then() : alert(t`Changing series needs a connection.`);
   const remove = (choice: "archive" | "keep") =>
     actions.remove.mutate({ series: s, decks: choice }, { onError: failed });
-  // Deleting a series is the one series write with no Undo, so iOS asks first, and the learner
+  // Deleting a series is the one series write with no Undo, so an alert asks first, and the learner
   // chooses whether its decks stay in Library or are archived with it.
   const confirmDelete = () => {
     const cancel = { text: t`Cancel`, style: "cancel" as const };
     if (decks === 0) {
-      Alert.alert(
+      alert(
         t`Delete “${{ seriesName: isolate(seriesName) }}”?`,
         t`The series is deleted for good.`,
         [cancel, { text: t`Delete`, style: "destructive", onPress: () => remove("keep") }],
       );
       return;
     }
-    Alert.alert(
+    alert(
       t`Delete “${{ seriesName: isolate(seriesName) }}”?`,
       t`The series is deleted for good. Its decks can stay in Library or be archived with it.`,
       [

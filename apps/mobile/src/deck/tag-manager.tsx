@@ -5,10 +5,11 @@ import { deckTagsQuery, settleDeckTags } from "@lymi/client/queries";
 import { isolate, TAG_LIMITS, tagKey } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useContext, useRef, useState } from "react";
-import { Alert, ScrollView, TextInput, useWindowDimensions, View } from "react-native";
+import { ScrollView, TextInput, useWindowDimensions, View } from "react-native";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { ActionMenu } from "../ui/action-menu";
+import { alert } from "../ui/alert";
 import { SEARCHED_PAST, SearchField, useSearched } from "../ui/menu";
 import { Button, Text } from "../ui/primitives";
 import { Sheet, SheetError, SheetGroup, SheetRow } from "../ui/sheet";
@@ -115,7 +116,7 @@ export function useTagManager(deckId: string) {
   const confirmMerge = (from: DeckTag, into: DeckTag) => {
     const fromName = from.name;
     const intoName = into.name;
-    Alert.alert(
+    alert(
       t`Merge “${{ fromName: isolate(fromName) }}” into “${{ intoName: isolate(intoName) }}”?`,
       t`This deck’s cards tagged “${{ fromName: isolate(fromName) }}” take “${{ intoName: isolate(intoName) }}” instead. You can’t undo a merge.`,
       [

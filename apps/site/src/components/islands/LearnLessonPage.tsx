@@ -1,9 +1,14 @@
+import { EitusLesson } from "../learn/lessons/Eitus";
 import { HaaldusLesson } from "../learn/lessons/Haaldus";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { Island } from "./Island";
 
 /** Each built lesson by its slug; `LESSON_SLUGS` in the catalogue must name the same ones. */
-export const LESSON_VIEWS = { haaldus: HaaldusLesson, numbrid: NumbridLesson } as const;
+export const LESSON_VIEWS = {
+  haaldus: HaaldusLesson,
+  numbrid: NumbridLesson,
+  eitus: EitusLesson,
+} as const;
 
 export default function LearnLessonPage({
   locale,

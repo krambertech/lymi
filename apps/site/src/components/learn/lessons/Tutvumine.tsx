@@ -68,6 +68,22 @@ const GLOSSARY: Glossary = {
   "head aega": { en: msg`Goodbye`, note: msg`Word for word: “good time”.`, show: "Head aega!" },
 };
 
+/**
+ * Kati's note, gap by gap. Only one gap takes a place, so a place in the wrong gap never makes a
+ * sentence that is also right. tutvumine.test.ts checks that the filled gaps spell the recording.
+ */
+export const KATI_GAPS: readonly GapItem[] = [
+  { id: "olen", before: "Tere! Mina", after: "Kati.", answer: "olen" },
+  { id: "toota", before: "Ma elan Tallinnas. Ma ei", after: ", ma õpin.", answer: "tööta" },
+  { id: "tootab", before: "Minu sõber Jaan", after: "kohvikus.", answer: "töötab" },
+  { id: "tool", before: "Ta ei ole kodus, ta on", after: ".", answer: "tööl" },
+  { id: "raagime", before: "Me", after: "eesti keelt.", answer: "räägime" },
+  { id: "kus", before: "Aga sina?", after: "sina elad?", answer: "Kus" },
+];
+
+/** Words in the bank that fill no gap, each a slip one gap invites. */
+export const KATI_SPARE = ["oled", "töötan", "Kes"] as const;
+
 function useContent() {
   const { t } = useLingui();
 
@@ -376,103 +392,7 @@ function useContent() {
     },
   ];
 
-  const gaps: GapItem[] = [
-    {
-      id: "olen",
-      before: "Tere! Mina",
-      after: "Kati.",
-      answer: "olen",
-      why: (
-        <Trans>
-          <b lang="et">Mina</b> takes <b lang="et">olen</b>.
-        </Trans>
-      ),
-    },
-    {
-      id: "tallinnas",
-      before: "Ma elan",
-      after: ".",
-      answer: "Tallinnas",
-      why: (
-        <Trans>
-          Tallinn takes an extra a before the{" "}
-          <b lang="et" className="whitespace-nowrap">
-            -s
-          </b>
-          : <b lang="et">Tallinnas</b>.
-        </Trans>
-      ),
-    },
-    {
-      id: "toota",
-      before: "Ma ei",
-      after: ", ma õpin.",
-      answer: "tööta",
-      why: (
-        <Trans>
-          After <b lang="et">ei</b> the verb loses its ending: <b lang="et">ei tööta</b>.
-        </Trans>
-      ),
-    },
-    {
-      id: "tootab",
-      before: "Minu sõber Jaan",
-      after: "kohvikus.",
-      answer: "töötab",
-      why: (
-        <Trans>
-          Jaan is <b lang="et">ta</b>, so the verb takes{" "}
-          <b lang="et" className="whitespace-nowrap">
-            -b
-          </b>
-          : <b lang="et">töötab</b>.
-        </Trans>
-      ),
-    },
-    {
-      id: "tool",
-      before: "Ta ei ole kodus, ta on",
-      after: ".",
-      answer: "tööl",
-      why: (
-        <Trans>
-          <b lang="et">Töö</b>, work, takes{" "}
-          <b lang="et" className="whitespace-nowrap">
-            -l
-          </b>
-          : <b lang="et">tööl</b>, at work.
-        </Trans>
-      ),
-    },
-    {
-      id: "raagime",
-      before: "Me",
-      after: "eesti keelt.",
-      answer: "räägime",
-      why: (
-        <Trans>
-          <b lang="et">Me</b> takes{" "}
-          <b lang="et" className="whitespace-nowrap">
-            -me
-          </b>
-          : <b lang="et">räägime</b>.
-        </Trans>
-      ),
-    },
-    {
-      id: "kus",
-      before: "Aga sina?",
-      after: "sina elad?",
-      answer: "Kus",
-      why: (
-        <Trans>
-          <b lang="et">Kus</b> asks where; <b lang="et">kes</b> asks who.
-        </Trans>
-      ),
-    },
-  ];
-
-  return { answers, questions, listening, gaps };
+  return { answers, questions, listening };
 }
 
 export function TutvumineLesson() {
@@ -632,11 +552,8 @@ export function TutvumineLesson() {
                 <p>
                   <Trans>
                     Kati writes about herself. Each gap needs one thing you’ve practised: a form of{" "}
-                    <b lang="et">olema</b>, a verb ending, the verb after <b lang="et">ei</b>,{" "}
-                    <b lang="et" className="whitespace-nowrap">
-                      -s
-                    </b>{" "}
-                    or{" "}
+                    <b lang="et">olema</b>, a verb ending, the verb after <b lang="et">ei</b>, a
+                    place with{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -l
                     </b>
@@ -647,9 +564,9 @@ export function TutvumineLesson() {
               <GapPassage
                 id="kati-gaps"
                 title={t`Fill the gaps`}
-                gaps={content.gaps}
+                gaps={KATI_GAPS}
                 mode="drag"
-                spare={["oled", "töötan", "Kes"]}
+                spare={KATI_SPARE}
                 clip="p-kati"
               />
             </>

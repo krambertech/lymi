@@ -82,6 +82,26 @@ export function glossPieces(text: string, has: (word: string) => boolean): Piece
   return pieces;
 }
 
+/** Punctuation that closes onto the word before it, with no space: “Tallinnas.”, “(sina)”. */
+const CLOSES = /^[.,!?;:…)\]»”’]/u;
+/** Punctuation that opens onto the word after it: “«Tere»”. */
+const OPENS = /[([«„“‘]$/u;
+
+/** Whether a gap's word is spaced from the text before it. */
+export function spacedBefore(before: string): boolean {
+  return before !== "" && !OPENS.test(before);
+}
+
+/** Whether a gap's word is spaced from the text after it. */
+export function spacedAfter(after: string): boolean {
+  return after !== "" && !CLOSES.test(after);
+}
+
+/** A gap's sentence with the word in it, spaced as it would be written. */
+export function gapLine(before: string, word: string, after: string): string {
+  return `${before}${spacedBefore(before) ? " " : ""}${word}${spacedAfter(after) ? " " : ""}${after}`;
+}
+
 /** Words placed in a passage's gaps, by gap id. */
 export type Fills = Readonly<Record<string, string>>;
 

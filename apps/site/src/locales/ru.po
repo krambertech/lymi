@@ -434,9 +434,6 @@ msgstr "<0>Jonas</0> прошёл неделю 2"
 msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgstr "<0>Kes</0> спрашивает о людях, <1>mis</1> — о вещах."
 
-msgid "<0>Kus</0> asks where; <1>kes</1> asks who."
-msgstr "<0>Kus</0> спрашивает «где», а <1>kes</1> — «кто»."
-
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> спрашивает, откуда ты, а не где живёшь."
 
@@ -455,17 +452,11 @@ msgstr "<0>предельные издержки</0> <1>= цена ещё 1 шт
 msgid "<0>Mari</0> finished Week 3"
 msgstr "<0>Mari</0> прошла неделю 3"
 
-msgid "<0>Me</0> takes <1>-me</1>: <2>räägime</2>."
-msgstr "После <0>me</0> глагол оканчивается на <1>-me</1>: <2>räägime</2>."
-
 msgid "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgstr "<0>Мексиканский испанский</0>, <1>разговорные примеры</1>."
 
 msgid "<0>Mina</0> takes <1>olen</1>: <2>Mina olen Andres</2>."
 msgstr "После <0>mina</0> идёт <1>olen</1>: <2>Mina olen Andres</2>."
-
-msgid "<0>Mina</0> takes <1>olen</1>."
-msgstr "После <0>mina</0> идёт <1>olen</1>."
 
 msgid "<0>Olen</0> for I, <1>oled</1> for you, <2>on</2> for he or she and for they."
 msgstr "<0>Olen</0> для «я», <1>oled</1> для «ты», <2>on</2> для «он или она» и для «они»."
@@ -520,9 +511,6 @@ msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сегодня, завтр�
 
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — это «привет», а Мари уже уходит."
-
-msgid "<0>Töö</0>, work, takes <1>-l</1>: <2>tööl</2>, at work."
-msgstr "<0>Töö</0>, «работа», получает <1>-l</1>: <2>tööl</2>, «на работе»."
 
 msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>Veerand neli</0> — четверть пути к четырём, 3:15. <1>Kolmveerand neli</1> — три четверти, 3:45."
@@ -1368,9 +1356,6 @@ msgstr "преимущество"
 
 msgid "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
 msgstr "После <0>ei</0> идёт форма с ma без -n: <1>loen</1>, <2>ei loe</2>."
-
-msgid "After <0>ei</0> the verb loses its ending: <1>ei tööta</1>."
-msgstr "После <0>ei</0> глагол теряет окончание: <1>ei tööta</1>."
 
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "После <0>ei</0> у глагола <1>olema</1> нет окончания: <2>ei ole</2>."
@@ -5482,9 +5467,6 @@ msgstr "Издатель убрал её с публичных страниц Ly
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Редкий, но серьёзный риск — лактоацидоз."
 
-msgid "Jaan is <0>ta</0>, so the verb takes <1>-b</1>: <2>töötab</2>."
-msgstr "Яан — это <0>ta</0>, поэтому глагол оканчивается на <1>-b</1>: <2>töötab</2>."
-
 msgid "Jaan lives in Pärnu."
 msgstr "Яан живёт в Пярну."
 
@@ -5559,8 +5541,8 @@ msgstr "Kas sa tuled? Ты придёшь?"
 msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi — партитив от kass, кошка."
 
-msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
-msgstr "Кати пишет о себе. В каждом пропуске — одно из того, что ты уже знаешь: форма <0>olema</0>, окончание глагола, глагол после <1>ei</1>, <2>-s</2> либо <3>-l</3> или вопросительное слово."
+msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
+msgstr "Кати пишет о себе. В каждом пропуске — одно из того, что ты уже знаешь: форма <0>olema</0>, окончание глагола, глагол после <1>ei</1>, место с <2>-l</2> или вопросительное слово."
 
 msgid "Keep every word from your tutor lessons."
 msgstr "Сохрани каждое слово с уроков с репетитором."
@@ -9059,9 +9041,6 @@ msgstr "Разговор: вопросы к Мари"
 
 msgid "Talk: meeting Mari"
 msgstr "Разговор: знакомство с Мари"
-
-msgid "Tallinn takes an extra a before the <0>-s</0>: <1>Tallinnas</1>."
-msgstr "В слове Tallinn перед <0>-s</0> появляется ещё одно a: <1>Tallinnas</1>."
 
 msgid "Tallinn, the capital"
 msgstr "Таллин, столица"

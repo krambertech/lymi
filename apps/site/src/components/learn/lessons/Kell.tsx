@@ -101,7 +101,7 @@ function useTurn(degrees: number): number {
 }
 
 interface ClockProps extends Omit<React.SVGProps<SVGSVGElement>, "ref"> {
-  /** No time draws the face without hands; they fade in and turn once a time is set. */
+  /** No time draws both hands at twelve. */
   time: ClockTime | null;
   /** Fill the part of the hour that has gone, in the stage's hue. */
   wedge?: boolean;
@@ -117,10 +117,7 @@ function Clock({ time, wedge, still, className, label, ...rest }: ClockProps) {
   const minuteTurn = useTurn(time ? time.minute * 6 : 0);
   const hourTurn = useTurn(time ? ((time.hour % 12) + time.minute / 60) * 30 : 0);
   const ticks = Array.from({ length: 12 }, (_, i) => (i * Math.PI) / 6);
-  const ease = still
-    ? ""
-    : "transition-[transform,opacity] duration-700 ease-out motion-reduce:transition-none";
-  const hands = time ? undefined : 0;
+  const ease = still ? "" : "transition-transform duration-700 ease-out";
   const minute = time?.minute ?? 0;
   const end = (minute / 60) * Math.PI * 2;
   return (
@@ -159,11 +156,7 @@ function Clock({ time, wedge, still, className, label, ...rest }: ClockProps) {
         className={clsx("stroke-ink", ease)}
         strokeWidth="5.5"
         strokeLinecap="round"
-        style={{
-          transformOrigin: "60px 60px",
-          transform: `rotate(${hourTurn}deg)`,
-          opacity: hands,
-        }}
+        style={{ transformOrigin: "60px 60px", transform: `rotate(${hourTurn}deg)` }}
       />
       <line
         x1="60"
@@ -173,11 +166,7 @@ function Clock({ time, wedge, still, className, label, ...rest }: ClockProps) {
         className={clsx("stroke-(--form)", ease)}
         strokeWidth="3.5"
         strokeLinecap="round"
-        style={{
-          transformOrigin: "60px 60px",
-          transform: `rotate(${minuteTurn}deg)`,
-          opacity: hands,
-        }}
+        style={{ transformOrigin: "60px 60px", transform: `rotate(${minuteTurn}deg)` }}
       />
       <circle cx="60" cy="60" r="4.5" className="fill-ink" />
     </svg>
@@ -278,14 +267,10 @@ function ClockExplorer() {
   const [dragging, setDragging] = useState(false);
   const latest = useRef(time);
   latest.current = time;
-  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
-  const say = (next: ClockTime) => {
-    clearTimeout(timer.current);
-    timer.current = setTimeout(() => void playSound(timeSrc(next)), 180);
-  };
-  const set = (next: ClockTime, speak: boolean) => {
+  // Turning the clock only moves it; the time is heard when the learner presses play.
+  const set = (next: ClockTime) => {
+    latest.current = next;
     setTime(next);
-    if (speak) say(next);
   };
   const drag = (event: React.PointerEvent<SVGSVGElement>) => {
     const minute = nearestMinute(pointerAngle(event.currentTarget, event.clientX, event.clientY));
@@ -317,7 +302,7 @@ function ClockExplorer() {
             const by = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 }[event.key];
             if (!hour && !by) return;
             event.preventDefault();
-            set(hour ? at(hour, time.minute) : stepMinute(time, by as 1 | -1), true);
+            set(hour ? at(hour, time.minute) : stepMinute(time, by as 1 | -1));
           }}
           className="rounded-full focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-(--form)"
         >
@@ -336,10 +321,7 @@ function ClockExplorer() {
             onPointerMove={(event) => {
               if (dragging) drag(event);
             }}
-            onPointerUp={() => {
-              setDragging(false);
-              say(latest.current);
-            }}
+            onPointerUp={() => setDragging(false)}
             onPointerCancel={() => setDragging(false)}
           />
         </div>
@@ -370,7 +352,7 @@ function ClockExplorer() {
             type="button"
             aria-label={t`An hour earlier`}
             className={stepper}
-            onClick={() => set(at(previousHour(time.hour), time.minute), true)}
+            onClick={() => set(at(previousHour(time.hour), time.minute))}
           >
             <Minus aria-hidden="true" className="size-4.5" />
           </button>
@@ -381,7 +363,7 @@ function ClockExplorer() {
             type="button"
             aria-label={t`An hour later`}
             className={stepper}
-            onClick={() => set(at(nextHour(time.hour), time.minute), true)}
+            onClick={() => set(at(nextHour(time.hour), time.minute))}
           >
             <Plus aria-hidden="true" className="size-4.5" />
           </button>
@@ -393,7 +375,7 @@ function ClockExplorer() {
             value: minute,
           }))}
           value={time.minute}
-          onPick={(minute) => set(withMinute(time, minute), true)}
+          onPick={(minute) => set(withMinute(time, minute))}
         />
       </div>
     </Panel>
@@ -802,8 +784,8 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Drag the minute hand or pick the minutes, and hear each time. The hour a time is
-                    named after lights up.
+                    Drag the minute hand or pick the minutes, then press play to hear the time. The
+                    hour a time is named after lights up.
                   </Trans>
                 </p>
               </Prose>

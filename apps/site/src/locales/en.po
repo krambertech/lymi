@@ -2664,8 +2664,8 @@ msgstr "Drafting a hint…"
 msgid "Drag Lymi to Applications"
 msgstr "Drag Lymi to Applications"
 
-msgid "Drag the minute hand or pick the minutes, and hear each time. The hour a time is named after lights up."
-msgstr "Drag the minute hand or pick the minutes, and hear each time. The hour a time is named after lights up."
+msgid "Drag the minute hand or pick the minutes, then press play to hear the time. The hour a time is named after lights up."
+msgstr "Drag the minute hand or pick the minutes, then press play to hear the time. The hour a time is named after lights up."
 
 msgid "Drink more *water*!"
 msgstr "Drink more *water*!"

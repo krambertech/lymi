@@ -1659,6 +1659,236 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "mina-sina-tema/mina": {
+    "text": "mina",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/ma": {
+    "text": "ma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/sina": {
+    "text": "sina",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/sa": {
+    "text": "sa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/tema": {
+    "text": "tema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/ta": {
+    "text": "ta",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/meie": {
+    "text": "meie",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/me": {
+    "text": "me",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/teie": {
+    "text": "teie",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/te": {
+    "text": "te",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/nemad": {
+    "text": "nemad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/nad": {
+    "text": "nad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/olema": {
+    "text": "olema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/olen": {
+    "text": "olen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/oled": {
+    "text": "oled",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/on": {
+    "text": "on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/oleme": {
+    "text": "oleme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/olete": {
+    "text": "olete",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/mina-olen": {
+    "text": "Mina olen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/ma-olen": {
+    "text": "Ma olen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/sina-oled": {
+    "text": "Sina oled",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/sa-oled": {
+    "text": "Sa oled",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/tema-on": {
+    "text": "Tema on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/ta-on": {
+    "text": "Ta on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/meie-oleme": {
+    "text": "Meie oleme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/me-oleme": {
+    "text": "Me oleme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/teie-olete": {
+    "text": "Teie olete",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/te-olete": {
+    "text": "Te olete",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/nemad-on": {
+    "text": "Nemad on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/nad-on": {
+    "text": "Nad on",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/c-kes": {
+    "text": "Kes? Mina!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/c-mari": {
+    "text": "Ma olen Mari.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/c-olen-mari": {
+    "text": "Olen Mari.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/c-liis": {
+    "text": "Mina olen Liis ja tema on Peeter.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-olen-kodus": {
+    "text": "Olen kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-ma-valmis": {
+    "text": "Ma olen valmis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-oled-tubli": {
+    "text": "Oled väga tubli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-sa-sober": {
+    "text": "Sa oled hea sõber.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-ta-opetaja": {
+    "text": "Ta on õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-ta-vasinud": {
+    "text": "Ta on väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-oleme-valmis": {
+    "text": "Oleme valmis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-me-sobrad": {
+    "text": "Me oleme sõbrad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-olete-tublid": {
+    "text": "Olete väga tublid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-te-opetajad": {
+    "text": "Te olete õpetajad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-nad-kodus": {
+    "text": "Nad on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mina-sina-tema/s-nad-vasinud": {
+    "text": "Nad on väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "olevik/elama": {
     "text": "elama",
     "model": "eleven_v4",

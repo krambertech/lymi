@@ -4789,8 +4789,8 @@ msgstr "Розпочато"
 msgid "In Quizlet you choose a set and a study mode. In Lymi you open Today, and spaced repetition has already picked the cards that need you."
 msgstr "У Quizlet ти обираєш набір і режим навчання. У Lymi відкриваєш «Сьогодні», а інтервальне повторення вже вибрало картки, яким потрібна твоя увага."
 
-msgid "In some verbs the stem changes. <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don't need the rule for that yet. Learn each verb with its I form, the way Estonian dictionaries list it: <3>lugema, loen</3>. Take off -n and the rest is the stem."
-msgstr "У деяких дієсловах основа змінюється. <0/>, «читати», має основу <1>loe-</1>, тому «я читаю» буде <2/>. Правило для цього поки не потрібне. Запам’ятовуй кожне дієслово разом із формою для «я», як у естонських словниках: <3>lugema, loen</3>. Відкинь -n, і решта буде основою."
+msgid "In some verbs the stem changes. <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don't need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you'll add a third form, <4>lugeda</4>."
+msgstr "У деяких дієсловах основа змінюється. <0/>, «читати», має основу <1>loe-</1>, тому «я читаю» буде <2/>. Правило для цього поки не потрібне. Запам’ятовуй кожне дієслово разом із формою для «я»: <3>lugema, loen</3>. Відкинь -n, і решта буде основою. В уроці {verbForms} додаси третю форму, <4>lugeda</4>."
 
 msgid "In summer the *nights* stay light."
 msgstr "Улітку *ночі* світлі."

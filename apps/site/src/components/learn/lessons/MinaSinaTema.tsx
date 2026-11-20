@@ -53,7 +53,7 @@ const PEOPLE: readonly {
     ...PRONOUNS[1],
     means: msg`you`,
     is: msg`you are`,
-    who: msg`One person you're talking to, such as Mari.`,
+    who: msg`One person you’re talking to, such as Mari.`,
     seats: ["mari"],
   },
   {
@@ -74,14 +74,14 @@ const PEOPLE: readonly {
     ...PRONOUNS[4],
     means: msg`you all`,
     is: msg`you are, to more than one; polite you are`,
-    who: msg`The people you're talking to, or one person, politely.`,
+    who: msg`The people you’re talking to, or one person, politely.`,
     seats: ["mari", "jaan"],
   },
   {
     ...PRONOUNS[5],
     means: msg`they`,
     is: msg`they are`,
-    who: msg`Other people, not the ones you're talking to.`,
+    who: msg`Other people, not the ones you’re talking to.`,
     seats: ["peeter", "kadri"],
   },
 ];
@@ -135,7 +135,7 @@ const GLOSSARY: Glossary = {
   ),
   "kes? mina!": { en: msg`Who? Me!`, show: "Kes? Mina!", clip: "c-kes" },
   "mina olen liis ja tema on peeter": {
-    en: msg`I'm Liis, and he's Peeter.`,
+    en: msg`I’m Liis, and he’s Peeter.`,
     note: msg`Long forms, because the two people are set side by side.`,
     show: "Mina olen Liis ja tema on Peeter.",
     clip: "c-liis",
@@ -143,18 +143,18 @@ const GLOSSARY: Glossary = {
 };
 
 const WHO: readonly { id: keyof typeof PRONOUN_SENTENCES; who: Short; en: MessageDescriptor }[] = [
-  { id: "s-olen-kodus", who: "ma", en: msg`I'm at home.` },
-  { id: "s-ma-valmis", who: "ma", en: msg`I'm ready.` },
-  { id: "s-oled-tubli", who: "sa", en: msg`You're doing great.` },
-  { id: "s-sa-sober", who: "sa", en: msg`You're a good friend.` },
+  { id: "s-olen-kodus", who: "ma", en: msg`I’m at home.` },
+  { id: "s-ma-valmis", who: "ma", en: msg`I’m ready.` },
+  { id: "s-oled-tubli", who: "sa", en: msg`You’re doing great.` },
+  { id: "s-sa-sober", who: "sa", en: msg`You’re a good friend.` },
   { id: "s-ta-opetaja", who: "ta", en: msg`He or she is a teacher.` },
   { id: "s-ta-vasinud", who: "ta", en: msg`He or she is tired.` },
-  { id: "s-oleme-valmis", who: "me", en: msg`We're ready.` },
-  { id: "s-me-sobrad", who: "me", en: msg`We're friends.` },
-  { id: "s-olete-tublid", who: "te", en: msg`You're all doing great.` },
-  { id: "s-te-opetajad", who: "te", en: msg`You're teachers.` },
-  { id: "s-nad-kodus", who: "nad", en: msg`They're at home.` },
-  { id: "s-nad-vasinud", who: "nad", en: msg`They're tired.` },
+  { id: "s-oleme-valmis", who: "me", en: msg`We’re ready.` },
+  { id: "s-me-sobrad", who: "me", en: msg`We’re friends.` },
+  { id: "s-olete-tublid", who: "te", en: msg`You’re all doing great.` },
+  { id: "s-te-opetajad", who: "te", en: msg`You’re teachers.` },
+  { id: "s-nad-kodus", who: "nad", en: msg`They’re at home.` },
+  { id: "s-nad-vasinud", who: "nad", en: msg`They’re tired.` },
 ];
 
 /** The endings a gap offers: the answer and two near misses, so three fit on a phone. */
@@ -472,9 +472,9 @@ function WhoRound({ item, state, heard, answer, autoplay }: RoundProps<WhoItem>)
 
 const verdict = (share: number): ReactNode =>
   share === 1 ? (
-    <Trans>All of them. You can hear who it's about.</Trans>
+    <Trans>All of them. You can hear who it’s about.</Trans>
   ) : share >= 0.7 ? (
-    <Trans>Good ear. Play the ones you missed once more.</Trans>
+    <Trans>Most of them. Play the ones you missed once more.</Trans>
   ) : (
     <Trans>Listen to the end of the verb. Try the table above, then come back.</Trans>
   );
@@ -523,7 +523,11 @@ export function MinaSinaTemaLesson() {
         { label: "-d", verb: "oled", tip: t`The ending for sa, you.` },
         { label: "on", verb: "on", tip: t`No ending. Ta on and nad on: he or she is, they are.` },
         { label: "-me", verb: "oleme", tip: t`The ending for me, we.` },
-        { label: "-te", verb: "olete", tip: t`The ending for te, you to more than one.` },
+        {
+          label: "-te",
+          verb: "olete",
+          tip: t`The ending for te: you, to more than one; polite you.`,
+        },
       ].map(({ label, verb, tip }) => {
         const gloss = GLOSSARY[verb];
         return {
@@ -584,17 +588,17 @@ export function MinaSinaTemaLesson() {
           <b lang="et">mina</b>, for stress.
         </Trans>,
         <Trans key="2">
-          <b lang="et">ta</b> is both he and she. <b lang="et">te</b> is you to a group, and polite
-          you to one person.
+          <b lang="et">Ta</b> is both he and she. <b lang="et">Te</b> is you, to more than one, and
+          polite you to one person.
         </Trans>,
         <Trans key="3">
-          <b lang="et">olen, oled, on, oleme, olete, on</b>: I am, you are, and so on.
+          The forms of olema, to be: <b lang="et">olen, oled, on, oleme, olete, on</b>.
         </Trans>,
         <Trans key="4">
           The ending tells who, so the pronoun can go: <b lang="et">Olen Mari.</b>
         </Trans>,
         <Trans key="5">
-          <b lang="et">on</b> is both he or she is and they are. Only the pronoun tells them apart.
+          <b lang="et">On</b> is both he or she is and they are. Only the pronoun tells them apart.
         </Trans>,
       ]}
       sections={[
@@ -607,8 +611,8 @@ export function MinaSinaTemaLesson() {
                 <p>
                   <Trans>
                     Estonian has six words for people, and each comes in a long and a short form
-                    that mean the same. <Word w="mina" /> and <Word w="ma" /> are both I. The short
-                    one, in colour below, is the one you'll hear most. Tap any word.
+                    that mean the same. <Word w="Mina" /> and <Word w="ma" /> are both I. The short
+                    one, in colour below, is the one you’ll hear most. Tap any word.
                   </Trans>
                 </p>
               </Prose>
@@ -623,8 +627,8 @@ export function MinaSinaTemaLesson() {
               </Prose>
               <Aside>
                 <Trans>
-                  <Word w="tema" /> is he and she alike; Estonian pronouns have no gender.{" "}
-                  <Word w="teie" /> is also the polite you to one person, like French vous.
+                  <Word w="Tema" /> is he and she alike; Estonian pronouns have no gender.{" "}
+                  <Word w="Teie" /> is also the polite you to one person, like French vous.
                 </Trans>
               </Aside>
             </>
@@ -638,7 +642,7 @@ export function MinaSinaTemaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="olema" /> means to be. Its ending changes with the person:{" "}
+                    <Word w="Olema" /> means to be. Its ending changes with the person:{" "}
                     <Word w="olen" /> is I am, <Word w="oled" /> is you are. Tap an ending.
                   </Trans>
                 </p>
@@ -650,7 +654,7 @@ export function MinaSinaTemaLesson() {
                   phoneColumns={3}
                   empty={{
                     title: t`Tap an ending`,
-                    tip: t`You'll hear the form and who it's for.`,
+                    tip: t`You’ll hear the form and who it’s for.`,
                   }}
                   items={endings}
                 />
@@ -659,23 +663,23 @@ export function MinaSinaTemaLesson() {
                 <p>
                   <Trans>
                     Because the ending already says who, the pronoun can go. Both lines below mean
-                    I'm Mari. Estonian can drop the pronoun, but never the verb.
+                    I’m Mari. A sentence can drop the pronoun, but not the verb.
                   </Trans>
                 </p>
               </Prose>
               <ListenRows
                 items={(["c-mari", "c-olen-mari"] as const).map((id) => ({
                   main: PRONOUN_SENTENCES[id],
-                  sub: t`I'm Mari.`,
+                  sub: t`I’m Mari.`,
                   src: sentenceSrc(id),
                   label: t`Play ${PRONOUN_SENTENCES[id]}`,
                 }))}
               />
               <Aside>
                 <Trans>
-                  <Word w="on" /> has no ending, and it serves both he or she and they. That makes{" "}
-                  <Word w="olema" /> the irregular one: other verbs add an ending there too, as
-                  lesson {regularVerbs} shows.
+                  <Word w="On" /> has no ending, and it serves both he or she and they. That makes{" "}
+                  <Word w="olema" /> irregular: other verbs add an ending there too, as lesson{" "}
+                  {regularVerbs} shows.
                 </Trans>
               </Aside>
             </>
@@ -689,9 +693,9 @@ export function MinaSinaTemaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Now both together. You sit at the bottom, talking to Mari and Jaan across the
-                    table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a
-                    word to see who it means, or tap a person.
+                    You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri
+                    sit either side of you, and Peeter on the right. Tap a word to see who it means,
+                    or tap a person.
                   </Trans>
                 </p>
               </Prose>
@@ -714,7 +718,7 @@ export function MinaSinaTemaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a sentence and pick who it's about. Some drop the pronoun, so listen to the
+                    Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the
                     end of the verb. With <Word w="on" />, only the pronoun tells <Word w="ta" />{" "}
                     from <Word w="nad" />.
                   </Trans>
@@ -751,7 +755,7 @@ export function MinaSinaTemaLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All of them. You know olema.</Trans>
+                    <Trans>All six. Every ending was right.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Tap the endings above once more.</Trans>
                   ) : (

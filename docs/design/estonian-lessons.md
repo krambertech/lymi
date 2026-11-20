@@ -38,6 +38,12 @@ The parts live in `apps/site/src/components/learn`. A new lesson reaches for the
 | `Aside` | A short note that can be skipped, such as an exception or a comparison: a bordered callout with an info mark in the stage's ink. |
 | `Compare` | Two words drawn as bars on one time scale, one bar per 12 ms, so the longer word takes more room. |
 | `Quiz` with `ChoiceRound`, `GapRound` or `TypedRound` | Anything that marks the learner. A white card with its title on the stage's band, one Listen per round, the answers, a line of feedback, Next, and a score with Try again. The score lists the run's words as chips to hear again, misses marked, with a sparkle for a full score; give the quiz `recall` so it knows each round's word. A `TypedRound` item can bring its own `matches` and `prompt` when its answers can be typed many ways, as times are. A round can't be answered before its sound has played, except a `GapRound` with `listen="after"`, for a gap the sound would give away: the learner picks first and hears the sentence with the answer. Answers in a `ChoiceRound` share a row and grow alike, and a long one takes the room it needs, so labels fit in every locale. One flow drives every quiz: `quizReducer` in `apps/site/src/lib/learn/quiz.ts`. |
+| `Listening` | Listen to a short passage, then answer. One recording plays as thin sound bars on a line, a group per sentence, the heard part in the stage's ink and the rest grey: a tap on a group starts that sentence, and arrow keys step between them. Every question shows at once with lettered answers, and one Check marks them all. The text appears after Check, with the sentences behind missed answers underlined. A pick before the passage has played asks the learner to listen first. |
+| `Reading` | Read a short text, then answer. The text sits on the canvas, with an optional recording under it that highlights the sentence it reads. The questions are the same as `Listening`'s. Its glossary words open their cards only after Check, so a card can't give an answer away. |
+| `GapPassage` with `mode="pick"` | A passage with gaps, filled one at a time. The open gap's words sit under the passage, and each gap is marked as it is filled, with the rule behind it. Nothing plays while the learner works; the whole passage can be heard at the end. |
+| `GapPassage` with `mode="drag"` | A passage with gaps and one bank of words, some of them `spare`. The learner drags words into gaps, out of them and between them, or taps a word to put it in the open gap. A keyboard places a word with Enter. One Check marks every gap, and a wrong word is struck through beside the right one. |
+| `Dialogue` | Practise a conversation. The other speaker talks in the second voice, and at each of the learner's turns they pick a reply in Estonian. A wrong pick says why, then Say it plays the right reply and the conversation goes on. There are no translations. With `text="sound"` the other speaker's lines arrive as sound only, each readable on request. |
+| `QuizCard`, `ResultDots` | The card and round dots every marked part shares, for a new kind of practice. |
 
 A lesson file in `components/learn/lessons` holds its glossary, its sections and its recap, and passes them to `LessonView`, which draws a link back to all lessons, the head, the read bar, What to remember, the words, and links to the previous and next lessons, the same size. The read bar shows where the reader is, filling in order up to the section on screen; which sections are done is kept for the hub, not shown in the bar.
 
@@ -55,9 +61,27 @@ A lesson file in `components/learn/lessons` holds its glossary, its sections and
 - English is the source; Ukrainian and Russian are transcreated, and a pronunciation tip compares a sound with the reader's own language where the match is accurate.
 - A teacher checks the Estonian before a lesson launches.
 
+## Practice parts
+
+A lesson teaches with explorers and quizzes. The practice parts use the rule in context, after it is taught, and suit a later section of a lesson or a practice lesson of their own. `/components/lessons` shows each one working, in English, Ukrainian and Russian.
+
+| Use | When the lesson wants |
+| --- | --- |
+| `Listening` | Understanding by ear: a passage of four to eight sentences, two to four questions about what was said. Ask about meaning, never about a form the learner could spot without understanding. |
+| `Reading` | The same check by eye, for a text a little longer or harder than a passage the learner could follow by ear. Give its words a glossary; they open only after Check. |
+| `GapPassage` `pick` | One rule met gap by gap, such as olema's forms or a case ending: each gap has its own two to four words, and each mark explains the rule at once. |
+| `GapPassage` `drag` | Several rules in one text, read as a whole: each gap's word depends on the sentence around it, and spare words stop the last gap from answering itself. |
+| `Dialogue` | Phrases used in turn: greetings, questions and answers, saying no. Give the learner a role in one line, so a reply can be wrong for its meaning as well as its grammar. Use `text="sound"` once the phrases are familiar. |
+
+- Questions and wrong replies are in the reader's language; the passage, answers in gaps, and replies are Estonian.
+- Each question names the sentence that answers it (`line`), so a missed answer points back at the passage.
+- A passage and a dialogue use only what earlier lessons taught, plus at most a word or two the glossary explains.
+
 ## Sound
 
-Every clip a lesson plays is listed in `apps/site/src/lib/learn/clips.ts`. `pnpm --filter @lymi/site lesson:audio` records what is new or changed with the product's Estonian voice (`et` in `speech-voices.ts`) into `apps/site/public/audio/estonian-lessons/<lesson>/`, at 64 kbps, and removes clips no lesson uses. `manifest.json` beside them holds each clip's text, model and voice.
+Every clip a lesson plays is listed in `apps/site/src/lib/learn/clips.ts`. `pnpm --filter @lymi/site lesson:audio` records what is new or changed into `apps/site/public/audio/estonian-lessons/<lesson>/`, at 64 kbps, and removes clips no lesson uses. `manifest.json` beside them holds each clip's text, model and voice.
+
+A clip is a word or sentence in the main voice, the product's Estonian voice (`et` in `speech-voices.ts`); a line in the `second` voice, for the other speaker in a dialogue; or a passage, its `sentences` recorded as one take so it flows like speech. For a passage the script also saves when each sentence starts, as `<clip>.json` beside the recording, from ElevenLabs' character timings. The second voice is Liis, a voice from ElevenLabs' library made from a native Estonian speaker; the product itself has no second Estonian voice. The script brings every new clip to the same loudness (−18 LUFS) with ffmpeg, so the two voices play at one level. It needs ffmpeg installed.
 
 ## Progress and analytics
 

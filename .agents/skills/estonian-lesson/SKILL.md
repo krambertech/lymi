@@ -43,12 +43,23 @@ One file in `components/learn/lessons/` with a `SLUG` constant, its glossary, it
 
 - Every Estonian word in prose is a `<Word>` with a gloss; any other Estonian (a `<b>`, a note, a recap line) carries `lang="et"`.
 - Pick each part with [the kit tree](references/checklists.md#which-kit-part); check the design doc's tables before writing markup of your own.
+- Write every line to [the copy rules](references/copy.md) as you go; step 5 checks them.
 - Write every quiz to [the quiz rules](references/checklists.md#quizzes). Reviews flagged a giveaway or a skipped item in six of the first seven lesson PRs.
 - End with What to remember in three to five rules, then the words.
 - Fix a kit part in its own file in `components/learn`, never in a copy inside the lesson, and name the fix in the PR and the notes: every lesson uses it.
 - Each `Quiz` gets a fixed `id` of lowercase letters, digits and hyphens, unique in the lesson: it is the `quiz` property of `learn_quiz_finished`.
 
-## 5. Record the sound
+## 5. Edit the English
+
+The copy is the lesson. A learner forgives a plain layout; a line that sounds machine-written tells them nobody checked the Estonian either. Hold every string to [the copy rules](references/copy.md): headings, prose, instructions, glosses, notes, quiz titles, feedback, verdicts, the recap and the blurb.
+
+1. Read the lesson's strings in page order, aloud, as the learner meets them. Rewrite every sentence that does not teach a fact, show an example or say what to do next.
+2. Run [the tell scan](references/copy.md#the-tell-scan) on the lesson file and give each hit a reason to stay or rewrite it.
+3. Check every claim about the learner, difficulty or what people say against the lesson itself. Keep the reason, drop the claim.
+
+Done when every string passes the copy rules and the scan has no hit without a reason.
+
+## 6. Record the sound
 
 List every clip in `clips.ts`: the lesson's shared data as exports, and an entry under its slug in `CLIPS`. Then record:
 
@@ -58,19 +69,23 @@ env PATH="$HOME/.nvm/versions/node/v$(cat .nvmrc)/bin:$PATH" ELEVENLABS_API_KEY=
 
 Run it from the repository root, where `.nvmrc` names the Node it needs. The key goes from the main checkout's `apps/web/.dev.vars` into the command's environment only; never print it, echo it or write it to a file. The script records only new or changed clips, so a re-run is free. Done when it reports what you added and `pnpm --filter @lymi/site test` passes, since `clips.test.ts` checks the manifest against `CLIPS` and every mp3.
 
-## 6. Translate
+## 7. Translate
 
-English is the source. Run `pnpm i18n:extract` with the same Node, then fill every new Ukrainian and Russian entry with [the translate skill](../translate/SKILL.md#site-copy-is-transcreated): transcreate, ти and ты, never one language from the other. Give the title two or three candidates per language and list them in the PR. [The uk and ru slips](references/checklists.md#ukrainian-and-russian) list what reviews corrected.
+English is the source. Run `pnpm i18n:extract` with the same Node, then fill every new Ukrainian and Russian entry with [the translate skill](../translate/SKILL.md#site-copy-is-transcreated): transcreate, ти and ты, never one language from the other. Each language meets [the copy rules](references/copy.md#ukrainian-and-russian) on its own terms. Give the title two or three candidates per language and list them in the PR.
 
-Done when extract reports 0 missing in `uk` and `ru` and every new line reads as written in that language.
+Done when extract reports 0 missing in `uk` and `ru` and every new line reads as if a native teacher wrote it.
 
-## 7. Drive every section
+## 8. Get a cold copy review
 
-Start the site with `npx astro dev --background --port <port>` from `apps/site`, which returns at once (`npx astro dev stop` stops it; plain `astro dev` holds the shell), and drive the lesson with Playwright at `/estonian/learn/<slug>`, `/uk/…` and `/ru/…`. The verify skill drives the web product, not the site, so it does not apply. Cover [the drive matrix](references/checklists.md#drive-matrix): every control and every quiz to its score, at 1280 and 375 px, light and night.
+Your own reading is anchored on what you meant. Give a subagent only the lesson file, `apps/site/src/locales/uk.po`, `apps/site/src/locales/ru.po` and [the copy rules](references/copy.md), with no plan, notes or reasoning of yours, and ask it to list every English, Ukrainian and Russian line of this lesson that breaks a rule, each with its rewrite. Fix every finding or record in the PR why the line stays. Run it again on the fixed lines until a round finds nothing new.
+
+## 9. Drive every section
+
+Start the site with `npx astro dev --background --port <port>` from `apps/site`, which returns at once (`npx astro dev stop` stops it; plain `astro dev` holds the shell), and drive the lesson with Playwright at `/estonian/learn/<slug>`, `/uk/…` and `/ru/…`. The verify skill drives the web product, not the site, so it does not apply. Cover [the drive matrix](references/checklists.md#drive-matrix): every control and every quiz to its score, at 1280 and 375 px, light and night. Read each language's page top to bottom once as it renders: a line that was fine in the file can read wrong beside its controls.
 
 Done when every state in the matrix is seen with no console error, no failed request and nothing past the right edge at 375 px. Then capture the screenshots the PR needs, as [the screenshot workflow](../open-pr/references/screenshots.md) says.
 
-## 8. Open the PR
+## 10. Open the PR
 
 Run `pnpm verify:changed` after committing the `.po` files; it fails its catalog check while they are uncommitted. Then open the PR with [open-pr](../open-pr/SKILL.md) and turn on Auto-fix. Its body carries [the PR contents](references/checklists.md#pr-contents).
 

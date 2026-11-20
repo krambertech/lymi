@@ -60,18 +60,6 @@ Each one reached a PR. Look for its kind in yours.
 
 A teacher checks the Estonian before launch. That is a second check, never a reason to leave a known error in.
 
-## Ukrainian and Russian
-
-- Calques: «змінюється з особою» became «залежить від особи»; «утворюються за чергуванням» became «змінюються через чергування приголосних», ru «меняются из-за чередования согласных».
-- Clipped references: «про це урок {n}» became «про це розповідає урок {n}», ru «об этом — в уроке {n}».
-- A dash between two nouns: «Тому <1/> — неправильне дієслово», «Ты — тот, кто говорит».
-- Pairs that match: «Одна людина» and «Кілька людей», not «Множина».
-- Keep the English line's point: «Перші чотири — з числами», not «по порядку».
-- No capital mid-sentence in a feedback line.
-- Long answers such as «Понедельник» and «Воскресенье»: check them at 375 px.
-- A short English message can already exist with another meaning, as "Say it" did. Give yours a `context`.
-- Reuse another lesson's wording for the same message, so both lessons say it the same way.
-
 ## Drive matrix
 
 Drive the lesson in Playwright at 1280 and 375 px, light and night (`colorScheme: "dark"`), in en, uk and ru.
@@ -90,6 +78,7 @@ For element screenshots, hide `astro-dev-toolbar` and make `.sticky` static, or 
 - **Screenshots.** Each section and each quiz at desktop light and phone night, plus uk and ru.
 - **Instrumentation.** The product question: do visitors finish this lesson, and which quiz do they get wrong? The lesson reuses `learn_quiz_finished` with its quiz ids and `learn_lesson_finished`, both sent by the kit; name the ids. Change `docs/analytics.md` only for a new event or property.
 - **Verification.** Each form and claim with its source; `pnpm --filter @lymi/site typecheck` and `test`; extract at 0 missing; `pnpm verify:changed`; the drive matrix with its count of states; `pnpm reliability`.
+- **Copy.** The tell scan's remaining hits with their reasons, how many cold review rounds ran, and each line kept against a finding.
 - **Judgement calls.** The title and its uk and ru candidates, what the lesson leaves out and why, and any word from outside earlier lessons.
 
 ## Merge conflicts

@@ -43,6 +43,8 @@ A lesson file in `components/learn/lessons` holds its glossary, its sections and
 
 ## Writing a lesson
 
+[The estonian-lesson skill](../../.agents/skills/estonian-lesson/SKILL.md) builds one lesson end to end, from choosing its content to the PR, with the checks reviews kept asking for.
+
 - One question per lesson, answered in its heading and the line under it. Name a lesson by its topic, not a pun or a phrase.
 - Two or three short paragraphs, then something to touch. Explore first, then answer.
 - Every Estonian word in prose is a `Word` with a gloss.

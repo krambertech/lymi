@@ -333,8 +333,14 @@ msgstr "<0/> asks about people and <1/> about things: <2/> who is that, <3/> wha
 msgid "<0/> at the start turns a sentence into a yes-or-no question. Lesson {questions} is about questions."
 msgstr "<0/> at the start turns a sentence into a yes-or-no question. Lesson {questions} is about questions."
 
+msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> the irregular one: other verbs add an ending there too, as lesson {regularVerbs} shows."
+msgstr "<0/> has no ending, and it serves both he or she and they. That makes <1/> the irregular one: other verbs add an ending there too, as lesson {regularVerbs} shows."
+
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
+
+msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
+msgstr "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 
 msgid "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
 msgstr "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
@@ -350,6 +356,9 @@ msgstr "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:
 
 msgid "<0/> means holy, so this is the holy day."
 msgstr "<0/> means holy, so this is the holy day."
+
+msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
+msgstr "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 
 msgid "<0/> on its own is no, and <1/> is yes. A fuller answer repeats the verb with ei: asked <2/>, say <3/>. The no has no ending, so the same answer fits whoever is asked."
 msgstr "<0/> on its own is no, and <1/> is yes. A fuller answer repeats the verb with ei: asked <2/>, say <3/>. The no has no ending, so the same answer fits whoever is asked."
@@ -431,8 +440,14 @@ msgstr "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgid "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
 msgstr "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
 
+msgid "<0>olen, oled, on, oleme, olete, on</0>: I am, you are, and so on."
+msgstr "<0>olen, oled, on, oleme, olete, on</0>: I am, you are, and so on."
+
 msgid "<0>olen</0> for I, <1>oled</1> for you, <2>on</2> for he, she and they."
 msgstr "<0>olen</0> for I, <1>oled</1> for you, <2>on</2> for he, she and they."
+
+msgid "<0>on</0> is both he or she is and they are. Only the pronoun tells them apart."
+msgstr "<0>on</0> is both he or she is and they are. Only the pronoun tells them apart."
 
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>opportunity cost</0> <1>= what you give up</1>"
@@ -460,6 +475,9 @@ msgstr "<0>Sklep</0> is a shop, not a crypt, and <1>dynia</1> is a pumpkin, not 
 
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
+
+msgid "<0>ta</0> is both he and she. <1>te</1> is you to a group, and polite you to one person."
+msgstr "<0>ta</0> is both he and she. <1>te</1> is you to a group, and polite you to one person."
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
@@ -749,6 +767,9 @@ msgstr "A flat plate on a door says push; a handle says pull."
 
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
+
+msgid "A free Estonian lesson on personal pronouns, mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
+msgstr "A free Estonian lesson on personal pronouns, mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that's coming, and minutes past and to. Every time is read aloud."
 msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that's coming, and minutes past and to. Every time is read aloud."
@@ -1426,8 +1447,14 @@ msgstr "All of them. You can hear the difference."
 msgid "All of them. You can hear what a question asks."
 msgstr "All of them. You can hear what a question asks."
 
+msgid "All of them. You can hear who it's about."
+msgstr "All of them. You can hear who it's about."
+
 msgid "All of them. You hear who does it."
 msgstr "All of them. You hear who does it."
+
+msgid "All of them. You know olema."
+msgstr "All of them. You know olema."
 
 msgid "All Polish decks"
 msgstr "All Polish decks"
@@ -1795,6 +1822,9 @@ msgstr "because"
 
 msgid "Because I live in Tallinn."
 msgstr "Because I live in Tallinn."
+
+msgid "Because the ending already says who, the pronoun can go. Both lines below mean I'm Mari. Estonian can drop the pronoun, but never the verb."
+msgstr "Because the ending already says who, the pronoun can go. Both lines below mean I'm Mari. Estonian can drop the pronoun, but never the verb."
 
 msgid "bed"
 msgstr "bed"
@@ -2991,6 +3021,9 @@ msgstr "Each has its own page: the script, the sounds and the free decks that la
 msgid "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
 msgstr "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
 
+msgid "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
+msgstr "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
+
 msgid "Each question as New, Learning or Known"
 msgstr "Each question as New, Learning or Known"
 
@@ -3108,6 +3141,9 @@ msgstr "Ended in 1648 by the <0>Peace of Westphalia</0>."
 msgid "Endings of elama"
 msgstr "Endings of elama"
 
+msgid "Endings of olema"
+msgstr "Endings of olema"
+
 msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 msgstr "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 
@@ -3162,11 +3198,17 @@ msgstr "Estonian grammar lessons"
 msgid "Estonian has one present tense. <0/> means both I read and I'm reading, and the rest of the sentence tells you which. Here are the verbs in sentences you can use today."
 msgstr "Estonian has one present tense. <0/> means both I read and I'm reading, and the rest of the sentence tells you which. Here are the verbs in sentences you can use today."
 
+msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you'll hear most. Tap any word."
+msgstr "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you'll hear most. Tap any word."
+
 msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read any word aloud, even one you've never seen."
 msgstr "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read any word aloud, even one you've never seen."
 
 msgid "Estonian numbers"
 msgstr "Estonian numbers"
+
+msgid "Estonian personal pronouns and “to be”"
+msgstr "Estonian personal pronouns and “to be”"
 
 msgid "Estonian present tense"
 msgstr "Estonian present tense"
@@ -3629,6 +3671,10 @@ msgstr "forgot 4×"
 
 msgid "Forgot, Hard, Good or Easy"
 msgstr "Forgot, Hard, Good or Easy"
+
+msgctxt "pronoun form"
+msgid "Form"
+msgstr "Form"
 
 msgid "Format from 11 April 2026"
 msgstr "Format from 11 April 2026"
@@ -4106,8 +4152,20 @@ msgstr "Have you got the *key*?"
 msgid "He doesn’t *like* rainy days."
 msgstr "He doesn’t *like* rainy days."
 
+msgid "he or she"
+msgstr "he or she"
+
+msgid "he or she is"
+msgstr "he or she is"
+
+msgid "He or she is a teacher."
+msgstr "He or she is a teacher."
+
 msgid "He or she is at home."
 msgstr "He or she is at home."
+
+msgid "He or she is tired."
+msgstr "He or she is tired."
 
 msgid "he or she is; they are"
 msgstr "he or she is; they are"
@@ -4152,6 +4210,9 @@ msgstr "Hear a question and pick its question word. It's always the first word, 
 
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
+
+msgid "Hear a sentence and pick who it's about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
+msgstr "Hear a sentence and pick who it's about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 
 msgid "Hear a sentence, then pick how to say its no."
 msgstr "Hear a sentence, then pick how to say its no."
@@ -4635,6 +4696,9 @@ msgstr "I’m *reading* the newspaper."
 msgid "I'm 34 years old."
 msgstr "I'm 34 years old."
 
+msgid "I'm at home."
+msgstr "I'm at home."
+
 msgid "I'm from Ukraine."
 msgstr "I'm from Ukraine."
 
@@ -4671,11 +4735,17 @@ msgstr "I’m having a cheese *roll*."
 msgid "I'm learning Estonian."
 msgstr "I'm learning Estonian."
 
+msgid "I'm Liis, and he's Peeter."
+msgstr "I'm Liis, and he's Peeter."
+
 msgid "I’m listening to *music*."
 msgstr "I’m listening to *music*."
 
 msgid "I’m making *pumpkin* soup."
 msgstr "I’m making *pumpkin* soup."
+
+msgid "I'm Mari."
+msgstr "I'm Mari."
 
 msgid "I’m not *doing* anything."
 msgstr "I’m not *doing* anything."
@@ -4688,6 +4758,9 @@ msgstr "I'm reading a book."
 
 msgid "I’m reading a fashion *magazine*."
 msgstr "I’m reading a fashion *magazine*."
+
+msgid "I'm ready."
+msgstr "I'm ready."
 
 msgid "I’m taking the *dog* for a walk."
 msgstr "I’m taking the *dog* for a walk."
@@ -5468,6 +5541,9 @@ msgstr "Listen and type the time in digits, such as 3:30 or 3.30. Press Enter to
 msgid "Listen first."
 msgstr "Listen first."
 
+msgid "Listen to the end of the verb. Try the table above, then come back."
+msgstr "Listen to the end of the verb. Try the table above, then come back."
+
 msgid "Listen to the first word: kas, or which question word."
 msgstr "Listen to the first word: kas, or which question word."
 
@@ -5491,6 +5567,10 @@ msgstr "Locative"
 
 msgid "Lock"
 msgstr "Lock"
+
+msgctxt "pronoun form"
+msgid "Long"
+msgstr "Long"
 
 msgid "Long forms, because the two people are set side by side."
 msgstr "Long forms, because the two people are set side by side."
@@ -6131,6 +6211,9 @@ msgstr "No daily limit"
 msgid "No deck at this address · Lymi"
 msgstr "No deck at this address · Lymi"
 
+msgid "No ending. Ta on and nad on: he or she is, they are."
+msgstr "No ending. Ta on and nad on: he or she is, they are."
+
 msgid "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 
@@ -6324,6 +6407,9 @@ msgstr "Nouns and cases"
 msgid "Now a short exchange. Hear a question, then pick the answer that fits. A kas question wants yes or no; a question word wants what it asks about, such as a place for kus or a time for millal."
 msgstr "Now a short exchange. Hear a question, then pick the answer that fits. A kas question wants yes or no; a question word wants what it asks about, such as a place for kus or a time for millal."
 
+msgid "Now both together. You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
+msgstr "Now both together. You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
+
 msgid "Number"
 msgstr "Number"
 
@@ -6402,6 +6488,9 @@ msgstr "Older"
 
 msgid "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
 msgstr "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
+
+msgid "Olema, to be"
+msgstr "Olema, to be"
 
 msgid "On a door or a sign."
 msgstr "On a door or a sign."
@@ -6498,6 +6587,9 @@ msgstr "One of the ten base words."
 
 msgid "One person"
 msgstr "One person"
+
+msgid "One person you're talking to, such as Mari."
+msgstr "One person you're talking to, such as Mari."
 
 msgid "One present tense for both."
 msgstr "One present tense for both."
@@ -6609,6 +6701,9 @@ msgstr "Other MCP apps"
 
 msgid "Other minutes count from the hour that has struck. <0/> is “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is how <3>minut</3> looks after a number."
 msgstr "Other minutes count from the hour that has struck. <0/> is “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is how <3>minut</3> looks after a number."
+
+msgid "Other people, not the ones you're talking to."
+msgstr "Other people, not the ones you're talking to."
 
 msgid "Other subjects"
 msgstr "Other subjects"
@@ -6800,8 +6895,8 @@ msgid "Platform, track"
 msgstr "Platform, track"
 
 #. placeholder {0}: PRESENT_SENTENCES[each.id]
+#. placeholder {0}: PRONOUN_SENTENCES[id]
 #. placeholder {0}: bare(no)
-#. placeholder {0}: bare(yes)
 msgid "Play {0}"
 msgstr "Play {0}"
 
@@ -7009,6 +7104,9 @@ msgstr "Programming"
 
 msgid "Project management"
 msgstr "Project management"
+
+msgid "Pronouns"
+msgstr "Pronouns"
 
 msgid "Pronunciation"
 msgstr "Pronunciation"
@@ -7435,6 +7533,9 @@ msgstr "Roots, trunks, divisions, cords, branches: from C5 to T1."
 msgid "Round {roundNumber} of {total}"
 msgstr "Round {roundNumber} of {total}"
 
+msgid "Round the table"
+msgstr "Round the table"
+
 msgid "Run /mcp auth lymi. Your browser opens on Lymi. Sign in and allow it."
 msgstr "Run /mcp auth lymi. Your browser opens on Lymi. Sign in and allow it."
 
@@ -7515,6 +7616,9 @@ msgstr "Say no"
 
 msgid "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
+
+msgid "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
+msgstr "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
 
 msgid "Say the week through with the strip above, then try again."
 msgstr "Say the week through with the strip above, then try again."
@@ -7660,6 +7764,9 @@ msgstr "Set a routine and Grok Bot checks Lymi each morning: what’s due, and h
 msgid "Set fields, plain text"
 msgstr "Set fields, plain text"
 
+msgid "Setting two people side by side takes the long forms: <0/>"
+msgstr "Setting two people side by side takes the long forms: <0/>"
+
 msgid "seven"
 msgstr "seven"
 
@@ -7726,14 +7833,33 @@ msgstr "shop"
 msgid "Shop"
 msgstr "Shop"
 
+msgctxt "pronoun form"
+msgid "Short"
+msgstr "Short"
+
 msgid "Short and long"
 msgstr "Short and long"
+
+msgid "Short for meie."
+msgstr "Short for meie."
 
 msgid "Short for mina."
 msgstr "Short for mina."
 
+msgid "Short for nemad."
+msgstr "Short for nemad."
+
+msgid "Short for sina."
+msgstr "Short for sina."
+
 msgid "Short for sinu."
 msgstr "Short for sinu."
+
+msgid "Short for teie."
+msgstr "Short for teie."
+
+msgid "Short for tema."
+msgstr "Short for tema."
 
 msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 msgstr "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
@@ -7816,6 +7942,12 @@ msgstr "Six days end in <0>päev</0>, day. <1>Reede</1> doesn't."
 
 msgid "Six endings"
 msgstr "Six endings"
+
+msgid "Six pronouns, two forms"
+msgstr "Six pronouns, two forms"
+
+msgid "Six words for people, each with a long and a short form, and olema, to be, whose ending tells you who."
+msgstr "Six words for people, each with a long and a short form, and olema, to be, whose ending tells you who."
 
 msgid "Skills for the jobs you repeat"
 msgstr "Skills for the jobs you repeat"
@@ -7900,6 +8032,9 @@ msgstr "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form.
 
 msgid "Some verbs change inside: <0/>, but <1/>. Don't start from the -ma form. Start from the ma form, and the no follows: <2/>."
 msgstr "Some verbs change inside: <0/>, but <1/>. Don't start from the -ma form. Start from the ma form, and the no follows: <2/>."
+
+msgid "Someone else, a man or a woman: one word for both."
+msgstr "Someone else, a man or a woman: one word for both."
 
 msgid "Someone’s knocking at the *door*."
 msgstr "Someone’s knocking at the *door*."
@@ -8315,6 +8450,9 @@ msgstr "Tap a question word"
 msgid "Tap a vowel"
 msgstr "Tap a vowel"
 
+msgid "Tap a word or a person"
+msgstr "Tap a word or a person"
+
 msgid "Tap an ending"
 msgstr "Tap an ending"
 
@@ -8624,8 +8762,14 @@ msgstr "The ending for ta, he or she. Olema has on here."
 msgid "The ending for te, you to more than one or polite you."
 msgstr "The ending for te, you to more than one or polite you."
 
+msgid "The ending for te, you to more than one."
+msgstr "The ending for te, you to more than one."
+
 msgid "The ending says who, so ma and sa can go: <0>Elan Tallinnas.</0>"
 msgstr "The ending says who, so ma and sa can go: <0>Elan Tallinnas.</0>"
+
+msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
+msgstr "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 
 msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn't. Day names start with a small letter, like any other word."
 msgstr "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn't. Day names start with a small letter, like any other word."
@@ -8795,6 +8939,9 @@ msgstr "The part of a cell that releases energy from food"
 msgid "The partitive case"
 msgstr "The partitive case"
 
+msgid "The people you're talking to, or one person, politely."
+msgstr "The people you're talking to, or one person, politely."
+
 msgid "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 msgstr "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 
@@ -8891,6 +9038,24 @@ msgstr "The second day. Teisi- sounds like <0/>, second."
 msgid "The seven days, the four that count, and how to say what day it is."
 msgstr "The seven days, the four that count, and how to say what day it is."
 
+msgid "The short form is ma."
+msgstr "The short form is ma."
+
+msgid "The short form is me."
+msgstr "The short form is me."
+
+msgid "The short form is nad."
+msgstr "The short form is nad."
+
+msgid "The short form is sa."
+msgstr "The short form is sa."
+
+msgid "The short form is ta."
+msgstr "The short form is ta."
+
+msgid "The short form is te."
+msgstr "The short form is te."
+
 msgid "The small words every sentence is built from."
 msgstr "The small words every sentence is built from."
 
@@ -8911,6 +9076,9 @@ msgstr "The strike"
 
 msgid "The sugar photosynthesis makes"
 msgstr "The sugar photosynthesis makes"
+
+msgid "The table lights up who the word means."
+msgstr "The table lights up who the word means."
 
 msgid "The tens"
 msgstr "The tens"
@@ -9023,6 +9191,12 @@ msgstr "These ten words build every other number. Tap each one. Two pairs sound 
 msgid "These three keep slipping. Let’s start with la huelga."
 msgstr "These three keep slipping. Let’s start with la huelga."
 
+msgid "they"
+msgstr "they"
+
+msgid "they are"
+msgstr "they are"
+
 msgid "They eat at home."
 msgstr "They eat at home."
 
@@ -9041,8 +9215,14 @@ msgstr "They say it’ll rain *tomorrow*."
 msgid "They stay in Mochi. A card’s first side becomes its term and the rest becomes its meaning, and its first picture comes along."
 msgstr "They stay in Mochi. A card’s first side becomes its term and the rest becomes its meaning, and its first picture comes along."
 
+msgid "They're at home."
+msgstr "They're at home."
+
 msgid "They're drinking coffee."
 msgstr "They're drinking coffee."
+
+msgid "They're tired."
+msgstr "They're tired."
 
 msgid "They're working today."
 msgstr "They're working today."
@@ -9831,6 +10011,9 @@ msgstr "Water moving across a membrane toward more solute"
 msgid "Water moving through a membrane toward the side with more dissolved substance"
 msgstr "Water moving through a membrane toward the side with more dissolved substance"
 
+msgid "we"
+msgstr "we"
+
 msgid "we are"
 msgstr "we are"
 
@@ -9867,6 +10050,9 @@ msgstr "We use cookies and device storage for sign-in, preferences, offline use 
 msgid "We’ll meet at the station."
 msgstr "We’ll meet at the station."
 
+msgid "We're friends."
+msgstr "We're friends."
+
 msgid "We’re going into *town*."
 msgstr "We’re going into *town*."
 
@@ -9875,6 +10061,9 @@ msgstr "We’re looking for a new *flat*."
 
 msgid "We’re old *friends*."
 msgstr "We’re old *friends*."
+
+msgid "We're ready."
+msgstr "We're ready."
 
 msgid "We're waiting for the bus."
 msgstr "We're waiting for the bus."
@@ -10261,6 +10450,9 @@ msgstr "Who can see the cards I make?"
 msgid "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
 msgstr "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
 
+msgid "Who is it about?"
+msgstr "Who is it about?"
+
 msgid "Who is responsible"
 msgstr "Who is responsible"
 
@@ -10281,6 +10473,9 @@ msgstr "Who were the first Europeans to reach Canada?"
 
 msgid "Who, what, where"
 msgstr "Who, what, where"
+
+msgid "Who? Me!"
+msgstr "Who? Me!"
 
 msgid "Whose notes"
 msgstr "Whose notes"
@@ -10588,8 +10783,17 @@ msgstr "yesterday"
 msgid "Yesterday was a rest day."
 msgstr "Yesterday was a rest day."
 
+msgid "you"
+msgstr "you"
+
 msgid "You"
 msgstr "You"
+
+msgid "you all"
+msgstr "you all"
+
+msgid "You and someone else."
+msgstr "You and someone else."
 
 msgid "you are"
 msgstr "you are"
@@ -10696,8 +10900,17 @@ msgstr "You want everything on your own computer"
 msgid "You wrote this"
 msgstr "You wrote this"
 
+msgid "You, the one speaking."
+msgstr "You, the one speaking."
+
 msgid "you, to more than one person"
 msgstr "you, to more than one person"
+
+msgid "you, to more than one; polite you"
+msgstr "you, to more than one; polite you"
+
+msgid "you, to one person"
+msgstr "you, to one person"
 
 msgid "You'll hear a question with it, and an answer."
 msgstr "You'll hear a question with it, and an answer."
@@ -10714,6 +10927,9 @@ msgstr "You'll hear it, and where its name comes from."
 msgid "You'll hear the day it stands for."
 msgstr "You'll hear the day it stands for."
 
+msgid "You'll hear the form and who it's for."
+msgstr "You'll hear the form and who it's for."
+
 msgid "You'll hear these three in your first conversations. Learn them whole, with an answer each, and don't take them apart yet."
 msgstr "You'll hear these three in your first conversations. Learn them whole, with an answer each, and don't take them apart yet."
 
@@ -10722,6 +10938,18 @@ msgstr "You'll hear what day it is today. Pick the day that comes next."
 
 msgid "You'll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "You'll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
+
+msgid "You're a good friend."
+msgstr "You're a good friend."
+
+msgid "You're all doing great."
+msgstr "You're all doing great."
+
+msgid "You're doing great."
+msgstr "You're doing great."
+
+msgid "You're teachers."
+msgstr "You're teachers."
 
 msgid "You’re welcome"
 msgstr "You’re welcome"

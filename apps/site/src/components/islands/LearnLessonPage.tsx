@@ -2,6 +2,7 @@ import { EitusLesson } from "../learn/lessons/Eitus";
 import { HaaldusLesson } from "../learn/lessons/Haaldus";
 import { KellLesson } from "../learn/lessons/Kell";
 import { KusimusedLesson } from "../learn/lessons/Kusimused";
+import { MinaSinaTemaLesson } from "../learn/lessons/MinaSinaTema";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { OlevikLesson } from "../learn/lessons/Olevik";
 import { PaevadLesson } from "../learn/lessons/Paevad";
@@ -11,6 +12,7 @@ import { Island } from "./Island";
 export const LESSON_VIEWS = {
   haaldus: HaaldusLesson,
   numbrid: NumbridLesson,
+  "mina-sina-tema": MinaSinaTemaLesson,
   eitus: EitusLesson,
   kusimused: KusimusedLesson,
   olevik: OlevikLesson,

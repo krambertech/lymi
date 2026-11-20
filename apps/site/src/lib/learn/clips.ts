@@ -312,6 +312,42 @@ export const KUSIMUSED_SENTENCES = {
   "w-palju-vett": "Kui palju vett sa jood?",
 } as const;
 
+/** The six personal pronouns, long and short, with olema in the present for each. */
+export const PRONOUNS = [
+  { long: "mina", short: "ma", verb: "olen" },
+  { long: "sina", short: "sa", verb: "oled" },
+  { long: "tema", short: "ta", verb: "on" },
+  { long: "meie", short: "me", verb: "oleme" },
+  { long: "teie", short: "te", verb: "olete" },
+  { long: "nemad", short: "nad", verb: "on" },
+] as const;
+
+/** The text with its first letter in capitals. */
+export const capital = (text: string) => text.charAt(0).toUpperCase() + text.slice(1);
+
+/** A pronoun said with its form of olema, as one clip: “Ma olen”. */
+export const pronounWithOlema = (pronoun: string, verb: string) => capital(`${pronoun} ${verb}`);
+
+/** Sentences with a pronoun and olema, some with the pronoun dropped. */
+export const PRONOUN_SENTENCES = {
+  "c-kes": "Kes? Mina!",
+  "c-mari": "Ma olen Mari.",
+  "c-olen-mari": "Olen Mari.",
+  "c-liis": "Mina olen Liis ja tema on Peeter.",
+  "s-olen-kodus": "Olen kodus.",
+  "s-ma-valmis": "Ma olen valmis.",
+  "s-oled-tubli": "Oled väga tubli.",
+  "s-sa-sober": "Sa oled hea sõber.",
+  "s-ta-opetaja": "Ta on õpetaja.",
+  "s-ta-vasinud": "Ta on väsinud.",
+  "s-oleme-valmis": "Oleme valmis.",
+  "s-me-sobrad": "Me oleme sõbrad.",
+  "s-olete-tublid": "Olete väga tublid.",
+  "s-te-opetajad": "Te olete õpetajad.",
+  "s-nad-kodus": "Nad on kodus.",
+  "s-nad-vasinud": "Nad on väsinud.",
+} as const;
+
 /** The verbs of the present-tense lesson: the -ma form and the stem the endings go on. */
 export const PRESENT_VERBS = [
   { verb: "elama", stem: "ela" },
@@ -403,6 +439,24 @@ export const CLIPS: Record<string, Record<string, string>> = {
     ...NEGATION_PHRASES,
   ]),
   kusimused: { ...words(KUSIMUSED_WORDS), ...KUSIMUSED_SENTENCES },
+  "mina-sina-tema": {
+    ...words([
+      ...PRONOUNS.flatMap(({ long, short }) => [long, short]),
+      "olema",
+      "olen",
+      "oled",
+      "on",
+      "oleme",
+      "olete",
+    ]),
+    ...words(
+      PRONOUNS.flatMap(({ long, short, verb }) => [
+        pronounWithOlema(long, verb),
+        pronounWithOlema(short, verb),
+      ]),
+    ),
+    ...PRONOUN_SENTENCES,
+  },
   olevik: {
     ...words([
       ...PRESENT_VERBS.map(({ verb }) => verb),

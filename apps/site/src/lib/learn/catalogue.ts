@@ -64,7 +64,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad, with ten everyday verbs read aloud.`,
       },
       { name: msg`Negation`, et: "Ei ole" },
-      { name: msg`Questions`, et: "Kas? Mis? Kus?" },
+      {
+        slug: "kusimused",
+        name: msg`Questions`,
+        title: msg`Asking questions in Estonian`,
+        et: "Kas? Mis? Kus?",
+        minutes: 10,
+        blurb: msg`A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and the first questions you'll hear. Every sentence is read aloud.`,
+      },
       { name: msg`Saying where: -s and -l`, et: "Tallinnas, Tartus" },
       {
         slug: "numbrid",

@@ -216,6 +216,9 @@ msgstr "{name}: формат, все колоды и источник вопро
 msgid "{note} Lymi isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "{note} Lymi не связан с {authority} и не может гарантировать, что ты сдашь экзамен."
 
+msgid "{past} minutes past {struck}."
+msgstr "{past} минут после {struck}."
+
 msgid "{pictures, plural, one {# card brings its picture.} other {# cards bring their pictures.}}"
 msgstr "{pictures, plural, one {# карточка переносится с картинкой.} few {# карточки переносятся с картинками.} many {# карточек переносятся с картинками.} other {# карточки переносятся с картинками.}}"
 
@@ -327,6 +330,9 @@ msgstr "<0/> — это сто, а <1/> — тысяча, и «один» пер
 msgid "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
 msgstr "<0/> — завтра, <1/> — вчера. Добавь в начало <2>üle-</2>, и получится на день дальше: <3/> — послезавтра, <4/> — позавчера. Выбери, какой сегодня день."
 
+msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:30, not 4:30."
+msgstr "<0/> значит «половина», и смотрит вперёд. <1/> — это 3:30, а не 4:30."
+
 msgid "<0/> means holy, so this is the holy day."
 msgstr "<0/> значит «святой», так что это святой день."
 
@@ -349,6 +355,12 @@ msgstr "<0>{tensWord}</0> и -kümmend: {tens} × 10, затем <1>{ones}</1> �
 
 msgid "<0>{tensWord}</0> and -kümmend: {tens} tens."
 msgstr "<0>{tensWord}</0> и -kümmend: {tens} × 10."
+
+msgid "<0>{words}</0> is {digits}."
+msgstr "<0>{words}</0> — это {digits}."
+
+msgid "<0>{words}</0> is halfway to {next}, so it's {right}."
+msgstr "<0>{words}</0> — полпути до {next}, то есть {right}."
 
 msgid "<0>Active transport</0> moves substances against the gradient."
 msgstr "<0>Активный транспорт</0> переносит вещества против градиента."
@@ -389,6 +401,9 @@ msgstr "<0>Осмос</0>: вода проходит через мембрану
 msgid "<0>P suletud</0> on a sign: closed on Sunday."
 msgstr "<0>P suletud</0> на табличке: в воскресенье закрыто."
 
+msgid "<0>pool</0>, <1>veerand</1> and <2>kolmveerand</2> name the hour that's coming: <3>pool neli</3> is 3:30."
+msgstr "<0>pool</0>, <1>veerand</1> и <2>kolmveerand</2> называют наступающий час: <3>pool neli</3> — это 3:30."
+
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>эластичность спроса</0> ?"
 
@@ -403,6 +418,9 @@ msgstr "<0>Sõber</0> — родственник древнерусского «
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сегодня, завтра, вчера. <3>Üle-</3> добавляет ещё один день."
+
+msgid "<0>veerand neli</0> is a quarter of the way to four, 3:15. <1>kolmveerand neli</1> is three quarters, 3:45."
+msgstr "<0>veerand neli</0> — четверть пути к четырём, 3:15. <1>kolmveerand neli</1> — три четверти, 3:45."
 
 msgid "<0>за́мок</0> is a castle."
 msgstr "<0>за́мок</0> — это крепость."
@@ -442,6 +460,9 @@ msgstr "12 карточек к повторению, примерно пять �
 
 msgid "12 cards reviewed offline"
 msgstr "12 карточек повторено без сети"
+
+msgid "12 minutes"
+msgstr "12 минут"
 
 msgid "12 Spanish cards are due, about five minutes. Quick warm-up first?"
 msgstr "К повторению 12 карточек по испанскому, примерно пять минут. Сначала короткая разминка?"
@@ -605,6 +626,16 @@ msgstr "После сегодняшнего урока в колоде груп�
 msgid "A clever fix made from whatever is at hand"
 msgstr "Смекалистое решение из подручных средств"
 
+msgid "A clock"
+msgstr "Часы"
+
+#. placeholder {0}: timeDigits(time)
+msgid "A clock at {0}"
+msgstr "Часы показывают {0}"
+
+msgid "A clock at {right}"
+msgstr "Часы показывают {right}"
+
 msgid "A copy each, or AnkiHub for decks that update"
 msgstr "У каждого своя копия или AnkiHub для обновляемых колод"
 
@@ -667,6 +698,9 @@ msgstr "Гладкая накладка на двери подсказывает
 
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "В бесплатной колоде есть каждый дорожный знак из правил: по картинке, с польским названием и номером."
+
+msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that's coming, and minutes past and to. Every time is read aloud."
+msgstr "Бесплатный урок эстонского о том, как сказать, который час: целые часы, pool, veerand и kolmveerand, которые называют следующий час, и минуты до и после. Каждое время озвучено."
 
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
 msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение на первом слоге и то, как удвоенная буква меняет слово. Каждое слово озвучено."
@@ -830,6 +864,12 @@ msgstr "ссора"
 
 msgid "A quarrel"
 msgstr "Ссора"
+
+msgid "a quarter"
+msgstr "четверть"
+
+msgid "A quarter of the way to {next}."
+msgstr "Четверть пути до {next}."
 
 msgid "A question you got wrong"
 msgstr "Вопрос с ошибкой"
@@ -1176,11 +1216,17 @@ msgstr "преимущество"
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "После урока на italki, Preply или с частным репетитором вставь чат или сфотографируй заметки. Lymi превратит новые слова в карточки, которые ты повторяешь между уроками. Добавить их может и AI-ассистент. Бесплатно."
 
+msgid "After a number from two up, minut becomes minutit."
+msgstr "После чисел от двух и больше minut становится minutit."
+
 msgid "After today’s lesson"
 msgstr "После сегодняшнего урока"
 
 msgid "After you learn something new, you start noticing it everywhere"
 msgstr "Когда узнаёшь что-то новое, начинаешь замечать это повсюду"
+
+msgid "after; in, as in “in ten minutes”"
+msgstr "после; через, как в «через десять минут»"
 
 msgid "AI"
 msgstr "AI"
@@ -1336,6 +1382,9 @@ msgstr "А ещё «другой»."
 msgid "Also “to get”, from saama."
 msgstr "Ещё и «получить», от saama."
 
+msgid "Also a bell."
+msgstr "Ещё и колокол."
+
 msgid "Also called the frequency illusion."
 msgstr "Другое название — иллюзия частотности."
 
@@ -1360,8 +1409,14 @@ msgstr "Пример колоды"
 msgid "An extreme result is usually followed by a more ordinary one"
 msgstr "После выдающегося результата обычно идёт более скромный"
 
+msgid "An hour earlier"
+msgstr "На час раньше"
+
 msgid "An hour has 60 minutes."
 msgstr "В часе 60 минут."
+
+msgid "An hour later"
+msgstr "На час позже"
 
 msgid "An idea that only sounds brilliant after a few drinks"
 msgstr "Идея, которая кажется гениальной только после пары рюмок"
@@ -1483,6 +1538,9 @@ msgstr "С изменениями от 19 февраля 2026 года"
 msgid "As amended on 30 January 2026"
 msgstr "С изменениями от 30 января 2026 года"
 
+msgid "Ask <0>Mis kell on?</0> The answer is <1>kell on</1> and the hour: <2>kell on kolm</2>."
+msgstr "Спрашивай <0>Mis kell on?</0> Ответ — <1>kell on</1> и час: <2>kell on kolm</2>."
+
 msgid "Ask ChatGPT for flashcards from a photo of your notes, a textbook page or the chat you just had. They land in Lymi, where cards you remember come back later and the ones you forget come back sooner."
 msgstr "Попроси ChatGPT сделать флеш-карточки из фото заметок, страницы учебника или только что прошедшего разговора. Они попадут в Lymi, где карточки, которые ты помнишь, будут возвращаться позже, а забытые — раньше."
 
@@ -1506,6 +1564,9 @@ msgstr "Попроси Gemini сделать флеш-карточки из за
 
 msgid "Ask Grok Bot to explain a hard topic in plain words, then keep the key steps as cards."
 msgstr "Попроси Grok Bot простыми словами объяснить сложную тему, а главные шаги сохрани как карточки."
+
+msgid "Ask the time and understand the answer. Halves and quarters count toward the hour that's coming."
+msgstr "Спроси, который час, и пойми ответ. Половины и четверти считают до наступающего часа."
 
 msgid "Ask what to review."
 msgstr "Спроси, что повторить."
@@ -1578,6 +1639,9 @@ msgstr "корзина"
 
 msgid "bed"
 msgstr "кровать"
+
+msgid "Before the hour, say how long until the next one. <0/> is “in ten minutes, four”: 3:50."
+msgstr "Перед ровным часом говорят, сколько осталось до следующего. <0/> — «через десять минут четыре»: 3:50."
 
 msgid "Before the test"
 msgstr "Перед тестом"
@@ -2211,6 +2275,9 @@ msgstr "Нажми, чтобы перевернуть"
 msgid "Clinical signs"
 msgstr "Клинические признаки"
 
+msgid "clock, watch; o'clock"
+msgstr "часы; час (о времени)"
+
 msgid "Clocking off, and the free evening that follows"
 msgstr "Конец рабочего дня и свободный вечер после него"
 
@@ -2657,6 +2724,9 @@ msgstr "Готовим подсказку…"
 msgid "Drag Lymi to Applications"
 msgstr "Перетащи Lymi в «Программы»"
 
+msgid "Drag the minute hand or pick the minutes, then press play to hear the time. The hour a time is named after lights up."
+msgstr "Перетащи минутную стрелку или выбери минуты, а потом нажми кнопку воспроизведения, чтобы услышать время. Час, по которому названо время, подсвечивается."
+
 msgid "Drink more *water*!"
 msgstr "Пей больше *воды*!"
 
@@ -2968,6 +3038,9 @@ msgstr "У каждого существительного есть der, die и�
 
 msgid "Every noun ending in -ung takes die."
 msgstr "У всех существительных на -ung артикль die."
+
+msgid "Every one, by ear."
+msgstr "Все до одного, на слух."
 
 msgid "Every question has four answers and one is right. Because you learn 310 questions in all, it’s often called the 310-question test."
 msgstr "У каждого вопроса четыре варианта ответа, и верный только один. Всего нужно выучить 310 вопросов, поэтому его часто называют «тест 310 вопросов»."
@@ -3666,6 +3739,9 @@ msgstr "Хорошо"
 msgid "Good *morning*!"
 msgstr "Доброе *утро*!"
 
+msgid "Good ear. Halves and quarters are the ones to replay."
+msgstr "Хороший слух. Половины и четверти стоит послушать ещё раз."
+
 msgid "Good ear. Listen to how the ones you missed start."
 msgstr "Хороший слух. Послушай, как начинаются дни, где были ошибки."
 
@@ -3741,6 +3817,21 @@ msgstr "Grok Bot работает на собственном облачном �
 
 msgid "habeas corpus"
 msgstr "habeas corpus"
+
+msgid "half"
+msgstr "половина"
+
+msgid "Half hours"
+msgstr "Половины часов"
+
+msgid "half past three, 3:30"
+msgstr "половина четвёртого, 3:30"
+
+msgid "Half past: pool"
+msgstr "Половина: pool"
+
+msgid "Halfway to {next}."
+msgstr "Полпути до {next}."
 
 msgid "Hand"
 msgstr "Рука"
@@ -3843,6 +3934,9 @@ msgstr "Вот заметки с сегодняшнего урока испан�
 msgid "Here are the slides from today’s lecture on cells. Add the key terms."
 msgstr "Вот слайды с сегодняшней лекции о клетках. Добавь ключевые термины."
 
+msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. The form behind them comes in lesson {genitive}."
+msgstr "Здесь число меняет форму: <0>viis</0> становится <1>viie</1>, <2>kümme</2> — <3>kümne</3>, <4>kakskümmend</4> — <5>kahekümne</5>. Пока запомни эти три как готовые фразы. Откуда эта форма, объяснит урок {genitive}."
+
 msgid "Here’s chapter 4 of my Security+ guide. Add the key terms."
 msgstr "Вот глава 4 моего пособия по Security+. Добавь ключевые термины."
 
@@ -3884,6 +3978,9 @@ msgstr "святой; праздник"
 
 msgid "Hopefully"
 msgstr "Надеюсь"
+
+msgid "Hour"
+msgstr "Час"
 
 msgid "House"
 msgstr "Дом"
@@ -4289,6 +4386,9 @@ msgstr "Импортируй в Lymi"
 msgid "Important"
 msgstr "Важная"
 
+msgid "In {ahead} minutes it's {next}."
+msgstr "Через {ahead} минут будет {next}."
+
 msgid "In a bar in Spain, you ask them to “put” you one."
 msgstr "В испанском баре кофе просят «поставить»."
 
@@ -4496,6 +4596,9 @@ msgstr "Всё в порядке"
 msgid "It’s raining, so I want to *take a taxi*."
 msgstr "Идёт дождь, так что я хочу взять *такси*."
 
+msgid "It's three o'clock."
+msgstr "Три часа."
+
 msgid "It’s why a half-read chapter keeps nagging at you."
 msgstr "Вот почему недочитанная глава не даёт покоя."
 
@@ -4679,6 +4782,9 @@ msgctxt "cards in this state"
 msgid "Known"
 msgstr "Выученные"
 
+msgid "Kolm, three, and veerand, a quarter."
+msgstr "Kolm — три, veerand — четверть."
+
 msgid "Korean"
 msgstr "Корейский"
 
@@ -4687,6 +4793,15 @@ msgstr "Краков — красивый *город*."
 
 msgid "Krambertech OÜ, an Estonian company, provides Lymi and is responsible for your personal data. Contact <0>hello@lymi.app</0> with questions or privacy requests."
 msgstr "Lymi предоставляет эстонская компания Krambertech OÜ, которая отвечает за твои персональные данные. Вопросы и запросы о конфиденциальности отправляй на <0>hello@lymi.app</0>."
+
+msgid "Kümme minutit kolm läbi: 3:10."
+msgstr "Kümme minutit kolm läbi: десять минут четвёртого, 3:10."
+
+msgid "Kümne is the form kümme takes before minuti pärast."
+msgstr "Kümne — это форма kümme перед minuti pärast."
+
+msgid "Kümne minuti pärast neli: in ten minutes it's four, 3:50."
+msgstr "Kümne minuti pärast neli: через десять минут четыре, 3:50."
 
 msgid "Lab values"
 msgstr "Лабораторные нормы"
@@ -4933,8 +5048,14 @@ msgstr "Linna может значить «города» или «в город�
 msgid "Listen"
 msgstr "Послушать"
 
+msgid "Listen and pick the clock. The others are the usual mix-ups: an hour out, or a quarter the wrong way round."
+msgstr "Послушай и выбери часы. Остальные — обычные путаницы: не тот час или четверть не с той стороны."
+
 msgid "Listen and pick the day. Most of them end the same way, so listen to how each one starts."
 msgstr "Послушай и выбери день. Большинство заканчиваются одинаково, так что слушай, как каждый начинается."
+
+msgid "Listen and type the time in digits, such as 3:30 or 3.30. Press Enter to check."
+msgstr "Послушай и введи время цифрами, например 3:30 или 3.30. Нажми Enter, чтобы проверить."
 
 msgid "Listen first."
 msgstr "Сначала послушай."
@@ -5305,8 +5426,26 @@ msgstr "Микробиология"
 msgid "Milk"
 msgstr "Молоко"
 
+msgid "Minute hand"
+msgstr "Минутная стрелка"
+
+msgid "minutes"
+msgstr "минуты"
+
+msgid "Minutes"
+msgstr "Минуты"
+
+msgid "Minutes past count from the hour that has struck: <0>kümme minutit kolm läbi</0>, 3:10. Minutes to count down to the next: <1>kümne minuti pärast neli</1>, 3:50."
+msgstr "Минуты после считают от прошедшего часа: <0>kümme minutit kolm läbi</0>, 3:10. Минуты до отсчитывают до следующего: <1>kümne minuti pärast neli</1>, 3:50."
+
+msgid "Minutes past: läbi"
+msgstr "Минуты после: läbi"
+
 msgid "minutes to answer them"
 msgstr "минут на ответы"
+
+msgid "Minutes to: pärast"
+msgstr "Минуты до: pärast"
 
 msgid "mitochondrion"
 msgstr "митохондрия"
@@ -5817,6 +5956,12 @@ msgstr "На компьютере"
 msgid "On the free plan"
 msgstr "На бесплатном тарифе"
 
+msgid "On the hour"
+msgstr "Целые часы"
+
+msgid "On the hour: just its number."
+msgstr "Ровно: только число часа."
+
 msgid "On your phone"
 msgstr "На телефоне"
 
@@ -5966,6 +6111,9 @@ msgstr "Другие экзамены"
 
 msgid "Other MCP apps"
 msgstr "Другие MCP-приложения"
+
+msgid "Other minutes count from the hour that has struck. <0/> is “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is how <3>minut</3> looks after a number."
+msgstr "Остальные минуты считают от прошедшего часа. <0/> — «десять минут, три прошло»: 3:10. <1/> значит «сквозь» или «прошло», а <2/> — это <3>minut</3> после числа."
 
 msgid "Other subjects"
 msgstr "Другие темы"
@@ -6153,14 +6301,20 @@ msgstr "Простой текст"
 msgid "Platform, track"
 msgstr "Путь, платформа"
 
+#. placeholder {0}: timeDigits(time)
 #. placeholder {0}: w.term
 msgid "Play {0}"
 msgstr "Воспроизвести {0}"
 
+#. placeholder {0}: timeDigits(time)
 #. placeholder {0}: w.term
+#. placeholder {1}: timeWords(time)
 #. placeholder {1}: w.reading
 msgid "Play {0}, {1}"
 msgstr "Воспроизвести {0}, {1}"
+
+msgid "Play {digits}"
+msgstr "Воспроизвести {digits}"
 
 msgid "Play {n}"
 msgstr "Воспроизвести {n}"
@@ -6257,6 +6411,9 @@ msgstr "Польские слова, которые ты запомнишь."
 
 msgid "Polski · new"
 msgstr "Polski · новая"
+
+msgid "Pool neli: halfway to four, 3:30."
+msgstr "Pool neli: половина четвёртого, 3:30."
 
 msgid "Popular"
 msgstr "Популярное"
@@ -6384,6 +6541,18 @@ msgstr "Собираем вместе"
 
 msgid "Put your *hand* up."
 msgstr "Подними *руку*."
+
+msgid "quarter past three, 3:15"
+msgstr "четверть четвёртого, 3:15"
+
+msgid "quarter to four, 3:45"
+msgstr "без четверти четыре, 3:45"
+
+msgid "Quarters look ahead too. <0/> is a quarter, so <1/> is a quarter of the way to four: 3:15. <2/> is three quarters, so <3/> is 3:45."
+msgstr "Четверти тоже смотрят вперёд. <0/> — четверть, поэтому <1/> — это четверть четвёртого, 3:15, совсем как по-русски. <2/> — три четверти, поэтому <3/> — это 3:45."
+
+msgid "Quarters: veerand and kolmveerand"
+msgstr "Четверти: veerand и kolmveerand"
 
 msgid "Questions"
 msgstr "Вопросы"
@@ -7617,6 +7786,9 @@ msgstr "Скажи, что пора повторить в Lymi."
 msgid "Telling the time"
 msgstr "Который час"
 
+msgid "Telling the time in Estonian"
+msgstr "Который час по-эстонски"
+
 msgid "Template fields, with small monthly limits on Free"
 msgstr "Поля шаблона, на бесплатном тарифе — небольшой лимит в месяц"
 
@@ -7629,8 +7801,14 @@ msgstr "десять"
 msgid "Ten minutes between meetings."
 msgstr "Десять минут между встречами."
 
+msgid "ten past three, 3:10"
+msgstr "десять минут четвёртого, 3:10"
+
 msgid "Ten questions from your due cards"
 msgstr "Десять вопросов из карточек к повторению"
+
+msgid "ten to four, 3:50"
+msgstr "без десяти четыре, 3:50"
 
 msgid "Tens and ones are separate words: <0>kakskümmend üks</0>."
 msgstr "Десятки и единицы — отдельные слова: <0>kakskümmend üks</0>."
@@ -7907,6 +8085,15 @@ msgstr "H не читается: hoy звучит как «ой»."
 
 msgid "The hedgehog lives in the forest."
 msgstr "Ёжик живёт в лесу."
+
+msgid "The hour you hear is the one that's coming. Tap a few and listen."
+msgstr "Час, который ты слышишь, — тот, что наступает. Нажми на несколько и послушай."
+
+msgid "The hours"
+msgstr "Часы"
+
+msgid "The hours are the numbers you already know. Tap one to hear it."
+msgstr "Часы — это числа, которые ты уже знаешь. Нажми, чтобы услышать."
 
 msgid "The Hradec Králové and Pardubice regions."
 msgstr "Краловеградецкий и Пардубицкий края."
@@ -8307,6 +8494,9 @@ msgstr "Это мой *друг* из Китая."
 msgid "This is the current HSK 2.0 format. The syllabus published in 2025 grows level 1 to 300 words and level 2 to 500."
 msgstr "Это действующий формат HSK 2.0. Программа, опубликованная в 2025 году, увеличивает уровень 1 до 300 слов, а уровень 2 — до 500."
 
+msgid "This is the one most learners get wrong at first. Listen for the hour, then step back half an hour."
+msgstr "Услышь час и отступи на полчаса назад, как в «половине четвёртого»."
+
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "Эта политика охватывает сайт Lymi, приложения, API и подключённых помощников."
 
@@ -8325,6 +8515,12 @@ msgstr "три кошки"
 msgid "Three keep slipping: <0>aufhören, Schnapsidee, die Gewerkschaft</0>"
 msgstr "Три слова не держатся: <0>aufhören, Schnapsidee, die Gewerkschaft</0>"
 
+msgid "three quarters"
+msgstr "три четверти"
+
+msgid "Three quarters of the way to {next}."
+msgstr "Три четверти пути до {next}."
+
 msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 msgstr "Вот три, которые дважды не вспомнились: диффузия, митохондрия и рибосома."
 
@@ -8333,6 +8529,9 @@ msgstr "Три: SAML, CVSS и разницу между RTO и RPO."
 
 msgid "Through add-ons"
 msgstr "Через дополнения"
+
+msgid "through; past"
+msgstr "сквозь; прошло (о времени)"
 
 msgid "Thursday"
 msgstr "Четверг"
@@ -8364,6 +8563,12 @@ msgstr "Выражения времени: когда что происходи�
 msgid "Time for the level to halve"
 msgstr "Время, за которое уровень падает вдвое"
 
+msgid "Times"
+msgstr "Время"
+
+msgid "Times take practice. Listen for pool, veerand or kolmveerand first, then the hour."
+msgstr "Время требует практики. Сначала слушай pool, veerand или kolmveerand, потом час."
+
 msgid "Timetable"
 msgstr "Расписание"
 
@@ -8372,6 +8577,9 @@ msgstr "чаевые"
 
 msgid "To agree"
 msgstr "Соглашаться"
+
+msgid "To ask the time, say <0/> Word for word, it's “what clock is?” The answer starts with <1/> too: <2/>, it's three o'clock."
+msgstr "Чтобы спросить, который час, скажи <0/> Дословно — «что часы есть?» Ответ тоже начинается с <1/>: <2/>, три часа."
 
 msgid "To ask what day it is, say <0/> To answer, put the day after <1>täna on</1>: <2/>."
 msgstr "Чтобы спросить, какой сегодня день, скажи <0/> Чтобы ответить, назови день после <1>täna on</1>: <2/>."
@@ -8705,6 +8913,9 @@ msgstr "Перевернуть карточку обратно"
 msgid "Turn the card over"
 msgstr "Перевернуть карточку"
 
+msgid "Turn the clock"
+msgstr "Покрути часы"
+
 msgid "Turn this post into cards."
 msgstr "Сделай карточки из этого поста."
 
@@ -8782,6 +8993,12 @@ msgstr "Введи число"
 
 msgid "Type the number you hear"
 msgstr "Введи число, которое слышишь"
+
+msgid "Type the time"
+msgstr "Введи время"
+
+msgid "Type the time you hear"
+msgstr "Введи время, которое слышишь"
 
 msgid "Type the word; AI fills the rest and marks it"
 msgstr "Пишешь слово, остальное заполняет и помечает AI"
@@ -8862,6 +9079,9 @@ msgstr "обычно"
 msgid "Usually"
 msgstr "Обычно"
 
+msgid "Veerand neli: a quarter of the way to four, 3:15."
+msgstr "Veerand neli: четверть четвёртого, 3:15."
+
 msgid "verb"
 msgstr "глагол"
 
@@ -8901,6 +9121,9 @@ msgstr "Ждёт своей очереди"
 
 msgid "Wash your *hands*."
 msgstr "Помой *руки*."
+
+msgid "Watch the hour fill up on its way to four."
+msgstr "Посмотри, как час заполняется по пути к четырём."
 
 msgid "Water"
 msgstr "Вода"
@@ -9085,6 +9308,9 @@ msgstr "*Который* час?"
 msgid "What time does the *bank* open?"
 msgstr "Во сколько открывается *банк*?"
 
+msgid "What time is it?"
+msgstr "Который час?"
+
 msgid "What time is the next *train*?"
 msgstr "Во сколько следующий *поезд*?"
 
@@ -9197,6 +9423,12 @@ msgstr "Какие ассистенты поддерживаются?"
 msgid "Which ChatGPT plans can connect Lymi?"
 msgstr "На каких тарифах ChatGPT можно подключить Lymi?"
 
+msgid "Which clock did you hear?"
+msgstr "Какое время прозвучало?"
+
+msgid "Which clock?"
+msgstr "Какие часы?"
+
 msgid "Which day did you hear?"
 msgstr "Какой день прозвучал?"
 
@@ -9205,6 +9437,9 @@ msgstr "Какой день завтра?"
 
 msgid "Which deck should I add?"
 msgstr "Какую колоду добавить?"
+
+msgid "Which half hour?"
+msgstr "Половина какого?"
 
 msgid "Which language are the translations in?"
 msgstr "На каком языке перевод?"
@@ -9334,6 +9569,9 @@ msgstr "Слово → значение"
 
 msgid "Word and example recordings"
 msgstr "Записи слова и примера"
+
+msgid "Word for word: what clock is?"
+msgstr "Дословно: «что часы есть?»"
 
 msgid "Word pairs"
 msgstr "Пары слов"

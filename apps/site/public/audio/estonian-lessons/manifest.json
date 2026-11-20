@@ -794,6 +794,671 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "kell/mis-kell-on": {
+    "text": "Mis kell on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kell": {
+    "text": "kell",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/pool": {
+    "text": "pool",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/veerand": {
+    "text": "veerand",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kolmveerand": {
+    "text": "kolmveerand",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/la2bi": {
+    "text": "läbi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/pa2rast": {
+    "text": "pärast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/minutit": {
+    "text": "minutit",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/pool-neli": {
+    "text": "pool neli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/veerand-neli": {
+    "text": "veerand neli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/kolmveerand-neli": {
+    "text": "kolmveerand neli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/ku2mme-minutit-kolm-la2bi": {
+    "text": "kümme minutit kolm läbi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/ku2mne-minuti-pa2rast-neli": {
+    "text": "kümne minuti pärast neli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k1-00": {
+    "text": "Kell on üks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k1-05": {
+    "text": "Kell on viis minutit üks läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k1-10": {
+    "text": "Kell on kümme minutit üks läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k1-15": {
+    "text": "Kell on veerand kaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k1-20": {
+    "text": "Kell on kakskümmend minutit üks läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k1-30": {
+    "text": "Kell on pool kaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k1-40": {
+    "text": "Kell on kahekümne minuti pärast kaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k1-45": {
+    "text": "Kell on kolmveerand kaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k1-50": {
+    "text": "Kell on kümne minuti pärast kaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k1-55": {
+    "text": "Kell on viie minuti pärast kaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k2-00": {
+    "text": "Kell on kaks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k2-05": {
+    "text": "Kell on viis minutit kaks läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k2-10": {
+    "text": "Kell on kümme minutit kaks läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k2-15": {
+    "text": "Kell on veerand kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k2-20": {
+    "text": "Kell on kakskümmend minutit kaks läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k2-30": {
+    "text": "Kell on pool kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k2-40": {
+    "text": "Kell on kahekümne minuti pärast kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k2-45": {
+    "text": "Kell on kolmveerand kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k2-50": {
+    "text": "Kell on kümne minuti pärast kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k2-55": {
+    "text": "Kell on viie minuti pärast kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k3-00": {
+    "text": "Kell on kolm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k3-05": {
+    "text": "Kell on viis minutit kolm läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k3-10": {
+    "text": "Kell on kümme minutit kolm läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k3-15": {
+    "text": "Kell on veerand neli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k3-20": {
+    "text": "Kell on kakskümmend minutit kolm läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k3-30": {
+    "text": "Kell on pool neli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k3-40": {
+    "text": "Kell on kahekümne minuti pärast neli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k3-45": {
+    "text": "Kell on kolmveerand neli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k3-50": {
+    "text": "Kell on kümne minuti pärast neli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k3-55": {
+    "text": "Kell on viie minuti pärast neli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k4-00": {
+    "text": "Kell on neli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k4-05": {
+    "text": "Kell on viis minutit neli läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k4-10": {
+    "text": "Kell on kümme minutit neli läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k4-15": {
+    "text": "Kell on veerand viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k4-20": {
+    "text": "Kell on kakskümmend minutit neli läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k4-30": {
+    "text": "Kell on pool viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k4-40": {
+    "text": "Kell on kahekümne minuti pärast viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k4-45": {
+    "text": "Kell on kolmveerand viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k4-50": {
+    "text": "Kell on kümne minuti pärast viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k4-55": {
+    "text": "Kell on viie minuti pärast viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k5-00": {
+    "text": "Kell on viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k5-05": {
+    "text": "Kell on viis minutit viis läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k5-10": {
+    "text": "Kell on kümme minutit viis läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k5-15": {
+    "text": "Kell on veerand kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k5-20": {
+    "text": "Kell on kakskümmend minutit viis läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k5-30": {
+    "text": "Kell on pool kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k5-40": {
+    "text": "Kell on kahekümne minuti pärast kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k5-45": {
+    "text": "Kell on kolmveerand kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k5-50": {
+    "text": "Kell on kümne minuti pärast kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k5-55": {
+    "text": "Kell on viie minuti pärast kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k6-00": {
+    "text": "Kell on kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k6-05": {
+    "text": "Kell on viis minutit kuus läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k6-10": {
+    "text": "Kell on kümme minutit kuus läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k6-15": {
+    "text": "Kell on veerand seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k6-20": {
+    "text": "Kell on kakskümmend minutit kuus läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k6-30": {
+    "text": "Kell on pool seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k6-40": {
+    "text": "Kell on kahekümne minuti pärast seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k6-45": {
+    "text": "Kell on kolmveerand seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k6-50": {
+    "text": "Kell on kümne minuti pärast seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k6-55": {
+    "text": "Kell on viie minuti pärast seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k7-00": {
+    "text": "Kell on seitse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k7-05": {
+    "text": "Kell on viis minutit seitse läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k7-10": {
+    "text": "Kell on kümme minutit seitse läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k7-15": {
+    "text": "Kell on veerand kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k7-20": {
+    "text": "Kell on kakskümmend minutit seitse läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k7-30": {
+    "text": "Kell on pool kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k7-40": {
+    "text": "Kell on kahekümne minuti pärast kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k7-45": {
+    "text": "Kell on kolmveerand kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k7-50": {
+    "text": "Kell on kümne minuti pärast kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k7-55": {
+    "text": "Kell on viie minuti pärast kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k8-00": {
+    "text": "Kell on kaheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k8-05": {
+    "text": "Kell on viis minutit kaheksa läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k8-10": {
+    "text": "Kell on kümme minutit kaheksa läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k8-15": {
+    "text": "Kell on veerand üheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k8-20": {
+    "text": "Kell on kakskümmend minutit kaheksa läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k8-30": {
+    "text": "Kell on pool üheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k8-40": {
+    "text": "Kell on kahekümne minuti pärast üheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k8-45": {
+    "text": "Kell on kolmveerand üheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k8-50": {
+    "text": "Kell on kümne minuti pärast üheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k8-55": {
+    "text": "Kell on viie minuti pärast üheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k9-00": {
+    "text": "Kell on üheksa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k9-05": {
+    "text": "Kell on viis minutit üheksa läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k9-10": {
+    "text": "Kell on kümme minutit üheksa läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k9-15": {
+    "text": "Kell on veerand kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k9-20": {
+    "text": "Kell on kakskümmend minutit üheksa läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k9-30": {
+    "text": "Kell on pool kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k9-40": {
+    "text": "Kell on kahekümne minuti pärast kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k9-45": {
+    "text": "Kell on kolmveerand kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k9-50": {
+    "text": "Kell on kümne minuti pärast kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k9-55": {
+    "text": "Kell on viie minuti pärast kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k10-00": {
+    "text": "Kell on kümme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k10-05": {
+    "text": "Kell on viis minutit kümme läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k10-10": {
+    "text": "Kell on kümme minutit kümme läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k10-15": {
+    "text": "Kell on veerand üksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k10-20": {
+    "text": "Kell on kakskümmend minutit kümme läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k10-30": {
+    "text": "Kell on pool üksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k10-40": {
+    "text": "Kell on kahekümne minuti pärast üksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k10-45": {
+    "text": "Kell on kolmveerand üksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k10-50": {
+    "text": "Kell on kümne minuti pärast üksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k10-55": {
+    "text": "Kell on viie minuti pärast üksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k11-00": {
+    "text": "Kell on üksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k11-05": {
+    "text": "Kell on viis minutit üksteist läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k11-10": {
+    "text": "Kell on kümme minutit üksteist läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k11-15": {
+    "text": "Kell on veerand kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k11-20": {
+    "text": "Kell on kakskümmend minutit üksteist läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k11-30": {
+    "text": "Kell on pool kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k11-40": {
+    "text": "Kell on kahekümne minuti pärast kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k11-45": {
+    "text": "Kell on kolmveerand kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k11-50": {
+    "text": "Kell on kümne minuti pärast kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k11-55": {
+    "text": "Kell on viie minuti pärast kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k12-00": {
+    "text": "Kell on kaksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k12-05": {
+    "text": "Kell on viis minutit kaksteist läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k12-10": {
+    "text": "Kell on kümme minutit kaksteist läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k12-15": {
+    "text": "Kell on veerand üks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k12-20": {
+    "text": "Kell on kakskümmend minutit kaksteist läbi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k12-30": {
+    "text": "Kell on pool üks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k12-40": {
+    "text": "Kell on kahekümne minuti pärast üks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k12-45": {
+    "text": "Kell on kolmveerand üks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k12-50": {
+    "text": "Kell on kümne minuti pärast üks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kell/k12-55": {
+    "text": "Kell on viie minuti pärast üks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "paevad/esmaspa2ev": {
     "text": "esmaspäev",
     "model": "eleven_v4",

@@ -1,4 +1,5 @@
 import { numberWords } from "./estonian-numbers";
+import { ALL_TIMES, timeClip, timeSentence } from "./estonian-time";
 
 /**
  * Every sound a lesson plays, by lesson and clip id, with the Estonian it says. Read by
@@ -137,11 +138,32 @@ export const PAEVAD_SENTENCES = [
   ...WEEK.map((day) => `Homme on ${day}.`),
 ];
 
+/** The time lesson's words and phrases; each time it says is a clip of its own, by `timeClip`. */
+export const KELL_WORDS = [
+  "Mis kell on?",
+  "kell",
+  "pool",
+  "veerand",
+  "kolmveerand",
+  "läbi",
+  "pärast",
+  "minutit",
+  "pool neli",
+  "veerand neli",
+  "kolmveerand neli",
+  "kümme minutit kolm läbi",
+  "kümne minuti pärast neli",
+] as const;
+
 export const CLIPS: Record<string, Record<string, string>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
     ...Object.fromEntries(SPOKEN_NUMBERS.map((n) => [numberClip(n), numberWords(n)])),
     ...NUMBER_SENTENCES,
+  },
+  kell: {
+    ...words(KELL_WORDS),
+    ...Object.fromEntries(ALL_TIMES.map((time) => [timeClip(time), timeSentence(time)])),
   },
   paevad: { ...words(PAEVAD_WORDS), ...words(PAEVAD_SENTENCES) },
 };

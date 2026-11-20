@@ -67,7 +67,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 10,
         blurb: msg`A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers.`,
       },
-      { name: msg`Telling the time`, et: "Mis kell on?" },
+      {
+        slug: "kell",
+        name: msg`Telling the time`,
+        title: msg`Telling the time in Estonian`,
+        et: "Mis kell on?",
+        minutes: 12,
+        blurb: msg`A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that's coming, and minutes past and to. Every time is read aloud.`,
+      },
       {
         slug: "paevad",
         name: msg`Days of the week`,

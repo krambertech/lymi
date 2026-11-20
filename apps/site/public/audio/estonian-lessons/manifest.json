@@ -3599,6 +3599,256 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "tutvumine/nimi": {
+    "text": "nimi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/elan": {
+    "text": "elan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/elab": {
+    "text": "elab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/pa2rnus": {
+    "text": "Pärnus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/tallinnas": {
+    "text": "Tallinnas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/ei": {
+    "text": "ei",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/to2o2ta": {
+    "text": "tööta",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/to2o2tan": {
+    "text": "töötan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kontoris": {
+    "text": "kontoris",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kohvikus": {
+    "text": "kohvikus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/so3ber": {
+    "text": "sõber",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/o3pib": {
+    "text": "õpib",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/joob": {
+    "text": "joob",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/palju": {
+    "text": "palju",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kohvi": {
+    "text": "kohvi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/mis-su-nimi-on": {
+    "text": "Mis su nimi on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/va2ga-meeldiv": {
+    "text": "Väga meeldiv!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kust-sa-pa2rit-oled": {
+    "text": "Kust sa pärit oled?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kus-sa-elad": {
+    "text": "Kus sa elad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kus-sa-to2o2tad": {
+    "text": "Kus sa töötad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kas-sa-ra2a2gid-eesti-keelt": {
+    "text": "Kas sa räägid eesti keelt?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/natuke": {
+    "text": "Natuke.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/kuidas-la2heb": {
+    "text": "Kuidas läheb?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/ha2sti-aita2h-aga-sul": {
+    "text": "Hästi, aitäh. Aga sul?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/miks": {
+    "text": "Miks?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/sest": {
+    "text": "Sest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/head-aega": {
+    "text": "Head aega!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/a-mari-1": {
+    "text": "Tere! Mina olen Mari. Mis su nimi on?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tutvumine/a-sina-1": {
+    "text": "Tere! Minu nimi on Andres.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/a-mari-2": {
+    "text": "Väga meeldiv! Kust sa pärit oled?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tutvumine/a-sina-2": {
+    "text": "Ma olen pärit Ukrainast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/a-mari-3": {
+    "text": "Kus sa elad?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tutvumine/a-sina-3": {
+    "text": "Ma elan Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/a-mari-4": {
+    "text": "Kas sa oled õpetaja?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tutvumine/a-sina-4": {
+    "text": "Ei, ma ei ole. Ma töötan kontoris.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/a-mari-5": {
+    "text": "Kas sa räägid eesti keelt?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tutvumine/a-sina-5": {
+    "text": "Natuke. Ma õpin eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/a-mari-6": {
+    "text": "Väga hästi! Head aega!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tutvumine/a-sina-6": {
+    "text": "Aitäh! Head aega!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/k-mari-1": {
+    "text": "Tere, Andres! Kuidas läheb?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tutvumine/k-sina-1": {
+    "text": "Hästi, aitäh. Aga sul?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/k-mari-2": {
+    "text": "Ma olen natuke väsinud.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tutvumine/k-sina-2": {
+    "text": "Miks sa oled väsinud?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/k-mari-3": {
+    "text": "Sest ma töötan palju.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tutvumine/k-sina-3": {
+    "text": "Kus sa töötad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/k-mari-4": {
+    "text": "Haiglas, Pärnus.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tutvumine/k-sina-4": {
+    "text": "Kas sa elad Pärnus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/k-mari-5": {
+    "text": "Ei, ma elan Tartus.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "tutvumine/p-jaan": {
+    "text": "Tere! Minu nimi on Jaan. Ma elan Pärnus. Ma ei tööta kontoris, ma töötan kohvikus. Minu sõber Kati elab Tallinnas. Ta ei tööta, ta õpib. Ta joob palju kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tutvumine/p-kati": {
+    "text": "Tere! Mina olen Kati. Ma elan Tallinnas. Ma ei tööta, ma õpin. Minu sõber Jaan töötab kohvikus. Ta ei ole kodus, ta on tööl. Me räägime eesti keelt. Aga sina? Kus sina elad?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
   "kaskiv/ma-loen": {
     "text": "Ma loen.",
     "model": "eleven_v4",

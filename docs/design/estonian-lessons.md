@@ -10,6 +10,8 @@ The lessons are built and reachable but not launched: `learn` is in `prelaunchPa
 
 `apps/site/src/lib/learn/catalogue.ts` lists every lesson in order, built or planned, in five stages from A1 to B1. The order follows Estonia's free courses and textbooks, checked in November 2026, with one change: sentences come first. After pronunciation, a learner says who they are, what they do and where they live, says no and asks, and only then learns numbers, the time and the days, so those words go straight into sentences they can already make. The place endings `-s` and `-l` and commands come early as phrases, a short lesson shows that stems change before the genitive needs it, and the verb's three forms come before the past tense. The rules that most learners trip on, consonant gradation and the total object, wait until the words are familiar. Each lesson has a plain `name` in the reader's language, the words people search for, such as Past tense or The partitive case, and a built lesson has a `title` for its heading and search result, such as Estonian pronunciation. Its `et` is an Estonian phrase from the lesson, shown small beside the name, never instead of it.
 
+A practice lesson, named “Practice: …”, follows the lessons it practises and teaches no new grammar. It is a normal lesson in the catalogue, numbered in order, built from the practice parts below with only what came before it, plus at most two glossed phrases.
+
 ## Colour
 
 Each surface means one thing, so a learner can tell from the surface alone whether they are reading, trying or being marked.

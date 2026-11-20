@@ -324,8 +324,8 @@ msgstr "<0/> {left, plural, one {due} other {due}}"
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 
-msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:30, not 4:30. German says it the same way: halb vier."
-msgstr "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:30, not 4:30. German says it the same way: halb vier."
+msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:30, not 4:30."
+msgstr "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:30, not 4:30."
 
 msgid "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 msgstr "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."

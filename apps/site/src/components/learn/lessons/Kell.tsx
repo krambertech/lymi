@@ -101,7 +101,7 @@ function useTurn(degrees: number): number {
 }
 
 interface ClockProps extends Omit<React.SVGProps<SVGSVGElement>, "ref"> {
-  /** No time draws both hands at twelve. */
+  /** No time draws the face without hands; they fade in and turn once a time is set. */
   time: ClockTime | null;
   /** Fill the part of the hour that has gone, in the stage's hue. */
   wedge?: boolean;
@@ -117,7 +117,10 @@ function Clock({ time, wedge, still, className, label, ...rest }: ClockProps) {
   const minuteTurn = useTurn(time ? time.minute * 6 : 0);
   const hourTurn = useTurn(time ? ((time.hour % 12) + time.minute / 60) * 30 : 0);
   const ticks = Array.from({ length: 12 }, (_, i) => (i * Math.PI) / 6);
-  const ease = still ? "" : "transition-transform duration-700 ease-out";
+  const ease = still
+    ? ""
+    : "transition-[transform,opacity] duration-700 ease-out motion-reduce:transition-none";
+  const hands = time ? undefined : 0;
   const minute = time?.minute ?? 0;
   const end = (minute / 60) * Math.PI * 2;
   return (
@@ -156,7 +159,11 @@ function Clock({ time, wedge, still, className, label, ...rest }: ClockProps) {
         className={clsx("stroke-ink", ease)}
         strokeWidth="5.5"
         strokeLinecap="round"
-        style={{ transformOrigin: "60px 60px", transform: `rotate(${hourTurn}deg)` }}
+        style={{
+          transformOrigin: "60px 60px",
+          transform: `rotate(${hourTurn}deg)`,
+          opacity: hands,
+        }}
       />
       <line
         x1="60"
@@ -166,7 +173,11 @@ function Clock({ time, wedge, still, className, label, ...rest }: ClockProps) {
         className={clsx("stroke-(--form)", ease)}
         strokeWidth="3.5"
         strokeLinecap="round"
-        style={{ transformOrigin: "60px 60px", transform: `rotate(${minuteTurn}deg)` }}
+        style={{
+          transformOrigin: "60px 60px",
+          transform: `rotate(${minuteTurn}deg)`,
+          opacity: hands,
+        }}
       />
       <circle cx="60" cy="60" r="4.5" className="fill-ink" />
     </svg>
@@ -649,7 +660,7 @@ export function KellLesson() {
                 <p>
                   <Trans>
                     <Word w="pool" /> means half, and it looks ahead. <Word w="pool neli" /> is
-                    halfway to four, so it's 3:30, not 4:30. German says it the same way: halb vier.
+                    halfway to four, so it's 3:30, not 4:30.
                   </Trans>
                 </p>
                 <p>

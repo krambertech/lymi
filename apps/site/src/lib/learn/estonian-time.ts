@@ -4,8 +4,8 @@ import { numberWords } from "./estonian-numbers";
  * Times on a twelve-hour clock as Estonian says them, in the forms the time lesson teaches.
  * Each form follows an example in EKSS (Eesti keele seletav sõnaraamat): “Kell on veerand neli.”,
  * “Kell on pool kaksteist.”, “kolmveerand kaks”, “kolm minutit kaheksa läbi” and
- * “viie minuti pärast üks”. Twenty-five past and twenty-five to are left out: their usual forms
- * need cases the course hasn't reached.
+ * “viie minuti pärast üks”. Twenty-five past and twenty-five to follow the pattern of twenty and
+ * are left out only to keep the dial to ten stops.
  */
 export const MINUTES = [0, 5, 10, 15, 20, 30, 40, 45, 50, 55] as const;
 export type Minute = (typeof MINUTES)[number];

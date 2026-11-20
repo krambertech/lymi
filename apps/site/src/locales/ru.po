@@ -1189,8 +1189,8 @@ msgstr "преимущество"
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "После урока на italki, Preply или с частным репетитором вставь чат или сфотографируй заметки. Lymi превратит новые слова в карточки, которые ты повторяешь между уроками. Добавить их может и AI-ассистент. Бесплатно."
 
-msgid "After a number, minut becomes minutit."
-msgstr "После числа minut становится minutit."
+msgid "After a number from two up, minut becomes minutit."
+msgstr "После чисел от двух и больше minut становится minutit."
 
 msgid "After today’s lesson"
 msgstr "После сегодняшнего урока"

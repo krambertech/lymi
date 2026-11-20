@@ -60,7 +60,7 @@ const GLOSSARY: Glossary = {
     en: msg`after; in, as in “in ten minutes”`,
     note: msg`Kümne minuti pärast neli: in ten minutes it's four, 3:50.`,
   },
-  minutit: { en: msg`minutes`, note: msg`After a number, minut becomes minutit.` },
+  minutit: { en: msg`minutes`, note: msg`After a number from two up, minut becomes minutit.` },
   "pool neli": { en: msg`half past three, 3:30` },
   "veerand neli": { en: msg`quarter past three, 3:15` },
   "kolmveerand neli": { en: msg`quarter to four, 3:45` },
@@ -382,7 +382,7 @@ function ClockExplorer() {
             value: minute,
           }))}
           value={time.minute}
-          onPick={(minute) => set(at(time.hour, minute), true)}
+          onPick={(minute) => set(withMinute(time, minute), true)}
         />
       </div>
     </Panel>
@@ -482,24 +482,24 @@ function choicesFor(time: ClockTime): { choices: ClockTime[]; trap: ClockTime } 
   const later = at(nextHour(time.hour), time.minute);
   const all = [time, later, mirror[time.minute], earlier(time)];
   const seen = new Set<string>();
-  // Clock order, starting from the hour before the answer, so 11:45 lists 10:45 before 12:45.
-  const start = minutes(earlier(time)) - 60;
-  const from = (each: ClockTime) => (minutes(each) - start + 720) % 720;
+  // A fixed order per round, the same on the server and in the browser, that puts the answer in a
+  // different place from round to round. Clock order would always put it between the hours out.
+  const rank = (each: ClockTime) => (minutes(each) * 7 + minutes(time) * 13) % 31;
   const choices = all
     .filter((each): each is ClockTime => {
       if (!each || seen.has(timeClip(each))) return false;
       seen.add(timeClip(each));
       return true;
     })
-    .sort((a, b) => from(a) - from(b));
+    .sort((a, b) => rank(a) - rank(b));
   return { choices, trap: time.minute === 30 ? later : (mirror[time.minute] ?? later) };
 }
 
+/** An answer's clock is a picture of its digits, so a screen reader hears only the digits. */
 function ClockChoice({ time }: { time: ClockTime }) {
-  const { t } = useLingui();
   return (
     <span className="flex items-center gap-3 pe-5">
-      <Clock time={time} label={t`A clock at ${timeDigits(time)}`} className="size-12" />
+      <Clock time={time} className="size-12" />
       <span className="tabular-nums">{timeDigits(time)}</span>
     </span>
   );

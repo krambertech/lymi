@@ -74,7 +74,7 @@ const SATURDAY_GAPS: readonly GapItem[] = [
   { id: "olen", before: "Ma", after: "Tallinnas.", answer: "olen" },
   { id: "on", before: "Mari ja Jaan", after: "minu sõbrad.", answer: "on" },
   { id: "joome", before: "Me", after: "kell kümme kohvikus kohvi.", answer: "joome" },
-  { id: "eurot", before: "Kohv maksab kolm", after: "", answer: "eurot" },
+  { id: "eurot", before: "Kohv maksab kolm", after: ".", answer: "eurot" },
 ];
 
 function useContent() {

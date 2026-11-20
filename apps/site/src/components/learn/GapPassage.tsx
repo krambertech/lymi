@@ -134,7 +134,10 @@ function PassageLine({
         <span key={item.id}>
           {item.before}
           {item.before && " "}
-          {gap(item, i + 1)} {item.after}
+          {gap(item, i + 1)}
+          {/* Punctuation after a gap sits against it: “kolm eurot.”, not “kolm eurot .” */}
+          {/^[.,!?;:]/.test(item.after) ? "" : " "}
+          {item.after}
           {item.after && " "}
         </span>
       ))}

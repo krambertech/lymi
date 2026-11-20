@@ -207,13 +207,13 @@ function Line(props: {
   reply?: boolean;
 }) {
   const { id, text, means, reply } = props;
-  const { t, i18n } = useLingui();
+  const { i18n } = useLingui();
   const clip = src(id);
   const playing = usePlaying(clip);
+  // No aria-label: the sentence and its meaning are the button's name.
   return (
     <button
       type="button"
-      aria-label={t`Play ${said(id)}`}
       onClick={() => void playSound(clip)}
       className={clsx(
         "grid w-full cursor-pointer items-center gap-x-3.5 py-2.5 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover",
@@ -618,7 +618,7 @@ export function KusimusedLesson() {
                 id="question-word"
                 title={<Trans>Which question word?</Trans>}
                 items={askItems}
-                rounds={6}
+                rounds={7}
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>All of them. You can hear what a question asks.</Trans>

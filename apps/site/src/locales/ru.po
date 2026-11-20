@@ -6253,7 +6253,6 @@ msgid "Platform, track"
 msgstr "Путь, платформа"
 
 #. placeholder {0}: said(each.a)
-#. placeholder {0}: said(id)
 #. placeholder {0}: w.term
 msgid "Play {0}"
 msgstr "Воспроизвести {0}"

@@ -32,6 +32,7 @@ export const CHANGELOG_FIGURES = [
   "mac",
   "pitch-accent",
   "iphone",
+  "android",
 ] as const;
 
 /** Figures drawn at the tray's own 660 by 412 and running to its edges, rather than standing in it. */

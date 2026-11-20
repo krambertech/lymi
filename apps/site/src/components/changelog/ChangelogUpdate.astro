@@ -3,6 +3,7 @@ import { render } from "astro:content";
 import type { ChangelogUpdate } from "../../lib/changelog";
 import { CHANGELOG_SCENES } from "../../lib/changelog-figures";
 import type { Locale } from "../../lib/routes";
+import { StoreBadgesIn } from "../StoreBadges";
 import ChangelogFigure from "./ChangelogFigure";
 
 interface Props {
@@ -51,6 +52,13 @@ const Heading = href ? "h2" : "h1";
           </div>
         </div>
       )
+    )
+  }
+  {
+    entry.data.stores && (
+      <div class="mt-6">
+        <StoreBadgesIn locale={locale} first={entry.data.stores} />
+      </div>
     )
   }
   <div class="doc-prose changelog-prose mt-8">

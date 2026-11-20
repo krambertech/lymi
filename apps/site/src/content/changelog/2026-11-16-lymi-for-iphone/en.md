@@ -2,6 +2,7 @@
 title: Lymi for iPhone
 summary: Lymi is now on iPhone, with widgets, controls and Share to Lymi. Review and add cards from your phone, with the same decks as on the web.
 figure: iphone
+stores: app-store
 ---
 
 Lymi is now on iPhone. [Get it on the App Store](/download/iphone). Sign in with your Lymi account or with Apple, and your decks and progress are there. It isn’t on the App Store in EU countries yet.

@@ -26,7 +26,7 @@ const COMMON: Question[] = [
   {
     id: "phone",
     question: msg`Does it work on my phone?`,
-    answer: msg`Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both.`,
+    answer: msg`Yes. Lymi has apps for iPhone and Android. It also runs in the browser on any phone or computer, and you can add it to your home screen. Your cards and progress are the same everywhere.`,
   },
   {
     id: "cost",
@@ -378,7 +378,7 @@ export const EINBUERGERUNGSTEST_QUESTIONS: Question[] = [
   {
     id: "phone",
     question: msg`Does it work on my phone?`,
-    answer: msg`Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both.`,
+    answer: msg`Yes. Lymi has apps for iPhone and Android. It also runs in the browser on any phone or computer, and you can add it to your home screen. Your cards and progress are the same everywhere.`,
   },
   OFFLINE,
 ];

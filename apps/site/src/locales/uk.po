@@ -2578,8 +2578,11 @@ msgstr "двері"
 msgid "Download for Mac"
 msgstr "Завантажити для Mac"
 
-msgid "Download Lymi for Mac"
-msgstr "Завантажити Lymi для Mac"
+msgid "Download Lymi"
+msgstr "Завантажити Lymi"
+
+msgid "Download on the App Store"
+msgstr "Завантажити в App Store"
 
 msgid "Download the decks you own, any time."
 msgstr "Завантажуй свої колоди коли завгодно."
@@ -3142,6 +3145,9 @@ msgstr "Картки з анатомії, фармакології, мікроб
 msgid "Flashcards for cloud, security, finance and project management certifications. Turn your study guide into cards with your AI assistant and review a few minutes a day. Free."
 msgstr "Картки для сертифікацій із хмарних технологій, безпеки, фінансів та управління проєктами. Перетвори навчальний посібник на картки за допомогою AI-асистента й повторюй кілька хвилин на день. Безплатно."
 
+msgid "Flashcards for concepts, facts and vocabulary. Learn with spaced repetition."
+msgstr "Картки для понять, фактів і лексики. Вчися з інтервальними повтореннями."
+
 msgid "Flashcards for medical school."
 msgstr "Флешкартки для навчання в медичному."
 
@@ -3337,6 +3343,9 @@ msgstr "Безкоштовно"
 msgid "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Безкоштовні колоди з української з голосом на кожній картці. Додай будь-яку одним дотиком. Скоро буде більше."
 
+msgid "Free, as an app or in the browser"
+msgstr "Безплатно, у застосунку чи в браузері"
+
 msgid "Free, nothing to set up"
 msgstr "Безкоштовно, без жодних налаштувань"
 
@@ -3498,6 +3507,15 @@ msgstr "Німецькі взято з каталогу BAMF, у колоді С
 
 msgid "Germany’s test asks 300 general questions and 10 about your state. The general questions are one deck, and each state’s 10 are a small deck of their own, so you add only yours."
 msgstr "Тест у Німеччині має 300 загальних питань і 10 про твою федеральну землю. Загальні питання — одна колода, а 10 питань кожної землі — окрема невелика колода, тож ти додаєш лише свою."
+
+msgid "Get it on Google Play"
+msgstr "Завантажити з Google Play"
+
+msgid "Get Lymi"
+msgstr "Завантаж Lymi"
+
+msgid "Get Lymi for iPhone, Android and Mac. Your decks and progress are the same on every device."
+msgstr "Lymi для iPhone, Android і Mac. Твої колоди й прогрес однакові на кожному пристрої."
 
 msgid "Get started"
 msgstr "Почати"
@@ -4234,17 +4252,11 @@ msgstr "У Quizlet ти обираєш набір і режим навчання
 msgid "In summer the *nights* stay light."
 msgstr "Улітку *ночі* світлі."
 
-msgid "In the browser, added to your home screen"
-msgstr "У браузері, з іконкою на головному екрані"
-
 msgid "In the end"
 msgstr "Зрештою"
 
 msgid "In the Grok Bot app, open Connect apps and choose Add a custom connector. Name it Lymi, pick Remote HTTPS and paste this address."
 msgstr "У застосунку Grok Bot відкрий Connect apps і вибери Add a custom connector. Назви його Lymi, вибери Remote HTTPS і встав цю адресу."
-
-msgid "In the iPhone’s browser, free"
-msgstr "У браузері iPhone, безплатно"
 
 msgid "In this folder"
 msgstr "У цій папці"
@@ -4905,14 +4917,14 @@ msgstr "Lymi вирішує, коли кожна картка повертаєт
 msgid "Lymi for {name}"
 msgstr "Lymi для {name}"
 
+msgid "Lymi for Android"
+msgstr "Lymi для Android"
+
 msgid "Lymi for certification prep · Flashcards with spaced repetition"
 msgstr "Lymi для підготовки до сертифікації · Картки з інтервальним повторенням"
 
 msgid "Lymi for iPhone"
 msgstr "Lymi для iPhone"
-
-msgid "Lymi for iPhone is on the App Store"
-msgstr "Lymi для iPhone є в App Store"
 
 msgid "Lymi for language learning"
 msgstr "Lymi для вивчення мов"
@@ -4922,9 +4934,6 @@ msgstr "Lymi для вивчення мов · Запам’ятовуй сло�
 
 msgid "Lymi for Mac"
 msgstr "Lymi для Mac"
-
-msgid "Lymi for Mac adds a card from any app with ⌃⌥L and lives in the menu bar. For macOS 13 or later."
-msgstr "Lymi для Mac додає картку з будь-якого застосунку клавішами ⌃⌥L і живе у смузі меню. Для macOS 13 або новішої."
 
 msgid "Lymi for medical students · Flashcards with spaced repetition"
 msgstr "Lymi для студентів-медиків · Картки з інтервальним повторенням"
@@ -5000,6 +5009,9 @@ msgstr "Lymi з AI-асистентами"
 
 msgid "Lymi works for anything you want to remember."
 msgstr "Lymi підходить для всього, що хочеш запам’ятати."
+
+msgid "Lymi: Flashcards"
+msgstr "Lymi: флеш-картки"
 
 msgid "Lymi’s AI · meanings and examples"
 msgstr "AI від Lymi · значення й приклади"
@@ -5389,6 +5401,9 @@ msgctxt "cards in this state"
 msgid "New"
 msgstr "Нові"
 
+msgid "New apps for iPhone and Android"
+msgstr "Нові застосунки для iPhone і Android"
+
 msgid "New cards appear here."
 msgstr "Нові картки з’являться тут."
 
@@ -5523,8 +5538,8 @@ msgstr "Noji, колишній AnkiPro, безкоштовно дає вчити
 msgid "Noji, once called AnkiPro, is a polished phone app with a big deck library. Lymi has no daily limit, schedules with FSRS and keeps its AI free."
 msgstr "Noji, колишній AnkiPro, — продуманий застосунок для телефона з великою бібліотекою колод. У Lymi немає денного ліміту, повторення плануються за FSRS, а AI безкоштовний."
 
-msgid "Noji’s iPhone and Android apps are polished and well rated. Lymi runs in your phone’s browser for now."
-msgstr "Застосунки Noji для iPhone і Android продумані й мають високі оцінки. Lymi поки працює в браузері телефона."
+msgid "Noji’s iPhone and Android apps are polished and well rated. Lymi’s phone apps came out in November 2026."
+msgstr "Застосунки Noji для iPhone і Android продумані й мають високі оцінки. Застосунки Lymi для телефона вийшли в листопаді 2026 року."
 
 msgid "Nominative"
 msgstr "Називний"
@@ -6522,6 +6537,9 @@ msgstr "Повторюй кілька хвилин на день"
 msgid "Review a few minutes a day."
 msgstr "Повторюй кілька хвилин на день."
 
+msgid "Review and add cards on your phone and your Mac. Your decks and progress are the same everywhere."
+msgstr "Повторюй і додавай картки на телефоні й на Mac. Твої колоди й прогрес однакові всюди."
+
 msgid "Review as much as you like, use your own pictures and turn notes into cards without a subscription or ads."
 msgstr "Повторюй скільки завгодно, додавай власні зображення й перетворюй нотатки на картки — без підписки й реклами."
 
@@ -6955,8 +6973,8 @@ msgstr "навички, які перевіряють: читання, ауді�
 msgid "Skip to the document"
 msgstr "Перейти до документа"
 
-msgid "Skip to the download"
-msgstr "Перейти до завантаження"
+msgid "Skip to the downloads"
+msgstr "Перейти до завантажень"
 
 msgid "Skip to the updates"
 msgstr "Перейти до оновлень"
@@ -7855,8 +7873,8 @@ msgstr "Правила й кожен знак за зображенням."
 msgid "The same address works everywhere. Nothing to install."
 msgstr "Одна адреса працює скрізь. Нічого не треба встановлювати."
 
-msgid "The same cards in your phone’s browser, on your computer and in the Mac app, synced, with nothing to buy."
-msgstr "Ті самі картки в браузері телефона, на комп’ютері й у застосунку для Mac — синхронізовані, і нічого не треба купувати."
+msgid "The same cards in the iPhone and Android apps, on your computer and in the Mac app, synced, with nothing to buy."
+msgstr "Ті самі картки в застосунках для iPhone і Android, на комп’ютері й у застосунку для Mac — синхронізовані, і нічого не треба купувати."
 
 msgid "The same cards on your phone, in the browser and in the Mac app, with offline review on the free plan."
 msgstr "Ті самі картки на телефоні, у браузері й у застосунку для Mac, а повторення офлайн доступне в безкоштовному плані."
@@ -9264,8 +9282,8 @@ msgstr "Так. Gemini робить флешкартки й тести, а Gemin
 msgid "Yes. Lymi answers Yomitan the way AnkiConnect does: point Yomitan at Lymi’s address with a key from Settings and keep looking words up."
 msgstr "Так. Lymi відповідає Yomitan так само, як AnkiConnect: вкажи в Yomitan адресу Lymi з ключем із Налаштувань і шукай слова далі."
 
-msgid "Yes. Lymi runs in the browser on your phone and your computer, and you can add it to your home screen. Your cards and progress are the same on both."
-msgstr "Так. Lymi працює в браузері на телефоні й комп’ютері, його можна додати на головний екран. Картки й прогрес на обох однакові."
+msgid "Yes. Lymi has apps for iPhone and Android. It also runs in the browser on any phone or computer, and you can add it to your home screen. Your cards and progress are the same everywhere."
+msgstr "Так. У Lymi є застосунки для iPhone і Android. Він також працює в браузері на будь-якому телефоні чи комп’ютері, і його можна додати на головний екран. Картки й прогрес усюди однакові."
 
 msgid "Yes. Make it a routine: Grok Bot checks what’s due in Lymi on a schedule and quizzes you on it. You still review in Lymi, which keeps the schedule."
 msgstr "Так. Зроби це рутиною: Grok Bot за розкладом перевіряє, що чекає на повторення в Lymi, і ганяє тебе по цьому. А повторюєш ти все одно в Lymi, який стежить за розкладом."
@@ -9375,8 +9393,8 @@ msgstr "Ти вчишся за колодами з його бібліотеки
 msgid "You want a desktop app on Windows or Linux"
 msgstr "Тобі потрібен застосунок для Windows чи Linux"
 
-msgid "You want an app from the store"
-msgstr "Тобі потрібен застосунок із магазину"
+msgid "You want a proven phone app"
+msgstr "Тобі потрібен перевірений застосунок для телефона"
 
 msgid "You want everything on your own computer"
 msgstr "Ти хочеш тримати все на власному комп’ютері"

@@ -228,11 +228,22 @@ export function AssistantMarks({ compact }: { compact?: boolean | undefined }) {
 }
 
 /** A quiet line of the assistants Lymi works in, each opening its setup guide. */
-export function WorksWith({ names }: { names: readonly AssistantName[] }) {
+export function WorksWith({
+  names,
+  className,
+}: {
+  names: readonly AssistantName[];
+  className?: string | undefined;
+}) {
   const label = useId();
   const assistants = names.flatMap((name) => ASSISTANTS.filter((a) => a.name === name));
   return (
-    <div className="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink-muted">
+    <div
+      className={clsx(
+        "flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink-muted",
+        className,
+      )}
+    >
       <span id={label}>
         <Trans>Works with</Trans>
       </span>

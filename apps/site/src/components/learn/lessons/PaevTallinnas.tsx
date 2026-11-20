@@ -30,7 +30,7 @@ const GLOSSARY: Glossary = {
     en: msg`on Sunday`,
     note: msg`Pühapäev with the ending that says when, as in esmaspäeval.`,
   },
-  kell: { en: msg`clock, watch; o'clock`, note: msg`Kell on kümme: it's ten. Kell kümme: at ten.` },
+  kell: { en: msg`clock, watch; o’clock`, note: msg`Kell on kümme: it’s ten. Kell kümme: at ten.` },
   kümme: { en: msg`ten` },
   kaksteist: { en: msg`twelve` },
   üksteist: { en: msg`eleven` },
@@ -42,10 +42,10 @@ const GLOSSARY: Glossary = {
   maksab: { en: msg`costs`, note: msg`From maksma, to cost; also to pay.` },
   eurot: { en: msg`euros`, note: msg`After a number from two up, euro becomes eurot.` },
   buss: { en: msg`bus` },
-  ootan: { en: msg`I wait, I'm waiting`, note: msg`From ootama, to wait.` },
+  ootan: { en: msg`I wait, I’m waiting`, note: msg`From ootama, to wait.` },
   sind: {
     en: msg`you`,
-    note: msg`Sina as the one something is done to: Ma ootan sind, I'm waiting for you.`,
+    note: msg`Sina as the one something is done to: Ma ootan sind, I’m waiting for you.`,
   },
   istu: { en: msg`sit down`, note: msg`A command, from istuma, to sit.` },
   aga: { en: msg`but` },
@@ -55,13 +55,13 @@ const GLOSSARY: Glossary = {
   "kuidas läheb?": { en: msg`How are you?`, show: "Kuidas läheb?" },
 };
 
-/** Mari's line in the café talk, as recorded. */
+/** Mari’s line in the café talk, as recorded. */
 const said = (clip: keyof typeof TALLINN_DIALOGUE) => {
   const line = TALLINN_DIALOGUE[clip];
   return typeof line === "string" ? line : line.text;
 };
 
-/** The café's door: shut on Monday, and open later at the weekend. */
+/** The café’s door: shut on Monday, and open later at the weekend. */
 const CAFE_HOURS = [
   ["E", "suletud"],
   ["T–R", "9–18"],
@@ -86,7 +86,7 @@ function useContent() {
       ask: t`Can you have a coffee there on Monday?`,
       options: [
         { id: "nine", label: t`Yes, from 9:00 to 18:00` },
-        { id: "closed", label: t`No, it's closed` },
+        { id: "closed", label: t`No, it’s closed` },
         { id: "ten", label: t`Yes, from 10:00 to 16:00` },
       ],
       answer: "closed",
@@ -216,7 +216,7 @@ function useContent() {
       replies: [
         { line: said("d-sina-1"), right: true },
         { line: "Ma elan Tallinnas.", why: t`That says where you live. Mari asked how you are.` },
-        { line: "Kell on kümme.", why: t`That's the time. Mari asked how you are.` },
+        { line: "Kell on kümme.", why: t`That’s the time. Mari asked how you are.` },
       ],
     },
     { who: "them", clip: "d-mari-2", line: said("d-mari-2") },
@@ -236,7 +236,7 @@ function useContent() {
       replies: [
         { line: "Kell on pool kümme.", why: t`Pool looks ahead: pool kümme is 9:30.` },
         { line: said("d-sina-3"), right: true },
-        { line: "Kell on üksteist.", why: t`Üksteist is 11:00, and it's half past ten.` },
+        { line: "Kell on üksteist.", why: t`Üksteist is 11:00, and it’s half past ten.` },
       ],
     },
     { who: "them", clip: "d-mari-4", line: said("d-mari-4") },
@@ -310,15 +310,15 @@ export function PaevTallinnasLesson() {
           <b lang="et" className="whitespace-nowrap">
             -l
           </b>
-          , and when with <b lang="et">täna</b>, <b lang="et">homme</b> or a day's name with{" "}
+          , and when with <b lang="et">täna</b>, <b lang="et">homme</b> or a day’s name with{" "}
           <b lang="et" className="whitespace-nowrap">
             -l
           </b>
-          : <b lang="et">Pühapäeval olen kodus</b>, on Sunday I'm at home.
+          : <b lang="et">Pühapäeval olen kodus</b>, on Sunday I’m at home.
         </Trans>,
         <Trans key="5">
           Answer no with <b lang="et">ei</b> and the verb without its ending:{" "}
-          <b lang="et">Ei, ma ei tööta</b>, no, I don't work.
+          <b lang="et">Ei, ma ei tööta</b>, no, I don’t work.
         </Trans>,
       ]}
       sections={[
@@ -348,7 +348,7 @@ export function PaevTallinnasLesson() {
                   <OpeningHours
                     name="kohvik"
                     rows={CAFE_HOURS}
-                    caption={t`A café's opening hours`}
+                    caption={t`A café’s opening hours`}
                   />
                 }
               />
@@ -365,7 +365,7 @@ export function PaevTallinnasLesson() {
                 <p>
                   <Trans>
                     Your friend Mari sends you a message. Read it and answer the questions. Once
-                    you've answered, tap a word to see what it means.
+                    you’ve answered, tap a word to see what it means.
                   </Trans>
                 </p>
               </Prose>
@@ -396,7 +396,7 @@ export function PaevTallinnasLesson() {
               </Prose>
               <Listening
                 id="jaan-voice"
-                title={<Trans>Listen: Jaan's plans</Trans>}
+                title={<Trans>Listen: Jaan’s plans</Trans>}
                 clip="p-jaan"
                 sentences={TALLINN_PASSAGES.jaan}
                 questions={content.voice}
@@ -413,7 +413,7 @@ export function PaevTallinnasLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Now it's Saturday, and this is your plan. Put a word in each gap: a form of{" "}
+                    Now it’s Saturday, and this is your plan. Put a word in each gap: a form of{" "}
                     <Word w="olema" />, a verb with the right ending, <Word w="ei" />, or the form a
                     word takes after a number.
                   </Trans>
@@ -449,7 +449,7 @@ export function PaevTallinnasLesson() {
                 title={<Trans>Talk: coffee with Mari</Trans>}
                 part={
                   <Trans>
-                    It's Saturday, half past ten, and you don't work on Sundays. Mari speaks first;
+                    It’s Saturday, half past ten, and you don’t work on Sundays. Mari speaks first;
                     pick what you say back.
                   </Trans>
                 }

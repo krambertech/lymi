@@ -30,11 +30,11 @@ const GLOSSARY: Glossary = {
     en: msg`on Sunday`,
     note: msg`Pühapäev with the ending that says when, as in esmaspäeval.`,
   },
-  kell: { en: msg`o'clock; at, before a time`, note: msg`Kell kümme: at ten.` },
+  kell: { en: msg`o'clock; at, in front of a time`, note: msg`Kell kümme: at ten.` },
   kümme: { en: msg`ten` },
   kaksteist: { en: msg`twelve` },
   üksteist: { en: msg`eleven` },
-  pool: { en: msg`half`, note: msg`Pool üksteist: halfway to eleven, 10:30.` },
+  pool: { en: msg`half`, note: msg`Pool neli: halfway to four, 3:30.` },
   "pool üksteist": {
     en: msg`half past ten, 10:30`,
     note: msg`Pool looks ahead: halfway to eleven.`,
@@ -43,7 +43,7 @@ const GLOSSARY: Glossary = {
   eurot: { en: msg`euros`, note: msg`After a number from two up, euro becomes eurot.` },
   buss: { en: msg`bus` },
   ootan: { en: msg`I wait, I'm waiting`, note: msg`From ootama, to wait.` },
-  sind: { en: msg`you`, note: msg`Sina as the one something is done to: Ma ootan sind.` },
+  sind: { en: msg`you`, note: msg`Sina as the one something is done to: Ma ootan sind, I'm waiting for you.` },
   istu: { en: msg`sit down`, note: msg`A command, from istuma, to sit.` },
   aga: { en: msg`but` },
   olema: { en: msg`to be`, note: msg`Ma olen, sa oled, ta on.` },
@@ -172,7 +172,7 @@ function useContent() {
     },
     {
       id: "bus",
-      ask: t`When is his bus in Tallinn?`,
+      ask: t`When does his bus get to Tallinn?`,
       options: [
         { id: "eleven-thirty", label: t`At 11:30` },
         { id: "ten-thirty", label: t`At 10:30` },
@@ -221,7 +221,7 @@ function useContent() {
       who: "you",
       clip: "d-sina-2",
       replies: [
-        { line: "Jah, ma joob kohvi.", why: t`Ma takes -n: joon.` },
+        { line: "Jah, ma joob kohvi.", why: t`With ma, the verb ends in -n: ma joon.` },
         { line: "Ei, ma ei joon kohvi.", why: t`After ei, the verb drops its ending: ei joo.` },
         { line: said("d-sina-2"), right: true },
       ],
@@ -254,7 +254,6 @@ export function PaevTallinnasLesson() {
   const { t } = useLingui();
   const content = useContent();
   const days = lessonBySlug("paevad")?.n;
-  const time = lessonBySlug("kell")?.n;
 
   return (
     <LessonView
@@ -262,8 +261,8 @@ export function PaevTallinnasLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Read a sign and a message, follow a voice message, then plan a Saturday and talk it over:
-          numbers, times and days in sentences you know.
+          Read a café sign and a message, follow a voice message, fill in a plan for Saturday and
+          answer a friend at a café: numbers, times and days in sentences you know.
         </Trans>
       }
       facts={[
@@ -292,11 +291,11 @@ export function PaevTallinnasLesson() {
         </Trans>,
         <Trans key="2">
           Say when with <b lang="et">kell</b> and a number:{" "}
-          <b lang="et">Ma joon kell kümme kohvi</b>. Pool looks ahead, so{" "}
+          <b lang="et">Ma joon kell kümme kohvi</b>, I drink coffee at ten. Pool looks ahead, so{" "}
           <b lang="et">pool üksteist</b> is 10:30.
         </Trans>,
         <Trans key="3">
-          Say a price with <b lang="et">maksab</b>: <b lang="et">Kohv maksab kolm eurot</b>.
+          Say a price with <b lang="et">maksab</b>: <b lang="et">Kohv maksab kolm eurot</b>, coffee costs three euros.
         </Trans>,
         <Trans key="4">
           Say where with{" "}
@@ -307,11 +306,14 @@ export function PaevTallinnasLesson() {
           <b lang="et" className="whitespace-nowrap">
             -l
           </b>
-          , and which day with <b lang="et">täna</b>, <b lang="et">homme</b> or a day's name:{" "}
-          <b lang="et">Pühapäeval olen kodus</b>.
+          , and when with <b lang="et">täna</b>, <b lang="et">homme</b> or a day's name with{" "}
+          <b lang="et" className="whitespace-nowrap">
+            -l
+          </b>
+          : <b lang="et">Pühapäeval olen kodus</b>, on Sunday I'm at home.
         </Trans>,
         <Trans key="5">
-          Answer no with <b lang="et">ei</b> and the bare verb: <b lang="et">Ei, ma ei tööta</b>.
+          Answer no with <b lang="et">ei</b> and the bare verb: <b lang="et">Ei, ma ei tööta</b>, no, I don't work.
         </Trans>,
       ]}
       sections={[
@@ -324,7 +326,7 @@ export function PaevTallinnasLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A sign names each day by its capital letter, as lesson {days} showed, and gives
+                    A sign shortens each day to its first letter, as lesson {days} showed, and gives
                     hours on the 24-hour clock. <b lang="et">E–R 9–18</b> is Monday to Friday, 9:00
                     to 18:00. <Word w="Suletud" /> is closed.
                   </Trans>
@@ -357,8 +359,8 @@ export function PaevTallinnasLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Your friend Mari sends you a message. Read it and answer the questions. Its
-                    words open their meaning once you've answered.
+                    Your friend Mari sends you a message. Read it and answer the questions. Once
+                    you've answered, tap a word to see what it means.
                   </Trans>
                 </p>
               </Prose>
@@ -383,7 +385,7 @@ export function PaevTallinnasLesson() {
                 <p>
                   <Trans>
                     Jaan, another friend, leaves you a voice message. Listen for where he is and
-                    when. As lesson {time} showed, <Word w="pool" /> names the hour that's coming.
+                    when.
                   </Trans>
                 </p>
               </Prose>
@@ -406,15 +408,15 @@ export function PaevTallinnasLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Now it's Saturday, and this is your plan. Each gap takes a form of{" "}
-                    <Word w="olema" />, a verb ending, <Word w="ei" />, or the form a word takes
-                    after a number.
+                    Now it's Saturday, and this is your plan. Put a word in each gap: a form of{" "}
+                    <Word w="olema" />, a verb with the right ending, <Word w="ei" />, or the form a
+                    word takes after a number.
                   </Trans>
                 </p>
               </Prose>
               <GapPassage
                 id="my-saturday"
-                title={<Trans>Fill in your Saturday</Trans>}
+                title={<Trans>Fill the gaps</Trans>}
                 gaps={SATURDAY_GAPS}
                 mode="drag"
                 spare={["oled", "joob", "euro"]}

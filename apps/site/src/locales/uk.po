@@ -705,7 +705,7 @@ msgid "A café, an evening or a person can all be gezellig."
 msgstr "Gezellig буває і кафе, і вечір, і людина."
 
 msgid "A café's opening hours"
-msgstr "Години роботи кав'ярні"
+msgstr "Години роботи кав’ярні"
 
 msgid "A card shows its stress mark until you know the word. After that it shows the word the way books print it, without the mark. Each time you remember it, Lymi waits a little longer before showing it again. Turning the card over always shows the mark."
 msgstr "Поки ти не знаєш слово, картка показує його з наголосом. Потім — так, як друкують у книжках, без наголосу. Щоразу, коли ти згадуєш слово, Lymi чекає трохи довше, перш ніж показати його знову. На звороті картки наголос видно завжди."
@@ -736,7 +736,7 @@ msgid "A clock at {right}"
 msgstr "Годинник показує {right}"
 
 msgid "A command, from istuma, to sit."
-msgstr "Наказ від istuma, сидіти."
+msgstr "Наказовий спосіб від istuma, сідати."
 
 msgid "A conversation in two voices: the learner picks each reply. Shown first, then sound only for a harder one."
 msgstr "Розмова у два голоси: учень обирає кожну відповідь. Спершу з текстом, потім лише на слух — складніший рівень."
@@ -1042,8 +1042,8 @@ msgstr "Години роботи магазину"
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "Короткий текст, щоб прочитати й послухати, і всі питання одразу; картки слів відкриваються після перевірки."
 
-msgid "A sign names each day by its capital letter, as lesson {days} showed, and gives hours on the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
-msgstr "На вивісці кожен день — одна велика літера, як показав урок {days}, а години — за 24-годинним годинником. <0>E–R 9–18</0> — з понеділка по п'ятницю, з 9:00 до 18:00. <1/> — зачинено."
+msgid "A sign shortens each day to its first letter, as lesson {days} showed, and gives hours on the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
+msgstr "На табличці кожен день позначено першою літерою, як показав урок {days}, а час — у 24-годинному форматі. <0>E–R 9–18</0> — з понеділка до п’ятниці, з 9:00 до 18:00. <1/> — зачинено."
 
 msgid "A smaller, checked library"
 msgstr "Менша, перевірена бібліотека"
@@ -1682,8 +1682,8 @@ msgstr "Відповідай <0>jah</0> або <1>ei</1>. На питання з
 msgid "Answer every question first."
 msgstr "Спершу дай відповідь на всі питання."
 
-msgid "Answer no with <0>ei</0> and the bare verb: <1>Ei, ma ei tööta</1>."
-msgstr "Відповідай «ні» через <0>ei</0> і дієслово без закінчення: <1>Ei, ma ei tööta</1>."
+msgid "Answer no with <0>ei</0> and the bare verb: <1>Ei, ma ei tööta</1>, no, I don't work."
+msgstr "Відповідай «ні» через <0>ei</0> і дієслово без закінчення: <1>Ei, ma ei tööta</1>, ні, я не працюю."
 
 msgid "Answering no"
 msgstr "Як відповісти «ні»"
@@ -1905,7 +1905,7 @@ msgid "At ten"
 msgstr "О десятій"
 
 msgid "At the café"
-msgstr "У кав'ярні"
+msgstr "У кав’ярні"
 
 msgid "at the market"
 msgstr "на ринку"
@@ -3699,9 +3699,6 @@ msgstr "Спершу заповни всі пропуски."
 msgid "Fill in each field yourself"
 msgstr "Кожне поле заповнюєш власноруч"
 
-msgid "Fill in your Saturday"
-msgstr "Заповни свою суботу"
-
 msgid "Fill it from your tools"
 msgstr "Наповнюй зі своїх інструментів"
 
@@ -3953,7 +3950,7 @@ msgid "Free Estonian grammar lessons · Lymi"
 msgstr "Безкоштовні уроки естонської граматики · Lymi"
 
 msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
-msgstr "Безкоштовна практика естонської для початківців: прочитай години роботи й повідомлення, зрозумій голосове повідомлення з часом і днями, заповни план на суботу й поговори з подругою в кав'ярні. Кожне речення озвучене."
+msgstr "Безкоштовна практика естонської для початківців: прочитай години роботи й повідомлення, зрозумій голосове повідомлення з часом і днями, заповни план на суботу й поговори з подругою в кав’ярні. Кожне речення озвучене."
 
 msgid "Free flashcard decks: languages, exams and more · Lymi"
 msgstr "Безкоштовні картки: мови, іспити й не тільки · Lymi"
@@ -5201,7 +5198,7 @@ msgid "in a café"
 msgstr "у кав’ярні"
 
 msgid "In a café"
-msgstr "У кав'ярні"
+msgstr "У кав’ярні"
 
 msgid "in a hospital"
 msgstr "у лікарні"
@@ -5524,8 +5521,8 @@ msgstr "Рідкісний, але серйозний ризик — лакто�
 msgid "Jaan lives in Pärnu."
 msgstr "Яан живе в Пярну."
 
-msgid "Jaan, another friend, leaves you a voice message. Listen for where he is and when. As lesson {time} showed, <0/> names the hour that's coming."
-msgstr "Яан, ще один друг, надсилає тобі голосове повідомлення. Слухай, де він буде і коли. Пам'ятай з уроку {time}: <0/> називає годину, що настає."
+msgid "Jaan, another friend, leaves you a voice message. Listen for where he is and when."
+msgstr "Яан, ще один друг, надсилає тобі голосове повідомлення. Слухай, де він буде і коли."
 
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
@@ -6192,9 +6189,6 @@ msgstr "Ma olen pärit… означає «я родом з…»."
 
 msgid "Ma olen, sa oled, ta on."
 msgstr "Ma olen, sa oled, ta on."
-
-msgid "Ma takes -n: joon."
-msgstr "Ma бере -n: joon."
 
 msgid "Ma tulen kohe! I’m coming right away!"
 msgstr "Ma tulen kohe! Уже йду!"
@@ -6923,8 +6917,8 @@ msgstr "Тепер коротка розмова. Послухай питанн�
 msgid "Now both together. You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
 msgstr "Тепер разом. Ти сидиш унизу й говориш із Mari та Jaan навпроти. Liis і Kadri сидять обабіч тебе, а Peeter праворуч. Натисни слово, щоб побачити, кого воно означає, або натисни на людину."
 
-msgid "Now it's Saturday, and this is your plan. Each gap takes a form of <0/>, a verb ending, <1/>, or the form a word takes after a number."
-msgstr "Тепер субота, і ось твій план. У кожен пропуск іде форма <0/>, закінчення дієслова, <1/> або форма слова після числа."
+msgid "Now it's Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
+msgstr "Тепер субота, і ось твій план. Встав у кожен пропуск слово: форму <0/>, дієслово з потрібним закінченням, <1/> або форму слова після числа."
 
 msgid "Number"
 msgstr "Число"
@@ -6953,8 +6947,8 @@ msgstr "Õ чи o? Ü чи u?"
 msgid "Õ, ä, ö and ü stay exactly as you typed them, so <0>tuli</0>, fire, and <1>tüli</1>, a quarrel, are two different cards."
 msgstr "Õ, ä, ö і ü лишаються саме такими, як ти їх вводиш, тож <0>tuli</0> (вогонь) і <1>tüli</1> (сварка) — дві різні картки."
 
-msgid "o'clock; at, before a time"
-msgstr "година; о, перед часом"
+msgid "o'clock; at, in front of a time"
+msgstr "година; також «о», коли стоїть перед часом"
 
 msgid "of 200 points for level 1"
 msgstr "з 200 балів для рівня 1"
@@ -7600,9 +7594,6 @@ msgstr "Pool дивиться вперед: pool kümme — це 9:30."
 msgid "Pool neli: halfway to four, 3:30."
 msgstr "Pool neli: пів на четверту, 3:30."
 
-msgid "Pool üksteist: halfway to eleven, 10:30."
-msgstr "Pool üksteist: пів на одинадцяту, 10:30."
-
 msgid "Popular"
 msgstr "Популярне"
 
@@ -7892,8 +7883,8 @@ msgstr "дощ"
 msgid "Range"
 msgstr "Діапазон"
 
-msgid "Read a sign and a message, follow a voice message, then plan a Saturday and talk it over: numbers, times and days in sentences you know."
-msgstr "Прочитай вивіску й повідомлення, зрозумій голосове, сплануй суботу й обговори її: числа, час і дні в реченнях, які ти вже вмієш складати."
+msgid "Read a café sign and a message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
+msgstr "Прочитай табличку на кав’ярні й повідомлення, зрозумій голосове, заповни план на суботу й відповідай подрузі в кав’ярні: числа, час і дні в знайомих реченнях."
 
 msgid "Read both endings above once more, then try again."
 msgstr "Ще раз перечитай про обидва закінчення вище, а потім спробуй знову."
@@ -7905,7 +7896,7 @@ msgid "Read Japanese Kana covers hiragana and katakana, including voiced and com
 msgstr "Read Japanese Kana охоплює хірагану й катакану, зокрема дзвінкі та складені звуки, малу цу й знак довгого голосного."
 
 msgid "Read opening hours: <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00, and <1>suletud</1> is closed."
-msgstr "Читай години роботи: <0>E–R 9–18</0> — з понеділка по п'ятницю, з 9:00 до 18:00, а <1>suletud</1> — зачинено."
+msgstr "Читай години роботи: <0>E–R 9–18</0> — з понеділка до п’ятниці, з 9:00 до 18:00, а <1>suletud</1> — зачинено."
 
 msgid "Read signs, news and forms, and join longer sentences."
 msgstr "Читати вивіски, новини й бланки та складати довші речення."
@@ -7914,7 +7905,7 @@ msgid "Read the meaning, then try to recall the term before you look. Try it on 
 msgstr "Прочитай значення й спершу згадай термін, а тоді дивись. Спробуй на цих картках: вони з усієї колоди."
 
 msgid "Read the sign on a café in Tallinn, then answer."
-msgstr "Прочитай вивіску на кав'ярні в Таллінні, а тоді відповідай."
+msgstr "Прочитай табличку на дверях кав’ярні в Таллінні й дай відповіді."
 
 msgid "Read your German deck"
 msgstr "Прочитано колоду з німецької"
@@ -8205,8 +8196,8 @@ msgstr "Субота"
 msgid "Save “Feierabend” to my German deck."
 msgstr "Збережи «Feierabend» у мою колоду німецької."
 
-msgid "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>."
-msgstr "Ціну називай через <0>maksab</0>: <1>Kohv maksab kolm eurot</1>."
+msgid "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, coffee costs three euros."
+msgstr "Ціну називай через <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, кава коштує три євро."
 
 msgid "Say e with rounded lips, as in German “schön”."
 msgstr "Скажи «е», округливши губи, як у німецькому «schön»."
@@ -8239,11 +8230,11 @@ msgstr "Проговори тиждень за днями вище, а тоді 
 msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
 msgstr "Казати, що мусиш, хочеш і любиш робити, розповідати, як минув учорашній день і з ким."
 
-msgid "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
-msgstr "Коли — це <0>kell</0> і число: <1>Ma joon kell kümme kohvi</1>. Pool дивиться вперед, тож <2>pool üksteist</2> — це 10:30, пів на одинадцяту."
+msgid "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
+msgstr "Час називай через <0>kell</0> і число: <1>Ma joon kell kümme kohvi</1>, я п’ю каву о десятій. Pool дивиться вперед, тож <2>pool üksteist</2> — це 10:30, пів на одинадцяту."
 
-msgid "Say where with <0>-s</0> or <1>-l</1>, and which day with <2>täna</2>, <3>homme</3> or a day's name: <4>Pühapäeval olen kodus</4>."
-msgstr "Де — через <0>-s</0> або <1>-l</1>, а який день — через <2>täna</2>, <3>homme</3> або назву дня: <4>Pühapäeval olen kodus</4>."
+msgid "Say where with <0>-s</0> or <1>-l</1>, and when with <2>täna</2>, <3>homme</3> or a day's name with <4>-l</4>: <5>Pühapäeval olen kodus</5>, on Sunday I'm at home."
+msgstr "Місце називай через <0>-s</0> або <1>-l</1>, а день — через <2>täna</2>, <3>homme</3> або назву дня з <4>-l</4>: <5>Pühapäeval olen kodus</5>, у неділю я вдома."
 
 msgid "Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do."
 msgstr "Скажи, хто ти, що робиш і де живеш, запитай і відповідай. Потім лічи, називай час і день тижня і кажи людям, що робити."
@@ -8562,8 +8553,8 @@ msgstr "Спрощені чи традиційні"
 msgid "Simplified or traditional?"
 msgstr "Спрощені чи традиційні ієрогліфи?"
 
-msgid "Sina as the one something is done to: Ma ootan sind."
-msgstr "Sina, коли дія спрямована на тебе: Ma ootan sind."
+msgid "Sina as the one something is done to: Ma ootan sind, I'm waiting for you."
+msgstr "Sina, коли дія спрямована на тебе: Ma ootan sind, я чекаю на тебе."
 
 msgid "Sina is you: this says “You are Jaan.”"
 msgstr "Sina — це ти: тут сказано «Ти Яан»."
@@ -9259,7 +9250,7 @@ msgid "That's Jaan."
 msgstr "Це Яан."
 
 msgid "That's the time. Mari asked how you are."
-msgstr "Це котра година. Марі спитала, як у тебе справи."
+msgstr "Це про те, котра година. Марі спитала, як у тебе справи."
 
 msgid "The -des and -mata forms"
 msgstr "Форми на -des і -mata"
@@ -10494,7 +10485,7 @@ msgid "Tuesday Ukrainian class"
 msgstr "Українська, вівторкова група"
 
 msgid "Turg, market, takes -l by habit."
-msgstr "Turg, ринок, за звичаєм бере -l."
+msgstr "Turg, ринок, за традицією отримує -l."
 
 msgid "Turn a few cards over"
 msgstr "Переверни кілька карток"
@@ -11099,20 +11090,20 @@ msgstr "Коли ти читаєш?"
 msgid "When do you work?"
 msgstr "Коли ти працюєш?"
 
+msgid "When does his bus get to Tallinn?"
+msgstr "Коли його автобус приїде до Таллінна?"
+
 msgid "When does it close on Thursday?"
-msgstr "Коли вона зачиняється в четвер?"
+msgstr "О котрій кав’ярня зачиняється в четвер?"
 
 msgid "When does it open on Saturday?"
-msgstr "Коли вона відчиняється в суботу?"
+msgstr "О котрій кав’ярня відчиняється в суботу?"
 
 msgid "When does Mari have coffee?"
-msgstr "Коли Марі п'є каву?"
-
-msgid "When is his bus in Tallinn?"
-msgstr "Коли його автобус буде в Таллінні?"
+msgstr "Коли Марі п’є каву?"
 
 msgid "When is the café open?"
-msgstr "Коли кав'ярня відчинена?"
+msgstr "Коли кав’ярня відчинена?"
 
 msgid "When its card reaches Known in your reviews. From then on the reading is hidden on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it."
 msgstr "Коли його картка в повтореннях стає засвоєною. Відтоді читання приховане на цій картці й у прикладах у всіх твоїх колодах. Забудеш слово — і читання повернеться, а на звороті картки воно є завжди."
@@ -11368,6 +11359,9 @@ msgstr "вікно"
 
 msgid "With A1 if Spanish is new to you, or with Spanish Top 100 Verbs and Spanish Top 1000 Words if you’d rather learn the words you’ll hear most first. You can take both at once."
 msgstr "З A1, якщо іспанська для тебе нова, або з колод «Іспанська: 100 найуживаніших дієслів» та «Іспанська: 1000 найуживаніших слів», якщо хочеш спершу вивчити слова, які чутимеш найчастіше. Можна вчити й те, й інше одночасно."
+
+msgid "With ma, the verb ends in -n: ma joon."
+msgstr "З ma дієслово закінчується на -n: ma joon."
 
 msgid "With masks drawn for you, on Premium"
 msgstr "З автоматичними масками, у Premium"
@@ -11730,7 +11724,7 @@ msgid "you live, to more than one; polite you live"
 msgstr "ви живете; ввічливе «Ви живете»"
 
 msgid "You meet Mari at the café and answer her in Estonian. A wrong reply says why, then you hear the right one."
-msgstr "Ти зустрічаєш Марі в кав'ярні й відповідаєш їй естонською. Неправильна відповідь пояснює, у чому помилка, а тоді звучить правильна."
+msgstr "Ти зустрічаєш Марі в кав’ярні й відповідаєш їй естонською. Неправильна відповідь пояснює, у чому помилка, а тоді звучить правильна."
 
 msgid "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."
 msgstr "Ти вже знаєш <0/>, де, з уроку {questions}. Відповідай реченням, а в розмові — просто назвою місця."
@@ -11900,8 +11894,8 @@ msgstr "Твоя перша кана — <0>あ</0>."
 msgid "Your first word is <0>tere</0>."
 msgstr "Твоє перше слово — <0>tere</0>."
 
-msgid "Your friend Mari sends you a message. Read it and answer the questions. Its words open their meaning once you've answered."
-msgstr "Твоя подруга Марі надсилає тобі повідомлення. Прочитай його й дай відповіді. Значення слів відкриються, коли відповіси."
+msgid "Your friend Mari sends you a message. Read it and answer the questions. Once you've answered, tap a word to see what it means."
+msgstr "Твоя подруга Марі надсилає тобі повідомлення. Прочитай його й дай відповіді. Потім торкнися слова, щоб побачити, що воно означає."
 
 msgid "Your goal, your streak"
 msgstr "Твоя мета й дні поспіль"

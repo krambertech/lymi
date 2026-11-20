@@ -1042,8 +1042,8 @@ msgstr "A shop's opening hours"
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "A short text to read and hear, every question at once; its words open their cards once checked."
 
-msgid "A sign names each day by its capital letter, as lesson {days} showed, and gives hours on the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
-msgstr "A sign names each day by its capital letter, as lesson {days} showed, and gives hours on the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
+msgid "A sign shortens each day to its first letter, as lesson {days} showed, and gives hours on the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
+msgstr "A sign shortens each day to its first letter, as lesson {days} showed, and gives hours on the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
 
 msgid "A smaller, checked library"
 msgstr "A smaller, checked library"
@@ -1682,8 +1682,8 @@ msgstr "Answer <0>jah</0> or <1>ei</1>. To a question with olema, say <2>ei ole<
 msgid "Answer every question first."
 msgstr "Answer every question first."
 
-msgid "Answer no with <0>ei</0> and the bare verb: <1>Ei, ma ei tööta</1>."
-msgstr "Answer no with <0>ei</0> and the bare verb: <1>Ei, ma ei tööta</1>."
+msgid "Answer no with <0>ei</0> and the bare verb: <1>Ei, ma ei tööta</1>, no, I don't work."
+msgstr "Answer no with <0>ei</0> and the bare verb: <1>Ei, ma ei tööta</1>, no, I don't work."
 
 msgid "Answering no"
 msgstr "Answering no"
@@ -3699,9 +3699,6 @@ msgstr "Fill every gap first."
 msgid "Fill in each field yourself"
 msgstr "Fill in each field yourself"
 
-msgid "Fill in your Saturday"
-msgstr "Fill in your Saturday"
-
 msgid "Fill it from your tools"
 msgstr "Fill it from your tools"
 
@@ -5524,8 +5521,8 @@ msgstr "Its rare, serious risk is lactic acidosis."
 msgid "Jaan lives in Pärnu."
 msgstr "Jaan lives in Pärnu."
 
-msgid "Jaan, another friend, leaves you a voice message. Listen for where he is and when. As lesson {time} showed, <0/> names the hour that's coming."
-msgstr "Jaan, another friend, leaves you a voice message. Listen for where he is and when. As lesson {time} showed, <0/> names the hour that's coming."
+msgid "Jaan, another friend, leaves you a voice message. Listen for where he is and when."
+msgstr "Jaan, another friend, leaves you a voice message. Listen for where he is and when."
 
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
@@ -6192,9 +6189,6 @@ msgstr "Ma olen pärit… is I'm from…"
 
 msgid "Ma olen, sa oled, ta on."
 msgstr "Ma olen, sa oled, ta on."
-
-msgid "Ma takes -n: joon."
-msgstr "Ma takes -n: joon."
 
 msgid "Ma tulen kohe! I’m coming right away!"
 msgstr "Ma tulen kohe! I’m coming right away!"
@@ -6923,8 +6917,8 @@ msgstr "Now a short exchange. Hear a question, then pick the answer that fits. A
 msgid "Now both together. You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
 msgstr "Now both together. You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
 
-msgid "Now it's Saturday, and this is your plan. Each gap takes a form of <0/>, a verb ending, <1/>, or the form a word takes after a number."
-msgstr "Now it's Saturday, and this is your plan. Each gap takes a form of <0/>, a verb ending, <1/>, or the form a word takes after a number."
+msgid "Now it's Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
+msgstr "Now it's Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
 
 msgid "Number"
 msgstr "Number"
@@ -6953,8 +6947,8 @@ msgstr "Õ or o? Ü or u?"
 msgid "Õ, ä, ö and ü stay exactly as you typed them, so <0>tuli</0>, fire, and <1>tüli</1>, a quarrel, are two different cards."
 msgstr "Õ, ä, ö and ü stay exactly as you typed them, so <0>tuli</0>, fire, and <1>tüli</1>, a quarrel, are two different cards."
 
-msgid "o'clock; at, before a time"
-msgstr "o'clock; at, before a time"
+msgid "o'clock; at, in front of a time"
+msgstr "o'clock; at, in front of a time"
 
 msgid "of 200 points for level 1"
 msgstr "of 200 points for level 1"
@@ -7600,9 +7594,6 @@ msgstr "Pool looks ahead: pool kümme is 9:30."
 msgid "Pool neli: halfway to four, 3:30."
 msgstr "Pool neli: halfway to four, 3:30."
 
-msgid "Pool üksteist: halfway to eleven, 10:30."
-msgstr "Pool üksteist: halfway to eleven, 10:30."
-
 msgid "Popular"
 msgstr "Popular"
 
@@ -7892,8 +7883,8 @@ msgstr "rain"
 msgid "Range"
 msgstr "Range"
 
-msgid "Read a sign and a message, follow a voice message, then plan a Saturday and talk it over: numbers, times and days in sentences you know."
-msgstr "Read a sign and a message, follow a voice message, then plan a Saturday and talk it over: numbers, times and days in sentences you know."
+msgid "Read a café sign and a message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
+msgstr "Read a café sign and a message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
 
 msgid "Read both endings above once more, then try again."
 msgstr "Read both endings above once more, then try again."
@@ -8205,8 +8196,8 @@ msgstr "Saturday"
 msgid "Save “Feierabend” to my German deck."
 msgstr "Save “Feierabend” to my German deck."
 
-msgid "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>."
-msgstr "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>."
+msgid "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, coffee costs three euros."
+msgstr "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, coffee costs three euros."
 
 msgid "Say e with rounded lips, as in German “schön”."
 msgstr "Say e with rounded lips, as in German “schön”."
@@ -8239,11 +8230,11 @@ msgstr "Say the week through with the strip above, then try again."
 msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
 msgstr "Say what you must, want and like to do, what you did yesterday, and with whom."
 
-msgid "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
-msgstr "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
+msgid "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
+msgstr "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
 
-msgid "Say where with <0>-s</0> or <1>-l</1>, and which day with <2>täna</2>, <3>homme</3> or a day's name: <4>Pühapäeval olen kodus</4>."
-msgstr "Say where with <0>-s</0> or <1>-l</1>, and which day with <2>täna</2>, <3>homme</3> or a day's name: <4>Pühapäeval olen kodus</4>."
+msgid "Say where with <0>-s</0> or <1>-l</1>, and when with <2>täna</2>, <3>homme</3> or a day's name with <4>-l</4>: <5>Pühapäeval olen kodus</5>, on Sunday I'm at home."
+msgstr "Say where with <0>-s</0> or <1>-l</1>, and when with <2>täna</2>, <3>homme</3> or a day's name with <4>-l</4>: <5>Pühapäeval olen kodus</5>, on Sunday I'm at home."
 
 msgid "Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do."
 msgstr "Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do."
@@ -8562,8 +8553,8 @@ msgstr "Simplified or traditional"
 msgid "Simplified or traditional?"
 msgstr "Simplified or traditional?"
 
-msgid "Sina as the one something is done to: Ma ootan sind."
-msgstr "Sina as the one something is done to: Ma ootan sind."
+msgid "Sina as the one something is done to: Ma ootan sind, I'm waiting for you."
+msgstr "Sina as the one something is done to: Ma ootan sind, I'm waiting for you."
 
 msgid "Sina is you: this says “You are Jaan.”"
 msgstr "Sina is you: this says “You are Jaan.”"
@@ -11099,6 +11090,9 @@ msgstr "When do you read?"
 msgid "When do you work?"
 msgstr "When do you work?"
 
+msgid "When does his bus get to Tallinn?"
+msgstr "When does his bus get to Tallinn?"
+
 msgid "When does it close on Thursday?"
 msgstr "When does it close on Thursday?"
 
@@ -11107,9 +11101,6 @@ msgstr "When does it open on Saturday?"
 
 msgid "When does Mari have coffee?"
 msgstr "When does Mari have coffee?"
-
-msgid "When is his bus in Tallinn?"
-msgstr "When is his bus in Tallinn?"
 
 msgid "When is the café open?"
 msgstr "When is the café open?"
@@ -11368,6 +11359,9 @@ msgstr "window"
 
 msgid "With A1 if Spanish is new to you, or with Spanish Top 100 Verbs and Spanish Top 1000 Words if you’d rather learn the words you’ll hear most first. You can take both at once."
 msgstr "With A1 if Spanish is new to you, or with Spanish Top 100 Verbs and Spanish Top 1000 Words if you’d rather learn the words you’ll hear most first. You can take both at once."
+
+msgid "With ma, the verb ends in -n: ma joon."
+msgstr "With ma, the verb ends in -n: ma joon."
 
 msgid "With masks drawn for you, on Premium"
 msgstr "With masks drawn for you, on Premium"
@@ -11900,8 +11894,8 @@ msgstr "Your first kana is <0>あ</0>."
 msgid "Your first word is <0>tere</0>."
 msgstr "Your first word is <0>tere</0>."
 
-msgid "Your friend Mari sends you a message. Read it and answer the questions. Its words open their meaning once you've answered."
-msgstr "Your friend Mari sends you a message. Read it and answer the questions. Its words open their meaning once you've answered."
+msgid "Your friend Mari sends you a message. Read it and answer the questions. Once you've answered, tap a word to see what it means."
+msgstr "Your friend Mari sends you a message. Read it and answer the questions. Once you've answered, tap a word to see what it means."
 
 msgid "Your goal, your streak"
 msgstr "Your goal, your streak"

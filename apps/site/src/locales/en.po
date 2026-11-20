@@ -25,6 +25,9 @@ msgstr "“Look at that VAT, MAma!”"
 msgid "“May it come easy”, said to someone at work"
 msgstr "“May it come easy”, said to someone at work"
 
+msgid "“On Monday” takes an ending: <0/>. That comes in lesson {when}."
+msgstr "“On Monday” takes an ending: <0/>. That comes in lesson {when}."
+
 msgid "“Schönen Feierabend!” wishes someone a good evening off."
 msgstr "“Schönen Feierabend!” wishes someone a good evening off."
 
@@ -321,6 +324,12 @@ msgstr "<0/> {left, plural, one {due} other {due}}"
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 
+msgid "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
+msgstr "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
+
+msgid "<0/> means holy, so this is the holy day."
+msgstr "<0/> means holy, so this is the holy day."
+
 msgid "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 msgstr "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 
@@ -350,6 +359,9 @@ msgstr "<0>Aiko</0> finished Week 3"
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Diffusion</0>: particles move from high to low concentration."
 
+msgid "<0>E–R</0> on a sign: Monday to Friday."
+msgstr "<0>E–R</0> on a sign: Monday to Friday."
+
 msgid "<0>Jonas</0> added 4 cards to Week 4"
 msgstr "<0>Jonas</0> added 4 cards to Week 4"
 
@@ -374,6 +386,9 @@ msgstr "<0>opportunity cost</0> <1>= what you give up</1>"
 msgid "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 msgstr "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 
+msgid "<0>P suletud</0> on a sign: closed on Sunday."
+msgstr "<0>P suletud</0> on a sign: closed on Sunday."
+
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>price elasticity</0> ?"
 
@@ -385,6 +400,9 @@ msgstr "<0>Sklep</0> is a shop, not a crypt, and <1>dynia</1> is a pumpkin, not 
 
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
+
+msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
+msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 
 msgid "<0>за́мок</0> is a castle."
 msgstr "<0>за́мок</0> is a castle."
@@ -539,6 +557,9 @@ msgstr "64 cards"
 msgid "64 pages"
 msgstr "64 pages"
 
+msgid "8 minutes"
+msgstr "8 minutes"
+
 msgid "80% to pass. Questions from the official handbook."
 msgstr "80% to pass. Questions from the official handbook."
 
@@ -676,6 +697,9 @@ msgstr "A free flashcard app for Ukrainian. Each card marks its stress until you
 
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers."
 msgstr "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers."
+
+msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
+msgstr "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
 
 msgid "A full card in seconds"
 msgstr "A full card in seconds"
@@ -818,6 +842,9 @@ msgstr "A schedule for every card"
 
 msgid "A score for one attempt"
 msgstr "A score for one attempt"
+
+msgid "A shop's opening hours"
+msgstr "A shop's opening hours"
 
 msgid "A smaller, checked library"
 msgstr "A smaller, checked library"
@@ -1254,6 +1281,9 @@ msgstr "All of them, equally often"
 msgid "All of them, inside real sentences."
 msgstr "All of them, inside real sentences."
 
+msgid "All of them. You can count the week forward."
+msgstr "All of them. You can count the week forward."
+
 msgid "All of them. You can hear length."
 msgstr "All of them. You can hear length."
 
@@ -1265,6 +1295,9 @@ msgstr "All Polish decks"
 
 msgid "All Russian decks"
 msgstr "All Russian decks"
+
+msgid "All seven. You know the week by ear."
+msgstr "All seven. You know the week by ear."
 
 msgid "All shelves"
 msgstr "All shelves"
@@ -1296,6 +1329,9 @@ msgstr "Already in your deck, so it’s skipped"
 
 msgid "Also “came”: ta tuli, she came."
 msgstr "Also “came”: ta tuli, she came."
+
+msgid "Also “other”."
+msgstr "Also “other”."
 
 msgid "Also “to get”, from saama."
 msgstr "Also “to get”, from saama."
@@ -1609,6 +1645,12 @@ msgstr "Books often print ё as е. Add a word from such a book and the card sho
 msgid "Books often print ё as е. Add ежик from such a book and Lymi shows ёжик on the card until you know it, the dots marking the stress as an accent would."
 msgstr "Books often print ё as е. Add ежик from such a book and Lymi shows ёжик on the card until you know it, the dots marking the stress as an accent would."
 
+msgid "Borrowed from Low German or Old Swedish."
+msgstr "Borrowed from Low German or Old Swedish."
+
+msgid "Borrowed from the Low German or Old Swedish name for Friday. It's the one day without <0>päev</0>."
+msgstr "Borrowed from the Low German or Old Swedish name for Friday. It's the one day without <0>päev</0>."
+
 msgid "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
 msgstr "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
 
@@ -1764,6 +1806,12 @@ msgstr "Bye"
 
 msgid "café"
 msgstr "café"
+
+msgid "Calendars and signs use one capital letter a day: <0>E T K N R L P</0>."
+msgstr "Calendars and signs use one capital letter a day: <0>E T K N R L P</0>."
+
+msgid "Calendars, timetables and shop doors write each day as its first letter, a capital: <0>E, T, K, N, R, L, P</0>. A sign that says <1>E–R 9–18</1> is open Monday to Friday, nine to six."
+msgstr "Calendars, timetables and shop doors write each day as its first letter, a capital: <0>E, T, K, N, R, L, P</0>. A sign that says <1>E–R 9–18</1> is open Monday to Friday, nine to six."
 
 msgid "California DMV knowledge test"
 msgstr "California DMV knowledge test"
@@ -2169,6 +2217,9 @@ msgstr "Clocking off, and the free evening that follows"
 msgid "Close menu"
 msgstr "Close menu"
 
+msgid "closed"
+msgstr "closed"
+
 msgid "Cloud"
 msgstr "Cloud"
 
@@ -2339,6 +2390,9 @@ msgstr "Cosy"
 msgid "Cosy and convivial; good company"
 msgstr "Cosy and convivial; good company"
 
+msgid "Count forward"
+msgstr "Count forward"
+
 msgid "Create and practise flashcards with ChatGPT."
 msgstr "Create and practise flashcards with ChatGPT."
 
@@ -2382,6 +2436,9 @@ msgstr "Danke schön! Thank you very much!"
 msgid "Dates, definitions and formulas to know on the day."
 msgstr "Dates, definitions and formulas to know on the day."
 
+msgid "day"
+msgstr "day"
+
 msgid "Day {day}"
 msgstr "Day {day}"
 
@@ -2399,6 +2456,9 @@ msgstr "days in a row"
 
 msgid "Days of the week"
 msgstr "Days of the week"
+
+msgid "Days of the week in Estonian"
+msgstr "Days of the week in Estonian"
 
 msgid "Deadline"
 msgstr "Deadline"
@@ -2786,6 +2846,9 @@ msgstr "Enjoy your meal!"
 msgid "Enjoying the moment"
 msgstr "Enjoying the moment"
 
+msgid "Esmaspäev with an ending that says when."
+msgstr "Esmaspäev with an ending that says when."
+
 msgid "Español"
 msgstr "Español"
 
@@ -3122,6 +3185,9 @@ msgstr "fire"
 msgid "Fire"
 msgstr "Fire"
 
+msgid "first"
+msgstr "first"
+
 msgid "First day"
 msgstr "First day"
 
@@ -3368,6 +3434,9 @@ msgstr "French A2 · Wednesdays"
 msgid "French for “putting in place”."
 msgstr "French for “putting in place”."
 
+msgid "Friday"
+msgstr "Friday"
+
 msgid "Fridge"
 msgstr "Fridge"
 
@@ -3388,6 +3457,12 @@ msgstr "From a podcast episode"
 
 msgid "From a post on X"
 msgstr "From a post on X"
+
+msgid "From a Scandinavian name: the day people washed."
+msgstr "From a Scandinavian name: the day people washed."
+
+msgid "From a Scandinavian word: the day for washing."
+msgstr "From a Scandinavian word: the day for washing."
 
 msgid "From a web page"
 msgstr "From a web page"
@@ -3591,6 +3666,9 @@ msgstr "Good"
 msgid "Good *morning*!"
 msgstr "Good *morning*!"
 
+msgid "Good ear. Listen to how the ones you missed start."
+msgstr "Good ear. Listen to how the ones you missed start."
+
 msgid "Good ear. Numbers in sentences come fast; try once more."
 msgstr "Good ear. Numbers in sentences come fast; try once more."
 
@@ -3611,6 +3689,9 @@ msgstr "Good morning"
 
 msgid "Good morning. Here’s today in Lymi."
 msgstr "Good morning. Here’s today in Lymi."
+
+msgid "Good. Say the week through in your head before you pick."
+msgstr "Good. Say the week through in your head before you pick."
 
 msgid "Goodbye"
 msgstr "Goodbye"
@@ -3714,6 +3795,9 @@ msgstr "Hear {0}"
 msgid "Hear {0}, {1}"
 msgstr "Hear {0}, {1}"
 
+msgid "Hear a day"
+msgstr "Hear a day"
+
 msgid "Hear both"
 msgstr "Hear both"
 
@@ -3797,6 +3881,9 @@ msgstr "History"
 
 msgid "History notes"
 msgstr "History notes"
+
+msgid "holy; a holiday"
+msgstr "holy; a holiday"
 
 msgid "Hopefully"
 msgstr "Hopefully"
@@ -4849,6 +4936,9 @@ msgstr "Linna can mean “of the town” or “into the town”. Only how long y
 msgid "Listen"
 msgstr "Listen"
 
+msgid "Listen and pick the day. Most of them end the same way, so listen to how each one starts."
+msgstr "Listen and pick the day. Most of them end the same way, so listen to how each one starts."
+
 msgid "Listen first."
 msgstr "Listen first."
 
@@ -5241,6 +5331,9 @@ msgstr "Mochi is a notebook with linked Markdown notes. Lymi is for cards; a not
 
 msgid "Mochi works on your device without signing up. Lymi needs an account and keeps your cards on its servers."
 msgstr "Mochi works on your device without signing up. Lymi needs an account and keeps your cards on its servers."
+
+msgid "Monday"
+msgstr "Monday"
 
 msgid "More {language} decks"
 msgstr "More {language} decks"
@@ -5700,8 +5793,20 @@ msgstr "old"
 msgid "Older"
 msgstr "Older"
 
+msgid "On a door or a sign."
+msgstr "On a door or a sign."
+
+msgid "On a door you'll also see <0/>, open, and <1/>, closed."
+msgstr "On a door you'll also see <0/>, open, and <1/>, closed."
+
+msgid "On a toilet door, N stands for <0>naistele</0>, for women."
+msgstr "On a toilet door, N stands for <0>naistele</0>, for women."
+
 msgid "On iPhone"
 msgstr "On iPhone"
+
+msgid "on Monday"
+msgstr "on Monday"
 
 msgid "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
 msgstr "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
@@ -5751,6 +5856,9 @@ msgstr "One kanji, seven sounds."
 msgid "One less"
 msgstr "One less"
 
+msgid "One letter a day"
+msgstr "One letter a day"
+
 msgid "One letter or two?"
 msgstr "One letter or two?"
 
@@ -5798,6 +5906,9 @@ msgstr "Only you, unless you share the deck. Cards made from your notes stay in 
 
 msgid "Only you, unless you share the deck. Cards made from your study material stay in your account."
 msgstr "Only you, unless you share the deck. Cards made from your study material stay in your account."
+
+msgid "open"
+msgstr "open"
 
 msgid "Open by design."
 msgstr "Open by design."
@@ -6057,6 +6168,9 @@ msgstr "Play {0}, {1}"
 msgid "Play {n}"
 msgstr "Play {n}"
 
+msgid "Play {sentence}"
+msgstr "Play {sentence}"
+
 msgid "Play {show}"
 msgstr "Play {show}"
 
@@ -6066,8 +6180,17 @@ msgstr "Play {spoken}"
 msgid "Play {word}"
 msgstr "Play {word}"
 
+msgid "Play {word}, today"
+msgstr "Play {word}, today"
+
+msgid "Play {word}: {shown}"
+msgstr "Play {word}: {shown}"
+
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
+
+msgid "Play the week above once more, then try again."
+msgstr "Play the week above once more, then try again."
 
 msgid "Pleasant; cosy"
 msgstr "Pleasant; cosy"
@@ -6249,6 +6372,9 @@ msgstr "Publish a read-only copy, with Pro"
 #. placeholder {0}: date(deck.publishedAt)
 msgid "Published {0}"
 msgstr "Published {0}"
+
+msgid "Püha, holy, and päev, day."
+msgstr "Püha, holy, and päev, day."
 
 msgid "Pumpkin"
 msgstr "Pumpkin"
@@ -6674,6 +6800,9 @@ msgstr "Sample twice as fast as the highest frequency"
 msgid "SAT words"
 msgstr "SAT words"
 
+msgid "Saturday"
+msgstr "Saturday"
+
 msgid "Save “Feierabend” to my German deck."
 msgstr "Save “Feierabend” to my German deck."
 
@@ -6691,6 +6820,9 @@ msgstr "Say it"
 
 msgid "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
+
+msgid "Say the week through with the strip above, then try again."
+msgstr "Say the week through with the strip above, then try again."
 
 msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
 msgstr "Say what you must, want and like to do, what you did yesterday, and with whom."
@@ -6724,6 +6856,9 @@ msgstr "Search by sound"
 
 msgid "Search decks"
 msgstr "Search decks"
+
+msgid "second"
+msgstr "second"
 
 msgid "Section"
 msgstr "Section"
@@ -6832,6 +6967,9 @@ msgstr "seven"
 
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
 msgstr "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
+
+msgid "Seven days"
+msgstr "Seven days"
 
 msgid "Seven keep slipping. First one: how do you say <0>the strike</0>?"
 msgstr "Seven keep slipping. First one: how do you say <0>the strike</0>?"
@@ -6971,6 +7109,9 @@ msgstr "Sitting through a bad film because you paid for the ticket."
 
 msgid "six"
 msgstr "six"
+
+msgid "Six days end in <0>päev</0>, day. <1>Reede</1> doesn't."
+msgstr "Six days end in <0>päev</0>, day. <1>Reede</1> doesn't."
 
 msgid "Skills for the jobs you repeat"
 msgstr "Skills for the jobs you repeat"
@@ -7431,6 +7572,12 @@ msgstr "Talk at the table after a meal"
 msgid "Tamil"
 msgstr "Tamil"
 
+msgid "Tap a day"
+msgstr "Tap a day"
+
+msgid "Tap a letter"
+msgstr "Tap a letter"
+
 msgid "Tap a vowel"
 msgstr "Tap a vowel"
 
@@ -7656,11 +7803,20 @@ msgstr "The children are playing in the *park*."
 msgid "The cost of making one more unit"
 msgstr "The cost of making one more unit"
 
+msgid "the day after tomorrow"
+msgstr "the day after tomorrow"
+
 msgid "the day before"
 msgstr "the day before"
 
 msgid "The day before"
 msgstr "The day before"
+
+msgid "the day before yesterday"
+msgstr "the day before yesterday"
+
+msgid "The days as letters"
+msgstr "The days as letters"
 
 msgid "The decks follow the HSK 2.0 word lists and the 2025 syllabus, not one official list in full."
 msgstr "The decks follow the HSK 2.0 word lists and the 2025 syllabus, not one official list in full."
@@ -7692,6 +7848,9 @@ msgstr "The edge of the ice"
 msgid "The end of the working day"
 msgstr "The end of the working day"
 
+msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn't. Day names start with a small letter, like any other word."
+msgstr "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn't. Day names start with a small letter, like any other word."
+
 msgid "The evening after work"
 msgstr "The evening after work"
 
@@ -7703,6 +7862,24 @@ msgstr "The facial nerve: muscles of facial expression and taste on the front tw
 
 msgid "The facial nerve."
 msgstr "The facial nerve."
+
+msgid "The first day of the week."
+msgstr "The first day of the week."
+
+msgid "The first day. Esmas- sounds like <0/>, first."
+msgstr "The first day. Esmas- sounds like <0/>, first."
+
+msgid "The first four count: <0/> is the first day, <1/> the second, <2/> the third and <3/> the fourth. The other three have names of their own. Tap a day to hear it and see where its name comes from."
+msgstr "The first four count: <0/> is the first day, <1/> the second, <2/> the third and <3/> the fourth. The other three have names of their own. Tap a day to hear it and see where its name comes from."
+
+msgid "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
+msgstr "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
+
+msgid "The fourth day of the week."
+msgstr "The fourth day of the week."
+
+msgid "The fourth day. You can hear <0/>, four."
+msgstr "The fourth day. You can hear <0/>, four."
 
 msgid "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
 msgstr "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
@@ -7905,6 +8082,15 @@ msgstr "The same topic in other languages"
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "The same word for someone you love and a price you’d rather not pay."
 
+msgid "The second day of the week."
+msgstr "The second day of the week."
+
+msgid "The second day. Teisi- sounds like <0/>, second."
+msgstr "The second day. Teisi- sounds like <0/>, second."
+
+msgid "The seven days, the four that count, and how to say what day it is."
+msgstr "The seven days, the four that count, and how to say what day it is."
+
 msgid "The small words every sentence is built from."
 msgstr "The small words every sentence is built from."
 
@@ -7934,6 +8120,12 @@ msgstr "The tens: -kümmend"
 
 msgid "The thing being counted changes too: <0/>, <1/>. That form is the partitive, in lesson {partitive}. For now, listen for the number."
 msgstr "The thing being counted changes too: <0/>, <1/>. That form is the partitive, in lesson {partitive}. For now, listen for the number."
+
+msgid "The third day of the week."
+msgstr "The third day of the week."
+
+msgid "The third day. You can hear <0/>, three, from lesson {numbers}."
+msgstr "The third day. You can hear <0/>, three, from lesson {numbers}."
 
 msgid "The Thirty Years’ War"
 msgstr "The Thirty Years’ War"
@@ -7973,6 +8165,9 @@ msgstr "The wait before each review"
 
 msgid "The weather is *lovely* today."
 msgstr "The weather is *lovely* today."
+
+msgid "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
+msgstr "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
 
 msgid "The whiteboard"
 msgstr "The whiteboard"
@@ -8178,6 +8373,9 @@ msgstr "tip"
 msgid "To agree"
 msgstr "To agree"
 
+msgid "To ask what day it is, say <0/> To answer, put the day after <1>täna on</1>: <2/>."
+msgstr "To ask what day it is, say <0/> To answer, put the day after <1>täna on</1>: <2/>."
+
 msgid "To be"
 msgstr "To be"
 
@@ -8349,11 +8547,23 @@ msgstr "To usually do something"
 msgid "To work"
 msgstr "To work"
 
+msgid "today"
+msgstr "today"
+
 msgid "Today"
 msgstr "Today"
 
+msgid "Today is"
+msgstr "Today is"
+
+msgid "Today is Monday."
+msgstr "Today is Monday."
+
 msgid "Today, 8:00 · checked Lymi"
 msgstr "Today, 8:00 · checked Lymi"
+
+msgid "Today, tomorrow, yesterday"
+msgstr "Today, tomorrow, yesterday"
 
 msgid "Today’s page from my textbook. Add the new words to my Japanese deck."
 msgstr "Today’s page from my textbook. Add the new words to my Japanese deck."
@@ -8446,6 +8656,9 @@ msgstr "Try to remember the answer before you look. Try it on the cards here: th
 
 msgid "Try to remember the meaning before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Try to remember the meaning before you look. Try it on the cards here: they’re from all over the deck."
+
+msgid "Tuesday"
+msgstr "Tuesday"
 
 msgid "Tuesday German class"
 msgstr "Tuesday German class"
@@ -8749,6 +8962,12 @@ msgstr "Web page"
 msgid "Website visits, and where visitors click and scroll, are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
 msgstr "Website visits, and where visitors click and scroll, are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
 
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "week"
+msgstr "week"
+
 msgid "Week 1"
 msgstr "Week 1"
 
@@ -8802,6 +9021,9 @@ msgstr "What are you learning?"
 
 msgid "What comes across"
 msgstr "What comes across"
+
+msgid "What day is it today?"
+msgstr "What day is it today?"
 
 msgid "What do you *think*?"
 msgstr "What do you *think*?"
@@ -8974,6 +9196,12 @@ msgstr "Which assistants work?"
 
 msgid "Which ChatGPT plans can connect Lymi?"
 msgstr "Which ChatGPT plans can connect Lymi?"
+
+msgid "Which day did you hear?"
+msgstr "Which day did you hear?"
+
+msgid "Which day is tomorrow?"
+msgstr "Which day is tomorrow?"
 
 msgid "Which deck should I add?"
 msgstr "Which deck should I add?"
@@ -9406,6 +9634,15 @@ msgstr "you, to more than one person"
 
 msgid "You'll hear it in a word, with a note on how to say it."
 msgstr "You'll hear it in a word, with a note on how to say it."
+
+msgid "You'll hear it, and where its name comes from."
+msgstr "You'll hear it, and where its name comes from."
+
+msgid "You'll hear the day it stands for."
+msgstr "You'll hear the day it stands for."
+
+msgid "You'll hear what day it is today. Pick the day that comes next."
+msgstr "You'll hear what day it is today. Pick the day that comes next."
 
 msgid "You’re welcome"
 msgstr "You’re welcome"

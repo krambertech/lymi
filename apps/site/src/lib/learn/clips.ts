@@ -100,10 +100,48 @@ export const NUMBER_SENTENCES = {
 
 export const numberClip = (n: number) => `n${n}`;
 
+/** The week from Monday, as the days lesson shows it. */
+export const WEEK = [
+  "esmaspäev",
+  "teisipäev",
+  "kolmapäev",
+  "neljapäev",
+  "reede",
+  "laupäev",
+  "pühapäev",
+] as const;
+
+export const PAEVAD_WORDS = [
+  ...WEEK,
+  "päev",
+  "nädal",
+  "esimene",
+  "teine",
+  "kolm",
+  "neli",
+  "püha",
+  "avatud",
+  "suletud",
+  "täna",
+  "homme",
+  "eile",
+  "ülehomme",
+  "üleeile",
+  "esmaspäeval",
+] as const;
+
+/** What day it is, and the day after: “Täna on reede.” “Homme on laupäev.” */
+export const PAEVAD_SENTENCES = [
+  "Mis päev täna on?",
+  ...WEEK.map((day) => `Täna on ${day}.`),
+  ...WEEK.map((day) => `Homme on ${day}.`),
+];
+
 export const CLIPS: Record<string, Record<string, string>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
     ...Object.fromEntries(SPOKEN_NUMBERS.map((n) => [numberClip(n), numberWords(n)])),
     ...NUMBER_SENTENCES,
   },
+  paevad: { ...words(PAEVAD_WORDS), ...words(PAEVAD_SENTENCES) },
 };

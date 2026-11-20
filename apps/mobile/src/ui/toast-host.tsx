@@ -162,9 +162,14 @@ export function ToastHost({ scope: named, bottom: at }: { scope?: string; bottom
   // The web shows three, the older two peeking behind the newest.
   const visible = shown.filter((i) => i.scope === scope).slice(-3);
   return (
-    // Down from the top, so the toasts sit inside its bounds: at the root Android's blur target clips
-    // a child to its own box, and a box of no height drew none of them.
-    <View pointerEvents="box-none" className="absolute inset-x-6 top-0" style={{ bottom }}>
+    // Without its own `bottom` it reaches down from the top, so the toasts sit inside its bounds: at the
+    // root Android's blur target clips a child to its own box, and a box of no height drew none of them.
+    // One given a `bottom` sits in a box of no height above a sheet's footer, where a top would cancel it.
+    <View
+      pointerEvents="box-none"
+      className={at === undefined ? "absolute inset-x-6 top-0" : "absolute inset-x-6"}
+      style={{ bottom }}
+    >
       {visible.map((item, i) => (
         <Slot key={item.key} item={item} depth={visible.length - 1 - i} />
       ))}

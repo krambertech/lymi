@@ -173,6 +173,12 @@
   border-style: dashed;
   background: var(--danger-soft);
 }
+/* An answer picked but not yet checked, in the stage's hue: nothing is marked until Check. */
+.learn-answer.learn-chosen {
+  border-color: var(--form);
+  background: var(--form-soft);
+  box-shadow: 0 0 0 1px var(--form);
+}
 .learn-gap {
   border-bottom: 3px dashed var(--ink-faint);
 }
@@ -185,6 +191,32 @@
 .learn-gap[data-mark="wrong"] {
   border-bottom-color: var(--danger);
   color: var(--danger);
+}
+/* A gap in a passage: the one open now, one with a word placed in it, and every gap while a word is
+   dragged. Kept here rather than in classes, so they win over the dashed rule above. */
+.learn-gap[data-state="open"] {
+  border-bottom-color: var(--form);
+  background: var(--form-soft);
+}
+.learn-gap[data-state="filled"] {
+  border-bottom-style: solid;
+  border-bottom-color: var(--form);
+  color: var(--form);
+}
+.learn-gap[data-state="target"] {
+  border-bottom-color: var(--form);
+}
+.learn-gap[data-state="over"] {
+  border-bottom-color: var(--form);
+  background: var(--form-soft);
+}
+/* A word lifted out of the bank or a gap, following the pointer. */
+.learn-lifted {
+  position: fixed;
+  z-index: 50;
+  pointer-events: none;
+  rotate: -2deg;
+  box-shadow: var(--learn-pop);
 }
 @keyframes learn-fill {
   from {

@@ -54,7 +54,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 10,
         blurb: msg`A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud.`,
       },
-      { name: msg`Personal pronouns and “to be”`, et: "Mina, sina, tema" },
+      {
+        slug: "mina-sina-tema",
+        name: msg`Personal pronouns and “to be”`,
+        title: msg`Estonian personal pronouns and “to be”`,
+        et: "Mina, sina, tema",
+        minutes: 10,
+        blurb: msg`A free Estonian lesson on personal pronouns, mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud.`,
+      },
       {
         slug: "olevik",
         name: msg`Present tense`,

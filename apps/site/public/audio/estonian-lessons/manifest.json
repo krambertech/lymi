@@ -793,5 +793,365 @@
     "text": "Kohv maksab kolm eurot ja viiskümmend senti.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kas": {
+    "text": "kas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kes": {
+    "text": "kes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/mis": {
+    "text": "mis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kus": {
+    "text": "kus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/millal": {
+    "text": "millal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/miks": {
+    "text": "miks",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kuidas": {
+    "text": "kuidas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kui-palju": {
+    "text": "kui palju",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kust": {
+    "text": "kust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/jah": {
+    "text": "jah",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/ei": {
+    "text": "ei",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/ta2na": {
+    "text": "täna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/homme": {
+    "text": "homme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/kodus": {
+    "text": "kodus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/sest": {
+    "text": "sest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/natuke": {
+    "text": "natuke",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/ha2sti": {
+    "text": "hästi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/pa2rit": {
+    "text": "pärit",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/tallinnas": {
+    "text": "Tallinnas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/tartus": {
+    "text": "Tartus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/vo3i": {
+    "text": "või",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/su": {
+    "text": "su",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/sinu": {
+    "text": "sinu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/s-elad": {
+    "text": "Sa elad Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-elad": {
+    "text": "Kas sa elad Tallinnas?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/s-raagid": {
+    "text": "Sa räägid eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-raagid": {
+    "text": "Kas sa räägid eesti keelt?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/s-kodus": {
+    "text": "Ta on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-kodus": {
+    "text": "Kas ta on kodus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/s-kohv": {
+    "text": "Sa jood kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-kohv": {
+    "text": "Kas sa jood kohvi?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/s-tootavad": {
+    "text": "Nad töötavad täna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-tootavad": {
+    "text": "Kas nad töötavad täna?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/c-voi": {
+    "text": "Sa elad Tallinnas või?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-jah": {
+    "text": "Jah.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-ei": {
+    "text": "Ei.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-ei-ole": {
+    "text": "Ei ole.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-ei-tea": {
+    "text": "Ma ei tea.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-kes": {
+    "text": "Kes see on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-kes": {
+    "text": "See on Jaan.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-mis": {
+    "text": "Mis see on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-mis": {
+    "text": "See on raamat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-kus": {
+    "text": "Kus sa elad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-kus": {
+    "text": "Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-millal": {
+    "text": "Millal sa töötad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-millal": {
+    "text": "Homme.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-miks": {
+    "text": "Miks sa eesti keelt õpid?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-miks": {
+    "text": "Sest ma elan Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-kuidas": {
+    "text": "Kuidas sa eesti keelt õpid?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-kuidas": {
+    "text": "Ma loen palju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-kui-palju": {
+    "text": "Kui palju kohvi sa jood?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-kui-palju": {
+    "text": "Natuke.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-nimi": {
+    "text": "Mis su nimi on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-nimi": {
+    "text": "Minu nimi on Mari.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-laheb": {
+    "text": "Kuidas läheb?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-laheb": {
+    "text": "Hästi, aitäh. Aga sul?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/q-parit": {
+    "text": "Kust sa pärit oled?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/a-parit": {
+    "text": "Ma olen pärit Ukrainast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-kes-tartus": {
+    "text": "Kes elab Tartus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-kes-raagib": {
+    "text": "Kes räägib eesti keelt?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-mis-teed": {
+    "text": "Mis sa teed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-mis-loed": {
+    "text": "Mis sa loed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-kus-tootab": {
+    "text": "Kus ta töötab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-kus-elate": {
+    "text": "Kus te elate?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-millal-sood": {
+    "text": "Millal sa sööd?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-millal-loed": {
+    "text": "Millal sa loed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-miks-ootad": {
+    "text": "Miks sa ootad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-miks-opib": {
+    "text": "Miks ta eesti keelt õpib?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-kuidas-elad": {
+    "text": "Kuidas sa elad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-kuidas-raagib": {
+    "text": "Kuidas ta eesti keelt räägib?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-palju-tootad": {
+    "text": "Kui palju sa töötad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kusimused/w-palju-vett": {
+    "text": "Kui palju vett sa jood?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

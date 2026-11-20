@@ -5,7 +5,7 @@ figure: iphone
 stores: app-store
 ---
 
-Lymi тепер є на iPhone. [Завантаж в App Store](/download/iphone?locale=uk). Увійди через акаунт Lymi або Apple, і там будуть твої колоди та прогрес. У країнах ЄС застосунку в App Store поки немає.
+Lymi тепер є на iPhone. Увійди через акаунт Lymi або Apple, і там будуть твої колоди та прогрес.
 
 ## Повторюй будь-де
 

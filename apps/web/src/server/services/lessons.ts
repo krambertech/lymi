@@ -172,6 +172,25 @@ export type LinkDeps = {
   toMarkdown: (page: FetchedPage) => Promise<string>;
 };
 
+/** Characters of an article the reader takes at most, about 120,000 tokens even in a dense alphabet. */
+const MAX_ARTICLE_CHARACTERS = 300_000;
+
+/** Query parameters that track the reader or unlock a page for them, never part of what it is. */
+const PERSONAL_PARAMETER =
+  /^(utm_.*|fbclid|gclid|dclid|msclkid|mc_(cid|eid)|igshid|si|ref|ref_src|smid|sgrp|share.*|gift.*|unlocked_.*|access.*|.*token.*|sk|pwapi.*|_hs.*|mkt_tok)$/i;
+
+/**
+ * The article's address as a card keeps it: without the fragment and without parameters that track
+ * the reader or carry their access, since the card may be shared. `t`, a moment, always stays.
+ */
+export function cardSource(url: URL): string {
+  const kept = new URL(url.href);
+  kept.hash = "";
+  for (const key of [...kept.searchParams.keys()])
+    if (key !== "t" && PERSONAL_PARAMETER.test(key)) kept.searchParams.delete(key);
+  return kept.href;
+}
+
 /** How many reads material of this many words counts as. */
 export function readsFor(words: number): number {
   return Math.max(1, Math.ceil(words / LESSON_READ_WORDS));
@@ -257,7 +276,7 @@ export async function readLink(
   if (sentences.length === 0) throw unreadable("This page has no text Smart add can read.");
   return {
     title: page.title,
-    url: fitSource(page.url.href) ?? page.url.origin,
+    url: fitSource(cardSource(page.url)) ?? page.url.origin,
     sentences: sentences.map((text) => ({ text, at: null })),
   };
 }
@@ -416,7 +435,10 @@ export async function prepareLesson(
       ? material.text.trim().split(/\s+/).length
       : 0;
   const reads = material.transcript ? readsFor(words) : 1;
-  if (reads > LESSON_READS_PER_DAY) {
+  const characters = material.transcript?.sentences.reduce((n, s) => n + s.text.length + 8, 0) ?? 0;
+  // Words alone undercount an alphabet that tokenizes densely, such as Cyrillic or Greek, so the
+  // characters keep a day's read inside the reader's context too.
+  if (reads > LESSON_READS_PER_DAY || characters > MAX_ARTICLE_CHARACTERS) {
     throw new ServiceError(
       "invalid",
       "This article is too long for Smart add. Paste the part you want to learn from.",

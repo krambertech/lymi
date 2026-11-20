@@ -549,16 +549,17 @@ describe("readLink", () => {
     }
   });
 
-  it("treats a failing robots.txt as a refusal and an unreachable site as unreadable", async () => {
+  it("leaves a page unread when its robots.txt fails or the site can't be reached", async () => {
     const ctx = await learner(db, "link-robots-down", "Kateryna");
-    const { deps } = fakeWeb({
+    const { deps, fetched } = fakeWeb({
       "https://news.example.org/robots.txt": { status: 503 },
       [ARTICLE]: { body: articleHtml(["Kevad on käes."]) },
     });
     expect(await refusal(readLink(ctx, ARTICLE, deps, read))).toMatchObject({
-      reason: "link_refused",
-      details: { refused: "robots" },
+      reason: "link_unreadable",
+      message: "This site isn't answering. Try again later.",
     });
+    expect(fetched).not.toContain(ARTICLE);
     const offline = {
       ...deps,
       request: async () => {
@@ -579,6 +580,7 @@ describe("readLink", () => {
         headers: { "content-type": "text/html", "tdm-reservation": "1" },
       },
       { body: articleHtml(["Kevad on käes."], '<meta name="tdm-reservation" content="1">') },
+      { body: articleHtml(["Kevad on käes."], '<meta content="1" name="tdm-reservation">') },
     ]) {
       const { deps } = fakeWeb({ [ARTICLE]: page });
       expect(await refusal(readLink(ctx, ARTICLE, deps, read))).toMatchObject({
@@ -586,6 +588,28 @@ describe("readLink", () => {
         details: { refused: "tdm" },
       });
     }
+  });
+
+  it("matches robots.txt rules in any script against the encoded path", async () => {
+    const ctx = await learner(db, "link-robots-cyrillic", "Kateryna");
+    const page = "https://news.example.org/статті/весна";
+    const { deps, fetched } = fakeWeb({
+      "https://news.example.org/robots.txt": { body: "User-agent: *\nDisallow: /статті/" },
+      [new URL(page).href]: { body: articleHtml(["Весна прийшла."]) },
+    });
+    expect(await refusal(readLink(ctx, page, deps, read))).toMatchObject({
+      details: { refused: "robots" },
+    });
+    expect(fetched).not.toContain(new URL(page).href);
+  });
+
+  it("keeps the article's address without tracking or access parameters", async () => {
+    const ctx = await learner(db, "link-source", "Kateryna");
+    const link = `${ARTICLE}?id=7&utm_source=x&fbclid=y&gift=abc&t=40#comments`;
+    const { deps } = fakeWeb({
+      [new URL(link.replace(/#.*$/, "")).href]: { body: articleHtml(["Kevad on käes."]) },
+    });
+    expect((await readLink(ctx, link, deps, read)).url).toBe(`${ARTICLE}?id=7&t=40`);
   });
 
   it("refuses links that are not https or name no public host, before fetching anything", async () => {
@@ -778,6 +802,27 @@ describe("reading an article", () => {
 
     await readLesson(ctx, material, deps, { deckId: deck.id, reads: 2 });
     expect((await lessonAccess(ctx, new Set())).daily?.used).toBe(2);
+  });
+
+  it("refuses an article whose characters would outgrow the reader, whatever its words", async () => {
+    const ctx = await learner(db, "article-too-many-characters", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Русский", defaultLanguage: "ru" });
+    const sentence = `${"достопримечательность ".repeat(99)}конец.`;
+    const material = transcript(Array.from({ length: 140 }, () => sentence));
+    expect(
+      await refusal(
+        readLesson(
+          ctx,
+          material,
+          {
+            reader: fakeReader({ deck: deck.id, terms: [], questions: [] }),
+            ai: undefined,
+            operators: new Set(),
+          },
+          { deckId: deck.id },
+        ),
+      ),
+    ).toMatchObject({ reason: "too_long" });
   });
 
   it("refuses an article too long for a day's reads", async () => {

@@ -172,8 +172,8 @@ export function SmartAdd() {
         <li>Up to 10 files in one lesson, of which up to 3 can be PDFs, 20 MB of PDFs in all.</li>
         <li>Up to 100,000 characters of pasted text. Lymi leaves out anything after that.</li>
         <li>
-          Articles up to 5 MB that load within 10 seconds, and up to 75,000 words, the day’s 5
-          lessons.
+          Articles up to 5 MB that load within 10 seconds, and up to 75,000 words or 300,000
+          characters, the day’s 5 lessons.
         </li>
         <li>Up to 5 lessons a day while Smart add is in beta.</li>
       </ul>

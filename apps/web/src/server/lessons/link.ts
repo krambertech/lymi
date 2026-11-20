@@ -80,6 +80,8 @@ export function classifyLink(raw: string): LinkKind {
   if (url.protocol !== "https:") throw new LinkInvalid("Paste a link that starts with https://.");
   if (url.username || url.password || (url.port && url.port !== "443") || !publicHost(url.hostname))
     throw new LinkInvalid("Smart add reads only public web pages.");
+  // A fragment is the reader's place on the page, never sent to the site.
+  url.hash = "";
   const name = site(url.hostname);
   const service = REFUSED_SITES[name];
   if (service) return { kind: "drm", service };
@@ -128,12 +130,22 @@ export function robotsRules(text: string): Rule[] {
       }
       current.agents.push(value.toLowerCase());
     } else if ((key === "allow" || key === "disallow") && current) {
-      current.rules.push({ allow: key === "allow", pattern: value });
+      current.rules.push({ allow: key === "allow", pattern: encodedPath(value) });
     }
   }
   const ours = groups.filter((g) => g.agents.some((a) => a === BOT_TOKEN));
   const chosen = ours.length > 0 ? ours : groups.filter((g) => g.agents.includes("*"));
   return chosen.flatMap((g) => g.rules);
+}
+
+/**
+ * A path in the form a URL's own path takes, so a rule written in Cyrillic meets the
+ * percent-encoded path it names (RFC 9309, 2.2.2). Escapes already present keep their meaning.
+ */
+function encodedPath(path: string): string {
+  return path
+    .replace(/[^\x21-\x7e]/gu, (c) => encodeURIComponent(c))
+    .replace(/%[\da-f]{2}/gi, (escape) => escape.toUpperCase());
 }
 
 function patternMatches(pattern: string, path: string): boolean {
@@ -219,7 +231,7 @@ async function bounded(response: Response, limit: number): Promise<Uint8Array | 
   return out;
 }
 
-/** What robots.txt allows on one origin; a 4xx means no rules, and a 5xx or a 429 refuses. */
+/** What robots.txt allows on one origin: a 4xx means no rules, and a 5xx or a 429 leaves the page unread. */
 async function robotsFor(request: Fetch, origin: URL, signal: AbortSignal): Promise<Rule[] | null> {
   let response: Response;
   try {
@@ -238,9 +250,11 @@ async function robotsFor(request: Fetch, origin: URL, signal: AbortSignal): Prom
     await response.body?.cancel();
     return [];
   }
+  // RFC 9309 reads a failing robots.txt as a refusal; the page stays unread, but the learner hears
+  // the site is down rather than that it refuses apps.
   if (!response.ok) {
     await response.body?.cancel();
-    return null;
+    throw new LinkUnreadable("This site isn't answering. Try again later.");
   }
   const bytes = await bounded(response, MAX_ROBOTS_BYTES);
   return bytes ? robotsRules(new TextDecoder().decode(bytes)) : null;
@@ -263,7 +277,7 @@ export async function fetchArticle(start: URL, request: Fetch = fetch): Promise<
   const allowed = async (url: URL) => {
     if (!robots.has(url.origin)) robots.set(url.origin, await robotsFor(request, url, signal));
     const rules = robots.get(url.origin);
-    if (!rules || !robotsAllow(rules, `${url.pathname}${url.search}`))
+    if (!rules || !robotsAllow(rules, encodedPath(`${url.pathname}${url.search}`)))
       throw new LinkRefused("robots");
   };
   let response: Response;
@@ -309,7 +323,10 @@ export async function fetchArticle(start: URL, request: Fetch = fetch): Promise<
   }
   if (!bytes) throw new LinkUnreadable("This page is too large for Smart add to read.");
   const html = decode(bytes, type);
-  if (/<meta[^>]+name=["']?tdm-reservation["']?[^>]+content=["']?1["']?/i.test(html))
+  if (
+    /<meta[^>]+name=["']?tdm-reservation["']?[^>]+content=["']?1["']?/i.test(html) ||
+    /<meta[^>]+content=["']?1["']?[^>]+name=["']?tdm-reservation["']?/i.test(html)
+  )
     throw new LinkRefused("tdm");
   return { url, html, title: pageTitle(html) ?? url.hostname.replace(/^www\./, "") };
 }
@@ -371,7 +388,14 @@ export function articleSelector(html: string): string | undefined {
 export function markdownSentences(markdown: string): string[] {
   const sentences: string[] = [];
   const segmenter = new Intl.Segmenter(undefined, { granularity: "sentence" });
+  let fenced = false;
   for (const raw of markdown.split(/\n/)) {
+    // Code and structured data are not the article's prose.
+    if (/^\s*(```|~~~)/.test(raw)) {
+      fenced = !fenced;
+      continue;
+    }
+    if (fenced || /^\s*[{["]/.test(raw)) continue;
     const line = raw
       .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
       .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
@@ -401,6 +425,11 @@ export function countWords(text: string): number {
   return n;
 }
 
+/** The page without scripts and styles, so JSON-LD and code never become sentences. */
+export function readableHtml(html: string): string {
+  return html.replace(/<(script|style|noscript|template)\b[\s\S]*?<\/\1\s*>/gi, "");
+}
+
 /** The page as Markdown through Workers AI, from its article alone where the page marks one. */
 export async function pageMarkdown(
   env: { AI?: Ai | undefined } & HealthEnv,
@@ -411,7 +440,7 @@ export async function pageMarkdown(
   const selector = articleSelector(page.html);
   const result = await metered(env, "workers_ai", () =>
     ai.toMarkdown(
-      { name: "page.html", blob: new Blob([page.html], { type: "text/html" }) },
+      { name: "page.html", blob: new Blob([readableHtml(page.html)], { type: "text/html" }) },
       {
         conversionOptions: {
           html: {

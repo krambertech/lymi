@@ -1,5 +1,16 @@
 import { EXAMPLE_LENGTH, fitsExample } from "@lymi/core";
 
+/** Scripts written without spaces, where a word can start after any letter. */
+const UNSPACED =
+  /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Thai}\p{Script=Lao}\p{Script=Khmer}\p{Script=Myanmar}]/u;
+
+/** Whether a match starts a word, so a stem never matches the middle of another word. */
+function wordStart(text: string, at: number, needle: string): boolean {
+  if (at === 0) return true;
+  const before = String.fromCodePoint(text.codePointAt(at - 1) ?? 32);
+  return !/[\p{L}\p{M}\p{N}]/u.test(before) || UNSPACED.test(before) || UNSPACED.test(needle);
+}
+
 /** Where the term sits in the sentence: as written, by its first form, or by a word's stem. */
 export function findTerm(sentence: string, term: string): { start: number; end: number } | null {
   const text = sentence.toLowerCase();
@@ -12,8 +23,9 @@ export function findTerm(sentence: string, term: string): { start: number; end: 
     if (chars.length >= 4) tries.push(chars.slice(0, Math.max(3, chars.length - 2)).join(""));
   }
   for (const needle of tries) {
-    const start = text.indexOf(needle);
-    if (start >= 0) return { start, end: start + needle.length };
+    for (let start = text.indexOf(needle); start >= 0; start = text.indexOf(needle, start + 1)) {
+      if (wordStart(text, start, needle)) return { start, end: start + needle.length };
+    }
   }
   return null;
 }

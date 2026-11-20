@@ -3837,6 +3837,12 @@ msgstr "Future, “I”"
 msgid "Games"
 msgstr "Games"
 
+msgid "Gap {lastNumber}: not this one."
+msgstr "Gap {lastNumber}: not this one."
+
+msgid "Gap {lastNumber}: right."
+msgstr "Gap {lastNumber}: right."
+
 msgid "Gap {n}, empty"
 msgstr "Gap {n}, empty"
 

@@ -6,8 +6,10 @@ import {
   type CSSProperties,
   type KeyboardEvent,
   type ReactNode,
+  type Ref,
   useContext,
   useEffect,
+  useMemo,
   useRef,
   useState,
 } from "react";
@@ -45,46 +47,50 @@ const clock = (seconds: number) =>
 
 /**
  * A passage recorded as one take: play and pause it, start from any sentence, and the time now.
- * `sentences` are its sentences, one timing mark each.
+ * `sentences`, when known, draws that many even groups until the timing loads.
  */
-export function usePassage(clip: string, sentences: number) {
+export function usePassage(clip: string, sentences = 1) {
   const { slug } = useLesson();
   const src = clipUrl(slug, clip);
   const key = `passage:${slug}:${clip}`;
-  const [timing, setTiming] = useState<Timing | null>(null);
+  const [loaded, setLoaded] = useState<Timing | null>(null);
   const [t, setT] = useState(0);
   const [heard, setHeard] = useState(false);
-  const until = useRef<number | null>(null);
   const playing = usePlaying(key);
   useEffect(() => {
     let live = true;
     loadTiming(timingUrl(slug, clip))
-      .then((loaded) => live && setTiming(loaded))
+      .then((timing) => live && setLoaded(timing))
       .catch(() => {});
     return () => {
       live = false;
     };
   }, [slug, clip]);
+  // A part that leaves the page, such as on Try again, takes its sound with it.
+  const playingNow = useRef(false);
+  playingNow.current = playing;
+  useEffect(
+    () => () => {
+      if (playingNow.current) stopSound();
+    },
+    [],
+  );
   // Until the timing loads, the passage still plays whole, drawn as even sentences.
-  const marks = timing?.marks ?? Array.from({ length: sentences }, (_, i) => i);
-  const duration = timing?.duration ?? sentences;
-  const play = (from: number, to: number | null = null) => {
+  const timing = useMemo(
+    () => loaded ?? { marks: Array.from({ length: sentences }, (_, i) => i), duration: sentences },
+    [loaded, sentences],
+  );
+  const { marks, duration } = timing;
+  const play = (from: number) => {
     setHeard(true);
-    until.current = to;
-    void playSound(
-      src,
-      key,
-      (now) => {
-        setT(now);
-        if (until.current !== null && now >= until.current) stopSound();
-      },
-      from,
-    ).then(() => setT((now) => (now >= duration - 0.4 ? duration : now)));
+    void playSound(src, key, setT, from).then(() =>
+      setT((now) => (now >= duration - 0.4 ? duration : now)),
+    );
   };
   return {
     src,
-    timing: { marks, duration },
-    loaded: timing !== null,
+    timing,
+    loaded: loaded !== null,
     t,
     playing,
     heard,
@@ -92,10 +98,6 @@ export function usePassage(clip: string, sentences: number) {
     toggle() {
       if (playing) return stopSound();
       play(t >= duration - 0.4 ? 0 : t);
-    },
-    /** One sentence, from its mark to the next. */
-    sentence(i: number) {
-      play(marks[i] ?? 0, marks[i + 1] ?? null);
     },
     /** The sentence playing now, or -1. */
     now: playing ? sentenceAt(marks, t) : -1,
@@ -255,11 +257,13 @@ const LETTERS = "ABCDEF";
 
 /** An answer in the reader's language with its letter, for questions answered side by side. */
 export function LetterAnswer({
+  ref,
   index,
   label,
   mark,
   onPick,
 }: {
+  ref?: Ref<HTMLButtonElement> | undefined;
   index: number;
   label: ReactNode;
   mark: LetterMark;
@@ -270,6 +274,7 @@ export function LetterAnswer({
   const marked = mark === "right" || mark === "wrong" || mark === "out";
   return (
     <button
+      ref={ref}
       type="button"
       onClick={onPick}
       aria-pressed={marked ? undefined : mark === "chosen"}
@@ -359,6 +364,8 @@ export function PassageQuestions({
   const [checked, setChecked] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const scoreRef = useRef<HTMLParagraphElement>(null);
+  const firstAnswer = useRef<HTMLButtonElement>(null);
+  const restarted = useRef(false);
   const total = questions.length;
   const right = questions.filter((q) => chosen[q.id] === q.answer).length;
   const missed = new Set(questions.filter((q) => chosen[q.id] !== q.answer).map((q) => q.line));
@@ -368,7 +375,12 @@ export function PassageQuestions({
   };
   // biome-ignore lint/correctness/useExhaustiveDependencies: right and total are read at the Check
   useEffect(() => {
-    if (!checked) return;
+    // Try again takes its own button off the page, so focus goes back to the first answer.
+    if (!checked) {
+      if (restarted.current) firstAnswer.current?.focus({ preventScroll: true });
+      restarted.current = false;
+      return;
+    }
     scoreRef.current?.focus({ preventScroll: true });
     captureAnalytics("learn_quiz_finished", { lesson: slug, quiz: id, right, total });
     if (section) finishSection(section);
@@ -404,6 +416,7 @@ export function PassageQuestions({
               {q.options.map((option, i) => (
                 <LetterAnswer
                   key={option.id}
+                  ref={n === 0 && i === 0 ? firstAnswer : undefined}
                   index={i}
                   label={option.label}
                   mark={
@@ -449,6 +462,7 @@ export function PassageQuestions({
           {after?.(missed)}
           <Button
             onClick={() => {
+              restarted.current = true;
               setChosen({});
               check(false);
             }}

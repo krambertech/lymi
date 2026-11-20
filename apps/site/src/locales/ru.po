@@ -3837,6 +3837,12 @@ msgstr "Будущее время, «я»"
 msgid "Games"
 msgstr "Игры"
 
+msgid "Gap {lastNumber}: not this one."
+msgstr "Пропуск {lastNumber}: не то."
+
+msgid "Gap {lastNumber}: right."
+msgstr "Пропуск {lastNumber}: верно."
+
 msgid "Gap {n}, empty"
 msgstr "Пропуск {n}, пустой"
 

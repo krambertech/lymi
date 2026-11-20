@@ -142,9 +142,9 @@ function PassageLine({
   );
 }
 
-function HearIt({ clip, sentences }: { clip: string; sentences: number }) {
+function HearIt({ clip }: { clip: string }) {
   const { t } = useLingui();
-  const passage = usePassage(clip, sentences);
+  const passage = usePassage(clip);
   return (
     <div className="grid w-full gap-2 border-t border-edge pt-4">
       <p className="text-sm font-medium text-ink-muted">
@@ -171,12 +171,18 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
   const right = gaps.filter((item) => fills[item.id] === item.answer).length;
   useFinished(id, done, right, gaps.length);
   const firstOption = useRef<HTMLButtonElement>(null);
+  const scoreRef = useRef<HTMLParagraphElement>(null);
+  const restarted = useRef(false);
   const currentId = current?.id;
-  // Focus follows the next open gap's words, so a keyboard goes straight on.
+  // Focus follows the next open gap's words, so a keyboard goes straight on, then the score once
+  // the last gap is filled; Try again brings it back to the first gap's words.
   // biome-ignore lint/correctness/useExhaustiveDependencies: runs as the open gap changes
   useEffect(() => {
-    if (last) firstOption.current?.focus({ preventScroll: true });
-  }, [currentId, last]);
+    if (done) scoreRef.current?.focus({ preventScroll: true });
+    else if (last || restarted.current) firstOption.current?.focus({ preventScroll: true });
+    restarted.current = false;
+  }, [currentId, last, done]);
+  const lastNumber = last ? gaps.indexOf(last) + 1 : 0;
   const total = gaps.length;
   const openNumber = current ? gaps.indexOf(current) + 1 : 0;
   return (
@@ -206,7 +212,12 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
         )}
       />
       <p aria-live="polite" className="sr-only">
-        {last ? (fills[last.id] === last.answer ? t`Right.` : t`Not this one.`) : ""}
+        {/* The gap's number makes each mark new, so two right answers in a row are both read. */}
+        {last
+          ? fills[last.id] === last.answer
+            ? t`Gap ${lastNumber}: right.`
+            : t`Gap ${lastNumber}: not this one.`
+          : ""}
       </p>
       {last && (
         <Feedback right={fills[last.id] === last.answer}>
@@ -246,14 +257,15 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
       )}
       {done && (
         <>
-          <p className="text-xl font-semibold">
+          <p ref={scoreRef} tabIndex={-1} className="text-xl font-semibold outline-none">
             <Trans>
               {right} of {total} right
             </Trans>
           </p>
-          {clip && <HearIt clip={clip} sentences={gaps.length} />}
+          {clip && <HearIt clip={clip} />}
           <Button
             onClick={() => {
+              restarted.current = true;
               setFills({});
               setLast(null);
               setOpen(gaps[0]?.id ?? null);
@@ -301,9 +313,14 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
   const right = gaps.filter((item) => fills[item.id] === item.answer).length;
   const total = gaps.length;
   const scoreRef = useRef<HTMLParagraphElement>(null);
+  const firstWord = useRef<HTMLButtonElement>(null);
+  const restarted = useRef(false);
   useFinished(id, checked, right, total);
+  // Focus goes to the score at Check, and back to the first word on Try again.
   useEffect(() => {
     if (checked) scoreRef.current?.focus({ preventScroll: true });
+    else if (restarted.current) firstWord.current?.focus({ preventScroll: true });
+    restarted.current = false;
   }, [checked]);
 
   const gapNumber = (gap: string) => gaps.findIndex((item) => item.id === gap) + 1;
@@ -415,6 +432,7 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
                 <li key={`${word}-${i}`}>
                   {inBank ? (
                     <button
+                      ref={i === 0 ? firstWord : undefined}
                       type="button"
                       lang="et"
                       onPointerDown={start(word, "bank")}
@@ -511,9 +529,10 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
               <Trans>Where a word was wrong, the right one stands beside it.</Trans>
             </p>
           )}
-          {clip && <HearIt clip={clip} sentences={gaps.length} />}
+          {clip && <HearIt clip={clip} />}
           <Button
             onClick={() => {
+              restarted.current = true;
               setFills({});
               setChecked(false);
               setSaid("");

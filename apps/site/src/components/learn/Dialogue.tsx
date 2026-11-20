@@ -19,7 +19,7 @@ import {
   sayReply,
   startDialogue,
 } from "../../lib/learn/passage";
-import { playInTurn, playSound, usePlaying } from "../../lib/learn/player";
+import { playInTurn, playSound, stopSound, usePlaying } from "../../lib/learn/player";
 import { Button } from "../Button";
 import { SectionContext, useLesson } from "./lesson-context";
 import { Feedback, QuizCard, ResultDots } from "./Quiz";
@@ -79,7 +79,8 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
     null,
   );
   const src = (clip: string) => clipUrl(slug, clip);
-  const key = (clip: string) => `dialogue:${slug}:${clip}`;
+  // Keyed by the dialogue too, so two dialogues with the same lines don't light up together.
+  const key = (clip: string) => `dialogue:${slug}:${id}:${clip}`;
   const rightLine = (turn: Extract<DialogueTurn, { who: "you" }>) =>
     turn.replies.find((reply) => reply.right)?.line ?? "";
   const yours = turns.filter((turn) => turn.who === "you").length;
@@ -89,6 +90,8 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
   const current = state && !finished ? turns[state.shown] : undefined;
   const picked = state && current ? state.picks[state.shown] : undefined;
   const replyRef = useRef<HTMLButtonElement>(null);
+  const startRef = useRef<HTMLButtonElement>(null);
+  const restarted = useRef(false);
   const endRef = useRef<HTMLParagraphElement>(null);
 
   /** The other speaker's lines from `from` up to the learner's next turn, played in order. */
@@ -111,6 +114,11 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
   }, [finished]);
   // A new turn of the learner's takes the focus, so a keyboard answers straight on.
   const shown = state?.shown;
+  // Try again takes its own button off the page, so focus goes back to Start.
+  useEffect(() => {
+    if (state === null && restarted.current) startRef.current?.focus({ preventScroll: true });
+    restarted.current = false;
+  }, [state]);
   useEffect(() => {
     if (shown !== undefined && shown > 0) replyRef.current?.focus({ preventScroll: true });
   }, [shown]);
@@ -169,6 +177,7 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
       </p>
       {!state ? (
         <Button
+          ref={startRef}
           variant="primary"
           onClick={() => {
             dispatch({ type: "start" });
@@ -256,7 +265,13 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
                   <Ear aria-hidden="true" data-icon="inline-start" />
                   <Trans>Hear the whole conversation</Trans>
                 </Button>
-                <Button onClick={() => dispatch({ type: "restart" })}>
+                <Button
+                  onClick={() => {
+                    stopSound();
+                    restarted.current = true;
+                    dispatch({ type: "restart" });
+                  }}
+                >
                   <RotateCcw aria-hidden="true" data-icon="inline-start" />
                   <Trans>Try again</Trans>
                 </Button>

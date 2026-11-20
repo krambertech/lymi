@@ -51,7 +51,8 @@ function start(
   stopSound();
   element ??= new Audio();
   const sound = element;
-  if (!sound.src.endsWith(src)) sound.src = src;
+  // The same clip again keeps its loaded audio, unless loading it failed: then it loads anew.
+  if (!sound.src.endsWith(src) || sound.error) sound.src = src;
   sound.currentTime = from;
   playingKey = key;
   emit();

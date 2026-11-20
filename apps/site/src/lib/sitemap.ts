@@ -4,6 +4,7 @@ import { deckPath } from "./deck-page";
 import { explorePath } from "./explore";
 import {
   englishOnlyPaths,
+  isPrelaunch,
   isRuntimePage,
   type Locale,
   type LocalizedPage,
@@ -67,7 +68,7 @@ function localized(
 export function pagesSitemap(): string {
   return urlset([
     ...(Object.keys(localizedPages) as LocalizedPage[])
-      .filter((page) => !isRuntimePage(page))
+      .filter((page) => !isRuntimePage(page) && !isPrelaunch(page))
       .flatMap((page) => localized((locale) => localizedPath(page, locale))),
     ...changelogSlugs.flatMap((slug) => localized((locale) => changelogUpdatePath(slug, locale))),
     ...englishOnlyPaths.map((path) => ({ path })),

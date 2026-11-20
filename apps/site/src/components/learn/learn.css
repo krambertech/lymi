@@ -1,0 +1,222 @@
+/*
+ * The Estonian lessons. docs/design/estonian-lessons.md has the rules; in short, each surface means
+ * one thing: the canvas is for reading, a white plate is for answering (green and red live only
+ * there), the stage's tray is for exploring, and amber is the one next step.
+ * `--h` is the stage's hue; everything coloured by the lesson derives from it.
+ */
+.learn {
+  --tray: oklch(0.958 0.042 var(--h, 222));
+  --form: oklch(0.46 0.14 var(--h, 222));
+  --form-soft: oklch(0.92 0.05 var(--h, 222));
+  --form-faint: color-mix(in oklab, var(--form) 26%, transparent);
+  --learn-lift: 0 1px 2px oklch(0.2 0.03 60 / 0.06), 0 14px 30px -18px oklch(0.2 0.03 60 / 0.3);
+  --learn-pop:
+    0 14px 32px -14px oklch(0.2 0.03 60 / 0.28), 0 2px 6px -2px oklch(0.2 0.03 60 / 0.12);
+}
+[data-theme="dark"] .learn,
+.learn[data-theme="dark"] {
+  --tray: oklch(0.29 0.06 var(--h, 222));
+  --form: oklch(0.84 0.1 var(--h, 222));
+  --form-soft: oklch(0.36 0.075 var(--h, 222));
+  --learn-pop: 0 16px 36px -12px oklch(0 0 0 / 0.7), 0 0 0 1px oklch(1 0 0 / 0.06);
+}
+.learn-hue {
+  --tray: oklch(0.958 0.042 var(--h));
+  --form: oklch(0.46 0.14 var(--h));
+  --form-soft: oklch(0.92 0.05 var(--h));
+}
+[data-theme="dark"] .learn-hue {
+  --tray: oklch(0.29 0.06 var(--h));
+  --form: oklch(0.84 0.1 var(--h));
+  --form-soft: oklch(0.36 0.075 var(--h));
+}
+
+/* A sound that is playing: three bars that move, in place of the play triangle. */
+.learn-eq {
+  display: inline-flex;
+  gap: 2px;
+  align-items: center;
+  height: 14px;
+}
+.learn-eq i {
+  width: 2.5px;
+  height: 30%;
+  border-radius: 2px;
+  background: currentColor;
+  animation: learn-eq 640ms var(--ease-out) infinite alternate;
+}
+.learn-eq i:nth-child(2) {
+  animation-delay: -220ms;
+}
+.learn-eq i:nth-child(3) {
+  animation-delay: -440ms;
+}
+@keyframes learn-eq {
+  to {
+    height: 100%;
+  }
+}
+/* A ring that leaves the play button while it plays. */
+.learn-ring::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  border-radius: 9999px;
+  border: 2px solid var(--form);
+  animation: learn-ring 1100ms var(--ease-out) infinite;
+  pointer-events: none;
+}
+@keyframes learn-ring {
+  from {
+    transform: scale(1);
+    opacity: 0.55;
+  }
+  to {
+    transform: scale(1.45);
+    opacity: 0;
+  }
+}
+
+/* An Estonian word in prose. The help cursor says there is more to see on hover. */
+.learn-word {
+  all: unset;
+  cursor: help;
+  color: var(--form);
+  font-weight: 600;
+  border-radius: 4px;
+  padding-inline: 2px;
+  margin-inline: -2px;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 100% 1.5px;
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  transition: background-color 150ms;
+  -webkit-tap-highlight-color: transparent;
+}
+.learn-word:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 1px;
+}
+.learn-word[aria-expanded="true"],
+.learn-word[data-playing] {
+  background-color: var(--form-soft);
+}
+@media (hover: hover) {
+  .learn-word:hover {
+    background-color: var(--form-soft);
+  }
+}
+
+.learn-card {
+  position: fixed;
+  z-index: 60;
+  width: min(288px, calc(100vw - 32px));
+  box-shadow: var(--learn-pop);
+  opacity: 0;
+  transform: translateY(4px) scale(0.98);
+  transition:
+    opacity 140ms var(--ease-out),
+    transform 200ms var(--ease-out);
+  pointer-events: none;
+}
+.learn-card[data-below] {
+  transform: translateY(-4px) scale(0.98);
+}
+.learn-card[data-open] {
+  opacity: 1;
+  transform: none;
+  pointer-events: auto;
+}
+
+/* Keys: a row of sounds to press. */
+.learn-key {
+  box-shadow:
+    0 0 0 1px var(--edge),
+    0 2px 0 var(--edge-strong);
+  transition:
+    transform 120ms var(--ease-out),
+    box-shadow 120ms var(--ease-out),
+    background-color 150ms;
+}
+.learn-key:active,
+.learn-key[data-playing] {
+  transform: translateY(2px);
+  box-shadow:
+    0 0 0 1px var(--edge),
+    0 0 0 var(--edge-strong);
+}
+.learn-key[aria-pressed="true"] {
+  box-shadow:
+    0 0 0 2px var(--form),
+    0 2px 0 var(--edge-strong);
+}
+.learn-swap > * {
+  animation: learn-swap 260ms var(--ease-out);
+}
+@keyframes learn-swap {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+/* A quiz's card: white, its title on a band of the stage's hue. */
+.learn-quiz {
+  box-shadow: 0 0 0 1px var(--edge);
+}
+.learn-answer[data-mark="right"] {
+  border-color: var(--success);
+  background: var(--success-soft);
+}
+.learn-answer[data-mark="wrong"] {
+  border-color: var(--danger);
+  border-style: dashed;
+  background: var(--danger-soft);
+}
+.learn-gap {
+  border-bottom: 3px dashed var(--ink-faint);
+}
+.learn-gap[data-mark="right"] {
+  border-bottom-style: solid;
+  border-bottom-color: var(--success);
+  color: var(--success);
+  animation: learn-fill 260ms var(--ease-out);
+}
+.learn-gap[data-mark="wrong"] {
+  border-bottom-color: var(--danger);
+  color: var(--danger);
+}
+@keyframes learn-fill {
+  from {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
+}
+
+/* Bars of a word's loudness, one per 12 ms. */
+.learn-bars i {
+  flex: 1;
+  min-width: 1.5px;
+  border-radius: 3px;
+  background: var(--form-faint);
+  transition: background-color 80ms;
+}
+.learn-bars i[data-lit] {
+  background: var(--form);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .learn-eq i {
+    animation: none;
+    height: 70%;
+  }
+  .learn-ring::after,
+  .learn-swap > *,
+  .learn-gap[data-mark="right"] {
+    animation: none;
+  }
+  .learn-card,
+  .learn-card[data-below] {
+    transform: none;
+  }
+}

@@ -1,0 +1,8 @@
+---
+import LearnHubPage, { LEARN_BLURB, LEARN_TITLE } from "../../../components/islands/LearnHubPage";
+import MarketingLayout from "../../../layouts/MarketingLayout.astro";
+---
+
+<MarketingLayout page="learn" title={LEARN_TITLE} blurb={LEARN_BLURB}>
+  <LearnHubPage client:load locale="uk" />
+</MarketingLayout>

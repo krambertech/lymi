@@ -100,6 +100,22 @@ describe("analytics privacy contract", () => {
     expect(
       eventProperties("site_showcase_steered", { action: "picked", item: "Every morning" }),
     ).toBeNull();
+    expect(
+      eventProperties(
+        "learn_quiz_finished",
+        { lesson: "numbrid", quiz: "teist", right: 6, total: 8 },
+        "browser",
+      ),
+    ).toEqual({ lesson: "numbrid", quiz: "teist", right: 6, total: 8 });
+    // A quiz id is never a learner's words or a free label.
+    expect(
+      eventProperties(
+        "learn_quiz_finished",
+        { lesson: "numbrid", quiz: "Which number?", right: 1, total: 1 },
+        "browser",
+      ),
+    ).toBeNull();
+    expect(eventProperties("learn_lesson_finished", { lesson: "haaldus" }, "worker")).toBeNull();
     // The phone sends its own openings, screens and review legs; outcomes stay the server's.
     expect(eventProperties("app_opened", { backlog: "1-20" }, "phone")).toEqual({
       backlog: "1-20",

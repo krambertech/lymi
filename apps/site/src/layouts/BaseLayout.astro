@@ -3,7 +3,7 @@ import onestLatin from "@fontsource-variable/onest/files/onest-latin-wght-normal
 import onestCyrillic from "@lymi/design/fonts/onest-cyrillic-wght-normal.woff2?url";
 import { giftScript } from "../lib/free-gift";
 import { originScript } from "../lib/origin-badge";
-import { type Locale, type LocalizedPage, localizedPath, pageLocales } from "../lib/routes";
+import { isPrelaunch, type Locale, type LocalizedPage, localizedPath, pageLocales } from "../lib/routes";
 import "../styles.css";
 
 interface Props {
@@ -17,11 +17,13 @@ interface Props {
   /** A page's own preview image, in place of the site's. */
   shareImagePath?: string | undefined;
   shareImageAlt?: string | undefined;
+  /** True for a page that is not launched yet; a prelaunch `localizedPage` is too. */
+  noindex?: boolean | undefined;
   /** False for a page for the people building the site, so their visits stay out of analytics. */
   analytics?: boolean | undefined;
 }
 
-const { title, description, canonicalPath, localizedPage, alternatePaths, shareImagePath, analytics = true, shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what you learn.”" } = Astro.props;
+const { title, description, canonicalPath, localizedPage, alternatePaths, shareImagePath, noindex = isPrelaunch(localizedPage), analytics = true, shareImageAlt = "The Lymi lantern and wordmark above the line “Keep what you learn.”" } = Astro.props;
 const alternates: Partial<Record<Locale, string>> | undefined =
   alternatePaths ??
   (localizedPage &&
@@ -88,6 +90,7 @@ const locale = Astro.currentLocale ?? "en";
     </script>
     <script is:inline set:html={originScript(locale)} />
     <script is:inline set:html={giftScript()} />
+    {noindex && <meta name="robots" content="noindex" />}
     <slot name="head" />
   </head>
   <body data-analytics={analytics ? undefined : "off"}>

@@ -14,6 +14,7 @@ import {
   localizedPath,
   localizedRuntimePages,
   pageLocales,
+  prelaunchPages,
   unlistedPaths,
 } from "./routes";
 
@@ -114,8 +115,20 @@ describe("public routes", () => {
       changelogSlugs.map((slug) => changelogUpdatePath(slug, locale)),
     );
     const reference = API_RESOURCES.map((r) => `/docs/api/${r.slug}`);
-    const listable = [...routes].filter((route) => !unlistedPaths.includes(route));
+    const prelaunch = new Set(
+      prelaunchPages.flatMap((page) => locales.map((locale) => localizedPath(page, locale))),
+    );
+    const listable = [...routes].filter(
+      (route) => !unlistedPaths.includes(route) && !prelaunch.has(route),
+    );
     expect(new Set(listed)).toEqual(new Set([...listable, ...updates, ...reference]));
+  });
+
+  it("keeps pages that are not launched out of the sitemap", async () => {
+    const sitemap = await GET().text();
+    for (const page of prelaunchPages)
+      for (const locale of locales)
+        expect(sitemap).not.toContain(`lymi.app${localizedPath(page, locale)}<`);
   });
 
   it("keeps pages for the people building the site out of the sitemap", async () => {

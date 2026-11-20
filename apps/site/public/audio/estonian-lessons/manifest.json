@@ -3599,6 +3599,216 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "paev-tallinnas/kohvik": {
+    "text": "kohvik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/avatud": {
+    "text": "avatud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/suletud": {
+    "text": "suletud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kohvikus": {
+    "text": "kohvikus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/turul": {
+    "text": "turul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/to2o2l": {
+    "text": "tööl",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/linnas": {
+    "text": "linnas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kodus": {
+    "text": "kodus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ta2na": {
+    "text": "täna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/homme": {
+    "text": "homme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/reede": {
+    "text": "reede",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/laupa2ev": {
+    "text": "laupäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/pu2hapa2ev": {
+    "text": "pühapäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/pu2hapa2eval": {
+    "text": "pühapäeval",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kell": {
+    "text": "kell",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ku2mme": {
+    "text": "kümme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kaksteist": {
+    "text": "kaksteist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/u2ksteist": {
+    "text": "üksteist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/pool": {
+    "text": "pool",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/pool-u2ksteist": {
+    "text": "pool üksteist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/maksab": {
+    "text": "maksab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/eurot": {
+    "text": "eurot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/buss": {
+    "text": "buss",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ootan": {
+    "text": "ootan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/sind": {
+    "text": "sind",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/istu": {
+    "text": "istu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/aga": {
+    "text": "aga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/olema": {
+    "text": "olema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/ei": {
+    "text": "ei",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/so3brad": {
+    "text": "sõbrad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/kuidas-la2heb": {
+    "text": "Kuidas läheb?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/p-mari": {
+    "text": "Tere! Kuidas läheb? Täna on reede ja ma olen tööl. Homme on laupäev ja ma ei tööta. Ma joon kell kümme kohvikus kohvi. Kohv maksab kolm eurot. Kell kaksteist olen turul. Kas sa oled homme linnas?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "paev-tallinnas/p-jaan": {
+    "text": "Tere, see on Jaan! Ma olen täna Tartus, aga homme olen Tallinnas. Minu buss on Tallinnas kell pool üksteist. Ma ootan sind kohvikus. Pühapäeval olen kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/p-saturday": {
+    "text": "Täna on laupäev. Ma ei tööta. Ma olen Tallinnas. Mari ja Jaan on minu sõbrad. Me joome kell kümme kohvikus kohvi. Kohv maksab kolm eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/d-mari-1": {
+    "text": "Tere! Kuidas läheb?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "paev-tallinnas/d-sina-1": {
+    "text": "Hästi, aitäh. Aga sul?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/d-mari-2": {
+    "text": "Hästi! Istu! Kas sa jood kohvi?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "paev-tallinnas/d-sina-2": {
+    "text": "Jah, ma joon kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/d-mari-3": {
+    "text": "Mis kell on?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "paev-tallinnas/d-sina-3": {
+    "text": "Kell on pool üksteist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paev-tallinnas/d-mari-4": {
+    "text": "Kas sa töötad homme?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "paev-tallinnas/d-sina-4": {
+    "text": "Ei, homme on pühapäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kit/p-jaan": {
     "text": "Tere! Mina olen Jaan. Ma elan Tartus. Ma olen arst. Mari on minu sõber. Ta ei ole arst, ta on õpetaja. Me räägime eesti keelt.",
     "model": "eleven_v4",

@@ -119,6 +119,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud.`,
       },
       { name: msg`Commands`, et: "Istu! Ära istu!" },
+      {
+        slug: "paev-tallinnas",
+        name: msg`Practice: a day in Tallinn`,
+        title: msg`Estonian reading and listening practice: a day in Tallinn`,
+        et: "Päev Tallinnas",
+        minutes: 12,
+        blurb: msg`Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud.`,
+      },
     ],
   },
   {

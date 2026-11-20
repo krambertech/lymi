@@ -112,7 +112,7 @@ export const COMPONENTS: DesignPage[] = [
     slug: "after-an-action",
     title: "After an action",
     summary: "Undo in a toast, questions, offline",
-    lede: "How the phone answers once the learner has done something: a toast, iOS’s own question, or a row that waits for a connection.",
+    lede: "How the phone answers once the learner has done something: a toast, the system’s question, or a row that waits for a connection.",
     doc: "phone.md",
     Page: AfterAction,
   },

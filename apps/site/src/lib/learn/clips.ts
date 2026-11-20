@@ -196,6 +196,52 @@ export const NEGATION_PHRASES = [
   "Ma ei räägi eesti keelt.",
 ] as const;
 
+/** The verbs of the present-tense lesson: the -ma form and the stem the endings go on. */
+export const PRESENT_VERBS = [
+  { verb: "elama", stem: "ela" },
+  { verb: "õppima", stem: "õpi" },
+  { verb: "lugema", stem: "loe" },
+  { verb: "tegema", stem: "tee" },
+  { verb: "rääkima", stem: "räägi" },
+  { verb: "töötama", stem: "tööta" },
+  { verb: "ootama", stem: "oota" },
+  { verb: "armastama", stem: "armasta" },
+  { verb: "sööma", stem: "söö" },
+  { verb: "jooma", stem: "joo" },
+] as const;
+
+/** The six persons, short pronoun first, with the present-tense ending each takes. */
+export const PRESENT_ENDINGS = [
+  { pronoun: "ma", ending: "n" },
+  { pronoun: "sa", ending: "d" },
+  { pronoun: "ta", ending: "b" },
+  { pronoun: "me", ending: "me" },
+  { pronoun: "te", ending: "te" },
+  { pronoun: "nad", ending: "vad" },
+] as const;
+
+/** A short pronoun with its verb in the present, as one clip: “Ma loen”. */
+export const presentWithPronoun = (pronoun: string, stem: string, ending: string) =>
+  `${pronoun.charAt(0).toUpperCase()}${pronoun.slice(1)} ${stem}${ending}`;
+
+/** Everyday sentences in the present, some with the pronoun dropped. */
+export const PRESENT_SENTENCES = {
+  "s-elan-tallinnas": "Ma elan Tallinnas.",
+  "c-elan-tallinnas": "Elan Tallinnas.",
+  "s-opin-eesti": "Ma õpin eesti keelt.",
+  "c-opin-eesti": "Õpin eesti keelt.",
+  "s-mida-teed": "Mida sa teed?",
+  "s-loen-raamatut": "Ma loen raamatut.",
+  "s-raagib-eesti": "Ta räägib eesti keelt.",
+  "s-ootame-bussi": "Me ootame bussi.",
+  "s-tootab-kodus": "Ta töötab kodus.",
+  "s-joovad-kohvi": "Nad joovad kohvi.",
+  "s-armastan-sind": "Ma armastan sind.",
+  "s-raagite-hasti": "Te räägite väga hästi.",
+  "s-soovad-kodus": "Nad söövad kodus.",
+  "c-mina-joon": "Mina joon kohvi, tema joob vett.",
+} as const;
+
 /** The time lesson's words and phrases; each time it says is a clip of its own, by `timeClip`. */
 export const KELL_WORDS = [
   "Mis kell on?",
@@ -240,6 +286,24 @@ export const CLIPS: Record<string, Record<string, string>> = {
     ...NO_ANSWERS.flatMap(({ ask, answer }) => [ask, answer]),
     ...NEGATION_PHRASES,
   ]),
+  olevik: {
+    ...words([
+      ...PRESENT_VERBS.map(({ verb }) => verb),
+      ...PRESENT_ENDINGS.map(({ ending }) => `ela${ending}`),
+      "olema",
+      "olen",
+      "oled",
+      "on",
+      "oleme",
+      "olete",
+    ]),
+    ...words(
+      PRESENT_VERBS.flatMap(({ stem }) =>
+        PRESENT_ENDINGS.map(({ pronoun, ending }) => presentWithPronoun(pronoun, stem, ending)),
+      ),
+    ),
+    ...PRESENT_SENTENCES,
+  },
   kell: {
     ...words(KELL_WORDS),
     ...Object.fromEntries(ALL_TIMES.map((time) => [timeClip(time), timeSentence(time)])),

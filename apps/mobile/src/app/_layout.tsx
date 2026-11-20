@@ -28,6 +28,7 @@ import { Analytics } from "../telemetry/analytics";
 import { startTelemetry } from "../telemetry/posthog";
 import { usePalette, useRoom } from "../theme/palette";
 import { MenuHost } from "../ui/action-menu";
+import { AlertHost } from "../ui/alert";
 import { BlurRoot } from "../ui/blur-root";
 import { FloatingBarHost } from "../ui/floating-bar";
 import { FULL_SHEET, SHEET_STACK } from "../ui/stack";
@@ -316,6 +317,8 @@ function Root() {
         {signedIn && !update && <FloatingBarHost />}
         {signedIn && !update && <ToastHost />}
       </BlurRoot>
+      {/* Android's alerts; iOS presents its own. */}
+      <AlertHost />
       {kindling && (
         <SplashGuard key={replays} onFail={giveUp}>
           <Kindling lands={lands} onShown={shown} onDone={done} />

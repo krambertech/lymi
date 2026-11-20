@@ -437,10 +437,10 @@ msgstr "<0>Kes</0> спрашивает о людях, <1>mis</1> — о вещ�
 msgid "<0>Kus</0> asks where; <1>kes</1> asks who."
 msgstr "<0>Kus</0> спрашивает «где», а <1>kes</1> — «кто»."
 
-msgid "<0>Kust</0> asks where you're from, not where you live."
+msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> спрашивает, откуда ты, а не где живёшь."
 
-msgid "<0>Ma ei tea</0> is I don't know. <1>Kuidas läheb?</1> asks how you are."
+msgid "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
 msgstr "<0>Ma ei tea</0> — это «я не знаю». <1>Kuidas läheb?</1> — это «Как дела?»."
 
 msgid "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
@@ -491,7 +491,7 @@ msgstr "<0>Pool</0>, <1>veerand</1> и <2>kolmveerand</2> называют на�
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>эластичность спроса</0> ?"
 
-msgid "<0>Sa oled</0> is you are: this tells Mari she's from Ukraine."
+msgid "<0>Sa oled</0> is you are: this tells Mari she’s from Ukraine."
 msgstr "<0>Sa oled</0> — «ты есть»: так ты говоришь Мари, что она из Украины."
 
 msgid "<0>Sa</0> takes <1>-d</1>: <2>töötad</2>."
@@ -1384,7 +1384,7 @@ msgstr "После чисел от двух и больше minut станови
 msgid "After ei the verb drops its ending: ei ela."
 msgstr "После ei глагол теряет окончание: ei ela."
 
-msgid "After ei the verb has no ending: ei tööta, doesn't work."
+msgid "After ei the verb has no ending: ei tööta, doesn’t work."
 msgstr "После ei глагол без окончания: ei tööta, «не работает»."
 
 msgid "After ei, olema is ole; and you are a doctor."
@@ -3907,7 +3907,7 @@ msgstr "Бесплатные колоды по темам государстве
 msgid "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 msgstr "Бесплатные колоды, которые проходишь одну за другой. Каждый день несколько новых слов вперемешку с повторениями."
 
-msgid "Free Estonian conversation practice for beginners: say your name, where you're from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
+msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
 msgstr "Бесплатная разговорная практика эстонского для начинающих: скажи, как тебя зовут, откуда ты, где живёшь и работаешь, отвечай на вопросы «да или нет» и задавай свои. Каждый разговор и каждый текст озвучены."
 
 msgid "Free Estonian decks in Lymi"
@@ -5488,7 +5488,7 @@ msgstr "Яан — это <0>ta</0>, поэтому глагол оканчив�
 msgid "Jaan lives in Pärnu."
 msgstr "Яан живёт в Пярну."
 
-msgid "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says what isn't so, then what is."
+msgid "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says what isn’t so, then what is."
 msgstr "Яан рассказывает о себе и своей подруге Кати. Обрати внимание на <0/>: после отрицания Яан говорит, как на самом деле."
 
 msgid "Jah, ei, ei ole"
@@ -5559,7 +5559,7 @@ msgstr "Kas sa tuled? Ты придёшь?"
 msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi — партитив от kass, кошка."
 
-msgid "Kati writes about herself. Each gap needs one thing you've practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
+msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
 msgstr "Кати пишет о себе. В каждом пропуске — одно из того, что ты уже знаешь: форма <0>olema</0>, окончание глагола, глагол после <1>ei</1>, <2>-s</2> либо <3>-l</3> или вопросительное слово."
 
 msgid "Keep every word from your tutor lessons."
@@ -6280,7 +6280,7 @@ msgstr "Мари"
 msgid "Mari just said she works a lot. Ask where with <0>kus</0>."
 msgstr "Мари только что сказала, что много работает. Чтобы спросить где, скажи <0>kus</0>."
 
-msgid "Mari just said she's tired. Ask why with <0>miks</0>."
+msgid "Mari just said she’s tired. Ask why with <0>miks</0>."
 msgstr "Мари только что сказала, что устала. Чтобы спросить почему, скажи <0>miks</0>."
 
 msgid "Mari knows your name. <0>Kuidas läheb?</0> asks how you are."
@@ -8431,6 +8431,9 @@ msgstr "Она студентка"
 msgid "She's a teacher"
 msgstr "Она учительница"
 
+msgid "She’s a teacher"
+msgstr "Она учительница"
+
 msgid "Shelves"
 msgstr "Полки"
 
@@ -10026,7 +10029,7 @@ msgstr "Это действующий формат HSK 2.0. Программа, 
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "Эта политика охватывает сайт Lymi, приложения, API и подключённых помощников."
 
-msgid "This time Mari's lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
+msgid "This time Mari’s lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
 msgstr "На этот раз реплики Мари только звучат. Нажми на реплику, чтобы услышать её ещё раз, или на «Показать реплику: Мари», чтобы её прочитать."
 
 msgid "Thousands on AnkiWeb"
@@ -11027,9 +11030,6 @@ msgstr "Что внутри"
 msgid "What’s new in Lymi, and what got better."
 msgstr "Новые возможности Lymi и то, что стало лучше."
 
-msgid "What's your name?"
-msgstr "Как тебя зовут?"
-
 msgid "What’s your name?"
 msgstr "Как тебя зовут?"
 
@@ -11721,9 +11721,6 @@ msgstr "Тебе нужно проверенное приложение для �
 msgid "You want everything on your own computer"
 msgstr "Ты хочешь хранить всё на своём компьютере"
 
-msgid "You work in an office, not at a school."
-msgstr "Ты работаешь в офисе, а не в школе."
-
 msgid "You wrote this"
 msgstr "Это написано тобой"
 
@@ -11775,8 +11772,11 @@ msgstr "Вы молодцы."
 msgid "You’re doing great."
 msgstr "Ты молодец."
 
-msgid "You're learning Estonian, and you're speaking it now."
+msgid "You’re learning Estonian, and you’re speaking it now."
 msgstr "Ты учишь эстонский и сейчас на нём говоришь."
+
+msgid "You’re not a teacher: you work in an office."
+msgstr "Ты не учитель: ты работаешь в офисе."
 
 msgid "You’re teachers."
 msgstr "Вы учителя."

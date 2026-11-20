@@ -30,7 +30,7 @@ const GLOSSARY: Glossary = {
   ei: { en: msg`not; no` },
   tööta: {
     en: msg({ message: "work", context: "the verb, after ei" }),
-    note: msg`After ei the verb has no ending: ei tööta, doesn't work.`,
+    note: msg`After ei the verb has no ending: ei tööta, doesn’t work.`,
   },
   töötan: { en: msg`I work` },
   kontoris: { en: msg`at the office` },
@@ -40,7 +40,7 @@ const GLOSSARY: Glossary = {
   joob: { en: msg`he or she drinks`, note: msg`From jooma, to drink.` },
   palju: { en: msg`a lot` },
   kohvi: { en: msg`coffee`, note: msg`Joob kohvi: drinks coffee. Learn it as a phrase for now.` },
-  "mis su nimi on?": { en: msg`What's your name?`, show: "Mis su nimi on?" },
+  "mis su nimi on?": { en: msg`What’s your name?`, show: "Mis su nimi on?" },
   "väga meeldiv": {
     en: msg`Nice to meet you`,
     note: msg`Word for word: “very pleasant”.`,
@@ -106,7 +106,7 @@ function useContent() {
           line: "Ma elan Tartus.",
           why: (
             <Trans>
-              <b lang="et">Kust</b> asks where you're from, not where you live.
+              <b lang="et">Kust</b> asks where you’re from, not where you live.
             </Trans>
           ),
         },
@@ -114,7 +114,7 @@ function useContent() {
           line: "Sa oled pärit Ukrainast.",
           why: (
             <Trans>
-              <b lang="et">Sa oled</b> is you are: this tells Mari she's from Ukraine.
+              <b lang="et">Sa oled</b> is you are: this tells Mari she’s from Ukraine.
             </Trans>
           ),
         },
@@ -159,7 +159,7 @@ function useContent() {
       replies: [
         {
           line: "Jah, ma olen. Ma töötan koolis.",
-          why: <Trans>You work in an office, not at a school.</Trans>,
+          why: <Trans>You’re not a teacher: you work in an office.</Trans>,
         },
         { line: answering("a-sina-4"), right: true },
         {
@@ -193,7 +193,7 @@ function useContent() {
         },
         {
           line: "Ei. Ma ei õpi eesti keelt.",
-          why: <Trans>You're learning Estonian, and you're speaking it now.</Trans>,
+          why: <Trans>You’re learning Estonian, and you’re speaking it now.</Trans>,
         },
       ],
     },
@@ -237,7 +237,7 @@ function useContent() {
           line: "Ma ei tea.",
           why: (
             <Trans>
-              <b lang="et">Ma ei tea</b> is I don't know. <b lang="et">Kuidas läheb?</b> asks how
+              <b lang="et">Ma ei tea</b> is I don’t know. <b lang="et">Kuidas läheb?</b> asks how
               you are.
             </Trans>
           ),
@@ -263,7 +263,7 @@ function useContent() {
           line: "Kas sa oled väsinud?",
           why: (
             <Trans>
-              Mari just said she's tired. Ask why with <b lang="et">miks</b>.
+              Mari just said she’s tired. Ask why with <b lang="et">miks</b>.
             </Trans>
           ),
         },
@@ -358,7 +358,7 @@ function useContent() {
       options: [
         { id: "studies", label: t`She studies` },
         { id: "cafe", label: t`She works in a café` },
-        { id: "teacher", label: t`She's a teacher` },
+        { id: "teacher", label: t`She’s a teacher` },
       ],
       answer: "studies",
       line: 4,
@@ -582,7 +582,7 @@ export function TutvumineLesson() {
                 </p>
                 <p>
                   <Trans>
-                    This time Mari's lines are sound only. Tap a line to hear it again, or tap Show
+                    This time Mari’s lines are sound only. Tap a line to hear it again, or tap Show
                     what Mari said to read it.
                   </Trans>
                 </p>
@@ -608,7 +608,7 @@ export function TutvumineLesson() {
                 <p>
                   <Trans>
                     Jaan talks about himself and his friend Kati. Listen for <Word w="ei" />: Jaan
-                    says what isn't so, then what is.
+                    says what isn’t so, then what is.
                   </Trans>
                 </p>
               </Prose>
@@ -631,7 +631,7 @@ export function TutvumineLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Kati writes about herself. Each gap needs one thing you've practised: a form of{" "}
+                    Kati writes about herself. Each gap needs one thing you’ve practised: a form of{" "}
                     <b lang="et">olema</b>, a verb ending, the verb after <b lang="et">ei</b>,{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -s

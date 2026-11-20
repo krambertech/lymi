@@ -437,11 +437,11 @@ msgstr "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgid "<0>Kus</0> asks where; <1>kes</1> asks who."
 msgstr "<0>Kus</0> asks where; <1>kes</1> asks who."
 
-msgid "<0>Kust</0> asks where you're from, not where you live."
-msgstr "<0>Kust</0> asks where you're from, not where you live."
+msgid "<0>Kust</0> asks where you’re from, not where you live."
+msgstr "<0>Kust</0> asks where you’re from, not where you live."
 
-msgid "<0>Ma ei tea</0> is I don't know. <1>Kuidas läheb?</1> asks how you are."
-msgstr "<0>Ma ei tea</0> is I don't know. <1>Kuidas läheb?</1> asks how you are."
+msgid "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
+msgstr "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
 
 msgid "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
 msgstr "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
@@ -491,8 +491,8 @@ msgstr "<0>Pool</0>, <1>veerand</1> and <2>kolmveerand</2> name the hour that’
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>price elasticity</0> ?"
 
-msgid "<0>Sa oled</0> is you are: this tells Mari she's from Ukraine."
-msgstr "<0>Sa oled</0> is you are: this tells Mari she's from Ukraine."
+msgid "<0>Sa oled</0> is you are: this tells Mari she’s from Ukraine."
+msgstr "<0>Sa oled</0> is you are: this tells Mari she’s from Ukraine."
 
 msgid "<0>Sa</0> takes <1>-d</1>: <2>töötad</2>."
 msgstr "<0>Sa</0> takes <1>-d</1>: <2>töötad</2>."
@@ -1384,8 +1384,8 @@ msgstr "After a number from two up, minut becomes minutit."
 msgid "After ei the verb drops its ending: ei ela."
 msgstr "After ei the verb drops its ending: ei ela."
 
-msgid "After ei the verb has no ending: ei tööta, doesn't work."
-msgstr "After ei the verb has no ending: ei tööta, doesn't work."
+msgid "After ei the verb has no ending: ei tööta, doesn’t work."
+msgstr "After ei the verb has no ending: ei tööta, doesn’t work."
 
 msgid "After ei, olema is ole; and you are a doctor."
 msgstr "After ei, olema is ole; and you are a doctor."
@@ -3907,8 +3907,8 @@ msgstr "Free decks that follow the topics of Poland’s state exams. Take A1, th
 msgid "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 msgstr "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 
-msgid "Free Estonian conversation practice for beginners: say your name, where you're from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
-msgstr "Free Estonian conversation practice for beginners: say your name, where you're from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
+msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
+msgstr "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
 
 msgid "Free Estonian decks in Lymi"
 msgstr "Free Estonian decks in Lymi"
@@ -5488,8 +5488,8 @@ msgstr "Jaan is <0>ta</0>, so the verb takes <1>-b</1>: <2>töötab</2>."
 msgid "Jaan lives in Pärnu."
 msgstr "Jaan lives in Pärnu."
 
-msgid "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says what isn't so, then what is."
-msgstr "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says what isn't so, then what is."
+msgid "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says what isn’t so, then what is."
+msgstr "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says what isn’t so, then what is."
 
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
@@ -5559,8 +5559,8 @@ msgstr "Kas sa tuled? Are you coming?"
 msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi is the partitive of kass, cat."
 
-msgid "Kati writes about herself. Each gap needs one thing you've practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
-msgstr "Kati writes about herself. Each gap needs one thing you've practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
+msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
+msgstr "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, <2>-s</2> or <3>-l</3>, or a question word."
 
 msgid "Keep every word from your tutor lessons."
 msgstr "Keep every word from your tutor lessons."
@@ -6280,8 +6280,8 @@ msgstr "Mari"
 msgid "Mari just said she works a lot. Ask where with <0>kus</0>."
 msgstr "Mari just said she works a lot. Ask where with <0>kus</0>."
 
-msgid "Mari just said she's tired. Ask why with <0>miks</0>."
-msgstr "Mari just said she's tired. Ask why with <0>miks</0>."
+msgid "Mari just said she’s tired. Ask why with <0>miks</0>."
+msgstr "Mari just said she’s tired. Ask why with <0>miks</0>."
 
 msgid "Mari knows your name. <0>Kuidas läheb?</0> asks how you are."
 msgstr "Mari knows your name. <0>Kuidas läheb?</0> asks how you are."
@@ -8431,6 +8431,9 @@ msgstr "She's a student"
 msgid "She's a teacher"
 msgstr "She's a teacher"
 
+msgid "She’s a teacher"
+msgstr "She’s a teacher"
+
 msgid "Shelves"
 msgstr "Shelves"
 
@@ -10026,8 +10029,8 @@ msgstr "This is the current HSK 2.0 format. The syllabus published in 2025 grows
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "This policy covers Lymi’s website, apps, API and connected assistants."
 
-msgid "This time Mari's lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
-msgstr "This time Mari's lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
+msgid "This time Mari’s lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
+msgstr "This time Mari’s lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
 
 msgid "Thousands on AnkiWeb"
 msgstr "Thousands on AnkiWeb"
@@ -11027,9 +11030,6 @@ msgstr "What’s inside"
 msgid "What’s new in Lymi, and what got better."
 msgstr "What’s new in Lymi, and what got better."
 
-msgid "What's your name?"
-msgstr "What's your name?"
-
 msgid "What’s your name?"
 msgstr "What’s your name?"
 
@@ -11721,9 +11721,6 @@ msgstr "You want a proven phone app"
 msgid "You want everything on your own computer"
 msgstr "You want everything on your own computer"
 
-msgid "You work in an office, not at a school."
-msgstr "You work in an office, not at a school."
-
 msgid "You wrote this"
 msgstr "You wrote this"
 
@@ -11775,8 +11772,11 @@ msgstr "You’re all doing great."
 msgid "You’re doing great."
 msgstr "You’re doing great."
 
-msgid "You're learning Estonian, and you're speaking it now."
-msgstr "You're learning Estonian, and you're speaking it now."
+msgid "You’re learning Estonian, and you’re speaking it now."
+msgstr "You’re learning Estonian, and you’re speaking it now."
+
+msgid "You’re not a teacher: you work in an office."
+msgstr "You’re not a teacher: you work in an office."
 
 msgid "You’re teachers."
 msgstr "You’re teachers."

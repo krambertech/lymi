@@ -27,6 +27,7 @@ const MINUTES_TO: Partial<Record<number, string>> = { 5: "viie", 10: "kümne", 2
 
 const hourWord = (hour: number) => numberWords(hour);
 export const nextHour = (hour: number) => (hour % 12) + 1;
+export const previousHour = (hour: number) => (hour === 1 ? 12 : hour - 1);
 
 export function timeParts({ hour, minute }: ClockTime): TimePart[] {
   if (!Number.isInteger(hour) || hour < 1 || hour > 12) throw new RangeError(`No hour ${hour}`);
@@ -86,4 +87,28 @@ export function timeMatches(typed: string, { hour, minute }: ClockTime): boolean
   const m = match[2] === undefined ? 0 : Number(match[2]);
   if (h > 24 || m !== minute) return false;
   return h % 12 === hour % 12;
+}
+
+/** The lesson's minute closest to an angle on the dial, in degrees clockwise from twelve. */
+export function nearestMinute(degrees: number): Minute {
+  const raw = degrees / 6;
+  const gap = (m: number) => Math.min(Math.abs(raw - m), 60 - Math.abs(raw - m));
+  let best: Minute = 0;
+  for (const minute of MINUTES) if (gap(minute) < gap(best)) best = minute;
+  return best;
+}
+
+/** Moves a time to another minute the short way round, carrying the hour when the hand passes twelve. */
+export function withMinute(time: ClockTime, minute: Minute): ClockTime {
+  const forward = (minute - time.minute + 60) % 60;
+  let hour = time.hour;
+  if (minute < time.minute && forward <= 30) hour = nextHour(hour);
+  else if (minute > time.minute && forward > 30) hour = previousHour(hour);
+  return { hour, minute };
+}
+
+/** The next or previous minute the lesson offers. */
+export function stepMinute(time: ClockTime, by: 1 | -1): ClockTime {
+  const i = MINUTES.indexOf(time.minute);
+  return withMinute(time, MINUTES[(i + by + MINUTES.length) % MINUTES.length] as Minute);
 }

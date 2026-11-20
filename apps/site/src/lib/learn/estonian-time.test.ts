@@ -1,5 +1,14 @@
 import { describe, expect, it } from "vitest";
-import { ALL_TIMES, timeDigits, timeMatches, timeSentence, timeWords } from "./estonian-time";
+import {
+  ALL_TIMES,
+  nearestMinute,
+  stepMinute,
+  timeDigits,
+  timeMatches,
+  timeSentence,
+  timeWords,
+  withMinute,
+} from "./estonian-time";
 
 describe("Estonian times", () => {
   it("says full hours with the hour that has struck", () => {
@@ -38,5 +47,25 @@ describe("Estonian times", () => {
     expect(timeMatches("3", { hour: 3, minute: 0 })).toBe(true);
     expect(timeMatches("12:00", { hour: 12, minute: 0 })).toBe(true);
     expect(timeMatches("0:30", { hour: 12, minute: 30 })).toBe(true);
+  });
+
+  it("moves the minute hand the short way round, carrying the hour only past twelve", () => {
+    expect(withMinute({ hour: 3, minute: 40 }, 20)).toEqual({ hour: 3, minute: 20 });
+    expect(withMinute({ hour: 3, minute: 20 }, 40)).toEqual({ hour: 3, minute: 40 });
+    expect(withMinute({ hour: 3, minute: 45 }, 20)).toEqual({ hour: 3, minute: 20 });
+    expect(withMinute({ hour: 3, minute: 45 }, 0)).toEqual({ hour: 4, minute: 0 });
+    expect(withMinute({ hour: 12, minute: 50 }, 10)).toEqual({ hour: 1, minute: 10 });
+    expect(withMinute({ hour: 1, minute: 5 }, 55)).toEqual({ hour: 12, minute: 55 });
+    expect(stepMinute({ hour: 3, minute: 55 }, 1)).toEqual({ hour: 4, minute: 0 });
+    expect(stepMinute({ hour: 4, minute: 0 }, -1)).toEqual({ hour: 3, minute: 55 });
+    expect(stepMinute({ hour: 3, minute: 20 }, 1)).toEqual({ hour: 3, minute: 30 });
+  });
+
+  it("snaps the dial to the nearest minute the lesson says", () => {
+    expect(nearestMinute(0)).toBe(0);
+    expect(nearestMinute(355)).toBe(0);
+    expect(nearestMinute(92)).toBe(15);
+    expect(nearestMinute(150)).toBe(20);
+    expect(nearestMinute(160)).toBe(30);
   });
 });

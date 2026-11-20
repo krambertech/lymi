@@ -2,20 +2,24 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Minus, Plus } from "lucide-react";
-import { type ReactNode, useMemo, useRef, useState } from "react";
+import { type ReactNode, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { LESSONS } from "../../../lib/learn/catalogue";
 import { clipUrl } from "../../../lib/learn/clips";
 import {
   type ClockTime,
   MINUTES,
   type Minute,
+  nearestMinute,
   nextHour,
+  previousHour,
+  stepMinute,
   timeClip,
   timeDigits,
   timeMatches,
   timeParts,
   timeSentence,
   timeWords,
+  withMinute,
 } from "../../../lib/learn/estonian-time";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
@@ -89,9 +93,11 @@ function Said({ time }: { time: ClockTime }) {
 /** Turns a hand the short way round, so 55 to 00 moves forward rather than spinning back. */
 function useTurn(degrees: number): number {
   const last = useRef(degrees);
-  const delta = ((((degrees - last.current) % 360) + 540) % 360) - 180;
-  last.current += delta;
-  return last.current;
+  const turn = last.current + ((((degrees - last.current) % 360) + 540) % 360) - 180;
+  useLayoutEffect(() => {
+    last.current = turn;
+  }, [turn]);
+  return turn;
 }
 
 interface ClockProps extends Omit<React.SVGProps<SVGSVGElement>, "ref"> {
@@ -255,31 +261,6 @@ function pointerAngle(svg: SVGSVGElement, x: number, y: number): number {
   return (angle + 360) % 360;
 }
 
-/** The lesson's minute closest to an angle, round the dial. */
-function nearestMinute(degrees: number): Minute {
-  const raw = degrees / 6;
-  let best: Minute = 0;
-  for (const minute of MINUTES) {
-    const gap = (m: number) => Math.min(Math.abs(raw - m), 60 - Math.abs(raw - m));
-    if (gap(minute) < gap(best)) best = minute;
-  }
-  return best;
-}
-
-/** Steps a time to another minute, carrying the hour when the hand passes twelve. */
-function withMinute(time: ClockTime, minute: Minute): ClockTime {
-  let hour = time.hour;
-  if (time.minute >= 40 && minute <= 20) hour = nextHour(hour);
-  else if (time.minute <= 20 && minute >= 40) hour = hour === 1 ? 12 : hour - 1;
-  return { hour, minute };
-}
-
-function stepMinute(time: ClockTime, by: 1 | -1): ClockTime {
-  const i = MINUTES.indexOf(time.minute);
-  const minute = MINUTES[(i + by + MINUTES.length) % MINUTES.length] as Minute;
-  return withMinute(time, minute);
-}
-
 function ClockExplorer() {
   const { t } = useLingui();
   const [time, setTime] = useState<ClockTime>(at(3, 45));
@@ -297,7 +278,10 @@ function ClockExplorer() {
   };
   const drag = (event: React.PointerEvent<SVGSVGElement>) => {
     const minute = nearestMinute(pointerAngle(event.currentTarget, event.clientX, event.clientY));
-    setTime((now) => (now.minute === minute ? now : withMinute(now, minute)));
+    const now = latest.current;
+    if (now.minute === minute) return;
+    latest.current = withMinute(now, minute);
+    setTime(latest.current);
   };
   const stepper =
     "edge-lift grid size-10 cursor-pointer place-items-center rounded-full bg-plate text-ink transition-[background-color,scale] duration-150 active:scale-[0.94] hoverable:hover:bg-plate-hover";
@@ -316,10 +300,13 @@ function ClockExplorer() {
           aria-valuenow={time.minute}
           aria-valuetext={`${digits}, ${words}`}
           onKeyDown={(event) => {
+            const hour = { PageUp: nextHour(time.hour), PageDown: previousHour(time.hour) }[
+              event.key
+            ];
             const by = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 }[event.key];
-            if (!by) return;
+            if (!hour && !by) return;
             event.preventDefault();
-            set(stepMinute(time, by as 1 | -1), true);
+            set(hour ? at(hour, time.minute) : stepMinute(time, by as 1 | -1), true);
           }}
           className="rounded-full focus-visible:outline-3 focus-visible:outline-offset-4 focus-visible:outline-(--form)"
         >
@@ -372,7 +359,7 @@ function ClockExplorer() {
             type="button"
             aria-label={t`An hour earlier`}
             className={stepper}
-            onClick={() => set(at(time.hour === 1 ? 12 : time.hour - 1, time.minute), true)}
+            onClick={() => set(at(previousHour(time.hour), time.minute), true)}
           >
             <Minus aria-hidden="true" className="size-4.5" />
           </button>
@@ -402,7 +389,7 @@ function ClockExplorer() {
   );
 }
 
-const HALVES = [at(3, 30), at(7, 30), at(12, 30), at(9, 30), at(5, 30), at(10, 30)];
+const HALVES = [at(7, 30), at(3, 30), at(12, 30), at(9, 30), at(4, 30), at(10, 30)];
 
 /** Hear “pool …”, pick one of two half hours; the clock sets itself once it's answered. */
 function HalfRound({ item, state, heard, answer, autoplay }: RoundProps<ClockTime>) {
@@ -429,7 +416,7 @@ function HalfRound({ item, state, heard, answer, autoplay }: RoundProps<ClockTim
         {note}
         <fieldset className="m-0 grid w-full max-w-[340px] min-w-0 grid-cols-2 gap-2 border-0 p-0">
           <legend className="sr-only">{t`Times`}</legend>
-          {[right, trap].map((digits) => (
+          {(item.hour % 2 ? [right, trap] : [trap, right]).map((digits) => (
             <Answer
               key={digits}
               big
@@ -459,9 +446,9 @@ function HalfRound({ item, state, heard, answer, autoplay }: RoundProps<ClockTim
 
 /** The times the listening quiz asks, chosen for the mix-ups learners make. */
 const HEARD = [
-  at(3, 30),
-  at(8, 30),
   at(5, 15),
+  at(8, 30),
+  at(3, 30),
   at(10, 15),
   at(2, 45),
   at(11, 45),
@@ -474,13 +461,13 @@ const HEARD = [
 ];
 
 const minutes = (time: ClockTime) => (time.hour % 12) * 60 + time.minute;
-const earlier = (time: ClockTime) => at(time.hour === 1 ? 12 : time.hour - 1, time.minute);
+const earlier = (time: ClockTime) => at(previousHour(time.hour), time.minute);
 
 /**
  * The answer, the same minutes an hour later (reading “pool neli” as 4:30), the time its words
  * mirror (veerand and kolmveerand, läbi and pärast) and the same minutes an hour earlier.
  */
-function choicesFor(time: ClockTime): ClockTime[] {
+function choicesFor(time: ClockTime): { choices: ClockTime[]; trap: ClockTime } {
   const mirror: Partial<Record<number, ClockTime>> = {
     15: at(time.hour, 45),
     45: at(time.hour, 15),
@@ -492,16 +479,20 @@ function choicesFor(time: ClockTime): ClockTime[] {
     55: at(nextHour(time.hour), 5),
     0: at(earlier(time).hour, 30),
   };
-  const all = [time, at(nextHour(time.hour), time.minute), mirror[time.minute], earlier(time)];
+  const later = at(nextHour(time.hour), time.minute);
+  const all = [time, later, mirror[time.minute], earlier(time)];
   const seen = new Set<string>();
-  return all
+  // Clock order, starting from the hour before the answer, so 11:45 lists 10:45 before 12:45.
+  const start = minutes(earlier(time)) - 60;
+  const from = (each: ClockTime) => (minutes(each) - start + 720) % 720;
+  const choices = all
     .filter((each): each is ClockTime => {
       if (!each || seen.has(timeClip(each))) return false;
       seen.add(timeClip(each));
       return true;
     })
-    .slice(0, 4)
-    .sort((a, b) => minutes(a) - minutes(b));
+    .sort((a, b) => from(a) - from(b));
+  return { choices, trap: time.minute === 30 ? later : (mirror[time.minute] ?? later) };
 }
 
 function ClockChoice({ time }: { time: ClockTime }) {
@@ -515,9 +506,9 @@ function ClockChoice({ time }: { time: ClockTime }) {
 }
 
 const TYPED = [
-  at(3, 30),
-  at(6, 0),
   at(9, 15),
+  at(6, 0),
+  at(2, 30),
   at(1, 45),
   at(7, 30),
   at(2, 10),
@@ -534,8 +525,7 @@ export function KellLesson() {
   const heardItems = useMemo(
     () =>
       HEARD.map((time): ChoiceItem & { trap: ClockTime } => {
-        const choices = choicesFor(time);
-        const trap = choices.find((each) => timeClip(each) !== timeClip(time)) ?? time;
+        const { choices, trap } = choicesFor(time);
         const words = timeWords(time);
         const digits = timeDigits(time);
         return {

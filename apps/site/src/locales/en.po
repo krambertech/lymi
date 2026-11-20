@@ -732,9 +732,6 @@ msgstr "a federal state."
 msgid "A few minutes a day"
 msgstr "A few minutes a day"
 
-msgid "A few places take -l by habit: <0/>, at the market, and places whose names end in -maa, such as <1/> and <2/>, in Germany."
-msgstr "A few places take -l by habit: <0/>, at the market, and places whose names end in -maa, such as <1/> and <2/>, in Germany."
-
 msgid "A few weeks in"
 msgstr "A few weeks in"
 
@@ -6880,6 +6877,9 @@ msgstr "Place words: on, under, behind"
 msgid "Places to work"
 msgstr "Places to work"
 
+msgid "Places whose names end in -maa take -l too, even where English says in: <0/>, on Saaremaa, and <1/>, in Germany."
+msgstr "Places whose names end in -maa take -l too, even where English says in: <0/>, on Saaremaa, and <1/>, in Germany."
+
 msgid "Places with -l"
 msgstr "Places with -l"
 
@@ -8840,8 +8840,8 @@ msgstr "The one that matches your test or topic. You can add more than one, and 
 msgid "The ones starting to fade"
 msgstr "The ones starting to fade"
 
-msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you're doing something rather than inside a building: <2/>, at work."
-msgstr "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you're doing something rather than inside a building: <2/>, at work."
+msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you're doing something rather than inside a building: <2/>, at work. A market takes -l by habit: <3/>."
+msgstr "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you're doing something rather than inside a building: <2/>, at work. A market takes -l by habit: <3/>."
 
 msgid "The output depends on the history of the input"
 msgstr "The output depends on the history of the input"

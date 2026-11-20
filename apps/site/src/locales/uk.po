@@ -358,7 +358,7 @@ msgid "<0/> repeats the verb from the question. Estonians answer like this with 
 msgstr "<0/> повторює дієслово з питання. Естонці так відповідають з будь-яким дієсловом, про це урок {negation} про заперечення."
 
 msgid "<0/>, at home, is the one you'll say most. Now answer <1/> six ways: tap a place."
-msgstr "Найчастіше ти казатимеш <0/>, вдома. А тепер дай шість відповідей на <1/>: торкнись місця."
+msgstr "<0/>, вдома, ти казатимеш найчастіше. А тепер дай шість відповідей на <1/>: торкнись місця."
 
 msgid "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same for everyone."
 msgstr "<0/>, «бути», працює так само. <1/> стає <2/>, і <3/> однакове для всіх."
@@ -731,9 +731,6 @@ msgstr "федеративна держава."
 
 msgid "A few minutes a day"
 msgstr "Кілька хвилин на день"
-
-msgid "A few places take -l by habit: <0/>, at the market, and places whose names end in -maa, such as <1/> and <2/>, in Germany."
-msgstr "Деякі місця беруть -l за звичкою: <0/>, на ринку, і місця, чия назва закінчується на -maa, як-от <1/> і <2/>, у Німеччині."
 
 msgid "A few weeks in"
 msgstr "За кілька тижнів"
@@ -6880,6 +6877,9 @@ msgstr "Де що: на, під, за"
 msgid "Places to work"
 msgstr "Де працювати"
 
+msgid "Places whose names end in -maa take -l too, even where English says in: <0/>, on Saaremaa, and <1/>, in Germany."
+msgstr "Місця, чия назва закінчується на -maa, теж беруть -l, навіть коли українською кажемо «в»: <0/>, на Сааремаа, і <1/>, у Німеччині."
+
 msgid "Places with -l"
 msgstr "Місця з -l"
 
@@ -8840,8 +8840,8 @@ msgstr "Ту, що відповідає твоєму тесту чи темі. �
 msgid "The ones starting to fade"
 msgstr "Ті, які починають забуватися"
 
-msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you're doing something rather than inside a building: <2/>, at work."
-msgstr "Друге закінчення — <0>-l</0>. Воно означає «на» поверхні: <1/>, на столі. А ще — заняття, де ти щось робиш, а не будівлю, де ти всередині: <2/>, на роботі."
+msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you're doing something rather than inside a building: <2/>, at work. A market takes -l by habit: <3/>."
+msgstr "Друге закінчення — <0>-l</0>. Воно означає «на» поверхні: <1/>, на столі. А ще — заняття, де ти щось робиш, а не будівлю, де ти всередині: <2/>, на роботі. Ринок бере -l за звичкою: <3/>."
 
 msgid "The output depends on the history of the input"
 msgstr "Результат залежить від того, що було на вході раніше"

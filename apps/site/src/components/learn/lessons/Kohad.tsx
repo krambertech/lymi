@@ -129,8 +129,12 @@ const ON_KEYS: readonly { where: Where; id: Id }[] = [
   { where: "seinal", id: "l-seinal" },
   { where: "tööl", id: "l-tool" },
   { where: "turul", id: "l-turul" },
-  { where: "Saaremaal", id: "l-saaremaal" },
-  { where: "Saksamaal", id: "l-saksamaal" },
+];
+
+/** The -maa places, too long for a key on a phone, as sentences to hear. */
+const MAA_LINES: readonly { q: Id; a: readonly Id[] }[] = [
+  { q: "l-saaremaal", a: [] },
+  { q: "l-saksamaal", a: [] },
 ];
 
 /** “Where are they?”: a sentence, its place, and two other places in a fixed order. */
@@ -482,7 +486,7 @@ export function KohadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="kodus" />, at home, is the one you'll say most. Now answer{" "}
+                    <Word w="Kodus" />, at home, is the one you'll say most. Now answer{" "}
                     <Word w="Kus sa töötad?" /> six ways: tap a place.
                   </Trans>
                 </p>
@@ -546,14 +550,8 @@ export function KohadLesson() {
                   <Trans>
                     The other ending is <b lang="et">-l</b>. It says on a surface:{" "}
                     <Word w="laual" />, on the table. And it says at an activity, where you're doing
-                    something rather than inside a building: <Word w="tööl" />, at work.
-                  </Trans>
-                </p>
-                <p>
-                  <Trans>
-                    A few places take -l by habit: <Word w="turul" />, at the market, and places
-                    whose names end in -maa, such as <Word w="Saaremaal" /> and{" "}
-                    <Word w="Saksamaal" />, in Germany.
+                    something rather than inside a building: <Word w="tööl" />, at work. A market
+                    takes -l by habit: <Word w="turul" />.
                   </Trans>
                 </p>
               </Prose>
@@ -561,7 +559,7 @@ export function KohadLesson() {
                 <Keys
                   label={t`Places with -l`}
                   items={keysOf(ON_KEYS)}
-                  columns={3}
+                  columns={4}
                   phoneColumns={2}
                   empty={{
                     title: t`Tap a place`,
@@ -569,6 +567,15 @@ export function KohadLesson() {
                   }}
                 />
               </Panel>
+              <Prose>
+                <p>
+                  <Trans>
+                    Places whose names end in -maa take -l too, even where English says in:{" "}
+                    <Word w="Saaremaal" />, on Saaremaa, and <Word w="Saksamaal" />, in Germany.
+                  </Trans>
+                </p>
+              </Prose>
+              <Exchanges items={MAA_LINES} />
               <Aside>
                 <Trans>
                   English says at work and at school alike. Estonian says <Word w="tööl" /> but{" "}

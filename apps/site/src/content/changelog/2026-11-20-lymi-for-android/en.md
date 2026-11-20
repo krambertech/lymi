@@ -5,7 +5,7 @@ figure: android
 stores: google-play
 ---
 
-Lymi is now on Google Play. Sign in with your Lymi account, and your decks and progress are there. Unlike the iPhone app, it’s available in EU countries too.
+Lymi is now on [Google Play](/download/android). Sign in with your Lymi account, and your decks and progress are there. Unlike the iPhone app, it’s available in EU countries too.
 
 ## Review on your phone
 

@@ -1,5 +1,6 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
+import { useId } from "react";
 import { type DownloadPath, downloadHref } from "../lib/downloads";
 
 /** The store marks from Simple Icons (CC0), drawn in the text colour. */
@@ -20,7 +21,7 @@ export function GooglePlayMark() {
 }
 
 const store =
-  "inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-plate px-3 font-medium whitespace-nowrap text-ink transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:veil max-[30rem]:flex-1";
+  "inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-plate px-3 font-medium whitespace-nowrap text-ink transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:veil max-[30rem]:w-full";
 
 /**
  * The homepage's line to the phone apps: a soft pill with the app icon and a small button per
@@ -31,6 +32,7 @@ const store =
 export function GetTheApp({ className }: { className?: string | undefined }) {
   const { i18n } = useLingui();
   const href = (path: DownloadPath) => downloadHref(path, i18n.locale);
+  const label = useId();
   return (
     <div
       className={clsx(
@@ -38,7 +40,10 @@ export function GetTheApp({ className }: { className?: string | undefined }) {
         className,
       )}
     >
-      <span className="flex h-8 items-center gap-2 ps-1 pe-2 whitespace-nowrap text-ink-secondary">
+      <span
+        id={label}
+        className="flex h-8 items-center gap-2 ps-1 pe-2 whitespace-nowrap text-ink-secondary"
+      >
         <img
           src="/phone/icon.png"
           alt=""
@@ -48,22 +53,21 @@ export function GetTheApp({ className }: { className?: string | undefined }) {
         />
         <Trans>On your phone</Trans>
       </span>
-      <span className="flex gap-1 max-[30rem]:w-full">
-        <a
-          href={href("/download/iphone")}
-          data-app-store=""
-          hidden
-          suppressHydrationWarning
-          className={store}
-        >
-          <AppleMark />
-          App Store
-        </a>
-        <a href={href("/download/android")} className={store}>
-          <GooglePlayMark />
-          Google Play
-        </a>
-      </span>
+      <ul aria-labelledby={label} className="flex gap-1 max-[30rem]:w-full">
+        {/* The App Store item stays hidden until the visitor's country is known to sell Lymi. */}
+        <li data-app-store="" hidden suppressHydrationWarning className="flex max-[30rem]:flex-1">
+          <a href={href("/download/iphone")} className={store}>
+            <AppleMark />
+            App Store
+          </a>
+        </li>
+        <li className="flex max-[30rem]:flex-1">
+          <a href={href("/download/android")} className={store}>
+            <GooglePlayMark />
+            Google Play
+          </a>
+        </li>
+      </ul>
     </div>
   );
 }

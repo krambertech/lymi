@@ -22,7 +22,7 @@ Done when you have a section list where every Estonian word is either from an ea
 
 ## 2. Check every Estonian form
 
-Look up every form you will show or record in ÕS 2018 before anything is recorded: `https://arhiiv.eki.ee/dict/qs/index.cgi?Q=<word>&F=M` answers `curl`, while sonaveeb.ee and keeleabi.eki.ee refuse automated fetches. A claim about where a word comes from needs EKI's etymology dictionary; without one, write "sounds like", never "comes from". [The Estonian slips](references/checklists.md#estonian-slips-reviews-caught) list what reviews caught before.
+Look up every form you will show or record before anything is recorded. ÕS 2025 is the norm since 1 January 2026, and Sõnaveeb's EKI dictionary carries it: `https://sonaveeb.ee/search/unif/est/eki/<word>` answers `curl`. The ÕS 2018 archive (`https://arhiiv.eki.ee/dict/qs/index.cgi?Q=<word>&F=M`) is a fallback only; recheck in Sõnaveeb any form where the two differ. A claim about where a word comes from needs EKI's etymology dictionary; without one, write "sounds like", never "comes from". [The Estonian slips](references/checklists.md#estonian-slips-reviews-caught) list what reviews caught before.
 
 Done when every form and claim has a source you can name in the PR's Verification section.
 
@@ -53,10 +53,10 @@ One file in `components/learn/lessons/` with a `SLUG` constant, its glossary, it
 List every clip in `clips.ts`: the lesson's shared data as exports, and an entry under its slug in `CLIPS`. Then record:
 
 ```bash
-env PATH="$HOME/.nvm/versions/node/v22.22.3/bin:$PATH" ELEVENLABS_API_KEY="$(sed -n 's/^ELEVENLABS_API_KEY=//p' "$(git rev-parse --path-format=absolute --git-common-dir)/../apps/web/.dev.vars")" pnpm --filter @lymi/site lesson:audio
+env PATH="$HOME/.nvm/versions/node/v$(cat .nvmrc)/bin:$PATH" ELEVENLABS_API_KEY="$(sed -n 's/^ELEVENLABS_API_KEY=//p' "$(git rev-parse --path-format=absolute --git-common-dir)/../apps/web/.dev.vars")" pnpm --filter @lymi/site lesson:audio
 ```
 
-The key goes from the main checkout's `apps/web/.dev.vars` into the command's environment only; never print it, echo it or write it to a file. The script records only new or changed clips, so a re-run is free. Done when it reports what you added and `pnpm --filter @lymi/site test` passes, since `clips.test.ts` checks the manifest against `CLIPS` and every mp3.
+Run it from the repository root, where `.nvmrc` names the Node it needs. The key goes from the main checkout's `apps/web/.dev.vars` into the command's environment only; never print it, echo it or write it to a file. The script records only new or changed clips, so a re-run is free. Done when it reports what you added and `pnpm --filter @lymi/site test` passes, since `clips.test.ts` checks the manifest against `CLIPS` and every mp3.
 
 ## 6. Translate
 
@@ -66,7 +66,7 @@ Done when extract reports 0 missing in `uk` and `ru` and every new line reads as
 
 ## 7. Drive every section
 
-Run the site with `astro dev` from `apps/site` (it returns at once; `npx astro dev stop` stops it) and drive the lesson with Playwright at `/estonian/learn/<slug>`, `/uk/…` and `/ru/…`. The verify skill drives the web product, not the site, so it does not apply. Cover [the drive matrix](references/checklists.md#drive-matrix): every control and every quiz to its score, at 1280 and 375 px, light and night.
+Start the site with `npx astro dev --background --port <port>` from `apps/site`, which returns at once (`npx astro dev stop` stops it; plain `astro dev` holds the shell), and drive the lesson with Playwright at `/estonian/learn/<slug>`, `/uk/…` and `/ru/…`. The verify skill drives the web product, not the site, so it does not apply. Cover [the drive matrix](references/checklists.md#drive-matrix): every control and every quiz to its score, at 1280 and 375 px, light and night.
 
 Done when every state in the matrix is seen with no console error, no failed request and nothing past the right edge at 375 px. Then capture the screenshots the PR needs, as [the screenshot workflow](../open-pr/references/screenshots.md) says.
 

@@ -44,7 +44,7 @@ export const STAGES: readonly Stage[] = [
     name: msg`The basics`,
     level: "A1",
     hue: 222,
-    goal: msg`Hear Estonian, count, tell the time, say who you are, tell people what to do and say where you are.`,
+    goal: msg`Say who you are, what you do and where you live, and ask and answer. Then count, tell the time and name the day.`,
     lessons: [
       {
         slug: "haaldus",
@@ -54,6 +54,11 @@ export const STAGES: readonly Stage[] = [
         minutes: 10,
         blurb: msg`A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud.`,
       },
+      { name: msg`Personal pronouns and “to be”`, et: "Mina, sina, tema" },
+      { name: msg`Present tense`, et: "Ma loen" },
+      { name: msg`Negation`, et: "Ei ole" },
+      { name: msg`Questions`, et: "Kas? Mis? Kus?" },
+      { name: msg`Saying where: -s and -l`, et: "Tallinnas, Tartus" },
       {
         slug: "numbrid",
         name: msg`Numbers`,
@@ -64,12 +69,7 @@ export const STAGES: readonly Stage[] = [
       },
       { name: msg`Telling the time`, et: "Mis kell on?" },
       { name: msg`Days of the week`, et: "Esmaspäev, teisipäev" },
-      { name: msg`Personal pronouns and “to be”`, et: "Mina, sina, tema" },
-      { name: msg`Present tense`, et: "Ma loen" },
-      { name: msg`Negation`, et: "Ei ole" },
       { name: msg`Commands`, et: "Istu! Ära istu!" },
-      { name: msg`Questions`, et: "Kas? Mis? Kus?" },
-      { name: msg`Saying where: -s and -l`, et: "Tallinnas, Tartus" },
     ],
   },
   {

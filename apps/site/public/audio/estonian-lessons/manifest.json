@@ -3033,5 +3033,190 @@
     "text": "Kell on viie minuti pärast üks.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/esmaspa2ev": {
+    "text": "esmaspäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/teisipa2ev": {
+    "text": "teisipäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/kolmapa2ev": {
+    "text": "kolmapäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/neljapa2ev": {
+    "text": "neljapäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/reede": {
+    "text": "reede",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/laupa2ev": {
+    "text": "laupäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/pu2hapa2ev": {
+    "text": "pühapäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/pa2ev": {
+    "text": "päev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/na2dal": {
+    "text": "nädal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/esimene": {
+    "text": "esimene",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/teine": {
+    "text": "teine",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/kolm": {
+    "text": "kolm",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/neli": {
+    "text": "neli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/pu2ha": {
+    "text": "püha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/avatud": {
+    "text": "avatud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/suletud": {
+    "text": "suletud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/ta2na": {
+    "text": "täna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/homme": {
+    "text": "homme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/eile": {
+    "text": "eile",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/u2lehomme": {
+    "text": "ülehomme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/u2leeile": {
+    "text": "üleeile",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/esmaspa2eval": {
+    "text": "esmaspäeval",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/mis-pa2ev-ta2na-on": {
+    "text": "Mis päev täna on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/ta2na-on-esmaspa2ev": {
+    "text": "Täna on esmaspäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/ta2na-on-teisipa2ev": {
+    "text": "Täna on teisipäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/ta2na-on-kolmapa2ev": {
+    "text": "Täna on kolmapäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/ta2na-on-neljapa2ev": {
+    "text": "Täna on neljapäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/ta2na-on-reede": {
+    "text": "Täna on reede.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/ta2na-on-laupa2ev": {
+    "text": "Täna on laupäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/ta2na-on-pu2hapa2ev": {
+    "text": "Täna on pühapäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/homme-on-esmaspa2ev": {
+    "text": "Homme on esmaspäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/homme-on-teisipa2ev": {
+    "text": "Homme on teisipäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/homme-on-kolmapa2ev": {
+    "text": "Homme on kolmapäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/homme-on-neljapa2ev": {
+    "text": "Homme on neljapäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/homme-on-reede": {
+    "text": "Homme on reede.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/homme-on-laupa2ev": {
+    "text": "Homme on laupäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "paevad/homme-on-pu2hapa2ev": {
+    "text": "Homme on pühapäev.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

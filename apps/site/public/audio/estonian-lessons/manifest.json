@@ -1844,6 +1844,26 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "kohad/otepa2a2": {
+    "text": "Otepää",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohad/otepa2a2l": {
+    "text": "Otepääl",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohad/lasnama2e": {
+    "text": "Lasnamäe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "kohad/lasnama2el": {
+    "text": "Lasnamäel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kohad/s-elan-tallinnas": {
     "text": "Ma elan Tallinnas.",
     "model": "eleven_v4",

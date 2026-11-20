@@ -62,6 +62,10 @@ const PLACE_MEANS: Record<Place["place"] | Where, MessageDescriptor> = {
   Saaremaal: msg`on Saaremaa`,
   Saksamaa: msg`Germany`,
   Saksamaal: msg`in Germany`,
+  Otepää: msg`Otepää, a small town in the south`,
+  Otepääl: msg`in Otepää`,
+  Lasnamäe: msg`Lasnamäe, a district of Tallinn`,
+  Lasnamäel: msg`in Lasnamäe`,
 };
 
 /** What each sentence means, in the reader's language. */
@@ -602,6 +606,8 @@ export function KohadLesson() {
                     A market takes <b lang="et">-l</b> by habit: <Word w="turul" />, at the market.
                     So do names ending in <b lang="et">-maa</b>: <Word w="Saaremaal" />, on
                     Saaremaa, and <Word w="Saksamaal" />, in Germany, though English says in there.
+                    A few towns and districts take <b lang="et">-l</b> as well, such as{" "}
+                    <Word w="Otepääl" /> and <Word w="Lasnamäel" />.
                   </Trans>
                 </p>
               </Prose>
@@ -625,8 +631,8 @@ export function KohadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round shows a place. Pick its ending, then hear it in a sentence. Towns,
-                    buildings and most countries take <b lang="et">-s</b>; work, the market and
+                    Each round shows a place. Pick its ending, then hear it in a sentence. Most
+                    towns, buildings and countries take <b lang="et">-s</b>; work, the market and
                     names ending in <b lang="et">-maa</b> take <b lang="et">-l</b>.
                   </Trans>
                 </p>
@@ -642,9 +648,7 @@ export function KohadLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>
-                      Read the places with <b lang="et">-l</b> above once more, then try again.
-                    </Trans>
+                    <Trans>Read both endings above once more, then try again.</Trans>
                   )
                 }
                 recall={(item) => ({ label: item.where, src: wordSrc(item.where) })}

@@ -360,7 +360,8 @@ export const PRESENT_SENTENCES = {
 
 /**
  * The places of the lesson on -s and -l: each word as a learner meets it, and whole in the form
- * that says where you are. Checked in ÕS 2018: Saksamaa and Saaremaa take the outer cases.
+ * that says where you are. Checked in ÕS 2025 on Sõnaveeb: Saksamaa, Saaremaa, Otepää and
+ * Lasnamäe take the outer cases.
  */
 export const KOHAD_PLACES = [
   { place: "Eesti", where: "Eestis" },
@@ -381,6 +382,8 @@ export const KOHAD_PLACES = [
   { place: "turg", where: "turul" },
   { place: "Saaremaa", where: "Saaremaal" },
   { place: "Saksamaa", where: "Saksamaal" },
+  { place: "Otepää", where: "Otepääl" },
+  { place: "Lasnamäe", where: "Lasnamäel" },
 ] as const;
 
 /** The sentences of the lesson on -s and -l. */

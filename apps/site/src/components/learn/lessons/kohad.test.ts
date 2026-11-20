@@ -33,3 +33,16 @@ describe("saying-where quizzes", () => {
     }
   });
 });
+
+describe("saying-where data", () => {
+  it("builds each place from the shown stem and its ending", () => {
+    for (const each of ENDINGS) expect(each.before + each.ending).toBe(each.where);
+  });
+
+  it("offers each first-round answer among its options", () => {
+    for (const each of HEARD) {
+      expect(each.options).toContain(each.where);
+      expect(new Set(each.options).size).toBe(3);
+    }
+  });
+});

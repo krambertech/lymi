@@ -877,8 +877,8 @@ msgstr "A machine that runs pods"
 msgid "A major chord with a minor seventh, built on the fifth note of the key"
 msgstr "A major chord with a minor seventh, built on the fifth note of the key"
 
-msgid "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there."
-msgstr "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there."
+msgid "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there. A few towns and districts take <5>-l</5> as well, such as <6/> and <7/>."
+msgstr "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there. A few towns and districts take <5>-l</5> as well, such as <6/> and <7/>."
 
 msgid "A native German AI voice reads every card, so <0>ü</0>, <1>ö</1>, <2>ß</2> and the long words sound the way they should. Tap a word to hear it. If a card has its own recording, that plays instead."
 msgstr "A native German AI voice reads every card, so <0>ü</0>, <1>ö</1>, <2>ß</2> and the long words sound the way they should. Tap a word to hear it. If a card has its own recording, that plays instead."
@@ -3012,8 +3012,8 @@ msgstr "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the l
 msgid "Each question as New, Learning or Known"
 msgstr "Each question as New, Learning or Known"
 
-msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Towns, buildings and most countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
-msgstr "Each round shows a place. Pick its ending, then hear it in a sentence. Towns, buildings and most countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
+msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
+msgstr "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
@@ -4903,11 +4903,17 @@ msgstr "In Gemini CLI, anywhere. In the Gemini app, Google opens custom apps onl
 msgid "in Germany"
 msgstr "in Germany"
 
+msgid "in Lasnamäe"
+msgstr "in Lasnamäe"
+
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "In many real data sets, about 30% of numbers start with a 1"
+
+msgid "in Otepää"
+msgstr "in Otepää"
 
 msgid "in Pärnu"
 msgstr "in Pärnu"
@@ -5370,6 +5376,9 @@ msgstr "Language learning"
 
 msgid "Languages"
 msgstr "Languages"
+
+msgid "Lasnamäe, a district of Tallinn"
+msgstr "Lasnamäe, a district of Tallinn"
 
 msgid "Last updated"
 msgstr "Last updated"
@@ -6762,6 +6771,9 @@ msgstr "Organisms, stains and what they cause."
 msgid "osmosis"
 msgstr "osmosis"
 
+msgid "Otepää, a small town in the south"
+msgstr "Otepää, a small town in the south"
+
 msgid "Other apps"
 msgstr "Other apps"
 
@@ -7370,6 +7382,9 @@ msgstr "rain"
 msgid "Range"
 msgstr "Range"
 
+msgid "Read both endings above once more, then try again."
+msgstr "Read both endings above once more, then try again."
+
 msgid "Read it as it's written"
 msgstr "Read it as it's written"
 
@@ -7381,9 +7396,6 @@ msgstr "Read signs, news and forms, and join longer sentences."
 
 msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
-
-msgid "Read the places with <0>-l</0> above once more, then try again."
-msgstr "Read the places with <0>-l</0> above once more, then try again."
 
 msgid "Read your German deck"
 msgstr "Read your German deck"

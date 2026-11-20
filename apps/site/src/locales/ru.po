@@ -877,8 +877,8 @@ msgstr "Машина, на которой работают поды"
 msgid "A major chord with a minor seventh, built on the fifth note of the key"
 msgstr "Мажорный аккорд с малой септимой, построенный на пятой ступени тональности"
 
-msgid "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there."
-msgstr "Рынок получает <0>-l</0> по традиции: <1/>, на рынке. Так же и названия на <2>-maa</2>: <3/>, на Сааремаа, и даже <4/>, в Германии, хотя по-русски тут говорят «в»."
+msgid "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there. A few towns and districts take <5>-l</5> as well, such as <6/> and <7/>."
+msgstr "Рынок получает <0>-l</0> по традиции: <1/>, на рынке. Так же и названия на <2>-maa</2>: <3/>, на Сааремаа, и даже <4/>, в Германии, хотя по-русски тут говорят «в». Ещё <5>-l</5> получают некоторые города и районы, например <6/> и <7/>."
 
 msgid "A native German AI voice reads every card, so <0>ü</0>, <1>ö</1>, <2>ß</2> and the long words sound the way they should. Tap a word to hear it. If a card has its own recording, that plays instead."
 msgstr "Каждую карточку читает AI-голос носителя немецкого, так что <0>ü</0>, <1>ö</1>, <2>ß</2> и длинные слова звучат как надо. Нажми на слово, чтобы послушать. Если у карточки есть своя запись, звучит она."
@@ -3012,8 +3012,8 @@ msgstr "У каждого местоимения две формы. Говори
 msgid "Each question as New, Learning or Known"
 msgstr "Каждый вопрос — новый, в изучении или выученный"
 
-msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Towns, buildings and most countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
-msgstr "В каждом раунде — место. Выбери окончание, а потом послушай предложение. Города, здания и большинство стран получают <0>-s</0>; работа, рынок и названия на <1>-maa</1> получают <2>-l</2>."
+msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
+msgstr "В каждом раунде — место. Выбери окончание, а потом послушай предложение. Большинство городов, зданий и стран получают <0>-s</0>; работа, рынок и названия на <1>-maa</1> получают <2>-l</2>."
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Каждое государство теперь само правило своей землёй: так начался современный <0>суверенитет</0>."
@@ -4903,11 +4903,17 @@ msgstr "В Gemini CLI — где угодно. В приложении Gemini Go
 msgid "in Germany"
 msgstr "в Германии"
 
+msgid "in Lasnamäe"
+msgstr "в Ласнамяэ"
+
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "В уроке {pronouns} был глагол <0/>, «быть»: <1/>, <2/>, <3/>, <4/>. У большинства глаголов те же окончания. А там, где у olema стоит <5/>, у них два своих: <6>-b</6> для «он или она» и <7>-vad</7> для «они»."
 
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "Во многих реальных наборах данных около 30% чисел начинаются с 1"
+
+msgid "in Otepää"
+msgstr "в Отепя"
 
 msgid "in Pärnu"
 msgstr "в Пярну"
@@ -5370,6 +5376,9 @@ msgstr "Изучение языков"
 
 msgid "Languages"
 msgstr "Языки"
+
+msgid "Lasnamäe, a district of Tallinn"
+msgstr "Ласнамяэ, район Таллина"
 
 msgid "Last updated"
 msgstr "Обновлено"
@@ -6762,6 +6771,9 @@ msgstr "Возбудители, окраски и что они вызывают
 msgid "osmosis"
 msgstr "осмос"
 
+msgid "Otepää, a small town in the south"
+msgstr "Отепя, небольшой город на юге"
+
 msgid "Other apps"
 msgstr "Другие приложения"
 
@@ -7370,6 +7382,9 @@ msgstr "дождь"
 msgid "Range"
 msgstr "Диапазон"
 
+msgid "Read both endings above once more, then try again."
+msgstr "Ещё раз перечитай про оба окончания выше, а потом попробуй снова."
+
 msgid "Read it as it's written"
 msgstr "Читай, как написано"
 
@@ -7381,9 +7396,6 @@ msgstr "Читать вывески, новости и бланки и стро�
 
 msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Прочитай значение и сначала вспомни термин, а потом смотри. Попробуй на этих карточках: они из всей колоды."
-
-msgid "Read the places with <0>-l</0> above once more, then try again."
-msgstr "Ещё раз перечитай места с <0>-l</0> выше, а потом попробуй снова."
 
 msgid "Read your German deck"
 msgstr "Прочитана колода по немецкому"

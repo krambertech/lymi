@@ -4,8 +4,9 @@ import type { CardHit, DeckSummary } from "@lymi/client/api";
 import { writes } from "@lymi/client/writes";
 import { type UseQueryResult, useQueryClient } from "@tanstack/react-query";
 import { useRef, useState } from "react";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import { useArchivedCards, useArchivedDecks } from "../../../data/queries";
+import { alert } from "../../../ui/alert";
 import { EmptyState } from "../../../ui/empty-state";
 import { LoadFailed, useLoadFailed } from "../../../ui/load-failed";
 import { OfflineNote } from "../../../ui/offline-note";
@@ -50,7 +51,7 @@ export default function Archived() {
       }
     } catch (e) {
       hold(item, !restore);
-      Alert.alert(t`Couldn’t save that.`, e instanceof Error ? e.message : undefined);
+      alert(t`Couldn’t save that.`, e instanceof Error ? e.message : undefined);
     }
   };
 

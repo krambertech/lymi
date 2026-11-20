@@ -5,10 +5,11 @@ import { keysQuery } from "@lymi/client/queries";
 import { ApiKeyInput, apiKeyLimits, isolate, type Scope } from "@lymi/core";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { useState } from "react";
-import { AccessibilityInfo, Alert, View } from "react-native";
+import { AccessibilityInfo, View } from "react-native";
 import { siteUrl } from "../../../auth/client";
 import { usePalette } from "../../../theme/palette";
 import { ActionMenu } from "../../../ui/action-menu";
+import { alert } from "../../../ui/alert";
 import { Chip } from "../../../ui/chip";
 import { clipboard } from "../../../ui/clipboard";
 import { EmptyState } from "../../../ui/empty-state";
@@ -50,7 +51,7 @@ export default function ApiKeys() {
     onError: (e) => toast.add({ title: errorMessage(e), error: true }),
   });
   const askRevoke = (id: string, name: string) =>
-    Alert.alert(
+    alert(
       t`Revoke “${{ name: isolate(name) }}”?`,
       t`Scripts using it stop working at once. This can’t be undone.`,
       [

@@ -72,7 +72,7 @@ export function Keys({ label, items, columns, phoneColumns, empty }: KeysProps) 
             <span
               lang="et"
               aria-hidden={picked === null}
-              className="grid size-16 shrink-0 place-items-center rounded-tile bg-plate pb-1 text-4xl font-semibold text-(--form)"
+              className="grid h-16 min-w-16 shrink-0 place-items-center rounded-tile bg-plate px-2.5 pb-1 text-4xl font-semibold whitespace-nowrap text-(--form)"
             >
               {big}
             </span>
@@ -111,7 +111,10 @@ function Key({
     >
       <b
         lang="et"
-        className={clsx("text-3xl/none font-semibold tabular-nums", item.accent && "text-(--form)")}
+        className={clsx(
+          "text-3xl/none font-semibold whitespace-nowrap tabular-nums",
+          item.accent && "text-(--form)",
+        )}
       >
         {item.label}
       </b>

@@ -3625,6 +3625,9 @@ msgstr "Вимкнено"
 msgid "Often forgotten"
 msgstr "Часто забуваються"
 
+msgid "OK"
+msgstr "OK"
+
 msgid "On"
 msgstr "Увімкнено"
 

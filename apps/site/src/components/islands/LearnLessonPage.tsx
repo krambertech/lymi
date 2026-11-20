@@ -7,6 +7,7 @@ import { MinaSinaTemaLesson } from "../learn/lessons/MinaSinaTema";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { OlevikLesson } from "../learn/lessons/Olevik";
 import { PaevadLesson } from "../learn/lessons/Paevad";
+import { TutvumineLesson } from "../learn/lessons/Tutvumine";
 import { Island } from "./Island";
 
 /** Each built lesson by its slug; `LESSON_SLUGS` in the catalogue must name the same ones. */
@@ -20,6 +21,7 @@ export const LESSON_VIEWS = {
   olevik: OlevikLesson,
   kell: KellLesson,
   paevad: PaevadLesson,
+  tutvumine: TutvumineLesson,
 } as const;
 
 export default function LearnLessonPage({

@@ -232,6 +232,13 @@ export const cards = sqliteTable(
     audioApprovedKey: text("audio_approved_key"),
     /** R2 key of the example's recording an import brought, which its play control plays; null without one. */
     exampleRecordingKey: text("example_recording_key"),
+    /**
+     * The example's recording came from the learner's own capture tool, such as asbplayer, so it
+     * plays only for the deck's owner; everyone else hears generated speech. CONTEXT.md, Recording.
+     */
+    exampleRecordingCaptured: integer("example_recording_captured", { mode: "boolean" })
+      .notNull()
+      .default(false),
     /** Who added the card. Activity filters on this without parsing the audit log. */
     createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] })
       .notNull()
@@ -881,6 +888,8 @@ export const cardImages = sqliteTable(
     sourceKind: text("source_kind", { enum: ["upload", "url"] }).notNull(),
     /** Host of an imported link, never the full URL, which may carry credentials. */
     sourceHost: text("source_host"),
+    /** A frame the learner's capture tool sent, shown only to the card's owner. CONTEXT.md, Picture. */
+    captured: integer("captured", { mode: "boolean" }).notNull().default(false),
     status: text("status", { enum: ["active", "archived", "replaced"] })
       .notNull()
       .default("active"),

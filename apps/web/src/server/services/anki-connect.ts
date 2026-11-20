@@ -1,22 +1,39 @@
 import {
   AnkiConnectCall,
+  type AnkiConnectMedia,
   AnkiConnectNote,
+  AnkiConnectNoteUpdate,
   CARD_LIMITS,
   fitsLanguage,
+  IMAGE_LIMITS,
+  inspectImage,
   pronunciationText,
   type Scope,
   TAG_LIMITS,
   tagKey,
   termKey,
 } from "@lymi/core";
-import { and, asc, eq, inArray, isNull, selectIn, sql } from "@lymi/core/db";
+import { and, asc, eq, gte, inArray, isNull, selectIn, sql } from "@lymi/core/db";
+import type { Card } from "@lymi/core/schema";
 import { schema } from "../db";
 import { track } from "./analytics";
-import { meaningText, plainText, soundFiles, sourceText } from "./anki-connect-text";
-import { addCards, duplicatesAmong, type ServerCardInput } from "./cards";
+import { meaningText, pictureFiles, plainText, soundFiles, sourceText } from "./anki-connect-text";
+import { type CardImageStorage, storeImportedImage } from "./card-images";
+import {
+  addCards,
+  duplicatesAmong,
+  type ServerCardInput,
+  type ServerCardPatch,
+  updateCard,
+} from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 import type { EnrichmentQueue } from "./enrichment";
-import { MAX_RECORDING_BYTES, recordingFormat, storeRecording } from "./recordings";
+import {
+  MAX_RECORDING_BYTES,
+  recordingFormat,
+  storeExampleRecording,
+  storeRecording,
+} from "./recordings";
 
 /**
  * Lymi's side of the AnkiConnect protocol, written from its public description so Yomitan and
@@ -32,8 +49,21 @@ export const PROTOCOL_VERSION = 6;
 export const ankiConnectClient = (keyName: string | undefined) =>
   keyName ? `anki-connect:${keyName}` : "anki-connect";
 export const NOTE_TYPE = "Lymi card";
-/** Named so Yomitan fills each with the right marker on its own: the first with the term. */
-export const NOTE_FIELDS = ["Term", "Reading", "Meaning", "Sentence", "URL", "Audio"] as const;
+/**
+ * Named so Yomitan fills each with the right marker on its own: the first with the term. Sentence
+ * audio and Picture are for a capture tool such as asbplayer, and keep what it sends for the
+ * card's owner alone. CONTEXT.md, Recording.
+ */
+export const NOTE_FIELDS = [
+  "Term",
+  "Reading",
+  "Meaning",
+  "Sentence",
+  "URL",
+  "Audio",
+  "Sentence audio",
+  "Picture",
+] as const;
 type NoteField = (typeof NOTE_FIELDS)[number];
 
 /** Yomitan looks for this wording to tell a duplicate from any other refusal. */
@@ -68,6 +98,8 @@ const SUPPORTED = [
   "notesInfo",
   "cardsInfo",
   "storeMediaFile",
+  "updateNoteFields",
+  "addTags",
   "guiBrowse",
   "guiEditNote",
   "sync",
@@ -77,8 +109,8 @@ const SUPPORTED = [
 export type AnkiConnectDeps = {
   scope: Scope;
   enrichment: EnrichmentQueue | null;
-  /** Where uploads wait, and where a term's recording is kept. */
-  media: { stash: R2Bucket; audio: R2Bucket } | null;
+  /** Where uploads wait, where recordings are kept, and, when configured, where pictures are. */
+  media: { stash: R2Bucket; audio: R2Bucket; pictures?: CardImageStorage | null } | null;
 };
 
 /** A refusal the client shows the learner as it is, so it is written for them. */
@@ -219,9 +251,12 @@ async function run(
     case "sync":
       return null;
     case "updateNoteFields":
+      return updateNoteFields(ctx, params.note, deps);
+    case "addTags":
+      return addTags(ctx, params, deps, budget);
     case "updateNote":
       throw new Refusal(
-        "Lymi doesn’t change cards from here. In Yomitan’s Anki settings, set duplicates to add a new note, and edit the card in Lymi.",
+        "Lymi doesn’t change a card’s tags and fields together. In Yomitan’s Anki settings, set duplicates to add a new note, and edit the card in Lymi.",
       );
     default:
       throw new Refusal(UNSUPPORTED);
@@ -278,8 +313,19 @@ const chooseNoteType = () => `In Yomitan’s Anki settings, choose the note type
 const noteUnreadable = () =>
   `Lymi couldn’t read this note. In Yomitan’s Anki settings, choose a Lymi deck and the note type “${NOTE_TYPE}”.`;
 
+/** The files a note's fields play or show, by the role each has on the card. */
+type NoteMedia = { sound: string[]; exampleSound: string[]; picture: string[] };
+
+function mediaOf(fields: Record<string, string>): NoteMedia {
+  return {
+    sound: soundFiles(fields.Audio ?? ""),
+    exampleSound: soundFiles(fields["Sentence audio"] ?? ""),
+    picture: pictureFiles(fields.Picture ?? ""),
+  };
+}
+
 type Prepared =
-  | { ok: true; input: ServerCardInput; allowDuplicate: boolean; sound: string | undefined }
+  | { ok: true; input: ServerCardInput; allowDuplicate: boolean; media: NoteMedia }
   | { ok: false; error: string; reason: Reason | null };
 
 function field(note: AnkiConnectNote, name: NoteField) {
@@ -306,7 +352,7 @@ function fittedSource(url: string) {
   }
 }
 
-function tagsOf(note: AnkiConnectNote) {
+function tagsOf(note: Pick<AnkiConnectNote, "tags">) {
   const kept = new Map<string, string>();
   for (const tag of note.tags ?? []) {
     const name = tag.trim();
@@ -356,7 +402,7 @@ function prepare(note: AnkiConnectNote | null, decks: Map<string, Deck>): Prepar
   return {
     ok: true,
     allowDuplicate: note.options?.allowDuplicate === true,
-    sound: soundFiles(field(note, "Audio"))[0],
+    media: mediaOf(note.fields),
     input: {
       deckId: deck.id,
       term,
@@ -410,8 +456,13 @@ function requireWrite(ctx: ServiceContext, deps: AnkiConnectDeps) {
   );
 }
 
-async function add(ctx: ServiceContext, notes: (AnkiConnectNote | null)[], deps: AnkiConnectDeps) {
+async function add(ctx: ServiceContext, sent: (AnkiConnectNote | null)[], deps: AnkiConnectDeps) {
   requireWrite(ctx, deps);
+  const notes = await Promise.all(
+    sent.map(async (note) =>
+      note ? { ...note, fields: await withFiles(ctx, note.fields, note, deps) } : null,
+    ),
+  );
   const byName = new Map((await ownedDecks(ctx)).map((d) => [d.name, d]));
   const prepared = notes.map((note) => prepare(note, byName));
   for (const p of prepared) {
@@ -427,10 +478,12 @@ async function add(ctx: ServiceContext, notes: (AnkiConnectNote | null)[], deps:
   const { media } = deps;
   if (media) {
     await Promise.all(
-      valid.map((p, index) => {
+      valid.map(async (p, index) => {
         const outcome = outcomes[index];
-        if (!p.sound || !outcome) return undefined;
-        return keepSound(ctx, outcome.status === "added" ? outcome.id : null, p.sound, media);
+        // A duplicate's card keeps its own media; the uploads go either way.
+        const cardId = outcome?.status === "added" ? outcome.id : null;
+        if (cardId) await keepMedia(ctx, cardId, p.media, media, "add");
+        await dropUploads(ctx, p.media, media);
       }),
     );
   }
@@ -454,10 +507,34 @@ async function stashKey(userId: string, fileName: string) {
   return `${STASH}${userId}/${hex}`;
 }
 
+/** What an upload is, by its bytes, or null for anything Lymi keeps neither as a clip nor as a picture. */
+function uploadKind(bytes: Uint8Array): "audio" | "picture" | null {
+  if (recordingFormat(bytes)) return bytes.byteLength <= MAX_RECORDING_BYTES ? "audio" : null;
+  return inspectImage(bytes).ok ? "picture" : null;
+}
+
 /**
- * An upload arrives before the note that plays it. A clip in a format both apps play waits for
- * its note; anything else, such as a screenshot, is answered and dropped.
+ * An upload arrives before the note that plays or shows it. A clip in a format both apps play, or
+ * a still picture, waits for its note; anything else is answered and dropped.
  */
+async function stash(
+  ctx: ServiceContext,
+  fileName: string,
+  data: unknown,
+  deps: AnkiConnectDeps,
+): Promise<void> {
+  if (!deps.media || typeof data !== "string") return;
+  if (data.length > Math.ceil(IMAGE_LIMITS.maxBytes / 3) * 4) return;
+  let bytes: Uint8Array;
+  try {
+    bytes = Uint8Array.from(atob(data), (c) => c.charCodeAt(0));
+  } catch {
+    return;
+  }
+  if (!uploadKind(bytes)) return;
+  await deps.media.stash.put(await stashKey(ctx.userId, fileName), bytes);
+}
+
 async function storeMedia(
   ctx: ServiceContext,
   params: Record<string, unknown>,
@@ -466,40 +543,183 @@ async function storeMedia(
   requireWrite(ctx, deps);
   const fileName = typeof params.filename === "string" ? params.filename : "";
   if (!fileName) throw new Refusal("storeMediaFile needs a filename.");
-  const { data } = params;
-  if (!deps.media || typeof data !== "string") return fileName;
-  if (data.length > Math.ceil(MAX_RECORDING_BYTES / 3) * 4) return fileName;
-  let bytes: Uint8Array;
-  try {
-    bytes = Uint8Array.from(atob(data), (c) => c.charCodeAt(0));
-  } catch {
-    return fileName;
-  }
-  if (!recordingFormat(bytes)) return fileName;
-  await deps.media.stash.put(await stashKey(ctx.userId, fileName), bytes);
+  await stash(ctx, fileName, params.data, deps);
   return fileName;
 }
 
-/** Keeps a waiting clip as the new card's recording, then lets it go either way. */
-async function keepSound(
+/**
+ * A note's `audio` and `picture` entries, as AnkiConnect reads them: each file is saved, then
+ * referenced at the end of every field it names, as `storeMediaFile` and a field would.
+ */
+async function withFiles(
   ctx: ServiceContext,
-  cardId: string | null,
-  fileName: string,
+  fields: Record<string, string>,
+  files: { audio?: AnkiConnectMedia[] | undefined; picture?: AnkiConnectMedia[] | undefined },
+  deps: AnkiConnectDeps,
+): Promise<Record<string, string>> {
+  const result = { ...fields };
+  const entries = [
+    ...(files.audio ?? []).map((file) => ({ file, marker: `[sound:${file.filename}]` })),
+    ...(files.picture ?? []).map((file) => ({
+      file,
+      marker: `<img src="${file.filename.replace(/"/g, "&quot;")}">`,
+    })),
+  ];
+  for (const { file, marker } of entries) {
+    if (!file.filename || !file.fields?.length) continue;
+    await stash(ctx, file.filename, file.data, deps);
+    for (const name of file.fields) result[name] = `${result[name] ?? ""}${marker}`;
+  }
+  return result;
+}
+
+/** The waiting upload of the first of these files that has one, as bytes. */
+async function firstUpload(
+  ctx: ServiceContext,
+  files: string[],
+  stashed: R2Bucket,
+): Promise<Uint8Array | null> {
+  for (const fileName of files) {
+    const object = await stashed.get(await stashKey(ctx.userId, fileName));
+    if (object) return new Uint8Array(await object.arrayBuffer());
+  }
+  return null;
+}
+
+/**
+ * Keeps a note's waiting files on its card: the term's clip as the card's recording, and the
+ * sentence's clip and the picture as the owner's captured media. Each takes the first of its
+ * field's files that arrived, since a client may write an old reference before the new one.
+ */
+async function keepMedia(
+  ctx: ServiceContext,
+  cardId: string,
+  files: NoteMedia,
   media: NonNullable<AnkiConnectDeps["media"]>,
+  action: "add" | "update",
 ) {
-  const key = await stashKey(ctx.userId, fileName);
-  if (cardId) {
+  if (files.sound.length > 0) {
     await storeRecording(
       ctx,
       cardId,
-      async () => {
-        const object = await media.stash.get(key);
-        return object ? new Uint8Array(await object.arrayBuffer()) : null;
-      },
+      () => firstUpload(ctx, files.sound, media.stash),
       media.audio,
     );
   }
-  await media.stash.delete(key);
+  if (files.exampleSound.length > 0) {
+    const [card] = await ctx.db
+      .select({ example: schema.cards.example })
+      .from(schema.cards)
+      .where(and(eq(schema.cards.id, cardId), eq(schema.cards.userId, ctx.userId)));
+    const stored = await storeExampleRecording(
+      ctx,
+      cardId,
+      card?.example ?? undefined,
+      () => firstUpload(ctx, files.exampleSound, media.stash),
+      media.audio,
+      true,
+    );
+    if (stored === "stored") {
+      track(ctx.analytics, { name: "anki_connect_media", kind: "sentence_audio", action });
+    }
+  }
+  if (files.picture.length > 0 && media.pictures) {
+    const bytes = await firstUpload(ctx, files.picture, media.stash);
+    if (bytes) {
+      const [card] = await ctx.db
+        .select()
+        .from(schema.cards)
+        .where(and(eq(schema.cards.id, cardId), eq(schema.cards.userId, ctx.userId)));
+      try {
+        if (card) {
+          await storeImportedImage(ctx, card, bytes, undefined, media.pictures, true);
+          track(ctx.analytics, { name: "anki_connect_media", kind: "picture", action });
+        }
+      } catch (error) {
+        // A picture the Images binding cannot read, or one a newer write replaced, is left out.
+        if (!(error instanceof ServiceError)) throw error;
+      }
+    }
+  }
+}
+
+/** Lets a note's uploads go once its card has what it keeps. */
+async function dropUploads(
+  ctx: ServiceContext,
+  files: NoteMedia,
+  media: NonNullable<AnkiConnectDeps["media"]>,
+) {
+  const names = [...files.sound, ...files.exampleSound, ...files.picture];
+  if (names.length === 0) return;
+  await media.stash.delete(await Promise.all(names.map((name) => stashKey(ctx.userId, name))));
+}
+
+/** The learner's own card behind a note id, or a refusal naming the id as AnkiConnect does. */
+async function ownCardOf(ctx: ServiceContext, note: number): Promise<Card> {
+  const [row] = await ctx.db
+    .select({ card: schema.cards })
+    .from(schema.cards)
+    .where(and(eq(schema.cards.userId, ctx.userId), eq(rowid, note)));
+  if (!row) throw new Refusal(`Note was not found: ${note}`);
+  return row.card;
+}
+
+/**
+ * Changes a card's text from the fields a client sends, as asbplayer's update of the last card
+ * does. The term stays, and an empty field clears nothing. The sentence lands before its clip,
+ * because a new sentence drops the clip that said the old one.
+ */
+async function updateNoteFields(ctx: ServiceContext, value: unknown, deps: AnkiConnectDeps) {
+  requireWrite(ctx, deps);
+  const parsed = AnkiConnectNoteUpdate.safeParse(value);
+  if (!parsed.success) throw new Refusal("updateNoteFields needs a note with an id and fields.");
+  const card = await ownCardOf(ctx, parsed.data.id);
+  const fields = await withFiles(ctx, parsed.data.fields ?? {}, parsed.data, deps);
+  const patch: ServerCardPatch = {};
+  const text = (name: NoteField) => fields[name] ?? "";
+  const meaning = fitted(meaningText(text("Meaning")), CARD_LIMITS.meaning);
+  if (meaning && meaning !== card.meaning) patch.meaning = meaning;
+  const reading = plainText(text("Reading"));
+  if (
+    reading &&
+    reading !== card.term &&
+    reading !== (pronunciationText(card) ?? "") &&
+    reading.length <= CARD_LIMITS.pronunciation
+  ) {
+    patch.pronunciation = reading;
+  }
+  const example = fitted(plainText(text("Sentence")), CARD_LIMITS.example);
+  if (example && example !== card.example) patch.example = example;
+  const source = fittedSource(sourceText(text("URL")));
+  if (source && source !== card.source) patch.source = source;
+  if (Object.keys(patch).length > 0) await updateCard(ctx, card.id, patch, deps.enrichment);
+  const { media } = deps;
+  if (media) {
+    const files = mediaOf(fields);
+    await keepMedia(ctx, card.id, files, media, "update");
+    await dropUploads(ctx, files, media);
+  }
+  return null;
+}
+
+/** Adds tags, written as one space-separated string, to each of the learner's own notes. */
+async function addTags(
+  ctx: ServiceContext,
+  params: Record<string, unknown>,
+  deps: AnkiConnectDeps,
+  budget: Budget,
+) {
+  requireWrite(ctx, deps);
+  const ids = numbers(params.notes, budget);
+  const sent = typeof params.tags === "string" ? params.tags.split(/\s+/) : [];
+  for (const id of ids) {
+    const card = await ownCardOf(ctx, id);
+    const tags = tagsOf({ tags: [...card.tags, ...sent] });
+    if (tags.length !== card.tags.length || tags.some((tag, i) => tag !== card.tags[i])) {
+      await updateCard(ctx, card.id, { tags });
+    }
+  }
+  return null;
 }
 
 /** Deletes uploads whose note never came. Run from the cron. */
@@ -515,6 +735,7 @@ export async function sweepAnkiConnectUploads(stash: R2Bucket, at: Date) {
 }
 
 const rowid = sql<number>`${schema.cards}.rowid`;
+const DAY = 24 * 60 * 60 * 1000;
 
 /** AnkiConnect ids are whole numbers, so a card's is its row number. Clients keep it only while a popup is open. */
 async function noteIds({ db, userId }: ServiceContext, cardIds: string[]) {
@@ -528,11 +749,12 @@ async function noteIds({ db, userId }: ServiceContext, cardIds: string[]) {
   return new Map(rows.map((r) => [r.id, r.note]));
 }
 
-type Query = { deck?: string; field?: string; notes?: number[] };
+type Query = { deck?: string; field?: string; notes?: number[]; added?: number };
 
 /**
  * The searches Yomitan writes to find a duplicate's note: `"deck:Name" "term:value"`, `nid:1,2`,
- * and alternatives joined as `(a) or (b)`. Any other field name is read as the term.
+ * and alternatives joined as `(a) or (b)`, and asbplayer's `added:1` for the notes added in the
+ * last day. Any other field name is read as the term.
  */
 export function parseQuery(query: string): Query[] {
   const alternatives = /\)\s+or\s+\(/i.test(query)
@@ -551,7 +773,10 @@ export function parseQuery(query: string): Query[] {
       const name = token.slice(0, colon).toLowerCase();
       const value = token.slice(colon + 1);
       if (name === "deck") parsed.deck = value;
-      else if (name === "nid" || name === "cid") {
+      else if (name === "added") {
+        const days = Number(value);
+        if (Number.isInteger(days) && days > 0) parsed.added = days;
+      } else if (name === "nid" || name === "cid") {
         parsed.notes = value.split(",").map(Number).filter(Number.isInteger);
       } else parsed.field = value;
     }
@@ -571,8 +796,18 @@ async function findNotes(ctx: ServiceContext, query: string, budget: Budget) {
   const languages = [...new Set(decks.map((d) => d.language))];
   const found = new Set<number>();
   for (const q of queries) {
-    if (q.deck === undefined && q.field === undefined && q.notes === undefined) continue;
+    if (
+      q.deck === undefined &&
+      q.field === undefined &&
+      q.notes === undefined &&
+      q.added === undefined
+    ) {
+      continue;
+    }
     const where = [eq(schema.cards.userId, ctx.userId), isNull(schema.cards.archivedAt)];
+    if (q.added !== undefined) {
+      where.push(gte(schema.cards.createdAt, new Date(Date.now() - q.added * DAY)));
+    }
     if (q.deck !== undefined) {
       const deck = byName.get(q.deck);
       if (!deck) continue;
@@ -613,7 +848,10 @@ async function notesInfo({ db, userId }: ServiceContext, ids: number[]) {
       Meaning: row.card.meaning ?? "",
       Sentence: row.card.example ?? "",
       URL: row.card.source ?? "",
+      // A client reads these to add to them, and Lymi's files never leave it under a client's name.
       Audio: "",
+      "Sentence audio": "",
+      Picture: "",
     };
     return {
       noteId: id,

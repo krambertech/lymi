@@ -1196,6 +1196,17 @@ export const AnkiConnectCall = z.object({
 });
 export type AnkiConnectCall = z.infer<typeof AnkiConnectCall>;
 
+/**
+ * A file sent inside a note, such as asbplayer's sentence clip or frame: base64 `data` saved as
+ * `filename` and referenced from each of `fields`. Lymi never fetches a `url` or reads a `path`.
+ */
+export const AnkiConnectMedia = z.object({
+  filename: z.string(),
+  data: z.string().optional(),
+  fields: z.array(z.string()).optional(),
+});
+export type AnkiConnectMedia = z.infer<typeof AnkiConnectMedia>;
+
 /** A note as an AnkiConnect client sends it: fields by name, holding the client's HTML. */
 export const AnkiConnectNote = z.object({
   deckName: z.string(),
@@ -1203,5 +1214,16 @@ export const AnkiConnectNote = z.object({
   fields: z.record(z.string(), z.string()),
   tags: z.array(z.string()).optional(),
   options: z.object({ allowDuplicate: z.boolean().optional() }).optional(),
+  audio: z.array(AnkiConnectMedia).optional(),
+  picture: z.array(AnkiConnectMedia).optional(),
 });
 export type AnkiConnectNote = z.infer<typeof AnkiConnectNote>;
+
+/** `updateNoteFields`' note: the fields to change on the note with this id, and files as a note sends them. */
+export const AnkiConnectNoteUpdate = z.object({
+  id: z.number().int(),
+  fields: z.record(z.string(), z.string()).optional(),
+  audio: z.array(AnkiConnectMedia).optional(),
+  picture: z.array(AnkiConnectMedia).optional(),
+});
+export type AnkiConnectNoteUpdate = z.infer<typeof AnkiConnectNoteUpdate>;

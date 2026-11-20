@@ -58,6 +58,8 @@ export default async function drive({ page, step, api, expect }) {
       "Sentence",
       "URL",
       "Audio",
+      "Sentence audio",
+      "Picture",
     ]);
   });
 

@@ -53,6 +53,7 @@ function card(patch: Partial<Card> = {}): Card {
     audioSource: null,
     audioApprovedKey: null,
     exampleRecordingKey: null,
+    exampleRecordingCaptured: false,
     createdBy: "user",
     archivedAt: null,
     createdAt: now,

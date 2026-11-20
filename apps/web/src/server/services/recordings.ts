@@ -104,6 +104,7 @@ export async function storeRecording(
  * Stores an imported clip of the example as its recording, which its play control plays instead
  * of generated speech, on the same terms as `storeRecording`. A card that no longer says `said`,
  * the sentence the clip was imported with, has nothing to play it beside, so the clip is skipped.
+ * A `captured` clip came from the learner's own capture tool and plays for the owner alone.
  */
 export async function storeExampleRecording(
   ctx: ServiceContext,
@@ -111,6 +112,7 @@ export async function storeExampleRecording(
   said: string | undefined,
   load: () => Promise<Uint8Array | null>,
   bucket: R2Bucket,
+  captured = false,
 ): Promise<"stored" | "kept" | "skipped"> {
   const [card] = await ctx.db
     .select({
@@ -130,7 +132,11 @@ export async function storeExampleRecording(
   await ctx.db.batch([
     ctx.db
       .update(schema.cards)
-      .set({ exampleRecordingKey: put.key, updatedAt: new Date() })
+      .set({
+        exampleRecordingKey: put.key,
+        exampleRecordingCaptured: captured,
+        updatedAt: new Date(),
+      })
       .where(
         and(
           eq(schema.cards.id, cardId),
@@ -146,7 +152,11 @@ export async function storeExampleRecording(
         action: "set_audio",
         id: cardId,
         deckId: card.deckId,
-        details: { kind: "example", format: put.format.extension },
+        details: {
+          kind: "example",
+          format: put.format.extension,
+          ...(captured ? { captured: true } : {}),
+        },
       },
       schema.cards,
       stored,

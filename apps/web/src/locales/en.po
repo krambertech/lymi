@@ -1452,6 +1452,9 @@ msgstr "Arrange sections"
 msgid "Arts"
 msgstr "Arts"
 
+msgid "asbplayer adds the line you hear in a video, its audio and a picture of the scene to your card. Only you hear that audio and see that picture. People you share the deck with hear Lymi’s voice instead."
+msgstr "asbplayer adds the line you hear in a video, its audio and a picture of the scene to your card. Only you hear that audio and see that picture. People you share the deck with hear Lymi’s voice instead."
+
 msgid "Ask {assistant} to make cards from your lesson. You’ll find them in your deck and in Activity."
 msgstr "Ask {assistant} to make cards from your lesson. You’ll find them in your deck and in Activity."
 
@@ -1482,6 +1485,9 @@ msgstr "At {savedTime}, {zone} time, only on days with cards due."
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "At least {MIN_PASSWORD_LENGTH} characters."
+
+msgid "Audio and pictures from videos"
+msgstr "Audio and pictures from videos"
 
 msgid "Automatic"
 msgstr "Automatic"
@@ -1762,6 +1768,10 @@ msgstr "Choose one"
 
 msgid "Choose the .zip file Lymi exports as a Lymi file, without unzipping it."
 msgstr "Choose the .zip file Lymi exports as a Lymi file, without unzipping it."
+
+#. placeholder {0}: field("Lymi card")
+msgid "Choose the deck Yomitan adds to, and the note type {0}."
+msgstr "Choose the deck Yomitan adds to, and the note type {0}."
 
 msgid "Choose the file again"
 msgstr "Choose the file again"
@@ -3020,6 +3030,9 @@ msgstr "in about a week"
 msgid "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
 msgstr "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
 
+msgid "In asbplayer’s Anki settings, paste Lymi’s address as the AnkiConnect URL and your Yomitan key as the AnkiConnect API Key."
+msgstr "In asbplayer’s Anki settings, paste Lymi’s address as the AnkiConnect URL and your Yomitan key as the AnkiConnect API Key."
+
 msgid "In ChatGPT on the web, turn on <0>Developer mode</0> under <1>Settings → Apps → Advanced settings</1>."
 msgstr "In ChatGPT on the web, turn on <0>Developer mode</0> under <1>Settings → Apps → Advanced settings</1>."
 
@@ -3501,6 +3514,12 @@ msgstr "Manage"
 
 msgid "Manage connected apps"
 msgstr "Manage connected apps"
+
+#. placeholder {0}: field("Sentence")
+#. placeholder {1}: field("Sentence audio")
+#. placeholder {2}: field("Picture")
+msgid "Map Sentence to {0}, Audio to {1} and Image to {2}."
+msgstr "Map Sentence to {0}, Audio to {1} and Image to {2}."
 
 msgid "Mark important"
 msgstr "Mark important"
@@ -5566,6 +5585,10 @@ msgstr "Time"
 msgid "Time each day"
 msgstr "Time each day"
 
+#. placeholder {0}: field("Update last card")
+msgid "To add them to the word you just looked up, set asbplayer’s mining button to {0}."
+msgstr "To add them to the word you just looked up, set asbplayer’s mining button to {0}."
+
 msgid "To export every deck at once, open <0>Settings</0> and choose <1>Export everything</1> instead."
 msgstr "To export every deck at once, open <0>Settings</0> and choose <1>Export everything</1> instead."
 
@@ -5712,6 +5735,10 @@ msgstr "Turn off the join link?"
 
 msgid "Turn off these emails"
 msgstr "Turn off these emails"
+
+#. placeholder {0}: field("Re-encode audio as mp3")
+msgid "Turn on {0}. Lymi plays MP3, M4A, AAC and WAV audio."
+msgstr "Turn on {0}. Lymi plays MP3, M4A, AAC and WAV audio."
 
 msgid "Turn the connector on in a chat."
 msgstr "Turn the connector on in a chat."

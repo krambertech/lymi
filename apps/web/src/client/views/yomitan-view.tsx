@@ -1,7 +1,14 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { KeyRound } from "lucide-react";
 import { lastUsed, shortDate } from "../components/api-keys-section";
-import { AppActivity, AppConnect, AppPage, AppSection, AppStop } from "../components/app-page";
+import {
+  AppActivity,
+  AppConnect,
+  AppPage,
+  AppSection,
+  AppSteps,
+  AppStop,
+} from "../components/app-page";
 import { Button } from "../components/button";
 import { CopyField } from "../components/copy-field";
 import { InlineError } from "../components/inline-error";
@@ -51,6 +58,7 @@ export function YomitanView(props: Props) {
           <Settings {...props} current={current} />
           <AppActivity appKey="yomitan" app={YOMITAN_ACTIVITY_APP} name="Yomitan" />
           <Connect {...props} />
+          <Asbplayer />
           <AppStop
             consequence={t`Lymi revokes Yomitan’s key, so Yomitan can no longer add cards or find duplicates. Cards it added stay.`}
             label={t`Disconnect Yomitan`}
@@ -161,6 +169,52 @@ function Connect(props: Props) {
         )}
       </div>
     </AppConnect>
+  );
+}
+
+/**
+ * asbplayer, a video player extension, puts the sentence's clip and a frame of the scene on a
+ * card through the same address and key. The field names are Lymi card's. CONTEXT.md, Recording.
+ */
+function Asbplayer() {
+  const { t } = useLingui();
+  const field = (name: string) => <span className="font-medium text-ink">{name}</span>;
+  return (
+    <AppSection title={t`Audio and pictures from videos`}>
+      <div className="edge grid gap-4 rounded-xl bg-plate p-5">
+        <p className="max-w-[60ch] text-base text-ink-secondary text-pretty">
+          <Trans>
+            asbplayer adds the line you hear in a video, its audio and a picture of the scene to
+            your card. Only you hear that audio and see that picture. People you share the deck with
+            hear Lymi’s voice instead.
+          </Trans>
+        </p>
+        <AppSteps
+          steps={[
+            <Trans key="connect">
+              In asbplayer’s Anki settings, paste Lymi’s address as the AnkiConnect URL and your
+              Yomitan key as the AnkiConnect API Key.
+            </Trans>,
+            <Trans key="deck">
+              Choose the deck Yomitan adds to, and the note type {field("Lymi card")}.
+            </Trans>,
+            <Trans key="fields">
+              Map Sentence to {field("Sentence")}, Audio to {field("Sentence audio")} and Image to{" "}
+              {field("Picture")}.
+            </Trans>,
+            <Trans key="mp3">
+              Turn on {field("Re-encode audio as mp3")}. Lymi plays MP3, M4A, AAC and WAV audio.
+            </Trans>,
+          ]}
+        />
+        <p className="max-w-[60ch] text-sm text-ink-muted text-pretty">
+          <Trans>
+            To add them to the word you just looked up, set asbplayer’s mining button to{" "}
+            {field("Update last card")}.
+          </Trans>
+        </p>
+      </div>
+    </AppSection>
   );
 }
 

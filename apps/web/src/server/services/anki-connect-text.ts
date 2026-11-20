@@ -78,3 +78,10 @@ export function sourceText(html: string): string {
 export function soundFiles(html: string): string[] {
   return [...html.matchAll(/\[sound:([^\]]+)\]/g)].map(([, name = ""]) => name);
 }
+
+/** The file names of the pictures a field shows, in order. */
+export function pictureFiles(html: string): string[] {
+  return [...html.matchAll(/<img\b[^>]*?\bsrc\s*=\s*(?:"([^"]*)"|'([^']*)'|([^\s>]+))/gi)]
+    .map(([, double, single, bare]) => decode(double ?? single ?? bare ?? ""))
+    .filter(Boolean);
+}

@@ -46,6 +46,8 @@ export function livePublicationMedia(
         // The page needs a description to render the picture, so bytes without one stay private.
         isNotNull(cardImages.description),
         ne(cardImages.description, ""),
+        // A frame the learner's own tool captured is theirs alone. CONTEXT.md, Recording.
+        eq(cardImages.captured, false),
       ),
     )
     .where(

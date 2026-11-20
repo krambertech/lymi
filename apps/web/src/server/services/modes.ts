@@ -23,10 +23,18 @@ import { ServiceError } from "./context";
 
 /** Review modes on the server; the expand-phase storage rules are in docs/data-model.md (ADR 0014). */
 
-/** Whether a state's mode is asked, as raw SQL shared by due counts, the queue, stats and reminders. */
+/**
+ * Whether a state's mode is asked, as raw SQL shared by due counts, the queue, stats and reminders.
+ * `learner` is the state's learner, by default the `user_id` beside `direction`, since a captured
+ * picture asks its modes of the card's owner alone.
+ */
 export function askedSql(
   direction = "card_states.direction",
-  { cards = "cards", decks = "decks" }: { cards?: string; decks?: string } = {},
+  {
+    cards = "cards",
+    decks = "decks",
+    learner = direction.replace(/\.direction$/, ".user_id"),
+  }: { cards?: string; decks?: string; learner?: string } = {},
 ): string {
   const directions = `coalesce(${cards}.directions, ${decks}.directions)`;
   const modes = `case when ${cards}.directions is null then null else ${cards}.review_modes end`;
@@ -34,6 +42,7 @@ export function askedSql(
     select 1 from card_images
     where card_images.card_id = ${cards}.id and card_images.status = 'active'
       and card_images.description is not null
+      and (card_images.captured = 0 or ${learner} = ${cards}.user_id)
   )`;
   const pictureOnly = `(json_array_length(coalesce(${modes}, '[]')) > 0 and not exists (
     select 1 from json_each(${modes}) where json_each.value in ('${TEXT_MODES.join("', '")}')
@@ -92,7 +101,7 @@ function stateInserts(
           ${due}, 0, ${fsrs}, null, ${added}, ${due}, ${key}
         from cards join decks on decks.id = cards.deck_id
         join (${learners}) as learners on learners.deck_id = decks.id
-        where ${where} and ${sql.raw(askedSql(`'${direction}'`))}`,
+        where ${where} and ${sql.raw(askedSql(`'${direction}'`, { learner: "learners.user_id" }))}`,
       )
       .onConflictDoNothing();
   });

@@ -363,6 +363,7 @@ export async function addCards(
       audioSource: null,
       audioApprovedKey: null,
       exampleRecordingKey: null,
+      exampleRecordingCaptured: false,
       createdBy: actor,
       archivedAt: null,
       createdAt: now,
@@ -1254,7 +1255,9 @@ function editWrite(
       ...(revision === undefined ? bumped("card", patch, current) : { revision }),
       normalizedTerm,
       ...(audioStale ? { audioKey: null, audioSource: null } : {}),
-      ...(exampleRecordingStale ? { exampleRecordingKey: null } : {}),
+      ...(exampleRecordingStale
+        ? { exampleRecordingKey: null, exampleRecordingCaptured: false }
+        : {}),
       ...(draftStale ? { hintDraft: null } : {}),
       updatedAt: now,
     })

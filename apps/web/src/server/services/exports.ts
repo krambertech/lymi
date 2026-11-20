@@ -343,10 +343,13 @@ function fileCard(
             description: image.description,
             width: image.width,
             height: image.height,
+            ...(image.captured ? { captured: true } : {}),
           }
         : null,
     recording: recording ? { file: recording } : null,
-    exampleRecording: exampleRecording ? { file: exampleRecording } : null,
+    exampleRecording: exampleRecording
+      ? { file: exampleRecording, ...(card.exampleRecordingCaptured ? { captured: true } : {}) }
+      : null,
     archivedAt: card.archivedAt?.getTime() ?? null,
     createdAt: card.createdAt.getTime(),
     states: item.states.sort((a, b) => a.mode.localeCompare(b.mode)),

@@ -299,6 +299,10 @@
     {
       "name": "0074_normal_sunspot.sql",
       "sha256": "020042e39e27dc49172bd89c27850315ddaabcebdec9bf3577a57c891014969a"
+    },
+    {
+      "name": "0075_huge_true_believers.sql",
+      "sha256": "dd91b8149dbe48c76365b791fb4cdfcdf96d9cc55f8584c94b48420fe13e7159"
     }
   ]
 }

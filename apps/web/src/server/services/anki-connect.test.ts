@@ -1,4 +1,5 @@
-import { eq } from "@lymi/core/db";
+import { crc32, deflateSync } from "node:zlib";
+import { and, eq } from "@lymi/core/db";
 import { beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
 import type { AnalyticsEvent } from "./analytics";
@@ -8,9 +9,11 @@ import {
   parseQuery,
   sweepAnkiConnectUploads,
 } from "./anki-connect";
-import { addCards } from "./cards";
+import { cardImageFile } from "./card-images";
+import { addCards, showCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { archiveDeck, createDeck } from "./decks";
+import { join } from "./members";
 import { learner, type TestBindings, testDb } from "./test-db";
 
 /**
@@ -34,7 +37,15 @@ beforeAll(async () => {
     clientName: "Yomitan",
     analytics: { writeDataPoint: () => {}, capture: (event) => events.push(event) },
   };
-  deps = { scope: "write", enrichment: null, media: { stash: env.IMPORTS, audio: env.AUDIO } };
+  deps = {
+    scope: "write",
+    enrichment: null,
+    media: {
+      stash: env.IMPORTS,
+      audio: env.AUDIO,
+      pictures: { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
+    },
+  };
   japanese = (await createDeck(user, { name: "日本語", defaultLanguage: "ja" })).id;
   await createDeck(user, { name: "Italiano", defaultLanguage: "it" });
   await createDeck(user, { name: "Italiano", defaultLanguage: "it" });
@@ -89,6 +100,8 @@ describe("answerCall", () => {
       "Sentence",
       "URL",
       "Audio",
+      "Sentence audio",
+      "Picture",
     ]);
     expect(await call("modelFieldNames", { modelName: "Basic" })).toMatchObject({
       error: expect.stringContaining("Lymi card"),
@@ -303,14 +316,199 @@ describe("answerCall", () => {
     ).toMatchObject({ error: expect.stringContaining("can only read") });
   });
 
-  it("refuses to change a card, which Lymi does in the app", async () => {
-    expect(await call("updateNoteFields", { note: { id: 1, fields: {} } })).toMatchObject({
+  it("refuses to change fields and tags together, and a note that isn't the learner's", async () => {
+    expect(await call("updateNote", { note: { id: 1, fields: {}, tags: [] } })).toMatchObject({
       error: expect.stringContaining("edit the card in Lymi"),
     });
+    expect(
+      await call("updateNoteFields", { note: { id: 999_999, fields: { Sentence: "x" } } }, 6),
+    ).toEqual({ result: null, error: "Note was not found: 999999" });
   });
 
   it("answers View note without opening anything", async () => {
     expect(await call("guiBrowse", { query: "nid:1" })).toEqual([]);
+  });
+});
+
+/** A solid-colour PNG, built by hand so the test needs no image library. */
+function png(width: number, height: number) {
+  const row = [0, ...Array.from({ length: width }, () => [40, 90, 200, 255]).flat()];
+  const raw = Buffer.from(Array.from({ length: height }, () => row).flat());
+  const chunk = (kind: string, data: Buffer) => {
+    const body = Buffer.concat([Buffer.from(kind, "ascii"), data]);
+    const out = Buffer.alloc(12 + data.length);
+    out.writeUInt32BE(data.length, 0);
+    body.copy(out, 4);
+    out.writeUInt32BE(crc32(body), 8 + data.length);
+    return out;
+  };
+  const header = Buffer.alloc(13);
+  header.writeUInt32BE(width, 0);
+  header.writeUInt32BE(height, 4);
+  header.set([8, 6, 0, 0, 0], 8);
+  return Buffer.concat([
+    Buffer.from([0x89, 0x50, 0x4e, 0x47, 0x0d, 0x0a, 0x1a, 0x0a]),
+    chunk("IHDR", header),
+    chunk("IDAT", deflateSync(raw)),
+    chunk("IEND", Buffer.alloc(0)),
+  ]).toString("base64");
+}
+
+const clip = (tag: number) => btoa(String.fromCharCode(0x49, 0x44, 0x33, 4, 0, 0, 0, 0, 0, 0, tag));
+const frame = png(64, 36);
+
+const cardOf = async (term: string) => {
+  const [card] = await db
+    .select()
+    .from(schema.cards)
+    .where(and(eq(schema.cards.userId, ctx.userId), eq(schema.cards.term, term)));
+  if (!card) throw new Error(`no card ${term}`);
+  return card;
+};
+const pictureOf = async (cardId: string) => {
+  const [image] = await db
+    .select()
+    .from(schema.cardImages)
+    .where(and(eq(schema.cardImages.cardId, cardId), eq(schema.cardImages.status, "active")));
+  return image;
+};
+
+/**
+ * asbplayer's two ways to a card, with its requests as the public AnkiConnect protocol describes
+ * them: a note carrying `audio` and `picture`, and updating the last card Yomitan added.
+ */
+describe("asbplayer", () => {
+  it("keeps the clip and frame a note carries as the example's recording and the picture", async () => {
+    events.length = 0;
+    const id = await call(
+      "addNote",
+      {
+        note: {
+          deckName: "日本語",
+          modelName: "Lymi card",
+          fields: { Term: "電車", Sentence: "電車が来ました。", URL: "https://www.youtube.com/" },
+          tags: ["asbplayer"],
+          options: { allowDuplicate: false, duplicateScope: "collection" },
+          audio: [{ filename: "asbplayer_train.mp3", data: clip(1), fields: ["Sentence audio"] }],
+          picture: [{ filename: "asbplayer_train.png", data: frame, fields: ["Picture"] }],
+        },
+      },
+      6,
+    );
+    expect(id).toEqual({ result: expect.any(Number), error: null });
+    const card = await cardOf("電車");
+    // On main the clip was dropped, so the card had no recording of its example.
+    expect(card.exampleRecordingKey).not.toBeNull();
+    expect(card).toMatchObject({
+      example: "電車が来ました。",
+      exampleRecordingCaptured: true,
+      audioKey: null,
+    });
+    expect(await env.AUDIO.get(card.exampleRecordingKey ?? "")).not.toBeNull();
+    expect(await pictureOf(card.id)).toMatchObject({ captured: true, contentType: "image/webp" });
+    expect(events).toContainEqual({
+      name: "anki_connect_media",
+      kind: "sentence_audio",
+      action: "add",
+    });
+    expect(events).toContainEqual({ name: "anki_connect_media", kind: "picture", action: "add" });
+    expect((await env.IMPORTS.list({ prefix: "anki-connect/" })).objects).toHaveLength(0);
+  });
+
+  it("puts the sentence, its clip and the frame on the card Yomitan added last", async () => {
+    await call("addNote", { note: note({ Term: "改札", Sentence: "駅で待つ。" }) });
+    const card = await cardOf("改札");
+    events.length = 0;
+
+    const found = (await call("findNotes", { query: "added:1" }, 6)) as { result: number[] };
+    const last = Math.max(...found.result);
+    expect(await call("notesInfo", { notes: [last] }, 6)).toMatchObject({
+      result: [{ fields: { Term: { value: "改札" }, "Sentence audio": { value: "", order: 6 } } }],
+    });
+    expect(
+      await call("storeMediaFile", { filename: "asbplayer_gate.mp3", data: clip(2) }, 6),
+    ).toEqual({ result: "asbplayer_gate.mp3", error: null });
+    await call("storeMediaFile", { filename: "asbplayer_gate.png", data: frame }, 6);
+    expect(
+      await call(
+        "updateNoteFields",
+        {
+          note: {
+            id: last,
+            fields: {
+              Sentence: "改札を出たら右です。",
+              "Sentence audio": "[sound:asbplayer_gate.mp3]",
+              Picture: '<img src="asbplayer_gate.png">',
+            },
+          },
+        },
+        6,
+      ),
+    ).toEqual({ result: null, error: null });
+    expect(await call("addTags", { notes: [last], tags: "asbplayer" }, 6)).toEqual({
+      result: null,
+      error: null,
+    });
+
+    const updated = await cardOf("改札");
+    expect(updated).toMatchObject({
+      id: card.id,
+      example: "改札を出たら右です。",
+      exampleRecordingCaptured: true,
+      tags: ["asbplayer"],
+    });
+    expect(updated.exampleRecordingKey).not.toBeNull();
+    expect(await pictureOf(card.id)).toMatchObject({ captured: true });
+    expect(events).toContainEqual({
+      name: "anki_connect_media",
+      kind: "sentence_audio",
+      action: "update",
+    });
+    expect((await env.IMPORTS.list({ prefix: "anki-connect/" })).objects).toHaveLength(0);
+  });
+
+  it("drops a captured clip when a later update changes the sentence without one", async () => {
+    const [id] = (await call("findNotes", { query: '"term:改札"' })) as number[];
+    await call("updateNoteFields", { note: { id, fields: { Sentence: "改札はどこですか。" } } });
+    expect(await cardOf("改札")).toMatchObject({
+      example: "改札はどこですか。",
+      exampleRecordingKey: null,
+      exampleRecordingCaptured: false,
+    });
+  });
+
+  it("plays and shows captured media to the owner alone, never to a member of the deck", async () => {
+    const card = await cardOf("電車");
+    const picture = await pictureOf(card.id);
+    const member = await learner(db, "anki-connect-member", "Ren");
+    await join(member, japanese);
+
+    expect(await showCard(ctx, card.id)).toMatchObject({
+      exampleRecorded: true,
+      image: { id: picture?.id },
+    });
+    expect(await showCard(member, card.id)).toMatchObject({ exampleRecorded: false, image: null });
+    await expect(
+      cardImageFile(member, card.id, picture?.id ?? "", env.PRIVATE_IMAGES),
+    ).rejects.toMatchObject({ code: "not_found" });
+    expect(
+      (await cardImageFile(ctx, card.id, picture?.id ?? "", env.PRIVATE_IMAGES)).image.id,
+    ).toBe(picture?.id);
+  });
+
+  it("refuses every write from a read-only key", async () => {
+    const reading = { ...deps, scope: "read" as const };
+    const [id] = (await call("findNotes", { query: '"term:電車"' })) as number[];
+    for (const [action, params] of [
+      ["updateNoteFields", { note: { id, fields: { Sentence: "x" } } }],
+      ["addTags", { notes: [id], tags: "asbplayer" }],
+      ["storeMediaFile", { filename: "a.mp3", data: clip(3) }],
+      ["addNote", { note: note({ Term: "猫" }) }],
+    ] as const) {
+      expect(await answerCall(ctx, { action, params, version: 6 }, reading)).toMatchObject({
+        error: expect.stringContaining("can only read"),
+      });
+    }
   });
 });
 
@@ -332,5 +530,7 @@ describe("parseQuery", () => {
     expect(parseQuery('("term:a") or ("term:b")')).toEqual([{ field: "a" }, { field: "b" }]);
     expect(parseQuery('nid:1,2 ("term:a")')).toEqual([{ notes: [1, 2], field: "a" }]);
     expect(parseQuery('"term:(笑)"')).toEqual([{ field: "(笑)" }]);
+    expect(parseQuery("added:1")).toEqual([{ added: 1 }]);
+    expect(parseQuery("added:x")).toEqual([{}]);
   });
 });

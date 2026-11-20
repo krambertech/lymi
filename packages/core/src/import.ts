@@ -97,6 +97,8 @@ export type ImportedCard = {
   recording?: string | undefined;
   /** The adapter's name for the example's own recording, fetched only while writing. */
   exampleRecording?: string | undefined;
+  /** Which of the picture and the example's recording a capture tool sent, kept for the owner alone. */
+  captured?: { picture?: boolean | undefined; exampleRecording?: boolean | undefined } | undefined;
   /** Clips the note held besides the term's and the example's recordings, which are left out. */
   soundsLeftOut?: number | undefined;
   /** The note had a pitch accent that could not be read as text, which is left out. */

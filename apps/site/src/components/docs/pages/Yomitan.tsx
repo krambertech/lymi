@@ -10,6 +10,12 @@ const FIELDS: { field: string; marker: string; becomes: string }[] = [
   { field: "Sentence", marker: "{sentence}", becomes: "The example" },
   { field: "URL", marker: "{url}", becomes: "The source" },
   { field: "Audio", marker: "{audio}", becomes: "The card’s recording" },
+  {
+    field: "Sentence audio",
+    marker: "(empty)",
+    becomes: "The example’s recording, from asbplayer",
+  },
+  { field: "Picture", marker: "(empty)", becomes: "The card’s picture, from asbplayer" },
 ];
 
 /** Written for a learner who reads in their browser, not for a developer. */
@@ -67,8 +73,9 @@ export function Yomitan() {
           <StepTitle>Choose a deck and the note type</StepTitle>
           <p>
             Open <strong>Configure Anki card format</strong>. Choose one of your Lymi decks as the
-            deck and <strong>Lymi card</strong> as the note type. Yomitan fills every field for you;
-            leave them as they are.
+            deck and <strong>Lymi card</strong> as the note type. Yomitan fills the fields for you;
+            leave them as they are, but clear <strong>Sentence audio</strong> and{" "}
+            <strong>Picture</strong> if Yomitan put anything in them. asbplayer fills those two.
           </p>
         </div>
         <div>
@@ -128,6 +135,58 @@ export function Yomitan() {
         ]}
       />
 
+      <H2>Clips and pictures from videos</H2>
+      <p>
+        <a href="https://docs.asbplayer.dev/">asbplayer</a> is a browser extension for watching
+        video with subtitles. With it, a card you add while watching gets the line you heard as its
+        example, that line’s audio as the example’s recording, and a picture of the scene.
+      </p>
+      <p>
+        Only you hear that audio and see that picture. Anyone you share the deck with hears Lymi’s
+        voice for the example and sees no picture, and a published deck’s page shows neither. A Lymi
+        export keeps them, and importing it gives them back to you.
+      </p>
+      <Steps>
+        <div>
+          <StepTitle>Connect asbplayer to Lymi</StepTitle>
+          <p>
+            In asbplayer’s settings, under <strong>Anki</strong>, paste the same address into{" "}
+            <strong>AnkiConnect URL</strong> and your Yomitan key into{" "}
+            <strong>AnkiConnect API Key</strong>.
+          </p>
+        </div>
+        <div>
+          <StepTitle>Choose the deck and the fields</StepTitle>
+          <p>
+            Choose the deck Yomitan adds to and the note type <strong>Lymi card</strong>. Map
+            Sentence to <strong>Sentence</strong>, Audio to <strong>Sentence audio</strong>, Image
+            to <strong>Picture</strong> and URL to <strong>URL</strong>.
+          </p>
+        </div>
+        <div>
+          <StepTitle>Turn on MP3</StepTitle>
+          <p>
+            Turn on <strong>Re-encode audio as mp3</strong>. Lymi keeps MP3, M4A, AAC and WAV audio
+            up to 2 MB; audio in another format is left out, and the example is read aloud by Lymi
+            instead.
+          </p>
+        </div>
+        <div>
+          <StepTitle>Add the clip to the word</StepTitle>
+          <p>
+            Look up the word with Yomitan and press +. Then, in asbplayer, update the last card: set{" "}
+            <strong>Mining button default action</strong> to <strong>Update last card</strong>, or
+            press Ctrl + Shift + U. The card gets the line, its audio and the picture, and the tag
+            asbplayer adds. To add a card from asbplayer alone, export it from asbplayer’s card
+            dialog instead.
+          </p>
+        </div>
+      </Steps>
+      <p>
+        Lymi never records anything itself. It keeps what asbplayer sends, and a new sentence on the
+        card drops the audio that said the old one.
+      </p>
+
       <H2>One deck for each language</H2>
       <p>
         Yomitan sends every word to the deck in its card format. Lymi refuses a word written in
@@ -150,20 +209,21 @@ export function Yomitan() {
       <H2>What stays behind</H2>
       <ul>
         <li>
-          <strong>Pictures.</strong> Screenshots, clipboard images and dictionary pictures are not
-          kept. Add a picture to the card in Lymi.
+          <strong>Dictionary pictures.</strong> Pictures inside a dictionary entry are not kept. A
+          picture sent in the Picture field becomes the card’s picture, which only you see.
         </li>
         <li>
           <strong>View note.</strong> Lymi has no window to open, so Yomitan’s View note button does
           nothing. Find the card in Library or Activity.
         </li>
         <li>
-          <strong>Overwriting a note.</strong> Lymi does not change a card from Yomitan. Leave
-          Yomitan’s duplicate setting on adding a new note, and edit the card in Lymi.
+          <strong>Overwriting a note.</strong> When Yomitan or asbplayer updates a card, Lymi
+          changes its reading, meaning, sentence and page, and keeps the term. An empty field clears
+          nothing.
         </li>
         <li>
-          <strong>Fields you add.</strong> Lymi reads the six fields above. Anything else you map in
-          Yomitan is left out.
+          <strong>Fields you add.</strong> Lymi reads the eight fields above. Anything else you map
+          is left out.
         </li>
       </ul>
 

@@ -392,7 +392,7 @@ export function EitusLesson() {
           explain: (
             <>
               <span lang="et" className="font-medium text-ink">
-                {bare(yes)} → {right}
+                {bare(yes)} → {no}
               </span>{" "}
               <Trans>Ei, and the verb without its ending.</Trans>
             </>
@@ -575,7 +575,7 @@ export function EitusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="olema" />, to be, works the same way. <Word w="Ma olen väsinud" />{" "}
+                    <Word w="Olema" />, to be, works the same way. <Word w="Ma olen väsinud" />{" "}
                     becomes <Word w="Ma ei ole väsinud" />, and <Word w="ei ole" /> is the same for
                     everyone.
                   </Trans>
@@ -599,7 +599,7 @@ export function EitusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="ei" /> on its own is no, and <Word w="jah" /> is yes. A fuller answer
+                    <Word w="Ei" /> on its own is no, and <Word w="jah" /> is yes. A fuller answer
                     repeats the verb with ei: asked <Word w="Kas sa loed?" />, say{" "}
                     <Word w="ei loe" />. The no has no ending, so the same answer fits whoever is
                     asked.
@@ -628,7 +628,7 @@ export function EitusLesson() {
               </Panel>
               <Aside>
                 <Trans>
-                  <Word w="kas" /> at the start turns a sentence into a yes-or-no question. Lesson{" "}
+                  <Word w="Kas" /> at the start turns a sentence into a yes-or-no question. Lesson{" "}
                   {questions} is about questions.
                 </Trans>
               </Aside>

@@ -6,10 +6,11 @@ import { useInfiniteQuery } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
 import { openBrowserAsync } from "expo-web-browser";
 import { type ReactNode, useEffect, useState } from "react";
-import { AccessibilityInfo, Alert, View } from "react-native";
+import { AccessibilityInfo, View } from "react-native";
 import { ActivityList } from "../activity/activity-view";
 import { captureEvent } from "../telemetry/posthog";
 import { usePalette } from "../theme/palette";
+import { alert } from "../ui/alert";
 import { Chip, type ChipTone } from "../ui/chip";
 import { clipboard } from "../ui/clipboard";
 import { FieldError } from "../ui/field";
@@ -316,7 +317,7 @@ export function AppStop({
         variant="danger"
         loading={stopping}
         onPress={() =>
-          Alert.alert(label, consequence, [
+          alert(label, consequence, [
             { text: keep, style: "cancel" },
             { text: label, style: "destructive", onPress: onStop },
           ])

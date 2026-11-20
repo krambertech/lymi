@@ -234,6 +234,14 @@
       "linter": {
         "rules": {
           "style": {
+            "noRestrictedGlobals": {
+              "level": "error",
+              "options": {
+                "deniedGlobals": {
+                  "alert": "Import alert from src/ui/alert.tsx: the global one draws Android's AppCompat dialog."
+                }
+              }
+            },
             "noRestrictedImports": {
               "level": "error",
               "options": {
@@ -243,6 +251,10 @@
                   "@expo/ui/swift-ui": {
                     "importNames": ["BottomSheet"],
                     "message": "Use Sheet from src/ui/sheet.tsx: it owns the title, description, save header and the inset every sheet shares."
+                  },
+                  "react-native": {
+                    "importNames": ["Alert"],
+                    "message": "Use alert from src/ui/alert.tsx: it shows iOS's alert and, on Android, Material's dialog in Lymi's colours."
                   },
                   "@expo/ui/jetpack-compose": {
                     "importNames": ["ModalBottomSheet"],

@@ -2381,6 +2381,9 @@ msgstr "Скачать для Mac"
 msgid "Download Lymi"
 msgstr "Скачать Lymi"
 
+msgid "Download on the App Store"
+msgstr "Загрузите в App Store"
+
 msgid "Download the decks you own, any time."
 msgstr "Скачивай свои колоды когда угодно."
 
@@ -3080,6 +3083,9 @@ msgstr "Бесплатно"
 msgid "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Бесплатные колоды по украинскому с голосом на каждой карточке. Добавь любую одним касанием. Скоро будет больше."
 
+msgid "Free, as an app or in the browser"
+msgstr "Бесплатно, в приложении или в браузере"
+
 msgid "Free, nothing to set up"
 msgstr "Бесплатно, ничего настраивать не нужно"
 
@@ -3232,6 +3238,9 @@ msgstr "Немецкие взяты из каталога BAMF, в колоде 
 
 msgid "Germany’s test asks 300 general questions and 10 about your state. The general questions are one deck, and each state’s 10 are a small deck of their own, so you add only yours."
 msgstr "В тесте в Германии 300 общих вопросов и 10 о твоей федеральной земле. Общие вопросы — одна колода, а 10 вопросов каждой земли — отдельная небольшая колода, так что ты добавляешь только свою."
+
+msgid "Get it on Google Play"
+msgstr "Скачать из Google Play"
 
 msgid "Get Lymi"
 msgstr "Скачай Lymi"
@@ -3971,9 +3980,6 @@ msgstr "Приглашай учеников по почте или по ссыл
 msgid "Invited"
 msgstr "Приглашение отправлено"
 
-msgid "iPhone and Android"
-msgstr "iPhone и Android"
-
 msgid "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
 msgstr "IRCC не публикует свои вопросы. Это тренировочные вопросы по каждой главе официального пособия."
 
@@ -4516,9 +4522,6 @@ msgstr "Lymi для подготовки к сертификации · Карт
 msgid "Lymi for iPhone"
 msgstr "Lymi для iPhone"
 
-msgid "Lymi for iPhone, free"
-msgstr "Lymi для iPhone, бесплатно"
-
 msgid "Lymi for language learning"
 msgstr "Lymi для изучения языков"
 
@@ -4578,9 +4581,6 @@ msgstr "Lymi подходит не всем, кто пользуется Quizlet
 
 msgid "Lymi mixes their questions into one daily review."
 msgstr "Lymi смешивает их вопросы в одно ежедневное повторение."
-
-msgid "Lymi on your phone"
-msgstr "Lymi на телефоне"
 
 msgid "Lymi runs in the browser there; its desktop app is for the Mac only."
 msgstr "Там Lymi работает в браузере, а приложение для компьютера есть только для Mac."
@@ -8468,8 +8468,8 @@ msgstr "Да. Gemini делает флеш-карточки и тесты, а Ge
 msgid "Yes. Lymi answers Yomitan the way AnkiConnect does: point Yomitan at Lymi’s address with a key from Settings and keep looking words up."
 msgstr "Да. Lymi отвечает Yomitan так же, как AnkiConnect: укажи в Yomitan адрес Lymi и ключ из Настроек и продолжай искать слова."
 
-msgid "Yes. Lymi has apps for iPhone and Android, and runs in the browser on your computer. Your cards and progress are the same on all of them."
-msgstr "Да. У Lymi есть приложения для iPhone и Android, а на компьютере он работает в браузере. Карточки и прогресс везде одинаковы."
+msgid "Yes. Lymi has apps for iPhone and Android. It also runs in the browser on any phone or computer, and you can add it to your home screen. Your cards and progress are the same everywhere."
+msgstr "Да. У Lymi есть приложения для iPhone и Android. Он также работает в браузере на любом телефоне или компьютере, и его можно добавить на главный экран. Карточки и прогресс везде одинаковы."
 
 msgid "Yes. Make it a routine: Grok Bot checks what’s due in Lymi on a schedule and quizzes you on it. You still review in Lymi, which keeps the schedule."
 msgstr "Да. Сделай это рутиной: Grok Bot по расписанию проверяет, что пора повторить в Lymi, и гоняет тебя по этому. А повторяешь ты всё равно в Lymi, который следит за расписанием."

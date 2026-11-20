@@ -157,7 +157,7 @@ function useContent(key: CompareKey): Content {
           {
             id: "iphone",
             label: <Trans>On iPhone</Trans>,
-            lymi: <Trans>Lymi for iPhone, free</Trans>,
+            lymi: <Trans>Free, as an app or in the browser</Trans>,
             other: <Trans>AnkiMobile, a one-off €29.99 ($24.99 in the US)</Trans>,
             ahead: "lymi",
           },

@@ -2381,6 +2381,9 @@ msgstr "Download for Mac"
 msgid "Download Lymi"
 msgstr "Download Lymi"
 
+msgid "Download on the App Store"
+msgstr "Download on the App Store"
+
 msgid "Download the decks you own, any time."
 msgstr "Download the decks you own, any time."
 
@@ -3080,6 +3083,9 @@ msgstr "Free to use"
 msgid "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
 msgstr "Free Ukrainian decks with a voice on every card. Add one in a tap. More are on the way."
 
+msgid "Free, as an app or in the browser"
+msgstr "Free, as an app or in the browser"
+
 msgid "Free, nothing to set up"
 msgstr "Free, nothing to set up"
 
@@ -3232,6 +3238,9 @@ msgstr "Germany’s come from the BAMF catalogue, the US deck has all 128 civics
 
 msgid "Germany’s test asks 300 general questions and 10 about your state. The general questions are one deck, and each state’s 10 are a small deck of their own, so you add only yours."
 msgstr "Germany’s test asks 300 general questions and 10 about your state. The general questions are one deck, and each state’s 10 are a small deck of their own, so you add only yours."
+
+msgid "Get it on Google Play"
+msgstr "Get it on Google Play"
 
 msgid "Get Lymi"
 msgstr "Get Lymi"
@@ -3971,9 +3980,6 @@ msgstr "Invite learners by email as well as by link, and see who has joined the 
 msgid "Invited"
 msgstr "Invited"
 
-msgid "iPhone and Android"
-msgstr "iPhone and Android"
-
 msgid "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
 msgstr "IRCC doesn’t publish its questions. These are practice questions written from every chapter of the official study guide."
 
@@ -4516,9 +4522,6 @@ msgstr "Lymi for certification prep · Flashcards with spaced repetition"
 msgid "Lymi for iPhone"
 msgstr "Lymi for iPhone"
 
-msgid "Lymi for iPhone, free"
-msgstr "Lymi for iPhone, free"
-
 msgid "Lymi for language learning"
 msgstr "Lymi for language learning"
 
@@ -4578,9 +4581,6 @@ msgstr "Lymi isn’t for everyone who uses Quizlet. If one of these is you, Quiz
 
 msgid "Lymi mixes their questions into one daily review."
 msgstr "Lymi mixes their questions into one daily review."
-
-msgid "Lymi on your phone"
-msgstr "Lymi on your phone"
 
 msgid "Lymi runs in the browser there; its desktop app is for the Mac only."
 msgstr "Lymi runs in the browser there; its desktop app is for the Mac only."
@@ -8468,8 +8468,8 @@ msgstr "Yes. Gemini makes flashcards and quizzes, and Gemini Notebook makes them
 msgid "Yes. Lymi answers Yomitan the way AnkiConnect does: point Yomitan at Lymi’s address with a key from Settings and keep looking words up."
 msgstr "Yes. Lymi answers Yomitan the way AnkiConnect does: point Yomitan at Lymi’s address with a key from Settings and keep looking words up."
 
-msgid "Yes. Lymi has apps for iPhone and Android, and runs in the browser on your computer. Your cards and progress are the same on all of them."
-msgstr "Yes. Lymi has apps for iPhone and Android, and runs in the browser on your computer. Your cards and progress are the same on all of them."
+msgid "Yes. Lymi has apps for iPhone and Android. It also runs in the browser on any phone or computer, and you can add it to your home screen. Your cards and progress are the same everywhere."
+msgstr "Yes. Lymi has apps for iPhone and Android. It also runs in the browser on any phone or computer, and you can add it to your home screen. Your cards and progress are the same everywhere."
 
 msgid "Yes. Make it a routine: Grok Bot checks what’s due in Lymi on a schedule and quizzes you on it. You still review in Lymi, which keeps the schedule."
 msgstr "Yes. Make it a routine: Grok Bot checks what’s due in Lymi on a schedule and quizzes you on it. You still review in Lymi, which keeps the schedule."

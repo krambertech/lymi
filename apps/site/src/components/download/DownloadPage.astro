@@ -5,7 +5,7 @@ import { pageI18n } from "../../lib/i18n";
 import { downloadHref } from "../../lib/downloads";
 import { type Locale, localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
-import { GetTheAppIn } from "../GetTheApp";
+import { StoreBadgesIn } from "../StoreBadges";
 import SiteHeader from "../islands/SiteHeader";
 import { PageFooter } from "../PageFooter";
 import {
@@ -60,7 +60,7 @@ const i18n = pageI18n(locale);
       </h1>
       <p class="mt-5 max-w-[40ch] text-lg text-pretty text-ink-secondary @2xl:text-xl">{i18n._(DOWNLOAD_LEDE)}</p>
       <div id="download" class="mt-9 flex w-full justify-center">
-        <GetTheAppIn locale={locale} />
+        <StoreBadgesIn locale={locale} size="lg" className="justify-center" />
       </div>
 
       <section aria-labelledby="mac" class="mt-20 flex w-full max-w-[880px] flex-col items-center border-t border-edge pt-14 @4xl:mt-24">

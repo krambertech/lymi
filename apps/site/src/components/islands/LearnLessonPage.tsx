@@ -1,6 +1,7 @@
 import { EitusLesson } from "../learn/lessons/Eitus";
 import { HaaldusLesson } from "../learn/lessons/Haaldus";
 import { KellLesson } from "../learn/lessons/Kell";
+import { KohadLesson } from "../learn/lessons/Kohad";
 import { KusimusedLesson } from "../learn/lessons/Kusimused";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { OlevikLesson } from "../learn/lessons/Olevik";
@@ -12,6 +13,7 @@ export const LESSON_VIEWS = {
   numbrid: NumbridLesson,
   eitus: EitusLesson,
   kusimused: KusimusedLesson,
+  kohad: KohadLesson,
   olevik: OlevikLesson,
   kell: KellLesson,
 } as const;

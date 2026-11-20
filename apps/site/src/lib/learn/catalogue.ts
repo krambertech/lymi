@@ -79,7 +79,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 10,
         blurb: msg`A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and the first questions you'll hear. Every sentence is read aloud.`,
       },
-      { name: msg`Saying where: -s and -l`, et: "Tallinnas, Tartus" },
+      {
+        slug: "kohad",
+        name: msg`Saying where: -s and -l`,
+        title: msg`In, on and at in Estonian: -s and -l`,
+        et: "Tallinnas, Tartus",
+        minutes: 8,
+        blurb: msg`A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus. Every sentence is read aloud.`,
+      },
       {
         slug: "numbrid",
         name: msg`Numbers`,

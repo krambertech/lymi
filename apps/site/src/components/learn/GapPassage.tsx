@@ -11,7 +11,14 @@ import {
   useRef,
   useState,
 } from "react";
-import { type Fills, placeWord, wordsLeft } from "../../lib/learn/passage";
+import {
+  type Fills,
+  gapLine,
+  placeWord,
+  spacedAfter,
+  spacedBefore,
+  wordsLeft,
+} from "../../lib/learn/passage";
 import { Button } from "../Button";
 import { SectionContext, useLesson } from "./lesson-context";
 import { PassagePlayer, usePassage } from "./Passage";
@@ -133,8 +140,10 @@ function PassageLine({
       {gaps.map((item, i) => (
         <span key={item.id}>
           {item.before}
-          {item.before && " "}
-          {gap(item, i + 1)} {item.after}
+          {spacedBefore(item.before) && " "}
+          {gap(item, i + 1)}
+          {spacedAfter(item.after) && " "}
+          {item.after}
           {item.after && " "}
         </span>
       ))}
@@ -223,7 +232,7 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
         <Feedback right={fills[last.id] === last.answer}>
           {last.why}{" "}
           <span lang="et" className="text-ink">
-            {[last.before, last.answer, last.after].filter(Boolean).join(" ")}
+            {gapLine(last.before, last.answer, last.after)}
           </span>
         </Feedback>
       )}

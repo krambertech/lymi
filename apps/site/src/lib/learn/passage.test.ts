@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  gapLine,
   glossPieces,
   nextReply,
   pickReply,
@@ -124,5 +125,26 @@ describe("dialogue", () => {
   it("doesn't run on before a reply is picked", () => {
     const state = startDialogue(turns);
     expect(sayReply(turns, state)).toBe(state);
+  });
+});
+
+describe("gapLine", () => {
+  it("spaces a gap's word from the words around it", () => {
+    expect(gapLine("Mina", "olen", "Kati.")).toBe("Mina olen Kati.");
+  });
+
+  it("sets closing punctuation straight after the word", () => {
+    for (const mark of [".", ",", "!", "?", ";", ":", "…", ")", "»", "”"])
+      expect(gapLine("Ma elan", "Tallinnas", `${mark} x`)).toBe(`Ma elan Tallinnas${mark} x`);
+  });
+
+  it("sets the word straight after opening punctuation", () => {
+    expect(gapLine("Ta ütleb «", "Tere", "»")).toBe("Ta ütleb «Tere»");
+    expect(gapLine("(", "sina", ")")).toBe("(sina)");
+  });
+
+  it("leaves no stray space at an empty side", () => {
+    expect(gapLine("", "Kus", "sina elad?")).toBe("Kus sina elad?");
+    expect(gapLine("Ma olen", "kodus", "")).toBe("Ma olen kodus");
   });
 });

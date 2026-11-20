@@ -498,6 +498,90 @@ export const KOHAD_SENTENCES = {
   "g-kontoris": "Nad töötavad kontoris.",
 } as const;
 
+/**
+ * The practice lesson on meeting someone, built only from lessons 1 to 6. Mari speaks in the
+ * second voice; the learner, Andres, in the main one.
+ */
+export const TUTVUMINE_ANSWERING = {
+  "a-mari-1": { text: "Tere! Mina olen Mari. Mis su nimi on?", voice: "second" },
+  "a-sina-1": "Tere! Minu nimi on Andres.",
+  "a-mari-2": { text: "Väga meeldiv! Kust sa pärit oled?", voice: "second" },
+  "a-sina-2": "Ma olen pärit Ukrainast.",
+  "a-mari-3": { text: "Kus sa elad?", voice: "second" },
+  "a-sina-3": "Ma elan Tartus.",
+  "a-mari-4": { text: "Kas sa oled õpetaja?", voice: "second" },
+  "a-sina-4": "Ei, ma ei ole. Ma töötan kontoris.",
+  "a-mari-5": { text: "Kas sa räägid eesti keelt?", voice: "second" },
+  "a-sina-5": "Natuke. Ma õpin eesti keelt.",
+  "a-mari-6": { text: "Väga hästi! Head aega!", voice: "second" },
+  "a-sina-6": "Aitäh! Head aega!",
+} as const satisfies Record<string, Clip>;
+
+/** The second conversation: the learner asks, and Mari answers. */
+export const TUTVUMINE_ASKING = {
+  "k-mari-1": { text: "Tere, Andres! Kuidas läheb?", voice: "second" },
+  "k-sina-1": "Hästi, aitäh. Aga sul?",
+  "k-mari-2": { text: "Ma olen natuke väsinud.", voice: "second" },
+  "k-sina-2": "Miks sa oled väsinud?",
+  "k-mari-3": { text: "Sest ma töötan palju.", voice: "second" },
+  "k-sina-3": "Kus sa töötad?",
+  "k-mari-4": { text: "Haiglas, Pärnus.", voice: "second" },
+  "k-sina-4": "Kas sa elad Pärnus?",
+  "k-mari-5": { text: "Ei, ma elan Tartus.", voice: "second" },
+} as const satisfies Record<string, Clip>;
+
+/** Jaan talks about himself and Kati; Kati writes back, a text with gaps. */
+export const TUTVUMINE_PASSAGES = {
+  jaan: [
+    "Tere! Minu nimi on Jaan.",
+    "Ma elan Pärnus.",
+    "Ma ei tööta kontoris, ma töötan kohvikus.",
+    "Minu sõber Kati elab Tallinnas.",
+    "Ta ei tööta, ta õpib.",
+    "Ta joob palju kohvi.",
+  ],
+  kati: [
+    "Tere! Mina olen Kati.",
+    "Ma elan Tallinnas.",
+    "Ma ei tööta, ma õpin.",
+    "Minu sõber Jaan töötab kohvikus.",
+    "Ta ei ole kodus, ta on tööl.",
+    "Me räägime eesti keelt.",
+    "Aga sina? Kus sina elad?",
+  ],
+} as const;
+
+/** Words and phrases with a card: the passage's words, and the phrases worth keeping. */
+export const TUTVUMINE_WORDS = [
+  "nimi",
+  "elan",
+  "elab",
+  "Pärnus",
+  "Tallinnas",
+  "ei",
+  "tööta",
+  "töötan",
+  "kontoris",
+  "kohvikus",
+  "sõber",
+  "õpib",
+  "joob",
+  "palju",
+  "kohvi",
+  "Mis su nimi on?",
+  "Väga meeldiv!",
+  "Kust sa pärit oled?",
+  "Kus sa elad?",
+  "Kus sa töötad?",
+  "Kas sa räägid eesti keelt?",
+  "Natuke.",
+  "Kuidas läheb?",
+  "Hästi, aitäh. Aga sul?",
+  "Miks?",
+  "Sest",
+  "Head aega!",
+] as const;
+
 /** The time lesson's words and phrases; each time it says is a clip of its own, by `timeClip`. */
 export const KELL_WORDS = [
   "Mis kell on?",
@@ -708,6 +792,13 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...Object.fromEntries(ALL_TIMES.map((time) => [timeClip(time), timeSentence(time)])),
   },
   paevad: { ...words(PAEVAD_WORDS), ...words(PAEVAD_SENTENCES) },
+  tutvumine: {
+    ...words(TUTVUMINE_WORDS),
+    ...TUTVUMINE_ANSWERING,
+    ...TUTVUMINE_ASKING,
+    "p-jaan": { sentences: TUTVUMINE_PASSAGES.jaan },
+    "p-kati": { sentences: TUTVUMINE_PASSAGES.kati, voice: "second" },
+  },
   kaskiv: {
     ...words([
       ...KASKIV_STEMS.flatMap(({ ma, stem }) => [`Ma ${ma}.`, commandTo(stem)]),

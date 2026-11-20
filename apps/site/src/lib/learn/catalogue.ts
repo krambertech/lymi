@@ -95,6 +95,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud.`,
       },
       {
+        slug: "tutvumine",
+        name: msg`Practice: meeting someone`,
+        title: msg`Estonian conversation practice: meeting someone`,
+        et: "Tere! Mina olen Mari.",
+        minutes: 10,
+        blurb: msg`Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud.`,
+      },
+      {
         slug: "numbrid",
         name: msg`Numbers`,
         title: msg`Estonian numbers`,

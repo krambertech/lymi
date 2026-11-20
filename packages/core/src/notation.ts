@@ -30,8 +30,11 @@ function dollar(src: string, pos: number, max: number): Scan | undefined {
   if (after >= max || isSpace(src[after])) return undefined;
   for (let i = after; i < max; i++) {
     if (src[i] === "\\") i++;
-    else if (src[i] === "$" && !isSpace(src[i - 1]) && !(i + 1 < max && isDigit(src[i + 1])))
+    else if (src[i] === "$") {
+      // The first unescaped `$` decides: "$5 and $x$" keeps "$5 and " as text, as Pandoc does.
+      if (isSpace(src[i - 1]) || (i + 1 < max && isDigit(src[i + 1]))) return undefined;
       return math(src, pos, i + 1, src.slice(after, i));
+    }
   }
   return undefined;
 }

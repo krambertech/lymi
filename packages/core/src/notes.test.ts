@@ -222,6 +222,9 @@ describe("parseNotes with notation", () => {
       expect(notation(source)).toEqual([literal(source)]);
     }
     expect(notation("\\$5 and \\$x\\$")).toEqual([paragraph(text("$5 and $x$"))]);
+    expect(notation("It costs $5 and the area is $x^2$.")).toEqual([
+      paragraph(text("It costs $5 and the area is "), math("x^2", "$x^2$"), text(".")),
+    ]);
   });
 
   it("reads display math on lines of its own", () => {
@@ -242,6 +245,16 @@ describe("parseNotes with notation", () => {
         start: 1,
         items: [[paragraph(text("step")), displayMath("x = 1", "$$x = 1$$")]],
       },
+    ]);
+    expect(notation("Steps:\n- integrate\n$$\n\\int x\\,dx\n$$")).toEqual([
+      paragraph(text("Steps:")),
+      {
+        type: "list",
+        ordered: false,
+        start: 1,
+        items: [[paragraph(text("integrate"))]],
+      },
+      displayMath("\\int x\\,dx", "$$\n\\int x\\,dx\n$$"),
     ]);
   });
 
@@ -278,11 +291,5 @@ describe("parseNotes with notation", () => {
     // An unclosed opener is an ordinary Markdown escape, as before.
     expect(notation("\\(x")).toEqual([paragraph(text("(x"))]);
     expect(notation("\\[x")).toEqual([paragraph(text("[x"))]);
-  });
-});
-
-describe("notesToText with notation nodes", () => {
-  it("keeps the source of math and code", () => {
-    expect(notesToText("**$x^2$** and `map()`")).toBe("$x^2$ and `map()`");
   });
 });

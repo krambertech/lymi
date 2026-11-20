@@ -51,7 +51,18 @@ describe("parseFieldNotation", () => {
       math("y", "$y$"),
       text("."),
     ]);
-    expect(parseFieldNotation("$a $b$")).toEqual([math("a $b", "$a $b$")]);
+    expect(parseFieldNotation("$a $b$")).toEqual([text("$a "), math("b", "$b$")]);
+    expect(parseFieldNotation("It costs $5 and the area is $x^2$.")).toEqual([
+      text("It costs $5 and the area is "),
+      math("x^2", "$x^2$"),
+      text("."),
+    ]);
+    expect(parseFieldNotation("$20,000 and $30,000 for $x$")).toEqual([
+      text("$20,000 and $30,000 for "),
+      math("x", "$x$"),
+    ]);
+    // The first span fails on the digit; the next `$` may still open one.
+    expect(parseFieldNotation("$x$5 and y$")).toEqual([text("$x"), math("5 and y", "$5 and y$")]);
   });
 
   it("keeps \\$ and \\` as a literal dollar and backtick", () => {

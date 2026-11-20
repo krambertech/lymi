@@ -31,8 +31,9 @@ const line = (state: StateBlock, n: number) =>
 
 const indented = (state: StateBlock, n: number) => (state.sCount[n] ?? 0) - state.blkIndent >= 4;
 
-const outdented = (state: StateBlock, n: number) =>
-  !state.isEmpty(n) && (state.sCount[n] ?? 0) < state.blkIndent;
+// Measured from the opening line too, so a block that interrupts a list item's lazy line still closes.
+const outdented = (state: StateBlock, start: number, n: number) =>
+  !state.isEmpty(n) && (state.sCount[n] ?? 0) < Math.min(state.blkIndent, state.sCount[start] ?? 0);
 
 /** Fenced code that must close: an unclosed fence stays text instead of swallowing the rest of the note. */
 function codeBlock(state: StateBlock, start: number, end: number, silent: boolean): boolean {
@@ -43,7 +44,7 @@ function codeBlock(state: StateBlock, start: number, end: number, silent: boolea
   if (!markup || (markup[0] === "`" && info.includes("`"))) return false;
   let close = start + 1;
   for (; ; close++) {
-    if (close >= end || outdented(state, close)) return false;
+    if (close >= end || outdented(state, start, close)) return false;
     const text = line(state, close).trimEnd();
     if (
       !indented(state, close) &&
@@ -54,7 +55,7 @@ function codeBlock(state: StateBlock, start: number, end: number, silent: boolea
       break;
   }
   if (silent) return true;
-  const token = state.push("code_block", "code", 0);
+  const token = state.push("notation_code_block", "code", 0);
   token.meta = {
     type: "codeBlock",
     value: state.getLines(start + 1, close, state.sCount[start] ?? 0, false),
@@ -83,7 +84,7 @@ function displayMath(state: StateBlock, start: number, end: number, silent: bool
     const text = (last === start ? first.slice(open.length) : line(state, last)).trimEnd();
     if (text.endsWith(close)) break;
     last++;
-    if (last >= end || state.isEmpty(last) || outdented(state, last)) return false;
+    if (last >= end || state.isEmpty(last) || outdented(state, start, last)) return false;
   }
   const source = state.getLines(start, last + 1, state.blkIndent, false).trim();
   const tex = source.slice(open.length, -close.length).trim();
@@ -190,7 +191,7 @@ export function parseNotes(source: string, { notation = false }: NoteOptions = {
       case "inline":
         into.push({ type: "paragraph", children: inlines(token.children ?? []) });
         break;
-      case "code_block":
+      case "notation_code_block":
       case "display_math":
         into.push(token.meta as NoteBlock);
         break;

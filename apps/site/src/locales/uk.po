@@ -318,8 +318,17 @@ msgstr "*Завтра* субота."
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
+msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> the irregular one: other verbs add an ending there too, as lesson {regularVerbs} shows."
+msgstr "<0/> не має закінчення і підходить і для «він, вона», і для «вони». Тому <1/> — неправильне дієслово: інші дієслова й тут мають закінчення, про це розповідає урок {regularVerbs}."
+
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> — це сто, а <1/> — тисяча, і «один» перед ними не кажуть. Сотні пишуться разом, <2/>, а тисячі окремо: <3/>."
+
+msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
+msgstr "<0/> означає і «він», і «вона»: в естонських займенниках немає роду. <1/> — це ще й ввічливе «Ви» до однієї людини, як в українській."
+
+msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
+msgstr "<0/> означає «бути». Його закінчення залежить від особи: <1/> — «я є», <2/> — «ти є». Натисни закінчення."
 
 msgid "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 msgstr "<0>-teist</0> утворює числа від одинадцяти до дев’ятнадцяти, а <1>-kümmend</1> — десятки."
@@ -368,6 +377,12 @@ msgstr "<0>Мексиканська іспанська</0>, <1>розмовні 
 msgid "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
 msgstr "<0>õ ä ö ü</0> — окремі голосні, і найнезвичніша з них <1>õ</1>."
 
+msgid "<0>olen, oled, on, oleme, olete, on</0>: I am, you are, and so on."
+msgstr "<0>olen, oled, on, oleme, olete, on</0>: «бути» для я, ти, він, ми, ви, вони."
+
+msgid "<0>on</0> is both he or she is and they are. Only the pronoun tells them apart."
+msgstr "<0>on</0> — і для «він, вона», і для «вони». Розрізнити їх можна лише за займенником."
+
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>альтернативна вартість</0> <1>= чим жертвуєш</1>"
 
@@ -385,6 +400,9 @@ msgstr "<0>Sklep</0> — це магазин, а не склеп, а <1>dynia</1
 
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> — родич давньоруського «сябр», тобто друг. Білоруською й досі кажуть «сябар»."
+
+msgid "<0>ta</0> is both he and she. <1>te</1> is you to a group, and polite you to one person."
+msgstr "<0>ta</0> — і «він», і «вона». <1>te</1> — «ви» до кількох людей і ввічливе «Ви» до однієї."
 
 msgid "<0>за́мок</0> is a castle."
 msgstr "<0>за́мок</0> — це фортеця."
@@ -646,6 +664,9 @@ msgstr "Гладка накладка на дверях підказує «шт�
 
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "Безкоштовна колода містить кожен дорожній знак із правил: за малюнком, із польською назвою та номером."
+
+msgid "A free Estonian lesson on personal pronouns, mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про особові займенники: mina, sina, tema та інші в повній і короткій формі, а ще дієслово olema, «бути». Кожне речення можна послухати."
 
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
 msgstr "Безкоштовний урок естонської вимови: дев’ять голосних з õ, ä, ö та ü, наголос на першому складі й те, як подвоєна літера змінює слово. Кожне слово озвучено."
@@ -1260,6 +1281,12 @@ msgstr "Усі правильно. Ти чуєш довготу."
 msgid "All of them. You can hear the difference."
 msgstr "Усі правильно. Ти чуєш різницю."
 
+msgid "All of them. You can hear who it's about."
+msgstr "Усі правильно. Ти чуєш, про кого мова."
+
+msgid "All of them. You know olema."
+msgstr "Усі правильно. Ти знаєш olema."
+
 msgid "All Polish decks"
 msgstr "Усі польські колоди"
 
@@ -1539,6 +1566,9 @@ msgstr "Директор банку"
 
 msgid "basket"
 msgstr "кошик"
+
+msgid "Because the ending already says who, the pronoun can go. Both lines below mean I'm Mari. Estonian can drop the pronoun, but never the verb."
+msgstr "Закінчення вже каже, хто це, тож займенник можна опустити. Обидва рядки нижче означають «Я Mari». В українській часто пропускають «є», а в естонській навпаки: без займенника можна, без дієслова ніколи."
 
 msgid "bed"
 msgstr "ліжко"
@@ -2669,6 +2699,9 @@ msgstr "Для кожної є своя сторінка: письмо, звук
 msgid "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
 msgstr "Кожна частина має ще й мінімум: 38 зі 120 за мовні знання й читання та 19 із 60 за аудіювання."
 
+msgid "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
+msgstr "У кожного займенника дві форми. Кажи коротку, <0>ma</0>, а повну, <1>mina</1>, залиш для наголосу."
+
 msgid "Each question as New, Learning or Known"
 msgstr "Кожне питання — нове, у вивченні чи засвоєне"
 
@@ -2774,6 +2807,9 @@ msgstr "Від 11 до 19: -teist"
 msgid "Ended in 1648 by the <0>Peace of Westphalia</0>."
 msgstr "Завершилася 1648 року <0>Вестфальським миром</0>."
 
+msgid "Endings of olema"
+msgstr "Закінчення olema"
+
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "Звука õ немає ні в англійській, ні в українській. Скажи «о», але не округлюй губи."
 
@@ -2819,11 +2855,17 @@ msgstr "В естонській є ще й третій ступінь довг�
 msgid "Estonian grammar lessons"
 msgstr "Уроки естонської граматики"
 
+msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you'll hear most. Tap any word."
+msgstr "В естонській шість особових займенників, і кожен має повну й коротку форму з однаковим значенням. <0/> і <1/> — це «я». Коротку, виділену кольором, ти чутимеш найчастіше. Натисни будь-яке слово."
+
 msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read any word aloud, even one you've never seen."
 msgstr "Естонською пишуть так, як вимовляють. Кожну літеру читаєш, і кожна звучить однаково, де б не стояла. Знаючи літери, ти прочитаєш уголос будь-яке слово, навіть зовсім нове."
 
 msgid "Estonian numbers"
 msgstr "Числа естонською"
+
+msgid "Estonian personal pronouns and “to be”"
+msgstr "Естонські особові займенники і «бути»"
 
 msgid "Estonian pronunciation"
 msgstr "Естонська вимова"
@@ -3095,6 +3137,9 @@ msgstr "Кожне поле заповнюєш власноруч"
 msgid "Fill it from your tools"
 msgstr "Наповнюй зі своїх інструментів"
 
+msgid "Fill the ending"
+msgstr "Встав закінчення"
+
 msgid "Fill the gap"
 msgstr "Заповни пропуск"
 
@@ -3262,6 +3307,10 @@ msgstr "забуто 4×"
 
 msgid "Forgot, Hard, Good or Easy"
 msgstr "«Не пам’ятаю», «Важко», «Добре» або «Легко»"
+
+msgctxt "pronoun form"
+msgid "Form"
+msgstr "Форма"
 
 msgid "Format from 11 April 2026"
 msgstr "Формат від 11 квітня 2026 року"
@@ -3557,6 +3606,9 @@ msgstr "Віддає пару електронів"
 msgid "Gladly"
 msgstr "Охоче"
 
+msgid "Go back to the endings above, then try again."
+msgstr "Повернися до закінчень вище й спробуй ще раз."
+
 msgid "Go home"
 msgstr "На головну"
 
@@ -3691,6 +3743,21 @@ msgstr "У тебе є *ключ*?"
 msgid "He doesn’t *like* rainy days."
 msgstr "Він не *любить* дощових днів."
 
+msgid "he or she"
+msgstr "він чи вона"
+
+msgid "he or she is"
+msgstr "він чи вона є"
+
+msgid "He or she is a teacher."
+msgstr "Він чи вона — вчитель."
+
+msgid "He or she is tired."
+msgstr "Він утомився або вона втомилася."
+
+msgid "he or she is; they are"
+msgstr "він чи вона є; вони є"
+
 msgid "He’s a good *friend* of mine."
 msgstr "Він мій добрий *друг*."
 
@@ -3713,6 +3780,9 @@ msgstr "Послухати {0}"
 #. placeholder {1}: i18n._(f.meaning)
 msgid "Hear {0}, {1}"
 msgstr "Послухати {0}, {1}"
+
+msgid "Hear a sentence and pick who it's about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
+msgstr "Послухай речення й вибери, про кого воно. Де займенника немає, слухай кінець дієслова. З <0/> відрізнити <1/> від <2/> можна лише за займенником."
 
 msgid "Hear both"
 msgstr "Послухати обидва"
@@ -3944,6 +4014,9 @@ msgstr "Я *думаю*, це чудово."
 msgid "I add words with Yomitan. Does that still work?"
 msgstr "Я додаю слова через Yomitan. Це працюватиме й далі?"
 
+msgid "I am"
+msgstr "я є"
+
 msgid "I ate an *apple*."
 msgstr "Я з’їв *яблуко*."
 
@@ -4103,6 +4176,9 @@ msgstr "Я *читаю* газету."
 msgid "I'm 34 years old."
 msgstr "Мені 34 роки."
 
+msgid "I'm at home."
+msgstr "Я вдома."
+
 msgid "I’m getting up early *tomorrow* morning."
 msgstr "*Завтра* я встаю рано."
 
@@ -4133,17 +4209,26 @@ msgstr "Я йду в магазин по хліб."
 msgid "I’m having a cheese *roll*."
 msgstr "Я їм *булочку* з сиром."
 
+msgid "I'm Liis, and he's Peeter."
+msgstr "Я Liis, а він Peeter."
+
 msgid "I’m listening to *music*."
 msgstr "Я слухаю *музику*."
 
 msgid "I’m making *pumpkin* soup."
 msgstr "Варю *гарбузовий* суп."
 
+msgid "I'm Mari."
+msgstr "Я Mari."
+
 msgid "I’m not *doing* anything."
 msgstr "Я нічого не *роблю*."
 
 msgid "I’m reading a fashion *magazine*."
 msgstr "Я читаю *журнал* про моду."
+
+msgid "I'm ready."
+msgstr "Я готовий (готова)."
 
 msgid "I’m taking the *dog* for a walk."
 msgstr "Я йду гуляти із *собакою*."
@@ -4852,6 +4937,9 @@ msgstr "Послухати"
 msgid "Listen first."
 msgstr "Спершу прослухай."
 
+msgid "Listen to the end of the verb. Try the table above, then come back."
+msgstr "Слухай кінець дієслова. Пограйся зі столом вище й повертайся."
+
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
 
@@ -4869,6 +4957,13 @@ msgstr "Місцевий відмінок"
 
 msgid "Lock"
 msgstr "Замок (на дверях)"
+
+msgctxt "pronoun form"
+msgid "Long"
+msgstr "Повна"
+
+msgid "Long forms, because the two people are set side by side."
+msgstr "Повні форми, бо двох людей протиставлено."
 
 msgid "Long time no see"
 msgstr "Давно не бачились"
@@ -5269,6 +5364,9 @@ msgstr "Понад 50 000 готових колод. Бібліотека Lymi �
 msgid "More than a translation."
 msgstr "Більше, ніж переклад."
 
+msgid "More than one"
+msgstr "Множина"
+
 msgid "More updates"
 msgstr "Інші оновлення"
 
@@ -5368,6 +5466,9 @@ msgstr "Природа"
 msgid "NCLEX pharmacology"
 msgstr "Фармакологія NCLEX"
 
+msgid "Nearly. Tap the endings above once more."
+msgstr "Майже. Ще раз понатискай закінчення вище."
+
 msgid "Needed; your cards live on Lymi’s servers"
 msgstr "Потрібен; картки зберігаються на серверах Lymi"
 
@@ -5457,6 +5558,9 @@ msgstr "Без денного ліміту"
 
 msgid "No deck at this address · Lymi"
 msgstr "За цією адресою немає колоди · Lymi"
+
+msgid "No ending. Ta on and nad on: he or she is, they are."
+msgstr "Без закінчення. Ta on і nad on: «він, вона» і «вони»."
 
 msgid "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "В українській такого звуку немає. Найближче до нього російське «ы», трохи схоже й українське «и». Скажи «о», потім розтягни губи, а язик залиш на місці."
@@ -5624,6 +5728,9 @@ msgstr "іменник"
 msgid "Nouns and cases"
 msgstr "Іменники та відмінки"
 
+msgid "Now both together. You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
+msgstr "Тепер разом. Ти сидиш унизу й говориш із Mari та Jaan навпроти. Liis і Kadri сидять обабіч тебе, а Peeter праворуч. Натисни слово, щоб побачити, кого воно означає, або натисни на людину."
+
 msgid "Number"
 msgstr "Число"
 
@@ -5700,6 +5807,9 @@ msgstr "старий"
 msgid "Older"
 msgstr "Раніше"
 
+msgid "Olema, to be"
+msgstr "Olema, бути"
+
 msgid "On iPhone"
 msgstr "На iPhone"
 
@@ -5765,6 +5875,12 @@ msgstr "Одна з двох дзеркальних форм"
 
 msgid "One of the ten base words."
 msgstr "Одне з десяти базових слів."
+
+msgid "One person"
+msgstr "Одна людина"
+
+msgid "One person you're talking to, such as Mari."
+msgstr "Людина, з якою ти говориш, наприклад Mari."
 
 msgid "One shared deck, everyone on their own schedule"
 msgstr "Одна спільна колода, у кожного свій розклад"
@@ -5858,6 +5974,9 @@ msgstr "Інші іспити"
 
 msgid "Other MCP apps"
 msgstr "Інші MCP-застосунки"
+
+msgid "Other people, not the ones you're talking to."
+msgstr "Інші люди, не ті, з ким ти говориш."
 
 msgid "Other subjects"
 msgstr "Інші теми"
@@ -6000,6 +6119,9 @@ msgstr "Вибери OAuth, потім Client ID Metadata Documents. Створ�
 msgid "Pick one, add it for free, and start reviewing."
 msgstr "Обери колоду, додай її безкоштовно й починай повторювати."
 
+msgid "Pick the ending that goes with the pronoun, then hear the sentence."
+msgstr "Обери закінчення, яке пасує до займенника, а потім послухай речення."
+
 msgid "Pick up where you left off"
 msgstr "Продовж з того ж місця"
 
@@ -6045,6 +6167,7 @@ msgstr "Простий текст"
 msgid "Platform, track"
 msgstr "Колія, платформа"
 
+#. placeholder {0}: PRONOUN_SENTENCES[id]
 #. placeholder {0}: w.term
 msgid "Play {0}"
 msgstr "Відтворити {0}"
@@ -6218,6 +6341,9 @@ msgstr "Програмування"
 
 msgid "Project management"
 msgstr "Управління проєктами"
+
+msgid "Pronouns"
+msgstr "Займенники"
 
 msgid "Pronunciation"
 msgstr "Вимова"
@@ -6617,6 +6743,9 @@ msgstr "Корінці, стовбури, поділи, пучки, гілки: 
 msgid "Round {roundNumber} of {total}"
 msgstr "Раунд {roundNumber} з {total}"
 
+msgid "Round the table"
+msgstr "За столом"
+
 msgid "Run /mcp auth lymi. Your browser opens on Lymi. Sign in and allow it."
 msgstr "Запусти /mcp auth lymi. У браузері відкриється Lymi. Увійди й дозволь доступ."
 
@@ -6691,6 +6820,9 @@ msgstr "Вимова"
 
 msgid "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "Скажи «о», потім розтягни губи, а язик залиш на місці. Близьке до російського «ы», трохи схоже й українське «и»."
+
+msgid "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
+msgstr "Повну форму кажуть, коли займенник під наголосом: коли він стоїть сам або коли одну людину протиставляють іншій. <0/>"
 
 msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
 msgstr "Казати, що мусиш, хочеш і любиш робити, розповідати, як минув учорашній день і з ким."
@@ -6827,6 +6959,9 @@ msgstr "Налаштуй рутину, і Grok Bot щоранку перевір
 msgid "Set fields, plain text"
 msgstr "Фіксовані поля, простий текст"
 
+msgid "Setting two people side by side takes the long forms: <0/>"
+msgstr "Коли двох людей протиставляють, кажуть повні форми: <0/>"
+
 msgid "seven"
 msgstr "сім"
 
@@ -6890,11 +7025,30 @@ msgstr "магазин"
 msgid "Shop"
 msgstr "Магазин"
 
+msgctxt "pronoun form"
+msgid "Short"
+msgstr "Коротка"
+
 msgid "Short and long"
 msgstr "Короткі й довгі звуки"
 
+msgid "Short for meie."
+msgstr "Скорочено від meie."
+
 msgid "Short for mina."
 msgstr "Скорочено від mina."
+
+msgid "Short for nemad."
+msgstr "Скорочено від nemad."
+
+msgid "Short for sina."
+msgstr "Скорочено від sina."
+
+msgid "Short for teie."
+msgstr "Скорочено від teie."
+
+msgid "Short for tema."
+msgstr "Скорочено від tema."
 
 msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 msgstr "Короткі безкоштовні уроки від перших звуків до B1. Натисни на будь-яке слово, щоб його почути, і пробуй кожне правило просто під час читання."
@@ -6971,6 +7125,12 @@ msgstr "Додивлятися поганий фільм лише через у�
 
 msgid "six"
 msgstr "шість"
+
+msgid "Six pronouns, two forms"
+msgstr "Шість займенників, дві форми"
+
+msgid "Six words for people, each with a long and a short form, and olema, to be, whose ending tells you who."
+msgstr "Шість особових займенників, кожен у повній і короткій формі, і дієслово olema, «бути», закінчення якого підказує, хто це."
 
 msgid "Skills for the jobs you repeat"
 msgstr "Навички для повторюваних справ"
@@ -7049,6 +7209,9 @@ msgstr "Sobre — «над», mesa — «стіл». Буває, що вона �
 
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Деякі кандзі в китайському шрифті виглядають інакше. Lymi показує твої картки в японському написанні, як у японських книжках."
+
+msgid "Someone else, a man or a woman: one word for both."
+msgstr "Хтось інший, чоловік чи жінка: одне слово для обох."
 
 msgid "Someone’s knocking at the *door*."
 msgstr "Хтось стукає в *двері*."
@@ -7434,6 +7597,12 @@ msgstr "тамільська"
 msgid "Tap a vowel"
 msgstr "Натисни на голосну"
 
+msgid "Tap a word or a person"
+msgstr "Натисни слово або людину"
+
+msgid "Tap an ending"
+msgstr "Натисни закінчення"
+
 msgid "Tap to turn it over"
 msgstr "Торкнися, щоб перевернути"
 
@@ -7692,6 +7861,21 @@ msgstr "Край криги"
 msgid "The end of the working day"
 msgstr "Кінець робочого дня"
 
+msgid "The ending for ma, I."
+msgstr "Закінчення для ma, «я»."
+
+msgid "The ending for me, we."
+msgstr "Закінчення для me, «ми»."
+
+msgid "The ending for sa, you."
+msgstr "Закінчення для sa, «ти»."
+
+msgid "The ending for te, you to more than one."
+msgstr "Закінчення для te, «ви»."
+
+msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
+msgstr "Закінчення каже, хто це, тож займенник можна опустити: <0>Olen Mari.</0>"
+
 msgid "The evening after work"
 msgstr "Вечір після роботи"
 
@@ -7821,6 +8005,9 @@ msgstr "Частина клітини, що вивільняє енергію з
 msgid "The partitive case"
 msgstr "Партитив"
 
+msgid "The people you're talking to, or one person, politely."
+msgstr "Люди, з якими ти говориш, або одна людина, якщо ввічливо."
+
 msgid "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 msgstr "Застосунок на телефоні запитує дозвіл, перш ніж надсилати твій власний вміст до AI. У вебзастосунку, через API-ключі й підключені застосунки AI працює, доки вибір для облікового запису не зроблено. Вимкнути AI-сервіси можна в розділі Ти на телефоні або в Налаштуваннях у вебзастосунку. Явне вимкнення зупиняє нову AI-обробку твого вмісту в усьому Lymi, зокрема у фоновому режимі й через підключені застосунки. Збережені текст та аудіо залишаються, а додавати картки вручну й повторювати їх можна й далі. Для аудіо спільних та опублікованих карток діє вибір власника."
 
@@ -7905,6 +8092,24 @@ msgstr "Та сама тема іншими мовами"
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "Одне слово і для коханої людини, і для ціни, яку не хочеться платити."
 
+msgid "The short form is ma."
+msgstr "Коротка форма: ma."
+
+msgid "The short form is me."
+msgstr "Коротка форма: me."
+
+msgid "The short form is nad."
+msgstr "Коротка форма: nad."
+
+msgid "The short form is sa."
+msgstr "Коротка форма: sa."
+
+msgid "The short form is ta."
+msgstr "Коротка форма: ta."
+
+msgid "The short form is te."
+msgstr "Коротка форма: te."
+
 msgid "The small words every sentence is built from."
 msgstr "Маленькі слова, з яких складається кожне речення."
 
@@ -7925,6 +8130,9 @@ msgstr "Страйк"
 
 msgid "The sugar photosynthesis makes"
 msgstr "Цукор, що утворюється під час фотосинтезу"
+
+msgid "The table lights up who the word means."
+msgstr "За столом підсвітяться ті, про кого це слово."
 
 msgid "The tens"
 msgstr "Десятки"
@@ -8022,6 +8230,12 @@ msgstr "З цих десяти слів будується будь-яке ін�
 msgid "These three keep slipping. Let’s start with la huelga."
 msgstr "Ці три постійно вислизають. Почнімо з la huelga."
 
+msgid "they"
+msgstr "вони"
+
+msgid "they are"
+msgstr "вони є"
+
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "Вони відповідають джерелу {source} ({edition}), дослівно як в іспиті. Переклади й пояснення написав Lymi; він не пов’язаний з {authority} і не може гарантувати, що ти складеш іспит."
 
@@ -8033,6 +8247,12 @@ msgstr "Кажуть, *завтра* буде дощ."
 
 msgid "They stay in Mochi. A card’s first side becomes its term and the rest becomes its meaning, and its first picture comes along."
 msgstr "Вони лишаються в Mochi. Перша сторона картки стає терміном, решта — значенням, а перше зображення переноситься разом із нею."
+
+msgid "They're at home."
+msgstr "Вони вдома."
+
+msgid "They're tired."
+msgstr "Вони втомилися."
 
 msgid "Things to ask ChatGPT."
 msgstr "Що можна попросити в ChatGPT."
@@ -8177,6 +8397,9 @@ msgstr "чайові"
 
 msgid "To agree"
 msgstr "Погоджуватися"
+
+msgid "to be"
+msgstr "бути"
 
 msgid "To be"
 msgstr "Бути"
@@ -8701,6 +8924,12 @@ msgstr "Рух води крізь мембрану туди, де більше 
 msgid "Water moving through a membrane toward the side with more dissolved substance"
 msgstr "Рух води крізь мембрану в бік, де більше розчиненої речовини"
 
+msgid "we"
+msgstr "ми"
+
+msgid "we are"
+msgstr "ми є"
+
 msgid "We bought a *rug* for the living room."
 msgstr "Ми купили *килим* у вітальню."
 
@@ -8731,6 +8960,9 @@ msgstr "Ми використовуємо файли cookie й сховище п
 msgid "We’ll meet at the station."
 msgstr "Зустрінемося на вокзалі."
 
+msgid "We're friends."
+msgstr "Ми друзі."
+
 msgid "We’re going into *town*."
 msgstr "Ми їдемо в *місто*."
 
@@ -8739,6 +8971,9 @@ msgstr "Ми шукаємо нову *квартиру*."
 
 msgid "We’re old *friends*."
 msgstr "Ми давні *друзі*."
+
+msgid "We're ready."
+msgstr "Ми готові."
 
 msgid "Weather"
 msgstr "Погода"
@@ -8978,6 +9213,9 @@ msgstr "На яких планах ChatGPT можна підключити Lymi?
 msgid "Which deck should I add?"
 msgstr "Яку колоду додати?"
 
+msgid "Which ending?"
+msgstr "Яке закінчення?"
+
 msgid "Which language are the translations in?"
 msgstr "Якою мовою переклад?"
 
@@ -9029,6 +9267,9 @@ msgstr "Хто бачить картки, які я створюю?"
 msgid "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
 msgstr "Хто в США може голосувати на федеральних виборах, балотуватися на федеральну посаду й бути присяжним?"
 
+msgid "Who is it about?"
+msgstr "Про кого це?"
+
 msgid "Who is responsible"
 msgstr "Хто відповідає за дані"
 
@@ -9037,6 +9278,9 @@ msgstr "Хто його знає?"
 
 msgid "Who were the first Europeans to reach Canada?"
 msgstr "Хто з європейців першим дістався Канади?"
+
+msgid "Who? Me!"
+msgstr "Хто? Я!"
 
 msgid "Whose notes"
 msgstr "Чиї нотатки"
@@ -9320,8 +9564,23 @@ msgstr "учора"
 msgid "Yesterday was a rest day."
 msgstr "Учора був день відпочинку."
 
+msgid "you"
+msgstr "ти"
+
 msgid "You"
 msgstr "Ти"
+
+msgid "you all"
+msgstr "ви"
+
+msgid "You and someone else."
+msgstr "Ти і ще хтось."
+
+msgid "you are"
+msgstr "ти є"
+
+msgid "you are, to more than one; polite you are"
+msgstr "ви є; ввічливе «Ви є»"
 
 msgid "You build your own card layouts"
 msgstr "Тобі потрібні власні макети карток"
@@ -9401,11 +9660,35 @@ msgstr "Ти хочеш тримати все на власному комп’�
 msgid "You wrote this"
 msgstr "Це написано тобою"
 
+msgid "You, the one speaking."
+msgstr "Ти — той, хто говорить."
+
 msgid "you, to more than one person"
 msgstr "ви, до кількох людей"
 
+msgid "you, to more than one; polite you"
+msgstr "ви; ввічливе «Ви»"
+
+msgid "you, to one person"
+msgstr "ти"
+
 msgid "You'll hear it in a word, with a note on how to say it."
 msgstr "Почуєш її в слові й дізнаєшся, як її вимовляти."
+
+msgid "You'll hear the form and who it's for."
+msgstr "Почуєш форму й дізнаєшся, для кого вона."
+
+msgid "You're a good friend."
+msgstr "Ти добрий друг."
+
+msgid "You're all doing great."
+msgstr "Ви молодці."
+
+msgid "You're doing great."
+msgstr "Ти молодець."
+
+msgid "You're teachers."
+msgstr "Ви вчителі."
 
 msgid "You’re welcome"
 msgstr "Нема за що"

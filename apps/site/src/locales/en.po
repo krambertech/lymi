@@ -318,8 +318,17 @@ msgstr "*Tomorrow* is Saturday."
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {due} other {due}}"
 
+msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> the irregular one: other verbs add an ending there too, as lesson {regularVerbs} shows."
+msgstr "<0/> has no ending, and it serves both he or she and they. That makes <1/> the irregular one: other verbs add an ending there too, as lesson {regularVerbs} shows."
+
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
+
+msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
+msgstr "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
+
+msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
+msgstr "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 
 msgid "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 msgstr "<0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
@@ -368,6 +377,12 @@ msgstr "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgid "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
 msgstr "<0>õ ä ö ü</0> are vowels of their own, and <1>õ</1> is the new one."
 
+msgid "<0>olen, oled, on, oleme, olete, on</0>: I am, you are, and so on."
+msgstr "<0>olen, oled, on, oleme, olete, on</0>: I am, you are, and so on."
+
+msgid "<0>on</0> is both he or she is and they are. Only the pronoun tells them apart."
+msgstr "<0>on</0> is both he or she is and they are. Only the pronoun tells them apart."
+
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>opportunity cost</0> <1>= what you give up</1>"
 
@@ -385,6 +400,9 @@ msgstr "<0>Sklep</0> is a shop, not a crypt, and <1>dynia</1> is a pumpkin, not 
 
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
+
+msgid "<0>ta</0> is both he and she. <1>te</1> is you to a group, and polite you to one person."
+msgstr "<0>ta</0> is both he and she. <1>te</1> is you to a group, and polite you to one person."
 
 msgid "<0>за́мок</0> is a castle."
 msgstr "<0>за́мок</0> is a castle."
@@ -646,6 +664,9 @@ msgstr "A flat plate on a door says push; a handle says pull."
 
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
+
+msgid "A free Estonian lesson on personal pronouns, mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
+msgstr "A free Estonian lesson on personal pronouns, mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 
 msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
 msgstr "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
@@ -1260,6 +1281,12 @@ msgstr "All of them. You can hear length."
 msgid "All of them. You can hear the difference."
 msgstr "All of them. You can hear the difference."
 
+msgid "All of them. You can hear who it's about."
+msgstr "All of them. You can hear who it's about."
+
+msgid "All of them. You know olema."
+msgstr "All of them. You know olema."
+
 msgid "All Polish decks"
 msgstr "All Polish decks"
 
@@ -1539,6 +1566,9 @@ msgstr "Bank president"
 
 msgid "basket"
 msgstr "basket"
+
+msgid "Because the ending already says who, the pronoun can go. Both lines below mean I'm Mari. Estonian can drop the pronoun, but never the verb."
+msgstr "Because the ending already says who, the pronoun can go. Both lines below mean I'm Mari. Estonian can drop the pronoun, but never the verb."
 
 msgid "bed"
 msgstr "bed"
@@ -2669,6 +2699,9 @@ msgstr "Each has its own page: the script, the sounds and the free decks that la
 msgid "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
 msgstr "Each part also has a minimum: 38 of 120 in language knowledge and reading, and 19 of 60 in listening."
 
+msgid "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
+msgstr "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
+
 msgid "Each question as New, Learning or Known"
 msgstr "Each question as New, Learning or Known"
 
@@ -2774,6 +2807,9 @@ msgstr "Eleven to nineteen: -teist"
 msgid "Ended in 1648 by the <0>Peace of Westphalia</0>."
 msgstr "Ended in 1648 by the <0>Peace of Westphalia</0>."
 
+msgid "Endings of olema"
+msgstr "Endings of olema"
+
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "English has no õ. Say “o” without rounding your lips."
 
@@ -2819,11 +2855,17 @@ msgstr "Estonian also has a third, extra-long length, and the spelling doesn't a
 msgid "Estonian grammar lessons"
 msgstr "Estonian grammar lessons"
 
+msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you'll hear most. Tap any word."
+msgstr "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you'll hear most. Tap any word."
+
 msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read any word aloud, even one you've never seen."
 msgstr "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read any word aloud, even one you've never seen."
 
 msgid "Estonian numbers"
 msgstr "Estonian numbers"
+
+msgid "Estonian personal pronouns and “to be”"
+msgstr "Estonian personal pronouns and “to be”"
 
 msgid "Estonian pronunciation"
 msgstr "Estonian pronunciation"
@@ -3095,6 +3137,9 @@ msgstr "Fill in each field yourself"
 msgid "Fill it from your tools"
 msgstr "Fill it from your tools"
 
+msgid "Fill the ending"
+msgstr "Fill the ending"
+
 msgid "Fill the gap"
 msgstr "Fill the gap"
 
@@ -3262,6 +3307,10 @@ msgstr "forgot 4×"
 
 msgid "Forgot, Hard, Good or Easy"
 msgstr "Forgot, Hard, Good or Easy"
+
+msgctxt "pronoun form"
+msgid "Form"
+msgstr "Form"
 
 msgid "Format from 11 April 2026"
 msgstr "Format from 11 April 2026"
@@ -3557,6 +3606,9 @@ msgstr "Gives away a pair of electrons"
 msgid "Gladly"
 msgstr "Gladly"
 
+msgid "Go back to the endings above, then try again."
+msgstr "Go back to the endings above, then try again."
+
 msgid "Go home"
 msgstr "Go home"
 
@@ -3691,6 +3743,21 @@ msgstr "Have you got the *key*?"
 msgid "He doesn’t *like* rainy days."
 msgstr "He doesn’t *like* rainy days."
 
+msgid "he or she"
+msgstr "he or she"
+
+msgid "he or she is"
+msgstr "he or she is"
+
+msgid "He or she is a teacher."
+msgstr "He or she is a teacher."
+
+msgid "He or she is tired."
+msgstr "He or she is tired."
+
+msgid "he or she is; they are"
+msgstr "he or she is; they are"
+
 msgid "He’s a good *friend* of mine."
 msgstr "He’s a good *friend* of mine."
 
@@ -3713,6 +3780,9 @@ msgstr "Hear {0}"
 #. placeholder {1}: i18n._(f.meaning)
 msgid "Hear {0}, {1}"
 msgstr "Hear {0}, {1}"
+
+msgid "Hear a sentence and pick who it's about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
+msgstr "Hear a sentence and pick who it's about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 
 msgid "Hear both"
 msgstr "Hear both"
@@ -3944,6 +4014,9 @@ msgstr "I *think* it’s great."
 msgid "I add words with Yomitan. Does that still work?"
 msgstr "I add words with Yomitan. Does that still work?"
 
+msgid "I am"
+msgstr "I am"
+
 msgid "I ate an *apple*."
 msgstr "I ate an *apple*."
 
@@ -4103,6 +4176,9 @@ msgstr "I’m *reading* the newspaper."
 msgid "I'm 34 years old."
 msgstr "I'm 34 years old."
 
+msgid "I'm at home."
+msgstr "I'm at home."
+
 msgid "I’m getting up early *tomorrow* morning."
 msgstr "I’m getting up early *tomorrow* morning."
 
@@ -4133,17 +4209,26 @@ msgstr "I’m going to the shop for bread."
 msgid "I’m having a cheese *roll*."
 msgstr "I’m having a cheese *roll*."
 
+msgid "I'm Liis, and he's Peeter."
+msgstr "I'm Liis, and he's Peeter."
+
 msgid "I’m listening to *music*."
 msgstr "I’m listening to *music*."
 
 msgid "I’m making *pumpkin* soup."
 msgstr "I’m making *pumpkin* soup."
 
+msgid "I'm Mari."
+msgstr "I'm Mari."
+
 msgid "I’m not *doing* anything."
 msgstr "I’m not *doing* anything."
 
 msgid "I’m reading a fashion *magazine*."
 msgstr "I’m reading a fashion *magazine*."
+
+msgid "I'm ready."
+msgstr "I'm ready."
 
 msgid "I’m taking the *dog* for a walk."
 msgstr "I’m taking the *dog* for a walk."
@@ -4852,6 +4937,9 @@ msgstr "Listen"
 msgid "Listen first."
 msgstr "Listen first."
 
+msgid "Listen to the end of the verb. Try the table above, then come back."
+msgstr "Listen to the end of the verb. Try the table above, then come back."
+
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
 
@@ -4869,6 +4957,13 @@ msgstr "Locative"
 
 msgid "Lock"
 msgstr "Lock"
+
+msgctxt "pronoun form"
+msgid "Long"
+msgstr "Long"
+
+msgid "Long forms, because the two people are set side by side."
+msgstr "Long forms, because the two people are set side by side."
 
 msgid "Long time no see"
 msgstr "Long time no see"
@@ -5269,6 +5364,9 @@ msgstr "More than 50,000 ready-made decks. Lymi’s library is smaller, so you�
 msgid "More than a translation."
 msgstr "More than a translation."
 
+msgid "More than one"
+msgstr "More than one"
+
 msgid "More updates"
 msgstr "More updates"
 
@@ -5368,6 +5466,9 @@ msgstr "Nature"
 msgid "NCLEX pharmacology"
 msgstr "NCLEX pharmacology"
 
+msgid "Nearly. Tap the endings above once more."
+msgstr "Nearly. Tap the endings above once more."
+
 msgid "Needed; your cards live on Lymi’s servers"
 msgstr "Needed; your cards live on Lymi’s servers"
 
@@ -5457,6 +5558,9 @@ msgstr "No daily limit"
 
 msgid "No deck at this address · Lymi"
 msgstr "No deck at this address · Lymi"
+
+msgid "No ending. Ta on and nad on: he or she is, they are."
+msgstr "No ending. Ta on and nad on: he or she is, they are."
 
 msgid "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
@@ -5624,6 +5728,9 @@ msgstr "noun"
 msgid "Nouns and cases"
 msgstr "Nouns and cases"
 
+msgid "Now both together. You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
+msgstr "Now both together. You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
+
 msgid "Number"
 msgstr "Number"
 
@@ -5700,6 +5807,9 @@ msgstr "old"
 msgid "Older"
 msgstr "Older"
 
+msgid "Olema, to be"
+msgstr "Olema, to be"
+
 msgid "On iPhone"
 msgstr "On iPhone"
 
@@ -5765,6 +5875,12 @@ msgstr "One of a mirror-image pair"
 
 msgid "One of the ten base words."
 msgstr "One of the ten base words."
+
+msgid "One person"
+msgstr "One person"
+
+msgid "One person you're talking to, such as Mari."
+msgstr "One person you're talking to, such as Mari."
 
 msgid "One shared deck, everyone on their own schedule"
 msgstr "One shared deck, everyone on their own schedule"
@@ -5858,6 +5974,9 @@ msgstr "Other exams"
 
 msgid "Other MCP apps"
 msgstr "Other MCP apps"
+
+msgid "Other people, not the ones you're talking to."
+msgstr "Other people, not the ones you're talking to."
 
 msgid "Other subjects"
 msgstr "Other subjects"
@@ -6000,6 +6119,9 @@ msgstr "Pick OAuth, then Client ID Metadata Documents. Create it as a plugin. Th
 msgid "Pick one, add it for free, and start reviewing."
 msgstr "Pick one, add it for free, and start reviewing."
 
+msgid "Pick the ending that goes with the pronoun, then hear the sentence."
+msgstr "Pick the ending that goes with the pronoun, then hear the sentence."
+
 msgid "Pick up where you left off"
 msgstr "Pick up where you left off"
 
@@ -6045,6 +6167,7 @@ msgstr "Plain text"
 msgid "Platform, track"
 msgstr "Platform, track"
 
+#. placeholder {0}: PRONOUN_SENTENCES[id]
 #. placeholder {0}: w.term
 msgid "Play {0}"
 msgstr "Play {0}"
@@ -6218,6 +6341,9 @@ msgstr "Programming"
 
 msgid "Project management"
 msgstr "Project management"
+
+msgid "Pronouns"
+msgstr "Pronouns"
 
 msgid "Pronunciation"
 msgstr "Pronunciation"
@@ -6617,6 +6743,9 @@ msgstr "Roots, trunks, divisions, cords, branches: from C5 to T1."
 msgid "Round {roundNumber} of {total}"
 msgstr "Round {roundNumber} of {total}"
 
+msgid "Round the table"
+msgstr "Round the table"
+
 msgid "Run /mcp auth lymi. Your browser opens on Lymi. Sign in and allow it."
 msgstr "Run /mcp auth lymi. Your browser opens on Lymi. Sign in and allow it."
 
@@ -6691,6 +6820,9 @@ msgstr "Say it"
 
 msgid "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
 msgstr "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
+
+msgid "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
+msgstr "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
 
 msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
 msgstr "Say what you must, want and like to do, what you did yesterday, and with whom."
@@ -6827,6 +6959,9 @@ msgstr "Set a routine and Grok Bot checks Lymi each morning: what’s due, and h
 msgid "Set fields, plain text"
 msgstr "Set fields, plain text"
 
+msgid "Setting two people side by side takes the long forms: <0/>"
+msgstr "Setting two people side by side takes the long forms: <0/>"
+
 msgid "seven"
 msgstr "seven"
 
@@ -6890,11 +7025,30 @@ msgstr "shop"
 msgid "Shop"
 msgstr "Shop"
 
+msgctxt "pronoun form"
+msgid "Short"
+msgstr "Short"
+
 msgid "Short and long"
 msgstr "Short and long"
 
+msgid "Short for meie."
+msgstr "Short for meie."
+
 msgid "Short for mina."
 msgstr "Short for mina."
+
+msgid "Short for nemad."
+msgstr "Short for nemad."
+
+msgid "Short for sina."
+msgstr "Short for sina."
+
+msgid "Short for teie."
+msgstr "Short for teie."
+
+msgid "Short for tema."
+msgstr "Short for tema."
 
 msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 msgstr "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
@@ -6971,6 +7125,12 @@ msgstr "Sitting through a bad film because you paid for the ticket."
 
 msgid "six"
 msgstr "six"
+
+msgid "Six pronouns, two forms"
+msgstr "Six pronouns, two forms"
+
+msgid "Six words for people, each with a long and a short form, and olema, to be, whose ending tells you who."
+msgstr "Six words for people, each with a long and a short form, and olema, to be, whose ending tells you who."
 
 msgid "Skills for the jobs you repeat"
 msgstr "Skills for the jobs you repeat"
@@ -7049,6 +7209,9 @@ msgstr "Sobre, over, plus mesa, table. It can outlast the meal."
 
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
+
+msgid "Someone else, a man or a woman: one word for both."
+msgstr "Someone else, a man or a woman: one word for both."
 
 msgid "Someone’s knocking at the *door*."
 msgstr "Someone’s knocking at the *door*."
@@ -7434,6 +7597,12 @@ msgstr "Tamil"
 msgid "Tap a vowel"
 msgstr "Tap a vowel"
 
+msgid "Tap a word or a person"
+msgstr "Tap a word or a person"
+
+msgid "Tap an ending"
+msgstr "Tap an ending"
+
 msgid "Tap to turn it over"
 msgstr "Tap to turn it over"
 
@@ -7692,6 +7861,21 @@ msgstr "The edge of the ice"
 msgid "The end of the working day"
 msgstr "The end of the working day"
 
+msgid "The ending for ma, I."
+msgstr "The ending for ma, I."
+
+msgid "The ending for me, we."
+msgstr "The ending for me, we."
+
+msgid "The ending for sa, you."
+msgstr "The ending for sa, you."
+
+msgid "The ending for te, you to more than one."
+msgstr "The ending for te, you to more than one."
+
+msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
+msgstr "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
+
 msgid "The evening after work"
 msgstr "The evening after work"
 
@@ -7821,6 +8005,9 @@ msgstr "The part of a cell that releases energy from food"
 msgid "The partitive case"
 msgstr "The partitive case"
 
+msgid "The people you're talking to, or one person, politely."
+msgstr "The people you're talking to, or one person, politely."
+
 msgid "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 msgstr "The phone app asks permission before sending your own content to AI. On the web, and through API keys or connected apps, AI runs while the account choice is unanswered. You can turn AI services off in You on the phone or Settings on the web. An explicit off stops new AI processing for your content across Lymi, including background work and connected apps. Saved text and audio remain, and you can still add cards manually and review. Audio for shared and published cards follows the owner’s choice."
 
@@ -7905,6 +8092,24 @@ msgstr "The same topic in other languages"
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "The same word for someone you love and a price you’d rather not pay."
 
+msgid "The short form is ma."
+msgstr "The short form is ma."
+
+msgid "The short form is me."
+msgstr "The short form is me."
+
+msgid "The short form is nad."
+msgstr "The short form is nad."
+
+msgid "The short form is sa."
+msgstr "The short form is sa."
+
+msgid "The short form is ta."
+msgstr "The short form is ta."
+
+msgid "The short form is te."
+msgstr "The short form is te."
+
 msgid "The small words every sentence is built from."
 msgstr "The small words every sentence is built from."
 
@@ -7925,6 +8130,9 @@ msgstr "The strike"
 
 msgid "The sugar photosynthesis makes"
 msgstr "The sugar photosynthesis makes"
+
+msgid "The table lights up who the word means."
+msgstr "The table lights up who the word means."
 
 msgid "The tens"
 msgstr "The tens"
@@ -8022,6 +8230,12 @@ msgstr "These ten words build every other number. Tap each one. Two pairs sound 
 msgid "These three keep slipping. Let’s start with la huelga."
 msgstr "These three keep slipping. Let’s start with la huelga."
 
+msgid "they"
+msgstr "they"
+
+msgid "they are"
+msgstr "they are"
+
 msgid "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "They follow {source} ({edition}), in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 
@@ -8033,6 +8247,12 @@ msgstr "They say it’ll rain *tomorrow*."
 
 msgid "They stay in Mochi. A card’s first side becomes its term and the rest becomes its meaning, and its first picture comes along."
 msgstr "They stay in Mochi. A card’s first side becomes its term and the rest becomes its meaning, and its first picture comes along."
+
+msgid "They're at home."
+msgstr "They're at home."
+
+msgid "They're tired."
+msgstr "They're tired."
 
 msgid "Things to ask ChatGPT."
 msgstr "Things to ask ChatGPT."
@@ -8177,6 +8397,9 @@ msgstr "tip"
 
 msgid "To agree"
 msgstr "To agree"
+
+msgid "to be"
+msgstr "to be"
 
 msgid "To be"
 msgstr "To be"
@@ -8701,6 +8924,12 @@ msgstr "Water moving across a membrane toward more solute"
 msgid "Water moving through a membrane toward the side with more dissolved substance"
 msgstr "Water moving through a membrane toward the side with more dissolved substance"
 
+msgid "we"
+msgstr "we"
+
+msgid "we are"
+msgstr "we are"
+
 msgid "We bought a *rug* for the living room."
 msgstr "We bought a *rug* for the living room."
 
@@ -8731,6 +8960,9 @@ msgstr "We use cookies and device storage for sign-in, preferences, offline use 
 msgid "We’ll meet at the station."
 msgstr "We’ll meet at the station."
 
+msgid "We're friends."
+msgstr "We're friends."
+
 msgid "We’re going into *town*."
 msgstr "We’re going into *town*."
 
@@ -8739,6 +8971,9 @@ msgstr "We’re looking for a new *flat*."
 
 msgid "We’re old *friends*."
 msgstr "We’re old *friends*."
+
+msgid "We're ready."
+msgstr "We're ready."
 
 msgid "Weather"
 msgstr "Weather"
@@ -8978,6 +9213,9 @@ msgstr "Which ChatGPT plans can connect Lymi?"
 msgid "Which deck should I add?"
 msgstr "Which deck should I add?"
 
+msgid "Which ending?"
+msgstr "Which ending?"
+
 msgid "Which language are the translations in?"
 msgstr "Which language are the translations in?"
 
@@ -9029,6 +9267,9 @@ msgstr "Who can see the cards I make?"
 msgid "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
 msgstr "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
 
+msgid "Who is it about?"
+msgstr "Who is it about?"
+
 msgid "Who is responsible"
 msgstr "Who is responsible"
 
@@ -9037,6 +9278,9 @@ msgstr "Who knows?"
 
 msgid "Who were the first Europeans to reach Canada?"
 msgstr "Who were the first Europeans to reach Canada?"
+
+msgid "Who? Me!"
+msgstr "Who? Me!"
 
 msgid "Whose notes"
 msgstr "Whose notes"
@@ -9320,8 +9564,23 @@ msgstr "yesterday"
 msgid "Yesterday was a rest day."
 msgstr "Yesterday was a rest day."
 
+msgid "you"
+msgstr "you"
+
 msgid "You"
 msgstr "You"
+
+msgid "you all"
+msgstr "you all"
+
+msgid "You and someone else."
+msgstr "You and someone else."
+
+msgid "you are"
+msgstr "you are"
+
+msgid "you are, to more than one; polite you are"
+msgstr "you are, to more than one; polite you are"
 
 msgid "You build your own card layouts"
 msgstr "You build your own card layouts"
@@ -9401,11 +9660,35 @@ msgstr "You want everything on your own computer"
 msgid "You wrote this"
 msgstr "You wrote this"
 
+msgid "You, the one speaking."
+msgstr "You, the one speaking."
+
 msgid "you, to more than one person"
 msgstr "you, to more than one person"
 
+msgid "you, to more than one; polite you"
+msgstr "you, to more than one; polite you"
+
+msgid "you, to one person"
+msgstr "you, to one person"
+
 msgid "You'll hear it in a word, with a note on how to say it."
 msgstr "You'll hear it in a word, with a note on how to say it."
+
+msgid "You'll hear the form and who it's for."
+msgstr "You'll hear the form and who it's for."
+
+msgid "You're a good friend."
+msgstr "You're a good friend."
+
+msgid "You're all doing great."
+msgstr "You're all doing great."
+
+msgid "You're doing great."
+msgstr "You're doing great."
+
+msgid "You're teachers."
+msgstr "You're teachers."
 
 msgid "You’re welcome"
 msgstr "You’re welcome"

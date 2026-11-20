@@ -30,7 +30,7 @@ const GLOSSARY: Glossary = {
     en: msg`on Sunday`,
     note: msg`Pühapäev with the ending that says when, as in esmaspäeval.`,
   },
-  kell: { en: msg`o'clock; at, in front of a time`, note: msg`Kell kümme: at ten.` },
+  kell: { en: msg`o'clock; also at, when it comes before a time`, note: msg`Kell kümme: at ten.` },
   kümme: { en: msg`ten` },
   kaksteist: { en: msg`twelve` },
   üksteist: { en: msg`eleven` },
@@ -43,7 +43,10 @@ const GLOSSARY: Glossary = {
   eurot: { en: msg`euros`, note: msg`After a number from two up, euro becomes eurot.` },
   buss: { en: msg`bus` },
   ootan: { en: msg`I wait, I'm waiting`, note: msg`From ootama, to wait.` },
-  sind: { en: msg`you`, note: msg`Sina as the one something is done to: Ma ootan sind, I'm waiting for you.` },
+  sind: {
+    en: msg`you`,
+    note: msg`Sina as the one something is done to: Ma ootan sind, I'm waiting for you.`,
+  },
   istu: { en: msg`sit down`, note: msg`A command, from istuma, to sit.` },
   aga: { en: msg`but` },
   olema: { en: msg`to be`, note: msg`Ma olen, sa oled, ta on.` },
@@ -126,7 +129,7 @@ function useContent() {
     },
     {
       id: "coffee",
-      ask: t`When does Mari have coffee?`,
+      ask: t`When does Mari have coffee tomorrow?`,
       options: [
         { id: "ten", label: t`At ten` },
         { id: "twelve", label: t`At twelve` },
@@ -148,7 +151,7 @@ function useContent() {
     },
     {
       id: "noon",
-      ask: t`Where is Mari at twelve?`,
+      ask: t`Where is Mari at twelve tomorrow?`,
       options: [
         { id: "cafe", label: t`In a café` },
         { id: "market", label: t`At the market` },
@@ -261,8 +264,8 @@ export function PaevTallinnasLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Read a café sign and a message, follow a voice message, fill in a plan for Saturday and
-          answer a friend at a café: numbers, times and days in sentences you know.
+          Read a café sign and a text message, follow a voice message, fill in a plan for Saturday
+          and answer a friend at a café: numbers, times and days in sentences you know.
         </Trans>
       }
       facts={[
@@ -295,7 +298,8 @@ export function PaevTallinnasLesson() {
           <b lang="et">pool üksteist</b> is 10:30.
         </Trans>,
         <Trans key="3">
-          Say a price with <b lang="et">maksab</b>: <b lang="et">Kohv maksab kolm eurot</b>, coffee costs three euros.
+          Say a price with <b lang="et">maksab</b>: <b lang="et">Kohv maksab kolm eurot</b>, coffee
+          costs three euros.
         </Trans>,
         <Trans key="4">
           Say where with{" "}
@@ -313,7 +317,8 @@ export function PaevTallinnasLesson() {
           : <b lang="et">Pühapäeval olen kodus</b>, on Sunday I'm at home.
         </Trans>,
         <Trans key="5">
-          Answer no with <b lang="et">ei</b> and the bare verb: <b lang="et">Ei, ma ei tööta</b>, no, I don't work.
+          Answer no with <b lang="et">ei</b> and the verb without its ending:{" "}
+          <b lang="et">Ei, ma ei tööta</b>, no, I don't work.
         </Trans>,
       ]}
       sections={[
@@ -326,9 +331,9 @@ export function PaevTallinnasLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A sign shortens each day to its first letter, as lesson {days} showed, and gives
-                    hours on the 24-hour clock. <b lang="et">E–R 9–18</b> is Monday to Friday, 9:00
-                    to 18:00. <Word w="Suletud" /> is closed.
+                    A sign shortens each day to its first letter, as in lesson {days}. Hours use the
+                    24-hour clock. <b lang="et">E–R 9–18</b> is Monday to Friday, 9:00 to 18:00.{" "}
+                    <Word w="Suletud" /> is closed.
                   </Trans>
                 </p>
                 <p>
@@ -434,8 +439,8 @@ export function PaevTallinnasLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    You meet Mari at the café and answer her in Estonian. A wrong reply says why,
-                    then you hear the right one.
+                    You meet Mari at the café and answer her in Estonian. If you pick a wrong reply,
+                    you see why, then hear the right one.
                   </Trans>
                 </p>
               </Prose>

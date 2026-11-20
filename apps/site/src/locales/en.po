@@ -1042,8 +1042,8 @@ msgstr "A shop's opening hours"
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "A short text to read and hear, every question at once; its words open their cards once checked."
 
-msgid "A sign shortens each day to its first letter, as lesson {days} showed, and gives hours on the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
-msgstr "A sign shortens each day to its first letter, as lesson {days} showed, and gives hours on the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
+msgid "A sign shortens each day to its first letter, as in lesson {days}. Hours use the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
+msgstr "A sign shortens each day to its first letter, as in lesson {days}. Hours use the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
 
 msgid "A smaller, checked library"
 msgstr "A smaller, checked library"
@@ -1682,8 +1682,8 @@ msgstr "Answer <0>jah</0> or <1>ei</1>. To a question with olema, say <2>ei ole<
 msgid "Answer every question first."
 msgstr "Answer every question first."
 
-msgid "Answer no with <0>ei</0> and the bare verb: <1>Ei, ma ei tööta</1>, no, I don't work."
-msgstr "Answer no with <0>ei</0> and the bare verb: <1>Ei, ma ei tööta</1>, no, I don't work."
+msgid "Answer no with <0>ei</0> and the verb without its ending: <1>Ei, ma ei tööta</1>, no, I don't work."
+msgstr "Answer no with <0>ei</0> and the verb without its ending: <1>Ei, ma ei tööta</1>, no, I don't work."
 
 msgid "Answering no"
 msgstr "Answering no"
@@ -6947,8 +6947,8 @@ msgstr "Õ or o? Ü or u?"
 msgid "Õ, ä, ö and ü stay exactly as you typed them, so <0>tuli</0>, fire, and <1>tüli</1>, a quarrel, are two different cards."
 msgstr "Õ, ä, ö and ü stay exactly as you typed them, so <0>tuli</0>, fire, and <1>tüli</1>, a quarrel, are two different cards."
 
-msgid "o'clock; at, in front of a time"
-msgstr "o'clock; at, in front of a time"
+msgid "o'clock; also at, when it comes before a time"
+msgstr "o'clock; also at, when it comes before a time"
 
 msgid "of 200 points for level 1"
 msgstr "of 200 points for level 1"
@@ -7883,8 +7883,8 @@ msgstr "rain"
 msgid "Range"
 msgstr "Range"
 
-msgid "Read a café sign and a message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
-msgstr "Read a café sign and a message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
+msgid "Read a café sign and a text message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
+msgstr "Read a café sign and a text message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
 
 msgid "Read both endings above once more, then try again."
 msgstr "Read both endings above once more, then try again."
@@ -11099,8 +11099,8 @@ msgstr "When does it close on Thursday?"
 msgid "When does it open on Saturday?"
 msgstr "When does it open on Saturday?"
 
-msgid "When does Mari have coffee?"
-msgstr "When does Mari have coffee?"
+msgid "When does Mari have coffee tomorrow?"
+msgstr "When does Mari have coffee tomorrow?"
 
 msgid "When is the café open?"
 msgstr "When is the café open?"
@@ -11162,8 +11162,8 @@ msgstr "Where is Jaan on Sunday?"
 msgid "Where is Jaan today?"
 msgstr "Where is Jaan today?"
 
-msgid "Where is Mari at twelve?"
-msgstr "Where is Mari at twelve?"
+msgid "Where is Mari at twelve tomorrow?"
+msgstr "Where is Mari at twelve tomorrow?"
 
 msgid "Where Lymi does more"
 msgstr "Where Lymi does more"
@@ -11723,8 +11723,8 @@ msgstr "You live in Tartu."
 msgid "you live, to more than one; polite you live"
 msgstr "you live, to more than one; polite you live"
 
-msgid "You meet Mari at the café and answer her in Estonian. A wrong reply says why, then you hear the right one."
-msgstr "You meet Mari at the café and answer her in Estonian. A wrong reply says why, then you hear the right one."
+msgid "You meet Mari at the café and answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "You meet Mari at the café and answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."
 
 msgid "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."
 msgstr "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."

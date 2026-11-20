@@ -1042,8 +1042,8 @@ msgstr "Часы работы магазина"
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "Короткий текст, чтобы прочитать и послушать, и все вопросы сразу; карточки слов открываются после проверки."
 
-msgid "A sign shortens each day to its first letter, as lesson {days} showed, and gives hours on the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
-msgstr "На табличке каждый день обозначен первой буквой, как показал урок {days}, а время — в 24-часовом формате. <0>E–R 9–18</0> — с понедельника по пятницу, с 9:00 до 18:00. <1/> — закрыто."
+msgid "A sign shortens each day to its first letter, as in lesson {days}. Hours use the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
+msgstr "На табличке каждый день обозначен первой буквой, как в уроке {days}. Время — в 24-часовом формате. <0>E–R 9–18</0> — с понедельника по пятницу, с 9:00 до 18:00. <1/> — закрыто."
 
 msgid "A smaller, checked library"
 msgstr "Меньше, но все проверены"
@@ -1682,8 +1682,8 @@ msgstr "Отвечай <0>jah</0> или <1>ei</1>. На вопрос с olema �
 msgid "Answer every question first."
 msgstr "Сначала ответь на все вопросы."
 
-msgid "Answer no with <0>ei</0> and the bare verb: <1>Ei, ma ei tööta</1>, no, I don't work."
-msgstr "Отвечай «нет» через <0>ei</0> и глагол без окончания: <1>Ei, ma ei tööta</1>, нет, я не работаю."
+msgid "Answer no with <0>ei</0> and the verb without its ending: <1>Ei, ma ei tööta</1>, no, I don't work."
+msgstr "Говори «нет» словом <0>ei</0> и глаголом без окончания: <1>Ei, ma ei tööta</1>, нет, я не работаю."
 
 msgid "Answering no"
 msgstr "Как ответить «нет»"
@@ -3950,7 +3950,7 @@ msgid "Free Estonian grammar lessons · Lymi"
 msgstr "Бесплатные уроки эстонской грамматики · Lymi"
 
 msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
-msgstr "Бесплатная практика эстонского для начинающих: прочитай часы работы и сообщение, пойми голосовое сообщение со временем и днями, заполни план на субботу и поговори с подругой в кафе. Каждое предложение озвучено."
+msgstr "Бесплатная практика эстонского для начинающих: прочитай часы работы и сообщение, пойми голосовое сообщение, где звучат время и дни, заполни план на субботу и поговори с подругой в кафе. Каждое предложение озвучено."
 
 msgid "Free flashcard decks: languages, exams and more · Lymi"
 msgstr "Бесплатные карточки: языки, экзамены и не только · Lymi"
@@ -6947,7 +6947,7 @@ msgstr "Õ или o? Ü или u?"
 msgid "Õ, ä, ö and ü stay exactly as you typed them, so <0>tuli</0>, fire, and <1>tüli</1>, a quarrel, are two different cards."
 msgstr "Õ, ä, ö и ü остаются ровно такими, как ты их вводишь, поэтому <0>tuli</0> (огонь) и <1>tüli</1> (ссора) — две разные карточки."
 
-msgid "o'clock; at, in front of a time"
+msgid "o'clock; also at, when it comes before a time"
 msgstr "час; также «в», когда стоит перед временем"
 
 msgid "of 200 points for level 1"
@@ -7883,8 +7883,8 @@ msgstr "дождь"
 msgid "Range"
 msgstr "Диапазон"
 
-msgid "Read a café sign and a message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
-msgstr "Прочитай табличку на кафе и сообщение, пойми голосовое, заполни план на субботу и ответь подруге в кафе: числа, время и дни в знакомых предложениях."
+msgid "Read a café sign and a text message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
+msgstr "Прочитай табличку на двери кафе и сообщение, пойми голосовое, заполни план на субботу и ответь подруге в кафе: числа, время и дни в знакомых предложениях."
 
 msgid "Read both endings above once more, then try again."
 msgstr "Ещё раз перечитай про оба окончания выше, а потом попробуй снова."
@@ -11099,8 +11099,8 @@ msgstr "Во сколько кафе закрывается в четверг?"
 msgid "When does it open on Saturday?"
 msgstr "Во сколько кафе открывается в субботу?"
 
-msgid "When does Mari have coffee?"
-msgstr "Когда Мари пьёт кофе?"
+msgid "When does Mari have coffee tomorrow?"
+msgstr "Когда Мари завтра пьёт кофе?"
 
 msgid "When is the café open?"
 msgstr "Когда кафе открыто?"
@@ -11162,8 +11162,8 @@ msgstr "Где Яан в воскресенье?"
 msgid "Where is Jaan today?"
 msgstr "Где Яан сегодня?"
 
-msgid "Where is Mari at twelve?"
-msgstr "Где Мари в двенадцать?"
+msgid "Where is Mari at twelve tomorrow?"
+msgstr "Где Мари завтра в двенадцать?"
 
 msgid "Where Lymi does more"
 msgstr "Где Lymi умеет больше"
@@ -11723,8 +11723,8 @@ msgstr "Ты живёшь в Тарту."
 msgid "you live, to more than one; polite you live"
 msgstr "вы живёте; вежливое «Вы живёте»"
 
-msgid "You meet Mari at the café and answer her in Estonian. A wrong reply says why, then you hear the right one."
-msgstr "Ты встречаешь Мари в кафе и отвечаешь ей по-эстонски. Неправильный ответ объясняет, в чём ошибка, а потом звучит правильный."
+msgid "You meet Mari at the café and answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Ты встречаешь Мари в кафе и отвечаешь ей по-эстонски. Если выберешь неправильный ответ, увидишь почему, а потом услышишь правильный."
 
 msgid "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."
 msgstr "Ты уже знаешь <0/>, где, из урока {questions}. Отвечай предложением, а в разговоре — просто названием места."
@@ -11895,7 +11895,7 @@ msgid "Your first word is <0>tere</0>."
 msgstr "Твоё первое слово — <0>tere</0>."
 
 msgid "Your friend Mari sends you a message. Read it and answer the questions. Once you've answered, tap a word to see what it means."
-msgstr "Твоя подруга Мари присылает тебе сообщение. Прочитай его и ответь на вопросы. Потом коснись слова, чтобы увидеть, что оно значит."
+msgstr "Твоя подруга Мари присылает тебе сообщение. Прочитай его и ответь на вопросы. Когда ответишь, нажми на слово, чтобы увидеть, что оно значит."
 
 msgid "Your goal, your streak"
 msgstr "Твоя цель и дни подряд"

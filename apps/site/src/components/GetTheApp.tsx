@@ -19,13 +19,14 @@ export function GooglePlayMark() {
   );
 }
 
-const link =
-  "inline-flex items-center gap-1.5 rounded-xs text-ink-secondary hoverable:hover:text-ink";
+const store =
+  "inline-flex h-8 items-center justify-center gap-1.5 rounded-full bg-plate px-3 font-medium whitespace-nowrap text-ink transition-[background-color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:veil max-[30rem]:flex-1";
 
 /**
- * The homepage's quiet line to the phone apps, set like Works with under it. The App Store link
- * starts hidden and shows where the App Store sells Lymi (`showAppStoreLinks`); the download
- * page and changelog use the stores' own badges instead (`StoreBadges`).
+ * The homepage's line to the phone apps: a soft pill with the app icon and a small button per
+ * store, so it reads apart from Works with under it. The App Store button starts hidden and shows
+ * where the App Store sells Lymi (`showAppStoreLinks`); the download page and changelog use the
+ * stores' own badges instead (`StoreBadges`).
  */
 export function GetTheApp({ className }: { className?: string | undefined }) {
   const { i18n } = useLingui();
@@ -33,27 +34,36 @@ export function GetTheApp({ className }: { className?: string | undefined }) {
   return (
     <div
       className={clsx(
-        "flex flex-wrap items-center gap-x-4 gap-y-2 text-sm text-ink-muted",
+        "inline-flex max-w-full flex-wrap items-center gap-1 rounded-[20px] bg-plate-nested p-1 text-sm",
         className,
       )}
     >
-      <span>
+      <span className="flex h-8 items-center gap-2 ps-1 pe-2 whitespace-nowrap text-ink-secondary">
+        <img
+          src="/phone/icon.png"
+          alt=""
+          width={24}
+          height={24}
+          className="relative! size-6 rounded-full"
+        />
         <Trans>On your phone</Trans>
       </span>
-      <a
-        href={href("/download/iphone")}
-        data-app-store=""
-        hidden
-        suppressHydrationWarning
-        className={link}
-      >
-        <AppleMark />
-        App Store
-      </a>
-      <a href={href("/download/android")} className={link}>
-        <GooglePlayMark />
-        Google Play
-      </a>
+      <span className="flex gap-1 max-[30rem]:w-full">
+        <a
+          href={href("/download/iphone")}
+          data-app-store=""
+          hidden
+          suppressHydrationWarning
+          className={store}
+        >
+          <AppleMark />
+          App Store
+        </a>
+        <a href={href("/download/android")} className={store}>
+          <GooglePlayMark />
+          Google Play
+        </a>
+      </span>
     </div>
   );
 }

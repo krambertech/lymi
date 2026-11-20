@@ -81,7 +81,7 @@ export function LandingView() {
           after={
             <>
               <GetTheApp />
-              <WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} className="mt-3" />
+              <WorksWith names={["Claude", "ChatGPT", "Grok", "Gemini"]} className="mt-5" />
             </>
           }
         />

@@ -5,6 +5,8 @@ import { useMemo } from "react";
 function Inlines({ nodes }: { nodes: readonly NoteInline[] }) {
   return nodes.map((node, i) => {
     if (node.type === "text") return node.value;
+    // Notation stays as typed until web rendering ships (docs/proposals/math-chemistry-and-code-on-cards.md).
+    if (node.type === "math" || node.type === "code") return node.source;
     // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
     if (node.type === "break") return <br key={i} />;
     if (node.type === "link") {
@@ -41,6 +43,14 @@ function Blocks({ blocks }: { blocks: readonly NoteBlock[] }) {
         // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
         <p key={i}>
           <Inlines nodes={block.children} />
+        </p>
+      );
+    }
+    if (block.type === "displayMath" || block.type === "codeBlock") {
+      return (
+        // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+        <p key={i} className="whitespace-pre-wrap">
+          {block.source}
         </p>
       );
     }

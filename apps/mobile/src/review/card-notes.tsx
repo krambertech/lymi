@@ -6,6 +6,8 @@ import { Text } from "../ui/primitives";
 function Inlines({ nodes }: { nodes: readonly NoteInline[] }): ReactNode {
   return nodes.map((node, i) => {
     if (node.type === "text") return node.value;
+    // Notation stays as typed until phone rendering ships (docs/proposals/math-chemistry-and-code-on-cards.md).
+    if (node.type === "math" || node.type === "code") return node.source;
     if (node.type === "break") return "\n";
     if (node.type === "link") {
       return (
@@ -42,6 +44,14 @@ function Blocks({ blocks, className }: { blocks: readonly NoteBlock[]; className
         // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
         <Text key={i} className={className}>
           <Inlines nodes={block.children} />
+        </Text>
+      );
+    }
+    if (block.type === "displayMath" || block.type === "codeBlock") {
+      return (
+        // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+        <Text key={i} className={className}>
+          {block.source}
         </Text>
       );
     }

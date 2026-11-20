@@ -8,7 +8,7 @@ decision: Inline math, chemistry and code in every card field, display blocks in
 
 A learner studying for a physics, chemistry or programming exam writes `$E = mc^2$`, `$\ce{H2SO4}$` or `` `map()` `` on a card. Review and the card page should show a formula, a chemical formula or code, on the web and the phone. Today every field shows the source as typed. An Anki deck written with MathJax arrives with its `\(…\)` delimiters as literal text.
 
-Not decided yet: the phone renderer, what speech does with a formula, and two parser details. They are listed under [Open questions](#open-questions).
+Not decided yet: what speech does with a formula. It is listed under [Open questions](#open-questions).
 
 ## Evidence
 
@@ -49,9 +49,12 @@ Notation makes long derivations tempting. These rules keep a card to one fact:
 
 ## Open questions
 
-- **Phone renderer.** KaTeX needs a DOM, and React Native has none. The candidates are MathJax to SVG through `react-native-svg` (already a dependency), RaTeX through `ratex-react-native` (v0.0.x), and a WebView. [Issue #1187](https://github.com/krambertech/lymi/issues/1187) picks one by scroll speed on a long card list, fidelity against KaTeX on one formula set, mhchem support and bundle size.
 - **Speech.** The voice could skip a formula, read its plain words, or the card could offer no audio when its term is mostly notation.
-- **Parser.** Inline code may use single backticks only. Term, meaning and example may go through `parseNotes` or through a smaller reader that knows only inline notation.
+
+## Decided since
+
+- **Phone renderer.** MathJax converting TeX to SVG in JavaScript, drawn by `react-native-svg`. It ships over the air with the web and sits inside our own `Text`. The comparison is on [issue #1187](https://github.com/krambertech/lymi/issues/1187).
+- **Parser.** Inline code uses single backticks only; a longer backtick run stays text. Term, meaning, example and hint go through `parseFieldNotation` in `@lymi/core/notation`, a small reader with no Markdown, where `\$` and `` \` `` are the only escapes. Notes read the same inline notation through `parseNotes(source, { notation: true })`, which shares that scanner. Display math and fenced code must start at a line start and must close: an unclosed `$$`, `\[` or fence stays text instead of swallowing the rest of the note. `pnpm --filter @lymi/web notation:dry-run --remote` counts the cards that would show differently and saves a sample outside the repository.
 
 ## Delivery
 

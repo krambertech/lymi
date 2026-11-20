@@ -6,11 +6,12 @@ import { type SectionActionId, sectionActions } from "@lymi/client/section-actio
 import { isolate } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { type Href, useRouter } from "expo-router";
-import { Alert, View } from "react-native";
+import { View } from "react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 import { captureEvent } from "../telemetry/posthog";
 import { usePalette } from "../theme/palette";
 import { ActionMenu } from "../ui/action-menu";
+import { alert } from "../ui/alert";
 import { Icon } from "../ui/icons";
 import type { MenuItem } from "../ui/menu";
 import { Button, Press, Text } from "../ui/primitives";
@@ -46,7 +47,7 @@ export function useStartSection(deckId: string, sections: readonly Section[]) {
     const others = opening.length - 1;
     const cards = opening.reduce((sum, s) => sum + s.total, 0);
     const sectionName = section.name;
-    Alert.alert(
+    alert(
       t`Start ${{ sectionName: isolate(sectionName) }} early?`,
       [
         plural(others, {

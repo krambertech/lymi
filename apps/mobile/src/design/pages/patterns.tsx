@@ -1,10 +1,11 @@
 import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
-import { Alert, TextInput, View } from "react-native";
+import { TextInput, View } from "react-native";
 import { Flame } from "../../brand/flame";
 import { usePalette } from "../../theme/palette";
 import { inputCap } from "../../theme/type";
 import { ActionMenu } from "../../ui/action-menu";
+import { alert } from "../../ui/alert";
 import { GlassButton, GlassPill } from "../../ui/glass";
 import { Icon } from "../../ui/icons";
 import { Select } from "../../ui/menu";
@@ -644,7 +645,10 @@ export function AfterAction() {
           ]}
         />
       </Sub>
-      <Sub title="A question" note="iOS’s own alert, kept for what cannot be undone.">
+      <Sub
+        title="A question"
+        note="The system’s alert, iOS’s own or Material’s dialog on Android, kept for what cannot be undone."
+      >
         <Variants
           items={[
             {
@@ -655,7 +659,7 @@ export function AfterAction() {
                     label="Leave “Lezione 12”"
                     variant="secondary"
                     onPress={() =>
-                      Alert.alert(
+                      alert(
                         "Leave Lezione 12?",
                         "The deck leaves Library and its cards stop coming up in review. If you join again, your reviews are still there.",
                         [

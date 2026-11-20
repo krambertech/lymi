@@ -14,7 +14,7 @@ import * as Haptics from "expo-haptics";
 import { useLocalSearchParams, useNavigation, useRouter } from "expo-router";
 import { usePreventRemove } from "expo-router/react-navigation";
 import { useEffect, useMemo, useReducer, useRef, useState } from "react";
-import { Alert, ScrollView, type TextInput, View } from "react-native";
+import { ScrollView, type TextInput, View } from "react-native";
 import Animated, { FadeOut, Keyframe } from "react-native-reanimated";
 import { CAPTURE_KEYS, captureStore } from "../data/kept";
 import { useOwnedDecks } from "../data/queries";
@@ -45,6 +45,7 @@ import {
 import { TermSheet } from "../smart-add/term-sheet";
 import { useOnline } from "../streak/goal-picker";
 import { ALWAYS, CROSSFADE, timed, useReduceMotion } from "../theme/motion";
+import { alert } from "../ui/alert";
 import { FormHeader } from "../ui/form-header";
 import { GlassPill } from "../ui/glass";
 import { Select } from "../ui/menu";
@@ -141,7 +142,7 @@ export default function SmartAdd() {
 
   // A swipe down asks before it throws the lesson away, as a form with something typed does.
   usePreventRemove(!empty && !added, ({ data }) => {
-    Alert.alert(t`Discard this lesson?`, t`The pages and text you added aren’t kept.`, [
+    alert(t`Discard this lesson?`, t`The pages and text you added aren’t kept.`, [
       { text: t`Keep adding`, style: "cancel" },
       {
         text: t`Discard`,

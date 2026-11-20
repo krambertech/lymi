@@ -16,7 +16,6 @@ import { type ReactNode, useEffect, useState } from "react";
 import {
   AccessibilityInfo,
   ActivityIndicator,
-  Alert,
   Platform,
   ScrollView,
   Share,
@@ -28,6 +27,7 @@ import { useOnline } from "../streak/goal-picker";
 import { usePalette } from "../theme/palette";
 import { inputCap } from "../theme/type";
 import { ActionMenu } from "../ui/action-menu";
+import { alert } from "../ui/alert";
 import { Chip } from "../ui/chip";
 import { clipboard } from "../ui/clipboard";
 import { FormHeader } from "../ui/form-header";
@@ -79,7 +79,7 @@ export default function ShareDeck() {
 
   const after = (...keys: string[][]) =>
     Promise.all([...keys, ["activity"]].map((queryKey) => qc.invalidateQueries({ queryKey })));
-  const failed = (title: string) => (e: unknown) => Alert.alert(title, errorMessage(e));
+  const failed = (title: string) => (e: unknown) => alert(title, errorMessage(e));
   const sentTo = (email: string) => t`Invitation sent to ${email}.`;
 
   const invite = useMutation({
@@ -157,7 +157,7 @@ export default function ShareDeck() {
 
   const askRemove = (member: Member) => {
     const name = member.name;
-    Alert.alert(
+    alert(
       t`Remove ${{ name: isolate(name) }}?`,
       t`They lose this deck and can’t rejoin, by link or invitation. Their reviews are kept.`,
       [
@@ -168,7 +168,7 @@ export default function ShareDeck() {
   };
   const askCancel = (invitation: Invitation) => {
     const email = invitation.email;
-    Alert.alert(
+    alert(
       t`Cancel the invitation to ${email}?`,
       t`Their invitation link stops working. You can invite them again any time.`,
       [
@@ -182,14 +182,10 @@ export default function ShareDeck() {
     );
   };
   const askTurnOff = () =>
-    Alert.alert(
-      t`Turn off the join link?`,
-      t`The link stops working for good. People who joined stay.`,
-      [
-        { text: t`Keep link`, style: "cancel" },
-        { text: t`Turn off link`, style: "destructive", onPress: () => turnOff.mutate() },
-      ],
-    );
+    alert(t`Turn off the join link?`, t`The link stops working for good. People who joined stay.`, [
+      { text: t`Keep link`, style: "cancel" },
+      { text: t`Turn off link`, style: "destructive", onPress: () => turnOff.mutate() },
+    ]);
 
   const link = joinLink.data?.link;
   const shared = !!link || turnOn.isPending;

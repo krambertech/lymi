@@ -7,7 +7,7 @@ import { useQueryClient } from "@tanstack/react-query";
 import { File } from "expo-file-system";
 import { useLocalSearchParams, useRouter } from "expo-router";
 import { type ComponentProps, useEffect, useRef, useState } from "react";
-import { Alert, ScrollView, type TextInput, View } from "react-native";
+import { ScrollView, type TextInput, View } from "react-native";
 import { AddFieldChips, CardFields, useFormFields } from "../capture/card-fields";
 import { ChipIn } from "../capture/chip-in";
 import { useChoiceSheet, useDraft } from "../capture/choice-sheet";
@@ -32,6 +32,7 @@ import { TagsChoices, tagsSummary } from "../capture/tags";
 import { cardEdited, heldCard } from "../card/edited";
 import { useDeckCards, useDecks } from "../data/queries";
 import { formatList } from "../i18n/list";
+import { alert } from "../ui/alert";
 import { FieldChip, FieldChipRow } from "../ui/field-chip";
 import { FormHeader } from "../ui/form-header";
 import { GlassPill } from "../ui/glass";
@@ -141,7 +142,7 @@ export default function EditCard() {
     };
     // Only a changed example counts, so one saved before the limit still saves as it is.
     if (changes.example !== undefined && !fitsExample(changes.example)) {
-      Alert.alert(t`Keep the example under 250 characters.`);
+      alert(t`Keep the example under 250 characters.`);
       return;
     }
     const pictureChanged = pictureWrite(card, picture) !== null;
@@ -171,7 +172,7 @@ export default function EditCard() {
     } catch (e) {
       setSaving(false);
       // The text may be saved, or queued offline, before the picture fails, so the alert names only what failed.
-      Alert.alert(
+      alert(
         written ? t`Couldn’t change the picture.` : t`Couldn’t save the card.`,
         errorMessage(e),
       );

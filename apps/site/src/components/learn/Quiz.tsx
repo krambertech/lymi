@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { captureAnalytics } from "@lymi/client/analytics";
 import { clsx } from "clsx";
-import { ArrowRight, Check, Ear, RotateCcw, X } from "lucide-react";
+import { ArrowRight, Check, Ear, RotateCcw, Sparkles, X } from "lucide-react";
 import {
   Fragment,
   type ReactNode,
@@ -11,7 +11,7 @@ import {
   useRef,
   useState,
 } from "react";
-import { playInTurn, playSound } from "../../lib/learn/player";
+import { playInTurn, playSound, usePlaying } from "../../lib/learn/player";
 import {
   type QuizState,
   quizReducer,
@@ -113,6 +113,8 @@ interface QuizProps<Item> {
   rounds?: number;
   /** The line under the score. */
   verdict?: (share: number) => ReactNode;
+  /** What each round asked, to hear again on the score. */
+  recall?: (item: Item) => Recall;
   /** Sounds to play side by side after an answer, under “Hear both”. */
   both?: (item: Item) => readonly string[] | undefined;
   round: (props: RoundProps<Item>) => ReactNode;
@@ -131,6 +133,7 @@ export function Quiz<Item>({
   rounds,
   verdict,
   both,
+  recall,
   round,
   order = shuffledRun,
 }: QuizProps<Item>) {
@@ -215,7 +218,13 @@ export function Quiz<Item>({
       <div ref={bodyRef} className="grid justify-items-start gap-4 px-5 pt-5 pb-5 max-sm:px-4">
         {state.status === "finished" ? (
           <>
-            <Score right={rightCount(state)} total={total} verdict={verdict} />
+            <Score
+              right={rightCount(state)}
+              total={total}
+              verdict={verdict}
+              results={state.results}
+              recalled={list.slice(0, total).map((item) => recall?.(item))}
+            />
             <Button
               ref={againRef}
               onClick={() => {
@@ -277,16 +286,26 @@ export function Quiz<Item>({
   );
 }
 
+/** A word or number from a round, to hear again on the score. */
+export interface Recall {
+  label: string;
+  src: string;
+}
+
 function Score({
   right,
   total,
   verdict,
+  results,
+  recalled,
 }: {
   right: number;
   total: number;
   verdict?: ((share: number) => ReactNode) | undefined;
+  results: readonly boolean[];
+  recalled: readonly (Recall | undefined)[];
 }) {
-  return (
+  const words = (
     <p className="text-xl font-semibold">
       <Trans>
         {right} of {total} right
@@ -297,6 +316,74 @@ function Score({
         </span>
       )}
     </p>
+  );
+  return <ScoreWords share={right / total} results={results} recalled={recalled} words={words} />;
+}
+
+/** The run's words as chips to hear again, the missed ones marked, with a mark for a full score. */
+function ScoreWords({
+  share,
+  results,
+  recalled,
+  words,
+}: {
+  share: number;
+  results: readonly boolean[];
+  recalled: readonly (Recall | undefined)[];
+  words: ReactNode;
+}) {
+  return (
+    <div className="grid w-full gap-3.5">
+      <div className="flex items-center gap-3">
+        <span
+          className={clsx(
+            "learn-pop grid size-11 shrink-0 place-items-center rounded-full",
+            share === 1 ? "bg-success text-plate" : "bg-(--tray) text-(--form)",
+          )}
+        >
+          {share === 1 ? (
+            <Sparkles aria-hidden="true" className="size-5.5" />
+          ) : (
+            <Ear aria-hidden="true" className="size-5.5" />
+          )}
+        </span>
+        {words}
+      </div>
+      <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
+        {recalled.map((word, i) =>
+          word ? (
+            // biome-ignore lint/suspicious/noArrayIndexKey: one chip per round, in order
+            <li key={i} className="learn-pop" style={{ animationDelay: `${i * 60}ms` }}>
+              <RecallChip word={word} ok={results[i] === true} />
+            </li>
+          ) : null,
+        )}
+      </ul>
+    </div>
+  );
+}
+
+function RecallChip({ word, ok }: { word: Recall; ok: boolean }) {
+  const playing = usePlaying(word.src);
+  return (
+    <button
+      type="button"
+      onClick={() => void playSound(word.src)}
+      className={clsx(
+        "inline-flex cursor-pointer items-center gap-1.5 rounded-full border py-1 ps-2 pe-3 text-md font-medium transition-colors duration-150",
+        ok
+          ? "border-success/40 bg-success-soft text-ink"
+          : "border-dashed border-danger bg-danger-soft text-ink",
+        playing && "ring-2 ring-(--form)",
+      )}
+    >
+      {ok ? (
+        <Check aria-hidden="true" className="size-3.5 text-success" strokeWidth={3} />
+      ) : (
+        <X aria-hidden="true" className="size-3.5 text-danger" strokeWidth={3} />
+      )}
+      <span lang="et">{word.label}</span>
+    </button>
   );
 }
 

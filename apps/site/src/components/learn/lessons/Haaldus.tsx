@@ -156,7 +156,7 @@ export function HaaldusLesson() {
     [meaning],
   );
 
-  const gapItems = useMemo<(GapItem & { pair: readonly [string, string] })[]>(
+  const gapItems = useMemo<(GapItem & { pair: readonly [string, string]; word: string })[]>(
     () =>
       LENGTH_PAIRS.flatMap(([short, long]) => {
         const i = firstDifference(short, long);
@@ -169,6 +169,7 @@ export function HaaldusLesson() {
             after: short.slice(i),
             options: [letter, letter + letter],
             answer: j ? letter + letter : letter,
+            word,
             pair: [short, long] as const,
             explain: (
               <>
@@ -345,6 +346,7 @@ export function HaaldusLesson() {
                 rounds={6}
                 verdict={(share) => <Verdict share={share} />}
                 both={(item) => item.options.map((option) => src(option.id))}
+                recall={(item) => ({ label: item.answer, src: item.src })}
                 order={eachPairFirst}
                 round={(props) => <ChoiceRound {...props} />}
               />
@@ -425,6 +427,7 @@ export function HaaldusLesson() {
                   )
                 }
                 both={(item) => item.pair.map(src)}
+                recall={(item) => ({ label: item.word, src: item.src })}
                 order={eachPairFirst}
                 round={(props) => <GapRound {...props} />}
               />

@@ -176,6 +176,9 @@ msgstr "{left, plural, =0 {Це вся колода. Додай її, і Lymi с
 msgid "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
 msgstr "{lessonCount, plural, one {# урок, скоро} few {# уроки, скоро} many {# уроків, скоро} other {# уроку, скоро}}"
 
+msgid "{more, plural, one {and # more} other {and # more}}"
+msgstr "{more, plural, one {і ще #} few {і ще #} many {і ще #} other {і ще #}}"
+
 msgid "{n, plural, one {# known} other {# known}}"
 msgstr "{n, plural, one {# засвоєна} few {# засвоєні} many {# засвоєних} other {# засвоєної}}"
 
@@ -596,6 +599,9 @@ msgstr "Схема зі слайдів може стати малюнком ка
 msgid "A dialogue in voice mode"
 msgstr "Діалог у голосовому режимі"
 
+msgid "A digit after the tens is a word of its own: <0/>, twenty-one. Slide to any number and hear how it's built."
+msgstr "Цифра після десятків — окреме слово: <0/>, двадцять один. Посунь до будь-якого числа й послухай, як воно складається."
+
 msgid "A double letter is a longer sound, and it makes a different word. <0/> is a hundred; <1/> means send. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 msgstr "Подвоєна літера — це довший звук, і з ним виходить інше слово. <0/> — це сто, а <1/> — «надішли». З приголосними так само: <2/> — курка, а <3/> — «неси» (до однієї людини)."
 
@@ -902,6 +908,9 @@ msgstr "Додати {name} в Lymi"
 
 msgid "Add {title}"
 msgstr "Додати «{title}»"
+
+msgid "Add <0>-teist</0> to a digit and you have eleven to nineteen: <1/>, <2/>, <3/>. The ending comes from “of the second ten”."
+msgstr "Додай <0>-teist</0> до цифри — і маєш числа від одинадцяти до дев’ятнадцяти: <1/>, <2/>, <3/>. Закінчення походить від «другого десятка»."
 
 msgid "Add a card from any app with ⌃⌥L, and open Lymi from the menu bar."
 msgstr "Додавай картку з будь-якого застосунку клавішами ⌃⌥L і відкривай Lymi зі смуги меню."
@@ -2750,8 +2759,11 @@ msgstr "El або la на кожному іменнику."
 msgid "eleven"
 msgstr "одинадцять"
 
-msgid "Eleven to nineteen add <0>-teist</0> to the digit: <1/>, <2/>, <3/>. The ending comes from “of the second ten”."
-msgstr "Від одинадцяти до дев’ятнадцяти до цифри додають <0>-teist</0>: <1/>, <2/>, <3/>. Це закінчення означає «другого десятка»."
+msgid "Eleven to nineteen"
+msgstr "Від одинадцяти до дев’ятнадцяти"
+
+msgid "Eleven to nineteen: -teist"
+msgstr "Від 11 до 19: -teist"
 
 msgid "Ended in 1648 by the <0>Peace of Westphalia</0>."
 msgstr "Завершилася 1648 року <0>Вестфальським миром</0>."
@@ -3224,6 +3236,9 @@ msgstr "Для тестів на громадянство Німеччини, С
 msgid "For the ones that slip"
 msgstr "Для того, що забувається"
 
+msgid "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty."
+msgstr "Для десятків додай до цифри <0>-kümmend</0>: <1/> — два десятки, двадцять."
+
 msgid "Forgot"
 msgstr "Не пам’ятаю"
 
@@ -3280,6 +3295,9 @@ msgstr "Безкоштовні колоди за темами державних
 
 msgid "Free decks to take one after another. Each day brings a few new words, mixed in with your reviews."
 msgstr "Безплатні колоди, які проходиш одну за одною. Щодня кілька нових слів, упереміш із повтореннями."
+
+msgid "Free Estonian decks in Lymi"
+msgstr "Безкоштовні естонські колоди в Lymi"
 
 msgid "Free Estonian decks with a native voice on every card, with meanings in English, Russian or Ukrainian. Add one in a tap."
 msgstr "Безкоштовні естонські колоди з голосом носія на кожній картці та значеннями українською, російською чи англійською. Додай одним дотиком."
@@ -4657,9 +4675,6 @@ msgstr "Вивчи десять слів, від <0>null</0> до <1>kümme</1>.
 
 msgid "Learn the alphabet, then your first words."
 msgstr "Вивчи абетку, а потім перші слова."
-
-msgid "Learn the most common Estonian words with Lymi's free decks"
-msgstr "Вивчай найуживаніші естонські слова з безкоштовними колодами Lymi"
 
 msgid "Learn the same deck together"
 msgstr "Вчіть одну колоду разом"
@@ -6211,6 +6226,9 @@ msgstr "Гарбуз"
 msgid "Put Lymi’s address in ~/.gemini/settings.json, with the client ID from the setup guide."
 msgstr "Додай адресу Lymi в ~/.gemini/settings.json разом із client ID з інструкції з підключення."
 
+msgid "Put them together"
+msgstr "Складаємо разом"
+
 msgid "Put your *hand* up."
 msgstr "Підніми *руку*."
 
@@ -6933,9 +6951,6 @@ msgstr "Перейти до завантаження"
 msgid "Skip to the updates"
 msgstr "Перейти до оновлень"
 
-msgid "Slide to any number and hear how it's built."
-msgstr "Посунь повзунок до будь-якого числа й послухай, як воно складається."
-
 msgid "Slides and PDFs"
 msgstr "Слайди й PDF"
 
@@ -7434,9 +7449,6 @@ msgstr "Десять хвилин між зустрічами."
 msgid "Ten questions from your due cards"
 msgstr "Десять запитань із карток на повторення"
 
-msgid "Tens add <0>-kümmend</0>: <1/> is two tens, twenty. A digit after it is a separate word: <2/>, twenty-one."
-msgstr "До десятків додають <0>-kümmend</0>: <1/> — це два десятки, двадцять. Цифра після нього — окреме слово: <2/>, двадцять один."
-
 msgid "Tens and ones are separate words: <0>kakskümmend üks</0>."
 msgstr "Десятки й одиниці — окремі слова: <0>kakskümmend üks</0>."
 
@@ -7728,6 +7740,9 @@ msgstr "документація Mochi"
 msgid "The molecule a cell uses to store and carry energy"
 msgstr "Молекула, у якій клітина зберігає і переносить енергію"
 
+msgid "The most common words, each brought back on the day you'd forget it."
+msgstr "Найуживаніші слова, і кожне повертається саме тоді, коли ти б його забув."
+
 msgid "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 msgstr "Найкорисніші слова зі списку Goethe-Institut для кожного рівня, кожен іменник з артиклем і множиною, з перекладом поруч."
 
@@ -7865,6 +7880,12 @@ msgstr "Страйк"
 
 msgid "The sugar photosynthesis makes"
 msgstr "Цукор, що утворюється під час фотосинтезу"
+
+msgid "The tens"
+msgstr "Десятки"
+
+msgid "The tens: -kümmend"
+msgstr "Десятки: -kümmend"
 
 msgid "The thing being counted changes too: <0/>, <1/>. That form is the partitive, in lesson {partitive}. For now, listen for the number."
 msgstr "Змінюється й те, що рахують: <0/>, <1/>. Ця форма — партитив, про неї урок {partitive}. Поки що слухай число."
@@ -8470,9 +8491,6 @@ msgstr "два"
 
 msgid "Two *bread rolls*, please."
 msgstr "Дві *булочки*, будь ласка."
-
-msgid "Two endings do the rest"
-msgstr "Решту зроблять два закінчення"
 
 msgid "two hundred"
 msgstr "двісті"

@@ -17,8 +17,8 @@ export function Panel({ children, className }: { children: ReactNode; className?
 
 export interface KeyItem {
   label: string;
-  /** A word under the key, the example it plays. */
-  sub?: string | undefined;
+  /** A word under the key, the example it plays; it may light part of itself, such as an ending. */
+  sub?: ReactNode;
   src: string;
   /** A key for something new to the learner, in the stage's hue with a dot. */
   accent?: boolean | undefined;
@@ -115,11 +115,14 @@ function Key({
       >
         {item.label}
       </b>
-      <span className="grid h-4 place-items-center">
+      <span className="grid min-h-4 place-items-center">
         {playing ? (
           <Playing className="h-3 text-(--form)" />
         ) : item.sub ? (
-          <small lang="et" className="text-xs text-ink-muted">
+          <small
+            lang="et"
+            className="max-w-full text-xs leading-tight wrap-anywhere text-ink-muted"
+          >
             {item.sub}
           </small>
         ) : null}

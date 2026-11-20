@@ -115,6 +115,16 @@ function Spoken({ n }: { n: number }) {
   );
 }
 
+/** The digit's word over its ending, so the ending lines up key after key. */
+function Stacked({ base, ending }: { base: string; ending: string }) {
+  return (
+    <span className="grid leading-tight">
+      <span>{base}</span>
+      <span className="text-(--form)">{ending}</span>
+    </span>
+  );
+}
+
 function HowItsBuilt({ n }: { n: number }) {
   const ones = DIGIT_WORDS[n % 10] ?? "";
   const tensWord = DIGIT_WORDS[Math.floor(n / 10)] ?? "";
@@ -355,26 +365,75 @@ export function NumbridLesson() {
           ),
         },
         {
-          id: "build",
-          title: t`Two endings do the rest`,
+          id: "teens",
+          title: t`Eleven to nineteen: -teist`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Eleven to nineteen add <em>-teist</em> to the digit: <Word w="üksteist" />,{" "}
-                    <Word w="kaksteist" />, <Word w="kolmteist" />. The ending comes from “of the
-                    second ten”.
+                    Add <em>-teist</em> to a digit and you have eleven to nineteen:{" "}
+                    <Word w="üksteist" />, <Word w="kaksteist" />, <Word w="kolmteist" />. The
+                    ending comes from “of the second ten”.
                   </Trans>
                 </p>
+              </Prose>
+              <Panel>
+                <Keys
+                  label={t`Eleven to nineteen`}
+                  columns={9}
+                  phoneColumns={5}
+                  items={range(11, 19).map((n) => ({
+                    label: String(n),
+                    sub: <Stacked base={DIGIT_WORDS[n - 10] ?? ""} ending="teist" />,
+                    src: numberSrc(n),
+                    label2: `${n}, ${numberWords(n)}`,
+                  }))}
+                />
+              </Panel>
+            </>
+          ),
+        },
+        {
+          id: "tens",
+          title: t`The tens: -kümmend`,
+          children: (
+            <>
+              <Prose>
                 <p>
                   <Trans>
-                    Tens add <em>-kümmend</em>: <Word w="kakskümmend" /> is two tens, twenty. A
-                    digit after it is a separate word: <Word w="kakskümmend üks" />, twenty-one.
+                    For the tens, add <em>-kümmend</em> to the digit: <Word w="kakskümmend" /> is
+                    two tens, twenty.
                   </Trans>
                 </p>
+              </Prose>
+              <Panel>
+                <Keys
+                  label={t`The tens`}
+                  columns={8}
+                  phoneColumns={4}
+                  items={range(2, 9).map((d) => ({
+                    label: String(d * 10),
+                    sub: <Stacked base={DIGIT_WORDS[d] ?? ""} ending="kümmend" />,
+                    src: numberSrc(d * 10),
+                    label2: `${d * 10}, ${numberWords(d * 10)}`,
+                  }))}
+                />
+              </Panel>
+            </>
+          ),
+        },
+        {
+          id: "build",
+          title: t`Put them together`,
+          children: (
+            <>
+              <Prose>
                 <p>
-                  <Trans>Slide to any number and hear how it's built.</Trans>
+                  <Trans>
+                    A digit after the tens is a word of its own: <Word w="kakskümmend üks" />,
+                    twenty-one. Slide to any number and hear how it's built.
+                  </Trans>
                 </p>
               </Prose>
               <Builder />
@@ -402,6 +461,7 @@ export function NumbridLesson() {
                 items={teistItems}
                 rounds={8}
                 both={(item) => item.options.map((option) => numberSrc(Number(option.id)))}
+                recall={(item) => ({ label: item.answer, src: item.src })}
                 round={(props) => <ChoiceRound {...props} />}
               />
             </>
@@ -459,6 +519,7 @@ export function NumbridLesson() {
                 items={levelItems[level] ?? []}
                 rounds={6}
                 verdict={typedVerdict}
+                recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}
                 round={(props) => <TypedRound {...props} />}
               />
             </>
@@ -501,6 +562,7 @@ export function NumbridLesson() {
                     </Trans>
                   )
                 }
+                recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}
                 round={(props) => <TypedRound {...props} />}
               />
             </>

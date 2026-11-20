@@ -1,17 +1,16 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { captureAnalytics } from "@lymi/client/analytics";
 import { clsx } from "clsx";
-import { ArrowLeft, ArrowRight, ChevronDown } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
 import { lessonBySlug, lessonPath, nextLesson } from "../../lib/learn/catalogue";
 import { finishSection as saveSection, startLesson } from "../../lib/learn/progress";
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
-import { ArrowLink } from "../landing/ArrowLink";
 import { LearnLayout } from "./LearnLayout";
+import { LessonWords } from "./LessonWords";
 import { type Glossary, LessonContext, SectionContext, useLesson } from "./lesson-context";
 import { WordCards } from "./Word";
-import { WordList } from "./WordList";
 
 export interface LessonSection {
   /** Stable id: the read bar and progress use it. */
@@ -113,24 +112,7 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
                   <li key={i}>{line}</li>
                 ))}
               </ol>
-              <details className="group mt-2 overflow-hidden rounded-lg bg-plate ring-1 ring-edge">
-                <summary className="flex cursor-pointer list-none items-center gap-3 px-4 py-3.5 text-lg font-medium hoverable:hover:bg-plate-hover [&::-webkit-details-marker]:hidden">
-                  <Trans>Words from this lesson</Trans>
-                  <span className="text-md font-normal text-ink-muted tabular-nums">
-                    {words.length}
-                  </span>
-                  <ChevronDown
-                    aria-hidden="true"
-                    className="ms-auto size-5 text-ink-muted transition-transform duration-200 group-open:rotate-180"
-                  />
-                </summary>
-                <div className="border-t border-edge">
-                  <WordList words={words} bare />
-                </div>
-              </details>
-              <ArrowLink href={localizedPath("estonian", i18n.locale)} size="md">
-                <Trans>Learn the most common Estonian words with Lymi's free decks</Trans>
-              </ArrowLink>
+              <LessonWords words={words} />
             </Section>
             <NextLesson slug={slug} locale={i18n.locale} onFinish={() => finishSection("recap")} />
           </div>

@@ -205,7 +205,21 @@
   background: var(--form);
 }
 
+/* The score's marks pop in. */
+.learn-pop {
+  animation: learn-pop 380ms var(--ease-out) both;
+}
+@keyframes learn-pop {
+  from {
+    opacity: 0;
+    transform: scale(0.6);
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
+  .learn-pop {
+    animation: none;
+  }
   .learn-eq i {
     animation: none;
     height: 70%;

@@ -33,10 +33,10 @@ The parts live in `apps/site/src/components/learn`. A new lesson reaches for the
 | `PlayButton`, `Listen` | One clip; the sound a quiz round asks about. While a sound plays, its triangle becomes three moving bars and a ring leaves the button. |
 | `ListenRows` | A list of things to hear on one plate, with an optional first column such as a numeral. The words at the end of a lesson are one. |
 | `Panel` | The tray anything to play with sits on. |
-| `Keys` | A row of sounds to press, with a line under it that explains the last key. Accent keys, for what is new, carry the hue and a dot. |
+| `Keys` | A row of sounds to press, with a line under it that explains the last key. Accent keys, for what is new, carry the hue and a dot. A key's word can light part of itself, such as an ending set under its digit. |
 | `Chips` | Pick one of a few. |
 | `Compare` | Two words drawn as bars on one time scale, one bar per 12 ms, so the longer word takes more room. |
-| `Quiz` with `ChoiceRound`, `GapRound` or `TypedRound` | Anything that marks the learner. A white card with its title on the stage's band, one Listen per round, the answers, a line of feedback, Next, and a score with Try again. A round can't be answered before its sound has played. One flow drives every quiz: `quizReducer` in `apps/site/src/lib/learn/quiz.ts`. |
+| `Quiz` with `ChoiceRound`, `GapRound` or `TypedRound` | Anything that marks the learner. A white card with its title on the stage's band, one Listen per round, the answers, a line of feedback, Next, and a score with Try again. The score lists the run's words as chips to hear again, misses marked, with a sparkle for a full score; give the quiz `recall` so it knows each round's word. A round can't be answered before its sound has played. One flow drives every quiz: `quizReducer` in `apps/site/src/lib/learn/quiz.ts`. |
 
 A lesson file in `components/learn/lessons` holds its glossary, its sections and its recap, and passes them to `LessonView`, which draws a link back to all lessons, the head, the read bar, What to remember, the words and the link to the next lesson. The read bar shows where the reader is, filling in order up to the section on screen; which sections are done is kept for the hub, not shown in the bar.
 
@@ -46,7 +46,8 @@ A lesson file in `components/learn/lessons` holds its glossary, its sections and
 - Two or three short paragraphs, then something to touch. Explore first, then answer.
 - Every Estonian word in prose is a `Word` with a gloss.
 - Listening only: nothing asks for the microphone.
-- Every lesson ends the same way: What to remember in three to five rules, the words from the lesson folded into one row that opens to the list, a link to Lymi's free Estonian decks, and the next lesson.
+- One idea per section. When a rule has two halves, such as -teist and -kümmend, give each half a section and its own explorer, then a section that puts them together.
+- Every lesson ends the same way: What to remember in three to five rules, then `LessonWords` on the stage's tray: a card with the first words as chips that opens to the full list, and under it, on the same tray, the way on to Lymi's free Estonian decks. Then the next lesson.
 - English is the source; Ukrainian and Russian are transcreated, and a pronunciation tip compares a sound with the reader's own language where the match is accurate.
 - A teacher checks the Estonian before a lesson launches.
 

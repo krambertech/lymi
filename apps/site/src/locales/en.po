@@ -6692,8 +6692,8 @@ msgstr "Say o, then spread your lips and keep your tongue where it was. Russian 
 msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
 msgstr "Say what you must, want and like to do, what you did yesterday, and with whom."
 
-msgid "Say who you are, what you do and where you live, and ask and answer. Then count, tell the time and name the day."
-msgstr "Say who you are, what you do and where you live, and ask and answer. Then count, tell the time and name the day."
+msgid "Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do."
+msgstr "Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do."
 
 msgid "Say yes in Lymi"
 msgstr "Say yes in Lymi"

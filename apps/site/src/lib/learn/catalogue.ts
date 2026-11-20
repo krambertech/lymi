@@ -44,7 +44,7 @@ export const STAGES: readonly Stage[] = [
     name: msg`The basics`,
     level: "A1",
     hue: 222,
-    goal: msg`Say who you are, what you do and where you live, and ask and answer. Then count, tell the time and name the day.`,
+    goal: msg`Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do.`,
     lessons: [
       {
         slug: "haaldus",

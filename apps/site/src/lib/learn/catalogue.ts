@@ -95,6 +95,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud.`,
       },
       {
+        slug: "tutvumine",
+        name: msg`Practice: meeting someone`,
+        title: msg`Estonian conversation practice: meeting someone`,
+        et: "Tere! Mina olen Mari.",
+        minutes: 10,
+        blurb: msg`Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud.`,
+      },
+      {
         slug: "numbrid",
         name: msg`Numbers`,
         title: msg`Estonian numbers`,
@@ -118,7 +126,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 8,
         blurb: msg`A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud.`,
       },
-      { name: msg`Commands`, et: "Istu! Ära istu!" },
+      {
+        slug: "kaskiv",
+        name: msg`Commands`,
+        title: msg`Estonian imperative: giving commands`,
+        et: "Istu! Ära istu!",
+        minutes: 10,
+        blurb: msg`A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud.`,
+      },
     ],
   },
   {

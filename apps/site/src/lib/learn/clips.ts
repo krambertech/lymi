@@ -498,6 +498,90 @@ export const KOHAD_SENTENCES = {
   "g-kontoris": "Nad töötavad kontoris.",
 } as const;
 
+/**
+ * The practice lesson on meeting someone, built only from lessons 1 to 6. Mari speaks in the
+ * second voice; the learner, Andres, in the main one.
+ */
+export const TUTVUMINE_ANSWERING = {
+  "a-mari-1": { text: "Tere! Mina olen Mari. Mis su nimi on?", voice: "second" },
+  "a-sina-1": "Tere! Minu nimi on Andres.",
+  "a-mari-2": { text: "Väga meeldiv! Kust sa pärit oled?", voice: "second" },
+  "a-sina-2": "Ma olen pärit Ukrainast.",
+  "a-mari-3": { text: "Kus sa elad?", voice: "second" },
+  "a-sina-3": "Ma elan Tartus.",
+  "a-mari-4": { text: "Kas sa oled õpetaja?", voice: "second" },
+  "a-sina-4": "Ei, ma ei ole. Ma töötan kontoris.",
+  "a-mari-5": { text: "Kas sa räägid eesti keelt?", voice: "second" },
+  "a-sina-5": "Natuke. Ma õpin eesti keelt.",
+  "a-mari-6": { text: "Väga hästi! Head aega!", voice: "second" },
+  "a-sina-6": "Aitäh! Head aega!",
+} as const satisfies Record<string, Clip>;
+
+/** The second conversation: the learner asks, and Mari answers. */
+export const TUTVUMINE_ASKING = {
+  "k-mari-1": { text: "Tere, Andres! Kuidas läheb?", voice: "second" },
+  "k-sina-1": "Hästi, aitäh. Aga sul?",
+  "k-mari-2": { text: "Ma olen natuke väsinud.", voice: "second" },
+  "k-sina-2": "Miks sa oled väsinud?",
+  "k-mari-3": { text: "Sest ma töötan palju.", voice: "second" },
+  "k-sina-3": "Kus sa töötad?",
+  "k-mari-4": { text: "Haiglas, Pärnus.", voice: "second" },
+  "k-sina-4": "Kas sa elad Pärnus?",
+  "k-mari-5": { text: "Ei, ma elan Tartus.", voice: "second" },
+} as const satisfies Record<string, Clip>;
+
+/** Jaan talks about himself and Kati; Kati writes back, a text with gaps. */
+export const TUTVUMINE_PASSAGES = {
+  jaan: [
+    "Tere! Minu nimi on Jaan.",
+    "Ma elan Pärnus.",
+    "Ma ei tööta kontoris, ma töötan kohvikus.",
+    "Minu sõber Kati elab Tallinnas.",
+    "Ta ei tööta, ta õpib.",
+    "Ta joob palju kohvi.",
+  ],
+  kati: [
+    "Tere! Mina olen Kati.",
+    "Ma elan Tallinnas.",
+    "Ma ei tööta, ma õpin.",
+    "Minu sõber Jaan töötab kohvikus.",
+    "Ta ei ole kodus, ta on tööl.",
+    "Me räägime eesti keelt.",
+    "Aga sina? Kus sina elad?",
+  ],
+} as const;
+
+/** Words and phrases with a card: the passage's words, and the phrases worth keeping. */
+export const TUTVUMINE_WORDS = [
+  "nimi",
+  "elan",
+  "elab",
+  "Pärnus",
+  "Tallinnas",
+  "ei",
+  "tööta",
+  "töötan",
+  "kontoris",
+  "kohvikus",
+  "sõber",
+  "õpib",
+  "joob",
+  "palju",
+  "kohvi",
+  "Mis su nimi on?",
+  "Väga meeldiv!",
+  "Kust sa pärit oled?",
+  "Kus sa elad?",
+  "Kus sa töötad?",
+  "Kas sa räägid eesti keelt?",
+  "Natuke.",
+  "Kuidas läheb?",
+  "Hästi, aitäh. Aga sul?",
+  "Miks?",
+  "Sest",
+  "Head aega!",
+] as const;
+
 /** The time lesson's words and phrases; each time it says is a clip of its own, by `timeClip`. */
 export const KELL_WORDS = [
   "Mis kell on?",
@@ -514,6 +598,76 @@ export const KELL_WORDS = [
   "kümme minutit kolm läbi",
   "kümne minuti pärast neli",
 ] as const;
+
+/**
+ * The commands lesson's verbs from the present-tense lesson, each with its ma form and its stem,
+ * which is the command to one person. Checked in ÕS 2025 on Sõnaveeb (EKI morphology).
+ */
+export const KASKIV_STEMS = [
+  { verb: "lugema", ma: "loen", stem: "loe" },
+  { verb: "rääkima", ma: "räägin", stem: "räägi" },
+  { verb: "ootama", ma: "ootan", stem: "oota" },
+  { verb: "sööma", ma: "söön", stem: "söö" },
+  { verb: "jooma", ma: "joon", stem: "joo" },
+  { verb: "õppima", ma: "õpin", stem: "õpi" },
+] as const;
+
+/** A command to one person: “Loe!”, or with `no`, “Ära loe!”. */
+export const commandTo = (stem: string, no = false) =>
+  no ? `Ära ${stem}!` : `${stem.charAt(0).toUpperCase()}${stem.slice(1)}!`;
+
+/** “Ma ei loe.”: the statement with ei that a command with ära is told apart from. */
+export const notSentence = (stem: string) => `Ma ei ${stem}.`;
+
+/**
+ * Everyday commands: the verb, its ma form, the command to one person, and to more than one or
+ * politely. Checked in ÕS 2025 on Sõnaveeb: istuge, tulge, oodake, kuulake, vaadake, rääkige.
+ */
+export const KASKIV_EVERYDAY = [
+  { verb: "istuma", ma: "istun", one: "Istu!", more: "Istuge!" },
+  { verb: "tulema", ma: "tulen", one: "Tule siia!", more: "Tulge siia!" },
+  { verb: "ootama", ma: "ootan", one: "Oota!", more: "Oodake!" },
+  { verb: "kuulama", ma: "kuulan", one: "Kuula!", more: "Kuulake!" },
+  { verb: "vaatama", ma: "vaatan", one: "Vaata!", more: "Vaadake!" },
+  {
+    verb: "rääkima",
+    ma: "räägin",
+    one: "Räägi aeglasemalt, palun.",
+    more: "Rääkige aeglasemalt, palun.",
+  },
+] as const;
+
+/** The stems the do-and-don't switch flips. */
+export const KASKIV_FLIP = ["istu", "oota", "räägi", "loe", "söö", "joo"] as const;
+
+/** The stems of the “do, don't or not?” quiz, each heard three ways. */
+export const KASKIV_HEARD = ["istu", "oota", "loe", "joo"] as const;
+
+/** One person or more: each command and its form to more than one. ÕS 2025: lugege, ärge. */
+export const KASKIV_MORE = [
+  ...KASKIV_EVERYDAY.slice(0, 5).map(({ one, more }) => ({ one, more })),
+  { one: "Loe!", more: "Lugege!" },
+  { one: "Ära istu!", more: "Ärge istuge!" },
+  { one: "Ära loe!", more: "Ärge lugege!" },
+] as const;
+
+/** Words and lines the commands lesson says outside its lists. */
+export const KASKIV_WORDS = ["palun", "ära", "siia", "Ma lähen.", "Mine!", "Ärge oodake!"] as const;
+
+/**
+ * At a café with Mari: her lines in the second voice, the learner's in the main one. Words from
+ * lessons 1–9 and this lesson's commands; tuleb is tulema with the ta ending.
+ */
+export const KASKIV_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Oota, ma tulen!", voice: "second" },
+  "d-sina-1": "Tere! Istu, palun.",
+  "d-mari-2": { text: "Aitäh! Kas sa räägid eesti keelt?", voice: "second" },
+  "d-sina-2": "Natuke. Räägi aeglasemalt, palun.",
+  "d-mari-3": { text: "Kas sa jood kohvi või vett?", voice: "second" },
+  "d-sina-3": "Kohvi, palun.",
+  "d-mari-4": { text: "Vaata! Jaan tuleb.", voice: "second" },
+  "d-sina-4": "Jaan, tule siia!",
+} as const satisfies Record<string, Clip>;
 
 /**
  * The practice parts' demo on /components/lessons: Jaan introduces himself, Mari writes about
@@ -638,5 +792,24 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...Object.fromEntries(ALL_TIMES.map((time) => [timeClip(time), timeSentence(time)])),
   },
   paevad: { ...words(PAEVAD_WORDS), ...words(PAEVAD_SENTENCES) },
+  tutvumine: {
+    ...words(TUTVUMINE_WORDS),
+    ...TUTVUMINE_ANSWERING,
+    ...TUTVUMINE_ASKING,
+    "p-jaan": { sentences: TUTVUMINE_PASSAGES.jaan },
+    "p-kati": { sentences: TUTVUMINE_PASSAGES.kati, voice: "second" },
+  },
+  kaskiv: {
+    ...words([
+      ...KASKIV_STEMS.flatMap(({ ma, stem }) => [`Ma ${ma}.`, commandTo(stem)]),
+      ...KASKIV_EVERYDAY.map(({ one }) => one),
+      ...KASKIV_FLIP.flatMap((stem) => [commandTo(stem), commandTo(stem, true)]),
+      ...KASKIV_HEARD.map(notSentence),
+      ...KASKIV_MORE.flatMap(({ one, more }) => [one, more]),
+      "Rääkige aeglasemalt, palun.",
+      ...KASKIV_WORDS,
+    ]),
+    ...KASKIV_DIALOGUE,
+  },
   kit: KIT_CLIPS,
 };

@@ -47,18 +47,18 @@ const at = (hour: number, minute: Minute): ClockTime => ({ hour, minute });
 const GLOSSARY: Glossary = {
   "mis kell on?": {
     en: msg`What time is it?`,
-    note: msg`Word for word: what clock is?`,
+    note: msg`Word for word: “what clock is?”`,
     show: "Mis kell on?",
   },
-  kell: { en: msg`clock, watch; o'clock`, note: msg`Also a bell.` },
-  "kell on kolm": { en: msg`It's three o'clock.`, show: "Kell on kolm", clip: timeClip(at(3, 0)) },
+  kell: { en: msg`clock, watch; o’clock`, note: msg`Also a bell.` },
+  "kell on kolm": { en: msg`It’s three o’clock.`, show: "Kell on kolm", clip: timeClip(at(3, 0)) },
   pool: { en: msg`half`, note: msg`Pool neli: halfway to four, 3:30.` },
   veerand: { en: msg`a quarter`, note: msg`Veerand neli: a quarter of the way to four, 3:15.` },
   kolmveerand: { en: msg`three quarters`, note: msg`Kolm, three, and veerand, a quarter.` },
   läbi: { en: msg`through; past`, note: msg`Kümme minutit kolm läbi: 3:10.` },
   pärast: {
     en: msg`after; in, as in “in ten minutes”`,
-    note: msg`Kümne minuti pärast neli: in ten minutes it's four, 3:50.`,
+    note: msg`Kümne minuti pärast neli: in ten minutes it’s four, 3:50.`,
   },
   minutit: { en: msg`minutes`, note: msg`After a number from two up, minut becomes minutit.` },
   "pool neli": { en: msg`half past three, 3:30` },
@@ -229,7 +229,7 @@ function HowItsSaid({ time }: { time: ClockTime }) {
   const past = time.minute;
   switch (time.minute) {
     case 0:
-      return <Trans>On the hour: just its number.</Trans>;
+      return <Trans>On the hour: the number alone.</Trans>;
     case 15:
       return <Trans>A quarter of the way to {next}.</Trans>;
     case 30:
@@ -247,7 +247,7 @@ function HowItsSaid({ time }: { time: ClockTime }) {
     default:
       return (
         <Trans>
-          In {ahead} minutes it's {next}.
+          In {ahead} minutes it’s {next}.
         </Trans>
       );
   }
@@ -428,7 +428,7 @@ function HalfRound({ item, state, heard, answer, autoplay }: RoundProps<ClockTim
         {done && (
           <Feedback right={state.right}>
             <Trans>
-              <b lang="et">{words}</b> is halfway to {next}, so it's {right}.
+              It’s {right}: <b lang="et">{words}</b> is halfway to {next}.
             </Trans>
           </Feedback>
         )}
@@ -515,6 +515,8 @@ const TYPED = [
 export function KellLesson() {
   const { t } = useLingui();
   const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
+  const partitive = LESSONS.find((lesson) => lesson.et === "Kaks kassi")?.n;
+  const numbers = LESSONS.find((lesson) => lesson.et === "Üks, kaks, kolm")?.n;
 
   const heardItems = useMemo(
     () =>
@@ -532,7 +534,7 @@ export function KellLesson() {
           })),
           explain: (
             <Trans>
-              <b lang="et">{words}</b> is {digits}.
+              It’s {digits}: <b lang="et">{words}</b>.
             </Trans>
           ),
         };
@@ -559,7 +561,7 @@ export function KellLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Ask the time and understand the answer. Halves and quarters count toward the hour that's
+          Ask the time and understand the answer. Halves and quarters count toward the hour that’s
           coming.
         </Trans>
       }
@@ -584,12 +586,12 @@ export function KellLesson() {
           <b lang="et">kell on kolm</b>.
         </Trans>,
         <Trans key="2">
-          <b lang="et">pool</b>, <b lang="et">veerand</b> and <b lang="et">kolmveerand</b> name the
-          hour that's coming: <b lang="et">pool neli</b> is 3:30.
+          <b lang="et">Pool</b>, <b lang="et">veerand</b> and <b lang="et">kolmveerand</b> name the
+          hour that’s coming: <b lang="et">pool neli</b> is 3:30.
         </Trans>,
         <Trans key="3">
-          <b lang="et">veerand neli</b> is a quarter of the way to four, 3:15.{" "}
-          <b lang="et">kolmveerand neli</b> is three quarters, 3:45.
+          <b lang="et">Veerand neli</b> is a quarter of the way to four, 3:15.{" "}
+          <b lang="et">Kolmveerand neli</b> is three quarters, 3:45.
         </Trans>,
         <Trans key="4">
           Minutes past count from the hour that has struck: <b lang="et">kümme minutit kolm läbi</b>
@@ -606,13 +608,15 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To ask the time, say <Word w="Mis kell on?" /> Word for word, it's “what clock
+                    To ask the time, say <Word w="Mis kell on?" /> Word for word, it’s “what clock
                     is?” The answer starts with <Word w="kell" /> too: <Word w="Kell on kolm" />,
-                    it's three o'clock.
+                    it’s three o’clock.
                   </Trans>
                 </p>
                 <p>
-                  <Trans>The hours are the numbers you already know. Tap one to hear it.</Trans>
+                  <Trans>
+                    The hours are the numbers from lesson {numbers}. Tap one to hear it.
+                  </Trans>
                 </p>
               </Prose>
               <Panel>
@@ -642,12 +646,12 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="pool" /> means half, and it looks ahead. <Word w="pool neli" /> is
-                    halfway to four, so it's 3:30, not 4:30.
+                    <Word w="Pool" /> means half, and it looks ahead. <Word w="Pool neli" /> is
+                    halfway to four, so it’s 3:30, not 4:30.
                   </Trans>
                 </p>
                 <p>
-                  <Trans>The hour you hear is the one that's coming. Tap a few and listen.</Trans>
+                  <Trans>The hour you hear is the one that’s coming. Tap a few and listen.</Trans>
                 </p>
               </Prose>
               <Panel>
@@ -678,8 +682,8 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    This is the one most learners get wrong at first. Listen for the hour, then step
-                    back half an hour.
+                    Pool names the coming hour, so the hour you hear is one ahead. Listen for the
+                    hour, then step back half an hour.
                   </Trans>
                 </p>
               </Prose>
@@ -703,14 +707,16 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Quarters look ahead too. <Word w="veerand" /> is a quarter, so{" "}
+                    Quarters look ahead too. <Word w="Veerand" /> is a quarter, so{" "}
                     <Word w="veerand neli" /> is a quarter of the way to four: 3:15.{" "}
-                    <Word w="kolmveerand" /> is three quarters, so <Word w="kolmveerand neli" /> is
+                    <Word w="Kolmveerand" /> is three quarters, so <Word w="kolmveerand neli" /> is
                     3:45.
                   </Trans>
                 </p>
                 <p>
-                  <Trans>Watch the hour fill up on its way to four.</Trans>
+                  <Trans>
+                    Each clock fills in the part of the hour that has gone. Tap one to hear it.
+                  </Trans>
                 </p>
               </Prose>
               <HourTrack />
@@ -725,10 +731,11 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Other minutes count from the hour that has struck.{" "}
-                    <Word w="kümme minutit kolm läbi" /> is “ten minutes, three passed”: 3:10.{" "}
-                    <Word w="läbi" /> means through or past, and <Word w="minutit" /> is how{" "}
-                    <em>minut</em> looks after a number.
+                    Other minutes, up to twenty past, count from the hour that has struck.{" "}
+                    <Word w="Kümme minutit kolm läbi" /> is, word for word, “ten minutes, three
+                    passed”: 3:10. <Word w="Läbi" /> means through or past, and <Word w="minutit" />{" "}
+                    is the partitive of <em>minut</em>, the form after a number; lesson {partitive}{" "}
+                    explains it.
                   </Trans>
                 </p>
               </Prose>
@@ -753,15 +760,16 @@ export function KellLesson() {
                 <p>
                   <Trans>
                     Before the hour, say how long until the next one.{" "}
-                    <Word w="kümne minuti pärast neli" /> is “in ten minutes, four”: 3:50.
+                    <Word w="Kümne minuti pärast neli" /> is, word for word, “in ten minutes, four”:
+                    3:50.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
                     Here the number changes shape: <em>viis</em> becomes <em>viie</em>,{" "}
                     <em>kümme</em> becomes <em>kümne</em>, <em>kakskümmend</em> becomes{" "}
-                    <em>kahekümne</em>. Learn these three as set phrases for now. The form behind
-                    them comes in lesson {genitive}.
+                    <em>kahekümne</em>. Learn these three as set phrases for now. Lesson {genitive}{" "}
+                    explains the form.
                   </Trans>
                 </p>
               </Prose>
@@ -785,7 +793,7 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Drag the minute hand or pick the minutes, then press play to hear the time. The
+                    Drag the minute hand or pick the minutes, then tap play to hear the time. The
                     hour a time is named after lights up.
                   </Trans>
                 </p>
@@ -803,8 +811,8 @@ export function KellLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Listen and pick the clock. The others are the usual mix-ups: an hour out, or a
-                    quarter the wrong way round.
+                    Listen and pick the clock. The others are an hour out, or another time named
+                    after the same hour, such as 3:15 and 3:45.
                   </Trans>
                 </p>
               </Prose>
@@ -831,9 +839,7 @@ export function KellLesson() {
             <>
               <Prose>
                 <p>
-                  <Trans>
-                    Listen and type the time in digits, such as 3:30 or 3.30. Press Enter to check.
-                  </Trans>
+                  <Trans>Listen and type the time in digits, such as 3:30 or 3.30.</Trans>
                 </p>
               </Prose>
               <Quiz
@@ -845,11 +851,11 @@ export function KellLesson() {
                   share === 1 ? (
                     <Trans>Every one, by ear.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Good ear. Halves and quarters are the ones to replay.</Trans>
+                    <Trans>Most of them. Play the ones you missed once more.</Trans>
                   ) : (
                     <Trans>
-                      Times take practice. Listen for pool, veerand or kolmveerand first, then the
-                      hour.
+                      Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you which
+                      hour to count from.
                     </Trans>
                   )
                 }

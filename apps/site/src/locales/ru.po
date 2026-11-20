@@ -28,6 +28,9 @@ msgstr "«Смотри, какая ВАТА, МАма!»"
 msgid "“May it come easy”, said to someone at work"
 msgstr "«Пусть будет легко» — говорят тому, кто работает"
 
+msgid "“On Monday” takes an ending: <0/>. That comes in lesson {when}."
+msgstr "«В понедельник» по-эстонски — одно слово с окончанием: <0/>. Об этом — в уроке {when}."
+
 msgid "“Schönen Feierabend!” wishes someone a good evening off."
 msgstr "«Schönen Feierabend!» — пожелание хорошо отдохнуть после работы."
 
@@ -351,6 +354,9 @@ msgstr "<0/> — это сто, а <1/> — тысяча, и «один» пер
 msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 msgstr "<0/> значит и «он», и «она»: у эстонских местоимений нет рода. <1/> — это ещё и вежливое «Вы» к одному человеку, как в русском."
 
+msgid "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
+msgstr "<0/> — завтра, <1/> — вчера. Добавь в начало <2>üle-</2>, и получится на день дальше: <3/> — послезавтра, <4/> — позавчера. Выбери, какой сегодня день."
+
 msgid "<0/> is yes and <1/> is no. When the question asks with olema, to be, the usual no is <2/>: he isn't, I'm not. When you don't know, say <3/>."
 msgstr "<0/> значит да, <1/> значит нет. Если в вопросе есть olema, быть, обычный ответ «нет» — <2/>, то есть «не» вместе с глаголом olema. Если не знаешь, скажи <3/>."
 
@@ -359,6 +365,9 @@ msgstr "<0/> значит твой, это короткое <1/>; откуда �
 
 msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:30, not 4:30."
 msgstr "<0/> значит «половина», и смотрит вперёд. <1/> — это 3:30, а не 4:30."
+
+msgid "<0/> means holy, so this is the holy day."
+msgstr "<0/> значит «святой», так что это святой день."
 
 msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 msgstr "<0/> значит «быть». Его окончание меняется по лицам: <1/> — «я есть», <2/> — «ты есть». Нажми на окончание."
@@ -406,6 +415,9 @@ msgstr "<0>Aiko</0> прошла неделю 3"
 
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Диффузия</0>: частицы движутся от высокой концентрации к низкой."
+
+msgid "<0>E–R</0> on a sign: Monday to Friday."
+msgstr "<0>E–R</0> на табличке: с понедельника по пятницу."
 
 msgid "<0>ei {stem}</0>: <1>ei</1> before the verb, and the ending is gone."
 msgstr "<0>ei {stem}</0>: <1>ei</1> перед глаголом, а окончание пропало."
@@ -455,6 +467,9 @@ msgstr "<0>альтернативная стоимость</0> <1>= чем же�
 msgid "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 msgstr "<0>Осмос</0>: вода проходит через мембрану туда, где больше растворённого вещества."
 
+msgid "<0>P suletud</0> on a sign: closed on Sunday."
+msgstr "<0>P suletud</0> на табличке: в воскресенье закрыто."
+
 msgid "<0>Pole</0> means the same as <1>ei ole</1>. You'll hear both."
 msgstr "<0>Pole</0> значит то же, что <1>ei ole</1>. Услышишь оба."
 
@@ -475,6 +490,9 @@ msgstr "<0>Sõber</0> — родственник древнерусского «
 
 msgid "<0>ta</0> is both he and she. <1>te</1> is you to a group, and polite you to one person."
 msgstr "<0>ta</0> — и «он», и «она». <1>te</1> — «вы» нескольким людям и вежливое «Вы» одному."
+
+msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
+msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сегодня, завтра, вчера. <3>Üle-</3> добавляет ещё один день."
 
 msgid "<0>veerand neli</0> is a quarter of the way to four, 3:15. <1>kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>veerand neli</0> — четверть пути к четырём, 3:15. <1>kolmveerand neli</1> — три четверти, 3:45."
@@ -810,6 +828,9 @@ msgstr "Бесплатный урок о вопросах в эстонском:
 msgid "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad, with ten everyday verbs read aloud."
 msgstr "Бесплатный урок об эстонских глаголах в настоящем времени: форма на -ma, основа и шесть окончаний -n, -d, -b, -me, -te и -vad на десяти повседневных глаголах, с озвучкой."
 
+msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
+msgstr "Бесплатный урок о днях недели на эстонском: семь названий, четыре с числами внутри, однобуквенные обозначения в часах работы, а ещё täna, homme и eile. Каждое слово озвучено."
+
 msgid "A full card in seconds"
 msgstr "Полная карточка за секунды"
 
@@ -978,6 +999,9 @@ msgstr "Своё расписание у каждой карточки"
 
 msgid "A score for one attempt"
 msgstr "Баллы за одну попытку"
+
+msgid "A shop's opening hours"
+msgstr "Часы работы магазина"
 
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
 msgstr "Короткий текст, чтобы прочитать и послушать, и все вопросы сразу; карточки слов открываются после проверки."
@@ -1441,6 +1465,9 @@ msgstr "Все. <0>Ei</0>, и окончание уходит."
 msgid "All of them. <0>Ei</0>, then the verb from the question."
 msgstr "Все. <0>Ei</0>, а за ним глагол из вопроса."
 
+msgid "All of them. You can count the week forward."
+msgstr "Всё верно. Ты умеешь считать неделю вперёд."
+
 msgid "All of them. You can follow a short exchange."
 msgstr "Все. Ты уже понимаешь короткий разговор."
 
@@ -1467,6 +1494,9 @@ msgstr "Все польские колоды"
 
 msgid "All Russian decks"
 msgstr "Все колоды по русскому"
+
+msgid "All seven. You know the week by ear."
+msgstr "Все семь. Ты знаешь неделю на слух."
 
 msgid "All shelves"
 msgstr "Все полки"
@@ -1501,6 +1531,9 @@ msgstr "Уже есть в колоде, поэтому пропущено"
 
 msgid "Also “came”: ta tuli, she came."
 msgstr "Ещё и «пришла»: ta tuli — она пришла."
+
+msgid "Also “other”."
+msgstr "А ещё «другой»."
 
 msgid "Also “to get”, from saama."
 msgstr "Ещё и «получить», от saama."
@@ -1901,6 +1934,12 @@ msgstr "В книгах ё часто печатают как е. Добавь �
 msgid "Books often print ё as е. Add ежик from such a book and Lymi shows ёжик on the card until you know it, the dots marking the stress as an accent would."
 msgstr "Книги часто печатают ё как е. Добавь ежик из такой книги — и Lymi будет показывать на карточке ёжик, пока ты не выучишь слово: точки отмечают ударение так же, как знак ударения."
 
+msgid "Borrowed from Low German or Old Swedish."
+msgstr "Заимствовано из нижненемецкого или древнешведского."
+
+msgid "Borrowed from the Low German or Old Swedish name for Friday. It's the one day without <0>päev</0>."
+msgstr "Заимствовано из нижненемецкого или древнешведского названия пятницы. Единственный день без <0>päev</0>."
+
 msgid "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
 msgstr "Оба — спокойные приложения с флеш-карточками, в которых удобно работать с клавиатуры. Mochi хранит заметки и карточки вместе, в Markdown. Lymi делает за тебя большую часть работы над карточками и синхронизирует их бесплатно."
 
@@ -2059,6 +2098,12 @@ msgstr "Пока"
 
 msgid "café"
 msgstr "кафе"
+
+msgid "Calendars and signs use one capital letter a day: <0>E T K N R L P</0>."
+msgstr "В календарях и на табличках каждый день — одна заглавная буква: <0>E T K N R L P</0>."
+
+msgid "Calendars, timetables and shop doors write each day as its first letter, a capital: <0>E, T, K, N, R, L, P</0>. A sign that says <1>E–R 9–18</1> is open Monday to Friday, nine to six."
+msgstr "В календарях, расписаниях и на дверях магазинов каждый день обозначают одной первой буквой, заглавной: <0>E, T, K, N, R, L, P</0>. Табличка «<1>E–R 9–18</1>» значит, что открыто с понедельника по пятницу, с 9 до 18."
 
 msgid "California DMV knowledge test"
 msgstr "Теоретический экзамен DMV в Калифорнии"
@@ -2467,6 +2512,9 @@ msgstr "Конец рабочего дня и свободный вечер по
 msgid "Close menu"
 msgstr "Закрыть меню"
 
+msgid "closed"
+msgstr "закрыто"
+
 msgid "Cloud"
 msgstr "Облако"
 
@@ -2637,6 +2685,9 @@ msgstr "Уютный"
 msgid "Cosy and convivial; good company"
 msgstr "Уютный и душевный; в хорошей компании"
 
+msgid "Count forward"
+msgstr "Считаем вперёд"
+
 msgid "Create and practise flashcards with ChatGPT."
 msgstr "Создавай и повторяй флеш-карточки с ChatGPT."
 
@@ -2680,6 +2731,9 @@ msgstr "Danke schön! Большое спасибо!"
 msgid "Dates, definitions and formulas to know on the day."
 msgstr "Даты, определения и формулы, которые нужно знать на экзамене."
 
+msgid "day"
+msgstr "день"
+
 msgid "Day {day}"
 msgstr "День {day}"
 
@@ -2697,6 +2751,9 @@ msgstr "дней подряд"
 
 msgid "Days of the week"
 msgstr "Дни недели"
+
+msgid "Days of the week in Estonian"
+msgstr "Дни недели на эстонском"
 
 msgid "Deadline"
 msgstr "Срок"
@@ -3162,6 +3219,9 @@ msgstr "Приятного аппетита!"
 msgid "Enjoying the moment"
 msgstr "Наслаждение моментом"
 
+msgid "Esmaspäev with an ending that says when."
+msgstr "Esmaspäev с окончанием, которое отвечает на вопрос «когда»."
+
 msgid "Español"
 msgstr "Español"
 
@@ -3528,6 +3588,9 @@ msgstr "огонь"
 msgid "Fire"
 msgstr "Огонь"
 
+msgid "first"
+msgstr "первый"
+
 msgid "First day"
 msgstr "Первый день"
 
@@ -3784,6 +3847,9 @@ msgstr "Французский A2 · по средам"
 msgid "French for “putting in place”."
 msgstr "По-французски — «разложить всё по местам»."
 
+msgid "Friday"
+msgstr "Пятница"
+
 msgid "Fridge"
 msgstr "Холодильник"
 
@@ -3807,6 +3873,12 @@ msgstr "Из выпуска подкаста"
 
 msgid "From a post on X"
 msgstr "Из поста в X"
+
+msgid "From a Scandinavian name: the day people washed."
+msgstr "От скандинавского названия: день, когда мылись."
+
+msgid "From a Scandinavian word: the day for washing."
+msgstr "От скандинавского слова: день, когда мылись."
 
 msgid "From a web page"
 msgstr "С веб-страницы"
@@ -4055,6 +4127,9 @@ msgstr "Доброе *утро*!"
 msgid "Good ear. Halves and quarters are the ones to replay."
 msgstr "Хороший слух. Половины и четверти стоит послушать ещё раз."
 
+msgid "Good ear. Listen to how the ones you missed start."
+msgstr "Хороший слух. Послушай, как начинаются дни, где были ошибки."
+
 msgid "Good ear. Numbers in sentences come fast; try once more."
 msgstr "Хороший слух. В предложениях числа звучат быстро, попробуй ещё раз."
 
@@ -4078,6 +4153,9 @@ msgstr "Доброе утро. Вот твой день в Lymi."
 
 msgid "Good. Hear the ones you missed once more."
 msgstr "Хорошо. Послушай ещё раз те, где ошибся."
+
+msgid "Good. Say the week through in your head before you pick."
+msgstr "Хорошо. Прежде чем выбрать, проговори неделю про себя."
 
 msgid "Goodbye"
 msgstr "До свидания"
@@ -4241,6 +4319,9 @@ msgstr "Послушать {0}"
 msgid "Hear {0}, {1}"
 msgstr "Послушать {0}, {1}"
 
+msgid "Hear a day"
+msgstr "День на слух"
+
 msgid "Hear a question and pick its question word. It's always the first word, so listen to the start."
 msgstr "Послушай вопрос и выбери вопросительное слово. Оно всегда первое, так что слушай начало."
 
@@ -4354,6 +4435,9 @@ msgstr "История"
 
 msgid "History notes"
 msgstr "Конспект по истории"
+
+msgid "holy; a holiday"
+msgstr "святой; праздник"
 
 msgid "Hopefully"
 msgstr "Надеюсь"
@@ -4918,8 +5002,8 @@ msgstr "Начато"
 msgid "In Quizlet you choose a set and a study mode. In Lymi you open Today, and spaced repetition has already picked the cards that need you."
 msgstr "В Quizlet ты выбираешь набор и режим. В Lymi открываешь «Сегодня», а интервальное повторение уже отобрало карточки, которым нужно твоё внимание."
 
-msgid "In some verbs the stem changes. <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don't need the rule for that yet. Learn each verb with its I form, the way Estonian dictionaries list it: <3>lugema, loen</3>. Take off -n and the rest is the stem."
-msgstr "У некоторых глаголов основа меняется. У <0/>, «читать», основа <1>loe-</1>, поэтому «я читаю» будет <2/>. Правило для этого пока не нужно. Запоминай каждый глагол вместе с формой для «я», как в эстонских словарях: <3>lugema, loen</3>. Отбрось -n, и остальное будет основой."
+msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don't need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you'll add a third form, <4>lugeda</4>."
+msgstr "У некоторых глаголов основа меняется. У <0/>, «читать», основа <1>loe-</1>, поэтому «я читаю» будет <2/>. Правило для этого пока не нужно. Запоминай каждый глагол вместе с формой для «я»: <3>lugema, loen</3>. Отбрось -n, и остальное будет основой. В уроке {verbForms} добавишь третью форму, <4>lugeda</4>."
 
 msgid "In summer the *nights* stay light."
 msgstr "Летом *ночи* светлые."
@@ -5586,6 +5670,9 @@ msgstr "Послушать"
 msgid "Listen and pick the clock. The others are the usual mix-ups: an hour out, or a quarter the wrong way round."
 msgstr "Послушай и выбери часы. Остальные — обычные путаницы: не тот час или четверть не с той стороны."
 
+msgid "Listen and pick the day. Most of them end the same way, so listen to how each one starts."
+msgstr "Послушай и выбери день. Большинство заканчиваются одинаково, так что слушай, как каждый начинается."
+
 msgid "Listen and type the time in digits, such as 3:30 or 3.30. Press Enter to check."
 msgstr "Послушай и введи время цифрами, например 3:30 или 3.30. Нажми Enter, чтобы проверить."
 
@@ -6063,6 +6150,9 @@ msgstr "Mochi — это блокнот со связанными заметка
 
 msgid "Mochi works on your device without signing up. Lymi needs an account and keeps your cards on its servers."
 msgstr "Mochi работает на устройстве без регистрации. Lymi нужен аккаунт, и карточки хранятся на его серверах."
+
+msgid "Monday"
+msgstr "Понедельник"
 
 msgid "More {language} decks"
 msgstr "Ещё колоды: {language}"
@@ -6588,8 +6678,20 @@ msgstr "У olema будет <0>ei ole</0>, или одним словом <1>pol
 msgid "Olema, to be"
 msgstr "Olema, быть"
 
+msgid "On a door or a sign."
+msgstr "На двери или на табличке."
+
+msgid "On a door you'll also see <0/>, open, and <1/>, closed."
+msgstr "На двери ещё увидишь <0/>, открыто, и <1/>, закрыто."
+
+msgid "On a toilet door, N stands for <0>naistele</0>, for women."
+msgstr "На двери туалета N значит <0>naistele</0>, для женщин."
+
 msgid "On iPhone"
 msgstr "На iPhone"
+
+msgid "on Monday"
+msgstr "в понедельник"
 
 msgid "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
 msgstr "На quizlet.com открой свой набор, выбери Export в меню … и нажми Copy text."
@@ -6650,6 +6752,9 @@ msgstr "Один кандзи, семь звучаний."
 
 msgid "One less"
 msgstr "На единицу меньше"
+
+msgid "One letter a day"
+msgstr "Одна буква на день"
 
 msgid "One letter or two?"
 msgstr "Одна буква или две?"
@@ -6713,6 +6818,9 @@ msgstr "Только ты, если не поделишься колодой. К
 
 msgid "Only you, unless you share the deck. Cards made from your study material stay in your account."
 msgstr "Только ты, если не поделишься колодой. Карточки из твоих учебных материалов остаются в твоём аккаунте."
+
+msgid "open"
+msgstr "открыто"
 
 msgid "Open by design."
 msgstr "Открытый по замыслу."
@@ -7018,6 +7126,9 @@ msgstr "Воспроизвести {said}"
 msgid "Play {say}"
 msgstr "Воспроизвести {say}"
 
+msgid "Play {sentence}"
+msgstr "Воспроизвести {sentence}"
+
 msgid "Play {show}"
 msgstr "Воспроизвести {show}"
 
@@ -7030,8 +7141,17 @@ msgstr "Воспроизвести {text}"
 msgid "Play {word}"
 msgstr "Воспроизвести {word}"
 
+msgid "Play {word}, today"
+msgstr "Воспроизвести {word}, сегодня"
+
+msgid "Play {word}: {shown}"
+msgstr "Воспроизвести {word}: {shown}"
+
 msgid "Play pronunciation"
 msgstr "Послушать произношение"
+
+msgid "Play the week above once more, then try again."
+msgstr "Ещё раз переслушай неделю выше, а потом попробуй снова."
 
 msgid "Play what {name} said"
 msgstr "Воспроизвести реплику: {name}"
@@ -7228,6 +7348,9 @@ msgstr "Публикация копии только для чтения, в Pro
 #. placeholder {0}: date(deck.publishedAt)
 msgid "Published {0}"
 msgstr "Опубликовано {0}"
+
+msgid "Püha, holy, and päev, day."
+msgstr "Püha — святой, päev — день."
 
 msgid "Pumpkin"
 msgstr "Тыква"
@@ -7683,6 +7806,9 @@ msgstr "Дискретизируй с частотой вдвое выше ма�
 msgid "SAT words"
 msgstr "Слова для SAT"
 
+msgid "Saturday"
+msgstr "Суббота"
+
 msgid "Save “Feierabend” to my German deck."
 msgstr "Сохрани «Feierabend» в мою колоду немецкого."
 
@@ -7710,6 +7836,9 @@ msgstr "Скажи «о», затем растяни губы, а язык ос�
 
 msgid "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
 msgstr "Полную форму говорят, когда местоимение под ударением: когда оно стоит само по себе или когда одного человека противопоставляют другому. <0/>"
+
+msgid "Say the week through with the strip above, then try again."
+msgstr "Проговори неделю по дням выше, а потом попробуй снова."
 
 msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
 msgstr "Говорить, что нужно, хочется и нравится делать, рассказывать, как прошёл вчерашний день и с кем."
@@ -7746,6 +7875,9 @@ msgstr "Поиск по звучанию"
 
 msgid "Search decks"
 msgstr "Поиск колод"
+
+msgid "second"
+msgstr "второй"
 
 msgid "Section"
 msgstr "Раздел"
@@ -7860,6 +7992,9 @@ msgstr "семь"
 
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
 msgstr "Семь карточек: четыре по финскому, две шахматные и одна из той статьи об обработке сигналов."
+
+msgid "Seven days"
+msgstr "Семь дней"
 
 msgid "Seven keep slipping. First one: how do you say <0>the strike</0>?"
 msgstr "Семь слов постоянно забываются. Первое: как будет <0>забастовка</0>?"
@@ -8036,6 +8171,9 @@ msgstr "Досматривать плохой фильм только из-за 
 
 msgid "six"
 msgstr "шесть"
+
+msgid "Six days end in <0>päev</0>, day. <1>Reede</1> doesn't."
+msgstr "Шесть дней заканчиваются на <0>päev</0>, день. <1>Reede</1> — нет."
 
 msgid "Six endings"
 msgstr "Шесть окончаний"
@@ -8544,8 +8682,14 @@ msgstr "Tallinnas оканчивается на -s, «в», об этом — в
 msgid "Tamil"
 msgstr "тамильский"
 
+msgid "Tap a day"
+msgstr "Нажми на день"
+
 msgid "Tap a filled gap to take its word back."
 msgstr "Нажми на заполненный пропуск, чтобы забрать слово."
+
+msgid "Tap a letter"
+msgstr "Нажми на букву"
 
 msgid "Tap a question word"
 msgstr "Нажми вопросительное слово"
@@ -8811,11 +8955,20 @@ msgstr "Дети играют в *парке*."
 msgid "The cost of making one more unit"
 msgstr "Сколько стоит произвести ещё одну единицу"
 
+msgid "the day after tomorrow"
+msgstr "послезавтра"
+
 msgid "the day before"
 msgstr "накануне"
 
 msgid "The day before"
 msgstr "Накануне"
+
+msgid "the day before yesterday"
+msgstr "позавчера"
+
+msgid "The days as letters"
+msgstr "Дни буквами"
 
 msgid "The decks follow the HSK 2.0 word lists and the 2025 syllabus, not one official list in full."
 msgstr "Колоды опираются на списки слов HSK 2.0 и программу 2025 года, а не на один официальный список целиком."
@@ -8874,6 +9027,9 @@ msgstr "Окончание говорит, кто это, поэтому ma и s
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "Окончание говорит, кто это, поэтому местоимение можно опустить: <0>Olen Mari.</0>"
 
+msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn't. Day names start with a small letter, like any other word."
+msgstr "Эстонская неделя, <0/>, начинается с понедельника, как и у нас. Шесть дней заканчиваются на <1/>, день. Только <2/>, пятница, — нет. Как и в русском, дни недели пишут со строчной буквы."
+
 msgid "The evening after work"
 msgstr "Вечер после работы"
 
@@ -8886,8 +9042,26 @@ msgstr "Лицевой нерв: мимические мышцы и вкус н�
 msgid "The facial nerve."
 msgstr "Лицевой."
 
+msgid "The first day of the week."
+msgstr "Первый день недели."
+
+msgid "The first day. Esmas- sounds like <0/>, first."
+msgstr "Первый день. Esmas- звучит как <0/>, первый."
+
+msgid "The first four count: <0/> is the first day, <1/> the second, <2/> the third and <3/> the fourth. The other three have names of their own. Tap a day to hear it and see where its name comes from."
+msgstr "Первые четыре — с числами: <0/> — первый день, <1/> — второй, <2/> — третий, <3/> — четвёртый. У трёх остальных названия со своей историей. Нажми на день, чтобы услышать его и узнать, откуда название."
+
+msgid "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
+msgstr "Первые четыре — с числами: <0>esmaspäev</0> — первый день, <1>neljapäev</1> — четвёртый."
+
 msgid "The form says who"
 msgstr "Форма говорит, кто"
+
+msgid "The fourth day of the week."
+msgstr "Четвёртый день недели."
+
+msgid "The fourth day. You can hear <0/>, four."
+msgstr "Четвёртый день. Слышно <0/>, четыре."
 
 msgid "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
 msgstr "Полный каталог BAMF: 300 общих вопросов и 10 о твоей земле — на немецком, как на тесте, с русским переводом рядом."
@@ -9123,6 +9297,15 @@ msgstr "Та же тема на других языках"
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "Одно слово и для любимого человека, и для цены, которую не хочется платить."
 
+msgid "The second day of the week."
+msgstr "Второй день недели."
+
+msgid "The second day. Teisi- sounds like <0/>, second."
+msgstr "Второй день. Teisi- звучит как <0/>, второй."
+
+msgid "The seven days, the four that count, and how to say what day it is."
+msgstr "Семь дней, четыре с числами в названии, и как сказать, какой сегодня день."
+
 msgid "The short form is ma."
 msgstr "Краткая форма: ma."
 
@@ -9174,6 +9357,12 @@ msgstr "Десятки: -kümmend"
 msgid "The thing being counted changes too: <0/>, <1/>. That form is the partitive, in lesson {partitive}. For now, listen for the number."
 msgstr "Меняется и то, что считают: <0/>, <1/>. Эта форма — партитив, о ней урок {partitive}. Пока слушай число."
 
+msgid "The third day of the week."
+msgstr "Третий день недели."
+
+msgid "The third day. You can hear <0/>, three, from lesson {numbers}."
+msgstr "Третий день. Слышно <0/>, три, из урока {numbers}."
+
 msgid "The Thirty Years’ War"
 msgstr "Тридцатилетняя война"
 
@@ -9215,6 +9404,9 @@ msgstr "Сколько проходит перед каждым повторен
 
 msgid "The weather is *lovely* today."
 msgstr "Сегодня *чудесная* погода."
+
+msgid "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
+msgstr "Неделя начинается с <0>esmaspäev</0>. Дни недели пишут со строчной буквы."
 
 msgid "The whiteboard"
 msgstr "Доска"
@@ -9480,6 +9672,9 @@ msgstr "Чтобы узнать больше, чем «да» или «нет»,
 msgid "To ask the time, say <0/> Word for word, it's “what clock is?” The answer starts with <1/> too: <2/>, it's three o'clock."
 msgstr "Чтобы спросить, который час, скажи <0/> Дословно — «что часы есть?» Ответ тоже начинается с <1/>: <2/>, три часа."
 
+msgid "To ask what day it is, say <0/> To answer, put the day after <1>täna on</1>: <2/>."
+msgstr "Чтобы спросить, какой сегодня день, скажи <0/> Чтобы ответить, назови день после <1>täna on</1>: <2/>."
+
 msgid "to be"
 msgstr "быть"
 
@@ -9696,8 +9891,17 @@ msgstr "сегодня"
 msgid "Today"
 msgstr "Сегодня"
 
+msgid "Today is"
+msgstr "Сегодня"
+
+msgid "Today is Monday."
+msgstr "Сегодня понедельник."
+
 msgid "Today, 8:00 · checked Lymi"
 msgstr "Сегодня, 8:00 · проверил Lymi"
+
+msgid "Today, tomorrow, yesterday"
+msgstr "Сегодня, завтра, вчера"
 
 msgid "Today’s page from my textbook. Add the new words to my Japanese deck."
 msgstr "Сегодняшняя страница из моего учебника. Добавь новые слова в мою японскую колоду."
@@ -9793,6 +9997,9 @@ msgstr "Сначала вспомни ответ, а потом смотри. П
 
 msgid "Try to remember the meaning before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Сначала вспомни значение, а потом смотри. Попробуй на этих карточках: они из всей колоды."
+
+msgid "Tuesday"
+msgstr "Вторник"
 
 msgid "Tuesday German class"
 msgstr "Урок немецкого во вторник"
@@ -10141,6 +10348,12 @@ msgstr "Веб-страница"
 msgid "Website visits, and where visitors click and scroll, are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
 msgstr "Посещения сайта, а также то, куда посетители нажимают и как далеко прокручивают, подсчитываются без постоянного идентификатора устройства: используется ежедневный код посетителя, полученный из IP-адреса и данных браузера. Сведения об источнике перехода и кампании могут передаваться по ссылкам до регистрации. Отчёты об ошибках содержат очищенные технические данные, страну и идентификатор аккаунта или приложения; они отправляются и после возражения против продуктовой аналитики. Журналы хостинга и обобщённые показатели быстродействия также помогают поддерживать работу и безопасность Lymi."
 
+msgid "Wednesday"
+msgstr "Среда"
+
+msgid "week"
+msgstr "неделя"
+
 msgid "Week 1"
 msgstr "Неделя 1"
 
@@ -10206,6 +10419,9 @@ msgstr "Что ты читаешь?"
 
 msgid "What comes across"
 msgstr "Что перенесётся"
+
+msgid "What day is it today?"
+msgstr "Какой сегодня день?"
 
 msgid "What did you read?"
 msgstr "Что ты прочитал?"
@@ -10453,6 +10669,12 @@ msgstr "Какое время прозвучало?"
 
 msgid "Which clock?"
 msgstr "Какие часы?"
+
+msgid "Which day did you hear?"
+msgstr "Какой день прозвучал?"
+
+msgid "Which day is tomorrow?"
+msgstr "Какой день завтра?"
 
 msgid "Which deck should I add?"
 msgstr "Какую колоду добавить?"
@@ -11015,11 +11237,20 @@ msgstr "Услышишь elama с ним и узнаешь, для кого он
 msgid "You'll hear it in a word, with a note on how to say it."
 msgstr "Услышишь её в слове и узнаешь, как её произносить."
 
+msgid "You'll hear it, and where its name comes from."
+msgstr "Услышишь его и узнаешь, откуда название."
+
+msgid "You'll hear the day it stands for."
+msgstr "Услышишь день, который она обозначает."
+
 msgid "You'll hear the form and who it's for."
 msgstr "Услышишь форму и узнаешь, для кого она."
 
 msgid "You'll hear these three in your first conversations. Learn them whole, with an answer each, and don't take them apart yet."
 msgstr "Эти три вопроса услышишь в первых же разговорах. Учи их целиком, каждый с ответом, и пока не разбирай на части."
+
+msgid "You'll hear what day it is today. Pick the day that comes next."
+msgstr "Услышишь, какой сегодня день. Выбери, какой будет завтра."
 
 msgid "You'll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "Часто его говорят одним словом, <0/>, и это ровно то же, что <1/>. Попробуй все три."

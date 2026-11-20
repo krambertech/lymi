@@ -484,7 +484,7 @@ export function NumbridLesson() {
               <ListenRows
                 lead="96px"
                 items={bigs.map((n) => ({
-                  lead: n >= 10000 ? i18n.number(n) : String(n),
+                  lead: n >= 10000 ? n.toLocaleString("et") : String(n),
                   main: <Spoken n={n} />,
                   src: numberSrc(n),
                   label: t`Play ${n}`,

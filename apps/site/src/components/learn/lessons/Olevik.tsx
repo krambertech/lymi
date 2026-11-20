@@ -13,7 +13,7 @@ import {
   presentWithPronoun,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
-import { eachPairFirst } from "../../../lib/learn/quiz";
+import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
@@ -54,13 +54,13 @@ const ENDING_TIPS: Record<Ending, { tip: MessageDescriptor; elama: MessageDescri
   b: { tip: msg`The ending for ta, he or she. Olema has on here.`, elama: msg`he or she lives` },
   me: { tip: msg`The ending for me, we.`, elama: msg`we live` },
   te: {
-    tip: msg`The ending for te, you to more than one.`,
-    elama: msg`you live, to more than one`,
+    tip: msg`The ending for te, you to more than one or polite you.`,
+    elama: msg`you live, to more than one; polite you live`,
   },
   vad: { tip: msg`The ending for nad, they. Olema has on here too.`, elama: msg`they live` },
 };
 
-/** The two near misses a gap or a choice offers beside the answer, so three fit on a phone. */
+/** The first round's two wrong endings, the same on the server and in the browser. */
 const NEAR: Record<Ending, readonly [Ending, Ending]> = {
   n: ["d", "me"],
   d: ["n", "te"],
@@ -70,20 +70,63 @@ const NEAR: Record<Ending, readonly [Ending, Ending]> = {
   vad: ["b", "me"],
 };
 
+const ENDINGS = PRESENT_ENDINGS.map((each) => each.ending);
+
+/** The answer and two other endings at random, in random order, so the buttons never give it away. */
+export function threeEndings(answer: Ending): Ending[] {
+  return shuffle([answer, ...shuffle(ENDINGS.filter((each) => each !== answer)).slice(0, 2)]);
+}
+
+/** Each ending once before any comes back. Every round but the first draws its endings afresh. */
+function freshRun<T extends { pair: readonly [string, string]; answer: string }>(
+  withEndings: (item: T, endings: Ending[]) => T,
+) {
+  return (items: readonly T[], pinned?: T): T[] =>
+    eachPairFirst(items, pinned).map((item) =>
+      item === pinned ? item : withEndings(item, threeEndings(item.answer as Ending)),
+    );
+}
+
+type GapQuizItem = GapItem & { said: string; pair: readonly [string, string] };
+type HeardItem = ChoiceItem & {
+  said: string;
+  form: string;
+  stem: string;
+  pair: readonly [string, string];
+};
+
+const endingOptions = (stem: string, endings: readonly Ending[]) =>
+  endings.map((ending) => ({ id: ending, label: <Form stem={stem} ending={ending} /> }));
+
+const gapRun = freshRun<GapQuizItem>((item, endings) => ({ ...item, options: endings }));
+const heardRun = freshRun<HeardItem>((item, endings) => ({
+  ...item,
+  options: endingOptions(item.stem, endings),
+}));
+
+/** Keyed by the ending, so a run hears all six, and a sentence never meets its pronoun-less twin. */
+export const heardPair = (sentence: Sentence) => [sentence.ending, sentence.id] as const;
+
+/** The first round's options: the answer and its two near misses, in the endings' order. */
+const nearEndings = (answer: Ending) =>
+  ENDINGS.filter((each) => each === answer || NEAR[answer].includes(each));
+
 /** Longer than this, a gap's sentence no longer fits a phone at the gap's size. */
 const GAP_FITS = 12;
 
 const verbOf = (name: Verb["verb"]) => PRESENT_VERBS.find((each) => each.verb === name) as Verb;
 
-/** Sentences to hear, with the verb in each and who does it. */
-const SENTENCES: readonly {
+interface Sentence {
   id: keyof typeof PRESENT_SENTENCES;
   verb: Verb["verb"];
   ending: Ending;
   en: MessageDescriptor;
   /** Shown in the list of sentences; the rest are heard in the quiz and in the prose. */
   listed: boolean;
-}[] = [
+}
+
+/** Sentences to hear, with the verb in each and who does it. */
+export const SENTENCES: readonly Sentence[] = [
   {
     id: "s-elan-tallinnas",
     verb: "elama",
@@ -186,7 +229,7 @@ const GLOSSARY: Glossary = {
   olen: { en: msg`I am` },
   oled: { en: msg`you are` },
   oleme: { en: msg`we are` },
-  olete: { en: msg`you are, to more than one` },
+  olete: { en: msg`you are, to more than one; polite you are` },
   on: { en: msg`he or she is; they are` },
   "ma loen": {
     en: msg`I read; I'm reading`,
@@ -327,7 +370,7 @@ export function OlevikLesson() {
     [i18n],
   );
 
-  const gapItems = useMemo<(GapItem & { said: string; pair: readonly [string, string] })[]>(
+  const gapItems = useMemo<GapQuizItem[]>(
     () =>
       PRESENT_VERBS.flatMap((verb) =>
         PRESENT_ENDINGS.map((person) => ({ verb, person })).filter(
@@ -336,14 +379,11 @@ export function OlevikLesson() {
         ),
       ).map(({ verb, person }) => {
         const text = said(person, verb);
-        const [a, b] = NEAR[person.ending];
         return {
           src: saidSrc(person, verb),
           before: `${capital(person.pronoun)} ${verb.stem}`,
           after: "",
-          options: PRESENT_ENDINGS.map((each) => each.ending).filter(
-            (each) => each === person.ending || each === a || each === b,
-          ),
+          options: nearEndings(person.ending),
           answer: person.ending,
           said: text,
           pair: [person.ending, verb.verb] as const,
@@ -360,27 +400,18 @@ export function OlevikLesson() {
     [i18n],
   );
 
-  const heardItems = useMemo<
-    (ChoiceItem & { said: string; form: string; pair: readonly [string, string] })[]
-  >(
+  const heardItems = useMemo<HeardItem[]>(
     () =>
       SENTENCES.map((each) => {
         const verb = verbOf(each.verb);
-        const [a, b] = NEAR[each.ending];
-        const options = PRESENT_ENDINGS.filter(
-          (person) => person.ending === each.ending || person.ending === a || person.ending === b,
-        ).map((person) => ({
-          id: person.ending,
-          label: <Form stem={verb.stem} ending={person.ending} />,
-        }));
         return {
           src: sentenceSrc(each.id),
           answer: each.ending,
-          options,
+          options: endingOptions(verb.stem, nearEndings(each.ending)),
+          stem: verb.stem,
           said: PRESENT_SENTENCES[each.id],
           form: `${verb.stem}${each.ending}`,
-          // Keyed by the verb form, so a sentence and its pronoun-less twin never share a run.
-          pair: [`${verb.stem}${each.ending}`, each.id] as const,
+          pair: heardPair(each),
           explain: (
             <>
               <span lang="et" className="font-medium text-ink">
@@ -524,7 +555,7 @@ export function OlevikLesson() {
                   )
                 }
                 recall={(item) => ({ label: item.said, src: item.src })}
-                order={eachPairFirst}
+                order={gapRun}
                 round={(props) => <GapRound {...props} listen="after" />}
               />
             </>
@@ -599,7 +630,7 @@ export function OlevikLesson() {
                   )
                 }
                 recall={(item) => ({ label: item.form, src: item.src })}
-                order={eachPairFirst}
+                order={heardRun}
                 round={(props) => <ChoiceRound {...props} />}
               />
             </>

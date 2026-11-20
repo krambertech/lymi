@@ -5360,7 +5360,7 @@ msgid "More than a translation."
 msgstr "Більше, ніж переклад."
 
 msgid "More than one"
-msgstr "Множина"
+msgstr "Кілька людей"
 
 msgid "More updates"
 msgstr "Інші оновлення"
@@ -7367,7 +7367,7 @@ msgid "Stem changes"
 msgstr "Зміни основи"
 
 msgid "Stems such as <0>loe-</0> and <1>räägi-</1> follow consonant gradation, which lesson {gradation} explains once you know more words."
-msgstr "Такі основи, як <0>loe-</0> і <1>räägi-</1>, утворюються за чергуванням приголосних. Його пояснює урок {gradation}, коли ти вже знатимеш більше слів."
+msgstr "Такі основи, як <0>loe-</0> і <1>räägi-</1>, змінюються через чергування приголосних. Його пояснює урок {gradation}, коли ти вже знатимеш більше слів."
 
 msgid "Step by step, after a tutor lesson"
 msgstr "Крок за кроком після уроку з репетитором"
@@ -7562,7 +7562,7 @@ msgid "Talk at the table after a meal"
 msgstr "Розмова за столом після їжі"
 
 msgid "Tallinnas ends in -s, in, which is lesson {where}. Keelt and raamatut are the partitive, lesson {partitive}. For now, learn them as phrases."
-msgstr "Tallinnas закінчується на -s, «у, в», про це урок {where}. Keelt і raamatut — це партитив, урок {partitive}. Поки що вчи їх як готові фрази."
+msgstr "Tallinnas закінчується на -s, «у, в», про це розповідає урок {where}. Keelt і raamatut — це партитив, урок {partitive}. Поки що вчи їх як готові фрази."
 
 msgid "Tamil"
 msgstr "тамільська"
@@ -7849,8 +7849,8 @@ msgstr "Закінчення для sa, «ти»."
 msgid "The ending for ta, he or she. Olema has on here."
 msgstr "Закінчення для ta, «він чи вона». В olema тут on."
 
-msgid "The ending for te, you to more than one."
-msgstr "Закінчення для te, «ви»."
+msgid "The ending for te, you to more than one or polite you."
+msgstr "Закінчення для te, «ви», зокрема ввічливе."
 
 msgid "The ending says who, so ma and sa can go: <0>Elan Tallinnas.</0>"
 msgstr "Закінчення каже, хто це, тому ma і sa можна пропустити: <0>Elan Tallinnas.</0>"
@@ -9549,8 +9549,8 @@ msgstr "Ти"
 msgid "you are"
 msgstr "ти є"
 
-msgid "you are, to more than one"
-msgstr "ви є"
+msgid "you are, to more than one; polite you are"
+msgstr "ви є; ввічливе «Ви є»"
 
 msgid "You build your own card layouts"
 msgstr "Тобі потрібні власні макети карток"
@@ -9594,8 +9594,8 @@ msgstr "Вивчено в контексті."
 msgid "you live"
 msgstr "ти живеш"
 
-msgid "you live, to more than one"
-msgstr "ви живете"
+msgid "you live, to more than one; polite you live"
+msgstr "ви живете; ввічливе «Ви живете»"
 
 msgid "You need *flour* for pancakes."
 msgstr "Для млинців потрібне *борошно*."

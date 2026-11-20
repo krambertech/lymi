@@ -7849,8 +7849,8 @@ msgstr "The ending for sa, you."
 msgid "The ending for ta, he or she. Olema has on here."
 msgstr "The ending for ta, he or she. Olema has on here."
 
-msgid "The ending for te, you to more than one."
-msgstr "The ending for te, you to more than one."
+msgid "The ending for te, you to more than one or polite you."
+msgstr "The ending for te, you to more than one or polite you."
 
 msgid "The ending says who, so ma and sa can go: <0>Elan Tallinnas.</0>"
 msgstr "The ending says who, so ma and sa can go: <0>Elan Tallinnas.</0>"
@@ -9549,8 +9549,8 @@ msgstr "You"
 msgid "you are"
 msgstr "you are"
 
-msgid "you are, to more than one"
-msgstr "you are, to more than one"
+msgid "you are, to more than one; polite you are"
+msgstr "you are, to more than one; polite you are"
 
 msgid "You build your own card layouts"
 msgstr "You build your own card layouts"
@@ -9594,8 +9594,8 @@ msgstr "You learned this one in context."
 msgid "you live"
 msgstr "you live"
 
-msgid "you live, to more than one"
-msgstr "you live, to more than one"
+msgid "you live, to more than one; polite you live"
+msgstr "you live, to more than one; polite you live"
 
 msgid "You need *flour* for pancakes."
 msgstr "You need *flour* for pancakes."

@@ -28,6 +28,9 @@ msgstr "“Look at that VAT, MAma!”"
 msgid "“May it come easy”, said to someone at work"
 msgstr "“May it come easy”, said to someone at work"
 
+msgid "“On Monday” takes an ending: <0/>. That comes in lesson {when}."
+msgstr "“On Monday” takes an ending: <0/>. That comes in lesson {when}."
+
 msgid "“Schönen Feierabend!” wishes someone a good evening off."
 msgstr "“Schönen Feierabend!” wishes someone a good evening off."
 
@@ -344,6 +347,9 @@ msgstr "<0/> is a hundred and <1/> a thousand, with no “one” in front of eit
 msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 msgstr "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 
+msgid "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
+msgstr "<0/> is tomorrow and <1/> yesterday. Put <2>üle-</2> in front to go one day further: <3/>, the day after tomorrow, and <4/>, the day before yesterday. Pick a day to be today."
+
 msgid "<0/> is yes and <1/> is no. When the question asks with olema, to be, the usual no is <2/>: he isn't, I'm not. When you don't know, say <3/>."
 msgstr "<0/> is yes and <1/> is no. When the question asks with olema, to be, the usual no is <2/>: he isn't, I'm not. When you don't know, say <3/>."
 
@@ -352,6 +358,9 @@ msgstr "<0/> is your, short for <1/>; lesson {genitive} explains the form. <2/> 
 
 msgid "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:30, not 4:30."
 msgstr "<0/> means half, and it looks ahead. <1/> is halfway to four, so it's 3:30, not 4:30."
+
+msgid "<0/> means holy, so this is the holy day."
+msgstr "<0/> means holy, so this is the holy day."
 
 msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 msgstr "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
@@ -399,6 +408,9 @@ msgstr "<0>Aiko</0> finished Week 3"
 
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Diffusion</0>: particles move from high to low concentration."
+
+msgid "<0>E–R</0> on a sign: Monday to Friday."
+msgstr "<0>E–R</0> on a sign: Monday to Friday."
 
 msgid "<0>ei {stem}</0>: <1>ei</1> before the verb, and the ending is gone."
 msgstr "<0>ei {stem}</0>: <1>ei</1> before the verb, and the ending is gone."
@@ -448,6 +460,9 @@ msgstr "<0>opportunity cost</0> <1>= what you give up</1>"
 msgid "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 msgstr "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 
+msgid "<0>P suletud</0> on a sign: closed on Sunday."
+msgstr "<0>P suletud</0> on a sign: closed on Sunday."
+
 msgid "<0>Pole</0> means the same as <1>ei ole</1>. You'll hear both."
 msgstr "<0>Pole</0> means the same as <1>ei ole</1>. You'll hear both."
 
@@ -468,6 +483,9 @@ msgstr "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 
 msgid "<0>ta</0> is both he and she. <1>te</1> is you to a group, and polite you to one person."
 msgstr "<0>ta</0> is both he and she. <1>te</1> is you to a group, and polite you to one person."
+
+msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
+msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 
 msgid "<0>veerand neli</0> is a quarter of the way to four, 3:15. <1>kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>veerand neli</0> is a quarter of the way to four, 3:15. <1>kolmveerand neli</1> is three quarters, 3:45."
@@ -800,6 +818,9 @@ msgstr "A free lesson on Estonian questions: kas for yes or no, answers with jah
 msgid "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad, with ten everyday verbs read aloud."
 msgstr "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad, with ten everyday verbs read aloud."
 
+msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
+msgstr "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
+
 msgid "A full card in seconds"
 msgstr "A full card in seconds"
 
@@ -959,6 +980,9 @@ msgstr "A schedule for every card"
 
 msgid "A score for one attempt"
 msgstr "A score for one attempt"
+
+msgid "A shop's opening hours"
+msgstr "A shop's opening hours"
 
 msgid "A smaller, checked library"
 msgstr "A smaller, checked library"
@@ -1416,6 +1440,9 @@ msgstr "All of them. <0>Ei</0>, and the ending goes."
 msgid "All of them. <0>Ei</0>, then the verb from the question."
 msgstr "All of them. <0>Ei</0>, then the verb from the question."
 
+msgid "All of them. You can count the week forward."
+msgstr "All of them. You can count the week forward."
+
 msgid "All of them. You can follow a short exchange."
 msgstr "All of them. You can follow a short exchange."
 
@@ -1442,6 +1469,9 @@ msgstr "All Polish decks"
 
 msgid "All Russian decks"
 msgstr "All Russian decks"
+
+msgid "All seven. You know the week by ear."
+msgstr "All seven. You know the week by ear."
 
 msgid "All shelves"
 msgstr "All shelves"
@@ -1476,6 +1506,9 @@ msgstr "Already in your deck, so it’s skipped"
 
 msgid "Also “came”: ta tuli, she came."
 msgstr "Also “came”: ta tuli, she came."
+
+msgid "Also “other”."
+msgstr "Also “other”."
 
 msgid "Also “to get”, from saama."
 msgstr "Also “to get”, from saama."
@@ -1870,6 +1903,12 @@ msgstr "Books often print ё as е. Add a word from such a book and the card sho
 msgid "Books often print ё as е. Add ежик from such a book and Lymi shows ёжик on the card until you know it, the dots marking the stress as an accent would."
 msgstr "Books often print ё as е. Add ежик from such a book and Lymi shows ёжик on the card until you know it, the dots marking the stress as an accent would."
 
+msgid "Borrowed from Low German or Old Swedish."
+msgstr "Borrowed from Low German or Old Swedish."
+
+msgid "Borrowed from the Low German or Old Swedish name for Friday. It's the one day without <0>päev</0>."
+msgstr "Borrowed from the Low German or Old Swedish name for Friday. It's the one day without <0>päev</0>."
+
 msgid "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
 msgstr "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
 
@@ -2025,6 +2064,12 @@ msgstr "Bye"
 
 msgid "café"
 msgstr "café"
+
+msgid "Calendars and signs use one capital letter a day: <0>E T K N R L P</0>."
+msgstr "Calendars and signs use one capital letter a day: <0>E T K N R L P</0>."
+
+msgid "Calendars, timetables and shop doors write each day as its first letter, a capital: <0>E, T, K, N, R, L, P</0>. A sign that says <1>E–R 9–18</1> is open Monday to Friday, nine to six."
+msgstr "Calendars, timetables and shop doors write each day as its first letter, a capital: <0>E, T, K, N, R, L, P</0>. A sign that says <1>E–R 9–18</1> is open Monday to Friday, nine to six."
 
 msgid "California DMV knowledge test"
 msgstr "California DMV knowledge test"
@@ -2433,6 +2478,9 @@ msgstr "Clocking off, and the free evening that follows"
 msgid "Close menu"
 msgstr "Close menu"
 
+msgid "closed"
+msgstr "closed"
+
 msgid "Cloud"
 msgstr "Cloud"
 
@@ -2603,6 +2651,9 @@ msgstr "Cosy"
 msgid "Cosy and convivial; good company"
 msgstr "Cosy and convivial; good company"
 
+msgid "Count forward"
+msgstr "Count forward"
+
 msgid "Create and practise flashcards with ChatGPT."
 msgstr "Create and practise flashcards with ChatGPT."
 
@@ -2646,6 +2697,9 @@ msgstr "Danke schön! Thank you very much!"
 msgid "Dates, definitions and formulas to know on the day."
 msgstr "Dates, definitions and formulas to know on the day."
 
+msgid "day"
+msgstr "day"
+
 msgid "Day {day}"
 msgstr "Day {day}"
 
@@ -2663,6 +2717,9 @@ msgstr "days in a row"
 
 msgid "Days of the week"
 msgstr "Days of the week"
+
+msgid "Days of the week in Estonian"
+msgstr "Days of the week in Estonian"
 
 msgid "Deadline"
 msgstr "Deadline"
@@ -3107,6 +3164,9 @@ msgstr "Enjoy your meal!"
 msgid "Enjoying the moment"
 msgstr "Enjoying the moment"
 
+msgid "Esmaspäev with an ending that says when."
+msgstr "Esmaspäev with an ending that says when."
+
 msgid "Español"
 msgstr "Español"
 
@@ -3464,6 +3524,9 @@ msgstr "fire"
 msgid "Fire"
 msgstr "Fire"
 
+msgid "first"
+msgstr "first"
+
 msgid "First day"
 msgstr "First day"
 
@@ -3720,6 +3783,9 @@ msgstr "French A2 · Wednesdays"
 msgid "French for “putting in place”."
 msgstr "French for “putting in place”."
 
+msgid "Friday"
+msgstr "Friday"
+
 msgid "Fridge"
 msgstr "Fridge"
 
@@ -3740,6 +3806,12 @@ msgstr "From a podcast episode"
 
 msgid "From a post on X"
 msgstr "From a post on X"
+
+msgid "From a Scandinavian name: the day people washed."
+msgstr "From a Scandinavian name: the day people washed."
+
+msgid "From a Scandinavian word: the day for washing."
+msgstr "From a Scandinavian word: the day for washing."
 
 msgid "From a web page"
 msgstr "From a web page"
@@ -3958,6 +4030,9 @@ msgstr "Good *morning*!"
 msgid "Good ear. Halves and quarters are the ones to replay."
 msgstr "Good ear. Halves and quarters are the ones to replay."
 
+msgid "Good ear. Listen to how the ones you missed start."
+msgstr "Good ear. Listen to how the ones you missed start."
+
 msgid "Good ear. Numbers in sentences come fast; try once more."
 msgstr "Good ear. Numbers in sentences come fast; try once more."
 
@@ -3981,6 +4056,9 @@ msgstr "Good morning. Here’s today in Lymi."
 
 msgid "Good. Hear the ones you missed once more."
 msgstr "Good. Hear the ones you missed once more."
+
+msgid "Good. Say the week through in your head before you pick."
+msgstr "Good. Say the week through in your head before you pick."
 
 msgid "Goodbye"
 msgstr "Goodbye"
@@ -4126,6 +4204,9 @@ msgstr "Hear {0}"
 msgid "Hear {0}, {1}"
 msgstr "Hear {0}, {1}"
 
+msgid "Hear a day"
+msgstr "Hear a day"
+
 msgid "Hear a question and pick its question word. It's always the first word, so listen to the start."
 msgstr "Hear a question and pick its question word. It's always the first word, so listen to the start."
 
@@ -4230,6 +4311,9 @@ msgstr "History"
 
 msgid "History notes"
 msgstr "History notes"
+
+msgid "holy; a holiday"
+msgstr "holy; a holiday"
 
 msgid "Hopefully"
 msgstr "Hopefully"
@@ -4791,8 +4875,8 @@ msgstr "In progress"
 msgid "In Quizlet you choose a set and a study mode. In Lymi you open Today, and spaced repetition has already picked the cards that need you."
 msgstr "In Quizlet you choose a set and a study mode. In Lymi you open Today, and spaced repetition has already picked the cards that need you."
 
-msgid "In some verbs the stem changes. <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don't need the rule for that yet. Learn each verb with its I form, the way Estonian dictionaries list it: <3>lugema, loen</3>. Take off -n and the rest is the stem."
-msgstr "In some verbs the stem changes. <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don't need the rule for that yet. Learn each verb with its I form, the way Estonian dictionaries list it: <3>lugema, loen</3>. Take off -n and the rest is the stem."
+msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don't need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you'll add a third form, <4>lugeda</4>."
+msgstr "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don't need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you'll add a third form, <4>lugeda</4>."
 
 msgid "In summer the *nights* stay light."
 msgstr "In summer the *nights* stay light."
@@ -5447,6 +5531,9 @@ msgstr "Listen"
 msgid "Listen and pick the clock. The others are the usual mix-ups: an hour out, or a quarter the wrong way round."
 msgstr "Listen and pick the clock. The others are the usual mix-ups: an hour out, or a quarter the wrong way round."
 
+msgid "Listen and pick the day. Most of them end the same way, so listen to how each one starts."
+msgstr "Listen and pick the day. Most of them end the same way, so listen to how each one starts."
+
 msgid "Listen and type the time in digits, such as 3:30 or 3.30. Press Enter to check."
 msgstr "Listen and type the time in digits, such as 3:30 or 3.30. Press Enter to check."
 
@@ -5891,6 +5978,9 @@ msgstr "Mochi is a notebook with linked Markdown notes. Lymi is for cards; a not
 
 msgid "Mochi works on your device without signing up. Lymi needs an account and keeps your cards on its servers."
 msgstr "Mochi works on your device without signing up. Lymi needs an account and keeps your cards on its servers."
+
+msgid "Monday"
+msgstr "Monday"
 
 msgid "More {language} decks"
 msgstr "More {language} decks"
@@ -6410,8 +6500,20 @@ msgstr "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
 msgid "Olema, to be"
 msgstr "Olema, to be"
 
+msgid "On a door or a sign."
+msgstr "On a door or a sign."
+
+msgid "On a door you'll also see <0/>, open, and <1/>, closed."
+msgstr "On a door you'll also see <0/>, open, and <1/>, closed."
+
+msgid "On a toilet door, N stands for <0>naistele</0>, for women."
+msgstr "On a toilet door, N stands for <0>naistele</0>, for women."
+
 msgid "On iPhone"
 msgstr "On iPhone"
+
+msgid "on Monday"
+msgstr "on Monday"
 
 msgid "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
 msgstr "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
@@ -6472,6 +6574,9 @@ msgstr "One kanji, seven sounds."
 
 msgid "One less"
 msgstr "One less"
+
+msgid "One letter a day"
+msgstr "One letter a day"
 
 msgid "One letter or two?"
 msgstr "One letter or two?"
@@ -6535,6 +6640,9 @@ msgstr "Only you, unless you share the deck. Cards made from your notes stay in 
 
 msgid "Only you, unless you share the deck. Cards made from your study material stay in your account."
 msgstr "Only you, unless you share the deck. Cards made from your study material stay in your account."
+
+msgid "open"
+msgstr "open"
 
 msgid "Open by design."
 msgstr "Open by design."
@@ -6825,6 +6933,9 @@ msgstr "Play {said}"
 msgid "Play {say}"
 msgstr "Play {say}"
 
+msgid "Play {sentence}"
+msgstr "Play {sentence}"
+
 msgid "Play {show}"
 msgstr "Play {show}"
 
@@ -6837,11 +6948,20 @@ msgstr "Play {text}"
 msgid "Play {word}"
 msgstr "Play {word}"
 
+msgid "Play {word}, today"
+msgstr "Play {word}, today"
+
+msgid "Play {word}: {shown}"
+msgstr "Play {word}: {shown}"
+
 msgid "Play example"
 msgstr "Play example"
 
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
+
+msgid "Play the week above once more, then try again."
+msgstr "Play the week above once more, then try again."
 
 msgid "Pleasant; cosy"
 msgstr "Pleasant; cosy"
@@ -7028,6 +7148,9 @@ msgstr "Publish a read-only copy, with Pro"
 
 msgid "Published {published}"
 msgstr "Published {published}"
+
+msgid "Püha, holy, and päev, day."
+msgstr "Püha, holy, and päev, day."
 
 msgid "Pumpkin"
 msgstr "Pumpkin"
@@ -7483,6 +7606,9 @@ msgstr "Sample twice as fast as the highest frequency"
 msgid "SAT words"
 msgstr "SAT words"
 
+msgid "Saturday"
+msgstr "Saturday"
+
 msgid "Save “Feierabend” to my German deck."
 msgstr "Save “Feierabend” to my German deck."
 
@@ -7506,6 +7632,9 @@ msgstr "Say o, then spread your lips and keep your tongue where it was. Russian 
 
 msgid "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
 msgstr "Say the long form when the pronoun carries the stress: when it stands alone, or when you set one person against another. <0/>"
+
+msgid "Say the week through with the strip above, then try again."
+msgstr "Say the week through with the strip above, then try again."
 
 msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
 msgstr "Say what you must, want and like to do, what you did yesterday, and with whom."
@@ -7542,6 +7671,9 @@ msgstr "Search by sound"
 
 msgid "Search decks"
 msgstr "Search decks"
+
+msgid "second"
+msgstr "second"
 
 msgid "Section"
 msgstr "Section"
@@ -7650,6 +7782,9 @@ msgstr "seven"
 
 msgid "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
 msgstr "Seven cards. Four Finnish, two chess terms, one from that signal-processing paper."
+
+msgid "Seven days"
+msgstr "Seven days"
 
 msgid "Seven keep slipping. First one: how do you say <0>the strike</0>?"
 msgstr "Seven keep slipping. First one: how do you say <0>the strike</0>?"
@@ -7811,6 +7946,9 @@ msgstr "Sitting through a bad film because you paid for the ticket."
 
 msgid "six"
 msgstr "six"
+
+msgid "Six days end in <0>päev</0>, day. <1>Reede</1> doesn't."
+msgstr "Six days end in <0>päev</0>, day. <1>Reede</1> doesn't."
 
 msgid "Six endings"
 msgstr "Six endings"
@@ -8313,6 +8451,12 @@ msgstr "Tallinnas ends in -s, in, which is lesson {where}. Keelt and raamatut ar
 msgid "Tamil"
 msgstr "Tamil"
 
+msgid "Tap a day"
+msgstr "Tap a day"
+
+msgid "Tap a letter"
+msgstr "Tap a letter"
+
 msgid "Tap a question word"
 msgstr "Tap a question word"
 
@@ -8568,11 +8712,20 @@ msgstr "The children are playing in the *park*."
 msgid "The cost of making one more unit"
 msgstr "The cost of making one more unit"
 
+msgid "the day after tomorrow"
+msgstr "the day after tomorrow"
+
 msgid "the day before"
 msgstr "the day before"
 
 msgid "The day before"
 msgstr "The day before"
+
+msgid "the day before yesterday"
+msgstr "the day before yesterday"
+
+msgid "The days as letters"
+msgstr "The days as letters"
 
 msgid "The decks follow the HSK 2.0 word lists and the 2025 syllabus, not one official list in full."
 msgstr "The decks follow the HSK 2.0 word lists and the 2025 syllabus, not one official list in full."
@@ -8631,6 +8784,9 @@ msgstr "The ending says who, so ma and sa can go: <0>Elan Tallinnas.</0>"
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 
+msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn't. Day names start with a small letter, like any other word."
+msgstr "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn't. Day names start with a small letter, like any other word."
+
 msgid "The evening after work"
 msgstr "The evening after work"
 
@@ -8643,8 +8799,26 @@ msgstr "The facial nerve: muscles of facial expression and taste on the front tw
 msgid "The facial nerve."
 msgstr "The facial nerve."
 
+msgid "The first day of the week."
+msgstr "The first day of the week."
+
+msgid "The first day. Esmas- sounds like <0/>, first."
+msgstr "The first day. Esmas- sounds like <0/>, first."
+
+msgid "The first four count: <0/> is the first day, <1/> the second, <2/> the third and <3/> the fourth. The other three have names of their own. Tap a day to hear it and see where its name comes from."
+msgstr "The first four count: <0/> is the first day, <1/> the second, <2/> the third and <3/> the fourth. The other three have names of their own. Tap a day to hear it and see where its name comes from."
+
+msgid "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
+msgstr "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
+
 msgid "The form says who"
 msgstr "The form says who"
+
+msgid "The fourth day of the week."
+msgstr "The fourth day of the week."
+
+msgid "The fourth day. You can hear <0/>, four."
+msgstr "The fourth day. You can hear <0/>, four."
 
 msgid "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
 msgstr "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
@@ -8868,6 +9042,15 @@ msgstr "The same topic in other languages"
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "The same word for someone you love and a price you’d rather not pay."
 
+msgid "The second day of the week."
+msgstr "The second day of the week."
+
+msgid "The second day. Teisi- sounds like <0/>, second."
+msgstr "The second day. Teisi- sounds like <0/>, second."
+
+msgid "The seven days, the four that count, and how to say what day it is."
+msgstr "The seven days, the four that count, and how to say what day it is."
+
 msgid "The short form is ma."
 msgstr "The short form is ma."
 
@@ -8919,6 +9102,12 @@ msgstr "The tens: -kümmend"
 msgid "The thing being counted changes too: <0/>, <1/>. That form is the partitive, in lesson {partitive}. For now, listen for the number."
 msgstr "The thing being counted changes too: <0/>, <1/>. That form is the partitive, in lesson {partitive}. For now, listen for the number."
 
+msgid "The third day of the week."
+msgstr "The third day of the week."
+
+msgid "The third day. You can hear <0/>, three, from lesson {numbers}."
+msgstr "The third day. You can hear <0/>, three, from lesson {numbers}."
+
 msgid "The Thirty Years’ War"
 msgstr "The Thirty Years’ War"
 
@@ -8960,6 +9149,9 @@ msgstr "The wait before each review"
 
 msgid "The weather is *lovely* today."
 msgstr "The weather is *lovely* today."
+
+msgid "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
+msgstr "The week starts on <0>esmaspäev</0>. Day names start with a small letter."
 
 msgid "The whiteboard"
 msgstr "The whiteboard"
@@ -9225,6 +9417,9 @@ msgstr "To ask for more than yes or no, start with a question word instead of ka
 msgid "To ask the time, say <0/> Word for word, it's “what clock is?” The answer starts with <1/> too: <2/>, it's three o'clock."
 msgstr "To ask the time, say <0/> Word for word, it's “what clock is?” The answer starts with <1/> too: <2/>, it's three o'clock."
 
+msgid "To ask what day it is, say <0/> To answer, put the day after <1>täna on</1>: <2/>."
+msgstr "To ask what day it is, say <0/> To answer, put the day after <1>täna on</1>: <2/>."
+
 msgid "to be"
 msgstr "to be"
 
@@ -9441,8 +9636,17 @@ msgstr "today"
 msgid "Today"
 msgstr "Today"
 
+msgid "Today is"
+msgstr "Today is"
+
+msgid "Today is Monday."
+msgstr "Today is Monday."
+
 msgid "Today, 8:00 · checked Lymi"
 msgstr "Today, 8:00 · checked Lymi"
+
+msgid "Today, tomorrow, yesterday"
+msgstr "Today, tomorrow, yesterday"
 
 msgid "Today’s page from my textbook. Add the new words to my Japanese deck."
 msgstr "Today’s page from my textbook. Add the new words to my Japanese deck."
@@ -9538,6 +9742,9 @@ msgstr "Try to remember the answer before you look, then turn the card over."
 
 msgid "Try to remember the meaning before you look, then turn the card over."
 msgstr "Try to remember the meaning before you look, then turn the card over."
+
+msgid "Tuesday"
+msgstr "Tuesday"
 
 msgid "Tuesday German class"
 msgstr "Tuesday German class"
@@ -9883,6 +10090,12 @@ msgstr "Web page"
 msgid "Website visits, and where visitors click and scroll, are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
 msgstr "Website visits, and where visitors click and scroll, are counted without a persistent device identifier, using a daily visitor code derived from the IP address and browser. Referral and campaign information can follow links into sign-up. Error reports contain scrubbed technical details, country and an account or app identifier; they continue if you object to product analytics. Hosting logs and aggregate performance measures also help keep Lymi working and secure."
 
+msgid "Wednesday"
+msgstr "Wednesday"
+
+msgid "week"
+msgstr "week"
+
 msgid "Week 1"
 msgstr "Week 1"
 
@@ -9948,6 +10161,9 @@ msgstr "What are you reading?"
 
 msgid "What comes across"
 msgstr "What comes across"
+
+msgid "What day is it today?"
+msgstr "What day is it today?"
 
 msgid "What do you *think*?"
 msgstr "What do you *think*?"
@@ -10171,6 +10387,12 @@ msgstr "Which clock did you hear?"
 
 msgid "Which clock?"
 msgstr "Which clock?"
+
+msgid "Which day did you hear?"
+msgstr "Which day did you hear?"
+
+msgid "Which day is tomorrow?"
+msgstr "Which day is tomorrow?"
 
 msgid "Which deck should I add?"
 msgstr "Which deck should I add?"
@@ -10706,11 +10928,20 @@ msgstr "You'll hear elama with it and who it's for."
 msgid "You'll hear it in a word, with a note on how to say it."
 msgstr "You'll hear it in a word, with a note on how to say it."
 
+msgid "You'll hear it, and where its name comes from."
+msgstr "You'll hear it, and where its name comes from."
+
+msgid "You'll hear the day it stands for."
+msgstr "You'll hear the day it stands for."
+
 msgid "You'll hear the form and who it's for."
 msgstr "You'll hear the form and who it's for."
 
 msgid "You'll hear these three in your first conversations. Learn them whole, with an answer each, and don't take them apart yet."
 msgstr "You'll hear these three in your first conversations. Learn them whole, with an answer each, and don't take them apart yet."
+
+msgid "You'll hear what day it is today. Pick the day that comes next."
+msgstr "You'll hear what day it is today. Pick the day that comes next."
 
 msgid "You'll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "You'll often hear it as one word, <0/>, which means exactly <1/>. Try all three."

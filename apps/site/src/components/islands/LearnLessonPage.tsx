@@ -1,4 +1,5 @@
 import { HaaldusLesson } from "../learn/lessons/Haaldus";
+import { KellLesson } from "../learn/lessons/Kell";
 import { MinaSinaTemaLesson } from "../learn/lessons/MinaSinaTema";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { Island } from "./Island";
@@ -8,6 +9,7 @@ export const LESSON_VIEWS = {
   haaldus: HaaldusLesson,
   numbrid: NumbridLesson,
   "mina-sina-tema": MinaSinaTemaLesson,
+  kell: KellLesson,
 } as const;
 
 export default function LearnLessonPage({

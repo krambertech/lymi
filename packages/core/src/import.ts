@@ -3,6 +3,7 @@ import { EXAMPLE_LENGTH, fitsExample } from "./example";
 import { sourcePitch } from "./pitch";
 import { kanaReading, moraCount } from "./reading";
 import { OPEN } from "./responses/common";
+import { tagKey } from "./terms";
 import { type FieldSource, LanguageTag, type Rating, ReviewModeKey } from "./types";
 
 /** Where an import's file came from. Each source is one adapter on the server. */
@@ -583,9 +584,11 @@ export function importTags(tags: readonly string[]): { tags: string[]; shortened
     const tag = raw.trim();
     if (!tag || DROPPED_TAGS.has(tag.toLowerCase())) continue;
     const fitted =
-      length(tag) > IMPORT_LIMITS.tag ? [...tag].slice(0, IMPORT_LIMITS.tag).join("") : tag;
+      length(tag) > IMPORT_LIMITS.tag
+        ? [...tag].slice(0, IMPORT_LIMITS.tag).join("").trimEnd()
+        : tag;
     if (fitted !== tag) shortened = true;
-    const key = fitted.toLowerCase();
+    const key = tagKey(fitted);
     if (seen.has(key)) continue;
     seen.add(key);
     kept.push(fitted);

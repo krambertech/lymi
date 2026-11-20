@@ -130,7 +130,7 @@ pnpm exec playwright install chromium webkit
 pnpm --filter @lymi/web exec vitest run --project components
 ```
 
-Each browser context asks for reduced motion, for the same reason the journeys do: a toast that changes opacity and height without travelling holds still long enough to be clicked, where one sliding into a stack does not. `forced-states` rewrites both motion queries into `data-motion` selectors, so the specimens that prove the full and reduced forms are unaffected by what the context asks for. A test that drives full motion wraps its subject in `<MotionConfig reducedMotion="never">` and says why. CI retries a failed test once, matching the journeys: these gate the same merges.
+Each browser context asks for reduced motion, for the same reason the journeys do: a toast that changes opacity and height without travelling holds still long enough to be clicked, where one sliding into a stack does not. `forced-states` rewrites both motion queries into `data-motion` selectors, so the specimens that prove the full and reduced forms are unaffected by what the context asks for. A test that drives full motion wraps its subject in `<MotionConfig reducedMotion="never">` and says why. CI retries a failed test once, matching the journeys, and reports a pass on retry as flaky ([Flaky tests](#flaky-tests)).
 
 An instance's files run one after another in the same browser page, so a file can leave state behind for the next. On touch Chromium, `page.viewport()` wider than the device leaves the whole page pinch-zoomed after the size is restored, and a later file can pan that zoomed view; Playwright then aims a click a row off and reports another element intercepting it. The test setup resets the page scale before every file.
 
@@ -176,9 +176,29 @@ Every run writes a final summary with its selected browser and component coverag
 
 Comment `/e2e` on a pull request to force a run without adding a label. The command accepts only the repository owner and only branches in this repository.
 
-Every shard uploads a small `e2e-shard-outcome-<n>` artifact, and the final check downloads them all so the run summary carries a row per shard, the combined pass count, and the file, line and title of every failing test. `scripts/e2e-shard-outcome.mjs` builds that record from the JSON report that the shared Playwright config writes on CI. A shard whose browser install or dependency step broke is recorded as a failure rather than a skip, so the table never reads as a deliberate exclusion.
+Every shard uploads a small `e2e-shard-outcome-<n>` artifact, and the final check downloads them all so the run summary carries a row per shard, the combined pass count, the file, line and title of every failing test, and every test that passed only on retry. `scripts/e2e-shard-outcome.mjs` builds that record from the JSON report that the shared Playwright config writes on CI. A shard whose browser install or dependency step broke is recorded as a failure rather than a skip, so the table never reads as a deliberate exclusion.
 
-A failed shard also retains screenshots, video from the retry, a Playwright trace, and the HTML report as `e2e-diagnostics-shard-<n>` for seven days. Successful shards retain no browser artifacts.
+A failed shard also retains screenshots, video from the retry, a Playwright trace, and the HTML report as `e2e-diagnostics-shard-<n>` for seven days. So does a green shard with a test that passed only on retry: the failed attempt's screenshot and `error-context.md`, which holds the page's accessibility snapshot at the failure, are the evidence for its cause. Other successful shards retain no browser artifacts.
+
+## Flaky tests
+
+A test that fails and then passes on CI's retry is flaky, and a flaky pass is a failure CI forgave once. A silent retry teaches whoever reads the run to rerun instead of fixing, and it hides real races. From 12 October to 18 November 2026, 400 of 1,317 runs with journeys passed a test only on retry. Three tests in `review-complete.spec.ts` made 412 of those 520 passes: two hit a product race, where a goal change that landed while Today opened the day left the day on the old goal, and one pressed Tab before focus arrived.
+
+CI keeps one retry for journeys and component tests, so a flake does not turn `main` red while its cause is found, and nothing about it is silent:
+
+- The run summary has a Passed only on retry row and a table naming each such test, its browser and its first error.
+- On a push to `main`, `scripts/flaky-issues.mjs` opens a `flaky test` issue for each one, comments on the issue already open for it, or reopens a closed one. The phone's smoke journey does the same when it passes only on its second run on `main`.
+- A green shard with a flaky journey keeps its diagnostics, as above.
+
+Fix a flaky test; never make it pass. Read the failed attempt first: the summary names it, and `error-context.md` shows what the page held. Then fix what it shows:
+
+- A race in the product, such as a read and a write that another request can land between: fix the product, with a test that lands the other writer in between, as `racedBy` and `insertRacedBy` in `apps/web/src/server/services/test-race.ts` do.
+- A test that acts before the page is ready for it: wait for the state the next step depends on, such as a response, focus on the control a key press needs, or the row it reads.
+- A test that only fails under a loaded runner: find what it depends on being fast, or move what it proves to a lower layer that is not.
+
+If the cause cannot be found, delete the test, and say in its issue or pull request what it proved and which test, if any, still covers that. Never add a sleep, a longer timeout, a skip, a `fixme` or a retry to make a test pass, and never rerun a red job to get a green one without reading the failure: a job that passes on a rerun is flaky too, and goes in an issue the same way. `biome-plugins/no-flaky-masks.grit` fails `pnpm check` on `waitForTimeout`, retries in `describe.configure`, `slow` and `fixme` under `e2e/`; it cannot tell a longer `setTimeout` from a test that needs one, so that part is review's. A wait that proves something does not happen, such as an event that is never sent, is the one honest sleep, and takes a `biome-ignore` that says so.
+
+A test that times out on your own Mac while other sessions load it is not a CI flake. Run it again alone before calling it a bug, and judge flakiness by CI.
 
 ## Delivery checks
 
@@ -198,9 +218,41 @@ Committed migrations are immutable production history. `pnpm db:generate` create
 
 Each Worker exposes its Cloudflare version ID, deployment timestamp and optional commit tag from `/api/health`. After Workers Builds activates versions, `pnpm deploy:health` checks both canonical domains and identifies the versions serving traffic. Before calling production verified, compare its active tag with the intended commit. A successful build page without these active-version checks is not deployment evidence.
 
+## Rules a pure function must keep
+
+A rule that holds for every input is a property test: a `*.property.test.ts` beside the module, using `fast-check` to try a hundred generated inputs on each run and shrink any failure to the smallest one. Write one when a function in `packages/core` has a rule a single example cannot cover: a round trip such as `serializeState` and `deserializeState`, an invariant such as "every field fits its limit", idempotency, or an order that must not depend on the input's order. `fsrs.property.test.ts` and `import.property.test.ts` are the models.
+
+A failure prints a seed and a counterexample. Turn the counterexample into an ordinary regression test beside the fix, so the case stays covered whatever the generator draws next. When a counterexample shows the generator was wrong rather than the code, narrow the generator and say why in a comment. A generator stops strings and arrays at ten items unless it says `size: "max"`, so a property about a limit, such as the 40-character tag, needs it to reach the limit at all. To search harder before a change to the scheduler or an importer, raise `numRuns` with `fc.configureGlobal` in a throwaway file and pass a longer `--testTimeout`; never commit a raised count.
+
+## Which schedules a scheduler change moves
+
+`src/fsrs.differential.test.ts` in `packages/core` plays 264 recorded card histories through the scheduler, reading the card back from storage before each grade and demoting a same-day Easy to Good as the server does, and compares each card's outcome with the approved one: its state, due date, stability, difficulty, and the dates under the four grade buttons. The histories in `src/scheduler-snapshot/histories.json` cover new cards, single grades, steady learners, repeated Forgots, long gaps, same-day repeats, a device clock behind the last grade, and cards brought in through `replayProgress`. The approved outcomes are `schedules.json` beside them, one card per line.
+
+A change that moves any card fails with a summary: how many cards moved and of which kinds, then for the due date and each grade how many moved later or earlier, the median shift and the largest with its card. Dates are compared to the second, and stability and difficulty to four decimals. Float drift big enough to show there also redraws fuzz, so it usually moves dates too.
+
+Fuzz stays on. ts-fsrs seeds it from the review time, the card's review count and its difficulty times stability, and every history fixes its times, so each run draws the same fuzz. A change that moves a card's stability also redraws the fuzz of its later grades, which is why one moved grade can move every grade after it.
+
+When a pull request means to change scheduling, such as a new parameter, retention, learning step or a ts-fsrs upgrade that changes results, approve the new schedules in the same pull request:
+
+```bash
+pnpm --filter @lymi/core schedules
+```
+
+Commit `schedules.json`, paste the test's summary from before the regeneration into the pull request, and let the diff show reviewers every card that moved. A pull request that means to change nothing about scheduling never regenerates: a failure there is the bug.
+
+`pnpm --filter @lymi/core schedules --histories` redraws the histories from their seed. Each history's review times follow the scheduler of the day it was drawn, so redraw only to grow the corpus, in a pull request that does not change the scheduler.
+
+The test sits beside the year-long simulation's fingerprint check in `src/simulation.test.ts` rather than replacing it. The fingerprint asks whether `results.json` is stale, and it also covers the draw and the simulations, which these histories never touch; the snapshot asks which cards a change moved and by how much. A scheduler change runs both commands.
+
 ## Bugs a pattern can catch
 
 When a review finds a bug whose shape a search can spot, add the search so the next one fails `pnpm check` instead of waiting for a reviewer. A pattern inside one file is a Grit plugin in `biome-plugins/`, scoped in `biome.json`; a pattern across files, such as a key spelled in two modules, is a check in `scripts/check-regressions.mjs` with a test in its `.test.mjs`. Each message names the pull request that found the bug. Logic bugs, races and wrong copy beyond a known false claim stay with regression tests.
+
+## Check what broke before
+
+`pnpm reliability` reads the branch's diff against `origin/main` and prints the items of `scripts/reliability-checklist.mjs` it triggers: bug classes that reached `main` or production at least twice, such as a list past D1's 100 bound parameters or a write whose `WHERE` names only the id. Each item has a trigger a diff shows, the question to answer, and the pull requests behind it. **The script loads the checklist from `origin/main`, so a branch cannot loosen the checklist that judges it.** Most changes trigger nothing and none triggers more than a handful, so answer each printed item in the PR's Verification section; [open-pr](../.agents/skills/open-pr/SKILL.md) gives them to the independent reviewer too.
+
+Add an item when a fix repairs a class that already broke once before and no automated check can catch it, with a trigger, an `example` that fires it, and both pull requests. When a search can find the bug outright, move it to [a pattern check](#bugs-a-pattern-can-catch) and delete the item. Sharpen a trigger that fires on changes it has nothing to say about.
 
 ## Workers-runtime tests
 
@@ -286,7 +338,7 @@ A freeze that changes a successful response also asks whether the phone's kept q
 
 The journey is a smoke test and stays one flow. A behaviour it could cover belongs in the layer that can see it: a rule in a unit test, an answer in a route test, the client's handling of it in `phone-client.test.ts`. Add a step only for something that exists solely in the native build, such as a session surviving a relaunch.
 
-`.github/workflows/phone.yml` runs it on GitHub's `macos-26` runner, which is free for a public repository. It fingerprints the native inputs with `@expo/fingerprint` and caches the Simulator build under that hash, so a run without a native change only re-bundles the JavaScript into the cached app, starts the Worker, boots a Simulator and runs the flow. The Worker is a build with the personas (`LYMI_APP_PREVIEW=1`) served by `wrangler dev`, because Vite's dev Worker dropped requests for minutes beside the Simulator on that runner. A failed flow runs once more and reports a pass on retry as a warning. A failed run keeps Maestro's screenshots, its JUnit report, the Worker log and the runner's memory for seven days.
+`.github/workflows/phone.yml` runs it on GitHub's `macos-26` runner, which is free for a public repository. It fingerprints the native inputs with `@expo/fingerprint` and caches the Simulator build under that hash, so a run without a native change only re-bundles the JavaScript into the cached app, starts the Worker, boots a Simulator and runs the flow. The Worker is a build with the personas (`LYMI_APP_PREVIEW=1`) served by `wrangler dev`, because Vite's dev Worker dropped requests for minutes beside the Simulator on that runner. A failed flow runs once more and reports a pass on retry as a warning, and on `main` as a [flaky test](#flaky-tests) issue. A failed run keeps Maestro's screenshots, its JUnit report, the Worker log and the runner's memory for seven days.
 
 To run it on your Mac, build the Release app against a local Worker, install it on your own Simulator, and run the script with that Worker's port:
 

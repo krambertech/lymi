@@ -66,3 +66,4 @@ What each feature does and where it runs is in [the feature map](PRODUCT.md#feat
 - [Explore](docs/design/explore.md)
 - [Getting started](docs/design/onboarding.md)
 - [The changelog](docs/design/changelog.md)
+- [Estonian lessons](docs/design/estonian-lessons.md)

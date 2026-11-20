@@ -2,6 +2,7 @@ import { offersDeck, readableIn } from "@lymi/core/catalog";
 import { changelogSlugs, changelogUpdatePath } from "./changelog-paths";
 import { deckPath } from "./deck-page";
 import { explorePath } from "./explore";
+import { LESSON_SLUGS, lessonPath } from "./learn/catalogue";
 import {
   englishOnlyPaths,
   isRuntimePage,
@@ -10,6 +11,7 @@ import {
   locales,
   localizedPages,
   localizedPath,
+  prelaunchPages,
 } from "./routes";
 
 const SITE = "https://lymi.app";
@@ -64,12 +66,15 @@ function localized(
  * The pages from the build: the translated ones and each changelog update in every locale, then
  * the English-only ones.
  */
-export function pagesSitemap(): string {
+export function pagesSitemap(prelaunch: readonly LocalizedPage[] = prelaunchPages): string {
   return urlset([
     ...(Object.keys(localizedPages) as LocalizedPage[])
-      .filter((page) => !isRuntimePage(page))
+      .filter((page) => !isRuntimePage(page) && !prelaunch.includes(page))
       .flatMap((page) => localized((locale) => localizedPath(page, locale))),
     ...changelogSlugs.flatMap((slug) => localized((locale) => changelogUpdatePath(slug, locale))),
+    ...(prelaunch.includes("learn")
+      ? []
+      : LESSON_SLUGS.flatMap((slug) => localized((locale) => lessonPath(slug, locale)))),
     ...englishOnlyPaths.map((path) => ({ path })),
   ]);
 }

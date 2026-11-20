@@ -22,7 +22,8 @@
       "!packages/design/uniwind.gen.css",
       "!apps/mobile/src/uniwind-types.d.ts",
       "!apps/mobile/contract",
-      "!apps/web/src/server/enrichment/runs"
+      "!apps/web/src/server/enrichment/runs",
+      "!packages/core/src/scheduler-snapshot/*.json"
     ]
   },
   "formatter": {
@@ -140,6 +141,10 @@
           }
         }
       }
+    },
+    {
+      "includes": ["e2e/**"],
+      "plugins": ["./biome-plugins/no-flaky-masks.grit"]
     },
     {
       "includes": ["apps/mobile/**", "!apps/mobile/src/i18n/list.ts"],

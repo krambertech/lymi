@@ -12,6 +12,7 @@ export const localizedPages = {
   landing: "/",
   languages: "/languages",
   estonian: "/languages/estonian",
+  learn: "/estonian/learn",
   ...languagePages,
   assistants: "/ai-assistants",
   grokAssistant: "/ai-assistants/grok-bot",
@@ -35,6 +36,14 @@ export const localizedPages = {
 } as const;
 export type LocalizedPage = keyof typeof localizedPages;
 
+/**
+ * Pages built and reachable in every locale but not launched: kept out of the sitemap, out of
+ * search with `noindex`, and linked from nowhere. Launching one is removing it from this list.
+ */
+export const prelaunchPages: readonly LocalizedPage[] = ["learn"];
+export const isPrelaunch = (page: LocalizedPage | undefined): boolean =>
+  !!page && prelaunchPages.includes(page);
+
 /** Pages rendered per request from the database, in every locale; `sitemap-decks.xml` lists them. */
 export const localizedRuntimePages = [
   "/languages/estonian",
@@ -57,7 +66,7 @@ export function isRuntimePage(page: LocalizedPage): boolean {
 }
 
 /** Pages built from content, one per item in every locale; `sitemap-pages.xml` lists each. */
-export const localizedContentPages = ["/changelog/[slug]"] as const;
+export const localizedContentPages = ["/changelog/[slug]", "/estonian/learn/[lesson]"] as const;
 
 export const locales = ["en", "uk", "ru"] as const;
 export type Locale = (typeof locales)[number];

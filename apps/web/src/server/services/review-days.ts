@@ -95,16 +95,21 @@ export async function setReviewTimezone(ctx: ServiceContext, input: ReviewTimezo
   return getSettings(ctx);
 }
 
-/** The day's row, created with the goal and zone it will be measured against. */
+/**
+ * The day's row, created with the goal and zone it will be measured against. The goal is read as
+ * the row is written, so a goal change between the caller's read and this insert is not lost:
+ * `applyGoalToToday` finds no row to move then. `goal` stands in only for a learner with no settings.
+ */
 export async function openDay(
   ctx: ServiceContext,
   date: string,
   zone: string,
   goal: number,
 ): Promise<ReviewDay> {
+  const current = sql<number>`coalesce((select ${schema.userSettings.dailyGoal} from ${schema.userSettings} where ${schema.userSettings.userId} = ${ctx.userId}), ${goal})`;
   const created = await ctx.db
     .insert(schema.reviewDays)
-    .values({ id: newId(), userId: ctx.userId, date, goal, timezone: zone })
+    .values({ id: newId(), userId: ctx.userId, date, goal: current, timezone: zone })
     .onConflictDoNothing()
     .returning({ id: schema.reviewDays.id });
   if (created.length) recordStreakChange(ctx, date, zone);

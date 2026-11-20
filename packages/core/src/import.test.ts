@@ -112,6 +112,12 @@ describe("importTags", () => {
       shortened: false,
     });
   });
+  it("keeps one tag for spellings the learner's tag list treats as one", () => {
+    expect(importTags(["\u0457\u0457", "\u0407\u0456\u0308"]).tags).toEqual(["\u0457\u0457"]);
+  });
+  it("cuts a long tag without leaving a space at its end", () => {
+    expect(importTags([`${"a".repeat(39)} b`]).tags).toEqual(["a".repeat(39)]);
+  });
   it("cuts long tags and keeps at most the limit", () => {
     const many = Array.from({ length: 25 }, (_, i) => `tag${i}`);
     expect(importTags(many)).toEqual({ tags: many.slice(0, 20), shortened: true });

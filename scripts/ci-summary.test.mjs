@@ -167,3 +167,67 @@ test("a run with no browser coverage renders no shard table", () => {
 test("missing shard outcomes read as none rather than throwing", () => {
   assert.deepEqual(readShardOutcomes("scripts/no-such-directory"), []);
 });
+
+test("a test that passed only on retry is named, not just counted", () => {
+  const summary = renderCiSummary(
+    { RUN_E2E: "true", SHARDS: "1", BROWSER_RESULT: "success" },
+    [
+      {
+        shard: 1,
+        shards: 1,
+        outcome: "success",
+        reported: true,
+        passed: 20,
+        failed: 0,
+        flaky: 1,
+        skipped: 0,
+        failures: [],
+        flakyTests: [
+          {
+            file: "e2e/review-complete.spec.ts",
+            line: 108,
+            title: "leaving mid-review ends on the success screen",
+            project: "chromium",
+            error: "Locator: getByText(/^2 | of 5/)",
+          },
+        ],
+      },
+    ],
+    [
+      {
+        file: "apps/web/src/client/components/command-menu.browser.test.tsx",
+        title: "a failed search still reports itself",
+        project: "components (touch)",
+      },
+    ],
+  );
+
+  assert.match(summary, /\| Passed only on retry \| 2 tests, listed below \|/);
+  assert.match(summary, /### Passed only on retry/);
+  assert.match(
+    summary,
+    /\| leaving mid-review ends on the success screen \| `e2e\/review-complete\.spec\.ts:108` \| chromium \| Locator: getByText\(\/\^2 \\\| of 5\/\) \|/,
+  );
+  assert.match(summary, /command-menu\.browser\.test\.tsx` \| components \(touch\) \|/);
+});
+
+test("a run where nothing needed its retry says so", () => {
+  const summary = renderCiSummary({ RUN_E2E: "false" }, [], []);
+  assert.match(summary, /\| Passed only on retry \| None \|/);
+  assert.doesNotMatch(summary, /### Passed only on retry/);
+});
+
+test("a flaky test whose issue could not be filed says so", () => {
+  const summary = renderCiSummary(
+    { RUN_E2E: "false", FLAKY_ISSUES: "failure" },
+    [],
+    [
+      {
+        file: "apps/web/src/client/x.browser.test.tsx",
+        title: "x",
+        project: "components (desktop)",
+      },
+    ],
+  );
+  assert.match(summary, /Filing their `flaky test` issues failed/);
+});

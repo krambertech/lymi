@@ -113,6 +113,7 @@ test("a learner crops, saves and removes their own photo", async ({ page }, test
   await expect(page.getByRole("alert")).toHaveText(
     "Your photo was changed somewhere else. Check it, then try again.",
   );
+  // biome-ignore lint/plugin: proves the refused save stops refetching, which only waiting past a few renders shows.
   await page.waitForTimeout(1500);
   expect(reads).toBeLessThanOrEqual(2);
   await page.getByRole("button", { name: "Cancel" }).click();

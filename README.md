@@ -91,6 +91,8 @@ Edit the source and re-run its generator, because the next run overwrites a hand
 | both `worker-configuration.d.ts` files | a Wrangler binding change | that workspace's `cf-typegen` |
 | `apps/web/src/client/routeTree.gen.ts` | adding or renaming a file in `apps/web/src/client/routes` | `pnpm dev` or `pnpm build`, through the TanStack Router plugin |
 | `packages/core/simulation/results.json` | changing the draw, the scheduler or a year-long simulation | `pnpm --filter @lymi/core simulate` |
+| `packages/core/src/scheduler-snapshot/schedules.json` | an intended change to scheduling; [testing.md](docs/testing.md#which-schedules-a-scheduler-change-moves) says when | `pnpm --filter @lymi/core schedules` |
+| `packages/core/src/scheduler-snapshot/histories.json` | growing the corpus, never beside a scheduler change | `pnpm --filter @lymi/core schedules --histories` |
 | `packages/design/src/tokens.gen.ts`, `packages/design/uniwind.gen.css`, `apps/desktop/src/colours.gen.ts` | changing `packages/design/tokens.css` | `node scripts/check-design-docs.mjs --write` |
 | `packages/design/fonts/onest-cyrillic-wght-normal.woff2` | updating `@fontsource-variable/onest` | `python3 packages/design/scripts/onest-stress.py` (needs `pip install fonttools brotli`) |
 | `apps/mobile/assets/symbols/` | changing `apps/mobile/src/ui/icons.tsx` or the lantern in `packages/design/src/lantern.ts` | `pnpm --filter @lymi/mobile symbols` (needs `brew install swiftdraw`) |

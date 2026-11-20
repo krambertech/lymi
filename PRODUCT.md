@@ -80,6 +80,7 @@ What Lymi does today, by the learner's job. Each row names where it runs and the
 | Editions | A published deck in the learner's meaning language | Site, web, phone | [ADR 0015](docs/adr/0015-published-decks-use-pinned-localized-editions.md) |
 | Report | A member tells Lymi a deck or card someone else wrote is wrong | Web, phone | [CONTEXT.md](CONTEXT.md) |
 | Public site | Landing and use-case pages in English, Ukrainian and Russian, the changelog, the API docs | Site | [Site structure](docs/site-structure.md) |
+| Estonian lessons | Free interactive grammar lessons with audio and quizzes, no account needed; built, not launched | Site | [Estonian lessons](docs/design/estonian-lessons.md) |
 | Deck reports | Adds and returning learners for a publisher's own decks | API | [ADR 0028](docs/adr/0028-publishers-read-aggregate-reports-on-their-published-decks.md) |
 
 ### Connect and control

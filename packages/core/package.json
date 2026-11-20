@@ -26,7 +26,8 @@
   "scripts": {
     "typecheck": "tsc -p tsconfig.json",
     "test": "vitest run",
-    "simulate": "tsx simulation/generate.ts"
+    "simulate": "tsx simulation/generate.ts",
+    "schedules": "tsx src/scheduler-snapshot/generate.ts"
   },
   "dependencies": {
     "drizzle-orm": "^0.45.4",
@@ -37,6 +38,7 @@
   },
   "devDependencies": {
     "@types/node": "^26.6.5",
+    "fast-check": "^4.10.2",
     "tsx": "^4.23.15",
     "typescript": "^6.0.3",
     "vitest": "^5.0.3"

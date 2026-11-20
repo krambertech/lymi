@@ -109,3 +109,70 @@ test("a long list of failures is truncated with a count of the rest", () => {
   assert.equal(record.failures.length, 20);
   assert.equal(record.truncatedFailures, 5);
 });
+
+test("a test that passed only on retry is named with its project and first error", () => {
+  const record = shardOutcome({
+    shard: 2,
+    shards: 3,
+    outcome: "success",
+    report: {
+      stats: { expected: 20, unexpected: 0, flaky: 1, skipped: 0 },
+      suites: [
+        {
+          title: "review-complete.spec.ts",
+          specs: [
+            {
+              title: "a steady test",
+              ok: true,
+              file: "review-complete.spec.ts",
+              line: 9,
+              tests: [
+                { projectName: "chromium", status: "expected", results: [{ status: "passed" }] },
+              ],
+            },
+          ],
+          suites: [
+            {
+              title: "past midnight",
+              specs: [
+                {
+                  title: "the new day's goal takes over",
+                  ok: true,
+                  file: "review-complete.spec.ts",
+                  line: 198,
+                  tests: [
+                    {
+                      projectName: "chromium",
+                      status: "flaky",
+                      results: [
+                        {
+                          status: "failed",
+                          error: {
+                            message:
+                              "\u001b[31mError: expect(locator).toBeVisible() failed\u001b[39m\n\nLocator: getByText('2 of 2')\nExpected: visible",
+                          },
+                        },
+                        { status: "passed" },
+                      ],
+                    },
+                  ],
+                },
+              ],
+            },
+          ],
+        },
+      ],
+    },
+  });
+
+  assert.deepEqual(record.flakyTests, [
+    {
+      file: "e2e/review-complete.spec.ts",
+      line: 198,
+      title: "past midnight › the new day's goal takes over",
+      project: "chromium",
+      error: "Error: expect(locator).toBeVisible() failed Locator: getByText('2 of 2')",
+    },
+  ]);
+  assert.deepEqual(record.failures, []);
+});

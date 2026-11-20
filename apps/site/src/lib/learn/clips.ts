@@ -26,6 +26,43 @@ export function clipUrl(lesson: string, id: string): string {
   return `${CLIP_ROOT}/${lesson}/${id}.mp3`;
 }
 
+/** Where a passage's sentence timings sit, beside its recording. */
+export function timingUrl(lesson: string, id: string): string {
+  return `${CLIP_ROOT}/${lesson}/${id}.json`;
+}
+
+/**
+ * The two voices a lesson records with: `main` is the product's Estonian voice, `second` the other
+ * speaker in a dialogue.
+ */
+export type LessonVoice = "main" | "second";
+
+/**
+ * A clip: a word or sentence in the main voice; a line in a chosen voice; or a passage, several
+ * sentences recorded as one take, with the time each sentence starts saved beside it.
+ */
+export type Clip =
+  | string
+  | { text: string; voice: LessonVoice }
+  | { sentences: readonly string[]; voice?: LessonVoice };
+
+/** What a clip says, as it is sent to be recorded. */
+export function clipText(clip: Clip): string {
+  if (typeof clip === "string") return clip;
+  return "text" in clip ? clip.text : clip.sentences.join(" ");
+}
+
+export function clipVoice(clip: Clip): LessonVoice {
+  return typeof clip === "string" ? "main" : (clip.voice ?? "main");
+}
+
+/** A passage is one take whose sentences are timed. */
+export function isPassage(
+  clip: Clip,
+): clip is { sentences: readonly string[]; voice?: LessonVoice } {
+  return typeof clip !== "string" && "sentences" in clip;
+}
+
 const words = (list: readonly string[]) =>
   Object.fromEntries(list.map((word) => [clipId(word), word]));
 
@@ -478,7 +515,57 @@ export const KELL_WORDS = [
   "kümne minuti pärast neli",
 ] as const;
 
-export const CLIPS: Record<string, Record<string, string>> = {
+/**
+ * The practice parts' demo on /components/lessons: Jaan introduces himself, Mari writes about
+ * herself, a passage with gaps, and meeting Mari. Words from lessons 1–5.
+ */
+export const KIT_PASSAGES = {
+  jaan: [
+    "Tere! Mina olen Jaan.",
+    "Ma elan Tartus.",
+    "Ma olen arst.",
+    "Mari on minu sõber.",
+    "Ta ei ole arst, ta on õpetaja.",
+    "Me räägime eesti keelt.",
+  ],
+  mari: [
+    "Tere! Minu nimi on Mari.",
+    "Ma olen õpetaja.",
+    "Ma elan Tallinnas.",
+    "Ma loen palju.",
+    "Minu vend Peeter ei loe.",
+    "Ta kuulab muusikat.",
+    "Kas sina loed palju?",
+  ],
+  peeter: [
+    "Mina olen õpetaja.",
+    "Minu vend Peeter on arst.",
+    "Me elame Tallinnas.",
+    "Peeter ei loe palju.",
+    "Mina loen iga päev.",
+  ],
+} as const;
+
+/** Meeting Mari: her lines in the second voice, the learner's in the main one. */
+export const KIT_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Mina olen Mari. Kes sina oled?", voice: "second" },
+  "d-sina-1": "Mina olen Jaan.",
+  "d-mari-2": { text: "Väga meeldiv! Kas sa elad Tallinnas?", voice: "second" },
+  "d-sina-2": "Ei, ma ei ela Tallinnas. Ma elan Tartus.",
+  "d-mari-3": { text: "Tartus? Kas sa oled õpetaja?", voice: "second" },
+  "d-sina-3": "Ei, ma olen arst.",
+  "d-mari-4": { text: "Tore! Head aega!", voice: "second" },
+  "d-sina-4": "Head aega!",
+} as const satisfies Record<string, Clip>;
+
+const KIT_CLIPS: Record<string, Clip> = {
+  "p-jaan": { sentences: KIT_PASSAGES.jaan },
+  "p-mari": { sentences: KIT_PASSAGES.mari, voice: "second" },
+  "p-peeter": { sentences: KIT_PASSAGES.peeter },
+  ...KIT_DIALOGUE,
+};
+
+export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
     ...Object.fromEntries(SPOKEN_NUMBERS.map((n) => [numberClip(n), numberWords(n)])),
@@ -551,4 +638,5 @@ export const CLIPS: Record<string, Record<string, string>> = {
     ...Object.fromEntries(ALL_TIMES.map((time) => [timeClip(time), timeSentence(time)])),
   },
   paevad: { ...words(PAEVAD_WORDS), ...words(PAEVAD_SENTENCES) },
+  kit: KIT_CLIPS,
 };

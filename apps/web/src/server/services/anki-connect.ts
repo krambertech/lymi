@@ -74,6 +74,8 @@ const UNSUPPORTED = "unsupported action";
 const CLIENT_TAGS = new Set(["yomitan"]);
 /** Notes in one call, as many as `POST /api/cards` takes, since each may queue enrichment. */
 export const MAX_NOTES = 200;
+/** Files one request may upload, inside notes or by `storeMediaFile`; asbplayer sends two a card. */
+export const MAX_FILES = 20;
 /** Calls in one `multi`, which may not nest; the key's rate limit counts the request once. */
 export const MAX_ACTIONS = 50;
 /** Search alternatives in one request, each a query; a popup sends one or two per entry. */
@@ -141,6 +143,11 @@ export function answerOpenCall(call: AnkiConnectCall) {
 class Budget {
   notes = MAX_NOTES;
   searches = MAX_SEARCHES;
+  files = MAX_FILES;
+  file() {
+    if (this.files === 0) throw new Refusal(`Send at most ${MAX_FILES} files in one request.`);
+    this.files--;
+  }
   take(count: number, refusal: string) {
     if (count > this.notes) throw new Refusal(refusal);
     this.notes -= count;
@@ -216,12 +223,12 @@ async function run(
     case "canAddNotesWithErrorDetail":
       return canAdd(ctx, notesOf(params.notes, budget));
     case "addNote": {
-      const [outcome] = await add(ctx, notesOf([params.note], budget), deps);
+      const [outcome] = await add(ctx, notesOf([params.note], budget), deps, budget);
       if (!outcome || "error" in outcome) throw new Refusal(outcome?.error ?? noteUnreadable());
       return outcome.id;
     }
     case "addNotes":
-      return (await add(ctx, notesOf(params.notes, budget), deps)).map((o) =>
+      return (await add(ctx, notesOf(params.notes, budget), deps, budget)).map((o) =>
         "id" in o ? o.id : null,
       );
     case "findNotes":
@@ -243,7 +250,7 @@ async function run(
           : {},
       );
     case "storeMediaFile":
-      return storeMedia(ctx, params, deps);
+      return storeMedia(ctx, params, deps, budget);
     // Lymi has no window to open, so the client's View note does nothing rather than fail.
     case "guiBrowse":
       return [];
@@ -251,7 +258,7 @@ async function run(
     case "sync":
       return null;
     case "updateNoteFields":
-      return updateNoteFields(ctx, params.note, deps);
+      return updateNoteFields(ctx, params.note, deps, budget);
     case "addTags":
       return addTags(ctx, params, deps, budget);
     case "updateNote":
@@ -456,13 +463,20 @@ function requireWrite(ctx: ServiceContext, deps: AnkiConnectDeps) {
   );
 }
 
-async function add(ctx: ServiceContext, sent: (AnkiConnectNote | null)[], deps: AnkiConnectDeps) {
+async function add(
+  ctx: ServiceContext,
+  sent: (AnkiConnectNote | null)[],
+  deps: AnkiConnectDeps,
+  budget: Budget,
+) {
   requireWrite(ctx, deps);
-  const notes = await Promise.all(
-    sent.map(async (note) =>
-      note ? { ...note, fields: await withFiles(ctx, note.fields, note, deps) } : null,
-    ),
-  );
+  // One note's files at a time, so a request never holds every upload in memory at once.
+  const notes: (AnkiConnectNote | null)[] = [];
+  for (const note of sent) {
+    notes.push(
+      note ? { ...note, fields: await withFiles(ctx, note.fields, note, deps, budget) } : null,
+    );
+  }
   const byName = new Map((await ownedDecks(ctx)).map((d) => [d.name, d]));
   const prepared = notes.map((note) => prepare(note, byName));
   for (const p of prepared) {
@@ -539,23 +553,28 @@ async function storeMedia(
   ctx: ServiceContext,
   params: Record<string, unknown>,
   deps: AnkiConnectDeps,
+  budget: Budget,
 ) {
   requireWrite(ctx, deps);
   const fileName = typeof params.filename === "string" ? params.filename : "";
   if (!fileName) throw new Refusal("storeMediaFile needs a filename.");
+  budget.file();
   await stash(ctx, fileName, params.data, deps);
   return fileName;
 }
 
 /**
  * A note's `audio` and `picture` entries, as AnkiConnect reads them: each file is saved, then
- * referenced at the end of every field it names, as `storeMediaFile` and a field would.
+ * referenced at the end of every field it names, as `storeMediaFile` and a field would. Only a
+ * capture tool sends files this way, so one aimed at Audio, the term's recording that the deck's
+ * members hear, is left out rather than shared.
  */
 async function withFiles(
   ctx: ServiceContext,
   fields: Record<string, string>,
   files: { audio?: AnkiConnectMedia[] | undefined; picture?: AnkiConnectMedia[] | undefined },
   deps: AnkiConnectDeps,
+  budget: Budget,
 ): Promise<Record<string, string>> {
   const result = { ...fields };
   const entries = [
@@ -566,9 +585,11 @@ async function withFiles(
     })),
   ];
   for (const { file, marker } of entries) {
-    if (!file.filename || !file.fields?.length) continue;
+    const names = (file.fields ?? []).filter((name) => name !== "Audio");
+    if (!file.filename || names.length === 0) continue;
+    budget.file();
     await stash(ctx, file.filename, file.data, deps);
-    for (const name of file.fields) result[name] = `${result[name] ?? ""}${marker}`;
+    for (const name of names) result[name] = `${result[name] ?? ""}${marker}`;
   }
   return result;
 }
@@ -669,12 +690,17 @@ async function ownCardOf(ctx: ServiceContext, note: number): Promise<Card> {
  * does. The term stays, and an empty field clears nothing. The sentence lands before its clip,
  * because a new sentence drops the clip that said the old one.
  */
-async function updateNoteFields(ctx: ServiceContext, value: unknown, deps: AnkiConnectDeps) {
+async function updateNoteFields(
+  ctx: ServiceContext,
+  value: unknown,
+  deps: AnkiConnectDeps,
+  budget: Budget,
+) {
   requireWrite(ctx, deps);
   const parsed = AnkiConnectNoteUpdate.safeParse(value);
   if (!parsed.success) throw new Refusal("updateNoteFields needs a note with an id and fields.");
   const card = await ownCardOf(ctx, parsed.data.id);
-  const fields = await withFiles(ctx, parsed.data.fields ?? {}, parsed.data, deps);
+  const fields = await withFiles(ctx, parsed.data.fields ?? {}, parsed.data, deps, budget);
   const patch: ServerCardPatch = {};
   const text = (name: NoteField) => fields[name] ?? "";
   const meaning = fitted(meaningText(text("Meaning")), CARD_LIMITS.meaning);
@@ -693,12 +719,9 @@ async function updateNoteFields(ctx: ServiceContext, value: unknown, deps: AnkiC
   const source = fittedSource(sourceText(text("URL")));
   if (source && source !== card.source) patch.source = source;
   if (Object.keys(patch).length > 0) await updateCard(ctx, card.id, patch, deps.enrichment);
-  const { media } = deps;
-  if (media) {
-    const files = mediaOf(fields);
-    await keepMedia(ctx, card.id, files, media, "update");
-    await dropUploads(ctx, files, media);
-  }
+  // The uploads stay for the hourly sweep: asbplayer updates every card on the same line with the
+  // same files, one call each.
+  if (deps.media) await keepMedia(ctx, card.id, mediaOf(fields), deps.media, "update");
   return null;
 }
 
@@ -712,10 +735,17 @@ async function addTags(
   requireWrite(ctx, deps);
   const ids = numbers(params.notes, budget);
   const sent = typeof params.tags === "string" ? params.tags.split(/\s+/) : [];
+  const added = tagsOf({ tags: sent });
   for (const id of ids) {
-    const card = await ownCardOf(ctx, id);
-    const tags = tagsOf({ tags: [...card.tags, ...sent] });
-    if (tags.length !== card.tags.length || tags.some((tag, i) => tag !== card.tags[i])) {
+    // A note that is gone or not the learner's is passed over, as AnkiConnect does.
+    const card = await ownCardOf(ctx, id).catch((error: unknown) => {
+      if (error instanceof Refusal) return null;
+      throw error;
+    });
+    if (!card) continue;
+    const held = new Set(card.tags.map(tagKey));
+    const tags = [...card.tags, ...added.filter((tag) => !held.has(tagKey(tag)))];
+    if (tags.length > card.tags.length && tags.length <= TAG_LIMITS.count) {
       await updateCard(ctx, card.id, { tags });
     }
   }

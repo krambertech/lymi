@@ -104,7 +104,9 @@ export async function storeRecording(
  * Stores an imported clip of the example as its recording, which its play control plays instead
  * of generated speech, on the same terms as `storeRecording`. A card that no longer says `said`,
  * the sentence the clip was imported with, has nothing to play it beside, so the clip is skipped.
- * A `captured` clip came from the learner's own capture tool and plays for the owner alone.
+ * A `captured` clip came from the learner's own capture tool and plays for the owner alone; it
+ * replaces an earlier captured clip, so capturing the line again fixes a badly timed one.
+ * `skipped` also covers a clip that lost to a concurrent edit, whose object is then deleted.
  */
 export async function storeExampleRecording(
   ctx: ServiceContext,
@@ -120,16 +122,19 @@ export async function storeExampleRecording(
       language: schema.cards.language,
       example: schema.cards.example,
       exampleRecordingKey: schema.cards.exampleRecordingKey,
+      exampleRecordingCaptured: schema.cards.exampleRecordingCaptured,
     })
     .from(schema.cards)
     .where(and(eq(schema.cards.id, cardId), eq(schema.cards.userId, ctx.userId)));
   if (!card) return "skipped";
-  if (card.exampleRecordingKey) return "kept";
+  const replacing = captured && card.exampleRecordingCaptured ? card.exampleRecordingKey : null;
+  if (card.exampleRecordingKey && !replacing) return "kept";
   if (!card.example || !sameExample(card.language, card.example, said)) return "skipped";
   const put = await putRecording(bucket, cardId, "example-recorded", await load());
   if (!put) return "skipped";
+  if (put.key === replacing) return "kept";
   const stored = and(eq(schema.cards.id, cardId), eq(schema.cards.exampleRecordingKey, put.key))!;
-  await ctx.db.batch([
+  const [update] = await ctx.db.batch([
     ctx.db
       .update(schema.cards)
       .set({
@@ -142,7 +147,12 @@ export async function storeExampleRecording(
           eq(schema.cards.id, cardId),
           eq(schema.cards.userId, ctx.userId),
           eq(schema.cards.example, card.example),
-          isNull(schema.cards.exampleRecordingKey),
+          replacing
+            ? and(
+                eq(schema.cards.exampleRecordingKey, replacing),
+                eq(schema.cards.exampleRecordingCaptured, true),
+              )
+            : isNull(schema.cards.exampleRecordingKey),
         ),
       ),
     auditStatementWhen(
@@ -162,5 +172,17 @@ export async function storeExampleRecording(
       stored,
     ),
   ]);
+  // The guard is the arbiter: an edit or another clip that landed first leaves this one unused.
+  if ((update as D1Result).meta.changes !== 1) {
+    // Keys are fingerprints, so the same clip stored by a concurrent call shares this object.
+    const [now] = await ctx.db
+      .select({ key: schema.cards.exampleRecordingKey })
+      .from(schema.cards)
+      .where(eq(schema.cards.id, cardId));
+    if (now?.key === put.key) return "kept";
+    await bucket.delete(put.key);
+    return "skipped";
+  }
+  if (replacing) await bucket.delete(replacing);
   return "stored";
 }

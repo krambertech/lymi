@@ -1207,6 +1207,11 @@ export const AnkiConnectMedia = z.object({
 });
 export type AnkiConnectMedia = z.infer<typeof AnkiConnectMedia>;
 
+/** AnkiConnect takes one file or a list; asbplayer sends one. Read as a list either way. */
+const AnkiConnectMediaList = z
+  .union([AnkiConnectMedia, z.array(AnkiConnectMedia)])
+  .transform((files) => (Array.isArray(files) ? files : [files]));
+
 /** A note as an AnkiConnect client sends it: fields by name, holding the client's HTML. */
 export const AnkiConnectNote = z.object({
   deckName: z.string(),
@@ -1214,8 +1219,8 @@ export const AnkiConnectNote = z.object({
   fields: z.record(z.string(), z.string()),
   tags: z.array(z.string()).optional(),
   options: z.object({ allowDuplicate: z.boolean().optional() }).optional(),
-  audio: z.array(AnkiConnectMedia).optional(),
-  picture: z.array(AnkiConnectMedia).optional(),
+  audio: AnkiConnectMediaList.optional(),
+  picture: AnkiConnectMediaList.optional(),
 });
 export type AnkiConnectNote = z.infer<typeof AnkiConnectNote>;
 
@@ -1223,7 +1228,7 @@ export type AnkiConnectNote = z.infer<typeof AnkiConnectNote>;
 export const AnkiConnectNoteUpdate = z.object({
   id: z.number().int(),
   fields: z.record(z.string(), z.string()).optional(),
-  audio: z.array(AnkiConnectMedia).optional(),
-  picture: z.array(AnkiConnectMedia).optional(),
+  audio: AnkiConnectMediaList.optional(),
+  picture: AnkiConnectMediaList.optional(),
 });
 export type AnkiConnectNoteUpdate = z.infer<typeof AnkiConnectNoteUpdate>;

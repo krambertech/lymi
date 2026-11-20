@@ -199,8 +199,8 @@ function Asbplayer() {
               Choose the deck Yomitan adds to, and the note type {field("Lymi card")}.
             </Trans>,
             <Trans key="fields">
-              Map Sentence to {field("Sentence")}, Audio to {field("Sentence audio")} and Image to{" "}
-              {field("Picture")}.
+              Map Word to {field("Term")}, Sentence to {field("Sentence")}, Audio to{" "}
+              {field("Sentence audio")} and Image to {field("Picture")}.
             </Trans>,
             <Trans key="mp3">
               Turn on {field("Re-encode audio as mp3")}. Lymi plays MP3, M4A, AAC and WAV audio.

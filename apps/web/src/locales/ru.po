@@ -3515,11 +3515,12 @@ msgstr "Управлять"
 msgid "Manage connected apps"
 msgstr "Управлять подключёнными приложениями"
 
-#. placeholder {0}: field("Sentence")
-#. placeholder {1}: field("Sentence audio")
-#. placeholder {2}: field("Picture")
-msgid "Map Sentence to {0}, Audio to {1} and Image to {2}."
-msgstr "Сопоставь Sentence с {0}, Audio с {1}, а Image с {2}."
+#. placeholder {0}: field("Term")
+#. placeholder {1}: field("Sentence")
+#. placeholder {2}: field("Sentence audio")
+#. placeholder {3}: field("Picture")
+msgid "Map Word to {0}, Sentence to {1}, Audio to {2} and Image to {3}."
+msgstr "Сопоставь Word с {0}, Sentence с {1}, Audio с {2}, а Image с {3}."
 
 msgid "Mark important"
 msgstr "Отметить важной"

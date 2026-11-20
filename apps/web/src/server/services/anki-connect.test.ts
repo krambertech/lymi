@@ -14,6 +14,7 @@ import { addCards, showCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { archiveDeck, createDeck } from "./decks";
 import { join } from "./members";
+import { storeExampleRecording } from "./recordings";
 import { learner, type TestBindings, testDb } from "./test-db";
 
 /**
@@ -374,8 +375,9 @@ const pictureOf = async (cardId: string) => {
 };
 
 /**
- * asbplayer's two ways to a card, with its requests as the public AnkiConnect protocol describes
- * them: a note carrying `audio` and `picture`, and updating the last card Yomitan added.
+ * asbplayer's two ways to a card: a note carrying `audio` and `picture`, and updating the last
+ * card Yomitan added. asbplayer sends each as one `{ filename, data, fields }` object, named
+ * `asbp_` with a random suffix, which AnkiConnect accepts beside a list.
  */
 describe("asbplayer", () => {
   it("keeps the clip and frame a note carries as the example's recording and the picture", async () => {
@@ -389,8 +391,8 @@ describe("asbplayer", () => {
           fields: { Term: "電車", Sentence: "電車が来ました。", URL: "https://www.youtube.com/" },
           tags: ["asbplayer"],
           options: { allowDuplicate: false, duplicateScope: "collection" },
-          audio: [{ filename: "asbplayer_train.mp3", data: clip(1), fields: ["Sentence audio"] }],
-          picture: [{ filename: "asbplayer_train.png", data: frame, fields: ["Picture"] }],
+          audio: { filename: "asbp_train_k3f9.mp3", data: clip(1), fields: ["Sentence audio"] },
+          picture: { filename: "asbp_train_k3f9.png", data: frame, fields: ["Picture"] },
         },
       },
       6,
@@ -417,54 +419,152 @@ describe("asbplayer", () => {
 
   it("puts the sentence, its clip and the frame on the card Yomitan added last", async () => {
     await call("addNote", { note: note({ Term: "改札", Sentence: "駅で待つ。" }) });
-    const card = await cardOf("改札");
+    await call("addNote", { note: note({ Term: "出口", Sentence: "駅で待つ。" }) });
+    const gate = await cardOf("改札");
+    const exit = await cardOf("出口");
     events.length = 0;
 
     const found = (await call("findNotes", { query: "added:1" }, 6)) as { result: number[] };
     const last = Math.max(...found.result);
     expect(await call("notesInfo", { notes: [last] }, 6)).toMatchObject({
-      result: [{ fields: { Term: { value: "改札" }, "Sentence audio": { value: "", order: 6 } } }],
+      result: [{ fields: { Term: { value: "出口" }, "Sentence audio": { value: "", order: 6 } } }],
     });
-    expect(
-      await call("storeMediaFile", { filename: "asbplayer_gate.mp3", data: clip(2) }, 6),
-    ).toEqual({ result: "asbplayer_gate.mp3", error: null });
-    await call("storeMediaFile", { filename: "asbplayer_gate.png", data: frame }, 6);
-    expect(
-      await call(
-        "updateNoteFields",
-        {
-          note: {
-            id: last,
-            fields: {
-              Sentence: "改札を出たら右です。",
-              "Sentence audio": "[sound:asbplayer_gate.mp3]",
-              Picture: '<img src="asbplayer_gate.png">',
+    // "Also update cards with the same subtitle" sends the same files again, one note at a time.
+    const [earlier] = (await call("findNotes", { query: '"term:改札"' })) as number[];
+    for (const id of [last, earlier]) {
+      expect(
+        await call(
+          "updateNoteFields",
+          {
+            note: {
+              id,
+              fields: { Sentence: "改札を出たら右です。" },
+              audio: { filename: "asbp_gate_x7q2.mp3", data: clip(2), fields: ["Sentence audio"] },
+              picture: { filename: "asbp_gate_x7q2.png", data: frame, fields: ["Picture"] },
             },
           },
-        },
-        6,
-      ),
-    ).toEqual({ result: null, error: null });
-    expect(await call("addTags", { notes: [last], tags: "asbplayer" }, 6)).toEqual({
+          6,
+        ),
+      ).toEqual({ result: null, error: null });
+    }
+    expect(await call("addTags", { notes: [last, earlier], tags: "asbplayer" }, 6)).toEqual({
       result: null,
       error: null,
     });
 
-    const updated = await cardOf("改札");
-    expect(updated).toMatchObject({
-      id: card.id,
-      example: "改札を出たら右です。",
-      exampleRecordingCaptured: true,
-      tags: ["asbplayer"],
-    });
-    expect(updated.exampleRecordingKey).not.toBeNull();
-    expect(await pictureOf(card.id)).toMatchObject({ captured: true });
+    for (const card of [gate, exit]) {
+      const updated = await cardOf(card.term);
+      expect(updated).toMatchObject({
+        id: card.id,
+        example: "改札を出たら右です。",
+        exampleRecordingCaptured: true,
+        tags: ["asbplayer"],
+      });
+      expect(updated.exampleRecordingKey).not.toBeNull();
+      expect(await pictureOf(card.id)).toMatchObject({ captured: true });
+    }
+    expect(events.filter((e) => e.name === "anki_connect_media")).toHaveLength(4);
     expect(events).toContainEqual({
       name: "anki_connect_media",
       kind: "sentence_audio",
       action: "update",
     });
-    expect((await env.IMPORTS.list({ prefix: "anki-connect/" })).objects).toHaveLength(0);
+  });
+
+  it("takes a file stored first and referenced from the field, as AnkiConnect allows", async () => {
+    await call("addNote", { note: note({ Term: "切符", Sentence: "切符を買う。" }) });
+    const [id] = (await call("findNotes", { query: '"term:切符"' })) as number[];
+    await call("storeMediaFile", { filename: "asbp_ticket_a1.mp3", data: clip(4) }, 6);
+    await call("storeMediaFile", { filename: "asbp_ticket_a1.png", data: frame }, 6);
+    await call("updateNoteFields", {
+      note: {
+        id,
+        fields: {
+          "Sentence audio": "[sound:asbp_ticket_a1.mp3]",
+          Picture: '<img src="asbp_ticket_a1.png">',
+        },
+      },
+    });
+    const card = await cardOf("切符");
+    expect(card).toMatchObject({ example: "切符を買う。", exampleRecordingCaptured: true });
+    expect(await pictureOf(card.id)).toMatchObject({ captured: true });
+  });
+
+  it("replaces a captured clip when the line is captured again", async () => {
+    const before = await cardOf("改札");
+    const [id] = (await call("findNotes", { query: '"term:改札"' })) as number[];
+    await call("updateNoteFields", {
+      note: {
+        id,
+        fields: { Sentence: "改札を出たら右です。" },
+        audio: { filename: "asbp_gate_retimed.mp3", data: clip(9), fields: ["Sentence audio"] },
+      },
+    });
+    const after = await cardOf("改札");
+    expect(after.exampleRecordingKey).not.toBe(before.exampleRecordingKey);
+    expect(after.exampleRecordingCaptured).toBe(true);
+    expect(await env.AUDIO.get(before.exampleRecordingKey ?? "")).toBeNull();
+  });
+
+  it("leaves out a captured clip aimed at Audio, which members of the deck would hear", async () => {
+    await call("addNote", {
+      note: {
+        ...note({ Term: "ホーム", Sentence: "ホームで待つ。" }),
+        audio: { filename: "asbp_platform.mp3", data: clip(5), fields: ["Audio"] },
+      },
+    });
+    expect(await cardOf("ホーム")).toMatchObject({
+      audioKey: null,
+      exampleRecordingKey: null,
+    });
+  });
+
+  it("caps the files one request may upload", async () => {
+    const files = Array.from({ length: 21 }, (_, i) => ({
+      filename: `asbp_${i}.mp3`,
+      data: clip(i),
+      fields: ["Sentence audio"],
+    }));
+    expect(await call("addNote", { note: { ...note({ Term: "線路" }), audio: files } }, 6)).toEqual(
+      { result: null, error: "Send at most 20 files in one request." },
+    );
+  });
+
+  it("adds tags beside the ones a card has, and passes over a note that isn't there", async () => {
+    await addCards(ctx, [{ deckId: japanese, term: "時刻表", tags: ["yomitan"], enrich: false }]);
+    const [id] = (await call("findNotes", { query: '"term:時刻表"' })) as number[];
+    expect(await call("addTags", { notes: [999_998, id], tags: "asbplayer" }, 6)).toEqual({
+      result: null,
+      error: null,
+    });
+    expect((await cardOf("時刻表")).tags).toEqual(["yomitan", "asbplayer"]);
+  });
+
+  it("keeps no clip that lost to an edit made while it was stored", async () => {
+    const card = await cardOf("切符");
+    const folder = { prefix: `cards/${card.id}/example-recorded/` };
+    const before = (await env.AUDIO.list(folder)).objects.length;
+    await db
+      .update(schema.cards)
+      .set({ exampleRecordingKey: null, exampleRecordingCaptured: false })
+      .where(eq(schema.cards.id, card.id));
+    const outcome = await storeExampleRecording(
+      ctx,
+      card.id,
+      "切符を買う。",
+      async () => {
+        await db
+          .update(schema.cards)
+          .set({ example: "切符を二枚買う。" })
+          .where(eq(schema.cards.id, card.id));
+        return Uint8Array.from(atob(clip(7)), (c) => c.charCodeAt(0));
+      },
+      env.AUDIO,
+      true,
+    );
+    expect(outcome).toBe("skipped");
+    expect((await cardOf("切符")).exampleRecordingKey).toBeNull();
+    expect((await env.AUDIO.list(folder)).objects).toHaveLength(before);
   });
 
   it("drops a captured clip when a later update changes the sentence without one", async () => {
@@ -514,6 +614,8 @@ describe("asbplayer", () => {
 
 describe("sweepAnkiConnectUploads", () => {
   it("deletes uploads whose note never came after an hour", async () => {
+    // Updates leave their uploads for this sweep, so start from an empty stash.
+    await sweepAnkiConnectUploads(env.IMPORTS, new Date(Date.now() + 2 * 60 * 60 * 1000));
     await env.IMPORTS.put("anki-connect/someone/abc", new Uint8Array([1]));
     await sweepAnkiConnectUploads(env.IMPORTS, new Date());
     expect((await env.IMPORTS.list({ prefix: "anki-connect/" })).objects).toHaveLength(1);

@@ -158,9 +158,12 @@ export function Yomitan() {
         <div>
           <StepTitle>Choose the deck and the fields</StepTitle>
           <p>
-            Choose the deck Yomitan adds to and the note type <strong>Lymi card</strong>. Map
-            Sentence to <strong>Sentence</strong>, Audio to <strong>Sentence audio</strong>, Image
-            to <strong>Picture</strong> and URL to <strong>URL</strong>.
+            Choose the deck Yomitan adds to and the note type <strong>Lymi card</strong>. Map Word
+            to <strong>Term</strong>, Sentence to <strong>Sentence</strong>, Audio to{" "}
+            <strong>Sentence audio</strong>, Image to <strong>Picture</strong> and URL to{" "}
+            <strong>URL</strong>. Without Word, Lymi refuses a card added from asbplayer alone,
+            because it has no term. Audio mapped to <strong>Audio</strong> is left out, because the
+            deck’s members hear that field.
           </p>
         </div>
         <div>
@@ -184,7 +187,8 @@ export function Yomitan() {
       </Steps>
       <p>
         Lymi never records anything itself. It keeps what asbplayer sends, and a new sentence on the
-        card drops the audio that said the old one.
+        card drops the audio that said the old one, and capturing the same line again replaces the
+        audio and the picture.
       </p>
 
       <H2>One deck for each language</H2>

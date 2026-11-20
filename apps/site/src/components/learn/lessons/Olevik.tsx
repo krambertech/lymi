@@ -512,7 +512,7 @@ export function OlevikLesson() {
                 </p>
                 <p>
                   <Trans>
-                    In some verbs the stem changes. <Word w="lugema" />, to read, has the stem{" "}
+                    In some verbs the stem changes: <Word w="lugema" />, to read, has the stem{" "}
                     <b lang="et">loe-</b>, so I read is <Word w="ma loen" />. You don't need the
                     rule for that yet. Learn each verb with its I form:{" "}
                     <b lang="et">lugema, loen</b>. Take off -n and the rest is the stem. In lesson{" "}

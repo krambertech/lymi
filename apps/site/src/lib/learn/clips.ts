@@ -806,8 +806,8 @@ const TALLINN_CLIPS: Record<string, Clip> = {
   ...TALLINN_DIALOGUE,
 };
 
-/** How a verb's -da form ends: -da, -ta, -la or -na, or a short -a. */
-export type DaPattern = "da" | "ta" | "la" | "a";
+/** How a verb's -da form ends: -da, -ta, -la, -na, or a short -a. */
+export type DaPattern = "da" | "ta" | "la" | "na" | "a";
 
 /**
  * The verbs of the lesson on a verb's three forms: the -ma form, the -da form split before its
@@ -827,7 +827,7 @@ export const VERB_FORMS = [
   { ma: "vaatama", da: ["vaada", "ta"], n: "vaatan", ge: "Vaadake!", pattern: "ta" },
   { ma: "olema", da: ["ol", "la"], n: "olen", ge: "Olge!", pattern: "la" },
   { ma: "tulema", da: ["tul", "la"], n: "tulen", ge: "Tulge!", pattern: "la" },
-  { ma: "minema", da: ["min", "na"], n: "lähen", ge: "Minge!", pattern: "la" },
+  { ma: "minema", da: ["min", "na"], n: "lähen", ge: "Minge!", pattern: "na" },
   { ma: "tegema", da: ["teh", "a"], n: "teen", ge: "Tehke!", pattern: "a" },
   { ma: "nägema", da: ["näh", "a"], n: "näen", ge: "Nähke!", pattern: "a" },
   { ma: "sööma", da: ["süü", "a"], n: "söön", ge: "Sööge!", pattern: "a" },
@@ -968,7 +968,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "verbi-pohivormid": {
     ...words(VERB_FORMS.flatMap((verb) => [verb.ma, daForm(verb), verb.n, threeForms(verb)])),
     ...words(VERB_FORMS.filter((verb) => VORMID_COMMANDS.includes(verb.ma)).map((verb) => verb.ge)),
-    ...words(["Ma tahan lugeda."]),
+    ...words(["tahan", "Ma tahan lugeda."]),
     "p-class": { sentences: VORMID_CLASS },
   },
   kit: KIT_CLIPS,

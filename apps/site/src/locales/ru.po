@@ -346,8 +346,8 @@ msgstr "<0/> {left, plural, one {карточка к повторению} few {
 msgid "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn’t do: <3/>, I’m not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
 msgstr "<0/> и <1/> оба отрицают, но каждое по-своему. <2>Ei</2> говорит, чего человек не делает: <3/>, я не сажусь. <4>Ära</4> просит этого не делать: <5/> Команда никогда не начинается с <6>ei</6>."
 
-msgid "<0/> and <1/> both translate as to read. Estonian uses each after different words: after <2>tahan</2>, I want, comes the <3>-da</3> form, <4/>. Lesson {infinitives} shows which words take which."
-msgstr "<0/> и <1/> оба переводятся как «читать». Но ставят их после разных слов: после <2>tahan</2>, «я хочу», идёт форма на <3>-da</3>: <4/>. После каких слов идёт какая форма, объясняет урок {infinitives}."
+msgid "<0/> and <1/> both translate as to read. Estonian uses each after different words: after <2/>, I want, comes the <3>-da</3> form, <4/>. Lesson {infinitives} shows which words take which."
+msgstr "<0/> и <1/> оба переводятся как «читать». Но ставят их после разных слов: после <2/>, «я хочу», идёт форма на <3>-da</3>: <4/>. После каких слов идёт какая форма, объясняет урок {infinitives}."
 
 msgid "<0/> and <1/> change their long vowel: <2/>, <3/>. Learn these four whole."
 msgstr "<0/> и <1/> меняют долгий гласный: <2/>, <3/>. Эти четыре запоминай целыми словами."
@@ -937,8 +937,8 @@ msgstr "Бесплатный урок о днях недели на эстонс
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Бесплатный урок о повелительном наклонении в эстонском языке: основа глагола как команда (loe!, istu!, tule siia!), ära для «не делай», формы на -ge и -ke для нескольких человек или на «вы», повседневные команды вроде räägi aeglasemalt, palun и короткий разговор в кафе. Каждое предложение озвучено."
 
-msgid "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da form is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word is read aloud."
-msgstr "Бесплатный урок о трёх основных формах эстонского глагола — lugema, lugeda, loen: как образуется форма на -da (-da, -ta, -la, -na или -a), в том числе teha, näha, süüa и juua, и команды на -ge и -ke, которые строятся на ней. Каждое слово озвучено."
+msgid "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da form is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud."
+msgstr "Бесплатный урок о трёх основных формах эстонского глагола — lugema, lugeda, loen: как образуется форма на -da (-da, -ta, -la, -na или -a), в том числе teha, näha, süüa и juua, и команды на -ge и -ke, которые строятся на ней. Каждое слово и предложение озвучено."
 
 msgid "A full card in seconds"
 msgstr "Полная карточка за секунды"
@@ -1583,6 +1583,9 @@ msgstr "Все языки"
 msgid "All lessons"
 msgstr "Все уроки"
 
+msgid "All nine. You matched each <0>-da</0> form to its verb."
+msgstr "Все девять. Каждая форма на <0>-da</0> — со своим глаголом."
+
 msgid "All of Explore"
 msgstr "Весь каталог"
 
@@ -1648,9 +1651,6 @@ msgstr "Все полки"
 
 msgid "All six. Every ending was right."
 msgstr "Все шесть. Каждое окончание верное."
-
-msgid "All six. You matched each <0>-da</0> form to its verb."
-msgstr "Все шесть. Каждая форма на <0>-da</0> — со своим глаголом."
 
 msgid "All six. You matched every pronoun with its ending."
 msgstr "Все шесть. Каждое местоимение — со своим окончанием."
@@ -4327,6 +4327,9 @@ msgstr "От õppima, учить, учиться."
 msgid "From rääkima, to speak."
 msgstr "От rääkima, «говорить»."
 
+msgid "From tahtma, to want."
+msgstr "От tahtma, «хотеть»."
+
 msgid "From the chat you just had"
 msgstr "Из только что прошедшего разговора"
 
@@ -5185,27 +5188,6 @@ msgstr "Я забыл взять *вещи*."
 msgid "I form"
 msgstr "Форма для «я»"
 
-msgid "I form <0>joon</0>. Drop <1>-ma</1>, turn <2>oo</2> into <3>uu</3> and add <4>-a</4>."
-msgstr "Форма для «я» — <0>joon</0>. Отбрось <1>-ma</1>, замени <2>oo</2> на <3>uu</3> и добавь <4>-a</4>."
-
-msgid "I form <0>lähen</0>, a stem of its own. Drop <1>-ema</1> and add <2>-na</2>."
-msgstr "Форма для «я» — <0>lähen</0>, со своей основой. Отбрось <1>-ema</1> и добавь <2>-na</2>."
-
-msgid "I form <0>näen</0>. Drop <1>-ema</1>, turn g into h and add <2>-a</2>."
-msgstr "Форма для «я» — <0>näen</0>. Отбрось <1>-ema</1>, замени g на h и добавь <2>-a</2>."
-
-msgid "I form <0>olen</0>. Drop <1>-ema</1> and add <2>-la</2>."
-msgstr "Форма для «я» — <0>olen</0>. Отбрось <1>-ema</1> и добавь <2>-la</2>."
-
-msgid "I form <0>söön</0>. Drop <1>-ma</1>, turn <2>öö</2> into <3>üü</3> and add <4>-a</4>."
-msgstr "Форма для «я» — <0>söön</0>. Отбрось <1>-ma</1>, замени <2>öö</2> на <3>üü</3> и добавь <4>-a</4>."
-
-msgid "I form <0>teen</0>. Drop <1>-ema</1>, turn g into h and add <2>-a</2>."
-msgstr "Форма для «я» — <0>teen</0>. Отбрось <1>-ema</1>, замени g на h и добавь <2>-a</2>."
-
-msgid "I form <0>tulen</0>. Drop <1>-ema</1> and add <2>-la</2>."
-msgstr "Форма для «я» — <0>tulen</0>. Отбрось <1>-ema</1> и добавь <2>-la</2>."
-
 msgid "I go"
 msgstr "я иду"
 
@@ -5346,6 +5328,9 @@ msgstr "я жду"
 
 msgid "I wait, I’m waiting"
 msgstr "я жду"
+
+msgid "I want"
+msgstr "я хочу"
 
 msgid "I want to *eat* sushi."
 msgstr "Я хочу *поесть* суши."
@@ -6311,6 +6296,9 @@ msgstr "Урок 4"
 
 msgid "Lesson 4 · getting around"
 msgstr "Урок 4 · транспорт"
+
+msgid "Lessons {negation} and {commands} called <0/> the <1>ma</1> form, after <2>ma loen</2>. From here on it is the I form, and the <3>-ma</3> form is <4/>."
+msgstr "В уроках {negation} и {commands} <0/> называлась формой с <1>ma</1> — от <2>ma loen</2>. Дальше это форма для «я», а форма на <3>-ma</3> — это <4/>."
 
 msgid "Lessons done: <0>{doneCount}</0> of {builtCount}"
 msgstr "Пройдено уроков: <0>{doneCount}</0> из {builtCount}"
@@ -10196,6 +10184,27 @@ msgstr "Подъязычный."
 
 msgid "The I form"
 msgstr "Форма для «я»"
+
+msgid "The I form is <0>joon</0>. Drop <1>-ma</1>, turn <2>oo</2> into <3>uu</3> and add <4>-a</4>."
+msgstr "Форма для «я» — <0>joon</0>. Отбрось <1>-ma</1>, замени <2>oo</2> на <3>uu</3> и добавь <4>-a</4>."
+
+msgid "The I form is <0>lähen</0>, with a stem of its own. Drop <1>-ema</1> and add <2>-na</2>."
+msgstr "Форма для «я» — <0>lähen</0>, со своей основой. Отбрось <1>-ema</1> и добавь <2>-na</2>."
+
+msgid "The I form is <0>näen</0>. Drop <1>-ema</1>, turn g into h and add <2>-a</2>."
+msgstr "Форма для «я» — <0>näen</0>. Отбрось <1>-ema</1>, замени g на h и добавь <2>-a</2>."
+
+msgid "The I form is <0>olen</0>. Drop <1>-ema</1> and add <2>-la</2>."
+msgstr "Форма для «я» — <0>olen</0>. Отбрось <1>-ema</1> и добавь <2>-la</2>."
+
+msgid "The I form is <0>söön</0>. Drop <1>-ma</1>, turn <2>öö</2> into <3>üü</3> and add <4>-a</4>."
+msgstr "Форма для «я» — <0>söön</0>. Отбрось <1>-ma</1>, замени <2>öö</2> на <3>üü</3> и добавь <4>-a</4>."
+
+msgid "The I form is <0>teen</0>. Drop <1>-ema</1>, turn g into h and add <2>-a</2>."
+msgstr "Форма для «я» — <0>teen</0>. Отбрось <1>-ema</1>, замени g на h и добавь <2>-a</2>."
+
+msgid "The I form is <0>tulen</0>. Drop <1>-ema</1> and add <2>-la</2>."
+msgstr "Форма для «я» — <0>tulen</0>. Отбрось <1>-ema</1> и добавь <2>-la</2>."
 
 msgid "The I form of {ma}."
 msgstr "Форма для «я» от {ma}."

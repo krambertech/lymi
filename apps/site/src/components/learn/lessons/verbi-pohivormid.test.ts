@@ -8,7 +8,7 @@ import {
   VORMID_CLASS,
 } from "../../../lib/learn/clips";
 import { eachPairFirst } from "../../../lib/learn/quiz";
-import { ASKED, CLASS_GAPS, HEARD, threeVerbs } from "./VerbiPohivormid";
+import { ASKED, CLASS_GAPS, HEARD, heardRun, threeVerbs } from "./VerbiPohivormid";
 
 const recorded = CLIPS["verbi-pohivormid"] ?? {};
 
@@ -39,7 +39,7 @@ describe("a verb's three forms", () => {
       "süüa",
       "juua",
     ]);
-    for (const verb of VERB_FORMS) expect(verb.da[1]).toMatch(/^(da|ta|la|na|a)$/);
+    for (const verb of VERB_FORMS) expect(verb.da[1]).toBe(verb.pattern);
   });
 });
 
@@ -51,30 +51,48 @@ describe("“Which form did you hear?”", () => {
     }
   });
 
+  it("puts the answer in every place after the first round", () => {
+    const items = HEARD.map((item) => ({
+      pair: item.pair,
+      answer: item.kind as string,
+      options: ["ma", "da", "n"],
+    }));
+    const places = [new Set<number>(), new Set<number>(), new Set<number>()];
+    for (let run = 0; run < 300; run++)
+      heardRun(items, items[0])
+        .slice(1, 4)
+        .forEach((item, round) => {
+          places[round]?.add(item.options.indexOf(item.answer));
+        });
+    for (const each of places) expect(each.size).toBe(3);
+  });
+
   it("has a recording for every form it asks about", () => {
     for (const item of HEARD) expect(recorded[clipId(item.said)]).toBe(item.said);
   });
 });
 
 describe("“Which verb is it?”", () => {
-  it("offers the answer, the verb it's likeliest taken for, and one more, in no fixed place", () => {
+  it("offers the answer and two others drawn at random, in no fixed place", () => {
     const places = new Set<number>();
+    const others = new Set<string>();
     for (let run = 0; run < 300; run++) {
       const three = threeVerbs("sööma");
       expect(new Set(three).size).toBe(3);
       expect(three).toContain("sööma");
-      expect(three).toContain("jooma");
       places.add(three.indexOf("sööma"));
+      for (const each of three) if (each !== "sööma") others.add(each);
     }
     expect(places.size).toBe(3);
+    expect(others.size).toBe(ASKED.length - 1);
   });
 
-  it("asks six different verbs in a run", () => {
+  it("asks every verb once in a run", () => {
     const items = ASKED.map((ma) => ({ ma, pair: [ma, ma] as const }));
-    for (let run = 0; run < 50; run++) {
-      const six = eachPairFirst(items, items[0]).slice(0, 6);
-      expect(new Set(six.map((item) => item.ma)).size).toBe(6);
-    }
+    for (let run = 0; run < 50; run++)
+      expect(new Set(eachPairFirst(items, items[0]).map((item) => item.ma)).size).toBe(
+        ASKED.length,
+      );
   });
 });
 

@@ -92,48 +92,48 @@ function How({ ma }: { ma: Verb }) {
     case "olema":
       return (
         <Trans>
-          I form <span lang="et">olen</span>. Drop <End>-ema</End> and add <End>-la</End>.
+          The I form is <span lang="et">olen</span>. Drop <End>-ema</End> and add <End>-la</End>.
         </Trans>
       );
     case "tulema":
       return (
         <Trans>
-          I form <span lang="et">tulen</span>. Drop <End>-ema</End> and add <End>-la</End>.
+          The I form is <span lang="et">tulen</span>. Drop <End>-ema</End> and add <End>-la</End>.
         </Trans>
       );
     case "minema":
       return (
         <Trans>
-          I form <span lang="et">lähen</span>, a stem of its own. Drop <End>-ema</End> and add{" "}
-          <End>-na</End>.
+          The I form is <span lang="et">lähen</span>, with a stem of its own. Drop <End>-ema</End>{" "}
+          and add <End>-na</End>.
         </Trans>
       );
     case "tegema":
       return (
         <Trans>
-          I form <span lang="et">teen</span>. Drop <End>-ema</End>, turn g into h and add{" "}
+          The I form is <span lang="et">teen</span>. Drop <End>-ema</End>, turn g into h and add{" "}
           <End>-a</End>.
         </Trans>
       );
     case "nägema":
       return (
         <Trans>
-          I form <span lang="et">näen</span>. Drop <End>-ema</End>, turn g into h and add{" "}
+          The I form is <span lang="et">näen</span>. Drop <End>-ema</End>, turn g into h and add{" "}
           <End>-a</End>.
         </Trans>
       );
     case "sööma":
       return (
         <Trans>
-          I form <span lang="et">söön</span>. Drop <End>-ma</End>, turn <span lang="et">öö</span>{" "}
-          into <span lang="et">üü</span> and add <End>-a</End>.
+          The I form is <span lang="et">söön</span>. Drop <End>-ma</End>, turn{" "}
+          <span lang="et">öö</span> into <span lang="et">üü</span> and add <End>-a</End>.
         </Trans>
       );
     case "jooma":
       return (
         <Trans>
-          I form <span lang="et">joon</span>. Drop <End>-ma</End>, turn <span lang="et">oo</span>{" "}
-          into <span lang="et">uu</span> and add <End>-a</End>.
+          The I form is <span lang="et">joon</span>. Drop <End>-ma</End>, turn{" "}
+          <span lang="et">oo</span> into <span lang="et">uu</span> and add <End>-a</End>.
         </Trans>
       );
     default:
@@ -156,6 +156,7 @@ const GLOSSARY: Glossary = {
       ];
     }),
   ),
+  tahan: { en: msg`I want`, note: msg`From tahtma, to want.` },
   "ma tahan lugeda": {
     en: msg`I want to read.`,
     show: "Ma tahan lugeda.",
@@ -491,34 +492,26 @@ export const ASKED = [
 
 type Asked = (typeof ASKED)[number];
 
-/** The verb each one is likeliest to be taken for. */
-const NEAR: Record<Asked, Asked> = {
-  olema: "tulema",
-  tulema: "olema",
-  minema: "tulema",
-  tegema: "nägema",
-  nägema: "tegema",
-  sööma: "jooma",
-  jooma: "sööma",
-  ootama: "vaatama",
-  vaatama: "ootama",
-};
-
-/** The answer, the verb it's likeliest taken for, and one more at random, in random order. */
+/** The answer and two other verbs at random, in random order, so no set of options names it. */
 export function threeVerbs(answer: Asked): Verb[] {
-  const near = NEAR[answer];
-  const other = shuffle(ASKED.filter((each) => each !== answer && each !== near))[0] as Asked;
-  return shuffle([answer, near, other]);
+  return shuffle([answer, ...shuffle(ASKED.filter((each) => each !== answer)).slice(0, 2)]);
 }
 
 /** The first round's options, fixed so the page renders the same on the server. */
 const firstVerbs = (i: number): Verb[] => {
-  const answer = ASKED[i] as Asked;
-  const other = ASKED[(i + 4) % ASKED.length] as Asked;
-  const three = [answer, NEAR[answer], other];
+  const three = [0, 3, 6].map((step) => ASKED[(i + step) % ASKED.length] as Asked);
   const turn = i % 3;
   return [...three.slice(turn), ...three.slice(0, turn)];
 };
+
+/** Each form once before any comes back; every round but the first shuffles its three options. */
+export function heardRun<
+  T extends { pair: readonly [string, string]; options: readonly unknown[] },
+>(items: readonly T[], pinned?: T): T[] {
+  return eachPairFirst(items, pinned).map((item) =>
+    item === pinned ? item : { ...item, options: shuffle(item.options) },
+  );
+}
 
 type HeardItem = ChoiceItem & { said: string; pair: readonly [string, string] };
 type AskedItem = ChoiceItem & { said: string; pair: readonly [string, string] };
@@ -653,6 +646,7 @@ export function VerbiPohivormidLesson() {
   const present = lessonBySlug("olevik")?.n;
   const pronouns = lessonBySlug("mina-sina-tema")?.n;
   const commands = lessonBySlug("kaskiv")?.n;
+  const negation = lessonBySlug("eitus")?.n;
   const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
   const infinitives = at("Pean minema, tahan lugeda");
   const gradation = at("Jalg, jala");
@@ -757,10 +751,17 @@ export function VerbiPohivormidLesson() {
                 </p>
                 <p>
                   <Trans>
+                    Lessons {negation} and {commands} called <Word w="loen" /> the{" "}
+                    <span lang="et">ma</span> form, after <span lang="et">ma loen</span>. From here
+                    on it is the I form, and the <End>-ma</End> form is <Word w="lugema" />.
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>
                     <Word w="Lugema" /> and <Word w="lugeda" /> both translate as to read. Estonian
-                    uses each after different words: after <span lang="et">tahan</span>, I want,
-                    comes the <End>-da</End> form, <Word w="Ma tahan lugeda" />. Lesson{" "}
-                    {infinitives} shows which words take which.
+                    uses each after different words: after <Word w="tahan" />, I want, comes the{" "}
+                    <End>-da</End> form, <Word w="Ma tahan lugeda" />. Lesson {infinitives} shows
+                    which words take which.
                   </Trans>
                 </p>
                 <p>
@@ -839,7 +840,7 @@ export function VerbiPohivormidLesson() {
                   )
                 }
                 recall={(item) => ({ label: item.said, src: item.src })}
-                order={eachPairFirst}
+                order={heardRun}
                 round={(props) => <ChoiceRound {...props} />}
               />
             </>
@@ -915,11 +916,11 @@ export function VerbiPohivormidLesson() {
                 id="which-verb"
                 title={<Trans>Which verb is it?</Trans>}
                 items={askedItems}
-                rounds={6}
+                rounds={ASKED.length}
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>
-                      All six. You matched each <End>-da</End> form to its verb.
+                      All nine. You matched each <End>-da</End> form to its verb.
                     </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>

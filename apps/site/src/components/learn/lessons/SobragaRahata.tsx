@@ -286,7 +286,7 @@ function AsFlip() {
           title={<Trans>The job alone</Trans>}
           tip={
             <Trans>
-              After <span lang="et">on</span>, is, the job keeps its first form:{" "}
+              After <span lang="et">on</span>, is, the job keeps the form a dictionary lists first:{" "}
               <span lang="et">Jaan on kokk</span>.
             </Trans>
           }
@@ -864,7 +864,11 @@ export function SobragaRahataLesson() {
                   </Trans>
                 </p>
               </Prose>
-              <Match id="which-ending" title={<Trans>Which ending?</Trans>} pairs={matchPairs} />
+              <Match
+                id="which-ending"
+                title={<Trans>What does it mean?</Trans>}
+                pairs={matchPairs}
+              />
             </>
           ),
         },
@@ -892,8 +896,8 @@ export function SobragaRahataLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Now build the forms. Each word shows its genitive; type the form its cue asks
-                    for, such as by bus.
+                    Now build the forms. Each word comes with its genitive: add the ending its cue
+                    asks for.
                   </Trans>
                 </p>
               </Prose>

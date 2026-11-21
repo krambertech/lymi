@@ -1598,8 +1598,8 @@ msgstr "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 
-msgid "After <0>on</0>, is, the job keeps its first form: <1>Jaan on kokk</1>."
-msgstr "After <0>on</0>, is, the job keeps its first form: <1>Jaan on kokk</1>."
+msgid "After <0>on</0>, is, the job keeps the form a dictionary lists first: <1>Jaan on kokk</1>."
+msgstr "After <0>on</0>, is, the job keeps the form a dictionary lists first: <1>Jaan on kokk</1>."
 
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
@@ -7765,8 +7765,8 @@ msgstr "Nouns and cases"
 msgid "Now"
 msgstr "Now"
 
-msgid "Now build the forms. Each word shows its genitive; type the form its cue asks for, such as by bus."
-msgstr "Now build the forms. Each word shows its genitive; type the form its cue asks for, such as by bus."
+msgid "Now build the forms. Each word comes with its genitive: add the ending its cue asks for."
+msgstr "Now build the forms. Each word comes with its genitive: add the ending its cue asks for."
 
 msgid "Now hear a line and pick what it means. Listen to how the word ends."
 msgstr "Now hear a line and pick what it means. Listen to how the word ends."

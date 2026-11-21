@@ -1598,8 +1598,8 @@ msgstr "Після <0>ei</0> іде форма з ma без -n: <1>loen</1>, <2>
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "Після <0>ei</0> дієслово <1>olema</1> втрачає закінчення: <2>ei ole</2>."
 
-msgid "After <0>on</0>, is, the job keeps its first form: <1>Jaan on kokk</1>."
-msgstr "Після <0>on</0>, «є», професія стоїть у початковій формі: <1>Jaan on kokk</1>."
+msgid "After <0>on</0>, is, the job keeps the form a dictionary lists first: <1>Jaan on kokk</1>."
+msgstr "Після <0>on</0>, «є», професія стоїть у формі, яку словник дає першою: <1>Jaan on kokk</1>."
 
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "Після уроку на italki, Preply чи з приватним репетитором встав чат або сфотографуй нотатки. Lymi перетворить нові слова на картки, які ти повторюєш між уроками. Додати їх може й AI-асистент. Безкоштовно."
@@ -1734,7 +1734,7 @@ msgid "All of them, by ear."
 msgstr "Усі правильно, на слух."
 
 msgid "All of them, each ending on its genitive."
-msgstr "Усі: кожне закінчення на своєму родовому відмінку."
+msgstr "Усі: ти щоразу додаєш закінчення до родового відмінка."
 
 msgid "All of them, equally often"
 msgstr "Усі, однаково часто"
@@ -6096,7 +6096,7 @@ msgid "Is this like an Anki MCP server?"
 msgstr "Це як MCP-сервер для Anki?"
 
 msgid "It also says what someone was at a time: <0/>, as a child. In <1/>, <2>elas</2> is the past tense from lesson {past}."
-msgstr "Ще воно каже, ким людина була колись: <0/> — дитиною. У <1/> слово <2>elas</2> — минулий час з уроку {past}."
+msgstr "Ще воно каже, ким людина була колись: <0/> — дитиною. У реченні <1/> слово <2>elas</2> — минулий час з уроку {past}."
 
 msgid "It depends"
 msgstr "Залежить від обставин"
@@ -7765,8 +7765,8 @@ msgstr "Іменники та відмінки"
 msgid "Now"
 msgstr "Зараз"
 
-msgid "Now build the forms. Each word shows its genitive; type the form its cue asks for, such as by bus."
-msgstr "Тепер утвори форми. Біля кожного слова є його родовий відмінок; напиши форму, яку просить підказка, наприклад «автобусом»."
+msgid "Now build the forms. Each word comes with its genitive: add the ending its cue asks for."
+msgstr "Тепер утвори форми. Біля кожного слова стоїть його родовий відмінок: додай закінчення за підказкою."
 
 msgid "Now hear a line and pick what it means. Listen to how the word ends."
 msgstr "Тепер послухай рядок і обери, що він означає. Слухай, як закінчується слово."

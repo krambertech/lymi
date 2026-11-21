@@ -2,7 +2,6 @@ import { describe, expect, it } from "vitest";
 import {
   formMatches,
   insertAt,
-  letterChanges,
   lineReducer,
   matchDone,
   matchReducer,
@@ -172,33 +171,6 @@ describe("form", () => {
     expect(onlyMarksDiffer("ohtul", ["õhtul"])).toBe(true);
     expect(onlyMarksDiffer("käe", ["käe"])).toBe(false);
     expect(onlyMarksDiffer("kää", ["käe"])).toBe(false);
-  });
-
-  it("lights the letters that changed", () => {
-    expect(letterChanges("pood", "poes")).toEqual({
-      base: [
-        { text: "po", changed: false },
-        { text: "od", changed: true },
-      ],
-      form: [
-        { text: "po", changed: false },
-        { text: "es", changed: true },
-      ],
-    });
-    expect(letterChanges("tuba", "toas").form).toEqual([
-      { text: "t", changed: false },
-      { text: "o", changed: true },
-      { text: "a", changed: false },
-      { text: "s", changed: true },
-    ]);
-    expect(letterChanges("Tallinn", "Tallinnas").form).toEqual([
-      { text: "Tallinn", changed: false },
-      { text: "as", changed: true },
-    ]);
-    expect(letterChanges("jalg", "jala").base).toEqual([
-      { text: "jal", changed: false },
-      { text: "g", changed: true },
-    ]);
   });
 
   it("puts a letter at the caret, over any selection", () => {

@@ -6,6 +6,7 @@ import { clipUrl, KIT_DIALOGUE, KIT_PASSAGES } from "../../lib/learn/clips";
 import { Dialogue, type DialogueTurn } from "./Dialogue";
 import { type FormItem, FormRound, formRecall } from "./FormRound";
 import { type GapItem, GapPassage } from "./GapPassage";
+import { KitExplorers } from "./KitExplorers";
 import { LearnLayout } from "./LearnLayout";
 import { type Glossary, LessonContext } from "./lesson-context";
 import { Match, type MatchPair } from "./Match";
@@ -463,7 +464,7 @@ export function KitDemo() {
             <Part
               id="form"
               title={t`Make the form`}
-              use={t`A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer lights the letters that changed.`}
+              use={t`A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer shows the word turning into its form.`}
             >
               <Quiz
                 id="kit-form"
@@ -480,6 +481,7 @@ export function KitDemo() {
             >
               <Match id="kit-match" title={t`What does it mean?`} pairs={content.pairs} />
             </Part>
+            <KitExplorers Part={Part} />
           </div>
         </LearnLayout>
       </WordCards>

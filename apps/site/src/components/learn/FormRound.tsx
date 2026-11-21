@@ -1,15 +1,9 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ArrowRight, X } from "lucide-react";
 import { type ReactNode, useEffect, useRef, useState } from "react";
+import { morph } from "../../lib/learn/forms";
 import { playSound } from "../../lib/learn/player";
-import {
-  ESTONIAN_LETTERS,
-  formMatches,
-  insertAt,
-  letterChanges,
-  onlyMarksDiffer,
-  type Piece,
-} from "../../lib/learn/practice";
+import { ESTONIAN_LETTERS, formMatches, insertAt, onlyMarksDiffer } from "../../lib/learn/practice";
 import { Button } from "../Button";
 import { Answer, Feedback, type RoundProps } from "./Quiz";
 import { PlayButton } from "./Sound";
@@ -35,42 +29,47 @@ export interface FormItem {
   explain?: ReactNode;
 }
 
-/** A word with the letters a form changed lit, or the letters the base lost struck. */
-function Pieces({ pieces, lit }: { pieces: readonly Piece[]; lit: "lit" | "gone" }) {
-  return pieces.map((piece, i) =>
-    piece.changed ? (
-      // biome-ignore lint/suspicious/noArrayIndexKey: the pieces of one word, in order
-      <span key={i} className={lit === "lit" ? "learn-lit" : "learn-gone"}>
-        {piece.text}
-      </span>
-    ) : (
-      // biome-ignore lint/suspicious/noArrayIndexKey: as above
-      <span key={i}>{piece.text}</span>
-    ),
-  );
-}
-
-/** pood → poes, the changed letters lit, with the form's clip to hear. */
+/**
+ * The word turning into its form, as `Morph` draws it: dropped letters struck, added ones
+ * underlined. Inside the marked card the added letters stay in ink, not the stage's hue.
+ */
 function Change({ base, form, src }: { base: string; form: string; src?: string | undefined }) {
   const { t } = useLingui();
-  const changes = letterChanges(base, form);
+  const parts = morph(base, form);
   return (
-    <p className="flex flex-wrap items-center gap-x-3 gap-y-1">
-      <span className="sr-only">{t`${base} becomes ${form}`}</span>
+    <p className="flex flex-wrap items-center gap-3">
       <span
-        aria-hidden="true"
         lang="et"
-        className="flex items-center gap-3 text-3xl font-semibold tracking-tight"
+        data-play=""
+        className="learn-morph learn-morph-ink min-w-0 text-3xl/tight font-semibold tracking-tight wrap-anywhere"
       >
-        <span className="text-ink-secondary">
-          <Pieces pieces={changes.base} lit="gone" />
-        </span>
-        <ArrowRight className="size-5 text-ink-muted" strokeWidth={2.25} />
-        <span>
-          <Pieces pieces={changes.form} lit="lit" />
+        <span className="sr-only">{t`${base} becomes ${form}`}</span>
+        <span aria-hidden="true">
+          {parts.map((part, i) =>
+            part.kind === "added" ? (
+              // biome-ignore lint/suspicious/noArrayIndexKey: a word's parts never reorder
+              <span key={i} data-kind="added">
+                <span>{part.text}</span>
+              </span>
+            ) : (
+              // biome-ignore lint/suspicious/noArrayIndexKey: a word's parts never reorder
+              <span key={i} data-kind={part.kind}>
+                {part.text}
+              </span>
+            ),
+          )}
         </span>
       </span>
-      {src && <PlayButton src={src} label={t`Play ${form}`} />}
+      {src && (
+        <PlayButton
+          src={src}
+          label={
+            <Trans>
+              Play <span lang="et">{form}</span>
+            </Trans>
+          }
+        />
+      )}
     </p>
   );
 }

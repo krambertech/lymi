@@ -13,11 +13,29 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+msgid "-b now; in the past just -s."
+msgstr "-b зараз; у минулому лише -s."
+
+msgid "-d now, -sid in the past."
+msgstr "-d зараз, -sid у минулому."
+
+msgid "-me now, -sime in the past."
+msgstr "-me зараз, -sime у минулому."
+
+msgid "-n now, -sin in the past."
+msgstr "-n зараз, -sin у минулому."
+
 msgid "-s or -l?"
 msgstr "-s чи -l?"
 
+msgid "-te now, -site in the past."
+msgstr "-te зараз, -site у минулому."
+
 msgid "-teist or -kümmend?"
 msgstr "-teist чи -kümmend?"
+
+msgid "-vad now; -sid in the past, as for sa."
+msgstr "-vad зараз; -sid у минулому, як для sa."
 
 msgid ", in the right group"
 msgstr ", у правильній групі"
@@ -94,6 +112,11 @@ msgstr "{0, plural, one {Повтори всі #} few {Повтори всі #} 
 msgid "{0, plural, one {Your deck} other {Your decks}}"
 msgstr "{0, plural, one {Твоя колода} few {Твої колоди} many {Твої колоди} other {Твої колоди}}"
 
+#. placeholder {0}: before.word
+#. placeholder {1}: step.word
+msgid "{0} becomes {1}"
+msgstr "{0} стає {1}"
+
 #. placeholder {0}: i18n.number(IMPORT_FROM)
 msgid "{0} cards, history kept"
 msgstr "{0} карток, історію збережено"
@@ -112,6 +135,14 @@ msgstr "{0} з {1} сьогодні"
 #. placeholder {1}: g.when
 msgid "{0}, next in {1}"
 msgstr "{0}, наступне через {1}"
+
+#. placeholder {0}: place.meaning
+msgid "{0}, right answer"
+msgstr "{0}, правильна відповідь"
+
+#. placeholder {0}: place.meaning
+msgid "{0}, your answer"
+msgstr "{0}, твоя відповідь"
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Додано # картку} few {Додано # картки} many {Додано # карток} other {Додано # картки}}"
@@ -784,6 +815,12 @@ msgstr "Поки ти не знаєш слово, картка показує й
 msgid "A card shows pinyin over its word until the card is Known. In the examples on your cards, pinyin disappears from each character you’ve learned, but stays where that character has a different sound."
 msgstr "Картка показує піньїнь над своїм словом, доки її не засвоєно. У прикладах на твоїх картках піньїнь зникає з кожного ієрогліфа, який ти вже знаєш, але лишається там, де цей ієрогліф звучить інакше."
 
+msgid "A cat and a cardboard box"
+msgstr "Кіт і картонна коробка"
+
+msgid "A cat and a house"
+msgstr "Кіт і будинок"
+
 msgid "A cell dividing in two"
 msgstr "Поділ клітини на дві"
 
@@ -845,6 +882,9 @@ msgstr "Цифра після десятків — окреме слово: <0/>
 msgid "A double letter is longer, and it makes a different word."
 msgstr "Подвоєна літера звучить довше, і з нею виходить інше слово."
 
+msgid "A drawing on the tray: pressing a place, on a key or on the drawing, moves the cat there and plays the sentence."
+msgstr "Малюнок на підкладці: натискання на місце, на клавіші чи на малюнку, переносить туди кота й програє речення."
+
 msgid "A duck asleep in a POT"
 msgstr "Качка застрягла в ПАТОці"
 
@@ -871,6 +911,9 @@ msgstr "Флешкартки для всього, що ти вчиш."
 
 msgid "A flat plate on a door says push; a handle says pull."
 msgstr "Гладка накладка на дверях підказує «штовхай», ручка — «тягни»."
+
+msgid "a foot"
+msgstr "нога"
 
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "Безкоштовна колода містить кожен дорожній знак із правил: за малюнком, із польською назвою та номером."
@@ -1038,6 +1081,9 @@ msgstr "Записка від Каті"
 msgid "A notes field on each card"
 msgstr "Поле нотаток на кожній картці"
 
+msgid "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
+msgstr "Відмінки іменника на підкладці: торкнися форми, щоб її почути, закінчення підсвічене. Рядки можуть починатися з питальних слів, а один рядок чи стовпець можна виділити. На телефоні рядки стають списком."
+
 msgid "A page that isn’t where the link says it is"
 msgstr "Сторінка, якої немає там, куди веде посилання"
 
@@ -1095,6 +1141,12 @@ msgstr "Питальне слово стоїть першим, а те, про �
 msgid "A question you got wrong"
 msgstr "Питання з помилкою"
 
+msgid "A quiz round on a scene: hear a sentence, then tap the place on the drawing."
+msgstr "Раунд вікторини на сцені: послухай речення, а потім торкнися місця на малюнку."
+
+msgid "a room"
+msgstr "кімната"
+
 msgid "A round loaf of bread"
 msgstr "Кругла хлібина"
 
@@ -1103,6 +1155,9 @@ msgstr "Свій розклад для кожної картки"
 
 msgid "A score for one attempt"
 msgstr "Бали за одну спробу"
+
+msgid "a shop"
+msgstr "крамниця"
 
 msgid "A shop’s opening hours"
 msgstr "Години роботи магазину"
@@ -1164,11 +1219,14 @@ msgstr "Зачіпка, а не відповідь."
 msgid "A weekly check-in"
 msgstr "Підсумок тижня"
 
-msgid "A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer lights the letters that changed."
-msgstr "Слово й підказка: введи форму, з клавішами õ ä ö ü š ž, або вибери її. Відповідь підсвічує літери, що змінилися."
+msgid "A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer shows the word turning into its form."
+msgstr "Слово й підказка: введи форму, з клавішами õ ä ö ü š ž, або вибери її. Відповідь показує, як слово стає формою."
 
 msgid "A word list from a spreadsheet"
 msgstr "Список слів із таблиці"
+
+msgid "A word turning into its forms: the letters it drops are struck, the ones it gains are lit."
+msgstr "Слово перетворюється на свої форми: літери, які воно втрачає, закреслені, а нові підсвічені."
 
 msgid "A year has 365 days."
 msgstr "У році 365 днів."
@@ -2115,6 +2173,9 @@ msgstr "Перед іспитом з водіння"
 
 msgid "Began in 1618 with the <0>Defenestration of Prague</0>."
 msgstr "Почалася 1618 року з <0>Празької дефенестрації</0>."
+
+msgid "behind"
+msgstr "позаду"
 
 msgid "belongs in"
 msgstr "має бути в"
@@ -3538,6 +3599,9 @@ msgstr "Будь-які. Кожна колода — або спрощені, а
 msgid "El or la, on every noun."
 msgstr "El або la на кожному іменнику."
 
+msgid "Elative"
+msgstr "Елатив"
+
 msgid "eleven"
 msgstr "одинадцять"
 
@@ -4126,12 +4190,18 @@ msgstr "забуто 4×"
 msgid "Forgot, Hard, Good or Easy"
 msgstr "«Не пам’ятаю», «Важко», «Добре» або «Легко»"
 
+msgid "Form"
+msgstr "Форма"
+
 msgctxt "pronoun form"
 msgid "Form"
 msgstr "Форма"
 
 msgid "Format from 11 April 2026"
 msgstr "Формат від 11 квітня 2026 року"
+
+msgid "Forms of maja"
+msgstr "Форми maja"
 
 msgid "four"
 msgstr "чотири"
@@ -4366,6 +4436,9 @@ msgstr "Повністю офлайн на всіх пристроях"
 
 msgid "Furigana, pinyin, stress marks."
 msgstr "Фурігана, піньїнь, наголоси."
+
+msgid "Future"
+msgstr "Майбутній"
 
 msgid "Future, “I”"
 msgstr "Майбутній час, «я»"
@@ -4612,6 +4685,9 @@ msgstr "Grok Bot працює на власному хмарному комп’
 msgid "habeas corpus"
 msgstr "habeas corpus"
 
+msgid "hakkama, now"
+msgstr "hakkama, зараз"
+
 msgid "half"
 msgstr "пів, половина"
 
@@ -4713,6 +4789,9 @@ msgstr "Він працює"
 
 msgid "He writes"
 msgstr "Він пише"
+
+msgid "he, she"
+msgstr "він, вона"
 
 msgid "He’s a doctor"
 msgstr "Він лікар"
@@ -5171,6 +5250,9 @@ msgstr "Я їжджу на роботу *поїздом*."
 msgid "I got a *call* from my mum."
 msgstr "Мені *дзвонила* мама."
 
+msgid "I had already eaten."
+msgstr "Я тоді вже поїв."
+
 msgid "I have a *dog*."
 msgstr "У мене є *собака*."
 
@@ -5179,6 +5261,9 @@ msgstr "У мене рюкзак на *спині*."
 
 msgid "I have a Japanese *friend*."
 msgstr "У мене є *друг* — японець."
+
+msgid "I have already eaten."
+msgstr "Я вже поїв."
 
 msgid "I have an *appointment* tomorrow."
 msgstr "Завтра в мене *запис*."
@@ -5339,6 +5424,9 @@ msgstr "Я вдома."
 msgid "I’m at work."
 msgstr "Я на роботі."
 
+msgid "I’m eating now."
+msgstr "Зараз я їм."
+
 msgid "I’m from Ukraine."
 msgstr "Я з України."
 
@@ -5359,6 +5447,9 @@ msgstr "На вихідних я йду в гості до *друга*."
 
 msgid "I’m going to Beijing *tomorrow*."
 msgstr "*Завтра* я їду до Пекіна."
+
+msgid "I’m going to eat."
+msgstr "Я збираюся їсти."
 
 msgid "I’m going to the *bank* to get money."
 msgstr "Я йду в *банк* зняти гроші."
@@ -5459,6 +5550,9 @@ msgstr "Якщо колода твого курсу оновлюється че�
 msgid "If your teacher assigns sets and runs Quizlet Live in class, stay where the class is."
 msgstr "Якщо вчитель задає набори й проводить Quizlet Live на уроках, залишайся там, де весь клас."
 
+msgid "Illative"
+msgstr "Ілатив"
+
 msgid "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 msgstr "Умовний графік пам’яті за тридцять днів. Без повторень знання поступово згасає. Після повторень на 3-й, 8-й і 19-й день воно відновлюється, а з довшими перервами згасає повільніше."
 
@@ -5507,6 +5601,12 @@ msgstr "У питанні з kas голос наприкінці знижуєт�
 msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
 msgstr "У проєкті з файлами курсу Claude може зібрати одну колоду з розділом на кожну лекцію."
 
+msgid "in a room"
+msgstr "у кімнаті"
+
+msgid "in a shop"
+msgstr "у крамниці"
+
 msgid "In an office"
 msgstr "В офісі"
 
@@ -5533,6 +5633,9 @@ msgstr "У прикладах фуриґана лишається над сло�
 
 msgid "in Finland"
 msgstr "у Фінляндії"
+
+msgid "in front"
+msgstr "попереду"
 
 msgid "In Gemini CLI, /mcp shows Lymi connected. Asked to add the terms from a README to the Kubernetes deck, Gemini uses Lymi and adds 11 cards."
 msgstr "У Gemini CLI команда /mcp показує, що Lymi підключено. Gemini отримує прохання додати терміни з README в колоду «Kubernetes», використовує Lymi й додає 11 карток."
@@ -5603,8 +5706,17 @@ msgstr "Зрештою"
 msgid "In the Grok Bot app, open Connect apps and choose Add a custom connector. Name it Lymi, pick Remote HTTPS and paste this address."
 msgstr "У застосунку Grok Bot відкрий Connect apps і вибери Add a custom connector. Назви його Lymi, вибери Remote HTTPS і встав цю адресу."
 
+msgid "in the house"
+msgstr "у будинку"
+
+msgid "In the house: -s, and -des for more than one."
+msgstr "У будинку: -s, а для кількох -des."
+
 msgid "In the order you learn them, one section at a time."
 msgstr "У тому порядку, в якому ти їх вчиш: розділ за розділом."
+
+msgid "In the past"
+msgstr "У минулому"
 
 msgid "In the place"
 msgstr "Де?"
@@ -5636,11 +5748,17 @@ msgstr "У чому, у що, з чого"
 msgid "In, on and at in Estonian: -s and -l"
 msgstr "«В» і «на» естонською: -s і -l"
 
+msgid "Inessive"
+msgstr "Інесив"
+
 msgid "Infinitives: -ma and -da"
 msgstr "Інфінітиви: -ma і -da"
 
 msgid "Injured at the elbow; weak grip and numb little finger"
 msgstr "Ушкоджується біля ліктя; слабкий хват і оніміння мізинця"
+
+msgid "inside"
+msgstr "всередині"
 
 msgid "Inside a building, a town or a country: -s."
 msgstr "Усередині будівлі, у місті чи країні: -s."
@@ -5665,6 +5783,12 @@ msgstr "Mac з Intel?"
 
 msgid "Intel Mac? Download for Intel"
 msgstr "Mac з Intel? Завантажити версію для Intel"
+
+msgid "into the house"
+msgstr "у будинок"
+
+msgid "Into the house. Majja doubles the j; majasse means the same."
+msgstr "У будинок. У majja j подвоюється; majasse означає те саме."
 
 msgid "Invite"
 msgstr "Запросити"
@@ -6411,6 +6535,9 @@ msgstr "Схоже на знайоме. Означає інше."
 msgid "Looks like"
 msgstr "Схоже на"
 
+msgid "Lugema now and in the past"
+msgstr "Lugema зараз і в минулому"
+
 msgid "Lymi · Flashcard app with spaced repetition"
 msgstr "Lymi · Флеш-картки з інтервальним повторенням"
 
@@ -7086,6 +7213,9 @@ msgstr "Наступне повторення через {0}"
 msgid "Next time, you can peek at it before the answer."
 msgstr "Наступного разу зможеш підглянути її до відповіді."
 
+msgid "next to"
+msgstr "поруч"
+
 msgid "Nice to meet you"
 msgstr "Приємно познайомитися"
 
@@ -7324,11 +7454,20 @@ msgstr "іменник"
 msgid "Nouns and cases"
 msgstr "Іменники та відмінки"
 
+msgid "Now"
+msgstr "Зараз"
+
 msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
 msgstr "Тепер субота, і ось твій план. Встав у кожен пропуск слово: форму <0/>, дієслово з потрібним закінченням, <1/> або форму слова після числа."
 
+msgid "Now the stem is loe-, in the past luge-."
+msgstr "Зараз основа loe-, у минулому luge-."
+
 msgid "Now you ask. Pick the question that fits what Mari just said. Ask why with <0/>, and the answer starts with <1/>, because."
 msgstr "Тепер питаєш ти. Обирай запитання, яке пасує до того, що Марі щойно сказала. «Чому» — це <0/>, а відповідь починається з <1/>, «бо»."
+
+msgid "now, for ma"
+msgstr "зараз, для ma"
 
 msgid "Number"
 msgstr "Число"
@@ -7365,6 +7504,18 @@ msgstr "з 40 балів, щоб скласти говоріння"
 
 msgid "of 70 points to pass reading, writing and listening"
 msgstr "з 70 балів, щоб скласти читання, письмо й аудіювання"
+
+msgid "of a foot"
+msgstr "ноги"
+
+msgid "of a room"
+msgstr "кімнати"
+
+msgid "of a shop"
+msgstr "крамниці"
+
+msgid "Of the house. For one it looks like the base form."
+msgstr "Будинку. В однині збігається з початковою формою."
 
 msgid "of the points to pass, at every level"
 msgstr "балів для складання на кожному рівні"
@@ -7406,8 +7557,17 @@ msgstr "Раніше"
 msgid "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
 msgstr "Від olema буде <0>ei ole</0>, або одним словом <1>pole</1>."
 
+msgid "olema, now"
+msgstr "olema, зараз"
+
+msgid "olema, past"
+msgstr "olema, минулий"
+
 msgid "Olema, to be"
 msgstr "Olema, бути"
+
+msgid "on"
+msgstr "на"
 
 msgid "On a door or a sign."
 msgstr "На дверях або на табличці."
@@ -7474,6 +7634,9 @@ msgstr "Щойно ти додаси колоду, Lymi плануватиме �
 
 msgid "one"
 msgstr "один"
+
+msgid "One"
+msgstr "Один"
 
 msgid "One card’s reviews over seven weeks"
 msgstr "Повторення однієї картки за сім тижнів"
@@ -7664,6 +7827,12 @@ msgstr "Наша *команда* виграла!"
 msgid "Out loud, on a walk"
 msgstr "Уголос, на прогулянці"
 
+msgid "out of the house"
+msgstr "з будинку"
+
+msgid "Out of the house: -st, and -dest for more than one."
+msgstr "З будинку: -st, а для кількох -dest."
+
 msgid "Own things, count them and put them somewhere. Stems change first, then the genitive, which most other cases build on."
 msgstr "Мати речі, лічити їх і кудись класти. Спершу змінюються основи, потім генітив, на якому будується більшість інших відмінків."
 
@@ -7697,6 +7866,9 @@ msgstr "Пярну має <0>-s</0>: <1>Pärnus</1>."
 msgid "Pärnu, a town by the sea"
 msgstr "Пярну, місто біля моря"
 
+msgid "Part of something, and after numbers. Maju swaps the a for -u."
+msgstr "Частина чогось, а також після числівників. У maju a змінюється на -u."
+
 msgid "Participles"
 msgstr "Дієприкметники"
 
@@ -7712,14 +7884,23 @@ msgstr "Поширення частинок від вищої концентра
 msgid "Particles spreading from where there are more of them to where there are fewer"
 msgstr "Рух частинок звідти, де їх більше, туди, де їх менше"
 
+msgid "partitive"
+msgstr "партитив"
+
 msgid "Partitive"
 msgstr "Партитив"
 
 msgid "parts: reading, writing, listening and speaking"
 msgstr "частини: читання, письмо, аудіювання й говоріння"
 
+msgid "Past"
+msgstr "Минулий"
+
 msgid "Past tense"
 msgstr "Минулий час"
+
+msgid "past, for ma"
+msgstr "минулий, для ma"
 
 msgid "Paste it into Lymi"
 msgstr "Встав у Lymi"
@@ -7908,9 +8089,6 @@ msgstr "Відтворити {ask}"
 msgid "Play {digits}"
 msgstr "Відтворити {digits}"
 
-msgid "Play {form}"
-msgstr "Відтворити {form}"
-
 msgid "Play {n}"
 msgstr "Відтворити {n}"
 
@@ -7934,6 +8112,15 @@ msgstr "Відтворити {text}"
 
 msgid "Play {word}"
 msgstr "Відтворити {word}"
+
+#. placeholder {0}: example.sentence
+#. placeholder {0}: shown.sentence
+#. placeholder {0}: step.word
+msgid "Play <0>{0}</0>"
+msgstr "Відтворити <0>{0}</0>"
+
+msgid "Play <0>{form}</0>"
+msgstr "Відтворити <0>{form}</0>"
 
 msgid "Play each number twice before you type."
 msgstr "Прослухай кожне число двічі, перш ніж писати."
@@ -7974,6 +8161,9 @@ msgstr "Будь ласка; ось, тримай"
 msgid "Please; here you go; you’re welcome"
 msgstr "Будь ласка; ось, тримай; нема за що"
 
+msgid "Pluperfect"
+msgstr "Давноминулий"
+
 msgid "Plural"
 msgstr "Множина"
 
@@ -7985,6 +8175,9 @@ msgstr "Партитив множини"
 
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP і PRINCE2: процеси, ролі й термінологія."
+
+msgid "Poe- plus -s: in a shop."
+msgstr "Poe- плюс -s: у крамниці."
 
 msgid "points in all, at either level"
 msgstr "балів загалом на кожному з рівнів"
@@ -8108,6 +8301,12 @@ msgstr "Віддавай перевагу поясненню з найменшо
 
 msgid "Pregnant"
 msgstr "Вагітна"
+
+msgid "Present"
+msgstr "Теперішній"
+
+msgid "Present perfect"
+msgstr "Перфект"
 
 msgid "Present tense"
 msgstr "Теперішній час"
@@ -8750,6 +8949,15 @@ msgstr "Заперечення в минулому"
 
 msgid "Saying where: -s and -l"
 msgstr "Як сказати, де: закінчення -s і -l"
+
+msgid "Scene"
+msgstr "Сцена"
+
+msgid "Scene quiz"
+msgstr "Вікторина на сцені"
+
+msgid "Scene with movement"
+msgstr "Сцена з рухом"
 
 msgid "Scheduling"
 msgstr "Планування повторень"
@@ -9554,6 +9762,12 @@ msgstr "Ta — це він або вона: «Він Яан»."
 msgid "table"
 msgstr "стіл"
 
+msgid "Table of forms"
+msgstr "Таблиця форм"
+
+msgid "Table of forms, a verb"
+msgstr "Таблиця форм дієслова"
+
 msgid "Tag cards by chapter, pick one tag and review just those cards."
 msgstr "Познач картки тегами за розділами, обери один тег і повтори лише ці картки."
 
@@ -9644,6 +9858,9 @@ msgstr "Натисни на день"
 msgid "Tap a filled gap to take its word back."
 msgstr "Торкнися заповненого пропуску, щоб забрати слово."
 
+msgid "Tap a form"
+msgstr "Торкнися форми"
+
 msgid "Tap a letter"
 msgstr "Натисни на літеру"
 
@@ -9653,8 +9870,14 @@ msgstr "Торкнись місця"
 msgid "Tap a place to hear the answer."
 msgstr "Торкнись місця, щоб почути відповідь."
 
+msgid "Tap a place to send the cat there and hear where it is."
+msgstr "Торкнися місця, щоб відправити туди кота й почути, де він."
+
 msgid "Tap a question word"
 msgstr "Натисни питальне слово"
+
+msgid "Tap a tense"
+msgstr "Торкнися часу"
 
 msgid "Tap a vowel"
 msgstr "Натисни на голосну"
@@ -9770,6 +9993,12 @@ msgstr "за десять четверта, 3:50"
 msgid "Tens and ones are separate words: <0>kakskümmend üks</0>."
 msgstr "Десятки й одиниці — окремі слова: <0>kakskümmend üks</0>."
 
+msgid "Tenses of sööma"
+msgstr "Часи sööma"
+
+msgid "Tenses on a line, past to future. Each point plays an example and shows how its verb is built; a band shows what a tense reaches to."
+msgstr "Часи на лінії, від минулого до майбутнього. Кожна точка програє приклад і показує, як побудоване дієслово; смуга показує, до чого час сягає."
+
 msgid "Term"
 msgstr "Термін"
 
@@ -9841,6 +10070,12 @@ msgstr "Це про те, котра година. Марі спитала, як
 
 msgid "The -des and -mata forms"
 msgstr "Форми на -des і -mata"
+
+msgid "the -ma form"
+msgstr "форма на -ma"
+
+msgid "the -nud form"
+msgstr "форма на -nud"
 
 msgid "The {name} app icon behind Lymi’s"
 msgstr "Іконка застосунку {name} позаду іконки Lymi"
@@ -9941,6 +10176,12 @@ msgstr "App Store"
 msgid "The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend."
 msgstr "У sõpra b стає p: ma ootan sõpra, я чекаю на друга."
 
+msgid "The b drops and the u becomes o."
+msgstr "b зникає, а u стає o."
+
+msgid "The base form. More than one adds -d."
+msgstr "Початкова форма. Для кількох додається -d."
+
 msgid "The basics"
 msgstr "Основи"
 
@@ -9962,8 +10203,35 @@ msgstr "Картки з цієї сторінки з’являться тут."
 msgid "The castle stands on a hill."
 msgstr "Замок стоїть на горі."
 
+msgid "The cat comes out of the house."
+msgstr "Кіт виходить з будинку."
+
+msgid "The cat goes into the house."
+msgstr "Кіт заходить у будинок."
+
 msgid "The cat is asleep on the *rug*."
 msgstr "Кіт спить на *килимі*."
+
+msgid "The cat is behind the box."
+msgstr "Кіт за коробкою."
+
+msgid "The cat is in front of the box."
+msgstr "Кіт перед коробкою."
+
+msgid "The cat is in the house."
+msgstr "Кіт у будинку."
+
+msgid "The cat is inside the box."
+msgstr "Кіт у коробці."
+
+msgid "The cat is next to the box."
+msgstr "Кіт біля коробки."
+
+msgid "The cat is on the box."
+msgstr "Кіт на коробці."
+
+msgid "The cat is under the box."
+msgstr "Кіт під коробкою."
 
 msgid "The children are already *asleep*."
 msgstr "Діти вже *сплять*."
@@ -10103,6 +10371,15 @@ msgstr "Повний каталог BAMF: 300 загальних питань і
 msgid "The future"
 msgstr "Майбутнє"
 
+msgid "The g comes back in the partitive."
+msgstr "У партитиві g повертається."
+
+msgid "The g drops and an a comes in."
+msgstr "g зникає, а з’являється a."
+
+msgid "The g drops and the u becomes o: loe-, plus -n for ma."
+msgstr "g зникає, а u стає o: loe-, плюс -n для ma."
+
 msgid "The gaps grow as you learn."
 msgstr "Що краще знаєш, то довші паузи."
 
@@ -10187,6 +10464,9 @@ msgstr "Ліхтар і логотип Lymi над англійським нап
 msgid "The Lymi plugin gives your assistant a skill for each. It installs in Claude, Claude Code, Codex, Cursor and Gemini CLI."
 msgstr "Плагін Lymi дає асистентові навичку для кожної. Він встановлюється в Claude, Claude Code, Codex, Cursor і Gemini CLI."
 
+msgid "The m becomes d: -ma turns into -da."
+msgstr "m стає d: -ma перетворюється на -da."
+
 msgid "the Mochi docs"
 msgstr "документація Mochi"
 
@@ -10219,6 +10499,9 @@ msgstr "довідковий центр Noji"
 
 msgid "The object: whole or part"
 msgstr "Додаток: ціле чи частина"
+
+msgid "The od drops and an e comes in: poe- carries most forms."
+msgstr "od зникає, а з’являється e: від poe- утворюється більшість форм."
 
 msgid "The old *castle* on the hill."
 msgstr "Старий *замок* на горі."
@@ -10343,8 +10626,14 @@ msgstr "Однаково в обох"
 msgid "The same kanji sounds different in different words. Lymi shows the reading over the kanji until you know the word, then takes it away so you learn to read it on your own."
 msgstr "Той самий кандзі в різних словах звучить по-різному. Lymi показує читання над кандзі, доки ти не знаєш слово, а потім прибирає його, і далі ти читаєш без підказки."
 
+msgid "The same table for a verb: persons down, tenses across."
+msgstr "Та сама таблиця для дієслова: особи в рядках, часи в стовпцях."
+
 msgid "The same topic in other languages"
 msgstr "Та сама тема іншими мовами"
+
+msgid "The same with a house: the cat walks in, sits inside, and comes out."
+msgstr "Те саме з будинком: кіт заходить, сидить усередині й виходить."
 
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "Одне слово і для коханої людини, і для ціни, яку не хочеться платити."
@@ -10733,6 +11022,9 @@ msgstr "Вирази часу: коли що відбувається"
 msgid "Time for the level to halve"
 msgstr "Час, за який рівень знижується вдвічі"
 
+msgid "Timeline"
+msgstr "Лінія часу"
+
 msgid "Times"
 msgstr "Час"
 
@@ -10931,6 +11223,9 @@ msgstr "читати"
 msgid "To read"
 msgstr "Читати"
 
+msgid "to read, da-form"
+msgstr "читати, форма на -da"
+
 msgid "To rent"
 msgstr "Орендувати"
 
@@ -10997,6 +11292,9 @@ msgstr "працювати"
 msgid "To work"
 msgstr "Працювати"
 
+msgid "Toa- plus -s: in a room."
+msgstr "Toa- плюс -s: у кімнаті."
+
 msgid "today"
 msgstr "сьогодні"
 
@@ -11026,6 +11324,9 @@ msgstr "завтра"
 
 msgid "Tomorrow"
 msgstr "Завтра"
+
+msgid "Tomorrow I’ll eat at home."
+msgstr "Завтра я їстиму вдома."
 
 msgid "Tomorrow I’m getting up early for work."
 msgstr "Завтра я рано встаю на роботу."
@@ -11313,6 +11614,9 @@ msgstr "Üksteist — це 11:00, а зараз пів на одинадцяту
 
 msgid "uncle"
 msgstr "дядько"
+
+msgid "under"
+msgstr "під"
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершені справи тримаються в пам’яті краще за завершені"
@@ -11839,6 +12143,9 @@ msgstr "Де Яан сьогодні?"
 msgid "Where is Mari at twelve tomorrow?"
 msgstr "Де Марі завтра о дванадцятій?"
 
+msgid "Where is the cat?"
+msgstr "Де кіт?"
+
 msgid "Where Lymi does more"
 msgstr "У чому сильніший Lymi"
 
@@ -11850,6 +12157,12 @@ msgstr "З чого почати?"
 
 msgid "Where someone goes: tule siia, come here."
 msgstr "Куди: tule siia, «іди сюди»."
+
+msgid "Where the cat goes"
+msgstr "Куди йде кіт"
+
+msgid "Where the cat is"
+msgstr "Де кіт"
 
 msgid "Where will he wait for you?"
 msgstr "Де він на тебе чекатиме?"
@@ -12079,6 +12392,9 @@ msgstr "Слово → значення"
 msgid "Word and example recordings"
 msgstr "Записи слова й прикладу"
 
+msgid "Word changes"
+msgstr "Як змінюється слово"
+
 msgid "Word for word: “good time”."
 msgstr "Дослівно: «добрий час»."
 
@@ -12102,6 +12418,9 @@ msgstr "Пари слів"
 
 msgid "Word tiles tapped into order after hearing the sentence or reading its meaning; every right order counts, and the sentence plays after Check."
 msgstr "Плитки слів у правильному порядку: спершу речення звучить або видно його значення; зараховується кожен правильний порядок, а після перевірки речення звучить."
+
+msgid "Words"
+msgstr "Слова"
 
 msgid "Words and phrases from lessons, chats and books."
 msgstr "Слова й фрази з уроків, розмов і книжок."
@@ -12350,6 +12669,9 @@ msgstr "Так. Репетитор може створити колоду й н�
 msgid "yesterday"
 msgstr "учора"
 
+msgid "Yesterday I ate at home."
+msgstr "Учора я їв удома."
+
 msgid "Yesterday was a rest day."
 msgstr "Учора був день відпочинку."
 
@@ -12494,6 +12816,9 @@ msgstr "Ти хочеш тримати все на власному комп’�
 msgid "You wrote this"
 msgstr "Це написано тобою"
 
+msgid "you, more than one"
+msgstr "ви"
+
 msgid "You, the one speaking."
 msgstr "Ти — той, хто говорить."
 
@@ -12506,8 +12831,14 @@ msgstr "ти"
 msgid "You’ll hear a question with it, and an answer."
 msgstr "Почуєш питання з ним і відповідь."
 
+msgid "You’ll hear an example and see how its verb is built."
+msgstr "Почуєш приклад і побачиш, як побудоване дієслово."
+
 msgid "You’ll hear elama with it and who it’s for."
 msgstr "Почуєш elama з ним і дізнаєшся, для кого воно."
+
+msgid "You’ll hear it and read what its ending does."
+msgstr "Почуєш її і прочитаєш, що робить закінчення."
 
 msgid "You’ll hear it in a sentence."
 msgstr "Почуєш його в реченні."

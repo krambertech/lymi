@@ -238,55 +238,6 @@ export function onlyMarksDiffer(value: string, answers: readonly string[]): bool
   return !formMatches(value, answers) && answers.some((answer) => bare(answer) === bare(value));
 }
 
-export interface Piece {
-  text: string;
-  changed: boolean;
-}
-
-/**
- * Which letters changed between a word and its form, from the longest run of letters they share in
- * order: pood → poes lights `od` and `es`, tuba → toas lights `ub` and `o`, `s`.
- */
-export function letterChanges(base: string, form: string): { base: Piece[]; form: Piece[] } {
-  const a = [...base];
-  const b = [...form];
-  const same = (x: string | undefined, y: string | undefined) =>
-    x !== undefined && y !== undefined && x.toLowerCase() === y.toLowerCase();
-  // lcs[i][j]: the longest shared run of a[i..] and b[j..].
-  const lcs = Array.from({ length: a.length + 1 }, () => new Array<number>(b.length + 1).fill(0));
-  for (let i = a.length - 1; i >= 0; i--)
-    for (let j = b.length - 1; j >= 0; j--) {
-      const row = lcs[i] as number[];
-      const below = lcs[i + 1] as number[];
-      row[j] = same(a[i], b[j])
-        ? (below[j + 1] as number) + 1
-        : Math.max(below[j] as number, row[j + 1] as number);
-    }
-  const keptA = new Array<boolean>(a.length).fill(false);
-  const keptB = new Array<boolean>(b.length).fill(false);
-  let i = 0;
-  let j = 0;
-  while (i < a.length && j < b.length) {
-    if (same(a[i], b[j])) {
-      keptA[i++] = true;
-      keptB[j++] = true;
-    } else if (((lcs[i + 1] as number[])[j] as number) >= ((lcs[i] as number[])[j + 1] as number))
-      i++;
-    else j++;
-  }
-  const pieces = (letters: string[], kept: boolean[]) => {
-    const out: Piece[] = [];
-    letters.forEach((letter, k) => {
-      const changed = !kept[k];
-      const last = out[out.length - 1];
-      if (last && last.changed === changed) last.text += letter;
-      else out.push({ text: letter, changed });
-    });
-    return out;
-  };
-  return { base: pieces(a, keptA), form: pieces(b, keptB) };
-}
-
 /** The letters a learner can't always type, offered as keys under a field. */
 export const ESTONIAN_LETTERS = ["õ", "ä", "ö", "ü", "š", "ž"] as const;
 

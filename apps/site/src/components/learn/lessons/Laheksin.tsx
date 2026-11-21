@@ -161,7 +161,7 @@ function useContent() {
         clip: "d-sina-1",
         replies: [
           {
-            line: "Ma tahtsin kohvi.",
+            line: "Ma tahtsin ühte kohvi ja vett.",
             why: (
               <Trans>
                 <Et>Tahtsin</Et> is the past, I wanted. To ask politely now: <Et>tahaksin</Et>.
@@ -170,7 +170,7 @@ function useContent() {
           },
           { line: said("d-sina-1"), right: true },
           {
-            line: "Ma tahaksid ühe kohvi, palun.",
+            line: "Ma tahaksid ühte kohvi ja vett.",
             why: (
               <Trans>
                 <Et>-ksid</Et> is for <Et>sa</Et> or <Et>nad</Et>. With <Et>ma</Et>:{" "}
@@ -187,7 +187,7 @@ function useContent() {
         replies: [
           { line: said("d-sina-2"), right: true },
           {
-            line: "Jah, ma võtsin.",
+            line: "Jah, võtsin ka.",
             why: (
               <Trans>
                 <Et>Võtsin</Et> is the past, I took. To order: <Et>võtaksin</Et>.
@@ -195,7 +195,7 @@ function useContent() {
             ),
           },
           {
-            line: "Jah, me võtaksin saiakese.",
+            line: "Jah, me võtaksin ka.",
             why: (
               <Trans>
                 With <Et>me</Et>, the ending is <Et>-ksime</Et>. For yourself: <Et>ma võtaksin</Et>.
@@ -210,7 +210,7 @@ function useContent() {
         clip: "d-sina-3",
         replies: [
           {
-            line: "Kas ma saaksin sularahas maksma?",
+            line: "Kas ma saaksin sularahas maksma, palun?",
             why: (
               <Trans>
                 After <Et>saama</Et>, the <Et>-da</Et> form: <Et>maksta</Et>.

@@ -661,7 +661,7 @@ msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> або <1>-ke</1> у кінці"
 
 msgid "<0>-ksid</0> is for <1>sa</1> or <2>nad</2>. With <3>ma</3>: <4>tahaksin</4>."
-msgstr ""
+msgstr "<0>-ksid</0> — для <1>sa</1> або <2>nad</2>. З <3>ma</3>: <4>tahaksin</4>."
 
 msgid "<0>-ma</0> form"
 msgstr "Форма на <0>-ma</0>"
@@ -1148,7 +1148,7 @@ msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousan
 msgstr "Перед <0>sada</0> і <1>tuhat</1> «один» не кажуть. Сотні пишуться разом, тисячі окремо."
 
 msgid "<0>Sain</0> is the past. To ask politely: <1>kas ma saaksin</1>."
-msgstr ""
+msgstr "<0>Sain</0> — минулий час. Щоб чемно спитати: <1>kas ma saaksin</1>."
 
 msgid "<0>sin</0> when it happened; no ending after <1>ei</1>."
 msgstr "<0>sin</0>, коли це сталося; після <1>ei</1> закінчення немає."
@@ -1196,7 +1196,7 @@ msgid "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> and <1>mulle m
 msgstr "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> і <1>mulle meeldib</1> вимагають форми на <2>-da</2>."
 
 msgid "<0>Tahtsin</0> is the past, I wanted. To ask politely now: <1>tahaksin</1>."
-msgstr ""
+msgstr "<0>Tahtsin</0> — минулий час, «хотілося». Щоб чемно попросити зараз: <1>tahaksin</1>."
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сьогодні, завтра, учора. <3>Üle-</3> додає ще один день."
@@ -1247,7 +1247,7 @@ msgid "<0>Võtsin</0> is the past, and one whole cake takes the genitive: <1>ma 
 msgstr "<0>Võtsin</0> — це минулий час, а один цілий торт — родовий: <1>ma võtan ühe koogi</1>."
 
 msgid "<0>Võtsin</0> is the past, I took. To order: <1>võtaksin</1>."
-msgstr ""
+msgstr "<0>Võtsin</0> — минулий час. Щоб замовити: <1>võtaksin</1>."
 
 msgid "<0>за́мок</0> is a castle."
 msgstr "<0>за́мок</0> — це фортеця."
@@ -1518,7 +1518,7 @@ msgid "A brilliant first round rarely repeats in the second."
 msgstr "Блискучий перший раунд рідко вдається повторити в другому."
 
 msgid "a bun, a pastry"
-msgstr ""
+msgstr "булочка"
 
 msgid "A café, an evening or a person can all be gezellig."
 msgstr "Gezellig буває і кафе, і вечір, і людина."
@@ -1796,7 +1796,7 @@ msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (go
 msgstr "Безкоштовний урок про естонські форми на -ma, -mas і -mast: lähen ujuma (іду плавати), olen ujumas (на плаванні) і tulen ujumast (повертаюся з плавання). Вони відповідають на kuhu?, kus? і kust?, як і назви місць. А ще — коли казати lähen, käin чи tulen. Кожне речення озвучене."
 
 msgid "A free lesson on the Estonian conditional mood, the would form: -ks with the person endings (ma läheksin, sa läheksid, ta läheks), polite requests (ma tahaksin kohvi, kas sa saaksid aidata?) and if clauses (kui mul oleks aega). Every sentence is read aloud."
-msgstr ""
+msgstr "Безкоштовний урок про умовний спосіб в естонській: -ks з особовими закінченнями (ma läheksin, sa läheksid, ta läheks), чемні прохання (ma tahaksin kohvi, kas sa saaksid aidata?) і речення з «якби» (kui mul oleks aega). Кожне речення озвучене."
 
 msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
 msgstr "Безкоштовний урок про дні тижня естонською: сім назв, чотири з числами всередині, однолітерні позначення в годинах роботи, а ще täna, homme і eile. Кожне слово озвучене."
@@ -2649,7 +2649,7 @@ msgid "After <0>pole</0>, what there is none of in a place takes the third form:
 msgstr "Після <0>pole</0> те, чого немає в якомусь місці, стоїть у третій формі: <1>pole leiba</1>."
 
 msgid "After <0>saama</0>, the <1>-da</1> form: <2>maksta</2>."
-msgstr ""
+msgstr "Після <0>saama</0> — форма на <1>-da</1>: <2>maksta</2>."
 
 msgid "After <0>si-</0> come <1>-n, -d, -me, -te</1>, as in the present. <2>Ta</2> has only <3>s</3>, and <4>nad</4> has <5>sid</5>, as <6>sa</6> does: <7>ta elas, nad elasid</7>."
 msgstr "Після <0>si-</0> ідуть <1>-n, -d, -me, -te</1>, як у теперішньому часі. У <2>ta</2> лише <3>s</3>, а в <4>nad</4> — <5>sid</5>, як у <6>sa</6>: <7>ta elas, nad elasid</7>."
@@ -2874,7 +2874,7 @@ msgid "All nine. You knew which verb each <0>-da</0> form belongs to."
 msgstr "Усі дев’ять. Кожна форма на <0>-da</0> — зі своїм дієсловом."
 
 msgid "All nine. You match the ending to the person every time."
-msgstr ""
+msgstr "Усі дев’ять. Ти щоразу добираєш закінчення до особи."
 
 msgid "All nine. You read every clue around the gap."
 msgstr "Усі дев’ять. Кожну підказку біля пропуску помічено."
@@ -4817,7 +4817,7 @@ msgid "Cosy and convivial; good company"
 msgstr "Затишний і душевний; у доброму товаристві"
 
 msgid "Could you help me?"
-msgstr ""
+msgstr "Ти міг би мені допомогти?"
 
 msgid "Count forward"
 msgstr "Рахуємо вперед"
@@ -5118,7 +5118,7 @@ msgid "Doctors, banks and the library all ask for it."
 msgstr "Його питають і лікар, і банк, і бібліотека."
 
 msgid "Does"
-msgstr ""
+msgstr "Робить"
 
 msgid "Does every noun come with der, die or das?"
 msgstr "Чи кожен іменник має der, die або das?"
@@ -5582,7 +5582,7 @@ msgid "Endings that tell you the third form"
 msgstr "Закінчення, що підказують третю форму"
 
 msgid "Endings: <0>-ksin, -ksid, -ks, -ksime, -ksite, -ksid</0>. With <1>ei</1>, just <2>-ks</2>: <3>ma ei läheks</3>."
-msgstr ""
+msgstr "Закінчення: <0>-ksin, -ksid, -ks, -ksime, -ksite, -ksid</0>. З <1>ei</1> — просто <2>-ks</2>: <3>ma ei läheks</3>."
 
 msgid "English"
 msgstr "Англійська"
@@ -5606,7 +5606,7 @@ msgid "English puts on or under before the thing. Estonian puts its word after i
 msgstr "Українською «на» чи «під» стоять перед предметом. Естонська ставить своє слово після нього: <0/> Дослівно: «кіт є коробки на»."
 
 msgid "English puts would before the verb. Estonian puts <0>-ks</0> inside it. Take the present form for <1>ma</1>, drop its <2>-n</2> and add <3>-ksin</3>: <4>lähen, läheksin</4>; <5>olen, oleksin</5>; <6>tahan, tahaksin</6>. The other persons change only the end: <7>-ksid</7>, <8>-ks</8>, <9>-ksime</9>, <10>-ksite</10>, <11>-ksid</11>."
-msgstr ""
+msgstr "Українською кажуть «ми пішли б»: окреме слово «б» поруч із дієсловом. Естонська ставить <0>-ks</0> усередину дієслова. Візьми форму теперішнього часу для <1>ma</1>, прибери <2>-n</2> і додай <3>-ksin</3>: <4>lähen, läheksin</4>; <5>olen, oleksin</5>; <6>tahan, tahaksin</6>. Інші особи змінюють тільки кінець: <7>-ksid</7>, <8>-ks</8>, <9>-ksime</9>, <10>-ksite</10>, <11>-ksid</11>."
 
 msgid "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Lesson {into} teaches the endings for going into a place and coming out of it."
 msgstr "Українською кажуть «на роботі», але «в школі», і естонською так само: <0/>, але <1/>. Проте так збігається не завжди, тож вчи кожне місце разом із закінченням. Як сказати «в місто» і «з міста», розповідає урок {into}."
@@ -5669,7 +5669,7 @@ msgid "Estonian asks three questions about a place, <0>kus</0>, <1>kuhu</1> and 
 msgstr "Естонська ставить про місце три питання — <0>kus</0>, <1>kuhu</1> і <2>kust</2>, тобто де, куди і звідки, — і на кожне відповідає своїм закінченням: <3>majas, majja, majast</3>."
 
 msgid "Estonian conditional: läheksin, tahaksin, kui mul oleks"
-msgstr ""
+msgstr "Умовний спосіб в естонській: läheksin, tahaksin, kui mul oleks"
 
 msgid "Estonian consonant gradation: why jalg becomes jala"
 msgstr "Чергування приголосних в естонській: чому jalg стає jala"
@@ -5924,7 +5924,7 @@ msgid "Every word with its three forms."
 msgstr "Кожне слово з трьома формами."
 
 msgid "Every would form has <0>-ks</0> in it, then the person ending."
-msgstr ""
+msgstr "У кожній формі умовного способу є <0>-ks</0>, а за ним — особове закінчення."
 
 msgid "Everyday commands"
 msgstr "Накази на щодень"
@@ -7020,7 +7020,7 @@ msgid "Gladly"
 msgstr "Охоче"
 
 msgid "gladly, with pleasure"
-msgstr ""
+msgstr "охоче, із задоволенням"
 
 msgid "glass"
 msgstr "склянка"
@@ -8703,10 +8703,10 @@ msgid "I work until five."
 msgstr "Я працюю до п’ятої."
 
 msgid "I would like some coffee."
-msgstr ""
+msgstr "Я хотів би кави."
 
 msgid "I wouldn’t go there."
-msgstr ""
+msgstr "Я б туди не пішов."
 
 msgid "I, you and the other pronouns have their own forms for to and from. Lesson {pronouns} teaches them."
 msgstr "У займенників «я», «ти» та інших свої форми для «кому» і «від кого». Про них розповідає урок {pronouns}."
@@ -9000,7 +9000,7 @@ msgid "If a story shows a gun early on, it should go off later"
 msgstr "Якщо на початку історії з’являється рушниця, згодом вона має вистрілити"
 
 msgid "If I had time, I would go to the beach."
-msgstr ""
+msgstr "Якби в мене був час, я пішов би на пляж."
 
 msgid "If only"
 msgstr "Якби ж то"
@@ -9021,7 +9021,7 @@ msgid "If your teacher assigns sets and runs Quizlet Live in class, stay where t
 msgstr "Якщо вчитель задає набори й проводить Quizlet Live на уроках, залишайся там, де весь клас."
 
 msgid "if, when"
-msgstr ""
+msgstr "якщо, коли"
 
 msgid "Illative"
 msgstr "Ілатив"
@@ -9120,7 +9120,7 @@ msgid "in bookshops"
 msgstr "у книгарнях"
 
 msgid "in cash"
-msgstr ""
+msgstr "готівкою"
 
 msgid "In ChatGPT, open Plugins, press +, then Add custom MCP server. Name it Lymi and paste this address."
 msgstr "У ChatGPT відкрий Plugins, натисни +, потім Add custom MCP server. Назви сервер Lymi і встав цю адресу."
@@ -12464,7 +12464,7 @@ msgid "One shared deck, everyone on their own schedule"
 msgstr "Одна спільна колода, у кожного свій розклад"
 
 msgid "One sign: -ks"
-msgstr ""
+msgstr "Одна ознака на все"
 
 msgid "One spelling, two words."
 msgstr "Одне написання, два слова."
@@ -12636,7 +12636,7 @@ msgid "Ordering at a café"
 msgstr "Замовлення в кав’ярні"
 
 msgid "Ordering politely"
-msgstr ""
+msgstr "Чемне замовлення"
 
 msgid "Ordinals and dates"
 msgstr "Порядкові числівники й дати"
@@ -12967,7 +12967,7 @@ msgid "Pick the word for the gap"
 msgstr "Обери слово для пропуску"
 
 msgid "Pick the written form that fits the person before the gap, then hear the sentence."
-msgstr ""
+msgstr "Вибери письмову форму, що пасує до особи перед пропуском, а потім послухай речення."
 
 msgid "Pick up where you left off"
 msgstr "Продовж з того ж місця"
@@ -13225,10 +13225,10 @@ msgid "Polish words you’ll remember."
 msgstr "Польські слова, які ти запам’ятаєш."
 
 msgid "Polite and if"
-msgstr ""
+msgstr "Чемно і «якби»"
 
 msgid "Polite: <0>Ma tahaksin kohvi.</0> If: <1>Kui mul oleks aega…</1>"
-msgstr ""
+msgstr "Чемно: <0>Ma tahaksin kohvi.</0> Якби: <1>Kui mul oleks aega…</1>"
 
 msgid "Polski · new"
 msgstr "Polski · нова"
@@ -13327,7 +13327,7 @@ msgid "Present"
 msgstr "Теперішній"
 
 msgid "Present and conditional, person by person"
-msgstr ""
+msgstr "Теперішній час і умовний спосіб за особами"
 
 msgid "Present or past"
 msgstr "Теперішній чи минулий час"
@@ -13667,7 +13667,7 @@ msgid "Read the sign on a café in Tallinn, then answer."
 msgstr "Прочитай табличку на дверях кав’ярні в Таллінні й дай відповіді."
 
 msgid "Read the table once more, then try again."
-msgstr ""
+msgstr "Ще раз переглянь таблицю і спробуй знову."
 
 msgid "Read the three endings above once more, then try again."
 msgstr "Ще раз перечитай про три закінчення вище й спробуй знову."
@@ -15268,7 +15268,7 @@ msgid "Take the *metro* to the airport."
 msgstr "До аеропорту їдь на *метро*."
 
 msgid "Take the present <0>ma</0> form, swap <1>-n</1> for <2>-ksin</2>: <3>lähen, läheksin</3>."
-msgstr ""
+msgstr "Візьми форму теперішнього часу для <0>ma</0> і заміни <1>-n</1> на <2>-ksin</2>: <3>lähen, läheksin</3>."
 
 msgid "Tal on: he or she has."
 msgstr "Tal on: у нього чи в неї є."
@@ -15283,7 +15283,7 @@ msgid "Talk at the table after a meal"
 msgstr "Розмова за столом після їжі"
 
 msgid "Talk: a coffee, please"
-msgstr ""
+msgstr "Розмова: каву, будь ласка"
 
 msgid "Talk: asking Mari"
 msgstr "Розмова: запитання до Марі"
@@ -17287,7 +17287,7 @@ msgid "The words you’ll hear most, first."
 msgstr "Спершу слова, які чутимеш найчастіше."
 
 msgid "The would form: <0>ma läheksin</0>, <1>ma tahaksin kohvi</1>, <2>kui mul oleks aega</2>. One sign, <3>-ks</3>, and the person endings."
-msgstr ""
+msgstr "Умовний спосіб: <0>ma läheksin</0>, <1>ma tahaksin kohvi</1>, <2>kui mul oleks aega</2>. Одна ознака, <3>-ks</3>, і особові закінчення."
 
 msgid "their"
 msgstr "їхній"
@@ -17897,7 +17897,7 @@ msgid "To get up early"
 msgstr "Рано вставати"
 
 msgid "to get, to be able to"
-msgstr ""
+msgstr "отримувати, могти"
 
 msgid "to give notice"
 msgstr "розірвати договір"
@@ -18051,7 +18051,7 @@ msgid "To say no, put <0>ei</0> before <1>ole</1> or <2>olnud</2>, the same for 
 msgstr "Щоб заперечити, постав <0>ei</0> перед <1>ole</1> або <2>olnud</2>, однаково для всіх осіб: <3>ma ei ole lugenud</3>, <4>nad ei olnud lugenud</4>."
 
 msgid "To say no, use <0>ei</0> and the bare <1>-ks</1> form for everyone: <2>ma ei läheks</2>, <3>nad ei läheks</3>. In speech you also hear <4>ma läheks</4> for <5>ma läheksin</5>. In writing, use the full endings."
-msgstr ""
+msgstr "Щоб заперечити, вживай <0>ei</0> і просту форму на <1>-ks</1> для всіх: <2>ma ei läheks</2>, <3>nad ei läheks</3>. У розмові можна почути <4>ma läheks</4> замість <5>ma läheksin</5>. На письмі вживай повні закінчення."
 
 msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 msgstr "Щоб сказати «не», постав <0/> перед дієсловом. <1/> — «я читаю», а <2/> — «я не читаю». Дієслово втрачає закінчення, а <3/> однакове, хоч би про кого йшлося."
@@ -18195,7 +18195,7 @@ msgid "to wait, the -da form"
 msgstr "чекати, форма на -da"
 
 msgid "to want"
-msgstr ""
+msgstr "хотіти"
 
 msgid "to whom"
 msgstr "кому"
@@ -18616,7 +18616,7 @@ msgid "U.S. citizens"
 msgstr "Громадяни США"
 
 msgid "Ühe saiakese: one bun, the genitive."
-msgstr ""
+msgstr "Ühe saiakese: одну булочку, родовий відмінок."
 
 msgid "Ukraine"
 msgstr "Україна"
@@ -19852,7 +19852,7 @@ msgid "Who were the first Europeans to reach Canada?"
 msgstr "Хто з європейців першим дістався Канади?"
 
 msgid "Who would?"
-msgstr ""
+msgstr "Хто б це зробив?"
 
 msgid "Who, what, where"
 msgstr "Хто, що, де"
@@ -19964,16 +19964,16 @@ msgid "With <0>ma</0> it’s <1>tahan</1>, and what you want takes the third for
 msgstr "З <0>ma</0> — <1>tahan</1>, а те, чого хочеш, стоїть у третій формі: <2>leiba</2>."
 
 msgid "With <0>me</0>, the ending is <1>-ksime</1>."
-msgstr ""
+msgstr "З <0>me</0> закінчення <1>-ksime</1>."
 
 msgid "With <0>me</0>, the ending is <1>-ksime</1>. For yourself: <2>ma võtaksin</2>."
-msgstr ""
+msgstr "З <0>me</0> закінчення <1>-ksime</1>. Про себе: <2>ma võtaksin</2>."
 
 msgid "With <0>sa</0>, the ending is <1>-ksid</1>."
-msgstr ""
+msgstr "З <0>sa</0> закінчення <1>-ksid</1>."
 
 msgid "With <0>ta</0>, just <1>-ks</1>."
-msgstr ""
+msgstr "З <0>ta</0> — просто <1>-ks</1>."
 
 msgid "with a book"
 msgstr "з книжкою"
@@ -20285,7 +20285,7 @@ msgid "Works with"
 msgstr "Працює з"
 
 msgid "Would"
-msgstr ""
+msgstr "Зробив би"
 
 msgid "Write to me: the <0>-le</0> form says to whom, as in <1>mulle meeldib</1>."
 msgstr "Напиши мені: форма на <0>-le</0> відповідає на питання «кому?», як у <1>mulle meeldib</1>."
@@ -20753,10 +20753,10 @@ msgid "You study from its library"
 msgstr "Ти вчишся за колодами з його бібліотеки"
 
 msgid "You use it in two places. To ask politely: <0>ma tahaksin</0>, I would like, and <1>kas sa saaksid</1>, could you, from lesson {modals}. And for what isn’t real, after <2/>, if: both halves of the sentence take it."
-msgstr ""
+msgstr "Його вживають у двох випадках. Щоб чемно попросити: <0>ma tahaksin</0>, хотілося б, і <1>kas sa saaksid</1>, чи не можна б, з уроку {modals}. І для того, що не є реальним, після <2/>, якби: тоді обидві частини речення стоять в умовному способі."
 
 msgid "You want a coffee and a <0/>, and you’d like to pay in cash."
-msgstr ""
+msgstr "Тобі хочеться кави й <0/>, а заплатити хочеш готівкою."
 
 msgid "You want a desktop app on Windows or Linux"
 msgstr "Тобі потрібен застосунок для Windows чи Linux"

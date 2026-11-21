@@ -68,6 +68,19 @@ All under Play Console, Lymi. Do the setup steps in `docs/phone-release.md` firs
 - App Store screenshots belong to a version. A live version's screenshots are locked, so new ones go on the next version's page (`+` beside iOS App), which then goes to App Review with its build.
 - Play's screenshots and feature graphic change in Main store listing and in each translation at any time; with managed publishing on, the change waits in Publishing overview until you publish it.
 
+## Uploading by API
+
+`screenshots/upload.mjs` uploads what `set.mjs` rendered, so neither console needs a drag and drop:
+
+```bash
+node apps/mobile/store/screenshots/upload.mjs apple 1.0.1
+node apps/mobile/store/screenshots/upload.mjs play --skip 6
+```
+
+- `apple <version>` creates that version beside the live one when it is missing, then replaces both iPhone sizes in every language. Attach the build, write What's New and submit it by hand.
+- `play --skip <shot>` replaces the phone screenshots and the feature graphic in every listing and commits the edit. Play takes at most eight, so one shot stays out; Hear every word is the one left out today, since Made for your language has a speaker on every card.
+- The keys live in `~/.lymi/keys/`, never in the repo: `AuthKey_<key id>.p8` and `app-store-connect.json` (`{"keyId", "issuerId"}`) from App Store Connect → Users and Access → Integrations, with App Manager access, and `play-service-account.json`, a JSON key for the eas-submit service account in the Google Cloud project Lymi Text to Speech. `LYMI_STORE_KEYS` points elsewhere.
+
 ## After approval
 
 - Release the App Store version by hand from its version page.

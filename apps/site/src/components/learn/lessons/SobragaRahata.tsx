@@ -1,7 +1,7 @@
 import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
@@ -659,13 +659,6 @@ export function SobragaRahataLesson() {
     [i18n],
   );
 
-  // The gaps’ words are shuffled after the page loads, so no place holds the answer.
-  const [gaps, setGaps] = useState<readonly GapItem[]>(content.gaps);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: shuffled once, as the page loads
-  useEffect(() => {
-    setGaps(content.gaps.map((gap) => ({ ...gap, options: shuffle(gap.options ?? []) })));
-  }, []);
-
   const rows = (list: readonly string[]) =>
     list.map((said) => ({ main: <Lit text={said} />, sub: meaning(said, i18n), src: src(said) }));
 
@@ -984,7 +977,7 @@ export function SobragaRahataLesson() {
               <GapPassage
                 id="kati-message"
                 title={<Trans>Fill the gaps</Trans>}
-                gaps={gaps}
+                gaps={content.gaps}
                 mode="pick"
                 clip="p-kati"
               />

@@ -7,10 +7,12 @@ import { KusimusedLesson } from "../learn/lessons/Kusimused";
 import { MinaSinaTemaLesson } from "../learn/lessons/MinaSinaTema";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { OlevikLesson } from "../learn/lessons/Olevik";
+import { OsastavLesson } from "../learn/lessons/Osastav";
 import { PaevadLesson } from "../learn/lessons/Paevad";
 import { PaevTallinnasLesson } from "../learn/lessons/PaevTallinnas";
 import { SobragaRahataLesson } from "../learn/lessons/SobragaRahata";
 import { TutvumineLesson } from "../learn/lessons/Tutvumine";
+import { VerbiPohivormidLesson } from "../learn/lessons/VerbiPohivormid";
 import { Island } from "./Island";
 
 /** Each built lesson by its slug; `LESSON_SLUGS` in the catalogue must name the same ones. */
@@ -28,6 +30,8 @@ export const LESSON_VIEWS = {
   kaskiv: KaskivLesson,
   "paev-tallinnas": PaevTallinnasLesson,
   "sobraga-rahata": SobragaRahataLesson,
+  "verbi-pohivormid": VerbiPohivormidLesson,
+  osastav: OsastavLesson,
 } as const;
 
 export default function LearnLessonPage({

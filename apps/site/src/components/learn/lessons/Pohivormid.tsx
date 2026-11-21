@@ -1,4 +1,4 @@
-import type { MessageDescriptor } from "@lingui/core";
+import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
@@ -30,7 +30,8 @@ type LineId = keyof typeof POHIVORMID_DIALOGUE;
 
 const wordSrc = (word: string) => clipUrl(SLUG, clipId(word));
 const entrySrc = (forms: NounForms) => clipUrl(SLUG, clipId(nounEntry(forms)));
-export const formsOf = (first: First) => NOUN_FORMS.find((forms) => forms[0] === first) as NounForms;
+export const formsOf = (first: First) =>
+  NOUN_FORMS.find((forms) => forms[0] === first) as NounForms;
 const line = (id: LineId) => {
   const clip = POHIVORMID_DIALOGUE[id];
   return typeof clip === "string" ? clip : clip.text;
@@ -295,6 +296,21 @@ function EntryCard() {
   );
 }
 
+/** A noun's three forms and its meaning, under an answered round. */
+function explainEntry(forms: NounForms, first: First, i18n: I18n) {
+  return (
+    <>
+      <span lang="et" className="font-medium text-ink">
+        {nounEntry(forms)}
+      </span>{" "}
+      {i18n._(MEANS[first])}
+    </>
+  );
+}
+
+const offersOf = (forms: NounForms, kinds: readonly Offer[]) =>
+  kinds.map((kind) => ({ id: kind, label: <span lang="et">{offer(forms, kind)}</span> }));
+
 type NextItem = ChoiceItem & { first: First };
 type ThirdItem = TypedItem & { forms: NounForms; pair: readonly [string, string] };
 
@@ -395,18 +411,6 @@ export function PohivormidLesson() {
       };
     });
 
-  const explainEntry = (forms: NounForms, first: First | TypedFirst) => (
-    <>
-      <span lang="et" className="font-medium text-ink">
-        {nounEntry(forms)}
-      </span>{" "}
-      {i18n._(MEANS[first])}
-    </>
-  );
-
-  const offersOf = (forms: NounForms, kinds: readonly Offer[]) =>
-    kinds.map((kind) => ({ id: kind, label: <span lang="et">{offer(forms, kind)}</span> }));
-
   const nextItems = useMemo<NextItem[]>(
     () =>
       NEXT.map((first) => {
@@ -416,10 +420,9 @@ export function PohivormidLesson() {
           src: wordSrc(first),
           answer: "right",
           options: offersOf(forms, FIRST_OFFERS),
-          explain: explainEntry(forms, first),
+          explain: explainEntry(forms, first, i18n),
         };
       }),
-    // biome-ignore lint/correctness/useExhaustiveDependencies: the helpers read only i18n
     [i18n],
   );
 
@@ -715,8 +718,8 @@ export function PohivormidLesson() {
               </Panel>
               <Aside>
                 <Trans>
-                  A final vowel doesn’t promise matching forms, though. <Word w="auto" />, car, ends in a vowel like{" "}
-                  <Word w="maja" />, but its third form is <Word w="autot" />. And{" "}
+                  A final vowel doesn’t promise matching forms, though. <Word w="auto" />, car, ends
+                  in a vowel like <Word w="maja" />, but its third form is <Word w="autot" />. And{" "}
                   <Word w="raamat" />, book, goes <b lang="et">raamatu, raamatut</b>. The dictionary
                   settles it.
                 </Trans>
@@ -734,8 +737,8 @@ export function PohivormidLesson() {
                   <Trans>
                     Lesson {stems} showed letters dropping or changing before an ending:{" "}
                     <Word w="pood" /> becomes <Word w="poe" />. That change is the second form. In
-                    these words the third form has the first form’s letters back:{" "}
-                    <Word w="poodi" />.
+                    these words the third form has the first form’s letters back: <Word w="poodi" />
+                    .
                   </Trans>
                 </p>
               </Prose>
@@ -783,7 +786,8 @@ export function PohivormidLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -st
                     </b>
-                    : <Word w="naine" />, <Word w="naise" />, <Word w="naist" />. Most words ending in{" "}
+                    : <Word w="naine" />, <Word w="naise" />, <Word w="naist" />. Most words ending
+                    in{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -us
                     </b>{" "}
@@ -831,9 +835,7 @@ export function PohivormidLesson() {
               </Aside>
               <Prose>
                 <p>
-                  <Trans>
-                    Each round plays the first two forms of a new word. Type the third.
-                  </Trans>
+                  <Trans>Each round plays the first two forms of a new word. Type the third.</Trans>
                 </p>
               </Prose>
               <Quiz
@@ -866,9 +868,9 @@ export function PohivormidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To ask for a word’s forms, Estonian says <b lang="et">Mis on sõna … põhivormid?</b>,
-                    with the word in the gap. <Word w="Sõna" /> means word. Answer with all three,
-                    in order.
+                    To ask for a word’s forms, Estonian says{" "}
+                    <b lang="et">Mis on sõna … põhivormid?</b>, with the word in the gap.{" "}
+                    <Word w="Sõna" /> means word. Answer with all three, in order.
                   </Trans>
                 </p>
               </Prose>

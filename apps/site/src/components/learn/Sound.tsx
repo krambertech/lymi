@@ -17,8 +17,11 @@ export function Playing({ className }: { className?: string | undefined }) {
 
 interface PlayProps {
   src: string;
-  /** What it plays, for a screen reader: “Play kõrv”. */
-  label: string;
+  /**
+   * What it plays, for a screen reader: “Play kõrv”. Give a node when the Estonian in it needs its
+   * own `lang`, such as a sentence.
+   */
+  label: ReactNode;
   className?: string | undefined;
 }
 
@@ -28,7 +31,7 @@ export function PlayButton({ src, label, className }: PlayProps) {
   return (
     <button
       type="button"
-      aria-label={label}
+      aria-label={typeof label === "string" ? label : undefined}
       onClick={() => void playSound(src)}
       className={clsx(
         "relative grid size-9 shrink-0 cursor-pointer place-items-center rounded-full transition-[background-color,color,scale] duration-150 active:scale-[0.94]",
@@ -38,6 +41,7 @@ export function PlayButton({ src, label, className }: PlayProps) {
         className,
       )}
     >
+      {typeof label === "string" ? null : <span className="sr-only">{label}</span>}
       {playing ? <Playing /> : <Play aria-hidden="true" className="size-3.5 fill-current" />}
     </button>
   );

@@ -21,6 +21,18 @@ export const ALLOWED_NEAR_PAIRS: readonly {
     reason:
       "The quiz asks whether the ending stays after ei: Ei loe against Ei loed is the lesson.",
   },
+  {
+    lesson: "osastav",
+    quiz: "one-or-more",
+    reason:
+      "The quiz asks for the first or the third form after a number: kass after üks, kassi after kaks. Each run asks three of each, so the longer form wins half the time.",
+  },
+  {
+    lesson: "osastav",
+    quiz: "market-day",
+    reason:
+      "Each gap asks for the first or the third form: üks leib against kilo juustu. Three of seven gaps want the first, so the longer form scores four of seven.",
+  },
 ];
 
 /**

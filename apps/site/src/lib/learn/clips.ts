@@ -809,6 +809,194 @@ const TALLINN_CLIPS: Record<string, Clip> = {
   ...TALLINN_DIALOGUE,
 };
 
+/**
+ * Nouns of the partitive lesson, each with its third form, the partitive. Checked in ÕS 2025 on
+ * Sõnaveeb (EKI morphology, 21 Nov 2026). Later lessons on objects and the plural partitive can
+ * import it.
+ */
+export const PARTITIVE_NOUNS = {
+  kass: "kassi",
+  raamat: "raamatut",
+  laps: "last",
+  auto: "autot",
+  maja: "maja",
+  euro: "eurot",
+  kool: "kooli",
+  laud: "lauda",
+  kohv: "kohvi",
+  vesi: "vett",
+  juust: "juustu",
+  leib: "leiba",
+  piim: "piima",
+  raha: "raha",
+  aeg: "aega",
+  kohvik: "kohvikut",
+} as const;
+
+export type PartitiveNoun = keyof typeof PARTITIVE_NOUNS;
+
+/** “üks kass”, or from two up “kaks kassi”: a number with a noun in the form it takes. */
+export const counted = (number: string, noun: PartitiveNoun) =>
+  `${number} ${number === "üks" ? noun : PARTITIVE_NOUNS[noun]}`;
+
+/** The counting switch: three numbers over six nouns, maja among them, whose forms look alike. */
+export const OSASTAV_COUNT = {
+  numbers: ["üks", "kaks", "viis"],
+  nouns: ["kass", "raamat", "laps", "auto", "maja", "euro"],
+} as const satisfies { numbers: readonly string[]; nouns: readonly PartitiveNoun[] };
+
+/** “One or more?”: each noun once with üks and once with a number from two up. */
+export const OSASTAV_COUNTED = [
+  { noun: "kass", number: "kolm" },
+  { noun: "auto", number: "kaks" },
+  { noun: "euro", number: "kümme" },
+  { noun: "laps", number: "kolm" },
+  { noun: "kool", number: "neli" },
+  { noun: "laud", number: "viis" },
+] as const satisfies readonly { noun: PartitiveNoun; number: string }[];
+
+/** Asking how many and how much, each with an answer. */
+export const OSASTAV_EXCHANGES = [
+  { q: "Mitu last sul on?", a: "Mul on kaks last." },
+  { q: "Mitu kassi teil on?", a: "Meil on üks kass." },
+  { q: "Kui palju see maksab?", a: "Viis eurot." },
+] as const;
+
+/** An amount and what it measures, in its third form. */
+export const OSASTAV_AMOUNTS = [
+  { phrase: "tass kohvi", noun: "kohv" },
+  { phrase: "klaas vett", noun: "vesi" },
+  { phrase: "kilo juustu", noun: "juust" },
+  { phrase: "natuke piima", noun: "piim" },
+  { phrase: "palju raha", noun: "raha" },
+  { phrase: "vähe aega", noun: "aeg" },
+] as const satisfies readonly { phrase: string; noun: PartitiveNoun }[];
+
+/** Yes and no: the thing someone has, and the same thing when it isn't there. */
+export const OSASTAV_NO = [
+  { yes: "Mul on kass.", no: "Mul pole kassi.", noun: "kass" },
+  { yes: "Sul on auto.", no: "Sul pole autot.", noun: "auto" },
+  { yes: "Tal on laps.", no: "Tal pole last.", noun: "laps" },
+  { yes: "Neil on maja.", no: "Neil pole maja.", noun: "maja" },
+  { yes: "Laual on leib.", no: "Laual pole leiba.", noun: "leib" },
+  { yes: "Toas on laud.", no: "Toas pole lauda.", noun: "laud" },
+  // The thing first: it keeps its first form after pole too.
+  { yes: "Kass on laual.", no: "Kass pole laual.", noun: "kass", first: true },
+] as const satisfies readonly { yes: string; no: string; noun: PartitiveNoun; first?: true }[];
+
+/**
+ * “Which form after pole?”: a sentence with a gap for the noun. Where the noun comes first, it keeps
+ * its first form; each noun comes both ways, so its two forms are both answers.
+ */
+export const OSASTAV_POLE_QUIZ = [
+  { cue: "Mul pole …", noun: "kass", said: "Mul pole kassi." },
+  { cue: "… pole laual", noun: "kass", said: "Kass pole laual.", first: true },
+  { cue: "Sul pole …", noun: "auto", said: "Sul pole autot." },
+  { cue: "… pole Tallinnas", noun: "auto", said: "Auto pole Tallinnas.", first: true },
+  { cue: "Laual pole …", noun: "leib", said: "Laual pole leiba." },
+  { cue: "… pole laual", noun: "leib", said: "Leib pole laual.", first: true },
+  { cue: "Toas pole …", noun: "laud", said: "Toas pole lauda." },
+  { cue: "… pole toas", noun: "laud", said: "Laud pole toas.", first: true },
+] as const satisfies readonly { cue: string; noun: PartitiveNoun; said: string; first?: true }[];
+
+/** “Type the form”: food and drink someone has, and two that are only talked about. */
+export const OSASTAV_FOOD_QUIZ = [
+  { cue: "Ma joon …", noun: "kohv", said: "Ma joon kohvi." },
+  { cue: "Ta joob …", noun: "vesi", said: "Ta joob vett." },
+  { cue: "Me sööme …", noun: "leib", said: "Me sööme leiba." },
+  { cue: "Nad söövad …", noun: "juust", said: "Nad söövad juustu." },
+  { cue: "Ma tahan …", noun: "piim", said: "Ma tahan piima." },
+  { cue: "… maksab kaks eurot", noun: "piim", said: "Piim maksab kaks eurot.", first: true },
+  { cue: "… on laual", noun: "leib", said: "Leib on laual.", first: true },
+] as const satisfies readonly { cue: string; noun: PartitiveNoun; said: string; first?: true }[];
+
+/** Food and drink taken without counting. */
+export const OSASTAV_SOME = [
+  "Ma joon kohvi.",
+  "Ta joob vett.",
+  "Me sööme leiba.",
+  "Nad söövad juustu.",
+  "Ma tahan piima.",
+  "Kohvi, palun.",
+] as const;
+
+/**
+ * Mari at the market, a passage with gaps, and Jaan's voice message from the market. Words from
+ * lessons 1–16 and this lesson's nouns.
+ */
+export const OSASTAV_PASSAGES = {
+  market: [
+    "Täna on laupäev ja Mari on turul.",
+    "Tal on vaja kilo juustu ja üks leib.",
+    "Juust maksab seitse eurot.",
+    "Aga turul pole täna leiba.",
+    "Turul on kohvik.",
+    "Mari joob kohvikus kohvi.",
+    "Kohvikus on üks kass.",
+  ],
+  jaan: [
+    "Tere, see on Jaan! Ma olen turul.",
+    "Täna on palju juustu.",
+    "Kilo juustu maksab kaheksa eurot.",
+    "Leib maksab kaks eurot.",
+    "Aga täna pole piima.",
+    "Kas sa tahad kohvi?",
+  ],
+} as const;
+
+/** Words and lines the partitive lesson says outside its lists. */
+export const OSASTAV_WORDS = [
+  "kass",
+  "kassi",
+  "raamat",
+  "raamatut",
+  "laps",
+  "last",
+  "maja",
+  "kohv",
+  "kohvi",
+  "vesi",
+  "vett",
+  "juust",
+  "juustu",
+  "leib",
+  "leiba",
+  "piim",
+  "piima",
+  "aeg",
+  "aega",
+  "mitu",
+  "tass",
+  "klaas",
+  "kilo",
+  "palju",
+  "natuke",
+  "vähe",
+  "pole",
+  "tahan",
+  "Mul ei ole kassi.",
+  "Üks kohv, palun.",
+  "Ma loen raamatut.",
+] as const;
+
+const OSASTAV_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...OSASTAV_COUNT.numbers.flatMap((number) =>
+      OSASTAV_COUNT.nouns.map((noun) => counted(number, noun)),
+    ),
+    ...OSASTAV_COUNTED.flatMap(({ noun, number }) => [counted("üks", noun), counted(number, noun)]),
+    ...OSASTAV_EXCHANGES.flatMap(({ q, a }) => [q, a]),
+    ...OSASTAV_AMOUNTS.map(({ phrase }) => phrase),
+    ...OSASTAV_NO.flatMap(({ yes, no }) => [yes, no]),
+    ...OSASTAV_SOME,
+    ...OSASTAV_POLE_QUIZ.map(({ said }) => said),
+    ...OSASTAV_FOOD_QUIZ.map(({ said }) => said),
+    ...OSASTAV_WORDS,
+  ]),
+  "p-market": { sentences: OSASTAV_PASSAGES.market },
+  "p-jaan": { sentences: OSASTAV_PASSAGES.jaan },
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -902,5 +1090,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  osastav: OSASTAV_CLIPS,
   kit: KIT_CLIPS,
 };

@@ -1,14 +1,14 @@
 # Testing
 
-A test in Lymi guards one behavior that a learner, a caller or a deploy depends on, and it fails only when that behavior regresses. The rest of this document applies that rule:
+Each test guards one behavior that a learner, a caller or a deploy depends on, and goes red only when that behavior regresses.
 
-- Each test depends on intended behavior and nothing else, and no two tests guard the same behavior: [What a test must depend on](#what-a-test-must-depend-on).
-- Each test runs at the cheapest layer that can observe its behavior. Unit, service, route and component tests carry most of the suite. A small set of Playwright journeys proves that the browser, Worker, authentication, D1 and the review path work together: [Where a test goes](#where-a-test-goes).
-- Some rules get their own kind of check: [property tests](#rules-a-pure-function-must-keep) for a rule over every input, [the schedule snapshot](#which-schedules-a-scheduler-change-moves) for a scheduler change, [pattern checks](#bugs-a-pattern-can-catch) for a bug a search can find, [the reliability checklist](#check-what-broke-before) for a bug class no check can find, and [lesson checks](#estonian-lesson-checks) for the Estonian course.
-- The closer a change is to shipping, the more of the suite runs: [What runs when](#what-runs-when).
-- Tests do not replace seeing the change work. Feature verification drives the running app, and interface review judges the experience: [Review coverage](#review-coverage).
+- Anchor the test to that behavior, one test per behavior ([What a test must depend on](#what-a-test-must-depend-on)).
+- Put it at the cheapest layer that observes the behavior. Journeys are the exception ([Where a test goes](#where-a-test-goes)).
+- Some rules have their own check: [property tests](#rules-a-pure-function-must-keep) for a rule over every input, [the schedule snapshot](#which-schedules-a-scheduler-change-moves) for a scheduler change, [pattern checks](#bugs-a-pattern-can-catch) for a bug a search can find, [the reliability checklist](#check-what-broke-before) for a bug class no check can find, and [lesson checks](#estonian-lesson-checks) for the Estonian course.
+- More of the suite runs the closer a change is to shipping ([What runs when](#what-runs-when)).
+- Also verify the learner's outcome in the running app ([Review coverage](#review-coverage)).
 
-Every test runs against local Cloudflare bindings. None uses production data or AI credentials.
+Tests run against local Cloudflare bindings, never production data or AI credentials.
 
 ## Review coverage
 
@@ -103,23 +103,27 @@ The Mac app in `apps/desktop` is tested only where it differs from the web. The 
 
 ## What a test must depend on
 
-A test depends on intended behavior: what a learner sees, what a caller gets back, and what is stored or sent. It changes only when that behavior changes, and it fails only when that behavior regresses. Before you add or keep a test, name the change to the code that would make it fail. If no change would, or if a change that keeps the behavior would, the test does not belong.
+A test depends on intended behavior: what a learner sees, what a caller gets back, and what is stored or sent. Before you add or keep a test, walk this tree:
 
-Do not write a test that depends on any of these:
+```text
+Which change to the code turns the test red?
+├── None, or only bringing back code removed on purpose
+│   → Delete it. It tests the past, a library, the browser, a mock or the type system.
+└── A regression of intended behavior
+    ├── A change that keeps the behavior also turns it red?
+    │   → Rewrite it against the behavior.
+    ├── Another test already goes red on the same regression?
+    │   → Keep the stronger one and delete the other.
+    └── Otherwise → keep it.
+```
 
-- **The past.** The test asserts that removed code stays gone: a deleted route answers 404, a removed field is absent, or a moved module is missing from its old path. Bringing the code back would be a decision, not a regression. A contract that live clients still use is behavior and keeps its test: a supported phone release ([ADR 0032](adr/0032-the-phone-ships-over-the-air-and-the-api-keeps-every-supported-release-working.md)), a public link, or a redirect.
-- **Nothing.** No change to Lymi's code can make the test fail. It tests the browser, React, Zod, Base UI or ts-fsrs rather than what Lymi adds on top of them. Or it mocks the unit under test and asserts what the mock returns, or it asserts what TypeScript already guarantees.
-- **The implementation.** The test changes when the code changes, even when the behavior did not. Its expected value comes from the same function as the code, so a wrong result still passes. Or it reads private state, internal call order, which helper ran, a Tailwind class, a log message or a SQL fragment.
-
-Write expected values as literals: `expect(applyDiscount(100, 0.2)).toBe(80)`, not `price - price * 0.2`. Find elements by role and accessible name, not by class. Assert what reaches the caller or the server, not what sits in a module's cache.
-
-One behavior has one test. Before you add a case, search for a test that already covers it: a property, conformance or simulation test, a test at another layer, or the shared package's own test when the module only re-exports it. Extend that test instead of copying it. A reducer test and a component test of the same flow are not copies, because the reducer test owns the rule and the component test owns the wiring that [CODING_STANDARDS.md](../CODING_STANDARDS.md#give-a-flow-one-state) asks for.
-
-Production code exists for production. Do not export a function, add a flag or widen a type only so that a test can reach it. Test through the public API, and inject a dependency where the test must replace one. The one exception is a reset that stands in for a restart, such as `resetWriteCache` or `resetUpdateRequired`, when a test proves what survives that restart. Its doc comment says which restart it stands for.
-
-A test that pins exact wording, such as a hash of a prompt, belongs only where something reads that wording's version. `enrichment/prompt.test.ts` is the model: it fails until `ENRICHMENT_PROMPT_VERSION` goes up, and the recorded eval runs in `enrichment/recorded-run.ts` record that version.
-
-When a change removes code, delete the tests that only guarded it. When a change moves code, move its tests with it.
+- Write expected values as literals: `toBe(80)`, not `price - price * 0.2`. A value built with the code's own logic passes a wrong result.
+- Find elements by role and accessible name. Assert what reaches the caller or the server, never private state, call order, class names, log lines or SQL.
+- Before you add a case, search property, conformance and simulation tests, the other layers, and the shared package's test for a re-exported module. Extend the test that covers the behavior. A reducer test owns the rule and a component test owns the wiring, so one flow has both ([CODING_STANDARDS.md](../CODING_STANDARDS.md#give-a-flow-one-state)).
+- A contract that live clients still call keeps its test: a supported phone release ([ADR 0032](adr/0032-the-phone-ships-over-the-air-and-the-api-keeps-every-supported-release-working.md)), a public link or a redirect.
+- Reach code through its public API, and inject a dependency where a test must replace one. Production code has no export, flag or type that only tests read. The exception is a reset that stands in for a restart, such as `resetWriteCache`, when a test proves what survives that restart. Its doc comment names the restart.
+- Pin exact wording, such as a prompt hash, only where something reads its version. `enrichment/prompt.test.ts` goes red until `ENRICHMENT_PROMPT_VERSION` rises, and `enrichment/recorded-run.ts` records that version.
+- A change that removes code removes the tests that only guarded it.
 
 ## Where a test goes
 

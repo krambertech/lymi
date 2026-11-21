@@ -659,6 +659,10 @@ export interface TypedItem {
   matches?: (typed: string) => boolean;
   /** The field's label and placeholder, when it asks for something other than a number. */
   prompt?: string;
+  /** What the Listen button shows instead of “Listen”, such as the words it plays. */
+  listen?: ReactNode;
+  /** The phone keyboard: numbers by default, letters for a typed word. */
+  inputMode?: "decimal" | "text";
 }
 
 /** Listen, then type. For numbers, prices and times. */
@@ -686,7 +690,9 @@ export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<
           heard();
           input.current?.focus({ preventScroll: true });
         }}
-      />
+      >
+        {item.listen}
+      </Listen>
       {note}
       <form
         className="flex w-full max-w-sm gap-2"
@@ -702,7 +708,8 @@ export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<
           value={value}
           onChange={(event) => setValue(event.target.value)}
           readOnly={done}
-          inputMode="decimal"
+          inputMode={item.inputMode ?? "decimal"}
+          autoCapitalize={item.inputMode === "text" ? "none" : undefined}
           autoComplete="off"
           spellCheck={false}
           aria-label={item.prompt ?? t`Type the number`}

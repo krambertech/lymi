@@ -169,7 +169,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 16,
         blurb: msg`A free lesson on the Estonian partitive case, a noun’s third form: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud.`,
       },
-      { name: msg`Plural`, et: "Kassid" },
+      {
+        slug: "mitmus",
+        name: msg`Plural`,
+        title: msg`Estonian plural`,
+        et: "Kassid",
+        minutes: 12,
+        blurb: msg`A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud.`,
+      },
       {
         slug: "majas-majja-majast",
         name: msg`In, into, out of`,

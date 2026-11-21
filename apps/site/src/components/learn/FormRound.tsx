@@ -34,16 +34,21 @@ export interface FormItem {
  * underlined. Inside the marked card the added letters stay in ink, not the stage's hue.
  */
 function Change({ base, form, src }: { base: string; form: string; src?: string | undefined }) {
-  const { t } = useLingui();
+  const { i18n } = useLingui();
   const parts = morph(base, form);
   return (
     <p className="flex flex-wrap items-center gap-3">
       <span
         lang="et"
         data-play=""
-        className="learn-morph learn-morph-ink min-w-0 text-3xl/tight font-semibold tracking-tight wrap-anywhere"
+        className="learn-morph learn-morph-ink min-w-0 text-3xl/tight font-semibold tracking-tight whitespace-nowrap"
       >
-        <span className="sr-only">{t`${base} becomes ${form}`}</span>
+        {/* The sentence is in the reader's language; only the forms in it are Estonian. */}
+        <span lang={i18n.locale} className="sr-only">
+          <Trans>
+            <span lang="et">{base}</span> becomes <span lang="et">{form}</span>
+          </Trans>
+        </span>
         <span aria-hidden="true">
           {parts.map((part, i) =>
             part.kind === "added" ? (

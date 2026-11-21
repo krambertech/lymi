@@ -499,11 +499,11 @@ export function SobragaRahataLesson() {
   const { t, i18n } = useLingui();
   const content = useContent();
   const clock = lessonBySlug("kell")?.n;
-  const threeForms = LESSONS.find((lesson) => lesson.et === "Kolm põhivormi")?.n;
-  const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
-  const past = LESSONS.find((lesson) => lesson.et === "Lihtminevik")?.n;
+  const threeForms = lessonBySlug("pohivormid")?.n;
+  const genitive = lessonBySlug("omastav")?.n;
+  const past = lessonBySlug("lihtminevik")?.n;
   const times = LESSONS.find((lesson) => lesson.et === "Esmaspäeval, aasta pärast")?.n;
-  const into = LESSONS.find((lesson) => lesson.et === "Majas, majja, majast")?.n;
+  const into = lessonBySlug("majas-majja-majast")?.n;
 
   const heardItems = useMemo<HeardItem[]>(() => {
     // The page opens on a -ta order, its answer second.

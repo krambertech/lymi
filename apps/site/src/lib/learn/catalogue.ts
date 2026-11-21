@@ -177,7 +177,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`How to say “I like” in Estonian`,
         et: "Mulle meeldib",
         minutes: 12,
-        blurb: msg`A free Estonian lesson on liking things: mulle, sulle, talle and the rest with meeldib, meeldivad for more than one thing, meeldib with a verb, ei meeldi, and feelings with mul on, such as mul on külm. Every sentence is read aloud.`,
+        blurb: msg`A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud.`,
       },
       { name: msg`Practice: at the market`, et: "Turul" },
       { name: msg`Past tense`, et: "Lihtminevik" },

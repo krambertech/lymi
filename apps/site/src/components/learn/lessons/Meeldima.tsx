@@ -89,6 +89,7 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Mul on kahju.": msg`I’m sorry. It’s a pity.`,
   "Tal on igav.": msg`He or she is bored.`,
   "Kas sul on külm?": msg`Are you cold?`,
+  "Ma olen väsinud.": msg`I’m tired.`,
   "Mulle maitseb kohv.": msg`Coffee tastes good to me.`,
   "Kas sulle maitseb?": msg`Does it taste good to you?`,
 };
@@ -109,7 +110,7 @@ const PERSON: Record<MeeldimaPerson["id"], MessageDescriptor> = {
   sa: msg`You, to one person`,
   ta: msg`He or she`,
   me: msg`We`,
-  te: msg`You, to more than one`,
+  te: msg`You, to more than one; polite you`,
   nad: msg`They`,
 };
 
@@ -131,7 +132,7 @@ const GLOSSARY: Glossary = {
     note: msg`Mulle meeldib kohv: I like coffee. For one thing, or a verb.`,
   },
   meeldivad: {
-    en: msg`please`,
+    en: msg({ message: "please", context: "meeldima" }),
     note: msg`Mulle meeldivad kassid: I like cats. For more than one thing.`,
   },
   "ei meeldi": {
@@ -338,7 +339,7 @@ function MoreFlip() {
           }
           tip={
             <Trans>
-              Whoever likes it: <span lang="et">mulle</span>, <span lang="et">talle</span>,{" "}
+              The same whoever likes it: <span lang="et">mulle</span>, <span lang="et">talle</span>,{" "}
               <span lang="et">meile</span> or <span lang="et">neile</span>.
             </Trans>
           }
@@ -385,7 +386,11 @@ function NoFlip() {
               <span lang="et">Ei meeldi</span> for both
             </Trans>
           }
-          tip={<Trans>One thing or more, the no is the same.</Trans>}
+          tip={
+            <Trans>
+              <span lang="et">Ei meeldi</span> is the same for one thing or more.
+            </Trans>
+          }
         />
       ) : (
         <FlipNote
@@ -440,6 +445,7 @@ export function MeeldimaLesson() {
   const present = lessonBySlug("olevik")?.n;
   const negation = lessonBySlug("eitus")?.n;
   const questions = lessonBySlug("kusimused")?.n;
+  const pronouns = lessonBySlug("mina-sina-tema")?.n;
   const mulOn = LESSONS.find((lesson) => lesson.et === "Mul on")?.n;
   const plural = LESSONS.find((lesson) => lesson.et === "Kassid")?.n;
   const onto = LESSONS.find((lesson) => lesson.et === "Laual, lauale, laualt")?.n;
@@ -509,7 +515,8 @@ export function MeeldimaLesson() {
       options: ["Mul", "Mulle"],
       why: (
         <Trans>
-          A feeling takes the <End>-l</End> form: <span lang="et">mul on igav</span>.
+          <span lang="et">Igav</span> takes the <End>-l</End> form:{" "}
+          <span lang="et">mul on igav</span>.
         </Trans>
       ),
     },
@@ -581,7 +588,7 @@ export function MeeldimaLesson() {
           line: "Ei, mulle on külm.",
           why: (
             <Trans>
-              A feeling takes the <End>-l</End> form, as having does:{" "}
+              <span lang="et">Külm</span> takes the <End>-l</End> form, as having does:{" "}
               <span lang="et">mul on külm</span>.
             </Trans>
           ),
@@ -660,8 +667,8 @@ export function MeeldimaLesson() {
         <Trans>
           To say you like something, put the person in the <End>-le</End> form before{" "}
           <span lang="et">meeldib</span>: <span lang="et">Mulle meeldib kohv</span> is I like
-          coffee. A feeling takes the <End>-l</End> form instead: <span lang="et">Mul on külm</span>
-          , I’m cold.
+          coffee. Some feelings take the <End>-l</End> form instead:{" "}
+          <span lang="et">Mul on külm</span>, I’m cold.
         </Trans>
       }
       facts={[
@@ -697,15 +704,16 @@ export function MeeldimaLesson() {
           more than one thing: <b lang="et">Mulle meeldib lugeda. Mulle meeldivad kassid.</b>
         </Trans>,
         <Trans key="3">
-          No is <b lang="et">ei meeldi</b> for both: <b lang="et">Mulle ei meeldi koerad.</b>
+          Not liking is <b lang="et">ei meeldi</b>, for one thing or more:{" "}
+          <b lang="et">Mulle ei meeldi koerad.</b>
         </Trans>,
         <Trans key="4">
           Ask with <b lang="et">kas</b> or <b lang="et">kellele</b>:{" "}
           <b lang="et">Kas sulle meeldib Tallinn? Kellele meeldib kohv?</b>
         </Trans>,
         <Trans key="5">
-          A feeling takes the <End>-l</End> form, as having does: <b lang="et">Mul on külm.</b>{" "}
-          <b lang="et">Mul on hea meel.</b>
+          Feelings such as cold and gladness take the <End>-l</End> form, as having does:{" "}
+          <b lang="et">Mul on külm.</b> <b lang="et">Mul on hea meel.</b>
         </Trans>,
       ]}
       sections={[
@@ -727,7 +735,7 @@ export function MeeldimaLesson() {
                   <Trans>
                     <Word w="Mulle" />, to me, is the <End>-le</End> form of{" "}
                     <span lang="et">mina</span>: <End>-le</End> says to whom, as in lesson {onto}.
-                    It sits beside the <End>-l</End> form of lesson {mulOn}:{" "}
+                    The table puts it beside the <End>-l</End> form of lesson {mulOn}:{" "}
                     <Word w="Mul on kass" />, I have a cat. Tap a form to hear it in a sentence.
                   </Trans>
                 </p>
@@ -763,7 +771,9 @@ export function MeeldimaLesson() {
                   ) : share >= 0.6 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>Tap the Likes column above once more, then try again.</Trans>
+                    <Trans>
+                      Tap the forms in the Likes column above once more, then try again.
+                    </Trans>
                   )
                 }
                 recall={(item) => ({ label: item.said, src: item.src })}
@@ -898,14 +908,16 @@ export function MeeldimaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A feeling takes the <End>-l</End> form of lesson {mulOn}, as having does:{" "}
+                    These feelings take the <End>-l</End> form of lesson {mulOn}, as having does:{" "}
                     <Word w="Mul on külm" />, I’m cold. Word for word, it’s “at me is cold”, with{" "}
-                    <span lang="et">mul</span>, not <span lang="et">mulle</span>.
+                    <span lang="et">mul</span>, not <span lang="et">mulle</span>. Others use{" "}
+                    <span lang="et">ma olen</span>, as in lesson {pronouns}:{" "}
+                    <Word w="Ma olen väsinud" />, I’m tired.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Other people work the same way: <Word w="Tal on igav" />, he or she is bored.{" "}
+                    It’s the same for other people: <Word w="Tal on igav" />, he or she is bored.{" "}
                     <Word w="Kas sul on külm" />? asks whether you’re cold. Tap a feeling to hear
                     it.
                   </Trans>
@@ -940,16 +952,17 @@ export function MeeldimaLesson() {
         },
         {
           id: "message",
-          title: t`Having, feeling and liking`,
+          title: t`Feeling and liking`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Mari writes to Jaan. Fill each gap: the <End>-l</End> form for having and
-                    feeling, the <End>-le</End> form for liking, and <span lang="et">meeldib</span>{" "}
-                    or <span lang="et">meeldivad</span> for what she likes.
+                    Mari writes to Jaan. Fill each gap: the <End>-l</End> form for a feeling, the{" "}
+                    <End>-le</End> form for liking and for to whom, and{" "}
+                    <span lang="et">meeldib</span> or <span lang="et">meeldivad</span> for what she
+                    likes.
                   </Trans>
                 </p>
               </Prose>
@@ -972,8 +985,8 @@ export function MeeldimaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Liis asks what you’d like to do. Each reply says how you feel or what you like;
-                    pick the one that fits.
+                    Liis invites you out. Each reply says how you feel or what you like; pick the
+                    one that fits.
                   </Trans>
                 </p>
               </Prose>

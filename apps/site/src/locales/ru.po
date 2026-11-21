@@ -480,8 +480,8 @@ msgstr "<0/>, «пожалуйста», делает команду вежлив
 msgid "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same for everyone."
 msgstr "<0/>, «быть», устроен так же. <1/> становится <2/>, и <3/> одинаково для всех."
 
-msgid "<0/>, to me, is the <1>-le</1> form of <2>mina</2>: <3>-le</3> says to whom, as in lesson {onto}. It sits beside the <4>-l</4> form of lesson {mulOn}: <5/>, I have a cat. Tap a form to hear it in a sentence."
-msgstr "<0/>, «мне», — форма на <1>-le</1> от <2>mina</2>: <3>-le</3> отвечает на вопрос «кому?», как в уроке {onto}. Рядом стоит форма на <4>-l</4> из урока {mulOn}: <5/>, у меня есть кот. Нажми на форму, чтобы услышать её в предложении."
+msgid "<0/>, to me, is the <1>-le</1> form of <2>mina</2>: <3>-le</3> says to whom, as in lesson {onto}. The table puts it beside the <4>-l</4> form of lesson {mulOn}: <5/>, I have a cat. Tap a form to hear it in a sentence."
+msgstr "<0/>, «мне», — форма на <1>-le</1> от <2>mina</2>: <3>-le</3> отвечает на вопрос «кому?», как в уроке {onto}. В таблице рядом — форма на <4>-l</4> из урока {mulOn}: <5/>, у меня есть кот. Нажми на форму, чтобы услышать её в предложении."
 
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> или <1>-ke</1> на конце"
@@ -512,6 +512,9 @@ msgstr "<0>E–R</0> на табличке: с понедельника по п�
 msgid "<0>Ei meeldi</0> for both"
 msgstr "<0>Ei meeldi</0> в обоих случаях"
 
+msgid "<0>Ei meeldi</0> is the same for one thing or more."
+msgstr "<0>Ei meeldi</0> одно и то же, одно это или несколько."
+
 msgid "<0>Ei ole</0> in one word"
 msgstr "<0>Ei ole</0> одним словом"
 
@@ -523,6 +526,9 @@ msgstr "<0>Ei</0> говорит, чего человек не делает; <1>
 
 msgid "<0>Ei</0>, and the verb without its ending."
 msgstr "<0>Ei</0> и глагол без окончания."
+
+msgid "<0>Igav</0> takes the <1>-l</1> form: <2>mul on igav</2>."
+msgstr "С <0>igav</0> — форма на <1>-l</1>: <2>mul on igav</2>."
 
 msgid "<0>Jonas</0> added 4 cards to Week 4"
 msgstr "<0>Jonas</0> добавил 4 карточки в неделю 4"
@@ -541,6 +547,9 @@ msgstr "<0>Kes</0> спрашивает о людях, <1>mis</1> — о вещ�
 
 msgid "<0>Kohv</0> is one thing, so it’s <1>meeldib</1>."
 msgstr "<0>Kohv</0> — что-то одно, поэтому нужно <1>meeldib</1>."
+
+msgid "<0>Külm</0> takes the <1>-l</1> form, as having does: <2>mul on külm</2>."
+msgstr "С <0>külm</0> — форма на <1>-l</1>, как и с «у меня есть»: <2>mul on külm</2>."
 
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> спрашивает, откуда ты, а не где живёшь."
@@ -939,18 +948,6 @@ msgstr "Не путай с английским embarrassed: «смущённы�
 msgid "a federal state."
 msgstr "федеративное государство."
 
-msgid "A feeling takes the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>."
-msgstr "Для чувств берётся форма на <0>-l</0> из урока {mulOn}, как и для «у меня есть»: <1/>, мне холодно. Дословно — «у меня холодно»: <2>mul</2>, а не <3>mulle</3>, хотя по-русски говорим «мне»."
-
-msgid "A feeling takes the <0>-l</0> form, as having does: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
-msgstr "Для чувств — форма на <0>-l</0>, как и для «у меня есть»: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
-
-msgid "A feeling takes the <0>-l</0> form, as having does: <1>mul on külm</1>."
-msgstr "Для чувств — форма на <0>-l</0>, как и для «у меня есть»: <1>mul on külm</1>."
-
-msgid "A feeling takes the <0>-l</0> form: <1>mul on igav</1>."
-msgstr "Для чувств — форма на <0>-l</0>: <1>mul on igav</1>."
-
 msgid "A few minutes a day"
 msgstr "Несколько минут в день"
 
@@ -975,8 +972,8 @@ msgstr "нога"
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "В бесплатной колоде есть каждый дорожный знак из правил: по картинке, с польским названием и номером."
 
-msgid "A free Estonian lesson on liking things: mulle, sulle, talle and the rest with meeldib, meeldivad for more than one thing, meeldib with a verb, ei meeldi, and feelings with mul on, such as mul on külm. Every sentence is read aloud."
-msgstr "Бесплатный урок эстонского о том, как сказать «мне нравится»: mulle, sulle, talle и другие с meeldib, meeldivad, когда нравится несколько вещей, meeldib с глаголом, ei meeldi и чувства с mul on, например mul on külm. Каждое предложение озвучено."
+msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о meeldima, «нравиться»: mulle meeldib и другие лица, meeldivad, когда нравится несколько вещей, meeldib с глаголом, ei meeldi, вопросы с kas и kellele и чувства, например mul on külm. Каждое предложение озвучено."
 
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о личных местоимениях: mina, sina, tema и другие в полной и краткой форме, и глагол olema, «быть». Каждое предложение озвучено."
@@ -1763,7 +1760,7 @@ msgid "All six. Every ending was right."
 msgstr "Все шесть. Каждое окончание верное."
 
 msgid "All six. You knew each person by their <0>-le</0> form."
-msgstr "Все шесть. Каждое лицо узнано по форме на <0>-le</0>."
+msgstr "Все шесть. Ты узнаёшь каждое лицо по форме на <0>-le</0>."
 
 msgid "All six. You matched every pronoun with its ending."
 msgstr "Все шесть. Каждое местоимение — со своим окончанием."
@@ -4074,8 +4071,14 @@ msgstr "Семья"
 msgid "father"
 msgstr "отец"
 
+msgid "Feeling and liking"
+msgstr "Чувствовать себя и нравиться"
+
 msgid "Feeling low; in a slump"
 msgstr "Плохое настроение; упадок сил"
+
+msgid "Feelings such as cold and gladness take the <0>-l</0> form, as having does: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
+msgstr "С чувствами вроде холода или радости — форма на <0>-l</0>, как и с «у меня есть»: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
 
 msgid "Feelings, travel and polite speech, once N5 feels easy."
 msgstr "Чувства, поездки и вежливая речь, когда N5 уже даётся легко."
@@ -4267,7 +4270,7 @@ msgid "For example: {list}."
 msgstr "Например: {list}."
 
 msgid "For food and drink there’s also <0/>, from maitsma, to taste. It takes the <1>-le</1> form too: <2/>, coffee tastes good to me. <3/>? asks whether you like what you’re eating."
-msgstr "О еде и напитках говорят ещё <0/>, от maitsma, «быть на вкус». С ним тоже форма на <1>-le</1>: <2/>, мне нравится вкус кофе. <3/>? — так спрашивают, вкусно ли тебе то, что ты ешь."
+msgstr "О еде и напитках говорят ещё <0/>, от maitsma, «быть по вкусу». С ним тоже форма на <1>-le</1>: <2/>, мне нравится вкус кофе. <3/>? — так спрашивают, вкусно ли тебе то, что ты ешь."
 
 msgid "For Germany, the US, Czechia and Spain, the decks follow the question list each exam publishes, named under the exam. Canada and the DMVs don’t publish their questions, so those decks are practice questions written from the official guide, and the language exam decks teach the vocabulary of each level rather than an official list. Lymi isn’t affiliated with any exam authority and can’t promise a pass."
 msgstr "Колоды для Германии, США, Чехии и Испании следуют списку вопросов, который публикует каждый экзамен; источник указан под экзаменом. Канада и DMV свои вопросы не публикуют, поэтому эти колоды — тренировочные вопросы по официальному пособию, а колоды языковых экзаменов учат лексике уровня, а не официальному списку. Lymi не связан ни с одним экзаменационным органом и не может гарантировать, что ты сдашь экзамен."
@@ -4496,7 +4499,7 @@ msgid "From lugema, to read."
 msgstr "От lugema, «читать»."
 
 msgid "From maitsma, to taste."
-msgstr "От maitsma, «быть на вкус»."
+msgstr "От maitsma, «быть по вкусу»."
 
 msgid "From maksma, to cost; also to pay."
 msgstr "От maksma, стоить; ещё значит «платить»."
@@ -4874,9 +4877,6 @@ msgstr "Ты уже поел? Так здороваются"
 
 msgid "Have you got the *key*?"
 msgstr "У тебя есть *ключ*?"
-
-msgid "Having, feeling and liking"
-msgstr "Иметь, чувствовать, любить"
 
 msgid "He doesn’t *like* rainy days."
 msgstr "Он не *любит* дождливые дни."
@@ -5743,6 +5743,9 @@ msgstr "Мне тридцать *лет*."
 msgid "I’m tired"
 msgstr "я устал (устала)"
 
+msgid "I’m tired."
+msgstr "Я устал, я устала."
+
 msgid "Ice, jää, plus edge, äär: four ä in a row."
 msgstr "Лёд — jää, край — äär: четыре ä подряд."
 
@@ -6163,6 +6166,9 @@ msgstr "Суббота, половина одиннадцатого, а по в�
 
 msgid "It’s the form that follows <0>ei</0> in lesson {negation}: <1/>, I don’t read. Tap either side of a pair to hear it."
 msgstr "Это та же форма, что идёт после <0>ei</0> в уроке {negation}: <1/>, я не читаю. Нажми на любую половину пары, чтобы услышать её."
+
+msgid "It’s the same for other people: <0/>, he or she is bored. <1/>? asks whether you’re cold. Tap a feeling to hear it."
+msgstr "С другими людьми так же: <0/>, ему или ей скучно. <1/>? — так спрашивают, холодно ли тебе. Нажми на чувство, чтобы его услышать."
 
 msgid "It’s three o’clock."
 msgstr "Три часа."
@@ -6637,7 +6643,7 @@ msgstr "Световые реакции"
 msgid "Liis"
 msgstr "Лийс"
 
-msgid "Liis asks what you’d like to do. Each reply says how you feel or what you like; pick the one that fits."
+msgid "Liis invites you out. Each reply says how you feel or what you like; pick the one that fits."
 msgstr "Лийс зовёт тебя куда-нибудь пойти. Каждый ответ говорит, что ты чувствуешь или что тебе нравится; выбери подходящий."
 
 msgid "Like the a in “cat”."
@@ -7074,8 +7080,8 @@ msgstr "Мари работает в больнице."
 msgid "Mari writes"
 msgstr "Мари пишет"
 
-msgid "Mari writes to Jaan. Fill each gap: the <0>-l</0> form for having and feeling, the <1>-le</1> form for liking, and <2>meeldib</2> or <3>meeldivad</3> for what she likes."
-msgstr "Мари пишет Яану. Заполни каждый пропуск: форма на <0>-l</0> — чтобы иметь и чувствовать, форма на <1>-le</1> — чтобы нравилось, а для того, что ей нравится, — <2>meeldib</2> или <3>meeldivad</3>."
+msgid "Mari writes to Jaan. Fill each gap: the <0>-l</0> form for a feeling, the <1>-le</1> form for liking and for to whom, and <2>meeldib</2> or <3>meeldivad</3> for what she likes."
+msgstr "Мари пишет Яану. Заполни каждый пропуск: форма на <0>-l</0> — для чувств, форма на <1>-le</1> — для «нравится» и «кому», а <2>meeldib</2> или <3>meeldivad</3> — в зависимости от того, что ей нравится."
 
 msgid "Mari’s brother"
 msgstr "Брат Мари"
@@ -7114,7 +7120,7 @@ msgid "Match"
 msgstr "Пары"
 
 msgid "Match each feeling to when you’d say it."
-msgstr "Соедини каждое чувство с тем, когда так говорят."
+msgstr "Соедини каждое чувство с ситуацией, в которой так говорят."
 
 msgid "Match, Blast and Quizlet Live"
 msgstr "Match, Blast и Quizlet Live"
@@ -7531,9 +7537,6 @@ msgstr "В русском такого звука нет, но близко к �
 msgid "No good; won’t do"
 msgstr "Нельзя; не годится"
 
-msgid "No is <0>ei meeldi</0> for both: <1>Mulle ei meeldi koerad.</1>"
-msgstr "«Нет» — всегда <0>ei meeldi</0>: <1>Mulle ei meeldi koerad.</1>"
-
 msgid "No limit"
 msgstr "Без лимита"
 
@@ -7662,6 +7665,9 @@ msgstr "Нет встроенной поддержки"
 
 msgid "Not for most certifications yet. Your assistant can turn your study guide into a deck in a few minutes, and a deck from Anki or Mochi imports with its review history."
 msgstr "Для большинства сертификаций пока нет. Ассистент может за несколько минут превратить твоё пособие в колоду, а колода из Anki или Mochi импортируется вместе с историей повторений."
+
+msgid "Not liking is <0>ei meeldi</0>, for one thing or more: <1>Mulle ei meeldi koerad.</1>"
+msgstr "«Не нравится» — это <0>ei meeldi</0>, одно это или несколько: <1>Mulle ei meeldi koerad.</1>"
 
 msgid "Not marked important"
 msgstr "Не отмечена как важная"
@@ -8004,14 +8010,11 @@ msgstr "Когда что-то одно или действие — или ко�
 msgid "One thing or more"
 msgstr "Одно или несколько"
 
-msgid "One thing or more, the no is the same."
-msgstr "Одно или несколько — отрицание одно и то же."
-
 msgid "one thing, or a verb"
 msgstr "что-то одно или действие"
 
 msgid "One thing, or a verb in its <0>-da</0> form, takes <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
-msgstr "Когда нравится что-то одно или действие в форме на <0>-da</0>, нужно <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
+msgstr "Когда нравится что-то одно или глагол в форме на <0>-da</0>, нужно <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
 
 msgid "One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 msgstr "По одному направлению за раз: китайское слово — вспомни значение, или значение — вспомни китайское. Вспоминаешь ответ, переворачиваешь карточку и оцениваешь, насколько легко вспомнилось. Ничего набирать не нужно."
@@ -8117,9 +8120,6 @@ msgstr "Другие MCP-приложения"
 
 msgid "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
 msgstr "Остальные минуты, до двадцати после ровного часа, считают от прошедшего часа. <0/> — дословно «десять минут, три прошло»: 3:10. <1/> значит «сквозь» или «прошло», а <2/> — партитив от <3>minut</3>, форма после числа; её объясняет урок {partitive}."
-
-msgid "Other people work the same way: <0/>, he or she is bored. <1/>? asks whether you’re cold. Tap a feeling to hear it."
-msgstr "С другими людьми так же: <0/>, ему или ей скучно. <1/>? — так спрашивают, холодно ли тебе. Нажми на чувство, чтобы его услышать."
 
 msgid "Other people, not the ones you’re talking to."
 msgstr "Другие люди, не те, с кем ты говоришь."
@@ -8452,6 +8452,10 @@ msgstr "Приятный; уютный"
 msgid "please"
 msgstr "пожалуйста"
 
+msgctxt "meeldima"
+msgid "please"
+msgstr "нравятся"
+
 msgid "Please"
 msgstr "Пожалуйста"
 
@@ -8712,7 +8716,7 @@ msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else move
 msgstr "Чтобы спросить «да или нет», поставь <0>kas</0> перед предложением. Больше ничего не двигается: <1>Kas sa elad Tallinnas?</1>"
 
 msgid "Put each word under the verb it takes after <0>mulle</0>: <1>meeldib</1> for one thing or a verb, <2>meeldivad</2> for more than one thing."
-msgstr "Разложи слова по глаголу, который с ними будет после <0>mulle</0>: <1>meeldib</1>, когда что-то одно или действие, <2>meeldivad</2>, когда несколько."
+msgstr "Для каждого слова выбери, что будет после <0>mulle</0>: <1>meeldib</1>, когда что-то одно или действие, или <2>meeldivad</2>, когда несколько."
 
 msgid "Put every word in a group first."
 msgstr "Сначала разложи все слова по группам."
@@ -10233,8 +10237,8 @@ msgstr "Ещё раз нажми на команды выше, а потом п�
 msgid "Tap the Do and Don’t lines above once more, then try again."
 msgstr "Ещё раз послушай строки «Делай» и «Не делай» выше, а потом попробуй снова."
 
-msgid "Tap the Likes column above once more, then try again."
-msgstr "Ещё раз нажми на столбец «Нравится» выше, а потом попробуй снова."
+msgid "Tap the forms in the Likes column above once more, then try again."
+msgstr "Ещё раз нажми на формы в столбце «Нравится» выше, а потом попробуй снова."
 
 msgid "Tap the places above once more, then try again."
 msgstr "Ещё раз нажми на места выше, а потом попробуй снова."
@@ -10264,7 +10268,7 @@ msgid "Tartu, a university town"
 msgstr "Тарту, университетский город"
 
 msgid "tastes good"
-msgstr "вкусно, по вкусу"
+msgstr "нравится на вкус"
 
 msgid "tasty"
 msgstr "вкусный"
@@ -10980,6 +10984,9 @@ msgstr "Та же таблица для глагола: лица в строка
 msgid "The same topic in other languages"
 msgstr "Та же тема на других языках"
 
+msgid "The same whoever likes it: <0>mulle</0>, <1>talle</1>, <2>meile</2> or <3>neile</3>."
+msgstr "Одинаково, кому нравится: <0>mulle</0>, <1>talle</1>, <2>meile</2> или <3>neile</3>."
+
 msgid "The same with a house: the cat walks in, sits inside, and comes out."
 msgstr "То же с домом: кот заходит, сидит внутри и выходит."
 
@@ -11171,6 +11178,9 @@ msgstr "Весь вечер нечего делать."
 
 msgid "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
 msgstr "Из этих одиннадцати слов строится любое число до 99. Нажми на каждое. Две пары звучат похоже: <0/> и <1/>, <2/> и <3/>."
+
+msgid "These feelings take the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>. Others use <4>ma olen</4>, as in lesson {pronouns}: <5/>, I’m tired."
+msgstr "С этими чувствами — форма на <0>-l</0> из урока {mulOn}, как и с «у меня есть»: <1/>, мне холодно. Дословно — «у меня холодно»: <2>mul</2>, а не <3>mulle</3>, хотя по-русски говорим «мне». Другие чувства — с <4>ma olen</4>, как в уроке {pronouns}: <5/>, я устал."
 
 msgid "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
 msgstr "Эти шаги для Gemini CLI, который работает где угодно. В приложении Gemini Google открывает пользовательские приложения только для взрослых в США и на английском."
@@ -11638,7 +11648,7 @@ msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don�
 msgstr "Чтобы сказать «не», поставь <0/> перед глаголом. <1/> — «я читаю», а <2/> — «я не читаю». Глагол теряет окончание, а <3/> одно и то же, о ком бы ни шла речь."
 
 msgid "To say who likes something, put the person in the <0>-le</0> form: <1>Mulle meeldib kohv.</1>"
-msgstr "Чтобы сказать, кому что-то нравится, поставь лицо в форму на <0>-le</0>: <1>Mulle meeldib kohv.</1>"
+msgstr "Чтобы сказать, кому что-то нравится, поставь местоимение в форму на <0>-le</0>: <1>Mulle meeldib kohv.</1>"
 
 msgid "To say you don’t like something, put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1/>. It’s <2/> for more than one thing too: <3/>."
 msgstr "Чтобы сказать, что что-то не нравится, поставь <0>ei</0> перед глаголом и убери окончание, как в уроке {negation}: <1/>. Когда этого несколько, тоже <2/>: <3/>."
@@ -11646,8 +11656,8 @@ msgstr "Чтобы сказать, что что-то не нравится, п�
 msgid "To say you like doing something, put a verb’s <0>-da</0> form after <1>meeldib</1>: <2/>, I like reading. Lesson {verbForms} shows each verb’s <3>-da</3> form."
 msgstr "Чтобы сказать, что тебе нравится что-то делать, поставь после <1>meeldib</1> глагол в форме на <0>-da</0>: <2/>, мне нравится читать. Форму на <3>-da</3> каждого глагола показывает урок {verbForms}."
 
-msgid "To say you like something, put the person in the <0>-le</0> form before <1>meeldib</1>: <2>Mulle meeldib kohv</2> is I like coffee. A feeling takes the <3>-l</3> form instead: <4>Mul on külm</4>, I’m cold."
-msgstr "Чтобы сказать, что тебе что-то нравится, поставь лицо в форму на <0>-le</0> перед <1>meeldib</1>: <2>Mulle meeldib kohv</2> — мне нравится кофе. А для чувств берётся форма на <3>-l</3>: <4>Mul on külm</4>, мне холодно."
+msgid "To say you like something, put the person in the <0>-le</0> form before <1>meeldib</1>: <2>Mulle meeldib kohv</2> is I like coffee. Some feelings take the <3>-l</3> form instead: <4>Mul on külm</4>, I’m cold."
+msgstr "Чтобы сказать, что тебе что-то нравится, поставь местоимение в форму на <0>-le</0> перед <1>meeldib</1>: <2>Mulle meeldib kohv</2> — мне нравится кофе. А некоторые чувства берут форму на <3>-l</3>: <4>Mul on külm</4>, мне холодно."
 
 msgid "to school"
 msgstr "в школу"
@@ -11710,7 +11720,7 @@ msgid "To work"
 msgstr "Работать"
 
 msgid "to you, more than one; polite"
-msgstr "вам; вежливое «Вам»"
+msgstr "вам: нескольким людям или вежливо"
 
 msgid "to you, one person"
 msgstr "тебе"
@@ -12773,9 +12783,6 @@ msgstr "Кто, что, где"
 msgid "Who? Me!"
 msgstr "Кто? Я!"
 
-msgid "Whoever likes it: <0>mulle</0>, <1>talle</1>, <2>meile</2> or <3>neile</3>."
-msgstr "Кому бы ни нравилось: <0>mulle</0>, <1>talle</1>, <2>meile</2> или <3>neile</3>."
-
 msgid "Whose notes"
 msgstr "Чьи заметки"
 
@@ -13314,11 +13321,11 @@ msgstr "вы"
 msgid "You, the one speaking."
 msgstr "Ты — тот, кто говорит."
 
-msgid "You, to more than one"
-msgstr "Вы"
-
 msgid "you, to more than one; polite you"
 msgstr "вы; вежливое «Вы»"
+
+msgid "You, to more than one; polite you"
+msgstr "Вы: несколько человек или вежливо"
 
 msgid "you, to one person"
 msgstr "ты"

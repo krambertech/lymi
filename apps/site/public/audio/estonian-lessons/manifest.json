@@ -4649,6 +4649,11 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "meeldima/ma-olen-va2sinud": {
+    "text": "Ma olen väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "meeldima/mulle-maitseb-kohv": {
     "text": "Mulle maitseb kohv.",
     "model": "eleven_v4",

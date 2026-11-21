@@ -934,6 +934,7 @@ export const MEELDIMA_WORDS = [
   "maitseb",
   "Tal on igav.",
   "Kas sul on külm?",
+  "Ma olen väsinud.",
   "Mulle maitseb kohv.",
   "Kas sulle maitseb?",
   "kassid",

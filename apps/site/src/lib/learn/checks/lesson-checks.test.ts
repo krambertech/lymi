@@ -180,9 +180,7 @@ function shown(option: unknown): string {
   if (typeof label !== "object" || label === null) return String(id);
   let text = labelTexts.get(label);
   if (text === undefined) {
-    const html = renderToStaticMarkup(
-      createElement(Island, { locale: "en", children: label as ReactNode }),
-    );
+    const html = renderToStaticMarkup(createElement(Island, { locale: "en" }, label as ReactNode));
     text = textOf(parse(html, "en")).trim() || String(id);
     labelTexts.set(label, text);
   }

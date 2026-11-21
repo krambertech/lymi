@@ -82,8 +82,8 @@ function KindTable() {
     ),
     vowel: (
       <Trans>
-        Short words swap the last vowel of the third form: a for u, i for e, u for e.{" "}
-        <Et>maja, maju</Et>; <Et>kooli, koole</Et>; <Et>lindu, linde</Et>.
+        Short words change the last vowel of the third form: <Et>maja, maju</Et>;{" "}
+        <Et>kooli, koole</Et>; <Et>lindu, linde</Et>.
       </Trans>
     ),
     long: (
@@ -139,11 +139,7 @@ function useContent() {
   const { t } = useLingui();
   return useMemo(() => {
     const whys: Record<string, ReactNode> = {
-      two: (
-        <Trans>
-          After a number, the singular third form.
-        </Trans>
-      ),
+      two: <Trans>After a number, the singular third form.</Trans>,
       many: (
         <Trans>
           After <Et>palju</Et>, the plural third form.
@@ -185,7 +181,7 @@ function useContent() {
         options: [
           { id: "bread", label: t`Bread and cheese` },
           { id: "fruit", label: t`Apples and bananas` },
-          { id: "cakes", label: t`Cakes and flowers for the table` },
+          { id: "cakes", label: t`Cakes` },
         ],
         answer: "fruit",
         line: 1,
@@ -195,8 +191,8 @@ function useContent() {
         ask: t`Who is bringing flowers?`,
         options: [
           { id: "friends", label: t`Kati’s friends` },
-          { id: "children", label: t`The children` },
-          { id: "mother", label: t`Kati’s mother and father` },
+          { id: "mother", label: t`Her mother and father` },
+          { id: "children", label: t`The neighbours’ children` },
         ],
         answer: "friends",
         line: 3,
@@ -205,9 +201,9 @@ function useContent() {
         id: "children",
         ask: t`What are the children eating?`,
         options: [
-          { id: "apples", label: t`Apples` },
-          { id: "bananas", label: t`Bananas and apples` },
+          { id: "soup", label: t`Soup` },
           { id: "cakes", label: t`Cakes` },
+          { id: "fruit", label: t`Bananas and apples` },
         ],
         answer: "cakes",
         line: 4,
@@ -248,7 +244,8 @@ export function RaamatuidMajuLesson() {
       words={["palju", "sünnipäev", "külalisi", "lilli"]}
       recap={[
         <Trans key="1">
-          Some or many things, no number: the plural third form. <b lang="et">Mul on palju raamatuid.</b>
+          Some or many things, no number: the plural third form.{" "}
+          <b lang="et">Mul on palju raamatuid.</b>
         </Trans>,
         <Trans key="2">
           After a number, still the singular: <b lang="et">kaks raamatut</b>.
@@ -258,7 +255,8 @@ export function RaamatuidMajuLesson() {
           <b lang="et">raamatuid</b>), or a new last vowel (<b lang="et">maju, koole</b>).
         </Trans>,
         <Trans key="4">
-          Learn it as the fourth key form, with the dictionary form, the genitive and the third form.
+          Learn it as the fourth key form, with the dictionary form, the genitive and the third
+          form.
         </Trans>,
       ]}
       sections={[
@@ -272,8 +270,8 @@ export function RaamatuidMajuLesson() {
                   <Trans>
                     Lesson {partitive} used the third form for some of a thing: <Et>leiba</Et>,{" "}
                     <Et>kohvi</Et>. For some or many things you can count, the third form goes into
-                    the plural. In English it’s the difference between some bread and some apples,
-                    a lot of coffee and a lot of books.
+                    the plural. In English it’s the difference between some bread and some apples, a
+                    lot of coffee and a lot of books.
                   </Trans>
                 </p>
                 <p>
@@ -302,9 +300,9 @@ export function RaamatuidMajuLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The plural third form ends in <Et>-sid</Et>, <Et>-id</Et>, or a vowel. Which one a
-                    word takes is hard to guess, so a dictionary gives it as a fourth key form, after
-                    the three of lesson {forms}. The patterns below cover most everyday words.
+                    The plural third form ends in <Et>-sid</Et>, <Et>-id</Et>, or a vowel. Which one
+                    a word takes is hard to guess, so a dictionary gives it as a fourth key form,
+                    after the three of lesson {forms}. The patterns below cover most everyday words.
                   </Trans>
                 </p>
               </Prose>

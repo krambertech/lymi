@@ -2472,7 +2472,14 @@ export const PLURAL_PART_PARTY = [
   "Lapsed söövad kooke.",
 ] as const;
 
-export const PLURAL_PART_WORDS = ["palju", "sünnipäev", "külalisi", "lilli", "kooke", "banaane"] as const;
+export const PLURAL_PART_WORDS = [
+  "palju",
+  "sünnipäev",
+  "külalisi",
+  "lilli",
+  "kooke",
+  "banaane",
+] as const;
 
 const PLURAL_PART_CLIPS: Record<string, Clip> = {
   ...words(PLURAL_PART_WORDS),

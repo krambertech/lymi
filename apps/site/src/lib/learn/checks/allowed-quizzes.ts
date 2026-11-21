@@ -59,6 +59,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "Each round offers the forms of one noun: raamatu against raamatut and pileti against piletit is the lesson, and the words around the gap decide it.",
   },
   {
+    lesson: "raamatuid-maju",
+    quiz: "two-or-many",
+    reason:
+      "Each round offers one noun's singular third form, plural third form and plural: õuna against õunad is the lesson, and the word before the gap decides it.",
+  },
+  {
     lesson: "jalg-jala",
     quiz: "kati-room",
     reason:

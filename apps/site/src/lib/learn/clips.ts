@@ -671,6 +671,127 @@ export const KASKIV_DIALOGUE = {
 } as const satisfies Record<string, Clip>;
 
 /**
+ * The owners of the lesson on “to have”: each short pronoun, its -l form, the long -l form said
+ * for stress, and a sentence. Checked in ÕS 2025 on Sõnaveeb (EKI morphology): mul, minul; sul,
+ * sinul; tal, temal; meil; teil; neil, nendel.
+ */
+export const MUL_ON_OWNERS = [
+  { pronoun: "ma", owner: "mul", long: "minul", said: "Mul on kass." },
+  { pronoun: "sa", owner: "sul", long: "sinul", said: "Sul on auto." },
+  { pronoun: "ta", owner: "tal", long: "temal", said: "Tal on koer." },
+  { pronoun: "me", owner: "meil", long: "meil", said: "Meil on maja." },
+  { pronoun: "te", owner: "teil", long: "teil", said: "Kas teil on küsimus?" },
+  { pronoun: "nad", owner: "neil", long: "nendel", said: "Neil on laps." },
+] as const;
+
+export type MulOnOwner = (typeof MUL_ON_OWNERS)[number]["owner"];
+
+/** “Who has it?”: two sentences for each owner, heard and matched to the owner. */
+export const MUL_ON_HEARD = [
+  { owner: "mul", said: "Mul on kass." },
+  { owner: "mul", said: "Mul on küsimus." },
+  { owner: "sul", said: "Sul on auto." },
+  { owner: "sul", said: "Kas sul on raamat?" },
+  { owner: "tal", said: "Tal on koer." },
+  { owner: "tal", said: "Tal on hea õpetaja." },
+  { owner: "meil", said: "Meil on maja." },
+  { owner: "meil", said: "Meil on kodu Tartus." },
+  { owner: "teil", said: "Kas teil on küsimus?" },
+  { owner: "teil", said: "Kas teil on auto?" },
+  { owner: "neil", said: "Neil on laps." },
+  { owner: "neil", said: "Neil on maja Pärnus." },
+] as const satisfies readonly { owner: MulOnOwner; said: string }[];
+
+/** I am, or I have: the same words with the pronoun and olema, and with the -l form and on. */
+export const MUL_ON_SWITCH = [
+  { am: "Ma olen kass.", have: "Mul on kass." },
+  { am: "Sa oled õpetaja.", have: "Sul on õpetaja." },
+  { am: "Ta on hea sõber.", have: "Tal on hea sõber." },
+  { am: "Me oleme kodus.", have: "Meil on kodu." },
+] as const;
+
+/** “Am or have?”: pairs to tell apart by ear. */
+export const MUL_ON_AM_HAVE = [
+  { am: "Ma olen õpetaja.", have: "Mul on õpetaja." },
+  { am: "Sa oled hea sõber.", have: "Sul on hea sõber." },
+  { am: "Ta on laps.", have: "Tal on laps." },
+  { am: "Nad on kodus.", have: "Neil on kodu." },
+] as const;
+
+/**
+ * Names and nouns with -l, on the genitive: Mari, Mari, Maril; Jaan, Jaani, Jaanil; sõber, sõbra,
+ * sõbral. ÕS 2025 on Sõnaveeb: emal, isal, sõbral, õpetajal, kellel; Maril and Jaanil as forms
+ * of the names.
+ */
+export const MUL_ON_NAMES = [
+  { word: "Mari", genitive: "Mari", owner: "Maril", said: "Maril on kass." },
+  { word: "Jaan", genitive: "Jaani", owner: "Jaanil", said: "Jaanil on auto." },
+  { word: "ema", genitive: "ema", owner: "emal", said: "Emal on küsimus." },
+  { word: "isa", genitive: "isa", owner: "isal", said: "Isal on koer." },
+  { word: "sõber", genitive: "sõbra", owner: "sõbral", said: "Minu sõbral on maja." },
+  { word: "õpetaja", genitive: "õpetaja", owner: "õpetajal", said: "Õpetajal on raamat." },
+] as const;
+
+/** Questions and answers: kellel, yes and no, and mul on vaja. */
+export const MUL_ON_LINES = {
+  "q-kellel-auto": "Kellel on auto?",
+  "a-jaanil": "Jaanil.",
+  "q-kellel-kusimus": "Kellel on küsimus?",
+  "a-minul": "Minul.",
+  "q-sul-auto": "Kas sul on auto?",
+  "a-jah-on": "Jah, on.",
+  "a-ei-ole": "Ei ole.",
+  "a-pole": "Pole.",
+  "q-sul-aega": "Kas sul on aega?",
+  "a-pole-aega": "Mul pole aega.",
+  "v-raha": "Mul on vaja raha.",
+  "v-abi": "Mul on vaja abi.",
+  "v-sul-abi": "Kas sul on vaja abi?",
+} as const;
+
+/** Mari's note, with a gap at each owner and each on. */
+export const MUL_ON_PASSAGE = [
+  "Mina olen Mari.",
+  "Mul on kass.",
+  "Minu ema on õpetaja.",
+  "Emal on auto.",
+  "Jaan on minu sõber.",
+  "Jaanil on koer.",
+  "Me elame Tartus.",
+  "Meil on hea kodu.",
+  "Kas sul on kass?",
+] as const;
+
+/**
+ * At home with a flatmate, Liis: her lines in the second voice, the learner's in the main one.
+ * Jaani is Jaan's genitive, from the lesson on the genitive.
+ */
+export const MUL_ON_DIALOGUE = {
+  "d-liis-1": { text: "Tere! Kas sul on aega?", voice: "second" },
+  "d-sina-1": "Jah, on.",
+  "d-liis-2": { text: "Mul on vaja abi. Kas sul on auto?", voice: "second" },
+  "d-sina-2": "Ei ole. Aga Jaanil on auto.",
+  "d-liis-3": { text: "Hästi! Kellel on Jaani number?", voice: "second" },
+  "d-sina-3": "Mul on.",
+  "d-liis-4": { text: "Aitäh! Kas sul on homme aega?", voice: "second" },
+  "d-sina-4": "Ei, mul pole homme aega.",
+} as const satisfies Record<string, Clip>;
+
+/** Words the lesson on “to have” says on their own. */
+export const MUL_ON_WORDS = [
+  ...MUL_ON_OWNERS.flatMap(({ owner, long }) => [owner, long]),
+  ...MUL_ON_NAMES.map(({ owner }) => owner),
+  "kellel",
+  "vaja",
+  "koer",
+  "küsimus",
+  "raha",
+  "abi",
+  "Hästi, aitäh. Aga sul?",
+  ...MUL_ON_NAMES.flatMap(({ word, genitive }) => [word, genitive]),
+] as const;
+
+/**
  * The practice parts' demo on /components/lessons: Jaan introduces himself, Mari writes about
  * herself, a passage with gaps, and meeting Mari. Words from lessons 1–5.
  */
@@ -902,5 +1023,17 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  "mul-on": {
+    ...words([
+      ...MUL_ON_WORDS,
+      ...MUL_ON_HEARD.map(({ said }) => said),
+      ...MUL_ON_SWITCH.flatMap(({ am, have }) => [am, have]),
+      ...MUL_ON_AM_HAVE.flatMap(({ am, have }) => [am, have]),
+      ...MUL_ON_NAMES.map(({ said }) => said),
+    ]),
+    ...MUL_ON_LINES,
+    "p-mari": { sentences: MUL_ON_PASSAGE },
+    ...MUL_ON_DIALOGUE,
+  },
   kit: KIT_CLIPS,
 };

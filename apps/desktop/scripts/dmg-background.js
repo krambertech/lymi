@@ -1,5 +1,3 @@
-// Renders the download window's background, `assets/dmg-background.tiff`, at 1x and 2x from Lymi's
-// own tokens and type. Finder draws the two icons and their names over it. README.md.
 import { execFileSync } from "node:child_process";
 import { mkdtempSync, rmSync, writeFileSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -15,9 +13,6 @@ const font = createRequire(join(root, "apps/web/package.json")).resolve(
 );
 const tokens = join(root, "packages/design/tokens.css");
 
-// The window is 640 by 400 points; the icons' centres, (180, 214) and (460, 214), are in scripts/dmg.py.
-// The light room with the lantern lit: Lymi's icon is the lantern, so its light pools around it,
-// and the arrow brightens as it carries that light to the folder it should land in.
 const html = `<!doctype html>
 <html data-theme="light"><head><meta charset="utf-8">
 <link rel="stylesheet" href="${pathToFileURL(tokens)}">
@@ -54,7 +49,6 @@ const html = `<!doctype html>
 </body></html>`;
 
 const stage = mkdtempSync(join(tmpdir(), "lymi-dmg-background-"));
-// Opened as a file, since a page set from a string may not read the tokens and font from disk.
 const source = join(stage, "background.html");
 writeFileSync(source, html);
 const browser = await chromium.launch();
@@ -71,7 +65,6 @@ try {
     await page.screenshot({ path });
     shots.push(path);
   }
-  // One TIFF holding both sizes, so Finder draws the sharp one on a Retina screen.
   execFileSync("tiffutil", [
     "-cathidpicheck",
     ...shots,

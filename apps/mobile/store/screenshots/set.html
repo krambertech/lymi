@@ -69,9 +69,9 @@
   .copy h1 em { font-style: normal; color: var(--amber); }
   .copy p { margin-top: 44px; font-size: 54px; font-weight: 450; line-height: 1.28; letter-spacing: -0.01em; color: var(--ivory-2); max-width: 26ch; text-wrap: pretty; }
   .copy.center p { margin-inline: auto; }
-  .hero-copy h1 { font-size: 122px; }
-  .hero-copy p { font-size: 48px; margin-top: 34px; }
-  .hero-copy .badge { margin-top: 32px; font-size: 42px; padding: 18px 38px; }
+  .hero-copy h1 { font-size: 136px; }
+  .hero-copy p { font-size: 52px; margin-top: 38px; }
+  .hero-copy .badge { margin-top: 40px; font-size: 44px; padding: 20px 40px; }
 
   /* An iPhone drawn around a raw Simulator capture. */
   .phone {
@@ -208,10 +208,10 @@
     // 1 · Learn anything: the lantern over the headline, Today in front and a review behind it.
     () => {
       add(`<div class="abs" style="left:-400px;top:-250px;width:2120px;height:2000px;border-radius:50%;background:radial-gradient(closest-side, #fdb44366, #f0a7322e 40%, transparent 70%);z-index:0"></div>`);
-      add(`<img class="abs" src="${brand}lantern-dark.svg" style="width:300px;left:510px;top:70px;z-index:3;filter:drop-shadow(0 0 100px #fdb443aa)">`);
-      add(`<div class="copy center hero-copy" style="top:380px"><h1>${T.shots.hero[0]}</h1><p>${T.shots.hero[1]}</p><span class="badge">${T.free}</span></div>`);
-      phone(raw("02-review"), { pw: 800, x: -10, y: 1230, rot: -7, z: 2 });
-      phone(raw("01-today"), { pw: 800, x: 520, y: 1130, rot: 5, z: 4 });
+      add(`<img class="abs" src="${brand}lantern-dark.svg" style="width:300px;left:510px;top:140px;z-index:3;filter:drop-shadow(0 0 100px #fdb443aa)">`);
+      add(`<div class="copy center hero-copy" style="top:470px"><h1>${T.shots.hero[0]}</h1><p>${T.shots.hero[1]}</p><span class="badge">${T.free}</span></div>`);
+      phone(raw("02-review"), { pw: 800, x: -10, y: 1310, rot: -7, z: 2 });
+      phone(raw("01-today"), { pw: 800, x: 520, y: 1210, rot: 5, z: 4 });
     },
     // 2 · Ready decks: no phone; the languages in their own scripts and the subjects people study for.
     () => {

@@ -1,5 +1,6 @@
-import { resetGradeCache } from "@lymi/client/grades";
+import { flushOutbox, resetGradeCache } from "@lymi/client/grades";
 import { type ReviewFlow, type ReviewPlatform, useReviewFlow } from "@lymi/client/review-flow";
+import { flushWrites, resetWriteCache, SEND_TIMEOUT } from "@lymi/client/writes";
 import type { GradeOut, StreakOut } from "@lymi/core";
 import { QueryClient, QueryClientProvider, QueryObserver } from "@tanstack/react-query";
 import type { ReactNode } from "react";
@@ -77,8 +78,11 @@ function gradeShown(flow: ReviewFlow) {
 }
 
 beforeEach(() => {
+  // Real timers first, in case a previous file on this page left fake ones installed.
+  vi.useRealTimers();
   localStorage.clear();
   resetGradeCache();
+  resetWriteCache();
   qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   vi.spyOn(api, "streak").mockResolvedValue({
     reviewedDays: 1,
@@ -88,8 +92,15 @@ beforeEach(() => {
   vi.spyOn(api, "rounds").mockResolvedValue({} as Awaited<ReturnType<typeof api.rounds>>);
 });
 
-afterEach(() => {
+afterEach(async () => {
   vi.useRealTimers();
+  // A flush queues behind the one in flight, under the same Web Lock, so waiting on one more lets a
+  // leftover send finish on its mocks and stop writing to storage before the next test clears it.
+  // Capped, since a send that never answers can't be aborted from here.
+  await Promise.race([
+    Promise.allSettled([flushWrites(), flushOutbox()]),
+    new Promise((resolve) => setTimeout(resolve, 1000)),
+  ]);
   vi.restoreAllMocks();
 });
 
@@ -249,9 +260,35 @@ test("steps forward again when the server keeps a grade Undo took back", async (
 
 test("fetches the next day's draw when the day ends during a review", async () => {
   // The test owns the clock, so a slow runner cannot reach the day's end before the first draw.
+  // Only Date is faked. Faking setTimeout too stops React Query notifying (it uses setTimeout(0))
+  // and stops fresh() from capping a stuck flush, which is why this test flaked under waitFor.
   const start = new Date("2026-11-01T12:00:00Z").getTime();
   const end = start + 60 * 60_000;
-  vi.useFakeTimers({ now: start, toFake: ["Date", "setTimeout", "clearTimeout"] });
+  vi.useFakeTimers({ now: start, toFake: ["Date"] });
+  const longTimers = new Map<object, () => void>();
+  const realSetTimeout = globalThis.setTimeout.bind(globalThis);
+  const realClearTimeout = globalThis.clearTimeout.bind(globalThis);
+  vi.spyOn(globalThis, "setTimeout").mockImplementation(((
+    fn: TimerHandler,
+    delay?: number,
+    ...args: unknown[]
+  ) => {
+    // Anything longer than a send's own timeout is the day's timer; shorter ones stay real so the
+    // hook can settle, and the test never waits on a real day-long timer.
+    if (typeof fn === "function" && (delay ?? 0) > SEND_TIMEOUT) {
+      const handle = { long: true };
+      longTimers.set(handle, () => fn(...args));
+      return handle as unknown as ReturnType<typeof setTimeout>;
+    }
+    return realSetTimeout(fn as TimerHandler, delay, ...args);
+  }) as typeof setTimeout);
+  vi.spyOn(globalThis, "clearTimeout").mockImplementation(((
+    handle?: ReturnType<typeof setTimeout>,
+  ) => {
+    if (handle && typeof handle === "object" && longTimers.delete(handle)) return;
+    realClearTimeout(handle);
+  }) as typeof clearTimeout);
+
   const today = drawOf(["a"], dayOf(end - DAY, end));
   const tomorrow = drawOf(["b"], dayOf(end, end + DAY));
   const draw = vi
@@ -264,7 +301,10 @@ test("fetches the next day's draw when the day ends during a review", async () =
   expect(result.current.leg?.date).toBe(today.day.date);
   const calls = draw.mock.calls.length;
   // Midnight passes with the review still open, and only the day's own timer can notice.
-  await vi.advanceTimersByTimeAsync(end - Date.now() + 100);
+  vi.setSystemTime(end + 100);
+  const due = [...longTimers.values()];
+  longTimers.clear();
+  for (const run of due) run();
   await vi.waitFor(() => expect(result.current.leg?.date).toBe(tomorrow.day.date));
   expect(draw.mock.calls.length).toBeGreaterThan(calls);
   await vi.waitFor(() => expect(result.current.current?.card.id).toBe("b"));

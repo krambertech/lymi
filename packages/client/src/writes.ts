@@ -594,7 +594,7 @@ async function queued(written: Promise<Written<Result>>): Promise<{ queued: bool
   return { queued: (await written).status === "queued" };
 }
 
-/** For tests: forget the in-memory copy so the next read comes from storage. */
+/** For tests: forget the in-memory copy so the next read comes from storage, and drop a flush still in flight. */
 export function resetWriteCache() {
   cache = null;
   client = null;
@@ -602,4 +602,6 @@ export function resetWriteCache() {
   awaited.clear();
   settled.clear();
   clearTimeout(timer);
+  timer = undefined;
+  chain = Promise.resolve();
 }

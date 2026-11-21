@@ -6,7 +6,7 @@ window.COPY = {
     shots: {
       hero: [
         "Learn anything.<br><em>Remember it.</em>",
-        "Flashcards that come back right before you’d forget them.",
+        "Flashcards that come back before you forget.",
       ],
       decks: [
         "Start with a <em>ready deck</em>",
@@ -180,10 +180,7 @@ window.COPY = {
   uk: {
     free: "Безкоштовно · Без реклами",
     shots: {
-      hero: [
-        "Вчи будь-що.<br><em>І пам’ятай.</em>",
-        "Картки повертаються саме тоді, коли ти от-от їх забудеш.",
-      ],
+      hero: ["Вчи будь-що.<br><em>І пам’ятай.</em>", "Картки повертаються, перш ніж ти забудеш."],
       decks: [
         "Почни з <em>готової колоди</em>",
         "27 мов, тести з водіння, тести на громадянство, географія, наука та інше.",
@@ -356,7 +353,7 @@ window.COPY = {
     shots: {
       hero: [
         "Учи что угодно.<br><em>И помни.</em>",
-        "Карточки возвращаются, когда ты вот-вот их забудешь.",
+        "Карточки возвращаются, прежде чем ты забудешь.",
       ],
       decks: [
         "Начни с <em>готовой колоды</em>",

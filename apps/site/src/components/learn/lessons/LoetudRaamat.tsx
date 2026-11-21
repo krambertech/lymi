@@ -29,17 +29,18 @@ function Et({ children }: { children: ReactNode }) {
 
 const MEANS: Record<string, MessageDescriptor> = {
   lugema: msg`to read`,
-  tegema: msg`to do, to make`,
+  tulema: msg`to come`,
   kirjutama: msg`to write`,
   laulma: msg`to sing`,
   kasutama: msg`to use`,
-  sööma: msg`to eat`,
+  elama: msg`to live`,
 };
 
 const GLOSSARY: Glossary = {
   kuulutus: { en: msg`an ad, a notice` },
   hoidma: { en: msg`to keep, to look after`, note: msg`Hästi hoitud, well kept.` },
   kokkuleppel: { en: msg`by agreement, to be agreed` },
+  kasvama: { en: msg`to grow`, note: msg`Kasvav laps, a growing child.` },
 };
 
 function ParticipleTable() {
@@ -49,8 +50,8 @@ function ParticipleTable() {
     label: i18n._(MEANS[verb.ma] as MessageDescriptor),
     tip: (
       <Trans>
-        <Et>{verb.v}</Et> is doing it, <Et>{verb.nud}</Et> has done it, and something{" "}
-        <Et>{verb.tud}</Et> has had it done to it.
+        <Et>{verb.v}</Et>: doing it. <Et>{verb.nud}</Et>: has done it. <Et>{verb.tud}</Et>: had it
+        done to it.
       </Trans>
     ),
     cells: [
@@ -64,7 +65,7 @@ function ParticipleTable() {
     <Panel className="gap-5">
       <Paradigm
         label={t`Verbs and the adjectives made from them`}
-        columns={[t`Verb`, t`Doing it`, t`Has done it`, t`Done to it`]}
+        columns={[t`Verb`, t`Is doing it`, t`Has done it`, t`Done to it`]}
         rows={rows}
         highlight={{ column: 3 }}
         empty={{
@@ -80,18 +81,36 @@ const FORM_POOL = [...new Set(PARTICIPLE_GAPS.flatMap((gap) => gap.options))];
 
 const isDone = (word: string) => word.endsWith("tud") || word.endsWith("dud");
 
-const oppositeOf = (answer: string, pair: readonly string[]) =>
-  FORM_POOL.filter((word) => !pair.includes(word) && isDone(word) !== isDone(answer));
+const CLASHES: Record<string, readonly string[]> = {
+  "tud-kasutama": ["töötav"],
+  "v-tootama": ["kasutatud"],
+  "v-jooksma": ["keedetud"],
+};
 
-function firstOptions(pair: readonly string[], answer: string, index: number): string[] {
+const oppositeOf = (answer: string, pair: readonly string[], avoid: readonly string[] = []) =>
+  FORM_POOL.filter(
+    (word) => !pair.includes(word) && !avoid.includes(word) && isDone(word) !== isDone(answer),
+  );
+
+function firstOptions(
+  pair: readonly string[],
+  answer: string,
+  index: number,
+  avoid: readonly string[],
+): string[] {
   const other = pair.find((word) => word !== answer) as string;
-  const third = oppositeOf(answer, pair).at(index % 4) as string;
+  const third = oppositeOf(answer, pair, avoid).at(index % 4) as string;
   const order = [answer, other, third];
   const turn = (index % 3) + 1;
   return [...order.slice(turn), ...order.slice(0, turn)];
 }
 
-type GapRun = GapItem & { id: string; said: string; pair: readonly string[] };
+type GapRun = GapItem & {
+  id: string;
+  said: string;
+  pair: readonly string[];
+  avoid: readonly string[];
+};
 
 function content(t: (descriptor: MessageDescriptor) => string) {
   const why = (kind: string, answer: string): ReactNode =>
@@ -106,6 +125,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
     );
   const gaps: GapRun[] = PARTICIPLE_GAPS.map((gap, index) => {
     const said = objectGapSaid(gap);
+    const avoid = CLASHES[gap.id] ?? [];
     return {
       id: gap.id,
       said,
@@ -113,7 +133,8 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       before: gap.before,
       after: gap.after,
       pair: gap.options,
-      options: firstOptions(gap.options, gap.answer, index),
+      avoid,
+      options: firstOptions(gap.options, gap.answer, index, avoid),
       answer: gap.answer,
       explain: why(gap.id.split("-")[0] as string, gap.answer),
     };
@@ -126,7 +147,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       options: [
         { id: "used", label: t(msg`A used bicycle`) },
         { id: "new", label: t(msg`A new bicycle`) },
-        { id: "seat", label: t(msg`A child’s car seat`) },
+        { id: "seat", label: t(msg`A child’s seat for a bike`) },
       ],
       answer: "used",
       line: 0,
@@ -147,7 +168,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       ask: t(msg`Who is it right for?`),
       options: [
         { id: "adult", label: t(msg`A grown-up who rides to work`) },
-        { id: "small", label: t(msg`A small child learning to ride`) },
+        { id: "small", label: t(msg`A teenager who races`) },
         { id: "child", label: t(msg`A growing child`) },
       ],
       answer: "child",
@@ -159,7 +180,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
 }
 
 const withThird = (item: GapRun): GapRun => {
-  const third = shuffle(oppositeOf(item.answer, item.pair))[0] as string;
+  const third = shuffle(oppositeOf(item.answer, item.pair, item.avoid))[0] as string;
   return { ...item, options: shuffle([...item.pair, third]) };
 };
 
@@ -187,7 +208,7 @@ export function LoetudRaamatLesson() {
         <Trans key="q">2 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
-      words={["kuulutus", "hoidma", "kokkuleppel"]}
+      words={["kuulutus", "hoidma", "kokkuleppel", "kasvama"]}
       recap={[
         <Trans key="1">
           <b lang="et">-v</b> for what the noun is doing: <b lang="et">magav laps</b>, a sleeping
@@ -196,15 +217,15 @@ export function LoetudRaamatLesson() {
         </Trans>,
         <Trans key="2">
           <b lang="et">-nud</b> for what the noun has done: <b lang="et">väsinud mees</b>, a man who
-          is tired.
+          has got tired: a tired man.
         </Trans>,
         <Trans key="3">
           <b lang="et">-tud</b> or <b lang="et">-dud</b> for what was done to the noun:{" "}
           <b lang="et">loetud raamat</b>, <b lang="et">suletud uks</b>.
         </Trans>,
         <Trans key="4">
-          <b lang="et">-nud</b> and <b lang="et">-tud</b> never change before a noun:{" "}
-          <b lang="et">ma ostsin kasutatud auto</b>.
+          Before a noun, <b lang="et">-nud</b> and <b lang="et">-tud</b> never change:{" "}
+          <b lang="et">kasutatud autoga</b>, <b lang="et">kasutatud autodes</b>.
         </Trans>,
       ]}
       sections={[
@@ -219,7 +240,7 @@ export function LoetudRaamatLesson() {
                     You already know two of these forms. The <Et>-nud</Et> form from lesson{" "}
                     {perfect} says what someone has done, and the <Et>-tud</Et> form from lesson{" "}
                     {impersonal} says what was done. Put either one before a noun and it works like
-                    an adjective. The new one is <Et>-v</Et>, for what the noun is doing right now,
+                    an adjective. The new one is <Et>-v</Et>, for what the noun does or is doing,
                     like English “sleeping” in “a sleeping child”.
                   </Trans>
                 </p>
@@ -227,11 +248,13 @@ export function LoetudRaamatLesson() {
               <ParticipleTable />
               <Aside>
                 <Trans>
-                  <Et>-nud</Et> and <Et>-tud</Et> stay the same whatever the noun does:{" "}
-                  <Et>kasutatud auto</Et>, <Et>kasutatud autot</Et>, <Et>kasutatud autos</Et>.{" "}
+                  <Et>-nud</Et> and <Et>-tud</Et> stay the same before a noun, whatever case it is
+                  in: <Et>kasutatud auto</Et>, <Et>kasutatud autot</Et>, <Et>kasutatud autos</Et>.{" "}
                   <Et>-v</Et> changes like any adjective: <Et>magav laps</Et>, but{" "}
                   <Et>ma nägin magavat last</Et>. You meet them every day on signs: <Et>avatud</Et>,
-                  open, and <Et>suletud</Et>, closed.
+                  open, and <Et>suletud</Et>, closed. Before a noun, <Et>-nud</Et> sounds most
+                  natural with verbs that take no object: <Et>väsinud</Et>, <Et>kukkunud puu</Et>, a
+                  fallen tree.
                 </Trans>
               </Aside>
             </>
@@ -262,7 +285,7 @@ export function LoetudRaamatLesson() {
                 rounds={8}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All eight. You can turn any verb into an adjective.</Trans>
+                    <Trans>All eight. You can tell doing it from done to it.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Most of them. Ask: does the noun do it, or is it done to it?</Trans>
                   ) : (

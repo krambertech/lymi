@@ -3414,11 +3414,11 @@ const DES_MATA_CLIPS: Record<string, Clip> = {
 
 export const PARTICIPLE_VERBS = [
   { ma: "lugema", v: "lugev", nud: "lugenud", tud: "loetud" },
-  { ma: "tegema", v: "tegev", nud: "teinud", tud: "tehtud" },
+  { ma: "tulema", v: "tulev", nud: "tulnud", tud: "tuldud" },
   { ma: "kirjutama", v: "kirjutav", nud: "kirjutanud", tud: "kirjutatud" },
   { ma: "laulma", v: "laulev", nud: "laulnud", tud: "lauldud" },
   { ma: "kasutama", v: "kasutav", nud: "kasutanud", tud: "kasutatud" },
-  { ma: "sööma", v: "sööv", nud: "söönud", tud: "söödud" },
+  { ma: "elama", v: "elav", nud: "elanud", tud: "elatud" },
 ] as const;
 
 export const PARTICIPLE_GAPS = [
@@ -3431,7 +3431,7 @@ export const PARTICIPLE_GAPS = [
   },
   {
     id: "v-magama",
-    before: "Ole vaiksem, toas on",
+    before: "Räägi vaiksemalt, toas on",
     after: "laps.",
     answer: "magav",
     options: ["magav", "magatud"],
@@ -3473,8 +3473,8 @@ export const PARTICIPLE_GAPS = [
   },
   {
     id: "tud-kirjutama",
-    before: "See raamat on",
-    after: "lastele.",
+    before: "Laual oli käsitsi",
+    after: "kiri.",
     answer: "kirjutatud",
     options: ["kirjutatud", "kirjutav"],
   },
@@ -3491,7 +3491,7 @@ const PARTICIPLE_CLIPS: Record<string, Clip> = {
   ...words(PARTICIPLE_VERBS.flatMap((verb) => [verb.ma, verb.v, verb.nud, verb.tud])),
   ...words(PARTICIPLE_GAPS.flatMap((gap) => gap.options)),
   ...words(PARTICIPLE_GAPS.map(objectGapSaid)),
-  ...words(["kuulutus", "hoidma", "kokkuleppel"]),
+  ...words(["kuulutus", "hoidma", "kokkuleppel", "kasvama"]),
   "p-ad": { sentences: BIKE_AD_PASSAGE },
 };
 

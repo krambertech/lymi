@@ -732,14 +732,11 @@ msgstr "Родовий відмінок плюс <0>-ni</0>."
 msgid "<0>-ni</0> says how far, in place or in time: <1/> is as far as Tartu. It marks where the way stops. Going into a place is still <2/> or <3/> from lesson {into}."
 msgstr "<0>-ni</0> каже, де межа, — у місці чи в часі: <1/> — аж до Тарту, і не далі. Щоб зайти в саме місце, як і раніше кажуть <2/> чи <3/> з уроку {into}: «у магазин» — це не -ni."
 
-msgid "<0>-nud</0> and <1>-tud</1> never change before a noun: <2>ma ostsin kasutatud auto</2>."
-msgstr "<0>-nud</0> і <1>-tud</1> перед іменником ніколи не змінюються: <2>ma ostsin kasutatud auto</2>."
+msgid "<0>-nud</0> and <1>-tud</1> stay the same before a noun, whatever case it is in: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. <5>-v</5> changes like any adjective: <6>magav laps</6>, but <7>ma nägin magavat last</7>. You meet them every day on signs: <8>avatud</8>, open, and <9>suletud</9>, closed. Before a noun, <10>-nud</10> sounds most natural with verbs that take no object: <11>väsinud</11>, <12>kukkunud puu</12>, a fallen tree."
+msgstr "<0>-nud</0> і <1>-tud</1> перед іменником не змінюються, хоч би в якому відмінку він стояв: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. А <5>-v</5> змінюється, як звичайний прикметник: <6>magav laps</6>, але <7>ma nägin magavat last</7>. Ці форми трапляються щодня на табличках: <8>avatud</8>, «відчинено», і <9>suletud</9>, «зачинено». Перед іменником <10>-nud</10> звучить найприродніше з дієсловами без додатка: <11>väsinud</11>, <12>kukkunud puu</12>, «повалене дерево»."
 
-msgid "<0>-nud</0> and <1>-tud</1> stay the same whatever the noun does: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. <5>-v</5> changes like any adjective: <6>magav laps</6>, but <7>ma nägin magavat last</7>. You meet them every day on signs: <8>avatud</8>, open, and <9>suletud</9>, closed."
-msgstr "<0>-nud</0> і <1>-tud</1> не змінюються, хоч би в якому відмінку стояв іменник: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. А <5>-v</5> змінюється, як звичайний прикметник: <6>magav laps</6>, але <7>ma nägin magavat last</7>. Ці форми трапляються щодня на табличках: <8>avatud</8>, «відчинено», і <9>suletud</9>, «зачинено»."
-
-msgid "<0>-nud</0> for what the noun has done: <1>väsinud mees</1>, a man who is tired."
-msgstr "<0>-nud</0> — для того, що іменник уже зробив: <1>väsinud mees</1>, «втомлений чоловік»."
+msgid "<0>-nud</0> for what the noun has done: <1>väsinud mees</1>, a man who has got tired: a tired man."
+msgstr "<0>-nud</0> — для того, що іменник уже зробив: <1>väsinud mees</1>, чоловік, який утомився, тобто «втомлений чоловік»."
 
 msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
 msgstr "<0>-s</0> і <1>-l</1> додаємо до основи іменника: <2>pood</2>, основа <3>poe</3>, <4>poes</4>."
@@ -769,7 +766,7 @@ msgid "<0>-us</0> takes <1>-t</1>."
 msgstr "<0>-us</0> отримує <1>-t</1>."
 
 msgid "<0>-v</0> for what the noun is doing: <1>magav laps</1>, a sleeping child. Take the <2>-ma</2> form and swap <3>-ma</3> for <4>-v</4>, or <5>-ev</5> after a consonant: <6>laulev</6>."
-msgstr "<0>-v</0> — для того, що іменник робить: <1>magav laps</1>, «спляча дитина». Візьми форму на <2>-ma</2> і заміни <3>-ma</3> на <4>-v</4>, а після приголосного — на <5>-ev</5>: <6>laulev</6>."
+msgstr "<0>-v</0> — для того, що іменник робить: <1>magav laps</1>, «дитина, що спить». Візьми форму на <2>-ma</2> і заміни <3>-ma</3> на <4>-v</4>, а після приголосного — на <5>-ev</5>: <6>laulev</6>."
 
 msgid "<0>-v</0> or <1>-tud</1>?"
 msgstr "<0>-v</0> чи <1>-tud</1>?"
@@ -817,16 +814,16 @@ msgstr "<0>{0}</0> — це «{1}»."
 msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
 msgstr "<0>{0}</0> — це <1>{1}</1> без останньої літери."
 
-#. placeholder {0}: verb.v
-#. placeholder {1}: verb.nud
-#. placeholder {2}: verb.tud
-msgid "<0>{0}</0> is doing it, <1>{1}</1> has done it, and something <2>{2}</2> has had it done to it."
-msgstr "<0>{0}</0> — той, хто це робить, <1>{1}</1> — той, хто це вже зробив, а <2>{2}</2> — те, з чим це зробили."
-
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
 msgid "<0>{0}</0>: <1>{1}</1>"
 msgstr "<0>{0}</0>: <1>{1}</1>"
+
+#. placeholder {0}: verb.v
+#. placeholder {1}: verb.nud
+#. placeholder {2}: verb.tud
+msgid "<0>{0}</0>: doing it. <1>{1}</1>: has done it. <2>{2}</2>: had it done to it."
+msgstr "<0>{0}</0>: робить. <1>{1}</1>: уже зробив. <2>{2}</2>: з ним це зробили."
 
 msgid "<0>{base}</0> becomes <1>{form}</1>"
 msgstr "<0>{base}</0> стає <1>{form}</1>"
@@ -1119,7 +1116,7 @@ msgid "<0>Laua peal</0> and <1>laual</1> say the same, and so do <2>kasti sees</
 msgstr "<0>Laua peal</0> і <1>laual</1> означають те саме, так само <2>kasti sees</2> і <3>kastis</3>."
 
 msgid "<0>Loetud raamat</0>, a book that has been read. <1>Magav laps</1>, a sleeping child. A verb can describe a noun, just like an adjective."
-msgstr "<0>Loetud raamat</0> — прочитана книжка. <1>Magav laps</1> — спляча дитина. Дієслово може описувати іменник, як прикметник."
+msgstr "<0>Loetud raamat</0> — прочитана книжка. <1>Magav laps</1> — дитина, що спить. Дієслово може описувати іменник, як прикметник."
 
 msgid "<0>Lugesin</0> is I read, I was reading and I did read: one simple past for all three. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
 msgstr "Простий минулий час не має роду: <0>lugesin</0> — це і «я читав», і «я читала». Коли саме, показують слова на зразок <1>eile</1> чи <2>eelmisel nädalal</2>."
@@ -1812,8 +1809,8 @@ msgstr "Зміна всередині слова"
 msgid "A chat with Mari"
 msgstr "Розмова з Марі"
 
-msgid "A child’s car seat"
-msgstr "Дитяче крісло в машину"
+msgid "A child’s seat for a bike"
+msgstr "Дитяче сидіння на велосипед"
 
 msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
 msgstr "Після сьогоднішнього уроку в колоді групи «Естонська A2 · щовівторка» з’являються три нові картки: kohtuma, broneerima та ilm. Їх отримують усі {learners} учнів."
@@ -2489,9 +2486,6 @@ msgstr "На табличці кожен день позначено першо�
 msgid "a small cat"
 msgstr "маленький кіт"
 
-msgid "A small child learning to ride"
-msgstr "Малюк, що вчиться кататися"
-
 msgid "A small or dear one"
 msgstr "Щось маленьке чи миле"
 
@@ -2524,6 +2518,9 @@ msgstr "Чай без лимона, будь ласка."
 
 msgid "A tea without sugar, please."
 msgstr "Чай без цукру, будь ласка."
+
+msgid "A teenager who races"
+msgstr "Підліток, який займається гонками"
 
 msgid "A term and a definition"
 msgstr "Термін і визначення"
@@ -3201,8 +3198,8 @@ msgstr "Усі вісім. Ти вмієш будувати основу для 
 msgid "All eight. You can say while and without in one word."
 msgstr "Усі вісім. Ти вмієш сказати «роблячи» і «не зробивши» одним словом."
 
-msgid "All eight. You can turn any verb into an adjective."
-msgstr "Усі вісім. Тепер ти можеш зробити з будь-якого дієслова прикметник."
+msgid "All eight. You can tell doing it from done to it."
+msgstr "Усі вісім. Ти відрізняєш «робить» від «зроблено»."
 
 msgid "All eight. You hear what each verb asks for."
 msgstr "Усі вісім. Ти чуєш, чого вимагає кожне дієслово."
@@ -4153,6 +4150,9 @@ msgstr "ліжко"
 
 msgid "Before a -ta form, to stress the without."
 msgstr "Перед формою на -ta, щоб підсилити «без»."
+
+msgid "Before a noun, <0>-nud</0> and <1>-tud</1> never change: <2>kasutatud autoga</2>, <3>kasutatud autodes</3>."
+msgstr "Перед іменником <0>-nud</0> і <1>-tud</1> ніколи не змінюються: <2>kasutatud autoga</2>, <3>kasutatud autodes</3>."
 
 msgid "Before a noun, <0>Martin</0> takes its genitive: <1>Martini kohv</1>."
 msgstr "Перед іменником <0>Martin</0> стоїть у родовому: <1>Martini kohv</1>."
@@ -5754,7 +5754,7 @@ msgid "Done form, impersonal now and impersonal past"
 msgstr "Форма на -tud/-dud, безособова зараз і в минулому"
 
 msgid "Done to it"
-msgstr "Зроблено з ним"
+msgstr "З ним зробили"
 
 msgid "Done. Biology has a section for each file."
 msgstr "Готово. У «Біології» є розділ для кожного файлу."
@@ -10136,6 +10136,9 @@ msgstr "Є"
 msgid "Is a person named before the gap? Is there a time in the past? Pick the form, then hear the sentence."
 msgstr "Чи названо людину перед пропуском? Чи є час у минулому? Вибери форму, а потім послухай речення."
 
+msgid "Is doing it"
+msgstr "Робить"
+
 msgid "Is Grok Bot the same as Grok?"
 msgstr "Grok Bot і Grok — це одне й те саме?"
 
@@ -10628,6 +10631,9 @@ msgstr "Kassi — партитив від kass, кіт."
 
 msgid "Kasti is its genitive: kasti peal, on the box."
 msgstr "Kasti — родовий відмінок: kasti peal, на коробці."
+
+msgid "Kasvav laps, a growing child."
+msgstr "Kasvav laps — дитина, яка росте."
 
 msgid "Kati"
 msgstr "Каті"
@@ -19262,6 +19268,9 @@ msgstr "Підніматися"
 msgid "to go, to visit"
 msgstr "ходити, бувати"
 
+msgid "to grow"
+msgstr "рости"
+
 msgid "To have fun"
 msgstr "Розважатися"
 
@@ -19272,7 +19281,7 @@ msgid "to him or her"
 msgstr "йому чи їй"
 
 msgid "to keep, to look after"
-msgstr "тримати, берегти"
+msgstr "берегти, доглядати"
 
 msgid "to learn"
 msgstr "вчити, вчитися"
@@ -22142,8 +22151,8 @@ msgstr "ви"
 msgid "You all work in an office."
 msgstr "Ви працюєте в офісі."
 
-msgid "You already know two of these forms. The <0>-nud</0> form from lesson {perfect} says what someone has done, and the <1>-tud</1> form from lesson {impersonal} says what was done. Put either one before a noun and it works like an adjective. The new one is <2>-v</2>, for what the noun is doing right now, like English “sleeping” in “a sleeping child”."
-msgstr "Дві з цих форм ти вже знаєш. Форма на <0>-nud</0> з уроку {perfect} каже, що хтось уже зробив, а форма на <1>-tud</1> з уроку {impersonal} — що було зроблено. Постав будь-яку з них перед іменником, і вона працює як прикметник, зовсім як українські дієприкметники: «втомлений», «прочитана». Нова форма — <2>-v</2>, для того, що іменник робить зараз, як «спляча» у «спляча дитина»."
+msgid "You already know two of these forms. The <0>-nud</0> form from lesson {perfect} says what someone has done, and the <1>-tud</1> form from lesson {impersonal} says what was done. Put either one before a noun and it works like an adjective. The new one is <2>-v</2>, for what the noun does or is doing, like English “sleeping” in “a sleeping child”."
+msgstr "Дві з цих форм ти вже знаєш. Форма на <0>-nud</0> з уроку {perfect} каже, що хтось уже зробив, а форма на <1>-tud</1> з уроку {impersonal} — що було зроблено. Постав будь-яку з них перед іменником, і вона працює як прикметник, зовсім як українські дієприкметники: «втомлений», «прочитана». Нова форма — <2>-v</2>, для того, що іменник робить; українською тут зазвичай кажуть підрядним реченням: «дитина, що спить»."
 
 msgid "You and Kati plan Saturday. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
 msgstr "Ви з Каті плануєте суботу. Вибери, що ти скажеш. Якщо вибереш неправильну відповідь, побачиш чому, а потім почуєш правильну."

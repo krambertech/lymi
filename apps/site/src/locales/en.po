@@ -731,14 +731,11 @@ msgstr "<0>-ni</0> on the genitive."
 msgid "<0>-ni</0> says how far, in place or in time: <1/> is as far as Tartu. It marks where the way stops. Going into a place is still <2/> or <3/> from lesson {into}."
 msgstr "<0>-ni</0> says how far, in place or in time: <1/> is as far as Tartu. It marks where the way stops. Going into a place is still <2/> or <3/> from lesson {into}."
 
-msgid "<0>-nud</0> and <1>-tud</1> never change before a noun: <2>ma ostsin kasutatud auto</2>."
-msgstr "<0>-nud</0> and <1>-tud</1> never change before a noun: <2>ma ostsin kasutatud auto</2>."
+msgid "<0>-nud</0> and <1>-tud</1> stay the same before a noun, whatever case it is in: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. <5>-v</5> changes like any adjective: <6>magav laps</6>, but <7>ma nägin magavat last</7>. You meet them every day on signs: <8>avatud</8>, open, and <9>suletud</9>, closed. Before a noun, <10>-nud</10> sounds most natural with verbs that take no object: <11>väsinud</11>, <12>kukkunud puu</12>, a fallen tree."
+msgstr "<0>-nud</0> and <1>-tud</1> stay the same before a noun, whatever case it is in: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. <5>-v</5> changes like any adjective: <6>magav laps</6>, but <7>ma nägin magavat last</7>. You meet them every day on signs: <8>avatud</8>, open, and <9>suletud</9>, closed. Before a noun, <10>-nud</10> sounds most natural with verbs that take no object: <11>väsinud</11>, <12>kukkunud puu</12>, a fallen tree."
 
-msgid "<0>-nud</0> and <1>-tud</1> stay the same whatever the noun does: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. <5>-v</5> changes like any adjective: <6>magav laps</6>, but <7>ma nägin magavat last</7>. You meet them every day on signs: <8>avatud</8>, open, and <9>suletud</9>, closed."
-msgstr "<0>-nud</0> and <1>-tud</1> stay the same whatever the noun does: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. <5>-v</5> changes like any adjective: <6>magav laps</6>, but <7>ma nägin magavat last</7>. You meet them every day on signs: <8>avatud</8>, open, and <9>suletud</9>, closed."
-
-msgid "<0>-nud</0> for what the noun has done: <1>väsinud mees</1>, a man who is tired."
-msgstr "<0>-nud</0> for what the noun has done: <1>väsinud mees</1>, a man who is tired."
+msgid "<0>-nud</0> for what the noun has done: <1>väsinud mees</1>, a man who has got tired: a tired man."
+msgstr "<0>-nud</0> for what the noun has done: <1>väsinud mees</1>, a man who has got tired: a tired man."
 
 msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
 msgstr "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
@@ -816,16 +813,16 @@ msgstr "<0>{0}</0> is {1}."
 msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
 msgstr "<0>{0}</0> is <1>{1}</1> without its last letter."
 
-#. placeholder {0}: verb.v
-#. placeholder {1}: verb.nud
-#. placeholder {2}: verb.tud
-msgid "<0>{0}</0> is doing it, <1>{1}</1> has done it, and something <2>{2}</2> has had it done to it."
-msgstr "<0>{0}</0> is doing it, <1>{1}</1> has done it, and something <2>{2}</2> has had it done to it."
-
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
 msgid "<0>{0}</0>: <1>{1}</1>"
 msgstr "<0>{0}</0>: <1>{1}</1>"
+
+#. placeholder {0}: verb.v
+#. placeholder {1}: verb.nud
+#. placeholder {2}: verb.tud
+msgid "<0>{0}</0>: doing it. <1>{1}</1>: has done it. <2>{2}</2>: had it done to it."
+msgstr "<0>{0}</0>: doing it. <1>{1}</1>: has done it. <2>{2}</2>: had it done to it."
 
 msgid "<0>{base}</0> becomes <1>{form}</1>"
 msgstr "<0>{base}</0> becomes <1>{form}</1>"
@@ -1811,8 +1808,8 @@ msgstr "A change inside"
 msgid "A chat with Mari"
 msgstr "A chat with Mari"
 
-msgid "A child’s car seat"
-msgstr "A child’s car seat"
+msgid "A child’s seat for a bike"
+msgstr "A child’s seat for a bike"
 
 msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
 msgstr "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
@@ -2488,9 +2485,6 @@ msgstr "A sign shortens each day to its first letter, as in lesson {days}. Hours
 msgid "a small cat"
 msgstr "a small cat"
 
-msgid "A small child learning to ride"
-msgstr "A small child learning to ride"
-
 msgid "A small or dear one"
 msgstr "A small or dear one"
 
@@ -2523,6 +2517,9 @@ msgstr "A tea without lemon, please."
 
 msgid "A tea without sugar, please."
 msgstr "A tea without sugar, please."
+
+msgid "A teenager who races"
+msgstr "A teenager who races"
 
 msgid "A term and a definition"
 msgstr "A term and a definition"
@@ -3200,8 +3197,8 @@ msgstr "All eight. You can build the stem for every plural case."
 msgid "All eight. You can say while and without in one word."
 msgstr "All eight. You can say while and without in one word."
 
-msgid "All eight. You can turn any verb into an adjective."
-msgstr "All eight. You can turn any verb into an adjective."
+msgid "All eight. You can tell doing it from done to it."
+msgstr "All eight. You can tell doing it from done to it."
 
 msgid "All eight. You hear what each verb asks for."
 msgstr "All eight. You hear what each verb asks for."
@@ -4152,6 +4149,9 @@ msgstr "bed"
 
 msgid "Before a -ta form, to stress the without."
 msgstr "Before a -ta form, to stress the without."
+
+msgid "Before a noun, <0>-nud</0> and <1>-tud</1> never change: <2>kasutatud autoga</2>, <3>kasutatud autodes</3>."
+msgstr "Before a noun, <0>-nud</0> and <1>-tud</1> never change: <2>kasutatud autoga</2>, <3>kasutatud autodes</3>."
 
 msgid "Before a noun, <0>Martin</0> takes its genitive: <1>Martini kohv</1>."
 msgstr "Before a noun, <0>Martin</0> takes its genitive: <1>Martini kohv</1>."
@@ -10135,6 +10135,9 @@ msgstr "Is"
 msgid "Is a person named before the gap? Is there a time in the past? Pick the form, then hear the sentence."
 msgstr "Is a person named before the gap? Is there a time in the past? Pick the form, then hear the sentence."
 
+msgid "Is doing it"
+msgstr "Is doing it"
+
 msgid "Is Grok Bot the same as Grok?"
 msgstr "Is Grok Bot the same as Grok?"
 
@@ -10627,6 +10630,9 @@ msgstr "Kassi is the partitive of kass, cat."
 
 msgid "Kasti is its genitive: kasti peal, on the box."
 msgstr "Kasti is its genitive: kasti peal, on the box."
+
+msgid "Kasvav laps, a growing child."
+msgstr "Kasvav laps, a growing child."
 
 msgid "Kati"
 msgstr "Kati"
@@ -19261,6 +19267,9 @@ msgstr "To go up"
 msgid "to go, to visit"
 msgstr "to go, to visit"
 
+msgid "to grow"
+msgstr "to grow"
+
 msgid "To have fun"
 msgstr "To have fun"
 
@@ -22141,8 +22150,8 @@ msgstr "you all"
 msgid "You all work in an office."
 msgstr "You all work in an office."
 
-msgid "You already know two of these forms. The <0>-nud</0> form from lesson {perfect} says what someone has done, and the <1>-tud</1> form from lesson {impersonal} says what was done. Put either one before a noun and it works like an adjective. The new one is <2>-v</2>, for what the noun is doing right now, like English “sleeping” in “a sleeping child”."
-msgstr "You already know two of these forms. The <0>-nud</0> form from lesson {perfect} says what someone has done, and the <1>-tud</1> form from lesson {impersonal} says what was done. Put either one before a noun and it works like an adjective. The new one is <2>-v</2>, for what the noun is doing right now, like English “sleeping” in “a sleeping child”."
+msgid "You already know two of these forms. The <0>-nud</0> form from lesson {perfect} says what someone has done, and the <1>-tud</1> form from lesson {impersonal} says what was done. Put either one before a noun and it works like an adjective. The new one is <2>-v</2>, for what the noun does or is doing, like English “sleeping” in “a sleeping child”."
+msgstr "You already know two of these forms. The <0>-nud</0> form from lesson {perfect} says what someone has done, and the <1>-tud</1> form from lesson {impersonal} says what was done. Put either one before a noun and it works like an adjective. The new one is <2>-v</2>, for what the noun does or is doing, like English “sleeping” in “a sleeping child”."
 
 msgid "You and Kati plan Saturday. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
 msgstr "You and Kati plan Saturday. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."

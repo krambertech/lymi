@@ -3,7 +3,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Minus, Plus } from "lucide-react";
 import { type ReactNode, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { LESSONS } from "../../../lib/learn/catalogue";
+import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import { clipUrl } from "../../../lib/learn/clips";
 import {
   type ClockTime,
@@ -516,7 +516,7 @@ export function KellLesson() {
   const { t } = useLingui();
   const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
   const partitive = LESSONS.find((lesson) => lesson.et === "Kaks kassi")?.n;
-  const numbers = LESSONS.find((lesson) => lesson.et === "Üks, kaks, kolm")?.n;
+  const numbers = lessonBySlug("numbrid")?.n;
 
   const heardItems = useMemo(
     () =>
@@ -745,7 +745,6 @@ export function KellLesson() {
                   lead: timeDigits(time),
                   main: <Said time={time} />,
                   src: timeSrc(time),
-                  label: t`Play ${timeDigits(time)}`,
                 }))}
               />
             </>
@@ -779,7 +778,6 @@ export function KellLesson() {
                   lead: timeDigits(time),
                   main: <Said time={time} />,
                   src: timeSrc(time),
-                  label: t`Play ${timeDigits(time)}`,
                 }))}
               />
             </>

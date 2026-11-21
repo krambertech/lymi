@@ -737,7 +737,7 @@ export const STEM_WORDS = [
     kind: "inside",
     where: "jões",
     said: "Me ujume jões.",
-    slips: ["jõgis", "jõs"],
+    slips: ["jõges", "jõs"],
   },
   {
     word: "laud",
@@ -745,7 +745,7 @@ export const STEM_WORDS = [
     kind: "inside",
     where: "laual",
     said: "Raamat on laual.",
-    slips: ["laudal", "lauel"],
+    slips: ["laudel", "lauel"],
   },
   {
     word: "turg",
@@ -761,7 +761,7 @@ export const STEM_WORDS = [
     kind: "inside",
     where: "aknal",
     said: "Kohv on aknal.",
-    slips: ["akenal", "aknel"],
+    slips: ["akenal", "akenil"],
   },
   {
     word: "kool",
@@ -769,7 +769,7 @@ export const STEM_WORDS = [
     kind: "vowel",
     where: "koolis",
     said: "Ta õpib koolis.",
-    slips: ["kools", "koolas"],
+    slips: ["kools", "koolos"],
   },
   {
     word: "raamat",
@@ -785,7 +785,7 @@ export const STEM_WORDS = [
     kind: "vowel",
     where: "uksel",
     said: "Jaan on uksel.",
-    slips: ["uksil", "uksal"],
+    slips: ["uksul", "uksal"],
   },
   {
     word: "Tallinn",
@@ -817,7 +817,7 @@ export const STEM_WORDS = [
     kind: "same",
     where: "kodus",
     said: "Ta töötab kodus.",
-    slips: ["kodis", "kodes"],
+    slips: ["kodes", "kodas"],
   },
   {
     word: "haigla",
@@ -849,7 +849,7 @@ export const STEM_WORDS = [
     kind: "same",
     where: "Pärnus",
     said: "Jaan elab Pärnus.",
-    slips: ["Pärnas", "Pärnuis"],
+    slips: ["Pärnes", "Pärnuis"],
   },
   {
     word: "Soome",
@@ -857,7 +857,7 @@ export const STEM_WORDS = [
     kind: "same",
     where: "Soomes",
     said: "Ma elan Soomes.",
-    slips: ["Soomas", "Soomeis"],
+    slips: ["Soomis", "Soomeis"],
   },
 ] as const satisfies readonly {
   word: string;

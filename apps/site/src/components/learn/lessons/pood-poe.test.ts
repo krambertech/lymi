@@ -1,7 +1,16 @@
 import { describe, expect, it } from "vitest";
 import { STEM_WORDS } from "../../../lib/learn/clips";
 import { eachPairFirst } from "../../../lib/learn/quiz";
-import { ASKED, changed, endingOf, formsInOrder, HEARD, threeWords } from "./PoodPoe";
+import {
+  ASKED,
+  changed,
+  endingOf,
+  formsInOrder,
+  HEARD,
+  threeForms,
+  threeWords,
+  wrongForms,
+} from "./PoodPoe";
 
 describe("stems data", () => {
   it("builds each form from the stem and -s or -l", () => {
@@ -72,5 +81,20 @@ describe("stems quizzes", () => {
   it("puts the first round's answer in every place across the nouns", () => {
     const places = new Set(STEM_WORDS.map((noun, i) => formsInOrder(noun, i).indexOf(noun.where)));
     expect(places).toEqual(new Set([0, 1, 2]));
+  });
+
+  it("draws different wrong forms for one noun across runs, never the answer", () => {
+    for (const noun of STEM_WORDS) {
+      expect(wrongForms(noun)).not.toContain(noun.where);
+      expect(wrongForms(noun).length).toBeGreaterThanOrEqual(3);
+      const sets = new Set<string>();
+      for (let run = 0; run < 200; run++) {
+        const three = threeForms(noun);
+        expect(new Set(three).size).toBe(3);
+        expect(three).toContain(noun.where);
+        sets.add([...three].sort().join(" "));
+      }
+      expect(sets.size).toBeGreaterThan(1);
+    }
   });
 });

@@ -58,7 +58,7 @@ const PLACE_MEANS: Record<Place["place"] | Where, MessageDescriptor> = {
   tööl: msg`at work`,
   turg: msg`market`,
   turul: msg`at the market`,
-  Saaremaa: msg`Saaremaa, Estonia's largest island`,
+  Saaremaa: msg`Saaremaa, Estonia’s largest island`,
   Saaremaal: msg`on Saaremaa`,
   Saksamaa: msg`Germany`,
   Saksamaal: msg`in Germany`,
@@ -85,13 +85,13 @@ const MEANS: Record<Id, MessageDescriptor> = {
   "w-linnas": msg`I work in town.`,
   "l-laual": msg`The book is on the table.`,
   "l-seinal": msg`The picture is on the wall.`,
-  "l-tool": msg`I'm at work.`,
+  "l-tool": msg`I’m at work.`,
   "l-turul": msg`Mum is at the market.`,
   "l-saaremaal": msg`We live on Saaremaa.`,
   "l-saksamaal": msg`They live in Germany.`,
   "h-haiglas": msg`Mari works in a hospital.`,
   "h-parnus": msg`Jaan lives in Pärnu.`,
-  "h-kodus": msg`We're at home.`,
+  "h-kodus": msg`We’re at home.`,
   "h-tartus": msg`They study in Tartu.`,
   "h-kohvikus": msg`He or she is having coffee in a café.`,
   "h-kontoris": msg`You all work in an office.`,
@@ -620,7 +620,7 @@ export function KohadLesson() {
                       -l
                     </b>
                     . It says on a surface: <Word w="laual" />, on the table. And it says at an
-                    activity, where you're doing something rather than inside a building:{" "}
+                    activity, where you’re doing something rather than inside a building:{" "}
                     <Word w="tööl" />, at work.
                   </Trans>
                 </p>
@@ -633,7 +633,7 @@ export function KohadLesson() {
                   phoneColumns={2}
                   empty={{
                     title: t`Tap a place`,
-                    tip: t`You'll hear it in a sentence.`,
+                    tip: t`You’ll hear it in a sentence.`,
                   }}
                 />
               </Panel>

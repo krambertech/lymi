@@ -24,7 +24,9 @@ Done when you have a section list where every Estonian word is either from an ea
 
 Look up every form you will show or record before anything is recorded. ÕS 2025 is the norm since 1 January 2026, and Sõnaveeb's EKI dictionary carries it: `https://sonaveeb.ee/search/unif/est/eki/<word>` answers `curl`. The ÕS 2018 archive (`https://arhiiv.eki.ee/dict/qs/index.cgi?Q=<word>&F=M`) is a fallback only; recheck in Sõnaveeb any form where the two differ. A claim about where a word comes from needs EKI's etymology dictionary; without one, write "sounds like", never "comes from". [The Estonian slips](references/checklists.md#estonian-slips-reviews-caught) list what reviews caught before.
 
-Done when every form and claim has a source you can name in the PR's Verification section.
+Then run `pnpm --filter @lymi/site lesson:forms` once the lesson renders: it lists every Estonian word the lesson shows or says that `apps/site/src/lib/learn/verified-forms.json` lacks, adds the ones Sõnaveeb confirms, and prints the rest. Fix each printed word, or add it by hand as `"<form>": "by hand: <source>"` when a source you can name confirms it, such as a name.
+
+Done when every form and claim has a source you can name in the PR's Verification section, and `lesson:forms` adds nothing.
 
 ## 3. Add the catalogue entry and the page
 
@@ -67,7 +69,7 @@ List every clip in `clips.ts`: the lesson's shared data as exports, and an entry
 env PATH="$HOME/.nvm/versions/node/v$(cat .nvmrc)/bin:$PATH" ELEVENLABS_API_KEY="$(sed -n 's/^ELEVENLABS_API_KEY=//p' "$(git rev-parse --path-format=absolute --git-common-dir)/../apps/web/.dev.vars")" pnpm --filter @lymi/site lesson:audio
 ```
 
-Run it from the repository root, where `.nvmrc` names the Node it needs. The key goes from the main checkout's `apps/web/.dev.vars` into the command's environment only; never print it, echo it or write it to a file. The script records only new or changed clips, so a re-run is free. Done when it reports what you added and `pnpm --filter @lymi/site test` passes, since `clips.test.ts` checks the manifest against `CLIPS` and every mp3.
+Run it from the repository root, where `.nvmrc` names the Node it needs. The key goes from the main checkout's `apps/web/.dev.vars` into the command's environment only; never print it, echo it or write it to a file. The script records only new or changed clips, so a re-run is free. Done when it reports what you added and `pnpm --filter @lymi/site test` passes, since `clips.test.ts` checks the manifest against `CLIPS` and every mp3, and the lesson checks in `src/lib/learn/checks/` hold the lesson to the review rules the checklists mark **(checked)**. Each failure names the file, the rule and the fix; never add a new lesson to `known-issues.ts`.
 
 ## 7. Translate
 

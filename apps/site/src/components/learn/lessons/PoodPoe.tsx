@@ -319,6 +319,17 @@ export const formsInOrder = (noun: Noun, turn: number): string[] => {
   return [...three.slice(at), ...three.slice(0, at)];
 };
 
+/**
+ * The wrong forms a round can offer: the noun's two made-up forms, the stem with no ending and the
+ * word with no ending. Each round after the first draws two, so no set of options names its noun.
+ */
+export const wrongForms = (noun: Noun): string[] =>
+  [...new Set<string>([...noun.slips, noun.stem, noun.word])].filter((form) => form !== noun.where);
+
+/** The answer and two wrong forms at random, in random order. */
+export const threeForms = (noun: Noun): string[] =>
+  shuffle([noun.where, ...shuffle(wrongForms(noun)).slice(0, 2)]);
+
 type HeardItem = ChoiceItem & { noun: Noun; pair: readonly [string, string] };
 
 interface FormItem {
@@ -431,9 +442,9 @@ const SATURDAY_GAPS = (why: (noun: Noun) => ReactNode): PassageGap[] => {
       options: ["poodis", "poes"],
     },
     gap("kohvikus", "Kati on", "kohvik", "kohvikis", "."),
-    { ...gap("kodus", "Mari on", "kodu", "kodis", ". Ta istub"), options: ["kodis", "kodus"] },
+    { ...gap("kodus", "Mari on", "kodu", "kodes", ". Ta istub"), options: ["kodes", "kodus"] },
     gap("toas", "", "tuba", "tubas", "ja loeb."),
-    { ...gap("laual", "Kohv on", "laud", "laudal", "."), options: ["laudal", "laual"] },
+    { ...gap("laual", "Kohv on", "laud", "laudel", "."), options: ["laudel", "laual"] },
   ];
 };
 
@@ -480,7 +491,7 @@ export function PoodPoeLesson() {
   // The first round keeps its server order; every later one shuffles its three forms.
   const formRun = (items: readonly FormItem[], pinned?: FormItem): FormItem[] =>
     eachPairFirst(items, pinned).map((item) =>
-      item === pinned ? item : { ...item, options: shuffle([item.noun.where, ...item.noun.slips]) },
+      item === pinned ? item : { ...item, options: threeForms(item.noun) },
     );
 
   const gaps = SATURDAY_GAPS((noun) => (

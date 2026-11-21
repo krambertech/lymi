@@ -93,7 +93,7 @@ function Resume() {
       ) : (
         <>
           <span className="text-sm text-ink-muted">
-            <Trans>You've finished every lesson so far</Trans>
+            <Trans>You’ve finished every lesson so far</Trans>
           </span>
           <p className="text-2xl/tight font-semibold tracking-tight">
             <Trans>More are on the way.</Trans>

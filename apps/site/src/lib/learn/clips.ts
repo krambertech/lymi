@@ -2657,7 +2657,7 @@ export const PERFECT_WHEN = [
   { said: "Laupäeval me nägime filmi.", kind: "past" },
   { said: "Ma sõin kell kaheksa.", kind: "past" },
   { said: "Kui ma koju tulin, oli Kati juba söönud.", kind: "before" },
-  { said: "Ma olin seda filmi enne näinud.", kind: "before" },
+  { said: "Kui me kinno läksime, olin ma seda filmi juba näinud.", kind: "before" },
   { said: "Kui me jaama jõudsime, oli rong juba läinud.", kind: "before" },
 ] as const;
 

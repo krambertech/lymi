@@ -30,6 +30,7 @@ msgstr "-s или -l?"
 
 msgid "-si- or -i-"
 msgstr "-si- или -i-"
+
 msgid "-sse means into or to"
 msgstr "-sse отвечает на «куда?»"
 
@@ -533,6 +534,7 @@ msgstr "Форма на <0>-ma</0>"
 #. placeholder {1}: step.word
 msgid "<0>{0}</0> becomes <1>{1}</1>"
 msgstr "<0>{0}</0> превращается в <1>{1}</1>"
+
 #. placeholder {0}: capital(ownedBook(whose))
 #. placeholder {1}: i18n._(PERSON[who].book)
 msgid "<0>{0}</0> is {1}."
@@ -670,6 +672,15 @@ msgstr "<0>Mina</0> — это «я». «Моя» будет <1>minu</1>: <2>min
 msgid "<0>Mina</0> takes <1>olen</1>: <2>Mina olen Andres</2>."
 msgstr "После <0>mina</0> идёт <1>olen</1>: <2>Mina olen Andres</2>."
 
+msgid "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
+msgstr "<0>Mina</0>, <1>sina</1> и <2>nemad</2> меняются: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> и <6>teie</6> остаются как есть."
+
+msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same short forms you met for he or she, we and you. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
+msgstr "<0>Minu</0> и <1>sinu</1> часто сокращаются до <2/> и <3/>. <4>Tema</4>, <5>meie</5> и <6>teie</6> сокращаются до <7>ta, me</7> и <8>te</8> — тех же кратких форм, что и для «он или она», «мы» и «вы». В уроке {questions} уже было <9>su</9>: <10/> — «Как тебя зовут?»"
+
+msgid "<0>Mulle meeldib</0> is I like. Lesson {liking} explains how it works."
+msgstr "<0>Mulle meeldib</0> — это «мне нравится». Как это устроено, объясняет урок {liking}."
+
 msgid "<0>n</0> now, <1>sin</1> in the past."
 msgstr "<0>n</0> сейчас, <1>sin</1> в прошлом."
 
@@ -681,14 +692,6 @@ msgstr "<0>Nad on</0> — это «они есть», сейчас. Кати с�
 
 msgid "<0>Nad ostavad</0> is they buy, now. Kati asked what you bought."
 msgstr "<0>Nad ostavad</0> — это «они покупают», сейчас. Кати спрашивала о вчерашних покупках."
-msgid "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
-msgstr "<0>Mina</0>, <1>sina</1> и <2>nemad</2> меняются: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> и <6>teie</6> остаются как есть."
-
-msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same short forms you met for he or she, we and you. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
-msgstr "<0>Minu</0> и <1>sinu</1> часто сокращаются до <2/> и <3/>. <4>Tema</4>, <5>meie</5> и <6>teie</6> сокращаются до <7>ta, me</7> и <8>te</8> — тех же кратких форм, что и для «он или она», «мы» и «вы». В уроке {questions} уже было <9>su</9>: <10/> — «Как тебя зовут?»"
-
-msgid "<0>Mulle meeldib</0> is I like. Lesson {liking} explains how it works."
-msgstr "<0>Mulle meeldib</0> — это «мне нравится». Как это устроено, объясняет урок {liking}."
 
 msgid "<0>Nende</0> is their. For you and Martin, say <1>meie</1>, our."
 msgstr "<0>Nende</0> — это «их». Про себя и Мартина говори <1>meie</1>, «наш»."
@@ -786,13 +789,14 @@ msgstr "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> и <1>mulle m
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сегодня, завтра, вчера. <3>Üle-</3> добавляет ещё один день."
 
-msgid "<0>te</0> now, <1>site</1> in the past."
-msgstr "<0>te</0> сейчас, <1>site</1> в прошлом."
 msgid "<0>Tartu</0> and <1>haigla</1> stay as they are, and <2>-s</2> or <3>-l</3> goes straight on."
 msgstr "<0>Tartu</0> и <1>haigla</1> не меняются, и <2>-s</2> или <3>-l</3> просто добавляется в конце."
 
 msgid "<0>Tartus</0> says where you are. After <1>tulen</1> too, say where to: <2>Tartusse</2>."
 msgstr "<0>Tartus</0> говорит, где ты находишься. После <1>tulen</1> тоже нужно «куда»: <2>Tartusse</2>."
+
+msgid "<0>te</0> now, <1>site</1> in the past."
+msgstr "<0>te</0> сейчас, <1>site</1> в прошлом."
 
 msgid "<0>Teha, näha, süüa</0> and <1>juua</1> end in a bare <2>-a</2> and change their stem. Learn these four whole."
 msgstr "<0>Teha, näha, süüa</0> и <1>juua</1> оканчиваются просто на <2>-a</2>, и основа у них меняется. Эти четыре запоминай целыми словами."
@@ -1873,6 +1877,7 @@ msgstr "После <0>pole</0> то, чего нет в каком-то мест
 
 msgid "After <0>si-</0> come <1>-n, -d, -me, -te</1>, as in the present. <2>Ta</2> has only <3>s</3>, and <4>nad</4> has <5>sid</5>, as <6>sa</6> does: <7>ta elas, nad elasid</7>."
 msgstr "После <0>si-</0> идут <1>-n, -d, -me, -te</1>, как в настоящем времени. У <2>ta</2> только <3>s</3>, а у <4>nad</4> — <5>sid</5>, как у <6>sa</6>: <7>ta elas, nad elasid</7>."
+
 msgid "After <0>tahad</0>, from <1>tahtma</1>, the <2>-da</2> form."
 msgstr "После <0>tahad</0> (от <1>tahtma</1>) — форма на <2>-da</2>."
 
@@ -6048,6 +6053,7 @@ msgstr "Я купила свежий *хлеб*."
 
 msgid "I came"
 msgstr "я пришёл, пришла"
+
 msgid "I can come tomorrow."
 msgstr "Я могу прийти завтра."
 
@@ -6331,13 +6337,14 @@ msgstr "я говорю"
 msgid "I spoke, I was speaking"
 msgstr "я говорил, говорила"
 
-msgid "I studied Estonian yesterday."
-msgstr "Вчера я учил(а) эстонский."
 msgid "I start"
 msgstr "я начинаю"
 
 msgid "I stay"
 msgstr "я остаюсь"
+
+msgid "I studied Estonian yesterday."
+msgstr "Вчера я учил(а) эстонский."
 
 msgid "I study Japanese *every day*."
 msgstr "Я учу японский *каждый день*."
@@ -6746,6 +6753,7 @@ msgstr "В уроке {commands} <0/> нужно было запомнить ц�
 
 msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1><2/>.</1> With <3/>, today, the verb is in the present: <4><5/>.</4>"
 msgstr "В уроке {days} было слово <0/>, «вчера». С ним глагол стоит в прошедшем времени: <1><2/>.</1> А с <3/>, «сегодня», — в настоящем: <4><5/>.</4>"
+
 msgid "In lesson {places} you learned <0/>, at school, and <1/>, in Tallinn. Take off the <2>-s</2> and you have the genitive: <3/>, <4/>. The vowel that appeared before the <5>-s</5> belongs to the genitive."
 msgstr "В уроке {places} были <0/>, в школе, и <1/>, в Таллине. Отбрось <2>-s</2> — и получишь родительный падеж: <3/>, <4/>. Гласная перед <5>-s</5> — часть родительного."
 
@@ -7235,6 +7243,7 @@ msgstr "Kassi — партитив от kass, кошка."
 
 msgid "Kati"
 msgstr "Кати"
+
 msgid "Kati asks for your name, so your: <0>sinu</0>."
 msgstr "Кати спрашивает, как тебя зовут, поэтому «твоё»: <0>sinu</0>."
 
@@ -9864,10 +9873,11 @@ msgstr "Ставь <0>ei</0> перед глаголом: <1>ma ei loe</1>, я �
 msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
 msgstr "Чтобы спросить «да или нет», поставь <0>kas</0> перед предложением. Больше ничего не двигается: <1>Kas sa elad Tallinnas?</1>"
 
-msgid "Put each verb in the group its past belongs to, then check. Tap a verb to hear it."
-msgstr "Распредели глаголы по тому, как они образуют прошедшее время, и проверь. Коснись глагола, чтобы его услышать."
 msgid "Put each form under the question it answers. The short forms count too: <0/> and <1/> answer <2/>."
 msgstr "Разложи формы по вопросам, на которые они отвечают. Короткие формы тоже считаются: <0/> и <1/> отвечают на <2/>."
+
+msgid "Put each verb in the group its past belongs to, then check. Tap a verb to hear it."
+msgstr "Распредели глаголы по тому, как они образуют прошедшее время, и проверь. Коснись глагола, чтобы его услышать."
 
 msgid "Put each verb with the form that follows it. Tap a verb to hear it, then tap its group."
 msgstr "Разложи глаголы по форме, которая идёт после них. Коснись глагола, чтобы услышать его, а потом — его группы."
@@ -11403,13 +11413,14 @@ msgstr "Разговор: на улице"
 msgid "Talk: meeting Mari"
 msgstr "Разговор: знакомство с Мари"
 
+msgid "Talk: whose is it?"
+msgstr "Разговор: чьё это?"
+
 msgid "Talk: yesterday with Kati"
 msgstr "Разговор: вчерашний день с Кати"
 
 msgid "Talking about yesterday"
 msgstr "Разговор о вчерашнем дне"
-msgid "Talk: whose is it?"
-msgstr "Разговор: чьё это?"
 
 msgid "Tallinn"
 msgstr "Таллин"
@@ -11464,6 +11475,7 @@ msgstr "Коснись времени"
 
 msgid "Tap a time"
 msgstr "Коснись отметки"
+
 msgid "Tap a verb"
 msgstr "Коснись глагола"
 
@@ -11514,6 +11526,7 @@ msgstr "Ещё раз понажимай вопросительные слова
 
 msgid "Tap the verbs above once more, then try again."
 msgstr "Ещё раз послушай глаголы выше, а потом попробуй снова."
+
 msgid "Tap the Whose column above once more, then try again."
 msgstr "Ещё раз пройдись по столбцу «Чей» выше, а потом попробуй снова."
 
@@ -12023,6 +12036,7 @@ msgstr "Окончание говорит, кто это, поэтому мес�
 
 msgid "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; of these seven, only <5>minema</5> drops it: <6><7/>.</6> Pick a verb and tap its forms to see what changes."
 msgstr "Окончания те же, что после <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. Форма для <2>ta</2> заканчивается на <3>i</3>, как <4/>; из этих семи только <5>minema</5> его теряет: <6><7/>.</6> Выбери глагол и касайся форм, чтобы увидеть, что меняется."
+
 msgid "The Estonian genitive case: my, your and whose"
 msgstr "Родительный падеж в эстонском языке: мой, твой, чей"
 
@@ -12370,6 +12384,7 @@ msgstr "настоящее время, для «я»"
 
 msgid "The present: the stem changes to loe-."
 msgstr "Настоящее время: основа меняется на loe-."
+
 msgid "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. Their short forms are <1>mu, su, ta, me</1> and <2>te</2>; <3>nende</3> has none."
 msgstr "Местоимения: <0>minu, sinu, tema, meie, teie, nende</0>. Их краткие формы — <1>mu, su, ta, me</1> и <2>te</2>; у <3>nende</3> краткой нет."
 
@@ -12514,16 +12529,17 @@ msgstr "Краткая форма: te."
 msgid "The short form of ei ole."
 msgstr "Краткая форма ei ole."
 
-msgid "the simple past"
-msgstr "простое прошедшее время"
-
-msgid "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
-msgstr "Простое прошедшее время по-эстонски — <0/>. Рода в нём нет: <1>õppisin</1> — это и «я учил», и «я учила». Коснись отметки на линии, чтобы услышать предложение и увидеть, как построен глагол."
 msgid "The short form of minu."
 msgstr "Краткая форма minu."
 
 msgid "The short form of sinu."
 msgstr "Краткая форма sinu."
+
+msgid "the simple past"
+msgstr "простое прошедшее время"
+
+msgid "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
+msgstr "Простое прошедшее время по-эстонски — <0/>. Рода в нём нет: <1>õppisin</1> — это и «я учил», и «я учила». Коснись отметки на линии, чтобы услышать предложение и увидеть, как построен глагол."
 
 msgid "The small words every sentence is built from."
 msgstr "Маленькие слова, из которых строится каждое предложение."
@@ -12909,13 +12925,14 @@ msgstr "Это мой *друг* из Китая."
 msgid "This is the current HSK 2.0 format. The syllabus published in 2025 grows level 1 to 300 words and level 2 to 500."
 msgstr "Это действующий формат HSK 2.0. Программа, опубликованная в 2025 году, увеличивает уровень 1 до 300 слов, а уровень 2 — до 500."
 
-msgid "This lesson says what happened. Saying that something didn’t happen takes another form, which lesson {pastNo} teaches."
-msgstr "Этот урок о том, что произошло. Чтобы сказать, что чего-то не было, нужна другая форма, об этом — в уроке {pastNo}."
 msgid "This is their picture."
 msgstr "Это их фото."
 
 msgid "This is your coffee."
 msgstr "Это твой кофе."
+
+msgid "This lesson says what happened. Saying that something didn’t happen takes another form, which lesson {pastNo} teaches."
+msgstr "Этот урок о том, что произошло. Чтобы сказать, что чего-то не было, нужна другая форма, об этом — в уроке {pastNo}."
 
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "Эта политика охватывает сайт Lymi, приложения, API и подключённых помощников."
@@ -13307,16 +13324,17 @@ msgstr "Чтобы попросить кого-то чего-то не дела�
 msgid "To tell someone what to do, say the verb’s stem: <0>Istu!</0> is sit down. To tell them not to, put <1>ära</1> before it: <2>Ära istu!</2>"
 msgstr "Чтобы сказать, что делать, произнеси основу глагола: <0>Istu!</0> — это «садись». Чтобы сказать, чего не делать, поставь перед ней <1>ära</1>: <2>Ära istu!</2>"
 
-msgid "To the cinema"
-msgstr "В кино"
-
-msgid "To the market"
-msgstr "На рынок"
 msgid "to the café"
 msgstr "в кафе"
 
+msgid "To the cinema"
+msgstr "В кино"
+
 msgid "to the hospital"
 msgstr "в больницу"
+
+msgid "To the market"
+msgstr "На рынок"
 
 msgid "to the office"
 msgstr "в офис"
@@ -13352,10 +13370,11 @@ msgstr "сегодня"
 msgid "Today"
 msgstr "Сегодня"
 
-msgid "Today I’m studying Estonian."
-msgstr "Сегодня я учу эстонский."
 msgid "Today I’m starting to study at home."
 msgstr "Сегодня я начинаю заниматься дома."
+
+msgid "Today I’m studying Estonian."
+msgstr "Сегодня я учу эстонский."
 
 msgid "Today is"
 msgstr "Сегодня"
@@ -14253,10 +14272,11 @@ msgstr "Откуда ты идёшь?"
 msgid "Where are you from?"
 msgstr "Откуда ты?"
 
-msgid "Where did Mari go at ten?"
-msgstr "Куда Мари ходила в десять?"
 msgid "Where are you going?"
 msgstr "Куда ты идёшь?"
+
+msgid "Where did Mari go at ten?"
+msgstr "Куда Мари ходила в десять?"
 
 msgid "Where do you all live?"
 msgstr "Где вы живёте?"

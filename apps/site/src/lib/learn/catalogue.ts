@@ -159,7 +159,14 @@ export const STAGES: readonly Stage[] = [
         blurb: msg`A free lesson on Estonian noun stems: why pood becomes poes and tuba becomes toas, words that add a vowel (koolis, raamatus), words that stay the same (kodus), and how a dictionary shows the stem. Every sentence is read aloud.`,
       },
       { name: msg`The three forms of a noun`, et: "Kolm põhivormi" },
-      { name: msg`The genitive case`, et: "Minu raamat" },
+      {
+        slug: "omastav",
+        name: msg`The genitive case`,
+        title: msg`The Estonian genitive case: my, your and whose`,
+        et: "Minu raamat",
+        minutes: 12,
+        blurb: msg`A free lesson on the Estonian genitive case: minu, sinu, tema, meie, teie and nende for my, your, his or her, our and their, the owner before the noun (Mari raamat), kelle for whose, and the genitive as the form that takes -s and -l (kooli, koolis). Every sentence is read aloud.`,
+      },
       { name: msg`“To have”`, et: "Mul on" },
       {
         slug: "osastav",

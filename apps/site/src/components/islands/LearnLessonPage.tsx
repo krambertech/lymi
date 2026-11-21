@@ -8,6 +8,7 @@ import { MajasMajjaMajastLesson } from "../learn/lessons/MajasMajjaMajast";
 import { MinaSinaTemaLesson } from "../learn/lessons/MinaSinaTema";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { OlevikLesson } from "../learn/lessons/Olevik";
+import { OmastavLesson } from "../learn/lessons/Omastav";
 import { OsastavLesson } from "../learn/lessons/Osastav";
 import { PaevadLesson } from "../learn/lessons/Paevad";
 import { PaevTallinnasLesson } from "../learn/lessons/PaevTallinnas";
@@ -32,6 +33,7 @@ export const LESSON_VIEWS = {
   kaskiv: KaskivLesson,
   "paev-tallinnas": PaevTallinnasLesson,
   "pood-poe": PoodPoeLesson,
+  omastav: OmastavLesson,
   "majas-majja-majast": MajasMajjaMajastLesson,
   "verbi-pohivormid": VerbiPohivormidLesson,
   tegevusnimed: TegevusnimedLesson,

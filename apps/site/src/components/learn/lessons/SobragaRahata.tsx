@@ -485,7 +485,7 @@ function useContent() {
       ask: t`How long can Mari stay?`,
       options: [
         { id: "until", label: t`Until three` },
-        { id: "from", label: t`From three on` },
+        { id: "from", label: t`From three` },
         { id: "hours", label: t`For three hours` },
       ],
       answer: "until",

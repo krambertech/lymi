@@ -783,11 +783,11 @@ msgstr "<0>Kokk</0> has the genitive <1>koka</1>, so as a cook is <2>kokana</2>.
 msgid "<0>Kool</0> gains an i: <1>kooli</1>. It’s the vowel you heard in <2>koolis</2>."
 msgstr "<0>Kool</0> gains an i: <1>kooli</1>. It’s the vowel you heard in <2>koolis</2>."
 
-msgid "<0>Kooli</0> says where to: you’d be coming to school. She asked where from."
-msgstr "<0>Kooli</0> says where to: you’d be coming to school. She asked where from."
-
 msgid "<0>Koolis</0> says where you are. To say where from, use <1>-st</1>: <2>koolist</2>."
 msgstr "<0>Koolis</0> says where you are. To say where from, use <1>-st</1>: <2>koolist</2>."
+
+msgid "<0>Koolisse</0> says where to: you’d be coming to school. She asked where from."
+msgstr "<0>Koolisse</0> says where to: you’d be coming to school. She asked where from."
 
 msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>"
 msgstr "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>"
@@ -990,8 +990,8 @@ msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>
 msgid "<0>Tartu</0> and <1>haigla</1> stay as they are, and <2>-s</2> or <3>-l</3> goes straight on."
 msgstr "<0>Tartu</0> and <1>haigla</1> stay as they are, and <2>-s</2> or <3>-l</3> goes straight on."
 
-msgid "<0>Tartus</0> says where you are. After <1>tulen</1> too, say where to: <2>Tartusse</2>."
-msgstr "<0>Tartus</0> says where you are. After <1>tulen</1> too, say where to: <2>Tartusse</2>."
+msgid "<0>Tartust</0> says from Tartu. You’re going to Tartu: <1>Tartusse</1>."
+msgstr "<0>Tartust</0> says from Tartu. You’re going to Tartu: <1>Tartusse</1>."
 
 msgid "<0>te</0> now, <1>site</1> in the past."
 msgstr "<0>te</0> now, <1>site</1> in the past."
@@ -5877,8 +5877,8 @@ msgstr "from the office"
 msgid "from the shop"
 msgstr "from the shop"
 
-msgid "From three on"
-msgstr "From three on"
+msgid "From three"
+msgstr "From three"
 
 msgid "From tohtima."
 msgstr "From tohtima."
@@ -8902,9 +8902,6 @@ msgstr "Liis"
 msgid "Liis shares a flat with you and needs a hand. She speaks first; pick what you say back."
 msgstr "Liis shares a flat with you and needs a hand. She speaks first; pick what you say back."
 
-msgid "Like <0>küsimus</0>, <1>vastus</1> ends its third form in <2>-ust</2>: <3>vastust</3>."
-msgstr "Like <0>küsimus</0>, <1>vastus</1> ends its third form in <2>-ust</2>: <3>vastust</3>."
-
 msgid "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
 msgstr "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
 
@@ -9196,9 +9193,6 @@ msgstr "Ma istun says that you’re sitting down. To ask her, use the stem: istu
 
 msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… is I’m from…"
-
-msgid "Ma olen says I am. To say you have it, use mul on."
-msgstr "Ma olen says I am. To say you have it, use mul on."
 
 msgid "Ma olen, sa oled, ta on."
 msgstr "Ma olen, sa oled, ta on."
@@ -12451,6 +12445,9 @@ msgstr "Sina as the one something is done to: Ma ootan sind, I’m waiting for y
 msgid "Sina is you: this says “You are Jaan.”"
 msgstr "Sina is you: this says “You are Jaan.”"
 
+msgid "Sina means you. To say that you have it, answer Minul."
+msgstr "Sina means you. To say that you have it, answer Minul."
+
 msgid "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
 msgstr "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
 
@@ -14245,6 +14242,9 @@ msgstr "The one that matches your test or topic. You can add more than one, and 
 
 msgid "The ones starting to fade"
 msgstr "The ones starting to fade"
+
+msgid "The order is first, second, third, so <0>vastuse</0> comes before <1>vastust</1>."
+msgstr "The order is first, second, third, so <0>vastuse</0> comes before <1>vastust</1>."
 
 msgid "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."
 msgstr "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."

@@ -453,11 +453,11 @@ export function PohivormidLesson() {
           ),
         },
         {
-          line: "Vastus, vastuse, vastuse.",
+          line: "Vastus, vastust, vastuse.",
           why: (
             <Trans>
-              Like <b lang="et">küsimus</b>, <b lang="et">vastus</b> ends its third form in{" "}
-              <b lang="et">-ust</b>: <b lang="et">vastust</b>.
+              The order is first, second, third, so <b lang="et">vastuse</b> comes before{" "}
+              <b lang="et">vastust</b>.
             </Trans>
           ),
         },

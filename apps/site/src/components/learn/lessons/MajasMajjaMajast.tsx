@@ -354,10 +354,11 @@ export function MajasMajjaMajastLesson() {
       replies: [
         { line: line("d-sina-2"), right: true },
         {
-          line: "Ma tulen kooli.",
+          line: "Ma tulen koolisse.",
           why: (
             <Trans>
-              <b lang="et">Kooli</b> says where to: you’d be coming to school. She asked where from.
+              <b lang="et">Koolisse</b> says where to: you’d be coming to school. She asked where
+              from.
             </Trans>
           ),
         },
@@ -387,11 +388,11 @@ export function MajasMajjaMajastLesson() {
           ),
         },
         {
-          line: "Ei, ma tulen homme Tartus.",
+          line: "Ei, ma lähen homme Tartust.",
           why: (
             <Trans>
-              <b lang="et">Tartus</b> says where you are. After <b lang="et">tulen</b> too, say
-              where to: <b lang="et">Tartusse</b>.
+              <b lang="et">Tartust</b> says from Tartu. You’re going to Tartu:{" "}
+              <b lang="et">Tartusse</b>.
             </Trans>
           ),
         },

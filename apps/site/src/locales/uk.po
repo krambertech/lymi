@@ -783,11 +783,11 @@ msgstr "Родовий відмінок від <0>kokk</0> — <1>koka</1>, то
 msgid "<0>Kool</0> gains an i: <1>kooli</1>. It’s the vowel you heard in <2>koolis</2>."
 msgstr "У <0>kool</0> на кінці з’являється i: <1>kooli</1>. Це та сама голосна, що в <2>koolis</2>."
 
-msgid "<0>Kooli</0> says where to: you’d be coming to school. She asked where from."
-msgstr "<0>Kooli</0> відповідає на «куди?»: вийшло б, що ти приходиш до школи. Марі питала, звідки."
-
 msgid "<0>Koolis</0> says where you are. To say where from, use <1>-st</1>: <2>koolist</2>."
 msgstr "<0>Koolis</0> каже, де ти зараз. Щоб сказати «звідки», потрібне <1>-st</1>: <2>koolist</2>."
+
+msgid "<0>Koolisse</0> says where to: you’d be coming to school. She asked where from."
+msgstr "<0>Koolisse</0> відповідає на «куди?»: вийшло б, що ти приходиш до школи. Марі питала, звідки."
 
 msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>"
 msgstr "<0>Kus</0>, <1>kuhu</1> чи <2>kust</2>"
@@ -990,8 +990,8 @@ msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сьогодні, завт�
 msgid "<0>Tartu</0> and <1>haigla</1> stay as they are, and <2>-s</2> or <3>-l</3> goes straight on."
 msgstr "<0>Tartu</0> і <1>haigla</1> не змінюються, і <2>-s</2> чи <3>-l</3> додається просто в кінець."
 
-msgid "<0>Tartus</0> says where you are. After <1>tulen</1> too, say where to: <2>Tartusse</2>."
-msgstr "<0>Tartus</0> каже, де ти є. Після <1>tulen</1> теж потрібне «куди»: <2>Tartusse</2>."
+msgid "<0>Tartust</0> says from Tartu. You’re going to Tartu: <1>Tartusse</1>."
+msgstr "<0>Tartust</0> означає «з Тарту». А ти їдеш до Тарту: <1>Tartusse</1>."
 
 msgid "<0>te</0> now, <1>site</1> in the past."
 msgstr "<0>te</0> тепер, <1>site</1> у минулому."
@@ -5877,7 +5877,7 @@ msgstr "з офісу"
 msgid "from the shop"
 msgstr "з магазину"
 
-msgid "From three on"
+msgid "From three"
 msgstr "Від третьої"
 
 msgid "From tohtima."
@@ -8902,9 +8902,6 @@ msgstr "Ліїс"
 msgid "Liis shares a flat with you and needs a hand. She speaks first; pick what you say back."
 msgstr "Ліїс живе з тобою в одній квартирі, і їй потрібна допомога. Вона говорить першою, а ти вибирай, що відповісти."
 
-msgid "Like <0>küsimus</0>, <1>vastus</1> ends its third form in <2>-ust</2>: <3>vastust</3>."
-msgstr "Як і в <0>küsimus</0>, третя форма <1>vastus</1> закінчується на <2>-ust</2>: <3>vastust</3>."
-
 msgid "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
 msgstr "Як і <0>küsimus</0>, <1>vastus</1> має другу форму на <2>-use</2>: <3>vastuse</3>."
 
@@ -9196,9 +9193,6 @@ msgstr "Ma istun означає, що сідаєш ти. Щоб попросит
 
 msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… означає «я родом з…»."
-
-msgid "Ma olen says I am. To say you have it, use mul on."
-msgstr "Ma olen — це «я…», про те, хто ти. Щоб сказати, що це в тебе, кажи mul on."
 
 msgid "Ma olen, sa oled, ta on."
 msgstr "Ma olen, sa oled, ta on."
@@ -12451,6 +12445,9 @@ msgstr "Sina, коли дія спрямована на тебе: Ma ootan sind,
 msgid "Sina is you: this says “You are Jaan.”"
 msgstr "Sina — це ти: тут сказано «Ти Яан»."
 
+msgid "Sina means you. To say that you have it, answer Minul."
+msgstr "Sina — це «ти». Щоб сказати, що номер у тебе, відповідай Minul."
+
 msgid "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
 msgstr "Ще з уроку {present} ти кажеш <0/> Ти п’єш каву, не рахуючи чашок, тому <1>kohvi</1> стоїть у третій формі. Так само з усім, що їси, п’єш чи хочеш, не рахуючи. Українською схоже: «хочу молока». Торкнись речення, щоб його почути."
 
@@ -14245,6 +14242,9 @@ msgstr "Ту, що відповідає твоєму тесту чи темі. �
 
 msgid "The ones starting to fade"
 msgstr "Ті, які починають забуватися"
+
+msgid "The order is first, second, third, so <0>vastuse</0> comes before <1>vastust</1>."
+msgstr "Порядок такий: перша, друга, третя, тож <0>vastuse</0> іде перед <1>vastust</1>."
 
 msgid "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."
 msgstr "Порядок такий: перша, друга, третя. <0>Poe</0>, форма без <1>d</1>, іде другою."

@@ -342,7 +342,7 @@ type EndingItem = GapItem & { id: Id; where: Where; pair: readonly [string, stri
 export function KohadLesson() {
   const { t, i18n } = useLingui();
   const questions = lessonBySlug("kusimused")?.n;
-  const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
+  const stems = lessonBySlug("pood-poe")?.n;
   const into = LESSONS.find((lesson) => lesson.et === "Majas, majja, majast")?.n;
 
   const keysOf = (list: readonly { where: Where; id: Id }[]): KeyItem[] =>
@@ -520,7 +520,7 @@ export function KohadLesson() {
                     -s
                   </b>{" "}
                   form: <Word w="kool" />, <Word w="koolis" />; <Word w="linn" />,{" "}
-                  <Word w="linnas" />. Lesson {genitive} shows where the vowel comes from.
+                  <Word w="linnas" />. Lesson {stems} shows where the vowel comes from.
                 </Trans>
               </Aside>
             </>

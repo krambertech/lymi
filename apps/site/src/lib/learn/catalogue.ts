@@ -150,7 +150,14 @@ export const STAGES: readonly Stage[] = [
     hue: 160,
     goal: msg`Own things, count them and put them somewhere. Stems change first, then the genitive, which most other cases build on.`,
     lessons: [
-      { name: msg`Stem changes`, et: "Pood, poe" },
+      {
+        slug: "pood-poe",
+        name: msg`Stem changes`,
+        title: msg`Estonian noun stems: why pood becomes poes`,
+        et: "Pood, poe",
+        minutes: 10,
+        blurb: msg`A free lesson on Estonian noun stems: why pood becomes poes and tuba becomes toas, words that add a vowel (koolis, raamatus), words that stay the same (kodus), and how a dictionary shows the stem. Every sentence is read aloud.`,
+      },
       { name: msg`The three forms of a noun`, et: "Kolm põhivormi" },
       { name: msg`The genitive case`, et: "Minu raamat" },
       { name: msg`“To have”`, et: "Mul on" },

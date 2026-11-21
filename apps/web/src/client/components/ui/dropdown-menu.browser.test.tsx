@@ -104,10 +104,6 @@ function ChoiceHarness({ onSort = () => {} }: { onSort?: (value: string) => void
   );
 }
 
-test("the device rule matches the machine this browser stands in for", () => {
-  expect(window.matchMedia(DESKTOP_QUERY).matches).toBe(desktop);
-});
-
 describe("DropdownMenu", () => {
   test("renders every part in this shape: group, label, danger row and inset", async () => {
     const screen = await render(

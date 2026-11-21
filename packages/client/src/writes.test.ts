@@ -5,6 +5,7 @@ const store = new Map<string, string>();
 configureForTest(store);
 
 const calls: string[] = [];
+const added: unknown[] = [];
 const answers: (() => unknown)[] = [];
 const next = (kind: string) => {
   calls.push(kind);
@@ -24,7 +25,10 @@ vi.mock("./api", async () => {
     ApiError,
     errorMessage: () => "unreachable",
     api: {
-      addCard: (input: { id: string }) => next(`add ${input.id}`),
+      addCard: (input: { id: string }) => {
+        added.push(input);
+        return next(`add ${input.id}`);
+      },
       updateCard: (id: string) => next(`update ${id}`),
       archiveCard: (id: string) => next(`archive ${id}`),
       restoreCard: (id: string) => next(`restore ${id}`),
@@ -54,6 +58,7 @@ const edit = (id: string) => ({ kind: "card.update", id, patch: { meaning: "m" }
 beforeEach(() => {
   store.clear();
   calls.length = 0;
+  added.length = 0;
   answers.length = 0;
   flushGrades.mockClear();
   w.resetWriteCache();
@@ -88,7 +93,11 @@ describe("submitting a write", () => {
     answers.push(offline);
     await w.submit(add("a"), "a");
     w.resetWriteCache();
-    expect(w.writeStore.snapshot()).toMatchObject([{ write: { kind: "card.add" } }]);
+    w.claimWrites("me");
+    expect(w.pendingWrites()).toBe(1);
+    calls.length = 0;
+    await w.flushWrites();
+    expect(calls).toEqual(["add a"]);
   });
 
   it("refetches review data when the server refuses a card write shown in it", async () => {
@@ -194,12 +203,12 @@ describe("submitting a write", () => {
         pronunciation: "за́мок",
       });
       expect(stressed).toMatchObject({ queued: true, outcome: { status: "added" } });
-      expect(w.writeStore.snapshot()).toMatchObject([
-        { write: { kind: "card.add", input: { term: "замок", pronunciation: "за́мок" } } },
-      ]);
     } finally {
       vi.unstubAllGlobals();
     }
+    added.length = 0;
+    await w.flushWrites();
+    expect(added).toMatchObject([{ term: "замок", pronunciation: "за́мок" }]);
   });
 
   it("stores an offline add's bracketed Japanese term as the server would, and finds its duplicate", async () => {
@@ -232,12 +241,12 @@ describe("submitting a write", () => {
         status: "added",
         card: { term: "上手", pronunciation: "じょうず" },
       });
-      expect(w.writeStore.snapshot()).toMatchObject([
-        { write: { input: { term: "上手", pronunciation: "じょうず" } } },
-      ]);
     } finally {
       vi.unstubAllGlobals();
     }
+    added.length = 0;
+    await w.flushWrites();
+    expect(added).toMatchObject([{ term: "上手", pronunciation: "じょうず" }]);
   });
 
   it("throws a refusal, as the plain request would", async () => {
@@ -339,15 +348,12 @@ describe("flushing", () => {
   });
 
   it("sends the grades made before each write ahead of it", async () => {
+    vi.useFakeTimers({ toFake: ["Date"], now: new Date("2026-11-21T09:00:00.000Z") });
     answers.push(offline);
     await w.submit(add("a"), "a");
-    const [queued] = w.writeStore.snapshot();
     flushGrades.mockClear();
     await w.flushWrites();
-    expect(flushGrades.mock.calls).toEqual([
-      [new Date(queued?.at ?? 0).toISOString()],
-      [undefined],
-    ]);
+    expect(flushGrades.mock.calls).toEqual([["2026-11-21T09:00:00.000Z"], [undefined]]);
   });
 
   it("skips an entry it cannot read, and keeps one from another version unsent", async () => {
@@ -359,7 +365,6 @@ describe("flushing", () => {
     );
     w.resetWriteCache();
     w.claimWrites("me");
-    expect(w.writeStore.snapshot().map((e) => e.key)).toEqual(["k"]);
     await w.flushWrites();
     expect(calls).toEqual(["add a"]);
     expect(store.has("lymi-writes:y")).toBe(true);

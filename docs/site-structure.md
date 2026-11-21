@@ -134,4 +134,4 @@ Run the local gates in [AGENTS.md](../AGENTS.md#before-you-push) and the product
 
 If an existing `my.lymi.app` tab or installed app still renders the old public shell, clear the stored site data for `my.lymi.app`, including its service worker and caches, then close and reopen the tab or app. Closing matters, because an unregistered worker keeps controlling the document it already has open. Sign in again and re-enable reminders if the browser discarded the push subscription.
 
-Browser tests cover clearing a stale shell. This is a client recovery procedure, not a requirement to reset every learner after deployment.
+This is a client recovery procedure, not a requirement to reset every learner after deployment.

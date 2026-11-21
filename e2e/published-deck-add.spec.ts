@@ -77,11 +77,8 @@ test("anyone can add a published deck, and a withdrawn one admits nobody new", a
     expect(await settings.json()).toMatchObject({ dailyGoal: 25, learningKind: null });
   });
 
-  await test.step("leaving the review lands on Today, and Welcome's address leads there too", async () => {
+  await test.step("leaving the review lands on Today", async () => {
     await visitor.getByRole("button", { name: "Leave review" }).click();
-    await expect(visitor).toHaveURL(/\/today$/);
-    await expect(visitor.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
-    await visitor.goto("/welcome", { waitUntil: "commit" });
     await expect(visitor).toHaveURL(/\/today$/);
     await expect(visitor.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
   });

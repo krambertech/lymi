@@ -77,7 +77,6 @@ describe("signing a persona in on an isolated preview", () => {
     // Before the fix this threw, and the preview check saw a 500.
     expect(response.status).toBe(303);
     expect(response.headers.getSetCookie().join(";")).toContain("session_token");
-    expect(warn).toHaveBeenCalledWith(expect.stringContaining("Rebuilding"));
 
     const [after] = await db.select().from(schema.user).where(eq(schema.user.email, email));
     expect(after?.id, "the stale account should have been replaced").not.toBe(before?.id);

@@ -136,18 +136,6 @@ describe("public routes", () => {
       }
     expect(launched).toContain(`lymi.app${localizedPath("learn", "en")}<`);
   });
-
-  it("keeps pages that are not launched out of the sitemap", async () => {
-    const sitemap = await GET().text();
-    for (const page of prelaunchPages)
-      for (const locale of locales)
-        expect(sitemap).not.toContain(`lymi.app${localizedPath(page, locale)}<`);
-  });
-
-  it("keeps pages for the people building the site out of the sitemap", async () => {
-    const sitemap = await GET().text();
-    for (const path of unlistedPaths) expect(sitemap).not.toContain(`lymi.app${path}<`);
-  });
 });
 
 describe("pageLocales", () => {

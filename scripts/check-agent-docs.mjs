@@ -297,7 +297,7 @@ function checkReferences(tree, doc, scripts, skills) {
 }
 
 /** The verify skill's feature table: each row's title, entry link and line. */
-export function featureRows(text) {
+function featureRows(text) {
   const rows = [];
   let inTable = false;
   text.split("\n").forEach((line, index) => {

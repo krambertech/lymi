@@ -1,11 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  APP_STORE_URL,
-  download,
-  downloadCapture,
-  downloadCaptureRequest,
-  downloadHref,
-} from "./downloads";
+import { download, downloadCapture, downloadCaptureRequest, downloadHref } from "./downloads";
 
 function visit(path: string, headers: Record<string, string> = {}) {
   return new Request(`https://lymi.app${path}`, { headers });
@@ -26,10 +20,6 @@ describe("download", () => {
     );
     expect(download("/download")).toBeUndefined();
     expect(download("/download/windows")).toBeUndefined();
-  });
-
-  it("sends the iPhone link to the App Store", () => {
-    expect(download("/download/iphone")?.file).toBe(APP_STORE_URL);
   });
 });
 

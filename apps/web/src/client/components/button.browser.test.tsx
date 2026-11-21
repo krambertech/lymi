@@ -34,7 +34,7 @@ test("render swaps the element for a link that keeps the button's classes, insid
   expect(el.tagName).toBe("A");
   expect(el.hasAttribute("type")).toBe(false);
   expect(el.className).toBe(page.getByRole("button", { name: "Start" }).element().className);
-  expect(el.querySelector(":scope > span > span > kbd")?.textContent).toBe("R");
+  expect(el.querySelector("kbd")?.textContent).toBe("R");
   expect(ref.current).toBe(el);
 });
 

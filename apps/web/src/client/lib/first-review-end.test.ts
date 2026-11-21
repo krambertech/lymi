@@ -6,12 +6,9 @@ const captureAnalytics = vi.hoisted(() => vi.fn());
 vi.mock("./telemetry", () => ({ captureAnalytics }));
 
 const eventProperties = (await import("@lymi/core/analytics")).eventProperties;
-const {
-  firstReviewEndSent,
-  reminderProperties,
-  reportFirstReviewEndLeft,
-  resetFirstReviewEndLeftForTests,
-} = await import("./first-review-end");
+const { firstReviewEndSent, reminderProperties, reportFirstReviewEndLeft } = await import(
+  "./first-review-end"
+);
 const { FIRST_REVIEW_END_LEFT_KEY } = await import("./storage-keys");
 
 const stored = new Map<string, string>();
@@ -24,11 +21,9 @@ beforeEach(() => {
     setItem: (key: string, value: string) => stored.set(key, value),
     removeItem: (key: string) => stored.delete(key),
   });
-  resetFirstReviewEndLeftForTests();
 });
 
 afterEach(() => {
-  resetFirstReviewEndLeftForTests();
   vi.unstubAllGlobals();
 });
 

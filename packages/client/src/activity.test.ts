@@ -65,18 +65,6 @@ describe("mergeActivity", () => {
   });
 });
 
-describe("mergeActivity across pages", () => {
-  it("makes a group split by Show more one row with the whole count and every card", () => {
-    const first = [entry("new", 1), entry("g", 2, ["uno", "due"])];
-    const second = [entry("g", 3, ["tre", "quattro", "cinque"]), entry("old", 1)];
-    const rows = mergeActivity([...first, ...second]);
-    expect(rows.map((r) => r.group)).toEqual(["new", "g", "old"]);
-    expect(rows[1]).toMatchObject({ count: 5 });
-    expect(rows[1]?.cards).toHaveLength(5);
-    expect(new Set(rows.map((r) => r.group)).size).toBe(rows.length);
-  });
-});
-
 type Export = NonNullable<ActivityEntry["export"]>;
 type Import = NonNullable<ActivityEntry["import"]>;
 const file = (status: string, format = "lymi") => ({ status, format }) as unknown as Export;

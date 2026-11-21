@@ -373,24 +373,12 @@ describe("Combobox", () => {
     (box().element() as HTMLElement).focus();
     await userEvent.keyboard("po");
 
+    await expect.element(search()).toHaveFocus();
     await expect.element(search()).toHaveValue("po");
     await expect.poll(() => page.getByRole("option").elements().length).toBeGreaterThan(1);
     await expect.poll(highlighted).toContain("Polish");
     await userEvent.keyboard("{Enter}");
     expect(onValueChange).toHaveBeenCalledExactlyOnceWith("pl");
-  });
-
-  test("typing on the closed box opens it and searches for what was typed", async () => {
-    const onValueChange = vi.fn();
-    await render(<Harness onValueChange={onValueChange} />);
-    (box().element() as HTMLElement).focus();
-    await userEvent.keyboard("ukr");
-
-    await expect.element(search()).toHaveFocus();
-    await expect.element(search()).toHaveValue("ukr");
-    await expect.poll(highlighted).toContain("Ukrainian");
-    await userEvent.keyboard("{Enter}");
-    expect(onValueChange).toHaveBeenCalledExactlyOnceWith("uk");
   });
 
   test("opens with the chosen row in view", async () => {

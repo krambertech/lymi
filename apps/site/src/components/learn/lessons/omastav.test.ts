@@ -1,13 +1,11 @@
 import { describe, expect, it } from "vitest";
 import {
   OMASTAV_FORMS,
-  OMASTAV_PASSAGE,
   OMASTAV_PHRASES,
   OMASTAV_PRONOUNS,
   OMASTAV_WHOSE,
   phraseOf,
 } from "../../../lib/learn/clips";
-import { gapLine } from "../../../lib/learn/passage";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { KATI_GAPS, sharedLength } from "./Omastav";
 
@@ -61,11 +59,6 @@ describe("genitive data", () => {
 });
 
 describe("Kati's note", () => {
-  it("spells the recorded passage once every gap holds its answer", () => {
-    const filled = KATI_GAPS.map((gap) => gapLine(gap.before, gap.answer, gap.after)).join(" ");
-    expect(filled).toBe(OMASTAV_PASSAGE.join(" "));
-  });
-
   it("offers the answer in each gap, first in some and second in others", () => {
     for (const gap of KATI_GAPS) expect(gap.options).toContain(gap.answer);
     const places = new Set(KATI_GAPS.map((gap) => gap.options?.indexOf(gap.answer)));

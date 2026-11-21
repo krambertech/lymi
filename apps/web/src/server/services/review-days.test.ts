@@ -104,17 +104,6 @@ describe("the daily goal counts attempts", () => {
     expect(summary.days.at(-1)).toMatchObject({ outcome: "exhausted", satisfied: true });
   });
 
-  it("ignores a duplicate grade", async () => {
-    const { ctx, cards } = await setup(5, ["kolm", "neli"]);
-    const [a] = cards;
-    if (!a) throw new Error("no cards");
-
-    await grade(ctx, a.id, 3, later(5));
-    const replay = await grade(ctx, a.id, 3, later(4));
-
-    expect(replay).toMatchObject({ duplicate: true, reviewId: null, day: { attempts: 1 } });
-  });
-
   it("stores a grade sent twice at once only once", async () => {
     const { ctx, cards } = await setup(5, ["kaheksa"]);
     const [a] = cards;

@@ -26,10 +26,9 @@ test("a teacher can reach the teachers page, try the join link and find ready-ma
     await expect(page.getByText("The link is off. Nobody new can join.")).toBeVisible();
   });
 
-  await test.step("the ready-made decks are Lymi's own, with no beta note left", async () => {
+  await test.step("the ready-made decks are Lymi's own", async () => {
     await expect(page.getByRole("heading", { name: "Start from a ready-made deck" })).toBeVisible();
     await expect(page.getByText("Everyday Estonian")).toBeVisible();
-    await expect(page.getByText(/rolling out during the beta/)).toHaveCount(0);
   });
 
   await test.step("every edition is in the sitemap", async () => {

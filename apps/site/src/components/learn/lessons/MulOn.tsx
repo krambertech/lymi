@@ -545,7 +545,7 @@ export function MulOnLesson() {
       clip: "d-sina-3",
       replies: [
         { line: line("d-sina-3"), right: true },
-        { line: "Ma olen.", why: t`Ma olen says I am. To say you have it, use mul on.` },
+        { line: "Sina.", why: t`Sina means you. To say that you have it, answer Minul.` },
         { line: "Sinul.", why: t`Sinul says that Liis has it.` },
       ],
     },

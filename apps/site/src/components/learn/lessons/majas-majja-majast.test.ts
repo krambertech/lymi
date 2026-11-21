@@ -26,7 +26,7 @@ describe("in, into and out of quiz", () => {
   it("puts each question in every place across runs", () => {
     const places = new Map(DIRECTIONS.map((each) => [each, new Set<number>()]));
     for (let run = 0; run < 300; run++)
-      shuffledDirections().forEach((each, i) => places.get(each)?.add(i));
+      for (const [i, each] of shuffledDirections().entries()) places.get(each)?.add(i);
     for (const seen of places.values()) expect(seen.size).toBe(3);
   });
 });

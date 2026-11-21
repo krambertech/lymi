@@ -158,6 +158,7 @@ function copyStatements(
         audioSource: null,
         audioApprovedKey: null,
         exampleRecordingKey: null,
+        exampleRecordingCaptured: sql`0`,
         sectionId: sql`sections.new_id`,
       },
       sql`from cards
@@ -170,6 +171,7 @@ function copyStatements(
     ),
     ...keyStatements(db, userId, localizedKeys),
     // The copy shares each picture's object; deleting an account leaves one another row uses.
+    // A captured picture was the owner's alone, so it stays behind.
     copyRows(
       db,
       schema.cardImages,
@@ -182,7 +184,7 @@ function copyStatements(
       },
       sql`from card_images as images
         join deck_copy_ids as ids on ids.old_id = images.card_id and ids.user_id = ${userId}
-        where images.status = 'active'`,
+        where images.status = 'active' and images.captured = 0`,
     ),
     ...[schema.cardStates, schema.reviews, schema.importantCards].map((table) =>
       db

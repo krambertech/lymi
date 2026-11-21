@@ -31,6 +31,7 @@ export type CardView = Omit<
   | "audioApprovedKey"
   | "exampleTranslationOf"
   | "exampleRecordingKey"
+  | "exampleRecordingCaptured"
 > & {
   reviewModes: ReviewMode[] | null;
   image: CardImageView | null;
@@ -57,7 +58,20 @@ export function imageView(image: CardImage): CardImageView {
   };
 }
 
-function view(card: Card, image: CardImage | undefined, important: boolean): CardView {
+/**
+ * Whether the viewer may have the learner's own captured media: only the card's owner does, so a
+ * member and a public page get generated speech and no picture. CONTEXT.md, Recording.
+ */
+export function seesCaptured(card: Pick<Card, "userId">, viewerId: string) {
+  return card.userId === viewerId;
+}
+
+function view(
+  card: Card,
+  image: CardImage | undefined,
+  important: boolean,
+  viewerId: string,
+): CardView {
   // The draft is the owner's editor's, never shown on the card, so a member never reads it.
   const {
     reviewModeKeys,
@@ -67,6 +81,7 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
     exampleTranslationOf: _of,
     // A client needs only whether there is one; the example's route finds the clip itself.
     exampleRecordingKey: _recording,
+    exampleRecordingCaptured: _captured,
     ...rest
   } = card;
   return {
@@ -79,9 +94,11 @@ function view(card: Card, image: CardImage | undefined, important: boolean): Car
         ? "failed"
         : card.exampleTranslationStatus,
     exampleTranslationStale: translationStale(card),
-    exampleRecorded: card.exampleRecordingKey !== null,
+    exampleRecorded:
+      card.exampleRecordingKey !== null &&
+      (!card.exampleRecordingCaptured || seesCaptured(card, viewerId)),
     reviewModes: cardModes({ directions: card.directions, reviewModeKeys }),
-    image: image ? imageView(image) : null,
+    image: image && (!image.captured || seesCaptured(card, viewerId)) ? imageView(image) : null,
     important,
   };
 }
@@ -227,7 +244,7 @@ export async function presentCards(
         exampleTranslationStatus: null,
       });
     }
-    return view(seen, images.get(card.id), important.has(card.id));
+    return view(seen, images.get(card.id), important.has(card.id), viewerId);
   });
 }
 

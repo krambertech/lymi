@@ -33,6 +33,7 @@ export type Card = Omit<
   | "audioApprovedKey"
   | "exampleTranslationOf"
   | "exampleRecordingKey"
+  | "exampleRecordingCaptured"
 > & {
   reviewModes: ReviewMode[] | null;
   image: CardImage | null;

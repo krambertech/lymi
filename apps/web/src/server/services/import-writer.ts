@@ -664,6 +664,8 @@ export type PendingPicture = {
   kind?: "recording" | "exampleRecording" | undefined;
   /** The sentence an example's recording says, which the card must still say when it is stored. */
   example?: string | undefined;
+  /** A Lymi file's captured picture or example recording, which stays the owner's alone. */
+  captured?: boolean | undefined;
 };
 
 /**
@@ -733,6 +735,7 @@ export async function writeChunk<Note>(
           name: item.card.exampleRecording,
           kind: "exampleRecording",
           example: item.card.fields.example,
+          ...(item.card.captured?.exampleRecording ? { captured: true } : {}),
         });
       }
       existingRows.push({
@@ -795,6 +798,7 @@ export async function writeChunk<Note>(
         cardId: id,
         name: item.card.picture,
         ...(item.card.pictureDescription ? { description: item.card.pictureDescription } : {}),
+        ...(item.card.captured?.picture ? { captured: true } : {}),
       });
     }
     if (item.card.recording) {
@@ -806,6 +810,7 @@ export async function writeChunk<Note>(
         name: item.card.exampleRecording,
         kind: "exampleRecording",
         example: fields.example,
+        ...(item.card.captured?.exampleRecording ? { captured: true } : {}),
       });
     }
 
@@ -1028,7 +1033,14 @@ export async function attachPictures<Note>(
         ? "skipped"
         : picture.kind === "recording"
           ? await storeRecording(ctx, picture.cardId, load, audio)
-          : await storeExampleRecording(ctx, picture.cardId, picture.example, load, audio);
+          : await storeExampleRecording(
+              ctx,
+              picture.cardId,
+              picture.example,
+              load,
+              audio,
+              picture.captured === true,
+            );
       // A card a retried step already recorded was counted then.
       if (outcome !== "kept") {
         (picture.kind === "recording" ? recordings : exampleRecordings)[outcome]++;
@@ -1055,7 +1067,7 @@ export async function attachPictures<Note>(
         picture.description && !revealedAnswer(card, picture.description)
           ? picture.description
           : undefined;
-      await storeImportedImage(ctx, card, bytes, description, images);
+      await storeImportedImage(ctx, card, bytes, description, images, picture.captured === true);
       stored++;
     } catch (err) {
       if (!(err instanceof ServiceError)) throw err;

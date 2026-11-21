@@ -52,6 +52,7 @@ function card(patch: Partial<Card> = {}): Card {
     audioSource: null,
     audioApprovedKey: null,
     exampleRecordingKey: null,
+    exampleRecordingCaptured: false,
     createdBy: "user",
     archivedAt: null,
     createdAt: now,
@@ -163,6 +164,28 @@ describe("example audio", () => {
     expect(allowance.left).not.toHaveBeenCalled();
     expect(vi.mocked(aiAllowedForOwner).mock.calls).toHaveLength(consentChecks);
     expect(put).not.toHaveBeenCalled();
+  });
+
+  it("plays a captured recording to the owner alone, and generated speech to a member", async () => {
+    const { bucket } = memoryBucket();
+    const key = "cards/card-1/example-recorded/asbplayer.mp3";
+    await bucket.put(key, new Uint8Array([9, 9, 9]));
+    const captured = card({ exampleRecordingKey: key, exampleRecordingCaptured: true });
+    const speech = vi.fn(async () => sound());
+    const deps = { bucket, providers: () => [provider("elevenlabs", speech)] };
+
+    const owned = await exampleAudio(context(captured), "card-1", deps, free());
+    expect("clip" in owned && owned.clip.key).toBe(key);
+    expect(speech).not.toHaveBeenCalled();
+
+    const heard = await exampleAudio(
+      { ...context(captured), userId: "member-1" },
+      "card-1",
+      deps,
+      free(),
+    );
+    expect("clip" in heard && heard.clip.key).not.toBe(key);
+    expect(speech).toHaveBeenCalledTimes(1);
   });
 
   it("never stands generated speech in for a missing recording", async () => {

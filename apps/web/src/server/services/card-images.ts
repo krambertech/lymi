@@ -4,6 +4,7 @@ import { and, desc, eq, type SQL, sql } from "@lymi/core/db";
 import type { Card, CardImage } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
 import { type AuditAction, auditStatementWhen, insertWhen } from "./audit";
+import { seesCaptured } from "./card-view";
 import { getCard, ownedCard, showCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 import { type Fetcher, fetchRemoteImage } from "./image-import";
@@ -33,15 +34,19 @@ export async function uploadCardImage(
   return showCard(ctx, card.id);
 }
 
-/** Store an imported picture on a card the import wrote and the caller has already read. */
+/**
+ * Store an imported picture on a card the caller has already read. A `captured` one came from the
+ * learner's own capture tool and shows to the owner alone.
+ */
 export async function storeImportedImage(
   ctx: ServiceContext,
   card: Card,
   bytes: Uint8Array,
   description: string | undefined,
   deps: CardImageStorage,
+  captured = false,
 ) {
-  await storeImage(ctx, card, bytes, { kind: "upload", host: null }, description, deps);
+  await storeImage(ctx, card, bytes, { kind: "upload", host: null, captured }, description, deps);
 }
 
 /** Fetch a public link once and store a private copy, keeping only the link's host. */
@@ -119,7 +124,7 @@ export async function cardImageFile(
   imageId: string,
   bucket: R2Bucket,
 ) {
-  await getCard(ctx, cardId);
+  const card = await getCard(ctx, cardId);
   const [image] = await ctx.db
     .select()
     .from(schema.cardImages)
@@ -130,7 +135,9 @@ export async function cardImageFile(
         eq(schema.cardImages.status, "active"),
       ),
     );
-  if (!image) throw new ServiceError("not_found", "Picture not found");
+  if (!image || (image.captured && !seesCaptured(card, ctx.userId))) {
+    throw new ServiceError("not_found", "Picture not found");
+  }
   const object = await bucket.get(image.objectKey);
   if (!object) throw new ServiceError("not_found", "Picture not found");
   return { image, object };
@@ -162,7 +169,7 @@ async function storeImage(
   ctx: ServiceContext,
   card: Card,
   input: Uint8Array,
-  source: { kind: CardImage["sourceKind"]; host: string | null },
+  source: { kind: CardImage["sourceKind"]; host: string | null; captured?: boolean },
   description: string | undefined,
   deps: CardImageStorage,
 ) {
@@ -210,6 +217,7 @@ async function storeImage(
           description: description ?? null,
           sourceKind: source.kind,
           sourceHost: source.host,
+          captured: source.captured ?? false,
           status: "active",
           createdBy: ctx.actor,
           createdAt: now,
@@ -223,6 +231,7 @@ async function storeImage(
         imageId,
         source: source.kind,
         sourceHost: source.host,
+        ...(source.captured ? { captured: true } : {}),
         width: normalized.width,
         height: normalized.height,
         ...(description === undefined ? {} : { description }),

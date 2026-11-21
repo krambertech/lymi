@@ -4,10 +4,12 @@
  * these over a quiz's simulated runs and a gap passage's gaps.
  */
 
-/** One round as a learner sees it: the options' visible text and where the answer is. */
+/** One round as a learner sees it: the options' visible text, where the answer is, what it plays. */
 export interface PickRound {
   options: readonly string[];
   answer: number;
+  /** The text of the round's clip, when it has one. */
+  heard?: string | undefined;
 }
 
 /** Lower case, letters, digits and single spaces: what a learner compares by eye. */
@@ -57,8 +59,23 @@ export function oneLetterApart(a: string, b: string): boolean {
 /** A rule a learner could follow without listening: the options it would pick from at random. */
 export interface Strategy {
   name: string;
-  pick: (options: readonly string[]) => number[];
+  pick: (options: readonly string[], heard?: string) => number[];
+  /** How a quiz stops the rule working. */
+  fix: string;
+  /** The rounds the rule says something about; every round when absent. */
+  applies?: (round: PickRound) => boolean;
 }
+
+/** How many letters two words share at their start. */
+const sharedStart = (a: string, b: string) => {
+  let i = 0;
+  while (i < a.length && i < b.length && a[i] === b[i]) i++;
+  return i;
+};
+
+/** Whether the clip says the answer as written, so matching what is heard is the task itself. */
+const saidAsWritten = (round: PickRound) =>
+  ` ${plain(round.heard ?? "")} `.includes(` ${plain(round.options[round.answer] ?? "")} `);
 
 const all = (options: readonly string[]) => options.map((_, i) => i);
 const byLength = (
@@ -73,14 +90,17 @@ const byLength = (
 export const STRATEGIES: readonly Strategy[] = [
   {
     name: "pick the longest",
+    fix: "choose wrong options as long as the answer, or longer and shorter than it in turn",
     pick: (options) => byLength(options, (length, lengths) => length === Math.max(...lengths)),
   },
   {
     name: "pick the shortest",
+    fix: "choose wrong options as long as the answer, or longer and shorter than it in turn",
     pick: (options) => byLength(options, (length, lengths) => length === Math.min(...lengths)),
   },
   {
     name: "pick the middle length",
+    fix: "choose wrong options as long as the answer, or longer and shorter than it in turn",
     pick: (options) =>
       byLength(
         options,
@@ -89,6 +109,7 @@ export const STRATEGIES: readonly Strategy[] = [
   },
   {
     name: "pick the one with no one-letter neighbour",
+    fix: "give the answer a wrong option one letter away from it, as the others have",
     pick: (options) => {
       const alone = all(options).filter(
         (i) => !options.some((other, j) => j !== i && oneLetterApart(options[i] as string, other)),
@@ -96,18 +117,36 @@ export const STRATEGIES: readonly Strategy[] = [
       return alone.length ? alone : all(options);
     },
   },
+  {
+    name: "pick the one sharing the most leading letters with a word heard",
+    fix: "choose wrong options that start the way the heard word does, such as other forms of it",
+    pick: (options, heard = "") => {
+      const words = plain(heard).split(" ");
+      const shared = options.map((option) =>
+        Math.max(...words.map((word) => sharedStart(plain(option), word))),
+      );
+      const most = Math.max(...shared);
+      return most > 0 ? all(options).filter((i) => shared[i] === most) : all(options);
+    },
+    applies: (round) => round.heard !== undefined && !saidAsWritten(round),
+  },
 ];
 
-/** A strategy's expected share right over the rounds, and chance's, from 0 to 1. */
+/**
+ * A strategy's expected share right over the rounds it applies to, and chance's, from 0 to 1, and
+ * how many rounds that was.
+ */
 export function strategyScore(strategy: Strategy, rounds: readonly PickRound[]) {
+  const scored = rounds.filter((round) => strategy.applies?.(round) ?? true);
   let score = 0;
   let chance = 0;
-  for (const round of rounds) {
-    const picked = strategy.pick(round.options);
+  for (const round of scored) {
+    const picked = strategy.pick(round.options, round.heard);
     if (picked.includes(round.answer)) score += 1 / picked.length;
     chance += 1 / round.options.length;
   }
-  return { score: score / rounds.length, chance: chance / rounds.length };
+  const of = Math.max(1, scored.length);
+  return { score: score / of, chance: chance / of, rounds: scored.length };
 }
 
 /**

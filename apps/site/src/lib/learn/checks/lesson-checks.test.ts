@@ -15,7 +15,7 @@ import { CLIPS, clipText, isPassage } from "../clips";
 import { gapLine } from "../passage";
 import { shuffledRun } from "../quiz";
 import VERIFIED from "../verified-forms.json";
-import { ALLOWED_NEAR_PAIRS } from "./allowed-quizzes";
+import { ALLOWED_NEAR_PAIRS, ALLOWED_STRATEGIES } from "./allowed-quizzes";
 import { formsIn, lessonForms, VERIFIED_FORMS_PATH } from "./forms";
 import {
   fairCap,
@@ -198,7 +198,16 @@ const picks = (quiz: QuizProps) =>
 function pickRound(item: Record<string, unknown>): PickRound | undefined {
   const options = item.options as unknown[];
   const answer = options.findIndex((option) => optionId(option) === String(item.answer));
-  return answer < 0 ? undefined : { options: options.map(shown), answer };
+  return answer < 0
+    ? undefined
+    : { options: options.map(shown), answer, heard: heardText(item.src) };
+}
+
+/** What a round's clip says, found from its URL's lesson and id. */
+function heardText(src: unknown): string | undefined {
+  const [, lesson, id] = String(src).match(/([^/]+)\/([^/]+)\.mp3$/) ?? [];
+  const clip = lesson && id ? CLIPS[lesson]?.[id] : undefined;
+  return clip === undefined ? undefined : clipText(clip);
 }
 
 const SIMULATED = 200;
@@ -460,19 +469,25 @@ describe.each(SLUGS)("lesson %s", (slug) => {
       const rounds = [...unit.first, ...unit.later]
         .flat()
         .filter((round) => round.options.length > 2);
-      if (unit.kind === "passage" ? rounds.length < 4 : rounds.length === 0) continue;
       for (const strategy of STRATEGIES) {
-        const { score, chance } = strategyScore(strategy, rounds);
-        if (score > chance + 0.25)
-          problems.push(
-            `${where(slug, `id="${unit.id}"`)}: ${unit.kind} "${unit.id}": “${strategy.name}” scores ${percent(score)} where chance is ${percent(chance)}, so a learner can score without listening. Example: ${rounds
-              .filter((round) => strategy.pick(round.options).includes(round.answer))
-              .slice(0, 2)
-              .map((round) => `${round.options.join(", ")} → ${round.options[round.answer]}`)
-              .join(
-                "; ",
-              )}. Fix: choose wrong options that break the rule as often as the answer does, such as one as long as the answer, or one a letter away from it.`,
+        const { score, chance, rounds: scored } = strategyScore(strategy, rounds);
+        if (unit.kind === "passage" ? scored < 4 : scored === 0) continue;
+        const allowed = ALLOWED_STRATEGIES.some(
+          (each) =>
+            each.lesson === slug && each.quiz === unit.id && each.strategy === strategy.name,
+        );
+        if (score <= chance + 0.25 || allowed) continue;
+        const examples = rounds
+          .filter((round) => strategy.applies?.(round) ?? true)
+          .filter((round) => strategy.pick(round.options, round.heard).includes(round.answer))
+          .slice(0, 2)
+          .map(
+            (round) =>
+              `${round.heard ? `hearing “${round.heard}”, ` : ""}${round.options.join(", ")} → ${round.options[round.answer]}`,
           );
+        problems.push(
+          `${where(slug, `id="${unit.id}"`)}: ${unit.kind} "${unit.id}": “${strategy.name}” scores ${percent(score)} where chance is ${percent(chance)}, so a learner can score without what the quiz tests. Example: ${examples.join("; ")}. Fix: ${strategy.fix}; or, where the rule is the lesson, list the quiz in ALLOWED_STRATEGIES (apps/site/src/lib/learn/checks/allowed-quizzes.ts) with the reason.`,
+        );
       }
     }
     expectNoneUnlessKnown(

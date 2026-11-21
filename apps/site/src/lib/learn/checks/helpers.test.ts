@@ -54,8 +54,17 @@ describe("the check helpers", () => {
       { options: ["kool", "kooli", "koolis"], answer: 1 },
       { options: ["raamat", "raamatu", "raamatus"], answer: 1 },
     ];
-    expect(strategyScore(middle, rounds)).toEqual({ score: 1, chance: 1 / 3 });
+    expect(strategyScore(middle, rounds)).toEqual({ score: 1, chance: 1 / 3, rounds: 2 });
     expect(placeShares(rounds, 3)).toEqual([0, 1, 0]);
+    const leading = STRATEGIES[4] as Strategy;
+    expect(leading.pick(["pood", "jõgi", "turg"], "Ema on poes.")).toEqual([0]);
+    expect(leading.applies?.({ options: ["pood", "tuba"], answer: 0, heard: "Ema on poes." })).toBe(
+      true,
+    );
+    // The answer said as written: matching what is heard is the task.
+    expect(
+      leading.applies?.({ options: ["kodus", "koolis"], answer: 0, heard: "Ma olen kodus." }),
+    ).toBe(false);
   });
 
   it("parses server HTML with the language each element is in", () => {

@@ -24,6 +24,4 @@ export const KNOWN_ISSUES: Readonly<Record<string, readonly string[]>> = {
    * a round after the first can be answered by the place, or the word, no earlier round used.
    */
   "answer-place": ["haaldus", "kell", "kohad", "mina-sina-tema"],
-  /** A quiz where picking the shortest option, the form without its ending, beats chance. */
-  "cheap-strategy": ["eitus"],
 };

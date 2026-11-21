@@ -4419,6 +4419,46 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "mitmus/laps": {
+    "text": "laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/lapse": {
+    "text": "lapse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/lapsed": {
+    "text": "lapsed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/laps-lapse": {
+    "text": "laps, lapse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/uks": {
+    "text": "uks",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/ukse": {
+    "text": "ukse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/uksed": {
+    "text": "uksed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/uks-ukse": {
+    "text": "uks, ukse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "mitmus/pood": {
     "text": "pood",
     "model": "eleven_v4",
@@ -4476,46 +4516,6 @@
   },
   "mitmus/jo3gi-jo3e": {
     "text": "jõgi, jõe",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "mitmus/laps": {
-    "text": "laps",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "mitmus/lapse": {
-    "text": "lapse",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "mitmus/lapsed": {
-    "text": "lapsed",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "mitmus/laps-lapse": {
-    "text": "laps, lapse",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "mitmus/uks": {
-    "text": "uks",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "mitmus/ukse": {
-    "text": "ukse",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "mitmus/uksed": {
-    "text": "uksed",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "mitmus/uks-ukse": {
-    "text": "uks, ukse",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

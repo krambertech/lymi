@@ -158,10 +158,10 @@ export const STAGES: readonly Stage[] = [
       {
         slug: "mitmus",
         name: msg`Plural`,
-        title: msg`Estonian plural: kassid, majad, poed`,
+        title: msg`Estonian plural`,
         et: "Kassid",
         minutes: 12,
-        blurb: msg`A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud.`,
       },
       { name: msg`In, into, out of`, et: "Majas, majja, majast" },
       { name: msg`On, onto, off`, et: "Laual, lauale, laualt" },
@@ -209,7 +209,7 @@ export const STAGES: readonly Stage[] = [
     name: msg`Harder grammar`,
     level: "A2",
     hue: 18,
-    goal: msg`The rules that trip most learners up. You know every word by now, so only the rule is new.`,
+    goal: msg`Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new.`,
     lessons: [
       { name: msg`Consonant gradation`, et: "Jalg, jala" },
       { name: msg`The object: whole or part`, et: "Raamatut või raamatu" },

@@ -41,7 +41,7 @@ export function LessonWords({ words }: { words: readonly string[] }) {
             <Trans>Free Estonian decks in Lymi</Trans>
           </span>
           <span className="text-sm text-ink-secondary">
-            <Trans>The most common words, each brought back on the day you'd forget it.</Trans>
+            <Trans>The most common words, each brought back on the day you’d forget it.</Trans>
           </span>
         </span>
         <ArrowRight

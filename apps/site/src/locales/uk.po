@@ -270,6 +270,10 @@ msgstr "{word} у пропуску {n}"
 msgid "{word} taken out of the gap"
 msgstr "{word} прибрано з пропуску"
 
+#. placeholder {0}: i18n._(MEANINGS[word])
+msgid "{word}, {0}, today"
+msgstr "{word}, {0}, сьогодні"
+
 msgid "*Bread* and butter."
 msgstr "*Хліб* з маслом."
 
@@ -367,7 +371,7 @@ msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also 
 msgstr "<0/> означає і «він», і «вона»: в естонських займенниках немає роду. <1/> — це ще й ввічливе «Ви» до однієї людини, як в українській."
 
 msgid "<0/> is the same for one and many, so with it only the noun changes: <1/> <2/> Switch between One and Many, and tap a sentence to hear it."
-msgstr "<0/> однакове для одного й багатьох, тож із ним змінюється лише іменник: <1/> <2/> Перемикай між «Один» і «Багато» й торкайся речення, щоб його почути."
+msgstr "<0/> не залежить від числа, тож із ним змінюється лише іменник: <1/> <2/> Перемикай між «Один» і «Багато» й торкайся речення, щоб його почути."
 
 msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
 msgstr "<0/> — це місто, а <1/> — у Таллінні. В естонській «в» — не окреме слово, а закінчення: до кінця назви додають <2>-s</2>. «Я живу в Таллінні» — це <3/>"
@@ -823,8 +827,8 @@ msgid "A dialogue in voice mode"
 msgstr "Діалог у голосовому режимі"
 
 #. placeholder {0}: ending("-d")
-msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. To say more than one, take the second form and add {0}: <0/>, <1/>, so <2/>, cats."
-msgstr "Словник подає іменник у трьох формах, про це розповідає урок {forms}. Щоб сказати «більше ніж один», візьми другу форму й додай {0}: <0/>, <1/>, звідси <2/> — коти."
+msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. The second form is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
+msgstr "Словник подає іменник у трьох формах, про це розповідає урок {forms}. Друга форма — це родовий відмінок, про нього розповідає урок {genitive}. Щоб сказати «більше ніж один», додай до неї {0}: <0/>, <1/>, звідси <2/> — коти."
 
 msgid "A dictionary lists a verb in its -ma form: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
 msgstr "У словнику дієслово стоїть у формі на -ma: <0/>, «жити». Відкинь -ma, і залишиться основа <1>ela-</1>. Закінчення додається до основи: <2/>, «я живу»."
@@ -925,7 +929,7 @@ msgstr "Безкоштовний урок про дні тижня естонс�
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Безкоштовний урок про наказовий спосіб в естонській мові: основа дієслова як наказ (loe!, istu!, tule siia!), ära для «не роби», форми на -ge і -ke для кількох людей або на «ви», щоденні накази на кшталт räägi aeglasemalt, palun і коротка розмова в кав’ярні. Кожне речення озвучене."
 
-msgid "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
+msgid "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
 msgstr "Безкоштовний урок про множину в естонській мові: друга форма плюс -d (kassid, raamatud), зміна основи, яка в ній зберігається (poed, toad, mehed), дієслово з іменником у множині (lapsed loevad) і прикметники в множині (suured majad). Кожне речення можна послухати."
 
 msgid "A friend is waiting."
@@ -1055,7 +1059,7 @@ msgstr "Союз грибів і коренів рослин: вода в обм
 msgid "A passage with gaps and one bank of words, dragged or tapped into place and checked together."
 msgstr "Текст із пропусками й один набір слів: їх перетягують або торкаються, а перевіряють усі разом."
 
-msgid "A passage with gaps, the open gap's words under it, each marked as it is filled."
+msgid "A passage with gaps, the open gap’s words under it, each marked as it is filled."
 msgstr "Текст із пропусками: слова для відкритого пропуску під ним, кожен перевіряється одразу."
 
 msgid "A photo of a textbook page goes to ChatGPT with “Make flashcards from this page.” It uses Lymi and adds four cards to a Biology deck: chlorophyll, stomata, glucose and chloroplast."
@@ -1120,7 +1124,7 @@ msgstr "Свій розклад для кожної картки"
 msgid "A score for one attempt"
 msgstr "Бали за одну спробу"
 
-msgid "A shop's opening hours"
+msgid "A shop’s opening hours"
 msgstr "Години роботи магазину"
 
 msgid "A short text to read and hear, every question at once; its words open their cards once checked."
@@ -1304,8 +1308,8 @@ msgid "Add now"
 msgstr "Додати зараз"
 
 #. placeholder {0}: ending("-d")
-msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: it’s <2>poed</2>, not <3>poodid</3>. Tap each form to hear it."
-msgstr "Додавай {0} до другої форми, <0>poe</0>, а не до <1>pood</1>: <2>poed</2>, а не <3>poodid</3>. Торкайся кожної форми, щоб її почути."
+msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Tap each form to hear it."
+msgstr "Додавай {0} до другої форми, <0>poe</0>, а не до <1>pood</1>: <2>poed</2>. Торкайся кожної форми, щоб її почути."
 
 msgid "Add the 300 questions"
 msgstr "Додати 300 питань"
@@ -2242,7 +2246,7 @@ msgstr "Книжки часто друкують ё як е. Додай ежик
 msgid "Borrowed from Low German or Old Swedish."
 msgstr "Запозичене з нижньонімецької або давньошведської."
 
-msgid "Borrowed from the Low German or Old Swedish name for Friday. It's the one day without <0>päev</0>."
+msgid "Borrowed from the Low German or Old Swedish name for Friday. It’s the one day without <0>päev</0>."
 msgstr "Запозичене з нижньонімецької чи давньошведської назви п’ятниці. Єдиний день без <0>päev</0>."
 
 msgid "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
@@ -3718,8 +3722,8 @@ msgstr "Числа естонською"
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Естонські особові займенники і «бути»"
 
-msgid "Estonian plural: kassid, majad, poed"
-msgstr "Множина в естонській мові: kassid, majad, poed"
+msgid "Estonian plural"
+msgstr "Множина в естонській мові"
 
 msgid "Estonian present tense"
 msgstr "Теперішній час в естонській мові"
@@ -4626,9 +4630,6 @@ msgstr "Добре"
 msgid "Good *morning*!"
 msgstr "Доброго *ранку*!"
 
-msgid "Good ear. Listen to how the ones you missed start."
-msgstr "Добрий слух. Послухай, як починаються дні, де були помилки."
-
 msgid "good friends"
 msgstr "добрі друзі"
 
@@ -4798,7 +4799,7 @@ msgstr "Він працює"
 msgid "He writes"
 msgstr "Він пише"
 
-msgid "He's a doctor"
+msgid "He’s a doctor"
 msgstr "Він лікар"
 
 msgid "He’s a good *friend* of mine."
@@ -4807,10 +4808,10 @@ msgstr "Він мій добрий *друг*."
 msgid "He’s a good *person*."
 msgstr "Він добра *людина*."
 
-msgid "He's a student"
+msgid "He’s a student"
 msgstr "Він студент"
 
-msgid "He's a teacher"
+msgid "He’s a teacher"
 msgstr "Він учитель"
 
 msgid "Head ööd! Good night."
@@ -5432,7 +5433,7 @@ msgstr "Мені 34 роки."
 msgid "I’m at home."
 msgstr "Я вдома."
 
-msgid "I'm at work."
+msgid "I’m at work."
 msgstr "Я на роботі."
 
 msgid "I’m from Ukraine."
@@ -6786,13 +6787,13 @@ msgstr "Марі працює в лікарні."
 msgid "Mari writes"
 msgstr "Марі пише"
 
-msgid "Mari's brother"
+msgid "Mari’s brother"
 msgstr "Брат Марі"
 
-msgid "Mari's father"
+msgid "Mari’s father"
 msgstr "Батько Марі"
 
-msgid "Mari's friend"
+msgid "Mari’s friend"
 msgstr "Друг Марі"
 
 msgid "Mark a card important and Lymi shows it more often. The cards you keep forgetting gather in Often forgotten, a round of their own."
@@ -6989,6 +6990,9 @@ msgstr "Ранок"
 
 msgid "Most land plants have one."
 msgstr "Вона є в більшості наземних рослин."
+
+msgid "Most of them. Listen to how the ones you missed start."
+msgstr "Майже всі. Послухай, як починаються дні, де були помилки."
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Майже всі. Переслухай ще раз ті, де були помилки."
@@ -7257,10 +7261,10 @@ msgstr "Ні, не читаю."
 msgid "No, it’s closed"
 msgstr "Ні, зачинено"
 
-msgid "No, she's a student"
+msgid "No, she’s a student"
 msgstr "Ні, вона студентка"
 
-msgid "No, she's a teacher"
+msgid "No, she’s a teacher"
 msgstr "Ні, вона вчителька"
 
 msgid "no, when the question has olema"
@@ -7508,7 +7512,7 @@ msgstr "Olema, бути"
 msgid "On a door or a sign."
 msgstr "На дверях або на табличці."
 
-msgid "On a door you'll also see <0/>, open, and <1/>, closed."
+msgid "On a door you’ll also see <0/>, open, and <1/>, closed."
 msgstr "На дверях також побачиш <0/>, відчинено, і <1/>, зачинено."
 
 msgid "On a toilet door, N stands for <0>naistele</0>, for women."
@@ -7980,9 +7984,9 @@ msgstr "Колія, платформа"
 msgid "Play"
 msgstr "Відтворити"
 
-#. placeholder {0}: PRESENT_SENTENCES[each.id]
-#. placeholder {0}: PRONOUN_SENTENCES[id]
 #. placeholder {0}: bare(no)
+#. placeholder {0}: bare(yes)
+#. placeholder {0}: noun.many
 msgid "Play {0}"
 msgstr "Відтворити {0}"
 
@@ -8011,29 +8015,17 @@ msgstr "Відтворити {question}"
 msgid "Play {said}"
 msgstr "Відтворити {said}"
 
-msgid "Play {say}"
-msgstr "Відтворити {say}"
-
 msgid "Play {sentence}"
 msgstr "Відтворити {sentence}"
 
 msgid "Play {show}"
 msgstr "Відтворити {show}"
 
-msgid "Play {spoken}"
-msgstr "Відтворити {spoken}"
-
 msgid "Play {text}"
 msgstr "Відтворити {text}"
 
 msgid "Play {word}"
 msgstr "Відтворити {word}"
-
-msgid "Play {word}, today"
-msgstr "Відтворити {word}, сьогодні"
-
-msgid "Play {word}: {shown}"
-msgstr "Відтворити {word}: {shown}"
 
 msgid "Play each number twice before you type."
 msgstr "Прослухай кожне число двічі, перш ніж писати."
@@ -8733,7 +8725,7 @@ msgstr "Російські слова, які ти запам’ятаєш."
 msgid "Russian writes <0>за́мок</0>, a castle, and <1>замо́к</1>, a lock, the same way. Only the stress tells them apart. Lymi keeps each as its own card, with its own stress and its own sound."
 msgstr "У російській <0>за́мок</0>, фортеця, і <1>замо́к</1> на дверях пишуться однаково. Розрізняє їх лише наголос. Lymi тримає кожне слово на окремій картці, зі своїм наголосом і своїм звучанням."
 
-msgid "Saaremaa, Estonia's largest island"
+msgid "Saaremaa, Estonia’s largest island"
 msgstr "Сааремаа, найбільший острів Естонії"
 
 msgid "Sada alone, with no “one” in front."
@@ -9046,17 +9038,14 @@ msgstr "Вона працює в кав’ярні"
 msgid "She’s *coming* back tomorrow."
 msgstr "Вона *повернеться* завтра."
 
-msgid "She's a doctor"
+msgid "She’s a doctor"
 msgstr "Вона лікарка"
 
 msgid "She’s a good *friend* of mine."
 msgstr "Вона моя добра *подруга*."
 
-msgid "She's a student"
+msgid "She’s a student"
 msgstr "Вона студентка"
-
-msgid "She's a teacher"
-msgstr "Вона вчителька"
 
 msgid "She’s a teacher"
 msgstr "Вона вчителька"
@@ -9195,7 +9184,7 @@ msgstr "Додивлятися поганий фільм лише через у�
 msgid "six"
 msgstr "шість"
 
-msgid "Six days end in <0>päev</0>, day. <1>Reede</1> doesn't."
+msgid "Six days end in <0>päev</0>, day. <1>Reede</1> doesn’t."
 msgstr "Шість днів закінчуються на <0>päev</0>, день. <1>Reede</1> — ні."
 
 msgid "Six endings"
@@ -9927,7 +9916,7 @@ msgstr "Так ти кажеш Марі пити каву. А вона пита�
 msgid "That’s a book."
 msgstr "Це книжка."
 
-msgid "That's good morning; Mari is leaving."
+msgid "That’s good morning; Mari is leaving."
 msgstr "Це «доброго ранку», а Марі йде."
 
 msgid "That’s Jaan."
@@ -10167,8 +10156,8 @@ msgstr "Закінчення каже, хто це, тому ma, sa, me і te м
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "Закінчення каже, хто це, тож займенник можна опустити: <0>Olen Mari.</0>"
 
-msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn't. Day names start with a small letter, like any other word."
-msgstr "Естонський тиждень, <0/>, починається з понеділка, як і в нас. Шість днів закінчуються на <1/>, день. Тільки <2/>, п’ятниця, — ні. Як і в українській, назви днів пишуть з малої літери."
+msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
+msgstr "Естонський тиждень, <0/>, починається з понеділка, як і в нас. Шість днів закінчуються на <1/>, день. <2/>, п’ятниця, — виняток. Як і в українській, назви днів пишуть з малої літери."
 
 msgid "The evening after work"
 msgstr "Вечір після роботи"
@@ -10278,7 +10267,7 @@ msgstr "Тест Leben in Deutschland наприкінці інтеграцій�
 msgid "The lesson chat"
 msgstr "Чат уроку"
 
-msgid "The lesson kit's parts for practice after a rule is taught: listening, a passage with gaps, reading and a dialogue. docs/design/estonian-lessons.md says when to use each."
+msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading and a dialogue. docs/design/estonian-lessons.md says when to use each."
 msgstr "Частини набору уроків для практики після правила: слухання, текст із пропусками, читання й діалог. Коли яку брати, описано в docs/design/estonian-lessons.md."
 
 msgid "The lessons are free and need no account. Your progress stays in this browser."
@@ -10320,7 +10309,7 @@ msgstr "документація Mochi"
 msgid "The molecule a cell uses to store and carry energy"
 msgstr "Молекула, у якій клітина зберігає і переносить енергію"
 
-msgid "The most common words, each brought back on the day you'd forget it."
+msgid "The most common words, each brought back on the day you’d forget it."
 msgstr "Найуживаніші слова, і кожне повертається саме тоді, коли ти б його забув."
 
 msgid "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
@@ -10359,7 +10348,7 @@ msgstr "Ту, що відповідає твоєму тесту чи темі. �
 msgid "The ones starting to fade"
 msgstr "Ті, які починають забуватися"
 
-msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you're doing something rather than inside a building: <2/>, at work."
+msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
 msgstr "Друге закінчення — <0>-l</0>. Воно означає «на», коли йдеться про поверхню: <1/>, на столі. А ще «на» там, де ти щось робиш, а не просто перебуваєш у будівлі: <2/>, на роботі."
 
 msgid "The output depends on the history of the input"
@@ -10456,9 +10445,6 @@ msgstr "Право постати перед суддею, а не залиша�
 msgid "The right to have a court decide whether someone is lawfully detained"
 msgstr "Право на те, щоб суд вирішив, чи законно людину затримано"
 
-msgid "The rules that trip most learners up. You know every word by now, so only the rule is new."
-msgstr "Правила, на яких спотикається більшість учнів. Усі слова ти вже знаєш, тож нове тут лише правило."
-
 msgid "The rules the theory test asks about, and every sign of the ПДР by its picture."
 msgstr "Правила, про які питають на теорії, і кожен знак ПДР за зображенням."
 
@@ -10474,7 +10460,7 @@ msgstr "Ті самі картки в застосунках для iPhone і An
 msgid "The same cards on your phone, in the browser and in the Mac app, with offline review on the free plan."
 msgstr "Ті самі картки на телефоні, у браузері й у застосунку для Mac, а повторення офлайн доступне в безкоштовному плані."
 
-msgid "The same conversation with Mari's lines heard, not shown; each can be read on request."
+msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
 msgstr "Та сама розмова, але репліки Марі лише чути; кожну можна відкрити й прочитати."
 
 msgid "The same for every person."
@@ -11648,7 +11634,7 @@ msgstr "Ми використовуємо файли cookie й сховище п
 msgid "We’ll meet at the station."
 msgstr "Зустрінемося на вокзалі."
 
-msgid "We're at home."
+msgid "We’re at home."
 msgstr "Ми вдома."
 
 msgid "We’re friends."
@@ -12328,6 +12314,9 @@ msgstr "Кольорові слова показують своє значенн
 msgid "Words show their reading in kana over the kanji. The kana deck is the one place with romaji, because there the sound is the answer."
 msgstr "Над кандзі показано читання каною. Ромадзі є лише в колоді кани, бо там звучання і є відповіддю."
 
+msgid "Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new."
+msgstr "Слова, що змінюються всередині, відмінок додатка, нові часи й способи. Усі слова ти вже знаєш, тож нове тут лише правило."
+
 msgid "Words, meanings or a picture."
 msgstr "Слова, значення чи картинка."
 
@@ -12683,28 +12672,28 @@ msgstr "Почуєш питання з ним і відповідь."
 msgid "You’ll hear elama with it and who it’s for."
 msgstr "Почуєш elama з ним і дізнаєшся, для кого воно."
 
-msgid "You'll hear it in a sentence."
+msgid "You’ll hear it in a sentence."
 msgstr "Почуєш його в реченні."
 
 msgid "You’ll hear it in a word, with a note on how to say it."
 msgstr "Почуєш її в слові й дізнаєшся, як її вимовляти."
 
-msgid "You'll hear it, and where its name comes from."
+msgid "You’ll hear it, and where its name comes from."
 msgstr "Почуєш його і дізнаєшся, звідки назва."
 
-msgid "You'll hear the day it stands for."
+msgid "You’ll hear the day it stands for."
 msgstr "Почуєш день, який вона позначає."
 
 msgid "You’ll hear the form and who it’s for."
 msgstr "Почуєш форму й дізнаєшся, для кого вона."
 
-msgid "You'll hear what day it is today. Pick the day that comes next."
+msgid "You’ll hear what day it is today. Pick the day that comes next."
 msgstr "Почуєш, який сьогодні день. Обери, який буде завтра."
 
 msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
 msgstr "Часто його кажуть одним словом, <0/>, і це рівно те саме, що <1/>. Спробуй усі три."
 
-msgid "You're a doctor, arst."
+msgid "You’re a doctor, arst."
 msgstr "Ти лікар, arst."
 
 msgid "You’re a good friend."
@@ -12731,7 +12720,7 @@ msgstr "Ви вчителі."
 msgid "You’re welcome"
 msgstr "Нема за що"
 
-msgid "You've finished every lesson so far"
+msgid "You’ve finished every lesson so far"
 msgstr "Усі готові уроки пройдено"
 
 msgid "your"

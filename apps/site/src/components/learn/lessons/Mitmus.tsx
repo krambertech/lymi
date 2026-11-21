@@ -414,6 +414,7 @@ export function MitmusLesson() {
   const present = lessonBySlug("olevik")?.n;
   const stems = LESSONS.find((lesson) => lesson.et === "Pood, poe")?.n;
   const forms = LESSONS.find((lesson) => lesson.et === "Kolm põhivormi")?.n;
+  const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
   const partitive = LESSONS.find((lesson) => lesson.et === "Kaks kassi")?.n;
   const gaps = gapsOf();
 
@@ -557,9 +558,10 @@ export function MitmusLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A dictionary gives a noun in three forms, as lesson {forms} shows. To say more
-                    than one, take the second form and add {ending("-d")}: <Word w="kass" />,{" "}
-                    <Word w="kassi" />, so <Word w="kassid" />, cats.
+                    A dictionary gives a noun in three forms, as lesson {forms} shows. The second
+                    form is the genitive from lesson {genitive}. To say more than one, add{" "}
+                    {ending("-d")} to it: <Word w="kass" />, <Word w="kassi" />, so{" "}
+                    <Word w="kassid" />, cats.
                   </Trans>
                 </p>
                 <p>
@@ -618,8 +620,7 @@ export function MitmusLesson() {
                 <p>
                   <Trans>
                     Add the {ending("-d")} to the second form, <b lang="et">poe</b>, not to{" "}
-                    <b lang="et">pood</b>: it’s <b lang="et">poed</b>, not <b lang="et">poodid</b>.
-                    Tap each form to hear it.
+                    <b lang="et">pood</b>: <b lang="et">poed</b>. Tap each form to hear it.
                   </Trans>
                 </p>
               </Prose>

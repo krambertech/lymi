@@ -2978,8 +2978,8 @@ msgstr "Also the genitive of kool."
 msgid "Always"
 msgstr "Always"
 
-msgid "Always the third form after <0>ei</0> and after verbs such as <1>ootama, armastama, otsima</1>: <2>Ma ootan sõpra.</2>"
-msgstr "Always the third form after <0>ei</0> and after verbs such as <1>ootama, armastama, otsima</1>: <2>Ma ootan sõpra.</2>"
+msgid "Always the third form after <0>ei</0>, after a number, and after verbs such as <1>ootama, armastama, otsima</1>: <2>Ma ootan sõpra.</2>"
+msgstr "Always the third form after <0>ei</0>, after a number, and after verbs such as <1>ootama, armastama, otsima</1>: <2>Ma ootan sõpra.</2>"
 
 msgid "am not, is not, are not"
 msgstr "am not, is not, are not"
@@ -4169,6 +4169,9 @@ msgstr "Cards you’ve learned in Noji keep their due dates. Noji’s file says 
 msgid "Cards you’ve learned keep their due dates and come in as Known. Noji’s file doesn’t say when you reviewed them, so Insights starts your history from your first review in Lymi."
 msgstr "Cards you’ve learned keep their due dates and come in as Known. Noji’s file doesn’t say when you reviewed them, so Insights starts your history from your first review in Lymi."
 
+msgid "Careful if your own language uses its genitive for part of something, as in some bread: Estonian does the opposite. Its genitive is for the whole, and the third form is for the part."
+msgstr "Careful if your own language uses its genitive for part of something, as in some bread: Estonian does the opposite. Its genitive is for the whole, and the third form is for the part."
+
 msgid "Carries electrons onward"
 msgstr "Carries electrons onward"
 
@@ -5078,9 +5081,6 @@ msgstr "Don’t speak."
 
 msgid "Don’t take down a fence until you know why it was put up"
 msgstr "Don’t take down a fence until you know why it was put up"
-
-msgid "Don’t try to decide every time. Ask one question: did the whole thing get done? If not, or if you can’t tell, the third form is the safe choice."
-msgstr "Don’t try to decide every time. Ask one question: did the whole thing get done? If not, or if you can’t tell, the third form is the safe choice."
 
 msgid "Don’t wait."
 msgstr "Don’t wait."
@@ -6222,6 +6222,9 @@ msgstr "four schools"
 
 msgid "Four short verbs"
 msgstr "Four short verbs"
+
+msgid "Four times it’s always the third form. After <0>ei</0>, because nothing got done. After a number from two up: <1>kaks piletit</1>. For some of something you can’t count, such as coffee. And after verbs of feeling, waiting and looking for, on their own, because they don’t finish anything: <2>ootama, armastama, otsima</2>."
+msgstr "Four times it’s always the third form. After <0>ei</0>, because nothing got done. After a number from two up: <1>kaks piletit</1>. For some of something you can’t count, such as coffee. And after verbs of feeling, waiting and looking for, on their own, because they don’t finish anything: <2>ootama, armastama, otsima</2>."
 
 msgid "Four ways to ask"
 msgstr "Four ways to ask"
@@ -8821,8 +8824,8 @@ msgstr "In a café"
 msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. Lesson {object} explains why the third form appears here too: <1/>"
 msgstr "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. Lesson {object} explains why the third form appears here too: <1/>"
 
-msgid "In a command, and for more than one, the whole thing takes the dictionary form: <0>Osta pilet! Ma ostsin piletid.</0>"
-msgstr "In a command, and for more than one, the whole thing takes the dictionary form: <0>Osta pilet! Ma ostsin piletid.</0>"
+msgid "In a command the whole thing takes the dictionary form, and more than one the plural with -d: <0>Osta pilet! Ma ostsin piletid.</0>"
+msgstr "In a command the whole thing takes the dictionary form, and more than one the plural with -d: <0>Osta pilet! Ma ostsin piletid.</0>"
 
 msgid "in a hospital"
 msgstr "in a hospital"
@@ -12138,11 +12141,11 @@ msgstr "One way at a time: the Ukrainian for its meaning, or the meaning for the
 msgid "One whole cake takes the genitive: <0>ühe koogi</0>."
 msgstr "One whole cake takes the genitive: <0>ühe koogi</0>."
 
-msgid "One whole loaf, bought: the genitive."
-msgstr "One whole loaf, bought: the genitive."
+msgid "One whole loaf, and it’s bought: the genitive."
+msgstr "One whole loaf, and it’s bought: the genitive."
 
-msgid "One whole thing takes the genitive: <0/>, ticket, becomes <1>pileti</1>. In a command from lesson {commands}, the whole thing takes the dictionary form, and so do more than one, in the plural of lesson {plural}."
-msgstr "One whole thing takes the genitive: <0/>, ticket, becomes <1>pileti</1>. In a command from lesson {commands}, the whole thing takes the dictionary form, and so do more than one, in the plural of lesson {plural}."
+msgid "One whole thing takes the genitive: <0/>, ticket, becomes <1>pileti</1>. In a command from lesson {commands}, the whole thing takes the dictionary form. More than one whole thing, without a number, takes the plural with <2>-d</2> of lesson {plural}: <3>piletid</3>."
+msgstr "One whole thing takes the genitive: <0/>, ticket, becomes <1>pileti</1>. In a command from lesson {commands}, the whole thing takes the dictionary form. More than one whole thing, without a number, takes the plural with <2>-d</2> of lesson {plural}: <3>piletid</3>."
 
 msgid "One whole ticket, bought: the genitive."
 msgstr "One whole ticket, bought: the genitive."
@@ -16097,8 +16100,8 @@ msgstr "the Noji help centre"
 msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 msgstr "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 
-msgid "The object is the thing you act on: the book you read, the bread you buy. In Estonian it takes one of two forms, and the choice says something English says with “was reading” and “read to the end”. The third form of lesson {partitive} says part of it, or not done yet. The genitive of lesson {genitive} says the whole thing, done."
-msgstr "The object is the thing you act on: the book you read, the bread you buy. In Estonian it takes one of two forms, and the choice says something English says with “was reading” and “read to the end”. The third form of lesson {partitive} says part of it, or not done yet. The genitive of lesson {genitive} says the whole thing, done."
+msgid "The object is the thing you act on: the book you read, the bread you buy. In Estonian it takes one of two forms, and the choice says something English says with “was reading” and “read to the end”. The third form of lesson {partitive} says part of it, or not done yet. The genitive of lesson {genitive} says the whole thing, done. In the present it says the whole thing will get done: <0>Ma söön koogi ära</0>, I’ll eat the cake up."
+msgstr "The object is the thing you act on: the book you read, the bread you buy. In Estonian it takes one of two forms, and the choice says something English says with “was reading” and “read to the end”. The third form of lesson {partitive} says part of it, or not done yet. The genitive of lesson {genitive} says the whole thing, done. In the present it says the whole thing will get done: <0>Ma söön koogi ära</0>, I’ll eat the cake up."
 
 msgid "The object: whole or part"
 msgstr "The object: whole or part"
@@ -16741,8 +16744,8 @@ msgstr "The whole official bank for the test of Czech life and institutions, in 
 msgid "The whole thing"
 msgstr "The whole thing"
 
-msgid "The whole thing, done: the genitive. <0>Ma lugesin raamatu läbi.</0>"
-msgstr "The whole thing, done: the genitive. <0>Ma lugesin raamatu läbi.</0>"
+msgid "The whole thing, done or sure to get done: the genitive. <0>Ma lugesin raamatu läbi.</0>"
+msgstr "The whole thing, done or sure to get done: the genitive. <0>Ma lugesin raamatu läbi.</0>"
 
 msgid "The woman is drinking coffee."
 msgstr "The woman is drinking coffee."
@@ -17083,9 +17086,6 @@ msgstr "Thousands stay a separate word."
 
 msgid "three"
 msgstr "three"
-
-msgid "Three cases never take the genitive. After <0>ei</0>, because nothing got done. For an amount you can’t count, such as coffee. And after verbs of feeling, waiting and looking for, because they never finish anything: <1>ootama, armastama, otsima</1>."
-msgstr "Three cases never take the genitive. After <0>ei</0>, because nothing got done. For an amount you can’t count, such as coffee. And after verbs of feeling, waiting and looking for, because they never finish anything: <1>ootama, armastama, otsima</1>."
 
 msgid "three cats"
 msgstr "three cats"
@@ -19957,6 +19957,9 @@ msgstr "You don’t have to come."
 
 msgid "You don’t have to swim."
 msgstr "You don’t have to swim."
+
+msgid "You don’t need to weigh every case. Ask one question: does the whole thing get done? If not, or if you can’t tell, the third form is the safe choice."
+msgstr "You don’t need to weigh every case. Ask one question: does the whole thing get done? If not, or if you can’t tell, the third form is the safe choice."
 
 msgid "You don’t need to. Give the cards to Gemini CLI with Lymi connected, and it adds them to a deck that schedules every review. If you already have Anki decks, Lymi imports them."
 msgstr "You don’t need to. Give the cards to Gemini CLI with Lymi connected, and it adds them to a deck that schedules every review. If you already have Anki decks, Lymi imports them."

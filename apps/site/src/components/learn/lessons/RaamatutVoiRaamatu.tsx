@@ -52,7 +52,7 @@ const GLOSSARY: Glossary = {
 
 const PAIR_MEANS: Record<string, MessageDescriptor> = {
   bread: msg`Bread`,
-  book: msg`A book`,
+  book: msg`Book`,
   cake: msg`Cake`,
   work: msg`Work`,
 };
@@ -128,7 +128,7 @@ function useContent() {
           After <Et>ei</Et>, always the third form.
         </Trans>
       ),
-      one: <Trans>One whole loaf, bought: the genitive.</Trans>,
+      one: <Trans>One whole loaf, and it’s bought: the genitive.</Trans>,
       bought: <Trans>One whole ticket, bought: the genitive.</Trans>,
       eating: (
         <Trans>
@@ -247,7 +247,7 @@ function useContent() {
             ),
           },
           {
-            line: "Ei, aitäh. Ma tahan tee.",
+            line: "Ei, aitäh. Ma tahan teed.",
             why: (
               <Trans>
                 That says you do want tea. To say no: <Et>ma ei taha teed</Et>.
@@ -321,15 +321,16 @@ export function RaamatutVoiRaamatuLesson() {
           Part of it, or still going on: the third form. <b lang="et">Ma loen raamatut.</b>
         </Trans>,
         <Trans key="2">
-          The whole thing, done: the genitive. <b lang="et">Ma lugesin raamatu läbi.</b>
+          The whole thing, done or sure to get done: the genitive.{" "}
+          <b lang="et">Ma lugesin raamatu läbi.</b>
         </Trans>,
         <Trans key="3">
-          Always the third form after <b lang="et">ei</b> and after verbs such as{" "}
+          Always the third form after <b lang="et">ei</b>, after a number, and after verbs such as{" "}
           <b lang="et">ootama, armastama, otsima</b>: <b lang="et">Ma ootan sõpra.</b>
         </Trans>,
         <Trans key="4">
-          In a command, and for more than one, the whole thing takes the dictionary form:{" "}
-          <b lang="et">Osta pilet! Ma ostsin piletid.</b>
+          In a command the whole thing takes the dictionary form, and more than one the plural with
+          -d: <b lang="et">Osta pilet! Ma ostsin piletid.</b>
         </Trans>,
       ]}
       sections={[
@@ -345,7 +346,8 @@ export function RaamatutVoiRaamatuLesson() {
                     Estonian it takes one of two forms, and the choice says something English says
                     with “was reading” and “read to the end”. The third form of lesson {partitive}{" "}
                     says part of it, or not done yet. The genitive of lesson {genitive} says the
-                    whole thing, done.
+                    whole thing, done. In the present it says the whole thing will get done:{" "}
+                    <Et>Ma söön koogi ära</Et>, I’ll eat the cake up.
                   </Trans>
                 </p>
                 <p>
@@ -356,6 +358,13 @@ export function RaamatutVoiRaamatuLesson() {
                 </p>
               </Prose>
               <PairTable />
+              <Aside>
+                <Trans>
+                  Careful if your own language uses its genitive for part of something, as in some
+                  bread: Estonian does the opposite. Its genitive is for the whole, and the third
+                  form is for the part.
+                </Trans>
+              </Aside>
             </>
           ),
         },
@@ -366,9 +375,10 @@ export function RaamatutVoiRaamatuLesson() {
             <Prose>
               <p>
                 <Trans>
-                  Three cases never take the genitive. After <Et>ei</Et>, because nothing got done.
-                  For an amount you can’t count, such as coffee. And after verbs of feeling, waiting
-                  and looking for, because they never finish anything:{" "}
+                  Four times it’s always the third form. After <Et>ei</Et>, because nothing got
+                  done. After a number from two up: <Et>kaks piletit</Et>. For some of something you
+                  can’t count, such as coffee. And after verbs of feeling, waiting and looking for,
+                  on their own, because they don’t finish anything:{" "}
                   <Et>ootama, armastama, otsima</Et>.
                 </Trans>
               </p>
@@ -386,15 +396,16 @@ export function RaamatutVoiRaamatuLesson() {
                   <Trans>
                     One whole thing takes the genitive: <Word w="pilet" />, ticket, becomes{" "}
                     <Et>pileti</Et>. In a command from lesson {commands}, the whole thing takes the
-                    dictionary form, and so do more than one, in the plural of lesson {plural}.
+                    dictionary form. More than one whole thing, without a number, takes the plural
+                    with <Et>-d</Et> of lesson {plural}: <Et>piletid</Et>.
                   </Trans>
                 </p>
                 <SentenceList items={OBJECT_WHOLE} />
               </Prose>
               <Aside>
                 <Trans>
-                  Don’t try to decide every time. Ask one question: did the whole thing get done? If
-                  not, or if you can’t tell, the third form is the safe choice.
+                  You don’t need to weigh every case. Ask one question: does the whole thing get
+                  done? If not, or if you can’t tell, the third form is the safe choice.
                 </Trans>
               </Aside>
             </>

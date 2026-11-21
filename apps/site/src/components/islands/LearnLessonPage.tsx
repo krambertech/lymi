@@ -1,3 +1,4 @@
+import { AruSaamaLesson } from "../learn/lessons/AruSaama";
 import { EitusLesson } from "../learn/lessons/Eitus";
 import { HaaldusLesson } from "../learn/lessons/Haaldus";
 import { JalgJalaLesson } from "../learn/lessons/JalgJala";
@@ -86,6 +87,7 @@ export const LESSON_VIEWS = {
   raagitakse: RaagitakseLesson,
   "ootan-sind": OotanSindLesson,
   kiri: KiriLesson,
+  "aru-saama": AruSaamaLesson,
   mitmus: MitmusLesson,
 } as const;
 

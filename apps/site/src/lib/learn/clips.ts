@@ -3050,6 +3050,44 @@ const LETTER_CLIPS: Record<string, Clip> = {
   ...LETTER_DIALOGUE,
 };
 
+export const PARTICLE_VERBS = [
+  { verb: "aru saama", said: "Ma saan sinust aru." },
+  { verb: "läbi saama", said: "Ma saan Katiga hästi läbi." },
+  { verb: "välja nägema", said: "Sa näed täna hea välja." },
+  { verb: "kokku leppima", said: "Lepime nii kokku." },
+  { verb: "vastu võtma", said: "Ma võtan selle töö vastu." },
+  { verb: "maha jääma", said: "Ma jäin bussist maha." },
+] as const;
+
+export const PARTICLE_GAPS = [
+  { id: "aru-sinust", before: "Vabandust, ma ei saa sinust", after: ".", answer: "aru" },
+  { id: "labi-kati", before: "Ma saan Katiga hästi", after: ".", answer: "läbi" },
+  { id: "valja-tana", before: "Sa näed täna väga hea", after: ".", answer: "välja" },
+  { id: "maha-buss", before: "Ma jäin hommikul bussist", after: ".", answer: "maha" },
+  { id: "kokku-nii", before: "Hästi, lepime nii", after: ".", answer: "kokku" },
+  { id: "vastu-too", before: "Ma võtan selle töö", after: ".", answer: "vastu" },
+  { id: "aru-ulesanne", before: "Kas sa said ülesandest", after: "?", answer: "aru" },
+  { id: "labi-omavahel", before: "Jaan ja Mari ei saa omavahel", after: ".", answer: "läbi" },
+] as const;
+
+export const PARTICLE_OPTIONS = ["aru", "läbi", "välja", "kokku", "vastu", "maha"] as const;
+
+export const PARTICLE_DIALOGUE = {
+  "d-mari-1": { text: "Kas sa said eilsest tunnist aru?", voice: "second" },
+  "d-sina-1": "Jah, ma sain kõigest aru.",
+  "d-mari-2": { text: "Miks sa eile hommikul hilinesid?", voice: "second" },
+  "d-sina-2": "Ma jäin bussist maha.",
+  "d-mari-3": { text: "Kas me kohtume reedel kell kuus?", voice: "second" },
+  "d-sina-3": "Jah, lepime kokku!",
+} as const satisfies Record<string, Clip>;
+
+const PARTICLE_CLIPS: Record<string, Clip> = {
+  ...words(PARTICLE_OPTIONS),
+  ...words(PARTICLE_VERBS.flatMap((verb) => [verb.verb, verb.said])),
+  ...words(PARTICLE_GAPS.map(objectGapSaid)),
+  ...PARTICLE_DIALOGUE,
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -4023,6 +4061,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   raagitakse: IMPERSONAL_CLIPS,
   "ootan-sind": GOVERNMENT_CLIPS,
   kiri: LETTER_CLIPS,
+  "aru-saama": PARTICLE_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

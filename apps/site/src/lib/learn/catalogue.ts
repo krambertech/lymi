@@ -432,7 +432,14 @@ export const STAGES: readonly Stage[] = [
     hue: 280,
     goal: msg`Build new words from ones you know, read signs, news and forms, and join longer sentences.`,
     lessons: [
-      { name: msg`Particle verbs with new meanings`, et: "Aru saama" },
+      {
+        slug: "aru-saama",
+        name: msg`Particle verbs with new meanings`,
+        title: msg`Estonian particle verbs: aru saama, läbi saama, välja nägema`,
+        et: "Aru saama",
+        minutes: 12,
+        blurb: msg`A free Estonian lesson on particle verbs whose meaning is new: aru saama (understand), läbi saama (get along), välja nägema (look), kokku leppima (agree), vastu võtma (accept) and maha jääma (miss), and why the particle goes to the end of the sentence. Every sentence is read aloud.`,
+      },
       { name: msg`Through, over, along`, et: "Läbi metsa, üle tee" },
       { name: msg`Words from verbs: -ja, -mine`, et: "Õpetaja, lugemine" },
       { name: msg`Words from words: -lik, -tu, -ke`, et: "Sõbralik, kodutu" },

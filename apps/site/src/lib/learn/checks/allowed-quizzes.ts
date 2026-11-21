@@ -71,6 +71,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "Each round offers one verb's conditional for sa, me and ta: läheks against läheksid and läheksime is the lesson, and the pronoun before the gap decides it.",
   },
   {
+    lesson: "lahme-las",
+    quiz: "lets-or-las",
+    reason:
+      "Each round offers one verb's ta, nad and let's forms: sööb against söövad and sööme is the lesson, and the words before the gap decide it.",
+  },
+  {
     lesson: "jalg-jala",
     quiz: "kati-room",
     reason:

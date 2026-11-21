@@ -954,11 +954,20 @@ msgstr "<0>Läbi</0> says to the end, so the genitive."
 msgid "<0>Lähen ujuma</0> is I’m going swimming, <1>olen ujumas</1> I’m out swimming, and <2>tulen ujumast</2> I’m coming back from swimming. The ending says which."
 msgstr "<0>Lähen ujuma</0> is I’m going swimming, <1>olen ujumas</1> I’m out swimming, and <2>tulen ujumast</2> I’m coming back from swimming. The ending says which."
 
+msgid "<0>Lähme!</0>, let’s go, and <1>las ta tuleb</1>, let him come. Two short ways to suggest and allow."
+msgstr "<0>Lähme!</0>, let’s go, and <1>las ta tuleb</1>, let him come. Two short ways to suggest and allow."
+
 msgid "<0>Läksin</0> is the past. Next week is still to come: <1>lähen</1>."
 msgstr "<0>Läksin</0> is the past. Next week is still to come: <1>lähen</1>."
 
 msgid "<0>Lapsed</0> is plural, so the verb takes the form of <1>nad</1>: <2>õpivad</2>."
 msgstr "<0>Lapsed</0> is plural, so the verb takes the form of <1>nad</1>: <2>õpivad</2>."
+
+msgid "<0>Las nad</0>, or <1>las lapsed</1>: the present form for <2>nad</2>."
+msgstr "<0>Las nad</0>, or <1>las lapsed</1>: the present form for <2>nad</2>."
+
+msgid "<0>Las ta</0>: the present form for <1>ta</1>."
+msgstr "<0>Las ta</0>: the present form for <1>ta</1>."
 
 msgid "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
 msgstr "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
@@ -1025,6 +1034,9 @@ msgstr "<0>Mina</0> takes <1>olen</1>: <2>Mina olen Andres</2>."
 
 msgid "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
 msgstr "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
+
+msgid "<0>Mine</0> tells one person to go. To go together: <1>lähme</1>."
+msgstr "<0>Mine</0> tells one person to go. To go together: <1>lähme</1>."
 
 msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same short forms you met for he or she, we and you. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
 msgstr "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same short forms you met for he or she, we and you. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
@@ -1169,6 +1181,9 @@ msgstr "<0>Sõin</0> is the past, and the cake has only just come. With <1>ära<
 
 msgid "<0>Sõnaveeb</0>, the free dictionary of the Institute of the Estonian Language, lists them under <1>Sõnavormid</1>, word forms. Search for a word and scroll to that table: its left column holds the three forms, top to bottom. The right column is the plural."
 msgstr "<0>Sõnaveeb</0>, the free dictionary of the Institute of the Estonian Language, lists them under <1>Sõnavormid</1>, word forms. Search for a word and scroll to that table: its left column holds the three forms, top to bottom. The right column is the plural."
+
+msgid "<0>Söö</0> tells one person to eat. To eat together: <1>sööme</1>."
+msgstr "<0>Söö</0> tells one person to eat. To eat together: <1>sööme</1>."
 
 msgid "<0>Sööma</0> and <1>jooma</1> break the pattern. Their commands build on the I form: <2>söön, sööge</2>; <3>joon, jooge</3>."
 msgstr "<0>Sööma</0> and <1>jooma</1> break the pattern. Their commands build on the I form: <2>söön, sööge</2>; <3>joon, jooge</3>."
@@ -1781,6 +1796,9 @@ msgstr "A free lesson on Estonian’s three “inside” cases, the inessive, il
 
 msgid "A free lesson on Estonian’s three “on” cases, the adessive, allative and ablative: kus, kuhu and kust, -l for on and at (laual, tööl), -le for onto and to (lauale, tööle) and -lt for off and from (laualt, töölt), which places take -le and which -sse, and -le and -lt on a person (emale, emalt). Every sentence is read aloud."
 msgstr "A free lesson on Estonian’s three “on” cases, the adessive, allative and ablative: kus, kuhu and kust, -l for on and at (laual, tööl), -le for onto and to (lauale, tööle) and -lt for off and from (laualt, töölt), which places take -le and which -sse, and -le and -lt on a person (emale, emalt). Every sentence is read aloud."
+
+msgid "A free lesson on how to say let’s and let him or her in Estonian: the we form without me (teeme, vaatame, lähme) and las with the present (las ta tuleb, las nad mängivad, las ma aitan). Every sentence is read aloud."
+msgstr "A free lesson on how to say let’s and let him or her in Estonian: the we form without me (teeme, vaatame, lähme) and las with the present (las ta tuleb, las nad mängivad, las ma aitan). Every sentence is read aloud."
 
 msgid "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
 msgstr "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
@@ -2614,6 +2632,9 @@ msgstr "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do:
 msgid "After <0>lähen</0>, say where to: <1>Tartusse</1>. <2>Tartus</2> is where you are."
 msgstr "After <0>lähen</0>, say where to: <1>Tartusse</1>. <2>Tartus</2> is where you are."
 
+msgid "After <0>las</0>, the present form: <1>tuleb</1>."
+msgstr "After <0>las</0>, the present form: <1>tuleb</1>."
+
 msgid "After <0>mulle meeldib</0>, the <1>-da</1> form."
 msgstr "After <0>mulle meeldib</0>, the <1>-da</1> form."
 
@@ -2865,6 +2886,9 @@ msgstr "All lessons"
 
 msgid "All nine. Two, many and the ones you mean, every time."
 msgstr "All nine. Two, many and the ones you mean, every time."
+
+msgid "All nine. You can suggest and allow."
+msgstr "All nine. You can suggest and allow."
 
 msgid "All nine. You hear the tense and know what it says."
 msgstr "All nine. You hear the tense and know what it says."
@@ -3837,6 +3861,9 @@ msgstr "Book"
 
 msgid "books"
 msgstr "books"
+
+msgid "Books also have a form in <0>-gem</0> or <1>-kem</1>: <2>tehkem</2>, <3>mingem</3>. You will read it in slogans and old texts. People say <4>teeme</4> and <5>lähme</5>."
+msgstr "Books also have a form in <0>-gem</0> or <1>-kem</1>: <2>tehkem</2>, <3>mingem</3>. You will read it in slogans and old texts. People say <4>teeme</4> and <5>lähme</5>."
 
 msgid "Books often print ё as е. Add a word from such a book and the card shows its ё until you know it."
 msgstr "Books often print ё as е. Add a word from such a book and the card shows its ё until you know it."
@@ -5708,6 +5735,9 @@ msgstr "Estonian infinitives after other verbs"
 
 msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
 msgstr "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
+
+msgid "Estonian let’s and let him: lähme, teeme, las ta tuleb"
+msgstr "Estonian let’s and let him: lähme, teeme, las ta tuleb"
 
 msgid "Estonian letters"
 msgstr "Estonian letters"
@@ -9227,6 +9257,9 @@ msgstr "in Pärnu"
 msgid "In Pärnu"
 msgstr "In Pärnu"
 
+msgid "in peace"
+msgstr "in peace"
+
 msgid "in Polish"
 msgstr "in Polish"
 
@@ -10321,6 +10354,9 @@ msgstr "lemon"
 msgid "Lesson"
 msgstr "Lesson"
 
+msgid "Lesson {commands} gave orders to one person: <0>istu!</0> To suggest doing something together, take the <1>me</1> form of the present and drop <2>me</2>. Only <3>minema</3> also gets shorter: <4>me läheme</4>, but <5>lähme!</5>"
+msgstr "Lesson {commands} gave orders to one person: <0>istu!</0> To suggest doing something together, take the <1>me</1> form of the present and drop <2>me</2>. Only <3>minema</3> also gets shorter: <4>me läheme</4>, but <5>lähme!</5>"
+
 msgid "Lesson {forms} gave each verb a <0>da</0> form, as in <1/>. The <2>nud</2> form comes from it: take off the <3>da</3> and put <4>nud</4> in its place. <5>Lugeda</5> gives <6>lugenud</6>."
 msgstr "Lesson {forms} gave each verb a <0>da</0> form, as in <1/>. The <2>nud</2> form comes from it: take off the <3>da</3> and put <4>nud</4> in its place. <5>Lugeda</5> gives <6>lugenud</6>."
 
@@ -10378,11 +10414,35 @@ msgstr "Lessons {negation} and {commands} called <0/> the <1>ma</1> form, after 
 msgid "Lessons done: <0>{doneCount}</0> of {builtCount}"
 msgstr "Lessons done: <0>{doneCount}</0> of {builtCount}"
 
+msgid "let"
+msgstr "let"
+
 msgid "Let {name} add cards?"
 msgstr "Let {name} add cards?"
 
 msgid "Let Claude add cards?"
 msgstr "Let Claude add cards?"
+
+msgid "Let her sleep."
+msgstr "Let her sleep."
+
+msgid "Let him come."
+msgstr "Let him come."
+
+msgid "Let him, let them"
+msgstr "Let him, let them"
+
+msgid "Let him, let them: <0>las</0> with the present. <1>Las ta tuleb. Las nad mängivad.</1>"
+msgstr "Let him, let them: <0>las</0> with the present. <1>Las ta tuleb. Las nad mängivad.</1>"
+
+msgid "Let me help you."
+msgstr "Let me help you."
+
+msgid "Let them play."
+msgstr "Let them play."
+
+msgid "Let’s"
+msgstr "Let’s"
 
 msgid "Let’s *take a taxi*."
 msgstr "Let’s *take a taxi*."
@@ -10390,8 +10450,17 @@ msgstr "Let’s *take a taxi*."
 msgid "Let’s and let them"
 msgstr "Let’s and let them"
 
+msgid "Let’s do it!"
+msgstr "Let’s do it!"
+
+msgid "Let’s eat!"
+msgstr "Let’s eat!"
+
 msgid "Let’s go into *town*!"
 msgstr "Let’s go into *town*!"
+
+msgid "Let’s go!"
+msgstr "Let’s go!"
 
 msgid "Let’s meet again *tomorrow*."
 msgstr "Let’s meet again *tomorrow*."
@@ -10401,6 +10470,15 @@ msgstr "Let’s practise a dialogue with my Italian words."
 
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Let’s practise. Use the German words from my deck."
+
+msgid "Let’s watch!"
+msgstr "Let’s watch!"
+
+msgid "Let’s, let him, let them"
+msgstr "Let’s, let him, let them"
+
+msgid "Let’s: the <0>me</0> form without <1>me</1>. <2>Teeme! Vaatame!</2> Only <3>minema</3> is shorter: <4>Lähme!</4>"
+msgstr "Let’s: the <0>me</0> form without <1>me</1>. <2>Teeme! Vaatame!</2> Only <3>minema</3> is shorter: <4>Lähme!</4>"
 
 msgid "library"
 msgstr "library"
@@ -11362,6 +11440,9 @@ msgstr "Most of them. Look at the word before and after each gap."
 
 msgid "Most of them. Look at the word just before each gap."
 msgstr "Most of them. Look at the word just before each gap."
+
+msgid "Most of them. Look at who comes before the gap."
+msgstr "Most of them. Look at who comes before the gap."
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Most of them. Play the ones you missed once more."
@@ -12725,6 +12806,9 @@ msgstr "out swimming"
 msgid "Out swimming"
 msgstr "Out swimming"
 
+msgid "outside"
+msgstr "outside"
+
 msgid "Own things, count them and put them somewhere. Stems change first, then the genitive, which most other cases build on."
 msgstr "Own things, count them and put them somewhere. Stems change first, then the genitive, which most other cases build on."
 
@@ -13670,6 +13754,9 @@ msgstr "Read the table once more, then try again."
 
 msgid "Read the three endings above once more, then try again."
 msgstr "Read the three endings above once more, then try again."
+
+msgid "Read the two sections above once more, then try again."
+msgstr "Read the two sections above once more, then try again."
 
 msgid "Read your German deck"
 msgstr "Read your German deck"
@@ -15320,6 +15407,9 @@ msgstr "Talk: meeting Mari"
 msgid "Talk: plans with Kati"
 msgstr "Talk: plans with Kati"
 
+msgid "Talk: what shall we do?"
+msgstr "Talk: what shall we do?"
+
 msgid "Talk: what you didn’t do"
 msgstr "Talk: what you didn’t do"
 
@@ -15688,6 +15778,9 @@ msgstr "That says you speak more slowly. To ask her, use the stem: räägi."
 
 msgid "That says you’re sorry. Liis asked you to come."
 msgstr "That says you’re sorry. Liis asked you to come."
+
+msgid "That speaks to Jaan, but he isn’t here. About him: <0>las ta tuleb</0>."
+msgstr "That speaks to Jaan, but he isn’t here. About him: <0>las ta tuleb</0>."
 
 msgid "That tells Jaan not to come."
 msgstr "That tells Jaan not to come."
@@ -16114,6 +16207,12 @@ msgstr "The decks follow the NPI ČR reference description for A1 and A2, not an
 
 msgid "The decks hold the most useful words of each level’s Goethe-Institut word list, not the whole list."
 msgstr "The decks hold the most useful words of each level’s Goethe-Institut word list, not the whole list."
+
+msgid "The dictionary form doesn’t suggest anything. For let’s: <0>lähme</0>."
+msgstr "The dictionary form doesn’t suggest anything. For let’s: <0>lähme</0>."
+
+msgid "The dictionary form doesn’t suggest anything. For let’s: <0>sööme</0>."
+msgstr "The dictionary form doesn’t suggest anything. For let’s: <0>sööme</0>."
 
 msgid "The DMV doesn’t publish its questions. These are practice questions written from the official handbook."
 msgstr "The DMV doesn’t publish its questions. These are practice questions written from the official handbook."
@@ -17940,6 +18039,9 @@ msgstr "to learn"
 msgid "to learn, to study"
 msgstr "to learn, to study"
 
+msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the plain present form: <1>las ta tuleb</1>, let him come. With <2>ma</2> it offers help: <3>las ma aitan</3>, let me help."
+msgstr "To let someone do something, or to say you don’t mind, put <0/> before the person and the plain present form: <1>las ta tuleb</1>, let him come. With <2>ma</2> it offers help: <3>las ma aitan</3>, let me help."
+
 msgid "To like"
 msgstr "To like"
 
@@ -18257,6 +18359,9 @@ msgstr "Today, tomorrow, yesterday"
 
 msgid "Today’s page from my textbook. Add the new words to my Japanese deck."
 msgstr "Today’s page from my textbook. Add the new words to my Japanese deck."
+
+msgid "together"
+msgstr "together"
 
 msgid "tomorrow"
 msgstr "tomorrow"
@@ -18837,6 +18942,9 @@ msgstr "We change trains in Cologne."
 msgid "We didn’t eat."
 msgstr "We didn’t eat."
 
+msgid "we do, we make"
+msgstr "we do, we make"
+
 msgid "We don’t eat; we aren’t eating."
 msgstr "We don’t eat; we aren’t eating."
 
@@ -18846,8 +18954,14 @@ msgstr "We don’t like cats."
 msgid "We don’t sell your personal data, show ads or track you across other companies’ apps and websites. We use the data below to provide, protect and improve Lymi."
 msgstr "We don’t sell your personal data, show ads or track you across other companies’ apps and websites. We use the data below to provide, protect and improve Lymi."
 
+msgid "we eat"
+msgstr "we eat"
+
 msgid "We eat bread."
 msgstr "We eat bread."
+
+msgid "we go"
+msgstr "we go"
 
 msgid "We have a cat."
 msgstr "We have a cat."
@@ -18917,6 +19031,9 @@ msgstr "We use access controls and encrypted connections to protect data. No onl
 
 msgid "We use cookies and device storage for sign-in, preferences, offline use and syncing unfinished edits and reviews. The public website uses browser storage for preferences, but no analytics cookies. Signing out clears account data cached by the app, although some preferences and cached audio can remain."
 msgstr "We use cookies and device storage for sign-in, preferences, offline use and syncing unfinished edits and reviews. The public website uses browser storage for preferences, but no analytics cookies. Signing out clears account data cached by the app, although some preferences and cached audio can remain."
+
+msgid "we watch"
+msgstr "we watch"
 
 msgid "we went, we visited"
 msgstr "we went, we visited"
@@ -20052,6 +20169,9 @@ msgstr "With the clock from lesson {clock} it means until: <0/>, until five. Lea
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 
+msgid "With the present form: las ta tuleb, let him or her come."
+msgstr "With the present form: las ta tuleb, let him or her come."
+
 msgid "with the shop assistants"
 msgstr "with the shop assistants"
 
@@ -20538,6 +20658,9 @@ msgstr "you all"
 msgid "You all work in an office."
 msgstr "You all work in an office."
 
+msgid "You and Kati plan Saturday. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "You and Kati plan Saturday. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
+
 msgid "You and someone else."
 msgstr "You and someone else."
 
@@ -20736,6 +20859,9 @@ msgstr "You sit at the bottom, talking to Mari and Jaan across the table. Liis a
 msgid "You speak Estonian."
 msgstr "You speak Estonian."
 
+msgid "You speak to someone and suggest doing it together: the <0>me</0> form without <1>me</1>."
+msgstr "You speak to someone and suggest doing it together: the <0>me</0> form without <1>me</1>."
+
 msgid "You speak very well."
 msgstr "You speak very well."
 
@@ -20771,6 +20897,9 @@ msgstr "You want everything on your own computer"
 
 msgid "You want one cake and no tea, and you’ll eat the cake right away."
 msgstr "You want one cake and no tea, and you’ll eat the cake right away."
+
+msgid "You want to go to the cinema, you’re happy for Jaan to come, and then you want pizza."
+msgstr "You want to go to the cinema, you’re happy for Jaan to come, and then you want pizza."
 
 msgid "You went to Tartu last summer, and you haven’t tried <0/> yet."
 msgstr "You went to Tartu last summer, and you haven’t tried <0/> yet."

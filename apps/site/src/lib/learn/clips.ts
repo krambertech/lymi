@@ -2770,6 +2770,57 @@ const CONDITIONAL_CLIPS: Record<string, Clip> = {
   ...CONDITIONAL_DIALOGUE,
 };
 
+export const LETS_PAIRS = [
+  { verb: "tegema", we: "me teeme", lets: "Teeme!" },
+  { verb: "vaatama", we: "me vaatame", lets: "Vaatame!" },
+  { verb: "sööma", we: "me sööme", lets: "Sööme!" },
+  { verb: "minema", we: "me läheme", lets: "Lähme!" },
+] as const;
+
+export const LAS_USES = [
+  "Las ta tuleb.",
+  "Las nad mängivad.",
+  "Las ma aitan sind.",
+  "Las ta magab.",
+] as const;
+
+export const LETS_GAPS = [
+  { id: "minema-ta", verb: "minema", before: "Las ta", after: "koju.", answer: "läheb" },
+  { id: "minema-nad", verb: "minema", before: "Las nad", after: "koju.", answer: "lähevad" },
+  { id: "minema-lets", verb: "minema", before: "Kati,", after: "koju!", answer: "lähme" },
+  { id: "sooma-ta", verb: "sööma", before: "Las ta", after: "rahus.", answer: "sööb" },
+  { id: "sooma-nad", verb: "sööma", before: "Las nad", after: "rahus.", answer: "söövad" },
+  { id: "sooma-lets", verb: "sööma", before: "Kati,", after: "midagi!", answer: "sööme" },
+  { id: "mangima-ta", verb: "mängima", before: "Las ta", after: "õues.", answer: "mängib" },
+  { id: "mangima-nad", verb: "mängima", before: "Las lapsed", after: "õues.", answer: "mängivad" },
+  { id: "mangima-lets", verb: "mängima", before: "Tule,", after: "koos!", answer: "mängime" },
+] as const;
+
+export const LETS_OPTIONS: Record<(typeof LETS_GAPS)[number]["verb"], readonly string[]> = {
+  minema: ["läheb", "lähevad", "lähme"],
+  sööma: ["sööb", "söövad", "sööme"],
+  mängima: ["mängib", "mängivad", "mängime"],
+};
+
+export const LETS_DIALOGUE = {
+  "d-kati-1": { text: "Mida me laupäeval teeme?", voice: "second" },
+  "d-sina-1": "Lähme kinno!",
+  "d-kati-2": { text: "Hea mõte! Aga Jaan tahab ka tulla.", voice: "second" },
+  "d-sina-2": "Las ta tuleb!",
+  "d-kati-3": { text: "Ja pärast filmi?", voice: "second" },
+  "d-sina-3": "Sööme pitsat!",
+} as const satisfies Record<string, Clip>;
+
+export const LETS_WORDS = ["las", "koos", "rahus", "õues"] as const;
+
+const LETS_CLIPS: Record<string, Clip> = {
+  ...words(LETS_WORDS),
+  ...words(LETS_PAIRS.flatMap((pair) => [pair.verb, pair.we, pair.lets])),
+  ...words(LAS_USES),
+  ...words(LETS_GAPS.map(objectGapSaid)),
+  ...LETS_DIALOGUE,
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -3739,6 +3790,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "majades-inimestele": PLURAL_CASE_CLIPS,
   "olen-lugenud": PERFECT_CLIPS,
   laheksin: CONDITIONAL_CLIPS,
+  "lahme-las": LETS_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

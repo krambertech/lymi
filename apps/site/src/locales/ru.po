@@ -955,11 +955,20 @@ msgstr "<0>Läbi</0> значит «до конца», поэтому родит
 msgid "<0>Lähen ujuma</0> is I’m going swimming, <1>olen ujumas</1> I’m out swimming, and <2>tulen ujumast</2> I’m coming back from swimming. The ending says which."
 msgstr "<0>Lähen ujuma</0> — это «я иду плавать», <1>olen ujumas</1> — «я на плавании», а <2>tulen ujumast</2> — «я возвращаюсь с плавания». Какое из трёх — показывает окончание."
 
+msgid "<0>Lähme!</0>, let’s go, and <1>las ta tuleb</1>, let him come. Two short ways to suggest and allow."
+msgstr "<0>Lähme!</0> — пойдём, и <1>las ta tuleb</1> — пусть придёт. Два коротких способа предложить и разрешить."
+
 msgid "<0>Läksin</0> is the past. Next week is still to come: <1>lähen</1>."
 msgstr "<0>Läksin</0> — прошедшее время. Следующая неделя ещё впереди: <1>lähen</1>."
 
 msgid "<0>Lapsed</0> is plural, so the verb takes the form of <1>nad</1>: <2>õpivad</2>."
 msgstr "<0>Lapsed</0> — множественное число, поэтому глагол стоит в форме для <1>nad</1>: <2>õpivad</2>."
+
+msgid "<0>Las nad</0>, or <1>las lapsed</1>: the present form for <2>nad</2>."
+msgstr "<0>Las nad</0> или <1>las lapsed</1>: форма настоящего времени для <2>nad</2>."
+
+msgid "<0>Las ta</0>: the present form for <1>ta</1>."
+msgstr "<0>Las ta</0>: форма настоящего времени для <1>ta</1>."
 
 msgid "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
 msgstr "<0>Last</0> — третья форма, поэтому она идёт после <1>lapse</1>."
@@ -1026,6 +1035,9 @@ msgstr "После <0>mina</0> идёт <1>olen</1>: <2>Mina olen Andres</2>."
 
 msgid "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
 msgstr "<0>Mina</0>, <1>sina</1> и <2>nemad</2> меняются: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> и <6>teie</6> остаются как есть."
+
+msgid "<0>Mine</0> tells one person to go. To go together: <1>lähme</1>."
+msgstr "<0>Mine</0> велит одному человеку идти. Чтобы пойти вместе: <1>lähme</1>."
 
 msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same short forms you met for he or she, we and you. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
 msgstr "<0>Minu</0> и <1>sinu</1> часто сокращаются до <2/> и <3/>. <4>Tema</4>, <5>meie</5> и <6>teie</6> сокращаются до <7>ta, me</7> и <8>te</8> — тех же кратких форм, что и для «он или она», «мы» и «вы». В уроке {questions} уже было <9>su</9>: <10/> — «Как тебя зовут?»"
@@ -1170,6 +1182,9 @@ msgstr "<0>Sõin</0> — это прошедшее время, а торт то�
 
 msgid "<0>Sõnaveeb</0>, the free dictionary of the Institute of the Estonian Language, lists them under <1>Sõnavormid</1>, word forms. Search for a word and scroll to that table: its left column holds the three forms, top to bottom. The right column is the plural."
 msgstr "В <0>Sõnaveeb</0>, бесплатном словаре Института эстонского языка, они стоят в таблице <1>Sõnavormid</1> — «формы слова». Найди слово и пролистай до этой таблицы: в левом столбце сверху вниз три формы. Правый столбец — это множественное число."
+
+msgid "<0>Söö</0> tells one person to eat. To eat together: <1>sööme</1>."
+msgstr "<0>Söö</0> велит одному человеку есть. Чтобы поесть вместе: <1>sööme</1>."
 
 msgid "<0>Sööma</0> and <1>jooma</1> break the pattern. Their commands build on the I form: <2>söön, sööge</2>; <3>joon, jooge</3>."
 msgstr "<0>Sööma</0> и <1>jooma</1> — исключения. Их команды строятся на форме для «я»: <2>söön, sööge</2>; <3>joon, jooge</3>."
@@ -1782,6 +1797,9 @@ msgstr "Бесплатный урок эстонского о трёх «вну�
 
 msgid "A free lesson on Estonian’s three “on” cases, the adessive, allative and ablative: kus, kuhu and kust, -l for on and at (laual, tööl), -le for onto and to (lauale, tööle) and -lt for off and from (laualt, töölt), which places take -le and which -sse, and -le and -lt on a person (emale, emalt). Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о трёх внешнеместных падежах — адессиве, аллативе и аблативе: kus, kuhu и kust, -l — где (laual, tööl), -le — куда (lauale, tööle), -lt — откуда (laualt, töölt), какие места употребляются с -le, а какие с -sse, и -le с -lt, когда речь о человеке (emale, emalt). Каждое предложение озвучено."
+
+msgid "A free lesson on how to say let’s and let him or her in Estonian: the we form without me (teeme, vaatame, lähme) and las with the present (las ta tuleb, las nad mängivad, las ma aitan). Every sentence is read aloud."
+msgstr "Бесплатный урок о том, как сказать по-эстонски «давай» и «пусть»: форма для «мы» без me (teeme, vaatame, lähme) и las с настоящим временем (las ta tuleb, las nad mängivad, las ma aitan). Каждое предложение озвучено."
 
 msgid "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
 msgstr "Бесплатный урок о том, как сказать «у меня есть» по-эстонски: mul, sul, tal, meil, teil и neil on, имена с -l, например Maril on, вопрос kellel on?, mul on vaja — «мне нужно» — и ответы jah, on и ei ole. Каждое предложение озвучено."
@@ -2615,6 +2633,9 @@ msgstr "После <0>läheb</0> форма на <1>-ma</1> говорит, чт
 msgid "After <0>lähen</0>, say where to: <1>Tartusse</1>. <2>Tartus</2> is where you are."
 msgstr "После <0>lähen</0> говорят, куда: <1>Tartusse</1>. <2>Tartus</2> отвечает на «где?»."
 
+msgid "After <0>las</0>, the present form: <1>tuleb</1>."
+msgstr "После <0>las</0> — форма настоящего времени: <1>tuleb</1>."
+
 msgid "After <0>mulle meeldib</0>, the <1>-da</1> form."
 msgstr "После <0>mulle meeldib</0> — форма на <1>-da</1>."
 
@@ -2866,6 +2887,9 @@ msgstr "Все уроки"
 
 msgid "All nine. Two, many and the ones you mean, every time."
 msgstr "Все девять. Две, много и именно эти — каждый раз верно."
+
+msgid "All nine. You can suggest and allow."
+msgstr "Все девять. Ты умеешь предлагать и разрешать."
 
 msgid "All nine. You hear the tense and know what it says."
 msgstr "Все девять. Ты слышишь время и понимаешь, что оно значит."
@@ -3838,6 +3862,9 @@ msgstr "Книга"
 
 msgid "books"
 msgstr "книги"
+
+msgid "Books also have a form in <0>-gem</0> or <1>-kem</1>: <2>tehkem</2>, <3>mingem</3>. You will read it in slogans and old texts. People say <4>teeme</4> and <5>lähme</5>."
+msgstr "В книгах есть ещё форма на <0>-gem</0> или <1>-kem</1>: <2>tehkem</2>, <3>mingem</3>. Её можно встретить в лозунгах и старых текстах. В разговоре говорят <4>teeme</4> и <5>lähme</5>."
 
 msgid "Books often print ё as е. Add a word from such a book and the card shows its ё until you know it."
 msgstr "В книгах ё часто печатают как е. Добавь слово из такой книги, и карточка будет показывать ё, пока ты его не выучишь."
@@ -5709,6 +5736,9 @@ msgstr "Инфинитив после других глаголов в эсто�
 
 msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
 msgstr "По-эстонски пишут так, как произносят. Каждую букву читаешь, и каждая звучит одинаково, где бы ни стояла. Зная буквы, ты прочитаешь вслух и новое слово."
+
+msgid "Estonian let’s and let him: lähme, teeme, las ta tuleb"
+msgstr "Как сказать «давай» и «пусть» по-эстонски"
 
 msgid "Estonian letters"
 msgstr "Эстонские буквы"
@@ -9228,6 +9258,9 @@ msgstr "в Пярну"
 msgid "In Pärnu"
 msgstr "В Пярну"
 
+msgid "in peace"
+msgstr "спокойно"
+
 msgid "in Polish"
 msgstr "по-польски"
 
@@ -10322,6 +10355,9 @@ msgstr "лимон"
 msgid "Lesson"
 msgstr "Урок"
 
+msgid "Lesson {commands} gave orders to one person: <0>istu!</0> To suggest doing something together, take the <1>me</1> form of the present and drop <2>me</2>. Only <3>minema</3> also gets shorter: <4>me läheme</4>, but <5>lähme!</5>"
+msgstr "В уроке {commands} были приказы одному человеку: <0>istu!</0> Чтобы предложить что-то сделать вместе, возьми форму настоящего времени для <1>me</1> и убери само <2>me</2>. Как русское «пойдём» или «сделаем»: форма та же, что и «мы сделаем», только без «мы». Лишь <3>minema</3> ещё и становится короче: <4>me läheme</4>, но <5>lähme!</5>"
+
 msgid "Lesson {forms} gave each verb a <0>da</0> form, as in <1/>. The <2>nud</2> form comes from it: take off the <3>da</3> and put <4>nud</4> in its place. <5>Lugeda</5> gives <6>lugenud</6>."
 msgstr "В уроке {forms} у каждого глагола была форма на <0>da</0>, как <1/>. От неё и образуют форму на <2>nud</2>: убери <3>da</3> и поставь на его место <4>nud</4>. Из <5>lugeda</5> получается <6>lugenud</6>."
 
@@ -10379,11 +10415,35 @@ msgstr "В уроках {negation} и {commands} <0/> называлась фо�
 msgid "Lessons done: <0>{doneCount}</0> of {builtCount}"
 msgstr "Пройдено уроков: <0>{doneCount}</0> из {builtCount}"
 
+msgid "let"
+msgstr "пусть"
+
 msgid "Let {name} add cards?"
 msgstr "Разрешить {name} добавлять карточки?"
 
 msgid "Let Claude add cards?"
 msgstr "Разрешить Claude добавлять карточки?"
+
+msgid "Let her sleep."
+msgstr "Пусть она спит."
+
+msgid "Let him come."
+msgstr "Пусть он придёт."
+
+msgid "Let him, let them"
+msgstr "Пусть он, пусть они"
+
+msgid "Let him, let them: <0>las</0> with the present. <1>Las ta tuleb. Las nad mängivad.</1>"
+msgstr "Пусть он, пусть они: <0>las</0> с настоящим временем. <1>Las ta tuleb. Las nad mängivad.</1>"
+
+msgid "Let me help you."
+msgstr "Давай я тебе помогу."
+
+msgid "Let them play."
+msgstr "Пусть они играют."
+
+msgid "Let’s"
+msgstr "Давай"
 
 msgid "Let’s *take a taxi*."
 msgstr "Поехали на *такси*."
@@ -10391,8 +10451,17 @@ msgstr "Поехали на *такси*."
 msgid "Let’s and let them"
 msgstr "«Пойдём» и «пусть»"
 
+msgid "Let’s do it!"
+msgstr "Давай сделаем!"
+
+msgid "Let’s eat!"
+msgstr "Давай поедим!"
+
 msgid "Let’s go into *town*!"
 msgstr "Пойдём в *город*!"
+
+msgid "Let’s go!"
+msgstr "Пойдём!"
 
 msgid "Let’s meet again *tomorrow*."
 msgstr "Увидимся *завтра*."
@@ -10402,6 +10471,15 @@ msgstr "Давай потренируем диалог с моими италь�
 
 msgid "Let’s practise. Use the German words from my deck."
 msgstr "Давай попрактикуемся. Используй немецкие слова из моей колоды."
+
+msgid "Let’s watch!"
+msgstr "Давай посмотрим!"
+
+msgid "Let’s, let him, let them"
+msgstr "Давай, пусть он, пусть они"
+
+msgid "Let’s: the <0>me</0> form without <1>me</1>. <2>Teeme! Vaatame!</2> Only <3>minema</3> is shorter: <4>Lähme!</4>"
+msgstr "Давай: форма для <0>me</0> без <1>me</1>. <2>Teeme! Vaatame!</2> Лишь <3>minema</3> короче: <4>Lähme!</4>"
 
 msgid "library"
 msgstr "библиотека"
@@ -11363,6 +11441,9 @@ msgstr "Большинство. Смотри на слово перед проп
 
 msgid "Most of them. Look at the word just before each gap."
 msgstr "Большинство. Смотри на слово прямо перед пропуском."
+
+msgid "Most of them. Look at who comes before the gap."
+msgstr "Большинство. Смотри, кто стоит перед пропуском."
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
@@ -12726,6 +12807,9 @@ msgstr "на плавании"
 msgid "Out swimming"
 msgstr "На плавании"
 
+msgid "outside"
+msgstr "на улице"
+
 msgid "Own things, count them and put them somewhere. Stems change first, then the genitive, which most other cases build on."
 msgstr "Иметь вещи, считать их и куда-то класть. Сначала меняются основы, затем генитив, на котором строится большинство других падежей."
 
@@ -13671,6 +13755,9 @@ msgstr "Ещё раз посмотри таблицу и попробуй сно
 
 msgid "Read the three endings above once more, then try again."
 msgstr "Ещё раз перечитай про три окончания выше и попробуй снова."
+
+msgid "Read the two sections above once more, then try again."
+msgstr "Ещё раз прочитай два раздела выше и попробуй снова."
 
 msgid "Read your German deck"
 msgstr "Прочитана колода по немецкому"
@@ -15321,6 +15408,9 @@ msgstr "Разговор: знакомство с Мари"
 msgid "Talk: plans with Kati"
 msgstr "Разговор: планы с Кати"
 
+msgid "Talk: what shall we do?"
+msgstr "Разговор: что будем делать?"
+
 msgid "Talk: what you didn’t do"
 msgstr "Разговор: чего ты не делал"
 
@@ -15689,6 +15779,9 @@ msgstr "Это значит, что медленнее говоришь ты. Ч
 
 msgid "That says you’re sorry. Liis asked you to come."
 msgstr "Так ты говоришь, что тебе жаль. А Лийс звала тебя прийти."
+
+msgid "That speaks to Jaan, but he isn’t here. About him: <0>las ta tuleb</0>."
+msgstr "Это обращение к Яану, но его здесь нет. О нём: <0>las ta tuleb</0>."
 
 msgid "That tells Jaan not to come."
 msgstr "Так ты просишь Яана не подходить."
@@ -16115,6 +16208,12 @@ msgstr "Колоды опираются на референтное описан
 
 msgid "The decks hold the most useful words of each level’s Goethe-Institut word list, not the whole list."
 msgstr "В колодах — самые полезные слова из списка Goethe-Institut для каждого уровня, а не весь список."
+
+msgid "The dictionary form doesn’t suggest anything. For let’s: <0>lähme</0>."
+msgstr "Словарная форма ничего не предлагает. Для «давай»: <0>lähme</0>."
+
+msgid "The dictionary form doesn’t suggest anything. For let’s: <0>sööme</0>."
+msgstr "Словарная форма ничего не предлагает. Для «давай»: <0>sööme</0>."
 
 msgid "The DMV doesn’t publish its questions. These are practice questions written from the official handbook."
 msgstr "DMV не публикует свои вопросы. Это тренировочные вопросы по официальному пособию."
@@ -17941,6 +18040,9 @@ msgstr "учить, учиться"
 msgid "to learn, to study"
 msgstr "учить, учиться"
 
+msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the plain present form: <1>las ta tuleb</1>, let him come. With <2>ma</2> it offers help: <3>las ma aitan</3>, let me help."
+msgstr "Чтобы разрешить кому-то что-то сделать или сказать, что ты не против, поставь <0/> перед лицом и обычную форму настоящего времени: <1>las ta tuleb</1>, пусть придёт. Как русское «пусть»: после него тоже обычный глагол. С <2>ma</2> это предложение помочь: <3>las ma aitan</3>, давай я помогу."
+
 msgid "To like"
 msgstr "Нравиться"
 
@@ -18258,6 +18360,9 @@ msgstr "Сегодня, завтра, вчера"
 
 msgid "Today’s page from my textbook. Add the new words to my Japanese deck."
 msgstr "Сегодняшняя страница из моего учебника. Добавь новые слова в мою японскую колоду."
+
+msgid "together"
+msgstr "вместе"
 
 msgid "tomorrow"
 msgstr "завтра"
@@ -18838,6 +18943,9 @@ msgstr "В Кёльне мы делаем пересадку."
 msgid "We didn’t eat."
 msgstr "Мы не ели."
 
+msgid "we do, we make"
+msgstr "мы делаем"
+
 msgid "We don’t eat; we aren’t eating."
 msgstr "Мы не едим."
 
@@ -18847,8 +18955,14 @@ msgstr "Нам не нравятся кошки."
 msgid "We don’t sell your personal data, show ads or track you across other companies’ apps and websites. We use the data below to provide, protect and improve Lymi."
 msgstr "Мы не продаём твои персональные данные, не показываем рекламу и не отслеживаем тебя в приложениях и на сайтах других компаний. Описанные ниже данные нужны, чтобы предоставлять, защищать и улучшать Lymi."
 
+msgid "we eat"
+msgstr "мы едим"
+
 msgid "We eat bread."
 msgstr "Мы едим хлеб."
+
+msgid "we go"
+msgstr "мы идём"
 
 msgid "We have a cat."
 msgstr "У нас есть кошка."
@@ -18918,6 +19032,9 @@ msgstr "Мы используем контроль доступа и зашиф�
 
 msgid "We use cookies and device storage for sign-in, preferences, offline use and syncing unfinished edits and reviews. The public website uses browser storage for preferences, but no analytics cookies. Signing out clears account data cached by the app, although some preferences and cached audio can remain."
 msgstr "Мы используем файлы cookie и хранилище устройства для входа, предпочтений, работы офлайн и синхронизации незавершённых изменений и повторений. Публичный сайт хранит предпочтения в браузере, но не использует аналитические cookie. Выход очищает кешированные приложением данные аккаунта, хотя некоторые предпочтения и кешированное аудио могут остаться."
+
+msgid "we watch"
+msgstr "мы смотрим"
 
 msgid "we went, we visited"
 msgstr "мы ходили, мы ездили"
@@ -20053,6 +20170,9 @@ msgstr "Когда речь о часах (урок {clock}), оно значи�
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "С колоды, которая подходит к твоей цели: поездке или первым урокам. Можно добавить несколько, и Lymi смешает их карточки в одно ежедневное повторение."
 
+msgid "With the present form: las ta tuleb, let him or her come."
+msgstr "С формой настоящего времени: las ta tuleb, пусть он или она придёт."
+
 msgid "with the shop assistants"
 msgstr "с продавцами"
 
@@ -20539,6 +20659,9 @@ msgstr "вы"
 msgid "You all work in an office."
 msgstr "Вы работаете в офисе."
 
+msgid "You and Kati plan Saturday. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Вы с Кати планируете субботу. Выбери, что ты скажешь. Если выберешь неправильный ответ, увидишь почему, а потом услышишь правильный."
+
 msgid "You and someone else."
 msgstr "Ты и кто-то ещё."
 
@@ -20737,6 +20860,9 @@ msgstr "Ты сидишь внизу и говоришь с Mari и Jaan нап�
 msgid "You speak Estonian."
 msgstr "Ты говоришь по-эстонски."
 
+msgid "You speak to someone and suggest doing it together: the <0>me</0> form without <1>me</1>."
+msgstr "Ты обращаешься к кому-то и предлагаешь сделать это вместе: форма для <0>me</0> без <1>me</1>."
+
 msgid "You speak very well."
 msgstr "Вы очень хорошо говорите."
 
@@ -20772,6 +20898,9 @@ msgstr "Ты хочешь хранить всё на своём компьюте
 
 msgid "You want one cake and no tea, and you’ll eat the cake right away."
 msgstr "Ты хочешь одно пирожное и не хочешь чая, а пирожное съешь сразу."
+
+msgid "You want to go to the cinema, you’re happy for Jaan to come, and then you want pizza."
+msgstr "Тебе хочется в кино, ты не против, чтобы Яан пришёл, а потом хочется пиццы."
 
 msgid "You went to Tartu last summer, and you haven’t tried <0/> yet."
 msgstr "Прошлым летом у тебя была поездка в Тарту, а <0/> тебе ещё не доводилось пробовать."

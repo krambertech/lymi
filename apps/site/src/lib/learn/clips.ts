@@ -1,5 +1,6 @@
 import { numberWords } from "./estonian-numbers";
 import { ALL_TIMES, timeClip, timeSentence } from "./estonian-time";
+import { KIT_EXPLORE_TEXTS } from "./kit-explore";
 
 /**
  * Every sound a lesson plays, by lesson and clip id, with the Estonian it says. Read by
@@ -717,6 +718,8 @@ const KIT_CLIPS: Record<string, Clip> = {
   "p-mari": { sentences: KIT_PASSAGES.mari, voice: "second" },
   "p-peeter": { sentences: KIT_PASSAGES.peeter },
   ...KIT_DIALOGUE,
+  // The explorers' forms and sentences: Paradigm, Scene, Timeline, Morph.
+  ...words(KIT_EXPLORE_TEXTS),
 };
 
 /**

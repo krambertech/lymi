@@ -13,10 +13,15 @@ What does the learner do here?
 ├── Explore, with nothing to get wrong → a Panel holding:
 │   ├── a row of sounds, each explained → Keys
 │   ├── one of a few choices that changes what is shown → Chips
-│   └── two words' length side by side → Compare
+│   ├── two words' length side by side → Compare
+│   ├── a word's forms in a table: cases, persons, tenses → Paradigm
+│   ├── where something is or goes, in a picture → Scene
+│   ├── when, across tenses, and how each is built → Timeline
+│   └── how a stem changes from form to form → Morph
 ├── Read a skippable exception or comparison → Aside
 ├── Get marked on the new rule → Quiz with:
 │   ├── hear, then pick a word or form → ChoiceRound
+│   ├── hear, then tap the place in a picture → SceneRound
 │   ├── fill a gap in a sentence heard
 │   │   ├── the sound does not say the answer → GapRound
 │   │   └── the sound says it → GapRound listen="after"

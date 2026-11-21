@@ -414,7 +414,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian verb government: ootan sind, räägin sinust, helistan sulle`,
         et: "Ootan sind, räägin sinust",
         minutes: 12,
-        blurb: msg`A free lesson on which case an Estonian verb takes: the third form after ootama and aitama (ootan sind), -st after rääkima and aru saama (räägin sinust), -le after helistama (helistan sulle) and -ga after kohtuma (kohtun sinuga), and how a dictionary shows it with keda, kellest, kellele. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on which case an Estonian verb takes: the third form after ootama and aitama (ootan sind), -st after rääkima and aru saama (räägin sinust), -le after helistama (helistan sulle) and -ga after kohtuma (kohtun sinuga), and how a dictionary shows it with keda, kellest, kellele, kellega. Every sentence is read aloud.`,
       },
       { name: msg`Practice: a message to the landlord`, et: "Kiri" },
     ],

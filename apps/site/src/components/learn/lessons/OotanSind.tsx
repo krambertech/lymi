@@ -45,7 +45,7 @@ const MEANS: Record<string, MessageDescriptor> = {
 };
 
 const GLOSSARY: Glossary = {
-  keda: { en: msg`whom`, note: msg`The question for the third form: keda sa ootad?` },
+  keda: { en: msg`whom`, note: msg`The question for an object: keda sa ootad?` },
   kellest: { en: msg`about whom, from whom` },
   kellele: { en: msg`to whom` },
   kellega: { en: msg`with whom` },
@@ -57,7 +57,7 @@ function KindTable() {
   const tips: Record<Kind, ReactNode> = {
     part: (
       <Trans>
-        These verbs take the third form, whatever happens: <Et>ma ootan sind</Et>. Question:{" "}
+        These verbs take the third form on their own: <Et>ma ootan sind</Et>. Question:{" "}
         <Et>keda?</Et>
       </Trans>
     ),
@@ -119,17 +119,17 @@ function content() {
     ),
     from: (
       <Trans>
-        <Et>Rääkima</Et>, about, and <Et>aru saama</Et> take <Et>-st</Et>: <Et>sinust</Et>.
+        <Et>Hoolima</Et> and <Et>aru saama</Et> take <Et>-st</Et>: <Et>sinust</Et>.
       </Trans>
     ),
     to: (
       <Trans>
-        <Et>Helistama</Et> and <Et>kirjutama</Et> go to someone: <Et>sulle</Et>.
+        <Et>Helistama</Et> and <Et>vastama</Et> go to someone: <Et>sulle</Et>.
       </Trans>
     ),
     with: (
       <Trans>
-        <Et>Kohtuma</Et>, and <Et>rääkima</Et> with someone, take <Et>-ga</Et>: <Et>sinuga</Et>.
+        <Et>Kohtuma</Et> takes <Et>-ga</Et>, with: <Et>sinuga</Et>.
       </Trans>
     ),
   };
@@ -209,7 +209,7 @@ function content() {
           line: "Ma ootan selle väga!",
           why: (
             <Trans>
-              <Et>Ootama</Et> always takes the third form: <Et>seda</Et>.
+              On its own, <Et>ootama</Et> takes the third form: <Et>seda</Et>.
             </Trans>
           ),
         },
@@ -263,11 +263,11 @@ export function OotanSindLesson() {
           <b lang="et">kohtuma kellega?</b>
         </Trans>,
         <Trans key="2">
-          <b lang="et">Ootama, aitama, armastama, otsima</b> always take the third form.
+          <b lang="et">Ootama, aitama, armastama, otsima</b> take the third form on their own.
         </Trans>,
         <Trans key="3">
           The same verb can change its meaning with the case: <b lang="et">räägin sinust</b>, about
-          you; <b lang="et">räägin sinuga</b>, with you.
+          you; <b lang="et">räägin sinuga</b>, with you; <b lang="et">räägin sulle</b>, I tell you.
         </Trans>,
       ]}
       sections={[
@@ -281,18 +281,20 @@ export function OotanSindLesson() {
                   <Trans>
                     In English, a little word after the verb does the job: wait for, talk about,
                     call someone. In Estonian, the verb asks for a case. A dictionary shows it with
-                    a question word: <Word w="keda" /> for the third form, <Word w="kellest" /> for{" "}
-                    <Et>-st</Et>, <Word w="kellele" /> for <Et>-le</Et>, <Word w="kellega" /> for{" "}
-                    <Et>-ga</Et>. Learn the verb and its question together.
+                    a question word: <Word w="keda" /> for an object (for these verbs, the third
+                    form), <Word w="kellest" /> for <Et>-st</Et>, <Word w="kellele" /> for{" "}
+                    <Et>-le</Et>, <Word w="kellega" /> for <Et>-ga</Et>. Learn the verb and its
+                    question together.
                   </Trans>
                 </p>
               </Prose>
               <KindTable />
               <Aside>
                 <Trans>
-                  Verbs such as <Et>ootama</Et> take the third form from lesson {partitive} always,
-                  even when the waiting is over. The whole or part choice of lesson {object} doesn’t
-                  apply to them.
+                  Verbs such as <Et>ootama</Et> take the third form from lesson {partitive} even
+                  when the action is done: <Et>ootasin sind kaua</Et>. The whole or part choice of
+                  lesson {object} comes back only with a small word such as <Et>ära</Et>:{" "}
+                  <Et>ootan su ära</Et>.
                 </Trans>
               </Aside>
             </>
@@ -322,7 +324,8 @@ export function OotanSindLesson() {
                     <Trans>All eight. You hear what each verb asks for.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>
-                      Most of them. Ask the verb its question: <Et>keda, kellest, kellele?</Et>
+                      Most of them. Ask the verb its question:{" "}
+                      <Et>keda, kellest, kellele, kellega?</Et>
                     </Trans>
                   ) : (
                     <Trans>Look through the table once more, then try again.</Trans>

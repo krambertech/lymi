@@ -2947,7 +2947,8 @@ export const GOVERNMENT_KINDS = {
   ],
   to: [
     { verb: "helistama", said: "Ma helistan sulle." },
-    { verb: "ütlema", said: "Ma ütlen sulle." },
+    { verb: "ütlema", said: "Ma ütlen sulle homme." },
+    { verb: "rääkima", said: "Ma räägin sulle." },
     { verb: "vastama", said: "Ma vastan sulle." },
   ],
   with: [
@@ -2959,12 +2960,12 @@ export const GOVERNMENT_KINDS = {
 export const GOVERNMENT_GAPS = [
   { id: "wait-part", before: "Ma ootan", after: "kell viis.", answer: "sind" },
   { id: "help-part", before: "Kas ma võin", after: "aidata?", answer: "sind" },
-  { id: "talk-from", before: "Ema räägib", after: "palju.", answer: "sinust" },
+  { id: "care-from", before: "Ma hoolin", after: "väga.", answer: "sinust" },
   { id: "understand-from", before: "Ma ei saa", after: "aru.", answer: "sinust" },
   { id: "call-to", before: "Ma helistan", after: "homme.", answer: "sulle" },
-  { id: "write-to", before: "Kati kirjutab", after: "kirja.", answer: "sulle" },
+  { id: "answer-to", before: "Ma vastan", after: "kohe.", answer: "sulle" },
   { id: "meet-with", before: "Jaan tahab", after: "kohtuda.", answer: "sinuga" },
-  { id: "talk-with", before: "Kas ma saan", after: "rääkida?", answer: "sinuga" },
+  { id: "meet-again-with", before: "Kati kohtub", after: "kohvikus.", answer: "sinuga" },
 ] as const;
 
 export const GOVERNMENT_OPTIONS = ["sind", "sinust", "sulle", "sinuga"] as const;

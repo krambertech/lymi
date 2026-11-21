@@ -879,11 +879,14 @@ msgstr "<0>Hakkama</0> takes the person’s ending, and the verb after it stays 
 msgid "<0>Hakkama</0> takes the person’s ending; the verb after it stays in its <1>ma</1> form."
 msgstr "<0>Hakkama</0> takes the person’s ending; the verb after it stays in its <1>ma</1> form."
 
-msgid "<0>Helistama</0> and <1>kirjutama</1> go to someone: <2>sulle</2>."
-msgstr "<0>Helistama</0> and <1>kirjutama</1> go to someone: <2>sulle</2>."
+msgid "<0>Helistama</0> and <1>vastama</1> go to someone: <2>sulle</2>."
+msgstr "<0>Helistama</0> and <1>vastama</1> go to someone: <2>sulle</2>."
 
 msgid "<0>Homme</0> is tomorrow, so the present: <1>olen</1>."
 msgstr "<0>Homme</0> is tomorrow, so the present: <1>olen</1>."
+
+msgid "<0>Hoolima</0> and <1>aru saama</1> take <2>-st</2>: <3>sinust</3>."
+msgstr "<0>Hoolima</0> and <1>aru saama</1> take <2>-st</2>: <3>sinust</3>."
 
 msgid "<0>in</0> goes on <1>ol-</1>."
 msgstr "<0>in</0> goes on <1>ol-</1>."
@@ -924,11 +927,11 @@ msgstr "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2
 msgid "<0>Kohtuma</0> takes <1>-ga</1>, not <2>-le</2>: <3>sinuga</3>."
 msgstr "<0>Kohtuma</0> takes <1>-ga</1>, not <2>-le</2>: <3>sinuga</3>."
 
+msgid "<0>Kohtuma</0> takes <1>-ga</1>, with: <2>sinuga</2>."
+msgstr "<0>Kohtuma</0> takes <1>-ga</1>, with: <2>sinuga</2>."
+
 msgid "<0>Kohtuma</0> takes <1>-ga</1>: you meet with someone, <2>sinuga</2>."
 msgstr "<0>Kohtuma</0> takes <1>-ga</1>: you meet with someone, <2>sinuga</2>."
-
-msgid "<0>Kohtuma</0>, and <1>rääkima</1> with someone, take <2>-ga</2>: <3>sinuga</3>."
-msgstr "<0>Kohtuma</0>, and <1>rääkima</1> with someone, take <2>-ga</2>: <3>sinuga</3>."
 
 msgid "<0>Kohv</0> is one thing, so it’s <1>meeldib</1>."
 msgstr "<0>Kohv</0> is one thing, so it’s <1>meeldib</1>."
@@ -1101,11 +1104,8 @@ msgstr "<0>Oo</0> turns into <1>õ</1>, then <2>in</2>."
 msgid "<0>Öö</0> turns into <1>õ</1>, then <2>in</2>."
 msgstr "<0>Öö</0> turns into <1>õ</1>, then <2>in</2>."
 
-msgid "<0>Ootama, aitama, armastama, otsima</0> always take the third form."
-msgstr "<0>Ootama, aitama, armastama, otsima</0> always take the third form."
-
-msgid "<0>Ootama</0> always takes the third form: <1>seda</1>."
-msgstr "<0>Ootama</0> always takes the third form: <1>seda</1>."
+msgid "<0>Ootama, aitama, armastama, otsima</0> take the third form on their own."
+msgstr "<0>Ootama, aitama, armastama, otsima</0> take the third form on their own."
 
 msgid "<0>Ootama</0> and <1>aitama</1> take the third form: <2>sind</2>."
 msgstr "<0>Ootama</0> and <1>aitama</1> take the third form: <2>sind</2>."
@@ -1172,9 +1172,6 @@ msgstr "<0>Praegu</0>, right now: still reading, so the third form."
 
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>price elasticity</0> ?"
-
-msgid "<0>Rääkima</0>, about, and <1>aru saama</1> take <2>-st</2>: <3>sinust</3>."
-msgstr "<0>Rääkima</0>, about, and <1>aru saama</1> take <2>-st</2>: <3>sinust</3>."
 
 msgid "<0>Sa oled</0> is you are: this tells Mari she’s from Ukraine."
 msgstr "<0>Sa oled</0> is you are: this tells Mari she’s from Ukraine."
@@ -1899,8 +1896,8 @@ msgstr "A free lesson on the future in Estonian, which has no future tense: the 
 msgid "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da form is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud."
 msgstr "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da form is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud."
 
-msgid "A free lesson on which case an Estonian verb takes: the third form after ootama and aitama (ootan sind), -st after rääkima and aru saama (räägin sinust), -le after helistama (helistan sulle) and -ga after kohtuma (kohtun sinuga), and how a dictionary shows it with keda, kellest, kellele. Every sentence is read aloud."
-msgstr "A free lesson on which case an Estonian verb takes: the third form after ootama and aitama (ootan sind), -st after rääkima and aru saama (räägin sinust), -le after helistama (helistan sulle) and -ga after kohtuma (kohtun sinuga), and how a dictionary shows it with keda, kellest, kellele. Every sentence is read aloud."
+msgid "A free lesson on which case an Estonian verb takes: the third form after ootama and aitama (ootan sind), -st after rääkima and aru saama (räägin sinust), -le after helistama (helistan sulle) and -ga after kohtuma (kohtun sinuga), and how a dictionary shows it with keda, kellest, kellele, kellega. Every sentence is read aloud."
+msgstr "A free lesson on which case an Estonian verb takes: the third form after ootama and aitama (ootan sind), -st after rääkima and aru saama (räägin sinust), -le after helistama (helistan sulle) and -ga after kohtuma (kohtun sinuga), and how a dictionary shows it with keda, kellest, kellele, kellega. Every sentence is read aloud."
 
 msgid "A free lesson on which Estonian verbs take the -da form after them and which take the -ma form: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
 msgstr "A free lesson on which Estonian verbs take the -da form after them and which take the -ma form: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
@@ -9286,8 +9283,8 @@ msgstr "In Claude Code, turn what you just learned into cards without leaving th
 msgid "In Claude, open Settings, then Connectors, and choose Add custom connector. Paste this address and leave the rest empty."
 msgstr "In Claude, open Settings, then Connectors, and choose Add custom connector. Paste this address and leave the rest empty."
 
-msgid "In English, a little word after the verb does the job: wait for, talk about, call someone. In Estonian, the verb asks for a case. A dictionary shows it with a question word: <0/> for the third form, <1/> for <2>-st</2>, <3/> for <4>-le</4>, <5/> for <6>-ga</6>. Learn the verb and its question together."
-msgstr "In English, a little word after the verb does the job: wait for, talk about, call someone. In Estonian, the verb asks for a case. A dictionary shows it with a question word: <0/> for the third form, <1/> for <2>-st</2>, <3/> for <4>-le</4>, <5/> for <6>-ga</6>. Learn the verb and its question together."
+msgid "In English, a little word after the verb does the job: wait for, talk about, call someone. In Estonian, the verb asks for a case. A dictionary shows it with a question word: <0/> for an object (for these verbs, the third form), <1/> for <2>-st</2>, <3/> for <4>-le</4>, <5/> for <6>-ga</6>. Learn the verb and its question together."
+msgstr "In English, a little word after the verb does the job: wait for, talk about, call someone. In Estonian, the verb asks for a case. A dictionary shows it with a question word: <0/> for an object (for these verbs, the third form), <1/> for <2>-st</2>, <3/> for <4>-le</4>, <5/> for <6>-ga</6>. Learn the verb and its question together."
 
 msgid "in Estonia"
 msgstr "in Estonia"
@@ -11582,8 +11579,8 @@ msgstr "Morning"
 msgid "Most land plants have one."
 msgstr "Most land plants have one."
 
-msgid "Most of them. Ask the verb its question: <0>keda, kellest, kellele?</0>"
-msgstr "Most of them. Ask the verb its question: <0>keda, kellest, kellele?</0>"
+msgid "Most of them. Ask the verb its question: <0>keda, kellest, kellele, kellega?</0>"
+msgstr "Most of them. Ask the verb its question: <0>keda, kellest, kellele, kellega?</0>"
 
 msgid "Most of them. Listen again in the table to the ones you missed."
 msgstr "Most of them. Listen again in the table to the ones you missed."
@@ -12490,6 +12487,9 @@ msgstr "On her way to swim"
 
 msgid "On iPhone"
 msgstr "On iPhone"
+
+msgid "On its own, <0>ootama</0> takes the third form: <1>seda</1>."
+msgstr "On its own, <0>ootama</0> takes the third form: <1>seda</1>."
 
 msgid "on Monday"
 msgstr "on Monday"
@@ -17077,8 +17077,8 @@ msgstr "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. Their short fo
 msgid "The push behind ragtime, funk and reggae."
 msgstr "The push behind ragtime, funk and reggae."
 
-msgid "The question for the third form: keda sa ootad?"
-msgstr "The question for the third form: keda sa ootad?"
+msgid "The question for an object: keda sa ootad?"
+msgstr "The question for an object: keda sa ootad?"
 
 msgid "The questions and answers are BAMF’s, from its catalogue of 7 May 2025, in German as they appear on the test. The translations and notes are Lymi’s. Lymi isn’t affiliated with BAMF and can’t promise a pass."
 msgstr "The questions and answers are BAMF’s, from its catalogue of 7 May 2025, in German as they appear on the test. The translations and notes are Lymi’s. Lymi isn’t affiliated with BAMF and can’t promise a pass."
@@ -17179,8 +17179,8 @@ msgstr "The same table for a verb: persons down, tenses across."
 msgid "The same topic in other languages"
 msgstr "The same topic in other languages"
 
-msgid "The same verb can change its meaning with the case: <0>räägin sinust</0>, about you; <1>räägin sinuga</1>, with you."
-msgstr "The same verb can change its meaning with the case: <0>räägin sinust</0>, about you; <1>räägin sinuga</1>, with you."
+msgid "The same verb can change its meaning with the case: <0>räägin sinust</0>, about you; <1>räägin sinuga</1>, with you; <2>räägin sulle</2>, I tell you."
+msgstr "The same verb can change its meaning with the case: <0>räägin sinust</0>, about you; <1>räägin sinuga</1>, with you; <2>räägin sulle</2>, I tell you."
 
 msgid "The same whoever likes it: <0>mulle</0>, <1>talle</1>, <2>meile</2> or <3>neile</3>."
 msgstr "The same whoever likes it: <0>mulle</0>, <1>talle</1>, <2>meile</2> or <3>neile</3>."
@@ -17696,8 +17696,8 @@ msgstr "These take <0>-st</0>, about or from: <1>ma räägin sinust</1>. Questio
 msgid "These three keep slipping. Let’s start with la huelga."
 msgstr "These three keep slipping. Let’s start with la huelga."
 
-msgid "These verbs take the third form, whatever happens: <0>ma ootan sind</0>. Question: <1>keda?</1>"
-msgstr "These verbs take the third form, whatever happens: <0>ma ootan sind</0>. Question: <1>keda?</1>"
+msgid "These verbs take the third form on their own: <0>ma ootan sind</0>. Question: <1>keda?</1>"
+msgstr "These verbs take the third form on their own: <0>ma ootan sind</0>. Question: <1>keda?</1>"
 
 msgid "they"
 msgstr "they"
@@ -19111,8 +19111,8 @@ msgstr "Verbs of having to, starting and going"
 msgid "Verbs of wanting and being able"
 msgstr "Verbs of wanting and being able"
 
-msgid "Verbs such as <0>ootama</0> take the third form from lesson {partitive} always, even when the waiting is over. The whole or part choice of lesson {object} doesn’t apply to them."
-msgstr "Verbs such as <0>ootama</0> take the third form from lesson {partitive} always, even when the waiting is over. The whole or part choice of lesson {object} doesn’t apply to them."
+msgid "Verbs such as <0>ootama</0> take the third form from lesson {partitive} even when the action is done: <1>ootasin sind kaua</1>. The whole or part choice of lesson {object} comes back only with a small word such as <2>ära</2>: <3>ootan su ära</3>."
+msgstr "Verbs such as <0>ootama</0> take the third form from lesson {partitive} even when the action is done: <1>ootasin sind kaua</1>. The whole or part choice of lesson {object} comes back only with a small word such as <2>ära</2>: <3>ootan su ära</3>."
 
 msgid "Verbs weaken the same way. Of the three forms of lesson {verbForms}, the <0>-ma</0> form is the strong one. The <1>-da</1> form, the present, or both can be weak: <2/>, <3>lugeda</3>, <4/>."
 msgstr "Verbs weaken the same way. Of the three forms of lesson {verbForms}, the <0>-ma</0> form is the strong one. The <1>-da</1> form, the present, or both can be weak: <2/>, <3>lugeda</3>, <4/>."

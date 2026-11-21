@@ -20,6 +20,7 @@ import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, type KeyItem, Keys, Panel } from "../Explore";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Paradigm } from "../Paradigm";
 import { type ChoiceItem, ChoiceRound, Quiz, type TypedItem, TypedRound } from "../Quiz";
 import { Word } from "../Word";
 
@@ -131,35 +132,16 @@ const GLOSSARY: Glossary = {
   koolis: { en: msg`at school, in a school` },
 };
 
-/** One form in the table: tap to hear it. */
-function FormCell({ form, active, onPick }: { form: string; active: boolean; onPick: () => void }) {
-  const src = wordSrc(form);
-  const playing = usePlaying(src);
-  return (
-    <button
-      type="button"
-      lang="et"
-      aria-pressed={active}
-      onClick={() => {
-        onPick();
-        void playSound(src);
-      }}
-      className={clsx(
-        "w-full cursor-pointer rounded-md px-2 py-2 text-start text-lg font-semibold tracking-tight transition-colors duration-150 hoverable:hover:bg-plate-hover max-sm:px-1.5 max-sm:text-base",
-        (active || playing) && "text-(--form)",
-      )}
-    >
-      {form}
-    </button>
-  );
+/** The letters a form shares with the first form, then `|` before the rest, which Paradigm lights. */
+function litFrom(first: string, form: string): string {
+  let shared = 0;
+  while (shared < first.length && first[shared] === form[shared]) shared++;
+  return shared >= form.length ? form : `${form.slice(0, shared)}|${form.slice(shared)}`;
 }
 
 /** Ten nouns in their three forms, one column per form; a tap plays a form and says which it is. */
 function FormTable({ notes }: { notes: Record<string, ReactNode> }) {
   const { t, i18n } = useLingui();
-  const [picked, setPicked] = useState<{ row: number; slot: number } | null>(null);
-  const slots = [t`First`, t`Second`, t`Third`];
-  const forms = picked ? TABLE[picked.row] : undefined;
   const slotName = (slot: number, first: string) =>
     slot === 0
       ? t`The first form: the word itself.`
@@ -168,60 +150,27 @@ function FormTable({ notes }: { notes: Record<string, ReactNode> }) {
         : t`The third form of ${first}.`;
   return (
     <Panel>
-      <div className="overflow-hidden rounded-lg bg-plate ring-1 ring-edge">
-        <table className="w-full table-fixed border-collapse">
-          <caption className="sr-only">{t`Ten nouns in their three forms`}</caption>
-          <thead>
-            <tr>
-              {slots.map((slot) => (
-                <th
-                  key={slot}
-                  scope="col"
-                  className="px-3.5 pt-3 pb-1 text-start text-sm font-medium text-ink-muted max-sm:px-3"
-                >
-                  {slot}
-                </th>
-              ))}
-            </tr>
-          </thead>
-          <tbody>
-            {TABLE.map((row, r) => (
-              <tr key={row[0]} className="border-t border-edge">
-                {row.map((form, slot) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: a form can repeat in its row
-                  <td key={slot} className="px-1.5 py-1 align-top">
-                    <FormCell
-                      form={form}
-                      active={picked?.row === r && picked.slot === slot}
-                      onPick={() => setPicked({ row: r, slot })}
-                    />
-                    {slot === 0 && (
-                      <span className="block px-2 pb-1.5 text-sm text-ink-muted max-sm:px-1.5">
-                        {i18n._(MEANS[row[0]])}
-                      </span>
-                    )}
-                  </td>
-                ))}
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-      <div aria-live={picked ? "polite" : undefined} className="min-h-14">
-        {forms && picked ? (
-          <p key={`${picked.row}-${picked.slot}`} className="learn-swap text-md text-ink-secondary">
-            <b lang="et" className="text-xl font-semibold text-ink">
-              {nounEntry(forms)}
-            </b>
-            <br />
-            {slotName(picked.slot, forms[0])} {notes[forms[0]]}
-          </p>
-        ) : (
-          <p className="text-md text-ink-secondary">
-            <Trans>Tap a form to hear it and see how it relates to the first.</Trans>
-          </p>
-        )}
-      </div>
+      <Paradigm
+        label={t`Ten nouns in their three forms`}
+        columns={[t`First`, t`Second`, t`Third`]}
+        rows={TABLE.map((forms) => ({
+          id: forms[0],
+          label: i18n._(MEANS[forms[0]]),
+          cells: forms.map((form, slot) => ({
+            form: slot === 0 ? form : litFrom(forms[0], form),
+            src: wordSrc(form),
+            note: (
+              <>
+                {slotName(slot, forms[0])} {notes[forms[0]]}
+              </>
+            ),
+          })),
+        }))}
+        empty={{
+          title: t`Tap a form`,
+          tip: t`You’ll hear it and see how it changes from the first.`,
+        }}
+      />
     </Panel>
   );
 }

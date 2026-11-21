@@ -285,8 +285,8 @@ function pickUnits(slug: Slug): PickUnit[] {
 const percent = (share: number) => `${Math.round(share * 100)}%`;
 
 describe.each(SLUGS)("lesson %s", (slug) => {
-  // Simulating every quiz's runs is the slow part, and it is cached: do it once here, with room
-  // for a busy CI runner, so no single check below pays for it inside its own timeout.
+  // Simulating every pick quiz's runs is the slow part, and pickUnits caches it. Warming it here,
+  // with its own timeout, keeps a loaded CI runner from timing out whichever test comes first.
   beforeAll(() => {
     pickUnits(slug);
   }, 60_000);

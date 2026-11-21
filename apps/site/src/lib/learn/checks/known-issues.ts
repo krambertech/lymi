@@ -19,4 +19,11 @@ export const KNOWN_ISSUES: Readonly<Record<string, readonly string[]>> = {
   ],
   /** A quiz whose options for an answer never change, so the set names the answer. */
   "option-sets": ["eitus", "kell", "kusimused", "mina-sina-tema"],
+  /**
+   * A quiz whose answer favours a place in some round: fixed option orders under eachPairFirst, so
+   * a round after the first can be answered by the place, or the word, no earlier round used.
+   */
+  "answer-place": ["haaldus", "kell", "kohad", "mina-sina-tema"],
+  /** A quiz where picking the shortest option, the form without its ending, beats chance. */
+  "cheap-strategy": ["eitus"],
 };

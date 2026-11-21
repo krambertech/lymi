@@ -334,6 +334,10 @@
   display: inline-block;
   color: var(--ink-faint);
 }
+/* Drawn, not written, so the text a screen reader or a check finds is the new word alone. */
+.learn-morph [data-kind="dropped"]::before {
+  content: attr(data-text);
+}
 .learn-morph [data-kind="dropped"]::after {
   content: "";
   position: absolute;

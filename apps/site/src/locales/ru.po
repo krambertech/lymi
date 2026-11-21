@@ -105,11 +105,6 @@ msgstr "{0, plural, one {Повтори все #} few {Повтори все #} 
 msgid "{0, plural, one {Your deck} other {Your decks}}"
 msgstr "{0, plural, one {Твоя колода} few {Твои колоды} many {Твои колоды} other {Твои колоды}}"
 
-#. placeholder {0}: before.word
-#. placeholder {1}: step.word
-msgid "{0} becomes {1}"
-msgstr "{0} становится {1}"
-
 #. placeholder {0}: i18n.number(IMPORT_FROM)
 msgid "{0} cards, history kept"
 msgstr "{0} карточек, история сохранена"
@@ -139,9 +134,6 @@ msgstr "{0}, твой ответ"
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}}"
-
-msgid "{before} blank {after}"
-msgstr "{before} пропуск {after}"
 
 msgid "{cardCount, plural, one {See the card} other {See all # cards}}"
 msgstr "{cardCount, plural, one {Посмотреть карточку} few {Посмотреть все # карточки} many {Посмотреть все # карточек} other {Посмотреть все # карточки}}"
@@ -443,10 +435,18 @@ msgstr "<0/>, «быть», устроен так же. <1/> становитс�
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> или <1>-ke</1> на конце"
 
+#. placeholder {0}: before.word
+#. placeholder {1}: step.word
+msgid "<0>{0}</0> becomes <1>{1}</1>"
+msgstr "<0>{0}</0> превращается в <1>{1}</1>"
+
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
 msgid "<0>{0}</0>: <1>{1}</1>"
 msgstr "<0>{0}</0>: <1>{1}</1>"
+
+msgid "<0>{before}</0> blank <1>{after}</1>"
+msgstr "<0>{before}</0> пропуск <1>{after}</1>"
 
 msgid "<0>{plannedCount}</0> planned, A1 to B1"
 msgstr "Запланировано: <0>{plannedCount}</0>, от A1 до B1"
@@ -459,6 +459,12 @@ msgstr "<0>Aiko</0> прошла неделю 3"
 
 msgid "<0>Ära</0> before the stem"
 msgstr "<0>Ära</0> перед основой"
+
+msgid "<0>b</0> now, only <1>s</1> in the past."
+msgstr "<0>b</0> сейчас, в прошлом только <1>s</1>."
+
+msgid "<0>d</0> now, <1>sid</1> in the past."
+msgstr "<0>d</0> сейчас, <1>sid</1> в прошлом."
 
 msgid "<0>Diffusion</0>: particles move from high to low concentration."
 msgstr "<0>Диффузия</0>: частицы движутся от высокой концентрации к низкой."
@@ -478,11 +484,20 @@ msgstr "<0>Ei</0> говорит, чего человек не делает; <1>
 msgid "<0>Ei</0>, and the verb without its ending."
 msgstr "<0>Ei</0> и глагол без окончания."
 
+msgid "<0>in</0> goes on <1>ol-</1>."
+msgstr "<0>in</0> добавляется к <1>ol-</1>."
+
+msgid "<0>in</0> goes on <1>tul-</1>."
+msgstr "<0>in</0> добавляется к <1>tul-</1>."
+
 msgid "<0>Jonas</0> added 4 cards to Week 4"
 msgstr "<0>Jonas</0> добавил 4 карточки в неделю 4"
 
 msgid "<0>Jonas</0> finished Week 2"
 msgstr "<0>Jonas</0> прошёл неделю 2"
+
+msgid "<0>Käin</0> is the present. Kati asked about yesterday."
+msgstr "<0>Käin</0> — это настоящее время. Кати спрашивала про вчера."
 
 msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgstr "<0>Kes</0> спрашивает о людях, <1>mis</1> — о вещах."
@@ -505,11 +520,20 @@ msgstr "<0>предельные издержки</0> <1>= цена ещё 1 шт
 msgid "<0>Mari</0> finished Week 3"
 msgstr "<0>Mari</0> прошла неделю 3"
 
+msgid "<0>Me</0> is we, and you were on your own."
+msgstr "<0>Me</0> — это «мы», а вчера рядом никого не было."
+
+msgid "<0>me</0> now, <1>sime</1> in the past."
+msgstr "<0>me</0> сейчас, <1>sime</1> в прошлом."
+
 msgid "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgstr "<0>Мексиканский испанский</0>, <1>разговорные примеры</1>."
 
 msgid "<0>Mina</0> takes <1>olen</1>: <2>Mina olen Andres</2>."
 msgstr "После <0>mina</0> идёт <1>olen</1>: <2>Mina olen Andres</2>."
+
+msgid "<0>n</0> now, <1>sin</1> in the past."
+msgstr "<0>n</0> сейчас, <1>sin</1> в прошлом."
 
 msgid "<0>Olen</0> for I, <1>oled</1> for you, <2>on</2> for he or she and for they."
 msgstr "<0>Olen</0> для «я», <1>oled</1> для «ты», <2>on</2> для «он или она» и для «они»."
@@ -517,11 +541,23 @@ msgstr "<0>Olen</0> для «я», <1>oled</1> для «ты», <2>on</2> для
 msgid "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
 msgstr "<0>On</0> — и «он или она есть», и «они есть». Различить их можно только по местоимению."
 
+msgid "<0>Oo</0> turns into <1>õ</1>, then <2>in</2>."
+msgstr "<0>Oo</0> превращается в <1>õ</1>, потом <2>in</2>."
+
+msgid "<0>Öö</0> turns into <1>õ</1>, then <2>in</2>."
+msgstr "<0>Öö</0> превращается в <1>õ</1>, потом <2>in</2>."
+
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>альтернативная стоимость</0> <1>= чем жертвуешь</1>"
 
 msgid "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 msgstr "<0>Осмос</0>: вода проходит через мембрану туда, где больше растворённого вещества."
+
+msgid "<0>Ostan</0> is the present. Kati asked what you bought."
+msgstr "<0>Ostan</0> — это настоящее время. Кати спрашивала про вчерашние покупки."
+
+msgid "<0>Ostsid</0> is for <1>sa</1> or <2>nad</2>. With <3>ma</3>, it’s <4>ostsin</4>."
+msgstr "<0>Ostsid</0> — для <1>sa</1> или <2>nad</2>. Для <3>ma</3> будет <4>ostsin</4>."
 
 msgid "<0>P suletud</0> on a sign: closed on Sunday."
 msgstr "<0>P suletud</0> на табличке: в воскресенье закрыто."
@@ -556,14 +592,26 @@ msgstr "<0>Sklep</0> — это магазин, а не склеп, а <1>dynia<
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> — родственник древнерусского «сябр», то есть друг. Белорусы до сих пор говорят «сябар»."
 
+msgid "<0>Ta</0> adds nothing after the i."
+msgstr "<0>Ta</0> ничего не добавляет после i."
+
+msgid "<0>Ta</0> drops the i: <1>läks</1>."
+msgstr "<0>Ta</0> теряет i: <1>läks</1>."
+
 msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 msgstr "<0>Ta</0> — и «он», и «она». <1>Te</1> — «вы» нескольким людям и вежливое «Вы» одному."
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сегодня, завтра, вчера. <3>Üle-</3> добавляет ещё один день."
 
+msgid "<0>te</0> now, <1>site</1> in the past."
+msgstr "<0>te</0> сейчас, <1>site</1> в прошлом."
+
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — это «привет», а Мари уже уходит."
+
+msgid "<0>vad</0> now, <1>sid</1> in the past, as for <2>sa</2>."
+msgstr "<0>vad</0> сейчас, <1>sid</1> в прошлом, как и для <2>sa</2>."
 
 msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>Veerand neli</0> — четверть пути к четырём, 3:15. <1>Kolmveerand neli</1> — три четверти, 3:45."
@@ -705,6 +753,9 @@ msgstr "33 вопроса, 17 для сдачи. Выучить — 300 общи
 
 msgid "4 days"
 msgstr "4 дня"
+
+msgid "4 exercises"
+msgstr "4 упражнения"
 
 msgid "40 and 60 questions. 120 of 200 points to pass."
 msgstr "40 и 60 вопросов. 120 из 200 баллов для сдачи."
@@ -938,6 +989,9 @@ msgstr "Бесплатный урок о днях недели на эстонс
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Бесплатный урок о повелительном наклонении в эстонском языке: основа глагола как команда (loe!, istu!, tule siia!), ära для «не делай», формы на -ge и -ke для нескольких человек или на «вы», повседневные команды вроде räägi aeglasemalt, palun и короткий разговор в кафе. Каждое предложение озвучено."
 
+msgid "A free lesson on the Estonian simple past: -si- on most verbs (elasin, lugesin, rääkisin), -i- on short everyday ones (olin, läksin, sõin), the six endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
+msgstr "Бесплатный урок о прошедшем времени в эстонском: -si- у большинства глаголов (elasin, lugesin, rääkisin), -i- у коротких повседневных (olin, läksin, sõin), шесть окончаний, которые показывают, кто это сделал, и слова eile и eelmisel nädalal. Каждое предложение озвучено."
+
 msgid "A full card in seconds"
 msgstr "Полная карточка за секунды"
 
@@ -1040,6 +1094,9 @@ msgstr "С 11 апреля 2026 года действует новый форм�
 
 msgid "A new language"
 msgstr "Иностранный язык"
+
+msgid "A new stem, <0>läks-</0>, then <1>in</1>. Now it’s <2>lähen</2>."
+msgstr "Новая основа, <0>läks-</0>, потом <1>in</1>. В настоящем — <2>lähen</2>."
 
 msgid "A note from Kati"
 msgstr "Записка от Кати"
@@ -1473,6 +1530,9 @@ msgstr "После <0>ei</0> идёт форма с ma без -n: <1>loen</1>, <
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "После <0>ei</0> у глагола <1>olema</1> нет окончания: <2>ei ole</2>."
 
+msgid "After <0>si-</0> come <1>-n, -d, -me, -te</1>, as in the present. <2>Ta</2> has only <3>s</3>, and <4>nad</4> has <5>sid</5>, as <6>sa</6> does: <7>ta elas, nad elasid</7>."
+msgstr "После <0>si-</0> идут <1>-n, -d, -me, -te</1>, как в настоящем времени. У <2>ta</2> только <3>s</3>, а у <4>nad</4> — <5>sid</5>, как у <6>sa</6>: <7>ta elas, nad elasid</7>."
+
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "После урока на italki, Preply или с частным репетитором вставь чат или сфотографируй заметки. Lymi превратит новые слова в карточки, которые ты повторяешь между уроками. Добавить их может и AI-ассистент. Бесплатно."
 
@@ -1661,6 +1721,12 @@ msgstr "Все шесть. Каждое окончание верное."
 
 msgid "All six. You matched every pronoun with its ending."
 msgstr "Все шесть. Каждое местоимение — со своим окончанием."
+
+msgid "All six. You matched every pronoun with its past ending."
+msgstr "Все шесть. Каждое местоимение — со своим окончанием прошедшего времени."
+
+msgid "All six. You told the past from the present every time."
+msgstr "Все шесть. Прошлое и настоящее — каждый раз без ошибки."
 
 msgid "All Spanish decks"
 msgstr "Все испанские колоды"
@@ -2023,6 +2089,9 @@ msgstr "дома"
 msgid "At home"
 msgstr "Дома"
 
+msgid "At nine"
+msgstr "В девять"
+
 msgid "at school, in a school"
 msgstr "в школе"
 
@@ -2046,6 +2115,9 @@ msgstr "В три"
 
 msgid "At twelve"
 msgstr "В двенадцать"
+
+msgid "At two"
+msgstr "В два"
 
 msgid "at work"
 msgstr "на работе"
@@ -2199,6 +2271,9 @@ msgstr "Оба планируют повторения по FSRS. В Anki мож
 
 msgid "Bread"
 msgstr "Хлеб"
+
+msgid "Bread and cheese"
+msgstr "Хлеб и сыр"
 
 msgid "Breadcrumb"
 msgstr "Навигационная цепочка"
@@ -2801,6 +2876,9 @@ msgstr "кофе"
 
 msgid "Coffee"
 msgstr "Кофе"
+
+msgid "Coffee and milk"
+msgstr "Кофе и молоко"
 
 msgid "Coffee costs €3.50."
 msgstr "Кофе стоит 3,50 €."
@@ -3487,6 +3565,9 @@ msgstr "край"
 msgid "Edit card"
 msgstr "Редактировать карточку"
 
+msgid "Eelmine nädal, last week, with the -l that says when, as in esmaspäeval."
+msgstr "Eelmine nädal, «прошлая неделя», с -l, которое говорит «когда», как в esmaspäeval."
+
 msgid "Eesti · new"
 msgstr "Eesti · новая"
 
@@ -3541,6 +3622,9 @@ msgstr "Любые. Каждая колода — либо упрощённые,
 msgid "El or la, on every noun."
 msgstr "El или la у каждого существительного."
 
+msgid "Ela- from elama, then -sin."
+msgstr "Ela- из elama, потом -sin."
+
 msgid "Elative"
 msgstr "Элатив"
 
@@ -3555,6 +3639,9 @@ msgstr "От 11 до 19: -teist"
 
 msgid "Ended in 1648 by the <0>Peace of Westphalia</0>."
 msgstr "Завершилась в 1648 году <0>Вестфальским миром</0>."
+
+msgid "Endings in the past"
+msgstr "Окончания в прошедшем времени"
 
 msgid "Endings of elama"
 msgstr "Окончания elama"
@@ -3628,6 +3715,9 @@ msgstr "Уроки эстонской грамматики"
 msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
 msgstr "В эстонском одно настоящее время. <0/> значит и «я читаю» вообще, и «я читаю сейчас», а что именно, видно из остального предложения. Нажми на предложение, чтобы его услышать."
 
+msgid "Estonian has one simple past, called <0/>. Like the present in lesson {present}, it covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
+msgstr "Простое прошедшее время в эстонском одно, оно называется <0/>. Как и настоящее из урока {present}, оно одно на несколько значений, а рода в нём нет: <1>õppisin</1> — это и «я учил», и «я учила». Коснись времени на линии, чтобы услышать предложение и увидеть, как построен глагол."
+
 msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
 msgstr "В эстонском шесть личных местоимений, и у каждого есть полная и краткая форма с одним значением. <0/> и <1/> — это «я». Краткую, выделенную цветом, ты будешь слышать чаще всего. Нажми на любое слово."
 
@@ -3639,6 +3729,9 @@ msgstr "По-эстонски пишут так, как произносят. К
 
 msgid "Estonian numbers"
 msgstr "Числа на эстонском"
+
+msgid "Estonian past tense"
+msgstr "Прошедшее время в эстонском языке"
 
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Эстонские личные местоимения и «быть»"
@@ -4133,6 +4226,9 @@ msgstr "Форма"
 msgid "Format from 11 April 2026"
 msgstr "Формат с 11 апреля 2026 года"
 
+msgid "Forms now and in the past"
+msgstr "Формы в настоящем и прошедшем времени"
+
 msgid "Forms of maja"
 msgstr "Формы maja"
 
@@ -4300,6 +4396,9 @@ msgstr "От istuma, «садиться, сидеть»."
 
 msgid "From jooma, to drink."
 msgstr "От jooma, пить."
+
+msgid "From käima: käisin poes, I went to the shop."
+msgstr "От käima: käisin poes — «сходил(а) в магазин»."
 
 msgid "From kool, school."
 msgstr "От kool — школа."
@@ -4514,6 +4613,9 @@ msgstr "Охотно"
 msgid "Go back to the endings above, then try again."
 msgstr "Вернись к окончаниям выше и попробуй ещё раз."
 
+msgid "Go back to the table above, then try again."
+msgstr "Вернись к таблице выше, а потом попробуй ещё раз."
+
 msgid "Go home"
 msgstr "На главную"
 
@@ -4675,8 +4777,35 @@ msgstr "Он слушает музыку"
 msgid "he or she"
 msgstr "он или она"
 
+msgid "he or she ate"
+msgstr "он ел, она ела"
+
+msgid "He or she ate at home."
+msgstr "Ел или ела дома."
+
+msgid "he or she bought"
+msgstr "он купил, она купила"
+
+msgid "he or she came"
+msgstr "он пришёл, она пришла"
+
+msgid "He or she came home."
+msgstr "Пришёл или пришла домой."
+
+msgid "he or she did"
+msgstr "он делал, она делала"
+
+msgid "he or she drank"
+msgstr "он пил, она пила"
+
+msgid "He or she drank coffee."
+msgstr "Пил или пила кофе."
+
 msgid "he or she drinks"
 msgstr "он или она пьёт"
+
+msgid "He or she eats at home."
+msgstr "Он или она ест дома."
 
 msgid "he or she is"
 msgstr "он или она есть"
@@ -4690,8 +4819,20 @@ msgstr "Он или она дома."
 msgid "He or she is at school."
 msgstr "Он или она в школе."
 
+msgid "He or she is coming home."
+msgstr "Он или она идёт домой."
+
+msgid "He or she is drinking coffee."
+msgstr "Он или она пьёт кофе."
+
+msgid "He or she is going to work."
+msgstr "Он или она идёт на работу."
+
 msgid "He or she is having coffee in a café."
 msgstr "Он или она пьёт кофе в кафе."
+
+msgid "He or she is reading a book."
+msgstr "Он или она читает книгу."
 
 msgid "He or she is tired."
 msgstr "Он устал или она устала."
@@ -4699,11 +4840,17 @@ msgstr "Он устал или она устала."
 msgid "he or she is; they are"
 msgstr "он или она есть; они есть"
 
+msgid "he or she lived"
+msgstr "он жил, она жила"
+
 msgid "he or she lives"
 msgstr "он или она живёт"
 
 msgid "He or she lives in Finland."
 msgstr "Он или она живёт в Финляндии."
+
+msgid "he or she saw"
+msgstr "он видел, она видела"
 
 msgid "He or she speaks Estonian."
 msgstr "Он или она говорит по-эстонски."
@@ -4713,6 +4860,21 @@ msgstr "он или она учится"
 
 msgid "He or she studies at school."
 msgstr "Он или она учится в школе."
+
+msgid "he or she was"
+msgstr "он был, она была"
+
+msgid "He or she was at home."
+msgstr "Был или была дома."
+
+msgid "He or she was reading a book."
+msgstr "Читал или читала книгу."
+
+msgid "he or she went"
+msgstr "он пошёл, она пошла"
+
+msgid "He or she went to work."
+msgstr "Пошёл или пошла на работу."
 
 msgid "He or she works from home."
 msgstr "Он или она работает из дома."
@@ -4769,6 +4931,9 @@ msgstr "Послушай вопрос и выбери вопросительно
 
 msgid "Hear a question, then pick the answer that fits. A kas question takes yes, no or I don’t know; a question word wants what it asks about, such as a place for kus or a time for millal."
 msgstr "Послушай вопрос и выбери ответ, который подходит. На kas отвечают «да», «нет» или «не знаю», а на вопросительное слово — тем, о чём оно спрашивает: местом на kus, временем на millal."
+
+msgid "Hear a sentence about someone and pick whether it happens now or happened in the past. Listen to the verb: <0>tuleb</0> is now, <1>tuli</1> is the past."
+msgstr "Послушай предложение о ком-то и выбери, происходит это сейчас или уже было. Слушай глагол: <0>tuleb</0> — сейчас, <1>tuli</1> — в прошлом."
 
 msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
 msgstr "Послушай предложение и выбери место. Слушай слово, которое кончается на <0>-s</0>."
@@ -5102,8 +5267,14 @@ msgstr "Я добавляю слова через Yomitan. Это будет р�
 msgid "I am"
 msgstr "я есть"
 
+msgid "I ate"
+msgstr "я ел, ела"
+
 msgid "I ate an *apple*."
 msgstr "Я съел *яблоко*."
+
+msgid "I bought"
+msgstr "я купил, купила"
 
 msgid "I bought a big *pumpkin*."
 msgstr "Я купила большую *тыкву*."
@@ -5116,6 +5287,9 @@ msgstr "Я купила хлеб в *магазине*."
 
 msgid "I bought fresh *bread*."
 msgstr "Я купила свежий *хлеб*."
+
+msgid "I came"
+msgstr "я пришёл, пришла"
 
 msgid "I can’t *come* today."
 msgstr "Я не могу сегодня *прийти*."
@@ -5131,6 +5305,9 @@ msgstr "я прихожу"
 
 msgid "I cry"
 msgstr "Я плачу (слёзы)"
+
+msgid "I did, I made"
+msgstr "я делал, делала; сделал, сделала"
 
 msgid "I don’t have a *dog*."
 msgstr "У меня нет *собаки*."
@@ -5155,6 +5332,9 @@ msgstr "Я не понимаю"
 
 msgid "I don’t understand."
 msgstr "Я не понимаю."
+
+msgid "I drank"
+msgstr "я пил, пила"
 
 msgid "I drink *milk* in the morning."
 msgstr "Я пью *молоко* утром."
@@ -5243,6 +5423,9 @@ msgstr "Я живу в Тарту."
 msgid "I live in the *city*."
 msgstr "Я живу в *городе*."
 
+msgid "I lived"
+msgstr "я жил, жила"
+
 msgid "I love you."
 msgstr "Я тебя люблю."
 
@@ -5261,6 +5444,9 @@ msgstr "я читаю"
 msgid "I read a lot."
 msgstr "Я много читаю."
 
+msgid "I read, I was reading"
+msgstr "я читал, читала"
+
 msgid "I read, I’m reading"
 msgstr "Я читаю: вообще и сейчас"
 
@@ -5269,6 +5455,9 @@ msgstr "я читаю (вообще и сейчас)"
 
 msgid "I really *like* this book."
 msgstr "Мне очень *нравится* эта книга."
+
+msgid "I saw"
+msgstr "я видел, видела"
 
 msgid "I sit down"
 msgstr "я сажусь"
@@ -5281,6 +5470,15 @@ msgstr "Я спал всю *ночь*."
 
 msgid "I speak"
 msgstr "я говорю"
+
+msgid "I speak, I’m speaking"
+msgstr "я говорю"
+
+msgid "I spoke, I was speaking"
+msgstr "я говорил, говорила"
+
+msgid "I studied Estonian yesterday."
+msgstr "Вчера я учил(а) эстонский."
 
 msgid "I study Japanese *every day*."
 msgstr "Я учу японский *каждый день*."
@@ -5303,8 +5501,17 @@ msgstr "Я хочу *поесть* суши."
 msgid "I want to *sleep*."
 msgstr "Я хочу *спать*."
 
+msgid "I was"
+msgstr "я был, была"
+
 msgid "I watched a film with a *friend*."
 msgstr "Я смотрел фильм с *другом*."
+
+msgid "I went"
+msgstr "я пошёл, пошла"
+
+msgid "I went and came back; I visited"
+msgstr "я сходил, сходила; побывал, побывала"
 
 msgid "I won’t buy such an *expensive* phone."
 msgstr "Я не куплю такой *дорогой* телефон."
@@ -5513,6 +5720,9 @@ msgstr "Важная"
 msgid "In {ahead} minutes it’s {next}."
 msgstr "Через {ahead} минут будет {next}."
 
+msgid "In <0/>, to buy, <1>ta</1> takes <2>is</2>: <3/>, I bought, but <4/>, he or she bought."
+msgstr "В <0/>, «покупать», форма для <1>ta</1> получает <2>is</2>: <3/> — для «я», но <4/> — для «он или она»."
+
 msgid "In a bar in Spain, you ask them to “put” you one."
 msgstr "В испанском баре кофе просят «поставить»."
 
@@ -5578,6 +5788,9 @@ msgstr "в Германии"
 
 msgid "in Lasnamäe"
 msgstr "в Ласнамяэ"
+
+msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1/> Today the verb is in the present again: <2/>"
+msgstr "В уроке {days} было слово <0/>, «вчера». С ним глагол стоит в прошедшем времени: <1/> Сегодня глагол снова в настоящем: <2/>"
 
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "В уроке {pronouns} был глагол <0/>, «быть»: <1/>, <2/>, <3/>, <4/>. У большинства глаголов те же окончания. А там, где у olema стоит <5/>, у них два своих: <6>-b</6> для «он или она» и <7>-vad</7> для «они»."
@@ -5962,6 +6175,9 @@ msgstr "Kas sa tuled? Ты придёшь?"
 msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi — партитив от kass, кошка."
 
+msgid "Kati"
+msgstr "Кати"
+
 msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 msgstr "Кати пишет о себе. В каждом пропуске — одно из того, что ты уже знаешь: форма <0>olema</0>, окончание глагола, глагол после <1>ei</1>, место с <2>-l</2> или вопросительное слово."
 
@@ -6112,6 +6328,18 @@ msgstr "Ласнамяэ, район Таллина"
 
 msgid "Last updated"
 msgstr "Обновлено"
+
+msgid "last week"
+msgstr "на прошлой неделе"
+
+msgid "Last week"
+msgstr "На прошлой неделе"
+
+msgid "Last week I read a lot."
+msgstr "На прошлой неделе я много читал(а)."
+
+msgid "Last week, yesterday and today"
+msgstr "На прошлой неделе, вчера и сегодня"
 
 msgid "Later shelves"
 msgstr "Следующие полки"
@@ -6375,6 +6603,9 @@ msgstr "Аудирование: планы Яана"
 
 msgid "Listen: meet Jaan"
 msgstr "Аудирование: знакомство с Яаном"
+
+msgid "Listen: what did Mari do?"
+msgstr "Аудирование: что делала Мари?"
 
 msgid "Listen."
 msgstr "Слушай."
@@ -6734,6 +6965,9 @@ msgstr "Отец Мари"
 msgid "Mari’s friend"
 msgstr "Друг Мари"
 
+msgid "Mari’s Saturday"
+msgstr "Суббота Мари"
+
 msgid "Mark a card important and Lymi shows it more often. The cards you keep forgetting gather in Often forgotten, a round of their own."
 msgstr "Отметь карточку важной, и Lymi будет показывать её чаще. Карточки, которые ты постоянно забываешь, собираются в «Часто забываются» — отдельный круг повторения."
 
@@ -6944,6 +7178,15 @@ msgstr "В большинстве польских слов ударение п�
 msgid "Most Spanish nouns ending in -o are masculine and most ending in -a are feminine, but not <0>el día</0> or <1>la mano</1>. The ready-made decks keep every noun with its el or la, and AI notes the gender when the ending doesn’t match."
 msgstr "Большинство испанских существительных на -o мужского рода, а на -a женского, но не <0>el día</0> и не <1>la mano</1>. В готовых колодах каждое существительное стоит со своим el или la, а AI отмечает род, когда окончание его не выдаёт."
 
+msgid "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
+msgstr "Большинство глаголов строят прошедшее время от формы на <0>ma</0>. Отбрось <1>ma</1> и добавь <2>sin</2> для «я»: <3/>, <4/>."
+
+msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form, a few short ones take <2>i-</2>, and six endings say who did it."
+msgstr "Большинство глаголов добавляют <0>si-</0> к основе формы на <1>ma</1>, несколько коротких берут <2>i-</2>, а шесть окончаний говорят, кто это сделал."
+
+msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
+msgstr "Большинство глаголов добавляют <0>si-</0> к основе формы на <1>ma</1>: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
+
 msgid "mother"
 msgstr "мать"
 
@@ -7045,6 +7288,9 @@ msgstr "Почти. Переслушай те, где были ошибки."
 
 msgid "Nearly. Tap the endings above once more."
 msgstr "Почти. Ещё раз понажимай окончания выше."
+
+msgid "Nearly. Tap the past forms in the table once more."
+msgstr "Почти. Ещё раз послушай формы прошедшего времени в таблице."
 
 msgid "Nearly. Watch for endings that stay after <0>ei</0>."
 msgstr "Почти. Следи, чтобы после <0>ei</0> не оставалось окончания."
@@ -7353,8 +7599,17 @@ msgstr "Существительные и падежи"
 msgid "Now"
 msgstr "Сейчас"
 
+msgid "Now it’s <0>näen</0>; the g comes back in the past."
+msgstr "В настоящем — <0>näen</0>, а в прошедшем g возвращается."
+
+msgid "Now it’s <0>teen</0>; the g comes back in the past."
+msgstr "В настоящем — <0>teen</0>, а в прошедшем g возвращается."
+
 msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
 msgstr "Теперь суббота, и вот твой план. Вставь в каждый пропуск слово: форму <0/>, глагол с нужным окончанием, <1/> или форму слова после числа."
+
+msgid "Now or in the past?"
+msgstr "Сейчас или в прошлом?"
 
 msgid "Now the stem is loe-, in the past luge-."
 msgstr "Сейчас основа loe-, в прошлом luge-."
@@ -8418,6 +8673,9 @@ msgstr "Quizlet создан, чтобы пройти набор перед те
 msgid "Quizlet only exports sets you created. Pictures and audio stay behind either way."
 msgstr "Quizlet экспортирует только наборы, созданные тобой. Картинки и аудио не переносятся в любом случае."
 
+msgid "Rääki- from rääkima, then -sin."
+msgstr "Rääki- из rääkima, потом -sin."
+
 msgid "Raamat, book, and kogu, collection."
 msgstr "Raamat — книга, kogu — собрание."
 
@@ -9253,6 +9511,12 @@ msgstr "Некоторые кандзи в китайском шрифте вы�
 msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 msgstr "Некоторые места получают <0>-l</0> по традиции, например <1>turul</1> и названия на <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 
+msgid "Some short everyday verbs take <0>i-</0> instead, and most change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn each one with its past, as you learned <5>lugema</5> with <6>loen</6>."
+msgstr "Несколько коротких повседневных глаголов берут вместо этого <0>i-</0>, и у большинства из них ещё и меняется основа: <1/> — <2/>, <3/> — <4/>. Запоминай каждый вместе с прошедшим временем, как пару <5>lugema</5> — <6>loen</6>."
+
+msgid "Some short verbs take <0>i-</0> and change their stem: <1>olin, tulin, läksin, tegin, nägin, sõin, jõin</1>. <2>Ta</2> ends in <3>i</3>, as in <4>ta oli</4>, except <5>ta läks</5>."
+msgstr "Несколько коротких глаголов берут <0>i-</0> и меняют основу: <1>olin, tulin, läksin, tegin, nägin, sõin, jõin</1>. Форма для <2>ta</2> кончается на <3>i</3>, как <4>ta oli</4>, кроме <5>ta läks</5>."
+
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Некоторые основы меняются: <0>lugema, loen</0>. Запоминай каждый глагол с формой для «я»."
 
@@ -9700,6 +9964,12 @@ msgstr "Разговор: кофе с Мари"
 msgid "Talk: meeting Mari"
 msgstr "Разговор: знакомство с Мари"
 
+msgid "Talk: yesterday with Kati"
+msgstr "Разговор: вчерашний день с Кати"
+
+msgid "Talking about yesterday"
+msgstr "Разговор о вчерашнем дне"
+
 msgid "Tallinn, the capital"
 msgstr "Таллин, столица"
 
@@ -9736,6 +10006,9 @@ msgstr "Нажми вопросительное слово"
 msgid "Tap a tense"
 msgstr "Коснись времени"
 
+msgid "Tap a time"
+msgstr "Коснись времени"
+
 msgid "Tap a vowel"
 msgstr "Нажми на гласную"
 
@@ -9759,6 +10032,9 @@ msgstr "Ещё раз нажми на места выше, а потом поп�
 
 msgid "Tap the question words above once more, then try again."
 msgstr "Ещё раз понажимай вопросительные слова выше, а потом попробуй снова."
+
+msgid "Tap the verbs above once more, then try again."
+msgstr "Ещё раз послушай глаголы выше, а потом попробуй снова."
 
 msgid "Tap to turn it over"
 msgstr "Коснись, чтобы перевернуть"
@@ -9901,6 +10177,9 @@ msgstr "Так ты говоришь Мари пить кофе. А она сп�
 msgid "That’s a book."
 msgstr "Это книга."
 
+msgid "That’s about someone else. Kati asked what you did."
+msgstr "Это о ком-то другом. Кати спрашивала про тебя."
+
 msgid "That’s good morning; Mari is leaving."
 msgstr "Это «доброе утро», а Мари уходит."
 
@@ -9909,6 +10188,9 @@ msgstr "Это Jaan."
 
 msgid "That’s the time. Mari asked how you are."
 msgstr "Это о том, который час. Мари спросила, как у тебя дела."
+
+msgid "That’s what you’re doing now. Kati asked about yesterday."
+msgstr "Это о том, что ты делаешь сейчас. Кати спрашивала про вчера."
 
 msgid "The -des and -mata forms"
 msgstr "Формы на -des и -mata"
@@ -10168,6 +10450,9 @@ msgstr "Окончание говорит, кто это, поэтому ma, sa,
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "Окончание говорит, кто это, поэтому местоимение можно опустить: <0>Olen Mari.</0>"
 
+msgid "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; only <5>minema</5> drops it: <6/>. Pick a verb and tap its forms to see what changes."
+msgstr "Окончания те же, что после <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. Форма для <2>ta</2> кончается на <3>i</3>, как <4/>; только <5>minema</5> его теряет: <6/>. Выбери глагол и касайся форм, чтобы увидеть, что меняется."
+
 msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
 msgstr "Эстонская неделя, <0/>, начинается с понедельника, как и у нас. Шесть дней заканчиваются на <1/>, день. <2/>, пятница, — исключение. Как и в русском, дни недели пишут со строчной буквы."
 
@@ -10357,6 +10642,9 @@ msgstr "Те, которые начинают забываться"
 msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
 msgstr "Второе окончание — <0>-l</0>. Оно значит «на», когда речь о поверхности: <1/>, на столе. А ещё «на» там, где ты что-то делаешь, а не просто находишься в здании: <2/>, на работе."
 
+msgid "The other persons take the present’s endings after <0>si-</0>, with two changes. <1>Ta</1> has only <2>s</2>: <3/>. <4>Nad</4> has <5>sid</5>, the same as <6>sa</6>: <7/>. Pick a verb and tap a form."
+msgstr "Остальные лица после <0>si-</0> берут окончания настоящего времени, с двумя изменениями. У <1>ta</1> только <2>s</2>: <3/>. У <4>nad</4> — <5>sid</5>, так же, как у <6>sa</6>: <7/>. Выбери глагол и коснись формы."
+
 msgid "The output depends on the history of the input"
 msgstr "Результат зависит от того, что было на входе раньше"
 
@@ -10371,6 +10659,21 @@ msgstr "Партитив от muusika."
 
 msgid "The passage"
 msgstr "Текст"
+
+msgid "The past keeps the stem of the <0>ma</0> form where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>ma</6> form beside the I form."
+msgstr "Прошедшее время сохраняет основу формы на <0>ma</0> там, где настоящее её меняет. Сейчас говорят <1/>, а в прошлом <2/>, потому что прошедшее образуется от <3/>. Так же <4/> — настоящее, а <5/> — прошедшее. Форму на <6>ma</6> рядом с формой для «я» показывает урок {verbForms}."
+
+msgid "The past with -i-"
+msgstr "Прошедшее время с -i-"
+
+msgid "The past with -si-"
+msgstr "Прошедшее время с -si-"
+
+msgid "the past, for I"
+msgstr "прошедшее время, для «я»"
+
+msgid "The past: luge- from lugema, then -sin."
+msgstr "Прошедшее время: luge- из lugema, потом -sin."
 
 msgid "The people you’re talking to, or one person, politely."
 msgstr "Люди, с которыми ты говоришь, или один человек, если вежливо."
@@ -10401,6 +10704,12 @@ msgstr "Игрок пропустил бы ход, если бы шахматы 
 
 msgid "The plural of sõber."
 msgstr "Множественное число от sõber."
+
+msgid "the present, for I"
+msgstr "настоящее время, для «я»"
+
+msgid "The present: the stem changes to loe-."
+msgstr "Настоящее время: основа меняется на loe-."
 
 msgid "The push behind ragtime, funk and reggae."
 msgstr "Именно она даёт драйв рэгтайму, фанку и регги."
@@ -10506,6 +10815,9 @@ msgstr "Краткая форма: ta."
 
 msgid "The short form is te."
 msgstr "Краткая форма: te."
+
+msgid "the simple past"
+msgstr "простое прошедшее время"
 
 msgid "The small words every sentence is built from."
 msgstr "Маленькие слова, из которых строится каждое предложение."
@@ -10648,6 +10960,9 @@ msgstr "По этому адресу нет колоды."
 msgid "There is nothing published yet."
 msgstr "Пока ничего не опубликовано."
 
+msgid "There is one past: <0>lugesin</0> is I read, I was reading and I did read. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
+msgstr "Прошедшее время одно, и рода в нём нет: <0>lugesin</0> — это и «я читал», и «я читала». Когда именно, говорят слова вроде <1>eile</1> или <2>eelmisel nädalal</2>."
+
 msgid "There’s a *park* near the station."
 msgstr "Возле вокзала есть *парк*."
 
@@ -10665,6 +10980,9 @@ msgstr "они"
 
 msgid "they are"
 msgstr "они есть"
+
+msgid "They ate and had coffee"
+msgstr "Поели и выпили кофе"
 
 msgid "They eat at home."
 msgstr "Они едят дома."
@@ -10684,6 +11002,12 @@ msgstr "они живут"
 msgid "They live in Germany."
 msgstr "Они живут в Германии."
 
+msgid "they lived"
+msgstr "они жили"
+
+msgid "They read"
+msgstr "Читали"
+
 msgid "They say it’ll rain *tomorrow*."
 msgstr "Говорят, *завтра* будет дождь."
 
@@ -10695,6 +11019,9 @@ msgstr "Они учатся в Тарту."
 
 msgid "They work in an office."
 msgstr "Они работают в офисе."
+
+msgid "They worked"
+msgstr "Работали"
 
 msgid "They’re at home."
 msgstr "Они дома."
@@ -10785,6 +11112,9 @@ msgstr "Это мой *друг* из Китая."
 
 msgid "This is the current HSK 2.0 format. The syllabus published in 2025 grows level 1 to 300 words and level 2 to 500."
 msgstr "Это действующий формат HSK 2.0. Программа, опубликованная в 2025 году, увеличивает уровень 1 до 300 слов, а уровень 2 — до 500."
+
+msgid "This lesson says what happened. Saying that something didn’t happen takes another form, which lesson {pastNo} teaches."
+msgstr "Этот урок о том, что произошло. Чтобы сказать, что чего-то не было, нужна другая форма, об этом — в уроке {pastNo}."
 
 msgid "This policy covers Lymi’s website, apps, API and connected assistants."
 msgstr "Эта политика охватывает сайт Lymi, приложения, API и подключённых помощников."
@@ -10914,6 +11244,9 @@ msgstr "бронировать"
 
 msgid "To book; to reserve"
 msgstr "Бронировать"
+
+msgid "to buy"
+msgstr "покупать"
 
 msgid "To buy"
 msgstr "Покупать"
@@ -11083,6 +11416,9 @@ msgstr "Чтобы сказать «не», поставь <0/> перед гл�
 msgid "to school"
 msgstr "в школу"
 
+msgid "to see"
+msgstr "видеть"
+
 msgid "To sign"
 msgstr "Подписывать"
 
@@ -11107,6 +11443,9 @@ msgstr "Брать"
 msgid "To take a taxi"
 msgstr "Взять такси"
 
+msgid "To Tartu"
+msgstr "В Тарту"
+
 msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
 msgstr "Чтобы сказать одному человеку, что делать, эстонский берёт основу глагола и ничего к ней не добавляет. Возьми форму с ma из урока {present} и убери <0>-n</0>. <1/> — это «я читаю», а <2/> просит одного человека читать."
 
@@ -11118,6 +11457,9 @@ msgstr "Чтобы попросить кого-то чего-то не дела�
 
 msgid "To tell someone what to do, say the verb’s stem: <0>Istu!</0> is sit down. To tell them not to, put <1>ära</1> before it: <2>Ära istu!</2>"
 msgstr "Чтобы сказать, что делать, произнеси основу глагола: <0>Istu!</0> — это «садись». Чтобы сказать, чего не делать, поставь перед ней <1>ära</1>: <2>Ära istu!</2>"
+
+msgid "To the market"
+msgstr "На рынок"
 
 msgid "To usually do something"
 msgstr "Обычно что-то делать"
@@ -11139,6 +11481,9 @@ msgstr "сегодня"
 
 msgid "Today"
 msgstr "Сегодня"
+
+msgid "Today I’m studying Estonian."
+msgstr "Сегодня я учу эстонский."
 
 msgid "Today is"
 msgstr "Сегодня"
@@ -11708,6 +12053,15 @@ msgstr "Какой сегодня день?"
 msgid "What day is it tomorrow?"
 msgstr "Какой завтра день?"
 
+msgid "What did he or she do?"
+msgstr "Что делал или делала?"
+
+msgid "What did Mari and Jaan do at home?"
+msgstr "Что Мари и Яан делали дома?"
+
+msgid "What did she buy?"
+msgstr "Что она купила?"
+
 msgid "What did you read?"
 msgstr "Что ты прочитал?"
 
@@ -11767,6 +12121,9 @@ msgstr "А если я уже пользуюсь Anki?"
 
 msgid "What if it gets something wrong?"
 msgstr "А если он ошибётся?"
+
+msgid "What is he or she doing?"
+msgstr "Что он или она делает?"
 
 msgid "What is that?"
 msgstr "Что это?"
@@ -11880,6 +12237,9 @@ msgstr "Когда ты работаешь?"
 msgid "When colleagues leave, you say <0><1>お疲れ様です</1></0>."
 msgstr "Когда коллеги уходят с работы, им говорят <0><1>お疲れ様です</1></0>."
 
+msgid "When did Jaan go home?"
+msgstr "Когда Яан ушёл домой?"
+
 msgid "When do you eat?"
 msgstr "Когда ты ешь?"
 
@@ -11921,6 +12281,9 @@ msgstr "Где слово неверное, рядом стоит верное."
 
 msgid "Where are you from?"
 msgstr "Откуда ты?"
+
+msgid "Where did Mari go at ten?"
+msgstr "Куда Мари ходила в десять?"
 
 msgid "Where do you all live?"
 msgstr "Где вы живёте?"
@@ -12228,6 +12591,9 @@ msgstr "Дословно: «очень приятно»."
 msgid "Word for word: “what clock is?”"
 msgstr "Дословно: «что часы есть?»"
 
+msgid "Word for word: simple past."
+msgstr "Дословно: «простое прошедшее»."
+
 msgid "Word meanings open once you have answered."
 msgstr "Значения слов откроются, когда ответишь."
 
@@ -12484,11 +12850,23 @@ msgstr "Да. Репетитор может создать колоду и от�
 msgid "yesterday"
 msgstr "вчера"
 
+msgid "Yesterday"
+msgstr "Вчера"
+
 msgid "Yesterday I ate at home."
 msgstr "Вчера я ел дома."
 
+msgid "Yesterday I studied Estonian."
+msgstr "Вчера я учил(а) эстонский."
+
 msgid "Yesterday was a rest day."
 msgstr "Вчера был день отдыха."
+
+msgid "Yesterday was Saturday. Listen to what your friend Mari did, then answer."
+msgstr "Вчера была суббота. Послушай, что делала твоя подруга Мари, и ответь на вопросы."
+
+msgid "Yesterday you stayed at home on your own, read a book and went to the shop. Kati speaks first; pick what you say back."
+msgstr "Твой вчерашний день: дома без компании, книга и поход в магазин. Кати говорит первой; выбирай, что ответить."
 
 msgid "you"
 msgstr "ты"
@@ -12646,6 +13024,9 @@ msgstr "ты"
 msgid "You’ll hear a question with it, and an answer."
 msgstr "Услышишь вопрос с ним и ответ."
 
+msgid "You’ll hear a sentence and see how its verb is built."
+msgstr "Услышишь предложение и увидишь, как построен глагол."
+
 msgid "You’ll hear an example and see how its verb is built."
 msgstr "Услышишь пример и увидишь, как построен глагол."
 
@@ -12660,6 +13041,9 @@ msgstr "Услышишь его в предложении."
 
 msgid "You’ll hear it in a word, with a note on how to say it."
 msgstr "Услышишь её в слове и узнаешь, как её произносить."
+
+msgid "You’ll hear it with its pronoun and read what its ending does."
+msgstr "Услышишь её вместе с местоимением и прочитаешь, что делает окончание."
 
 msgid "You’ll hear it, and where its name comes from."
 msgstr "Услышишь его и узнаешь, откуда название."
@@ -12762,6 +13146,9 @@ msgstr "Твоя первая кана — <0>あ</0>."
 
 msgid "Your first word is <0>tere</0>."
 msgstr "Твоё первое слово — <0>tere</0>."
+
+msgid "Your friend Kati asks about your day. Answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Твоя подруга Кати спрашивает, как прошёл твой день. Отвечай по-эстонски. Если выберешь неверный ответ, увидишь почему, а потом услышишь правильный."
 
 msgid "Your friend Mari sends you a message. Read it and answer the questions. Once you’ve answered, tap a word to see what it means."
 msgstr "Твоя подруга Мари присылает тебе сообщение. Прочитай его и ответь на вопросы. Когда ответишь, нажми на слово, чтобы увидеть, что оно значит."

@@ -392,7 +392,7 @@ export function MitmusLesson() {
   const stems = LESSONS.find((lesson) => lesson.et === "Pood, poe")?.n;
   const forms = LESSONS.find((lesson) => lesson.et === "Kolm põhivormi")?.n;
   const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
-  const partitive = LESSONS.find((lesson) => lesson.et === "Kaks kassi")?.n;
+  const partitive = lessonBySlug("osastav")?.n;
   const gaps = gapsOf();
 
   const typedItems = useMemo<(TypedItem & { many: string; pair: readonly [string, string] })[]>(

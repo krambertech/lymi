@@ -65,6 +65,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "Each round offers one noun's singular third form, plural third form and plural: õuna against õunad is the lesson, and the word before the gap decides it.",
   },
   {
+    lesson: "laheksin",
+    quiz: "would-endings",
+    reason:
+      "Each round offers one verb's conditional for sa, me and ta: läheks against läheksid and läheksime is the lesson, and the pronoun before the gap decides it.",
+  },
+  {
     lesson: "jalg-jala",
     quiz: "kati-room",
     reason:

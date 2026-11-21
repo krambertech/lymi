@@ -2684,6 +2684,92 @@ const PERFECT_CLIPS: Record<string, Clip> = {
   ...PERFECT_DIALOGUE,
 };
 
+export const CONDITIONAL_PRONOUNS = ["ma", "sa", "ta", "me", "te", "nad"] as const;
+
+export const CONDITIONAL_VERBS = {
+  olema: {
+    now: ["olen", "oled", "on", "oleme", "olete", "on"],
+    would: ["oleksin", "oleksid", "oleks", "oleksime", "oleksite", "oleksid"],
+  },
+  minema: {
+    now: ["lähen", "lähed", "läheb", "läheme", "lähete", "lähevad"],
+    would: ["läheksin", "läheksid", "läheks", "läheksime", "läheksite", "läheksid"],
+  },
+  tahtma: {
+    now: ["tahan", "tahad", "tahab", "tahame", "tahate", "tahavad"],
+    would: ["tahaksin", "tahaksid", "tahaks", "tahaksime", "tahaksite", "tahaksid"],
+  },
+  saama: {
+    now: ["saan", "saad", "saab", "saame", "saate", "saavad"],
+    would: ["saaksin", "saaksid", "saaks", "saaksime", "saaksite", "saaksid"],
+  },
+} as const;
+
+export const conditionalForms = (verb: keyof typeof CONDITIONAL_VERBS) =>
+  CONDITIONAL_PRONOUNS.map((pronoun, at) => ({
+    pronoun,
+    now: `${pronoun} ${CONDITIONAL_VERBS[verb].now[at]}`,
+    would: `${pronoun} ${CONDITIONAL_VERBS[verb].would[at]}`,
+  }));
+
+export const CONDITIONAL_USES = [
+  "Ma tahaksin kohvi.",
+  "Kas sa saaksid mind aidata?",
+  "Kui mul oleks aega, läheksin ma randa.",
+  "Ma ei läheks sinna.",
+] as const;
+
+export const CONDITIONAL_GAPS = [
+  { id: "minema-sa", verb: "minema", before: "Kas sa", after: "kinno?", answer: "läheksid" },
+  {
+    id: "minema-me",
+    verb: "minema",
+    before: "Me",
+    after: "hea meelega randa.",
+    answer: "läheksime",
+  },
+  { id: "minema-ta", verb: "minema", before: "Ta", after: "koju.", answer: "läheks" },
+  { id: "olema-sa", verb: "olema", before: "Kas sa", after: "homme kodus?", answer: "oleksid" },
+  { id: "olema-me", verb: "olema", before: "Me", after: "väga rõõmsad.", answer: "oleksime" },
+  { id: "olema-ta", verb: "olema", before: "Ta", after: "väga õnnelik.", answer: "oleks" },
+  { id: "tulema-sa", verb: "tulema", before: "Kas sa", after: "meile külla?", answer: "tuleksid" },
+  { id: "tulema-me", verb: "tulema", before: "Me", after: "hea meelega.", answer: "tuleksime" },
+  { id: "tulema-ta", verb: "tulema", before: "Ta", after: "homme.", answer: "tuleks" },
+] as const;
+
+export const CONDITIONAL_OPTIONS: Record<
+  (typeof CONDITIONAL_GAPS)[number]["verb"],
+  readonly string[]
+> = {
+  minema: ["läheksid", "läheksime", "läheks"],
+  olema: ["oleksid", "oleksime", "oleks"],
+  tulema: ["tuleksid", "tuleksime", "tuleks"],
+};
+
+export const CONDITIONAL_DIALOGUE = {
+  "d-teenindaja-1": { text: "Tere! Mida te sooviksite?", voice: "second" },
+  "d-sina-1": "Ma tahaksin kohvi, palun.",
+  "d-teenindaja-2": { text: "Kas te sooviksite ka midagi süüa?", voice: "second" },
+  "d-sina-2": "Jah, ma võtaksin ühe saiakese.",
+  "d-teenindaja-3": { text: "Kaardiga või sularahas?", voice: "second" },
+  "d-sina-3": "Kas ma saaksin sularahas maksta?",
+} as const satisfies Record<string, Clip>;
+
+export const CONDITIONAL_WORDS = ["kui", "hea meelega", "saiake", "sularahas"] as const;
+
+const CONDITIONAL_CLIPS: Record<string, Clip> = {
+  ...words(CONDITIONAL_WORDS),
+  ...words(Object.keys(CONDITIONAL_VERBS)),
+  ...words(
+    (Object.keys(CONDITIONAL_VERBS) as (keyof typeof CONDITIONAL_VERBS)[]).flatMap((verb) =>
+      conditionalForms(verb).flatMap((form) => [form.now, form.would]),
+    ),
+  ),
+  ...words(CONDITIONAL_USES),
+  ...words(CONDITIONAL_GAPS.map(objectGapSaid)),
+  ...CONDITIONAL_DIALOGUE,
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -3652,6 +3738,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "raamatuid-maju": PLURAL_PART_CLIPS,
   "majades-inimestele": PLURAL_CASE_CLIPS,
   "olen-lugenud": PERFECT_CLIPS,
+  laheksin: CONDITIONAL_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

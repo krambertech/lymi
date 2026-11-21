@@ -538,8 +538,20 @@ msgstr "<0>-ge</0> или <1>-ke</1> на конце"
 msgid "<0>-ma</0> form"
 msgstr "Форма на <0>-ma</0>"
 
+msgid "<0>-ne</0> becomes <1>-se</1>, then <2>-st</2>."
+msgstr "<0>-ne</0> становится <1>-se</1>, а затем <2>-st</2>."
+
+msgid "<0>-ne</0> becomes <1>-st</1>."
+msgstr "<0>-ne</0> становится <1>-st</1>."
+
 msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
 msgstr "<0>-s</0> и <1>-l</1> добавляем к основе существительного: <2>pood</2>, основа <3>poe</3>, <4>poes</4>."
+
+msgid "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
+msgstr "<0>-us</0> становится <1>-use</1>, а затем <2>-ust</2>."
+
+msgid "<0>-us</0> takes <1>-t</1>."
+msgstr "<0>-us</0> получает <1>-t</1>."
 
 #. placeholder {0}: noun.word
 #. placeholder {1}: noun.stem
@@ -674,6 +686,9 @@ msgstr "<0>Kust</0> спрашивает, откуда ты, а не где жи
 msgid "<0>Lapsed</0> is plural, so the verb takes the form of <1>nad</1>: <2>õpivad</2>."
 msgstr "<0>Lapsed</0> — множественное число, поэтому глагол стоит в форме для <1>nad</1>: <2>õpivad</2>."
 
+msgid "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
+msgstr "<0>Last</0> — третья форма, поэтому она идёт после <1>lapse</1>."
+
 msgid "<0>Lugesin</0> is I read, I was reading and I did read: one simple past for all three. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
 msgstr "В простом прошедшем нет рода: <0>lugesin</0> — это и «я читал», и «я читала». Когда именно, показывают слова вроде <1>eile</1> или <2>eelmisel nädalal</2>."
 
@@ -688,6 +703,9 @@ msgstr "После <0>ma</0> глагол оканчивается на <1>-n</1
 
 msgid "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
 msgstr "После <0>ma</0> глагол оканчивается на <1>-n</1>: <2>õpin</2>."
+
+msgid "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
+msgstr "<0>Majas</0> значит «в доме»: это вторая форма с <1>-s</1>. А сама вторая форма — <2>maja</2>."
 
 msgid "<0>marginal cost</0> <1>= cost of 1 more</1>"
 msgstr "<0>предельные издержки</0> <1>= цена ещё 1 шт.</1>"
@@ -764,6 +782,9 @@ msgstr "<0>Pärnusse</0> отвечает на «куда?». После <1>pär
 msgid "<0>Pean, hakkan, lähen, tule</0> and <1>jään</1> take the <2>-ma</2> form."
 msgstr "<0>Pean, hakkan, lähen, tule</0> и <1>jään</1> требуют формы на <2>-ma</2>."
 
+msgid "<0>Poe</0> is the second form. The third has the <1>d</1> back: <2>poodi</2>."
+msgstr "<0>Poe</0> — вторая форма. В третьей <1>d</1> возвращается: <2>poodi</2>."
+
 msgid "<0>Poes</0> says where you are. After <1>lähen</1>, say where to: <2>poodi</2>."
 msgstr "<0>Poes</0> говорит, где ты находишься. После <1>lähen</1> нужно «куда»: <2>poodi</2>."
 
@@ -805,6 +826,9 @@ msgstr "<0>Sklep</0> — это магазин, а не склеп, а <1>dynia<
 
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> — родственник древнерусского «сябр», то есть друг. Белорусы до сих пор говорят «сябар»."
+
+msgid "<0>Sõnaveeb</0>, the free dictionary of the Institute of the Estonian Language, lists them under <1>Sõnavormid</1>, word forms. Search for a word and scroll to that table: its left column holds the three forms, top to bottom. The right column is the plural."
+msgstr "В <0>Sõnaveeb</0>, бесплатном словаре Института эстонского языка, они стоят в таблице <1>Sõnavormid</1> — «формы слова». Найди слово и пролистай до этой таблицы: в левом столбце сверху вниз три формы. Правый столбец — это множественное число."
 
 msgid "<0>Sööma</0> and <1>jooma</1> break the pattern. Their commands build on the I form: <2>söön, sööge</2>; <3>joon, jooge</3>."
 msgstr "<0>Sööma</0> и <1>jooma</1> — исключения. Их команды строятся на форме для «я»: <2>söön, sööge</2>; <3>joon, jooge</3>."
@@ -1183,6 +1207,9 @@ msgstr "Схема со слайдов может стать картинкой 
 msgid "A dialogue in voice mode"
 msgstr "Диалог в голосовом режиме"
 
+msgid "A dictionary gives a noun in three forms, always in the same order: <0>kool, kooli, kooli</0>."
+msgstr "Словарь приводит существительное в трёх формах, всегда в одном и том же порядке: <0>kool, kooli, kooli</0>."
+
 #. placeholder {0}: ending("-d")
 msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. The second form is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
 msgstr "Словарь даёт существительное в трёх формах, об этом — в уроке {forms}. Вторая форма — это родительный падеж, о нём — в уроке {genitive}. Чтобы сказать «больше одного», добавь к ней {0}: <0/>, <1/>, отсюда <2/> — кошки."
@@ -1238,6 +1265,9 @@ msgstr "Через несколько недель"
 msgid "A few words break the rule: <0/>, thank you, puts the stress on its second half."
 msgstr "Несколько слов нарушают правило: в <0/>, «спасибо», ударение падает на вторую половину."
 
+msgid "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
+msgstr "Но гласная на конце ещё ничего не гарантирует. <0/> («машина») оканчивается на гласную, как и <1/>, но третья форма у него <2/>. А у <3/> («книга») — <4>raamatu, raamatut</4>. Решает словарь."
+
 msgid "A final vowel is no guarantee: <0>tuba</0> ends in one too, and its stem is <1>toa</1>. The dictionary pair settles it: <2>kodu, kodu</2> but <3>tuba, toa</3>."
 msgstr "Гласная на конце ничего не гарантирует: <0>tuba</0> тоже на неё кончается, а основа — <1>toa</1>. Решает пара из словаря: <2>kodu, kodu</2>, но <3>tuba, toa</3>."
 
@@ -1255,6 +1285,9 @@ msgstr "нога"
 
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "В бесплатной колоде есть каждый дорожный знак из правил: по картинке, с польским названием и номером."
+
+msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the third. Every word is read aloud."
+msgstr "Бесплатный урок эстонского о трёх основных формах существительного, põhivormid (kool, kooli, kooli; pood, poe, poodi): как их приводят словарь и Sõnaveeb и как большинство слов на -ne и -us, а также односложные слова на долгую гласную, подсказывают третью форму. Каждое слово озвучено."
 
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о личных местоимениях: mina, sina, tema и другие в полной и краткой форме, и глагол olema, «быть». Каждое предложение озвучено."
@@ -1488,11 +1521,17 @@ msgstr "Записка от Кати"
 msgid "A notes field on each card"
 msgstr "Поле для заметок в каждой карточке"
 
+msgid "A noun has three forms"
+msgstr "У существительного три формы"
+
 msgid "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
 msgstr "Падежи существительного на подложке: коснись формы, чтобы её услышать, окончание подсвечено. Строки могут начинаться с вопросительных слов, а одну строку или столбец можно выделить. На телефоне строки становятся списком."
 
 msgid "A noun’s genitive is its form before <0>-s</0> or <1>-l</1>: <2>kooli</2> in <3>koolis</3>, <4>poe</4> in <5>poes</5>. A dictionary lists it second: <6>pood, poe</6>."
 msgstr "Родительный падеж существительного — это его форма перед <0>-s</0> или <1>-l</1>: <2>kooli</2> в <3>koolis</3>, <4>poe</4> в <5>poes</5>. В словаре она идёт второй: <6>pood, poe</6>."
+
+msgid "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its second form the same and adds <1>-d</1> for the third: <2>töö, töö, tööd</2>."
+msgstr "У односложного слова, которое оканчивается на долгую гласную, например <0/> («работа»), вторая форма такая же, а для третьей добавляется <1>-d</1>: <2>töö, töö, tööd</2>."
 
 msgid "A page that isn’t where the link says it is"
 msgstr "Страница, которой нет там, куда ведёт ссылка"
@@ -1534,6 +1573,9 @@ msgstr "Тренировочная викторина"
 
 msgid "A practice quiz tells you how you did today. A deck keeps track of every question and plans when you see each one again."
 msgstr "Тренировочная викторина показывает, как прошла сегодняшняя попытка. Колода помнит каждый вопрос и планирует, когда ты увидишь его снова."
+
+msgid "A printed dictionary puts them on one line instead: <0>pood poe poodi</0>."
+msgstr "Бумажный словарь приводит их в одну строку: <0>pood poe poodi</0>."
 
 msgid "A promise; plans to meet"
 msgstr "Обещание; договорённость о встрече"
@@ -2277,8 +2319,14 @@ msgstr "Все шесть: после каждого числа верная ф�
 msgid "All six. You told the three forms apart every time."
 msgstr "Все шесть. Три формы без единой ошибки."
 
+msgid "All six. You typed the third form right every time."
+msgstr "Все шесть. Третья форма каждый раз верная."
+
 msgid "All Spanish decks"
 msgstr "Все испанские колоды"
+
+msgid "All three forms are the same."
+msgstr "Все три формы одинаковые."
 
 msgid "All three go on the same stem: <0>haiglas, haiglasse, haiglast</0>."
 msgstr "Все три окончания встают на одну и ту же основу: <0>haiglas, haiglasse, haiglast</0>."
@@ -2419,6 +2467,9 @@ msgstr "Пакет Anki · доступен сутки"
 
 msgid "AnkiMobile, a one-off €29.99 ($24.99 in the US)"
 msgstr "AnkiMobile, разовая покупка за 29,99 € (в США — 24,99 $)"
+
+msgid "answer"
+msgstr "ответ"
 
 msgid "Answer <0>jah</0> or <1>ei</1>. When the question has olema, the no is <2>ei ole</2>. If you don’t know, say <3>Ma ei tea.</3>"
 msgstr "Отвечай <0>jah</0> или <1>ei</1>. Если в вопросе есть olema, «нет» — это <2>ei ole</2>. Если не знаешь, говори <3>Ma ei tea.</3>"
@@ -4233,6 +4284,9 @@ msgstr "Каждый ответ — это команда или коротка�
 msgid "Each round gives a word and the noun it owns. Type the word’s genitive, the form that goes in front, and hear the phrase. If you know the word with <0>-s</0> or <1>-l</1>, take off its last letter."
 msgstr "В каждом раунде — слово и существительное, которое ему принадлежит. Напечатай родительный падеж слова, форму, которая стоит впереди, и послушай словосочетание. Если знаешь это слово с <0>-s</0> или <1>-l</1>, отбрось последнюю букву."
 
+msgid "Each round shows a new word. Type its third form."
+msgstr "В каждом раунде — новое слово. Напиши его третью форму."
+
 msgid "Each round shows a noun as a dictionary gives it, with its stem, and a meaning such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
 msgstr "В каждом раунде — существительное, как его даёт словарь, вместе с основой, и смысл, который нужно передать, например «в магазине». Выбери форму с этим значением, а потом послушай её в предложении. Существительные — из всех трёх разделов."
 
@@ -4385,6 +4439,9 @@ msgstr "Окончания elama"
 
 msgid "Endings of olema"
 msgstr "Окончания olema"
+
+msgid "Endings that tell you the third form"
+msgstr "Окончания, которые подсказывают третью форму"
 
 msgid "English"
 msgstr "Английский"
@@ -4689,6 +4746,9 @@ msgstr "Извините"
 msgid "Excuse me; sorry"
 msgstr "Извините; простите"
 
+msgid "exercise"
+msgstr "упражнение"
+
 msgid "expensive"
 msgstr "дорогой"
 
@@ -4815,6 +4875,9 @@ msgstr "Финансы и бухгалтерия"
 msgid "Find your exam"
 msgstr "Найти свой экзамен"
 
+msgid "Finding the forms in a dictionary"
+msgstr "Где искать формы в словаре"
+
 msgid "Fine, thanks. And you?"
 msgstr "Хорошо, спасибо. А у тебя?"
 
@@ -4836,8 +4899,14 @@ msgstr "Огонь"
 msgid "first"
 msgstr "первый"
 
+msgid "First"
+msgstr "Первая"
+
 msgid "First day"
 msgstr "Первый день"
+
+msgid "First form"
+msgstr "Первая форма"
 
 msgid "First-line drug for type 2 diabetes. Lowers the glucose the liver makes."
 msgstr "Препарат первой линии при диабете 2 типа. Снижает выработку глюкозы печенью."
@@ -6035,6 +6104,10 @@ msgstr "святой; праздник"
 msgid "home"
 msgstr "дом"
 
+msgctxt "kodu: the place you live"
+msgid "home"
+msgstr "родной дом"
+
 msgid "Home, <0/>, has a short form of its own: <1/> when you go there. Then <2/> when you’re there, <3/> when you leave."
 msgstr "У слова «дом», <0/>, своя короткая форма: <1/> — когда идёшь домой. А дальше <2/> — когда ты дома, <3/> — когда уходишь из дома."
 
@@ -6046,6 +6119,9 @@ msgstr "дом; родительный — дома"
 
 msgid "Hopefully"
 msgstr "Надеюсь"
+
+msgid "horse"
+msgstr "лошадь"
 
 msgid "hospital"
 msgstr "больница"
@@ -6911,6 +6987,9 @@ msgstr "Через {ahead} минут будет {next}."
 msgid "In <0/>, to buy, <1>ta</1> takes <2>is</2>: <3/>, I bought, but <4/>, he or she bought."
 msgstr "В <0/>, «покупать», форма для <1>ta</1> получает <2>is</2>: <3/> — для «я», но <4/> — для «он или она»."
 
+msgid "In <0>kool, kooli, kooli</0> the second and third forms are the same word. Many short words work this way, such as <1/>, town. In some words ending in a vowel all three match: <2/>, house, is <3>maja, maja, maja</3>."
+msgstr "В <0>kool, kooli, kooli</0> вторая и третья формы одинаковые. Так ведут себя многие короткие слова, например <1/> («город»). А в некоторых словах на гласную совпадают все три: <2/> («дом») — это <3>maja, maja, maja</3>."
+
 msgid "In <0>pood, poe</0> the <1>d</1> drops, the long <2>oo</2> turns short, and an <3>e</3> ends the stem. In <4/>, room, the <5>b</5> drops and the <6>u</6> turns into <7>o</7>: the stem is <8/>, and in the room is <9/>."
 msgstr "Как в «день — дня», внутри выпадает буква: в <0>pood, poe</0> исчезает <1>d</1>, долгое <2>oo</2> становится кратким, а в конце основы появляется <3>e</3>. В <4/>, комната, выпадает <5>b</5>, а <6>u</6> становится <7>o</7>: основа — <8/>, а в комнате — <9/>."
 
@@ -7099,6 +7178,9 @@ msgstr "в реке"
 
 msgid "in the room"
 msgstr "в комнате"
+
+msgid "In the second, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the third ends in <3>-st</3>."
+msgstr "Во второй форме <0>ee</0> сокращается, а <1>s</1> становится <2>h</2>; третья оканчивается на <3>-st</3>."
 
 msgid "in the shop"
 msgstr "в магазине"
@@ -7399,6 +7481,9 @@ msgstr "Издатель убрал её с публичных страниц Ly
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Редкий, но серьёзный риск — лактоацидоз."
 
+msgid "Its second and third forms are the same."
+msgstr "Вторая и третья формы одинаковые."
+
 msgid "Jaan is at the door."
 msgstr "Яан у двери."
 
@@ -7654,6 +7739,9 @@ msgstr "Лабораторные нормы"
 msgid "Label cards across decks, then review just those."
 msgstr "Помечай карточки в разных колодах и повторяй только их."
 
+msgid "land, country"
+msgstr "земля, страна"
+
 msgid "land, country; the ground"
 msgstr "земля, страна; почва"
 
@@ -7765,6 +7853,9 @@ msgstr "Учите одну колоду вместе"
 msgid "Learn the Spanish words you’ll use most, a few minutes a day. A native voice reads every card, and free decks take you from <0>hola</0> to B1."
 msgstr "Учи испанские слова, которые пригодятся чаще всего, несколько минут в день. Каждую карточку читает голос носителя, а бесплатные колоды ведут от <0>hola</0> до B1."
 
+msgid "Learn the vowel at the end of the third form along with the word: <0>poodi, lauda, turgu</0>."
+msgstr "Гласную на конце третьей формы запоминай вместе со словом: <0>poodi, lauda, turgu</0>."
+
 msgid "Learn three questions whole: <0>Mis su nimi on? Kuidas läheb?</0> and <1>Kust sa pärit oled?</1>"
 msgstr "Три вопроса учи целиком: <0>Mis su nimi on? Kuidas läheb?</0> и <1>Kust sa pärit oled?</1>"
 
@@ -7863,6 +7954,9 @@ msgstr "В уроке {places} шла речь о <0/>, «где», и об ок
 msgid "Lesson {previousNumber}"
 msgstr "Урок {previousNumber}"
 
+msgid "Lesson {stems} showed letters dropping or changing before an ending: <0/> becomes <1/>. That change is the second form. In these words the third form has the first form’s letters back: <2/>."
+msgstr "В уроке {stems} буквы перед окончанием выпадали или менялись: <0/> становится <1/>. Такая перемена — это и есть вторая форма. А в этих словах третья форма возвращает буквы первой: <2/>."
+
 msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
 msgstr "Урок {stems} показал существительные, у которых основа меняется перед окончанием: <0/> становится <1/>. Множественное число образуется от этой второй формы, поэтому изменение есть и в нём: <2/> — магазины."
 
@@ -7907,6 +8001,12 @@ msgstr "библиотека"
 
 msgid "Light reactions"
 msgstr "Световые реакции"
+
+msgid "Like <0>küsimus</0>, <1>vastus</1> ends its third form in <2>-ust</2>: <3>vastust</3>."
+msgstr "Как и у <0>küsimus</0>, третья форма <1>vastus</1> оканчивается на <2>-ust</2>: <3>vastust</3>."
+
+msgid "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
+msgstr "Как и у <0>küsimus</0>, вторая форма <1>vastus</1> оканчивается на <2>-use</2>: <3>vastuse</3>."
 
 msgid "Like the a in “cat”."
 msgstr "Как «я» в слове «пять» или «a» в английском «cat»."
@@ -8040,6 +8140,9 @@ msgstr "Тоска по тому, чего уже нет"
 
 msgid "look forward to"
 msgstr "ждать с нетерпением"
+
+msgid "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them the first, second and third form."
+msgstr "Найди в словаре <0/> («школа»), и увидишь три слова: <1>kool, kooli, kooli</1>. Так приводится каждое существительное, всегда в одном и том же порядке. Большинство других его форм образуется от одной из этих трёх. По-эстонски они называются <2/>, «основные формы». В этом курсе мы называем их первой, второй и третьей формой."
 
 msgid "Look."
 msgstr "Смотри."
@@ -8423,6 +8526,9 @@ msgstr "Мужской род, хотя оканчивается на -a: buenos
 msgid "Match"
 msgstr "Пары"
 
+msgid "Match each word with its second and third forms. A wrong pair counts against you, so look for the letters that change."
+msgstr "Соедини каждое слово с его второй и третьей формой. Неверная пара идёт в минус, так что присматривайся, какие буквы меняются."
+
 msgid "Match, Blast and Quizlet Live"
 msgstr "Match, Blast и Quizlet Live"
 
@@ -8642,6 +8748,9 @@ msgstr "Большинство глаголов меняет <0>-ma</0> на <1>
 msgid "Most verbs: <0>si-</0> on the stem of the <1>ma</1> form."
 msgstr "Большинство глаголов: <0>si-</0> после основы формы на <1>ma</1>."
 
+msgid "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
+msgstr "У большинства слов на <0>-ne</0> и <1>-us</1> третья форма оканчивается на <2>-st</2>, а односложное слово, которое оканчивается на долгую гласную, добавляет <3>-d</3>: <4>naist, küsimust, tööd</4>."
+
 msgid "mother"
 msgstr "мать"
 
@@ -8762,6 +8871,9 @@ msgstr "Почти. Ещё раз сравни последнюю строку �
 
 msgid "Nearly. For the ones you missed, start from the second form."
 msgstr "Почти. Там, где была ошибка, начни со второй формы."
+
+msgid "Nearly. Hear the ones you missed with all three forms."
+msgstr "Почти. Переслушай те, где были ошибки, со всеми тремя формами."
 
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Почти. Вслушивайся в глагол в вопросе."
@@ -9251,6 +9363,9 @@ msgstr "Olema, быть"
 msgid "on"
 msgstr "на"
 
+msgid "On <0>Sõnaveeb</0>, the three forms are the left column under <1>Sõnavormid</1>."
+msgstr "В <0>Sõnaveeb</0> три формы — это левый столбец таблицы <1>Sõnavormid</1>."
+
 msgid "On a door or a sign."
 msgstr "На двери или на табличке."
 
@@ -9439,6 +9554,12 @@ msgstr "Одна общая колода, у каждого своё распи�
 msgid "One spelling, two words."
 msgstr "Одно написание, два слова."
 
+msgid "One syllable ending in a long vowel takes <0>-d</0>."
+msgstr "Один слог с долгой гласной на конце получает <0>-d</0>."
+
+msgid "One syllable ending in a long vowel: the second is the same, the third adds <0>-d</0>."
+msgstr "Один слог с долгой гласной на конце: вторая форма такая же, третья добавляет <0>-d</0>."
+
 msgid "one table"
 msgstr "один стол"
 
@@ -9570,6 +9691,9 @@ msgstr "Другие люди, не те, с кем ты говоришь."
 
 msgid "Other subjects"
 msgstr "Другие темы"
+
+msgid "Other words don’t show their third form, so learn all three together: <0>pood, poe, poodi</0>."
+msgstr "По остальным словам третью форму не угадать, так что учи все три вместе: <0>pood, poe, poodi</0>."
 
 msgid "our"
 msgstr "наш"
@@ -9714,6 +9838,9 @@ msgstr "Перфект и плюсквамперфект"
 
 msgid "Perfective"
 msgstr "Совершенный вид"
+
+msgid "person"
+msgstr "человек"
 
 msgid "Person"
 msgstr "Человек"
@@ -9962,6 +10089,10 @@ msgstr "Падежи во множественном числе"
 msgid "Plural partitive"
 msgstr "Партитив множественного числа"
 
+msgctxt "grammatical number"
+msgid "Plural: see lesson {plural}"
+msgstr "Множественное: урок {plural}"
+
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP и PRINCE2: процессы, роли и терминология."
 
@@ -10078,6 +10209,9 @@ msgstr "Практика: знакомство"
 
 msgid "Practice: reading the news"
 msgstr "Практика: читаем новости"
+
+msgid "Practice: the forms in class"
+msgstr "Практика: формы на уроке"
 
 msgid "Practise in conversation"
 msgstr "Практика в разговоре"
@@ -10229,6 +10363,9 @@ msgstr "Четверти тоже смотрят вперёд. <0/> — четв
 
 msgid "Quarters: veerand and kolmveerand"
 msgstr "Четверти: veerand и kolmveerand"
+
+msgid "question"
+msgstr "вопрос"
 
 msgid "Question"
 msgstr "Вопрос"
@@ -10388,6 +10525,9 @@ msgstr "Прочитай значение и сначала вспомни те�
 
 msgid "Read the sign on a café in Tallinn, then answer."
 msgstr "Прочитай табличку на двери кафе в Таллине и ответь на вопросы."
+
+msgid "Read the three endings above once more, then try again."
+msgstr "Ещё раз перечитай про три окончания выше и попробуй снова."
 
 msgid "Read your German deck"
 msgstr "Прочитана колода по немецкому"
@@ -10612,6 +10752,9 @@ msgstr "реки"
 msgid "Road"
 msgstr "Дорога"
 
+msgid "road; also tea"
+msgstr "дорога; а ещё чай"
+
 msgid "road; tea"
 msgstr "дорога; чай"
 
@@ -10813,6 +10956,12 @@ msgstr "Поиск колод"
 
 msgid "second"
 msgstr "второй"
+
+msgid "Second"
+msgstr "Вторая"
+
+msgid "Second and third"
+msgstr "Вторая и третья"
 
 msgid "second form"
 msgstr "вторая форма"
@@ -11131,6 +11280,10 @@ msgstr "Sina — это ты: здесь сказано «Ты Яан»."
 msgid "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
 msgstr "Ещё с урока {present} ты говоришь <0/> Ты пьёшь кофе, не считая чашек, поэтому <1>kohvi</1> стоит в третьей форме. Так же со всем, что ешь, пьёшь или хочешь, не считая. По-русски похоже: «хочу молока». Нажми на предложение, чтобы его услышать."
 
+msgctxt "grammatical number"
+msgid "Singular"
+msgstr "Единственное"
+
 msgid "sit down"
 msgstr "садись"
 
@@ -11272,6 +11425,9 @@ msgstr "Некоторые кандзи в китайском шрифте вы�
 msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 msgstr "Некоторые места получают <0>-l</0> по традиции, например <1>turul</1> и названия на <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 
+msgid "Some short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
+msgstr "У некоторых коротких слов на <0>-s</0> третья форма тоже оканчивается на <1>-st</1>, но каждое меняется по-своему: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Такие слова запоминай сразу в трёх формах."
+
 msgid "Some stay as they are: <0>kodu, kodus</0>."
 msgstr "Некоторые не меняются: <0>kodu, kodus</0>."
 
@@ -11289,6 +11445,9 @@ msgstr "У некоторых глаголов <0>-ta</0>: <1/>, <2/>; <3/>, <4/
 
 msgid "Some words change inside before an ending: <0/>, a shop, gives <1/>, in the shop. That changed form is the genitive too: <2/>, the shop door. A dictionary lists the genitive second: <3>pood, poe</3>. Lesson {stems} shows how these changes work."
 msgstr "Некоторые слова перед окончанием меняются внутри: <0/>, магазин, даёт <1/>, в магазине. Эта изменённая форма — тоже родительный: <2/>, дверь магазина. В словаре родительный идёт второй формой: <3>pood, poe</3>. Как работают такие изменения, показывает урок {stems}."
+
+msgid "Some words give their third form away. Most words ending in <0>-ne</0> have a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
+msgstr "Некоторые слова сами подсказывают третью форму. У большинства слов на <0>-ne</0> вторая форма оканчивается на <1>-se</1>, а третья — на <2>-st</2>: <3/>, <4/>, <5/>. Большинство слов на <6>-us</6> ведут себя так же: <7/> («вопрос») — <8>küsimuse, küsimust</8>."
 
 msgid "Somebody, nobody: -gi and -ki"
 msgstr "Кто-то, никто: -gi и -ki"
@@ -11773,6 +11932,9 @@ msgstr "Разговор: в кафе"
 msgid "Talk: coffee with Mari"
 msgstr "Разговор: кофе с Мари"
 
+msgid "Talk: in class"
+msgstr "Разговор: на уроке"
+
 msgid "Talk: in the street"
 msgstr "Разговор: на улице"
 
@@ -11847,6 +12009,9 @@ msgstr "Коснись глагола"
 
 msgid "Tap a vowel"
 msgstr "Нажми на гласную"
+
+msgid "Tap a word"
+msgstr "Нажми на слово"
 
 msgid "Tap a word or a person"
 msgstr "Нажми на слово или на человека"
@@ -11979,6 +12144,9 @@ msgstr "Десять повседневных глаголов, основа к�
 
 msgid "Ten minutes between meetings."
 msgstr "Десять минут между встречами."
+
+msgid "Ten nouns in their three forms"
+msgstr "Десять существительных в трёх формах"
 
 msgid "ten past three, 3:10"
 msgstr "десять минут четвёртого, 3:10"
@@ -12472,11 +12640,17 @@ msgstr "Первый день. Esmas- звучит как <0/>, первый."
 msgid "The first form"
 msgstr "Первая форма"
 
+msgid "The first form: the word itself."
+msgstr "Первая форма: само слово."
+
 msgid "The first four count: <0/> is the first day, <1/> the second, <2/> the third and <3/> the fourth. The other three have names of their own. Tap a day to hear it and see where its name comes from."
 msgstr "Первые четыре — с числами: <0/> — первый день, <1/> — второй, <2/> — третий, <3/> — четвёртый. У трёх остальных названия со своей историей. Нажми на день, чтобы услышать его и узнать, откуда название."
 
 msgid "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
 msgstr "Первые четыре — с числами: <0>esmaspäev</0> — первый день, <1>neljapäev</1> — четвёртый."
+
+msgid "The first is the word on its own. The second is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the second form means by itself, and lesson {partitive} what the third is for."
+msgstr "Первая — это слово само по себе. Вторая — то, что урок {stems} назвал основой: добавь к ней <0>-s</0>, и получится <1/>. Что значит вторая форма сама по себе, рассказывает урок {genitive}, а зачем нужна третья — урок {partitive}."
 
 msgid "The form a dictionary lists first."
 msgstr "Форма, которая в словаре стоит первой."
@@ -12622,6 +12796,9 @@ msgstr "Умение чувствовать настроение людей во
 msgid "The Leben in Deutschland test at the end of an integration course uses the same questions. There, 15 correct answers earn the certificate; for citizenship you need 17."
 msgstr "В тесте Leben in Deutschland в конце интеграционного курса те же вопросы. Там для сертификата достаточно 15 правильных ответов, а для гражданства нужно 17."
 
+msgid "The left column, top to bottom: the first, second and third form. Pick another word and watch how they change."
+msgstr "Левый столбец сверху вниз: первая, вторая и третья форма. Выбери другое слово и посмотри, как они меняются."
+
 msgid "The lesson chat"
 msgstr "Чат урока"
 
@@ -12657,6 +12834,9 @@ msgstr "Плагин Lymi даёт ассистенту навык для каж
 
 msgid "The m becomes d: -ma turns into -da."
 msgstr "m становится d: -ma превращается в -da."
+
+msgid "the main forms: a word’s first, second and third form"
+msgstr "основные формы: первая, вторая и третья форма слова"
 
 msgid "The man is working."
 msgstr "Мужчина работает."
@@ -12738,6 +12918,9 @@ msgstr "Ту, что подходит к твоему тесту или теме
 
 msgid "The ones starting to fade"
 msgstr "Те, которые начинают забываться"
+
+msgid "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."
+msgstr "Порядок такой: первая, вторая, третья. <0>Poe</0>, форма без <1>d</1>, идёт второй."
 
 msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
 msgstr "Второе окончание — <0>-l</0>. Оно значит «на», когда речь о поверхности: <1/>, на столе. А ещё «на» там, где ты что-то делаешь, а не просто находишься в здании: <2/>, на работе."
@@ -12938,17 +13121,38 @@ msgstr "дверь школы"
 msgid "the school’s, of the school"
 msgstr "школы"
 
+msgid "The second and third form of {first}."
+msgstr "Вторая и третья форма слова {first}."
+
 msgid "The second day of the week."
 msgstr "Второй день недели."
 
 msgid "The second day. Teisi- sounds like <0/>, second."
 msgstr "Второй день. Teisi- звучит как <0/>, второй."
 
+msgid "The second drops the <0>d</0> and one <1>o</1>; the third has them back."
+msgstr "Во второй форме выпадают <0>d</0> и одно <1>o</1>, в третьей они возвращаются."
+
+msgid "The second drops the <0>d</0>; the third has it back."
+msgstr "Во второй форме <0>d</0> выпадает, в третьей возвращается."
+
+msgid "The second drops the <0>g</0>; the third has it back."
+msgstr "Во второй форме <0>g</0> выпадает, в третьей возвращается."
+
 msgid "The second form and -d"
 msgstr "Вторая форма и -d"
 
 msgid "The second form and <0>-d</0>"
 msgstr "Вторая форма и <0>-d</0>"
+
+msgid "The second form is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
+msgstr "Именно ко второй форме добавляют <0>-s</0> и <1>-l</1>: из <2>kooli</2> получается <3>koolis</3>."
+
+msgid "The second form of {first}."
+msgstr "Вторая форма слова {first}."
+
+msgid "The second form of <0>{first}</0>."
+msgstr "Вторая форма слова <0>{first}</0>."
 
 msgid "the second form of kass"
 msgstr "вторая форма слова kass"
@@ -12961,6 +13165,9 @@ msgstr "вторая форма слова suur"
 
 msgid "The second form plus -d."
 msgstr "Вторая форма плюс -d."
+
+msgid "The second loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the third is the first again."
+msgstr "Во второй форме <0>b</0> исчезает, а <1>u</1> становится <2>o</2>; третья снова такая же, как первая."
 
 msgid "The second verb usually goes last: <0>Ma pean homme tööle minema.</0>"
 msgstr "Второй глагол обычно стоит в конце: <0>Ma pean homme tööle minema.</0>"
@@ -13086,14 +13293,32 @@ msgstr "Десятки"
 msgid "The tens: -kümmend"
 msgstr "Десятки: -kümmend"
 
+msgid "The third adds <0>-t</0>."
+msgstr "Третья добавляет <0>-t</0>."
+
 msgid "The third day of the week."
 msgstr "Третий день недели."
 
 msgid "The third day. You can hear <0/>, three, from lesson {numbers}."
 msgstr "Третий день. Слышно <0/>, три, из урока {numbers}."
 
+msgid "The third drops the <0>k</0> and ends in <1>-st</1>."
+msgstr "В третьей <0>k</0> выпадает, а окончание — <1>-st</1>."
+
+msgid "The third drops the <0>p</0> and ends in <1>-st</1>."
+msgstr "В третьей <0>p</0> выпадает, а окончание — <1>-st</1>."
+
 msgid "The third form is the last of the three a dictionary gives, as lesson {forms} shows: <0>raamat, raamatu, raamatut</0>. You’ve heard it in prices since lesson {numbers}: <1/>. Tap a form to hear it with its number."
 msgstr "Третья форма — последняя из трёх, которые даёт словарь, как показывает урок {forms}: <0>raamat, raamatu, raamatut</0>. Ты слышишь её в ценах ещё с урока {numbers}: <1/>. Нажми на форму, чтобы услышать её с числом."
+
+msgid "The third form of {first}."
+msgstr "Третья форма слова {first}."
+
+msgid "The third form of <0>{first}</0>."
+msgstr "Третья форма слова <0>{first}</0>."
+
+msgid "The third form of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
+msgstr "Третья форма <0>laps</0> оканчивается на <1>-st</1>: <2>last</2>."
 
 msgid "The third form of aeg."
 msgstr "Третья форма слова aeg."
@@ -13119,6 +13344,9 @@ msgstr "Третья форма слова piim."
 msgid "The third form of vesi."
 msgstr "Третья форма слова vesi."
 
+msgid "The third is the second with <0>-t</0>."
+msgstr "Третья — это вторая с <0>-t</0>."
+
 msgid "The Thirty Years’ War"
 msgstr "Тридцатилетняя война"
 
@@ -13130,6 +13358,9 @@ msgstr "Три основные формы существительного"
 
 msgid "The three forms of a verb"
 msgstr "Три основные формы глагола"
+
+msgid "The three forms of an Estonian noun"
+msgstr "Три основные формы слова в эстонском"
 
 msgid "The three forms of an Estonian verb"
 msgstr "Три основные формы эстонского глагола"
@@ -13362,6 +13593,12 @@ msgstr "О чём попросить Gemini."
 msgid "Things to ask Grok Bot."
 msgstr "О чём попросить Grok Bot."
 
+msgid "Third"
+msgstr "Третья"
+
+msgid "Third form"
+msgstr "Третья форма"
+
 msgid "thirteen"
 msgstr "тринадцать"
 
@@ -13559,6 +13796,9 @@ msgstr "Соглашаться"
 
 msgid "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
 msgstr "Чтобы ответить «нет», скажи <0>ei</0> или <1>ei</1> с глаголом из вопроса: <2>Kas sa loed? Ei loe.</2>"
+
+msgid "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
+msgstr "Чтобы спросить о формах слова, по-эстонски говорят <0>Mis on sõna … põhivormid?</0>, а на место пропуска ставят слово. <1/> значит «слово». Отвечай всеми тремя формами, по порядку."
 
 msgid "To ask for more than yes or no, start with a question word instead of kas, and leave out the part you ask about. <0/> You live in Tallinn. <1/> Where do you live?"
 msgstr "Чтобы узнать больше, чем «да» или «нет», начни с вопросительного слова вместо kas, а то, о чём спрашиваешь, убери. <0/> Ты живёшь в Таллине. <1/> Где ты живёшь?"
@@ -13992,6 +14232,9 @@ msgstr "Путешествия, здоровье и мнения — когда 
 msgid "Travel, health and opinions, once HSK 1 feels easy."
 msgstr "Путешествия, здоровье и мнения — когда HSK 1 уже даётся легко."
 
+msgid "tree"
+msgstr "дерево"
+
 msgid "Try"
 msgstr "Попробуй"
 
@@ -14198,6 +14441,9 @@ msgstr "Введи число, которое слышишь"
 
 msgid "Type the plural"
 msgstr "Введи множественное число"
+
+msgid "Type the third form"
+msgstr "Напиши третью форму"
 
 msgid "Type the time"
 msgstr "Введи время"
@@ -14794,6 +15040,12 @@ msgstr "Когда результат зависит от того, что бы�
 msgid "When the second form is the same as the first, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
 msgstr "Когда вторая форма такая же, как первая, новое только {0}: <0/> даёт <1/>. Переключай «Один» и «Много» и нажимай на слово, чтобы его услышать."
 
+msgid "When the third form is the same as the second"
+msgstr "Когда третья форма такая же, как вторая"
+
+msgid "When the third form takes letters back"
+msgstr "Когда третья форма возвращает буквы"
+
 msgid "When you don’t know a short form, use <0>-sse</0>: it is right for every place in this lesson."
 msgstr "Если не знаешь короткой формы, бери <0>-sse</0>: она верна для каждого места в этом уроке."
 
@@ -14992,6 +15244,9 @@ msgstr "Какая форма стоит первой?"
 msgid "Which form?"
 msgstr "Какая форма?"
 
+msgid "Which forms go together?"
+msgstr "Какие формы идут вместе?"
+
 msgid "Which half hour?"
 msgstr "Половина какого?"
 
@@ -15139,6 +15394,9 @@ msgstr "Чей?"
 msgid "why"
 msgstr "почему"
 
+msgid "Why a dictionary gives every Estonian noun in three forms, where to find them, and which endings tell you the third."
+msgstr "Почему словарь даёт каждое эстонское существительное в трёх формах, где их найти и какие окончания подсказывают третью."
+
 msgid "Why are you learning Estonian?"
 msgstr "Почему ты учишь эстонский?"
 
@@ -15259,6 +15517,9 @@ msgstr "Пары слов"
 msgid "Word tiles tapped into order after hearing the sentence or reading its meaning; every right order counts, and the sentence plays after Check."
 msgstr "Плитки слов в правильном порядке: сначала предложение звучит или видно его значение; засчитывается любой верный порядок, а после проверки предложение звучит."
 
+msgid "Word to look up"
+msgstr "Слово для поиска"
+
 msgid "Words"
 msgstr "Слова"
 
@@ -15316,6 +15577,15 @@ msgstr "Над кандзи показано чтение каной. Ромад
 msgid "Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new."
 msgstr "Слова, которые меняются внутри, падеж дополнения, новые времена и наклонения. Все слова ты уже знаешь, так что новое здесь только правило."
 
+msgid "Words whose ending tells the third form"
+msgstr "Слова, окончание которых подсказывает третью форму"
+
+msgid "Words whose second and third forms match"
+msgstr "Слова с одинаковой второй и третьей формой"
+
+msgid "Words whose third form takes letters back"
+msgstr "Слова, у которых третья форма возвращает буквы"
+
 msgid "Words, meanings or a picture."
 msgstr "Слова, значения или картинка."
 
@@ -15334,6 +15604,9 @@ msgstr "Работа и учёба"
 
 msgid "Work, a job (informal, Mexico)"
 msgstr "Работа (разговорное, Мексика)"
+
+msgid "work, job"
+msgstr "работа"
 
 msgid "work; of work"
 msgstr "работа; родительный — работы"
@@ -15728,6 +16001,9 @@ msgstr "Услышишь elama с ним и узнаешь, для кого он
 msgid "You’ll hear it and read what its ending does."
 msgstr "Услышишь её и прочитаешь, что делает окончание."
 
+msgid "You’ll hear it and see how it changes from the first."
+msgstr "Услышишь её и увидишь, как она меняется по сравнению с первой."
+
 msgid "You’ll hear it and see how it’s made."
 msgstr "Услышишь её и увидишь, как она образуется."
 
@@ -15745,6 +16021,9 @@ msgstr "Услышишь её вместе с местоимением и про
 
 msgid "You’ll hear it, and where its name comes from."
 msgstr "Услышишь его и узнаешь, откуда название."
+
+msgid "You’ll hear its three forms."
+msgstr "Услышишь три его формы."
 
 msgid "You’ll hear the day it stands for."
 msgstr "Услышишь день, который она обозначает."
@@ -15775,6 +16054,9 @@ msgstr "Ты в кафе, и заходит Мари. Она говорит пе
 
 msgid "You’re doing great."
 msgstr "Ты молодец."
+
+msgid "You’re in an Estonian class. Mari, the teacher, asks for the forms of four words; pick your answer."
+msgstr "Ты на уроке эстонского. Учительница Мари просит назвать формы четырёх слов — выбери ответ."
 
 msgid "You’re learning Estonian, and you’re speaking it now."
 msgstr "Ты учишь эстонский и сейчас на нём говоришь."

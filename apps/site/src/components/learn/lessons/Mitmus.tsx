@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   capital,
   clipId,
@@ -390,7 +390,7 @@ export function MitmusLesson() {
   const { t, i18n } = useLingui();
   const present = lessonBySlug("olevik")?.n;
   const stems = lessonBySlug("pood-poe")?.n;
-  const forms = LESSONS.find((lesson) => lesson.et === "Kolm põhivormi")?.n;
+  const forms = lessonBySlug("pohivormid")?.n;
   const genitive = lessonBySlug("omastav")?.n;
   const partitive = lessonBySlug("osastav")?.n;
   const gaps = gapsOf();

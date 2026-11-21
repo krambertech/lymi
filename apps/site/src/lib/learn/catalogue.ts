@@ -158,7 +158,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 10,
         blurb: msg`A free lesson on Estonian noun stems: why pood becomes poes and tuba becomes toas, words that add a vowel (koolis, raamatus), words that stay the same (kodus), and how a dictionary shows the stem. Every sentence is read aloud.`,
       },
-      { name: msg`The three forms of a noun`, et: "Kolm põhivormi" },
+      {
+        slug: "pohivormid",
+        name: msg`The three forms of a noun`,
+        title: msg`The three forms of an Estonian noun`,
+        et: "Kolm põhivormi",
+        minutes: 12,
+        blurb: msg`A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the third. Every word is read aloud.`,
+      },
       {
         slug: "omastav",
         name: msg`The genitive case`,

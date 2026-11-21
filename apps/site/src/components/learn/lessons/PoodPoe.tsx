@@ -371,7 +371,7 @@ export function PoodPoeLesson() {
   const { t, i18n } = useLingui();
   const places = lessonBySlug("kohad")?.n;
   const present = lessonBySlug("olevik")?.n;
-  const forms = LESSONS.find((lesson) => lesson.et === "Kolm põhivormi")?.n;
+  const forms = lessonBySlug("pohivormid")?.n;
   const gradation = LESSONS.find((lesson) => lesson.et === "Jalg, jala")?.n;
 
   const heardItems = useMemo<HeardItem[]>(

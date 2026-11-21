@@ -11,14 +11,17 @@ import {
   OSASTAV_COUNT,
   OSASTAV_COUNTED,
   OSASTAV_EXCHANGES,
+  OSASTAV_FOOD_QUIZ,
   OSASTAV_NO,
   OSASTAV_PASSAGES,
+  OSASTAV_POLE_QUIZ,
   OSASTAV_SOME,
   PARTITIVE_NOUNS,
   type PartitiveNoun,
 } from "../../../lib/learn/clips";
 import { shuffle } from "../../../lib/learn/quiz";
 import { type KeyItem, Keys, ListenRows, Panel, type RowItem } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
@@ -111,6 +114,10 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Üks kohv, palun.": msg`One coffee, please.`,
   "Ma loen raamatut.": msg`I’m reading a book.`,
   "Kass on laual.": msg`The cat is on the table.`,
+  "Leib pole laual.": msg`The bread isn’t on the table.`,
+  "Laud pole toas.": msg`The table isn’t in the room.`,
+  "Piim maksab kaks eurot.": msg`The milk costs two euros.`,
+  "Leib on laual.": msg`The bread is on the table.`,
   "Kass pole laual.": msg`The cat isn’t on the table.`,
 };
 
@@ -302,6 +309,34 @@ export function countRun<
   ];
 }
 
+type PoleItem = FormItem & {
+  noun: PartitiveNoun;
+  /** Whether the noun comes first, so it keeps its first form after pole. */
+  first: boolean;
+  pair: readonly [string, string];
+  options: readonly string[];
+};
+
+/**
+ * A run of four: every noun once, two said first and two after pole, in a random order, each
+ * round's two forms in a new order. The pinned first round counts as its noun's turn and its kind's.
+ */
+export function poleRun<
+  T extends { noun: PartitiveNoun; first: boolean; options: readonly string[] },
+>(items: readonly T[], pinned?: T): T[] {
+  const nouns = shuffle(
+    [...new Set(items.map((item) => item.noun))].filter((noun) => noun !== pinned?.noun),
+  );
+  const firsts = 2 - (pinned?.first ? 1 : 0);
+  const picked = nouns.map(
+    (noun, i) => items.find((item) => item.noun === noun && item.first === i < firsts) as T,
+  );
+  return [
+    ...(pinned ? [pinned] : []),
+    ...shuffle(picked).map((item) => ({ ...item, options: shuffle(item.options) })),
+  ];
+}
+
 function useContent() {
   const { t } = useLingui();
   const gaps: PassageGap[] = [
@@ -479,6 +514,73 @@ export function OsastavLesson() {
     [i18n],
   );
 
+  const amountItems = useMemo<FormItem[]>(
+    () =>
+      OSASTAV_AMOUNTS.map(({ phrase, noun }) => ({
+        base: noun,
+        gloss: i18n._(NOUN_MEANS[noun]),
+        cue: `${phrase.split(" ")[0]} …`,
+        cueLang: "et",
+        answers: [PARTITIVE_NOUNS[noun]],
+        src: src(phrase),
+        said: phrase,
+        explain: means(phrase, i18n),
+      })),
+    [i18n],
+  );
+
+  // The server's first round has the answer second, the next first, and so on.
+  const poleItems = useMemo<PoleItem[]>(
+    () =>
+      OSASTAV_POLE_QUIZ.map((row, i) => {
+        const third = PARTITIVE_NOUNS[row.noun];
+        return {
+          base: row.noun,
+          gloss: i18n._(NOUN_MEANS[row.noun]),
+          cue: row.cue,
+          cueLang: "et",
+          answers: ["first" in row ? row.noun : third],
+          options: i % 2 ? [row.noun, third] : [third, row.noun],
+          src: src(row.said),
+          said: row.said,
+          noun: row.noun,
+          first: "first" in row,
+          pair: [row.noun, row.said] as const,
+          explain:
+            "first" in row ? (
+              <Trans>The sentence starts with it, so it keeps its first form.</Trans>
+            ) : (
+              <Trans>
+                After <b lang="et">pole</b>, what isn’t there takes the third form.
+              </Trans>
+            ),
+        };
+      }),
+    [i18n],
+  );
+
+  const foodItems = useMemo<FormItem[]>(
+    () =>
+      OSASTAV_FOOD_QUIZ.map((row) => ({
+        base: row.noun,
+        gloss: i18n._(NOUN_MEANS[row.noun]),
+        cue: row.cue,
+        cueLang: "et",
+        answers: ["first" in row ? row.noun : PARTITIVE_NOUNS[row.noun]],
+        src: src(row.said),
+        said: row.said,
+        explain:
+          "first" in row ? (
+            <Trans>
+              Nobody eats or drinks it here: the sentence is about it, so the first form.
+            </Trans>
+          ) : (
+            <Trans>Some of it, eaten, drunk or wanted, not counted: the third form.</Trans>
+          ),
+      })),
+    [i18n],
+  );
+
   const rowsOf = (texts: readonly string[]): RowItem[] =>
     texts.map((text) => ({ main: text, sub: means(text, i18n), src: src(text) }));
 
@@ -508,8 +610,8 @@ export function OsastavLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">3 exercises</Trans>,
+        <Trans key="m">16 minutes</Trans>,
+        <Trans key="q">6 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -650,6 +752,7 @@ export function OsastavLesson() {
         {
           id: "amounts",
           title: t`After an amount`,
+          quiz: true,
           children: (
             <>
               <Prose>
@@ -680,12 +783,38 @@ export function OsastavLesson() {
                   }}
                 />
               </Panel>
+              <Prose>
+                <p>
+                  <Trans>
+                    Now make the form yourself. Each round shows the word as a dictionary gives it
+                    and the amount before it. Type its third form.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="amount-form"
+                title={<Trans>Type the form after the amount</Trans>}
+                items={amountItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, typed in full.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Tap the amounts above for the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Tap the amounts above once more, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                round={(props) => <FormRound {...props} />}
+              />
             </>
           ),
         },
         {
           id: "no",
           title: t`Saying something isn’t there`,
+          quiz: true,
           children: (
             <>
               <Prose>
@@ -711,12 +840,39 @@ export function OsastavLesson() {
                   that starts with the thing keeps its first form: <Word w="Kass pole laual." />
                 </Trans>
               </Aside>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round shows a sentence with a gap. Pick the form that fills it: does the
+                    sentence say something isn’t there, or does it start with the thing?
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="pole-form"
+                title={<Trans>Which form fills the gap?</Trans>}
+                items={poleItems}
+                rounds={4}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All four. You told the two kinds of sentence apart.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Compare the last row of the table once more.</Trans>
+                  ) : (
+                    <Trans>Tap both columns of the table once more, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={poleRun}
+                round={(props) => <FormRound {...props} />}
+              />
             </>
           ),
         },
         {
           id: "food",
           title: t`Food and drink`,
+          quiz: true,
           children: (
             <>
               <Prose>
@@ -737,6 +893,31 @@ export function OsastavLesson() {
                   <Word w="Ma loen raamatut." /> has another reason, which lesson {object} explains.
                 </Trans>
               </Aside>
+              <Prose>
+                <p>
+                  <Trans>
+                    Type the form each sentence needs. In two of them, nobody eats or drinks the
+                    thing.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="food-form"
+                title={<Trans>Type the form the sentence needs</Trans>}
+                items={foodItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, typed in full.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Hear the sentences above for the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Hear the sentences above once more, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                round={(props) => <FormRound {...props} />}
+              />
             </>
           ),
         },

@@ -884,6 +884,32 @@ export const OSASTAV_NO = [
   { yes: "Kass on laual.", no: "Kass pole laual.", noun: "kass", first: true },
 ] as const satisfies readonly { yes: string; no: string; noun: PartitiveNoun; first?: true }[];
 
+/**
+ * “Which form after pole?”: a sentence with a gap for the noun. Where the noun comes first, it keeps
+ * its first form; each noun comes both ways, so its two forms are both answers.
+ */
+export const OSASTAV_POLE_QUIZ = [
+  { cue: "Mul pole …", noun: "kass", said: "Mul pole kassi." },
+  { cue: "… pole laual", noun: "kass", said: "Kass pole laual.", first: true },
+  { cue: "Sul pole …", noun: "auto", said: "Sul pole autot." },
+  { cue: "Sul on …", noun: "auto", said: "Sul on auto.", first: true },
+  { cue: "Laual pole …", noun: "leib", said: "Laual pole leiba." },
+  { cue: "… pole laual", noun: "leib", said: "Leib pole laual.", first: true },
+  { cue: "Toas pole …", noun: "laud", said: "Toas pole lauda." },
+  { cue: "… pole toas", noun: "laud", said: "Laud pole toas.", first: true },
+] as const satisfies readonly { cue: string; noun: PartitiveNoun; said: string; first?: true }[];
+
+/** “Type the form”: food and drink someone has, and two that are only talked about. */
+export const OSASTAV_FOOD_QUIZ = [
+  { cue: "Ma joon …", noun: "kohv", said: "Ma joon kohvi." },
+  { cue: "Ta joob …", noun: "vesi", said: "Ta joob vett." },
+  { cue: "Me sööme …", noun: "leib", said: "Me sööme leiba." },
+  { cue: "Nad söövad …", noun: "juust", said: "Nad söövad juustu." },
+  { cue: "Ma tahan …", noun: "piim", said: "Ma tahan piima." },
+  { cue: "… maksab kaks eurot", noun: "piim", said: "Piim maksab kaks eurot.", first: true },
+  { cue: "… on laual", noun: "leib", said: "Leib on laual.", first: true },
+] as const satisfies readonly { cue: string; noun: PartitiveNoun; said: string; first?: true }[];
+
 /** Food and drink taken without counting. */
 export const OSASTAV_SOME = [
   "Ma joon kohvi.",
@@ -963,6 +989,8 @@ const OSASTAV_CLIPS: Record<string, Clip> = {
     ...OSASTAV_AMOUNTS.map(({ phrase }) => phrase),
     ...OSASTAV_NO.flatMap(({ yes, no }) => [yes, no]),
     ...OSASTAV_SOME,
+    ...OSASTAV_POLE_QUIZ.map(({ said }) => said),
+    ...OSASTAV_FOOD_QUIZ.map(({ said }) => said),
     ...OSASTAV_WORDS,
   ]),
   "p-market": { sentences: OSASTAV_PASSAGES.market },

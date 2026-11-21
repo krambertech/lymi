@@ -707,6 +707,9 @@ msgstr "135–145 ммоль/л у дорослих"
 msgid "14 cards"
 msgstr "14 карток"
 
+msgid "16 minutes"
+msgstr "16 хвилин"
+
 msgid "17."
 msgstr "17."
 
@@ -748,9 +751,6 @@ msgstr "Той, хто праворуч."
 
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 питань, 15 для складання. Вивчити — 300."
-
-msgid "3 exercises"
-msgstr "3 вправи"
 
 msgid "3 of 4 chosen"
 msgstr "Обрано 3 з 4"
@@ -808,6 +808,9 @@ msgstr "500 футів (близько 150 м) в обидва боки"
 
 msgid "6 cards from Anatomy"
 msgstr "6 карток з колоди «Анатомія»"
+
+msgid "6 exercises"
+msgstr "6 вправ"
 
 msgid "60% in reading, writing and listening, and 60% in speaking."
 msgstr "60% у читанні, письмі й аудіюванні та 60% у говорінні."
@@ -1585,6 +1588,9 @@ msgstr "Після <0>ei</0> іде форма з ma без -n: <1>loen</1>, <2>
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "Після <0>ei</0> дієслово <1>olema</1> втрачає закінчення: <2>ei ole</2>."
 
+msgid "After <0>pole</0>, what isn’t there takes the third form."
+msgstr "Після <0>pole</0> те, чого немає, стоїть у третій формі."
+
 msgid "After <0>pole</0>, what someone hasn’t got, or what there is none of in a place, takes the third form: <1>Mul pole kassi, Laual pole leiba</1>. When the sentence starts with the thing, it keeps its first: <2>Kass pole laual</2>."
 msgstr "Після <0>pole</0> те, чого в когось немає або чого немає в якомусь місці, стоїть у третій формі: <1>Mul pole kassi, Laual pole leiba</1>. Якщо речення починається з самої речі, вона лишається в першій: <2>Kass pole laual</2>."
 
@@ -1717,6 +1723,9 @@ msgstr "Усі естонські колоди"
 msgid "All exams"
 msgstr "Усі іспити"
 
+msgid "All four. You told the two kinds of sentence apart."
+msgstr "Усі чотири: обидва види речень розрізнено."
+
 msgid "All free decks"
 msgstr "Усі безкоштовні колоди"
 
@@ -1800,6 +1809,9 @@ msgstr "Усі сім. Ти знаєш тиждень на слух."
 
 msgid "All shelves"
 msgstr "Усі полиці"
+
+msgid "All six, typed in full."
+msgstr "Усі шість, набрані повністю."
 
 msgid "All six. Every ending was right."
 msgstr "Усі шість. Кожне закінчення правильне."
@@ -3644,6 +3656,9 @@ msgstr "У кожному раунді — число. Обери форму і�
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "У кожному раунді — місце. Обери закінчення, а потім послухай речення. Більшість міст, будівель і країн мають <0>-s</0>; робота, ринок і назви на <1>-maa</1> мають <2>-l</2>."
 
+msgid "Each round shows a sentence with a gap. Pick the form that fills it: does the sentence say something isn’t there, or does it start with the thing?"
+msgstr "У кожному раунді — речення з пропуском. Обери форму для нього: речення каже, що чогось немає, чи починається з самої речі?"
+
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Кожна держава відтоді сама правила своєю землею: так почався сучасний <0>суверенітет</0>."
 
@@ -5067,6 +5082,9 @@ msgstr "Послухати текст"
 
 msgid "Hear the question, then pick the short answer that says no."
 msgstr "Послухай питання й обери коротку відповідь «ні»."
+
+msgid "Hear the sentences above once more, then try again."
+msgstr "Ще раз послухай речення вище, а потім спробуй знову."
 
 msgid "Hear the two questions above once more, then try again."
 msgstr "Ще раз послухай два питання вище й спробуй знову."
@@ -7432,6 +7450,12 @@ msgstr "Природа"
 msgid "NCLEX pharmacology"
 msgstr "Фармакологія NCLEX"
 
+msgid "Nearly. Compare the last row of the table once more."
+msgstr "Майже. Ще раз порівняй останній рядок таблиці."
+
+msgid "Nearly. Hear the sentences above for the ones you missed."
+msgstr "Майже. Для помилок послухай речення вище."
+
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Майже. Прислухайся до дієслова в питанні."
 
@@ -7440,6 +7464,9 @@ msgstr "Майже. Там, де була помилка, послухай пе�
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Переслухай ті, де були помилки."
+
+msgid "Nearly. Tap the amounts above for the ones you missed."
+msgstr "Майже. Для помилок торкнись слів кількості вище."
 
 msgid "Nearly. Tap the endings above once more."
 msgstr "Майже. Ще раз понатискай закінчення вище."
@@ -7642,6 +7669,9 @@ msgstr "Ні. Додавати й редагувати картки можеш �
 msgid "No. Quizlet exports a set’s terms and definitions as text, so your cards start as new. Your first answers in Lymi show what you already know, and those cards come back less often."
 msgstr "Ні. Quizlet експортує терміни й визначення набору як текст, тож картки почнуться як нові. Перші відповіді в Lymi покажуть, що ти вже знаєш, і такі картки повертатимуться рідше."
 
+msgid "Nobody eats or drinks it here: the sentence is about it, so the first form."
+msgstr "Тут це ніхто не їсть і не п’є: речення про саму річ, тому перша форма."
+
 msgid "Noji alternative: Lymi vs Noji, compared · Lymi"
 msgstr "Альтернатива Noji: порівняння Lymi та Noji · Lymi"
 
@@ -7762,6 +7792,9 @@ msgstr "Зараз"
 
 msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
 msgstr "Тепер субота, і ось твій план. Встав у кожен пропуск слово: форму <0/>, дієслово з потрібним закінченням, <1/> або форму слова після числа."
+
+msgid "Now make the form yourself. Each round shows the word as a dictionary gives it and the amount before it. Type its third form."
+msgstr "Тепер утвори форму. У кожному раунді — слово, як його подає словник, і слово кількості перед ним. Набери третю форму."
 
 msgid "Now the stem is loe-, in the past luge-."
 msgstr "Зараз основа loe-, у минулому luge-."
@@ -9741,6 +9774,9 @@ msgstr "Sobre — «над», mesa — «стіл». Буває, що вона �
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Деякі кандзі в китайському шрифті виглядають інакше. Lymi показує твої картки в японському написанні, як у японських книжках."
 
+msgid "Some of it, eaten, drunk or wanted, not counted: the third form."
+msgstr "Трохи чогось, що їдять, п’ють чи хочуть, не рахуючи: третя форма."
+
 msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 msgstr "Деякі місця мають <0>-l</0> за традицією, як-от <1>turul</1> і назви на <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 
@@ -10257,11 +10293,17 @@ msgstr "Торкнись слова"
 msgid "Tap an ending"
 msgstr "Натисни закінчення"
 
+msgid "Tap both columns of the table once more, then try again."
+msgstr "Ще раз торкнись обох стовпців таблиці, а потім спробуй знову."
+
 msgid "Tap õ, ä and ü in the vowels above once more, then try again."
 msgstr "Ще раз натисни õ, ä і ü серед голосних вище, потім спробуй знову."
 
 msgid "Tap one side, then its match on the other."
 msgstr "Торкнися одного боку, потім його пари з іншого."
+
+msgid "Tap the amounts above once more, then try again."
+msgstr "Ще раз торкнись слів кількості вище, а потім спробуй знову."
 
 msgid "Tap the commands above once more, then try again."
 msgstr "Ще раз торкнися наказів вище, а потім спробуй знову."
@@ -10554,6 +10596,12 @@ msgstr "Основи"
 msgid "The book is on the table."
 msgstr "Книжка на столі."
 
+msgid "The bread is on the table."
+msgstr "Хліб на столі."
+
+msgid "The bread isn’t on the table."
+msgstr "Хліба немає на столі."
+
 msgid "The browning that gives seared, baked and toasted food its flavour"
 msgstr "Підрум’янювання, що надає смаку смаженому, печеному й тостам"
 
@@ -10845,6 +10893,9 @@ msgstr "Плагін Lymi дає асистентові навичку для к
 msgid "The m becomes d: -ma turns into -da."
 msgstr "m стає d: -ma перетворюється на -da."
 
+msgid "The milk costs two euros."
+msgstr "Молоко коштує два євро."
+
 msgid "the Mochi docs"
 msgstr "документація Mochi"
 
@@ -11022,6 +11073,9 @@ msgstr "Другий день тижня."
 msgid "The second day. Teisi- sounds like <0/>, second."
 msgstr "Другий день. Teisi- звучить як <0/>, другий."
 
+msgid "The sentence starts with it, so it keeps its first form."
+msgstr "Речення починається з цієї речі, тому вона лишається в першій формі."
+
 msgid "The seven days, the four that count, and how to say what day it is."
 msgstr "Сім днів, чотири з числами в назві, і як сказати, який сьогодні день."
 
@@ -11084,6 +11138,9 @@ msgstr "Страйк"
 
 msgid "The sugar photosynthesis makes"
 msgstr "Цукор, що утворюється під час фотосинтезу"
+
+msgid "The table isn’t in the room."
+msgstr "Стола немає в кімнаті."
 
 msgid "The table lights up who the word means."
 msgstr "За столом підсвітяться ті, про кого це слово."
@@ -12014,6 +12071,15 @@ msgstr "Введи слово. Lymi додасть значення, прикл�
 msgid "Type the form"
 msgstr "Введи форму"
 
+msgid "Type the form after the amount"
+msgstr "Набери форму після слова кількості"
+
+msgid "Type the form each sentence needs. In two of them, nobody eats or drinks the thing."
+msgstr "Набери форму, потрібну реченню. У двох реченнях цю річ ніхто не їсть і не п’є."
+
+msgid "Type the form the sentence needs"
+msgstr "Набери потрібну форму"
+
 msgid "Type the number"
 msgstr "Введи число"
 
@@ -12700,6 +12766,9 @@ msgstr "Яке закінчення?"
 
 msgid "Which form did you hear?"
 msgstr "Яку форму ти чуєш?"
+
+msgid "Which form fills the gap?"
+msgstr "Яка форма заповнює пропуск?"
 
 msgid "Which form follows the number?"
 msgstr "Яка форма йде після числа?"

@@ -707,6 +707,9 @@ msgstr "135–145 mmol/L in adults"
 msgid "14 cards"
 msgstr "14 cards"
 
+msgid "16 minutes"
+msgstr "16 minutes"
+
 msgid "17."
 msgstr "17."
 
@@ -748,9 +751,6 @@ msgstr "23 metres."
 
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 questions, 15 to pass. 300 to learn."
-
-msgid "3 exercises"
-msgstr "3 exercises"
 
 msgid "3 of 4 chosen"
 msgstr "3 of 4 chosen"
@@ -808,6 +808,9 @@ msgstr "500 feet in either direction"
 
 msgid "6 cards from Anatomy"
 msgstr "6 cards from Anatomy"
+
+msgid "6 exercises"
+msgstr "6 exercises"
 
 msgid "60% in reading, writing and listening, and 60% in speaking."
 msgstr "60% in reading, writing and listening, and 60% in speaking."
@@ -1585,6 +1588,9 @@ msgstr "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 
+msgid "After <0>pole</0>, what isn’t there takes the third form."
+msgstr "After <0>pole</0>, what isn’t there takes the third form."
+
 msgid "After <0>pole</0>, what someone hasn’t got, or what there is none of in a place, takes the third form: <1>Mul pole kassi, Laual pole leiba</1>. When the sentence starts with the thing, it keeps its first: <2>Kass pole laual</2>."
 msgstr "After <0>pole</0>, what someone hasn’t got, or what there is none of in a place, takes the third form: <1>Mul pole kassi, Laual pole leiba</1>. When the sentence starts with the thing, it keeps its first: <2>Kass pole laual</2>."
 
@@ -1717,6 +1723,9 @@ msgstr "All Estonian decks"
 msgid "All exams"
 msgstr "All exams"
 
+msgid "All four. You told the two kinds of sentence apart."
+msgstr "All four. You told the two kinds of sentence apart."
+
 msgid "All free decks"
 msgstr "All free decks"
 
@@ -1800,6 +1809,9 @@ msgstr "All seven. You know the week by ear."
 
 msgid "All shelves"
 msgstr "All shelves"
+
+msgid "All six, typed in full."
+msgstr "All six, typed in full."
 
 msgid "All six. Every ending was right."
 msgstr "All six. Every ending was right."
@@ -3644,6 +3656,9 @@ msgstr "Each round shows a number. Pick the form of the noun that follows it, th
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 
+msgid "Each round shows a sentence with a gap. Pick the form that fills it: does the sentence say something isn’t there, or does it start with the thing?"
+msgstr "Each round shows a sentence with a gap. Pick the form that fills it: does the sentence say something isn’t there, or does it start with the thing?"
+
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 
@@ -5067,6 +5082,9 @@ msgstr "Hear it read"
 
 msgid "Hear the question, then pick the short answer that says no."
 msgstr "Hear the question, then pick the short answer that says no."
+
+msgid "Hear the sentences above once more, then try again."
+msgstr "Hear the sentences above once more, then try again."
 
 msgid "Hear the two questions above once more, then try again."
 msgstr "Hear the two questions above once more, then try again."
@@ -7432,6 +7450,12 @@ msgstr "Nature"
 msgid "NCLEX pharmacology"
 msgstr "NCLEX pharmacology"
 
+msgid "Nearly. Compare the last row of the table once more."
+msgstr "Nearly. Compare the last row of the table once more."
+
+msgid "Nearly. Hear the sentences above for the ones you missed."
+msgstr "Nearly. Hear the sentences above for the ones you missed."
+
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Nearly. Listen for the verb in the question."
 
@@ -7440,6 +7464,9 @@ msgstr "Nearly. Listen to the first word of the ones you missed."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nearly. Tap the amounts above for the ones you missed."
+msgstr "Nearly. Tap the amounts above for the ones you missed."
 
 msgid "Nearly. Tap the endings above once more."
 msgstr "Nearly. Tap the endings above once more."
@@ -7642,6 +7669,9 @@ msgstr "No. Only you add and edit cards. Learners review them, and each keeps th
 msgid "No. Quizlet exports a set’s terms and definitions as text, so your cards start as new. Your first answers in Lymi show what you already know, and those cards come back less often."
 msgstr "No. Quizlet exports a set’s terms and definitions as text, so your cards start as new. Your first answers in Lymi show what you already know, and those cards come back less often."
 
+msgid "Nobody eats or drinks it here: the sentence is about it, so the first form."
+msgstr "Nobody eats or drinks it here: the sentence is about it, so the first form."
+
 msgid "Noji alternative: Lymi vs Noji, compared · Lymi"
 msgstr "Noji alternative: Lymi vs Noji, compared · Lymi"
 
@@ -7762,6 +7792,9 @@ msgstr "Now"
 
 msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
 msgstr "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
+
+msgid "Now make the form yourself. Each round shows the word as a dictionary gives it and the amount before it. Type its third form."
+msgstr "Now make the form yourself. Each round shows the word as a dictionary gives it and the amount before it. Type its third form."
 
 msgid "Now the stem is loe-, in the past luge-."
 msgstr "Now the stem is loe-, in the past luge-."
@@ -9741,6 +9774,9 @@ msgstr "Sobre, over, plus mesa, table. It can outlast the meal."
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 
+msgid "Some of it, eaten, drunk or wanted, not counted: the third form."
+msgstr "Some of it, eaten, drunk or wanted, not counted: the third form."
+
 msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 msgstr "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 
@@ -10257,11 +10293,17 @@ msgstr "Tap an amount"
 msgid "Tap an ending"
 msgstr "Tap an ending"
 
+msgid "Tap both columns of the table once more, then try again."
+msgstr "Tap both columns of the table once more, then try again."
+
 msgid "Tap õ, ä and ü in the vowels above once more, then try again."
 msgstr "Tap õ, ä and ü in the vowels above once more, then try again."
 
 msgid "Tap one side, then its match on the other."
 msgstr "Tap one side, then its match on the other."
+
+msgid "Tap the amounts above once more, then try again."
+msgstr "Tap the amounts above once more, then try again."
 
 msgid "Tap the commands above once more, then try again."
 msgstr "Tap the commands above once more, then try again."
@@ -10554,6 +10596,12 @@ msgstr "The basics"
 msgid "The book is on the table."
 msgstr "The book is on the table."
 
+msgid "The bread is on the table."
+msgstr "The bread is on the table."
+
+msgid "The bread isn’t on the table."
+msgstr "The bread isn’t on the table."
+
 msgid "The browning that gives seared, baked and toasted food its flavour"
 msgstr "The browning that gives seared, baked and toasted food its flavour"
 
@@ -10845,6 +10893,9 @@ msgstr "The Lymi plugin gives your assistant a skill for each. It installs in Cl
 msgid "The m becomes d: -ma turns into -da."
 msgstr "The m becomes d: -ma turns into -da."
 
+msgid "The milk costs two euros."
+msgstr "The milk costs two euros."
+
 msgid "the Mochi docs"
 msgstr "the Mochi docs"
 
@@ -11022,6 +11073,9 @@ msgstr "The second day of the week."
 msgid "The second day. Teisi- sounds like <0/>, second."
 msgstr "The second day. Teisi- sounds like <0/>, second."
 
+msgid "The sentence starts with it, so it keeps its first form."
+msgstr "The sentence starts with it, so it keeps its first form."
+
 msgid "The seven days, the four that count, and how to say what day it is."
 msgstr "The seven days, the four that count, and how to say what day it is."
 
@@ -11084,6 +11138,9 @@ msgstr "The strike"
 
 msgid "The sugar photosynthesis makes"
 msgstr "The sugar photosynthesis makes"
+
+msgid "The table isn’t in the room."
+msgstr "The table isn’t in the room."
 
 msgid "The table lights up who the word means."
 msgstr "The table lights up who the word means."
@@ -12014,6 +12071,15 @@ msgstr "Type a word. Lymi adds a meaning, an example and audio, and marks every 
 msgid "Type the form"
 msgstr "Type the form"
 
+msgid "Type the form after the amount"
+msgstr "Type the form after the amount"
+
+msgid "Type the form each sentence needs. In two of them, nobody eats or drinks the thing."
+msgstr "Type the form each sentence needs. In two of them, nobody eats or drinks the thing."
+
+msgid "Type the form the sentence needs"
+msgstr "Type the form the sentence needs"
+
 msgid "Type the number"
 msgstr "Type the number"
 
@@ -12700,6 +12766,9 @@ msgstr "Which ending?"
 
 msgid "Which form did you hear?"
 msgstr "Which form did you hear?"
+
+msgid "Which form fills the gap?"
+msgstr "Which form fills the gap?"
 
 msgid "Which form follows the number?"
 msgstr "Which form follows the number?"

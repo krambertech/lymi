@@ -4589,6 +4589,26 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "osastav/leib-pole-laual": {
+    "text": "Leib pole laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/laud-pole-toas": {
+    "text": "Laud pole toas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/piim-maksab-kaks-eurot": {
+    "text": "Piim maksab kaks eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/leib-on-laual": {
+    "text": "Leib on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "osastav/kass": {
     "text": "kass",
     "model": "eleven_v4",

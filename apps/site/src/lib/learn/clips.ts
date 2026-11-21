@@ -719,6 +719,93 @@ const KIT_CLIPS: Record<string, Clip> = {
   ...KIT_DIALOGUE,
 };
 
+/**
+ * The practice lesson “A day in Tallinn”: Mari's message, Jaan's voice message, a Saturday with
+ * gaps and a talk at a café. Words from lessons 1–10, plus buss and pühapäeval, which its glossary
+ * explains.
+ */
+export const TALLINN_PASSAGES = {
+  mari: [
+    "Tere! Kuidas läheb?",
+    "Täna on reede ja ma olen tööl.",
+    "Homme on laupäev ja ma ei tööta.",
+    "Ma joon kell kümme kohvikus kohvi.",
+    "Kohv maksab kolm eurot.",
+    "Kell kaksteist olen turul.",
+    "Kas sa oled homme linnas?",
+  ],
+  jaan: [
+    "Tere, see on Jaan!",
+    "Ma olen täna Tartus, aga homme olen Tallinnas.",
+    "Minu buss on Tallinnas kell pool üksteist.",
+    "Ma ootan sind kohvikus.",
+    "Pühapäeval olen kodus.",
+  ],
+  saturday: [
+    "Täna on laupäev.",
+    "Ma ei tööta.",
+    "Ma olen Tallinnas.",
+    "Mari ja Jaan on minu sõbrad.",
+    "Me joome kell kümme kohvikus kohvi.",
+    "Kohv maksab kolm eurot.",
+  ],
+} as const;
+
+/** Meeting Mari at the café: her lines in the second voice, the learner's in the main one. */
+export const TALLINN_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Kuidas läheb?", voice: "second" },
+  "d-sina-1": "Hästi, aitäh. Aga sul?",
+  "d-mari-2": { text: "Hästi! Istu! Kas sa jood kohvi?", voice: "second" },
+  "d-sina-2": "Jah, ma joon kohvi.",
+  "d-mari-3": { text: "Mis kell on?", voice: "second" },
+  "d-sina-3": "Kell on pool üksteist.",
+  "d-mari-4": { text: "Kas sa töötad homme?", voice: "second" },
+  "d-sina-4": "Ei, homme on pühapäev.",
+} as const satisfies Record<string, Clip>;
+
+/** The words of “A day in Tallinn” with a card, each heard on its own. */
+export const TALLINN_WORDS = [
+  "kohvik",
+  "avatud",
+  "suletud",
+  "kohvikus",
+  "turul",
+  "tööl",
+  "linnas",
+  "kodus",
+  "täna",
+  "homme",
+  "reede",
+  "laupäev",
+  "pühapäev",
+  "pühapäeval",
+  "kell",
+  "kümme",
+  "kaksteist",
+  "üksteist",
+  "pool",
+  "pool üksteist",
+  "maksab",
+  "eurot",
+  "buss",
+  "ootan",
+  "sind",
+  "istu",
+  "aga",
+  "olema",
+  "ei",
+  "sõbrad",
+  "Kuidas läheb?",
+] as const;
+
+const TALLINN_CLIPS: Record<string, Clip> = {
+  ...words(TALLINN_WORDS),
+  "p-mari": { sentences: TALLINN_PASSAGES.mari, voice: "second" },
+  "p-jaan": { sentences: TALLINN_PASSAGES.jaan },
+  "p-saturday": { sentences: TALLINN_PASSAGES.saturday },
+  ...TALLINN_DIALOGUE,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -811,5 +898,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ]),
     ...KASKIV_DIALOGUE,
   },
+  "paev-tallinnas": TALLINN_CLIPS,
   kit: KIT_CLIPS,
 };

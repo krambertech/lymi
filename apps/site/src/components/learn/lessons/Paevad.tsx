@@ -11,6 +11,7 @@ import { shuffledRun } from "../../../lib/learn/quiz";
 import { Chips, Keys, Panel } from "../Explore";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { OpeningHours } from "../OpeningHours";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
 import { PlayButton, Playing } from "../Sound";
 import { Word } from "../Word";
@@ -213,34 +214,19 @@ function DayTile(props: {
   );
 }
 
-/** A door sign with opening hours, written the way Estonian shops write them. */
+/** A shop's door sign, the one the days lesson reads. */
 function DoorSign() {
   const { t } = useLingui();
-  const rows = [
-    ["E–R", "9–18"],
-    ["L", "10–16"],
-    ["P", "suletud"],
-  ] as const;
   return (
-    <figure className="m-0 grid justify-items-center gap-2">
-      <div
-        lang="et"
-        className="grid w-full max-w-64 gap-1.5 rounded-lg bg-ink px-5 pt-3.5 pb-4 text-canvas shadow-(--learn-lift)"
-      >
-        <span className="text-center text-sm font-semibold tracking-[0.12em] uppercase">
-          avatud
-        </span>
-        <dl className="m-0 grid grid-cols-[auto_1fr] gap-x-6 gap-y-1 text-xl font-semibold tabular-nums">
-          {rows.map(([days, hours]) => (
-            <div key={days} className="contents">
-              <dt>{days}</dt>
-              <dd className="m-0 text-end">{hours}</dd>
-            </div>
-          ))}
-        </dl>
-      </div>
-      <figcaption className="text-sm text-ink-secondary">{t`A shop's opening hours`}</figcaption>
-    </figure>
+    <OpeningHours
+      name="avatud"
+      rows={[
+        ["E–R", "9–18"],
+        ["L", "10–16"],
+        ["P", "suletud"],
+      ]}
+      caption={t`A shop's opening hours`}
+    />
   );
 }
 

@@ -71,6 +71,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "Each round offers one verb's conditional for sa, me and ta: läheks against läheksid and läheksime is the lesson, and the pronoun before the gap decides it.",
   },
   {
+    lesson: "labi-metsa",
+    quiz: "which-form",
+    reason:
+      "Each round offers one noun's genitive and partitive: pargi against parki is the lesson, and the word before the gap decides it.",
+  },
+  {
     lesson: "lahme-las",
     quiz: "lets-or-las",
     reason:

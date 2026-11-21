@@ -3098,6 +3098,99 @@ const PARTICLE_CLIPS: Record<string, Clip> = {
   ...PARTICLE_DIALOGUE,
 };
 
+export const PREPOSITIONS = [
+  { word: "läbi", takes: "genitive", phrase: "läbi pargi", said: "Me läksime läbi pargi." },
+  { word: "üle", takes: "genitive", phrase: "üle tee", said: "Mine üle tee!" },
+  { word: "ümber", takes: "genitive", phrase: "ümber maja", said: "Lapsed jooksevad ümber maja." },
+  { word: "mööda", takes: "partitive", phrase: "mööda teed", said: "Me sõitsime mööda teed." },
+] as const;
+
+export const PREPOSITION_GAPS = [
+  {
+    id: "labi-park",
+    before: "Me läksime läbi",
+    after: ".",
+    answer: "pargi",
+    options: ["pargi", "parki"],
+  },
+  {
+    id: "mooda-tanav",
+    before: "Me sõitsime mööda",
+    after: ".",
+    answer: "tänavat",
+    options: ["tänava", "tänavat"],
+  },
+  {
+    id: "ule-sild",
+    before: "Auto sõitis üle",
+    after: ".",
+    answer: "silla",
+    options: ["silla", "silda"],
+  },
+  {
+    id: "umber-park",
+    before: "Lapsed jooksevad ümber",
+    after: ".",
+    answer: "pargi",
+    options: ["pargi", "parki"],
+  },
+  {
+    id: "mooda-sild",
+    before: "Ma kõnnin aeglaselt mööda",
+    after: ".",
+    answer: "silda",
+    options: ["silla", "silda"],
+  },
+  {
+    id: "ule-tanav",
+    before: "Mine siin üle",
+    after: "!",
+    answer: "tänava",
+    options: ["tänava", "tänavat"],
+  },
+  {
+    id: "mooda-tanav-2",
+    before: "Jalutame veel natuke mööda",
+    after: ".",
+    answer: "tänavat",
+    options: ["tänava", "tänavat"],
+  },
+  {
+    id: "mooda-park",
+    before: "Koer jooksis mööda",
+    after: ".",
+    answer: "parki",
+    options: ["pargi", "parki"],
+  },
+] as const;
+
+export const DIRECTIONS_PASSAGE = [
+  "Tere! Siin Jaan. Ma seletan, kuidas minu juurde tulla.",
+  "Bussipeatusest mine kõigepealt üle tee.",
+  "Siis kõnni natuke aega mööda jõge.",
+  "Mine üle silla ja läbi väikese pargi.",
+  "Minu maja on pargi taga, sellel on punane katus.",
+] as const;
+
+export const PREPOSITION_WORDS = [
+  "läbi",
+  "üle",
+  "ümber",
+  "mööda",
+  "park",
+  "sild",
+  "tänav",
+  "jõgi",
+] as const;
+
+const PREPOSITION_CLIPS: Record<string, Clip> = {
+  ...words(PREPOSITION_WORDS),
+  ...words(PREPOSITIONS.flatMap((item) => [item.phrase, item.said])),
+  ...words(PREPOSITION_GAPS.flatMap((gap) => gap.options)),
+  ...words(PREPOSITION_GAPS.map(objectGapSaid)),
+  "p-jaan": { sentences: DIRECTIONS_PASSAGE, voice: "second" },
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -4072,6 +4165,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "ootan-sind": GOVERNMENT_CLIPS,
   kiri: LETTER_CLIPS,
   "aru-saama": PARTICLE_CLIPS,
+  "labi-metsa": PREPOSITION_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

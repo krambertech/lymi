@@ -484,7 +484,7 @@ export function OsastavLesson() {
   const negation = lessonBySlug("eitus")?.n;
   const questions = lessonBySlug("kusimused")?.n;
   const present = lessonBySlug("olevik")?.n;
-  const forms = LESSONS.find((lesson) => lesson.et === "Kolm põhivormi")?.n;
+  const forms = lessonBySlug("pohivormid")?.n;
   const have = LESSONS.find((lesson) => lesson.et === "Mul on")?.n;
   const object = LESSONS.find((lesson) => lesson.et === "Raamatut või raamatu")?.n;
 

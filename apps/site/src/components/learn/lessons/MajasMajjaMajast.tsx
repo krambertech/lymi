@@ -286,7 +286,7 @@ export function MajasMajjaMajastLesson() {
   const { t, i18n } = useLingui();
   const places = lessonBySlug("kohad")?.n;
   const questions = lessonBySlug("kusimused")?.n;
-  const threeForms = LESSONS.find((lesson) => lesson.et === "Kolm põhivormi")?.n;
+  const threeForms = lessonBySlug("pohivormid")?.n;
   const onto = LESSONS.find((lesson) => lesson.et === "Laual, lauale, laualt")?.n;
 
   const keyOf = (label: string, sub: React.ReactNode, id: Id, tip?: React.ReactNode): KeyItem => ({

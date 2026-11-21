@@ -2155,23 +2155,23 @@ const FUTURE_CLIPS: Record<string, Clip> = {
 export const WEEKEND_PASSAGES = {
   mari: [
     "Tere! Mul oli väga hea nädalavahetus.",
-    "Laupäeval me käisime Tartus.",
-    "Me sõime kohvikus ja vaatasime linna.",
-    "Pühapäeval ma olin kodus ja lugesin raamatut.",
+    "Laupäeval käisime me Tartus.",
+    "Me sõime kohvikus ja vaatasime linnas ringi.",
+    "Pühapäeval olin ma kodus ja lugesin raamatut.",
     "Jaan ei tulnud, sest ta töötas.",
   ],
   jaan: [
     "Tere, Mari! See on Jaan.",
-    "Järgmisel nädalal ma hakkan eesti keelt õppima.",
+    "Järgmisel nädalal hakkan ma eesti keelt õppima.",
     "Esmaspäeval ja kolmapäeval on mul tund kell kuus.",
     "Reedel ma ei tööta.",
     "Kas me läheme reedel kinno?",
   ],
   kati: [
-    "Eelmisel laupäeval ma olin kodus.",
+    "Eelmisel laupäeval olin ma kodus.",
     "Ma ei läinud kinno.",
-    "Järgmisel laupäeval ma lähen Tartusse.",
-    "Esmaspäeval ma hakkan töötama.",
+    "Järgmisel laupäeval lähen ma Tartusse.",
+    "Esmaspäeval hakkan ma töötama.",
   ],
 } as const;
 

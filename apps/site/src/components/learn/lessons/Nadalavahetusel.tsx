@@ -36,10 +36,10 @@ const GLOSSARY: Glossary = {
 };
 
 const PLAN_GAPS: GapItem[] = [
-  { id: "olin", before: "Eelmisel laupäeval ma", after: "kodus.", answer: "olin" },
+  { id: "olin", before: "Eelmisel laupäeval", after: "ma kodus.", answer: "olin" },
   { id: "lainud", before: "Ma ei", after: "kinno.", answer: "läinud" },
-  { id: "lahen", before: "Järgmisel laupäeval ma", after: "Tartusse.", answer: "lähen" },
-  { id: "tootama", before: "Esmaspäeval ma hakkan", after: ".", answer: "töötama" },
+  { id: "lahen", before: "Järgmisel laupäeval", after: "ma Tartusse.", answer: "lähen" },
+  { id: "tootama", before: "Esmaspäeval hakkan ma", after: ".", answer: "töötama" },
 ];
 
 function useContent() {
@@ -112,7 +112,7 @@ function useContent() {
       id: "ask",
       ask: t`What does Jaan ask Mari?`,
       options: [
-        { id: "work", label: t`If she is free` },
+        { id: "tartu", label: t`To go to Tartu on Friday` },
         { id: "cinema", label: t`To go to the cinema on Friday` },
         { id: "lesson", label: t`To come to his lesson` },
       ],
@@ -138,10 +138,11 @@ function useContent() {
         },
         { line: said("d-sina-1"), right: true },
         {
-          line: "Ma hakkan Tartusse minema.",
+          line: "Ma käisin sõbraga Tartusse.",
           why: (
             <Trans>
-              That’s what you’re going to do. Kati asked about the past: <Et>ma käisin</Et>.
+              With <Et>käima</Et> the place takes -s: <Et>Tartus</Et>. The -sse ending goes with{" "}
+              <Et>minema</Et>.
             </Trans>
           ),
         },
@@ -237,7 +238,8 @@ export function NadalavahetuselLesson() {
       recap={[
         <Trans key="1">
           The past adds -si- or -i- and the ending that says who: <b lang="et">lugesin</b>,{" "}
-          <b lang="et">käisime</b>, <b lang="et">ta töötas</b>.
+          <b lang="et">käisime</b>, <b lang="et">sõime</b>; with <b lang="et">ta</b>, just -s:{" "}
+          <b lang="et">ta töötas</b>.
         </Trans>,
         <Trans key="2">
           “Didn’t” is <b lang="et">ei</b> with the -nud form, the same for everyone:{" "}
@@ -249,7 +251,7 @@ export function NadalavahetuselLesson() {
           <b lang="et">ma hakkan õppima</b>.
         </Trans>,
         <Trans key="4">
-          A word for when takes -l:{" "}
+          Days, weeks and the weekend take -l for “when”:{" "}
           <b lang="et">eelmisel laupäeval, järgmisel nädalal, nädalavahetusel</b>.
         </Trans>,
       ]}
@@ -289,8 +291,8 @@ export function NadalavahetuselLesson() {
                 <p>
                   <Trans>
                     Now Jaan talks about <Word w="järgmisel nädalal" />, next week. Listen for what
-                    he is going to start, with the <Et>hakkama</Et> of lesson {future}, and for the
-                    days in the present that mean the future.
+                    he is going to start, with the <Et>hakkama</Et> of lesson {future}, and for days
+                    with a present-tense verb that point to the future.
                   </Trans>
                 </p>
               </Prose>
@@ -313,9 +315,9 @@ export function NadalavahetuselLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Kati writes what she did, what she didn’t do and what she will do. The time word
-                    at the start of each sentence tells you which: <Word w="eelmisel laupäeval" />{" "}
-                    is past, <Et>järgmisel laupäeval</Et> is future.
+                    Kati writes what she did, what she didn’t do and what she will do. The time
+                    words tell you which: <Word w="eelmisel laupäeval" /> is past,{" "}
+                    <Et>järgmisel laupäeval</Et> is future.
                   </Trans>
                 </p>
               </Prose>

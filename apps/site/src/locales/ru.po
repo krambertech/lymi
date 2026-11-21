@@ -935,7 +935,7 @@ msgid "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you ar
 msgstr "<0>Ma ei tea</0> — это «я не знаю». <1>Kuidas läheb?</1> — это «Как дела?»."
 
 msgid "<0>Ma käisin</0> says you went. To say you didn’t: <1>ma ei käinud</1>."
-msgstr "<0>Ma käisin</0> значит, что ты ходил. Чтобы сказать «не ходил»: <1>ma ei käinud</1>."
+msgstr "<0>Ma käisin</0> значит «да». Чтобы сказать «нет»: <1>ma ei käinud</1>."
 
 msgid "<0>Ma tahan lugeda</0> is I want to read, and <1>Ma pean lugema</1> is I have to read. The first verb decides whether the second takes its <2>-da</2> or its <3>-ma</3> form."
 msgstr "<0>Ma tahan lugeda</0> — это «я хочу читать», а <1>Ma pean lugema</1> — «мне надо читать». Первый глагол решает, в какой форме будет второй: на <2>-da</2> или на <3>-ma</3>."
@@ -2115,9 +2115,6 @@ msgstr "женское имя"
 
 msgid "A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer shows the word turning into its form."
 msgstr "Слово и подсказка: введи форму, с клавишами õ ä ö ü š ž, или выбери её. Ответ показывает, как слово становится формой."
-
-msgid "A word for when takes -l: <0>eelmisel laupäeval, järgmisel nädalal, nädalavahetusel</0>."
-msgstr "Слово для «когда» берёт -l: <0>eelmisel laupäeval, järgmisel nädalal, nädalavahetusel</0>."
 
 msgid "A word list from a spreadsheet"
 msgstr "Список слов из таблицы"
@@ -4613,6 +4610,9 @@ msgstr "Дни недели"
 msgid "Days of the week in Estonian"
 msgstr "Дни недели на эстонском"
 
+msgid "Days, weeks and the weekend take -l for “when”: <0>eelmisel laupäeval, järgmisel nädalal, nädalavahetusel</0>."
+msgstr "Дни, недели и выходные в ответ на «когда?» получают -l: <0>eelmisel laupäeval, järgmisel nädalal, nädalavahetusel</0>."
+
 msgid "Deadline"
 msgstr "Срок"
 
@@ -7039,7 +7039,7 @@ msgid "He was at the shop"
 msgstr "Он был в магазине"
 
 msgid "He was ill"
-msgstr "Он заболел"
+msgstr "Он болел"
 
 msgid "He was in Tartu"
 msgstr "Он был в Тарту"
@@ -8480,9 +8480,6 @@ msgstr "Если бы"
 msgid "If only; maybe; I wish"
 msgstr "Если бы; может быть; вот бы"
 
-msgid "If she is free"
-msgstr "Свободна ли она"
-
 msgid "If you have money"
 msgstr "Есть ли у тебя деньги"
 
@@ -9302,8 +9299,8 @@ msgstr "Кати пишет о своей семье. В каждом пропу
 msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 msgstr "Кати пишет о себе. В каждом пропуске — одно из того, что ты уже знаешь: форма <0>olema</0>, окончание глагола, глагол после <1>ei</1>, место с <2>-l</2> или вопросительное слово."
 
-msgid "Kati writes what she did, what she didn’t do and what she will do. The time word at the start of each sentence tells you which: <0/> is past, <1>järgmisel laupäeval</1> is future."
-msgstr "Кати пишет, что она сделала, чего не сделала и что сделает. Слово времени в начале каждого предложения подсказывает, что именно: <0/> — прошлое, <1>järgmisel laupäeval</1> — будущее."
+msgid "Kati writes what she did, what she didn’t do and what she will do. The time words tell you which: <0/> is past, <1>järgmisel laupäeval</1> is future."
+msgstr "Кати пишет, что она сделала, чего не сделала и что сделает. Слова времени подсказывают, что именно: <0/> — прошлое, <1>järgmisel laupäeval</1> — будущее."
 
 msgid "Kati’s message"
 msgstr "Сообщение от Кати"
@@ -11337,8 +11334,8 @@ msgstr "В настоящем — <0>teen</0>, а в прошедшем g воз
 msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
 msgstr "Теперь суббота, и вот твой план. Вставь в каждый пропуск слово: форму <0/>, глагол с нужным окончанием, <1/> или форму слова после числа."
 
-msgid "Now Jaan talks about <0/>, next week. Listen for what he is going to start, with the <1>hakkama</1> of lesson {future}, and for the days in the present that mean the future."
-msgstr "Теперь Яан говорит о <0/> — следующей неделе. Слушай, что он начнёт делать, — это <1>hakkama</1> из урока {future}, и дни в настоящем времени, которые означают будущее."
+msgid "Now Jaan talks about <0/>, next week. Listen for what he is going to start, with the <1>hakkama</1> of lesson {future}, and for days with a present-tense verb that point to the future."
+msgstr "Теперь Яан говорит о <0/> — следующей неделе. Слушай, что он начнёт делать, — это <1>hakkama</1> из урока {future}, и обрати внимание на дни с глаголом в настоящем времени, которые указывают на будущее."
 
 msgid "Now Kati asks where you live, and you do the living, so you: <0>sina</0>."
 msgstr "Теперь Кати спрашивает, где живёшь именно ты, поэтому «ты»: <0>sina</0>."
@@ -13498,7 +13495,7 @@ msgid "She studies"
 msgstr "Она учится"
 
 msgid "She went to the market"
-msgstr "Ходила на рынок"
+msgstr "Ходила на рынок за продуктами"
 
 msgid "She worked"
 msgstr "Работала"
@@ -14737,7 +14734,7 @@ msgid "That says where you live. Mari asked how you are."
 msgstr "Это о том, где ты живёшь. Мари спросила, как у тебя дела."
 
 msgid "That says you didn’t work, in the past. Kati asks about next weekend: <0>ma töötan</0>."
-msgstr "Это значит, что ты не работал, в прошлом. Кати спрашивает про следующие выходные: <0>ma töötan</0>."
+msgstr "Это отрицание в прошлом. Кати спрашивает про следующие выходные: <0>ma töötan</0>."
 
 msgid "That says you don’t like it. Liis asked you to come."
 msgstr "Так ты говоришь, что тебе не нравится. А Лийс звала тебя прийти."
@@ -14786,9 +14783,6 @@ msgstr "Это о том, который час. Мари спросила, ка
 
 msgid "That’s what you’re doing now. Kati asked about yesterday."
 msgstr "Это о том, что ты делаешь сейчас. Кати спрашивала о вчерашнем дне."
-
-msgid "That’s what you’re going to do. Kati asked about the past: <0>ma käisin</0>."
-msgstr "Это о том, что ты только собираешься сделать. Кати спросила о прошлом: <0>ma käisin</0>."
 
 msgid "The -da form of {ma}."
 msgstr "Форма на -da от {ma}."
@@ -15660,8 +15654,8 @@ msgstr "Партитив от tee, после joob."
 msgid "The passage"
 msgstr "Текст"
 
-msgid "The past adds -si- or -i- and the ending that says who: <0>lugesin</0>, <1>käisime</1>, <2>ta töötas</2>."
-msgstr "Прошедшее время добавляет -si- или -i- и окончание, которое говорит кто: <0>lugesin</0>, <1>käisime</1>, <2>ta töötas</2>."
+msgid "The past adds -si- or -i- and the ending that says who: <0>lugesin</0>, <1>käisime</1>, <2>sõime</2>; with <3>ta</3>, just -s: <4>ta töötas</4>."
+msgstr "Прошедшее время добавляет -si- или -i- и окончание, которое показывает, кто: <0>lugesin</0>, <1>käisime</1>, <2>sõime</2>; с <3>ta</3> — только -s: <4>ta töötas</4>."
 
 msgid "The past keeps the stem of the <0>ma</0> form where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>ma</6> form beside the I form."
 msgstr "Прошедшее время сохраняет основу формы на <0>ma</0> там, где настоящее её меняет. Сейчас говорят <1/>, а в прошлом <2/>, потому что прошедшее образуется от <3/>. Так же <4/> — настоящее, а <5/> — прошедшее. Форму на <6>ma</6> рядом с формой для «я» показывает урок {verbForms}."
@@ -16732,7 +16726,7 @@ msgid "To come"
 msgstr "Приходить"
 
 msgid "To come to his lesson"
-msgstr "Прийти на его урок"
+msgstr "Придёт ли она на его урок"
 
 msgid "to do, to make"
 msgstr "делать"
@@ -16797,8 +16791,11 @@ msgstr "ходить (туда и обратно); ходить регулярн
 msgid "to go and come back; to visit"
 msgstr "ходить куда-то и возвращаться; бывать"
 
+msgid "To go to Tartu on Friday"
+msgstr "Поедут ли они в Тарту"
+
 msgid "To go to the cinema on Friday"
-msgstr "Пойти в кино в пятницу"
+msgstr "Пойдут ли они в кино в пятницу"
 
 msgid "To go up"
 msgstr "Подниматься"
@@ -17914,7 +17911,7 @@ msgid "What does it say?"
 msgstr "Что это значит?"
 
 msgid "What does Jaan ask Mari?"
-msgstr "Что Яан спрашивает у Мари?"
+msgstr "О чём Яан спрашивает Мари?"
 
 msgid "What does Jaan ask you?"
 msgstr "О чём тебя спрашивает Яан?"
@@ -18698,6 +18695,9 @@ msgstr "С <0>eile</0> — прошедшее время."
 
 msgid "With <0>homme</0>, the present says what’s coming."
 msgstr "С <0>homme</0> настоящее время говорит о том, что будет."
+
+msgid "With <0>käima</0> the place takes -s: <1>Tartus</1>. The -sse ending goes with <2>minema</2>."
+msgstr "С <0>käima</0> место получает -s: <1>Tartus</1>. Окончание -sse — с <2>minema</2>."
 
 msgid "with a book"
 msgstr "с книгой"

@@ -2115,9 +2115,6 @@ msgstr "a woman’s name"
 msgid "A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer shows the word turning into its form."
 msgstr "A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer shows the word turning into its form."
 
-msgid "A word for when takes -l: <0>eelmisel laupäeval, järgmisel nädalal, nädalavahetusel</0>."
-msgstr "A word for when takes -l: <0>eelmisel laupäeval, järgmisel nädalal, nädalavahetusel</0>."
-
 msgid "A word list from a spreadsheet"
 msgstr "A word list from a spreadsheet"
 
@@ -4611,6 +4608,9 @@ msgstr "Days of the week"
 
 msgid "Days of the week in Estonian"
 msgstr "Days of the week in Estonian"
+
+msgid "Days, weeks and the weekend take -l for “when”: <0>eelmisel laupäeval, järgmisel nädalal, nädalavahetusel</0>."
+msgstr "Days, weeks and the weekend take -l for “when”: <0>eelmisel laupäeval, järgmisel nädalal, nädalavahetusel</0>."
 
 msgid "Deadline"
 msgstr "Deadline"
@@ -8479,9 +8479,6 @@ msgstr "If only"
 msgid "If only; maybe; I wish"
 msgstr "If only; maybe; I wish"
 
-msgid "If she is free"
-msgstr "If she is free"
-
 msgid "If you have money"
 msgstr "If you have money"
 
@@ -9301,8 +9298,8 @@ msgstr "Kati writes about her family. For each gap, pick who or whose."
 msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 msgstr "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 
-msgid "Kati writes what she did, what she didn’t do and what she will do. The time word at the start of each sentence tells you which: <0/> is past, <1>järgmisel laupäeval</1> is future."
-msgstr "Kati writes what she did, what she didn’t do and what she will do. The time word at the start of each sentence tells you which: <0/> is past, <1>järgmisel laupäeval</1> is future."
+msgid "Kati writes what she did, what she didn’t do and what she will do. The time words tell you which: <0/> is past, <1>järgmisel laupäeval</1> is future."
+msgstr "Kati writes what she did, what she didn’t do and what she will do. The time words tell you which: <0/> is past, <1>järgmisel laupäeval</1> is future."
 
 msgid "Kati’s message"
 msgstr "Kati’s message"
@@ -11336,8 +11333,8 @@ msgstr "Now it’s <0>teen</0>; the g comes back in the past."
 msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
 msgstr "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
 
-msgid "Now Jaan talks about <0/>, next week. Listen for what he is going to start, with the <1>hakkama</1> of lesson {future}, and for the days in the present that mean the future."
-msgstr "Now Jaan talks about <0/>, next week. Listen for what he is going to start, with the <1>hakkama</1> of lesson {future}, and for the days in the present that mean the future."
+msgid "Now Jaan talks about <0/>, next week. Listen for what he is going to start, with the <1>hakkama</1> of lesson {future}, and for days with a present-tense verb that point to the future."
+msgstr "Now Jaan talks about <0/>, next week. Listen for what he is going to start, with the <1>hakkama</1> of lesson {future}, and for days with a present-tense verb that point to the future."
 
 msgid "Now Kati asks where you live, and you do the living, so you: <0>sina</0>."
 msgstr "Now Kati asks where you live, and you do the living, so you: <0>sina</0>."
@@ -14786,9 +14783,6 @@ msgstr "That’s the time. Mari asked how you are."
 msgid "That’s what you’re doing now. Kati asked about yesterday."
 msgstr "That’s what you’re doing now. Kati asked about yesterday."
 
-msgid "That’s what you’re going to do. Kati asked about the past: <0>ma käisin</0>."
-msgstr "That’s what you’re going to do. Kati asked about the past: <0>ma käisin</0>."
-
 msgid "The -da form of {ma}."
 msgstr "The -da form of {ma}."
 
@@ -15659,8 +15653,8 @@ msgstr "The partitive of tee, after joob."
 msgid "The passage"
 msgstr "The passage"
 
-msgid "The past adds -si- or -i- and the ending that says who: <0>lugesin</0>, <1>käisime</1>, <2>ta töötas</2>."
-msgstr "The past adds -si- or -i- and the ending that says who: <0>lugesin</0>, <1>käisime</1>, <2>ta töötas</2>."
+msgid "The past adds -si- or -i- and the ending that says who: <0>lugesin</0>, <1>käisime</1>, <2>sõime</2>; with <3>ta</3>, just -s: <4>ta töötas</4>."
+msgstr "The past adds -si- or -i- and the ending that says who: <0>lugesin</0>, <1>käisime</1>, <2>sõime</2>; with <3>ta</3>, just -s: <4>ta töötas</4>."
 
 msgid "The past keeps the stem of the <0>ma</0> form where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>ma</6> form beside the I form."
 msgstr "The past keeps the stem of the <0>ma</0> form where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>ma</6> form beside the I form."
@@ -16795,6 +16789,9 @@ msgstr "to go and come back; to go regularly"
 
 msgid "to go and come back; to visit"
 msgstr "to go and come back; to visit"
+
+msgid "To go to Tartu on Friday"
+msgstr "To go to Tartu on Friday"
 
 msgid "To go to the cinema on Friday"
 msgstr "To go to the cinema on Friday"
@@ -18697,6 +18694,9 @@ msgstr "With <0>eile</0>, the past."
 
 msgid "With <0>homme</0>, the present says what’s coming."
 msgstr "With <0>homme</0>, the present says what’s coming."
+
+msgid "With <0>käima</0> the place takes -s: <1>Tartus</1>. The -sse ending goes with <2>minema</2>."
+msgstr "With <0>käima</0> the place takes -s: <1>Tartus</1>. The -sse ending goes with <2>minema</2>."
 
 msgid "with a book"
 msgstr "with a book"

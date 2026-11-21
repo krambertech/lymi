@@ -92,52 +92,48 @@ function How({ ma }: { ma: Verb }) {
     case "olema":
       return (
         <Trans>
-          I form <span lang="et">olen</span>. Drop <span lang="et">-⁠ema</span> and add{" "}
-          <span lang="et">-⁠la</span>.
+          I form <span lang="et">olen</span>. Drop <End>-ema</End> and add <End>-la</End>.
         </Trans>
       );
     case "tulema":
       return (
         <Trans>
-          I form <span lang="et">tulen</span>. Drop <span lang="et">-⁠ema</span> and add{" "}
-          <span lang="et">-⁠la</span>.
+          I form <span lang="et">tulen</span>. Drop <End>-ema</End> and add <End>-la</End>.
         </Trans>
       );
     case "minema":
       return (
         <Trans>
-          I form <span lang="et">lähen</span>, a stem of its own. Drop <span lang="et">-⁠ema</span>{" "}
-          and add <span lang="et">-⁠na</span>.
+          I form <span lang="et">lähen</span>, a stem of its own. Drop <End>-ema</End> and add{" "}
+          <End>-na</End>.
         </Trans>
       );
     case "tegema":
       return (
         <Trans>
-          I form <span lang="et">teen</span>. Drop <span lang="et">-⁠ema</span>, turn g into h and
-          add <span lang="et">-⁠a</span>.
+          I form <span lang="et">teen</span>. Drop <End>-ema</End>, turn g into h and add{" "}
+          <End>-a</End>.
         </Trans>
       );
     case "nägema":
       return (
         <Trans>
-          I form <span lang="et">näen</span>. Drop <span lang="et">-⁠ema</span>, turn g into h and
-          add <span lang="et">-⁠a</span>.
+          I form <span lang="et">näen</span>. Drop <End>-ema</End>, turn g into h and add{" "}
+          <End>-a</End>.
         </Trans>
       );
     case "sööma":
       return (
         <Trans>
-          I form <span lang="et">söön</span>. Drop <span lang="et">-⁠ma</span>, turn{" "}
-          <span lang="et">öö</span> into <span lang="et">üü</span> and add <span lang="et">-⁠a</span>
-          .
+          I form <span lang="et">söön</span>. Drop <End>-ma</End>, turn <span lang="et">öö</span>{" "}
+          into <span lang="et">üü</span> and add <End>-a</End>.
         </Trans>
       );
     case "jooma":
       return (
         <Trans>
-          I form <span lang="et">joon</span>. Drop <span lang="et">-⁠ma</span>, turn{" "}
-          <span lang="et">oo</span> into <span lang="et">uu</span> and add <span lang="et">-⁠a</span>
-          .
+          I form <span lang="et">joon</span>. Drop <End>-ma</End>, turn <span lang="et">oo</span>{" "}
+          into <span lang="et">uu</span> and add <End>-a</End>.
         </Trans>
       );
     default:
@@ -152,8 +148,8 @@ const GLOSSARY: Glossary = {
       const { ma, n } = verb;
       const command = COMMAND_MEANS[ma];
       return [
-        [ma, { en: MEANS[ma], note: msg`Its -⁠da form is ${da}, its I form ${n}.` }],
-        [da, { en: MEANS[ma], note: msg`The -⁠da form of ${ma}.` }],
+        [ma, { en: MEANS[ma], note: msg`Its -da form is ${da}, its I form ${n}.` }],
+        [da, { en: MEANS[ma], note: msg`The -da form of ${ma}.` }],
         [n, { en: I_MEANS[ma], note: msg`The I form of ${ma}.` }],
         [threeForms(verb), { en: MEANS[ma] }],
         ...(command ? [[verb.ge.toLowerCase(), { en: command, show: verb.ge }]] : []),
@@ -163,9 +159,18 @@ const GLOSSARY: Glossary = {
   "ma tahan lugeda": {
     en: msg`I want to read.`,
     show: "Ma tahan lugeda.",
-    note: msg`Tahan, I want, is followed by the -⁠da form.`,
+    note: msg`Tahan, I want, is followed by the -da form.`,
   },
 };
+
+/** An Estonian ending in running text: read in Estonian, never split after its hyphen. */
+function End({ children }: { children: ReactNode }) {
+  return (
+    <span lang="et" className="whitespace-nowrap">
+      {children}
+    </span>
+  );
+}
 
 /** A form with its ending in the stage's hue: “luge” + “da”. */
 function Lit({ stem, ending }: { stem: string; ending: string }) {
@@ -241,8 +246,23 @@ function VerbCard() {
         <PlayButton src={src(threeForms(verb))} label={t`Play all three`} />
       </div>
       <div className="grid gap-1.5 sm:grid-cols-3 sm:gap-2">
-        <FormTile label={<Trans>-⁠ma form</Trans>} parts={maParts(verb)} />
-        <FormTile label={<Trans>-⁠da form</Trans>} parts={verb.da} isNew />
+        <FormTile
+          label={
+            <Trans>
+              <End>-ma</End> form
+            </Trans>
+          }
+          parts={maParts(verb)}
+        />
+        <FormTile
+          label={
+            <Trans>
+              <End>-da</End> form
+            </Trans>
+          }
+          parts={verb.da}
+          isNew
+        />
         <FormTile label={<Trans>I form</Trans>} parts={nParts(verb)} />
       </div>
     </Panel>
@@ -291,18 +311,22 @@ function FormFlip() {
     ma: {
       title: (
         <Trans>
-          The <span lang="et">-⁠ma</span> form
+          The <End>-ma</End> form
         </Trans>
       ),
       tip: (
         <Trans>
-          The form a dictionary lists first. Take off -⁠ma and you have its stem,{" "}
+          The form a dictionary lists first. Take off <End>-ma</End> and you have its stem,{" "}
           <span lang="et">luge-</span>.
         </Trans>
       ),
     },
     da: {
-      title: <Trans>The same stem with -⁠da</Trans>,
+      title: (
+        <Trans>
+          The same stem with <End>-da</End>
+        </Trans>
+      ),
       tip: (
         <Trans>
           Only the ending changes: <span lang="et">luge-ma</span>, <span lang="et">luge-da</span>.
@@ -314,8 +338,8 @@ function FormFlip() {
       tip: (
         <Trans>
           It can have a stem of its own: <span lang="et">loe-n</span>,{" "}
-          <span lang="et">räägi-n</span>, <span lang="et">õpi-n</span>. The -⁠da form keeps the -⁠ma
-          form’s stem.
+          <span lang="et">räägi-n</span>, <span lang="et">õpi-n</span>. The <End>-da</End> form
+          keeps the <End>-ma</End> form’s stem.
         </Trans>
       ),
     },
@@ -325,9 +349,23 @@ function FormFlip() {
       <Chips
         label={t`Which form`}
         items={[
-          { label: t`-⁠ma form`, value: "ma" },
-          { label: t`-⁠da form`, value: "da" },
-          { label: t`I form`, value: "n" },
+          {
+            label: (
+              <Trans>
+                <End>-ma</End> form
+              </Trans>
+            ),
+            value: "ma",
+          },
+          {
+            label: (
+              <Trans>
+                <End>-da</End> form
+              </Trans>
+            ),
+            value: "da",
+          },
+          { label: <Trans>I form</Trans>, value: "n" },
         ]}
         value={kind}
         onPick={(value) => setKind(value)}
@@ -502,35 +540,35 @@ export const CLASS_GAPS = [
     before: "Täna me",
     after: "raamatut.",
     answer: "loeme",
-    options: ["loeme", "lugeme"],
+    options: ["loeme", "lugege"],
   },
   {
     id: "lugege",
     before: "",
     after: ", palun.",
     answer: "Lugege",
-    options: ["Loege", "Loete", "Lugege"],
+    options: ["Lugeda", "Loete", "Lugege"],
   },
   {
     id: "loete",
     before: "Te",
     after: "väga hästi.",
     answer: "loete",
-    options: ["lugete", "loete", "lugege"],
+    options: ["lugeda", "loete", "lugege"],
   },
   {
     id: "raagite",
     before: "Kas te",
     after: "kodus eesti keelt?",
     answer: "räägite",
-    options: ["räägite", "rääkige", "rääkite"],
+    options: ["räägite", "rääkige", "rääkida"],
   },
   {
     id: "raakige",
     before: "",
     after: "kodus eesti keelt!",
     answer: "Rääkige",
-    options: ["Räägite", "Räägige", "Rääkige"],
+    options: ["Räägite", "Rääkida", "Rääkige"],
   },
 ] as const satisfies readonly GapItem[];
 
@@ -540,7 +578,8 @@ function ClassWhy({ id }: { id: (typeof CLASS_GAPS)[number]["id"] }) {
     case "istuge":
       return (
         <Trans>
-          A command to the class, built on the -⁠da form: <span lang="et">istuda, istuge</span>.
+          A command to the class, built on the <End>-da</End> form:{" "}
+          <span lang="et">istuda, istuge</span>.
         </Trans>
       );
     case "loeme":
@@ -552,7 +591,7 @@ function ClassWhy({ id }: { id: (typeof CLASS_GAPS)[number]["id"] }) {
     case "lugege":
       return (
         <Trans>
-          A command, built on the -⁠da form: <span lang="et">lugeda, lugege</span>.
+          A command, built on the <End>-da</End> form: <span lang="et">lugeda, lugege</span>.
         </Trans>
       );
     case "loete":
@@ -571,7 +610,8 @@ function ClassWhy({ id }: { id: (typeof CLASS_GAPS)[number]["id"] }) {
     case "raakige":
       return (
         <Trans>
-          A command again, built on the -⁠da form: <span lang="et">rääkida, rääkige</span>.
+          A command again, built on the <End>-da</End> form: <span lang="et">rääkida, rääkige</span>
+          .
         </Trans>
       );
   }
@@ -589,14 +629,14 @@ function WhichForm({ verb, kind, said }: { verb: VerbForms; kind: Kind; said: st
       <b lang="et" className="font-medium text-ink">
         {said}
       </b>{" "}
-      is the -⁠ma form itself, {means}.
+      is the <End>-ma</End> form itself, {means}.
     </Trans>
   ) : kind === "da" ? (
     <Trans>
       <b lang="et" className="font-medium text-ink">
         {said}
       </b>{" "}
-      is the -⁠da form of <span lang="et">{ma}</span>, {means}.
+      is the <End>-da</End> form of <span lang="et">{ma}</span>, {means}.
     </Trans>
   ) : (
     <Trans>
@@ -667,8 +707,8 @@ export function VerbiPohivormidLesson() {
       sub={
         <Trans>
           Learn every Estonian verb as three forms: <span lang="et">lugema, lugeda, loen</span>.
-          Most verbs make the middle one by swapping -⁠ma for -⁠da; some take -⁠ta, and a few take -⁠la,
-          -⁠na or a bare -⁠a.
+          Most verbs make the middle one by swapping <End>-ma</End> for <End>-da</End>; some take{" "}
+          <End>-ta</End>, and a few take <End>-la</End>, <End>-na</End> or a bare <End>-a</End>.
         </Trans>
       }
       facts={[
@@ -679,25 +719,26 @@ export function VerbiPohivormidLesson() {
       words={VERB_FORMS.map(threeForms)}
       recap={[
         <Trans key="1">
-          Learn a verb as three forms, the -⁠ma form, the -⁠da form and the I form:{" "}
-          <b lang="et">lugema, lugeda, loen</b>.
+          Learn a verb as three forms, the <End>-ma</End> form, the <End>-da</End> form and the I
+          form: <b lang="et">lugema, lugeda, loen</b>.
         </Trans>,
         <Trans key="2">
-          Most verbs swap -⁠ma for -⁠da on the same stem: <b lang="et">elama, elada</b>. The -⁠da form
-          keeps that stem when the I form changes it: <b lang="et">lugeda, loen</b>.
+          Most verbs swap <End>-ma</End> for <End>-da</End> on the same stem:{" "}
+          <b lang="et">elama, elada</b>. The <End>-da</End> form keeps that stem when the I form
+          changes it: <b lang="et">lugeda, loen</b>.
         </Trans>,
         <Trans key="3">
-          Some take -⁠ta: <b lang="et">oodata</b>. <span lang="et">Olema</span>,{" "}
-          <span lang="et">tulema</span> and <span lang="et">minema</span> take -⁠la or -⁠na:{" "}
-          <b lang="et">olla, tulla, minna</b>.
+          Some take <End>-ta</End>: <b lang="et">oodata</b>. <span lang="et">Olema</span>,{" "}
+          <span lang="et">tulema</span> and <span lang="et">minema</span> take <End>-la</End> or{" "}
+          <End>-na</End>: <b lang="et">olla, tulla, minna</b>.
         </Trans>,
         <Trans key="4">
-          <b lang="et">Teha, näha, süüa</b> and <b lang="et">juua</b> end in a bare -⁠a and change
-          their stem. Learn these four whole.
+          <b lang="et">Teha, näha, süüa</b> and <b lang="et">juua</b> end in a bare <End>-a</End>{" "}
+          and change their stem. Learn these four whole.
         </Trans>,
         <Trans key="5">
           The present builds on the I form; for most verbs, the command to more than one builds on
-          the -⁠da form: <b lang="et">te loete, lugege!</b>
+          the <End>-da</End> form: <b lang="et">te loete, lugege!</b>
         </Trans>,
       ]}
       sections={[
@@ -711,21 +752,21 @@ export function VerbiPohivormidLesson() {
                   <Trans>
                     In lesson {present} you learned a verb as two forms: <Word w="lugema" />, to
                     read, and its I form, <Word w="loen" />. A dictionary gives a third between
-                    them, the -⁠da form: <Word w="lugema, lugeda, loen" />.
+                    them, the <End>-da</End> form: <Word w="lugema, lugeda, loen" />.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
                     <Word w="Lugema" /> and <Word w="lugeda" /> both translate as to read. Estonian
                     uses each after different words: after <span lang="et">tahan</span>, I want,
-                    comes the -⁠da form, <Word w="Ma tahan lugeda" />. Lesson {infinitives} shows
-                    which words take which.
+                    comes the <End>-da</End> form, <Word w="Ma tahan lugeda" />. Lesson{" "}
+                    {infinitives} shows which words take which.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Here are the ten verbs of lesson {present} with their three forms. The -⁠da form
-                    is outlined. Tap a form to hear it.
+                    Here are the ten verbs of lesson {present} with their three forms. The{" "}
+                    <End>-da</End> form is outlined. Tap a form to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -735,14 +776,15 @@ export function VerbiPohivormidLesson() {
         },
         {
           id: "da",
-          title: t`Most verbs: -⁠da`,
+          title: t`Most verbs keep the stem`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Most verbs make the -⁠da form by swapping -⁠ma for -⁠da: <Word w="elama" />,{" "}
-                    <Word w="elada" />. Whatever sits before -⁠ma usually stays as it is.
+                    Most verbs make the <End>-da</End> form by swapping <End>-ma</End> for{" "}
+                    <End>-da</End>: <Word w="elama" />, <Word w="elada" />. Whatever sits before{" "}
+                    <End>-ma</End> usually stays as it is.
                   </Trans>
                 </p>
                 <p>
@@ -757,7 +799,7 @@ export function VerbiPohivormidLesson() {
               <FormFlip />
               <Aside>
                 <Trans>
-                  Some verbs take -⁠ta: <Word w="ootama" />, <Word w="oodata" />;{" "}
+                  Some verbs take <End>-ta</End>: <Word w="ootama" />, <Word w="oodata" />;{" "}
                   <Word w="kuulama" />, <Word w="kuulata" />; <Word w="vaatama" />,{" "}
                   <Word w="vaadata" />. <span lang="et">Ootama</span> and{" "}
                   <span lang="et">vaatama</span> also turn the t of their stem into d:{" "}
@@ -805,15 +847,15 @@ export function VerbiPohivormidLesson() {
         },
         {
           id: "la-na",
-          title: t`Olla, tulla and minna`,
+          title: t`Three verbs with a double l or n`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Olema" />, <Word w="tulema" /> and <Word w="minema" /> drop -⁠ema and
-                    add -⁠la or -⁠na, repeating the l or n: <Word w="olla" />, <Word w="tulla" />,{" "}
-                    <Word w="minna" />.
+                    <Word w="Olema" />, <Word w="tulema" /> and <Word w="minema" /> drop{" "}
+                    <End>-ema</End> and add <End>-la</End> or <End>-na</End>, repeating the l or n:{" "}
+                    <Word w="olla" />, <Word w="tulla" />, <Word w="minna" />.
                   </Trans>
                 </p>
                 <p>
@@ -824,21 +866,21 @@ export function VerbiPohivormidLesson() {
                   </Trans>
                 </p>
               </Prose>
-              <FormKeys verbs={["olema", "tulema", "minema"]} label={t`Forms in -⁠la and -⁠na`} />
+              <FormKeys verbs={["olema", "tulema", "minema"]} label={t`Three verbs`} />
             </>
           ),
         },
         {
           id: "short",
-          title: t`Teha, näha, süüa and juua`,
+          title: t`Four short verbs`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    These four short verbs end their -⁠da form in a bare -⁠a, and the stem changes
-                    too. <Word w="Tegema" />, to do, and <Word w="nägema" />, to see, turn g into h:{" "}
-                    <Word w="teha" />, <Word w="näha" />.
+                    These four short verbs end their <End>-da</End> form in a bare <End>-a</End>,{" "}
+                    and the stem changes too. <Word w="Tegema" />, to do, and <Word w="nägema" />,
+                    to see, turn g into h: <Word w="teha" />, <Word w="näha" />.
                   </Trans>
                 </p>
                 <p>
@@ -848,7 +890,10 @@ export function VerbiPohivormidLesson() {
                   </Trans>
                 </p>
               </Prose>
-              <FormKeys verbs={["tegema", "nägema", "sööma", "jooma"]} label={t`Forms in -⁠a`} />
+              <FormKeys
+                verbs={["tegema", "nägema", "sööma", "jooma"]}
+                label={t`Four short verbs`}
+              />
             </>
           ),
         },
@@ -861,8 +906,8 @@ export function VerbiPohivormidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a -⁠da form and pick the verb it belongs to. These are the ones that look
-                    least like their -⁠ma form.
+                    Hear a <End>-da</End> form and pick the verb it belongs to. These are the ones
+                    that look least like their <End>-ma</End> form.
                   </Trans>
                 </p>
               </Prose>
@@ -873,12 +918,15 @@ export function VerbiPohivormidLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six. You matched each -⁠da form to its verb.</Trans>
+                    <Trans>
+                      All six. You matched each <End>-da</End> form to its verb.
+                    </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
                     <Trans>
-                      Play the -⁠ta, -⁠la, -⁠na and -⁠a forms above once more, then try again.
+                      Play the <End>-ta</End>, <End>-la</End>, <End>-na</End> and <End>-a</End>{" "}
+                      forms above once more, then try again.
                     </Trans>
                   )
                 }
@@ -891,22 +939,23 @@ export function VerbiPohivormidLesson() {
         },
         {
           id: "commands",
-          title: t`Commands built on the -⁠da form`,
+          title: t`Commands for more than one`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
                     In lesson {commands} you learned <Word w="Lugege!" /> as a whole word. It comes
-                    from the -⁠da form, with -⁠ge in place of its ending: <Word w="lugeda" /> gives{" "}
-                    <Word w="Lugege!" />, and <Word w="tulla" /> gives <Word w="Tulge!" />
+                    from the <End>-da</End> form, with <End>-ge</End> in place of its ending:{" "}
+                    <Word w="lugeda" /> gives <Word w="Lugege!" />, and <Word w="tulla" /> gives{" "}
+                    <Word w="Tulge!" />
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Where the -⁠da form ends in -⁠ta, or in -⁠a after h, the command takes -⁠ke:{" "}
-                    <Word w="oodata" />, <Word w="Oodake!" />; <Word w="teha" />,{" "}
-                    <Word w="Tehke!" /> Tap either side of a pair to hear it.
+                    Where the <End>-da</End> form ends in <End>-ta</End>, or in <End>-a</End> after
+                    h, the command takes <End>-ke</End>: <Word w="oodata" />, <Word w="Oodake!" />;{" "}
+                    <Word w="teha" />, <Word w="Tehke!" /> Tap either side of a pair to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -936,8 +985,9 @@ export function VerbiPohivormidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Mari teaches a class. When she tells them what to do, the verb builds on the -⁠da
-                    form; when she says what the class does, on the I form. Fill each gap.
+                    Mari teaches a class. When she tells them what to do, the verb builds on the{" "}
+                    <End>-da</End> form; when she says what the class does, on the I form. Fill each
+                    gap.
                   </Trans>
                 </p>
               </Prose>

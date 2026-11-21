@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS } from "../../../lib/learn/catalogue";
+import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -341,7 +341,7 @@ export function OlevikLesson() {
   const gradation = at("Jalg, jala");
   const where = at("Tallinnas, Tartus");
   const partitive = at("Kaks kassi");
-  const verbForms = at("Lugema, lugeda, loen");
+  const verbForms = lessonBySlug("verbi-pohivormid")?.n;
 
   const endings = useMemo(
     () =>
@@ -583,7 +583,6 @@ export function OlevikLesson() {
                   main: PRESENT_SENTENCES[each.id],
                   sub: i18n._(each.en),
                   src: sentenceSrc(each.id),
-                  label: t`Play ${PRESENT_SENTENCES[each.id]}`,
                 }))}
               />
               <Prose>

@@ -175,7 +175,7 @@ export const STAGES: readonly Stage[] = [
         minutes: 12,
         blurb: msg`A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da form is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word is read aloud.`,
       },
-      { name: msg`Infinitives: -ma and -da`, et: "Pean minema, tahan lugeda" },
+      { name: msg`Infinitives after other verbs`, et: "Pean minema, tahan lugeda" },
       { name: msg`Can, may, must`, et: "Võin, saan, oskan" },
       { name: msg`Going, being, coming back: -ma, -mas, -mast`, et: "Lähen ujuma, olen ujumas" },
       { name: msg`“To like” and feelings`, et: "Mulle meeldib" },
@@ -209,7 +209,7 @@ export const STAGES: readonly Stage[] = [
     name: msg`Harder grammar`,
     level: "A2",
     hue: 18,
-    goal: msg`The rules that trip most learners up. You know every word by now, so only the rule is new.`,
+    goal: msg`Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new.`,
     lessons: [
       { name: msg`Consonant gradation`, et: "Jalg, jala" },
       { name: msg`The object: whole or part`, et: "Raamatut või raamatu" },

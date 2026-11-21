@@ -1770,8 +1770,8 @@ msgstr "A goodbye with <0>-ni</0>: see you tomorrow."
 msgid "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
 msgstr "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
 
-msgid "A hard letter turns soft, k into g and p into b: <0/>, <1/>."
-msgstr "A hard letter turns soft, k into g and p into b: <0/>, <1/>."
+msgid "A hard letter turns soft, k into g, p into b and t into d: <0/>, <1/>."
+msgstr "A hard letter turns soft, k into g, p into b and t into d: <0/>, <1/>."
 
 msgid "a hen"
 msgstr "a hen"
@@ -4590,6 +4590,9 @@ msgctxt "deck tag"
 msgid "Core vocabulary"
 msgstr "Core vocabulary"
 
+msgid "corner"
+msgstr "corner"
+
 msgid "correct answers to pass"
 msgstr "correct answers to pass"
 
@@ -5096,6 +5099,9 @@ msgstr "Drop the slides into Smart add, or send them to Claude, ChatGPT, Gemini 
 
 msgid "Drop them into Smart add. Lymi picks out the terms, keeps the definitions from your notes and skips the ones already in your deck. No assistant needed."
 msgstr "Drop them into Smart add. Lymi picks out the terms, keeps the definitions from your notes and skips the ones already in your deck. No assistant needed."
+
+msgid "Dropped"
+msgstr "Dropped"
 
 msgid "Drugs, how they work and what to watch for."
 msgstr "Drugs, how they work and what to watch for."
@@ -6580,11 +6586,11 @@ msgstr "Future"
 msgid "Future, “I”"
 msgstr "Future, “I”"
 
-msgid "g, b or d is gone, and the vowel before it may change: <0>tuba, toa</0>."
-msgstr "g, b or d is gone, and the vowel before it may change: <0>tuba, toa</0>."
-
 msgid "g, b or d is gone, and the vowel next to it may change: <0/>, <1/>."
 msgstr "g, b or d is gone, and the vowel next to it may change: <0/>, <1/>."
+
+msgid "g, b or d is gone, and the vowel next to it may change: <0>tuba, toa</0>."
+msgstr "g, b or d is gone, and the vowel next to it may change: <0>tuba, toa</0>."
 
 msgid "Gains a vowel"
 msgstr "Gains a vowel"
@@ -6824,9 +6830,6 @@ msgstr "Going, out, coming back"
 
 msgid "gold"
 msgstr "gold"
-
-msgid "Gone"
-msgstr "Gone"
 
 msgid "Good"
 msgstr "Good"
@@ -7408,8 +7411,8 @@ msgstr "Here are the ten verbs of lesson {present} with their three forms. The <
 msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 msgstr "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 
-msgid "Here the dictionary form is the short one, and the genitive is long: <0>mõte, mõtte</0>."
-msgstr "Here the dictionary form is the short one, and the genitive is long: <0>mõte, mõtte</0>."
+msgid "Here the genitive is the strong one: <0>mõte, mõtte</0>; <1>hammas, hamba</1>."
+msgstr "Here the genitive is the strong one: <0>mõte, mõtte</0>; <1>hammas, hamba</1>."
 
 msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
 msgstr "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
@@ -9403,8 +9406,8 @@ msgstr "Just the right amount: not too much, not too little"
 msgid "Juust, juustu, juustu."
 msgstr "Juust, juustu, juustu."
 
-msgid "k turns into g and p into b: <0>pank, panga</0>; <1>lamp, lambi</1>."
-msgstr "k turns into g and p into b: <0>pank, panga</0>; <1>lamp, lambi</1>."
+msgid "k turns into g, p into b and t into d: <0>pank, panga</0>; <1>lamp, lambi</1>."
+msgstr "k turns into g, p into b and t into d: <0>pank, panga</0>; <1>lamp, lambi</1>."
 
 msgid "Kana"
 msgstr "Kana"
@@ -10868,14 +10871,14 @@ msgstr "Morning"
 msgid "Most land plants have one."
 msgstr "Most land plants have one."
 
+msgid "Most of them. Listen again in the table to the ones you missed."
+msgstr "Most of them. Listen again in the table to the ones you missed."
+
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Most of them. Listen to how the ones you missed start."
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Most of them. Play the ones you missed once more."
-
-msgid "Most of them. Tap the table once more for the ones you missed."
-msgstr "Most of them. Tap the table once more for the ones you missed."
 
 msgid "Most of what Noji keeps for Premium, Lymi gives you on the free plan."
 msgstr "Most of what Noji keeps for Premium, Lymi gives you on the free plan."
@@ -15626,8 +15629,8 @@ msgstr "The genitive is the form before -s"
 msgid "The genitive is the odd one out"
 msgstr "The genitive is the odd one out"
 
-msgid "The genitive is the odd one out. The dictionary form and the third form match; the genitive and the cases built on it differ: <0>jalg, jala, jalga</0>; <1>jalas</1>."
-msgstr "The genitive is the odd one out. The dictionary form and the third form match; the genitive and the cases built on it differ: <0>jalg, jala, jalga</0>; <1>jalas</1>."
+msgid "The genitive is the odd one out. The dictionary form and the third form match; the genitive and the cases built on it differ: <0>jalg, jala, jalga</0>; <1>jalal</1>."
+msgstr "The genitive is the odd one out. The dictionary form and the third form match; the genitive and the cases built on it differ: <0>jalg, jala, jalga</0>; <1>jalal</1>."
 
 msgid "The genitive of arst."
 msgstr "The genitive of arst."
@@ -16960,9 +16963,6 @@ msgstr "Time for the level to halve"
 
 msgid "time, after no: mul ei olnud aega"
 msgstr "time, after no: mul ei olnud aega"
-
-msgid "time, as in one time"
-msgstr "time, as in one time"
 
 msgid "Timeline"
 msgstr "Timeline"

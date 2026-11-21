@@ -1771,8 +1771,8 @@ msgstr "Прощание с <0>-ni</0>: до завтра."
 msgid "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
 msgstr "Рутина Grok Bot запускается каждый день в 8:00: проверь, что пора повторить в Lymi, и погоняй меня. Этим утром он нашёл 12 карточек по испанскому, примерно на пять минут, и спросил, как будет «забастовка»."
 
-msgid "A hard letter turns soft, k into g and p into b: <0/>, <1/>."
-msgstr "Твёрдая буква становится мягче, k в g и p в b: <0/>, <1/>."
+msgid "A hard letter turns soft, k into g, p into b and t into d: <0/>, <1/>."
+msgstr "Глухая буква становится звонкой, k в g, p в b и t в d: <0/>, <1/>."
 
 msgid "a hen"
 msgstr "курица"
@@ -4591,6 +4591,9 @@ msgctxt "deck tag"
 msgid "Core vocabulary"
 msgstr "Базовая лексика"
 
+msgid "corner"
+msgstr "угол"
+
 msgid "correct answers to pass"
 msgstr "правильных ответов, чтобы сдать"
 
@@ -5097,6 +5100,9 @@ msgstr "Добавь слайды в Умное добавление или от
 
 msgid "Drop them into Smart add. Lymi picks out the terms, keeps the definitions from your notes and skips the ones already in your deck. No assistant needed."
 msgstr "Добавь их в Умное добавление. Lymi выберет термины, сохранит определения из твоих заметок и пропустит те, что уже есть в колоде. Ассистент не нужен."
+
+msgid "Dropped"
+msgstr "Выпала"
 
 msgid "Drugs, how they work and what to watch for."
 msgstr "Препараты, как они действуют и на что обращать внимание."
@@ -6581,11 +6587,11 @@ msgstr "Будущее"
 msgid "Future, “I”"
 msgstr "Будущее время, «я»"
 
-msgid "g, b or d is gone, and the vowel before it may change: <0>tuba, toa</0>."
-msgstr "g, b или d исчезает, а гласная перед ней может измениться: <0>tuba, toa</0>."
-
 msgid "g, b or d is gone, and the vowel next to it may change: <0/>, <1/>."
 msgstr "g, b или d исчезает, а гласная рядом может измениться: <0/>, <1/>."
+
+msgid "g, b or d is gone, and the vowel next to it may change: <0>tuba, toa</0>."
+msgstr "g, b или d исчезает, а гласная рядом может измениться: <0>tuba, toa</0>."
 
 msgid "Gains a vowel"
 msgstr "Появляется гласная"
@@ -6826,9 +6832,6 @@ msgstr "Идти, быть там, возвращаться"
 msgid "gold"
 msgstr "золото"
 
-msgid "Gone"
-msgstr "Исчезла"
-
 msgid "Good"
 msgstr "Хорошо"
 
@@ -6945,7 +6948,7 @@ msgid "Hard"
 msgstr "Трудно"
 
 msgid "Hard to soft"
-msgstr "Твёрдая становится мягче"
+msgstr "Глухая становится звонкой"
 
 msgid "Harder grammar"
 msgstr "Сложная грамматика"
@@ -7409,8 +7412,8 @@ msgstr "Вот десять глаголов из урока {present}, кажд
 msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 msgstr "Здесь каждое число звучит посреди фразы: цена, возраст, номер телефона. Введи число, которое слышишь."
 
-msgid "Here the dictionary form is the short one, and the genitive is long: <0>mõte, mõtte</0>."
-msgstr "Здесь короткая — словарная форма, а родительный длинный: <0>mõte, mõtte</0>."
+msgid "Here the genitive is the strong one: <0>mõte, mõtte</0>; <1>hammas, hamba</1>."
+msgstr "Здесь сильный как раз родительный: <0>mõte, mõtte</0>; <1>hammas, hamba</1>."
 
 msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
 msgstr "Здесь число меняет форму: <0>viis</0> становится <1>viie</1>, <2>kümme</2> — <3>kümne</3>, <4>kakskümmend</4> — <5>kahekümne</5>. Пока запомни эти три как готовые фразы. Эту форму объясняет урок {genitive}."
@@ -9404,8 +9407,8 @@ msgstr "Ровно столько, сколько нужно: не слишко�
 msgid "Juust, juustu, juustu."
 msgstr "Juust, juustu, juustu."
 
-msgid "k turns into g and p into b: <0>pank, panga</0>; <1>lamp, lambi</1>."
-msgstr "k становится g, а p становится b: <0>pank, panga</0>; <1>lamp, lambi</1>."
+msgid "k turns into g, p into b and t into d: <0>pank, panga</0>; <1>lamp, lambi</1>."
+msgstr "Глухая становится звонкой: k в g, p в b, t в d: <0>pank, panga</0>; <1>lamp, lambi</1>."
 
 msgid "Kana"
 msgstr "Кана"
@@ -9909,7 +9912,7 @@ msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> bec
 msgstr "Урок {stems} показал существительные, у которых основа меняется перед окончанием: <0/> становится <1/>. Множественное число образуется от этой второй формы, поэтому изменение есть и в нём: <2/> — магазины."
 
 msgid "Lesson {stems} showed that a stem can lose or change a letter inside: <0/>, room, has the stem <1/>. This change has a name, consonant gradation, and a pattern. It is like foot and feet in English: the word changes inside, not only at the end."
-msgstr "Урок {stems} показал, что основа может потерять или изменить букву внутри: <0/>, комната, имеет основу <1/>. У этого изменения есть название — чередование согласных — и свои правила. Это как в русском день — дня, сон — сна: слово меняется внутри, а не только в конце."
+msgstr "Урок {stems} показал, что основа может потерять или изменить букву внутри: <0/>, комната, имеет основу <1/>. У этого изменения есть название — чередование согласных — и свои правила. Это как в русском друг — друзья, рука — ручка: слово меняется внутри, а не только в конце."
 
 msgid "Lesson 4"
 msgstr "Урок 4"
@@ -10869,14 +10872,14 @@ msgstr "Утро"
 msgid "Most land plants have one."
 msgstr "Она есть у большинства наземных растений."
 
+msgid "Most of them. Listen again in the table to the ones you missed."
+msgstr "Большинство. Послушай ещё раз в таблице те, что не получились."
+
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Почти все. Послушай, как начинаются дни, где были ошибки."
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
-
-msgid "Most of them. Tap the table once more for the ones you missed."
-msgstr "Большинство. Ещё раз нажми на таблицу для тех, что не получились."
 
 msgid "Most of what Noji keeps for Premium, Lymi gives you on the free plan."
 msgstr "Почти всё, что Noji оставляет для Premium, Lymi даёт бесплатно."
@@ -15412,7 +15415,7 @@ msgid "The command of tulema, to come."
 msgstr "Команда от tulema, «приходить»."
 
 msgid "The consonant has a strong form and a weak one. The dictionary form and the third form have one, and the genitive of lesson {genitive} has the other: <0/>, <1/>, <2>jalga</2>. Every case built on the genitive follows it, so in the room is <3>toas</3>, and on the foot is <4>jalal</4>."
-msgstr "Согласный имеет сильную форму и слабую. Словарная форма и третья форма имеют одну, а родительный из урока {genitive} — другую: <0/>, <1/>, <2>jalga</2>. Каждый падеж на основе родительного идёт за ним, так что в комнате — <3>toas</3>, а на ноге — <4>jalal</4>."
+msgstr "Согласный имеет сильную форму и слабую. Словарная форма и третья форма имеют одну, а родительный из урока {genitive} — другую: <0/>, <1/>, <2>jalga</2>. Каждый падеж на основе родительного повторяет его, так что в комнате — <3>toas</3>, а на ноге — <4>jalal</4>."
 
 msgid "The cost of making one more unit"
 msgstr "Сколько стоит произвести ещё одну единицу"
@@ -15625,10 +15628,10 @@ msgid "The genitive is the form before -s"
 msgstr "Родительный — это форма перед -s"
 
 msgid "The genitive is the odd one out"
-msgstr "Родительный выделяется"
+msgstr "Родительный — исключение"
 
-msgid "The genitive is the odd one out. The dictionary form and the third form match; the genitive and the cases built on it differ: <0>jalg, jala, jalga</0>; <1>jalas</1>."
-msgstr "Родительный выделяется. Словарная и третья формы совпадают, а родительный и падежи на его основе отличаются: <0>jalg, jala, jalga</0>; <1>jalas</1>."
+msgid "The genitive is the odd one out. The dictionary form and the third form match; the genitive and the cases built on it differ: <0>jalg, jala, jalga</0>; <1>jalal</1>."
+msgstr "Родительный — исключение. Словарная и третья формы совпадают, а родительный и падежи на его основе отличаются: <0>jalg, jala, jalga</0>; <1>jalal</1>."
 
 msgid "The genitive of arst."
 msgstr "Родительный падеж от arst."
@@ -16509,10 +16512,10 @@ msgid "The wait before each review"
 msgstr "Сколько проходит перед каждым повторением"
 
 msgid "The weak form goes single, turns soft, drops the letter or blends it: <0>kapi, panga, toa, linnu</0>. A few words go the other way: <1>mõte, mõtte</1>."
-msgstr "В слабой форме буква становится одинарной, мягче, исчезает или сливается: <0>kapi, panga, toa, linnu</0>. Несколько слов меняются наоборот: <1>mõte, mõtte</1>."
+msgstr "В слабой форме буква становится одинарной или звонкой, выпадает или сливается: <0>kapi, panga, toa, linnu</0>. Несколько слов меняются наоборот: <1>mõte, mõtte</1>."
 
 msgid "The weak form is shorter or softer than the strong one, in one of four ways:"
-msgstr "Слабая форма короче или мягче сильной — одним из четырёх способов:"
+msgstr "Слабая форма короче или «мягче» сильной — одним из четырёх способов:"
 
 msgid "The weather is *lovely* today."
 msgstr "Сегодня *чудесная* погода."
@@ -16961,9 +16964,6 @@ msgstr "Время, за которое уровень падает вдвое"
 
 msgid "time, after no: mul ei olnud aega"
 msgstr "времени, после «нет»: mul ei olnud aega"
-
-msgid "time, as in one time"
-msgstr "раз"
 
 msgid "Timeline"
 msgstr "Линия времени"

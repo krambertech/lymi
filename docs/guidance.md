@@ -1,6 +1,6 @@
 # Write and maintain guidance
 
-This covers the repository's own documents: the root and nested `AGENTS.md`, skills, `docs/`, proposals and ADRs. Source comments follow [the coding standards](../CODING_STANDARDS.md#comment-only-what-the-code-cannot-say).
+This covers the repository's own documents: the root and nested `AGENTS.md`, skills, `docs/`, proposals and ADRs. Source files carry no comments; see [the coding standards](../CODING_STANDARDS.md#write-no-comments).
 
 ## Put each fact where it is owned
 

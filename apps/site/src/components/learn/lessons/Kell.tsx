@@ -3,7 +3,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Minus, Plus } from "lucide-react";
 import { type ReactNode, useLayoutEffect, useMemo, useRef, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import { clipUrl } from "../../../lib/learn/clips";
 import {
   type ClockTime,
@@ -23,8 +23,8 @@ import {
 } from "../../../lib/learn/estonian-time";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
-import { LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { LessonView, Prose } from "../LessonView";
 import {
   Answer,
   type ChoiceItem,
@@ -77,12 +77,12 @@ function Said({ time }: { time: ClockTime }) {
     <>
       {timeParts(time).map((part, i) =>
         part.hour && time.minute !== 0 ? (
-          // biome-ignore lint/suspicious/noArrayIndexKey: a time's parts never reorder
+          // oxlint-disable-next-line react/no-array-index-key -- a time's parts never reorder
           <span key={i} className="text-(--form)">
             {part.text}
           </span>
         ) : (
-          // biome-ignore lint/suspicious/noArrayIndexKey: a time's parts never reorder
+          // oxlint-disable-next-line react/no-array-index-key -- a time's parts never reorder
           <span key={i}>{part.text}</span>
         ),
       )}
@@ -514,7 +514,7 @@ const TYPED = [
 
 export function KellLesson() {
   const { t } = useLingui();
-  const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
+  const genitive = lessonBySlug("omastav")?.n;
   const partitive = lessonBySlug("osastav")?.n;
   const numbers = lessonBySlug("numbrid")?.n;
 
@@ -543,15 +543,13 @@ export function KellLesson() {
   );
   const typedItems = useMemo(
     () =>
-      TYPED.map(
-        (time): TypedItem => ({
-          src: timeSrc(time),
-          answers: [timeDigits(time)],
-          matches: (typed) => timeMatches(typed, time),
-          prompt: t`Type the time`,
-          said: timeSentence(time),
-        }),
-      ),
+      TYPED.map((time): TypedItem => ({
+        src: timeSrc(time),
+        answers: [timeDigits(time)],
+        matches: (typed) => timeMatches(typed, time),
+        prompt: t`Type the time`,
+        said: timeSentence(time),
+      })),
     [t],
   );
 

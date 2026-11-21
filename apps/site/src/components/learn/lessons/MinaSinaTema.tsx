@@ -15,8 +15,8 @@ import {
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { Answer, Feedback, type GapItem, GapRound, Quiz, type RoundProps } from "../Quiz";
 import { Listen, Playing } from "../Sound";
 import { Word } from "../Word";
@@ -420,7 +420,7 @@ function WhoRound({ item, state, heard, answer, autoplay }: RoundProps<WhoItem>)
   const { t, i18n } = useLingui();
   const [nudged, setNudged] = useState(false);
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a new round replays even when its clip is the last one's
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- a new round replays even when its clip is the last one's
   useEffect(() => {
     if (autoplay) void playSound(item.src);
   }, [autoplay, round, item.src]);

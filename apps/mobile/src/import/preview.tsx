@@ -684,7 +684,7 @@ function FieldsStep({
           const role = draft[i] ?? "skip";
           return (
             <Select
-              // biome-ignore lint/suspicious/noArrayIndexKey: a note type can repeat a field name, and its fields never reorder
+              // oxlint-disable-next-line react/no-array-index-key -- a note type can repeat a field name, and its fields never reorder
               key={`${field}-${i}`}
               label={t`${field} becomes`}
               value={role}

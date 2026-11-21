@@ -19,9 +19,9 @@ import { buttonClass } from "../Button";
 import { ExamPageLink } from "../exams/ExamPageLink";
 import { DeckTile } from "../explore/DeckTile";
 import { shelfLabel, tagLabel } from "../explore/explore-labels";
+import { SiteFooter } from "../landing/SiteFooter";
 import { Localized } from "../Localized";
 import { AppTile } from "../Logo";
-import { SiteFooter } from "../landing/SiteFooter";
 import { PreviewFace } from "./PreviewFace";
 
 interface LocaleProps {
@@ -334,7 +334,7 @@ function DeckSpread({ deck, cards }: { deck: PublicDeckOut; cards: DeckCard[] })
         } as CSSProperties;
         return (
           <li
-            // biome-ignore lint/suspicious/noArrayIndexKey: a fixed spread; a term can repeat.
+            // oxlint-disable-next-line react/no-array-index-key -- a fixed spread; a term can repeat.
             key={index}
             className="deck-spread-card"
             data-outer={Math.abs(offset) > 1 || undefined}

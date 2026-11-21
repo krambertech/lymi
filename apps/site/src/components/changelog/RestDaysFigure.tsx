@@ -44,7 +44,7 @@ export function RestDaysFigure() {
       </p>
       <div className="mt-5 grid grid-cols-7 gap-y-2 text-center">
         {weekdays.map((name, index) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: narrow weekday names repeat, so the index is the identity
+          // oxlint-disable-next-line react/no-array-index-key -- narrow weekday names repeat, so the index is the identity
           <span key={index} className="pb-1 text-xs text-ink-muted">
             {name}
           </span>
@@ -54,7 +54,7 @@ export function RestDaysFigure() {
             const run = day === "lit" || day === "rest";
             return (
               <span
-                // biome-ignore lint/suspicious/noArrayIndexKey: a fixed drawing, so the place is the identity
+                // oxlint-disable-next-line react/no-array-index-key -- a fixed drawing, so the place is the identity
                 key={`${row}-${column}`}
                 className={clsx(
                   "relative flex h-10 items-center justify-center",

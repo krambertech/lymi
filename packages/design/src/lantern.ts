@@ -1,21 +1,6 @@
-/**
- * The lantern, as data, in a 120 unit box. One source of truth: the web, the site and the phone
- * draw from here, so the mark cannot drift between them.
- *
- * The parts, top to bottom: a bail tall enough to read as a handle rather than a keyring, a hood
- * that flares wide over the glass, two rods down the sides, an opaque glass, and a fount on a foot.
- * The glass is a solid colour and every metal part overlaps its edges, so the mark carries its own
- * interior and can sit on any surface without painting a hole in it.
- *
- * There is no second cut for small sizes. The rods and the flame are exactly what keep the drawing
- * legible when it is tiny; a simplified version that drops them collapses into a mushroom by 24 px.
- * One drawing, every size.
- */
-
 export type Ink = "metal" | "glass" | "glass-unlit" | "amber" | "flame" | "flame-core" | "ember";
 
 export interface Shape {
-  /** A rounded rect (x, y, w, h, r) or a path (d). */
   x?: number;
   y?: number;
   w?: number;
@@ -25,11 +10,9 @@ export interface Shape {
   fill?: Ink;
   stroke?: Ink;
   strokeWidth?: number;
-  /** Round the outline of a filled path, e.g. the hood's corners. */
   round?: boolean;
 }
 
-/** Where the drawing actually sits inside the 120 box. The lockup measures from these. */
 export const LANTERN_BOUNDS = { left: 31.5, right: 88.5, top: 15.25, bottom: 106 } as const;
 
 export const FLAME_OUTER = {
@@ -42,13 +25,8 @@ export const FLAME_CORE = {
   fill: "flame-core",
 } satisfies Shape;
 
-/** Where the flame's core sits, the point it flickers from; the flame itself grows from its bounds' bottom. */
 export const FLAME_CORE_BASE = 90.5;
 
-/**
- * The flame's own box inside the 120 unit one. The streak's Flame crops to this, so the mark and
- * the streak are one drawing rather than two that drift.
- */
 export const FLAME_BOUNDS = { left: 44, right: 76, top: 58, bottom: 96.5 } as const;
 
 export const EMBER = {
@@ -56,10 +34,8 @@ export const EMBER = {
   fill: "ember",
 } satisfies Shape;
 
-/** The ember scaled about its base to the flame's height, for the streak's Flame, where the lantern's ember is a speck. */
 export const EMBER_AT_FLAME_SIZE = "translate(60 96.45) scale(2.15) translate(-60 -89.9)";
 
-/** The bail, drawn behind the hood so the two never merge into one blob. */
 export const LANTERN_BAIL = {
   d: "M40.5 48 A19.5 30 0 0 1 79.5 48",
   stroke: "metal",
@@ -68,7 +44,6 @@ export const LANTERN_BAIL = {
 
 export const LANTERN_GLASS = { x: 38.5, y: 49, w: 43, h: 46, r: 3, fill: "glass" } satisfies Shape;
 
-/** Everything painted over the glass: rods, hood, the bail's pivots, fount and foot. */
 export const LANTERN_FRAME: Shape[] = [
   { x: 34, y: 50, w: 5, h: 46, r: 2.5, fill: "metal" },
   { x: 81, y: 50, w: 5, h: 46, r: 2.5, fill: "metal" },
@@ -79,5 +54,4 @@ export const LANTERN_FRAME: Shape[] = [
   { x: 38, y: 101, w: 44, h: 5, r: 2.5, fill: "metal" },
 ];
 
-/** Where the embers leave the lantern: the top of the hood, where a real one vents. */
 export const VENT = { x: 60, y: 38 } as const;

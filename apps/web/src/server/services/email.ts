@@ -920,7 +920,7 @@ export async function addressEmailLanguage(
     .select({ appLanguage: schema.userSettings.appLanguage })
     .from(schema.user)
     .innerJoin(schema.userSettings, eq(schema.userSettings.userId, schema.user.id))
-    // biome-ignore lint/plugin: Better Auth stores emails lower-cased, so ASCII-only folding loses nothing here.
+    // oxlint-disable-next-line lymi/no-sql-lower -- Better Auth stores emails lower-cased, so ASCII-only folding loses nothing here.
     .where(sql`lower(${schema.user.email}) = ${email.toLowerCase()}`);
   return row?.appLanguage ? emailLanguage(row.appLanguage) : null;
 }
@@ -979,7 +979,7 @@ export async function accountIdForEmail(db: Db, email: string): Promise<string |
   const [row] = await db
     .select({ id: schema.user.id })
     .from(schema.user)
-    // biome-ignore lint/plugin: Better Auth stores emails lower-cased, so ASCII-only folding loses nothing here.
+    // oxlint-disable-next-line lymi/no-sql-lower -- Better Auth stores emails lower-cased, so ASCII-only folding loses nothing here.
     .where(sql`lower(${schema.user.email}) = ${email.trim().toLowerCase()}`);
   return row?.id ?? null;
 }

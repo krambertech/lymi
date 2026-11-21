@@ -6,11 +6,9 @@ import { type Locale, localizedPath } from "../../lib/routes";
 import { ArrowLink } from "./ArrowLink";
 import { Attachment } from "./AssistantChat";
 import { DeckWords } from "./DeckWords";
-import { FeatureSection, Wide } from "./FeatureSection";
 import { GERMAN_QUESTIONS } from "./faq";
+import { FeatureSection, Wide } from "./FeatureSection";
 import { GenderTiles } from "./GenderTiles";
-import { EnrichGerman } from "./GermanAi";
-import { GermanBento } from "./GermanBento";
 import {
   GERMAN_CLASS_CARDS,
   GERMAN_EXAMPLES,
@@ -21,7 +19,10 @@ import {
   germanHand,
   RENTING_WORDS,
 } from "./german";
+import { EnrichGerman } from "./GermanAi";
+import { GermanBento } from "./GermanBento";
 import { LandingLayout } from "./LandingLayout";
+import { addDeckUrl, pathSteps } from "./language-decks";
 import { LanguageDecks } from "./LanguageDecks";
 import {
   DetailsSection,
@@ -35,7 +36,6 @@ import {
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
-import { addDeckUrl, pathSteps } from "./language-decks";
 import { type NotebookCard, type NotebookRow, NotebookToCards } from "./NotebookToCards";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";

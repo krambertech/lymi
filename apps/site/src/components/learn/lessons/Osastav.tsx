@@ -23,8 +23,8 @@ import { shuffle } from "../../../lib/learn/quiz";
 import { type KeyItem, Keys, ListenRows, Panel, type RowItem } from "../Explore";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
 import { Listening, type PassageQuestion } from "../Passage";
 import { type GapItem, GapRound, Quiz } from "../Quiz";
@@ -484,8 +484,8 @@ export function OsastavLesson() {
   const negation = lessonBySlug("eitus")?.n;
   const questions = lessonBySlug("kusimused")?.n;
   const present = lessonBySlug("olevik")?.n;
-  const forms = LESSONS.find((lesson) => lesson.et === "Kolm põhivormi")?.n;
-  const have = LESSONS.find((lesson) => lesson.et === "Mul on")?.n;
+  const forms = lessonBySlug("pohivormid")?.n;
+  const have = lessonBySlug("mul-on")?.n;
   const object = LESSONS.find((lesson) => lesson.et === "Raamatut või raamatu")?.n;
 
   const countItems = useMemo<CountItem[]>(

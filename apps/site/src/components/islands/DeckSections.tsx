@@ -509,7 +509,7 @@ function CardsView({
                   <dl>
                     {shownCards.map((card, cardIndex) => (
                       <div
-                        // biome-ignore lint/suspicious/noArrayIndexKey: terms can repeat across sections; order is fixed.
+                        // oxlint-disable-next-line react/no-array-index-key -- terms can repeat across sections; order is fixed.
                         key={cardIndex}
                         className="grid grid-cols-[minmax(0,1fr)_minmax(0,1.1fr)] gap-5 border-t border-edge py-2.5 text-md"
                       >

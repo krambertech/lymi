@@ -3,8 +3,8 @@ import { clsx } from "clsx";
 import { Check, ChevronDown } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useRef } from "react";
-import { Lantern } from "../Lantern";
 import { EASE } from "../landing/playback";
+import { Lantern } from "../Lantern";
 import { RollingNumber } from "../RollingNumber";
 import { useSceneLoop } from "./scene-loop";
 

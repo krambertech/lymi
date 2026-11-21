@@ -117,6 +117,7 @@ function Empty() {
           <YomitanMark key="yomitan" className="size-11 rounded-tile" />,
         ].map((mark, i) => (
           <span
+            // oxlint-disable-next-line react/no-array-index-key -- Biome let this pass; triage in #1278
             key={String(i)}
             className={clsx("-ms-1.5 block rounded-md bg-plate p-0.5 first:ms-0", FAN[i])}
           >

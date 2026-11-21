@@ -83,10 +83,3 @@ export function stripJyutping(text: string): string {
     .map((segment) => segment.text)
     .join("");
 }
-
-/** Runs written back as text with inline Jyutping, so `parseJyutping` reads the same runs. */
-export function formatJyutping(segments: readonly JyutpingSegment[]): string {
-  return segments
-    .map(({ text, reading }) => (reading === undefined ? text : `${text}[${reading}]`))
-    .join("");
-}

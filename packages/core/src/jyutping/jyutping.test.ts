@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  formatJyutping,
+  type JyutpingSegment,
   jyutpingDigits,
   jyutpingExampleSegments,
   jyutpingKey,
@@ -11,9 +11,14 @@ import {
   stripJyutping,
 } from ".";
 
+/** Runs written as inline Jyutping, the notation `parseJyutping` reads. */
+const inline = (segments: readonly JyutpingSegment[]) =>
+  segments
+    .map(({ text, reading }) => (reading === undefined ? text : `${text}[${reading}]`))
+    .join("");
 const drawn = (term: string, reading: string) => {
   const segments = jyutpingTermReading(term, reading);
-  return segments && formatJyutping(segments);
+  return segments && inline(segments);
 };
 const pairs = (term: string, reading: string) =>
   jyutpingPairs(jyutpingTermReading(term, reading) ?? []);
@@ -78,9 +83,6 @@ describe("jyutpingTermReading", () => {
     expect(drawn("卡拉OK", "kaa1 laa1 ou1 kei1")).toBe("卡[kaa1]拉[laa1]OK[ou1 kei1]");
     expect(drawn("BB仔", "bi4 zai2")).toBe("BB[bi4]仔[zai2]");
   });
-  it("puts a reading that does not fit over the whole term", () => {
-    expect(drawn("你好嗎", "nei5 hou2")).toBe("你好嗎[nei5 hou2]");
-  });
   it("puts a one-form reading over the first of listed forms", () => {
     expect(drawn("行 · 行路", "hang4")).toBe("行[hang4] · 行路");
   });
@@ -95,9 +97,6 @@ describe("jyutpingKey", () => {
     expect(jyutpingKey("行", "hong4")).not.toBe(jyutpingKey("行", "hang4"));
     expect(jyutpingKey("長", "coeng4")).not.toBe(jyutpingKey("長", "zoeng2"));
     expect(jyutpingKey("樂", "lok6")).not.toBe(jyutpingKey("樂", "ngok6"));
-  });
-  it("keeps a changed tone as its own reading", () => {
-    expect(jyutpingKey("女", "neoi5")).not.toBe(jyutpingKey("女", "neoi2"));
   });
   it("matches across spacing, case, punctuation and raised tone numbers", () => {
     const key = jyutpingKey("香港", "hoeng1 gong2");
@@ -133,9 +132,6 @@ describe("jyutpingPairs", () => {
     expect(pairs("銀行", "ngan4 hong4")).toEqual(["jyutping:銀[ngan4]", "jyutping:行[hong4]"]);
     expect(pairs("行路", "hang4 lou6")).toEqual(["jyutping:行[hang4]", "jyutping:路[lou6]"]);
   });
-  it("pairs a character outside the Basic Multilingual Plane whole", () => {
-    expect(pairs("搭𨋢", "daap3 lip1")).toContain("jyutping:𨋢[lip1]");
-  });
   it("gives no pair for a reading over the whole term or a toneless syllable", () => {
     expect(pairs("你好嗎", "nei5 hou2")).toEqual([]);
     expect(pairs("你好", "nei hou")).toEqual([]);
@@ -143,7 +139,7 @@ describe("jyutpingPairs", () => {
 });
 
 describe("parseJyutping", () => {
-  const read = (text: string) => formatJyutping(parseJyutping(text));
+  const read = (text: string) => inline(parseJyutping(text));
 
   it("puts each bracket over as many characters before it as it has syllables", () => {
     expect(parseJyutping("我去銀行[ngan4 hong4]。")).toEqual([

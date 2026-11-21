@@ -1,6 +1,6 @@
 import { expect, inject, test } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { CardNotes } from "./card-notes";
 
 test("notes render formatting and a keyboard-accessible external link", async () => {

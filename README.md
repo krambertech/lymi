@@ -59,7 +59,7 @@ pnpm check        # lint, formatting, design, styling, regression, cache, agent-
 pnpm check:regressions # bug patterns that reached pull requests before: dead shadows, undefined CSS properties, storage keys spelled twice, retired claims
 pnpm check:design # the phone's values match packages/design; DESIGN.md keeps no tokens in its frontmatter; design docs name real components
 pnpm build        # production build
-pnpm fix          # Biome, writing fixes
+pnpm fix          # oxfmt and Oxlint, writing fixes
 pnpm i18n:extract # pull new interface strings into the uk and ru catalogs
 pnpm i18n:check   # fails when a string was added without extracting
 pnpm typecheck    # tsc across the workspace

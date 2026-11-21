@@ -684,7 +684,7 @@ export function WordView({
             .filter(Boolean)
             .map((part, index) => (
               // Parts come from a fixed list in a fixed order, so the index is a stable key.
-              // biome-ignore lint/suspicious/noArrayIndexKey: fixed-length list in a fixed order
+              // oxlint-disable-next-line react/no-array-index-key -- fixed-length list in a fixed order
               <Fragment key={index}>
                 {index > 0 && <span aria-hidden="true">·</span>}
                 {part}

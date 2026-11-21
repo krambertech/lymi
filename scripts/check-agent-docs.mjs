@@ -73,22 +73,6 @@ export function workingTree(dir = root) {
   };
 }
 
-/** A tree from a map of file to contents, for tests. */
-export function memoryTree(contents, { ignored = [] } = {}) {
-  const files = Object.keys(contents);
-  const isDirectory = (path) => {
-    const prefix = `${path.replace(/\/$/, "")}/`;
-    return path === "" || files.some((file) => file.startsWith(prefix));
-  };
-  return {
-    files,
-    read: (file) => contents[file],
-    exists: (path) => files.includes(path.replace(/\/$/, "")) || isDirectory(path),
-    isDirectory,
-    ignored: (path) => ignored.some((entry) => path === entry || path.startsWith(`${entry}/`)),
-  };
-}
-
 /** Each line outside fences, and each shell line inside one, with its number. */
 function linesOf(text) {
   const lines = [];
@@ -297,7 +281,7 @@ function checkReferences(tree, doc, scripts, skills) {
 }
 
 /** The verify skill's feature table: each row's title, entry link and line. */
-export function featureRows(text) {
+function featureRows(text) {
   const rows = [];
   let inTable = false;
   text.split("\n").forEach((line, index) => {

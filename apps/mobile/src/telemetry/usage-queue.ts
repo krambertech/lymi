@@ -12,7 +12,7 @@ const USAGE_QUEUE = "lymi_usage_queue" as PostHogPersistedProperty;
  * Keeps usage events in a queue of their own that sends only the account `sendable()` names, so a
  * crash report never waits on consent and usage never outlives it. docs/analytics.md.
  */
-// biome-ignore lint/suspicious/noExplicitAny: a mixin's constructor takes whatever its base does.
+// oxlint-disable-next-line typescript/no-explicit-any -- a mixin's constructor takes whatever its base does.
 export function withUsageQueue<Base extends abstract new (...args: any[]) => PostHogCore>(
   base: Base,
   sendable: () => string | undefined,

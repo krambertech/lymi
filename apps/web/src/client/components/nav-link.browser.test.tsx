@@ -6,8 +6,8 @@ import {
   RouterProvider,
 } from "@tanstack/react-router";
 import { expect, test } from "vitest";
-import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page } from "vitest/browser";
 import { NavLink, StaticNavProvider } from "./nav-link";
 
 const link = (

@@ -111,10 +111,10 @@ export function Grid({ children }: { children: ReactNode[] }) {
   return (
     <View className="gap-2">
       {rows.map((row, r) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: rows never reorder
+        // oxlint-disable-next-line react/no-array-index-key -- rows never reorder
         <View key={r} className="flex-row gap-2">
           {row.map((cell, c) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: cells never reorder
+            // oxlint-disable-next-line react/no-array-index-key -- cells never reorder
             <View key={c} className="flex-1">
               {cell}
             </View>

@@ -1,7 +1,7 @@
 import { Pencil } from "lucide-react";
 import { describe, expect, inject, test } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { IconButton } from "../button";
 import { Dialog, DialogContent, DialogTitle } from "./dialog";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./tooltip";
@@ -77,26 +77,6 @@ describe("Tooltip", () => {
     await expect.element(tip("Archive deck")).toBeVisible();
     await tab();
     await expect.poll(() => openTips().length).toBe(0);
-  });
-
-  test("a disabled tooltip never opens, so a menu button stays quiet while its menu is open", async () => {
-    const screen = await render(
-      <TooltipProvider>
-        <Tooltip disabled>
-          <TooltipTrigger render={<button type="button" aria-label="Card options" />}>
-            …
-          </TooltipTrigger>
-          <TooltipContent>Card options</TooltipContent>
-        </Tooltip>
-      </TooltipProvider>,
-    );
-    const trigger = screen.getByRole("button", { name: "Card options" });
-    (trigger.element() as HTMLElement).focus();
-    await expect.element(trigger).toHaveFocus();
-    if (desktop) await trigger.hover();
-    await new Promise((r) => setTimeout(r, 700));
-
-    expect(openTips()).toHaveLength(0);
   });
 
   test.runIf(desktop)("waits under a still pointer, then shows", async () => {

@@ -1,8 +1,8 @@
 import type { CSSProperties, ReactNode } from "react";
 import { openLymiUrl } from "../../lib/origins";
-import type { LanguageTarget } from "../LanguageLinks";
 import { SiteFooter } from "../landing/SiteFooter";
 import { SiteNav } from "../landing/SiteNav";
+import type { LanguageTarget } from "../LanguageLinks";
 
 interface Props {
   /** Where the footer's language links go: the hub's page, or a lesson's own paths. */

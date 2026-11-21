@@ -1,13 +1,22 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {
-  BUDGET,
-  check,
-  featureRows,
-  memoryTree,
-  pnpmScripts,
-  productRoutes,
-} from "./check-agent-docs.mjs";
+import { BUDGET, check, pnpmScripts, productRoutes } from "./check-agent-docs.mjs";
+
+/** A tree from a map of file to contents, standing in for `workingTree`. */
+function memoryTree(contents, { ignored = [] } = {}) {
+  const files = Object.keys(contents);
+  const isDirectory = (path) => {
+    const prefix = `${path.replace(/\/$/, "")}/`;
+    return path === "" || files.some((file) => file.startsWith(prefix));
+  };
+  return {
+    files,
+    read: (file) => contents[file],
+    exists: (path) => files.includes(path.replace(/\/$/, "")) || isDirectory(path),
+    isDirectory,
+    ignored: (path) => ignored.some((entry) => path === entry || path.startsWith(`${entry}/`)),
+  };
+}
 
 const VERIFY = ".agents/skills/verify";
 const ROUTES = "apps/web/src/client/routes";
@@ -263,13 +272,5 @@ test("parses pnpm invocations into workspace and script", () => {
   ]);
   assert.deepEqual(pnpmScripts("pnpm -r test; pnpm --filter @lymi/web exec vitest"), [
     { filter: "@lymi/web", script: "exec" },
-  ]);
-});
-
-test("reads the feature table's rows with their lines", () => {
-  const rows = featureRows(repo().read(`${VERIFY}/SKILL.md`));
-  assert.deepEqual(rows, [
-    { number: 7, title: "Review", entry: "features/review.md" },
-    { number: 8, title: "Library", entry: "features/library.md" },
   ]);
 });

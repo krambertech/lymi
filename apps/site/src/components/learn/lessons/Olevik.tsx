@@ -15,8 +15,8 @@ import {
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { type ChoiceItem, ChoiceRound, type GapItem, GapRound, Quiz } from "../Quiz";
 import { Playing } from "../Sound";
 import { Word } from "../Word";

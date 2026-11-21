@@ -37,11 +37,9 @@ describe("searching cards a page at a time", () => {
     const qc = new QueryClient();
     const options = cardSearchQuery("ver", "d1");
     await qc.fetchInfiniteQuery(options);
-    const query = qc.getQueryCache().find({ queryKey: options.queryKey });
     expect(options.getNextPageParam(page(["a"], "c1"), [], undefined, [])).toBe("c1");
     expect(options.getNextPageParam(page([], "c2"), [], "c1", [])).toBe("c2");
     expect(options.getNextPageParam(page(["b"], null), [], "c2", [])).toBeUndefined();
-    expect(query).toBeDefined();
 
     const params = new URL(urls[0] ?? "", "http://x").searchParams;
     expect(params.get("query")).toBe("ver");

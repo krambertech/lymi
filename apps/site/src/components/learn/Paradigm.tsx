@@ -72,7 +72,7 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
     <div className="@container grid gap-4">
       {/* The table is laid out as a grid, so each part names its role: Safari drops a grid's table semantics. */}
       <table
-        // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+        // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- a table laid out as a grid loses its semantics in Safari
         role="table"
         aria-label={label}
         className={clsx(
@@ -83,12 +83,12 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
       >
         {columns.length > 0 && (
           <thead
-            // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+            // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- a table laid out as a grid loses its semantics in Safari
             role="rowgroup"
             className="contents"
           >
             <tr
-              // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+              // oxlint-disable-next-line jsx-a11y/no-redundant-roles, jsx-a11y/no-interactive-element-to-noninteractive-role -- a table laid out as a grid loses its semantics in Safari; Biome let this pass; triage in #1278
               role="row"
               className={clsx(
                 "col-span-full grid-cols-subgrid pb-0.5",
@@ -97,7 +97,7 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
             >
               {asks && (
                 <th
-                  // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                  // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- a table laid out as a grid loses its semantics in Safari
                   role="columnheader"
                   scope="col"
                 >
@@ -105,7 +105,7 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
                 </th>
               )}
               <th
-                // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- a table laid out as a grid loses its semantics in Safari
                 role="columnheader"
                 scope="col"
               >
@@ -113,9 +113,9 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
               </th>
               {Array.from({ length: width }, (_, column) => (
                 <th
-                  // biome-ignore lint/suspicious/noArrayIndexKey: columns never reorder
+                  // oxlint-disable-next-line react/no-array-index-key -- columns never reorder
                   key={column}
-                  // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                  // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- a table laid out as a grid loses its semantics in Safari
                   role="columnheader"
                   scope="col"
                   className={clsx(
@@ -132,27 +132,28 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
           </thead>
         )}
         <tbody
-          // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+          // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- a table laid out as a grid loses its semantics in Safari
           role="rowgroup"
           className="contents"
         >
           {rows.map((each, r) => (
-            // On a narrow screen a row stacks: its question and name share the first line, over its forms.
+            // On a narrow screen a row stacks: its question and name share the first line, over its forms,
+            // which go one per line below 28rem so a long form is never cut short.
             <tr
               key={each.id}
-              // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+              // oxlint-disable-next-line jsx-a11y/no-redundant-roles, jsx-a11y/no-interactive-element-to-noninteractive-role -- a table laid out as a grid loses its semantics in Safari; Biome let this pass; triage in #1278
               role="row"
               className={clsx(
                 "col-span-full grid items-center gap-x-3",
                 stacks
-                  ? "grid-cols-(--stacked) gap-y-1.5 not-first:pt-2 @lg:grid-cols-subgrid @lg:gap-y-0 @lg:pt-0!"
+                  ? "grid-cols-1 gap-y-1.5 not-first:pt-2 @md:grid-cols-(--stacked) @lg:grid-cols-subgrid @lg:gap-y-0 @lg:pt-0!"
                   : "grid-cols-subgrid",
               )}
               style={{ "--stacked": `repeat(${width}, minmax(0, 1fr))` } as React.CSSProperties}
             >
               {asks && (
                 <td
-                  // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                  // oxlint-disable-next-line jsx-a11y/no-redundant-roles, jsx-a11y/no-interactive-element-to-noninteractive-role -- a table laid out as a grid loses its semantics in Safari; Biome let this pass; triage in #1278
                   role="cell"
                   lang="et"
                   className={clsx(
@@ -165,7 +166,7 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
                 </td>
               )}
               <th
-                // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                // oxlint-disable-next-line jsx-a11y/no-redundant-roles -- a table laid out as a grid loses its semantics in Safari
                 role="rowheader"
                 scope="row"
                 className={clsx(
@@ -195,9 +196,9 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
                 const form = each.cells[column];
                 return (
                   <td
-                    // biome-ignore lint/suspicious/noArrayIndexKey: columns never reorder
+                    // oxlint-disable-next-line react/no-array-index-key -- columns never reorder
                     key={column}
-                    // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                    // oxlint-disable-next-line jsx-a11y/no-redundant-roles, jsx-a11y/no-interactive-element-to-noninteractive-role -- a table laid out as a grid loses its semantics in Safari; Biome let this pass; triage in #1278
                     role="cell"
                     className="min-w-0"
                   >

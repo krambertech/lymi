@@ -4,13 +4,13 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { CornerDownRight } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import { clipUrl, KUSIMUSED_SENTENCES } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
 import { PlayButton, PlayMark } from "../Sound";
 import { Word } from "../Word";
@@ -395,7 +395,7 @@ type FitItem = ChoiceItem & { q: Id; a: Id };
 export function KusimusedLesson() {
   const { t, i18n } = useLingui();
   const negation = lessonBySlug("eitus")?.n;
-  const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
+  const genitive = lessonBySlug("omastav")?.n;
 
   const askItems = useMemo<AskItem[]>(
     () =>

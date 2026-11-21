@@ -38,6 +38,7 @@ export function Precedence({ carryOverEvery }: { carryOverEvery: number }) {
   return (
     <ol className="grid list-none gap-0 !ps-0" aria-label="What each attempt checks, in order">
       {steps.map((s, i) => (
+        // oxlint-disable-next-line react/no-array-index-key -- Biome let this pass; triage in #1278
         <li key={String(i)} className="!m-0 grid grid-cols-[2rem_1fr] gap-x-3">
           <div className="flex flex-col items-center">
             <span

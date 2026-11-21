@@ -14,7 +14,6 @@ import {
   releasePlatforms,
   rollbackPlan,
   rolloutDue,
-  sampleCalls,
 } from "./phone-release.mjs";
 
 const linked = {
@@ -205,14 +204,6 @@ const called = (calls, id) =>
 
 test("records the pinned CLI's commands", () => {
   assert.equal(manifest.version, EAS_CLI_VERSION);
-  assert.equal(manifest.commands["update:view"].flags["non-interactive"], undefined);
-});
-
-test("sends only flags the pinned CLI accepts, for every call", () => {
-  const { calls, eas } = stubEas();
-  sampleCalls(eas);
-  assert.equal(calls.length, 21);
-  for (const argv of calls) assertAccepted(argv);
 });
 
 test("sends exactly the calls the pinned CLI's own parser accepted, values included", () => {

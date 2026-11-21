@@ -5,11 +5,11 @@ import { type ReactNode, useState } from "react";
 export function inline(text: string): ReactNode[] {
   return text.split(/(`[^`]+`|\*\*[^*]+\*\*)/g).map((part, i) => {
     if (part.startsWith("`") && part.endsWith("`") && part.length > 1) {
-      // biome-ignore lint/suspicious/noArrayIndexKey: parts of one fixed string
+      // oxlint-disable-next-line react/no-array-index-key -- parts of one fixed string
       return <code key={i}>{part.slice(1, -1)}</code>;
     }
     if (part.startsWith("**") && part.endsWith("**")) {
-      // biome-ignore lint/suspicious/noArrayIndexKey: parts of one fixed string
+      // oxlint-disable-next-line react/no-array-index-key -- parts of one fixed string
       return <strong key={i}>{part.slice(2, -2)}</strong>;
     }
     return part;

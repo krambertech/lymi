@@ -64,12 +64,13 @@ export function GapPassage(props: GapPassageProps) {
 function useFinished(id: string, done: boolean, right: number, total: number) {
   const { slug, finishSection } = useLesson();
   const section = useContext(SectionContext);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: reported once each time it finishes
+  // oxlint-disable react-hooks/exhaustive-deps -- reported once each time it finishes
   useEffect(() => {
     if (!done) return;
     captureAnalytics("learn_quiz_finished", { lesson: slug, quiz: id, right, total });
     if (section) finishSection(section);
   }, [done]);
+  // oxlint-enable react-hooks/exhaustive-deps
 }
 
 function Gap({
@@ -183,7 +184,7 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
     setOrder(
       Object.fromEntries(gaps.map((item) => [item.id, shuffle(item.options ?? [item.answer])])),
     );
-  // biome-ignore lint/correctness/useExhaustiveDependencies: once per passage; gaps is a new array each render
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- once per passage; gaps is a new array each render
   useEffect(reshuffle, [gaps.map((item) => item.id).join(" ")]);
   const firstOpen = gaps.find((item) => !fills[item.id]) ?? null;
   const current = gaps.find((item) => item.id === open && !fills[item.id]) ?? firstOpen;
@@ -196,7 +197,7 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
   const currentId = current?.id;
   // Focus follows the next open gap's words, so a keyboard goes straight on, then the score once
   // the last gap is filled; Try again brings it back to the first gap's words.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: runs as the open gap changes
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- runs as the open gap changes
   useEffect(() => {
     if (done) scoreRef.current?.focus({ preventScroll: true });
     else if (last || restarted.current) firstOption.current?.focus({ preventScroll: true });
@@ -395,7 +396,7 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
               const liftedHere =
                 lift?.moved && lift.value.from === "bank" && lift.value.word === word && inBank;
               return (
-                // biome-ignore lint/suspicious/noArrayIndexKey: the bank's order is fixed and a word can repeat
+                // oxlint-disable-next-line react/no-array-index-key -- the bank's order is fixed and a word can repeat
                 <li key={`${word}-${i}`}>
                   {inBank ? (
                     <button

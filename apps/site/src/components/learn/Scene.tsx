@@ -35,7 +35,7 @@ interface Place {
   quiz?: false;
 }
 
-export type SceneName = "box" | "house";
+export type SceneName = "box" | "house" | "table";
 
 const BOX: Record<string, Place> = {
   // Peal, sees and taga sit apart along the box, so a quiz shows each one's outline whole.
@@ -57,11 +57,25 @@ const HOUSE: Record<string, Place> = {
   majast: { pose: YARD, from: WINDOW, spot: [300, 170, 76, 74], quiz: false },
 };
 
-const PLACES: Record<SceneName, Record<string, Place>> = { box: BOX, house: HOUSE };
+const TABLETOP: Pose = { x: 200, y: 122, s: 0.8, layer: "front" };
+const TABLE: Record<string, Place> = {
+  lauale: { pose: TABLETOP, from: YARD, spot: [110, 132, 160, 94], quiz: false },
+  laual: { pose: TABLETOP, spot: [166, 34, 70, 92] },
+  laualt: { pose: YARD, from: TABLETOP, spot: [300, 166, 80, 78], quiz: false },
+};
+
+const PLACES: Record<SceneName, Record<string, Place>> = {
+  box: BOX,
+  house: HOUSE,
+  table: TABLE,
+};
 
 /** A place's sentence, as the lesson gives it. */
 export interface ScenePlace {
-  /** The place's id in the scene: sees, peal, all, taga, ees, korval; majja, majas, majast. */
+  /**
+   * The place's id in the scene: sees, peal, all, taga, ees, korval; majja, majas, majast; lauale,
+   * laual, laualt.
+   */
   id: string;
   /** The word that changes, on its key: peal. */
   word: string;
@@ -199,6 +213,7 @@ class Stage {
       return;
     }
     if (this.scene === "house") return this.walk(id, place);
+    if (this.scene === "table") return this.hop(id, place);
     const from = this.place;
     if (from === id) {
       // Already there: a small hop says so.
@@ -275,6 +290,33 @@ class Stage {
     }
     this.place = id;
   }
+  /** The table: the cat jumps up onto it from the floor, or down from it, in an arc. */
+  async hop(id: string, place: Place) {
+    const end = place.pose;
+    const start = place.from;
+    const at = (pose: Pose) => this.at.x === pose.x && this.at.y === pose.y;
+    // A movement starts on its own side: on the floor to jump up, on the table to jump down.
+    if (start && !at(start)) {
+      await this.fade(false, 140);
+      this.jump(start);
+      await this.fade(true, 160);
+      await wait(160);
+    }
+    if (at(end)) {
+      // There already: a small hop says so.
+      await this.move({ ...this.at, y: this.at.y - 12 }, 150, "ease-out");
+      await this.move({ ...end }, 200, "ease-in");
+    } else {
+      const mid = {
+        ...end,
+        x: (this.at.x + end.x) / 2,
+        y: Math.min(this.at.y, end.y) - 52,
+        s: (this.at.s + end.s) / 2,
+      };
+      await this.move({ ...end }, 560, "cubic-bezier(0.33, 0, 0.2, 1)", mid);
+    }
+    this.place = id;
+  }
   /** Puts the cat at a pose without moving it there. */
   jump(pose: Pose) {
     this.at = { ...pose };
@@ -283,7 +325,7 @@ class Stage {
   }
 }
 
-/** The drawing: the box or the house, with empty layers the cat moves between. */
+/** The drawing: the box, the house or the table, with empty layers the cat moves between. */
 function Drawing({
   scene,
   layers,
@@ -348,6 +390,73 @@ function Drawing({
               opacity="0.35"
             />
           </g>
+          {ghosts.front}
+          <g ref={at("front")} />
+        </>
+      ) : scene === "table" ? (
+        <>
+          <ellipse cx="214" cy="228" rx="160" ry="12" fill="var(--scene-ground)" />
+          {/* The table: two back legs, the top seen from a little above, and two front legs. */}
+          <path
+            d="M138 126 V212 M282 114 V202"
+            stroke="var(--ink)"
+            strokeWidth="11"
+            strokeLinecap="round"
+          />
+          <path
+            d="M138 126 V212 M282 114 V202"
+            stroke="var(--scene-kraft-in)"
+            strokeWidth="6"
+            strokeLinecap="round"
+          />
+          {ghosts.behind}
+          <g ref={at("behind")} />
+          {ghosts.inside}
+          <g ref={at("inside")} />
+          <path
+            d="M110 128 L136 108 L294 108 L268 128 Z"
+            fill="var(--scene-kraft)"
+            stroke="var(--ink)"
+            strokeWidth="2.6"
+            strokeLinejoin="round"
+          />
+          <path
+            d="M268 128 L294 108 L294 120 L268 142 Z"
+            fill="var(--scene-kraft-side)"
+            stroke="var(--ink)"
+            strokeWidth="2.6"
+            strokeLinejoin="round"
+          />
+          <rect
+            x="110"
+            y="128"
+            width="158"
+            height="14"
+            fill="var(--scene-kraft-side)"
+            stroke="var(--ink)"
+            strokeWidth="2.6"
+            strokeLinejoin="round"
+          />
+          <rect
+            x="120"
+            y="142"
+            width="13"
+            height="84"
+            fill="var(--scene-kraft-side)"
+            stroke="var(--ink)"
+            strokeWidth="2.6"
+            strokeLinejoin="round"
+          />
+          <rect
+            x="245"
+            y="142"
+            width="13"
+            height="84"
+            fill="var(--scene-kraft-side)"
+            stroke="var(--ink)"
+            strokeWidth="2.6"
+            strokeLinejoin="round"
+          />
           {ghosts.front}
           <g ref={at("front")} />
         </>
@@ -430,7 +539,7 @@ function useStage(scene: SceneName, start: string | null) {
   });
   const lid = useRef<SVGGElement | null>(null);
   const stage = useRef<Stage | null>(null);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the stage is built once per scene
+  // oxlint-disable react-hooks/exhaustive-deps -- the stage is built once per scene
   useEffect(() => {
     const { behind, inside, front } = layers.current;
     if (!behind || !inside || !front) return;
@@ -443,6 +552,7 @@ function useStage(scene: SceneName, start: string | null) {
       stage.current = null;
     };
   }, [scene]);
+  // oxlint-enable react-hooks/exhaustive-deps
   return { layers, lid, stage };
 }
 
@@ -493,7 +603,7 @@ export function Scene({ scene, label, keysLabel, places }: SceneProps) {
           {places.map((place) => {
             const spot = PLACES[scene][place.id]?.spot;
             return spot ? (
-              // biome-ignore lint/a11y/noStaticElementInteractions: a pointer shortcut for the keys below
+              // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- a pointer shortcut for the keys below
               <rect
                 key={place.id}
                 x={spot[0]}

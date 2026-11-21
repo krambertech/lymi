@@ -1,14 +1,10 @@
 import type { ThemeChoice } from "@lymi/client/desktop";
 
-/** What the learner sets for this Mac. They live on the Mac, not the account, so each Mac keeps its own. */
 export interface Preferences {
   shortcut: string;
-  /** The lantern in the menu bar; without it Lymi keeps its Dock icon, so it can always be reached. */
   showInMenuBar: boolean;
-  /** The cards due beside the lantern. Off until the learner asks for it. */
   showDue: boolean;
   fillSelection: boolean;
-  /** The page's theme, kept here so a window can open in it before any page has loaded. */
   theme: ThemeChoice;
 }
 
@@ -24,10 +20,6 @@ export const DEFAULTS: Preferences = {
 export const isTheme = (value: unknown): value is ThemeChoice =>
   value === "light" || value === "dark" || value === "system";
 
-/**
- * A global shortcut must hold ⌘ or ⌃ and one key. ⌥ alone is how a Mac types accents, so ⌥E as a
- * global shortcut would break typing in every app. The page records with the same rule.
- */
 export function usableShortcut(accelerator: string) {
   const parts = accelerator.split("+");
   const key = parts.at(-1) ?? "";
@@ -40,7 +32,6 @@ export function usableShortcut(accelerator: string) {
   );
 }
 
-/** What a saved file holds, read field by field, so a damaged or older file still starts the app. */
 export function parsePreferences(saved: unknown): Preferences {
   const value = (typeof saved === "object" && saved !== null ? saved : {}) as Record<
     string,

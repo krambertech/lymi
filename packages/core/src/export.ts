@@ -142,12 +142,23 @@ export const LymiFileCard = z.object({
       description: z.string().nullable(),
       width: z.number().int(),
       height: z.number().int(),
+      captured: z.boolean().optional().meta({
+        description: "The learner's capture tool sent it, so it shows to the deck's owner alone",
+      }),
     })
     .nullable(),
   // A recording an import brought, in `media/`; generated speech is made again rather than carried.
   recording: z.object({ file: z.string() }).nullable().optional(),
   // The example's recording an import brought, in `media/`.
-  exampleRecording: z.object({ file: z.string() }).nullable().optional(),
+  exampleRecording: z
+    .object({
+      file: z.string(),
+      captured: z.boolean().optional().meta({
+        description: "The learner's capture tool sent it, so it plays for the deck's owner alone",
+      }),
+    })
+    .nullable()
+    .optional(),
   archivedAt: Moment.nullable(),
   createdAt: Moment,
   states: z.array(LymiFileState),

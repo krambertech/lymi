@@ -146,13 +146,13 @@ export function DocsShell({ pathname, children }: { pathname: string; children: 
     return () => window.removeEventListener("keydown", onKey);
   }, []);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: navigating is the trigger, not the value
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- navigating is the trigger, not the value
   useEffect(() => {
     setMenu(false);
   }, [pathname]);
 
   // A long sidebar opens on the page being read, not on its first section.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: navigating is the trigger, not the value
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- navigating is the trigger, not the value
   useEffect(() => {
     document
       .querySelector<HTMLElement>("#doc-sidebar [aria-current='page']")

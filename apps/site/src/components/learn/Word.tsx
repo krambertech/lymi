@@ -169,6 +169,7 @@ function Card({
   }, [open.keyboard, placed]);
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- Biome let this pass; triage in #1278
     <div
       id="learn-card"
       ref={ref}

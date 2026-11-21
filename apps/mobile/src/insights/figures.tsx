@@ -181,7 +181,7 @@ export function RecallTally({ passed, failed }: { passed: number; failed: number
     >
       {marks.map((m, i) => (
         <View
-          // biome-ignore lint/suspicious/noArrayIndexKey: a mark is a count, with no identity beyond its place
+          // oxlint-disable-next-line react/no-array-index-key -- a mark is a count, with no identity beyond its place
           key={i}
           className="rounded-[3px]"
           style={{

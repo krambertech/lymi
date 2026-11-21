@@ -99,6 +99,7 @@ export function renderLesson(
         parts: [...recording.parts],
         words: [...recording.words],
         clips: [...recording.clips],
+        played: [...recording.played],
         view: recording.view,
       },
     };

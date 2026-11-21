@@ -316,7 +316,7 @@ function Burst({ run }: { run: number }) {
   const [fed, setFed] = useState(0);
   const timeline = useTimeline();
   const first = useRef(true);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: replays on `run` only.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- replays on `run` only.
   useEffect(() => {
     if (first.current) {
       first.current = false;

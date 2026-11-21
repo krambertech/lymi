@@ -4,8 +4,8 @@ import { ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { localizedPath } from "../../lib/routes";
 import { trayStyle } from "../../lib/tray";
-import { AssistantMark, type AssistantName } from "./AssistantMarks";
 import { ASSISTANT_KEYS, ASSISTANT_PAGES, type AssistantKey } from "./assistant-pages";
+import { AssistantMark, type AssistantName } from "./AssistantMarks";
 import { Section, useSectionTitleId } from "./Section";
 
 interface Props {

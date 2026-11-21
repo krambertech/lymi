@@ -88,7 +88,9 @@ async function load(url: string, referrer = "https://example.com/private") {
   });
   Object.defineProperty(document, "cookie", {
     get: () => "",
-    set: (value: string) => cookieWrites.push(value),
+    set: (value: string) => {
+      cookieWrites.push(value);
+    },
   });
   vi.stubGlobal("document", document);
   vi.stubGlobal("window", new EventTarget());

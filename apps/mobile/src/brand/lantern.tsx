@@ -165,6 +165,7 @@ export function Lantern({
         reduceMotion: ALWAYS,
       });
     }
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
   }, [fed, out, reduce, breath, sparks]);
 
   useEffect(() => {

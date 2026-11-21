@@ -150,11 +150,27 @@ describe("the streak as of the last end screen", () => {
 describe("what the end of a review offers", () => {
   it("Review forgotten holds each card whose latest grade today is Forgot, once", () => {
     const d = data(12);
-    const state = play(d, 8, (i) => (i < 2 ? 1 : 3));
-    const forgotten = state.log.filter((e) => e.rating === 1).map((e) => e.cardId);
-    const latest = new Map(state.log.map((e) => [e.cardId, e.rating]));
-    const expected = [...new Set(forgotten)].filter((id) => latest.get(id) === 1);
-    expect(forgottenRound(d, state).map((r) => r.cardId)).toEqual(expected);
+    const graded = (cardId: string, rating: Rating, second: number): LocalGrade => ({
+      cardId,
+      mode: M,
+      rating,
+      reviewedAt: new Date(noon.getTime() + second * 1000).toISOString(),
+      stateBefore: 2,
+    });
+    // c0 is forgotten twice, c1 forgotten and then recalled, c3 forgotten once.
+    const grades = [
+      graded("c0", 1, 1),
+      graded("c1", 1, 2),
+      graded("c3", 1, 3),
+      graded("c1", 3, 4),
+      graded("c0", 1, 5),
+    ];
+    const state = drawState(d, grades, new Date(noon.getTime() + 3_600_000), undefined);
+    expect(
+      forgottenRound(d, state)
+        .map((r) => r.cardId)
+        .sort(),
+    ).toEqual(["c0", "c3"]);
   });
 
   it("counts the cards the draw still holds, and a forgotten card once its return is in reach", () => {

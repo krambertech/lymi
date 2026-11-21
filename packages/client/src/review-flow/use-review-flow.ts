@@ -180,19 +180,22 @@ export function useReviewFlow(
 
   const { steps, askRound, owesDrawFetch, legReport } = view;
   const stepKey = JSON.stringify(steps);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a step is the same step until its text changes.
+  // oxlint-disable react-hooks/exhaustive-deps -- a step is the same step until its text changes.
   useEffect(() => {
     for (const step of steps) dispatch(step);
   }, [stepKey]);
+  // oxlint-enable react-hooks/exhaustive-deps
   const askKey = askRound ? `${askRound.at}:${askRound.done}` : null;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: one ask per emptied page.
+  // oxlint-disable react-hooks/exhaustive-deps -- one ask per emptied page.
   useEffect(() => {
     if (!askRound) return;
     dispatch({ type: "asked", ask: askRound });
     void list.refetch();
   }, [askKey]);
+  // oxlint-enable react-hooks/exhaustive-deps
   useEffect(() => {
     if (owesDrawFetch) void draw.refetch();
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
   }, [owesDrawFetch, draw.refetch]);
 
   // Sent grades from an earlier day are no longer in any draw.
@@ -271,6 +274,7 @@ export function useReviewFlow(
     return () => {
       stopWatching?.();
       queueMicrotask(() => {
+        // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
         if (mounts.current === mount) legs.current?.leave();
       });
     };

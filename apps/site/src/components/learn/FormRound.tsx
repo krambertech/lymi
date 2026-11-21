@@ -34,25 +34,30 @@ export interface FormItem {
  * underlined. Inside the marked card the added letters stay in ink, not the stage's hue.
  */
 function Change({ base, form, src }: { base: string; form: string; src?: string | undefined }) {
-  const { t } = useLingui();
+  const { i18n } = useLingui();
   const parts = morph(base, form);
   return (
     <p className="flex flex-wrap items-center gap-3">
       <span
         lang="et"
         data-play=""
-        className="learn-morph learn-morph-ink min-w-0 text-3xl/tight font-semibold tracking-tight wrap-anywhere"
+        className="learn-morph learn-morph-ink min-w-0 text-3xl/tight font-semibold tracking-tight whitespace-nowrap"
       >
-        <span className="sr-only">{t`${base} becomes ${form}`}</span>
+        {/* The sentence is in the reader's language; only the forms in it are Estonian. */}
+        <span lang={i18n.locale} className="sr-only">
+          <Trans>
+            <span lang="et">{base}</span> becomes <span lang="et">{form}</span>
+          </Trans>
+        </span>
         <span aria-hidden="true">
           {parts.map((part, i) =>
             part.kind === "added" ? (
-              // biome-ignore lint/suspicious/noArrayIndexKey: a word's parts never reorder
+              // oxlint-disable-next-line react/no-array-index-key -- a word's parts never reorder
               <span key={i} data-kind="added">
                 <span>{part.text}</span>
               </span>
             ) : (
-              // biome-ignore lint/suspicious/noArrayIndexKey: a word's parts never reorder
+              // oxlint-disable-next-line react/no-array-index-key -- a word's parts never reorder
               <span key={i} data-kind={part.kind}>
                 {part.text}
               </span>
@@ -114,12 +119,13 @@ export function FormRound({ item, state, heard, answer, autoplay }: RoundProps<F
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
   // Nothing to hear first: each round, including a restart, opens answerable, and the field takes
   // focus when it opens from Next.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: runs as each round opens
+  // oxlint-disable react-hooks/exhaustive-deps -- runs as each round opens
   useEffect(() => {
     heard();
     setValue("");
     if (autoplay) input.current?.focus({ preventScroll: true });
   }, [round]);
+  // oxlint-enable react-hooks/exhaustive-deps
   const done = state.status === "answered";
   const picked = done ? state.picked : null;
   const expected = item.answers[0] ?? "";

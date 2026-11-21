@@ -187,6 +187,26 @@ export function AppActivity({
   );
 }
 
+/** Numbered steps, as How it connects lists them. */
+export function AppSteps({ steps }: { steps: ReactNode[] }) {
+  return (
+    <ol className="grid gap-3 text-base text-ink-secondary">
+      {steps.map((step, i) => (
+        // oxlint-disable-next-line react/no-array-index-key -- Biome let this pass; triage in #1278
+        <li key={String(i)} className="grid grid-cols-[26px_1fr] gap-3">
+          <span
+            aria-hidden="true"
+            className="edge grid size-[26px] place-items-center rounded-full bg-plate-nested text-xs font-semibold text-ink tabular-nums"
+          >
+            {i + 1}
+          </span>
+          <span className="min-w-0 pt-0.5 text-pretty">{step}</span>
+        </li>
+      ))}
+    </ol>
+  );
+}
+
 /** How the app reaches Lymi: a line, numbered steps, and the guide on lymi.app when there is one. */
 export function AppConnect({
   name,
@@ -208,19 +228,7 @@ export function AppConnect({
     <AppSection title={t`How it connects`}>
       <div className="edge grid gap-4 rounded-xl bg-plate p-5">
         <p className="max-w-[60ch] text-base text-ink-secondary text-pretty">{intro}</p>
-        <ol className="grid gap-3 text-base text-ink-secondary">
-          {steps.map((step, i) => (
-            <li key={String(i)} className="grid grid-cols-[26px_1fr] gap-3">
-              <span
-                aria-hidden="true"
-                className="edge grid size-[26px] place-items-center rounded-full bg-plate-nested text-xs font-semibold text-ink tabular-nums"
-              >
-                {i + 1}
-              </span>
-              <span className="min-w-0 pt-0.5 text-pretty">{step}</span>
-            </li>
-          ))}
-        </ol>
+        <AppSteps steps={steps} />
         {children}
         {guide && (
           <div className="border-t border-edge pt-4">

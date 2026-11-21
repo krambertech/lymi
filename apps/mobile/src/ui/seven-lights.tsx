@@ -85,7 +85,7 @@ export function SevenLights({
         );
         const landing = i === today && turn && sequence !== undefined ? turn : undefined;
         return (
-          // biome-ignore lint/suspicious/noArrayIndexKey: a day's place in the week is its identity.
+          // oxlint-disable-next-line react/no-array-index-key -- a day's place in the week is its identity.
           <View key={i} className={`items-center ${lg ? "gap-2" : "gap-1.5"}`}>
             <Glass
               level={l}

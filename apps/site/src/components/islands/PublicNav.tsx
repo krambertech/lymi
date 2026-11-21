@@ -1,7 +1,7 @@
 import { openLymiUrl } from "../../lib/origins";
 import type { LocalizedPage } from "../../lib/routes";
-import { Localized } from "../Localized";
 import { SiteNav } from "../landing/SiteNav";
+import { Localized } from "../Localized";
 
 interface Props {
   locale: string;

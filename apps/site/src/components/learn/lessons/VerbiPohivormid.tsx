@@ -20,8 +20,8 @@ import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, Panel } from "../Explore";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { type GapItem, GapPassage } from "../GapPassage";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
 import { PlayButton, Playing } from "../Sound";
 import { Word } from "../Word";
@@ -674,7 +674,7 @@ export function VerbiPohivormidLesson() {
   const commands = lessonBySlug("kaskiv")?.n;
   const negation = lessonBySlug("eitus")?.n;
   const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
-  const infinitives = at("Pean minema, tahan lugeda");
+  const infinitives = lessonBySlug("tegevusnimed")?.n;
   const gradation = at("Jalg, jala");
 
   const heardItems = useMemo<HeardItem[]>(

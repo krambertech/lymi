@@ -7,7 +7,7 @@ What App Store Connect and Play Console need by hand for the first submission, i
 1. Raise `expo.version` in `apps/mobile/app.json` to `1.0.0`, the version the stores will show, and follow the contract steps in `docs/phone-release.md` for a new version.
 2. Ship a binary with this pull request's privacy manifest, the AI consent prompt (#973) and content reports (#971). Each changes the native fingerprint or the review notes, so the build under review must postdate all three.
 3. Make the review account as [`review.md`](review.md) describes.
-4. Run `node apps/mobile/store/screenshots/render.mjs` to write the screenshots to `apps/mobile/store/screenshots/out/`.
+4. Run `node apps/mobile/store/screenshots/set.mjs` to write the screenshots to `apps/mobile/store/screenshots/out/`.
 
 ## App Store Connect
 
@@ -22,7 +22,7 @@ All under App Store Connect, Apps, Lymi.
 4. **Pricing and Availability.** Price **Free** (USD 0). Availability: all countries and regions.
 5. **EU trader status.** App Store Connect home, Business, then the Digital Services Act section. A trader's address, phone and email are shown on the EU store page. Deciding whether Lymi is a trader is yours; distribution in the EU waits until it is answered.
 6. **The version page**, `iOS App 1.0` in the sidebar, per language:
-   - iPhone screenshots: the 6.9" slot takes `out/panorama/<language>/6.9/`, the 6.3" slot takes `out/panorama/<language>/6.3/`, in file order.
+   - iPhone screenshots: the 6.9" slot takes `out/<language>/6.9/`, the 6.3" slot takes `out/<language>/6.3/`, all nine in file order.
    - Promotional Text, Description, Keywords from `listing/<language>.md`.
    - Support URL `https://lymi.app/support`, Marketing URL `https://lymi.app`.
    - What's New stays empty on the first version.
@@ -50,8 +50,8 @@ All under Play Console, Lymi. Do the setup steps in `docs/phone-release.md` firs
    - App name, Short description, Full description from `listing/en.md`.
    - App icon: `apps/mobile/assets/icon.png` resized to 512 × 512, `sips -z 512 512 apps/mobile/assets/icon.png --out icon-512.png`.
    - Feature graphic: `out/play-feature/en.jpg`.
-   - Phone screenshots: `out/panorama/en/play/`, all six. Skip tablet screenshots; the app is phone-only.
-3. **Translations.** On the same page, Manage translations, Add your own translations: Ukrainian and Russian, with the text from `listing/uk.md` and `listing/ru.md`, the feature graphic `out/play-feature/<language>.jpg` and the screenshots `out/panorama/<language>/play/`.
+   - Phone screenshots: `out/en/play/`, all nine in file order. Skip tablet screenshots; the app is phone-only.
+3. **Translations.** On the same page, Manage translations, Add your own translations: Ukrainian and Russian, with the text from `listing/uk.md` and `listing/ru.md`, the feature graphic `out/play-feature/<language>.jpg` and the screenshots `out/<language>/play/`.
 4. **App content**, under Policy and programs. Each declaration below opens from that page:
    - Privacy policy: `https://lymi.app/privacy`.
    - Ads: **No, my app does not contain ads**.
@@ -62,6 +62,24 @@ All under Play Console, Lymi. Do the setup steps in `docs/phone-release.md` firs
    - Data safety: from [`privacy.md`](privacy.md#google-play-console-data-safety).
    - Advertising ID: **No**, the app does not use it.
 5. **Release notes.** When promoting the release, paste the release notes from `listing/<language>.md`.
+
+## Replacing the screenshots later
+
+- App Store screenshots belong to a version. A live version's screenshots are locked, so new ones go on the next version's page (`+` beside iOS App), which then goes to App Review with its build.
+- Play's screenshots and feature graphic change in Main store listing and in each translation at any time; with managed publishing on, the change waits in Publishing overview until you publish it.
+
+## Uploading by API
+
+`screenshots/upload.mjs` uploads what `set.mjs` rendered, so neither console needs a drag and drop:
+
+```bash
+node apps/mobile/store/screenshots/upload.mjs apple 1.0.1
+node apps/mobile/store/screenshots/upload.mjs play --skip 6
+```
+
+- `apple <version>` creates that version beside the live one when it is missing, then replaces both iPhone sizes in every language. Attach the build, write What's New and submit it by hand.
+- `play --skip <shot>` replaces the phone screenshots and the feature graphic in every listing and commits the edit. Play takes at most eight, so one shot stays out; Hear every word is the one left out today, since Made for your language has a speaker on every card.
+- The keys live in `~/.lymi/keys/`, never in the repo: `AuthKey_<key id>.p8` and `app-store-connect.json` (`{"keyId", "issuerId"}`) from App Store Connect → Users and Access → Integrations, with App Manager access, and `play-service-account.json`, a JSON key for the eas-submit service account in the Google Cloud project Lymi Text to Speech. `LYMI_STORE_KEYS` points elsewhere.
 
 ## After approval
 

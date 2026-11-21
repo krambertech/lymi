@@ -1,5 +1,5 @@
-import { AssistantPageView } from "../landing/AssistantPageView";
 import type { AssistantKey } from "../landing/assistant-pages";
+import { AssistantPageView } from "../landing/AssistantPageView";
 import { Island } from "./Island";
 
 interface Props {

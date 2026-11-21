@@ -233,7 +233,7 @@ export function createEas(runner = defaultRunner) {
 }
 
 /** Makes every kind of EAS call once, so the tests and the manifest check the same argv. */
-export function sampleCalls(eas) {
+function sampleCalls(eas) {
   eas.channels();
   eas.createChannel("production");
   eas.view("g1");

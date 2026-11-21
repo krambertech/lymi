@@ -9,6 +9,7 @@ import {
   describeCardImage,
   importCardImage,
   restoreCardImage,
+  storeImportedImage,
   uploadCardImage,
 } from "./card-images";
 import { addCards, showCard, updateCard } from "./cards";
@@ -387,6 +388,32 @@ describe("card pictures", () => {
       uploadCardImage(member, card.id, jpeg, {}, { bucket: store, images: processor() }),
     ).rejects.toMatchObject({ code: "forbidden" });
     expect(await drawableCount(member, { zone: "UTC" })).toBeGreaterThan(0);
+  });
+
+  it("asks a captured picture's modes of its owner alone, and hides it from members", async () => {
+    const { deck, card } = await signCard("platform");
+    const store = bucket();
+    const [row] = await db.select().from(schema.cards).where(eq(schema.cards.id, card.id));
+    if (!row) throw new Error("card missing");
+    await storeImportedImage(
+      owner,
+      row,
+      jpeg,
+      "A train at a station",
+      { bucket: store, images: processor() },
+      true,
+    );
+    await join(member, deck.id);
+
+    expect((await statesOf(card.id)).map((s) => s.mode).sort()).toEqual([
+      "image_to_meaning",
+      "term_to_meaning",
+    ]);
+    expect((await statesOf(card.id, "member")).map((s) => s.mode)).toEqual(["term_to_meaning"]);
+    expect((await showCard(member, card.id)).image).toBeNull();
+    expect((await showCard(owner, card.id)).image).toMatchObject({
+      description: "A train at a station",
+    });
   });
 
   it("imports from a public link without keeping the link", async () => {

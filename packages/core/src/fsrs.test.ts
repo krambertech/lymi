@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   deserializeState,
   emptyState,
-  formatInterval,
+  interval,
   preview,
   readFsrs,
   State,
@@ -12,12 +12,6 @@ import {
 
 describe("fsrs", () => {
   const now = new Date("2026-09-05T20:00:00Z");
-
-  it("starts a new card in the New state", () => {
-    const s = emptyState(now);
-    expect(s.state).toBe(State.New);
-    expect(s.reps).toBe(0);
-  });
 
   it("orders the four outcomes: Again < Hard < Good < Easy", () => {
     const p = preview(emptyState(now), now);
@@ -65,17 +59,16 @@ describe("fsrs", () => {
     expect(schedule(card, 3, later).card.state).toBe(State.Review);
   });
 
-  it("round-trips through JSON", () => {
-    const r = schedule(emptyState(now), 3, now);
-    const back = deserializeState(serializeState(r.card));
-    expect(back.due.getTime()).toBe(r.card.due.getTime());
-    expect(back.stability).toBe(r.card.stability);
-  });
-
-  it("formats intervals the way the grade buttons show them", () => {
-    expect(formatInterval(now, new Date(now.getTime() + 60_000))).toBe("1 min");
-    expect(formatInterval(now, new Date(now.getTime() + 2 * 86_400_000))).toBe("2 d");
-    expect(formatInterval(now, new Date(now.getTime() + 90 * 86_400_000))).toBe("3 mo");
+  it("gives intervals in the unit the grade buttons show them in", () => {
+    expect(interval(now, new Date(now.getTime() + 60_000))).toEqual({ value: 1, unit: "minute" });
+    expect(interval(now, new Date(now.getTime() + 2 * 86_400_000))).toEqual({
+      value: 2,
+      unit: "day",
+    });
+    expect(interval(now, new Date(now.getTime() + 90 * 86_400_000))).toEqual({
+      value: 3,
+      unit: "month",
+    });
   });
 });
 

@@ -223,7 +223,7 @@ export function HintSheet({
   // What the field holds now, read when a draft lands after the learner may have typed.
   const latest = useRef(text);
   latest.current = text;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: once per opening, not per render of the card.
+  // oxlint-disable react-hooks/exhaustive-deps -- once per opening, not per render of the card.
   useEffect(() => {
     if (!open || !card) return;
     opening.current += 1;
@@ -233,6 +233,7 @@ export function HintSheet({
     setDrafting(false);
     setDraftNote(null);
   }, [open]);
+  // oxlint-enable react-hooks/exhaustive-deps
   const settings = useQuery(settingsQuery);
   const editing = card ?? shown;
   const empty = !text.trim();

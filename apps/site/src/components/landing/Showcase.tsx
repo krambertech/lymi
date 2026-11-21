@@ -174,6 +174,7 @@ function ShowcaseRoot({ label, tray = "end", trayClassName, children, className 
         className,
       )}
     >
+      {/* oxlint-disable-next-line jsx-a11y/interactive-supports-focus -- Biome let this pass; triage in #1278 */}
       <div
         role="tablist"
         aria-label={label}

@@ -6,8 +6,6 @@ import type { Locale } from "../../lib/routes";
 import { UKRAINIAN_QUESTIONS } from "./faq";
 import { NotebookToCards } from "./NotebookToCards";
 import { type StressPage, StressView } from "./StressView";
-import { EnrichUkrainian } from "./UkrainianAi";
-import { UkrainianBento } from "./UkrainianBento";
 import {
   UKRAINIAN_CLASS_CARDS,
   UKRAINIAN_EXAMPLES,
@@ -16,6 +14,8 @@ import {
   UKRAINIAN_PATH,
   UKRAINIAN_VOICE_WORDS,
 } from "./ukrainian";
+import { EnrichUkrainian } from "./UkrainianAi";
+import { UkrainianBento } from "./UkrainianBento";
 
 const Uk = ({ children }: { children: ReactNode }) => <span lang="uk">{children}</span>;
 

@@ -177,7 +177,7 @@ function Popover({
     });
   };
   // Back closes the menu before it reaches the screen.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: it binds once, for as long as the menu is open.
+  // oxlint-disable react-hooks/exhaustive-deps -- it binds once, for as long as the menu is open.
   useEffect(() => {
     const back = BackHandler.addEventListener("hardwareBackPress", () => {
       leave();
@@ -185,6 +185,7 @@ function Popover({
     });
     return () => back.remove();
   }, []);
+  // oxlint-enable react-hooks/exhaustive-deps
   const p = usePalette();
   const target = useBlurTarget();
   // Blur from Android 12; before it, the plate the web falls back to.

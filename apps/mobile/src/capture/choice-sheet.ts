@@ -78,7 +78,7 @@ export function useChoiceSheet<K extends string>(refocus: () => void) {
  */
 export function useDraft<T>(value: T, apply: (next: T) => void, keep: (apply: () => void) => void) {
   const [draft, setDraft] = useState(value);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the latest draft is what ✓ applies.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- the latest draft is what ✓ applies.
   useEffect(() => keep(() => apply(draft)), [draft]);
   return [draft, setDraft] as const;
 }

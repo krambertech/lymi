@@ -1,5 +1,3 @@
-// The page's only reach into the app, as `window.lymiDesktop`. Typed by the shared contract in
-// `packages/client/src/desktop.ts`; a sandboxed preload loads no other file, so it is types only.
 import type { AskApp, DesktopBridge, ToApp, ToPage } from "@lymi/client/desktop";
 
 import electron = require("electron");
@@ -11,10 +9,6 @@ const send = <C extends keyof ToApp>(channel: C, ...args: ToApp[C]) =>
 const ask = <C extends keyof AskApp>(channel: C, ...args: AskApp[C]["args"]) =>
   ipcRenderer.invoke(channel, ...args) as Promise<AskApp[C]["result"]>;
 
-/**
- * A message the app sends while the page is still starting, such as a menu command that opened
- * the window, waits here until the page listens, and then reaches it once.
- */
 const waiting = new Map<keyof ToPage, unknown[]>();
 const listening = new Map<keyof ToPage, (value: never) => void>();
 for (const channel of ["panel:shown", "menu:command", "app:navigate"] as const) {

@@ -16,7 +16,7 @@ import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { type Db, schema } from "../db";
 import { anki } from "../imports/anki";
 import { bytesSource, openZip, readZipEntry } from "../imports/files";
-import { uploadCardImage } from "./card-images";
+import { storeImportedImage, uploadCardImage } from "./card-images";
 import { addCards, archiveCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { archiveDeck, createDeck } from "./decks";
@@ -111,7 +111,7 @@ async function runExport(ctx: ServiceContext, input: ExportStartInput) {
   const data = await writeExportData(ctx, started.id, storage());
   let step: MediaStep = { segment: 1, offset: data.offset, after: null, number: 0 };
   let missing = 0;
-  for (let done = data.media === 0; !done; ) {
+  for (let done = data.media === 0; !done;) {
     const written = await writeExportMedia(ctx, started.id, step, storage());
     step = {
       segment: written.segment,
@@ -686,6 +686,57 @@ describe("a recording on export", () => {
     expect(cards.map((card) => [card.recording ?? null, card.exampleRecording ?? null])).toEqual([
       [null, `lymi-${hashi}-example-recording.mp3`],
     ]);
+  }, 60_000);
+
+  it("carries captured media out of a Lymi file and back in, still the owner's alone", async () => {
+    const owner = await fresh("Owner");
+    const deck = await createDeck(owner, { name: "Japanese", defaultLanguage: "ja" });
+    const [added] = await addCards(owner, [
+      { deckId: deck.id, term: "駅", meaning: "station", example: "駅に着きました。" },
+    ]);
+    if (added?.status !== "added") throw new Error("card not added");
+    const eki = added.card.id;
+    const key = `cards/${eki}/example-recorded/asbplayer.mp3`;
+    await env.AUDIO.put(key, new Uint8Array([0x49, 0x44, 0x33, ...new Array(61).fill(7)]));
+    await db
+      .update(schema.cards)
+      .set({ exampleRecordingKey: key, exampleRecordingCaptured: true })
+      .where(eq(schema.cards.id, eki));
+    const [row] = await db.select().from(schema.cards).where(eq(schema.cards.id, eki));
+    if (!row) throw new Error("card missing");
+    await storeImportedImage(
+      owner,
+      row,
+      png(40, 30),
+      undefined,
+      { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
+      true,
+    );
+
+    const lymiFile = await runExport(owner, { format: "lymi", deckId: deck.id });
+    const zip = await entries(lymiFile.bytes);
+    const line = new TextDecoder()
+      .decode(await zip.read("cards.jsonl"))
+      .split("\n")
+      .find((text) => text.includes(eki));
+    expect(JSON.parse(line ?? "{}")).toMatchObject({
+      picture: { captured: true },
+      exampleRecording: { file: `media/${eki}-example.mp3`, captured: true },
+    });
+
+    const copy = await fresh("Copy");
+    await runImport(copy, "japanese.zip", lymiFile.bytes);
+    const [copied] = await db
+      .select()
+      .from(schema.cards)
+      .where(eq(schema.cards.userId, copy.userId));
+    expect(copied).toMatchObject({ exampleRecordingCaptured: true });
+    expect(copied?.exampleRecordingKey).not.toBeNull();
+    const [image] = await db
+      .select()
+      .from(schema.cardImages)
+      .where(eq(schema.cardImages.cardId, copied?.id ?? ""));
+    expect(image).toMatchObject({ captured: true, status: "active" });
   }, 60_000);
 
   it("keeps a translation written for an earlier example marked on the way back in", async () => {

@@ -101,7 +101,7 @@ export function DeckAiCard({ deck, onSave }: Props) {
           <div className="mt-2 grid gap-2">
             {/* A long note scrolls in its own box, so the settings below stay in reach. */}
             <section
-              // biome-ignore lint/a11y/noNoninteractiveTabindex: a scrolling box needs focus so a keyboard can scroll it
+              // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- a scrolling box needs focus so a keyboard can scroll it
               tabIndex={0}
               aria-label={t`Learned from your cards`}
               className="max-h-48 overflow-y-auto rounded-md bg-plate-nested px-3 py-2.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"

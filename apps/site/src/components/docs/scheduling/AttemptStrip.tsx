@@ -58,7 +58,7 @@ export function AttemptStrip({ tiles, marked, label }: Props) {
         const lit = active === null ? marked?.has(t.card) : active === t.card;
         const dim = active !== null && active !== t.card;
         return (
-          // biome-ignore lint/suspicious/noArrayIndexKey: an attempt is its position in the day
+          // oxlint-disable-next-line react/no-array-index-key -- an attempt is its position in the day
           <li key={i} className="!m-0 grid">
             <button
               type="button"

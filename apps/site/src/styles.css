@@ -90,7 +90,6 @@
   }
   /* Theme switch: swap in one frame, no ragged cascade. */
   html.theme-switching * {
-    /* biome-ignore lint/complexity/noImportantStyles: the swap has to beat every component transition */
     transition: none !important;
   }
   #root {

@@ -187,7 +187,10 @@ export const cards = sqliteTable(
     notes: text("notes"),
     language: text("language"),
     /** The names of the card's `card_tags`, in order, written in the same batch. */
-    tags: text("tags", { mode: "json" }).$type<string[]>().notNull().default(sql`'[]'`),
+    tags: text("tags", { mode: "json" })
+      .$type<string[]>()
+      .notNull()
+      .default(sql`'[]'`),
     /** Where it came from, free text: "Lesson 14", "Il Gattopardo ch. 2", "chat with Marco". */
     source: text("source"),
     /** Overrides the deck's directions for this card. Null means follow the deck. */
@@ -232,6 +235,13 @@ export const cards = sqliteTable(
     audioApprovedKey: text("audio_approved_key"),
     /** R2 key of the example's recording an import brought, which its play control plays; null without one. */
     exampleRecordingKey: text("example_recording_key"),
+    /**
+     * The example's recording came from the learner's own capture tool, such as asbplayer, so it
+     * plays only for the deck's owner; everyone else hears generated speech. CONTEXT.md, Recording.
+     */
+    exampleRecordingCaptured: integer("example_recording_captured", { mode: "boolean" })
+      .notNull()
+      .default(false),
     /** Who added the card. Activity filters on this without parsing the audit log. */
     createdBy: text("created_by", { enum: ["user", "api", "mcp", "ai", "system"] })
       .notNull()
@@ -530,7 +540,10 @@ export const deckPublications = sqliteTable(
     /** Which shelf the deck sits on in Explore. Null until a publisher chooses one. */
     category: text("category", { enum: PUBLICATION_CATEGORIES }),
     /** Keys from `PUBLICATION_TAGS`, in list order. Not a card's `tags`, and never copied into them. */
-    tags: text("tags", { mode: "json" }).$type<PublicationTag[]>().notNull().default(sql`'[]'`),
+    tags: text("tags", { mode: "json" })
+      .$type<PublicationTag[]>()
+      .notNull()
+      .default(sql`'[]'`),
     /** The original edition: the language the deck's own fields are written in. */
     meaningLanguage: text("meaning_language").notNull(),
     /**
@@ -881,6 +894,8 @@ export const cardImages = sqliteTable(
     sourceKind: text("source_kind", { enum: ["upload", "url"] }).notNull(),
     /** Host of an imported link, never the full URL, which may carry credentials. */
     sourceHost: text("source_host"),
+    /** A frame the learner's capture tool sent, shown only to the card's owner. CONTEXT.md, Picture. */
+    captured: integer("captured", { mode: "boolean" }).notNull().default(false),
     status: text("status", { enum: ["active", "archived", "replaced"] })
       .notNull()
       .default("active"),
@@ -888,7 +903,9 @@ export const cardImages = sqliteTable(
     ...timestamps,
   },
   (t) => [
-    uniqueIndex("card_images_active_idx").on(t.cardId).where(sql`status = 'active'`),
+    uniqueIndex("card_images_active_idx")
+      .on(t.cardId)
+      .where(sql`status = 'active'`),
     index("card_images_card_idx").on(t.cardId, t.createdAt),
   ],
 );
@@ -1019,9 +1036,13 @@ export const auditLog = sqliteTable(
   (t) => [
     index("audit_user_idx").on(t.userId, t.createdAt),
     // Activity reads everything but the grades, which outnumber the rest many times over.
-    index("audit_activity_idx").on(t.userId, t.createdAt).where(sql`entity <> 'review'`),
+    index("audit_activity_idx")
+      .on(t.userId, t.createdAt)
+      .where(sql`entity <> 'review'`),
     // An app's page reads only that app's rows; grades never show there, as in `audit_activity_idx`.
-    index("audit_app_idx").on(t.userId, t.actorClient, t.createdAt).where(sql`entity <> 'review'`),
+    index("audit_app_idx")
+      .on(t.userId, t.actorClient, t.createdAt)
+      .where(sql`entity <> 'review'`),
   ],
 );
 

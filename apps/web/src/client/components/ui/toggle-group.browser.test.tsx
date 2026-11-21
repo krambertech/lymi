@@ -1,8 +1,8 @@
 import { MotionConfig } from "motion/react";
 import { useState } from "react";
 import { expect, test, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { withMotion } from "../../test/motion";
 import { offsetOnceChosen, plateOffset } from "../../test/plate";
 import { Segmented } from "../segmented";

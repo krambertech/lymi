@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -25,8 +25,8 @@ import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, ListenRows, Panel } from "../Explore";
 import { type GapItem, GapPassage } from "../GapPassage";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { Match, type MatchPair } from "../Match";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
@@ -35,10 +35,8 @@ import { Playing } from "../Sound";
 import { Word } from "../Word";
 
 const SLUG = "meeldima";
-/** A clip by what it says. */
 const src = (text: string) => clipUrl(SLUG, clipId(text));
 
-/** What each sentence means, by what it says. */
 const MEANS: Record<string, MessageDescriptor> = {
   "Mul on kass.": msg`I have a cat.`,
   "Sul on kass.": msg`You have a cat.`,
@@ -94,17 +92,14 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Kas sulle maitseb?": msg`Does it taste good to you?`,
 };
 
-/** A sentence without its last mark, as a glossary key and a `Word` inside a sentence. */
 const bare = (said: string) => said.replace(/[.!?]$/, "");
 
-/** An ending in running text, kept on one line and marked as Estonian: -le. */
 const End = ({ children }: { children: string }) => (
   <span lang="et" className="whitespace-nowrap">
     {children}
   </span>
 );
 
-/** Who each person is, in the reader's language. */
 const PERSON: Record<MeeldimaPerson["id"], MessageDescriptor> = {
   ma: msg({ message: "I", context: "person" }),
   sa: msg`You, to one person`,
@@ -114,7 +109,6 @@ const PERSON: Record<MeeldimaPerson["id"], MessageDescriptor> = {
   nad: msg`They`,
 };
 
-/** Who likes it, as the answer to “Who likes it?”: uk and ru answer with the dative (Мені, Мне). */
 const LIKER: Record<MeeldimaPerson["id"], MessageDescriptor> = {
   ma: msg({ message: "I", context: "who likes it" }),
   sa: msg({ message: "You, to one person", context: "who likes it" }),
@@ -124,7 +118,6 @@ const LIKER: Record<MeeldimaPerson["id"], MessageDescriptor> = {
   nad: msg({ message: "They", context: "who likes it" }),
 };
 
-/** Short answers glossed with their word below, so each form has one entry. */
 const ANSWERS = new Set(["Mulle!", "Ei meeldi."]);
 
 const GLOSSARY: Glossary = {
@@ -162,10 +155,8 @@ const GLOSSARY: Glossary = {
   kassid: { en: msg`cats` },
 };
 
-/** A stretch of a line, lit in the stage's hue when it is what changed. */
 type Piece = readonly [text: string, lit: boolean];
 
-/** “Mulle meeldivad kassid.” with -vad and the plural -d lit. */
 export function litMore(said: string): Piece[] {
   const [person, , noun = ""] = said.slice(0, -1).split(" ");
   return [
@@ -177,7 +168,6 @@ export function litMore(said: string): Piece[] {
   ];
 }
 
-/** “Mulle ei meeldi kohv.” with ei meeldi lit. */
 export function litNo(said: string): Piece[] {
   const at = said.indexOf("ei meeldi");
   return [
@@ -187,7 +177,6 @@ export function litNo(said: string): Piece[] {
   ];
 }
 
-/** One line to tap. Its lit pieces swap in when the switch flips. */
 function FlipLine({
   pieces,
   said,
@@ -213,7 +202,7 @@ function FlipLine({
       >
         <span className="inline-block">
           {pieces.map(([text, lit], i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: a line’s pieces never reorder
+            // oxlint-disable-next-line react/no-array-index-key -- a line’s pieces never reorder
             <span key={i} className={clsx(lit && "text-(--form)")}>
               {text}
             </span>
@@ -227,7 +216,6 @@ function FlipLine({
   );
 }
 
-/** The line under a switch: what the switch changed. */
 function FlipNote({ mode, title, tip }: { mode: string; title: ReactNode; tip: ReactNode }) {
   return (
     <div aria-live="polite" className="min-h-13">
@@ -239,7 +227,6 @@ function FlipNote({ mode, title, tip }: { mode: string; title: ReactNode; tip: R
   );
 }
 
-/** A sentence and what it means, as a line under a table or after an answer. */
 function Said({ said }: { said: string }) {
   const { i18n } = useLingui();
   return (
@@ -252,7 +239,6 @@ function Said({ said }: { said: string }) {
   );
 }
 
-/** Who has and who likes, person by person: the -l form beside the -le form. */
 function HasLikes() {
   const { t, i18n } = useLingui();
   const rows: ParadigmRow[] = MEELDIMA_PERSONS.map((person) => ({
@@ -292,7 +278,6 @@ function HasLikes() {
   );
 }
 
-/** Four likes, switched together between one thing and more than one. */
 function MoreFlip() {
   const { t } = useLingui();
   const [more, setMore] = useState(false);
@@ -359,7 +344,6 @@ function MoreFlip() {
   );
 }
 
-/** Four likes, switched together between yes and no. */
 function NoFlip() {
   const { t } = useLingui();
   const [no, setNo] = useState(false);
@@ -420,13 +404,11 @@ function NoFlip() {
 type PersonId = MeeldimaPerson["id"];
 const PERSON_IDS: readonly PersonId[] = MEELDIMA_PERSONS.map(({ id }) => id);
 
-/** The answer and two other persons at random, in random order. */
 export function threePersons(answer: PersonId): PersonId[] {
   const others = PERSON_IDS.filter((each) => each !== answer);
   return shuffle([answer, ...shuffle(others).slice(0, 2)]);
 }
 
-/** The first run's persons, fixed so the page renders the same on the server. */
 export const firstPersons = (i: number): PersonId[] => {
   const three = [0, 2, 3].map((step) => PERSON_IDS[(i + step) % PERSON_IDS.length] as PersonId);
   const turn = i % 3;
@@ -438,7 +420,6 @@ type WhoItem = ChoiceItem & { said: string; answer: PersonId; pair: readonly [st
 const personOptions = (ids: readonly PersonId[], i18n: I18n) =>
   ids.map((id) => ({ id, label: <span lang={i18n.locale}>{i18n._(LIKER[id])}</span> }));
 
-/** The feelings and when someone would say each. */
 const FEELING_WHEN: readonly {
   said: (typeof MEELDIMA_FEELINGS)[number];
   when: MessageDescriptor;
@@ -456,10 +437,10 @@ export function MeeldimaLesson() {
   const negation = lessonBySlug("eitus")?.n;
   const questions = lessonBySlug("kusimused")?.n;
   const pronouns = lessonBySlug("mina-sina-tema")?.n;
-  const mulOn = LESSONS.find((lesson) => lesson.et === "Mul on")?.n;
-  const plural = LESSONS.find((lesson) => lesson.et === "Kassid")?.n;
-  const onto = LESSONS.find((lesson) => lesson.et === "Laual, lauale, laualt")?.n;
-  const infinitives = LESSONS.find((lesson) => lesson.et === "Pean minema, tahan lugeda")?.n;
+  const mulOn = lessonBySlug("mul-on")?.n;
+  const plural = lessonBySlug("mitmus")?.n;
+  const onto = lessonBySlug("laual-lauale-laualt")?.n;
+  const infinitives = lessonBySlug("tegevusnimed")?.n;
 
   const whoItems = useMemo<WhoItem[]>(
     () =>
@@ -477,7 +458,6 @@ export function MeeldimaLesson() {
     [i18n],
   );
 
-  // Every round but the first draws its other persons afresh, so no set of options names the answer.
   const whoRun = (items: readonly WhoItem[], pinned?: WhoItem): WhoItem[] =>
     eachPairFirst(items, pinned).map((item) =>
       item === pinned ? item : { ...item, options: personOptions(threePersons(item.answer), i18n) },

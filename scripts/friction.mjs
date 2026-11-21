@@ -64,12 +64,19 @@ export function occurrences(discussion) {
 export async function findCategory(graphql, repository) {
   const [owner, name] = repository.split("/");
   const data = await graphql(
-    `query($owner: String!, $name: String!) {
-      repository(owner: $owner, name: $name) {
-        id
-        discussionCategories(first: 50) { nodes { id slug } }
+    `
+      query ($owner: String!, $name: String!) {
+        repository(owner: $owner, name: $name) {
+          id
+          discussionCategories(first: 50) {
+            nodes {
+              id
+              slug
+            }
+          }
+        }
       }
-    }`,
+    `,
     { owner, name },
   );
   const category = data.repository.discussionCategories.nodes.find(
@@ -86,17 +93,28 @@ export async function findCategory(graphql, repository) {
 export async function search(graphql, repository, words) {
   await findCategory(graphql, repository);
   const data = await graphql(
-    `query($query: String!) {
-      search(type: DISCUSSION, query: $query, first: 20) {
-        nodes {
-          ... on Discussion {
-            number title url upvoteCount
-            category { slug }
-            comments(first: 100) { nodes { body } }
+    `
+      query ($query: String!) {
+        search(type: DISCUSSION, query: $query, first: 20) {
+          nodes {
+            ... on Discussion {
+              number
+              title
+              url
+              upvoteCount
+              category {
+                slug
+              }
+              comments(first: 100) {
+                nodes {
+                  body
+                }
+              }
+            }
           }
         }
       }
-    }`,
+    `,
     { query: `repo:${repository} is:open ${words}` },
   );
   const found = data.search.nodes.filter((node) => node.category?.slug === CATEGORY);
@@ -112,9 +130,16 @@ export async function search(graphql, repository, words) {
 export async function file(graphql, repository, options) {
   const { repositoryId, categoryId } = await findCategory(graphql, repository);
   const data = await graphql(
-    `mutation($input: CreateDiscussionInput!) {
-      createDiscussion(input: $input) { discussion { number url } }
-    }`,
+    `
+      mutation ($input: CreateDiscussionInput!) {
+        createDiscussion(input: $input) {
+          discussion {
+            number
+            url
+          }
+        }
+      }
+    `,
     {
       input: { repositoryId, categoryId, title: options.title.trim(), body: frictionBody(options) },
     },
@@ -126,14 +151,21 @@ export async function file(graphql, repository, options) {
 export async function plus(graphql, repository, { number, note }) {
   const [owner, name] = repository.split("/");
   const data = await graphql(
-    `query($owner: String!, $name: String!, $number: Int!) {
-      repository(owner: $owner, name: $name) {
-        discussion(number: $number) {
-          id url viewerCanUpvote viewerHasUpvoted
-          category { slug }
+    `
+      query ($owner: String!, $name: String!, $number: Int!) {
+        repository(owner: $owner, name: $name) {
+          discussion(number: $number) {
+            id
+            url
+            viewerCanUpvote
+            viewerHasUpvoted
+            category {
+              slug
+            }
+          }
         }
       }
-    }`,
+    `,
     { owner, name, number },
   );
   const discussion = data.repository.discussion;
@@ -142,14 +174,24 @@ export async function plus(graphql, repository, { number, note }) {
   // Every agent signs in as the same account, which GitHub lets upvote once, so the comment is what counts.
   if (discussion.viewerCanUpvote && !discussion.viewerHasUpvoted) {
     await graphql(
-      `mutation($id: ID!) { addUpvote(input: { subjectId: $id }) { clientMutationId } }`,
+      `
+        mutation ($id: ID!) {
+          addUpvote(input: { subjectId: $id }) {
+            clientMutationId
+          }
+        }
+      `,
       { id: discussion.id },
     );
   }
   await graphql(
-    `mutation($id: ID!, $body: String!) {
-      addDiscussionComment(input: { discussionId: $id, body: $body }) { clientMutationId }
-    }`,
+    `
+      mutation ($id: ID!, $body: String!) {
+        addDiscussionComment(input: { discussionId: $id, body: $body }) {
+          clientMutationId
+        }
+      }
+    `,
     { id: discussion.id, body: `${OCCURRENCE} ${note.trim()}` },
   );
   return `Recorded another occurrence on ${discussion.url}`;

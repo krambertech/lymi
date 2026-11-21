@@ -1,9 +1,9 @@
 import { msg } from "@lingui/core/macro";
 import type { Locale } from "../../lib/routes";
 import type { GenderGroup } from "./GenderTiles";
-import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { noun, verb, word } from "./hand-cards";
+import type { Example } from "./HandExamples";
 import type { PathStep, VoiceWord } from "./japanese";
 import type { EditionWord } from "./language-decks";
 

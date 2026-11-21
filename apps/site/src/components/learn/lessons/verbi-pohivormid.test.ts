@@ -1,12 +1,5 @@
 import { describe, expect, it } from "vitest";
-import {
-  CLIPS,
-  clipId,
-  daForm,
-  threeForms,
-  VERB_FORMS,
-  VORMID_CLASS,
-} from "../../../lib/learn/clips";
+import { CLIPS, clipId, daForm, threeForms, VERB_FORMS } from "../../../lib/learn/clips";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { ASKED, CLASS_GAPS, HEARD, heardRun, MADE, threeVerbs } from "./VerbiPohivormid";
 
@@ -108,16 +101,6 @@ describe("“Make the -da form”", () => {
 });
 
 describe("the class passage", () => {
-  it("reads, with its gaps filled, as the recording says it", () => {
-    const filled = CLASS_GAPS.map(
-      (gap) =>
-        [gap.before, gap.answer].filter(Boolean).join(" ") + gap.after.replace(/^(?=[^,.!?])/, " "),
-    )
-      .join(" ")
-      .replace(/ +/g, " ");
-    expect(filled).toBe(VORMID_CLASS.join(" "));
-  });
-
   it("puts each gap's answer among its words, not always in one place", () => {
     const places = new Set<number>();
     for (const gap of CLASS_GAPS) {

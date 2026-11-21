@@ -1,8 +1,14 @@
 import { readFileSync } from "node:fs";
-import { type EnrichedField, normalizeCardText, type ReviewModeKey, readingKey } from "@lymi/core";
+import {
+  type EnrichedField,
+  hintable,
+  normalizeCardText,
+  type ReviewModeKey,
+  readingKey,
+} from "@lymi/core";
 import { describe, expect, it } from "vitest";
 import { decksBrief } from "../lessons/prompt";
-import { hintable, hintInput } from "../services/hint-draft";
+import { hintInput } from "../services/hint-draft";
 import { cantonese } from "./cantonese";
 
 const fixtures = JSON.parse(

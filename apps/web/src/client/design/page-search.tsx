@@ -171,7 +171,7 @@ export function PageSearch({
                 }
               >
                 {sections.map(({ section, rows: inSection }) => (
-                  // biome-ignore lint/a11y/useSemanticElements: options grouped inside a listbox; a fieldset groups form controls.
+                  // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- options grouped inside a listbox; a fieldset groups form controls.
                   <div
                     key={section}
                     role="group"

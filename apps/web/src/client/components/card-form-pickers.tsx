@@ -330,6 +330,7 @@ export function ModesChip({
               aria-label={
                 value ? t`How it’s asked: ${names(value.map(modeName))}` : t`How it’s asked`
               }
+              // oxlint-disable-next-line jsx-a11y/role-supports-aria-props -- Biome let this pass; triage in #1278
               aria-invalid={invalid || undefined}
             >
               <FieldChipContent icon={ArrowLeftRight} filled={!!value}>

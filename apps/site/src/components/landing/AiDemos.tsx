@@ -167,7 +167,7 @@ export function LessonDemo({ play }: DemoProps) {
               const set = term.meaning === null && skipped;
               return (
                 <span
-                  // biome-ignore lint/suspicious/noArrayIndexKey: the note's parts never reorder
+                  // oxlint-disable-next-line react/no-array-index-key -- the note's parts never reorder
                   key={i}
                   className={clsx(
                     "text-ink decoration-ink-muted decoration-dashed underline-offset-4",
@@ -479,7 +479,7 @@ export function VoiceDemo({ play }: DemoProps) {
             <span aria-hidden="true" className="flex h-6 flex-1 items-center gap-[2px]">
               {(peaks[c.id] ?? Array.from({ length: BARS }, () => 0.1)).map((p, i) => (
                 <span
-                  // biome-ignore lint/suspicious/noArrayIndexKey: bars in a fixed order
+                  // oxlint-disable-next-line react/no-array-index-key -- bars in a fixed order
                   key={i}
                   style={{ height: `${p * 100}%` }}
                   className={clsx(

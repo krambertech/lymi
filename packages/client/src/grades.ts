@@ -285,7 +285,8 @@ export function retireGrades(dayStart: string) {
   if (kept.length !== current.length) write(kept);
 }
 
-/** For tests: forget the in-memory copy so the next read comes from storage. */
+/** For tests: forget the in-memory copy so the next read comes from storage, and drop a flush still in flight. */
 export function resetGradeCache() {
   cache = null;
+  chain = Promise.resolve();
 }

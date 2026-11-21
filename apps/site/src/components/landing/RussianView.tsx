@@ -5,8 +5,6 @@ import type { ReactNode } from "react";
 import type { Locale } from "../../lib/routes";
 import { RUSSIAN_QUESTIONS } from "./faq";
 import { NotebookToCards } from "./NotebookToCards";
-import { EnrichRussian } from "./RussianAi";
-import { RussianBento } from "./RussianBento";
 import {
   RUSSIAN_CLASS_CARDS,
   RUSSIAN_EXAMPLES,
@@ -15,6 +13,8 @@ import {
   RUSSIAN_PATH,
   RUSSIAN_VOICE_WORDS,
 } from "./russian";
+import { EnrichRussian } from "./RussianAi";
+import { RussianBento } from "./RussianBento";
 import { type StressPage, StressView } from "./StressView";
 
 const Ru = ({ children }: { children: ReactNode }) => <span lang="ru">{children}</span>;

@@ -947,6 +947,7 @@ export const OMASTAV_WORDS = [
   "Mari raamat",
   "Eesti",
   "Eestis",
+  "kümne minuti pärast",
 ] as const;
 
 const OMASTAV_CLIPS: Record<string, Clip> = {

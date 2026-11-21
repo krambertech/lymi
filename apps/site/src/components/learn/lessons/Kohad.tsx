@@ -342,7 +342,7 @@ type EndingItem = GapItem & { id: Id; where: Where; pair: readonly [string, stri
 export function KohadLesson() {
   const { t, i18n } = useLingui();
   const questions = lessonBySlug("kusimused")?.n;
-  const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
+  const genitive = lessonBySlug("omastav")?.n;
   const into = LESSONS.find((lesson) => lesson.et === "Majas, majja, majast")?.n;
 
   const keysOf = (list: readonly { where: Where; id: Id }[]): KeyItem[] =>

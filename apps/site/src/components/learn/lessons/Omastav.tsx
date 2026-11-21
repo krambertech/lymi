@@ -200,6 +200,7 @@ const GLOSSARY: Glossary = {
   mari: { en: msg`Mari, a woman’s name`, show: "Mari" },
   "mari raamat": { en: msg`Mari’s book`, show: "Mari raamat" },
   vend: { en: msg`brother`, clip: false },
+  "kümne minuti pärast": { en: msg`in ten minutes`, show: "kümne minuti pärast" },
   miisu: { en: msg`Miisu, a name for a cat`, show: "Miisu", clip: false },
 };
 
@@ -555,6 +556,20 @@ export const formsOf = (phrase: Phrase): string[] => [
   ...new Set([phrase.word, phrase.whose, phrase.where]),
 ];
 
+/**
+ * A round's options after the first: the genitive, one of its own word's other forms (the likeliest
+ * slip), and either the other one or another owner's genitive, drawn afresh each run so no fixed set
+ * or length names the answer.
+ */
+export function formOptions(phrase: Phrase): string[] {
+  const own = shuffle([phrase.word, phrase.where].filter((form) => form !== phrase.whose));
+  const others = shuffle(
+    OMASTAV_PHRASES.filter((each) => each.word !== phrase.word).map((each) => each.whose),
+  );
+  const second = own[1] !== undefined && Math.random() < 0.5 ? own[1] : others[0];
+  return shuffle([...new Set([phrase.whose, own[0] as string, second as string])]);
+}
+
 /** The first round's order, turned by the item's place so the answer isn't always in one spot. */
 export function firstOrder(phrase: Phrase, i: number): string[] {
   const forms = formsOf(phrase);
@@ -737,6 +752,7 @@ export function OmastavLesson() {
   const { t } = useLingui();
   const questions = lessonBySlug("kusimused")?.n;
   const places = lessonBySlug("kohad")?.n;
+  const time = lessonBySlug("kell")?.n;
   const stems = LESSONS.find((lesson) => lesson.et === "Pood, poe")?.n;
 
   const whoseItems = useMemo<WhoseItem[]>(
@@ -765,7 +781,7 @@ export function OmastavLesson() {
   // Every round but the first shuffles its forms afresh, so the answer has no fixed place.
   const formRun = (items: readonly FormItem[], pinned?: FormItem): FormItem[] =>
     eachPairFirst(items, pinned).map((item) =>
-      item === pinned ? item : { ...item, options: shuffle(formsOf(item.phrase)) },
+      item === pinned ? item : { ...item, options: formOptions(item.phrase) },
     );
 
   // The right reply moves between first, second and third place from turn to turn.
@@ -937,7 +953,7 @@ export function OmastavLesson() {
       sections={[
         {
           id: "my-your",
-          title: t`Minu, sinu, nende: my, your, their`,
+          title: t`My, your and their`,
           children: (
             <>
               <Prose>
@@ -1090,6 +1106,14 @@ export function OmastavLesson() {
                 </p>
               </Prose>
               <FormTable />
+              <Aside>
+                <Trans>
+                  Numbers have a genitive too. In lesson {time}, <Word w="kümne minuti pärast" /> is
+                  in ten minutes: <span lang="et">kümne</span> is the genitive of{" "}
+                  <span lang="et">kümme</span>, and <span lang="et">minuti</span> of{" "}
+                  <span lang="et">minut</span>.
+                </Trans>
+              </Aside>
             </>
           ),
         },

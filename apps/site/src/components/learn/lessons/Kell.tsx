@@ -514,7 +514,7 @@ const TYPED = [
 
 export function KellLesson() {
   const { t } = useLingui();
-  const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
+  const genitive = lessonBySlug("omastav")?.n;
   const partitive = LESSONS.find((lesson) => lesson.et === "Kaks kassi")?.n;
   const numbers = lessonBySlug("numbrid")?.n;
 

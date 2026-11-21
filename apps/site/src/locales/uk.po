@@ -5674,6 +5674,9 @@ msgstr "У Тарту"
 msgid "In Tartu."
 msgstr "У Тарту."
 
+msgid "in ten minutes"
+msgstr "через десять хвилин"
+
 msgid "in the book"
 msgstr "у книзі"
 
@@ -6904,9 +6907,6 @@ msgstr "Mina бере -n: loen."
 msgid "Mina, I, takes olen."
 msgstr "Mina, я, бере olen."
 
-msgid "Minu, sinu, nende: my, your, their"
-msgstr "Minu, sinu, nende: мій, твій, їхній"
-
 msgid "Minute hand"
 msgstr "Хвилинна стрілка"
 
@@ -7087,6 +7087,9 @@ msgstr "Мене звати Марі."
 
 msgid "My number is 5 2 0 9 4."
 msgstr "Мій номер — 5 2 0 9 4."
+
+msgid "My, your and their"
+msgstr "Мій, твій, їхній"
 
 msgid "Ñ is a letter of its own: ¡Feliz año nuevo!"
 msgstr "Ñ є окремою літерою: ¡Feliz año nuevo!"
@@ -7451,6 +7454,9 @@ msgstr "Числа й час"
 
 msgid "Numbers by ear. Eleven words and two endings take you to ninety-nine."
 msgstr "Числа на слух. Одинадцять слів і дві частини, -teist і -kümmend, доведуть тебе до дев’яноста дев’яти."
+
+msgid "Numbers have a genitive too. In lesson {time}, <0/> is in ten minutes: <1>kümne</1> is the genitive of <2>kümme</2>, and <3>minuti</3> of <4>minut</4>."
+msgstr "Родовий є й у числівників. В уроці {time} <0/> — це «через десять хвилин»: <1>kümne</1> — родовий від <2>kümme</2>, а <3>minuti</3> — від <4>minut</4>."
 
 msgid "Numbers in the wild"
 msgstr "Числа в житті"

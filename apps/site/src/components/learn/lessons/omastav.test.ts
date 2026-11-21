@@ -7,8 +7,8 @@ import {
   OMASTAV_WHOSE,
 } from "../../../lib/learn/clips";
 import { gapLine } from "../../../lib/learn/passage";
-import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
-import { firstOrder, formsOf, KATI_GAPS, sharedLength } from "./Omastav";
+import { eachPairFirst } from "../../../lib/learn/quiz";
+import { firstOrder, formOptions, formsOf, KATI_GAPS, sharedLength } from "./Omastav";
 
 describe("genitive quizzes", () => {
   it("hears each of the six pronouns once in every run of “Whose?”", () => {
@@ -51,11 +51,21 @@ describe("genitive quizzes", () => {
     expect(places).toEqual(new Set([0, 1, 2]));
   });
 
-  it("puts a later round's answer in every place", () => {
-    const phrase = OMASTAV_PHRASES[0] as (typeof OMASTAV_PHRASES)[number];
-    const places = new Set<number>();
-    for (let run = 0; run < 200; run++) places.add(shuffle(formsOf(phrase)).indexOf(phrase.whose));
-    expect(places).toEqual(new Set([0, 1, 2]));
+  it("draws a later round's options afresh: the answer, a slip of its own word, in every place", () => {
+    for (const phrase of OMASTAV_PHRASES) {
+      const places = new Set<number>();
+      const sets = new Set<string>();
+      for (let run = 0; run < 300; run++) {
+        const options = formOptions(phrase);
+        expect(new Set(options).size).toBe(3);
+        expect(options).toContain(phrase.whose);
+        expect(options.some((each) => each === phrase.word || each === phrase.where)).toBe(true);
+        places.add(options.indexOf(phrase.whose));
+        sets.add([...options].sort().join(" "));
+      }
+      expect(places).toEqual(new Set([0, 1, 2]));
+      expect(sets.size).toBeGreaterThan(1);
+    }
   });
 });
 

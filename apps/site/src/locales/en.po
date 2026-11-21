@@ -5674,6 +5674,9 @@ msgstr "In Tartu"
 msgid "In Tartu."
 msgstr "In Tartu."
 
+msgid "in ten minutes"
+msgstr "in ten minutes"
+
 msgid "in the book"
 msgstr "in the book"
 
@@ -6904,9 +6907,6 @@ msgstr "Mina takes -n: loen."
 msgid "Mina, I, takes olen."
 msgstr "Mina, I, takes olen."
 
-msgid "Minu, sinu, nende: my, your, their"
-msgstr "Minu, sinu, nende: my, your, their"
-
 msgid "Minute hand"
 msgstr "Minute hand"
 
@@ -7087,6 +7087,9 @@ msgstr "My name is Mari."
 
 msgid "My number is 5 2 0 9 4."
 msgstr "My number is 5 2 0 9 4."
+
+msgid "My, your and their"
+msgstr "My, your and their"
 
 msgid "Ñ is a letter of its own: ¡Feliz año nuevo!"
 msgstr "Ñ is a letter of its own: ¡Feliz año nuevo!"
@@ -7451,6 +7454,9 @@ msgstr "Numbers and time"
 
 msgid "Numbers by ear. Eleven words and two endings take you to ninety-nine."
 msgstr "Numbers by ear. Eleven words and two endings take you to ninety-nine."
+
+msgid "Numbers have a genitive too. In lesson {time}, <0/> is in ten minutes: <1>kümne</1> is the genitive of <2>kümme</2>, and <3>minuti</3> of <4>minut</4>."
+msgstr "Numbers have a genitive too. In lesson {time}, <0/> is in ten minutes: <1>kümne</1> is the genitive of <2>kümme</2>, and <3>minuti</3> of <4>minut</4>."
 
 msgid "Numbers in the wild"
 msgstr "Numbers in the wild"

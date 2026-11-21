@@ -4819,6 +4819,11 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "omastav/ku2mne-minuti-pa2rast": {
+    "text": "kümne minuti pärast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "omastav/p-kati": {
     "text": "Tere! Minu nimi on Kati. Mina elan Tartus. Jaan on minu vend. Jaani kohvik on Tallinnas. Ema ja isa elavad Pärnus. Nende kassi nimi on Miisu. Mis sinu nimi on?",
     "model": "eleven_v4",

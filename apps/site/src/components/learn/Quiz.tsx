@@ -598,7 +598,12 @@ export function GapRound({
     <>
       {(!pickFirst || done) && <Listen src={item.src} onPlay={heard} />}
       {note}
-      <p className="sr-only">{t`${before} blank ${after}`}</p>
+      {/* The words around the gap are Estonian, so a screen reader reads them as Estonian. */}
+      <p className="sr-only">
+        <Trans>
+          <span lang="et">{before}</span> blank <span lang="et">{after}</span>
+        </Trans>
+      </p>
       <p
         lang="et"
         aria-hidden="true"

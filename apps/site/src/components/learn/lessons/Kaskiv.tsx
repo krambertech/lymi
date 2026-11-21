@@ -643,7 +643,7 @@ export function KaskivLesson() {
                 id="what-to-do"
                 title={<Trans>What to do?</Trans>}
                 items={askedItems}
-                rounds={6}
+                rounds={9}
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>All of them. You understood every command.</Trans>

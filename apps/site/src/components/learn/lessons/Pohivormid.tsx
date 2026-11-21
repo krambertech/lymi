@@ -2,7 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Fragment, type ReactNode, useMemo, useState } from "react";
-import { LESSONS } from "../../../lib/learn/catalogue";
+import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -237,7 +237,7 @@ export function PohivormidLesson() {
   const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
   const stems = at("Pood, poe");
   const genitive = at("Minu raamat");
-  const partitive = at("Kaks kassi");
+  const partitive = lessonBySlug("osastav")?.n;
 
   const notes: Record<string, ReactNode> = {
     kool: <Trans>Its second and third forms are the same.</Trans>,

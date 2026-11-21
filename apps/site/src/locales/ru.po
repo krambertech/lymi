@@ -497,8 +497,8 @@ msgstr "После <0>mina</0> идёт <1>olen</1>: <2>Mina olen Andres</2>."
 msgid "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
 msgstr "<0>Mina</0>, <1>sina</1> и <2>nemad</2> меняются: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> и <6>teie</6> остаются как есть."
 
-msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same words as the short pronouns. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
-msgstr "<0>Minu</0> и <1>sinu</1> часто сокращаются до <2/> и <3/>. <4>Tema</4>, <5>meie</5> и <6>teie</6> сокращаются до <7>ta, me</7> и <8>te</8> — тех же слов, что и краткие местоимения. В уроке {questions} уже было <9>su</9>: <10/> — «Как тебя зовут?»"
+msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same short forms you met for he or she, we and you. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
+msgstr "<0>Minu</0> и <1>sinu</1> часто сокращаются до <2/> и <3/>. <4>Tema</4>, <5>meie</5> и <6>teie</6> сокращаются до <7>ta, me</7> и <8>te</8> — тех же кратких форм, что и для «он или она», «мы» и «вы». В уроке {questions} уже было <9>su</9>: <10/> — «Как тебя зовут?»"
 
 msgid "<0>Nende</0> is their. For you and Jaan, say <1>meie</1>, our."
 msgstr "<0>Nende</0> — это «их». Про себя и Яана говори <1>meie</1>, «наш»."
@@ -1021,8 +1021,8 @@ msgstr "Рынок получает <0>-l</0> по традиции: <1/>, на 
 msgid "A message from Mari"
 msgstr "Сообщение от Мари"
 
-msgid "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country goes first in the same way, and Eesti stays as it is: <2/>"
-msgstr "Имя на согласную получает гласную, часто i: <0/>, <1/>. Название страны тоже стоит первым, а Eesti не меняется: <2/>"
+msgid "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country goes first in the same way, and <2>Eesti</2> stays as it is: <3/>"
+msgstr "Имя на согласную получает гласную, часто i: <0/>, <1/>. Название страны тоже стоит первым, а <2>Eesti</2> не меняется: <3/>"
 
 msgid "A name ending in a consonant gains a vowel."
 msgstr "В имени на согласную появляется гласная."
@@ -1958,8 +1958,8 @@ msgstr "Спроси, что пора повторить, прежде чем о
 msgid "Ask what’s waiting and your assistant shows it right in the chat. Then open Lymi to review."
 msgstr "Спроси, что ждёт повторения, и ассистент покажет это прямо в чате. Потом открой Lymi, чтобы повторить."
 
-msgid "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1>, whose book is this?"
-msgstr "Спрашивай «чей?» словом <0>kelle</0>: <1>Kelle raamat see on?</1> — чья это книга?"
+msgid "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1> means “Whose book is this?”"
+msgstr "Спрашивай «чей?» словом <0>kelle</0>: <1>Kelle raamat see on?</1> — «Чья это книга?»"
 
 msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
 msgstr "Спрашивай словом <0>kus</0>, а отвечай предложением или одним словом: <1>Kus sa elad? Tartus.</1>"
@@ -5614,7 +5614,7 @@ msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most ve
 msgstr "В уроке {pronouns} был глагол <0/>, «быть»: <1/>, <2/>, <3/>, <4/>. У большинства глаголов те же окончания. А там, где у olema стоит <5/>, у них два своих: <6>-b</6> для «он или она» и <7>-vad</7> для «они»."
 
 msgid "In lesson {questions} you heard <0/> The word <1/>, my, is <2/> in the form that says whose. That form is the genitive."
-msgstr "В уроке {questions} была фраза <0/> Слово <1/>, «мой», — это <2/> в форме, которая отвечает на «чей?». Эта форма — родительный падеж. Русское «мой» — отдельное слово, а эстонский ставит в родительный само местоимение, как русский делает с «его», «её» и «их»."
+msgstr "В уроке {questions} была фраза <0/> Слово <1/>, «мой», — это <2/> в родительном падеже, форме, которая отвечает на «чей?». Русское «мой» — отдельное слово, а эстонский берёт само местоимение в родительном, как «его» — родительный от «он»."
 
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "Во многих реальных наборах данных около 30% чисел начинаются с 1"
@@ -6003,10 +6003,10 @@ msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi — партитив от kass, кошка."
 
 msgid "Kati asks for your name, so your: <0>sinu</0>."
-msgstr "Кати спрашивает твоё имя, поэтому «твоё»: <0>sinu</0>."
+msgstr "Кати спрашивает, как тебя зовут, поэтому «твоё»: <0>sinu</0>."
 
-msgid "Kati is the one who lives there, so I: <0>mina</0>."
-msgstr "Живёт там сама Кати, поэтому «я»: <0>mina</0>."
+msgid "Kati is the one who lives in Tartu, so I: <0>mina</0>."
+msgstr "Кати — та, кто живёт в Тарту, поэтому «я»: <0>mina</0>."
 
 msgid "Kati writes about her family. For each gap, pick who or whose."
 msgstr "Кати пишет о своей семье. В каждом пропуске выбери: «кто» или «чей»."
@@ -10032,8 +10032,8 @@ msgstr "Браузер"
 msgid "The browser, and a Mac app"
 msgstr "Браузер и приложение для Mac"
 
-msgid "The café is Jaan’s, so his name takes the genitive."
-msgstr "Кафе принадлежит Яану, поэтому его имя стоит в родительном."
+msgid "The café is Jaan’s, so <0>Jaan</0> takes the genitive: <1>Jaani</1>."
+msgstr "Кафе принадлежит Яану, поэтому <0>Jaan</0> стоит в родительном: <1>Jaani</1>."
 
 msgid "the café’s name"
 msgstr "название кафе"
@@ -10213,7 +10213,7 @@ msgid "The genitive of kass: kassi nimi, the cat’s name."
 msgstr "Родительный от kass: kassi nimi, имя кота."
 
 msgid "The genitive of kes, who."
-msgstr "Родительный от kes, «кто», как «кого»."
+msgstr "Родительный от kes, «кто», — как «кого» от «кто»."
 
 msgid "The genitive of mina. Short: mu."
 msgstr "Родительный от mina. Коротко: mu."
@@ -10329,8 +10329,8 @@ msgstr "Самые полезные слова из списка Goethe-Institut
 msgid "The name is Kati’s own, so my: <0>minu</0>."
 msgstr "Имя принадлежит Кати, поэтому «моё»: <0>minu</0>."
 
-msgid "The name is the cat’s, so the cat takes the genitive."
-msgstr "Имя принадлежит коту, поэтому «кот» стоит в родительном."
+msgid "The name is the cat’s, so <0>kass</0> takes the genitive: <1>kassi</1>."
+msgstr "Имя принадлежит коту, поэтому <0>kass</0> стоит в родительном: <1>kassi</1>."
 
 msgid "The network of nerves that runs from the neck into the arm"
 msgstr "Сплетение нервов, идущее от шеи к руке"
@@ -12888,17 +12888,17 @@ msgstr "Сообщение репетитора"
 msgid "Your website"
 msgstr "Твой сайт"
 
-msgid "your, as in sa"
-msgstr "твой"
-
-msgid "your, as in te"
-msgstr "ваш"
-
 msgid "your, to more than one; polite your"
 msgstr "ваш, нескольким людям или на «вы»"
 
+msgid "your, to one"
+msgstr "твой"
+
 msgid "your, to one person"
 msgstr "твой"
+
+msgid "your, to several"
+msgstr "ваш"
 
 msgid "zero"
 msgstr "ноль"

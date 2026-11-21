@@ -53,7 +53,7 @@ const PERSON: Record<
   sina: {
     who: msg`you, to one person`,
     whose: msg`your, to one person`,
-    short: msg`your, as in sa`,
+    short: msg`your, to one`,
     book: msg`your book, to one person`,
   },
   tema: {
@@ -66,7 +66,7 @@ const PERSON: Record<
   teie: {
     who: msg`you, to more than one; polite you`,
     whose: msg`your, to more than one; polite your`,
-    short: msg`your, as in te`,
+    short: msg`your, to several`,
     book: msg`your book, to more than one or polite`,
   },
   nemad: { who: msg`they`, whose: msg`their`, short: msg`their`, book: msg`their book` },
@@ -674,7 +674,7 @@ export const KATI_GAPS: readonly PassageGap[] = [
     options: ["Mina", "Minu"],
     why: (
       <Trans>
-        Kati is the one who lives there, so I: <b lang="et">mina</b>.
+        Kati is the one who lives in Tartu, so I: <b lang="et">mina</b>.
       </Trans>
     ),
   },
@@ -696,7 +696,11 @@ export const KATI_GAPS: readonly PassageGap[] = [
     after: "kohvik on Tallinnas.",
     answer: "Jaani",
     options: ["Jaan", "Jaani"],
-    why: <Trans>The café is Jaan’s, so his name takes the genitive.</Trans>,
+    why: (
+      <Trans>
+        The café is Jaan’s, so <b lang="et">Jaan</b> takes the genitive: <b lang="et">Jaani</b>.
+      </Trans>
+    ),
   },
   {
     id: "kassi",
@@ -704,7 +708,11 @@ export const KATI_GAPS: readonly PassageGap[] = [
     after: "nimi on Miisu.",
     answer: "kassi",
     options: ["kass", "kassi"],
-    why: <Trans>The name is the cat’s, so the cat takes the genitive.</Trans>,
+    why: (
+      <Trans>
+        The name is the cat’s, so <b lang="et">kass</b> takes the genitive: <b lang="et">kassi</b>.
+      </Trans>
+    ),
   },
   {
     id: "sinu",
@@ -906,8 +914,8 @@ export function OmastavLesson() {
           <b lang="et">mu, su, ta, me</b> and <b lang="et">te</b>; <b lang="et">nende</b> has none.
         </Trans>,
         <Trans key="3">
-          Ask whose with <b lang="et">kelle</b>: <b lang="et">Kelle raamat see on?</b>, whose book
-          is this?
+          Ask whose with <b lang="et">kelle</b>: <b lang="et">Kelle raamat see on?</b> means “Whose
+          book is this?”
         </Trans>,
         <Trans key="4">
           A noun’s genitive is its form before{" "}
@@ -953,9 +961,9 @@ export function OmastavLesson() {
                   <span lang="et">Minu</span> and <span lang="et">sinu</span> often shorten to{" "}
                   <Word w="mu" /> and <Word w="su" />. <span lang="et">Tema</span>,{" "}
                   <span lang="et">meie</span> and <span lang="et">teie</span> shorten to{" "}
-                  <span lang="et">ta, me</span> and <span lang="et">te</span>, the same words as the
-                  short pronouns. Lesson {questions} used <span lang="et">su</span>:{" "}
-                  <Word w="Mis su nimi on?" /> means “What’s your name?”
+                  <span lang="et">ta, me</span> and <span lang="et">te</span>, the same short forms
+                  you met for he or she, we and you. Lesson {questions} used{" "}
+                  <span lang="et">su</span>: <Word w="Mis su nimi on?" /> means “What’s your name?”
                 </Trans>
               </Aside>
             </>
@@ -1013,8 +1021,9 @@ export function OmastavLesson() {
                 <p>
                   <Trans>
                     A name ending in a consonant gains a vowel, often an i: <Word w="Jaan" />,{" "}
-                    <Word w="Jaani" />. A country goes first in the same way, and Eesti stays as it
-                    is: <Word w="Eesti pealinn on Tallinn." />
+                    <Word w="Jaani" />. A country goes first in the same way, and{" "}
+                    <span lang="et">Eesti</span> stays as it is:{" "}
+                    <Word w="Eesti pealinn on Tallinn." />
                   </Trans>
                 </p>
                 <p>

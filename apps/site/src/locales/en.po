@@ -3558,9 +3558,6 @@ msgstr "Built with Ukrainian in mind."
 msgid "bus"
 msgstr "bus"
 
-msgid "busy eating"
-msgstr "busy eating"
-
 msgid "but"
 msgstr "but"
 
@@ -13995,8 +13992,8 @@ msgstr "The cat is behind the box."
 msgid "The cat is coming back from eating."
 msgstr "The cat is coming back from eating."
 
-msgid "The cat is going in to eat."
-msgstr "The cat is going in to eat."
+msgid "The cat is going off to eat."
+msgstr "The cat is going off to eat."
 
 msgid "The cat is in front of the box."
 msgstr "The cat is in front of the box."
@@ -14004,14 +14001,14 @@ msgstr "The cat is in front of the box."
 msgid "The cat is in the house."
 msgstr "The cat is in the house."
 
-msgid "The cat is in there, eating."
-msgstr "The cat is in there, eating."
-
 msgid "The cat is inside the box."
 msgstr "The cat is inside the box."
 
 msgid "The cat is next to the box."
 msgstr "The cat is next to the box."
+
+msgid "The cat is off eating."
+msgstr "The cat is off eating."
 
 msgid "The cat is on the box."
 msgstr "The cat is on the box."

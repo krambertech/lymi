@@ -145,8 +145,8 @@ function End({ children }: { children: ReactNode }) {
 function CatScene() {
   const { t } = useLingui();
   const said: Record<(typeof GOING_SCENE)[number]["id"], { meaning: string; gloss: string }> = {
-    majja: { meaning: t`going off to eat`, gloss: t`The cat is going in to eat.` },
-    majas: { meaning: t`busy eating`, gloss: t`The cat is in there, eating.` },
+    majja: { meaning: t`going off to eat`, gloss: t`The cat is going off to eat.` },
+    majas: { meaning: t`out eating`, gloss: t`The cat is off eating.` },
     majast: { meaning: t`back from eating`, gloss: t`The cat is coming back from eating.` },
   };
   const places: ScenePlace[] = GOING_SCENE.map((place) => ({

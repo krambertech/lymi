@@ -535,7 +535,7 @@ msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> 
 msgstr "<0/> означає «бути». Його закінчення залежить від особи: <1/> — «я є», <2/> — «ти є». Натисни закінчення."
 
 msgid "<0/> means you’re setting off, so it takes <1>-ma</1>: <2/> <3/>, I am, says where you are now, so it takes <4>-mas</4>: <5/>"
-msgstr "<0/> означає, що ти вирушаєш, тож після нього <1>-ma</1>: <2/> <3/>, «я є», каже, де ти зараз, тож після нього <4>-mas</4>: <5/>"
+msgstr "<0/> означає, що ти вирушаєш, тож після нього <1>-ma</1>: <2/> <3/>, форма дієслова «бути», каже, де ти зараз, тож після нього <4>-mas</4>: <5/>"
 
 msgid "<0/> on its own is no, and <1/> is yes. A fuller answer repeats the verb with ei: asked <2/>, say <3/>. The no has no ending, so the same answer fits whoever is asked."
 msgstr "<0/> саме по собі означає «ні», а <1/> — «так». Повніша відповідь повторює дієслово з ei: на <2/> відповідай <3/>. У запереченні немає закінчення, тож та сама відповідь пасує, кого б не питали."
@@ -3559,9 +3559,6 @@ msgstr "Створено спеціально для української."
 msgid "bus"
 msgstr "автобус"
 
-msgid "busy eating"
-msgstr "їсть"
-
 msgid "but"
 msgstr "але"
 
@@ -5028,7 +5025,7 @@ msgid "Estonian"
 msgstr "Естонська"
 
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
-msgstr "Естонською: «іду плавати», «я на плаванні», «повертаюся з плавання»"
+msgstr "Естонські форми на -ma, -mas і -mast: іду, там, повертаюся"
 
 msgid "Estonian A1 · Autumn course"
 msgstr "Естонська A1 · осінній курс"
@@ -13996,8 +13993,8 @@ msgstr "Кіт за коробкою."
 msgid "The cat is coming back from eating."
 msgstr "Кіт повертається після їжі."
 
-msgid "The cat is going in to eat."
-msgstr "Кіт іде в будинок поїсти."
+msgid "The cat is going off to eat."
+msgstr "Кіт іде їсти."
 
 msgid "The cat is in front of the box."
 msgstr "Кіт перед коробкою."
@@ -14005,14 +14002,14 @@ msgstr "Кіт перед коробкою."
 msgid "The cat is in the house."
 msgstr "Кіт у будинку."
 
-msgid "The cat is in there, eating."
-msgstr "Кіт у будинку, їсть."
-
 msgid "The cat is inside the box."
 msgstr "Кіт у коробці."
 
 msgid "The cat is next to the box."
 msgstr "Кіт біля коробки."
+
+msgid "The cat is off eating."
+msgstr "Кіт пішов їсти."
 
 msgid "The cat is on the box."
 msgstr "Кіт на коробці."

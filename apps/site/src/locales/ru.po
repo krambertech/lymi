@@ -535,7 +535,7 @@ msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> 
 msgstr "<0/> значит «быть». Его окончание меняется по лицам: <1/> — «я есть», <2/> — «ты есть». Нажми на окончание."
 
 msgid "<0/> means you’re setting off, so it takes <1>-ma</1>: <2/> <3/>, I am, says where you are now, so it takes <4>-mas</4>: <5/>"
-msgstr "<0/> значит, что ты отправляешься, поэтому после него <1>-ma</1>: <2/> <3/>, «я есть», говорит, где ты сейчас, поэтому после него <4>-mas</4>: <5/>"
+msgstr "<0/> значит, что ты отправляешься, поэтому после него <1>-ma</1>: <2/> <3/>, форма глагола «быть», говорит, где ты сейчас, поэтому после него <4>-mas</4>: <5/>"
 
 msgid "<0/> on its own is no, and <1/> is yes. A fuller answer repeats the verb with ei: asked <2/>, say <3/>. The no has no ending, so the same answer fits whoever is asked."
 msgstr "<0/> само по себе значит «нет», а <1/> — «да». Более полный ответ повторяет глагол с ei: на <2/> отвечай <3/>. В отрицании нет окончания, поэтому тот же ответ подходит, кого бы ни спросили."
@@ -3559,9 +3559,6 @@ msgstr "Сделано специально для украинского."
 msgid "bus"
 msgstr "автобус"
 
-msgid "busy eating"
-msgstr "ест"
-
 msgid "but"
 msgstr "но"
 
@@ -5028,7 +5025,7 @@ msgid "Estonian"
 msgstr "Эстонский"
 
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
-msgstr "По-эстонски: «иду плавать», «я на плавании», «возвращаюсь с плавания»"
+msgstr "Эстонские формы на -ma, -mas и -mast: иду, там, возвращаюсь"
 
 msgid "Estonian A1 · Autumn course"
 msgstr "Эстонский A1 · осенний курс"
@@ -12503,7 +12500,7 @@ msgid "Set fields, plain text"
 msgstr "Заданные поля, простой текст"
 
 msgid "Setting off for a run"
-msgstr "Собирается на пробежку"
+msgstr "Выходит на пробежку"
 
 msgid "Setting two people side by side takes the long forms: <0/>"
 msgstr "Когда двух людей противопоставляют, говорят полные формы: <0/>"
@@ -13996,8 +13993,8 @@ msgstr "Кот за коробкой."
 msgid "The cat is coming back from eating."
 msgstr "Кот возвращается после еды."
 
-msgid "The cat is going in to eat."
-msgstr "Кот идёт в дом поесть."
+msgid "The cat is going off to eat."
+msgstr "Кот идёт есть."
 
 msgid "The cat is in front of the box."
 msgstr "Кот перед коробкой."
@@ -14005,14 +14002,14 @@ msgstr "Кот перед коробкой."
 msgid "The cat is in the house."
 msgstr "Кот в доме."
 
-msgid "The cat is in there, eating."
-msgstr "Кот в доме, ест."
-
 msgid "The cat is inside the box."
 msgstr "Кот в коробке."
 
 msgid "The cat is next to the box."
 msgstr "Кот рядом с коробкой."
+
+msgid "The cat is off eating."
+msgstr "Кот ушёл есть."
 
 msgid "The cat is on the box."
 msgstr "Кот на коробке."

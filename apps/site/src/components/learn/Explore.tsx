@@ -180,7 +180,11 @@ export interface RowItem {
   sub?: ReactNode;
   /** No clip means a row to read, not to play. */
   src: string | null;
-  label: string;
+  /**
+   * Only for a row whose text can't be read as it stands, such as a word split into syllables:
+   * the word and its meaning. Otherwise the row's own text names it, meaning included.
+   */
+  label?: string;
 }
 
 /** A list of things to hear on one white plate. A tap anywhere on a row plays it. */

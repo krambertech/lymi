@@ -226,7 +226,6 @@ function ReadBar({ title, sections }: { title: string; sections: readonly Lesson
     >
       <div className="mx-auto flex max-w-[720px] items-center px-5 py-2.5">
         <span
-          lang="et"
           aria-hidden={!stuck}
           className={clsx(
             "overflow-hidden font-medium text-ellipsis whitespace-nowrap transition-[max-width,opacity,margin] duration-300",

@@ -19,8 +19,8 @@ import {
 } from "../../../lib/learn/clips";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Keys, Panel } from "../Explore";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { Lit, Paradigm, type ParadigmRow } from "../Paradigm";
 import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
@@ -29,12 +29,10 @@ import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Word } from "../Word";
 
 const SLUG = "ujuma-ujumas-ujumast";
-/** A clip by what it says. */
 const src = (text: string) => clipUrl(SLUG, clipId(text));
 
 type Verb = GoingVerb["verb"];
 
-/** What each activity means, by its -ma form. */
 const VERB_MEANS: Record<Verb, MessageDescriptor> = {
   ujuma: msg`to swim`,
   jooksma: msg`to run`,
@@ -42,7 +40,6 @@ const VERB_MEANS: Record<Verb, MessageDescriptor> = {
   "kohvi jooma": msg`to drink coffee`,
 };
 
-/** Each activity in each way, as the quiz’s answers say it. */
 const WAY_MEANS: Record<Verb, Record<Way, MessageDescriptor>> = {
   ujuma: {
     ma: msg`going swimming`,
@@ -66,7 +63,6 @@ const WAY_MEANS: Record<Verb, Record<Way, MessageDescriptor>> = {
   },
 };
 
-/** What each of Mari’s sentences in the table means. */
 const MARI_MEANS: Record<Verb, Record<Way, MessageDescriptor>> = {
   ujuma: {
     ma: msg`Mari is going swimming.`,
@@ -90,7 +86,6 @@ const MARI_MEANS: Record<Verb, Record<Way, MessageDescriptor>> = {
   },
 };
 
-/** What each sentence of the verb keys says. */
 const KEY_MEANS: Record<(typeof GOING_KEYS)[number]["said"], MessageDescriptor> = {
   "Ma lähen ujuma.": msg`I’m going swimming.`,
   "Ma olen ujumas.": msg`I’m out swimming.`,
@@ -103,7 +98,6 @@ const verbOf = (name: Verb) => GOING_VERBS.find((each) => each.verb === name) as
 const ujuma = verbOf("ujuma");
 const jooksma = verbOf("jooksma");
 
-/** Mari’s sentences glossed: “mari on ujumas.” for each activity the prose shows. */
 const mariGlosses = (verb: GoingVerb) =>
   WAYS.map((way) => {
     const said = goingSentence(verb, way);
@@ -140,7 +134,6 @@ const GLOSSARY: Glossary = {
   "iga päev": { en: msg`every day` },
 };
 
-/** An Estonian ending in running text: read in Estonian, never split after its hyphen. */
 function End({ children }: { children: ReactNode }) {
   return (
     <span lang="et" className="whitespace-nowrap">
@@ -149,7 +142,6 @@ function End({ children }: { children: ReactNode }) {
   );
 }
 
-/** The cat goes into the house to eat, eats, and comes back out. */
 function CatScene() {
   const { t } = useLingui();
   const said: Record<(typeof GOING_SCENE)[number]["id"], { meaning: string; gloss: string }> = {
@@ -174,7 +166,6 @@ function CatScene() {
   );
 }
 
-/** Which question each column answers, as the line under the table says it. */
 function WayNote({ way, means }: { way: Way; means: string }) {
   switch (way) {
     case "ma":
@@ -198,7 +189,6 @@ function WayNote({ way, means }: { way: Way; means: string }) {
   }
 }
 
-/** Four activities going, out and coming back; a tap plays Mari’s sentence. */
 function WayTable() {
   const { t, i18n } = useLingui();
   const rows: ParadigmRow[] = GOING_VERBS.map((verb) => ({
@@ -227,7 +217,6 @@ function WayTable() {
   );
 }
 
-/** The line under a verb key: where the verb comes from and the form it takes. */
 function KeyTip({ lead }: { lead: (typeof GOING_KEYS)[number]["lead"] }) {
   switch (lead) {
     case "lähen":
@@ -264,7 +253,6 @@ function KeyTip({ lead }: { lead: (typeof GOING_KEYS)[number]["lead"] }) {
   }
 }
 
-/** Keys for the verbs before the forms: each plays its sentence, the form’s ending lit. */
 function VerbKeys() {
   const { t, i18n } = useLingui();
   return (
@@ -298,10 +286,6 @@ function VerbKeys() {
   );
 }
 
-/**
- * “Going, out or back?”: each activity heard alone in each way, keyed by the way. The first is
- * not the lesson’s headline example, and its answer is not in the first place.
- */
 export const HEARD = [
   ...GOING_VERBS.flatMap((verb) =>
     WAYS.map((way) => ({
@@ -313,7 +297,6 @@ export const HEARD = [
   ),
 ].sort((a, b) => Number(b.said === "jooksmast") - Number(a.said === "jooksmast"));
 
-/** The three ways in a turned order, so the first round’s answer isn’t always in one place. */
 const turned = (i: number): Way[] => {
   const turn = i % 3;
   return [...WAYS.slice(turn), ...WAYS.slice(0, turn)];
@@ -331,7 +314,6 @@ const heardOptions = (verb: Verb, ways: readonly Way[], i18n: I18n) =>
     label: <span lang={i18n.locale}>{i18n._(WAY_MEANS[verb][way])}</span>,
   }));
 
-/** The form and what it says, after an answer. */
 function Explain({ verb, way }: { verb: Verb; way: Way }) {
   const { i18n } = useLingui();
   return (
@@ -344,7 +326,6 @@ function Explain({ verb, way }: { verb: Verb; way: Way }) {
   );
 }
 
-/** Where Kati’s family is, by what her message says. */
 function voiceQuestions(t: (descriptor: MessageDescriptor) => string): PassageQuestion[] {
   return [
     {
@@ -402,7 +383,6 @@ export function UjumaUjumasUjumastLesson() {
     [i18n],
   );
 
-  // The three ways are the same for each activity, so only their order changes between rounds.
   const heardRun = (items: readonly HeardItem[], pinned?: HeardItem): HeardItem[] =>
     eachPairFirst(items, pinned).map((item) =>
       item === pinned ? item : { ...item, options: heardOptions(item.verb, shuffle(WAYS), i18n) },

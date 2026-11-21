@@ -1923,19 +1923,11 @@ export const INFINITIVE_WORDS = [
   "Ma hakkan täna kodus õppima.",
 ] as const;
 
-/** The three ways the -ma form places someone: going to do it, there doing it, back from it. */
 export type Way = "ma" | "mas" | "mast";
 export const WAYS: readonly Way[] = ["ma", "mas", "mast"];
 
-/** The verb before each way, for Mari: läheb ujuma, on ujumas, tuleb ujumast. */
 export const WAY_LEADS: Record<Way, string> = { ma: "läheb", mas: "on", mast: "tuleb" };
 
-/**
- * The activities of the lesson on -ma, -mas and -mast, each with the part before its ending.
- * Sõnaveeb's EKI dictionary (21 Nov 2026) gives ujumas, ujumast, jooksmas, jooksmast, söömas,
- * söömast, joomas and joomast as forms of their verbs; its Rektsioon field gives minema “mida
- * tegema”, käima “mida tegemas”, and tulema both “mida tegema” and “mida tegemast”.
- */
 export const GOING_VERBS = [
   { verb: "ujuma", stem: "uju" },
   { verb: "jooksma", stem: "jooks" },
@@ -1945,21 +1937,17 @@ export const GOING_VERBS = [
 
 export type GoingVerb = (typeof GOING_VERBS)[number];
 
-/** An activity in one way, alone: “ujumas”. */
 export const goingForm = (verb: GoingVerb, way: Way) => `${verb.stem}${way}`;
 
-/** Mari and an activity in one way: “Mari on ujumas.” */
 export const goingSentence = (verb: GoingVerb, way: Way) =>
   `Mari ${WAY_LEADS[way]} ${goingForm(verb, way)}.`;
 
-/** The cat of the house scene goes in to eat, eats, and comes back out. */
 export const GOING_SCENE = [
   { id: "majja", word: "sööma", sentence: "Kass läheb sööma." },
   { id: "majas", word: "söömas", sentence: "Kass on söömas." },
   { id: "majast", word: "söömast", sentence: "Kass tuleb söömast." },
 ] as const;
 
-/** Activities and places by the question they answer; the places are from lesson 19. */
 export const GOING_SORT = [
   { w: "jooksma", bin: "kuhu" },
   { w: "koju", bin: "kuhu" },
@@ -1972,7 +1960,6 @@ export const GOING_SORT = [
   { w: "kodust", bin: "kust" },
 ] as const;
 
-/** The verbs before the three forms, each in a sentence, its form split before the ending. */
 export const GOING_KEYS = [
   { lead: "lähen", said: "Ma lähen ujuma.", form: "uju|ma" },
   { lead: "olen", said: "Ma olen ujumas.", form: "uju|mas" },
@@ -1981,7 +1968,6 @@ export const GOING_KEYS = [
   { lead: "tule", said: "Tule sööma!", form: "söö|ma" },
 ] as const;
 
-/** Kati's voice message to Jaan: who is where. Words from lessons 1–23, plus iga päev. */
 export const GOING_VOICE = [
   "Tere, Jaan! Ma olen kodus.",
   "Ema ei ole kodus, ta on ujumas.",
@@ -1991,7 +1977,6 @@ export const GOING_VOICE = [
   "Tule ka sööma!",
 ] as const;
 
-/** Words of the -ma, -mas and -mast lesson with a card. */
 export const GOING_WORDS = [
   "majja",
   "majas",

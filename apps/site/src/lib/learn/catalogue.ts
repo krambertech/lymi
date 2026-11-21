@@ -161,7 +161,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian plural: kassid, majad, poed`,
         et: "Kassid",
         minutes: 12,
-        blurb: msg`A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, lapsed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud.`,
       },
       { name: msg`In, into, out of`, et: "Majas, majja, majast" },
       { name: msg`On, onto, off`, et: "Laual, lauale, laualt" },

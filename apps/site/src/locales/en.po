@@ -776,9 +776,6 @@ msgstr "A card shows pinyin over its word until the card is Known. In the exampl
 msgid "A cell dividing in two"
 msgstr "A cell dividing in two"
 
-msgid "A change inside the stem comes back in the plural: <0>pood, poe → poed; tuba, toa → toad</0>."
-msgstr "A change inside the stem comes back in the plural: <0>pood, poe → poed; tuba, toa → toad</0>."
-
 msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
 msgstr "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
 
@@ -928,8 +925,8 @@ msgstr "A free lesson on the Estonian days of the week: the seven names, the fou
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 
-msgid "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, lapsed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
-msgstr "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, lapsed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
+msgid "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
+msgstr "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
 
 msgid "A friend is waiting."
 msgstr "A friend is waiting."
@@ -1306,6 +1303,10 @@ msgstr "Add Lymi to Gemini CLI once and sign in. Then ask from the terminal: car
 msgid "Add now"
 msgstr "Add now"
 
+#. placeholder {0}: ending("-d")
+msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: it’s <2>poed</2>, not <3>poodid</3>. Tap each form to hear it."
+msgstr "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: it’s <2>poed</2>, not <3>poodid</3>. Tap each form to hear it."
+
 msgid "Add the 300 questions"
 msgstr "Add the 300 questions"
 
@@ -1486,6 +1487,9 @@ msgstr "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, 
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 
+msgid "After a number from two up, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
+msgstr "After a number from two up, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
+
 msgid "After a number from two up, euro becomes eurot."
 msgstr "After a number from two up, euro becomes eurot."
 
@@ -1494,9 +1498,6 @@ msgstr "After a number from two up, minut becomes minutit."
 
 msgid "After a number from two up, the partitive."
 msgstr "After a number from two up, the partitive."
-
-msgid "After a number, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
-msgstr "After a number, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
 
 msgid "After a number, the noun stays singular: <0>kaks kassi</0>."
 msgstr "After a number, the noun stays singular: <0>kaks kassi</0>."
@@ -1648,9 +1649,6 @@ msgstr "All of them. You can hear who it’s about."
 msgid "All of them. You hear who does it."
 msgstr "All of them. You hear who does it."
 
-msgid "All of them. You heard one from many every time."
-msgstr "All of them. You heard one from many every time."
-
 msgid "All of them. You matched every answer to its question."
 msgstr "All of them. You matched every answer to its question."
 
@@ -1680,6 +1678,9 @@ msgstr "All shelves"
 
 msgid "All six plurals right."
 msgstr "All six plurals right."
+
+msgid "All six right: you told one from many every time."
+msgstr "All six right: you told one from many every time."
 
 msgid "All six. Every ending was right."
 msgstr "All six. Every ending was right."
@@ -1739,8 +1740,8 @@ msgstr "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
 msgid "An .ofc file from Noji"
 msgstr "An .ofc file from Noji"
 
-msgid "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. <3/> is a big house, and <4/> are big houses."
-msgstr "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. <3/> is a big house, and <4/> are big houses."
+msgid "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. A big house is <3/>, and big houses are <4/>."
+msgstr "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. A big house is <3/>, and big houses are <4/>."
 
 #. placeholder {0}: ending("-d")
 msgid "An adjective takes {0} too, before the noun or after <0>on</0>: <1>suured majad; Majad on suured.</1>"
@@ -6318,8 +6319,8 @@ msgstr "Lesson {number}, coming soon"
 msgid "Lesson {previousNumber}"
 msgstr "Lesson {previousNumber}"
 
-msgid "Lesson {stems} showed nouns that change inside before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
-msgstr "Lesson {stems} showed nouns that change inside before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
+msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
+msgstr "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
 
 msgid "Lesson 4"
 msgstr "Lesson 4"
@@ -9938,10 +9939,6 @@ msgstr "That’s the time. Mari asked how you are."
 msgid "The -des and -mata forms"
 msgstr "The -des and -mata forms"
 
-#. placeholder {0}: ending("-d")
-msgid "The {0} goes on the second form, not the first: it’s <0>poed</0>, not <1>poodid</1>. Tap each form to hear it."
-msgstr "The {0} goes on the second form, not the first: it’s <0>poed</0>, not <1>poodid</1>. Tap each form to hear it."
-
 msgid "The {name} app icon behind Lymi’s"
 msgstr "The {name} app icon behind Lymi’s"
 
@@ -10411,6 +10408,12 @@ msgstr "The player would pass, if chess allowed it."
 msgid "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
 msgstr "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
 
+msgid "The plural keeps the stem change"
+msgstr "The plural keeps the stem change"
+
+msgid "The plural keeps the stem change of the second form: <0>pood, poe → poed; tuba, toa → toad</0>."
+msgstr "The plural keeps the stem change of the second form: <0>pood, poe → poed; tuba, toa → toad</0>."
+
 msgid "The plural of sõber."
 msgstr "The plural of sõber."
 
@@ -10549,9 +10552,6 @@ msgstr "The steam in a sauna"
 msgid "The stem alone"
 msgstr "The stem alone"
 
-msgid "The stem change comes back"
-msgstr "The stem change comes back"
-
 msgid "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 msgstr "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 
@@ -10621,14 +10621,14 @@ msgstr "The translative case"
 msgid "The union"
 msgstr "The union"
 
-msgid "The verb after a plural"
-msgstr "The verb after a plural"
-
 msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
 msgstr "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
 
 msgid "The verb ends in <0>-b</0>, or is <1>on</1>."
 msgstr "The verb ends in <0>-b</0>, or is <1>on</1>."
+
+msgid "The verb with a plural noun"
+msgstr "The verb with a plural noun"
 
 msgid "The verb without its ending"
 msgstr "The verb without its ending"
@@ -11119,8 +11119,8 @@ msgstr "To say"
 msgid "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
 msgstr "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
 
-msgid "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5>"
-msgstr "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5>"
+msgid "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
+msgstr "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
 
 msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 msgstr "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."

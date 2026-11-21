@@ -808,8 +808,8 @@ const TALLINN_CLIPS: Record<string, Clip> = {
 
 /**
  * The plural lesson's nouns: the first and second forms a dictionary gives, and the plural, the
- * second form with -d. `same` words change nothing inside; `changed` ones show lesson 13's stem
- * change again. Checked in ÕS 2025 on Sõnaveeb (EKI morphology, 21 Nov 2026).
+ * second form with -d. `same` words only gain a vowel or nothing; `changed` ones keep lesson 13's
+ * stem change. Checked in ÕS 2025 on Sõnaveeb (EKI morphology, 21 Nov 2026).
  */
 export const MITMUS_SAME = [
   { one: "maja", second: "maja", many: "majad" },
@@ -818,14 +818,14 @@ export const MITMUS_SAME = [
   { one: "kool", second: "kooli", many: "koolid" },
   { one: "linn", second: "linna", many: "linnad" },
   { one: "raamat", second: "raamatu", many: "raamatud" },
+  { one: "laps", second: "lapse", many: "lapsed" },
+  { one: "uks", second: "ukse", many: "uksed" },
 ] as const;
 
 export const MITMUS_CHANGED = [
   { one: "pood", second: "poe", many: "poed" },
   { one: "tuba", second: "toa", many: "toad" },
   { one: "jõgi", second: "jõe", many: "jõed" },
-  { one: "laps", second: "lapse", many: "lapsed" },
-  { one: "uks", second: "ukse", many: "uksed" },
   { one: "mees", second: "mehe", many: "mehed" },
   { one: "naine", second: "naise", many: "naised" },
   { one: "sõber", second: "sõbra", many: "sõbrad" },

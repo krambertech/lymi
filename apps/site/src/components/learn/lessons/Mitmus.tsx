@@ -207,7 +207,12 @@ function OneManyFlip({
         value={mode}
         onPick={(value) => setMode(value)}
       />
-      <div className="grid gap-1.5 sm:grid-flow-col sm:grid-cols-2 sm:grid-rows-3">
+      <div
+        className={clsx(
+          "grid gap-1.5 sm:grid-flow-col sm:grid-cols-2",
+          rows.length > 6 ? "sm:grid-rows-4" : "sm:grid-rows-3",
+        )}
+      >
         {rows.map((row) => {
           const side = row[mode];
           return <FlipLine key={row.key} pieces={side.pieces} said={side.said} mode={mode} />;
@@ -499,7 +504,8 @@ export function MitmusLesson() {
           To say more than one, add <span lang="et">-d</span> to a noun’s second form:{" "}
           <span lang="et">kass, kassi</span> gives <span lang="et">kassid</span>, cats. An adjective
           takes <span lang="et">-d</span> too, and the verb takes the form of{" "}
-          <span lang="et">nad</span>: <span lang="et">Suured kassid söövad.</span>
+          <span lang="et">nad</span>: <span lang="et">Suured kassid söövad.</span> The big cats are
+          eating.
         </Trans>
       }
       facts={[
@@ -527,7 +533,7 @@ export function MitmusLesson() {
           <b lang="et">maja, maja → majad</b>.
         </Trans>,
         <Trans key="2">
-          A change inside the stem comes back in the plural:{" "}
+          The plural keeps the stem change of the second form:{" "}
           <b lang="et">pood, poe → poed; tuba, toa → toad</b>.
         </Trans>,
         <Trans key="3">
@@ -588,8 +594,8 @@ export function MitmusLesson() {
               />
               <Aside>
                 <Trans>
-                  After a number, Estonian keeps the noun singular, in the partitive from lesson{" "}
-                  {partitive}: <Word w="kaks kassi" />, two cats, not{" "}
+                  After a number from two up, Estonian keeps the noun singular, in the partitive
+                  from lesson {partitive}: <Word w="kaks kassi" />, two cats, not{" "}
                   <span lang="et">kaks kassid</span>.
                 </Trans>
               </Aside>
@@ -598,21 +604,22 @@ export function MitmusLesson() {
         },
         {
           id: "stem",
-          title: t`The stem change comes back`,
+          title: t`The plural keeps the stem change`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Lesson {stems} showed nouns that change inside before an ending:{" "}
+                    Lesson {stems} showed nouns whose stem changes before an ending:{" "}
                     <Word w="pood" /> becomes <Word w="poe" />. The plural is built on that second
                     form, so the change shows again: <Word w="poed" />, shops.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    The {ending("-d")} goes on the second form, not the first: it’s{" "}
-                    <b lang="et">poed</b>, not <b lang="et">poodid</b>. Tap each form to hear it.
+                    Add the {ending("-d")} to the second form, <b lang="et">poe</b>, not to{" "}
+                    <b lang="et">pood</b>: it’s <b lang="et">poed</b>, not <b lang="et">poodid</b>.
+                    Tap each form to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -663,7 +670,7 @@ export function MitmusLesson() {
         },
         {
           id: "verbs",
-          title: t`The verb after a plural`,
+          title: t`The verb with a plural noun`,
           children: (
             <>
               <Prose>
@@ -737,7 +744,7 @@ export function MitmusLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All of them. You heard one from many every time.</Trans>
+                    <Trans>All six right: you told one from many every time.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
@@ -764,9 +771,8 @@ export function MitmusLesson() {
                 <p>
                   <Trans>
                     An adjective before a plural noun is plural too, built the same way:{" "}
-                    <Word w="suur" />, <Word w="suure" />, <Word w="suured" />.{" "}
-                    <Word w="suur maja" /> is a big house, and <Word w="suured majad" /> are big
-                    houses.
+                    <Word w="suur" />, <Word w="suure" />, <Word w="suured" />. A big house is{" "}
+                    <Word w="suur maja" />, and big houses are <Word w="suured majad" />.
                   </Trans>
                 </p>
                 <p>

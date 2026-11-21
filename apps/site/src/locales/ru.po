@@ -367,7 +367,7 @@ msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also 
 msgstr "<0/> значит и «он», и «она»: у эстонских местоимений нет рода. <1/> — это ещё и вежливое «Вы» к одному человеку, как в русском."
 
 msgid "<0/> is the same for one and many, so with it only the noun changes: <1/> <2/> Switch between One and Many, and tap a sentence to hear it."
-msgstr "<0/> одинаково для одного и многих, поэтому с ним меняется только существительное: <1/> <2/> Переключайся между «Один» и «Много»; нажми на предложение, чтобы его услышать."
+msgstr "<0/> не зависит от числа, поэтому с ним меняется только существительное: <1/> <2/> Переключай «Один» и «Много» и нажимай на предложение, чтобы его услышать."
 
 msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
 msgstr "<0/> — это город, а <1/> — в Таллине. В эстонском «в» — не отдельное слово, а окончание: в конец названия добавляют <2>-s</2>. «Я живу в Таллине» — это <3/>"
@@ -776,9 +776,6 @@ msgstr "Карточка показывает пиньинь над своим �
 msgid "A cell dividing in two"
 msgstr "Деление клетки надвое"
 
-msgid "A change inside the stem comes back in the plural: <0>pood, poe → poed; tuba, toa → toad</0>."
-msgstr "Изменение внутри основы возвращается во множественном числе: <0>pood, poe → poed; tuba, toa → toad</0>."
-
 msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
 msgstr "После сегодняшнего урока в колоде группы «Эстонский A2 · по вторникам» появляются три новые карточки: kohtuma, broneerima и ilm. Их получают все {learners} учеников."
 
@@ -827,7 +824,7 @@ msgstr "Диалог в голосовом режиме"
 
 #. placeholder {0}: ending("-d")
 msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. To say more than one, take the second form and add {0}: <0/>, <1/>, so <2/>, cats."
-msgstr "Словарь даёт существительное в трёх формах, об этом — в уроке {forms}. Чтобы сказать «больше одного», возьми вторую форму и добавь {0}: <0/>, <1/>, значит, <2/> — кошки."
+msgstr "В словаре существительное стоит в трёх формах, об этом — в уроке {forms}. Чтобы сказать «больше одного», возьми вторую форму и добавь {0}: <0/>, <1/>, отсюда <2/> — кошки."
 
 msgid "A dictionary lists a verb in its -ma form: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
 msgstr "В словаре глагол стоит в форме на -ma: <0/>, «жить». Отбрось -ma, и останется основа <1>ela-</1>. Окончание добавляется к основе: <2/>, «я живу»."
@@ -928,8 +925,8 @@ msgstr "Бесплатный урок о днях недели на эстонс
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Бесплатный урок о повелительном наклонении в эстонском языке: основа глагола как команда (loe!, istu!, tule siia!), ära для «не делай», формы на -ge и -ke для нескольких человек или на «вы», повседневные команды вроде räägi aeglasemalt, palun и короткий разговор в кафе. Каждое предложение озвучено."
 
-msgid "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, lapsed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
-msgstr "Бесплатный урок о множественном числе в эстонском языке: вторая форма плюс -d (kassid, raamatud), изменение основы, которое в нём сохраняется (poed, toad, lapsed), глагол после существительного во множественном числе (lapsed loevad) и прилагательные во множественном числе (suured majad). Каждое предложение озвучено."
+msgid "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
+msgstr "Бесплатный урок о множественном числе в эстонском языке: вторая форма плюс -d (kassid, raamatud), изменение основы, которое в нём сохраняется (poed, toad, mehed), глагол с существительным во множественном числе (lapsed loevad) и прилагательные во множественном числе (suured majad). Каждое предложение озвучено."
 
 msgid "A friend is waiting."
 msgstr "Друг ждёт."
@@ -1079,10 +1076,10 @@ msgstr "Стопка непрочитанных книг"
 #. placeholder {0}: ending("-b")
 #. placeholder {1}: ending("-vad")
 msgid "A plural noun takes the same verb form as <0/>, they, from lesson {present}. One child reading is <1/>, with the {0} of <2>ta</2>. Children reading is <3/>, with the {1} of <4>nad</4>."
-msgstr "После существительного во множественном числе глагол стоит в той же форме, что и после <0/> — «они», из урока {present}. Один ребёнок читает — <1/>, с {0}, как после <2>ta</2>. Дети читают — <3/>, с {1}, как после <4>nad</4>."
+msgstr "С существительным во множественном числе глагол стоит в той же форме, что и с <0/> — «они» (об этих формах — в уроке {present}). Один ребёнок читает — <1/>, с {0}, как у <2>ta</2>. Дети читают — <3/>, с {1}, как у <4>nad</4>."
 
 msgid "A plural noun takes the verb form of <0>nad</0>: <1>Lapsed loevad.</1> <2>On</2> stays <3>on</3>."
-msgstr "После существительного во множественном числе глагол стоит в форме для <0>nad</0>: <1>Lapsed loevad.</1> <2>On</2> так и остаётся <3>on</3>."
+msgstr "С существительным во множественном числе глагол стоит в форме для <0>nad</0>: <1>Lapsed loevad.</1> <2>On</2> так и остаётся <3>on</3>."
 
 msgid "A practice quiz"
 msgstr "Тренировочная викторина"
@@ -1306,6 +1303,10 @@ msgstr "Добавь Lymi в Gemini CLI один раз и войди. Даль�
 msgid "Add now"
 msgstr "Добавить сейчас"
 
+#. placeholder {0}: ending("-d")
+msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: it’s <2>poed</2>, not <3>poodid</3>. Tap each form to hear it."
+msgstr "Добавляй {0} ко второй форме, <0>poe</0>, а не к <1>pood</1>: <2>poed</2>, а не <3>poodid</3>. Нажимай на каждую форму, чтобы её услышать."
+
 msgid "Add the 300 questions"
 msgstr "Добавить 300 вопросов"
 
@@ -1463,7 +1464,7 @@ msgid "Adjective and noun in the first form."
 msgstr "Прилагательное и существительное в первой форме."
 
 msgid "Adjectives take -d too"
-msgstr "Прилагательные тоже получают -d"
+msgstr "Прилагательные тоже оканчиваются на -d"
 
 msgid "Ads"
 msgstr "Реклама"
@@ -1478,13 +1479,16 @@ msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "После <0>ei</0> у глагола <1>olema</1> нет окончания: <2>ei ole</2>."
 
 msgid "After <0>nad on</0>, the adjective takes <1>-d</1>, like <2>ilusad</2>."
-msgstr "После <0>nad on</0> прилагательное получает <1>-d</1>, как <2>ilusad</2>."
+msgstr "После <0>nad on</0> прилагательное тоже оканчивается на <1>-d</1>, как <2>ilusad</2>."
 
 msgid "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
-msgstr "После <0>on</0> так же: <1/> <2/> Переключайся между «Один» и «Много»; нажми на строку, чтобы её услышать."
+msgstr "После <0>on</0> так же: <1/> <2/> Переключай «Один» и «Много» и нажимай на строку, чтобы её услышать."
 
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "После урока на italki, Preply или с частным репетитором вставь чат или сфотографируй заметки. Lymi превратит новые слова в карточки, которые ты повторяешь между уроками. Добавить их может и AI-ассистент. Бесплатно."
+
+msgid "After a number from two up, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
+msgstr "После числа от двух существительное в эстонском остаётся в единственном числе, в партитиве (о нём — в уроке {partitive}): <0/> — две кошки, а не <1>kaks kassid</1>."
 
 msgid "After a number from two up, euro becomes eurot."
 msgstr "После чисел от двух и больше euro становится eurot."
@@ -1494,9 +1498,6 @@ msgstr "После чисел от двух и больше minut станови
 
 msgid "After a number from two up, the partitive."
 msgstr "После числа от двух — партитив."
-
-msgid "After a number, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
-msgstr "После числа существительное в эстонском остаётся в единственном числе, в партитиве из урока {partitive}: <0/> — две кошки, а не <1>kaks kassid</1>."
 
 msgid "After a number, the noun stays singular: <0>kaks kassi</0>."
 msgstr "После числа существительное остаётся в единственном числе: <0>kaks kassi</0>."
@@ -1648,9 +1649,6 @@ msgstr "Все верно. Ты слышишь, о ком речь."
 msgid "All of them. You hear who does it."
 msgstr "Все. Ты слышишь, кто это делает."
 
-msgid "All of them. You heard one from many every time."
-msgstr "Все. Каждый раз верно услышано, один или много."
-
 msgid "All of them. You matched every answer to its question."
 msgstr "Все. Каждый ответ подходит к своему вопросу."
 
@@ -1680,6 +1678,9 @@ msgstr "Все полки"
 
 msgid "All six plurals right."
 msgstr "Все шесть форм множественного числа верны."
+
+msgid "All six right: you told one from many every time."
+msgstr "Все шесть верно: один и много ни разу не перепутаны."
 
 msgid "All six. Every ending was right."
 msgstr "Все шесть. Каждое окончание верное."
@@ -1739,12 +1740,12 @@ msgstr "Файл .apkg или .colpkg из Anki, AnkiDroid или AnkiMobile"
 msgid "An .ofc file from Noji"
 msgstr "Файл .ofc из Noji"
 
-msgid "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. <3/> is a big house, and <4/> are big houses."
-msgstr "Прилагательное перед существительным во множественном числе тоже стоит во множественном и образуется так же: <0/>, <1/>, <2/>. <3/> — большой дом, а <4/> — большие дома."
+msgid "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. A big house is <3/>, and big houses are <4/>."
+msgstr "Прилагательное перед существительным во множественном числе тоже стоит во множественном и образуется так же: <0/>, <1/>, <2/>. Большой дом — <3/>, а большие дома — <4/>."
 
 #. placeholder {0}: ending("-d")
 msgid "An adjective takes {0} too, before the noun or after <0>on</0>: <1>suured majad; Majad on suured.</1>"
-msgstr "Прилагательное тоже получает {0} — и перед существительным, и после <0>on</0>: <1>suured majad; Majad on suured.</1>"
+msgstr "Прилагательное тоже оканчивается на {0} — и перед существительным, и после <0>on</0>: <1>suured majad; Majad on suured.</1>"
 
 msgid "An amateur"
 msgstr "Дилетант"
@@ -2251,7 +2252,7 @@ msgid "Both schedule reviews with FSRS. Anki lets you shape every detail of a ca
 msgstr "Оба планируют повторения по FSRS. В Anki можно настроить каждую мелочь в карточке. Lymi берёт на себя почти всю работу по её созданию."
 
 msgid "Both take <0>-d</0>"
-msgstr "Оба получают <0>-d</0>"
+msgstr "Оба оканчиваются на <0>-d</0>"
 
 msgid "Bread"
 msgstr "Хлеб"
@@ -6318,8 +6319,8 @@ msgstr "Урок {number}, скоро"
 msgid "Lesson {previousNumber}"
 msgstr "Урок {previousNumber}"
 
-msgid "Lesson {stems} showed nouns that change inside before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
-msgstr "Урок {stems} показал существительные, которые меняются внутри перед окончанием: <0/> становится <1/>. Множественное число образуется от этой второй формы, поэтому изменение снова видно: <2/> — магазины."
+msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
+msgstr "Урок {stems} показал существительные, у которых основа меняется перед окончанием: <0/> становится <1/>. Множественное число образуется от этой второй формы, поэтому изменение есть и в нём: <2/> — магазины."
 
 msgid "Lesson 4"
 msgstr "Урок 4"
@@ -9938,10 +9939,6 @@ msgstr "Это о том, который час. Мари спросила, ка
 msgid "The -des and -mata forms"
 msgstr "Формы на -des и -mata"
 
-#. placeholder {0}: ending("-d")
-msgid "The {0} goes on the second form, not the first: it’s <0>poed</0>, not <1>poodid</1>. Tap each form to hear it."
-msgstr "{0} добавляют ко второй форме, а не к первой: <0>poed</0>, а не <1>poodid</1>. Нажимай на каждую форму, чтобы её услышать."
-
 msgid "The {name} app icon behind Lymi’s"
 msgstr "Значок приложения {name} за значком Lymi"
 
@@ -10201,7 +10198,7 @@ msgid "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapä
 msgstr "Первые четыре — с числами: <0>esmaspäev</0> — первый день, <1>neljapäev</1> — четвёртый."
 
 msgid "The form a dictionary lists first."
-msgstr "Форма, которую словарь даёт первой."
+msgstr "Форма, которая в словаре стоит первой."
 
 msgid "The form says who"
 msgstr "Форма говорит, кто"
@@ -10348,7 +10345,7 @@ msgid "the Noji help centre"
 msgstr "справочный центр Noji"
 
 msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
-msgstr "Существительное получает <0>-d</0>, глагол — <1>-vad</1>. <2>On</2> не меняется."
+msgstr "Существительное оканчивается на <0>-d</0>, глагол — на <1>-vad</1>. <2>On</2> не меняется."
 
 msgid "The object: whole or part"
 msgstr "Дополнение: целое или часть"
@@ -10410,6 +10407,12 @@ msgstr "Игрок пропустил бы ход, если бы шахматы 
 #. placeholder {0}: ending("-d")
 msgid "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
 msgstr "Множественное число — это вторая форма плюс {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
+
+msgid "The plural keeps the stem change"
+msgstr "Множественное число сохраняет изменение основы"
+
+msgid "The plural keeps the stem change of the second form: <0>pood, poe → poed; tuba, toa → toad</0>."
+msgstr "Множественное число сохраняет изменение основы из второй формы: <0>pood, poe → poed; tuba, toa → toad</0>."
 
 msgid "The plural of sõber."
 msgstr "Множественное число от sõber."
@@ -10549,9 +10552,6 @@ msgstr "Пар в сауне"
 msgid "The stem alone"
 msgstr "Только основа"
 
-msgid "The stem change comes back"
-msgstr "Изменение основы возвращается"
-
 msgid "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 msgstr "Основа не меняется: <0>istu</0>, <1>ära istu</1>."
 
@@ -10621,14 +10621,14 @@ msgstr "Транслатив"
 msgid "The union"
 msgstr "Профсоюз"
 
-msgid "The verb after a plural"
-msgstr "Глагол после множественного числа"
-
 msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
 msgstr "Глагол теряет окончание после <0>ei</0>, а не после <1>kas</1>: <2>elad</2>."
 
 msgid "The verb ends in <0>-b</0>, or is <1>on</1>."
-msgstr "Глагол оканчивается на <0>-b</0> или это <1>on</1>."
+msgstr "Глагол с <0>-b</0> на конце или <1>on</1>."
+
+msgid "The verb with a plural noun"
+msgstr "Глагол с существительным во множественном числе"
 
 msgid "The verb without its ending"
 msgstr "Глагол без окончания"
@@ -11119,8 +11119,8 @@ msgstr "Сказать"
 msgid "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
 msgstr "Чтобы сказать «не делай», ставь <0>ära</0> перед основой: <1>Ära istu!</1>"
 
-msgid "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5>"
-msgstr "Чтобы сказать «больше одного», добавь <0>-d</0> ко второй форме существительного: <1>kass, kassi</1> даёт <2>kassid</2> — кошки. Прилагательное тоже получает <3>-d</3>, а глагол стоит в форме для <4>nad</4>: <5>Suured kassid söövad.</5>"
+msgid "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
+msgstr "Чтобы сказать «больше одного», добавь <0>-d</0> ко второй форме существительного: <1>kass, kassi</1> даёт <2>kassid</2> — кошки. К прилагательному тоже добавляется <3>-d</3>, а глагол стоит в форме для <4>nad</4>: <5>Suured kassid söövad.</5> Большие кошки едят."
 
 msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 msgstr "Чтобы сказать «не», поставь <0/> перед глаголом. <1/> — «я читаю», а <2/> — «я не читаю». Глагол теряет окончание, а <3/> одно и то же, о ком бы ни шла речь."
@@ -11957,7 +11957,7 @@ msgstr "Когда результат зависит от того, что бы�
 
 #. placeholder {0}: ending("-d")
 msgid "When the second form is the same as the first, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
-msgstr "Когда вторая форма такая же, как первая, новое только {0}: <0/> даёт <1/>. Переключайся между «Один» и «Много»; нажми на слово, чтобы его услышать."
+msgstr "Когда вторая форма такая же, как первая, новое только {0}: <0/> даёт <1/>. Переключай «Один» и «Много» и нажимай на слово, чтобы его услышать."
 
 msgid "where"
 msgstr "где"

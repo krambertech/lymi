@@ -162,7 +162,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Into and out of in Estonian: -sse and -st`,
         et: "Majas, majja, majast",
         minutes: 10,
-        blurb: msg`A free lesson on Estonian’s three “inside” cases: kus, kuhu and kust, -s for in, -sse for into (Tartusse) and -st for out of (koolist), the short forms kooli, poodi and koju, and how to say where you’re from. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on Estonian’s three “inside” cases, the inessive, illative and elative: kus, kuhu and kust, -s for in, -sse for into (Tartusse) and -st for out of (koolist), the short forms kooli, poodi and koju, and how to say where you’re from. Every sentence is read aloud.`,
       },
       { name: msg`On, onto, off`, et: "Laual, lauale, laualt" },
       { name: msg`Place words: on, under, behind`, et: "Kass ja kast" },

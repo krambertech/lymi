@@ -80,7 +80,7 @@ const FORM_MEANS: Record<string, MessageDescriptor> = {
   majast: msg`out of the house`,
   kodu: msg`home`,
   kodus: msg`at home`,
-  koju: msg`home, going there`,
+  koju: msg`going home`,
   kodust: msg`from home`,
   Eestist: msg`from Estonia`,
   Soomest: msg`from Finland`,
@@ -162,7 +162,7 @@ const SHORT_KEYS: readonly { place: Place["place"]; id: Id }[] = [
 const GLOSSARY: Glossary = {
   kus: { en: msg`where` },
   kuhu: { en: msg`where to`, note: msg`Asks where someone or something is going.` },
-  kust: { en: msg`where from`, note: msg`Kus with its -s swapped for -st, “out of”.` },
+  kust: { en: msg`where from`, note: msg`Kus with a t on the end.` },
   kass: { en: msg`cat` },
   tuleb: { en: msg`comes, is coming`, note: msg`Tulema with the ta ending.` },
   tööl: { en: msg`at work` },
@@ -320,7 +320,7 @@ function DirectionSwitch() {
             <b lang="et" className="whitespace-nowrap">
               -s
             </b>{" "}
-            says in. Switch to <b lang="et">kuhu?</b> and <b lang="et">kust?</b>
+            says in. Switch to <b lang="et">kuhu?</b> and <b lang="et">kust?</b> to compare.
           </Trans>
         ) : direction === "kuhu" ? (
           <Trans>
@@ -578,11 +578,11 @@ export function MajasMajjaMajastLesson() {
           <b lang="et">kooli, poodi, linna, majja, koju</b>.
         </Trans>,
         <Trans key="4">
-          Names and long words take{" "}
+          When you don’t know a short form, use{" "}
           <b lang="et" className="whitespace-nowrap">
             -sse
           </b>
-          , and it’s the safe choice when you don’t know a short form.
+          : long words and most names have only that one.
         </Trans>,
         <Trans key="5">
           Where you’re from takes{" "}
@@ -601,7 +601,7 @@ export function MajasMajjaMajastLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Lesson {places} answered <Word w="kus" />, where, with{" "}
+                    Lesson {places} taught <Word w="kus" />, where, and its{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -s
                     </b>
@@ -666,7 +666,7 @@ export function MajasMajjaMajastLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -st
                     </b>{" "}
-                    form of the country or town. Tap one to answer.
+                    form of the country or town. Tap a place to hear the answer.
                   </Trans>
                 </p>
               </Prose>
@@ -736,7 +736,7 @@ export function MajasMajjaMajastLesson() {
         },
         {
           id: "hearing",
-          title: t`Hearing the direction`,
+          title: t`Which question the place answers`,
           quiz: true,
           children: (
             <>
@@ -782,7 +782,7 @@ export function MajasMajjaMajastLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Some short, everyday words also have a short form for where to, with no{" "}
+                    Some everyday words also have a short form for where to, with no{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -sse
                     </b>
@@ -793,8 +793,8 @@ export function MajasMajjaMajastLesson() {
                   <Trans>
                     For <Word w="kool" />, <Word w="pood" /> and <Word w="linn" />, the short form
                     is the third form a dictionary gives, as lesson {threeForms} shows:{" "}
-                    <b lang="et">kool, kooli, kooli</b>. <Word w="Maja" /> and <Word w="kodu" />{" "}
-                    have their own: <Word w="majja" /> and <Word w="koju" />.
+                    <b lang="et">pood, poe, poodi</b>. <Word w="Maja" /> and <Word w="kodu" /> have
+                    their own: <Word w="majja" /> and <Word w="koju" />.
                   </Trans>
                 </p>
               </Prose>
@@ -829,7 +829,8 @@ export function MajasMajjaMajastLesson() {
                       -sse
                     </b>{" "}
                     forms are right too: <Word w="koolisse" />, <Word w="poesse" />,{" "}
-                    <Word w="linnasse" />, <Word w="majasse" />. Names and long words have only the{" "}
+                    <Word w="linnasse" />, <Word w="majasse" />. Long words and most names have only
+                    the{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -sse
                     </b>{" "}
@@ -844,8 +845,9 @@ export function MajasMajjaMajastLesson() {
               </Prose>
               <Aside>
                 <Trans>
-                  <Word w="Kodu" />, home, changes the most: <Word w="koju" /> when you go there,{" "}
-                  <Word w="kodus" /> when you’re there, <Word w="kodust" /> when you leave.
+                  <Word w="Kodu" />, home, has a short form of its own: <Word w="koju" /> when you
+                  go there. Then <Word w="kodus" /> when you’re there, <Word w="kodust" /> when you
+                  leave.
                 </Trans>
               </Aside>
               <Exchanges

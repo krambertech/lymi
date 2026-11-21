@@ -409,8 +409,8 @@ msgstr "<0/> repeats the verb from the question, and any verb can answer this wa
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 
-msgid "<0/>, home, changes the most: <1/> when you go there, <2/> when you’re there, <3/> when you leave."
-msgstr "<0/>, home, changes the most: <1/> when you go there, <2/> when you’re there, <3/> when you leave."
+msgid "<0/>, home, has a short form of its own: <1/> when you go there. Then <2/> when you’re there, <3/> when you leave."
+msgstr "<0/>, home, has a short form of its own: <1/> when you go there. Then <2/> when you’re there, <3/> when you leave."
 
 msgid "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
 msgstr "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
@@ -474,8 +474,8 @@ msgstr "<0>Koolis</0> says where you are. To say where from, use <1>-st</1>: <2>
 msgid "<0>Kuhu?</0> Where to? <1>-sse</1> says into or to, on the same stem as <2>-s</2>."
 msgstr "<0>Kuhu?</0> Where to? <1>-sse</1> says into or to, on the same stem as <2>-s</2>."
 
-msgid "<0>Kus?</0> Where? <1>-s</1> says in. Switch to <2>kuhu?</2> and <3>kust?</3>"
-msgstr "<0>Kus?</0> Where? <1>-s</1> says in. Switch to <2>kuhu?</2> and <3>kust?</3>"
+msgid "<0>Kus?</0> Where? <1>-s</1> says in. Switch to <2>kuhu?</2> and <3>kust?</3> to compare."
+msgstr "<0>Kus?</0> Where? <1>-s</1> says in. Switch to <2>kuhu?</2> and <3>kust?</3> to compare."
 
 msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
 msgstr "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
@@ -928,8 +928,8 @@ msgstr "A free lesson on Estonian questions: kas for yes or no, answers with jah
 msgid "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud."
 msgstr "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud."
 
-msgid "A free lesson on Estonian’s three “inside” cases: kus, kuhu and kust, -s for in, -sse for into (Tartusse) and -st for out of (koolist), the short forms kooli, poodi and koju, and how to say where you’re from. Every sentence is read aloud."
-msgstr "A free lesson on Estonian’s three “inside” cases: kus, kuhu and kust, -s for in, -sse for into (Tartusse) and -st for out of (koolist), the short forms kooli, poodi and koju, and how to say where you’re from. Every sentence is read aloud."
+msgid "A free lesson on Estonian’s three “inside” cases, the inessive, illative and elative: kus, kuhu and kust, -s for in, -sse for into (Tartusse) and -st for out of (koolist), the short forms kooli, poodi and koju, and how to say where you’re from. Every sentence is read aloud."
+msgstr "A free lesson on Estonian’s three “inside” cases, the inessive, illative and elative: kus, kuhu and kust, -s for in, -sse for into (Tartusse) and -st for out of (koolist), the short forms kooli, poodi and koju, and how to say where you’re from. Every sentence is read aloud."
 
 msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 msgstr "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
@@ -4064,8 +4064,8 @@ msgstr "Footpath"
 msgid "For {0}"
 msgstr "For {0}"
 
-msgid "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>kool, kooli, kooli</3>. <4/> and <5/> have their own: <6/> and <7/>."
-msgstr "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>kool, kooli, kooli</3>. <4/> and <5/> have their own: <6/> and <7/>."
+msgid "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. <4/> and <5/> have their own: <6/> and <7/>."
+msgstr "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. <4/> and <5/> have their own: <6/> and <7/>."
 
 msgid "For a cashier, a builder, or a friend who is studying."
 msgstr "For a cashier, a builder, or a friend who is studying."
@@ -4583,6 +4583,9 @@ msgstr "Goethe-Zertifikat A1, A2 and B1"
 msgid "Goethe-Zertifikat A1, A2 and B1: the words for each level"
 msgstr "Goethe-Zertifikat A1, A2 and B1: the words for each level"
 
+msgid "going home"
+msgstr "going home"
+
 msgid "Going over a lesson again"
 msgstr "Going over a lesson again"
 
@@ -4859,9 +4862,6 @@ msgstr "Hearing a command"
 msgid "Hearing ära and ei"
 msgstr "Hearing ära and ei"
 
-msgid "Hearing the direction"
-msgstr "Hearing the direction"
-
 msgid "Hearing the place"
 msgstr "Hearing the place"
 
@@ -4951,9 +4951,6 @@ msgstr "holy; a holiday"
 
 msgid "home"
 msgstr "home"
-
-msgid "home, going there"
-msgstr "home, going there"
 
 msgid "Hopefully"
 msgstr "Hopefully"
@@ -6139,6 +6136,9 @@ msgstr "Kümne is the form kümme takes before minuti pärast."
 msgid "Kümne minuti pärast neli: in ten minutes it’s four, 3:50."
 msgstr "Kümne minuti pärast neli: in ten minutes it’s four, 3:50."
 
+msgid "Kus with a t on the end."
+msgstr "Kus with a t on the end."
+
 msgid "Kus with its -s swapped for -st, “out of”."
 msgstr "Kus with its -s swapped for -st, “out of”."
 
@@ -6324,8 +6324,8 @@ msgstr "Lesson {number} · {minutes} min"
 msgid "Lesson {number}, coming soon"
 msgstr "Lesson {number}, coming soon"
 
-msgid "Lesson {places} answered <0/>, where, with <1>-s</1>: <2/> Estonian asks two more questions about a place. <3/> asks where to: <4/> <5/> asks where from: <6/>"
-msgstr "Lesson {places} answered <0/>, where, with <1>-s</1>: <2/> Estonian asks two more questions about a place. <3/> asks where to: <4/> <5/> asks where from: <6/>"
+msgid "Lesson {places} taught <0/>, where, and its <1>-s</1>: <2/> Estonian asks two more questions about a place. <3/> asks where to: <4/> <5/> asks where from: <6/>"
+msgstr "Lesson {places} taught <0/>, where, and its <1>-s</1>: <2/> Estonian asks two more questions about a place. <3/> asks where to: <4/> <5/> asks where from: <6/>"
 
 msgid "Lesson {previousNumber}"
 msgstr "Lesson {previousNumber}"
@@ -7086,9 +7086,6 @@ msgstr "Named after William of Ockham, a 14th-century friar."
 
 msgid "Named by two Australian scientists in 1964."
 msgstr "Named by two Australian scientists in 1964."
-
-msgid "Names and long words take <0>-sse</0>, and it’s the safe choice when you don’t know a short form."
-msgstr "Names and long words take <0>-sse</0>, and it’s the safe choice when you don’t know a short form."
 
 msgid "Narrow therapeutic range; check levels and potassium"
 msgstr "Narrow therapeutic range; check levels and potassium"
@@ -9249,6 +9246,9 @@ msgstr "So; well then"
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre, over, plus mesa, table. It can outlast the meal."
 
+msgid "Some everyday words also have a short form for where to, with no <0>-sse</0>: <1/> <2/>"
+msgstr "Some everyday words also have a short form for where to, with no <0>-sse</0>: <1/> <2/>"
+
 msgid "Some everyday words have a short form for where to: <0>kooli, poodi, linna, majja, koju</0>."
 msgstr "Some everyday words have a short form for where to: <0>kooli, poodi, linna, majja, koju</0>."
 
@@ -9257,9 +9257,6 @@ msgstr "Some kanji look different in a Chinese font. Lymi shows your cards in Ja
 
 msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 msgstr "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
-
-msgid "Some short, everyday words also have a short form for where to, with no <0>-sse</0>: <1/> <2/>"
-msgstr "Some short, everyday words also have a short form for where to, with no <0>-sse</0>: <1/> <2/>"
 
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
@@ -9978,8 +9975,8 @@ msgstr "The *way* home takes an hour."
 msgid "The *window* is open."
 msgstr "The *window* is open."
 
-msgid "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. Names and long words have only the <5>-sse</5> form: <6/>, <7/>. So when you don’t know a short form, <8>-sse</8> is the safe choice."
-msgstr "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. Names and long words have only the <5>-sse</5> form: <6/>, <7/>. So when you don’t know a short form, <8>-sse</8> is the safe choice."
+msgid "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. Long words and most names have only the <5>-sse</5> form: <6/>, <7/>. So when you don’t know a short form, <8>-sse</8> is the safe choice."
+msgstr "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. Long words and most names have only the <5>-sse</5> form: <6/>, <7/>. So when you don’t know a short form, <8>-sse</8> is the safe choice."
 
 msgid "The 1618 revolt in Prague that started the Thirty Years’ War"
 msgstr "The 1618 revolt in Prague that started the Thirty Years’ War"
@@ -11894,6 +11891,9 @@ msgstr "When its card reaches Known in your reviews. From then on the reading is
 msgid "When the output depends on the history of the input"
 msgstr "When the output depends on the history of the input"
 
+msgid "When you don’t know a short form, use <0>-sse</0>: long words and most names have only that one."
+msgstr "When you don’t know a short form, use <0>-sse</0>: long words and most names have only that one."
+
 msgid "where"
 msgstr "where"
 
@@ -12064,6 +12064,9 @@ msgstr "Which place?"
 
 msgid "Which plans include Grok Bot?"
 msgstr "Which plans include Grok Bot?"
+
+msgid "Which question the place answers"
+msgstr "Which question the place answers"
 
 msgid "Which question word?"
 msgstr "Which question word?"
@@ -12570,8 +12573,8 @@ msgstr "You meet Mari at the café and answer her in Estonian. If you pick a wro
 msgid "You meet Mari on your way from school to the shop. You’re from Pärnu, and tomorrow you’re going to Tartu."
 msgstr "You meet Mari on your way from school to the shop. You’re from Pärnu, and tomorrow you’re going to Tartu."
 
-msgid "You met <0/> in lesson {questions}. <1/> takes the <2>-st</2> form of the country or town. Tap one to answer."
-msgstr "You met <0/> in lesson {questions}. <1/> takes the <2>-st</2> form of the country or town. Tap one to answer."
+msgid "You met <0/> in lesson {questions}. <1/> takes the <2>-st</2> form of the country or town. Tap a place to hear the answer."
+msgstr "You met <0/> in lesson {questions}. <1/> takes the <2>-st</2> form of the country or town. Tap a place to hear the answer."
 
 msgid "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."
 msgstr "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."

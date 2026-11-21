@@ -469,6 +469,7 @@ export function CommandMenu({
     onAddCard(target?.id, row.term);
   }
 
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
   useEffect(() => {
     if (!held || !checked || !addRow) return;
     setHeld(null);

@@ -80,7 +80,7 @@ The closer a change is to shipping, the more runs. Every test still runs in ever
 
 | Check | Save | Push | Pull request | Main |
 | --- | --- | --- | --- | --- |
-| Biome, interface strings, migration safety, TypeScript | - | all | all | all |
+| Oxlint and oxfmt, interface strings, migration safety, TypeScript | - | all | all | all |
 | Production build and deployment boundaries | - | on handover | yes | yes |
 | Unit, service and route tests | changed graph | changed graph | all | all |
 | Workers-runtime tests | - | when server or core changed | when server or core changed | all |
@@ -229,7 +229,7 @@ Fix a flaky test; never make it pass. Read the failed attempt first: the summary
 - A test that acts before the page is ready for it: wait for the state the next step depends on, such as a response, focus on the control a key press needs, or the row it reads.
 - A test that only fails under a loaded runner: find what it depends on being fast, or move what it proves to a lower layer that is not.
 
-If the cause cannot be found, delete the test, and say in its issue or pull request what it proved and which test, if any, still covers that. Never add a sleep, a longer timeout, a skip, a `fixme` or a retry to make a test pass, and never rerun a red job to get a green one without reading the failure: a job that passes on a rerun is flaky too, and goes in an issue the same way. `biome-plugins/no-flaky-masks.grit` fails `pnpm check` on `waitForTimeout`, retries in `describe.configure`, `slow` and `fixme` under `e2e/`; it cannot tell a longer `setTimeout` from a test that needs one, so that part is review's. A wait that proves something does not happen, such as an event that is never sent, is the one honest sleep, and takes a `biome-ignore` that says so.
+If the cause cannot be found, delete the test, and say in its issue or pull request what it proved and which test, if any, still covers that. Never add a sleep, a longer timeout, a skip, a `fixme` or a retry to make a test pass, and never rerun a red job to get a green one without reading the failure: a job that passes on a rerun is flaky too, and goes in an issue the same way. `lymi/no-flaky-masks` in `oxlint-plugin-lymi` fails `pnpm check` on `waitForTimeout`, retries in `describe.configure`, `slow` and `fixme` under `e2e/`; it cannot tell a longer `setTimeout` from a test that needs one, so that part is review's. A wait that proves something does not happen, such as an event that is never sent, is the one honest sleep, and takes an `oxlint-disable-next-line` that says so.
 
 A test that times out on your own Mac while other sessions load it is not a CI flake. Run it again alone before calling it a bug, and judge flakiness by CI.
 
@@ -279,7 +279,7 @@ The test sits beside the year-long simulation's fingerprint check in `src/simula
 
 ## Bugs a pattern can catch
 
-When a review finds a bug whose shape a search can spot, add the search so the next one fails `pnpm check` instead of waiting for a reviewer. A pattern inside one file is a Grit plugin in `biome-plugins/`, scoped in `biome.json`; a pattern across files, such as a key spelled in two modules, is a check in `scripts/check-regressions.mjs` with a test in its `.test.mjs`. Each message names the pull request that found the bug. Logic bugs, races and wrong copy beyond a known false claim stay with regression tests.
+When a review finds a bug whose shape a search can spot, add the search so the next one fails `pnpm check` instead of waiting for a reviewer. A pattern inside one file is a rule in `oxlint-plugin-lymi/rules/` with a test beside it, scoped in `.oxlintrc.json`; a pattern across files, such as a key spelled in two modules, is a check in `scripts/check-regressions.mjs` with a test in its `.test.mjs`. Each message names the pull request that found the bug. Logic bugs, races and wrong copy beyond a known false claim stay with regression tests.
 
 `scripts/check-test-only-exports.mjs` holds one such search across the whole repository. It fails when only tests read a production export that its own module does not use, the shape of `writeStore` and `streakLength` before #1266. Its `ALLOWED` list holds the exports that stay, each with its reason: a reset that stands in for a restart, or a check whose only runner is a test.
 
@@ -299,7 +299,7 @@ Add an item when a fix repairs a class that already broke once before and no aut
 
 `apps/web/vitest.workers.config.ts` runs `*.workers.test.ts` files inside workerd with the production Worker's compatibility date and flags, and answers every outgoing request from a stub upstream in that config. Node accepts request options that workerd refuses: `redirect: "error"` once passed typecheck, lint, the unit tests and the deployment dry run, then failed every AI and audio call in production. `outgoing-fetch.workers.test.ts` drives every outgoing fetch the Worker makes with request options, from the AI providers to picture import, email, PostHog and Apple, through the real `fetch` and `Request`; it proves the call leaves and comes back, not how a provider behaves.
 
-Add a case there, and an answer to the stub, for any new outgoing fetch or any new use of an API only Workers provides. `biome-plugins/no-redirect-error.grit` catches the one option known to break; this project catches the next one. `scripts/test-plan.mjs` runs it in `pnpm verify:changed` and on pull requests that reach `apps/web/src/server/` or `packages/core/`, and `pnpm verify` and every push to `main` run it always.
+Add a case there, and an answer to the stub, for any new outgoing fetch or any new use of an API only Workers provides. `lymi/no-redirect-error` catches the one option known to break; this project catches the next one. `scripts/test-plan.mjs` runs it in `pnpm verify:changed` and on pull requests that reach `apps/web/src/server/` or `packages/core/`, and `pnpm verify` and every push to `main` run it always.
 
 ## Route tests through the Worker's fetch handler
 

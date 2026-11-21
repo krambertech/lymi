@@ -313,9 +313,8 @@ export function clozeRecordings(
   clips: readonly (readonly string[])[],
   text: number,
 ): ReturnType<typeof noteRecordings> {
-  const roles = names.map(
-    (name, i): FieldRole =>
-      i === text || SENTENCE_FIELD.test(fieldWords(name)) ? "example" : "skip",
+  const roles = names.map((name, i): FieldRole =>
+    i === text || SENTENCE_FIELD.test(fieldWords(name)) ? "example" : "skip",
   );
   const sounds = noteRecordings(names, roles, clips);
   return {

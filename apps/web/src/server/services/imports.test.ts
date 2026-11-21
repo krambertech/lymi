@@ -1572,31 +1572,28 @@ async function pictureDeck(count: number, every = 1) {
     ],
     counts: { decks: 1, cards: count, reviews: 0, pictures: pictures.length, sounds: 0 },
   };
-  const cards = Array.from(
-    { length: count },
-    (_, i): LymiFileCard => ({
-      id: `c${i}`,
-      deck: "d1",
-      section: null,
-      term: `parola ${i}`,
-      meaning: `word ${i}`,
-      pronunciation: null,
-      example: null,
-      notes: null,
-      language: "it",
-      tags: [],
-      source: null,
-      meaningSource: null,
-      exampleSource: null,
-      reviewModes: null,
-      picture: pictured(i)
-        ? { file: `media/c${i}.png`, description: "Blue", width: 24, height: 24 }
-        : null,
-      archivedAt: null,
-      createdAt: CREATED,
-      states: [],
-    }),
-  );
+  const cards = Array.from({ length: count }, (_, i): LymiFileCard => ({
+    id: `c${i}`,
+    deck: "d1",
+    section: null,
+    term: `parola ${i}`,
+    meaning: `word ${i}`,
+    pronunciation: null,
+    example: null,
+    notes: null,
+    language: "it",
+    tags: [],
+    source: null,
+    meaningSource: null,
+    exampleSource: null,
+    reviewModes: null,
+    picture: pictured(i)
+      ? { file: `media/c${i}.png`, description: "Blue", width: 24, height: 24 }
+      : null,
+    archivedAt: null,
+    createdAt: CREATED,
+    states: [],
+  }));
   await segment.add("lymi.json", encoder.encode(JSON.stringify(manifest)), true);
   await segment.add(
     "cards.jsonl",

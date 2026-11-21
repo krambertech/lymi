@@ -7,9 +7,10 @@ import type { Locale } from "../../lib/routes";
 import { ArrowLink } from "./ArrowLink";
 import { Attachment } from "./AssistantChat";
 import { DeckWords } from "./DeckWords";
-import { FeatureSection, Wide } from "./FeatureSection";
 import { POLISH_QUESTIONS } from "./faq";
+import { FeatureSection, Wide } from "./FeatureSection";
 import { LandingLayout } from "./LandingLayout";
+import { addDeckUrl, pathSteps } from "./language-decks";
 import { LanguageDecks } from "./LanguageDecks";
 import {
   DetailsSection,
@@ -24,10 +25,7 @@ import {
   VoiceSection,
 } from "./LanguageSections";
 import { LookAlikes } from "./LookAlikes";
-import { addDeckUrl, pathSteps } from "./language-decks";
 import { type NotebookCard, type NotebookRow, NotebookToCards } from "./NotebookToCards";
-import { EnrichPolish } from "./PolishAi";
-import { PolishBento } from "./PolishBento";
 import {
   lookAlikesFor,
   OFFICE_WORDS,
@@ -39,6 +37,8 @@ import {
   POLISH_VOICE_WORDS,
   polishHand,
 } from "./polish";
+import { EnrichPolish } from "./PolishAi";
+import { PolishBento } from "./PolishBento";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
 import { WordForms } from "./WordForms";

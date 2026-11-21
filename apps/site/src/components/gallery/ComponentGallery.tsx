@@ -4,18 +4,17 @@ import { type ReactNode, useEffect, useState } from "react";
 import { trayStyle } from "../../lib/tray";
 import { Breadcrumb } from "../Breadcrumb";
 import { buttonClass } from "../Button";
-import { Wordmark } from "../Logo";
 import { ArrowLink } from "../landing/ArrowLink";
 import { Added, AssistantChat, Attachment } from "../landing/AssistantChat";
 import { AssistantMarksWithMore, WorksWith } from "../landing/AssistantMarks";
 import { Assurances } from "../landing/Assurances";
+import { SAMPLE_CARDS, type SampleCard, USE_CASE_CARDS } from "../landing/cards";
 import { CardsHero } from "../landing/CardsHero";
 import { AssistantAvatar, LearnerBubble, ToolCall, UsingLymi } from "../landing/ChatParts";
-import { SAMPLE_CARDS, type SampleCard, USE_CASE_CARDS } from "../landing/cards";
 import { ESTONIAN_FORM_SLOTS, FORM_WORDS } from "../landing/estonian";
+import { MEDICINE_QUESTIONS } from "../landing/faq";
 import { FeatureSection, Wide } from "../landing/FeatureSection";
 import { FreeBadge } from "../landing/FreeBadge";
-import { MEDICINE_QUESTIONS } from "../landing/faq";
 import { GERMAN_EXAMPLES, GERMAN_VERBS, germanHand } from "../landing/german";
 import { Hero } from "../landing/Hero";
 import { BENTO_HUES, CheckList, LanguageBento, Tile } from "../landing/LanguageBento";
@@ -32,6 +31,7 @@ import { SpokenWords, useClipPlayer } from "../landing/SpokenWords";
 import { Steps } from "../landing/Steps";
 import { UseCases } from "../landing/UseCases";
 import { WordForms } from "../landing/WordForms";
+import { Wordmark } from "../Logo";
 
 interface Entry {
   id: string;
@@ -724,7 +724,7 @@ function Prose({ text }: { text: string }) {
   return text.split("`").map((part, i) =>
     i % 2 === 1 ? (
       <code
-        // biome-ignore lint/suspicious/noArrayIndexKey: a fixed sentence split once
+        // oxlint-disable-next-line react/no-array-index-key -- a fixed sentence split once
         key={i}
         className="rounded-xs bg-plate-nested px-1 py-px font-mono text-[0.9em] text-ink"
       >

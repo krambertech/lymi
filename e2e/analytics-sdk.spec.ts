@@ -82,7 +82,7 @@ test("the real browser SDK sends only approved payloads through the proxy, witho
     analytics.setAnalyticsLearner("test-opaque-account", false);
     analytics.captureAnalytics("welcome_step_viewed", { step_name: "start", skipped: true });
   }, modulePath);
-  // biome-ignore lint/plugin: proves an event is never sent, which only waiting past the SDK's flush interval shows.
+  // oxlint-disable-next-line lymi/no-flaky-masks -- proves an event is never sent, which only waiting past the SDK's flush interval shows.
   await page.waitForTimeout(3500);
   expect(sent.join(" ")).not.toContain('"step_name":"start"');
 });

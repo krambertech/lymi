@@ -1,4 +1,4 @@
-// biome-ignore lint/style/noRestrictedImports: this is the one place the raw sheet is wrapped.
+// oxlint-disable-next-line eslint/no-restricted-imports -- this is the one place the raw sheet is wrapped.
 import { BottomSheet, Group, Host, RNHostView } from "@expo/ui/swift-ui";
 import { presentationDetents, presentationDragIndicator } from "@expo/ui/swift-ui/modifiers";
 import type { ReactElement } from "react";

@@ -1,6 +1,6 @@
 import { openLymiUrl } from "../../lib/origins";
-import { Localized } from "../Localized";
 import { SiteNav } from "../landing/SiteNav";
+import { Localized } from "../Localized";
 
 /** The marketing top bar on pages that are not built from landing sections, such as the policies. */
 export default function SiteHeader({ locale = "en" }: { locale?: string }) {

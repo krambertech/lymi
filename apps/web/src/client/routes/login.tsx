@@ -106,11 +106,11 @@ function Login() {
     returnTo: rawReturnTo,
   } = search;
   const returnTo = safeProductReturnPath(rawReturnTo);
-  const [flow, dispatch] = useReducer(
-    loginFlow,
-    openOn,
-    (mode): LoginFlow => ({ status: "form", mode: mode ?? "sign-in", errors: {} }),
-  );
+  const [flow, dispatch] = useReducer(loginFlow, openOn, (mode): LoginFlow => ({
+    status: "form",
+    mode: mode ?? "sign-in",
+    errors: {},
+  }));
   const { mode } = flow;
   const attempts = useRef(0);
   const [email, setEmail] = useState(known ?? "");

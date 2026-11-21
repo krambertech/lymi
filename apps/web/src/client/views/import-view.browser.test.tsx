@@ -9,8 +9,8 @@ import {
 } from "@tanstack/react-query";
 import { useState } from "react";
 import { afterEach, expect, test, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { messages } from "../../locales/en.po";
 import type { Choices } from "../components/import-parts";
 import { StaticNavProvider } from "../components/nav-link";

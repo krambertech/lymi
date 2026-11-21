@@ -154,10 +154,10 @@ function Fan({ size, ring }: { size: number; ring?: string }) {
   const chatgpt = ASSISTANTS[1]?.app;
   const gemini = ASSISTANTS[2]?.app;
   const marks = [
-    claude && <AppMark app={claude} size={size} />,
-    chatgpt && <AppMark app={chatgpt} size={size} />,
+    claude && <AppMark key="claude" app={claude} size={size} />,
+    chatgpt && <AppMark key="chatgpt" app={chatgpt} size={size} />,
     <ReadwiseMark key="readwise" size={size} />,
-    gemini && <AppMark app={gemini} size={size} />,
+    gemini && <AppMark key="gemini" app={gemini} size={size} />,
     <YomitanMark key="yomitan" size={size} />,
   ];
   return (
@@ -168,7 +168,7 @@ function Fan({ size, ring }: { size: number; ring?: string }) {
     >
       {marks.map((mark, i) => (
         <View
-          // biome-ignore lint/suspicious/noArrayIndexKey: the fan is fixed and never reorders
+          // oxlint-disable-next-line react/no-array-index-key -- the fan is fixed and never reorders
           key={i}
           style={{
             marginStart: i === 0 ? 0 : -6,

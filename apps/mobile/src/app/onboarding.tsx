@@ -75,7 +75,7 @@ export default function Onboarding() {
   useEffect(() => {
     if (step === "ai") captureEvent("ai_consent_shown", { place: "welcome" });
   }, [step]);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the step is the trigger.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- the step is the trigger.
   useEffect(() => {
     scroll.current?.scrollTo({ y: 0, animated: false });
   }, [step]);

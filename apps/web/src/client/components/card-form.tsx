@@ -309,7 +309,7 @@ export function CardForm(props: CardFormProps) {
       `[data-extra="${key}"] :is(textarea, input:not([type=file]), button)`,
     );
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the field the editor opened at, once
+  // oxlint-disable react-hooks/exhaustive-deps -- the field the editor opened at, once
   useEffect(() => {
     if (!focus) return;
     // After the sheet has placed its own initial focus, so this one wins.
@@ -330,6 +330,7 @@ export function CardForm(props: CardFormProps) {
     }, 80);
     return () => clearTimeout(timer);
   }, []);
+  // oxlint-enable react-hooks/exhaustive-deps
 
   const owned = useMemo(() => decks?.filter((d) => d.role === "owner"), [decks]);
   // A deck handed in that the learner does not own, such as the N key on a shared deck, is not
@@ -365,7 +366,7 @@ export function CardForm(props: CardFormProps) {
   // Adding keeps the hint at the row's end, since a hint is mostly for a card that keeps failing.
   const chipKeys: ChipKey[] = adding ? [...BASE_ORDER] : [...BASE_ORDER, "hint"];
   // The deck's cards as the deck page last read them; without them the AI's fields lead.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: read once per deck, so chips stay put
+  // oxlint-disable react-hooks/exhaustive-deps -- read once per deck, so chips stay put
   const order = useMemo(
     () =>
       chipOrder(
@@ -375,6 +376,7 @@ export function CardForm(props: CardFormProps) {
       ),
     [deck, !!current],
   );
+  // oxlint-enable react-hooks/exhaustive-deps
 
   const values: CardFormValues = {
     deckId: deck,
@@ -894,6 +896,7 @@ export function CardForm(props: CardFormProps) {
   };
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- Biome let this pass; triage in #1278
     <form
       ref={formRef}
       className="grid min-w-0 gap-4"

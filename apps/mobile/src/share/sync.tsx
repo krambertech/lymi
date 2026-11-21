@@ -105,7 +105,7 @@ export function ShareSync({ signedIn }: { signedIn: boolean }) {
   const loaded = decks.data !== undefined;
   const stringsKey = JSON.stringify(strings);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `active` asks for a fresh cookie.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- `active` asks for a fresh cookie.
   useEffect(() => {
     let live = true;
     const base = {

@@ -4,8 +4,6 @@ import { Trans } from "@lingui/react/macro";
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import type { Locale } from "../../lib/routes";
 import { Attachment } from "./AssistantChat";
-import { EnrichEstonian, NotesToCardsEstonian } from "./EstonianAi";
-import { EstonianBento } from "./EstonianBento";
 import {
   ESTONIAN_CLASS_CARDS,
   ESTONIAN_EXAMPLES,
@@ -15,9 +13,13 @@ import {
   ESTONIAN_VOICE_WORDS,
   FORM_WORDS,
 } from "./estonian";
-import { Wide } from "./FeatureSection";
+import { EnrichEstonian, NotesToCardsEstonian } from "./EstonianAi";
+import { EstonianBento } from "./EstonianBento";
 import { ESTONIAN_QUESTIONS } from "./faq";
+import { Wide } from "./FeatureSection";
 import { LandingLayout } from "./LandingLayout";
+import { ESTONIAN } from "./language-cards";
+import { addDeckUrl, pathSteps } from "./language-decks";
 import { LanguageDecks } from "./LanguageDecks";
 import {
   DetailsSection,
@@ -29,8 +31,6 @@ import {
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
-import { ESTONIAN } from "./language-cards";
-import { addDeckUrl, pathSteps } from "./language-decks";
 import { EstonianStartup } from "./OriginBadge";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";

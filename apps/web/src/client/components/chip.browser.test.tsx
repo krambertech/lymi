@@ -1,7 +1,7 @@
 import { createRef } from "react";
 import { expect, test } from "vitest";
-import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page } from "vitest/browser";
 import { Chip } from "./chip";
 
 test("a Chip passes data, aria and ref through to its span", async () => {

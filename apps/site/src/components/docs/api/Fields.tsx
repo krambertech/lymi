@@ -122,7 +122,7 @@ export function Fields({ schema, expand = false }: FieldsProps) {
       <div className="grid gap-3">
         <p className="!mb-0 text-base text-ink-secondary">One of these shapes:</p>
         {variants.map((v, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: variants have no id of their own
+          // oxlint-disable-next-line react/no-array-index-key -- variants have no id of their own
           <div key={i} className="rounded-md bg-plate-nested p-3.5">
             {v.label && <p className="!mb-2 font-mono text-xs text-ink">{v.label}</p>}
             <Fields schema={v.schema} expand />

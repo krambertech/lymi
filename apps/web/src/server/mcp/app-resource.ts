@@ -1,7 +1,7 @@
-import { html, version } from "virtual:lymi-mcp-app";
 import type { AppLanguage } from "@lymi/core";
 import { RESOURCE_MIME_TYPE, registerAppResource } from "@modelcontextprotocol/ext-apps/server";
 import type { McpServer } from "@modelcontextprotocol/server";
+import { html, version } from "virtual:lymi-mcp-app";
 import { messages as en } from "../../locales/en.po";
 import { messages as ru } from "../../locales/ru.po";
 import { messages as uk } from "../../locales/uk.po";

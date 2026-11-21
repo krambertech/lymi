@@ -37,7 +37,7 @@ import {
   type SectionProgression,
 } from "./types";
 
-// biome-ignore lint/suspicious/noExplicitAny: both Workers pass their own typed D1 database.
+// oxlint-disable-next-line typescript/no-explicit-any -- both Workers pass their own typed D1 database.
 type CatalogDb = BaseSQLiteDatabase<"async", any, any>;
 
 export interface PublicationRow {

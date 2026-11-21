@@ -1,8 +1,8 @@
 import { type ReactNode, useState } from "react";
+import type { HandCard } from "./hand-cards";
 import { HandOfCards } from "./HandOfCards";
 import { Hero, type HeroLink } from "./Hero";
 import { HeroGround } from "./HeroScenes";
-import type { HandCard } from "./hand-cards";
 
 interface Props {
   title: ReactNode;

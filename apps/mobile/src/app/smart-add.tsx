@@ -137,7 +137,7 @@ export default function SmartAdd() {
   // The deck the server names must be on the list, though the web may have changed the decks since.
   useEffect(() => void qc.invalidateQueries({ queryKey: ["decks"] }), [qc]);
   // A new step starts at its top.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: runs on each step
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- runs on each step
   useEffect(() => scroll.current?.scrollTo({ y: 0, animated: false }), [step]);
 
   // A swipe down asks before it throws the lesson away, as a form with something typed does.

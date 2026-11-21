@@ -22,7 +22,7 @@ export function RailNav({ rows, className, children, ...rest }: RailNavProps) {
   const ref = useRef<HTMLElement>(null);
   const hover = useFluidHover(ref, { items: ROW, dividers: BREAK });
   const { remeasure } = hover;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: `rows` is the signal to measure again.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- `rows` is the signal to measure again.
   useLayoutEffect(() => remeasure(), [rows, remeasure]);
   return (
     <nav

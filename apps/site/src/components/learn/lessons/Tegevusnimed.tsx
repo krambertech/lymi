@@ -16,8 +16,8 @@ import {
 import { formText } from "../../../lib/learn/forms";
 import { Keys, ListenRows, Panel } from "../Explore";
 import { type GapItem, GapPassage } from "../GapPassage";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { type OrderItem, OrderRound } from "../OrderRound";
 import { Lit, Paradigm, type ParadigmRow } from "../Paradigm";
 import { Quiz } from "../Quiz";

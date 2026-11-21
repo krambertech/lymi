@@ -21,8 +21,8 @@ import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, ListenRows, Panel } from "../Explore";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
 import { Playing } from "../Sound";
 import { Word } from "../Word";
@@ -140,7 +140,7 @@ function FlipLine({
       >
         <span className="inline-block">
           {pieces.map(([text, lit], i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: a line’s pieces never reorder
+            // oxlint-disable-next-line react/no-array-index-key -- a line’s pieces never reorder
             <span key={i} className={clsx(lit && "text-(--form)")}>
               {text}
             </span>

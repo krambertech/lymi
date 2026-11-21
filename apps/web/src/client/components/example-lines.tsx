@@ -42,7 +42,7 @@ export function ExampleLines({
     <div className="relative grid gap-1 rounded-lg bg-plate-nested px-3.5 py-3">
       {/* The room is on this box, in the interface's direction, since the corner stays put under a right-to-left sentence. */}
       <div className={clsx(speaker && "pe-7")}>
-        {/* biome-ignore lint/a11y/useKeyWithClickEvents: the sentence is only a wider pointer target; its speaker is the keyboard's control */}
+        {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-noninteractive-element-interactions -- the sentence is only a wider pointer target; its speaker is the keyboard's control; Biome let this pass; triage in #1278 */}
         <p
           lang={lang}
           dir={textDirection(language)}

@@ -206,7 +206,7 @@ export function ListenRows({
       )}
     >
       {items.map((item, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: a lesson's list never reorders
+        // oxlint-disable-next-line react/no-array-index-key -- a lesson's list never reorders
         <Row key={i} item={item} lead={lead} />
       ))}
     </ul>
@@ -378,7 +378,7 @@ function CompareRow(props: {
         >
           {clip?.bars.map((level, i) => (
             <i
-              // biome-ignore lint/suspicious/noArrayIndexKey: a bar's place in the clip is its identity
+              // oxlint-disable-next-line react/no-array-index-key -- a bar's place in the clip is its identity
               key={i}
               style={{ height: `${Math.max(10, Math.round(level * 100))}%` }}
               data-lit={(i + 0.5) / clip.bars.length <= lit ? "" : undefined}

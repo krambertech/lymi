@@ -32,7 +32,7 @@ export function Swap({ id, children, distance = 8, height, duration = 300 }: Swa
   if (state.id !== id) setState({ id, node: children, previous: state.node });
   const progress = useSharedValue(1);
   const first = useRef(true);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: runs when the content changes
+  // oxlint-disable react-hooks/exhaustive-deps -- runs when the content changes
   useEffect(() => {
     if (first.current) {
       first.current = false;
@@ -41,6 +41,7 @@ export function Swap({ id, children, distance = 8, height, duration = 300 }: Swa
     progress.value = 0;
     progress.value = withTiming(1, { duration, easing: curve(EASE_OUT), reduceMotion: ALWAYS });
   }, [state.id]);
+  // oxlint-enable react-hooks/exhaustive-deps
   const previous = state.previous;
 
   const travel = reduce ? 0 : distance;

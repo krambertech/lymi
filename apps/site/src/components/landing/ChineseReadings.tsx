@@ -49,7 +49,7 @@ export function ChineseReadings() {
     <AnimatePresence mode="popLayout" initial={false}>
       {runs.map(([zh, py], i) => (
         <motion.span
-          // biome-ignore lint/suspicious/noArrayIndexKey: a word's runs never reorder
+          // oxlint-disable-next-line react/no-array-index-key -- a word's runs never reorder
           key={`${word.word}-${i}`}
           initial={enter === false ? false : { ...enter, x: from }}
           animate={{ opacity: 1, filter: "blur(0px)", x: 0 }}

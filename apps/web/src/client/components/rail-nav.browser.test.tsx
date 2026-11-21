@@ -1,6 +1,6 @@
 import { describe, expect, inject, test } from "vitest";
-import { userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { userEvent } from "vitest/browser";
 import { RailHeading, RailNav, RailRow } from "./rail-nav";
 
 const desktop = inject("machine") === "desktop";

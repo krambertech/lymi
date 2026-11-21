@@ -21,7 +21,7 @@ export function ReturnGaps({ gap, jitter }: { gap: number; jitter: number }) {
           </span>
           {Array.from({ length: gap + jitter }, (_, j) => (
             <span
-              // biome-ignore lint/suspicious/noArrayIndexKey: cells are positions
+              // oxlint-disable-next-line react/no-array-index-key -- cells are positions
               key={j}
               aria-hidden="true"
               className={clsx(
@@ -89,7 +89,7 @@ export function SlotPattern({
       >
         {slots.map((s, i) => (
           <li
-            // biome-ignore lint/suspicious/noArrayIndexKey: slots are positions
+            // oxlint-disable-next-line react/no-array-index-key -- slots are positions
             key={i}
             aria-label={`Draw ${i + 1}: ${name(s)}`}
             className="relative !m-0 grid aspect-[3/4] place-items-center overflow-hidden rounded-xs bg-plate-nested"

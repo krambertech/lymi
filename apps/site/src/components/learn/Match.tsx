@@ -79,7 +79,7 @@ export function Match({ id, title, pairs, columns }: MatchProps) {
   // Keyed on the pairs' ids, not the array, so a lesson passing them inline doesn't reset a game on
   // each render.
   const pairsKey = ids.join("\u0001");
-  // biome-ignore lint/correctness/useExhaustiveDependencies: shuffles once per set of pairs, after the page loads
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- shuffles once per set of pairs, after the page loads
   useEffect(reshuffle, [pairsKey]);
 
   useEffect(() => {
@@ -88,13 +88,14 @@ export function Match({ id, title, pairs, columns }: MatchProps) {
     return () => clearTimeout(timer);
   }, [state.wrong]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: reported once each time it is finished
+  // oxlint-disable react-hooks/exhaustive-deps -- reported once each time it is finished
   useEffect(() => {
     if (!done) return;
     captureAnalytics("learn_quiz_finished", { lesson: slug, quiz: id, right, total });
     if (section) finishSection(section);
     againRef.current?.focus({ preventScroll: true });
   }, [done]);
+  // oxlint-enable react-hooks/exhaustive-deps
   useEffect(() => {
     if (!done && restarted.current) {
       restarted.current = false;

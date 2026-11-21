@@ -202,7 +202,7 @@ describe("loadPublicDeck", () => {
 /** Rows go in a few at a time: D1 binds 100 parameters to a statement, every column counted. */
 async function insertAll<T>(table: Parameters<Db["insert"]>[0], rows: T[], perStatement: number) {
   for (let from = 0; from < rows.length; from += perStatement) {
-    // biome-ignore lint/suspicious/noExplicitAny: one helper for tables of different shapes.
+    // oxlint-disable-next-line typescript/no-explicit-any -- one helper for tables of different shapes.
     await db.insert(table).values(rows.slice(from, from + perStatement) as any);
   }
 }

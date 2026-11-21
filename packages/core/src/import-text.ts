@@ -34,7 +34,7 @@ export type DetectedSeparators = TextSeparators & {
 };
 
 // Control characters other than tab and line breaks never belong on a card.
-// biome-ignore lint/suspicious/noControlCharactersInRegex: the control characters are the point.
+// oxlint-disable-next-line eslint/no-control-regex -- the control characters are the point.
 const CONTROL = /[\u0000-\u0008\u000b\u000c\u000e-\u001f]/g;
 
 /** The text with a leading BOM removed, line endings as `\n` and control characters gone. */

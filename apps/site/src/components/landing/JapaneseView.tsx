@@ -7,13 +7,14 @@ import type { Locale } from "../../lib/routes";
 import { addUrl } from "../deck/DeckView";
 import { ArrowLink } from "./ArrowLink";
 import { Attachment } from "./AssistantChat";
-import { FeatureSection, Wide } from "./FeatureSection";
 import { JAPANESE_QUESTIONS } from "./faq";
+import { FeatureSection, Wide } from "./FeatureSection";
+import { CLASS_CARDS, HAND_EXAMPLES, JAPANESE_HAND, JAPANESE_PATH, VOICE_WORDS } from "./japanese";
 import { EnrichJapanese, PageToCards } from "./JapaneseAi";
 import { JapaneseBento } from "./JapaneseBento";
-import { CLASS_CARDS, HAND_EXAMPLES, JAPANESE_HAND, JAPANESE_PATH, VOICE_WORDS } from "./japanese";
 import { KanjiReadings } from "./KanjiReadings";
 import { LandingLayout } from "./LandingLayout";
+import { pathSteps } from "./language-decks";
 import { LanguageDecks } from "./LanguageDecks";
 import {
   DetailsSection,
@@ -26,7 +27,6 @@ import {
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
-import { pathSteps } from "./language-decks";
 import { PitchSection } from "./PitchSection";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";

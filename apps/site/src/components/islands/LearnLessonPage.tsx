@@ -9,6 +9,7 @@ import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { OlevikLesson } from "../learn/lessons/Olevik";
 import { PaevadLesson } from "../learn/lessons/Paevad";
 import { PaevTallinnasLesson } from "../learn/lessons/PaevTallinnas";
+import { PohivormidLesson } from "../learn/lessons/Pohivormid";
 import { TutvumineLesson } from "../learn/lessons/Tutvumine";
 import { Island } from "./Island";
 
@@ -26,6 +27,7 @@ export const LESSON_VIEWS = {
   tutvumine: TutvumineLesson,
   kaskiv: KaskivLesson,
   "paev-tallinnas": PaevTallinnasLesson,
+  pohivormid: PohivormidLesson,
 } as const;
 
 export default function LearnLessonPage({

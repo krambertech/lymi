@@ -806,6 +806,79 @@ const TALLINN_CLIPS: Record<string, Clip> = {
   ...TALLINN_DIALOGUE,
 };
 
+/** A noun's three forms in a dictionary's order: first, second, third. */
+export type NounForms = readonly [string, string, string];
+
+/** A noun's three forms written as a dictionary lists them: “pood, poe, poodi”. */
+export const nounEntry = (forms: NounForms) => forms.join(", ");
+
+/**
+ * Nouns in their three forms, checked in Sõnaveeb. The first ten are lesson 14's table; the rest
+ * show its patterns. Later lessons on the genitive, the partitive and the plural can import them.
+ */
+export const NOUN_FORMS = [
+  ["kool", "kooli", "kooli"],
+  ["pood", "poe", "poodi"],
+  ["raamat", "raamatu", "raamatut"],
+  ["maja", "maja", "maja"],
+  ["auto", "auto", "autot"],
+  ["linn", "linna", "linna"],
+  ["uks", "ukse", "ust"],
+  ["mees", "mehe", "meest"],
+  ["naine", "naise", "naist"],
+  ["laps", "lapse", "last"],
+  ["kodu", "kodu", "kodu"],
+  ["sõna", "sõna", "sõna"],
+  ["tuba", "toa", "tuba"],
+  ["laud", "laua", "lauda"],
+  ["turg", "turu", "turgu"],
+  ["küsimus", "küsimuse", "küsimust"],
+  ["töö", "töö", "tööd"],
+] as const satisfies readonly NounForms[];
+
+/**
+ * Lesson 14's “type the third form” quiz: words whose ending gives the third form away, by
+ * pattern. Each plays its first two forms; the learner types the third.
+ */
+export const POHIVORMID_TYPED = [
+  { forms: ["inimene", "inimese", "inimest"], pattern: "ne" },
+  { forms: ["hobune", "hobuse", "hobust"], pattern: "ne" },
+  { forms: ["vastus", "vastuse", "vastust"], pattern: "us" },
+  { forms: ["harjutus", "harjutuse", "harjutust"], pattern: "us" },
+  { forms: ["maa", "maa", "maad"], pattern: "long" },
+  { forms: ["tee", "tee", "teed"], pattern: "long" },
+  { forms: ["puu", "puu", "puud"], pattern: "long" },
+] as const satisfies readonly { forms: NounForms; pattern: "ne" | "us" | "long" }[];
+
+/** The first two forms, as the typed quiz plays them: “vastus, vastuse”. */
+export const firstTwo = (forms: NounForms) => forms.slice(0, 2).join(", ");
+
+/**
+ * In class: Mari, the teacher, asks for a word's three forms in the second voice; the learner
+ * answers in the main one. Words from lessons 2–6 and this lesson's nouns.
+ */
+export const POHIVORMID_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Mis on sõna pood põhivormid?", voice: "second" },
+  "d-sina-1": "Pood, poe, poodi.",
+  "d-mari-2": { text: "Jah. Ja laps?", voice: "second" },
+  "d-sina-2": "Laps, lapse, last.",
+  "d-mari-3": { text: "Jah. Ja maja?", voice: "second" },
+  "d-sina-3": "Maja, maja, maja.",
+  "d-mari-4": { text: "Ja vastus?", voice: "second" },
+  "d-sina-4": "Vastus, vastuse, vastust.",
+} as const satisfies Record<string, Clip>;
+
+const POHIVORMID_CLIPS: Record<string, Clip> = {
+  ...words([
+    "põhivormid",
+    "koolis",
+    ...new Set([...NOUN_FORMS, ...POHIVORMID_TYPED.map(({ forms }) => forms)].flat()),
+  ]),
+  ...words(NOUN_FORMS.map(nounEntry)),
+  ...words(POHIVORMID_TYPED.flatMap(({ forms }) => [firstTwo(forms), nounEntry(forms)])),
+  ...POHIVORMID_DIALOGUE,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -899,5 +972,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  pohivormid: POHIVORMID_CLIPS,
   kit: KIT_CLIPS,
 };

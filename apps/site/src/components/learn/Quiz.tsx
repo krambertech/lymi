@@ -647,9 +647,11 @@ export interface TypedItem {
   matches?: (typed: string) => boolean;
   /** The field's label and placeholder, when it asks for something other than a number. */
   prompt?: string;
+  /** `text` for an answer typed in letters, such as a word's form: a phone then shows letters, not digits. */
+  keyboard?: "decimal" | "text";
 }
 
-/** Listen, then type. For numbers, prices and times. */
+/** Listen, then type. For numbers, prices and times, or a word's form with `keyboard: "text"`. */
 export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<TypedItem>) {
   const { t } = useLingui();
   const { nudge, note } = useNudge();
@@ -690,7 +692,8 @@ export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<
           value={value}
           onChange={(event) => setValue(event.target.value)}
           readOnly={done}
-          inputMode="decimal"
+          inputMode={item.keyboard ?? "decimal"}
+          autoCapitalize={item.keyboard === "text" ? "none" : undefined}
           autoComplete="off"
           spellCheck={false}
           aria-label={item.prompt ?? t`Type the number`}

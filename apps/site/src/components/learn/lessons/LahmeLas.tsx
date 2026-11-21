@@ -144,7 +144,8 @@ function content() {
           line: "Tule ka!",
           why: (
             <Trans>
-              That speaks to Jaan, but he isn’t here. About him: <Et>las ta tuleb</Et>.
+              <Et>Tule ka</Et> tells Kati, the person you’re talking to, to come. About Jaan:{" "}
+              <Et>las ta tuleb</Et>.
             </Trans>
           ),
         },
@@ -204,7 +205,7 @@ export function LahmeLasLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          <Et>Lähme!</Et>, let’s go, and <Et>las ta tuleb</Et>, let him come. Two short ways to
+          <Et>Lähme!</Et> means let’s go, and <Et>las ta tuleb</Et>, let him come. Two short ways to
           suggest and allow.
         </Trans>
       }
@@ -262,7 +263,8 @@ export function LahmeLasLesson() {
                   <Trans>
                     To let someone do something, or to say you don’t mind, put <Word w="las" />{" "}
                     before the person and the plain present form: <Et>las ta tuleb</Et>, let him
-                    come. With <Et>ma</Et> it offers help: <Et>las ma aitan</Et>, let me help.
+                    come. With <Et>ma</Et> it offers to do something yourself: <Et>las ma aitan</Et>
+                    , let me help.
                   </Trans>
                 </p>
               </Prose>

@@ -960,8 +960,8 @@ msgstr "<0>Läbi</0> says to the end, so the genitive."
 msgid "<0>Lähen ujuma</0> is I’m going swimming, <1>olen ujumas</1> I’m out swimming, and <2>tulen ujumast</2> I’m coming back from swimming. The ending says which."
 msgstr "<0>Lähen ujuma</0> is I’m going swimming, <1>olen ujumas</1> I’m out swimming, and <2>tulen ujumast</2> I’m coming back from swimming. The ending says which."
 
-msgid "<0>Lähme!</0>, let’s go, and <1>las ta tuleb</1>, let him come. Two short ways to suggest and allow."
-msgstr "<0>Lähme!</0>, let’s go, and <1>las ta tuleb</1>, let him come. Two short ways to suggest and allow."
+msgid "<0>Lähme!</0> means let’s go, and <1>las ta tuleb</1>, let him come. Two short ways to suggest and allow."
+msgstr "<0>Lähme!</0> means let’s go, and <1>las ta tuleb</1>, let him come. Two short ways to suggest and allow."
 
 msgid "<0>Läksin</0> is the past. Next week is still to come: <1>lähen</1>."
 msgstr "<0>Läksin</0> is the past. Next week is still to come: <1>lähen</1>."
@@ -1241,6 +1241,9 @@ msgstr "<0>Töötasin</0> is the past. For next weekend, the present: <1>ma tö�
 
 msgid "<0>Töötasin</0> is the past. For tomorrow, the present: <1>töötan</1>."
 msgstr "<0>Töötasin</0> is the past. For tomorrow, the present: <1>töötan</1>."
+
+msgid "<0>Tule ka</0> tells Kati, the person you’re talking to, to come. About Jaan: <1>las ta tuleb</1>."
+msgstr "<0>Tule ka</0> tells Kati, the person you’re talking to, to come. About Jaan: <1>las ta tuleb</1>."
 
 msgid "<0>Tulema</0> again, as a command: come here to do it, so <1>-ma</1>."
 msgstr "<0>Tulema</0> again, as a command: come here to do it, so <1>-ma</1>."
@@ -15902,9 +15905,6 @@ msgstr "That says you speak more slowly. To ask her, use the stem: räägi."
 msgid "That says you’re sorry. Liis asked you to come."
 msgstr "That says you’re sorry. Liis asked you to come."
 
-msgid "That speaks to Jaan, but he isn’t here. About him: <0>las ta tuleb</0>."
-msgstr "That speaks to Jaan, but he isn’t here. About him: <0>las ta tuleb</0>."
-
 msgid "That tells Jaan not to come."
 msgstr "That tells Jaan not to come."
 
@@ -18174,8 +18174,8 @@ msgstr "to learn"
 msgid "to learn, to study"
 msgstr "to learn, to study"
 
-msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the plain present form: <1>las ta tuleb</1>, let him come. With <2>ma</2> it offers help: <3>las ma aitan</3>, let me help."
-msgstr "To let someone do something, or to say you don’t mind, put <0/> before the person and the plain present form: <1>las ta tuleb</1>, let him come. With <2>ma</2> it offers help: <3>las ma aitan</3>, let me help."
+msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the plain present form: <1>las ta tuleb</1>, let him come. With <2>ma</2> it offers to do something yourself: <3>las ma aitan</3>, let me help."
+msgstr "To let someone do something, or to say you don’t mind, put <0/> before the person and the plain present form: <1>las ta tuleb</1>, let him come. With <2>ma</2> it offers to do something yourself: <3>las ma aitan</3>, let me help."
 
 msgid "To like"
 msgstr "To like"

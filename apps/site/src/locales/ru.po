@@ -820,6 +820,9 @@ msgstr "<0>Диффузия</0>: частицы движутся от высок
 msgid "<0>E–R</0> on a sign: Monday to Friday."
 msgstr "<0>E–R</0> на табличке: с понедельника по пятницу."
 
+msgid "<0>Eestis räägitakse eesti keelt</0>: when it doesn’t matter who does it. The <1>-takse</1> form now, <2>-ti</2> in the past."
+msgstr "<0>Eestis räägitakse eesti keelt</0>: когда неважно, кто это делает. Форма на <1>-takse</1> сейчас, на <2>-ti</2> в прошлом."
+
 msgid "<0>Ei loe</0> is now, <1>ei lugenud</1> the past. <2>Ei olnud</2>, or <3>polnud</3>, is wasn’t."
 msgstr "<0>Ei loe</0> — сейчас, <1>ei lugenud</1> — в прошлом. <2>Ei olnud</2>, или <3>polnud</3>, — «не был»."
 
@@ -1405,6 +1408,9 @@ msgstr "Издание 2026 года"
 msgid "23 metres."
 msgstr "Тот, кто справа."
 
+msgid "24 June, celebrated the evening before."
+msgstr "24 июня; празднуют накануне вечером."
+
 msgid "25 questions, 15 to pass. 300 to learn."
 msgstr "25 вопросов, 15 для сдачи. Выучить — 300."
 
@@ -1825,6 +1831,9 @@ msgstr "Бесплатный урок о родительном падеже в 
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Бесплатный урок о повелительном наклонении в эстонском языке: основа глагола как команда (loe!, istu!, tule siia!), ära для «не делай», формы на -ge и -ke для нескольких человек или на «вы», повседневные команды вроде räägi aeglasemalt, palun и короткий разговор в кафе. Каждое предложение озвучено."
 
+msgid "A free lesson on the Estonian impersonal voice, for when it doesn’t matter who does it: -takse and -akse now (Eestis räägitakse eesti keelt, tehakse), -ti and -di in the past (maja ehitati), ei with -ta (siin ei suitsetata), and Estonian customs to read. Every sentence is read aloud."
+msgstr "Бесплатный урок о безличной форме в эстонском, когда неважно, кто это делает: -takse и -akse сейчас (Eestis räägitakse eesti keelt, tehakse), -ti и -di в прошлом (maja ehitati), ei с -ta (siin ei suitsetata) и текст об эстонских обычаях. Каждое предложение озвучено."
+
 msgid "A free lesson on the Estonian object case: the third form for part of something, an action still going on, after ei and after verbs such as ootama (ma loen raamatut), and the genitive for the whole thing done (ma lugesin raamatu läbi), with the dictionary form in commands (osta pilet!). Every sentence is read aloud."
 msgstr "Бесплатный урок о падеже дополнения в эстонском: третья форма для части чего-то, для продолжающегося действия, после ei и после глаголов вроде ootama (ma loen raamatut), и родительный для целого законченного дела (ma lugesin raamatu läbi), а в приказах — словарная форма (osta pilet!). Каждое предложение озвучено."
 
@@ -2062,6 +2071,9 @@ msgstr "Текст с пропусками и один набор слов: их
 
 msgid "A passage with gaps, the open gap’s words under it, each marked as it is filled."
 msgstr "Текст с пропусками: слова для открытого пропуска под ним, каждый проверяется сразу."
+
+msgid "A person does it, named before the gap: the usual form."
+msgstr "Действие совершает человек, названный перед пропуском: обычная форма."
 
 msgid "A photo of a textbook page goes to ChatGPT with “Make flashcards from this page.” It uses Lymi and adds four cards to a Biology deck: chlorophyll, stomata, glucose and chloroplast."
 msgstr "Фото страницы учебника отправляется в ChatGPT с просьбой «Сделай карточки по этой странице». ChatGPT использует Lymi и добавляет четыре карточки в колоду «Биология»: chlorophyll, stomata, glucose и chloroplast."
@@ -2887,6 +2899,9 @@ msgstr "Все девять. Две, много и именно эти — ка�
 
 msgid "All nine. You can suggest and allow."
 msgstr "Все девять. Ты умеешь предлагать и разрешать."
+
+msgid "All nine. You can tell who does it, or that nobody is named."
+msgstr "Все девять. Ты видишь, кто это делает, или что никто не назван."
 
 msgid "All nine. You hear the tense and know what it says."
 msgstr "Все девять. Ты слышишь время и понимаешь, что оно значит."
@@ -3851,6 +3866,15 @@ msgstr "день рождения"
 msgid "Blended"
 msgstr "Слилась"
 
+msgid "blood sausage"
+msgstr "кровяная колбаса"
+
+msgid "Blood sausage"
+msgstr "Кровяную колбасу"
+
+msgid "bonfire"
+msgstr "костёр"
+
 msgid "book"
 msgstr "книга"
 
@@ -3977,6 +4001,9 @@ msgstr "Собери каждое предложение по его значе�
 msgid "Build it from the <0>da</0> form: its ending gives way to <1>nud</1>. <2>lugeda, lugenud</2>; <3>oodata, oodanud</3>; <4>olla, olnud</4>."
 msgstr "Образуй её от формы на <0>da</0>: окончание меняется на <1>nud</1>. <2>lugeda, lugenud</2>; <3>oodata, oodanud</3>; <4>olla, olnud</4>."
 
+msgid "Build it from the done form: <0>räägitud</0>, <1>müüdud</1>."
+msgstr "Образуй её от формы на -tud: <0>räägitud</0>, <1>müüdud</1>."
+
 msgid "Build new words from ones you know, read signs, news and forms, and join longer sentences."
 msgstr "Строй новые слова из знакомых, читай вывески, новости и бланки и составляй длинные предложения."
 
@@ -3991,6 +4018,9 @@ msgstr "Образуй родительный множественного"
 
 msgid "Build the sentence"
 msgstr "Собери предложение"
+
+msgid "Building it"
+msgstr "Как её образовать"
 
 msgid "Building something of your own? Lymi has a full API. <0>Read the API docs</0>"
 msgstr "Делаешь что-то своё? У Lymi есть полноценный API. <0>Документация API</0>"
@@ -4090,6 +4120,15 @@ msgstr "От {publisher}"
 
 msgid "by bus"
 msgstr "на автобусе"
+
+msgid "By heart"
+msgstr "Наизусть"
+
+msgid "By the rule"
+msgstr "По правилу"
+
+msgid "By the sea, in small villages"
+msgstr "У моря, в маленьких деревнях"
 
 msgid "by train"
 msgstr "на поезде"
@@ -4864,6 +4903,9 @@ msgstr "чашка"
 msgid "cupboard"
 msgstr "шкаф"
 
+msgid "Customs are told in the impersonal: what people do on <0/>, Midsummer, in the sauna and at Christmas. Read and answer."
+msgstr "Об обычаях рассказывают безличной формой: что делают на <0/>, Иванов день, в сауне и на Рождество. Прочитай и ответь."
+
 msgid "Czech"
 msgstr "Чешский"
 
@@ -5263,6 +5305,9 @@ msgstr "не делайте: нескольким людям или на «вы�
 msgid "Done"
 msgstr "Пройдено"
 
+msgid "Done form, impersonal now and impersonal past"
+msgstr "Форма на -tud, безличная сейчас и в прошлом"
+
 msgid "Done. Biology has a section for each file."
 msgstr "Готово. В «Биологии» есть раздел для каждого файла."
 
@@ -5307,6 +5352,9 @@ msgstr "Перетащи Lymi в «Программы»"
 
 msgid "Drag the minute hand or pick the minutes, then tap play to hear the time. The hour a time is named after lights up."
 msgstr "Перетащи минутную стрелку или выбери минуты, а потом нажми кнопку воспроизведения, чтобы услышать время. Час, по которому названо время, подсвечивается."
+
+msgid "Drink hot tea"
+msgstr "Пьют горячий чай"
 
 msgid "Drink more *water*!"
 msgstr "Пей больше *воды*!"
@@ -5635,6 +5683,9 @@ msgstr "По-русски говорят «на работе», но «в шко
 msgid "English says I can for both. Both take the <0>-da</0> form, as lesson {infinitives} showed. Tap a form to hear its sentence."
 msgstr "По-русски это тоже разные слова: «умею» и «могу». После обоих идёт форма на <0>-da</0>, как показал урок {infinitives}. Коснись формы, чтобы услышать предложение."
 
+msgid "English says people speak, they say, or it is built. Estonian has one form of the verb for this, with no person at all: <0>räägitakse</0>, people speak. You see it on signs, in news and when you talk about how things are done."
+msgstr "По-русски говорят «говорят», «здесь не курят» — глагол без подлежащего, и всем понятно, что речь о людях вообще. В эстонском для этого есть отдельная форма глагола, без всякого лица: <0>räägitakse</0>, говорят. Её видно на табличках, в новостях и когда рассказывают, как что-то делают."
+
 msgid "Enjoy your meal"
 msgstr "Приятного аппетита"
 
@@ -5724,6 +5775,9 @@ msgstr "В эстонском шесть личных местоимений, и
 
 msgid "Estonian imperative: giving commands"
 msgstr "Повелительное наклонение в эстонском языке"
+
+msgid "Estonian impersonal: räägitakse, tehakse, ehitati"
+msgstr "Безличная форма в эстонском: räägitakse, tehakse, ehitati"
 
 msgid "Estonian infinitives after other verbs"
 msgstr "Инфинитив после других глаголов в эстонском языке"
@@ -6183,6 +6237,9 @@ msgstr "Первая форма"
 
 msgid "First-line drug for type 2 diabetes. Lowers the glucose the liver makes."
 msgstr "Препарат первой линии при диабете 2 типа. Снижает выработку глюкозы печенью."
+
+msgid "Fish soup"
+msgstr "Уху"
 
 msgid "five"
 msgstr "пять"
@@ -7070,6 +7127,9 @@ msgstr "Повтори один блок перед экзаменом"
 msgid "Go over one lecture before the test"
 msgstr "Повтори одну лекцию перед контрольной"
 
+msgid "Go straight to bed"
+msgstr "Сразу ложатся спать"
+
 msgid "Go swimming with her mum"
 msgstr "Пойти поплавать с мамой"
 
@@ -7186,6 +7246,9 @@ msgstr "Грамматика"
 
 msgid "Greetings"
 msgstr "Приветствия"
+
+msgid "Grilled sausages by the fire"
+msgstr "Жареные колбаски у костра"
 
 msgid "Grok Bot can check Lymi on a schedule. Make it a routine, and each morning it tells you what’s due and warms you up on the words that keep slipping. Its cloud computer keeps running when your laptop is closed."
 msgstr "Grok Bot может проверять Lymi по расписанию. Сделай это рутиной, и каждое утро он будет говорить, что пора повторить, и разминать тебя на словах, которые постоянно вылетают из головы. Его облачный компьютер работает, даже когда ноутбук закрыт."
@@ -7904,6 +7967,9 @@ msgstr "Как успехи с колодой по анатомии?"
 
 msgid "How it works"
 msgstr "Как это работает"
+
+msgid "How it’s done in Estonia"
+msgstr "Как это делают в Эстонии"
 
 msgid "How likely data this extreme would be if nothing were going on"
 msgstr "Насколько вероятны такие крайние данные, если на самом деле ничего не происходит"
@@ -9164,6 +9230,9 @@ msgstr "В Claude открой Settings, затем Connectors и выбери A
 msgid "in Estonia"
 msgstr "в Эстонии"
 
+msgid "In Estonia, people speak Estonian."
+msgstr "В Эстонии говорят по-эстонски."
+
 msgid "In example sentences, furigana stays over the words you’re still learning and leaves the ones you know."
 msgstr "В примерах фуригана остаётся над словами, которые ты ещё учишь, и исчезает над теми, что уже знаешь."
 
@@ -9309,6 +9378,9 @@ msgstr "В коробке"
 msgid "In the car"
 msgstr "В машину"
 
+msgid "In the country"
+msgstr "В деревне"
+
 msgid "In the end"
 msgstr "В итоге"
 
@@ -9320,6 +9392,9 @@ msgstr "в доме"
 
 msgid "In the house: -s, and -des for more than one."
 msgstr "В доме: -s, а для нескольких -des."
+
+msgid "in the old days"
+msgstr "раньше, в старину"
 
 msgid "In the order you learn them, one section at a time."
 msgstr "В том порядке, в котором ты их учишь: раздел за разделом."
@@ -9353,6 +9428,9 @@ msgstr "всего"
 
 msgid "in town"
 msgstr "в городе"
+
+msgid "In towns"
+msgstr "В городах"
 
 msgid "in Ukraine"
 msgstr "в Украине"
@@ -9450,6 +9528,9 @@ msgstr "IRCC не публикует свои вопросы. Это трени�
 msgctxt "is a doctor"
 msgid "Is"
 msgstr "Есть"
+
+msgid "Is a person named before the gap? Is there a time in the past? Pick the form, then hear the sentence."
+msgstr "Назван ли человек перед пропуском? Есть ли время в прошлом? Выбери форму, а потом послушай предложение."
 
 msgid "Is Grok Bot the same as Grok?"
 msgstr "Grok Bot и Grok — это одно и то же?"
@@ -9838,6 +9919,9 @@ msgstr "Joob kohvi — «пьёт кофе». Пока запомни это к�
 
 msgid "Journey"
 msgstr "Путешествие"
+
+msgid "Jump into the snow"
+msgstr "Прыгают в снег"
 
 msgid "jumps"
 msgstr "прыгает"
@@ -10647,6 +10731,9 @@ msgstr "Предложный падеж"
 msgid "Lock"
 msgstr "Замок (на двери)"
 
+msgid "Lõket: the third form, as in tehakse lõket."
+msgstr "Lõket: третья форма, как в tehakse lõket."
+
 msgctxt "pronoun form"
 msgid "Long"
 msgstr "Полная"
@@ -11285,6 +11372,9 @@ msgstr "Метро"
 msgid "Microbiology"
 msgstr "Микробиология"
 
+msgid "Midsummer Day"
+msgstr "Иванов день"
+
 msgid "Miisu, a cat’s name"
 msgstr "Мийсу, кличка кошки"
 
@@ -11438,6 +11528,9 @@ msgstr "Большинство. Смотри на слово прямо пере
 
 msgid "Most of them. Look at who comes before the gap."
 msgstr "Большинство. Смотри, кто стоит перед пропуском."
+
+msgid "Most of them. Look for a person before the gap."
+msgstr "Большинство. Ищи человека перед пропуском."
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
@@ -11855,6 +11948,9 @@ msgstr "Над <0>次</0> и <1>駅</1> чтения нет: ты их уже з
 msgid "No signal"
 msgstr "Нет связи"
 
+msgid "No smoking here."
+msgstr "Здесь не курят."
+
 msgid "No swimming here."
 msgstr "Здесь нельзя плавать."
 
@@ -11915,6 +12011,9 @@ msgstr "нет, когда в вопросе есть olema"
 msgid "no; not"
 msgstr "нет; не"
 
+msgid "No: <0>ei</0> with <1>-ta</1> now, <2>-tud</2> in the past. <3>Siin ei suitsetata.</3>"
+msgstr "Отрицание: <0>ei</0> с <1>-ta</1> сейчас, с <2>-tud</2> в прошлом. <3>Siin ei suitsetata.</3>"
+
 msgid "No."
 msgstr "Нет."
 
@@ -11956,6 +12055,15 @@ msgstr "Нет. Quizlet экспортирует термины и опреде�
 
 msgid "Nobody eats, drinks or wants it here: the sentence starts with it, so the first form."
 msgstr "Здесь это никто не ест, не пьёт и не хочет: предложение начинается с самого предмета, поэтому первая форма."
+
+msgid "Nobody is named, and a time word puts it in the past: <0>-ti</0>."
+msgstr "Никто не назван, а слово о времени переносит действие в прошлое: <0>-ti</0>."
+
+msgid "Nobody is named, and it happens now or usually: <0>-takse</0>."
+msgstr "Никто не назван, и это происходит сейчас или обычно: <0>-takse</0>."
+
+msgid "Nobody named: <0>-takse</0> or <1>-akse</1> now, <2>-ti</2> or <3>-di</3> in the past. <4>Räägitakse, räägiti.</4>"
+msgstr "Никто не назван: <0>-takse</0> или <1>-akse</1> сейчас, <2>-ti</2> или <3>-di</3> в прошлом. <4>Räägitakse, räägiti.</4>"
 
 msgid "Noji alternative: Lymi vs Noji, compared · Lymi"
 msgstr "Аналог Noji: сравнение Lymi и Noji · Lymi"
@@ -12933,6 +13041,12 @@ msgstr "Пеэтер — это ta, он, значит: on."
 msgid "People ask these three when they meet you. Learn them whole, each with an answer, and don’t take them apart yet."
 msgstr "Эти три вопроса тебе зададут при встрече. Учи их целиком, каждый с ответом, и пока не разбирай на части."
 
+msgid "People did it"
+msgstr "Делали"
+
+msgid "People do it"
+msgstr "Делают"
+
 msgid "People, food, time and your first verbs."
 msgstr "Люди, еда, время и первые глаголы."
 
@@ -13732,6 +13846,9 @@ msgstr "Читай часы работы: <0>E–R 9–18</0> — с понед�
 msgid "Read the box under the sentences once more, then try again."
 msgstr "Ещё раз прочитай рамку под предложениями и попробуй снова."
 
+msgid "Read the first section once more, then try again."
+msgstr "Ещё раз прочитай первый раздел и попробуй снова."
+
 msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Прочитай значение и сначала вспомни термин, а потом смотри. Попробуй на этих карточках: они из всей колоды."
 
@@ -14089,6 +14206,9 @@ msgstr "Суббота"
 
 msgid "Saturday shopping"
 msgstr "Покупки в субботу"
+
+msgid "sauerkraut"
+msgstr "квашеная капуста"
 
 msgid "Save “Feierabend” to my German deck."
 msgstr "Сохрани «Feierabend» в мою колоду немецкого."
@@ -14835,6 +14955,9 @@ msgstr "Кто-то другой, мужчина или женщина: одно
 msgid "Someone you’d call <0>sa</0>."
 msgstr "Тому, с кем ты на «ты»: <0>sa</0>."
 
+msgid "Someone, or nobody?"
+msgstr "Кто-то или никто?"
+
 msgid "Someone’s knocking at the *door*."
 msgstr "Кто-то стучит в *дверь*."
 
@@ -14966,6 +15089,9 @@ msgstr "Начни с <0>あ</0>."
 
 msgid "Start from a ready-made deck"
 msgstr "Начни с готовой колоды"
+
+msgid "Start from the done form, the one in <0>-tud</0> or <1>-dud</1>: <2>räägitud</2>, spoken; <3>müüdud</3>, sold. Swap <4>-tud</4> for <5>-takse</5> and <6>-dud</6> for <7>-akse</7>: <8>räägitakse</8>, <9>müüakse</9>. For the past, <10>-ti</10> or <11>-di</11>: <12>räägiti</12>, <13>müüdi</13>."
+msgstr "Начни с формы на <0>-tud</0> или <1>-dud</1>: <2>räägitud</2>, сказанный; <3>müüdud</3>, проданный. Замени <4>-tud</4> на <5>-takse</5>, а <6>-dud</6> на <7>-akse</7>: <8>räägitakse</8>, <9>müüakse</9>. Для прошлого — <10>-ti</10> или <11>-di</11>: <12>räägiti</12>, <13>müüdi</13>."
 
 msgid "Start from the third form. If it ends in a vowel, add <0>-de</0>: <1>maja, majade</1>; <2>sõpra, sõprade</2>. If it ends in <3>-d</3> or <4>-t</4>, add <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; <8>inimest, inimeste</8>."
 msgstr "Начни с третьей формы. Если она оканчивается на гласный, добавь <0>-de</0>: <1>maja, majade</1>; <2>sõpra, sõprade</2>. Если на <3>-d</3> или <4>-t</4>, добавь <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; <8>inimest, inimeste</8>."
@@ -15215,6 +15341,9 @@ msgstr "Поддержка и почта: мы храним присланную
 
 msgid "Swap <0>-ma</0> for <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
 msgstr "Замени <0>-ma</0> на <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
+
+msgid "Swap <0>-tud</0> for <1>-takse</1> now and <2>-ti</2> in the past; <3>-dud</3> for <4>-akse</4> and <5>-di</5>."
+msgstr "Замени <0>-tud</0> на <1>-takse</1> сейчас и на <2>-ti</2> в прошлом; <3>-dud</3> — на <4>-akse</4> и <5>-di</5>."
 
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведы говорят так и о кофе, и о рабочем времени."
@@ -16758,6 +16887,9 @@ msgstr "Прошедшее время от käima: käisin, käisid, käis, käi
 msgid "The past of sööma: sõin, sõid, sõi, sõime."
 msgstr "Прошедшее время от sööma: sõin, sõid, sõi, sõime."
 
+msgid "The past still follows the rule: <0>tehtud, tehti</0>. The present you learn by heart."
+msgstr "Прошедшее всё равно по правилу: <0>tehtud, tehti</0>. Настоящее выучи наизусть."
+
 msgid "The past with -i-"
 msgstr "Прошедшее время с -i-"
 
@@ -17048,6 +17180,9 @@ msgstr "Продавцам"
 msgid "the shop door"
 msgstr "дверь магазина"
 
+msgid "The shop opens at nine."
+msgstr "Магазин открывают в девять."
+
 msgid "the shop’s, of the shop"
 msgstr "магазина"
 
@@ -17186,6 +17321,9 @@ msgstr "Предмет перед ними стоит в родительном 
 
 msgid "The thing is plural, so the verb takes <0>-vad</0>."
 msgstr "Того, что нравится, несколько, поэтому у глагола <0>-vad</0>."
+
+msgid "The thing that is done stays in its dictionary form: <0>pood avatakse</0>, <1>maja ehitati</1>."
+msgstr "То, с чем что-то делают, остаётся в словарной форме: <0>pood avatakse</0>, <1>maja ehitati</1>."
 
 msgid "The thing you act on, the object, takes the third form or the genitive. The choice says whether the whole thing got done."
 msgstr "То, на что направлено действие, — дополнение — стоит в третьей форме или в родительном. Выбор показывает, сделано ли дело целиком, как «читал» и «прочитал»."
@@ -17668,6 +17806,9 @@ msgstr "Колода больше не опубликована · Lymi"
 msgid "This deck is no longer published."
 msgstr "Эта колода больше не опубликована."
 
+msgid "This house was built in 1920."
+msgstr "Этот дом построили в 1920 году."
+
 msgid "This is Jaan’s cat."
 msgstr "Это кот Яана."
 
@@ -18149,6 +18290,9 @@ msgstr "Чтобы отрицать, поставь <0>ei</0> перед <1>ole<
 msgid "To say no, use <0>ei</0> and the bare <1>-ks</1> form for everyone: <2>ma ei läheks</2>, <3>nad ei läheks</3>. In speech you also hear <4>ma läheks</4> for <5>ma läheksin</5>. In writing, use the full endings."
 msgstr "Чтобы отрицать, используй <0>ei</0> и простую форму на <1>-ks</1> для всех: <2>ma ei läheks</2>, <3>nad ei läheks</3>. В разговоре можно услышать <4>ma läheks</4> вместо <5>ma läheksin</5>. На письме используй полные окончания."
 
+msgid "To say no: <0>ei</0> with <1>-ta</1> or <2>-da</2> now, <3>siin ei suitsetata</3>; and the done form in the past, <4>seda ei räägitud</4>."
+msgstr "Чтобы отрицать: <0>ei</0> с <1>-ta</1> или <2>-da</2> сейчас, <3>siin ei suitsetata</3>; а в прошлом — форма на -tud, <4>seda ei räägitud</4>."
+
 msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 msgstr "Чтобы сказать «не», поставь <0/> перед глаголом. <1/> — «я читаю», а <2/> — «я не читаю». Глагол теряет окончание, а <3/> одно и то же, о ком бы ни шла речь."
 
@@ -18178,6 +18322,9 @@ msgstr "видеть"
 
 msgid "To see their friends at home"
 msgstr "В гости к друзьям"
+
+msgid "to sell"
+msgstr "продавать"
 
 msgid "To sign"
 msgstr "Подписывать"
@@ -19189,6 +19336,12 @@ msgstr "Что она делала дома?"
 msgid "What did you read?"
 msgstr "Что ты прочитал?"
 
+msgid "What do people do after the sauna in winter?"
+msgstr "Что делают зимой после сауны?"
+
+msgid "What do people eat at Midsummer?"
+msgstr "Что едят на Иванов день?"
+
 msgid "What do you *think*?"
 msgstr "Что ты *думаешь*?"
 
@@ -19469,6 +19622,9 @@ msgstr "Когда его карточка в повторениях стано�
 msgid "When Kati came, I had already eaten."
 msgstr "Когда Кати пришла, я уже поел."
 
+msgid "When nobody is named"
+msgstr "Когда никто не назван"
+
 msgid "When the output depends on the history of the input"
 msgstr "Когда результат зависит от того, что было на входе раньше"
 
@@ -19523,6 +19679,9 @@ msgstr "Где ела Мари?"
 
 msgid "Where did Mari go at ten?"
 msgstr "Куда Мари ходила в десять?"
+
+msgid "Where did people live in the old days?"
+msgstr "Где жили люди раньше?"
 
 msgid "Where did they go on Saturday?"
 msgstr "Куда они ездили в субботу?"

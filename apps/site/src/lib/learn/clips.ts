@@ -2825,6 +2825,101 @@ const LETS_CLIPS: Record<string, Clip> = {
   ...LETS_DIALOGUE,
 };
 
+export const IMPERSONAL_KINDS = {
+  regular: [
+    { verb: "rääkima", done: "räägitud", now: "räägitakse", past: "räägiti" },
+    { verb: "lugema", done: "loetud", now: "loetakse", past: "loeti" },
+    { verb: "elama", done: "elatud", now: "elatakse", past: "elati" },
+    { verb: "müüma", done: "müüdud", now: "müüakse", past: "müüdi" },
+  ],
+  heart: [
+    { verb: "tegema", done: "tehtud", now: "tehakse", past: "tehti" },
+    { verb: "sööma", done: "söödud", now: "süüakse", past: "söödi" },
+    { verb: "minema", done: "mindud", now: "minnakse", past: "mindi" },
+    { verb: "tulema", done: "tuldud", now: "tullakse", past: "tuldi" },
+  ],
+} as const;
+
+export const IMPERSONAL_USES = [
+  "Eestis räägitakse eesti keelt.",
+  "Siin ei suitsetata.",
+  "Pood avatakse kell üheksa.",
+  "See maja ehitati 1920. aastal.",
+] as const;
+
+export const IMPERSONAL_GAPS = [
+  {
+    id: "raakima-person",
+    verb: "rääkima",
+    before: "Mari",
+    after: "eesti keelt.",
+    answer: "räägib",
+  },
+  {
+    id: "raakima-now",
+    verb: "rääkima",
+    before: "Eestis",
+    after: "eesti keelt.",
+    answer: "räägitakse",
+  },
+  {
+    id: "raakima-past",
+    verb: "rääkima",
+    before: "Vanasti",
+    after: "siin saksa keelt.",
+    answer: "räägiti",
+  },
+  { id: "ehitama-person", verb: "ehitama", before: "Jaan", after: "maja.", answer: "ehitab" },
+  { id: "ehitama-now", verb: "ehitama", before: "Siia", after: "uus kool.", answer: "ehitatakse" },
+  {
+    id: "ehitama-past",
+    verb: "ehitama",
+    before: "See maja",
+    after: "1920. aastal.",
+    answer: "ehitati",
+  },
+  { id: "avama-person", verb: "avama", before: "Kati", after: "akna.", answer: "avab" },
+  { id: "avama-now", verb: "avama", before: "Pood", after: "kell üheksa.", answer: "avatakse" },
+  { id: "avama-past", verb: "avama", before: "Uus pood", after: "eile.", answer: "avati" },
+] as const;
+
+export const IMPERSONAL_OPTIONS: Record<
+  (typeof IMPERSONAL_GAPS)[number]["verb"],
+  readonly string[]
+> = {
+  rääkima: ["räägib", "räägitakse", "räägiti"],
+  ehitama: ["ehitab", "ehitatakse", "ehitati"],
+  avama: ["avab", "avatakse", "avati"],
+};
+
+export const IMPERSONAL_CUSTOMS = [
+  "Eestis räägitakse eesti keelt.",
+  "Jaanipäeval tehakse lõket ja süüakse grillvorsti.",
+  "Talvel minnakse sauna ja siis hüpatakse lumme.",
+  "Jõulude ajal süüakse verivorsti ja hapukapsast.",
+  "Vanasti elati maal, nüüd elatakse rohkem linnas.",
+] as const;
+
+export const IMPERSONAL_WORDS = [
+  "vanasti",
+  "jaanipäev",
+  "lõke",
+  "verivorst",
+  "hapukapsas",
+] as const;
+
+const IMPERSONAL_CLIPS: Record<string, Clip> = {
+  ...words(IMPERSONAL_WORDS),
+  ...words(
+    Object.values(IMPERSONAL_KINDS).flatMap((verbs) =>
+      verbs.flatMap((verb) => [verb.verb, verb.done, verb.now, verb.past]),
+    ),
+  ),
+  ...words(IMPERSONAL_USES),
+  ...words(IMPERSONAL_GAPS.map(objectGapSaid)),
+  "p-customs": { sentences: IMPERSONAL_CUSTOMS },
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -3795,6 +3890,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "olen-lugenud": PERFECT_CLIPS,
   laheksin: CONDITIONAL_CLIPS,
   "lahme-las": LETS_CLIPS,
+  raagitakse: IMPERSONAL_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

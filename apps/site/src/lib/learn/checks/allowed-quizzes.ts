@@ -77,6 +77,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "Each round offers one verb's ta, nad and let's forms: sööb against söövad and sööme is the lesson, and the words before the gap decide it.",
   },
   {
+    lesson: "raagitakse",
+    quiz: "who-does-it",
+    reason:
+      "Each round offers one verb's personal, impersonal and past impersonal forms: avab against avatakse and avati is the lesson, and the words around the gap decide it.",
+  },
+  {
     lesson: "jalg-jala",
     quiz: "kati-room",
     reason:

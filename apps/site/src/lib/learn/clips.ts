@@ -1943,7 +1943,7 @@ export const HAKKAMA_ENDINGS = [
   { pronoun: "nad", ending: "vad" },
 ] as const;
 
-export const HAKKAMA_VERBS = ["õppima", "töötama", "elama", "lugema"] as const;
+export const HAKKAMA_VERBS = ["õppima", "töötama", "rääkima", "lugema"] as const;
 
 export const hakkamaSentence = (pronoun: string, ending: string, verb: string) =>
   `${presentWithPronoun(pronoun, "hakka", ending)} ${verb}.`;

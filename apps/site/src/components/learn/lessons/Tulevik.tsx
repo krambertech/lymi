@@ -56,7 +56,7 @@ function Et({ children }: { children: ReactNode }) {
 const MEANS: Record<HakkamaVerb, MessageDescriptor> = {
   õppima: msg`to learn, to study`,
   töötama: msg`to work`,
-  elama: msg`to live`,
+  rääkima: msg`to speak, to talk`,
   lugema: msg`to read`,
 };
 
@@ -122,8 +122,8 @@ function HakkamaTable() {
       </p>
       <Paradigm
         key={verb}
-        label={t`Now and from now on`}
-        columns={[t`Now`, t`From now on`]}
+        label={t`Now and going to`}
+        columns={[t`Now`, t`Going to`]}
         rows={rows}
         highlight={{ column: 1 }}
         empty={{
@@ -145,7 +145,7 @@ const GAP_MEANS: Record<string, MessageDescriptor> = {
   "Eile ma töötasin.": msg`Yesterday I worked.`,
   "Homme ma loen raamatut.": msg`Tomorrow I’ll read a book.`,
   "Eile ma lugesin raamatut.": msg`Yesterday I read a book.`,
-  "Homme ma lähen tööle.": msg`Tomorrow I’m going to work.`,
+  "Homme ma lähen tööle.": msg`Tomorrow I’m off to work.`,
   "Eile ma läksin tööle.": msg`Yesterday I went to work.`,
   "Homme ma tulen koju.": msg`Tomorrow I’m coming home.`,
   "Eile ma tulin koju.": msg`Yesterday I came home.`,
@@ -224,7 +224,7 @@ const GLOSSARY: Glossary = {
     note: msg`Järgmine nädal, next week, with the -l that says when, as in eelmisel nädalal.`,
   },
   "homme ma lähen tööle": {
-    en: msg`Tomorrow I’m going to work.`,
+    en: msg`Tomorrow I’m off to work.`,
     show: "Homme ma lähen tööle.",
     clip: clipId("Homme ma lähen tööle."),
   },
@@ -328,7 +328,7 @@ function useContent() {
         options: ["tulid", "tuled"],
         why: (
           <Trans>
-            Mari asks about next week, so the present: <Et>tuled</Et>.
+            Mari asks about something still to come, so the present: <Et>tuled</Et>.
           </Trans>
         ),
       },
@@ -491,7 +491,7 @@ export function TulevikLesson() {
         </Trans>,
         <Trans key="4">
           <Et>Hakkama</Et> takes the person’s ending, and the verb after it stays the same:{" "}
-          <b lang="et">ma hakkan, nad hakkavad õppima</b>.
+          <b lang="et">ma hakkan õppima, nad hakkavad õppima</b>.
         </Trans>,
       ]}
       sections={[
@@ -508,7 +508,7 @@ export function TulevikLesson() {
                     <Nowrap>
                       <Word w="Homme ma lähen tööle" />.
                     </Nowrap>{" "}
-                    English does this too: tomorrow I’m going to work.
+                    English does this too: tomorrow I’m working.
                   </Trans>
                 </p>
                 <p>
@@ -594,8 +594,7 @@ export function TulevikLesson() {
                   <Trans>
                     <Word w="Hakkama" /> takes the person’s ending, and the verb after it stays in
                     its <End>ma</End> form: <Word w="Ma hakkan õppima" />,{" "}
-                    <b lang="et">nad hakkavad õppima</b>. Pick a verb and compare now with from now
-                    on.
+                    <b lang="et">nad hakkavad õppima</b>. Pick a verb and compare now with going to.
                   </Trans>
                 </p>
               </Prose>

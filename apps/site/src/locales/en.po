@@ -557,8 +557,8 @@ msgstr "<0/> takes <1>-l</1>, as lesson {places} showed for names ending in <2>-
 msgid "<0/> takes the <1>-ma</1> form, and so do <2/>, <3/>, <4/> and <5/>."
 msgstr "<0/> takes the <1>-ma</1> form, and so do <2/>, <3/>, <4/> and <5/>."
 
-msgid "<0/> takes the person’s ending, and the verb after it stays in its <1>ma</1> form: <2/>, <3>nad hakkavad õppima</3>. Pick a verb and compare now with from now on."
-msgstr "<0/> takes the person’s ending, and the verb after it stays in its <1>ma</1> form: <2/>, <3>nad hakkavad õppima</3>. Pick a verb and compare now with from now on."
+msgid "<0/> takes the person’s ending, and the verb after it stays in its <1>ma</1> form: <2/>, <3>nad hakkavad õppima</3>. Pick a verb and compare now with going to."
+msgstr "<0/> takes the person’s ending, and the verb after it stays in its <1>ma</1> form: <2/>, <3>nad hakkavad õppima</3>. Pick a verb and compare now with going to."
 
 msgid "<0/> with the <1>-da</1> form says something has to be done, without naming who: <2/> Put a person in the <3>-l</3> form from lesson {having} to make it theirs: <4/>"
 msgstr "<0/> with the <1>-da</1> form says something has to be done, without naming who: <2/> Put a person in the <3>-l</3> form from lesson {having} to make it theirs: <4/>"
@@ -786,8 +786,8 @@ msgstr "<0>Hakkad</0> is for <1>sa</1>, and after it comes the <2>ma</2> form: <
 msgid "<0>Hakkama</0> and a <1>ma</1> form say what you’re going to do or start doing: <2>Ma hakkan eesti keelt õppima</2>."
 msgstr "<0>Hakkama</0> and a <1>ma</1> form say what you’re going to do or start doing: <2>Ma hakkan eesti keelt õppima</2>."
 
-msgid "<0>Hakkama</0> takes the person’s ending, and the verb after it stays the same: <1>ma hakkan, nad hakkavad õppima</1>."
-msgstr "<0>Hakkama</0> takes the person’s ending, and the verb after it stays the same: <1>ma hakkan, nad hakkavad õppima</1>."
+msgid "<0>Hakkama</0> takes the person’s ending, and the verb after it stays the same: <1>ma hakkan õppima, nad hakkavad õppima</1>."
+msgstr "<0>Hakkama</0> takes the person’s ending, and the verb after it stays the same: <1>ma hakkan õppima, nad hakkavad õppima</1>."
 
 msgid "<0>Hakkama</0> takes the person’s ending; the verb after it stays in its <1>ma</1> form."
 msgstr "<0>Hakkama</0> takes the person’s ending; the verb after it stays in its <1>ma</1> form."
@@ -5189,8 +5189,8 @@ msgstr "Estonian has no future tense. The present with a time word says what’s
 msgid "Estonian has no separate future tense. The present says what’s coming: <0>Homme ma töötan</0>, tomorrow I’m working."
 msgstr "Estonian has no separate future tense. The present says what’s coming: <0>Homme ma töötan</0>, tomorrow I’m working."
 
-msgid "Estonian has no separate future tense. You say what’s coming with the present of lesson {present} and a word for when: <0><1/>.</0> English does this too: tomorrow I’m going to work."
-msgstr "Estonian has no separate future tense. You say what’s coming with the present of lesson {present} and a word for when: <0><1/>.</0> English does this too: tomorrow I’m going to work."
+msgid "Estonian has no separate future tense. You say what’s coming with the present of lesson {present} and a word for when: <0><1/>.</0> English does this too: tomorrow I’m working."
+msgstr "Estonian has no separate future tense. You say what’s coming with the present of lesson {present} and a word for when: <0><1/>.</0> English does this too: tomorrow I’m working."
 
 msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
 msgstr "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
@@ -6093,9 +6093,6 @@ msgstr "from Mum"
 msgid "From nemad, they."
 msgstr "From nemad, they."
 
-msgid "From now on"
-msgstr "From now on"
-
 msgid "From now until your test date"
 msgstr "From now until your test date"
 
@@ -6463,6 +6460,9 @@ msgstr "Going over a lesson again"
 
 msgid "going swimming"
 msgstr "going swimming"
+
+msgid "Going to"
+msgstr "Going to"
 
 msgid "Going to the market"
 msgstr "Going to the market"
@@ -9914,8 +9914,8 @@ msgstr "Mari"
 msgid "Mari asks <0/>, <1/> and <2/>. Answer each with the form that fits its question."
 msgstr "Mari asks <0/>, <1/> and <2/>. Answer each with the form that fits its question."
 
-msgid "Mari asks about next week, so the present: <0>tuled</0>."
-msgstr "Mari asks about next week, so the present: <0>tuled</0>."
+msgid "Mari asks about something still to come, so the present: <0>tuled</0>."
+msgstr "Mari asks about something still to come, so the present: <0>tuled</0>."
 
 msgid "Mari asks about swimming. Pick each reply by what it says about you."
 msgstr "Mari asks about swimming. Pick each reply by what it says about you."
@@ -10913,8 +10913,8 @@ msgstr "Nouns that stay the same"
 msgid "Now"
 msgstr "Now"
 
-msgid "Now and from now on"
-msgstr "Now and from now on"
+msgid "Now and going to"
+msgstr "Now and going to"
 
 msgid "Now build the forms: put the ending the cue asks for on the genitive. Where the genitive changes inside, the word shows it."
 msgstr "Now build the forms: put the ending the cue asks for on the genitive. Where the genitive changes inside, the word shows it."
@@ -16492,8 +16492,8 @@ msgstr "Tomorrow I’m coming home."
 msgid "Tomorrow I’m getting up early for work."
 msgstr "Tomorrow I’m getting up early for work."
 
-msgid "Tomorrow I’m going to work."
-msgstr "Tomorrow I’m going to work."
+msgid "Tomorrow I’m off to work."
+msgstr "Tomorrow I’m off to work."
 
 msgid "Tomorrow I’m working at the office."
 msgstr "Tomorrow I’m working at the office."

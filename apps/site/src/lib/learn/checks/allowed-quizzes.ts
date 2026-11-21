@@ -47,6 +47,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "The options are the three questions, all offered every round in a shuffled order, so shape picks nothing: kus against kust is the lesson.",
   },
   {
+    lesson: "meeldima",
+    quiz: "mari-message",
+    reason:
+      "The gaps ask for the -l form or the -le form: mul on igav against mulle meeldib is the lesson, and the words around each gap decide it.",
+  },
+  {
     lesson: "osastav",
     quiz: "one-or-more",
     reason:

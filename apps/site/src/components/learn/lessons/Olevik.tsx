@@ -338,7 +338,7 @@ export function OlevikLesson() {
   const { t, i18n } = useLingui();
   const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
   const pronouns = at("Mina, sina, tema");
-  const gradation = at("Jalg, jala");
+  const gradation = lessonBySlug("jalg-jala")?.n;
   const where = at("Tallinnas, Tartus");
   const partitive = lessonBySlug("osastav")?.n;
   const verbForms = lessonBySlug("verbi-pohivormid")?.n;

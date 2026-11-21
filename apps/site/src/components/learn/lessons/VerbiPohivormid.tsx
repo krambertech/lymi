@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -673,9 +673,8 @@ export function VerbiPohivormidLesson() {
   const pronouns = lessonBySlug("mina-sina-tema")?.n;
   const commands = lessonBySlug("kaskiv")?.n;
   const negation = lessonBySlug("eitus")?.n;
-  const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
   const infinitives = lessonBySlug("tegevusnimed")?.n;
-  const gradation = at("Jalg, jala");
+  const gradation = lessonBySlug("jalg-jala")?.n;
 
   const heardItems = useMemo<HeardItem[]>(
     () =>

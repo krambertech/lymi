@@ -344,7 +344,14 @@ export const STAGES: readonly Stage[] = [
     hue: 18,
     goal: msg`Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new.`,
     lessons: [
-      { name: msg`Consonant gradation`, et: "Jalg, jala" },
+      {
+        slug: "jalg-jala",
+        name: msg`Consonant gradation`,
+        title: msg`Estonian consonant gradation: why jalg becomes jala`,
+        et: "Jalg, jala",
+        minutes: 14,
+        blurb: msg`A free lesson on consonant gradation in Estonian, the change inside a word such as jalg, jala or tuba, toa: why the genitive is the odd one out, the four ways a consonant weakens (kapp, kapi; pank, panga; pood, poe; lind, linnu), words that go the other way (mõte, mõtte), and the same change in verbs (lugema, loen). Every word is read aloud.`,
+      },
       { name: msg`The object: whole or part`, et: "Raamatut või raamatu" },
       { name: msg`Plural partitive`, et: "Raamatuid, maju" },
       { name: msg`Plural cases`, et: "Majades, inimestele" },

@@ -53,6 +53,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "The options are the three questions, all offered every round in a shuffled order, so shape picks nothing: kus against kust is the lesson.",
   },
   {
+    lesson: "jalg-jala",
+    quiz: "kati-room",
+    reason:
+      "Each gap offers forms of one word: toa against toas and kapi against kapis is the lesson, and the words around each gap decide the case.",
+  },
+  {
     lesson: "meeldima",
     quiz: "mari-message",
     reason:

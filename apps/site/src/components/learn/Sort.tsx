@@ -228,7 +228,7 @@ export function Sort({ id, title, bins, items }: SortProps) {
               <div className="flex flex-wrap gap-2">{pool.map(chip)}</div>
             ) : (
               <p className="text-md text-ink-secondary">
-                <Trans>Every word has a group. Check when you're ready.</Trans>
+                <Trans>Every word has a group. Check when you’re ready.</Trans>
               </p>
             )}
           </div>

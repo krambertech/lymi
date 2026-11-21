@@ -607,7 +607,7 @@ export function KaskivLesson() {
               <ListenRows
                 items={KASKIV_EVERYDAY.map(({ one }) => {
                   const means = i18n._(MEANS[one] as MessageDescriptor);
-                  return { main: one, sub: means, src: src(one), label: `${one} ${means}` };
+                  return { main: one, sub: means, src: src(one) };
                 })}
               />
               <Prose>

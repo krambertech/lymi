@@ -263,7 +263,8 @@ export function HaaldusLesson() {
                     main: <Syllables parts={parts} />,
                     sub: meaning(word),
                     src: src(word),
-                    label: t`Play ${spoken}`,
+                    // The syllables read apart, so the label says the word whole.
+                    label: `${spoken}, ${meaning(word)}`,
                   };
                 })}
               />

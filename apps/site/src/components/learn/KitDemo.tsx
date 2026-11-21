@@ -34,9 +34,9 @@ function useContent() {
       id: "job",
       ask: t`What does Jaan do?`,
       options: [
-        { id: "teacher", label: t`He's a teacher` },
-        { id: "doctor", label: t`He's a doctor` },
-        { id: "student", label: t`He's a student` },
+        { id: "teacher", label: t`He’s a teacher` },
+        { id: "doctor", label: t`He’s a doctor` },
+        { id: "student", label: t`He’s a student` },
       ],
       answer: "doctor",
       line: 2,
@@ -57,8 +57,8 @@ function useContent() {
       ask: t`Is Mari a doctor?`,
       options: [
         { id: "yes", label: t`Yes, she is` },
-        { id: "teacher", label: t`No, she's a teacher` },
-        { id: "student", label: t`No, she's a student` },
+        { id: "teacher", label: t`No, she’s a teacher` },
+        { id: "student", label: t`No, she’s a student` },
       ],
       answer: "teacher",
       line: 4,
@@ -80,9 +80,9 @@ function useContent() {
       id: "job",
       ask: t`What does Mari do?`,
       options: [
-        { id: "doctor", label: t`She's a doctor` },
-        { id: "teacher", label: t`She's a teacher` },
-        { id: "student", label: t`She's a student` },
+        { id: "doctor", label: t`She’s a doctor` },
+        { id: "teacher", label: t`She’s a teacher` },
+        { id: "student", label: t`She’s a student` },
       ],
       answer: "teacher",
       line: 1,
@@ -91,9 +91,9 @@ function useContent() {
       id: "peeter",
       ask: t`Who is Peeter?`,
       options: [
-        { id: "brother", label: t`Mari's brother` },
-        { id: "friend", label: t`Mari's friend` },
-        { id: "father", label: t`Mari's father` },
+        { id: "brother", label: t`Mari’s brother` },
+        { id: "friend", label: t`Mari’s friend` },
+        { id: "father", label: t`Mari’s father` },
       ],
       answer: "brother",
       line: 4,
@@ -183,7 +183,7 @@ function useContent() {
       clip: "d-sina-3",
       replies: [
         { line: line("d-sina-3"), right: true },
-        { line: "Jah, ma olen õpetaja.", why: t`You're a doctor, arst.` },
+        { line: "Jah, ma olen õpetaja.", why: t`You’re a doctor, arst.` },
         { line: "Ei, ma ei olen arst.", why: t`After ei, olema is ole; and you are a doctor.` },
       ],
     },
@@ -192,7 +192,7 @@ function useContent() {
       who: "you",
       clip: "d-sina-4",
       replies: [
-        { line: "Tere hommikust!", why: t`That's good morning; Mari is leaving.` },
+        { line: "Tere hommikust!", why: t`That’s good morning; Mari is leaving.` },
         { line: "Kes sina oled?", why: t`That asks who she is; she told you.` },
         { line: line("d-sina-4"), right: true },
       ],
@@ -327,7 +327,7 @@ export function KitDemo() {
               </h1>
               <p className="max-w-[52ch] text-lg text-ink-secondary">
                 <Trans>
-                  The lesson kit's parts for practice after a rule is taught: listening, a passage
+                  The lesson kit’s parts for practice after a rule is taught: listening, a passage
                   with gaps, reading, a dialogue, sorting, matching, building a sentence and making
                   a form. docs/design/estonian-lessons.md says when to use each.
                 </Trans>
@@ -370,7 +370,7 @@ export function KitDemo() {
             <Part
               id="gaps-pick"
               title={t`Gaps, one at a time`}
-              use={t`A passage with gaps, the open gap's words under it, each marked as it is filled.`}
+              use={t`A passage with gaps, the open gap’s words under it, each marked as it is filled.`}
             >
               <GapPassage
                 id="kit-gaps-pick"
@@ -424,7 +424,7 @@ export function KitDemo() {
             <Part
               id="dialogue-sound"
               title={t`Dialogue, sound only`}
-              use={t`The same conversation with Mari's lines heard, not shown; each can be read on request.`}
+              use={t`The same conversation with Mari’s lines heard, not shown; each can be read on request.`}
             >
               <Dialogue
                 id="kit-dialogue-sound"

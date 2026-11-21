@@ -5,7 +5,7 @@ import { useLesson } from "./lesson-context";
 
 /** The words worth keeping from a lesson, each one to hear. */
 export function WordList({ words, bare }: { words: readonly string[]; bare?: boolean }) {
-  const { t, i18n } = useLingui();
+  const { i18n } = useLingui();
   const { slug, glossary } = useLesson();
   return (
     <ListenRows
@@ -18,7 +18,6 @@ export function WordList({ words, bare }: { words: readonly string[]; bare?: boo
           main: show,
           sub: gloss ? i18n._(gloss.en) : undefined,
           src: clip ? clipUrl(slug, clip) : null,
-          label: t`Play ${show}`,
         };
       })}
     />

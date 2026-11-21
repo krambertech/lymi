@@ -1,5 +1,3 @@
-// Every word on the store screenshots, per language. Ukrainian and Russian are written from the English.
-// `shots` holds each screenshot's headline (one <em> for the lit words) and the plain line under it.
 window.COPY = {
   en: {
     free: "Free · No ads",
@@ -76,7 +74,6 @@ window.COPY = {
           ["Română", 110],
         ],
       ],
-      // Real Explore decks. A leading * lights a subject; the lit ones sit at different places in their rows.
       topics: [
         [
           "Polish road signs",
@@ -246,7 +243,6 @@ window.COPY = {
           ["Română", 110],
         ],
       ],
-      // Ukrainian readers are not offered decks that teach Ukrainian, so Serbian takes its place.
       topics: [
         [
           "Дорожні знаки Польщі",

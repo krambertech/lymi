@@ -1,4 +1,3 @@
-// Drawn avatars from apps/web/src/client/dev/persona-avatar.tsx and assistant marks from apps/site AssistantMarks.tsx.
 window.ART = {
   avatars: {
     fresh:

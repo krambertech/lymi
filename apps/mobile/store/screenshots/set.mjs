@@ -1,6 +1,3 @@
-// Renders the store screenshots from set.html and Play's feature graphic from feature.html:
-//   node set.mjs [locale...]
-// Writes out/<locale>/{6.9,6.3,play}/NN.jpg and out/play-feature/<locale>.jpg.
 import { execFileSync } from "node:child_process";
 import { mkdirSync } from "node:fs";
 import { createRequire } from "node:module";
@@ -8,7 +5,6 @@ import { dirname, join } from "node:path";
 import { fileURLToPath, pathToFileURL } from "node:url";
 
 const here = dirname(fileURLToPath(import.meta.url));
-// Playwright is installed with the web app's browser tests.
 const { chromium } = createRequire(join(here, "../../../web/package.json"))("playwright");
 const asked = process.argv.slice(2);
 const locales = asked.length ? asked : ["en", "uk", "ru"];
@@ -26,7 +22,6 @@ async function open(file, params, viewport) {
   await page.evaluate(() => Promise.all([...document.images].map((img) => img.decode())));
 }
 
-/** One stage of panels, clipped into a file per panel. JPEG, because App Store Connect rejects a PNG with alpha. */
 async function renderSet(lang, size, width, height, dir) {
   await open("set.html", { lang, size }, { width: width * 9, height });
   await page.evaluate(() => window.fit());
@@ -47,7 +42,6 @@ async function renderSet(lang, size, width, height, dir) {
 }
 
 for (const lang of locales) {
-  // App Store Connect's large and medium Dynamic Island classes: 6.9" is rendered, 6.3" scaled from it.
   const large = await renderSet(lang, "iphone", 1320, 2868, join(out, lang, "6.9"));
   mkdirSync(join(out, lang, "6.3"), { recursive: true });
   for (const file of large) {
@@ -55,7 +49,6 @@ for (const lang of locales) {
       stdio: "ignore",
     });
   }
-  // Google Play takes only 9:16 phone screenshots.
   await renderSet(lang, "play", 1440, 2560, join(out, lang, "play"));
   await open("feature.html", { lang }, { width: 1024, height: 500 });
   mkdirSync(join(out, "play-feature"), { recursive: true });

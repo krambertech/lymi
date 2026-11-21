@@ -1,9 +1,3 @@
-// Uploads the rendered screenshots in out/ to the stores:
-//   node upload.mjs apple <version> [locale...]
-//   node upload.mjs play --skip <shot> [locale...]
-// Apple puts them on <version>, creating it beside the live one when it is missing.
-// Play replaces the phone screenshots and the feature graphic in each listing and commits the edit.
-// Keys live outside the repo; see "Uploading by API" in ../checklist.md.
 import { createHash, createSign } from "node:crypto";
 import { readdirSync, readFileSync, statSync } from "node:fs";
 import { homedir } from "node:os";
@@ -14,11 +8,11 @@ const here = dirname(fileURLToPath(import.meta.url));
 const out = join(here, "out");
 const keys = process.env.LYMI_STORE_KEYS ?? join(homedir(), ".lymi", "keys");
 const bundleId = "app.lymi";
+const playMaxPhoneShots = 8;
 
 const appleLocales = { en: "en-US", uk: "uk", ru: "ru" };
 const playLocales = { en: "en-US", uk: "uk", ru: "ru-RU" };
-// App Store Connect's slots for the two sizes set.mjs renders.
-const appleSlots = { 6.9: "APP_IPHONE_67", 6.3: "APP_IPHONE_61" };
+const appleSlotBySize = { 6.9: "APP_IPHONE_67", 6.3: "APP_IPHONE_61" };
 
 const b64 = (value) => Buffer.from(JSON.stringify(value)).toString("base64url");
 const shots = (dir) =>
@@ -33,8 +27,6 @@ async function call(url, init, what) {
   if (!response.ok) throw new Error(`${what}: ${response.status} ${text}`);
   return text ? JSON.parse(text) : null;
 }
-
-// App Store Connect ------------------------------------------------------------------------------
 
 function appleToken() {
   const { keyId, issuerId } = JSON.parse(
@@ -157,7 +149,7 @@ async function apple(versionString, languages) {
     const { data: sets } = await asc(
       `/v1/appStoreVersionLocalizations/${localization.id}/appScreenshotSets?include=appScreenshots&limit[appScreenshots]=10`,
     );
-    for (const [size, slot] of Object.entries(appleSlots)) {
+    for (const [size, slot] of Object.entries(appleSlotBySize)) {
       let set = sets.find((s) => s.attributes.screenshotDisplayType === slot);
       if (set) {
         for (const old of set.relationships.appScreenshots.data) {
@@ -189,8 +181,6 @@ async function apple(versionString, languages) {
     }
   }
 }
-
-// Google Play ------------------------------------------------------------------------------------
 
 async function playToken() {
   const account = JSON.parse(readFileSync(join(keys, "play-service-account.json"), "utf8"));
@@ -248,12 +238,12 @@ async function play(skip, languages) {
           );
         }
       };
-      // Play takes at most eight phone screenshots.
       const phone = shots(join(out, lang, "play")).filter(
         (file) => basename(file) !== `${skip}.jpg`,
       );
-      if (phone.length > 8)
-        throw new Error("Play takes at most eight; pass --skip with a shot number.");
+      if (phone.length > playMaxPhoneShots) {
+        throw new Error(`Play takes at most ${playMaxPhoneShots}; pass --skip with a shot number.`);
+      }
       await images("phoneScreenshots", phone)();
       await images("featureGraphic", [join(out, "play-feature", `${lang}.jpg`)])();
       console.log(`play ${playLocales[lang]}: ${phone.length} + feature graphic`);
@@ -265,8 +255,6 @@ async function play(skip, languages) {
     throw error;
   }
 }
-
-// ------------------------------------------------------------------------------------------------
 
 const [store, ...rest] = process.argv.slice(2);
 const skipAt = rest.indexOf("--skip");

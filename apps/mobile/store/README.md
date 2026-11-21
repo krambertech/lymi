@@ -16,7 +16,7 @@ Public text calls Lymi a flashcard app; screen names and product words follow [`
 node apps/mobile/store/screenshots/set.mjs
 ```
 
-It writes `screenshots/out/<language>/` in three sizes: `6.9` (1320 × 2868) and `6.3` (1206 × 2622) for App Store Connect's two iPhone slots, and `play` (1440 × 2560) for Google Play, which takes only 16:9 or 9:16. It also writes Play's feature graphic per language to `out/play-feature/`. `out/` is not committed. Pass languages to render fewer, as in `set.mjs uk`.
+It writes `screenshots/out/<language>/` in three sizes: `6.9` (1320 × 2868) and `6.3` (1206 × 2622) for App Store Connect's two iPhone slots, and `play` (1440 × 2560) for Google Play, which takes only 16:9 or 9:16. It also writes Play's feature graphic per language to `out/play-feature/`. They are JPEG because App Store Connect rejects a PNG with alpha. `out/` is not committed. Pass languages to render fewer, as in `set.mjs uk`.
 
 [`upload.mjs`](screenshots/upload.mjs) sends them to App Store Connect and Google Play; [the checklist](checklist.md#uploading-by-api) has its commands and keys.
 
@@ -32,6 +32,6 @@ The nine screenshots are one page, [`set.html`](screenshots/set.html): each shot
 8. Bring your existing decks. The icons of the apps Lymi imports from, falling into Lymi.
 9. Your goal, your pace. The goal picker over the streak.
 
-Every word on them, in each language, is in [`copy.js`](screenshots/copy.js). The drawn faces come from the dev panel's persona avatars and the assistant marks from the site's assistant pages; [`art.js`](screenshots/art.js) holds both, so regenerate it when either changes. A headline that is too long for its language shrinks until it fits in three lines.
+Every word on them, in each language, is in [`copy.js`](screenshots/copy.js). Its deck names are real Explore decks, and a leading `*` lights one. Ukrainian readers aren't offered decks that teach Ukrainian, so Serbian takes its place there. The drawn faces come from the dev panel's persona avatars and the assistant marks from the site's assistant pages; [`art.js`](screenshots/art.js) holds both, so regenerate it when either changes. A headline that is too long for its language shrinks until it fits in three lines.
 
 The captures in `raw/<language>/` come from an iPhone 13 mini Simulator with the `learner` persona, status bar at 9:41, the app language set to the capture's language and the review card's meaning in it. The mini is 375 points wide against the Pro Max's 440, so every element comes out larger in the same frame; keep that device when you retake them. `06-streak` is taken in dark appearance. `07-deck` is the shared deck Lisboa a dois after some reviews, so its sections show progress. Retake them when a captured screen changes visibly, from your own Simulator as [`docs/local-dev.md`](../../../docs/local-dev.md) describes.

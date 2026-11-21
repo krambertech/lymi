@@ -40,6 +40,9 @@ msgstr "-teist или -kümmend?"
 msgid "-vad now; -sid in the past, as for sa."
 msgstr "-vad сейчас; -sid в прошлом, как для sa."
 
+msgid ", in the right group"
+msgstr ", в правильной группе"
+
 msgid "“J’ai la flemme” is the whole excuse."
 msgstr "«J’ai la flemme» — и никаких других объяснений."
 
@@ -87,6 +90,10 @@ msgstr "{0, plural, one {# раздел} few {# раздела} many {# разд
 #. placeholder {0}: 3
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, one {Выбрано: #} few {Выбрано: #} many {Выбрано: #} other {Выбрано: #}}"
+
+#. placeholder {0}: state.mistakes
+msgid "{0, plural, one {# wrong try} other {# wrong tries}}"
+msgstr "{0, plural, one {# неверная попытка} few {# неверные попытки} many {# неверных попыток} other {# неверной попытки}}"
 
 #. placeholder {0}: 3
 msgid "{0, plural, one {Add # card} other {Add # cards}}"
@@ -137,6 +144,9 @@ msgstr "{0}, твой ответ"
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}}"
+
+msgid "{base} becomes {form}"
+msgstr "{base} становится {form}"
 
 msgid "{before} blank {after}"
 msgstr "{before} пропуск {after}"
@@ -293,8 +303,26 @@ msgstr "{turned, plural, one {# карточка перевёрнута} few {# 
 msgid "{v}, as in {word}"
 msgstr "{v}, как в {word}"
 
+msgid "{word} added"
+msgstr "{word} добавлено"
+
+msgid "{word} back with the words"
+msgstr "{word} снова среди слов"
+
+msgid "{word} chosen. Now its match."
+msgstr "{word} выбрано. Теперь его пару."
+
+msgid "{word} in {label}"
+msgstr "{word} в {label}"
+
 msgid "{word} in gap {n}"
 msgstr "{word} в пропуске {n}"
+
+msgid "{word} picked. Choose its group."
+msgstr "{word} выбрано. Теперь его группу."
+
+msgid "{word} taken out"
+msgstr "{word} убрано"
 
 msgid "{word} taken out of the gap"
 msgstr "{word} убрано из пропуска"
@@ -302,6 +330,12 @@ msgstr "{word} убрано из пропуска"
 #. placeholder {0}: i18n._(MEANINGS[word])
 msgid "{word}, {0}, today"
 msgstr "{word}, {0}, сегодня"
+
+msgid "{word}, word {place}"
+msgstr "{word}, слово {place}"
+
+msgid "{word}: matched."
+msgstr "{word}: пара найдена."
 
 msgid "*Bread* and butter."
 msgstr "*Хлеб* с маслом."
@@ -1197,6 +1231,9 @@ msgstr "Вещь; что-то"
 msgid "a thousand"
 msgstr "тысяча"
 
+msgid "a town"
+msgstr "город"
+
 msgid "A translation beside each one"
 msgstr "Перевод рядом с каждым вопросом"
 
@@ -1211,6 +1248,9 @@ msgstr "Итоги недели"
 
 msgid "a woman’s name"
 msgstr "женское имя"
+
+msgid "A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer shows the word turning into its form."
+msgstr "Слово и подсказка: введи форму, с клавишами õ ä ö ü š ž, или выбери её. Ответ показывает, как слово становится формой."
 
 msgid "A word list from a spreadsheet"
 msgstr "Список слов из таблицы"
@@ -1744,6 +1784,9 @@ msgstr "Ещё и колокол."
 msgid "Also called the frequency illusion."
 msgstr "Другое название — иллюзия частотности."
 
+msgid "Also right:"
+msgstr "Тоже верно:"
+
 msgid "Always"
 msgstr "Всегда"
 
@@ -2107,6 +2150,9 @@ msgstr "у меня, чтобы подчеркнуть"
 msgid "at Mum"
 msgstr "у мамы"
 
+msgid "at school"
+msgstr "в школе"
+
 msgid "at school, in a school"
 msgstr "в школе"
 
@@ -2235,6 +2281,9 @@ msgstr "Началась в 1618 году с <0>Пражской дефенес�
 
 msgid "behind"
 msgstr "сзади"
+
+msgid "belongs in"
+msgstr "должно быть в"
 
 msgid "Beta"
 msgstr "Бета"
@@ -2385,6 +2434,9 @@ msgstr "Строй новые слова из знакомых, читай вы�
 
 msgid "Build the course in order."
 msgstr "Выстрой курс шаг за шагом."
+
+msgid "Build the sentence"
+msgstr "Собери предложение"
 
 msgid "Building something of your own? Lymi has a full API. <0>Read the API docs</0>"
 msgstr "Делаешь что-то своё? У Lymi есть полноценный API. <0>Документация API</0>"
@@ -2823,6 +2875,9 @@ msgstr "Палочки для еды"
 msgid "Chords, scales and the theory behind the pieces you play."
 msgstr "Аккорды, гаммы и теория к произведениям, которые играют на уроках."
 
+msgid "Chosen. Now its match."
+msgstr "Выбрано. Теперь его пару."
+
 msgid "Citizenship"
 msgstr "Гражданство"
 
@@ -2894,6 +2949,9 @@ msgstr "Конец рабочего дня и свободный вечер по
 
 msgid "Close menu"
 msgstr "Закрыть меню"
+
+msgid "Close: only the letters with marks are off."
+msgstr "Почти: ошибка только в буквах со значками."
 
 msgid "closed"
 msgstr "закрыто"
@@ -3787,6 +3845,9 @@ msgstr "Повелительное наклонение в эстонском я
 msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
 msgstr "По-эстонски пишут так, как произносят. Каждую букву читаешь, и каждая звучит одинаково, где бы ни стояла. Зная буквы, ты прочитаешь вслух и новое слово."
 
+msgid "Estonian letters"
+msgstr "Эстонские буквы"
+
 msgid "Estonian numbers"
 msgstr "Числа на эстонском"
 
@@ -3924,6 +3985,12 @@ msgstr "Колоды всех земель"
 
 msgid "Every subject on one schedule."
 msgstr "Все предметы в одном расписании."
+
+msgid "Every word has a group. Check when you’re ready."
+msgstr "Все слова в группах. Можно проверять."
+
+msgid "Every word is in its group."
+msgstr "Каждое слово в своей группе."
 
 msgid "Every word with its forms."
 msgstr "Каждое слово с его формами."
@@ -4980,6 +5047,9 @@ msgstr "Послушай, как звучит каждое слово."
 msgid "Hear every card read aloud the way a native speaker says it."
 msgstr "Каждую карточку можно услышать так, как её произносит носитель языка."
 
+msgid "Hear it"
+msgstr "Послушать"
+
 msgid "Hear it read"
 msgstr "Послушать текст"
 
@@ -5911,6 +5981,9 @@ msgstr "В голосовом режиме ChatGPT берёт твои слов�
 msgid "In voice mode, Claude can quiz you from your decks while you walk or cook. You answer out loud, and your reviews stay in Lymi."
 msgstr "В голосовом режиме Claude погоняет тебя по твоим колодам, пока ты гуляешь или готовишь. Отвечаешь вслух, а повторения остаются в Lymi."
 
+msgid "in, inside"
+msgstr "в, внутри"
+
 msgid "In, into, out of"
 msgstr "В чём, во что, из чего"
 
@@ -5928,6 +6001,12 @@ msgstr "Повреждается у локтя; слабый хват и оне�
 
 msgid "inside"
 msgstr "внутри"
+
+msgid "Inside a building, a town or a country: -s."
+msgstr "Внутри здания, в городе или стране: -s."
+
+msgid "Inside or on?"
+msgstr "Внутри или на?"
 
 msgid "Insights"
 msgstr "Обзор"
@@ -6042,6 +6121,13 @@ msgstr "Глагол распадается: в «Ich höre jetzt auf» auf ух
 
 msgid "It was {expected}."
 msgstr "Прозвучало {expected}."
+
+#. placeholder {0}: item.answers[0]
+msgid "It was <0>{0}</0>"
+msgstr "Правильно: <0>{0}</0>"
+
+msgid "It was <0>{expected}</0>."
+msgstr "Правильно: <0>{expected}</0>."
 
 msgid "It was a really *pleasant* evening."
 msgstr "Это был очень *приятный* вечер."
@@ -6334,6 +6420,9 @@ msgctxt "cards in this state"
 msgid "Known"
 msgstr "Выученные"
 
+msgid "Kodu is home; kodus, at home."
+msgstr "Kodu — дом; kodus — дома."
+
 msgid "Kolm, three, and veerand, a quarter."
 msgstr "Kolm — три, veerand — четверть."
 
@@ -6521,6 +6610,9 @@ msgstr "Лекция 6"
 
 msgid "lecture-5-slides.pdf"
 msgstr "lecture-5-slides.pdf"
+
+msgid "Left column"
+msgstr "Левая колонка"
 
 msgid "Legal bases"
 msgstr "Правовые основания"
@@ -6976,6 +7068,9 @@ msgstr "Сделай одну колоду для учебной группы и
 msgid "Make Spanish flashcards from this post."
 msgstr "Сделай из этого поста карточки по испанскому."
 
+msgid "Make the form"
+msgstr "Образуй форму"
+
 msgid "makes a yes-or-no question"
 msgstr "делает вопрос, на который отвечают «да» или «нет»"
 
@@ -7056,6 +7151,9 @@ msgstr "Мужской род"
 
 msgid "Masculine, though it ends in -a: buenos días."
 msgstr "Мужской род, хотя оканчивается на -a: buenos días."
+
+msgid "Match"
+msgstr "Пары"
 
 msgid "Match, Blast and Quizlet Live"
 msgstr "Match, Blast и Quizlet Live"
@@ -7507,6 +7605,9 @@ msgstr "Над <0>次</0> и <1>駅</1> чтения нет: ты их уже з
 msgid "No signal"
 msgstr "Нет связи"
 
+msgid "No wrong tries."
+msgstr "Ни одной неверной попытки."
+
 msgid "No, *thank you*."
 msgstr "Нет, *спасибо*."
 
@@ -7602,6 +7703,9 @@ msgstr "Нет"
 
 msgid "Not “I want well”. It’s how you accept a coffee."
 msgstr "Дословно «хочу хорошо», а значит «да, с удовольствием» — например, в ответ на кофе."
+
+msgid "Not a pair."
+msgstr "Не пара."
 
 msgid "Not a week, as Russian <0>неде́ля</0> is."
 msgstr "Не неделя, как русское <0>неде́ля</0>."
@@ -7809,6 +7913,9 @@ msgstr "На двери или на табличке."
 msgid "On a door you’ll also see <0/>, open, and <1/>, closed."
 msgstr "На двери ещё увидишь <0/>, открыто, и <1/>, закрыто."
 
+msgid "On a surface, at work or at a market: -l."
+msgstr "На поверхности, на работе или на рынке: -l."
+
 msgid "On a toilet door, N stands for <0>naistele</0>, for women."
 msgstr "На двери туалета N значит <0>naistele</0>, для женщин."
 
@@ -7850,6 +7957,9 @@ msgstr "на стене"
 
 msgid "On your phone"
 msgstr "На телефоне"
+
+msgid "on, at"
+msgstr "на"
 
 msgid "On, onto, off"
 msgstr "На чём, на что, с чего"
@@ -8085,6 +8195,12 @@ msgstr "Страница не найдена"
 msgid "Page not found · Lymi"
 msgstr "Страница не найдена · Lymi"
 
+msgid "Pair {number}"
+msgstr "Пара {number}"
+
+msgid "Pairs across two columns, tapped one side then the other; a pair locks when it is right, and wrong tries count."
+msgstr "Пары из двух колонок: нажми на одну сторону, потом на другую; верная пара закрепляется, а неверные попытки считаются."
+
 msgid "Park"
 msgstr "Парк"
 
@@ -8220,6 +8336,9 @@ msgstr "Выбери пару. Оба слова показаны на одно�
 msgid "Pick a range, listen, and type the number in digits."
 msgstr "Выбери диапазон, послушай и введи число цифрами."
 
+msgid "Pick a word first."
+msgstr "Сначала выбери слово."
+
 msgid "Pick each pair above again and hear which word is longer."
 msgstr "Ещё раз выбери каждую пару выше и послушай, какое слово длиннее."
 
@@ -8234,6 +8353,9 @@ msgstr "Выбери колоду, добавь её бесплатно и на�
 
 msgid "Pick the ending that goes with the pronoun, then hear the sentence."
 msgstr "Выбери окончание, которое подходит к местоимению, а потом послушай предложение."
+
+msgid "Pick the form"
+msgstr "Выбери форму"
 
 msgid "Pick the word for the gap"
 msgstr "Выбери слово для пропуска"
@@ -8340,6 +8462,9 @@ msgstr "Воспроизвести {word}"
 #. placeholder {0}: step.word
 msgid "Play <0>{0}</0>"
 msgstr "Воспроизвести <0>{0}</0>"
+
+msgid "Play <0>{form}</0>"
+msgstr "Воспроизвести <0>{form}</0>"
 
 msgid "Play each number twice before you type."
 msgstr "Послушай каждое число дважды, прежде чем писать."
@@ -8612,6 +8737,9 @@ msgstr "Pühapäev с окончанием, которое отвечает на
 msgid "Pumpkin"
 msgstr "Тыква"
 
+msgid "Put {picked} here"
+msgstr "Положить {picked} сюда"
+
 msgid "Put <0/> in front to ask: <1/> Answer yes with <2/> It’s <3>on</3>, not <4>olen</4>, because the car is what “is”."
 msgstr "Чтобы спросить, поставь в начало <0/>: <1/> Ответ «да» — <2/> Именно <3>on</3>, а не <4>olen</4>, потому что «есть» здесь машина."
 
@@ -8621,8 +8749,14 @@ msgstr "Ставь <0>ei</0> перед глаголом: <1>ma ei loe</1>, я �
 msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
 msgstr "Чтобы спросить «да или нет», поставь <0>kas</0> перед предложением. Больше ничего не двигается: <1>Kas sa elad Tallinnas?</1>"
 
+msgid "Put every word in a group first."
+msgstr "Сначала разложи все слова по группам."
+
 msgid "Put Lymi’s address in ~/.gemini/settings.json, with the client ID from the setup guide."
 msgstr "Впиши адрес Lymi в ~/.gemini/settings.json вместе с client ID из инструкции по настройке."
+
+msgid "Put the words in order"
+msgstr "Расставь слова по порядку"
 
 msgid "Put them together"
 msgstr "Собираем вместе"
@@ -9000,6 +9134,9 @@ msgstr "Правильный ответ"
 msgid "right away"
 msgstr "сразу"
 
+msgid "Right column"
+msgstr "Правая колонка"
+
 msgid "Right."
 msgstr "Правильно."
 
@@ -9114,6 +9251,9 @@ msgstr "Произношение"
 msgctxt "dialogue: say the right reply and go on"
 msgid "Say it"
 msgstr "Сказать"
+
+msgid "Say it in Estonian:"
+msgstr "Скажи по-эстонски:"
 
 msgid "Say no"
 msgstr "Ответь «нет»"
@@ -9636,6 +9776,9 @@ msgstr "Скоро"
 msgid "Sorry; excuse me"
 msgstr "Извините; простите"
 
+msgid "Sort"
+msgstr "Разложи по группам"
+
 msgid "Sounds good"
 msgstr "Договорились"
 
@@ -10119,11 +10262,20 @@ msgstr "Нажми на гласную"
 msgid "Tap a word or a person"
 msgstr "Нажми на слово или на человека"
 
+msgid "Tap a word to add it; drag or use the arrow keys to move it."
+msgstr "Нажми на слово, чтобы добавить его; перетащи или сдвинь стрелками."
+
+msgid "Tap a word, then its group, or drag it there."
+msgstr "Нажми на слово, потом на его группу, или перетащи его туда."
+
 msgid "Tap an ending"
 msgstr "Нажми на окончание"
 
 msgid "Tap õ, ä and ü in the vowels above once more, then try again."
 msgstr "Ещё раз нажми на õ, ä и ü среди гласных выше, потом попробуй снова."
+
+msgid "Tap one side, then its match on the other."
+msgstr "Нажми на одну сторону, потом на её пару с другой."
 
 msgid "Tap the commands above once more, then try again."
 msgstr "Ещё раз нажми на команды выше, а потом попробуй снова."
@@ -10139,6 +10291,12 @@ msgstr "Ещё раз понажимай вопросительные слова
 
 msgid "Tap the six forms above once more, then try again."
 msgstr "Ещё раз послушай шесть форм выше, а потом попробуй снова."
+
+msgid "Tap the words in order"
+msgstr "Нажимай на слова по порядку"
+
+msgid "Tap the words in order first."
+msgstr "Сначала нажми на слова по порядку."
 
 msgid "Tap to turn it over"
 msgstr "Коснись, чтобы перевернуть"
@@ -10671,8 +10829,8 @@ msgstr "В тесте Leben in Deutschland в конце интеграцион�
 msgid "The lesson chat"
 msgstr "Чат урока"
 
-msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading and a dialogue. docs/design/estonian-lessons.md says when to use each."
-msgstr "Части набора уроков для практики после правила: аудирование, текст с пропусками, чтение и диалог. Когда что брать, описано в docs/design/estonian-lessons.md."
+msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence and making a form. docs/design/estonian-lessons.md says when to use each."
+msgstr "Части набора уроков для практики после правила: аудирование, текст с пропусками, чтение, диалог, группы, пары, сборка предложения и образование формы. Когда что брать, описано в docs/design/estonian-lessons.md."
 
 msgid "The lessons are free and need no account. Your progress stays in this browser."
 msgstr "Уроки бесплатные, аккаунт не нужен. Твой прогресс хранится в этом браузере."
@@ -11003,6 +11161,9 @@ msgstr "Глагол теряет окончание после <0>ei</0>, а н
 
 msgid "The verb is <0>on</0> whoever has the thing, and one thing you can count stays in its first form: <1>Meil on maja.</1>"
 msgstr "Глагол — <0>on</0>, у кого бы ни была вещь, а одна вещь, которую можно посчитать, остаётся в первой форме: <1>Meil on maja.</1>"
+
+msgid "The verb stays second, whichever word comes first."
+msgstr "Глагол остаётся вторым, какое бы слово ни стояло первым."
 
 msgid "The verb without its ending"
 msgstr "Глагол без окончания"
@@ -11610,6 +11771,9 @@ msgstr "Завтра."
 msgid "Tonight"
 msgstr "Сегодня вечером"
 
+msgid "Tööl, at work, takes -l like a market does."
+msgstr "Tööl, на работе, берёт -l, как и рынок."
+
 msgctxt "deck tag"
 msgid "TOPIK I"
 msgstr "TOPIK I"
@@ -11701,6 +11865,9 @@ msgstr "Украинский, группа по вторникам"
 
 msgid "Tuleb says that he’s coming. To call him over, use the stem: tule."
 msgstr "Tuleb значит, что он идёт. Чтобы позвать его, скажи основу: tule."
+
+msgid "Turg becomes turu- before an ending: turul."
+msgstr "Перед окончанием turg становится turu-: turul."
 
 msgid "Turg, market, takes -l by habit."
 msgstr "Turg, рынок, по традиции получает -l."
@@ -11801,6 +11968,9 @@ msgstr "двести"
 msgid "two thousand"
 msgstr "две тысячи"
 
+msgid "Type <0>{letter}</0>"
+msgstr "Ввести <0>{letter}</0>"
+
 msgid "Type <0>でんしゃ</0> or <1>デンシャ</1> and find <2>電車</2>."
 msgstr "Набери <0>でんしゃ</0> или <1>デンシャ</1> и найдёшь <2>電車</2>."
 
@@ -11818,6 +11988,9 @@ msgstr "Напиши слово. Lymi добавит значение, прим�
 
 msgid "Type a word. Lymi adds a meaning, an example and audio, and marks every field it wrote so you can check it."
 msgstr "Напиши слово. Lymi добавит значение, пример и аудио и пометит каждое поле, которое написал сам, чтобы его было легко проверить."
+
+msgid "Type the form"
+msgstr "Введи форму"
 
 msgid "Type the number"
 msgstr "Введи число"
@@ -11903,6 +12076,9 @@ msgstr "Пользоваться значением, не забирая его"
 
 msgid "Use cases"
 msgstr "Для чего"
+
+msgid "Use every word."
+msgstr "Используй все слова."
 
 msgid "Used Lymi"
 msgstr "Использован Lymi"
@@ -12398,6 +12574,9 @@ msgstr "откуда"
 msgid "Where is he or she?"
 msgstr "Где он или она?"
 
+msgid "Where is it?"
+msgstr "Где это?"
+
 msgid "Where is Jaan on Sunday?"
 msgstr "Где Яан в воскресенье?"
 
@@ -12704,6 +12883,9 @@ msgstr "Порядок слов: глагол на втором месте"
 msgid "Word pairs"
 msgstr "Пары слов"
 
+msgid "Word tiles tapped into order after hearing the sentence or reading its meaning; every right order counts, and the sentence plays after Check."
+msgstr "Плитки слов в правильном порядке: сначала предложение звучит или видно его значение; засчитывается любой верный порядок, а после проверки предложение звучит."
+
 msgid "Words"
 msgstr "Слова"
 
@@ -12748,6 +12930,9 @@ msgstr "Слова из твоей колоды"
 
 msgid "Words in colour open their meaning."
 msgstr "Цветные слова показывают своё значение."
+
+msgid "Words into two or three groups, tapped or dragged, checked together; a wrong word shows its group and the rule."
+msgstr "Слова в две-три группы, нажатием или перетаскиванием, с одной проверкой; неверное слово показывает свою группу и правило."
 
 msgid "Words show their reading in kana over the kanji. The kana deck is the one place with romaji, because there the sound is the answer."
 msgstr "Над кандзи показано чтение каной. Ромадзи есть только в колоде каны, потому что там звучание и есть ответ."
@@ -13283,6 +13468,9 @@ msgstr "Твои права и выбор"
 
 msgid "Your Saturday"
 msgstr "Твоя суббота"
+
+msgid "Your sentence"
+msgstr "Твоё предложение"
 
 msgid "Your state"
 msgstr "Твоя земля"

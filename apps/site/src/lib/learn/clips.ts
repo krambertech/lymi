@@ -809,6 +809,142 @@ const TALLINN_CLIPS: Record<string, Clip> = {
   ...TALLINN_DIALOGUE,
 };
 
+/*
+ * The past-tense lesson, “Lihtminevik”. Every verb form was checked against its paradigm in
+ * Sõnaveeb's EKI morphology database (ÕS 2025) on 21 November 2026.
+ */
+
+/** Verbs whose past puts -si- on the -ma form's stem, with the stem the present builds on. */
+export const PAST_SI_VERBS = [
+  { verb: "elama", now: "ela", past: "ela" },
+  { verb: "lugema", now: "loe", past: "luge" },
+  { verb: "õppima", now: "õpi", past: "õppi" },
+  { verb: "rääkima", now: "räägi", past: "rääki" },
+  { verb: "töötama", now: "tööta", past: "tööta" },
+  { verb: "ootama", now: "oota", past: "oota" },
+] as const;
+
+/** The six persons with what follows the stem in the past of a -si- verb. */
+export const PAST_SI_ENDINGS = [
+  { pronoun: "ma", ending: "sin" },
+  { pronoun: "sa", ending: "sid" },
+  { pronoun: "ta", ending: "s" },
+  { pronoun: "me", ending: "sime" },
+  { pronoun: "te", ending: "site" },
+  { pronoun: "nad", ending: "sid" },
+] as const;
+
+/** Everyday verbs whose past takes -i-: the stem before it, and the forms for ma and ta. */
+export const PAST_I_VERBS = [
+  { verb: "olema", stem: "ol", ma: "olin", ta: "oli" },
+  { verb: "tulema", stem: "tul", ma: "tulin", ta: "tuli" },
+  { verb: "minema", stem: "läks", ma: "läksin", ta: "läks" },
+  { verb: "tegema", stem: "teg", ma: "tegin", ta: "tegi" },
+  { verb: "nägema", stem: "näg", ma: "nägin", ta: "nägi" },
+  { verb: "sööma", stem: "sõ", ma: "sõin", ta: "sõi" },
+  { verb: "jooma", stem: "jõ", ma: "jõin", ta: "jõi" },
+] as const;
+
+/** Time words on a line, each with a sentence whose verb is built as `build` shows. */
+export const PAST_TIMELINE = [
+  {
+    id: "last-week",
+    et: "eelmisel nädalal",
+    at: -2,
+    sentence: "Eelmisel nädalal lugesin palju.",
+    build: "luge|sin",
+  },
+  { id: "yesterday", et: "eile", at: -1, sentence: "Eile õppisin eesti keelt.", build: "õppi|sin" },
+  { id: "today", et: "täna", at: 0, sentence: "Täna õpin eesti keelt.", build: "õpi|n" },
+] as const;
+
+/** One sentence said now and in the past, for “Now or in the past?”. */
+export const PAST_NOW_OR_THEN = [
+  { verb: "olema", now: "Ta on kodus.", past: "Ta oli kodus." },
+  { verb: "tulema", now: "Ta tuleb koju.", past: "Ta tuli koju." },
+  { verb: "minema", now: "Ta läheb tööle.", past: "Ta läks tööle." },
+  { verb: "tegema", now: "Mida ta teeb?", past: "Mida ta tegi?" },
+  { verb: "sööma", now: "Ta sööb kodus.", past: "Ta sõi kodus." },
+  { verb: "jooma", now: "Ta joob kohvi.", past: "Ta jõi kohvi." },
+  { verb: "lugema", now: "Ta loeb raamatut.", past: "Ta luges raamatut." },
+] as const;
+
+/** Mari's Saturday, told the day after. */
+export const PAST_SATURDAY = [
+  "Eile oli laupäev.",
+  "Kell kümme käis Mari turul.",
+  "Ta ostis leiba ja juustu.",
+  "Kell kaks tuli Jaan Tartust.",
+  "Nad sõid kodus ja jõid kohvi.",
+  "Siis läksid nad linna.",
+  "Jaan läks kell üheksa koju.",
+] as const;
+
+/** Kati asks about yesterday: her lines in the second voice, the learner's in the main one. */
+export const PAST_DIALOGUE = {
+  "d-kati-1": { text: "Tere! Mida sa eile tegid?", voice: "second" },
+  "d-sina-1": "Ma olin kodus ja lugesin raamatut.",
+  "d-kati-2": { text: "Kas sa käisid ka poes?", voice: "second" },
+  "d-sina-2": "Jah, ma käisin poes.",
+  "d-kati-3": { text: "Mida sa ostsid?", voice: "second" },
+  "d-sina-3": "Ma ostsin leiba ja piima.",
+} as const satisfies Record<string, Clip>;
+
+/** The words of the past-tense lesson with a card, each heard on its own. */
+export const PAST_WORDS = [
+  "lihtminevik",
+  "eile",
+  "täna",
+  "eelmisel nädalal",
+  "elama",
+  "elasin",
+  "lugema",
+  "loen",
+  "lugesin",
+  "räägin",
+  "rääkisin",
+  "ostma",
+  "ostsin",
+  "ostis",
+  "käisin",
+  "rääkima",
+  "ootama",
+  "käima",
+  "õppima",
+  "töötama",
+] as const;
+
+/**
+ * The verbs of “Which past?”: five that take -si- and five that take -i-. Three -i- verbs end in
+ * -ema and two don't, and lugema does, so sorting by -ema scores 7 of 10, near chance.
+ */
+export const PAST_SORT = [
+  { verb: "elama", past: "elasin", bin: "si" },
+  { verb: "lugema", past: "lugesin", bin: "si" },
+  { verb: "rääkima", past: "rääkisin", bin: "si" },
+  { verb: "ootama", past: "ootasin", bin: "si" },
+  { verb: "käima", past: "käisin", bin: "si" },
+  { verb: "olema", past: "olin", bin: "i" },
+  { verb: "tulema", past: "tulin", bin: "i" },
+  { verb: "minema", past: "läksin", bin: "i" },
+  { verb: "sööma", past: "sõin", bin: "i" },
+  { verb: "jooma", past: "jõin", bin: "i" },
+] as const;
+
+const PAST_CLIPS: Record<string, Clip> = {
+  ...words(PAST_WORDS),
+  ...words(
+    PAST_SI_VERBS.flatMap(({ past }) =>
+      PAST_SI_ENDINGS.map(({ pronoun, ending }) => presentWithPronoun(pronoun, past, ending)),
+    ),
+  ),
+  ...words(PAST_I_VERBS.flatMap(({ verb, ma, ta }) => [verb, ma, ta])),
+  ...words(PAST_TIMELINE.map(({ sentence }) => sentence)),
+  ...words(PAST_NOW_OR_THEN.flatMap(({ now, past }) => [now, past])),
+  "p-saturday": { sentences: PAST_SATURDAY },
+  ...PAST_DIALOGUE,
+};
+
 /** How a verb's -da form ends: -da, -ta, -la, -na, or a short -a. */
 export type DaPattern = "da" | "ta" | "la" | "na" | "a";
 
@@ -1606,5 +1742,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     "p-message": { sentences: INFINITIVE_MESSAGE },
   },
   osastav: OSASTAV_CLIPS,
+  lihtminevik: PAST_CLIPS,
   kit: KIT_CLIPS,
 };

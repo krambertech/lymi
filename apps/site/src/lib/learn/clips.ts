@@ -1755,6 +1755,88 @@ export const VORMID_CLASS = [
   "Rääkige kodus eesti keelt!",
 ] as const;
 
+export const NUD_BY_HEART: Readonly<Record<string, string>> = {
+  minema: "läinud",
+  tegema: "teinud",
+  nägema: "näinud",
+  sööma: "söönud",
+  jooma: "joonud",
+};
+
+export const nudForm = (verb: VerbForms) => NUD_BY_HEART[verb.ma] ?? `${verb.da[0]}nud`;
+
+export const verbForms = (ma: string) => VERB_FORMS.find((verb) => verb.ma === ma) as VerbForms;
+
+export const pastNo = (pronoun: string, nud: string) =>
+  `${presentWithPronoun(pronoun, `ei ${nud}`, "")}.`;
+
+export const NUD_CHAINS = ["lugema", "rääkima", "ootama", "olema", "tulema"] as const;
+
+export const NO_NOW_OR_THEN = [
+  { verb: "lugema", now: "Ma ei loe.", past: "Ma ei lugenud." },
+  { verb: "rääkima", now: "Sa ei räägi.", past: "Sa ei rääkinud." },
+  { verb: "töötama", now: "Ta ei tööta.", past: "Ta ei töötanud." },
+  { verb: "sööma", now: "Me ei söö.", past: "Me ei söönud." },
+  { verb: "tegema", now: "Ma ei tee.", past: "Ma ei teinud." },
+  { verb: "jooma", now: "Ma ei joo.", past: "Ma ei joonud." },
+  { verb: "ootama", now: "Ma ei oota.", past: "Ma ei oodanud." },
+] as const;
+
+export const NUD_MATCH = ["minema", "tegema", "sööma", "olema", "lugema", "ootama"] as const;
+
+export const NO_PAST_SUNDAY = [
+  "Eile oli pühapäev.",
+  "Mari ei läinud tööle.",
+  "Ta oli kodus ja luges raamatut.",
+  "Jaan ei tulnud, sest ta töötas.",
+  "Mari ei käinud poes.",
+  "Ta ei söönud kodus, ta sõi kohvikus.",
+] as const;
+
+export const NO_PAST_DIALOGUE = {
+  "d-kati-1": { text: "Tere! Kas sa käisid eile poes?", voice: "second" },
+  "d-sina-1": "Ei, ma ei käinud.",
+  "d-kati-2": { text: "Miks sa ei käinud?", voice: "second" },
+  "d-sina-2": "Mul ei olnud aega.",
+  "d-kati-3": { text: "Kas sa nägid eile Marit?", voice: "second" },
+  "d-sina-3": "Ei, ma ei näinud.",
+} as const satisfies Record<string, Clip>;
+
+export const NO_PAST_WORDS = [
+  "ei",
+  "lugenud",
+  "käinud",
+  "käima",
+  "käia",
+  "polnud",
+  "Mul ei olnud aega.",
+  "Ma ei olnud kodus.",
+  "Ma polnud kodus.",
+  "Ma ei läinud.",
+  "Nad ei läinud.",
+  "Ma ei loe.",
+  "miks",
+  "aega",
+] as const;
+
+const NO_PAST_CLIPS: Record<string, Clip> = {
+  ...words(NO_PAST_WORDS),
+  ...words(
+    PAST_SI_VERBS.flatMap(({ verb }) =>
+      PAST_SI_ENDINGS.map(({ pronoun }) => pastNo(pronoun, nudForm(verbForms(verb)))),
+    ),
+  ),
+  ...words(
+    [...NUD_CHAINS, ...Object.keys(NUD_BY_HEART), ...NUD_MATCH].map((ma) => nudForm(verbForms(ma))),
+  ),
+  ...words(
+    [...NUD_CHAINS, ...Object.keys(NUD_BY_HEART)].flatMap((ma) => [ma, daForm(verbForms(ma))]),
+  ),
+  ...words(NO_NOW_OR_THEN.map(({ past }) => past)),
+  "p-sunday": { sentences: NO_PAST_SUNDAY },
+  ...NO_PAST_DIALOGUE,
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -2702,5 +2784,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   mitmus: MITMUS_CLIPS,
   osastav: OSASTAV_CLIPS,
   lihtminevik: PAST_CLIPS,
+  "ma-ei-lainud": NO_PAST_CLIPS,
   kit: KIT_CLIPS,
 };

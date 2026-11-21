@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -660,7 +660,7 @@ export function LihtminevikLesson() {
   const present = lessonBySlug("olevik")?.n;
   const days = lessonBySlug("paevad")?.n;
   const verbForms = lessonBySlug("verbi-pohivormid")?.n;
-  const pastNo = LESSONS.find((lesson) => lesson.et === "Ma ei läinud")?.n;
+  const pastNo = lessonBySlug("ma-ei-lainud")?.n;
 
   return (
     <LessonView

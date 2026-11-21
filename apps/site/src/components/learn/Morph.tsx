@@ -11,7 +11,7 @@ export interface MorphStep {
   /** The form, as written and said: poe. */
   word: string;
   /** What the form is, in the reader's language, under its key: genitive, in the shop. */
-  label: string;
+  label: ReactNode;
   src: string;
   /** What changed on the way to this form, said once its key is pressed. */
   note?: ReactNode;

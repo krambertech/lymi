@@ -406,7 +406,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian impersonal: räägitakse, tehakse, ehitati`,
         et: "Räägitakse",
         minutes: 12,
-        blurb: msg`A free lesson on the Estonian impersonal voice, for when it doesn’t matter who does it: -takse and -akse now (Eestis räägitakse eesti keelt, tehakse), -ti and -di in the past (maja ehitati), ei with -ta (siin ei suitsetata), and Estonian customs to read. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian impersonal voice, for when it doesn’t matter who does it: -takse and -dakse now (Eestis räägitakse eesti keelt, saadakse, tehakse), -ti and -di in the past (maja ehitati), ei with -ta (siin ei suitsetata), and Estonian customs to read. Every sentence is read aloud.`,
       },
       { name: msg`Which case a verb takes`, et: "Ootan sind, räägin sinust" },
       { name: msg`Practice: a message to the landlord`, et: "Kiri" },

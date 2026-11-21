@@ -1834,8 +1834,8 @@ msgstr "Безкоштовний урок про родовий відмінок
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Безкоштовний урок про наказовий спосіб в естонській мові: основа дієслова як наказ (loe!, istu!, tule siia!), ära для «не роби», форми на -ge і -ke для кількох людей або на «ви», щоденні накази на кшталт räägi aeglasemalt, palun і коротка розмова в кав’ярні. Кожне речення озвучене."
 
-msgid "A free lesson on the Estonian impersonal voice, for when it doesn’t matter who does it: -takse and -akse now (Eestis räägitakse eesti keelt, tehakse), -ti and -di in the past (maja ehitati), ei with -ta (siin ei suitsetata), and Estonian customs to read. Every sentence is read aloud."
-msgstr "Безкоштовний урок про безособову форму в естонській, коли неважливо, хто це робить: -takse і -akse зараз (Eestis räägitakse eesti keelt, tehakse), -ti і -di у минулому (maja ehitati), ei з -ta (siin ei suitsetata) і текст про естонські звичаї. Кожне речення озвучене."
+msgid "A free lesson on the Estonian impersonal voice, for when it doesn’t matter who does it: -takse and -dakse now (Eestis räägitakse eesti keelt, saadakse, tehakse), -ti and -di in the past (maja ehitati), ei with -ta (siin ei suitsetata), and Estonian customs to read. Every sentence is read aloud."
+msgstr "Безкоштовний урок про безособову форму в естонській, коли неважливо, хто це робить: -takse і -dakse зараз (Eestis räägitakse eesti keelt, saadakse, tehakse), -ti і -di у минулому (maja ehitati), ei з -ta (siin ei suitsetata) і текст про естонські звичаї. Кожне речення озвучене."
 
 msgid "A free lesson on the Estonian object case: the third form for part of something, an action still going on, after ei and after verbs such as ootama (ma loen raamatut), and the genitive for the whole thing done (ma lugesin raamatu läbi), with the dictionary form in commands (osta pilet!). Every sentence is read aloud."
 msgstr "Безкоштовний урок про відмінок додатка в естонській: третя форма для частини чогось, для дії, що триває, після ei і після дієслів на кшталт ootama (ma loen raamatut), і родовий для цілої зробленої справи (ma lugesin raamatu läbi), а в наказах — словникова форма (osta pilet!). Кожне речення озвучене."
@@ -2274,6 +2274,9 @@ msgstr "Зачіпка, а не відповідь."
 
 msgid "A weekly check-in"
 msgstr "Підсумок тижня"
+
+msgid "A whole thing that is done is in its dictionary form: <0>pood avatakse</0>, <1>maja ehitati</1>. The third form stays the third form: <2>räägitakse eesti keelt</2>."
+msgstr "Ціла річ, з якою щось роблять, стоїть у словниковій формі: <0>pood avatakse</0>, <1>maja ehitati</1>. Третя форма лишається третьою формою: <2>räägitakse eesti keelt</2>."
 
 msgid "a woman’s name"
 msgstr "жіноче ім’я"
@@ -4004,8 +4007,8 @@ msgstr "Склади кожне речення за його значенням.
 msgid "Build it from the <0>da</0> form: its ending gives way to <1>nud</1>. <2>lugeda, lugenud</2>; <3>oodata, oodanud</3>; <4>olla, olnud</4>."
 msgstr "Утворюй її від форми на <0>da</0>: закінчення змінюється на <1>nud</1>. <2>lugeda, lugenud</2>; <3>oodata, oodanud</3>; <4>olla, olnud</4>."
 
-msgid "Build it from the done form: <0>räägitud</0>, <1>müüdud</1>."
-msgstr "Утворюй її від форми на -tud: <0>räägitud</0>, <1>müüdud</1>."
+msgid "Build it from the done form: <0>räägitud</0>, <1>saadud</1>."
+msgstr "Утворюй її від форми на -tud/-dud: <0>räägitud</0>, <1>saadud</1>."
 
 msgid "Build new words from ones you know, read signs, news and forms, and join longer sentences."
 msgstr "Твори нові слова з тих, що вже знаєш, читай вивіски, новини й бланки та складай довші речення."
@@ -5306,10 +5309,10 @@ msgid "don’t, to more than one or polite"
 msgstr "не робіть: до кількох людей або на «ви»"
 
 msgid "Done"
-msgstr "Пройдено"
+msgstr "На -tud/-dud"
 
 msgid "Done form, impersonal now and impersonal past"
-msgstr "Форма на -tud, безособова зараз і в минулому"
+msgstr "Форма на -tud/-dud, безособова зараз і в минулому"
 
 msgid "Done. Biology has a section for each file."
 msgstr "Готово. У «Біології» є розділ для кожного файлу."
@@ -12065,8 +12068,8 @@ msgstr "Нікого не названо, а слово про час перен
 msgid "Nobody is named, and it happens now or usually: <0>-takse</0>."
 msgstr "Нікого не названо, і це відбувається зараз або зазвичай: <0>-takse</0>."
 
-msgid "Nobody named: <0>-takse</0> or <1>-akse</1> now, <2>-ti</2> or <3>-di</3> in the past. <4>Räägitakse, räägiti.</4>"
-msgstr "Нікого не названо: <0>-takse</0> або <1>-akse</1> зараз, <2>-ti</2> або <3>-di</3> у минулому. <4>Räägitakse, räägiti.</4>"
+msgid "Nobody named: <0>-takse</0> or <1>-dakse</1> now, <2>-ti</2> or <3>-di</3> in the past. <4>Räägitakse, räägiti.</4>"
+msgstr "Нікого не названо: <0>-takse</0> або <1>-dakse</1> зараз, <2>-ti</2> або <3>-di</3> у минулому. <4>Räägitakse, räägiti.</4>"
 
 msgid "Noji alternative: Lymi vs Noji, compared · Lymi"
 msgstr "Альтернатива Noji: порівняння Lymi та Noji · Lymi"
@@ -15093,8 +15096,8 @@ msgstr "Почни з <0>あ</0>."
 msgid "Start from a ready-made deck"
 msgstr "Почни з готової колоди"
 
-msgid "Start from the done form, the one in <0>-tud</0> or <1>-dud</1>: <2>räägitud</2>, spoken; <3>müüdud</3>, sold. Swap <4>-tud</4> for <5>-takse</5> and <6>-dud</6> for <7>-akse</7>: <8>räägitakse</8>, <9>müüakse</9>. For the past, <10>-ti</10> or <11>-di</11>: <12>räägiti</12>, <13>müüdi</13>."
-msgstr "Почни з форми на <0>-tud</0> або <1>-dud</1>: <2>räägitud</2>, сказаний; <3>müüdud</3>, проданий. Заміни <4>-tud</4> на <5>-takse</5>, а <6>-dud</6> на <7>-akse</7>: <8>räägitakse</8>, <9>müüakse</9>. Для минулого — <10>-ti</10> або <11>-di</11>: <12>räägiti</12>, <13>müüdi</13>."
+msgid "Start from the done form, the one in <0>-tud</0> or <1>-dud</1>: <2>räägitud</2>, spoken; <3>saadud</3>, got. Swap <4>-tud</4> for <5>-takse</5> and <6>-dud</6> for <7>-dakse</7>: <8>räägitakse</8>, <9>saadakse</9>. For the past, <10>-ti</10> or <11>-di</11>: <12>räägiti</12>, <13>saadi</13>."
+msgstr "Почни з форми на <0>-tud</0> або <1>-dud</1>: <2>räägitud</2>, сказаний; <3>saadud</3>, отриманий. Заміни <4>-tud</4> на <5>-takse</5>, а <6>-dud</6> на <7>-dakse</7>: <8>räägitakse</8>, <9>saadakse</9>. Для минулого — <10>-ti</10> або <11>-di</11>: <12>räägiti</12>, <13>saadi</13>."
 
 msgid "Start from the third form. If it ends in a vowel, add <0>-de</0>: <1>maja, majade</1>; <2>sõpra, sõprade</2>. If it ends in <3>-d</3> or <4>-t</4>, add <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; <8>inimest, inimeste</8>."
 msgstr "Почни з третьої форми. Якщо вона закінчується на голосний, додай <0>-de</0>: <1>maja, majade</1>; <2>sõpra, sõprade</2>. Якщо на <3>-d</3> або <4>-t</4>, додай <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; <8>inimest, inimeste</8>."
@@ -15345,8 +15348,8 @@ msgstr "Підтримка й пошта: ми зберігаємо надісл
 msgid "Swap <0>-ma</0> for <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
 msgstr "Заміни <0>-ma</0> на <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
 
-msgid "Swap <0>-tud</0> for <1>-takse</1> now and <2>-ti</2> in the past; <3>-dud</3> for <4>-akse</4> and <5>-di</5>."
-msgstr "Заміни <0>-tud</0> на <1>-takse</1> зараз і на <2>-ti</2> у минулому; <3>-dud</3> — на <4>-akse</4> і <5>-di</5>."
+msgid "Swap <0>-tud</0> for <1>-takse</1> now and <2>-ti</2> in the past; <3>-dud</3> for <4>-dakse</4> and <5>-di</5>."
+msgstr "Заміни <0>-tud</0> на <1>-takse</1> зараз і на <2>-ti</2> у минулому; <3>-dud</3> — на <4>-dakse</4> і <5>-di</5>."
 
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведи кажуть так і про каву, і про робочий час."
@@ -17322,9 +17325,6 @@ msgstr "Предмет перед ними стоїть у родовому ві
 msgid "The thing is plural, so the verb takes <0>-vad</0>."
 msgstr "Того, що подобається, кілька, тож у дієслова <0>-vad</0>."
 
-msgid "The thing that is done stays in its dictionary form: <0>pood avatakse</0>, <1>maja ehitati</1>."
-msgstr "Те, з чим щось роблять, лишається у словниковій формі: <0>pood avatakse</0>, <1>maja ehitati</1>."
-
 msgid "The thing you act on, the object, takes the third form or the genitive. The choice says whether the whole thing got done."
 msgstr "Те, на що спрямована дія, — додаток — стоїть у третій формі або в родовому. Вибір показує, чи справу зроблено повністю, як «читав» і «прочитав»."
 
@@ -18121,6 +18121,9 @@ msgstr "Щоб знайти форму після ei, візьми форму з
 msgid "to forget"
 msgstr "забувати"
 
+msgid "to get"
+msgstr "отримувати"
+
 msgid "To get to know"
 msgstr "Знайомитися"
 
@@ -18322,9 +18325,6 @@ msgstr "бачити"
 
 msgid "To see their friends at home"
 msgstr "У гості до друзів"
-
-msgid "to sell"
-msgstr "продавати"
 
 msgid "To sign"
 msgstr "Підписувати"

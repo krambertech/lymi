@@ -34,7 +34,8 @@ const MEANS: Record<string, MessageDescriptor> = {
   rääkima: msg`to speak`,
   lugema: msg`to read`,
   elama: msg`to live`,
-  müüma: msg`to sell`,
+  saama: msg`to get`,
+  nägema: msg`to see`,
   tegema: msg`to do, to make`,
   sööma: msg`to eat`,
   minema: msg`to go`,
@@ -60,7 +61,7 @@ function KindTable() {
     regular: (
       <Trans>
         Swap <Et>-tud</Et> for <Et>-takse</Et> now and <Et>-ti</Et> in the past; <Et>-dud</Et> for{" "}
-        <Et>-akse</Et> and <Et>-di</Et>.
+        <Et>-dakse</Et> and <Et>-di</Et>.
       </Trans>
     ),
     heart: (
@@ -206,11 +207,11 @@ export function RaagitakseLesson() {
       words={["vanasti", "jaanipäev", "lõke", "verivorst", "hapukapsas"]}
       recap={[
         <Trans key="1">
-          Nobody named: <b lang="et">-takse</b> or <b lang="et">-akse</b> now, <b lang="et">-ti</b>{" "}
+          Nobody named: <b lang="et">-takse</b> or <b lang="et">-dakse</b> now, <b lang="et">-ti</b>{" "}
           or <b lang="et">-di</b> in the past. <b lang="et">Räägitakse, räägiti.</b>
         </Trans>,
         <Trans key="2">
-          Build it from the done form: <b lang="et">räägitud</b>, <b lang="et">müüdud</b>.
+          Build it from the done form: <b lang="et">räägitud</b>, <b lang="et">saadud</b>.
         </Trans>,
         <Trans key="3">
           No: <b lang="et">ei</b> with <b lang="et">-ta</b> now, <b lang="et">-tud</b> in the past.{" "}
@@ -235,8 +236,9 @@ export function RaagitakseLesson() {
               <SentenceList items={IMPERSONAL_USES} />
               <Aside>
                 <Trans>
-                  The thing that is done stays in its dictionary form: <Et>pood avatakse</Et>,{" "}
-                  <Et>maja ehitati</Et>.
+                  A whole thing that is done is in its dictionary form: <Et>pood avatakse</Et>,{" "}
+                  <Et>maja ehitati</Et>. The third form stays the third form:{" "}
+                  <Et>räägitakse eesti keelt</Et>.
                 </Trans>
               </Aside>
             </>
@@ -251,10 +253,10 @@ export function RaagitakseLesson() {
                 <p>
                   <Trans>
                     Start from the done form, the one in <Et>-tud</Et> or <Et>-dud</Et>:{" "}
-                    <Et>räägitud</Et>, spoken; <Et>müüdud</Et>, sold. Swap <Et>-tud</Et> for{" "}
-                    <Et>-takse</Et> and <Et>-dud</Et> for <Et>-akse</Et>: <Et>räägitakse</Et>,{" "}
-                    <Et>müüakse</Et>. For the past, <Et>-ti</Et> or <Et>-di</Et>: <Et>räägiti</Et>,{" "}
-                    <Et>müüdi</Et>.
+                    <Et>räägitud</Et>, spoken; <Et>saadud</Et>, got. Swap <Et>-tud</Et> for{" "}
+                    <Et>-takse</Et> and <Et>-dud</Et> for <Et>-dakse</Et>: <Et>räägitakse</Et>,{" "}
+                    <Et>saadakse</Et>. For the past, <Et>-ti</Et> or <Et>-di</Et>: <Et>räägiti</Et>,{" "}
+                    <Et>saadi</Et>.
                   </Trans>
                 </p>
               </Prose>

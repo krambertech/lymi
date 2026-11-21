@@ -1833,8 +1833,8 @@ msgstr "A free lesson on the Estonian genitive case: minu, sinu, tema, meie, tei
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 
-msgid "A free lesson on the Estonian impersonal voice, for when it doesn’t matter who does it: -takse and -akse now (Eestis räägitakse eesti keelt, tehakse), -ti and -di in the past (maja ehitati), ei with -ta (siin ei suitsetata), and Estonian customs to read. Every sentence is read aloud."
-msgstr "A free lesson on the Estonian impersonal voice, for when it doesn’t matter who does it: -takse and -akse now (Eestis räägitakse eesti keelt, tehakse), -ti and -di in the past (maja ehitati), ei with -ta (siin ei suitsetata), and Estonian customs to read. Every sentence is read aloud."
+msgid "A free lesson on the Estonian impersonal voice, for when it doesn’t matter who does it: -takse and -dakse now (Eestis räägitakse eesti keelt, saadakse, tehakse), -ti and -di in the past (maja ehitati), ei with -ta (siin ei suitsetata), and Estonian customs to read. Every sentence is read aloud."
+msgstr "A free lesson on the Estonian impersonal voice, for when it doesn’t matter who does it: -takse and -dakse now (Eestis räägitakse eesti keelt, saadakse, tehakse), -ti and -di in the past (maja ehitati), ei with -ta (siin ei suitsetata), and Estonian customs to read. Every sentence is read aloud."
 
 msgid "A free lesson on the Estonian object case: the third form for part of something, an action still going on, after ei and after verbs such as ootama (ma loen raamatut), and the genitive for the whole thing done (ma lugesin raamatu läbi), with the dictionary form in commands (osta pilet!). Every sentence is read aloud."
 msgstr "A free lesson on the Estonian object case: the third form for part of something, an action still going on, after ei and after verbs such as ootama (ma loen raamatut), and the genitive for the whole thing done (ma lugesin raamatu läbi), with the dictionary form in commands (osta pilet!). Every sentence is read aloud."
@@ -2273,6 +2273,9 @@ msgstr "A way in, never the answer."
 
 msgid "A weekly check-in"
 msgstr "A weekly check-in"
+
+msgid "A whole thing that is done is in its dictionary form: <0>pood avatakse</0>, <1>maja ehitati</1>. The third form stays the third form: <2>räägitakse eesti keelt</2>."
+msgstr "A whole thing that is done is in its dictionary form: <0>pood avatakse</0>, <1>maja ehitati</1>. The third form stays the third form: <2>räägitakse eesti keelt</2>."
 
 msgid "a woman’s name"
 msgstr "a woman’s name"
@@ -4003,8 +4006,8 @@ msgstr "Build each sentence from what it means. One tile is the wrong form of th
 msgid "Build it from the <0>da</0> form: its ending gives way to <1>nud</1>. <2>lugeda, lugenud</2>; <3>oodata, oodanud</3>; <4>olla, olnud</4>."
 msgstr "Build it from the <0>da</0> form: its ending gives way to <1>nud</1>. <2>lugeda, lugenud</2>; <3>oodata, oodanud</3>; <4>olla, olnud</4>."
 
-msgid "Build it from the done form: <0>räägitud</0>, <1>müüdud</1>."
-msgstr "Build it from the done form: <0>räägitud</0>, <1>müüdud</1>."
+msgid "Build it from the done form: <0>räägitud</0>, <1>saadud</1>."
+msgstr "Build it from the done form: <0>räägitud</0>, <1>saadud</1>."
 
 msgid "Build new words from ones you know, read signs, news and forms, and join longer sentences."
 msgstr "Build new words from ones you know, read signs, news and forms, and join longer sentences."
@@ -12064,8 +12067,8 @@ msgstr "Nobody is named, and a time word puts it in the past: <0>-ti</0>."
 msgid "Nobody is named, and it happens now or usually: <0>-takse</0>."
 msgstr "Nobody is named, and it happens now or usually: <0>-takse</0>."
 
-msgid "Nobody named: <0>-takse</0> or <1>-akse</1> now, <2>-ti</2> or <3>-di</3> in the past. <4>Räägitakse, räägiti.</4>"
-msgstr "Nobody named: <0>-takse</0> or <1>-akse</1> now, <2>-ti</2> or <3>-di</3> in the past. <4>Räägitakse, räägiti.</4>"
+msgid "Nobody named: <0>-takse</0> or <1>-dakse</1> now, <2>-ti</2> or <3>-di</3> in the past. <4>Räägitakse, räägiti.</4>"
+msgstr "Nobody named: <0>-takse</0> or <1>-dakse</1> now, <2>-ti</2> or <3>-di</3> in the past. <4>Räägitakse, räägiti.</4>"
 
 msgid "Noji alternative: Lymi vs Noji, compared · Lymi"
 msgstr "Noji alternative: Lymi vs Noji, compared · Lymi"
@@ -15092,8 +15095,8 @@ msgstr "Start at <0>あ</0>."
 msgid "Start from a ready-made deck"
 msgstr "Start from a ready-made deck"
 
-msgid "Start from the done form, the one in <0>-tud</0> or <1>-dud</1>: <2>räägitud</2>, spoken; <3>müüdud</3>, sold. Swap <4>-tud</4> for <5>-takse</5> and <6>-dud</6> for <7>-akse</7>: <8>räägitakse</8>, <9>müüakse</9>. For the past, <10>-ti</10> or <11>-di</11>: <12>räägiti</12>, <13>müüdi</13>."
-msgstr "Start from the done form, the one in <0>-tud</0> or <1>-dud</1>: <2>räägitud</2>, spoken; <3>müüdud</3>, sold. Swap <4>-tud</4> for <5>-takse</5> and <6>-dud</6> for <7>-akse</7>: <8>räägitakse</8>, <9>müüakse</9>. For the past, <10>-ti</10> or <11>-di</11>: <12>räägiti</12>, <13>müüdi</13>."
+msgid "Start from the done form, the one in <0>-tud</0> or <1>-dud</1>: <2>räägitud</2>, spoken; <3>saadud</3>, got. Swap <4>-tud</4> for <5>-takse</5> and <6>-dud</6> for <7>-dakse</7>: <8>räägitakse</8>, <9>saadakse</9>. For the past, <10>-ti</10> or <11>-di</11>: <12>räägiti</12>, <13>saadi</13>."
+msgstr "Start from the done form, the one in <0>-tud</0> or <1>-dud</1>: <2>räägitud</2>, spoken; <3>saadud</3>, got. Swap <4>-tud</4> for <5>-takse</5> and <6>-dud</6> for <7>-dakse</7>: <8>räägitakse</8>, <9>saadakse</9>. For the past, <10>-ti</10> or <11>-di</11>: <12>räägiti</12>, <13>saadi</13>."
 
 msgid "Start from the third form. If it ends in a vowel, add <0>-de</0>: <1>maja, majade</1>; <2>sõpra, sõprade</2>. If it ends in <3>-d</3> or <4>-t</4>, add <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; <8>inimest, inimeste</8>."
 msgstr "Start from the third form. If it ends in a vowel, add <0>-de</0>: <1>maja, majade</1>; <2>sõpra, sõprade</2>. If it ends in <3>-d</3> or <4>-t</4>, add <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; <8>inimest, inimeste</8>."
@@ -15344,8 +15347,8 @@ msgstr "Support and email: we keep the information you send us so we can respond
 msgid "Swap <0>-ma</0> for <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
 msgstr "Swap <0>-ma</0> for <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
 
-msgid "Swap <0>-tud</0> for <1>-takse</1> now and <2>-ti</2> in the past; <3>-dud</3> for <4>-akse</4> and <5>-di</5>."
-msgstr "Swap <0>-tud</0> for <1>-takse</1> now and <2>-ti</2> in the past; <3>-dud</3> for <4>-akse</4> and <5>-di</5>."
+msgid "Swap <0>-tud</0> for <1>-takse</1> now and <2>-ti</2> in the past; <3>-dud</3> for <4>-dakse</4> and <5>-di</5>."
+msgstr "Swap <0>-tud</0> for <1>-takse</1> now and <2>-ti</2> in the past; <3>-dud</3> for <4>-dakse</4> and <5>-di</5>."
 
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Swedes use it for coffee and working hours alike."
@@ -17321,9 +17324,6 @@ msgstr "The thing before them is in the genitive: <0>laud</0> becomes <1>laua al
 msgid "The thing is plural, so the verb takes <0>-vad</0>."
 msgstr "The thing is plural, so the verb takes <0>-vad</0>."
 
-msgid "The thing that is done stays in its dictionary form: <0>pood avatakse</0>, <1>maja ehitati</1>."
-msgstr "The thing that is done stays in its dictionary form: <0>pood avatakse</0>, <1>maja ehitati</1>."
-
 msgid "The thing you act on, the object, takes the third form or the genitive. The choice says whether the whole thing got done."
 msgstr "The thing you act on, the object, takes the third form or the genitive. The choice says whether the whole thing got done."
 
@@ -18120,6 +18120,9 @@ msgstr "To find the form that follows ei, take the ma form from lesson {present}
 msgid "to forget"
 msgstr "to forget"
 
+msgid "to get"
+msgstr "to get"
+
 msgid "To get to know"
 msgstr "To get to know"
 
@@ -18321,9 +18324,6 @@ msgstr "to see"
 
 msgid "To see their friends at home"
 msgstr "To see their friends at home"
-
-msgid "to sell"
-msgstr "to sell"
 
 msgid "To sign"
 msgstr "To sign"

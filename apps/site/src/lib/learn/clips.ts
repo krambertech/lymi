@@ -2830,10 +2830,11 @@ export const IMPERSONAL_KINDS = {
     { verb: "rääkima", done: "räägitud", now: "räägitakse", past: "räägiti" },
     { verb: "lugema", done: "loetud", now: "loetakse", past: "loeti" },
     { verb: "elama", done: "elatud", now: "elatakse", past: "elati" },
-    { verb: "müüma", done: "müüdud", now: "müüakse", past: "müüdi" },
+    { verb: "saama", done: "saadud", now: "saadakse", past: "saadi" },
   ],
   heart: [
     { verb: "tegema", done: "tehtud", now: "tehakse", past: "tehti" },
+    { verb: "nägema", done: "nähtud", now: "nähakse", past: "nähti" },
     { verb: "sööma", done: "söödud", now: "süüakse", past: "söödi" },
     { verb: "minema", done: "mindud", now: "minnakse", past: "mindi" },
     { verb: "tulema", done: "tuldud", now: "tullakse", past: "tuldi" },
@@ -2858,8 +2859,8 @@ export const IMPERSONAL_GAPS = [
   {
     id: "raakima-now",
     verb: "rääkima",
-    before: "Eestis",
-    after: "eesti keelt.",
+    before: "Nüüd",
+    after: "siin eesti keelt.",
     answer: "räägitakse",
   },
   {
@@ -2870,7 +2871,13 @@ export const IMPERSONAL_GAPS = [
     answer: "räägiti",
   },
   { id: "ehitama-person", verb: "ehitama", before: "Jaan", after: "maja.", answer: "ehitab" },
-  { id: "ehitama-now", verb: "ehitama", before: "Siia", after: "uus kool.", answer: "ehitatakse" },
+  {
+    id: "ehitama-now",
+    verb: "ehitama",
+    before: "Siia",
+    after: "järgmisel aastal uus kool.",
+    answer: "ehitatakse",
+  },
   {
     id: "ehitama-past",
     verb: "ehitama",
@@ -2879,7 +2886,13 @@ export const IMPERSONAL_GAPS = [
     answer: "ehitati",
   },
   { id: "avama-person", verb: "avama", before: "Kati", after: "akna.", answer: "avab" },
-  { id: "avama-now", verb: "avama", before: "Pood", after: "kell üheksa.", answer: "avatakse" },
+  {
+    id: "avama-now",
+    verb: "avama",
+    before: "Pood",
+    after: "iga päev kell üheksa.",
+    answer: "avatakse",
+  },
   { id: "avama-past", verb: "avama", before: "Uus pood", after: "eile.", answer: "avati" },
 ] as const;
 

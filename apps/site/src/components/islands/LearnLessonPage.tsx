@@ -13,6 +13,7 @@ import { MinaSinaTemaLesson } from "../learn/lessons/MinaSinaTema";
 import { MitmusLesson } from "../learn/lessons/Mitmus";
 import { ModaalverbidLesson } from "../learn/lessons/Modaalverbid";
 import { MulOnLesson } from "../learn/lessons/MulOn";
+import { NadalavahetuselLesson } from "../learn/lessons/Nadalavahetusel";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { OlevikLesson } from "../learn/lessons/Olevik";
 import { OmastavLesson } from "../learn/lessons/Omastav";
@@ -62,6 +63,7 @@ export const LESSON_VIEWS = {
   lihtminevik: LihtminevikLesson,
   "ma-ei-lainud": MaEiLainudLesson,
   tulevik: TulevikLesson,
+  nadalavahetusel: NadalavahetuselLesson,
   mitmus: MitmusLesson,
 } as const;
 

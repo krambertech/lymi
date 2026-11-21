@@ -174,7 +174,14 @@ export const STAGES: readonly Stage[] = [
     hue: 72,
     goal: msg`Say what you can, must and like to do, where you are going, what you did yesterday and what you will do tomorrow.`,
     lessons: [
-      { name: msg`The three forms of a verb`, et: "Lugema, lugeda, loen" },
+      {
+        slug: "verbi-pohivormid",
+        name: msg`The three forms of a verb`,
+        title: msg`The three forms of an Estonian verb`,
+        et: "Lugema, lugeda, loen",
+        minutes: 12,
+        blurb: msg`A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da form is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud.`,
+      },
       {
         slug: "tegevusnimed",
         name: msg`Infinitives after other verbs`,

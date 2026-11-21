@@ -405,7 +405,7 @@ const orderRows = (i18n: I18n) =>
 export function TegevusnimedLesson() {
   const { t, i18n } = useLingui();
   const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
-  const verbForms = at("Lugema, lugeda, loen");
+  const verbForms = lessonBySlug("verbi-pohivormid")?.n;
   const canMay = at("Võin, saan, oskan");
   const going = at("Lähen ujuma, olen ujumas");
   const nounForms = at("Kolm põhivormi");

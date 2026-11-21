@@ -809,6 +809,172 @@ const TALLINN_CLIPS: Record<string, Clip> = {
   ...TALLINN_DIALOGUE,
 };
 
+/** Which form a verb wants for the verb after it. */
+export type Takes = "da" | "ma";
+
+/**
+ * The verbs of the lesson on infinitives that a second verb follows: the verb, the form a learner
+ * meets it in (`lead`), which form the second verb takes, how a sentence with it starts
+ * (`frame`), and one sentence whose second verb is `form`, written with `|` before its ending.
+ * Sõnaveeb's EKI dictionary names the form under Rektsioon: “mida teha” for the -da form, “mida
+ * tegema” for the -ma form (pidama in its second entry), checked 21 Nov 2026.
+ */
+export const INFINITIVE_LEADS = [
+  {
+    verb: "tahtma",
+    lead: "tahan",
+    takes: "da",
+    frame: "Ma tahan",
+    said: "Ma tahan süüa.",
+    form: "süü|a",
+  },
+  {
+    verb: "võima",
+    lead: "võin",
+    takes: "da",
+    frame: "Ma võin",
+    said: "Ma võin sind oodata.",
+    form: "ooda|ta",
+  },
+  {
+    verb: "saama",
+    lead: "saan",
+    takes: "da",
+    frame: "Ma saan",
+    said: "Ma saan homme tulla.",
+    form: "tul|la",
+  },
+  {
+    verb: "oskama",
+    lead: "oskan",
+    takes: "da",
+    frame: "Ma oskan",
+    said: "Ma oskan natuke eesti keelt rääkida.",
+    form: "rääki|da",
+  },
+  {
+    verb: "tohtima",
+    lead: "tohin",
+    takes: "da",
+    frame: "Ma tohin",
+    said: "Ma tohin kodus töötada.",
+    form: "tööta|da",
+  },
+  {
+    verb: "proovima",
+    lead: "proovin",
+    takes: "da",
+    frame: "Ma proovin",
+    said: "Ma proovin eesti keelt õppida.",
+    form: "õppi|da",
+  },
+  {
+    verb: "armastama",
+    lead: "armastan",
+    takes: "da",
+    frame: "Ma armastan",
+    said: "Ma armastan lugeda.",
+    form: "luge|da",
+  },
+  {
+    verb: "meeldima",
+    lead: "mulle meeldib",
+    takes: "da",
+    frame: "Mulle meeldib",
+    said: "Mulle meeldib kohvi juua.",
+    form: "juu|a",
+  },
+  {
+    verb: "pidama",
+    lead: "pean",
+    takes: "ma",
+    frame: "Ma pean",
+    said: "Ma pean minema.",
+    form: "mine|ma",
+  },
+  {
+    verb: "hakkama",
+    lead: "hakkan",
+    takes: "ma",
+    frame: "Ma hakkan",
+    said: "Ma hakkan eesti keelt õppima.",
+    form: "õppi|ma",
+  },
+  {
+    verb: "minema",
+    lead: "lähen",
+    takes: "ma",
+    frame: "Ma lähen",
+    said: "Ma lähen kohvi jooma.",
+    form: "joo|ma",
+  },
+  { verb: "tulema", lead: "tule", takes: "ma", frame: "Tule", said: "Tule sööma!", form: "söö|ma" },
+  {
+    verb: "jääma",
+    lead: "jään",
+    takes: "ma",
+    frame: "Ma jään",
+    said: "Ma jään koju lugema.",
+    form: "luge|ma",
+  },
+] as const satisfies readonly {
+  verb: string;
+  lead: string;
+  takes: Takes;
+  frame: string;
+  said: string;
+  form: string;
+}[];
+
+export type InfinitiveLead = (typeof INFINITIVE_LEADS)[number];
+
+/** Six verbs in their -ma and -da forms, `|` before the ending, for tahan and pean side by side. */
+export const INFINITIVE_PAIRS = [
+  { ma: "luge|ma", da: "luge|da" },
+  { ma: "söö|ma", da: "süü|a" },
+  { ma: "mine|ma", da: "min|na" },
+  { ma: "tule|ma", da: "tul|la" },
+  { ma: "õppi|ma", da: "õppi|da" },
+  { ma: "tööta|ma", da: "tööta|da" },
+] as const;
+
+/** “Ma tahan lugeda.” or “Ma pean lugema.”: a pair's form after tahan or pean, as one clip. */
+export const wantOrMust = (form: string, takes: Takes) =>
+  `Ma ${takes === "da" ? "tahan" : "pean"} ${form.replace("|", "")}.`;
+
+/** The second verb last, however much comes between it and the first. */
+export const INFINITIVE_ORDER = [
+  "Ma pean minema.",
+  "Ma pean tööle minema.",
+  "Ma pean homme tööle minema.",
+  "Ma tahan täna kodus lugeda.",
+] as const;
+
+/**
+ * Mari's message to Jaan, gap by gap: after pean the -ma form, after tahad and meeldib the -da
+ * form, and with no verb before it the present. Words from lessons 1–22.
+ */
+export const INFINITIVE_MESSAGE = [
+  "Tere, Jaan! Ma pean täna kodus töötama.",
+  "Aga ma lähen kell neli linna.",
+  "Kas sa tahad kohvi juua?",
+  "Ma ootan sind kohvikus.",
+  "Mulle meeldib kohvikus lugeda.",
+  "Ma pean kell kuus koju minema.",
+] as const;
+
+/** Words of the infinitives lesson with a card, each heard on its own. */
+export const INFINITIVE_WORDS = [
+  "lugema",
+  "lugeda",
+  "Nad tahavad lugeda.",
+  "Nad peavad lugema.",
+  "teha",
+  "tegema",
+  "õppima",
+  "Ma õpin lugema.",
+] as const;
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -902,5 +1068,14 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  tegevusnimed: {
+    ...words(INFINITIVE_LEADS.flatMap(({ lead, said }) => [lead, said])),
+    ...words(
+      INFINITIVE_PAIRS.flatMap(({ ma, da }) => [wantOrMust(da, "da"), wantOrMust(ma, "ma")]),
+    ),
+    ...words(INFINITIVE_ORDER),
+    ...words(INFINITIVE_WORDS),
+    "p-message": { sentences: INFINITIVE_MESSAGE },
+  },
   kit: KIT_CLIPS,
 };

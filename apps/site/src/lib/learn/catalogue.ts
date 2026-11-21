@@ -168,7 +168,14 @@ export const STAGES: readonly Stage[] = [
     goal: msg`Say what you can, must and like to do, where you are going, what you did yesterday and what you will do tomorrow.`,
     lessons: [
       { name: msg`The three forms of a verb`, et: "Lugema, lugeda, loen" },
-      { name: msg`Infinitives: -ma and -da`, et: "Pean minema, tahan lugeda" },
+      {
+        slug: "tegevusnimed",
+        name: msg`Infinitives after other verbs`,
+        title: msg`Estonian infinitives after other verbs`,
+        et: "Pean minema, tahan lugeda",
+        minutes: 12,
+        blurb: msg`A free lesson on which Estonian verbs take the -da form after them and which take the -ma form: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud.`,
+      },
       { name: msg`Can, may, must`, et: "Võin, saan, oskan" },
       { name: msg`Going, being, coming back: -ma, -mas, -mast`, et: "Lähen ujuma, olen ujumas" },
       { name: msg`“To like” and feelings`, et: "Mulle meeldib" },

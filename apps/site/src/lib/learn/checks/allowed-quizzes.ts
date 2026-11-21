@@ -25,7 +25,7 @@ export const ALLOWED_NEAR_PAIRS: readonly {
     lesson: "meeldima",
     quiz: "mari-message",
     reason:
-      "The gaps ask for the -l form or the -le form: mul on igav against mulle meeldib is the lesson, and the word after each gap decides it.",
+      "The gaps ask for the -l form or the -le form: mul on igav against mulle meeldib is the lesson, and the words around each gap decide it.",
   },
   {
     lesson: "osastav",

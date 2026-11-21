@@ -53,10 +53,10 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Teile meeldib kass.": msg`You like the cat. To more than one, or polite.`,
   "Neile meeldib kass.": msg`They like the cat.`,
   "Mulle meeldib Tartu.": msg`I like Tartu.`,
-  "Kas sulle meeldib kohv?": msg`Do you like coffee?`,
+  "Sulle meeldib kohv.": msg`You like coffee.`,
   "Talle meeldib Tallinn.": msg`He or she likes Tallinn.`,
   "Meile meeldib eesti keel.": msg`We like Estonian.`,
-  "Kas teile meeldib Pärnu?": msg`Do you like Pärnu? To more than one, or polite.`,
+  "Teile meeldib Pärnu.": msg`You like Pärnu. To more than one, or polite.`,
   "Neile meeldib kool.": msg`They like school.`,
   "Mulle meeldivad kassid.": msg`I like cats.`,
   "Talle meeldib koer.": msg`He or she likes the dog.`,
@@ -106,12 +106,22 @@ const End = ({ children }: { children: string }) => (
 
 /** Who each person is, in the reader's language. */
 const PERSON: Record<MeeldimaPerson["id"], MessageDescriptor> = {
-  ma: msg`I`,
+  ma: msg({ message: "I", context: "person" }),
   sa: msg`You, to one person`,
   ta: msg`He or she`,
   me: msg`We`,
   te: msg`You, to more than one; polite you`,
   nad: msg`They`,
+};
+
+/** Who likes it, as the answer to “Who likes it?”: uk and ru answer with the dative (Мені, Мне). */
+const LIKER: Record<MeeldimaPerson["id"], MessageDescriptor> = {
+  ma: msg({ message: "I", context: "who likes it" }),
+  sa: msg({ message: "You, to one person", context: "who likes it" }),
+  ta: msg({ message: "He or she", context: "who likes it" }),
+  me: msg({ message: "We", context: "who likes it" }),
+  te: msg({ message: "You, to more than one; polite you", context: "who likes it" }),
+  nad: msg({ message: "They", context: "who likes it" }),
 };
 
 /** Short answers glossed with their word below, so each form has one entry. */
@@ -426,7 +436,7 @@ export const firstPersons = (i: number): PersonId[] => {
 type WhoItem = ChoiceItem & { said: string; answer: PersonId; pair: readonly [string, string] };
 
 const personOptions = (ids: readonly PersonId[], i18n: I18n) =>
-  ids.map((id) => ({ id, label: <span lang={i18n.locale}>{i18n._(PERSON[id])}</span> }));
+  ids.map((id) => ({ id, label: <span lang={i18n.locale}>{i18n._(LIKER[id])}</span> }));
 
 /** The feelings and when someone would say each. */
 const FEELING_WHEN: readonly {
@@ -449,7 +459,7 @@ export function MeeldimaLesson() {
   const mulOn = LESSONS.find((lesson) => lesson.et === "Mul on")?.n;
   const plural = LESSONS.find((lesson) => lesson.et === "Kassid")?.n;
   const onto = LESSONS.find((lesson) => lesson.et === "Laual, lauale, laualt")?.n;
-  const verbForms = lessonBySlug("verbi-pohivormid")?.n;
+  const infinitives = LESSONS.find((lesson) => lesson.et === "Pean minema, tahan lugeda")?.n;
 
   const whoItems = useMemo<WhoItem[]>(
     () =>
@@ -515,8 +525,7 @@ export function MeeldimaLesson() {
       options: ["Mul", "Mulle"],
       why: (
         <Trans>
-          <span lang="et">Igav</span> takes the <End>-l</End> form:{" "}
-          <span lang="et">mul on igav</span>.
+          Feeling bored takes the <End>-l</End> form: <span lang="et">mul on igav</span>.
         </Trans>
       ),
     },
@@ -588,7 +597,7 @@ export function MeeldimaLesson() {
           line: "Ei, mulle on külm.",
           why: (
             <Trans>
-              <span lang="et">Külm</span> takes the <End>-l</End> form, as having does:{" "}
+              Feeling cold takes the <End>-l</End> form, as having does:{" "}
               <span lang="et">mul on külm</span>.
             </Trans>
           ),
@@ -612,7 +621,7 @@ export function MeeldimaLesson() {
         },
         { line: line("d-sina-2"), right: true },
         {
-          line: "Jah, meeldivad.",
+          line: "Jah, mulle meeldivad.",
           why: (
             <Trans>
               <span lang="et">Kohv</span> is one thing, so it’s <span lang="et">meeldib</span>.
@@ -813,10 +822,10 @@ export function MeeldimaLesson() {
               <MoreFlip />
               <Aside>
                 <Trans>
-                  For food and drink there’s also <Word w="maitseb" />, from maitsma, to taste. It
-                  takes the <End>-le</End> form too: <Word w="Mulle maitseb kohv" />, coffee tastes
-                  good to me. <Word w="Kas sulle maitseb" />? asks whether you like what you’re
-                  eating.
+                  For food and drink there’s also <Word w="maitseb" />, from{" "}
+                  <span lang="et">maitsma</span>, to taste. It takes the <End>-le</End> form too:{" "}
+                  <Word w="Mulle maitseb kohv" />, coffee tastes good to me.{" "}
+                  <Word w="Kas sulle maitseb" />? asks whether you like what you’re eating.
                 </Trans>
               </Aside>
             </>
@@ -830,9 +839,8 @@ export function MeeldimaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    To say you like doing something, put a verb’s <End>-da</End> form after{" "}
-                    <span lang="et">meeldib</span>: <Word w="Mulle meeldib lugeda" />, I like
-                    reading. Lesson {verbForms} shows each verb’s <End>-da</End> form.
+                    As lesson {infinitives} showed, <span lang="et">meeldib</span> takes a verb’s{" "}
+                    <End>-da</End> form: <Word w="Mulle meeldib lugeda" />, I like reading.
                   </Trans>
                 </p>
                 <p>

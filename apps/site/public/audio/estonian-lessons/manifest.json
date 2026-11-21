@@ -4374,8 +4374,8 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "meeldima/kas-sulle-meeldib-kohv": {
-    "text": "Kas sulle meeldib kohv?",
+  "meeldima/sulle-meeldib-kohv": {
+    "text": "Sulle meeldib kohv.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -4389,8 +4389,8 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "meeldima/kas-teile-meeldib-pa2rnu": {
-    "text": "Kas teile meeldib Pärnu?",
+  "meeldima/teile-meeldib-pa2rnu": {
+    "text": "Teile meeldib Pärnu.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -4461,6 +4461,11 @@
   },
   "meeldima/tallinn": {
     "text": "Tallinn",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/pood": {
+    "text": "pood",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

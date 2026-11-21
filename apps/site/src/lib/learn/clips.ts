@@ -833,10 +833,10 @@ export const likesCat = (person: MeeldimaPerson) => `${capital(person.likes)} me
 /** “Who likes it?”: one sentence per person, each about one thing, so only the person changes. */
 export const MEELDIMA_WHO: Readonly<Record<MeeldimaPerson["id"], string>> = {
   ma: "Mulle meeldib Tartu.",
-  sa: "Kas sulle meeldib kohv?",
+  sa: "Sulle meeldib kohv.",
   ta: "Talle meeldib Tallinn.",
   me: "Meile meeldib eesti keel.",
-  te: "Kas teile meeldib Pärnu?",
+  te: "Teile meeldib Pärnu.",
   nad: "Neile meeldib kool.",
 };
 
@@ -860,6 +860,7 @@ export const MEELDIMA_DOING = [
 export const MEELDIMA_WHICH = [
   { w: "kohv", verb: "meeldib" },
   { w: "Tallinn", verb: "meeldib" },
+  { w: "pood", verb: "meeldib" },
   { w: "eesti keel", verb: "meeldib" },
   { w: "lugeda", verb: "meeldib" },
   { w: "ujuda", verb: "meeldib" },

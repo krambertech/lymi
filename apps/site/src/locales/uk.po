@@ -578,9 +578,6 @@ msgstr "<0>Ei</0> каже, чого людина не робить; <1>ära</1>
 msgid "<0>Ei</0>, and the verb without its ending."
 msgstr "<0>Ei</0> і дієслово без закінчення."
 
-msgid "<0>Igav</0> takes the <1>-l</1> form: <2>mul on igav</2>."
-msgstr "З <0>igav</0> — форма на <1>-l</1>: <2>mul on igav</2>."
-
 msgid "<0>Jonas</0> added 4 cards to Week 4"
 msgstr "<0>Jonas</0> додав 4 картки в тиждень 4"
 
@@ -598,9 +595,6 @@ msgstr "<0>Kes</0> питає про людей, <1>mis</1> — про речі.
 
 msgid "<0>Kohv</0> is one thing, so it’s <1>meeldib</1>."
 msgstr "<0>Kohv</0> — щось одне, тож потрібне <1>meeldib</1>."
-
-msgid "<0>Külm</0> takes the <1>-l</1> form, as having does: <2>mul on külm</2>."
-msgstr "З <0>külm</0> — форма на <1>-l</1>, як і з «у мене є»: <2>mul on külm</2>."
 
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> питає, звідки ти, а не де живеш."
@@ -2195,6 +2189,9 @@ msgstr "Зі змінами від 19 лютого 2026 року"
 msgid "As amended on 30 January 2026"
 msgstr "Зі змінами від 30 січня 2026 року"
 
+msgid "As lesson {infinitives} showed, <0>meeldib</0> takes a verb’s <1>-da</1> form: <2/>, I like reading."
+msgstr "Як показав урок {infinitives}, після <0>meeldib</0> дієслово стоїть у формі на <1>-da</1>: <2/>, мені подобається читати."
+
 msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 msgstr "Як і в olema, закінчення вже каже, хто це, тому ma, sa, me і te часто пропускають: <0/>. Щоб протиставити двох людей, бери повні займенники з уроку {pronouns}: <1/>."
 
@@ -3532,12 +3529,6 @@ msgstr "У вас є вільний *запис* на сьогодні?"
 msgid "Do you like cats?"
 msgstr "Тобі подобаються коти?"
 
-msgid "Do you like coffee?"
-msgstr "Тобі подобається кава?"
-
-msgid "Do you like Pärnu? To more than one, or polite."
-msgstr "Вам подобається Пярну? До кількох людей або на «ви»."
-
 msgid "Do you like Tallinn?"
 msgstr "Тобі подобається Таллінн?"
 
@@ -4314,6 +4305,12 @@ msgstr "батько"
 msgid "Feeling and liking"
 msgstr "Почуватися й подобатися"
 
+msgid "Feeling bored takes the <0>-l</0> form: <1>mul on igav</1>."
+msgstr "Щоб сказати, що нудно, потрібна форма на <0>-l</0>: <1>mul on igav</1>."
+
+msgid "Feeling cold takes the <0>-l</0> form, as having does: <1>mul on külm</1>."
+msgstr "Щоб сказати, що холодно, потрібна форма на <0>-l</0>, як і для «у мене є»: <1>mul on külm</1>."
+
 msgid "Feeling low; in a slump"
 msgstr "Кепський настрій; занепад сил"
 
@@ -4533,8 +4530,8 @@ msgstr "Для всіх"
 msgid "For example: {list}."
 msgstr "Наприклад: {list}."
 
-msgid "For food and drink there’s also <0/>, from maitsma, to taste. It takes the <1>-le</1> form too: <2/>, coffee tastes good to me. <3/>? asks whether you like what you’re eating."
-msgstr "Про їжу й напої є ще <0/>, від maitsma, «смакувати». З ним теж форма на <1>-le</1>: <2/>, мені смакує кава. <3/>? — так питають, чи смакує тобі те, що ти їси."
+msgid "For food and drink there’s also <0/>, from <1>maitsma</1>, to taste. It takes the <2>-le</2> form too: <3/>, coffee tastes good to me. <4/>? asks whether you like what you’re eating."
+msgstr "Про їжу й напої є ще <0/>, від <1>maitsma</1>, «смакувати». З ним теж форма на <2>-le</2>: <3/>, мені смакує кава. <4/>? — так питають, чи смакує тобі те, що ти їси."
 
 msgid "For Germany, the US, Czechia and Spain, the decks follow the question list each exam publishes, named under the exam. Canada and the DMVs don’t publish their questions, so those decks are practice questions written from the official guide, and the language exam decks teach the vocabulary of each level rather than an official list. Lymi isn’t affiliated with any exam authority and can’t promise a pass."
 msgstr "Колоди для Німеччини, США, Чехії та Іспанії відповідають списку питань, який публікує кожен іспит; джерело вказано під іспитом. Канада й DMV своїх питань не публікують, тож ці колоди — тренувальні питання за офіційним посібником, а колоди мовних іспитів навчають лексики рівня, а не офіційного списку. Lymi не пов’язаний з жодним екзаменаційним органом і не може гарантувати, що ти складеш іспит."
@@ -5169,6 +5166,10 @@ msgstr "він чи вона"
 msgid "He or she"
 msgstr "Він чи вона"
 
+msgctxt "who likes it"
+msgid "He or she"
+msgstr "Йому чи їй"
+
 msgid "He or she doesn’t have a child."
 msgstr "У нього чи в неї немає дитини."
 
@@ -5649,6 +5650,14 @@ msgstr "Сотні мільйонів"
 
 msgid "I"
 msgstr "я"
+
+msgctxt "person"
+msgid "I"
+msgstr "Я"
+
+msgctxt "who likes it"
+msgid "I"
+msgstr "Мені"
 
 msgid "I *feel* a bit tired today."
 msgstr "Сьогодні я *почуваюся* трохи втомленим."
@@ -11923,6 +11932,10 @@ msgstr "вони"
 msgid "They"
 msgstr "Вони"
 
+msgctxt "who likes it"
+msgid "They"
+msgstr "Їм"
+
 msgid "they are"
 msgstr "вони є"
 
@@ -12408,9 +12421,6 @@ msgstr "Щоб сказати, кому щось подобається, пос�
 
 msgid "To say you don’t like something, put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1/>. It’s <2/> for more than one thing too: <3/>."
 msgstr "Щоб сказати, що щось не подобається, постав <0>ei</0> перед дієсловом і прибери закінчення, як в уроці {negation}: <1/>. Коли цього кілька, теж <2/>: <3/>."
-
-msgid "To say you like doing something, put a verb’s <0>-da</0> form after <1>meeldib</1>: <2/>, I like reading. Lesson {verbForms} shows each verb’s <3>-da</3> form."
-msgstr "Щоб сказати, що тобі подобається щось робити, постав після <1>meeldib</1> дієслово у формі на <0>-da</0>: <2/>, мені подобається читати. Форму на <3>-da</3> кожного дієслова показує урок {verbForms}."
 
 msgid "To say you like something, put the person in the <0>-le</0> form before <1>meeldib</1>: <2>Mulle meeldib kohv</2> is I like coffee. Some feelings take the <3>-l</3> form instead: <4>Mul on külm</4>, I’m cold."
 msgstr "Щоб сказати, що тобі щось подобається, постав займенник у форму на <0>-le</0> перед <1>meeldib</1>: <2>Mulle meeldib kohv</2> — мені подобається кава. А деякі почуття беруть форму на <3>-l</3>: <4>Mul on külm</4>, мені холодно."
@@ -12964,6 +12974,10 @@ msgstr "ми"
 
 msgid "We"
 msgstr "Ми"
+
+msgctxt "who likes it"
+msgid "We"
+msgstr "Нам"
 
 msgid "we are"
 msgstr "ми є"
@@ -14098,6 +14112,12 @@ msgstr "Ти вчишся за схемами з підписами"
 msgid "You learned this one in context."
 msgstr "Вивчено в контексті."
 
+msgid "You like coffee."
+msgstr "Тобі подобається кава."
+
+msgid "You like Pärnu. To more than one, or polite."
+msgstr "Вам подобається Пярну. До кількох людей або на «ви»."
+
 msgid "You like the cat."
 msgstr "Тобі подобається кіт."
 
@@ -14185,11 +14205,19 @@ msgstr "ви; ввічливе «Ви»"
 msgid "You, to more than one; polite you"
 msgstr "Ви: кілька людей або ввічливо"
 
+msgctxt "who likes it"
+msgid "You, to more than one; polite you"
+msgstr "Вам: кільком людям або ввічливо"
+
 msgid "you, to one person"
 msgstr "ти"
 
 msgid "You, to one person"
 msgstr "Ти"
+
+msgctxt "who likes it"
+msgid "You, to one person"
+msgstr "Тобі"
 
 msgid "You’ll hear a question with it, and an answer."
 msgstr "Почуєш питання з ним і відповідь."

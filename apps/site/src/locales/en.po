@@ -578,9 +578,6 @@ msgstr "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to:
 msgid "<0>Ei</0>, and the verb without its ending."
 msgstr "<0>Ei</0>, and the verb without its ending."
 
-msgid "<0>Igav</0> takes the <1>-l</1> form: <2>mul on igav</2>."
-msgstr "<0>Igav</0> takes the <1>-l</1> form: <2>mul on igav</2>."
-
 msgid "<0>Jonas</0> added 4 cards to Week 4"
 msgstr "<0>Jonas</0> added 4 cards to Week 4"
 
@@ -598,9 +595,6 @@ msgstr "<0>Kes</0> asks about people, <1>mis</1> about things."
 
 msgid "<0>Kohv</0> is one thing, so it’s <1>meeldib</1>."
 msgstr "<0>Kohv</0> is one thing, so it’s <1>meeldib</1>."
-
-msgid "<0>Külm</0> takes the <1>-l</1> form, as having does: <2>mul on külm</2>."
-msgstr "<0>Külm</0> takes the <1>-l</1> form, as having does: <2>mul on külm</2>."
 
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> asks where you’re from, not where you live."
@@ -2195,6 +2189,9 @@ msgstr "As amended on 19 February 2026"
 msgid "As amended on 30 January 2026"
 msgstr "As amended on 30 January 2026"
 
+msgid "As lesson {infinitives} showed, <0>meeldib</0> takes a verb’s <1>-da</1> form: <2/>, I like reading."
+msgstr "As lesson {infinitives} showed, <0>meeldib</0> takes a verb’s <1>-da</1> form: <2/>, I like reading."
+
 msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 msgstr "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 
@@ -3532,12 +3529,6 @@ msgstr "Do you have an *appointment* free today?"
 msgid "Do you like cats?"
 msgstr "Do you like cats?"
 
-msgid "Do you like coffee?"
-msgstr "Do you like coffee?"
-
-msgid "Do you like Pärnu? To more than one, or polite."
-msgstr "Do you like Pärnu? To more than one, or polite."
-
 msgid "Do you like Tallinn?"
 msgstr "Do you like Tallinn?"
 
@@ -4314,6 +4305,12 @@ msgstr "father"
 msgid "Feeling and liking"
 msgstr "Feeling and liking"
 
+msgid "Feeling bored takes the <0>-l</0> form: <1>mul on igav</1>."
+msgstr "Feeling bored takes the <0>-l</0> form: <1>mul on igav</1>."
+
+msgid "Feeling cold takes the <0>-l</0> form, as having does: <1>mul on külm</1>."
+msgstr "Feeling cold takes the <0>-l</0> form, as having does: <1>mul on külm</1>."
+
 msgid "Feeling low; in a slump"
 msgstr "Feeling low; in a slump"
 
@@ -4533,8 +4530,8 @@ msgstr "For everyone"
 msgid "For example: {list}."
 msgstr "For example: {list}."
 
-msgid "For food and drink there’s also <0/>, from maitsma, to taste. It takes the <1>-le</1> form too: <2/>, coffee tastes good to me. <3/>? asks whether you like what you’re eating."
-msgstr "For food and drink there’s also <0/>, from maitsma, to taste. It takes the <1>-le</1> form too: <2/>, coffee tastes good to me. <3/>? asks whether you like what you’re eating."
+msgid "For food and drink there’s also <0/>, from <1>maitsma</1>, to taste. It takes the <2>-le</2> form too: <3/>, coffee tastes good to me. <4/>? asks whether you like what you’re eating."
+msgstr "For food and drink there’s also <0/>, from <1>maitsma</1>, to taste. It takes the <2>-le</2> form too: <3/>, coffee tastes good to me. <4/>? asks whether you like what you’re eating."
 
 msgid "For Germany, the US, Czechia and Spain, the decks follow the question list each exam publishes, named under the exam. Canada and the DMVs don’t publish their questions, so those decks are practice questions written from the official guide, and the language exam decks teach the vocabulary of each level rather than an official list. Lymi isn’t affiliated with any exam authority and can’t promise a pass."
 msgstr "For Germany, the US, Czechia and Spain, the decks follow the question list each exam publishes, named under the exam. Canada and the DMVs don’t publish their questions, so those decks are practice questions written from the official guide, and the language exam decks teach the vocabulary of each level rather than an official list. Lymi isn’t affiliated with any exam authority and can’t promise a pass."
@@ -5169,6 +5166,10 @@ msgstr "he or she"
 msgid "He or she"
 msgstr "He or she"
 
+msgctxt "who likes it"
+msgid "He or she"
+msgstr "He or she"
+
 msgid "He or she doesn’t have a child."
 msgstr "He or she doesn’t have a child."
 
@@ -5647,6 +5648,14 @@ msgstr "Hundreds join into one word."
 msgid "Hundreds of millions"
 msgstr "Hundreds of millions"
 
+msgid "I"
+msgstr "I"
+
+msgctxt "person"
+msgid "I"
+msgstr "I"
+
+msgctxt "who likes it"
 msgid "I"
 msgstr "I"
 
@@ -11923,6 +11932,10 @@ msgstr "they"
 msgid "They"
 msgstr "They"
 
+msgctxt "who likes it"
+msgid "They"
+msgstr "They"
+
 msgid "they are"
 msgstr "they are"
 
@@ -12408,9 +12421,6 @@ msgstr "To say who likes something, put the person in the <0>-le</0> form: <1>Mu
 
 msgid "To say you don’t like something, put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1/>. It’s <2/> for more than one thing too: <3/>."
 msgstr "To say you don’t like something, put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1/>. It’s <2/> for more than one thing too: <3/>."
-
-msgid "To say you like doing something, put a verb’s <0>-da</0> form after <1>meeldib</1>: <2/>, I like reading. Lesson {verbForms} shows each verb’s <3>-da</3> form."
-msgstr "To say you like doing something, put a verb’s <0>-da</0> form after <1>meeldib</1>: <2/>, I like reading. Lesson {verbForms} shows each verb’s <3>-da</3> form."
 
 msgid "To say you like something, put the person in the <0>-le</0> form before <1>meeldib</1>: <2>Mulle meeldib kohv</2> is I like coffee. Some feelings take the <3>-l</3> form instead: <4>Mul on külm</4>, I’m cold."
 msgstr "To say you like something, put the person in the <0>-le</0> form before <1>meeldib</1>: <2>Mulle meeldib kohv</2> is I like coffee. Some feelings take the <3>-l</3> form instead: <4>Mul on külm</4>, I’m cold."
@@ -12962,6 +12972,10 @@ msgstr "Water moving through a membrane toward the side with more dissolved subs
 msgid "we"
 msgstr "we"
 
+msgid "We"
+msgstr "We"
+
+msgctxt "who likes it"
 msgid "We"
 msgstr "We"
 
@@ -14098,6 +14112,12 @@ msgstr "You learn from labelled pictures"
 msgid "You learned this one in context."
 msgstr "You learned this one in context."
 
+msgid "You like coffee."
+msgstr "You like coffee."
+
+msgid "You like Pärnu. To more than one, or polite."
+msgstr "You like Pärnu. To more than one, or polite."
+
 msgid "You like the cat."
 msgstr "You like the cat."
 
@@ -14185,9 +14205,17 @@ msgstr "you, to more than one; polite you"
 msgid "You, to more than one; polite you"
 msgstr "You, to more than one; polite you"
 
+msgctxt "who likes it"
+msgid "You, to more than one; polite you"
+msgstr "You, to more than one; polite you"
+
 msgid "you, to one person"
 msgstr "you, to one person"
 
+msgid "You, to one person"
+msgstr "You, to one person"
+
+msgctxt "who likes it"
 msgid "You, to one person"
 msgstr "You, to one person"
 

@@ -1,5 +1,6 @@
 import { AruSaamaLesson } from "../learn/lessons/AruSaama";
 import { EitusLesson } from "../learn/lessons/Eitus";
+import { EtSestKuiLesson } from "../learn/lessons/EtSestKui";
 import { HaaldusLesson } from "../learn/lessons/Haaldus";
 import { JalgJalaLesson } from "../learn/lessons/JalgJala";
 import { KaskivLesson } from "../learn/lessons/Kaskiv";
@@ -98,6 +99,7 @@ export const LESSON_VIEWS = {
   "sobralik-kodutu": SobralikKodutuLesson,
   "lugedes-lugemata": LugedesLugemataLesson,
   "loetud-raamat": LoetudRaamatLesson,
+  "et-sest-kui": EtSestKuiLesson,
   mitmus: MitmusLesson,
 } as const;
 

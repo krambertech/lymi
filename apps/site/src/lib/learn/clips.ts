@@ -3495,6 +3495,47 @@ const PARTICIPLE_CLIPS: Record<string, Clip> = {
   "p-ad": { sentences: BIKE_AD_PASSAGE },
 };
 
+export const CONJUNCTIONS = [
+  { id: "et", word: "et", example: "Ma arvan, et homme sajab." },
+  { id: "sest", word: "sest", example: "Ma jään koju, sest olen haige." },
+  { id: "kui-if", word: "kui", example: "Kui sajab, jään ma koju." },
+  { id: "kui-when", word: "kui", example: "Kui ma koju jõuan, helistan sulle." },
+  { id: "kui-than", word: "kui", example: "Tallinn on suurem kui Tartu." },
+  { id: "aga", word: "aga", example: "Ma tahan tulla, aga mul ei ole aega." },
+] as const;
+
+export const CONJUNCTION_GAPS = [
+  { id: "et-arvan", before: "Ma arvan,", after: "homme sajab vihma.", answer: "et" },
+  { id: "sest-haige", before: "Ma jään täna koju,", after: "ma olen haige.", answer: "sest" },
+  { id: "kui-raha", before: "Ma ostaksin uue auto,", after: "mul oleks raha.", answer: "kui" },
+  { id: "et-utles", before: "Ta ütles,", after: "ta tuleb hiljem.", answer: "et" },
+  { id: "kui-pikem", before: "Kati on pikem", after: "tema vend.", answer: "kui" },
+  { id: "sest-kulm", before: "Me ei läinud randa,", after: "oli liiga külm.", answer: "sest" },
+  { id: "kui-joua", before: "Helista mulle,", after: "sa koju jõuad.", answer: "kui" },
+  { id: "et-loodan", before: "Ma loodan,", after: "sul läheb hästi.", answer: "et" },
+  {
+    id: "sest-elab",
+    before: "Ta õpib eesti keelt,",
+    after: "ta elab nüüd Tallinnas.",
+    answer: "sest",
+  },
+] as const;
+
+export const WHY_ESTONIAN_PASSAGE = [
+  "Ma õpin eesti keelt, sest me kolisime eelmisel aastal Tartusse.",
+  "Minu õpetaja ütleb, et ma räägin juba päris hästi.",
+  "Kui ma millestki aru ei saa, küsin ma uuesti.",
+  "Eesti keel on raskem kui inglise keel, aga väga ilus.",
+] as const;
+
+const CONJUNCTION_CLIPS: Record<string, Clip> = {
+  ...words(["et", "sest", "kui", "aga"]),
+  ...words(CONJUNCTIONS.map((item) => item.example)),
+  ...words(CONJUNCTION_GAPS.map(objectGapSaid)),
+  ...words(["kolima", "uuesti", "päris"]),
+  "p-kati": { sentences: WHY_ESTONIAN_PASSAGE },
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -4474,6 +4515,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "sobralik-kodutu": SUFFIX_CLIPS,
   "lugedes-lugemata": DES_MATA_CLIPS,
   "loetud-raamat": PARTICIPLE_CLIPS,
+  "et-sest-kui": CONJUNCTION_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

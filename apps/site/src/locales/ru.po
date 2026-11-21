@@ -863,6 +863,9 @@ msgstr "<0>{text}</0>, {0}; третья форма тоже <1>maja</1>, поэ
 msgid "<0>Active transport</0> moves substances against the gradient."
 msgstr "<0>Активный транспорт</0> переносит вещества против градиента."
 
+msgid "<0>Aga</0> means “but”, with a comma before it."
+msgstr ""
+
 msgid "<0>Aiko</0> finished Week 3"
 msgstr "<0>Aiko</0> прошла неделю 3"
 
@@ -940,6 +943,15 @@ msgstr "<0>Ei</0> и глагол без окончания."
 
 msgid "<0>Ema ja isa</0> are two people, like <1>nad</1>, so the verb ends in <2>-vad</2>."
 msgstr "<0>Ema ja isa</0> — это два человека, как <1>nad</1>, поэтому глагол оканчивается на <2>-vad</2>."
+
+msgid "<0>Et</0> brings in what someone thinks, says or hopes, like English “that”."
+msgstr ""
+
+msgid "<0>Et</0>, <1>sest</1> or <2>kui</2>?"
+msgstr ""
+
+msgid "<0>et</0>, that: <1>ma arvan, et…</1> <2>sest</2>, because. <3>aga</3>, but."
+msgstr ""
 
 msgid "<0>Hakkad</0> is for <1>sa</1>, and after it comes the <2>ma</2> form: <3>ma hakkan õppima</3>."
 msgstr "<0>Hakkad</0> — для <1>sa</1>, а после него идёт форма на <2>ma</2>: <3>ma hakkan õppima</3>."
@@ -1031,6 +1043,18 @@ msgstr "<0>Koolisse</0> отвечает на «куда?»: получилос�
 msgid "<0>Kuhu?</0> {means}"
 msgstr "<0>Kuhu?</0> {means}"
 
+msgid "<0>Kui</0> as “if”: the clause comes first, so the verb <1>jään</1> comes straight after the comma."
+msgstr ""
+
+msgid "<0>Kui</0> as “than”, after a word like <1>suurem</1>, bigger. No comma here."
+msgstr ""
+
+msgid "<0>Kui</0> as “when”: the same word, and the same verb straight after the comma."
+msgstr ""
+
+msgid "<0>kui</0> is if, when and than: <1>kui sajab</1>, <2>kui ma koju jõuan</2>, <3>suurem kui Tartu</3>."
+msgstr ""
+
 msgid "<0>Kus?</0> {means}"
 msgstr "<0>Kus?</0> {means}"
 
@@ -1099,6 +1123,9 @@ msgstr "<0>Loetud raamat</0> — прочитанная книга. <1>Magav lap
 
 msgid "<0>Lugesin</0> is I read, I was reading and I did read: one simple past for all three. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
 msgstr "В простом прошедшем нет рода: <0>lugesin</0> — это и «я читал», и «я читала». Когда именно, показывают слова вроде <1>eile</1> или <2>eelmisel nädalal</2>."
+
+msgid "<0>Ma arvan, et…</0>, I think that… <1>Sest</1>, because. <2>Kui</2>, if, when or than. The small words that turn two short sentences into one."
+msgstr ""
 
 msgid "<0>Ma ei käi</0> is now. Kati asked about yesterday."
 msgstr "<0>Ma ei käi</0> — это сейчас. Кати спрашивала про вчера."
@@ -1327,6 +1354,9 @@ msgstr "<0>Sain</0> — прошедшее время. Чтобы вежливо
 
 msgid "<0>Sellest</0> is about it. <1>Ootama</1> takes the third form: <2>seda</2>."
 msgstr "<0>Sellest</0> — это «об этом». <1>Ootama</1> требует третьей формы: <2>seda</2>."
+
+msgid "<0>Sest</0> gives the reason, like English “because”."
+msgstr ""
 
 msgid "<0>sin</0> when it happened; no ending after <1>ei</1>."
 msgstr "<0>sin</0>, когда это случилось; после <1>ei</1> окончания нет."
@@ -1807,6 +1837,9 @@ msgstr "Кофе с молоком, пожалуйста."
 msgid "A coffee without milk, please."
 msgstr "Кофе без молока, пожалуйста."
 
+msgid "A comma goes before <0>et</0>, <1>sest</1>, <2>aga</2> and the <3>kui</3> of if or when, but not before the <4>kui</4> of than."
+msgstr ""
+
 msgid "A command again, built on the <0>-da</0> form: <1>rääkida, rääkige</1>."
 msgstr "Снова команда, значит, от формы на <0>-da</0>: <1>rääkida, rääkige</1>."
 
@@ -1945,6 +1978,9 @@ msgstr "Бесплатный урок эстонского о трёх осно�
 
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о четырёх падежных окончаниях: -ga — «с» и «на чём» (sõbraga, bussiga), -ta — «без» (piimata), -ni — «до самого» (kella viieni, Tartuni) и -na — «как», в роли (arstina). Все они добавляются к родительному падежу. Каждое предложение озвучено."
+
+msgid "A free Estonian lesson on joining two sentences: et for that (ma arvan, et…), sest for because, kui for if, when and than, aga for but, where the commas go, and why the verb comes straight after a kui clause (kui sajab, jään ma koju). Every sentence is read aloud."
+msgstr ""
 
 msgid "A free Estonian lesson on making nouns from verbs: drop -ma and add -ja for the person (õpetama, õpetaja; laulma, laulja) or -mine for the activity (lugema, lugemine; ujuma, ujumine). Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о том, как образовать существительное от глагола: отбрось -ma и добавь -ja для того, кто это делает (õpetama, õpetaja; laulma, laulja), или -mine для самого действия (lugema, lugemine; ujuma, ujumine). Каждое предложение озвучено."
@@ -2994,6 +3030,9 @@ msgstr "Только <0>üks</0> — значит, первая форма: <1>�
 msgid "After <0>üks</0> on its own, the first form: <1>üks leib</1>."
 msgstr "Только <0>üks</0> — значит, первая форма: <1>üks leib</1>."
 
+msgid "After a <0>kui</0> clause at the start, the verb usually comes next: <1>Kui sajab, jään ma koju.</1>"
+msgstr ""
+
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "После урока на italki, Preply или с частным репетитором вставь чат или сфотографируй заметки. Lymi превратит новые слова в карточки, которые ты повторяешь между уроками. Добавить их может и AI-ассистент. Бесплатно."
 
@@ -3077,6 +3116,9 @@ msgstr "Когда узнаёшь что-то новое, начинаешь з�
 
 msgid "after; in, as in “in ten minutes”"
 msgstr "после; через, как в «через десять минут»"
+
+msgid "again"
+msgstr ""
 
 msgid "against, towards"
 msgstr "против, навстречу"
@@ -3218,6 +3260,9 @@ msgstr "Все уроки"
 
 msgid "All nine. Two, many and the ones you mean, every time."
 msgstr "Все девять. Две, много и именно эти — каждый раз верно."
+
+msgid "All nine. You can join two sentences into one."
+msgstr ""
 
 msgid "All nine. You can read a new word from its ending."
 msgstr "Все девять. Ты можешь понять новое слово по его окончанию."
@@ -5957,6 +6002,9 @@ msgstr "У каждого слова есть форма для <0>kus</0>, <1>k
 msgid "Each word is its second form plus <0>-d</0>."
 msgstr "Каждое слово — это его вторая форма плюс <0>-d</0>."
 
+msgid "Each word joins two sentences into one."
+msgstr ""
+
 msgid "ear"
 msgstr "ухо"
 
@@ -6187,6 +6235,9 @@ msgstr "Эстонский задаёт о месте три вопроса — 
 
 msgid "Estonian conditional: läheksin, tahaksin, kui mul oleks"
 msgstr "Условное наклонение в эстонском: läheksin, tahaksin, kui mul oleks"
+
+msgid "Estonian conjunctions: et (that), sest (because), kui (if, when, than)"
+msgstr ""
 
 msgid "Estonian consonant gradation: why jalg becomes jala"
 msgstr "Чередование согласных в эстонском: почему jalg становится jala"
@@ -6829,6 +6880,9 @@ msgstr "Так говорят кассиру, строителю или друг
 msgid "For a hard card"
 msgstr "Для трудной карточки"
 
+msgid "For a new job"
+msgstr ""
+
 msgid "For a person’s place, Estonian says <0/>: <1/> It has three forms too: <2/> <3/>"
 msgstr "Чтобы сказать «у кого-то», эстонский берёт <0/>: <1/> У него тоже три формы: <2/> <3/>"
 
@@ -6950,6 +7004,9 @@ msgstr "четыре школы"
 
 msgid "Four short verbs"
 msgstr "Четыре коротких глагола"
+
+msgid "Four short words do most of the work. <0>Et</0> is that, <1>sest</1> is because and <2>aga</2> is but. <3>Kui</3> has three jobs: if, when, and than. You don’t need to tell if from when: <4>kui sajab</4> is both “if it rains” and “when it rains”. For a real “if” about something unlikely, use the would form from lesson {would}: <5>kui mul oleks raha</5>."
+msgstr ""
 
 msgid "Four times it’s always the third form. After <0>ei</0>, because nothing got done. After a number from two up: <1>kaks piletit</1>. For some of something you can’t count, such as coffee. And after verbs of feeling, waiting and looking for, on their own, because they don’t finish anything: <2>ootama, armastama, otsima</2>."
 msgstr "В четырёх случаях — всегда третья форма. После <0>ei</0>, потому что ничего не сделано. После числа от двух: <1>kaks piletit</1>. Для части того, что не посчитать, например кофе. И после глаголов чувств, ожидания и поиска, когда они одни, потому что они ничего не завершают: <2>ootama, armastama, otsima</2>."
@@ -8274,8 +8331,14 @@ msgstr "Привет!"
 msgid "help"
 msgstr "помощь"
 
+msgid "Her best friend is Estonian"
+msgstr ""
+
 msgid "Her brother"
 msgstr "Её брат"
+
+msgid "Her family moved to Tartu"
+msgstr ""
 
 msgid "Her grandmother"
 msgstr "Её бабушка"
@@ -9600,6 +9663,9 @@ msgstr "идея"
 msgid "idiom"
 msgstr "идиома"
 
+msgid "if"
+msgstr ""
+
 msgid "If"
 msgstr "Если"
 
@@ -9698,6 +9764,9 @@ msgstr "в больнице"
 
 msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 msgstr "В вопросе с kas голос в конце понижается, как в утверждении: kas уже говорит, что это вопрос. В разговоре вместо него ещё услышишь <0/> в конце, что-то вроде «да?»: <1/>"
+
+msgid "In a plain sentence the verb likes to be second: <0>Täna lähen ma tööle</0>, not “today I go”. A whole <1>kui</1> clause at the start counts as the first part, so the verb comes straight after the comma: <2>Kui sajab, jään ma koju</2>. In speech you will also hear <3>täna ma lähen</3>, so this is a habit to pick up, not a strict rule."
+msgstr ""
 
 msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
 msgstr "В проекте с файлами курса Claude может собрать одну колоду с разделом на каждую лекцию."
@@ -10193,6 +10262,9 @@ msgstr "Это запрещено."
 msgid "It joins your daily review straight away. There is nothing to build."
 msgstr "Она сразу попадает в ежедневное повторение. Ничего не нужно собирать самому."
 
+msgid "It means if, when or than, so it takes <0>kui</0>."
+msgstr ""
+
 msgid "It means while or by doing, and the doer is the same as in the rest of the sentence: <0>Raamatut lugedes jäin ma magama.</0>"
 msgstr "Она означает «делая» или «тем, что делаешь», и действие выполняет тот же человек, что и в остальном предложении: <0>Raamatut lugedes jäin ma magama.</0>"
 
@@ -10201,6 +10273,9 @@ msgstr "Для него нужна энергия <0>АТФ</0>."
 
 msgid "It reads from the reading on your card, so a word that can be read several ways is said the way your card has it."
 msgstr "Он берёт чтение с твоей карточки, поэтому слово, которое можно прочитать по-разному, звучит именно так, как у тебя записано."
+
+msgid "It says what someone thinks, says or hopes, so it takes <0>et</0>."
+msgstr ""
 
 msgid "It schedules every card with spaced repetition. A card you remember waits longer before it comes back, and one you forget comes back sooner."
 msgstr "Lymi планирует каждую карточку по методу интервальных повторений. Карточка, которую ты помнишь, возвращается позже, а та, которую забываешь, — раньше."
@@ -10491,6 +10566,9 @@ msgstr "Ссылка для присоединения"
 msgid "Joined"
 msgstr "В колоде"
 
+msgid "Joining two sentences"
+msgstr ""
+
 msgid "Joins oxaloacetate to start the cycle"
 msgstr "Соединяется с оксалоацетатом и запускает цикл"
 
@@ -10622,6 +10700,9 @@ msgstr "Кати пишет хозяйке квартиры"
 
 msgid "Kati writes what she did, what she didn’t do and what she will do. The time words tell you which: <0/> is past, <1>järgmisel laupäeval</1> is future."
 msgstr "Кати пишет, что она сделала, чего не сделала и что сделает. Слова времени подсказывают, что именно: <0/> — прошлое, <1>järgmisel laupäeval</1> — будущее."
+
+msgid "Kati writes why she learns Estonian. Look for <0>et</0>, <1>sest</1>, <2>kui</2> and <3>aga</3>, and for <4/>, to move house."
+msgstr ""
 
 msgid "Kati’s <0/>, her tap, is broken. She writes a <1/> to her <2/>, Mrs Tamm. Read it and answer. Look for the -nud form of lesson {perfect} and the polite would form of lesson {conditional}."
 msgstr "У Кати сломался <0/>, кран. Она пишет <1/>, письмо, своей <2/>, госпоже Тамм. Прочитай и ответь. Ищи форму на -nud из урока {perfect} и вежливое условное наклонение из урока {conditional}."
@@ -11970,6 +12051,9 @@ msgstr "может, можно"
 msgid "Me elame Tartus: we live in Tartu. The -⁠l form goes with on, not with other verbs."
 msgstr "Me elame Tartus: мы живём в Тарту. Форма на -⁠l идёт с on, а не с другими глаголами."
 
+msgid "Me kolisime, we moved."
+msgstr ""
+
 msgid "Me, we, takes -me: elame."
 msgstr "Me, мы, берёт -me: elame."
 
@@ -12183,6 +12267,9 @@ msgstr "Большинство. Спроси себя: это тоже прои�
 
 msgid "Most of them. Ask: is it someone, or something you do?"
 msgstr "Большинство. Спроси себя: это кто-то или что-то, что делают?"
+
+msgid "Most of them. Ask: is it what someone says, the reason, or if, when or than?"
+msgstr ""
 
 msgid "Most of them. Listen again in the table to the ones you missed."
 msgstr "Большинство. Послушай ещё раз в таблице те, что не получились."
@@ -14546,6 +14633,9 @@ msgstr "Быстрый старт"
 msgid "Quiet"
 msgstr "Тихие"
 
+msgid "quite, fairly"
+msgstr ""
+
 msgid "Quiz me on the cranial nerves I keep missing."
 msgstr "Погоняй меня по черепным нервам, которые я забываю."
 
@@ -14647,6 +14737,9 @@ msgstr "Ещё раз посмотри таблицу и попробуй сно
 
 msgid "Read the three endings above once more, then try again."
 msgstr "Ещё раз перечитай про три окончания выше и попробуй снова."
+
+msgid "Read the two halves and pick the word that joins them, then hear the sentence."
+msgstr ""
 
 msgid "Read the two sections above once more, then try again."
 msgstr "Ещё раз прочитай два раздела выше и попробуй снова."
@@ -15343,8 +15436,14 @@ msgstr "Как поделиться колодой"
 msgid "Sharing and connected apps"
 msgstr "Общие колоды и подключённые приложения"
 
+msgid "She already speaks quite well"
+msgstr ""
+
 msgid "She asked whether you have time, not what you have."
 msgstr "Она спрашивала, есть ли у тебя время, а не что у тебя есть."
+
+msgid "She asks again"
+msgstr ""
 
 msgid "She came back from *town*."
 msgstr "Она вернулась из *города*."
@@ -15361,11 +15460,23 @@ msgstr "Она не пьёт молока, поэтому <0>-ta</0>: без м�
 msgid "She drinks some coffee, not a counted cup: <0>joob kohvi</0>."
 msgstr "Здесь кофе не считают чашками: <0>joob kohvi</0>."
 
+msgid "She looks the word up"
+msgstr ""
+
+msgid "She must practise more"
+msgstr ""
+
 msgid "She read a book"
 msgstr "Читала книгу"
 
 msgid "She read a book at home"
 msgstr "Читала дома книгу"
+
+msgid "She should read more"
+msgstr ""
+
+msgid "She stays quiet"
+msgstr ""
 
 msgid "She studies"
 msgstr "Она учится"
@@ -16474,6 +16585,9 @@ msgstr "Нажми на слово"
 msgid "Tap a word or a person"
 msgstr "Нажми на слово или на человека"
 
+msgid "Tap a word or a sentence"
+msgstr ""
+
 msgid "Tap a word to add it; drag or use the arrow keys to move it."
 msgstr "Нажми на слово, чтобы добавить его; перетащи или сдвинь стрелками."
 
@@ -16699,6 +16813,9 @@ msgstr "Текст, скопированный из набора Quizlet"
 msgid "textbook"
 msgstr "учебник"
 
+msgid "than"
+msgstr ""
+
 msgid "thank you"
 msgstr "спасибо"
 
@@ -16713,6 +16830,9 @@ msgstr "Спасибо за работу"
 
 msgid "Thanks; cheers"
 msgstr "Спасибо; спасибо, друг"
+
+msgid "that"
+msgstr ""
 
 msgid "That asks her not to speak at all."
 msgstr "Так ты просишь её вообще не говорить."
@@ -16767,6 +16887,9 @@ msgstr "Так ты просишь Мари не пить воду. А она с
 
 msgid "That tells Mari to drink coffee. She asked what you’d like."
 msgstr "Так ты говоришь Мари пить кофе. А она спрашивала, что будешь ты."
+
+msgid "That, because, or if?"
+msgstr ""
 
 msgid "That’s a book."
 msgstr "Это книга."
@@ -18060,6 +18183,9 @@ msgstr "Вторая форма плюс -d."
 msgid "The second loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the third is the first again."
 msgstr "Во второй форме <0>b</0> исчезает, а <1>u</1> становится <2>o</2>; третья снова такая же, как первая."
 
+msgid "The second part is the reason, so it takes <0>sest</0>."
+msgstr ""
+
 msgid "The second verb usually goes last: <0>Ma pean homme tööle minema.</0>"
 msgstr "Второй глагол обычно стоит в конце: <0>Ma pean homme tööle minema.</0>"
 
@@ -19216,6 +19342,9 @@ msgstr "Нескольким людям или одному на «вы»."
 
 msgid "To more than one person, or politely, the command ends in <0>-ge</0> or <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"
 msgstr "Нескольким людям или на «вы» команда заканчивается на <0>-ge</0> или <1>-ke</1>: <2>Istuge! Oodake! Ärge lugege!</2>"
+
+msgid "to move house"
+msgstr ""
 
 msgid "to Mum"
 msgstr "маме"
@@ -20432,6 +20561,9 @@ msgstr "О чём спрашивает карточка?"
 msgid "What does everyone want?"
 msgstr "Кто что хочет?"
 
+msgid "What does her teacher say?"
+msgstr ""
+
 msgid "What does it ask?"
 msgstr "О чём спрашивают?"
 
@@ -20497,6 +20629,9 @@ msgstr "Что делает Пеэтер вместо чтения?"
 
 msgid "What does Peeter drink?"
 msgstr "Что пьёт Пеэтер?"
+
+msgid "What does she do when she doesn’t understand?"
+msgstr ""
 
 msgid "What does she need?"
 msgstr "Что ей нужно?"
@@ -21334,8 +21469,14 @@ msgstr "Почему Яан не пришёл?"
 msgid "Why is he or she learning Estonian?"
 msgstr "Почему он или она учит эстонский?"
 
+msgid "Why is Kati learning Estonian?"
+msgstr ""
+
 msgid "Why is the phone useless there?"
 msgstr "Почему телефон там бесполезен?"
+
+msgid "Why Kati learns Estonian"
+msgstr ""
 
 msgid "Why this verb?"
 msgstr "Почему этот глагол?"
@@ -21674,6 +21815,9 @@ msgstr "Слова из одной долгой гласной сокращаю�
 
 msgid "Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new."
 msgstr "Слова, которые меняются внутри, падеж дополнения, новые времена и наклонения. Все слова ты уже знаешь, так что новое здесь только правило."
+
+msgid "Words that join two sentences"
+msgstr ""
 
 msgid "Words that keep the same stem in every form add <0>-sid</0>: <1>auto, autosid</1>; <2>ema, emasid</2>."
 msgstr "Слова, у которых основа не меняется ни в одной форме, добавляют <0>-sid</0>: <1>auto, autosid</1>; <2>ema, emasid</2>."

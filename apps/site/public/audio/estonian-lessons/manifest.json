@@ -4409,6 +4409,16 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "modaalverbid/ta-tuleb-ujuma": {
+    "text": "Ta tuleb ujuma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "modaalverbid/tuleb-ujuda": {
+    "text": "Tuleb ujuda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "modaalverbid/ma-oskan-ujuda": {
     "text": "Ma oskan ujuda.",
     "model": "eleven_v4",
@@ -4494,13 +4504,13 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "modaalverbid/ma-ei-oska-ujuda": {
-    "text": "Ma ei oska ujuda.",
+  "modaalverbid/ta-ei-oska-ujuda": {
+    "text": "Ta ei oska ujuda.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "modaalverbid/ma-ei-saa-ta2na-ujuda": {
-    "text": "Ma ei saa täna ujuda.",
+  "modaalverbid/ta-ei-saa-ta2na-ujuda": {
+    "text": "Ta ei saa täna ujuda.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -4516,6 +4526,11 @@
   },
   "modaalverbid/sul-pole-vaja-ujuda": {
     "text": "Sul pole vaja ujuda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "modaalverbid/ma-ei-oska-ujuda": {
+    "text": "Ma ei oska ujuda.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

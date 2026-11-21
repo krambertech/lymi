@@ -850,8 +850,8 @@ export const MODAL_PERMISSION = [
 
 /** Can't, mustn't, don't have to, each said about swimming. */
 export const MODAL_NOT = [
-  { lead: "ei oska", said: "Ma ei oska ujuda." },
-  { lead: "ei saa", said: "Ma ei saa täna ujuda." },
+  { lead: "ei oska", said: "Ta ei oska ujuda." },
+  { lead: "ei saa", said: "Ta ei saa täna ujuda." },
   { lead: "ei tohi", said: "Siin ei tohi ujuda." },
   { lead: "ei pea", said: "Sa ei pea ujuma." },
   { lead: "pole vaja", said: "Sul pole vaja ujuda." },
@@ -875,9 +875,9 @@ export const MODAL_REASONS = [
   "Ma oskan ujuda.",
   "Ma saan homme tulla.",
   "Sa võid siin istuda.",
-  "Siin ei tohi süüa.",
-  "Sa ei pea tulema.",
-  "Ma pean minema.",
+  "Kas ma tohin siin istuda?",
+  "Tuleb oodata.",
+  "Mul on vaja minna.",
 ] as const;
 
 /** Sentences the lesson's prose and asides play. */
@@ -888,6 +888,8 @@ export const MODAL_SENTENCES = [
   "Ta võib homme tulla.",
   "Sa ei pea tulema.",
   "Sa ei tohi tulla.",
+  "Ta tuleb ujuma.",
+  "Tuleb ujuda.",
 ] as const;
 
 /** Words the lesson glosses and plays on their own. */

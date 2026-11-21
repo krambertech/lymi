@@ -455,8 +455,8 @@ msgstr "<0/> — это сто, а <1/> — тысяча, и «один» пер
 msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 msgstr "<0/> — это сто, а <1/> — «отправь». Удвоенная буква — это более долгий звук, и с ним получается другое слово. С согласными так же: <2/> — курица, а <3/> — «неси» (одному человеку)."
 
-msgid "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> does too: <4/> Tap a verb to hear its sentence."
-msgstr "<0/> — про разрешение. С <1>ei</1> это «нельзя»: <2/> В вопросе так просят разрешения, как и с <3/>: <4/> Коснись глагола, чтобы услышать предложение."
+msgid "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> does too: <4/> Tap one to hear its sentence."
+msgstr "<0/> — про разрешение. С <1>ei</1> это «нельзя»: <2/> В вопросе так просят разрешения, как и с <3/>: <4/> Коснись любого, чтобы услышать предложение."
 
 msgid "<0/> is at home. Now answer <1/> six ways: tap a place."
 msgstr "<0/> — это дома. А теперь дай шесть ответов на <1/>: нажми на место."
@@ -473,8 +473,8 @@ msgstr "<0/> — это «мне надо», и после него идёт ф�
 msgid "<0/> is I, the one who does something: <1/> <2/> is my, for what you own: <3/>"
 msgstr "<0/> — это «я», тот, кто что-то делает: <1/> <2/> — это «мой», о том, что тебе принадлежит: <3/>"
 
-msgid "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian switches to <3>ei tohi</3>: <4/> <5/>, no need, also leaves it to you. Tap a verb to hear it said about swimming."
-msgstr "<0/> — это «надо», но <1>ei pea</1> — не «нельзя», а «не обязательно»: <2/> Для «нельзя» в эстонском другой глагол, <3>ei tohi</3>: <4/> <5/>, «не нужно», тоже оставляет выбор тебе. Коснись глагола, чтобы услышать, как это говорят о плавании."
+msgid "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian switches to <3>ei tohi</3>: <4/> <5/>, no need, also leaves it to you. Tap one to hear it said about swimming."
+msgstr "<0/> — это «надо», но <1>ei pea</1> — не «нельзя», а «не обязательно»: <2/> Для «нельзя» в эстонском другой глагол, <3>ei tohi</3>: <4/> <5/>, «не нужно», тоже оставляет выбор тебе. Коснись любого, чтобы услышать, как это говорят о плавании."
 
 msgid "<0/> is one cat; <1/> is two cats. After a number from two up, a noun takes its third form, the partitive, and stays singular: <2/> has no plural ending."
 msgstr "<0/> — одна кошка, <1/> — две кошки. После числа от двух и больше существительное стоит в третьей форме, партитиве, и остаётся в единственном числе: у <2/> нет окончания множественного числа."
@@ -509,8 +509,8 @@ msgstr "<0/> само по себе значит «нет», а <1/> — «да�
 msgid "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
 msgstr "<0/> повторяет глагол из вопроса, и так можно ответить с любым глаголом: <1>Kas sa loed? Ei loe.</1> Об отрицании рассказывает урок {negation}."
 
-msgid "<0/> says you don’t mind, or you allow it. You can offer with it: <1/> You can also let someone do something: <2/>"
-msgstr "<0/> значит «я не против» или «можно». Так предлагают: <1/> И так разрешают: <2/>"
+msgid "<0/> says something is allowed, and you also offer with it: <1/> To let someone do something: <2/>"
+msgstr "<0/> — когда ты разрешаешь или предлагаешь. Так предлагают: <1/> И так разрешают: <2/>"
 
 msgid "<0/> takes the <1>-ma</1> form, and so do <2/>, <3/>, <4/> and <5/>."
 msgstr "<0/> требует формы на <1>-ma</1>, как и <2/>, <3/>, <4/> и <5/>."
@@ -621,17 +621,20 @@ msgstr "<0>E–R</0> на табличке: с понедельника по п�
 msgid "<0>Ei ole</0> in one word"
 msgstr "<0>Ei ole</0> одним словом"
 
+msgid "<0>Ei oska</0> says you never learned. You learned as a child."
+msgstr "<0>Ei oska</0> значит, что ты не умеешь. А тебя научили ещё в детстве."
+
 msgid "<0>Ei pea</0> is don’t have to, and <1>ei tohi</1> is mustn’t: <2>Sa ei pea tulema. Sa ei tohi tulla.</2>"
 msgstr "<0>Ei pea</0> — это «не обязательно», а <1>ei tohi</1> — «нельзя»: <2>Sa ei pea tulema. Sa ei tohi tulla.</2>"
 
 msgid "<0>Ei pea</0> says you don’t have to work. You do work tomorrow."
 msgstr "<0>Ei pea</0> значит, что работать тебе не обязательно. А завтра ты работаешь."
 
+msgid "<0>Ei saa</0> says something stops you. She asked whether you know how."
+msgstr "<0>Ei saa</0> значит, что тебе что-то мешает. А она спросила, умеешь ли ты."
+
 msgid "<0>Ei tohi</0> says you’re not allowed to swim. Nothing stops you today."
 msgstr "<0>Ei tohi</0> значит, что тебе нельзя плавать. А сегодня тебе ничто не мешает."
-
-msgid "<0>Ei tohi</0> says you’re not allowed. She asked whether you know how."
-msgstr "<0>Ei tohi</0> значит, что тебе нельзя. А она спросила, умеешь ли ты."
 
 msgid "<0>Ei</0> before the verb, and the ending is gone: <1>ei {stem}</1>."
 msgstr "<0>Ei</0> перед глаголом, а окончание пропало: <1>ei {stem}</1>."
@@ -771,11 +774,11 @@ msgstr "<0>Pärnusse</0> отвечает на «куда?». После <1>pär
 msgid "<0>Pean, hakkan, lähen, tule</0> and <1>jään</1> take the <2>-ma</2> form."
 msgstr "<0>Pean, hakkan, lähen, tule</0> и <1>jään</1> требуют формы на <2>-ma</2>."
 
-msgid "<0>Pean</0> says you have to swim. She asked whether you know how."
-msgstr "<0>Pean</0> значит, что тебе надо плавать. А она спросила, умеешь ли ты."
+msgid "<0>Pean</0> is I have to. <1>Tuleb</1> with the <2>-da</2> form says it has to be done, naming no one. <3>Mul on vaja</3> is I need to."
+msgstr "<0>Pean</0> — это «мне надо». <1>Tuleb</1> с формой на <2>-da</2> говорит, что что-то надо сделать, и никого не называет. <3>Mul on vaja</3> — это «мне нужно»."
 
-msgid "<0>Pean</0>, <1>tuleb</1> and <2>mul on vaja</2> say what has to be done. <3>Pean</3> takes the <4>-ma</4> form, the other two the <5>-da</5> form."
-msgstr "<0>Pean</0>, <1>tuleb</1> и <2>mul on vaja</2> говорят, что что-то надо сделать. После <3>pean</3> идёт форма на <4>-ma</4>, после двух других — на <5>-da</5>."
+msgid "<0>Pean</0> says you have to come. Nobody makes you; you’re free."
+msgstr "<0>Pean</0> значит, что тебе надо прийти. Тебя никто не заставляет, у тебя просто свободный день."
 
 msgid "<0>Poes</0> says where you are. After <1>lähen</1>, say where to: <2>poodi</2>."
 msgstr "<0>Poes</0> говорит, где ты находишься. После <1>lähen</1> нужно «куда»: <2>poodi</2>."
@@ -864,8 +867,8 @@ msgstr "<0>vad</0> сейчас, <1>sid</1> в прошлом, как и для 
 msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>Veerand neli</0> — четверть пути к четырём, 3:15. <1>Kolmveerand neli</1> — три четверти, 3:45."
 
-msgid "<0>Võin</0> says you don’t mind, or you allow it: <1>Sa võid siin istuda.</1> <2>Tohin</2> is about being allowed, and with <3>ei</3> it says mustn’t: <4>Siin ei tohi süüa.</4>"
-msgstr "<0>Võin</0> значит «я не против» или «можно»: <1>Sa võid siin istuda.</1> <2>Tohin</2> — про разрешение, а с <3>ei</3> значит «нельзя»: <4>Siin ei tohi süüa.</4>"
+msgid "<0>Võin</0> and <1>tohin</1> both say it’s allowed; <2>võin</2> also offers: <3>Ma võin sind oodata.</3> <4>Tohin</4> is mostly heard with <5>ei</5>: <6>Siin ei tohi süüa.</6>"
+msgstr "<0>Võin</0> и <1>tohin</1> оба говорят, что что-то разрешено; <2>võin</2> ещё и предлагает: <3>Ma võin sind oodata.</3> <4>Tohin</4> чаще всего слышно с <5>ei</5>: <6>Siin ei tohi süüa.</6>"
 
 msgid "<0>за́мок</0> is a castle."
 msgstr "<0>за́мок</0> — это крепость."
@@ -5573,6 +5576,12 @@ msgstr "он пришёл, она пришла"
 msgid "He or she came home."
 msgstr "Пришёл или пришла домой."
 
+msgid "He or she can’t swim today: something is in the way."
+msgstr "Он или она сегодня не может плавать: что-то мешает."
+
+msgid "He or she can’t swim: never learned."
+msgstr "Он или она не умеет плавать."
+
 msgid "he or she did, made"
 msgstr "он делал, сделал; она делала, сделала"
 
@@ -5611,6 +5620,9 @@ msgstr "Он или она в школе."
 
 msgid "He or she is coming home."
 msgstr "Он или она приходит домой."
+
+msgid "He or she is coming to swim."
+msgstr "Он или она идёт плавать."
 
 msgid "He or she is drinking coffee."
 msgstr "Он или она пьёт кофе."
@@ -6201,12 +6213,6 @@ msgstr "Не могу найти *ключи*."
 msgid "I can’t get to the *phone*."
 msgstr "Я не могу подойти к *телефону*."
 
-msgid "I can’t swim today: something is in the way."
-msgstr "Я сегодня не могу плавать: что-то мешает."
-
-msgid "I can’t swim: I never learned."
-msgstr "Я не умею плавать."
-
 msgid "I come"
 msgstr "я прихожу"
 
@@ -6321,9 +6327,6 @@ msgstr "Завтра у меня *запись*."
 msgid "I have lots of *friends*."
 msgstr "У меня много *друзей*."
 
-msgid "I have no plans then."
-msgstr "У меня тогда нет планов."
-
 msgid "I have three cats."
 msgstr "У меня три кошки."
 
@@ -6351,8 +6354,12 @@ msgstr "Мне надо работать."
 msgid "I have to, I must"
 msgstr "мне надо, нужно"
 
-msgid "I have to. <0>Pean</0> takes the <1>-ma</1> form."
-msgstr "Мне надо. После <0>pean</0> идёт форма на <1>-ma</1>."
+msgctxt "modal verbs lesson: pean"
+msgid "I have to, I must"
+msgstr "мне надо"
+
+msgid "I have to: it’s on me."
+msgstr "Мне надо: это моя обязанность."
 
 msgid "I have two children."
 msgstr "У меня двое детей."
@@ -6453,8 +6460,8 @@ msgstr "Мне нужно подождать."
 msgid "I need to work."
 msgstr "Мне нужно работать."
 
-msgid "I need to. <0>Vaja</0> takes the <1>-da</1> form."
-msgstr "Мне нужно. После <0>vaja</0> идёт форма на <1>-da</1>."
+msgid "I need to: there’s a need."
+msgstr "Мне нужно: есть нужда."
 
 msgid "I never learned to read."
 msgstr "Я не умею читать."
@@ -6640,6 +6647,9 @@ msgstr "мне можно"
 msgid "I’m allowed to work from home."
 msgstr "Мне можно работать дома."
 
+msgid "I’m asking first."
+msgstr "Я сначала спрашиваю."
+
 msgid "I’m at home."
 msgstr "Я дома."
 
@@ -6657,6 +6667,9 @@ msgstr "Я иду из магазина."
 
 msgid "I’m eating now."
 msgstr "Сейчас я ем."
+
+msgid "I’m free."
+msgstr "У меня есть время."
 
 msgid "I’m from Estonia."
 msgstr "Я из Эстонии."
@@ -7204,6 +7217,9 @@ msgstr "Ничего страшного"
 msgid "It has no meaning of its own, like a spoken question mark."
 msgstr "Своего значения не имеет, это как знак вопроса вслух."
 
+msgid "It has to be done, and no one is named."
+msgstr "Надо сделать, и никто не назван."
+
 msgid "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
 msgstr "Это помогает. Колода Read Japanese Kana учит хирагане и катакане, а с ними остальные колоды даются легче."
 
@@ -7259,9 +7275,6 @@ msgstr "Это {right}: <0>{words}</0> — полпути до {next}."
 msgid "It’s *cosy* in the sauna."
 msgstr "В сауне *уютно*."
 
-msgid "It’s against the rules."
-msgstr "Это против правил."
-
 msgid "It’s fine by me."
 msgstr "Я не против."
 
@@ -7298,8 +7311,8 @@ msgstr "Это та же форма, что идёт после <0>ei</0> в у�
 msgid "It’s three o’clock."
 msgstr "Три часа."
 
-msgid "It’s up to you. <0>Pea</0> still takes the <1>-ma</1> form."
-msgstr "Решать тебе. После <0>pea</0> всё так же идёт форма на <1>-ma</1>."
+msgid "It’s up to you."
+msgstr "Решать тебе."
 
 msgid "It’s why a half-read chapter keeps nagging at you."
 msgstr "Вот почему недочитанная глава не даёт покоя."
@@ -7855,6 +7868,9 @@ msgstr "библиотека"
 
 msgid "Light reactions"
 msgstr "Световые реакции"
+
+msgid "Like <0>mul on vaja</0>: the person in the <1>-l</1> form, then the <2>-da</2> form. It means the same as <3>ei pea</3>."
+msgstr "Как и в <0>mul on vaja</0>: человек в форме на <1>-l</1>, потом форма на <2>-da</2>. Значит то же, что <3>ei pea</3>."
 
 msgid "Like the a in “cat”."
 msgstr "Как «я» в слове «пять» или «a» в английском «cat»."
@@ -8749,6 +8765,9 @@ msgstr "Средний род"
 msgid "Neuter, not feminine: every noun ending in -chen takes das."
 msgstr "Средний род, а не женский: у всех существительных на -chen артикль das."
 
+msgid "Never learned."
+msgstr "Не умеет."
+
 msgid "New"
 msgstr "Новая"
 
@@ -9309,14 +9328,14 @@ msgstr "Надо …"
 msgid "One has to go."
 msgstr "Надо идти."
 
+msgid "One has to swim."
+msgstr "Надо плавать."
+
 msgid "One has to wait."
 msgstr "Надо подождать."
 
 msgid "One has to work."
 msgstr "Надо работать."
-
-msgid "One has to, with no one named. <0>Tuleb</0> takes the <1>-da</1> form."
-msgstr "Надо, и не сказано кому. После <0>tuleb</0> идёт форма на <1>-da</1>."
 
 msgid "one house"
 msgstr "один дом"
@@ -10134,8 +10153,8 @@ msgstr "Тыква"
 msgid "Put {picked} here"
 msgstr "Положить {picked} сюда"
 
-msgid "Put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1>oskan</1> becomes <2>ei oska</2>. <3>Oskan</3> and <4>saan</4> stay different with <5>ei</5> too. You never learned: <6/> Something is in the way: <7/>"
-msgstr "Поставь <0>ei</0> перед глаголом и убери окончание, как в уроке {negation}: <1>oskan</1> становится <2>ei oska</2>. <3>Oskan</3> и <4>saan</4> различаются и с <5>ei</5>. Ты не умеешь: <6/> Тебе что-то мешает: <7/>"
+msgid "Put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1>oskan</1> becomes <2>ei oska</2>. <3>Oskan</3> and <4>saan</4> stay different with <5>ei</5> too. Never learned: <6/> Something is in the way today: <7/>"
+msgstr "Поставь <0>ei</0> перед глаголом и убери окончание, как в уроке {negation}: <1>oskan</1> становится <2>ei oska</2>. <3>Oskan</3> и <4>saan</4> различаются и с <5>ei</5>. Не умеет: <6/> Сегодня что-то мешает: <7/>"
 
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 msgstr "Ставь <0>ei</0> перед глаголом: <1>ma ei loe</1>, я не читаю."
@@ -11791,6 +11810,9 @@ msgstr "Ещё раз нажми на оба столбца таблицы, а �
 msgid "Tap õ, ä and ü in the vowels above once more, then try again."
 msgstr "Ещё раз нажми на õ, ä и ü среди гласных выше, потом попробуй снова."
 
+msgid "Tap one"
+msgstr "Коснись любого"
+
 msgid "Tap one side, then its match on the other."
 msgstr "Нажми на одну сторону, потом на её пару с другой."
 
@@ -11955,6 +11977,9 @@ msgstr "Это вопрос, кто она, а она уже сказала."
 
 msgid "That chess term you just used, add it to my deck."
 msgstr "Добавь в мою колоду этот шахматный термин."
+
+msgid "That goes for everyone."
+msgstr "Это для всех."
 
 msgid "That holds even when the I form changes the stem: <0/> gives <1/>, though I read is <2/>. The same goes for <3/> and <4/>. Switch between the forms and tap a line to hear it."
 msgstr "Это верно и тогда, когда форма для «я» меняет основу: из <0/> получается <1/>, хотя «я читаю» — это <2/>. То же с <3/> и <4/>. Переключай формы и нажми на строку, чтобы услышать её."
@@ -12742,9 +12767,6 @@ msgstr "Правила и каждый знак по изображению."
 msgid "The same address works everywhere. Nothing to install."
 msgstr "Один адрес работает везде. Ничего не нужно устанавливать."
 
-msgid "The same as <0>ei pea</0>, with the <1>-da</1> form."
-msgstr "То же, что <0>ei pea</0>, но с формой на <1>-da</1>."
-
 msgid "The same cards in the iPhone and Android apps, on your computer and in the Mac app, synced, with nothing to buy."
 msgstr "Те же карточки в приложениях для iPhone и Android, на компьютере и в приложении для Mac — синхронизированы, и ничего не нужно покупать."
 
@@ -13050,9 +13072,6 @@ msgstr "На столе нет хлеба."
 
 msgid "There’s no need for you to swim."
 msgstr "Тебе не нужно плавать."
-
-msgid "There’s no need."
-msgstr "Не нужно."
 
 msgid "There’s no table in the room."
 msgstr "В комнате нет стола."
@@ -14620,8 +14639,8 @@ msgstr "Где Lymi работает с Gemini?"
 msgid "Where each app does more, including the rows where it’s {name}. We check these against {name}’s own pages and update them when either app changes."
 msgstr "Где каждое приложение умеет больше, в том числе там, где впереди {name}. Мы сверяем это с собственными страницами {name} и обновляем, когда меняется любое из приложений."
 
-msgid "Where English says can, Estonian picks the verb by the reason. <0>Oskan</0> is when you know how, <1>saan</1> when nothing stops you, and <2>võin</2> when you don’t mind or you allow it. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
-msgstr "Как в русском различают «умею» и «могу», так и в эстонском глагол выбирают по причине. <0>Oskan</0> — когда умеешь, <1>saan</1> — когда ничто не мешает, <2>võin</2> — когда ты не против или разрешаешь. «Мне надо» — это <3>pean</3>, а «нельзя» — <4>ei tohi</4>."
+msgid "Where English says can, Estonian picks the verb by the reason. <0>Oskan</0> is when you know how, <1>saan</1> when nothing stops you, and <2>võin</2> when it’s allowed or you offer. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
+msgstr "Как в русском различают «умею» и «могу», так и в эстонском глагол выбирают по причине. <0>Oskan</0> — когда умеешь, <1>saan</1> — когда ничто не мешает, <2>võin</2> — когда ты разрешаешь или предлагаешь. «Мне надо» — это <3>pean</3>, а «нельзя» — <4>ei tohi</4>."
 
 msgid "where from"
 msgstr "откуда"
@@ -14973,6 +14992,9 @@ msgstr "В Pro"
 
 msgid "With Pro, from $5 a month"
 msgstr "В Pro, от 5 $ в месяц"
+
+msgid "With the <0>-ma</0> form, <1/> still means comes: <2/> Only with the <3>-da</3> form does it mean has to: <4/>"
+msgstr "С формой на <0>-ma</0> <1/> так и значит «приходит», «идёт»: <2/> «Надо» оно значит только с формой на <3>-da</3>: <4/>"
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "С колоды, которая подходит к твоей цели: поездке или первым урокам. Можно добавить несколько, и Lymi смешает их карточки в одно ежедневное повторение."
@@ -15437,9 +15459,6 @@ msgstr "Нужен тариф или рабочее пространство Cha
 msgid "You need a set for everything"
 msgstr "Тебе нужен готовый набор на всё"
 
-msgid "You never learned."
-msgstr "Ты этого не умеешь."
-
 msgid "You own this deck"
 msgstr "Твоя колода"
 
@@ -15475,9 +15494,6 @@ msgstr "Тебе нужно проверенное приложение для �
 
 msgid "You want everything on your own computer"
 msgstr "Ты хочешь хранить всё на своём компьютере"
-
-msgid "You work tomorrow, not today."
-msgstr "Ты работаешь завтра, а не сегодня."
 
 msgid "You work tomorrow, so you can’t come."
 msgstr "Завтра ты работаешь, так что прийти не можешь."

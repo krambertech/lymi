@@ -59,8 +59,10 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Mul on vaja minna.": msg`I need to go.`,
   "Mul on vaja oodata.": msg`I need to wait.`,
   "Mul on vaja töötada.": msg`I need to work.`,
-  "Ma ei oska ujuda.": msg`I can’t swim: I never learned.`,
-  "Ma ei saa täna ujuda.": msg`I can’t swim today: something is in the way.`,
+  "Ta ei oska ujuda.": msg`He or she can’t swim: never learned.`,
+  "Ta ei saa täna ujuda.": msg`He or she can’t swim today: something is in the way.`,
+  "Ta tuleb ujuma.": msg`He or she is coming to swim.`,
+  "Tuleb ujuda.": msg`One has to swim.`,
   "Siin ei tohi ujuda.": msg`No swimming here.`,
   "Sa ei pea ujuma.": msg`You don’t have to swim.`,
   "Sul pole vaja ujuda.": msg`There’s no need for you to swim.`,
@@ -90,7 +92,10 @@ const GLOSSARY: Glossary = {
   võin: { en: msg`I may, I can`, note: msg`From võima.` },
   võib: { en: msg`may, might`, note: msg`The ta form of võima.` },
   tohin: { en: msg`I’m allowed to`, note: msg`From tohtima.` },
-  pean: { en: msg`I have to, I must`, note: msg`From pidama.` },
+  pean: {
+    en: msg({ message: "I have to, I must", context: "modal verbs lesson: pean" }),
+    note: msg`From pidama.`,
+  },
   tuleb: {
     en: msg`has to be done; comes`,
     note: msg`From tulema, to come. Before a -da form it means has to.`,
@@ -196,7 +201,7 @@ function MayOrAllowed() {
         columns={4}
         phoneColumns={2}
         empty={{
-          title: <Trans>Tap a verb</Trans>,
+          title: <Trans>Tap one</Trans>,
           tip: <Trans>You’ll hear it in a sentence.</Trans>,
         }}
         items={MODAL_PERMISSION.map(({ lead, said }) => ({
@@ -214,23 +219,11 @@ function MayOrAllowed() {
 function DutyNote({ lead }: { lead: DutyLead }) {
   switch (lead) {
     case "pean":
-      return (
-        <Trans>
-          I have to. <span lang="et">Pean</span> takes the <End>-ma</End> form.
-        </Trans>
-      );
+      return <Trans>I have to: it’s on me.</Trans>;
     case "tuleb":
-      return (
-        <Trans>
-          One has to, with no one named. <span lang="et">Tuleb</span> takes the <End>-da</End> form.
-        </Trans>
-      );
+      return <Trans>It has to be done, and no one is named.</Trans>;
     case "vaja":
-      return (
-        <Trans>
-          I need to. <span lang="et">Vaja</span> takes the <End>-da</End> form.
-        </Trans>
-      );
+      return <Trans>I need to: there’s a need.</Trans>;
   }
 }
 
@@ -270,21 +263,18 @@ function HaveTo() {
 function NotTip({ lead }: { lead: (typeof MODAL_NOT)[number]["lead"] }) {
   switch (lead) {
     case "ei oska":
-      return <Trans>You never learned.</Trans>;
+      return <Trans>Never learned.</Trans>;
     case "ei saa":
       return <Trans>Something is in the way.</Trans>;
     case "ei tohi":
       return <Trans>It isn’t allowed.</Trans>;
     case "ei pea":
-      return (
-        <Trans>
-          It’s up to you. <span lang="et">Pea</span> still takes the <End>-ma</End> form.
-        </Trans>
-      );
+      return <Trans>It’s up to you.</Trans>;
     case "pole vaja":
       return (
         <Trans>
-          The same as <span lang="et">ei pea</span>, with the <End>-da</End> form.
+          Like <span lang="et">mul on vaja</span>: the person in the <End>-l</End> form, then the{" "}
+          <End>-da</End> form. It means the same as <span lang="et">ei pea</span>.
         </Trans>
       );
   }
@@ -300,7 +290,7 @@ function CantOrMustnt() {
         columns={3}
         phoneColumns={2}
         empty={{
-          title: <Trans>Tap a verb</Trans>,
+          title: <Trans>Tap one</Trans>,
           tip: <Trans>You’ll hear it said about swimming.</Trans>,
         }}
         items={MODAL_NOT.map(({ lead, said }) => ({
@@ -398,11 +388,11 @@ export const heardRun = (items: readonly HeardItem[], pinned?: HeardItem): Heard
 /** Why each sentence of “Why this verb?” takes its verb. */
 const REASONS: Record<(typeof MODAL_REASONS)[number], MessageDescriptor> = {
   "Ma oskan ujuda.": msg`I learned as a child.`,
-  "Ma saan homme tulla.": msg`I have no plans then.`,
+  "Ma saan homme tulla.": msg`I’m free.`,
   "Sa võid siin istuda.": msg`It’s fine by me.`,
-  "Siin ei tohi süüa.": msg`It’s against the rules.`,
-  "Sa ei pea tulema.": msg`There’s no need.`,
-  "Ma pean minema.": msg`I’m late for work.`,
+  "Kas ma tohin siin istuda?": msg`I’m asking first.`,
+  "Tuleb oodata.": msg`That goes for everyone.`,
+  "Mul on vaja minna.": msg`I’m late for work.`,
 };
 
 const dialogueLine = (id: keyof typeof MODAL_DIALOGUE) => {
@@ -432,19 +422,19 @@ export function ModaalverbidLesson() {
       clip: "d-sina-1",
       replies: [
         {
-          line: "Jah, ma pean.",
+          line: "Ei, ma ei oska.",
           why: (
             <Trans>
-              <span lang="et">Pean</span> says you have to swim. She asked whether you know how.
+              <span lang="et">Ei oska</span> says you never learned. You learned as a child.
             </Trans>
           ),
         },
         { line: dialogueLine("d-sina-1"), right: true },
         {
-          line: "Ei, ma ei tohi.",
+          line: "Ei, ma ei saa.",
           why: (
             <Trans>
-              <span lang="et">Ei tohi</span> says you’re not allowed. She asked whether you know
+              <span lang="et">Ei saa</span> says something stops you. She asked whether you know
               how.
             </Trans>
           ),
@@ -456,7 +446,14 @@ export function ModaalverbidLesson() {
       who: "you",
       clip: "d-sina-2",
       replies: [
-        { line: "Ei, ma pean täna töötama.", why: t`You work tomorrow, not today.` },
+        {
+          line: "Jah, ma pean tulema.",
+          why: (
+            <Trans>
+              <span lang="et">Pean</span> says you have to come. Nobody makes you; you’re free.
+            </Trans>
+          ),
+        },
         {
           line: "Ei, ma ei tohi ujuda.",
           why: (
@@ -496,8 +493,8 @@ export function ModaalverbidLesson() {
         <Trans>
           Where English says can, Estonian picks the verb by the reason.{" "}
           <span lang="et">Oskan</span> is when you know how, <span lang="et">saan</span> when
-          nothing stops you, and <span lang="et">võin</span> when you don’t mind or you allow it.
-          Must is <span lang="et">pean</span>, and mustn’t is <span lang="et">ei tohi</span>.
+          nothing stops you, and <span lang="et">võin</span> when it’s allowed or you offer. Must is{" "}
+          <span lang="et">pean</span>, and mustn’t is <span lang="et">ei tohi</span>.
         </Trans>
       }
       facts={[
@@ -525,14 +522,14 @@ export function ModaalverbidLesson() {
           <b lang="et">Saan</b> says nothing stops you: <b lang="et">Ma saan homme tulla.</b>
         </Trans>,
         <Trans key="2">
-          <b lang="et">Võin</b> says you don’t mind, or you allow it:{" "}
-          <b lang="et">Sa võid siin istuda.</b> <b lang="et">Tohin</b> is about being allowed, and
-          with <b lang="et">ei</b> it says mustn’t: <b lang="et">Siin ei tohi süüa.</b>
+          <b lang="et">Võin</b> and <b lang="et">tohin</b> both say it’s allowed;{" "}
+          <b lang="et">võin</b> also offers: <b lang="et">Ma võin sind oodata.</b>{" "}
+          <b lang="et">Tohin</b> is mostly heard with <b lang="et">ei</b>:{" "}
+          <b lang="et">Siin ei tohi süüa.</b>
         </Trans>,
         <Trans key="3">
-          <b lang="et">Pean</b>, <b lang="et">tuleb</b> and <b lang="et">mul on vaja</b> say what
-          has to be done. <b lang="et">Pean</b> takes the <End>-ma</End> form, the other two the{" "}
-          <End>-da</End> form.
+          <b lang="et">Pean</b> is I have to. <b lang="et">Tuleb</b> with the <End>-da</End> form
+          says it has to be done, naming no one. <b lang="et">Mul on vaja</b> is I need to.
         </Trans>,
         <Trans key="4">
           <b lang="et">Ei pea</b> is don’t have to, and <b lang="et">ei tohi</b> is mustn’t:{" "}
@@ -578,8 +575,8 @@ export function ModaalverbidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Võin" /> says you don’t mind, or you allow it. You can offer with it:{" "}
-                    <Word w="Ma võin sind oodata." /> You can also let someone do something:{" "}
+                    <Word w="Võin" /> says something is allowed, and you also offer with it:{" "}
+                    <Word w="Ma võin sind oodata." /> To let someone do something:{" "}
                     <Word w="Sa võid siin istuda." />
                   </Trans>
                 </p>
@@ -587,8 +584,8 @@ export function ModaalverbidLesson() {
                   <Trans>
                     <Word w="Tohin" /> is about being allowed. With <b lang="et">ei</b> it says
                     mustn’t: <Word w="Siin ei tohi süüa." /> In a question it asks whether you may,
-                    as <Word w="võin" /> does too: <Word w="Kas ma tohin siin istuda?" /> Tap a verb
-                    to hear its sentence.
+                    as <Word w="võin" /> does too: <Word w="Kas ma tohin siin istuda?" /> Tap one to
+                    hear its sentence.
                   </Trans>
                 </p>
               </Prose>
@@ -629,6 +626,13 @@ export function ModaalverbidLesson() {
                 </p>
               </Prose>
               <HaveTo />
+              <Aside>
+                <Trans>
+                  With the <End>-ma</End> form, <Word w="tuleb" /> still means comes:{" "}
+                  <Word w="Ta tuleb ujuma." /> Only with the <End>-da</End> form does it mean has
+                  to: <Word w="Tuleb ujuda." />
+                </Trans>
+              </Aside>
             </>
           ),
         },
@@ -644,8 +648,8 @@ export function ModaalverbidLesson() {
                     Put <b lang="et">ei</b> before the verb and drop its ending, as in lesson{" "}
                     {negation}: <b lang="et">oskan</b> becomes <b lang="et">ei oska</b>.{" "}
                     <b lang="et">Oskan</b> and <b lang="et">saan</b> stay different with{" "}
-                    <b lang="et">ei</b> too. You never learned: <Word w="Ma ei oska ujuda." />{" "}
-                    Something is in the way: <Word w="Ma ei saa täna ujuda." />
+                    <b lang="et">ei</b> too. Never learned: <Word w="Ta ei oska ujuda." /> Something
+                    is in the way today: <Word w="Ta ei saa täna ujuda." />
                   </Trans>
                 </p>
                 <p>
@@ -653,7 +657,7 @@ export function ModaalverbidLesson() {
                     <Word w="Pean" /> is must, but <b lang="et">ei pea</b> is don’t have to:{" "}
                     <Word w="Sa ei pea tulema." /> For mustn’t, Estonian switches to{" "}
                     <b lang="et">ei tohi</b>: <Word w="Sa ei tohi tulla." /> <Word w="Pole vaja" />,
-                    no need, also leaves it to you. Tap a verb to hear it said about swimming.
+                    no need, also leaves it to you. Tap one to hear it said about swimming.
                   </Trans>
                 </p>
               </Prose>

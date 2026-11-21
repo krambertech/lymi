@@ -15,7 +15,6 @@ import {
   speechLocale,
   stressRules,
   supportedLanguage,
-  writtenWithReading,
 } from ".";
 
 describe("languageSupport", () => {
@@ -121,16 +120,6 @@ describe("speechLocale", () => {
   });
 });
 
-describe("writtenWithReading", () => {
-  it("calls a Japanese or Chinese pronunciation a Reading", () => {
-    for (const tag of ["ja", "ja-JP", "zh", "zh-TW"]) expect(writtenWithReading(tag)).toBe(true);
-  });
-  it("calls every other pronunciation a pronunciation", () => {
-    for (const tag of ["ko", "ru", "en", "zh-hak", null])
-      expect(writtenWithReading(tag)).toBe(false);
-  });
-});
-
 describe("languageFormat", () => {
   it("finds a format from any tag of its language", () => {
     expect(languageFormat("ja-JP")?.tag).toBe("ja");
@@ -183,7 +172,6 @@ describe("languageFormat", () => {
       label: "pronunciation",
       sample: { term: "학교", pronunciation: "학꾜" },
     });
-    expect(writtenWithReading("ko")).toBe(false);
   });
   it("tells a client to leave an empty pronunciation out, which the API accepts, and the model to write null", () => {
     expect(languageFormat("ko")?.pronunciation.format).toContain(

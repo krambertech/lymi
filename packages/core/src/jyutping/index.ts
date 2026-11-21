@@ -9,7 +9,6 @@ import { cleanJyutping, hasTone, jyutpingSyllables, readingTokens } from "./spli
 export type { JyutpingSegment } from "./align";
 export { alignJyutping, jyutpingTermSegments } from "./align";
 export {
-  formatJyutping,
   JYUTPING_BRACKET,
   jyutpingExampleSegments,
   parseJyutping,

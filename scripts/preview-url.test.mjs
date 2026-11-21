@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { findPreview, findPreviewUrl } from "./preview-url.mjs";
+import { findPreview } from "./preview-url.mjs";
 
 const upload = {
   type: "version-upload",
@@ -15,7 +15,7 @@ test("returns the stable alias rather than the version-specific preview", () => 
   const output = `${JSON.stringify({ type: "wrangler-session" })}\n${JSON.stringify(upload)}\n`;
 
   assert.equal(
-    findPreviewUrl(output, { workerName: "lymi-site", alias: "pr-73" }),
+    findPreview(output, { workerName: "lymi-site", alias: "pr-73" }).url,
     "https://pr-73-lymi-site.example.workers.dev",
   );
 });
@@ -38,7 +38,7 @@ test("uses the latest matching upload from a structured output file", () => {
   const output = `${JSON.stringify(upload)}\n${JSON.stringify(latest)}\n`;
 
   assert.equal(
-    findPreviewUrl(output, { workerName: "lymi-site", alias: "pr-74" }),
+    findPreview(output, { workerName: "lymi-site", alias: "pr-74" }).url,
     latest.preview_alias_url,
   );
 });
@@ -46,21 +46,21 @@ test("uses the latest matching upload from a structured output file", () => {
 test("fails when Wrangler omits or returns the wrong alias", () => {
   assert.throws(
     () =>
-      findPreviewUrl(JSON.stringify({ ...upload, preview_alias_url: null }), {
+      findPreview(JSON.stringify({ ...upload, preview_alias_url: null }), {
         workerName: "lymi-site",
         alias: "pr-73",
       }),
     /without the requested stable preview alias/,
   );
   assert.throws(
-    () => findPreviewUrl(JSON.stringify(upload), { workerName: "lymi-site", alias: "pr-72" }),
+    () => findPreview(JSON.stringify(upload), { workerName: "lymi-site", alias: "pr-72" }),
     /unexpected preview alias URL/,
   );
 });
 
 test("fails clearly when the structured output is malformed", () => {
   assert.throws(
-    () => findPreviewUrl("not-json", { workerName: "lymi-site", alias: "pr-73" }),
+    () => findPreview("not-json", { workerName: "lymi-site", alias: "pr-73" }),
     /line 1 is not valid JSON/,
   );
 });

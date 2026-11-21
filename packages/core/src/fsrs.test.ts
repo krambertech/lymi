@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 import {
   deserializeState,
   emptyState,
-  formatInterval,
+  interval,
   preview,
   readFsrs,
   State,
@@ -59,10 +59,16 @@ describe("fsrs", () => {
     expect(schedule(card, 3, later).card.state).toBe(State.Review);
   });
 
-  it("formats intervals the way the grade buttons show them", () => {
-    expect(formatInterval(now, new Date(now.getTime() + 60_000))).toBe("1 min");
-    expect(formatInterval(now, new Date(now.getTime() + 2 * 86_400_000))).toBe("2 d");
-    expect(formatInterval(now, new Date(now.getTime() + 90 * 86_400_000))).toBe("3 mo");
+  it("gives intervals in the unit the grade buttons show them in", () => {
+    expect(interval(now, new Date(now.getTime() + 60_000))).toEqual({ value: 1, unit: "minute" });
+    expect(interval(now, new Date(now.getTime() + 2 * 86_400_000))).toEqual({
+      value: 2,
+      unit: "day",
+    });
+    expect(interval(now, new Date(now.getTime() + 90 * 86_400_000))).toEqual({
+      value: 3,
+      unit: "month",
+    });
   });
 });
 

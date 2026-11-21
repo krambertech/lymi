@@ -2,7 +2,7 @@ import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import { type CardText, normalizeCardText } from "../card-text";
 import { tamilSegments } from "../indic";
-import { formatJyutping, parseJyutping, stripJyutping } from "../jyutping";
+import { parseJyutping, stripJyutping } from "../jyutping";
 import { formatPinyin, parsePinyin, stripPinyin } from "../pinyin";
 import {
   formatReadings,
@@ -52,6 +52,12 @@ interface Fixture {
 type Card = { term: string; pronunciation: string; language: string };
 
 /** Each engine's inline notation, and the term as it draws it. */
+/** Runs written back as inline readings, text[reading], the notation Jyutping is parsed from. */
+const inline = (segments: readonly ReadingSegment[]) =>
+  segments
+    .map(({ text, reading }) => (reading === undefined ? text : `${text}[${reading}]`))
+    .join("");
+
 const NOTATION: Record<
   ReadingEngine,
   {
@@ -68,7 +74,7 @@ const NOTATION: Record<
     draw: overTerm,
   },
   pinyin: { parse: parsePinyin, format: formatPinyin, strip: stripPinyin, draw: overTerm },
-  jyutping: { parse: parseJyutping, format: formatJyutping, strip: stripJyutping, draw: overTerm },
+  jyutping: { parse: parseJyutping, format: inline, strip: stripJyutping, draw: overTerm },
   // Marks stay in the text, so an example parses as one run.
   stress: {
     parse: (text) => (text ? [{ text }] : []),

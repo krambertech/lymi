@@ -108,20 +108,6 @@ export function interval(from: Date, to: Date): Interval {
   return { value: Math.round(days / 365), unit: "year" };
 }
 
-const SHORT_UNIT: Record<IntervalUnit, string> = {
-  minute: "min",
-  hour: "h",
-  day: "d",
-  month: "mo",
-  year: "y",
-};
-
-/** English shorthand, for logs and tests. Interface code formats `interval()` for its locale. */
-export function formatInterval(from: Date, to: Date): string {
-  const { value, unit } = interval(from, to);
-  return `${value} ${SHORT_UNIT[unit]}`;
-}
-
 /**
  * How likely the card is to come back if asked right now, 0 to 1. A card that has never been
  * reviewed has nothing to come back from, so it is 0 rather than the model's optimism.

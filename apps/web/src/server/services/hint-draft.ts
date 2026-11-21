@@ -37,12 +37,6 @@ const DECK_MEANINGS = 8;
 /** One line the learner can read in a glance under the cue. */
 const MAX_WORDS = 6;
 
-/** The rule now lives in core, for the clients; language tests still read it from here. */
-export { hintable } from "@lymi/core";
-
-/** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const HINT_PROMPT_VERSION = 7;
-
 // The model is asked for a memory hook: unlike "hint", the word tells it never to give the answer away.
 export const HINT_INSTRUCTIONS = [
   "You write one memory hook for a language learner's vocabulary card: a short line in the learner's own language that, once read, makes the term hard to forget.",

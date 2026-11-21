@@ -12,6 +12,7 @@ import {
   wordOverlap,
 } from "./giveaways";
 import { parse, textOf } from "./html";
+import { orderProblems } from "./order";
 
 describe("the check helpers", () => {
   it("reads whole words and leaves endings, stems and syllables out", () => {
@@ -115,5 +116,13 @@ describe("the check helpers", () => {
     >[0];
     expect(textOf(tree)).toBe("See kass & more");
     expect((b as { lang: string }).lang).toBe("et");
+  });
+
+  it("finds order answers that use other words and tiles that miss one", () => {
+    expect(orderProblems(["Ma elan Tallinnas.", "Tallinnas ma elan."])).toEqual([]);
+    expect(orderProblems(["Ma elan Tallinnas.", "Tallinnas elab ma."])).toHaveLength(1);
+    expect(orderProblems(["Ma elan Tallinnas."], ["ma", "elan"])).toEqual([
+      'no tile for "Tallinnas"',
+    ]);
   });
 });

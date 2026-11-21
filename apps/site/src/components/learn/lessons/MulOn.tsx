@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -411,8 +411,8 @@ export function MulOnLesson() {
   const pronouns = lessonBySlug("mina-sina-tema")?.n;
   const places = lessonBySlug("kohad")?.n;
   const negation = lessonBySlug("eitus")?.n;
-  const forms = LESSONS.find((lesson) => lesson.et === "Kolm põhivormi")?.n;
-  const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
+  const forms = lessonBySlug("pohivormid")?.n;
+  const genitive = lessonBySlug("omastav")?.n;
   const partitive = lessonBySlug("osastav")?.n;
   const gaps = useGaps();
 

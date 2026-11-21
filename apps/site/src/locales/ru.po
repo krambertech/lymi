@@ -105,11 +105,6 @@ msgstr "{0, plural, one {Повтори все #} few {Повтори все #} 
 msgid "{0, plural, one {Your deck} other {Your decks}}"
 msgstr "{0, plural, one {Твоя колода} few {Твои колоды} many {Твои колоды} other {Твои колоды}}"
 
-#. placeholder {0}: before.word
-#. placeholder {1}: step.word
-msgid "{0} becomes {1}"
-msgstr "{0} становится {1}"
-
 #. placeholder {0}: i18n.number(IMPORT_FROM)
 msgid "{0} cards, history kept"
 msgstr "{0} карточек, история сохранена"
@@ -445,6 +440,11 @@ msgstr "<0/>, «быть», устроен так же. <1/> становитс�
 
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> или <1>-ke</1> на конце"
+
+#. placeholder {0}: before.word
+#. placeholder {1}: step.word
+msgid "<0>{0}</0> becomes <1>{1}</1>"
+msgstr "<0>{0}</0> становится <1>{1}</1>"
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
@@ -1366,8 +1366,8 @@ msgid "Add now"
 msgstr "Добавить сейчас"
 
 #. placeholder {0}: ending("-d")
-msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Tap each form to hear it."
-msgstr "Добавляй {0} ко второй форме, <0>poe</0>, а не к <1>pood</1>: <2>poed</2>. Нажимай на каждую форму, чтобы её услышать."
+msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
+msgstr "Добавляй {0} ко второй форме, <0>poe</0>, а не к <1>pood</1>: <2>poed</2>. Выбери слово и нажимай на каждую форму, чтобы увидеть, что меняется."
 
 msgid "Add the 300 questions"
 msgstr "Добавить 300 вопросов"
@@ -9078,6 +9078,9 @@ msgstr "Поиск колод"
 msgid "second"
 msgstr "второй"
 
+msgid "second form"
+msgstr "вторая форма"
+
 msgid "Section"
 msgstr "Раздел"
 
@@ -10263,7 +10266,7 @@ msgid "The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend.
 msgstr "В sõpra b превращается в p: ma ootan sõpra — я жду друга."
 
 msgid "The b drops and the u becomes o."
-msgstr "b выпадает, а u становится o."
+msgstr "Выпадает b, а u становится o."
 
 msgid "The base form. More than one adds -d."
 msgstr "Начальная форма. Для нескольких добавляется -d."
@@ -10376,11 +10379,17 @@ msgstr "DMV не публикует свои вопросы. Это тренир
 msgid "The duck never answers. It doesn’t need to."
 msgstr "Утка никогда не отвечает. Ей и не нужно."
 
+msgid "The e drops and an a comes in."
+msgstr "Выпадает e, а появляется a."
+
 msgid "The earthy smell of rain on dry ground"
 msgstr "Запах дождя, пролившегося на сухую землю"
 
 msgid "The edge of the ice"
 msgstr "Кромка льда"
+
+msgid "The ee shortens, the s becomes h, and an e comes in."
+msgstr "Долгое ee сокращается, s становится h, и появляется e."
 
 msgid "The end of the working day"
 msgstr "Конец рабочего дня"
@@ -10480,6 +10489,9 @@ msgstr "В партитиве g возвращается."
 
 msgid "The g drops and an a comes in."
 msgstr "g выпадает, а появляется a."
+
+msgid "The g drops and the i becomes e."
+msgstr "Выпадает g, а i становится e."
 
 msgid "The g drops and the u becomes o: loe-, plus -n for ma."
 msgstr "g выпадает, а u становится o: loe-, плюс -n для ma."
@@ -10595,6 +10607,9 @@ msgstr "Самые частые слова, и каждое возвращает
 msgid "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 msgstr "Самые полезные слова из списка Goethe-Institut для каждого уровня, каждое существительное с артиклем и множественным числом, с переводом рядом."
 
+msgid "The n becomes s."
+msgstr "Вместо n стоит s."
+
 msgid "The network of nerves that runs from the neck into the arm"
 msgstr "Сплетение нервов, идущее от шеи к руке"
 
@@ -10621,6 +10636,9 @@ msgstr "Дополнение: целое или часть"
 
 msgid "The od drops and an e comes in: poe- carries most forms."
 msgstr "od выпадает, а появляется e: от poe- образуется большинство форм."
+
+msgid "The od drops and an e comes in."
+msgstr "Выпадает od, а появляется e."
 
 msgid "The old *castle* on the hill."
 msgstr "Старый *замок* на горе."
@@ -10790,6 +10808,9 @@ msgstr "вторая форма слова pood"
 
 msgid "the second form of suur"
 msgstr "вторая форма слова suur"
+
+msgid "The second form plus -d."
+msgstr "Вторая форма плюс -d."
 
 msgid "The seven days, the four that count, and how to say what day it is."
 msgstr "Семь дней, четыре с числами в названии, и как сказать, какой сегодня день."

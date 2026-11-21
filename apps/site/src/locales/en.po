@@ -105,11 +105,6 @@ msgstr "{0, plural, one {Review all #} other {Review all #}}"
 msgid "{0, plural, one {Your deck} other {Your decks}}"
 msgstr "{0, plural, one {Your deck} other {Your decks}}"
 
-#. placeholder {0}: before.word
-#. placeholder {1}: step.word
-msgid "{0} becomes {1}"
-msgstr "{0} becomes {1}"
-
 #. placeholder {0}: i18n.number(IMPORT_FROM)
 msgid "{0} cards, history kept"
 msgstr "{0} cards, history kept"
@@ -445,6 +440,11 @@ msgstr "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same
 
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> or <1>-ke</1> on the end"
+
+#. placeholder {0}: before.word
+#. placeholder {1}: step.word
+msgid "<0>{0}</0> becomes <1>{1}</1>"
+msgstr "<0>{0}</0> becomes <1>{1}</1>"
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
@@ -1366,8 +1366,8 @@ msgid "Add now"
 msgstr "Add now"
 
 #. placeholder {0}: ending("-d")
-msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Tap each form to hear it."
-msgstr "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Tap each form to hear it."
+msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
+msgstr "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
 
 msgid "Add the 300 questions"
 msgstr "Add the 300 questions"
@@ -9078,6 +9078,9 @@ msgstr "Search decks"
 msgid "second"
 msgstr "second"
 
+msgid "second form"
+msgstr "second form"
+
 msgid "Section"
 msgstr "Section"
 
@@ -10376,11 +10379,17 @@ msgstr "The DMV doesn’t publish its questions. These are practice questions wr
 msgid "The duck never answers. It doesn’t need to."
 msgstr "The duck never answers. It doesn’t need to."
 
+msgid "The e drops and an a comes in."
+msgstr "The e drops and an a comes in."
+
 msgid "The earthy smell of rain on dry ground"
 msgstr "The earthy smell of rain on dry ground"
 
 msgid "The edge of the ice"
 msgstr "The edge of the ice"
+
+msgid "The ee shortens, the s becomes h, and an e comes in."
+msgstr "The ee shortens, the s becomes h, and an e comes in."
 
 msgid "The end of the working day"
 msgstr "The end of the working day"
@@ -10480,6 +10489,9 @@ msgstr "The g comes back in the partitive."
 
 msgid "The g drops and an a comes in."
 msgstr "The g drops and an a comes in."
+
+msgid "The g drops and the i becomes e."
+msgstr "The g drops and the i becomes e."
 
 msgid "The g drops and the u becomes o: loe-, plus -n for ma."
 msgstr "The g drops and the u becomes o: loe-, plus -n for ma."
@@ -10595,6 +10607,9 @@ msgstr "The most common words, each brought back on the day you’d forget it."
 msgid "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 msgstr "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 
+msgid "The n becomes s."
+msgstr "The n becomes s."
+
 msgid "The network of nerves that runs from the neck into the arm"
 msgstr "The network of nerves that runs from the neck into the arm"
 
@@ -10621,6 +10636,9 @@ msgstr "The object: whole or part"
 
 msgid "The od drops and an e comes in: poe- carries most forms."
 msgstr "The od drops and an e comes in: poe- carries most forms."
+
+msgid "The od drops and an e comes in."
+msgstr "The od drops and an e comes in."
 
 msgid "The old *castle* on the hill."
 msgstr "The old *castle* on the hill."
@@ -10790,6 +10808,9 @@ msgstr "the second form of pood"
 
 msgid "the second form of suur"
 msgstr "the second form of suur"
+
+msgid "The second form plus -d."
+msgstr "The second form plus -d."
 
 msgid "The seven days, the four that count, and how to say what day it is."
 msgstr "The seven days, the four that count, and how to say what day it is."

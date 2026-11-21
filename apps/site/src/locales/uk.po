@@ -105,11 +105,6 @@ msgstr "{0, plural, one {Повтори всі #} few {Повтори всі #} 
 msgid "{0, plural, one {Your deck} other {Your decks}}"
 msgstr "{0, plural, one {Твоя колода} few {Твої колоди} many {Твої колоди} other {Твої колоди}}"
 
-#. placeholder {0}: before.word
-#. placeholder {1}: step.word
-msgid "{0} becomes {1}"
-msgstr "{0} стає {1}"
-
 #. placeholder {0}: i18n.number(IMPORT_FROM)
 msgid "{0} cards, history kept"
 msgstr "{0} карток, історію збережено"
@@ -445,6 +440,11 @@ msgstr "<0/>, «бути», працює так само. <1/> стає <2/>, і
 
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> або <1>-ke</1> у кінці"
+
+#. placeholder {0}: before.word
+#. placeholder {1}: step.word
+msgid "<0>{0}</0> becomes <1>{1}</1>"
+msgstr "<0>{0}</0> стає <1>{1}</1>"
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
@@ -1366,8 +1366,8 @@ msgid "Add now"
 msgstr "Додати зараз"
 
 #. placeholder {0}: ending("-d")
-msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Tap each form to hear it."
-msgstr "Додавай {0} до другої форми, <0>poe</0>, а не до <1>pood</1>: <2>poed</2>. Торкайся кожної форми, щоб її почути."
+msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
+msgstr "Додавай {0} до другої форми, <0>poe</0>, а не до <1>pood</1>: <2>poed</2>. Обери слово й торкайся кожної форми, щоб побачити, що змінюється."
 
 msgid "Add the 300 questions"
 msgstr "Додати 300 питань"
@@ -9078,6 +9078,9 @@ msgstr "Пошук колод"
 msgid "second"
 msgstr "другий"
 
+msgid "second form"
+msgstr "друга форма"
+
 msgid "Section"
 msgstr "Розділ"
 
@@ -10263,7 +10266,7 @@ msgid "The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend.
 msgstr "У sõpra b стає p: ma ootan sõpra, я чекаю на друга."
 
 msgid "The b drops and the u becomes o."
-msgstr "b зникає, а u стає o."
+msgstr "Зникає b, а u стає o."
 
 msgid "The base form. More than one adds -d."
 msgstr "Початкова форма. Для кількох додається -d."
@@ -10376,11 +10379,17 @@ msgstr "DMV не публікує своїх питань. Це тренувал
 msgid "The duck never answers. It doesn’t need to."
 msgstr "Качка ніколи не відповідає. Та їй і не треба."
 
+msgid "The e drops and an a comes in."
+msgstr "Зникає e, а з’являється a."
+
 msgid "The earthy smell of rain on dry ground"
 msgstr "Запах дощу, що впав на суху землю"
 
 msgid "The edge of the ice"
 msgstr "Край криги"
+
+msgid "The ee shortens, the s becomes h, and an e comes in."
+msgstr "Довге ee коротшає, s стає h, і з’являється e."
 
 msgid "The end of the working day"
 msgstr "Кінець робочого дня"
@@ -10480,6 +10489,9 @@ msgstr "У партитиві g повертається."
 
 msgid "The g drops and an a comes in."
 msgstr "g зникає, а з’являється a."
+
+msgid "The g drops and the i becomes e."
+msgstr "Зникає g, а i стає e."
 
 msgid "The g drops and the u becomes o: loe-, plus -n for ma."
 msgstr "g зникає, а u стає o: loe-, плюс -n для ma."
@@ -10595,6 +10607,9 @@ msgstr "Найуживаніші слова, і кожне повертаєть�
 msgid "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 msgstr "Найкорисніші слова зі списку Goethe-Institut для кожного рівня, кожен іменник з артиклем і множиною, з перекладом поруч."
 
+msgid "The n becomes s."
+msgstr "Замість n стоїть s."
+
 msgid "The network of nerves that runs from the neck into the arm"
 msgstr "Сплетення нервів, що йде від шиї до руки"
 
@@ -10621,6 +10636,9 @@ msgstr "Додаток: ціле чи частина"
 
 msgid "The od drops and an e comes in: poe- carries most forms."
 msgstr "od зникає, а з’являється e: від poe- утворюється більшість форм."
+
+msgid "The od drops and an e comes in."
+msgstr "Зникає od, а з’являється e."
 
 msgid "The old *castle* on the hill."
 msgstr "Старий *замок* на горі."
@@ -10790,6 +10808,9 @@ msgstr "друга форма слова pood"
 
 msgid "the second form of suur"
 msgstr "друга форма слова suur"
+
+msgid "The second form plus -d."
+msgstr "Друга форма плюс -d."
 
 msgid "The seven days, the four that count, and how to say what day it is."
 msgstr "Сім днів, чотири з числами в назві, і як сказати, який сьогодні день."

@@ -70,6 +70,8 @@ export function lessonForms(page: Rendered): Map<string, string> {
   }
   // Each outermost Estonian element as one text, so a word split across spans stays whole.
   const outermost = (element: Element, inEstonian: boolean) => {
+    // Hidden from screen readers, such as Morph's struck letters: its sr-only twin says the words.
+    if (element.attrs["aria-hidden"] === "true") return;
     if (element.lang === "et" && !inEstonian) {
       add(estonianText(element), 'text in lang="et"');
       return;
@@ -112,7 +114,8 @@ function estonianText(element: Element): string {
   return element.children
     .map((child) => {
       if (!isElement(child)) return child.text;
-      if (child.lang !== "et" || child.tag === "svg") return " ";
+      if (child.lang !== "et" || child.tag === "svg" || child.attrs["aria-hidden"] === "true")
+        return " ";
       const text = estonianText(child);
       return apart || BLOCKS.has(child.tag) ? ` ${text} ` : text;
     })

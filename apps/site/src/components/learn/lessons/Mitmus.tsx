@@ -24,6 +24,7 @@ import { Chips, Panel } from "../Explore";
 import { type GapItem, GapPassage } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Morph, type MorphChain } from "../Morph";
 import { type ChoiceItem, ChoiceRound, Quiz, type TypedItem, TypedRound } from "../Quiz";
 import { PlayButton, Playing } from "../Sound";
 import { Word } from "../Word";
@@ -220,51 +221,6 @@ function OneManyFlip({
       </div>
       <FlipNote mode={mode} title={notes[mode].title} tip={notes[mode].tip} />
     </Panel>
-  );
-}
-
-/** One form of a noun to tap, with what it plays. */
-function FormWord({ said, children }: { said: string; children: ReactNode }) {
-  const clip = src(said);
-  const playing = usePlaying(clip);
-  return (
-    <button
-      type="button"
-      onClick={() => void playSound(clip)}
-      className={clsx(
-        "flex cursor-pointer items-center gap-2 rounded-xs px-2 py-1 text-start text-xl font-semibold tracking-tight transition-colors duration-150 hoverable:hover:bg-plate-hover max-sm:text-lg",
-        playing && "bg-plate-hover",
-      )}
-    >
-      <span lang="et" className="whitespace-nowrap">
-        {children}
-      </span>
-      {playing && <Playing className="h-3 text-(--form)" />}
-    </button>
-  );
-}
-
-/** First form, second form and plural, each to tap, with the plural’s -d lit. */
-function StemRow({ one, second, many }: PluralNoun) {
-  const { i18n } = useLingui();
-  return (
-    <div className="grid gap-1 rounded-tile bg-plate px-2 pt-1.5 pb-2.5 shadow-[0_0_0_1px_var(--edge)]">
-      <div className="flex flex-wrap items-center gap-x-0.5">
-        <FormWord said={one}>
-          <span className="text-ink-secondary">{one}</span>
-        </FormWord>
-        <ArrowRight aria-hidden="true" className="size-4 text-ink-muted rtl:-scale-x-100" />
-        <FormWord said={second}>{second}</FormWord>
-        <ArrowRight aria-hidden="true" className="size-4 text-ink-muted rtl:-scale-x-100" />
-        <FormWord said={many}>
-          {second}
-          <span className="text-(--form)">d</span>
-        </FormWord>
-      </div>
-      <p className="ps-2 text-sm text-ink-muted">
-        {i18n._(NOUN_MEANS[one][0])}, {i18n._(NOUN_MEANS[one][1])}
-      </p>
-    </div>
   );
 }
 
@@ -466,6 +422,28 @@ export function MitmusLesson() {
         : { ...item, options: sentenceOptions(threeSentences(item.row), i18n) },
     );
 
+  const stemNotes: Record<(typeof MITMUS_CHANGED)[number]["one"], string> = {
+    pood: t`The od drops and an e comes in.`,
+    tuba: t`The b drops and the u becomes o.`,
+    jõgi: t`The g drops and the i becomes e.`,
+    mees: t`The ee shortens, the s becomes h, and an e comes in.`,
+    naine: t`The n becomes s.`,
+    sõber: t`The e drops and an a comes in.`,
+  };
+  const stemChains: MorphChain[] = MITMUS_CHANGED.map(({ one, second, many }) => ({
+    id: one,
+    steps: [
+      { word: one, label: i18n._(NOUN_MEANS[one][0]), src: src(one) },
+      { word: second, label: t`second form`, note: stemNotes[one], src: src(second) },
+      {
+        word: many,
+        label: i18n._(NOUN_MEANS[one][1]),
+        note: t`The second form plus -d.`,
+        src: src(many),
+      },
+    ],
+  }));
+
   const nounRows: FlipRow[] = MITMUS_SAME.map(({ one, second, many }) => ({
     key: one,
     one: { said: one, pieces: [[one, false]] },
@@ -620,16 +598,13 @@ export function MitmusLesson() {
                 <p>
                   <Trans>
                     Add the {ending("-d")} to the second form, <b lang="et">poe</b>, not to{" "}
-                    <b lang="et">pood</b>: <b lang="et">poed</b>. Tap each form to hear it.
+                    <b lang="et">pood</b>: <b lang="et">poed</b>. Pick a word, then tap each form to
+                    see what changes.
                   </Trans>
                 </p>
               </Prose>
               <Panel>
-                <div className="grid gap-1.5 sm:grid-cols-2">
-                  {MITMUS_CHANGED.map((noun) => (
-                    <StemRow key={noun.one} {...noun} />
-                  ))}
-                </div>
+                <Morph label={t`Words`} chains={stemChains} />
               </Panel>
             </>
           ),

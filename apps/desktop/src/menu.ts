@@ -7,10 +7,6 @@ interface Actions {
   shortcut: string;
 }
 
-/**
- * The Mac's menu bar while a Lymi window is open: the standard menus, with the product's commands
- * from the command menu. The Edit menu also makes ⌘C and ⌘V work in the product's text fields.
- */
 export function setAppMenu({ run, quickAdd, shortcut }: Actions) {
   const item = (label: string, command: MenuCommand, accelerator?: string) =>
     ({

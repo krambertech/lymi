@@ -1,10 +1,5 @@
 #!/usr/bin/env node
 
-// Derives what cannot read tokens.css and tray.css from them: src/tokens.gen.ts for the phone's SVG paint, native
-// views and widgets, uniwind.gen.css for the phone's class names, and the Mac app's window colours.
-// scripts/check-design-docs.mjs fails when any is stale; run this, or that script with --write, after
-// changing a token.
-
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pathToFileURL } from "node:url";
@@ -15,7 +10,6 @@ export const LIGHT = ':root,\n[data-theme="light"]';
 export const DARK = '[data-theme="dark"]';
 export const THEME = "@theme inline";
 
-/** The custom properties declared directly inside the first block that opens with `selector {`. */
 export function block(css, selector) {
   const start = css.indexOf(`${selector} {`);
   if (start === -1) throw new Error(`No block for ${selector}`);
@@ -37,10 +31,6 @@ const MIX = new RegExp(
   String.raw`^color-mix\(in oklab,\s*(.+?)\s+${NUMBER}%,\s*(.+?)(?:\s+${NUMBER}%)?\)$`,
 );
 
-/**
- * A colour as OKLab with alpha, from the forms tokens.css uses: oklch(), var(), relative oklch()
- * that lowers lightness, and color-mix() in oklab. Undefined for anything that is not a colour.
- */
 export function parse(value, vars = {}, seen = []) {
   const v = value.trim();
   const ref = v.match(/^var\(--([a-z0-9-]+)\)$/);
@@ -74,7 +64,6 @@ export function parse(value, vars = {}, seen = []) {
     const y = parse(mix[3], vars, seen);
     if (!x || !y) throw new Error(`Not a colour mix: ${v}`);
     const p = Number(mix[2]) / 100;
-    // Premultiplied, as CSS mixes colours with alpha.
     const alpha = x.alpha * p + y.alpha * (1 - p);
     const channel = (k) => (x[k] * x.alpha * p + y[k] * y.alpha * (1 - p)) / (alpha || 1);
     return { L: channel("L"), a: channel("a"), b: channel("b"), alpha };
@@ -82,7 +71,6 @@ export function parse(value, vars = {}, seen = []) {
   return undefined;
 }
 
-/** sRGB hex, with alpha as a fourth byte when the colour is translucent. */
 export function hex({ L, a, b, alpha }) {
   const l = (L + 0.3963377774 * a + 0.2158037573 * b) ** 3;
   const m = (L - 0.1055613458 * a - 0.0638541728 * b) ** 3;
@@ -109,11 +97,9 @@ export function oklchToHex(value) {
 
 function rooms(css) {
   const light = block(css, LIGHT);
-  // A token the dark room does not redeclare is the same in both rooms.
   return { light, dark: { ...light, ...block(css, DARK) }, theme: block(css, THEME) };
 }
 
-/** The names of every colour, in declaration order, with a Tailwind alias such as grade-easy as its own. */
 function colourNames(css) {
   const { light, theme } = rooms(css);
   const names = Object.keys(light).filter((name) => parse(light[name], light));
@@ -125,7 +111,6 @@ function colourNames(css) {
   return names;
 }
 
-/** Each room's colours as hex, keyed by token name. */
 export function palettes(css) {
   const { light, dark, theme } = rooms(css);
   const names = colourNames(css);
@@ -139,7 +124,6 @@ export function palettes(css) {
   return { light: room(light), dark: room(dark) };
 }
 
-/** Every colour as `name` and `dark-name`, in declaration order. */
 export function paletteFrom(css) {
   const { light, dark } = palettes(css);
   return [
@@ -148,7 +132,6 @@ export function paletteFrom(css) {
   ];
 }
 
-/** Box shadows with every colour in hex, which React Native's boxShadow reads. */
 function shadows(css) {
   const { light, dark } = rooms(css);
   const names = ["lift", "well", "lit-glow", "glass-drop"];
@@ -183,7 +166,6 @@ function scale(css) {
   };
 }
 
-/** Each script's faces from `--face-<code>` on `:root`, keyed by its ISO 15924 code: Jpan. */
 function faces(css) {
   return Object.fromEntries(
     Object.entries(block(css, ":root"))
@@ -195,12 +177,10 @@ function faces(css) {
   );
 }
 
-/** A value as TypeScript source in the shape Biome formats it to, so the check compares exactly. */
 function literal(value, indent = "") {
   const inner = `${indent}  `;
   if (Array.isArray(value)) {
     if (value.every((v) => typeof v === "number")) return `[${value.join(", ")}]`;
-    // A nested list that fits on its line stays on it, as Biome prints it; 8 is "light: " and ",".
     const line = `[${value.map((v) => JSON.stringify(v)).join(", ")}]`;
     if (
       indent &&
@@ -218,10 +198,6 @@ function literal(value, indent = "") {
   return JSON.stringify(value);
 }
 
-/**
- * The eight deck hues as each surface wears them, in sRGB hex, from tray.css: a tile's tray, a deck
- * page's cover and a shelf page's pool, by day and at night, and the card a tray holds at night.
- */
 export function huesFrom(tray) {
   const hues = Array.from({ length: 8 }, (_, at) => block(tray, `[data-hue="${at}"]`)["tray-h"]);
   const step = (selector) => {
@@ -237,7 +213,6 @@ export function huesFrom(tray) {
   };
 }
 
-/** The generated files, keyed by their path from the repository root. */
 export function outputs(
   css = readFileSync(resolve(root, "tokens.css"), "utf8"),
   tray = readFileSync(resolve(root, "tray.css"), "utf8"),

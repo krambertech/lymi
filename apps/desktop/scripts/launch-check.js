@@ -1,5 +1,3 @@
-// Starts a packaged Lymi.app and fails unless it loads the product with the bridge in place: the
-// check that an Electron upgrade, the fuses or signing left the app working. README.md.
 import { spawn } from "node:child_process";
 import { mkdtempSync, rmSync } from "node:fs";
 import { tmpdir } from "node:os";
@@ -10,13 +8,11 @@ const [appPath] = process.argv.slice(2);
 if (!appPath) throw new Error("Usage: launch-check.js <path to Lymi.app>");
 const PRODUCT = "https://my.lymi.app";
 const PORT = 9_571;
-// The Intel build runs under Rosetta, whose first start translates Electron and took a minute on CI.
 const TIMEOUT_MS = 180_000;
 
 const profile = mkdtempSync(join(tmpdir(), "lymi-launch-"));
 const child = spawn(
   join(appPath, "Contents", "MacOS", "Lymi"),
-  // A mock keychain, or an unsigned copy asks for and claims the installed app's "Lymi Safe Storage".
   [`--remote-debugging-port=${PORT}`, `--user-data-dir=${profile}`, "--use-mock-keychain"],
   { stdio: "inherit" },
 );
@@ -36,7 +32,6 @@ async function check() {
     browser = await chromium.connectOverCDP(`http://127.0.0.1:${PORT}`).catch(() => null);
     if (!browser) await sleep(500);
   }
-  // The quick-add panel loads at start, hidden, so a window is there without a press.
   while (Date.now() < deadline) {
     for (const page of browser.contexts().flatMap((context) => context.pages())) {
       if (!page.url().startsWith(`${PRODUCT}/`)) continue;
@@ -59,7 +54,6 @@ try {
   process.exitCode = 1;
 } finally {
   child.kill();
-  // A Lymi stuck on a modal ignores SIGTERM, and waiting on it held a release for an hour.
   const killed = setTimeout(() => child.kill("SIGKILL"), 5_000);
   if (exited === null) await new Promise((resolve) => child.once("exit", resolve));
   clearTimeout(killed);

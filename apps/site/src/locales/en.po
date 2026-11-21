@@ -37,8 +37,8 @@ msgstr "“Schönen Feierabend!” wishes someone a good evening off."
 msgid "“To have”"
 msgstr "“To have”"
 
-msgid "“To like”"
-msgstr "“To like”"
+msgid "“To like” and feelings"
+msgstr "“To like” and feelings"
 
 #. placeholder {0}: 6
 #. placeholder {0}: deck.cardCount
@@ -2210,6 +2210,9 @@ msgstr "Build a course in sections, share it with one link, and add what you tau
 msgid "Build a deck from this Project, one section per lecture."
 msgstr "Build a deck from this Project, one section per lecture."
 
+msgid "Build new words from ones you know, read signs, news and forms, and join longer sentences."
+msgstr "Build new words from ones you know, read signs, news and forms, and join longer sentences."
+
 msgid "Build the course in order."
 msgstr "Build the course in order."
 
@@ -2413,6 +2416,9 @@ msgstr "Can you have a coffee there on Monday?"
 
 msgid "Can you make a U-turn on a one-way street?"
 msgstr "Can you make a U-turn on a one-way street?"
+
+msgid "Can, may, must"
+msgstr "Can, may, must"
 
 msgid "Can; may"
 msgstr "Can; may"
@@ -4462,6 +4468,9 @@ msgstr "Goethe-Zertifikat A1, A2 and B1: the words for each level"
 msgid "Going over a lesson again"
 msgstr "Going over a lesson again"
 
+msgid "Going, being, coming back: -ma, -mas, -mast"
+msgstr "Going, being, coming back: -ma, -mas, -mast"
+
 msgid "Good"
 msgstr "Good"
 
@@ -6155,6 +6164,9 @@ msgstr "Let Claude add cards?"
 msgid "Let’s *take a taxi*."
 msgstr "Let’s *take a taxi*."
 
+msgid "Let’s and let them"
+msgstr "Let’s and let them"
+
 msgid "Let’s go into *town*!"
 msgstr "Let’s go into *town*!"
 
@@ -6746,6 +6758,9 @@ msgstr "More {language} decks"
 
 msgid "More are on the way."
 msgstr "More are on the way."
+
+msgid "More cases"
+msgstr "More cases"
 
 msgid "More decks"
 msgstr "More decks"
@@ -7499,6 +7514,9 @@ msgstr "Or send it from your AI assistant."
 msgid "or; at the end of a sentence, a bit like “right?”"
 msgstr "or; at the end of a sentence, a bit like “right?”"
 
+msgid "Ordinals and dates"
+msgstr "Ordinals and dates"
+
 msgid "Organisms, stains and what they cause."
 msgstr "Organisms, stains and what they cause."
 
@@ -7562,8 +7580,11 @@ msgstr "Pärnu, a town by the sea"
 msgid "Participles"
 msgstr "Participles"
 
-msgid "Particle verbs"
-msgstr "Particle verbs"
+msgid "Particle verbs with new meanings"
+msgstr "Particle verbs with new meanings"
+
+msgid "Particle verbs: up, out, away"
+msgstr "Particle verbs: up, out, away"
 
 msgid "Particles spreading from high to low concentration"
 msgstr "Particles spreading from high to low concentration"
@@ -7619,8 +7640,8 @@ msgstr "People ask these three when they meet you. Learn them whole, each with a
 msgid "People, food, time and your first verbs."
 msgstr "People, food, time and your first verbs."
 
-msgid "Perfect tenses"
-msgstr "Perfect tenses"
+msgid "Perfect and pluperfect"
+msgstr "Perfect and pluperfect"
 
 msgid "Perfective"
 msgstr "Perfective"
@@ -7842,6 +7863,9 @@ msgstr "Plural"
 msgid "Plural cases"
 msgstr "Plural cases"
 
+msgid "Plural partitive"
+msgstr "Plural partitive"
+
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP and PRINCE2: processes, roles and the vocabulary."
 
@@ -7938,8 +7962,23 @@ msgstr "practice-exam-notes.pdf"
 msgid "Practice: a day in Tallinn"
 msgstr "Practice: a day in Tallinn"
 
+msgid "Practice: a message to the landlord"
+msgstr "Practice: a message to the landlord"
+
+msgid "Practice: at the market"
+msgstr "Practice: at the market"
+
+msgid "Practice: last weekend, next week"
+msgstr "Practice: last weekend, next week"
+
+msgid "Practice: looking for a flat"
+msgstr "Practice: looking for a flat"
+
 msgid "Practice: meeting someone"
 msgstr "Practice: meeting someone"
+
+msgid "Practice: reading the news"
+msgstr "Practice: reading the news"
 
 msgid "Practise in conversation"
 msgstr "Practise in conversation"
@@ -7994,6 +8033,9 @@ msgstr "Project management"
 
 msgid "Pronouns"
 msgstr "Pronouns"
+
+msgid "Pronouns in every case"
+msgstr "Pronouns in every case"
 
 msgid "Pronunciation"
 msgstr "Pronunciation"
@@ -8208,9 +8250,6 @@ msgstr "Read Japanese Kana covers hiragana and katakana, including voiced and co
 
 msgid "Read opening hours: <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00, and <1>suletud</1> is closed."
 msgstr "Read opening hours: <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00, and <1>suletud</1> is closed."
-
-msgid "Read signs, news and forms, and join longer sentences."
-msgstr "Read signs, news and forms, and join longer sentences."
 
 msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
@@ -8550,8 +8589,8 @@ msgstr "Say the long form when the pronoun carries the stress: when it stands al
 msgid "Say the week through with the strip above, then try again."
 msgstr "Say the week through with the strip above, then try again."
 
-msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
-msgstr "Say what you must, want and like to do, what you did yesterday, and with whom."
+msgid "Say what you can, must and like to do, where you are going, what you did yesterday and what you will do tomorrow."
+msgstr "Say what you can, must and like to do, where you are going, what you did yesterday and what you will do tomorrow."
 
 msgid "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
 msgstr "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
@@ -8568,8 +8607,14 @@ msgstr "Say who you are, what you do and where you live, and ask and answer. The
 msgid "Say who you are: <0>Mina olen Andres</0> or <1>Minu nimi on Andres</1>."
 msgstr "Say who you are: <0>Mina olen Andres</0> or <1>Minu nimi on Andres</1>."
 
+msgid "Say with whom and without what, give a date and a time, put words in the right order, describe and compare things, and say what someone became."
+msgstr "Say with whom and without what, give a date and a time, put words in the right order, describe and compare things, and say what someone became."
+
 msgid "Say yes in Lymi"
 msgstr "Say yes in Lymi"
+
+msgid "Saying no in the past"
+msgstr "Saying no in the past"
 
 msgid "Saying where: -s and -l"
 msgstr "Saying where: -s and -l"
@@ -9013,6 +9058,9 @@ msgstr "Some places take <0>-l</0> by habit, such as <1>turul</1> and names endi
 
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
+
+msgid "Somebody, nobody: -gi and -ki"
+msgstr "Somebody, nobody: -gi and -ki"
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Someone else, a man or a woman: one word for both."
@@ -9905,6 +9953,9 @@ msgstr "The fourth day. You can hear <0/>, four."
 msgid "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
 msgstr "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
 
+msgid "The future"
+msgstr "The future"
+
 msgid "The gaps grow as you learn."
 msgstr "The gaps grow as you learn."
 
@@ -10498,6 +10549,9 @@ msgstr "Three: SAML, CVSS, and the difference between RTO and RPO."
 
 msgid "Through add-ons"
 msgstr "Through add-ons"
+
+msgid "Through, over, along"
+msgstr "Through, over, along"
 
 msgid "through; past"
 msgstr "through; past"
@@ -11150,9 +11204,6 @@ msgstr "Verb"
 msgid "Verbs"
 msgstr "Verbs"
 
-msgid "Verbs and more cases"
-msgstr "Verbs and more cases"
-
 msgid "Version of 5 January 2026"
 msgstr "Version of 5 January 2026"
 
@@ -11656,6 +11707,9 @@ msgstr "Which assistants can add cards?"
 msgid "Which assistants work?"
 msgstr "Which assistants work?"
 
+msgid "Which case a verb takes"
+msgstr "Which case a verb takes"
+
 msgid "Which ChatGPT plans can connect Lymi?"
 msgstr "Which ChatGPT plans can connect Lymi?"
 
@@ -11875,6 +11929,9 @@ msgstr "Word for word: “what clock is?”"
 msgid "Word meanings open once you have answered."
 msgstr "Word meanings open once you have answered."
 
+msgid "Word order: the verb comes second"
+msgstr "Word order: the verb comes second"
+
 msgid "Word pairs"
 msgstr "Word pairs"
 
@@ -11907,6 +11964,12 @@ msgstr "Words for travel, renting, work and paperwork, once A1 feels easy."
 
 msgid "Words from this lesson"
 msgstr "Words from this lesson"
+
+msgid "Words from verbs: -ja, -mine"
+msgstr "Words from verbs: -ja, -mine"
+
+msgid "Words from words: -lik, -tu, -ke"
+msgstr "Words from words: -lik, -tu, -ke"
 
 msgid "Words from your deck"
 msgstr "Words from your deck"

@@ -42,15 +42,15 @@ const FORM_MEANS: Record<string, MessageDescriptor> = {
   laualt: msg`off the table`,
   töö: msg`work, job`,
   tööl: msg`at work`,
-  tööle: msg`to work`,
+  tööle: msg({ message: "to work", context: "the place: going to work" }),
   töölt: msg`from work`,
   turg: msg`market`,
   turul: msg`at the market`,
   turule: msg`to the market`,
   turult: msg`from the market`,
   Saaremaa: msg`Saaremaa, Estonia’s largest island`,
-  Saaremaal: msg`on Saaremaa`,
-  Saaremaale: msg`to Saaremaa`,
+  Saaremaal: msg({ message: "on Saaremaa", context: "the island, where" }),
+  Saaremaale: msg({ message: "to Saaremaa", context: "the island, where to" }),
   Saaremaalt: msg`from Saaremaa`,
   kool: msg`school`,
   koolis: msg`at school, in a school`,
@@ -122,14 +122,14 @@ const GLOSSARY: Glossary = {
   kus: { en: msg`where` },
   kuhu: { en: msg`where to`, note: msg`Asks where someone or something is going.` },
   kust: { en: msg`where from`, note: msg`Kus with a t on the end.` },
-  kass: { en: msg`cat` },
+  kass: { en: msg({ message: "cat", context: "kass, the cat on the table" }) },
   hüppab: { en: msg`jumps`, note: msg`Hüppama with the ta ending.` },
   põrandale: { en: msg`onto the floor`, note: msg`Põrand, floor, with -le.` },
   helistan: { en: msg`I call, I phone`, note: msg`Helistama takes -le: helistan emale.` },
   küsin: { en: msg`I ask`, note: msg`Küsima takes -lt: küsin emalt.` },
   emale: { en: msg`to Mum` },
   emalt: { en: msg`from Mum` },
-  sõbrale: { en: msg`to a friend`, note: msg`Sõber, friend, on its stem sõbra-.` },
+  sõbrale: { en: msg`to a friend`, note: msg`Sõber, friend: -le goes on its stem sõbra-.` },
   ...Object.fromEntries(
     [
       ...OUTER_PLACES.flatMap((each) => [each.place, each.kus, each.kuhu, each.kust]),
@@ -244,8 +244,8 @@ function useSaturday(): GapItem[] {
       options: ["turult", "turule"],
       why: (
         <Trans>
-          <b lang="et">Läheb</b> says where she goes, so the market takes <b lang="et">-le</b>:{" "}
-          <b lang="et">turule</b>.
+          After <b lang="et">läheb</b>, goes, the place answers <b lang="et">kuhu</b>, so the market
+          takes <b lang="et">-le</b>: <b lang="et">turule</b>.
         </Trans>
       ),
     },
@@ -294,7 +294,8 @@ function useSaturday(): GapItem[] {
       options: ["poodi", "poest"],
       why: (
         <Trans>
-          Out of a shop takes <b lang="et">-st</b>: <b lang="et">poest</b>.
+          A shop takes <b lang="et">-s</b>, so from it takes <b lang="et">-st</b>:{" "}
+          <b lang="et">poest</b>.
         </Trans>
       ),
     },
@@ -444,7 +445,7 @@ export function LaualLaualeLaualtLesson() {
           for off and from: <b lang="et">laual, lauale, laualt</b>.
         </Trans>,
         <Trans key="2">
-          All three go on the same stem: <b lang="et">turul, turule, turult</b>.
+          All three endings go on the same stem: <b lang="et">turul, turule, turult</b>.
         </Trans>,
         <Trans key="3">
           A place that takes{" "}
@@ -463,7 +464,8 @@ export function LaualLaualeLaualtLesson() {
           <b lang="et" className="whitespace-nowrap">
             -sse
           </b>{" "}
-          or a short form: <b lang="et">tööle</b> but <b lang="et">kooli</b>.
+          or a short form: <b lang="et">tööle</b> but <b lang="et">kooli</b>. Every place in this
+          lesson works this way.
         </Trans>,
         <Trans key="4">
           On a person,{" "}
@@ -474,7 +476,8 @@ export function LaualLaualeLaualtLesson() {
           <b lang="et" className="whitespace-nowrap">
             -lt
           </b>{" "}
-          is from: <b lang="et">Ma helistan emale. Ma küsin emalt.</b>
+          is from: <b lang="et">Ma helistan emale. Ma küsin emalt</b>, word for word “I ask from
+          Mum”.
         </Trans>,
       ]}
       sections={[
@@ -490,19 +493,19 @@ export function LaualLaualeLaualtLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -l
                     </b>{" "}
-                    for on and at: <Word w="Kass on laual." /> Lesson {inner} added{" "}
+                    for on and at: <Word w="Kass on laual." /> Lesson {inner} paired{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -s
+                    </b>{" "}
+                    with{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -sse
                     </b>{" "}
                     and{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -st
-                    </b>{" "}
-                    to{" "}
-                    <b lang="et" className="whitespace-nowrap">
-                      -s
                     </b>
-                    , for where to and where from.{" "}
+                    , for “where to” and “where from”.{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -l
                     </b>{" "}
@@ -519,7 +522,7 @@ export function LaualLaualeLaualtLesson() {
                 </p>
                 <p>
                   <Trans>
-                    The answer to <Word w="kuhu" /> ends in{" "}
+                    For the table, the answer to <Word w="kuhu" /> ends in{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -le
                     </b>
@@ -624,12 +627,12 @@ export function LaualLaualeLaualtLesson() {
                   <Word w="Saaremaa" /> takes{" "}
                   <b lang="et" className="whitespace-nowrap">
                     -l
-                  </b>{" "}
-                  as names ending in{" "}
+                  </b>
+                  , as lesson {places} showed for names ending in{" "}
                   <b lang="et" className="whitespace-nowrap">
                     -maa
-                  </b>{" "}
-                  do, so it takes{" "}
+                  </b>
+                  . So it takes{" "}
                   <b lang="et" className="whitespace-nowrap">
                     -le
                   </b>{" "}
@@ -704,7 +707,7 @@ export function LaualLaualeLaualtLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The ending for where to follows the ending for where. A place with{" "}
+                    The ending for “where to” follows the ending for “where”. A place with{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -l
                     </b>{" "}
@@ -726,11 +729,11 @@ export function LaualLaualeLaualtLesson() {
                 </p>
                 <p>
                   <Trans>
-                    So English to can end in{" "}
+                    So one English “to” can be{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -le
                     </b>{" "}
-                    or in a short form, even in one sentence. Tap a sentence to hear it.
+                    or a short form, even in one sentence. Tap a sentence to hear it.
                   </Trans>
                 </p>
               </Prose>

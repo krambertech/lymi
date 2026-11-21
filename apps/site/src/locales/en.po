@@ -471,8 +471,8 @@ msgstr "<0/> on its own is no, and <1/> is yes. A fuller answer repeats the verb
 msgid "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
 msgstr "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
 
-msgid "<0/> takes <1>-l</1> as names ending in <2>-maa</2> do, so it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
-msgstr "<0/> takes <1>-l</1> as names ending in <2>-maa</2> do, so it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
+msgid "<0/> takes <1>-l</1>, as lesson {places} showed for names ending in <2>-maa</2>. So it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
+msgstr "<0/> takes <1>-l</1>, as lesson {places} showed for names ending in <2>-maa</2>. So it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
 
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
@@ -538,9 +538,6 @@ msgstr "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
 
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> asks where you’re from, not where you live."
-
-msgid "<0>Läheb</0> says where she goes, so the market takes <1>-le</1>: <2>turule</2>."
-msgstr "<0>Läheb</0> says where she goes, so the market takes <1>-le</1>: <2>turule</2>."
 
 msgid "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
 msgstr "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
@@ -1138,8 +1135,8 @@ msgstr "A photo of your notebook"
 msgid "A pile of unread books"
 msgstr "A pile of unread books"
 
-msgid "A place that takes <0>-l</0> takes <1>-le</1> for where to; one that takes <2>-s</2> takes <3>-sse</3> or a short form: <4>tööle</4> but <5>kooli</5>."
-msgstr "A place that takes <0>-l</0> takes <1>-le</1> for where to; one that takes <2>-s</2> takes <3>-sse</3> or a short form: <4>tööle</4> but <5>kooli</5>."
+msgid "A place that takes <0>-l</0> takes <1>-le</1> for where to; one that takes <2>-s</2> takes <3>-sse</3> or a short form: <4>tööle</4> but <5>kooli</5>. Every place in this lesson works this way."
+msgstr "A place that takes <0>-l</0> takes <1>-le</1> for where to; one that takes <2>-s</2> takes <3>-sse</3> or a short form: <4>tööle</4> but <5>kooli</5>. Every place in this lesson works this way."
 
 msgid "A practice quiz"
 msgstr "A practice quiz"
@@ -1191,6 +1188,9 @@ msgstr "a shop"
 
 msgid "A shop takes <0>-s</0>, not <1>-l</1>: <2>poes</2>, in the shop."
 msgstr "A shop takes <0>-s</0>, not <1>-l</1>: <2>poes</2>, in the shop."
+
+msgid "A shop takes <0>-s</0>, so from it takes <1>-st</1>: <2>poest</2>."
+msgstr "A shop takes <0>-s</0>, so from it takes <1>-st</1>: <2>poest</2>."
 
 msgid "A shop’s opening hours"
 msgstr "A shop’s opening hours"
@@ -1546,6 +1546,9 @@ msgstr "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 
+msgid "After <0>läheb</0>, goes, the place answers <1>kuhu</1>, so the market takes <2>-le</2>: <3>turule</3>."
+msgstr "After <0>läheb</0>, goes, the place answers <1>kuhu</1>, so the market takes <2>-le</2>: <3>turule</3>."
+
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 
@@ -1744,8 +1747,8 @@ msgstr "All Spanish decks"
 msgid "All three endings go on the same stem: <0/>, <1/>, <2/>. Tap a form in the table to hear it."
 msgstr "All three endings go on the same stem: <0/>, <1/>, <2/>. Tap a form in the table to hear it."
 
-msgid "All three go on the same stem: <0>turul, turule, turult</0>."
-msgstr "All three go on the same stem: <0>turul, turule, turult</0>."
+msgid "All three endings go on the same stem: <0>turul, turule, turult</0>."
+msgstr "All three endings go on the same stem: <0>turul, turule, turult</0>."
 
 msgid "All Ukrainian decks"
 msgstr "All Ukrainian decks"
@@ -2679,6 +2682,10 @@ msgstr "carry!"
 msgid "Castle"
 msgstr "Castle"
 
+msgid "cat"
+msgstr "cat"
+
+msgctxt "kass, the cat on the table"
 msgid "cat"
 msgstr "cat"
 
@@ -4222,6 +4229,9 @@ msgstr "For the German, US, Spanish, Czech and Canadian citizenship tests, with 
 
 msgid "For the ones that slip"
 msgstr "For the ones that slip"
+
+msgid "For the table, the answer to <0/> ends in <1>-le</1>: <2/> The answer to <3/> ends in <4>-lt</4>: <5/> The cat lands on the floor, so <6/> takes <7>-le</7>."
+msgstr "For the table, the answer to <0/> ends in <1>-le</1>: <2/> The answer to <3/> ends in <4>-lt</4>: <5/> The cat lands on the floor, so <6/> takes <7>-le</7>."
 
 msgid "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty."
 msgstr "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty."
@@ -6483,8 +6493,8 @@ msgstr "Lesson {number} · {minutes} min"
 msgid "Lesson {number}, coming soon"
 msgstr "Lesson {number}, coming soon"
 
-msgid "Lesson {places} taught <0>-l</0> for on and at: <1/> Lesson {inner} added <2>-sse</2> and <3>-st</3> to <4>-s</4>, for where to and where from. <5>-l</5> has a pair of its own: <6>-le</6> and <7>-lt</7>."
-msgstr "Lesson {places} taught <0>-l</0> for on and at: <1/> Lesson {inner} added <2>-sse</2> and <3>-st</3> to <4>-s</4>, for where to and where from. <5>-l</5> has a pair of its own: <6>-le</6> and <7>-lt</7>."
+msgid "Lesson {places} taught <0>-l</0> for on and at: <1/> Lesson {inner} paired <2>-s</2> with <3>-sse</3> and <4>-st</4>, for “where to” and “where from”. <5>-l</5> has a pair of its own: <6>-le</6> and <7>-lt</7>."
+msgstr "Lesson {places} taught <0>-l</0> for on and at: <1/> Lesson {inner} paired <2>-s</2> with <3>-sse</3> and <4>-st</4>, for “where to” and “where from”. <5>-l</5> has a pair of its own: <6>-le</6> and <7>-lt</7>."
 
 msgid "Lesson {previousNumber}"
 msgstr "Lesson {previousNumber}"
@@ -7717,8 +7727,8 @@ msgstr "On a door or a sign."
 msgid "On a door you’ll also see <0/>, open, and <1/>, closed."
 msgstr "On a door you’ll also see <0/>, open, and <1/>, closed."
 
-msgid "On a person, <0>-le</0> is to and <1>-lt</1> is from: <2>Ma helistan emale. Ma küsin emalt.</2>"
-msgstr "On a person, <0>-le</0> is to and <1>-lt</1> is from: <2>Ma helistan emale. Ma küsin emalt.</2>"
+msgid "On a person, <0>-le</0> is to and <1>-lt</1> is from: <2>Ma helistan emale. Ma küsin emalt</2>, word for word “I ask from Mum”."
+msgstr "On a person, <0>-le</0> is to and <1>-lt</1> is from: <2>Ma helistan emale. Ma küsin emalt</2>, word for word “I ask from Mum”."
 
 msgid "On a surface, at work or at a market: -l."
 msgstr "On a surface, at work or at a market: -l."
@@ -7735,6 +7745,10 @@ msgstr "on Monday"
 msgid "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
 msgstr "On quizlet.com, open your set, choose Export from its … menu and press Copy text."
 
+msgid "on Saaremaa"
+msgstr "on Saaremaa"
+
+msgctxt "the island, where"
 msgid "on Saaremaa"
 msgstr "on Saaremaa"
 
@@ -7994,9 +8008,6 @@ msgstr "Our *team* won!"
 
 msgid "Out loud, on a walk"
 msgstr "Out loud, on a walk"
-
-msgid "Out of a shop takes <0>-st</0>: <1>poest</1>."
-msgstr "Out of a shop takes <0>-st</0>: <1>poest</1>."
 
 msgid "out of the house"
 msgstr "out of the house"
@@ -9564,11 +9575,11 @@ msgstr "Snap your lecture slides or drop in the PDF, and Lymi makes the cards. Y
 msgid "Snap your lesson notes into cards, build the course in sections and share one link. Each learner reviews on their own schedule."
 msgstr "Snap your lesson notes into cards, build the course in sections and share one link. Each learner reviews on their own schedule."
 
-msgid "So English to can end in <0>-le</0> or in a short form, even in one sentence. Tap a sentence to hear it."
-msgstr "So English to can end in <0>-le</0> or in a short form, even in one sentence. Tap a sentence to hear it."
-
 msgid "So far every command speaks to one person, someone you’d call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It’s the same split as <5>sa</5> and <6/> in lesson {pronouns}."
 msgstr "So far every command speaks to one person, someone you’d call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It’s the same split as <5>sa</5> and <6/> in lesson {pronouns}."
+
+msgid "So one English “to” can be <0>-le</0> or a short form, even in one sentence. Tap a sentence to hear it."
+msgstr "So one English “to” can be <0>-le</0> or a short form, even in one sentence. Tap a sentence to hear it."
 
 msgid "So-so"
 msgstr "So-so"
@@ -9579,8 +9590,8 @@ msgstr "So-so; careless"
 msgid "So; well then"
 msgstr "So; well then"
 
-msgid "Sõber, friend, on its stem sõbra-."
-msgstr "Sõber, friend, on its stem sõbra-."
+msgid "Sõber, friend: -le goes on its stem sõbra-."
+msgstr "Sõber, friend: -le goes on its stem sõbra-."
 
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre, over, plus mesa, table. It can outlast the meal."
@@ -10377,9 +10388,6 @@ msgstr "The A1, A2 and B1 decks follow the topics of Poland’s state exams, so 
 msgid "the Anki manual"
 msgstr "the Anki manual"
 
-msgid "The answer to <0/> ends in <1>-le</1>: <2/> The answer to <3/> ends in <4>-lt</4>: <5/> The cat lands on the floor, so <6/> takes <7>-le</7>."
-msgstr "The answer to <0/> ends in <1>-le</1>: <2/> The answer to <3/> ends in <4>-lt</4>: <5/> The cat lands on the floor, so <6/> takes <7>-le</7>."
-
 msgid "the App Store"
 msgstr "the App Store"
 
@@ -10521,6 +10529,9 @@ msgstr "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
 msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 msgstr "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 
+msgid "The ending for “where to” follows the ending for “where”. A place with <0>-l</0> takes <1>-le</1>: <2/>, <3/>. A place with <4>-s</4> takes <5>-sse</5> or a short form, as lesson {inner} showed: <6/>, <7/>. Every place in this lesson works this way."
+msgstr "The ending for “where to” follows the ending for “where”. A place with <0>-l</0> takes <1>-le</1>: <2/>, <3/>. A place with <4>-s</4> takes <5>-sse</5> or a short form, as lesson {inner} showed: <6/>, <7/>. Every place in this lesson works this way."
+
 msgid "The ending for ma, I."
 msgstr "The ending for ma, I."
 
@@ -10538,9 +10549,6 @@ msgstr "The ending for ta, he or she. Olema has on here."
 
 msgid "The ending for te: you, to more than one; polite you."
 msgstr "The ending for te: you, to more than one; polite you."
-
-msgid "The ending for where to follows the ending for where. A place with <0>-l</0> takes <1>-le</1>: <2/>, <3/>. A place with <4>-s</4> takes <5>-sse</5> or a short form, as lesson {inner} showed: <6/>, <7/>. Every place in this lesson works this way."
-msgstr "The ending for where to follows the ending for where. A place with <0>-l</0> takes <1>-le</1>: <2/>, <3/>. A place with <4>-s</4> takes <5>-sse</5> or a short form, as lesson {inner} showed: <6/>, <7/>. Every place in this lesson works this way."
 
 msgid "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
 msgstr "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
@@ -11475,6 +11483,7 @@ msgstr "To rent"
 msgid "to run"
 msgstr "to run"
 
+msgctxt "the island, where to"
 msgid "to Saaremaa"
 msgstr "to Saaremaa"
 
@@ -11544,6 +11553,10 @@ msgstr "To usually do something"
 msgid "to wait"
 msgstr "to wait"
 
+msgid "to work"
+msgstr "to work"
+
+msgctxt "the place: going to work"
 msgid "to work"
 msgstr "to work"
 

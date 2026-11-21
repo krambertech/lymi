@@ -2703,6 +2703,10 @@ export const CONDITIONAL_VERBS = {
     now: ["saan", "saad", "saab", "saame", "saate", "saavad"],
     would: ["saaksin", "saaksid", "saaks", "saaksime", "saaksite", "saaksid"],
   },
+  tulema: {
+    now: ["tulen", "tuled", "tuleb", "tuleme", "tulete", "tulevad"],
+    would: ["tuleksin", "tuleksid", "tuleks", "tuleksime", "tuleksite", "tuleksid"],
+  },
 } as const;
 
 export const conditionalForms = (verb: keyof typeof CONDITIONAL_VERBS) =>

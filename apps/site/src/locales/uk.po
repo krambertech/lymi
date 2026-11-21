@@ -37,8 +37,8 @@ msgstr "«Schönen Feierabend!» — побажання добре відпоч�
 msgid "“To have”"
 msgstr "«Мати»"
 
-msgid "“To like”"
-msgstr "«Подобатися»"
+msgid "“To like” and feelings"
+msgstr "«Подобатися» і почуття"
 
 #. placeholder {0}: 6
 #. placeholder {0}: deck.cardCount
@@ -2210,6 +2210,9 @@ msgstr "Створи курс із розділів, поділися ним ч�
 msgid "Build a deck from this Project, one section per lecture."
 msgstr "Збери колоду з цього проєкту, по розділу на лекцію."
 
+msgid "Build new words from ones you know, read signs, news and forms, and join longer sentences."
+msgstr "Твори нові слова з тих, що вже знаєш, читай вивіски, новини й бланки та складай довші речення."
+
 msgid "Build the course in order."
 msgstr "Вибудуй курс крок за кроком."
 
@@ -2413,6 +2416,9 @@ msgstr "Чи можна випити там кави в понеділок?"
 
 msgid "Can you make a U-turn on a one-way street?"
 msgstr "Чи можна розвертатися на дорозі з одностороннім рухом?"
+
+msgid "Can, may, must"
+msgstr "Можу, можна, треба"
 
 msgid "Can; may"
 msgstr "Можна; могти"
@@ -4462,6 +4468,9 @@ msgstr "Goethe-Zertifikat A1, A2 і B1: лексика для кожного р�
 msgid "Going over a lesson again"
 msgstr "Повторення пройденого"
 
+msgid "Going, being, coming back: -ma, -mas, -mast"
+msgstr "Іти, бути там, повертатися: -ma, -mas, -mast"
+
 msgid "Good"
 msgstr "Добре"
 
@@ -6155,6 +6164,9 @@ msgstr "Дозволити Claude додавати картки?"
 msgid "Let’s *take a taxi*."
 msgstr "Поїхали на *таксі*."
 
+msgid "Let’s and let them"
+msgstr "«Ходімо» і «нехай»"
+
 msgid "Let’s go into *town*!"
 msgstr "Ходімо в *місто*!"
 
@@ -6746,6 +6758,9 @@ msgstr "Ще колоди: {language}"
 
 msgid "More are on the way."
 msgstr "Нові вже в роботі."
+
+msgid "More cases"
+msgstr "Ще відмінки"
 
 msgid "More decks"
 msgstr "Інші колоди"
@@ -7499,6 +7514,9 @@ msgstr "Або надішли через AI-асистента."
 msgid "or; at the end of a sentence, a bit like “right?”"
 msgstr "або; у кінці речення щось на зразок «так?»"
 
+msgid "Ordinals and dates"
+msgstr "Порядкові числівники й дати"
+
 msgid "Organisms, stains and what they cause."
 msgstr "Збудники, забарвлення та що вони спричиняють."
 
@@ -7562,8 +7580,11 @@ msgstr "Пярну, місто біля моря"
 msgid "Participles"
 msgstr "Дієприкметники"
 
-msgid "Particle verbs"
-msgstr "Складені дієслова"
+msgid "Particle verbs with new meanings"
+msgstr "Дієслова з частками: нові значення"
+
+msgid "Particle verbs: up, out, away"
+msgstr "Дієслова з частками: вгору, назовні, геть"
 
 msgid "Particles spreading from high to low concentration"
 msgstr "Поширення частинок від вищої концентрації до нижчої"
@@ -7619,7 +7640,7 @@ msgstr "Ці три питання тобі поставлять при зуст
 msgid "People, food, time and your first verbs."
 msgstr "Люди, їжа, час і перші дієслова."
 
-msgid "Perfect tenses"
+msgid "Perfect and pluperfect"
 msgstr "Перфект і плюсквамперфект"
 
 msgid "Perfective"
@@ -7842,6 +7863,9 @@ msgstr "Множина"
 msgid "Plural cases"
 msgstr "Відмінки в множині"
 
+msgid "Plural partitive"
+msgstr "Партитив множини"
+
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP і PRINCE2: процеси, ролі й термінологія."
 
@@ -7938,8 +7962,23 @@ msgstr "practice-exam-notes.pdf"
 msgid "Practice: a day in Tallinn"
 msgstr "Практика: день у Таллінні"
 
+msgid "Practice: a message to the landlord"
+msgstr "Практика: лист орендодавцю"
+
+msgid "Practice: at the market"
+msgstr "Практика: на ринку"
+
+msgid "Practice: last weekend, next week"
+msgstr "Практика: минулі вихідні, наступний тиждень"
+
+msgid "Practice: looking for a flat"
+msgstr "Практика: шукаємо квартиру"
+
 msgid "Practice: meeting someone"
 msgstr "Практика: знайомство"
+
+msgid "Practice: reading the news"
+msgstr "Практика: читаємо новини"
 
 msgid "Practise in conversation"
 msgstr "Практика в розмові"
@@ -7994,6 +8033,9 @@ msgstr "Управління проєктами"
 
 msgid "Pronouns"
 msgstr "Займенники"
+
+msgid "Pronouns in every case"
+msgstr "Займенники в усіх відмінках"
 
 msgid "Pronunciation"
 msgstr "Вимова"
@@ -8208,9 +8250,6 @@ msgstr "Read Japanese Kana охоплює хірагану й катакану, 
 
 msgid "Read opening hours: <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00, and <1>suletud</1> is closed."
 msgstr "Читай години роботи: <0>E–R 9–18</0> — з понеділка до п’ятниці, з 9:00 до 18:00, а <1>suletud</1> — зачинено."
-
-msgid "Read signs, news and forms, and join longer sentences."
-msgstr "Читати вивіски, новини й бланки та складати довші речення."
 
 msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Прочитай значення й спершу згадай термін, а тоді дивись. Спробуй на цих картках: вони з усієї колоди."
@@ -8550,8 +8589,8 @@ msgstr "Повну форму кажуть, коли займенник під �
 msgid "Say the week through with the strip above, then try again."
 msgstr "Проговори тиждень за днями вище, а тоді спробуй знову."
 
-msgid "Say what you must, want and like to do, what you did yesterday, and with whom."
-msgstr "Казати, що мусиш, хочеш і любиш робити, розповідати, як минув учорашній день і з ким."
+msgid "Say what you can, must and like to do, where you are going, what you did yesterday and what you will do tomorrow."
+msgstr "Розкажи, що вмієш, мусиш і любиш робити, куди йдеш, як минув учорашній день і які плани на завтра."
 
 msgid "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>, I drink coffee at ten. Pool looks ahead, so <2>pool üksteist</2> is 10:30."
 msgstr "Час називай словом <0>kell</0> і числом: <1>Ma joon kell kümme kohvi</1>, я п’ю каву о десятій. Pool дивиться вперед, тож <2>pool üksteist</2> — це 10:30, пів на одинадцяту."
@@ -8568,8 +8607,14 @@ msgstr "Скажи, хто ти, що робиш і де живеш, запит�
 msgid "Say who you are: <0>Mina olen Andres</0> or <1>Minu nimi on Andres</1>."
 msgstr "Кажи, хто ти: <0>Mina olen Andres</0> або <1>Minu nimi on Andres</1>."
 
+msgid "Say with whom and without what, give a date and a time, put words in the right order, describe and compare things, and say what someone became."
+msgstr "Скажи, з ким і без чого, назви дату й час, став слова в правильному порядку, описуй і порівнюй речі та розкажи, ким хтось став."
+
 msgid "Say yes in Lymi"
 msgstr "Дай згоду в Lymi"
+
+msgid "Saying no in the past"
+msgstr "Заперечення в минулому"
 
 msgid "Saying where: -s and -l"
 msgstr "Як сказати, де: закінчення -s і -l"
@@ -9013,6 +9058,9 @@ msgstr "Деякі місця мають <0>-l</0> за традицією, як
 
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Деякі основи змінюються: <0>lugema, loen</0>. Запам’ятовуй кожне дієслово з формою для «я»."
+
+msgid "Somebody, nobody: -gi and -ki"
+msgstr "Хтось, ніхто: -gi і -ki"
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Хтось інший, чоловік чи жінка: одне слово для обох."
@@ -9905,6 +9953,9 @@ msgstr "Четвертий день. Чути <0/>, чотири."
 msgid "The full BAMF catalogue: the 300 general questions and the 10 for your state, in German as they appear on the test, with English next to each."
 msgstr "Повний каталог BAMF: 300 загальних питань і 10 про твою землю — німецькою, як на тесті, з українським перекладом поруч."
 
+msgid "The future"
+msgstr "Майбутнє"
+
 msgid "The gaps grow as you learn."
 msgstr "Що краще знаєш, то довші паузи."
 
@@ -10498,6 +10549,9 @@ msgstr "Три: SAML, CVSS і різницю між RTO та RPO."
 
 msgid "Through add-ons"
 msgstr "Через доповнення"
+
+msgid "Through, over, along"
+msgstr "Крізь, через, уздовж"
 
 msgid "through; past"
 msgstr "крізь; минуло (про час)"
@@ -11150,9 +11204,6 @@ msgstr "Дієслово"
 msgid "Verbs"
 msgstr "Дієслова"
 
-msgid "Verbs and more cases"
-msgstr "Дієслова і нові відмінки"
-
 msgid "Version of 5 January 2026"
 msgstr "Версія від 5 січня 2026 року"
 
@@ -11656,6 +11707,9 @@ msgstr "Які асистенти можуть додавати картки?"
 msgid "Which assistants work?"
 msgstr "Які асистенти підтримуються?"
 
+msgid "Which case a verb takes"
+msgstr "Який відмінок потрібен дієслову"
+
 msgid "Which ChatGPT plans can connect Lymi?"
 msgstr "На яких планах ChatGPT можна підключити Lymi?"
 
@@ -11875,6 +11929,9 @@ msgstr "Дослівно: «що годинник є?»"
 msgid "Word meanings open once you have answered."
 msgstr "Значення слів відкриються, коли відповіси."
 
+msgid "Word order: the verb comes second"
+msgstr "Порядок слів: дієслово на другому місці"
+
 msgid "Word pairs"
 msgstr "Пари слів"
 
@@ -11907,6 +11964,12 @@ msgstr "Слова для подорожей, оренди, роботи й до
 
 msgid "Words from this lesson"
 msgstr "Слова з цього уроку"
+
+msgid "Words from verbs: -ja, -mine"
+msgstr "Слова від дієслів: -ja, -mine"
+
+msgid "Words from words: -lik, -tu, -ke"
+msgstr "Слова від слів: -lik, -tu, -ke"
 
 msgid "Words from your deck"
 msgstr "Слова з твоєї колоди"

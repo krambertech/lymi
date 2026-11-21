@@ -197,7 +197,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian -ma, -mas and -mast: going, being and coming back`,
         et: "Lähen ujuma, olen ujumas",
         minutes: 12,
-        blurb: msg`A free lesson on the Estonian -ma form as a place: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming), like kuhu?, kus? and kust?, and when to say lähen, käin or tulen. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud.`,
       },
       { name: msg`“To like” and feelings`, et: "Mulle meeldib" },
       { name: msg`Practice: at the market`, et: "Turul" },

@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -55,7 +55,7 @@ const WAY_MEANS: Record<Verb, Record<Way, MessageDescriptor>> = {
     mast: msg`back from a run`,
   },
   sööma: {
-    ma: msg`going to eat`,
+    ma: msg`going off to eat`,
     mas: msg`out eating`,
     mast: msg`back from eating`,
   },
@@ -79,7 +79,7 @@ const MARI_MEANS: Record<Verb, Record<Way, MessageDescriptor>> = {
     mast: msg`Mari is coming back from a run.`,
   },
   sööma: {
-    ma: msg`Mari is going to eat.`,
+    ma: msg`Mari is going off to eat.`,
     mas: msg`Mari is out eating.`,
     mast: msg`Mari is coming back from eating.`,
   },
@@ -96,7 +96,7 @@ const KEY_MEANS: Record<(typeof GOING_KEYS)[number]["said"], MessageDescriptor> 
   "Ma olen ujumas.": msg`I’m out swimming.`,
   "Ma käin iga päev ujumas.": msg`I go swimming every day.`,
   "Ma tulen ujumast.": msg`I’m coming back from swimming.`,
-  "Tule sööma!": msg`Come and eat.`,
+  "Tule sööma!": msg({ message: "Come and eat.", context: "tulema, come here" }),
 };
 
 const verbOf = (name: Verb) => GOING_VERBS.find((each) => each.verb === name) as GoingVerb;
@@ -153,7 +153,7 @@ function End({ children }: { children: ReactNode }) {
 function CatScene() {
   const { t } = useLingui();
   const said: Record<(typeof GOING_SCENE)[number]["id"], { meaning: string; gloss: string }> = {
-    majja: { meaning: t`going to eat`, gloss: t`The cat is going in to eat.` },
+    majja: { meaning: t`going off to eat`, gloss: t`The cat is going in to eat.` },
     majas: { meaning: t`busy eating`, gloss: t`The cat is in there, eating.` },
     majast: { meaning: t`back from eating`, gloss: t`The cat is coming back from eating.` },
   };
@@ -198,7 +198,7 @@ function WayNote({ way, means }: { way: Way; means: string }) {
   }
 }
 
-/** Four activities going, there and coming back; a tap plays Mari’s sentence. */
+/** Four activities going, out and coming back; a tap plays Mari’s sentence. */
 function WayTable() {
   const { t, i18n } = useLingui();
   const rows: ParadigmRow[] = GOING_VERBS.map((verb) => ({
@@ -214,10 +214,10 @@ function WayTable() {
   return (
     <Panel>
       <Paradigm
-        label={t`Four activities: going, there and coming back`}
+        label={t`Four activities: going, out and coming back`}
         columns={[
           t({ message: "Going", context: "setting off to do something" }),
-          t({ message: "There", context: "away, doing something" }),
+          t({ message: "Out", context: "away, doing something" }),
           t({ message: "Coming back", context: "from doing something" }),
         ]}
         rows={rows}
@@ -239,7 +239,7 @@ function KeyTip({ lead }: { lead: (typeof GOING_KEYS)[number]["lead"] }) {
     case "olen":
       return (
         <Trans>
-          From <span lang="et">olema</span>. You’re there doing it, so <End>-mas</End>.
+          From <span lang="et">olema</span>, to be. You’re there, doing it, so <End>-mas</End>.
         </Trans>
       );
     case "käin":
@@ -385,7 +385,7 @@ function voiceQuestions(t: (descriptor: MessageDescriptor) => string): PassageQu
 
 export function UjumaUjumasUjumastLesson() {
   const { t, i18n } = useLingui();
-  const inOut = LESSONS.find((lesson) => lesson.et === "Majas, majja, majast")?.n;
+  const inOut = lessonBySlug("majas-majja-majast")?.n;
   const infinitives = lessonBySlug("tegevusnimed")?.n;
 
   const heardItems = useMemo<HeardItem[]>(
@@ -463,10 +463,11 @@ export function UjumaUjumasUjumastLesson() {
       words={["ujuma", "ujumas", "ujumast", "käima", "tulema", "iga päev", "kust sa tuled?"]}
       recap={[
         <Trans key="1">
-          The <End>-ma</End> form says where someone is going: <b lang="et">Mari läheb ujuma.</b>
+          After <b lang="et">läheb</b>, the <End>-ma</End> form says what someone is off to do:{" "}
+          <b lang="et">Mari läheb ujuma.</b>
         </Trans>,
         <Trans key="2">
-          With <End>-mas</End>, they’re there, busy with it: <b lang="et">Mari on ujumas.</b>{" "}
+          With <End>-mas</End>, they’re in the middle of it: <b lang="et">Mari on ujumas.</b>{" "}
           <b lang="et">Käin</b> takes it too: <b lang="et">Ma käin iga päev ujumas.</b>
         </Trans>,
         <Trans key="3">
@@ -484,7 +485,7 @@ export function UjumaUjumasUjumastLesson() {
       sections={[
         {
           id: "three-ways",
-          title: t`Going, there, coming back`,
+          title: t`Going, out, coming back`,
           children: (
             <>
               <Prose>
@@ -522,15 +523,15 @@ export function UjumaUjumasUjumastLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The <End>-ma</End> form says where someone is going:{" "}
-                    <Word w="Mari läheb jooksma." /> You met it after <span lang="et">lähen</span>{" "}
-                    in lesson {infinitives}.
+                    After <span lang="et">läheb</span>, the <End>-ma</End> form says what someone is
+                    off to do: <Word w="Mari läheb jooksma." /> You met it after{" "}
+                    <span lang="et">lähen</span> in lesson {infinitives}.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Add <End>-s</End> and it says where someone is, away and busy with it:{" "}
-                    <Word w="Mari on jooksmas." /> Add <End>-st</End> and it says what they’re
+                    Add <End>-s</End> and it says someone is in the middle of it, often out doing
+                    it: <Word w="Mari on jooksmas." /> Add <End>-st</End> and it says what they’re
                     coming back from: <Word w="Mari tuleb jooksmast." />
                   </Trans>
                 </p>
@@ -631,9 +632,9 @@ export function UjumaUjumasUjumastLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The verb before the form fits it. <Word w="Lähen" /> means you’re setting off,
-                    so it takes <End>-ma</End>: <Word w="Ma lähen ujuma." /> <Word w="Olen" /> means
-                    you’re there, so <End>-mas</End>: <Word w="Ma olen ujumas." />
+                    <Word w="Lähen" /> means you’re setting off, so it takes <End>-ma</End>:{" "}
+                    <Word w="Ma lähen ujuma." /> <Word w="Olen" />, I am, says where you are now, so
+                    it takes <End>-mas</End>: <Word w="Ma olen ujumas." />
                   </Trans>
                 </p>
                 <p>
@@ -647,8 +648,8 @@ export function UjumaUjumasUjumastLesson() {
                   <Trans>
                     <Word w="Tulen" />, from <Word w="tulema" />, takes <End>-mast</End> when you
                     come back from something: <Word w="Ma tulen ujumast." /> It takes <End>-ma</End>{" "}
-                    when you come to do something: <Word w="Tule sööma!" /> Tap a verb to hear its
-                    sentence.
+                    when you come to do something, as in the command <Word w="Tule sööma!" /> Tap a
+                    verb to hear its sentence.
                   </Trans>
                 </p>
               </Prose>

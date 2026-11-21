@@ -2624,12 +2624,12 @@ const PLURAL_CASE_CLIPS: Record<string, Clip> = {
 };
 
 export const PERFECT_PERSONS = [
-  { pronoun: "ma", now: "olen", then: "olin" },
-  { pronoun: "sa", now: "oled", then: "olid" },
-  { pronoun: "ta", now: "on", then: "oli" },
-  { pronoun: "me", now: "oleme", then: "olime" },
-  { pronoun: "te", now: "olete", then: "olite" },
-  { pronoun: "nad", now: "on", then: "olid" },
+  { pronoun: "ma", now: "olen", past: "olin" },
+  { pronoun: "sa", now: "oled", past: "olid" },
+  { pronoun: "ta", now: "on", past: "oli" },
+  { pronoun: "me", now: "oleme", past: "olime" },
+  { pronoun: "te", now: "olete", past: "olite" },
+  { pronoun: "nad", now: "on", past: "olid" },
 ] as const;
 
 export const PERFECT_VERBS = { lugema: "lugenud", käima: "käinud", sööma: "söönud" } as const;
@@ -2638,7 +2638,7 @@ export const perfectForms = (nud: string) =>
   PERFECT_PERSONS.map((person) => ({
     pronoun: person.pronoun,
     now: `${person.pronoun} ${person.now} ${nud}`,
-    then: `${person.pronoun} ${person.then} ${nud}`,
+    past: `${person.pronoun} ${person.past} ${nud}`,
   }));
 
 export const PERFECT_CONTRASTS = [
@@ -2653,9 +2653,9 @@ export const PERFECT_WHEN = [
   { said: "Ma olen Tartus käinud.", kind: "now" },
   { said: "Kas sa oled seda filmi näinud?", kind: "now" },
   { said: "Ma ei ole veel söönud.", kind: "now" },
-  { said: "Eile ma käisin Tartus.", kind: "then" },
-  { said: "Laupäeval me nägime filmi.", kind: "then" },
-  { said: "Ma sõin kell kaheksa.", kind: "then" },
+  { said: "Eile ma käisin Tartus.", kind: "past" },
+  { said: "Laupäeval me nägime filmi.", kind: "past" },
+  { said: "Ma sõin kell kaheksa.", kind: "past" },
   { said: "Kui ma koju tulin, oli Kati juba söönud.", kind: "before" },
   { said: "Ma olin seda filmi enne näinud.", kind: "before" },
   { said: "Kui me jaama jõudsime, oli rong juba läinud.", kind: "before" },
@@ -2676,7 +2676,7 @@ const PERFECT_CLIPS: Record<string, Clip> = {
   ...words(PERFECT_WORDS),
   ...words(
     Object.values(PERFECT_VERBS).flatMap((nud) =>
-      perfectForms(nud).flatMap((form) => [form.now, form.then]),
+      perfectForms(nud).flatMap((form) => [form.now, form.past]),
     ),
   ),
   ...words(PERFECT_CONTRASTS),

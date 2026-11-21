@@ -70,7 +70,7 @@ function VerbTable() {
     label: i18n._(PERSONS[form.pronoun] as MessageDescriptor),
     cells: [
       { form: form.now, src: src(form.now) },
-      { form: form.then, src: src(form.then) },
+      { form: form.past, src: src(form.past) },
     ],
   }));
   return (
@@ -119,7 +119,7 @@ function useContent() {
         id: "now",
         label: <span lang={i18n.locale}>{t`It has happened, and it matters now`}</span>,
       },
-      { id: "then", label: <span lang={i18n.locale}>{t`It happened at a set time`}</span> },
+      { id: "past", label: <span lang={i18n.locale}>{t`It happened at a set time`}</span> },
       {
         id: "before",
         label: <span lang={i18n.locale}>{t`It had happened before something else`}</span>,
@@ -131,7 +131,7 @@ function useContent() {
           No time is named: the perfect, a present form of <Et>olema</Et> with <Et>-nud</Et>.
         </Trans>
       ),
-      then: <Trans>A set time in the past: the simple past.</Trans>,
+      past: <Trans>A set time in the past: the simple past.</Trans>,
       before: (
         <Trans>
           Before another past moment: the pluperfect, <Et>olin</Et> with <Et>-nud</Et>.

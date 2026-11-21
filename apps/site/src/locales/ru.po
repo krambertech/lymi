@@ -1033,9 +1033,6 @@ msgstr "После <0>ma</0> глагол оканчивается на <1>-n</1
 msgid "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
 msgstr "После <0>ma</0> глагол оканчивается на <1>-n</1>: <2>õpin</2>."
 
-msgid "<0>Maha</0> is down. Agreeing is <1>kokku leppima</1>: <2>lepime kokku</2>."
-msgstr "<0>Maha</0> — вниз. Договориться — это <1>kokku leppima</1>: <2>lepime kokku</2>."
-
 msgid "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
 msgstr "<0>Majas</0> значит «в доме»: это вторая форма с <1>-s</1>. А сама вторая форма — <2>maja</2>."
 
@@ -1214,7 +1211,7 @@ msgid "<0>Saaksime</0> is the ending for <1>me</1>. With <2>te</2>, it’s <3>sa
 msgstr "<0>Saaksime</0> — окончание для <1>me</1>. С <2>te</2> будет <3>saaksite</3>."
 
 msgid "<0>Saama</0> is to get. With <1>aru</1> it means to understand, and the person or thing takes <2>-st</2>: <3>sinust aru</3>."
-msgstr "<0>Saama</0> — получать. С <1>aru</1> оно значит понимать, а то, что понимаешь, получает <2>-st</2>: <3>sinust aru</3>."
+msgstr "<0>Saama</0> — получать. С <1>aru</1> оно значит понимать, а то, кого или что понимаешь, получает <2>-st</2>: <3>sinust aru</3>."
 
 msgid "<0>Saama</0>, can, takes the -da form: <1>tulla</1>."
 msgstr "<0>Saama</0> в значении «мочь» требует формы на -da: <1>tulla</1>."
@@ -1329,6 +1326,9 @@ msgstr "<0>vad</0> сейчас, <1>sid</1> в прошлом, как и для 
 
 msgid "<0>Vastama</0> answers to someone: <1>sulle</1>."
 msgstr "<0>Vastama</0> — отвечать кому-то: <1>sulle</1>."
+
+msgid "<0>Vastu</0> is towards. Agreeing is <1>kokku leppima</1>: <2>lepime nii kokku</2>."
+msgstr "<0>Vastu</0> — навстречу. Договориться — это <1>kokku leppima</1>: <2>lepime nii kokku</2>."
 
 msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>Veerand neli</0> — четверть пути к четырём, 3:15. <1>Kolmveerand neli</1> — три четверти, 3:45."
@@ -1746,9 +1746,6 @@ msgstr "В словаре глагол стоит в форме на -ma: <0/>, 
 
 msgid "A dictionary lists a verb in its -ma form: <0>elama</0>, to live. The endings go on its stem, <1>ela-</1>."
 msgstr "В словаре глагол стоит в форме на -ma: <0>elama</0>, «жить». Окончания добавляются к основе, <1>ela-</1>."
-
-msgid "A dictionary lists it under the particle: look up <0>aru saama</0>, not <1>saama</1>."
-msgstr "В словаре ищи по частице: <0>aru saama</0>, а не <1>saama</1>."
 
 msgid "A digit after the tens is a word of its own: <0/>, twenty-one. Slide to any number and hear how it’s built."
 msgstr "Цифра после десятков — отдельное слово: <0/>, двадцать один. Передвинь ползунок к любому числу и послушай, как оно складывается."
@@ -7236,7 +7233,7 @@ msgid "get up early"
 msgstr "рано вставать"
 
 msgid "Getting along is <0>läbi saama</0>, with <1>-ga</1> or <2>omavahel</2>, with each other."
-msgstr "Ладить — это <0>läbi saama</0>, с <1>-ga</1> или с <2>omavahel</2>, между собой."
+msgstr "Ладить — это <0>läbi saama</0>, с <1>-ga</1> или со словом <2>omavahel</2>, между собой."
 
 msgid "Getting around"
 msgstr "Как добраться"
@@ -9362,8 +9359,8 @@ msgstr "в комнате"
 msgid "in a shop"
 msgstr "в магазине"
 
-msgid "In a simple sentence the particle goes to the end: <0>Ma saan sinust aru.</0>"
-msgstr "В простом предложении частица идёт в конец: <0>Ma saan sinust aru.</0>"
+msgid "In a simple sentence the particle usually goes to the end of the clause: <0>Ma saan sinust aru.</0>"
+msgstr "В простом предложении частица обычно идёт в конец предложения: <0>Ma saan sinust aru.</0>"
 
 msgid "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
 msgstr "В утвердительном предложении одна вещь, которую можно посчитать, остаётся в первой форме, той, что в уроке {forms} идёт первой: <0/>, <1/>, <2/>. Время — это количество, а не одна вещь, поэтому у него другая форма: <3/> Эту форму объясняет урок {partitive}."
@@ -9943,6 +9940,9 @@ msgstr "Его форма на <0>-ma</0> — <1>hakkama</1>. В уроке {fut
 
 msgid "its changelog"
 msgstr "список изменений Mochi"
+
+msgid "Its dictionary form puts the particle first: <0>aru saama</0>. Look for that whole form, or for it inside the entry for <1>saama</1>."
+msgstr "В словарной форме частица стоит первой: <0>aru saama</0>. Ищи эту форму целиком или внутри статьи <1>saama</1>."
 
 msgid "Its forms barely look alike, which is why the card keeps all three."
 msgstr "Его формы почти не похожи друг на друга, поэтому карточка хранит все три."
@@ -16449,6 +16449,9 @@ msgstr "Браузер и приложение для Mac"
 msgid "The bus goes as far as Tartu."
 msgstr "Автобус идёт до самого Тарту."
 
+msgid "The bus leaves you behind, so it takes <0>-st</0>: <1>bussist maha</1>."
+msgstr "Автобус уехал без тебя, поэтому он получает <0>-st</0>: <1>bussist maha</1>."
+
 msgid "The café is Jaan’s, so <0>Jaan</0> takes the genitive: <1>Jaani</1>."
 msgstr "Кафе принадлежит Яану, поэтому <0>Jaan</0> стоит в родительном: <1>Jaani</1>."
 
@@ -17181,8 +17184,8 @@ msgstr "Часть клетки, которая высвобождает эне�
 msgid "The particle goes to the end"
 msgstr "Частица идёт в конец"
 
-msgid "The particle goes to the end, and agreeing takes <0>kokku</0>: <1>lepime kokku</1>."
-msgstr "Частица идёт в конец, а договариваться — это <0>kokku</0>: <1>lepime kokku</1>."
+msgid "The particle goes to the end, and agreeing takes <0>kokku</0>: <1>lepime nii kokku</1>."
+msgstr "Частица идёт в конец, а для «договориться» нужно <0>kokku</0>: <1>lepime nii kokku</1>."
 
 msgid "The partitive case"
 msgstr "Партитив"
@@ -17760,8 +17763,8 @@ msgstr "Профсоюз"
 msgid "The verb before the form"
 msgstr "Глагол перед формой"
 
-msgid "The verb comes second and <0>aru</0> goes to the end. What you understand takes <1>-st</1>: <2>ma sain kõigest aru</2>."
-msgstr "Глагол стоит вторым, а <0>aru</0> — в конце. То, что понимаешь, получает <1>-st</1>: <2>ma sain kõigest aru</2>."
+msgid "The verb comes second and <0>aru</0> goes to the end: <1>ma sain kõigest aru</1>."
+msgstr "Глагол стоит вторым, а <0>aru</0> — в конце: <1>ma sain kõigest aru</1>."
 
 msgid "The verb comes second and <0>maha</0> goes to the end, and the bus takes <1>-st</1>: <2>ma jäin bussist maha</2>."
 msgstr "Глагол стоит вторым, <0>maha</0> — в конце, а автобус получает <1>-st</1>: <2>ma jäin bussist maha</2>."
@@ -17784,8 +17787,8 @@ msgstr "Глагол в обоих предложениях один и тот �
 msgid "The verb stays second, whichever word comes first."
 msgstr "Глагол остаётся вторым, какое бы слово ни стояло первым."
 
-msgid "The verb still comes second, and the particle waits at the end of the sentence: <0>Ma saan sinust hästi aru.</0> It stays at the end with <1>ei</1> too: <2>Ma ei saa sinust aru.</2>"
-msgstr "Глагол по-прежнему стоит вторым, а частица ждёт в конце предложения: <0>Ma saan sinust hästi aru.</0> С <1>ei</1> она тоже в конце: <2>Ma ei saa sinust aru.</2> Это как приставка в «понять», только оторванная от глагола."
+msgid "The verb still comes second, and the particle usually waits at the end of the clause: <0>Ma saan sinust hästi aru.</0> It stays at the end with <1>ei</1> too: <2>Ma ei saa sinust aru.</2>"
+msgstr "Глагол по-прежнему стоит вторым, а частица обычно ждёт в конце предложения: <0>Ma saan sinust hästi aru.</0> С <1>ei</1> она тоже в конце: <2>Ma ei saa sinust aru.</2>"
 
 msgid "The verb with a plural noun"
 msgstr "Глагол с существительным во множественном числе"
@@ -18577,7 +18580,7 @@ msgstr "жить"
 msgid "to look for"
 msgstr "искать"
 
-msgid "to look, to seem"
+msgid "to look, to look like"
 msgstr "выглядеть"
 
 msgid "to look, to watch"
@@ -18614,7 +18617,7 @@ msgid "To miss someone or something"
 msgstr "Скучать по кому-то или чему-то"
 
 msgid "to miss, to fall behind"
-msgstr "опоздать, отстать"
+msgstr "опаздывать, отставать"
 
 msgid "To more than one person"
 msgstr "Нескольким людям"
@@ -19982,8 +19985,8 @@ msgstr "То, что нужно знать для занятия или экза
 msgid "What you send"
 msgstr "Что ты отправляешь"
 
-msgid "What you understand takes <0>-st</0>: <1>kõigest aru</1>."
-msgstr "То, что понимаешь, получает <0>-st</0>: <1>kõigest aru</1>."
+msgid "What you understand takes <0>-st</0>: <1>kõigest aru</1>. You may hear <2>kõike aru</2> in speech, but say and write <3>kõigest</3>."
+msgstr "То, что понимаешь, получает <0>-st</0>: <1>kõigest aru</1>. В разговоре можно услышать <2>kõike aru</2>, но говори и пиши <3>kõigest</3>."
 
 msgid "What you want takes the third form too: <0>Ma tahan leiba</0>."
 msgstr "То, чего хочешь, тоже стоит в третьей форме: <0>Ma tahan leiba</0>."
@@ -21516,9 +21519,6 @@ msgstr "Начинаешь с раздела <0>{first}</0>, а следующи
 
 msgid "You start with <0>{first}</0>. When you know most of it, you choose when to start the next."
 msgstr "Начинаешь с раздела <0>{first}</0>. Когда выучишь большую его часть, ты решаешь, когда начать следующий."
-
-msgid "You stay behind from the bus, so it takes <0>-st</0>: <1>bussist maha</1>."
-msgstr "Остаёшься позади автобуса, поэтому он получает <0>-st</0>: <1>bussist maha</1>."
 
 msgid "You study for one test, then move on"
 msgstr "Ты готовишься к одному тесту и идёшь дальше"

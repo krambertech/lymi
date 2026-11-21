@@ -1032,9 +1032,6 @@ msgstr "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
 msgid "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
 msgstr "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
 
-msgid "<0>Maha</0> is down. Agreeing is <1>kokku leppima</1>: <2>lepime kokku</2>."
-msgstr "<0>Maha</0> is down. Agreeing is <1>kokku leppima</1>: <2>lepime kokku</2>."
-
 msgid "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
 msgstr "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
 
@@ -1328,6 +1325,9 @@ msgstr "<0>vad</0> now, <1>sid</1> in the past, as for <2>sa</2>."
 
 msgid "<0>Vastama</0> answers to someone: <1>sulle</1>."
 msgstr "<0>Vastama</0> answers to someone: <1>sulle</1>."
+
+msgid "<0>Vastu</0> is towards. Agreeing is <1>kokku leppima</1>: <2>lepime nii kokku</2>."
+msgstr "<0>Vastu</0> is towards. Agreeing is <1>kokku leppima</1>: <2>lepime nii kokku</2>."
 
 msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
@@ -1745,9 +1745,6 @@ msgstr "A dictionary lists a verb in its -ma form: <0/>, to live. Take off -ma a
 
 msgid "A dictionary lists a verb in its -ma form: <0>elama</0>, to live. The endings go on its stem, <1>ela-</1>."
 msgstr "A dictionary lists a verb in its -ma form: <0>elama</0>, to live. The endings go on its stem, <1>ela-</1>."
-
-msgid "A dictionary lists it under the particle: look up <0>aru saama</0>, not <1>saama</1>."
-msgstr "A dictionary lists it under the particle: look up <0>aru saama</0>, not <1>saama</1>."
 
 msgid "A digit after the tens is a word of its own: <0/>, twenty-one. Slide to any number and hear how it’s built."
 msgstr "A digit after the tens is a word of its own: <0/>, twenty-one. Slide to any number and hear how it’s built."
@@ -9361,8 +9358,8 @@ msgstr "in a room"
 msgid "in a shop"
 msgstr "in a shop"
 
-msgid "In a simple sentence the particle goes to the end: <0>Ma saan sinust aru.</0>"
-msgstr "In a simple sentence the particle goes to the end: <0>Ma saan sinust aru.</0>"
+msgid "In a simple sentence the particle usually goes to the end of the clause: <0>Ma saan sinust aru.</0>"
+msgstr "In a simple sentence the particle usually goes to the end of the clause: <0>Ma saan sinust aru.</0>"
 
 msgid "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
 msgstr "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
@@ -9942,6 +9939,9 @@ msgstr "Its <0>-ma</0> form is <1>hakkama</1>. Lesson {future} uses it for the f
 
 msgid "its changelog"
 msgstr "its changelog"
+
+msgid "Its dictionary form puts the particle first: <0>aru saama</0>. Look for that whole form, or for it inside the entry for <1>saama</1>."
+msgstr "Its dictionary form puts the particle first: <0>aru saama</0>. Look for that whole form, or for it inside the entry for <1>saama</1>."
 
 msgid "Its forms barely look alike, which is why the card keeps all three."
 msgstr "Its forms barely look alike, which is why the card keeps all three."
@@ -16448,6 +16448,9 @@ msgstr "The browser, and a Mac app"
 msgid "The bus goes as far as Tartu."
 msgstr "The bus goes as far as Tartu."
 
+msgid "The bus leaves you behind, so it takes <0>-st</0>: <1>bussist maha</1>."
+msgstr "The bus leaves you behind, so it takes <0>-st</0>: <1>bussist maha</1>."
+
 msgid "The café is Jaan’s, so <0>Jaan</0> takes the genitive: <1>Jaani</1>."
 msgstr "The café is Jaan’s, so <0>Jaan</0> takes the genitive: <1>Jaani</1>."
 
@@ -17180,8 +17183,8 @@ msgstr "The part of a cell that releases energy from food"
 msgid "The particle goes to the end"
 msgstr "The particle goes to the end"
 
-msgid "The particle goes to the end, and agreeing takes <0>kokku</0>: <1>lepime kokku</1>."
-msgstr "The particle goes to the end, and agreeing takes <0>kokku</0>: <1>lepime kokku</1>."
+msgid "The particle goes to the end, and agreeing takes <0>kokku</0>: <1>lepime nii kokku</1>."
+msgstr "The particle goes to the end, and agreeing takes <0>kokku</0>: <1>lepime nii kokku</1>."
 
 msgid "The partitive case"
 msgstr "The partitive case"
@@ -17759,8 +17762,8 @@ msgstr "The union"
 msgid "The verb before the form"
 msgstr "The verb before the form"
 
-msgid "The verb comes second and <0>aru</0> goes to the end. What you understand takes <1>-st</1>: <2>ma sain kõigest aru</2>."
-msgstr "The verb comes second and <0>aru</0> goes to the end. What you understand takes <1>-st</1>: <2>ma sain kõigest aru</2>."
+msgid "The verb comes second and <0>aru</0> goes to the end: <1>ma sain kõigest aru</1>."
+msgstr "The verb comes second and <0>aru</0> goes to the end: <1>ma sain kõigest aru</1>."
 
 msgid "The verb comes second and <0>maha</0> goes to the end, and the bus takes <1>-st</1>: <2>ma jäin bussist maha</2>."
 msgstr "The verb comes second and <0>maha</0> goes to the end, and the bus takes <1>-st</1>: <2>ma jäin bussist maha</2>."
@@ -17783,8 +17786,8 @@ msgstr "The verb is the same both ways, so only the ending says which way the ca
 msgid "The verb stays second, whichever word comes first."
 msgstr "The verb stays second, whichever word comes first."
 
-msgid "The verb still comes second, and the particle waits at the end of the sentence: <0>Ma saan sinust hästi aru.</0> It stays at the end with <1>ei</1> too: <2>Ma ei saa sinust aru.</2>"
-msgstr "The verb still comes second, and the particle waits at the end of the sentence: <0>Ma saan sinust hästi aru.</0> It stays at the end with <1>ei</1> too: <2>Ma ei saa sinust aru.</2>"
+msgid "The verb still comes second, and the particle usually waits at the end of the clause: <0>Ma saan sinust hästi aru.</0> It stays at the end with <1>ei</1> too: <2>Ma ei saa sinust aru.</2>"
+msgstr "The verb still comes second, and the particle usually waits at the end of the clause: <0>Ma saan sinust hästi aru.</0> It stays at the end with <1>ei</1> too: <2>Ma ei saa sinust aru.</2>"
 
 msgid "The verb with a plural noun"
 msgstr "The verb with a plural noun"
@@ -18576,8 +18579,8 @@ msgstr "to live"
 msgid "to look for"
 msgstr "to look for"
 
-msgid "to look, to seem"
-msgstr "to look, to seem"
+msgid "to look, to look like"
+msgstr "to look, to look like"
 
 msgid "to look, to watch"
 msgstr "to look, to watch"
@@ -19981,8 +19984,8 @@ msgstr "What you need to know for a class or an exam."
 msgid "What you send"
 msgstr "What you send"
 
-msgid "What you understand takes <0>-st</0>: <1>kõigest aru</1>."
-msgstr "What you understand takes <0>-st</0>: <1>kõigest aru</1>."
+msgid "What you understand takes <0>-st</0>: <1>kõigest aru</1>. You may hear <2>kõike aru</2> in speech, but say and write <3>kõigest</3>."
+msgstr "What you understand takes <0>-st</0>: <1>kõigest aru</1>. You may hear <2>kõike aru</2> in speech, but say and write <3>kõigest</3>."
 
 msgid "What you want takes the third form too: <0>Ma tahan leiba</0>."
 msgstr "What you want takes the third form too: <0>Ma tahan leiba</0>."
@@ -21515,9 +21518,6 @@ msgstr "You start with <0>{first}</0>, and the next section opens as you learn t
 
 msgid "You start with <0>{first}</0>. When you know most of it, you choose when to start the next."
 msgstr ""
-
-msgid "You stay behind from the bus, so it takes <0>-st</0>: <1>bussist maha</1>."
-msgstr "You stay behind from the bus, so it takes <0>-st</0>: <1>bussist maha</1>."
 
 msgid "You study for one test, then move on"
 msgstr "You study for one test, then move on"

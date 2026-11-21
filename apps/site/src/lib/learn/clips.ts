@@ -3063,11 +3063,21 @@ export const PARTICLE_GAPS = [
   { id: "aru-sinust", before: "Vabandust, ma ei saa sinust", after: ".", answer: "aru" },
   { id: "labi-kati", before: "Ma saan Katiga hästi", after: ".", answer: "läbi" },
   { id: "valja-tana", before: "Sa näed täna väga hea", after: ".", answer: "välja" },
-  { id: "maha-buss", before: "Ma jäin hommikul bussist", after: ".", answer: "maha" },
+  { id: "maha-buss", before: "Ma magasin sisse ja jäin bussist", after: ".", answer: "maha" },
   { id: "kokku-nii", before: "Hästi, lepime nii", after: ".", answer: "kokku" },
-  { id: "vastu-too", before: "Ma võtan selle töö", after: ".", answer: "vastu" },
-  { id: "aru-ulesanne", before: "Kas sa said ülesandest", after: "?", answer: "aru" },
-  { id: "labi-omavahel", before: "Jaan ja Mari ei saa omavahel", after: ".", answer: "läbi" },
+  {
+    id: "vastu-too",
+    before: "Aitäh kutse eest, ma võtan selle hea meelega",
+    after: ".",
+    answer: "vastu",
+  },
+  { id: "aru-ulesanne", before: "Kas sa said minu küsimusest", after: "?", answer: "aru" },
+  {
+    id: "labi-omavahel",
+    before: "Jaan ja Mari on head sõbrad, nad saavad omavahel hästi",
+    after: ".",
+    answer: "läbi",
+  },
 ] as const;
 
 export const PARTICLE_OPTIONS = ["aru", "läbi", "välja", "kokku", "vastu", "maha"] as const;
@@ -3078,7 +3088,7 @@ export const PARTICLE_DIALOGUE = {
   "d-mari-2": { text: "Miks sa eile hommikul hilinesid?", voice: "second" },
   "d-sina-2": "Ma jäin bussist maha.",
   "d-mari-3": { text: "Kas me kohtume reedel kell kuus?", voice: "second" },
-  "d-sina-3": "Jah, lepime kokku!",
+  "d-sina-3": "Jah, lepime nii kokku!",
 } as const satisfies Record<string, Clip>;
 
 const PARTICLE_CLIPS: Record<string, Clip> = {

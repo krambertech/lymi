@@ -34,7 +34,7 @@ function Et({ children }: { children: ReactNode }) {
 const MEANS: Record<string, MessageDescriptor> = {
   "aru saama": msg`to understand`,
   "läbi saama": msg`to get along`,
-  "välja nägema": msg`to look, to seem`,
+  "välja nägema": msg`to look, to look like`,
   "kokku leppima": msg`to agree, to arrange`,
   "vastu võtma": msg`to accept, to receive`,
   "maha jääma": msg`to miss, to fall behind`,
@@ -180,17 +180,17 @@ function content() {
           line: "Jah, ma sain kõike aru.",
           why: (
             <Trans>
-              What you understand takes <Et>-st</Et>: <Et>kõigest aru</Et>.
+              What you understand takes <Et>-st</Et>: <Et>kõigest aru</Et>. You may hear{" "}
+              <Et>kõike aru</Et> in speech, but say and write <Et>kõigest</Et>.
             </Trans>
           ),
         },
         { line: said("d-sina-1"), right: true },
         {
-          line: "Jah, ma aru sain kõike.",
+          line: "Jah, ma aru sain kõikidest.",
           why: (
             <Trans>
-              The verb comes second and <Et>aru</Et> goes to the end. What you understand takes{" "}
-              <Et>-st</Et>: <Et>ma sain kõigest aru</Et>.
+              The verb comes second and <Et>aru</Et> goes to the end: <Et>ma sain kõigest aru</Et>.
             </Trans>
           ),
         },
@@ -205,7 +205,7 @@ function content() {
           line: "Ma jäin bussile maha.",
           why: (
             <Trans>
-              You stay behind from the bus, so it takes <Et>-st</Et>: <Et>bussist maha</Et>.
+              The bus leaves you behind, so it takes <Et>-st</Et>: <Et>bussist maha</Et>.
             </Trans>
           ),
         },
@@ -228,19 +228,20 @@ function content() {
       replies: [
         { line: said("d-sina-3"), right: true },
         {
-          line: "Jah, lepime nii maha!",
+          line: "Jah, lepime nii vastu!",
           why: (
             <Trans>
-              <Et>Maha</Et> is down. Agreeing is <Et>kokku leppima</Et>: <Et>lepime kokku</Et>.
+              <Et>Vastu</Et> is towards. Agreeing is <Et>kokku leppima</Et>:{" "}
+              <Et>lepime nii kokku</Et>.
             </Trans>
           ),
         },
         {
-          line: "Jah, maha lepime nii!",
+          line: "Jah, vastu lepime nii!",
           why: (
             <Trans>
-              The particle goes to the end, and agreeing takes <Et>kokku</Et>: <Et>lepime kokku</Et>
-              .
+              The particle goes to the end, and agreeing takes <Et>kokku</Et>:{" "}
+              <Et>lepime nii kokku</Et>.
             </Trans>
           ),
         },
@@ -289,15 +290,16 @@ export function AruSaamaLesson() {
           understand; <b lang="et">välja nägema</b>, to look.
         </Trans>,
         <Trans key="2">
-          In a simple sentence the particle goes to the end: <b lang="et">Ma saan sinust aru.</b>
+          In a simple sentence the particle usually goes to the end of the clause:{" "}
+          <b lang="et">Ma saan sinust aru.</b>
         </Trans>,
         <Trans key="3">
           With a second verb, the particle stands just before it:{" "}
           <b lang="et">Ma tahan sinust aru saada.</b>
         </Trans>,
         <Trans key="4">
-          A dictionary lists it under the particle: look up <b lang="et">aru saama</b>, not{" "}
-          <b lang="et">saama</b>.
+          Its dictionary form puts the particle first: <b lang="et">aru saama</b>. Look for that
+          whole form, or for it inside the entry for <b lang="et">saama</b>.
         </Trans>,
       ]}
       sections={[
@@ -328,9 +330,9 @@ export function AruSaamaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The verb still comes second, and the particle waits at the end of the sentence:{" "}
-                    <Et>Ma saan sinust hästi aru.</Et> It stays at the end with <Et>ei</Et> too:{" "}
-                    <Et>Ma ei saa sinust aru.</Et>
+                    The verb still comes second, and the particle usually waits at the end of the
+                    clause: <Et>Ma saan sinust hästi aru.</Et> It stays at the end with <Et>ei</Et>{" "}
+                    too: <Et>Ma ei saa sinust aru.</Et>
                   </Trans>
                 </p>
               </Prose>

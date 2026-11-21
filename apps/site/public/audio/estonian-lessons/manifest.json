@@ -4624,46 +4624,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "omastav/haigla-aken": {
-    "text": "haigla aken",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "omastav/tartu-kohvik": {
-    "text": "Tartu kohvik",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "omastav/pa2rnu": {
-    "text": "Pärnu",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "omastav/pa2rnus": {
-    "text": "Pärnus",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "omastav/pa2rnu-turg": {
-    "text": "Pärnu turg",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "omastav/eesti": {
-    "text": "Eesti",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "omastav/eestis": {
-    "text": "Eestis",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "omastav/eesti-pealinn": {
-    "text": "Eesti pealinn",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "omastav/see-on-minu-raamat": {
     "text": "See on minu raamat.",
     "model": "eleven_v4",
@@ -4819,13 +4779,23 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "omastav/eesti": {
+    "text": "Eesti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/eestis": {
+    "text": "Eestis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "omastav/ku2mne-minuti-pa2rast": {
     "text": "kümne minuti pärast",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "omastav/p-kati": {
-    "text": "Tere! Minu nimi on Kati. Mina elan Tartus. Jaan on minu vend. Jaani kohvik on Tallinnas. Ema ja isa elavad Pärnus. Nende kassi nimi on Miisu. Mis sinu nimi on?",
+    "text": "Tere! Minu nimi on Kati. Mina elan Tartus. Jaan on minu vend. Jaani kohvik on Tallinnas. Ema ja isa elavad Pärnus. Nende kassi nimi on Miisu. Mis sinu nimi on? Kus sina elad?",
     "model": "eleven_v4",
     "voice": "WtzwR2kNGVNuaTGaYLfK"
   },
@@ -4845,7 +4815,7 @@
     "voice": "WtzwR2kNGVNuaTGaYLfK"
   },
   "omastav/d-sina-2": {
-    "text": "See on Jaani kohv.",
+    "text": "See on Martini kohv.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -4865,7 +4835,7 @@
     "voice": "WtzwR2kNGVNuaTGaYLfK"
   },
   "omastav/d-sina-4": {
-    "text": "Kassi nimi on Miisu.",
+    "text": "Kassi nimi on Liisu.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

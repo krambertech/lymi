@@ -555,13 +555,28 @@ interface FormItem {
   pair: readonly [string, string];
 }
 
-/** The forms a “Which form goes first?” round offers: the word and its genitive. */
-export const formsOf = (phrase: Phrase): string[] => [phrase.word, phrase.whose];
+/** The other phrases' genitives, the pool a round's third option comes from. */
+const othersOf = (phrase: Phrase): string[] =>
+  OMASTAV_PHRASES.filter((each) => each.word !== phrase.word).map((each) => each.whose);
 
-/** The first round's order, turned by the item's place, as the server renders it. */
+/**
+ * A round's options: the genitive, the word as a dictionary gives it (the likeliest slip), and
+ * another owner's genitive drawn afresh each run, so no fixed set names the answer. The -s or -l
+ * form is the cue, never an option: offered, it would extend the answer by one letter.
+ */
+export function formOptions(phrase: Phrase): string[] {
+  return shuffle([phrase.whose, phrase.word, shuffle(othersOf(phrase))[0] as string]);
+}
+
+/** The first round's options as the server renders them, turned by the item's place. */
 export function firstOrder(phrase: Phrase, i: number): string[] {
-  const forms = formsOf(phrase);
-  return i % 2 === 0 ? forms : [...forms].reverse();
+  const forms = [
+    phrase.whose,
+    phrase.word,
+    othersOf(phrase)[i % othersOf(phrase).length] as string,
+  ];
+  const turn = i % forms.length;
+  return [...forms.slice(turn), ...forms.slice(0, turn)];
 }
 
 /** See a thing and its owner with -s or -l; pick the genitive that goes first, then hear the phrase. */
@@ -586,13 +601,11 @@ function FormRound({ item, state, heard, answer }: RoundProps<FormItem>) {
   return (
     <>
       {done && <Listen src={item.src} />}
-      <p className="grid gap-0.5 text-md text-ink-secondary">
-        <span>{i18n._(PHRASE_MEANS[said] as MessageDescriptor)}</span>
-        <span>
-          <Trans>
-            Start from <b lang="et">{item.phrase.where}</b>.
-          </Trans>
-        </span>
+      <p className="text-md text-ink-secondary">
+        <Trans>
+          Say “{i18n._(PHRASE_MEANS[said] as MessageDescriptor)}”, starting from{" "}
+          <b lang="et">{item.phrase.where}</b>.
+        </Trans>
       </p>
       <p
         lang="et"
@@ -779,7 +792,7 @@ export function OmastavLesson() {
   // Every round but the first shuffles its forms afresh, so the answer has no fixed place.
   const formRun = (items: readonly FormItem[], pinned?: FormItem): FormItem[] =>
     eachPairFirst(items, pinned).map((item) =>
-      item === pinned ? item : { ...item, options: shuffle(formsOf(item.phrase)) },
+      item === pinned ? item : { ...item, options: formOptions(item.phrase) },
     );
 
   // The right reply moves between first, second and third place from turn to turn.

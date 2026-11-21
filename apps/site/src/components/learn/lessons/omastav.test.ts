@@ -7,8 +7,8 @@ import {
   OMASTAV_WHOSE,
 } from "../../../lib/learn/clips";
 import { gapLine } from "../../../lib/learn/passage";
-import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
-import { firstOrder, formsOf, KATI_GAPS, sharedLength } from "./Omastav";
+import { eachPairFirst } from "../../../lib/learn/quiz";
+import { firstOrder, formOptions, KATI_GAPS, sharedLength } from "./Omastav";
 
 describe("genitive quizzes", () => {
   it("hears each of the six pronouns once in every run of “Whose?”", () => {
@@ -36,31 +36,43 @@ describe("genitive quizzes", () => {
     }
   });
 
-  it("offers the word and its genitive, never a form that gives the answer by its shape", () => {
-    for (const phrase of OMASTAV_PHRASES) {
-      const options = formsOf(phrase);
-      expect(options).toEqual([phrase.word, phrase.whose]);
-      expect(phrase.word).not.toBe(phrase.whose);
-      // The -s or -l form is the cue, never an option: offered, it would extend the answer by one letter.
-      expect(options).not.toContain(phrase.where);
-      for (const each of options) {
-        expect(options).not.toContain(`${each}s`);
-        expect(options).not.toContain(`${each}l`);
+  it("offers the genitive, its word and another owner's genitive, never the -s or -l form", () => {
+    for (const [i, phrase] of OMASTAV_PHRASES.entries()) {
+      const others = OMASTAV_PHRASES.filter((each) => each.word !== phrase.word).map(
+        (e) => e.whose,
+      );
+      const sets = new Set<string>();
+      const places = new Set<number>();
+      for (const options of [
+        firstOrder(phrase, i),
+        ...Array.from({ length: 300 }, () => formOptions(phrase)),
+      ]) {
+        expect(new Set(options).size).toBe(3);
+        expect(options).toContain(phrase.whose);
+        expect(options).toContain(phrase.word);
+        expect(options).not.toContain(phrase.where);
+        expect(options.filter((each) => others.includes(each))).toHaveLength(1);
+        // No option is another with an ending added, which would give the answer by its shape.
+        for (const each of options) {
+          expect(options).not.toContain(`${each}s`);
+          expect(options).not.toContain(`${each}l`);
+        }
+        sets.add([...options].sort().join(" "));
+        places.add(options.indexOf(phrase.whose));
       }
+      expect(sets.size).toBeGreaterThan(1);
+      expect(places).toEqual(new Set([0, 1, 2]));
     }
   });
 
-  it("puts the answer first and second, in the first round and in later ones", () => {
-    const firstPlaces = new Set(
+  it("puts the first round's answer in every place across the items", () => {
+    const places = new Set(
       OMASTAV_PHRASES.map((each, i) => firstOrder(each, i).indexOf(each.whose)),
     );
-    expect(firstPlaces).toEqual(new Set([0, 1]));
-    // The pinned first round is items[0] as the server renders it; later rounds are shuffled.
+    expect(places).toEqual(new Set([0, 1, 2]));
+    // The pinned first round is items[0] as the server renders it: its answer leads.
     const pinned = OMASTAV_PHRASES[0] as (typeof OMASTAV_PHRASES)[number];
-    expect(firstOrder(pinned, 0)).toContain(pinned.whose);
-    const later = new Set<number>();
-    for (let run = 0; run < 200; run++) later.add(shuffle(formsOf(pinned)).indexOf(pinned.whose));
-    expect(later).toEqual(new Set([0, 1]));
+    expect(firstOrder(pinned, 0).indexOf(pinned.whose)).toBe(0);
   });
 });
 

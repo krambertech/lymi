@@ -958,7 +958,7 @@ msgstr "<0>Läbi</0> значит «до конца», поэтому родит
 msgid "<0>Lähen ujuma</0> is I’m going swimming, <1>olen ujumas</1> I’m out swimming, and <2>tulen ujumast</2> I’m coming back from swimming. The ending says which."
 msgstr "<0>Lähen ujuma</0> — это «я иду плавать», <1>olen ujumas</1> — «я на плавании», а <2>tulen ujumast</2> — «я возвращаюсь с плавания». Какое из трёх — показывает окончание."
 
-msgid "<0>Lähme!</0>, let’s go, and <1>las ta tuleb</1>, let him come. Two short ways to suggest and allow."
+msgid "<0>Lähme!</0> means let’s go, and <1>las ta tuleb</1>, let him come. Two short ways to suggest and allow."
 msgstr "<0>Lähme!</0> — пойдём, и <1>las ta tuleb</1> — пусть придёт. Два коротких способа предложить и разрешить."
 
 msgid "<0>Läksin</0> is the past. Next week is still to come: <1>lähen</1>."
@@ -1239,6 +1239,9 @@ msgstr "<0>Töötasin</0> — это прошедшее время. Про сл�
 
 msgid "<0>Töötasin</0> is the past. For tomorrow, the present: <1>töötan</1>."
 msgstr "<0>Töötasin</0> — прошедшее время. Про завтра — настоящее: <1>töötan</1>."
+
+msgid "<0>Tule ka</0> tells Kati, the person you’re talking to, to come. About Jaan: <1>las ta tuleb</1>."
+msgstr "<0>Tule ka</0> зовёт Кати, с которой ты говоришь. О Яане: <1>las ta tuleb</1>."
 
 msgid "<0>Tulema</0> again, as a command: come here to do it, so <1>-ma</1>."
 msgstr "Снова <0>tulema</0>, но как команда: приходи сюда, чтобы что-то сделать, поэтому <1>-ma</1>."
@@ -15774,9 +15777,6 @@ msgstr "Это значит, что медленнее говоришь ты. Ч
 msgid "That says you’re sorry. Liis asked you to come."
 msgstr "Так ты говоришь, что тебе жаль. А Лийс звала тебя прийти."
 
-msgid "That speaks to Jaan, but he isn’t here. About him: <0>las ta tuleb</0>."
-msgstr "Это обращение к Яану, но его здесь нет. О нём: <0>las ta tuleb</0>."
-
 msgid "That tells Jaan not to come."
 msgstr "Так ты просишь Яана не подходить."
 
@@ -18034,8 +18034,8 @@ msgstr "учить, учиться"
 msgid "to learn, to study"
 msgstr "учить, учиться"
 
-msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the plain present form: <1>las ta tuleb</1>, let him come. With <2>ma</2> it offers help: <3>las ma aitan</3>, let me help."
-msgstr "Чтобы разрешить кому-то что-то сделать или сказать, что ты не против, поставь <0/> перед лицом и обычную форму настоящего времени: <1>las ta tuleb</1>, пусть придёт. Как русское «пусть»: после него тоже обычный глагол. С <2>ma</2> это предложение помочь: <3>las ma aitan</3>, давай я помогу."
+msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the plain present form: <1>las ta tuleb</1>, let him come. With <2>ma</2> it offers to do something yourself: <3>las ma aitan</3>, let me help."
+msgstr "Чтобы разрешить кому-то что-то сделать или сказать, что ты не против, поставь <0/> перед лицом и обычную форму настоящего времени: <1>las ta tuleb</1>, пусть придёт. Как русское «пусть»: после него тоже обычный глагол. С <2>ma</2> это предложение сделать что-то самому: <3>las ma aitan</3>, давай я помогу."
 
 msgid "To like"
 msgstr "Нравиться"

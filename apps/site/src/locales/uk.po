@@ -958,7 +958,7 @@ msgstr "<0>Läbi</0> означає «до кінця», тому родовий
 msgid "<0>Lähen ujuma</0> is I’m going swimming, <1>olen ujumas</1> I’m out swimming, and <2>tulen ujumast</2> I’m coming back from swimming. The ending says which."
 msgstr "<0>Lähen ujuma</0> — це «я йду плавати», <1>olen ujumas</1> — «я на плаванні», а <2>tulen ujumast</2> — «я повертаюся з плавання». Яке з трьох — показує закінчення."
 
-msgid "<0>Lähme!</0>, let’s go, and <1>las ta tuleb</1>, let him come. Two short ways to suggest and allow."
+msgid "<0>Lähme!</0> means let’s go, and <1>las ta tuleb</1>, let him come. Two short ways to suggest and allow."
 msgstr "<0>Lähme!</0> — ходімо, і <1>las ta tuleb</1> — хай прийде. Два короткі способи запропонувати й дозволити."
 
 msgid "<0>Läksin</0> is the past. Next week is still to come: <1>lähen</1>."
@@ -1239,6 +1239,9 @@ msgstr "<0>Töötasin</0> — це минулий час. Про наступн�
 
 msgid "<0>Töötasin</0> is the past. For tomorrow, the present: <1>töötan</1>."
 msgstr "<0>Töötasin</0> — минулий час. Про завтра — теперішній: <1>töötan</1>."
+
+msgid "<0>Tule ka</0> tells Kati, the person you’re talking to, to come. About Jaan: <1>las ta tuleb</1>."
+msgstr "<0>Tule ka</0> кличе Каті, з якою ти говориш. Про Яана: <1>las ta tuleb</1>."
 
 msgid "<0>Tulema</0> again, as a command: come here to do it, so <1>-ma</1>."
 msgstr "Знову <0>tulema</0>, але як наказ: прийди сюди, щоб щось зробити, тож <1>-ma</1>."
@@ -10350,7 +10353,7 @@ msgid "Lesson"
 msgstr "Урок"
 
 msgid "Lesson {commands} gave orders to one person: <0>istu!</0> To suggest doing something together, take the <1>me</1> form of the present and drop <2>me</2>. Only <3>minema</3> also gets shorter: <4>me läheme</4>, but <5>lähme!</5>"
-msgstr "В уроці {commands} були накази одній людині: <0>istu!</0> Щоб запропонувати щось зробити разом, візьми форму теперішнього часу для <1>me</1> і прибери саме <2>me</2>. Як українське «ходімо» чи «зробимо», тільки без окремого закінчення. Лише <3>minema</3> ще й коротшає: <4>me läheme</4>, але <5>lähme!</5>"
+msgstr "В уроці {commands} були накази одній людині: <0>istu!</0> Щоб запропонувати щось зробити разом, візьми форму теперішнього часу для <1>me</1> і прибери саме <2>me</2>. На відміну від українського «ходімо» чи «зробімо», окремого закінчення немає: це та сама форма, що й у «ми робимо». Лише <3>minema</3> ще й коротшає: <4>me läheme</4>, але <5>lähme!</5>"
 
 msgid "Lesson {forms} gave each verb a <0>da</0> form, as in <1/>. The <2>nud</2> form comes from it: take off the <3>da</3> and put <4>nud</4> in its place. <5>Lugeda</5> gives <6>lugenud</6>."
 msgstr "В уроці {forms} кожне дієслово мало форму на <0>da</0>, як <1/>. Від неї й утворюють форму на <2>nud</2>: прибери <3>da</3> і постав на його місце <4>nud</4>. З <5>lugeda</5> виходить <6>lugenud</6>."
@@ -10443,7 +10446,7 @@ msgid "Let’s *take a taxi*."
 msgstr "Поїхали на *таксі*."
 
 msgid "Let’s and let them"
-msgstr "«Ходімо» і «нехай»"
+msgstr "«Ходімо» і «хай»"
 
 msgid "Let’s do it!"
 msgstr "Зробімо це!"
@@ -10473,7 +10476,7 @@ msgid "Let’s, let him, let them"
 msgstr "Давай, хай він, хай вони"
 
 msgid "Let’s: the <0>me</0> form without <1>me</1>. <2>Teeme! Vaatame!</2> Only <3>minema</3> is shorter: <4>Lähme!</4>"
-msgstr "Давай: форма для <0>me</0> без <1>me</1>. <2>Teeme! Vaatame!</2> Лише <3>minema</3> коротша: <4>Lähme!</4>"
+msgstr "Давай: форма для <0>me</0> без <1>me</1>. <2>Teeme! Vaatame!</2> Лише в <3>minema</3> форма коротша: <4>Lähme!</4>"
 
 msgid "library"
 msgstr "бібліотека"
@@ -15774,9 +15777,6 @@ msgstr "Це означає, що повільніше говориш ти. Що
 msgid "That says you’re sorry. Liis asked you to come."
 msgstr "Так ти кажеш, що тобі шкода. А Лііс кликала тебе прийти."
 
-msgid "That speaks to Jaan, but he isn’t here. About him: <0>las ta tuleb</0>."
-msgstr "Це звертання до Яана, але його тут немає. Про нього: <0>las ta tuleb</0>."
-
 msgid "That tells Jaan not to come."
 msgstr "Так ти просиш Яана не підходити."
 
@@ -18034,8 +18034,8 @@ msgstr "вчити, вчитися"
 msgid "to learn, to study"
 msgstr "вчити, вчитися"
 
-msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the plain present form: <1>las ta tuleb</1>, let him come. With <2>ma</2> it offers help: <3>las ma aitan</3>, let me help."
-msgstr "Щоб дозволити комусь щось зробити або сказати, що ти не проти, постав <0/> перед особою і звичайну форму теперішнього часу: <1>las ta tuleb</1>, хай прийде. Як українське «хай»: після нього теж звичайне дієслово. З <2>ma</2> це пропозиція допомогти: <3>las ma aitan</3>, дай я допоможу."
+msgid "To let someone do something, or to say you don’t mind, put <0/> before the person and the plain present form: <1>las ta tuleb</1>, let him come. With <2>ma</2> it offers to do something yourself: <3>las ma aitan</3>, let me help."
+msgstr "Щоб дозволити комусь щось зробити або сказати, що ти не проти, постав <0/> перед особою і звичайну форму теперішнього часу: <1>las ta tuleb</1>, хай прийде. Як українське «хай»: після нього теж звичайне дієслово. З <2>ma</2> це пропозиція зробити щось самому: <3>las ma aitan</3>, дай я допоможу."
 
 msgid "To like"
 msgstr "Подобатися"

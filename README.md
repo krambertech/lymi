@@ -100,6 +100,7 @@ Edit the source and re-run its generator, because the next run overwrites a hand
 | `apps/desktop/assets/icon.png`, `icon.icns` | changing `icon.svg` | `pnpm --filter @lymi/desktop app-icon` (needs `rsvg-convert`) |
 | `apps/desktop/assets/dmg-background.tiff` | changing the download window | `pnpm --filter @lymi/desktop dmg-background` |
 | the clips in `apps/site/public/audio/hand/` | changing a landing card's term | `pnpm --filter @lymi/site hand:audio` (with `OPENAI_API_KEY`) |
+| `apps/site/src/lib/learn/verified-forms.json` | adding Estonian words to a lesson | `pnpm --filter @lymi/site lesson:forms` (looks them up in Sõnaveeb) |
 | recorded live runs in `apps/web/src/server/enrichment/runs/` | any change to what the enrichment model reads or which model reads it | `pnpm --filter @lymi/web eval:enrichment --record` (with `OPENAI_API_KEY` and `AI_GATEWAY_TOKEN`) |
 
 For the phone's frozen API contracts, follow [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md).

@@ -112,7 +112,12 @@ function WeekStrip({ details }: { details: readonly ReactNode[] }) {
               today={today === i}
               pressed={picked === i}
               onPress={() => setPicked(i)}
-              label={today === i ? t`Play ${word}, today` : t`Play ${word}`}
+              // The tile shows the meaning, so its label says it too.
+              label={
+                today === i
+                  ? t`${word}, ${i18n._(MEANINGS[word])}, today`
+                  : `${word}, ${i18n._(MEANINGS[word])}`
+              }
             />
           </li>
         ))}
@@ -142,7 +147,7 @@ function WeekStrip({ details }: { details: readonly ReactNode[] }) {
             </span>
             <span className="text-md text-ink-secondary">
               {picked === null
-                ? t`You'll hear it, and where its name comes from.`
+                ? t`You’ll hear it, and where its name comes from.`
                 : details[picked]}
             </span>
           </span>
@@ -225,7 +230,7 @@ function DoorSign() {
         ["L", "10–16"],
         ["P", "suletud"],
       ]}
-      caption={t`A shop's opening hours`}
+      caption={t`A shop’s opening hours`}
     />
   );
 }
@@ -289,13 +294,12 @@ function TodayLine() {
 
 function RelativeDay(props: { word: string; day: Day | null; meaning: string; lit: boolean }) {
   const { word, day: shown, meaning, lit } = props;
-  const { t, i18n } = useLingui();
+  const { i18n } = useLingui();
   const clip = src(word);
   const playing = usePlaying(clip);
   return (
     <button
       type="button"
-      aria-label={shown ? t`Play ${word}: ${shown}` : t`Play ${word}`}
       aria-current={lit ? "date" : undefined}
       data-playing={playing ? "" : undefined}
       onClick={() => void playSound(clip)}
@@ -346,7 +350,7 @@ export function PaevadLesson() {
       The fourth day. You can hear <Word w="neli" />, four.
     </Trans>,
     <Trans key="5">
-      Borrowed from the Low German or Old Swedish name for Friday. It's the one day without{" "}
+      Borrowed from the Low German or Old Swedish name for Friday. It’s the one day without{" "}
       <b lang="et">päev</b>.
     </Trans>,
     <Trans key="6">From a Scandinavian name: the day people washed.</Trans>,
@@ -444,7 +448,7 @@ export function PaevadLesson() {
           The week starts on <b lang="et">esmaspäev</b>. Day names start with a small letter.
         </Trans>,
         <Trans key="2">
-          Six days end in <b lang="et">päev</b>, day. <b lang="et">Reede</b> doesn't.
+          Six days end in <b lang="et">päev</b>, day. <b lang="et">Reede</b> doesn’t.
         </Trans>,
         <Trans key="3">
           The first four count: <b lang="et">esmaspäev</b> is the first day, and{" "}
@@ -468,7 +472,7 @@ export function PaevadLesson() {
                 <p>
                   <Trans>
                     The Estonian week, <Word w="nädal" />, starts on Monday. Six of its days end in{" "}
-                    <Word w="päev" />, day. <Word w="Reede" />, Friday, is the one that doesn't. Day
+                    <Word w="päev" />, day. <Word w="Reede" />, Friday, is the one that doesn’t. Day
                     names start with a small letter, like any other word.
                   </Trans>
                 </p>
@@ -503,7 +507,7 @@ export function PaevadLesson() {
                 </p>
                 <p>
                   <Trans>
-                    On a door you'll also see <Word w="avatud" />, open, and <Word w="suletud" />,
+                    On a door you’ll also see <Word w="avatud" />, open, and <Word w="suletud" />,
                     closed.
                   </Trans>
                 </p>
@@ -515,7 +519,7 @@ export function PaevadLesson() {
                   phoneColumns={7}
                   empty={{
                     title: t`Tap a letter`,
-                    tip: t`You'll hear the day it stands for.`,
+                    tip: t`You’ll hear the day it stands for.`,
                   }}
                   items={LETTERS.map((letter, i) => {
                     const word = day(i);
@@ -566,7 +570,7 @@ export function PaevadLesson() {
                   share === 1 ? (
                     <Trans>All seven. You know the week by ear.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Good ear. Listen to how the ones you missed start.</Trans>
+                    <Trans>Most of them. Listen to how the ones you missed start.</Trans>
                   ) : (
                     <Trans>Play the week above once more, then try again.</Trans>
                   )
@@ -616,7 +620,7 @@ export function PaevadLesson() {
             <>
               <Prose>
                 <p>
-                  <Trans>You'll hear what day it is today. Pick the day that comes next.</Trans>
+                  <Trans>You’ll hear what day it is today. Pick the day that comes next.</Trans>
                 </p>
               </Prose>
               <Quiz

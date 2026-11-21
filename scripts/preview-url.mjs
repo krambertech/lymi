@@ -32,10 +32,6 @@ export function findPreview(output, { workerName, alias }) {
   return { url: url.href.replace(/\/$/, ""), versionId: upload.version_id };
 }
 
-export function findPreviewUrl(output, options) {
-  return findPreview(output, options).url;
-}
-
 function writeGitHubResult({ url, versionId }, alias, kind = "site") {
   if (process.env.GITHUB_OUTPUT) {
     appendFileSync(process.env.GITHUB_OUTPUT, `url=${url}\nversion_id=${versionId}\n`);

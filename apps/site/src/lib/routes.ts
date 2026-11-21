@@ -65,14 +65,10 @@ export function isRuntimePage(page: LocalizedPage): boolean {
   );
 }
 
-/** Pages built from content, one per item in every locale; `sitemap-pages.xml` lists each. */
-export const localizedContentPages = ["/changelog/[slug]", "/estonian/learn/[lesson]"] as const;
-
 export const locales = ["en", "uk", "ru"] as const;
 export type Locale = (typeof locales)[number];
 
 /** One API reference page per resource, which `/docs/api/[resource]` renders. */
-export const apiReferenceRoute = "/docs/api/[resource]";
 const apiReferencePaths = API_RESOURCES.map((r) => `/docs/api/${r.slug}`);
 
 /** Terms, support and developer documentation stay in English on purpose. */
@@ -109,9 +105,6 @@ export const englishOnlyPaths: readonly string[] = [
   "/docs/recipes",
   ...apiReferencePaths,
 ];
-
-/** Pages for the people building the site, kept out of the sitemap and out of search. */
-export const unlistedPaths: readonly string[] = ["/components", "/components/lessons"];
 
 /** The locales a page exists in: a language's page is missing where `offersLanguage` says no. */
 export function pageLocales(page: LocalizedPage): Locale[] {

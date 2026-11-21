@@ -5,20 +5,24 @@ import { changelogSlugs, changelogUpdatePath } from "./changelog-paths";
 import { LANGUAGE_PAGE_TAGS, LANGUAGE_PAGES, languageOfPage } from "./language-pages";
 import { LESSON_SLUGS, lessonPath } from "./learn/catalogue";
 import {
-  apiReferenceRoute,
   englishOnlyPaths,
   isRuntimePage,
   type LocalizedPage,
   locales,
-  localizedContentPages,
   localizedPages,
   localizedPath,
   localizedRuntimePages,
   pageLocales,
   prelaunchPages,
-  unlistedPaths,
 } from "./routes";
 import { pagesSitemap } from "./sitemap";
+
+/** Pages built from content, one per item in every locale; `sitemap-pages.xml` lists each. */
+const localizedContentPages = ["/changelog/[slug]", "/estonian/learn/[lesson]"];
+/** One API reference page per resource. */
+const apiReferenceRoute = "/docs/api/[resource]";
+/** Pages for the people building the site, kept out of the sitemap and out of search. */
+const unlistedPaths = ["/components", "/components/lessons"];
 
 // Keys only; the Astro pages are never loaded.
 const pageFiles = Object.keys(import.meta.glob("../pages/**/*.astro"));

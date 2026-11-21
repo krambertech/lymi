@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
+import { orderProblems } from "../../../lib/learn/checks/order";
 import { CLIPS, clipId, INFINITIVE_LEADS, INFINITIVE_MESSAGE } from "../../../lib/learn/clips";
 import { gapLine } from "../../../lib/learn/passage";
-import { orderProblems } from "../../../lib/learn/practice";
 import { BUILT, MESSAGE_GAPS, SORTED } from "./Tegevusnimed";
 
 describe("“Sort the verbs”", () => {

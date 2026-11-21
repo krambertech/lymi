@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
-  formatJyutping,
+  type JyutpingSegment,
   jyutpingDigits,
   jyutpingExampleSegments,
   jyutpingKey,
@@ -11,9 +11,14 @@ import {
   stripJyutping,
 } from ".";
 
+/** Runs written as inline Jyutping, the notation `parseJyutping` reads. */
+const inline = (segments: readonly JyutpingSegment[]) =>
+  segments
+    .map(({ text, reading }) => (reading === undefined ? text : `${text}[${reading}]`))
+    .join("");
 const drawn = (term: string, reading: string) => {
   const segments = jyutpingTermReading(term, reading);
-  return segments && formatJyutping(segments);
+  return segments && inline(segments);
 };
 const pairs = (term: string, reading: string) =>
   jyutpingPairs(jyutpingTermReading(term, reading) ?? []);
@@ -134,7 +139,7 @@ describe("jyutpingPairs", () => {
 });
 
 describe("parseJyutping", () => {
-  const read = (text: string) => formatJyutping(parseJyutping(text));
+  const read = (text: string) => inline(parseJyutping(text));
 
   it("puts each bracket over as many characters before it as it has syllables", () => {
     expect(parseJyutping("我去銀行[ngan4 hong4]。")).toEqual([

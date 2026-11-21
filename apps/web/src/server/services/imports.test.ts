@@ -43,7 +43,6 @@ import {
   IMPORT_STALL_MS,
   type ImportResume,
   type ImportRunParams,
-  type ImportView,
   inspectImport,
   listImports,
   NOTES_PER_CHUNK,
@@ -133,7 +132,7 @@ async function writeAll(
     images: env.IMAGES,
     audio: env.AUDIO,
   },
-  onStep: (item: ImportView) => void = () => {},
+  onStep: (item: Awaited<ReturnType<typeof getImport>>) => void = () => {},
 ) {
   const pictures = {
     stored: 0,

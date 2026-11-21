@@ -1,6 +1,22 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { BUDGET, check, memoryTree, pnpmScripts, productRoutes } from "./check-agent-docs.mjs";
+import { BUDGET, check, pnpmScripts, productRoutes } from "./check-agent-docs.mjs";
+
+/** A tree from a map of file to contents, standing in for `workingTree`. */
+function memoryTree(contents, { ignored = [] } = {}) {
+  const files = Object.keys(contents);
+  const isDirectory = (path) => {
+    const prefix = `${path.replace(/\/$/, "")}/`;
+    return path === "" || files.some((file) => file.startsWith(prefix));
+  };
+  return {
+    files,
+    read: (file) => contents[file],
+    exists: (path) => files.includes(path.replace(/\/$/, "")) || isDirectory(path),
+    isDirectory,
+    ignored: (path) => ignored.some((entry) => path === entry || path.startsWith(`${entry}/`)),
+  };
+}
 
 const VERIFY = ".agents/skills/verify";
 const ROUTES = "apps/web/src/client/routes";

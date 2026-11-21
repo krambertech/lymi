@@ -127,7 +127,6 @@ export function presentImport(row: Import) {
     archivedAt: row.archivedAt,
   };
 }
-export type ImportView = ReturnType<typeof presentImport>;
 
 export async function listImports(ctx: ServiceContext) {
   const rows = await ctx.db

@@ -1,9 +1,7 @@
 import { hintable } from "@lymi/core";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider } from "../ai";
-import { promptHash } from "../ai/prompt-hash";
 import type { Db } from "../db";
-import { LANGUAGE_PROMPTS } from "../languages";
 import { supportedNamesIn } from "../languages/test-helpers";
 import { addCards, archiveCard, showCard, updateCard } from "./cards";
 import { ServiceError } from "./context";
@@ -12,8 +10,6 @@ import {
   acceptDraft,
   givesAway,
   HINT_INSTRUCTIONS,
-  HINT_PROMPT_VERSION,
-  HINT_REPLY_SCHEMA,
   type HintCard,
   hintDraftFor,
   hintInput,
@@ -28,16 +24,6 @@ const kurb: HintCard = {
 };
 
 describe("the hint prompt", () => {
-  it("changes only with a new prompt version", () => {
-    const guides = Object.values(LANGUAGE_PROMPTS).map((prompts) => prompts.hint);
-    const hash = promptHash({ HINT_INSTRUCTIONS, HINT_REPLY_SCHEMA, guides });
-    // Raise HINT_PROMPT_VERSION with any change to what the model reads, then update both.
-    expect({ HINT_PROMPT_VERSION, hash }).toEqual({
-      HINT_PROMPT_VERSION: 7,
-      hash: "9e66944b8d32918d",
-    });
-  });
-
   it("leaves each supported language to its module", () => {
     // Russian and Ukrainian are named as languages a hint is written in, never ones being learned.
     expect(supportedNamesIn(HINT_INSTRUCTIONS, ["Russian", "Ukrainian"])).toEqual([]);

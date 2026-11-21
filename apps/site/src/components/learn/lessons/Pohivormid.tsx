@@ -445,7 +445,7 @@ export function PohivormidLesson() {
             </span>
           </>
         ),
-        prompt: t`Third form of ${firstTwo(forms)}`,
+        prompt: t`Third form after ${firstTwo(forms)}`,
         keyboard: "text",
         pair: [pattern, forms[0]] as const,
       })),
@@ -807,7 +807,7 @@ export function PohivormidLesson() {
                   label={t`Words whose ending tells the third form`}
                   items={keysOf(TELLING)}
                   columns={3}
-                  phoneColumns={3}
+                  phoneColumns={2}
                   empty={{
                     title: t`Tap a word`,
                     tip: t`You’ll hear its three forms.`,

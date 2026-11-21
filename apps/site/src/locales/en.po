@@ -856,8 +856,8 @@ msgstr "A flat plate on a door says push; a handle says pull."
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 
-msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us and a final long vowel tell you the third. Every word is read aloud."
-msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us and a final long vowel tell you the third. Every word is read aloud."
+msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us, or a final long vowel, tell you the third. Every word is read aloud."
+msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us, or a final long vowel, tell you the third. Every word is read aloud."
 
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
@@ -10675,8 +10675,8 @@ msgid "Third"
 msgstr "Third"
 
 #. placeholder {0}: firstTwo(forms)
-msgid "Third form of {0}"
-msgstr "Third form of {0}"
+msgid "Third form after {0}"
+msgstr "Third form after {0}"
 
 msgid "thirteen"
 msgstr "thirteen"

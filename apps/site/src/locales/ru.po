@@ -856,7 +856,7 @@ msgstr "Гладкая накладка на двери подсказывает
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "В бесплатной колоде есть каждый дорожный знак из правил: по картинке, с польским названием и номером."
 
-msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us and a final long vowel tell you the third. Every word is read aloud."
+msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us, or a final long vowel, tell you the third. Every word is read aloud."
 msgstr "Бесплатный урок эстонского о трёх основных формах существительного, põhivormid (kool, kooli, kooli; pood, poe, poodi): как их приводят словарь и Sõnaveeb и как окончания -ne, -us и долгая гласная на конце подсказывают третью форму. Каждое слово озвучено."
 
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
@@ -6414,7 +6414,7 @@ msgid "look forward to"
 msgstr "ждать с нетерпением"
 
 msgid "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them the first, second and third form."
-msgstr "Найди в словаре <0/> («школа»), и увидишь три слова: <1>kool, kooli, kooli</1>. Так в словаре приводится каждое существительное, всегда в одном и том же порядке. Большинство других его форм образуется от одной из этих трёх. По-эстонски они называются <2/>, «основные формы». В этом курсе мы называем их первой, второй и третьей формой."
+msgstr "Найди в словаре <0/> («школа»), и увидишь три слова: <1>kool, kooli, kooli</1>. Так приводится каждое существительное, всегда в одном и том же порядке. Большинство других его форм образуется от одной из этих трёх. По-эстонски они называются <2/>, «основные формы». В этом курсе мы называем их первой, второй и третьей формой."
 
 msgid "Look."
 msgstr "Смотри."
@@ -7993,7 +7993,7 @@ msgstr "Партитив множественного числа"
 
 msgctxt "grammatical number"
 msgid "Plural: see lesson {plural}"
-msgstr "Множественное число: урок {plural}"
+msgstr "Множественное: урок {plural}"
 
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP и PRINCE2: процессы, роли и терминология."
@@ -9091,7 +9091,7 @@ msgstr "Sina — это ты: здесь сказано «Ты Яан»."
 
 msgctxt "grammatical number"
 msgid "Singular"
-msgstr "Единственное число"
+msgstr "Единственное"
 
 msgid "sit down"
 msgstr "садись"
@@ -10522,7 +10522,7 @@ msgid "The three forms of a verb"
 msgstr "Три основные формы глагола"
 
 msgid "The three forms of an Estonian noun"
-msgstr "Три основные формы эстонского существительного"
+msgstr "Три основные формы слова в эстонском"
 
 msgid "The three you missed most this week: “ojalá”, “madrugar” and “tener ganas de”."
 msgstr "Три, которые на этой неделе чаще всего не вспоминались: «ojalá», «madrugar» и «tener ganas de»."
@@ -10675,7 +10675,7 @@ msgid "Third"
 msgstr "Третья"
 
 #. placeholder {0}: firstTwo(forms)
-msgid "Third form of {0}"
+msgid "Third form after {0}"
 msgstr "Третья форма после {0}"
 
 msgid "thirteen"

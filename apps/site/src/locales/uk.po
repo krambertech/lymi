@@ -856,7 +856,7 @@ msgstr "Гладка накладка на дверях підказує «шт�
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "Безкоштовна колода містить кожен дорожній знак із правил: за малюнком, із польською назвою та номером."
 
-msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us and a final long vowel tell you the third. Every word is read aloud."
+msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us, or a final long vowel, tell you the third. Every word is read aloud."
 msgstr "Безкоштовний урок естонської про три основні форми іменника, põhivormid (kool, kooli, kooli; pood, poe, poodi): як їх подають словник і Sõnaveeb і як закінчення -ne, -us та довга голосна в кінці слова підказують третю форму. Кожне слово озвучене."
 
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
@@ -10675,7 +10675,7 @@ msgid "Third"
 msgstr "Третя"
 
 #. placeholder {0}: firstTwo(forms)
-msgid "Third form of {0}"
+msgid "Third form after {0}"
 msgstr "Третя форма після {0}"
 
 msgid "thirteen"

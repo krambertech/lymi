@@ -408,14 +408,7 @@ export function PohivormidLesson() {
       answers: [forms[2]],
       src: entrySrc(forms),
       explain: RULES[pattern],
-      said: (
-        <>
-          {nounEntry(forms)}{" "}
-          <span lang={i18n.locale} className="text-md text-ink-muted">
-            {i18n._(MEANS[forms[0]])}
-          </span>
-        </>
-      ),
+      said: nounEntry(forms),
       pair: [pattern, forms[0]] as const,
     }));
   }, [i18n, t]);

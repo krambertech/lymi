@@ -413,7 +413,7 @@ const dialogueLine = (id: keyof typeof MODAL_DIALOGUE) => {
 export function ModaalverbidLesson() {
   const { t, i18n } = useLingui();
   const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
-  const infinitives = at("Pean minema, tahan lugeda");
+  const infinitives = lessonBySlug("tegevusnimed")?.n;
   const having = at("Mul on");
   const negation = lessonBySlug("eitus")?.n;
 

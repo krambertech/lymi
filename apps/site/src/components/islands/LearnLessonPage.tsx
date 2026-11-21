@@ -8,6 +8,7 @@ import { LihtminevikLesson } from "../learn/lessons/Lihtminevik";
 import { MinaSinaTemaLesson } from "../learn/lessons/MinaSinaTema";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { OlevikLesson } from "../learn/lessons/Olevik";
+import { OsastavLesson } from "../learn/lessons/Osastav";
 import { PaevadLesson } from "../learn/lessons/Paevad";
 import { PaevTallinnasLesson } from "../learn/lessons/PaevTallinnas";
 import { TutvumineLesson } from "../learn/lessons/Tutvumine";
@@ -27,6 +28,7 @@ export const LESSON_VIEWS = {
   tutvumine: TutvumineLesson,
   kaskiv: KaskivLesson,
   "paev-tallinnas": PaevTallinnasLesson,
+  osastav: OsastavLesson,
   lihtminevik: LihtminevikLesson,
 } as const;
 

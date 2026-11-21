@@ -20,6 +20,7 @@ import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
 import { Scene } from "../Scene";
+import { Sort } from "../Sort";
 import { PlayMark } from "../Sound";
 import { Word } from "../Word";
 
@@ -156,6 +157,19 @@ const HOUSE: readonly { id: "majja" | "majas" | "majast"; sentence: Id }[] = [
   { id: "majja", sentence: "s-majja" },
   { id: "majas", sentence: "s-majas" },
   { id: "majast", sentence: "s-majast" },
+];
+
+/** The sort: one place in each pair three ways, a name, a short form and kodu. */
+const SORT_ITEMS: readonly { w: string; bin: Direction }[] = [
+  { w: "Tartusse", bin: "kuhu" },
+  { w: "kodus", bin: "kus" },
+  { w: "poest", bin: "kust" },
+  { w: "koju", bin: "kuhu" },
+  { w: "Tartus", bin: "kus" },
+  { w: "kodust", bin: "kust" },
+  { w: "poodi", bin: "kuhu" },
+  { w: "poes", bin: "kus" },
+  { w: "Tartust", bin: "kust" },
 ];
 
 /** The everyday words with a short kuhu form, each said in a sentence. */
@@ -540,7 +554,7 @@ export function MajasMajjaMajastLesson() {
       }
       facts={[
         <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">A quiz and a conversation</Trans>,
+        <Trans key="q">2 quizzes and a conversation</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -864,6 +878,62 @@ export function MajasMajjaMajastLesson() {
                   { q: "k-kodus", a: [] },
                   { q: "k-kodust", a: [] },
                 ]}
+              />
+            </>
+          ),
+        },
+        {
+          id: "sort",
+          title: t`Sort by question`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Put each form under the question it answers. The short forms count too:{" "}
+                    <Word w="koju" /> and <Word w="poodi" /> answer <Word w="kuhu" />.
+                  </Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="sort-by-question"
+                title={<Trans>Sort the forms</Trans>}
+                bins={[
+                  {
+                    id: "kus",
+                    label: "kus?",
+                    hint: t`where`,
+                    rule: (
+                      <Trans>
+                        Where something is takes <b lang="et">-s</b>: <b lang="et">kodus</b>.
+                      </Trans>
+                    ),
+                  },
+                  {
+                    id: "kuhu",
+                    label: "kuhu?",
+                    hint: t`where to`,
+                    rule: (
+                      <Trans>
+                        Where something goes takes <b lang="et">-sse</b> or a short form:{" "}
+                        <b lang="et">Tartusse, koju</b>.
+                      </Trans>
+                    ),
+                  },
+                  {
+                    id: "kust",
+                    label: "kust?",
+                    hint: t`where from`,
+                    rule: (
+                      <Trans>
+                        Where something comes from takes <b lang="et">-st</b>:{" "}
+                        <b lang="et">kodust</b>.
+                      </Trans>
+                    ),
+                  },
+                ]}
+                items={SORT_ITEMS.map(({ w, bin }) => ({ w, bin, src: wordSrc(w) }))}
               />
             </>
           ),

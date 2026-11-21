@@ -1186,9 +1186,6 @@ msgstr "Питальне слово стоїть першим, а те, про �
 msgid "A question you got wrong"
 msgstr "Питання з помилкою"
 
-msgid "A quiz and a conversation"
-msgstr "Тест і розмова"
-
 msgid "A quiz round on a scene: hear a sentence, then tap the place on the drawing."
 msgstr "Раунд вікторини на сцені: послухай речення, а потім торкнися місця на малюнку."
 
@@ -8591,6 +8588,9 @@ msgstr "Став <0>ei</0> перед дієсловом: <1>ma ei loe</1>, я �
 msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
 msgstr "Щоб спитати «так чи ні», постав <0>kas</0> перед реченням. Більше нічого не рухається: <1>Kas sa elad Tallinnas?</1>"
 
+msgid "Put each form under the question it answers. The short forms count too: <0/> and <1/> answer <2/>."
+msgstr "Розклади форми за питаннями, на які вони відповідають. Короткі форми теж рахуються: <0/> і <1/> відповідають на <2/>."
+
 msgid "Put every word in a group first."
 msgstr "Спершу розклади всі слова по групах."
 
@@ -9623,6 +9623,12 @@ msgstr "Вибачте; перепрошую"
 
 msgid "Sort"
 msgstr "Розклади по групах"
+
+msgid "Sort by question"
+msgstr "Розклади за питаннями"
+
+msgid "Sort the forms"
+msgstr "Розклади форми"
 
 msgid "Sounds good"
 msgstr "Домовились"
@@ -12433,6 +12439,15 @@ msgstr "З чого почати?"
 
 msgid "Where someone goes: tule siia, come here."
 msgstr "Куди: tule siia, «іди сюди»."
+
+msgid "Where something comes from takes <0>-st</0>: <1>kodust</1>."
+msgstr "Звідки щось іде — <0>-st</0>: <1>kodust</1>."
+
+msgid "Where something goes takes <0>-sse</0> or a short form: <1>Tartusse, koju</1>."
+msgstr "Куди щось іде — <0>-sse</0> або коротка форма: <1>Tartusse, koju</1>."
+
+msgid "Where something is takes <0>-s</0>: <1>kodus</1>."
+msgstr "Де щось є — <0>-s</0>: <1>kodus</1>."
 
 msgid "Where the cat goes"
 msgstr "Куди йде кіт"

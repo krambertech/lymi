@@ -5876,8 +5876,8 @@ msgstr "in Germany"
 msgid "in Lasnamäe"
 msgstr "in Lasnamäe"
 
-msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1/>. With <2/>, today, the verb is in the present: <3/>."
-msgstr "In lesson {days} you met <0/>, yesterday. It goes with the past: <1/>. With <2/>, today, the verb is in the present: <3/>."
+msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1><2/>.</1> With <3/>, today, the verb is in the present: <4><5/>.</4>"
+msgstr "In lesson {days} you met <0/>, yesterday. It goes with the past: <1><2/>.</1> With <3/>, today, the verb is in the present: <4><5/>.</4>"
 
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
@@ -10645,8 +10645,8 @@ msgstr "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 
-msgid "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; only <5>minema</5> drops it: <6/>. Pick a verb and tap its forms to see what changes."
-msgstr "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; only <5>minema</5> drops it: <6/>. Pick a verb and tap its forms to see what changes."
+msgid "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; only <5>minema</5> drops it: <6><7/>.</6> Pick a verb and tap its forms to see what changes."
+msgstr "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; only <5>minema</5> drops it: <6><7/>.</6> Pick a verb and tap its forms to see what changes."
 
 msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
 msgstr "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."

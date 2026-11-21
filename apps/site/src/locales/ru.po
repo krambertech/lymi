@@ -5876,8 +5876,8 @@ msgstr "в Германии"
 msgid "in Lasnamäe"
 msgstr "в Ласнамяэ"
 
-msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1/>. With <2/>, today, the verb is in the present: <3/>."
-msgstr "В уроке {days} было слово <0/>, «вчера». С ним глагол стоит в прошедшем времени: <1/>. А с <2/>, «сегодня», — в настоящем: <3/>."
+msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1><2/>.</1> With <3/>, today, the verb is in the present: <4><5/>.</4>"
+msgstr "В уроке {days} было слово <0/>, «вчера». С ним глагол стоит в прошедшем времени: <1><2/>.</1> А с <3/>, «сегодня», — в настоящем: <4><5/>.</4>"
 
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "В уроке {pronouns} был глагол <0/>, «быть»: <1/>, <2/>, <3/>, <4/>. У большинства глаголов те же окончания. А там, где у olema стоит <5/>, у них два своих: <6>-b</6> для «он или она» и <7>-vad</7> для «они»."
@@ -10645,8 +10645,8 @@ msgstr "Окончание говорит, кто это, поэтому ma, sa,
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "Окончание говорит, кто это, поэтому местоимение можно опустить: <0>Olen Mari.</0>"
 
-msgid "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; only <5>minema</5> drops it: <6/>. Pick a verb and tap its forms to see what changes."
-msgstr "Окончания те же, что после <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. Форма для <2>ta</2> заканчивается на <3>i</3>, как <4/>; только <5>minema</5> его теряет: <6/>. Выбери глагол и касайся форм, чтобы увидеть, что меняется."
+msgid "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; only <5>minema</5> drops it: <6><7/>.</6> Pick a verb and tap its forms to see what changes."
+msgstr "Окончания те же, что после <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. Форма для <2>ta</2> заканчивается на <3>i</3>, как <4/>; только <5>minema</5> его теряет: <6><7/>.</6> Выбери глагол и касайся форм, чтобы увидеть, что меняется."
 
 msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
 msgstr "Эстонская неделя, <0/>, начинается с понедельника, как и у нас. Шесть дней заканчиваются на <1/>, день. <2/>, пятница, — исключение. Как и в русском, дни недели пишут со строчной буквы."

@@ -62,6 +62,11 @@ function End({ children }: { children: ReactNode }) {
   );
 }
 
+/** Keeps a Word and the full stop after it on one line, so the stop never starts a line. */
+function Nowrap({ children }: { children: ReactNode }) {
+  return <span className="whitespace-nowrap">{children}</span>;
+}
+
 /** An Estonian word in running text that needs no card, such as a pronoun. */
 function Et({ children }: { children: ReactNode }) {
   return <span lang="et">{children}</span>;
@@ -704,8 +709,13 @@ export function LihtminevikLesson() {
                 <p>
                   <Trans>
                     In lesson {days} you met <Word w="eile" />, yesterday. It goes with the past:{" "}
-                    <Word w="Eile õppisin eesti keelt" />. With <Word w="täna" />, today, the verb
-                    is in the present: <Word w="Täna õpin eesti keelt" />.
+                    <Nowrap>
+                      <Word w="Eile õppisin eesti keelt" />.
+                    </Nowrap>{" "}
+                    With <Word w="täna" />, today, the verb is in the present:{" "}
+                    <Nowrap>
+                      <Word w="Täna õpin eesti keelt" />.
+                    </Nowrap>
                   </Trans>
                 </p>
                 <p>
@@ -827,7 +837,10 @@ export function LihtminevikLesson() {
                     The endings are the ones that follow <End>si-</End>:{" "}
                     <b lang="et">sõin, sõid, sõi, sõime, sõite, sõid</b>. <Et>Ta</Et> ends in{" "}
                     <End>i</End>, as in <Word w="sõi" />; only <Et>minema</Et> drops it:{" "}
-                    <Word w="läks" />. Pick a verb and tap its forms to see what changes.
+                    <Nowrap>
+                      <Word w="läks" />.
+                    </Nowrap>{" "}
+                    Pick a verb and tap its forms to see what changes.
                   </Trans>
                 </p>
               </Prose>

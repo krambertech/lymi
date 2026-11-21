@@ -5876,8 +5876,8 @@ msgstr "у Німеччині"
 msgid "in Lasnamäe"
 msgstr "у Ласнамяе"
 
-msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1/>. With <2/>, today, the verb is in the present: <3/>."
-msgstr "В уроці {days} було слово <0/>, «учора». З ним дієслово стоїть у минулому часі: <1/>. А з <2/>, «сьогодні», — у теперішньому: <3/>."
+msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1><2/>.</1> With <3/>, today, the verb is in the present: <4><5/>.</4>"
+msgstr "В уроці {days} було слово <0/>, «учора». З ним дієслово стоїть у минулому часі: <1><2/>.</1> А з <3/>, «сьогодні», — у теперішньому: <4><5/>.</4>"
 
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "В уроці {pronouns} було дієслово <0/>, «бути»: <1/>, <2/>, <3/>, <4/>. Більшість дієслів мають ті самі закінчення. А там, де в olema стоїть <5/>, у них два власні: <6>-b</6> для «він чи вона» і <7>-vad</7> для «вони»."
@@ -10645,8 +10645,8 @@ msgstr "Закінчення каже, хто це, тому ma, sa, me і te м
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "Закінчення каже, хто це, тож займенник можна опустити: <0>Olen Mari.</0>"
 
-msgid "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; only <5>minema</5> drops it: <6/>. Pick a verb and tap its forms to see what changes."
-msgstr "Закінчення ті самі, що після <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. Форма для <2>ta</2> закінчується на <3>i</3>, як <4/>; лише <5>minema</5> його губить: <6/>. Вибери дієслово й торкайся форм, щоб побачити, що змінюється."
+msgid "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; only <5>minema</5> drops it: <6><7/>.</6> Pick a verb and tap its forms to see what changes."
+msgstr "Закінчення ті самі, що після <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. Форма для <2>ta</2> закінчується на <3>i</3>, як <4/>; лише <5>minema</5> його губить: <6><7/>.</6> Вибери дієслово й торкайся форм, щоб побачити, що змінюється."
 
 msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
 msgstr "Естонський тиждень, <0/>, починається з понеділка, як і в нас. Шість днів закінчуються на <1/>, день. <2/>, п’ятниця, — виняток. Як і в українській, назви днів пишуть з малої літери."

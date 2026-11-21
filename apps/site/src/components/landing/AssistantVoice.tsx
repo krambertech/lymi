@@ -38,7 +38,7 @@ function Wave({ talking, who }: { talking: boolean; who: Turn["who"] | undefined
     >
       {WAVE.map((height, i) => (
         <span
-          // biome-ignore lint/suspicious/noArrayIndexKey: the bars never move or change.
+          // oxlint-disable-next-line react/no-array-index-key -- the bars never move or change.
           key={i}
           className={clsx(
             "voice-wave w-1.5 rounded-full transition-colors duration-300",
@@ -62,7 +62,7 @@ function marked(text: string, words: readonly string[]) {
   const pattern = new RegExp(`(${escaped.join("|")})`, "gi");
   return text.split(pattern).map((part, i) =>
     i % 2 === 1 ? (
-      // biome-ignore lint/suspicious/noArrayIndexKey: the parts of one fixed line never reorder.
+      // oxlint-disable-next-line react/no-array-index-key -- the parts of one fixed line never reorder.
       <span key={i} className="-mx-[3px] rounded-md bg-plate px-[3px] py-px">
         {part}
       </span>

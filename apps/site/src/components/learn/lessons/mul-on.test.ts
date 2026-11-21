@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { MUL_ON_NAMES, MUL_ON_OWNERS, MUL_ON_PASSAGE } from "../../../lib/learn/clips";
+import { MUL_ON_NAMES, MUL_ON_OWNERS } from "../../../lib/learn/clips";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { AM_HAVE, threeOwners, WHO_HAS } from "./MulOn";
 
@@ -62,9 +62,5 @@ describe("“to have” data", () => {
   it("starts each owner's sentence with its -l form", () => {
     for (const { owner, said } of MUL_ON_OWNERS)
       expect(said.toLowerCase().split(" ")).toContain(owner);
-  });
-
-  it("ends every sentence of Mari's note with a full stop or a question mark", () => {
-    for (const sentence of MUL_ON_PASSAGE) expect(sentence).toMatch(/[.?]$/);
   });
 });

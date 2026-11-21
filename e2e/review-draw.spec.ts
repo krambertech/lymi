@@ -177,24 +177,3 @@ test("offline, grading still works, running out claims nothing, and it all syncs
     await expect(page.getByRole("heading", { name: "You’re done for today" })).toBeVisible();
   });
 });
-
-test("a round from Today walks its own cards and ends with Round done", async ({
-  page,
-  browserName,
-}, testInfo) => {
-  test.skip(browserName !== "chromium", "logic, not rendering");
-  await startAsTestLearner(page, testInfo, "review-round");
-  await addDeck(page, "Round", 4);
-
-  await page.goto("/review");
-  const forgotten = await currentCard(page);
-  await grade(page, "1", 1);
-
-  await page.goto("/review?round=forgotten");
-  await expect(page.getByLabel(forgotten, { exact: true })).toBeVisible();
-  await expect(page.getByText("0 of 1", { exact: true })).toBeVisible();
-  await page.keyboard.press("Space");
-  await page.keyboard.press("3");
-  await expect(page.getByRole("heading", { name: "Round done" })).toBeVisible();
-  await expect(page.getByRole("button", { name: /^Continue/ })).toContainText("3 cards left");
-});

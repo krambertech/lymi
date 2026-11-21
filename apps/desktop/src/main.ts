@@ -47,27 +47,21 @@ import { DEFAULT_SHORTCUT, isTheme, type Preferences, usableShortcut } from "./s
 import { completeSignIn, requestSignIn } from "./sign-in.js";
 import { restartToUpdate, watchForUpdates } from "./updates.js";
 
-// A packaged build always talks to production; only a development run may point elsewhere.
 const PRODUCT_URL = productOrigin(app.isPackaged, process.env.LYMI_URL);
 const DEV = !app.isPackaged && isLoopback(PRODUCT_URL);
-// A local persona instead of a sign-in, never against production. docs/local-dev.md.
 const DEV_PERSONA = DEV ? process.env.LYMI_DEV_PERSONA : undefined;
 const PANEL_WIDTH = 480;
-// Signed out, the window is the size of the sign-in form; signed in, the size of the app.
 const SIGN_IN_SIZE = { width: 440, height: 720 };
 const APP_SIZE = { width: 1280, height: 840 };
-// Pages a signed-out window shows; signing in moves the window on from them.
 const SIGNED_OUT_PATHS = new Set(["/login", "/reset-password"]);
 const DUE_EVERY_MS = 15 * 60_000;
 const assets = join(app.getAppPath(), "assets");
 const preload = join(app.getAppPath(), "dist", "preload.cjs");
-// What the product asks the browser for; everything else is refused.
 const PERMISSIONS = new Set(["clipboard-sanitized-write", "notifications", "fullscreen"]);
 
 let ses: Session;
 let tray: Tray | null = null;
 let panel: BrowserWindow | null = null;
-// Loads again on the next press: it failed to load, or the learner signed in or out meanwhile.
 let panelStale = false;
 let main: BrowserWindow | null = null;
 let prefs: Preferences;
@@ -88,7 +82,6 @@ function openExternal(url: string) {
   if (leaving(url, PRODUCT_URL) === "browser") void shell.openExternal(url);
 }
 
-/** Only the product loads inside Lymi's windows; every other link or redirect opens in the browser. */
 function keepToProduct(win: BrowserWindow) {
   win.webContents.setWindowOpenHandler(({ url }) => {
     openExternal(url);
@@ -107,13 +100,8 @@ function keepToProduct(win: BrowserWindow) {
 
 const webPreferences = () => ({ session: ses, preload, sandbox: true, contextIsolation: true });
 
-/** A window shows this wherever its page has not painted: on a reload, a navigation or a resize. */
 const colours = () => windowColours[nativeTheme.shouldUseDarkColors ? "dark" : "light"];
 
-/**
- * Shows the main window, at `path` when one is asked for; an open window moves without reloading.
- * Signed out, it opens as the sign-in window.
- */
 async function openMain(path?: string) {
   await sessionKnown;
   if (main && !main.isDestroyed()) {
@@ -127,7 +115,6 @@ async function openMain(path?: string) {
   main = new BrowserWindow({
     ...(hasCookie(signIn) ? APP_SIZE : SIGN_IN_SIZE),
     minWidth: 380,
-    // The page draws a 40 px title bar on every screen; the traffic lights sit centred in it.
     titleBarStyle: "hidden",
     trafficLightPosition: { x: 20, y: 13 },
     show: false,
@@ -137,14 +124,12 @@ async function openMain(path?: string) {
   fitMain(hasCookie(signIn), false);
   keepToProduct(main);
   main.once("ready-to-show", () => main?.show());
-  // Full screen hides the traffic lights, so the page shows its Lymi tile again.
   const fullScreen = () => toPage(main, "window:full-screen", !!main?.isFullScreen());
   main.on("enter-full-screen", fullScreen);
   main.on("leave-full-screen", fullScreen);
   main.webContents.on("did-finish-load", fullScreen);
   main.on("closed", () => {
     main = null;
-    // Closed while This Mac recorded a shortcut, the page never said it stopped.
     if (!globalShortcut.isRegistered(prefs.shortcut)) registerShortcut(prefs.shortcut);
     placeApp();
   });
@@ -152,10 +137,6 @@ async function openMain(path?: string) {
   void main.loadURL(url);
 }
 
-/**
- * Sizes the main window for who is using it: a fixed sign-in window while signed out, the app's
- * own size once signed in, centred where the window already is.
- */
 function fitMain(signedInNow: boolean, animate: boolean) {
   if (!main || main.isDestroyed()) return;
   if (!signedInNow && main.isFullScreen()) main.setFullScreen(false);
@@ -179,7 +160,6 @@ function fitMain(signedInNow: boolean, animate: boolean) {
   );
 }
 
-/** The one place the sign-in state changes; answers whether it did. */
 function setAuth(event: AuthEvent) {
   const before = signIn;
   signIn = auth(signIn, event);
@@ -190,16 +170,11 @@ function setAuth(event: AuthEvent) {
   return true;
 }
 
-/**
- * Signing in or out, in a window or through the browser: the window changes size, and a window
- * still on the sign-in form goes on to where the learner was headed.
- */
 function sessionChanged(now: boolean) {
   if (!main || main.isDestroyed()) return;
   fitMain(now, main.isVisible());
   if (!now) return;
   const current = URL.parse(main.webContents.getURL());
-  // The page's own redirect after an email sign-in is already under way.
   if (!current || !SIGNED_OUT_PATHS.has(current.pathname) || main.webContents.isLoading()) return;
   const returnTo = current.searchParams.get("returnTo");
   const url = (returnTo && productUrl(returnTo)) || productUrl("/today");
@@ -212,7 +187,6 @@ function createPanel() {
     width: PANEL_WIDTH,
     height: 112,
     frame: false,
-    // An opaque window, so text renders as crisply as in any app; macOS rounds and shadows it.
     roundedCorners: true,
     hasShadow: true,
     resizable: false,
@@ -227,7 +201,6 @@ function createPanel() {
   });
   keepToProduct(panel);
   panel.on("blur", () => panel?.hide());
-  // Opened at login before the network is up, or crashed: the next press loads it again.
   panelStale = false;
   panel.webContents.on("did-fail-load", (_event, _code, _description, _url, mainFrame) => {
     if (mainFrame) panelStale = true;
@@ -240,7 +213,6 @@ function createPanel() {
   if (url) void panel.loadURL(url);
 }
 
-/** Like Spotlight: centred on the screen under the pointer, a fifth of the way down. */
 async function showPanel() {
   if (!panel || panel.isDestroyed()) createPanel();
   if (!panel) return;
@@ -254,8 +226,6 @@ async function showPanel() {
     panel.webContents.reload();
   }
   let selection: string | null = null;
-  // Copied before the panel shows, while the app the learner was reading still has the selection.
-  // A second press while that runs is ignored, so two copies never trade the learner's clipboard.
   if (prefs.fillSelection && canCopySelection()) {
     copying = selectedText().then((text) => {
       selection = text;
@@ -289,10 +259,6 @@ async function refreshDue() {
   renderTray();
 }
 
-/**
- * Where Lymi lives: in the menu bar alone while no window is open, or in the Dock whenever a
- * window is open or the learner hid the lantern, so it can always be reached.
- */
 function placeApp() {
   if (process.platform !== "darwin") return;
   const windowOpen = !!main && !main.isDestroyed();
@@ -328,7 +294,6 @@ function renderTray() {
   );
 }
 
-/** A menu command goes to the product's page, which owns what each one does. */
 function runCommand(command: MenuCommand) {
   if (main && !main.isDestroyed()) {
     main.show();
@@ -336,7 +301,6 @@ function runCommand(command: MenuCommand) {
     toPage(main, "menu:command", command);
     return;
   }
-  // The preload holds it until the page listens.
   void openMain().then(() =>
     main?.webContents.once("did-finish-load", () => toPage(main, "menu:command", command)),
   );
@@ -356,7 +320,6 @@ function registerShortcut(accelerator: string) {
   }
 }
 
-/** Moves the quick-add shortcut, keeping the old one when another app already holds the new. */
 function moveShortcut(next: string) {
   if (!usableShortcut(next)) return "invalid";
   globalShortcut.unregister(prefs.shortcut);
@@ -376,18 +339,14 @@ const preferencesOut = () => ({
   ...(update && { update }),
 });
 
-/** What the page sends: the contract's shape, but untrusted, so every value is checked here. */
 type Untrusted<T extends unknown[]> = { [I in keyof T]: unknown };
 
-// One handler for each message in the shared contract, which is what makes a missing one fail to
-// compile. Each runs only for a message from the product's own page.
 const toApp: { [C in keyof ToApp]: (...args: Untrusted<ToApp[C]>) => void } = {
   "panel:hide": () => panel?.hide(),
   "panel:resize": (height) => {
     if (!panel || typeof height !== "number" || !Number.isFinite(height)) return;
     panel.setContentSize(PANEL_WIDTH, Math.min(Math.max(Math.ceil(height), 56), 480));
   },
-  // The page's plate colour, so the window matches the learner's theme rather than the system's.
   "panel:background": (color) => {
     if (typeof color === "string" && /^#[0-9a-f]{6}$/i.test(color))
       panel?.setBackgroundColor(color);
@@ -410,14 +369,12 @@ const toApp: { [C in keyof ToApp]: (...args: Untrusted<ToApp[C]>) => void } = {
     writePreferences(prefs);
     nativeTheme.themeSource = theme;
   },
-  // The one place Lymi asks macOS for Accessibility: This Mac's button, never the shortcut.
   "prefs:accessibility": () => {
     systemPreferences.isTrustedAccessibilityClient(true);
     void shell.openExternal(
       "x-apple.systempreferences:com.apple.preference.security?Privacy_Accessibility",
     );
   },
-  // While This Mac records a new shortcut, the current one must not open the panel instead.
   "prefs:recording": (on) => {
     if (on === true) globalShortcut.unregister(prefs.shortcut);
     else if (!globalShortcut.isRegistered(prefs.shortcut)) registerShortcut(prefs.shortcut);
@@ -458,14 +415,11 @@ for (const [channel, handler] of Object.entries(askApp)) {
   );
 }
 
-/** A message to a page, typed by the contract. */
 function toPage<C extends keyof ToPage>(win: BrowserWindow | null, channel: C, value: ToPage[C]) {
   if (win && !win.isDestroyed()) win.webContents.send(channel, value);
 }
 
-/** A freestanding question, because Lymi may have no window open behind it. */
 async function askToRetrySignIn() {
-  // The browser is in front, and in the menu bar alone Lymi has nothing to raise.
   app.focus({ steal: true });
   const { response } = await dialog.showMessageBox({
     message: "Couldn’t sign in to Lymi",
@@ -482,29 +436,23 @@ const finishSignIn = handBack({
   complete: (link) => completeSignIn(link, PRODUCT_URL, ses),
   signedIn: () => hasCookie(signIn),
   askToRetry: askToRetrySignIn,
-  // The browser that handed the link back is signed in, so no provider needs naming again.
   retry: () => requestSignIn(PRODUCT_URL),
   report: (cause) => console.error("Sign-in failed:", cause),
 });
 
-/** The browser's hand-back after sign-in; the windows share the session it lands in. */
 async function onLink(link: string) {
-  // A link can be what launched Lymi, and an existing session decides whether a failure matters.
   await sessionKnown;
   if (!(await finishSignIn(link))) return;
-  // The browser is in front; Lymi comes forward with the learner signed in.
   setAuth(HANDED_BACK);
   await openMain();
   app.focus({ steal: true });
 }
 
-// A packaged build takes its name and icon from its bundle; unpackaged, this is Electron's own.
 app.setName("Lymi");
 
 if (!app.requestSingleInstanceLock()) {
   app.quit();
 } else {
-  // Unpackaged, macOS registers Electron.app itself, so a link reaches this running copy.
   if (process.defaultApp) {
     app.setAsDefaultProtocolClient(SCHEME, process.execPath, [resolve(process.argv[1] ?? ".")]);
   } else {
@@ -514,27 +462,19 @@ if (!app.requestSingleInstanceLock()) {
     event.preventDefault();
     void onLink(link);
   });
-  // Opening Lymi again, from Applications, Spotlight or the Dock, shows its window.
   app.on("second-instance", () => void openMain());
   app.on("activate", () => void openMain());
-  // Links and windows wait on this, so a failed start must not leave them waiting for good.
   app
     .whenReady()
     .then(start)
     .catch((cause) => console.error("Start failed:", cause))
     .finally(() => sessionRead());
-  // A menu bar app stays running with no window open.
   app.on("window-all-closed", () => {});
   app.on("will-quit", () => globalShortcut.unregisterAll());
 }
 
-/**
- * Lymi opened from the disk image or Downloads asks once per launch to move itself: only in
- * Applications does it update itself and keep the sign-in link pointing at it.
- */
 async function offerToMove() {
   if (!app.isPackaged || process.platform !== "darwin" || app.isInApplicationsFolder()) return;
-  // A copy driven over the debugging port, as the launch check does, would wait on the dialog forever.
   if (app.commandLine.hasSwitch("remote-debugging-port")) return;
   const { response } = await dialog.showMessageBox({
     message: "Move Lymi to Applications?",
@@ -545,7 +485,6 @@ async function offerToMove() {
     cancelId: 1,
     icon: join(assets, "icon.png"),
   });
-  // Moving quits and relaunches from Applications; cancelling the password prompt throws.
   if (response === 0) app.moveToApplicationsFolder();
 }
 
@@ -561,14 +500,12 @@ async function start() {
   );
   ses.setPermissionCheckHandler((_contents, permission, origin) => allowed(permission, origin));
   prefs = readPreferences();
-  // Also what the page's prefers-color-scheme reads, and the appearance of native menus and dialogs.
   nativeTheme.themeSource = prefs.theme;
   nativeTheme.on("updated", () => {
     main?.setBackgroundColor(colours().canvas);
     panel?.setBackgroundColor(colours().plate);
   });
   if (DEV_PERSONA) {
-    // Signs the window session in as a seeded persona; the route sets the cookie and redirects.
     const url = productUrl(`/api/dev/sign-in?as=${encodeURIComponent(DEV_PERSONA)}`);
     if (url) await ses.fetch(url, { credentials: "include" });
   }
@@ -585,16 +522,12 @@ async function start() {
     renderTray();
     toPage(main, "app:update", next);
   });
-  // Signing in or out in a window adds or removes the session cookie, and the window, the tray and
-  // the panel follow. The daily refresh rewrites it in place, an overwrite then an insert, and
-  // changes nothing.
   const present = (await ses.cookies.get({ url: PRODUCT_URL })).some(
     (cookie) =>
       sessionChange(false, { name: cookie.name, cause: "inserted", removed: false }) === true,
   );
   setAuth({ type: "read", present });
   sessionRead();
-  // Asked once the cookie is known, so a 401 at launch is not lost to the read.
   void refreshDue();
   let settle: ReturnType<typeof setTimeout> | undefined;
   ses.cookies.on("changed", (_event, cookie, cause, removed) => {
@@ -602,15 +535,12 @@ async function start() {
     clearTimeout(settle);
     settle = setTimeout(() => {
       void refreshDue();
-      // Never under the learner's typing: an open panel reloads on its next press instead.
       if (panel?.isVisible()) panelStale = true;
       else panel?.webContents.reload();
     }, 500);
   });
   if (DEV) {
-    // Lets a script open the panel and find its window without pressing the shortcut. README.md.
     process.on("SIGUSR2", () => {
-      // A menu command written to `dev-command` in the profile runs as if chosen from the menu bar.
       const file = join(app.getPath("userData"), "dev-command");
       if (existsSync(file)) {
         const command = readFileSync(file, "utf8").trim();

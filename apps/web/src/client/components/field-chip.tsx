@@ -118,9 +118,9 @@ export function FieldChipRow({
   const start = more.start ? `transparent, black ${FADE}` : "black, black";
   const end = more.end ? `black calc(100% - ${FADE}), transparent` : "black";
   return (
-    // biome-ignore lint/a11y/useSemanticElements: a row of controls with a name, which a fieldset is not
     <div
       ref={ref}
+      // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a row of controls with a name, which a fieldset is not
       role="group"
       aria-label={label}
       style={

@@ -79,6 +79,8 @@ function release() {
     $app_version: PHONE_CLIENT?.version ?? null,
     $app_build: PHONE_CLIENT?.build ?? null,
     app_update: PHONE_CLIENT?.update ?? null,
+    // `beta` for TestFlight and Play testing installs, `production` for the stores.
+    app_channel: Updates.channel || null,
     $app_namespace: Constants.expoConfig?.ios?.bundleIdentifier ?? null,
     $geoip_disable: true,
   };

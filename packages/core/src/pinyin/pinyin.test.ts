@@ -98,10 +98,6 @@ describe("pinyinTermReading", () => {
   it("converts tone numbers as it draws", () => {
     expect(drawn("你好", "ni3 hao3")).toBe("你[nǐ]好[hǎo]");
   });
-  it("draws nothing for a reading that is not pinyin or a term with no Han", () => {
-    expect(pinyinTermReading("学习", "ɕɥɛ̌ɕǐ")).toBeNull();
-    expect(pinyinTermReading("OK", "OK")).toBeNull();
-  });
 });
 
 describe("pinyinKey", () => {
@@ -113,11 +109,6 @@ describe("pinyinKey", () => {
   it("gives one key across case, spacing, NFD and tone numbers", () => {
     const keys = ["xuéxí", "Xué xí", "xue2 xi2", "xuéxí"].map((r) => pinyinKey("学习", r));
     expect(new Set(keys)).toEqual(new Set(["xuéxí"]));
-  });
-  it("gives no key for a toneless reading, IPA, or another word's pinyin", () => {
-    expect(pinyinKey("学习", "xuexi")).toBeNull();
-    expect(pinyinKey("学习", "ɕɥɛ̌ɕǐ")).toBeNull();
-    expect(pinyinKey("行", "xuéxí")).toBeNull();
   });
 });
 

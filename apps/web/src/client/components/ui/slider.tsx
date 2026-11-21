@@ -49,7 +49,7 @@ function Slider<Value extends number | readonly number[]>({
         {thumbs.map((_, index) => (
           <SliderPrimitive.Thumb
             data-slot="slider-thumb"
-            // biome-ignore lint/suspicious/noArrayIndexKey: a thumb is its position in the value, not an item
+            // oxlint-disable-next-line react/no-array-index-key -- a thumb is its position in the value, not an item
             key={index}
             aria-label={label}
             className={cn(

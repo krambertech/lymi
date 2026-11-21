@@ -5,9 +5,8 @@ import { createOpenAiTextProvider, OpenAiTextError } from "./openai-text";
 const schema = { name: "reply", schema: { type: "object" } };
 
 function reply(content: string, finishReason = "stop") {
-  return vi.fn(
-    async (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> =>
-      Response.json({ choices: [{ message: { content }, finish_reason: finishReason }] }),
+  return vi.fn(async (_input: RequestInfo | URL, _init?: RequestInit): Promise<Response> =>
+    Response.json({ choices: [{ message: { content }, finish_reason: finishReason }] }),
   );
 }
 

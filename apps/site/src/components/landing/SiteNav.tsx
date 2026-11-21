@@ -153,7 +153,7 @@ function HoverRows({
   const reduce = useReducedMotion();
   const [row, setRow] = useState<{ el: HTMLElement; rect: Rect } | null>(null);
   return (
-    // biome-ignore lint/a11y/noStaticElementInteractions: it only follows the pointer for the fill; the rows are the links.
+    // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- it only follows the pointer for the fill; the rows are the links.
     <div
       className={clsx("relative", className)}
       onPointerOver={(e) => {
@@ -290,7 +290,7 @@ function ShelfPlaceholder({ rows }: { rows: number }) {
   return (
     <>
       {Array.from({ length: rows }, (_, at) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: placeholder rows have nothing else to key on
+        // oxlint-disable-next-line react/no-array-index-key -- placeholder rows have nothing else to key on
         <span key={at} className="flex h-8 items-center px-2.5" aria-hidden="true">
           <span className="h-3 w-20 rounded-xs bg-plate-nested" />
         </span>
@@ -793,7 +793,7 @@ function PhoneMenu({ openAppUrl, current, signUpHref }: PhoneMenuProps) {
               {shelves === undefined && (
                 <div className="mt-2.5 flex flex-wrap gap-1.5 px-3" aria-hidden="true">
                   {Array.from({ length: PHONE_SHELVES }, (_, at) => (
-                    // biome-ignore lint/suspicious/noArrayIndexKey: placeholder chips have nothing else to key on
+                    // oxlint-disable-next-line react/no-array-index-key -- placeholder chips have nothing else to key on
                     <span key={at} className={chipPlaceholderClass} />
                   ))}
                 </div>

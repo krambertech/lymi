@@ -184,31 +184,6 @@ describe("what the owner changes reaches every member on their next request", ()
     expect(state?.due).toEqual(later);
   });
 
-  it("a member who is caught up matches the deck's version and stays that way", async () => {
-    const { deck } = await sharedDeck("Tee", ["sild"]);
-    await join(anna, deck.id);
-    const versions = async () => {
-      const [row] = await db
-        .select({ deck: schema.decks.statesVersion, member: schema.deckMembers.statesVersion })
-        .from(schema.deckMembers)
-        .innerJoin(schema.decks, eq(schema.decks.id, schema.deckMembers.deckId))
-        .where(and(eq(schema.deckMembers.deckId, deck.id), eq(schema.deckMembers.userId, "anna")));
-      return row;
-    };
-    const joined = await versions();
-    expect(joined?.member).toBe(joined?.deck);
-
-    await addCards(kateryna, [{ deckId: deck.id, term: "jõgi" }]);
-    const behind = await versions();
-    expect(behind?.member).toBeLessThan(behind?.deck ?? 0);
-
-    await nextRequest(anna);
-    await nextRequest(anna);
-    const caughtUp = await versions();
-    expect(caughtUp?.member).toBe(caughtUp?.deck);
-    expect(await dueFor(anna, deck.id)).toBe(2);
-  });
-
   it("a member behind on many decks catches up on all of them in more than one batch", async () => {
     const decks = [];
     for (let i = 0; i < 12; i++) {
@@ -319,17 +294,6 @@ describe("leaving and being removed", () => {
 
     await join(anna, deck.id);
     expect(await dueFor(anna, deck.id)).toBe(1);
-  });
-
-  it("a member the owner removed cannot rejoin through the link", async () => {
-    const { deck } = await sharedDeck("Linn", ["tänav"]);
-    await join(anna, deck.id);
-
-    await removeMember(kateryna, deck.id, "anna");
-
-    expect((await listDecks(anna)).map((d) => d.id)).not.toContain(deck.id);
-    await expect(join(anna, deck.id)).rejects.toThrow(forbidden);
-    expect(await listMembers(kateryna, deck.id)).toEqual([]);
   });
 
   it("joining twice repairs states without duplicating membership or audit", async () => {

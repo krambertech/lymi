@@ -2,8 +2,8 @@ import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { useState } from "react";
 import { expect, test } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { messages } from "../../locales/en.po";
 import { MoveToSectionDialog } from "./section-dialogs";
 

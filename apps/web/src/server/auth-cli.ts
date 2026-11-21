@@ -18,7 +18,7 @@ import { emailOTP } from "better-auth/plugins/email-otp";
 import { jwt } from "better-auth/plugins/jwt";
 
 const options = {
-  // biome-ignore lint/suspicious/noExplicitAny: the CLI never queries; it only reads the option shape
+  // oxlint-disable-next-line typescript/no-explicit-any -- the CLI never queries; it only reads the option shape
   database: drizzleAdapter({} as any, { provider: "sqlite", schema: {} }),
   emailAndPassword: { enabled: true },
   socialProviders: { google: { clientId: "cli", clientSecret: "cli" } },

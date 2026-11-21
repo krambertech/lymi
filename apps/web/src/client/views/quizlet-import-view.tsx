@@ -73,6 +73,7 @@ export function QuizletImportView({
   const separators = chosen ?? detected ?? { field: "\t", row: "\n" };
   const parsed = useMemo(
     () => (typed.trim() ? parseDelimited(typed, separators) : null),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
     [typed, separators],
   );
   const doubtful = !chosen && detected !== null && detected.confidence < 0.8;
@@ -256,7 +257,7 @@ export function QuizletImportView({
                   </thead>
                   <tbody>
                     {parsed.cards.slice(0, PREVIEW_ROWS).map((card, i) => (
-                      // biome-ignore lint/suspicious/noArrayIndexKey: rows have no id, and repeats are allowed.
+                      // oxlint-disable-next-line react/no-array-index-key -- rows have no id, and repeats are allowed.
                       <tr key={i} className="border-edge border-t align-top">
                         <td dir="auto" className="px-4 py-2 break-words whitespace-pre-wrap">
                           {card.term}

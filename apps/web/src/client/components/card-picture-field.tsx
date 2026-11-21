@@ -170,7 +170,7 @@ export function CardPictureField({
             <FieldError>{linkError}</FieldError>
           </Field>
         ) : (
-          // biome-ignore lint/a11y/noStaticElementInteractions: a drop target; its buttons do the same by keyboard.
+          // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- a drop target; its buttons do the same by keyboard.
           <div
             onDragOver={(e) => {
               if (!e.dataTransfer.types.includes("Files")) return;

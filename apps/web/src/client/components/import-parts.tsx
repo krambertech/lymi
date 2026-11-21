@@ -313,7 +313,7 @@ export function FieldsDialog({
           <ul className="grid gap-3">
             {type.fields.map((field, i) => (
               <li
-                // biome-ignore lint/suspicious/noArrayIndexKey: a note type can repeat a field name, and its fields never reorder
+                // oxlint-disable-next-line react/no-array-index-key -- a note type can repeat a field name, and its fields never reorder
                 key={`${field}-${i}`}
                 className="grid grid-cols-[1fr_minmax(9rem,auto)] items-end gap-3"
               >

@@ -88,13 +88,12 @@ describe("marking chosen cards important", () => {
     api.setCardsImportant.mockResolvedValue({
       results: ["a", "b"].map((id) => ({ id, status: "updated" })),
     });
-    const settled = vi.spyOn(qc, "invalidateQueries");
     const marking = markCards(qc, "d1", ["a", "b"], true);
     stale([row("a"), row("b"), row("c")]);
     await reading;
     await marking.done;
     expect(marks()).toEqual([true, true, false]);
-    expect(settled).toHaveBeenCalledWith({ queryKey: key, exact: true });
+    expect(qc.getQueryState(key)?.isInvalidated).toBe(true);
   });
 
   it("gives each card back the mark it had on Undo", async () => {

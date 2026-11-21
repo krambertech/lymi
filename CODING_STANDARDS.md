@@ -36,6 +36,9 @@ D1's `lower()` folds ASCII only. To match text case-insensitively, compare again
 
 Workers refuses `redirect: "error"` at runtime, though Node tests pass; reject a redirect with `redirect: "manual"` and a `Location` check.
 
-## Comment only what the code cannot say
+## Write no comments
 
-A source comment states a reason, invariant, safety boundary or platform quirk the code cannot express, in one sentence. Longer rationale belongs in its owning doc or ADR. Reserve JSDoc for public contracts whose behavior names and types cannot express.
+Source files carry no comments. Say a reason in a name, a type, a test or a check; record a non-obvious decision or an outside constraint in the owning doc or an ADR, and link the code from there. Tool directives stay: `oxlint-disable-next-line` with its reason after `--`, `@ts-expect-error`, `/// <reference>`, `/** @type {…} */` in JavaScript, and the `check-styling: allow` marker.
+
+The Oxlint rule `lymi/no-comments` enforces this for TypeScript and JavaScript, in the editor and in `pnpm check`. Older files still hold comments: [scripts/comment-baseline.json](scripts/comment-baseline.json) records how many comment lines each may keep, a new file may keep none, and a count may only fall. `pnpm check:comments` fails when the baseline allows more than a file holds; after deleting comments, lower it with `pnpm check:comments --update`. [The delete-comment skill](.agents/skills/delete-comment/SKILL.md) works through the rest.
+

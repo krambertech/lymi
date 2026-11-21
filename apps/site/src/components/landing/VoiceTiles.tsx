@@ -28,7 +28,7 @@ function Wave({ peaks, played }: { peaks: number[] | null; played: number }) {
     <span aria-hidden="true" className="flex h-[34px] items-center gap-[2px]">
       {(peaks ?? Array.from({ length: BARS }, () => 0.06)).map((p, i) => (
         <span
-          // biome-ignore lint/suspicious/noArrayIndexKey: bars in a fixed order
+          // oxlint-disable-next-line react/no-array-index-key -- bars in a fixed order
           key={i}
           style={{ height: `${Math.max(2 / 34, p) * 100}%` }}
           className={clsx(

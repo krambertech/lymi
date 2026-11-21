@@ -70,7 +70,7 @@ function inScript(children: ReactNode, script: Script): ReactNode {
     typeof child === "string"
       ? child.split(SCRIPT_RUNS[script]).map((run, i) =>
           i % 2 ? (
-            // biome-ignore lint/suspicious/noArrayIndexKey: runs are derived from the string and never reorder.
+            // oxlint-disable-next-line react/no-array-index-key -- runs are derived from the string and never reorder.
             <RNText key={i} style={face}>
               {run}
             </RNText>

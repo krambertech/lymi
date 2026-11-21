@@ -264,15 +264,13 @@ export const PAGES: DocPage[] = [
       "Every resource the API serves, with its routes and objects, read from the running server.",
     section: "Reference",
   },
-  ...API_RESOURCES.map(
-    (r): DocPage => ({
-      to: `/docs/api/${r.slug}`,
-      nav: r.name,
-      title: r.name,
-      blurb: r.description,
-      section: r.group,
-    }),
-  ),
+  ...API_RESOURCES.map((r): DocPage => ({
+    to: `/docs/api/${r.slug}`,
+    nav: r.name,
+    title: r.name,
+    blurb: r.description,
+    section: r.group,
+  })),
 ];
 
 function sectionsOf(tab: DocTab): { name: string; pages: DocPage[] }[] {

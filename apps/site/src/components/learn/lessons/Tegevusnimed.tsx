@@ -16,8 +16,8 @@ import {
 import { formText } from "../../../lib/learn/forms";
 import { Keys, ListenRows, Panel } from "../Explore";
 import { type GapItem, GapPassage } from "../GapPassage";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { type OrderItem, OrderRound } from "../OrderRound";
 import { Lit, Paradigm, type ParadigmRow } from "../Paradigm";
 import { Quiz } from "../Quiz";
@@ -406,7 +406,7 @@ export function TegevusnimedLesson() {
   const { t, i18n } = useLingui();
   const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
   const verbForms = lessonBySlug("verbi-pohivormid")?.n;
-  const canMay = at("Võin, saan, oskan");
+  const canMay = lessonBySlug("modaalverbid")?.n;
   const going = at("Lähen ujuma, olen ujumas");
   const nounForms = lessonBySlug("pohivormid")?.n;
   const wordOrder = at("Täna lähen ma");

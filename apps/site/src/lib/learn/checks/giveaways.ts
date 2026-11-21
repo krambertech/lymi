@@ -56,6 +56,18 @@ export function oneLetterApart(a: string, b: string): boolean {
   return x.slice(i).join("") === y.slice(i + 1).join("");
 }
 
+const wordSet = (text: string) => new Set(plain(text).split(" ").filter(Boolean));
+
+/** How alike two options' words are: the words they share over all their words, from 0 to 1. */
+export function wordOverlap(a: string, b: string): number {
+  const [x, y] = [wordSet(a), wordSet(b)];
+  const union = new Set([...x, ...y]).size;
+  if (union === 0) return 0;
+  let shared = 0;
+  for (const word of x) if (y.has(word)) shared++;
+  return shared / union;
+}
+
 /** A rule a learner could follow without listening: the options it would pick from at random. */
 export interface Strategy {
   name: string;
@@ -86,6 +98,28 @@ const byLength = (
   const picked = all(options).filter((i) => keep(lengths[i] as number, lengths));
   return picked.length ? picked : all(options);
 };
+
+/** How many letters two options share at their start and, after that, at their end. */
+export function sharedEnds(a: string, b: string): number {
+  const [x, y] = [plain(a), plain(b)];
+  const start = sharedStart(x, y);
+  let end = 0;
+  while (
+    end < Math.min(x.length, y.length) - start &&
+    x[x.length - 1 - end] === y[y.length - 1 - end]
+  )
+    end++;
+  return start + end;
+}
+
+/** The options most like all the others by `alike`, or every option when none is like another. */
+function mostAlike(options: readonly string[], alike: (a: string, b: string) => number): number[] {
+  const totals = options.map((a, i) =>
+    options.reduce((sum, b, j) => (i === j ? sum : sum + alike(a, b)), 0),
+  );
+  const most = Math.max(...totals);
+  return most > 0 ? all(options).filter((i) => most - (totals[i] as number) < 1e-9) : all(options);
+}
 
 export const STRATEGIES: readonly Strategy[] = [
   {
@@ -129,6 +163,20 @@ export const STRATEGIES: readonly Strategy[] = [
       return most > 0 ? all(options).filter((i) => shared[i] === most) : all(options);
     },
     applies: (round) => round.heard !== undefined && !saidAsWritten(round),
+  },
+  {
+    // Each wrong option changes one thing about the answer and keeps another, so the answer is the
+    // one that has something in common with every other option (#1257, #1261).
+    name: "pick the one sharing the most words with the others",
+    fix: "give the wrong options as much in common with each other as with the answer, such as one more option wrong in both places, or wrong options that change different words",
+    pick: (options) => mostAlike(options, wordOverlap),
+  },
+  {
+    // The same within a word: ostsin among ostsid and ostan keeps the past of one and the person
+    // of the other, which no whole word shows (#1259).
+    name: "pick the one sharing the most letters at its ends with the others",
+    fix: "give the wrong options as much in common with each other as with the answer, such as one more option wrong in both places, or wrong options that change different letters",
+    pick: (options) => mostAlike(options, sharedEnds),
   },
 ];
 

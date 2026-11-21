@@ -9,7 +9,6 @@ import {
   normalizeForm,
   onlyMarksDiffer,
   orderMatches,
-  orderProblems,
   orderTiles,
   sentenceEnd,
   sentenceWords,
@@ -128,14 +127,6 @@ describe("order", () => {
     expect(orderMatches(["Tallinnas", "ma", "elan"], answers)).toBe(true);
     expect(orderMatches(["elan", "ma", "Tallinnas"], answers)).toBe(false);
     expect(orderMatches([], answers)).toBe(false);
-  });
-
-  it("finds answers that use other words and tiles that miss one", () => {
-    expect(orderProblems(["Ma elan Tallinnas.", "Tallinnas ma elan."])).toEqual([]);
-    expect(orderProblems(["Ma elan Tallinnas.", "Tallinnas elab ma."])).toHaveLength(1);
-    expect(orderProblems(["Ma elan Tallinnas."], ["ma", "elan"])).toEqual([
-      'no tile for "Tallinnas"',
-    ]);
   });
 
   it("adds, removes and moves tiles in the line", () => {

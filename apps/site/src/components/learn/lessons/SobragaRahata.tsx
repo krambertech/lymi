@@ -20,8 +20,8 @@ import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, ListenRows, Panel } from "../Explore";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { type GapItem, GapPassage } from "../GapPassage";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { Match, type MatchPair } from "../Match";
 import { Morph, type MorphChain } from "../Morph";
 import { type PassageQuestion, Reading } from "../Passage";
@@ -143,7 +143,7 @@ function Lit({ text }: { text: string }) {
     if (!CASE_FORMS.has(word.toLowerCase())) return part;
     const cut = word.length - 2;
     return (
-      // biome-ignore lint/suspicious/noArrayIndexKey: a sentence's words never reorder
+      // oxlint-disable-next-line react/no-array-index-key -- a sentence's words never reorder
       <span key={i}>
         {word.slice(0, cut)}
         <span className="text-(--form)">{word.slice(cut)}</span>
@@ -485,7 +485,7 @@ function useContent() {
       ask: t`How long can Mari stay?`,
       options: [
         { id: "until", label: t`Until three` },
-        { id: "from", label: t`From three on` },
+        { id: "from", label: t`From three` },
         { id: "hours", label: t`For three hours` },
       ],
       answer: "until",

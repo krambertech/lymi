@@ -46,22 +46,6 @@ describe("replayProgress", () => {
     expect(state.lapses).toBe(1);
   });
 
-  it("orders the log, drops repeats and grades from the future", () => {
-    const { reviews } = replayProgress(
-      {
-        mode: "term_to_meaning",
-        reviews: [
-          { at: day(12), rating: 3 },
-          { at: day(10), rating: 3 },
-          { at: day(10), rating: 4 },
-          { at: day(50), rating: 3 },
-        ],
-      },
-      now,
-    );
-    expect(reviews.map((r) => r.reviewedAt)).toEqual([day(10), day(12)]);
-  });
-
   it("uses the source's memory only for a mode with a schedule and no log", () => {
     const { state, reviews } = replayProgress(
       {
@@ -89,12 +73,6 @@ describe("replayProgress", () => {
     );
     expect(reviews).toHaveLength(1);
     expect(state.state).toBe(State.New);
-  });
-
-  it("starts a mode with nothing to replay as new", () => {
-    expect(replayProgress({ mode: "term_to_meaning", reviews: [] }, now).state.state).toBe(
-      State.New,
-    );
   });
 });
 

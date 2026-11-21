@@ -60,10 +60,11 @@ function usePlayAny() {
   const pronounce = usePronunciation(asked?.card ?? null);
   const play = pronounce?.play;
   // A fresh object on every ask, so the same card plays again.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: plays once per ask, not per render
+  // oxlint-disable react-hooks/exhaustive-deps -- plays once per ask, not per render
   useEffect(() => {
     if (asked) play?.();
   }, [asked]);
+  // oxlint-enable react-hooks/exhaustive-deps
   const error = pronounce?.error;
   useEffect(() => {
     if (error) toast.add({ error: true, title: error });
@@ -181,10 +182,11 @@ function MoveSheet({ deckId, cardId, to }: Moving) {
   const toDeck = useMoveToDeck(deckId);
   const sections = useSections(deckId).data;
   const ready = to === "deck" || !!sections;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: opens once, when its sections are in
+  // oxlint-disable react-hooks/exhaustive-deps -- opens once, when its sections are in
   useEffect(() => {
     if (ready) (to === "section" ? toSection : toDeck).open([cardId]);
   }, [ready]);
+  // oxlint-enable react-hooks/exhaustive-deps
   return to === "section" ? toSection.sheet : toDeck.sheet;
 }
 

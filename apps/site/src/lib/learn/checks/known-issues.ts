@@ -23,4 +23,14 @@ export const KNOWN_ISSUES: Readonly<Record<string, readonly string[]>> = {
    * a round after the first can be answered by the place, or the word, no earlier round used.
    */
   "answer-place": ["haaldus", "kell", "kohad", "mina-sina-tema"],
+  /**
+   * A quiz, dialogue or passage whose answer is the option sharing the most words with the others:
+   * each wrong reply changes one thing about the right one.
+   */
+  "majority-option": ["kaskiv", "paev-tallinnas", "tutvumine"],
+  /**
+   * A dialogue's replies or a passage's questions, or a quiz's options in Ukrainian or Russian, that
+   * a length rule answers better than chance.
+   */
+  "cheap-strategy-parts": ["paev-tallinnas", "tutvumine"],
 };

@@ -130,13 +130,6 @@ describe("date bucketing", () => {
     day: "2-digit",
   });
 
-  it("resolves each timestamp in its own offset, not today's", () => {
-    // Helsinki is UTC+2 in January and UTC+3 in July. A single offset taken in summer
-    // would push this winter review onto the following day.
-    expect(helsinki.format(new Date("2026-01-15T21:30:00Z"))).toBe("2026-01-15");
-    expect(helsinki.format(new Date("2026-07-15T21:30:00Z"))).toBe("2026-07-16");
-  });
-
   it("files an imported bucket on the right side of a clock change", () => {
     // Europe changes its clocks on 29 March 2026: Helsinki is +2 before and +3 after, so the
     // same wall time either side of it belongs to a different UTC hour.

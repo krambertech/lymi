@@ -29,7 +29,7 @@ export function Toc({ path }: { path: string }) {
   const [items, setItems] = useState<Heading[]>([]);
   const [active, setActive] = useState<string>("");
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: navigating is what re-reads the DOM
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- navigating is what re-reads the DOM
   useEffect(() => {
     // <main> outlives a route change; the page inside it does not. Watching the container
     // rather than the page catches both the swap and a page that fills itself in later.

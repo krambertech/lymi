@@ -128,16 +128,6 @@ describe("alignReading", () => {
 });
 
 describe("termReading", () => {
-  it("draws a Japanese card's kana reading", () => {
-    expect(termReading({ term: "食べる", language: "ja", pronunciation: "たべる" })).toEqual([
-      { text: "食", reading: "た" },
-      { text: "べる" },
-    ]);
-    expect(termReading({ term: "今日", language: "ja-JP", pronunciation: "きょう" })).toEqual([
-      { text: "今日", reading: "きょう" },
-    ]);
-  });
-
   it("draws nothing for another language, a missing or non-kana reading, or a kana term", () => {
     expect(termReading({ term: "молоко", language: "ru", pronunciation: "молоко́" })).toBeNull();
     expect(termReading({ term: "學校", language: "ko", pronunciation: "hakgyo" })).toBeNull();

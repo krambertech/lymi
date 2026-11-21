@@ -6,7 +6,7 @@
  * A failure names the file and line, the rule, and the fix. The rules and the PRs they come from
  * are in .agents/skills/estonian-lesson/references/checklists.md.
  */
-import { appendFileSync } from "node:fs";
+import { appendFileSync, readFileSync } from "node:fs";
 import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
@@ -29,7 +29,17 @@ import {
 } from "./giveaways";
 import { elements, parse, textOf, textRuns } from "./html";
 import { KNOWN_ISSUES } from "./known-issues";
-import { LOCALES, labelSource, rendered, renderLesson, SLUGS, type Slug, where } from "./lessons";
+import {
+  type CheckLocale,
+  LOCALES,
+  labelSource,
+  rendered,
+  renderLesson,
+  SLUGS,
+  type Slug,
+  where,
+} from "./lessons";
+import { recording, resetRecording } from "./record";
 
 /**
  * Every `Object.fromEntries` the lesson modules make while they load. A glossary built from a list
@@ -76,6 +86,51 @@ vi.mock("../../../components/learn/Passage", async (importOriginal) => {
     Reading: recorded("Reading", kit.Reading as never),
   };
 });
+vi.mock("../../../components/learn/Explore", async (importOriginal) => {
+  const kit = await importOriginal<typeof import("../../../components/learn/Explore")>();
+  const { recorded } = await import("./record");
+  return {
+    ...kit,
+    Chips: recorded("Chips", kit.Chips as never) as unknown as typeof kit.Chips,
+    Compare: recorded("Compare", kit.Compare as never) as unknown as typeof kit.Compare,
+  };
+});
+vi.mock("../player", async (importOriginal) => {
+  const player = await importOriginal<typeof import("../player")>();
+  const { recording } = await import("./record");
+  return {
+    ...player,
+    playSound: (src: string) => {
+      recording.played.push(src);
+      return Promise.resolve();
+    },
+    playInTurn: (items: readonly { src: string }[]) => {
+      recording.played.push(...items.map((item) => item.src));
+      return Promise.resolve();
+    },
+    // Never settles: a press only needs to show which clip it asks for.
+    loudness: (src: string) => {
+      recording.played.push(src);
+      return new Promise(() => {});
+    },
+  };
+});
+
+/**
+ * A state the clip check renders the page in: every `useState` whose first value is `from` starts
+ * at `to` instead, as if the learner had pressed the chip for `to`.
+ */
+const forced = vi.hoisted(() => ({ state: null as { from: unknown; to: unknown } | null }));
+vi.mock("react", async (importOriginal) => {
+  const react = await importOriginal<typeof import("react")>();
+  return {
+    ...react,
+    useState: (initial: unknown) =>
+      react.useState(
+        forced.state !== null && Object.is(initial, forced.state.from) ? forced.state.to : initial,
+      ),
+  };
+});
 vi.mock("../../../components/learn/LessonView", async (importOriginal) => {
   const kit = await importOriginal<typeof import("../../../components/learn/LessonView")>();
   const { recording } = await import("./record");
@@ -119,6 +174,13 @@ function expectNone(problems: readonly string[], rule: string) {
 /** The known issues each listed lesson still has, so a fixed lesson comes off the list. */
 const stillKnown = new Set<string>();
 
+/** The problems `known-issues.ts` doesn't excuse for this lesson and check. */
+function unlessKnown(problems: readonly string[], check: string, slug: string): readonly string[] {
+  if (!KNOWN_ISSUES[check]?.includes(slug)) return problems;
+  if (problems.length) stillKnown.add(`${check}/${slug}`);
+  return [];
+}
+
 /** As `expectNone`, except for a lesson `known-issues.ts` lists for this check. */
 function expectNoneUnlessKnown(
   problems: readonly string[],
@@ -126,8 +188,7 @@ function expectNoneUnlessKnown(
   check: string,
   slug: string,
 ) {
-  if (!KNOWN_ISSUES[check]?.includes(slug)) return expectNone(problems, rule);
-  if (problems.length) stillKnown.add(`${check}/${slug}`);
+  expectNone(unlessKnown(problems, check, slug), rule);
 }
 
 afterAll(() => {
@@ -181,7 +242,7 @@ const optionId = (option: unknown) =>
 
 const labelTexts = new WeakMap<object, string>();
 /** An option's visible text: the string itself, or its label rendered the way the page renders it. */
-function shown(option: unknown): string {
+function shown(option: unknown, locale: CheckLocale): string {
   if (typeof option === "string") return option;
   const { id, label } = option as { id: string; label?: unknown };
   if (typeof label === "string" || typeof label === "number") return String(label);
@@ -189,10 +250,10 @@ function shown(option: unknown): string {
   let text = labelTexts.get(label);
   if (text === undefined) {
     const html = renderToStaticMarkup(
-      // biome-ignore lint/correctness/noChildrenProp: Island's props type requires children, and this .ts file has no JSX.
-      createElement(Island, { locale: "en", children: label as ReactNode }),
+      // oxlint-disable-next-line react/no-children-prop -- Island's props type requires children, and this .ts file has no JSX.
+      createElement(Island, { locale, children: label as ReactNode }),
     );
-    text = textOf(parse(html, "en")).trim() || String(id);
+    text = textOf(parse(html, locale)).trim() || String(id);
     labelTexts.set(label, text);
   }
   return text;
@@ -204,12 +265,16 @@ const picks = (quiz: QuizProps) =>
   quiz.items.every((item) => Array.isArray(item.options) && "answer" in item);
 
 /** A round as the learner sees it, or undefined when its options don't hold the answer. */
-function pickRound(item: Record<string, unknown>): PickRound | undefined {
+function pickRound(item: Record<string, unknown>, locale: CheckLocale): PickRound | undefined {
   const options = item.options as unknown[];
   const answer = options.findIndex((option) => optionId(option) === String(item.answer));
   return answer < 0
     ? undefined
-    : { options: options.map(shown), answer, heard: heardText(item.src) };
+    : {
+        options: options.map((option) => shown(option, locale)),
+        answer,
+        heard: heardText(item.src),
+      };
 }
 
 /** What a round's clip says, found from its URL's lesson and id. */
@@ -225,14 +290,17 @@ const SIMULATED = 200;
  * A quiz's runs as learners meet them, drawn from a seeded random source: `first` as the page
  * opens, its first round pinned to the server's, and `later` after Try again.
  */
-function simulate(quiz: QuizProps): { first: PickRound[][]; later: PickRound[][] } {
+function simulate(
+  quiz: QuizProps,
+  locale: CheckLocale,
+): { first: PickRound[][]; later: PickRound[][] } {
   const order = quiz.order ?? shuffledRun;
   const spy = vi.spyOn(Math, "random").mockImplementation(seeded(quiz.id.length * 7919 + 1));
   try {
     const run = (pinned: boolean) =>
       (order(quiz.items, pinned ? quiz.items[0] : undefined) as Record<string, unknown>[])
         .slice(0, total(quiz))
-        .map(pickRound)
+        .map((item) => pickRound(item, locale))
         .filter((round) => round !== undefined);
     return {
       first: Array.from({ length: SIMULATED }, () => run(true)),
@@ -250,46 +318,214 @@ interface GapProps {
 }
 
 interface PickUnit {
-  kind: "quiz" | "passage";
+  /** A pick quiz, a gap passage, a dialogue's replies, or a listening or reading part's questions. */
+  kind: "quiz" | "passage" | "dialogue" | "questions";
   id: string;
-  /** A quiz's first runs, or a passage's gaps as its one run. */
+  /** A quiz's first runs, or the one run of a part whose options keep their order. */
   first: PickRound[][];
   later: PickRound[][];
 }
 
-const unitsBySlug = new Map<Slug, PickUnit[]>();
+interface DialogueProps {
+  id: string;
+  turns: readonly (
+    | { who: "them"; clip: string }
+    | { who: "you"; clip: string; replies: readonly { line: string; right?: boolean }[] }
+  )[];
+}
 
-/** Each place a learner picks from: a pick quiz's simulated runs, or a pick passage's gaps. */
-function pickUnits(slug: Slug): PickUnit[] {
-  const known = unitsBySlug.get(slug);
+interface QuestionsProps {
+  id: string;
+  questions: readonly { options: readonly { id: string; label: unknown }[]; answer: string }[];
+}
+
+const unitsBySlug = new Map<string, PickUnit[]>();
+
+/**
+ * Each place a learner picks from, with its options as `locale` shows them: a pick quiz's
+ * simulated runs, a pick passage's gaps, a dialogue's turns, a passage's questions.
+ */
+function pickUnits(slug: Slug, locale: CheckLocale): PickUnit[] {
+  const key = `${slug}/${locale}`;
+  const known = unitsBySlug.get(key);
   if (known) return known;
   const units: PickUnit[] = [];
-  unitsBySlug.set(slug, units);
-  for (const { part, props } of rendered(slug, "en").recording.parts) {
+  unitsBySlug.set(key, units);
+  for (const { part, props } of rendered(slug, locale).recording.parts) {
     if (part === "Quiz" && picks(props as unknown as QuizProps)) {
       const quiz = props as unknown as QuizProps;
-      units.push({ kind: "quiz", id: quiz.id, ...simulate(quiz) });
+      units.push({ kind: "quiz", id: quiz.id, ...simulate(quiz, locale) });
     }
     if (part === "GapPassage" && (props as unknown as GapProps).mode === "pick") {
       const passage = props as unknown as GapProps;
       const gaps = passage.gaps
         .filter((gap) => (gap.options?.length ?? 0) > 1)
-        .map((gap) => pickRound(gap as unknown as Record<string, unknown>))
+        .map((gap) => pickRound(gap as unknown as Record<string, unknown>, locale))
         .filter((round) => round !== undefined);
       units.push({ kind: "passage", id: passage.id, first: [gaps], later: [] });
+    }
+    if (part === "Dialogue") {
+      const dialogue = props as unknown as DialogueProps;
+      const turns = dialogue.turns.flatMap((turn) =>
+        turn.who === "you" && turn.replies.some((reply) => reply.right)
+          ? [
+              {
+                options: turn.replies.map((reply) => reply.line),
+                answer: turn.replies.findIndex((reply) => reply.right),
+              },
+            ]
+          : [],
+      );
+      units.push({ kind: "dialogue", id: dialogue.id, first: [turns], later: [] });
+    }
+    if (part === "Listening" || part === "Reading") {
+      const { id, questions } = props as unknown as QuestionsProps;
+      const asked = questions
+        .map((question) => pickRound(question as unknown as Record<string, unknown>, locale))
+        .filter((round) => round !== undefined);
+      units.push({ kind: "questions", id, first: [asked], later: [] });
     }
   }
   return units;
 }
 
+/** The fewest rounds a part whose options keep their order needs before a rule's score means much. */
+const FEWEST_FIXED = { passage: 4, dialogue: 3, questions: 3 } as const;
+
+const MANIFEST = JSON.parse(
+  readFileSync(
+    new URL("../../../../public/audio/estonian-lessons/manifest.json", import.meta.url),
+    "utf8",
+  ),
+) as Record<string, unknown>;
+
+/** A clip URL's `lesson/id`, or undefined for any other sound. */
+const clipName = (src: string) => src.match(/\/estonian-lessons\/([^/]+\/[^/]+)\.mp3$/)?.[1];
+
+interface ChipsProps {
+  label: string;
+  items: readonly { value: string | number }[];
+  value: string | number | null;
+  onPick: (value: string | number) => void;
+}
+
+/** A chip row by its label and values, since two rows can share a label. */
+const chipKey = (chip: ChipsProps) =>
+  JSON.stringify([chip.label, chip.items.map((item) => item.value)]);
+
+/** How a learner reaches a clip, and what in the lesson's source to point a failure at. */
+interface Reach {
+  how: string;
+  near: readonly string[];
+}
+
+const reachBySlug = new Map<Slug, Map<string, Reach>>();
+
+/**
+ * Every clip the page can play, each with how a learner reaches it: on the page as rendered, in a
+ * dialogue turn not shown yet, by pressing a chip, or on the page as a chip leaves it. A server
+ * render shows one state, so this presses each chip and renders the page once per chip value.
+ */
+function reachableClips(slug: Slug): Map<string, Reach> {
+  const known = reachBySlug.get(slug);
+  if (known) return known;
+  const reach = new Map<string, Reach>();
+  reachBySlug.set(slug, reach);
+  const add = (name: string | undefined, how: string, near: readonly string[] = []) => {
+    if (!name || reach.has(name)) return;
+    const id = name.split("/")[1] ?? "";
+    reach.set(name, { how, near: [...near, `"${id}"`, `w="${id}"`] });
+  };
+  const chipNear = (chip: ChipsProps) => [`t\`${chip.label}\``, "<Chips"];
+  const page = rendered(slug, "en");
+  for (const { lesson, id } of page.recording.clips) add(`${lesson}/${id}`, "the page plays");
+  const chips: ChipsProps[] = [];
+  for (const { part, props } of page.recording.parts) {
+    if (part === "Dialogue")
+      for (const turn of (props as unknown as DialogueProps).turns)
+        add(`${slug}/${turn.clip}`, `dialogue "${String(props.id)}" plays`, [
+          `id="${String(props.id)}"`,
+        ]);
+    if (part === "Chips") chips.push(props as unknown as ChipsProps);
+    if (part === "Compare") {
+      const compare = props as unknown as {
+        pairs: readonly (readonly string[])[];
+        src: (word: string) => string;
+      };
+      for (const word of compare.pairs.flat())
+        add(clipName(compare.src(word)), `the Compare pairs play, as for “${word}”,`, ["<Compare"]);
+    }
+  }
+  // A press after the server render sets state on a page that is gone, which React ignores.
+  for (const chip of chips)
+    for (const { value } of chip.items) {
+      resetRecording();
+      chip.onPick(value);
+      const how = `pressing the ${chip.label} chip “${value}” plays`;
+      for (const { lesson, id } of recording.clips) add(`${lesson}/${id}`, how, chipNear(chip));
+      for (const src of recording.played) add(clipName(src), how, chipNear(chip));
+    }
+  for (const chip of chips) {
+    // A chip's value usually starts as its own useState; booleans and null say too little to find it.
+    if (typeof chip.value !== "string" && typeof chip.value !== "number") continue;
+    for (const { value } of chip.items) {
+      if (value === chip.value) continue;
+      forced.state = { from: chip.value, to: value };
+      try {
+        const after = renderLesson(slug, "en");
+        // Another state that started at the same value moved instead, and the chip stayed.
+        const moved = after.recording.parts.some(
+          ({ part, props }) =>
+            part === "Chips" &&
+            props.value === value &&
+            chipKey(props as unknown as ChipsProps) === chipKey(chip),
+        );
+        if (!moved) continue;
+        for (const { lesson, id } of after.recording.clips)
+          add(
+            `${lesson}/${id}`,
+            `after pressing the ${chip.label} chip “${value}”, the page plays`,
+            chipNear(chip),
+          );
+      } catch {
+        // Another state that starts at the same value can't take this one; the page never gets there.
+      } finally {
+        forced.state = null;
+      }
+    }
+  }
+  resetRecording();
+  return reach;
+}
+
 const percent = (share: number) => `${Math.round(share * 100)}%`;
+
+/** The rules that find the answer as the option most like the rest. */
+const MAJORITY = new Set([
+  "pick the one sharing the most words with the others",
+  "pick the one sharing the most letters at its ends with the others",
+]);
+
+const KIND_NAMES = {
+  quiz: "quiz",
+  passage: "gap passage",
+  dialogue: "dialogue",
+  questions: "the questions of",
+} as const;
+
+/** A unit's options and answers, to tell whether another language shows the same. */
+const roundsKey = (unit: PickUnit) =>
+  JSON.stringify(
+    [...unit.first, ...unit.later].flat().map((round) => [round.options, round.answer]),
+  );
 
 describe.each(SLUGS)("lesson %s", (slug) => {
   // Simulating every pick quiz's runs is the slow part, and pickUnits caches it. Warming it here,
   // with its own timeout, keeps a loaded CI runner from timing out whichever test comes first.
   beforeAll(() => {
-    pickUnits(slug);
-  }, 60_000);
+    for (const locale of LOCALES) pickUnits(slug, locale);
+    reachableClips(slug);
+  }, 120_000);
 
   it("gives each quiz a fixed id of lowercase letters, digits and hyphens, once", () => {
     const problems: string[] = [];
@@ -405,7 +641,8 @@ describe.each(SLUGS)("lesson %s", (slug) => {
           each.quiz === id &&
           (!each.pair || pairKey(a, b) === pairKey(...each.pair)),
       );
-    for (const unit of pickUnits(slug)) {
+    for (const unit of pickUnits(slug, "en")) {
+      if (unit.kind !== "quiz" && unit.kind !== "passage") continue;
       const found = new Map<string, string>();
       for (const { options } of [...unit.first, ...unit.later].flat())
         for (const [i, a] of options.entries())
@@ -430,7 +667,7 @@ describe.each(SLUGS)("lesson %s", (slug) => {
 
   it("spreads each answer over every place, round by round", () => {
     const problems: string[] = [];
-    for (const unit of pickUnits(slug)) {
+    for (const unit of pickUnits(slug, "en")) {
       if (unit.kind !== "quiz") continue;
       const at = where(slug, `id="${unit.id}"`);
       // The first round of the first run is the server's, fixed by design.
@@ -477,45 +714,9 @@ describe.each(SLUGS)("lesson %s", (slug) => {
     );
   });
 
-  it("scores a learner who doesn't listen at chance", () => {
-    const problems: string[] = [];
-    for (const unit of pickUnits(slug)) {
-      // Two options leave a rule nothing to choose between.
-      const rounds = [...unit.first, ...unit.later]
-        .flat()
-        .filter((round) => round.options.length > 2);
-      for (const strategy of STRATEGIES) {
-        const { score, chance, rounds: scored } = strategyScore(strategy, rounds);
-        if (unit.kind === "passage" ? scored < 4 : scored === 0) continue;
-        const allowed = ALLOWED_STRATEGIES.some(
-          (each) =>
-            each.lesson === slug && each.quiz === unit.id && each.strategy === strategy.name,
-        );
-        if (score <= chance + 0.25 || allowed) continue;
-        const examples = rounds
-          .filter((round) => strategy.applies?.(round) ?? true)
-          .filter((round) => strategy.pick(round.options, round.heard).includes(round.answer))
-          .slice(0, 2)
-          .map(
-            (round) =>
-              `${round.heard ? `hearing “${round.heard}”, ` : ""}${round.options.join(", ")} → ${round.options[round.answer]}`,
-          );
-        problems.push(
-          `${where(slug, `id="${unit.id}"`)}: ${unit.kind} "${unit.id}": “${strategy.name}” scores ${percent(score)} where chance is ${percent(chance)}, so a learner can score without what the quiz tests. Example: ${examples.join("; ")}. Fix: ${strategy.fix}; or, where the rule is the lesson, list the quiz in ALLOWED_STRATEGIES (apps/site/src/lib/learn/checks/allowed-quizzes.ts) with the reason.`,
-        );
-      }
-    }
-    expectNoneUnlessKnown(
-      problems,
-      "No cheap rule beats chance (checklists.md#quizzes)",
-      "cheap-strategy",
-      slug,
-    );
-  });
-
   it("puts a gap passage's answers in more than one place", () => {
     const problems: string[] = [];
-    for (const unit of pickUnits(slug)) {
+    for (const unit of pickUnits(slug, "en")) {
       if (unit.kind !== "passage") continue;
       const gaps = unit.first.flat();
       const places = new Map<number, number>();
@@ -601,16 +802,23 @@ describe.each(SLUGS)("lesson %s", (slug) => {
       problems.push(
         `${where(slug, `w="${word}"`)}: <Word w="${word}" /> has no entry in the lesson's glossary. Fix: add "${word.toLowerCase()}" to GLOSSARY with its meaning (keys are lower case), or write it as <b lang="et">.`,
       );
-    const recorded = new Set(
+    const listed = new Set(
       Object.entries(CLIPS).flatMap(([lesson, clips]) =>
         Object.keys(clips).map((id) => `${lesson}/${id}`),
       ),
     );
-    for (const name of new Set(page.recording.clips.map(({ lesson, id }) => `${lesson}/${id}`)))
-      if (!recorded.has(name))
+    for (const [name, { how, near }] of reachableClips(slug)) {
+      const lesson = name.split("/")[0] as string;
+      const at = where(slug, ...near);
+      if (!listed.has(name))
         problems.push(
-          `${where(slug, `"${name.split("/")[1]}"`, `w="${name.split("/")[1]}"`)}: the page plays ${name}, which CLIPS in apps/site/src/lib/learn/clips.ts doesn't list, so it has no recording. Fix: add it under CLIPS["${name.split("/")[0]}"] and run lesson:audio, or give the gloss clip: false.`,
+          `${at}: ${how} ${name}, which CLIPS in apps/site/src/lib/learn/clips.ts doesn't list, so it has no recording. Fix: add it under CLIPS["${lesson}"] and run lesson:audio, or give the gloss clip: false.`,
         );
+      else if (!(name in MANIFEST))
+        problems.push(
+          `${at}: ${how} ${name}, which CLIPS lists but public/audio/estonian-lessons/manifest.json doesn't, so it was never recorded. Fix: run pnpm --filter @lymi/site lesson:audio.`,
+        );
+    }
     expectNone(problems, "Words and clips (SKILL.md step 4 and 6)");
   });
 
@@ -695,6 +903,55 @@ describe.each(SLUGS)("lesson %s", (slug) => {
         !forms.every((form) => verified[form]?.includes("a name"))
       );
     };
+
+    it("scores a learner who doesn't listen at chance", () => {
+      // By the known-issues check each finding falls under; the last two came after the first.
+      const problems: Record<string, string[]> = {
+        "cheap-strategy": [],
+        "majority-option": [],
+        "cheap-strategy-parts": [],
+      };
+      const english = new Map(
+        pickUnits(slug, "en").map((unit) => [`${unit.kind}/${unit.id}`, roundsKey(unit)]),
+      );
+      for (const unit of pickUnits(slug, locale)) {
+        // Options the same in every language fail once, in English.
+        if (locale !== "en" && english.get(`${unit.kind}/${unit.id}`) === roundsKey(unit)) continue;
+        // Two options leave a rule nothing to choose between.
+        const rounds = [...unit.first, ...unit.later]
+          .flat()
+          .filter((round) => round.options.length > 2);
+        for (const strategy of STRATEGIES) {
+          const { score, chance, rounds: scored } = strategyScore(strategy, rounds);
+          if (unit.kind === "quiz" ? scored === 0 : scored < FEWEST_FIXED[unit.kind]) continue;
+          const allowed = ALLOWED_STRATEGIES.some(
+            (each) =>
+              each.lesson === slug && each.quiz === unit.id && each.strategy === strategy.name,
+          );
+          if (score <= chance + 0.25 || allowed) continue;
+          const examples = rounds
+            .filter((round) => strategy.applies?.(round) ?? true)
+            .filter((round) => strategy.pick(round.options, round.heard).includes(round.answer))
+            .slice(0, 2)
+            .map(
+              (round) =>
+                `${round.heard ? `hearing “${round.heard}”, ` : ""}${round.options.join(" | ")} → ${round.options[round.answer]}`,
+            );
+          const check = MAJORITY.has(strategy.name)
+            ? "majority-option"
+            : unit.kind === "dialogue" || unit.kind === "questions" || locale !== "en"
+              ? "cheap-strategy-parts"
+              : "cheap-strategy";
+          problems[check]?.push(
+            `${where(slug, `id="${unit.id}"`, `id: "${unit.id}"`)}: ${KIND_NAMES[unit.kind]} "${unit.id}"${locale === "en" ? "" : ` in ${locale}`}: “${strategy.name}” scores ${percent(score)} where chance is ${percent(chance)}, so a learner can score without what it tests. Example: ${examples.join("; ")}. Fix: ${strategy.fix}; or, where the rule is the lesson, list it in ALLOWED_STRATEGIES (apps/site/src/lib/learn/checks/allowed-quizzes.ts) with the reason.`,
+          );
+        }
+      }
+      expectNone(
+        Object.entries(problems).flatMap(([check, found]) => unlessKnown(found, check, slug)),
+        "No cheap rule beats chance (checklists.md#quizzes)",
+      );
+    });
 
     it("marks Estonian outside a Word with lang", () => {
       const problems = new Set<string>();

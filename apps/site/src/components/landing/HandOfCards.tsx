@@ -281,6 +281,7 @@ function FanCard({
 
   return (
     // The whole card turns over on a tap; the Turn it over button below is the keyboard way in.
+    // oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- Biome let this pass; triage in #1278
     <div
       ref={self}
       className="hand-card"
@@ -439,7 +440,7 @@ export function HandOfCards({
   const [dealFrom, setDealFrom] = useState(0);
 
   // The hand is random, so it is dealt after hydration rather than rendered on the server.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a new round deals the same cards again.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- a new round deals the same cards again.
   useEffect(() => {
     setFinePointer(window.matchMedia("(hover: hover) and (pointer: fine)").matches);
     // A hand the server dealt is already held; keep it rather than dealing over it.

@@ -183,6 +183,7 @@ function SelectTrigger({
       data-slot="select-trigger"
       {...props}
       {...a11y}
+      // oxlint-disable-next-line jsx-a11y/role-has-required-aria-props -- Biome let this pass; triage in #1278
       role="combobox"
       aria-haspopup="listbox"
       aria-expanded={open}
@@ -403,7 +404,7 @@ function SelectGroup({
   }
   return (
     <GroupLabelContext.Provider value={labelId}>
-      {/* biome-ignore lint/a11y/useSemanticElements: a group of options, which a fieldset is not */}
+      {/* oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a group of options, which a fieldset is not */}
       <div role="group" aria-labelledby={labelId} data-slot="select-group" className={className}>
         {children}
       </div>

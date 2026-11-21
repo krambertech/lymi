@@ -266,7 +266,7 @@ function Example({ example }: { example: TimelineExample }) {
             {example.sentence.split(" ").map((word, i) => {
               const bare = word.replace(/[.,!?]/g, "").toLowerCase();
               return (
-                // biome-ignore lint/suspicious/noArrayIndexKey: a sentence's words never reorder
+                // oxlint-disable-next-line react/no-array-index-key -- a sentence's words never reorder
                 <span key={i}>
                   {i > 0 && " "}
                   <span className={built.has(bare) ? "text-(--form)" : undefined}>{word}</span>

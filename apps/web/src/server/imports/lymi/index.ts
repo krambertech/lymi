@@ -232,6 +232,14 @@ export const lymi: SourceAdapter<LymiNote> = {
         recording: note.recording ? card.recording?.file : undefined,
         exampleRecording:
           note.exampleRecording && fitted.fields.example ? card.exampleRecording?.file : undefined,
+        ...(card.picture?.captured || card.exampleRecording?.captured
+          ? {
+              captured: {
+                picture: card.picture?.captured === true,
+                exampleRecording: card.exampleRecording?.captured === true,
+              },
+            }
+          : {}),
         progress,
         shortened: fitted.shortened || tags.shortened || !!hint?.shortened,
         // A card in its deck's language follows the language the learner chooses for the deck.

@@ -5,18 +5,17 @@ import { isLoopbackUrl } from "../shared/origins";
  * from wrangler.jsonc; this narrows the secrets, which live in .dev.vars locally and in
  * `wrangler secret` in production.
  */
-export interface Bindings
-  extends Omit<
-    Env,
-    | "REQUESTS"
-    | "EVENTS"
-    | "HEALTH"
-    | "POSTHOG_PROJECT_TOKEN"
-    | "PHONE_MINIMUM_VERSION_IOS"
-    | "PHONE_UPDATE_URL_IOS"
-    | "AI_GATEWAY_ID"
-    | "AI_GATEWAY_URL"
-  > {
+export interface Bindings extends Omit<
+  Env,
+  | "REQUESTS"
+  | "EVENTS"
+  | "HEALTH"
+  | "POSTHOG_PROJECT_TOKEN"
+  | "PHONE_MINIMUM_VERSION_IOS"
+  | "PHONE_UPDATE_URL_IOS"
+  | "AI_GATEWAY_ID"
+  | "AI_GATEWAY_URL"
+> {
   /** Optional in local tests and loopback; previews use isolated datasets. */
   REQUESTS?: AnalyticsEngineDataset;
   EVENTS?: AnalyticsEngineDataset;

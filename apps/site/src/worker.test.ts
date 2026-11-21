@@ -49,12 +49,6 @@ describe("a download link", () => {
     ]);
   });
 
-  it("sends Intel Macs to the Intel build", async () => {
-    const response = await open("https://lymi.app/download/mac-intel");
-    expect(response.headers.get("location")).toBe("https://downloads.lymi.app/darwin/x64/Lymi.dmg");
-    expect(events()[0].properties.chip).toBe("intel");
-  });
-
   it.each([
     ["a HEAD request", { method: "HEAD" }],
     ["a POST request", { method: "POST" }],

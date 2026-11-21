@@ -91,7 +91,7 @@ export function CheckList({ items }: { items: readonly ReactNode[] }) {
   return (
     <ul className="grid gap-1.5 text-md text-ink">
       {items.map((item, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: a fixed list of sentences
+        // oxlint-disable-next-line react/no-array-index-key -- a fixed list of sentences
         <li key={i} className="flex items-center gap-2.5">
           <span className="grid size-5 shrink-0 place-items-center rounded-full bg-success-soft text-success">
             <Check aria-hidden="true" className="size-3" strokeWidth={3} />

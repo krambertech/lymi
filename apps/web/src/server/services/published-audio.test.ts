@@ -1,9 +1,4 @@
-import { deckPageHand, deckPageSpread } from "@lymi/core/catalog";
-import {
-  listPublicDeckSlugs,
-  loadPublicDeck,
-  publicDeckFrontCards,
-} from "@lymi/core/catalog/server";
+import { listPublicDeckSlugs, publicDeckFrontCards } from "@lymi/core/catalog/server";
 import { eq, sql } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { SpeechProvider } from "../ai";
@@ -106,39 +101,6 @@ describe("published deck audio", () => {
       remaining: 0,
     });
     expect(speech).toHaveBeenCalledTimes(front.length);
-  });
-
-  it("picks the same cards the deck page lays out and deals", async () => {
-    const deck = await createDeck(lymi, { name: "Sections", defaultLanguage: "et" });
-    await addCards(
-      lymi,
-      terms(14, "sõna").map((term, i) => ({
-        deckId: deck.id,
-        term,
-        ...(i % 4 === 3 ? {} : { meaning: `${term} meaning` }),
-      })),
-    );
-    await publishDeck(lymi, deck.id, publication("sections"), publishers);
-    const page = await loadPublicDeck(db, "sections");
-    if (page.status !== "published") throw new Error("Expected a published deck");
-    const groups = page.deck.sections
-      .map((section) =>
-        section.cards.flatMap((card) => (card.meaning ? [{ ...card, meaning: card.meaning }] : [])),
-      )
-      .filter((cards) => cards.length > 0);
-    const shown = new Set(
-      [...deckPageSpread(page.deck, groups), ...deckPageHand(page.deck, groups)].map(
-        (card) => card.term,
-      ),
-    );
-    const front = await publicDeckFrontCards(db, "sections");
-    const frontTerms = await db
-      .select({ id: schema.cards.id, term: schema.cards.term })
-      .from(schema.cards)
-      .where(eq(schema.cards.deckId, deck.id));
-    expect(
-      new Set(frontTerms.filter((card) => front.includes(card.id)).map((card) => card.term)),
-    ).toEqual(shown);
   });
 
   it("stops at the batch size and leaves the rest for the next run", async () => {

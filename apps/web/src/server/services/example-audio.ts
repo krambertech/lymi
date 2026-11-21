@@ -6,6 +6,7 @@ import { aiAllowedForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
 import { type AudioDependencies, boundedAudio, providerStatus } from "./audio";
 import { audit } from "./audit";
+import { seesCaptured } from "./card-view";
 import { getCard } from "./cards";
 import { type ServiceContext, ServiceError } from "./context";
 import { withAudioLease } from "./lead-in";
@@ -23,7 +24,10 @@ export async function exampleAudio(
   const card = await getCard(ctx, cardId);
   if (card.archivedAt) throw new ServiceError("not_found", "Card not found");
   // A recording plays as it is, free of the allowance and the owner's AI choice. CONTEXT.md, Recording.
-  if (card.exampleRecordingKey) {
+  if (
+    card.exampleRecordingKey &&
+    (!card.exampleRecordingCaptured || seesCaptured(card, ctx.userId))
+  ) {
     const recorded = await sent.bucket.get(card.exampleRecordingKey);
     if (recorded) return { clip: recorded };
     throw new ServiceError("unavailable", "The example's recording is temporarily unavailable");

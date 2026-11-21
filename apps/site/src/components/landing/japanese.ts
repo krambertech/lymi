@@ -1,8 +1,8 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { noun, verb } from "./hand-cards";
+import type { Example } from "./HandExamples";
 
 /**
  * The Japanese page's words. Terms and their readings are Japanese and never translated; meanings

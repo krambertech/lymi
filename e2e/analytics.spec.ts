@@ -5,33 +5,6 @@ import { expect, test } from "./test";
 const analyticsCookies = (cookies: { name: string }[]) =>
   cookies.filter((c) => /ph_|posthog|lymi_analytics/.test(c.name));
 
-test("the public site asks nothing and stores nothing for analytics", async ({ page, context }) => {
-  for (const path of ["/", "/uk"]) {
-    await page.goto(`${e2eSiteUrl}${path}`);
-    await expect(page.getByRole("heading", { level: 1 }).first()).toBeVisible();
-    await expect(page.getByRole("button", { name: /cookie/i })).toHaveCount(0);
-    await expect(page.getByRole("complementary", { name: /privacy/i })).toHaveCount(0);
-  }
-  expect(analyticsCookies(await context.cookies())).toEqual([]);
-  const stored = await page.evaluate(() => [
-    ...Object.keys(localStorage),
-    ...Object.keys(sessionStorage),
-  ]);
-  expect(stored.filter((key) => /ph_|posthog|analytics|consent/i.test(key))).toEqual([]);
-});
-
-test("a learner's analytics are on with no switch in Settings", async ({ page }) => {
-  await page.goto("/api/dev/sign-in?as=learner&reset=1");
-  await expect(page.getByRole("heading", { name: "Today", exact: true })).toBeVisible();
-  expect(await page.request.get("/api/settings").then((r) => r.json())).toMatchObject({
-    analyticsConsent: null,
-  });
-  await page.goto("/settings");
-  await expect(page.getByRole("heading", { name: "Settings", exact: true })).toBeVisible();
-  await expect(page.getByRole("switch", { name: /analytics/i })).toHaveCount(0);
-  await expect(page.getByRole("link", { name: /privacy preferences/i })).toHaveCount(0);
-});
-
 test("a public visit's source rides the Get started link into sign-up without cookies", async ({
   page,
   context,

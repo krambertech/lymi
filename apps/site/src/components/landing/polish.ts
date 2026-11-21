@@ -1,8 +1,8 @@
 import { msg } from "@lingui/core/macro";
 import type { Locale } from "../../lib/routes";
-import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { noun, phrase, verb } from "./hand-cards";
+import type { Example } from "./HandExamples";
 import type { PathStep, VoiceWord } from "./japanese";
 import type { EditionWord } from "./language-decks";
 import type { FormKind, FormSlot, FormWord } from "./WordForms";

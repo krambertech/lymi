@@ -7,9 +7,6 @@ import { EXAMS, examPath } from "../../lib/exams";
 import type { Locale } from "../../lib/routes";
 import { ArrowLink } from "./ArrowLink";
 import { Attachment } from "./AssistantChat";
-import { EnrichChinese, NotesToCardsChinese, PlecoImport } from "./ChineseAi";
-import { ChineseBento } from "./ChineseBento";
-import { ChineseReadings } from "./ChineseReadings";
 import {
   CHINESE_CLASS_CARDS,
   CHINESE_EXAMPLES,
@@ -17,9 +14,13 @@ import {
   CHINESE_PATH,
   CHINESE_VOICE_WORDS,
 } from "./chinese";
-import { FeatureSection, Wide } from "./FeatureSection";
+import { EnrichChinese, NotesToCardsChinese, PlecoImport } from "./ChineseAi";
+import { ChineseBento } from "./ChineseBento";
+import { ChineseReadings } from "./ChineseReadings";
 import { CHINESE_QUESTIONS } from "./faq";
+import { FeatureSection, Wide } from "./FeatureSection";
 import { LandingLayout } from "./LandingLayout";
+import { addDeckUrl, pathSteps } from "./language-decks";
 import { LanguageDecks } from "./LanguageDecks";
 import {
   DetailsSection,
@@ -32,7 +33,6 @@ import {
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
-import { addDeckUrl, pathSteps } from "./language-decks";
 import { Pinyin } from "./Pinyin";
 import { PinyinFade } from "./PinyinFade";
 import { Questions } from "./Questions";

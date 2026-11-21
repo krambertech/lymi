@@ -17,6 +17,6 @@ Under the header come four parts, each on plates and in this order:
 
 Before an app is connected, the page holds only the header and How it connects, with the field to connect in it.
 
-Yomitan's page shows the key Yomitan holds: its Settings replace the key, its Activity is every AnkiConnect write made with a key named Yomitan, which survives a replaced key and leaves out another AnkiConnect tool's key, and Stop revokes it. Until Yomitan's icon licence is settled, a dictionary glyph stands in for its mark.
+Yomitan's page shows the key Yomitan holds: its Settings replace the key, its Activity is every AnkiConnect write made with a key named Yomitan, which survives a replaced key and leaves out another AnkiConnect tool's key, and Stop revokes it. Until Yomitan's icon licence is settled, a dictionary glyph stands in for its mark. Once connected, its web page also has **Audio and pictures from videos**, which names the asbplayer settings and the Lymi card fields to map (Sentence audio and Picture) so asbplayer can add a line's clip and a frame with the same key.
 
 On the phone, You → Apps opens the integration list, followed by Add an app chips. The empty state is on the canvas. App pages push from this list, and iOS alerts confirm Stop ([phone.md](system/phone.md#navigation)). Unrecognized apps show an Unverified chip beside their name.

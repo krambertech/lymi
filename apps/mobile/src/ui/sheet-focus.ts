@@ -17,11 +17,12 @@ export function useSheetFocus({
   const own = useRef<TextInput>(null);
   const field = ref ?? own;
   const android = Platform.OS === "android";
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the field is the same one throughout.
+  // oxlint-disable react-hooks/exhaustive-deps -- the field is the same one throughout.
   useEffect(() => {
     if (!android || !on || !open) return;
     const later = setTimeout(() => field.current?.focus(), RISE_MS);
     return () => clearTimeout(later);
   }, [on, open]);
+  // oxlint-enable react-hooks/exhaustive-deps
   return { ref: field, autoFocus: on && !android };
 }

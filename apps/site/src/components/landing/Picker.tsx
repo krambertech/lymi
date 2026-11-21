@@ -34,7 +34,7 @@ export function Picker({ options, at, onPick, label, lang, align = "center" }: P
       <legend className="sr-only">{label}</legend>
       {options.map((option, i) => (
         <button
-          // biome-ignore lint/suspicious/noArrayIndexKey: options keep their order, so the index is the identity
+          // oxlint-disable-next-line react/no-array-index-key -- options keep their order, so the index is the identity
           key={i}
           type="button"
           lang={lang}

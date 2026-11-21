@@ -256,6 +256,7 @@ export function SearchDialog({ open, onClose }: { open: boolean; onClose: () => 
   };
 
   return (
+    // oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- Biome let this pass; triage in #1278
     <dialog
       ref={dialog}
       aria-label="Search the documentation"

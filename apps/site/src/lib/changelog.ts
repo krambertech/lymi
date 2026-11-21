@@ -1,5 +1,5 @@
-import { type CollectionEntry, getCollection } from "astro:content";
 import type { ImageMetadata } from "astro";
+import { type CollectionEntry, getCollection } from "astro:content";
 import { CHANGELOG_FOLDER, isChangelogPublished } from "./changelog-paths";
 import type { Locale } from "./routes";
 import { TRAY_HUES } from "./tray";

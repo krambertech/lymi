@@ -31,7 +31,7 @@ export function DeckTile({
           <div className="deck-tray-stack">
             {/* Paper behind the card, one sheet per further card the deck holds, at most two. */}
             {Array.from({ length: paperFor(deck.cardCount) }, (_, at) => (
-              // biome-ignore lint/suspicious/noArrayIndexKey: a fixed stack, and the sheets are blank.
+              // oxlint-disable-next-line react/no-array-index-key -- a fixed stack, and the sheets are blank.
               <span key={at} className="deck-tray-paper" data-at={at + 1} aria-hidden="true" />
             ))}
             <article className="deck-tray-card">

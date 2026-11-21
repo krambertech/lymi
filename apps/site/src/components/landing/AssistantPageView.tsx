@@ -23,6 +23,7 @@ import {
 import type { ReactNode } from "react";
 import { PRODUCT_ORIGIN } from "../../lib/origins";
 import { Lantern } from "../Lantern";
+import { ASSISTANT_PAGES, type AssistantKey } from "./assistant-pages";
 import { type Ask, AssistantAsks } from "./AssistantAsks";
 import {
   AssistantChatDemo,
@@ -49,7 +50,6 @@ import {
 } from "./AssistantPieces";
 import { AssistantSignature } from "./AssistantSignature";
 import { VoiceScene } from "./AssistantVoice";
-import { ASSISTANT_PAGES, type AssistantKey } from "./assistant-pages";
 import { CopyAddress } from "./ConnectSteps";
 import { Wide } from "./FeatureSection";
 import { Hero } from "./Hero";

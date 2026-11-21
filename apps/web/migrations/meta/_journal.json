@@ -526,6 +526,13 @@
       "when": 1793537198079,
       "tag": "0074_normal_sunspot",
       "breakpoints": true
+    },
+    {
+      "idx": 75,
+      "version": "6",
+      "when": 1795197689934,
+      "tag": "0075_huge_true_believers",
+      "breakpoints": true
     }
   ]
 }

@@ -10,7 +10,7 @@ function Inlines({ nodes }: { nodes: readonly NoteInline[] }): ReactNode {
     if (node.type === "link") {
       return (
         <Text
-          // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+          // oxlint-disable-next-line react/no-array-index-key -- a note part has no identity beyond its order
           key={i}
           className="text-ink underline"
           accessibilityRole="link"
@@ -27,7 +27,7 @@ function Inlines({ nodes }: { nodes: readonly NoteInline[] }): ReactNode {
       strikethrough: { textDecorationLine: "line-through" as const },
     }[node.type];
     return (
-      // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+      // oxlint-disable-next-line react/no-array-index-key -- a note part has no identity beyond its order
       <Text key={i} style={style}>
         <Inlines nodes={node.children} />
       </Text>
@@ -39,17 +39,17 @@ function Blocks({ blocks, className }: { blocks: readonly NoteBlock[]; className
   return blocks.map((block, i) => {
     if (block.type === "paragraph") {
       return (
-        // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+        // oxlint-disable-next-line react/no-array-index-key -- a note part has no identity beyond its order
         <Text key={i} className={className}>
           <Inlines nodes={block.children} />
         </Text>
       );
     }
     return (
-      // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+      // oxlint-disable-next-line react/no-array-index-key -- a note part has no identity beyond its order
       <View key={i} className="gap-1">
         {block.items.map((item, j) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+          // oxlint-disable-next-line react/no-array-index-key -- a note part has no identity beyond its order
           <View key={j} className="flex-row gap-2">
             <Text className={className}>{block.ordered ? `${block.start + j}.` : "•"}</Text>
             <View className="flex-1 gap-1">

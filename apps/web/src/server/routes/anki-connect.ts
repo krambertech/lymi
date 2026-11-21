@@ -60,7 +60,17 @@ ankiConnect.post("/", describe({ hide: true, open: true }), async (c) => {
   const answer = await answerCall(ctxOf(c), call, {
     scope: principal.scope,
     enrichment: enrichmentQueue(c.env),
-    media: c.env.IMPORTS && c.env.AUDIO ? { stash: c.env.IMPORTS, audio: c.env.AUDIO } : null,
+    media:
+      c.env.IMPORTS && c.env.AUDIO
+        ? {
+            stash: c.env.IMPORTS,
+            audio: c.env.AUDIO,
+            pictures:
+              c.env.PRIVATE_IMAGES && c.env.IMAGES
+                ? { bucket: c.env.PRIVATE_IMAGES, images: c.env.IMAGES }
+                : null,
+          }
+        : null,
   });
   return c.json(answer, 200, CORS);
 });

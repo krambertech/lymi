@@ -1,8 +1,8 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { expect, inject, test } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { messages } from "../../locales/en.po";
 import { streak } from "../design/mock";
 import { StreakButton, StreakPanel } from "./streak";

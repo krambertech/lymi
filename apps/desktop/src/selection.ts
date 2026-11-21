@@ -2,7 +2,6 @@ import { execFile } from "node:child_process";
 import { ClipboardItem, clipboard, systemPreferences } from "electron";
 import { termFromCopy } from "./term.js";
 
-// Presses ⌘C through Core Graphics, which needs only Accessibility; System Events would also need Automation.
 const COPY = `ObjC.import("CoreGraphics");
 const press = (down) => {
   const event = $.CGEventCreateKeyboardEvent(null, 8, down);
@@ -12,17 +11,11 @@ const press = (down) => {
 press(true);
 press(false);`;
 
-/** Whether macOS lets the app press keys. Never asks: only This Mac's button does, once. */
 export function canCopySelection() {
   return process.platform === "darwin" && systemPreferences.isTrustedAccessibilityClient(false);
 }
 
-/**
- * The text selected in the app in front, read by pressing ⌘C there. The clipboard is put back as
- * it was, every item in every type it held, so adding a word never costs what the learner copied.
- */
 export async function selectedText(): Promise<string | null> {
-  // An item's types resolve lazily from the clipboard, so each is read now, before it is cleared.
   const saved = await Promise.all(
     (await clipboard.read()).map(
       async (item) =>

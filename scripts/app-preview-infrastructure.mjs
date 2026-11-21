@@ -335,7 +335,7 @@ export async function ensurePreviewInfrastructure({
 export function migrationFailureReason({ status, output = "", error }) {
   if (error) return error.message;
   const lines = output
-    // biome-ignore lint/suspicious/noControlCharactersInRegex: strips Wrangler's ANSI colors.
+    // oxlint-disable-next-line eslint/no-control-regex -- strips Wrangler's ANSI colors.
     .replace(/\u001b\[[0-9;]*m/g, "")
     .split("\n")
     .map((line) => line.trim());

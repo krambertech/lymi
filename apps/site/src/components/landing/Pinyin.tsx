@@ -19,18 +19,18 @@ export function Pinyin({ term, pinyin, hidden, lit, rt }: Props) {
   let drawn = 0;
   return segments.map((segment, index) => {
     if (segment.reading === undefined) {
-      // biome-ignore lint/suspicious/noArrayIndexKey: segments in a fixed order
+      // oxlint-disable-next-line react/no-array-index-key -- segments in a fixed order
       return <Fragment key={index}>{segment.text}</Fragment>;
     }
     const at = drawn++;
     const gone = typeof hidden === "function" ? hidden(at) : hidden;
     return (
-      // biome-ignore lint/suspicious/noArrayIndexKey: segments in a fixed order
+      // oxlint-disable-next-line react/no-array-index-key -- segments in a fixed order
       <ruby key={index}>
         {segment.text}
         <rp>(</rp>
         {/* Out of the accessible name, so a screen reader says the word once, as written. */}
-        {/* biome-ignore lint/a11y/noAriaHiddenOnFocusable: rt is never focusable */}
+        {/* oxlint-disable-next-line jsx-a11y/no-aria-hidden-on-focusable -- rt is never focusable */}
         <rt
           aria-hidden="true"
           className={clsx(

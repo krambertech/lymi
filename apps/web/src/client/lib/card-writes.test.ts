@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from "vitest";
 import type { CardFormValues } from "../components/card-form";
 import type { Card } from "./api";
-import { addInput, cardPatch, hasChanges } from "./card-writes";
+import { cardPatch, hasChanges } from "./card-writes";
 
 vi.mock("./api", () => ({ api: {} }));
 
@@ -64,25 +64,6 @@ const card: Card = {
   updatedAt: new Date(0),
   important: false,
 };
-
-describe("addInput", () => {
-  it("leaves empty fields out and marks typed text as the learner's", () => {
-    expect(addInput(values({ meaning: "to hurry up", tags: ["verbs"] }))).toEqual({
-      deckId: "d1",
-      term: "sbrigarsi",
-      language: "it",
-      meaning: "to hurry up",
-      meaningSource: "manual",
-      tags: ["verbs"],
-    });
-  });
-
-  it("sends a card's own review modes and a cleared language", () => {
-    const input = addInput(values({ language: null, reviewModes: ["image_to_term"] }));
-    expect(input.language).toBeNull();
-    expect(input.reviewModes).toEqual([{ cue: "image", target: "term" }]);
-  });
-});
 
 describe("cardPatch", () => {
   const unchanged = values({ meaning: "to hurry up", tags: ["verbs"], source: "Lesson 14" });

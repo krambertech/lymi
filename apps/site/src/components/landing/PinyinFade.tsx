@@ -77,7 +77,7 @@ export function PinyinFade() {
               className="text-[length:clamp(24px,5.2cqw,56px)] leading-[1.8] font-medium tracking-[0.02em] text-ink"
             >
               {Array.from(line.zh).map((ch, i) => {
-                // biome-ignore lint/suspicious/noArrayIndexKey: characters in a fixed order
+                // oxlint-disable-next-line react/no-array-index-key -- characters in a fixed order
                 if (!HAN.test(ch)) return <span key={`${ch}${i}`}>{ch}</span>;
                 const py = syl[han++] ?? "";
                 const key = `${ch}|${py}`;
@@ -87,7 +87,7 @@ export function PinyinFade() {
                 const stays = step >= TWIST && key === "行|xíng";
                 const at = flash ? order++ : 0;
                 return (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: characters in a fixed order
+                  // oxlint-disable-next-line react/no-array-index-key -- characters in a fixed order
                   <ruby key={`${ch}${i}`}>
                     <span
                       className={clsx(

@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { describe, expect, inject, test, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { DESKTOP_QUERY } from "../../lib/device";
 import {
   Dialog,

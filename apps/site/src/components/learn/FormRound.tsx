@@ -52,12 +52,12 @@ function Change({ base, form, src }: { base: string; form: string; src?: string 
         <span aria-hidden="true">
           {parts.map((part, i) =>
             part.kind === "added" ? (
-              // biome-ignore lint/suspicious/noArrayIndexKey: a word's parts never reorder
+              // oxlint-disable-next-line react/no-array-index-key -- a word's parts never reorder
               <span key={i} data-kind="added">
                 <span>{part.text}</span>
               </span>
             ) : (
-              // biome-ignore lint/suspicious/noArrayIndexKey: a word's parts never reorder
+              // oxlint-disable-next-line react/no-array-index-key -- a word's parts never reorder
               <span key={i} data-kind={part.kind}>
                 {part.text}
               </span>
@@ -119,12 +119,13 @@ export function FormRound({ item, state, heard, answer, autoplay }: RoundProps<F
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
   // Nothing to hear first: each round, including a restart, opens answerable, and the field takes
   // focus when it opens from Next.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: runs as each round opens
+  // oxlint-disable react-hooks/exhaustive-deps -- runs as each round opens
   useEffect(() => {
     heard();
     setValue("");
     if (autoplay) input.current?.focus({ preventScroll: true });
   }, [round]);
+  // oxlint-enable react-hooks/exhaustive-deps
   const done = state.status === "answered";
   const picked = done ? state.picked : null;
   const expected = item.answers[0] ?? "";

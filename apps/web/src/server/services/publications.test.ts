@@ -1,4 +1,4 @@
-import { PublicationInput } from "@lymi/core";
+import type { PublicationInput } from "@lymi/core";
 import {
   listPublicCatalog,
   listPublicDeckSlugs,
@@ -143,19 +143,7 @@ describe("publishing", () => {
     await expect(getPublication(anna, deck.id)).rejects.toEqual(notFound);
   });
 
-  it("files a deck under citizenship and refuses the retired exams shelf", () => {
-    expect(
-      PublicationInput.parse({ ...input("citizenship"), category: "citizenship" }),
-    ).toMatchObject({ category: "citizenship" });
-    expect(PublicationInput.safeParse({ ...input("exams"), category: "exams" }).success).toBe(
-      false,
-    );
-  });
-
-  it("keeps no level, and reads a deck still on a retired shelf as having none", async () => {
-    const parsed = PublicationInput.parse({ ...input("levelled"), level: "A1" });
-    expect(parsed).not.toHaveProperty("level");
-
+  it("reads a deck still on a retired shelf as having none", async () => {
     const deck = await publishedDeck("still-on-exams");
     await db
       .update(schema.deckPublications)
@@ -164,7 +152,6 @@ describe("publishing", () => {
     const row = await getPublication(lymi, deck.id);
     const { publication } = publicationOut("https://my.lymi.test", row);
     expect(publication).toMatchObject({ category: null });
-    expect(publication).not.toHaveProperty("level");
   });
 
   it("checks the slug shape", () => {

@@ -197,8 +197,8 @@ function Field({
   return (
     <DescriberContext.Provider value={describer}>
       <FieldContext.Provider value={context}>
-        {/* biome-ignore lint/a11y/useSemanticElements: one control and its text, which a fieldset is not */}
         <div
+          // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- one control and its text, which a fieldset is not
           role="group"
           data-slot="field"
           data-orientation={orientation}
@@ -241,7 +241,7 @@ function FieldLabel({ className, id, htmlFor, aside, ...props }: FieldLabelProps
   const claimLabelId = field?.claimLabelId;
   React.useLayoutEffect(() => claimLabelId?.(ownId), [claimLabelId, ownId]);
   const label = (
-    // biome-ignore lint/a11y/noLabelWithoutControl: the Field supplies htmlFor.
+    // oxlint-disable-next-line jsx-a11y/label-has-associated-control -- the Field supplies htmlFor.
     <label
       id={ownId}
       data-slot="field-label"

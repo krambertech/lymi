@@ -160,11 +160,6 @@ export function speechInputs(language: string | null | undefined): readonly Spee
   ];
 }
 
-/** Languages whose pronunciation is a reading of a script that does not show it, so the field is called Reading. */
-export function writtenWithReading(language: string | null | undefined): boolean {
-  return languageSupport(language)?.pronunciation === "reading";
-}
-
 /** What the pronunciation holds, saying its empty case as a client sends it or as the model writes it. */
 function describePronunciation(format: LanguageFormat, empty: "omit" | "null"): string {
   const when =

@@ -64,12 +64,10 @@ export function usePullToEnd({ onEnd, away }: { onEnd: () => void; away: boolean
       scheduleOnRN(onEnd);
     });
 
-  const style = useAnimatedStyle(
-    (): ViewStyle => ({
-      transform: [{ translateY: y.value }],
-      borderRadius: interpolate(y.value, [0, 120], [0, CORNER], "clamp"),
-    }),
-  );
+  const style = useAnimatedStyle((): ViewStyle => ({
+    transform: [{ translateY: y.value }],
+    borderRadius: interpolate(y.value, [0, 120], [0, CORNER], "clamp"),
+  }));
   return { gesture, style };
 }
 

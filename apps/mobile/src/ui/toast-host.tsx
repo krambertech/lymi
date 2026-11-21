@@ -191,11 +191,12 @@ function Slot({ item, depth }: { item: Item; depth: number }) {
     timer.current = setTimeout(close, item.action ? ACTION_TIMEOUT : TIMEOUT);
   };
   // Only the front toast counts down, as on the web, and a touch holds it.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: restarts when the toast moves to the front.
+  // oxlint-disable react-hooks/exhaustive-deps -- restarts when the toast moves to the front.
   useEffect(() => {
     if (depth === 0 && !held.current) start();
     return () => clearTimeout(timer.current);
   }, [depth]);
+  // oxlint-enable react-hooks/exhaustive-deps
   const hold = () => {
     held.current = true;
     clearTimeout(timer.current);

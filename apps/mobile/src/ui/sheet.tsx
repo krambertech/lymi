@@ -321,7 +321,7 @@ export function SheetGroup({ children }: { children: ReactNode }) {
     <GroupMarked.Provider value={marked}>
       <View className="overflow-hidden rounded-xl bg-glass-group">
         {rows.map((row, i) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: rows are given in order and never reorder
+          // oxlint-disable-next-line react/no-array-index-key -- rows are given in order and never reorder
           <Fragment key={i}>
             {i > 0 && <View className="h-px bg-edge" />}
             {row}

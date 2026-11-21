@@ -1,6 +1,5 @@
 import type { ComponentType } from "react";
 import type { ChangelogFigureName } from "../../lib/changelog-figures";
-import { Localized } from "../Localized";
 import { AssistantChat } from "../landing/AssistantChat";
 import { EnrichDemo } from "../landing/EnrichDemo";
 import { ImportDemo } from "../landing/ImportDemo";
@@ -8,6 +7,7 @@ import { JoinLinkDemo } from "../landing/JoinLinkDemo";
 import { LibraryDemo } from "../landing/LibraryDemo";
 import { ReviewDemo } from "../landing/ReviewDemo";
 import { SeriesDemo } from "../landing/SeriesDemo";
+import { Localized } from "../Localized";
 import { ActivityFigure } from "./ActivityFigure";
 import { AndroidFigure } from "./AndroidFigure";
 import { CantoneseTamilFigure } from "./CantoneseTamilFigure";

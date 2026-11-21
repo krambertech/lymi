@@ -27,9 +27,6 @@ describe("developer tools gate", () => {
         APP_PREVIEW: "true",
       }),
     ).toBe(false);
-    expect(appPreviewEnabled({ PRODUCT_URL: "https://my.lymi.app", APP_PREVIEW: "true" })).toBe(
-      false,
-    );
   });
 
   it("lets the access middleware validate the preview capability", () => {

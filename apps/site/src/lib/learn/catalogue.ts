@@ -302,7 +302,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 12,
         blurb: msg`A free lesson on the future in Estonian, which has no future tense: the present with homme, ülehomme and järgmisel nädalal (homme ma töötan), and hakkama with a -ma form for what you’re going to do (ma hakkan õppima). Every sentence is read aloud.`,
       },
-      { name: msg`Practice: last weekend, next week`, et: "Nädalavahetusel" },
+      {
+        slug: "nadalavahetusel",
+        name: msg`Practice: last weekend, next week`,
+        title: msg`Estonian practice: last weekend and next week`,
+        et: "Nädalavahetusel",
+        minutes: 12,
+        blurb: msg`Free Estonian practice in the past and the future: read about a friend’s weekend, follow a voice message about next week, fill in what someone did, didn’t do and will do, and tell a friend about your weekend, with käisime, ma ei läinud and ma hakkan õppima. Every sentence is read aloud.`,
+      },
     ],
   },
   {

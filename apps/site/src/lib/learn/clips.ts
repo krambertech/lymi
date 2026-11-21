@@ -2207,6 +2207,59 @@ const MARKET_CLIPS: Record<string, Clip> = {
   ...MARKET_DIALOGUE,
 };
 
+export const WEEKEND_PASSAGES = {
+  mari: [
+    "Tere! Mul oli väga hea nädalavahetus.",
+    "Laupäeval käisime me Tartus.",
+    "Me sõime kohvikus ja vaatasime linnas ringi.",
+    "Pühapäeval olin ma kodus ja lugesin raamatut.",
+    "Jaan ei tulnud, sest ta töötas.",
+  ],
+  jaan: [
+    "Tere, Mari! See on Jaan.",
+    "Järgmisel nädalal hakkan ma eesti keelt õppima.",
+    "Esmaspäeval ja kolmapäeval on mul tund kell kuus.",
+    "Reedel ma ei tööta.",
+    "Kas me läheme reedel kinno?",
+  ],
+  kati: [
+    "Eelmisel laupäeval olin ma kodus.",
+    "Ma ei läinud kinno.",
+    "Järgmisel laupäeval lähen ma Tartusse.",
+    "Esmaspäeval hakkan ma töötama.",
+  ],
+} as const;
+
+export const WEEKEND_DIALOGUE = {
+  "d-kati-1": { text: "Tere! Mida sa nädalavahetusel tegid?", voice: "second" },
+  "d-sina-1": "Ma käisin sõbraga Tartus.",
+  "d-kati-2": { text: "Kas sa käisid ka kinos?", voice: "second" },
+  "d-sina-2": "Ei, ma ei käinud.",
+  "d-kati-3": { text: "Mida sa järgmisel nädalavahetusel teed?", voice: "second" },
+  "d-sina-3": "Ma töötan kodus.",
+} as const satisfies Record<string, Clip>;
+
+export const WEEKEND_WORDS = [
+  "nädalavahetus",
+  "nädalavahetusel",
+  "eelmisel laupäeval",
+  "järgmisel nädalal",
+  "käisime",
+  "sõime",
+  "sest",
+  "tund",
+  "kinno",
+  "kinos",
+] as const;
+
+const WEEKEND_CLIPS: Record<string, Clip> = {
+  ...words(WEEKEND_WORDS),
+  "p-mari": { sentences: WEEKEND_PASSAGES.mari },
+  "p-jaan": { sentences: WEEKEND_PASSAGES.jaan, voice: "second" },
+  "p-kati": { sentences: WEEKEND_PASSAGES.kati },
+  ...WEEKEND_DIALOGUE,
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -3169,6 +3222,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   osastav: OSASTAV_CLIPS,
   turul: MARKET_CLIPS,
   lihtminevik: PAST_CLIPS,
+  nadalavahetusel: WEEKEND_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

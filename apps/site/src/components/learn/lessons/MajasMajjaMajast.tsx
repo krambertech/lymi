@@ -422,12 +422,20 @@ export function MajasMajjaMajastLesson() {
       replies: [
         {
           line: "Tere! Ma olen poes.",
-          why: t`Poes says you’re in the shop. She asked where you’re going.`,
+          why: (
+            <Trans>
+              <b lang="et">Poes</b> says you’re in the shop. She asked where you’re going.
+            </Trans>
+          ),
         },
         { line: line("d-sina-1"), right: true },
         {
           line: "Tere! Ma tulen poest.",
-          why: t`Poest says you’re coming from the shop. She asked where you’re going.`,
+          why: (
+            <Trans>
+              <b lang="et">Poest</b> says you’re coming from the shop. She asked where you’re going.
+            </Trans>
+          ),
         },
       ],
     },
@@ -439,11 +447,20 @@ export function MajasMajjaMajastLesson() {
         { line: line("d-sina-2"), right: true },
         {
           line: "Ma tulen kooli.",
-          why: t`Kooli says where to: you’d be coming to school. She asked where from.`,
+          why: (
+            <Trans>
+              <b lang="et">Kooli</b> says where to: you’d be coming to school. She asked where from.
+            </Trans>
+          ),
         },
         {
           line: "Ma tulen koolis.",
-          why: t`Koolis says where you are. To say where from, use -st: koolist.`,
+          why: (
+            <Trans>
+              <b lang="et">Koolis</b> says where you are. To say where from, use{" "}
+              <b lang="et">-st</b>: <b lang="et">koolist</b>.
+            </Trans>
+          ),
         },
       ],
     },
@@ -454,11 +471,21 @@ export function MajasMajjaMajastLesson() {
       replies: [
         {
           line: "Ei, ma lähen homme Tartus.",
-          why: t`After lähen, say where to: Tartusse. Tartus is where you are.`,
+          why: (
+            <Trans>
+              After <b lang="et">lähen</b>, say where to: <b lang="et">Tartusse</b>.{" "}
+              <b lang="et">Tartus</b> is where you are.
+            </Trans>
+          ),
         },
         {
           line: "Ei, ma olen homme Tartusse.",
-          why: t`Tartusse says into Tartu. To say where you’ll be, use -s: Tartus.`,
+          why: (
+            <Trans>
+              <b lang="et">Tartusse</b> says into Tartu. To say where you’ll be, use{" "}
+              <b lang="et">-s</b>: <b lang="et">Tartus</b>.
+            </Trans>
+          ),
         },
         { line: line("d-sina-3"), right: true },
       ],
@@ -470,12 +497,22 @@ export function MajasMajjaMajastLesson() {
       replies: [
         {
           line: "Ei, ma olen pärit Pärnusse.",
-          why: t`Pärnusse says to Pärnu. Pärit takes the form for where from: Pärnust.`,
+          why: (
+            <Trans>
+              <b lang="et">Pärnusse</b> says to Pärnu. <b lang="et">Pärit</b> takes the form for
+              where from: <b lang="et">Pärnust</b>.
+            </Trans>
+          ),
         },
         { line: line("d-sina-4"), right: true },
         {
           line: "Ei, ma olen pärit Pärnus.",
-          why: t`Pärnus says in Pärnu. Pärit takes the form for where from: Pärnust.`,
+          why: (
+            <Trans>
+              <b lang="et">Pärnus</b> says in Pärnu. <b lang="et">Pärit</b> takes the form for where
+              from: <b lang="et">Pärnust</b>.
+            </Trans>
+          ),
         },
       ],
     },
@@ -713,7 +750,12 @@ export function MajasMajjaMajastLesson() {
               </Prose>
               <Quiz
                 id="which-question"
-                title={<Trans>Kus, kuhu or kust?</Trans>}
+                title={
+                  <Trans>
+                    <span lang="et">Kus</span>, <span lang="et">kuhu</span> or{" "}
+                    <span lang="et">kust</span>?
+                  </Trans>
+                }
                 items={heardItems}
                 rounds={6}
                 verdict={(share) =>
@@ -734,18 +776,17 @@ export function MajasMajjaMajastLesson() {
         },
         {
           id: "short",
-          title: t`Short forms: kooli, poodi, koju`,
+          title: t`Short forms of everyday words`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Some short, everyday words have a second form for where to, shorter than{" "}
+                    Some short, everyday words also have a short form for where to, with no{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -sse
                     </b>
-                    , and it’s the one you’ll hear most: <Word w="Ma lähen kooli." />{" "}
-                    <Word w="Ma lähen poodi." />
+                    : <Word w="Ma lähen kooli." /> <Word w="Ma lähen poodi." />
                   </Trans>
                 </p>
                 <p>

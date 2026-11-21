@@ -906,8 +906,14 @@ export const INNER_WORDS = [
   "Eestist",
   "Soomest",
   "Ukrainast",
-  ...INNER_PLACES.flatMap((each) => [each.place, each.kus, each.kuhu, each.kust]),
-] as const;
+  ...INNER_PLACES.flatMap((each) => [
+    each.place,
+    each.kus,
+    each.kuhu,
+    each.kust,
+    ...("long" in each ? [each.long] : []),
+  ]),
+];
 
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),

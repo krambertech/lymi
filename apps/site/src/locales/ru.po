@@ -17,10 +17,10 @@ msgid "-s or -l?"
 msgstr "-s или -l?"
 
 msgid "-sse means into or to"
-msgstr ""
+msgstr "-sse отвечает на «куда?»"
 
 msgid "-st means out of or from"
-msgstr ""
+msgstr "-st отвечает на «откуда?»"
 
 msgid "-teist or -kümmend?"
 msgstr "-teist или -kümmend?"
@@ -410,7 +410,7 @@ msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no
 msgstr "<0/> Ты живёшь в Таллине. <1/> Ты живёшь в Таллине? Чтобы спросить «да или нет», поставь <2/> перед предложением."
 
 msgid "<0/>, home, changes the most: <1/> when you go there, <2/> when you’re there, <3/> when you leave."
-msgstr ""
+msgstr "<0/>, дом, меняется сильнее всех: <1/> — когда идёшь домой, <2/> — когда ты дома, <3/> — когда уходишь из дома."
 
 msgid "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
 msgstr "<0/>, «пожалуйста», делает команду вежливой. Когда по-эстонски говорят слишком быстро, скажи: <1/>"
@@ -465,14 +465,23 @@ msgstr "<0>Jonas</0> прошёл неделю 2"
 msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgstr "<0>Kes</0> спрашивает о людях, <1>mis</1> — о вещах."
 
+msgid "<0>Kooli</0> says where to: you’d be coming to school. She asked where from."
+msgstr "<0>Kooli</0> отвечает на «куда?»: получилось бы, что ты идёшь в школу. Мари спросила, откуда."
+
+msgid "<0>Koolis</0> says where you are. To say where from, use <1>-st</1>: <2>koolist</2>."
+msgstr "<0>Koolis</0> говорит, где ты находишься. Чтобы сказать «откуда», нужно <1>-st</1>: <2>koolist</2>."
+
 msgid "<0>Kuhu?</0> Where to? <1>-sse</1> says into or to, on the same stem as <2>-s</2>."
-msgstr ""
+msgstr "<0>Kuhu?</0> Куда? <1>-sse</1> показывает, куда движутся, и стоит на той же основе, что и <2>-s</2>."
 
 msgid "<0>Kus?</0> Where? <1>-s</1> says in. Switch to <2>kuhu?</2> and <3>kust?</3>"
-msgstr ""
+msgstr "<0>Kus?</0> Где? <1>-s</1> показывает, где что-то находится. Переключи на <2>kuhu?</2> и <3>kust?</3>"
+
+msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
+msgstr "<0>Kus</0>, <1>kuhu</1> или <2>kust</2>?"
 
 msgid "<0>Kust?</0> Where from? <1>-st</1> says out of or from."
-msgstr ""
+msgstr "<0>Kust?</0> Откуда? <1>-st</1> показывает, откуда движутся."
 
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> спрашивает, откуда ты, а не где живёшь."
@@ -513,6 +522,18 @@ msgstr "<0>Осмос</0>: вода проходит через мембрану
 msgid "<0>P suletud</0> on a sign: closed on Sunday."
 msgstr "<0>P suletud</0> на табличке: в воскресенье закрыто."
 
+msgid "<0>Pärnus</0> says in Pärnu. <1>Pärit</1> takes the form for where from: <2>Pärnust</2>."
+msgstr "<0>Pärnus</0> — это «в Пярну». После <1>pärit</1> нужна форма «откуда»: <2>Pärnust</2>."
+
+msgid "<0>Pärnusse</0> says to Pärnu. <1>Pärit</1> takes the form for where from: <2>Pärnust</2>."
+msgstr "<0>Pärnusse</0> — это «в Пярну», куда. После <1>pärit</1> нужна форма «откуда»: <2>Pärnust</2>."
+
+msgid "<0>Poes</0> says you’re in the shop. She asked where you’re going."
+msgstr "<0>Poes</0> значит, что ты в магазине. Мари спросила, куда ты идёшь."
+
+msgid "<0>Poest</0> says you’re coming from the shop. She asked where you’re going."
+msgstr "<0>Poest</0> значит, что ты идёшь из магазина. Мари спросила, куда ты идёшь."
+
 msgid "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
 msgstr "<0>Pole</0> значит то же, что <1>ei ole</1>. Услышишь оба."
 
@@ -548,6 +569,9 @@ msgstr "<0>Ta</0> — и «он», и «она». <1>Te</1> — «вы» нес�
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сегодня, завтра, вчера. <3>Üle-</3> добавляет ещё один день."
+
+msgid "<0>Tartusse</0> says into Tartu. To say where you’ll be, use <1>-s</1>: <2>Tartus</2>."
+msgstr "<0>Tartusse</0> — это «в Тарту», куда. Чтобы сказать, где ты будешь, нужно <1>-s</1>: <2>Tartus</2>."
 
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — это «привет», а Мари уже уходит."
@@ -905,7 +929,7 @@ msgid "A free lesson on Estonian verbs in the present tense: the -ma form, the s
 msgstr "Бесплатный урок об эстонских глаголах в настоящем времени: форма на -ma, основа и шесть окончаний -n, -d, -b, -me, -te и -vad на десяти повседневных глаголах. Каждое предложение озвучено."
 
 msgid "A free lesson on Estonian’s three “inside” cases: kus, kuhu and kust, -s for in, -sse for into (Tartusse) and -st for out of (koolist), the short forms kooli, poodi and koju, and how to say where you’re from. Every sentence is read aloud."
-msgstr ""
+msgstr "Бесплатный урок эстонского о трёх «внутренних» падежах: kus, kuhu и kust, -s — где (Tartus), -sse — куда (Tartusse), -st — откуда (koolist), короткие формы kooli, poodi и koju, и как сказать, откуда ты. Каждое предложение озвучено."
 
 msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какие места получают какое окончание и как ответить на kus, «где». Каждое предложение озвучено."
@@ -1083,7 +1107,7 @@ msgid "A question you got wrong"
 msgstr "Вопрос с ошибкой"
 
 msgid "A quiz and a conversation"
-msgstr ""
+msgstr "Тест и разговор"
 
 msgid "A round loaf of bread"
 msgstr "Круглый хлеб"
@@ -1439,6 +1463,9 @@ msgstr "После <0>ei</0> идёт форма с ma без -n: <1>loen</1>, <
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "После <0>ei</0> у глагола <1>olema</1> нет окончания: <2>ei ole</2>."
 
+msgid "After <0>lähen</0>, say where to: <1>Tartusse</1>. <2>Tartus</2> is where you are."
+msgstr "После <0>lähen</0> говорят, куда: <1>Tartusse</1>. <2>Tartus</2> отвечает на «где?»."
+
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "После урока на italki, Preply или с частным репетитором вставь чат или сфотографируй заметки. Lymi превратит новые слова в карточки, которые ты повторяешь между уроками. Добавить их может и AI-ассистент. Бесплатно."
 
@@ -1462,9 +1489,6 @@ msgstr "После ei глагол теряет окончание: ei joo."
 
 msgid "After ei, the verb drops its ending: ei tööta."
 msgstr "После ei глагол теряет окончание: ei tööta."
-
-msgid "After lähen, say where to: Tartusse. Tartus is where you are."
-msgstr ""
 
 msgid "After today’s lesson"
 msgstr "После сегодняшнего урока"
@@ -1599,7 +1623,7 @@ msgid "All of them. You hear who does it."
 msgstr "Все. Ты слышишь, кто это делает."
 
 msgid "All of them. You heard the ending in every sentence."
-msgstr ""
+msgstr "Все. В каждом предложении окончание услышано верно."
 
 msgid "All of them. You matched every answer to its question."
 msgstr "Все. Каждый ответ подходит к своему вопросу."
@@ -1638,7 +1662,7 @@ msgid "All Spanish decks"
 msgstr "Все испанские колоды"
 
 msgid "All three go on the same stem: <0>haiglas, haiglasse, haiglast</0>."
-msgstr ""
+msgstr "Все три окончания встают на одну и ту же основу: <0>haiglas, haiglasse, haiglast</0>."
 
 msgid "All Ukrainian decks"
 msgstr "Все колоды по украинскому"
@@ -1960,7 +1984,7 @@ msgid "Asks how it’s done."
 msgstr "Спрашивает, каким образом."
 
 msgid "Asks where someone or something is going."
-msgstr ""
+msgstr "Спрашивает, куда кто-то или что-то движется."
 
 msgid "At 10:00"
 msgstr "В 10:00"
@@ -2787,7 +2811,7 @@ msgid "Come here."
 msgstr "Иди сюда."
 
 msgid "Come home!"
-msgstr ""
+msgstr "Иди домой!"
 
 msgid "Come on; let’s go"
 msgstr "Давай; пошли"
@@ -2799,7 +2823,7 @@ msgid "Comes back a few cards later, then after longer gaps"
 msgstr "Возвращается через несколько карточек, а потом через более длинные промежутки"
 
 msgid "comes, is coming"
-msgstr ""
+msgstr "приходит, идёт"
 
 msgid "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards, and sentence translations come along too."
 msgstr "Переходишь с колоды вроде Kaishi 1.5k? Записи слов и тональное ударение остаются на карточках, а переводы предложений переходят вместе с ними."
@@ -3550,7 +3574,7 @@ msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "Звука õ нет ни в английском, ни в русском. Скажи «о», но не округляй губы."
 
 msgid "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap each form to hear it in a sentence."
-msgstr ""
+msgstr "Русский различает это предлогом и падежом: в доме, в дом, из дома. Эстонский меняет только конец слова. Нажми на каждую форму, чтобы услышать её в предложении."
 
 msgid "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Lesson {into} teaches the endings for going into a place and coming out of it."
 msgstr "По-русски говорят «на работе», но «в школе», и по-эстонски так же: <0/>, но <1/>. Правда, так совпадает не всегда, поэтому учи каждое место вместе с окончанием. Как сказать «в город» и «из города», объясняет урок {into}."
@@ -3601,7 +3625,7 @@ msgid "Estonian also has a third, extra-long length, and the spelling doesn’t 
 msgstr "В эстонском есть ещё и третья степень долготы, сверхдолгая, и на письме её видно не всегда. <0>Linna</0> значит и «города», и «в город», и во втором значении звук тянется дольше."
 
 msgid "Estonian asks three questions about a place, <0>kus</0>, <1>kuhu</1> and <2>kust</2>, and answers each with its own ending: <3>majas, majja, majast</3>."
-msgstr ""
+msgstr "Эстонский задаёт о месте три вопроса — <0>kus</0>, <1>kuhu</1> и <2>kust</2>, то есть где, куда и откуда, — и на каждый отвечает своим окончанием: <3>majas, majja, majast</3>."
 
 msgid "Estonian conversation practice: meeting someone"
 msgstr "Разговорная практика эстонского: знакомство"
@@ -4041,7 +4065,7 @@ msgid "For {0}"
 msgstr "Для земли {0}"
 
 msgid "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>kool, kooli, kooli</3>. <4/> and <5/> have their own: <6/> and <7/>."
-msgstr ""
+msgstr "У <0/>, <1/> и <2/> короткая форма — это третья форма из словаря, о ней рассказывает урок {threeForms}: <3>kool, kooli, kooli</3>. У <4/> и <5/> она своя: <6/> и <7/>."
 
 msgid "For a cashier, a builder, or a friend who is studying."
 msgstr "Так говорят кассиру, строителю или другу, который учится."
@@ -4274,16 +4298,16 @@ msgid "From elama, to live."
 msgstr "От elama, жить."
 
 msgid "from Estonia"
-msgstr ""
+msgstr "из Эстонии"
 
 msgid "from Finland"
-msgstr ""
+msgstr "из Финляндии"
 
 msgid "From G. K. Chesterton’s 1929 book The Thing."
 msgstr "Из книги Г. К. Честертона «The Thing» 1929 года."
 
 msgid "from home"
-msgstr ""
+msgstr "из дома"
 
 msgid "From istuma, to sit."
 msgstr "От istuma, «садиться, сидеть»."
@@ -4316,40 +4340,40 @@ msgid "From õppima, to learn, to study."
 msgstr "От õppima, учить, учиться."
 
 msgid "from Pärnu"
-msgstr ""
+msgstr "из Пярну"
 
 msgid "From rääkima, to speak."
 msgstr "От rääkima, «говорить»."
 
 msgid "from school"
-msgstr ""
+msgstr "из школы"
 
 msgid "from Tallinn"
-msgstr ""
+msgstr "из Таллина"
 
 msgid "from Tartu"
-msgstr ""
+msgstr "из Тарту"
 
 msgid "from the café"
-msgstr ""
+msgstr "из кафе"
 
 msgid "From the chat you just had"
 msgstr "Из только что прошедшего разговора"
 
 msgid "from the hospital"
-msgstr ""
+msgstr "из больницы"
 
 msgid "From the lesson"
 msgstr "С урока"
 
 msgid "from the office"
-msgstr ""
+msgstr "из офиса"
 
 msgid "from the shop"
-msgstr ""
+msgstr "из магазина"
 
 msgid "from town"
-msgstr ""
+msgstr "из города"
 
 msgid "From tulema, to come."
 msgstr "От tulema, «приходить»."
@@ -4358,7 +4382,7 @@ msgid "From tuul, wind."
 msgstr "От tuul — ветер."
 
 msgid "from Ukraine"
-msgstr ""
+msgstr "из Украины"
 
 msgid "From your notes"
 msgstr "Из твоих заметок"
@@ -4705,7 +4729,7 @@ msgid "He or she is at school."
 msgstr "Он или она в школе."
 
 msgid "He or she is from Pärnu."
-msgstr ""
+msgstr "Он или она из Пярну."
 
 msgid "He or she is having coffee in a café."
 msgstr "Он или она пьёт кофе в кафе."
@@ -4788,7 +4812,7 @@ msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-
 msgstr "Послушай предложение и выбери место. Слушай слово, которое кончается на <0>-s</0>."
 
 msgid "Hear a sentence and pick the question its place answers. Listen to the end of the place: <0/> can come to a place or from it."
-msgstr ""
+msgstr "Послушай предложение и выбери вопрос, на который отвечает место. Слушай конец слова: <0/> — это и «идёт в», и «идёт из»."
 
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Послушай предложение и выбери глагол из него. Варианты отличаются только окончанием, так что слушай конец глагола."
@@ -4836,7 +4860,7 @@ msgid "Hearing ära and ei"
 msgstr "Ära и ei на слух"
 
 msgid "Hearing the direction"
-msgstr ""
+msgstr "Направление на слух"
 
 msgid "Hearing the place"
 msgstr "Место на слух"
@@ -4929,7 +4953,7 @@ msgid "home"
 msgstr "дом"
 
 msgid "home, going there"
-msgstr ""
+msgstr "домой"
 
 msgid "Hopefully"
 msgstr "Надеюсь"
@@ -4941,7 +4965,7 @@ msgid "Hour"
 msgstr "Час"
 
 msgid "house"
-msgstr ""
+msgstr "дом"
 
 msgid "House"
 msgstr "Дом"
@@ -5375,25 +5399,25 @@ msgid "I’m at work."
 msgstr "Я на работе."
 
 msgid "I’m coming from home."
-msgstr ""
+msgstr "Я иду из дома."
 
 msgid "I’m coming from school."
-msgstr ""
+msgstr "Я иду из школы."
 
 msgid "I’m coming from Tartu."
-msgstr ""
+msgstr "Я еду из Тарту."
 
 msgid "I’m coming from the shop."
-msgstr ""
+msgstr "Я иду из магазина."
 
 msgid "I’m from Estonia."
-msgstr ""
+msgstr "Я из Эстонии."
 
 msgid "I’m from Finland."
-msgstr ""
+msgstr "Я из Финляндии."
 
 msgid "I’m from Tallinn."
-msgstr ""
+msgstr "Я из Таллина."
 
 msgid "I’m from Ukraine."
 msgstr "Я из Украины."
@@ -5417,10 +5441,10 @@ msgid "I’m going to Beijing *tomorrow*."
 msgstr "*Завтра* я еду в Пекин."
 
 msgid "I’m going to school."
-msgstr ""
+msgstr "Я иду в школу."
 
 msgid "I’m going to Tartu."
-msgstr ""
+msgstr "Я еду в Тарту."
 
 msgid "I’m going to the *bank* to get money."
 msgstr "Я иду в *банк* снять деньги."
@@ -5432,13 +5456,13 @@ msgid "I’m going to the cinema with a *friend*."
 msgstr "Иду в кино с *другом*."
 
 msgid "I’m going to the hospital."
-msgstr ""
+msgstr "Я иду в больницу."
 
 msgid "I’m going to the shop for bread."
 msgstr "Я иду в магазин за хлебом."
 
 msgid "I’m going to the shop."
-msgstr ""
+msgstr "Я иду в магазин."
 
 msgid "I’m going."
 msgstr "Я иду."
@@ -5447,7 +5471,7 @@ msgid "I’m having a cheese *roll*."
 msgstr "Я ем *булочку* с сыром."
 
 msgid "I’m in Tartu."
-msgstr ""
+msgstr "Я в Тарту."
 
 msgid "I’m learning Estonian."
 msgstr "Я учу эстонский."
@@ -5675,7 +5699,7 @@ msgid "In the Grok Bot app, open Connect apps and choose Add a custom connector.
 msgstr "В приложении Grok Bot открой Connect apps и выбери Add a custom connector. Назови его Lymi, выбери Remote HTTPS и вставь этот адрес."
 
 msgid "in the house"
-msgstr ""
+msgstr "в доме"
 
 msgid "In the order you learn them, one section at a time."
 msgstr "В том порядке, в котором ты их учишь: раздел за разделом."
@@ -5687,7 +5711,7 @@ msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. 
 msgstr "В настоящем времени поставь <0>ei</0> перед глаголом и убери окончание. Для всех лиц это одинаково, так что сказать «нет» проще, чем «да»."
 
 msgid "in the shop"
-msgstr ""
+msgstr "в магазине"
 
 msgid "In this folder"
 msgstr "В этой папке"
@@ -5735,10 +5759,10 @@ msgid "Intel Mac? Download for Intel"
 msgstr "Mac с Intel? Скачать версию для Intel"
 
 msgid "Into and out of in Estonian: -sse and -st"
-msgstr ""
+msgstr "Куда и откуда по-эстонски: -sse и -st"
 
 msgid "into the house"
-msgstr ""
+msgstr "в дом"
 
 msgid "Invite"
 msgstr "Пригласить"
@@ -5915,7 +5939,7 @@ msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Редкий, но серьёзный риск — лактоацидоз."
 
 msgid "Jaan is coming to the café."
-msgstr ""
+msgstr "Яан идёт в кафе."
 
 msgid "Jaan lives in Pärnu."
 msgstr "Яан живёт в Пярну."
@@ -6097,12 +6121,6 @@ msgstr "Выученные"
 msgid "Kolm, three, and veerand, a quarter."
 msgstr "Kolm — три, veerand — четверть."
 
-msgid "Kooli says where to: you’d be coming to school. She asked where from."
-msgstr ""
-
-msgid "Koolis says where you are. To say where from, use -st: koolist."
-msgstr ""
-
 msgid "Korean"
 msgstr "Корейский"
 
@@ -6123,9 +6141,6 @@ msgstr "Kümne minuti pärast neli: через десять минут четы�
 
 msgid "Kus with its -s swapped for -st, “out of”."
 msgstr "Kus, где -s заменили на -st, «из»."
-
-msgid "Kus, kuhu or kust?"
-msgstr ""
 
 msgid "Lab values"
 msgstr "Лабораторные нормы"
@@ -6310,7 +6325,7 @@ msgid "Lesson {number}, coming soon"
 msgstr "Урок {number}, скоро"
 
 msgid "Lesson {places} answered <0/>, where, with <1>-s</1>: <2/> Estonian asks two more questions about a place. <3/> asks where to: <4/> <5/> asks where from: <6/>"
-msgstr ""
+msgstr "Урок {places} отвечал на <0/>, «где», окончанием <1>-s</1>: <2/> Эстонский задаёт о месте ещё два вопроса. <3/> спрашивает «куда»: <4/> <5/> спрашивает «откуда»: <6/>"
 
 msgid "Lesson {previousNumber}"
 msgstr "Урок {previousNumber}"
@@ -6746,10 +6761,10 @@ msgid "Mari"
 msgstr "Мари"
 
 msgid "Mari asks <0/>, <1/> and <2/>. Answer each with the form that fits its question."
-msgstr ""
+msgstr "Мари спрашивает <0/>, <1/> и <2/>. На каждый вопрос отвечай формой, которая к нему подходит."
 
 msgid "Mari is coming from the café."
-msgstr ""
+msgstr "Мари идёт из кафе."
 
 msgid "Mari just said she works a lot. Ask where with <0>kus</0>."
 msgstr "Мари только что сказала, что много работает. Чтобы спросить где, скажи <0>kus</0>."
@@ -6767,7 +6782,7 @@ msgid "Mari told you her name at the start."
 msgstr "Мари назвала своё имя ещё в начале."
 
 msgid "Mari works in a café."
-msgstr ""
+msgstr "Мари работает в кафе."
 
 msgid "Mari works in a hospital."
 msgstr "Мари работает в больнице."
@@ -7073,7 +7088,7 @@ msgid "Named by two Australian scientists in 1964."
 msgstr "Название предложили двое австралийских учёных в 1964 году."
 
 msgid "Names and long words take <0>-sse</0>, and it’s the safe choice when you don’t know a short form."
-msgstr ""
+msgstr "Названия и длинные слова получают <0>-sse</0>, и это надёжный выбор, когда не знаешь короткой формы."
 
 msgid "Narrow therapeutic range; check levels and potassium"
 msgstr "Узкий терапевтический диапазон; контролируй уровень препарата и калия"
@@ -7735,7 +7750,7 @@ msgid "Out loud, on a walk"
 msgstr "Вслух, на прогулке"
 
 msgid "out of the house"
-msgstr ""
+msgstr "из дома"
 
 msgid "Own things, count them and put them somewhere. Stems change first, then the genitive, which most other cases build on."
 msgstr "Иметь вещи, считать их и куда-то класть. Сначала меняются основы, затем генитив, на котором строится большинство других падежей."
@@ -7763,12 +7778,6 @@ msgstr "Пярну получает <0>-s</0>: <1>Pärnus</1>."
 
 msgid "Pärnu, a town by the sea"
 msgstr "Пярну, город у моря"
-
-msgid "Pärnus says in Pärnu. Pärit takes the form for where from: Pärnust."
-msgstr ""
-
-msgid "Pärnusse says to Pärnu. Pärit takes the form for where from: Pärnust."
-msgstr ""
 
 msgid "Participles"
 msgstr "Причастия"
@@ -7942,7 +7951,7 @@ msgid "Place words: on, under, behind"
 msgstr "Где что: на, под, за"
 
 msgid "Places that take <0>-l</0>, such as <1/>, have three forms of their own. Lesson {onto} teaches them."
-msgstr ""
+msgstr "У мест с окончанием <0>-l</0>, например <1/>, свои три формы. О них — в уроке {onto}."
 
 msgid "Places to work"
 msgstr "Где работать"
@@ -8052,12 +8061,6 @@ msgstr "Партитив множественного числа"
 
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP и PRINCE2: процессы, роли и терминология."
-
-msgid "Poes says you’re in the shop. She asked where you’re going."
-msgstr ""
-
-msgid "Poest says you’re coming from the shop. She asked where you’re going."
-msgstr ""
 
 msgid "points in all, at either level"
 msgstr "баллов всего на каждом из уровней"
@@ -9054,10 +9057,10 @@ msgid "Short for tema."
 msgstr "Сокращение от tema."
 
 msgid "Short forms for where to"
-msgstr ""
+msgstr "Короткие формы для «куда»"
 
-msgid "Short forms: kooli, poodi, koju"
-msgstr ""
+msgid "Short forms of everyday words"
+msgstr "Короткие формы повседневных слов"
 
 msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 msgstr "Короткие бесплатные уроки от первых звуков до B1. Нажми на любое слово, чтобы его услышать, и пробуй каждое правило прямо по ходу чтения."
@@ -9229,7 +9232,7 @@ msgid "Snap your lesson notes into cards, build the course in sections and share
 msgstr "Преврати заметки с урока в карточки, построй курс из разделов и поделись одной ссылкой. Каждый ученик повторяет по своему расписанию."
 
 msgid "So a place has a form for each question, all three on the same stem. Switch between them."
-msgstr ""
+msgstr "Значит, у места есть форма для каждого вопроса, и все три стоят на одной основе. Переключай их."
 
 msgid "So far every command speaks to one person, someone you’d call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It’s the same split as <5>sa</5> and <6/> in lesson {pronouns}."
 msgstr "До сих пор каждая команда обращалась к одному человеку, с которым ты на «ты»: <0/>. Нескольким людям или одному на «вы» команда заканчивается на <1>-ge</1> или <2>-ke</2>: <3/> <4/> Это то же деление, что между <5>sa</5> и <6/> в уроке {pronouns}."
@@ -9247,7 +9250,7 @@ msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre — «над», mesa — «стол». Бывает, что она длится дольше самой еды."
 
 msgid "Some everyday words have a short form for where to: <0>kooli, poodi, linna, majja, koju</0>."
-msgstr ""
+msgstr "У некоторых повседневных слов есть короткая форма для «куда»: <0>kooli, poodi, linna, majja, koju</0>."
 
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Некоторые кандзи в китайском шрифте выглядят иначе. Lymi показывает твои карточки в японском написании, как в японских книгах."
@@ -9255,8 +9258,8 @@ msgstr "Некоторые кандзи в китайском шрифте вы�
 msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 msgstr "Некоторые места получают <0>-l</0> по традиции, например <1>turul</1> и названия на <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 
-msgid "Some short, everyday words have a second form for where to, shorter than <0>-sse</0>, and it’s the one you’ll hear most: <1/> <2/>"
-msgstr ""
+msgid "Some short, everyday words also have a short form for where to, with no <0>-sse</0>: <1/> <2/>"
+msgstr "У некоторых коротких повседневных слов есть ещё и короткая форма для «куда», без <0>-sse</0>: <1/> <2/>"
 
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Некоторые основы меняются: <0>lugema, loen</0>. Запоминай каждый глагол с формой для «я»."
@@ -9604,7 +9607,7 @@ msgid "Switch between Do and Don’t, and tap a line to hear it."
 msgstr "Переключайся между «Делай» и «Не делай»; нажми на строку, чтобы её услышать."
 
 msgid "Switch between the forms above once more, then try again."
-msgstr ""
+msgstr "Ещё раз переключи формы выше, а потом попробуй снова."
 
 msgid "Switch to In the place and watch the last letters change."
 msgstr "Переключи на «Где?» и смотри, как меняются концы слов."
@@ -9700,7 +9703,7 @@ msgid "Talk: coffee with Mari"
 msgstr "Разговор: кофе с Мари"
 
 msgid "Talk: in the street"
-msgstr ""
+msgstr "Разговор: на улице"
 
 msgid "Talk: meeting Mari"
 msgstr "Разговор: знакомство с Мари"
@@ -9721,10 +9724,10 @@ msgid "Tap a filled gap to take its word back."
 msgstr "Нажми на заполненный пропуск, чтобы забрать слово."
 
 msgid "Tap a form"
-msgstr ""
+msgstr "Нажми на форму"
 
 msgid "Tap a form to hear the answer."
-msgstr ""
+msgstr "Нажми на форму, чтобы услышать ответ."
 
 msgid "Tap a letter"
 msgstr "Нажми на букву"
@@ -9776,9 +9779,6 @@ msgstr "Тарту получает <0>-s</0>: <1>Tartus</1>."
 
 msgid "Tartu, a university town"
 msgstr "Тарту, университетский город"
-
-msgid "Tartusse says into Tartu. To say where you’ll be, use -s: Tartus."
-msgstr ""
 
 msgid "tasty"
 msgstr "вкусный"
@@ -9979,7 +9979,7 @@ msgid "The *window* is open."
 msgstr "*Окно* открыто."
 
 msgid "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. Names and long words have only the <5>-sse</5> form: <6/>, <7/>. So when you don’t know a short form, <8>-sse</8> is the safe choice."
-msgstr ""
+msgstr "Формы на <0>-sse</0> тоже правильные: <1/>, <2/>, <3/>, <4/>. У названий и длинных слов есть только форма на <5>-sse</5>: <6/>, <7/>. Так что, если не знаешь короткой формы, <8>-sse</8> — надёжный выбор."
 
 msgid "The 1618 revolt in Prague that started the Thirty Years’ War"
 msgstr "Восстание в Праге 1618 года, с которого началась Тридцатилетняя война"
@@ -10036,16 +10036,16 @@ msgid "The castle stands on a hill."
 msgstr "Замок стоит на горе."
 
 msgid "The cat comes out of the house."
-msgstr ""
+msgstr "Кот выходит из дома."
 
 msgid "The cat goes into the house."
-msgstr ""
+msgstr "Кот заходит в дом."
 
 msgid "The cat is asleep on the *rug*."
 msgstr "Кот спит на *ковре*."
 
 msgid "The cat is in the house."
-msgstr ""
+msgstr "Кот в доме."
 
 msgid "The children are already *asleep*."
 msgstr "Дети уже *спят*."
@@ -10363,7 +10363,7 @@ msgid "The push behind ragtime, funk and reggae."
 msgstr "Именно она даёт драйв рэгтайму, фанку и регги."
 
 msgid "The question the place answers"
-msgstr ""
+msgstr "Вопрос, на который отвечает место"
 
 msgid "The questions and answers are BAMF’s, from its catalogue of 7 May 2025, in German as they appear on the test. The translations and notes are Lymi’s. Lymi isn’t affiliated with BAMF and can’t promise a pass."
 msgstr "Вопросы и ответы взяты из каталога BAMF от 7 мая 2025 года, на немецком, как на тесте. Переводы и пояснения написал Lymi. Lymi не связан с BAMF и не может гарантировать, что ты сдашь тест."
@@ -10639,7 +10639,7 @@ msgid "They live in Germany."
 msgstr "Они живут в Германии."
 
 msgid "They live in Pärnu."
-msgstr ""
+msgstr "Они живут в Пярну."
 
 msgid "They say it’ll rain *tomorrow*."
 msgstr "Говорят, *завтра* будет дождь."
@@ -10657,7 +10657,7 @@ msgid "They’re at home."
 msgstr "Они дома."
 
 msgid "They’re coming to Pärnu."
-msgstr ""
+msgstr "Они едут в Пярну."
 
 msgid "They’re drinking coffee."
 msgstr "Они пьют кофе."
@@ -10774,13 +10774,13 @@ msgid "Three quarters of the way to {next}."
 msgstr "Три четверти пути до {next}."
 
 msgid "Three questions about a place"
-msgstr ""
+msgstr "Три вопроса о месте"
 
 msgid "Three questions to know by heart"
 msgstr "Три вопроса наизусть"
 
 msgid "Three questions, three endings: <0>kus?</0> <1>-s</1> for in, <2>kuhu?</2> <3>-sse</3> for into, <4>kust?</4> <5>-st</5> for out of: <6>Tartus, Tartusse, Tartust</6>."
-msgstr ""
+msgstr "Три вопроса — три окончания: <0>kus?</0> <1>-s</1> — где, <2>kuhu?</2> <3>-sse</3> — куда, <4>kust?</4> <5>-st</5> — откуда: <6>Tartus, Tartusse, Tartust</6>."
 
 msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 msgstr "Вот три, которые дважды не вспомнились: диффузия, митохондрия и рибосома."
@@ -11017,7 +11017,7 @@ msgid "To one person"
 msgstr "Одному человеку"
 
 msgid "to Pärnu"
-msgstr ""
+msgstr "в Пярну"
 
 msgid "To pull"
 msgstr "Тянуть"
@@ -11041,13 +11041,13 @@ msgid "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
 msgstr "Чтобы сказать «не делай», ставь <0>ära</0> перед основой: <1>Ära istu!</1>"
 
 msgid "To say into or to, put <0>-sse</0> where the <1>-s</1> was: <2/>, <3/>; <4/>, <5/>. Ask with <6/>."
-msgstr ""
+msgstr "Чтобы сказать «куда», поставь <0>-sse</0> на место <1>-s</1>: <2/>, <3/>; <4/>, <5/>. Спрашивают словом <6/>."
 
 msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 msgstr "Чтобы сказать «не», поставь <0/> перед глаголом. <1/> — «я читаю», а <2/> — «я не читаю». Глагол теряет окончание, а <3/> одно и то же, о ком бы ни шла речь."
 
 msgid "To say out of or from, swap the <0>-s</0> for <1>-st</1>: <2/>, <3/>. The rest of the word stays as it was: <4/>, <5/>."
-msgstr ""
+msgstr "Чтобы сказать «откуда», замени <0>-s</0> на <1>-st</1>: <2/>, <3/>. Остальная часть слова не меняется: <4/>, <5/>."
 
 msgid "to school"
 msgstr "в школу"
@@ -11077,10 +11077,10 @@ msgid "To take a taxi"
 msgstr "Взять такси"
 
 msgid "to Tallinn"
-msgstr ""
+msgstr "в Таллин"
 
 msgid "to Tartu"
-msgstr ""
+msgstr "в Тарту"
 
 msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
 msgstr "Чтобы сказать одному человеку, что делать, эстонский берёт основу глагола и ничего к ней не добавляет. Возьми форму с ma из урока {present} и убери <0>-n</0>. <1/> — это «я читаю», а <2/> просит одного человека читать."
@@ -11095,19 +11095,19 @@ msgid "To tell someone what to do, say the verb’s stem: <0>Istu!</0> is sit do
 msgstr "Чтобы сказать, что делать, произнеси основу глагола: <0>Istu!</0> — это «садись». Чтобы сказать, чего не делать, поставь перед ней <1>ära</1>: <2>Ära istu!</2>"
 
 msgid "to the café"
-msgstr ""
+msgstr "в кафе"
 
 msgid "to the hospital"
-msgstr ""
+msgstr "в больницу"
 
 msgid "to the office"
-msgstr ""
+msgstr "в офис"
 
 msgid "to the shop"
-msgstr ""
+msgstr "в магазин"
 
 msgid "to town"
-msgstr ""
+msgstr "в город"
 
 msgid "To usually do something"
 msgstr "Обычно что-то делать"
@@ -11253,7 +11253,7 @@ msgid "Tuleb says that he’s coming. To call him over, use the stem: tule."
 msgstr "Tuleb значит, что он идёт. Чтобы позвать его, скажи основу: tule."
 
 msgid "Tulema with the ta ending."
-msgstr ""
+msgstr "Tulema с окончанием для ta."
 
 msgid "Turg, market, takes -l by habit."
 msgstr "Turg, рынок, по традиции получает -l."
@@ -11594,7 +11594,7 @@ msgid "We’re going into *town*."
 msgstr "Мы едем в *город*."
 
 msgid "We’re going to town."
-msgstr ""
+msgstr "Мы идём в город."
 
 msgid "We’re looking for a new *flat*."
 msgstr "Мы ищем новую *квартиру*."
@@ -11907,13 +11907,13 @@ msgid "Where a word was wrong, the right one stands beside it."
 msgstr "Где слово неверное, рядом стоит верное."
 
 msgid "Where are you coming from?"
-msgstr ""
+msgstr "Откуда ты идёшь?"
 
 msgid "Where are you from?"
 msgstr "Откуда ты?"
 
 msgid "Where are you going?"
-msgstr ""
+msgstr "Куда ты идёшь?"
 
 msgid "Where do you all live?"
 msgstr "Где вы живёте?"
@@ -11970,19 +11970,19 @@ msgid "Where someone goes: tule siia, come here."
 msgstr "Куда: tule siia, «иди сюда»."
 
 msgid "Where the cat is and goes"
-msgstr ""
+msgstr "Где кот и куда он идёт"
 
 msgid "where to"
-msgstr ""
+msgstr "куда"
 
 msgid "Where will he wait for you?"
 msgstr "Где он будет тебя ждать?"
 
 msgid "Where you’re from"
-msgstr ""
+msgstr "Откуда ты"
 
 msgid "Where you’re from takes <0>-st</0>: <1>Ma olen pärit Ukrainast.</1>"
-msgstr ""
+msgstr "Откуда ты родом — тоже <0>-st</0>: <1>Ma olen pärit Ukrainast.</1>"
 
 msgid "Where’s the *flour*?"
 msgstr "Где здесь *мука*?"
@@ -12568,10 +12568,10 @@ msgid "You meet Mari at the café and answer her in Estonian. If you pick a wron
 msgstr "Ты встречаешь Мари в кафе и отвечаешь ей по-эстонски. Если выберешь неправильный ответ, увидишь почему, а потом услышишь правильный."
 
 msgid "You meet Mari on your way from school to the shop. You’re from Pärnu, and tomorrow you’re going to Tartu."
-msgstr ""
+msgstr "Ты встречаешь Мари по дороге из школы в магазин. Ты из Пярну, а завтра едешь в Тарту."
 
 msgid "You met <0/> in lesson {questions}. <1/> takes the <2>-st</2> form of the country or town. Tap one to answer."
-msgstr ""
+msgstr "Вопрос <0/> был в уроке {questions}. После <1/> страна или город стоит в форме на <2>-st</2>. Нажми на одну, чтобы ответить."
 
 msgid "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."
 msgstr "Ты уже знаешь <0/>, где, из урока {questions}. Отвечай предложением, а в разговоре — просто названием места."
@@ -12640,7 +12640,7 @@ msgid "You’ll hear elama with it and who it’s for."
 msgstr "Услышишь elama с ним и узнаешь, для кого оно."
 
 msgid "You’ll hear it in a sentence about the cat."
-msgstr ""
+msgstr "Услышишь её в предложении о коте."
 
 msgid "You’ll hear it in a sentence."
 msgstr "Услышишь его в предложении."

@@ -48,7 +48,7 @@ const MEANS: Record<First | TypedFirst, MessageDescriptor> = {
   mees: msg`man`,
   naine: msg`woman`,
   laps: msg`child`,
-  kodu: msg`home`,
+  kodu: msg({ message: "home", context: "kodu: the place you live" }),
   sõna: msg`word`,
   tuba: msg`room`,
   laud: msg`table`,
@@ -268,10 +268,10 @@ function EntryCard() {
         <div className="grid grid-cols-[1.25rem_minmax(0,1fr)_minmax(0,1fr)] items-center gap-x-3 gap-y-0.5">
           <span />
           <span className="text-xs text-ink-muted">
-            <Trans>One</Trans>
+            <Trans context="grammatical number">Singular</Trans>
           </span>
           <span className="text-xs text-ink-muted">
-            <Trans>More than one: lesson {plural}</Trans>
+            <Trans context="grammatical number">Plural: see lesson {plural}</Trans>
           </span>
           {forms.map((form, slot) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: a form can repeat in the column
@@ -309,7 +309,7 @@ export function PohivormidLesson() {
     kool: <Trans>Its second and third forms are the same.</Trans>,
     pood: (
       <Trans>
-        The second drops the <b lang="et">d</b>; the third has it back.
+        The second drops the <b lang="et">d</b> and one <b lang="et">o</b>; the third has them back.
       </Trans>
     ),
     raamat: (
@@ -331,8 +331,8 @@ export function PohivormidLesson() {
     ),
     mees: (
       <Trans>
-        The <b lang="et">s</b> becomes <b lang="et">h</b> in the second; the third ends in{" "}
-        <b lang="et">-st</b>.
+        In the second, <b lang="et">ee</b> shortens and <b lang="et">s</b> becomes{" "}
+        <b lang="et">h</b>; the third ends in <b lang="et">-st</b>.
       </Trans>
     ),
     naine: (
@@ -368,7 +368,8 @@ export function PohivormidLesson() {
     ),
     töö: (
       <Trans>
-        One long syllable: the second is the same, the third adds <b lang="et">-d</b>.
+        One syllable ending in a long vowel: the second is the same, the third adds{" "}
+        <b lang="et">-d</b>.
       </Trans>
     ),
     kodu: <Trans>All three forms are the same.</Trans>,
@@ -444,7 +445,7 @@ export function PohivormidLesson() {
             </span>
           </>
         ),
-        prompt: t`Type the third form`,
+        prompt: t`Third form of ${firstTwo(forms)}`,
         keyboard: "text",
         pair: [pattern, forms[0]] as const,
       })),
@@ -503,11 +504,11 @@ export function PohivormidLesson() {
       replies: [
         {
           line: "Vastus, vastus, vastust.",
-          why: t`A word in -us has a second form in -use: vastuse.`,
+          why: t`Like küsimus, vastus has a second form in -use: vastuse.`,
         },
         {
           line: "Vastus, vastuse, vastuse.",
-          why: t`A word in -us ends its third form in -ust: vastust.`,
+          why: t`Like küsimus, vastus ends its third form in -ust: vastust.`,
         },
         { line: line("d-sina-4"), right: true },
       ],
@@ -569,7 +570,7 @@ export function PohivormidLesson() {
           <b lang="et">Sõnavormid</b>.
         </Trans>,
         <Trans key="4">
-          A word in{" "}
+          Most words in{" "}
           <b lang="et" className="whitespace-nowrap">
             -ne
           </b>{" "}
@@ -577,11 +578,11 @@ export function PohivormidLesson() {
           <b lang="et" className="whitespace-nowrap">
             -us
           </b>{" "}
-          ends its third form in{" "}
+          end their third form in{" "}
           <b lang="et" className="whitespace-nowrap">
             -st
           </b>
-          , and a word of one long syllable adds{" "}
+          , and a one-syllable word ending in a long vowel adds{" "}
           <b lang="et" className="whitespace-nowrap">
             -d
           </b>
@@ -602,10 +603,10 @@ export function PohivormidLesson() {
                 <p>
                   <Trans>
                     Look up <Word w="kool" />, school, and a dictionary gives you three words:{" "}
-                    <b lang="et">kool, kooli, kooli</b>. Every noun is listed this way, always in
-                    the same order, because most of its other forms are built on one of the three.
-                    Estonian calls them <Word w="põhivormid" />, the main forms. Here they’re the
-                    first, second and third form.
+                    <b lang="et">kool, kooli, kooli</b>. Every noun is listed this way, in the same
+                    order. Most of its other forms are built on one of the three. Estonian calls
+                    them <Word w="põhivormid" />, the main forms. This course calls them the first,
+                    second and third form.
                   </Trans>
                 </p>
                 <p>
@@ -633,7 +634,11 @@ export function PohivormidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <a href="https://sonaveeb.ee" lang="et">
+                    <a
+                      href="https://sonaveeb.ee"
+                      lang="et"
+                      className="font-medium text-ink underline decoration-(--form) decoration-2 underline-offset-4 hoverable:hover:text-(--form)"
+                    >
                       Sõnaveeb
                     </a>
                     , the free dictionary of the Institute of the Estonian Language, lists them
@@ -710,7 +715,7 @@ export function PohivormidLesson() {
               </Panel>
               <Aside>
                 <Trans>
-                  You can’t count on it, though. <Word w="auto" />, car, ends in a vowel like{" "}
+                  A final vowel doesn’t promise matching forms, though. <Word w="auto" />, car, ends in a vowel like{" "}
                   <Word w="maja" />, but its third form is <Word w="autot" />. And{" "}
                   <Word w="raamat" />, book, goes <b lang="et">raamatu, raamatut</b>. The dictionary
                   settles it.
@@ -749,7 +754,7 @@ export function PohivormidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Which vowel ends the third form you learn with the word:{" "}
+                    Learn the vowel at the end of the third form along with the word:{" "}
                     <b lang="et">poodi, lauda, turgu</b>.
                   </Trans>
                 </p>
@@ -766,11 +771,11 @@ export function PohivormidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Some words give their third form away. A word ending in{" "}
+                    Some words give their third form away. Most words ending in{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -ne
                     </b>{" "}
-                    has a second form in{" "}
+                    have a second form in{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -se
                     </b>{" "}
@@ -778,18 +783,18 @@ export function PohivormidLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -st
                     </b>
-                    : <Word w="naine" />, <Word w="naise" />, <Word w="naist" />. A word ending in{" "}
+                    : <Word w="naine" />, <Word w="naise" />, <Word w="naist" />. Most words ending in{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -us
                     </b>{" "}
-                    does the same: <Word w="küsimus" />, question, goes{" "}
+                    do the same: <Word w="küsimus" />, question, goes{" "}
                     <b lang="et">küsimuse, küsimust</b>.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    A word of one long syllable, such as <Word w="töö" />, work, keeps its second
-                    form the same and adds{" "}
+                    A one-syllable word that ends in a long vowel, such as <Word w="töö" />, work,
+                    keeps its second form the same and adds{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -d
                     </b>{" "}
@@ -811,7 +816,7 @@ export function PohivormidLesson() {
               </Panel>
               <Aside>
                 <Trans>
-                  Short words ending in{" "}
+                  Some short words ending in{" "}
                   <b lang="et" className="whitespace-nowrap">
                     -s
                   </b>{" "}
@@ -820,8 +825,8 @@ export function PohivormidLesson() {
                     -st
                   </b>
                   , but each changes in its own way: <b lang="et">uks, ukse, ust</b>;{" "}
-                  <b lang="et">laps, lapse, last</b>; <b lang="et">mees, mehe, meest</b>. Learn
-                  those whole.
+                  <b lang="et">laps, lapse, last</b>; <b lang="et">mees, mehe, meest</b>. Learn all
+                  three forms of those.
                 </Trans>
               </Aside>
               <Prose>
@@ -838,7 +843,7 @@ export function PohivormidLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six. You read the third form off the ending every time.</Trans>
+                    <Trans>All six. You typed the third form right every time.</Trans>
                   ) : share >= 0.6 ? (
                     <Trans>Nearly. Hear the ones you missed with their third form.</Trans>
                   ) : (
@@ -862,7 +867,7 @@ export function PohivormidLesson() {
                 <p>
                   <Trans>
                     To ask for a word’s forms, Estonian says <b lang="et">Mis on sõna … põhivormid?</b>,
-                    with the word in the gap. <Word w="sõna" /> means word. Answer with all three,
+                    with the word in the gap. <Word w="Sõna" /> means word. Answer with all three,
                     in order.
                   </Trans>
                 </p>

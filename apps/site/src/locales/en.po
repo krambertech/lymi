@@ -841,6 +841,9 @@ msgstr "A few weeks in"
 msgid "A few words break the rule: <0/>, thank you, puts the stress on its second half."
 msgstr "A few words break the rule: <0/>, thank you, puts the stress on its second half."
 
+msgid "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
+msgstr "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
+
 msgid "A first-line drug for type 2 diabetes; it lowers the glucose the liver makes"
 msgstr "A first-line drug for type 2 diabetes; it lowers the glucose the liver makes"
 
@@ -853,8 +856,8 @@ msgstr "A flat plate on a door says push; a handle says pull."
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 
-msgid "A free Estonian lesson on a noun’s three main forms (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and the endings -ne, -us and long vowels that tell you the third. Every word is read aloud."
-msgstr "A free Estonian lesson on a noun’s three main forms (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and the endings -ne, -us and long vowels that tell you the third. Every word is read aloud."
+msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us and a final long vowel tell you the third. Every word is read aloud."
+msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us and a final long vowel tell you the third. Every word is read aloud."
 
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
@@ -1022,6 +1025,9 @@ msgstr "A notes field on each card"
 msgid "A noun has three forms"
 msgstr "A noun has three forms"
 
+msgid "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its second form the same and adds <1>-d</1> for the third: <2>töö, töö, tööd</2>."
+msgstr "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its second form the same and adds <1>-d</1> for the third: <2>töö, töö, tööd</2>."
+
 msgid "A page that isn’t where the link says it is"
 msgstr "A page that isn’t where the link says it is"
 
@@ -1148,20 +1154,8 @@ msgstr "A way in, never the answer."
 msgid "A weekly check-in"
 msgstr "A weekly check-in"
 
-msgid "A word in -us ends its third form in -ust: vastust."
-msgstr "A word in -us ends its third form in -ust: vastust."
-
-msgid "A word in -us has a second form in -use: vastuse."
-msgstr "A word in -us has a second form in -use: vastuse."
-
-msgid "A word in <0>-ne</0> or <1>-us</1> ends its third form in <2>-st</2>, and a word of one long syllable adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
-msgstr "A word in <0>-ne</0> or <1>-us</1> ends its third form in <2>-st</2>, and a word of one long syllable adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
-
 msgid "A word list from a spreadsheet"
 msgstr "A word list from a spreadsheet"
-
-msgid "A word of one long syllable, such as <0/>, work, keeps its second form the same and adds <1>-d</1> for the third: <2>töö, töö, tööd</2>."
-msgstr "A word of one long syllable, such as <0/>, work, keeps its second form the same and adds <1>-d</1> for the third: <2>töö, töö, tööd</2>."
 
 msgid "A year has 365 days."
 msgstr "A year has 365 days."
@@ -1640,8 +1634,8 @@ msgstr "All six. You matched every pronoun with its ending."
 msgid "All six. You picked the second and third form every time."
 msgstr "All six. You picked the second and third form every time."
 
-msgid "All six. You read the third form off the ending every time."
-msgstr "All six. You read the third form off the ending every time."
+msgid "All six. You typed the third form right every time."
+msgstr "All six. You typed the third form right every time."
 
 msgid "All Spanish decks"
 msgstr "All Spanish decks"
@@ -4901,6 +4895,10 @@ msgstr "holy; a holiday"
 msgid "home"
 msgstr "home"
 
+msgctxt "kodu: the place you live"
+msgid "home"
+msgstr "home"
+
 msgid "Hopefully"
 msgstr "Hopefully"
 
@@ -5623,6 +5621,9 @@ msgstr "In the place"
 msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It’s the same for every person, so no is easier than yes."
 msgstr "In the present tense, put <0>ei</0> before the verb and drop its ending. It’s the same for every person, so no is easier than yes."
 
+msgid "In the second, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the third ends in <3>-st</3>."
+msgstr "In the second, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the third ends in <3>-st</3>."
+
 msgid "In this folder"
 msgstr "In this folder"
 
@@ -6148,6 +6149,9 @@ msgstr "Learn the same deck together"
 msgid "Learn the Spanish words you’ll use most, a few minutes a day. A native voice reads every card, and free decks take you from <0>hola</0> to B1."
 msgstr "Learn the Spanish words you’ll use most, a few minutes a day. A native voice reads every card, and free decks take you from <0>hola</0> to B1."
 
+msgid "Learn the vowel at the end of the third form along with the word: <0>poodi, lauda, turgu</0>."
+msgstr "Learn the vowel at the end of the third form along with the word: <0>poodi, lauda, turgu</0>."
+
 msgid "Learn three questions whole: <0>Mis su nimi on? Kuidas läheb?</0> and <1>Kust sa pärit oled?</1>"
 msgstr "Learn three questions whole: <0>Mis su nimi on? Kuidas läheb?</0> and <1>Kust sa pärit oled?</1>"
 
@@ -6279,6 +6283,12 @@ msgstr "library"
 msgid "Light reactions"
 msgstr "Light reactions"
 
+msgid "Like küsimus, vastus ends its third form in -ust: vastust."
+msgstr "Like küsimus, vastus ends its third form in -ust: vastust."
+
+msgid "Like küsimus, vastus has a second form in -use: vastuse."
+msgstr "Like küsimus, vastus has a second form in -use: vastuse."
+
 msgid "Like the a in “cat”."
 msgstr "Like the a in “cat”."
 
@@ -6403,8 +6413,8 @@ msgstr "Longing for what is gone"
 msgid "look forward to"
 msgstr "look forward to"
 
-msgid "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, always in the same order, because most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. Here they’re the first, second and third form."
-msgstr "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, always in the same order, because most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. Here they’re the first, second and third form."
+msgid "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them the first, second and third form."
+msgstr "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them the first, second and third form."
 
 msgid "Look."
 msgstr "Look."
@@ -6889,9 +6899,6 @@ msgstr "More than a translation."
 msgid "More than one"
 msgstr "More than one"
 
-msgid "More than one: lesson {plural}"
-msgstr "More than one: lesson {plural}"
-
 msgid "More updates"
 msgstr "More updates"
 
@@ -6921,6 +6928,9 @@ msgstr "Most Polish words stress the second syllable from the end, so their card
 
 msgid "Most Spanish nouns ending in -o are masculine and most ending in -a are feminine, but not <0>el día</0> or <1>la mano</1>. The ready-made decks keep every noun with its el or la, and AI notes the gender when the ending doesn’t match."
 msgstr "Most Spanish nouns ending in -o are masculine and most ending in -a are feminine, but not <0>el día</0> or <1>la mano</1>. The ready-made decks keep every noun with its el or la, and AI notes the gender when the ending doesn’t match."
+
+msgid "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
+msgstr "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
 
 msgid "mother"
 msgstr "mother"
@@ -7479,9 +7489,6 @@ msgstr "Once you add a deck, Lymi schedules each card by how well you remember i
 msgid "one"
 msgstr "one"
 
-msgid "One"
-msgstr "One"
-
 msgid "One card’s reviews over seven weeks"
 msgstr "One card’s reviews over seven weeks"
 
@@ -7521,9 +7528,6 @@ msgstr "One letter or two?"
 msgid "One letter or two? Listen, then fill the gap."
 msgstr "One letter or two? Listen, then fill the gap."
 
-msgid "One long syllable: the second is the same, the third adds <0>-d</0>."
-msgstr "One long syllable: the second is the same, the third adds <0>-d</0>."
-
 msgid "One more"
 msgstr "One more"
 
@@ -7556,6 +7560,9 @@ msgstr "One shared deck, everyone on their own schedule"
 
 msgid "One spelling, two words."
 msgstr "One spelling, two words."
+
+msgid "One syllable ending in a long vowel: the second is the same, the third adds <0>-d</0>."
+msgstr "One syllable ending in a long vowel: the second is the same, the third adds <0>-d</0>."
 
 msgid "One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 msgstr "One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
@@ -7983,6 +7990,10 @@ msgstr "Plural cases"
 
 msgid "Plural partitive"
 msgstr "Plural partitive"
+
+msgctxt "grammatical number"
+msgid "Plural: see lesson {plural}"
+msgstr "Plural: see lesson {plural}"
 
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP and PRINCE2: processes, roles and the vocabulary."
@@ -9002,9 +9013,6 @@ msgstr "Short for teie."
 msgid "Short for tema."
 msgstr "Short for tema."
 
-msgid "Short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn those whole."
-msgstr "Short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn those whole."
-
 msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 msgstr "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
 
@@ -9080,6 +9088,10 @@ msgstr "Sina as the one something is done to: Ma ootan sind, I’m waiting for y
 
 msgid "Sina is you: this says “You are Jaan.”"
 msgstr "Sina is you: this says “You are Jaan.”"
+
+msgctxt "grammatical number"
+msgid "Singular"
+msgstr "Singular"
 
 msgid "sit down"
 msgstr "sit down"
@@ -9195,11 +9207,14 @@ msgstr "Some kanji look different in a Chinese font. Lymi shows your cards in Ja
 msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 msgstr "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 
+msgid "Some short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
+msgstr "Some short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
+
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 
-msgid "Some words give their third form away. A word ending in <0>-ne</0> has a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. A word ending in <6>-us</6> does the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
-msgstr "Some words give their third form away. A word ending in <0>-ne</0> has a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. A word ending in <6>-us</6> does the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
+msgid "Some words give their third form away. Most words ending in <0>-ne</0> have a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
+msgstr "Some words give their third form away. Most words ending in <0>-ne</0> have a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
 
 msgid "Somebody, nobody: -gi and -ki"
 msgstr "Somebody, nobody: -gi and -ki"
@@ -9918,9 +9933,6 @@ msgstr "The *way* home takes an hour."
 msgid "The *window* is open."
 msgstr "The *window* is open."
 
-msgid "The <0>s</0> becomes <1>h</1> in the second; the third ends in <2>-st</2>."
-msgstr "The <0>s</0> becomes <1>h</1> in the second; the third ends in <2>-st</2>."
-
 msgid "The 1618 revolt in Prague that started the Thirty Years’ War"
 msgstr "The 1618 revolt in Prague that started the Thirty Years’ War"
 
@@ -10386,6 +10398,9 @@ msgstr "The second day of the week."
 msgid "The second day. Teisi- sounds like <0/>, second."
 msgstr "The second day. Teisi- sounds like <0/>, second."
 
+msgid "The second drops the <0>d</0> and one <1>o</1>; the third has them back."
+msgstr "The second drops the <0>d</0> and one <1>o</1>; the third has them back."
+
 msgid "The second drops the <0>d</0>; the third has it back."
 msgstr "The second drops the <0>d</0>; the third has it back."
 
@@ -10658,6 +10673,10 @@ msgstr "Things to ask Grok Bot."
 
 msgid "Third"
 msgstr "Third"
+
+#. placeholder {0}: firstTwo(forms)
+msgid "Third form of {0}"
+msgstr "Third form of {0}"
 
 msgid "thirteen"
 msgstr "thirteen"
@@ -12008,9 +12027,6 @@ msgstr "Which questions come up"
 msgid "Which two come next?"
 msgstr "Which two come next?"
 
-msgid "Which vowel ends the third form you learn with the word: <0>poodi, lauda, turgu</0>."
-msgstr "Which vowel ends the third form you learn with the word: <0>poodi, lauda, turgu</0>."
-
 msgid "Which word did you hear?"
 msgstr "Which word did you hear?"
 
@@ -12479,9 +12495,6 @@ msgstr "You can do it!"
 
 msgid "You can edit your content and settings, export your library, control AI services and reminders, revoke keys and disconnect apps. You can also request access, correction, erasure, restriction or portability of personal data, or object to processing based on legitimate interests. These rights depend on the circumstances and applicable law. Email <0>hello@lymi.app</0>; we may verify your identity before acting. You can complain to the <1>Estonian Data Protection Inspectorate</1> or your local supervisory authority."
 msgstr "You can edit your content and settings, export your library, control AI services and reminders, revoke keys and disconnect apps. You can also request access, correction, erasure, restriction or portability of personal data, or object to processing based on legitimate interests. These rights depend on the circumstances and applicable law. Email <0>hello@lymi.app</0>; we may verify your identity before acting. You can complain to the <1>Estonian Data Protection Inspectorate</1> or your local supervisory authority."
-
-msgid "You can’t count on it, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
-msgstr "You can’t count on it, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
 
 msgid "You can’t live without *water*."
 msgstr "You can’t live without *water*."

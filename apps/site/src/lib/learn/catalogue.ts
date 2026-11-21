@@ -157,7 +157,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`The three forms of an Estonian noun`,
         et: "Kolm põhivormi",
         minutes: 12,
-        blurb: msg`A free Estonian lesson on a noun’s three main forms (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and the endings -ne, -us and long vowels that tell you the third. Every word is read aloud.`,
+        blurb: msg`A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us and a final long vowel tell you the third. Every word is read aloud.`,
       },
       { name: msg`The genitive case`, et: "Minu raamat" },
       { name: msg`“To have”`, et: "Mul on" },

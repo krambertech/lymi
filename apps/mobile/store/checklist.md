@@ -7,7 +7,7 @@ What App Store Connect and Play Console need by hand for the first submission, i
 1. Raise `expo.version` in `apps/mobile/app.json` to `1.0.0`, the version the stores will show, and follow the contract steps in `docs/phone-release.md` for a new version.
 2. Ship a binary with this pull request's privacy manifest, the AI consent prompt (#973) and content reports (#971). Each changes the native fingerprint or the review notes, so the build under review must postdate all three.
 3. Make the review account as [`review.md`](review.md) describes.
-4. Run `node apps/mobile/store/screenshots/render.mjs` to write the screenshots to `apps/mobile/store/screenshots/out/`.
+4. Run `node apps/mobile/store/screenshots/set.mjs` to write the screenshots to `apps/mobile/store/screenshots/out/`.
 
 ## App Store Connect
 

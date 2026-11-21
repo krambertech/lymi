@@ -1641,8 +1641,8 @@ msgstr "All languages"
 msgid "All lessons"
 msgstr "All lessons"
 
-msgid "All nine. You matched each <0>-da</0> form to its verb."
-msgstr "All nine. You matched each <0>-da</0> form to its verb."
+msgid "All nine. You knew which verb each <0>-da</0> form belongs to."
+msgstr "All nine. You knew which verb each <0>-da</0> form belongs to."
 
 msgid "All of Explore"
 msgstr "All of Explore"
@@ -4830,8 +4830,8 @@ msgstr "Hear {0}"
 msgid "Hear {0}, {1}"
 msgstr "Hear {0}, {1}"
 
-msgid "Hear a <0>-da</0> form and pick the verb it belongs to. These are the ones that look least like their <1>-ma</1> form."
-msgstr "Hear a <0>-da</0> form and pick the verb it belongs to. These are the ones that look least like their <1>-ma</1> form."
+msgid "Hear a <0>-da</0> form and pick what its verb means. These are the ones that look least like their <1>-ma</1> form."
+msgstr "Hear a <0>-da</0> form and pick what its verb means. These are the ones that look least like their <1>-ma</1> form."
 
 msgid "Hear a command and pick what it asks you to do."
 msgstr "Hear a command and pick what it asks you to do."

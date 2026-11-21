@@ -1,4 +1,4 @@
-import type { MessageDescriptor } from "@lingui/core";
+import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
@@ -516,8 +516,9 @@ export function heardRun<
 type HeardItem = ChoiceItem & { said: string; pair: readonly [string, string] };
 type AskedItem = ChoiceItem & { said: string; pair: readonly [string, string] };
 
-const verbOptions = (verbs: readonly Verb[]) =>
-  verbs.map((ma) => ({ id: ma, label: <span lang="et">{ma}</span> }));
+/** Each verb by its meaning, so the spelling of the heard form can't point at the answer. */
+const verbOptions = (verbs: readonly Verb[], i18n: I18n) =>
+  verbs.map((ma) => ({ id: ma, label: <span lang={i18n.locale}>{i18n._(MEANS[ma])}</span> }));
 
 /** The passage of the class, gap by gap, each gap's words in its own order. */
 export const CLASS_GAPS = [
@@ -642,7 +643,7 @@ function WhichForm({ verb, kind, said }: { verb: VerbForms; kind: Kind; said: st
 }
 
 export function VerbiPohivormidLesson() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const present = lessonBySlug("olevik")?.n;
   const pronouns = lessonBySlug("mina-sina-tema")?.n;
   const commands = lessonBySlug("kaskiv")?.n;
@@ -681,17 +682,19 @@ export function VerbiPohivormidLesson() {
           pair: [ma, ma] as const,
           src: src(da),
           answer: ma,
-          options: verbOptions(firstVerbs(i)),
+          options: verbOptions(firstVerbs(i), i18n),
           explain: <WhichForm verb={verb} kind="da" said={da} />,
         };
       }),
-    [],
+    [i18n],
   );
 
   // Every round but the first draws its wrong verbs afresh, so no set of options names the answer.
   const askedRun = (items: readonly AskedItem[], pinned?: AskedItem): AskedItem[] =>
     eachPairFirst(items, pinned).map((item) =>
-      item === pinned ? item : { ...item, options: verbOptions(threeVerbs(item.answer as Asked)) },
+      item === pinned
+        ? item
+        : { ...item, options: verbOptions(threeVerbs(item.answer as Asked), i18n) },
     );
 
   return (
@@ -907,8 +910,8 @@ export function VerbiPohivormidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a <End>-da</End> form and pick the verb it belongs to. These are the ones
-                    that look least like their <End>-ma</End> form.
+                    Hear a <End>-da</End> form and pick what its verb means. These are the ones that
+                    look least like their <End>-ma</End> form.
                   </Trans>
                 </p>
               </Prose>
@@ -920,7 +923,7 @@ export function VerbiPohivormidLesson() {
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>
-                      All nine. You matched each <End>-da</End> form to its verb.
+                      All nine. You knew which verb each <End>-da</End> form belongs to.
                     </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>

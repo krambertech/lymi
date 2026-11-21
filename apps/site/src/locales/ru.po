@@ -1641,7 +1641,7 @@ msgstr "Все языки"
 msgid "All lessons"
 msgstr "Все уроки"
 
-msgid "All nine. You matched each <0>-da</0> form to its verb."
+msgid "All nine. You knew which verb each <0>-da</0> form belongs to."
 msgstr "Все девять. Каждая форма на <0>-da</0> — со своим глаголом."
 
 msgid "All of Explore"
@@ -4830,8 +4830,8 @@ msgstr "Послушать {0}"
 msgid "Hear {0}, {1}"
 msgstr "Послушать {0}, {1}"
 
-msgid "Hear a <0>-da</0> form and pick the verb it belongs to. These are the ones that look least like their <1>-ma</1> form."
-msgstr "Послушай форму на <0>-da</0> и выбери, от какого она глагола. Здесь те, что меньше всего похожи на свою форму на <1>-ma</1>."
+msgid "Hear a <0>-da</0> form and pick what its verb means. These are the ones that look least like their <1>-ma</1> form."
+msgstr "Послушай форму на <0>-da</0> и выбери, что значит её глагол. Здесь те, что меньше всего похожи на свою форму на <1>-ma</1>."
 
 msgid "Hear a command and pick what it asks you to do."
 msgstr "Послушай команду и выбери, что она просит сделать."

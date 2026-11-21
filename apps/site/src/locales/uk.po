@@ -732,6 +732,15 @@ msgstr "Родовий відмінок плюс <0>-ni</0>."
 msgid "<0>-ni</0> says how far, in place or in time: <1/> is as far as Tartu. It marks where the way stops. Going into a place is still <2/> or <3/> from lesson {into}."
 msgstr "<0>-ni</0> каже, де межа, — у місці чи в часі: <1/> — аж до Тарту, і не далі. Щоб зайти в саме місце, як і раніше кажуть <2/> чи <3/> з уроку {into}: «у магазин» — це не -ni."
 
+msgid "<0>-nud</0> and <1>-tud</1> never change before a noun: <2>ma ostsin kasutatud auto</2>."
+msgstr "<0>-nud</0> і <1>-tud</1> перед іменником ніколи не змінюються: <2>ma ostsin kasutatud auto</2>."
+
+msgid "<0>-nud</0> and <1>-tud</1> stay the same whatever the noun does: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. <5>-v</5> changes like any adjective: <6>magav laps</6>, but <7>ma nägin magavat last</7>. You meet them every day on signs: <8>avatud</8>, open, and <9>suletud</9>, closed."
+msgstr "<0>-nud</0> і <1>-tud</1> не змінюються, хоч би в якому відмінку стояв іменник: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. А <5>-v</5> змінюється, як звичайний прикметник: <6>magav laps</6>, але <7>ma nägin magavat last</7>. Ці форми трапляються щодня на табличках: <8>avatud</8>, «відчинено», і <9>suletud</9>, «зачинено»."
+
+msgid "<0>-nud</0> for what the noun has done: <1>väsinud mees</1>, a man who is tired."
+msgstr "<0>-nud</0> — для того, що іменник уже зробив: <1>väsinud mees</1>, «втомлений чоловік»."
+
 msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
 msgstr "<0>-s</0> і <1>-l</1> додаємо до основи іменника: <2>pood</2>, основа <3>poe</3>, <4>poes</4>."
 
@@ -750,11 +759,20 @@ msgstr "Родовий відмінок плюс <0>-ta</0>."
 msgid "<0>-tu</0> means without, like English -less: <1>kodutu</1>, homeless."
 msgstr "<0>-tu</0> означає «без», як «без-» у «бездомний»: <1>kodutu</1>."
 
+msgid "<0>-tud</0> or <1>-dud</1> for what was done to the noun: <2>loetud raamat</2>, <3>suletud uks</3>."
+msgstr "<0>-tud</0> або <1>-dud</1> — для того, що зробили з іменником: <2>loetud raamat</2>, «прочитана книжка», <3>suletud uks</3>, «зачинені двері»."
+
 msgid "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
 msgstr "<0>-us</0> стає <1>-use</1>, а потім <2>-ust</2>."
 
 msgid "<0>-us</0> takes <1>-t</1>."
 msgstr "<0>-us</0> отримує <1>-t</1>."
+
+msgid "<0>-v</0> for what the noun is doing: <1>magav laps</1>, a sleeping child. Take the <2>-ma</2> form and swap <3>-ma</3> for <4>-v</4>, or <5>-ev</5> after a consonant: <6>laulev</6>."
+msgstr "<0>-v</0> — для того, що іменник робить: <1>magav laps</1>, «спляча дитина». Візьми форму на <2>-ma</2> і заміни <3>-ma</3> на <4>-v</4>, а після приголосного — на <5>-ev</5>: <6>laulev</6>."
+
+msgid "<0>-v</0> or <1>-tud</1>?"
+msgstr "<0>-v</0> чи <1>-tud</1>?"
 
 #. placeholder {0}: noun.word
 #. placeholder {1}: noun.stem
@@ -798,6 +816,12 @@ msgstr "<0>{0}</0> — це «{1}»."
 #. placeholder {1}: phrase.where
 msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
 msgstr "<0>{0}</0> — це <1>{1}</1> без останньої літери."
+
+#. placeholder {0}: verb.v
+#. placeholder {1}: verb.nud
+#. placeholder {2}: verb.tud
+msgid "<0>{0}</0> is doing it, <1>{1}</1> has done it, and something <2>{2}</2> has had it done to it."
+msgstr "<0>{0}</0> — той, хто це робить, <1>{1}</1> — той, хто це вже зробив, а <2>{2}</2> — те, з чим це зробили."
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
@@ -1069,6 +1093,9 @@ msgstr "<0>Last</0> — третя форма, тож вона йде після
 
 msgid "<0>Laua peal</0> and <1>laual</1> say the same, and so do <2>kasti sees</2> and <3>kastis</3>."
 msgstr "<0>Laua peal</0> і <1>laual</1> означають те саме, так само <2>kasti sees</2> і <3>kastis</3>."
+
+msgid "<0>Loetud raamat</0>, a book that has been read. <1>Magav laps</1>, a sleeping child. A verb can describe a noun, just like an adjective."
+msgstr "<0>Loetud raamat</0> — прочитана книжка. <1>Magav laps</1> — спляча дитина. Дієслово може описувати іменник, як прикметник."
 
 msgid "<0>Lugesin</0> is I read, I was reading and I did read: one simple past for all three. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
 msgstr "Простий минулий час не має роду: <0>lugesin</0> — це і «я читав», і «я читала». Коли саме, показують слова на зразок <1>eile</1> чи <2>eelmisel nädalal</2>."
@@ -1700,6 +1727,9 @@ msgstr "гарна кімната"
 msgid "a big house"
 msgstr "великий будинок"
 
+msgid "A bike for sale"
+msgstr "Продається велосипед"
+
 msgid "A book"
 msgstr "Книжка"
 
@@ -1751,6 +1781,9 @@ msgstr "Зміна всередині слова"
 
 msgid "A chat with Mari"
 msgstr "Розмова з Марі"
+
+msgid "A child’s car seat"
+msgstr "Дитяче крісло в машину"
 
 msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
 msgstr "Після сьогоднішнього уроку в колоді групи «Естонська A2 · щовівторка» з’являються три нові картки: kohtuma, broneerima та ilm. Їх отримують усі {learners} учнів."
@@ -1919,6 +1952,9 @@ msgstr "Безкоштовний урок естонської про те, як
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про meeldima, «подобатися»: mulle meeldib та інші особи, meeldivad, коли подобається кілька речей, meeldib з дієсловом, ei meeldi, питання з kas і kellele та почуття, як-от mul on külm. Кожне речення озвучене."
 
+msgid "A free Estonian lesson on participles, verbs used like adjectives: -v for doing it (magav laps, tulev nädal), -nud for has done it (väsinud), and -tud for done to it (loetud raamat, kasutatud auto, suletud), with an ad to read. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про дієприкметники — дієслова в ролі прикметників: -v для того, хто робить (magav laps, tulev nädal), -nud для того, хто вже зробив (väsinud), і -tud для того, з чим це зробили (loetud raamat, kasutatud auto, suletud), а ще оголошення для читання. Кожне речення озвучене."
+
 msgid "A free Estonian lesson on particle verbs whose meaning is new: aru saama (understand), läbi saama (get along), välja nägema (look), kokku leppima (agree), vastu võtma (accept) and maha jääma (miss), and why the particle goes to the end of the sentence. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про дієслова з частками, що мають нове значення: aru saama (розуміти), läbi saama (ладнати), välja nägema (виглядати), kokku leppima (домовлятися), vastu võtma (приймати) і maha jääma (не встигнути), і чому частка стоїть у кінці речення. Кожне речення озвучене."
 
@@ -2084,6 +2120,12 @@ msgstr "Прощання з <0>-ni</0>: до завтра."
 msgid "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
 msgstr "Рутина Grok Bot запускається щодня о 8:00: перевір, що чекає на повторення в Lymi, і поганяй мене. Цього ранку він знайшов 12 карток з іспанської, приблизно на п’ять хвилин, і спитав, як буде «страйк»."
 
+msgid "A growing child"
+msgstr "Дитина, яка росте"
+
+msgid "A grown-up who rides to work"
+msgstr "Дорослий, що їздить на роботу"
+
 msgid "A hard letter turns soft, k into g, p into b and t into d: <0/>, <1/>."
 msgstr "Глуха літера стає дзвінкою, k на g, p на b і t на d: <0/>, <1/>."
 
@@ -2219,6 +2261,9 @@ msgstr "Кожну картку читає AI-голос носія іспанс
 
 msgid "A native Ukrainian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
 msgstr "Кожну картку читає AI-голос носія української і наголошує той склад, який позначено, тож <0>за́мок</0> і <1>замо́к</1> звучать по-різному. Якщо в картки є власний запис, звучить він."
+
+msgid "A new bicycle"
+msgstr "Новий велосипед"
 
 msgid "a new book"
 msgstr "нова книжка"
@@ -2408,6 +2453,9 @@ msgstr "На табличці кожен день позначено першо�
 msgid "a small cat"
 msgstr "маленький кіт"
 
+msgid "A small child learning to ride"
+msgstr "Малюк, що вчиться кататися"
+
 msgid "A small or dear one"
 msgstr "Щось маленьке чи миле"
 
@@ -2470,6 +2518,9 @@ msgstr "місто"
 
 msgid "A translation beside each one"
 msgstr "Переклад біля кожного питання"
+
+msgid "A used bicycle"
+msgstr "Вживаний велосипед"
 
 msgid "A voice message from Jaan"
 msgstr "Голосове повідомлення від Яана"
@@ -3108,6 +3159,9 @@ msgstr "Усі вісім. Ти вмієш будувати основу для 
 msgid "All eight. You can say while and without in one word."
 msgstr "Усі вісім. Ти вмієш сказати «роблячи» і «не зробивши» одним словом."
 
+msgid "All eight. You can turn any verb into an adjective."
+msgstr "Усі вісім. Тепер ти можеш зробити з будь-якого дієслова прикметник."
+
 msgid "All eight. You hear what each verb asks for."
 msgstr "Усі вісім. Ти чуєш, чого вимагає кожне дієслово."
 
@@ -3417,6 +3471,12 @@ msgstr "Файл .ofc з Noji"
 
 msgid "An activity has the same three, built on its <0>-ma</0> form: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
 msgstr "Заняття має ті самі три форми, і всі вони виростають із форми на <0>-ma</0>: <1/> <2/> <3/> Марі йде плавати, вона на плаванні, і вона вже повертається."
+
+msgid "An ad"
+msgstr "Оголошення"
+
+msgid "an ad, a notice"
+msgstr "оголошення"
 
 msgid "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. A big house is <3/>, and big houses are <4/>."
 msgstr "Прикметник перед іменником у множині теж стоїть у множині й утворюється так само: <0/>, <1/>, <2/>. Великий будинок — <3/>, а великі будинки — <4/>."
@@ -4412,6 +4472,9 @@ msgstr "Купуємо сир і хліб"
 
 msgid "By {publisher}"
 msgstr "Від {publisher}"
+
+msgid "by agreement, to be agreed"
+msgstr "за домовленістю"
 
 msgid "By boat"
 msgstr "Човном"
@@ -5578,6 +5641,9 @@ msgstr "Дія"
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Зробити двічі — те саме, що зробити один раз"
 
+msgid "Doing it, or done to it?"
+msgstr "Робить чи зроблено?"
+
 msgid "don’t"
 msgstr "не роби"
 
@@ -5641,6 +5707,9 @@ msgstr "На -tud/-dud"
 
 msgid "Done form, impersonal now and impersonal past"
 msgstr "Форма на -tud/-dud, безособова зараз і в минулому"
+
+msgid "Done to it"
+msgstr "Зроблено з ним"
 
 msgid "Done. Biology has a section for each file."
 msgstr "Готово. У «Біології» є розділ для кожного файлу."
@@ -6178,6 +6247,9 @@ msgstr "Основа іменника в естонській"
 
 msgid "Estonian numbers"
 msgstr "Числа естонською"
+
+msgid "Estonian participles: lugev, lugenud, loetud raamat"
+msgstr "Естонські дієприкметники: lugev, lugenud, loetud raamat"
 
 msgid "Estonian particle verbs: aru saama, läbi saama, välja nägema"
 msgstr "Естонські дієслова з частками: що означають і де стоїть частка"
@@ -7740,8 +7812,14 @@ msgstr "Є"
 msgid "Has done"
 msgstr "Уже зроблено"
 
+msgid "Has done it"
+msgstr "Уже зробив"
+
 msgid "has to be done; comes"
 msgstr "треба; приходить"
+
+msgid "Hästi hoitud, well kept."
+msgstr "Hästi hoitud — у доброму стані, доглянутий."
 
 msgid "Have a *lovely* weekend!"
 msgstr "*Гарних* вихідних!"
@@ -10019,6 +10097,9 @@ msgstr "Noji — це те саме, що Anki?"
 msgid "Is or works as"
 msgstr "Є чи ким працює"
 
+msgid "Is the noun doing it, or did someone do it to the noun? Pick the form, then hear the sentence."
+msgstr "Іменник сам це робить чи це зробили з ним? Обери форму, а потім послухай речення."
+
 msgid "Is there"
 msgstr "Є"
 
@@ -10139,6 +10220,15 @@ msgstr "Правильно: <0>{expected}</0>."
 
 msgid "It was a really *pleasant* evening."
 msgstr "Це був дуже *приємний* вечір."
+
+msgid "It was painted"
+msgstr "Його пофарбували"
+
+msgid "It was repaired"
+msgstr "Його відремонтували"
+
+msgid "It was sold"
+msgstr "Його продали"
 
 msgid "It will all work out"
 msgstr "Усе владнається"
@@ -12085,6 +12175,9 @@ msgstr "Вона є в більшості наземних рослин."
 msgid "Most of them. Ask the verb its question: <0>keda, kellest, kellele, kellega?</0>"
 msgstr "Більшість. Постав дієслову його питання: <0>keda, kellest, kellele, kellega?</0>"
 
+msgid "Most of them. Ask: does the noun do it, or is it done to it?"
+msgstr "Більшість. Запитай себе: іменник це робить чи це зробили з ним?"
+
 msgid "Most of them. Ask: is it happening too, or not happening?"
 msgstr "Більшість. Запитай себе: це теж відбувається чи не відбувається?"
 
@@ -13327,6 +13420,9 @@ msgstr "З однини в множину"
 
 msgid "One verb after another"
 msgstr "Дієслово після дієслова"
+
+msgid "One verb gives three words that describe a noun."
+msgstr "Одне дієслово дає три слова, що описують іменник."
 
 msgid "One verb in two words"
 msgstr "Одне дієслово у двох словах"
@@ -15670,11 +15766,17 @@ msgstr "Деякі слова з новою останньою голосною 
 msgid "Somebody, nobody: -gi and -ki"
 msgstr "Хтось, ніхто: -gi і -ki"
 
+msgid "Someone did it to the noun, so it takes <0>-tud</0>: <1>{answer}</1>."
+msgstr "Це зробили з іменником, тож потрібна <0>-tud</0>: <1>{answer}</1>."
+
 msgid "Someone eats, drinks or wants some of it, uncounted, so the third form."
 msgstr "Це їдять, п’ють чи хочуть, не рахуючи, тому третя форма."
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Хтось інший, чоловік чи жінка: одне слово для обох."
+
+msgid "Someone is selling a bike. Read the <0/> and look for the <1>-tud</1> and <2>-v</2> words. <3>Müüa</3> at the start of an ad means for sale."
+msgstr "Хтось продає велосипед. Прочитай <0/>, «оголошення», і шукай слова на <1>-tud</1> і <2>-v</2>. <3>Müüa</3> на початку оголошення означає «продається»."
 
 msgid "Someone to come and fix it tomorrow"
 msgstr "Щоб завтра хтось прийшов і полагодив"
@@ -17569,6 +17671,9 @@ msgstr "Заперечення olema, «бути»."
 msgid "the Noji help centre"
 msgstr "довідковий центр Noji"
 
+msgid "The noun is doing it itself, so it takes <0>-v</0>: <1>{answer}</1>."
+msgstr "Іменник робить це сам, тож потрібна <0>-v</0>: <1>{answer}</1>."
+
 msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 msgstr "Іменник закінчується на <0>-d</0>, дієслово — на <1>-vad</1>. <2>On</2> не змінюється."
 
@@ -18740,6 +18845,9 @@ msgstr "Три питання — три закінчення: <0>kus?</0> <1>-s
 msgid "Three take the second form, and mööda takes the third."
 msgstr "Три вимагають другої форми, а mööda — третьої."
 
+msgid "Three verb adjectives"
+msgstr "Три дієприкметники"
+
 msgid "Three verbs"
 msgstr "Три дієслова"
 
@@ -19036,6 +19144,9 @@ msgstr "допомагати"
 
 msgid "to him or her"
 msgstr "йому чи їй"
+
+msgid "to keep, to look after"
+msgstr "тримати, берегти"
 
 msgid "to learn"
 msgstr "вчити, вчитися"
@@ -19335,6 +19446,9 @@ msgstr "розуміти"
 msgid "to us"
 msgstr "нам"
 
+msgid "to use"
+msgstr "використовувати"
+
 msgid "To usually do something"
 msgstr "Зазвичай щось робити"
 
@@ -19366,6 +19480,9 @@ msgstr "Працювати"
 msgctxt "where to"
 msgid "To work"
 msgstr "На роботу"
+
+msgid "to write"
+msgstr "писати"
 
 msgid "to you, more than one; polite"
 msgstr "вам: кільком людям або ввічливо"
@@ -19902,6 +20019,9 @@ msgstr "Дієслово"
 msgid "Verbs"
 msgstr "Дієслова"
 
+msgid "Verbs and the adjectives made from them"
+msgstr "Дієслова і дієприкметники від них"
+
 msgid "Verbs and the case they take"
 msgstr "Дієслова і відмінки, яких вони вимагають"
 
@@ -20381,6 +20501,9 @@ msgstr "Що п’є Пеетер?"
 msgid "What does she need?"
 msgstr "Що їй потрібно?"
 
+msgid "What does the ad say?"
+msgstr "Що сказано в оголошенні?"
+
 msgid "What does the ending say?"
 msgstr "Що каже закінчення?"
 
@@ -20407,6 +20530,9 @@ msgstr "А якщо я вже користуюся Anki?"
 
 msgid "What if it gets something wrong?"
 msgstr "А якщо він помилиться?"
+
+msgid "What is for sale?"
+msgstr "Що продають?"
 
 msgid "What is he going to do next week?"
 msgstr "Що він робитиме наступного тижня?"
@@ -20477,6 +20603,9 @@ msgstr "Що робити?"
 
 msgid "What to remember"
 msgstr "Що запам’ятати"
+
+msgid "What was done to it last month?"
+msgstr "Що з ним зробили минулого місяця?"
 
 msgid "What we collect and why"
 msgstr "Які дані ми збираємо й навіщо"
@@ -21111,6 +21240,9 @@ msgstr "Хто приносить квіти?"
 
 msgid "Who is it about?"
 msgstr "Про кого це?"
+
+msgid "Who is it right for?"
+msgstr "Кому він підійде?"
 
 msgid "Who is Peeter?"
 msgstr "Хто такий Пеетер?"
@@ -21865,6 +21997,9 @@ msgstr "ви"
 
 msgid "You all work in an office."
 msgstr "Ви працюєте в офісі."
+
+msgid "You already know two of these forms. The <0>-nud</0> form from lesson {perfect} says what someone has done, and the <1>-tud</1> form from lesson {impersonal} says what was done. Put either one before a noun and it works like an adjective. The new one is <2>-v</2>, for what the noun is doing right now, like English “sleeping” in “a sleeping child”."
+msgstr "Дві з цих форм ти вже знаєш. Форма на <0>-nud</0> з уроку {perfect} каже, що хтось уже зробив, а форма на <1>-tud</1> з уроку {impersonal} — що було зроблено. Постав будь-яку з них перед іменником, і вона працює як прикметник, зовсім як українські дієприкметники: «втомлений», «прочитана». Нова форма — <2>-v</2>, для того, що іменник робить зараз, як «спляча» у «спляча дитина»."
 
 msgid "You and Kati plan Saturday. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
 msgstr "Ви з Каті плануєте суботу. Вибери, що ти скажеш. Якщо вибереш неправильну відповідь, побачиш чому, а потім почуєш правильну."

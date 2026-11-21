@@ -731,6 +731,15 @@ msgstr "<0>-ni</0> on the genitive."
 msgid "<0>-ni</0> says how far, in place or in time: <1/> is as far as Tartu. It marks where the way stops. Going into a place is still <2/> or <3/> from lesson {into}."
 msgstr "<0>-ni</0> says how far, in place or in time: <1/> is as far as Tartu. It marks where the way stops. Going into a place is still <2/> or <3/> from lesson {into}."
 
+msgid "<0>-nud</0> and <1>-tud</1> never change before a noun: <2>ma ostsin kasutatud auto</2>."
+msgstr "<0>-nud</0> and <1>-tud</1> never change before a noun: <2>ma ostsin kasutatud auto</2>."
+
+msgid "<0>-nud</0> and <1>-tud</1> stay the same whatever the noun does: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. <5>-v</5> changes like any adjective: <6>magav laps</6>, but <7>ma nägin magavat last</7>. You meet them every day on signs: <8>avatud</8>, open, and <9>suletud</9>, closed."
+msgstr "<0>-nud</0> and <1>-tud</1> stay the same whatever the noun does: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. <5>-v</5> changes like any adjective: <6>magav laps</6>, but <7>ma nägin magavat last</7>. You meet them every day on signs: <8>avatud</8>, open, and <9>suletud</9>, closed."
+
+msgid "<0>-nud</0> for what the noun has done: <1>väsinud mees</1>, a man who is tired."
+msgstr "<0>-nud</0> for what the noun has done: <1>väsinud mees</1>, a man who is tired."
+
 msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
 msgstr "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
 
@@ -749,11 +758,20 @@ msgstr "<0>-ta</0> on the genitive."
 msgid "<0>-tu</0> means without, like English -less: <1>kodutu</1>, homeless."
 msgstr "<0>-tu</0> means without, like English -less: <1>kodutu</1>, homeless."
 
+msgid "<0>-tud</0> or <1>-dud</1> for what was done to the noun: <2>loetud raamat</2>, <3>suletud uks</3>."
+msgstr "<0>-tud</0> or <1>-dud</1> for what was done to the noun: <2>loetud raamat</2>, <3>suletud uks</3>."
+
 msgid "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
 msgstr "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
 
 msgid "<0>-us</0> takes <1>-t</1>."
 msgstr "<0>-us</0> takes <1>-t</1>."
+
+msgid "<0>-v</0> for what the noun is doing: <1>magav laps</1>, a sleeping child. Take the <2>-ma</2> form and swap <3>-ma</3> for <4>-v</4>, or <5>-ev</5> after a consonant: <6>laulev</6>."
+msgstr "<0>-v</0> for what the noun is doing: <1>magav laps</1>, a sleeping child. Take the <2>-ma</2> form and swap <3>-ma</3> for <4>-v</4>, or <5>-ev</5> after a consonant: <6>laulev</6>."
+
+msgid "<0>-v</0> or <1>-tud</1>?"
+msgstr "<0>-v</0> or <1>-tud</1>?"
 
 #. placeholder {0}: noun.word
 #. placeholder {1}: noun.stem
@@ -797,6 +815,12 @@ msgstr "<0>{0}</0> is {1}."
 #. placeholder {1}: phrase.where
 msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
 msgstr "<0>{0}</0> is <1>{1}</1> without its last letter."
+
+#. placeholder {0}: verb.v
+#. placeholder {1}: verb.nud
+#. placeholder {2}: verb.tud
+msgid "<0>{0}</0> is doing it, <1>{1}</1> has done it, and something <2>{2}</2> has had it done to it."
+msgstr "<0>{0}</0> is doing it, <1>{1}</1> has done it, and something <2>{2}</2> has had it done to it."
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
@@ -1068,6 +1092,9 @@ msgstr "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
 
 msgid "<0>Laua peal</0> and <1>laual</1> say the same, and so do <2>kasti sees</2> and <3>kastis</3>."
 msgstr "<0>Laua peal</0> and <1>laual</1> say the same, and so do <2>kasti sees</2> and <3>kastis</3>."
+
+msgid "<0>Loetud raamat</0>, a book that has been read. <1>Magav laps</1>, a sleeping child. A verb can describe a noun, just like an adjective."
+msgstr "<0>Loetud raamat</0>, a book that has been read. <1>Magav laps</1>, a sleeping child. A verb can describe a noun, just like an adjective."
 
 msgid "<0>Lugesin</0> is I read, I was reading and I did read: one simple past for all three. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
 msgstr "<0>Lugesin</0> is I read, I was reading and I did read: one simple past for all three. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
@@ -1699,6 +1726,9 @@ msgstr "a beautiful room"
 msgid "a big house"
 msgstr "a big house"
 
+msgid "A bike for sale"
+msgstr "A bike for sale"
+
 msgid "A book"
 msgstr "A book"
 
@@ -1750,6 +1780,9 @@ msgstr "A change inside"
 
 msgid "A chat with Mari"
 msgstr "A chat with Mari"
+
+msgid "A child’s car seat"
+msgstr "A child’s car seat"
 
 msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
 msgstr "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
@@ -1918,6 +1951,9 @@ msgstr "A free Estonian lesson on making nouns from verbs: drop -ma and add -ja 
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on participles, verbs used like adjectives: -v for doing it (magav laps, tulev nädal), -nud for has done it (väsinud), and -tud for done to it (loetud raamat, kasutatud auto, suletud), with an ad to read. Every sentence is read aloud."
+msgstr "A free Estonian lesson on participles, verbs used like adjectives: -v for doing it (magav laps, tulev nädal), -nud for has done it (väsinud), and -tud for done to it (loetud raamat, kasutatud auto, suletud), with an ad to read. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on particle verbs whose meaning is new: aru saama (understand), läbi saama (get along), välja nägema (look), kokku leppima (agree), vastu võtma (accept) and maha jääma (miss), and why the particle goes to the end of the sentence. Every sentence is read aloud."
 msgstr "A free Estonian lesson on particle verbs whose meaning is new: aru saama (understand), läbi saama (get along), välja nägema (look), kokku leppima (agree), vastu võtma (accept) and maha jääma (miss), and why the particle goes to the end of the sentence. Every sentence is read aloud."
 
@@ -2083,6 +2119,12 @@ msgstr "A goodbye with <0>-ni</0>: see you tomorrow."
 msgid "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
 msgstr "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
 
+msgid "A growing child"
+msgstr "A growing child"
+
+msgid "A grown-up who rides to work"
+msgstr "A grown-up who rides to work"
+
 msgid "A hard letter turns soft, k into g, p into b and t into d: <0/>, <1/>."
 msgstr "A hard letter turns soft, k into g, p into b and t into d: <0/>, <1/>."
 
@@ -2218,6 +2260,9 @@ msgstr "A native Spanish AI voice reads every card, so <0>ñ</0>, the rolled <1>
 
 msgid "A native Ukrainian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
 msgstr "A native Ukrainian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
+
+msgid "A new bicycle"
+msgstr "A new bicycle"
 
 msgid "a new book"
 msgstr "a new book"
@@ -2407,6 +2452,9 @@ msgstr "A sign shortens each day to its first letter, as in lesson {days}. Hours
 msgid "a small cat"
 msgstr "a small cat"
 
+msgid "A small child learning to ride"
+msgstr "A small child learning to ride"
+
 msgid "A small or dear one"
 msgstr "A small or dear one"
 
@@ -2469,6 +2517,9 @@ msgstr "a town"
 
 msgid "A translation beside each one"
 msgstr "A translation beside each one"
+
+msgid "A used bicycle"
+msgstr "A used bicycle"
 
 msgid "A voice message from Jaan"
 msgstr "A voice message from Jaan"
@@ -3107,6 +3158,9 @@ msgstr "All eight. You can build the stem for every plural case."
 msgid "All eight. You can say while and without in one word."
 msgstr "All eight. You can say while and without in one word."
 
+msgid "All eight. You can turn any verb into an adjective."
+msgstr "All eight. You can turn any verb into an adjective."
+
 msgid "All eight. You hear what each verb asks for."
 msgstr "All eight. You hear what each verb asks for."
 
@@ -3416,6 +3470,12 @@ msgstr "An .ofc file from Noji"
 
 msgid "An activity has the same three, built on its <0>-ma</0> form: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
 msgstr "An activity has the same three, built on its <0>-ma</0> form: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
+
+msgid "An ad"
+msgstr "An ad"
+
+msgid "an ad, a notice"
+msgstr "an ad, a notice"
 
 msgid "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. A big house is <3/>, and big houses are <4/>."
 msgstr "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. A big house is <3/>, and big houses are <4/>."
@@ -4411,6 +4471,9 @@ msgstr "Buying cheese and bread"
 
 msgid "By {publisher}"
 msgstr "By {publisher}"
+
+msgid "by agreement, to be agreed"
+msgstr "by agreement, to be agreed"
 
 msgid "By boat"
 msgstr "By boat"
@@ -5577,6 +5640,9 @@ msgstr "Doing it"
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Doing it twice has the same effect as doing it once"
 
+msgid "Doing it, or done to it?"
+msgstr "Doing it, or done to it?"
+
 msgid "don’t"
 msgstr "don’t"
 
@@ -5640,6 +5706,9 @@ msgstr "Done"
 
 msgid "Done form, impersonal now and impersonal past"
 msgstr "Done form, impersonal now and impersonal past"
+
+msgid "Done to it"
+msgstr "Done to it"
 
 msgid "Done. Biology has a section for each file."
 msgstr "Done. Biology has a section for each file."
@@ -6177,6 +6246,9 @@ msgstr "Estonian noun stems"
 
 msgid "Estonian numbers"
 msgstr "Estonian numbers"
+
+msgid "Estonian participles: lugev, lugenud, loetud raamat"
+msgstr "Estonian participles: lugev, lugenud, loetud raamat"
 
 msgid "Estonian particle verbs: aru saama, läbi saama, välja nägema"
 msgstr "Estonian particle verbs: aru saama, läbi saama, välja nägema"
@@ -7739,8 +7811,14 @@ msgstr "Has"
 msgid "Has done"
 msgstr "Has done"
 
+msgid "Has done it"
+msgstr "Has done it"
+
 msgid "has to be done; comes"
 msgstr "has to be done; comes"
+
+msgid "Hästi hoitud, well kept."
+msgstr "Hästi hoitud, well kept."
 
 msgid "Have a *lovely* weekend!"
 msgstr "Have a *lovely* weekend!"
@@ -10018,6 +10096,9 @@ msgstr "Is Noji the same as Anki?"
 msgid "Is or works as"
 msgstr "Is or works as"
 
+msgid "Is the noun doing it, or did someone do it to the noun? Pick the form, then hear the sentence."
+msgstr "Is the noun doing it, or did someone do it to the noun? Pick the form, then hear the sentence."
+
 msgid "Is there"
 msgstr "Is there"
 
@@ -10138,6 +10219,15 @@ msgstr "It was <0>{expected}</0>."
 
 msgid "It was a really *pleasant* evening."
 msgstr "It was a really *pleasant* evening."
+
+msgid "It was painted"
+msgstr "It was painted"
+
+msgid "It was repaired"
+msgstr "It was repaired"
+
+msgid "It was sold"
+msgstr "It was sold"
 
 msgid "It will all work out"
 msgstr "It will all work out"
@@ -12084,6 +12174,9 @@ msgstr "Most land plants have one."
 msgid "Most of them. Ask the verb its question: <0>keda, kellest, kellele, kellega?</0>"
 msgstr "Most of them. Ask the verb its question: <0>keda, kellest, kellele, kellega?</0>"
 
+msgid "Most of them. Ask: does the noun do it, or is it done to it?"
+msgstr "Most of them. Ask: does the noun do it, or is it done to it?"
+
 msgid "Most of them. Ask: is it happening too, or not happening?"
 msgstr "Most of them. Ask: is it happening too, or not happening?"
 
@@ -13326,6 +13419,9 @@ msgstr "One to many"
 
 msgid "One verb after another"
 msgstr "One verb after another"
+
+msgid "One verb gives three words that describe a noun."
+msgstr "One verb gives three words that describe a noun."
 
 msgid "One verb in two words"
 msgstr "One verb in two words"
@@ -15669,11 +15765,17 @@ msgstr "Some words with a new last vowel also allow <0>-sid</0>: <1>maju</1> or 
 msgid "Somebody, nobody: -gi and -ki"
 msgstr "Somebody, nobody: -gi and -ki"
 
+msgid "Someone did it to the noun, so it takes <0>-tud</0>: <1>{answer}</1>."
+msgstr "Someone did it to the noun, so it takes <0>-tud</0>: <1>{answer}</1>."
+
 msgid "Someone eats, drinks or wants some of it, uncounted, so the third form."
 msgstr "Someone eats, drinks or wants some of it, uncounted, so the third form."
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Someone else, a man or a woman: one word for both."
+
+msgid "Someone is selling a bike. Read the <0/> and look for the <1>-tud</1> and <2>-v</2> words. <3>Müüa</3> at the start of an ad means for sale."
+msgstr "Someone is selling a bike. Read the <0/> and look for the <1>-tud</1> and <2>-v</2> words. <3>Müüa</3> at the start of an ad means for sale."
 
 msgid "Someone to come and fix it tomorrow"
 msgstr "Someone to come and fix it tomorrow"
@@ -17568,6 +17670,9 @@ msgstr "The no of olema, to be."
 msgid "the Noji help centre"
 msgstr "the Noji help centre"
 
+msgid "The noun is doing it itself, so it takes <0>-v</0>: <1>{answer}</1>."
+msgstr "The noun is doing it itself, so it takes <0>-v</0>: <1>{answer}</1>."
+
 msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 msgstr "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 
@@ -18739,6 +18844,9 @@ msgstr "Three questions, three endings: <0>kus?</0> <1>-s</1> for in, <2>kuhu?</
 msgid "Three take the second form, and mööda takes the third."
 msgstr "Three take the second form, and mööda takes the third."
 
+msgid "Three verb adjectives"
+msgstr "Three verb adjectives"
+
 msgid "Three verbs"
 msgstr "Three verbs"
 
@@ -19035,6 +19143,9 @@ msgstr "to help"
 
 msgid "to him or her"
 msgstr "to him or her"
+
+msgid "to keep, to look after"
+msgstr "to keep, to look after"
 
 msgid "to learn"
 msgstr "to learn"
@@ -19334,6 +19445,9 @@ msgstr "to understand"
 msgid "to us"
 msgstr "to us"
 
+msgid "to use"
+msgstr "to use"
+
 msgid "To usually do something"
 msgstr "To usually do something"
 
@@ -19365,6 +19479,9 @@ msgstr "To work"
 msgctxt "where to"
 msgid "To work"
 msgstr "To work"
+
+msgid "to write"
+msgstr "to write"
 
 msgid "to you, more than one; polite"
 msgstr "to you, more than one; polite"
@@ -19901,6 +20018,9 @@ msgstr "Verb"
 msgid "Verbs"
 msgstr "Verbs"
 
+msgid "Verbs and the adjectives made from them"
+msgstr "Verbs and the adjectives made from them"
+
 msgid "Verbs and the case they take"
 msgstr "Verbs and the case they take"
 
@@ -20380,6 +20500,9 @@ msgstr "What does Peeter drink?"
 msgid "What does she need?"
 msgstr "What does she need?"
 
+msgid "What does the ad say?"
+msgstr "What does the ad say?"
+
 msgid "What does the ending say?"
 msgstr "What does the ending say?"
 
@@ -20406,6 +20529,9 @@ msgstr "What if I already use Anki?"
 
 msgid "What if it gets something wrong?"
 msgstr "What if it gets something wrong?"
+
+msgid "What is for sale?"
+msgstr "What is for sale?"
 
 msgid "What is he going to do next week?"
 msgstr "What is he going to do next week?"
@@ -20476,6 +20602,9 @@ msgstr "What to do?"
 
 msgid "What to remember"
 msgstr "What to remember"
+
+msgid "What was done to it last month?"
+msgstr "What was done to it last month?"
 
 msgid "What we collect and why"
 msgstr "What we collect and why"
@@ -21110,6 +21239,9 @@ msgstr "Who is bringing flowers?"
 
 msgid "Who is it about?"
 msgstr "Who is it about?"
+
+msgid "Who is it right for?"
+msgstr "Who is it right for?"
 
 msgid "Who is Peeter?"
 msgstr "Who is Peeter?"
@@ -21864,6 +21996,9 @@ msgstr "you all"
 
 msgid "You all work in an office."
 msgstr "You all work in an office."
+
+msgid "You already know two of these forms. The <0>-nud</0> form from lesson {perfect} says what someone has done, and the <1>-tud</1> form from lesson {impersonal} says what was done. Put either one before a noun and it works like an adjective. The new one is <2>-v</2>, for what the noun is doing right now, like English “sleeping” in “a sleeping child”."
+msgstr "You already know two of these forms. The <0>-nud</0> form from lesson {perfect} says what someone has done, and the <1>-tud</1> form from lesson {impersonal} says what was done. Put either one before a noun and it works like an adjective. The new one is <2>-v</2>, for what the noun is doing right now, like English “sleeping” in “a sleeping child”."
 
 msgid "You and Kati plan Saturday. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
 msgstr "You and Kati plan Saturday. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."

@@ -3412,6 +3412,89 @@ const DES_MATA_CLIPS: Record<string, Clip> = {
   "p-kati": { sentences: MORNING_PASSAGE },
 };
 
+export const PARTICIPLE_VERBS = [
+  { ma: "lugema", v: "lugev", nud: "lugenud", tud: "loetud" },
+  { ma: "tegema", v: "tegev", nud: "teinud", tud: "tehtud" },
+  { ma: "kirjutama", v: "kirjutav", nud: "kirjutanud", tud: "kirjutatud" },
+  { ma: "laulma", v: "laulev", nud: "laulnud", tud: "lauldud" },
+  { ma: "kasutama", v: "kasutav", nud: "kasutanud", tud: "kasutatud" },
+  { ma: "sööma", v: "sööv", nud: "söönud", tud: "söödud" },
+] as const;
+
+export const PARTICIPLE_GAPS = [
+  {
+    id: "tud-kasutama",
+    before: "Me ostsime",
+    after: "auto, sest uus oli liiga kallis.",
+    answer: "kasutatud",
+    options: ["kasutatud", "kasutav"],
+  },
+  {
+    id: "v-magama",
+    before: "Ole vaiksem, toas on",
+    after: "laps.",
+    answer: "magav",
+    options: ["magav", "magatud"],
+  },
+  {
+    id: "tud-keetma",
+    before: "Hommikul sõin ma",
+    after: "muna ja leiba.",
+    answer: "keedetud",
+    options: ["keedetud", "keetev"],
+  },
+  {
+    id: "v-tulema",
+    before: "Ma kardan, et",
+    after: "nädal on väga kiire.",
+    answer: "tulev",
+    options: ["tulev", "tuldud"],
+  },
+  {
+    id: "v-tootama",
+    before: "Kas sul on mõni",
+    after: "laadija?",
+    answer: "töötav",
+    options: ["töötav", "töötatud"],
+  },
+  {
+    id: "tud-sulgema",
+    before: "Pood on täna",
+    after: ".",
+    answer: "suletud",
+    options: ["suletud", "sulgev"],
+  },
+  {
+    id: "v-jooksma",
+    before: "Kas suvilas on",
+    after: "vesi?",
+    answer: "jooksev",
+    options: ["jooksev", "joostud"],
+  },
+  {
+    id: "tud-kirjutama",
+    before: "See raamat on",
+    after: "lastele.",
+    answer: "kirjutatud",
+    options: ["kirjutatud", "kirjutav"],
+  },
+] as const;
+
+export const BIKE_AD_PASSAGE = [
+  "Müüa kasutatud jalgratas, kolm aastat vana.",
+  "Ratas on hästi hoitud ja eelmisel kuul parandatud.",
+  "See sobib kasvavale lapsele.",
+  "Hind on kokkuleppel, helista õhtuti.",
+] as const;
+
+const PARTICIPLE_CLIPS: Record<string, Clip> = {
+  ...words(PARTICIPLE_VERBS.flatMap((verb) => [verb.ma, verb.v, verb.nud, verb.tud])),
+  ...words(PARTICIPLE_GAPS.flatMap((gap) => gap.options)),
+  ...words(PARTICIPLE_GAPS.map(objectGapSaid)),
+  ...words(["kuulutus", "hoidma", "kokkuleppel"]),
+  "p-ad": { sentences: BIKE_AD_PASSAGE },
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -4390,6 +4473,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "opetaja-lugemine": VERB_NOUN_CLIPS,
   "sobralik-kodutu": SUFFIX_CLIPS,
   "lugedes-lugemata": DES_MATA_CLIPS,
+  "loetud-raamat": PARTICIPLE_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

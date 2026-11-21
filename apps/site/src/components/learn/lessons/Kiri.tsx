@@ -27,7 +27,7 @@ const GLOSSARY: Glossary = {
   },
   meister: { en: msg`repair person, craftsman` },
   parandama: { en: msg`to repair, to fix` },
-  tilkuma: { en: msg`to drip` },
+  tilkuma: { en: msg`to drip`, note: msg`Vesi tilgub, the water drips.` },
   pigem: { en: msg`rather, instead` },
 };
 
@@ -91,8 +91,8 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       ask: t(msg`When does the repair person come?`),
       options: [
         { id: "ten", label: t(msg`Tomorrow at ten o’clock`) },
-        { id: "five", label: t(msg`On Friday at ten`) },
-        { id: "friday", label: t(msg`On Friday at five`) },
+        { id: "fri-ten", label: t(msg`On Friday at ten`) },
+        { id: "fri-five", label: t(msg`On Friday at five`) },
       ],
       answer: "ten",
       line: 2,
@@ -113,7 +113,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       ask: t(msg`What will Mrs Tamm do if the repair person can’t come?`),
       options: [
         { id: "self", label: t(msg`Come and fix it herself`) },
-        { id: "new", label: t(msg`Come to Kati to fix it`) },
+        { id: "another", label: t(msg`Send another repair person`) },
         { id: "phone", label: t(msg`Phone Kati`) },
       ],
       answer: "phone",
@@ -164,8 +164,8 @@ function content(t: (descriptor: MessageDescriptor) => string) {
           line: "Ei, ma ei ole see parandama.",
           why: (
             <Trans>
-              After <Et>ei</Et>, the object takes the third form, <Et>seda</Et>, and the verb the
-              -nud form, <Et>parandanud</Et>.
+              After <Et>ei</Et>, the object takes the third form, <Et>seda</Et>. After{" "}
+              <Et>ei ole</Et>, the verb takes the -nud form: <Et>parandanud</Et>.
             </Trans>
           ),
         },
@@ -179,10 +179,10 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       replies: [
         { line: said("d-sina-3"), right: true },
         {
-          line: "Kas te saaksin pigem õhtul tulla?",
+          line: "Kas te saaksime pigem õhtul tulla?",
           why: (
             <Trans>
-              <Et>Saaksin</Et> is the ending for <Et>ma</Et>. With <Et>te</Et>, it’s{" "}
+              <Et>Saaksime</Et> is the ending for <Et>me</Et>. With <Et>te</Et>, it’s{" "}
               <Et>saaksite</Et>.
             </Trans>
           ),
@@ -212,11 +212,11 @@ function content(t: (descriptor: MessageDescriptor) => string) {
         },
         { line: said("d-sina-4"), right: true },
         {
-          line: "Aitäh, ma ootan teiega.",
+          line: "Aitäh, ma ootan teie.",
           why: (
             <Trans>
-              <Et>Teiega</Et> is with you. <Et>Ootama</Et> takes the third form: <Et>ootan teid</Et>
-              .
+              <Et>Teie</Et> is the long first form of <Et>te</Et>. <Et>Ootama</Et> takes the third form:{" "}
+              <Et>ootan teid</Et>.
             </Trans>
           ),
         },
@@ -298,7 +298,7 @@ export function KiriLesson() {
         },
         {
           id: "voice",
-          title: t`Mrs Tamm phones back`,
+          title: t`Mrs Tamm replies`,
           quiz: true,
           children: (
             <>
@@ -366,8 +366,8 @@ export function KiriLesson() {
                 title={<Trans>Talk: the repair person</Trans>}
                 part={
                   <Trans>
-                    You are Kati. You haven’t tried to fix the tap. You work tomorrow morning, so
-                    the evening suits you better.
+                    You are Kati. You haven’t tried to fix the tap yourself. The day after tomorrow
+                    you work in the morning, so the evening suits you better.
                   </Trans>
                 }
                 them={t`Repair person`}

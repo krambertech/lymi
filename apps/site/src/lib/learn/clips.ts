@@ -3003,7 +3003,7 @@ export const LETTER_PASSAGES = {
     "Te võite mulle helistada. Aitäh!",
   ],
   tamm: [
-    "Tere, Kati! See on proua Tamm.",
+    "Tere, Kati! Siin proua Tamm.",
     "Aitäh, et te mulle kirjutasite.",
     "Meister tuleb homme kell kümme.",
     "Selliseid kraane parandatakse kiiresti.",
@@ -3018,11 +3018,14 @@ export const LETTER_PASSAGES = {
 } as const;
 
 export const LETTER_DIALOGUE = {
-  "d-meister-1": { text: "Tere! Mina olen meister. Mis juhtus?", voice: "second" },
+  "d-meister-1": { text: "Tere, siin meister. Mis juhtus?", voice: "second" },
   "d-sina-1": "Köögis on kraan katki läinud.",
   "d-meister-2": { text: "Kas te olete seda ise parandanud?", voice: "second" },
   "d-sina-2": "Ei, ma ei ole seda parandanud.",
-  "d-meister-3": { text: "Kas ma võiksin homme hommikul tulla?", voice: "second" },
+  "d-meister-3": {
+    text: "Homme ma ei saa. Kas ma võiksin ülehomme hommikul tulla?",
+    voice: "second",
+  },
   "d-sina-3": "Kas te saaksite pigem õhtul tulla?",
   "d-meister-4": { text: "Hästi. Ma helistan teile enne.", voice: "second" },
   "d-sina-4": "Aitäh, ma ootan teid.",

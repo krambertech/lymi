@@ -1192,8 +1192,8 @@ msgstr "Після <0>sa</0> дієслово закінчується на <1>-
 msgid "<0>Sa</0> takes <1>oled</1>, not <2>on</2>."
 msgstr "Після <0>sa</0> йде <1>oled</1>, а не <2>on</2>."
 
-msgid "<0>Saaksin</0> is the ending for <1>ma</1>. With <2>te</2>, it’s <3>saaksite</3>."
-msgstr "<0>Saaksin</0> — закінчення для <1>ma</1>. З <2>te</2> буде <3>saaksite</3>."
+msgid "<0>Saaksime</0> is the ending for <1>me</1>. With <2>te</2>, it’s <3>saaksite</3>."
+msgstr "<0>Saaksime</0> — закінчення для <1>me</1>. З <2>te</2> буде <3>saaksite</3>."
 
 msgid "<0>Saama</0>, can, takes the -da form: <1>tulla</1>."
 msgstr "<0>Saama</0> у значенні «могти» вимагає форми на -da: <1>tulla</1>."
@@ -1276,11 +1276,11 @@ msgstr "<0>te</0> тепер, <1>site</1> у минулому."
 msgid "<0>Teha, näha, süüa</0> and <1>juua</1> end in a bare <2>-a</2> and change their stem. Learn these four whole."
 msgstr "<0>Teha, näha, süüa</0> й <1>juua</1> закінчуються просто на <2>-a</2>, і основа в них змінюється. Ці чотири запам’ятовуй цілими словами."
 
+msgid "<0>Teie</0> is the long first form of <1>te</1>. <2>Ootama</2> takes the third form: <3>ootan teid</3>."
+msgstr "<0>Teie</0> — довга перша форма від <1>te</1>. <2>Ootama</2> вимагає третьої форми: <3>ootan teid</3>."
+
 msgid "<0>Teie</0> is your. For you and Martin, say <1>meie</1>, our."
 msgstr "<0>Teie</0> — це «ваш». Про себе і Мартіна кажи <1>meie</1>, «наш»."
-
-msgid "<0>Teiega</0> is with you. <1>Ootama</1> takes the third form: <2>ootan teid</2>."
-msgstr "<0>Teiega</0> — це «з вами». <1>Ootama</1> вимагає третьої форми: <2>ootan teid</2>."
 
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — це «привіт», а Марі вже йде."
@@ -2690,8 +2690,8 @@ msgstr "Після <0>ei</0> завжди третя форма."
 msgid "After <0>ei</0>, the object always takes the third form: <1>seda</1>."
 msgstr "Після <0>ei</0> додаток завжди в третій формі: <1>seda</1>."
 
-msgid "After <0>ei</0>, the object takes the third form, <1>seda</1>, and the verb the -nud form, <2>parandanud</2>."
-msgstr "Після <0>ei</0> додаток стоїть у третій формі, <1>seda</1>, а дієслово у формі на -nud, <2>parandanud</2>."
+msgid "After <0>ei</0>, the object takes the third form, <1>seda</1>. After <2>ei ole</2>, the verb takes the -nud form: <3>parandanud</3>."
+msgstr "Після <0>ei</0> додаток стоїть у третій формі: <1>seda</1>. Після <2>ei ole</2> дієслово стоїть у формі на -nud: <3>parandanud</3>."
 
 msgid "After <0>ei</0>, the same form as for every other person."
 msgstr "Після <0>ei</0> — та сама форма, що й для всіх інших осіб."
@@ -4792,9 +4792,6 @@ msgstr "Іди додому!"
 msgid "Come on; let’s go"
 msgstr "Давай; ходімо"
 
-msgid "Come to Kati to fix it"
-msgstr "Прийти до Каті полагодити"
-
 msgid "come!"
 msgstr "приходь!"
 
@@ -5621,7 +5618,7 @@ msgid "Each verb has its case"
 msgstr "Кожне дієслово має свій відмінок"
 
 msgid "Each verb keeps its case: <0>helistan teile</0>, <1>ootan teid</1>, <2>vastas mulle</2>."
-msgstr "Кожне дієслово тримає свій відмінок: <0>helistan teile</0>, <1>ootan teid</1>, <2>vastas mulle</2>."
+msgstr "Кожне дієслово вимагає свого відмінка: <0>helistan teile</0>, <1>ootan teid</1>, <2>vastas mulle</2>."
 
 msgid "Each word gains a vowel at the end: <0>kooli, ukse, raamatu</0>."
 msgstr "Кожне слово отримує голосну в кінці: <0>kooli, ukse, raamatu</0>."
@@ -5936,7 +5933,7 @@ msgid "Estonian practice: shopping at the market"
 msgstr "Практика естонської: покупки на ринку"
 
 msgid "Estonian practice: write to your landlord about a broken tap"
-msgstr "Практика естонської: напиши власнику квартири про зламаний кран"
+msgstr "Практика естонської: напиши власниці квартири про зламаний кран"
 
 msgid "Estonian present tense"
 msgstr "Теперішній час в естонській мові"
@@ -11761,9 +11758,9 @@ msgid "Moving molecules against the gradient, using energy"
 msgstr "Перенесення молекул проти градієнта з витратою енергії"
 
 msgid "Mrs Tamm answers with a voice message. Listen for the time, and for a sentence that says what is done without saying who, the impersonal of lesson {impersonal}."
-msgstr "Пані Тамм відповідає голосовим повідомленням. Слухай, о котрій, і шукай речення, яке каже, що робиться, не кажучи хто, — безособову форму з уроку {impersonal}."
+msgstr "Пані Тамм відповідає голосовим повідомленням. Зверни увагу на час і знайди речення, яке каже, що робиться, не кажучи хто, — безособову форму з уроку {impersonal}."
 
-msgid "Mrs Tamm phones back"
+msgid "Mrs Tamm replies"
 msgstr "Пані Тамм відповідає"
 
 msgid "Mul on aega: I have time."
@@ -14636,6 +14633,9 @@ msgstr "Продавець"
 
 msgid "Send a lesson plan to your AI assistant, or use Lymi’s public API from your own tools."
 msgstr "Надішли план уроку AI-асистентові або використовуй відкритий API Lymi зі своїх інструментів."
+
+msgid "Send another repair person"
+msgstr "Надіслати іншого майстра"
 
 msgid "Send Claude, ChatGPT, Gemini or Grok a photo of your notes. It adds the cards to Lymi, where you review them."
 msgstr "Надішли фото нотаток у Claude, ChatGPT, Gemini чи Grok. Асистент додасть картки в Lymi, де ти їх повторюватимеш."
@@ -19289,6 +19289,9 @@ msgstr "Версія від 5 січня 2026 року"
 msgid "Version of 7 May 2025"
 msgstr "Версія від 7 травня 2025 року"
 
+msgid "Vesi tilgub, the water drips."
+msgstr "Vesi tilgub — вода капає."
+
 msgid "Vesi, vee, vett."
 msgstr "Vesi, vee, vett."
 
@@ -21172,8 +21175,8 @@ msgstr "Ти — Андрес. Цього разу ти розпитуєш Ма�
 msgid "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."
 msgstr "Ти Яан, лікар із Тарту. Марі говорить першою; обирай, що відповісти."
 
-msgid "You are Kati. You haven’t tried to fix the tap. You work tomorrow morning, so the evening suits you better."
-msgstr "Ти — Каті. Кран ще ніхто не лагодив. Завтра зранку в тебе робота, тож тобі зручніше ввечері."
+msgid "You are Kati. You haven’t tried to fix the tap yourself. The day after tomorrow you work in the morning, so the evening suits you better."
+msgstr "Ти — Каті. Ти ще не пробувала полагодити кран сама. Післязавтра зранку в тебе робота, тож тобі зручніше ввечері."
 
 msgid "you are, to more than one; polite you are"
 msgstr "ви є; ввічливе «Ви є»"

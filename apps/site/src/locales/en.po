@@ -1191,8 +1191,8 @@ msgstr "<0>Sa</0> takes <1>-d</1>: <2>töötad</2>."
 msgid "<0>Sa</0> takes <1>oled</1>, not <2>on</2>."
 msgstr "<0>Sa</0> takes <1>oled</1>, not <2>on</2>."
 
-msgid "<0>Saaksin</0> is the ending for <1>ma</1>. With <2>te</2>, it’s <3>saaksite</3>."
-msgstr "<0>Saaksin</0> is the ending for <1>ma</1>. With <2>te</2>, it’s <3>saaksite</3>."
+msgid "<0>Saaksime</0> is the ending for <1>me</1>. With <2>te</2>, it’s <3>saaksite</3>."
+msgstr "<0>Saaksime</0> is the ending for <1>me</1>. With <2>te</2>, it’s <3>saaksite</3>."
 
 msgid "<0>Saama</0>, can, takes the -da form: <1>tulla</1>."
 msgstr "<0>Saama</0>, can, takes the -da form: <1>tulla</1>."
@@ -1275,11 +1275,11 @@ msgstr "<0>te</0> now, <1>site</1> in the past."
 msgid "<0>Teha, näha, süüa</0> and <1>juua</1> end in a bare <2>-a</2> and change their stem. Learn these four whole."
 msgstr "<0>Teha, näha, süüa</0> and <1>juua</1> end in a bare <2>-a</2> and change their stem. Learn these four whole."
 
+msgid "<0>Teie</0> is the long first form of <1>te</1>. <2>Ootama</2> takes the third form: <3>ootan teid</3>."
+msgstr "<0>Teie</0> is the long first form of <1>te</1>. <2>Ootama</2> takes the third form: <3>ootan teid</3>."
+
 msgid "<0>Teie</0> is your. For you and Martin, say <1>meie</1>, our."
 msgstr "<0>Teie</0> is your. For you and Martin, say <1>meie</1>, our."
-
-msgid "<0>Teiega</0> is with you. <1>Ootama</1> takes the third form: <2>ootan teid</2>."
-msgstr "<0>Teiega</0> is with you. <1>Ootama</1> takes the third form: <2>ootan teid</2>."
 
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> is hello, and Mari is leaving."
@@ -2689,8 +2689,8 @@ msgstr "After <0>ei</0>, always the third form."
 msgid "After <0>ei</0>, the object always takes the third form: <1>seda</1>."
 msgstr "After <0>ei</0>, the object always takes the third form: <1>seda</1>."
 
-msgid "After <0>ei</0>, the object takes the third form, <1>seda</1>, and the verb the -nud form, <2>parandanud</2>."
-msgstr "After <0>ei</0>, the object takes the third form, <1>seda</1>, and the verb the -nud form, <2>parandanud</2>."
+msgid "After <0>ei</0>, the object takes the third form, <1>seda</1>. After <2>ei ole</2>, the verb takes the -nud form: <3>parandanud</3>."
+msgstr "After <0>ei</0>, the object takes the third form, <1>seda</1>. After <2>ei ole</2>, the verb takes the -nud form: <3>parandanud</3>."
 
 msgid "After <0>ei</0>, the same form as for every other person."
 msgstr "After <0>ei</0>, the same form as for every other person."
@@ -4790,9 +4790,6 @@ msgstr "Come home!"
 
 msgid "Come on; let’s go"
 msgstr "Come on; let’s go"
-
-msgid "Come to Kati to fix it"
-msgstr "Come to Kati to fix it"
 
 msgid "come!"
 msgstr "come!"
@@ -11762,8 +11759,8 @@ msgstr "Moving molecules against the gradient, using energy"
 msgid "Mrs Tamm answers with a voice message. Listen for the time, and for a sentence that says what is done without saying who, the impersonal of lesson {impersonal}."
 msgstr "Mrs Tamm answers with a voice message. Listen for the time, and for a sentence that says what is done without saying who, the impersonal of lesson {impersonal}."
 
-msgid "Mrs Tamm phones back"
-msgstr "Mrs Tamm phones back"
+msgid "Mrs Tamm replies"
+msgstr "Mrs Tamm replies"
 
 msgid "Mul on aega: I have time."
 msgstr "Mul on aega: I have time."
@@ -14635,6 +14632,9 @@ msgstr "Seller"
 
 msgid "Send a lesson plan to your AI assistant, or use Lymi’s public API from your own tools."
 msgstr "Send a lesson plan to your AI assistant, or use Lymi’s public API from your own tools."
+
+msgid "Send another repair person"
+msgstr "Send another repair person"
 
 msgid "Send Claude, ChatGPT, Gemini or Grok a photo of your notes. It adds the cards to Lymi, where you review them."
 msgstr "Send Claude, ChatGPT, Gemini or Grok a photo of your notes. It adds the cards to Lymi, where you review them."
@@ -19288,6 +19288,9 @@ msgstr "Version of 5 January 2026"
 msgid "Version of 7 May 2025"
 msgstr "Version of 7 May 2025"
 
+msgid "Vesi tilgub, the water drips."
+msgstr "Vesi tilgub, the water drips."
+
 msgid "Vesi, vee, vett."
 msgstr "Vesi, vee, vett."
 
@@ -21171,8 +21174,8 @@ msgstr "You are Andres. This time you ask Mari about herself."
 msgid "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."
 msgstr "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."
 
-msgid "You are Kati. You haven’t tried to fix the tap. You work tomorrow morning, so the evening suits you better."
-msgstr "You are Kati. You haven’t tried to fix the tap. You work tomorrow morning, so the evening suits you better."
+msgid "You are Kati. You haven’t tried to fix the tap yourself. The day after tomorrow you work in the morning, so the evening suits you better."
+msgstr "You are Kati. You haven’t tried to fix the tap yourself. The day after tomorrow you work in the morning, so the evening suits you better."
 
 msgid "you are, to more than one; polite you are"
 msgstr "you are, to more than one; polite you are"

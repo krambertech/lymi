@@ -1,7 +1,7 @@
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, X } from "lucide-react";
-import { type ReactNode, useCallback, useEffect, useRef, useState } from "react";
+import { type ReactNode, useCallback, useEffect, useId, useRef, useState } from "react";
 import { playSound, usePlaying } from "../../lib/learn/player";
 import { Feedback, type RoundProps, useAutoplay, useNudge } from "./Quiz";
 import { Listen, PlayButton } from "./Sound";
@@ -28,8 +28,8 @@ interface Place {
   hit: readonly [number, number, number];
   /** A place reached by moving, such as into the house: where the cat sets off from. */
   from?: Pose;
-  /** Hidden from view at rest, so a quiz can't ask for it. */
-  hidden?: boolean;
+  /** No place in a quiz: hidden from view at rest, or a movement rather than a place. */
+  quiz?: false;
 }
 
 export type SceneName = "box" | "house";
@@ -39,7 +39,7 @@ const BOX: Record<string, Place> = {
   sees: { pose: { x: 248, y: 184, s: 0.82, layer: "inside" }, hit: [248, 120, 20] },
   peal: { pose: { x: 210, y: 120, s: 0.84, layer: "front" }, hit: [210, 70, 24] },
   // Under the box can't be seen until the box tilts, so it has no place in a quiz.
-  all: { pose: { x: 236, y: 221, s: 0.5, layer: "behind" }, hit: [262, 214, 20], hidden: true },
+  all: { pose: { x: 236, y: 221, s: 0.5, layer: "behind" }, hit: [262, 214, 20], quiz: false },
   taga: { pose: { x: 170, y: 162, s: 0.82, layer: "behind" }, hit: [170, 98, 20] },
   ees: { pose: { x: 170, y: 252, s: 1.04, layer: "front" }, hit: [166, 206, 32] },
   korval: { pose: { x: 334, y: 222, s: 0.94, layer: "front" }, hit: [334, 176, 36] },
@@ -49,9 +49,9 @@ const YARD: Pose = { x: 338, y: 236, s: 0.78, layer: "front" };
 const DOOR: Pose = { x: 236, y: 224, s: 0.62, layer: "front" };
 const WINDOW: Pose = { x: 167, y: 192, s: 0.44, layer: "inside", window: true };
 const HOUSE: Record<string, Place> = {
-  majja: { pose: WINDOW, from: YARD, hit: [236, 192, 26] },
+  majja: { pose: WINDOW, from: YARD, hit: [236, 192, 26], quiz: false },
   majas: { pose: WINDOW, hit: [167, 160, 30] },
-  majast: { pose: YARD, from: WINDOW, hit: [338, 196, 34] },
+  majast: { pose: YARD, from: WINDOW, hit: [338, 196, 34], quiz: false },
 };
 
 const PLACES: Record<SceneName, Record<string, Place>> = { box: BOX, house: HOUSE };
@@ -162,15 +162,22 @@ class Stage {
     await run.finished.catch(() => {});
     this.lift(on);
   }
-  /** Moves the cat to a place, after any move already running. */
+  /** The place asked for last; a move still waiting for an older one is skipped. */
+  target: string | null = null;
+  /** Moves the cat to a place once the move running now ends. */
   go(id: string): Promise<void> {
-    this.queue = this.queue.then(() => this.travel(id)).catch(() => {});
+    this.target = id;
+    this.queue = this.queue
+      .then(() => (this.target === id ? this.travel(id) : undefined))
+      .catch(() => {});
     return this.queue;
   }
   /** Shows the cat at a place at once, as a quiz does after its answer. */
   show(id: string): Promise<void> {
+    this.target = id;
     this.queue = this.queue
       .then(async () => {
+        if (this.target !== id) return;
         if (reduced()) return this.set(id);
         await this.fade(false, 100);
         this.set(id);
@@ -232,11 +239,19 @@ class Stage {
   }
   /** The house: the cat walks to the door and appears in the window, or the other way. */
   async walk(id: string, place: Place) {
-    const inside = this.at.window === true;
     const end = place.pose;
+    const start = place.from;
+    // A movement starts on its own side: in the yard to walk in, inside to come out.
+    if (start && (start.window === true) !== (this.at.window === true)) {
+      await this.fade(false, 140);
+      this.jump(start);
+      await this.fade(true, 160);
+      await wait(160);
+    }
+    const inside = this.at.window === true;
     if (end.window) {
       if (!inside) {
-        if (place.from) await this.move({ ...DOOR }, 560, "cubic-bezier(0.45, 0, 0.25, 1)");
+        if (start) await this.move({ ...DOOR }, 560, "cubic-bezier(0.45, 0, 0.25, 1)");
         await this.fade(false, 140);
         this.set(id);
         this.cat.style.opacity = "0";
@@ -250,14 +265,18 @@ class Stage {
     } else {
       if (inside) {
         await this.fade(false, 140);
-        this.at = { ...DOOR };
-        this.layer(DOOR);
-        this.cat.style.transform = T(DOOR);
+        this.jump(DOOR);
         await this.fade(true, 160);
       }
       await this.move({ ...end }, 560, "cubic-bezier(0.45, 0, 0.25, 1)");
     }
     this.place = id;
+  }
+  /** Puts the cat at a pose without moving it there. */
+  jump(pose: Pose) {
+    this.at = { ...pose };
+    this.layer(pose);
+    this.cat.style.transform = T(pose);
   }
 }
 
@@ -278,6 +297,8 @@ function Drawing({
   ghosts?: Partial<Record<Pose["layer"], ReactNode>>;
   children?: ReactNode;
 }) {
+  // Two house drawings on a page each need their own window clip.
+  const clip = `learn-window-${useId().replace(/[^a-zA-Z0-9]/g, "")}`;
   const at = (name: Pose["layer"]) => (node: SVGGElement | null) => {
     layers.current[name] = node;
   };
@@ -355,11 +376,11 @@ function Drawing({
           />
           <rect x="140" y="146" width="54" height="50" rx="3" fill="var(--scene-room)" />
           <defs>
-            <clipPath id="learn-window">
+            <clipPath id={clip}>
               <rect x="140" y="146" width="54" height="50" rx="3" />
             </clipPath>
           </defs>
-          <g clipPath="url(#learn-window)">
+          <g clipPath={`url(#${clip})`}>
             {ghosts.inside}
             <g ref={at("inside")} />
           </g>
@@ -581,7 +602,7 @@ export function SceneRound({ item, state, heard, answer, autoplay }: RoundProps<
   }, [done, item.answer, stage]);
   if (!right) return null;
   const where = PLACES[item.scene];
-  const spots = item.places.filter((place) => where[place.id] && !where[place.id]?.hidden);
+  const spots = item.places.filter((place) => where[place.id] && where[place.id]?.quiz !== false);
   const markOf = (id: string) =>
     !done ? undefined : id === item.answer ? "right" : id === picked ? "wrong" : undefined;
   const pick = (id: string) => {
@@ -621,7 +642,13 @@ export function SceneRound({ item, state, heard, answer, autoplay }: RoundProps<
             <button
               key={place.id}
               type="button"
-              aria-label={place.meaning}
+              aria-label={
+                mark === "right"
+                  ? t`${place.meaning}, right answer`
+                  : mark === "wrong"
+                    ? t`${place.meaning}, your answer`
+                    : place.meaning
+              }
               aria-disabled={done || undefined}
               onClick={() => pick(place.id)}
               onPointerEnter={() => setActive(place.id)}
@@ -643,8 +670,7 @@ export function SceneRound({ item, state, heard, answer, autoplay }: RoundProps<
               <span className="learn-spot-name">{place.meaning}</span>
               {mark && (
                 <span
-                  role="img"
-                  aria-label={mark === "right" ? t`Right answer` : t`Your answer`}
+                  aria-hidden="true"
                   className={clsx(
                     "absolute -end-1 -top-1 grid size-5 place-items-center rounded-full text-plate ring-3 ring-plate",
                     mark === "right" ? "bg-success" : "bg-danger",

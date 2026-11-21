@@ -129,6 +129,14 @@ msgstr "{0} of {1} today"
 msgid "{0}, next in {1}"
 msgstr "{0}, next in {1}"
 
+#. placeholder {0}: place.meaning
+msgid "{0}, right answer"
+msgstr "{0}, right answer"
+
+#. placeholder {0}: place.meaning
+msgid "{0}, your answer"
+msgstr "{0}, your answer"
+
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {# card added} other {# cards added}}"
 

@@ -79,7 +79,7 @@ export function Timeline({ label, points, empty }: TimelineProps) {
       <fieldset className="m-0 min-w-0 border-0 p-0">
         <legend className="sr-only">{label}</legend>
         {/* Across, for a wide tray. */}
-        <div className="relative hidden h-32 @lg:block">
+        <div className="relative hidden h-32 @xl:block">
           <span
             aria-hidden="true"
             className="absolute inset-x-0 top-9 h-0.5 rounded-full bg-(--form-faint)"
@@ -114,13 +114,13 @@ export function Timeline({ label, points, empty }: TimelineProps) {
               point={each}
               pressed={picked === i}
               onPress={() => press(i)}
-              className="absolute top-6 w-28 -translate-x-1/2 justify-items-center text-center rtl:translate-x-1/2"
+              className="absolute top-6 w-max max-w-28 -translate-x-1/2 justify-items-center text-center rtl:translate-x-1/2"
               style={{ insetInlineStart: `${place(each.at)}%` }}
             />
           ))}
         </div>
         {/* Upright, for a narrow one: past at the top. */}
-        <div className="relative @lg:hidden">
+        <div className="relative @xl:hidden">
           <span
             aria-hidden="true"
             className="absolute inset-y-7 start-[0.9375rem] w-0.5 rounded-full bg-(--form-faint)"

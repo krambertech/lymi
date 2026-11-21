@@ -141,7 +141,7 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
                 scope="row"
                 className={clsx(
                   "grid min-w-0 text-start leading-tight font-normal",
-                  stacks && "grow basis-1/2 @lg:basis-auto",
+                  stacks && "grow",
                 )}
               >
                 <span
@@ -160,6 +160,8 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
                   </small>
                 )}
               </th>
+              {/* Stacked, the forms start a line of their own, however many columns there are. */}
+              {stacks && <td aria-hidden="true" className="h-0 basis-full p-0 @lg:hidden" />}
               {Array.from({ length: width }, (_, column) => {
                 const form = each.cells[column];
                 return (
@@ -188,7 +190,7 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
         </tbody>
       </table>
       {/* The live region stays put; only what is inside it is swapped. */}
-      <div aria-live="polite" hidden={!detail}>
+      <div aria-live="polite">
         {detail && (
           <div
             key={picked ? `${picked.row}-${picked.column}` : "empty"}

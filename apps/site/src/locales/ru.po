@@ -347,7 +347,7 @@ msgid "<0/> asks about people and <1/> about things: <2/> Who is that? <3/> What
 msgstr "<0/> спрашивает о людях, а <1/> — о вещах: <2/> Кто это? <3/> Что это?"
 
 msgid "<0/> asks how many, and the noun after it takes its third form too. For a price, ask with <1>kui palju</1>, how much, from lesson {questions}."
-msgstr "<0/> спрашивает, сколько чего-то есть, и существительное после него тоже стоит в третьей форме. Чтобы спросить цену, говори <1>kui palju</1>, «сколько», из урока {questions}."
+msgstr "<0/> значит «сколько», и существительное после него тоже стоит в третьей форме. Чтобы спросить цену, спрашивай <1>kui palju</1>, «сколько», из урока {questions}."
 
 msgid "<0/> at the start turns a sentence into a yes-or-no question. Lesson {questions} covers kas and the question words."
 msgstr "<0/> в начале превращает предложение в вопрос, на который отвечают «да» или «нет». О kas и вопросительных словах рассказывает урок {questions}."
@@ -359,10 +359,10 @@ msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/
 msgstr "<0/> не имеет окончания и подходит и для «он или она», и для «они». Поэтому <1/> — неправильный глагол: у других глаголов окончание есть и здесь, об этом — в уроке {regularVerbs}."
 
 msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/>"
-msgstr "<0/> — у меня есть кошка. Чтобы сказать, что кошки нет, возьми <1/> из урока {negation}, а кошка перейдёт в третью форму: <2/>"
+msgstr "<0/> У меня есть кошка. Чтобы сказать, что кошки нет, возьми <1/> из урока {negation}, а кошка перейдёт в третью форму: <2/>"
 
 msgid "<0/> is a cup of coffee. The amount comes first, in its first form, and what it measures follows in its third: <1/> becomes <2/>."
-msgstr "<0/> — чашка кофе. Сначала идёт мера в первой форме, а за ней то, что меряют, в третьей: <1/> становится <2/>. По-русски так же: «стакан воды», а не «стакан вода»."
+msgstr "<0/> — чашка кофе. Сначала идёт слово количества в первой форме, а за ним то, что меряют, в третьей: <1/> становится <2/>. По-русски так же: «стакан воды», а не «стакан вода»."
 
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> — это сто, а <1/> — тысяча, и «один» перед ними не говорят. Сотни пишутся слитно, <2/>, а тысячи отдельно: <3/>."
@@ -400,9 +400,6 @@ msgstr "<0/> значит «половина» и смотрит вперёд. <
 msgid "<0/> means holy, so this is the holy day."
 msgstr "<0/> значит «святой», так что это святой день."
 
-msgid "<0/> means the same, since <1>pole</1> is the short form of <2>ei ole</2>. Lesson {have} taught <3>mul on</3>."
-msgstr "<0/> значит то же самое: <1>pole</1> — краткая форма <2>ei ole</2>. Конструкцию <3>mul on</3> объясняет урок {have}."
-
 msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 msgstr "<0/> значит «быть». Его окончание меняется по лицам: <1/> — «я есть», <2/> — «ты есть». Нажми на окончание."
 
@@ -416,7 +413,7 @@ msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no
 msgstr "<0/> Ты живёшь в Таллине. <1/> Ты живёшь в Таллине? Чтобы спросить «да или нет», поставь <2/> перед предложением."
 
 msgid "<0/>, a lot, <1/>, a little, and <2/>, not much, work the same way. You asked <3>Kui palju kohvi sa jood?</3> in lesson {questions}: that’s this rule too."
-msgstr "Так же работают <0/> — много, <1/> — немного и <2/> — мало. Вопрос <3>Kui palju kohvi sa jood?</3> из урока {questions} построен по тому же правилу."
+msgstr "<0/> (много), <1/> (немного) и <2/> (мало) работают так же. Вопрос <3>Kui palju kohvi sa jood?</3> из урока {questions} построен по тому же правилу."
 
 msgid "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
 msgstr "<0/>, «пожалуйста», делает команду вежливой. Когда по-эстонски говорят слишком быстро, скажи: <1/>"
@@ -499,7 +496,7 @@ msgid "<0>Mina</0> takes <1>olen</1>: <2>Mina olen Andres</2>."
 msgstr "После <0>mina</0> идёт <1>olen</1>: <2>Mina olen Andres</2>."
 
 msgid "<0>Natuke</0> is an amount too: <1>natuke piima</1>."
-msgstr "<0>Natuke</0> — тоже мера: <1>natuke piima</1>."
+msgstr "<0>Natuke</0> тоже обозначает количество: <1>natuke piima</1>."
 
 msgid "<0>Olen</0> for I, <1>oled</1> for you, <2>on</2> for he or she and for they."
 msgstr "<0>Olen</0> для «я», <1>oled</1> для «ты», <2>on</2> для «он или она» и для «они»."
@@ -937,8 +934,8 @@ msgstr "Бесплатный урок о днях недели на эстонс
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "Бесплатный урок о повелительном наклонении в эстонском языке: основа глагола как команда (loe!, istu!, tule siia!), ära для «не делай», формы на -ge и -ke для нескольких человек или на «вы», повседневные команды вроде räägi aeglasemalt, palun и короткий разговор в кафе. Каждое предложение озвучено."
 
-msgid "A free lesson on the Estonian partitive case, a noun’s third form: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), in no sentences (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
-msgstr "Бесплатный урок о партитиве в эстонском языке, третьей форме существительного: после числительных от двух (kaks kassi, viis eurot), после mitu и слов меры (tass kohvi), в отрицании (mul pole kassi) и с едой и напитками (ma joon kohvi). Каждое предложение озвучено."
+msgid "A free lesson on the Estonian partitive case, a noun’s third form: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
+msgstr "Бесплатный урок о партитиве в эстонском языке, третьей форме существительного: после числительных от двух (kaks kassi, viis eurot), после mitu и слов количества (tass kohvi), после pole (mul pole kassi) и с едой и напитками (ma joon kohvi). Каждое предложение озвучено."
 
 msgid "A full card in seconds"
 msgstr "Полная карточка за секунды"
@@ -1484,6 +1481,12 @@ msgstr "После <0>ei</0> у глагола <1>olema</1> нет оконча�
 msgid "After <0>kaks</0>, the third form: <1>kaks kassi</1>."
 msgstr "После <0>kaks</0> — третья форма: <1>kaks kassi</1>."
 
+msgid "After <0>pole</0>, the thing someone hasn’t got, or that isn’t somewhere, takes the third form: <1>Mul pole kassi</1>."
+msgstr "После <0>pole</0> то, чего у кого-то нет или чего где-то нет, стоит в третьей форме: <1>Mul pole kassi</1>."
+
+msgid "After <0>pole</0>, what isn’t there takes its third form: <1>kassi, autot, last</1>. <2>Maja</2> stays <3>maja</3>."
+msgstr "После <0>pole</0> то, чего нет, стоит в третьей форме: <1>kassi, autot, last</1>. <2>Maja</2> остаётся <3>maja</3>."
+
 msgid "After <0>pole</0>, what isn’t there takes the third form: <1>pole leiba</1>."
 msgstr "После <0>pole</0> то, чего нет, стоит в третьей форме: <1>pole leiba</1>."
 
@@ -1512,13 +1515,13 @@ msgid "After a number from two up, the third form: <0>seitse eurot</0>."
 msgstr "После числа от двух — третья форма: <0>seitse eurot</0>."
 
 msgid "After an amount"
-msgstr "После слова меры"
+msgstr "После слов количества"
 
 msgid "After an amount, the third form: <0>kilo juustu</0>."
-msgstr "После меры — третья форма: <0>kilo juustu</0>."
+msgstr "После слова количества — третья форма: <0>kilo juustu</0>."
 
 msgid "After an amount, what it measures takes the third form: <0>tass kohvi, palju raha</0>."
-msgstr "После меры то, что меряют, стоит в третьей форме: <0>tass kohvi, palju raha</0>."
+msgstr "После слова количества то, что меряют, стоит в третьей форме: <0>tass kohvi, palju raha</0>."
 
 msgid "After ei the verb drops its ending: ei ela."
 msgstr "После ei глагол теряет окончание: ei ela."
@@ -1701,7 +1704,7 @@ msgid "All six. You matched every pronoun with its ending."
 msgstr "Все шесть. Каждое местоимение — со своим окончанием."
 
 msgid "All six. You picked the right form after every number."
-msgstr "Все шесть. Ты выбрал правильную форму после каждого числа."
+msgstr "Все шесть: после каждого числа верная форма."
 
 msgid "All Spanish decks"
 msgstr "Все испанские колоды"
@@ -1750,7 +1753,7 @@ msgid "am not, is not, are not"
 msgstr "не быть: я не, он не, они не"
 
 msgid "Amounts"
-msgstr "Меры"
+msgstr "Слова количества"
 
 msgid "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
 msgstr "Файл .apkg или .colpkg из Anki, AnkiDroid или AnkiMobile"
@@ -1981,7 +1984,7 @@ msgid "Ask Grok Bot to explain a hard topic in plain words, then keep the key st
 msgstr "Попроси Grok Bot простыми словами объяснить сложную тему, а главные шаги сохрани как карточки."
 
 msgid "Ask how many with <0>mitu</0> and the third form: <1>Mitu last sul on?</1>"
-msgstr "Спрашивай «сколько» через <0>mitu</0> и третью форму: <1>Mitu last sul on?</1>"
+msgstr "Чтобы спросить «сколько», говори <0>mitu</0> и ставь существительное в третью форму: <1>Mitu last sul on?</1>"
 
 msgid "Ask the time and understand the answer. Halves and quarters count toward the hour that’s coming."
 msgstr "Спроси, который час, и пойми ответ. Половины и четверти считают до наступающего часа."
@@ -4150,9 +4153,6 @@ msgstr "Следить через RSS"
 msgid "Food and drink"
 msgstr "Еда и напитки"
 
-msgid "Food and drink you don’t count take it too: <0>Ma joon kohvi</0>."
-msgstr "Еда и напитки, которые не считают, тоже стоят в ней: <0>Ma joon kohvi</0>."
-
 msgid "Footpath"
 msgstr "Пешеходная дорожка"
 
@@ -5665,20 +5665,14 @@ msgstr "в кафе"
 msgid "In a café"
 msgstr "В кафе"
 
-msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. <1/> uses the third form for another reason, which lesson {object} explains."
-msgstr "В кафе услышишь и <0/> Это один кофе, его считают, поэтому он остаётся в первой форме. В <1/> третья форма стоит по другой причине, о ней рассказывает урок {object}."
+msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. The third form in <1/> has another reason, which lesson {object} explains."
+msgstr "В кафе услышишь и <0/> Это один кофе, его считают, поэтому он остаётся в первой форме. <1/> Здесь третья форма стоит по другой причине: о ней рассказывает урок {object}."
 
 msgid "in a hospital"
 msgstr "в больнице"
 
 msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 msgstr "В вопросе с kas голос в конце понижается, как в утверждении: kas уже говорит, что это вопрос. В разговоре вместо него ещё услышишь <0/> в конце, что-то вроде «да?»: <1/>"
-
-msgid "In a no sentence"
-msgstr "В отрицании"
-
-msgid "In a no sentence, what isn’t there takes the third form: <0>Mul pole kassi</0>."
-msgstr "В отрицании то, чего нет, стоит в третьей форме: <0>Mul pole kassi</0>."
 
 msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
 msgstr "В проекте с файлами курса Claude может собрать одну колоду с разделом на каждую лекцию."
@@ -5929,6 +5923,9 @@ msgstr "Это был очень *приятный* вечер."
 msgid "It will all work out"
 msgstr "Всё образуется"
 
+msgid "It works the same for a place: <0/> Switch between <1>on</1> and <2>pole</2>."
+msgstr "С местом так же: <0/> Переключай между <1>on</1> и <2>pole</2>. По-русски похоже: «нет хлеба», а не «нет хлеб»."
+
 msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
 msgstr "Так же с городами, зданиями и большинством стран. Попробуй на трёх странах и трёх городах."
 
@@ -6010,8 +6007,8 @@ msgstr "Издатель убрал её с публичных страниц Ly
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Редкий, но серьёзный риск — лактоацидоз."
 
-msgid "Jaan calls you from the market. Listen for the prices and for what there isn’t."
-msgstr "Яан звонит тебе с рынка. Слушай цены и то, чего нет."
+msgid "Jaan leaves you a voice message from the market. Listen for the prices and for what there isn’t."
+msgstr "Яан прислал тебе голосовое с рынка. Слушай цены и то, чего нет."
 
 msgid "Jaan lives in Pärnu."
 msgstr "Яан живёт в Пярну."
@@ -6504,9 +6501,6 @@ msgstr "Сначала послушай."
 msgid "Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you which hour to count from."
 msgstr "Слушай pool, veerand, kolmveerand, läbi или pärast: каждое подсказывает, от какого часа считать."
 
-msgid "Listen for the third form at the end."
-msgstr "Слушай третью форму в конце."
-
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Слушай конец глагола. Поиграй со столом выше и возвращайся."
 
@@ -6862,6 +6856,9 @@ msgstr "предельные издержки"
 msgid "Mari"
 msgstr "Мари"
 
+msgid "Mari goes to the market on Saturday. Pick the first or third form for each gap. The third follows a number from two up, an amount or <0>pole</0>, and marks food or drink someone eats, drinks or wants."
+msgstr "В субботу Мари идёт на рынок. Выбери для каждого пропуска первую или третью форму. Третья стоит после числа от двух, после слова количества и после <0>pole</0>, а также для того, что едят, пьют или хотят."
+
 msgid "Mari just said she works a lot. Ask where with <0>kus</0>."
 msgstr "Мари только что сказала, что много работает. Чтобы спросить где, скажи <0>kus</0>."
 
@@ -6870,9 +6867,6 @@ msgstr "Мари только что сказала, что устала. Что
 
 msgid "Mari knows your name. <0>Kuidas läheb?</0> asks how you are."
 msgstr "Мари знает твоё имя. <0>Kuidas läheb?</0> — это «Как дела?»."
-
-msgid "Mari spends Saturday at the market. Pick the form for each gap: the first form, or the third after a number from two up, an amount or <0>pole</0>, and for food and drink."
-msgstr "Мари проводит субботу на рынке. Выбери форму для каждого пропуска: первую или третью — после числа от двух, меры или <0>pole</0>, а также для еды и напитков."
 
 msgid "Mari starts a conversation. Pick each of your replies; a wrong one says why. Everything in it comes from lessons {first} to {last}, plus two phrases: <0/>, nice to meet you, and <1/>, goodbye."
 msgstr "Мари начинает разговор. Выбирай каждый свой ответ; неверный объяснит, что не так. Всё здесь — из уроков {first}–{last}, кроме двух фраз: <0/> — «приятно познакомиться» и <1/> — «до свидания»."
@@ -7736,9 +7730,6 @@ msgstr "Одна из пары зеркальных форм"
 
 msgid "One of the eleven base words."
 msgstr "Одно из одиннадцати базовых слов."
-
-msgid "One or more?"
-msgstr "Один или больше?"
 
 msgid "One person"
 msgstr "Один человек"
@@ -8944,6 +8935,9 @@ msgstr "Дай согласие в Lymi"
 msgid "Saying no in the past"
 msgstr "Отрицание в прошлом"
 
+msgid "Saying something isn’t there"
+msgstr "Когда чего-то нет"
+
 msgid "Saying where: -s and -l"
 msgstr "Как сказать, где: окончания -s и -l"
 
@@ -9127,8 +9121,8 @@ msgstr "Общие колоды и подключённые приложения
 msgid "She came back from *town*."
 msgstr "Она вернулась из *города*."
 
-msgid "She drinks coffee without counting it: <0>joob kohvi</0>."
-msgstr "Кофе она пьёт, не считая: <0>joob kohvi</0>."
+msgid "She drinks some coffee, not a counted cup: <0>joob kohvi</0>."
+msgstr "Тут кофе — сколько-то, а не посчитанная чашка: <0>joob kohvi</0>."
 
 msgid "She studies"
 msgstr "Она учится"
@@ -9269,6 +9263,9 @@ msgstr "Sina, когда действие направлено на тебя: Ma
 
 msgid "Sina is you: this says “You are Jaan.”"
 msgstr "Sina — это ты: здесь сказано «Ты Яан»."
+
+msgid "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
+msgstr "Ещё с урока {present} ты говоришь <0/> Ты пьёшь немного кофе, а не посчитанную чашку, поэтому <1>kohvi</1> стоит в третьей форме. Так же со всем, что ешь, пьёшь или хочешь немного. По-русски похоже: «хочу молока», то есть немного молока. Нажми на предложение, чтобы его услышать."
 
 msgid "sit down"
 msgstr "садись"
@@ -9858,9 +9855,6 @@ msgstr "Нажми на место, чтобы услышать ответ."
 msgid "Tap a question word"
 msgstr "Нажми вопросительное слово"
 
-msgid "Tap a sentence"
-msgstr "Нажми на предложение"
-
 msgid "Tap a vowel"
 msgstr "Нажми на гласную"
 
@@ -9868,7 +9862,7 @@ msgid "Tap a word or a person"
 msgstr "Нажми на слово или на человека"
 
 msgid "Tap an amount"
-msgstr "Нажми на меру"
+msgstr "Нажми на слово"
 
 msgid "Tap an ending"
 msgstr "Нажми на окончание"
@@ -10161,6 +10155,9 @@ msgstr "Замок стоит на горе."
 msgid "The cat is asleep on the *rug*."
 msgstr "Кот спит на *ковре*."
 
+msgid "The cat isn’t on the table."
+msgstr "Кошки нет на столе."
+
 msgid "The children are already *asleep*."
 msgstr "Дети уже *спят*."
 
@@ -10254,8 +10251,8 @@ msgstr "Окончание говорит, кто это, поэтому ma, sa,
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "Окончание говорит, кто это, поэтому местоимение можно опустить: <0>Olen Mari.</0>"
 
-msgid "The Estonian partitive case: after numbers, amounts and no"
-msgstr "Партитив в эстонском языке: после чисел, мер и в отрицании"
+msgid "The Estonian partitive case: after numbers, amounts and negation"
+msgstr "Партитив в эстонском языке: после чисел, слов количества и в отрицании"
 
 msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
 msgstr "Эстонская неделя, <0/>, начинается с понедельника, как и у нас. Шесть дней заканчиваются на <1/>, день. <2/>, пятница, — исключение. Как и в русском, дни недели пишут со строчной буквы."
@@ -10283,6 +10280,9 @@ msgstr "Первые четыре — с числами: <0/> — первый
 
 msgid "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
 msgstr "Первые четыре — с числами: <0>esmaspäev</0> — первый день, <1>neljapäev</1> — четвёртый."
+
+msgid "The form after a number"
+msgstr "Форма после числа"
 
 msgid "The form says who"
 msgstr "Форма говорит, кто"
@@ -10536,9 +10536,6 @@ msgstr "Тот же разговор, но реплики Мари только 
 msgid "The same for every person."
 msgstr "Одинаково для всех лиц."
 
-msgid "The same happens whenever something isn’t there: <0/> Switch between <1>on</1> and <2>pole</2>."
-msgstr "Так же всякий раз, когда чего-то нет: <0/> Переключай между <1>on</1> и <2>pole</2>."
-
 msgid "The same in both"
 msgstr "Одинаково в обоих"
 
@@ -10639,28 +10636,28 @@ msgid "The third form is the last of the three a dictionary gives, as lesson {fo
 msgstr "Третья форма — последняя из трёх, которые даёт словарь, как показывает урок {forms}: <0>kass, kassi, kassi</0>. Ты слышишь её в ценах ещё с урока {numbers}: <1/>. Выбери число и следи за существительными."
 
 msgid "The third form of aeg."
-msgstr "Третья форма от aeg."
+msgstr "Третья форма слова aeg."
 
 msgid "The third form of juust."
-msgstr "Третья форма от juust."
+msgstr "Третья форма слова juust."
 
 msgid "The third form of kass, the partitive."
-msgstr "Третья форма от kass, партитив."
+msgstr "Третья форма слова kass, партитив."
 
 msgid "The third form of kohv."
-msgstr "Третья форма от kohv."
+msgstr "Третья форма слова kohv."
 
 msgid "The third form of laps."
-msgstr "Третья форма от laps."
+msgstr "Третья форма слова laps."
 
 msgid "The third form of leib."
-msgstr "Третья форма от leib."
+msgstr "Третья форма слова leib."
 
 msgid "The third form of piim."
-msgstr "Третья форма от piim."
+msgstr "Третья форма слова piim."
 
 msgid "The third form of vesi."
-msgstr "Третья форма от vesi."
+msgstr "Третья форма слова vesi."
 
 msgid "The Thirty Years’ War"
 msgstr "Тридцатилетняя война"
@@ -11920,14 +11917,11 @@ msgstr "А если он ошибётся?"
 msgid "What is that?"
 msgstr "Что это?"
 
-msgid "What is there none of today?"
-msgstr "Чего сегодня нет?"
-
 msgid "What is this part called?"
 msgstr "Как называется эта часть?"
 
-msgid "What isn’t there takes its third form: <0>kassi, autot, last</0>. <1>Maja</1> stays <2>maja</2>."
-msgstr "То, чего нет, стоит в третьей форме: <0>kassi, autot, last</0>. <1>Maja</1> остаётся <2>maja</2>."
+msgid "What isn’t there today?"
+msgstr "Чего сегодня нет?"
 
 msgid "What it’s for"
 msgstr "Для чего она"
@@ -11980,6 +11974,9 @@ msgstr "Что ты видишь"
 
 msgid "What you compare"
 msgstr "Что сравниваем"
+
+msgid "What you eat, drink or want, when you don’t count it, takes it too: <0>Ma joon kohvi</0>."
+msgstr "То, что едят, пьют или хотят, не считая, тоже стоит в третьей форме: <0>Ma joon kohvi</0>."
 
 msgid "What you get with Lymi"
 msgstr "Что ты получишь с Lymi"
@@ -12056,8 +12053,8 @@ msgstr "Во сколько кафе открывается в субботу?"
 msgid "When does Mari have coffee tomorrow?"
 msgstr "Когда Мари завтра пьёт кофе?"
 
-msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, in a no sentence, and with food and drink you don’t count."
-msgstr "Когда в эстонском существительное стоит в третьей форме, партитиве: после числа от двух, после меры, в отрицании и с едой и напитками, которые не считают."
+msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for food and drink someone eats, drinks or wants."
+msgstr "Когда в эстонском существительное стоит в третьей форме, партитиве: после числа от двух, после слова количества, после <0>pole</0> и для еды и напитков, которые едят, пьют или хотят."
 
 msgid "When is the café open?"
 msgstr "Когда кафе открыто?"
@@ -12672,6 +12669,9 @@ msgstr "вы есть; вежливое «Вы есть»"
 msgid "You build your own card layouts"
 msgstr "Ты собираешь свои макеты карточек"
 
+msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/> Lesson {have} taught <4>mul on</4>."
+msgstr "Можно сказать и <0/> Это то же самое: <1>pole</1> — краткая форма <2>ei ole</2>. Если предложение начинается с самого предмета, он остаётся в первой форме: <3/> Конструкцию <4>mul on</4> объясняет урок {have}."
+
 msgid "You can delete your account in You › Delete account on the phone or Settings › Delete account on the web, after confirming your identity. Deletion cannot be undone. Your account and private learning records are erased, and file cleanup and requests to erase account-linked analytics run separately. Provider logs, backups and support correspondence can remain under their applicable retention periods; deletion is not an instant purge of every copy."
 msgstr "Удалить аккаунт можно в разделе Ты › Удалить аккаунт на телефоне или Настройки › Удалить аккаунт в веб-приложении после подтверждения личности. Отменить удаление невозможно. Аккаунт и личные учебные записи стираются, а очистка файлов и запросы на стирание связанной аналитики выполняются отдельно. Журналы поставщиков, резервные копии и переписка с поддержкой могут храниться в течение соответствующих сроков; удаление не означает мгновенного стирания каждой копии."
 
@@ -12851,9 +12851,6 @@ msgstr "Не за что"
 
 msgid "You’ve finished every lesson so far"
 msgstr "Все готовые уроки пройдены"
-
-msgid "You’ve said <0/> since lesson {present}. You drink some coffee, an amount nobody counts, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way."
-msgstr "Ты говоришь <0/> ещё с урока {present}. Ты пьёшь сколько-то кофе, и никто его не считает, поэтому <1>kohvi</1> стоит в третьей форме. Так же работает всё, что ешь, пьёшь или хочешь в каком-то количестве. По-русски похоже: «хочу молока», то есть немного молока."
 
 msgid "your"
 msgstr "твой"

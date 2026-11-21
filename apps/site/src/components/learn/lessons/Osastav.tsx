@@ -113,6 +113,7 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Mul ei ole kassi.": msg`I don’t have a cat.`,
   "Üks kohv, palun.": msg`One coffee, please.`,
   "Ma loen raamatut.": msg`I’m reading a book.`,
+  "Kass pole laual.": msg`The cat isn’t on the table.`,
 };
 
 const means = (text: string, i18n: I18n) => {
@@ -331,7 +332,8 @@ function NoSwitch() {
       <p aria-live="polite" className="text-md text-ink-secondary">
         {no ? (
           <Trans>
-            What isn’t there takes its third form: <b lang="et">kassi, autot, last</b>.{" "}
+            After <b lang="et">pole</b>, what isn’t there takes its third form:{" "}
+            <b lang="et">kassi, autot, last</b>.{" "}
             <b lang="et">Maja</b> stays <b lang="et">maja</b>.
           </Trans>
         ) : (
@@ -375,7 +377,7 @@ function useContent() {
   const gaps: PassageGap[] = [
     {
       id: "juustu",
-      before: "Täna on laupäev ja Mari on turul. Ta tahab kilo",
+      before: "Täna on laupäev ja Mari on turul. Tal on vaja kilo",
       after: "",
       answer: "juustu",
       options: ["juust", "juustu"],
@@ -430,7 +432,7 @@ function useContent() {
       options: ["kohv", "kohvi"],
       why: (
         <Trans>
-          She drinks coffee without counting it: <b lang="et">joob kohvi</b>.
+          She drinks some coffee, not a counted cup: <b lang="et">joob kohvi</b>.
         </Trans>
       ),
     },
@@ -476,16 +478,16 @@ function useContent() {
       id: "milk",
       ask: t`How much is the milk?`,
       options: [
-        { id: "one", label: t`€1` },
         { id: "two", label: t`€2` },
+        { id: "one", label: t`€1` },
         { id: "ten", label: t`€10` },
       ],
-      answer: "one",
+      answer: "two",
       line: 3,
     },
     {
       id: "none",
-      ask: t`What is there none of today?`,
+      ask: t`What isn’t there today?`,
       options: [
         { id: "cheese", label: t`Cheese` },
         { id: "milk", label: t`Milk` },
@@ -559,12 +561,6 @@ export function OsastavLesson() {
     },
   }));
 
-  const someKeys: KeyItem[] = OSASTAV_SOME.map((sentence) => ({
-    label: sentence,
-    src: src(sentence),
-    detail: { title: <span lang="et">{sentence}</span>, tip: means(sentence, i18n) },
-  }));
-
   return (
     <LessonView
       slug={SLUG}
@@ -572,7 +568,8 @@ export function OsastavLesson() {
       sub={
         <Trans>
           When Estonian uses a noun’s third form, the partitive: after a number from two up, after
-          an amount, in a no sentence, and with food and drink you don’t count.
+          an amount, after <b lang="et">pole</b>, and for food and drink someone eats, drinks or
+          wants.
         </Trans>
       }
       facts={[
@@ -612,11 +609,12 @@ export function OsastavLesson() {
           <b lang="et">tass kohvi, palju raha</b>.
         </Trans>,
         <Trans key="4">
-          In a no sentence, what isn’t there takes the third form:{" "}
-          <b lang="et">Mul pole kassi</b>.
+          After <b lang="et">pole</b>, the thing someone hasn’t got, or that isn’t somewhere, takes
+          the third form: <b lang="et">Mul pole kassi</b>.
         </Trans>,
         <Trans key="5">
-          Food and drink you don’t count take it too: <b lang="et">Ma joon kohvi</b>.
+          What you eat, drink or want, when you don’t count it, takes it too:{" "}
+          <b lang="et">Ma joon kohvi</b>.
         </Trans>,
       ]}
       sections={[
@@ -687,7 +685,7 @@ export function OsastavLesson() {
         },
         {
           id: "one-or-more",
-          title: t`One or more?`,
+          title: t`The form after a number`,
           quiz: true,
           children: (
             <>
@@ -758,7 +756,7 @@ export function OsastavLesson() {
         },
         {
           id: "no",
-          title: t`In a no sentence`,
+          title: t`Saying something isn’t there`,
           children: (
             <>
               <Prose>
@@ -771,17 +769,18 @@ export function OsastavLesson() {
                 </p>
                 <p>
                   <Trans>
-                    The same happens whenever something isn’t there: <Word w="Laual pole leiba." />{" "}
-                    Switch between <b lang="et">on</b> and <b lang="et">pole</b>.
+                    It works the same for a place: <Word w="Laual pole leiba." /> Switch between{" "}
+                    <b lang="et">on</b> and <b lang="et">pole</b>.
                   </Trans>
                 </p>
               </Prose>
               <NoSwitch />
               <Aside>
                 <Trans>
-                  <Word w="Mul ei ole kassi." /> means the same, since <b lang="et">pole</b> is the
-                  short form of <b lang="et">ei ole</b>. Lesson {have} taught <b lang="et">mul on</b>
-                  .
+                  You can also say <Word w="Mul ei ole kassi." /> It means the same:{" "}
+                  <b lang="et">pole</b> is the short form of <b lang="et">ei ole</b>. A sentence that
+                  starts with the thing keeps its first form: <Word w="Kass pole laual." /> Lesson{" "}
+                  {have} taught <b lang="et">mul on</b>.
                 </Trans>
               </Aside>
             </>
@@ -795,29 +794,25 @@ export function OsastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    You’ve said <Word w="Ma joon kohvi." /> since lesson {present}. You drink some
-                    coffee, an amount nobody counts, so <b lang="et">kohvi</b> is in its third
-                    form. Anything you eat, drink or want some of works the same way.
+                    Since lesson {present} you’ve said <Word w="Ma joon kohvi." /> You drink some
+                    coffee, not a counted cup, so <b lang="et">kohvi</b> is in its third form.
+                    Anything you eat, drink or want some of works the same way. Tap a sentence to
+                    hear it.
                   </Trans>
                 </p>
               </Prose>
-              <Panel>
-                <Keys
-                  label={t`Food and drink`}
-                  items={someKeys}
-                  columns={3}
-                  phoneColumns={1}
-                  empty={{
-                    title: t`Tap a sentence`,
-                    tip: t`Listen for the third form at the end.`,
-                  }}
-                />
-              </Panel>
+              <ul className="m-0 grid list-none overflow-hidden rounded-lg bg-plate p-0 ring-1 ring-edge sm:grid-cols-2">
+                {OSASTAV_SOME.map((sentence) => (
+                  <li key={sentence} className="border-b border-edge">
+                    <Line text={sentence} />
+                  </li>
+                ))}
+              </ul>
               <Aside>
                 <Trans>
                   In a café you’ll also hear <Word w="Üks kohv, palun." /> That’s one coffee,
-                  counted, so it keeps its first form. <Word w="Ma loen raamatut." /> uses the
-                  third form for another reason, which lesson {object} explains.
+                  counted, so it keeps its first form. The third form in{" "}
+                  <Word w="Ma loen raamatut." /> has another reason, which lesson {object} explains.
                 </Trans>
               </Aside>
             </>
@@ -832,9 +827,9 @@ export function OsastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Mari spends Saturday at the market. Pick the form for each gap: the first form,
-                    or the third after a number from two up, an amount or <b lang="et">pole</b>,
-                    and for food and drink.
+                    Mari goes to the market on Saturday. Pick the first or third form for each gap.
+                    The third follows a number from two up, an amount or <b lang="et">pole</b>, and
+                    marks food or drink someone eats, drinks or wants.
                   </Trans>
                 </p>
               </Prose>
@@ -857,7 +852,8 @@ export function OsastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Jaan calls you from the market. Listen for the prices and for what there isn’t.
+                    Jaan leaves you a voice message from the market. Listen for the prices and for
+                    what there isn’t.
                   </Trans>
                 </p>
               </Prose>

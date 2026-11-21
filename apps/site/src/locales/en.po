@@ -400,9 +400,6 @@ msgstr "<0/> means half, and it looks ahead. <1/> is halfway to four, so it’s 
 msgid "<0/> means holy, so this is the holy day."
 msgstr "<0/> means holy, so this is the holy day."
 
-msgid "<0/> means the same, since <1>pole</1> is the short form of <2>ei ole</2>. Lesson {have} taught <3>mul on</3>."
-msgstr "<0/> means the same, since <1>pole</1> is the short form of <2>ei ole</2>. Lesson {have} taught <3>mul on</3>."
-
 msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 msgstr "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 
@@ -937,8 +934,8 @@ msgstr "A free lesson on the Estonian days of the week: the seven names, the fou
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 
-msgid "A free lesson on the Estonian partitive case, a noun’s third form: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), in no sentences (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
-msgstr "A free lesson on the Estonian partitive case, a noun’s third form: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), in no sentences (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
+msgid "A free lesson on the Estonian partitive case, a noun’s third form: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
+msgstr "A free lesson on the Estonian partitive case, a noun’s third form: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
 
 msgid "A full card in seconds"
 msgstr "A full card in seconds"
@@ -1483,6 +1480,12 @@ msgstr "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 
 msgid "After <0>kaks</0>, the third form: <1>kaks kassi</1>."
 msgstr "After <0>kaks</0>, the third form: <1>kaks kassi</1>."
+
+msgid "After <0>pole</0>, the thing someone hasn’t got, or that isn’t somewhere, takes the third form: <1>Mul pole kassi</1>."
+msgstr "After <0>pole</0>, the thing someone hasn’t got, or that isn’t somewhere, takes the third form: <1>Mul pole kassi</1>."
+
+msgid "After <0>pole</0>, what isn’t there takes its third form: <1>kassi, autot, last</1>. <2>Maja</2> stays <3>maja</3>."
+msgstr "After <0>pole</0>, what isn’t there takes its third form: <1>kassi, autot, last</1>. <2>Maja</2> stays <3>maja</3>."
 
 msgid "After <0>pole</0>, what isn’t there takes the third form: <1>pole leiba</1>."
 msgstr "After <0>pole</0>, what isn’t there takes the third form: <1>pole leiba</1>."
@@ -4150,9 +4153,6 @@ msgstr "Follow with RSS"
 msgid "Food and drink"
 msgstr "Food and drink"
 
-msgid "Food and drink you don’t count take it too: <0>Ma joon kohvi</0>."
-msgstr "Food and drink you don’t count take it too: <0>Ma joon kohvi</0>."
-
 msgid "Footpath"
 msgstr "Footpath"
 
@@ -5665,20 +5665,14 @@ msgstr "in a café"
 msgid "In a café"
 msgstr "In a café"
 
-msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. <1/> uses the third form for another reason, which lesson {object} explains."
-msgstr "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. <1/> uses the third form for another reason, which lesson {object} explains."
+msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. The third form in <1/> has another reason, which lesson {object} explains."
+msgstr "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. The third form in <1/> has another reason, which lesson {object} explains."
 
 msgid "in a hospital"
 msgstr "in a hospital"
 
 msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 msgstr "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
-
-msgid "In a no sentence"
-msgstr "In a no sentence"
-
-msgid "In a no sentence, what isn’t there takes the third form: <0>Mul pole kassi</0>."
-msgstr "In a no sentence, what isn’t there takes the third form: <0>Mul pole kassi</0>."
 
 msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
 msgstr "In a Project with your course files, Claude can build one deck with a section for each lecture."
@@ -5929,6 +5923,9 @@ msgstr "It was a really *pleasant* evening."
 msgid "It will all work out"
 msgstr "It will all work out"
 
+msgid "It works the same for a place: <0/> Switch between <1>on</1> and <2>pole</2>."
+msgstr "It works the same for a place: <0/> Switch between <1>on</1> and <2>pole</2>."
+
 msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
 msgstr "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
 
@@ -6010,8 +6007,8 @@ msgstr "Its publisher took it off Lymi’s public pages. Anyone who already adde
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Its rare, serious risk is lactic acidosis."
 
-msgid "Jaan calls you from the market. Listen for the prices and for what there isn’t."
-msgstr "Jaan calls you from the market. Listen for the prices and for what there isn’t."
+msgid "Jaan leaves you a voice message from the market. Listen for the prices and for what there isn’t."
+msgstr "Jaan leaves you a voice message from the market. Listen for the prices and for what there isn’t."
 
 msgid "Jaan lives in Pärnu."
 msgstr "Jaan lives in Pärnu."
@@ -6504,9 +6501,6 @@ msgstr "Listen first."
 msgid "Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you which hour to count from."
 msgstr "Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you which hour to count from."
 
-msgid "Listen for the third form at the end."
-msgstr "Listen for the third form at the end."
-
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Listen to the end of the verb. Try the table above, then come back."
 
@@ -6862,6 +6856,9 @@ msgstr "marginal cost"
 msgid "Mari"
 msgstr "Mari"
 
+msgid "Mari goes to the market on Saturday. Pick the first or third form for each gap. The third follows a number from two up, an amount or <0>pole</0>, and marks food or drink someone eats, drinks or wants."
+msgstr "Mari goes to the market on Saturday. Pick the first or third form for each gap. The third follows a number from two up, an amount or <0>pole</0>, and marks food or drink someone eats, drinks or wants."
+
 msgid "Mari just said she works a lot. Ask where with <0>kus</0>."
 msgstr "Mari just said she works a lot. Ask where with <0>kus</0>."
 
@@ -6870,9 +6867,6 @@ msgstr "Mari just said she’s tired. Ask why with <0>miks</0>."
 
 msgid "Mari knows your name. <0>Kuidas läheb?</0> asks how you are."
 msgstr "Mari knows your name. <0>Kuidas läheb?</0> asks how you are."
-
-msgid "Mari spends Saturday at the market. Pick the form for each gap: the first form, or the third after a number from two up, an amount or <0>pole</0>, and for food and drink."
-msgstr "Mari spends Saturday at the market. Pick the form for each gap: the first form, or the third after a number from two up, an amount or <0>pole</0>, and for food and drink."
 
 msgid "Mari starts a conversation. Pick each of your replies; a wrong one says why. Everything in it comes from lessons {first} to {last}, plus two phrases: <0/>, nice to meet you, and <1/>, goodbye."
 msgstr "Mari starts a conversation. Pick each of your replies; a wrong one says why. Everything in it comes from lessons {first} to {last}, plus two phrases: <0/>, nice to meet you, and <1/>, goodbye."
@@ -7736,9 +7730,6 @@ msgstr "One of a mirror-image pair"
 
 msgid "One of the eleven base words."
 msgstr "One of the eleven base words."
-
-msgid "One or more?"
-msgstr "One or more?"
 
 msgid "One person"
 msgstr "One person"
@@ -8944,6 +8935,9 @@ msgstr "Say yes in Lymi"
 msgid "Saying no in the past"
 msgstr "Saying no in the past"
 
+msgid "Saying something isn’t there"
+msgstr "Saying something isn’t there"
+
 msgid "Saying where: -s and -l"
 msgstr "Saying where: -s and -l"
 
@@ -9127,8 +9121,8 @@ msgstr "Sharing and connected apps"
 msgid "She came back from *town*."
 msgstr "She came back from *town*."
 
-msgid "She drinks coffee without counting it: <0>joob kohvi</0>."
-msgstr "She drinks coffee without counting it: <0>joob kohvi</0>."
+msgid "She drinks some coffee, not a counted cup: <0>joob kohvi</0>."
+msgstr "She drinks some coffee, not a counted cup: <0>joob kohvi</0>."
 
 msgid "She studies"
 msgstr "She studies"
@@ -9269,6 +9263,9 @@ msgstr "Sina as the one something is done to: Ma ootan sind, I’m waiting for y
 
 msgid "Sina is you: this says “You are Jaan.”"
 msgstr "Sina is you: this says “You are Jaan.”"
+
+msgid "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
+msgstr "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
 
 msgid "sit down"
 msgstr "sit down"
@@ -9858,9 +9855,6 @@ msgstr "Tap a place to hear the answer."
 msgid "Tap a question word"
 msgstr "Tap a question word"
 
-msgid "Tap a sentence"
-msgstr "Tap a sentence"
-
 msgid "Tap a vowel"
 msgstr "Tap a vowel"
 
@@ -10161,6 +10155,9 @@ msgstr "The castle stands on a hill."
 msgid "The cat is asleep on the *rug*."
 msgstr "The cat is asleep on the *rug*."
 
+msgid "The cat isn’t on the table."
+msgstr "The cat isn’t on the table."
+
 msgid "The children are already *asleep*."
 msgstr "The children are already *asleep*."
 
@@ -10254,8 +10251,8 @@ msgstr "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 
-msgid "The Estonian partitive case: after numbers, amounts and no"
-msgstr "The Estonian partitive case: after numbers, amounts and no"
+msgid "The Estonian partitive case: after numbers, amounts and negation"
+msgstr "The Estonian partitive case: after numbers, amounts and negation"
 
 msgid "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
 msgstr "The Estonian week, <0/>, starts on Monday. Six of its days end in <1/>, day. <2/>, Friday, is the one that doesn’t. Day names start with a small letter, like any other word."
@@ -10283,6 +10280,9 @@ msgstr "The first four count: <0/> is the first day, <1/> the second, <2/> the t
 
 msgid "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
 msgstr "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
+
+msgid "The form after a number"
+msgstr "The form after a number"
 
 msgid "The form says who"
 msgstr "The form says who"
@@ -10535,9 +10535,6 @@ msgstr "The same conversation with Mari’s lines heard, not shown; each can be 
 
 msgid "The same for every person."
 msgstr "The same for every person."
-
-msgid "The same happens whenever something isn’t there: <0/> Switch between <1>on</1> and <2>pole</2>."
-msgstr "The same happens whenever something isn’t there: <0/> Switch between <1>on</1> and <2>pole</2>."
 
 msgid "The same in both"
 msgstr "The same in both"
@@ -11920,14 +11917,11 @@ msgstr "What if it gets something wrong?"
 msgid "What is that?"
 msgstr "What is that?"
 
-msgid "What is there none of today?"
-msgstr "What is there none of today?"
-
 msgid "What is this part called?"
 msgstr "What is this part called?"
 
-msgid "What isn’t there takes its third form: <0>kassi, autot, last</0>. <1>Maja</1> stays <2>maja</2>."
-msgstr "What isn’t there takes its third form: <0>kassi, autot, last</0>. <1>Maja</1> stays <2>maja</2>."
+msgid "What isn’t there today?"
+msgstr "What isn’t there today?"
 
 msgid "What it’s for"
 msgstr "What it’s for"
@@ -11980,6 +11974,9 @@ msgstr "What you can see"
 
 msgid "What you compare"
 msgstr "What you compare"
+
+msgid "What you eat, drink or want, when you don’t count it, takes it too: <0>Ma joon kohvi</0>."
+msgstr "What you eat, drink or want, when you don’t count it, takes it too: <0>Ma joon kohvi</0>."
 
 msgid "What you get with Lymi"
 msgstr "What you get with Lymi"
@@ -12056,8 +12053,8 @@ msgstr "When does it open on Saturday?"
 msgid "When does Mari have coffee tomorrow?"
 msgstr "When does Mari have coffee tomorrow?"
 
-msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, in a no sentence, and with food and drink you don’t count."
-msgstr "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, in a no sentence, and with food and drink you don’t count."
+msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for food and drink someone eats, drinks or wants."
+msgstr "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for food and drink someone eats, drinks or wants."
 
 msgid "When is the café open?"
 msgstr "When is the café open?"
@@ -12672,6 +12669,9 @@ msgstr "you are, to more than one; polite you are"
 msgid "You build your own card layouts"
 msgstr "You build your own card layouts"
 
+msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/> Lesson {have} taught <4>mul on</4>."
+msgstr "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/> Lesson {have} taught <4>mul on</4>."
+
 msgid "You can delete your account in You › Delete account on the phone or Settings › Delete account on the web, after confirming your identity. Deletion cannot be undone. Your account and private learning records are erased, and file cleanup and requests to erase account-linked analytics run separately. Provider logs, backups and support correspondence can remain under their applicable retention periods; deletion is not an instant purge of every copy."
 msgstr "You can delete your account in You › Delete account on the phone or Settings › Delete account on the web, after confirming your identity. Deletion cannot be undone. Your account and private learning records are erased, and file cleanup and requests to erase account-linked analytics run separately. Provider logs, backups and support correspondence can remain under their applicable retention periods; deletion is not an instant purge of every copy."
 
@@ -12851,9 +12851,6 @@ msgstr "You’re welcome"
 
 msgid "You’ve finished every lesson so far"
 msgstr "You’ve finished every lesson so far"
-
-msgid "You’ve said <0/> since lesson {present}. You drink some coffee, an amount nobody counts, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way."
-msgstr "You’ve said <0/> since lesson {present}. You drink some coffee, an amount nobody counts, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way."
 
 msgid "your"
 msgstr "your"

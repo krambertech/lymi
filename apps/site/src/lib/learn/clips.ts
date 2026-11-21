@@ -896,7 +896,7 @@ export const OSASTAV_SOME = [
 export const OSASTAV_PASSAGES = {
   market: [
     "Täna on laupäev ja Mari on turul.",
-    "Ta tahab kilo juustu ja natuke piima.",
+    "Tal on vaja kilo juustu ja natuke piima.",
     "Juust maksab seitse eurot.",
     "Turul pole täna leiba.",
     "Mari joob kohvikus kohvi.",
@@ -907,7 +907,7 @@ export const OSASTAV_PASSAGES = {
     "Tere, see on Jaan! Ma olen turul.",
     "Täna on palju juustu.",
     "Kilo juustu maksab kaheksa eurot.",
-    "Piim maksab üks euro.",
+    "Piim maksab kaks eurot.",
     "Aga täna pole leiba.",
     "Kas sa tahad kohvi?",
   ],
@@ -946,6 +946,7 @@ export const OSASTAV_WORDS = [
   "Mul ei ole kassi.",
   "Üks kohv, palun.",
   "Ma loen raamatut.",
+  "Kass pole laual.",
 ] as const;
 
 const OSASTAV_CLIPS: Record<string, Clip> = {

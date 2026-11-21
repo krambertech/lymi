@@ -53,7 +53,6 @@ const FORM_MEANS: Record<string, MessageDescriptor> = {
   haiglas: msg`in a hospital`,
   haiglasse: msg`to the hospital`,
   haiglast: msg`from the hospital`,
-  kontor: msg`office`,
   kontoris: msg`at the office`,
   kontorisse: msg`to the office`,
   kontorist: msg`from the office`,
@@ -92,11 +91,9 @@ const FORM_MEANS: Record<string, MessageDescriptor> = {
 
 /** Each table place's name, short, as a row label. */
 const PLACE_NAMES: Record<string, MessageDescriptor> = {
-  Tallinn: msg`Tallinn`,
   Tartu: msg`Tartu`,
   Pärnu: msg`Pärnu`,
   haigla: msg`hospital`,
-  kontor: msg`office`,
   kohvik: msg`café`,
 };
 
@@ -125,20 +122,13 @@ const MEANS: Record<Id, MessageDescriptor> = {
 };
 
 /** The places of the forms table: the lesson teaches -sse as kuhu for each of them. */
-const TABLE_PLACES: readonly Place["place"][] = [
-  "Tallinn",
-  "Tartu",
-  "Pärnu",
-  "haigla",
-  "kontor",
-  "kohvik",
-];
+const TABLE_PLACES: readonly Place["place"][] = ["Tartu", "Pärnu", "haigla", "kohvik"];
 
 export const DIRECTIONS: readonly Direction[] = ["kus", "kuhu", "kust"];
 
 /**
  * “Kus, kuhu or kust?”: a place form heard on its own, so only its ending says which question it
- * answers. The table's six places, each three ways.
+ * answers. The table's four places, each three ways.
  */
 export const HEARD: readonly { form: string; direction: Direction }[] = TABLE_PLACES.flatMap(
   (name) => DIRECTIONS.map((direction) => ({ form: placeOf(name)[direction], direction })),
@@ -648,7 +638,7 @@ export function MajasMajjaMajastLesson() {
               </Prose>
               <Panel>
                 <Paradigm
-                  label={t`Six places, each with a form for kus, kuhu and kust`}
+                  label={t`Four places, each with a form for kus, kuhu and kust`}
                   columns={[t`Where?`, t`Where to?`, t`Where from?`]}
                   rows={TABLE_PLACES.map((name) => {
                     const each = placeOf(name);

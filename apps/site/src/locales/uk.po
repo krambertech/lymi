@@ -4263,6 +4263,9 @@ msgstr "Форми maja"
 msgid "four"
 msgstr "чотири"
 
+msgid "Four places, each with a form for kus, kuhu and kust"
+msgstr "Чотири місця, у кожного форма для kus, kuhu і kust"
+
 msgid "Four ways to ask"
 msgstr "Чотири способи питати"
 
@@ -9471,9 +9474,6 @@ msgstr "Шість днів закінчуються на <0>päev</0>, день
 msgid "Six endings"
 msgstr "Шість закінчень"
 
-msgid "Six places, each with a form for kus, kuhu and kust"
-msgstr "Шість місць, у кожного форма для kus, kuhu і kust"
-
 msgid "Six pronouns, two forms"
 msgstr "Шість займенників, дві форми"
 
@@ -10031,9 +10031,6 @@ msgstr "Розмова: на вулиці"
 
 msgid "Talk: meeting Mari"
 msgstr "Розмова: знайомство з Марі"
-
-msgid "Tallinn"
-msgstr "Таллінн"
 
 msgid "Tallinn, the capital"
 msgstr "Таллінн, столиця"

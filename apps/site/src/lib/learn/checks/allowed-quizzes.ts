@@ -21,6 +21,13 @@ export const ALLOWED_NEAR_PAIRS: readonly {
     reason:
       "The quiz asks whether the ending stays after ei: Ei loe against Ei loed is the lesson.",
   },
+  {
+    lesson: "majas-majja-majast",
+    quiz: "which-question",
+    pair: ["kus?", "kust?"],
+    reason:
+      "The options are the three questions, all offered every round in a shuffled order, so shape picks nothing: kus against kust is the lesson.",
+  },
 ];
 
 /**

@@ -268,9 +268,16 @@ function WhoseSwitch() {
         })}
       </ul>
       <p aria-live="polite" className="text-md text-ink-secondary">
-        {whose
-          ? t`Mina, sina and nemad change: minu, sinu, nende. Tema, meie and teie stay as they are.`
-          : t`Switch to Whose and watch which pronouns change.`}
+        {whose ? (
+          <Trans>
+            <span lang="et">Mina</span>, <span lang="et">sina</span> and{" "}
+            <span lang="et">nemad</span> change: <span lang="et">minu, sinu, nende</span>.{" "}
+            <span lang="et">Tema</span>, <span lang="et">meie</span> and <span lang="et">teie</span>{" "}
+            stay as they are.
+          </Trans>
+        ) : (
+          <Trans>Switch to Whose and watch which pronouns change.</Trans>
+        )}
       </p>
     </Panel>
   );
@@ -380,8 +387,8 @@ function FormTable() {
       title: <Trans>A change inside</Trans>,
       tip: (
         <Trans>
-          <span lang="et">Pood</span> loses its d, and its o turns to e: <span lang="et">poe</span>.
-          Learn these words in pairs.
+          <span lang="et">Pood</span> loses its d, and the second o turns to e:{" "}
+          <span lang="et">poe</span>. Learn these words in pairs.
         </Trans>
       ),
     },
@@ -693,9 +700,24 @@ export function OmastavLesson() {
       who: "you",
       clip: "d-sina-1",
       replies: [
-        { line: "See on mina raamat.", why: t`Mina is I. To say my, use minu: minu raamat.` },
+        {
+          line: "See on mina raamat.",
+          why: (
+            <Trans>
+              <b lang="et">Mina</b> is I. To say my, use <b lang="et">minu</b>:{" "}
+              <b lang="et">minu raamat</b>.
+            </Trans>
+          ),
+        },
         { line: dialogueLine("d-sina-1"), right: true },
-        { line: "See on raamat minu.", why: t`The owner goes first: minu raamat.` },
+        {
+          line: "See on raamat minu.",
+          why: (
+            <Trans>
+              The owner goes first: <b lang="et">minu raamat</b>.
+            </Trans>
+          ),
+        },
       ],
     },
     { who: "them", clip: "d-mari-2", line: dialogueLine("d-mari-2") },
@@ -703,8 +725,22 @@ export function OmastavLesson() {
       who: "you",
       clip: "d-sina-2",
       replies: [
-        { line: "See on Jaan kohv.", why: t`Before a noun, Jaan takes its genitive: Jaani kohv.` },
-        { line: "See on sinu kohv.", why: t`Sinu is your: that says the coffee is Mari’s.` },
+        {
+          line: "See on Jaan kohv.",
+          why: (
+            <Trans>
+              Before a noun, <b lang="et">Jaan</b> takes its genitive: <b lang="et">Jaani kohv</b>.
+            </Trans>
+          ),
+        },
+        {
+          line: "See on sinu kohv.",
+          why: (
+            <Trans>
+              <b lang="et">Sinu</b> is your: that says the coffee is Mari’s.
+            </Trans>
+          ),
+        },
         { line: dialogueLine("d-sina-2"), right: true },
       ],
     },
@@ -716,9 +752,21 @@ export function OmastavLesson() {
         { line: dialogueLine("d-sina-3"), right: true },
         {
           line: "Jah, see on nende kass.",
-          why: t`Nende is their. For you and Jaan, say meie, our.`,
+          why: (
+            <Trans>
+              <b lang="et">Nende</b> is their. For you and Jaan, say <b lang="et">meie</b>, our.
+            </Trans>
+          ),
         },
-        { line: "Jah, see on teie kass.", why: t`Teie is your. About yourselves, say meie, our.` },
+        {
+          line: "Jah, see on teie kass.",
+          why: (
+            <Trans>
+              <b lang="et">Teie</b> is your. About yourself and Jaan, say <b lang="et">meie</b>,
+              our.
+            </Trans>
+          ),
+        },
       ],
     },
     { who: "them", clip: "d-mari-4", line: dialogueLine("d-mari-4") },
@@ -728,10 +776,22 @@ export function OmastavLesson() {
       replies: [
         {
           line: "Kass nimi on Miisu.",
-          why: t`The cat owns the name, so kass takes its genitive: kassi nimi.`,
+          why: (
+            <Trans>
+              The cat owns the name, so <b lang="et">kass</b> takes its genitive:{" "}
+              <b lang="et">kassi nimi</b>.
+            </Trans>
+          ),
         },
         { line: dialogueLine("d-sina-4"), right: true },
-        { line: "Miisu nimi on kass.", why: t`That says Miisu’s name is Kass.` },
+        {
+          line: "Miisu nimi on kass.",
+          why: (
+            <Trans>
+              That says Miisu’s name is <b lang="et">Kass</b>, Cat.
+            </Trans>
+          ),
+        },
       ],
     },
   ];
@@ -796,8 +856,8 @@ export function OmastavLesson() {
           <b lang="et">poes</b>. A dictionary lists it second: <b lang="et">pood, poe</b>.
         </Trans>,
         <Trans key="5">
-          A name ending in a vowel stays as it is: <b lang="et">Mari raamat</b>. A name ending in a
-          consonant gains a vowel: <b lang="et">Jaani kass</b>.
+          A name ending in a vowel usually stays as it is: <b lang="et">Mari raamat</b>. A name
+          ending in a consonant gains a vowel: <b lang="et">Jaani kass</b>.
         </Trans>,
       ]}
       sections={[
@@ -878,7 +938,7 @@ export function OmastavLesson() {
                   <Trans>
                     A name or a noun owns things the same way: it goes first, in the genitive.{" "}
                     <Word w="Mari raamat" /> is Mari’s book. Estonian adds no ’s, and Mari stays as
-                    it is: a name ending in a vowel doesn’t change.
+                    it is, as most names ending in a vowel do.
                   </Trans>
                 </p>
                 <p>
@@ -941,11 +1001,14 @@ export function OmastavLesson() {
                 </p>
                 <p>
                   <Trans>
-                    Lesson {stems} showed words that change inside, such as <Word w="pood" /> and{" "}
-                    <Word w="poes" />. The changed form is the genitive too: <Word w="poe uks" />,
-                    the shop door. A dictionary lists it second: pood, poe. Pick a kind of word and
-                    tap any form.
+                    Some words change inside before an ending: <Word w="pood" />, a shop, gives{" "}
+                    <Word w="poes" />, in the shop. That changed form is the genitive too:{" "}
+                    <Word w="poe uks" />, the shop door. A dictionary lists the genitive second:{" "}
+                    <span lang="et">pood, poe</span>. Lesson {stems} shows how these changes work.
                   </Trans>
+                </p>
+                <p>
+                  <Trans>Pick a kind of word and tap any form to hear it.</Trans>
                 </p>
               </Prose>
               <FormTable />
@@ -1006,14 +1069,15 @@ export function OmastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Mina" /> is the one who does something: <Word w="Mina elan Tartus." />{" "}
-                    <Word w="Minu" /> is the one who owns something: <Word w="Minu nimi on Mari." />
+                    <Word w="Mina" /> is I, the one who does something:{" "}
+                    <Word w="Mina elan Tartus." /> <Word w="Minu" /> is my, for what you own:{" "}
+                    <Word w="Minu nimi on Mari." />
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Kati writes about her family. Pick the word for each gap: the one who does
-                    something, or the one who owns it.
+                    Kati writes about her family. For each gap, pick the one who does something or
+                    the one who owns something.
                   </Trans>
                 </p>
               </Prose>
@@ -1036,7 +1100,7 @@ export function OmastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Mari is at your home and asks whose things are whose. Pick each answer.
+                    Mari is at your home and asks who owns what. Answer with the genitive.
                   </Trans>
                 </p>
               </Prose>

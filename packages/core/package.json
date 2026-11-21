@@ -9,6 +9,7 @@
     "./schema": "./src/schema/index.ts",
     "./db": "./src/db.ts",
     "./notes": "./src/notes.ts",
+    "./notation": "./src/notation.ts",
     "./reading": "./src/reading.ts",
     "./pinyin": "./src/pinyin/index.ts",
     "./indic": "./src/indic/index.ts",

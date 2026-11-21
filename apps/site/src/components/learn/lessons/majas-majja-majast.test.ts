@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
-import { DIRECTIONS, HEARD, shuffledDirections, twoCycles } from "./MajasMajjaMajast";
+import { twoCycles } from "../../../lib/learn/quiz";
+import { DIRECTIONS, HEARD, shuffledDirections } from "./MajasMajjaMajast";
 
 const items = HEARD.map((each) => ({ ...each, pair: [each.direction, each.form] as const }));
 const asked = (run: readonly (typeof items)[number][]) =>

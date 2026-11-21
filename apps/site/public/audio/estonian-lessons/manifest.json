@@ -9228,5 +9228,290 @@
     "text": "Tere, Mari! Ma töötan haiglas arstina. Ma lähen tööle rongiga. Ma töötan kella neljani. Ma ei joo piima. Ma joon kohvi piimata. Homseni!",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/laud": {
+    "text": "laud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/laual": {
+    "text": "laual",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/lauale": {
+    "text": "lauale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/laualt": {
+    "text": "laualt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/to2o2": {
+    "text": "töö",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/to2o2l": {
+    "text": "tööl",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/to2o2le": {
+    "text": "tööle",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/to2o2lt": {
+    "text": "töölt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/turg": {
+    "text": "turg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/turul": {
+    "text": "turul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/turule": {
+    "text": "turule",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/turult": {
+    "text": "turult",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/saaremaa": {
+    "text": "Saaremaa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/saaremaal": {
+    "text": "Saaremaal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/saaremaale": {
+    "text": "Saaremaale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/saaremaalt": {
+    "text": "Saaremaalt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kool": {
+    "text": "kool",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/koolis": {
+    "text": "koolis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kooli": {
+    "text": "kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/poes": {
+    "text": "poes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/poodi": {
+    "text": "poodi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/tartu": {
+    "text": "Tartu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/tartus": {
+    "text": "Tartus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/tartusse": {
+    "text": "Tartusse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/haigla": {
+    "text": "haigla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/haiglas": {
+    "text": "haiglas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/haiglasse": {
+    "text": "haiglasse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kus": {
+    "text": "kus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kuhu": {
+    "text": "kuhu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kust": {
+    "text": "kust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/hu2ppab": {
+    "text": "hüppab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/po3randal": {
+    "text": "põrandal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/po3randale": {
+    "text": "põrandale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kass": {
+    "text": "kass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/helistan": {
+    "text": "helistan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ku2sin": {
+    "text": "küsin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/emale": {
+    "text": "emale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/emalt": {
+    "text": "emalt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/so3brale": {
+    "text": "sõbrale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/s-lauale": {
+    "text": "Kass hüppab lauale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/s-laual": {
+    "text": "Kass on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/s-laualt": {
+    "text": "Kass hüppab laualt põrandale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/q-lahed": {
+    "text": "Kuhu sa lähed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/a-lahen-toole": {
+    "text": "Ma lähen tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/a-lahen-turule": {
+    "text": "Ma lähen turule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/q-tuled": {
+    "text": "Kust sa tuled?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/a-tulen-toolt": {
+    "text": "Ma tulen töölt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/a-tulen-turult": {
+    "text": "Ma tulen turult.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/c-toole-kooli": {
+    "text": "Ma lähen tööle, aga Mari läheb kooli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/c-toolt-koolist": {
+    "text": "Ema tuleb töölt, aga isa tuleb koolist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-emal-on": {
+    "text": "Emal on kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-helistan-emale": {
+    "text": "Ma helistan emale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-helistan-sobrale": {
+    "text": "Ma helistan sõbrale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-kusin-emalt": {
+    "text": "Ma küsin emalt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-kusin-isalt": {
+    "text": "Ma küsin isalt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-saturday": {
+    "text": "Täna on laupäev ja Mari ei lähe tööle. Ta läheb turule. Ta helistab emale. Isa on poes. Mari tuleb turult koju. Isa tuleb ka poest koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

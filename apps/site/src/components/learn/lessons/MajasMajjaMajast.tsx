@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { CornerDownRight } from "lucide-react";
 import { useMemo } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -13,7 +13,7 @@ import {
   INNER_SENTENCES,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
-import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
+import { shuffle, twoCycles } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { type KeyItem, Keys, Panel } from "../Explore";
 import { Aside, LessonView, Prose } from "../LessonView";
@@ -133,15 +133,6 @@ export const DIRECTIONS: readonly Direction[] = ["kus", "kuhu", "kust"];
 export const HEARD: readonly { form: string; direction: Direction }[] = TABLE_PLACES.flatMap(
   (name) => DIRECTIONS.map((direction) => ({ form: placeOf(name)[direction], direction })),
 );
-
-/** Six rounds as two cycles: each question once, then each question once more. */
-export function twoCycles<T extends { pair: readonly [string, string] }>(
-  items: readonly T[],
-  pinned?: T,
-): T[] {
-  const first = eachPairFirst(items, pinned).slice(0, DIRECTIONS.length);
-  return [...first, ...eachPairFirst(items.filter((item) => !first.includes(item)))];
-}
 
 /** The house scene: the cat goes in, sits inside and comes out, each with its sentence. */
 const HOUSE: readonly { id: "majja" | "majas" | "majast"; sentence: Id }[] = [
@@ -287,7 +278,7 @@ export function MajasMajjaMajastLesson() {
   const places = lessonBySlug("kohad")?.n;
   const questions = lessonBySlug("kusimused")?.n;
   const threeForms = lessonBySlug("pohivormid")?.n;
-  const onto = LESSONS.find((lesson) => lesson.et === "Laual, lauale, laualt")?.n;
+  const onto = lessonBySlug("laual-lauale-laualt")?.n;
 
   const keyOf = (label: string, sub: React.ReactNode, id: Id, tip?: React.ReactNode): KeyItem => ({
     label,

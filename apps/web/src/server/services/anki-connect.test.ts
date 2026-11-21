@@ -9,7 +9,7 @@ import {
   parseQuery,
   sweepAnkiConnectUploads,
 } from "./anki-connect";
-import { cardImageFile } from "./card-images";
+import { cardImageFile, storeImportedImage } from "./card-images";
 import { addCards, showCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { archiveDeck, createDeck } from "./decks";
@@ -517,6 +517,41 @@ describe("asbplayer", () => {
       audioKey: null,
       exampleRecordingKey: null,
     });
+  });
+
+  it("keeps a picture the learner chose, and replaces only a captured one", async () => {
+    await call("addNote", { note: note({ Term: "改札口", Sentence: "改札口で会おう。" }) });
+    const card = await cardOf("改札口");
+    await storeImportedImage(
+      ctx,
+      card,
+      Uint8Array.from(atob(frame), (c) => c.charCodeAt(0)),
+      "Blue gate",
+      { bucket: env.PRIVATE_IMAGES, images: env.IMAGES },
+    );
+    const chosen = await pictureOf(card.id);
+    const [id] = (await call("findNotes", { query: '"term:改札口"' })) as number[];
+    await call("updateNoteFields", {
+      note: {
+        id,
+        fields: {},
+        picture: { filename: "asbp_gate2.png", data: frame, fields: ["Picture"] },
+      },
+    });
+    expect(await pictureOf(card.id)).toMatchObject({ id: chosen?.id, captured: false });
+
+    const before = await pictureOf((await cardOf("改札")).id);
+    const [gate] = (await call("findNotes", { query: '"term:改札"' })) as number[];
+    await call("updateNoteFields", {
+      note: {
+        id: gate,
+        fields: {},
+        picture: { filename: "asbp_gate3.png", data: frame, fields: ["Picture"] },
+      },
+    });
+    const after = await pictureOf((await cardOf("改札")).id);
+    expect(after).toMatchObject({ captured: true });
+    expect(after?.id).not.toBe(before?.id);
   });
 
   it("caps the files one request may upload", async () => {

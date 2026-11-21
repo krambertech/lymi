@@ -491,15 +491,15 @@ async function add(
   );
   const { media } = deps;
   if (media) {
-    await Promise.all(
-      valid.map(async (p, index) => {
-        const outcome = outcomes[index];
-        // A duplicate's card keeps its own media; the uploads go either way.
-        const cardId = outcome?.status === "added" ? outcome.id : null;
-        if (cardId) await keepMedia(ctx, cardId, p.media, media, "add");
-        await dropUploads(ctx, p.media, media);
-      }),
-    );
+    // One note at a time: a note may name files earlier requests stashed, so this is not bounded
+    // by the files this request carried.
+    for (const [index, p] of valid.entries()) {
+      const outcome = outcomes[index];
+      // A duplicate's card keeps its own media; the uploads go either way.
+      const cardId = outcome?.status === "added" ? outcome.id : null;
+      if (cardId) await keepMedia(ctx, cardId, p.media, media, "add");
+      await dropUploads(ctx, p.media, media);
+    }
   }
   const ids = await noteIds(
     ctx,
@@ -644,7 +644,7 @@ async function keepMedia(
       track(ctx.analytics, { name: "anki_connect_media", kind: "sentence_audio", action });
     }
   }
-  if (files.picture.length > 0 && media.pictures) {
+  if (files.picture.length > 0 && media.pictures && (await pictureSlotOpen(ctx, cardId))) {
     const bytes = await firstUpload(ctx, files.picture, media.stash);
     if (bytes) {
       const [card] = await ctx.db
@@ -662,6 +662,27 @@ async function keepMedia(
       }
     }
   }
+}
+
+/**
+ * Whether a captured frame may take the card's picture: only when the card has none, or has only
+ * an earlier captured one. A picture the learner chose or an import brought, active or archived
+ * for restore, stays.
+ */
+async function pictureSlotOpen(ctx: ServiceContext, cardId: string) {
+  const [held] = await ctx.db
+    .select({ id: schema.cardImages.id })
+    .from(schema.cardImages)
+    .where(
+      and(
+        eq(schema.cardImages.cardId, cardId),
+        eq(schema.cardImages.userId, ctx.userId),
+        inArray(schema.cardImages.status, ["active", "archived"]),
+        eq(schema.cardImages.captured, false),
+      ),
+    )
+    .limit(1);
+  return !held;
 }
 
 /** Lets a note's uploads go once its card has what it keeps. */

@@ -1,0 +1,734 @@
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
+import type { ReactNode } from "react";
+import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import {
+  clipId,
+  clipUrl,
+  type DutyLead,
+  dutySentence,
+  type HeardKind,
+  type HeardVerb,
+  MODAL_DIALOGUE,
+  MODAL_DUTIES,
+  MODAL_HEARD_KINDS,
+  MODAL_HEARD_VERBS,
+  MODAL_NOT,
+  MODAL_PERMISSION,
+  MODAL_REASONS,
+  MODAL_SKILLS,
+  notSaid,
+  type SkillLead,
+  skillSentence,
+} from "../../../lib/learn/clips";
+import { formText } from "../../../lib/learn/forms";
+import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
+import { Dialogue, type DialogueTurn } from "../Dialogue";
+import { Keys, Panel } from "../Explore";
+import { Aside, LessonView, Prose } from "../LessonView";
+import type { Glossary } from "../lesson-context";
+import { Match, type MatchPair } from "../Match";
+import { Paradigm, type ParadigmRow } from "../Paradigm";
+import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { Word } from "../Word";
+
+const SLUG = "modaalverbid";
+/** A clip by what it says. */
+const src = (text: string) => clipUrl(SLUG, clipId(text));
+
+/** What each sentence the lesson plays means, by what it says. */
+const MEANS: Record<string, MessageDescriptor> = {
+  "Ma oskan ujuda.": msg`I can swim: I know how.`,
+  "Ma saan ujuda.": msg`I can swim: nothing stops me.`,
+  "Ma oskan lugeda.": msg`I can read: I know how.`,
+  "Ma saan lugeda.": msg`I can read: nothing stops me.`,
+  "Ma oskan eesti keelt rääkida.": msg`I can speak Estonian: I know how.`,
+  "Ma saan eesti keelt rääkida.": msg`I can speak Estonian: nothing stops me.`,
+  "Ma oskan eesti keelt.": msg`I know Estonian.`,
+  "Ma saan homme tulla.": msg`I can come tomorrow.`,
+  "Ma võin sind oodata.": msg`I can wait for you.`,
+  "Sa võid siin istuda.": msg`You can sit here.`,
+  "Kas ma tohin siin istuda?": msg`May I sit here?`,
+  "Siin ei tohi süüa.": msg`No eating here.`,
+  "Ta võib homme tulla.": msg`He or she may come tomorrow.`,
+  "Ma pean minema.": msg`I have to go.`,
+  "Ma pean ootama.": msg`I have to wait.`,
+  "Ma pean töötama.": msg`I have to work.`,
+  "Tuleb minna.": msg`We have to go.`,
+  "Tuleb oodata.": msg`We have to wait.`,
+  "Tuleb töötada.": msg`We have to work.`,
+  "Mul tuleb oodata.": msg`I have to wait.`,
+  "Mul on vaja minna.": msg`I need to go.`,
+  "Mul on vaja oodata.": msg`I need to wait.`,
+  "Mul on vaja töötada.": msg`I need to work.`,
+  "Ma ei oska ujuda.": msg`I can’t swim: I never learned.`,
+  "Ma ei saa täna ujuda.": msg`I can’t swim today: something is in the way.`,
+  "Siin ei tohi ujuda.": msg`No swimming here.`,
+  "Sa ei pea ujuma.": msg`You don’t have to swim.`,
+  "Sul pole vaja ujuda.": msg`There’s no need for you to swim.`,
+  "Sa ei pea tulema.": msg`You don’t have to come.`,
+  "Sa ei tohi tulla.": msg`You mustn’t come.`,
+};
+
+/** What each verb of the oskan-and-saan table means. */
+const SKILL_MEANS: Record<(typeof MODAL_SKILLS)[number]["ma"], MessageDescriptor> = {
+  ujuma: msg`to swim`,
+  lugema: msg`to read`,
+  "eesti keelt rääkima": msg`to speak Estonian`,
+};
+
+/** What each verb of the have-to table means. */
+const DUTY_MEANS: Record<(typeof MODAL_DUTIES)[number]["ma"], MessageDescriptor> = {
+  "mine|ma": msg`to go`,
+  "oota|ma": msg`to wait`,
+  "tööta|ma": msg`to work`,
+};
+
+const GLOSSARY: Glossary = {
+  ...Object.fromEntries(
+    Object.entries(MEANS).map(([said, en]) => [said.toLowerCase(), { en, show: said }]),
+  ),
+  oskan: { en: msg`I can, I know how to`, note: msg`From oskama.` },
+  saan: { en: msg`I can, I’m able to`, note: msg`From saama, which also means to get.` },
+  võin: { en: msg`I may, I can`, note: msg`From võima.` },
+  võib: { en: msg`may, might`, note: msg`Võin with the ta ending.` },
+  tohin: { en: msg`I’m allowed to`, note: msg`From tohtima.` },
+  pean: { en: msg`I have to, I must`, note: msg`From pidama.` },
+  tuleb: {
+    en: msg`has to be done; comes`,
+    note: msg`From tulema, to come. Before a -da form it means has to.`,
+  },
+  vaja: { en: msg`needed`, note: msg`Mul on vaja is I need.` },
+  "mul on vaja": { en: msg`I need` },
+  ujuma: { en: msg`to swim`, note: msg`Its -da form is ujuda.` },
+  siin: { en: msg`here`, note: msg`Where something is. Siia is where it goes.` },
+  "ei tohi": { en: msg`mustn’t, not allowed to` },
+  "ei pea": { en: msg`don’t have to` },
+  "pole vaja": { en: msg`no need`, note: msg`Pole is ei ole.` },
+};
+
+/** An Estonian ending in running text: read in Estonian, never split after its hyphen. */
+function End({ children }: { children: ReactNode }) {
+  return (
+    <span lang="et" className="whitespace-nowrap">
+      {children}
+    </span>
+  );
+}
+
+/** A sentence and what it means, as a detail line or an explanation shows it. */
+function Said({ said }: { said: string }) {
+  const { i18n } = useLingui();
+  return (
+    <>
+      <span lang="et">{said}</span>{" "}
+      <small className="ms-1 text-md font-normal text-ink-secondary">
+        {i18n._(MEANS[said] as MessageDescriptor)}
+      </small>
+    </>
+  );
+}
+
+/** The line under the oskan-and-saan table, by its column. */
+function SkillNote({ lead }: { lead: SkillLead }) {
+  return lead === "oskan" ? (
+    <Trans>
+      <span lang="et">Oskan</span>: you learned how.
+    </Trans>
+  ) : (
+    <Trans>
+      <span lang="et">Saan</span>: nothing stops you, such as time, a place or your health.
+    </Trans>
+  );
+}
+
+/** The same three skills after oskan and after saan; a tap plays the whole sentence. */
+function KnowOrAble() {
+  const { t, i18n } = useLingui();
+  const leads = ["oskan", "saan"] as const;
+  const rows: ParadigmRow[] = MODAL_SKILLS.map((skill) => ({
+    id: skill.ma,
+    label: i18n._(SKILL_MEANS[skill.ma]),
+    et: skill.ma,
+    cells: leads.map((lead) => ({
+      form: `${lead} ${skill.da}`,
+      src: src(skillSentence(lead, skill)),
+      note: <SkillNote lead={lead} />,
+    })),
+  }));
+  return (
+    <Panel>
+      <Paradigm
+        label={t`Three skills: know how to, or nothing stops you`}
+        columns={[t`I know how to …`, t`Nothing stops me …`]}
+        rows={rows}
+        empty={{ title: t`Tap a form`, tip: t`You’ll hear the whole sentence.` }}
+      />
+    </Panel>
+  );
+}
+
+/** The line under a may-or-allowed key. */
+function PermissionTip({ lead }: { lead: (typeof MODAL_PERMISSION)[number]["lead"] }) {
+  switch (lead) {
+    case "võin":
+      return <Trans>An offer: it’s fine by you.</Trans>;
+    case "võid":
+      return (
+        <Trans>
+          <span lang="et">Võin</span> with the <span lang="et">sa</span> ending: you let someone.
+        </Trans>
+      );
+    case "tohin":
+      return <Trans>A question: are you allowed?</Trans>;
+    case "ei tohi":
+      return <Trans>A rule. With no person, it holds for everyone.</Trans>;
+  }
+}
+
+/** Keys for may and allowed: each plays its sentence. */
+function MayOrAllowed() {
+  const { t } = useLingui();
+  return (
+    <Panel>
+      <Keys
+        label={t`May and allowed to`}
+        columns={4}
+        phoneColumns={2}
+        empty={{
+          title: <Trans>Tap a form</Trans>,
+          tip: <Trans>You’ll hear it in a sentence.</Trans>,
+        }}
+        items={MODAL_PERMISSION.map(({ lead, said }) => ({
+          label: lead,
+          src: src(said),
+          detail: { title: <Said said={said} />, tip: <PermissionTip lead={lead} /> },
+        }))}
+      />
+    </Panel>
+  );
+}
+
+/** The line under the have-to table, by its column. */
+function DutyNote({ lead }: { lead: DutyLead }) {
+  switch (lead) {
+    case "pean":
+      return (
+        <Trans>
+          I have to. <span lang="et">Pean</span> takes the <End>-ma</End> form.
+        </Trans>
+      );
+    case "tuleb":
+      return (
+        <Trans>
+          Has to be done, with no one named. <span lang="et">Tuleb</span> takes the <End>-da</End>{" "}
+          form.
+        </Trans>
+      );
+    case "vaja":
+      return (
+        <Trans>
+          I need to. <span lang="et">Vaja</span> takes the <End>-da</End> form.
+        </Trans>
+      );
+  }
+}
+
+/** The form a have-to cell shows: the lead and the second verb, its ending lit. */
+const dutyForm = (lead: DutyLead, duty: (typeof MODAL_DUTIES)[number]) =>
+  lead === "pean" ? `pean ${duty.ma}` : lead === "tuleb" ? `tuleb ${duty.da}` : `vaja ${duty.da}`;
+
+/** Three verbs after pean, tuleb and mul on vaja; a tap plays the whole sentence. */
+function HaveTo() {
+  const { t, i18n } = useLingui();
+  const leads = ["pean", "tuleb", "vaja"] as const;
+  const rows: ParadigmRow[] = MODAL_DUTIES.map((duty) => ({
+    id: formText(duty.ma),
+    label: i18n._(DUTY_MEANS[duty.ma]),
+    et: formText(duty.ma),
+    cells: leads.map((lead) => ({
+      form: dutyForm(lead, duty),
+      src: src(dutySentence(lead, duty)),
+      note: <DutyNote lead={lead} />,
+    })),
+  }));
+  return (
+    <Panel>
+      <Paradigm
+        label={t`Three verbs: have to, has to be done, need to`}
+        columns={[t`I have to …`, t`Has to be done …`, t`I need to …`]}
+        rows={rows}
+        empty={{ title: t`Tap a form`, tip: t`You’ll hear the whole sentence.` }}
+      />
+    </Panel>
+  );
+}
+
+/** The line under a can’t-or-mustn’t key. */
+function NotTip({ lead }: { lead: (typeof MODAL_NOT)[number]["lead"] }) {
+  switch (lead) {
+    case "ei oska":
+      return <Trans>You never learned.</Trans>;
+    case "ei saa":
+      return <Trans>Something is in the way.</Trans>;
+    case "ei tohi":
+      return <Trans>It isn’t allowed.</Trans>;
+    case "ei pea":
+      return (
+        <Trans>
+          It’s up to you. <span lang="et">Pea</span> still takes the <End>-ma</End> form.
+        </Trans>
+      );
+    case "pole vaja":
+      return (
+        <Trans>
+          The same as <span lang="et">ei pea</span>, with the <End>-da</End> form.
+        </Trans>
+      );
+  }
+}
+
+/** Keys for can’t, mustn’t and don’t have to, each said about swimming. */
+function CantOrMustnt() {
+  const { t } = useLingui();
+  return (
+    <Panel>
+      <Keys
+        label={t`Can’t, mustn’t and don’t have to`}
+        columns={3}
+        phoneColumns={2}
+        empty={{
+          title: <Trans>Tap a form</Trans>,
+          tip: <Trans>You’ll hear it said about swimming.</Trans>,
+        }}
+        items={MODAL_NOT.map(({ lead, said }) => ({
+          label: lead,
+          src: src(said),
+          detail: { title: <Said said={said} />, tip: <NotTip lead={lead} /> },
+        }))}
+      />
+    </Panel>
+  );
+}
+
+/** What each sentence of “What does it say?” means, by its way and its verb. */
+const HEARD_MEANS: Record<HeardKind, Record<HeardVerb["da"], MessageDescriptor>> = {
+  oska: { ujuda: msg`I never learned to swim.`, lugeda: msg`I never learned to read.` },
+  saa: { ujuda: msg`Something stops me swimming.`, lugeda: msg`Something stops me reading.` },
+  tohi: { ujuda: msg`I’m not allowed to swim.`, lugeda: msg`I’m not allowed to read.` },
+  pea: { ujuda: msg`I don’t have to swim.`, lugeda: msg`I don’t have to read.` },
+};
+
+function HeardMeaning({ kind, verb }: { kind: HeardKind; verb: HeardVerb }) {
+  const { i18n } = useLingui();
+  return <span lang={i18n.locale}>{i18n._(HEARD_MEANS[kind][verb.da])}</span>;
+}
+
+/** The answer and two other ways at random, in random order. */
+export function threeKinds(answer: HeardKind): HeardKind[] {
+  const others = MODAL_HEARD_KINDS.filter((kind) => kind !== answer);
+  return shuffle([answer, ...shuffle(others).slice(0, 2)]);
+}
+
+/** The first round’s options, fixed so the page renders the same on the server. */
+export function firstKinds(answer: HeardKind, i: number): HeardKind[] {
+  const others = MODAL_HEARD_KINDS.filter((kind) => kind !== answer);
+  const two = [others[i % 3], others[(i + 1) % 3]] as HeardKind[];
+  const at = i % 3;
+  return [...two.slice(0, at), answer, ...two.slice(at)];
+}
+
+/** “What does it say?”: each way heard with both verbs, keyed by the way. */
+export const HEARD = [
+  { kind: "saa", verb: MODAL_HEARD_VERBS[1] },
+  { kind: "oska", verb: MODAL_HEARD_VERBS[0] },
+  { kind: "pea", verb: MODAL_HEARD_VERBS[1] },
+  { kind: "tohi", verb: MODAL_HEARD_VERBS[0] },
+  { kind: "oska", verb: MODAL_HEARD_VERBS[1] },
+  { kind: "saa", verb: MODAL_HEARD_VERBS[0] },
+  { kind: "tohi", verb: MODAL_HEARD_VERBS[1] },
+  { kind: "pea", verb: MODAL_HEARD_VERBS[0] },
+] as const satisfies readonly { kind: HeardKind; verb: HeardVerb }[];
+
+type HeardItem = ChoiceItem & {
+  said: string;
+  verb: HeardVerb;
+  pair: readonly [string, string];
+};
+
+const kindOptions = (verb: HeardVerb, kinds: readonly HeardKind[]) =>
+  kinds.map((kind) => ({ id: kind, label: <HeardMeaning kind={kind} verb={verb} /> }));
+
+/** After an answer: the sentence and what it means. */
+function HeardExplain({ kind, verb }: { kind: HeardKind; verb: HeardVerb }) {
+  return (
+    <>
+      <span lang="et" className="font-medium text-ink">
+        {notSaid(kind, verb)}
+      </span>{" "}
+      <HeardMeaning kind={kind} verb={verb} />
+    </>
+  );
+}
+
+const HEARD_ITEMS: HeardItem[] = HEARD.map(({ kind, verb }, i) => {
+  const said = notSaid(kind, verb);
+  return {
+    said,
+    verb,
+    pair: [kind, said] as const,
+    src: src(said),
+    answer: kind,
+    options: kindOptions(verb, firstKinds(kind, i)),
+    explain: <HeardExplain kind={kind} verb={verb} />,
+  };
+});
+
+/** Every round but the first draws its wrong meanings afresh, so no set of options names the answer. */
+export const heardRun = (items: readonly HeardItem[], pinned?: HeardItem): HeardItem[] =>
+  eachPairFirst(items, pinned).map((item) =>
+    item === pinned
+      ? item
+      : { ...item, options: kindOptions(item.verb, threeKinds(item.answer as HeardKind)) },
+  );
+
+/** Why each sentence of “Why this verb?” takes its verb. */
+const REASONS: Record<(typeof MODAL_REASONS)[number], MessageDescriptor> = {
+  "Ma oskan ujuda.": msg`I learned as a child.`,
+  "Ma saan homme tulla.": msg`I have no plans then.`,
+  "Sa võid siin istuda.": msg`It’s fine by me.`,
+  "Siin ei tohi süüa.": msg`It’s against the rules.`,
+  "Sa ei pea tulema.": msg`There’s no need.`,
+  "Ma pean minema.": msg`I’m late for work.`,
+};
+
+const dialogueLine = (id: keyof typeof MODAL_DIALOGUE) => {
+  const clip = MODAL_DIALOGUE[id];
+  return typeof clip === "string" ? clip : clip.text;
+};
+
+export function ModaalverbidLesson() {
+  const { t, i18n } = useLingui();
+  const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
+  const infinitives = at("Pean minema, tahan lugeda");
+  const having = at("Mul on");
+  const negation = lessonBySlug("eitus")?.n;
+
+  const reasons: MatchPair[] = MODAL_REASONS.map((said) => ({
+    id: clipId(said),
+    left: said,
+    right: i18n._(REASONS[said]),
+    rightLang: i18n.locale,
+    src: src(said),
+  }));
+
+  const dialogue: DialogueTurn[] = [
+    { who: "them", clip: "d-mari-1", line: dialogueLine("d-mari-1") },
+    {
+      who: "you",
+      clip: "d-sina-1",
+      replies: [
+        {
+          line: "Jah, ma pean.",
+          why: (
+            <Trans>
+              <span lang="et">Pean</span> says you have to swim. She asked whether you know how.
+            </Trans>
+          ),
+        },
+        { line: dialogueLine("d-sina-1"), right: true },
+        {
+          line: "Ei, ma ei tohi.",
+          why: (
+            <Trans>
+              <span lang="et">Ei tohi</span> says you’re not allowed. She asked whether you know
+              how.
+            </Trans>
+          ),
+        },
+      ],
+    },
+    { who: "them", clip: "d-mari-2", line: dialogueLine("d-mari-2") },
+    {
+      who: "you",
+      clip: "d-sina-2",
+      replies: [
+        { line: "Ei, ma pean täna töötama.", why: t`You work tomorrow, not today.` },
+        {
+          line: "Ei, ma ei tohi ujuda.",
+          why: (
+            <Trans>
+              <span lang="et">Ei tohi</span> says you’re not allowed to swim. Nothing stops you
+              today.
+            </Trans>
+          ),
+        },
+        { line: dialogueLine("d-sina-2"), right: true },
+      ],
+    },
+    { who: "them", clip: "d-mari-3", line: dialogueLine("d-mari-3") },
+    {
+      who: "you",
+      clip: "d-sina-3",
+      replies: [
+        { line: dialogueLine("d-sina-3"), right: true },
+        {
+          line: "Ei, ma ei pea homme töötama.",
+          why: (
+            <Trans>
+              <span lang="et">Ei pea</span> says you don’t have to work. You do work tomorrow.
+            </Trans>
+          ),
+        },
+        { line: "Jah, ma võin homme tulla.", why: t`You work tomorrow, so you can’t come.` },
+      ],
+    },
+  ];
+
+  return (
+    <LessonView
+      slug={SLUG}
+      glossary={GLOSSARY}
+      sub={
+        <Trans>
+          Where English says can, Estonian picks the verb by the reason:{" "}
+          <span lang="et">oskan</span> when you know how, <span lang="et">saan</span> when nothing
+          stops you, <span lang="et">võin</span> when it’s fine. Must is <span lang="et">pean</span>
+          , and mustn’t is <span lang="et">ei tohi</span>.
+        </Trans>
+      }
+      facts={[
+        <Trans key="m">12 minutes</Trans>,
+        <Trans key="q">A quiz, pairs to match and a conversation</Trans>,
+        <Trans key="l">Listening only, no microphone</Trans>,
+      ]}
+      words={[
+        "oskan",
+        "saan",
+        "võin",
+        "tohin",
+        "pean",
+        "tuleb",
+        "vaja",
+        "ei tohi",
+        "ei pea",
+        "pole vaja",
+        "ujuma",
+        "siin",
+      ]}
+      recap={[
+        <Trans key="1">
+          <b lang="et">Oskan</b> is for what you learned: <b lang="et">Ma oskan ujuda.</b>{" "}
+          <b lang="et">Saan</b> says nothing stops you: <b lang="et">Ma saan homme tulla.</b>
+        </Trans>,
+        <Trans key="2">
+          <b lang="et">Võin</b> says it’s fine: <b lang="et">Sa võid siin istuda.</b>{" "}
+          <b lang="et">Tohin</b> is about being allowed, and with <b lang="et">ei</b> it says
+          mustn’t: <b lang="et">Siin ei tohi süüa.</b>
+        </Trans>,
+        <Trans key="3">
+          <b lang="et">Pean</b>, <b lang="et">tuleb</b> and <b lang="et">mul on vaja</b> say what
+          has to be done. <b lang="et">Pean</b> takes the <End>-ma</End> form, the other two the{" "}
+          <End>-da</End> form.
+        </Trans>,
+        <Trans key="4">
+          <b lang="et">Ei pea</b> is don’t have to, and <b lang="et">ei tohi</b> is mustn’t:{" "}
+          <b lang="et">Sa ei pea tulema. Sa ei tohi tulla.</b>
+        </Trans>,
+      ]}
+      sections={[
+        {
+          id: "oskan-saan",
+          title: t`Know how, or nothing stops you`,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    <Word w="Oskan" /> is for what you learned: <Word w="Ma oskan ujuda." /> says
+                    you know how to swim. <Word w="Saan" /> says nothing stops you:{" "}
+                    <Word w="Ma saan homme tulla." />
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>
+                    English says I can for both. Both take the <End>-da</End> form, as lesson{" "}
+                    {infinitives} showed. Tap a form to hear its sentence.
+                  </Trans>
+                </p>
+              </Prose>
+              <KnowOrAble />
+              <Aside>
+                <Trans>
+                  With a language, <Word w="oskan" /> needs no second verb:{" "}
+                  <Word w="Ma oskan eesti keelt." />
+                </Trans>
+              </Aside>
+            </>
+          ),
+        },
+        {
+          id: "voin-tohin",
+          title: t`May, and allowed to`,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    <Word w="Võin" /> says it’s fine. You can offer with it:{" "}
+                    <Word w="Ma võin sind oodata." /> You can also let someone do something:{" "}
+                    <Word w="Sa võid siin istuda." />
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>
+                    <Word w="Tohin" /> is about being allowed. With <b lang="et">ei</b> it says
+                    mustn’t: <Word w="Siin ei tohi süüa." /> In a question it asks whether you may,
+                    as <Word w="võin" /> can: <Word w="Kas ma tohin siin istuda?" /> Tap a form to
+                    hear its sentence.
+                  </Trans>
+                </p>
+              </Prose>
+              <MayOrAllowed />
+              <Aside>
+                <Trans>
+                  <Word w="Võib" /> can also say that something might happen.{" "}
+                  <Word w="Ta võib homme tulla." /> can mean he or she is allowed to come tomorrow,
+                  or might.
+                </Trans>
+              </Aside>
+            </>
+          ),
+        },
+        {
+          id: "pean",
+          title: t`Have to and need to`,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    <Word w="Pean" /> is I have to, and it takes the <End>-ma</End> form:{" "}
+                    <Word w="Ma pean minema." />
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>
+                    <Word w="Tuleb" /> with the <End>-da</End> form says something has to be done,
+                    without naming who: <Word w="Tuleb oodata." /> Put a person in the <End>-l</End>{" "}
+                    form from lesson {having} to make it theirs: <Word w="Mul tuleb oodata." />
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>
+                    <Word w="Mul on vaja" />, I need, takes the <End>-da</End> form of a verb:{" "}
+                    <Word w="Mul on vaja minna." /> Tap a form to hear its sentence.
+                  </Trans>
+                </p>
+              </Prose>
+              <HaveTo />
+            </>
+          ),
+        },
+        {
+          id: "not",
+          title: t`Can’t, mustn’t, don’t have to`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Put <b lang="et">ei</b> before the verb, as in lesson {negation}, and the two
+                    kinds of can’t stay apart. <Word w="Ma ei oska ujuda." /> means you never
+                    learned. <Word w="Ma ei saa täna ujuda." /> means something is in the way.
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>
+                    Mustn’t and don’t have to take different verbs. <Word w="Sa ei tohi tulla." />{" "}
+                    forbids it. <Word w="Sa ei pea tulema." /> leaves it to you, and so does{" "}
+                    <Word w="pole vaja" />, no need. Tap a form to hear it said about swimming.
+                  </Trans>
+                </p>
+              </Prose>
+              <CantOrMustnt />
+              <Prose>
+                <p>
+                  <Trans>Listen to each sentence and pick what it means.</Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="what-it-says"
+                title={<Trans>What does it say?</Trans>}
+                items={HEARD_ITEMS}
+                rounds={MODAL_HEARD_KINDS.length}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All four. You told can’t, mustn’t and don’t have to apart by ear.</Trans>
+                  ) : (
+                    <Trans>Play the ones you missed once more, then try again.</Trans>
+                  )
+                }
+                recall={(item) => ({ label: item.said, src: item.src })}
+                order={heardRun}
+                round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "which",
+          title: t`Which verb, and why`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Estonian picks the verb by the reason behind it. Match each sentence with its
+                    reason. A right pair plays the sentence.
+                  </Trans>
+                </p>
+              </Prose>
+              <Match
+                id="why-this-verb"
+                title={<Trans>Why this verb?</Trans>}
+                pairs={reasons}
+                columns={[<Trans key="s">Sentence</Trans>, <Trans key="r">Reason</Trans>]}
+              />
+            </>
+          ),
+        },
+        {
+          id: "plans",
+          title: t`Plans with Mari`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Mari asks about swimming. Pick each reply by what it says about you.
+                  </Trans>
+                </p>
+              </Prose>
+              <Dialogue
+                id="plans-with-mari"
+                title={<Trans>Swimming with Mari</Trans>}
+                part={
+                  <Trans>
+                    You learned to swim as a child. You’re free today and work tomorrow.
+                  </Trans>
+                }
+                them={t`Mari`}
+                turns={dialogue}
+              />
+            </>
+          ),
+        },
+      ]}
+    />
+  );
+}

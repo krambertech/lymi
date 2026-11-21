@@ -169,7 +169,14 @@ export const STAGES: readonly Stage[] = [
     lessons: [
       { name: msg`The three forms of a verb`, et: "Lugema, lugeda, loen" },
       { name: msg`Infinitives: -ma and -da`, et: "Pean minema, tahan lugeda" },
-      { name: msg`Can, may, must`, et: "Võin, saan, oskan" },
+      {
+        slug: "modaalverbid",
+        name: msg`Can, may, must`,
+        title: msg`Estonian modal verbs: can, may, must`,
+        et: "Võin, saan, oskan",
+        minutes: 12,
+        blurb: msg`A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud.`,
+      },
       { name: msg`Going, being, coming back: -ma, -mas, -mast`, et: "Lähen ujuma, olen ujumas" },
       { name: msg`“To like” and feelings`, et: "Mulle meeldib" },
       { name: msg`Practice: at the market`, et: "Turul" },

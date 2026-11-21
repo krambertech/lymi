@@ -420,6 +420,9 @@ msgstr "<0/> at the start turns a sentence into a yes-or-no question. Lesson {qu
 msgid "<0/> becomes <1/>, and the verb takes its <2>-ge</2> or <3>-ke</3> form: <4/> <5/> Said politely to one person, the sentence to keep is <6/>"
 msgstr "<0/> becomes <1/>, and the verb takes its <2>-ge</2> or <3>-ke</3> form: <4/> <5/> Said politely to one person, the sentence to keep is <6/>"
 
+msgid "<0/> can also say that something might happen. <1/> can mean he or she is allowed to come tomorrow, or might."
+msgstr "<0/> can also say that something might happen. <1/> can mean he or she is allowed to come tomorrow, or might."
+
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 
@@ -429,11 +432,20 @@ msgstr "<0/> is a hundred and <1/> a thousand, with no “one” in front of eit
 msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 msgstr "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 
+msgid "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> can: <4/> Tap a form to hear its sentence."
+msgstr "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> can: <4/> Tap a form to hear its sentence."
+
 msgid "<0/> is at home. Now answer <1/> six ways: tap a place."
 msgstr "<0/> is at home. Now answer <1/> six ways: tap a place."
 
+msgid "<0/> is for what you learned: <1/> says you know how to swim. <2/> says nothing stops you: <3/>"
+msgstr "<0/> is for what you learned: <1/> says you know how to swim. <2/> says nothing stops you: <3/>"
+
 msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 msgstr "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
+
+msgid "<0/> is I have to, and it takes the <1>-ma</1> form: <2/>"
+msgstr "<0/> is I have to, and it takes the <1>-ma</1> form: <2/>"
 
 msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
 msgstr "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
@@ -465,8 +477,17 @@ msgstr "<0/> on its own is no, and <1/> is yes. A fuller answer repeats the verb
 msgid "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
 msgstr "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
 
+msgid "<0/> says it’s fine. You can offer with it: <1/> You can also let someone do something: <2/>"
+msgstr "<0/> says it’s fine. You can offer with it: <1/> You can also let someone do something: <2/>"
+
+msgid "<0/> with the <1>-da</1> form says something has to be done, without naming who: <2/> Put a person in the <3>-l</3> form from lesson {having} to make it theirs: <4/>"
+msgstr "<0/> with the <1>-da</1> form says something has to be done, without naming who: <2/> Put a person in the <3>-l</3> form from lesson {having} to make it theirs: <4/>"
+
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
+
+msgid "<0/>, I need, takes the <1>-da</1> form of a verb: <2/> Tap a form to hear its sentence."
+msgstr "<0/>, I need, takes the <1>-da</1> form of a verb: <2/> Tap a form to hear its sentence."
 
 msgid "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
 msgstr "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
@@ -502,6 +523,18 @@ msgstr "<0>E–R</0> on a sign: Monday to Friday."
 
 msgid "<0>Ei ole</0> in one word"
 msgstr "<0>Ei ole</0> in one word"
+
+msgid "<0>Ei pea</0> is don’t have to, and <1>ei tohi</1> is mustn’t: <2>Sa ei pea tulema. Sa ei tohi tulla.</2>"
+msgstr "<0>Ei pea</0> is don’t have to, and <1>ei tohi</1> is mustn’t: <2>Sa ei pea tulema. Sa ei tohi tulla.</2>"
+
+msgid "<0>Ei pea</0> says you don’t have to work. You do work tomorrow."
+msgstr "<0>Ei pea</0> says you don’t have to work. You do work tomorrow."
+
+msgid "<0>Ei tohi</0> says you’re not allowed to swim. Nothing stops you today."
+msgstr "<0>Ei tohi</0> says you’re not allowed to swim. Nothing stops you today."
+
+msgid "<0>Ei tohi</0> says you’re not allowed. She asked whether you know how."
+msgstr "<0>Ei tohi</0> says you’re not allowed. She asked whether you know how."
 
 msgid "<0>Ei</0> before the verb, and the ending is gone: <1>ei {stem}</1>."
 msgstr "<0>Ei</0> before the verb, and the ending is gone: <1>ei {stem}</1>."
@@ -554,11 +587,23 @@ msgstr "<0>On</0> is both he or she is and they are. Only the pronoun tells them
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>opportunity cost</0> <1>= what you give up</1>"
 
+msgid "<0>Oskan</0> is for what you learned: <1>Ma oskan ujuda.</1> <2>Saan</2> says nothing stops you: <3>Ma saan homme tulla.</3>"
+msgstr "<0>Oskan</0> is for what you learned: <1>Ma oskan ujuda.</1> <2>Saan</2> says nothing stops you: <3>Ma saan homme tulla.</3>"
+
+msgid "<0>Oskan</0>: you learned how."
+msgstr "<0>Oskan</0>: you learned how."
+
 msgid "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 msgstr "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 
 msgid "<0>P suletud</0> on a sign: closed on Sunday."
 msgstr "<0>P suletud</0> on a sign: closed on Sunday."
+
+msgid "<0>Pean</0> says you have to swim. She asked whether you know how."
+msgstr "<0>Pean</0> says you have to swim. She asked whether you know how."
+
+msgid "<0>Pean</0>, <1>tuleb</1> and <2>mul on vaja</2> say what has to be done. <3>Pean</3> takes the <4>-ma</4> form, the other two the <5>-da</5> form."
+msgstr "<0>Pean</0>, <1>tuleb</1> and <2>mul on vaja</2> say what has to be done. <3>Pean</3> takes the <4>-ma</4> form, the other two the <5>-da</5> form."
 
 msgid "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
 msgstr "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
@@ -577,6 +622,9 @@ msgstr "<0>Sa</0> takes <1>-d</1>: <2>töötad</2>."
 
 msgid "<0>Sa</0> takes <1>oled</1>, not <2>on</2>."
 msgstr "<0>Sa</0> takes <1>oled</1>, not <2>on</2>."
+
+msgid "<0>Saan</0>: nothing stops you, such as time, a place or your health."
+msgstr "<0>Saan</0>: nothing stops you, such as time, a place or your health."
 
 msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
 msgstr "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
@@ -601,6 +649,12 @@ msgstr "<0>Tere</0> is hello, and Mari is leaving."
 
 msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
+
+msgid "<0>Võin</0> says it’s fine: <1>Sa võid siin istuda.</1> <2>Tohin</2> is about being allowed, and with <3>ei</3> it says mustn’t: <4>Siin ei tohi süüa.</4>"
+msgstr "<0>Võin</0> says it’s fine: <1>Sa võid siin istuda.</1> <2>Tohin</2> is about being allowed, and with <3>ei</3> it says mustn’t: <4>Siin ei tohi süüa.</4>"
+
+msgid "<0>Võin</0> with the <1>sa</1> ending: you let someone."
+msgstr "<0>Võin</0> with the <1>sa</1> ending: you let someone."
 
 msgid "<0>за́мок</0> is a castle."
 msgstr "<0>за́мок</0> is a castle."
@@ -951,6 +1005,9 @@ msgstr "A free flashcard app for Spanish. A native voice reads every card, every
 msgid "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
 msgstr "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
 
+msgid "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
+msgstr "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
+
 msgid "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
 msgstr "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
 
@@ -1141,14 +1198,23 @@ msgstr "A question word goes first, and the part you ask about drops out: <0>Kus
 msgid "A question you got wrong"
 msgstr "A question you got wrong"
 
+msgid "A question: are you allowed?"
+msgstr "A question: are you allowed?"
+
 msgid "A quiz round on a scene: hear a sentence, then tap the place on the drawing."
 msgstr "A quiz round on a scene: hear a sentence, then tap the place on the drawing."
+
+msgid "A quiz, pairs to match and a conversation"
+msgstr "A quiz, pairs to match and a conversation"
 
 msgid "a room"
 msgstr "a room"
 
 msgid "A round loaf of bread"
 msgstr "A round loaf of bread"
+
+msgid "A rule. With no person, it holds for everyone."
+msgstr "A rule. With no person, it holds for everyone."
 
 msgid "A schedule for every card"
 msgstr "A schedule for every card"
@@ -1612,6 +1678,9 @@ msgstr "All Estonian decks"
 msgid "All exams"
 msgstr "All exams"
 
+msgid "All four. You told can’t, mustn’t and don’t have to apart by ear."
+msgstr "All four. You told can’t, mustn’t and don’t have to apart by ear."
+
 msgid "All free decks"
 msgstr "All free decks"
 
@@ -1783,6 +1852,9 @@ msgstr "An idea that only sounds brilliant after a few drinks"
 
 msgid "An idea that only sounds good after a few drinks"
 msgstr "An idea that only sounds good after a few drinks"
+
+msgid "An offer: it’s fine by you."
+msgstr "An offer: it’s fine by you."
 
 msgid "An old *castle* stands on the hill."
 msgstr "An old *castle* stands on the hill."
@@ -2539,6 +2611,12 @@ msgstr "Can, may, must"
 
 msgid "Can; may"
 msgstr "Can; may"
+
+msgid "Can’t, mustn’t and don’t have to"
+msgstr "Can’t, mustn’t and don’t have to"
+
+msgid "Can’t, mustn’t, don’t have to"
+msgstr "Can’t, mustn’t, don’t have to"
 
 msgid "Canada"
 msgstr "Canada"
@@ -3317,6 +3395,9 @@ msgstr "don’t eat, doesn’t eat"
 msgid "Don’t eat."
 msgstr "Don’t eat."
 
+msgid "don’t have to"
+msgstr "don’t have to"
+
 msgid "don’t read, doesn’t read"
 msgstr "don’t read, doesn’t read"
 
@@ -3632,6 +3713,9 @@ msgstr "English has no õ. Say “o” without rounding your lips."
 msgid "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Lesson {into} teaches the endings for going into a place and coming out of it."
 msgstr "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Lesson {into} teaches the endings for going into a place and coming out of it."
 
+msgid "English says I can for both. Both take the <0>-da</0> form, as lesson {infinitives} showed. Tap a form to hear its sentence."
+msgstr "English says I can for both. Both take the <0>-da</0> form, as lesson {infinitives} showed. Tap a form to hear its sentence."
+
 msgid "Enjoy your meal"
 msgstr "Enjoy your meal"
 
@@ -3698,11 +3782,17 @@ msgstr "Estonian is spelled the way it sounds. You say every letter, and each on
 msgid "Estonian letters"
 msgstr "Estonian letters"
 
+msgid "Estonian modal verbs: can, may, must"
+msgstr "Estonian modal verbs: can, may, must"
+
 msgid "Estonian numbers"
 msgstr "Estonian numbers"
 
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Estonian personal pronouns and “to be”"
+
+msgid "Estonian picks the verb by the reason behind it. Match each sentence with its reason. A right pair plays the sentence."
+msgstr "Estonian picks the verb by the reason behind it. Match each sentence with its reason. A right pair plays the sentence."
 
 msgid "Estonian present tense"
 msgstr "Estonian present tense"
@@ -4392,8 +4482,17 @@ msgstr "From ootama, to wait."
 msgid "From õppima, to learn, to study."
 msgstr "From õppima, to learn, to study."
 
+msgid "From oskama."
+msgstr "From oskama."
+
+msgid "From pidama."
+msgstr "From pidama."
+
 msgid "From rääkima, to speak."
 msgstr "From rääkima, to speak."
+
+msgid "From saama, which also means to get."
+msgstr "From saama, which also means to get."
 
 msgid "From the chat you just had"
 msgstr "From the chat you just had"
@@ -4401,11 +4500,20 @@ msgstr "From the chat you just had"
 msgid "From the lesson"
 msgstr "From the lesson"
 
+msgid "From tohtima."
+msgstr "From tohtima."
+
 msgid "From tulema, to come."
 msgstr "From tulema, to come."
 
+msgid "From tulema, to come. Before a -da form it means has to."
+msgstr "From tulema, to come. Before a -da form it means has to."
+
 msgid "From tuul, wind."
 msgstr "From tuul, wind."
+
+msgid "From võima."
+msgstr "From võima."
 
 msgid "From your notes"
 msgstr "From your notes"
@@ -4724,8 +4832,20 @@ msgstr "Hard"
 msgid "Harder grammar"
 msgstr "Harder grammar"
 
+msgid "Has to be done …"
+msgstr "Has to be done …"
+
+msgid "Has to be done, with no one named. <0>Tuleb</0> takes the <1>-da</1> form."
+msgstr "Has to be done, with no one named. <0>Tuleb</0> takes the <1>-da</1> form."
+
+msgid "has to be done; comes"
+msgstr "has to be done; comes"
+
 msgid "Have a *lovely* weekend!"
 msgstr "Have a *lovely* weekend!"
+
+msgid "Have to and need to"
+msgstr "Have to and need to"
 
 msgid "Have you eaten? A way to say hello"
 msgstr "Have you eaten? A way to say hello"
@@ -4771,6 +4891,9 @@ msgstr "he or she lives"
 
 msgid "He or she lives in Finland."
 msgstr "He or she lives in Finland."
+
+msgid "He or she may come tomorrow."
+msgstr "He or she may come tomorrow."
 
 msgid "He or she speaks Estonian."
 msgstr "He or she speaks Estonian."
@@ -4914,6 +5037,9 @@ msgstr "Hello (formal)"
 
 msgid "Hello!"
 msgstr "Hello!"
+
+msgid "here"
+msgstr "here"
 
 msgid "Here are my notes from today’s pharmacology lecture. Add the drugs."
 msgstr "Here are my notes from today’s pharmacology lecture. Add the drugs."
@@ -5187,6 +5313,36 @@ msgstr "I bought bread at the *shop*."
 msgid "I bought fresh *bread*."
 msgstr "I bought fresh *bread*."
 
+msgid "I can come tomorrow."
+msgstr "I can come tomorrow."
+
+msgid "I can read: I know how."
+msgstr "I can read: I know how."
+
+msgid "I can read: nothing stops me."
+msgstr "I can read: nothing stops me."
+
+msgid "I can speak Estonian: I know how."
+msgstr "I can speak Estonian: I know how."
+
+msgid "I can speak Estonian: nothing stops me."
+msgstr "I can speak Estonian: nothing stops me."
+
+msgid "I can swim: I know how."
+msgstr "I can swim: I know how."
+
+msgid "I can swim: nothing stops me."
+msgstr "I can swim: nothing stops me."
+
+msgid "I can wait for you."
+msgstr "I can wait for you."
+
+msgid "I can, I know how to"
+msgstr "I can, I know how to"
+
+msgid "I can, I’m able to"
+msgstr "I can, I’m able to"
+
 msgid "I can’t *come* today."
 msgstr "I can’t *come* today."
 
@@ -5196,6 +5352,12 @@ msgstr "I can’t find my *keys*."
 msgid "I can’t get to the *phone*."
 msgstr "I can’t get to the *phone*."
 
+msgid "I can’t swim today: something is in the way."
+msgstr "I can’t swim today: something is in the way."
+
+msgid "I can’t swim: I never learned."
+msgstr "I can’t swim: I never learned."
+
 msgid "I come"
 msgstr "I come"
 
@@ -5204,6 +5366,12 @@ msgstr "I cry"
 
 msgid "I don’t have a *dog*."
 msgstr "I don’t have a *dog*."
+
+msgid "I don’t have to read."
+msgstr "I don’t have to read."
+
+msgid "I don’t have to swim."
+msgstr "I don’t have to swim."
 
 msgid "I don’t know"
 msgstr "I don’t know"
@@ -5271,8 +5439,29 @@ msgstr "I have an *appointment* tomorrow."
 msgid "I have lots of *friends*."
 msgstr "I have lots of *friends*."
 
+msgid "I have no plans then."
+msgstr "I have no plans then."
+
 msgid "I have three cats."
 msgstr "I have three cats."
+
+msgid "I have to …"
+msgstr "I have to …"
+
+msgid "I have to go."
+msgstr "I have to go."
+
+msgid "I have to wait."
+msgstr "I have to wait."
+
+msgid "I have to work."
+msgstr "I have to work."
+
+msgid "I have to, I must"
+msgstr "I have to, I must"
+
+msgid "I have to. <0>Pean</0> takes the <1>-ma</1> form."
+msgstr "I have to. <0>Pean</0> takes the <1>-ma</1> form."
 
 msgid "I hope"
 msgstr "I hope"
@@ -5283,8 +5472,17 @@ msgstr "I hope so; if only"
 msgid "I hope we see each other on Friday."
 msgstr "I hope we see each other on Friday."
 
+msgid "I know Estonian."
+msgstr "I know Estonian."
+
+msgid "I know how to …"
+msgstr "I know how to …"
+
 msgid "I learn a little *every day*."
 msgstr "I learn a little *every day*."
+
+msgid "I learned as a child."
+msgstr "I learned as a child."
 
 msgid "I like *reading* books."
 msgstr "I like *reading* books."
@@ -5316,8 +5514,35 @@ msgstr "I live in the *city*."
 msgid "I love you."
 msgstr "I love you."
 
+msgid "I may, I can"
+msgstr "I may, I can"
+
 msgid "I miss it"
 msgstr "I miss it"
+
+msgid "I need"
+msgstr "I need"
+
+msgid "I need to …"
+msgstr "I need to …"
+
+msgid "I need to go."
+msgstr "I need to go."
+
+msgid "I need to wait."
+msgstr "I need to wait."
+
+msgid "I need to work."
+msgstr "I need to work."
+
+msgid "I need to. <0>Vaja</0> takes the <1>-da</1> form."
+msgstr "I need to. <0>Vaja</0> takes the <1>-da</1> form."
+
+msgid "I never learned to read."
+msgstr "I never learned to read."
+
+msgid "I never learned to swim."
+msgstr "I never learned to swim."
 
 msgid "I pay"
 msgstr "I pay"
@@ -5418,6 +5643,9 @@ msgstr "I’m *reading* the newspaper."
 msgid "I’m 34 years old."
 msgstr "I’m 34 years old."
 
+msgid "I’m allowed to"
+msgstr "I’m allowed to"
+
 msgid "I’m at home."
 msgstr "I’m at home."
 
@@ -5469,6 +5697,9 @@ msgstr "I’m going."
 msgid "I’m having a cheese *roll*."
 msgstr "I’m having a cheese *roll*."
 
+msgid "I’m late for work."
+msgstr "I’m late for work."
+
 msgid "I’m learning Estonian."
 msgstr "I’m learning Estonian."
 
@@ -5486,6 +5717,12 @@ msgstr "I’m Mari."
 
 msgid "I’m not *doing* anything."
 msgstr "I’m not *doing* anything."
+
+msgid "I’m not allowed to read."
+msgstr "I’m not allowed to read."
+
+msgid "I’m not allowed to swim."
+msgstr "I’m not allowed to swim."
 
 msgid "I’m not drinking."
 msgstr "I’m not drinking."
@@ -5859,6 +6096,9 @@ msgstr "It has no meaning of its own, like a spoken question mark."
 msgid "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
 msgstr "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
 
+msgid "It isn’t allowed."
+msgstr "It isn’t allowed."
+
 msgid "It joins your daily review straight away. There is nothing to build."
 msgstr "It joins your daily review straight away. There is nothing to build."
 
@@ -5905,6 +6145,12 @@ msgstr "It’s {right}: <0>{words}</0> is halfway to {next}."
 msgid "It’s *cosy* in the sauna."
 msgstr "It’s *cosy* in the sauna."
 
+msgid "It’s against the rules."
+msgstr "It’s against the rules."
+
+msgid "It’s fine by me."
+msgstr "It’s fine by me."
+
 msgid "It’s fine; I’m OK"
 msgstr "It’s fine; I’m OK"
 
@@ -5938,6 +6184,9 @@ msgstr "It’s the form that follows <0>ei</0> in lesson {negation}: <1/>, I don
 msgid "It’s three o’clock."
 msgstr "It’s three o’clock."
 
+msgid "It’s up to you. <0>Pea</0> still takes the <1>-ma</1> form."
+msgstr "It’s up to you. <0>Pea</0> still takes the <1>-ma</1> form."
+
 msgid "It’s why a half-read chapter keeps nagging at you."
 msgstr "It’s why a half-read chapter keeps nagging at you."
 
@@ -5946,6 +6195,9 @@ msgstr "Italian"
 
 msgid "Italiano · phrase"
 msgstr "Italiano · phrase"
+
+msgid "Its -da form is ujuda."
+msgstr "Its -da form is ujuda."
 
 msgid "its changelog"
 msgstr "its changelog"
@@ -6137,6 +6389,9 @@ msgstr "Key"
 
 msgid "Keyboard first"
 msgstr "Keyboard first"
+
+msgid "Know how, or nothing stops you"
+msgstr "Know how, or nothing stops you"
 
 msgid "Know where you stand."
 msgstr "Know where you stand."
@@ -6449,6 +6704,9 @@ msgstr "Listen first."
 
 msgid "Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you which hour to count from."
 msgstr "Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you which hour to count from."
+
+msgid "Listen to each sentence and pick what it means."
+msgstr "Listen to each sentence and pick what it means."
 
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Listen to the end of the verb. Try the table above, then come back."
@@ -6799,6 +7057,9 @@ msgstr "marginal cost"
 msgid "Mari"
 msgstr "Mari"
 
+msgid "Mari asks about swimming. Pick each reply by what it says about you."
+msgstr "Mari asks about swimming. Pick each reply by what it says about you."
+
 msgid "Mari just said she works a lot. Ask where with <0>kus</0>."
 msgstr "Mari just said she works a lot. Ask where with <0>kus</0>."
 
@@ -6865,14 +7126,26 @@ msgstr "Match, Blast and Quizlet Live turn a set into a race. Lymi shows one car
 msgid "Maths and code"
 msgstr "Maths and code"
 
+msgid "May and allowed to"
+msgstr "May and allowed to"
+
 msgid "May I open the *window*?"
 msgstr "May I open the *window*?"
+
+msgid "May I sit here?"
+msgstr "May I sit here?"
 
 msgid "may I…?"
 msgstr "may I…?"
 
 msgid "May it come easy"
 msgstr "May it come easy"
+
+msgid "May, and allowed to"
+msgstr "May, and allowed to"
+
+msgid "may, might"
+msgstr "may, might"
 
 msgid "Me, we, takes -me: elame."
 msgstr "Me, we, takes -me: elame."
@@ -7066,6 +7339,9 @@ msgstr "Moving from Anki"
 msgid "Moving molecules against the gradient, using energy"
 msgstr "Moving molecules against the gradient, using energy"
 
+msgid "Mul on vaja is I need."
+msgstr "Mul on vaja is I need."
+
 msgid "multiple-choice questions"
 msgstr "multiple-choice questions"
 
@@ -7083,6 +7359,12 @@ msgstr "Music lessons"
 
 msgid "Music theory"
 msgstr "Music theory"
+
+msgid "Mustn’t and don’t have to take different verbs. <0/> forbids it. <1/> leaves it to you, and so does <2/>, no need. Tap a form to hear it said about swimming."
+msgstr "Mustn’t and don’t have to take different verbs. <0/> forbids it. <1/> leaves it to you, and so does <2/>, no need. Tap a form to hear it said about swimming."
+
+msgid "mustn’t, not allowed to"
+msgstr "mustn’t, not allowed to"
 
 msgid "My *back* hurts."
 msgstr "My *back* hurts."
@@ -7146,6 +7428,9 @@ msgstr "Nearly. Tap the endings above once more."
 
 msgid "Nearly. Watch for endings that stay after <0>ei</0>."
 msgstr "Nearly. Watch for endings that stay after <0>ei</0>."
+
+msgid "needed"
+msgstr "needed"
 
 msgid "Needed; your cards live on Lymi’s servers"
 msgstr "Needed; your cards live on Lymi’s servers"
@@ -7243,6 +7528,9 @@ msgstr "No daily limit"
 msgid "No deck at this address · Lymi"
 msgstr "No deck at this address · Lymi"
 
+msgid "No eating here."
+msgstr "No eating here."
+
 msgid "No ending. Ta on and nad on: he or she is, they are."
 msgstr "No ending. Ta on and nad on: he or she is, they are."
 
@@ -7261,6 +7549,9 @@ msgstr "No ma: the ending -n already says I."
 msgid "No meaning yet"
 msgstr "No meaning yet"
 
+msgid "no need"
+msgstr "no need"
+
 msgid "No pinyin over <0>我们在这里</0>: you know those characters."
 msgstr "No pinyin over <0>我们在这里</0>: you know those characters."
 
@@ -7269,6 +7560,9 @@ msgstr "No reading over <0>次</0> and <1>駅</1>: you already know them."
 
 msgid "No signal"
 msgstr "No signal"
+
+msgid "No swimming here."
+msgstr "No swimming here."
 
 msgid "No wrong tries."
 msgstr "No wrong tries."
@@ -7441,6 +7735,9 @@ msgstr "Nothing behind a paywall"
 
 msgid "Nothing here by that name."
 msgstr "Nothing here by that name."
+
+msgid "Nothing stops me …"
+msgstr "Nothing stops me …"
 
 msgid "Nothing. Lymi is free on the web, on your phone and on the Mac."
 msgstr "Nothing. Lymi is free on the web, on your phone and on the Mac."
@@ -8064,6 +8361,9 @@ msgstr "Places with -l"
 msgid "Plain text"
 msgstr "Plain text"
 
+msgid "Plans with Mari"
+msgstr "Plans with Mari"
+
 msgid "Platform, track"
 msgstr "Platform, track"
 
@@ -8131,6 +8431,9 @@ msgstr "Play each sentence twice before you type."
 msgid "Play pronunciation"
 msgstr "Play pronunciation"
 
+msgid "Play the ones you missed once more, then try again."
+msgstr "Play the ones you missed once more, then try again."
+
 msgid "Play the week above once more, then try again."
 msgstr "Play the week above once more, then try again."
 
@@ -8190,6 +8493,9 @@ msgstr "points to pass N5"
 
 msgid "Poland"
 msgstr "Poland"
+
+msgid "Pole is ei ole."
+msgstr "Pole is ei ole."
 
 msgid "Policies"
 msgstr "Policies"
@@ -8395,6 +8701,9 @@ msgstr "Pumpkin"
 
 msgid "Put {picked} here"
 msgstr "Put {picked} here"
+
+msgid "Put <0>ei</0> before the verb, as in lesson {negation}, and the two kinds of can’t stay apart. <1/> means you never learned. <2/> means something is in the way."
+msgstr "Put <0>ei</0> before the verb, as in lesson {negation}, and the two kinds of can’t stay apart. <1/> means you never learned. <2/> means something is in the way."
 
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 msgstr "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
@@ -8645,6 +8954,9 @@ msgstr "Ready-made flashcard decks, written by a person and checked card by card
 
 msgid "Ready-made sets"
 msgstr "Ready-made sets"
+
+msgid "Reason"
+msgstr "Reason"
 
 msgid "Recall"
 msgstr "Recall"
@@ -9076,6 +9388,9 @@ msgstr "send!"
 msgid "Sent when you’re back online"
 msgstr "Sent when you’re back online"
 
+msgid "Sentence"
+msgstr "Sentence"
+
 msgid "Sentence {sentenceNumber} of {sentenceCount}, {time}"
 msgstr "Sentence {sentenceNumber} of {sentenceCount}, {time}"
 
@@ -9411,6 +9726,15 @@ msgstr "Someone’s knocking at the *door*."
 msgid "Something else"
 msgstr "Something else"
 
+msgid "Something is in the way."
+msgstr "Something is in the way."
+
+msgid "Something stops me reading."
+msgstr "Something stops me reading."
+
+msgid "Something stops me swimming."
+msgstr "Something stops me swimming."
+
 msgid "Soon"
 msgstr "Soon"
 
@@ -9734,6 +10058,9 @@ msgstr "Support and email: we keep the information you send us so we can respond
 
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Swedes use it for coffee and working hours alike."
+
+msgid "Swimming with Mari"
+msgstr "Swimming with Mari"
 
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 msgstr "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
@@ -10608,6 +10935,9 @@ msgstr "The rules, and every sign by its picture."
 msgid "The same address works everywhere. Nothing to install."
 msgstr "The same address works everywhere. Nothing to install."
 
+msgid "The same as <0>ei pea</0>, with the <1>-da</1> form."
+msgstr "The same as <0>ei pea</0>, with the <1>-da</1> form."
+
 msgid "The same cards in the iPhone and Android apps, on your computer and in the Mac app, synced, with nothing to buy."
 msgstr "The same cards in the iPhone and Android apps, on your computer and in the Mac app, synced, with nothing to buy."
 
@@ -10812,6 +11142,12 @@ msgstr "There is nothing published yet."
 msgid "There’s a *park* near the station."
 msgstr "There’s a *park* near the station."
 
+msgid "There’s no need for you to swim."
+msgstr "There’s no need for you to swim."
+
+msgid "There’s no need."
+msgstr "There’s no need."
+
 msgid "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
 msgstr "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
 
@@ -10976,6 +11312,12 @@ msgstr "Three quarters of the way to {next}."
 
 msgid "Three questions to know by heart"
 msgstr "Three questions to know by heart"
+
+msgid "Three skills: know how to, or nothing stops you"
+msgstr "Three skills: know how to, or nothing stops you"
+
+msgid "Three verbs: have to, has to be done, need to"
+msgstr "Three verbs: have to, has to be done, need to"
 
 msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 msgstr "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
@@ -11253,6 +11595,9 @@ msgstr "To sleep; to go to bed"
 msgid "to speak"
 msgstr "to speak"
 
+msgid "to speak Estonian"
+msgstr "to speak Estonian"
+
 msgid "to speak, to talk"
 msgstr "to speak, to talk"
 
@@ -11261,6 +11606,9 @@ msgstr "To stop"
 
 msgid "To study"
 msgstr "To study"
+
+msgid "to swim"
+msgstr "to swim"
 
 msgid "To take"
 msgstr "To take"
@@ -11685,6 +12033,9 @@ msgstr "Vocabulary for levels 1 and 2 of TOPIK I and for level 3 of TOPIK II, wi
 msgid "Vocabulary for the first two levels of the Japanese-Language Proficiency Test, with a translation beside each word."
 msgstr "Vocabulary for the first two levels of the Japanese-Language Proficiency Test, with a translation beside each word."
 
+msgid "Võin with the ta ending."
+msgstr "Võin with the ta ending."
+
 msgid "Vowels"
 msgstr "Vowels"
 
@@ -11739,6 +12090,15 @@ msgstr "We change trains in Cologne."
 
 msgid "We don’t sell your personal data, show ads or track you across other companies’ apps and websites. We use the data below to provide, protect and improve Lymi."
 msgstr "We don’t sell your personal data, show ads or track you across other companies’ apps and websites. We use the data below to provide, protect and improve Lymi."
+
+msgid "We have to go."
+msgstr "We have to go."
+
+msgid "We have to wait."
+msgstr "We have to wait."
+
+msgid "We have to work."
+msgstr "We have to work."
 
 msgid "we live"
 msgstr "we live"
@@ -11901,6 +12261,9 @@ msgstr "What does it cost?"
 
 msgid "What does it mean?"
 msgstr "What does it mean?"
+
+msgid "What does it say?"
+msgstr "What does it say?"
 
 msgid "What does Jaan do?"
 msgstr "What does Jaan do?"
@@ -12125,6 +12488,9 @@ msgstr "Where does Lymi work with Gemini?"
 msgid "Where each app does more, including the rows where it’s {name}. We check these against {name}’s own pages and update them when either app changes."
 msgstr "Where each app does more, including the rows where it’s {name}. We check these against {name}’s own pages and update them when either app changes."
 
+msgid "Where English says can, Estonian picks the verb by the reason: <0>oskan</0> when you know how, <1>saan</1> when nothing stops you, <2>võin</2> when it’s fine. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
+msgstr "Where English says can, Estonian picks the verb by the reason: <0>oskan</0> when you know how, <1>saan</1> when nothing stops you, <2>võin</2> when it’s fine. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
+
 msgid "where from"
 msgstr "where from"
 
@@ -12157,6 +12523,9 @@ msgstr "Where should I start?"
 
 msgid "Where someone goes: tule siia, come here."
 msgstr "Where someone goes: tule siia, come here."
+
+msgid "Where something is. Siia is where it goes."
+msgstr "Where something is. Siia is where it goes."
 
 msgid "Where the cat goes"
 msgstr "Where the cat goes"
@@ -12254,6 +12623,9 @@ msgstr "Which question word?"
 msgid "Which questions come up"
 msgstr "Which questions come up"
 
+msgid "Which verb, and why"
+msgstr "Which verb, and why"
+
 msgid "Which word did you hear?"
 msgstr "Which word did you hear?"
 
@@ -12323,6 +12695,9 @@ msgstr "Why are you waiting?"
 msgid "Why is he or she learning Estonian?"
 msgstr "Why is he or she learning Estonian?"
 
+msgid "Why this verb?"
+msgstr "Why this verb?"
+
 msgid "Widget"
 msgstr "Widget"
 
@@ -12349,6 +12724,9 @@ msgstr "Will the AI slip into Russian?"
 
 msgid "window"
 msgstr "window"
+
+msgid "With a language, <0/> needs no second verb: <1/>"
+msgstr "With a language, <0/> needs no second verb: <1/>"
 
 msgid "With A1 if Spanish is new to you, or with Spanish Top 100 Verbs and Spanish Top 1000 Words if you’d rather learn the words you’ll hear most first. You can take both at once."
 msgstr "With A1 if Spanish is new to you, or with Spanish Top 100 Verbs and Spanish Top 1000 Words if you’d rather learn the words you’ll hear most first. You can take both at once."
@@ -12717,11 +13095,20 @@ msgstr "You can do it!"
 msgid "You can edit your content and settings, export your library, control AI services and reminders, revoke keys and disconnect apps. You can also request access, correction, erasure, restriction or portability of personal data, or object to processing based on legitimate interests. These rights depend on the circumstances and applicable law. Email <0>hello@lymi.app</0>; we may verify your identity before acting. You can complain to the <1>Estonian Data Protection Inspectorate</1> or your local supervisory authority."
 msgstr "You can edit your content and settings, export your library, control AI services and reminders, revoke keys and disconnect apps. You can also request access, correction, erasure, restriction or portability of personal data, or object to processing based on legitimate interests. These rights depend on the circumstances and applicable law. Email <0>hello@lymi.app</0>; we may verify your identity before acting. You can complain to the <1>Estonian Data Protection Inspectorate</1> or your local supervisory authority."
 
+msgid "You can sit here."
+msgstr "You can sit here."
+
 msgid "You can’t live without *water*."
 msgstr "You can’t live without *water*."
 
 msgid "You design your own cards"
 msgstr "You design your own cards"
+
+msgid "You don’t have to come."
+msgstr "You don’t have to come."
+
+msgid "You don’t have to swim."
+msgstr "You don’t have to swim."
 
 msgid "You don’t need to. Give the cards to Gemini CLI with Lymi connected, and it adds them to a deck that schedules every review. If you already have Anki decks, Lymi imports them."
 msgstr "You don’t need to. Give the cards to Gemini CLI with Lymi connected, and it adds them to a deck that schedules every review. If you already have Anki decks, Lymi imports them."
@@ -12747,6 +13134,9 @@ msgstr "You learn from labelled pictures"
 msgid "You learned this one in context."
 msgstr "You learned this one in context."
 
+msgid "You learned to swim as a child. You’re free today and work tomorrow."
+msgstr "You learned to swim as a child. You’re free today and work tomorrow."
+
 msgid "you live"
 msgstr "you live"
 
@@ -12768,6 +13158,9 @@ msgstr "You meet Mari at the café and answer her in Estonian. If you pick a wro
 msgid "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."
 msgstr "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."
 
+msgid "You mustn’t come."
+msgstr "You mustn’t come."
+
 msgid "You need *flour* for pancakes."
 msgstr "You need *flour* for pancakes."
 
@@ -12776,6 +13169,9 @@ msgstr "You need a ChatGPT plan or workspace that can add a custom MCP server. O
 
 msgid "You need a set for everything"
 msgstr "You need a set for everything"
+
+msgid "You never learned."
+msgstr "You never learned."
 
 msgid "You own this deck"
 msgstr "You own this deck"
@@ -12813,6 +13209,12 @@ msgstr "You want a proven phone app"
 msgid "You want everything on your own computer"
 msgstr "You want everything on your own computer"
 
+msgid "You work tomorrow, not today."
+msgstr "You work tomorrow, not today."
+
+msgid "You work tomorrow, so you can’t come."
+msgstr "You work tomorrow, so you can’t come."
+
 msgid "You wrote this"
 msgstr "You wrote this"
 
@@ -12846,6 +13248,9 @@ msgstr "You’ll hear it in a sentence."
 msgid "You’ll hear it in a word, with a note on how to say it."
 msgstr "You’ll hear it in a word, with a note on how to say it."
 
+msgid "You’ll hear it said about swimming."
+msgstr "You’ll hear it said about swimming."
+
 msgid "You’ll hear it, and where its name comes from."
 msgstr "You’ll hear it, and where its name comes from."
 
@@ -12854,6 +13259,9 @@ msgstr "You’ll hear the day it stands for."
 
 msgid "You’ll hear the form and who it’s for."
 msgstr "You’ll hear the form and who it’s for."
+
+msgid "You’ll hear the whole sentence."
+msgstr "You’ll hear the whole sentence."
 
 msgid "You’ll hear what day it is today. Pick the day that comes next."
 msgstr "You’ll hear what day it is today. Pick the day that comes next."

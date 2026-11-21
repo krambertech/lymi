@@ -3191,6 +3191,92 @@ const PREPOSITION_CLIPS: Record<string, Clip> = {
   "p-jaan": { sentences: DIRECTIONS_PASSAGE, voice: "second" },
 };
 
+export const VERB_NOUNS = [
+  { verb: "õpetama", person: "õpetaja", doing: "õpetamine" },
+  { verb: "lugema", person: "lugeja", doing: "lugemine" },
+  { verb: "laulma", person: "laulja", doing: "laulmine" },
+  { verb: "ujuma", person: "ujuja", doing: "ujumine" },
+  { verb: "müüma", person: "müüja", doing: "müümine" },
+  { verb: "jooksma", person: "jooksja", doing: "jooksmine" },
+] as const;
+
+export const VERB_NOUN_GAPS = [
+  {
+    id: "ja-ema",
+    before: "Minu ema on",
+    after: "koolis.",
+    answer: "õpetaja",
+    options: ["õpetaja", "õpetamine"],
+  },
+  {
+    id: "mine-hobi",
+    before: "Minu hobi on",
+    after: ".",
+    answer: "lugemine",
+    options: ["lugeja", "lugemine"],
+  },
+  {
+    id: "ja-pood",
+    before: "Poes aitas mind üks noor",
+    after: ".",
+    answer: "müüja",
+    options: ["müüja", "müümine"],
+  },
+  {
+    id: "mine-meeldib",
+    before: "Mulle meeldib",
+    after: "meres.",
+    answer: "ujumine",
+    options: ["ujuja", "ujumine"],
+  },
+  {
+    id: "ja-kuulus",
+    before: "Ta on kuulus",
+    after: ".",
+    answer: "laulja",
+    options: ["laulja", "laulmine"],
+  },
+  {
+    id: "mine-hommik",
+    before: "Hommikune",
+    after: "on tervislik.",
+    answer: "jooksmine",
+    options: ["jooksja", "jooksmine"],
+  },
+  {
+    id: "ja-hea",
+    before: "Kas sa oled hea",
+    after: "?",
+    answer: "ujuja",
+    options: ["ujuja", "ujumine"],
+  },
+  {
+    id: "mine-keel",
+    before: "Eesti keele",
+    after: "võtab aega.",
+    answer: "õppimine",
+    options: ["õppija", "õppimine"],
+  },
+] as const;
+
+export const FAMILY_JOBS_PASSAGE = [
+  "Minu ema on õpetaja ja isa on müüja.",
+  "Mu vend on laulja, ta laulab kooris.",
+  "Minu õde on hea ujuja.",
+  "Mulle endale meeldib kõige rohkem lugemine.",
+  "Meie pere lemmik sport on jooksmine.",
+] as const;
+
+export const VERB_NOUN_WORDS = ["hobi", "tervislik", "koor", "sport"] as const;
+
+const VERB_NOUN_CLIPS: Record<string, Clip> = {
+  ...words(VERB_NOUN_WORDS),
+  ...words(VERB_NOUNS.flatMap((item) => [item.verb, item.person, item.doing])),
+  ...words(VERB_NOUN_GAPS.flatMap((gap) => gap.options)),
+  ...words(VERB_NOUN_GAPS.map(objectGapSaid)),
+  "p-kati": { sentences: FAMILY_JOBS_PASSAGE },
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -4166,6 +4252,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   kiri: LETTER_CLIPS,
   "aru-saama": PARTICLE_CLIPS,
   "labi-metsa": PREPOSITION_CLIPS,
+  "opetaja-lugemine": VERB_NOUN_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

@@ -659,6 +659,9 @@ msgstr "<0>-ga</0> on the genitive."
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> or <1>-ke</1> on the end"
 
+msgid "<0>-ja</0> or <1>-mine</1>?"
+msgstr "<0>-ja</0> or <1>-mine</1>?"
+
 msgid "<0>-ksid</0> is for <1>sa</1> or <2>nad</2>. With <3>ma</3>: <4>tahaksin</4>."
 msgstr "<0>-ksid</0> is for <1>sa</1> or <2>nad</2>. With <3>ma</3>: <4>tahaksin</4>."
 
@@ -1629,6 +1632,12 @@ msgstr "A .mochi file from Mochi"
 msgid "A *hedgehog* lives in the forest."
 msgstr "A *hedgehog* lives in the forest."
 
+msgid "A <0>-mine</0> word changes like <1>inimene</1>, <2>inimese</2>, <3>inimest</3>: <4>lugemine</4>, <5>lugemise</5>, <6>lugemist</6>. So you say <7>mulle meeldib lugemine</7> but <8>ma armastan lugemist</8>."
+msgstr "A <0>-mine</0> word changes like <1>inimene</1>, <2>inimese</2>, <3>inimest</3>: <4>lugemine</4>, <5>lugemise</5>, <6>lugemist</6>. So you say <7>mulle meeldib lugemine</7> but <8>ma armastan lugemist</8>."
+
+msgid "A <0>-mine</0> word changes like <1>inimene</1>: <2>ma armastan lugemist</2>."
+msgstr "A <0>-mine</0> word changes like <1>inimene</1>: <2>ma armastan lugemist</2>."
+
 msgid "A 48-page lecture PDF goes to Claude with “Make flashcards from the key terms in this lecture.” It uses Lymi and adds four cards to a Pharmacology deck: agonist, antagonist, half-life and bioavailability."
 msgstr "A 48-page lecture PDF goes to Claude with “Make flashcards from the key terms in this lecture.” It uses Lymi and adds four cards to a Pharmacology deck: agonist, antagonist, half-life and bioavailability."
 
@@ -1853,6 +1862,9 @@ msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool
 
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 msgstr "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
+
+msgid "A free Estonian lesson on making nouns from verbs: drop -ma and add -ja for the person (õpetama, õpetaja; laulma, laulja) or -mine for the activity (lugema, lugemine; ujuma, ujumine). Every sentence is read aloud."
+msgstr "A free Estonian lesson on making nouns from verbs: drop -ma and add -ja for the person (õpetama, õpetaja; laulma, laulja) or -mine for the activity (lugema, lugemine; ujuma, ujumine). Every sentence is read aloud."
 
 msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
 msgstr "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
@@ -2481,6 +2493,12 @@ msgstr "Add {name} to Lymi"
 msgid "Add {title}"
 msgstr "Add {title}"
 
+msgid "Add <0>-ja</0> for the person who does it: <1>lugeja</1>, a reader; <2>müüja</2>, a seller."
+msgstr "Add <0>-ja</0> for the person who does it: <1>lugeja</1>, a reader; <2>müüja</2>, a seller."
+
+msgid "Add <0>-mine</0> for the activity: <1>lugemine</1>, reading; <2>ujumine</2>, swimming."
+msgstr "Add <0>-mine</0> for the activity: <1>lugemine</1>, reading; <2>ujumine</2>, swimming."
+
 msgid "Add <0>-s</0> and it says someone is in the middle of it, often out doing it: <1/> Add <2>-st</2> and it says what they’re coming back from: <3/>"
 msgstr "Add <0>-s</0> and it says someone is in the middle of it, often out doing it: <1/> Add <2>-st</2> and it says what they’re coming back from: <3/>"
 
@@ -3009,6 +3027,9 @@ msgstr "All Chinese decks"
 
 msgid "All day tomorrow"
 msgstr "All day tomorrow"
+
+msgid "All eight. A person ends in <0>-ja</0>, an activity in <1>-mine</1>."
+msgstr "All eight. A person ends in <0>-ja</0>, an activity in <1>-mine</1>."
 
 msgid "All eight. Before a noun, only mööda wants the third form."
 msgstr "All eight. Before a noun, only mööda wants the third form."
@@ -4714,6 +4735,9 @@ msgstr "Chinese font"
 msgid "Chinese words you’ll remember."
 msgstr "Chinese words you’ll remember."
 
+msgid "choir"
+msgstr "choir"
+
 msgid "Choose a grade to move to the next card."
 msgstr "Choose a grade to move to the next card."
 
@@ -5431,6 +5455,9 @@ msgstr "Does the AI write my cards?"
 msgid "Does the German deck include my state’s questions?"
 msgstr "Does the German deck include my state’s questions?"
 
+msgid "Does the sentence need the person or the activity? Pick the word, then hear the sentence."
+msgstr "Does the sentence need the person or the activity? Pick the word, then hear the sentence."
+
 msgctxt "meeldima"
 msgid "Doesn’t like"
 msgstr "Doesn’t like"
@@ -5443,6 +5470,9 @@ msgstr "dog"
 
 msgid "Dog"
 msgstr "Dog"
+
+msgid "Doing it"
+msgstr "Doing it"
 
 msgid "Doing it twice has the same effect as doing it once"
 msgstr "Doing it twice has the same effect as doing it once"
@@ -5582,6 +5612,12 @@ msgstr "Driving"
 
 msgid "Driving tests"
 msgstr "Driving tests"
+
+#. placeholder {0}: item.verb
+#. placeholder {1}: item.person
+#. placeholder {2}: item.doing
+msgid "Drop <0>-ma</0> from <1>{0}</1> and keep <2>{stem}</2>: <3>{1}</3>, <4>{2}</4>."
+msgstr "Drop <0>-ma</0> from <1>{0}</1> and keep <2>{stem}</2>: <3>{1}</3>, <4>{2}</4>."
 
 msgid "Drop a chapter into Smart add, or send it to Claude, ChatGPT, Gemini or Grok and ask for the key terms. Each card keeps the guide’s definition."
 msgstr "Drop a chapter into Smart add, or send it to Claude, ChatGPT, Gemini or Grok and ask for the key terms. Each card keeps the guide’s definition."
@@ -5948,6 +5984,9 @@ msgstr "Estonia’s capital"
 
 msgid "Estonian"
 msgstr "Estonian"
+
+msgid "Estonian -ja and -mine: õpetaja, lugemine and other words from verbs"
+msgstr "Estonian -ja and -mine: õpetaja, lugemine and other words from verbs"
 
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Estonian -ma, -mas and -mast: going, being and coming back"
@@ -7015,6 +7054,9 @@ msgstr "From olema, to be."
 msgid "From olema."
 msgstr "From olema."
 
+msgid "From one verb, two nouns: <0>õpetama</0> gives <1>õpetaja</1>, a teacher, and <2>õpetamine</2>, teaching."
+msgstr "From one verb, two nouns: <0>õpetama</0> gives <1>õpetaja</1>, a teacher, and <2>õpetamine</2>, teaching."
+
 msgid "From ootama, to wait."
 msgstr "From ootama, to wait."
 
@@ -7799,6 +7841,15 @@ msgstr "He or she works from home."
 msgid "he or she; his or her"
 msgstr "he or she; his or her"
 
+msgid "He sells things in a shop"
+msgstr "He sells things in a shop"
+
+msgid "He sings in a choir"
+msgstr "He sings in a choir"
+
+msgid "He teaches at a school"
+msgstr "He teaches at a school"
+
 msgid "He was already in Tartu"
 msgstr "He was already in Tartu"
 
@@ -7843,6 +7894,9 @@ msgstr "Head ööd! Good night."
 
 msgid "health insurance company"
 msgstr "health insurance company"
+
+msgid "healthy, good for you"
+msgstr "healthy, good for you"
 
 #. placeholder {0}: c.term
 #. placeholder {0}: current.term
@@ -8020,8 +8074,17 @@ msgstr "Hello!"
 msgid "help"
 msgstr "help"
 
+msgid "Her brother"
+msgstr "Her brother"
+
+msgid "Her grandmother"
+msgstr "Her grandmother"
+
 msgid "Her job: <0>-na</0>, as a doctor."
 msgstr "Her job: <0>-na</0>, as a doctor."
+
+msgid "Her mother"
+msgstr "Her mother"
 
 msgid "Her mother and father"
 msgstr "Her mother and father"
@@ -8109,6 +8172,9 @@ msgstr "History"
 
 msgid "History notes"
 msgstr "History notes"
+
+msgid "hobby"
+msgstr "hobby"
 
 msgid "holy; a holiday"
 msgstr "holy; a holiday"
@@ -10300,6 +10366,9 @@ msgstr "Kati writes about her family. For each gap, pick who or whose."
 msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 msgstr "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 
+msgid "Kati writes about what her family does. Look for the <0>-ja</0> and <1>-mine</1> words, and the <2/> she likes most."
+msgstr "Kati writes about what her family does. Look for the <0>-ja</0> and <1>-mine</1> words, and the <2/> she likes most."
+
 msgid "Kati writes to the landlord"
 msgstr "Kati writes to the landlord"
 
@@ -10311,6 +10380,9 @@ msgstr "Kati’s <0/>, her tap, is broken. She writes a <1/> to her <2/>, Mrs Ta
 
 msgid "Kati’s birthday"
 msgstr "Kati’s birthday"
+
+msgid "Kati’s family"
+msgstr "Kati’s family"
 
 msgid "Kati’s friends"
 msgstr "Kati’s friends"
@@ -10438,6 +10510,9 @@ msgstr "Kohv, kohvi, kohvi."
 
 msgid "Kolm, three, and veerand, a quarter."
 msgstr "Kolm, three, and veerand, a quarter."
+
+msgid "Kooris, in a choir."
+msgstr "Kooris, in a choir."
 
 msgid "Korean"
 msgstr "Korean"
@@ -11831,6 +11906,9 @@ msgstr "Most land plants have one."
 msgid "Most of them. Ask the verb its question: <0>keda, kellest, kellele, kellega?</0>"
 msgstr "Most of them. Ask the verb its question: <0>keda, kellest, kellele, kellega?</0>"
 
+msgid "Most of them. Ask: is it someone, or something you do?"
+msgstr "Most of them. Ask: is it someone, or something you do?"
+
 msgid "Most of them. Listen again in the table to the ones you missed."
 msgstr "Most of them. Listen again in the table to the ones you missed."
 
@@ -13008,6 +13086,9 @@ msgstr "One spelling, two words."
 msgid "One stem, the same endings"
 msgstr "One stem, the same endings"
 
+msgid "One stem, two nouns"
+msgstr "One stem, two nouns"
+
 msgid "One syllable ending in a long vowel takes <0>-d</0>."
 msgstr "One syllable ending in a long vowel takes <0>-d</0>."
 
@@ -13435,6 +13516,9 @@ msgstr "person"
 
 msgid "Person"
 msgstr "Person"
+
+msgid "Person or activity?"
+msgstr "Person or activity?"
 
 msgid "Personal ID code"
 msgstr "Personal ID code"
@@ -14527,6 +14611,9 @@ msgstr "Run /mcp auth lymi. Your browser opens on Lymi. Sign in and allow it."
 msgid "Run /mcp to see Lymi connected, then ask Gemini for your first cards."
 msgstr "Run /mcp to see Lymi connected, then ask Gemini for your first cards."
 
+msgid "Running in the park"
+msgstr "Running in the park"
+
 msgid "Running in town"
 msgstr "Running in town"
 
@@ -15485,6 +15572,9 @@ msgstr "spider"
 msgid "Split a deck into sections, one per unit. Learners start with the first, and the next opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can start the next section early."
 msgstr "Split a deck into sections, one per unit. Learners start with the first, and the next opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can start the next section early."
 
+msgid "sport"
+msgstr "sport"
+
 msgid "Spread your practice over time."
 msgstr "Spread your practice over time."
 
@@ -15764,6 +15854,9 @@ msgstr "Swap <0>-tud</0> for <1>-takse</1> now and <2>-ti</2> in the past; <3>-d
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Swedes use it for coffee and working hours alike."
 
+msgid "Swimming in the sea"
+msgstr "Swimming in the sea"
+
 msgid "Swimming plans"
 msgstr "Swimming plans"
 
@@ -15892,6 +15985,9 @@ msgstr "Take it again"
 
 msgid "Take the *metro* to the airport."
 msgstr "Take the *metro* to the airport."
+
+msgid "Take the <0>-ma</0> form and drop <1>-ma</1>: <2>luge-ma</2> gives the stem <3>luge-</3>."
+msgstr "Take the <0>-ma</0> form and drop <1>-ma</1>: <2>luge-ma</2> gives the stem <3>luge-</3>."
 
 msgid "Take the present <0>ma</0> form, swap <1>-n</1> for <2>-ksin</2>: <3>lähen, läheksin</3>."
 msgstr "Take the present <0>ma</0> form, swap <1>-n</1> for <2>-ksin</2>: <3>lähen, läheksin</3>."
@@ -17545,6 +17641,9 @@ msgstr "The same in both"
 msgid "The same kanji sounds different in different words. Lymi shows the reading over the kanji until you know the word, then takes it away so you learn to read it on your own."
 msgstr "The same kanji sounds different in different words. Lymi shows the reading over the kanji until you know the word, then takes it away so you learn to read it on your own."
 
+msgid "The same stem gives the person and the activity."
+msgstr "The same stem gives the person and the activity."
+
 msgid "The same stem with <0>-da</0>"
 msgstr "The same stem with <0>-da</0>"
 
@@ -17628,6 +17727,12 @@ msgstr "The second verb usually goes last: <0>Ma pean homme tööle minema.</0>"
 
 msgid "The seller said üheksa, nine. Kaheksa is eight."
 msgstr "The seller said üheksa, nine. Kaheksa is eight."
+
+msgid "The sentence needs a person, so it takes <0>-ja</0>, and the meaning gives <1>{answer}</1>."
+msgstr "The sentence needs a person, so it takes <0>-ja</0>, and the meaning gives <1>{answer}</1>."
+
+msgid "The sentence needs the activity, so it takes <0>-mine</0>, and the meaning gives <1>{answer}</1>."
+msgstr "The sentence needs the activity, so it takes <0>-mine</0>, and the meaning gives <1>{answer}</1>."
 
 msgid "The sentence starts with it, so it keeps its first form."
 msgstr "The sentence starts with it, so it keeps its first form."
@@ -18862,8 +18967,14 @@ msgstr "to see"
 msgid "To see their friends at home"
 msgstr "To see their friends at home"
 
+msgid "to sell"
+msgstr "to sell"
+
 msgid "To sign"
 msgstr "To sign"
+
+msgid "to sing"
+msgstr "to sing"
 
 msgid "to sit, to sit down"
 msgstr "to sit, to sit down"
@@ -18918,6 +19029,9 @@ msgstr "to Tartu"
 
 msgid "To Tartu"
 msgstr "To Tartu"
+
+msgid "to teach"
+msgstr "to teach"
 
 msgid "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
 msgstr "To tell one person what to do, Estonian uses the verb’s stem with nothing after it. Take the ma form from lesson {present} and drop the <0>-n</0>. <1/> is I read, and <2/> tells one person to read."
@@ -19531,6 +19645,9 @@ msgstr "Verbs"
 msgid "Verbs and the case they take"
 msgstr "Verbs and the case they take"
 
+msgid "Verbs and the words made from them"
+msgstr "Verbs and the words made from them"
+
 msgid "Verbs before the form"
 msgstr "Verbs before the form"
 
@@ -19959,8 +20076,14 @@ msgstr "What does Kati do?"
 msgid "What does Kati drink a lot of?"
 msgstr "What does Kati drink a lot of?"
 
+msgid "What does Kati like most?"
+msgstr "What does Kati like most?"
+
 msgid "What does Kati write?"
 msgstr "What does Kati write?"
+
+msgid "What does Kati’s father do?"
+msgstr "What does Kati’s father do?"
 
 msgid "What does Lymi cost?"
 msgstr "What does Lymi cost?"
@@ -20675,6 +20798,9 @@ msgstr "Who can see the cards I make?"
 msgid "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
 msgstr "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
 
+msgid "Who does it"
+msgstr "Who does it"
+
 msgid "Who has a car?"
 msgstr "Who has a car?"
 
@@ -20728,6 +20854,9 @@ msgstr "Who lives in Tartu?"
 
 msgid "Who or whose?"
 msgstr "Who or whose?"
+
+msgid "Who sings in a choir?"
+msgstr "Who sings in a choir?"
 
 msgid "Who speaks Estonian?"
 msgstr "Who speaks Estonian?"
@@ -21557,6 +21686,9 @@ msgstr "You know <0>{term}</0>. Its pinyin goes from the examples on all your ca
 
 msgid "You know <0>银行</0>. <1>行</1> loses háng in <2>行长</2> too, but keeps xíng in <3>不行</3>."
 msgstr "You know <0>银行</0>. <1>行</1> loses háng in <2>行长</2> too, but keeps xíng in <3>不行</3>."
+
+msgid "You know the <0>-ma</0> form from lesson {maForm}. Drop <1>-ma</1> and you have the stem. Add <2>-ja</2> and you get the person who does it, like English -er: <3>õpetaja</3>, teacher. Add <4>-mine</4> and you get the activity, like English -ing: <5>õpetamine</5>, teaching."
+msgstr "You know the <0>-ma</0> form from lesson {maForm}. Drop <1>-ma</1> and you have the stem. Add <2>-ja</2> and you get the person who does it, like English -er: <3>õpetaja</3>, teacher. Add <4>-mine</4> and you get the activity, like English -ing: <5>õpetamine</5>, teaching."
 
 msgid "You know the <0>-nud</0> form from lesson {negativePast}: <1>ma ei lugenud</1>, I didn’t read. Put a form of <2>olema</2> before it and you get two more tenses. With <3>olen</3>, the perfect: <4>ma olen lugenud</4>, I have read. With <5>olin</5>, the pluperfect: <6>ma olin lugenud</6>, I had read."
 msgstr "You know the <0>-nud</0> form from lesson {negativePast}: <1>ma ei lugenud</1>, I didn’t read. Put a form of <2>olema</2> before it and you get two more tenses. With <3>olen</3>, the perfect: <4>ma olen lugenud</4>, I have read. With <5>olin</5>, the pluperfect: <6>ma olin lugenud</6>, I had read."

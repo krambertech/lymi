@@ -31,11 +31,15 @@ describe("past-tense quizzes", () => {
     expect(places.size).toBe(3);
   });
 
-  it("hears both now and the past in every run", () => {
+  it("hears every verb once in a seven-round run, now or in the past", () => {
     const items = whenItems(i18n);
+    const answers = new Set<string>();
     for (let run = 0; run < 200; run++) {
-      const six = eachPairFirst(items).slice(0, 6);
-      expect(new Set(six.map((item) => item.answer))).toEqual(new Set(["now", "past"]));
+      const seven = eachPairFirst(items, run === 0 ? items[0] : undefined).slice(0, 7);
+      expect(new Set(seven.map((item) => item.pair[0])).size).toBe(7);
+      for (const item of seven.slice(1)) answers.add(`${item.pair[0]}-${item.answer}`);
     }
+    // Every verb is heard both ways across runs, so its tense can't be learned from its verb.
+    expect(answers.size).toBe(14);
   });
 });

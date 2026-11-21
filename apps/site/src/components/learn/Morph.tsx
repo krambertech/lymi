@@ -84,7 +84,6 @@ function MorphChainView({ chain }: { chain: MorphChain }) {
             data-play={turn > 0 ? "" : undefined}
             className="learn-morph min-w-0 text-5xl/tight font-semibold tracking-tight wrap-anywhere max-sm:text-4xl/tight"
           >
-            {/* Only the words are Estonian: “becomes” is read in the page's language. */}
             <span className="sr-only">
               {before ? (
                 <Trans>
@@ -94,7 +93,6 @@ function MorphChainView({ chain }: { chain: MorphChain }) {
                 <span lang="et">{step.word}</span>
               )}
             </span>
-            {/* The change letter by letter. Dropped letters are drawn by CSS, so the text is the new word. */}
             <span aria-hidden="true" lang="et">
               {parts.map((part, i) =>
                 part.kind === "added" ? (
@@ -102,9 +100,6 @@ function MorphChainView({ chain }: { chain: MorphChain }) {
                   <span key={i} data-kind="added">
                     <span>{part.text}</span>
                   </span>
-                ) : part.kind === "dropped" ? (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: a word's parts never reorder
-                  <span key={i} data-kind="dropped" data-text={part.text} />
                 ) : (
                   // biome-ignore lint/suspicious/noArrayIndexKey: a word's parts never reorder
                   <span key={i} data-kind={part.kind}>

@@ -272,7 +272,7 @@ const WHEN_MEANS: Record<string, MessageDescriptor> = {
   "Ta luges raamatut.": msg`He or she was reading a book.`,
 };
 
-/** Each sentence of “Now or in the past?”, keyed by now or past so a run hears both. */
+/** Each sentence of “Now or in the past?”, keyed by its verb: a run hears every verb once, now or in the past at random. */
 export function whenItems(i18n: I18n): WhenItem[] {
   return PAST_NOW_OR_THEN.flatMap((each, i) =>
     (["past", "now"] as const).map((kind, k) => {
@@ -281,7 +281,7 @@ export function whenItems(i18n: I18n): WhenItem[] {
         src: src(said),
         answer: kind,
         said,
-        pair: [kind, `${each.verb}-${kind}`] as const,
+        pair: [each.verb, `${each.verb}-${kind}`] as const,
         // Fixed for the server's first round; the order function shuffles every round after it.
         options: kindOptions((i + k) % 2 === 0 ? ["now", "past"] : ["past", "now"], i18n),
         explain: (
@@ -459,7 +459,8 @@ function useContent() {
       ],
     }));
 
-    // Each right answer sits in its own place: second, first, third, first.
+    // Each right answer sits in its own place: second, first, third, first. The answer is the
+    // longest option only once and never the shortest, so length alone doesn't find it.
     const saturday: PassageQuestion[] = [
       {
         id: "ten",
@@ -467,7 +468,7 @@ function useContent() {
         options: [
           { id: "work", label: t({ message: "To work", context: "where to" }) },
           { id: "market", label: t`To the market` },
-          { id: "tartu", label: t`To Tartu` },
+          { id: "cinema", label: t`To the cinema` },
         ],
         answer: "market",
         line: 1,
@@ -477,7 +478,7 @@ function useContent() {
         ask: t`What did she buy?`,
         options: [
           { id: "bread", label: t`Bread and cheese` },
-          { id: "coffee", label: t`Coffee and milk` },
+          { id: "coffee", label: t`Cheese and coffee` },
           { id: "book", label: t({ message: "A book", context: "what was bought" }) },
         ],
         answer: "bread",
@@ -487,7 +488,7 @@ function useContent() {
         id: "home",
         ask: t`What did Mari and Jaan do at home?`,
         options: [
-          { id: "read", label: t`They read` },
+          { id: "read", label: t`They read and had tea` },
           { id: "worked", label: t`They worked` },
           { id: "ate", label: t`They ate and had coffee` },
         ],
@@ -500,7 +501,7 @@ function useContent() {
         options: [
           { id: "nine", label: t`At nine` },
           { id: "two", label: t`At two` },
-          { id: "ten", label: t`At ten` },
+          { id: "eleven", label: t`At eleven` },
         ],
         answer: "nine",
         line: 6,
@@ -511,7 +512,8 @@ function useContent() {
       const line = PAST_DIALOGUE[clip];
       return typeof line === "string" ? line : line.text;
     };
-    // The right reply moves between first, third and second place.
+    // The right reply moves between first, third and second place. In each turn one wrong reply
+    // misses on one count and the other on both, so no reply wins by sharing the most with the rest.
     const talk: DialogueTurn[] = [
       { who: "them", clip: "d-kati-1", line: said("d-kati-1") },
       {
@@ -524,8 +526,12 @@ function useContent() {
             why: t`That’s what you’re doing now. Kati asked about yesterday.`,
           },
           {
-            line: "Ta oli kodus ja luges raamatut.",
-            why: t`That’s about someone else. Kati asked what you did.`,
+            line: "Nad on kodus ja loevad raamatut.",
+            why: (
+              <Trans>
+                <Et>Nad on</Et> is they are, now. Kati asked what you did yesterday.
+              </Trans>
+            ),
           },
         ],
       },
@@ -535,10 +541,10 @@ function useContent() {
         clip: "d-sina-2",
         replies: [
           {
-            line: "Jah, me käisime poes.",
+            line: "Jah, nad käivad poes.",
             why: (
               <Trans>
-                <Et>Me</Et> is we, and you were on your own.
+                <Et>Nad käivad</Et> is they go, now. Kati asked about you, yesterday.
               </Trans>
             ),
           },
@@ -569,10 +575,10 @@ function useContent() {
           },
           { line: said("d-sina-3"), right: true },
           {
-            line: "Ma ostan leiba ja piima.",
+            line: "Nad ostavad leiba ja piima.",
             why: (
               <Trans>
-                <Et>Ostan</Et> is the present. Kati asked what you bought.
+                <Et>Nad ostavad</Et> is they buy, now. Kati asked what you bought.
               </Trans>
             ),
           },
@@ -596,17 +602,26 @@ function useContent() {
             as in <Et>töötasin</Et>
           </Trans>
         ),
-        rule: t`Most verbs: -si- on the stem of the -ma form.`,
+        rule: (
+          <Trans>
+            Most verbs: <End>si-</End> on the stem of the <End>ma</End> form.
+          </Trans>
+        ),
       },
       {
         id: "i",
         label: "-i-",
         hint: (
           <Trans>
-            as in <Et>jõin</Et>
+            as in <Et>nägin</Et>
           </Trans>
         ),
-        rule: t`One of the short verbs that take -i-.`,
+        rule: (
+          <Trans>
+            One of the seven <End>i-</End> verbs:{" "}
+            <Et>olema, tulema, minema, tegema, nägema, sööma, jooma</Et>.
+          </Trans>
+        ),
       },
     ];
     const sort: SortItem[] = PAST_SORT.map((each) => ({
@@ -620,7 +635,7 @@ function useContent() {
           </Trans>
         ) : (
           <Trans>
-            One of the short verbs: its past is <Et>{each.past}</Et>.
+            One of the seven <End>i-</End> verbs: its past is <Et>{each.past}</Et>.
           </Trans>
         ),
     }));
@@ -644,7 +659,7 @@ export function LihtminevikLesson() {
   const content = useContent();
   const present = lessonBySlug("olevik")?.n;
   const days = lessonBySlug("paevad")?.n;
-  const verbForms = LESSONS.find((lesson) => lesson.et === "Lugema, lugeda, loen")?.n;
+  const verbForms = lessonBySlug("verbi-pohivormid")?.n;
   const pastNo = LESSONS.find((lesson) => lesson.et === "Ma ei läinud")?.n;
 
   return (
@@ -653,8 +668,8 @@ export function LihtminevikLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Most verbs put <End>si-</End> on the stem of the <End>ma</End> form; a few short ones take{" "}
-          <End>i-</End>. An ending for each person says who did it.
+          Most verbs put <End>si-</End> on the stem of the <End>ma</End> form; a few everyday verbs
+          take <End>i-</End>. An ending for each person says who did it.
         </Trans>
       }
       facts={[
@@ -689,9 +704,10 @@ export function LihtminevikLesson() {
           does: <b lang="et">ta elas, nad elasid</b>.
         </Trans>,
         <Trans key="3">
-          Some short verbs take <End>i-</End>, and several change their stem:{" "}
-          <b lang="et">olin, tulin, läksin, tegin, nägin, sõin, jõin</b>. <Et>Ta</Et> ends in{" "}
-          <End>i</End>, as in <b lang="et">ta oli</b>, except <b lang="et">ta läks</b>.
+          A few everyday verbs take <End>i-</End> on the stem of the <End>ma</End> form:{" "}
+          <b lang="et">olin, tulin, tegin, nägin</b>. Three change the stem:{" "}
+          <b lang="et">läksin, sõin, jõin</b>. <Et>Ta</Et> ends in <End>i</End>, as in{" "}
+          <b lang="et">ta oli</b>, except <b lang="et">ta läks</b>.
         </Trans>,
         <Trans key="4">
           <b lang="et">Lugesin</b> is I read, I was reading and I did read: one simple past for all
@@ -826,9 +842,9 @@ export function LihtminevikLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Some short everyday verbs take <End>i-</End> instead, and several change their
-                    stem too: <Word w="sööma" />, <Word w="sõin" />, I ate; <Word w="minema" />,{" "}
-                    <Word w="läksin" />, I went. Learn each one with its past, as you learned{" "}
+                    A few everyday verbs take <End>i-</End> instead, and several change their stem
+                    too: <Word w="sööma" />, <Word w="sõin" />, I ate; <Word w="minema" />,{" "}
+                    <Word w="läksin" />, I went. Learn them one by one, as you learned{" "}
                     <b lang="et">lugema</b> with <b lang="et">loen</b>.
                   </Trans>
                 </p>
@@ -836,7 +852,8 @@ export function LihtminevikLesson() {
                   <Trans>
                     The endings are the ones that follow <End>si-</End>:{" "}
                     <b lang="et">sõin, sõid, sõi, sõime, sõite, sõid</b>. <Et>Ta</Et> ends in{" "}
-                    <End>i</End>, as in <Word w="sõi" />; only <Et>minema</Et> drops it:{" "}
+                    <End>i</End>, as in <Word w="sõi" />; of these seven, only <Et>minema</Et> drops
+                    it:{" "}
                     <Nowrap>
                       <Word w="läks" />.
                     </Nowrap>{" "}
@@ -883,8 +900,8 @@ export function LihtminevikLesson() {
                 <p>
                   <Trans>
                     Hear a sentence about someone and pick whether it happens now or happened in the
-                    past. Listen to the verb: <b lang="et">tuleb</b> is now, <b lang="et">tuli</b>{" "}
-                    is the past.
+                    past. Listen to the verb: <b lang="et">elab</b> is now, <b lang="et">elas</b> is
+                    the past.
                   </Trans>
                 </p>
               </Prose>
@@ -892,10 +909,10 @@ export function LihtminevikLesson() {
                 id="now-or-past"
                 title={<Trans>Now or in the past?</Trans>}
                 items={content.when}
-                rounds={6}
+                rounds={7}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six. You told the past from the present every time.</Trans>
+                    <Trans>All seven. You told the past from the present every time.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Most of them. Play the ones you missed once more.</Trans>
                   ) : (

@@ -2344,14 +2344,23 @@ export const OBJECT_ALWAYS = [
 export const OBJECT_WHOLE = ["Ma ostsin pileti.", "Osta pilet!", "Ma ostsin piletid."] as const;
 
 export const OBJECT_GAPS = [
-  { id: "no", before: "Ma ei ostnud", after: ".", answer: "leiba", options: ["leiva", "leiba"] },
-  { id: "one", before: "Ma ostsin ühe", after: ".", answer: "pileti", options: ["pileti", "piletit"] },
-  { id: "now", before: "Ma loen praegu", after: ".", answer: "raamatut", options: ["raamatu", "raamatut"] },
-  { id: "done", before: "Ma lugesin", after: "läbi.", answer: "raamatu", options: ["raamatut", "raamatu"] },
-  { id: "wait", before: "Ma ootan", after: ".", answer: "sõpra", options: ["sõpra", "sõbra"] },
-  { id: "buy", before: "Osta", after: "!", answer: "pilet", options: ["pileti", "pilet", "piletit"] },
-  { id: "eat", before: "Ma sõin", after: "ära.", answer: "koogi", options: ["kooki", "koogi"] },
+  { id: "now", noun: "raamat", before: "Ma loen praegu", after: ".", answer: "raamatut" },
+  { id: "done", noun: "raamat", before: "Ma lugesin", after: "läbi.", answer: "raamatu" },
+  { id: "no", noun: "leib", before: "Ma ei ostnud", after: ".", answer: "leiba" },
+  { id: "one", noun: "leib", before: "Ma ostsin ühe", after: ".", answer: "leiva" },
+  { id: "eating", noun: "kook", before: "Ma söön praegu", after: ".", answer: "kooki" },
+  { id: "eaten", noun: "kook", before: "Ma sõin", after: "ära.", answer: "koogi" },
+  { id: "buy", noun: "pilet", before: "Osta", after: "!", answer: "pilet" },
+  { id: "bought", noun: "pilet", before: "Ma ostsin ühe", after: ".", answer: "pileti" },
+  { id: "not-bought", noun: "pilet", before: "Ma ei ostnud", after: ".", answer: "piletit" },
 ] as const;
+
+export const OBJECT_FORMS: Record<(typeof OBJECT_GAPS)[number]["noun"], readonly string[]> = {
+  raamat: ["raamatu", "raamatut"],
+  leib: ["leiva", "leiba"],
+  kook: ["koogi", "kooki"],
+  pilet: ["pilet", "pileti", "piletit"],
+};
 
 export const OBJECT_SHOP = [
   "Täna käisin ma poes.",
@@ -2370,7 +2379,16 @@ export const OBJECT_DIALOGUE = {
   "d-sina-3": "Aitäh! Ma söön koogi kohe ära.",
 } as const satisfies Record<string, Clip>;
 
-export const OBJECT_WORDS = ["läbi", "ära", "praegu", "võti", "võtit", "pilet", "kook", "teed"] as const;
+export const OBJECT_WORDS = [
+  "läbi",
+  "ära",
+  "praegu",
+  "võti",
+  "võtit",
+  "pilet",
+  "kook",
+  "teed",
+] as const;
 
 export const objectGapSaid = (gap: { before: string; answer: string; after: string }) =>
   `${gap.before} ${gap.answer}${/^[.!?]$/.test(gap.after) ? "" : " "}${gap.after}`;

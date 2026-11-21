@@ -53,6 +53,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "The options are the three questions, all offered every round in a shuffled order, so shape picks nothing: kus against kust is the lesson.",
   },
   {
+    lesson: "raamatut-voi-raamatu",
+    quiz: "part-or-whole",
+    reason:
+      "Each round offers the forms of one noun: raamatu against raamatut and pileti against piletit is the lesson, and the words around the gap decide it.",
+  },
+  {
     lesson: "jalg-jala",
     quiz: "kati-room",
     reason:

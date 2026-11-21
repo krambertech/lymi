@@ -8,6 +8,7 @@ import {
   clipUrl,
   OBJECT_ALWAYS,
   OBJECT_DIALOGUE,
+  OBJECT_FORMS,
   OBJECT_GAPS,
   OBJECT_PAIRS,
   OBJECT_SHOP,
@@ -39,6 +40,14 @@ const GLOSSARY: Glossary = {
   pilet: { en: msg`ticket` },
   kook: { en: msg`cake` },
   teed: { en: msg`tea, the third form`, note: msg`The third form of tee: ma ei taha teed.` },
+  "ma ei ostnud leiba.": { en: msg`I didn’t buy bread.` },
+  "ma joon kohvi.": { en: msg`I drink coffee; I’m drinking coffee.` },
+  "ma ootan sõpra.": { en: msg`I’m waiting for a friend.` },
+  "ma armastan sind.": { en: msg`I love you.` },
+  "ma otsin võtit.": { en: msg`I’m looking for my key.` },
+  "ma ostsin pileti.": { en: msg`I bought a ticket.` },
+  "osta pilet!": { en: msg`Buy a ticket!` },
+  "ma ostsin piletid.": { en: msg`I bought the tickets.` },
 };
 
 const PAIR_MEANS: Record<string, MessageDescriptor> = {
@@ -50,7 +59,10 @@ const PAIR_MEANS: Record<string, MessageDescriptor> = {
 
 const PAIR_TIPS: Record<string, { part: MessageDescriptor; whole: MessageDescriptor }> = {
   bread: { part: msg`Some bread.`, whole: msg`A loaf, the whole of it.` },
-  book: { part: msg`I was reading a book, maybe not to the end.`, whole: msg`I read the book to the end.` },
+  book: {
+    part: msg`I was reading a book, maybe not to the end.`,
+    whole: msg`I read the book to the end.`,
+  },
   cake: { part: msg`I ate some cake.`, whole: msg`I ate the cake up.` },
   work: { part: msg`I was working, I did some work.`, whole: msg`I got the work done.` },
 };
@@ -63,8 +75,16 @@ function PairTable() {
     id: pair.id,
     label: i18n._(PAIR_MEANS[pair.id] as MessageDescriptor),
     cells: [
-      { form: pair.part, src: src(pair.part), note: i18n._(PAIR_TIPS[pair.id]?.part as MessageDescriptor) },
-      { form: pair.whole, src: src(pair.whole), note: i18n._(PAIR_TIPS[pair.id]?.whole as MessageDescriptor) },
+      {
+        form: pair.part,
+        src: src(pair.part),
+        note: i18n._(PAIR_TIPS[pair.id]?.part as MessageDescriptor),
+      },
+      {
+        form: pair.whole,
+        src: src(pair.whole),
+        note: i18n._(PAIR_TIPS[pair.id]?.whole as MessageDescriptor),
+      },
     ],
   }));
   return (
@@ -74,7 +94,9 @@ function PairTable() {
       rows={rows}
       empty={{
         title: t`Tap a sentence`,
-        tip: <Trans>Each row says the same thing twice: once in progress or in part, once done.</Trans>,
+        tip: (
+          <Trans>Each row says the same thing twice: once in progress or in part, once done.</Trans>
+        ),
       }}
     />
   );
@@ -101,9 +123,16 @@ function useContent() {
           After <Et>ei</Et>, always the third form.
         </Trans>
       ),
-      one: (
+      "not-bought": (
         <Trans>
-          One whole ticket, bought: the genitive.
+          After <Et>ei</Et>, always the third form.
+        </Trans>
+      ),
+      one: <Trans>One whole loaf, bought: the genitive.</Trans>,
+      bought: <Trans>One whole ticket, bought: the genitive.</Trans>,
+      eating: (
+        <Trans>
+          <Et>Praegu</Et>, right now: still eating, so the third form.
         </Trans>
       ),
       now: (
@@ -116,17 +145,8 @@ function useContent() {
           <Et>Läbi</Et> says to the end, so the genitive.
         </Trans>
       ),
-      wait: (
-        <Trans>
-          <Et>Ootama</Et> always takes the third form.
-        </Trans>
-      ),
-      buy: (
-        <Trans>
-          A command takes the dictionary form for the whole thing.
-        </Trans>
-      ),
-      eat: (
+      buy: <Trans>A command takes the dictionary form for the whole thing.</Trans>,
+      eaten: (
         <Trans>
           <Et>Ära</Et> says all of it, so the genitive.
         </Trans>
@@ -140,7 +160,7 @@ function useContent() {
         src: src(said),
         before: gap.before,
         after: gap.after,
-        options: gap.options,
+        options: OBJECT_FORMS[gap.noun],
         answer: gap.answer,
         explain: whys[gap.id],
       };
@@ -152,7 +172,7 @@ function useContent() {
         ask: t`Did Jaan buy milk?`,
         options: [
           { id: "litre", label: t`Yes, a litre` },
-          { id: "no", label: t`No` },
+          { id: "no", label: t`No, he didn’t` },
           { id: "some", label: t`Yes, some for the coffee` },
         ],
         answer: "no",
@@ -193,10 +213,11 @@ function useContent() {
         clip: "d-sina-1",
         replies: [
           {
-            line: "Ma võtan üks kook.",
+            line: "Ma võtsin ühe kooki.",
             why: (
               <Trans>
-                The thing you take is not in the dictionary form here. One whole cake: <Et>ühe koogi</Et>.
+                <Et>Võtsin</Et> is the past, and one whole cake takes the genitive:{" "}
+                <Et>ma võtan ühe koogi</Et>.
               </Trans>
             ),
           },
@@ -226,8 +247,12 @@ function useContent() {
             ),
           },
           {
-            line: "Ei, aitäh. Ma tahan teed.",
-            why: t`That says you do want tea.`,
+            line: "Ei, aitäh. Ma tahan tee.",
+            why: (
+              <Trans>
+                That says you do want tea. To say no: <Et>ma ei taha teed</Et>.
+              </Trans>
+            ),
           },
         ],
       },
@@ -245,10 +270,11 @@ function useContent() {
             ),
           },
           {
-            line: "Aitäh! Ma sõin koogi kohe ära.",
+            line: "Aitäh! Ma sõin kooki kohe ära.",
             why: (
               <Trans>
-                <Et>Sõin</Et> is the past, and the cake has only just come.
+                <Et>Sõin</Et> is the past, and the cake has only just come. With <Et>ära</Et>, the
+                genitive: <Et>koogi</Et>.
               </Trans>
             ),
           },
@@ -318,8 +344,8 @@ export function RaamatutVoiRaamatuLesson() {
                     The object is the thing you act on: the book you read, the bread you buy. In
                     Estonian it takes one of two forms, and the choice says something English says
                     with “was reading” and “read to the end”. The third form of lesson {partitive}{" "}
-                    says part of it, or not done yet. The genitive of lesson {genitive} says the whole
-                    thing, done.
+                    says part of it, or not done yet. The genitive of lesson {genitive} says the
+                    whole thing, done.
                   </Trans>
                 </p>
                 <p>
@@ -367,8 +393,8 @@ export function RaamatutVoiRaamatuLesson() {
               </Prose>
               <Aside>
                 <Trans>
-                  Don’t try to decide every time. Ask one question: did the whole thing get done?
-                  If not, or if you can’t tell, the third form is the safe choice.
+                  Don’t try to decide every time. Ask one question: did the whole thing get done? If
+                  not, or if you can’t tell, the third form is the safe choice.
                 </Trans>
               </Aside>
             </>
@@ -391,10 +417,10 @@ export function RaamatutVoiRaamatuLesson() {
                 id="part-or-whole"
                 title={<Trans>Part or whole?</Trans>}
                 items={content.gaps}
-                rounds={7}
+                rounds={9}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All seven. You read every clue around the gap.</Trans>
+                    <Trans>All nine. You read every clue around the gap.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Most of them. Look at the word before and after each gap.</Trans>
                   ) : (
@@ -450,9 +476,7 @@ export function RaamatutVoiRaamatuLesson() {
                 id="cafe-object"
                 title={<Trans>Talk: at the café</Trans>}
                 part={
-                  <Trans>
-                    You want one cake and no tea, and you’ll eat the cake right away.
-                  </Trans>
+                  <Trans>You want one cake and no tea, and you’ll eat the cake right away.</Trans>
                 }
                 them={t`Waiter`}
                 turns={content.talk}

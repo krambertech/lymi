@@ -81,7 +81,7 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
                 <span lang="et">{lesson.et}</span>
               </span>
               <h1 className="text-[clamp(2.75rem,7vw,4.25rem)] leading-none font-semibold tracking-[-0.035em] text-balance">
-                {i18n._(lesson.title)}
+                <LessonName name={i18n._(lesson.title)} />
               </h1>
               <p className="max-w-[44ch] text-[clamp(1.125rem,2vw,1.3125rem)] text-pretty text-ink-secondary">
                 {sub}
@@ -232,7 +232,7 @@ function ReadBar({ title, sections }: { title: string; sections: readonly Lesson
             stuck ? "me-3.5 max-w-56 opacity-100 max-sm:max-w-28" : "me-0 max-w-0 opacity-0",
           )}
         >
-          {title}
+          <LessonName name={title} />
         </span>
         <nav aria-label={t`Sections`} className="flex min-w-0 flex-1 gap-1">
           {sections.map((section, i) => {

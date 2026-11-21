@@ -24,6 +24,7 @@ import { SobragaRahataLesson } from "../learn/lessons/SobragaRahata";
 
 import { TegevusnimedLesson } from "../learn/lessons/Tegevusnimed";
 import { TutvumineLesson } from "../learn/lessons/Tutvumine";
+import { UjumaUjumasUjumastLesson } from "../learn/lessons/UjumaUjumasUjumast";
 import { VerbiPohivormidLesson } from "../learn/lessons/VerbiPohivormid";
 import { Island } from "./Island";
 
@@ -52,6 +53,7 @@ export const LESSON_VIEWS = {
   meeldima: MeeldimaLesson,
   "verbi-pohivormid": VerbiPohivormidLesson,
   tegevusnimed: TegevusnimedLesson,
+  "ujuma-ujumas-ujumast": UjumaUjumasUjumastLesson,
   osastav: OsastavLesson,
   lihtminevik: LihtminevikLesson,
   mitmus: MitmusLesson,

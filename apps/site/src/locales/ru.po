@@ -2397,8 +2397,8 @@ msgstr "После числа от двух — партитив."
 msgid "After a number from two up, the third form: <0>seitse eurot</0>."
 msgstr "После числа от двух — третья форма: <0>seitse eurot</0>."
 
-msgid "After a verb such as <0/>, I’m waiting, or <1>armastan</1>, I love, the person takes the partitive from lesson {partitive}: <2/> is I love you. A pronoun’s partitive doesn’t grow from the genitive, so learn the six as they are."
-msgstr "После глагола вроде <0/>, я жду, или <1>armastan</1>, я люблю, местоимение стоит в партитиве из урока {partitive}: <2/> — я тебя люблю. Партитив местоимения не образуется от родительного падежа, так что шесть форм стоит запомнить как есть."
+msgid "After a verb such as <0/>, I’m waiting, or <1>armastan</1>, I love, the person takes the partitive from lesson {partitive}. <2/> is I love you. A pronoun’s partitive doesn’t grow from the genitive, so learn the six as they are."
+msgstr "После глаголов вроде <0/> («я жду») или <1>armastan</1> («я люблю») местоимение стоит в партитиве из урока {partitive}. <2/> — «я тебя люблю». Партитив местоимения не образуется от родительного падежа, так что шесть форм стоит запомнить как есть."
 
 msgid "After an amount"
 msgstr "После слов количества"
@@ -4828,7 +4828,7 @@ msgid "Each deck opens on its own page with every card on it, so you can see wha
 msgstr "У каждой колоды есть своя страница со всеми карточками, так что ты видишь, что будешь учить, ещё до того, как её добавишь."
 
 msgid "Each form answers the same form of <0>kes</0>: <1>kellega?</1>, <2>kellele?</2>, <3>keda?</3>"
-msgstr "Каждая форма отвечает на вопрос той же формой <0>kes</0>: <1>kellega?</1>, <2>kellele?</2>, <3>keda?</3>"
+msgstr "Каждая форма отвечает на вопрос с той же формой <0>kes</0>: <1>kellega?</1>, <2>kellele?</2>, <3>keda?</3>"
 
 msgid "Each gap becomes a card of its own, with the hidden word as the term and the sentence as its example. Image occlusion notes stay in Anki."
 msgstr "Каждый пропуск станет отдельной карточкой: скрытое слово — термином, а предложение — примером. Записи Image Occlusion останутся в Anki."
@@ -5272,7 +5272,7 @@ msgid "Every pronoun has a genitive, and it goes before the thing it owns. Tap a
 msgstr "Родительный есть у каждого местоимения, и он стоит перед тем, что ему принадлежит. Нажми на форму, чтобы её услышать."
 
 msgid "Every pronoun works this way: <0/>, without you; <1/>, with him or her. For they, the genitive is <2/>, so with them is <3/>. Tap a line to hear it."
-msgstr "Так работает каждое местоимение: <0/> — без тебя, <1/> — с ним или с ней. У «они» родительный падеж <2/>, поэтому «с ними» — <3/>. Нажми на строку, чтобы её услышать."
+msgstr "Так работает каждое местоимение: <0/> — без тебя, <1/> — с ним или с ней. Родительный падеж от «они» — <2/>, поэтому «с ними» — <3/>. Нажми на строку, чтобы её услышать."
 
 msgid "Every question has four answers and one is right. Because you learn 310 questions in all, it’s often called the 310-question test."
 msgstr "У каждого вопроса четыре варианта ответа, и верный только один. Всего нужно выучить 310 вопросов, поэтому его часто называют «тест 310 вопросов»."
@@ -5713,7 +5713,7 @@ msgid "For three hours"
 msgstr "Три часа"
 
 msgid "For to, at and from, speech uses a short form: <0/>, to me; <1/>, at me, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem."
-msgstr "Для «кому», «у кого» и «от кого» в речи звучит краткая форма: <0/> — мне, <1/> — у меня, как в <2>mul on</2> из урока {have}, <3/> — от меня. Это окончания <4>-le</4>, <5>-l</5> и <6>-lt</6> из урока {onto} на краткой основе."
+msgstr "Для «кому», «у кого» и «от кого» в речи звучит краткая форма: <0/> — мне, <1/> — у меня, как в <2>mul on</2> из урока {have}, <3/> — от меня. Это окончания <4>-le</4>, <5>-l</5> и <6>-lt</6> из урока {onto}, добавленные к короткой основе."
 
 msgid "For to, at and from, speech uses the short forms: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>."
 msgstr "Для «кому», «у кого» и «от кого» в речи звучат краткие формы: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>."
@@ -6879,9 +6879,6 @@ msgstr "Вот десять глаголов из урока {present}, кажд
 
 msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 msgstr "Здесь каждое число звучит посреди фразы: цена, возраст, номер телефона. Введи число, которое слышишь."
-
-msgid "Here is one pronoun in the cases of this lesson, each beside the form of <0>kes</0>, who, that asks for it: <1/>, with whom; <2/>, to whom."
-msgstr "Вот одно местоимение в падежах этого урока, каждая форма рядом с формой <0>kes</0>, кто, которая о ней спрашивает: <1/> — с кем, <2/> — кому."
 
 msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
 msgstr "Здесь число меняет форму: <0>viis</0> становится <1>viie</1>, <2>kümme</2> — <3>kümne</3>, <4>kakskümmend</4> — <5>kahekümne</5>. Пока запомни эти три как готовые фразы. Эту форму объясняет урок {genitive}."
@@ -10695,7 +10692,7 @@ msgid "Now hear a line and pick what it means. Listen to how the word ends."
 msgstr "Теперь послушай строку и выбери, что она значит. Слушай, как заканчивается слово."
 
 msgid "Now hear a line and pick what the pronoun says. The ending tells you: <0>-le</0>, <1>-l</1> or <2>-lt</2>."
-msgstr "Теперь послушай строку и выбери, что говорит местоимение. Подскажет окончание: <0>-le</0>, <1>-l</1> или <2>-lt</2>."
+msgstr "Теперь послушай строку и выбери, что значит местоимение. Подскажет окончание: <0>-le</0>, <1>-l</1> или <2>-lt</2>."
 
 msgid "Now it’s <0>näen</0>; the g comes back in the past."
 msgstr "В настоящем — <0>näen</0>, а в прошедшем g возвращается."
@@ -14833,7 +14830,7 @@ msgid "The partitive of tema."
 msgstr "Партитив от tema."
 
 msgid "The partitive, after a verb such as <0>ootama</0>: a short word of its own."
-msgstr "Партитив, после глагола вроде <0>ootama</0>: отдельное короткое слово."
+msgstr "Партитив, например после <0>ootama</0>. Это отдельное короткое слово."
 
 msgid "The partitive: me, you, him or her"
 msgstr "Партитив: меня, тебя, его или её"
@@ -15193,6 +15190,9 @@ msgstr "Стола нет в комнате."
 
 msgid "The table lights up who the word means."
 msgstr "За столом подсветятся те, о ком это слово."
+
+msgid "The table shows one pronoun in each case of this lesson. Beside each form is the question that asks for it, a form of <0>kes</0>, who: <1/>, with whom; <2/>, to whom."
+msgstr "Вот одно местоимение в падежах этого урока. Рядом с каждой формой — вопрос, форма <0>kes</0> («кто»): <1/> — с кем, <2/> — кому."
 
 msgid "the table’s, of the table"
 msgstr "стола"
@@ -18358,12 +18358,12 @@ msgstr "Ты — тот, кто говорит."
 msgid "you, to more than one; polite"
 msgstr "вы; вежливое «Вы»"
 
-msgctxt "the partitive teid"
-msgid "you, to more than one; polite"
-msgstr "вас; вежливое «Вас»"
-
 msgid "you, to more than one; polite you"
 msgstr "вы; вежливое «Вы»"
+
+msgctxt "the partitive teid"
+msgid "you, to more than one; polite you"
+msgstr "вас; вежливое «Вас»"
 
 msgid "you, to more than one; polite you; your"
 msgstr "вы; вежливое «Вы»; ваш"

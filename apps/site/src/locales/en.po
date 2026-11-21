@@ -2396,8 +2396,8 @@ msgstr "After a number from two up, the partitive."
 msgid "After a number from two up, the third form: <0>seitse eurot</0>."
 msgstr "After a number from two up, the third form: <0>seitse eurot</0>."
 
-msgid "After a verb such as <0/>, I’m waiting, or <1>armastan</1>, I love, the person takes the partitive from lesson {partitive}: <2/> is I love you. A pronoun’s partitive doesn’t grow from the genitive, so learn the six as they are."
-msgstr "After a verb such as <0/>, I’m waiting, or <1>armastan</1>, I love, the person takes the partitive from lesson {partitive}: <2/> is I love you. A pronoun’s partitive doesn’t grow from the genitive, so learn the six as they are."
+msgid "After a verb such as <0/>, I’m waiting, or <1>armastan</1>, I love, the person takes the partitive from lesson {partitive}. <2/> is I love you. A pronoun’s partitive doesn’t grow from the genitive, so learn the six as they are."
+msgstr "After a verb such as <0/>, I’m waiting, or <1>armastan</1>, I love, the person takes the partitive from lesson {partitive}. <2/> is I love you. A pronoun’s partitive doesn’t grow from the genitive, so learn the six as they are."
 
 msgid "After an amount"
 msgstr "After an amount"
@@ -6878,9 +6878,6 @@ msgstr "Here are the ten verbs of lesson {present} with their three forms. The <
 
 msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 msgstr "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
-
-msgid "Here is one pronoun in the cases of this lesson, each beside the form of <0>kes</0>, who, that asks for it: <1/>, with whom; <2/>, to whom."
-msgstr "Here is one pronoun in the cases of this lesson, each beside the form of <0>kes</0>, who, that asks for it: <1/>, with whom; <2/>, to whom."
 
 msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
 msgstr "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
@@ -15193,6 +15190,9 @@ msgstr "The table isn’t in the room."
 msgid "The table lights up who the word means."
 msgstr "The table lights up who the word means."
 
+msgid "The table shows one pronoun in each case of this lesson. Beside each form is the question that asks for it, a form of <0>kes</0>, who: <1/>, with whom; <2/>, to whom."
+msgstr "The table shows one pronoun in each case of this lesson. Beside each form is the question that asks for it, a form of <0>kes</0>, who: <1/>, with whom; <2/>, to whom."
+
 msgid "the table’s, of the table"
 msgstr "the table’s, of the table"
 
@@ -18357,10 +18357,10 @@ msgstr "You, the one speaking."
 msgid "you, to more than one; polite"
 msgstr "you, to more than one; polite"
 
-msgctxt "the partitive teid"
-msgid "you, to more than one; polite"
-msgstr "you, to more than one; polite"
+msgid "you, to more than one; polite you"
+msgstr "you, to more than one; polite you"
 
+msgctxt "the partitive teid"
 msgid "you, to more than one; polite you"
 msgstr "you, to more than one; polite you"
 

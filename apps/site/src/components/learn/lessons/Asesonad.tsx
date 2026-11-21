@@ -90,7 +90,7 @@ const GLOSSARY: Glossary = {
   teda: { en: msg`him or her`, note: msg`The partitive of tema.` },
   meid: { en: msg`us`, note: msg`The partitive of meie.` },
   teid: {
-    en: msg({ message: "you, to more than one; polite", context: "the partitive teid" }),
+    en: msg({ message: "you, to more than one; polite you", context: "the partitive teid" }),
     note: msg`The partitive of teie.`,
   },
   neid: { en: msg`them`, note: msg`The partitive of nemad.` },
@@ -104,7 +104,7 @@ const PERSON_NAMES: Record<PronounId, MessageDescriptor> = {
   sina: msg`you`,
   tema: msg`he or she`,
   meie: msg`we`,
-  teie: msg`you, to more than one; polite`,
+  teie: msg`you, to more than one; polite you`,
   nemad: msg`they`,
 };
 const WITH_MEANS: Record<PronounId, { ga: MessageDescriptor; ta: MessageDescriptor }> = {
@@ -123,7 +123,7 @@ const PARTITIVE_MEANS: Record<PronounId, MessageDescriptor> = {
   sina: msg`you, one person`,
   tema: msg`him or her`,
   meie: msg`us`,
-  teie: msg({ message: "you, to more than one; polite", context: "the partitive teid" }),
+  teie: msg({ message: "you, to more than one; polite you", context: "the partitive teid" }),
   nemad: msg`them`,
 };
 
@@ -650,7 +650,7 @@ export function AsesonadLesson() {
                   <Trans>
                     After a verb such as <Word w="ootan" />, I’m waiting, or{" "}
                     <span lang="et">armastan</span>, I love, the person takes the partitive from
-                    lesson {partitive}: <Word w="Ma armastan sind" /> is I love you. A pronoun’s
+                    lesson {partitive}. <Word w="Ma armastan sind" /> is I love you. A pronoun’s
                     partitive doesn’t grow from the genitive, so learn the six as they are.
                   </Trans>
                 </p>
@@ -680,9 +680,9 @@ export function AsesonadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Here is one pronoun in the cases of this lesson, each beside the form of{" "}
-                    <span lang="et">kes</span>, who, that asks for it: <Word w="kellega?" />, with
-                    whom; <Word w="kellele?" />, to whom.
+                    The table shows one pronoun in each case of this lesson. Beside each form is the
+                    question that asks for it, a form of <span lang="et">kes</span>, who:{" "}
+                    <Word w="kellega?" />, with whom; <Word w="kellele?" />, to whom.
                   </Trans>
                 </p>
                 <p>

@@ -1,67 +1,36 @@
 import { describe, expect, it } from "vitest";
-import {
-  CLIPS,
-  clipId,
-  INFINITIVE_LEADS,
-  INFINITIVE_MESSAGE,
-  INFINITIVE_PAIRS,
-} from "../../../lib/learn/clips";
+import { CLIPS, clipId, INFINITIVE_LEADS, INFINITIVE_MESSAGE } from "../../../lib/learn/clips";
 import { gapLine } from "../../../lib/learn/passage";
-import {
-  FORM_ITEMS,
-  FORM_ROUNDS,
-  formRun,
-  MESSAGE_GAPS,
-  SECONDS,
-  sentenceOf,
-} from "./Tegevusnimed";
+import { orderProblems } from "../../../lib/learn/practice";
+import { BUILT, MESSAGE_GAPS, SORTED } from "./Tegevusnimed";
 
-describe("“Which form follows?”", () => {
-  it("opens on oskan, not the headline tahan or pean, with its answer in the second place", () => {
-    const first = FORM_ITEMS[0];
-    expect(first?.lead.lead).toBe("oskan");
-    expect(first?.options.map((option) => option.id)).toEqual(["ma", "da"]);
+describe("“Sort the verbs”", () => {
+  it("sorts five verbs of each kind", () => {
+    const takes = SORTED.map((lead) => INFINITIVE_LEADS.find((each) => each.lead === lead)?.takes);
+    expect(takes.filter((each) => each === "da")).toHaveLength(5);
+    expect(takes.filter((each) => each === "ma")).toHaveLength(5);
   });
 
-  it("asks four -da verbs and four -ma verbs in every run, each verb once", () => {
-    for (let run = 0; run < 300; run++) {
-      const asked = formRun(FORM_ITEMS, run % 2 === 0 ? FORM_ITEMS[0] : undefined);
-      expect(asked).toHaveLength(FORM_ROUNDS);
-      expect(asked.filter((item) => item.answer === "da")).toHaveLength(FORM_ROUNDS / 2);
-      expect(new Set(asked.map((item) => item.lead.lead)).size).toBe(FORM_ROUNDS);
-    }
-  });
-
-  it("puts the answer in either place after the first round", () => {
-    const places = new Set<number>();
-    for (let run = 0; run < 300; run++)
-      for (const item of formRun(FORM_ITEMS, FORM_ITEMS[0]).slice(1))
-        places.add(item.options.findIndex((option) => option.id === item.answer));
-    expect(places).toEqual(new Set([0, 1]));
-  });
-
-  it("gives every verb a second verb that the table has", () => {
-    for (const lead of INFINITIVE_LEADS) {
-      const seconds = SECONDS[lead.lead];
-      expect(seconds.length).toBeGreaterThan(0);
-      for (const ma of seconds) expect(INFINITIVE_PAIRS.some((pair) => pair.ma === ma)).toBe(true);
-    }
-  });
-
-  it("builds its sentences with the form the verb takes", () => {
-    const tahan = INFINITIVE_LEADS.find((lead) => lead.lead === "tahan");
-    const tule = INFINITIVE_LEADS.find((lead) => lead.lead === "tule");
-    const lugema = INFINITIVE_PAIRS[0];
-    expect(tahan && sentenceOf(tahan, lugema)).toBe("Ma tahan lugeda.");
-    expect(tule && sentenceOf(tule, lugema)).toBe("Tule lugema!");
-  });
-
-  it("has a recording of every verb it asks about and every sentence a key plays", () => {
+  it("has a recording of every verb it sorts and every sentence a key plays", () => {
     const recorded = CLIPS.tegevusnimed ?? {};
     for (const { lead, said } of INFINITIVE_LEADS) {
       expect(recorded[clipId(lead)]).toBe(lead);
       expect(recorded[clipId(said)]).toBe(said);
     }
+  });
+});
+
+describe("“Build the sentence”", () => {
+  it("accepts orders made of the same words, and keeps the wrong form out", () => {
+    for (const { answers, spare } of BUILT) {
+      expect(orderProblems(answers)).toEqual([]);
+      for (const tile of spare) expect(answers[0]?.split(/[\s.]+/)).not.toContain(tile);
+    }
+  });
+
+  it("plays a recording of each sentence", () => {
+    const recorded = CLIPS.tegevusnimed ?? {};
+    for (const { answers } of BUILT) expect(recorded[clipId(answers[0])]).toBe(answers[0]);
   });
 });
 

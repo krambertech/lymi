@@ -19,8 +19,10 @@ import { Keys, ListenRows, Panel } from "../Explore";
 import { type GapItem, GapPassage } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { type OrderItem, OrderRound } from "../OrderRound";
 import { Lit, Paradigm, type ParadigmRow } from "../Paradigm";
-import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { Quiz } from "../Quiz";
+import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Word } from "../Word";
 
 const SLUG = "tegevusnimed";
@@ -235,116 +237,51 @@ function LeadKeys({ takes, label }: { takes: Takes; label: string }) {
   );
 }
 
-/**
- * The second verbs each verb can take in the quiz, as rows of the tahan-and-pean table, so every
- * sentence the quiz builds makes sense: “Tule lugema!” but not “Ma oskan minna.”
- */
-export const SECONDS: Record<Lead, readonly Pair["ma"][]> = {
-  tahan: ["luge|ma", "söö|ma", "mine|ma", "õppi|ma"],
-  võin: ["luge|ma", "tule|ma", "tööta|ma"],
-  saan: ["luge|ma", "tule|ma", "tööta|ma"],
-  oskan: ["luge|ma"],
-  tohin: ["luge|ma", "söö|ma", "tule|ma", "tööta|ma"],
-  proovin: ["luge|ma", "õppi|ma", "tule|ma"],
-  armastan: ["luge|ma", "õppi|ma", "söö|ma"],
-  "mulle meeldib": ["luge|ma", "õppi|ma", "tööta|ma", "söö|ma"],
-  pean: ["luge|ma", "tööta|ma", "tule|ma", "mine|ma", "õppi|ma"],
-  hakkan: ["luge|ma", "õppi|ma", "tööta|ma", "söö|ma"],
-  lähen: ["söö|ma", "õppi|ma", "tööta|ma"],
-  tule: ["söö|ma", "luge|ma"],
-  jään: ["luge|ma", "õppi|ma", "tööta|ma"],
-};
+/** The verbs of “Sort the verbs”: five of each kind, the rest met in the keys and the message. */
+export const SORTED: readonly Lead[] = [
+  "tahan",
+  "võin",
+  "oskan",
+  "tohin",
+  "armastan",
+  "pean",
+  "hakkan",
+  "lähen",
+  "tule",
+  "jään",
+];
 
-const pairOf = (ma: Pair["ma"]) => INFINITIVE_PAIRS.find((pair) => pair.ma === ma) as Pair;
+/** The sentences to build: each with its other right order and the wrong form as a spare tile. */
+export const BUILT = [
+  {
+    answers: ["Ma pean homme tööle minema.", "Homme pean ma tööle minema."],
+    spare: ["minna"],
+    lead: "pean",
+  },
+  {
+    answers: ["Ma tahan täna kodus lugeda.", "Täna tahan ma kodus lugeda."],
+    spare: ["lugema"],
+    lead: "tahan",
+  },
+  { answers: ["Ma jään koju lugema."], spare: ["lugeda"], lead: "jään" },
+] as const satisfies readonly {
+  answers: readonly string[];
+  spare: readonly string[];
+  lead: Lead;
+}[];
 
-/** The sentence a lead and a second verb make: “Ma tahan lugeda.”, “Tule lugema!” */
-export const sentenceOf = (lead: InfinitiveLead, pair: Pair) =>
-  `${lead.frame} ${formText(pair[lead.takes])}${lead.lead === "tule" ? "!" : "."}`;
-
-type FormItem = ChoiceItem & {
-  lead: InfinitiveLead;
-  pair: readonly [Takes, string];
-};
-
-/** The two forms of a second verb as options, in the order given. */
-const formOptions = (pair: Pair, order: readonly Takes[]) =>
-  order.map((takes) => ({
-    id: takes,
-    label: (
-      <span lang="et">
-        <Lit form={pair[takes]} />
-      </span>
-    ),
-  }));
-
-/** After an answer: the sentence, and which form the verb takes. */
-function FormWhy({ lead, pair }: { lead: InfinitiveLead; pair: Pair }) {
-  const name = lead.lead;
-  return (
-    <>
-      <span lang="et" className="font-medium text-ink">
-        {sentenceOf(lead, pair)}
-      </span>{" "}
-      {lead.takes === "da" ? (
-        <Trans>
-          After <span lang="et">{name}</span> comes the <End>-da</End> form.
-        </Trans>
-      ) : (
-        <Trans>
-          After <span lang="et">{name}</span> comes the <End>-ma</End> form.
-        </Trans>
-      )}
-    </>
+/** After a sentence is built: which form its first verb takes, and that it goes last. */
+function BuiltWhy({ lead }: { lead: Lead }) {
+  return leadOf(lead).takes === "da" ? (
+    <Trans>
+      After <span lang="et">{lead}</span>, the <End>-da</End> form, at the end.
+    </Trans>
+  ) : (
+    <Trans>
+      After <span lang="et">{lead}</span>, the <End>-ma</End> form, at the end.
+    </Trans>
   );
 }
-
-/** A round of “Which form follows?” for a lead and a second verb, its options in the order given. */
-const formRound = (lead: InfinitiveLead, pair: Pair, order: readonly Takes[]): FormItem => ({
-  lead,
-  pair: [lead.takes, lead.lead],
-  src: src(lead.lead),
-  answer: lead.takes,
-  options: formOptions(pair, order),
-  explain: <FormWhy lead={lead} pair={pair} />,
-});
-
-/** Rounds in a run: as many -da verbs as -ma verbs, so always picking one side scores half. */
-export const FORM_ROUNDS = 8;
-
-/**
- * The quiz's first round, fixed for the server: oskan, which no explorer above leads with, its
- * answer in the second place.
- */
-const FIRST: Lead = "oskan";
-
-/**
- * A run of “Which form follows?”: four -da verbs and four -ma verbs at random, the pinned first
- * round kept; every other round draws its second verb and the order of its two forms afresh.
- */
-export function formRun(items: readonly FormItem[], pinned?: FormItem): FormItem[] {
-  const side = (takes: Takes) =>
-    shuffle(items.filter((item) => item.answer === takes && item !== pinned)).slice(
-      0,
-      FORM_ROUNDS / 2 - (pinned?.answer === takes ? 1 : 0),
-    );
-  const drawn = shuffle([...side("da"), ...side("ma")]).map((item) => {
-    const pair = pairOf(shuffle(SECONDS[item.lead.lead])[0] as Pair["ma"]);
-    return formRound(item.lead, pair, shuffle(["da", "ma"] as const));
-  });
-  return pinned ? [pinned, ...drawn] : drawn;
-}
-
-/** The first item first; every item's first second verb, its forms in a fixed order. */
-export const FORM_ITEMS: FormItem[] = [
-  leadOf(FIRST),
-  ...INFINITIVE_LEADS.filter((lead) => lead.lead !== FIRST),
-].map((lead, i) =>
-  formRound(
-    lead,
-    pairOf(SECONDS[lead.lead][0] as Pair["ma"]),
-    i % 2 === 0 ? ["ma", "da"] : ["da", "ma"],
-  ),
-);
 
 /** Mari's message, gap by gap, each gap's words in its own order. */
 export const MESSAGE_GAPS = [
@@ -448,6 +385,9 @@ const ORDER_MEANS: Record<(typeof INFINITIVE_ORDER)[number], MessageDescriptor> 
   "Ma tahan täna kodus lugeda.": msg`I want to read at home today.`,
 };
 
+/** What each sentence to build means. */
+const BUILT_MEANS: Record<string, MessageDescriptor> = { ...SAID_MEANS, ...ORDER_MEANS };
+
 const orderRows = (i18n: I18n) =>
   INFINITIVE_ORDER.map((said) => ({ main: said, sub: i18n._(ORDER_MEANS[said]), src: src(said) }));
 
@@ -469,6 +409,41 @@ export function TegevusnimedLesson() {
 
   const rows = useMemo(() => orderRows(i18n), [i18n]);
 
+  const bins: SortBin[] = [
+    {
+      id: "da",
+      label: "-da",
+      hint: <span lang="et">tahan lugeda</span>,
+      rule: (
+        <Trans>
+          Wanting, being able, being allowed and loving take the <End>-da</End> form.
+        </Trans>
+      ),
+    },
+    {
+      id: "ma",
+      label: "-ma",
+      hint: <span lang="et">pean lugema</span>,
+      rule: (
+        <Trans>
+          Having to, starting, going, coming and staying take the <End>-ma</End> form.
+        </Trans>
+      ),
+    },
+  ];
+  const sorted: SortItem[] = SORTED.map((lead) => ({
+    w: lead,
+    bin: leadOf(lead).takes,
+    src: src(lead),
+  }));
+  const built: OrderItem[] = BUILT.map(({ answers, spare, lead }) => ({
+    answers,
+    spare,
+    src: src(answers[0]),
+    meaning: i18n._(BUILT_MEANS[answers[0]] as MessageDescriptor),
+    explain: <BuiltWhy lead={lead} />,
+  }));
+
   return (
     <LessonView
       slug={SLUG}
@@ -482,7 +457,7 @@ export function TegevusnimedLesson() {
       }
       facts={[
         <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">A quiz and a message to fill in</Trans>,
+        <Trans key="q">A sort, sentences to build and a message to fill in</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={INFINITIVE_LEADS.map(({ lead }) => lead)}
@@ -548,8 +523,9 @@ export function TegevusnimedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    These eight verbs take the <End>-da</End> form, <Word w="tahan" /> among them:{" "}
-                    <Word w="Ma tahan süüa." /> <Word w="Ma oskan natuke eesti keelt rääkida." />
+                    The eight verbs below take the <End>-da</End> form, <Word w="tahan" /> among
+                    them: <Word w="Ma tahan süüa." />{" "}
+                    <Word w="Ma oskan natuke eesti keelt rääkida." />
                   </Trans>
                 </p>
                 <p>
@@ -560,7 +536,7 @@ export function TegevusnimedLesson() {
                 </p>
                 <p>
                   <Trans>
-                    <Word w="Mulle meeldib" />, I like, takes the <End>-da</End> form too:{" "}
+                    <Word w="Mulle meeldib" />, I like, is the eighth:{" "}
                     <Word w="Mulle meeldib kohvi juua." /> Tap a verb to hear it in a sentence.
                   </Trans>
                 </p>
@@ -611,36 +587,24 @@ export function TegevusnimedLesson() {
           ),
         },
         {
-          id: "which-form",
-          title: t`Which form follows?`,
+          id: "sort",
+          title: t`Sort the verbs`,
           quiz: true,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Hear a verb and pick the form that follows it. Both choices are the same verb,
-                    once in its <End>-da</End> form and once in its <End>-ma</End> form.
+                    Put each verb with the form that follows it. Tap a verb to hear it, then tap its
+                    group.
                   </Trans>
                 </p>
               </Prose>
-              <Quiz
-                id="which-form"
+              <Sort
+                id="sort-verbs"
                 title={<Trans>Which form follows?</Trans>}
-                items={FORM_ITEMS}
-                rounds={FORM_ROUNDS}
-                verdict={(share) =>
-                  share === 1 ? (
-                    <Trans>All eight. You picked the right form after every verb.</Trans>
-                  ) : share >= 0.7 ? (
-                    <Trans>Nearly. Play the verbs you missed once more.</Trans>
-                  ) : (
-                    <Trans>Tap the verbs above once more, then try again.</Trans>
-                  )
-                }
-                recall={(item) => ({ label: item.lead.lead, src: item.src })}
-                order={formRun}
-                round={(props) => <ChoiceRound {...props} />}
+                bins={bins}
+                items={sorted}
               />
             </>
           ),
@@ -648,6 +612,7 @@ export function TegevusnimedLesson() {
         {
           id: "last",
           title: t`Where the second verb goes`,
+          quiz: true,
           children: (
             <>
               <Prose>
@@ -665,6 +630,28 @@ export function TegevusnimedLesson() {
                 </p>
               </Prose>
               <ListenRows items={rows} />
+              <Prose>
+                <p>
+                  <Trans>
+                    Build each sentence from what it means. One tile is the wrong form of the second
+                    verb and stays out.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="build-sentence"
+                title={<Trans>Build the sentence</Trans>}
+                items={built}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All three. Each second verb in its form, at the end.</Trans>
+                  ) : (
+                    <Trans>Look at where the second verb goes, then try again.</Trans>
+                  )
+                }
+                recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}
+                round={(props) => <OrderRound {...props} />}
+              />
             </>
           ),
         },

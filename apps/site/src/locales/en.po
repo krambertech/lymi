@@ -366,6 +366,9 @@ msgstr "<0/> is at home. Now answer <1/> six ways: tap a place."
 msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 msgstr "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 
+msgid "<0/> is the same for one and many, so with it only the noun changes: <1/> <2/> Switch between One and Many, and tap a sentence to hear it."
+msgstr "<0/> is the same for one and many, so with it only the noun changes: <1/> <2/> Switch between One and Many, and tap a sentence to hear it."
+
 msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
 msgstr "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
 
@@ -443,17 +446,26 @@ msgstr "<0>Ei</0> says what someone doesn’t do; <1>ära</1> tells them not to:
 msgid "<0>Ei</0>, and the verb without its ending."
 msgstr "<0>Ei</0>, and the verb without its ending."
 
+msgid "<0>Ema ja isa</0> are two people, like <1>nad</1>, so the verb ends in <2>-vad</2>."
+msgstr "<0>Ema ja isa</0> are two people, like <1>nad</1>, so the verb ends in <2>-vad</2>."
+
 msgid "<0>Jonas</0> added 4 cards to Week 4"
 msgstr "<0>Jonas</0> added 4 cards to Week 4"
 
 msgid "<0>Jonas</0> finished Week 2"
 msgstr "<0>Jonas</0> finished Week 2"
 
+msgid "<0>kassi</0> + <1>d</1> = <2>kassid</2>"
+msgstr "<0>kassi</0> + <1>d</1> = <2>kassid</2>"
+
 msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgstr "<0>Kes</0> asks about people, <1>mis</1> about things."
 
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> asks where you’re from, not where you live."
+
+msgid "<0>Lapsed</0> is plural, so the verb takes the form of <1>nad</1>: <2>õpivad</2>."
+msgstr "<0>Lapsed</0> is plural, so the verb takes the form of <1>nad</1>: <2>õpivad</2>."
 
 msgid "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
 msgstr "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
@@ -463,6 +475,9 @@ msgstr "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
 
 msgid "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
 msgstr "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
+
+msgid "<0>Magavad</0> is the form of <1>nad</1>, so there is more than one cat: <2>kassid</2>."
+msgstr "<0>Magavad</0> is the form of <1>nad</1>, so there is more than one cat: <2>kassid</2>."
 
 msgid "<0>marginal cost</0> <1>= cost of 1 more</1>"
 msgstr "<0>marginal cost</0> <1>= cost of 1 more</1>"
@@ -520,6 +535,9 @@ msgstr "<0>Sklep</0> is a shop, not a crypt, and <1>dynia</1> is a pumpkin, not 
 
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
+
+msgid "<0>Suured</0> ends in <1>-d</1>, so there is more than one room: <2>toad</2>."
+msgstr "<0>Suured</0> ends in <1>-d</1>, so there is more than one room: <2>toad</2>."
 
 msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 msgstr "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
@@ -613,6 +631,9 @@ msgstr "2 quizzes"
 
 msgid "2 quizzes and a conversation"
 msgstr "2 quizzes and a conversation"
+
+msgid "2 quizzes and a passage with gaps"
+msgstr "2 quizzes and a passage with gaps"
 
 msgid "20 questions asked aloud, 12 to pass. 128 to learn."
 msgstr "20 questions asked aloud, 12 to pass. 128 to learn."
@@ -725,6 +746,12 @@ msgstr "A 48-page lecture PDF goes to Claude with “Make flashcards from the ke
 msgid "A bad idea that seemed good"
 msgstr "A bad idea that seemed good"
 
+msgid "a beautiful room"
+msgstr "a beautiful room"
+
+msgid "a big house"
+msgstr "a big house"
+
 msgid "A book"
 msgstr "A book"
 
@@ -748,6 +775,9 @@ msgstr "A card shows pinyin over its word until the card is Known. In the exampl
 
 msgid "A cell dividing in two"
 msgstr "A cell dividing in two"
+
+msgid "A change inside the stem comes back in the plural: <0>pood, poe → poed; tuba, toa → toad</0>."
+msgstr "A change inside the stem comes back in the plural: <0>pood, poe → poed; tuba, toa → toad</0>."
 
 msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
 msgstr "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
@@ -795,6 +825,10 @@ msgstr "A diagram from your slides can be a card’s picture, and Lymi can ask y
 msgid "A dialogue in voice mode"
 msgstr "A dialogue in voice mode"
 
+#. placeholder {0}: ending("-d")
+msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. To say more than one, take the second form and add {0}: <0/>, <1/>, so <2/>, cats."
+msgstr "A dictionary gives a noun in three forms, as lesson {forms} shows. To say more than one, take the second form and add {0}: <0/>, <1/>, so <2/>, cats."
+
 msgid "A dictionary lists a verb in its -ma form: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
 msgstr "A dictionary lists a verb in its -ma form: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
 
@@ -812,6 +846,9 @@ msgstr "A duck asleep in a POT"
 
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "A false friend. Embarrassed is avergonzado."
+
+msgid "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. One verb is new: <0/>, to sleep."
+msgstr "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. One verb is new: <0/>, to sleep."
 
 msgid "a federal state."
 msgstr "a federal state."
@@ -891,11 +928,20 @@ msgstr "A free lesson on the Estonian days of the week: the seven names, the fou
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 
+msgid "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, lapsed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
+msgstr "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, lapsed), the verb after a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
+
+msgid "A friend is waiting."
+msgstr "A friend is waiting."
+
 msgid "A full card in seconds"
 msgstr "A full card in seconds"
 
 msgid "A glass of *water*, please."
 msgstr "A glass of *water*, please."
+
+msgid "a good friend"
+msgstr "a good friend"
 
 msgid "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
 msgstr "A Grok Bot routine runs every day at 8:00: check what’s due in Lymi and quiz me. This morning it found 12 Spanish cards due, about five minutes, and asked how to say “the strike”."
@@ -988,6 +1034,9 @@ msgstr "A native Spanish AI voice reads every card, so <0>ñ</0>, the rolled <1>
 msgid "A native Ukrainian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
 msgstr "A native Ukrainian AI voice reads every card and stresses the syllable the mark shows, so <0>за́мок</0> and <1>замо́к</1> sound different. If a card has its own recording, that plays instead."
 
+msgid "a new book"
+msgstr "a new book"
+
 msgid "A new format applies from 11 April 2026. The level stays A2."
 msgstr "A new format applies from 11 April 2026. The level stays A2."
 
@@ -1026,6 +1075,14 @@ msgstr "A photo of your notebook"
 
 msgid "A pile of unread books"
 msgstr "A pile of unread books"
+
+#. placeholder {0}: ending("-b")
+#. placeholder {1}: ending("-vad")
+msgid "A plural noun takes the same verb form as <0/>, they, from lesson {present}. One child reading is <1/>, with the {0} of <2>ta</2>. Children reading is <3/>, with the {1} of <4>nad</4>."
+msgstr "A plural noun takes the same verb form as <0/>, they, from lesson {present}. One child reading is <1/>, with the {0} of <2>ta</2>. Children reading is <3/>, with the {1} of <4>nad</4>."
+
+msgid "A plural noun takes the verb form of <0>nad</0>: <1>Lapsed loevad.</1> <2>On</2> stays <3>on</3>."
+msgstr "A plural noun takes the verb form of <0>nad</0>: <1>Lapsed loevad.</1> <2>On</2> stays <3>on</3>."
 
 msgid "A practice quiz"
 msgstr "A practice quiz"
@@ -1074,6 +1131,9 @@ msgstr "A short text to read and hear, every question at once; its words open th
 
 msgid "A sign shortens each day to its first letter, as in lesson {days}. Hours use the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
 msgstr "A sign shortens each day to its first letter, as in lesson {days}. Hours use the 24-hour clock. <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00. <1/> is closed."
+
+msgid "a small cat"
+msgstr "a small cat"
 
 msgid "A smaller, checked library"
 msgstr "A smaller, checked library"
@@ -1399,6 +1459,12 @@ msgstr "adjective"
 msgid "Adjective agreement"
 msgstr "Adjective agreement"
 
+msgid "Adjective and noun in the first form."
+msgstr "Adjective and noun in the first form."
+
+msgid "Adjectives take -d too"
+msgstr "Adjectives take -d too"
+
 msgid "Ads"
 msgstr "Ads"
 
@@ -1411,6 +1477,12 @@ msgstr "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 
+msgid "After <0>nad on</0>, the adjective takes <1>-d</1>, like <2>ilusad</2>."
+msgstr "After <0>nad on</0>, the adjective takes <1>-d</1>, like <2>ilusad</2>."
+
+msgid "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
+msgstr "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
+
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 
@@ -1419,6 +1491,15 @@ msgstr "After a number from two up, euro becomes eurot."
 
 msgid "After a number from two up, minut becomes minutit."
 msgstr "After a number from two up, minut becomes minutit."
+
+msgid "After a number from two up, the partitive."
+msgstr "After a number from two up, the partitive."
+
+msgid "After a number, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
+msgstr "After a number, Estonian keeps the noun singular, in the partitive from lesson {partitive}: <0/>, two cats, not <1>kaks kassid</1>."
+
+msgid "After a number, the noun stays singular: <0>kaks kassi</0>."
+msgstr "After a number, the noun stays singular: <0>kaks kassi</0>."
 
 msgid "After ei the verb drops its ending: ei ela."
 msgstr "After ei the verb drops its ending: ei ela."
@@ -1567,6 +1648,9 @@ msgstr "All of them. You can hear who it’s about."
 msgid "All of them. You hear who does it."
 msgstr "All of them. You hear who does it."
 
+msgid "All of them. You heard one from many every time."
+msgstr "All of them. You heard one from many every time."
+
 msgid "All of them. You matched every answer to its question."
 msgstr "All of them. You matched every answer to its question."
 
@@ -1593,6 +1677,9 @@ msgstr "All seven. You know the week by ear."
 
 msgid "All shelves"
 msgstr "All shelves"
+
+msgid "All six plurals right."
+msgstr "All six plurals right."
 
 msgid "All six. Every ending was right."
 msgstr "All six. Every ending was right."
@@ -1652,6 +1739,13 @@ msgstr "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
 msgid "An .ofc file from Noji"
 msgstr "An .ofc file from Noji"
 
+msgid "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. <3/> is a big house, and <4/> are big houses."
+msgstr "An adjective before a plural noun is plural too, built the same way: <0/>, <1/>, <2/>. <3/> is a big house, and <4/> are big houses."
+
+#. placeholder {0}: ending("-d")
+msgid "An adjective takes {0} too, before the noun or after <0>on</0>: <1>suured majad; Majad on suured.</1>"
+msgstr "An adjective takes {0} too, before the noun or after <0>on</0>: <1>suured majad; Majad on suured.</1>"
+
 msgid "An amateur"
 msgstr "An amateur"
 
@@ -1681,6 +1775,9 @@ msgstr "An idea that only sounds good after a few drinks"
 
 msgid "An old *castle* stands on the hill."
 msgstr "An old *castle* stands on the hill."
+
+msgid "an old town"
+msgstr "an old town"
 
 msgid "An option in Flashcards, on the web"
 msgstr "An option in Flashcards, on the web"
@@ -1837,6 +1934,9 @@ msgstr "As amended on 19 February 2026"
 
 msgid "As amended on 30 January 2026"
 msgstr "As amended on 30 January 2026"
+
+msgid "As in poes, in the shop."
+msgstr "As in poes, in the shop."
 
 msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 msgstr "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
@@ -2036,6 +2136,9 @@ msgstr "Bank president"
 msgid "basket"
 msgstr "basket"
 
+msgid "beautiful rooms"
+msgstr "beautiful rooms"
+
 msgid "because"
 msgstr "because"
 
@@ -2075,8 +2178,17 @@ msgstr "Beta blocker"
 msgid "Bicycle"
 msgstr "Bicycle"
 
+msgid "big"
+msgstr "big"
+
+msgid "big houses"
+msgstr "big houses"
+
 msgid "Big numbers"
 msgstr "Big numbers"
+
+msgid "big, of more than one"
+msgstr "big, of more than one"
 
 msgid "Bill"
 msgstr "Bill"
@@ -2111,8 +2223,14 @@ msgstr "Biology notes"
 msgid "Biology study group"
 msgstr "Biology study group"
 
+msgid "book"
+msgstr "book"
+
 msgid "Book"
 msgstr "Book"
+
+msgid "books"
+msgstr "books"
 
 msgid "Books often print ё as е. Add a word from such a book and the card shows its ё until you know it."
 msgstr "Books often print ё as е. Add a word from such a book and the card shows its ё until you know it."
@@ -2131,6 +2249,9 @@ msgstr "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes 
 
 msgid "Both schedule reviews with FSRS. Anki lets you shape every detail of a card. Lymi takes most of the work out of making one."
 msgstr "Both schedule reviews with FSRS. Anki lets you shape every detail of a card. Lymi takes most of the work out of making one."
+
+msgid "Both take <0>-d</0>"
+msgstr "Both take <0>-d</0>"
 
 msgid "Bread"
 msgstr "Bread"
@@ -2439,6 +2560,9 @@ msgstr "Canadian citizenship test: practice questions on every chapter"
 msgid "Cantonese"
 msgstr "Cantonese"
 
+msgid "car"
+msgstr "car"
+
 msgid "Card design"
 msgstr "Card design"
 
@@ -2514,11 +2638,17 @@ msgstr "Carries water up from the roots"
 msgid "carry!"
 msgstr "carry!"
 
+msgid "cars"
+msgstr "cars"
+
 msgid "Castle"
 msgstr "Castle"
 
 msgid "cat"
 msgstr "cat"
+
+msgid "cats"
+msgstr "cats"
 
 msgid "CCSE Spanish nationality test"
 msgstr "CCSE Spanish nationality test"
@@ -2604,6 +2734,12 @@ msgstr "Chess"
 
 msgid "Chess · new"
 msgstr "Chess · new"
+
+msgid "child"
+msgstr "child"
+
+msgid "children"
+msgstr "children"
 
 msgid "Chinese"
 msgstr "Chinese"
@@ -3236,6 +3372,9 @@ msgstr "Done. Biology has a section for each file."
 msgid "door"
 msgstr "door"
 
+msgid "doors"
+msgstr "doors"
+
 msgid "Download for Mac"
 msgstr "Download for Mac"
 
@@ -3397,6 +3536,9 @@ msgstr "Each time you remember a word, Lymi waits longer before showing it again
 
 msgid "Each time you remember a word, Lymi waits longer before showing it again. Forget it, and it comes back soon. You arrive at the next lesson still knowing the last one."
 msgstr "Each time you remember a word, Lymi waits longer before showing it again. Forget it, and it comes back soon. You arrive at the next lesson still knowing the last one."
+
+msgid "Each word is its second form plus <0>-d</0>."
+msgstr "Each word is its second form plus <0>-d</0>."
 
 msgid "ear"
 msgstr "ear"
@@ -3574,6 +3716,9 @@ msgstr "Estonian numbers"
 
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Estonian personal pronouns and “to be”"
+
+msgid "Estonian plural: kassid, majad, poed"
+msgstr "Estonian plural: kassid, majad, poed"
 
 msgid "Estonian present tense"
 msgstr "Estonian present tense"
@@ -4185,6 +4330,9 @@ msgstr "Friend"
 msgid "friends"
 msgstr "friends"
 
+msgid "Friends are waiting."
+msgstr "Friends are waiting."
+
 msgid "From a long PDF"
 msgstr "From a long PDF"
 
@@ -4480,6 +4628,9 @@ msgstr "Good *morning*!"
 msgid "Good ear. Listen to how the ones you missed start."
 msgstr "Good ear. Listen to how the ones you missed start."
 
+msgid "good friends"
+msgstr "good friends"
+
 msgid "Good luck!"
 msgstr "Good luck!"
 
@@ -4684,6 +4835,9 @@ msgstr "Hear a command and pick what it asks you to do."
 msgid "Hear a day"
 msgstr "Hear a day"
 
+msgid "Hear a noun’s first and second forms, then type its plural. Build it on the second form."
+msgstr "Hear a noun’s first and second forms, then type its plural. Build it on the second form."
+
 msgid "Hear a question and pick its question word. It always comes first, so listen to the start."
 msgstr "Hear a question and pick its question word. It always comes first, so listen to the start."
 
@@ -4698,6 +4852,9 @@ msgstr "Hear a sentence and pick the verb in it. The answers differ only in the 
 
 msgid "Hear a sentence and pick what it says. Listen to how it starts: with the verb, with <0>ära</0>, or with <1>ma ei</1>."
 msgstr "Hear a sentence and pick what it says. Listen to how it starts: with the verb, with <0>ära</0>, or with <1>ma ei</1>."
+
+msgid "Hear a sentence and pick what it says. Listen to the end of the noun and of the verb."
+msgstr "Hear a sentence and pick what it says. Listen to the end of the noun and of the verb."
 
 msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 msgstr "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
@@ -4737,6 +4894,9 @@ msgstr "Hearing a command"
 
 msgid "Hearing ära and ei"
 msgstr "Hearing ära and ei"
+
+msgid "Hearing one or many"
+msgstr "Hearing one or many"
 
 msgid "Hearing the place"
 msgstr "Hearing the place"
@@ -4837,8 +4997,14 @@ msgstr "hospital"
 msgid "Hour"
 msgstr "Hour"
 
+msgid "house"
+msgstr "house"
+
 msgid "House"
 msgstr "House"
+
+msgid "houses"
+msgstr "houses"
 
 msgid "Housing"
 msgstr "Housing"
@@ -5640,6 +5806,9 @@ msgstr "Is this *chair* free?"
 msgid "Is this like an Anki MCP server?"
 msgstr "Is this like an Anki MCP server?"
 
+msgid "is, are"
+msgstr "is, are"
+
 msgid "It depends"
 msgstr "It depends"
 
@@ -5833,6 +6002,9 @@ msgstr "Kas makes a question"
 
 msgid "Kas sa tuled? Are you coming?"
 msgstr "Kas sa tuled? Are you coming?"
+
+msgid "Kass, kassi: a vowel appears at the end."
+msgstr "Kass, kassi: a vowel appears at the end."
 
 msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi is the partitive of kass, cat."
@@ -6145,6 +6317,9 @@ msgstr "Lesson {number}, coming soon"
 
 msgid "Lesson {previousNumber}"
 msgstr "Lesson {previousNumber}"
+
+msgid "Lesson {stems} showed nouns that change inside before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
+msgstr "Lesson {stems} showed nouns that change inside before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
 
 msgid "Lesson 4"
 msgstr "Lesson 4"
@@ -6567,8 +6742,21 @@ msgstr "Make Spanish flashcards from this post."
 msgid "Making cards with AI"
 msgstr "Making cards with AI"
 
+msgid "Making the plural"
+msgstr "Making the plural"
+
+msgid "man"
+msgstr "man"
+
+msgctxt "plural"
+msgid "Many"
+msgstr "Many"
+
 msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {genitive} shows where the vowel comes from."
 msgstr "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {genitive} shows where the vowel comes from."
+
+msgid "Many: the verb form of <0>nad</0>"
+msgstr "Many: the verb form of <0>nad</0>"
 
 msgid "marginal cost"
 msgstr "marginal cost"
@@ -6683,6 +6871,9 @@ msgstr "Meeting"
 
 msgid "Members of a shared deck see its owner’s name and the deck’s content. The owner sees members’ names, roles and when they joined, but not their email addresses or review progress. If someone invites you by email, we receive your address from them and keep an invitation record. Published decks and their publisher’s name are visible on public pages."
 msgstr "Members of a shared deck see its owner’s name and the deck’s content. The owner sees members’ names, roles and when they joined, but not their email addresses or review progress. If someone invites you by email, we receive your address from them and keep an invitation record. Published decks and their publisher’s name are visible on public pages."
+
+msgid "men"
+msgstr "men"
 
 msgid "Menu"
 msgstr "Menu"
@@ -6879,6 +7070,9 @@ msgstr "Ñ is a letter of its own: ¡Feliz año nuevo!"
 msgid "Na⁺ − (Cl⁻ + HCO₃⁻); raised in some metabolic acidoses"
 msgstr "Na⁺ − (Cl⁻ + HCO₃⁻); raised in some metabolic acidoses"
 
+msgid "Nad magavad: they sleep."
+msgstr "Nad magavad: they sleep."
+
 msgid "name"
 msgstr "name"
 
@@ -6902,6 +7096,9 @@ msgstr "Nature"
 
 msgid "NCLEX pharmacology"
 msgstr "NCLEX pharmacology"
+
+msgid "Nearly. For the ones you missed, start from the second form."
+msgstr "Nearly. For the ones you missed, start from the second form."
 
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Nearly. Listen for the verb in the question."
@@ -6948,6 +7145,9 @@ msgstr "New"
 
 msgid "New apps for iPhone and Android"
 msgstr "New apps for iPhone and Android"
+
+msgid "new books"
+msgstr "new books"
 
 msgid "New cards appear here."
 msgstr "New cards appear here."
@@ -7292,6 +7492,9 @@ msgstr "Okay"
 msgid "old"
 msgstr "old"
 
+msgid "old towns"
+msgstr "old towns"
+
 msgid "Older"
 msgstr "Older"
 
@@ -7361,6 +7564,10 @@ msgstr "Once you add a deck, Lymi schedules each card by how well you remember i
 msgid "one"
 msgstr "one"
 
+msgctxt "plural"
+msgid "One"
+msgstr "One"
+
 msgid "One card’s reviews over seven weeks"
 msgstr "One card’s reviews over seven weeks"
 
@@ -7409,6 +7616,12 @@ msgstr "One of a mirror-image pair"
 msgid "One of the eleven base words."
 msgstr "One of the eleven base words."
 
+msgid "One or many"
+msgstr "One or many"
+
+msgid "One or many?"
+msgstr "One or many?"
+
 msgid "One person"
 msgstr "One person"
 
@@ -7450,6 +7663,9 @@ msgstr "One word for asking, handing something over and answering thanks."
 
 msgid "One word for both."
 msgstr "One word for both."
+
+msgid "One: the verb form of <0>ta</0>"
+msgstr "One: the verb form of <0>ta</0>"
 
 msgid "Only"
 msgstr "Only"
@@ -8468,14 +8684,26 @@ msgstr "Right. And at 50 mph?"
 msgid "Right. And which one closes your eyelids?"
 msgstr "Right. And which one closes your eyelids?"
 
+msgid "river"
+msgstr "river"
+
+msgid "rivers"
+msgstr "rivers"
+
 msgid "Road"
 msgstr "Road"
 
 msgid "road; tea"
 msgstr "road; tea"
 
+msgid "room"
+msgstr "room"
+
 msgid "Room"
 msgstr "Room"
+
+msgid "rooms"
+msgstr "rooms"
 
 msgid "Roots, trunks, divisions, cords, branches: from C5 to T1."
 msgstr "Roots, trunks, divisions, cords, branches: from C5 to T1."
@@ -8630,6 +8858,9 @@ msgstr "school"
 
 msgid "School"
 msgstr "School"
+
+msgid "schools"
+msgstr "schools"
 
 msgid "Science"
 msgstr "Science"
@@ -8838,6 +9069,9 @@ msgstr "shop"
 msgid "Shop"
 msgstr "Shop"
 
+msgid "shops"
+msgstr "shops"
+
 msgctxt "pronoun form"
 msgid "Short"
 msgstr "Short"
@@ -8998,6 +9232,9 @@ msgstr "Slides, photos or typed notes."
 
 msgid "Slow or stop so others can pass without you forcing them to change speed or path."
 msgstr "Slow or stop so others can pass without you forcing them to change speed or path."
+
+msgid "small cats"
+msgstr "small cats"
 
 msgid "Small things, done well."
 msgstr "Small things, done well."
@@ -9542,11 +9779,17 @@ msgstr "Tap the commands above once more, then try again."
 msgid "Tap the Do and Don’t lines above once more, then try again."
 msgstr "Tap the Do and Don’t lines above once more, then try again."
 
+msgid "Tap the One and Many sentences above once more, then try again."
+msgstr "Tap the One and Many sentences above once more, then try again."
+
 msgid "Tap the places above once more, then try again."
 msgstr "Tap the places above once more, then try again."
 
 msgid "Tap the question words above once more, then try again."
 msgstr "Tap the question words above once more, then try again."
+
+msgid "Tap the rows above once more, then try again."
+msgstr "Tap the rows above once more, then try again."
 
 msgid "Tap to turn it over"
 msgstr "Tap to turn it over"
@@ -9695,6 +9938,10 @@ msgstr "That’s the time. Mari asked how you are."
 msgid "The -des and -mata forms"
 msgstr "The -des and -mata forms"
 
+#. placeholder {0}: ending("-d")
+msgid "The {0} goes on the second form, not the first: it’s <0>poed</0>, not <1>poodid</1>. Tap each form to hear it."
+msgstr "The {0} goes on the second form, not the first: it’s <0>poed</0>, not <1>poodid</1>. Tap each form to hear it."
+
 msgid "The {name} app icon behind Lymi’s"
 msgstr "The {name} app icon behind Lymi’s"
 
@@ -9818,11 +10065,23 @@ msgstr "The castle stands on a hill."
 msgid "The cat is asleep on the *rug*."
 msgstr "The cat is asleep on the *rug*."
 
+msgid "The cat is at home."
+msgstr "The cat is at home."
+
+msgid "The cats are at home."
+msgstr "The cats are at home."
+
+msgid "The child is reading."
+msgstr "The child is reading."
+
 msgid "The children are already *asleep*."
 msgstr "The children are already *asleep*."
 
 msgid "The children are playing in the *park*."
 msgstr "The children are playing in the *park*."
+
+msgid "The children are reading."
+msgstr "The children are reading."
 
 msgid "The cost of making one more unit"
 msgstr "The cost of making one more unit"
@@ -9932,11 +10191,17 @@ msgstr "The first day of the week."
 msgid "The first day. Esmas- sounds like <0/>, first."
 msgstr "The first day. Esmas- sounds like <0/>, first."
 
+msgid "The first form"
+msgstr "The first form"
+
 msgid "The first four count: <0/> is the first day, <1/> the second, <2/> the third and <3/> the fourth. The other three have names of their own. Tap a day to hear it and see where its name comes from."
 msgstr "The first four count: <0/> is the first day, <1/> the second, <2/> the third and <3/> the fourth. The other three have names of their own. Tap a day to hear it and see where its name comes from."
 
 msgid "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
 msgstr "The first four count: <0>esmaspäev</0> is the first day, and <1>neljapäev</1> the fourth."
+
+msgid "The form a dictionary lists first."
+msgstr "The form a dictionary lists first."
 
 msgid "The form says who"
 msgstr "The form says who"
@@ -9989,6 +10254,12 @@ msgstr "The hours"
 msgid "The hours are the numbers from lesson {numbers}. Tap one to hear it."
 msgstr "The hours are the numbers from lesson {numbers}. Tap one to hear it."
 
+msgid "The house is big."
+msgstr "The house is big."
+
+msgid "The houses are big."
+msgstr "The houses are big."
+
 msgid "The Hradec Králové and Pardubice regions."
 msgstr "The Hradec Králové and Pardubice regions."
 
@@ -10040,6 +10311,12 @@ msgstr "The Lymi lantern and wordmark above the English line “Keep what you le
 msgid "The Lymi plugin gives your assistant a skill for each. It installs in Claude, Claude Code, Codex, Cursor and Gemini CLI."
 msgstr "The Lymi plugin gives your assistant a skill for each. It installs in Claude, Claude Code, Codex, Cursor and Gemini CLI."
 
+msgid "The man is working."
+msgstr "The man is working."
+
+msgid "The men are working."
+msgstr "The men are working."
+
 msgid "the Mochi docs"
 msgstr "the Mochi docs"
 
@@ -10069,6 +10346,9 @@ msgstr "The no of olema, to be."
 
 msgid "the Noji help centre"
 msgstr "the Noji help centre"
+
+msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
+msgstr "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 
 msgid "The object: whole or part"
 msgstr "The object: whole or part"
@@ -10126,6 +10406,10 @@ msgstr "The place or in the place"
 
 msgid "The player would pass, if chess allowed it."
 msgstr "The player would pass, if chess allowed it."
+
+#. placeholder {0}: ending("-d")
+msgid "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
+msgstr "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
 
 msgid "The plural of sõber."
 msgstr "The plural of sõber."
@@ -10193,6 +10477,9 @@ msgstr "The same conversation with Mari's lines heard, not shown; each can be re
 msgid "The same for every person."
 msgstr "The same for every person."
 
+msgid "The same for ta and nad."
+msgstr "The same for ta and nad."
+
 msgid "The same in both"
 msgstr "The same in both"
 
@@ -10210,6 +10497,21 @@ msgstr "The second day of the week."
 
 msgid "The second day. Teisi- sounds like <0/>, second."
 msgstr "The second day. Teisi- sounds like <0/>, second."
+
+msgid "The second form and -d"
+msgstr "The second form and -d"
+
+msgid "The second form and <0>-d</0>"
+msgstr "The second form and <0>-d</0>"
+
+msgid "the second form of kass"
+msgstr "the second form of kass"
+
+msgid "the second form of pood"
+msgstr "the second form of pood"
+
+msgid "the second form of suur"
+msgstr "the second form of suur"
 
 msgid "The seven days, the four that count, and how to say what day it is."
 msgstr "The seven days, the four that count, and how to say what day it is."
@@ -10247,6 +10549,9 @@ msgstr "The steam in a sauna"
 msgid "The stem alone"
 msgstr "The stem alone"
 
+msgid "The stem change comes back"
+msgstr "The stem change comes back"
+
 msgid "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 msgstr "The stem doesn’t change: <0>istu</0>, <1>ära istu</1>."
 
@@ -10273,6 +10578,12 @@ msgstr "The sugar photosynthesis makes"
 
 msgid "The table lights up who the word means."
 msgstr "The table lights up who the word means."
+
+msgid "The teacher is speaking."
+msgstr "The teacher is speaking."
+
+msgid "The teachers are speaking."
+msgstr "The teachers are speaking."
 
 msgid "The tens"
 msgstr "The tens"
@@ -10310,8 +10621,14 @@ msgstr "The translative case"
 msgid "The union"
 msgstr "The union"
 
+msgid "The verb after a plural"
+msgstr "The verb after a plural"
+
 msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
 msgstr "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
+
+msgid "The verb ends in <0>-b</0>, or is <1>on</1>."
+msgstr "The verb ends in <0>-b</0>, or is <1>on</1>."
 
 msgid "The verb without its ending"
 msgstr "The verb without its ending"
@@ -10339,6 +10656,12 @@ msgstr "The whiteboard"
 
 msgid "The whole official bank for the test of Czech life and institutions, in Czech as on the test, with a translation next to each."
 msgstr "The whole official bank for the test of Czech life and institutions, in Czech as on the test, with a translation next to each."
+
+msgid "The woman is drinking coffee."
+msgstr "The woman is drinking coffee."
+
+msgid "The women are drinking coffee."
+msgstr "The women are drinking coffee."
 
 msgid "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
 msgstr "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
@@ -10796,6 +11119,9 @@ msgstr "To say"
 msgid "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
 msgstr "To say don’t, put <0>ära</0> before the stem: <1>Ära istu!</1>"
 
+msgid "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5>"
+msgstr "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5>"
+
 msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 msgstr "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 
@@ -10804,6 +11130,9 @@ msgstr "to school"
 
 msgid "To sign"
 msgstr "To sign"
+
+msgid "to sleep"
+msgstr "to sleep"
 
 msgid "To sleep; to go to bed"
 msgstr "To sleep; to go to bed"
@@ -10910,6 +11239,9 @@ msgstr "town, city"
 
 msgid "Town; city"
 msgstr "Town; city"
+
+msgid "towns, cities"
+msgstr "towns, cities"
 
 msgid "Traditional deck"
 msgstr "Traditional deck"
@@ -11074,6 +11406,9 @@ msgstr "two"
 msgid "Two *bread rolls*, please."
 msgstr "Two *bread rolls*, please."
 
+msgid "two cats"
+msgstr "two cats"
+
 msgid "two hundred"
 msgstr "two hundred"
 
@@ -11103,6 +11438,9 @@ msgstr "Type the number"
 
 msgid "Type the number you hear"
 msgstr "Type the number you hear"
+
+msgid "Type the plural"
+msgstr "Type the plural"
 
 msgid "Type the time"
 msgstr "Type the time"
@@ -11617,6 +11955,10 @@ msgstr "When its card reaches Known in your reviews. From then on the reading is
 msgid "When the output depends on the history of the input"
 msgstr "When the output depends on the history of the input"
 
+#. placeholder {0}: ending("-d")
+msgid "When the second form is the same as the first, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
+msgstr "When the second form is the same as the first, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
+
 msgid "where"
 msgstr "where"
 
@@ -11898,6 +12240,12 @@ msgstr "With the deck that fits why you’re learning, such as a trip or your fi
 
 msgid "With, without, until, as"
 msgstr "With, without, until, as"
+
+msgid "woman"
+msgstr "woman"
+
+msgid "women"
+msgstr "women"
 
 msgid "won’t do, no"
 msgstr "won’t do, no"

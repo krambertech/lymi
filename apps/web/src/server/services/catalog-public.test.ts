@@ -1,5 +1,7 @@
 import { newId, type PublicationInput } from "@lymi/core";
+import { DECK_PAGE_HAND } from "@lymi/core/catalog";
 import { listPublicCatalog, listPublicDeckSlugs, loadPublicDeck } from "@lymi/core/catalog/server";
+import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import { type Db, schema } from "../db";
 import { addCards, archiveCard } from "./cards";
@@ -86,24 +88,120 @@ describe("loadPublicDeck", () => {
     expect(JSON.stringify(result)).not.toContain("ARCHIVED");
   });
 
-  it("never carries ids, account details, members, notes or examples", async () => {
+  it("never carries ids, account details or members", async () => {
     const deck = await sectionedDeck("private");
     await turnOnJoinLink(lymi, deck.id);
     await addPublishedDeck(anna, "private");
     const result = await loadPublicDeck(db, "private");
     const json = JSON.stringify(result);
     expect(result.status).toBe("published");
-    for (const secret of [
-      deck.id,
-      "lymi@lymi.test",
-      "anna",
-      "Lymi Publisher Account",
-      "PRIVATE-NOTE",
-      "PRIVATE-EXAMPLE",
-    ]) {
+    for (const secret of [deck.id, "lymi@lymi.test", "anna", "Lymi Publisher Account"]) {
       expect(json).not.toContain(secret);
     }
-    expect(json).not.toMatch(/"(id|userId|deckId|sectionId|notes|example|token)"/);
+    expect(json).not.toMatch(/"(id|userId|deckId|sectionId|token)"/);
+  });
+
+  it("shows notes and examples only on the cards a visitor can turn over", async () => {
+    const deck = await createDeck(lymi, { name: "Hand Estonian", defaultLanguage: "et" });
+    await addCards(
+      lymi,
+      Array.from({ length: 9 }, (_, i) => ({
+        deckId: deck.id,
+        term: `sõna ${i}`,
+        meaning: `word ${i}`,
+        notes: `NOTE-${i}`,
+        example: `Lause ${i}.`,
+      })),
+    );
+    await publishDeck(lymi, deck.id, input("hand-details"), publishers);
+    const result = await loadPublicDeck(db, "hand-details");
+    if (result.status !== "published") throw new Error(result.status);
+    const shown = result.deck.sections.flatMap((section) => section.cards);
+    const detailed = shown.filter((card) => card.details);
+    expect(detailed).toHaveLength(DECK_PAGE_HAND);
+    for (const card of detailed) {
+      const i = card.term.split(" ")[1];
+      expect(card.details).toEqual({
+        example: `Lause ${i}.`,
+        notes: `NOTE-${i}`,
+        exampleAudio: { cardId: expect.any(String) },
+      });
+    }
+    // Every other card's text stays off the page.
+    const json = JSON.stringify(result);
+    const hidden = shown.filter((card) => !card.details).map((card) => card.term.split(" ")[1]);
+    for (const i of hidden) expect(json).not.toContain(`NOTE-${i}`);
+  });
+
+  it("shows an edition's own notes and translation, never the original's", async () => {
+    const deck = await createDeck(lymi, { name: "Edition Estonian", defaultLanguage: "et" });
+    const [first, second] = await addCards(lymi, [
+      {
+        deckId: deck.id,
+        term: "tere",
+        meaning: "hello",
+        notes: "EN-NOTE",
+        example: "Tere hommikust!",
+      },
+      {
+        deckId: deck.id,
+        term: "leib",
+        meaning: "bread",
+        notes: "EN-ONLY",
+        example: "Leib on värske.",
+      },
+    ]);
+    if (first?.status !== "added" || second?.status !== "added") throw new Error("not added");
+    // The original's translation of the first card was written for an earlier example.
+    await db
+      .update(schema.cards)
+      .set({ exampleTranslation: "STALE", exampleTranslationOf: "earlier" })
+      .where(eq(schema.cards.id, first.card.id));
+    await publishDeck(lymi, deck.id, input("edition-details"), publishers);
+    await db.insert(schema.deckEditions).values({
+      id: newId(),
+      deckId: deck.id,
+      language: "uk",
+      status: "published",
+      revision: 1,
+      publishedAt: new Date(),
+    });
+    await db.insert(schema.cardLocalizations).values({
+      id: newId(),
+      cardId: first.card.id,
+      language: "uk",
+      provenance: "human",
+      status: "approved",
+      sourceRevision: 1,
+      meaning: "привіт",
+      notes: "UK-NOTE",
+      example: "Tere hommikust, sõber!",
+      exampleTranslation: "Доброго ранку, друже!",
+    });
+    const detailsOf = async (language?: string) => {
+      const result = await loadPublicDeck(db, "edition-details", language);
+      if (result.status !== "published") throw new Error(result.status);
+      return Object.fromEntries(
+        result.deck.sections.flatMap((s) => s.cards).map((card) => [card.term, card.details]),
+      );
+    };
+
+    const heard = { exampleAudio: { cardId: expect.any(String) } };
+    const en = await detailsOf();
+    expect(en.tere).toEqual({ example: "Tere hommikust!", notes: "EN-NOTE", ...heard });
+    const uk = await detailsOf("uk");
+    // The edition's own sentence has no clip: the one stored says the original's.
+    expect(uk.tere).toEqual({
+      example: "Tere hommikust, sõber!",
+      exampleTranslation: "Доброго ранку, друже!",
+      notes: "UK-NOTE",
+    });
+    // The edition has no notes for this card, so the English ones stay off the Ukrainian page.
+    expect(uk.leib).toEqual({ example: "Leib on värske.", ...heard });
+
+    // Once the card changes after the edition was written, its translation no longer counts.
+    await db.update(schema.cards).set({ revision: 2 }).where(eq(schema.cards.id, first.card.id));
+    expect((await detailsOf("uk")).tere).not.toHaveProperty("exampleTranslation");
   });
 
   it("is unavailable once withdrawn or archived, and missing for an unknown slug", async () => {

@@ -3,9 +3,9 @@ import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
 import {
   activeAvatarVersion,
   deckPageHand,
-  deckPageSpread,
   isPublicDeckSlug,
   offersDeck,
+  type PublicCardDetails,
   PublicDeckOut,
   type PublicDeckResult,
   PublicDeckSummary,
@@ -15,6 +15,7 @@ import {
   stableHash,
 } from "./catalog";
 import { selectIn } from "./db";
+import { translationStale } from "./example";
 import { askedModes, isImageMode } from "./modes";
 import { livePublicationMedia } from "./publication-media";
 import {
@@ -29,7 +30,7 @@ import {
   sections,
   userAvatars,
 } from "./schema/app";
-import { SPOKEN_TERM_MAX } from "./terms";
+import { canSpeakExample, SPOKEN_TERM_MAX } from "./terms";
 import {
   type Directions,
   publicationTags,
@@ -80,6 +81,8 @@ export interface CardRow {
   reviewModeKeys: ReviewModeKey[] | null;
   /** Whether the card can be spoken, so its page offers a clip the product makes on first play. */
   speakable?: boolean;
+  /** The card's other fields in the page's edition; only the cards shown up front publish them. */
+  details?: PublicCardDetails;
 }
 
 export interface PublicMediaRow {
@@ -181,16 +184,19 @@ export function projectPublicDeck(
     });
   }
   groups.set(null, { name: null, cards: [] });
+  const front = frontCardIds(publication, sectionRows, cardRows);
   for (const card of cardRows) {
     const group = groups.get(card.sectionId) ?? groups.get(null);
     const media = mediaByCard.get(card.id);
     const audio = media?.audio ?? (card.speakable ? { cardId: card.id } : undefined);
+    const details = front.has(card.id) ? card.details : undefined;
     group?.cards.push({
       term: card.term,
       meaning: card.meaning,
       modes: modesOf(publication.deckDirections, card, !!media?.image),
       ...(media?.image ? { image: media.image } : {}),
       ...(audio ? { audio } : {}),
+      ...(details && Object.keys(details).length > 0 ? { details } : {}),
     });
   }
   const deck = PublicDeckOut.parse({
@@ -217,6 +223,27 @@ export function projectPublicDeck(
     sections: [...groups.values()].filter((group) => group.cards.length > 0),
   });
   return { status: "published", deck };
+}
+
+/**
+ * The cards a page lets a visitor turn over, picked from the same groups the page picks from:
+ * sections in order, then the unsectioned, cards with a meaning only.
+ */
+function frontCardIds(
+  publication: Pick<PublicationRow, "slug" | "revision">,
+  sectionRows: readonly SectionRow[],
+  cardRows: readonly CardRow[],
+): Set<string> {
+  const groups = new Map<string | null, CardRow[]>();
+  for (const section of sectionRows) groups.set(section.id, []);
+  groups.set(null, []);
+  for (const card of cardRows) {
+    if (!card.meaning) continue;
+    const group = groups.get(card.sectionId) ?? groups.get(null);
+    group?.push(card);
+  }
+  const shown = [...groups.values()].filter((cards) => cards.length > 0);
+  return new Set(deckPageHand(publication, shown).map((card) => card.id));
 }
 
 /** The modes a card is asked in, from its own list when it overrides its deck. */
@@ -255,8 +282,8 @@ export async function loadPublicDeck(
 }
 
 /**
- * The ids of the cards a deck page shows before a visitor opens the full list, the spread and
- * the hand, in the original and every published edition. The product voices these ahead. #759.
+ * The ids of the cards a deck page lets a visitor turn over before opening the full list, in the
+ * original and every published edition. The product voices these ahead. #759.
  */
 export async function publicDeckFrontCards(db: CatalogDb, slug: string): Promise<string[]> {
   const original = await readPublicDeck(db, slug);
@@ -267,17 +294,7 @@ export async function publicDeckFrontCards(db: CatalogDb, slug: string): Promise
   const ids = new Set<string>();
   for (const read of [original, ...editions]) {
     if ("status" in read) continue;
-    const groups = new Map<string | null, (CardRow & { meaning: string })[]>();
-    for (const section of read.sectionRows) groups.set(section.id, []);
-    groups.set(null, []);
-    for (const card of read.cardRows) {
-      if (!card.meaning) continue;
-      const group = groups.get(card.sectionId) ?? groups.get(null);
-      group?.push({ ...card, meaning: card.meaning });
-    }
-    const shown = [...groups.values()].filter((cards) => cards.length > 0);
-    for (const card of deckPageSpread(read.publication, shown)) ids.add(card.id);
-    for (const card of deckPageHand(read.publication, shown)) ids.add(card.id);
+    for (const id of frontCardIds(read.publication, read.sectionRows, read.cardRows)) ids.add(id);
   }
   return [...ids];
 }
@@ -379,6 +396,20 @@ async function readPublicDeck(
         directions: cards.directions,
         reviewModeKeys: cards.reviewModeKeys,
         speakable: sql<number>`${cards.language} is not null and length(${cards.term}) <= ${SPOKEN_TERM_MAX}`,
+        pronunciation: sql<
+          string | null
+        >`coalesce(localization.pronunciation, ${cards.pronunciation})`,
+        example: sql<string | null>`coalesce(localization.example, ${cards.example})`,
+        exampleTranslation: cards.exampleTranslation,
+        exampleTranslationOf: cards.exampleTranslationOf,
+        notes: cards.notes,
+        editionExampleTranslation: sql<string | null>`localization.example_translation`,
+        editionNotes: sql<string | null>`localization.notes`,
+        editionExample: sql<string | null>`localization.example`,
+        editionCurrent: sql<number>`coalesce(${sql.raw("localization.source_revision")} >= ${cards.revision}, 0)`,
+        originalExample: cards.example,
+        language: cards.language,
+        exampleRecorded: sql<number>`${cards.exampleRecordingKey} is not null`,
       })
       .from(cards)
       .leftJoin(
@@ -405,7 +436,50 @@ async function readPublicDeck(
     sectionRows: sectionRows.map(({ localized, ...section }) =>
       wanted && localized !== 1 ? { ...section, nameLanguage: original } : section,
     ),
-    cardRows: cardRows.map(({ speakable, ...card }) => ({ ...card, speakable: speakable === 1 })),
+    cardRows: cardRows.map(
+      ({
+        speakable,
+        pronunciation,
+        example,
+        exampleTranslation,
+        exampleTranslationOf,
+        notes,
+        editionExampleTranslation,
+        editionNotes,
+        editionExample,
+        editionCurrent,
+        originalExample,
+        language,
+        exampleRecorded,
+        ...card
+      }) => {
+        // The original's translation and notes are in its own language, so an edition shows only its own.
+        // An edition's translation counts only while the card is unchanged since, as in the app.
+        const translation = wanted
+          ? editionCurrent === 1
+            ? editionExampleTranslation
+            : null
+          : translationStale({ example, exampleTranslation, exampleTranslationOf })
+            ? null
+            : exampleTranslation;
+        const details: PublicCardDetails = {};
+        if (pronunciation?.trim()) details.pronunciation = pronunciation.trim();
+        if (example?.trim()) details.example = example.trim();
+        if (details.example && translation?.trim()) details.exampleTranslation = translation.trim();
+        const shownNotes = (wanted ? editionNotes : notes)?.trim();
+        if (shownNotes) details.notes = shownNotes;
+        // The clip says the original's sentence, so an edition's own sentence goes unvoiced.
+        const ownSentence = !(wanted && editionExample?.trim());
+        if (
+          details.example &&
+          ownSentence &&
+          (exampleRecorded === 1 || canSpeakExample({ example: originalExample, language }))
+        ) {
+          details.exampleAudio = { cardId: card.id };
+        }
+        return { ...card, speakable: speakable === 1, details };
+      },
+    ),
     mediaRows,
   };
 }
@@ -805,7 +879,7 @@ async function sampleCards(
   for (const row of rows) {
     const list = byDeck.get(row.deckId);
     if (!list || list.length === 0) continue;
-    // Prefer a card short enough to read at a glance on a tray, as the deck page's spread does.
+    // Prefer a card short enough to read at a glance on a tray.
     const glanceable = list.filter(
       (card) => card.term.length <= 22 && (card.meaning?.length ?? 0) <= 40,
     );

@@ -5,9 +5,9 @@ import { describe } from "../http";
 import type { AppEnv } from "../index";
 import { leadInDependencies } from "../lead-ins";
 import { ownerAnalytics } from "../posthog";
-import { spendPublicAudio } from "../public-audio-rate-limit";
+import { publicAudioAllowance, spendPublicAudio } from "../public-audio-rate-limit";
 import { publisherAvatar } from "../services";
-import { publicMediaFile, publicPronunciation } from "../services/public-media";
+import { publicExampleAudio, publicMediaFile, publicPronunciation } from "../services/public-media";
 
 /** A published deck's own media. The product Worker checks the publication on every request. */
 export const publicMedia = new Hono<AppEnv>();
@@ -17,9 +17,25 @@ publicMedia.get(
   describe({ hide: true, open: true, errors: [404, 503] }),
   async (c) => {
     const kind = c.req.param("kind");
-    if (kind !== "image" && kind !== "audio") return c.notFound();
+    if (kind !== "image" && kind !== "audio" && kind !== "example") return c.notFound();
     let object: R2ObjectBody;
-    if (kind === "image") {
+    if (kind === "example") {
+      const work = publicExampleAudio(
+        c.get("db"),
+        c.req.param("cardId"),
+        {
+          bucket: c.env.AUDIO,
+          providers: (language) => createSpeechProviders(c.env, language),
+          analytics: ownerAnalytics(c.env, c.get("db"), (work) => c.executionCtx.waitUntil(work)),
+        },
+        publicAudioAllowance(c),
+      );
+      // A visitor who leaves mid-generation still gets the clip stored, and its lease released.
+      c.executionCtx.waitUntil(work.catch(() => undefined));
+      const found = await work;
+      if ("retryAfter" in found) return tooManyRequests(found.retryAfter);
+      object = found.clip;
+    } else if (kind === "image") {
       object = await publicMediaFile(c.get("db"), c.req.param("cardId"), kind, {
         images: c.env.PRIVATE_IMAGES,
         audio: c.env.AUDIO,

@@ -1,6 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
-import { modeOf } from "@lymi/core";
+import { exampleShown, modeOf } from "@lymi/core";
 import { offersLanguage } from "@lymi/core/catalog";
 import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
@@ -16,6 +16,7 @@ import {
 } from "react";
 import { HAND_SIZE } from "../../lib/hand";
 import { buttonClass } from "../Button";
+import { NoteBlocks } from "../NoteBlocks";
 import { Furigana } from "./Furigana";
 import { HAND_CARDS, type HandCard } from "./hand-cards";
 
@@ -26,6 +27,9 @@ const TOSS_MS = 620;
 const HINT_AFTER_MS = 2400;
 const DEALT_KEY = "lymi-hand-dealt";
 const WIDE = /[\p{Script=Han}\p{Script=Hiragana}\p{Script=Katakana}\p{Script=Hangul}]/gu;
+
+/** A card's two sounds: its term, and its example when it has one to hear. */
+type Sound = "term" | "example";
 
 interface Dealt {
   key: number;
@@ -94,8 +98,9 @@ interface CardProps {
   /** Arrive from the deck rather than appearing in place. */
   enter: boolean;
   delay: number;
-  playing: boolean;
-  onPlay: (card: HandCard) => void;
+  /** Which of the card's sounds is playing. */
+  playing: Sound | null;
+  onPlay: (card: HandCard, sound: Sound) => void;
   onPress: () => void;
   /** Shown on the front face once a visitor has waited without turning anything. */
   hint?: string | null | undefined;
@@ -119,6 +124,18 @@ function FanCard({
   const { t, i18n } = useLingui();
   const [landed, setLanded] = useState(!enter);
   const self = useRef<HTMLDivElement>(null);
+  const backScroll = useRef<HTMLDivElement>(null);
+  const answerRef = useRef<HTMLDivElement>(null);
+
+  // A card too long for its face turns to its answer, with the end of the question still in view.
+  useEffect(() => {
+    const scroller = backScroll.current;
+    const answerAt = answerRef.current;
+    if (!revealed || !scroller || !answerAt) return;
+    scroller.scrollTop = 0;
+    if (scroller.scrollHeight <= scroller.clientHeight) return;
+    scroller.scrollTop = Math.max(answerAt.offsetTop - scroller.offsetTop - 48, 0);
+  }, [revealed]);
 
   useLayoutEffect(() => {
     if (landed) return;
@@ -185,24 +202,61 @@ function FanCard({
         lang={cue === "term" ? card.language : undefined}
         dir="auto"
         className="whitespace-pre-line mt-3.5 text-[min(46px,calc(var(--cw)*var(--term)))] leading-[1.02] font-medium tracking-[-0.03em] text-balance text-ink [overflow-wrap:anywhere]"
-        style={{ "--term": cueStep(cueText) } as CSSProperties}
+        style={{ "--term": cueStep(cueText, cue === "term" && audible) } as CSSProperties}
       >
-        {cue === "term" && card.furigana ? (
-          <Furigana
-            term={card.term}
-            reading={card.furigana}
-            lang={card.language}
-            hidden={card.state === "known" && !back}
-          />
-        ) : cue === "term" && card.stress && (card.state !== "known" || back) ? (
-          card.stress
-        ) : (
-          cueText
+        {(cue === "term" ? withSpeaker : (text: ReactNode) => text)(
+          cue === "term" && card.furigana ? (
+            <Furigana
+              term={card.term}
+              reading={card.furigana}
+              lang={card.language}
+              hidden={card.state === "known" && !back}
+            />
+          ) : cue === "term" && card.stress && (card.state !== "known" || back) ? (
+            card.stress
+          ) : (
+            cueText
+          ),
         )}
       </p>
     );
 
-  // The reading and the sound belong to the term, so they go wherever the term is shown.
+  // The sound follows the term's last word, as review draws it, wherever the term is shown.
+  const speaker = audible ? (
+    <button
+      type="button"
+      aria-label={playing === "term" ? t`Replay pronunciation` : t`Play pronunciation`}
+      // It sits inside the term, whose language would otherwise voice the label.
+      lang={i18n.locale}
+      tabIndex={front ? 0 : -1}
+      onClick={(e) => {
+        e.stopPropagation();
+        onPlay(card, "term");
+      }}
+      className={clsx(
+        "hand-speaker relative inline-flex size-8 shrink-0 items-center justify-center rounded-full edge bg-plate text-base tracking-normal transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-hover",
+        "before:absolute before:-inset-1.5 before:content-[''] [&_svg]:size-4",
+        playing === "term" ? "text-ink" : "text-ink-secondary",
+        !front && "invisible",
+      )}
+    >
+      <Volume2 aria-hidden="true" />
+    </button>
+  ) : null;
+
+  // The term and its sound on one line: the sound keeps beside the term's first line however the
+  // term wraps, so it never drops onto a line of its own. The holder sets the term's size.
+  const withSpeaker = (text: ReactNode) =>
+    speaker ? (
+      <span className="flex items-start gap-2.5">
+        <span className="min-w-0">{text}</span>
+        <span className="hand-speaker-slot">{speaker}</span>
+      </span>
+    ) : (
+      text
+    );
+
+  // The reading and the pronunciation belong to the term, so they go wherever the term is shown.
   const termDetails = (
     <>
       {card.reading && (
@@ -210,29 +264,77 @@ function FanCard({
           {card.reading}
         </p>
       )}
-      {(card.pronunciation || audible) && (
-        <p className="mt-2.5 flex min-h-8 items-center gap-2.5 text-md text-ink-muted">
-          {card.pronunciation && <span className="hand-ipa truncate">{card.pronunciation}</span>}
-          {audible && (
-            <button
-              type="button"
-              aria-label={playing ? t`Replay pronunciation` : t`Play pronunciation`}
-              tabIndex={front ? 0 : -1}
-              onClick={(e) => {
-                e.stopPropagation();
-                onPlay(card);
-              }}
-              className={clsx(
-                "relative inline-flex size-8 shrink-0 items-center justify-center rounded-full edge bg-plate transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-hover",
-                "before:absolute before:-inset-1.5 before:content-[''] [&_svg]:size-4",
-                playing ? "text-ink" : "text-ink-secondary",
-                !front && "invisible",
-              )}
-            >
-              <Volume2 aria-hidden="true" />
-            </button>
-          )}
+      {card.pronunciation && (
+        <p className="hand-ipa mt-1.5 truncate text-md text-ink-muted">{card.pronunciation}</p>
+      )}
+    </>
+  );
+
+  // The rest of a turned card, as review lays it out: the example in its block, then the notes.
+  const extras = (
+    <>
+      {card.forms && (
+        <p lang={card.language} className="mt-1.5 text-md text-ink-secondary italic">
+          {card.forms}
         </p>
+      )}
+      {card.example && (
+        // The app's example block: the sentence over its translation, the speaker in the corner.
+        <div className="hand-example relative mt-3 grid gap-1 rounded-lg bg-plate-nested px-3.5 py-3">
+          <p
+            lang={card.language}
+            dir="auto"
+            className={clsx(
+              "line-clamp-3 text-md leading-relaxed text-pretty text-ink",
+              card.exampleAudio && "pe-7",
+            )}
+          >
+            {exampleShown(card.example)}
+          </p>
+          {card.exampleTranslation && (
+            <p className="line-clamp-2 text-base text-pretty text-ink-muted">
+              {card.exampleTranslation}
+            </p>
+          )}
+          {card.exampleAudio && (
+            <span className="absolute end-1.5 top-3 flex h-[1lh] items-center text-md leading-relaxed">
+              <button
+                type="button"
+                lang={i18n.locale}
+                aria-label={t`Play example`}
+                tabIndex={front ? 0 : -1}
+                onClick={(e) => {
+                  e.stopPropagation();
+                  onPlay(card, "example");
+                }}
+                className={clsx(
+                  "relative inline-flex size-8 items-center justify-center rounded-full transition-[background-color,color,scale] duration-150 ease-out active:scale-[0.97] hoverable:hover:bg-plate-hover",
+                  "before:absolute before:-inset-1.5 before:content-[''] [&_svg]:size-4",
+                  playing === "example" ? "text-ink" : "text-ink-muted",
+                )}
+              >
+                <Volume2 aria-hidden="true" />
+              </button>
+            </span>
+          )}
+        </div>
+      )}
+      {card.noteBlocks ? (
+        // A link in the notes opens on its own; the press must not also send the card away.
+        // biome-ignore lint/a11y/noStaticElementInteractions: only stops a link's click bubbling.
+        // biome-ignore lint/a11y/useKeyWithClickEvents: a link's own Enter is not a card press.
+        <div onClick={(e) => (e.target as Element).closest("a") && e.stopPropagation()}>
+          <NoteBlocks
+            blocks={card.noteBlocks}
+            className="hand-note mt-2.5 text-[0.84375rem] leading-[1.45] text-pretty text-ink-muted"
+          />
+        </div>
+      ) : (
+        card.note && (
+          <p className="hand-note mt-2.5 text-[0.84375rem] leading-[1.45] text-pretty text-ink-muted">
+            {say(card.note)}
+          </p>
+        )
       )}
     </>
   );
@@ -246,10 +348,12 @@ function FanCard({
           dir="auto"
           className="whitespace-pre-line text-[min(28px,calc(var(--cw)*0.092))] leading-[1.15] font-medium tracking-[-0.02em] text-balance text-ink [overflow-wrap:anywhere]"
         >
-          {card.furigana ? (
-            <Furigana term={card.term} reading={card.furigana} lang={card.language} />
-          ) : (
-            (card.stress ?? card.term)
+          {withSpeaker(
+            card.furigana ? (
+              <Furigana term={card.term} reading={card.furigana} lang={card.language} />
+            ) : (
+              (card.stress ?? card.term)
+            ),
           )}
         </p>
         {termDetails}
@@ -269,7 +373,7 @@ function FanCard({
           dir="auto"
           className="whitespace-pre-line mt-1.5 text-md text-ink-secondary [overflow-wrap:anywhere]"
         >
-          {card.term}
+          {withSpeaker(card.term)}
         </p>
         {termDetails}
       </>
@@ -299,45 +403,40 @@ function FanCard({
       }
     >
       <div ref={flipRef} className="hand-flip">
-        <div className="hand-face" aria-hidden={revealed || undefined}>
-          {header}
-          {cueFor(false)}
-          {cue === "term" && termDetails}
-          <p
-            className="hand-hint mt-auto text-base text-ink-muted"
-            data-shown={hint ? true : undefined}
-          >
-            {hint}
-          </p>
+        <div className="hand-face" aria-hidden={revealed || undefined} inert={revealed}>
+          <div className="hand-scroll">
+            {header}
+            {cueFor(false)}
+            {cue === "term" && termDetails}
+            <p
+              className="hand-hint mt-auto text-base text-ink-muted"
+              data-shown={hint ? true : undefined}
+            >
+              {hint}
+            </p>
+          </div>
         </div>
-        <div className="hand-face hand-back" aria-hidden={!revealed || undefined}>
-          {header}
-          {cueFor(true)}
-          {cue === "term" && termDetails}
-          {/* Review shows a text card's picture only once it is turned. */}
-          {!picture && card.image && (
-            <img
-              src={card.image.url}
-              alt={card.image.description}
-              width={card.image.width}
-              height={card.image.height}
-              loading="lazy"
-              decoding="async"
-              className="hand-answer-picture mt-3"
-            />
-          )}
-          <div className="mt-auto border-t border-edge-strong pt-3.5">
-            {answer}
-            {card.forms && (
-              <p lang={card.language} className="mt-1.5 text-md text-ink-secondary italic">
-                {card.forms}
-              </p>
+        <div className="hand-face hand-back" aria-hidden={!revealed || undefined} inert={!revealed}>
+          <div ref={backScroll} className="hand-scroll">
+            {header}
+            {cueFor(true)}
+            {cue === "term" && termDetails}
+            {/* Review shows a text card's picture only once it is turned. */}
+            {!picture && card.image && (
+              <img
+                src={card.image.url}
+                alt={card.image.description}
+                width={card.image.width}
+                height={card.image.height}
+                loading="lazy"
+                decoding="async"
+                className="hand-answer-picture mt-3"
+              />
             )}
-            {card.note && (
-              <p className="mt-2 text-[0.84375rem] leading-[1.45] text-ink-muted">
-                {say(card.note)}
-              </p>
-            )}
+            <div ref={answerRef} className="mt-auto border-t border-edge-strong pt-3.5">
+              {answer}
+              {extras}
+            </div>
           </div>
         </div>
       </div>
@@ -346,11 +445,12 @@ function FanCard({
 }
 
 /** A long word would break mid-letter at the full size, and a long cue would run past the card. */
-function cueStep(text: string): number {
-  // A CJK character is about two Latin letters wide and has no spaces to wrap at.
-  const longest = Math.max(
-    ...text.split(/\s+/).map((w) => w.length + (w.match(WIDE) ?? []).length),
-  );
+function cueStep(text: string, speaker = false): number {
+  // A CJK character is about two Latin letters wide and has no spaces to wrap at. The speaker
+  // beside the term takes about three letters of its line.
+  const longest =
+    Math.max(...text.split(/\s+/).map((w) => w.length + (w.match(WIDE) ?? []).length)) +
+    (speaker ? 3 : 0);
   const step = longest >= 13 ? 0.115 : longest >= 10 ? 0.13 : 0.155;
   // A question with its options on their own lines needs the room of a passage.
   if (text.length > 120 || text.includes("\n")) return Math.min(step, 0.07);
@@ -389,6 +489,8 @@ interface Props {
   quiet?: boolean | undefined;
   /** Deal in the given order rather than shuffled, so a page can tell its cards in sequence. */
   ordered?: boolean | undefined;
+  /** Told each time the visitor turns the front card over. */
+  onTurn?: (() => void) | undefined;
 }
 
 /**
@@ -404,6 +506,7 @@ export function HandOfCards({
   onFront,
   quiet,
   ordered,
+  onTurn,
 }: Props) {
   const { t, i18n } = useLingui();
   // Only the landing's mixed hand drops a language the page doesn't offer; a deck page's cards are its own.
@@ -521,12 +624,16 @@ export function HandOfCards({
     setPlaying(null);
   }, []);
 
-  const play = useCallback((card: HandCard) => {
+  const play = useCallback((card: HandCard, sound: Sound) => {
     audio.current?.pause();
-    const clip = new Audio(card.audio ?? `/audio/hand/${card.id}.mp3`);
+    const source =
+      sound === "example" ? card.exampleAudio : (card.audio ?? `/audio/hand/${card.id}.mp3`);
+    if (!source) return;
+    const clip = new Audio(source);
     audio.current = clip;
-    setPlaying(card.id);
-    const done = () => setPlaying((current) => (current === card.id ? null : current));
+    const key = `${card.id}:${sound}`;
+    setPlaying(key);
+    const done = () => setPlaying((current) => (current === key ? null : current));
     clip.addEventListener("ended", done);
     clip.addEventListener("error", done);
     clip.play().catch(done);
@@ -538,6 +645,7 @@ export function HandOfCards({
     taught.current = true;
     setHint(false);
     setPhase("back");
+    onTurn?.();
     const said = spoken(front.card, (d) => (typeof d === "string" ? d : i18n._(d)));
     setAnnounce(
       <Trans>
@@ -545,7 +653,7 @@ export function HandOfCards({
         <span lang={said.answerLanguage}>{said.answer}</span>
       </Trans>,
     );
-  }, [hand, phase, i18n]);
+  }, [hand, phase, i18n, onTurn]);
 
   const next = useCallback(() => {
     const [front, ...rest] = hand;
@@ -608,7 +716,7 @@ export function HandOfCards({
             revealed
             enter={false}
             delay={0}
-            playing={false}
+            playing={null}
             onPlay={play}
             onPress={press}
           />
@@ -631,7 +739,11 @@ export function HandOfCards({
               revealed={k === 0 && phase === "back"}
               enter={dealing || key >= dealFrom + size}
               delay={dealing && phase === "dealing" ? DEAL_STAGGER_MS * (size - 1 - k) : 0}
-              playing={k === 0 && playing === card.id}
+              playing={
+                k === 0 && playing?.startsWith(`${card.id}:`)
+                  ? (playing.slice(card.id.length + 1) as Sound)
+                  : null
+              }
               onPlay={play}
               onPress={press}
               hint={

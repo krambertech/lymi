@@ -1,5 +1,5 @@
 import { newId, type PublicationInput } from "@lymi/core";
-import { loadPublicDeck } from "@lymi/core/catalog/server";
+import { loadPublicDeck, publicDeckFrontCards } from "@lymi/core/catalog/server";
 import { eq } from "@lymi/core/db";
 import { Hono } from "hono";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
@@ -12,7 +12,7 @@ import { addCards, archiveCard, restoreCard } from "./cards";
 import type { ServiceContext } from "./context";
 import { createDeck } from "./decks";
 import { approveEdition, importEdition, publishEdition } from "./editions";
-import { publicMediaFile, publicPronunciation } from "./public-media";
+import { publicExampleAudio, publicMediaFile, publicPronunciation } from "./public-media";
 import { publishDeck, withdrawDeck } from "./publications";
 import { learner, type TestBindings, testDb } from "./test-db";
 
@@ -370,6 +370,89 @@ describe("public pronunciation on first play", () => {
       missing,
     );
     expect(spend).not.toHaveBeenCalled();
+    expect(speech).not.toHaveBeenCalled();
+  });
+});
+
+describe("a public card's example read aloud", () => {
+  const speechProvider = (speech: SpeechProvider["speech"]): SpeechProvider => ({
+    provider: "elevenlabs",
+    model: "eleven_v4",
+    voice: "voice",
+    locale: "et-EE",
+    contentType: "audio/mpeg",
+    extension: "mp3",
+    speech,
+  });
+  const allowance = () => ({ left: vi.fn(async () => null), spend: vi.fn(async () => {}) });
+
+  async function exampleDeck(slug: string, count: number) {
+    const deck = await createDeck(publisher, { name: `Examples ${slug}`, defaultLanguage: "et" });
+    const added = await addCards(
+      publisher,
+      Array.from({ length: count }, (_, i) => ({
+        deckId: deck.id,
+        term: `sõna ${slug} ${i}`,
+        meaning: `word ${i}`,
+        example: `See on lause ${i}.`,
+      })),
+    );
+    await publishDeck(publisher, deck.id, publication(slug), publishers);
+    const ids = added.flatMap((outcome) => (outcome.status === "added" ? [outcome.card.id] : []));
+    const front = await publicDeckFrontCards(db, slug);
+    return {
+      inHand: ids.filter((id) => front.includes(id)),
+      outside: ids.filter((id) => !front.includes(id)),
+    };
+  }
+
+  it("voices a hand card's example once within the budget and serves it free afterwards", async () => {
+    const { inHand } = await exampleDeck("example-hand", 3);
+    const cardId = inHand[0] ?? "";
+    const speech = vi.fn(async () => new Response(new Uint8Array([9, 8, 7])));
+    const budget = allowance();
+    const deps = { bucket: env.AUDIO, providers: () => [speechProvider(speech)] };
+    const first = await publicExampleAudio(db, cardId, deps, budget);
+    if (!("clip" in first)) throw new Error("Expected a clip");
+    expect(first.clip.size).toBe(3);
+    expect("clip" in (await publicExampleAudio(db, cardId, deps, budget))).toBe(true);
+    expect(speech).toHaveBeenCalledTimes(1);
+    expect(budget.spend).toHaveBeenCalledTimes(1);
+    // The page offers it, under the card's own id.
+    const page = await loadPublicDeck(db, "example-hand");
+    if (page.status !== "published") throw new Error(page.status);
+    const shown = page.deck.sections.flatMap((s) => s.cards);
+    expect(shown.filter((card) => card.details?.exampleAudio).length).toBe(3);
+  });
+
+  it("keeps the example of a card outside the hand unheard, and spends nothing", async () => {
+    const { outside } = await exampleDeck("example-outside", 8);
+    const speech = vi.fn(async () => new Response(new Uint8Array([1])));
+    const budget = allowance();
+    await expect(
+      publicExampleAudio(
+        db,
+        outside[0] ?? "",
+        { bucket: env.AUDIO, providers: () => [speechProvider(speech)] },
+        budget,
+      ),
+    ).rejects.toEqual(missing);
+    expect(speech).not.toHaveBeenCalled();
+    expect(budget.left).not.toHaveBeenCalled();
+  });
+
+  it("makes nothing once the public budget is spent", async () => {
+    const { inHand } = await exampleDeck("example-budget", 2);
+    const speech = vi.fn(async () => new Response(new Uint8Array([1])));
+    const budget = { left: vi.fn(async () => 90), spend: vi.fn(async () => {}) };
+    expect(
+      await publicExampleAudio(
+        db,
+        inHand[0] ?? "",
+        { bucket: env.AUDIO, providers: () => [speechProvider(speech)] },
+        budget,
+      ),
+    ).toEqual({ retryAfter: 90 });
     expect(speech).not.toHaveBeenCalled();
   });
 });

@@ -68,6 +68,22 @@ Public pages show up to four decks, one row on desktop and two columns on phone.
 
 List a deck only while it meets the conditions for its own public page to return 200. Withdrawal and archive remove it from cached catalogue pages within five minutes. Validators depend on catalogue content, locale and Worker version, never the requesting account.
 
+## The public deck page
+
+`lymi.app/explore/<slug>` is the main way new learners arrive, nearly always straight from a search or a link, so the page is a landing page for one deck. Its first screen answers what that visitor asks first: is this the list I looked for, are the cards good, and what does it cost.
+
+The hero, in the deck's tray colour, holds the byline, the name, the summary, facts as chips (the taught language or subject, the meaning language, the card count, **Free**), tags, **Add free deck** and **Try a few cards**, then a line saying Lymi is free and needs no payment details. Beside it on desktop and under it on a phone sits a fan of three of the deck's first cards, each shown whole as a turned card: section, picture, term, pronunciation, meaning and example. **See all N cards** under the fan leads to the list. The byline shows **Checked** with the date the publisher last checked the deck, or **Published** when it was never checked.
+
+**What's inside** lists every section in order as a row that opens: its number, name, **Start here** on the first of an ordered deck, a few of its first words and its card count. A first section of 24 cards or fewer starts open. Every card of the deck is in the page's HTML, rendered on the server with no island, so search engines read the whole list and a deck of a thousand cards ships it once. A row shows the term and meaning, its picture and a speaker; one script plays the words, one at a time, and says so when a clip fails.
+
+**How it works** follows, its three steps beside the cards to try. `deckPageHand` deals the deck's first five cards with a meaning, in order, each asked from its term, so a visitor tries what they would learn first. A turned card shows what review shows: the answer, the pronunciation, the example with its translation and speaker in the app's example block, and the notes, drawn from blocks the server parsed so the page ships no Markdown parser. The term's speaker sits beside its first line. A card with more than its face holds scrolls inside the card, fading at its foot, and turns to show its answer with the end of the question above it. Notes are cut to about ten lines and a list to its first eight items, ending in an ellipsis; the whole note is in Lymi.
+
+**More than flipping cards** is a bento of what surrounds a review, so a visitor does not take the cards to try for the whole app: a wide tile with the return lane following one of the deck's first terms through spaced repetition, then the homepage's own tiles for the daily goal, Insights, hints, review modes, offline, the keyboard, quick add and export.
+
+A deck whose slug names a level (A1 to C2) gets **{Language}, level by level**: one deck for each level of the same language, preferring decks in the page's meaning language, with this one marked **You're here**. A deck the ladder shows leaves More like this. The page closes with the lit lantern and **Add free deck**, then More like this and the links to the deck's neighbours and shelf. On a phone a bar with the deck's name and **Add free deck** rises from the foot once the hero's Add has scrolled away, and hides again while another Add is on screen.
+
+Only the hand's cards carry pronunciation, example, translation and notes (`details` on `PublicDeckOut`); the rest of the deck shows term and meaning only. An edition shows its own approved notes and translation and never falls back to the original's, which are in another language. A translation is left out once it no longer matches: the original's when its example has changed, an edition's when the card has changed since the edition was written, as in the app. A hand card's example can be heard at `/public/media/card/<id>/example` when it is the original's sentence, recorded or short enough to voice; the clip follows the owner's choice about AI and the public audio budget.
+
 ## In the product
 
 Signed-in learners open `my.lymi.app/explore` from the desktop rail or the learner menu in the narrow web layout. The native phone app has an Explore tab. `GET /api/explore` returns `PublicDeckSummary` rows for the learner’s meaning language plus Library membership.

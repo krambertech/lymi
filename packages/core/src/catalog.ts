@@ -18,6 +18,22 @@ const PublicImage = z.object({
   height: z.number().int(),
 });
 
+/** A card's other fields, as review shows them once it is turned. */
+const PublicCardDetails = z.object({
+  pronunciation: z.string().optional(),
+  /** In the term's language, with any inline readings left in. */
+  example: z.string().optional(),
+  /** The example in the meaning language, only while it still matches the example. */
+  exampleTranslation: z.string().optional(),
+  notes: z.string().optional(),
+  /**
+   * Set when the example can be heard at `/public/media/card/<cardId>/example`: the original's
+   * own sentence, recorded or short enough to voice. An edition's own sentence has no clip.
+   */
+  exampleAudio: z.object({ cardId: z.string() }).optional(),
+});
+export type PublicCardDetails = z.infer<typeof PublicCardDetails>;
+
 /**
  * What a public deck page may show, and nothing else. This is the security boundary of
  * ADR 0016: the public Worker reads only through `loadPublicDeck`, which selects only these
@@ -64,6 +80,12 @@ export const PublicDeckOut = z.object({
           modes: z.array(ReviewModeKey.meta(OPEN)).min(1),
           image: PublicImage.optional(),
           audio: z.object({ cardId: z.string() }).optional(),
+          /**
+           * What else the card holds, only on the cards a page lets a visitor turn over
+           * (`deckPageHand`), so the rest of the deck's text never rides along. Each field is in
+           * the edition's language.
+           */
+          details: PublicCardDetails.optional(),
         }),
       ),
     }),
@@ -246,71 +268,20 @@ export function stableHash(text: string): number {
   return h >>> 0;
 }
 
-/** The most cards a deck page lays out at the top. */
-export const DECK_PAGE_SPREAD = 5;
 /** How many cards a deck page's hand holds. */
 export const DECK_PAGE_HAND = 5;
 
 /**
- * The cards of a deck page's hand: distinct cards from anywhere in the deck, shuffled from the
- * deck's own revision rather than at random, so everyone who loads one revision is served the
- * same page and its ETag stays honest. The product voices these ahead of a first play. #759.
+ * The cards of a deck page's hand: the deck's first cards, in the order a learner meets them, so
+ * a visitor tries what they would learn first and every visitor to one revision gets the same
+ * cards. The product voices these ahead of a first play. #759.
  */
 export function deckPageHand<T>(
-  deck: { slug: string; revision: number },
+  _deck: { slug: string; revision: number },
   groups: readonly (readonly T[])[],
   size = DECK_PAGE_HAND,
 ): T[] {
-  const cards = groups.flat();
-  let seed = stableHash(`${deck.slug}:${deck.revision}:stack`);
-  for (let i = cards.length - 1; i > 0; i--) {
-    seed = (seed * 1103515245 + 12345) >>> 0;
-    const j = seed % (i + 1);
-    [cards[i], cards[j]] = [cards[j] as T, cards[i] as T];
-  }
-  return cards.slice(0, size);
-}
-
-/**
- * The cards laid out at the top of a deck page, in deck order: one from each of sections spread
- * evenly through the deck, preferring cards short enough to read at a glance. A deck with fewer
- * sections than places gives more than one card from a section. The choice changes only with
- * the revision. The product voices these ahead of a first play. #759.
- */
-export function deckPageSpread<T extends { term: string; meaning: string }>(
-  deck: { slug: string; revision: number },
-  groups: readonly (readonly T[])[],
-  size = DECK_PAGE_SPREAD,
-): T[] {
-  const count = Math.min(
-    size,
-    groups.reduce((sum, cards) => sum + cards.length, 0),
-  );
-  if (count === 0) return [];
-  const perGroup = groups.map(() => 0);
-  if (groups.length >= count) {
-    for (let i = 0; i < count; i++) {
-      const at = count === 1 ? 0 : Math.round((i * (groups.length - 1)) / (count - 1));
-      perGroup[at] = 1;
-    }
-  } else {
-    for (let placed = 0; placed < count; ) {
-      groups.forEach((cards, at) => {
-        if (placed < count && (perGroup[at] ?? 0) < cards.length) {
-          perGroup[at] = (perGroup[at] ?? 0) + 1;
-          placed++;
-        }
-      });
-    }
-  }
-  return groups.flatMap((cards, at) => {
-    const take = perGroup[at] ?? 0;
-    if (take === 0) return [];
-    const glanceable = cards.filter((card) => card.term.length <= 20 && card.meaning.length <= 36);
-    const from = glanceable.length >= take ? glanceable : cards;
-    const start = stableHash(`${deck.slug}:${deck.revision}:${at}`) % from.length;
-    return Array.from({ length: take }, (_, k) => from[(start + k) % from.length] as T);
-  });
+  return groups.flat().slice(0, size);
 }
 
 /**

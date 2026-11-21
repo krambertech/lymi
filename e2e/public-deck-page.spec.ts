@@ -99,64 +99,64 @@ test("anyone can read a published deck's page, see its sections and cards, and t
     await page.goto(`${publicSite}${pagePath}`);
     await expect(page.getByRole("heading", { level: 1, name: "Evening Estonian" })).toBeVisible();
     await expect(page.getByText("By Lymi", { exact: true })).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: "Add to Lymi", exact: true }).first(),
-    ).toHaveAttribute("href", addUrl);
+    const hero = page.locator("header");
+    await expect(hero.getByRole("link", { name: "Add free deck" })).toHaveAttribute("href", addUrl);
+    await expect(hero.getByRole("link", { name: "Add free deck" })).toHaveAttribute(
+      "data-add",
+      "hero",
+    );
+    // The first screen shows the deck's first cards whole, as a turned card shows them.
+    const fan = page.getByRole("list", { name: "Cards from this deck" });
+    await expect(fan.getByRole("listitem")).toHaveCount(3);
+    await expect(fan).toContainText("tere päevast");
+    await expect(fan).toContainText("good afternoon");
     await expect(page.getByRole("heading", { name: "How it works" })).toBeVisible();
+    await expect(page.getByRole("heading", { name: "More than flipping cards" })).toBeVisible();
   });
 
-  await test.step("the sections read in order, and every card opens in its own view", async () => {
-    const sections = page.getByRole("region", { name: "What’s inside" });
-    const rows = sections.getByRole("listitem");
-    await expect(rows).toHaveCount(2);
-    await expect(rows.nth(0)).toContainText("Greetings");
-    await expect(rows.nth(0)).toContainText("3 cards");
-    await expect(rows.nth(0)).toContainText("Start here");
-    await expect(rows.nth(1)).toContainText("In the café");
-    await expect(rows.nth(1)).toContainText("2 cards");
-    await expect(sections.getByText("one coffee, please", { exact: true })).toBeHidden();
-
-    await sections.getByRole("link", { name: "See all 5 cards" }).click();
-    const view = page.getByRole("dialog", { name: "All 5 cards" });
-    await expect(view).toBeVisible();
-    await expect(page).toHaveURL(/#cards$/);
-    await view.getByRole("link", { name: /In the café/ }).click();
-    await expect(view.getByText("one coffee, please", { exact: true })).toBeInViewport();
+  await test.step("every card is on the page, a section at a time", async () => {
+    const inside = page.getByRole("region", { name: "What’s inside" });
+    const sections = inside.locator("details");
+    await expect(sections).toHaveCount(2);
+    await expect(sections.nth(0)).toContainText("Greetings");
+    await expect(sections.nth(0)).toContainText("3 cards");
+    await expect(sections.nth(0)).toContainText("Start here");
+    await expect(sections.nth(1)).toContainText("In the café");
+    await expect(sections.nth(1)).toContainText("2 cards");
+    // A short first section starts open; the next waits for a press.
+    await expect(inside.getByText("good night", { exact: true })).toBeVisible();
+    await expect(inside.getByText("one coffee, please", { exact: true })).toBeHidden();
+    await sections.nth(1).locator("summary").click();
+    await expect(inside.getByText("one coffee, please", { exact: true })).toBeVisible();
     // A card with no meaning keeps its place and says so.
-    await expect(view.getByRole("term").filter({ hasText: "kohupiim" })).toBeVisible();
-    await expect(view.getByText("No meaning yet")).toBeAttached();
+    await expect(inside.getByRole("term").filter({ hasText: "kohupiim" })).toBeVisible();
+    await expect(inside.getByText("No meaning yet")).toBeAttached();
     // A card's picture is public with the deck, addressed by the card rather than an approval.
-    const picture = view.getByRole("img", { name: "A lamp lit in a dark window" });
+    const picture = inside.getByRole("img", { name: "A lamp lit in a dark window" });
     await expect(picture).toHaveAttribute(
       "src",
       `${e2eProductUrl}/public/media/card/e2e-card-3/image`,
     );
-    await page.keyboard.press("Escape");
-    await expect(view).toBeHidden();
-    await expect(page).not.toHaveURL(/#cards$/);
-    await expect(sections.getByRole("link", { name: "See all 5 cards" })).toBeFocused();
-  });
-
-  await test.step("a link to #cards opens the view, and Back closes it", async () => {
-    await page.goto(`${publicSite}${pagePath}`);
-    await page.goto(`${publicSite}${pagePath}#cards`);
-    const view = page.getByRole("dialog", { name: "All 5 cards" });
-    await expect(view).toBeVisible();
-    await page.goBack();
-    await expect(view).toBeHidden();
   });
 
   await test.step("a visitor turns over each card once, then is asked to keep going in Lymi", async () => {
     const meanings = ["good afternoon", "good evening", "good night", "one coffee, please"];
-    const how = page.locator("#how");
-    await how.scrollIntoViewIfNeeded();
-    const stack = how.getByRole("region", { name: "Turn a few cards over" });
+    // The cards load their script as they come into view, as a visitor scrolls to them.
+    await page.locator("#try").scrollIntoViewIfNeeded();
+    await expect(page.locator("#try astro-island")).not.toHaveAttribute("ssr", "");
+    const stack = page.locator("#try").getByRole("region", { name: "Turn a few cards over" });
+    const backs: string[] = [];
     for (let turned = 0; turned < meanings.length; turned++) {
       await stack.getByRole("button", { name: "Turn it over" }).click();
       const shown = await stack.locator(".hand-card[data-place='front'] .hand-back").innerText();
       expect(meanings.some((meaning) => shown.includes(meaning))).toBe(true);
+      backs.push(shown);
       await stack.getByRole("button", { name: "Next card" }).click();
     }
+    // A turned card shows what review shows: its example and its notes.
+    const afternoon = backs.find((back) => back.includes("good afternoon"));
+    expect(afternoon).toContain("Tere päevast, kuidas läheb?");
+    expect(afternoon).toContain("Said from noon until evening.");
     await expect(stack.getByText("Keep going in Lymi", { exact: true })).toBeVisible();
     await expect(stack.getByText("One more card is waiting", { exact: false })).toBeVisible();
     await expect(stack.getByRole("link", { name: "Add to Lymi" })).toHaveAttribute("href", addUrl);
@@ -248,15 +248,16 @@ test("without JavaScript the page still shows the deck and its sections", async 
   const page = await context.newPage();
   await page.goto(`${publicSite}${pagePath}`);
   await expect(page.getByRole("heading", { level: 1, name: "Evening Estonian" })).toBeVisible();
-  await expect(page.getByRole("list", { name: "Cards from this deck" })).toContainText(
-    "tere päevast",
-  );
-  // The hand is dealt by the server, so its cards and the way into every card need no script.
-  await expect(page.locator("#how .hand-card")).toHaveCount(4);
-  await expect(page.getByRole("link", { name: "See all 5 cards" })).toHaveAttribute(
-    "href",
-    "#cards",
-  );
+  // The hand is dealt by the server, and every card is in the page's own HTML.
+  await expect(page.locator("#try .hand-card")).toHaveCount(4);
+  await expect(page.locator("#try")).toContainText("tere päevast");
+  await expect(
+    page.locator("header").getByRole("link", { name: "See all 5 cards" }),
+  ).toHaveAttribute("href", "#inside");
+  await page.locator("#inside details").nth(1).locator("summary").click();
+  await expect(
+    page.locator("#inside").getByText("one coffee, please", { exact: true }),
+  ).toBeVisible();
   await expect(page.getByRole("region", { name: "What’s inside" })).toContainText("In the café");
   await context.close();
 });
@@ -291,13 +292,14 @@ test("the card list stops the previous pronunciation and reports playback failur
   });
 
   await page.goto(`${publicSite}${pagePath}`);
-  await page.getByRole("link", { name: "See all 5 cards" }).click();
-  const view = page.getByRole("dialog", { name: "All 5 cards" });
+  const view = page.getByRole("region", { name: "What’s inside" });
+  // The second word with a recording is in the café, which opens on a press.
+  await view.locator("details").nth(1).locator("summary").click();
   const play = view.getByRole("button", { name: "Play pronunciation" });
 
   await play.first().click();
   await expect(view.getByRole("button", { name: "Stop pronunciation" })).toBeVisible();
-  await play.click();
+  await play.first().click();
   await expect(view.getByRole("button", { name: "Stop pronunciation" })).toBeVisible();
   await expect.poll(() => events.length).toBe(3);
   expect(events).toEqual([

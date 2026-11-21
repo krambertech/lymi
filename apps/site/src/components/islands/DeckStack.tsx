@@ -1,5 +1,6 @@
 import { Plural, Trans } from "@lingui/react/macro";
-import { type CSSProperties, useMemo } from "react";
+import { captureAnalytics } from "@lymi/client/analytics";
+import { type CSSProperties, useCallback, useMemo, useRef } from "react";
 import { deckHandCards } from "../../lib/deck-hand";
 import type { DeckCard } from "../../lib/deck-page";
 import { buttonClass } from "../Button";
@@ -10,6 +11,8 @@ import type { HandCard } from "../landing/hand-cards";
 
 interface Props {
   locale: string;
+  /** Sent with the first turn, so a visitor who tried the cards can be told from one who did not. */
+  slug: string;
   cards: DeckCard[];
   termLanguage: string | null;
   total: number;
@@ -33,21 +36,41 @@ const EMBERS = [
 const EMBERS_AT = 460;
 
 /** The landing page's hand of cards, dealt once from a few of this deck's cards. Nothing is saved. */
-export default function DeckStack({ locale, cards, termLanguage, total, addUrl }: Props) {
+export default function DeckStack({ locale, slug, cards, termLanguage, total, addUrl }: Props) {
   const hand = useMemo(() => deckHandCards(cards, termLanguage), [cards, termLanguage]);
+  const turned = useRef(false);
+  // Once a page load: whether visitors try the cards, and with add_to_lymi_clicked whether trying helps.
+  const onTurn = useCallback(() => {
+    if (turned.current) return;
+    turned.current = true;
+    captureAnalytics("public_deck_card_turned", { deck_slug: slug });
+  }, [slug]);
   return (
     <Localized locale={locale}>
-      <Hand hand={hand} total={total} addUrl={addUrl} />
+      <Hand hand={hand} total={total} addUrl={addUrl} onTurn={onTurn} />
     </Localized>
   );
 }
 
-function Hand({ hand, total, addUrl }: { hand: HandCard[]; total: number; addUrl: string }) {
+function Hand({
+  hand,
+  total,
+  addUrl,
+  onTurn,
+}: {
+  hand: HandCard[];
+  total: number;
+  addUrl: string;
+  onTurn: () => void;
+}) {
   // What the deck still holds after this hand, which for a deck of five or fewer is nothing.
   const left = Math.max(total - hand.length, 0);
   return (
     <div className="deck-hand">
       <HandOfCards
+        // A section of its own, centred: the cards behind square up under the front one.
+        layout="stack"
+        onTurn={onTurn}
         cards={hand}
         dealt={hand}
         finale={(again) => (

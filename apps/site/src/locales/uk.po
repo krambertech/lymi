@@ -73,6 +73,10 @@ msgstr "«Мати»"
 msgid "“To like” and feelings"
 msgstr "«Подобатися» і почуття"
 
+#. placeholder {0}: deck.cardCount
+msgid "{0, plural, =1 {See the card} other {See all # cards}}"
+msgstr "{0, plural, =1 {Переглянути картку} one {Переглянути всі # картку} few {Переглянути всі # картки} many {Переглянути всі # карток} other {Переглянути всі # картки}}"
+
 #. placeholder {0}: 6
 #. placeholder {0}: deck.cardCount
 #. placeholder {0}: deck.cards
@@ -82,10 +86,6 @@ msgstr "{0, plural, one {# картка} few {# картки} many {# карто
 #. placeholder {0}: shelf.decks.length
 msgid "{0, plural, one {# deck} other {# decks}}"
 msgstr "{0, plural, one {# колода} few {# колоди} many {# колод} other {# колоди}}"
-
-#. placeholder {0}: rest.length
-msgid "{0, plural, one {# more section} other {# more sections}}"
-msgstr "{0, plural, one {Ще # розділ} few {Ще # розділи} many {Ще # розділів} other {Ще # розділу}}"
 
 #. placeholder {0}: 3
 msgid "{0, plural, one {# person} other {# people}}"
@@ -107,10 +107,6 @@ msgstr "{0, plural, one {# хибна спроба} few {# хибні спроб
 #. placeholder {0}: 3
 msgid "{0, plural, one {Add # card} other {Add # cards}}"
 msgstr "{0, plural, one {Додати # картку} few {Додати # картки} many {Додати # карток} other {Додати # картки}}"
-
-#. placeholder {0}: step.cards.length - shownCards.length
-msgid "{0, plural, one {One more card in this section, in Lymi.} other {# more cards in this section, in Lymi.}}"
-msgstr "{0, plural, one {Ще одна картка цього розділу — у Lymi.} few {Ще # картки цього розділу — у Lymi.} many {Ще # карток цього розділу — у Lymi.} other {Ще # картки цього розділу — у Lymi.}}"
 
 #. placeholder {0}: 2
 msgid "{0, plural, one {Review # due} other {Review # due}}"
@@ -162,12 +158,6 @@ msgstr "{0}, твоя відповідь"
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Додано # картку} few {Додано # картки} many {Додано # карток} other {Додано # картки}}"
-
-msgid "{cardCount, plural, one {See the card} other {See all # cards}}"
-msgstr "{cardCount, plural, one {Переглянути картку} few {Переглянути всі # картки} many {Переглянути всі # карток} other {Переглянути всі # картки}}"
-
-msgid "{cardCount, plural, one {The one card} other {All # cards}}"
-msgstr "{cardCount, plural, one {Єдина картка} few {Усі # картки} many {Усі # карток} other {Усі # картки}}"
 
 msgid "{cards, plural, one {# card} other {# cards}}"
 msgstr "{cards, plural, one {# картка} few {# картки} many {# карток} other {# картки}}"
@@ -223,6 +213,9 @@ msgstr "Колоди: {label}"
 
 msgid "{language} · {name} · {count, plural, one {# free flashcard} other {# free flashcards}}"
 msgstr "{language} · {name} · {count, plural, one {# безкоштовна картка} few {# безкоштовні картки} many {# безкоштовних карток} other {# безкоштовної картки}}"
+
+msgid "{language}, level by level"
+msgstr "{language}: рівень за рівнем"
 
 msgid "{learners, plural, one {# learner} other {# learners}}"
 msgstr "{learners, plural, one {# учень} few {# учні} many {# учнів} other {# учня}}"
@@ -293,6 +286,18 @@ msgstr "{right} з {yours} відповідей правильні з першо
 
 msgid "{seconds} s"
 msgstr "{seconds} с"
+
+msgid "{sections, plural, one {# section} other {# sections}}"
+msgstr "{sections, plural, one {# розділ} few {# розділи} many {# розділів} other {# розділу}}"
+
+msgid "{size} Every section is open, so any card can come up in review."
+msgstr "{size} Усі розділи відкриті, тож будь-яка картка може з’явитися в повторенні."
+
+msgid "{size} You start with <0>{first}</0>, and choose when to start the next once you know most of it."
+msgstr "{size} Ти починаєш з <0>{first}</0> і вирішуєш, коли братися за наступний, щойно знатимеш більшу частину."
+
+msgid "{size} You start with <0>{first}</0>, and the next section opens as you learn the one before it."
+msgstr "{size} Ти починаєш з <0>{first}</0>, а наступний розділ відкривається, коли вивчиш попередній."
 
 msgid "{them} spoke."
 msgstr "{them} говорить."
@@ -1805,6 +1810,9 @@ msgstr "Додай слово з сьогоднішнього уроку. AI н�
 msgid "Add deck"
 msgstr "Додати колоду"
 
+msgid "Add free deck"
+msgstr "Додати безкоштовну колоду"
+
 msgid "Add from any app"
 msgstr "Додавай з будь-якої програми"
 
@@ -2809,9 +2817,6 @@ msgstr "Повернеться через 9 днів."
 
 msgid "Back online"
 msgstr "Знову в мережі"
-
-msgid "Back to {name}"
-msgstr "Назад до {name}"
 
 msgid "Back to Lymi"
 msgstr "На головну Lymi"
@@ -4593,8 +4598,8 @@ msgstr "Кожна *людина* інша."
 msgid "Every card an assistant adds or changes shows up in Activity, with the app that sent it."
 msgstr "Кожна картка, яку асистент додає чи змінює, з’являється в Активності разом із застосунком, що її надіслав."
 
-msgid "Every card in the deck"
-msgstr "Усі картки колоди"
+msgid "Every card is open from the start, so any of them can come up in review."
+msgstr "Усі картки відкриті від початку, тож будь-яка з них може з’явитися в повторенні."
 
 msgid "Every card is read aloud by a native Estonian AI voice, so õ, ü and the long vowels sound the way they should. Tap a word to hear it. If your deck has its own recordings, those play instead."
 msgstr "Кожну картку читає вголос AI-голос носія естонської, тож õ, ü і довгі голосні звучать так, як треба. Торкнися слова, щоб почути. Якщо в колоді є власні записи, звучать вони."
@@ -4661,9 +4666,6 @@ msgstr "Усі питання громадянознавчого тесту 2025
 
 msgid "Every script"
 msgstr "Будь-яке письмо"
-
-msgid "Every section is open, so any card can come up in review."
-msgstr "Усі розділи відкриті, тож будь-яка картка може з’явитися в повторенні."
 
 msgid "Every sign by its picture and German name."
 msgstr "Кожен знак за зображенням і німецькою назвою."
@@ -7161,9 +7163,6 @@ msgstr "у будинку"
 msgid "In the house: -s, and -des for more than one."
 msgstr "У будинку: -s, а для кількох -des."
 
-msgid "In the order you learn them, one section at a time."
-msgstr "У тому порядку, в якому ти їх вчиш: розділ за розділом."
-
 msgid "In the past"
 msgstr "У минулому"
 
@@ -8177,6 +8176,9 @@ msgstr "Lymi питає, що означає слово, і як його ска
 msgid "Lymi changelog"
 msgstr "Що нового в Lymi"
 
+msgid "Lymi decides when each card comes back, keeps your daily goal, and works on your phone and offline."
+msgstr "Lymi вирішує, коли кожна картка повертається, стежить за щоденною метою й працює на телефоні та без мережі."
+
 msgid "Lymi for {name}"
 msgstr "Lymi для {name}"
 
@@ -8228,8 +8230,8 @@ msgstr "Lymi на бічній панелі ChatGPT."
 msgid "Lymi is a flashcard app with spaced repetition. Add a word or a term, AI fills in the meaning, and Lymi decides when you see it again. Free to use."
 msgstr "Lymi — застосунок із флеш-картками та інтервальними повтореннями. Додай слово чи термін, AI впише значення, а Lymi вирішить, коли показати картку знову. Безкоштовно."
 
-msgid "Lymi is a free flashcard app with spaced repetition."
-msgstr "Lymi — безкоштовний застосунок із флеш-картками та інтервальними повтореннями."
+msgid "Lymi is a free flashcard app. Sign in with Google or an email address, no payment details."
+msgstr "Lymi — безкоштовний застосунок із флешкартками. Увійди через Google чи електронну пошту, без платіжних даних."
 
 msgid "Lymi is free to use, and your first card takes a minute."
 msgstr "Lymi безкоштовний, а перша картка займе хвилину."
@@ -8559,6 +8561,9 @@ msgstr "Значення → слово"
 msgid "Meaning, example, hint, picture and audio"
 msgstr "Значення, приклад, підказка, зображення й аудіо"
 
+msgid "Meanings in {meanings}"
+msgstr "Значення: {meanings}"
+
 msgid "Meanings in your language"
 msgstr "Значення твоєю мовою"
 
@@ -8693,6 +8698,9 @@ msgstr "Понад 50 000 готових колод. Бібліотека Lymi �
 
 msgid "More than a translation."
 msgstr "Більше, ніж переклад."
+
+msgid "More than flipping cards"
+msgstr "Більше, ніж перегортання карток"
 
 msgid "More than one"
 msgstr "Кілька людей"
@@ -8845,8 +8853,8 @@ msgstr "Na⁺ − (Cl⁻ + HCO₃⁻); підвищена при деяких м
 msgid "name"
 msgstr "ім’я"
 
-msgid "Name what the picture shows before you look. Try it on the cards here: they’re from all over the deck."
-msgstr "Спершу назви, що на зображенні, а тоді дивись. Спробуй на цих картках: вони з усієї колоди."
+msgid "Name what the picture shows before you look, then turn the card over."
+msgstr "Спершу назви, що на зображенні, а тоді переверни картку."
 
 msgid "Named after William of Ockham, a 14th-century friar."
 msgstr "Названа на честь Вільяма Оккама, монаха XIV століття."
@@ -10038,6 +10046,9 @@ msgstr "Прослухай кожне число двічі, перш ніж п�
 msgid "Play each sentence twice before you type."
 msgstr "Прослухай кожне речення двічі, перш ніж писати."
 
+msgid "Play example"
+msgstr "Відтворити приклад"
+
 msgid "Play pronunciation"
 msgstr "Послухати вимову"
 
@@ -10306,9 +10317,8 @@ msgstr "Публічний, через два роки — MIT"
 msgid "Publish a read-only copy, with Pro"
 msgstr "Публікація копії лише для перегляду, з Pro"
 
-#. placeholder {0}: date(deck.publishedAt)
-msgid "Published {0}"
-msgstr "Опубліковано {0}"
+msgid "Published {published}"
+msgstr "Опубліковано {published}"
 
 msgid "Püha, holy, and päev, day."
 msgstr "Püha — святий, päev — день."
@@ -10520,8 +10530,8 @@ msgstr "Read Japanese Kana охоплює хірагану й катакану, 
 msgid "Read opening hours: <0>E–R 9–18</0> is Monday to Friday, 9:00 to 18:00, and <1>suletud</1> is closed."
 msgstr "Читай години роботи: <0>E–R 9–18</0> — з понеділка до п’ятниці, з 9:00 до 18:00, а <1>suletud</1> — зачинено."
 
-msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
-msgstr "Прочитай значення й спершу згадай термін, а тоді дивись. Спробуй на цих картках: вони з усієї колоди."
+msgid "Read the meaning and recall the term before you look, then turn the card over."
+msgstr "Прочитай значення й згадай термін, а тоді переверни картку."
 
 msgid "Read the sign on a café in Tallinn, then answer."
 msgstr "Прочитай табличку на дверях кав’ярні в Таллінні й дай відповіді."
@@ -10619,6 +10629,9 @@ msgstr "Схожі колоди"
 
 msgid "Relative clauses"
 msgstr "Підрядні речення з «який»"
+
+msgid "Remember a card and Lymi waits longer before showing it again. Forget it, and it comes back soon. That’s spaced repetition: less reviewing, longer remembering."
+msgstr "Пам’ятаєш картку — Lymi чекає довше, перш ніж показати її знову. Забута картка скоро повернеться. Це інтервальне повторення: менше повторювати, довше пам’ятати."
 
 msgid "Remembered or Forgot"
 msgstr "«Пам’ятаю» або «Не пам’ятаю»"
@@ -10968,9 +10981,6 @@ msgstr "друга форма"
 
 msgid "Section"
 msgstr "Розділ"
-
-msgid "Section {position}:"
-msgstr "Розділ {position}:"
 
 msgid "Sections"
 msgstr "Розділи"
@@ -11586,6 +11596,9 @@ msgstr "Почни звідси"
 
 msgid "Start learning"
 msgstr "Почни вчитися"
+
+msgid "Start learning <0>{name}</0>"
+msgstr "Почни вчити <0>{name}</0>"
 
 msgid "Start lesson 1"
 msgstr "Почати урок 1"
@@ -14239,7 +14252,7 @@ msgid "Try"
 msgstr "Спробуй"
 
 msgid "Try a few cards"
-msgstr "Спробувати кілька карток"
+msgstr "Спробуй кілька карток"
 
 msgid "Try a question"
 msgstr "Спробуй питання"
@@ -14250,11 +14263,11 @@ msgstr "Спробуй слово, яке було б на картці, або 
 msgid "Try again"
 msgstr "Спробувати ще раз"
 
-msgid "Try to remember the answer before you look. Try it on the cards here: they’re from all over the deck."
-msgstr "Спершу згадай відповідь, а тоді дивись. Спробуй на цих картках: вони з усієї колоди."
+msgid "Try to remember the answer before you look, then turn the card over."
+msgstr "Спершу згадай відповідь, а тоді переверни картку."
 
-msgid "Try to remember the meaning before you look. Try it on the cards here: they’re from all over the deck."
-msgstr "Спершу згадай значення, а тоді дивись. Спробуй на цих картках: вони з усієї колоди."
+msgid "Try to remember the meaning before you look, then turn the card over."
+msgstr "Спершу згадай значення, а тоді переверни картку."
 
 msgid "Tuesday"
 msgstr "Вівторок"
@@ -15947,12 +15960,6 @@ msgstr "Ти говориш естонською."
 msgid "You speak very well."
 msgstr "Ви дуже добре говорите."
 
-msgid "You start with <0>{first}</0>, and the next section opens as you learn the one before it."
-msgstr "Починаєш із розділу <0>{first}</0>, а наступний відкривається, щойно вивчиш попередній."
-
-msgid "You start with <0>{first}</0>. When you know most of it, you choose when to start the next."
-msgstr "Починаєш із розділу <0>{first}</0>. Коли засвоїш більшу його частину, ти вирішуєш, коли почати наступний."
-
 msgid "You study for one test, then move on"
 msgstr "Ти готуєшся до одного тесту й ідеш далі"
 
@@ -16054,6 +16061,9 @@ msgstr "Ти в кав’ярні, і заходить Марі. Вона гов
 
 msgid "You’re doing great."
 msgstr "Ти молодець."
+
+msgid "You’re here"
+msgstr "Ти тут"
 
 msgid "You’re in an Estonian class. Mari, the teacher, asks for the forms of four words; pick your answer."
 msgstr "Ти на уроці естонської. Учителька Марі просить назвати форми чотирьох слів — вибери відповідь."

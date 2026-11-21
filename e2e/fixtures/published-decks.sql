@@ -19,7 +19,7 @@ INSERT INTO sections (id, deck_id, name, position) VALUES
   ('e2e-section-greetings', 'e2e-deck-evening', 'Greetings', 0);
 
 INSERT INTO cards (id, user_id, deck_id, section_id, term, meaning, notes, example) VALUES
-  ('e2e-card-1', 'e2e-publisher', 'e2e-deck-evening', 'e2e-section-greetings', 'tere päevast', 'good afternoon', 'PRIVATE note', 'PRIVATE example'),
+  ('e2e-card-1', 'e2e-publisher', 'e2e-deck-evening', 'e2e-section-greetings', 'tere päevast', 'good afternoon', 'Said from noon until evening.', 'Tere päevast, kuidas läheb?'),
   ('e2e-card-2', 'e2e-publisher', 'e2e-deck-evening', 'e2e-section-cafe', 'üks kohv, palun', 'one coffee, please', NULL, NULL),
   ('e2e-card-3', 'e2e-publisher', 'e2e-deck-evening', 'e2e-section-greetings', 'head õhtut', 'good evening', NULL, NULL),
   ('e2e-card-4', 'e2e-publisher', 'e2e-deck-evening', 'e2e-section-greetings', 'head ööd', 'good night', NULL, NULL),
@@ -28,8 +28,9 @@ INSERT INTO cards (id, user_id, deck_id, section_id, term, meaning, notes, examp
 
 UPDATE cards SET audio_key = 'PRIVATE-e2e-audio-1' WHERE id = 'e2e-card-1';
 UPDATE cards SET audio_key = 'PRIVATE-e2e-audio-2' WHERE id = 'e2e-card-2';
-INSERT INTO cards (id, user_id, deck_id, section_id, term) VALUES
-  ('e2e-card-no-meaning', 'e2e-publisher', 'e2e-deck-evening', 'e2e-section-cafe', 'kohupiim');
+-- No meaning keeps it out of the hand, the only cards whose notes and example are public.
+INSERT INTO cards (id, user_id, deck_id, section_id, term, notes, example) VALUES
+  ('e2e-card-no-meaning', 'e2e-publisher', 'e2e-deck-evening', 'e2e-section-cafe', 'kohupiim', 'PRIVATE note', 'PRIVATE example');
 
 INSERT INTO cards (id, user_id, deck_id, section_id, term, meaning) VALUES
   ('e2e-card-signs-1', 'e2e-publisher', 'e2e-deck-signs', NULL, 'peatee', 'priority road'),

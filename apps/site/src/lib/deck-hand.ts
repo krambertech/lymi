@@ -15,6 +15,15 @@ export function deckHandCards(cards: DeckCard[], termLanguage: string | null): H
     term: card.term,
     meaning: card.meaning,
     mode: card.mode,
+    ...(card.details?.pronunciation ? { pronunciation: card.details.pronunciation } : {}),
+    ...(card.details?.example ? { example: card.details.example } : {}),
+    ...(card.details?.exampleTranslation
+      ? { exampleTranslation: card.details.exampleTranslation }
+      : {}),
+    ...(card.noteBlocks ? { noteBlocks: card.noteBlocks } : {}),
+    ...(card.details?.exampleAudio
+      ? { exampleAudio: publicMediaUrl(card.details.exampleAudio.cardId, "example") }
+      : {}),
     audio: card.audio ? publicMediaUrl(card.audio.cardId, "audio") : null,
     image: card.image
       ? {

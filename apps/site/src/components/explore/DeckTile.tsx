@@ -36,7 +36,6 @@ export function DeckTile({
             ))}
             <article className="deck-tray-card">
               <PreviewFace
-                kind="deck-tray"
                 {...deck.card}
                 language={deck.language}
                 meaningLanguage={deck.meaningLanguage}

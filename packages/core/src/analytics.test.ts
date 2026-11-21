@@ -95,6 +95,20 @@ describe("analytics privacy contract", () => {
       eventProperties("site_link_followed", { place: "footer", target: "/explore?q=word" }),
     ).toBeNull();
     expect(
+      eventProperties(
+        "add_to_lymi_clicked",
+        { deck_slug: "polish-a1", place: "sticky" },
+        "browser",
+      ),
+    ).toEqual({ deck_slug: "polish-a1", place: "sticky" });
+    expect(
+      eventProperties("add_to_lymi_clicked", { deck_slug: "polish-a1", place: "footer" }),
+    ).toBeNull();
+    expect(
+      eventProperties("public_deck_card_turned", { deck_slug: "periodic-table" }, "browser"),
+    ).toEqual({ deck_slug: "periodic-table" });
+    expect(eventProperties("public_deck_card_turned", { deck_slug: "Periodic Table" })).toBeNull();
+    expect(
       eventProperties("site_showcase_steered", { action: "replayed", item: "routine" }, "browser"),
     ).toEqual({ action: "replayed", item: "routine" });
     expect(

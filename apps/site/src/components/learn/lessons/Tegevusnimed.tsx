@@ -1,7 +1,7 @@
 import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useMemo } from "react";
 import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
@@ -14,7 +14,6 @@ import {
   wantOrMust,
 } from "../../../lib/learn/clips";
 import { formText } from "../../../lib/learn/forms";
-import { shuffle } from "../../../lib/learn/quiz";
 import { Keys, ListenRows, Panel } from "../Explore";
 import { type GapItem, GapPassage } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
@@ -413,12 +412,6 @@ export function TegevusnimedLesson() {
   const wordOrder = at("Täna lähen ma");
   const present = lessonBySlug("olevik")?.n;
 
-  // The server renders the message's options as written; the browser shuffles them once.
-  const [gaps, setGaps] = useState<GapItem[]>(MESSAGE_ITEMS);
-  useEffect(() => {
-    setGaps(MESSAGE_ITEMS.map((gap) => ({ ...gap, options: shuffle(gap.options ?? []) })));
-  }, []);
-
   const rows = useMemo(() => orderRows(i18n), [i18n]);
 
   const bins: SortBin[] = [
@@ -687,7 +680,7 @@ export function TegevusnimedLesson() {
               <GapPassage
                 id="mari-message"
                 title={<Trans>Fill the gaps</Trans>}
-                gaps={gaps}
+                gaps={MESSAGE_ITEMS}
                 mode="pick"
                 clip="p-message"
               />

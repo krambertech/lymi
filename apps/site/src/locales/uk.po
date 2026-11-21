@@ -472,7 +472,7 @@ msgid "<0/> repeats the verb from the question, and any verb can answer this way
 msgstr "<0/> повторює дієслово з питання, і так можна відповісти з будь-яким дієсловом: <1>Kas sa loed? Ei loe.</1> Про заперечення розповідає урок {negation}."
 
 msgid "<0/> takes <1>-l</1>, as lesson {places} showed for names ending in <2>-maa</2>. So it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
-msgstr "<0/> вживається з <1>-l</1>, як урок {places} показав для назв на <2>-maa</2>. Тож у нього є й <3>-le</3> та <4>-lt</4>: <5/>, <6/>."
+msgstr "<0/> вживається з <1>-l</1>, як урок {places} показав для назв на <2>-maa</2>. Тож і <3>-le</3> та <4>-lt</4>: <5/>, <6/>."
 
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> Ти живеш у Таллінні. <1/> Ти живеш у Таллінні? Щоб спитати «так чи ні», постав <2/> перед реченням."
@@ -4264,9 +4264,6 @@ msgstr "Форми maja"
 msgid "four"
 msgstr "чотири"
 
-msgid "Four places, each in three forms"
-msgstr "Чотири місця, кожне в трьох формах"
-
 msgid "Four ways to ask"
 msgstr "Чотири способи питати"
 
@@ -6494,7 +6491,7 @@ msgid "Lesson {number}, coming soon"
 msgstr "Урок {number}, незабаром"
 
 msgid "Lesson {places} taught <0>-l</0> for on and at: <1/> Lesson {inner} paired <2>-s</2> with <3>-sse</3> and <4>-st</4>, for “where to” and “where from”. <5>-l</5> has a pair of its own: <6>-le</6> and <7>-lt</7>."
-msgstr "В уроці {places} було <0>-l</0> — «на»: <1/> Урок {inner} поставив поруч із <2>-s</2> закінчення <3>-sse</3> і <4>-st</4> — для «куди?» і «звідки?». У <5>-l</5> є своя пара: <6>-le</6> і <7>-lt</7>."
+msgstr "В уроці {places} було <0>-l</0> — «на»: <1/> В уроці {inner} у <2>-s</2> з’явилася пара: <3>-sse</3> і <4>-st</4> — для «куди?» і «звідки?». У <5>-l</5> є своя пара: <6>-le</6> і <7>-lt</7>."
 
 msgid "Lesson {previousNumber}"
 msgstr "Урок {previousNumber}"
@@ -9579,7 +9576,7 @@ msgid "So far every command speaks to one person, someone you’d call <0/>. To 
 msgstr "Досі кожен наказ звертався до однієї людини, з якою ти на «ти»: <0/>. До кількох людей або до однієї на «ви» наказ закінчується на <1>-ge</1> або <2>-ke</2>: <3/> <4/> Це той самий поділ, що між <5>sa</5> і <6/> в уроці {pronouns}."
 
 msgid "So one English “to” can be <0>-le</0> or a short form, even in one sentence. Tap a sentence to hear it."
-msgstr "Тут підкаже українська: де «на роботу», там <0>-le</0>, а де «до школи» — коротка форма. Торкнися речення, щоб його почути."
+msgstr "Тут підкаже українська: де «на» (на роботу), там <0>-le</0>; де «до» (до школи, до лікарні), там -sse або коротка форма. Торкнися речення, щоб його почути."
 
 msgid "So-so"
 msgstr "Так собі"
@@ -11206,6 +11203,9 @@ msgstr "три коти"
 
 msgid "Three keep slipping: <0>aufhören, Schnapsidee, die Gewerkschaft</0>"
 msgstr "Три слова не тримаються: <0>aufhören, Schnapsidee, die Gewerkschaft</0>"
+
+msgid "Three places, each in three forms"
+msgstr "Три місця, кожне в трьох формах"
 
 msgid "three quarters"
 msgstr "три чверті"

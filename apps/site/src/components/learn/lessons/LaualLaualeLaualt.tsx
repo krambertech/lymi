@@ -86,6 +86,9 @@ const MEANS: Record<Id, MessageDescriptor> = {
   "p-kusin-isalt": msg`I’ll ask Dad.`,
 };
 
+/** The places in the table of forms: Saaremaa’s long forms don’t fit a phone’s column. */
+const TABLE_PLACES = OUTER_PLACES.filter((place) => place.place !== "Saaremaa");
+
 /** The ending each question puts on a place, lit in its forms. */
 const ENDING: Record<Direction, string> = { kus: "l", kuhu: "le", kust: "lt" };
 
@@ -344,7 +347,7 @@ export function LaualLaualeLaualtLesson() {
     label: means[direction],
     ask: `${direction}?`,
     tip: tips[direction],
-    cells: OUTER_PLACES.map((place) => {
+    cells: TABLE_PLACES.map((place) => {
       const form = place[direction];
       const ending = ENDING[direction];
       return {
@@ -608,8 +611,8 @@ export function LaualLaualeLaualtLesson() {
               </Prose>
               <Panel>
                 <Paradigm
-                  label={t`Four places, each in three forms`}
-                  columns={OUTER_PLACES.map((place) => columns[place.place])}
+                  label={t`Three places, each in three forms`}
+                  columns={TABLE_PLACES.map((place) => columns[place.place])}
                   rows={paradigm}
                   empty={{
                     title: (

@@ -472,7 +472,7 @@ msgid "<0/> repeats the verb from the question, and any verb can answer this way
 msgstr "<0/> повторяет глагол из вопроса, и так можно ответить с любым глаголом: <1>Kas sa loed? Ei loe.</1> Об отрицании рассказывает урок {negation}."
 
 msgid "<0/> takes <1>-l</1>, as lesson {places} showed for names ending in <2>-maa</2>. So it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
-msgstr "<0/> употребляется с <1>-l</1>, как урок {places} показал для названий на <2>-maa</2>. Значит, у него есть и <3>-le</3> с <4>-lt</4>: <5/>, <6/>."
+msgstr "<0/> употребляется с <1>-l</1>, как урок {places} показал для названий на <2>-maa</2>. Значит, и <3>-le</3> с <4>-lt</4>: <5/>, <6/>."
 
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> Ты живёшь в Таллине. <1/> Ты живёшь в Таллине? Чтобы спросить «да или нет», поставь <2/> перед предложением."
@@ -4264,9 +4264,6 @@ msgstr "Формы maja"
 msgid "four"
 msgstr "четыре"
 
-msgid "Four places, each in three forms"
-msgstr "Четыре места, каждое в трёх формах"
-
 msgid "Four ways to ask"
 msgstr "Четыре способа спрашивать"
 
@@ -6494,7 +6491,7 @@ msgid "Lesson {number}, coming soon"
 msgstr "Урок {number}, скоро"
 
 msgid "Lesson {places} taught <0>-l</0> for on and at: <1/> Lesson {inner} paired <2>-s</2> with <3>-sse</3> and <4>-st</4>, for “where to” and “where from”. <5>-l</5> has a pair of its own: <6>-le</6> and <7>-lt</7>."
-msgstr "В уроке {places} было <0>-l</0> — «на»: <1/> Урок {inner} поставил рядом с <2>-s</2> окончания <3>-sse</3> и <4>-st</4> — для «куда?» и «откуда?». У <5>-l</5> есть своя пара: <6>-le</6> и <7>-lt</7>."
+msgstr "В уроке {places} было <0>-l</0> — «на»: <1/> В уроке {inner} у <2>-s</2> появилась пара: <3>-sse</3> и <4>-st</4> — для «куда?» и «откуда?». У <5>-l</5> есть своя пара: <6>-le</6> и <7>-lt</7>."
 
 msgid "Lesson {previousNumber}"
 msgstr "Урок {previousNumber}"
@@ -9579,7 +9576,7 @@ msgid "So far every command speaks to one person, someone you’d call <0/>. To 
 msgstr "До сих пор каждая команда обращалась к одному человеку, с которым ты на «ты»: <0/>. Нескольким людям или одному на «вы» команда заканчивается на <1>-ge</1> или <2>-ke</2>: <3/> <4/> Это то же деление, что между <5>sa</5> и <6/> в уроке {pronouns}."
 
 msgid "So one English “to” can be <0>-le</0> or a short form, even in one sentence. Tap a sentence to hear it."
-msgstr "Здесь подскажет русский: где «на работу», там <0>-le</0>, а где «в школу» — короткая форма; так же расходятся «с рынка» и «из магазина». Нажми на предложение, чтобы его услышать."
+msgstr "Здесь подскажет русский: где «на» (на работу), там <0>-le</0>; где «в» (в школу, в больницу), там -sse или короткая форма. Так же «с рынка» — это -lt, а «из магазина» — -st. Нажми на предложение, чтобы его услышать."
 
 msgid "So-so"
 msgstr "Так себе"
@@ -11206,6 +11203,9 @@ msgstr "три кошки"
 
 msgid "Three keep slipping: <0>aufhören, Schnapsidee, die Gewerkschaft</0>"
 msgstr "Три слова не держатся: <0>aufhören, Schnapsidee, die Gewerkschaft</0>"
+
+msgid "Three places, each in three forms"
+msgstr "Три места, каждое в трёх формах"
 
 msgid "three quarters"
 msgstr "три четверти"

@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -392,7 +392,7 @@ export function KaskivLesson() {
   const pronouns = lessonBySlug("mina-sina-tema")?.n;
   const present = lessonBySlug("olevik")?.n;
   const negation = lessonBySlug("eitus")?.n;
-  const verbForms = LESSONS.find((lesson) => lesson.et === "Lugema, lugeda, loen")?.n;
+  const verbForms = lessonBySlug("verbi-pohivormid")?.n;
 
   const askedItems = useMemo<AskedItem[]>(
     () =>

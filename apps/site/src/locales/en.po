@@ -4064,8 +4064,8 @@ msgstr "Footpath"
 msgid "For {0}"
 msgstr "For {0}"
 
-msgid "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. <4/> and <5/> have their own: <6/> and <7/>."
-msgstr "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. <4/> and <5/> have their own: <6/> and <7/>."
+msgid "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
+msgstr "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
 
 msgid "For a cashier, a builder, or a friend who is studying."
 msgstr "For a cashier, a builder, or a friend who is studying."
@@ -12573,8 +12573,8 @@ msgstr "You meet Mari at the café and answer her in Estonian. If you pick a wro
 msgid "You meet Mari on your way from school to the shop. You’re from Pärnu, and tomorrow you’re going to Tartu."
 msgstr "You meet Mari on your way from school to the shop. You’re from Pärnu, and tomorrow you’re going to Tartu."
 
-msgid "You met <0/> in lesson {questions}. <1/> takes the <2>-st</2> form of the country or town. Tap a place to hear the answer."
-msgstr "You met <0/> in lesson {questions}. <1/> takes the <2>-st</2> form of the country or town. Tap a place to hear the answer."
+msgid "You met <0/> in lesson {questions}. After <1/>, the country or town takes <2>-st</2>. Tap a place to hear the answer."
+msgstr "You met <0/> in lesson {questions}. After <1/>, the country or town takes <2>-st</2>. Tap a place to hear the answer."
 
 msgid "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."
 msgstr "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."

@@ -4064,8 +4064,8 @@ msgstr "Пешеходная дорожка"
 msgid "For {0}"
 msgstr "Для земли {0}"
 
-msgid "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. <4/> and <5/> have their own: <6/> and <7/>."
-msgstr "У <0/>, <1/> и <2/> короткая форма — это третья форма из словаря, её показывает урок {threeForms}: <3>pood, poe, poodi</3>. У <4/> и <5/> она своя: <6/> и <7/>."
+msgid "For <0/>, <1/> and <2/>, the short form is the third form a dictionary gives, as lesson {threeForms} shows: <3>pood, poe, poodi</3>. Two words have a short form of their own: <4/> for <5/>, <6/> for <7/>."
+msgstr "У <0/>, <1/> и <2/> короткая форма — это третья форма из словаря, её показывает урок {threeForms}: <3>pood, poe, poodi</3>. У двух слов своя короткая форма: <4/> от <5/>, <6/> от <7/>."
 
 msgid "For a cashier, a builder, or a friend who is studying."
 msgstr "Так говорят кассиру, строителю или другу, который учится."
@@ -4584,7 +4584,7 @@ msgid "Goethe-Zertifikat A1, A2 and B1: the words for each level"
 msgstr "Goethe-Zertifikat A1, A2 и B1: лексика для каждого уровня"
 
 msgid "going home"
-msgstr "домой (куда)"
+msgstr "домой"
 
 msgid "Going over a lesson again"
 msgstr "Повторение пройденного"
@@ -6325,7 +6325,7 @@ msgid "Lesson {number}, coming soon"
 msgstr "Урок {number}, скоро"
 
 msgid "Lesson {places} taught <0/>, where, and its <1>-s</1>: <2/> Estonian asks two more questions about a place. <3/> asks where to: <4/> <5/> asks where from: <6/>"
-msgstr "В уроке {places} было <0/>, «где», и окончание <1>-s</1>: <2/> Эстонский задаёт о месте ещё два вопроса. <3/> спрашивает «куда»: <4/> <5/> спрашивает «откуда»: <6/>"
+msgstr "В уроке {places} шла речь о <0/>, «где», и об окончании <1>-s</1>: <2/> Эстонский задаёт о месте ещё два вопроса. <3/> спрашивает «куда»: <4/> <5/> спрашивает «откуда»: <6/>"
 
 msgid "Lesson {previousNumber}"
 msgstr "Урок {previousNumber}"
@@ -12573,7 +12573,7 @@ msgstr "Ты встречаешь Мари в кафе и отвечаешь е�
 msgid "You meet Mari on your way from school to the shop. You’re from Pärnu, and tomorrow you’re going to Tartu."
 msgstr "Ты встречаешь Мари по дороге из школы в магазин. Ты из Пярну, а завтра едешь в Тарту."
 
-msgid "You met <0/> in lesson {questions}. <1/> takes the <2>-st</2> form of the country or town. Tap a place to hear the answer."
+msgid "You met <0/> in lesson {questions}. After <1/>, the country or town takes <2>-st</2>. Tap a place to hear the answer."
 msgstr "Вопрос <0/> был в уроке {questions}. После <1/> страна или город стоит в форме на <2>-st</2>. Нажми на место, чтобы услышать ответ."
 
 msgid "You met <0/>, where, in lesson {questions}. Answer with a sentence or, in speech, with the place alone."

@@ -298,7 +298,7 @@ function DirectionSwitch() {
         value={direction}
         onPick={setDirection}
       />
-      <ul className="m-0 grid list-none grid-cols-2 overflow-hidden rounded-lg bg-plate p-0 ring-1 ring-edge sm:grid-cols-3">
+      <ul className="m-0 grid list-none grid-cols-1 overflow-hidden rounded-lg bg-plate p-0 ring-1 ring-edge sm:grid-cols-2 lg:grid-cols-3">
         {SWITCH_PLACES.map((name) => {
           const form = placeOf(name)[direction];
           return (
@@ -661,12 +661,12 @@ export function MajasMajjaMajastLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    You met <Word w="Kust sa pärit oled?" /> in lesson {questions}.{" "}
-                    <Word w="Pärit" /> takes the{" "}
+                    You met <Word w="Kust sa pärit oled?" /> in lesson {questions}. After{" "}
+                    <Word w="pärit" />, the country or town takes{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -st
-                    </b>{" "}
-                    form of the country or town. Tap a place to hear the answer.
+                    </b>
+                    . Tap a place to hear the answer.
                   </Trans>
                 </p>
               </Prose>
@@ -793,8 +793,9 @@ export function MajasMajjaMajastLesson() {
                   <Trans>
                     For <Word w="kool" />, <Word w="pood" /> and <Word w="linn" />, the short form
                     is the third form a dictionary gives, as lesson {threeForms} shows:{" "}
-                    <b lang="et">pood, poe, poodi</b>. <Word w="Maja" /> and <Word w="kodu" /> have
-                    their own: <Word w="majja" /> and <Word w="koju" />.
+                    <b lang="et">pood, poe, poodi</b>. Two words have a short form of their own:{" "}
+                    <Word w="majja" /> for <Word w="maja" />, <Word w="koju" /> for{" "}
+                    <Word w="kodu" />.
                   </Trans>
                 </p>
               </Prose>

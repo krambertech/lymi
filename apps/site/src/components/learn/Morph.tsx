@@ -1,4 +1,4 @@
-import { Trans, useLingui } from "@lingui/react/macro";
+import { Trans } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { Fragment, type ReactNode, useState } from "react";
@@ -64,7 +64,6 @@ export function Morph({ label, chains }: MorphProps) {
 }
 
 function MorphChainView({ chain }: { chain: MorphChain }) {
-  const { i18n } = useLingui();
   // The chain opens on its first change, so the word shows what it does before any press.
   const [at, setAt] = useState(Math.min(1, chain.steps.length - 1));
   // Counts presses: the change plays on each one, never as the page opens.
@@ -83,20 +82,18 @@ function MorphChainView({ chain }: { chain: MorphChain }) {
             // Every press replays the change, the same key's too.
             key={turn}
             data-play={turn > 0 ? "" : undefined}
-            lang="et"
             className="learn-morph min-w-0 text-5xl/tight font-semibold tracking-tight wrap-anywhere max-sm:text-4xl/tight"
           >
-            {/* The sentence is in the reader's language; only the forms in it are Estonian. */}
-            <span lang={before ? i18n.locale : undefined} className="sr-only">
+            <span className="sr-only">
               {before ? (
                 <Trans>
                   <span lang="et">{before.word}</span> becomes <span lang="et">{step.word}</span>
                 </Trans>
               ) : (
-                step.word
+                <span lang="et">{step.word}</span>
               )}
             </span>
-            <span aria-hidden="true">
+            <span aria-hidden="true" lang="et">
               {parts.map((part, i) =>
                 part.kind === "added" ? (
                   // biome-ignore lint/suspicious/noArrayIndexKey: a word's parts never reorder

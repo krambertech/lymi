@@ -1,13 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { MEELDIMA_MORE, MEELDIMA_NO, MEELDIMA_PERSONS } from "../../../lib/learn/clips";
-import {
-  firstFeelings,
-  firstPersons,
-  litMore,
-  litNo,
-  threeFeelings,
-  threePersons,
-} from "./Meeldima";
+import { firstPersons, litMore, litNo, threePersons } from "./Meeldima";
 
 describe("meeldima quizzes", () => {
   it("offers the person heard and two others, in no fixed place", () => {
@@ -30,19 +23,6 @@ describe("meeldima quizzes", () => {
       places.add(options.indexOf(id));
     });
     expect(places.size).toBe(3);
-  });
-
-  it("offers the feeling heard and two other situations", () => {
-    const places = new Set<number>();
-    for (let run = 0; run < 200; run++) {
-      const three = threeFeelings("bored");
-      expect(new Set(three).size).toBe(3);
-      places.add(three.indexOf("bored"));
-    }
-    expect(places.size).toBe(3);
-    (["cold", "hot", "bored", "glad", "sorry"] as const).forEach((feeling, i) => {
-      expect(firstFeelings(i)).toContain(feeling);
-    });
   });
 });
 

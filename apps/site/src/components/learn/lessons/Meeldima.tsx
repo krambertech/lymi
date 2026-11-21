@@ -5,7 +5,6 @@ import { clsx } from "clsx";
 import { type ReactNode, useMemo, useState } from "react";
 import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
-  capital,
   clipId,
   clipUrl,
   hasCat,
@@ -28,8 +27,10 @@ import { Chips, ListenRows, Panel } from "../Explore";
 import { type GapItem, GapPassage } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Match, type MatchPair } from "../Match";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Playing } from "../Sound";
 import { Word } from "../Word";
 
@@ -422,79 +423,17 @@ type WhoItem = ChoiceItem & { said: string; answer: PersonId; pair: readonly [st
 const personOptions = (ids: readonly PersonId[], i18n: I18n) =>
   ids.map((id) => ({ id, label: <span lang={i18n.locale}>{i18n._(PERSON[id])}</span> }));
 
-type Verb = "meeldib" | "meeldivad";
-const VERBS: readonly Verb[] = ["meeldib", "meeldivad"];
-
-/** “Mulle meeldib kohv.”: a word from the verb quiz in its sentence. */
-export const whichSentence = ({ w, verb }: (typeof MEELDIMA_WHICH)[number]) =>
-  `Mulle ${verb} ${w}.`;
-
-type WhichItem = ChoiceItem & {
-  w: string;
-  answer: Verb;
-  pair: readonly [string, string];
-};
-
-const verbOptions = (verbs: readonly Verb[]) => verbs.map((verb) => ({ id: verb, label: verb }));
-
-/** Why a word takes its verb, after an answer: more than one, a verb (its -da form), or one thing. */
-function WhyVerb({ w, verb }: { w: string; verb: Verb }) {
-  const word = capital(w);
-  if (verb === "meeldivad")
-    return (
-      <Trans>
-        <span lang="et">{word}</span> is more than one.
-      </Trans>
-    );
-  if (w.endsWith("da"))
-    return (
-      <Trans>
-        <span lang="et">{word}</span> is a verb, and a verb takes <span lang="et">meeldib</span>.
-      </Trans>
-    );
-  return (
-    <Trans>
-      <span lang="et">{word}</span> is one thing.
-    </Trans>
-  );
-}
-
-type Feeling = "cold" | "hot" | "bored" | "glad" | "sorry";
-const FEELINGS: readonly Feeling[] = ["cold", "hot", "bored", "glad", "sorry"];
-const FEELING_SAID: Record<Feeling, (typeof MEELDIMA_FEELINGS)[number]> = {
-  cold: "Mul on külm.",
-  hot: "Mul on palav.",
-  bored: "Mul on igav.",
-  glad: "Mul on hea meel.",
-  sorry: "Mul on kahju.",
-};
-
-/** When someone would say each feeling. */
-const WHEN: Record<Feeling, MessageDescriptor> = {
-  cold: msg`It’s −15 °C outside.`,
-  hot: msg`It’s 30 °C in the sun.`,
-  bored: msg`There’s nothing to do all evening.`,
-  glad: msg`A friend you miss is coming to visit.`,
-  sorry: msg`Your friend is ill and can’t come.`,
-};
-
-/** The answer and two other feelings at random, in random order. */
-export function threeFeelings(answer: Feeling): Feeling[] {
-  const others = FEELINGS.filter((each) => each !== answer);
-  return shuffle([answer, ...shuffle(others).slice(0, 2)]);
-}
-
-/** The first run's feelings, fixed so the page renders the same on the server. */
-export const firstFeelings = (i: number): Feeling[] => {
-  const three = [0, 1, 3].map((step) => FEELINGS[(i + step) % FEELINGS.length] as Feeling);
-  const turn = i % 3;
-  return [...three.slice(turn), ...three.slice(0, turn)];
-};
-
-type FeelItem = ChoiceItem & { said: string; answer: Feeling; pair: readonly [string, string] };
-
-const feelingOptions = (feelings: readonly Feeling[], i18n: I18n) =>
-  feelings.map((id) => ({ id, label: <span lang={i18n.locale}>{i18n._(WHEN[id])}</span> }));
+/** The feelings and when someone would say each. */
+const FEELING_WHEN: readonly {
+  said: (typeof MEELDIMA_FEELINGS)[number];
+  when: MessageDescriptor;
+}[] = [
+  { said: "Mul on külm.", when: msg`It’s −15 °C outside.` },
+  { said: "Mul on palav.", when: msg`It’s 30 °C in the sun.` },
+  { said: "Mul on igav.", when: msg`There’s nothing to do all evening.` },
+  { said: "Mul on hea meel.", when: msg`A friend you miss is coming to visit.` },
+  { said: "Mul on kahju.", when: msg`Your friend is ill and can’t come.` },
+];
 
 export function MeeldimaLesson() {
   const { t, i18n } = useLingui();
@@ -528,54 +467,38 @@ export function MeeldimaLesson() {
       item === pinned ? item : { ...item, options: personOptions(threePersons(item.answer), i18n) },
     );
 
-  const whichItems = useMemo<WhichItem[]>(
-    () =>
-      MEELDIMA_WHICH.map((each, i) => ({
-        w: each.w,
-        src: src(each.w),
-        answer: each.verb,
-        pair: [each.w, each.w] as const,
-        options: verbOptions(i % 2 === 0 ? VERBS : [...VERBS].reverse()),
-        explain: (
-          <>
-            <span lang="et" className="font-medium text-ink">
-              {whichSentence(each)}
-            </span>{" "}
-            <WhyVerb w={each.w} verb={each.verb} />
-          </>
-        ),
-      })),
-    [],
-  );
+  const bins: SortBin[] = [
+    {
+      id: "meeldib",
+      label: "meeldib",
+      hint: t`one thing, or a verb`,
+      rule: (
+        <Trans>
+          One thing, or a verb in its <End>-da</End> form, takes <span lang="et">meeldib</span>:{" "}
+          <span lang="et">Mulle meeldib kohv. Mulle meeldib lugeda.</span>
+        </Trans>
+      ),
+    },
+    {
+      id: "meeldivad",
+      label: "meeldivad",
+      hint: t`more than one thing`,
+      rule: (
+        <Trans>
+          More than one thing takes <span lang="et">meeldivad</span>:{" "}
+          <span lang="et">Mulle meeldivad koerad.</span>
+        </Trans>
+      ),
+    },
+  ];
+  const sorted: SortItem[] = MEELDIMA_WHICH.map(({ w, verb }) => ({ w, bin: verb, src: src(w) }));
 
-  // The two verbs are the same every round, so only their order changes.
-  const whichRun = (items: readonly WhichItem[], pinned?: WhichItem): WhichItem[] =>
-    eachPairFirst(items, pinned).map((item) =>
-      item === pinned ? item : { ...item, options: verbOptions(shuffle(VERBS)) },
-    );
-
-  const feelItems = useMemo<FeelItem[]>(
-    () =>
-      FEELINGS.map((feeling, i) => {
-        const said = FEELING_SAID[feeling];
-        return {
-          said,
-          src: src(said),
-          answer: feeling,
-          pair: [feeling, feeling] as const,
-          options: feelingOptions(firstFeelings(i), i18n),
-          explain: <Said said={said} />,
-        };
-      }),
-    [i18n],
-  );
-
-  const feelRun = (items: readonly FeelItem[], pinned?: FeelItem): FeelItem[] =>
-    eachPairFirst(items, pinned).map((item) =>
-      item === pinned
-        ? item
-        : { ...item, options: feelingOptions(threeFeelings(item.answer), i18n) },
-    );
+  const pairs: MatchPair[] = FEELING_WHEN.map(({ said, when }) => ({
+    id: clipId(said),
+    left: said,
+    right: i18n._(when),
+    src: src(said),
+  }));
 
   const messageGaps: GapItem[] = [
     {
@@ -917,33 +840,21 @@ export function MeeldimaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a word and pick the verb it takes after <span lang="et">mulle</span>:{" "}
+                    Put each word under the verb it takes after <span lang="et">mulle</span>:{" "}
                     <span lang="et">meeldib</span> for one thing or a verb,{" "}
                     <span lang="et">meeldivad</span> for more than one thing.
                   </Trans>
                 </p>
               </Prose>
-              <Quiz
+              <Sort
                 id="which-verb"
-                title={<Trans>Which verb goes with it?</Trans>}
-                items={whichItems}
-                rounds={8}
-                verdict={(share) =>
-                  share === 1 ? (
-                    <Trans>All eight. You matched the verb to the thing every time.</Trans>
-                  ) : share >= 0.6 ? (
-                    <Trans>
-                      Nearly. Listen for the <End>-d</End> of a plural in the ones you missed.
-                    </Trans>
-                  ) : (
-                    <Trans>
-                      Switch the lines above between One thing and More than one, then try again.
-                    </Trans>
-                  )
+                title={
+                  <Trans>
+                    <span lang="et">Mulle meeldib</span> or <span lang="et">mulle meeldivad</span>?
+                  </Trans>
                 }
-                recall={(item) => ({ label: item.w, src: item.src })}
-                order={whichRun}
-                round={(props) => <ChoiceRound {...props} />}
+                bins={bins}
+                items={sorted}
               />
             </>
           ),
@@ -1020,27 +931,10 @@ export function MeeldimaLesson() {
             <>
               <Prose>
                 <p>
-                  <Trans>Hear a feeling and pick when you’d say it.</Trans>
+                  <Trans>Match each feeling to when you’d say it.</Trans>
                 </p>
               </Prose>
-              <Quiz
-                id="when"
-                title={<Trans>When would you say it?</Trans>}
-                items={feelItems}
-                rounds={5}
-                verdict={(share) =>
-                  share === 1 ? (
-                    <Trans>All five. You knew every feeling by ear.</Trans>
-                  ) : share >= 0.6 ? (
-                    <Trans>Nearly. Play the ones you missed once more.</Trans>
-                  ) : (
-                    <Trans>Tap the five feelings above once more, then try again.</Trans>
-                  )
-                }
-                recall={(item) => ({ label: item.said, src: item.src })}
-                order={feelRun}
-                round={(props) => <ChoiceRound {...props} />}
-              />
+              <Match id="when" title={<Trans>When would you say it?</Trans>} pairs={pairs} />
             </>
           ),
         },

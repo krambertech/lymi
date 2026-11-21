@@ -21,6 +21,13 @@ export const ALLOWED_NEAR_PAIRS: readonly {
     reason:
       "The quiz asks whether the ending stays after ei: Ei loe against Ei loed is the lesson.",
   },
+  {
+    lesson: "laual-lauale-laualt",
+    quiz: "which-question",
+    pair: ["kus?", "kust?"],
+    reason:
+      "The options are the three question words, each the answer equally often; the learner hears tööl or töölt and tells kus from kust by that ending.",
+  },
 ];
 
 /**

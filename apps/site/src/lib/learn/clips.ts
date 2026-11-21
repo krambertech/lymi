@@ -500,6 +500,70 @@ export const KOHAD_SENTENCES = {
 } as const;
 
 /**
+ * The places of the lesson on -l, -le and -lt, each in the forms that answer kus, kuhu and kust.
+ * Checked in ÕS 2025 on Sõnaveeb (EKI morphology, 21 Nov 2026).
+ */
+export const OUTER_PLACES = [
+  { place: "laud", kus: "laual", kuhu: "lauale", kust: "laualt" },
+  { place: "töö", kus: "tööl", kuhu: "tööle", kust: "töölt" },
+  { place: "turg", kus: "turul", kuhu: "turule", kust: "turult" },
+  { place: "Saaremaa", kus: "Saaremaal", kuhu: "Saaremaale", kust: "Saaremaalt" },
+] as const;
+
+/** Places that take -s, set beside the -l ones: what each says for where and where to. */
+export const OUTER_INNER_PLACES = [
+  { place: "kool", kus: "koolis", kuhu: "kooli" },
+  { place: "pood", kus: "poes", kuhu: "poodi" },
+  { place: "Tartu", kus: "Tartus", kuhu: "Tartusse" },
+  { place: "haigla", kus: "haiglas", kuhu: "haiglasse" },
+] as const;
+
+/** The sentences of the lesson on -l, -le and -lt. */
+export const OUTER_SENTENCES = {
+  "s-lauale": "Kass hüppab lauale.",
+  "s-laual": "Kass on laual.",
+  "s-laualt": "Kass hüppab laualt põrandale.",
+  "q-lahed": "Kuhu sa lähed?",
+  "a-lahen-toole": "Ma lähen tööle.",
+  "a-lahen-turule": "Ma lähen turule.",
+  "q-tuled": "Kust sa tuled?",
+  "a-tulen-toolt": "Ma tulen töölt.",
+  "a-tulen-turult": "Ma tulen turult.",
+  "c-toole-kooli": "Ma lähen tööle, aga Mari läheb kooli.",
+  "c-turult-poest": "Ema tuleb turult, aga isa tuleb poest.",
+  "p-emal-on": "Emal on kass.",
+  "p-helistan-emale": "Ma helistan emale.",
+  "p-helistan-sobrale": "Ma helistan sõbrale.",
+  "p-kusin-emalt": "Ma küsin emalt.",
+  "p-kusin-isalt": "Ma küsin isalt.",
+} as const;
+
+/** The gap passage: a Saturday with Mari, every gap filled. */
+export const OUTER_PASSAGE = [
+  "Täna on laupäev ja Mari ei lähe tööle.",
+  "Ta läheb turule.",
+  "Ta helistab emale.",
+  "Isa on poes.",
+  "Mari tuleb turult koju.",
+  "Isa tuleb ka poest koju.",
+] as const;
+
+/** Words the lesson glosses on their own, beyond the places' forms. */
+export const OUTER_WORDS = [
+  "kus",
+  "kuhu",
+  "kust",
+  "hüppab",
+  "põrandale",
+  "kass",
+  "helistan",
+  "küsin",
+  "emale",
+  "emalt",
+  "sõbrale",
+] as const;
+
+/**
  * The practice lesson on meeting someone, built only from lessons 1 to 6. Mari speaks in the
  * second voice; the learner, Andres, in the main one.
  */
@@ -902,5 +966,14 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  "laual-lauale-laualt": {
+    ...words([
+      ...OUTER_PLACES.flatMap(({ place, kus, kuhu, kust }) => [place, kus, kuhu, kust]),
+      ...OUTER_INNER_PLACES.flatMap(({ place, kus, kuhu }) => [place, kus, kuhu]),
+      ...OUTER_WORDS,
+    ]),
+    ...OUTER_SENTENCES,
+    "p-saturday": { sentences: OUTER_PASSAGE },
+  },
   kit: KIT_CLIPS,
 };

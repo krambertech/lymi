@@ -2326,6 +2326,65 @@ const GRADATION_CLIPS: Record<string, Clip> = {
   "p-room": { sentences: GRADATION_ROOM },
 };
 
+export const OBJECT_PAIRS = [
+  { id: "bread", part: "Ma ostsin leiba.", whole: "Ma ostsin leiva." },
+  { id: "book", part: "Ma lugesin raamatut.", whole: "Ma lugesin raamatu läbi." },
+  { id: "cake", part: "Ma sõin kooki.", whole: "Ma sõin koogi ära." },
+  { id: "work", part: "Ma tegin tööd.", whole: "Ma tegin töö ära." },
+] as const;
+
+export const OBJECT_ALWAYS = [
+  "Ma ei ostnud leiba.",
+  "Ma joon kohvi.",
+  "Ma ootan sõpra.",
+  "Ma armastan sind.",
+  "Ma otsin võtit.",
+] as const;
+
+export const OBJECT_WHOLE = ["Ma ostsin pileti.", "Osta pilet!", "Ma ostsin piletid."] as const;
+
+export const OBJECT_GAPS = [
+  { id: "no", before: "Ma ei ostnud", after: ".", answer: "leiba", options: ["leiva", "leiba"] },
+  { id: "one", before: "Ma ostsin ühe", after: ".", answer: "pileti", options: ["pileti", "piletit"] },
+  { id: "now", before: "Ma loen praegu", after: ".", answer: "raamatut", options: ["raamatu", "raamatut"] },
+  { id: "done", before: "Ma lugesin", after: "läbi.", answer: "raamatu", options: ["raamatut", "raamatu"] },
+  { id: "wait", before: "Ma ootan", after: ".", answer: "sõpra", options: ["sõpra", "sõbra"] },
+  { id: "buy", before: "Osta", after: "!", answer: "pilet", options: ["pileti", "pilet", "piletit"] },
+  { id: "eat", before: "Ma sõin", after: "ära.", answer: "koogi", options: ["kooki", "koogi"] },
+] as const;
+
+export const OBJECT_SHOP = [
+  "Täna käisin ma poes.",
+  "Ma ostsin leiba ja juustu.",
+  "Ma ostsin ka ühe koogi.",
+  "Piima ma ei ostnud.",
+  "Ma otsisin kaua võtit, aga ma ei leidnud seda.",
+] as const;
+
+export const OBJECT_DIALOGUE = {
+  "d-teenindaja-1": { text: "Tere! Mida te soovite?", voice: "second" },
+  "d-sina-1": "Ma võtan ühe koogi.",
+  "d-teenindaja-2": { text: "Kas te soovite ka teed?", voice: "second" },
+  "d-sina-2": "Ei, aitäh. Ma ei taha teed.",
+  "d-teenindaja-3": { text: "Palun, teie kook.", voice: "second" },
+  "d-sina-3": "Aitäh! Ma söön koogi kohe ära.",
+} as const satisfies Record<string, Clip>;
+
+export const OBJECT_WORDS = ["läbi", "ära", "praegu", "võti", "võtit", "pilet", "kook", "teed"] as const;
+
+export const objectGapSaid = (gap: { before: string; answer: string; after: string }) =>
+  `${gap.before} ${gap.answer}${/^[.!?]$/.test(gap.after) ? "" : " "}${gap.after}`;
+
+const OBJECT_CLIPS: Record<string, Clip> = {
+  ...words(OBJECT_WORDS),
+  ...words(OBJECT_PAIRS.flatMap((pair) => [pair.part, pair.whole])),
+  ...words(OBJECT_ALWAYS),
+  ...words(OBJECT_WHOLE),
+  ...words(OBJECT_GAPS.map(objectGapSaid)),
+  "p-shop": { sentences: OBJECT_SHOP, voice: "second" },
+  ...OBJECT_DIALOGUE,
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -3290,6 +3349,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   lihtminevik: PAST_CLIPS,
   nadalavahetusel: WEEKEND_CLIPS,
   "jalg-jala": GRADATION_CLIPS,
+  "raamatut-voi-raamatu": OBJECT_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

@@ -413,7 +413,7 @@ export function MulOnLesson() {
   const negation = lessonBySlug("eitus")?.n;
   const forms = LESSONS.find((lesson) => lesson.et === "Kolm põhivormi")?.n;
   const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
-  const partitive = LESSONS.find((lesson) => lesson.et === "Kaks kassi")?.n;
+  const partitive = lessonBySlug("osastav")?.n;
   const gaps = useGaps();
 
   // The -l form plays in a sentence; the long form plays on its own.

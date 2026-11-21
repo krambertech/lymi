@@ -4734,6 +4734,866 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "verbi-pohivormid/elama": {
+    "text": "elama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/elada": {
+    "text": "elada",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/elan": {
+    "text": "elan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/elama-elada-elan": {
+    "text": "elama, elada, elan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/lugema": {
+    "text": "lugema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/lugeda": {
+    "text": "lugeda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/loen": {
+    "text": "loen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/lugema-lugeda-loen": {
+    "text": "lugema, lugeda, loen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ra2a2kima": {
+    "text": "rääkima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ra2a2kida": {
+    "text": "rääkida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ra2a2gin": {
+    "text": "räägin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ra2a2kima-ra2a2kida-ra2a2gin": {
+    "text": "rääkima, rääkida, räägin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/o3ppima": {
+    "text": "õppima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/o3ppida": {
+    "text": "õppida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/o3pin": {
+    "text": "õpin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/o3ppima-o3ppida-o3pin": {
+    "text": "õppima, õppida, õpin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/istuma": {
+    "text": "istuma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/istuda": {
+    "text": "istuda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/istun": {
+    "text": "istun",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/istuma-istuda-istun": {
+    "text": "istuma, istuda, istun",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/to2o2tama": {
+    "text": "töötama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/to2o2tada": {
+    "text": "töötada",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/to2o2tan": {
+    "text": "töötan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/to2o2tama-to2o2tada-to2o2tan": {
+    "text": "töötama, töötada, töötan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/armastama": {
+    "text": "armastama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/armastada": {
+    "text": "armastada",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/armastan": {
+    "text": "armastan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/armastama-armastada-armastan": {
+    "text": "armastama, armastada, armastan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ootama": {
+    "text": "ootama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/oodata": {
+    "text": "oodata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ootan": {
+    "text": "ootan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ootama-oodata-ootan": {
+    "text": "ootama, oodata, ootan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/kuulama": {
+    "text": "kuulama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/kuulata": {
+    "text": "kuulata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/kuulan": {
+    "text": "kuulan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/kuulama-kuulata-kuulan": {
+    "text": "kuulama, kuulata, kuulan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/vaatama": {
+    "text": "vaatama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/vaadata": {
+    "text": "vaadata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/vaatan": {
+    "text": "vaatan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/vaatama-vaadata-vaatan": {
+    "text": "vaatama, vaadata, vaatan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/olema": {
+    "text": "olema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/olla": {
+    "text": "olla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/olen": {
+    "text": "olen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/olema-olla-olen": {
+    "text": "olema, olla, olen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/tulema": {
+    "text": "tulema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/tulla": {
+    "text": "tulla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/tulen": {
+    "text": "tulen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/tulema-tulla-tulen": {
+    "text": "tulema, tulla, tulen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/minema": {
+    "text": "minema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/minna": {
+    "text": "minna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/la2hen": {
+    "text": "lähen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/minema-minna-la2hen": {
+    "text": "minema, minna, lähen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/tegema": {
+    "text": "tegema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/teha": {
+    "text": "teha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/teen": {
+    "text": "teen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/tegema-teha-teen": {
+    "text": "tegema, teha, teen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/na2gema": {
+    "text": "nägema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/na2ha": {
+    "text": "näha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/na2en": {
+    "text": "näen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/na2gema-na2ha-na2en": {
+    "text": "nägema, näha, näen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/so2o2ma": {
+    "text": "sööma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/su2u2a": {
+    "text": "süüa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/so2o2n": {
+    "text": "söön",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/so2o2ma-su2u2a-so2o2n": {
+    "text": "sööma, süüa, söön",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/jooma": {
+    "text": "jooma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/juua": {
+    "text": "juua",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/joon": {
+    "text": "joon",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/jooma-juua-joon": {
+    "text": "jooma, juua, joon",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/lugege": {
+    "text": "Lugege!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ra2a2kige": {
+    "text": "Rääkige!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/istuge": {
+    "text": "Istuge!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/oodake": {
+    "text": "Oodake!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/olge": {
+    "text": "Olge!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/tulge": {
+    "text": "Tulge!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/tehke": {
+    "text": "Tehke!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/tahan": {
+    "text": "tahan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/ma-tahan-lugeda": {
+    "text": "Ma tahan lugeda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "verbi-pohivormid/p-class": {
+    "text": "Tere! Istuge, palun. Täna me loeme raamatut. Lugege, palun. Te loete väga hästi. Kas te räägite kodus eesti keelt? Rääkige kodus eesti keelt!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/u2ks-kass": {
+    "text": "üks kass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/u2ks-raamat": {
+    "text": "üks raamat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/u2ks-laps": {
+    "text": "üks laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/u2ks-auto": {
+    "text": "üks auto",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/u2ks-maja": {
+    "text": "üks maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/u2ks-euro": {
+    "text": "üks euro",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kaks-kassi": {
+    "text": "kaks kassi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kaks-raamatut": {
+    "text": "kaks raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kaks-last": {
+    "text": "kaks last",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kaks-autot": {
+    "text": "kaks autot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kaks-maja": {
+    "text": "kaks maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kaks-eurot": {
+    "text": "kaks eurot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/viis-kassi": {
+    "text": "viis kassi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/viis-raamatut": {
+    "text": "viis raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/viis-last": {
+    "text": "viis last",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/viis-autot": {
+    "text": "viis autot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/viis-maja": {
+    "text": "viis maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/viis-eurot": {
+    "text": "Viis eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kolm-kassi": {
+    "text": "kolm kassi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/ku2mme-eurot": {
+    "text": "kümme eurot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kolm-last": {
+    "text": "kolm last",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/u2ks-kool": {
+    "text": "üks kool",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/neli-kooli": {
+    "text": "neli kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/u2ks-laud": {
+    "text": "üks laud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/viis-lauda": {
+    "text": "viis lauda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/mitu-last-sul-on": {
+    "text": "Mitu last sul on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/mul-on-kaks-last": {
+    "text": "Mul on kaks last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/mitu-kassi-teil-on": {
+    "text": "Mitu kassi teil on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/meil-on-u2ks-kass": {
+    "text": "Meil on üks kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kui-palju-see-maksab": {
+    "text": "Kui palju see maksab?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/tass-kohvi": {
+    "text": "tass kohvi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/klaas-vett": {
+    "text": "klaas vett",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kilo-juustu": {
+    "text": "kilo juustu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/natuke-piima": {
+    "text": "natuke piima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/palju-raha": {
+    "text": "palju raha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/va2he-aega": {
+    "text": "vähe aega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/mul-on-kass": {
+    "text": "Mul on kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/mul-pole-kassi": {
+    "text": "Mul pole kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/sul-on-auto": {
+    "text": "Sul on auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/sul-pole-autot": {
+    "text": "Sul pole autot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/tal-on-laps": {
+    "text": "Tal on laps.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/tal-pole-last": {
+    "text": "Tal pole last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/neil-on-maja": {
+    "text": "Neil on maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/neil-pole-maja": {
+    "text": "Neil pole maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/laual-on-leib": {
+    "text": "Laual on leib.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/laual-pole-leiba": {
+    "text": "Laual pole leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/toas-on-laud": {
+    "text": "Toas on laud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/toas-pole-lauda": {
+    "text": "Toas pole lauda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kass-on-laual": {
+    "text": "Kass on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kass-pole-laual": {
+    "text": "Kass pole laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/ma-joon-kohvi": {
+    "text": "Ma joon kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/ta-joob-vett": {
+    "text": "Ta joob vett.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/me-so2o2me-leiba": {
+    "text": "Me sööme leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/nad-so2o2vad-juustu": {
+    "text": "Nad söövad juustu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/ma-tahan-piima": {
+    "text": "Ma tahan piima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kohvi-palun": {
+    "text": "Kohvi, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/auto-pole-tallinnas": {
+    "text": "Auto pole Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/leib-pole-laual": {
+    "text": "Leib pole laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/laud-pole-toas": {
+    "text": "Laud pole toas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/piim-maksab-kaks-eurot": {
+    "text": "Piim maksab kaks eurot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/leib-on-laual": {
+    "text": "Leib on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kass": {
+    "text": "kass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kassi": {
+    "text": "kassi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/raamat": {
+    "text": "raamat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/raamatut": {
+    "text": "raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/laps": {
+    "text": "laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/last": {
+    "text": "last",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/maja": {
+    "text": "maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kohv": {
+    "text": "kohv",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kohvi": {
+    "text": "kohvi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/vesi": {
+    "text": "vesi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/vett": {
+    "text": "vett",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/juust": {
+    "text": "juust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/juustu": {
+    "text": "juustu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/leib": {
+    "text": "leib",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/leiba": {
+    "text": "leiba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/piim": {
+    "text": "piim",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/piima": {
+    "text": "piima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/aeg": {
+    "text": "aeg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/aega": {
+    "text": "aega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/mitu": {
+    "text": "mitu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/tass": {
+    "text": "tass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/klaas": {
+    "text": "klaas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kilo": {
+    "text": "kilo",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/palju": {
+    "text": "palju",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/natuke": {
+    "text": "natuke",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/va2he": {
+    "text": "vähe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/pole": {
+    "text": "pole",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/tahan": {
+    "text": "tahan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/mul-ei-ole-kassi": {
+    "text": "Mul ei ole kassi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/u2ks-kohv-palun": {
+    "text": "Üks kohv, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/ma-loen-raamatut": {
+    "text": "Ma loen raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/p-market": {
+    "text": "Täna on laupäev ja Mari on turul. Tal on vaja kilo juustu ja üks leib. Juust maksab seitse eurot. Aga turul pole täna leiba. Turul on kohvik. Mari joob kohvikus kohvi. Kohvikus on üks kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/p-jaan": {
+    "text": "Tere, see on Jaan! Ma olen turul. Täna on palju juustu. Kilo juustu maksab kaheksa eurot. Leib maksab kaks eurot. Aga täna pole piima. Kas sa tahad kohvi?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kit/p-jaan": {
     "text": "Tere! Mina olen Jaan. Ma elan Tartus. Ma olen arst. Mari on minu sõber. Ta ei ole arst, ta on õpetaja. Me räägime eesti keelt.",
     "model": "eleven_v4",

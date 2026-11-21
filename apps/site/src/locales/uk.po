@@ -536,6 +536,9 @@ msgstr "<0>Kes</0> питає про людей, <1>mis</1> — про речі.
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> питає, звідки ти, а не де живеш."
 
+msgid "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
+msgstr "<0>Last</0> — третя форма, тож вона йде після <1>lapse</1>."
+
 msgid "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
 msgstr "<0>Ma ei tea</0> — це «я не знаю». <1>Kuidas läheb?</1> — це «Як справи?»."
 
@@ -544,6 +547,9 @@ msgstr "Після <0>ma</0> дієслово закінчується на <1>-
 
 msgid "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
 msgstr "Після <0>ma</0> дієслово закінчується на <1>-n</1>: <2>õpin</2>."
+
+msgid "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
+msgstr "<0>Majas</0> означає «в будинку»: це друга форма з <1>-s</1>. А сама друга форма — <2>maja</2>."
 
 msgid "<0>marginal cost</0> <1>= cost of 1 more</1>"
 msgstr "<0>граничні витрати</0> <1>= ціна ще 1 шт.</1>"
@@ -571,6 +577,9 @@ msgstr "<0>Осмос</0>: вода проходить крізь мембран
 
 msgid "<0>P suletud</0> on a sign: closed on Sunday."
 msgstr "<0>P suletud</0> на вивісці: у неділю зачинено."
+
+msgid "<0>Poe</0> is the second form. The third has the <1>d</1> back: <2>poodi</2>."
+msgstr "<0>Poe</0> — друга форма. У третій <1>d</1> повертається: <2>poodi</2>."
 
 msgid "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
 msgstr "<0>Pole</0> означає те саме, що <1>ei ole</1>. Почуєш обидва."
@@ -939,8 +948,8 @@ msgstr "нога"
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "Безкоштовна колода містить кожен дорожній знак із правил: за малюнком, із польською назвою та номером."
 
-msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us, or a final long vowel, tell you the third. Every word is read aloud."
-msgstr "Безкоштовний урок естонської про три основні форми іменника, põhivormid (kool, kooli, kooli; pood, poe, poodi): як їх подають словник і Sõnaveeb і як закінчення -ne, -us та довга голосна в кінці слова підказують третю форму. Кожне слово озвучене."
+msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the third. Every word is read aloud."
+msgstr "Безкоштовний урок естонської про три основні форми іменника, põhivormid (kool, kooli, kooli; pood, poe, poodi): як їх подають словник і Sõnaveeb і як більшість слів на -ne та -us, а також односкладові слова на довгу голосну, підказують третю форму. Кожне слово озвучене."
 
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про особові займенники: mina, sina, tema та інші в повній і короткій формі, а ще дієслово olema, «бути». Кожне речення можна послухати."
@@ -1734,9 +1743,6 @@ msgstr "Усі шість. Кожне закінчення правильне."
 
 msgid "All six. You matched every pronoun with its ending."
 msgstr "Усі шість. Кожен займенник — зі своїм закінченням."
-
-msgid "All six. You picked the second and third form every time."
-msgstr "Усі шість. Друга й третя форма щоразу на своїх місцях."
 
 msgid "All six. You typed the third form right every time."
 msgstr "Усі шість. Третя форма щоразу правильна."
@@ -4115,6 +4121,9 @@ msgstr "Перша"
 msgid "First day"
 msgstr "Перший день"
 
+msgid "First form"
+msgstr "Перша форма"
+
 msgid "First-line drug for type 2 diabetes. Lowers the glucose the liver makes."
 msgstr "Препарат першої лінії при діабеті 2 типу. Зменшує вироблення глюкози печінкою."
 
@@ -4935,9 +4944,6 @@ msgstr "Послухати"
 
 msgid "Hear it read"
 msgstr "Послухати текст"
-
-msgid "Hear the first form of a word, then pick the second and third, in order."
-msgstr "Послухай першу форму слова й вибери другу та третю — саме в такому порядку."
 
 msgid "Hear the question, then pick the short answer that says no."
 msgstr "Послухай питання й обери коротку відповідь «ні»."
@@ -6293,9 +6299,6 @@ msgstr "Мови"
 msgid "Lasnamäe, a district of Tallinn"
 msgstr "Ласнамяе, район Таллінна"
 
-msgid "Last is the third form, so it comes after lapse."
-msgstr "Last — третя форма, тож вона йде після lapse."
-
 msgid "Last updated"
 msgstr "Оновлено"
 
@@ -6505,11 +6508,11 @@ msgstr "бібліотека"
 msgid "Light reactions"
 msgstr "Світлові реакції"
 
-msgid "Like küsimus, vastus ends its third form in -ust: vastust."
-msgstr "Як і в küsimus, третя форма vastus закінчується на -ust: vastust."
+msgid "Like <0>küsimus</0>, <1>vastus</1> ends its third form in <2>-ust</2>: <3>vastust</3>."
+msgstr "Як і в <0>küsimus</0>, третя форма <1>vastus</1> закінчується на <2>-ust</2>: <3>vastust</3>."
 
-msgid "Like küsimus, vastus has a second form in -use: vastuse."
-msgstr "Як і küsimus, vastus має другу форму на -use: vastuse."
+msgid "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
+msgstr "Як і <0>küsimus</0>, <1>vastus</1> має другу форму на <2>-use</2>: <3>vastuse</3>."
 
 msgid "Like the a in “cat”."
 msgstr "Як «a» в англійському «cat»."
@@ -6824,9 +6827,6 @@ msgstr "Основна навігація"
 msgid "Mainland voice"
 msgstr "Голос материкового Китаю"
 
-msgid "Majas means in the house: the second form with -s. The second form itself is maja."
-msgstr "Majas означає «в будинку»: це друга форма з -s. А сама друга форма — maja."
-
 msgid "Make a card for each drug, with its class."
 msgstr "Зроби картку на кожен препарат, з його класом."
 
@@ -6973,6 +6973,9 @@ msgstr "Чоловічий рід, хоч і закінчується на -a: b
 
 msgid "Match"
 msgstr "Пари"
+
+msgid "Match each word with its second and third forms. A wrong pair counts against you, so look for the letters that change."
+msgstr "З’єднай кожне слово з його другою й третьою формою. Неправильна пара йде в мінус, тож придивляйся, які літери змінюються."
 
 msgid "Match, Blast and Quizlet Live"
 msgstr "Match, Blast і Quizlet Live"
@@ -7261,9 +7264,6 @@ msgstr "Майже. Прислухайся до дієслова в питанн
 
 msgid "Nearly. Listen to the first word of the ones you missed."
 msgstr "Майже. Там, де була помилка, послухай перше слово."
-
-msgid "Nearly. Look at the table above for the ones you missed."
-msgstr "Майже. Знайди в таблиці вище слова, на яких була помилка."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Переслухай ті, де були помилки."
@@ -8322,9 +8322,6 @@ msgstr "Множина: урок {plural}"
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP і PRINCE2: процеси, ролі й термінологія."
 
-msgid "Poe is the second form. The third has the d back: poodi."
-msgstr "Poe — друга форма. У третій d повертається: poodi."
-
 msgid "Poe- plus -s: in a shop."
 msgstr "Poe- плюс -s: у крамниці."
 
@@ -9152,6 +9149,9 @@ msgstr "другий"
 
 msgid "Second"
 msgstr "Друга"
+
+msgid "Second and third"
+msgstr "Друга й третя"
 
 msgid "Section"
 msgstr "Розділ"
@@ -10101,9 +10101,6 @@ msgstr "Торкайся слів по порядку"
 msgid "Tap the words in order first."
 msgstr "Спершу торкнися слів по порядку."
 
-msgid "Tap through the table above once more, then try again."
-msgstr "Ще раз послухай форми в таблиці вище й спробуй знову."
-
 msgid "Tap to turn it over"
 msgstr "Торкнися, щоб перевернути"
 
@@ -10713,8 +10710,8 @@ msgstr "Ту, що відповідає твоєму тесту чи темі. �
 msgid "The ones starting to fade"
 msgstr "Ті, які починають забуватися"
 
-msgid "The order is first, second, third. Poe, the one without the d, comes second."
-msgstr "Порядок такий: перша, друга, третя. Poe, форма без d, іде другою."
+msgid "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."
+msgstr "Порядок такий: перша, друга, третя. <0>Poe</0>, форма без <1>d</1>, іде другою."
 
 msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
 msgstr "Друге закінчення — <0>-l</0>. Воно означає «на», коли йдеться про поверхню: <1/>, на столі. А ще «на» там, де ти щось робиш, а не просто перебуваєш у будівлі: <2/>, на роботі."
@@ -10866,6 +10863,9 @@ msgstr "Саме до другої форми додають <0>-s</0> і <1>-l<
 msgid "The second form of {first}."
 msgstr "Друга форма слова {first}."
 
+msgid "The second form of <0>{first}</0>."
+msgstr "Друга форма слова <0>{first}</0>."
+
 msgid "The second loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the third is the first again."
 msgstr "У другій формі <0>b</0> зникає, а <1>u</1> стає <2>o</2>; третя знову така, як перша."
 
@@ -10956,8 +10956,11 @@ msgstr "У третій <0>p</0> випадає, а закінчення — <1>
 msgid "The third form of {first}."
 msgstr "Третя форма слова {first}."
 
-msgid "The third form of laps ends in -st: last."
-msgstr "Третя форма laps закінчується на -st: last."
+msgid "The third form of <0>{first}</0>."
+msgstr "Третя форма слова <0>{first}</0>."
+
+msgid "The third form of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
+msgstr "Третя форма <0>laps</0> закінчується на <1>-st</1>: <2>last</2>."
 
 msgid "The third is the second with <0>-t</0>."
 msgstr "Третя — це друга з <0>-t</0>."
@@ -12479,6 +12482,9 @@ msgstr "Яке закінчення?"
 msgid "Which form did you hear?"
 msgstr "Яку форму ти чуєш?"
 
+msgid "Which forms go together?"
+msgstr "Які форми йдуть разом?"
+
 msgid "Which half hour?"
 msgstr "Пів на яку?"
 
@@ -12520,9 +12526,6 @@ msgstr "Яке питальне слово?"
 
 msgid "Which questions come up"
 msgstr "Які питання трапляються"
-
-msgid "Which two come next?"
-msgstr "Які дві форми далі?"
 
 msgid "Which word did you hear?"
 msgstr "Яке слово прозвучало?"

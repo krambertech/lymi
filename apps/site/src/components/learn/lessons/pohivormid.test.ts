@@ -1,20 +1,14 @@
 import { describe, expect, it } from "vitest";
 import { NOUN_FORMS, POHIVORMID_TYPED } from "../../../lib/learn/clips";
 import { eachPairFirst } from "../../../lib/learn/quiz";
-import { FIRST_OFFERS, formsOf, NEXT, type Offer, offer } from "./Pohivormid";
-
-const KINDS: readonly Offer[] = ["right", "swapped", "twice", "first"];
+import { formsOf, MATCHED } from "./Pohivormid";
 
 describe("three forms quizzes", () => {
-  it("offers four different pairs for every word of “Which two come next?”", () => {
-    for (const first of NEXT) {
-      const offers = KINDS.map((kind) => offer(formsOf(first), kind));
-      expect(new Set(offers).size).toBe(4);
-    }
-  });
-
-  it("shows every offer kind once in the first round", () => {
-    expect([...FIRST_OFFERS].sort()).toEqual([...KINDS].sort());
+  it("matches six words whose second and third forms differ, none the card’s example", () => {
+    expect(MATCHED).toHaveLength(6);
+    expect(MATCHED).not.toContain("pood");
+    const rights = MATCHED.map((first) => formsOf(first).slice(1).join(", "));
+    expect(new Set(rights).size).toBe(6);
   });
 
   it("asks every pattern in every run of “Type the third form”", () => {

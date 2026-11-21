@@ -1,7 +1,6 @@
-import type { I18n, MessageDescriptor } from "@lingui/core";
+import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { clsx } from "clsx";
 import { Fragment, type ReactNode, useMemo, useState } from "react";
 import { LESSONS } from "../../../lib/learn/catalogue";
 import {
@@ -13,15 +12,16 @@ import {
   POHIVORMID_DIALOGUE,
   POHIVORMID_TYPED,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
-import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
+import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, type KeyItem, Keys, Panel } from "../Explore";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Match, type MatchPair } from "../Match";
 import { Paradigm } from "../Paradigm";
-import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { Quiz } from "../Quiz";
+import { PlayButton } from "../Sound";
 import { Word } from "../Word";
 
 const SLUG = "pohivormid";
@@ -81,22 +81,8 @@ const BACK: readonly First[] = ["pood", "tuba", "laud", "turg"];
 /** The nouns whose ending gives the third form away. */
 const TELLING: readonly First[] = ["naine", "küsimus", "töö"];
 
-/** “Which two come next?”: nouns whose second and third forms differ, so each offer is distinct. */
-export const NEXT: readonly First[] = ["pood", "raamat", "uks", "mees", "naine", "laps"];
-
-export type Offer = "right" | "swapped" | "twice" | "first";
-
-/** Two forms to follow the first: the right pair, or a slip a learner makes. */
-export function offer(forms: NounForms, kind: Offer): string {
-  const [one, two, three] = forms;
-  if (kind === "right") return `${two}, ${three}`;
-  if (kind === "swapped") return `${three}, ${two}`;
-  if (kind === "twice") return `${two}, ${two}`;
-  return `${one}, ${three}`;
-}
-
-/** The order of the first round's offers, fixed so the server and the browser agree. */
-export const FIRST_OFFERS: readonly Offer[] = ["twice", "right", "first", "swapped"];
+/** The match: words to pair with their second and third forms. pood is the card’s example above it. */
+export const MATCHED: readonly First[] = ["raamat", "auto", "uks", "mees", "naine", "laps"];
 
 function gloss(first: First | TypedFirst, form: string, forms: NounForms) {
   const [, two, three] = forms;
@@ -143,11 +129,17 @@ function litFrom(first: string, form: string): string {
 function FormTable({ notes }: { notes: Record<string, ReactNode> }) {
   const { t, i18n } = useLingui();
   const slotName = (slot: number, first: string) =>
-    slot === 0
-      ? t`The first form: the word itself.`
-      : slot === 1
-        ? t`The second form of ${first}.`
-        : t`The third form of ${first}.`;
+    slot === 0 ? (
+      <Trans>The first form: the word itself.</Trans>
+    ) : slot === 1 ? (
+      <Trans>
+        The second form of <b lang="et">{first}</b>.
+      </Trans>
+    ) : (
+      <Trans>
+        The third form of <b lang="et">{first}</b>.
+      </Trans>
+    );
   return (
     <Panel>
       <Paradigm
@@ -175,22 +167,15 @@ function FormTable({ notes }: { notes: Record<string, ReactNode> }) {
   );
 }
 
-/** One form in the dictionary card, to hear. */
+/** One form in the dictionary card with a play button beside it, as Sõnaveeb shows each form. */
 function EntryForm({ form }: { form: string }) {
-  const src = wordSrc(form);
-  const playing = usePlaying(src);
   return (
-    <button
-      type="button"
-      lang="et"
-      onClick={() => void playSound(src)}
-      className={clsx(
-        "cursor-pointer justify-self-start rounded-md px-1.5 py-1 text-lg font-medium transition-colors duration-150 hoverable:hover:bg-plate-hover",
-        playing && "text-(--form)",
-      )}
-    >
-      {form}
-    </button>
+    <span className="flex items-center gap-2">
+      <span lang="et" className="text-lg font-medium">
+        {form}
+      </span>
+      <PlayButton src={wordSrc(form)} label={<span lang="et">{form}</span>} className="size-8" />
+    </span>
   );
 }
 
@@ -245,22 +230,6 @@ function EntryCard() {
   );
 }
 
-/** A noun's three forms and its meaning, under an answered round. */
-function explainEntry(forms: NounForms, first: First, i18n: I18n) {
-  return (
-    <>
-      <span lang="et" className="font-medium text-ink">
-        {nounEntry(forms)}
-      </span>{" "}
-      {i18n._(MEANS[first])}
-    </>
-  );
-}
-
-const offersOf = (forms: NounForms, kinds: readonly Offer[]) =>
-  kinds.map((kind) => ({ id: kind, label: <span lang="et">{offer(forms, kind)}</span> }));
-
-type NextItem = ChoiceItem & { first: First };
 type ThirdItem = FormItem & { pair: readonly [string, string] };
 
 export function PohivormidLesson() {
@@ -360,28 +329,16 @@ export function PohivormidLesson() {
       };
     });
 
-  const nextItems = useMemo<NextItem[]>(
-    () =>
-      NEXT.map((first) => {
-        const forms = formsOf(first);
-        return {
-          first,
-          src: wordSrc(first),
-          answer: "right",
-          options: offersOf(forms, FIRST_OFFERS),
-          explain: explainEntry(forms, first, i18n),
-        };
-      }),
-    [i18n],
-  );
-
-  // Every round but the first shuffles its offers, so the right pair has no place of its own.
-  const nextRun = (items: readonly NextItem[], pinned?: NextItem): NextItem[] => {
-    const rest = shuffle(items.filter((item) => item !== pinned));
-    return (pinned ? [pinned, ...rest] : rest).map((item) =>
-      item === pinned ? item : { ...item, options: shuffle(item.options) },
-    );
-  };
+  const pairs: MatchPair[] = MATCHED.map((first) => {
+    const forms = formsOf(first);
+    return {
+      id: first,
+      left: first,
+      right: `${forms[1]}, ${forms[2]}`,
+      rightLang: "et",
+      src: entrySrc(forms),
+    };
+  });
 
   const thirdItems = useMemo<ThirdItem[]>(() => {
     const RULES: Record<"ne" | "us" | "long", ReactNode> = {
@@ -421,12 +378,22 @@ export function PohivormidLesson() {
       replies: [
         {
           line: "Pood, poe, poe.",
-          why: t`Poe is the second form. The third has the d back: poodi.`,
+          why: (
+            <Trans>
+              <b lang="et">Poe</b> is the second form. The third has the <b lang="et">d</b> back:{" "}
+              <b lang="et">poodi</b>.
+            </Trans>
+          ),
         },
         { line: line("d-sina-1"), right: true },
         {
           line: "Pood, poodi, poe.",
-          why: t`The order is first, second, third. Poe, the one without the d, comes second.`,
+          why: (
+            <Trans>
+              The order is first, second, third. <b lang="et">Poe</b>, the one without the{" "}
+              <b lang="et">d</b>, comes second.
+            </Trans>
+          ),
         },
       ],
     },
@@ -438,11 +405,20 @@ export function PohivormidLesson() {
         { line: line("d-sina-2"), right: true },
         {
           line: "Laps, lapse, lapse.",
-          why: t`The third form of laps ends in -st: last.`,
+          why: (
+            <Trans>
+              The third form of <b lang="et">laps</b> ends in <b lang="et">-st</b>:{" "}
+              <b lang="et">last</b>.
+            </Trans>
+          ),
         },
         {
           line: "Laps, last, lapse.",
-          why: t`Last is the third form, so it comes after lapse.`,
+          why: (
+            <Trans>
+              <b lang="et">Last</b> is the third form, so it comes after <b lang="et">lapse</b>.
+            </Trans>
+          ),
         },
       ],
     },
@@ -453,7 +429,12 @@ export function PohivormidLesson() {
       replies: [
         {
           line: "Maja, majas, maja.",
-          why: t`Majas means in the house: the second form with -s. The second form itself is maja.`,
+          why: (
+            <Trans>
+              <b lang="et">Majas</b> means in the house: the second form with <b lang="et">-s</b>.
+              The second form itself is <b lang="et">maja</b>.
+            </Trans>
+          ),
         },
         { line: line("d-sina-3"), right: true },
       ],
@@ -465,11 +446,21 @@ export function PohivormidLesson() {
       replies: [
         {
           line: "Vastus, vastus, vastust.",
-          why: t`Like küsimus, vastus has a second form in -use: vastuse.`,
+          why: (
+            <Trans>
+              Like <b lang="et">küsimus</b>, <b lang="et">vastus</b> has a second form in{" "}
+              <b lang="et">-use</b>: <b lang="et">vastuse</b>.
+            </Trans>
+          ),
         },
         {
           line: "Vastus, vastuse, vastuse.",
-          why: t`Like küsimus, vastus ends its third form in -ust: vastust.`,
+          why: (
+            <Trans>
+              Like <b lang="et">küsimus</b>, <b lang="et">vastus</b> ends its third form in{" "}
+              <b lang="et">-ust</b>: <b lang="et">vastust</b>.
+            </Trans>
+          ),
         },
         { line: line("d-sina-4"), right: true },
       ],
@@ -619,30 +610,19 @@ export function PohivormidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear the first form of a word, then pick the second and third, in order.
+                    Match each word with its second and third forms. A wrong pair counts against
+                    you, so look for the letters that change.
                   </Trans>
                 </p>
               </Prose>
-              <Quiz
-                id="next-forms"
-                title={<Trans>Which two come next?</Trans>}
-                items={nextItems}
-                rounds={6}
-                verdict={(share) =>
-                  share === 1 ? (
-                    <Trans>All six. You picked the second and third form every time.</Trans>
-                  ) : share >= 0.6 ? (
-                    <Trans>Nearly. Look at the table above for the ones you missed.</Trans>
-                  ) : (
-                    <Trans>Tap through the table above once more, then try again.</Trans>
-                  )
-                }
-                recall={(item) => ({
-                  label: nounEntry(formsOf(item.first)),
-                  src: entrySrc(formsOf(item.first)),
-                })}
-                order={nextRun}
-                round={(props) => <ChoiceRound {...props} />}
+              <Match
+                id="match-forms"
+                title={<Trans>Which forms go together?</Trans>}
+                pairs={pairs}
+                columns={[
+                  <Trans key="f">First form</Trans>,
+                  <Trans key="o">Second and third</Trans>,
+                ]}
               />
             </>
           ),

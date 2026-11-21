@@ -536,6 +536,9 @@ msgstr "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> asks where you’re from, not where you live."
 
+msgid "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
+msgstr "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
+
 msgid "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
 msgstr "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
 
@@ -544,6 +547,9 @@ msgstr "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
 
 msgid "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
 msgstr "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
+
+msgid "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
+msgstr "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
 
 msgid "<0>marginal cost</0> <1>= cost of 1 more</1>"
 msgstr "<0>marginal cost</0> <1>= cost of 1 more</1>"
@@ -571,6 +577,9 @@ msgstr "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance
 
 msgid "<0>P suletud</0> on a sign: closed on Sunday."
 msgstr "<0>P suletud</0> on a sign: closed on Sunday."
+
+msgid "<0>Poe</0> is the second form. The third has the <1>d</1> back: <2>poodi</2>."
+msgstr "<0>Poe</0> is the second form. The third has the <1>d</1> back: <2>poodi</2>."
 
 msgid "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
 msgstr "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
@@ -939,8 +948,8 @@ msgstr "a foot"
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 
-msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us, or a final long vowel, tell you the third. Every word is read aloud."
-msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how the endings -ne and -us, or a final long vowel, tell you the third. Every word is read aloud."
+msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the third. Every word is read aloud."
+msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the third. Every word is read aloud."
 
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
@@ -1734,9 +1743,6 @@ msgstr "All six. Every ending was right."
 
 msgid "All six. You matched every pronoun with its ending."
 msgstr "All six. You matched every pronoun with its ending."
-
-msgid "All six. You picked the second and third form every time."
-msgstr "All six. You picked the second and third form every time."
 
 msgid "All six. You typed the third form right every time."
 msgstr "All six. You typed the third form right every time."
@@ -4115,6 +4121,9 @@ msgstr "First"
 msgid "First day"
 msgstr "First day"
 
+msgid "First form"
+msgstr "First form"
+
 msgid "First-line drug for type 2 diabetes. Lowers the glucose the liver makes."
 msgstr "First-line drug for type 2 diabetes. Lowers the glucose the liver makes."
 
@@ -4935,9 +4944,6 @@ msgstr "Hear it"
 
 msgid "Hear it read"
 msgstr "Hear it read"
-
-msgid "Hear the first form of a word, then pick the second and third, in order."
-msgstr "Hear the first form of a word, then pick the second and third, in order."
 
 msgid "Hear the question, then pick the short answer that says no."
 msgstr "Hear the question, then pick the short answer that says no."
@@ -6293,9 +6299,6 @@ msgstr "Languages"
 msgid "Lasnamäe, a district of Tallinn"
 msgstr "Lasnamäe, a district of Tallinn"
 
-msgid "Last is the third form, so it comes after lapse."
-msgstr "Last is the third form, so it comes after lapse."
-
 msgid "Last updated"
 msgstr "Last updated"
 
@@ -6505,11 +6508,11 @@ msgstr "library"
 msgid "Light reactions"
 msgstr "Light reactions"
 
-msgid "Like küsimus, vastus ends its third form in -ust: vastust."
-msgstr "Like küsimus, vastus ends its third form in -ust: vastust."
+msgid "Like <0>küsimus</0>, <1>vastus</1> ends its third form in <2>-ust</2>: <3>vastust</3>."
+msgstr "Like <0>küsimus</0>, <1>vastus</1> ends its third form in <2>-ust</2>: <3>vastust</3>."
 
-msgid "Like küsimus, vastus has a second form in -use: vastuse."
-msgstr "Like küsimus, vastus has a second form in -use: vastuse."
+msgid "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
+msgstr "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
 
 msgid "Like the a in “cat”."
 msgstr "Like the a in “cat”."
@@ -6824,9 +6827,6 @@ msgstr "Main navigation"
 msgid "Mainland voice"
 msgstr "Mainland voice"
 
-msgid "Majas means in the house: the second form with -s. The second form itself is maja."
-msgstr "Majas means in the house: the second form with -s. The second form itself is maja."
-
 msgid "Make a card for each drug, with its class."
 msgstr "Make a card for each drug, with its class."
 
@@ -6973,6 +6973,9 @@ msgstr "Masculine, though it ends in -a: buenos días."
 
 msgid "Match"
 msgstr "Match"
+
+msgid "Match each word with its second and third forms. A wrong pair counts against you, so look for the letters that change."
+msgstr "Match each word with its second and third forms. A wrong pair counts against you, so look for the letters that change."
 
 msgid "Match, Blast and Quizlet Live"
 msgstr "Match, Blast and Quizlet Live"
@@ -7261,9 +7264,6 @@ msgstr "Nearly. Listen for the verb in the question."
 
 msgid "Nearly. Listen to the first word of the ones you missed."
 msgstr "Nearly. Listen to the first word of the ones you missed."
-
-msgid "Nearly. Look at the table above for the ones you missed."
-msgstr "Nearly. Look at the table above for the ones you missed."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Nearly. Play the ones you missed once more."
@@ -8322,9 +8322,6 @@ msgstr "Plural: see lesson {plural}"
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP and PRINCE2: processes, roles and the vocabulary."
 
-msgid "Poe is the second form. The third has the d back: poodi."
-msgstr "Poe is the second form. The third has the d back: poodi."
-
 msgid "Poe- plus -s: in a shop."
 msgstr "Poe- plus -s: in a shop."
 
@@ -9152,6 +9149,9 @@ msgstr "second"
 
 msgid "Second"
 msgstr "Second"
+
+msgid "Second and third"
+msgstr "Second and third"
 
 msgid "Section"
 msgstr "Section"
@@ -10101,9 +10101,6 @@ msgstr "Tap the words in order"
 msgid "Tap the words in order first."
 msgstr "Tap the words in order first."
 
-msgid "Tap through the table above once more, then try again."
-msgstr "Tap through the table above once more, then try again."
-
 msgid "Tap to turn it over"
 msgstr "Tap to turn it over"
 
@@ -10713,8 +10710,8 @@ msgstr "The one that matches your test or topic. You can add more than one, and 
 msgid "The ones starting to fade"
 msgstr "The ones starting to fade"
 
-msgid "The order is first, second, third. Poe, the one without the d, comes second."
-msgstr "The order is first, second, third. Poe, the one without the d, comes second."
+msgid "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."
+msgstr "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."
 
 msgid "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
 msgstr "The other ending is <0>-l</0>. It says on a surface: <1/>, on the table. And it says at an activity, where you’re doing something rather than inside a building: <2/>, at work."
@@ -10866,6 +10863,9 @@ msgstr "The second form is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> g
 msgid "The second form of {first}."
 msgstr "The second form of {first}."
 
+msgid "The second form of <0>{first}</0>."
+msgstr "The second form of <0>{first}</0>."
+
 msgid "The second loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the third is the first again."
 msgstr "The second loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the third is the first again."
 
@@ -10956,8 +10956,11 @@ msgstr "The third drops the <0>p</0> and ends in <1>-st</1>."
 msgid "The third form of {first}."
 msgstr "The third form of {first}."
 
-msgid "The third form of laps ends in -st: last."
-msgstr "The third form of laps ends in -st: last."
+msgid "The third form of <0>{first}</0>."
+msgstr "The third form of <0>{first}</0>."
+
+msgid "The third form of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
+msgstr "The third form of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
 
 msgid "The third is the second with <0>-t</0>."
 msgstr "The third is the second with <0>-t</0>."
@@ -12479,6 +12482,9 @@ msgstr "Which ending?"
 msgid "Which form did you hear?"
 msgstr "Which form did you hear?"
 
+msgid "Which forms go together?"
+msgstr "Which forms go together?"
+
 msgid "Which half hour?"
 msgstr "Which half hour?"
 
@@ -12520,9 +12526,6 @@ msgstr "Which question word?"
 
 msgid "Which questions come up"
 msgstr "Which questions come up"
-
-msgid "Which two come next?"
-msgstr "Which two come next?"
 
 msgid "Which word did you hear?"
 msgstr "Which word did you hear?"

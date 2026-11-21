@@ -26,6 +26,7 @@ import { SobragaRahataLesson } from "../learn/lessons/SobragaRahata";
 import { TulevikLesson } from "../learn/lessons/Tulevik";
 
 import { TegevusnimedLesson } from "../learn/lessons/Tegevusnimed";
+import { TurulLesson } from "../learn/lessons/Turul";
 import { TutvumineLesson } from "../learn/lessons/Tutvumine";
 import { UjumaUjumasUjumastLesson } from "../learn/lessons/UjumaUjumasUjumast";
 import { VerbiPohivormidLesson } from "../learn/lessons/VerbiPohivormid";
@@ -55,6 +56,7 @@ export const LESSON_VIEWS = {
   omastav: OmastavLesson,
   "majas-majja-majast": MajasMajjaMajastLesson,
   meeldima: MeeldimaLesson,
+  turul: TurulLesson,
   "verbi-pohivormid": VerbiPohivormidLesson,
   tegevusnimed: TegevusnimedLesson,
   "ujuma-ujumas-ujumast": UjumaUjumasUjumastLesson,

@@ -5,6 +5,7 @@ import type { ReactNode } from "react";
 import { KIT_DIALOGUE, KIT_PASSAGES } from "../../lib/learn/clips";
 import { Dialogue, type DialogueTurn } from "./Dialogue";
 import { type GapItem, GapPassage } from "./GapPassage";
+import { KitExplorers } from "./KitExplorers";
 import { LearnLayout } from "./LearnLayout";
 import { type Glossary, LessonContext } from "./lesson-context";
 import { Listening, type PassageQuestion, Reading } from "./Passage";
@@ -356,6 +357,7 @@ export function KitDemo() {
                 text="sound"
               />
             </Part>
+            <KitExplorers Part={Part} />
           </div>
         </LearnLayout>
       </WordCards>

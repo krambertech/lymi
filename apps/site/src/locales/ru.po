@@ -13,11 +13,29 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+msgid "-b now; in the past just -s."
+msgstr "-b сейчас; в прошлом просто -s."
+
+msgid "-d now, -sid in the past."
+msgstr "-d сейчас, -sid в прошлом."
+
+msgid "-me now, -sime in the past."
+msgstr "-me сейчас, -sime в прошлом."
+
+msgid "-n now, -sin in the past."
+msgstr "-n сейчас, -sin в прошлом."
+
 msgid "-s or -l?"
 msgstr "-s или -l?"
 
+msgid "-te now, -site in the past."
+msgstr "-te сейчас, -site в прошлом."
+
 msgid "-teist or -kümmend?"
 msgstr "-teist или -kümmend?"
+
+msgid "-vad now; -sid in the past, as for sa."
+msgstr "-vad сейчас; -sid в прошлом, как для sa."
 
 msgid "“J’ai la flemme” is the whole excuse."
 msgstr "«J’ai la flemme» — и никаких других объяснений."
@@ -87,6 +105,11 @@ msgstr "{0, plural, one {Повтори все #} few {Повтори все #} 
 msgid "{0, plural, one {Your deck} other {Your decks}}"
 msgstr "{0, plural, one {Твоя колода} few {Твои колоды} many {Твои колоды} other {Твои колоды}}"
 
+#. placeholder {0}: before.word
+#. placeholder {1}: step.word
+msgid "{0} becomes {1}"
+msgstr "{0} становится {1}"
+
 #. placeholder {0}: i18n.number(IMPORT_FROM)
 msgid "{0} cards, history kept"
 msgstr "{0} карточек, история сохранена"
@@ -105,6 +128,14 @@ msgstr "{0} из {1} сегодня"
 #. placeholder {1}: g.when
 msgid "{0}, next in {1}"
 msgstr "{0}, следующее через {1}"
+
+#. placeholder {0}: place.meaning
+msgid "{0}, right answer"
+msgstr "{0}, правильный ответ"
+
+#. placeholder {0}: place.meaning
+msgid "{0}, your answer"
+msgstr "{0}, твой ответ"
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}}"
@@ -777,6 +808,12 @@ msgstr "Пока ты не знаешь слово, карточка показ�
 msgid "A card shows pinyin over its word until the card is Known. In the examples on your cards, pinyin disappears from each character you’ve learned, but stays where that character has a different sound."
 msgstr "Карточка показывает пиньинь над своим словом, пока она не выучена. В примерах на твоих карточках пиньинь исчезает с каждого иероглифа, который ты уже знаешь, но остаётся там, где этот иероглиф читается иначе."
 
+msgid "A cat and a cardboard box"
+msgstr "Кот и картонная коробка"
+
+msgid "A cat and a house"
+msgstr "Кот и дом"
+
 msgid "A cell dividing in two"
 msgstr "Деление клетки надвое"
 
@@ -842,6 +879,9 @@ msgstr "Цифра после десятков — отдельное слово
 msgid "A double letter is longer, and it makes a different word."
 msgstr "Удвоенная буква звучит дольше, и с ней получается другое слово."
 
+msgid "A drawing on the tray: pressing a place, on a key or on the drawing, moves the cat there and plays the sentence."
+msgstr "Рисунок на подложке: нажатие на место, на клавише или на рисунке, переносит туда кота и проигрывает предложение."
+
 msgid "A duck asleep in a POT"
 msgstr "Утка застряла в ПАТОке"
 
@@ -871,6 +911,9 @@ msgstr "Флеш-карточки для всего, что ты учишь."
 
 msgid "A flat plate on a door says push; a handle says pull."
 msgstr "Гладкая накладка на двери подсказывает «толкай», ручка — «тяни»."
+
+msgid "a foot"
+msgstr "нога"
 
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "В бесплатной колоде есть каждый дорожный знак из правил: по картинке, с польским названием и номером."
@@ -1050,6 +1093,9 @@ msgstr "Записка от Кати"
 msgid "A notes field on each card"
 msgstr "Поле для заметок в каждой карточке"
 
+msgid "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
+msgstr "Падежи существительного на подложке: коснись формы, чтобы её услышать, окончание подсвечено. Строки могут начинаться с вопросительных слов, а одну строку или столбец можно выделить. На телефоне строки становятся списком."
+
 msgid "A page that isn’t where the link says it is"
 msgstr "Страница, которой нет там, куда ведёт ссылка"
 
@@ -1115,6 +1161,12 @@ msgstr "Вопросительное слово ставится первым, �
 msgid "A question you got wrong"
 msgstr "Вопрос с ошибкой"
 
+msgid "A quiz round on a scene: hear a sentence, then tap the place on the drawing."
+msgstr "Раунд викторины на сцене: послушай предложение, затем коснись места на рисунке."
+
+msgid "a room"
+msgstr "комната"
+
 msgid "A round loaf of bread"
 msgstr "Круглый хлеб"
 
@@ -1123,6 +1175,9 @@ msgstr "Своё расписание у каждой карточки"
 
 msgid "A score for one attempt"
 msgstr "Баллы за одну попытку"
+
+msgid "a shop"
+msgstr "магазин"
 
 msgid "A shop’s opening hours"
 msgstr "Часы работы магазина"
@@ -1186,6 +1241,9 @@ msgstr "Итоги недели"
 
 msgid "A word list from a spreadsheet"
 msgstr "Список слов из таблицы"
+
+msgid "A word turning into its forms: the letters it drops are struck, the ones it gains are lit."
+msgstr "Слово превращается в свои формы: буквы, которые оно теряет, зачёркнуты, а новые подсвечены."
 
 msgid "A year has 365 days."
 msgstr "В году 365 дней."
@@ -2173,6 +2231,9 @@ msgstr "Перед экзаменом на права"
 
 msgid "Began in 1618 with the <0>Defenestration of Prague</0>."
 msgstr "Началась в 1618 году с <0>Пражской дефенестрации</0>."
+
+msgid "behind"
+msgstr "сзади"
 
 msgid "Beta"
 msgstr "Бета"
@@ -3623,6 +3684,9 @@ msgstr "Любые. Каждая колода — либо упрощённые,
 msgid "El or la, on every noun."
 msgstr "El или la у каждого существительного."
 
+msgid "Elative"
+msgstr "Элатив"
+
 msgid "eleven"
 msgstr "одиннадцать"
 
@@ -4205,12 +4269,18 @@ msgstr "забыто 4×"
 msgid "Forgot, Hard, Good or Easy"
 msgstr "«Не помню», «Трудно», «Хорошо» или «Легко»"
 
+msgid "Form"
+msgstr "Форма"
+
 msgctxt "pronoun form"
 msgid "Form"
 msgstr "Форма"
 
 msgid "Format from 11 April 2026"
 msgstr "Формат с 11 апреля 2026 года"
+
+msgid "Forms of maja"
+msgstr "Формы maja"
 
 msgid "four"
 msgstr "четыре"
@@ -4448,6 +4518,9 @@ msgstr "Полностью без интернета на всех устрой�
 
 msgid "Furigana, pinyin, stress marks."
 msgstr "Фуригана, пиньинь, ударения."
+
+msgid "Future"
+msgstr "Будущее"
 
 msgid "Future, “I”"
 msgstr "Будущее время, «я»"
@@ -4697,6 +4770,9 @@ msgstr "Grok Bot работает на собственном облачном �
 msgid "habeas corpus"
 msgstr "habeas corpus"
 
+msgid "hakkama, now"
+msgstr "hakkama, сейчас"
+
 msgid "half"
 msgstr "половина"
 
@@ -4798,6 +4874,9 @@ msgstr "Он работает"
 
 msgid "He writes"
 msgstr "Он пишет"
+
+msgid "he, she"
+msgstr "он, она"
 
 msgid "He’s a doctor"
 msgstr "Он врач"
@@ -5268,6 +5347,9 @@ msgstr "Я езжу на работу на *поезде*."
 msgid "I got a *call* from my mum."
 msgstr "Мне *звонила* мама."
 
+msgid "I had already eaten."
+msgstr "Я тогда уже поел."
+
 msgid "I have a *dog*."
 msgstr "У меня есть *собака*."
 
@@ -5276,6 +5358,9 @@ msgstr "У меня рюкзак на *спине*."
 
 msgid "I have a Japanese *friend*."
 msgstr "У меня есть *друг* из Японии."
+
+msgid "I have already eaten."
+msgstr "Я уже поел."
 
 msgid "I have an *appointment* tomorrow."
 msgstr "Завтра у меня *запись*."
@@ -5436,6 +5521,9 @@ msgstr "Я дома."
 msgid "I’m at work."
 msgstr "Я на работе."
 
+msgid "I’m eating now."
+msgstr "Сейчас я ем."
+
 msgid "I’m from Ukraine."
 msgstr "Я из Украины."
 
@@ -5456,6 +5544,9 @@ msgstr "На выходных я иду в гости к *другу*."
 
 msgid "I’m going to Beijing *tomorrow*."
 msgstr "*Завтра* я еду в Пекин."
+
+msgid "I’m going to eat."
+msgstr "Я собираюсь есть."
 
 msgid "I’m going to the *bank* to get money."
 msgstr "Я иду в *банк* снять деньги."
@@ -5556,6 +5647,9 @@ msgstr "Если колода твоей группы обновляется ч�
 msgid "If your teacher assigns sets and runs Quizlet Live in class, stay where the class is."
 msgstr "Если преподаватель задаёт наборы и устраивает Quizlet Live на уроках, оставайся там, где весь класс."
 
+msgid "Illative"
+msgstr "Иллатив"
+
 msgid "Illustration of recall over thirty days. One line fades after a card is learned once. Another rises at reviews on days 3, 8, and 19, then fades more slowly as the gaps grow."
 msgstr "Условный график памяти за тридцать дней. Без повторений знание постепенно угасает. После повторений на 3-й, 8-й и 19-й день оно восстанавливается, а с более длинными перерывами угасает медленнее."
 
@@ -5604,6 +5698,12 @@ msgstr "В вопросе с kas голос в конце понижается, 
 msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
 msgstr "В проекте с файлами курса Claude может собрать одну колоду с разделом на каждую лекцию."
 
+msgid "in a room"
+msgstr "в комнате"
+
+msgid "in a shop"
+msgstr "в магазине"
+
 msgid "In an office"
 msgstr "В офисе"
 
@@ -5630,6 +5730,9 @@ msgstr "В примерах фуригана остаётся над слова�
 
 msgid "in Finland"
 msgstr "в Финляндии"
+
+msgid "in front"
+msgstr "впереди"
 
 msgid "In Gemini CLI, /mcp shows Lymi connected. Asked to add the terms from a README to the Kubernetes deck, Gemini uses Lymi and adds 11 cards."
 msgstr "В Gemini CLI команда /mcp показывает, что Lymi подключён. На просьбу добавить термины из README в колоду «Kubernetes» Gemini использует Lymi и добавляет 11 карточек."
@@ -5700,8 +5803,17 @@ msgstr "В итоге"
 msgid "In the Grok Bot app, open Connect apps and choose Add a custom connector. Name it Lymi, pick Remote HTTPS and paste this address."
 msgstr "В приложении Grok Bot открой Connect apps и выбери Add a custom connector. Назови его Lymi, выбери Remote HTTPS и вставь этот адрес."
 
+msgid "in the house"
+msgstr "в доме"
+
+msgid "In the house: -s, and -des for more than one."
+msgstr "В доме: -s, а для нескольких -des."
+
 msgid "In the order you learn them, one section at a time."
 msgstr "В том порядке, в котором ты их учишь: раздел за разделом."
+
+msgid "In the past"
+msgstr "В прошлом"
 
 msgid "In the place"
 msgstr "Где?"
@@ -5730,11 +5842,17 @@ msgstr "В чём, во что, из чего"
 msgid "In, on and at in Estonian: -s and -l"
 msgstr "«В» и «на» по-эстонски: -s и -l"
 
+msgid "Inessive"
+msgstr "Инессив"
+
 msgid "Infinitives: -ma and -da"
 msgstr "Инфинитивы: -ma и -da"
 
 msgid "Injured at the elbow; weak grip and numb little finger"
 msgstr "Повреждается у локтя; слабый хват и онемение мизинца"
+
+msgid "inside"
+msgstr "внутри"
 
 msgid "Insights"
 msgstr "Обзор"
@@ -5753,6 +5871,12 @@ msgstr "Mac с Intel?"
 
 msgid "Intel Mac? Download for Intel"
 msgstr "Mac с Intel? Скачать версию для Intel"
+
+msgid "into the house"
+msgstr "в дом"
+
+msgid "Into the house. Majja doubles the j; majasse means the same."
+msgstr "В дом. В majja j удваивается; majasse значит то же самое."
 
 msgid "Invite"
 msgstr "Пригласить"
@@ -6495,6 +6619,9 @@ msgstr "Похоже на знакомое. Значит другое."
 msgid "Looks like"
 msgstr "Похоже на"
 
+msgid "Lugema now and in the past"
+msgstr "Lugema сейчас и в прошлом"
+
 msgid "Lymi · Flashcard app with spaced repetition"
 msgstr "Lymi · Флеш-карточки с интервальным повторением"
 
@@ -7189,6 +7316,9 @@ msgstr "Следующее повторение через {0}"
 msgid "Next time, you can peek at it before the answer."
 msgstr "В следующий раз сможешь подсмотреть её до ответа."
 
+msgid "next to"
+msgstr "рядом"
+
 msgid "Nice to meet you"
 msgstr "Приятно познакомиться"
 
@@ -7421,11 +7551,20 @@ msgstr "существительное"
 msgid "Nouns and cases"
 msgstr "Существительные и падежи"
 
+msgid "Now"
+msgstr "Сейчас"
+
 msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
 msgstr "Теперь суббота, и вот твой план. Вставь в каждый пропуск слово: форму <0/>, глагол с нужным окончанием, <1/> или форму слова после числа."
 
+msgid "Now the stem is loe-, in the past luge-."
+msgstr "Сейчас основа loe-, в прошлом luge-."
+
 msgid "Now you ask. Pick the question that fits what Mari just said. Ask why with <0/>, and the answer starts with <1/>, because."
 msgstr "Теперь спрашиваешь ты. Выбирай вопрос, который подходит к тому, что Мари только что сказала. «Почему» — это <0/>, а ответ начинается с <1/>, «потому что»."
+
+msgid "now, for ma"
+msgstr "сейчас, для ma"
 
 msgid "Number"
 msgstr "Число"
@@ -7462,6 +7601,18 @@ msgstr "из 40 баллов, чтобы сдать говорение"
 
 msgid "of 70 points to pass reading, writing and listening"
 msgstr "из 70 баллов, чтобы сдать чтение, письмо и аудирование"
+
+msgid "of a foot"
+msgstr "ноги"
+
+msgid "of a room"
+msgstr "комнаты"
+
+msgid "of a shop"
+msgstr "магазина"
+
+msgid "Of the house. For one it looks like the base form."
+msgstr "Дома. В единственном числе совпадает с начальной формой."
 
 msgid "of the points to pass, at every level"
 msgstr "баллов для сдачи на каждом уровне"
@@ -7506,8 +7657,17 @@ msgstr "Раньше"
 msgid "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
 msgstr "У olema будет <0>ei ole</0>, или одним словом <1>pole</1>."
 
+msgid "olema, now"
+msgstr "olema, сейчас"
+
+msgid "olema, past"
+msgstr "olema, прошедшее"
+
 msgid "Olema, to be"
 msgstr "Olema, быть"
+
+msgid "on"
+msgstr "на"
 
 msgid "On a door or a sign."
 msgstr "На двери или на табличке."
@@ -7568,6 +7728,9 @@ msgstr "Как только ты добавишь колоду, Lymi будет 
 
 msgid "one"
 msgstr "один"
+
+msgid "One"
+msgstr "Один"
 
 msgctxt "plural"
 msgid "One"
@@ -7771,6 +7934,12 @@ msgstr "Наша *команда* выиграла!"
 msgid "Out loud, on a walk"
 msgstr "Вслух, на прогулке"
 
+msgid "out of the house"
+msgstr "из дома"
+
+msgid "Out of the house: -st, and -dest for more than one."
+msgstr "Из дома: -st, а для нескольких -dest."
+
 msgid "Own things, count them and put them somewhere. Stems change first, then the genitive, which most other cases build on."
 msgstr "Иметь вещи, считать их и куда-то класть. Сначала меняются основы, затем генитив, на котором строится большинство других падежей."
 
@@ -7798,6 +7967,9 @@ msgstr "Пярну получает <0>-s</0>: <1>Pärnus</1>."
 msgid "Pärnu, a town by the sea"
 msgstr "Пярну, город у моря"
 
+msgid "Part of something, and after numbers. Maju swaps the a for -u."
+msgstr "Часть чего-то, а также после числительных. В maju a меняется на -u."
+
 msgid "Participles"
 msgstr "Причастия"
 
@@ -7813,14 +7985,23 @@ msgstr "Распространение частиц от высокой конц
 msgid "Particles spreading from where there are more of them to where there are fewer"
 msgstr "Движение частиц оттуда, где их больше, туда, где их меньше"
 
+msgid "partitive"
+msgstr "партитив"
+
 msgid "Partitive"
 msgstr "Партитив"
 
 msgid "parts: reading, writing, listening and speaking"
 msgstr "части: чтение, письмо, аудирование и говорение"
 
+msgid "Past"
+msgstr "Прошедшее"
+
 msgid "Past tense"
 msgstr "Прошедшее время"
+
+msgid "past, for ma"
+msgstr "прошедшее, для ma"
 
 msgid "Paste it into Lymi"
 msgstr "Вставь его в Lymi"
@@ -8027,6 +8208,12 @@ msgstr "Воспроизвести {text}"
 msgid "Play {word}"
 msgstr "Воспроизвести {word}"
 
+#. placeholder {0}: example.sentence
+#. placeholder {0}: shown.sentence
+#. placeholder {0}: step.word
+msgid "Play <0>{0}</0>"
+msgstr "Воспроизвести <0>{0}</0>"
+
 msgid "Play each number twice before you type."
 msgstr "Послушай каждое число дважды, прежде чем писать."
 
@@ -8066,6 +8253,9 @@ msgstr "Пожалуйста; вот, держи"
 msgid "Please; here you go; you’re welcome"
 msgstr "Пожалуйста; вот, держи; не за что"
 
+msgid "Pluperfect"
+msgstr "Давнопрошедшее"
+
 msgid "Plural"
 msgstr "Множественное число"
 
@@ -8077,6 +8267,9 @@ msgstr "Партитив множественного числа"
 
 msgid "PMP and PRINCE2: processes, roles and the vocabulary."
 msgstr "PMP и PRINCE2: процессы, роли и терминология."
+
+msgid "Poe- plus -s: in a shop."
+msgstr "Poe- плюс -s: в магазине."
 
 msgid "points in all, at either level"
 msgstr "баллов всего на каждом из уровней"
@@ -8200,6 +8393,12 @@ msgstr "Предпочитай объяснение, которому нужно
 
 msgid "Pregnant"
 msgstr "Беременная"
+
+msgid "Present"
+msgstr "Настоящее"
+
+msgid "Present perfect"
+msgstr "Перфект"
 
 msgid "Present tense"
 msgstr "Настоящее время"
@@ -8839,6 +9038,15 @@ msgstr "Отрицание в прошлом"
 
 msgid "Saying where: -s and -l"
 msgstr "Как сказать, где: окончания -s и -l"
+
+msgid "Scene"
+msgstr "Сцена"
+
+msgid "Scene quiz"
+msgstr "Викторина на сцене"
+
+msgid "Scene with movement"
+msgstr "Сцена с движением"
 
 msgid "Scheduling"
 msgstr "Планирование повторений"
@@ -9649,6 +9857,12 @@ msgstr "Ta — это он или она: «Он Яан»."
 msgid "table"
 msgstr "стол"
 
+msgid "Table of forms"
+msgstr "Таблица форм"
+
+msgid "Table of forms, a verb"
+msgstr "Таблица форм глагола"
+
 msgid "Tag cards by chapter, pick one tag and review just those cards."
 msgstr "Отметь карточки тегами по главам, выбери один тег и повтори только эти карточки."
 
@@ -9739,6 +9953,9 @@ msgstr "Нажми на день"
 msgid "Tap a filled gap to take its word back."
 msgstr "Нажми на заполненный пропуск, чтобы забрать слово."
 
+msgid "Tap a form"
+msgstr "Коснись формы"
+
 msgid "Tap a letter"
 msgstr "Нажми на букву"
 
@@ -9748,8 +9965,14 @@ msgstr "Нажми на место"
 msgid "Tap a place to hear the answer."
 msgstr "Нажми на место, чтобы услышать ответ."
 
+msgid "Tap a place to send the cat there and hear where it is."
+msgstr "Коснись места, чтобы отправить туда кота и услышать, где он."
+
 msgid "Tap a question word"
 msgstr "Нажми вопросительное слово"
+
+msgid "Tap a tense"
+msgstr "Коснись времени"
 
 msgid "Tap a vowel"
 msgstr "Нажми на гласную"
@@ -9856,6 +10079,12 @@ msgstr "без десяти четыре, 3:50"
 msgid "Tens and ones are separate words: <0>kakskümmend üks</0>."
 msgstr "Десятки и единицы — отдельные слова: <0>kakskümmend üks</0>."
 
+msgid "Tenses of sööma"
+msgstr "Времена sööma"
+
+msgid "Tenses on a line, past to future. Each point plays an example and shows how its verb is built; a band shows what a tense reaches to."
+msgstr "Времена на линии, от прошлого к будущему. Каждая точка проигрывает пример и показывает, как построен глагол; полоса показывает, до чего время дотягивается."
+
 msgid "Term"
 msgstr "Термин"
 
@@ -9927,6 +10156,12 @@ msgstr "Это о том, который час. Мари спросила, ка
 
 msgid "The -des and -mata forms"
 msgstr "Формы на -des и -mata"
+
+msgid "the -ma form"
+msgstr "форма на -ma"
+
+msgid "the -nud form"
+msgstr "форма на -nud"
 
 msgid "The {name} app icon behind Lymi’s"
 msgstr "Значок приложения {name} за значком Lymi"
@@ -10027,6 +10262,12 @@ msgstr "App Store"
 msgid "The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend."
 msgstr "В sõpra b превращается в p: ma ootan sõpra — я жду друга."
 
+msgid "The b drops and the u becomes o."
+msgstr "b выпадает, а u становится o."
+
+msgid "The base form. More than one adds -d."
+msgstr "Начальная форма. Для нескольких добавляется -d."
+
 msgid "The basics"
 msgstr "Основы"
 
@@ -10048,11 +10289,38 @@ msgstr "Карточки с этой страницы появятся здес�
 msgid "The castle stands on a hill."
 msgstr "Замок стоит на горе."
 
+msgid "The cat comes out of the house."
+msgstr "Кот выходит из дома."
+
+msgid "The cat goes into the house."
+msgstr "Кот заходит в дом."
+
 msgid "The cat is asleep on the *rug*."
 msgstr "Кот спит на *ковре*."
 
 msgid "The cat is at home."
 msgstr "Кошка дома."
+
+msgid "The cat is behind the box."
+msgstr "Кот за коробкой."
+
+msgid "The cat is in front of the box."
+msgstr "Кот перед коробкой."
+
+msgid "The cat is in the house."
+msgstr "Кот в доме."
+
+msgid "The cat is inside the box."
+msgstr "Кот в коробке."
+
+msgid "The cat is next to the box."
+msgstr "Кот рядом с коробкой."
+
+msgid "The cat is on the box."
+msgstr "Кот на коробке."
+
+msgid "The cat is under the box."
+msgstr "Кот под коробкой."
 
 msgid "The cats are at home."
 msgstr "Кошки дома."
@@ -10207,6 +10475,15 @@ msgstr "Полный каталог BAMF: 300 общих вопросов и 10 
 msgid "The future"
 msgstr "Будущее"
 
+msgid "The g comes back in the partitive."
+msgstr "В партитиве g возвращается."
+
+msgid "The g drops and an a comes in."
+msgstr "g выпадает, а появляется a."
+
+msgid "The g drops and the u becomes o: loe-, plus -n for ma."
+msgstr "g выпадает, а u становится o: loe-, плюс -n для ma."
+
 msgid "The gaps grow as you learn."
 msgstr "Чем лучше знаешь, тем длиннее паузы."
 
@@ -10297,6 +10574,9 @@ msgstr "Фонарь и логотип Lymi над английской надп
 msgid "The Lymi plugin gives your assistant a skill for each. It installs in Claude, Claude Code, Codex, Cursor and Gemini CLI."
 msgstr "Плагин Lymi даёт ассистенту навык для каждого. Он ставится в Claude, Claude Code, Codex, Cursor и Gemini CLI."
 
+msgid "The m becomes d: -ma turns into -da."
+msgstr "m становится d: -ma превращается в -da."
+
 msgid "The man is working."
 msgstr "Мужчина работает."
 
@@ -10338,6 +10618,9 @@ msgstr "Существительное оканчивается на <0>-d</0>, 
 
 msgid "The object: whole or part"
 msgstr "Дополнение: целое или часть"
+
+msgid "The od drops and an e comes in: poe- carries most forms."
+msgstr "od выпадает, а появляется e: от poe- образуется большинство форм."
 
 msgid "The old *castle* on the hill."
 msgstr "Старый *замок* на горе."
@@ -10475,8 +10758,14 @@ msgstr "Одинаково в обоих"
 msgid "The same kanji sounds different in different words. Lymi shows the reading over the kanji until you know the word, then takes it away so you learn to read it on your own."
 msgstr "Один и тот же кандзи в разных словах звучит по-разному. Lymi показывает чтение над кандзи, пока ты не знаешь слово, а потом убирает его, и дальше ты читаешь без подсказки."
 
+msgid "The same table for a verb: persons down, tenses across."
+msgstr "Та же таблица для глагола: лица в строках, времена в столбцах."
+
 msgid "The same topic in other languages"
 msgstr "Та же тема на других языках"
+
+msgid "The same with a house: the cat walks in, sits inside, and comes out."
+msgstr "То же с домом: кот заходит, сидит внутри и выходит."
 
 msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "Одно слово и для любимого человека, и для цены, которую не хочется платить."
@@ -10895,6 +11184,9 @@ msgstr "Выражения времени: когда что происходи�
 msgid "Time for the level to halve"
 msgstr "Время, за которое уровень падает вдвое"
 
+msgid "Timeline"
+msgstr "Линия времени"
+
 msgid "Times"
 msgstr "Время"
 
@@ -11093,6 +11385,9 @@ msgstr "читать"
 msgid "To read"
 msgstr "Читать"
 
+msgid "to read, da-form"
+msgstr "читать, форма на -da"
+
 msgid "To rent"
 msgstr "Арендовать"
 
@@ -11165,6 +11460,9 @@ msgstr "работать"
 msgid "To work"
 msgstr "Работать"
 
+msgid "Toa- plus -s: in a room."
+msgstr "Toa- плюс -s: в комнате."
+
 msgid "today"
 msgstr "сегодня"
 
@@ -11194,6 +11492,9 @@ msgstr "завтра"
 
 msgid "Tomorrow"
 msgstr "Завтра"
+
+msgid "Tomorrow I’ll eat at home."
+msgstr "Завтра я буду есть дома."
 
 msgid "Tomorrow I’m getting up early for work."
 msgstr "Завтра я рано встаю на работу."
@@ -11478,6 +11779,9 @@ msgstr "Üksteist — это 11:00, а сейчас половина одинн�
 
 msgid "uncle"
 msgstr "дядя"
+
+msgid "under"
+msgstr "под"
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершённые дела удерживаются в памяти лучше завершённых"
@@ -12002,6 +12306,9 @@ msgstr "Где Яан сегодня?"
 msgid "Where is Mari at twelve tomorrow?"
 msgstr "Где Мари завтра в двенадцать?"
 
+msgid "Where is the cat?"
+msgstr "Где кот?"
+
 msgid "Where Lymi does more"
 msgstr "Где Lymi умеет больше"
 
@@ -12013,6 +12320,12 @@ msgstr "С чего начать?"
 
 msgid "Where someone goes: tule siia, come here."
 msgstr "Куда: tule siia, «иди сюда»."
+
+msgid "Where the cat goes"
+msgstr "Куда идёт кот"
+
+msgid "Where the cat is"
+msgstr "Где кот"
 
 msgid "Where will he wait for you?"
 msgstr "Где он будет тебя ждать?"
@@ -12248,6 +12561,9 @@ msgstr "Слово → значение"
 msgid "Word and example recordings"
 msgstr "Записи слова и примера"
 
+msgid "Word changes"
+msgstr "Как меняется слово"
+
 msgid "Word for word: “good time”."
 msgstr "Дословно: «хорошее время»."
 
@@ -12268,6 +12584,9 @@ msgstr "Порядок слов: глагол на втором месте"
 
 msgid "Word pairs"
 msgstr "Пары слов"
+
+msgid "Words"
+msgstr "Слова"
 
 msgid "Words and phrases from lessons, chats and books."
 msgstr "Слова и фразы из уроков, разговоров и книг."
@@ -12513,6 +12832,9 @@ msgstr "Да. Репетитор может создать колоду и от�
 msgid "yesterday"
 msgstr "вчера"
 
+msgid "Yesterday I ate at home."
+msgstr "Вчера я ел дома."
+
 msgid "Yesterday was a rest day."
 msgstr "Вчера был день отдыха."
 
@@ -12657,6 +12979,9 @@ msgstr "Ты хочешь хранить всё на своём компьюте
 msgid "You wrote this"
 msgstr "Это написано тобой"
 
+msgid "you, more than one"
+msgstr "вы"
+
 msgid "You, the one speaking."
 msgstr "Ты — тот, кто говорит."
 
@@ -12669,8 +12994,14 @@ msgstr "ты"
 msgid "You’ll hear a question with it, and an answer."
 msgstr "Услышишь вопрос с ним и ответ."
 
+msgid "You’ll hear an example and see how its verb is built."
+msgstr "Услышишь пример и увидишь, как построен глагол."
+
 msgid "You’ll hear elama with it and who it’s for."
 msgstr "Услышишь elama с ним и узнаешь, для кого оно."
+
+msgid "You’ll hear it and read what its ending does."
+msgstr "Услышишь её и прочитаешь, что делает окончание."
 
 msgid "You’ll hear it in a sentence."
 msgstr "Услышишь его в предложении."

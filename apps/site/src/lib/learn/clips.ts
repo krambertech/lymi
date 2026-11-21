@@ -809,6 +809,142 @@ const TALLINN_CLIPS: Record<string, Clip> = {
   ...TALLINN_DIALOGUE,
 };
 
+/*
+ * The past-tense lesson, “Lihtminevik”. Every verb form was checked against its paradigm in
+ * Sõnaveeb's EKI morphology database (ÕS 2025) on 21 November 2026.
+ */
+
+/** Verbs whose past puts -si- on the -ma form's stem, with the stem the present builds on. */
+export const PAST_SI_VERBS = [
+  { verb: "elama", now: "ela", past: "ela" },
+  { verb: "lugema", now: "loe", past: "luge" },
+  { verb: "õppima", now: "õpi", past: "õppi" },
+  { verb: "rääkima", now: "räägi", past: "rääki" },
+  { verb: "töötama", now: "tööta", past: "tööta" },
+  { verb: "ootama", now: "oota", past: "oota" },
+] as const;
+
+/** The six persons with what follows the stem in the past of a -si- verb. */
+export const PAST_SI_ENDINGS = [
+  { pronoun: "ma", ending: "sin" },
+  { pronoun: "sa", ending: "sid" },
+  { pronoun: "ta", ending: "s" },
+  { pronoun: "me", ending: "sime" },
+  { pronoun: "te", ending: "site" },
+  { pronoun: "nad", ending: "sid" },
+] as const;
+
+/** Everyday verbs whose past takes -i-: the stem before it, and the forms for ma and ta. */
+export const PAST_I_VERBS = [
+  { verb: "olema", stem: "ol", ma: "olin", ta: "oli" },
+  { verb: "tulema", stem: "tul", ma: "tulin", ta: "tuli" },
+  { verb: "minema", stem: "läks", ma: "läksin", ta: "läks" },
+  { verb: "tegema", stem: "teg", ma: "tegin", ta: "tegi" },
+  { verb: "nägema", stem: "näg", ma: "nägin", ta: "nägi" },
+  { verb: "sööma", stem: "sõ", ma: "sõin", ta: "sõi" },
+  { verb: "jooma", stem: "jõ", ma: "jõin", ta: "jõi" },
+] as const;
+
+/** Time words on a line, each with a sentence whose verb is built as `build` shows. */
+export const PAST_TIMELINE = [
+  {
+    id: "last-week",
+    et: "eelmisel nädalal",
+    at: -2,
+    sentence: "Eelmisel nädalal lugesin palju.",
+    build: "luge|sin",
+  },
+  { id: "yesterday", et: "eile", at: -1, sentence: "Eile õppisin eesti keelt.", build: "õppi|sin" },
+  { id: "today", et: "täna", at: 0, sentence: "Täna õpin eesti keelt.", build: "õpi|n" },
+] as const;
+
+/** One sentence said now and in the past, for “Now or in the past?”. */
+export const PAST_NOW_OR_THEN = [
+  { verb: "olema", now: "Ta on kodus.", past: "Ta oli kodus." },
+  { verb: "tulema", now: "Ta tuleb koju.", past: "Ta tuli koju." },
+  { verb: "minema", now: "Ta läheb tööle.", past: "Ta läks tööle." },
+  { verb: "tegema", now: "Mida ta teeb?", past: "Mida ta tegi?" },
+  { verb: "sööma", now: "Ta sööb kodus.", past: "Ta sõi kodus." },
+  { verb: "jooma", now: "Ta joob kohvi.", past: "Ta jõi kohvi." },
+  { verb: "lugema", now: "Ta loeb raamatut.", past: "Ta luges raamatut." },
+] as const;
+
+/** Mari's Saturday, told the day after. */
+export const PAST_SATURDAY = [
+  "Eile oli laupäev.",
+  "Kell kümme käis Mari turul.",
+  "Ta ostis leiba ja juustu.",
+  "Kell kaks tuli Jaan Tartust.",
+  "Nad sõid kodus ja jõid kohvi.",
+  "Siis läksid nad linna.",
+  "Jaan läks kell üheksa koju.",
+] as const;
+
+/** Kati asks about yesterday: her lines in the second voice, the learner's in the main one. */
+export const PAST_DIALOGUE = {
+  "d-kati-1": { text: "Tere! Mida sa eile tegid?", voice: "second" },
+  "d-sina-1": "Ma olin kodus ja lugesin raamatut.",
+  "d-kati-2": { text: "Kas sa käisid ka poes?", voice: "second" },
+  "d-sina-2": "Jah, ma käisin poes.",
+  "d-kati-3": { text: "Mida sa ostsid?", voice: "second" },
+  "d-sina-3": "Ma ostsin leiba ja piima.",
+} as const satisfies Record<string, Clip>;
+
+/** The words of the past-tense lesson with a card, each heard on its own. */
+export const PAST_WORDS = [
+  "lihtminevik",
+  "eile",
+  "täna",
+  "eelmisel nädalal",
+  "elama",
+  "elasin",
+  "lugema",
+  "loen",
+  "lugesin",
+  "räägin",
+  "rääkisin",
+  "ostma",
+  "ostsin",
+  "ostis",
+  "käisin",
+  "rääkima",
+  "ootama",
+  "käima",
+  "õppima",
+  "töötama",
+] as const;
+
+/**
+ * The verbs of “Which past?”: five that take -si- and five that take -i-. Three -i- verbs end in
+ * -ema and two don't, and lugema does, so sorting by -ema scores 7 of 10, near chance.
+ */
+export const PAST_SORT = [
+  { verb: "elama", past: "elasin", bin: "si" },
+  { verb: "lugema", past: "lugesin", bin: "si" },
+  { verb: "rääkima", past: "rääkisin", bin: "si" },
+  { verb: "ootama", past: "ootasin", bin: "si" },
+  { verb: "käima", past: "käisin", bin: "si" },
+  { verb: "olema", past: "olin", bin: "i" },
+  { verb: "tulema", past: "tulin", bin: "i" },
+  { verb: "minema", past: "läksin", bin: "i" },
+  { verb: "sööma", past: "sõin", bin: "i" },
+  { verb: "jooma", past: "jõin", bin: "i" },
+] as const;
+
+const PAST_CLIPS: Record<string, Clip> = {
+  ...words(PAST_WORDS),
+  ...words(
+    PAST_SI_VERBS.flatMap(({ past }) =>
+      PAST_SI_ENDINGS.map(({ pronoun, ending }) => presentWithPronoun(pronoun, past, ending)),
+    ),
+  ),
+  ...words(PAST_I_VERBS.flatMap(({ verb, ma, ta }) => [verb, ma, ta])),
+  ...words(PAST_TIMELINE.map(({ sentence }) => sentence)),
+  ...words(PAST_NOW_OR_THEN.flatMap(({ now, past }) => [now, past])),
+  "p-saturday": { sentences: PAST_SATURDAY },
+  ...PAST_DIALOGUE,
+};
+
 /** How a verb's -da form ends: -da, -ta, -la, -na, or a short -a. */
 export type DaPattern = "da" | "ta" | "la" | "na" | "a";
 
@@ -1140,6 +1276,166 @@ const MITMUS_CLIPS: Record<string, Clip> = {
     ...MITMUS_WORDS,
   ]),
   "p-home": { sentences: MITMUS_PASSAGE },
+};
+
+/**
+ * The genitive lesson's pronouns: who, and whose. Checked in ÕS 2025 on Sõnaveeb: minu or mu,
+ * sinu or su, tema or ta, meie or me, teie or te, and nende.
+ */
+export const OMASTAV_PRONOUNS = [
+  { who: "mina", whose: "minu", short: "mu" },
+  { who: "sina", whose: "sinu", short: "su" },
+  { who: "tema", whose: "tema" },
+  { who: "meie", whose: "meie" },
+  { who: "teie", whose: "teie" },
+  { who: "nemad", whose: "nende" },
+] as const;
+
+/** A pronoun's whose form before raamat, as the switch says it: “minu raamat”. */
+export const ownedBook = (whose: string) => `${whose} raamat`;
+
+/** How a noun's genitive differs from the word a dictionary gives first. */
+export type GenitiveKind = "vowel" | "inside" | "same";
+
+/**
+ * Nouns in three forms: the word, its genitive, and the genitive with -s or -l. Checked in ÕS 2025
+ * on Sõnaveeb: kooli, Tallinna, kohviku, raamatu, poe, toa, turu, laua, Tartu, haigla, kodu, töö.
+ */
+export const OMASTAV_FORMS: readonly {
+  kind: GenitiveKind;
+  word: string;
+  whose: string;
+  where: string;
+}[] = [
+  { kind: "vowel", word: "kool", whose: "kooli", where: "koolis" },
+  { kind: "vowel", word: "Tallinn", whose: "Tallinna", where: "Tallinnas" },
+  { kind: "vowel", word: "kohvik", whose: "kohviku", where: "kohvikus" },
+  { kind: "vowel", word: "raamat", whose: "raamatu", where: "raamatus" },
+  { kind: "inside", word: "pood", whose: "poe", where: "poes" },
+  { kind: "inside", word: "tuba", whose: "toa", where: "toas" },
+  { kind: "inside", word: "turg", whose: "turu", where: "turul" },
+  { kind: "inside", word: "laud", whose: "laua", where: "laual" },
+  { kind: "same", word: "Tartu", whose: "Tartu", where: "Tartus" },
+  { kind: "same", word: "haigla", whose: "haigla", where: "haiglas" },
+  { kind: "same", word: "kodu", whose: "kodu", where: "kodus" },
+  { kind: "same", word: "töö", whose: "töö", where: "tööl" },
+];
+
+/**
+ * “Which form goes first?”: a noun as a dictionary gives it, its genitive, the genitive with -s or
+ * -l as the cue, and a phrase with the genitive in front. Only nouns whose genitive differs from the
+ * word: the table shows the ones that don't change. ÕS 2025 on Sõnaveeb: kontori, jõe.
+ */
+export const OMASTAV_PHRASES: readonly {
+  kind: GenitiveKind;
+  word: string;
+  whose: string;
+  where: string;
+  noun: string;
+}[] = [
+  { kind: "vowel", word: "kool", whose: "kooli", where: "koolis", noun: "uks" },
+  { kind: "vowel", word: "kohvik", whose: "kohviku", where: "kohvikus", noun: "nimi" },
+  { kind: "vowel", word: "kontor", whose: "kontori", where: "kontoris", noun: "aken" },
+  { kind: "vowel", word: "Tallinn", whose: "Tallinna", where: "Tallinnas", noun: "turg" },
+  { kind: "inside", word: "pood", whose: "poe", where: "poes", noun: "uks" },
+  { kind: "inside", word: "tuba", whose: "toa", where: "toas", noun: "aken" },
+  { kind: "inside", word: "turg", whose: "turu", where: "turul", noun: "kohvik" },
+  { kind: "inside", word: "jõgi", whose: "jõe", where: "jões", noun: "nimi" },
+];
+
+/** A phrase of “Which form?”, as it is said: “kooli uks”. */
+export const phraseOf = (each: { whose: string; noun: string }) => `${each.whose} ${each.noun}`;
+
+/** “Whose?”: sentences with a pronoun's whose form, by the pronoun they use. */
+export const OMASTAV_WHOSE: readonly {
+  who: (typeof OMASTAV_PRONOUNS)[number]["who"];
+  said: string;
+}[] = [
+  { who: "mina", said: "See on minu raamat." },
+  { who: "mina", said: "Mu nimi on Kati." },
+  { who: "sina", said: "See on sinu kohv." },
+  { who: "sina", said: "Kas see on su kass?" },
+  { who: "tema", said: "Tema raamat on laual." },
+  { who: "tema", said: "Tema vend töötab haiglas." },
+  { who: "meie", said: "Meie kool on Tartus." },
+  { who: "meie", said: "Meie ema on õpetaja." },
+  { who: "teie", said: "Kas see on teie kohvik?" },
+  { who: "teie", said: "Teie kass on kodus." },
+  { who: "nemad", said: "Nende kontor on Tallinnas." },
+  { who: "nemad", said: "See on nende pilt." },
+];
+
+/** Whose, asked and answered, and an owner before a noun. Jaan's genitive is Jaani. */
+export const OMASTAV_SENTENCES = [
+  "Minu nimi on Mari.",
+  "Mina elan Tartus.",
+  "Mis su nimi on?",
+  "Kelle raamat see on?",
+  "See on minu raamat.",
+  "See on Mari raamat.",
+  "Kelle kass see on?",
+  "See on Jaani kass.",
+  "Eesti pealinn on Tallinn.",
+] as const;
+
+/** Kati writes about herself and her family: a passage with a gap at each who or whose. */
+export const OMASTAV_PASSAGE = [
+  "Tere! Minu nimi on Kati.",
+  "Mina elan Tartus.",
+  "Jaan on minu vend.",
+  "Jaani kohvik on Tallinnas.",
+  "Ema ja isa elavad Pärnus.",
+  "Nende kassi nimi on Miisu.",
+  "Mis sinu nimi on?",
+  "Kus sina elad?",
+] as const;
+
+/** At home with Mari: her lines in the second voice, the learner's in the main one. */
+export const OMASTAV_DIALOGUE = {
+  "d-mari-1": { text: "Kelle raamat see on?", voice: "second" },
+  "d-sina-1": "See on minu raamat.",
+  "d-mari-2": { text: "Ja kelle kohv see on?", voice: "second" },
+  "d-sina-2": "See on Martini kohv.",
+  "d-mari-3": { text: "Kas see on teie kass?", voice: "second" },
+  "d-sina-3": "Jah, see on meie kass.",
+  "d-mari-4": { text: "Mis kassi nimi on?", voice: "second" },
+  "d-sina-4": "Kassi nimi on Liisu.",
+} as const satisfies Record<string, Clip>;
+
+/** Words of the genitive lesson heard on their own, outside its lists. */
+export const OMASTAV_WORDS = [
+  "kelle",
+  "pealinn",
+  "uks",
+  "aken",
+  "nimi",
+  "kass",
+  "kassi",
+  "Jaan",
+  "Jaani",
+  "Mari",
+  "Mari raamat",
+  "Eesti",
+  "Eestis",
+  "kümne minuti pärast",
+] as const;
+
+const OMASTAV_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...OMASTAV_PRONOUNS.flatMap((each) => [
+      each.who,
+      each.whose,
+      ownedBook(each.whose),
+      ...("short" in each ? [each.short] : []),
+    ]),
+    ...OMASTAV_FORMS.flatMap(({ word, whose, where }) => [word, whose, where]),
+    ...OMASTAV_PHRASES.flatMap((each) => [each.word, each.whose, each.where, phraseOf(each)]),
+    ...OMASTAV_WHOSE.map(({ said }) => said),
+    ...OMASTAV_SENTENCES,
+    ...OMASTAV_WORDS,
+  ]),
+  "p-kati": { sentences: OMASTAV_PASSAGE, voice: "second" },
+  ...OMASTAV_DIALOGUE,
 };
 
 /**
@@ -1524,6 +1820,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  omastav: OMASTAV_CLIPS,
   "majas-majja-majast": {
     ...words(INNER_WORDS),
     ...INNER_SENTENCES,
@@ -1546,5 +1843,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   },
   mitmus: MITMUS_CLIPS,
   osastav: OSASTAV_CLIPS,
+  lihtminevik: PAST_CLIPS,
   kit: KIT_CLIPS,
 };

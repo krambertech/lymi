@@ -391,7 +391,7 @@ export function MitmusLesson() {
   const present = lessonBySlug("olevik")?.n;
   const stems = LESSONS.find((lesson) => lesson.et === "Pood, poe")?.n;
   const forms = LESSONS.find((lesson) => lesson.et === "Kolm põhivormi")?.n;
-  const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
+  const genitive = lessonBySlug("omastav")?.n;
   const partitive = lessonBySlug("osastav")?.n;
   const gaps = gapsOf();
 

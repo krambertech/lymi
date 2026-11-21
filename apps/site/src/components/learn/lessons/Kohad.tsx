@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { CornerDownRight } from "lucide-react";
 import { useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import { clipId, clipUrl, KOHAD_PLACES, KOHAD_SENTENCES } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
@@ -342,7 +342,7 @@ type EndingItem = GapItem & { id: Id; where: Where; pair: readonly [string, stri
 export function KohadLesson() {
   const { t, i18n } = useLingui();
   const questions = lessonBySlug("kusimused")?.n;
-  const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
+  const genitive = lessonBySlug("omastav")?.n;
   const into = lessonBySlug("majas-majja-majast")?.n;
 
   const keysOf = (list: readonly { where: Where; id: Id }[]): KeyItem[] =>

@@ -152,7 +152,14 @@ export const STAGES: readonly Stage[] = [
     lessons: [
       { name: msg`Stem changes`, et: "Pood, poe" },
       { name: msg`The three forms of a noun`, et: "Kolm põhivormi" },
-      { name: msg`The genitive case`, et: "Minu raamat" },
+      {
+        slug: "omastav",
+        name: msg`The genitive case`,
+        title: msg`The Estonian genitive case: my, your and whose`,
+        et: "Minu raamat",
+        minutes: 12,
+        blurb: msg`A free lesson on the Estonian genitive case: minu, sinu, tema, meie, teie and nende for my, your, his or her, our and their, the owner before the noun (Mari raamat), kelle for whose, and the genitive as the form that takes -s and -l (kooli, koolis). Every sentence is read aloud.`,
+      },
       { name: msg`“To have”`, et: "Mul on" },
       {
         slug: "osastav",
@@ -208,7 +215,14 @@ export const STAGES: readonly Stage[] = [
       { name: msg`Going, being, coming back: -ma, -mas, -mast`, et: "Lähen ujuma, olen ujumas" },
       { name: msg`“To like” and feelings`, et: "Mulle meeldib" },
       { name: msg`Practice: at the market`, et: "Turul" },
-      { name: msg`Past tense`, et: "Lihtminevik" },
+      {
+        slug: "lihtminevik",
+        name: msg`Past tense`,
+        title: msg`Estonian past tense`,
+        et: "Lihtminevik",
+        minutes: 14,
+        blurb: msg`A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud.`,
+      },
       { name: msg`Saying no in the past`, et: "Ma ei läinud" },
       { name: msg`The future`, et: "Hakkan õppima" },
       { name: msg`Practice: last weekend, next week`, et: "Nädalavahetusel" },

@@ -817,9 +817,6 @@ msgstr "<0>Дифузія</0>: частинки рухаються від вищ
 msgid "<0>E–R</0> on a sign: Monday to Friday."
 msgstr "<0>E–R</0> на вивісці: з понеділка по п’ятницю."
 
-msgid "<0>Eelmisel suvel</0>, last summer, is a set time, so the simple past: <1>käisin</1>."
-msgstr "<0>Eelmisel suvel</0>, минулого літа, — це певний час, тому простий минулий: <1>käisin</1>."
-
 msgid "<0>Ei loe</0> is now, <1>ei lugenud</1> the past. <2>Ei olnud</2>, or <3>polnud</3>, is wasn’t."
 msgstr "<0>Ei loe</0> — зараз, <1>ei lugenud</1> — у минулому. <2>Ei olnud</2>, або <3>polnud</3>, — «не був»."
 
@@ -2140,8 +2137,8 @@ msgstr "Свій розклад для кожної картки"
 msgid "A score for one attempt"
 msgstr "Бали за одну спробу"
 
-msgid "A set time in the past takes the simple past: <0>Eile ma käisin Tartus.</0>"
-msgstr "Певний час у минулому — простий минулий: <0>Eile ma käisin Tartus.</0>"
+msgid "A set time in the past usually takes the simple past: <0>Eile ma käisin Tartus.</0>"
+msgstr "Певний час у минулому зазвичай вимагає простого минулого: <0>Eile ma käisin Tartus.</0>"
 
 msgid "A set time in the past: the simple past."
 msgstr "Певний час у минулому — простий минулий."
@@ -7200,7 +7197,7 @@ msgid "habeas corpus"
 msgstr "habeas corpus"
 
 msgid "Had done"
-msgstr "Зробив до того"
+msgstr "Зроблено до того"
 
 msgid "hakkama, now"
 msgstr "hakkama, зараз"
@@ -7248,7 +7245,7 @@ msgid "Has"
 msgstr "Є"
 
 msgid "Has done"
-msgstr "Зробив, і це важливо зараз"
+msgstr "Уже зроблено"
 
 msgid "has to be done; comes"
 msgstr "треба; приходить"
@@ -7263,7 +7260,7 @@ msgid "Have to and need to"
 msgstr "Мушу, треба, потрібно"
 
 msgid "Have you been to Tartu?"
-msgstr "Чи бував ти в Тарту?"
+msgstr "Чи доводилося тобі бувати в Тарту?"
 
 msgid "Have you eaten? A way to say hello"
 msgstr "Ти вже поїв? Так вітаються"
@@ -9884,6 +9881,9 @@ msgstr "Каті питає про твої вихідні. Вибери, що �
 msgid "Kati asks for your name, so your: <0>sinu</0>."
 msgstr "Каті питає, як тебе звати, тож «твоє»: <0>sinu</0>."
 
+msgid "Kati asks when, with <0>käisid</0>, so answer in the simple past: <1>käisin</1>."
+msgstr "Каті питає «коли» і вживає <0>käisid</0>, тож відповідай простим минулим: <1>käisin</1>."
+
 msgid "Kati is a doctor."
 msgstr "Каті — лікарка."
 
@@ -10491,8 +10491,8 @@ msgstr "Слухай pool, veerand, kolmveerand, läbi чи pärast: кожне 
 msgid "Listen to each sentence and pick what it means."
 msgstr "Послухай кожне речення й вибери, що воно означає."
 
-msgid "Listen to each sentence and pick what it says about time. Listen for <0>olen</0> or <1>olin</1>, and for a time word."
-msgstr "Послухай кожне речення і вибери, що воно каже про час. Слухай <0>olen</0> чи <1>olin</1> і слова про час."
+msgid "Listen to each sentence and pick what it says about time. Listen for a form of <0>olema</0>, such as <1>olen</1> or <2>olin</2>, and for a time word."
+msgstr "Послухай кожне речення і вибери, що воно каже про час. Слухай форму <0>olema</0>, наприклад <1>olen</1> чи <2>olin</2>, і слова про час."
 
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Слухай кінець дієслова. Пограйся зі столом вище й повертайся."
@@ -11349,8 +11349,8 @@ msgstr "Вона є в більшості наземних рослин."
 msgid "Most of them. Listen again in the table to the ones you missed."
 msgstr "Більшість. Послухай ще раз у таблиці ті, що не вдалися."
 
-msgid "Most of them. Listen for <0>olen</0>, <1>olin</1> and the time words."
-msgstr "Більшість. Слухай <0>olen</0>, <1>olin</1> і слова про час."
+msgid "Most of them. Listen for <0>olema</0> and the time words."
+msgstr "Більшість. Слухай <0>olema</0> і слова про час."
 
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Майже всі. Послухай, як починаються дні, де були помилки."
@@ -15304,7 +15304,7 @@ msgid "Talk: coffee with Mari"
 msgstr "Розмова: кава з Марі"
 
 msgid "Talk: have you been there?"
-msgstr "Розмова: чи бував ти там?"
+msgstr "Розмова: чи доводилося тобі там бувати?"
 
 msgid "Talk: in class"
 msgstr "Розмова: на уроці"
@@ -16997,8 +16997,8 @@ msgstr "Коротка форма sinu."
 msgid "the simple past"
 msgstr "простий минулий час"
 
-msgid "The simple past from lesson {past} tells what happened at a set time: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. The perfect tells what has happened with no time named, such as something you have done in your life, or a result that matters now. English splits them the same way: I went yesterday, but I have been there."
-msgstr "Простий минулий з уроку {past} розповідає, що сталося в певний час: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. Перфект — про те, що вже сталося без названого часу: досвід за життя або результат, важливий зараз. В українській обидва випадки — один минулий час, а різницю передають слова «вже», «колись», «ще не». Естонська показує її самим дієсловом, як англійська: I went і I have been."
+msgid "The simple past from lesson {past} tells what happened at a set time: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. The perfect tells what has happened with no time named, such as something you have done in your life, or a result that matters now. English mostly splits them the same way: I went yesterday, but I have been there."
+msgstr "Простий минулий з уроку {past} розповідає, що сталося в певний час: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. Перфект — про те, що вже сталося без названого часу: досвід за життя або результат, важливий зараз. В українській обидва випадки — один минулий час, а різницю передають слова «вже», «колись», «ще не». Естонська здебільшого показує її самим дієсловом, як англійська: I went і I have been."
 
 msgid "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
 msgstr "Простий минулий час естонською — <0/>. Роду в ньому немає: <1>õppisin</1> — це і «я вчив», і «я вчила». Торкнися позначки на лінії, щоб почути речення й побачити, як побудоване дієслово."

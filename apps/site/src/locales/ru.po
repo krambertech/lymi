@@ -817,9 +817,6 @@ msgstr "<0>Диффузия</0>: частицы движутся от высок
 msgid "<0>E–R</0> on a sign: Monday to Friday."
 msgstr "<0>E–R</0> на табличке: с понедельника по пятницу."
 
-msgid "<0>Eelmisel suvel</0>, last summer, is a set time, so the simple past: <1>käisin</1>."
-msgstr "<0>Eelmisel suvel</0>, прошлым летом, — это определённое время, поэтому простое прошедшее: <1>käisin</1>."
-
 msgid "<0>Ei loe</0> is now, <1>ei lugenud</1> the past. <2>Ei olnud</2>, or <3>polnud</3>, is wasn’t."
 msgstr "<0>Ei loe</0> — сейчас, <1>ei lugenud</1> — в прошлом. <2>Ei olnud</2>, или <3>polnud</3>, — «не был»."
 
@@ -2140,8 +2137,8 @@ msgstr "Своё расписание у каждой карточки"
 msgid "A score for one attempt"
 msgstr "Баллы за одну попытку"
 
-msgid "A set time in the past takes the simple past: <0>Eile ma käisin Tartus.</0>"
-msgstr "Определённое время в прошлом — простое прошедшее: <0>Eile ma käisin Tartus.</0>"
+msgid "A set time in the past usually takes the simple past: <0>Eile ma käisin Tartus.</0>"
+msgstr "Определённое время в прошлом обычно требует простого прошедшего: <0>Eile ma käisin Tartus.</0>"
 
 msgid "A set time in the past: the simple past."
 msgstr "Определённое время в прошлом — простое прошедшее."
@@ -7200,7 +7197,7 @@ msgid "habeas corpus"
 msgstr "habeas corpus"
 
 msgid "Had done"
-msgstr "Сделал до того"
+msgstr "Сделано до того"
 
 msgid "hakkama, now"
 msgstr "hakkama, сейчас"
@@ -7248,7 +7245,7 @@ msgid "Has"
 msgstr "Есть"
 
 msgid "Has done"
-msgstr "Сделал, и это важно сейчас"
+msgstr "Уже сделано"
 
 msgid "has to be done; comes"
 msgstr "надо; приходит"
@@ -7263,7 +7260,7 @@ msgid "Have to and need to"
 msgstr "Надо и нужно"
 
 msgid "Have you been to Tartu?"
-msgstr "Бывал ли ты в Тарту?"
+msgstr "Доводилось ли тебе бывать в Тарту?"
 
 msgid "Have you eaten? A way to say hello"
 msgstr "Ты уже поел? Так здороваются"
@@ -9884,6 +9881,9 @@ msgstr "Кати спрашивает о твоих выходных. Выбер
 msgid "Kati asks for your name, so your: <0>sinu</0>."
 msgstr "Кати спрашивает, как тебя зовут, поэтому «твоё»: <0>sinu</0>."
 
+msgid "Kati asks when, with <0>käisid</0>, so answer in the simple past: <1>käisin</1>."
+msgstr "Кати спрашивает «когда» и использует <0>käisid</0>, так что отвечай простым прошедшим: <1>käisin</1>."
+
 msgid "Kati is a doctor."
 msgstr "Кати — врач."
 
@@ -10491,8 +10491,8 @@ msgstr "Слушай pool, veerand, kolmveerand, läbi или pärast: кажд�
 msgid "Listen to each sentence and pick what it means."
 msgstr "Послушай каждое предложение и выбери, что оно значит."
 
-msgid "Listen to each sentence and pick what it says about time. Listen for <0>olen</0> or <1>olin</1>, and for a time word."
-msgstr "Послушай каждое предложение и выбери, что оно говорит о времени. Слушай <0>olen</0> или <1>olin</1> и слова о времени."
+msgid "Listen to each sentence and pick what it says about time. Listen for a form of <0>olema</0>, such as <1>olen</1> or <2>olin</2>, and for a time word."
+msgstr "Послушай каждое предложение и выбери, что оно говорит о времени. Слушай форму <0>olema</0>, например <1>olen</1> или <2>olin</2>, и слова о времени."
 
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Слушай конец глагола. Поиграй со столом выше и возвращайся."
@@ -11349,8 +11349,8 @@ msgstr "Она есть у большинства наземных растен�
 msgid "Most of them. Listen again in the table to the ones you missed."
 msgstr "Большинство. Послушай ещё раз в таблице те, что не получились."
 
-msgid "Most of them. Listen for <0>olen</0>, <1>olin</1> and the time words."
-msgstr "Большинство. Слушай <0>olen</0>, <1>olin</1> и слова о времени."
+msgid "Most of them. Listen for <0>olema</0> and the time words."
+msgstr "Большинство. Слушай <0>olema</0> и слова о времени."
 
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Почти все. Послушай, как начинаются дни, где были ошибки."
@@ -15304,7 +15304,7 @@ msgid "Talk: coffee with Mari"
 msgstr "Разговор: кофе с Мари"
 
 msgid "Talk: have you been there?"
-msgstr "Разговор: бывал ли ты там?"
+msgstr "Разговор: доводилось ли тебе там бывать?"
 
 msgid "Talk: in class"
 msgstr "Разговор: на уроке"
@@ -16997,8 +16997,8 @@ msgstr "Краткая форма sinu."
 msgid "the simple past"
 msgstr "простое прошедшее время"
 
-msgid "The simple past from lesson {past} tells what happened at a set time: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. The perfect tells what has happened with no time named, such as something you have done in your life, or a result that matters now. English splits them the same way: I went yesterday, but I have been there."
-msgstr "Простое прошедшее из урока {past} рассказывает, что случилось в определённое время: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. Перфект — о том, что уже случилось без названного времени: опыт за жизнь или результат, важный сейчас. В русском оба случая — одно прошедшее время, а разницу передают слова «уже», «когда-нибудь», «ещё не». Эстонский показывает её самим глаголом, как английский: I went и I have been."
+msgid "The simple past from lesson {past} tells what happened at a set time: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. The perfect tells what has happened with no time named, such as something you have done in your life, or a result that matters now. English mostly splits them the same way: I went yesterday, but I have been there."
+msgstr "Простое прошедшее из урока {past} рассказывает, что случилось в определённое время: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. Перфект — о том, что уже случилось без названного времени: опыт за жизнь или результат, важный сейчас. В русском оба случая — одно прошедшее время, а разницу передают слова «уже», «когда-нибудь», «ещё не». Эстонский чаще всего показывает её самим глаголом, как английский: I went и I have been."
 
 msgid "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
 msgstr "Простое прошедшее время по-эстонски — <0/>. Рода в нём нет: <1>õppisin</1> — это и «я учил», и «я учила». Коснись отметки на линии, чтобы услышать предложение и увидеть, как построен глагол."

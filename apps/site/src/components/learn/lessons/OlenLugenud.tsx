@@ -190,8 +190,7 @@ function useContent() {
             line: "Ma olen eelmisel suvel seal käinud.",
             why: (
               <Trans>
-                <Et>Eelmisel suvel</Et>, last summer, is a set time, so the simple past:{" "}
-                <Et>käisin</Et>.
+                Kati asks when, with <Et>käisid</Et>, so answer in the simple past: <Et>käisin</Et>.
               </Trans>
             ),
           },
@@ -271,7 +270,8 @@ export function OlenLugenudLesson() {
           <b lang="et">Ma olin lugenud.</b>
         </Trans>,
         <Trans key="3">
-          A set time in the past takes the simple past: <b lang="et">Eile ma käisin Tartus.</b>
+          A set time in the past usually takes the simple past:{" "}
+          <b lang="et">Eile ma käisin Tartus.</b>
         </Trans>,
         <Trans key="4">
           No time, or a result now, takes the perfect: <b lang="et">Ma olen juba söönud.</b>
@@ -315,7 +315,7 @@ export function OlenLugenudLesson() {
                     The simple past from lesson {past} tells what happened at a set time:{" "}
                     <Et>eile</Et>, <Et>laupäeval</Et>, <Et>kell kaheksa</Et>. The perfect tells what
                     has happened with no time named, such as something you have done in your life,
-                    or a result that matters now. English splits them the same way: I went
+                    or a result that matters now. English mostly splits them the same way: I went
                     yesterday, but I have been there.
                   </Trans>
                 </p>
@@ -340,8 +340,8 @@ export function OlenLugenudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Listen to each sentence and pick what it says about time. Listen for{" "}
-                    <Et>olen</Et> or <Et>olin</Et>, and for a time word.
+                    Listen to each sentence and pick what it says about time. Listen for a form of{" "}
+                    <Et>olema</Et>, such as <Et>olen</Et> or <Et>olin</Et>, and for a time word.
                   </Trans>
                 </p>
               </Prose>
@@ -355,7 +355,7 @@ export function OlenLugenudLesson() {
                     <Trans>All nine. You hear the tense and know what it says.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>
-                      Most of them. Listen for <Et>olen</Et>, <Et>olin</Et> and the time words.
+                      Most of them. Listen for <Et>olema</Et> and the time words.
                     </Trans>
                   ) : (
                     <Trans>Read the sentences above once more, then try again.</Trans>

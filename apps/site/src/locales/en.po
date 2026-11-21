@@ -816,9 +816,6 @@ msgstr "<0>Diffusion</0>: particles move from high to low concentration."
 msgid "<0>E–R</0> on a sign: Monday to Friday."
 msgstr "<0>E–R</0> on a sign: Monday to Friday."
 
-msgid "<0>Eelmisel suvel</0>, last summer, is a set time, so the simple past: <1>käisin</1>."
-msgstr "<0>Eelmisel suvel</0>, last summer, is a set time, so the simple past: <1>käisin</1>."
-
 msgid "<0>Ei loe</0> is now, <1>ei lugenud</1> the past. <2>Ei olnud</2>, or <3>polnud</3>, is wasn’t."
 msgstr "<0>Ei loe</0> is now, <1>ei lugenud</1> the past. <2>Ei olnud</2>, or <3>polnud</3>, is wasn’t."
 
@@ -2139,8 +2136,8 @@ msgstr "A schedule for every card"
 msgid "A score for one attempt"
 msgstr "A score for one attempt"
 
-msgid "A set time in the past takes the simple past: <0>Eile ma käisin Tartus.</0>"
-msgstr "A set time in the past takes the simple past: <0>Eile ma käisin Tartus.</0>"
+msgid "A set time in the past usually takes the simple past: <0>Eile ma käisin Tartus.</0>"
+msgstr "A set time in the past usually takes the simple past: <0>Eile ma käisin Tartus.</0>"
 
 msgid "A set time in the past: the simple past."
 msgstr "A set time in the past: the simple past."
@@ -9883,6 +9880,9 @@ msgstr "Kati asks about your weekend. Pick what you say back. If you pick a wron
 msgid "Kati asks for your name, so your: <0>sinu</0>."
 msgstr "Kati asks for your name, so your: <0>sinu</0>."
 
+msgid "Kati asks when, with <0>käisid</0>, so answer in the simple past: <1>käisin</1>."
+msgstr "Kati asks when, with <0>käisid</0>, so answer in the simple past: <1>käisin</1>."
+
 msgid "Kati is a doctor."
 msgstr "Kati is a doctor."
 
@@ -10490,8 +10490,8 @@ msgstr "Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you 
 msgid "Listen to each sentence and pick what it means."
 msgstr "Listen to each sentence and pick what it means."
 
-msgid "Listen to each sentence and pick what it says about time. Listen for <0>olen</0> or <1>olin</1>, and for a time word."
-msgstr "Listen to each sentence and pick what it says about time. Listen for <0>olen</0> or <1>olin</1>, and for a time word."
+msgid "Listen to each sentence and pick what it says about time. Listen for a form of <0>olema</0>, such as <1>olen</1> or <2>olin</2>, and for a time word."
+msgstr "Listen to each sentence and pick what it says about time. Listen for a form of <0>olema</0>, such as <1>olen</1> or <2>olin</2>, and for a time word."
 
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Listen to the end of the verb. Try the table above, then come back."
@@ -11348,8 +11348,8 @@ msgstr "Most land plants have one."
 msgid "Most of them. Listen again in the table to the ones you missed."
 msgstr "Most of them. Listen again in the table to the ones you missed."
 
-msgid "Most of them. Listen for <0>olen</0>, <1>olin</1> and the time words."
-msgstr "Most of them. Listen for <0>olen</0>, <1>olin</1> and the time words."
+msgid "Most of them. Listen for <0>olema</0> and the time words."
+msgstr "Most of them. Listen for <0>olema</0> and the time words."
 
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Most of them. Listen to how the ones you missed start."
@@ -16996,8 +16996,8 @@ msgstr "The short form of sinu."
 msgid "the simple past"
 msgstr "the simple past"
 
-msgid "The simple past from lesson {past} tells what happened at a set time: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. The perfect tells what has happened with no time named, such as something you have done in your life, or a result that matters now. English splits them the same way: I went yesterday, but I have been there."
-msgstr "The simple past from lesson {past} tells what happened at a set time: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. The perfect tells what has happened with no time named, such as something you have done in your life, or a result that matters now. English splits them the same way: I went yesterday, but I have been there."
+msgid "The simple past from lesson {past} tells what happened at a set time: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. The perfect tells what has happened with no time named, such as something you have done in your life, or a result that matters now. English mostly splits them the same way: I went yesterday, but I have been there."
+msgstr "The simple past from lesson {past} tells what happened at a set time: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. The perfect tells what has happened with no time named, such as something you have done in your life, or a result that matters now. English mostly splits them the same way: I went yesterday, but I have been there."
 
 msgid "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
 msgstr "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."

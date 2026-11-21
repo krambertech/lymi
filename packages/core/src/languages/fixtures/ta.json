@@ -15,7 +15,10 @@
     { "text": "இது என் வீடு.", "plain": "இது என் வீடு." }
   ],
   "keys": [],
-  "noKey": [{ "term": "பஸ்", "pronunciation": "bas" }, { "term": "பாடல்", "pronunciation": "pāḍal" }],
+  "noKey": [
+    { "term": "பஸ்", "pronunciation": "bas" },
+    { "term": "பாடல்", "pronunciation": "pāḍal" }
+  ],
   "inputs": [
     {
       "sent": { "term": "பாடல்", "pronunciation": "pāḍal" },

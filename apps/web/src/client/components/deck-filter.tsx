@@ -179,11 +179,12 @@ function FieldValues({
   const { valueName } = useFilterNames(ctx);
   const chosen = field.get(filters);
   const valuesKey = values.join("\u0000");
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the key stands for the values
+  // oxlint-disable react-hooks/exhaustive-deps -- the key stands for the values
   const counts = useMemo(
     () => valueCounts(ctx, filters, field.key, values),
     [ctx, filters, field.key, valuesKey],
   );
+  // oxlint-enable react-hooks/exhaustive-deps
   const count = (value: string | null) => counts.get(value) ?? 0;
   const report = () => captureAnalytics("deck_filter_added", { kind: analyticsKind[field.key] });
 

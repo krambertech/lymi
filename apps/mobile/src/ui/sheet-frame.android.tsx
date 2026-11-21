@@ -1,6 +1,6 @@
 import {
   Host,
-  // biome-ignore lint/style/noRestrictedImports: this is the one place the raw sheet is wrapped.
+  // oxlint-disable-next-line eslint/no-restricted-imports -- this is the one place the raw sheet is wrapped.
   ModalBottomSheet,
   type ModalBottomSheetRef,
   RNHostView,
@@ -32,7 +32,7 @@ export function SheetFrame({ open, onOpenChange, onDismiss, expands, children }:
     left.current = true;
     setShown(false);
   };
-  // biome-ignore lint/correctness/useExhaustiveDependencies: only a change of `open` moves the sheet.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- only a change of `open` moves the sheet.
   useEffect(() => {
     const id = ++closing.current;
     if (!open) {
@@ -53,12 +53,13 @@ export function SheetFrame({ open, onOpenChange, onDismiss, expands, children }:
   }, [open]);
   // What a row chose runs once the screen's window has focus back from the sheet's, or a field it
   // focuses gets no keyboard.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: it answers the sheet going, not a new onDismiss.
+  // oxlint-disable react-hooks/exhaustive-deps -- it answers the sheet going, not a new onDismiss.
   useEffect(() => {
     if (shown || !left.current) return;
     left.current = false;
     return afterWindowFocus(onDismiss);
   }, [shown]);
+  // oxlint-enable react-hooks/exhaustive-deps
   if (!shown) return null;
   return (
     <Host colorScheme={room} style={{ position: "absolute", width }} pointerEvents="none">

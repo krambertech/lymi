@@ -1,5 +1,4 @@
 import { describe, expect, it } from "vitest";
-import { normaliseTerm } from "../terms";
 import {
   configuredLanguage,
   drawsReadings,
@@ -16,6 +15,7 @@ import {
   stressRules,
   supportedLanguage,
 } from ".";
+import { normaliseTerm } from "../terms";
 
 describe("languageSupport", () => {
   it("finds Japanese from any Japanese tag", () => {

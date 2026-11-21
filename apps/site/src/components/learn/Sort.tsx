@@ -79,18 +79,20 @@ export function Sort({ id, title, bins, items }: SortProps) {
   // Shuffled after the page loads, so the server's page and the first render match. Keyed on the
   // words, not the array, so a lesson passing them inline doesn't reset a game on each render.
   const wordsKey = ids.join("\u0001");
-  // biome-ignore lint/correctness/useExhaustiveDependencies: shuffles once per set of words
+  // oxlint-disable react-hooks/exhaustive-deps -- shuffles once per set of words
   useEffect(() => {
     dispatch({ type: "restarted", items: shuffle(ids) });
   }, [wordsKey]);
+  // oxlint-enable react-hooks/exhaustive-deps
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: reported once each time it is checked
+  // oxlint-disable react-hooks/exhaustive-deps -- reported once each time it is checked
   useEffect(() => {
     if (!state.checked) return;
     captureAnalytics("learn_quiz_finished", { lesson: slug, quiz: id, right, total });
     if (section) finishSection(section);
     againRef.current?.focus({ preventScroll: true });
   }, [state.checked]);
+  // oxlint-enable react-hooks/exhaustive-deps
   useEffect(() => {
     if (!state.checked && restarted.current) {
       restarted.current = false;
@@ -221,8 +223,7 @@ export function Sort({ id, title, bins, items }: SortProps) {
     >
       <div ref={rootRef} className="grid w-full gap-3">
         {!state.checked && (
-          // biome-ignore lint/a11y/noStaticElementInteractions: the words' own buttons carry the keyboard; this takes a tap to put a word back
-          // biome-ignore lint/a11y/useKeyWithClickEvents: as above
+          // oxlint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- the words' own buttons carry the keyboard; this takes a tap to put a word back
           <div
             data-bin={POOL}
             data-pool=""
@@ -249,8 +250,7 @@ export function Sort({ id, title, bins, items }: SortProps) {
             const here = state.items.filter((word) => state.places[word] === bin.id);
             const picked = state.picked;
             return (
-              // biome-ignore lint/a11y/noStaticElementInteractions: the bin's heading button carries the keyboard; the whole bin takes a tap
-              // biome-ignore lint/a11y/useKeyWithClickEvents: as above
+              // oxlint-disable-next-line jsx-a11y/no-static-element-interactions, jsx-a11y/click-events-have-key-events -- the bin's heading button carries the keyboard; the whole bin takes a tap
               <div
                 key={bin.id}
                 data-bin={bin.id}

@@ -111,7 +111,7 @@ async function runExport(ctx: ServiceContext, input: ExportStartInput) {
   const data = await writeExportData(ctx, started.id, storage());
   let step: MediaStep = { segment: 1, offset: data.offset, after: null, number: 0 };
   let missing = 0;
-  for (let done = data.media === 0; !done; ) {
+  for (let done = data.media === 0; !done;) {
     const written = await writeExportMedia(ctx, started.id, step, storage());
     step = {
       segment: written.segment,

@@ -8,8 +8,8 @@ import { finishSection as saveSection, startLesson } from "../../lib/learn/progr
 import { localizedPath } from "../../lib/routes";
 import { buttonClass } from "../Button";
 import { LearnLayout } from "./LearnLayout";
-import { LessonWords } from "./LessonWords";
 import { type Glossary, LessonContext, SectionContext, useLesson } from "./lesson-context";
+import { LessonWords } from "./LessonWords";
 import { WordCards } from "./Word";
 
 export interface LessonSection {
@@ -88,7 +88,7 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
               </p>
               <p className="flex flex-wrap gap-x-4 gap-y-1 text-sm text-ink-muted">
                 {facts.map((fact, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: a lesson's facts are fixed
+                  // oxlint-disable-next-line react/no-array-index-key -- a lesson's facts are fixed
                   <span key={i}>{fact}</span>
                 ))}
               </p>
@@ -107,7 +107,7 @@ export function LessonView({ slug, sub, facts, glossary, sections, recap, words 
             <Section id="recap" title={t`What to remember`}>
               <ol className="m-0 grid list-decimal gap-2.5 rounded-xl bg-(--tray) py-5.5 ps-11 pe-5.5 text-lg marker:font-medium marker:text-(--form) max-sm:-mx-1">
                 {recap.map((line, i) => (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: the recap is fixed and numbered
+                  // oxlint-disable-next-line react/no-array-index-key -- the recap is fixed and numbered
                   <li key={i}>{line}</li>
                 ))}
               </ol>
@@ -281,7 +281,7 @@ export function LessonName({ name }: { name: string }) {
     <>
       {name.split(/((?<=^|[\s(])-\p{L}+)/u).map((part, i) =>
         /^-\p{L}+$/u.test(part) ? (
-          // biome-ignore lint/suspicious/noArrayIndexKey: a name's parts are fixed
+          // oxlint-disable-next-line react/no-array-index-key -- a name's parts are fixed
           <span key={i} lang="et" className="whitespace-nowrap">
             {part}
           </span>

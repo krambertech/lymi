@@ -126,7 +126,7 @@ export async function openZip(file: RandomAccess): Promise<Map<string, ZipEntry>
     let size = u32(directory, at + 24);
     let offset = u32(directory, at + 42);
     const extra = directory.subarray(at + 46 + nameLength, at + 46 + nameLength + extraLength);
-    for (let e = 0; e + 4 <= extra.length; ) {
+    for (let e = 0; e + 4 <= extra.length;) {
       const id = u16(extra, e);
       const length = u16(extra, e + 2);
       if (id === 0x0001) {

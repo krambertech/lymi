@@ -3,10 +3,10 @@ import { type CSSProperties, useMemo } from "react";
 import { deckHandCards } from "../../lib/deck-hand";
 import type { DeckCard } from "../../lib/deck-page";
 import { buttonClass } from "../Button";
+import type { HandCard } from "../landing/hand-cards";
+import { HandOfCards } from "../landing/HandOfCards";
 import { Lantern } from "../Lantern";
 import { Localized } from "../Localized";
-import { HandOfCards } from "../landing/HandOfCards";
-import type { HandCard } from "../landing/hand-cards";
 
 interface Props {
   locale: string;

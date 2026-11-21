@@ -212,7 +212,7 @@ function readDecks(root: TransitMap) {
     let trashed = false;
     let archived = false;
     const seen = new Set<string>();
-    for (let at: string | null = id; at && !seen.has(at); ) {
+    for (let at: string | null = id; at && !seen.has(at);) {
       seen.add(at);
       const deck = decks.get(at);
       if (!deck) break;
@@ -372,14 +372,12 @@ export const mochi: SourceAdapter<MochiNote> = {
 
     summary.noteTypes = [...noteTypes.values()].sort((a, b) => b.notes - a.notes);
     summary.decks = [...deckCounts]
-      .map(
-        ([key, count]): SourceDeck => ({
-          key,
-          name: pathOf(key).name,
-          description: null,
-          cards: count,
-        }),
-      )
+      .map(([key, count]): SourceDeck => ({
+        key,
+        name: pathOf(key).name,
+        description: null,
+        cards: count,
+      }))
       .sort((a, b) => a.name.localeCompare(b.name));
     return { summary, notes };
   },

@@ -1,5 +1,5 @@
-import { ComparePageView } from "../landing/ComparePageView";
 import type { CompareKey } from "../landing/compare-pages";
+import { ComparePageView } from "../landing/ComparePageView";
 import { Island } from "./Island";
 
 interface Props {

@@ -22,8 +22,8 @@ import {
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { Chips, Panel } from "../Explore";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
 import { PlayButton, Playing } from "../Sound";
 import { Word } from "../Word";

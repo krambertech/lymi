@@ -57,7 +57,7 @@ function Checklist({ items }: { items: ReactNode[] }) {
     <ul className="my-5 grid list-none gap-3 !ps-0">
       {items.map((item, i) => (
         <li
-          // biome-ignore lint/suspicious/noArrayIndexKey: a static list
+          // oxlint-disable-next-line react/no-array-index-key -- a static list
           key={i}
           className="!m-0 grid grid-cols-[1.25rem_1fr] gap-3"
         >
@@ -200,6 +200,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
               <tr key={l.rating}>
                 <Td className="whitespace-nowrap text-ink">{GRADE_NAMES[l.rating]}</Td>
                 {l.steps.map((s, i) => (
+                  // oxlint-disable-next-line react/no-array-index-key -- Biome let this pass; triage in #1278
                   <Td key={String(i)} align="right" className="whitespace-nowrap">
                     {duration(s.minutes)}
                   </Td>
@@ -270,6 +271,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
             <tr>
               <Td className="whitespace-nowrap text-ink">Good</Td>
               {forgetting.forgot.map((_, i) => (
+                // oxlint-disable-next-line react/no-array-index-key -- Biome let this pass; triage in #1278
                 <Td key={String(i)} align="right" className="whitespace-nowrap">
                   {forgetting.remembered[i] ? duration(forgetting.remembered[i].minutes) : ""}
                 </Td>
@@ -278,6 +280,7 @@ export function Scheduling({ guide }: { guide: SchedulingGuide }) {
             <tr>
               <Td className="whitespace-nowrap text-ink">Forgot</Td>
               {forgetting.forgot.map((s, i) => (
+                // oxlint-disable-next-line react/no-array-index-key -- Biome let this pass; triage in #1278
                 <Td key={String(i)} align="right" className="whitespace-nowrap">
                   {duration(s.minutes)}
                 </Td>

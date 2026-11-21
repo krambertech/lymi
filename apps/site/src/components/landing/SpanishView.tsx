@@ -7,10 +7,11 @@ import type { Locale } from "../../lib/routes";
 import { ArrowLink } from "./ArrowLink";
 import { Attachment } from "./AssistantChat";
 import { DeckWords } from "./DeckWords";
-import { FeatureSection, Wide } from "./FeatureSection";
 import { SPANISH_QUESTIONS } from "./faq";
+import { FeatureSection, Wide } from "./FeatureSection";
 import { GenderTiles } from "./GenderTiles";
 import { LandingLayout } from "./LandingLayout";
+import { addDeckUrl, pathSteps } from "./language-decks";
 import { LanguageDecks } from "./LanguageDecks";
 import {
   DetailsSection,
@@ -24,12 +25,9 @@ import {
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
-import { addDeckUrl, pathSteps } from "./language-decks";
 import { type NotebookCard, type NotebookRow, NotebookToCards } from "./NotebookToCards";
 import { Questions } from "./Questions";
 import { SignUpSection } from "./SignUpSection";
-import { EnrichSpanish } from "./SpanishAi";
-import { SpanishBento } from "./SpanishBento";
 import {
   SPANISH_CLASS_CARDS,
   SPANISH_ESSENTIALS,
@@ -40,6 +38,8 @@ import {
   SPANISH_VOICE_WORDS,
   spanishHand,
 } from "./spanish";
+import { EnrichSpanish } from "./SpanishAi";
+import { SpanishBento } from "./SpanishBento";
 
 const FIRST_DECK = "spanish-a1-vocabulary";
 const VERBS_DECK = "spanish-top-100-verbs";

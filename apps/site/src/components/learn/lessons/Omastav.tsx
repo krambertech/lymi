@@ -24,8 +24,8 @@ import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, Panel } from "../Explore";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
 import { Answer, Feedback, Quiz, type RoundProps } from "../Quiz";
 import { Listen, PlayMark } from "../Sound";
@@ -470,7 +470,7 @@ function WhoseRound({ item, state, heard, answer, autoplay }: RoundProps<WhoseIt
   const { t, i18n } = useLingui();
   const [nudged, setNudged] = useState(false);
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a new round replays even when its clip is the last one's
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- a new round replays even when its clip is the last one's
   useEffect(() => {
     setNudged(false);
     if (autoplay) void playSound(item.src);

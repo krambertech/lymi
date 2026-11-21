@@ -283,8 +283,8 @@ function DropdownMenuGroup({ children }: { children: React.ReactNode }) {
     <MenuPrimitive.Group data-slot="dropdown-menu-group">{children}</MenuPrimitive.Group>
   ) : (
     <DrawerMenuGroupContext.Provider value={group}>
-      {/* biome-ignore lint/a11y/useSemanticElements: a group of menu items, which a fieldset is not */}
       <div
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a group of menu items, which a fieldset is not
         role="group"
         data-slot="dropdown-menu-group"
         aria-labelledby={labelled ? labelId : undefined}
@@ -556,7 +556,7 @@ function DropdownMenuRadioGroup({
           {children}
         </MenuPrimitive.RadioGroup>
       ) : (
-        // biome-ignore lint/a11y/useSemanticElements: a group of menu items, which a fieldset is not
+        // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- a group of menu items, which a fieldset is not
         <div role="group" data-slot="dropdown-menu-radio-group">
           {children}
         </div>

@@ -146,6 +146,7 @@ export function ImportStartView({
         )}
       </p>
 
+      {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- Biome let this pass; triage in #1278 */}
       <section
         aria-label={t`Choose your ${app} file`}
         onDragOver={(e) => {
@@ -943,7 +944,7 @@ export function ImportPreviewView({
   const goBack = at > 0 ? () => setAt(at - 1) : undefined;
 
   const opened = useRef(false);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: runs on each new step.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- runs on each new step.
   useEffect(() => {
     if (!opened.current) {
       opened.current = true;

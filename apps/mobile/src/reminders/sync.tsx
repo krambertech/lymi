@@ -69,12 +69,12 @@ export function ReminderSync() {
     return () => listener.remove();
   }, []);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the action titles follow the language.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- the action titles follow the language.
   useEffect(() => {
     void registerActions();
   }, [i18n.locale]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a return to the front, the day's progress and the language replan too.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- a return to the front, the day's progress and the language replan too.
   useEffect(() => {
     if (!replans(!!time, due)) return;
     // A review grades every few seconds; the plan only needs where the day settled.
@@ -103,6 +103,7 @@ export function ReminderSync() {
       live = false;
       clearTimeout(timer);
     };
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
   }, [time, due, dayDone, goal, progress, forecast, zone, front, i18n.locale]);
 
   // A cold start opens on "/", which redirects to Today; a review opened before that is replaced.

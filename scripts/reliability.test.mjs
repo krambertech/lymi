@@ -1,7 +1,7 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { checklistSource, globToRegExp, parseDiff, report, triggered } from "./reliability.mjs";
 import { ITEMS } from "./reliability-checklist.mjs";
+import { checklistSource, globToRegExp, parseDiff, report, triggered } from "./reliability.mjs";
 
 const DIFF = `diff --git a/apps/web/src/server/services/review.ts b/apps/web/src/server/services/review.ts
 --- a/apps/web/src/server/services/review.ts

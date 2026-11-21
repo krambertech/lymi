@@ -163,7 +163,7 @@ export function StreakCalendar({ days, today, firstMonth, run, rest }: Props) {
       <View onLayout={(e) => setWidth(e.nativeEvent.layout.width)}>
         <View className="flex-row px-3 pb-1.5" importantForAccessibility="no-hide-descendants">
           {heads.map((h, i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: a weekday's place is its identity.
+            // oxlint-disable-next-line react/no-array-index-key -- a weekday's place is its identity.
             <Text key={i} className="flex-1 text-center text-xs font-medium text-ink-muted">
               {h}
             </Text>
@@ -264,7 +264,7 @@ const MonthPage = memo(function MonthPage({
         <View key={week.find(Boolean) ?? "week"} className="flex-row">
           {week.map((date, i) => {
             if (!date) {
-              // biome-ignore lint/suspicious/noArrayIndexKey: an empty slot has only its place.
+              // oxlint-disable-next-line react/no-array-index-key -- an empty slot has only its place.
               return <View key={i} style={{ width: cell, height: CELL }} />;
             }
             const at = draw && run.has(date) ? runOrder.indexOf(date) : -1;

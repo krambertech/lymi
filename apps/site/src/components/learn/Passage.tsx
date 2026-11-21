@@ -190,7 +190,7 @@ export function PassagePlayer({ passage, label }: { passage: PassageControl; lab
           />
           {shown.map((group, i) => (
             <SentenceGroup
-              // biome-ignore lint/suspicious/noArrayIndexKey: one group per sentence, in order
+              // oxlint-disable-next-line react/no-array-index-key -- one group per sentence, in order
               key={i}
               group={group}
               lit={started ? passage.t : -1}
@@ -232,7 +232,7 @@ function SentenceGroup({
         const at = group.start + ((j + 0.5) / bars.length) * span;
         return (
           <i
-            // biome-ignore lint/suspicious/noArrayIndexKey: a bar's place in the sentence is its identity
+            // oxlint-disable-next-line react/no-array-index-key -- a bar's place in the sentence is its identity
             key={j}
             className={clsx(
               "block max-w-[3px] min-w-[2px] flex-1 rounded-full transition-colors duration-100",
@@ -373,7 +373,7 @@ export function PassageQuestions({
     setChecked(done);
     onChecked?.(done);
   };
-  // biome-ignore lint/correctness/useExhaustiveDependencies: right and total are read at the Check
+  // oxlint-disable react-hooks/exhaustive-deps -- right and total are read at the Check
   useEffect(() => {
     // Try again takes its own button off the page, so focus goes back to the first answer.
     if (!checked) {
@@ -386,6 +386,7 @@ export function PassageQuestions({
     if (section) finishSection(section);
     // The score is reported once per Check.
   }, [checked]);
+  // oxlint-enable react-hooks/exhaustive-deps
   return (
     <QuizCard
       title={title}
@@ -523,7 +524,7 @@ export function PassageText({
           ? glossPieces(sentence, (word) => word in glossary).map((piece, j) =>
               "word" in piece ? (
                 <Word
-                  // biome-ignore lint/suspicious/noArrayIndexKey: a sentence's pieces never reorder
+                  // oxlint-disable-next-line react/no-array-index-key -- a sentence's pieces never reorder
                   key={j}
                   w={piece.word}
                 />
@@ -533,7 +534,7 @@ export function PassageText({
             )
           : sentence;
         return (
-          // biome-ignore lint/suspicious/noArrayIndexKey: a passage's sentences never reorder
+          // oxlint-disable-next-line react/no-array-index-key -- a passage's sentences never reorder
           <span key={i}>
             <span
               className={clsx(

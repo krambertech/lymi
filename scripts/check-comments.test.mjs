@@ -41,7 +41,9 @@ test("ignores comment markers inside strings, templates, regexes and JSX text", 
 
 test("allows tool directives and type tags, but not prose after a JSDoc tag", () => {
   for (const directive of [
-    "// biome-ignore lint/suspicious/noExplicitAny: the SDK types it as any",
+    "// oxlint-disable-next-line typescript/no-explicit-any -- the SDK types it as any",
+    "/* oxlint-disable react-hooks/exhaustive-deps -- runs once */",
+    "// oxlint-enable react-hooks/exhaustive-deps",
     "// @ts-expect-error the fixture is deliberately wrong",
     '/// <reference types="vite/client" />',
     '/** @type {import("x").Config} */',

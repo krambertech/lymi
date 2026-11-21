@@ -144,7 +144,7 @@ export function DeckHand({
     >
       {cards.map((card, at) => (
         <HandCard
-          // biome-ignore lint/suspicious/noArrayIndexKey: a fixed hand; a term can repeat.
+          // oxlint-disable-next-line react/no-array-index-key -- a fixed hand; a term can repeat.
           key={at}
           card={card}
           at={at}

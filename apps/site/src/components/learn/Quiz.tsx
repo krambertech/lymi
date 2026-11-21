@@ -396,7 +396,7 @@ function ScoreWords({
       <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
         {recalled.map((word, i) =>
           word ? (
-            // biome-ignore lint/suspicious/noArrayIndexKey: one chip per round, in order
+            // oxlint-disable-next-line react/no-array-index-key -- one chip per round, in order
             <li key={i} className="learn-pop" style={{ animationDelay: `${i * 60}ms` }}>
               <RecallChip word={word} ok={results[i] === true} />
             </li>
@@ -463,7 +463,7 @@ export function ResultDots({
         const result = results[i];
         return (
           <i
-            // biome-ignore lint/suspicious/noArrayIndexKey: one dot per round, in order
+            // oxlint-disable-next-line react/no-array-index-key -- one dot per round, in order
             key={i}
             className={clsx(
               "size-2 rounded-full transition-colors duration-200",
@@ -492,7 +492,7 @@ export function useNudge() {
 
 /** Plays a round's sound as it opens from Next; the first round waits for the learner. */
 export function useAutoplay(src: string, autoplay: boolean, round: number) {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a new round replays even when its clip is the last one's
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- a new round replays even when its clip is the last one's
   useEffect(() => {
     if (autoplay) void playSound(src);
   }, [autoplay, round, src]);
@@ -579,10 +579,11 @@ export function GapRound({
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
   const pickFirst = listen === "after";
   useAutoplay(item.src, autoplay && !pickFirst, round);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: each round, including a restart, opens answerable
+  // oxlint-disable react-hooks/exhaustive-deps -- each round, including a restart, opens answerable
   useEffect(() => {
     if (pickFirst) heard();
   }, [pickFirst, round]);
+  // oxlint-enable react-hooks/exhaustive-deps
   const done = state.status === "answered";
   const picked = done ? state.picked : null;
   const [settled, setSettled] = useState(false);
@@ -672,7 +673,7 @@ export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<
   const [value, setValue] = useState("");
   const input = useRef<HTMLInputElement>(null);
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: each new round clears the field
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- each new round clears the field
   useEffect(() => {
     setValue("");
     if (autoplay) {

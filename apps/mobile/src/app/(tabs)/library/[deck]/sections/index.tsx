@@ -44,6 +44,7 @@ export default function DeckSections() {
   const query = useSections(id);
   const sections = query.data?.sections ?? [];
   const cards = useDeckCards(id);
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
   const columns = useMemo(() => lineColumns(sections, cards.data ?? []), [sections, cards.data]);
   const state = opening(sections, query.data?.progress ?? null);
   const focus = focusIndex(columns, state);
@@ -69,6 +70,7 @@ export default function DeckSections() {
     if (!section) return;
     setAsked(undefined);
     setNaming({ section });
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
   }, [owner, asked, sections]);
   const archived = useQuery({ ...archivedSectionsQuery(id), enabled: !!id && owner });
   const archivedCount = archived.data?.sections.length ?? 0;

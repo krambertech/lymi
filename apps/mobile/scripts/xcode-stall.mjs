@@ -11,7 +11,7 @@ export function descendants(rootPid) {
     etime,
   }));
   const tree = new Set([String(rootPid)]);
-  for (let grew = true; grew; ) {
+  for (let grew = true; grew;) {
     grew = false;
     for (const row of rows) {
       if (tree.has(row.ppid) && !tree.has(row.pid)) {

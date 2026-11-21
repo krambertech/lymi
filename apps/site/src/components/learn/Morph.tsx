@@ -96,12 +96,12 @@ function MorphChainView({ chain }: { chain: MorphChain }) {
             <span aria-hidden="true" lang="et">
               {parts.map((part, i) =>
                 part.kind === "added" ? (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: a word's parts never reorder
+                  // oxlint-disable-next-line react/no-array-index-key -- a word's parts never reorder
                   <span key={i} data-kind="added">
                     <span>{part.text}</span>
                   </span>
                 ) : (
-                  // biome-ignore lint/suspicious/noArrayIndexKey: a word's parts never reorder
+                  // oxlint-disable-next-line react/no-array-index-key -- a word's parts never reorder
                   <span key={i} data-kind={part.kind}>
                     {part.text}
                   </span>

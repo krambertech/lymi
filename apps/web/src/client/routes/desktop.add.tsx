@@ -289,7 +289,7 @@ function DesktopAdd() {
       <div className="flex h-14 items-center gap-2 ps-4.5 pe-3">
         <input
           ref={input}
-          // biome-ignore lint/a11y/noAutofocus: the panel opens to type a term, like Spotlight
+          // oxlint-disable-next-line jsx-a11y/no-autofocus -- the panel opens to type a term, like Spotlight
           autoFocus
           value={term}
           onChange={(e) => {
@@ -340,7 +340,7 @@ function DesktopAdd() {
           className="flex max-h-56 flex-col overflow-y-auto border-t border-edge p-1.5 outline-none"
         >
           {own.map((d, i) => (
-            // biome-ignore lint/a11y/useKeyWithClickEvents: the listbox takes the keys, as aria-activedescendant expects
+            // oxlint-disable-next-line jsx-a11y/click-events-have-key-events -- the listbox takes the keys, as aria-activedescendant expects
             <div
               key={d.id}
               id={`${listId}-${i}`}

@@ -20,8 +20,8 @@ import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, ListenRows, Panel } from "../Explore";
 import { type GapItem, GapPassage } from "../GapPassage";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { Morph, type MorphChain } from "../Morph";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
@@ -211,7 +211,7 @@ function FlipLine({ said, mode }: { said: string; mode: string }) {
       <span key={mode} className="learn-swap grid min-w-0">
         <span lang="et" className="text-xl font-medium tracking-tight max-sm:text-lg">
           {litStart(said).map(([text, lit], i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: a line’s pieces never reorder
+            // oxlint-disable-next-line react/no-array-index-key -- a line’s pieces never reorder
             <span key={i} className={lit ? "text-(--form)" : undefined}>
               {text}
             </span>

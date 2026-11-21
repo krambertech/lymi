@@ -192,6 +192,7 @@ export function AppSteps({ steps }: { steps: ReactNode[] }) {
   return (
     <ol className="grid gap-3 text-base text-ink-secondary">
       {steps.map((step, i) => (
+        // oxlint-disable-next-line react/no-array-index-key -- Biome let this pass; triage in #1278
         <li key={String(i)} className="grid grid-cols-[26px_1fr] gap-3">
           <span
             aria-hidden="true"

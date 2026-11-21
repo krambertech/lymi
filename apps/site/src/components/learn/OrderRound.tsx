@@ -62,10 +62,11 @@ export function OrderRound({ item, state, heard, answer, autoplay }: RoundProps<
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
   const fromMeaning = item.meaning !== undefined;
   useAutoplay(item.src, autoplay && !fromMeaning, round);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: each round built from its meaning opens answerable
+  // oxlint-disable react-hooks/exhaustive-deps -- each round built from its meaning opens answerable
   useEffect(() => {
     if (fromMeaning) heard();
   }, [fromMeaning, round]);
+  // oxlint-enable react-hooks/exhaustive-deps
 
   const tiles = item.tiles
     ? [...item.tiles, ...(item.spare ?? [])]

@@ -105,13 +105,14 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
     return lines;
   };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: reported once each time it ends
+  // oxlint-disable react-hooks/exhaustive-deps -- reported once each time it ends
   useEffect(() => {
     if (!finished) return;
     endRef.current?.focus({ preventScroll: true });
     captureAnalytics("learn_quiz_finished", { lesson: slug, quiz: id, right, total: yours });
     if (section) finishSection(section);
   }, [finished]);
+  // oxlint-enable react-hooks/exhaustive-deps
   // A new turn of the learner's takes the focus, so a keyboard answers straight on.
   const shown = state?.shown;
   // Try again takes its own button off the page, so focus goes back to Start.
@@ -132,12 +133,13 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
   // A right reply is said by itself after a moment; a wrong one waits for Say it, so its reason can be read.
   const pickedRight =
     current?.who === "you" && picked !== undefined && current.replies[picked]?.right;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: runs once per right pick
+  // oxlint-disable react-hooks/exhaustive-deps -- runs once per right pick
   useEffect(() => {
     if (!pickedRight) return;
     const timer = setTimeout(say, 650);
     return () => clearTimeout(timer);
   }, [pickedRight, shown]);
+  // oxlint-enable react-hooks/exhaustive-deps
 
   // What a screen reader hears: the other speaker's newest line, or the mark on a reply.
   const lastShown = state
@@ -191,7 +193,7 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
           <ol className="m-0 grid w-full list-none gap-3 p-0">
             {turns.slice(0, state.shown).map((turn, i) =>
               turn.who === "them" ? (
-                // biome-ignore lint/suspicious/noArrayIndexKey: a dialogue's turns never reorder
+                // oxlint-disable-next-line react/no-array-index-key -- a dialogue's turns never reorder
                 <li key={i}>
                   <TheirLine
                     name={them}
@@ -202,7 +204,7 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
                   />
                 </li>
               ) : (
-                // biome-ignore lint/suspicious/noArrayIndexKey: a dialogue's turns never reorder
+                // oxlint-disable-next-line react/no-array-index-key -- a dialogue's turns never reorder
                 <li key={i} className="grid">
                   <YourLine line={rightLine(turn)} src={src(turn.clip)} playKey={key(turn.clip)} />
                 </li>
@@ -215,7 +217,7 @@ export function Dialogue({ id, title, part, them, turns, text = "shown" }: Dialo
                 <legend className="mb-2.5 text-sm font-medium text-ink-muted">{t`Your reply`}</legend>
                 {current.replies.map((reply, i) => (
                   <ReplyButton
-                    // biome-ignore lint/suspicious/noArrayIndexKey: a turn's replies never reorder
+                    // oxlint-disable-next-line react/no-array-index-key -- a turn's replies never reorder
                     key={i}
                     ref={i === 0 ? replyRef : undefined}
                     line={reply.line}
@@ -345,7 +347,7 @@ function SoundOnly({ seed }: { seed: number }) {
     <span aria-hidden="true" className="flex h-6 items-center gap-[3px]">
       {Array.from({ length: count }, (_, i) => (
         <i
-          // biome-ignore lint/suspicious/noArrayIndexKey: decorative bars
+          // oxlint-disable-next-line react/no-array-index-key -- decorative bars
           key={i}
           className="block w-[3px] rounded-full bg-ink-faint"
           style={{ height: `${30 + ((i * 37 + seed * 11) % 70)}%` }}

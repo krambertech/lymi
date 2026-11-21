@@ -65,7 +65,7 @@ export function FreeDecks() {
                 </li>
               ))
             : Array.from({ length: PLACEHOLDERS }, (_, i) => (
-                // biome-ignore lint/suspicious/noArrayIndexKey: placeholders have no identity
+                // oxlint-disable-next-line react/no-array-index-key -- placeholders have no identity
                 <li key={i} aria-hidden="true" className="w-[220px] shrink-0">
                   <div className="deck-tray skeleton" />
                   <div className="skeleton mt-3.5 h-5 w-3/4 rounded-xs" />

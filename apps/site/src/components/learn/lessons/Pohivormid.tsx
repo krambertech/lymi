@@ -16,8 +16,8 @@ import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, type KeyItem, Keys, Panel } from "../Explore";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { Match, type MatchPair } from "../Match";
 import { Paradigm } from "../Paradigm";
 import { Quiz } from "../Quiz";
@@ -209,7 +209,7 @@ function EntryCard() {
             <Trans context="grammatical number">Plural: see lesson {plural}</Trans>
           </span>
           {forms.map((form, slot) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: a form can repeat in the column
+            // oxlint-disable-next-line react/no-array-index-key -- a form can repeat in the column
             <Fragment key={slot}>
               <span aria-hidden="true" className="text-sm font-semibold text-(--form) tabular-nums">
                 {slot + 1}

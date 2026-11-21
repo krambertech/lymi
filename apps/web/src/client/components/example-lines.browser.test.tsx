@@ -1,8 +1,8 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { describe, expect, test, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { messages } from "../../locales/en.po";
 import { ExampleLines } from "./example-lines";
 
@@ -14,8 +14,7 @@ async function renderSentence() {
   const onCard = vi.fn();
   await render(
     <I18nProvider i18n={i18n}>
-      {/* biome-ignore lint/a11y/useKeyWithClickEvents: stands in for the review card's tap */}
-      {/* biome-ignore lint/a11y/noStaticElementInteractions: stands in for the review card's tap */}
+      {/* oxlint-disable-next-line jsx-a11y/click-events-have-key-events, jsx-a11y/no-static-element-interactions -- stands in for the review card's tap */}
       <div onClick={onCard}>
         <ExampleLines
           example="Ho prenotato un tavolo per due."

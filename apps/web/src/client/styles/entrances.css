@@ -181,9 +181,8 @@
     transform: translateX(var(--toast-swipe-movement-x))
       translateY(
         calc(
-          var(--toast-swipe-movement-y) -
-          (var(--toast-index) * var(--peek)) -
-          (var(--shrink) * var(--height))
+          var(--toast-swipe-movement-y) - (var(--toast-index) * var(--peek)) -
+            (var(--shrink) * var(--height))
         )
       )
       scale(var(--scale));

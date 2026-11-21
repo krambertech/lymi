@@ -22,7 +22,6 @@ import {
   type SkillLead,
   skillSentence,
 } from "../../../lib/learn/clips";
-import { formText } from "../../../lib/learn/forms";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Keys, Panel } from "../Explore";
@@ -235,20 +234,22 @@ function DutyNote({ lead }: { lead: DutyLead }) {
   }
 }
 
-/** The form a have-to cell shows: the lead and the second verb, its ending lit. */
-const dutyForm = (lead: DutyLead, duty: (typeof MODAL_DUTIES)[number]) =>
-  lead === "pean" ? `pean ${duty.ma}` : lead === "tuleb" ? `tuleb ${duty.da}` : `vaja ${duty.da}`;
+/** The have-to rows: what each lead means, and the lead as Estonian says it. */
+const DUTY_LEADS = [
+  { lead: "pean", et: "pean", means: msg`I have to …` },
+  { lead: "tuleb", et: "tuleb", means: msg`One has to …` },
+  { lead: "vaja", et: "mul on vaja", means: msg`I need to …` },
+] as const satisfies readonly { lead: DutyLead; et: string; means: MessageDescriptor }[];
 
-/** Three verbs after pean, tuleb and mul on vaja; a tap plays the whole sentence. */
+/** Three verbs after pean, tuleb and mul on vaja, a row each; a tap plays the whole sentence. */
 function HaveTo() {
   const { t, i18n } = useLingui();
-  const leads = ["pean", "tuleb", "vaja"] as const;
-  const rows: ParadigmRow[] = MODAL_DUTIES.map((duty) => ({
-    id: formText(duty.ma),
-    label: i18n._(DUTY_MEANS[duty.ma]),
-    et: formText(duty.ma),
-    cells: leads.map((lead) => ({
-      form: dutyForm(lead, duty),
+  const rows: ParadigmRow[] = DUTY_LEADS.map(({ lead, et, means }) => ({
+    id: lead,
+    label: i18n._(means),
+    et,
+    cells: MODAL_DUTIES.map((duty) => ({
+      form: lead === "pean" ? duty.ma : duty.da,
       src: src(dutySentence(lead, duty)),
       note: <DutyNote lead={lead} />,
     })),
@@ -257,7 +258,7 @@ function HaveTo() {
     <Panel>
       <Paradigm
         label={t`Three ways to say have to`}
-        columns={[t`I have to …`, t`One has to …`, t`I need to …`]}
+        columns={MODAL_DUTIES.map((duty) => i18n._(DUTY_MEANS[duty.ma]))}
         rows={rows}
         empty={{ title: t`Tap a form`, tip: t`You’ll hear the whole sentence.` }}
       />

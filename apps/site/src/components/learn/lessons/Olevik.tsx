@@ -583,7 +583,6 @@ export function OlevikLesson() {
                   main: PRESENT_SENTENCES[each.id],
                   sub: i18n._(each.en),
                   src: sentenceSrc(each.id),
-                  label: t`Play ${PRESENT_SENTENCES[each.id]}`,
                 }))}
               />
               <Prose>

@@ -43,7 +43,7 @@ These mark a line as written by a machine. Each needs a rewrite, not a softer sy
 
 ## The tell scan
 
-Run it on the lesson file from the repository root. Every hit needs a rewrite or a reason to stay.
+`copy-checks.test.ts` runs this scan, curly apostrophes and the Ukrainian and Russian scan below on each lesson file's catalog entries, so run `pnpm i18n:extract` before the tests. A hit that stays goes in `apps/site/src/lib/learn/checks/allowed-copy.ts` with its reason. By hand, from the repository root:
 
 ```bash
 grep -nEi "good ear|great|well done|nice|awesome|amazing|perfect|let's|here's|simply|actually|really|basically|essentially|easy|tricky|master|unlock|journey|dive in|most learners|press enter|\bclick\b" apps/site/src/components/learn/lessons/<File>.tsx
@@ -67,7 +67,7 @@ Each language meets the same bar on its own terms. Write each from the English, 
 - **No capital mid-sentence** in a feedback line, and check long answers such as «Понедельник» and «Воскресенье» at 375 px.
 - **A short English message can already exist with another meaning,** as "Say it" did. Give yours a `context`.
 
-Scan the catalogs for officialese and praise, and fix every hit in this lesson's entries:
+The site tests scan this lesson's entries for officialese, praise and the calques above. By hand:
 
 ```bash
 grep -nEi "явля|здійсн|осуществ|данн|в рамках|у рамках|на протязі|слідуюч|приймати участь|молодець|молодец|чудово|отлично|хороший слух|добрий слух" apps/site/src/locales/uk.po apps/site/src/locales/ru.po

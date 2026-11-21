@@ -10,6 +10,7 @@ import { OlevikLesson } from "../learn/lessons/Olevik";
 import { OsastavLesson } from "../learn/lessons/Osastav";
 import { PaevadLesson } from "../learn/lessons/Paevad";
 import { PaevTallinnasLesson } from "../learn/lessons/PaevTallinnas";
+import { TegevusnimedLesson } from "../learn/lessons/Tegevusnimed";
 import { TutvumineLesson } from "../learn/lessons/Tutvumine";
 import { VerbiPohivormidLesson } from "../learn/lessons/VerbiPohivormid";
 import { Island } from "./Island";
@@ -29,6 +30,7 @@ export const LESSON_VIEWS = {
   kaskiv: KaskivLesson,
   "paev-tallinnas": PaevTallinnasLesson,
   "verbi-pohivormid": VerbiPohivormidLesson,
+  tegevusnimed: TegevusnimedLesson,
   osastav: OsastavLesson,
 } as const;
 

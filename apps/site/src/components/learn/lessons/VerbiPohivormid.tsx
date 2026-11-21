@@ -674,7 +674,7 @@ export function VerbiPohivormidLesson() {
   const commands = lessonBySlug("kaskiv")?.n;
   const negation = lessonBySlug("eitus")?.n;
   const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
-  const infinitives = at("Pean minema, tahan lugeda");
+  const infinitives = lessonBySlug("tegevusnimed")?.n;
   const gradation = at("Jalg, jala");
 
   const heardItems = useMemo<HeardItem[]>(

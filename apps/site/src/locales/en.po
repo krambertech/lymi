@@ -813,6 +813,9 @@ msgstr "<0>Diffusion</0>: particles move from high to low concentration."
 msgid "<0>E–R</0> on a sign: Monday to Friday."
 msgstr "<0>E–R</0> on a sign: Monday to Friday."
 
+msgid "<0>Eelmisel suvel</0>, last summer, is a set time, so the simple past: <1>käisin</1>."
+msgstr "<0>Eelmisel suvel</0>, last summer, is a set time, so the simple past: <1>käisin</1>."
+
 msgid "<0>Ei loe</0> is now, <1>ei lugenud</1> the past. <2>Ei olnud</2>, or <3>polnud</3>, is wasn’t."
 msgstr "<0>Ei loe</0> is now, <1>ei lugenud</1> the past. <2>Ei olnud</2>, or <3>polnud</3>, is wasn’t."
 
@@ -827,6 +830,9 @@ msgstr "<0>Ei ole</0> in one word"
 
 msgid "<0>Ei ole</0> is now. For yesterday, say <1>ei olnud</1>."
 msgstr "<0>Ei ole</0> is now. For yesterday, say <1>ei olnud</1>."
+
+msgid "<0>Ei olnud</0> is for before another past moment. Up to now: <1>ei ole</1>."
+msgstr "<0>Ei olnud</0> is for before another past moment. Up to now: <1>ei ole</1>."
 
 msgid "<0>Ei oska</0> says you never learned. You learned as a child."
 msgstr "<0>Ei oska</0> says you never learned. You learned as a child."
@@ -881,6 +887,9 @@ msgstr "<0>Jonas</0> added 4 cards to Week 4"
 
 msgid "<0>Jonas</0> finished Week 2"
 msgstr "<0>Jonas</0> finished Week 2"
+
+msgid "<0>Käin</0> is the present, and last summer is past: <1>käisin</1>."
+msgstr "<0>Käin</0> is the present, and last summer is past: <1>käisin</1>."
 
 msgid "<0>Käin</0> is the present. Kati asked about yesterday."
 msgstr "<0>Käin</0> is the present. Kati asked about yesterday."
@@ -969,6 +978,9 @@ msgstr "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you a
 msgid "<0>Ma käisin</0> says you went. To say you didn’t: <1>ma ei käinud</1>."
 msgstr "<0>Ma käisin</0> says you went. To say you didn’t: <1>ma ei käinud</1>."
 
+msgid "<0>Ma olen Tartus käinud</0> and <1>ma olin juba söönud</1>: how to build them, and when Estonian uses them instead of the simple past."
+msgstr "<0>Ma olen Tartus käinud</0> and <1>ma olin juba söönud</1>: how to build them, and when Estonian uses them instead of the simple past."
+
 msgid "<0>Ma tahan lugeda</0> is I want to read, and <1>Ma pean lugema</1> is I have to read. The first verb decides whether the second takes its <2>-da</2> or its <3>-ma</3> form."
 msgstr "<0>Ma tahan lugeda</0> is I want to read, and <1>Ma pean lugema</1> is I have to read. The first verb decides whether the second takes its <2>-da</2> or its <3>-ma</3> form."
 
@@ -1046,6 +1058,9 @@ msgstr "<0>Nende</0> is their. For you and Martin, say <1>meie</1>, our."
 
 msgid "<0>Olen</0> for I, <1>oled</1> for you, <2>on</2> for he or she and for they."
 msgstr "<0>Olen</0> for I, <1>oled</1> for you, <2>on</2> for he or she and for they."
+
+msgid "<0>Olin</0> is for before another past moment. Kati asks about your life up to now: <1>olen</1>."
+msgstr "<0>Olin</0> is for before another past moment. Kati asks about your life up to now: <1>olen</1>."
 
 msgid "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
 msgstr "<0>On</0> is both he or she is and they are. Only the pronoun tells them apart."
@@ -1319,6 +1334,9 @@ msgstr "180 points. 80 to pass N5, 90 to pass N4."
 
 msgid "2 days"
 msgstr "2 days"
+
+msgid "2 exercises"
+msgstr "2 exercises"
 
 msgid "2 quizzes"
 msgstr "2 quizzes"
@@ -1782,6 +1800,9 @@ msgstr "A free lesson on the Estonian partitive case, a noun’s third form: aft
 msgid "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
 
+msgid "A free lesson on the Estonian perfect and pluperfect: olema with the -nud form (ma olen Tartus käinud, ma olin juba söönud), and when to use them instead of the simple past (eile ma käisin Tartus). Every sentence is read aloud."
+msgstr "A free lesson on the Estonian perfect and pluperfect: olema with the -nud form (ma olen Tartus käinud, ma olin juba söönud), and when to use them instead of the simple past (eile ma käisin Tartus). Every sentence is read aloud."
+
 msgid "A free lesson on the Estonian plural cases: build the plural genitive by adding -de or -e to the third form (majade, raamatute, inimeste), then add the endings you already know: majades, inimestele, sõpradega. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian plural cases: build the plural genitive by adding -de or -e to the third form (majade, raamatute, inimeste), then add the endings you already know: majades, inimestele, sõpradega. Every sentence is read aloud."
 
@@ -2099,6 +2120,12 @@ msgstr "A schedule for every card"
 
 msgid "A score for one attempt"
 msgstr "A score for one attempt"
+
+msgid "A set time in the past takes the simple past: <0>Eile ma käisin Tartus.</0>"
+msgstr "A set time in the past takes the simple past: <0>Eile ma käisin Tartus.</0>"
+
+msgid "A set time in the past: the simple past."
+msgstr "A set time in the past: the simple past."
 
 msgid "a shop"
 msgstr "a shop"
@@ -2518,6 +2545,9 @@ msgstr "After <0>{lead}</0>, the <1>-da</1> form, and it goes last."
 msgid "After <0>{lead}</0>, the <1>-ma</1> form, and it goes last."
 msgstr "After <0>{lead}</0>, the <1>-ma</1> form, and it goes last."
 
+msgid "After <0>ei ole</0> comes the <1>-nud</1> form: <2>söönud</2>."
+msgstr "After <0>ei ole</0> comes the <1>-nud</1> form: <2>söönud</2>."
+
 msgid "after <0>ei</0>"
 msgstr "after <0>ei</0>"
 
@@ -2571,6 +2601,9 @@ msgstr "After <0>lähen</0>, say where to: <1>Tartusse</1>. <2>Tartus</2> is whe
 
 msgid "After <0>mulle meeldib</0>, the <1>-da</1> form."
 msgstr "After <0>mulle meeldib</0>, the <1>-da</1> form."
+
+msgid "After <0>olen</0> comes the <1>-nud</1> form: <2>käinud</2>."
+msgstr "After <0>olen</0> comes the <1>-nud</1> form: <2>käinud</2>."
 
 msgid "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
 msgstr "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
@@ -2815,6 +2848,9 @@ msgstr "All lessons"
 msgid "All nine. Two, many and the ones you mean, every time."
 msgstr "All nine. Two, many and the ones you mean, every time."
 
+msgid "All nine. You hear the tense and know what it says."
+msgstr "All nine. You hear the tense and know what it says."
+
 msgid "All nine. You knew which verb each <0>-da</0> form belongs to."
 msgstr "All nine. You knew which verb each <0>-da</0> form belongs to."
 
@@ -2995,6 +3031,9 @@ msgstr "Almost! It’s <0>„Dann <1>höre</1> ich <2>auf</2>“</0>: after “d
 msgctxt "deck tag"
 msgid "Alphabet"
 msgstr "Alphabet"
+
+msgid "already"
+msgstr "already"
 
 msgid "Already in your deck, so it’s skipped"
 msgstr "Already in your deck, so it’s skipped"
@@ -3671,6 +3710,9 @@ msgstr "Before a -ta form, to stress the without."
 
 msgid "Before a noun, <0>Martin</0> takes its genitive: <1>Martini kohv</1>."
 msgstr "Before a noun, <0>Martin</0> takes its genitive: <1>Martini kohv</1>."
+
+msgid "Before another past moment: the pluperfect, <0>olin</0> with <1>-nud</1>."
+msgstr "Before another past moment: the pluperfect, <0>olin</0> with <1>-nud</1>."
 
 msgid "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
 msgstr "Before the hour, say how long until the next one. <0/> is, word for word, “in ten minutes, four”: 3:50."
@@ -5649,6 +5691,9 @@ msgstr "Estonian numbers"
 msgid "Estonian past tense"
 msgstr "Estonian past tense"
 
+msgid "Estonian perfect and pluperfect: olen lugenud, olin lugenud"
+msgstr "Estonian perfect and pluperfect: olen lugenud, olin lugenud"
+
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Estonian personal pronouns and “to be”"
 
@@ -5717,6 +5762,9 @@ msgstr "Even to my boss?"
 
 msgid "Evening"
 msgstr "Evening"
+
+msgid "ever"
+msgstr "ever"
 
 msgid "Every *person* is different."
 msgstr "Every *person* is different."
@@ -7105,6 +7153,9 @@ msgstr "guests"
 msgid "habeas corpus"
 msgstr "habeas corpus"
 
+msgid "Had done"
+msgstr "Had done"
+
 msgid "hakkama, now"
 msgstr "hakkama, now"
 
@@ -7150,14 +7201,23 @@ msgstr "Harder grammar"
 msgid "Has"
 msgstr "Has"
 
+msgid "Has done"
+msgstr "Has done"
+
 msgid "has to be done; comes"
 msgstr "has to be done; comes"
 
 msgid "Have a *lovely* weekend!"
 msgstr "Have a *lovely* weekend!"
 
+msgid "Have done, had done"
+msgstr "Have done, had done"
+
 msgid "Have to and need to"
 msgstr "Have to and need to"
+
+msgid "Have you been to Tartu?"
+msgstr "Have you been to Tartu?"
 
 msgid "Have you eaten? A way to say hello"
 msgstr "Have you eaten? A way to say hello"
@@ -7512,6 +7572,9 @@ msgstr "Hear the question, then pick the short answer that says no."
 
 msgid "Hear the sentences above once more, then try again."
 msgstr "Hear the sentences above once more, then try again."
+
+msgid "Hear the tense"
+msgstr "Hear the tense"
 
 msgid "Hear the third form, then pick what it adds. Listen for its last sound."
 msgstr "Hear the third form, then pick what it adds. Listen for its last sound."
@@ -7978,6 +8041,9 @@ msgstr "I ate"
 msgid "I ate an *apple*."
 msgstr "I ate an *apple*."
 
+msgid "I ate at eight."
+msgstr "I ate at eight."
+
 msgid "I ate some cake."
 msgstr "I ate some cake."
 
@@ -8242,6 +8308,9 @@ msgstr "I have already eaten."
 
 msgid "I have an *appointment* tomorrow."
 msgstr "I have an *appointment* tomorrow."
+
+msgid "I have been to Tartu."
+msgstr "I have been to Tartu."
 
 msgid "I have lots of *friends*."
 msgstr "I have lots of *friends*."
@@ -9378,6 +9447,15 @@ msgstr "It does the same job without Anki running on your computer. Lymi is a re
 msgid "It doesn’t matter"
 msgstr "It doesn’t matter"
 
+msgid "It had happened before something else"
+msgstr "It had happened before something else"
+
+msgid "It happened at a set time"
+msgstr "It happened at a set time"
+
+msgid "It has happened, and it matters now"
+msgstr "It has happened, and it matters now"
+
 msgid "It has no meaning of its own, like a spoken question mark."
 msgstr "It has no meaning of its own, like a spoken question mark."
 
@@ -9691,6 +9769,9 @@ msgstr "Juust, juustu, juustu."
 msgid "k turns into g, p into b and t into d: <0>pank, panga</0>; <1>lamp, lambi</1>."
 msgstr "k turns into g, p into b and t into d: <0>pank, panga</0>; <1>lamp, lambi</1>."
 
+msgid "kama, an Estonian mix of roasted grain flours"
+msgstr "kama, an Estonian mix of roasted grain flours"
+
 msgid "Kana"
 msgstr "Kana"
 
@@ -9732,6 +9813,9 @@ msgstr "Kati asks about yesterday, and the answer is no each time. Pick what you
 
 msgid "Kati asks about your plans. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
 msgstr "Kati asks about your plans. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
+
+msgid "Kati asks about your trips and what you have tried. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Kati asks about your trips and what you have tried. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
 
 msgid "Kati asks about your weekend. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
 msgstr "Kati asks about your weekend. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
@@ -10345,6 +10429,9 @@ msgstr "Listen for pool, veerand, kolmveerand, läbi or pärast. Each tells you 
 
 msgid "Listen to each sentence and pick what it means."
 msgstr "Listen to each sentence and pick what it means."
+
+msgid "Listen to each sentence and pick what it says about time. Listen for <0>olen</0> or <1>olin</1>, and for a time word."
+msgstr "Listen to each sentence and pick what it says about time. Listen for <0>olen</0> or <1>olin</1>, and for a time word."
 
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Listen to the end of the verb. Try the table above, then come back."
@@ -11201,6 +11288,9 @@ msgstr "Most land plants have one."
 msgid "Most of them. Listen again in the table to the ones you missed."
 msgstr "Most of them. Listen again in the table to the ones you missed."
 
+msgid "Most of them. Listen for <0>olen</0>, <1>olin</1> and the time words."
+msgstr "Most of them. Listen for <0>olen</0>, <1>olin</1> and the time words."
+
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Most of them. Listen to how the ones you missed start."
 
@@ -11631,6 +11721,12 @@ msgstr "No signal"
 
 msgid "No swimming here."
 msgstr "No swimming here."
+
+msgid "No time is named: the perfect, a present form of <0>olema</0> with <1>-nud</1>."
+msgstr "No time is named: the perfect, a present form of <0>olema</0> with <1>-nud</1>."
+
+msgid "No time, or a result now, takes the perfect: <0>Ma olen juba söönud.</0>"
+msgstr "No time, or a result now, takes the perfect: <0>Ma olen juba söönud.</0>"
 
 msgid "No verb comes before it, so the present: <0>ma lähen</0>."
 msgstr "No verb comes before it, so the present: <0>ma lähen</0>."
@@ -12378,6 +12474,9 @@ msgstr "One: the verb form of <0>ta</0>"
 msgid "Only"
 msgstr "Only"
 
+msgid "Only <0>olema</0> changes. The <1>-nud</1> form stays the same for everyone."
+msgstr "Only <0>olema</0> changes. The <1>-nud</1> form stays the same for everyone."
+
 msgid "Only the ending changes: <0>luge-ma</0>, <1>luge-da</1>."
 msgstr "Only the ending changes: <0>luge-ma</0>, <1>luge-da</1>."
 
@@ -12695,6 +12794,12 @@ msgstr "People, food, time and your first verbs."
 msgid "Perfect and pluperfect"
 msgstr "Perfect and pluperfect"
 
+msgid "Perfect and pluperfect, person by person"
+msgstr "Perfect and pluperfect, person by person"
+
+msgid "Perfect: a present form of <0>olema</0> with <1>-nud</1>. <2>Ma olen lugenud.</2>"
+msgstr "Perfect: a present form of <0>olema</0> with <1>-nud</1>. <2>Ma olen lugenud.</2>"
+
 msgid "Perfective"
 msgstr "Perfective"
 
@@ -12984,6 +13089,9 @@ msgstr "pleases"
 
 msgid "Pluperfect"
 msgstr "Pluperfect"
+
+msgid "Pluperfect: a past form of <0>olema</0> with <1>-nud</1>. <2>Ma olin lugenud.</2>"
+msgstr "Pluperfect: a past form of <0>olema</0> with <1>-nud</1>. <2>Ma olin lugenud.</2>"
 
 msgid "Plural"
 msgstr "Plural"
@@ -13472,6 +13580,9 @@ msgstr "Read the meaning, then try to recall the term before you look. Try it on
 
 msgid "Read the rule above the quiz once more, then try again."
 msgstr "Read the rule above the quiz once more, then try again."
+
+msgid "Read the sentences above once more, then try again."
+msgstr "Read the sentences above once more, then try again."
 
 msgid "Read the sign on a café in Tallinn, then answer."
 msgstr "Read the sign on a café in Tallinn, then answer."
@@ -15104,6 +15215,9 @@ msgstr "Talk: at the market"
 msgid "Talk: coffee with Mari"
 msgstr "Talk: coffee with Mari"
 
+msgid "Talk: have you been there?"
+msgstr "Talk: have you been there?"
+
 msgid "Talk: in class"
 msgstr "Talk: in class"
 
@@ -16511,6 +16625,9 @@ msgstr "The place or in the place"
 msgid "The player would pass, if chess allowed it."
 msgstr "The player would pass, if chess allowed it."
 
+msgid "The pluperfect goes one step further back: it had happened before another past moment. Words such as <0/>, <1/> and <2/> often come with these tenses."
+msgstr "The pluperfect goes one step further back: it had happened before another past moment. Words such as <0/>, <1/> and <2/> often come with these tenses."
+
 #. placeholder {0}: kase.ending
 msgid "The plural genitive <0>{genitive}</0> plus <1>{0}</1>."
 msgstr "The plural genitive <0>{genitive}</0> plus <1>{0}</1>."
@@ -16791,6 +16908,9 @@ msgstr "The short form of sinu."
 
 msgid "the simple past"
 msgstr "the simple past"
+
+msgid "The simple past from lesson {past} tells what happened at a set time: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. The perfect tells what has happened with no time named, such as something you have done in your life, or a result that matters now. English splits them the same way: I went yesterday, but I have been there."
+msgstr "The simple past from lesson {past} tells what happened at a set time: <0>eile</0>, <1>laupäeval</1>, <2>kell kaheksa</2>. The perfect tells what has happened with no time named, such as something you have done in your life, or a result that matters now. English splits them the same way: I went yesterday, but I have been there."
 
 msgid "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
 msgstr "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
@@ -17712,6 +17832,9 @@ msgstr "To go to the cinema on Friday"
 msgid "To go up"
 msgstr "To go up"
 
+msgid "to go, to visit"
+msgstr "to go, to visit"
+
 msgid "To have fun"
 msgstr "To have fun"
 
@@ -17829,6 +17952,9 @@ msgstr "To say it didn’t happen, keep <0>ei</0> and change the verb to its <1>
 
 msgid "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
 msgstr "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
+
+msgid "To say no, put <0>ei</0> before <1>ole</1> or <2>olnud</2>, the same for every person: <3>ma ei ole lugenud</3>, <4>nad ei olnud lugenud</4>."
+msgstr "To say no, put <0>ei</0> before <1>ole</1> or <2>olnud</2>, the same for every person: <3>ma ei ole lugenud</3>, <4>nad ei olnud lugenud</4>."
 
 msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 msgstr "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
@@ -19123,6 +19249,9 @@ msgstr "When it’s always the third form"
 msgid "When its card reaches Known in your reviews. From then on the reading is hidden on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it."
 msgstr "When its card reaches Known in your reviews. From then on the reading is hidden on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it."
 
+msgid "When Kati came, I had already eaten."
+msgstr "When Kati came, I had already eaten."
+
 msgid "When the output depends on the history of the input"
 msgstr "When the output depends on the history of the input"
 
@@ -19135,6 +19264,9 @@ msgstr "When the third form is the same as the second"
 
 msgid "When the third form takes letters back"
 msgstr "When the third form takes letters back"
+
+msgid "When to use them"
+msgstr "When to use them"
 
 msgid "When would you say it?"
 msgstr "When would you say it?"
@@ -19502,6 +19634,9 @@ msgstr "Which question word?"
 msgid "Which questions come up"
 msgstr "Which questions come up"
 
+msgid "Which tense?"
+msgstr "Which tense?"
+
 msgid "Which verb is it?"
 msgstr "Which verb is it?"
 
@@ -19742,6 +19877,12 @@ msgstr "With A1 if Spanish is new to you, or with Spanish Top 100 Verbs and Span
 
 msgid "With an ending"
 msgstr "With an ending"
+
+msgid "With ei: never. Ma ei ole kunagi Pariisis käinud."
+msgstr "With ei: never. Ma ei ole kunagi Pariisis käinud."
+
+msgid "With ei: not yet. Ma ei ole veel söönud."
+msgstr "With ei: not yet. Ma ei ole veel söönud."
 
 msgid "with lemon"
 msgstr "with lemon"
@@ -20232,6 +20373,9 @@ msgstr "Yesterday I studied Estonian."
 msgid "Yesterday I was at home."
 msgstr "Yesterday I was at home."
 
+msgid "Yesterday I went to Tartu."
+msgstr "Yesterday I went to Tartu."
+
 msgid "Yesterday I went to work."
 msgstr "Yesterday I went to work."
 
@@ -20258,6 +20402,9 @@ msgstr "Yesterday you were busy: you didn’t go to the shop and didn’t see Ma
 
 msgid "Yesterday, today, tomorrow and next week"
 msgstr "Yesterday, today, tomorrow and next week"
+
+msgid "yet, still"
+msgstr "yet, still"
 
 msgid "you"
 msgstr "you"
@@ -20379,6 +20526,9 @@ msgstr "You know <0>{term}</0>. Its pinyin goes from the examples on all your ca
 msgid "You know <0>银行</0>. <1>行</1> loses háng in <2>行长</2> too, but keeps xíng in <3>不行</3>."
 msgstr "You know <0>银行</0>. <1>行</1> loses háng in <2>行长</2> too, but keeps xíng in <3>不行</3>."
 
+msgid "You know the <0>-nud</0> form from lesson {negativePast}: <1>ma ei lugenud</1>, I didn’t read. Put a form of <2>olema</2> before it and you get two more tenses. With <3>olen</3>, the perfect: <4>ma olen lugenud</4>, I have read. With <5>olin</5>, the pluperfect: <6>ma olin lugenud</6>, I had read."
+msgstr "You know the <0>-nud</0> form from lesson {negativePast}: <1>ma ei lugenud</1>, I didn’t read. Put a form of <2>olema</2> before it and you get two more tenses. With <3>olen</3>, the perfect: <4>ma olen lugenud</4>, I have read. With <5>olin</5>, the pluperfect: <6>ma olin lugenud</6>, I had read."
+
 msgid "You know their I forms: <0/> from lesson {pronouns}, <1/> and <2/> from lesson {commands}. Tap a form to hear it and see how it’s made."
 msgstr "You know their I forms: <0/> from lesson {pronouns}, <1/> and <2/> from lesson {commands}. Tap a form to hear it and see how it’s made."
 
@@ -20495,6 +20645,9 @@ msgstr "You want everything on your own computer"
 
 msgid "You want one cake and no tea, and you’ll eat the cake right away."
 msgstr "You want one cake and no tea, and you’ll eat the cake right away."
+
+msgid "You went to Tartu last summer, and you haven’t tried <0/> yet."
+msgstr "You went to Tartu last summer, and you haven’t tried <0/> yet."
 
 msgid "You work tomorrow, so you can’t come."
 msgstr "You work tomorrow, so you can’t come."

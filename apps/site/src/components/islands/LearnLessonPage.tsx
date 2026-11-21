@@ -17,6 +17,7 @@ import { ModaalverbidLesson } from "../learn/lessons/Modaalverbid";
 import { MulOnLesson } from "../learn/lessons/MulOn";
 import { NadalavahetuselLesson } from "../learn/lessons/Nadalavahetusel";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
+import { OlenLugenudLesson } from "../learn/lessons/OlenLugenud";
 import { OlevikLesson } from "../learn/lessons/Olevik";
 import { OmastavLesson } from "../learn/lessons/Omastav";
 import { OsastavLesson } from "../learn/lessons/Osastav";
@@ -74,6 +75,7 @@ export const LESSON_VIEWS = {
   "raamatut-voi-raamatu": RaamatutVoiRaamatuLesson,
   "raamatuid-maju": RaamatuidMajuLesson,
   "majades-inimestele": MajadesInimesteleLesson,
+  "olen-lugenud": OlenLugenudLesson,
   mitmus: MitmusLesson,
 } as const;
 

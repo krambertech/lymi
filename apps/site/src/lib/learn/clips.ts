@@ -2623,6 +2623,67 @@ const PLURAL_CASE_CLIPS: Record<string, Clip> = {
   "p-shopping": { sentences: PLURAL_CASE_SHOPPING },
 };
 
+export const PERFECT_PERSONS = [
+  { pronoun: "ma", now: "olen", then: "olin" },
+  { pronoun: "sa", now: "oled", then: "olid" },
+  { pronoun: "ta", now: "on", then: "oli" },
+  { pronoun: "me", now: "oleme", then: "olime" },
+  { pronoun: "te", now: "olete", then: "olite" },
+  { pronoun: "nad", now: "on", then: "olid" },
+] as const;
+
+export const PERFECT_VERBS = { lugema: "lugenud", käima: "käinud", sööma: "söönud" } as const;
+
+export const perfectForms = (nud: string) =>
+  PERFECT_PERSONS.map((person) => ({
+    pronoun: person.pronoun,
+    now: `${person.pronoun} ${person.now} ${nud}`,
+    then: `${person.pronoun} ${person.then} ${nud}`,
+  }));
+
+export const PERFECT_CONTRASTS = [
+  "Ma olen Tartus käinud.",
+  "Eile ma käisin Tartus.",
+  "Ma olen juba söönud.",
+  "Ma sõin kell kaheksa.",
+  "Kui Kati tuli, olin ma juba söönud.",
+] as const;
+
+export const PERFECT_WHEN = [
+  { said: "Ma olen Tartus käinud.", kind: "now" },
+  { said: "Kas sa oled seda filmi näinud?", kind: "now" },
+  { said: "Ma ei ole veel söönud.", kind: "now" },
+  { said: "Eile ma käisin Tartus.", kind: "then" },
+  { said: "Laupäeval me nägime filmi.", kind: "then" },
+  { said: "Ma sõin kell kaheksa.", kind: "then" },
+  { said: "Kui ma koju tulin, oli Kati juba söönud.", kind: "before" },
+  { said: "Ma olin seda filmi enne näinud.", kind: "before" },
+  { said: "Kui me jaama jõudsime, oli rong juba läinud.", kind: "before" },
+] as const;
+
+export const PERFECT_DIALOGUE = {
+  "d-kati-1": { text: "Kas sa oled Tartus käinud?", voice: "second" },
+  "d-sina-1": "Jah, olen käinud.",
+  "d-kati-2": { text: "Millal sa seal käisid?", voice: "second" },
+  "d-sina-2": "Ma käisin seal eelmisel suvel.",
+  "d-kati-3": { text: "Kas sa oled kama söönud?", voice: "second" },
+  "d-sina-3": "Ei, ma ei ole veel kama söönud.",
+} as const satisfies Record<string, Clip>;
+
+export const PERFECT_WORDS = ["juba", "veel", "kunagi", "kama"] as const;
+
+const PERFECT_CLIPS: Record<string, Clip> = {
+  ...words(PERFECT_WORDS),
+  ...words(
+    Object.values(PERFECT_VERBS).flatMap((nud) =>
+      perfectForms(nud).flatMap((form) => [form.now, form.then]),
+    ),
+  ),
+  ...words(PERFECT_CONTRASTS),
+  ...words(PERFECT_WHEN.map((item) => item.said)),
+  ...PERFECT_DIALOGUE,
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -3590,6 +3651,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "raamatut-voi-raamatu": OBJECT_CLIPS,
   "raamatuid-maju": PLURAL_PART_CLIPS,
   "majades-inimestele": PLURAL_CASE_CLIPS,
+  "olen-lugenud": PERFECT_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

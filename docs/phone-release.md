@@ -37,7 +37,8 @@ Testers run the `beta` build, so every update Phone beta publishes reaches them 
 
 - Test Information in App Store Connect holds the beta description, the feedback email `hello@lymi.app` and the review account from [`apps/mobile/store/review.md`](../apps/mobile/store/review.md). Apple reviews the first build of each version before external testers can install it.
 - A new `beta` build goes to the group by hand: in TestFlight, open the build, add Beta testers, and fill in What to Test, which EAS Submit cannot set on the free plan.
-- A TestFlight build expires 90 days after upload. Apple refuses new builds for a version once it is released, so the next `beta` build needs a higher `expo.version` than the one in the App Store.
+- Once a version is released in the App Store, Apple closes it and every earlier version to Beta App Review, so none of their builds can reach external testers, and it refuses new uploads of that version. External testing needs a `beta` build with a higher `expo.version` than the store's. `expo.version` is not part of the fingerprint, so raising it does not start a build: run Phone beta by hand only after a native change, or start the build with `node scripts/phone-release.mjs build ios beta`.
+- A TestFlight build expires 90 days after upload.
 - Testers send screenshots and crash reports from TestFlight; they arrive under TestFlight, Feedback. In PostHog, `app_channel=beta` marks their phone events ([analytics](analytics.md)).
 
 ## Setting it up

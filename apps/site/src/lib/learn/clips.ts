@@ -2494,6 +2494,97 @@ const PLURAL_PART_CLIPS: Record<string, Clip> = {
   "p-party": { sentences: PLURAL_PART_PARTY },
 };
 
+export const PLURAL_CASE_NOUNS = {
+  maja: {
+    one: ["maja", "majas", "majja", "majast", "majale", "majal", "majaga"],
+    many: ["majade", "majades", "majadesse", "majadest", "majadele", "majadel", "majadega"],
+  },
+  raamat: {
+    one: ["raamatu", "raamatus", "raamatusse", "raamatust", "raamatule", "raamatul", "raamatuga"],
+    many: [
+      "raamatute",
+      "raamatutes",
+      "raamatutesse",
+      "raamatutest",
+      "raamatutele",
+      "raamatutel",
+      "raamatutega",
+    ],
+  },
+  inimene: {
+    one: ["inimese", "inimeses", "inimesesse", "inimesest", "inimesele", "inimesel", "inimesega"],
+    many: [
+      "inimeste",
+      "inimestes",
+      "inimestesse",
+      "inimestest",
+      "inimestele",
+      "inimestel",
+      "inimestega",
+    ],
+  },
+  sõber: {
+    one: ["sõbra", "sõbras", "sõbrasse", "sõbrast", "sõbrale", "sõbral", "sõbraga"],
+    many: ["sõprade", "sõprades", "sõpradesse", "sõpradest", "sõpradele", "sõpradel", "sõpradega"],
+  },
+} as const;
+
+export const PLURAL_CASE_USES = [
+  "Ma räägin inimestega.",
+  "Ta kirjutab sõpradele.",
+  "Raamatutes on pilte.",
+  "Linnud istuvad puudel.",
+] as const;
+
+export const PLURAL_GENITIVES = [
+  { part: "maja", answer: "majade", kind: "vowel" },
+  { part: "lindu", answer: "lindude", kind: "vowel" },
+  { part: "sõpra", answer: "sõprade", kind: "vowel" },
+  { part: "kooli", answer: "koolide", kind: "vowel" },
+  {
+    part: "raamatut",
+    answer: "raamatute",
+    kind: "t",
+  },
+  { part: "inimest", answer: "inimeste", kind: "t" },
+  { part: "maad", answer: "maade", kind: "d" },
+  { part: "puud", answer: "puude", kind: "d" },
+] as const;
+
+export const PLURAL_CASE_MATCH = [
+  { one: "majas", many: "majades" },
+  { one: "sõbrale", many: "sõpradele" },
+  { one: "raamatust", many: "raamatutest" },
+  { one: "inimesega", many: "inimestega" },
+  { one: "linnul", many: "lindudel" },
+  { one: "maalt", many: "maadelt" },
+] as const;
+
+export const PLURAL_CASE_SHOPPING = [
+  "Laupäeval käivad Kati ja Mari poodides.",
+  "Nad otsivad kingitusi oma sõpradele.",
+  "Raamatupoodides on palju inimesi.",
+  "Mari räägib müüjatega eesti keeles.",
+  "Kingitused panevad nad kottidesse.",
+] as const;
+
+export const PLURAL_CASE_WORDS = [
+  "kingitusi",
+  "müüjatega",
+  "kottidesse",
+  "raamatupoodides",
+] as const;
+
+const PLURAL_CASE_CLIPS: Record<string, Clip> = {
+  ...words(PLURAL_CASE_WORDS),
+  ...words(Object.keys(PLURAL_CASE_NOUNS)),
+  ...words(Object.values(PLURAL_CASE_NOUNS).flatMap((noun) => [...noun.one, ...noun.many])),
+  ...words(PLURAL_CASE_USES),
+  ...words(PLURAL_GENITIVES.flatMap((item) => [item.part, item.answer])),
+  ...words(PLURAL_CASE_MATCH.flatMap((pair) => [pair.one, pair.many])),
+  "p-shopping": { sentences: PLURAL_CASE_SHOPPING },
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -3460,6 +3551,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "jalg-jala": GRADATION_CLIPS,
   "raamatut-voi-raamatu": OBJECT_CLIPS,
   "raamatuid-maju": PLURAL_PART_CLIPS,
+  "majades-inimestele": PLURAL_CASE_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

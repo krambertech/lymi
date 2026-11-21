@@ -644,6 +644,9 @@ msgstr "<0>-{ending}</0> on the genitive <1>{genitive}</1>."
 msgid "<0>-da</0> form"
 msgstr "<0>-da</0> form"
 
+msgid "<0>-de</0> or <1>-e</1>?"
+msgstr "<0>-de</0> or <1>-e</1>?"
+
 msgid "<0>-ga</0> is with"
 msgstr "<0>-ga</0> is with"
 
@@ -717,6 +720,21 @@ msgstr "<0>{0}, {1}</0>: the ending goes on <1>{2}</1>."
 #. placeholder {1}: step.word
 msgid "<0>{0}</0> becomes <1>{1}</1>"
 msgstr "<0>{0}</0> becomes <1>{1}</1>"
+
+#. placeholder {0}: item.part
+#. placeholder {1}: item.answer
+msgid "<0>{0}</0> ends in <1>-d</1>, so add <2>-e</2>: <3>{1}</3>."
+msgstr "<0>{0}</0> ends in <1>-d</1>, so add <2>-e</2>: <3>{1}</3>."
+
+#. placeholder {0}: item.part
+#. placeholder {1}: item.answer
+msgid "<0>{0}</0> ends in <1>-t</1>, so add <2>-e</2>: <3>{1}</3>."
+msgstr "<0>{0}</0> ends in <1>-t</1>, so add <2>-e</2>: <3>{1}</3>."
+
+#. placeholder {0}: item.part
+#. placeholder {1}: item.answer
+msgid "<0>{0}</0> ends in a vowel, so add <1>-de</1>: <2>{1}</2>."
+msgstr "<0>{0}</0> ends in a vowel, so add <1>-de</1>: <2>{1}</2>."
 
 #. placeholder {0}: capital(ownedBook(whose))
 #. placeholder {1}: i18n._(PERSON[who].book)
@@ -1641,6 +1659,9 @@ msgstr "A few words break the rule: <0/>, thank you, puts the stress on its seco
 msgid "A few words go the other way: the dictionary form is weak, and the genitive is strong. <0/>, thought, has the genitive <1/>. The genitive is still the odd one out."
 msgstr "A few words go the other way: the dictionary form is weak, and the genitive is strong. <0/>, thought, has the genitive <1/>. The genitive is still the odd one out."
 
+msgid "A few words such as <0>auto</0> and <1>kino</1> take <2>-de</2> even though their third form ends in <3>-t</3>: <4>autode</4>, <5>kinode</5>."
+msgstr "A few words such as <0>auto</0> and <1>kino</1> take <2>-de</2> even though their third form ends in <3>-t</3>: <4>autode</4>, <5>kinode</5>."
+
 msgid "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
 msgstr "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
 
@@ -1763,6 +1784,9 @@ msgstr "A free lesson on the Estonian partitive case, a noun’s third form: aft
 
 msgid "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
+
+msgid "A free lesson on the Estonian plural cases: build the plural genitive with -de or -te (majade, raamatute, inimeste), then add the endings you already know: majades, inimestele, sõpradega. Every sentence is read aloud."
+msgstr "A free lesson on the Estonian plural cases: build the plural genitive with -de or -te (majade, raamatute, inimeste), then add the endings you already know: majades, inimestele, sõpradega. Every sentence is read aloud."
 
 msgid "A free lesson on the Estonian plural partitive, the third form for more than one: palju raamatuid, poes on õunu, its three endings -id, -sid and a changed last vowel (autosid, raamatuid, maju, koole), and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian plural partitive, the third form for more than one: palju raamatuid, poes on õunu, its three endings -id, -sid and a changed last vowel (autosid, raamatuid, maju, koole), and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud."
@@ -2739,6 +2763,9 @@ msgstr "All 33 letters, then first words to read."
 
 msgid "All Chinese decks"
 msgstr "All Chinese decks"
+
+msgid "All eight. You can build the stem for every plural case."
+msgstr "All eight. You can build the stem for every plural case."
 
 msgid "All eight. You heard the difference every time."
 msgstr "All eight. You heard the difference every time."
@@ -3874,6 +3901,9 @@ msgstr "Build the course in order."
 msgid "Build the form"
 msgstr "Build the form"
 
+msgid "Build the plural genitive"
+msgstr "Build the plural genitive"
+
 msgid "Build the sentence"
 msgstr "Build the sentence"
 
@@ -4225,6 +4255,9 @@ msgstr "carry!"
 
 msgid "cars"
 msgstr "cars"
+
+msgid "Case by case"
+msgstr "Case by case"
 
 msgid "Castle"
 msgstr "Castle"
@@ -5484,6 +5517,9 @@ msgstr "Endings that tell you the third form"
 msgid "English"
 msgstr "English"
 
+msgid "English adds -s once and leaves the rest to small words: in the houses, to the friends. Estonian puts it all in one word, and the plural part always comes first."
+msgstr "English adds -s once and leaves the rest to small words: in the houses, to the friends. Estonian puts it all in one word, and the plural part always comes first."
+
 msgid "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 msgstr "English adds do or swaps words round. Estonian adds kas and leaves every other word where it was. Try it on five sentences."
 
@@ -5622,6 +5658,9 @@ msgstr "Estonian personal pronouns and “to be”"
 msgid "Estonian plural"
 msgstr "Estonian plural"
 
+msgid "Estonian plural cases: majades, inimestele, sõpradega"
+msgstr "Estonian plural cases: majades, inimestele, sõpradega"
+
 msgid "Estonian plural partitive: raamatuid, maju, autosid"
 msgstr "Estonian plural partitive: raamatuid, maju, autosid"
 
@@ -5747,6 +5786,12 @@ msgstr "Every noun ending in -ung takes die."
 
 msgid "Every one, by ear."
 msgstr "Every one, by ear."
+
+msgid "Every plural case is the plural genitive plus the singular ending: <0>majade, majades, majadele</0>."
+msgstr "Every plural case is the plural genitive plus the singular ending: <0>majade, majades, majadele</0>."
+
+msgid "Every plural form starts with the plural genitive."
+msgstr "Every plural form starts with the plural genitive."
 
 msgid "Every pronoun has a genitive, and it goes before the thing it owns. Tap a form to hear it."
 msgstr "Every pronoun has a genitive, and it goes before the thing it owns. Tap a form to hear it."
@@ -6514,6 +6559,9 @@ msgstr "From kolm, three; its genitive is kolme."
 msgid "From kool, school."
 msgstr "From kool, school."
 
+msgid "From kott, bag."
+msgstr "From kott, bag."
+
 msgid "From kuulama, to listen."
 msgstr "From kuulama, to listen."
 
@@ -6549,6 +6597,9 @@ msgstr "From minema: ma ei läinud, I didn’t go."
 
 msgid "from Mum"
 msgstr "from Mum"
+
+msgid "From müüja, shop assistant."
+msgstr "From müüja, shop assistant."
 
 msgid "From nemad, they."
 msgstr "From nemad, they."
@@ -6588,6 +6639,9 @@ msgstr "From piim, milk."
 
 msgid "From rääkima, to speak."
 msgstr "From rääkima, to speak."
+
+msgid "From raamatupood, bookshop."
+msgstr "From raamatupood, bookshop."
 
 msgid "From raha, money."
 msgstr "From raha, money."
@@ -7458,6 +7512,9 @@ msgstr "Hear the question, then pick the short answer that says no."
 
 msgid "Hear the sentences above once more, then try again."
 msgstr "Hear the sentences above once more, then try again."
+
+msgid "Hear the third form, then pick what it adds. Listen for its last sound."
+msgstr "Hear the third form, then pick what it adds. Listen for its last sound."
 
 msgid "Hear the two questions above once more, then try again."
 msgstr "Hear the two questions above once more, then try again."
@@ -8440,6 +8497,9 @@ msgstr "I take a walk in the *park*."
 msgid "I take the *metro* to work every day."
 msgstr "I take the *metro* to work every day."
 
+msgid "I talk with people."
+msgstr "I talk with people."
+
 msgid "I try"
 msgstr "I try"
 
@@ -8869,6 +8929,9 @@ msgstr "Import into Lymi"
 msgid "Important"
 msgstr "Important"
 
+msgid "in"
+msgstr "in"
+
 msgid "In {ahead} minutes it’s {next}."
 msgstr "In {ahead} minutes it’s {next}."
 
@@ -8925,6 +8988,12 @@ msgstr "In an order: mulle üks kohv, a coffee for me."
 
 msgid "In Bavaria and Austria it’s a Semmel."
 msgstr "In Bavaria and Austria it’s a Semmel."
+
+msgid "In big boxes"
+msgstr "In big boxes"
+
+msgid "in bookshops"
+msgstr "in bookshops"
 
 msgid "In ChatGPT, open Plugins, press +, then Add custom MCP server. Name it Lymi and paste this address."
 msgstr "In ChatGPT, open Plugins, press +, then Add custom MCP server. Name it Lymi and paste this address."
@@ -8983,6 +9052,9 @@ msgstr "In Kati’s room"
 
 msgid "in Lasnamäe"
 msgstr "in Lasnamäe"
+
+msgid "In lesson {cases} you added endings to the genitive: <0>maja, majas</0>; <1>sõbra, sõbrale</1>. The plural works the same way, with one step first. Make the plural genitive, then add the same endings: <2>majade, majades</2>; <3>sõprade, sõpradele</3>."
+msgstr "In lesson {cases} you added endings to the genitive: <0>maja, majas</0>; <1>sõbra, sõbrale</1>. The plural works the same way, with one step first. Make the plural genitive, then add the same endings: <2>majade, majades</2>; <3>sõprade, sõpradele</3>."
 
 msgid "In lesson {commands} you learned <0/> as a whole word. It comes from the <1>-da</1> form, with <2>-ge</2> in place of its ending: <3/> gives <4/>, and <5/> gives <6/>"
 msgstr "In lesson {commands} you learned <0/> as a whole word. It comes from the <1>-da</1> form, with <2>-ge</2> in place of its ending: <3/> gives <4/>, and <5/> gives <6/>"
@@ -9079,6 +9151,9 @@ msgstr "in the box"
 
 msgid "In the box"
 msgstr "In the box"
+
+msgid "In the car"
+msgstr "In the car"
 
 msgid "In the end"
 msgstr "In the end"
@@ -9184,6 +9259,12 @@ msgstr "into"
 
 msgid "Into and out of in Estonian: -sse and -st"
 msgstr "Into and out of in Estonian: -sse and -st"
+
+msgid "into bags"
+msgstr "into bags"
+
+msgid "Into bags"
+msgstr "Into bags"
 
 msgid "into school, to school"
 msgstr "into school, to school"
@@ -9642,6 +9723,9 @@ msgstr "Kasti is its genitive: kasti peal, on the box."
 
 msgid "Kati"
 msgstr "Kati"
+
+msgid "Kati and Mari go shopping for presents, <0/>. Read about it and answer."
+msgstr "Kati and Mari go shopping for presents, <0/>. Read about it and answer."
 
 msgid "Kati asks about yesterday, and the answer is no each time. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
 msgstr "Kati asks about yesterday, and the answer is no each time. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
@@ -10368,6 +10452,9 @@ msgstr "Longing"
 msgid "Longing for what is gone"
 msgstr "Longing for what is gone"
 
+msgid "Look at <0>sõber</0>: <1>sõbrale</1>, but <2>sõpradele</2>. The plural genitive is built on the third form <3>sõpra</3>, so it keeps the strong consonant from lesson {gradation}."
+msgstr "Look at <0>sõber</0>: <1>sõbrale</1>, but <2>sõpradele</2>. The plural genitive is built on the third form <3>sõpra</3>, so it keeps the strong consonant from lesson {gradation}."
+
 msgid "look forward to"
 msgstr "look forward to"
 
@@ -10876,6 +10963,9 @@ msgstr "Match"
 msgid "Match each feeling to when you’d say it."
 msgstr "Match each feeling to when you’d say it."
 
+msgid "Match each form with its plural. Keep the ending, change the stem."
+msgstr "Match each form with its plural. Keep the ending, change the stem."
+
 msgid "Match each form with what it means. Two words come twice, so read the ending."
 msgstr "Match each form with what it means. Two words come twice, so read the ending."
 
@@ -11113,6 +11203,9 @@ msgstr "Most of them. Listen again in the table to the ones you missed."
 
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Most of them. Listen to how the ones you missed start."
+
+msgid "Most of them. Listen to the last sound of the third form."
+msgstr "Most of them. Listen to the last sound of the third form."
 
 msgid "Most of them. Look at the word before and after each gap."
 msgstr "Most of them. Look at the word before and after each gap."
@@ -11897,6 +11990,9 @@ msgstr "of the town; into town"
 msgid "of the wind"
 msgstr "of the wind"
 
+msgid "of, the genitive"
+msgstr "of, the genitive"
+
 msgid "off the table"
 msgstr "off the table"
 
@@ -12074,6 +12170,9 @@ msgctxt "plural"
 msgid "One"
 msgstr "One"
 
+msgid "One and more than one, case by case"
+msgstr "One and more than one, case by case"
+
 msgid "one book"
 msgstr "one book"
 
@@ -12186,6 +12285,9 @@ msgstr "One person or more"
 msgid "One person you’re talking to, such as Mari."
 msgstr "One person you’re talking to, such as Mari."
 
+msgid "One plural stem and the endings you already know: <0>majades</0>, <1>inimestele</1>, <2>sõpradega</2>. How to build the stem with <3>-de</3> or <4>-te</4>."
+msgstr "One plural stem and the endings you already know: <0>majades</0>, <1>inimestele</1>, <2>sõpradega</2>. How to build the stem with <3>-de</3> or <4>-te</4>."
+
 msgid "One present tense for both."
 msgstr "One present tense for both."
 
@@ -12203,6 +12305,9 @@ msgstr "One shared deck, everyone on their own schedule"
 
 msgid "One spelling, two words."
 msgstr "One spelling, two words."
+
+msgid "One stem, the same endings"
+msgstr "One stem, the same endings"
 
 msgid "One syllable ending in a long vowel takes <0>-d</0>."
 msgstr "One syllable ending in a long vowel takes <0>-d</0>."
@@ -12227,6 +12332,9 @@ msgstr "one thing, or a verb"
 
 msgid "One thing, or a verb in its <0>-da</0> form, takes <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
 msgstr "One thing, or a verb in its <0>-da</0> form, takes <1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
+
+msgid "One to many"
+msgstr "One to many"
 
 msgid "One verb after another"
 msgstr "One verb after another"
@@ -12641,6 +12749,9 @@ msgstr "Pick a range, listen, and type the number in digits."
 msgid "Pick a verb and tap a form in each column."
 msgstr "Pick a verb and tap a form in each column."
 
+msgid "Pick a word and compare its forms. The right column always starts with the plural genitive in the first row."
+msgstr "Pick a word and compare its forms. The right column always starts with the plural genitive in the first row."
+
 msgid "Pick a word first."
 msgstr "Pick a word first."
 
@@ -13040,6 +13151,9 @@ msgstr "Present tense"
 msgid "Present, “I”"
 msgstr "Present, “I”"
 
+msgid "presents"
+msgstr "presents"
+
 msgid "Presets; the method isn’t named"
 msgstr "Presets; the method isn’t named"
 
@@ -13353,6 +13467,9 @@ msgstr "Read the box under the sentences once more, then try again."
 msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 
+msgid "Read the rule above the quiz once more, then try again."
+msgstr "Read the rule above the quiz once more, then try again."
+
 msgid "Read the sign on a café in Tallinn, then answer."
 msgstr "Read the sign on a café in Tallinn, then answer."
 
@@ -13615,6 +13732,9 @@ msgstr "Roots, trunks, divisions, cords, branches: from C5 to T1."
 msgid "Round {roundNumber} of {total}"
 msgstr "Round {roundNumber} of {total}"
 
+msgid "Round the shops"
+msgstr "Round the shops"
+
 msgid "Round the table"
 msgstr "Round the table"
 
@@ -13689,6 +13809,9 @@ msgstr "SAT words"
 
 msgid "Saturday"
 msgstr "Saturday"
+
+msgid "Saturday shopping"
+msgstr "Saturday shopping"
 
 msgid "Save “Feierabend” to my German deck."
 msgstr "Save “Feierabend” to my German deck."
@@ -14053,6 +14176,9 @@ msgstr "She works at a *bank*."
 
 msgid "She works in a café"
 msgstr "She works in a café"
+
+msgid "She writes to her friends."
+msgstr "She writes to her friends."
 
 msgid "She’s *coming* back tomorrow."
 msgstr "She’s *coming* back tomorrow."
@@ -14563,6 +14689,9 @@ msgstr "Start at <0>あ</0>."
 
 msgid "Start from a ready-made deck"
 msgstr "Start from a ready-made deck"
+
+msgid "Start from the third form. If it ends in a vowel, add <0>-de</0>: <1>maja, majade</1>; <2>sõpra, sõprade</2>. If it ends in <3>-d</3> or <4>-t</4>, add <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; <8>inimest, inimeste</8>."
+msgstr "Start from the third form. If it ends in a vowel, add <0>-de</0>: <1>maja, majade</1>; <2>sõpra, sõprade</2>. If it ends in <3>-d</3> or <4>-t</4>, add <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; <8>inimest, inimeste</8>."
 
 msgid "Start here"
 msgstr "Start here"
@@ -15563,6 +15692,9 @@ msgstr "The base form. More than one adds -d."
 msgid "The basics"
 msgstr "The basics"
 
+msgid "The birds sit in the trees."
+msgstr "The birds sit in the trees."
+
 msgid "The book is on the table."
 msgstr "The book is on the table."
 
@@ -16376,6 +16508,13 @@ msgstr "The place or in the place"
 msgid "The player would pass, if chess allowed it."
 msgstr "The player would pass, if chess allowed it."
 
+#. placeholder {0}: kase.ending
+msgid "The plural genitive <0>{genitive}</0> plus <1>{0}</1>."
+msgstr "The plural genitive <0>{genitive}</0> plus <1>{0}</1>."
+
+msgid "The plural genitive: the stem for every other plural case."
+msgstr "The plural genitive: the stem for every other plural case."
+
 #. placeholder {0}: ending("-d")
 msgid "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
 msgstr "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
@@ -16394,6 +16533,9 @@ msgstr "The plural third form ends in <0>-sid</0>, <1>-id</1>, or a vowel. Which
 
 msgid "The plural third form of banaan, banana."
 msgstr "The plural third form of banaan, banana."
+
+msgid "The plural third form of kingitus, present."
+msgstr "The plural third form of kingitus, present."
 
 msgid "The plural third form of kook, cake."
 msgstr "The plural third form of kook, cake."
@@ -16598,6 +16740,9 @@ msgstr "The sentence starts with it, so it keeps its first form."
 
 msgid "The seven days, the four that count, and how to say what day it is."
 msgstr "The seven days, the four that count, and how to say what day it is."
+
+msgid "The shop assistants"
+msgstr "The shop assistants"
 
 msgid "the shop door"
 msgstr "the shop door"
@@ -16936,8 +17081,14 @@ msgstr "their"
 msgid "their book"
 msgstr "their book"
 
+msgid "Their friends"
+msgstr "Their friends"
+
 msgid "Their office is in Tallinn."
 msgstr "Their office is in Tallinn."
+
+msgid "Their parents"
+msgstr "Their parents"
 
 msgid "Then open it. macOS asks once whether to open an app from the internet. Choose Open."
 msgstr "Then open it. macOS asks once whether to open an app from the internet. Choose Open."
@@ -16953,6 +17104,9 @@ msgstr "There are 22 pupils in the class."
 
 msgid "There are apples in the shop."
 msgstr "There are apples in the shop."
+
+msgid "There are pictures in the books."
+msgstr "There are pictures in the books."
 
 msgid "There are seven to start with. Tap one to hear it in a question."
 msgstr "There are seven to start with. Tap one to hear it in a question."
@@ -17143,6 +17297,12 @@ msgstr "Third"
 
 msgid "Third form"
 msgstr "Third form"
+
+msgid "Third form ends in <0>-d</0> or <1>-t</1>: add <2>-e</2>. <3>maad, maade</3>; <4>raamatut, raamatute</4>."
+msgstr "Third form ends in <0>-d</0> or <1>-t</1>: add <2>-e</2>. <3>maad, maade</3>; <4>raamatut, raamatute</4>."
+
+msgid "Third form ends in a vowel: add <0>-de</0>. <1>maja, majade</1>; <2>sõpra, sõprade</2>."
+msgstr "Third form ends in a vowel: add <0>-de</0>. <1>maja, majade</1>; <2>sõpra, sõprade</2>."
 
 msgid "Third form, more than one"
 msgstr "Third form, more than one"
@@ -17368,6 +17528,9 @@ msgstr "Timetable"
 
 msgid "tip"
 msgstr "tip"
+
+msgid "to"
+msgstr "to"
 
 msgid "To a café"
 msgstr "To a café"
@@ -17690,6 +17853,9 @@ msgstr "to school"
 
 msgid "to see"
 msgstr "to see"
+
+msgid "To see their friends at home"
+msgstr "To see their friends at home"
 
 msgid "To sign"
 msgstr "To sign"
@@ -19009,6 +19175,12 @@ msgstr "Where did Mari go at ten?"
 msgid "Where did they go on Saturday?"
 msgstr "Where did they go on Saturday?"
 
+msgid "Where do Kati and Mari go on Saturday?"
+msgstr "Where do Kati and Mari go on Saturday?"
+
+msgid "Where do they put the presents?"
+msgstr "Where do they put the presents?"
+
 msgid "Where do you all live?"
 msgstr "Where do you all live?"
 
@@ -19309,6 +19481,9 @@ msgstr "Which plans include Grok Bot?"
 msgid "Which plural third form?"
 msgstr "Which plural third form?"
 
+msgid "Which plural?"
+msgstr "Which plural?"
+
 msgid "Which question does it answer?"
 msgstr "Which question does it answer?"
 
@@ -19362,6 +19537,9 @@ msgstr "Who and whose"
 
 msgid "Who and whose are the same word."
 msgstr "Who and whose are the same word."
+
+msgid "Who are the presents for?"
+msgstr "Who are the presents for?"
 
 msgid "Who are you talking with?"
 msgstr "Who are you talking with?"
@@ -19510,6 +19688,9 @@ msgstr "Will the AI slip into Russian?"
 msgid "window"
 msgstr "window"
 
+msgid "with"
+msgstr "with"
+
 msgctxt "with or without"
 msgid "With"
 msgstr "With"
@@ -19609,6 +19790,9 @@ msgstr "With the clock from lesson {clock} it means until: <0/>, until five. Lea
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
+
+msgid "with the shop assistants"
+msgstr "with the shop assistants"
 
 msgid "with whom?"
 msgstr "with whom?"

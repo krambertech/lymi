@@ -1034,6 +1034,9 @@ msgstr "<0>-{ending}</0> добавляется к родительному па
 msgid "<0>-da</0> form"
 msgstr "Форма на <0>-da</0>"
 
+msgid "<0>-de</0> or <1>-e</1>?"
+msgstr "<0>-de</0> или <1>-e</1>?"
+
 msgid "<0>-ga</0> is with"
 msgstr "<0>-ga</0> — это «с»"
 
@@ -1142,6 +1145,24 @@ msgstr "<0>{0}, {1}</0>: окончание добавляем к <1>{2}</1>."
 #. placeholder {1}: step.word
 msgid "<0>{0}</0> becomes <1>{1}</1>"
 msgstr "<0>{0}</0> превращается в <1>{1}</1>"
+
+#. placeholder {0}: item.part
+#. placeholder {1}: item.answer
+msgid "<0>{0}</0> ends in <1>-d</1>, so add <2>-e</2>: <3>{1}</3>."
+msgstr ""
+"<0>{0}</0> оканчивается на <1>-d</1>, поэтому добавь <2>-e</2>: <3>{1}</3>."
+
+#. placeholder {0}: item.part
+#. placeholder {1}: item.answer
+msgid "<0>{0}</0> ends in <1>-t</1>, so add <2>-e</2>: <3>{1}</3>."
+msgstr ""
+"<0>{0}</0> оканчивается на <1>-t</1>, поэтому добавь <2>-e</2>: <3>{1}</3>."
+
+#. placeholder {0}: item.part
+#. placeholder {1}: item.answer
+msgid "<0>{0}</0> ends in a vowel, so add <1>-de</1>: <2>{1}</2>."
+msgstr ""
+"<0>{0}</0> оканчивается на гласный, поэтому добавь <1>-de</1>: <2>{1}</2>."
 
 #. placeholder {0}: capital(ownedBook(whose))
 #. placeholder {1}: i18n._(PERSON[who].book)
@@ -2481,6 +2502,13 @@ msgstr ""
 "выделяется."
 
 msgid ""
+"A few words such as <0>auto</0> and <1>kino</1> take <2>-de</2> even though "
+"their third form ends in <3>-t</3>: <4>autode</4>, <5>kinode</5>."
+msgstr ""
+"Несколько слов, например <0>auto</0> и <1>kino</1>, берут <2>-de</2>, хотя "
+"их третья форма оканчивается на <3>-t</3>: <4>autode</4>, <5>kinode</5>."
+
+msgid ""
 "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a "
 "vowel like <1/>, but its third form is <2/>. And <3/>, book, goes "
 "<4>raamatu, raamatut</4>. The dictionary settles it."
@@ -2869,6 +2897,16 @@ msgstr ""
 "большинства глаголов (elasin, lugesin, rääkisin), -i- у нескольких "
 "повседневных (olin, läksin, sõin), окончания, которые показывают, кто это "
 "сделал, и слова eile и eelmisel nädalal. Каждое предложение озвучено."
+
+msgid ""
+"A free lesson on the Estonian plural cases: build the plural genitive with "
+"-de or -te (majade, raamatute, inimeste), then add the endings you already "
+"know: majades, inimestele, sõpradega. Every sentence is read aloud."
+msgstr ""
+"Бесплатный урок о падежах множественного числа в эстонском: образуй "
+"родительный множественного на -de или -te (majade, raamatute, inimeste), а "
+"потом добавь уже знакомые окончания: majades, inimestele, sõpradega. Каждое "
+"предложение озвучено."
 
 msgid ""
 "A free lesson on the Estonian plural partitive, the third form for more than"
@@ -4363,6 +4401,10 @@ msgstr "Все 33 буквы, а потом первые слова для чт�
 msgid "All Chinese decks"
 msgstr "Все колоды по китайскому"
 
+msgid "All eight. You can build the stem for every plural case."
+msgstr ""
+"Все восемь. Ты умеешь строить основу для каждого падежа множественного."
+
 msgid "All eight. You heard the difference every time."
 msgstr "Все восемь. Разница слышна каждый раз."
 
@@ -5734,6 +5776,9 @@ msgstr "Выстрой курс шаг за шагом."
 msgid "Build the form"
 msgstr "Образуй форму"
 
+msgid "Build the plural genitive"
+msgstr "Образуй родительный множественного"
+
 msgid "Build the sentence"
 msgstr "Собери предложение"
 
@@ -6137,6 +6182,9 @@ msgstr "неси!"
 
 msgid "cars"
 msgstr "машины"
+
+msgid "Case by case"
+msgstr "Падеж за падежом"
 
 msgid "Castle"
 msgstr "Замок (крепость)"
@@ -7726,6 +7774,15 @@ msgid "English"
 msgstr "Английский"
 
 msgid ""
+"English adds -s once and leaves the rest to small words: in the houses, to "
+"the friends. Estonian puts it all in one word, and the plural part always "
+"comes first."
+msgstr ""
+"В русском во множественном у каждого падежа своё окончание: в домах, домам, "
+"домами. В эстонском проще: одна основа множественного и те же окончания, что"
+" и в единственном. Часть, которая значит множественное, всегда идёт первой."
+
+msgid ""
 "English adds do or swaps words round. Estonian adds kas and leaves every "
 "other word where it was. Try it on five sentences."
 msgstr ""
@@ -7944,6 +8001,9 @@ msgstr "Эстонские личные местоимения и «быть»"
 msgid "Estonian plural"
 msgstr "Множественное число в эстонском языке"
 
+msgid "Estonian plural cases: majades, inimestele, sõpradega"
+msgstr "Падежи множественного в эстонском: majades, inimestele, sõpradega"
+
 msgid "Estonian plural partitive: raamatuid, maju, autosid"
 msgstr "Третья форма множественного в эстонском: raamatuid, maju, autosid"
 
@@ -8126,6 +8186,16 @@ msgstr "У всех существительных на -ung артикль die.
 
 msgid "Every one, by ear."
 msgstr "Все до одного, на слух."
+
+msgid ""
+"Every plural case is the plural genitive plus the singular ending: "
+"<0>majade, majades, majadele</0>."
+msgstr ""
+"Каждый падеж множественного — это родительный множественного плюс окончание "
+"единственного: <0>majade, majades, majadele</0>."
+
+msgid "Every plural form starts with the plural genitive."
+msgstr "Каждая форма множественного начинается с родительного множественного."
 
 msgid ""
 "Every pronoun has a genitive, and it goes before the thing it owns. Tap a "
@@ -9163,6 +9233,9 @@ msgstr "От kolm, «три»; родительный падеж — kolme."
 msgid "From kool, school."
 msgstr "От kool — школа."
 
+msgid "From kott, bag."
+msgstr "От kott, сумка."
+
 msgid "From kuulama, to listen."
 msgstr "От kuulama, слушать."
 
@@ -9198,6 +9271,9 @@ msgstr "От minema: ma ei läinud — я не пошёл."
 
 msgid "from Mum"
 msgstr "от мамы"
+
+msgid "From müüja, shop assistant."
+msgstr "От müüja, продавец."
 
 msgid "From nemad, they."
 msgstr "От nemad, «они»."
@@ -9237,6 +9313,9 @@ msgstr "От piim, «молоко»."
 
 msgid "From rääkima, to speak."
 msgstr "От rääkima, «говорить»."
+
+msgid "From raamatupood, bookshop."
+msgstr "От raamatupood, книжный магазин."
 
 msgid "From raha, money."
 msgstr "От raha, «деньги»."
@@ -10307,6 +10386,12 @@ msgstr "Послушай вопрос и выбери короткий отве�
 msgid "Hear the sentences above once more, then try again."
 msgstr "Ещё раз послушай предложения выше, а потом попробуй снова."
 
+msgid ""
+"Hear the third form, then pick what it adds. Listen for its last sound."
+msgstr ""
+"Послушай третью форму и выбери, что к ней добавляется. Слушай её последний "
+"звук."
+
 msgid "Hear the two questions above once more, then try again."
 msgstr "Ещё раз послушай два вопроса выше и попробуй снова."
 
@@ -11360,6 +11445,9 @@ msgstr "Я гуляю в *парке*."
 msgid "I take the *metro* to work every day."
 msgstr "Каждый день я езжу на работу на *метро*."
 
+msgid "I talk with people."
+msgstr "Я разговариваю с людьми."
+
 msgid "I try"
 msgstr "я пробую"
 
@@ -11815,6 +11903,9 @@ msgstr "Импортируй в Lymi"
 msgid "Important"
 msgstr "Важная"
 
+msgid "in"
+msgstr "в"
+
 msgid "In {ahead} minutes it’s {next}."
 msgstr "Через {ahead} минут будет {next}."
 
@@ -11916,6 +12007,12 @@ msgstr "В заказе: mulle üks kohv — мне один кофе."
 msgid "In Bavaria and Austria it’s a Semmel."
 msgstr "В Баварии и Австрии говорят Semmel."
 
+msgid "In big boxes"
+msgstr "В большие коробки"
+
+msgid "in bookshops"
+msgstr "в книжных магазинах"
+
 msgid ""
 "In ChatGPT, open Plugins, press +, then Add custom MCP server. Name it Lymi "
 "and paste this address."
@@ -12005,6 +12102,17 @@ msgstr "В комнате Кати"
 
 msgid "in Lasnamäe"
 msgstr "в Ласнамяэ"
+
+msgid ""
+"In lesson {cases} you added endings to the genitive: <0>maja, majas</0>; "
+"<1>sõbra, sõbrale</1>. The plural works the same way, with one step first. "
+"Make the plural genitive, then add the same endings: <2>majade, majades</2>;"
+" <3>sõprade, sõpradele</3>."
+msgstr ""
+"В уроке {cases} закончения добавлялись к родительному: <0>maja, majas</0>; "
+"<1>sõbra, sõbrale</1>. Во множественном всё так же, только сначала один шаг:"
+" образуй родительный множественного, а потом добавь те же окончания: "
+"<2>majade, majades</2>; <3>sõprade, sõpradele</3>."
 
 msgid ""
 "In lesson {commands} you learned <0/> as a whole word. It comes from the "
@@ -12181,6 +12289,9 @@ msgstr "в коробке"
 msgid "In the box"
 msgstr "В коробке"
 
+msgid "In the car"
+msgstr "В машину"
+
 msgid "In the end"
 msgstr "В итоге"
 
@@ -12305,6 +12416,12 @@ msgstr "в, внутрь (куда)"
 
 msgid "Into and out of in Estonian: -sse and -st"
 msgstr "Куда и откуда по-эстонски: -sse и -st"
+
+msgid "into bags"
+msgstr "в сумки"
+
+msgid "Into bags"
+msgstr "В сумки"
 
 msgid "into school, to school"
 msgstr "в школу"
@@ -12891,6 +13008,10 @@ msgstr "Kasti — родительный падеж: kasti peal, на короб
 
 msgid "Kati"
 msgstr "Кати"
+
+msgid ""
+"Kati and Mari go shopping for presents, <0/>. Read about it and answer."
+msgstr "Кати и Мари идут за подарками, <0/>. Прочитай и ответь."
 
 msgid ""
 "Kati asks about yesterday, and the answer is no each time. Pick what you say"
@@ -13880,6 +14001,15 @@ msgstr "Тоска"
 msgid "Longing for what is gone"
 msgstr "Тоска по тому, чего уже нет"
 
+msgid ""
+"Look at <0>sõber</0>: <1>sõbrale</1>, but <2>sõpradele</2>. The plural "
+"genitive is built on the third form <3>sõpra</3>, so it keeps the strong "
+"consonant from lesson {gradation}."
+msgstr ""
+"Посмотри на <0>sõber</0>: <1>sõbrale</1>, но <2>sõpradele</2>. Родительный "
+"множественного строится на третьей форме <3>sõpra</3>, поэтому сохраняет "
+"сильный согласный из урока {gradation}."
+
 msgid "look forward to"
 msgstr "ждать с нетерпением"
 
@@ -14612,6 +14742,10 @@ msgstr "Пары"
 msgid "Match each feeling to when you’d say it."
 msgstr "Соедини каждое чувство с ситуацией, в которой так говорят."
 
+msgid "Match each form with its plural. Keep the ending, change the stem."
+msgstr ""
+"Соедини каждую форму с её множественным. Окончание то же, меняется основа."
+
 msgid ""
 "Match each form with what it means. Two words come twice, so read the "
 "ending."
@@ -14921,6 +15055,9 @@ msgstr "Большинство. Послушай ещё раз в таблице
 
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Почти все. Послушай, как начинаются дни, где были ошибки."
+
+msgid "Most of them. Listen to the last sound of the third form."
+msgstr "Большинство. Слушай последний звук третьей формы."
 
 msgid "Most of them. Look at the word before and after each gap."
 msgstr "Большинство. Смотри на слово перед пропуском и после него."
@@ -15927,6 +16064,9 @@ msgstr "города; в город"
 msgid "of the wind"
 msgstr "ветра"
 
+msgid "of, the genitive"
+msgstr "родительный"
+
 msgid "off the table"
 msgstr "со стола"
 
@@ -16122,6 +16262,9 @@ msgctxt "plural"
 msgid "One"
 msgstr "Один"
 
+msgid "One and more than one, case by case"
+msgstr "Единственное и множественное, падеж за падежом"
+
 msgid "one book"
 msgstr "одна книга"
 
@@ -16242,6 +16385,15 @@ msgstr "Один человек или несколько"
 msgid "One person you’re talking to, such as Mari."
 msgstr "Человек, с которым ты говоришь, например Mari."
 
+msgid ""
+"One plural stem and the endings you already know: <0>majades</0>, "
+"<1>inimestele</1>, <2>sõpradega</2>. How to build the stem with <3>-de</3> "
+"or <4>-te</4>."
+msgstr ""
+"Одна основа множественного и уже знакомые окончания: <0>majades</0>, "
+"<1>inimestele</1>, <2>sõpradega</2>. Как образовать основу на <3>-de</3> или"
+" <4>-te</4>."
+
 msgid "One present tense for both."
 msgstr "Одно настоящее время для обоих значений."
 
@@ -16261,6 +16413,9 @@ msgstr "Одна общая колода, у каждого своё распи�
 
 msgid "One spelling, two words."
 msgstr "Одно написание, два слова."
+
+msgid "One stem, the same endings"
+msgstr "Одна основа, те же окончания"
 
 msgid "One syllable ending in a long vowel takes <0>-d</0>."
 msgstr "Один слог с долгой гласной на конце получает <0>-d</0>."
@@ -16293,6 +16448,9 @@ msgid ""
 msgstr ""
 "Когда нравится что-то одно или глагол в форме на <0>-da</0>, нужно "
 "<1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
+
+msgid "One to many"
+msgstr "Из единственного во множественное"
 
 msgid "One verb after another"
 msgstr "Глагол после глагола"
@@ -16828,6 +16986,13 @@ msgstr "Выбери диапазон, послушай и введи число
 msgid "Pick a verb and tap a form in each column."
 msgstr "Выбери глагол и коснись формы в каждой колонке."
 
+msgid ""
+"Pick a word and compare its forms. The right column always starts with the "
+"plural genitive in the first row."
+msgstr ""
+"Выбери слово и сравни его формы. В правом столбце в первой строке всегда "
+"родительный множественного."
+
 msgid "Pick a word first."
 msgstr "Сначала выбери слово."
 
@@ -17323,6 +17488,9 @@ msgstr "Настоящее время"
 msgid "Present, “I”"
 msgstr "Настоящее время, «я»"
 
+msgid "presents"
+msgstr "подарки"
+
 msgid "Presets; the method isn’t named"
 msgstr "Готовые пресеты, метод не назван"
 
@@ -17795,6 +17963,9 @@ msgstr ""
 "Прочитай значение и сначала вспомни термин, а потом смотри. Попробуй на этих"
 " карточках: они из всей колоды."
 
+msgid "Read the rule above the quiz once more, then try again."
+msgstr "Ещё раз прочитай правило над упражнением и попробуй снова."
+
 msgid "Read the sign on a café in Tallinn, then answer."
 msgstr "Прочитай табличку на двери кафе в Таллине и ответь на вопросы."
 
@@ -18124,6 +18295,9 @@ msgstr "Корешки, стволы, деления, пучки, ветви: о
 msgid "Round {roundNumber} of {total}"
 msgstr "Раунд {roundNumber} из {total}"
 
+msgid "Round the shops"
+msgstr "По магазинам"
+
 msgid "Round the table"
 msgstr "За столом"
 
@@ -18207,6 +18381,9 @@ msgstr "Слова для SAT"
 
 msgid "Saturday"
 msgstr "Суббота"
+
+msgid "Saturday shopping"
+msgstr "Покупки в субботу"
 
 msgid "Save “Feierabend” to my German deck."
 msgstr "Сохрани «Feierabend» в мою колоду немецкого."
@@ -18662,6 +18839,9 @@ msgstr "Она работает в *банке*."
 
 msgid "She works in a café"
 msgstr "Она работает в кафе"
+
+msgid "She writes to her friends."
+msgstr "Она пишет друзьям."
 
 msgid "She’s *coming* back tomorrow."
 msgstr "Она *вернётся* завтра."
@@ -19400,6 +19580,17 @@ msgstr "Начни с <0>あ</0>."
 
 msgid "Start from a ready-made deck"
 msgstr "Начни с готовой колоды"
+
+msgid ""
+"Start from the third form. If it ends in a vowel, add <0>-de</0>: <1>maja, "
+"majade</1>; <2>sõpra, sõprade</2>. If it ends in <3>-d</3> or <4>-t</4>, add"
+" <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; <8>inimest, "
+"inimeste</8>."
+msgstr ""
+"Начни с третьей формы. Если она оканчивается на гласный, добавь <0>-de</0>: "
+"<1>maja, majade</1>; <2>sõpra, sõprade</2>. Если на <3>-d</3> или <4>-t</4>,"
+" добавь <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; "
+"<8>inimest, inimeste</8>."
 
 msgid "Start here"
 msgstr "Начни отсюда"
@@ -20617,6 +20808,9 @@ msgstr "Начальная форма. Для нескольких добавл�
 msgid "The basics"
 msgstr "Основы"
 
+msgid "The birds sit in the trees."
+msgstr "Птицы сидят на деревьях."
+
 msgid "The book is on the table."
 msgstr "Книга на столе."
 
@@ -21722,6 +21916,15 @@ msgstr "Название или «где»"
 msgid "The player would pass, if chess allowed it."
 msgstr "Игрок пропустил бы ход, если бы шахматы это позволяли."
 
+#. placeholder {0}: kase.ending
+msgid "The plural genitive <0>{genitive}</0> plus <1>{0}</1>."
+msgstr "Родительный множественного <0>{genitive}</0> плюс <1>{0}</1>."
+
+msgid "The plural genitive: the stem for every other plural case."
+msgstr ""
+"Родительный множественного — основа для всех остальных падежей "
+"множественного."
+
 #. placeholder {0}: ending("-d")
 msgid ""
 "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; "
@@ -21756,6 +21959,9 @@ msgstr ""
 
 msgid "The plural third form of banaan, banana."
 msgstr "Третья форма множественного от banaan, банан."
+
+msgid "The plural third form of kingitus, present."
+msgstr "Третья форма множественного от kingitus, подарок."
 
 msgid "The plural third form of kook, cake."
 msgstr "Третья форма множественного от kook, пирожное."
@@ -22052,6 +22258,9 @@ msgstr ""
 msgid "The seven days, the four that count, and how to say what day it is."
 msgstr ""
 "Семь дней, четыре с числами в названии, и как сказать, какой сегодня день."
+
+msgid "The shop assistants"
+msgstr "Продавцам"
 
 msgid "the shop door"
 msgstr "дверь магазина"
@@ -22500,8 +22709,14 @@ msgstr "их"
 msgid "their book"
 msgstr "их книга"
 
+msgid "Their friends"
+msgstr "Своим друзьям"
+
 msgid "Their office is in Tallinn."
 msgstr "Их офис в Таллине."
+
+msgid "Their parents"
+msgstr "Родителям"
 
 msgid ""
 "Then open it. macOS asks once whether to open an app from the internet. "
@@ -22521,6 +22736,9 @@ msgstr "В классе 22 ученика."
 
 msgid "There are apples in the shop."
 msgstr "В магазине есть яблоки."
+
+msgid "There are pictures in the books."
+msgstr "В книгах есть картинки."
 
 msgid "There are seven to start with. Tap one to hear it in a question."
 msgstr "Для начала их семь. Нажми на любое, чтобы услышать его в вопросе."
@@ -22759,6 +22977,20 @@ msgstr "Третья"
 
 msgid "Third form"
 msgstr "Третья форма"
+
+msgid ""
+"Third form ends in <0>-d</0> or <1>-t</1>: add <2>-e</2>. <3>maad, "
+"maade</3>; <4>raamatut, raamatute</4>."
+msgstr ""
+"Третья форма на <0>-d</0> или <1>-t</1>: добавь <2>-e</2>. <3>maad, "
+"maade</3>; <4>raamatut, raamatute</4>."
+
+msgid ""
+"Third form ends in a vowel: add <0>-de</0>. <1>maja, majade</1>; <2>sõpra, "
+"sõprade</2>."
+msgstr ""
+"Третья форма на гласный: добавь <0>-de</0>. <1>maja, majade</1>; <2>sõpra, "
+"sõprade</2>."
 
 msgid "Third form, more than one"
 msgstr "Третья форма, множественное"
@@ -23021,6 +23253,9 @@ msgstr "Расписание"
 
 msgid "tip"
 msgstr "чаевые"
+
+msgid "to"
+msgstr "к, кому"
 
 msgid "To a café"
 msgstr "В кофейню"
@@ -23458,6 +23693,9 @@ msgstr "в школу"
 
 msgid "to see"
 msgstr "видеть"
+
+msgid "To see their friends at home"
+msgstr "В гости к друзьям"
 
 msgid "To sign"
 msgstr "Подписывать"
@@ -24986,6 +25224,12 @@ msgstr "Куда Мари ходила в десять?"
 msgid "Where did they go on Saturday?"
 msgstr "Куда они ездили в субботу?"
 
+msgid "Where do Kati and Mari go on Saturday?"
+msgstr "Куда Кати и Мари ходят в субботу?"
+
+msgid "Where do they put the presents?"
+msgstr "Куда они кладут подарки?"
+
 msgid "Where do you all live?"
 msgstr "Где вы живёте?"
 
@@ -25324,6 +25568,9 @@ msgstr "В какие планы входит Grok Bot?"
 msgid "Which plural third form?"
 msgstr "Какая третья форма множественного?"
 
+msgid "Which plural?"
+msgstr "Какое множественное?"
+
 msgid "Which question does it answer?"
 msgstr "На какой вопрос отвечает?"
 
@@ -25377,6 +25624,9 @@ msgstr "Кто и чей"
 
 msgid "Who and whose are the same word."
 msgstr "«Кто» и «чей» здесь одно слово."
+
+msgid "Who are the presents for?"
+msgstr "Кому подарки?"
 
 msgid "Who are you talking with?"
 msgstr "С кем ты разговариваешь?"
@@ -25539,6 +25789,9 @@ msgstr "AI не перейдёт на русский?"
 msgid "window"
 msgstr "окно"
 
+msgid "with"
+msgstr "с"
+
 msgctxt "with or without"
 msgid "With"
 msgstr "С"
@@ -25685,6 +25938,9 @@ msgid ""
 msgstr ""
 "С колоды, которая подходит к твоей цели: поездке или первым урокам. Можно "
 "добавить несколько, и Lymi смешает их карточки в одно ежедневное повторение."
+
+msgid "with the shop assistants"
+msgstr "с продавцами"
 
 msgid "with whom?"
 msgstr "с кем?"

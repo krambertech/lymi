@@ -1018,6 +1018,9 @@ msgstr "<0>-{ending}</0> додається до родового відмінк
 msgid "<0>-da</0> form"
 msgstr "Форма на <0>-da</0>"
 
+msgid "<0>-de</0> or <1>-e</1>?"
+msgstr "<0>-de</0> чи <1>-e</1>?"
+
 msgid "<0>-ga</0> is with"
 msgstr "<0>-ga</0> — це «з»"
 
@@ -1126,6 +1129,24 @@ msgstr "<0>{0}, {1}</0>: закінчення додаємо до <1>{2}</1>."
 #. placeholder {1}: step.word
 msgid "<0>{0}</0> becomes <1>{1}</1>"
 msgstr "<0>{0}</0> стає <1>{1}</1>"
+
+#. placeholder {0}: item.part
+#. placeholder {1}: item.answer
+msgid "<0>{0}</0> ends in <1>-d</1>, so add <2>-e</2>: <3>{1}</3>."
+msgstr ""
+"<0>{0}</0> закінчується на <1>-d</1>, тому додай <2>-e</2>: <3>{1}</3>."
+
+#. placeholder {0}: item.part
+#. placeholder {1}: item.answer
+msgid "<0>{0}</0> ends in <1>-t</1>, so add <2>-e</2>: <3>{1}</3>."
+msgstr ""
+"<0>{0}</0> закінчується на <1>-t</1>, тому додай <2>-e</2>: <3>{1}</3>."
+
+#. placeholder {0}: item.part
+#. placeholder {1}: item.answer
+msgid "<0>{0}</0> ends in a vowel, so add <1>-de</1>: <2>{1}</2>."
+msgstr ""
+"<0>{0}</0> закінчується на голосний, тому додай <1>-de</1>: <2>{1}</2>."
 
 #. placeholder {0}: capital(ownedBook(whose))
 #. placeholder {1}: i18n._(PERSON[who].book)
@@ -2452,6 +2473,13 @@ msgstr ""
 " <0/>, думка, має родовий <1/>. Родовий однаково вирізняється."
 
 msgid ""
+"A few words such as <0>auto</0> and <1>kino</1> take <2>-de</2> even though "
+"their third form ends in <3>-t</3>: <4>autode</4>, <5>kinode</5>."
+msgstr ""
+"Кілька слів, як-от <0>auto</0> і <1>kino</1>, беруть <2>-de</2>, хоч їхня "
+"третя форма закінчується на <3>-t</3>: <4>autode</4>, <5>kinode</5>."
+
+msgid ""
 "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a "
 "vowel like <1/>, but its third form is <2/>. And <3/>, book, goes "
 "<4>raamatu, raamatut</4>. The dictionary settles it."
@@ -2836,6 +2864,15 @@ msgstr ""
 "більшості дієслів (elasin, lugesin, rääkisin), -i- у кількох щоденних (olin,"
 " läksin, sõin), закінчення, що показують, хто це зробив, і слова eile та "
 "eelmisel nädalal. Кожне речення озвучене."
+
+msgid ""
+"A free lesson on the Estonian plural cases: build the plural genitive with "
+"-de or -te (majade, raamatute, inimeste), then add the endings you already "
+"know: majades, inimestele, sõpradega. Every sentence is read aloud."
+msgstr ""
+"Безкоштовний урок про відмінки множини в естонській: утвори родовий множини "
+"на -de або -te (majade, raamatute, inimeste), а потім додай уже знайомі "
+"закінчення: majades, inimestele, sõpradega. Кожне речення озвучене."
 
 msgid ""
 "A free lesson on the Estonian plural partitive, the third form for more than"
@@ -4317,6 +4354,9 @@ msgstr "Усі 33 літери, а потім перші слова для чи�
 msgid "All Chinese decks"
 msgstr "Усі колоди з китайської"
 
+msgid "All eight. You can build the stem for every plural case."
+msgstr "Усі вісім. Ти вмієш будувати основу для кожного відмінка множини."
+
 msgid "All eight. You heard the difference every time."
 msgstr "Усі вісім. Різницю чути щоразу."
 
@@ -5682,6 +5722,9 @@ msgstr "Вибудуй курс крок за кроком."
 msgid "Build the form"
 msgstr "Утвори форму"
 
+msgid "Build the plural genitive"
+msgstr "Утвори родовий множини"
+
 msgid "Build the sentence"
 msgstr "Склади речення"
 
@@ -6083,6 +6126,9 @@ msgstr "неси!"
 
 msgid "cars"
 msgstr "машини"
+
+msgid "Case by case"
+msgstr "Відмінок за відмінком"
 
 msgid "Castle"
 msgstr "Замок (фортеця)"
@@ -7661,6 +7707,15 @@ msgid "English"
 msgstr "Англійська"
 
 msgid ""
+"English adds -s once and leaves the rest to small words: in the houses, to "
+"the friends. Estonian puts it all in one word, and the plural part always "
+"comes first."
+msgstr ""
+"В українській у множині кожен відмінок має своє закінчення: у будинках, "
+"будинкам, будинками. В естонській простіше: одна основа множини і ті самі "
+"закінчення, що й в однині. Частина, що означає множину, завжди йде першою."
+
+msgid ""
 "English adds do or swaps words round. Estonian adds kas and leaves every "
 "other word where it was. Try it on five sentences."
 msgstr ""
@@ -7880,6 +7935,9 @@ msgstr "Естонські особові займенники і «бути»"
 msgid "Estonian plural"
 msgstr "Множина в естонській мові"
 
+msgid "Estonian plural cases: majades, inimestele, sõpradega"
+msgstr "Відмінки множини в естонській: majades, inimestele, sõpradega"
+
 msgid "Estonian plural partitive: raamatuid, maju, autosid"
 msgstr "Третя форма множини в естонській: raamatuid, maju, autosid"
 
@@ -8058,6 +8116,16 @@ msgstr "Усі іменники на -ung мають артикль die."
 
 msgid "Every one, by ear."
 msgstr "Усі до одного, на слух."
+
+msgid ""
+"Every plural case is the plural genitive plus the singular ending: "
+"<0>majade, majades, majadele</0>."
+msgstr ""
+"Кожен відмінок множини — це родовий множини плюс закінчення однини: "
+"<0>majade, majades, majadele</0>."
+
+msgid "Every plural form starts with the plural genitive."
+msgstr "Кожна форма множини починається з родового множини."
 
 msgid ""
 "Every pronoun has a genitive, and it goes before the thing it owns. Tap a "
@@ -9086,6 +9154,9 @@ msgstr "Від kolm, «три»; родовий відмінок — kolme."
 msgid "From kool, school."
 msgstr "Від kool — школа."
 
+msgid "From kott, bag."
+msgstr "Від kott, сумка."
+
 msgid "From kuulama, to listen."
 msgstr "Від kuulama, слухати."
 
@@ -9121,6 +9192,9 @@ msgstr "Від minema: ma ei läinud — я не пішов."
 
 msgid "from Mum"
 msgstr "від мами"
+
+msgid "From müüja, shop assistant."
+msgstr "Від müüja, продавець."
 
 msgid "From nemad, they."
 msgstr "Від nemad, «вони»."
@@ -9160,6 +9234,9 @@ msgstr "Від piim, «молоко»."
 
 msgid "From rääkima, to speak."
 msgstr "Від rääkima, «говорити»."
+
+msgid "From raamatupood, bookshop."
+msgstr "Від raamatupood, книгарня."
 
 msgid "From raha, money."
 msgstr "Від raha, «гроші»."
@@ -10228,6 +10305,11 @@ msgstr "Послухай питання й обери коротку відпо�
 msgid "Hear the sentences above once more, then try again."
 msgstr "Ще раз послухай речення вище, а потім спробуй знову."
 
+msgid ""
+"Hear the third form, then pick what it adds. Listen for its last sound."
+msgstr ""
+"Послухай третю форму і вибери, що до неї додається. Слухай її останній звук."
+
 msgid "Hear the two questions above once more, then try again."
 msgstr "Ще раз послухай два питання вище й спробуй знову."
 
@@ -11277,6 +11359,9 @@ msgstr "Я гуляю в *парку*."
 msgid "I take the *metro* to work every day."
 msgstr "Щодня я їжджу на роботу на *метро*."
 
+msgid "I talk with people."
+msgstr "Я розмовляю з людьми."
+
 msgid "I try"
 msgstr "я пробую"
 
@@ -11732,6 +11817,9 @@ msgstr "Імпортуй у Lymi"
 msgid "Important"
 msgstr "Важлива"
 
+msgid "in"
+msgstr "в, у"
+
 msgid "In {ahead} minutes it’s {next}."
 msgstr "Через {ahead} хвилин буде {next}."
 
@@ -11832,6 +11920,12 @@ msgstr "У замовленні: mulle üks kohv — мені одну каву.
 msgid "In Bavaria and Austria it’s a Semmel."
 msgstr "У Баварії та Австрії кажуть Semmel."
 
+msgid "In big boxes"
+msgstr "У великі коробки"
+
+msgid "in bookshops"
+msgstr "у книгарнях"
+
 msgid ""
 "In ChatGPT, open Plugins, press +, then Add custom MCP server. Name it Lymi "
 "and paste this address."
@@ -11920,6 +12014,17 @@ msgstr "У кімнаті Каті"
 
 msgid "in Lasnamäe"
 msgstr "у Ласнамяе"
+
+msgid ""
+"In lesson {cases} you added endings to the genitive: <0>maja, majas</0>; "
+"<1>sõbra, sõbrale</1>. The plural works the same way, with one step first. "
+"Make the plural genitive, then add the same endings: <2>majade, majades</2>;"
+" <3>sõprade, sõpradele</3>."
+msgstr ""
+"В уроці {cases} закінчення додавалися до родового: <0>maja, majas</0>; "
+"<1>sõbra, sõbrale</1>. У множині все так само, тільки спершу один крок: "
+"утвори родовий множини, а потім додай ті самі закінчення: <2>majade, "
+"majades</2>; <3>sõprade, sõpradele</3>."
 
 msgid ""
 "In lesson {commands} you learned <0/> as a whole word. It comes from the "
@@ -12095,6 +12200,9 @@ msgstr "у коробці"
 msgid "In the box"
 msgstr "У коробці"
 
+msgid "In the car"
+msgstr "У машину"
+
 msgid "In the end"
 msgstr "Зрештою"
 
@@ -12219,6 +12327,12 @@ msgstr "у, всередину (куди)"
 
 msgid "Into and out of in Estonian: -sse and -st"
 msgstr "Куди і звідки естонською: -sse і -st"
+
+msgid "into bags"
+msgstr "у сумки"
+
+msgid "Into bags"
+msgstr "У сумки"
 
 msgid "into school, to school"
 msgstr "у школу, до школи"
@@ -12800,6 +12914,10 @@ msgstr "Kasti — родовий відмінок: kasti peal, на коробц
 
 msgid "Kati"
 msgstr "Каті"
+
+msgid ""
+"Kati and Mari go shopping for presents, <0/>. Read about it and answer."
+msgstr "Каті й Марі йдуть по подарунки, <0/>. Прочитай і дай відповідь."
 
 msgid ""
 "Kati asks about yesterday, and the answer is no each time. Pick what you say"
@@ -13785,6 +13903,15 @@ msgstr "Туга"
 msgid "Longing for what is gone"
 msgstr "Туга за тим, чого вже немає"
 
+msgid ""
+"Look at <0>sõber</0>: <1>sõbrale</1>, but <2>sõpradele</2>. The plural "
+"genitive is built on the third form <3>sõpra</3>, so it keeps the strong "
+"consonant from lesson {gradation}."
+msgstr ""
+"Подивись на <0>sõber</0>: <1>sõbrale</1>, але <2>sõpradele</2>. Родовий "
+"множини будується на третій формі <3>sõpra</3>, тому зберігає сильний "
+"приголосний з уроку {gradation}."
+
 msgid "look forward to"
 msgstr "чекати з нетерпінням"
 
@@ -14509,6 +14636,10 @@ msgstr "Пари"
 msgid "Match each feeling to when you’d say it."
 msgstr "З’єднай кожне почуття із ситуацією, у якій так кажуть."
 
+msgid "Match each form with its plural. Keep the ending, change the stem."
+msgstr ""
+"З’єднай кожну форму з її множиною. Закінчення те саме, змінюється основа."
+
 msgid ""
 "Match each form with what it means. Two words come twice, so read the "
 "ending."
@@ -14818,6 +14949,9 @@ msgstr "Більшість. Послухай ще раз у таблиці ті,
 
 msgid "Most of them. Listen to how the ones you missed start."
 msgstr "Майже всі. Послухай, як починаються дні, де були помилки."
+
+msgid "Most of them. Listen to the last sound of the third form."
+msgstr "Більшість. Слухай останній звук третьої форми."
 
 msgid "Most of them. Look at the word before and after each gap."
 msgstr "Більшість. Дивися на слово перед пропуском і після нього."
@@ -15815,6 +15949,9 @@ msgstr "міста; у місто"
 msgid "of the wind"
 msgstr "вітру"
 
+msgid "of, the genitive"
+msgstr "родовий"
+
 msgid "off the table"
 msgstr "зі столу"
 
@@ -16011,6 +16148,9 @@ msgctxt "plural"
 msgid "One"
 msgstr "Один"
 
+msgid "One and more than one, case by case"
+msgstr "Однина і множина, відмінок за відмінком"
+
 msgid "one book"
 msgstr "одна книжка"
 
@@ -16131,6 +16271,15 @@ msgstr "Одна людина чи кілька"
 msgid "One person you’re talking to, such as Mari."
 msgstr "Людина, з якою ти говориш, наприклад Mari."
 
+msgid ""
+"One plural stem and the endings you already know: <0>majades</0>, "
+"<1>inimestele</1>, <2>sõpradega</2>. How to build the stem with <3>-de</3> "
+"or <4>-te</4>."
+msgstr ""
+"Одна основа множини і вже знайомі закінчення: <0>majades</0>, "
+"<1>inimestele</1>, <2>sõpradega</2>. Як утворити основу на <3>-de</3> або "
+"<4>-te</4>."
+
 msgid "One present tense for both."
 msgstr "Один теперішній час для обох значень."
 
@@ -16150,6 +16299,9 @@ msgstr "Одна спільна колода, у кожного свій роз�
 
 msgid "One spelling, two words."
 msgstr "Одне написання, два слова."
+
+msgid "One stem, the same endings"
+msgstr "Одна основа, ті самі закінчення"
 
 msgid "One syllable ending in a long vowel takes <0>-d</0>."
 msgstr "Один склад із довгою голосною в кінці отримує <0>-d</0>."
@@ -16182,6 +16334,9 @@ msgid ""
 msgstr ""
 "Коли подобається щось одне або дієслово у формі на <0>-da</0>, потрібне "
 "<1>meeldib</1>: <2>Mulle meeldib kohv. Mulle meeldib lugeda.</2>"
+
+msgid "One to many"
+msgstr "З однини в множину"
 
 msgid "One verb after another"
 msgstr "Дієслово після дієслова"
@@ -16713,6 +16868,13 @@ msgstr "Вибери діапазон, послухай і введи число
 msgid "Pick a verb and tap a form in each column."
 msgstr "Вибери дієслово й торкнися форми в кожній колонці."
 
+msgid ""
+"Pick a word and compare its forms. The right column always starts with the "
+"plural genitive in the first row."
+msgstr ""
+"Вибери слово і порівняй його форми. У правому стовпці в першому рядку завжди"
+" родовий множини."
+
 msgid "Pick a word first."
 msgstr "Спершу вибери слово."
 
@@ -17201,6 +17363,9 @@ msgstr "Теперішній час"
 msgid "Present, “I”"
 msgstr "Теперішній час, «я»"
 
+msgid "presents"
+msgstr "подарунки"
+
 msgid "Presets; the method isn’t named"
 msgstr "Готові налаштування; метод не названо"
 
@@ -17671,6 +17836,9 @@ msgstr ""
 "Прочитай значення й спершу згадай термін, а тоді дивись. Спробуй на цих "
 "картках: вони з усієї колоди."
 
+msgid "Read the rule above the quiz once more, then try again."
+msgstr "Ще раз прочитай правило над вправою і спробуй знову."
+
 msgid "Read the sign on a café in Tallinn, then answer."
 msgstr "Прочитай табличку на дверях кав’ярні в Таллінні й дай відповіді."
 
@@ -17998,6 +18166,9 @@ msgstr "Корінці, стовбури, поділи, пучки, гілки: 
 msgid "Round {roundNumber} of {total}"
 msgstr "Раунд {roundNumber} з {total}"
 
+msgid "Round the shops"
+msgstr "По магазинах"
+
 msgid "Round the table"
 msgstr "За столом"
 
@@ -18082,6 +18253,9 @@ msgstr "Слова для SAT"
 
 msgid "Saturday"
 msgstr "Субота"
+
+msgid "Saturday shopping"
+msgstr "Покупки в суботу"
 
 msgid "Save “Feierabend” to my German deck."
 msgstr "Збережи «Feierabend» у мою колоду німецької."
@@ -18538,6 +18712,9 @@ msgstr "Вона працює в *банку*."
 
 msgid "She works in a café"
 msgstr "Вона працює в кав’ярні"
+
+msgid "She writes to her friends."
+msgstr "Вона пише друзям."
 
 msgid "She’s *coming* back tomorrow."
 msgstr "Вона *повернеться* завтра."
@@ -19273,6 +19450,17 @@ msgstr "Почни з <0>あ</0>."
 
 msgid "Start from a ready-made deck"
 msgstr "Почни з готової колоди"
+
+msgid ""
+"Start from the third form. If it ends in a vowel, add <0>-de</0>: <1>maja, "
+"majade</1>; <2>sõpra, sõprade</2>. If it ends in <3>-d</3> or <4>-t</4>, add"
+" <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; <8>inimest, "
+"inimeste</8>."
+msgstr ""
+"Почни з третьої форми. Якщо вона закінчується на голосний, додай <0>-de</0>:"
+" <1>maja, majade</1>; <2>sõpra, sõprade</2>. Якщо на <3>-d</3> або "
+"<4>-t</4>, додай <5>-e</5>: <6>maad, maade</6>; <7>raamatut, raamatute</7>; "
+"<8>inimest, inimeste</8>."
 
 msgid "Start here"
 msgstr "Почни звідси"
@@ -20477,6 +20665,9 @@ msgstr "Початкова форма. Для кількох додається 
 msgid "The basics"
 msgstr "Основи"
 
+msgid "The birds sit in the trees."
+msgstr "Птахи сидять на деревах."
+
 msgid "The book is on the table."
 msgstr "Книжка на столі."
 
@@ -21571,6 +21762,13 @@ msgstr "Назва чи «де»"
 msgid "The player would pass, if chess allowed it."
 msgstr "Гравець пропустив би хід, якби шахи це дозволяли."
 
+#. placeholder {0}: kase.ending
+msgid "The plural genitive <0>{genitive}</0> plus <1>{0}</1>."
+msgstr "Родовий множини <0>{genitive}</0> плюс <1>{0}</1>."
+
+msgid "The plural genitive: the stem for every other plural case."
+msgstr "Родовий множини — основа для всіх інших відмінків множини."
+
 #. placeholder {0}: ending("-d")
 msgid ""
 "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; "
@@ -21605,6 +21803,9 @@ msgstr ""
 
 msgid "The plural third form of banaan, banana."
 msgstr "Третя форма множини від banaan, банан."
+
+msgid "The plural third form of kingitus, present."
+msgstr "Третя форма множини від kingitus, подарунок."
 
 msgid "The plural third form of kook, cake."
 msgstr "Третя форма множини від kook, тістечко."
@@ -21895,6 +22096,9 @@ msgstr "Речення починається з цієї речі, тому в�
 
 msgid "The seven days, the four that count, and how to say what day it is."
 msgstr "Сім днів, чотири з числами в назві, і як сказати, який сьогодні день."
+
+msgid "The shop assistants"
+msgstr "Продавцям"
 
 msgid "the shop door"
 msgstr "двері магазину"
@@ -22341,8 +22545,14 @@ msgstr "їхній"
 msgid "their book"
 msgstr "їхня книга"
 
+msgid "Their friends"
+msgstr "Своїм друзям"
+
 msgid "Their office is in Tallinn."
 msgstr "Їхній офіс у Таллінні."
+
+msgid "Their parents"
+msgstr "Батькам"
 
 msgid ""
 "Then open it. macOS asks once whether to open an app from the internet. "
@@ -22362,6 +22572,9 @@ msgstr "У класі 22 учні."
 
 msgid "There are apples in the shop."
 msgstr "У магазині є яблука."
+
+msgid "There are pictures in the books."
+msgstr "У книжках є малюнки."
 
 msgid "There are seven to start with. Tap one to hear it in a question."
 msgstr "Для початку їх сім. Натисни на будь-яке, щоб почути його в питанні."
@@ -22597,6 +22810,20 @@ msgstr "Третя"
 
 msgid "Third form"
 msgstr "Третя форма"
+
+msgid ""
+"Third form ends in <0>-d</0> or <1>-t</1>: add <2>-e</2>. <3>maad, "
+"maade</3>; <4>raamatut, raamatute</4>."
+msgstr ""
+"Третя форма на <0>-d</0> або <1>-t</1>: додай <2>-e</2>. <3>maad, maade</3>;"
+" <4>raamatut, raamatute</4>."
+
+msgid ""
+"Third form ends in a vowel: add <0>-de</0>. <1>maja, majade</1>; <2>sõpra, "
+"sõprade</2>."
+msgstr ""
+"Третя форма на голосний: додай <0>-de</0>. <1>maja, majade</1>; <2>sõpra, "
+"sõprade</2>."
 
 msgid "Third form, more than one"
 msgstr "Третя форма, множина"
@@ -22858,6 +23085,9 @@ msgstr "Розклад"
 
 msgid "tip"
 msgstr "чайові"
+
+msgid "to"
+msgstr "до, кому"
 
 msgid "To a café"
 msgstr "До кав’ярні"
@@ -23294,6 +23524,9 @@ msgstr "до школи"
 
 msgid "to see"
 msgstr "бачити"
+
+msgid "To see their friends at home"
+msgstr "У гості до друзів"
 
 msgid "To sign"
 msgstr "Підписувати"
@@ -24815,6 +25048,12 @@ msgstr "Куди Марі ходила о десятій?"
 msgid "Where did they go on Saturday?"
 msgstr "Куди вони їздили в суботу?"
 
+msgid "Where do Kati and Mari go on Saturday?"
+msgstr "Куди Каті й Марі ходять у суботу?"
+
+msgid "Where do they put the presents?"
+msgstr "Куди вони кладуть подарунки?"
+
 msgid "Where do you all live?"
 msgstr "Де ви живете?"
 
@@ -25150,6 +25389,9 @@ msgstr "У які плани входить Grok Bot?"
 msgid "Which plural third form?"
 msgstr "Яка третя форма множини?"
 
+msgid "Which plural?"
+msgstr "Яка множина?"
+
 msgid "Which question does it answer?"
 msgstr "На яке питання відповідає?"
 
@@ -25203,6 +25445,9 @@ msgstr "Хто і чий"
 
 msgid "Who and whose are the same word."
 msgstr "«Хто» і «чий» тут одне слово."
+
+msgid "Who are the presents for?"
+msgstr "Кому подарунки?"
 
 msgid "Who are you talking with?"
 msgstr "З ким ти розмовляєш?"
@@ -25364,6 +25609,9 @@ msgstr "AI не перейде на російську?"
 msgid "window"
 msgstr "вікно"
 
+msgid "with"
+msgstr "з, разом з"
+
 msgctxt "with or without"
 msgid "With"
 msgstr "З"
@@ -25510,6 +25758,9 @@ msgid ""
 msgstr ""
 "З колоди, яка відповідає твоїй меті: подорожі чи першим урокам. Можна додати"
 " кілька, і Lymi змішає їхні картки в одне щоденне повторення."
+
+msgid "with the shop assistants"
+msgstr "з продавцями"
 
 msgid "with whom?"
 msgstr "з ким?"

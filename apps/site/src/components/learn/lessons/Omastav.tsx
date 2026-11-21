@@ -19,9 +19,10 @@ import {
   phraseOf,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
-import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
+import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, Panel } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
@@ -35,7 +36,6 @@ const SLUG = "omastav";
 const src = (text: string) => clipUrl(SLUG, clipId(text));
 
 type Who = (typeof OMASTAV_PRONOUNS)[number]["who"];
-type Phrase = (typeof OMASTAV_PHRASES)[number];
 
 /**
  * Each pronoun in the reader's language: who, whose, whose in a quiz answer's short line, and the
@@ -522,123 +522,6 @@ function WhoseRound({ item, state, heard, answer, autoplay }: RoundProps<WhoseIt
   );
 }
 
-interface FormItem {
-  src: string;
-  phrase: Phrase;
-  answer: string;
-  options: readonly string[];
-  /** Keyed by the word, so a run meets every word once. */
-  pair: readonly [string, string];
-}
-
-/** The other phrases' genitives, the pool a round's third option comes from. */
-const othersOf = (phrase: Phrase): string[] =>
-  OMASTAV_PHRASES.filter((each) => each.word !== phrase.word).map((each) => each.whose);
-
-/**
- * A round's options: the genitive, the word as a dictionary gives it (the likeliest slip), and
- * another owner's genitive drawn afresh each run, so no fixed set names the answer. The -s or -l
- * form is the cue, never an option: offered, it would extend the answer by one letter.
- */
-export function formOptions(phrase: Phrase): string[] {
-  return shuffle([phrase.whose, phrase.word, shuffle(othersOf(phrase))[0] as string]);
-}
-
-/** The first round's options as the server renders them, turned by the item's place. */
-export function firstOrder(phrase: Phrase, i: number): string[] {
-  const forms = [
-    phrase.whose,
-    phrase.word,
-    othersOf(phrase)[i % othersOf(phrase).length] as string,
-  ];
-  const turn = i % forms.length;
-  return [...forms.slice(turn), ...forms.slice(0, turn)];
-}
-
-/** See a thing and its owner with -s or -l; pick the genitive that goes first, then hear the phrase. */
-function FormRound({ item, state, heard, answer }: RoundProps<FormItem>) {
-  const { t, i18n } = useLingui();
-  const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
-  // The phrase would say the answer, so the round opens answerable and plays after the pick.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: each round, including a restart, opens answerable
-  useEffect(() => heard(), [round]);
-  const done = state.status === "answered";
-  const picked = done ? state.picked : null;
-  const said = phraseOf(item.phrase);
-  // A wrong pick shows in the gap for a moment, then the answer takes its place.
-  const [settled, setSettled] = useState(false);
-  useEffect(() => {
-    setSettled(false);
-    if (!done || picked === item.answer) return;
-    const timer = setTimeout(() => setSettled(true), 900);
-    return () => clearTimeout(timer);
-  }, [done, picked, item.answer]);
-  const filled = !done ? null : settled ? item.answer : picked;
-  return (
-    <>
-      {done && <Listen src={item.src} />}
-      <p className="text-md text-ink-secondary">
-        <Trans>
-          Say “{i18n._(PHRASE_MEANS[said] as MessageDescriptor)}”, starting from{" "}
-          <b lang="et">{item.phrase.where}</b>.
-        </Trans>
-      </p>
-      <p
-        lang="et"
-        className="flex flex-wrap items-baseline gap-x-3 text-[clamp(2.25rem,8vw,3.25rem)] leading-tight font-semibold tracking-tight"
-      >
-        <span
-          data-mark={filled === null ? undefined : filled === item.answer ? "right" : "wrong"}
-          className="learn-gap inline-block min-w-[3ch] text-center"
-        >
-          {filled ?? " "}
-        </span>
-        <span>{item.phrase.noun}</span>
-      </p>
-      <p className="sr-only">
-        <Trans>blank</Trans> <span lang="et">{item.phrase.noun}</span>
-      </p>
-      <fieldset className="m-0 flex min-w-0 flex-wrap gap-2.5 border-0 p-0">
-        <legend className="sr-only">{t`Fill the gap`}</legend>
-        {item.options.map((option) => (
-          <Answer
-            key={option}
-            big
-            lang="et"
-            label={option}
-            mark={
-              !done
-                ? undefined
-                : option === item.answer
-                  ? "right"
-                  : option === picked
-                    ? "wrong"
-                    : "out"
-            }
-            onPick={() => {
-              if (done) return;
-              answer(option, option === item.answer);
-              void playSound(item.src);
-            }}
-          />
-        ))}
-      </fieldset>
-      {done && (
-        <Feedback right={state.right}>
-          <span lang="et" className="font-medium text-ink">
-            {said}
-          </span>{" "}
-          {i18n._(PHRASE_MEANS[said] as MessageDescriptor)}.{" "}
-          <Trans>
-            <span lang="et">{capital(item.phrase.whose)}</span> is{" "}
-            <span lang="et">{item.phrase.where}</span> without its last letter.
-          </Trans>
-        </Feedback>
-      )}
-    </>
-  );
-}
-
 /**
  * Kati's note, gap by gap: each gap is who or whose. The right word sits first in some gaps and
  * second in others. omastav.test.ts checks that the filled gaps spell the recording.
@@ -736,7 +619,7 @@ const dialogueLine = (id: keyof typeof OMASTAV_DIALOGUE) => {
 };
 
 export function OmastavLesson() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const questions = lessonBySlug("kusimused")?.n;
   const places = lessonBySlug("kohad")?.n;
   const time = lessonBySlug("kell")?.n;
@@ -753,23 +636,37 @@ export function OmastavLesson() {
     [],
   );
 
-  const formItems = useMemo<FormItem[]>(
+  // Typed, so no set of options can name the answer. Keyed by the word, so a run meets each once.
+  const formItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
     () =>
-      OMASTAV_PHRASES.map((phrase, i) => ({
-        src: src(phraseOf(phrase)),
-        phrase,
-        answer: phrase.whose,
-        options: firstOrder(phrase, i),
-        pair: [phrase.word, phraseOf(phrase)] as const,
-      })),
-    [],
+      OMASTAV_PHRASES.map((phrase) => {
+        const said = phraseOf(phrase);
+        return {
+          base: phrase.word,
+          gloss: i18n._(FORM_MEANS[phrase.word] as MessageDescriptor),
+          cue: `… ${phrase.noun}`,
+          cueLang: "et",
+          answers: [phrase.whose],
+          src: src(said),
+          said: (
+            <>
+              {said}{" "}
+              <span lang={i18n.locale} className="text-md">
+                {i18n._(PHRASE_MEANS[said] as MessageDescriptor)}
+              </span>
+            </>
+          ),
+          explain: (
+            <Trans>
+              <span lang="et">{capital(phrase.whose)}</span> is{" "}
+              <span lang="et">{phrase.where}</span> without its last letter.
+            </Trans>
+          ),
+          pair: [phrase.word, said] as const,
+        };
+      }),
+    [i18n],
   );
-
-  // Every round but the first shuffles its forms afresh, so the answer has no fixed place.
-  const formRun = (items: readonly FormItem[], pinned?: FormItem): FormItem[] =>
-    eachPairFirst(items, pinned).map((item) =>
-      item === pinned ? item : { ...item, options: formOptions(item.phrase) },
-    );
 
   // The right reply moves between first, second and third place from turn to turn.
   const dialogue: DialogueTurn[] = [
@@ -1114,7 +1011,8 @@ export function OmastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round names a thing and gives its owner with{" "}
+                    Each round gives a word and the noun it owns. Type the word’s genitive, the form
+                    that goes in front, and hear the phrase. If you know the word with{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -s
                     </b>{" "}
@@ -1122,8 +1020,7 @@ export function OmastavLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -l
                     </b>
-                    . Take off the last letter, pick the form that goes in front, then hear the
-                    phrase.
+                    , take off its last letter.
                   </Trans>
                 </p>
               </Prose>
@@ -1134,7 +1031,7 @@ export function OmastavLesson() {
                 rounds={OMASTAV_PHRASES.length}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All of them. You picked the genitive every time.</Trans>
+                    <Trans>All of them. You made the genitive every time.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
@@ -1143,8 +1040,8 @@ export function OmastavLesson() {
                     </Trans>
                   )
                 }
-                recall={(item) => ({ label: phraseOf(item.phrase), src: item.src })}
-                order={formRun}
+                recall={formRecall}
+                order={eachPairFirst}
                 round={(props) => <FormRound {...props} />}
               />
             </>

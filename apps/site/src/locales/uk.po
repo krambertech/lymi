@@ -485,8 +485,8 @@ msgstr "<0>-ge</0> або <1>-ke</1> у кінці"
 msgid "<0>{0}</0> is {1}."
 msgstr "<0>{0}</0> — це «{1}»."
 
-#. placeholder {0}: capital(item.phrase.whose)
-#. placeholder {1}: item.phrase.where
+#. placeholder {0}: capital(phrase.whose)
+#. placeholder {1}: phrase.where
 msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
 msgstr "<0>{0}</0> — це <1>{1}</1> без останньої літери."
 
@@ -1739,11 +1739,11 @@ msgstr "Усі. Ти чуєш, хто це робить."
 msgid "All of them. You heard whose in every sentence."
 msgstr "Усі. Ти чуєш «чий» у кожному реченні."
 
+msgid "All of them. You made the genitive every time."
+msgstr "Усі. Родовий відмінок — у кожному раунді."
+
 msgid "All of them. You matched every answer to its question."
 msgstr "Усі. Кожна відповідь пасує до свого питання."
-
-msgid "All of them. You picked the genitive every time."
-msgstr "Усі. Родовий відмінок — у кожному раунді."
 
 msgid "All of them. You picked the place in every sentence."
 msgstr "Усі. У кожному реченні місце вибране правильно."
@@ -2303,9 +2303,6 @@ msgstr "Нотатки з біології"
 
 msgid "Biology study group"
 msgstr "Навчальна група з біології"
-
-msgid "blank"
-msgstr "пропуск"
 
 msgid "book"
 msgstr "книга"
@@ -3585,8 +3582,8 @@ msgstr "Кожне питання — нове, у вивченні чи зас�
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Кожна відповідь — це наказ або коротка репліка. Обирай ту, що пасує до слів Марі."
 
-msgid "Each round names a thing and gives its owner with <0>-s</0> or <1>-l</1>. Take off the last letter, pick the form that goes in front, then hear the phrase."
-msgstr "У кожному раунді є річ і її власник із <0>-s</0> чи <1>-l</1>. Відкинь останню літеру, вибери форму, що стоїть попереду, і послухай словосполучення."
+msgid "Each round gives a word and the noun it owns. Type the word’s genitive, the form that goes in front, and hear the phrase. If you know the word with <0>-s</0> or <1>-l</1>, take off its last letter."
+msgstr "У кожному раунді є слово й іменник, який йому належить. Надрукуй родовий відмінок слова, форму, що стоїть попереду, і послухай словосполучення. Якщо знаєш це слово з <0>-s</0> чи <1>-l</1>, відкинь останню літеру."
 
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "У кожному раунді — місце. Обери закінчення, а потім послухай речення. Більшість міст, будівель і країн мають <0>-s</0>; робота, ринок і назви на <1>-maa</1> мають <2>-l</2>."
@@ -9133,11 +9130,6 @@ msgstr "Субота"
 
 msgid "Save “Feierabend” to my German deck."
 msgstr "Збережи «Feierabend» у мою колоду німецької."
-
-#. placeholder {0}: i18n._(PHRASE_MEANS[said] as MessageDescriptor)
-#. placeholder {1}: item.phrase.where
-msgid "Say “{0}”, starting from <0>{1}</0>."
-msgstr "Скажи «{0}», почавши з <0>{1}</0>."
 
 msgid "Say a price with <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, coffee costs three euros."
 msgstr "Ціну називай словом <0>maksab</0>: <1>Kohv maksab kolm eurot</1>, кава коштує три євро."

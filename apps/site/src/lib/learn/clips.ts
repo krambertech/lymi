@@ -3540,7 +3540,7 @@ export const RELATIVE_FORMS = [
   { id: "subject", ta: "tema", person: "kes", thing: "mis" },
   { id: "partitive", ta: "teda", person: "keda", thing: "mida" },
   { id: "with", ta: "temaga", person: "kellega", thing: "millega" },
-  { id: "to", ta: "talle", person: "kellele", thing: "millele" },
+  { id: "to", ta: "temale", person: "kellele", thing: "millele" },
   { id: "in", ta: "temas", person: "kelles", thing: "milles" },
 ] as const;
 
@@ -3582,8 +3582,8 @@ export const RELATIVE_GAPS = [
   },
   {
     id: "milles",
-    before: "Maja,",
-    after: "me elame, on sada aastat vana.",
+    before: "Kleit,",
+    after: "ta peol oli, oli sinine.",
     answer: "milles",
     options: ["milles", "kelles"],
   },

@@ -30,14 +30,17 @@ function Et({ children }: { children: ReactNode }) {
 
 const ROLES: Record<Role, MessageDescriptor> = {
   subject: msg`The one who does it`,
-  partitive: msg`The object`,
+  partitive: msg`The object (part)`,
   with: msg`With someone or something`,
   to: msg`To someone or something`,
   in: msg`In something`,
 };
 
 const GLOSSARY: Glossary = {
-  asuma: { en: msg`to be located`, note: msg`Asub vanalinna lähedal, is near the old town.` },
+  asuma: {
+    en: msg`to be located`,
+    note: msg`Kool asub pargi kõrval, the school is next to the park.`,
+  },
   kunagi: { en: msg`once, at one time` },
   meremees: { en: msg`sailor` },
 };
@@ -63,12 +66,12 @@ function RelativeTable() {
     <Panel className="gap-5">
       <Paradigm
         label={t`Who and which in each case`}
-        columns={[t`He or she`, t`Who`, t`Which`]}
+        columns={[t`He or she`, t`For a person`, t`For a thing`]}
         rows={rows}
         highlight={{ column: 1 }}
         empty={{
           title: t`Tap a form`,
-          tip: <Trans>Each row has the same ending three times.</Trans>,
+          tip: <Trans>Each row below the first has the same ending three times.</Trans>,
         }}
       />
     </Panel>
@@ -148,7 +151,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
     },
     {
       id: "cafe",
-      ask: t(msg`Who works at the café?`),
+      ask: t(msg`Who works at the café they often go to?`),
       options: [
         { id: "sister", label: t(msg`Kati’s sister`) },
         { id: "neighbour", label: t(msg`The neighbour’s grandson`) },
@@ -181,7 +184,8 @@ export function RaamatMilleOstsinLesson() {
       sub={
         <Trans>
           <Et>Mees, kes seal seisab</Et>, the man who is standing there.{" "}
-          <Et>Film, mida me vaatasime</Et>, the film we watched. Who and which, in every case.
+          <Et>Film, mida me vaatasime</Et>, the film we watched. Who and which, in the case the
+          clause needs.
         </Trans>
       }
       facts={[
@@ -223,10 +227,13 @@ export function RaamatMilleOstsinLesson() {
               <RelativeTable />
               <Aside>
                 <Trans>
-                  Always put a comma before <Et>kes</Et> and <Et>mis</Et>, and another where the
-                  clause ends: <Et>Film, mida me vaatasime, oli hea</Et>. For a place you can also
-                  use <Et>kus</Et>, where: <Et>linn, kus ma elan</Et>. In speech you will hear{" "}
-                  <Et>mis</Et> for people too, but <Et>kes</Et> is the safe choice.
+                  Always put a comma before <Et>kes</Et> and <Et>mis</Et>, and another after it if
+                  the sentence goes on: <Et>Film, mida me vaatasime, oli hea</Et>. For a place you
+                  can also use <Et>kus</Et>, where: <Et>linn, kus ma elan</Et>. When the object is a
+                  finished whole, use <Et>kelle</Et> or <Et>mille</Et>, like <Et>selle</Et>:{" "}
+                  <Et>raamat, mille ma ostsin, on paks</Et>. <Et>Kes</Et> and <Et>mis</Et> stay the
+                  same for many: <Et>inimesed, kes seal seisavad</Et>. In speech you will hear{" "}
+                  <Et>mis</Et> for people too; in writing use <Et>kes</Et>.
                 </Trans>
               </Aside>
             </>
@@ -257,7 +264,7 @@ export function RaamatMilleOstsinLesson() {
                 rounds={8}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All eight. You can say who and which in any case.</Trans>
+                    <Trans>All eight. You can say who and which in the cases you need most.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>
                       Most of them. Ask: person or thing, and which form of <Et>tema</Et>?

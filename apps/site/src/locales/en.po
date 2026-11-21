@@ -1171,8 +1171,8 @@ msgstr "<0>Meeldib</0> or <1>meeldivad</1>"
 msgid "<0>Meeldivad</0> for more than one"
 msgstr "<0>Meeldivad</0> for more than one"
 
-msgid "<0>Mees, kes seal seisab</0>, the man who is standing there. <1>Film, mida me vaatasime</1>, the film we watched. Who and which, in every case."
-msgstr "<0>Mees, kes seal seisab</0>, the man who is standing there. <1>Film, mida me vaatasime</1>, the film we watched. Who and which, in every case."
+msgid "<0>Mees, kes seal seisab</0>, the man who is standing there. <1>Film, mida me vaatasime</1>, the film we watched. Who and which, in the case the clause needs."
+msgstr "<0>Mees, kes seal seisab</0>, the man who is standing there. <1>Film, mida me vaatasime</1>, the film we watched. Who and which, in the case the clause needs."
 
 msgid "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgstr "<0>Mexican Spanish</0>, <1>informal examples</1>."
@@ -3218,8 +3218,8 @@ msgstr "All eight. You can build the stem for every plural case."
 msgid "All eight. You can say while and without in one word."
 msgstr "All eight. You can say while and without in one word."
 
-msgid "All eight. You can say who and which in any case."
-msgstr "All eight. You can say who and which in any case."
+msgid "All eight. You can say who and which in the cases you need most."
+msgstr "All eight. You can say who and which in the cases you need most."
 
 msgid "All eight. You can tell doing it from done to it."
 msgstr "All eight. You can tell doing it from done to it."
@@ -3513,8 +3513,8 @@ msgstr "Also the genitive of kool."
 msgid "Always"
 msgstr "Always"
 
-msgid "Always put a comma before <0>kes</0> and <1>mis</1>, and another where the clause ends: <2>Film, mida me vaatasime, oli hea</2>. For a place you can also use <3>kus</3>, where: <4>linn, kus ma elan</4>. In speech you will hear <5>mis</5> for people too, but <6>kes</6> is the safe choice."
-msgstr "Always put a comma before <0>kes</0> and <1>mis</1>, and another where the clause ends: <2>Film, mida me vaatasime, oli hea</2>. For a place you can also use <3>kus</3>, where: <4>linn, kus ma elan</4>. In speech you will hear <5>mis</5> for people too, but <6>kes</6> is the safe choice."
+msgid "Always put a comma before <0>kes</0> and <1>mis</1>, and another after it if the sentence goes on: <2>Film, mida me vaatasime, oli hea</2>. For a place you can also use <3>kus</3>, where: <4>linn, kus ma elan</4>. When the object is a finished whole, use <5>kelle</5> or <6>mille</6>, like <7>selle</7>: <8>raamat, mille ma ostsin, on paks</8>. <9>Kes</9> and <10>mis</10> stay the same for many: <11>inimesed, kes seal seisavad</11>. In speech you will hear <12>mis</12> for people too; in writing use <13>kes</13>."
+msgstr "Always put a comma before <0>kes</0> and <1>mis</1>, and another after it if the sentence goes on: <2>Film, mida me vaatasime, oli hea</2>. For a place you can also use <3>kus</3>, where: <4>linn, kus ma elan</4>. When the object is a finished whole, use <5>kelle</5> or <6>mille</6>, like <7>selle</7>: <8>raamat, mille ma ostsin, on paks</8>. <9>Kes</9> and <10>mis</10> stay the same for many: <11>inimesed, kes seal seisavad</11>. In speech you will hear <12>mis</12> for people too; in writing use <13>kes</13>."
 
 msgid "Always the third form after <0>ei</0>, after a number, and after verbs such as <1>ootama, armastama, otsima</1>: <2>Ma ootan sõpra.</2>"
 msgstr "Always the third form after <0>ei</0>, after a number, and after verbs such as <1>ootama, armastama, otsima</1>: <2>Ma ootan sõpra.</2>"
@@ -3930,9 +3930,6 @@ msgstr "Asks how it’s done."
 
 msgid "Asks where someone or something is going."
 msgstr "Asks where someone or something is going."
-
-msgid "Asub vanalinna lähedal, is near the old town."
-msgstr "Asub vanalinna lähedal, is near the old town."
 
 msgid "At 10:00"
 msgstr "At 10:00"
@@ -5986,8 +5983,8 @@ msgstr "Each round shows a place. Pick its ending, then hear it in a sentence. M
 msgid "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
 msgstr "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
 
-msgid "Each row has the same ending three times."
-msgstr "Each row has the same ending three times."
+msgid "Each row below the first has the same ending three times."
+msgstr "Each row below the first has the same ending three times."
 
 msgid "Each row says the same thing twice: once in progress or in part, once done."
 msgstr "Each row says the same thing twice: once in progress or in part, once done."
@@ -6927,6 +6924,9 @@ msgstr "For a hard card"
 msgid "For a new job at a big company"
 msgstr "For a new job at a big company"
 
+msgid "For a person"
+msgstr "For a person"
+
 msgid "For a person’s place, Estonian says <0/>: <1/> It has three forms too: <2/> <3/>"
 msgstr "For a person’s place, Estonian says <0/>: <1/> It has three forms too: <2/> <3/>"
 
@@ -6935,6 +6935,9 @@ msgstr "For a place you can use <0>kus</0>: <1>kohvik, kus me käime</1>."
 
 msgid "For a test"
 msgstr "For a test"
+
+msgid "For a thing"
+msgstr "For a thing"
 
 msgid "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
 msgstr "For a trip, your first lessons, or the Goethe A1 to B1 word lists."
@@ -10916,6 +10919,9 @@ msgstr "Kohv, kohvi, kohvi."
 
 msgid "Kolm, three, and veerand, a quarter."
 msgstr "Kolm, three, and veerand, a quarter."
+
+msgid "Kool asub pargi kõrval, the school is next to the park."
+msgstr "Kool asub pargi kõrval, the school is next to the park."
 
 msgid "Kooris, in a choir."
 msgstr "Kooris, in a choir."
@@ -17892,8 +17898,8 @@ msgstr "The noun is doing it itself, so it takes <0>-v</0>: <1>{answer}</1>."
 msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 msgstr "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 
-msgid "The object"
-msgstr "The object"
+msgid "The object (part)"
+msgstr "The object (part)"
 
 msgid "The object is the thing you act on: the book you read, the bread you buy. In Estonian it takes one of two forms, and the choice says something English says with “was reading” and “read to the end”. The third form of lesson {partitive} says part of it, or not done yet. The genitive of lesson {genitive} says the whole thing, done. In the present it says the whole thing will get done: <0>Ma söön koogi ära</0>, I’ll eat the cake up."
 msgstr "The object is the thing you act on: the book you read, the bread you buy. In Estonian it takes one of two forms, and the choice says something English says with “was reading” and “read to the end”. The third form of lesson {partitive} says part of it, or not done yet. The genitive of lesson {genitive} says the whole thing, done. In the present it says the whole thing will get done: <0>Ma söön koogi ära</0>, I’ll eat the cake up."
@@ -21267,9 +21273,6 @@ msgstr "Where’s the *metro* station?"
 msgid "Where’s the *water*?"
 msgstr "Where’s the *water*?"
 
-msgid "Which"
-msgstr "Which"
-
 msgid "Which -nud form?"
 msgstr "Which -nud form?"
 
@@ -21549,8 +21552,8 @@ msgstr "Who speaks Estonian?"
 msgid "Who were the first Europeans to reach Canada?"
 msgstr "Who were the first Europeans to reach Canada?"
 
-msgid "Who works at the café?"
-msgstr "Who works at the café?"
+msgid "Who works at the café they often go to?"
+msgstr "Who works at the café they often go to?"
 
 msgid "Who would?"
 msgstr "Who would?"

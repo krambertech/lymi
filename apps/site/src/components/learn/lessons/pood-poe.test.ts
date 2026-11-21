@@ -29,11 +29,11 @@ describe("stems data", () => {
   });
 
   it("doesn't let the shortest or longest form give the answer away", () => {
-    const shortest = STEM_WORDS.filter(
-      (noun) => noun.slips.every((slip) => noun.where.length < slip.length),
+    const shortest = STEM_WORDS.filter((noun) =>
+      noun.slips.every((slip) => noun.where.length < slip.length),
     );
-    const longest = STEM_WORDS.filter(
-      (noun) => noun.slips.every((slip) => noun.where.length > slip.length),
+    const longest = STEM_WORDS.filter((noun) =>
+      noun.slips.every((slip) => noun.where.length > slip.length),
     );
     expect(shortest.length).toBeLessThan(STEM_WORDS.length / 3);
     expect(longest.length).toBeLessThan(STEM_WORDS.length / 3);
@@ -70,9 +70,7 @@ describe("stems quizzes", () => {
   });
 
   it("puts the first round's answer in every place across the nouns", () => {
-    const places = new Set(
-      STEM_WORDS.map((noun, i) => formsInOrder(noun, i).indexOf(noun.where)),
-    );
+    const places = new Set(STEM_WORDS.map((noun, i) => formsInOrder(noun, i).indexOf(noun.where)));
     expect(places).toEqual(new Set([0, 1, 2]));
   });
 });

@@ -1537,10 +1537,10 @@ msgstr "перевага"
 msgid "After <0/>, I want, comes the <1>-da</1> form: <2/> After <3/>, I have to, comes the <4>-ma</4> form: <5/>"
 msgstr "Після <0/>, «я хочу», іде форма на <1>-da</1>: <2/> Після <3/>, «я мушу», — форма на <4>-ma</4>: <5/>"
 
-msgid "After <0>{lead}</0>, the <1>-da</1> form, at the end."
+msgid "After <0>{lead}</0>, the <1>-da</1> form, and it goes last."
 msgstr "Після <0>{lead}</0> — форма на <1>-da</1>, у кінці."
 
-msgid "After <0>{lead}</0>, the <1>-ma</1> form, at the end."
+msgid "After <0>{lead}</0>, the <1>-ma</1> form, and it goes last."
 msgstr "Після <0>{lead}</0> — форма на <1>-ma</1>, у кінці."
 
 msgid "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
@@ -1756,7 +1756,7 @@ msgstr "Усі шість. Кожен займенник — зі своїм з�
 msgid "All Spanish decks"
 msgstr "Усі іспанські колоди"
 
-msgid "All three. Each second verb in its form, at the end."
+msgid "All three. Each second verb took the right form and went last."
 msgstr "Усі три. Друге дієслово щоразу в потрібній формі й у кінці."
 
 msgid "All Ukrainian decks"
@@ -2760,6 +2760,9 @@ msgstr "Перевірити"
 
 msgid "Check what’s due in Lymi and quiz me"
 msgstr "Перевір, що чекає в Lymi, і поганяй мене"
+
+msgid "Check which form each second verb takes and where it goes, then try again."
+msgstr "Перевір, у якій формі друге дієслово й де воно стоїть, і спробуй знову."
 
 msgid "Checked {checked}"
 msgstr "Перевірено {checked}"
@@ -4827,9 +4830,6 @@ msgstr "Ти вже поїв? Так вітаються"
 msgid "Have you got the *key*?"
 msgstr "У тебе є *ключ*?"
 
-msgid "Having to, starting, going, coming and staying take the <0>-ma</0> form."
-msgstr "Після «мусити», «починати», «іти», «приходити» й «залишатися» — форма на <0>-ma</0>."
-
 msgid "He doesn’t *like* rainy days."
 msgstr "Він не *любить* дощових днів."
 
@@ -6727,9 +6727,6 @@ msgstr "Туга"
 
 msgid "Longing for what is gone"
 msgstr "Туга за тим, чого вже немає"
-
-msgid "Look at where the second verb goes, then try again."
-msgstr "Подивись, де стоїть друге дієслово, і спробуй знову."
 
 msgid "look forward to"
 msgstr "чекати з нетерпінням"
@@ -11959,8 +11956,14 @@ msgstr "Дієслова"
 msgid "Verbs of having to, starting and going"
 msgstr "Дієслова обов’язку, початку й руху"
 
+msgid "Verbs of having to, starting, going, coming and staying take the <0>-ma</0> form."
+msgstr "Після «мусити», «починати», «іти», «приходити» й «залишатися» — форма на <0>-ma</0>."
+
 msgid "Verbs of wanting and being able"
 msgstr "Дієслова бажання й можливості"
+
+msgid "Verbs of wanting, being able, being allowed and loving take the <0>-da</0> form."
+msgstr "Після «хотіти», «могти», «можна» й «любити» — форма на <0>-da</0>."
 
 msgid "Version of 5 January 2026"
 msgstr "Версія від 5 січня 2026 року"
@@ -12001,9 +12004,6 @@ msgstr "Чекає своєї черги"
 
 msgid "wall"
 msgstr "стіна"
-
-msgid "Wanting, being able, being allowed and loving take the <0>-da</0> form."
-msgstr "Після «хотіти», «могти», «можна» й «любити» — форма на <0>-da</0>."
 
 msgid "Wash your *hands*."
 msgstr "Помий *руки*."

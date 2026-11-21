@@ -274,11 +274,11 @@ export const BUILT = [
 function BuiltWhy({ lead }: { lead: Lead }) {
   return leadOf(lead).takes === "da" ? (
     <Trans>
-      After <span lang="et">{lead}</span>, the <End>-da</End> form, at the end.
+      After <span lang="et">{lead}</span>, the <End>-da</End> form, and it goes last.
     </Trans>
   ) : (
     <Trans>
-      After <span lang="et">{lead}</span>, the <End>-ma</End> form, at the end.
+      After <span lang="et">{lead}</span>, the <End>-ma</End> form, and it goes last.
     </Trans>
   );
 }
@@ -416,7 +416,7 @@ export function TegevusnimedLesson() {
       hint: <span lang="et">tahan lugeda</span>,
       rule: (
         <Trans>
-          Wanting, being able, being allowed and loving take the <End>-da</End> form.
+          Verbs of wanting, being able, being allowed and loving take the <End>-da</End> form.
         </Trans>
       ),
     },
@@ -426,7 +426,7 @@ export function TegevusnimedLesson() {
       hint: <span lang="et">pean lugema</span>,
       rule: (
         <Trans>
-          Having to, starting, going, coming and staying take the <End>-ma</End> form.
+          Verbs of having to, starting, going, coming and staying take the <End>-ma</End> form.
         </Trans>
       ),
     },
@@ -644,9 +644,11 @@ export function TegevusnimedLesson() {
                 items={built}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All three. Each second verb in its form, at the end.</Trans>
+                    <Trans>All three. Each second verb took the right form and went last.</Trans>
                   ) : (
-                    <Trans>Look at where the second verb goes, then try again.</Trans>
+                    <Trans>
+                      Check which form each second verb takes and where it goes, then try again.
+                    </Trans>
                   )
                 }
                 recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}

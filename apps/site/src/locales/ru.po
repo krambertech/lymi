@@ -1537,10 +1537,10 @@ msgstr "преимущество"
 msgid "After <0/>, I want, comes the <1>-da</1> form: <2/> After <3/>, I have to, comes the <4>-ma</4> form: <5/>"
 msgstr "После <0/>, «я хочу», идёт форма на <1>-da</1>: <2/> После <3/>, «мне надо», — форма на <4>-ma</4>: <5/>"
 
-msgid "After <0>{lead}</0>, the <1>-da</1> form, at the end."
+msgid "After <0>{lead}</0>, the <1>-da</1> form, and it goes last."
 msgstr "После <0>{lead}</0> — форма на <1>-da</1>, в конце."
 
-msgid "After <0>{lead}</0>, the <1>-ma</1> form, at the end."
+msgid "After <0>{lead}</0>, the <1>-ma</1> form, and it goes last."
 msgstr "После <0>{lead}</0> — форма на <1>-ma</1>, в конце."
 
 msgid "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
@@ -1756,7 +1756,7 @@ msgstr "Все шесть. Каждое местоимение — со свои
 msgid "All Spanish decks"
 msgstr "Все испанские колоды"
 
-msgid "All three. Each second verb in its form, at the end."
+msgid "All three. Each second verb took the right form and went last."
 msgstr "Все три. Второй глагол каждый раз в нужной форме и в конце."
 
 msgid "All Ukrainian decks"
@@ -2760,6 +2760,9 @@ msgstr "Проверить"
 
 msgid "Check what’s due in Lymi and quiz me"
 msgstr "Проверь, что пора повторить в Lymi, и погоняй меня"
+
+msgid "Check which form each second verb takes and where it goes, then try again."
+msgstr "Проверь, в какой форме второй глагол и где он стоит, и попробуй снова."
 
 msgid "Checked {checked}"
 msgstr "Проверено {checked}"
@@ -4827,9 +4830,6 @@ msgstr "Ты уже поел? Так здороваются"
 msgid "Have you got the *key*?"
 msgstr "У тебя есть *ключ*?"
 
-msgid "Having to, starting, going, coming and staying take the <0>-ma</0> form."
-msgstr "После «надо», «начинать», «идти», «приходить» и «оставаться» — форма на <0>-ma</0>."
-
 msgid "He doesn’t *like* rainy days."
 msgstr "Он не *любит* дождливые дни."
 
@@ -6727,9 +6727,6 @@ msgstr "Тоска"
 
 msgid "Longing for what is gone"
 msgstr "Тоска по тому, чего уже нет"
-
-msgid "Look at where the second verb goes, then try again."
-msgstr "Посмотри, где стоит второй глагол, и попробуй снова."
 
 msgid "look forward to"
 msgstr "ждать с нетерпением"
@@ -11959,8 +11956,14 @@ msgstr "Глаголы"
 msgid "Verbs of having to, starting and going"
 msgstr "Глаголы долга, начала и движения"
 
+msgid "Verbs of having to, starting, going, coming and staying take the <0>-ma</0> form."
+msgstr "После «надо», «начинать», «идти», «приходить» и «оставаться» — форма на <0>-ma</0>."
+
 msgid "Verbs of wanting and being able"
 msgstr "Глаголы желания и возможности"
+
+msgid "Verbs of wanting, being able, being allowed and loving take the <0>-da</0> form."
+msgstr "После «хотеть», «мочь», «можно» и «любить» — форма на <0>-da</0>."
 
 msgid "Version of 5 January 2026"
 msgstr "Версия от 5 января 2026 года"
@@ -12001,9 +12004,6 @@ msgstr "Ждёт своей очереди"
 
 msgid "wall"
 msgstr "стена"
-
-msgid "Wanting, being able, being allowed and loving take the <0>-da</0> form."
-msgstr "После «хотеть», «мочь», «можно» и «любить» — форма на <0>-da</0>."
 
 msgid "Wash your *hands*."
 msgstr "Помой *руки*."

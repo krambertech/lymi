@@ -1537,11 +1537,11 @@ msgstr "advantage"
 msgid "After <0/>, I want, comes the <1>-da</1> form: <2/> After <3/>, I have to, comes the <4>-ma</4> form: <5/>"
 msgstr "After <0/>, I want, comes the <1>-da</1> form: <2/> After <3/>, I have to, comes the <4>-ma</4> form: <5/>"
 
-msgid "After <0>{lead}</0>, the <1>-da</1> form, at the end."
-msgstr "After <0>{lead}</0>, the <1>-da</1> form, at the end."
+msgid "After <0>{lead}</0>, the <1>-da</1> form, and it goes last."
+msgstr "After <0>{lead}</0>, the <1>-da</1> form, and it goes last."
 
-msgid "After <0>{lead}</0>, the <1>-ma</1> form, at the end."
-msgstr "After <0>{lead}</0>, the <1>-ma</1> form, at the end."
+msgid "After <0>{lead}</0>, the <1>-ma</1> form, and it goes last."
+msgstr "After <0>{lead}</0>, the <1>-ma</1> form, and it goes last."
 
 msgid "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
 msgstr "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
@@ -1756,8 +1756,8 @@ msgstr "All six. You matched every pronoun with its ending."
 msgid "All Spanish decks"
 msgstr "All Spanish decks"
 
-msgid "All three. Each second verb in its form, at the end."
-msgstr "All three. Each second verb in its form, at the end."
+msgid "All three. Each second verb took the right form and went last."
+msgstr "All three. Each second verb took the right form and went last."
 
 msgid "All Ukrainian decks"
 msgstr "All Ukrainian decks"
@@ -2760,6 +2760,9 @@ msgstr "Check"
 
 msgid "Check what’s due in Lymi and quiz me"
 msgstr "Check what’s due in Lymi and quiz me"
+
+msgid "Check which form each second verb takes and where it goes, then try again."
+msgstr "Check which form each second verb takes and where it goes, then try again."
 
 msgid "Checked {checked}"
 msgstr "Checked {checked}"
@@ -4827,9 +4830,6 @@ msgstr "Have you eaten? A way to say hello"
 msgid "Have you got the *key*?"
 msgstr "Have you got the *key*?"
 
-msgid "Having to, starting, going, coming and staying take the <0>-ma</0> form."
-msgstr "Having to, starting, going, coming and staying take the <0>-ma</0> form."
-
 msgid "He doesn’t *like* rainy days."
 msgstr "He doesn’t *like* rainy days."
 
@@ -6727,9 +6727,6 @@ msgstr "Longing"
 
 msgid "Longing for what is gone"
 msgstr "Longing for what is gone"
-
-msgid "Look at where the second verb goes, then try again."
-msgstr "Look at where the second verb goes, then try again."
 
 msgid "look forward to"
 msgstr "look forward to"
@@ -11959,8 +11956,14 @@ msgstr "Verbs"
 msgid "Verbs of having to, starting and going"
 msgstr "Verbs of having to, starting and going"
 
+msgid "Verbs of having to, starting, going, coming and staying take the <0>-ma</0> form."
+msgstr "Verbs of having to, starting, going, coming and staying take the <0>-ma</0> form."
+
 msgid "Verbs of wanting and being able"
 msgstr "Verbs of wanting and being able"
+
+msgid "Verbs of wanting, being able, being allowed and loving take the <0>-da</0> form."
+msgstr "Verbs of wanting, being able, being allowed and loving take the <0>-da</0> form."
 
 msgid "Version of 5 January 2026"
 msgstr "Version of 5 January 2026"
@@ -12001,9 +12004,6 @@ msgstr "Waits for its turn"
 
 msgid "wall"
 msgstr "wall"
-
-msgid "Wanting, being able, being allowed and loving take the <0>-da</0> form."
-msgstr "Wanting, being able, being allowed and loving take the <0>-da</0> form."
 
 msgid "Wash your *hands*."
 msgstr "Wash your *hands*."

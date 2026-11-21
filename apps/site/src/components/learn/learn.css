@@ -266,3 +266,40 @@
     transform: none;
   }
 }
+
+/* A wrong try in a match: a short shake, then both sides open again. */
+.learn-shake {
+  animation: learn-shake 320ms var(--ease-out);
+}
+@keyframes learn-shake {
+  25% {
+    translate: -3px 0;
+  }
+  50% {
+    translate: 3px 0;
+  }
+  75% {
+    translate: -1.5px 0;
+  }
+}
+/* The letters a form changed, lit in the stage's ink; the word's own letters it lost, struck. */
+.learn-lit {
+  color: var(--form);
+  text-decoration: underline 2px;
+  text-underline-offset: 0.18em;
+}
+.learn-gone {
+  color: var(--ink-muted);
+  text-decoration: line-through 1.5px;
+}
+/* Where a dragged tile will land in a sentence. */
+.learn-slot {
+  border: 1.5px dashed var(--form);
+  background: var(--form-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .learn-shake {
+    animation: none;
+  }
+}

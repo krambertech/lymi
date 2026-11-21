@@ -4329,11 +4329,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "majas-majja-majast/tuleb": {
-    "text": "tuleb",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "majas-majja-majast/to2o2l": {
     "text": "tööl",
     "model": "eleven_v4",
@@ -4666,46 +4661,6 @@
   },
   "majas-majja-majast/a-lahen-haiglasse": {
     "text": "Ma lähen haiglasse.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "majas-majja-majast/h-olen-tartus": {
-    "text": "Ma olen Tartus.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "majas-majja-majast/h-tulen-tartust": {
-    "text": "Ma tulen Tartust.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "majas-majja-majast/h-tootab-kohvikus": {
-    "text": "Mari töötab kohvikus.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "majas-majja-majast/h-tuleb-kohvikusse": {
-    "text": "Jaan tuleb kohvikusse.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "majas-majja-majast/h-tuleb-kohvikust": {
-    "text": "Mari tuleb kohvikust.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "majas-majja-majast/h-elavad-parnus": {
-    "text": "Nad elavad Pärnus.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "majas-majja-majast/h-tulevad-parnusse": {
-    "text": "Nad tulevad Pärnusse.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "majas-majja-majast/h-parit-parnust": {
-    "text": "Ta on pärit Pärnust.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

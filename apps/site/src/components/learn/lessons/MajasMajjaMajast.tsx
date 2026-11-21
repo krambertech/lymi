@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { CornerDownRight } from "lucide-react";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
@@ -15,9 +15,10 @@ import {
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
-import { Chips, type KeyItem, Keys, Panel } from "../Explore";
+import { type KeyItem, Keys, Panel } from "../Explore";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Paradigm } from "../Paradigm";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
 import { Scene } from "../Scene";
 import { Sort } from "../Sort";
@@ -82,11 +83,21 @@ const FORM_MEANS: Record<string, MessageDescriptor> = {
   majast: msg`out of the house`,
   kodu: msg`home`,
   kodus: msg`at home`,
-  koju: msg`going home`,
+  koju: msg`home, to home`,
   kodust: msg`from home`,
   Eestist: msg`from Estonia`,
   Soomest: msg`from Finland`,
   Ukrainast: msg`from Ukraine`,
+};
+
+/** Each table place's name, short, as a row label. */
+const PLACE_NAMES: Record<string, MessageDescriptor> = {
+  Tallinn: msg`Tallinn`,
+  Tartu: msg`Tartu`,
+  Pärnu: msg`Pärnu`,
+  haigla: msg`hospital`,
+  kontor: msg`office`,
+  kohvik: msg`café`,
 };
 
 /** What each sentence means, in the reader's language. */
@@ -105,14 +116,6 @@ const MEANS: Record<Id, MessageDescriptor> = {
   "q-lahed": msg`Where are you going?`,
   "a-lahen-tartusse": msg`I’m going to Tartu.`,
   "a-lahen-haiglasse": msg`I’m going to the hospital.`,
-  "h-olen-tartus": msg`I’m in Tartu.`,
-  "h-tulen-tartust": msg`I’m coming from Tartu.`,
-  "h-tootab-kohvikus": msg`Mari works in a café.`,
-  "h-tuleb-kohvikusse": msg`Jaan is coming to the café.`,
-  "h-tuleb-kohvikust": msg`Mari is coming from the café.`,
-  "h-elavad-parnus": msg`They live in Pärnu.`,
-  "h-tulevad-parnusse": msg`They’re coming to Pärnu.`,
-  "h-parit-parnust": msg`He or she is from Pärnu.`,
   "k-kooli": msg`I’m going to school.`,
   "k-poodi": msg`I’m going to the shop.`,
   "k-linna": msg`We’re going to town.`,
@@ -121,8 +124,8 @@ const MEANS: Record<Id, MessageDescriptor> = {
   "k-kodust": msg`I’m coming from home.`,
 };
 
-/** The places of the three-way switch: names and long words, which take -sse. */
-const SWITCH_PLACES: readonly Place["place"][] = [
+/** The places of the forms table: the lesson teaches -sse as kuhu for each of them. */
+const TABLE_PLACES: readonly Place["place"][] = [
   "Tallinn",
   "Tartu",
   "Pärnu",
@@ -131,26 +134,24 @@ const SWITCH_PLACES: readonly Place["place"][] = [
   "kohvik",
 ];
 
-/** The ending each question puts on a place, lit in its forms. */
-const ENDING: Record<Direction, string> = { kus: "s", kuhu: "sse", kust: "st" };
+export const DIRECTIONS: readonly Direction[] = ["kus", "kuhu", "kust"];
 
 /**
- * “Kus, kuhu or kust?”: a sentence and the question its place answers. Each place comes three
- * ways, and tulema goes both to and from, so the verb alone never gives the answer.
+ * “Kus, kuhu or kust?”: a place form heard on its own, so only its ending says which question it
+ * answers. The table's six places, each three ways.
  */
-export const HEARD: readonly { id: Id; direction: Direction }[] = [
-  { id: "h-tulen-tartust", direction: "kust" },
-  { id: "h-olen-tartus", direction: "kus" },
-  { id: "a-lahen-tartusse", direction: "kuhu" },
-  { id: "h-tootab-kohvikus", direction: "kus" },
-  { id: "h-tuleb-kohvikusse", direction: "kuhu" },
-  { id: "h-tuleb-kohvikust", direction: "kust" },
-  { id: "h-elavad-parnus", direction: "kus" },
-  { id: "h-tulevad-parnusse", direction: "kuhu" },
-  { id: "h-parit-parnust", direction: "kust" },
-];
+export const HEARD: readonly { form: string; direction: Direction }[] = TABLE_PLACES.flatMap(
+  (name) => DIRECTIONS.map((direction) => ({ form: placeOf(name)[direction], direction })),
+);
 
-export const DIRECTIONS: readonly Direction[] = ["kus", "kuhu", "kust"];
+/** Six rounds as two cycles: each question once, then each question once more. */
+export function twoCycles<T extends { pair: readonly [string, string] }>(
+  items: readonly T[],
+  pinned?: T,
+): T[] {
+  const first = eachPairFirst(items, pinned).slice(0, DIRECTIONS.length);
+  return [...first, ...eachPairFirst(items.filter((item) => !first.includes(item)))];
+}
 
 /** The house scene: the cat goes in, sits inside and comes out, each with its sentence. */
 const HOUSE: readonly { id: "majja" | "majas" | "majast"; sentence: Id }[] = [
@@ -186,7 +187,6 @@ const GLOSSARY: Glossary = {
   kuhu: { en: msg`where to`, note: msg`Asks where someone or something is going.` },
   kust: { en: msg`where from`, note: msg`Kus with a t on the end.` },
   kass: { en: msg`cat` },
-  tuleb: { en: msg`comes, is coming`, note: msg`Tulema with the ta ending.` },
   tööl: { en: msg`at work` },
   pärit: { en: msg`from, by birth`, note: msg`Ma olen pärit… is I’m from…` },
   ...Object.fromEntries(
@@ -213,17 +213,6 @@ const GLOSSARY: Glossary = {
     ]),
   ),
 };
-
-/** A form with its ending lit, when the form ends in it. */
-function Lit({ form, ending }: { form: string; ending?: string | undefined }) {
-  if (!ending || !form.endsWith(ending)) return <>{form}</>;
-  return (
-    <>
-      {form.slice(0, -ending.length)}
-      <span className="text-(--form)">{form.slice(-ending.length)}</span>
-    </>
-  );
-}
 
 /** A sentence that plays when tapped, with its meaning under it. */
 function Line({ id, reply }: { id: Id; reply?: boolean }) {
@@ -285,91 +274,6 @@ function Exchanges({ items }: { items: readonly { q: Id; a: readonly Id[] }[] })
   );
 }
 
-function PlaceButton(props: { src: string; word: React.ReactNode; means: string; swap: string }) {
-  const playing = usePlaying(props.src);
-  return (
-    <button
-      type="button"
-      onClick={() => void playSound(props.src)}
-      className="grid h-full w-full cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 py-3 ps-4 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover"
-    >
-      <span className="grid min-w-0">
-        <span
-          key={props.swap}
-          lang="et"
-          className="learn-swap text-xl font-semibold tracking-tight"
-        >
-          {props.word}
-        </span>
-        <span className="text-sm text-ink-muted">{props.means}</span>
-      </span>
-      <PlayMark playing={playing} />
-    </button>
-  );
-}
-
-/** Six places switched together between the forms that answer kus, kuhu and kust. */
-function DirectionSwitch() {
-  const { t, i18n } = useLingui();
-  const [direction, setDirection] = useState<Direction>("kus");
-  return (
-    <Panel>
-      <Chips
-        label={t`The question the place answers`}
-        items={DIRECTIONS.map((each) => ({ label: `${each}?`, value: each, lang: "et" }))}
-        value={direction}
-        onPick={setDirection}
-      />
-      <ul className="m-0 grid list-none grid-cols-1 overflow-hidden rounded-lg bg-plate p-0 ring-1 ring-edge sm:grid-cols-2 lg:grid-cols-3">
-        {SWITCH_PLACES.map((name) => {
-          const form = placeOf(name)[direction];
-          return (
-            <li key={name} className="border-b border-edge">
-              <PlaceButton
-                src={wordSrc(form)}
-                word={<Lit form={form} ending={ENDING[direction]} />}
-                means={i18n._(FORM_MEANS[form] as MessageDescriptor)}
-                swap={form}
-              />
-            </li>
-          );
-        })}
-      </ul>
-      <p key={direction} className="text-md text-ink-secondary">
-        {direction === "kus" ? (
-          <Trans>
-            <b lang="et">Kus?</b> Where?{" "}
-            <b lang="et" className="whitespace-nowrap">
-              -s
-            </b>{" "}
-            says in. Switch to <b lang="et">kuhu?</b> and <b lang="et">kust?</b> to compare.
-          </Trans>
-        ) : direction === "kuhu" ? (
-          <Trans>
-            <b lang="et">Kuhu?</b> Where to?{" "}
-            <b lang="et" className="whitespace-nowrap">
-              -sse
-            </b>{" "}
-            says into or to, on the same stem as{" "}
-            <b lang="et" className="whitespace-nowrap">
-              -s
-            </b>
-            .
-          </Trans>
-        ) : (
-          <Trans>
-            <b lang="et">Kust?</b> Where from?{" "}
-            <b lang="et" className="whitespace-nowrap">
-              -st
-            </b>{" "}
-            says out of or from.
-          </Trans>
-        )}
-      </p>
-    </Panel>
-  );
-}
-
 const directionOptions = (options: readonly Direction[], i18n: I18n) => {
   const means: Record<Direction, MessageDescriptor> = {
     kus: msg`where`,
@@ -386,7 +290,7 @@ const directionOptions = (options: readonly Direction[], i18n: I18n) => {
 /** The three questions in a random order, so the answer's place says nothing. */
 export const shuffledDirections = (): Direction[] => shuffle([...DIRECTIONS]);
 
-type HeardItem = ChoiceItem & { id: Id; pair: readonly [string, string] };
+type HeardItem = ChoiceItem & { form: string; pair: readonly [string, string] };
 
 export function MajasMajjaMajastLesson() {
   const { t, i18n } = useLingui();
@@ -407,24 +311,24 @@ export function MajasMajjaMajastLesson() {
 
   // Every round but the first shuffles its three questions, so the answer moves around.
   const heardRun = (items: readonly HeardItem[], pinned?: HeardItem): HeardItem[] =>
-    eachPairFirst(items, pinned).map((item) =>
+    twoCycles(items, pinned).map((item) =>
       item === pinned ? item : { ...item, options: directionOptions(shuffledDirections(), i18n) },
     );
 
   const heardItems = useMemo<HeardItem[]>(
     () =>
-      HEARD.map(({ id, direction }) => ({
-        id,
-        src: src(id),
+      HEARD.map(({ form, direction }) => ({
+        form,
+        src: wordSrc(form),
         answer: direction,
-        pair: [direction, id] as const,
+        pair: [direction, form] as const,
         options: directionOptions(DIRECTIONS, i18n),
         explain: (
           <>
             <span lang="et" className="font-medium text-ink">
-              {said(id)}
+              {form}
             </span>{" "}
-            {i18n._(MEANS[id])}
+            {i18n._(FORM_MEANS[form] as MessageDescriptor)}
           </>
         ),
       })),
@@ -443,19 +347,20 @@ export function MajasMajjaMajastLesson() {
       clip: "d-sina-1",
       replies: [
         {
-          line: "Tere! Ma olen poes.",
+          line: "Tere! Ma lähen poes.",
           why: (
             <Trans>
-              <b lang="et">Poes</b> says you’re in the shop. She asked where you’re going.
+              <b lang="et">Poes</b> says where you are. After <b lang="et">lähen</b>, say where to:{" "}
+              <b lang="et">poodi</b>.
             </Trans>
           ),
         },
         { line: line("d-sina-1"), right: true },
         {
-          line: "Tere! Ma tulen poest.",
+          line: "Tere! Ma olen poes.",
           why: (
             <Trans>
-              <b lang="et">Poest</b> says you’re coming from the shop. She asked where you’re going.
+              <b lang="et">Poes</b> says you’re in the shop. She asked where you’re going.
             </Trans>
           ),
         },
@@ -501,11 +406,11 @@ export function MajasMajjaMajastLesson() {
           ),
         },
         {
-          line: "Ei, ma olen homme Tartusse.",
+          line: "Ei, ma tulen homme Tartus.",
           why: (
             <Trans>
-              <b lang="et">Tartusse</b> says into Tartu. To say where you’ll be, use{" "}
-              <b lang="et">-s</b>: <b lang="et">Tartus</b>.
+              <b lang="et">Tartus</b> says where you are. After <b lang="et">tulen</b> too, say
+              where to: <b lang="et">Tartusse</b>.
             </Trans>
           ),
         },
@@ -604,7 +509,7 @@ export function MajasMajjaMajastLesson() {
           <b lang="et" className="whitespace-nowrap">
             -sse
           </b>
-          : long words and most names have only that one.
+          : it is right for every place in this lesson.
         </Trans>,
         <Trans key="5">
           Where you’re from takes{" "}
@@ -736,12 +641,35 @@ export function MajasMajjaMajastLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    So a place has a form for each question, all three on the same stem. Switch
-                    between them.
+                    So a place has a form for each question, all three on the same stem. Tap a form
+                    to hear it.
                   </Trans>
                 </p>
               </Prose>
-              <DirectionSwitch />
+              <Panel>
+                <Paradigm
+                  label={t`Six places, each with a form for kus, kuhu and kust`}
+                  columns={[t`Where?`, t`Where to?`, t`Where from?`]}
+                  rows={TABLE_PLACES.map((name) => {
+                    const each = placeOf(name);
+                    const stem = each.kus.slice(0, -1);
+                    return {
+                      id: name,
+                      label: i18n._(PLACE_NAMES[name] as MessageDescriptor),
+                      et: name,
+                      cells: DIRECTIONS.map((direction) => ({
+                        form: `${stem}|${each[direction].slice(stem.length)}`,
+                        src: wordSrc(each[direction]),
+                        note: i18n._(FORM_MEANS[each[direction]] as MessageDescriptor),
+                      })),
+                    };
+                  })}
+                  empty={{
+                    title: t`Tap a form`,
+                    tip: t`You’ll hear it and see what it means.`,
+                  }}
+                />
+              </Panel>
               <Aside>
                 <Trans>
                   Places that take{" "}
@@ -764,8 +692,20 @@ export function MajasMajjaMajastLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a sentence and pick the question its place answers. Listen to the end of
-                    the place: <Word w="tuleb" /> can come to a place or from it.
+                    Hear a place on its own and pick the question it answers. Only its ending tells
+                    you:{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -s
+                    </b>
+                    ,{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -sse
+                    </b>{" "}
+                    or{" "}
+                    <b lang="et" className="whitespace-nowrap">
+                      -st
+                    </b>
+                    .
                   </Trans>
                 </p>
               </Prose>
@@ -781,14 +721,28 @@ export function MajasMajjaMajastLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All of them. You heard the ending in every sentence.</Trans>
+                    <Trans>
+                      All of them. You told{" "}
+                      <b lang="et" className="whitespace-nowrap">
+                        -s
+                      </b>
+                      ,{" "}
+                      <b lang="et" className="whitespace-nowrap">
+                        -sse
+                      </b>{" "}
+                      and{" "}
+                      <b lang="et" className="whitespace-nowrap">
+                        -st
+                      </b>{" "}
+                      apart every time.
+                    </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>Switch between the forms above once more, then try again.</Trans>
+                    <Trans>Tap the forms in the table above once more, then try again.</Trans>
                   )
                 }
-                recall={(item) => ({ label: said(item.id), src: item.src })}
+                recall={(item) => ({ label: item.form, src: item.src })}
                 order={heardRun}
                 round={(props) => <ChoiceRound {...props} />}
               />
@@ -851,8 +805,9 @@ export function MajasMajjaMajastLesson() {
                       -sse
                     </b>{" "}
                     forms are right too: <Word w="koolisse" />, <Word w="poesse" />,{" "}
-                    <Word w="linnasse" />, <Word w="majasse" />. Long words and most names have only
-                    the{" "}
+                    <Word w="linnasse" />, <Word w="majasse" />. <Word w="Tartu" />,{" "}
+                    <Word w="Pärnu" />, <Word w="haigla" />, <Word w="kontor" /> and{" "}
+                    <Word w="kohvik" /> have only the{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -sse
                     </b>{" "}
@@ -867,7 +822,7 @@ export function MajasMajjaMajastLesson() {
               </Prose>
               <Aside>
                 <Trans>
-                  <Word w="Kodu" />, home, has a short form of its own: <Word w="koju" /> when you
+                  Home, <Word w="kodu" />, has a short form of its own: <Word w="koju" /> when you
                   go there. Then <Word w="kodus" /> when you’re there, <Word w="kodust" /> when you
                   leave.
                 </Trans>

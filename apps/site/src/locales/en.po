@@ -474,9 +474,6 @@ msgstr "<0/> repeats the verb from the question, and any verb can answer this wa
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 
-msgid "<0/>, home, has a short form of its own: <1/> when you go there. Then <2/> when you’re there, <3/> when you leave."
-msgstr "<0/>, home, has a short form of its own: <1/> when you go there. Then <2/> when you’re there, <3/> when you leave."
-
 msgid "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
 msgstr "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
 
@@ -536,17 +533,8 @@ msgstr "<0>Kooli</0> says where to: you’d be coming to school. She asked where
 msgid "<0>Koolis</0> says where you are. To say where from, use <1>-st</1>: <2>koolist</2>."
 msgstr "<0>Koolis</0> says where you are. To say where from, use <1>-st</1>: <2>koolist</2>."
 
-msgid "<0>Kuhu?</0> Where to? <1>-sse</1> says into or to, on the same stem as <2>-s</2>."
-msgstr "<0>Kuhu?</0> Where to? <1>-sse</1> says into or to, on the same stem as <2>-s</2>."
-
-msgid "<0>Kus?</0> Where? <1>-s</1> says in. Switch to <2>kuhu?</2> and <3>kust?</3> to compare."
-msgstr "<0>Kus?</0> Where? <1>-s</1> says in. Switch to <2>kuhu?</2> and <3>kust?</3> to compare."
-
 msgid "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
 msgstr "<0>Kus</0>, <1>kuhu</1> or <2>kust</2>?"
-
-msgid "<0>Kust?</0> Where from? <1>-st</1> says out of or from."
-msgstr "<0>Kust?</0> Where from? <1>-st</1> says out of or from."
 
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> asks where you’re from, not where you live."
@@ -593,11 +581,11 @@ msgstr "<0>Pärnus</0> says in Pärnu. <1>Pärit</1> takes the form for where fr
 msgid "<0>Pärnusse</0> says to Pärnu. <1>Pärit</1> takes the form for where from: <2>Pärnust</2>."
 msgstr "<0>Pärnusse</0> says to Pärnu. <1>Pärit</1> takes the form for where from: <2>Pärnust</2>."
 
+msgid "<0>Poes</0> says where you are. After <1>lähen</1>, say where to: <2>poodi</2>."
+msgstr "<0>Poes</0> says where you are. After <1>lähen</1>, say where to: <2>poodi</2>."
+
 msgid "<0>Poes</0> says you’re in the shop. She asked where you’re going."
 msgstr "<0>Poes</0> says you’re in the shop. She asked where you’re going."
-
-msgid "<0>Poest</0> says you’re coming from the shop. She asked where you’re going."
-msgstr "<0>Poest</0> says you’re coming from the shop. She asked where you’re going."
 
 msgid "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
 msgstr "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
@@ -635,8 +623,8 @@ msgstr "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and po
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 
-msgid "<0>Tartusse</0> says into Tartu. To say where you’ll be, use <1>-s</1>: <2>Tartus</2>."
-msgstr "<0>Tartusse</0> says into Tartu. To say where you’ll be, use <1>-s</1>: <2>Tartus</2>."
+msgid "<0>Tartus</0> says where you are. After <1>tulen</1> too, say where to: <2>Tartusse</2>."
+msgstr "<0>Tartus</0> says where you are. After <1>tulen</1> too, say where to: <2>Tartusse</2>."
 
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> is hello, and Mari is leaving."
@@ -1717,9 +1705,6 @@ msgstr "All of them. You can hear who it’s about."
 msgid "All of them. You hear who does it."
 msgstr "All of them. You hear who does it."
 
-msgid "All of them. You heard the ending in every sentence."
-msgstr "All of them. You heard the ending in every sentence."
-
 msgid "All of them. You matched every answer to its question."
 msgstr "All of them. You matched every answer to its question."
 
@@ -1728,6 +1713,9 @@ msgstr "All of them. You picked the place in every sentence."
 
 msgid "All of them. You picked the right ending every time."
 msgstr "All of them. You picked the right ending every time."
+
+msgid "All of them. You told <0>-s</0>, <1>-sse</1> and <2>-st</2> apart every time."
+msgstr "All of them. You told <0>-s</0>, <1>-sse</1> and <2>-st</2> apart every time."
 
 msgid "All of them. You told <0>ära</0> from <1>ei</1> every time."
 msgstr "All of them. You told <0>ära</0> from <1>ei</1> every time."
@@ -2937,9 +2925,6 @@ msgstr "come!"
 
 msgid "Comes back a few cards later, then after longer gaps"
 msgstr "Comes back a few cards later, then after longer gaps"
-
-msgid "comes, is coming"
-msgstr "comes, is coming"
 
 msgid "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards, and sentence translations come along too."
 msgstr "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards, and sentence translations come along too."
@@ -4720,9 +4705,6 @@ msgstr "Goethe-Zertifikat A1, A2 and B1"
 msgid "Goethe-Zertifikat A1, A2 and B1: the words for each level"
 msgstr "Goethe-Zertifikat A1, A2 and B1: the words for each level"
 
-msgid "going home"
-msgstr "going home"
-
 msgid "Going over a lesson again"
 msgstr "Going over a lesson again"
 
@@ -4871,9 +4853,6 @@ msgstr "He or she is at home."
 msgid "He or she is at school."
 msgstr "He or she is at school."
 
-msgid "He or she is from Pärnu."
-msgstr "He or she is from Pärnu."
-
 msgid "He or she is having coffee in a café."
 msgstr "He or she is having coffee in a café."
 
@@ -4948,6 +4927,9 @@ msgstr "Hear a command and pick what it asks you to do."
 msgid "Hear a day"
 msgstr "Hear a day"
 
+msgid "Hear a place on its own and pick the question it answers. Only its ending tells you: <0>-s</0>, <1>-sse</1> or <2>-st</2>."
+msgstr "Hear a place on its own and pick the question it answers. Only its ending tells you: <0>-s</0>, <1>-sse</1> or <2>-st</2>."
+
 msgid "Hear a question and pick its question word. It always comes first, so listen to the start."
 msgstr "Hear a question and pick its question word. It always comes first, so listen to the start."
 
@@ -4956,9 +4938,6 @@ msgstr "Hear a question, then pick the answer that fits. A kas question takes ye
 
 msgid "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
 msgstr "Hear a sentence and pick the place. Listen for the word that ends in <0>-s</0>."
-
-msgid "Hear a sentence and pick the question its place answers. Listen to the end of the place: <0/> can come to a place or from it."
-msgstr "Hear a sentence and pick the question its place answers. Listen to the end of the place: <0/> can come to a place or from it."
 
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
@@ -5097,6 +5076,12 @@ msgstr "holy; a holiday"
 
 msgid "home"
 msgstr "home"
+
+msgid "Home, <0/>, has a short form of its own: <1/> when you go there. Then <2/> when you’re there, <3/> when you leave."
+msgstr "Home, <0/>, has a short form of its own: <1/> when you go there. Then <2/> when you’re there, <3/> when you leave."
+
+msgid "home, to home"
+msgstr "home, to home"
 
 msgid "Hopefully"
 msgstr "Hopefully"
@@ -5553,9 +5538,6 @@ msgstr "I’m coming from home."
 msgid "I’m coming from school."
 msgstr "I’m coming from school."
 
-msgid "I’m coming from Tartu."
-msgstr "I’m coming from Tartu."
-
 msgid "I’m coming from the shop."
 msgstr "I’m coming from the shop."
 
@@ -5624,9 +5606,6 @@ msgstr "I’m going."
 
 msgid "I’m having a cheese *roll*."
 msgstr "I’m having a cheese *roll*."
-
-msgid "I’m in Tartu."
-msgstr "I’m in Tartu."
 
 msgid "I’m learning Estonian."
 msgstr "I’m learning Estonian."
@@ -6135,9 +6114,6 @@ msgstr "Its publisher took it off Lymi’s public pages. Anyone who already adde
 
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Its rare, serious risk is lactic acidosis."
-
-msgid "Jaan is coming to the café."
-msgstr "Jaan is coming to the café."
 
 msgid "Jaan lives in Pärnu."
 msgstr "Jaan lives in Pärnu."
@@ -6976,9 +6952,6 @@ msgstr "Mari"
 msgid "Mari asks <0/>, <1/> and <2/>. Answer each with the form that fits its question."
 msgstr "Mari asks <0/>, <1/> and <2/>. Answer each with the form that fits its question."
 
-msgid "Mari is coming from the café."
-msgstr "Mari is coming from the café."
-
 msgid "Mari just said she works a lot. Ask where with <0>kus</0>."
 msgstr "Mari just said she works a lot. Ask where with <0>kus</0>."
 
@@ -6993,9 +6966,6 @@ msgstr "Mari starts a conversation. Pick each of your replies; a wrong one says 
 
 msgid "Mari told you her name at the start."
 msgstr "Mari told you her name at the start."
-
-msgid "Mari works in a café."
-msgstr "Mari works in a café."
 
 msgid "Mari works in a hospital."
 msgstr "Mari works in a hospital."
@@ -8042,6 +8012,9 @@ msgstr "Pairs across two columns, tapped one side then the other; a pair locks w
 
 msgid "Park"
 msgstr "Park"
+
+msgid "Pärnu"
+msgstr "Pärnu"
 
 msgid "Pärnu takes <0>-s</0>: <1>Pärnus</1>."
 msgstr "Pärnu takes <0>-s</0>: <1>Pärnus</1>."
@@ -9498,6 +9471,9 @@ msgstr "Six days end in <0>päev</0>, day. <1>Reede</1> doesn’t."
 msgid "Six endings"
 msgstr "Six endings"
 
+msgid "Six places, each with a form for kus, kuhu and kust"
+msgstr "Six places, each with a form for kus, kuhu and kust"
+
 msgid "Six pronouns, two forms"
 msgstr "Six pronouns, two forms"
 
@@ -9567,8 +9543,8 @@ msgstr "Snap your lecture slides or drop in the PDF, and Lymi makes the cards. Y
 msgid "Snap your lesson notes into cards, build the course in sections and share one link. Each learner reviews on their own schedule."
 msgstr "Snap your lesson notes into cards, build the course in sections and share one link. Each learner reviews on their own schedule."
 
-msgid "So a place has a form for each question, all three on the same stem. Switch between them."
-msgstr "So a place has a form for each question, all three on the same stem. Switch between them."
+msgid "So a place has a form for each question, all three on the same stem. Tap a form to hear it."
+msgstr "So a place has a form for each question, all three on the same stem. Tap a form to hear it."
 
 msgid "So far every command speaks to one person, someone you’d call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It’s the same split as <5>sa</5> and <6/> in lesson {pronouns}."
 msgstr "So far every command speaks to one person, someone you’d call <0/>. To more than one, or politely to one, the command ends in <1>-ge</1> or <2>-ke</2>: <3/> <4/> It’s the same split as <5>sa</5> and <6/> in lesson {pronouns}."
@@ -9951,9 +9927,6 @@ msgstr "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line 
 msgid "Switch between Do and Don’t, and tap a line to hear it."
 msgstr "Switch between Do and Don’t, and tap a line to hear it."
 
-msgid "Switch between the forms above once more, then try again."
-msgstr "Switch between the forms above once more, then try again."
-
 msgid "Switch to In the place and watch the last letters change."
 msgstr "Switch to In the place and watch the last letters change."
 
@@ -10059,6 +10032,9 @@ msgstr "Talk: in the street"
 msgid "Talk: meeting Mari"
 msgstr "Talk: meeting Mari"
 
+msgid "Tallinn"
+msgstr "Tallinn"
+
 msgid "Tallinn, the capital"
 msgstr "Tallinn, the capital"
 
@@ -10125,6 +10101,9 @@ msgstr "Tap the commands above once more, then try again."
 msgid "Tap the Do and Don’t lines above once more, then try again."
 msgstr "Tap the Do and Don’t lines above once more, then try again."
 
+msgid "Tap the forms in the table above once more, then try again."
+msgstr "Tap the forms in the table above once more, then try again."
+
 msgid "Tap the places above once more, then try again."
 msgstr "Tap the places above once more, then try again."
 
@@ -10142,6 +10121,9 @@ msgstr "Tap to turn it over"
 
 msgid "Tape, a spare part and some nerve."
 msgstr "Tape, a spare part and some nerve."
+
+msgid "Tartu"
+msgstr "Tartu"
 
 msgid "Tartu is a beautiful *city*."
 msgstr "Tartu is a beautiful *city*."
@@ -10362,8 +10344,8 @@ msgstr "The *way* home takes an hour."
 msgid "The *window* is open."
 msgstr "The *window* is open."
 
-msgid "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. Long words and most names have only the <5>-sse</5> form: <6/>, <7/>. So when you don’t know a short form, <8>-sse</8> is the safe choice."
-msgstr "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. Long words and most names have only the <5>-sse</5> form: <6/>, <7/>. So when you don’t know a short form, <8>-sse</8> is the safe choice."
+msgid "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. <5/>, <6/>, <7/>, <8/> and <9/> have only the <10>-sse</10> form: <11/>, <12/>. So when you don’t know a short form, <13>-sse</13> is the safe choice."
+msgstr "The <0>-sse</0> forms are right too: <1/>, <2/>, <3/>, <4/>. <5/>, <6/>, <7/>, <8/> and <9/> have only the <10>-sse</10> form: <11/>, <12/>. So when you don’t know a short form, <13>-sse</13> is the safe choice."
 
 msgid "The 1618 revolt in Prague that started the Thirty Years’ War"
 msgstr "The 1618 revolt in Prague that started the Thirty Years’ War"
@@ -10785,9 +10767,6 @@ msgstr "The plural of sõber."
 msgid "The push behind ragtime, funk and reggae."
 msgstr "The push behind ragtime, funk and reggae."
 
-msgid "The question the place answers"
-msgstr "The question the place answers"
-
 msgid "The questions and answers are BAMF’s, from its catalogue of 7 May 2025, in German as they appear on the test. The translations and notes are Lymi’s. Lymi isn’t affiliated with BAMF and can’t promise a pass."
 msgstr "The questions and answers are BAMF’s, from its catalogue of 7 May 2025, in German as they appear on the test. The translations and notes are Lymi’s. Lymi isn’t affiliated with BAMF and can’t promise a pass."
 
@@ -11070,9 +11049,6 @@ msgstr "they live"
 msgid "They live in Germany."
 msgstr "They live in Germany."
 
-msgid "They live in Pärnu."
-msgstr "They live in Pärnu."
-
 msgid "They say it’ll rain *tomorrow*."
 msgstr "They say it’ll rain *tomorrow*."
 
@@ -11087,9 +11063,6 @@ msgstr "They work in an office."
 
 msgid "They’re at home."
 msgstr "They’re at home."
-
-msgid "They’re coming to Pärnu."
-msgstr "They’re coming to Pärnu."
 
 msgid "They’re drinking coffee."
 msgstr "They’re drinking coffee."
@@ -11698,9 +11671,6 @@ msgstr "Tuesday Ukrainian class"
 
 msgid "Tuleb says that he’s coming. To call him over, use the stem: tule."
 msgstr "Tuleb says that he’s coming. To call him over, use the stem: tule."
-
-msgid "Tulema with the ta ending."
-msgstr "Tulema with the ta ending."
 
 msgid "Turg becomes turu- before an ending: turul."
 msgstr "Turg becomes turu- before an ending: turul."
@@ -12356,8 +12326,8 @@ msgstr "When its card reaches Known in your reviews. From then on the reading is
 msgid "When the output depends on the history of the input"
 msgstr "When the output depends on the history of the input"
 
-msgid "When you don’t know a short form, use <0>-sse</0>: long words and most names have only that one."
-msgstr "When you don’t know a short form, use <0>-sse</0>: long words and most names have only that one."
+msgid "When you don’t know a short form, use <0>-sse</0>: it is right for every place in this lesson."
+msgstr "When you don’t know a short form, use <0>-sse</0>: it is right for every place in this lesson."
 
 msgid "where"
 msgstr "where"
@@ -12410,6 +12380,9 @@ msgstr "Where each app does more, including the rows where it’s {name}. We che
 msgid "where from"
 msgstr "where from"
 
+msgid "Where from?"
+msgstr "Where from?"
+
 msgid "Where is he or she?"
 msgstr "Where is he or she?"
 
@@ -12461,6 +12434,9 @@ msgstr "Where the cat is and goes"
 msgid "where to"
 msgstr "where to"
 
+msgid "Where to?"
+msgstr "Where to?"
+
 msgid "Where will he wait for you?"
 msgstr "Where will he wait for you?"
 
@@ -12469,6 +12445,9 @@ msgstr "Where you’re from"
 
 msgid "Where you’re from takes <0>-st</0>: <1>Ma olen pärit Ukrainast.</1>"
 msgstr "Where you’re from takes <0>-st</0>: <1>Ma olen pärit Ukrainast.</1>"
+
+msgid "Where?"
+msgstr "Where?"
 
 msgid "Where’s the *flour*?"
 msgstr "Where’s the *flour*?"
@@ -13151,6 +13130,9 @@ msgstr "You’ll hear elama with it and who it’s for."
 
 msgid "You’ll hear it and read what its ending does."
 msgstr "You’ll hear it and read what its ending does."
+
+msgid "You’ll hear it and see what it means."
+msgstr "You’ll hear it and see what it means."
 
 msgid "You’ll hear it in a sentence."
 msgstr "You’ll hear it in a sentence."

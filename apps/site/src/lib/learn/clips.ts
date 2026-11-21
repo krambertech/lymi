@@ -811,9 +811,10 @@ const TALLINN_CLIPS: Record<string, Clip> = {
 
 /**
  * The lesson on in, into and out of: each place in the forms that answer kus?, kuhu? and kust?.
- * `kuhu` is the form people say: the short one where the word has it, which `long` names beside
- * its -sse form. Checked in ÕS 2025 on Sõnaveeb (EKI morphology, 21 Nov 2026): kooli ~ koolisse,
- * poodi ~ poesse, linna ~ linnasse, majja ~ majasse, koju ~ kodusse; Tartu, Pärnu, haigla,
+ * `kuhu` is the form the lesson teaches for where to: the short form for kool, pood, linn, maja
+ * and kodu, with `long` naming the -sse form beside it, and -sse for the rest. Tallinn has a short
+ * form too, Tallinna; the lesson teaches Tallinnasse. Checked in ÕS 2025 on Sõnaveeb (EKI
+ * morphology, 21 Nov 2026): kooli ~ koolisse, poodi ~ poesse, linna ~ linnasse, majja ~ majasse, koju ~ kodusse; Tartu, Pärnu, haigla,
  * kontor and kohvik have -sse only. `third` is the dictionary's third form where the short form
  * matches it.
  */
@@ -868,14 +869,6 @@ export const INNER_SENTENCES = {
   "q-lahed": "Kuhu sa lähed?",
   "a-lahen-tartusse": "Ma lähen Tartusse.",
   "a-lahen-haiglasse": "Ma lähen haiglasse.",
-  "h-olen-tartus": "Ma olen Tartus.",
-  "h-tulen-tartust": "Ma tulen Tartust.",
-  "h-tootab-kohvikus": "Mari töötab kohvikus.",
-  "h-tuleb-kohvikusse": "Jaan tuleb kohvikusse.",
-  "h-tuleb-kohvikust": "Mari tuleb kohvikust.",
-  "h-elavad-parnus": "Nad elavad Pärnus.",
-  "h-tulevad-parnusse": "Nad tulevad Pärnusse.",
-  "h-parit-parnust": "Ta on pärit Pärnust.",
   "k-kooli": "Ma lähen kooli.",
   "k-poodi": "Ma lähen poodi.",
   "k-linna": "Me läheme linna.",
@@ -903,7 +896,6 @@ export const INNER_WORDS = [
   "kuhu",
   "kust",
   "kass",
-  "tuleb",
   "tööl",
   "pärit",
   "Eestist",

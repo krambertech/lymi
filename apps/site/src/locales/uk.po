@@ -7078,7 +7078,7 @@ msgid "Mari writes"
 msgstr "Марі пише"
 
 msgid "Mari writes to Jaan. Fill each gap: the <0>-l</0> form for a feeling, the <1>-le</1> form for liking and for “to me”, and <2>meeldib</2> or <3>meeldivad</3> for what she likes."
-msgstr "Марі пише Яану. Заповни кожен пропуск: форма на <0>-l</0> — для почуттів, форма на <1>-le</1> — для «подобається» і «мені», а <2>meeldib</2> чи <3>meeldivad</3> — залежно від того, що їй подобається."
+msgstr "Марі пише Яану. Заповни кожен пропуск: форма на <0>-l</0> — для почуттів, форма на <1>-le</1> — для «подобається» і «кому», а <2>meeldib</2> чи <3>meeldivad</3> — залежно від того, що їй подобається."
 
 msgid "Mari’s brother"
 msgstr "Брат Марі"

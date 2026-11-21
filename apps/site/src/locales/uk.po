@@ -408,8 +408,8 @@ msgstr "*Завтра* субота."
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
-msgid "<0/> <1/> Lesson {going} builds on this: the <2>-ma</2> form after a verb of going says what you’re off to do. Tap a verb to hear it in a sentence."
-msgstr "<0/> <1/> Докладніше — в уроці {going}: форма на <2>-ma</2> після дієслова руху показує, навіщо ти йдеш. Торкнися дієслова, щоб почути його в реченні."
+msgid "<0/> <1/> Lesson {going} explains what the <2>-ma</2> form means after <3>lähen</3>. Tap a verb to hear it in a sentence."
+msgstr "<0/> <1/> Що означає форма на <2>-ma</2> після <3>lähen</3>, пояснює урок {going}. Торкнися дієслова, щоб почути його в реченні."
 
 msgid "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn’t do: <3/>, I’m not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
 msgstr "<0/> і <1/> обидва заперечують, але кожне по-своєму. <2>Ei</2> каже, чого людина не робить: <3/>, я не сідаю. <4>Ära</4> просить цього не робити: <5/> Наказ ніколи не починається з <6>ei</6>."
@@ -468,8 +468,8 @@ msgstr "<0/> саме по собі означає «ні», а <1/> — «та�
 msgid "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
 msgstr "<0/> повторює дієслово з питання, і так можна відповісти з будь-яким дієсловом: <1>Kas sa loed? Ei loe.</1> Про заперечення розповідає урок {negation}."
 
-msgid "<0/> takes the <1>-ma</1> form, and so do the verbs for starting, going, coming and staying: <2/>, <3/>, <4/> and <5/>."
-msgstr "<0/> вимагає форми на <1>-ma</1>, як і дієслова «починати», «іти», «приходити» й «залишатися»: <2/>, <3/>, <4/> і <5/>."
+msgid "<0/> takes the <1>-ma</1> form, and so do <2/>, <3/>, <4/> and <5/>."
+msgstr "<0/> вимагає форми на <1>-ma</1>, як і <2/>, <3/>, <4/> та <5/>."
 
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> Ти живеш у Таллінні. <1/> Ти живеш у Таллінні? Щоб спитати «так чи ні», постав <2/> перед реченням."
@@ -581,6 +581,9 @@ msgstr "<0>Осмос</0>: вода проходить крізь мембран
 msgid "<0>P suletud</0> on a sign: closed on Sunday."
 msgstr "<0>P suletud</0> на вивісці: у неділю зачинено."
 
+msgid "<0>Pean, hakkan, lähen, tule</0> and <1>jään</1> take the <2>-ma</2> form."
+msgstr "<0>Pean, hakkan, lähen, tule</0> і <1>jään</1> вимагають форми на <2>-ma</2>."
+
 msgid "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
 msgstr "<0>Pole</0> означає те саме, що <1>ei ole</1>. Почуєш обидва."
 
@@ -613,6 +616,9 @@ msgstr "<0>Sõber</0> — родич давньоруського «сябр», 
 
 msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 msgstr "<0>Ta</0> — і «він», і «вона». <1>Te</1> — «ви» до кількох людей і ввічливе «Ви» до однієї."
+
+msgid "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> and <1>mulle meeldib</1> take the <2>-da</2> form."
+msgstr "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> і <1>mulle meeldib</1> вимагають форми на <2>-da</2>."
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сьогодні, завтра, учора. <3>Üle-</3> додає ще один день."
@@ -1560,6 +1566,9 @@ msgstr "Після <0>pean</0> — форма на <1>-ma</1>."
 
 msgid "After <0>tahad</0>, from <1>tahtma</1>, the <2>-da</2> form."
 msgstr "Після <0>tahad</0> (від <1>tahtma</1>) — форма на <2>-da</2>."
+
+msgid "After <0>tahan</0>, <1>pean</1> and the other verbs in this lesson, the second verb takes its <2>-da</2> or <3>-ma</3> form: <4>Ma tahan lugeda. Ma pean lugema.</4>"
+msgstr "Після <0>tahan</0>, <1>pean</1> та інших дієслів цього уроку друге дієслово стоїть у формі на <2>-da</2> або на <3>-ma</3>: <4>Ma tahan lugeda. Ma pean lugema.</4>"
 
 msgid "After <0>tahan</0>, the <1>-da</1> form."
 msgstr "Після <0>tahan</0> — форма на <1>-da</1>."
@@ -5539,6 +5548,9 @@ msgstr "Я хочу *спати*."
 msgid "I want to eat."
 msgstr "Я хочу їсти."
 
+msgid "I want to go to town tomorrow."
+msgstr "Завтра я хочу піти в місто."
+
 msgid "I want to read at home today."
 msgstr "Сьогодні я хочу почитати вдома."
 
@@ -5702,7 +5714,7 @@ msgid "I’m starting to learn Estonian."
 msgstr "Я починаю вчити естонську."
 
 msgid "I’m staying home to read."
-msgstr "Я залишаюся вдома почитати."
+msgstr "Я лишаюся вдома, щоб почитати."
 
 msgid "I’m taking the *dog* for a walk."
 msgstr "Я йду гуляти із *собакою*."
@@ -11584,6 +11596,9 @@ msgstr "сьогодні"
 msgid "Today"
 msgstr "Сьогодні"
 
+msgid "Today I’m starting to study at home."
+msgstr "Сьогодні я починаю вчитися вдома."
+
 msgid "Today is"
 msgstr "Сьогодні"
 
@@ -11956,14 +11971,8 @@ msgstr "Дієслова"
 msgid "Verbs of having to, starting and going"
 msgstr "Дієслова обов’язку, початку й руху"
 
-msgid "Verbs of having to, starting, going, coming and staying take the <0>-ma</0> form."
-msgstr "Після «мусити», «починати», «іти», «приходити» й «залишатися» — форма на <0>-ma</0>."
-
 msgid "Verbs of wanting and being able"
 msgstr "Дієслова бажання й можливості"
-
-msgid "Verbs of wanting, being able, being allowed and loving take the <0>-da</0> form."
-msgstr "Після «хотіти», «могти», «можна» й «любити» — форма на <0>-da</0>."
 
 msgid "Version of 5 January 2026"
 msgstr "Версія від 5 січня 2026 року"
@@ -12374,9 +12383,6 @@ msgstr "Коли кав’ярня відчинена?"
 
 msgid "When its card reaches Known in your reviews. From then on the reading is hidden on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it."
 msgstr "Коли його картка в повтореннях стає засвоєною. Відтоді читання приховане на цій картці й у прикладах у всіх твоїх колодах. Забудеш слово — і читання повернеться, а на звороті картки воно є завжди."
-
-msgid "When one verb follows another, the second takes its <0>-da</0> or <1>-ma</1> form: <2>Ma tahan lugeda. Ma pean lugema.</2>"
-msgstr "Коли одне дієслово йде за іншим, друге стоїть у формі на <0>-da</0> або на <1>-ma</1>: <2>Ma tahan lugeda. Ma pean lugema.</2>"
 
 msgid "When the output depends on the history of the input"
 msgstr "Коли результат залежить від того, що було на вході раніше"

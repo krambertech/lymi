@@ -963,7 +963,7 @@ export const INFINITIVE_MESSAGE = [
   "Ma pean kell kuus koju minema.",
 ] as const;
 
-/** Words of the infinitives lesson with a card, each heard on its own. */
+/** Words of the infinitives lesson with a card, and the sentences its build quiz plays. */
 export const INFINITIVE_WORDS = [
   "lugema",
   "lugeda",
@@ -973,6 +973,8 @@ export const INFINITIVE_WORDS = [
   "tegema",
   "õppima",
   "Ma õpin lugema.",
+  "Ma tahan homme linna minna.",
+  "Ma hakkan täna kodus õppima.",
 ] as const;
 
 export const CLIPS: Record<string, Record<string, Clip>> = {

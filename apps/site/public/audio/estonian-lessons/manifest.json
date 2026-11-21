@@ -4544,6 +4544,16 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "tegevusnimed/ma-tahan-homme-linna-minna": {
+    "text": "Ma tahan homme linna minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-hakkan-ta2na-kodus-o3ppima": {
+    "text": "Ma hakkan täna kodus õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "tegevusnimed/p-message": {
     "text": "Tere, Jaan! Ma pean täna kodus töötama. Aga ma lähen kell neli linna. Kas sa tahad kohvi juua? Ma ootan sind kohvikus. Mulle meeldib kohvikus lugeda. Ma pean kell kuus koju minema.",
     "model": "eleven_v4",

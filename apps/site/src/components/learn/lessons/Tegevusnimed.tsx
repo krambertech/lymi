@@ -254,16 +254,24 @@ export const SORTED: readonly Lead[] = [
 /** The sentences to build: each with its other right order and the wrong form as a spare tile. */
 export const BUILT = [
   {
-    answers: ["Ma pean homme tööle minema.", "Homme pean ma tööle minema."],
-    spare: ["minna"],
-    lead: "pean",
-  },
-  {
-    answers: ["Ma tahan täna kodus lugeda.", "Täna tahan ma kodus lugeda."],
-    spare: ["lugema"],
+    answers: ["Ma tahan homme linna minna.", "Homme tahan ma linna minna."],
+    spare: ["minema"],
     lead: "tahan",
   },
-  { answers: ["Ma jään koju lugema."], spare: ["lugeda"], lead: "jään" },
+  {
+    answers: [
+      "Ma hakkan täna kodus õppima.",
+      "Täna hakkan ma kodus õppima.",
+      "Kodus hakkan ma täna õppima.",
+    ],
+    spare: ["õppida"],
+    lead: "hakkan",
+  },
+  {
+    answers: ["Ma jään koju lugema.", "Koju jään ma lugema."],
+    spare: ["lugeda"],
+    lead: "jään",
+  },
 ] as const satisfies readonly {
   answers: readonly string[];
   spare: readonly string[];
@@ -386,7 +394,11 @@ const ORDER_MEANS: Record<(typeof INFINITIVE_ORDER)[number], MessageDescriptor> 
 };
 
 /** What each sentence to build means. */
-const BUILT_MEANS: Record<string, MessageDescriptor> = { ...SAID_MEANS, ...ORDER_MEANS };
+const BUILT_MEANS: Record<string, MessageDescriptor> = {
+  ...SAID_MEANS,
+  "Ma tahan homme linna minna.": msg`I want to go to town tomorrow.`,
+  "Ma hakkan täna kodus õppima.": msg`Today I’m starting to study at home.`,
+};
 
 const orderRows = (i18n: I18n) =>
   INFINITIVE_ORDER.map((said) => ({ main: said, sub: i18n._(ORDER_MEANS[said]), src: src(said) }));
@@ -413,20 +425,20 @@ export function TegevusnimedLesson() {
     {
       id: "da",
       label: "-da",
-      hint: <span lang="et">tahan lugeda</span>,
       rule: (
         <Trans>
-          Verbs of wanting, being able, being allowed and loving take the <End>-da</End> form.
+          <span lang="et">Tahan, võin, saan, oskan, tohin, proovin, armastan</span> and{" "}
+          <span lang="et">mulle meeldib</span> take the <End>-da</End> form.
         </Trans>
       ),
     },
     {
       id: "ma",
       label: "-ma",
-      hint: <span lang="et">pean lugema</span>,
       rule: (
         <Trans>
-          Verbs of having to, starting, going, coming and staying take the <End>-ma</End> form.
+          <span lang="et">Pean, hakkan, lähen, tule</span> and <span lang="et">jään</span> take the{" "}
+          <End>-ma</End> form.
         </Trans>
       ),
     },
@@ -463,7 +475,8 @@ export function TegevusnimedLesson() {
       words={INFINITIVE_LEADS.map(({ lead }) => lead)}
       recap={[
         <Trans key="1">
-          When one verb follows another, the second takes its <End>-da</End> or <End>-ma</End> form:{" "}
+          After <b lang="et">tahan</b>, <b lang="et">pean</b> and the other verbs in this lesson,
+          the second verb takes its <End>-da</End> or <End>-ma</End> form:{" "}
           <b lang="et">Ma tahan lugeda. Ma pean lugema.</b>
         </Trans>,
         <Trans key="2">
@@ -553,16 +566,15 @@ export function TegevusnimedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Pean" /> takes the <End>-ma</End> form, and so do the verbs for
-                    starting, going, coming and staying: <Word w="hakkan" />, <Word w="lähen" />,{" "}
-                    <Word w="tule" /> and <Word w="jään" />.
+                    <Word w="Pean" /> takes the <End>-ma</End> form, and so do <Word w="hakkan" />,{" "}
+                    <Word w="lähen" />, <Word w="tule" /> and <Word w="jään" />.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
                     <Word w="Ma pean minema." /> <Word w="Ma lähen kohvi jooma." /> Lesson {going}{" "}
-                    builds on this: the <End>-ma</End> form after a verb of going says what you’re
-                    off to do. Tap a verb to hear it in a sentence.
+                    explains what the <End>-ma</End> form means after <span lang="et">lähen</span>.
+                    Tap a verb to hear it in a sentence.
                   </Trans>
                 </p>
               </Prose>

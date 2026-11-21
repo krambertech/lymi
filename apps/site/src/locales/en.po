@@ -408,8 +408,8 @@ msgstr "*Tomorrow* is Saturday."
 msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {due} other {due}}"
 
-msgid "<0/> <1/> Lesson {going} builds on this: the <2>-ma</2> form after a verb of going says what you’re off to do. Tap a verb to hear it in a sentence."
-msgstr "<0/> <1/> Lesson {going} builds on this: the <2>-ma</2> form after a verb of going says what you’re off to do. Tap a verb to hear it in a sentence."
+msgid "<0/> <1/> Lesson {going} explains what the <2>-ma</2> form means after <3>lähen</3>. Tap a verb to hear it in a sentence."
+msgstr "<0/> <1/> Lesson {going} explains what the <2>-ma</2> form means after <3>lähen</3>. Tap a verb to hear it in a sentence."
 
 msgid "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn’t do: <3/>, I’m not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
 msgstr "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn’t do: <3/>, I’m not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
@@ -468,8 +468,8 @@ msgstr "<0/> on its own is no, and <1/> is yes. A fuller answer repeats the verb
 msgid "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
 msgstr "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
 
-msgid "<0/> takes the <1>-ma</1> form, and so do the verbs for starting, going, coming and staying: <2/>, <3/>, <4/> and <5/>."
-msgstr "<0/> takes the <1>-ma</1> form, and so do the verbs for starting, going, coming and staying: <2/>, <3/>, <4/> and <5/>."
+msgid "<0/> takes the <1>-ma</1> form, and so do <2/>, <3/>, <4/> and <5/>."
+msgstr "<0/> takes the <1>-ma</1> form, and so do <2/>, <3/>, <4/> and <5/>."
 
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
@@ -581,6 +581,9 @@ msgstr "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance
 msgid "<0>P suletud</0> on a sign: closed on Sunday."
 msgstr "<0>P suletud</0> on a sign: closed on Sunday."
 
+msgid "<0>Pean, hakkan, lähen, tule</0> and <1>jään</1> take the <2>-ma</2> form."
+msgstr "<0>Pean, hakkan, lähen, tule</0> and <1>jään</1> take the <2>-ma</2> form."
+
 msgid "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
 msgstr "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
 
@@ -613,6 +616,9 @@ msgstr "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 
 msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 msgstr "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
+
+msgid "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> and <1>mulle meeldib</1> take the <2>-da</2> form."
+msgstr "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> and <1>mulle meeldib</1> take the <2>-da</2> form."
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
@@ -1560,6 +1566,9 @@ msgstr "After <0>pean</0>, the <1>-ma</1> form."
 
 msgid "After <0>tahad</0>, from <1>tahtma</1>, the <2>-da</2> form."
 msgstr "After <0>tahad</0>, from <1>tahtma</1>, the <2>-da</2> form."
+
+msgid "After <0>tahan</0>, <1>pean</1> and the other verbs in this lesson, the second verb takes its <2>-da</2> or <3>-ma</3> form: <4>Ma tahan lugeda. Ma pean lugema.</4>"
+msgstr "After <0>tahan</0>, <1>pean</1> and the other verbs in this lesson, the second verb takes its <2>-da</2> or <3>-ma</3> form: <4>Ma tahan lugeda. Ma pean lugema.</4>"
 
 msgid "After <0>tahan</0>, the <1>-da</1> form."
 msgstr "After <0>tahan</0>, the <1>-da</1> form."
@@ -5538,6 +5547,9 @@ msgstr "I want to *sleep*."
 
 msgid "I want to eat."
 msgstr "I want to eat."
+
+msgid "I want to go to town tomorrow."
+msgstr "I want to go to town tomorrow."
 
 msgid "I want to read at home today."
 msgstr "I want to read at home today."
@@ -11584,6 +11596,9 @@ msgstr "today"
 msgid "Today"
 msgstr "Today"
 
+msgid "Today I’m starting to study at home."
+msgstr "Today I’m starting to study at home."
+
 msgid "Today is"
 msgstr "Today is"
 
@@ -11956,14 +11971,8 @@ msgstr "Verbs"
 msgid "Verbs of having to, starting and going"
 msgstr "Verbs of having to, starting and going"
 
-msgid "Verbs of having to, starting, going, coming and staying take the <0>-ma</0> form."
-msgstr "Verbs of having to, starting, going, coming and staying take the <0>-ma</0> form."
-
 msgid "Verbs of wanting and being able"
 msgstr "Verbs of wanting and being able"
-
-msgid "Verbs of wanting, being able, being allowed and loving take the <0>-da</0> form."
-msgstr "Verbs of wanting, being able, being allowed and loving take the <0>-da</0> form."
 
 msgid "Version of 5 January 2026"
 msgstr "Version of 5 January 2026"
@@ -12374,9 +12383,6 @@ msgstr "When is the café open?"
 
 msgid "When its card reaches Known in your reviews. From then on the reading is hidden on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it."
 msgstr "When its card reaches Known in your reviews. From then on the reading is hidden on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it."
-
-msgid "When one verb follows another, the second takes its <0>-da</0> or <1>-ma</1> form: <2>Ma tahan lugeda. Ma pean lugema.</2>"
-msgstr "When one verb follows another, the second takes its <0>-da</0> or <1>-ma</1> form: <2>Ma tahan lugeda. Ma pean lugema.</2>"
 
 msgid "When the output depends on the history of the input"
 msgstr "When the output depends on the history of the input"

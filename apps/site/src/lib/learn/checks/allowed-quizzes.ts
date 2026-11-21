@@ -22,6 +22,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "The quiz asks whether the ending stays after ei: Ei loe against Ei loed is the lesson.",
   },
   {
+    lesson: "meeldima",
+    quiz: "mari-message",
+    reason:
+      "The gaps ask for the -l form or the -le form: mul on igav against mulle meeldib is the lesson, and the word after each gap decides it.",
+  },
+  {
     lesson: "osastav",
     quiz: "one-or-more",
     reason:

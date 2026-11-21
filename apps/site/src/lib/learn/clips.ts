@@ -809,6 +809,153 @@ const TALLINN_CLIPS: Record<string, Clip> = {
   ...TALLINN_DIALOGUE,
 };
 
+/**
+ * The six persons of the lesson on meeldima: the -l form that has and feels (mul on kass, mul on
+ * külm) and the -le form that likes (mulle meeldib kass). Checked in ÕS 2025 on Sõnaveeb (mina:
+ * alaleütlev minule, mulle; meeldima: kellele mida teha).
+ */
+export const MEELDIMA_PERSONS = [
+  { id: "ma", long: "mina", has: "mul", likes: "mulle" },
+  { id: "sa", long: "sina", has: "sul", likes: "sulle" },
+  { id: "ta", long: "tema", has: "tal", likes: "talle" },
+  { id: "me", long: "meie", has: "meil", likes: "meile" },
+  { id: "te", long: "teie", has: "teil", likes: "teile" },
+  { id: "nad", long: "nemad", has: "neil", likes: "neile" },
+] as const;
+
+export type MeeldimaPerson = (typeof MEELDIMA_PERSONS)[number];
+
+/** “Mul on kass.”: the person who has, in the -l form. */
+export const hasCat = (person: MeeldimaPerson) => `${capital(person.has)} on kass.`;
+/** “Mulle meeldib kass.”: the person who likes, in the -le form. */
+export const likesCat = (person: MeeldimaPerson) => `${capital(person.likes)} meeldib kass.`;
+
+/** “Who likes it?”: one sentence per person, each about one thing, so only the person changes. */
+export const MEELDIMA_WHO: Readonly<Record<MeeldimaPerson["id"], string>> = {
+  ma: "Mulle meeldib Tartu.",
+  sa: "Kas sulle meeldib kohv?",
+  ta: "Talle meeldib Tallinn.",
+  me: "Meile meeldib eesti keel.",
+  te: "Kas teile meeldib Pärnu?",
+  nad: "Neile meeldib kool.",
+};
+
+/** One thing or more: meeldib becomes meeldivad. ÕS 2025: kassid, koerad, raamatud, õunad. */
+export const MEELDIMA_MORE = [
+  { one: "Mulle meeldib kass.", more: "Mulle meeldivad kassid." },
+  { one: "Talle meeldib koer.", more: "Talle meeldivad koerad." },
+  { one: "Meile meeldib raamat.", more: "Meile meeldivad raamatud." },
+  { one: "Neile meeldib õun.", more: "Neile meeldivad õunad." },
+] as const;
+
+/** Liking to do something: meeldib and a verb's da form. ÕS 2025: ujuda, rääkida, õppida. */
+export const MEELDIMA_DOING = [
+  "Mulle meeldib lugeda.",
+  "Talle meeldib ujuda.",
+  "Neile meeldib rääkida.",
+  "Meile meeldib eesti keelt õppida.",
+] as const;
+
+/** Which form of meeldima goes with each: one thing or a verb takes meeldib, more takes meeldivad. */
+export const MEELDIMA_WHICH = [
+  { w: "kohv", verb: "meeldib" },
+  { w: "Tallinn", verb: "meeldib" },
+  { w: "eesti keel", verb: "meeldib" },
+  { w: "lugeda", verb: "meeldib" },
+  { w: "ujuda", verb: "meeldib" },
+  { w: "koerad", verb: "meeldivad" },
+  { w: "raamatud", verb: "meeldivad" },
+  { w: "lapsed", verb: "meeldivad" },
+] as const;
+
+/** Saying no: ei meeldi, the same for one thing or more. */
+export const MEELDIMA_NO = [
+  { yes: "Mulle meeldib kohv.", no: "Mulle ei meeldi kohv." },
+  { yes: "Talle meeldivad koerad.", no: "Talle ei meeldi koerad." },
+  { yes: "Neile meeldib ujuda.", no: "Neile ei meeldi ujuda." },
+  { yes: "Meile meeldivad kassid.", no: "Meile ei meeldi kassid." },
+] as const;
+
+/** Asking and answering: kas sulle meeldib, a short yes or no, and kellele. */
+export const MEELDIMA_ASK = [
+  "Kas sulle meeldib Tallinn?",
+  "Jah, meeldib.",
+  "Kas sulle meeldivad kassid?",
+  "Ei meeldi.",
+  "Kellele meeldib kohv?",
+  "Mulle!",
+] as const;
+
+/**
+ * Feelings with the -l form. EKSS: “Mul on, hakkas külm”, “Mul hakkas palav”, “Üksinda hakkab mul
+ * igav”; Sõnaveeb: “Lapsel oli kingi üle hea meel”, “Mul on kahju, et nii läks”.
+ */
+export const MEELDIMA_FEELINGS = [
+  "Mul on külm.",
+  "Mul on palav.",
+  "Mul on igav.",
+  "Mul on hea meel.",
+  "Mul on kahju.",
+] as const;
+
+/** Mari's message to Jaan, with gaps for mul or mulle and meeldib or meeldivad. */
+export const MEELDIMA_PASSAGE = [
+  "Tere, Jaan!",
+  "Mul on täna igav.",
+  "Mulle ei meeldi kodus olla.",
+  "Kas sulle meeldib ujuda?",
+  "Või tule kohvikusse.",
+  "Kohvikus on kass.",
+  "Mulle meeldivad kassid.",
+  "Kirjuta mulle homme!",
+] as const;
+
+/** Making plans with Liis: her lines in the second voice, the learner's in the main one. */
+export const MEELDIMA_DIALOGUE = {
+  "d-liis-1": { text: "Tere! Kas sa tuled ujuma?", voice: "second" },
+  "d-sina-1": "Ei, mul on külm.",
+  "d-liis-2": { text: "Väga kahju! Kas sulle meeldib kohv?", voice: "second" },
+  "d-sina-2": "Jah, meeldib.",
+  "d-liis-3": { text: "Mulle ka. Tule kohvikusse!", voice: "second" },
+  "d-sina-3": "Jah, hea meelega!",
+  "d-liis-4": { text: "Kohvikus on ka kass.", voice: "second" },
+  "d-sina-4": "Mulle meeldivad kassid!",
+} as const satisfies Record<string, Clip>;
+
+/** Words and lines the lesson on meeldima says outside its lists. */
+export const MEELDIMA_WORDS = [
+  "meeldima",
+  "meeldib",
+  "meeldivad",
+  "ei meeldi",
+  "kellele",
+  ...MEELDIMA_PERSONS.map(({ likes }) => likes),
+  "hea meelega",
+  "maitseb",
+  "Tal on igav.",
+  "Kas sul on külm?",
+  "Ma olen väsinud.",
+  "Mulle maitseb kohv.",
+  "Kas sulle maitseb?",
+  "kassid",
+] as const;
+
+const MEELDIMA_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...MEELDIMA_PERSONS.flatMap((person) => [hasCat(person), likesCat(person)]),
+    ...Object.values(MEELDIMA_WHO),
+    ...MEELDIMA_MORE.flatMap(({ one, more }) => [one, more]),
+    ...MEELDIMA_DOING,
+    ...MEELDIMA_WHICH.map(({ w }) => w),
+    ...MEELDIMA_NO.flatMap(({ yes, no }) => [yes, no]),
+    ...MEELDIMA_ASK,
+    ...MEELDIMA_FEELINGS,
+    ...MEELDIMA_WORDS,
+  ]),
+  "p-message": { sentences: MEELDIMA_PASSAGE },
+  ...MEELDIMA_DIALOGUE,
+};
+
 /** How a verb's -da form ends: -da, -ta, -la, -na, or a short -a. */
 export type DaPattern = "da" | "ta" | "la" | "na" | "a";
 
@@ -1156,6 +1303,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  meeldima: MEELDIMA_CLIPS,
   "verbi-pohivormid": {
     ...words(VERB_FORMS.flatMap((verb) => [verb.ma, daForm(verb), verb.n, threeForms(verb)])),
     ...words(VERB_FORMS.filter((verb) => VORMID_COMMANDS.includes(verb.ma)).map((verb) => verb.ge)),

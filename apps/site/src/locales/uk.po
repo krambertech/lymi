@@ -138,15 +138,17 @@ msgstr "{0}, наступне через {1}"
 msgid "{0}, right answer"
 msgstr "{0}, правильна відповідь"
 
+#. placeholder {0}: i18n._(WORD_MEANS[noun.word])
+#. placeholder {1}: noun.stem
+msgid "{0}, stem <0>{1}</0>"
+msgstr "{0}, основа <0>{1}</0>"
+
 #. placeholder {0}: place.meaning
 msgid "{0}, your answer"
 msgstr "{0}, твоя відповідь"
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Додано # картку} few {Додано # картки} many {Додано # карток} other {Додано # картки}}"
-
-msgid "{base} becomes {form}"
-msgstr "{base} стає {form}"
 
 msgid "{before} blank {after}"
 msgstr "{before} пропуск {after}"
@@ -493,6 +495,9 @@ msgstr "<0>{0}</0> стає <1>{1}</1>"
 #. placeholder {1}: said.answer
 msgid "<0>{0}</0>: <1>{1}</1>"
 msgstr "<0>{0}</0>: <1>{1}</1>"
+
+msgid "<0>{base}</0> becomes <1>{form}</1>"
+msgstr "<0>{base}</0> стає <1>{form}</1>"
 
 msgid "<0>{plannedCount}</0> planned, A1 to B1"
 msgstr "Заплановано: <0>{plannedCount}</0>, від A1 до B1"

@@ -1,19 +1,19 @@
 import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { ArrowRight } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import { clipId, clipUrl, STEM_PASSAGE, STEM_WORDS, type StemKind } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
+import { FormRound, type FormItem as KitFormItem } from "../FormRound";
 import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
 import { Morph } from "../Morph";
-import { Answer, type ChoiceItem, ChoiceRound, Feedback, Quiz, type RoundProps } from "../Quiz";
-import { Listen, PlayMark } from "../Sound";
+import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { PlayMark } from "../Sound";
 import { Word } from "../Word";
 
 const SLUG = "pood-poe";
@@ -304,13 +304,7 @@ export const threeForms = (noun: Noun): string[] =>
 
 type HeardItem = ChoiceItem & { noun: Noun; pair: readonly [string, string] };
 
-interface FormItem {
-  noun: Noun;
-  src: string;
-  answer: string;
-  options: readonly string[];
-  pair: readonly [string, string];
-}
+type FormItem = KitFormItem & { noun: Noun; pair: readonly [string, string] };
 
 /** A headword or a stem as an option, each with the meaning of its headword. */
 const wordOptions = (words: readonly string[], i18n: I18n) =>
@@ -342,67 +336,15 @@ function Explain({ noun }: { noun: Noun }) {
   );
 }
 
-/**
- * See a noun and what to say, pick its form, then hear it in a sentence. The sound would give the
- * form away, so it plays only after the pick.
- */
-function FormRound({ item, state, heard, answer }: RoundProps<FormItem>) {
-  const { t, i18n } = useLingui();
-  const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: each round, including a restart, opens answerable
-  useEffect(() => {
-    heard();
-  }, [round]);
-  const done = state.status === "answered";
-  const picked = done ? state.picked : null;
-  const { noun } = item;
+/** The pair a dictionary gives and where the ending goes, after an answer. */
+function StemRule({ noun }: { noun: Noun }) {
   return (
-    <>
-      <div className="grid gap-1">
-        <p className="flex flex-wrap items-baseline gap-x-3">
-          <span lang="et" className="text-[clamp(2.25rem,8vw,3rem)] leading-none font-semibold">
-            {noun.word}, {noun.stem}
-          </span>
-          <span className="text-md text-ink-muted">{i18n._(WORD_MEANS[noun.word])}</span>
-        </p>
-        <p className="flex items-center gap-2 text-lg font-medium text-ink">
-          <ArrowRight aria-hidden="true" className="size-4 text-ink-muted rtl:-scale-x-100" />
-          {i18n._(WHERE_MEANS[noun.where])}
-        </p>
-      </div>
-      <fieldset className="m-0 flex min-w-0 flex-wrap gap-2.5 border-0 p-0">
-        <legend className="sr-only">{t`Pick the form`}</legend>
-        {item.options.map((option) => (
-          <Answer
-            key={option}
-            big
-            label={option}
-            mark={
-              !done
-                ? undefined
-                : option === item.answer
-                  ? "right"
-                  : option === picked
-                    ? "wrong"
-                    : "out"
-            }
-            onPick={() => {
-              if (done) return;
-              answer(option, option === item.answer);
-              void playSound(item.src);
-            }}
-          />
-        ))}
-      </fieldset>
-      {done && (
-        <>
-          <Listen src={item.src} />
-          <Feedback right={state.right}>
-            <Explain noun={noun} />
-          </Feedback>
-        </>
-      )}
-    </>
+    <Trans>
+      <span lang="et">
+        {noun.word}, {noun.stem}
+      </span>
+      : the ending goes on <span lang="et">{noun.stem}</span>.
+    </Trans>
   );
 }
 
@@ -456,11 +398,27 @@ export function PoodPoeLesson() {
       ASKED.map(({ noun, pair }, i) => ({
         noun,
         pair,
-        src: src(noun.said),
-        answer: noun.where,
+        base: noun.word,
+        gloss: (
+          <Trans>
+            {i18n._(WORD_MEANS[noun.word])}, stem <span lang="et">{noun.stem}</span>
+          </Trans>
+        ),
+        cue: i18n._(WHERE_MEANS[noun.where]),
+        answers: [noun.where],
         options: formsInOrder(noun, i + 1),
+        src: src(noun.said),
+        said: (
+          <>
+            {noun.said}{" "}
+            <span lang={i18n.locale} className="text-md">
+              {i18n._(SAID_MEANS[noun.said])}
+            </span>
+          </>
+        ),
+        explain: <StemRule noun={noun} />,
       })),
-    [],
+    [i18n],
   );
 
   // The first round keeps its server order; every later one shuffles its three forms.
@@ -472,14 +430,7 @@ export function PoodPoeLesson() {
   // The server renders each gap's options in a fixed order; the browser shuffles them once loaded.
   const [shuffled, setShuffled] = useState(false);
   useEffect(() => setShuffled(true), []);
-  const serverGaps = SATURDAY_GAPS((noun) => (
-    <Trans>
-      <span lang="et">
-        {noun.word}, {noun.stem}
-      </span>
-      : the ending goes on <span lang="et">{noun.stem}</span>.
-    </Trans>
-  ));
+  const serverGaps = SATURDAY_GAPS((noun) => <StemRule noun={noun} />);
   // biome-ignore lint/correctness/useExhaustiveDependencies: shuffled once, when the page loads
   const gaps = useMemo(
     () =>

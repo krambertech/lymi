@@ -29,6 +29,17 @@ Each update's Hermes source maps go to PostHog's error tracking from Phone beta,
 
 Both upload paths use PostHog's `event` release mode: maps are matched by chunk ID, while an exception's `$app_namespace`, `$app_version` and `$app_build` name its release. Republishing an OTA or building another binary does not bind its shared maps to the first binary's build number; `app_update` names the bundle that actually ran.
 
+## External beta testers
+
+People outside App Store Connect test the iOS app in the TestFlight external group **Beta testers**. They join by its public link, `https://testflight.apple.com/join/bSf3ZB7E`, or by an email invite to their Apple ID. The link takes up to 100 testers; change the limit under the group's Public Link, Manage.
+
+Testers run the `beta` build, so every update Phone beta publishes reaches them on their second launch after it, before Phone promote's smoke journey has run. Phone rollback reverts a bad one.
+
+- Test Information in App Store Connect holds the beta description, the feedback email `hello@lymi.app` and the review account from [`apps/mobile/store/review.md`](../apps/mobile/store/review.md). Apple reviews the first build of each version before external testers can install it.
+- A new `beta` build goes to the group by hand: in TestFlight, open the build, add Beta testers, and fill in What to Test, which EAS Submit cannot set on the free plan.
+- A TestFlight build expires 90 days after upload. Apple refuses new builds for a version once it is released, so the next `beta` build needs a higher `expo.version` than the one in the App Store.
+- Testers send screenshots and crash reports from TestFlight; they arrive under TestFlight, Feedback. In PostHog, `app_channel=beta` marks their phone events ([analytics](analytics.md)).
+
 ## Setting it up
 
 Do these once, in order. Steps 1 to 3 change `app.json` or `eas.json`, which are part of the fingerprint, so finish them before the first build. The bundle identifier and the Android package are both `app.lymi`; neither can change after the first upload.

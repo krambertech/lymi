@@ -73,7 +73,7 @@ const GLOSSARY: Glossary = {
   suhkruta: { en: msg`without sugar` },
   rahata: { en: msg`without money`, note: msg`From raha, money.` },
   ilma: { en: msg`without`, note: msg`Before a -ta form, to stress the without.` },
-  "ilma suhkruta": { en: msg`with no sugar at all` },
+  "ilma suhkruta": { en: msg`without sugar` },
   tartuni: { en: msg`as far as Tartu`, show: "Tartuni" },
   "kella viieni": { en: msg`until five o’clock` },
   "homseni!": { en: msg`see you tomorrow`, note: msg`Word for word, “until tomorrow”.` },
@@ -83,9 +83,9 @@ const GLOSSARY: Glossary = {
   arsti: { en: msg`doctor’s, of a doctor`, note: msg`The genitive of arst.` },
   arstina: { en: msg`as a doctor` },
   lapsena: { en: msg`as a child`, note: msg`From laps, child; its genitive is lapse.` },
-  "lapsena elas mari tartus.": {
+  "lapsena elas mari tartus": {
     en: msg`As a child, Mari lived in Tartu.`,
-    show: "Lapsena elas Mari Tartus.",
+    show: "Lapsena elas Mari Tartus",
   },
   pood: { en: msg`shop` },
   poe: { en: msg`shop’s, of a shop`, note: msg`The genitive of pood.` },
@@ -279,10 +279,10 @@ function AsFlip() {
       ) : (
         <FlipNote
           mode={mode}
-          title={<Trans>The job in its first form</Trans>}
+          title={<Trans>The job alone</Trans>}
           tip={
             <Trans>
-              With <span lang="et">on</span>, is, the job stays as it is:{" "}
+              After <span lang="et">on</span>, is, the job keeps its first form:{" "}
               <span lang="et">Jaan on kokk</span>.
             </Trans>
           }
@@ -381,7 +381,7 @@ function useContent() {
     ),
     bussiga: (
       <Trans>
-        How she goes: <span lang="et">-ga</span>, by bus.
+        How she gets to work: <span lang="et">-ga</span>, by bus.
       </Trans>
     ),
     viieni: (
@@ -693,12 +693,15 @@ export function SobragaRahataLesson() {
               <Aside>
                 <Trans>
                   You’ll also hear <Word w="ilma" /> before the word: <Word w="ilma suhkruta" />,
-                  with no sugar at all. It stresses the without, and the ending stays.
+                  without sugar. <span lang="et">Ilma</span> stresses the without, and the ending
+                  stays.
                 </Trans>
               </Aside>
               <Prose>
                 <p>
-                  <Trans>Now hear a line and pick what it says. Listen to how the word ends.</Trans>
+                  <Trans>
+                    Now hear a line and pick what it means. Listen to how the word ends.
+                  </Trans>
                 </p>
               </Prose>
               <Quiz
@@ -709,8 +712,8 @@ export function SobragaRahataLesson() {
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>
-                      All of them. You heard <span lang="et">-ga</span> and{" "}
-                      <span lang="et">-ta</span> apart every time.
+                      All of them. You told <span lang="et">-ga</span> from{" "}
+                      <span lang="et">-ta</span> every time.
                     </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed and listen to the ending.</Trans>
@@ -734,9 +737,14 @@ export function SobragaRahataLesson() {
                 <p>
                   <Trans>
                     <span lang="et">-ni</span> says how far, in place or in time.{" "}
-                    <Word w="Tartuni" /> is as far as Tartu. With the clock from lesson {clock} it
-                    means until: <Word w="kella viieni" />, until five. Learn it as a phrase for
-                    now: lesson {times} does from and until with the clock.
+                    <Word w="Tartuni" /> is as far as Tartu.
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>
+                    With the clock from lesson {clock} it means until: <Word w="kella viieni" />,
+                    until five. Learn it as a phrase for now: lesson {times} does from and until
+                    with the clock.
                   </Trans>
                 </p>
                 <p>
@@ -765,8 +773,9 @@ export function SobragaRahataLesson() {
                 </p>
                 <p>
                   <Trans>
-                    It also says what someone was at a time: <Word w="lapsena" />, as a child.{" "}
-                    <Word w="Lapsena elas Mari Tartus." /> uses the past tense from lesson {past}.
+                    It also says what someone was at a time: <Word w="lapsena" />, as a child. In{" "}
+                    <Word w="Lapsena elas Mari Tartus" />, <span lang="et">elas</span> is the past
+                    tense from lesson {past}.
                   </Trans>
                 </p>
                 <p>

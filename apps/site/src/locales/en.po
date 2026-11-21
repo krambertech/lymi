@@ -473,8 +473,8 @@ msgstr "<0>-ni</0> is until or as far as: <1>kella viieni</1>, until five; <2>Ta
 msgid "<0>-ni</0> on the genitive."
 msgstr "<0>-ni</0> on the genitive."
 
-msgid "<0>-ni</0> says how far, in place or in time. <1/> is as far as Tartu. With the clock from lesson {clock} it means until: <2/>, until five. Learn it as a phrase for now: lesson {times} does from and until with the clock."
-msgstr "<0>-ni</0> says how far, in place or in time. <1/> is as far as Tartu. With the clock from lesson {clock} it means until: <2/>, until five. Learn it as a phrase for now: lesson {times} does from and until with the clock."
+msgid "<0>-ni</0> says how far, in place or in time. <1/> is as far as Tartu."
+msgstr "<0>-ni</0> says how far, in place or in time. <1/> is as far as Tartu."
 
 msgid "<0>-ta</0> is the opposite of <1>-ga</1>. <2/> is with milk, and <3/> is without milk. It goes on the same genitive: <4/>, <5/>, <6/>."
 msgstr "<0>-ta</0> is the opposite of <1>-ga</1>. <2/> is with milk, and <3/> is without milk. It goes on the same genitive: <4/>, <5/>, <6/>."
@@ -1551,6 +1551,9 @@ msgstr "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 
+msgid "After <0>on</0>, is, the job keeps its first form: <1>Jaan on kokk</1>."
+msgstr "After <0>on</0>, is, the job keeps its first form: <1>Jaan on kokk</1>."
+
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 
@@ -1713,9 +1716,6 @@ msgstr "All of them. You can hear who it’s about."
 msgid "All of them. You hear who does it."
 msgstr "All of them. You hear who does it."
 
-msgid "All of them. You heard <0>-ga</0> and <1>-ta</1> apart every time."
-msgstr "All of them. You heard <0>-ga</0> and <1>-ta</1> apart every time."
-
 msgid "All of them. You matched every answer to its question."
 msgstr "All of them. You matched every answer to its question."
 
@@ -1724,6 +1724,9 @@ msgstr "All of them. You picked the place in every sentence."
 
 msgid "All of them. You picked the right ending every time."
 msgstr "All of them. You picked the right ending every time."
+
+msgid "All of them. You told <0>-ga</0> from <1>-ta</1> every time."
+msgstr "All of them. You told <0>-ga</0> from <1>-ta</1> every time."
 
 msgid "All of them. You told <0>ära</0> from <1>ei</1> every time."
 msgstr "All of them. You told <0>ära</0> from <1>ei</1> every time."
@@ -5199,8 +5202,8 @@ msgstr "how much, how many"
 msgid "How sections work"
 msgstr "How sections work"
 
-msgid "How she goes: <0>-ga</0>, by bus."
-msgstr "How she goes: <0>-ga</0>, by bus."
+msgid "How she gets to work: <0>-ga</0>, by bus."
+msgstr "How she gets to work: <0>-ga</0>, by bus."
 
 msgid "How Smart add works"
 msgstr "How Smart add works"
@@ -5982,8 +5985,8 @@ msgstr "Is this *chair* free?"
 msgid "Is this like an Anki MCP server?"
 msgstr "Is this like an Anki MCP server?"
 
-msgid "It also says what someone was at a time: <0/>, as a child. <1/> uses the past tense from lesson {past}."
-msgstr "It also says what someone was at a time: <0/>, as a child. <1/> uses the past tense from lesson {past}."
+msgid "It also says what someone was at a time: <0/>, as a child. In <1/>, <2>elas</2> is the past tense from lesson {past}."
+msgstr "It also says what someone was at a time: <0/>, as a child. In <1/>, <2>elas</2> is the past tense from lesson {past}."
 
 msgid "It depends"
 msgstr "It depends"
@@ -7615,8 +7618,8 @@ msgstr "Nouns and cases"
 msgid "Now"
 msgstr "Now"
 
-msgid "Now hear a line and pick what it says. Listen to how the word ends."
-msgstr "Now hear a line and pick what it says. Listen to how the word ends."
+msgid "Now hear a line and pick what it means. Listen to how the word ends."
+msgstr "Now hear a line and pick what it means. Listen to how the word ends."
 
 msgid "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
 msgstr "Now it’s Saturday, and this is your plan. Put a word in each gap: a form of <0/>, a verb with the right ending, <1/>, or the form a word takes after a number."
@@ -10613,8 +10616,8 @@ msgstr "The JLPT has published no official word list since 2010, so the N5 and N
 msgid "The JLPT has published no official word list since 2010, so these decks follow the Japan Foundation’s course lists and widely used study lists."
 msgstr "The JLPT has published no official word list since 2010, so these decks follow the Japan Foundation’s course lists and widely used study lists."
 
-msgid "The job in its first form"
-msgstr "The job in its first form"
+msgid "The job alone"
+msgstr "The job alone"
 
 msgid "The knack of reading the room"
 msgstr "The knack of reading the room"
@@ -12581,9 +12584,6 @@ msgctxt "with or without"
 msgid "With"
 msgstr "With"
 
-msgid "With <0>on</0>, is, the job stays as it is: <1>Jaan on kokk</1>."
-msgstr "With <0>on</0>, is, the job stays as it is: <1>Jaan on kokk</1>."
-
 msgid "with a friend"
 msgstr "with a friend"
 
@@ -12608,9 +12608,6 @@ msgstr "With milk"
 msgid "with Mum"
 msgstr "with Mum"
 
-msgid "with no sugar at all"
-msgstr "with no sugar at all"
-
 msgid "With or without"
 msgstr "With or without"
 
@@ -12634,6 +12631,9 @@ msgstr "With someone or something"
 
 msgid "With sugar"
 msgstr "With sugar"
+
+msgid "With the clock from lesson {clock} it means until: <0/>, until five. Learn it as a phrase for now: lesson {times} does from and until with the clock."
+msgstr "With the clock from lesson {clock} it means until: <0/>, until five. Learn it as a phrase for now: lesson {times} does from and until with the clock."
 
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
@@ -13124,8 +13124,8 @@ msgstr "you, to more than one; polite you"
 msgid "you, to one person"
 msgstr "you, to one person"
 
-msgid "You’ll also hear <0/> before the word: <1/>, with no sugar at all. It stresses the without, and the ending stays."
-msgstr "You’ll also hear <0/> before the word: <1/>, with no sugar at all. It stresses the without, and the ending stays."
+msgid "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."
+msgstr "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."
 
 msgid "You’ll hear a question with it, and an answer."
 msgstr "You’ll hear a question with it, and an answer."

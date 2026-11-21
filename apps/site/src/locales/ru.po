@@ -446,6 +446,11 @@ msgstr "<0/>, «быть», устроен так же. <1/> становитс�
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> или <1>-ke</1> на конце"
 
+#. placeholder {0}: capital(ownedBook(whose))
+#. placeholder {1}: i18n._(PERSON[who].book)
+msgid "<0>{0}</0> is {1}."
+msgstr "<0>{0}</0> — это «{1}»."
+
 #. placeholder {0}: capital(item.phrase.whose)
 #. placeholder {1}: item.phrase.where
 msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
@@ -3834,8 +3839,8 @@ msgstr "У всех существительных на -ung артикль die.
 msgid "Every one, by ear."
 msgstr "Все до одного, на слух."
 
-msgid "Every pronoun has a genitive, and it goes before the thing it owns. Switch to Whose and tap a word to hear it."
-msgstr "Родительный есть у каждого местоимения, и он стоит перед тем, что ему принадлежит. Переключи на «Чей» и нажми на слово, чтобы его услышать."
+msgid "Every pronoun has a genitive, and it goes before the thing it owns. Tap a form to hear it."
+msgstr "Родительный есть у каждого местоимения, и он стоит перед тем, что ему принадлежит. Нажми на форму, чтобы её услышать."
 
 msgid "Every question has four answers and one is right. Because you learn 310 questions in all, it’s often called the 310-question test."
 msgstr "У каждого вопроса четыре варианта ответа, и верный только один. Всего нужно выучить 310 вопросов, поэтому его часто называют «тест 310 вопросов»."
@@ -9858,14 +9863,8 @@ msgstr "Переключи <0/> на <1/>, и все шесть предложе
 msgid "Switch between Do and Don’t, and tap a line to hear it."
 msgstr "Переключайся между «Делай» и «Не делай»; нажми на строку, чтобы её услышать."
 
-msgid "Switch between Who and Whose above once more, then try again."
-msgstr "Ещё раз попереключай «Кто» и «Чей» выше, а потом попробуй снова."
-
 msgid "Switch to In the place and watch the last letters change."
 msgstr "Переключи на «Где?» и смотри, как меняются концы слов."
-
-msgid "Switch to Whose and watch which pronouns change."
-msgstr "Переключи на «Чей» и посмотри, какие местоимения меняются."
 
 msgid "Switching from"
 msgstr "Переход с"
@@ -10034,6 +10033,9 @@ msgstr "Ещё раз нажми на места выше, а потом поп�
 
 msgid "Tap the question words above once more, then try again."
 msgstr "Ещё раз понажимай вопросительные слова выше, а потом попробуй снова."
+
+msgid "Tap the Whose column above once more, then try again."
+msgstr "Ещё раз пройдись по столбцу «Чей» выше, а потом попробуй снова."
 
 msgid "Tap to turn it over"
 msgstr "Коснись, чтобы перевернуть"
@@ -12524,6 +12526,12 @@ msgstr "кто"
 msgid "Who"
 msgstr "Кто"
 
+msgid "Who and whose"
+msgstr "Кто и чей"
+
+msgid "Who and whose are the same word."
+msgstr "«Кто» и «чей» здесь одно слово."
+
 msgid "Who can see the cards I make?"
 msgstr "Кто видит карточки, которые я создаю?"
 
@@ -12547,9 +12555,6 @@ msgstr "Кто его знает?"
 
 msgid "Who lives in Tartu?"
 msgstr "Кто живёт в Тарту?"
-
-msgid "Who or whose"
-msgstr "Кто или чей"
 
 msgid "Who or whose?"
 msgstr "Кто или чей?"

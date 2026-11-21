@@ -25,6 +25,7 @@ import { Chips, Panel } from "../Explore";
 import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Paradigm, type ParadigmRow } from "../Paradigm";
 import { Answer, Feedback, Quiz, type RoundProps } from "../Quiz";
 import { Listen, PlayMark } from "../Sound";
 import { Word } from "../Word";
@@ -225,80 +226,55 @@ function Lit({ word, form }: { word: string; form: string }) {
   );
 }
 
-/** A tile to tap: a word and what it means. */
-function WordTile(props: { src: string; word: ReactNode; means: string; swap: string }) {
-  const playing = usePlaying(props.src);
-  return (
-    <button
-      type="button"
-      onClick={() => void playSound(props.src)}
-      className="grid h-full w-full cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 py-3 ps-4 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover"
-    >
-      <span className="grid min-w-0">
-        <span
-          key={props.swap}
-          lang="et"
-          className="learn-swap text-xl font-semibold tracking-tight max-sm:text-lg"
-        >
-          {props.word}
-        </span>
-        <span className="text-sm text-ink-muted">{props.means}</span>
-      </span>
-      <PlayMark playing={playing} />
-    </button>
-  );
-}
+/** The pronoun as it is written in the table: the letters the genitive changes come after a |. */
+const marked = (who: string, whose: string): string => {
+  const at = sharedLength(who, whose);
+  return at === whose.length ? whose : `${whose.slice(0, at)}|${whose.slice(at)}`;
+};
 
-/** The six pronouns, switched together between who and whose. */
-function WhoseSwitch() {
+/** The six pronouns, who beside whose, the genitive's own letters lit. */
+function WhoseTable() {
   const { t, i18n } = useLingui();
-  const [whose, setWhose] = useState(false);
+  const rows: ParadigmRow[] = OMASTAV_PRONOUNS.map(({ who, whose }) => ({
+    id: who,
+    label: i18n._(PERSON[who].who),
+    tip: (
+      <>
+        <Trans>
+          <span lang="et">{capital(ownedBook(whose))}</span> is {i18n._(PERSON[who].book)}.
+        </Trans>
+        {who === whose && (
+          <>
+            {" "}
+            <Trans>Who and whose are the same word.</Trans>
+          </>
+        )}
+      </>
+    ),
+    cells: [
+      { form: who, src: src(who) },
+      { form: marked(who, whose), src: src(whose) },
+    ],
+  }));
   return (
     <Panel>
-      <Chips
-        label={t`Who or whose`}
-        items={[
-          { label: t`Who`, value: "who" },
-          { label: t`Whose`, value: "whose" },
-        ]}
-        value={whose ? "whose" : "who"}
-        onPick={(value) => setWhose(value === "whose")}
+      <Paradigm
+        label={t`Who and whose`}
+        columns={[t`Who`, t`Whose`]}
+        rows={rows}
+        highlight={{ column: 1 }}
+        empty={{
+          title: <Trans>Tap a form</Trans>,
+          tip: (
+            <Trans>
+              <span lang="et">Mina</span>, <span lang="et">sina</span> and{" "}
+              <span lang="et">nemad</span> change: <span lang="et">minu, sinu, nende</span>.{" "}
+              <span lang="et">Tema</span>, <span lang="et">meie</span> and{" "}
+              <span lang="et">teie</span> stay as they are.
+            </Trans>
+          ),
+        }}
       />
-      <ul className="m-0 grid list-none grid-cols-2 overflow-hidden rounded-lg bg-plate p-0 ring-1 ring-edge sm:grid-cols-3">
-        {OMASTAV_PRONOUNS.map((each) => {
-          const said = whose ? ownedBook(each.whose) : each.who;
-          return (
-            <li key={each.who} className="border-b border-edge">
-              <WordTile
-                src={src(said)}
-                word={
-                  whose ? (
-                    <>
-                      <Lit word={each.who} form={each.whose} /> raamat
-                    </>
-                  ) : (
-                    each.who
-                  )
-                }
-                means={i18n._(whose ? PERSON[each.who].book : PERSON[each.who].who)}
-                swap={said}
-              />
-            </li>
-          );
-        })}
-      </ul>
-      <p aria-live="polite" className="text-md text-ink-secondary">
-        {whose ? (
-          <Trans>
-            <span lang="et">Mina</span>, <span lang="et">sina</span> and{" "}
-            <span lang="et">nemad</span> change: <span lang="et">minu, sinu, nende</span>.{" "}
-            <span lang="et">Tema</span>, <span lang="et">meie</span> and <span lang="et">teie</span>{" "}
-            stay as they are.
-          </Trans>
-        ) : (
-          <Trans>Switch to Whose and watch which pronouns change.</Trans>
-        )}
-      </p>
     </Panel>
   );
 }
@@ -978,12 +954,12 @@ export function OmastavLesson() {
                 </p>
                 <p>
                   <Trans>
-                    Every pronoun has a genitive, and it goes before the thing it owns. Switch to
-                    Whose and tap a word to hear it.
+                    Every pronoun has a genitive, and it goes before the thing it owns. Tap a form
+                    to hear it.
                   </Trans>
                 </p>
               </Prose>
-              <WhoseSwitch />
+              <WhoseTable />
               <Aside>
                 <Trans>
                   <span lang="et">Minu</span> and <span lang="et">sinu</span> often shorten to{" "}
@@ -1023,7 +999,7 @@ export function OmastavLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>Switch between Who and Whose above once more, then try again.</Trans>
+                    <Trans>Tap the Whose column above once more, then try again.</Trans>
                   )
                 }
                 recall={(item) => ({ label: item.said, src: item.src })}

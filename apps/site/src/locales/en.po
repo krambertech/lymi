@@ -446,6 +446,11 @@ msgstr "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> or <1>-ke</1> on the end"
 
+#. placeholder {0}: capital(ownedBook(whose))
+#. placeholder {1}: i18n._(PERSON[who].book)
+msgid "<0>{0}</0> is {1}."
+msgstr "<0>{0}</0> is {1}."
+
 #. placeholder {0}: capital(item.phrase.whose)
 #. placeholder {1}: item.phrase.where
 msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
@@ -3834,8 +3839,8 @@ msgstr "Every noun ending in -ung takes die."
 msgid "Every one, by ear."
 msgstr "Every one, by ear."
 
-msgid "Every pronoun has a genitive, and it goes before the thing it owns. Switch to Whose and tap a word to hear it."
-msgstr "Every pronoun has a genitive, and it goes before the thing it owns. Switch to Whose and tap a word to hear it."
+msgid "Every pronoun has a genitive, and it goes before the thing it owns. Tap a form to hear it."
+msgstr "Every pronoun has a genitive, and it goes before the thing it owns. Tap a form to hear it."
 
 msgid "Every question has four answers and one is right. Because you learn 310 questions in all, it’s often called the 310-question test."
 msgstr "Every question has four answers and one is right. Because you learn 310 questions in all, it’s often called the 310-question test."
@@ -9858,14 +9863,8 @@ msgstr "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line 
 msgid "Switch between Do and Don’t, and tap a line to hear it."
 msgstr "Switch between Do and Don’t, and tap a line to hear it."
 
-msgid "Switch between Who and Whose above once more, then try again."
-msgstr "Switch between Who and Whose above once more, then try again."
-
 msgid "Switch to In the place and watch the last letters change."
 msgstr "Switch to In the place and watch the last letters change."
-
-msgid "Switch to Whose and watch which pronouns change."
-msgstr "Switch to Whose and watch which pronouns change."
 
 msgid "Switching from"
 msgstr "Switching from"
@@ -10034,6 +10033,9 @@ msgstr "Tap the places above once more, then try again."
 
 msgid "Tap the question words above once more, then try again."
 msgstr "Tap the question words above once more, then try again."
+
+msgid "Tap the Whose column above once more, then try again."
+msgstr "Tap the Whose column above once more, then try again."
 
 msgid "Tap to turn it over"
 msgstr "Tap to turn it over"
@@ -12524,6 +12526,12 @@ msgstr "who"
 msgid "Who"
 msgstr "Who"
 
+msgid "Who and whose"
+msgstr "Who and whose"
+
+msgid "Who and whose are the same word."
+msgstr "Who and whose are the same word."
+
 msgid "Who can see the cards I make?"
 msgstr "Who can see the cards I make?"
 
@@ -12547,9 +12555,6 @@ msgstr "Who knows?"
 
 msgid "Who lives in Tartu?"
 msgstr "Who lives in Tartu?"
-
-msgid "Who or whose"
-msgstr "Who or whose"
 
 msgid "Who or whose?"
 msgstr "Who or whose?"

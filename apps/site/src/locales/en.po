@@ -1837,11 +1837,11 @@ msgstr "All Estonian decks"
 msgid "All exams"
 msgstr "All exams"
 
+msgid "All four. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and “don’t have to”."
+msgstr "All four. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and “don’t have to”."
+
 msgid "All four. You told a gap after <0>pole</0> from a gap at the start."
 msgstr "All four. You told a gap after <0>pole</0> from a gap at the start."
-
-msgid "All four. You told don’t know how, can’t, mustn’t and don’t have to apart by ear."
-msgstr "All four. You told don’t know how, can’t, mustn’t and don’t have to apart by ear."
 
 msgid "All free decks"
 msgstr "All free decks"
@@ -2812,6 +2812,9 @@ msgstr "Can, may, must"
 
 msgid "Can; may"
 msgstr "Can; may"
+
+msgid "Can: you know how, or nothing stops you"
+msgstr "Can: you know how, or nothing stops you"
 
 msgid "Can’t, mustn’t, don’t have to"
 msgstr "Can’t, mustn’t, don’t have to"
@@ -6809,9 +6812,6 @@ msgstr "Keyboard first"
 
 msgid "kilo"
 msgstr "kilo"
-
-msgid "Know how, or nothing stops you"
-msgstr "Know how, or nothing stops you"
 
 msgid "Know where you stand."
 msgstr "Know where you stand."
@@ -13343,8 +13343,8 @@ msgstr "Where should I start?"
 msgid "Where someone goes: tule siia, come here."
 msgstr "Where someone goes: tule siia, come here."
 
-msgid "Where something is. Siia is where it goes."
-msgstr "Where something is. Siia is where it goes."
+msgid "Where something is. For where it goes, say siia."
+msgstr "Where something is. For where it goes, say siia."
 
 msgid "Where the <0>-da</0> form ends in <1>-ta</1>, or in <2>-a</2> after h, the command takes <3>-ke</3>: <4/>, <5/>; <6/>, <7/> Tap either side of a pair to hear it."
 msgstr "Where the <0>-da</0> form ends in <1>-ta</1>, or in <2>-a</2> after h, the command takes <3>-ke</3>: <4/>, <5/>; <6/>, <7/> Tap either side of a pair to hear it."

@@ -99,7 +99,7 @@ const GLOSSARY: Glossary = {
   vaja: { en: msg`needed`, note: msg`Mul on vaja is I need.` },
   "mul on vaja": { en: msg`I need` },
   ujuma: { en: msg`to swim`, note: msg`Its -da form is ujuda.` },
-  siin: { en: msg`here`, note: msg`Where something is. Siia is where it goes.` },
+  siin: { en: msg`here`, note: msg`Where something is. For where it goes, say siia.` },
   "ei tohi": { en: msg`mustn’t, not allowed to` },
   "ei pea": { en: msg`don’t have to` },
   "pole vaja": { en: msg`no need`, note: msg`Pole is ei ole.` },
@@ -157,7 +157,7 @@ function KnowOrAble() {
   return (
     <Panel>
       <Paradigm
-        label={t`Know how, or nothing stops you`}
+        label={t`Can: you know how, or nothing stops you`}
         columns={[t`I know how to …`, t`I’m able to …`]}
         rows={rows}
         empty={{ title: t`Tap a form`, tip: t`You’ll hear the whole sentence.` }}
@@ -165,6 +165,9 @@ function KnowOrAble() {
     </Panel>
   );
 }
+
+/** A key shows the verb; a negative's ei or pole sits under it, so the key stays short on a phone. */
+const keyLabel = (lead: string) => lead.replace(/^(ei|pole) /, "");
 
 /** The line under a may-or-allowed key. */
 function PermissionTip({ lead }: { lead: (typeof MODAL_PERMISSION)[number]["lead"] }) {
@@ -198,7 +201,8 @@ function MayOrAllowed() {
           tip: <Trans>You’ll hear it in a sentence.</Trans>,
         }}
         items={MODAL_PERMISSION.map(({ lead, said }) => ({
-          label: lead,
+          label: keyLabel(lead),
+          sub: lead.includes(" ") ? lead : undefined,
           src: src(said),
           detail: { title: <Said said={said} />, tip: <PermissionTip lead={lead} /> },
         }))}
@@ -299,7 +303,8 @@ function CantOrMustnt() {
           tip: <Trans>You’ll hear it said about swimming.</Trans>,
         }}
         items={MODAL_NOT.map(({ lead, said }) => ({
-          label: lead,
+          label: keyLabel(lead),
+          sub: lead.includes(" ") ? lead : undefined,
           src: src(said),
           detail: { title: <Said said={said} />, tip: <NotTip lead={lead} /> },
         }))}
@@ -536,7 +541,7 @@ export function ModaalverbidLesson() {
       sections={[
         {
           id: "oskan-saan",
-          title: t`Know how, or nothing stops you`,
+          title: t`Can: you know how, or nothing stops you`,
           children: (
             <>
               <Prose>
@@ -665,8 +670,8 @@ export function ModaalverbidLesson() {
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>
-                      All four. You told don’t know how, can’t, mustn’t and don’t have to apart by
-                      ear.
+                      All four. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and
+                      “don’t have to”.
                     </Trans>
                   ) : (
                     <Trans>Play the ones you missed once more, then try again.</Trans>

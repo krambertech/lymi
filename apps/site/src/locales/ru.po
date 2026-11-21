@@ -431,7 +431,7 @@ msgid "<0/> becomes <1/>, and the verb takes its <2>-ge</2> or <3>-ke</3> form: 
 msgstr "<0/> превращается в <1/>, а глагол тоже стоит в форме на <2>-ge</2> или <3>-ke</3>: <4/> <5/> А для одного человека на «вы» стоит запомнить такую фразу: <6/>"
 
 msgid "<0/> can also say that something might happen. This sentence can mean he or she is allowed to come tomorrow, or might: <1/>"
-msgstr "<0/> говорит ещё и о том, что что-то может случиться. Это предложение может значить, что ему или ей можно прийти завтра, а может — что он или она, возможно, придёт: <1/>"
+msgstr "<0/> говорит ещё и о том, что что-то может случиться. Это предложение значит либо что ему или ей можно прийти завтра, либо что он или она, возможно, придёт: <1/>"
 
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> не имеет окончания и подходит и для «он или она», и для «они». Поэтому <1/> — неправильный глагол: у других глаголов окончание есть и здесь, об этом — в уроке {regularVerbs}."
@@ -500,7 +500,7 @@ msgid "<0/> repeats the verb from the question, and any verb can answer this way
 msgstr "<0/> повторяет глагол из вопроса, и так можно ответить с любым глаголом: <1>Kas sa loed? Ei loe.</1> Об отрицании рассказывает урок {negation}."
 
 msgid "<0/> says you don’t mind, or you allow it. You can offer with it: <1/> You can also let someone do something: <2/>"
-msgstr "<0/> значит «я не против» или «можно». Так можно что-то предложить: <1/> А можно кому-то что-то разрешить: <2/>"
+msgstr "<0/> значит «я не против» или «можно». Так предлагают: <1/> И так разрешают: <2/>"
 
 msgid "<0/> with the <1>-da</1> form says something has to be done, without naming who: <2/> Put a person in the <3>-l</3> form from lesson {having} to make it theirs: <4/>"
 msgstr "<0/> с формой на <1>-da</1> говорит, что что-то надо сделать, и не называет кому: <2/> Чтобы сказать кому, добавь человека в форме на <3>-l</3> из урока {having}: <4/>"
@@ -1837,11 +1837,11 @@ msgstr "Все эстонские колоды"
 msgid "All exams"
 msgstr "Все экзамены"
 
+msgid "All four. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and “don’t have to”."
+msgstr "Все четыре. «Не умею», «не могу», «нельзя» и «не обязательно» ты различаешь на слух."
+
 msgid "All four. You told a gap after <0>pole</0> from a gap at the start."
 msgstr "Все четыре: ты различаешь пропуск после <0>pole</0> и пропуск в начале."
-
-msgid "All four. You told don’t know how, can’t, mustn’t and don’t have to apart by ear."
-msgstr "Все четыре. «Не умею», «не могу», «нельзя» и «не обязательно» ты различаешь на слух."
 
 msgid "All free decks"
 msgstr "Все бесплатные колоды"
@@ -2812,6 +2812,9 @@ msgstr "Могу, можно, надо"
 
 msgid "Can; may"
 msgstr "Можно; мочь"
+
+msgid "Can: you know how, or nothing stops you"
+msgstr "Умею или могу"
 
 msgid "Can’t, mustn’t, don’t have to"
 msgstr "Не умею, не могу, нельзя, не обязательно"
@@ -6810,9 +6813,6 @@ msgstr "Всё с клавиатуры"
 msgid "kilo"
 msgstr "килограмм"
 
-msgid "Know how, or nothing stops you"
-msgstr "Умею или могу"
-
 msgid "Know where you stand."
 msgstr "Знай, где ты сейчас."
 
@@ -9246,7 +9246,7 @@ msgid "Put {picked} here"
 msgstr "Положить {picked} сюда"
 
 msgid "Put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1>oskan</1> becomes <2>ei oska</2>. <3>Oskan</3> and <4>saan</4> stay different with <5>ei</5> too. You never learned: <6/> Something is in the way: <7/>"
-msgstr "Поставь <0>ei</0> перед глаголом и убери окончание, как в уроке {negation}: <1>oskan</1> становится <2>ei oska</2>. <3>Oskan</3> и <4>saan</4> и с <5>ei</5> остаются разными. Ты не умеешь: <6/> Тебе что-то мешает: <7/>"
+msgstr "Поставь <0>ei</0> перед глаголом и убери окончание, как в уроке {negation}: <1>oskan</1> становится <2>ei oska</2>. <3>Oskan</3> и <4>saan</4> различаются и с <5>ei</5>. Ты не умеешь: <6/> Тебе что-то мешает: <7/>"
 
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 msgstr "Ставь <0>ei</0> перед глаголом: <1>ma ei loe</1>, я не читаю."
@@ -13343,8 +13343,8 @@ msgstr "С чего начать?"
 msgid "Where someone goes: tule siia, come here."
 msgstr "Куда: tule siia, «иди сюда»."
 
-msgid "Where something is. Siia is where it goes."
-msgstr "Где что-то находится. Siia — «сюда», куда движутся."
+msgid "Where something is. For where it goes, say siia."
+msgstr "Где что-то находится. Siia — «сюда»: куда что-то движется."
 
 msgid "Where the <0>-da</0> form ends in <1>-ta</1>, or in <2>-a</2> after h, the command takes <3>-ke</3>: <4/>, <5/>; <6/>, <7/> Tap either side of a pair to hear it."
 msgstr "Если форма на <0>-da</0> оканчивается на <1>-ta</1> или на <2>-a</2> после h, у команды будет <3>-ke</3>: <4/>, <5/>; <6/>, <7/> Нажми на любое слово в паре, чтобы услышать его."

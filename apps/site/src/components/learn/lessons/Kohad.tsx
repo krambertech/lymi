@@ -343,7 +343,7 @@ export function KohadLesson() {
   const { t, i18n } = useLingui();
   const questions = lessonBySlug("kusimused")?.n;
   const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
-  const into = LESSONS.find((lesson) => lesson.et === "Majas, majja, majast")?.n;
+  const into = lessonBySlug("majas-majja-majast")?.n;
 
   const keysOf = (list: readonly { where: Where; id: Id }[]): KeyItem[] =>
     list.map(({ where, id }) => ({

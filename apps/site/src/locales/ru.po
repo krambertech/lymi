@@ -732,14 +732,11 @@ msgstr "Родительный падеж плюс <0>-ni</0>."
 msgid "<0>-ni</0> says how far, in place or in time: <1/> is as far as Tartu. It marks where the way stops. Going into a place is still <2/> or <3/> from lesson {into}."
 msgstr "<0>-ni</0> говорит, где предел, — в месте или во времени: <1/> — до самого Тарту, и не дальше. Чтобы войти в само место, как и раньше говорят <2/> или <3/> из урока {into}: «в магазин» — это не -ni."
 
-msgid "<0>-nud</0> and <1>-tud</1> never change before a noun: <2>ma ostsin kasutatud auto</2>."
-msgstr "<0>-nud</0> и <1>-tud</1> перед существительным никогда не меняются: <2>ma ostsin kasutatud auto</2>."
+msgid "<0>-nud</0> and <1>-tud</1> stay the same before a noun, whatever case it is in: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. <5>-v</5> changes like any adjective: <6>magav laps</6>, but <7>ma nägin magavat last</7>. You meet them every day on signs: <8>avatud</8>, open, and <9>suletud</9>, closed. Before a noun, <10>-nud</10> sounds most natural with verbs that take no object: <11>väsinud</11>, <12>kukkunud puu</12>, a fallen tree."
+msgstr "<0>-nud</0> и <1>-tud</1> перед существительным не меняются, в каком бы падеже оно ни стояло: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. А <5>-v</5> меняется, как обычное прилагательное: <6>magav laps</6>, но <7>ma nägin magavat last</7>. Эти формы встречаются каждый день на табличках: <8>avatud</8>, «открыто», и <9>suletud</9>, «закрыто». Перед существительным <10>-nud</10> звучит естественнее всего с глаголами без дополнения: <11>väsinud</11>, <12>kukkunud puu</12>, «упавшее дерево»."
 
-msgid "<0>-nud</0> and <1>-tud</1> stay the same whatever the noun does: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. <5>-v</5> changes like any adjective: <6>magav laps</6>, but <7>ma nägin magavat last</7>. You meet them every day on signs: <8>avatud</8>, open, and <9>suletud</9>, closed."
-msgstr "<0>-nud</0> и <1>-tud</1> не меняются, в каком бы падеже ни стояло существительное: <2>kasutatud auto</2>, <3>kasutatud autot</3>, <4>kasutatud autos</4>. А <5>-v</5> меняется, как обычное прилагательное: <6>magav laps</6>, но <7>ma nägin magavat last</7>. Эти формы встречаются каждый день на табличках: <8>avatud</8>, «открыто», и <9>suletud</9>, «закрыто»."
-
-msgid "<0>-nud</0> for what the noun has done: <1>väsinud mees</1>, a man who is tired."
-msgstr "<0>-nud</0> — для того, что существительное уже сделало: <1>väsinud mees</1>, «уставший мужчина»."
+msgid "<0>-nud</0> for what the noun has done: <1>väsinud mees</1>, a man who has got tired: a tired man."
+msgstr "<0>-nud</0> — для того, что существительное уже сделало: <1>väsinud mees</1>, мужчина, который устал, то есть «уставший мужчина»."
 
 msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
 msgstr "<0>-s</0> и <1>-l</1> добавляем к основе существительного: <2>pood</2>, основа <3>poe</3>, <4>poes</4>."
@@ -817,16 +814,16 @@ msgstr "<0>{0}</0> — это «{1}»."
 msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
 msgstr "<0>{0}</0> — это <1>{1}</1> без последней буквы."
 
-#. placeholder {0}: verb.v
-#. placeholder {1}: verb.nud
-#. placeholder {2}: verb.tud
-msgid "<0>{0}</0> is doing it, <1>{1}</1> has done it, and something <2>{2}</2> has had it done to it."
-msgstr "<0>{0}</0> — тот, кто это делает, <1>{1}</1> — тот, кто это уже сделал, а <2>{2}</2> — то, с чем это сделали."
-
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
 msgid "<0>{0}</0>: <1>{1}</1>"
 msgstr "<0>{0}</0>: <1>{1}</1>"
+
+#. placeholder {0}: verb.v
+#. placeholder {1}: verb.nud
+#. placeholder {2}: verb.tud
+msgid "<0>{0}</0>: doing it. <1>{1}</1>: has done it. <2>{2}</2>: had it done to it."
+msgstr "<0>{0}</0>: делает. <1>{1}</1>: уже сделал. <2>{2}</2>: с ним это сделали."
 
 msgid "<0>{base}</0> becomes <1>{form}</1>"
 msgstr "<0>{base}</0> становится <1>{form}</1>"
@@ -1782,8 +1779,8 @@ msgstr "Изменение внутри слова"
 msgid "A chat with Mari"
 msgstr "Разговор с Мари"
 
-msgid "A child’s car seat"
-msgstr "Детское кресло для машины"
+msgid "A child’s seat for a bike"
+msgstr "Детское сиденье для велосипеда"
 
 msgid "A class deck, Estonian A2 · Tuesdays, gets three new cards after today’s lesson: kohtuma, broneerima and ilm. They reach all {learners} learners."
 msgstr "После сегодняшнего урока в колоде группы «Эстонский A2 · по вторникам» появляются три новые карточки: kohtuma, broneerima и ilm. Их получают все {learners} учеников."
@@ -2453,9 +2450,6 @@ msgstr "На табличке каждый день обозначен перв�
 msgid "a small cat"
 msgstr "маленькая кошка"
 
-msgid "A small child learning to ride"
-msgstr "Малыш, который учится кататься"
-
 msgid "A small or dear one"
 msgstr "Что-то маленькое или милое"
 
@@ -2488,6 +2482,9 @@ msgstr "Чай без лимона, пожалуйста."
 
 msgid "A tea without sugar, please."
 msgstr "Чай без сахара, пожалуйста."
+
+msgid "A teenager who races"
+msgstr "Подросток, который участвует в гонках"
 
 msgid "A term and a definition"
 msgstr "Термин и определение"
@@ -3159,8 +3156,8 @@ msgstr "Все восемь. Ты умеешь строить основу дл�
 msgid "All eight. You can say while and without in one word."
 msgstr "Все восемь. Ты умеешь сказать «делая» и «не сделав» одним словом."
 
-msgid "All eight. You can turn any verb into an adjective."
-msgstr "Все восемь. Теперь ты можешь сделать из любого глагола прилагательное."
+msgid "All eight. You can tell doing it from done to it."
+msgstr "Все восемь. Ты отличаешь «делает» от «сделано»."
 
 msgid "All eight. You hear what each verb asks for."
 msgstr "Все восемь. Ты слышишь, чего требует каждый глагол."
@@ -4108,6 +4105,9 @@ msgstr "кровать"
 
 msgid "Before a -ta form, to stress the without."
 msgstr "Перед формой на -ta, чтобы усилить «без»."
+
+msgid "Before a noun, <0>-nud</0> and <1>-tud</1> never change: <2>kasutatud autoga</2>, <3>kasutatud autodes</3>."
+msgstr "Перед существительным <0>-nud</0> и <1>-tud</1> никогда не меняются: <2>kasutatud autoga</2>, <3>kasutatud autodes</3>."
 
 msgid "Before a noun, <0>Martin</0> takes its genitive: <1>Martini kohv</1>."
 msgstr "Перед существительным <0>Martin</0> стоит в родительном: <1>Martini kohv</1>."
@@ -5709,7 +5709,7 @@ msgid "Done form, impersonal now and impersonal past"
 msgstr "Форма на -tud/-dud, безличная сейчас и в прошлом"
 
 msgid "Done to it"
-msgstr "Сделано с ним"
+msgstr "С ним сделали"
 
 msgid "Done. Biology has a section for each file."
 msgstr "Готово. В «Биологии» есть раздел для каждого файла."
@@ -10067,6 +10067,9 @@ msgstr "Есть"
 msgid "Is a person named before the gap? Is there a time in the past? Pick the form, then hear the sentence."
 msgstr "Назван ли человек перед пропуском? Есть ли время в прошлом? Выбери форму, а потом послушай предложение."
 
+msgid "Is doing it"
+msgstr "Делает"
+
 msgid "Is Grok Bot the same as Grok?"
 msgstr "Grok Bot и Grok — это одно и то же?"
 
@@ -10550,6 +10553,9 @@ msgstr "Kassi — партитив от kass, кошка."
 
 msgid "Kasti is its genitive: kasti peal, on the box."
 msgstr "Kasti — родительный падеж: kasti peal, на коробке."
+
+msgid "Kasvav laps, a growing child."
+msgstr "Kasvav laps — растущий ребёнок."
 
 msgid "Kati"
 msgstr "Кати"
@@ -19136,6 +19142,9 @@ msgstr "Подниматься"
 msgid "to go, to visit"
 msgstr "ходить, бывать"
 
+msgid "to grow"
+msgstr "расти"
+
 msgid "To have fun"
 msgstr "Развлекаться"
 
@@ -21998,8 +22007,8 @@ msgstr "вы"
 msgid "You all work in an office."
 msgstr "Вы работаете в офисе."
 
-msgid "You already know two of these forms. The <0>-nud</0> form from lesson {perfect} says what someone has done, and the <1>-tud</1> form from lesson {impersonal} says what was done. Put either one before a noun and it works like an adjective. The new one is <2>-v</2>, for what the noun is doing right now, like English “sleeping” in “a sleeping child”."
-msgstr "Две из этих форм ты уже знаешь. Форма на <0>-nud</0> из урока {perfect} говорит, что кто-то уже сделал, а форма на <1>-tud</1> из урока {impersonal} — что было сделано. Поставь любую из них перед существительным, и она работает как прилагательное, совсем как русские причастия: «уставший», «прочитанная». Новая форма — <2>-v</2>, для того, что существительное делает сейчас, как «спящий» в «спящий ребёнок»."
+msgid "You already know two of these forms. The <0>-nud</0> form from lesson {perfect} says what someone has done, and the <1>-tud</1> form from lesson {impersonal} says what was done. Put either one before a noun and it works like an adjective. The new one is <2>-v</2>, for what the noun does or is doing, like English “sleeping” in “a sleeping child”."
+msgstr "Две из этих форм ты уже знаешь. Форма на <0>-nud</0> из урока {perfect} говорит, что кто-то уже сделал, а форма на <1>-tud</1> из урока {impersonal} — что было сделано. Поставь любую из них перед существительным, и она работает как прилагательное, совсем как русские причастия: «уставший», «прочитанная». Новая форма — <2>-v</2>, для того, что существительное делает, как «спящий» в «спящий ребёнок»."
 
 msgid "You and Kati plan Saturday. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
 msgstr "Вы с Кати планируете субботу. Выбери, что ты скажешь. Если выберешь неправильный ответ, увидишь почему, а потом услышишь правильный."

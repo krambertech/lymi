@@ -124,6 +124,10 @@ msgstr "{0} на сегодня"
 msgid "{0} of {1} today"
 msgstr "{0} из {1} сегодня"
 
+#. placeholder {0}: means(row.no, i18n)
+msgid "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form after <1>pole</1>."
+msgstr "{0} Предложение начинается с кошки, поэтому <0>kass</0> остаётся в первой форме и после <1>pole</1>."
+
 #. placeholder {0}: g.name
 #. placeholder {1}: g.when
 msgid "{0}, next in {1}"
@@ -136,6 +140,10 @@ msgstr "{0}, правильный ответ"
 #. placeholder {0}: place.meaning
 msgid "{0}, your answer"
 msgstr "{0}, твой ответ"
+
+#. placeholder {0}: means(text, i18n)
+msgid "{0}; its third form is <0>maja</0> too, so it looks the same."
+msgstr "{0}; третья форма тоже <0>maja</0>, поэтому слово не меняется."
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}}"
@@ -389,8 +397,8 @@ msgstr "<0/> превращается в <1/>, а глагол тоже стои
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> не имеет окончания и подходит и для «он или она», и для «они». Поэтому <1/> — неправильный глагол: у других глаголов окончание есть и здесь, об этом — в уроке {regularVerbs}."
 
-msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/>"
-msgstr "<0/> У меня есть кошка. Чтобы сказать, что кошки нет, возьми <1/> из урока {negation}, а кошка перейдёт в третью форму: <2/>"
+msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (<3>Mul on</3> is lesson {have}.)"
+msgstr "<0/> У меня есть кошка. Чтобы сказать, что кошки нет, возьми <1/> из урока {negation}, а кошка перейдёт в третью форму: <2/> (<3>Mul on</3> — это урок {have}.)"
 
 msgid "<0/> is a cup of coffee. The amount comes first, in its first form, and what it measures follows in its third: <1/> becomes <2/>."
 msgstr "<0/> — чашка кофе. Сначала идёт слово количества в первой форме, а за ним то, что меряют, в третьей: <1/> становится <2/>. По-русски так же: «стакан воды», а не «стакан вода»."
@@ -526,9 +534,6 @@ msgstr "<0>Мексиканский испанский</0>, <1>разговор�
 msgid "<0>Mina</0> takes <1>olen</1>: <2>Mina olen Andres</2>."
 msgstr "После <0>mina</0> идёт <1>olen</1>: <2>Mina olen Andres</2>."
 
-msgid "<0>Natuke</0> is an amount too: <1>natuke piima</1>."
-msgstr "<0>Natuke</0> тоже обозначает количество: <1>natuke piima</1>."
-
 msgid "<0>Olen</0> for I, <1>oled</1> for you, <2>on</2> for he or she and for they."
 msgstr "<0>Olen</0> для «я», <1>oled</1> для «ты», <2>on</2> для «он или она» и для «они»."
 
@@ -598,11 +603,11 @@ msgstr "<0>乗る</0> — сесть, <1>換える</1> — заменить: т�
 msgid "<0>换</0> to swap, <1>乘</1> to ride: you swap the line you ride."
 msgstr "<0>换</0> — менять, <1>乘</1> — ехать: меняешь линию, по которой едешь."
 
-msgid "€1"
-msgstr "1 €"
-
 msgid "€10"
 msgstr "10 €"
+
+msgid "€12"
+msgstr "12 €"
 
 msgid "€13"
 msgstr "13 €"
@@ -1536,23 +1541,20 @@ msgstr "После <0>ei</0> идёт форма с ma без -n: <1>loen</1>, <
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "После <0>ei</0> у глагола <1>olema</1> нет окончания: <2>ei ole</2>."
 
-msgid "After <0>kaks</0>, the third form: <1>kaks kassi</1>."
-msgstr "После <0>kaks</0> — третья форма: <1>kaks kassi</1>."
+msgid "After <0>pole</0>, what someone hasn’t got, or what there is none of in a place, takes the third form: <1>Mul pole kassi, Laual pole leiba</1>. When the sentence starts with the thing, it keeps its first: <2>Kass pole laual</2>."
+msgstr "После <0>pole</0> то, чего у кого-то нет или чего нет в каком-то месте, стоит в третьей форме: <1>Mul pole kassi, Laual pole leiba</1>. Если предложение начинается с самого предмета, он остаётся в первой: <2>Kass pole laual</2>."
 
-msgid "After <0>pole</0>, the thing someone hasn’t got, or that isn’t somewhere, takes the third form: <1>Mul pole kassi</1>."
-msgstr "После <0>pole</0> то, чего у кого-то нет или чего где-то нет, стоит в третьей форме: <1>Mul pole kassi</1>."
+msgid "After <0>pole</0>, what there is none of in a place takes the third form: <1>pole leiba</1>."
+msgstr "После <0>pole</0> то, чего нет в каком-то месте, стоит в третьей форме: <1>pole leiba</1>."
 
-msgid "After <0>pole</0>, what isn’t there takes its third form: <1>kassi, autot, last</1>. <2>Maja</2> stays <3>maja</3>."
-msgstr "После <0>pole</0> то, чего нет, стоит в третьей форме: <1>kassi, autot, last</1>. <2>Maja</2> остаётся <3>maja</3>."
+msgid "After <0>üks</0> on its own, a noun keeps its first form. From two up, it takes its third."
+msgstr "После одного <0>üks</0> существительное остаётся в первой форме. От двух — стоит в третьей."
 
-msgid "After <0>pole</0>, what isn’t there takes the third form: <1>pole leiba</1>."
-msgstr "После <0>pole</0> то, чего нет, стоит в третьей форме: <1>pole leiba</1>."
+msgid "After <0>üks</0> on its own, the first form: <1>üks kass</1>."
+msgstr "После одного <0>üks</0> — первая форма: <1>üks kass</1>."
 
-msgid "After <0>üks</0>, each noun keeps its first form. Pick <1>kaks</1> and watch the endings."
-msgstr "После <0>üks</0> каждое существительное остаётся в первой форме. Выбери <1>kaks</1> и следи за окончаниями."
-
-msgid "After <0>üks</0>, the first form: <1>üks kass</1>."
-msgstr "После <0>üks</0> — первая форма: <1>üks kass</1>."
+msgid "After <0>üks</0> on its own, the first form: <1>üks leib</1>."
+msgstr "После одного <0>üks</0> — первая форма: <1>üks leib</1>."
 
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "После урока на italki, Preply или с частным репетитором вставь чат или сфотографируй заметки. Lymi превратит новые слова в карточки, которые ты повторяешь между уроками. Добавить их может и AI-ассистент. Бесплатно."
@@ -1560,8 +1562,8 @@ msgstr "После урока на italki, Preply или с частным ре�
 msgid "After a number from two up"
 msgstr "После числа от двух"
 
-msgid "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> it keeps its first: <2>üks kass</2>."
-msgstr "После числа от двух существительное стоит в третьей форме и остаётся в единственном числе: <0>kaks kassi, viis eurot</0>. После <1>üks</1> оно остаётся в первой: <2>üks kass</2>."
+msgid "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> on its own, it keeps its first: <2>üks kass</2>."
+msgstr "После числа от двух существительное стоит в третьей форме и остаётся в единственном числе: <0>kaks kassi, viis eurot</0>. После одного <1>üks</1> оно остаётся в первой: <2>üks kass</2>."
 
 msgid "After a number from two up, euro becomes eurot."
 msgstr "После чисел от двух и больше euro становится eurot."
@@ -2708,6 +2710,9 @@ msgstr "Замок (крепость)"
 msgid "cat"
 msgstr "кошка"
 
+msgid "cat, said first"
+msgstr "кошка в начале предложения"
+
 msgid "CCSE Spanish nationality test"
 msgstr "Экзамен CCSE на гражданство Испании"
 
@@ -2783,9 +2788,6 @@ msgstr "Проверено {date}. Источники: {places}."
 
 msgid "cheese"
 msgstr "сыр"
-
-msgid "Cheese"
-msgstr "Сыр"
 
 msgid "Chemistry"
 msgstr "Химия"
@@ -2966,6 +2968,9 @@ msgstr "Частые вопросы."
 
 msgid "Comparatives and superlatives"
 msgstr "Сравнительная и превосходная степень"
+
+msgid "Compare each row’s two sentences. The last row starts with the cat."
+msgstr "Сравни два предложения в каждой строке. Последняя строка начинается с кошки."
 
 msgid "Conditional mood"
 msgstr "Условное наклонение"
@@ -4129,6 +4134,9 @@ msgstr "Препарат первой линии при диабете 2 тип�
 msgid "five"
 msgstr "пять"
 
+msgid "Five"
+msgstr "Пять"
+
 msgid "five books"
 msgstr "пять книг"
 
@@ -4153,11 +4161,11 @@ msgstr "пять домов"
 msgid "Five look familiar. The four with marks are separate letters, not accents, and swapping one changes the word. English has no sound like <0/>."
 msgstr "Пять выглядят знакомо. Четыре со значками — отдельные буквы, а не разновидности привычных, и если заменить одну, получится другое слово. Ближе всего к <0/> русское ы."
 
-msgid "five men"
-msgstr "пятеро мужчин"
-
 msgid "Five sentences. Switch to Question and watch what changes."
 msgstr "Пять предложений. Переключи на «Вопрос» и посмотри, что изменится."
+
+msgid "five tables"
+msgstr "пять столов"
 
 msgid "Fix and tidy cards"
 msgstr "Исправить и упорядочить карточки"
@@ -4513,9 +4521,6 @@ msgstr "От tulema, «приходить»."
 
 msgid "From tuul, wind."
 msgstr "От tuul — ветер."
-
-msgid "From two up, each noun takes its third form. <0>Maja</0> looks the same, since its third form is <1>maja</1> too."
-msgstr "От двух каждое существительное стоит в третьей форме. <0>Maja</0> не меняется: его третья форма тоже <1>maja</1>."
 
 msgid "From your notes"
 msgstr "Из твоих заметок"
@@ -5172,9 +5177,6 @@ msgstr "Как Lymi использует персональные данные, 
 msgid "how many"
 msgstr "сколько"
 
-msgid "How many"
-msgstr "Сколько"
-
 msgid "How many are waiting for me tonight?"
 msgstr "Сколько карточек ждёт меня сегодня?"
 
@@ -5208,8 +5210,8 @@ msgstr "Сколько стоит кофе?"
 msgid "How much is a kilo of cheese?"
 msgstr "Сколько стоит килограмм сыра?"
 
-msgid "How much is the milk?"
-msgstr "Сколько стоит молоко?"
+msgid "How much is the bread?"
+msgstr "Сколько стоит хлеб?"
 
 msgid "How much of a dose reaches the blood"
 msgstr "Какая доля дозы попадает в кровь"
@@ -5993,6 +5995,9 @@ msgstr "Мари — врач?"
 msgid "Is Noji the same as Anki?"
 msgstr "Noji — это то же самое, что Anki?"
 
+msgid "Is there"
+msgstr "Есть"
+
 msgid "Is there a *bank* nearby?"
 msgstr "Здесь рядом есть *банк*?"
 
@@ -6004,6 +6009,9 @@ msgstr "Этот *стул* свободен?"
 
 msgid "Is this like an Anki MCP server?"
 msgstr "Это как MCP-сервер для Anki?"
+
+msgid "Isn’t there"
+msgstr "Нет"
 
 msgid "isn’t, aren’t"
 msgstr "нет"
@@ -6047,8 +6055,8 @@ msgstr "Это был очень *приятный* вечер."
 msgid "It will all work out"
 msgstr "Всё образуется"
 
-msgid "It works the same for a place: <0/> Switch between <1>on</1> and <2>pole</2>."
-msgstr "С местом так же: <0/> Переключай между <1>on</1> и <2>pole</2>. По-русски похоже: «нет хлеба», а не «нет хлеб»."
+msgid "It works the same for a place: <0/> Tap the sentences in each column."
+msgstr "С местом так же: <0/> Нажимай на предложения в каждом столбце. По-русски похоже: «нет хлеба», а не «нет хлеб»."
 
 msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
 msgstr "Так же с городами, зданиями и большинством стран. Попробуй на трёх странах и трёх городах."
@@ -6971,9 +6979,6 @@ msgstr "Сделай из этого поста карточки по испан
 msgid "Making cards with AI"
 msgstr "Создание карточек с AI"
 
-msgid "man"
-msgstr "мужчина"
-
 msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {genitive} shows where the vowel comes from."
 msgstr "У многих слов, как у Tallinn, перед <0>-s</0> появляется гласная, и какую именно, пока угадать трудно. Поэтому учи каждое место сразу с <1>-s</1>: <2/>, <3/>; <4/>, <5/>. Откуда берётся гласная, объясняет урок {genitive}."
 
@@ -7882,9 +7887,6 @@ msgstr "Одна буква или две?"
 msgid "One letter or two? Listen, then fill the gap."
 msgstr "Одна буква или две? Послушай и заполни пропуск."
 
-msgid "one man"
-msgstr "один мужчина"
-
 msgid "One more"
 msgstr "На единицу больше"
 
@@ -7920,6 +7922,9 @@ msgstr "Одна общая колода, у каждого своё распи�
 
 msgid "One spelling, two words."
 msgstr "Одно написание, два слова."
+
+msgid "one table"
+msgstr "один стол"
 
 msgid "One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 msgstr "По одному направлению за раз: китайское слово — вспомни значение, или значение — вспомни китайское. Вспоминаешь ответ, переворачиваешь карточку и оцениваешь, насколько легко вспомнилось. Ничего набирать не нужно."
@@ -9269,6 +9274,9 @@ msgstr "Отправится, когда сеть вернётся"
 msgid "Sentence {sentenceNumber} of {sentenceCount}, {time}"
 msgstr "Предложение {sentenceNumber} из {sentenceCount}, {time}"
 
+msgid "Sentences that say something is there, and that it isn’t"
+msgstr "Предложения о том, что что-то есть, и о том, что этого нет"
+
 msgid "Ser is for who and what: soy de Valencia, I’m from Valencia."
 msgstr "Ser говорят о том, кто и что: soy de Valencia, я из Валенсии."
 
@@ -9498,6 +9506,9 @@ msgstr "Шесть дней заканчиваются на <0>päev</0>, ден
 
 msgid "Six endings"
 msgstr "Шесть окончаний"
+
+msgid "Six nouns after one, two and five"
+msgstr "Шесть существительных после одного, двух и пяти"
 
 msgid "Six pronouns, two forms"
 msgstr "Шесть местоимений, две формы"
@@ -10075,6 +10086,9 @@ msgstr "Коснись места, чтобы отправить туда кот
 msgid "Tap a question word"
 msgstr "Нажми вопросительное слово"
 
+msgid "Tap a sentence"
+msgstr "Нажми на предложение"
+
 msgid "Tap a tense"
 msgstr "Коснись времени"
 
@@ -10419,6 +10433,9 @@ msgstr "Кот рядом с коробкой."
 
 msgid "The cat is on the box."
 msgstr "Кот на коробке."
+
+msgid "The cat is on the table."
+msgstr "Кошка на столе."
 
 msgid "The cat is under the box."
 msgstr "Кот под коробкой."
@@ -11772,6 +11789,9 @@ msgstr "Двадцать две. Новые слова будут появлят
 msgid "two"
 msgstr "два"
 
+msgid "Two"
+msgstr "Два"
+
 msgid "Two *bread rolls*, please."
 msgstr "Две *булочки*, пожалуйста."
 
@@ -12221,6 +12241,9 @@ msgstr "А если он ошибётся?"
 msgid "What is that?"
 msgstr "Что это?"
 
+msgid "What is there keeps its first form: <0>Turul on kohvik</0>."
+msgstr "То, что есть, остаётся в первой форме: <0>Turul on kohvik</0>."
+
 msgid "What is this part called?"
 msgstr "Как называется эта часть?"
 
@@ -12235,9 +12258,6 @@ msgstr "Какое число было во фразе?"
 
 msgid "What should I review tonight?"
 msgstr "Что мне повторить сегодня вечером?"
-
-msgid "What someone has, or what is there, keeps its first form. Pick <0>pole</0> to say it isn’t there."
-msgstr "То, что у кого-то есть или что где-то есть, остаётся в первой форме. Выбери <0>pole</0>, чтобы сказать, что этого нет."
 
 msgid "What stays for others"
 msgstr "Что останется другим"
@@ -12991,8 +13011,8 @@ msgstr "вы есть; вежливое «Вы есть»"
 msgid "You build your own card layouts"
 msgstr "Ты собираешь свои макеты карточек"
 
-msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/> Lesson {have} taught <4>mul on</4>."
-msgstr "Можно сказать и <0/> Это то же самое: <1>pole</1> — краткая форма <2>ei ole</2>. Если предложение начинается с самого предмета, он остаётся в первой форме: <3/> Конструкцию <4>mul on</4> объясняет урок {have}."
+msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/>"
+msgstr "Можно сказать и <0/> Это то же самое: <1>pole</1> — краткая форма <2>ei ole</2>. Если предложение начинается с самого предмета, он остаётся в первой форме: <3/>"
 
 msgid "You can delete your account in You › Delete account on the phone or Settings › Delete account on the web, after confirming your identity. Deletion cannot be undone. Your account and private learning records are erased, and file cleanup and requests to erase account-linked analytics run separately. Provider logs, backups and support correspondence can remain under their applicable retention periods; deletion is not an instant purge of every copy."
 msgstr "Удалить аккаунт можно в разделе Ты › Удалить аккаунт на телефоне или Настройки › Удалить аккаунт в веб-приложении после подтверждения личности. Отменить удаление невозможно. Аккаунт и личные учебные записи стираются, а очистка файлов и запросы на стирание связанной аналитики выполняются отдельно. Журналы поставщиков, резервные копии и переписка с поддержкой могут храниться в течение соответствующих сроков; удаление не означает мгновенного стирания каждой копии."

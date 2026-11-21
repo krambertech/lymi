@@ -4424,13 +4424,13 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "osastav/u2ks-mees": {
-    "text": "üks mees",
+  "osastav/u2ks-laud": {
+    "text": "üks laud",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "osastav/viis-meest": {
-    "text": "viis meest",
+  "osastav/viis-lauda": {
+    "text": "viis lauda",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -4546,6 +4546,16 @@
   },
   "osastav/linnas-pole-kohvikut": {
     "text": "Linnas pole kohvikut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kass-on-laual": {
+    "text": "Kass on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "osastav/kass-pole-laual": {
+    "text": "Kass pole laual.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -4734,18 +4744,13 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "osastav/kass-pole-laual": {
-    "text": "Kass pole laual.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "osastav/p-market": {
-    "text": "Täna on laupäev ja Mari on turul. Tal on vaja kilo juustu ja natuke piima. Juust maksab seitse eurot. Turul pole täna leiba. Mari joob kohvikus kohvi. Kohvikus on üks kass. Maril on kodus kaks kassi.",
+    "text": "Täna on laupäev ja Mari on turul. Tal on vaja kilo juustu ja üks leib. Juust maksab seitse eurot. Aga turul pole täna leiba. Turul on kohvik. Mari joob kohvikus kohvi. Kohvikus on üks kass.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
   "osastav/p-jaan": {
-    "text": "Tere, see on Jaan! Ma olen turul. Täna on palju juustu. Kilo juustu maksab kaheksa eurot. Piim maksab kaks eurot. Aga täna pole leiba. Kas sa tahad kohvi?",
+    "text": "Tere, see on Jaan! Ma olen turul. Täna on palju juustu. Kilo juustu maksab kaheksa eurot. Leib maksab kaks eurot. Aga täna pole piima. Kas sa tahad kohvi?",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

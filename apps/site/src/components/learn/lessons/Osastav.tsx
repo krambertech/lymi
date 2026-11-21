@@ -1,9 +1,7 @@
 import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { clsx } from "clsx";
-import { CornerDownRight } from "lucide-react";
-import { type ReactNode, useMemo, useState } from "react";
+import { useMemo } from "react";
 import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
@@ -19,15 +17,14 @@ import {
   PARTITIVE_NOUNS,
   type PartitiveNoun,
 } from "../../../lib/learn/clips";
-import { playSound, usePlaying } from "../../../lib/learn/player";
-import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
-import { Chips, type KeyItem, Keys, Panel } from "../Explore";
+import { shuffle } from "../../../lib/learn/quiz";
+import { type KeyItem, Keys, ListenRows, Panel, type RowItem } from "../Explore";
 import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Paradigm, type ParadigmRow } from "../Paradigm";
 import { Listening, type PassageQuestion } from "../Passage";
 import { type GapItem, GapRound, Quiz } from "../Quiz";
-import { PlayMark } from "../Sound";
 import { Word } from "../Word";
 
 const SLUG = "osastav";
@@ -42,7 +39,7 @@ const NOUN_MEANS: Record<PartitiveNoun, MessageDescriptor> = {
   maja: msg`house`,
   euro: msg`euro`,
   kool: msg`school`,
-  mees: msg`man`,
+  laud: msg`table`,
   kohv: msg`coffee`,
   vesi: msg`water`,
   juust: msg`cheese`,
@@ -78,8 +75,8 @@ const MEANS: Record<string, MessageDescriptor> = {
   "kümme eurot": msg`ten euros`,
   "üks kool": msg`one school`,
   "neli kooli": msg`four schools`,
-  "üks mees": msg`one man`,
-  "viis meest": msg`five men`,
+  "üks laud": msg`one table`,
+  "viis lauda": msg`five tables`,
   "Mitu last sul on?": msg`How many children do you have?`,
   "Mul on kaks last.": msg`I have two children.`,
   "Mitu kassi teil on?": msg`How many cats do you have?`,
@@ -113,6 +110,7 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Mul ei ole kassi.": msg`I don’t have a cat.`,
   "Üks kohv, palun.": msg`One coffee, please.`,
   "Ma loen raamatut.": msg`I’m reading a book.`,
+  "Kass on laual.": msg`The cat is on the table.`,
   "Kass pole laual.": msg`The cat isn’t on the table.`,
 };
 
@@ -163,212 +161,142 @@ const GLOSSARY: Glossary = {
   tahan: { en: msg`I want`, note: msg`From tahtma, to want.` },
 };
 
-/** A form with what it adds to the first form lit: kass → kass·i, laps → la·st. */
-function Lit({ base, form }: { base: string; form: string }) {
+/**
+ * A phrase or sentence as Paradigm writes it, without its full stop and with `|` before what the
+ * third form adds to the first: “kaks kass|i”, “Tal pole la|st”. A form like its first lights nothing.
+ */
+export function litForm(text: string, base: string, form: string): string {
+  const bare = text.replace(/[.?!]$/, "");
+  const at = bare.lastIndexOf(form);
+  if (at < 0 || base === form) return bare;
   let same = 0;
-  while (same < base.length && same < form.length && base[same] === form[same]) same++;
-  if (same === form.length && base.length === form.length) return <>{form}</>;
-  return (
-    <>
-      {form.slice(0, same)}
-      <span className="text-(--form)">{form.slice(same)}</span>
-    </>
-  );
+  while (same < base.length && base[same] === form[same]) same++;
+  return `${bare.slice(0, at + same)}|${bare.slice(at + same)}`;
 }
 
-/** A tile or row that plays its words, with what they mean under them. */
-function SayButton(props: { text: string; shown: ReactNode; means: string; big?: boolean }) {
-  const clip = src(props.text);
-  const playing = usePlaying(clip);
-  // No aria-label: the words and their meaning are the button's name.
-  return (
-    <button
-      type="button"
-      onClick={() => void playSound(clip)}
-      className="grid h-full w-full cursor-pointer grid-cols-[minmax(0,1fr)_auto] items-center gap-x-2 py-3 ps-4 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover"
-    >
-      <span className="grid min-w-0">
-        <span
-          key={props.text}
-          lang="et"
-          className={clsx(
-            "learn-swap font-semibold tracking-tight",
-            props.big ? "text-xl" : "text-lg max-sm:text-md",
-          )}
-        >
-          {props.shown}
-        </span>
-        <span className="text-sm text-ink-muted">{props.means}</span>
-      </span>
-      <PlayMark playing={playing} />
-    </button>
-  );
-}
-
-/** A sentence that plays when tapped, with its meaning under it. */
-function Line({ text, reply }: { text: string; reply?: boolean }) {
-  const { i18n } = useLingui();
-  const clip = src(text);
-  const playing = usePlaying(clip);
-  return (
-    <button
-      type="button"
-      onClick={() => void playSound(clip)}
-      className={clsx(
-        "grid w-full cursor-pointer items-center gap-x-3.5 py-2.5 pe-3 text-start transition-colors duration-150 hoverable:hover:bg-plate-hover",
-        reply ? "grid-cols-[auto_minmax(0,1fr)_auto] ps-5" : "grid-cols-[minmax(0,1fr)_auto] ps-4",
-      )}
-    >
-      {reply && (
-        <CornerDownRight aria-hidden="true" className="size-4 text-ink-faint rtl:-scale-x-100" />
-      )}
-      <span
-        lang="et"
-        className={clsx(
-          "min-w-0 tracking-tight max-sm:text-lg",
-          reply ? "text-lg" : "text-xl font-medium",
-        )}
-      >
-        {text}
-        <span
-          lang={i18n.locale}
-          className="block text-sm font-normal tracking-normal text-ink-muted"
-        >
-          {means(text, i18n)}
-        </span>
-      </span>
-      <PlayMark playing={playing} />
-    </button>
-  );
-}
-
-/** One, two or five, over six nouns: each tile shows the noun in the form the number asks for. */
-function CountSwitch() {
+/** Six nouns after üks, kaks and viis, the third form's new letters lit. */
+function CountTable() {
   const { t, i18n } = useLingui();
-  const [number, setNumber] = useState<string>("üks");
+  const rows: ParadigmRow[] = OSASTAV_COUNT.nouns.map((noun) => ({
+    id: noun,
+    label: i18n._(NOUN_MEANS[noun]),
+    et: noun,
+    cells: OSASTAV_COUNT.numbers.map((number) => {
+      const text = counted(number, noun);
+      return {
+        form: number === "üks" ? text : litForm(text, noun, PARTITIVE_NOUNS[noun]),
+        src: src(text),
+        note:
+          noun === "maja" && number !== "üks" ? (
+            <Trans>
+              {means(text, i18n)}; its third form is <b lang="et">maja</b> too, so it looks the
+              same.
+            </Trans>
+          ) : (
+            means(text, i18n)
+          ),
+      };
+    }),
+  }));
   return (
     <Panel>
-      <Chips
-        label={t`How many`}
-        items={OSASTAV_COUNT.numbers.map((each) => ({ label: each, value: each, lang: "et" }))}
-        value={number}
-        onPick={setNumber}
+      <Paradigm
+        label={t`Six nouns after one, two and five`}
+        columns={[t`One`, t`Two`, t`Five`]}
+        rows={rows}
+        empty={{
+          title: t`Tap a form`,
+          tip: (
+            <Trans>
+              After <b lang="et">üks</b> on its own, a noun keeps its first form. From two up, it
+              takes its third.
+            </Trans>
+          ),
+        }}
       />
-      <ul className="m-0 grid list-none grid-cols-2 overflow-hidden rounded-lg bg-plate p-0 ring-1 ring-edge sm:grid-cols-3">
-        {OSASTAV_COUNT.nouns.map((noun) => {
-          const text = counted(number, noun);
-          const form = number === "üks" ? noun : PARTITIVE_NOUNS[noun];
-          return (
-            <li key={noun} className="border-b border-edge">
-              <SayButton
-                text={text}
-                big
-                shown={
-                  <>
-                    <span className="font-normal text-ink-secondary">{number}</span>{" "}
-                    <Lit base={noun} form={form} />
-                  </>
-                }
-                means={means(text, i18n)}
-              />
-            </li>
-          );
-        })}
-      </ul>
-      <p aria-live="polite" className="text-md text-ink-secondary">
-        {number === "üks" ? (
-          <Trans>
-            After <b lang="et">üks</b>, each noun keeps its first form. Pick <b lang="et">kaks</b>{" "}
-            and watch the endings.
-          </Trans>
-        ) : (
-          <Trans>
-            From two up, each noun takes its third form. <b lang="et">Maja</b> looks the same, since
-            its third form is <b lang="et">maja</b> too.
-          </Trans>
-        )}
-      </p>
     </Panel>
   );
 }
 
-/** Yes or no over six sentences: what isn't there takes its third form. */
-function NoSwitch() {
+/** Seven sentences with on and with pole: what isn't there takes its third form, unless it comes first. */
+function NoTable() {
   const { t, i18n } = useLingui();
-  const [no, setNo] = useState(false);
+  const rows: ParadigmRow[] = OSASTAV_NO.map((row) => ({
+    id: clipId(row.no),
+    label: "first" in row ? t`cat, said first` : i18n._(NOUN_MEANS[row.noun]),
+    et: row.noun,
+    cells: [
+      { form: litForm(row.yes, row.noun, row.noun), src: src(row.yes), note: means(row.yes, i18n) },
+      {
+        form:
+          "first" in row
+            ? litForm(row.no, row.noun, row.noun)
+            : litForm(row.no, row.noun, PARTITIVE_NOUNS[row.noun]),
+        src: src(row.no),
+        note:
+          "first" in row ? (
+            <Trans>
+              {means(row.no, i18n)} The sentence starts with the cat, so <b lang="et">kass</b> keeps
+              its first form after <b lang="et">pole</b>.
+            </Trans>
+          ) : (
+            means(row.no, i18n)
+          ),
+      },
+    ],
+  }));
   return (
     <Panel>
-      <Chips
-        label={t`Yes or no`}
-        items={[
-          { label: "on", value: "on", lang: "et" },
-          { label: "pole", value: "pole", lang: "et" },
-        ]}
-        value={no ? "pole" : "on"}
-        onPick={(value) => setNo(value === "pole")}
+      <Paradigm
+        label={t`Sentences that say something is there, and that it isn’t`}
+        columns={[t`Is there`, t`Isn’t there`]}
+        rows={rows}
+        highlight={{ column: 1 }}
+        empty={{
+          title: t`Tap a sentence`,
+          tip: t`Compare each row’s two sentences. The last row starts with the cat.`,
+        }}
       />
-      <ul className="m-0 grid list-none overflow-hidden rounded-lg bg-plate p-0 ring-1 ring-edge sm:grid-cols-2">
-        {OSASTAV_NO.map((row) => {
-          const text = no ? row.no : row.yes;
-          const form = no ? PARTITIVE_NOUNS[row.noun] : row.noun;
-          const at = text.lastIndexOf(form);
-          return (
-            <li key={row.noun} className="border-b border-edge">
-              <SayButton
-                text={text}
-                shown={
-                  <>
-                    {text.slice(0, at)}
-                    <Lit base={row.noun} form={form} />
-                    {text.slice(at + form.length)}
-                  </>
-                }
-                means={means(text, i18n)}
-              />
-            </li>
-          );
-        })}
-      </ul>
-      <p aria-live="polite" className="text-md text-ink-secondary">
-        {no ? (
-          <Trans>
-            After <b lang="et">pole</b>, what isn’t there takes its third form:{" "}
-            <b lang="et">kassi, autot, last</b>. <b lang="et">Maja</b> stays <b lang="et">maja</b>.
-          </Trans>
-        ) : (
-          <Trans>
-            What someone has, or what is there, keeps its first form. Pick <b lang="et">pole</b> to
-            say it isn’t there.
-          </Trans>
-        )}
-      </p>
     </Panel>
   );
 }
 
-type CountItem = GapItem & { text: string; pair: readonly [string, string] };
+type CountItem = GapItem & {
+  text: string;
+  noun: PartitiveNoun;
+  /** Whether the number is üks, so the noun keeps its first form. */
+  one: boolean;
+  pair: readonly [string, string];
+};
 
 /** A count's two forms in a random order, so neither sits in one place. */
 const twoForms = (noun: PartitiveNoun) => shuffle([noun, PARTITIVE_NOUNS[noun]]);
 
-/** The first run as the server draws it: the answer first, second, first… */
-export const COUNT_ITEMS: readonly {
-  noun: PartitiveNoun;
-  number: string;
-  options: readonly string[];
-}[] = OSASTAV_COUNTED.flatMap(({ noun, number }, i) => {
-  const forms = [noun, PARTITIVE_NOUNS[noun]] as const;
-  return [
-    { noun, number, options: i % 2 ? [forms[1], forms[0]] : forms },
-    { noun, number: "üks", options: i % 2 ? forms : [forms[1], forms[0]] },
-  ];
-});
+/** Each noun with üks and with a number from two up; options in the server's fixed order. */
+export const COUNT_ITEMS: readonly { noun: PartitiveNoun; number: string; one: boolean }[] =
+  OSASTAV_COUNTED.flatMap(({ noun, number }) => [
+    { noun, number, one: false },
+    { noun, number: "üks", one: true },
+  ]);
 
-/** Keyed by the noun, so a run meets six nouns, each with üks or a bigger number. */
-export function countRun(items: readonly CountItem[], pinned?: CountItem): CountItem[] {
-  return eachPairFirst(items, pinned).map((item) =>
-    item === pinned ? item : { ...item, options: twoForms(item.pair[0] as PartitiveNoun) },
+/**
+ * A run of six: every noun once, three of them with üks and three with a bigger number, in a random
+ * order. The pinned first round counts as its noun's turn and its kind's.
+ */
+export function countRun<
+  T extends { noun: PartitiveNoun; one: boolean; options: readonly string[] },
+>(items: readonly T[], pinned?: T): T[] {
+  const nouns = shuffle(
+    [...new Set(items.map((item) => item.noun))].filter((noun) => noun !== pinned?.noun),
   );
+  const ones = 3 - (pinned?.one ? 1 : 0);
+  const picked = nouns.map(
+    (noun, i) => items.find((item) => item.noun === noun && item.one === i < ones) as T,
+  );
+  return [
+    ...(pinned ? [pinned] : []),
+    ...shuffle(picked).map((item) => ({ ...item, options: twoForms(item.noun) })),
+  ];
 }
 
 function useContent() {
@@ -387,14 +315,14 @@ function useContent() {
       ),
     },
     {
-      id: "piima",
-      before: "ja natuke",
+      id: "leib",
+      before: "ja üks",
       after: ".",
-      answer: "piima",
-      options: ["piima", "piim"],
+      answer: "leib",
+      options: ["leiba", "leib"],
       why: (
         <Trans>
-          <b lang="et">Natuke</b> is an amount too: <b lang="et">natuke piima</b>.
+          After <b lang="et">üks</b> on its own, the first form: <b lang="et">üks leib</b>.
         </Trans>
       ),
     },
@@ -412,14 +340,26 @@ function useContent() {
     },
     {
       id: "leiba",
-      before: "Turul pole täna",
+      before: "Aga turul pole täna",
       after: ".",
       answer: "leiba",
       options: ["leiba", "leib"],
       why: (
         <Trans>
-          After <b lang="et">pole</b>, what isn’t there takes the third form:{" "}
+          After <b lang="et">pole</b>, what there is none of in a place takes the third form:{" "}
           <b lang="et">pole leiba</b>.
+        </Trans>
+      ),
+    },
+    {
+      id: "kohvik",
+      before: "Turul on",
+      after: ".",
+      answer: "kohvik",
+      options: ["kohvik", "kohvikut"],
+      why: (
+        <Trans>
+          What is there keeps its first form: <b lang="et">Turul on kohvik</b>.
         </Trans>
       ),
     },
@@ -428,7 +368,7 @@ function useContent() {
       before: "Mari joob kohvikus",
       after: ".",
       answer: "kohvi",
-      options: ["kohv", "kohvi"],
+      options: ["kohvi", "kohv"],
       why: (
         <Trans>
           She drinks some coffee, not a counted cup: <b lang="et">joob kohvi</b>.
@@ -440,22 +380,10 @@ function useContent() {
       before: "Kohvikus on üks",
       after: ".",
       answer: "kass",
-      options: ["kass", "kassi"],
+      options: ["kassi", "kass"],
       why: (
         <Trans>
-          After <b lang="et">üks</b>, the first form: <b lang="et">üks kass</b>.
-        </Trans>
-      ),
-    },
-    {
-      id: "kassi",
-      before: "Maril on kodus kaks",
-      after: ".",
-      answer: "kassi",
-      options: ["kass", "kassi"],
-      why: (
-        <Trans>
-          After <b lang="et">kaks</b>, the third form: <b lang="et">kaks kassi</b>.
+          After <b lang="et">üks</b> on its own, the first form: <b lang="et">üks kass</b>.
         </Trans>
       ),
     },
@@ -474,11 +402,11 @@ function useContent() {
       line: 2,
     },
     {
-      id: "milk",
-      ask: t`How much is the milk?`,
+      id: "bread",
+      ask: t`How much is the bread?`,
       options: [
         { id: "two", label: t`€2` },
-        { id: "one", label: t`€1` },
+        { id: "twelve", label: t`€12` },
         { id: "ten", label: t`€10` },
       ],
       answer: "two",
@@ -488,11 +416,11 @@ function useContent() {
       id: "none",
       ask: t`What isn’t there today?`,
       options: [
-        { id: "cheese", label: t`Cheese` },
+        { id: "water", label: t`Water` },
+        { id: "tea", label: t`Tea` },
         { id: "milk", label: t`Milk` },
-        { id: "bread", label: t`Bread` },
       ],
-      answer: "bread",
+      answer: "milk",
       line: 4,
     },
     {
@@ -523,15 +451,17 @@ export function OsastavLesson() {
 
   const countItems = useMemo<CountItem[]>(
     () =>
-      COUNT_ITEMS.map(({ noun, number, options }) => {
+      COUNT_ITEMS.map(({ noun, number, one }) => {
         const text = counted(number, noun);
         return {
           text,
+          noun,
+          one,
           src: src(text),
-          before: `${number} `,
+          before: `${number}\u00a0`,
           after: "",
-          answer: number === "üks" ? noun : PARTITIVE_NOUNS[noun],
-          options,
+          answer: one ? noun : PARTITIVE_NOUNS[noun],
+          options: [noun, PARTITIVE_NOUNS[noun]],
           pair: [noun, text] as const,
           explain: (
             <>
@@ -545,6 +475,9 @@ export function OsastavLesson() {
       }),
     [i18n],
   );
+
+  const rowsOf = (texts: readonly string[]): RowItem[] =>
+    texts.map((text) => ({ main: text, sub: means(text, i18n), src: src(text) }));
 
   const amountKeys: KeyItem[] = OSASTAV_AMOUNTS.map(({ phrase, noun }) => ({
     label: phrase,
@@ -596,8 +529,8 @@ export function OsastavLesson() {
       recap={[
         <Trans key="1">
           After a number from two up, a noun takes its third form and stays singular:{" "}
-          <b lang="et">kaks kassi, viis eurot</b>. After <b lang="et">üks</b> it keeps its first:{" "}
-          <b lang="et">üks kass</b>.
+          <b lang="et">kaks kassi, viis eurot</b>. After <b lang="et">üks</b> on its own, it keeps
+          its first: <b lang="et">üks kass</b>.
         </Trans>,
         <Trans key="2">
           Ask how many with <b lang="et">mitu</b> and the third form:{" "}
@@ -608,8 +541,9 @@ export function OsastavLesson() {
           <b lang="et">tass kohvi, palju raha</b>.
         </Trans>,
         <Trans key="4">
-          After <b lang="et">pole</b>, the thing someone hasn’t got, or that isn’t somewhere, takes
-          the third form: <b lang="et">Mul pole kassi</b>.
+          After <b lang="et">pole</b>, what someone hasn’t got, or what there is none of in a place,
+          takes the third form: <b lang="et">Mul pole kassi, Laual pole leiba</b>. When the sentence
+          starts with the thing, it keeps its first: <b lang="et">Kass pole laual</b>.
         </Trans>,
         <Trans key="5">
           What you eat, drink or want, when you don’t count it, takes it too:{" "}
@@ -638,7 +572,7 @@ export function OsastavLesson() {
                   </Trans>
                 </p>
               </Prose>
-              <CountSwitch />
+              <CountTable />
               <Aside>
                 <Trans>
                   Some third forms change more than an ending: <Word w="laps" /> becomes{" "}
@@ -663,14 +597,7 @@ export function OsastavLesson() {
                   </Trans>
                 </p>
               </Prose>
-              <ul className="m-0 list-none overflow-hidden rounded-lg bg-plate p-0 ring-1 ring-edge">
-                {OSASTAV_EXCHANGES.map(({ q, a }) => (
-                  <li key={q} className="border-b border-edge pb-1 last:border-b-0">
-                    <Line text={q} />
-                    <Line text={a} reply />
-                  </li>
-                ))}
-              </ul>
+              <ListenRows items={rowsOf(OSASTAV_EXCHANGES.flatMap(({ q, a }) => [q, a]))} />
               <Prose>
                 <p>
                   <Trans>
@@ -763,23 +690,22 @@ export function OsastavLesson() {
                   <Trans>
                     <Word w="Mul on kass." /> I have a cat. To say you don’t, use <Word w="pole" />{" "}
                     from lesson {negation}, and the cat takes its third form:{" "}
-                    <Word w="Mul pole kassi." />
+                    <Word w="Mul pole kassi." /> (<b lang="et">Mul on</b> is lesson {have}.)
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    It works the same for a place: <Word w="Laual pole leiba." /> Switch between{" "}
-                    <b lang="et">on</b> and <b lang="et">pole</b>.
+                    It works the same for a place: <Word w="Laual pole leiba." /> Tap the sentences
+                    in each column.
                   </Trans>
                 </p>
               </Prose>
-              <NoSwitch />
+              <NoTable />
               <Aside>
                 <Trans>
                   You can also say <Word w="Mul ei ole kassi." /> It means the same:{" "}
                   <b lang="et">pole</b> is the short form of <b lang="et">ei ole</b>. A sentence
-                  that starts with the thing keeps its first form: <Word w="Kass pole laual." />{" "}
-                  Lesson {have} taught <b lang="et">mul on</b>.
+                  that starts with the thing keeps its first form: <Word w="Kass pole laual." />
                 </Trans>
               </Aside>
             </>
@@ -800,13 +726,7 @@ export function OsastavLesson() {
                   </Trans>
                 </p>
               </Prose>
-              <ul className="m-0 grid list-none overflow-hidden rounded-lg bg-plate p-0 ring-1 ring-edge sm:grid-cols-2">
-                {OSASTAV_SOME.map((sentence) => (
-                  <li key={sentence} className="border-b border-edge">
-                    <Line text={sentence} />
-                  </li>
-                ))}
-              </ul>
+              <ListenRows items={rowsOf(OSASTAV_SOME)} />
               <Aside>
                 <Trans>
                   In a café you’ll also hear <Word w="Üks kohv, palun." /> That’s one coffee,

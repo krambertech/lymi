@@ -822,7 +822,7 @@ export const PARTITIVE_NOUNS = {
   maja: "maja",
   euro: "eurot",
   kool: "kooli",
-  mees: "meest",
+  laud: "lauda",
   kohv: "kohvi",
   vesi: "vett",
   juust: "juustu",
@@ -852,7 +852,7 @@ export const OSASTAV_COUNTED = [
   { noun: "euro", number: "kümme" },
   { noun: "laps", number: "kolm" },
   { noun: "kool", number: "neli" },
-  { noun: "mees", number: "viis" },
+  { noun: "laud", number: "viis" },
 ] as const satisfies readonly { noun: PartitiveNoun; number: string }[];
 
 /** Asking how many and how much, each with an answer. */
@@ -880,7 +880,9 @@ export const OSASTAV_NO = [
   { yes: "Neil on maja.", no: "Neil pole maja.", noun: "maja" },
   { yes: "Laual on leib.", no: "Laual pole leiba.", noun: "leib" },
   { yes: "Linnas on kohvik.", no: "Linnas pole kohvikut.", noun: "kohvik" },
-] as const satisfies readonly { yes: string; no: string; noun: PartitiveNoun }[];
+  // The thing first: it keeps its first form after pole too.
+  { yes: "Kass on laual.", no: "Kass pole laual.", noun: "kass", first: true },
+] as const satisfies readonly { yes: string; no: string; noun: PartitiveNoun; first?: true }[];
 
 /** Food and drink taken without counting. */
 export const OSASTAV_SOME = [
@@ -899,19 +901,19 @@ export const OSASTAV_SOME = [
 export const OSASTAV_PASSAGES = {
   market: [
     "Täna on laupäev ja Mari on turul.",
-    "Tal on vaja kilo juustu ja natuke piima.",
+    "Tal on vaja kilo juustu ja üks leib.",
     "Juust maksab seitse eurot.",
-    "Turul pole täna leiba.",
+    "Aga turul pole täna leiba.",
+    "Turul on kohvik.",
     "Mari joob kohvikus kohvi.",
     "Kohvikus on üks kass.",
-    "Maril on kodus kaks kassi.",
   ],
   jaan: [
     "Tere, see on Jaan! Ma olen turul.",
     "Täna on palju juustu.",
     "Kilo juustu maksab kaheksa eurot.",
-    "Piim maksab kaks eurot.",
-    "Aga täna pole leiba.",
+    "Leib maksab kaks eurot.",
+    "Aga täna pole piima.",
     "Kas sa tahad kohvi?",
   ],
 } as const;
@@ -949,7 +951,6 @@ export const OSASTAV_WORDS = [
   "Mul ei ole kassi.",
   "Üks kohv, palun.",
   "Ma loen raamatut.",
-  "Kass pole laual.",
 ] as const;
 
 const OSASTAV_CLIPS: Record<string, Clip> = {

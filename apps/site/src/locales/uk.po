@@ -124,6 +124,10 @@ msgstr "{0} на сьогодні"
 msgid "{0} of {1} today"
 msgstr "{0} з {1} сьогодні"
 
+#. placeholder {0}: means(row.no, i18n)
+msgid "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form after <1>pole</1>."
+msgstr "{0} Речення починається з кота, тому <0>kass</0> лишається в першій формі й після <1>pole</1>."
+
 #. placeholder {0}: g.name
 #. placeholder {1}: g.when
 msgid "{0}, next in {1}"
@@ -136,6 +140,10 @@ msgstr "{0}, правильна відповідь"
 #. placeholder {0}: place.meaning
 msgid "{0}, your answer"
 msgstr "{0}, твоя відповідь"
+
+#. placeholder {0}: means(text, i18n)
+msgid "{0}; its third form is <0>maja</0> too, so it looks the same."
+msgstr "{0}; третя форма теж <0>maja</0>, тому слово не змінюється."
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Додано # картку} few {Додано # картки} many {Додано # карток} other {Додано # картки}}"
@@ -389,8 +397,8 @@ msgstr "<0/> стає <1/>, а дієслово теж стоїть у форм�
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> не має закінчення і підходить і для «він чи вона», і для «вони». Тому <1/> — неправильне дієслово: інші дієслова й тут мають закінчення, про це розповідає урок {regularVerbs}."
 
-msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/>"
-msgstr "<0/> У мене є кіт. Щоб сказати, що кота немає, візьми <1/> з уроку {negation}, а кіт перейде в третю форму: <2/>"
+msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (<3>Mul on</3> is lesson {have}.)"
+msgstr "<0/> У мене є кіт. Щоб сказати, що кота немає, візьми <1/> з уроку {negation}, а кіт перейде в третю форму: <2/> (<3>Mul on</3> — це урок {have}.)"
 
 msgid "<0/> is a cup of coffee. The amount comes first, in its first form, and what it measures follows in its third: <1/> becomes <2/>."
 msgstr "<0/> — чашка кави. Спершу йде слово кількості в першій формі, а за ним те, що міряють, у третій: <1/> стає <2/>. Українською так само: «чашка кави», а не «чашка кава»."
@@ -526,9 +534,6 @@ msgstr "<0>Мексиканська іспанська</0>, <1>розмовні 
 msgid "<0>Mina</0> takes <1>olen</1>: <2>Mina olen Andres</2>."
 msgstr "Після <0>mina</0> йде <1>olen</1>: <2>Mina olen Andres</2>."
 
-msgid "<0>Natuke</0> is an amount too: <1>natuke piima</1>."
-msgstr "<0>Natuke</0> теж означає кількість: <1>natuke piima</1>."
-
 msgid "<0>Olen</0> for I, <1>oled</1> for you, <2>on</2> for he or she and for they."
 msgstr "<0>Olen</0> для «я», <1>oled</1> для «ти», <2>on</2> для «він чи вона» і для «вони»."
 
@@ -598,11 +603,11 @@ msgstr "<0>乗る</0> — сісти, <1>換える</1> — замінити: т�
 msgid "<0>换</0> to swap, <1>乘</1> to ride: you swap the line you ride."
 msgstr "<0>换</0> — міняти, <1>乘</1> — їхати: міняєш лінію, якою їдеш."
 
-msgid "€1"
-msgstr "1 €"
-
 msgid "€10"
 msgstr "10 €"
+
+msgid "€12"
+msgstr "12 €"
 
 msgid "€13"
 msgstr "13 €"
@@ -1536,23 +1541,20 @@ msgstr "Після <0>ei</0> іде форма з ma без -n: <1>loen</1>, <2>
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "Після <0>ei</0> дієслово <1>olema</1> втрачає закінчення: <2>ei ole</2>."
 
-msgid "After <0>kaks</0>, the third form: <1>kaks kassi</1>."
-msgstr "Після <0>kaks</0> — третя форма: <1>kaks kassi</1>."
+msgid "After <0>pole</0>, what someone hasn’t got, or what there is none of in a place, takes the third form: <1>Mul pole kassi, Laual pole leiba</1>. When the sentence starts with the thing, it keeps its first: <2>Kass pole laual</2>."
+msgstr "Після <0>pole</0> те, чого в когось немає або чого немає в якомусь місці, стоїть у третій формі: <1>Mul pole kassi, Laual pole leiba</1>. Якщо речення починається з самої речі, вона лишається в першій: <2>Kass pole laual</2>."
 
-msgid "After <0>pole</0>, the thing someone hasn’t got, or that isn’t somewhere, takes the third form: <1>Mul pole kassi</1>."
-msgstr "Після <0>pole</0> те, чого в когось немає або чого немає десь, стоїть у третій формі: <1>Mul pole kassi</1>."
+msgid "After <0>pole</0>, what there is none of in a place takes the third form: <1>pole leiba</1>."
+msgstr "Після <0>pole</0> те, чого немає в якомусь місці, стоїть у третій формі: <1>pole leiba</1>."
 
-msgid "After <0>pole</0>, what isn’t there takes its third form: <1>kassi, autot, last</1>. <2>Maja</2> stays <3>maja</3>."
-msgstr "Після <0>pole</0> те, чого немає, стоїть у третій формі: <1>kassi, autot, last</1>. <2>Maja</2> лишається <3>maja</3>."
+msgid "After <0>üks</0> on its own, a noun keeps its first form. From two up, it takes its third."
+msgstr "Після самого <0>üks</0> іменник лишається в першій формі. Від двох — стоїть у третій."
 
-msgid "After <0>pole</0>, what isn’t there takes the third form: <1>pole leiba</1>."
-msgstr "Після <0>pole</0> те, чого немає, стоїть у третій формі: <1>pole leiba</1>."
+msgid "After <0>üks</0> on its own, the first form: <1>üks kass</1>."
+msgstr "Після самого <0>üks</0> — перша форма: <1>üks kass</1>."
 
-msgid "After <0>üks</0>, each noun keeps its first form. Pick <1>kaks</1> and watch the endings."
-msgstr "Після <0>üks</0> кожен іменник лишається в першій формі. Обери <1>kaks</1> і стеж за закінченнями."
-
-msgid "After <0>üks</0>, the first form: <1>üks kass</1>."
-msgstr "Після <0>üks</0> — перша форма: <1>üks kass</1>."
+msgid "After <0>üks</0> on its own, the first form: <1>üks leib</1>."
+msgstr "Після самого <0>üks</0> — перша форма: <1>üks leib</1>."
 
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "Після уроку на italki, Preply чи з приватним репетитором встав чат або сфотографуй нотатки. Lymi перетворить нові слова на картки, які ти повторюєш між уроками. Додати їх може й AI-асистент. Безкоштовно."
@@ -1560,8 +1562,8 @@ msgstr "Після уроку на italki, Preply чи з приватним р�
 msgid "After a number from two up"
 msgstr "Після числа від двох"
 
-msgid "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> it keeps its first: <2>üks kass</2>."
-msgstr "Після числа від двох іменник стоїть у третій формі й лишається в однині: <0>kaks kassi, viis eurot</0>. Після <1>üks</1> він лишається в першій: <2>üks kass</2>."
+msgid "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> on its own, it keeps its first: <2>üks kass</2>."
+msgstr "Після числа від двох іменник стоїть у третій формі й лишається в однині: <0>kaks kassi, viis eurot</0>. Після самого <1>üks</1> він лишається в першій: <2>üks kass</2>."
 
 msgid "After a number from two up, euro becomes eurot."
 msgstr "Після числа від двох і більше euro стає eurot."
@@ -2708,6 +2710,9 @@ msgstr "Замок (фортеця)"
 msgid "cat"
 msgstr "кіт"
 
+msgid "cat, said first"
+msgstr "кіт на початку речення"
+
 msgid "CCSE Spanish nationality test"
 msgstr "Іспит CCSE на громадянство Іспанії"
 
@@ -2783,9 +2788,6 @@ msgstr "Перевірено {date} за джерелами: {places}."
 
 msgid "cheese"
 msgstr "сир"
-
-msgid "Cheese"
-msgstr "Сир"
 
 msgid "Chemistry"
 msgstr "Хімія"
@@ -2966,6 +2968,9 @@ msgstr "Часті запитання."
 
 msgid "Comparatives and superlatives"
 msgstr "Вищий і найвищий ступені порівняння"
+
+msgid "Compare each row’s two sentences. The last row starts with the cat."
+msgstr "Порівняй два речення в кожному рядку. Останній рядок починається з кота."
 
 msgid "Conditional mood"
 msgstr "Умовний спосіб"
@@ -4129,6 +4134,9 @@ msgstr "Препарат першої лінії при діабеті 2 тип�
 msgid "five"
 msgstr "п’ять"
 
+msgid "Five"
+msgstr "П’ять"
+
 msgid "five books"
 msgstr "п’ять книжок"
 
@@ -4153,11 +4161,11 @@ msgstr "п’ять будинків"
 msgid "Five look familiar. The four with marks are separate letters, not accents, and swapping one changes the word. English has no sound like <0/>."
 msgstr "П’ять виглядають знайомо. Чотири зі значками — окремі літери, а не різновиди звичних, і якщо замінити одну, вийде інше слово. Звуку, як <0/>, в українській немає."
 
-msgid "five men"
-msgstr "п’ятеро чоловіків"
-
 msgid "Five sentences. Switch to Question and watch what changes."
 msgstr "П’ять речень. Перемкни на «Питання» й подивись, що зміниться."
+
+msgid "five tables"
+msgstr "п’ять столів"
 
 msgid "Fix and tidy cards"
 msgstr "Виправити й упорядкувати картки"
@@ -4513,9 +4521,6 @@ msgstr "Від tulema, «приходити»."
 
 msgid "From tuul, wind."
 msgstr "Від tuul — вітер."
-
-msgid "From two up, each noun takes its third form. <0>Maja</0> looks the same, since its third form is <1>maja</1> too."
-msgstr "Від двох кожен іменник стоїть у третій формі. <0>Maja</0> не змінюється, бо його третя форма теж <1>maja</1>."
 
 msgid "From your notes"
 msgstr "З твоїх нотаток"
@@ -5172,9 +5177,6 @@ msgstr "Як Lymi використовує персональні дані, хт
 msgid "how many"
 msgstr "скільки"
 
-msgid "How many"
-msgstr "Скільки"
-
 msgid "How many are waiting for me tonight?"
 msgstr "Скільки карток чекає на мене сьогодні?"
 
@@ -5208,8 +5210,8 @@ msgstr "Скільки коштує кава?"
 msgid "How much is a kilo of cheese?"
 msgstr "Скільки коштує кілограм сиру?"
 
-msgid "How much is the milk?"
-msgstr "Скільки коштує молоко?"
+msgid "How much is the bread?"
+msgstr "Скільки коштує хліб?"
 
 msgid "How much of a dose reaches the blood"
 msgstr "Яка частка дози потрапляє в кров"
@@ -5993,6 +5995,9 @@ msgstr "Марі — лікарка?"
 msgid "Is Noji the same as Anki?"
 msgstr "Noji — це те саме, що Anki?"
 
+msgid "Is there"
+msgstr "Є"
+
 msgid "Is there a *bank* nearby?"
 msgstr "Тут поблизу є *банк*?"
 
@@ -6004,6 +6009,9 @@ msgstr "Цей *стілець* вільний?"
 
 msgid "Is this like an Anki MCP server?"
 msgstr "Це як MCP-сервер для Anki?"
+
+msgid "Isn’t there"
+msgstr "Немає"
 
 msgid "isn’t, aren’t"
 msgstr "немає"
@@ -6047,8 +6055,8 @@ msgstr "Це був дуже *приємний* вечір."
 msgid "It will all work out"
 msgstr "Усе владнається"
 
-msgid "It works the same for a place: <0/> Switch between <1>on</1> and <2>pole</2>."
-msgstr "Так само і з місцем: <0/> Перемикай між <1>on</1> і <2>pole</2>. Українською схоже: «немає хліба», а не «немає хліб»."
+msgid "It works the same for a place: <0/> Tap the sentences in each column."
+msgstr "Так само і з місцем: <0/> Торкайся речень у кожному стовпці. Українською схоже: «немає хліба», а не «немає хліб»."
 
 msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
 msgstr "Так само з містами, будівлями й більшістю країн. Спробуй на трьох країнах і трьох містах."
@@ -6971,9 +6979,6 @@ msgstr "Зроби іспанські флешкартки з цього доп�
 msgid "Making cards with AI"
 msgstr "Створення карток з AI"
 
-msgid "man"
-msgstr "чоловік"
-
 msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {genitive} shows where the vowel comes from."
 msgstr "У багатьох слів, як у Tallinn, перед <0>-s</0> з’являється голосна, і яку саме, поки що вгадати важко. Тож вчи кожне місце одразу з <1>-s</1>: <2/>, <3/>; <4/>, <5/>. Звідки береться голосна, пояснює урок {genitive}."
 
@@ -7882,9 +7887,6 @@ msgstr "Одна літера чи дві?"
 msgid "One letter or two? Listen, then fill the gap."
 msgstr "Одна літера чи дві? Послухай і заповни пропуск."
 
-msgid "one man"
-msgstr "один чоловік"
-
 msgid "One more"
 msgstr "На одиницю більше"
 
@@ -7920,6 +7922,9 @@ msgstr "Одна спільна колода, у кожного свій роз�
 
 msgid "One spelling, two words."
 msgstr "Одне написання, два слова."
+
+msgid "one table"
+msgstr "один стіл"
 
 msgid "One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 msgstr "По одному напрямку за раз: китайське слово — згадай значення, або значення — згадай китайське. Пригадуєш відповідь, перевертаєш картку і оцінюєш, наскільки легко згадалося. Нічого набирати не треба."
@@ -9269,6 +9274,9 @@ msgstr "Надішлеться, коли мережа повернеться"
 msgid "Sentence {sentenceNumber} of {sentenceCount}, {time}"
 msgstr "Речення {sentenceNumber} з {sentenceCount}, {time}"
 
+msgid "Sentences that say something is there, and that it isn’t"
+msgstr "Речення про те, що щось є, і про те, що цього немає"
+
 msgid "Ser is for who and what: soy de Valencia, I’m from Valencia."
 msgstr "Ser кажуть про те, хто і що: soy de Valencia, я з Валенсії."
 
@@ -9498,6 +9506,9 @@ msgstr "Шість днів закінчуються на <0>päev</0>, день
 
 msgid "Six endings"
 msgstr "Шість закінчень"
+
+msgid "Six nouns after one, two and five"
+msgstr "Шість іменників після одного, двох і п’яти"
 
 msgid "Six pronouns, two forms"
 msgstr "Шість займенників, дві форми"
@@ -10075,6 +10086,9 @@ msgstr "Торкнися місця, щоб відправити туди кот
 msgid "Tap a question word"
 msgstr "Натисни питальне слово"
 
+msgid "Tap a sentence"
+msgstr "Торкнись речення"
+
 msgid "Tap a tense"
 msgstr "Торкнися часу"
 
@@ -10419,6 +10433,9 @@ msgstr "Кіт біля коробки."
 
 msgid "The cat is on the box."
 msgstr "Кіт на коробці."
+
+msgid "The cat is on the table."
+msgstr "Кіт на столі."
 
 msgid "The cat is under the box."
 msgstr "Кіт під коробкою."
@@ -11772,6 +11789,9 @@ msgstr "Двадцять дві. Нові слова з’являтимутьс
 msgid "two"
 msgstr "два"
 
+msgid "Two"
+msgstr "Два"
+
 msgid "Two *bread rolls*, please."
 msgstr "Дві *булочки*, будь ласка."
 
@@ -12221,6 +12241,9 @@ msgstr "А якщо він помилиться?"
 msgid "What is that?"
 msgstr "Що це?"
 
+msgid "What is there keeps its first form: <0>Turul on kohvik</0>."
+msgstr "Те, що є, лишається в першій формі: <0>Turul on kohvik</0>."
+
 msgid "What is this part called?"
 msgstr "Як називається ця частина?"
 
@@ -12235,9 +12258,6 @@ msgstr "Яке число було в реченні?"
 
 msgid "What should I review tonight?"
 msgstr "Що мені повторити сьогодні ввечері?"
-
-msgid "What someone has, or what is there, keeps its first form. Pick <0>pole</0> to say it isn’t there."
-msgstr "Те, що в когось є або що десь є, лишається в першій формі. Обери <0>pole</0>, щоб сказати, що цього немає."
 
 msgid "What stays for others"
 msgstr "Що залишиться іншим"
@@ -12991,8 +13011,8 @@ msgstr "ви є; ввічливе «Ви є»"
 msgid "You build your own card layouts"
 msgstr "Тобі потрібні власні макети карток"
 
-msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/> Lesson {have} taught <4>mul on</4>."
-msgstr "Можна сказати й <0/> Це те саме: <1>pole</1> — коротка форма від <2>ei ole</2>. Якщо речення починається з самої речі, вона лишається в першій формі: <3/> Конструкцію <4>mul on</4> пояснює урок {have}."
+msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/>"
+msgstr "Можна сказати й <0/> Це те саме: <1>pole</1> — коротка форма від <2>ei ole</2>. Якщо речення починається з самої речі, вона лишається в першій формі: <3/>"
 
 msgid "You can delete your account in You › Delete account on the phone or Settings › Delete account on the web, after confirming your identity. Deletion cannot be undone. Your account and private learning records are erased, and file cleanup and requests to erase account-linked analytics run separately. Provider logs, backups and support correspondence can remain under their applicable retention periods; deletion is not an instant purge of every copy."
 msgstr "Видалити обліковий запис можна в розділі Ти › Видалити обліковий запис на телефоні або Налаштування › Видалити обліковий запис у вебзастосунку після підтвердження особи. Скасувати видалення неможливо. Обліковий запис і приватні навчальні записи стираються, а очищення файлів та запити на стирання пов’язаної аналітики виконуються окремо. Журнали постачальників, резервні копії й листування з підтримкою можуть зберігатися протягом відповідних строків; видалення не означає миттєвого стирання кожної копії."

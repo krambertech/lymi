@@ -124,6 +124,10 @@ msgstr "{0} due"
 msgid "{0} of {1} today"
 msgstr "{0} of {1} today"
 
+#. placeholder {0}: means(row.no, i18n)
+msgid "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form after <1>pole</1>."
+msgstr "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form after <1>pole</1>."
+
 #. placeholder {0}: g.name
 #. placeholder {1}: g.when
 msgid "{0}, next in {1}"
@@ -136,6 +140,10 @@ msgstr "{0}, right answer"
 #. placeholder {0}: place.meaning
 msgid "{0}, your answer"
 msgstr "{0}, your answer"
+
+#. placeholder {0}: means(text, i18n)
+msgid "{0}; its third form is <0>maja</0> too, so it looks the same."
+msgstr "{0}; its third form is <0>maja</0> too, so it looks the same."
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {# card added} other {# cards added}}"
@@ -389,8 +397,8 @@ msgstr "<0/> becomes <1/>, and the verb takes its <2>-ge</2> or <3>-ke</3> form:
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 
-msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/>"
-msgstr "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/>"
+msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (<3>Mul on</3> is lesson {have}.)"
+msgstr "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (<3>Mul on</3> is lesson {have}.)"
 
 msgid "<0/> is a cup of coffee. The amount comes first, in its first form, and what it measures follows in its third: <1/> becomes <2/>."
 msgstr "<0/> is a cup of coffee. The amount comes first, in its first form, and what it measures follows in its third: <1/> becomes <2/>."
@@ -526,9 +534,6 @@ msgstr "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgid "<0>Mina</0> takes <1>olen</1>: <2>Mina olen Andres</2>."
 msgstr "<0>Mina</0> takes <1>olen</1>: <2>Mina olen Andres</2>."
 
-msgid "<0>Natuke</0> is an amount too: <1>natuke piima</1>."
-msgstr "<0>Natuke</0> is an amount too: <1>natuke piima</1>."
-
 msgid "<0>Olen</0> for I, <1>oled</1> for you, <2>on</2> for he or she and for they."
 msgstr "<0>Olen</0> for I, <1>oled</1> for you, <2>on</2> for he or she and for they."
 
@@ -598,11 +603,11 @@ msgstr "<0>乗る</0> to get on, plus <1>換える</1> to swap: you get on a dif
 msgid "<0>换</0> to swap, <1>乘</1> to ride: you swap the line you ride."
 msgstr "<0>换</0> to swap, <1>乘</1> to ride: you swap the line you ride."
 
-msgid "€1"
-msgstr "€1"
-
 msgid "€10"
 msgstr "€10"
+
+msgid "€12"
+msgstr "€12"
 
 msgid "€13"
 msgstr "€13"
@@ -1536,23 +1541,20 @@ msgstr "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 
-msgid "After <0>kaks</0>, the third form: <1>kaks kassi</1>."
-msgstr "After <0>kaks</0>, the third form: <1>kaks kassi</1>."
+msgid "After <0>pole</0>, what someone hasn’t got, or what there is none of in a place, takes the third form: <1>Mul pole kassi, Laual pole leiba</1>. When the sentence starts with the thing, it keeps its first: <2>Kass pole laual</2>."
+msgstr "After <0>pole</0>, what someone hasn’t got, or what there is none of in a place, takes the third form: <1>Mul pole kassi, Laual pole leiba</1>. When the sentence starts with the thing, it keeps its first: <2>Kass pole laual</2>."
 
-msgid "After <0>pole</0>, the thing someone hasn’t got, or that isn’t somewhere, takes the third form: <1>Mul pole kassi</1>."
-msgstr "After <0>pole</0>, the thing someone hasn’t got, or that isn’t somewhere, takes the third form: <1>Mul pole kassi</1>."
+msgid "After <0>pole</0>, what there is none of in a place takes the third form: <1>pole leiba</1>."
+msgstr "After <0>pole</0>, what there is none of in a place takes the third form: <1>pole leiba</1>."
 
-msgid "After <0>pole</0>, what isn’t there takes its third form: <1>kassi, autot, last</1>. <2>Maja</2> stays <3>maja</3>."
-msgstr "After <0>pole</0>, what isn’t there takes its third form: <1>kassi, autot, last</1>. <2>Maja</2> stays <3>maja</3>."
+msgid "After <0>üks</0> on its own, a noun keeps its first form. From two up, it takes its third."
+msgstr "After <0>üks</0> on its own, a noun keeps its first form. From two up, it takes its third."
 
-msgid "After <0>pole</0>, what isn’t there takes the third form: <1>pole leiba</1>."
-msgstr "After <0>pole</0>, what isn’t there takes the third form: <1>pole leiba</1>."
+msgid "After <0>üks</0> on its own, the first form: <1>üks kass</1>."
+msgstr "After <0>üks</0> on its own, the first form: <1>üks kass</1>."
 
-msgid "After <0>üks</0>, each noun keeps its first form. Pick <1>kaks</1> and watch the endings."
-msgstr "After <0>üks</0>, each noun keeps its first form. Pick <1>kaks</1> and watch the endings."
-
-msgid "After <0>üks</0>, the first form: <1>üks kass</1>."
-msgstr "After <0>üks</0>, the first form: <1>üks kass</1>."
+msgid "After <0>üks</0> on its own, the first form: <1>üks leib</1>."
+msgstr "After <0>üks</0> on its own, the first form: <1>üks leib</1>."
 
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
@@ -1560,8 +1562,8 @@ msgstr "After a lesson on italki, Preply or with a private tutor, paste the chat
 msgid "After a number from two up"
 msgstr "After a number from two up"
 
-msgid "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> it keeps its first: <2>üks kass</2>."
-msgstr "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> it keeps its first: <2>üks kass</2>."
+msgid "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> on its own, it keeps its first: <2>üks kass</2>."
+msgstr "After a number from two up, a noun takes its third form and stays singular: <0>kaks kassi, viis eurot</0>. After <1>üks</1> on its own, it keeps its first: <2>üks kass</2>."
 
 msgid "After a number from two up, euro becomes eurot."
 msgstr "After a number from two up, euro becomes eurot."
@@ -2708,6 +2710,9 @@ msgstr "Castle"
 msgid "cat"
 msgstr "cat"
 
+msgid "cat, said first"
+msgstr "cat, said first"
+
 msgid "CCSE Spanish nationality test"
 msgstr "CCSE Spanish nationality test"
 
@@ -2783,9 +2788,6 @@ msgstr "Checked on {date} against {places}."
 
 msgid "cheese"
 msgstr "cheese"
-
-msgid "Cheese"
-msgstr "Cheese"
 
 msgid "Chemistry"
 msgstr "Chemistry"
@@ -2966,6 +2968,9 @@ msgstr "Common questions."
 
 msgid "Comparatives and superlatives"
 msgstr "Comparatives and superlatives"
+
+msgid "Compare each row’s two sentences. The last row starts with the cat."
+msgstr "Compare each row’s two sentences. The last row starts with the cat."
 
 msgid "Conditional mood"
 msgstr "Conditional mood"
@@ -4129,6 +4134,9 @@ msgstr "First-line drug for type 2 diabetes. Lowers the glucose the liver makes.
 msgid "five"
 msgstr "five"
 
+msgid "Five"
+msgstr "Five"
+
 msgid "five books"
 msgstr "five books"
 
@@ -4153,11 +4161,11 @@ msgstr "five houses"
 msgid "Five look familiar. The four with marks are separate letters, not accents, and swapping one changes the word. English has no sound like <0/>."
 msgstr "Five look familiar. The four with marks are separate letters, not accents, and swapping one changes the word. English has no sound like <0/>."
 
-msgid "five men"
-msgstr "five men"
-
 msgid "Five sentences. Switch to Question and watch what changes."
 msgstr "Five sentences. Switch to Question and watch what changes."
+
+msgid "five tables"
+msgstr "five tables"
 
 msgid "Fix and tidy cards"
 msgstr "Fix and tidy cards"
@@ -4513,9 +4521,6 @@ msgstr "From tulema, to come."
 
 msgid "From tuul, wind."
 msgstr "From tuul, wind."
-
-msgid "From two up, each noun takes its third form. <0>Maja</0> looks the same, since its third form is <1>maja</1> too."
-msgstr "From two up, each noun takes its third form. <0>Maja</0> looks the same, since its third form is <1>maja</1> too."
 
 msgid "From your notes"
 msgstr "From your notes"
@@ -5172,9 +5177,6 @@ msgstr "How Lymi uses personal data, who receives it, and your choices."
 msgid "how many"
 msgstr "how many"
 
-msgid "How many"
-msgstr "How many"
-
 msgid "How many are waiting for me tonight?"
 msgstr "How many are waiting for me tonight?"
 
@@ -5208,8 +5210,8 @@ msgstr "How much is a coffee?"
 msgid "How much is a kilo of cheese?"
 msgstr "How much is a kilo of cheese?"
 
-msgid "How much is the milk?"
-msgstr "How much is the milk?"
+msgid "How much is the bread?"
+msgstr "How much is the bread?"
 
 msgid "How much of a dose reaches the blood"
 msgstr "How much of a dose reaches the blood"
@@ -5993,6 +5995,9 @@ msgstr "Is Mari a doctor?"
 msgid "Is Noji the same as Anki?"
 msgstr "Is Noji the same as Anki?"
 
+msgid "Is there"
+msgstr "Is there"
+
 msgid "Is there a *bank* nearby?"
 msgstr "Is there a *bank* nearby?"
 
@@ -6004,6 +6009,9 @@ msgstr "Is this *chair* free?"
 
 msgid "Is this like an Anki MCP server?"
 msgstr "Is this like an Anki MCP server?"
+
+msgid "Isn’t there"
+msgstr "Isn’t there"
 
 msgid "isn’t, aren’t"
 msgstr "isn’t, aren’t"
@@ -6047,8 +6055,8 @@ msgstr "It was a really *pleasant* evening."
 msgid "It will all work out"
 msgstr "It will all work out"
 
-msgid "It works the same for a place: <0/> Switch between <1>on</1> and <2>pole</2>."
-msgstr "It works the same for a place: <0/> Switch between <1>on</1> and <2>pole</2>."
+msgid "It works the same for a place: <0/> Tap the sentences in each column."
+msgstr "It works the same for a place: <0/> Tap the sentences in each column."
 
 msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
 msgstr "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
@@ -6971,9 +6979,6 @@ msgstr "Make Spanish flashcards from this post."
 msgid "Making cards with AI"
 msgstr "Making cards with AI"
 
-msgid "man"
-msgstr "man"
-
 msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {genitive} shows where the vowel comes from."
 msgstr "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {genitive} shows where the vowel comes from."
 
@@ -7882,9 +7887,6 @@ msgstr "One letter or two?"
 msgid "One letter or two? Listen, then fill the gap."
 msgstr "One letter or two? Listen, then fill the gap."
 
-msgid "one man"
-msgstr "one man"
-
 msgid "One more"
 msgstr "One more"
 
@@ -7920,6 +7922,9 @@ msgstr "One shared deck, everyone on their own schedule"
 
 msgid "One spelling, two words."
 msgstr "One spelling, two words."
+
+msgid "one table"
+msgstr "one table"
 
 msgid "One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 msgstr "One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
@@ -9269,6 +9274,9 @@ msgstr "Sent when you’re back online"
 msgid "Sentence {sentenceNumber} of {sentenceCount}, {time}"
 msgstr "Sentence {sentenceNumber} of {sentenceCount}, {time}"
 
+msgid "Sentences that say something is there, and that it isn’t"
+msgstr "Sentences that say something is there, and that it isn’t"
+
 msgid "Ser is for who and what: soy de Valencia, I’m from Valencia."
 msgstr "Ser is for who and what: soy de Valencia, I’m from Valencia."
 
@@ -9498,6 +9506,9 @@ msgstr "Six days end in <0>päev</0>, day. <1>Reede</1> doesn’t."
 
 msgid "Six endings"
 msgstr "Six endings"
+
+msgid "Six nouns after one, two and five"
+msgstr "Six nouns after one, two and five"
 
 msgid "Six pronouns, two forms"
 msgstr "Six pronouns, two forms"
@@ -10075,6 +10086,9 @@ msgstr "Tap a place to send the cat there and hear where it is."
 msgid "Tap a question word"
 msgstr "Tap a question word"
 
+msgid "Tap a sentence"
+msgstr "Tap a sentence"
+
 msgid "Tap a tense"
 msgstr "Tap a tense"
 
@@ -10419,6 +10433,9 @@ msgstr "The cat is next to the box."
 
 msgid "The cat is on the box."
 msgstr "The cat is on the box."
+
+msgid "The cat is on the table."
+msgstr "The cat is on the table."
 
 msgid "The cat is under the box."
 msgstr "The cat is under the box."
@@ -11772,6 +11789,9 @@ msgstr "Twenty-two. The new words will come up a few at a time."
 msgid "two"
 msgstr "two"
 
+msgid "Two"
+msgstr "Two"
+
 msgid "Two *bread rolls*, please."
 msgstr "Two *bread rolls*, please."
 
@@ -12221,6 +12241,9 @@ msgstr "What if it gets something wrong?"
 msgid "What is that?"
 msgstr "What is that?"
 
+msgid "What is there keeps its first form: <0>Turul on kohvik</0>."
+msgstr "What is there keeps its first form: <0>Turul on kohvik</0>."
+
 msgid "What is this part called?"
 msgstr "What is this part called?"
 
@@ -12235,9 +12258,6 @@ msgstr "What number was in it?"
 
 msgid "What should I review tonight?"
 msgstr "What should I review tonight?"
-
-msgid "What someone has, or what is there, keeps its first form. Pick <0>pole</0> to say it isn’t there."
-msgstr "What someone has, or what is there, keeps its first form. Pick <0>pole</0> to say it isn’t there."
 
 msgid "What stays for others"
 msgstr "What stays for others"
@@ -12991,8 +13011,8 @@ msgstr "you are, to more than one; polite you are"
 msgid "You build your own card layouts"
 msgstr "You build your own card layouts"
 
-msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/> Lesson {have} taught <4>mul on</4>."
-msgstr "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/> Lesson {have} taught <4>mul on</4>."
+msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/>"
+msgstr "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/>"
 
 msgid "You can delete your account in You › Delete account on the phone or Settings › Delete account on the web, after confirming your identity. Deletion cannot be undone. Your account and private learning records are erased, and file cleanup and requests to erase account-linked analytics run separately. Provider logs, backups and support correspondence can remain under their applicable retention periods; deletion is not an instant purge of every copy."
 msgstr "You can delete your account in You › Delete account on the phone or Settings › Delete account on the web, after confirming your identity. Deletion cannot be undone. Your account and private learning records are erased, and file cleanup and requests to erase account-linked analytics run separately. Provider logs, backups and support correspondence can remain under their applicable retention periods; deletion is not an instant purge of every copy."

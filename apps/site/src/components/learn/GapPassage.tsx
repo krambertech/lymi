@@ -19,6 +19,7 @@ import {
   spacedBefore,
   wordsLeft,
 } from "../../lib/learn/passage";
+import { shuffle } from "../../lib/learn/quiz";
 import { Button } from "../Button";
 import { SectionContext, useLesson } from "./lesson-context";
 import { PassagePlayer, usePassage } from "./Passage";
@@ -174,6 +175,15 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
   const [fills, setFills] = useState<Fills>({});
   const [open, setOpen] = useState<string | null>(gaps[0]?.id ?? null);
   const [last, setLast] = useState<GapItem | null>(null);
+  // The server renders each gap's words in the lesson's order; once mounted, and on every Try
+  // again, they shuffle, so the answer's place never gives it away.
+  const [order, setOrder] = useState<Readonly<Record<string, readonly string[]>> | null>(null);
+  const reshuffle = () =>
+    setOrder(
+      Object.fromEntries(gaps.map((item) => [item.id, shuffle(item.options ?? [item.answer])])),
+    );
+  // biome-ignore lint/correctness/useExhaustiveDependencies: once per passage; gaps is a new array each render
+  useEffect(reshuffle, [gaps.map((item) => item.id).join(" ")]);
   const firstOpen = gaps.find((item) => !fills[item.id]) ?? null;
   const current = gaps.find((item) => item.id === open && !fills[item.id]) ?? firstOpen;
   const done = firstOpen === null;
@@ -245,7 +255,7 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
           </p>
           <fieldset className="m-0 flex min-w-0 flex-wrap gap-2 border-0 p-0">
             <legend className="sr-only">{t`Pick the word for the gap`}</legend>
-            {(current.options ?? [current.answer]).map((word, i) => (
+            {(order?.[current.id] ?? current.options ?? [current.answer]).map((word, i) => (
               <button
                 key={word}
                 ref={i === 0 ? firstOption : undefined}
@@ -275,6 +285,7 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
           <Button
             onClick={() => {
               restarted.current = true;
+              reshuffle();
               setFills({});
               setLast(null);
               setOpen(gaps[0]?.id ?? null);

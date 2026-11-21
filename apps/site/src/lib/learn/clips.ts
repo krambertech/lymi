@@ -2032,6 +2032,126 @@ const NO_PAST_CLIPS: Record<string, Clip> = {
   ...NO_PAST_DIALOGUE,
 };
 
+export const FUTURE_TIMELINE = [
+  { id: "yesterday", et: "eile", at: -1, sentence: "Eile ma töötasin kodus.", build: "tööta|sin" },
+  { id: "today", et: "täna", at: 0, sentence: "Täna ma töötan kodus.", build: "tööta|n" },
+  { id: "tomorrow", et: "homme", at: 1, sentence: "Homme ma töötan kontoris.", build: "tööta|n" },
+  {
+    id: "next-week",
+    et: "järgmisel nädalal",
+    at: 2,
+    sentence: "Järgmisel nädalal ma olen Tartus.",
+    build: "ole|n",
+  },
+] as const;
+
+export const FUTURE_GAPS = [
+  {
+    verb: "olema",
+    now: "olen",
+    past: "olin",
+    homme: "Homme ma olen kodus.",
+    eile: "Eile ma olin kodus.",
+  },
+  {
+    verb: "töötama",
+    now: "töötan",
+    past: "töötasin",
+    homme: "Homme ma töötan.",
+    eile: "Eile ma töötasin.",
+  },
+  {
+    verb: "lugema",
+    now: "loen",
+    past: "lugesin",
+    homme: "Homme ma loen raamatut.",
+    eile: "Eile ma lugesin raamatut.",
+  },
+  {
+    verb: "minema",
+    now: "lähen",
+    past: "läksin",
+    homme: "Homme ma lähen tööle.",
+    eile: "Eile ma läksin tööle.",
+  },
+  {
+    verb: "tulema",
+    now: "tulen",
+    past: "tulin",
+    homme: "Homme ma tulen koju.",
+    eile: "Eile ma tulin koju.",
+  },
+] as const;
+
+export const HAKKAMA_ENDINGS = [
+  { pronoun: "ma", ending: "n" },
+  { pronoun: "sa", ending: "d" },
+  { pronoun: "ta", ending: "b" },
+  { pronoun: "me", ending: "me" },
+  { pronoun: "te", ending: "te" },
+  { pronoun: "nad", ending: "vad" },
+] as const;
+
+export const HAKKAMA_VERBS = ["õppima", "töötama", "rääkima", "lugema"] as const;
+
+export const hakkamaSentence = (pronoun: string, ending: string, verb: string) =>
+  `${presentWithPronoun(pronoun, "hakka", ending)} ${verb}.`;
+
+export const FUTURE_MESSAGE = [
+  "Järgmisel nädalal ma lähen Tartusse.",
+  "Ma hakkan Tartus elama.",
+  "Ma hakkan eesti keelt õppima.",
+  "Homme ma olen Tallinnas.",
+  "Kas sa tuled ka?",
+] as const;
+
+export const FUTURE_SATURDAY = [
+  "Homme on laupäev.",
+  "Jaan läheb homme turule.",
+  "Ülehomme on ta kodus.",
+  "Järgmisel nädalal hakkab ta Tartus töötama.",
+  "Mari hakkab ka Tartus elama.",
+] as const;
+
+export const FUTURE_DIALOGUE = {
+  "d-kati-1": { text: "Tere! Mida sa homme teed?", voice: "second" },
+  "d-sina-1": "Homme ma töötan kodus.",
+  "d-kati-2": { text: "Kas sa hakkad eesti keelt õppima?", voice: "second" },
+  "d-sina-2": "Jah, ma hakkan õppima.",
+  "d-kati-3": { text: "Millal sa lähed Tartusse?", voice: "second" },
+  "d-sina-3": "Järgmisel nädalal.",
+} as const satisfies Record<string, Clip>;
+
+export const FUTURE_WORDS = [
+  "tulevik",
+  "homme",
+  "ülehomme",
+  "järgmisel nädalal",
+  "hakkama",
+  "hakkan",
+  "Ma hakkan õppima.",
+  "Homme ma lähen tööle.",
+  "Homme ma töötan.",
+  "Täna ma töötan.",
+  "Ma hakkan Tartus elama.",
+  "millal",
+] as const;
+
+const FUTURE_CLIPS: Record<string, Clip> = {
+  ...words(FUTURE_WORDS),
+  ...words(FUTURE_TIMELINE.map(({ sentence }) => sentence)),
+  ...words(FUTURE_GAPS.flatMap(({ homme, eile }) => [homme, eile])),
+  ...words(
+    HAKKAMA_VERBS.flatMap((verb) =>
+      HAKKAMA_ENDINGS.map(({ pronoun, ending }) => hakkamaSentence(pronoun, ending, verb)),
+    ),
+  ),
+  ...words(HAKKAMA_VERBS),
+  "p-message": { sentences: FUTURE_MESSAGE },
+  "p-saturday": { sentences: FUTURE_SATURDAY },
+  ...FUTURE_DIALOGUE,
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -2994,5 +3114,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   osastav: OSASTAV_CLIPS,
   lihtminevik: PAST_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
+  tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,
 };

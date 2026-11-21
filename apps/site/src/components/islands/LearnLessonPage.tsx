@@ -23,6 +23,7 @@ import { PealAllTagaLesson } from "../learn/lessons/PealAllTaga";
 import { PohivormidLesson } from "../learn/lessons/Pohivormid";
 import { PoodPoeLesson } from "../learn/lessons/PoodPoe";
 import { SobragaRahataLesson } from "../learn/lessons/SobragaRahata";
+import { TulevikLesson } from "../learn/lessons/Tulevik";
 
 import { TegevusnimedLesson } from "../learn/lessons/Tegevusnimed";
 import { TutvumineLesson } from "../learn/lessons/Tutvumine";
@@ -60,6 +61,7 @@ export const LESSON_VIEWS = {
   osastav: OsastavLesson,
   lihtminevik: LihtminevikLesson,
   "ma-ei-lainud": MaEiLainudLesson,
+  tulevik: TulevikLesson,
   mitmus: MitmusLesson,
 } as const;
 

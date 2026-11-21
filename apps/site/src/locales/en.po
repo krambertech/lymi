@@ -109,8 +109,8 @@ msgstr "(didn’t) see"
 msgid "(didn’t) wait"
 msgstr "(didn’t) wait"
 
-msgid "(wasn’t), (weren’t)"
-msgstr "(wasn’t), (weren’t)"
+msgid "(not) been"
+msgstr "(not) been"
 
 #. placeholder {0}: 6
 #. placeholder {0}: deck.cardCount
@@ -575,9 +575,6 @@ msgstr "<0/> repeats the verb from the question, and any verb can answer this wa
 msgid "<0/> says something is allowed, and you also offer with it: <1/> To let someone do something: <2/>"
 msgstr "<0/> says something is allowed, and you also offer with it: <1/> To let someone do something: <2/>"
 
-msgid "<0/> says what wasn’t: <1><2/>.</1> People often shorten <3>ei olnud</3> to <4/>, as they shorten <5>ei ole</5> to <6>pole</6>. With the <7>mul on</7> of lesson {mulOn}, it says what you didn’t have: <8><9/>.</8>"
-msgstr "<0/> says what wasn’t: <1><2/>.</1> People often shorten <3>ei olnud</3> to <4/>, as they shorten <5>ei ole</5> to <6>pole</6>. With the <7>mul on</7> of lesson {mulOn}, it says what you didn’t have: <8><9/>.</8>"
-
 msgid "<0/> takes <1>-l</1>, as lesson {places} showed for names ending in <2>-maa</2>. So it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
 msgstr "<0/> takes <1>-l</1>, as lesson {places} showed for names ending in <2>-maa</2>. So it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
 
@@ -1017,8 +1014,8 @@ msgstr "<0>Saan</0>: nothing stops you, not time, place or health."
 msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
 msgstr "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
 
-msgid "<0>sin</0> when you did it; no ending after <1>ei</1>."
-msgstr "<0>sin</0> when you did it; no ending after <1>ei</1>."
+msgid "<0>sin</0> when it happened; no ending after <1>ei</1>."
+msgstr "<0>sin</0> when it happened; no ending after <1>ei</1>."
 
 msgid "<0>Sinu</0> is your: that says the coffee is Mari’s."
 msgstr "<0>Sinu</0> is your: that says the coffee is Mari’s."
@@ -5584,8 +5581,8 @@ msgstr "five euros"
 msgid "Five euros."
 msgstr "Five euros."
 
-msgid "Five everyday verbs break the rule, all from the verbs whose past you learned one by one: <0/>, <1/>, <2/>, <3/>, <4><5/>.</4> Tap each form to hear it and see what the rule would have given."
-msgstr "Five everyday verbs break the rule, all from the verbs whose past you learned one by one: <0/>, <1/>, <2/>, <3/>, <4><5/>.</4> Tap each form to hear it and see what the rule would have given."
+msgid "Five everyday verbs break the rule. They are among the verbs whose past forms you learned one at a time: <0/>, <1/>, <2/>, <3/>, <4><5/>.</4> Tap each form to hear it and see what the rule would have given."
+msgstr "Five everyday verbs break the rule. They are among the verbs whose past forms you learned one at a time: <0/>, <1/>, <2/>, <3/>, <4><5/>.</4> Tap each form to hear it and see what the rule would have given."
 
 msgid "five houses"
 msgstr "five houses"
@@ -10603,8 +10600,8 @@ msgstr "Not “I want well”. It’s how you accept a coffee."
 msgid "Not <0>juunud</0>: back to the <1>oo</1> of <2>jooma</2>."
 msgstr "Not <0>juunud</0>: back to the <1>oo</1> of <2>jooma</2>."
 
-msgid "Not <0>minnud</0>: a new stem, as in <1>läksin</1>."
-msgstr "Not <0>minnud</0>: a new stem, as in <1>läksin</1>."
+msgid "Not <0>minnud</0>: a different stem, as <1>läksin</1> has."
+msgstr "Not <0>minnud</0>: a different stem, as <1>läksin</1> has."
 
 msgid "Not <0>nähnud</0>: the h becomes i."
 msgstr "Not <0>nähnud</0>: the h becomes i."
@@ -15719,8 +15716,8 @@ msgstr "Time expressions: when things happen"
 msgid "Time for the level to halve"
 msgstr "Time for the level to halve"
 
-msgid "time, as in no time"
-msgstr "time, as in no time"
+msgid "time, after no: mul ei olnud aega"
+msgstr "time, after no: mul ei olnud aega"
 
 msgid "Timeline"
 msgstr "Timeline"
@@ -17588,6 +17585,9 @@ msgstr "With <0>-mas</0>, they’re in the middle of it: <1>Mari on ujumas.</1> 
 
 msgid "With <0>-mast</0>, they’re coming back from it: <1>Mari tuleb ujumast.</1>"
 msgstr "With <0>-mast</0>, they’re coming back from it: <1>Mari tuleb ujumast.</1>"
+
+msgid "With <0>ei</0>, <1/> says what wasn’t: <2><3/>.</2> People often shorten <4>ei olnud</4> to <5/>, as they shorten <6>ei ole</6> to <7>pole</7>. With the <8>mul on</8> of lesson {mulOn}, it says what you didn’t have: <9><10/>.</9>"
+msgstr "With <0>ei</0>, <1/> says what wasn’t: <2><3/>.</2> People often shorten <4>ei olnud</4> to <5/>, as they shorten <6>ei ole</6> to <7>pole</7>. With the <8>mul on</8> of lesson {mulOn}, it says what you didn’t have: <9><10/>.</9>"
 
 msgid "with a book"
 msgstr "with a book"

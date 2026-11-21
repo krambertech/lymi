@@ -110,8 +110,8 @@ msgstr "(не) видел"
 msgid "(didn’t) wait"
 msgstr "(не) ждал"
 
-msgid "(wasn’t), (weren’t)"
-msgstr "(не) был, (не) было"
+msgid "(not) been"
+msgstr "(не) был"
 
 #. placeholder {0}: 6
 #. placeholder {0}: deck.cardCount
@@ -576,9 +576,6 @@ msgstr "<0/> повторяет глагол из вопроса, и так мо
 msgid "<0/> says something is allowed, and you also offer with it: <1/> To let someone do something: <2/>"
 msgstr "<0/> — когда ты разрешаешь или предлагаешь. Так предлагают: <1/> И так разрешают: <2/>"
 
-msgid "<0/> says what wasn’t: <1><2/>.</1> People often shorten <3>ei olnud</3> to <4/>, as they shorten <5>ei ole</5> to <6>pole</6>. With the <7>mul on</7> of lesson {mulOn}, it says what you didn’t have: <8><9/>.</8>"
-msgstr "<0/> говорит, чего не было или где кого-то не было: <1><2/>.</1> Часто <3>ei olnud</3> сокращают до <4/>, как <5>ei ole</5> до <6>pole</6>. С <7>mul on</7> из урока {mulOn} так говорят, чего у тебя не было: <8><9/>.</8>"
-
 msgid "<0/> takes <1>-l</1>, as lesson {places} showed for names ending in <2>-maa</2>. So it takes <3>-le</3> and <4>-lt</4> too: <5/>, <6/>."
 msgstr "<0/> употребляется с <1>-l</1>, как урок {places} показал для названий на <2>-maa</2>. Значит, и <3>-le</3> с <4>-lt</4>: <5/>, <6/>."
 
@@ -1018,8 +1015,8 @@ msgstr "<0>Saan</0>: тебе ничто не мешает — ни время, 
 msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
 msgstr "Перед <0>sada</0> и <1>tuhat</1> «один» не говорят. Сотни пишутся слитно, тысячи отдельно."
 
-msgid "<0>sin</0> when you did it; no ending after <1>ei</1>."
-msgstr "<0>sin</0>, когда ты это сделал; после <1>ei</1> окончания нет."
+msgid "<0>sin</0> when it happened; no ending after <1>ei</1>."
+msgstr "<0>sin</0>, когда это случилось; после <1>ei</1> окончания нет."
 
 msgid "<0>Sinu</0> is your: that says the coffee is Mari’s."
 msgstr "<0>Sinu</0> — это «твой»: так ты говоришь, что это кофе Мари."
@@ -2655,7 +2652,7 @@ msgid "All seven, typed in full."
 msgstr "Все семь набраны полностью."
 
 msgid "All seven. You heard -nud every time it was there."
-msgstr "Все семь. Ты каждый раз слышал -nud, когда он был."
+msgstr "Все семь. Ты каждый раз слышал -nud там, где он был."
 
 msgid "All seven. You know the week by ear."
 msgstr "Все семь. Ты знаешь неделю на слух."
@@ -5585,8 +5582,8 @@ msgstr "пять евро"
 msgid "Five euros."
 msgstr "Пять евро."
 
-msgid "Five everyday verbs break the rule, all from the verbs whose past you learned one by one: <0/>, <1/>, <2/>, <3/>, <4><5/>.</4> Tap each form to hear it and see what the rule would have given."
-msgstr "Пять повседневных глаголов правило нарушают, и все они из тех, чьё прошедшее время ты учил отдельно: <0/>, <1/>, <2/>, <3/>, <4><5/>.</4> Нажми на каждую форму, чтобы услышать её и увидеть, что получилось бы по правилу."
+msgid "Five everyday verbs break the rule. They are among the verbs whose past forms you learned one at a time: <0/>, <1/>, <2/>, <3/>, <4><5/>.</4> Tap each form to hear it and see what the rule would have given."
+msgstr "Пять повседневных глаголов правило нарушают. Они из тех, чьё прошедшее время ты учил отдельно: <0/>, <1/>, <2/>, <3/>, <4><5/>.</4> Коснись каждой формы, чтобы услышать её и увидеть, что получилось бы по правилу."
 
 msgid "five houses"
 msgstr "пять домов"
@@ -8203,7 +8200,7 @@ msgid "In lesson {inOut}, a place has a form for each question: <0/> for <1>kuhu
 msgstr "В уроке {inOut} у места есть форма для каждого вопроса: <0/> для <1>kuhu?</1> (куда?), <2/> для <3>kus?</3> (где?) и <4/> для <5>kust?</5> (откуда?)."
 
 msgid "In lesson {negation} you said no in the present with <0/> and the verb without its ending: <1><2/>.</1> In lesson {past} you said what happened: <3>ma lugesin</3>, I read."
-msgstr "В уроке {negation} ты отрицал в настоящем времени с <0/> и глаголом без окончания: <1><2/>.</1> В уроке {past} ты рассказывал, что произошло: <3>ma lugesin</3> — я читал."
+msgstr "В уроке {negation} ты говорил «нет» в настоящем времени с <0/> и глаголом без окончания: <1><2/>.</1> В уроке {past} ты рассказывал, что произошло: <3>ma lugesin</3> — я читал."
 
 msgid "In lesson {places} you learned <0/>, at school, and <1/>, in Tallinn. Take off the <2>-s</2> and you have the genitive: <3/>, <4/>. The vowel that appeared before the <5>-s</5> belongs to the genitive."
 msgstr "В уроке {places} были <0/>, в школе, и <1/>, в Таллине. Отбрось <2>-s</2> — и получишь родительный падеж: <3/>, <4/>. Гласная перед <5>-s</5> — часть родительного."
@@ -10604,8 +10601,8 @@ msgstr "Дословно «хочу хорошо», а значит «да, с �
 msgid "Not <0>juunud</0>: back to the <1>oo</1> of <2>jooma</2>."
 msgstr "Не <0>juunud</0>: возвращается <1>oo</1> из <2>jooma</2>."
 
-msgid "Not <0>minnud</0>: a new stem, as in <1>läksin</1>."
-msgstr "Не <0>minnud</0>: новая основа, как в <1>läksin</1>."
+msgid "Not <0>minnud</0>: a different stem, as <1>läksin</1> has."
+msgstr "Не <0>minnud</0>: другая основа, как и у <1>läksin</1>."
 
 msgid "Not <0>nähnud</0>: the h becomes i."
 msgstr "Не <0>nähnud</0>: h становится i."
@@ -11475,7 +11472,7 @@ msgid "Pick a range, listen, and type the number in digits."
 msgstr "Выбери диапазон, послушай и введи число цифрами."
 
 msgid "Pick a verb and tap a form in each column."
-msgstr "Выбери глагол и нажми на форму в каждой колонке."
+msgstr "Выбери глагол и коснись формы в каждой колонке."
 
 msgid "Pick a word first."
 msgstr "Сначала выбери слово."
@@ -12554,7 +12551,7 @@ msgid "Saying something isn’t there"
 msgstr "Когда чего-то нет"
 
 msgid "Saying what you didn’t do"
-msgstr "Рассказываем, чего не делали"
+msgstr "Как сказать, чего ты не делал"
 
 msgid "Saying what you need"
 msgstr "Как сказать, что тебе нужно"
@@ -15009,7 +15006,7 @@ msgid "The same word for someone you love and a price you’d rather not pay."
 msgstr "Одно слово и для любимого человека, и для цены, которую не хочется платить."
 
 msgid "The same works when the <0>da</0> form ends in <1>ta</1> or <2>la</2>: <3/>, <4/>; <5/>, <6><7/>.</6> Pick a verb and tap its three forms in turn."
-msgstr "Так же, когда форма на <0>da</0> заканчивается на <1>ta</1> или <2>la</2>: <3/>, <4/>; <5/>, <6><7/>.</6> Выбери глагол и нажимай на его три формы по очереди."
+msgstr "Так же, когда форма на <0>da</0> заканчивается на <1>ta</1> или <2>la</2>: <3/>, <4/>; <5/>, <6><7/>.</6> Выбери глагол и касайся его трёх форм по очереди."
 
 msgid "the school door"
 msgstr "дверь школы"
@@ -15720,8 +15717,8 @@ msgstr "Выражения времени: когда что происходи�
 msgid "Time for the level to halve"
 msgstr "Время, за которое уровень падает вдвое"
 
-msgid "time, as in no time"
-msgstr "времени, как в «нет времени»"
+msgid "time, after no: mul ei olnud aega"
+msgstr "времени, после «нет»: mul ei olnud aega"
 
 msgid "Timeline"
 msgstr "Линия времени"
@@ -15992,7 +15989,7 @@ msgid "To say into or to, put <0>-sse</0> where the <1>-s</1> was: <2/>, <3/>; <
 msgstr "Чтобы сказать «куда», поставь <0>-sse</0> на место <1>-s</1>: <2/>, <3/>; <4/>, <5/>. Спрашивают словом <6/>."
 
 msgid "To say it didn’t happen, keep <0>ei</0> and change the verb to its <1>nud</1> form: <2><3/>.</2> The <4>nud</4> form never changes for the person: <5/>, <6/>. English does the same with didn’t: I didn’t go, they didn’t go."
-msgstr "Чтобы сказать, что этого не случилось, оставь <0>ei</0> и поменяй глагол на форму на <1>nud</1>: <2><3/>.</2> Форма на <4>nud</4> по лицам не меняется: <5/>, <6/>. Как в русском прошедшем времени: я не пошёл, ты не пошёл, он не пошёл, только эстонскому не нужны ещё и роды."
+msgstr "Чтобы сказать, что этого не случилось, оставь <0>ei</0> и поменяй глагол на форму на <1>nud</1>: <2><3/>.</2> Форма на <4>nud</4> по лицам не меняется: <5/>, <6/>. Похоже на русское прошедшее время: я не пошёл, ты не пошёл, он не пошёл. Но в русском оно меняется по роду и числу (она не пошла, они не пошли), а в эстонском — нет."
 
 msgid "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
 msgstr "Чтобы сказать «больше одного», добавь <0>-d</0> ко второй форме существительного: <1>kass, kassi</1> даёт <2>kassid</2> — кошки. К прилагательному тоже добавляется <3>-d</3>, а глагол стоит в форме для <4>nad</4>: <5>Suured kassid söövad.</5> Большие кошки едят."
@@ -16631,7 +16628,7 @@ msgid "Wash your *hands*."
 msgstr "Помой *руки*."
 
 msgid "wasn’t, weren’t"
-msgstr "не был, не было"
+msgstr "не был, не были"
 
 msgid "water"
 msgstr "вода"
@@ -17589,6 +17586,9 @@ msgstr "С <0>-mas</0> человек как раз этим занят: <1>Mari
 
 msgid "With <0>-mast</0>, they’re coming back from it: <1>Mari tuleb ujumast.</1>"
 msgstr "С <0>-mast</0> человек возвращается оттуда: <1>Mari tuleb ujumast.</1>"
+
+msgid "With <0>ei</0>, <1/> says what wasn’t: <2><3/>.</2> People often shorten <4>ei olnud</4> to <5/>, as they shorten <6>ei ole</6> to <7>pole</7>. With the <8>mul on</8> of lesson {mulOn}, it says what you didn’t have: <9><10/>.</9>"
+msgstr "С <0>ei</0> форма <1/> говорит, чего не было или где кого-то не было: <2><3/>.</2> Часто <4>ei olnud</4> сокращают до <5/>, как <6>ei ole</6> до <7>pole</7>. С <8>mul on</8> из урока {mulOn} так говорят, чего у тебя не было: <9><10/>.</9>"
 
 msgid "with a book"
 msgstr "с книгой"

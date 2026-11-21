@@ -95,7 +95,7 @@ function DidTable() {
     tip:
       person.pronoun === "ma" ? (
         <Trans>
-          <End>sin</End> when you did it; no ending after <Et>ei</Et>.
+          <End>sin</End> when it happened; no ending after <Et>ei</Et>.
         </Trans>
       ) : (
         <Trans>
@@ -227,7 +227,7 @@ const DA_NOTES: Record<string, ReactNode> = {
 const BY_HEART_NOTES: Record<string, ReactNode> = {
   minema: (
     <Trans>
-      Not <Et>minnud</Et>: a new stem, as in <b lang="et">läksin</b>.
+      Not <Et>minnud</Et>: a different stem, as <b lang="et">läksin</b> has.
     </Trans>
   ),
   tegema: (
@@ -274,7 +274,7 @@ const GLOSSARY: Glossary = {
   oodata: { en: msg`to wait, the -da form`, note: msg`From ootama.` },
   olla: { en: msg`to be, the -da form`, note: msg`From olema.` },
   oodanud: { en: msg`(didn’t) wait` },
-  olnud: { en: msg`(wasn’t), (weren’t)`, note: msg`Ma ei olnud, I wasn’t.` },
+  olnud: { en: msg`(not) been`, note: msg`Ma ei olnud, I wasn’t.` },
   tulnud: { en: msg`(didn’t) come` },
   läinud: { en: msg`(didn’t) go`, note: msg`From minema: ma ei läinud, I didn’t go.` },
   teinud: { en: msg`(didn’t) do, make` },
@@ -302,7 +302,7 @@ const GLOSSARY: Glossary = {
     show: "Mul ei olnud aega.",
     clip: clipId("Mul ei olnud aega."),
   },
-  aega: { en: msg`time, as in no time`, note: msg`The partitive of aeg, time.` },
+  aega: { en: msg`time, after no: mul ei olnud aega`, note: msg`The partitive of aeg, time.` },
   miks: { en: msg`why` },
 };
 
@@ -665,9 +665,9 @@ export function MaEiLainudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Five everyday verbs break the rule, all from the verbs whose past you learned
-                    one by one: <Word w="läinud" />, <Word w="teinud" />, <Word w="näinud" />,{" "}
-                    <Word w="söönud" />,{" "}
+                    Five everyday verbs break the rule. They are among the verbs whose past forms
+                    you learned one at a time: <Word w="läinud" />, <Word w="teinud" />,{" "}
+                    <Word w="näinud" />, <Word w="söönud" />,{" "}
                     <Nowrap>
                       <Word w="joonud" />.
                     </Nowrap>{" "}
@@ -701,7 +701,7 @@ export function MaEiLainudLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Olnud" /> says what wasn’t:{" "}
+                    With <Et>ei</Et>, <Word w="olnud" /> says what wasn’t:{" "}
                     <Nowrap>
                       <Word w="Ma ei olnud kodus" />.
                     </Nowrap>{" "}

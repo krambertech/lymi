@@ -814,6 +814,10 @@ msgstr "A bad idea that seemed good"
 msgid "A book"
 msgstr "A book"
 
+msgctxt "what was bought"
+msgid "A book"
+msgstr "A book"
+
 msgid "A brilliant first round rarely repeats in the second."
 msgstr "A brilliant first round rarely repeats in the second."
 
@@ -989,8 +993,8 @@ msgstr "A free lesson on the Estonian days of the week: the seven names, the fou
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 
-msgid "A free lesson on the Estonian simple past: -si- on most verbs (elasin, lugesin, rääkisin), -i- on short everyday ones (olin, läksin, sõin), the six endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
-msgstr "A free lesson on the Estonian simple past: -si- on most verbs (elasin, lugesin, rääkisin), -i- on short everyday ones (olin, läksin, sõin), the six endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
+msgid "A free lesson on the Estonian simple past: -si- on most verbs (elasin, lugesin, rääkisin), -i- on short everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
+msgstr "A free lesson on the Estonian simple past: -si- on most verbs (elasin, lugesin, rääkisin), -i- on short everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
 
 msgid "A full card in seconds"
 msgstr "A full card in seconds"
@@ -3715,9 +3719,6 @@ msgstr "Estonian grammar lessons"
 msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
 msgstr "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
 
-msgid "Estonian has one simple past, called <0/>. Like the present in lesson {present}, it covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
-msgstr "Estonian has one simple past, called <0/>. Like the present in lesson {present}, it covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
-
 msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
 msgstr "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
 
@@ -4792,8 +4793,8 @@ msgstr "he or she came"
 msgid "He or she came home."
 msgstr "He or she came home."
 
-msgid "he or she did"
-msgstr "he or she did"
+msgid "he or she did, made"
+msgstr "he or she did, made"
 
 msgid "he or she drank"
 msgstr "he or she drank"
@@ -5450,6 +5451,10 @@ msgstr "I read, I was reading"
 msgid "I read, I’m reading"
 msgstr "I read, I’m reading"
 
+msgctxt "gloss"
+msgid "I read, I’m reading"
+msgstr "I read, I’m reading"
+
 msgid "I read; I’m reading"
 msgstr "I read; I’m reading"
 
@@ -5789,8 +5794,8 @@ msgstr "in Germany"
 msgid "in Lasnamäe"
 msgstr "in Lasnamäe"
 
-msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1/> Today the verb is in the present again: <2/>"
-msgstr "In lesson {days} you met <0/>, yesterday. It goes with the past: <1/> Today the verb is in the present again: <2/>"
+msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1/> With <2/>, today, the verb is in the present: <3/>"
+msgstr "In lesson {days} you met <0/>, yesterday. It goes with the past: <1/> With <2/>, today, the verb is in the present: <3/>"
 
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
@@ -7181,8 +7186,8 @@ msgstr "Most Spanish nouns ending in -o are masculine and most ending in -a are 
 msgid "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
 msgstr "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
 
-msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form, a few short ones take <2>i-</2>, and six endings say who did it."
-msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form, a few short ones take <2>i-</2>, and six endings say who did it."
+msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form, a few short ones take <2>i-</2>, and an ending for each person says who did it."
+msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form, a few short ones take <2>i-</2>, and an ending for each person says who did it."
 
 msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
 msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
@@ -8435,6 +8440,9 @@ msgstr "Pregnant"
 msgid "Present"
 msgstr "Present"
 
+msgid "Present or past"
+msgstr "Present or past"
+
 msgid "Present perfect"
 msgstr "Present perfect"
 
@@ -9514,8 +9522,8 @@ msgstr "Some places take <0>-l</0> by habit, such as <1>turul</1> and names endi
 msgid "Some short everyday verbs take <0>i-</0> instead, and most change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn each one with its past, as you learned <5>lugema</5> with <6>loen</6>."
 msgstr "Some short everyday verbs take <0>i-</0> instead, and most change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn each one with its past, as you learned <5>lugema</5> with <6>loen</6>."
 
-msgid "Some short verbs take <0>i-</0> and change their stem: <1>olin, tulin, läksin, tegin, nägin, sõin, jõin</1>. <2>Ta</2> ends in <3>i</3>, as in <4>ta oli</4>, except <5>ta läks</5>."
-msgstr "Some short verbs take <0>i-</0> and change their stem: <1>olin, tulin, läksin, tegin, nägin, sõin, jõin</1>. <2>Ta</2> ends in <3>i</3>, as in <4>ta oli</4>, except <5>ta läks</5>."
+msgid "Some short verbs take <0>i-</0>, and most change their stem: <1>olin, tulin, läksin, tegin, nägin, sõin, jõin</1>. <2>Ta</2> ends in <3>i</3>, as in <4>ta oli</4>, except <5>ta läks</5>."
+msgstr "Some short verbs take <0>i-</0>, and most change their stem: <1>olin, tulin, läksin, tegin, nägin, sõin, jõin</1>. <2>Ta</2> ends in <3>i</3>, as in <4>ta oli</4>, except <5>ta läks</5>."
 
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
@@ -10819,6 +10827,12 @@ msgstr "The short form is te."
 msgid "the simple past"
 msgstr "the simple past"
 
+msgid "The simple past has one form for all of these: <0>lugesin</0> is I read, I was reading and I did read. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
+msgstr "The simple past has one form for all of these: <0>lugesin</0> is I read, I was reading and I did read. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
+
+msgid "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
+msgstr "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
+
 msgid "The small words every sentence is built from."
 msgstr "The small words every sentence is built from."
 
@@ -10959,9 +10973,6 @@ msgstr "There is no deck at this address."
 
 msgid "There is nothing published yet."
 msgstr "There is nothing published yet."
-
-msgid "There is one past: <0>lugesin</0> is I read, I was reading and I did read. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
-msgstr "There is one past: <0>lugesin</0> is I read, I was reading and I did read. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
 
 msgid "There’s a *park* near the station."
 msgstr "There’s a *park* near the station."
@@ -11470,6 +11481,10 @@ msgstr "to wait"
 msgid "to work"
 msgstr "to work"
 
+msgid "To work"
+msgstr "To work"
+
+msgctxt "where to"
 msgid "To work"
 msgstr "To work"
 
@@ -13147,8 +13162,8 @@ msgstr "Your first kana is <0>あ</0>."
 msgid "Your first word is <0>tere</0>."
 msgstr "Your first word is <0>tere</0>."
 
-msgid "Your friend Kati asks about your day. Answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."
-msgstr "Your friend Kati asks about your day. Answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."
+msgid "Your friend Kati asks what you did yesterday. Answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Your friend Kati asks what you did yesterday. Answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."
 
 msgid "Your friend Mari sends you a message. Read it and answer the questions. Once you’ve answered, tap a word to see what it means."
 msgstr "Your friend Mari sends you a message. Read it and answer the questions. Once you’ve answered, tap a word to see what it means."

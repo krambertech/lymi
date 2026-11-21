@@ -84,9 +84,9 @@ const MEANS: Record<SiVerb["verb"] | IVerb["verb"], MessageDescriptor> = {
 const PERSON_LABELS: Record<Pronoun, MessageDescriptor> = {
   ma: msg`I`,
   sa: msg`you`,
-  ta: msg`he, she`,
+  ta: msg`he or she`,
   me: msg`we`,
-  te: msg`you, more than one`,
+  te: msg`you, to more than one; polite you`,
   nad: msg`they`,
 };
 
@@ -295,7 +295,7 @@ const I_FORMS: Record<IVerb["verb"], { ma: MessageDescriptor; ta: MessageDescrip
   olema: { ma: msg`I was`, ta: msg`he or she was` },
   tulema: { ma: msg`I came`, ta: msg`he or she came` },
   minema: { ma: msg`I went`, ta: msg`he or she went` },
-  tegema: { ma: msg`I did, I made`, ta: msg`he or she did` },
+  tegema: { ma: msg`I did, I made`, ta: msg`he or she did, made` },
   nägema: { ma: msg`I saw`, ta: msg`he or she saw` },
   sööma: { ma: msg`I ate`, ta: msg`he or she ate` },
   jooma: { ma: msg`I drank`, ta: msg`he or she drank` },
@@ -363,7 +363,10 @@ const GLOSSARY: Glossary = {
   "ta elas": { en: msg`he or she lived` },
   "nad elasid": { en: msg`they lived` },
   lugema: { en: msg`to read` },
-  loen: { en: msg`I read, I’m reading`, note: msg`The present: the stem changes to loe-.` },
+  loen: {
+    en: msg({ message: "I read, I’m reading", context: "gloss" }),
+    note: msg`The present: the stem changes to loe-.`,
+  },
   lugesin: { en: msg`I read, I was reading`, note: msg`The past: luge- from lugema, then -sin.` },
   räägin: { en: msg`I speak, I’m speaking`, note: msg`From rääkima, to speak.` },
   rääkisin: { en: msg`I spoke, I was speaking`, note: msg`Rääki- from rääkima, then -sin.` },
@@ -455,7 +458,7 @@ function useContent() {
         id: "ten",
         ask: t`Where did Mari go at ten?`,
         options: [
-          { id: "work", label: t`To work` },
+          { id: "work", label: t({ message: "To work", context: "where to" }) },
           { id: "market", label: t`To the market` },
           { id: "tartu", label: t`To Tartu` },
         ],
@@ -468,7 +471,7 @@ function useContent() {
         options: [
           { id: "bread", label: t`Bread and cheese` },
           { id: "coffee", label: t`Coffee and milk` },
-          { id: "book", label: t`A book` },
+          { id: "book", label: t({ message: "A book", context: "what was bought" }) },
         ],
         answer: "bread",
         line: 2,
@@ -603,7 +606,7 @@ export function LihtminevikLesson() {
       sub={
         <Trans>
           Most verbs put <End>si-</End> on the stem of the <End>ma</End> form, a few short ones take{" "}
-          <End>i-</End>, and six endings say who did it.
+          <End>i-</End>, and an ending for each person says who did it.
         </Trans>
       }
       facts={[
@@ -638,13 +641,14 @@ export function LihtminevikLesson() {
           does: <b lang="et">ta elas, nad elasid</b>.
         </Trans>,
         <Trans key="3">
-          Some short verbs take <End>i-</End> and change their stem:{" "}
+          Some short verbs take <End>i-</End>, and most change their stem:{" "}
           <b lang="et">olin, tulin, läksin, tegin, nägin, sõin, jõin</b>. <Et>Ta</Et> ends in{" "}
           <End>i</End>, as in <b lang="et">ta oli</b>, except <b lang="et">ta läks</b>.
         </Trans>,
         <Trans key="4">
-          There is one past: <b lang="et">lugesin</b> is I read, I was reading and I did read. Time
-          words such as <b lang="et">eile</b> and <b lang="et">eelmisel nädalal</b> say when.
+          The simple past has one form for all of these: <b lang="et">lugesin</b> is I read, I was
+          reading and I did read. Time words such as <b lang="et">eile</b> and{" "}
+          <b lang="et">eelmisel nädalal</b> say when.
         </Trans>,
       ]}
       sections={[
@@ -657,16 +661,16 @@ export function LihtminevikLesson() {
                 <p>
                   <Trans>
                     In lesson {days} you met <Word w="eile" />, yesterday. It goes with the past:{" "}
-                    <Word w="Eile õppisin eesti keelt" /> Today the verb is in the present again:{" "}
-                    <Word w="Täna õpin eesti keelt" />
+                    <Word w="Eile õppisin eesti keelt" /> With <Word w="täna" />, today, the verb is
+                    in the present: <Word w="Täna õpin eesti keelt" />
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Estonian has one simple past, called <Word w="lihtminevik" />. Like the present
-                    in lesson {present}, it covers more than one English form:{" "}
-                    <b lang="et">õppisin</b> is I studied, I was studying and I did study. Tap a
-                    time on the line to hear a sentence and see how its verb is built.
+                    The simple past is called <Word w="lihtminevik" />. Like the present in lesson{" "}
+                    {present}, one form covers more than one English form: <b lang="et">õppisin</b>{" "}
+                    is I studied, I was studying and I did study. Tap a time on the line to hear a
+                    sentence and see how its verb is built.
                   </Trans>
                 </p>
               </Prose>
@@ -792,7 +796,7 @@ export function LihtminevikLesson() {
         },
         {
           id: "when",
-          title: t`Now or in the past?`,
+          title: t`Present or past`,
           quiz: true,
           children: (
             <>
@@ -858,8 +862,8 @@ export function LihtminevikLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Your friend Kati asks about your day. Answer her in Estonian. If you pick a
-                    wrong reply, you see why, then hear the right one.
+                    Your friend Kati asks what you did yesterday. Answer her in Estonian. If you
+                    pick a wrong reply, you see why, then hear the right one.
                   </Trans>
                 </p>
               </Prose>

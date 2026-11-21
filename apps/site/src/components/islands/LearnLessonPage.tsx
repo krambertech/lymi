@@ -7,6 +7,7 @@ import { KusimusedLesson } from "../learn/lessons/Kusimused";
 import { MinaSinaTemaLesson } from "../learn/lessons/MinaSinaTema";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { OlevikLesson } from "../learn/lessons/Olevik";
+import { OsastavLesson } from "../learn/lessons/Osastav";
 import { PaevadLesson } from "../learn/lessons/Paevad";
 import { PaevTallinnasLesson } from "../learn/lessons/PaevTallinnas";
 import { PoodPoeLesson } from "../learn/lessons/PoodPoe";
@@ -28,6 +29,7 @@ export const LESSON_VIEWS = {
   kaskiv: KaskivLesson,
   "paev-tallinnas": PaevTallinnasLesson,
   "pood-poe": PoodPoeLesson,
+  osastav: OsastavLesson,
 } as const;
 
 export default function LearnLessonPage({

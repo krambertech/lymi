@@ -107,6 +107,7 @@ describe("phone release errors", () => {
         $app_build: "42",
         $app_namespace: "app.lymi",
         app_update: update ?? null,
+        app_channel: "beta",
         $process_person_profile: false,
       });
       expect(event.properties.$exception_list).toMatchObject([
@@ -143,5 +144,23 @@ describe("phone release errors", () => {
     expect(phone.verifyReleaseException()).toBe(false);
     expect(state.captureException).toHaveBeenCalledExactlyOnceWith(expect.any(Error));
     expect(state.flush).toHaveBeenCalledOnce();
+  });
+});
+
+describe("phone usage events", () => {
+  it.each([
+    ["beta", "beta"],
+    ["production", "production"],
+    ["", null],
+  ])("names update channel %j as %j", async (channel, expected) => {
+    state.channel = channel;
+    const phone = await import("./posthog");
+    phone.startTelemetry();
+    phone.setTelemetryLearner("learner", true);
+    const event = state.options?.before_send({
+      event: "$identify",
+      properties: { $anon_distinct_id: "anonymous" },
+    });
+    expect(event?.properties).toMatchObject({ surface: "phone", app_channel: expected });
   });
 });

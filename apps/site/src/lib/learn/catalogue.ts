@@ -178,7 +178,7 @@ export const STAGES: readonly Stage[] = [
         name: msg`Past tense`,
         title: msg`Estonian past tense`,
         et: "Lihtminevik",
-        minutes: 12,
+        minutes: 14,
         blurb: msg`A free lesson on the Estonian simple past: -si- on most verbs (elasin, lugesin, rääkisin), -i- on short everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud.`,
       },
       { name: msg`Saying no in the past`, et: "Ma ei läinud" },

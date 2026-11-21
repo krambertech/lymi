@@ -28,6 +28,9 @@ msgstr "-n сейчас, -sin в прошлом."
 msgid "-s or -l?"
 msgstr "-s или -l?"
 
+msgid "-si- or -i-"
+msgstr "-si- или -i-"
+
 msgid "-te now, -site in the past."
 msgstr "-te сейчас, -site в прошлом."
 
@@ -713,6 +716,9 @@ msgstr "135–145 ммоль/л у взрослых"
 msgid "14 cards"
 msgstr "14 карточек"
 
+msgid "14 minutes"
+msgstr "14 минут"
+
 msgid "17."
 msgstr "17."
 
@@ -787,9 +793,6 @@ msgstr "33 вопроса, 17 для сдачи. Выучить — 300 общи
 
 msgid "4 days"
 msgstr "4 дня"
-
-msgid "4 exercises"
-msgstr "4 упражнения"
 
 msgid "40 and 60 questions. 120 of 200 points to pass."
 msgstr "40 и 60 вопросов. 120 из 200 баллов для сдачи."
@@ -2012,6 +2015,12 @@ msgstr "С изменениями от 19 февраля 2026 года"
 
 msgid "As amended on 30 January 2026"
 msgstr "С изменениями от 30 января 2026 года"
+
+msgid "as in <0>jõin</0>"
+msgstr "как в <0>jõin</0>"
+
+msgid "as in <0>töötasin</0>"
+msgstr "как в <0>töötasin</0>"
 
 msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 msgstr "Как и у olema, окончание уже говорит, кто это, поэтому ma, sa, me и te часто опускают: <0/>. Чтобы противопоставить двух людей, бери полные местоимения из урока {pronouns}: <1/>."
@@ -6180,6 +6189,14 @@ msgstr "Свой алгоритм или FSRS в настройках"
 msgid "Its partner, RTO, is how long you can afford to be down."
 msgstr "Его пара, RTO, — это сколько времени сервис может не работать."
 
+#. placeholder {0}: each.past
+msgid "Its past is <0>{0}</0>, one of the short verbs."
+msgstr "В прошедшем — <0>{0}</0>, это один из коротких глаголов."
+
+#. placeholder {0}: each.past
+msgid "Its past is <0>{0}</0>."
+msgstr "В прошедшем — <0>{0}</0>."
+
 msgid "Its publisher took it off Lymi’s public pages."
 msgstr "Издатель убрал её с публичных страниц Lymi."
 
@@ -7290,6 +7307,9 @@ msgstr "Большинство глаголов добавляет <0>si-</0> к
 msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
 msgstr "Большинство глаголов добавляет <0>si-</0> к основе формы на <1>ma</1>: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
 
+msgid "Most verbs: -si- on the stem of the -ma form."
+msgstr "Большинство глаголов: -si- после основы формы на -ma."
+
 msgid "mother"
 msgstr "мать"
 
@@ -7945,6 +7965,9 @@ msgstr "Одна из пары зеркальных форм"
 
 msgid "One of the eleven base words."
 msgstr "Одно из одиннадцати базовых слов."
+
+msgid "One of the short verbs that take -i-."
+msgstr "Один из коротких глаголов, которые берут -i-."
 
 msgid "One person"
 msgstr "Один человек"
@@ -8664,6 +8687,9 @@ msgstr "Ставь <0>ei</0> перед глаголом: <1>ma ei loe</1>, я �
 
 msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
 msgstr "Чтобы спросить «да или нет», поставь <0>kas</0> перед предложением. Больше ничего не двигается: <1>Kas sa elad Tallinnas?</1>"
+
+msgid "Put each verb in the group its past belongs to, then check. Tap a verb to hear it."
+msgstr "Распредели глаголы по группам их прошедшего времени и проверь. Коснись глагола, чтобы его услышать."
 
 msgid "Put every word in a group first."
 msgstr "Сначала разложи все слова по группам."
@@ -12619,6 +12645,9 @@ msgstr "Какая пара краёв находится в Восточной 
 
 msgid "Which part of an IP address names the network"
 msgstr "Какая часть IP-адреса обозначает сеть"
+
+msgid "Which past?"
+msgstr "Какое прошедшее?"
 
 msgid "Which place?"
 msgstr "Какое место?"

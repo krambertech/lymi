@@ -28,6 +28,9 @@ msgstr "-n now, -sin in the past."
 msgid "-s or -l?"
 msgstr "-s or -l?"
 
+msgid "-si- or -i-"
+msgstr "-si- or -i-"
+
 msgid "-te now, -site in the past."
 msgstr "-te now, -site in the past."
 
@@ -713,6 +716,9 @@ msgstr "135–145 mmol/L in adults"
 msgid "14 cards"
 msgstr "14 cards"
 
+msgid "14 minutes"
+msgstr "14 minutes"
+
 msgid "17."
 msgstr "17."
 
@@ -787,9 +793,6 @@ msgstr "33 questions, 17 to pass. 300 general questions and 10 for your state to
 
 msgid "4 days"
 msgstr "4 days"
-
-msgid "4 exercises"
-msgstr "4 exercises"
 
 msgid "40 and 60 questions. 120 of 200 points to pass."
 msgstr "40 and 60 questions. 120 of 200 points to pass."
@@ -2012,6 +2015,12 @@ msgstr "As amended on 19 February 2026"
 
 msgid "As amended on 30 January 2026"
 msgstr "As amended on 30 January 2026"
+
+msgid "as in <0>jõin</0>"
+msgstr "as in <0>jõin</0>"
+
+msgid "as in <0>töötasin</0>"
+msgstr "as in <0>töötasin</0>"
 
 msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 msgstr "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
@@ -6180,6 +6189,14 @@ msgstr "Its own algorithm, or FSRS in Settings"
 msgid "Its partner, RTO, is how long you can afford to be down."
 msgstr "Its partner, RTO, is how long you can afford to be down."
 
+#. placeholder {0}: each.past
+msgid "Its past is <0>{0}</0>, one of the short verbs."
+msgstr "Its past is <0>{0}</0>, one of the short verbs."
+
+#. placeholder {0}: each.past
+msgid "Its past is <0>{0}</0>."
+msgstr "Its past is <0>{0}</0>."
+
 msgid "Its publisher took it off Lymi’s public pages."
 msgstr "Its publisher took it off Lymi’s public pages."
 
@@ -7290,6 +7307,9 @@ msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form, a few short
 msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
 msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
 
+msgid "Most verbs: -si- on the stem of the -ma form."
+msgstr "Most verbs: -si- on the stem of the -ma form."
+
 msgid "mother"
 msgstr "mother"
 
@@ -7945,6 +7965,9 @@ msgstr "One of a mirror-image pair"
 
 msgid "One of the eleven base words."
 msgstr "One of the eleven base words."
+
+msgid "One of the short verbs that take -i-."
+msgstr "One of the short verbs that take -i-."
 
 msgid "One person"
 msgstr "One person"
@@ -8664,6 +8687,9 @@ msgstr "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 
 msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
 msgstr "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
+
+msgid "Put each verb in the group its past belongs to, then check. Tap a verb to hear it."
+msgstr "Put each verb in the group its past belongs to, then check. Tap a verb to hear it."
 
 msgid "Put every word in a group first."
 msgstr "Put every word in a group first."
@@ -12619,6 +12645,9 @@ msgstr "Which pair of regions is in East Bohemia?"
 
 msgid "Which part of an IP address names the network"
 msgstr "Which part of an IP address names the network"
+
+msgid "Which past?"
+msgstr "Which past?"
 
 msgid "Which place?"
 msgstr "Which place?"

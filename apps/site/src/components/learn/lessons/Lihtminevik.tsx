@@ -10,6 +10,7 @@ import {
   PAST_I_VERBS,
   PAST_NOW_OR_THEN,
   PAST_SATURDAY,
+  PAST_SORT,
   PAST_SI_ENDINGS,
   PAST_SI_VERBS,
   PAST_TIMELINE,
@@ -24,6 +25,7 @@ import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
 import { Morph, type MorphChain } from "../Morph";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
+import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, type GapItem, GapRound, Quiz } from "../Quiz";
 import { Timeline, type TimelinePoint } from "../Timeline";
@@ -579,9 +581,50 @@ function useContent() {
         item === pinned ? item : { ...item, options: kindOptions(shuffle(["now", "past"]), i18n) },
       );
 
+    // The hints name verbs that aren't in the sort, so neither gives an answer away.
+    const bins: SortBin[] = [
+      {
+        id: "si",
+        label: "-si-",
+        hint: (
+          <Trans>
+            as in <Et>töötasin</Et>
+          </Trans>
+        ),
+        rule: t`Most verbs: -si- on the stem of the -ma form.`,
+      },
+      {
+        id: "i",
+        label: "-i-",
+        hint: (
+          <Trans>
+            as in <Et>jõin</Et>
+          </Trans>
+        ),
+        rule: t`One of the short verbs that take -i-.`,
+      },
+    ];
+    const sort: SortItem[] = PAST_SORT.map((each) => ({
+      w: each.verb,
+      bin: each.bin,
+      src: src(each.verb),
+      why:
+        each.bin === "si" ? (
+          <Trans>
+            Its past is <Et>{each.past}</Et>.
+          </Trans>
+        ) : (
+          <Trans>
+            Its past is <Et>{each.past}</Et>, one of the short verbs.
+          </Trans>
+        ),
+    }));
+
     return {
       points,
       chains,
+      bins,
+      sort,
       endings: endingItems(i18n),
       when: whenItems(i18n),
       whenRun,
@@ -610,8 +653,8 @@ export function LihtminevikLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">4 exercises</Trans>,
+        <Trans key="m">14 minutes</Trans>,
+        <Trans key="q">5 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -791,6 +834,29 @@ export function LihtminevikLesson() {
               <Panel>
                 <Morph label={t`Verbs`} chains={content.chains} />
               </Panel>
+            </>
+          ),
+        },
+        {
+          id: "sort",
+          title: t`-si- or -i-`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Put each verb in the group its past belongs to, then check. Tap a verb to hear
+                    it.
+                  </Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="si-or-i"
+                title={<Trans>Which past?</Trans>}
+                bins={content.bins}
+                items={content.sort}
+              />
             </>
           ),
         },

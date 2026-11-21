@@ -28,6 +28,9 @@ msgstr "-n зараз, -sin у минулому."
 msgid "-s or -l?"
 msgstr "-s чи -l?"
 
+msgid "-si- or -i-"
+msgstr "-si- чи -i-"
+
 msgid "-te now, -site in the past."
 msgstr "-te зараз, -site у минулому."
 
@@ -713,6 +716,9 @@ msgstr "135–145 ммоль/л у дорослих"
 msgid "14 cards"
 msgstr "14 карток"
 
+msgid "14 minutes"
+msgstr "14 хвилин"
+
 msgid "17."
 msgstr "17."
 
@@ -787,9 +793,6 @@ msgstr "33 питання, 17 для складання. Вивчити — 300 
 
 msgid "4 days"
 msgstr "4 дні"
-
-msgid "4 exercises"
-msgstr "4 вправи"
 
 msgid "40 and 60 questions. 120 of 200 points to pass."
 msgstr "40 і 60 питань. 120 з 200 балів для складання."
@@ -2012,6 +2015,12 @@ msgstr "Зі змінами від 19 лютого 2026 року"
 
 msgid "As amended on 30 January 2026"
 msgstr "Зі змінами від 30 січня 2026 року"
+
+msgid "as in <0>jõin</0>"
+msgstr "як у <0>jõin</0>"
+
+msgid "as in <0>töötasin</0>"
+msgstr "як у <0>töötasin</0>"
 
 msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
 msgstr "Як і в olema, закінчення вже каже, хто це, тому ma, sa, me і te часто пропускають: <0/>. Щоб протиставити двох людей, бери повні займенники з уроку {pronouns}: <1/>."
@@ -6180,6 +6189,14 @@ msgstr "Власний алгоритм або FSRS у налаштування�
 msgid "Its partner, RTO, is how long you can afford to be down."
 msgstr "Його пара, RTO, — це скільки часу сервіс може не працювати."
 
+#. placeholder {0}: each.past
+msgid "Its past is <0>{0}</0>, one of the short verbs."
+msgstr "У минулому — <0>{0}</0>, це одне з коротких дієслів."
+
+#. placeholder {0}: each.past
+msgid "Its past is <0>{0}</0>."
+msgstr "У минулому — <0>{0}</0>."
+
 msgid "Its publisher took it off Lymi’s public pages."
 msgstr "Видавець прибрав її з публічних сторінок Lymi."
 
@@ -7290,6 +7307,9 @@ msgstr "Більшість дієслів додає <0>si-</0> до основ�
 msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
 msgstr "Більшість дієслів додає <0>si-</0> до основи форми на <1>ma</1>: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
 
+msgid "Most verbs: -si- on the stem of the -ma form."
+msgstr "Більшість дієслів: -si- після основи форми на -ma."
+
 msgid "mother"
 msgstr "мати"
 
@@ -7945,6 +7965,9 @@ msgstr "Одна з двох дзеркальних форм"
 
 msgid "One of the eleven base words."
 msgstr "Одне з одинадцяти базових слів."
+
+msgid "One of the short verbs that take -i-."
+msgstr "Одне з коротких дієслів, що беруть -i-."
 
 msgid "One person"
 msgstr "Одна людина"
@@ -8664,6 +8687,9 @@ msgstr "Став <0>ei</0> перед дієсловом: <1>ma ei loe</1>, я �
 
 msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
 msgstr "Щоб спитати «так чи ні», постав <0>kas</0> перед реченням. Більше нічого не рухається: <1>Kas sa elad Tallinnas?</1>"
+
+msgid "Put each verb in the group its past belongs to, then check. Tap a verb to hear it."
+msgstr "Постав кожне дієслово в групу, до якої належить його минулий час, і перевір. Торкнися дієслова, щоб його почути."
 
 msgid "Put every word in a group first."
 msgstr "Спершу розклади всі слова по групах."
@@ -12619,6 +12645,9 @@ msgstr "Яка пара країв розташована у Східній Че
 
 msgid "Which part of an IP address names the network"
 msgstr "Яка частина IP-адреси позначає мережу"
+
+msgid "Which past?"
+msgstr "Який минулий час?"
 
 msgid "Which place?"
 msgstr "Яке місце?"

@@ -907,6 +907,23 @@ export const PAST_WORDS = [
   "ostsin",
   "ostis",
   "käisin",
+  "rääkima",
+  "ootama",
+  "käima",
+] as const;
+
+/** The verbs of “Which past?”: five that take -si- and five that take -i-. */
+export const PAST_SORT = [
+  { verb: "elama", past: "elasin", bin: "si" },
+  { verb: "lugema", past: "lugesin", bin: "si" },
+  { verb: "rääkima", past: "rääkisin", bin: "si" },
+  { verb: "ootama", past: "ootasin", bin: "si" },
+  { verb: "käima", past: "käisin", bin: "si" },
+  { verb: "olema", past: "olin", bin: "i" },
+  { verb: "tulema", past: "tulin", bin: "i" },
+  { verb: "minema", past: "läksin", bin: "i" },
+  { verb: "tegema", past: "tegin", bin: "i" },
+  { verb: "sööma", past: "sõin", bin: "i" },
 ] as const;
 
 const PAST_CLIPS: Record<string, Clip> = {

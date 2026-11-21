@@ -19,6 +19,7 @@ import { Chips, type KeyItem, Keys, Panel } from "../Explore";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
+import { Scene } from "../Scene";
 import { PlayMark } from "../Sound";
 import { Word } from "../Word";
 
@@ -149,6 +150,13 @@ export const HEARD: readonly { id: Id; direction: Direction }[] = [
 ];
 
 export const DIRECTIONS: readonly Direction[] = ["kus", "kuhu", "kust"];
+
+/** The house scene: the cat goes in, sits inside and comes out, each with its sentence. */
+const HOUSE: readonly { id: "majja" | "majas" | "majast"; sentence: Id }[] = [
+  { id: "majja", sentence: "s-majja" },
+  { id: "majas", sentence: "s-majas" },
+  { id: "majast", sentence: "s-majast" },
+];
 
 /** The everyday words with a short kuhu form, each said in a sentence. */
 const SHORT_KEYS: readonly { place: Place["place"]; id: Id }[] = [
@@ -613,24 +621,23 @@ export function MajasMajjaMajastLesson() {
                 <p>
                   <Trans>
                     English puts in, into or out of before the place. Estonian changes the end of
-                    the place instead. Tap each form to hear it in a sentence.
+                    the place instead. Tap a form to watch the cat move and hear the sentence.
                   </Trans>
                 </p>
               </Prose>
               <Panel>
-                <Keys
-                  label={t`Where the cat is and goes`}
-                  items={[
-                    keyOf("majja", <span lang="et">kuhu?</span>, "s-majja"),
-                    keyOf("majas", <span lang="et">kus?</span>, "s-majas"),
-                    keyOf("majast", <span lang="et">kust?</span>, "s-majast"),
-                  ]}
-                  columns={3}
-                  phoneColumns={3}
-                  empty={{
-                    title: t`Tap a form`,
-                    tip: t`You’ll hear it in a sentence about the cat.`,
-                  }}
+                <Scene
+                  scene="house"
+                  label={t`A cat and a house`}
+                  keysLabel={t`Where the cat is and goes`}
+                  places={HOUSE.map(({ id, sentence }) => ({
+                    id,
+                    word: id,
+                    meaning: i18n._(FORM_MEANS[id] as MessageDescriptor),
+                    sentence: said(sentence),
+                    gloss: i18n._(MEANS[sentence]),
+                    src: src(sentence),
+                  }))}
                 />
               </Panel>
             </>

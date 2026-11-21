@@ -3637,8 +3637,8 @@ msgstr "Українською так само: «Ти живеш у Таллі�
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "Звука õ немає ні в англійській, ні в українській. Скажи «о», але не округлюй губи."
 
-msgid "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap each form to hear it in a sentence."
-msgstr "Українська розрізняє це прийменником і відмінком: у будинку, у будинок, з будинку. Естонська змінює лише кінець слова. Торкнись кожної форми, щоб почути її в реченні."
+msgid "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap a form to watch the cat move and hear the sentence."
+msgstr "Українська розрізняє це прийменником і відмінком: у будинку, у будинок, з будинку. Естонська змінює лише кінець слова. Торкнись форми, щоб побачити, як рухається кіт, і почути речення."
 
 msgid "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Lesson {into} teaches the endings for going into a place and coming out of it."
 msgstr "Українською кажуть «на роботі», але «в школі», і естонською так само: <0/>, але <1/>. Проте так збігається не завжди, тож вчи кожне місце разом із закінченням. Як сказати «в місто» і «з міста», розповідає урок {into}."
@@ -12951,9 +12951,6 @@ msgstr "Почуєш elama з ним і дізнаєшся, для кого во
 
 msgid "You’ll hear it and read what its ending does."
 msgstr "Почуєш її і прочитаєш, що робить закінчення."
-
-msgid "You’ll hear it in a sentence about the cat."
-msgstr "Почуєш її в реченні про кота."
 
 msgid "You’ll hear it in a sentence."
 msgstr "Почуєш його в реченні."

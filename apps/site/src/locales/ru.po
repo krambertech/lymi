@@ -3637,8 +3637,8 @@ msgstr "По-русски вопрос часто задают одной инт
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "Звука õ нет ни в английском, ни в русском. Скажи «о», но не округляй губы."
 
-msgid "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap each form to hear it in a sentence."
-msgstr "Русский различает это предлогом и падежом: в доме, в дом, из дома. Эстонский меняет только конец слова. Нажми на каждую форму, чтобы услышать её в предложении."
+msgid "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap a form to watch the cat move and hear the sentence."
+msgstr "Русский различает это предлогом и падежом: в доме, в дом, из дома. Эстонский меняет только конец слова. Нажми на форму, чтобы увидеть, как движется кот, и услышать предложение."
 
 msgid "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Lesson {into} teaches the endings for going into a place and coming out of it."
 msgstr "По-русски говорят «на работе», но «в школе», и по-эстонски так же: <0/>, но <1/>. Правда, так совпадает не всегда, поэтому учи каждое место вместе с окончанием. Как сказать «в город» и «из города», объясняет урок {into}."
@@ -12951,9 +12951,6 @@ msgstr "Услышишь elama с ним и узнаешь, для кого он
 
 msgid "You’ll hear it and read what its ending does."
 msgstr "Услышишь её и прочитаешь, что делает окончание."
-
-msgid "You’ll hear it in a sentence about the cat."
-msgstr "Услышишь её в предложении о коте."
 
 msgid "You’ll hear it in a sentence."
 msgstr "Услышишь его в предложении."

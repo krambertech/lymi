@@ -3637,8 +3637,8 @@ msgstr "English adds do or swaps words round. Estonian adds kas and leaves every
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "English has no õ. Say “o” without rounding your lips."
 
-msgid "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap each form to hear it in a sentence."
-msgstr "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap each form to hear it in a sentence."
+msgid "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap a form to watch the cat move and hear the sentence."
+msgstr "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap a form to watch the cat move and hear the sentence."
 
 msgid "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Lesson {into} teaches the endings for going into a place and coming out of it."
 msgstr "English says at work and at school alike. Estonian says <0/> but <1/>, so learn each place with its ending. Lesson {into} teaches the endings for going into a place and coming out of it."
@@ -12951,9 +12951,6 @@ msgstr "You’ll hear elama with it and who it’s for."
 
 msgid "You’ll hear it and read what its ending does."
 msgstr "You’ll hear it and read what its ending does."
-
-msgid "You’ll hear it in a sentence about the cat."
-msgstr "You’ll hear it in a sentence about the cat."
 
 msgid "You’ll hear it in a sentence."
 msgstr "You’ll hear it in a sentence."

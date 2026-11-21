@@ -102,7 +102,7 @@ export function KitExplorers({ Part }: { Part: (props: PartProps) => ReactNode }
   const tenses: Record<(typeof KIT_TENSES)[number]["id"], string> = {
     pluperfect: t`Pluperfect`,
     past: t`Past`,
-    perfect: t`Perfect`,
+    perfect: t`Present perfect`,
     present: t`Present`,
     future: t`Future`,
   };
@@ -110,9 +110,9 @@ export function KitExplorers({ Part }: { Part: (props: PartProps) => ReactNode }
     "Ma olin juba söönud.": t`I had already eaten.`,
     "Eile sõin ma kodus.": t`Yesterday I ate at home.`,
     "Ma olen juba söönud.": t`I have already eaten.`,
-    "Praegu ma söön.": t`I'm eating now.`,
-    "Homme söön ma kodus.": t`Tomorrow I'll eat at home.`,
-    "Ma hakkan sööma.": t`I'm going to eat.`,
+    "Praegu ma söön.": t`I’m eating now.`,
+    "Homme söön ma kodus.": t`Tomorrow I’ll eat at home.`,
+    "Ma hakkan sööma.": t`I’m going to eat.`,
   };
   const pieces: Record<string, string> = {
     "ol|in": t`olema, past`,
@@ -166,7 +166,7 @@ export function KitExplorers({ Part }: { Part: (props: PartProps) => ReactNode }
       <Part
         id="paradigm"
         title={t`Table of forms`}
-        use={t`A noun's cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack.`}
+        use={t`A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack.`}
       >
         <Panel>
           <Paradigm

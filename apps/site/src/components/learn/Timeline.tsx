@@ -23,7 +23,7 @@ export interface TimelineExample {
 
 export interface TimelinePoint {
   id: string;
-  /** The tense in the reader's language: Perfect. */
+  /** The tense in the reader's language: Past. */
   label: string;
   /** Its Estonian name, small under the label: täisminevik. */
   et?: string | undefined;

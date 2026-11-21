@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
-import { LESSONS } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   capital,
   clipId,
@@ -481,7 +481,7 @@ const verdict = (share: number): ReactNode =>
 
 export function MinaSinaTemaLesson() {
   const { t, i18n } = useLingui();
-  const regularVerbs = LESSONS.find((lesson) => lesson.et === "Ma loen")?.n;
+  const regularVerbs = lessonBySlug("olevik")?.n;
 
   const whoItems = useMemo<WhoItem[]>(
     () =>
@@ -672,7 +672,6 @@ export function MinaSinaTemaLesson() {
                   main: PRONOUN_SENTENCES[id],
                   sub: t`I’m Mari.`,
                   src: sentenceSrc(id),
-                  label: t`Play ${PRONOUN_SENTENCES[id]}`,
                 }))}
               />
               <Aside>

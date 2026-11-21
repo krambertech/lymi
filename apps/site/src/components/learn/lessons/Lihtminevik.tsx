@@ -615,7 +615,7 @@ function useContent() {
           </Trans>
         ) : (
           <Trans>
-            Its past is <Et>{each.past}</Et>, one of the short verbs.
+            One of the short verbs: its past is <Et>{each.past}</Et>.
           </Trans>
         ),
     }));
@@ -648,8 +648,8 @@ export function LihtminevikLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Most verbs put <End>si-</End> on the stem of the <End>ma</End> form, a few short ones take{" "}
-          <End>i-</End>, and an ending for each person says who did it.
+          Most verbs put <End>si-</End> on the stem of the <End>ma</End> form; a few short ones take{" "}
+          <End>i-</End>. An ending for each person says who did it.
         </Trans>
       }
       facts={[
@@ -684,14 +684,14 @@ export function LihtminevikLesson() {
           does: <b lang="et">ta elas, nad elasid</b>.
         </Trans>,
         <Trans key="3">
-          Some short verbs take <End>i-</End>, and most change their stem:{" "}
+          Some short verbs take <End>i-</End>, and several change their stem:{" "}
           <b lang="et">olin, tulin, läksin, tegin, nägin, sõin, jõin</b>. <Et>Ta</Et> ends in{" "}
           <End>i</End>, as in <b lang="et">ta oli</b>, except <b lang="et">ta läks</b>.
         </Trans>,
         <Trans key="4">
-          The simple past has one form for all of these: <b lang="et">lugesin</b> is I read, I was
-          reading and I did read. Time words such as <b lang="et">eile</b> and{" "}
-          <b lang="et">eelmisel nädalal</b> say when.
+          <b lang="et">Lugesin</b> is I read, I was reading and I did read: one simple past for all
+          three. Time words such as <b lang="et">eile</b> and <b lang="et">eelmisel nädalal</b> say
+          when.
         </Trans>,
       ]}
       sections={[
@@ -816,8 +816,8 @@ export function LihtminevikLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Some short everyday verbs take <End>i-</End> instead, and most change their stem
-                    too: <Word w="sööma" />, <Word w="sõin" />, I ate; <Word w="minema" />,{" "}
+                    Some short everyday verbs take <End>i-</End> instead, and several change their
+                    stem too: <Word w="sööma" />, <Word w="sõin" />, I ate; <Word w="minema" />,{" "}
                     <Word w="läksin" />, I went. Learn each one with its past, as you learned{" "}
                     <b lang="et">lugema</b> with <b lang="et">loen</b>.
                   </Trans>

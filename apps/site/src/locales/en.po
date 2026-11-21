@@ -542,6 +542,9 @@ msgstr "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> asks where you’re from, not where you live."
 
+msgid "<0>Lugesin</0> is I read, I was reading and I did read: one simple past for all three. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
+msgstr "<0>Lugesin</0> is I read, I was reading and I did read: one simple past for all three. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
+
 msgid "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
 msgstr "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
 
@@ -1030,8 +1033,8 @@ msgstr "A free lesson on the Estonian days of the week: the seven names, the fou
 msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
 
-msgid "A free lesson on the Estonian simple past: -si- on most verbs (elasin, lugesin, rääkisin), -i- on short everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
-msgstr "A free lesson on the Estonian simple past: -si- on most verbs (elasin, lugesin, rääkisin), -i- on short everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
+msgid "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on short everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
+msgstr "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on short everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
 
 msgid "A full card in seconds"
 msgstr "A full card in seconds"
@@ -6190,10 +6193,6 @@ msgid "Its partner, RTO, is how long you can afford to be down."
 msgstr "Its partner, RTO, is how long you can afford to be down."
 
 #. placeholder {0}: each.past
-msgid "Its past is <0>{0}</0>, one of the short verbs."
-msgstr "Its past is <0>{0}</0>, one of the short verbs."
-
-#. placeholder {0}: each.past
 msgid "Its past is <0>{0}</0>."
 msgstr "Its past is <0>{0}</0>."
 
@@ -7301,8 +7300,8 @@ msgstr "Most Spanish nouns ending in -o are masculine and most ending in -a are 
 msgid "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
 msgstr "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
 
-msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form, a few short ones take <2>i-</2>, and an ending for each person says who did it."
-msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form, a few short ones take <2>i-</2>, and an ending for each person says who did it."
+msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form; a few short ones take <2>i-</2>. An ending for each person says who did it."
+msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form; a few short ones take <2>i-</2>. An ending for each person says who did it."
 
 msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
 msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
@@ -7968,6 +7967,10 @@ msgstr "One of the eleven base words."
 
 msgid "One of the short verbs that take -i-."
 msgstr "One of the short verbs that take -i-."
+
+#. placeholder {0}: each.past
+msgid "One of the short verbs: its past is <0>{0}</0>."
+msgstr "One of the short verbs: its past is <0>{0}</0>."
 
 msgid "One person"
 msgstr "One person"
@@ -9685,11 +9688,11 @@ msgstr "Some kanji look different in a Chinese font. Lymi shows your cards in Ja
 msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 msgstr "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 
-msgid "Some short everyday verbs take <0>i-</0> instead, and most change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn each one with its past, as you learned <5>lugema</5> with <6>loen</6>."
-msgstr "Some short everyday verbs take <0>i-</0> instead, and most change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn each one with its past, as you learned <5>lugema</5> with <6>loen</6>."
+msgid "Some short everyday verbs take <0>i-</0> instead, and several change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn each one with its past, as you learned <5>lugema</5> with <6>loen</6>."
+msgstr "Some short everyday verbs take <0>i-</0> instead, and several change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn each one with its past, as you learned <5>lugema</5> with <6>loen</6>."
 
-msgid "Some short verbs take <0>i-</0>, and most change their stem: <1>olin, tulin, läksin, tegin, nägin, sõin, jõin</1>. <2>Ta</2> ends in <3>i</3>, as in <4>ta oli</4>, except <5>ta läks</5>."
-msgstr "Some short verbs take <0>i-</0>, and most change their stem: <1>olin, tulin, läksin, tegin, nägin, sõin, jõin</1>. <2>Ta</2> ends in <3>i</3>, as in <4>ta oli</4>, except <5>ta läks</5>."
+msgid "Some short verbs take <0>i-</0>, and several change their stem: <1>olin, tulin, läksin, tegin, nägin, sõin, jõin</1>. <2>Ta</2> ends in <3>i</3>, as in <4>ta oli</4>, except <5>ta läks</5>."
+msgstr "Some short verbs take <0>i-</0>, and several change their stem: <1>olin, tulin, läksin, tegin, nägin, sõin, jõin</1>. <2>Ta</2> ends in <3>i</3>, as in <4>ta oli</4>, except <5>ta läks</5>."
 
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
@@ -11010,9 +11013,6 @@ msgstr "The short form is te."
 
 msgid "the simple past"
 msgstr "the simple past"
-
-msgid "The simple past has one form for all of these: <0>lugesin</0> is I read, I was reading and I did read. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
-msgstr "The simple past has one form for all of these: <0>lugesin</0> is I read, I was reading and I did read. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
 
 msgid "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
 msgstr "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."

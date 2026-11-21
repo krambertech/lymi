@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS } from "../../../lib/learn/catalogue";
+import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -340,7 +340,7 @@ export function OlevikLesson() {
   const pronouns = at("Mina, sina, tema");
   const gradation = at("Jalg, jala");
   const where = at("Tallinnas, Tartus");
-  const partitive = at("Kaks kassi");
+  const partitive = lessonBySlug("osastav")?.n;
   const verbForms = at("Lugema, lugeda, loen");
 
   const endings = useMemo(

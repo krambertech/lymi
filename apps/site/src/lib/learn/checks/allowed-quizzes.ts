@@ -27,6 +27,18 @@ export const ALLOWED_NEAR_PAIRS: readonly {
     reason:
       "Each gap asks who or whose: Jaan against Jaani and kass against kassi is the lesson, and the pronoun gaps (mina, minu) are the same length.",
   },
+  {
+    lesson: "osastav",
+    quiz: "one-or-more",
+    reason:
+      "The quiz asks for the first or the third form after a number: kass after üks, kassi after kaks. Each run asks three of each, so the longer form wins half the time.",
+  },
+  {
+    lesson: "osastav",
+    quiz: "market-day",
+    reason:
+      "Each gap asks for the first or the third form: üks leib against kilo juustu. Three of seven gaps want the first, so the longer form scores four of seven.",
+  },
 ];
 
 /**

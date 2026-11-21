@@ -4839,6 +4839,436 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "majas-majja-majast/kus": {
+    "text": "kus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kuhu": {
+    "text": "kuhu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kust": {
+    "text": "kust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kass": {
+    "text": "kass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/to2o2l": {
+    "text": "tööl",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/pa2rit": {
+    "text": "pärit",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/eestist": {
+    "text": "Eestist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/soomest": {
+    "text": "Soomest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/ukrainast": {
+    "text": "Ukrainast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/tallinn": {
+    "text": "Tallinn",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/tallinnas": {
+    "text": "Tallinnas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/tallinnasse": {
+    "text": "Tallinnasse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/tallinnast": {
+    "text": "Tallinnast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/tartu": {
+    "text": "Tartu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/tartus": {
+    "text": "Tartus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/tartusse": {
+    "text": "Tartusse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/tartust": {
+    "text": "Tartust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/pa2rnu": {
+    "text": "Pärnu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/pa2rnus": {
+    "text": "Pärnus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/pa2rnusse": {
+    "text": "Pärnusse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/pa2rnust": {
+    "text": "Pärnust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/haigla": {
+    "text": "haigla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/haiglas": {
+    "text": "haiglas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/haiglasse": {
+    "text": "haiglasse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/haiglast": {
+    "text": "haiglast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kontor": {
+    "text": "kontor",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kontoris": {
+    "text": "kontoris",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kontorisse": {
+    "text": "kontorisse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kontorist": {
+    "text": "kontorist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kohvik": {
+    "text": "kohvik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kohvikus": {
+    "text": "kohvikus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kohvikusse": {
+    "text": "kohvikusse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kohvikust": {
+    "text": "kohvikust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kool": {
+    "text": "kool",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/koolis": {
+    "text": "koolis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kooli": {
+    "text": "kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/koolist": {
+    "text": "koolist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/koolisse": {
+    "text": "koolisse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/poes": {
+    "text": "poes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/poodi": {
+    "text": "poodi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/poest": {
+    "text": "poest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/poesse": {
+    "text": "poesse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/linn": {
+    "text": "linn",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/linnas": {
+    "text": "linnas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/linna": {
+    "text": "linna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/linnast": {
+    "text": "linnast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/linnasse": {
+    "text": "linnasse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/maja": {
+    "text": "maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/majas": {
+    "text": "majas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/majja": {
+    "text": "majja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/majast": {
+    "text": "majast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/majasse": {
+    "text": "majasse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kodu": {
+    "text": "kodu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kodus": {
+    "text": "kodus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/koju": {
+    "text": "koju",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/kodust": {
+    "text": "kodust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/s-majas": {
+    "text": "Kass on majas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/s-majja": {
+    "text": "Kass läheb majja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/s-majast": {
+    "text": "Kass tuleb majast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/q-tuled": {
+    "text": "Kust sa tuled?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/a-tulen-koolist": {
+    "text": "Ma tulen koolist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/a-tulen-poest": {
+    "text": "Ma tulen poest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/q-parit": {
+    "text": "Kust sa pärit oled?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/p-eestist": {
+    "text": "Ma olen pärit Eestist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/p-soomest": {
+    "text": "Ma olen pärit Soomest.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/p-ukrainast": {
+    "text": "Ma olen pärit Ukrainast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/p-tallinnast": {
+    "text": "Ma olen pärit Tallinnast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/q-lahed": {
+    "text": "Kuhu sa lähed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/a-lahen-tartusse": {
+    "text": "Ma lähen Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/a-lahen-haiglasse": {
+    "text": "Ma lähen haiglasse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/k-kooli": {
+    "text": "Ma lähen kooli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/k-poodi": {
+    "text": "Ma lähen poodi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/k-linna": {
+    "text": "Me läheme linna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/k-koju": {
+    "text": "Tule koju!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/k-kodus": {
+    "text": "Ma olen kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/k-kodust": {
+    "text": "Ma tulen kodust.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/d-mari-1": {
+    "text": "Tere! Kuhu sa lähed?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "majas-majja-majast/d-sina-1": {
+    "text": "Tere! Ma lähen poodi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/d-mari-2": {
+    "text": "Kust sa tuled?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "majas-majja-majast/d-sina-2": {
+    "text": "Ma tulen koolist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/d-mari-3": {
+    "text": "Kas sa oled homme kodus?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "majas-majja-majast/d-sina-3": {
+    "text": "Ei, ma lähen homme Tartusse.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/d-mari-4": {
+    "text": "Kas sa oled pärit Tartust?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "majas-majja-majast/d-sina-4": {
+    "text": "Ei, ma olen pärit Pärnust.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majas-majja-majast/d-mari-5": {
+    "text": "Head aega!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
   "verbi-pohivormid/elama": {
     "text": "elama",
     "model": "eleven_v4",

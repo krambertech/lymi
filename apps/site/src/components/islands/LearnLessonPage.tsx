@@ -21,6 +21,7 @@ import { PaevTallinnasLesson } from "../learn/lessons/PaevTallinnas";
 import { PohivormidLesson } from "../learn/lessons/Pohivormid";
 import { PoodPoeLesson } from "../learn/lessons/PoodPoe";
 import { SobragaRahataLesson } from "../learn/lessons/SobragaRahata";
+import { TulevikLesson } from "../learn/lessons/Tulevik";
 
 import { TegevusnimedLesson } from "../learn/lessons/Tegevusnimed";
 import { TutvumineLesson } from "../learn/lessons/Tutvumine";
@@ -56,6 +57,7 @@ export const LESSON_VIEWS = {
   "ujuma-ujumas-ujumast": UjumaUjumasUjumastLesson,
   osastav: OsastavLesson,
   lihtminevik: LihtminevikLesson,
+  tulevik: TulevikLesson,
   mitmus: MitmusLesson,
 } as const;
 

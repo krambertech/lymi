@@ -250,7 +250,7 @@ function shown(option: unknown, locale: CheckLocale): string {
   let text = labelTexts.get(label);
   if (text === undefined) {
     const html = renderToStaticMarkup(
-      // biome-ignore lint/correctness/noChildrenProp: Island's props type requires children, and this .ts file has no JSX.
+      // oxlint-disable-next-line react/no-children-prop -- Island's props type requires children, and this .ts file has no JSX.
       createElement(Island, { locale, children: label as ReactNode }),
     );
     text = textOf(parse(html, locale)).trim() || String(id);

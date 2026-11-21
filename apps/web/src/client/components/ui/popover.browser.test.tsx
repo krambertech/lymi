@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { expect, test } from "vitest";
-import { page } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page } from "vitest/browser";
 import { Popover, PopoverContent } from "./popover";
 
 const popup = () => document.querySelector<HTMLElement>('[data-slot="popover-content"]');

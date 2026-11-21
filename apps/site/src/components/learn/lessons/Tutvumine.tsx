@@ -9,8 +9,8 @@ import {
 } from "../../../lib/learn/clips";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { type GapItem, GapPassage } from "../GapPassage";
-import { LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { LessonView, Prose } from "../LessonView";
 import { Listening, type PassageQuestion } from "../Passage";
 import { Word } from "../Word";
 

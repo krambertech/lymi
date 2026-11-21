@@ -1,8 +1,8 @@
 import { Lock } from "lucide-react";
 import { useRef, useState } from "react";
 import { afterAll, beforeAll, expect, test } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { ErrorTip } from "./error-tip";
 
 const tip = () => document.querySelector<HTMLElement>('[data-slot="popover-content"]');

@@ -16,7 +16,7 @@ node -e 'const b=require("./scripts/comment-baseline.json");const d={};for(const
 gh pr list --state open --json number,files --jq '.[] | [.number, (.files[].path)] | @tsv'
 ```
 
-Keep one pull request under about 60 files. List the comments with `node scripts/check-comments.mjs --list <path>`; tool directives (`biome-ignore`, `@ts-expect-error`, `/// <reference>`, `/** @type {…} */`) are already left out and stay. Above 20 files, hand each directory to its own subagent with this skill's sorting rules. The subagent deletes comments and returns one row per comment: file, line, category, text, and one line of why. Write the docs and issues yourself from the rows, so one hand owns where each decision lands.
+Keep one pull request under about 60 files. List the comments with `node scripts/check-comments.mjs --list <path>`; tool directives (`oxlint-disable-next-line`, `@ts-expect-error`, `/// <reference>`, `/** @type {…} */`) are already left out and stay. Above 20 files, hand each directory to its own subagent with this skill's sorting rules. The subagent deletes comments and returns one row per comment: file, line, category, text, and one line of why. Write the docs and issues yourself from the rows, so one hand owns where each decision lands.
 
 ## Sort each comment
 
@@ -47,7 +47,7 @@ Change comments and docs only. A rename, extraction or test that would make the 
 Done means `node scripts/check-comments.mjs --list <path>` prints nothing.
 
 ```bash
-pnpm exec biome format --write <path>
+pnpm exec oxfmt <path>
 node scripts/check-comments.mjs --update
 pnpm verify:changed
 ```

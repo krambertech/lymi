@@ -1,8 +1,8 @@
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { describe, expect, test, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { messages } from "../../locales/en.po";
 import { NewDeckForm, type NewDeckFormProps } from "./new-deck-sheet";
 

@@ -18,15 +18,15 @@ export function Furigana({ term, reading, lang, hidden }: Props) {
   if (lettersReading(reading)) return <Pinyin term={term} pinyin={reading} hidden={hidden} />;
   return alignReading(term, reading).map((segment, index) =>
     segment.reading === undefined ? (
-      // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+      // oxlint-disable-next-line react/no-array-index-key -- runs in a fixed order
       <Fragment key={index}>{segment.text}</Fragment>
     ) : (
-      // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+      // oxlint-disable-next-line react/no-array-index-key -- runs in a fixed order
       <ruby key={index} lang={lang}>
         {segment.text}
         <rp>(</rp>
         {/* Out of the accessible name, so a screen reader says the word once, as written. */}
-        {/* biome-ignore lint/a11y/noAriaHiddenOnFocusable: rt is never focusable */}
+        {/* oxlint-disable-next-line jsx-a11y/no-aria-hidden-on-focusable -- rt is never focusable */}
         <rt
           aria-hidden="true"
           className={clsx(

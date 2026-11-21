@@ -1,4 +1,3 @@
-import { env, waitUntil } from "cloudflare:workers";
 import { languageDecks } from "@lymi/client/welcome";
 import {
   hasShelfPage,
@@ -14,6 +13,7 @@ import {
 import { listPublicCatalog, listPublicDeckSlugs } from "@lymi/core/catalog/server";
 import { drizzle } from "@lymi/core/db";
 import type { APIContext, AstroGlobal } from "astro";
+import { env, waitUntil } from "cloudflare:workers";
 import { DECK_CACHE_CONTROL, etagMatches } from "./deck-page";
 import { EXAM_DECKS, type ListedExam, listedExams } from "./exams";
 import { catalogContentHash, catalogEtag, shelfPath } from "./explore";

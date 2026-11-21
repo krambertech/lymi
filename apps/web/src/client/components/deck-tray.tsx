@@ -122,7 +122,7 @@ export function DeckTray({
     <div className={clsx("deck-tray", className)} data-hue={hue}>
       <div className="deck-tray-stack">
         {Array.from({ length: paperFor(cardCount) }, (_, at) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: a fixed stack, and the sheets are blank.
+          // oxlint-disable-next-line react/no-array-index-key -- a fixed stack, and the sheets are blank.
           <span key={at} className="deck-tray-paper" data-at={at + 1} aria-hidden="true" />
         ))}
         <article className="deck-tray-card">

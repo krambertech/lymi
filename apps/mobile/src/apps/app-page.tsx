@@ -210,7 +210,7 @@ export function AppConnect({
         <Text className="text-base text-ink-secondary">{intro}</Text>
         <View className="gap-3">
           {steps.map((step, i) => (
-            // biome-ignore lint/suspicious/noArrayIndexKey: the steps are fixed and never reorder
+            // oxlint-disable-next-line react/no-array-index-key -- the steps are fixed and never reorder
             <View key={i} className="flex-row gap-3">
               <View className="size-7 items-center justify-center rounded-full border border-edge bg-plate-nested">
                 <Text

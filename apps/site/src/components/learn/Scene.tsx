@@ -539,7 +539,7 @@ function useStage(scene: SceneName, start: string | null) {
   });
   const lid = useRef<SVGGElement | null>(null);
   const stage = useRef<Stage | null>(null);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the stage is built once per scene
+  // oxlint-disable react-hooks/exhaustive-deps -- the stage is built once per scene
   useEffect(() => {
     const { behind, inside, front } = layers.current;
     if (!behind || !inside || !front) return;
@@ -552,6 +552,7 @@ function useStage(scene: SceneName, start: string | null) {
       stage.current = null;
     };
   }, [scene]);
+  // oxlint-enable react-hooks/exhaustive-deps
   return { layers, lid, stage };
 }
 
@@ -602,7 +603,7 @@ export function Scene({ scene, label, keysLabel, places }: SceneProps) {
           {places.map((place) => {
             const spot = PLACES[scene][place.id]?.spot;
             return spot ? (
-              // biome-ignore lint/a11y/noStaticElementInteractions: a pointer shortcut for the keys below
+              // oxlint-disable-next-line jsx-a11y/no-static-element-interactions -- a pointer shortcut for the keys below
               <rect
                 key={place.id}
                 x={spot[0]}

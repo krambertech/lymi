@@ -98,6 +98,7 @@ function InertLink({
   );
   const href = hash ? `${path}#${hash}` : path;
   return (
+    // oxlint-disable-next-line jsx-a11y/anchor-has-content -- Biome let this pass; triage in #1278
     <a
       {...anchor}
       href={href}

@@ -7,8 +7,8 @@ import { clipUrl, NUMBER_SENTENCES, numberClip } from "../../../lib/learn/clips"
 import { DIGIT_WORDS, numberParts, numberWords } from "../../../lib/learn/estonian-numbers";
 import { playSound } from "../../../lib/learn/player";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
-import { LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { LessonView, Prose } from "../LessonView";
 import { type ChoiceItem, ChoiceRound, Quiz, type TypedItem, TypedRound } from "../Quiz";
 import { PlayButton } from "../Sound";
 import { Word } from "../Word";
@@ -102,12 +102,12 @@ function Spoken({ n }: { n: number }) {
     <>
       {numberParts(n).map((part, i) =>
         part.ending ? (
-          // biome-ignore lint/suspicious/noArrayIndexKey: a number's parts never reorder
+          // oxlint-disable-next-line react/no-array-index-key -- a number's parts never reorder
           <span key={i} className="text-(--form)">
             {part.text}
           </span>
         ) : (
-          // biome-ignore lint/suspicious/noArrayIndexKey: a number's parts never reorder
+          // oxlint-disable-next-line react/no-array-index-key -- a number's parts never reorder
           <span key={i}>{part.text}</span>
         ),
       )}
@@ -257,9 +257,11 @@ export function NumbridLesson() {
   const levelItems = useMemo(
     () =>
       LEVELS.map((each) =>
-        each.numbers.map(
-          (n): TypedItem => ({ src: numberSrc(n), answers: [String(n)], said: numberWords(n) }),
-        ),
+        each.numbers.map((n): TypedItem => ({
+          src: numberSrc(n),
+          answers: [String(n)],
+          said: numberWords(n),
+        })),
       ),
     [],
   );

@@ -83,7 +83,7 @@ export function useExampleAudio(card: SpokenCard, surface: Surface) {
       mounted.current = false;
     };
   }, []);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a new example, or leaving the card, stops the clip and lets it go
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- a new example, or leaving the card, stops the clip and lets it go
   useEffect(
     () => () => {
       const last = played.current;

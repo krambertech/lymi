@@ -1,7 +1,7 @@
 import { msg } from "@lingui/core/macro";
-import type { Example } from "./HandExamples";
 import type { HandCard } from "./hand-cards";
 import { noun, phrase } from "./hand-cards";
+import type { Example } from "./HandExamples";
 import type { PathStep, VoiceWord } from "./japanese";
 import type { StressPair } from "./StressPairs";
 

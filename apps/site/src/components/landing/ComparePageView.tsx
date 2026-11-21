@@ -25,8 +25,8 @@ import {
 import type { CSSProperties, ReactNode } from "react";
 import { trayStyle } from "../../lib/tray";
 import { ArrowLink } from "./ArrowLink";
-import { CompareMark } from "./CompareMark";
 import { COMPARE_PAGES, type CompareKey } from "./compare-pages";
+import { CompareMark } from "./CompareMark";
 import { FeatureSection, Wide } from "./FeatureSection";
 import { Hero } from "./Hero";
 import { type Collection, ImportDemo } from "./ImportDemo";

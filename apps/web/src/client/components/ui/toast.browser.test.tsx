@@ -1,6 +1,6 @@
 import { afterEach, beforeEach, describe, expect, inject, test, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { Toaster, toast } from "./toast";
 
 const region = () => page.getByRole("region", { name: "Notifications" });

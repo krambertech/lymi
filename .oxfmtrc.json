@@ -1,0 +1,53 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": false,
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "sortPackageJson": false,
+  "sortImports": {
+    "newlinesBetween": false,
+    "partitionByNewline": true,
+    "groups": ["builtin", "external", "internal", ["parent", "sibling", "index"], "unknown"]
+  },
+  "ignorePatterns": [
+    "**/dist",
+    "**/.astro",
+    "**/*.astro",
+    "**/node_modules",
+    "**/.wrangler",
+    "**/routeTree.gen.ts",
+    "**/migrations",
+    "design",
+    "**/public",
+    "apps/web/index.html",
+    "**/worker-configuration.d.ts",
+    "packages/design/uniwind.gen.css",
+    "apps/mobile/src/uniwind-types.d.ts",
+    "apps/mobile/contract",
+    "apps/web/src/server/enrichment/runs",
+    "packages/core/src/scheduler-snapshot/*.json",
+    "**/*.md",
+    "**/*.mdx",
+    "**/*.yml",
+    "**/*.yaml",
+    "**/*.html",
+    "**/*.toml",
+    "**/*.svg",
+    ".claude",
+    "pnpm-lock.yaml"
+  ],
+  "overrides": [
+    {
+      "files": ["**/*.json", "**/*.jsonc"],
+      "options": {
+        "trailingComma": "none"
+      }
+    }
+  ]
+}

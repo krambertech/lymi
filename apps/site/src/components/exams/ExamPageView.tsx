@@ -16,10 +16,10 @@ import type { Locale } from "../../lib/routes";
 import { Breadcrumb } from "../Breadcrumb";
 import { buttonClass } from "../Button";
 import { addUrl } from "../deck/DeckView";
-import { Localized } from "../Localized";
 import type { Question } from "../landing/faq";
 import { Questions } from "../landing/Questions";
 import { Section } from "../landing/Section";
+import { Localized } from "../Localized";
 import { DeckShowcase } from "./DeckShowcase";
 
 export const EINBUERGERUNGSTEST_TITLE = msg`Einbürgerungstest and Leben in Deutschland: questions and answers in English · Lymi`;

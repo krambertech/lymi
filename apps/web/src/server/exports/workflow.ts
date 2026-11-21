@@ -1,6 +1,6 @@
+import { ExportFailure } from "@lymi/core";
 import { WorkflowEntrypoint, type WorkflowEvent, type WorkflowStep } from "cloudflare:workers";
 import { NonRetryableError } from "cloudflare:workflows";
-import { ExportFailure } from "@lymi/core";
 import { createDb } from "../db";
 import type { Bindings } from "../env";
 import { reportServerException } from "../posthog";
@@ -52,7 +52,7 @@ export class ExportWorkflow extends WorkflowEntrypoint<Bindings, ExportRunParams
       );
       let media: MediaStep = { segment: 1, offset: data.offset, after: null, number: 0 };
       let missing = 0;
-      for (let done = data.media === 0; !done; ) {
+      for (let done = data.media === 0; !done;) {
         const written = await step.do(`media ${media.segment}`, STEP, () =>
           tooLargeStops(() => writeExportMedia(ctx, id, media, storage)),
         );

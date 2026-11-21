@@ -518,27 +518,25 @@ async function manifest(
     series: series
       .filter((item) => usedSeries.has(item.id))
       .map((item) => ({ id: item.id, name: item.name, position: item.position })),
-    decks: decks.map(
-      (deck): LymiFileDeck => ({
-        id: deck.id,
-        name: deck.name,
-        description: deck.description,
-        defaultLanguage: deck.defaultLanguage,
-        reviewModes: modesFromDirections(deck.directions),
-        sectionProgression: deck.sectionProgression,
-        series: deck.seriesId,
-        sections: sections
-          .filter((section) => section.deckId === deck.id)
-          .map((section) => ({
-            id: section.id,
-            name: section.name,
-            position: section.position,
-            archivedAt: section.archivedAt?.getTime() ?? null,
-          })),
-        archivedAt: deck.archivedAt?.getTime() ?? null,
-        createdAt: deck.createdAt.getTime(),
-      }),
-    ),
+    decks: decks.map((deck): LymiFileDeck => ({
+      id: deck.id,
+      name: deck.name,
+      description: deck.description,
+      defaultLanguage: deck.defaultLanguage,
+      reviewModes: modesFromDirections(deck.directions),
+      sectionProgression: deck.sectionProgression,
+      series: deck.seriesId,
+      sections: sections
+        .filter((section) => section.deckId === deck.id)
+        .map((section) => ({
+          id: section.id,
+          name: section.name,
+          position: section.position,
+          archivedAt: section.archivedAt?.getTime() ?? null,
+        })),
+      archivedAt: deck.archivedAt?.getTime() ?? null,
+      createdAt: deck.createdAt.getTime(),
+    })),
     counts,
   };
 }

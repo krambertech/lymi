@@ -9,7 +9,8 @@ const sitePreviewPrefixes = [
 const sitePreviewFiles = new Set([
   ".github/workflows/ci.yml",
   ".nvmrc",
-  "biome.json",
+  ".oxlintrc.json",
+  ".oxfmtrc.json",
   "package.json",
   "pnpm-lock.yaml",
   "pnpm-workspace.yaml",

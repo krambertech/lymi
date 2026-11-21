@@ -54,6 +54,7 @@ export function QuizletStart() {
   const separators = chosen ?? detected ?? { field: "\t", row: "\n" };
   const parsed = useMemo(
     () => (typed.trim() ? parseDelimited(typed, separators) : null),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
     [typed, separators],
   );
   const doubtful = !chosen && detected !== null && detected.confidence < 0.8;
@@ -198,7 +199,7 @@ export function QuizletStart() {
               <Plate className="overflow-hidden">
                 {parsed.cards.slice(0, PREVIEW_ROWS).map((card, i) => (
                   <View
-                    // biome-ignore lint/suspicious/noArrayIndexKey: rows have no id, and repeats are allowed.
+                    // oxlint-disable-next-line react/no-array-index-key -- rows have no id, and repeats are allowed.
                     key={i}
                     className={`gap-0.5 px-4 py-3 ${i > 0 ? "border-t border-edge" : ""}`}
                   >

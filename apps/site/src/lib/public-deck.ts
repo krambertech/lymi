@@ -1,4 +1,3 @@
-import { env, waitUntil } from "cloudflare:workers";
 import { offersDeck, type PublicDeckOut, type PublicDeckSummary } from "@lymi/core/catalog";
 import {
   countDeckPageView,
@@ -12,6 +11,7 @@ import {
 } from "@lymi/core/catalog/server";
 import { drizzle } from "@lymi/core/db";
 import type { AstroGlobal } from "astro";
+import { env, waitUntil } from "cloudflare:workers";
 import { type DeckLinks, deckLinks, linkedSlugs, withSummaries } from "./deck-links";
 import {
   countsAsPageView,

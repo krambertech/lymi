@@ -46,7 +46,7 @@ export function VoicesFigure() {
           <span className="flex h-8 flex-1 items-center gap-[3px]">
             {WAVE.map((height, index) => (
               <span
-                // biome-ignore lint/suspicious/noArrayIndexKey: a fixed drawing, so the index is the identity
+                // oxlint-disable-next-line react/no-array-index-key -- a fixed drawing, so the index is the identity
                 key={index}
                 className="w-[3px] rounded-full bg-ink-secondary"
                 style={{ height, opacity: index < 13 ? 1 : 0.35 }}

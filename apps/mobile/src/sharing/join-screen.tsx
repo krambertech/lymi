@@ -128,10 +128,8 @@ export function JoinScreen({ arrival }: { arrival: Arrival }) {
   const key = published ? `add:${arrival.slug}` : `link:${arrival.token}`;
   // Back from sign-in for this link, the deck was already shown: it joins at once, as the web does,
   // behind a loading state rather than appearing a second time.
-  const [resuming, setResume] = useReducer(
-    resume,
-    key,
-    (k): Resume => (isPromised(k) ? { status: "waiting" } : { status: "none" }),
+  const [resuming, setResume] = useReducer(resume, key, (k): Resume =>
+    isPromised(k) ? { status: "waiting" } : { status: "none" },
   );
   const viewer = preview.data?.viewer;
   const sessionState = session.isPending ? "pending" : signedIn ? "in" : "out";

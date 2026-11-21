@@ -9,8 +9,8 @@ import { clipId, clipUrl, KOHAD_PLACES, KOHAD_SENTENCES } from "../../../lib/lea
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, type KeyItem, Keys, Panel } from "../Explore";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { type ChoiceItem, ChoiceRound, type GapItem, GapRound, Quiz } from "../Quiz";
 import { PlayMark } from "../Sound";
 import { Word } from "../Word";

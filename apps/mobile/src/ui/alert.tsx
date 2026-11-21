@@ -1,4 +1,4 @@
-// biome-ignore lint/style/noRestrictedImports: this is the one place iOS's alert is called.
+// oxlint-disable-next-line eslint/no-restricted-imports -- this is the one place iOS's alert is called.
 import { Alert } from "react-native";
 import type { AlertButton } from "./alert-buttons";
 

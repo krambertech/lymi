@@ -100,7 +100,7 @@ function DeckHand({
           transitionDelay: `${at * 40}ms`,
         } as CSSProperties;
         return (
-          // biome-ignore lint/suspicious/noArrayIndexKey: a fixed hand; a term can repeat.
+          // oxlint-disable-next-line react/no-array-index-key -- a fixed hand; a term can repeat.
           <div key={at} className="deck-hand-card" style={style}>
             <TrayCardFace
               card={card}

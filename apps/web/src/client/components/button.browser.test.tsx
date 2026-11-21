@@ -1,7 +1,7 @@
 import { createRef } from "react";
 import { expect, test, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { Button, IconButton } from "./button";
 import {
   DropdownMenu,

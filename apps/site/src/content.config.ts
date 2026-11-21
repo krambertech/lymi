@@ -1,6 +1,6 @@
-import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { defineCollection } from "astro:content";
 import { CHANGELOG_FIGURES } from "./lib/changelog-figures";
 
 /** One folder per update, named `YYYY-MM-DD-slug`, holding `en.md`, `uk.md` and `ru.md`. */

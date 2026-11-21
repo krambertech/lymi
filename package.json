@@ -21,13 +21,13 @@
     "deploy:health:product": "node scripts/check-deployment.mjs https://my.lymi.app/api/health lymi-product",
     "deploy:health:site": "node scripts/check-deployment.mjs https://lymi.app/api/health lymi-site",
     "typecheck": "pnpm -r typecheck",
-    "test": "pnpm -r test && node --test scripts/*.test.mjs",
+    "test": "pnpm -r test && node --test scripts/*.test.mjs oxlint-plugin-lymi/rules/*.test.mjs",
     "test:workers": "pnpm --filter @lymi/web test:workers",
     "test:watch": "LYMI_COMPONENT_INSTANCES=desktop pnpm --filter @lymi/web exec vitest",
     "test:e2e": "playwright test",
     "test:e2e:chromium": "playwright test --project=chromium",
     "test:e2e:ui": "playwright test --ui",
-    "check": "biome check . && pnpm check:design && pnpm check:cache-shape && pnpm check:styling && pnpm check:comments && pnpm check:regressions && pnpm check:test-exports && pnpm check:agent-docs && pnpm --filter @lymi/mobile symbols:check",
+    "check": "oxfmt --check . && oxlint . && pnpm check:design && pnpm check:cache-shape && pnpm check:styling && pnpm check:comments && pnpm check:regressions && pnpm check:test-exports && pnpm check:agent-docs && pnpm --filter @lymi/mobile symbols:check",
     "check:cache-shape": "node scripts/check-cache-shape.mjs",
     "check:styling": "node scripts/check-styling.mjs",
     "check:comments": "node scripts/check-comments.mjs",
@@ -39,7 +39,7 @@
     "verify": "pnpm check && pnpm i18n:check && pnpm check:migrations && pnpm build && pnpm check:boundaries && pnpm typecheck && pnpm test && pnpm test:workers",
     "verify:changed": "node scripts/verify-changed.mjs",
     "check:boundaries": "node scripts/check-deployment-boundaries.mjs",
-    "fix": "biome check --write .",
+    "fix": "oxfmt . && oxlint --fix .",
     "db:generate": "pnpm --filter @lymi/web db:generate",
     "db:migrate": "pnpm --filter @lymi/web db:migrate",
     "db:migrate:prod": "pnpm --filter @lymi/web db:migrate:prod",
@@ -53,8 +53,10 @@
     "reliability": "node scripts/reliability.mjs"
   },
   "devDependencies": {
-    "@biomejs/biome": "^2.5.15",
+    "@oxlint/plugins": "1.92.0",
     "@playwright/test": "1.64.0",
+    "oxfmt": "0.77.0",
+    "oxlint": "1.92.0",
     "typescript": "^6.0.3"
   }
 }

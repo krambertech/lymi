@@ -24,6 +24,7 @@ import { PaevTallinnasLesson } from "../learn/lessons/PaevTallinnas";
 import { PealAllTagaLesson } from "../learn/lessons/PealAllTaga";
 import { PohivormidLesson } from "../learn/lessons/Pohivormid";
 import { PoodPoeLesson } from "../learn/lessons/PoodPoe";
+import { RaamatuidMajuLesson } from "../learn/lessons/RaamatuidMaju";
 import { RaamatutVoiRaamatuLesson } from "../learn/lessons/RaamatutVoiRaamatu";
 import { SobragaRahataLesson } from "../learn/lessons/SobragaRahata";
 import { TulevikLesson } from "../learn/lessons/Tulevik";
@@ -70,6 +71,7 @@ export const LESSON_VIEWS = {
   nadalavahetusel: NadalavahetuselLesson,
   "jalg-jala": JalgJalaLesson,
   "raamatut-voi-raamatu": RaamatutVoiRaamatuLesson,
+  "raamatuid-maju": RaamatuidMajuLesson,
   mitmus: MitmusLesson,
 } as const;
 

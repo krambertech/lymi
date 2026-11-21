@@ -2403,6 +2403,90 @@ const OBJECT_CLIPS: Record<string, Clip> = {
   ...OBJECT_DIALOGUE,
 };
 
+export const PLURAL_PART_KINDS = {
+  sid: [
+    { word: "auto", part: "autot", many: "autosid" },
+    { word: "kino", part: "kinot", many: "kinosid" },
+    { word: "ema", part: "ema", many: "emasid" },
+  ],
+  id: [
+    { word: "raamat", part: "raamatut", many: "raamatuid" },
+    { word: "õpik", part: "õpikut", many: "õpikuid" },
+    { word: "kohvik", part: "kohvikut", many: "kohvikuid" },
+  ],
+  vowel: [
+    { word: "maja", part: "maja", many: "maju" },
+    { word: "õun", part: "õuna", many: "õunu" },
+    { word: "kool", part: "kooli", many: "koole" },
+    { word: "lind", part: "lindu", many: "linde" },
+  ],
+  long: [
+    { word: "maa", part: "maad", many: "maid" },
+    { word: "puu", part: "puud", many: "puid" },
+    { word: "tee", part: "teed", many: "teid" },
+  ],
+} as const;
+
+export const PLURAL_PART_USES = [
+  "Mul on palju raamatuid.",
+  "Poes on õunu.",
+  "Mul ei ole autosid.",
+  "Ma armastan linde.",
+] as const;
+
+export const PLURAL_PART_GAPS = [
+  { id: "raamat-two", noun: "raamat", before: "Mul on kaks", after: ".", answer: "raamatut" },
+  { id: "raamat-many", noun: "raamat", before: "Mul on palju", after: ".", answer: "raamatuid" },
+  { id: "raamat-where", noun: "raamat", before: "Kus mu", after: "on?", answer: "raamatud" },
+  { id: "oun-two", noun: "õun", before: "Mul on kaks", after: ".", answer: "õuna" },
+  { id: "oun-many", noun: "õun", before: "Mul on palju", after: ".", answer: "õunu" },
+  { id: "oun-where", noun: "õun", before: "Kus mu", after: "on?", answer: "õunad" },
+  { id: "sober-two", noun: "sõber", before: "Mul on kaks", after: ".", answer: "sõpra" },
+  { id: "sober-many", noun: "sõber", before: "Mul on palju", after: ".", answer: "sõpru" },
+  { id: "sober-where", noun: "sõber", before: "Kus mu", after: "on?", answer: "sõbrad" },
+] as const;
+
+export const PLURAL_PART_FORMS: Record<
+  (typeof PLURAL_PART_GAPS)[number]["noun"],
+  readonly string[]
+> = {
+  raamat: ["raamatut", "raamatuid", "raamatud"],
+  õun: ["õuna", "õunu", "õunad"],
+  sõber: ["sõpra", "sõpru", "sõbrad"],
+};
+
+export const PLURAL_PART_MATCH = [
+  { word: "kass", many: "kasse" },
+  { word: "pood", many: "poode" },
+  { word: "tädi", many: "tädisid" },
+  { word: "tomat", many: "tomateid" },
+  { word: "öö", many: "öid" },
+  { word: "sõna", many: "sõnu" },
+] as const;
+
+export const PLURAL_PART_PARTY = [
+  "Täna on Kati sünnipäev.",
+  "Ta ostis poest õunu ja banaane.",
+  "Külalisi tuleb palju.",
+  "Kati sõbrad toovad lilli.",
+  "Lapsed söövad kooke.",
+] as const;
+
+export const PLURAL_PART_WORDS = ["palju", "sünnipäev", "külalisi", "lilli", "kooke", "banaane"] as const;
+
+const PLURAL_PART_CLIPS: Record<string, Clip> = {
+  ...words(PLURAL_PART_WORDS),
+  ...words(
+    Object.values(PLURAL_PART_KINDS).flatMap((nouns) =>
+      nouns.flatMap((noun) => [noun.word, noun.part, noun.many]),
+    ),
+  ),
+  ...words(PLURAL_PART_USES),
+  ...words(PLURAL_PART_GAPS.map(objectGapSaid)),
+  ...words(PLURAL_PART_MATCH.flatMap((noun) => [noun.word, noun.many])),
+  "p-party": { sentences: PLURAL_PART_PARTY },
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -3368,6 +3452,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   nadalavahetusel: WEEKEND_CLIPS,
   "jalg-jala": GRADATION_CLIPS,
   "raamatut-voi-raamatu": OBJECT_CLIPS,
+  "raamatuid-maju": PLURAL_PART_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

@@ -137,7 +137,8 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
           className="contents"
         >
           {rows.map((each, r) => (
-            // On a narrow screen a row stacks: its question and name share the first line, over its forms.
+            // On a narrow screen a row stacks: its question and name share the first line, over its forms,
+            // which go one per line below 28rem so a long form is never cut short.
             <tr
               key={each.id}
               // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
@@ -145,7 +146,7 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
               className={clsx(
                 "col-span-full grid items-center gap-x-3",
                 stacks
-                  ? "grid-cols-(--stacked) gap-y-1.5 not-first:pt-2 @lg:grid-cols-subgrid @lg:gap-y-0 @lg:pt-0!"
+                  ? "grid-cols-1 gap-y-1.5 not-first:pt-2 @md:grid-cols-(--stacked) @lg:grid-cols-subgrid @lg:gap-y-0 @lg:pt-0!"
                   : "grid-cols-subgrid",
               )}
               style={{ "--stacked": `repeat(${width}, minmax(0, 1fr))` } as React.CSSProperties}

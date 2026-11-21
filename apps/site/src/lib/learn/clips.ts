@@ -1011,6 +1011,434 @@ export const VORMID_CLASS = [
   "Rääkige kodus eesti keelt!",
 ] as const;
 
+/** Which form a verb wants for the verb after it. */
+export type Takes = "da" | "ma";
+
+/**
+ * The verbs of the lesson on infinitives that a second verb follows: the verb, the form a learner
+ * meets it in (`lead`), which form the second verb takes, how a sentence with it starts
+ * (`frame`), and one sentence whose second verb is `form`, written with `|` before its ending.
+ * Sõnaveeb's EKI dictionary names the form under Rektsioon: “mida teha” for the -da form, “mida
+ * tegema” for the -ma form (pidama in its second entry), checked 21 Nov 2026.
+ */
+export const INFINITIVE_LEADS = [
+  {
+    verb: "tahtma",
+    lead: "tahan",
+    takes: "da",
+    frame: "Ma tahan",
+    said: "Ma tahan süüa.",
+    form: "süü|a",
+  },
+  {
+    verb: "võima",
+    lead: "võin",
+    takes: "da",
+    frame: "Ma võin",
+    said: "Ma võin sind oodata.",
+    form: "ooda|ta",
+  },
+  {
+    verb: "saama",
+    lead: "saan",
+    takes: "da",
+    frame: "Ma saan",
+    said: "Ma saan homme tulla.",
+    form: "tul|la",
+  },
+  {
+    verb: "oskama",
+    lead: "oskan",
+    takes: "da",
+    frame: "Ma oskan",
+    said: "Ma oskan natuke eesti keelt rääkida.",
+    form: "rääki|da",
+  },
+  {
+    verb: "tohtima",
+    lead: "tohin",
+    takes: "da",
+    frame: "Ma tohin",
+    said: "Ma tohin kodus töötada.",
+    form: "tööta|da",
+  },
+  {
+    verb: "proovima",
+    lead: "proovin",
+    takes: "da",
+    frame: "Ma proovin",
+    said: "Ma proovin eesti keelt õppida.",
+    form: "õppi|da",
+  },
+  {
+    verb: "armastama",
+    lead: "armastan",
+    takes: "da",
+    frame: "Ma armastan",
+    said: "Ma armastan lugeda.",
+    form: "luge|da",
+  },
+  {
+    verb: "meeldima",
+    lead: "mulle meeldib",
+    takes: "da",
+    frame: "Mulle meeldib",
+    said: "Mulle meeldib kohvi juua.",
+    form: "juu|a",
+  },
+  {
+    verb: "pidama",
+    lead: "pean",
+    takes: "ma",
+    frame: "Ma pean",
+    said: "Ma pean minema.",
+    form: "mine|ma",
+  },
+  {
+    verb: "hakkama",
+    lead: "hakkan",
+    takes: "ma",
+    frame: "Ma hakkan",
+    said: "Ma hakkan eesti keelt õppima.",
+    form: "õppi|ma",
+  },
+  {
+    verb: "minema",
+    lead: "lähen",
+    takes: "ma",
+    frame: "Ma lähen",
+    said: "Ma lähen kohvi jooma.",
+    form: "joo|ma",
+  },
+  { verb: "tulema", lead: "tule", takes: "ma", frame: "Tule", said: "Tule sööma!", form: "söö|ma" },
+  {
+    verb: "jääma",
+    lead: "jään",
+    takes: "ma",
+    frame: "Ma jään",
+    said: "Ma jään koju lugema.",
+    form: "luge|ma",
+  },
+] as const satisfies readonly {
+  verb: string;
+  lead: string;
+  takes: Takes;
+  frame: string;
+  said: string;
+  form: string;
+}[];
+
+export type InfinitiveLead = (typeof INFINITIVE_LEADS)[number];
+
+/** Six verbs in their -ma and -da forms, `|` before the ending, for tahan and pean side by side. */
+export const INFINITIVE_PAIRS = [
+  { ma: "luge|ma", da: "luge|da" },
+  { ma: "söö|ma", da: "süü|a" },
+  { ma: "mine|ma", da: "min|na" },
+  { ma: "tule|ma", da: "tul|la" },
+  { ma: "õppi|ma", da: "õppi|da" },
+  { ma: "tööta|ma", da: "tööta|da" },
+] as const;
+
+/** “Ma tahan lugeda.” or “Ma pean lugema.”: a pair's form after tahan or pean, as one clip. */
+export const wantOrMust = (form: string, takes: Takes) =>
+  `Ma ${takes === "da" ? "tahan" : "pean"} ${form.replace("|", "")}.`;
+
+/** The second verb last, however much comes between it and the first. */
+export const INFINITIVE_ORDER = [
+  "Ma pean minema.",
+  "Ma pean tööle minema.",
+  "Ma pean homme tööle minema.",
+  "Ma tahan täna kodus lugeda.",
+] as const;
+
+/**
+ * Mari's message to Jaan, gap by gap: after pean the -ma form, after tahad and meeldib the -da
+ * form, and with no verb before it the present. Words from lessons 1–22.
+ */
+export const INFINITIVE_MESSAGE = [
+  "Tere, Jaan! Ma pean täna kodus töötama.",
+  "Aga ma lähen kell neli linna.",
+  "Kas sa tahad kohvi juua?",
+  "Ma ootan sind kohvikus.",
+  "Mulle meeldib kohvikus lugeda.",
+  "Ma pean kell kuus koju minema.",
+] as const;
+
+/** Words of the infinitives lesson with a card, and the sentences its build quiz plays. */
+export const INFINITIVE_WORDS = [
+  "lugema",
+  "lugeda",
+  "Nad tahavad lugeda.",
+  "Nad peavad lugema.",
+  "teha",
+  "tegema",
+  "õppima",
+  "Ma õpin lugema.",
+  "Ma tahan homme linna minna.",
+  "Ma hakkan täna kodus õppima.",
+] as const;
+/**
+ * The genitive lesson's pronouns: who, and whose. Checked in ÕS 2025 on Sõnaveeb: minu or mu,
+ * sinu or su, tema or ta, meie or me, teie or te, and nende.
+ */
+export const OMASTAV_PRONOUNS = [
+  { who: "mina", whose: "minu", short: "mu" },
+  { who: "sina", whose: "sinu", short: "su" },
+  { who: "tema", whose: "tema" },
+  { who: "meie", whose: "meie" },
+  { who: "teie", whose: "teie" },
+  { who: "nemad", whose: "nende" },
+] as const;
+
+/** A pronoun's whose form before raamat, as the switch says it: “minu raamat”. */
+export const ownedBook = (whose: string) => `${whose} raamat`;
+
+/** How a noun's genitive differs from the word a dictionary gives first. */
+export type GenitiveKind = "vowel" | "inside" | "same";
+
+/**
+ * Nouns in three forms: the word, its genitive, and the genitive with -s or -l. Checked in ÕS 2025
+ * on Sõnaveeb: kooli, Tallinna, kohviku, raamatu, poe, toa, turu, laua, Tartu, haigla, kodu, töö.
+ */
+export const OMASTAV_FORMS: readonly {
+  kind: GenitiveKind;
+  word: string;
+  whose: string;
+  where: string;
+}[] = [
+  { kind: "vowel", word: "kool", whose: "kooli", where: "koolis" },
+  { kind: "vowel", word: "Tallinn", whose: "Tallinna", where: "Tallinnas" },
+  { kind: "vowel", word: "kohvik", whose: "kohviku", where: "kohvikus" },
+  { kind: "vowel", word: "raamat", whose: "raamatu", where: "raamatus" },
+  { kind: "inside", word: "pood", whose: "poe", where: "poes" },
+  { kind: "inside", word: "tuba", whose: "toa", where: "toas" },
+  { kind: "inside", word: "turg", whose: "turu", where: "turul" },
+  { kind: "inside", word: "laud", whose: "laua", where: "laual" },
+  { kind: "same", word: "Tartu", whose: "Tartu", where: "Tartus" },
+  { kind: "same", word: "haigla", whose: "haigla", where: "haiglas" },
+  { kind: "same", word: "kodu", whose: "kodu", where: "kodus" },
+  { kind: "same", word: "töö", whose: "töö", where: "tööl" },
+];
+
+/**
+ * “Which form goes first?”: a noun as a dictionary gives it, its genitive, the genitive with -s or
+ * -l as the cue, and a phrase with the genitive in front. Only nouns whose genitive differs from the
+ * word: the table shows the ones that don't change. ÕS 2025 on Sõnaveeb: kontori, jõe.
+ */
+export const OMASTAV_PHRASES: readonly {
+  kind: GenitiveKind;
+  word: string;
+  whose: string;
+  where: string;
+  noun: string;
+}[] = [
+  { kind: "vowel", word: "kool", whose: "kooli", where: "koolis", noun: "uks" },
+  { kind: "vowel", word: "kohvik", whose: "kohviku", where: "kohvikus", noun: "nimi" },
+  { kind: "vowel", word: "kontor", whose: "kontori", where: "kontoris", noun: "aken" },
+  { kind: "vowel", word: "Tallinn", whose: "Tallinna", where: "Tallinnas", noun: "turg" },
+  { kind: "inside", word: "pood", whose: "poe", where: "poes", noun: "uks" },
+  { kind: "inside", word: "tuba", whose: "toa", where: "toas", noun: "aken" },
+  { kind: "inside", word: "turg", whose: "turu", where: "turul", noun: "kohvik" },
+  { kind: "inside", word: "jõgi", whose: "jõe", where: "jões", noun: "nimi" },
+];
+
+/** A phrase of “Which form?”, as it is said: “kooli uks”. */
+export const phraseOf = (each: { whose: string; noun: string }) => `${each.whose} ${each.noun}`;
+
+/** “Whose?”: sentences with a pronoun's whose form, by the pronoun they use. */
+export const OMASTAV_WHOSE: readonly {
+  who: (typeof OMASTAV_PRONOUNS)[number]["who"];
+  said: string;
+}[] = [
+  { who: "mina", said: "See on minu raamat." },
+  { who: "mina", said: "Mu nimi on Kati." },
+  { who: "sina", said: "See on sinu kohv." },
+  { who: "sina", said: "Kas see on su kass?" },
+  { who: "tema", said: "Tema raamat on laual." },
+  { who: "tema", said: "Tema vend töötab haiglas." },
+  { who: "meie", said: "Meie kool on Tartus." },
+  { who: "meie", said: "Meie ema on õpetaja." },
+  { who: "teie", said: "Kas see on teie kohvik?" },
+  { who: "teie", said: "Teie kass on kodus." },
+  { who: "nemad", said: "Nende kontor on Tallinnas." },
+  { who: "nemad", said: "See on nende pilt." },
+];
+
+/** Whose, asked and answered, and an owner before a noun. Jaan's genitive is Jaani. */
+export const OMASTAV_SENTENCES = [
+  "Minu nimi on Mari.",
+  "Mina elan Tartus.",
+  "Mis su nimi on?",
+  "Kelle raamat see on?",
+  "See on minu raamat.",
+  "See on Mari raamat.",
+  "Kelle kass see on?",
+  "See on Jaani kass.",
+  "Eesti pealinn on Tallinn.",
+] as const;
+
+/** Kati writes about herself and her family: a passage with a gap at each who or whose. */
+export const OMASTAV_PASSAGE = [
+  "Tere! Minu nimi on Kati.",
+  "Mina elan Tartus.",
+  "Jaan on minu vend.",
+  "Jaani kohvik on Tallinnas.",
+  "Ema ja isa elavad Pärnus.",
+  "Nende kassi nimi on Miisu.",
+  "Mis sinu nimi on?",
+  "Kus sina elad?",
+] as const;
+
+/** At home with Mari: her lines in the second voice, the learner's in the main one. */
+export const OMASTAV_DIALOGUE = {
+  "d-mari-1": { text: "Kelle raamat see on?", voice: "second" },
+  "d-sina-1": "See on minu raamat.",
+  "d-mari-2": { text: "Ja kelle kohv see on?", voice: "second" },
+  "d-sina-2": "See on Martini kohv.",
+  "d-mari-3": { text: "Kas see on teie kass?", voice: "second" },
+  "d-sina-3": "Jah, see on meie kass.",
+  "d-mari-4": { text: "Mis kassi nimi on?", voice: "second" },
+  "d-sina-4": "Kassi nimi on Liisu.",
+} as const satisfies Record<string, Clip>;
+
+/** Words of the genitive lesson heard on their own, outside its lists. */
+export const OMASTAV_WORDS = [
+  "kelle",
+  "pealinn",
+  "uks",
+  "aken",
+  "nimi",
+  "kass",
+  "kassi",
+  "Jaan",
+  "Jaani",
+  "Mari",
+  "Mari raamat",
+  "Eesti",
+  "Eestis",
+  "kümne minuti pärast",
+] as const;
+
+const OMASTAV_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...OMASTAV_PRONOUNS.flatMap((each) => [
+      each.who,
+      each.whose,
+      ownedBook(each.whose),
+      ...("short" in each ? [each.short] : []),
+    ]),
+    ...OMASTAV_FORMS.flatMap(({ word, whose, where }) => [word, whose, where]),
+    ...OMASTAV_PHRASES.flatMap((each) => [each.word, each.whose, each.where, phraseOf(each)]),
+    ...OMASTAV_WHOSE.map(({ said }) => said),
+    ...OMASTAV_SENTENCES,
+    ...OMASTAV_WORDS,
+  ]),
+  "p-kati": { sentences: OMASTAV_PASSAGE, voice: "second" },
+  ...OMASTAV_DIALOGUE,
+};
+
+/**
+ * The lesson on in, into and out of: each place in the forms that answer kus?, kuhu? and kust?.
+ * `kuhu` is the form the lesson teaches for where to: the short form for kool, pood, linn, maja
+ * and kodu, with `long` naming the -sse form beside it, and -sse for the rest. Tallinn has a short
+ * form too, Tallinna; the lesson teaches Tallinnasse. Checked in ÕS 2025 on Sõnaveeb (EKI
+ * morphology, 21 Nov 2026): kooli ~ koolisse, poodi ~ poesse, linna ~ linnasse, majja ~ majasse, koju ~ kodusse; Tartu, Pärnu, haigla,
+ * kontor and kohvik have -sse only. `third` is the dictionary's third form where the short form
+ * matches it.
+ */
+export const INNER_PLACES = [
+  { place: "Tallinn", kus: "Tallinnas", kuhu: "Tallinnasse", kust: "Tallinnast" },
+  { place: "Tartu", kus: "Tartus", kuhu: "Tartusse", kust: "Tartust" },
+  { place: "Pärnu", kus: "Pärnus", kuhu: "Pärnusse", kust: "Pärnust" },
+  { place: "haigla", kus: "haiglas", kuhu: "haiglasse", kust: "haiglast" },
+  { place: "kontor", kus: "kontoris", kuhu: "kontorisse", kust: "kontorist" },
+  { place: "kohvik", kus: "kohvikus", kuhu: "kohvikusse", kust: "kohvikust" },
+  {
+    place: "kool",
+    kus: "koolis",
+    kuhu: "kooli",
+    long: "koolisse",
+    kust: "koolist",
+    third: "kool, kooli, kooli",
+  },
+  {
+    place: "pood",
+    kus: "poes",
+    kuhu: "poodi",
+    long: "poesse",
+    kust: "poest",
+    third: "pood, poe, poodi",
+  },
+  {
+    place: "linn",
+    kus: "linnas",
+    kuhu: "linna",
+    long: "linnasse",
+    kust: "linnast",
+    third: "linn, linna, linna",
+  },
+  { place: "maja", kus: "majas", kuhu: "majja", long: "majasse", kust: "majast" },
+  { place: "kodu", kus: "kodus", kuhu: "koju", kust: "kodust" },
+] as const;
+
+/** The sentences of the lesson on in, into and out of. */
+export const INNER_SENTENCES = {
+  "s-majas": "Kass on majas.",
+  "s-majja": "Kass läheb majja.",
+  "s-majast": "Kass tuleb majast.",
+  "q-tuled": "Kust sa tuled?",
+  "a-tulen-koolist": "Ma tulen koolist.",
+  "a-tulen-poest": "Ma tulen poest.",
+  "q-parit": "Kust sa pärit oled?",
+  "p-eestist": "Ma olen pärit Eestist.",
+  "p-soomest": "Ma olen pärit Soomest.",
+  "p-ukrainast": "Ma olen pärit Ukrainast.",
+  "p-tallinnast": "Ma olen pärit Tallinnast.",
+  "q-lahed": "Kuhu sa lähed?",
+  "a-lahen-tartusse": "Ma lähen Tartusse.",
+  "a-lahen-haiglasse": "Ma lähen haiglasse.",
+  "k-kooli": "Ma lähen kooli.",
+  "k-poodi": "Ma lähen poodi.",
+  "k-linna": "Me läheme linna.",
+  "k-koju": "Tule koju!",
+  "k-kodus": "Ma olen kodus.",
+  "k-kodust": "Ma tulen kodust.",
+} as const;
+
+/** Meeting Mari in the street: her lines in the second voice, the learner's in the main one. */
+export const INNER_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Kuhu sa lähed?", voice: "second" },
+  "d-sina-1": "Tere! Ma lähen poodi.",
+  "d-mari-2": { text: "Kust sa tuled?", voice: "second" },
+  "d-sina-2": "Ma tulen koolist.",
+  "d-mari-3": { text: "Kas sa oled homme kodus?", voice: "second" },
+  "d-sina-3": "Ei, ma lähen homme Tartusse.",
+  "d-mari-4": { text: "Kas sa oled pärit Tartust?", voice: "second" },
+  "d-sina-4": "Ei, ma olen pärit Pärnust.",
+  "d-mari-5": { text: "Head aega!", voice: "second" },
+} as const satisfies Record<string, Clip>;
+
+/** Words the lesson plays on their own: the three questions and every place form. */
+export const INNER_WORDS = [
+  "kus",
+  "kuhu",
+  "kust",
+  "kass",
+  "tööl",
+  "pärit",
+  "Eestist",
+  "Soomest",
+  "Ukrainast",
+  ...INNER_PLACES.flatMap((each) => [
+    each.place,
+    each.kus,
+    each.kuhu,
+    each.kust,
+    ...("long" in each ? [each.long] : []),
+  ]),
+];
+
 /**
  * Nouns of the partitive lesson, each with its third form, the partitive. Checked in ÕS 2025 on
  * Sõnaveeb (EKI morphology, 21 Nov 2026). Later lessons on objects and the plural partitive can
@@ -1292,11 +1720,26 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  omastav: OMASTAV_CLIPS,
+  "majas-majja-majast": {
+    ...words(INNER_WORDS),
+    ...INNER_SENTENCES,
+    ...INNER_DIALOGUE,
+  },
   "verbi-pohivormid": {
     ...words(VERB_FORMS.flatMap((verb) => [verb.ma, daForm(verb), verb.n, threeForms(verb)])),
     ...words(VERB_FORMS.filter((verb) => VORMID_COMMANDS.includes(verb.ma)).map((verb) => verb.ge)),
     ...words(["tahan", "Ma tahan lugeda."]),
     "p-class": { sentences: VORMID_CLASS },
+  },
+  tegevusnimed: {
+    ...words(INFINITIVE_LEADS.flatMap(({ lead, said }) => [lead, said])),
+    ...words(
+      INFINITIVE_PAIRS.flatMap(({ ma, da }) => [wantOrMust(da, "da"), wantOrMust(ma, "ma")]),
+    ),
+    ...words(INFINITIVE_ORDER),
+    ...words(INFINITIVE_WORDS),
+    "p-message": { sentences: INFINITIVE_MESSAGE },
   },
   osastav: OSASTAV_CLIPS,
   lihtminevik: PAST_CLIPS,

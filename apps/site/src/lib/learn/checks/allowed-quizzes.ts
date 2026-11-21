@@ -22,6 +22,19 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "The quiz asks whether the ending stays after ei: Ei loe against Ei loed is the lesson.",
   },
   {
+    lesson: "omastav",
+    quiz: "kati-family",
+    reason:
+      "Each gap asks who or whose: Jaan against Jaani and kass against kassi is the lesson, and the pronoun gaps (mina, minu) are the same length.",
+  },
+  {
+    lesson: "majas-majja-majast",
+    quiz: "which-question",
+    pair: ["kus?", "kust?"],
+    reason:
+      "The options are the three questions, all offered every round in a shuffled order, so shape picks nothing: kus against kust is the lesson.",
+  },
+  {
     lesson: "osastav",
     quiz: "one-or-more",
     reason:

@@ -490,11 +490,17 @@ msgstr "<0>Jonas</0> добавил 4 карточки в неделю 4"
 msgid "<0>Jonas</0> finished Week 2"
 msgstr "<0>Jonas</0> прошёл неделю 2"
 
+msgid "<0>Kass</0> is one cat, like <1>ta</1>, so the verb ends in <2>-b</2>: <3>magab</3>."
+msgstr "<0>Kass</0> — это одна кошка, как <1>ta</1>, поэтому глагол оканчивается на <2>-b</2>: <3>magab</3>."
+
 msgid "<0>kassi</0> + <1>d</1> = <2>kassid</2>"
 msgstr "<0>kassi</0> + <1>d</1> = <2>kassid</2>"
 
 msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgstr "<0>Kes</0> спрашивает о людях, <1>mis</1> — о вещах."
+
+msgid "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2>."
+msgstr "<0>Kodu</0> — это один дом, поэтому прилагательное без <1>-d</1>: <2>väike</2>."
 
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> спрашивает, откуда ты, а не где живёшь."
@@ -510,9 +516,6 @@ msgstr "После <0>ma</0> глагол оканчивается на <1>-n</1
 
 msgid "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
 msgstr "После <0>ma</0> глагол оканчивается на <1>-n</1>: <2>õpin</2>."
-
-msgid "<0>Magavad</0> is the form of <1>nad</1>, so there is more than one cat: <2>kassid</2>."
-msgstr "<0>Magavad</0> — форма для <1>nad</1>, значит, кошек больше одной: <2>kassid</2>."
 
 msgid "<0>marginal cost</0> <1>= cost of 1 more</1>"
 msgstr "<0>предельные издержки</0> <1>= цена ещё 1 шт.</1>"
@@ -576,6 +579,9 @@ msgstr "<0>Suured</0> оканчивается на <1>-d</1>, значит, к�
 
 msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 msgstr "<0>Ta</0> — и «он», и «она». <1>Te</1> — «вы» нескольким людям и вежливое «Вы» одному."
+
+msgid "<0>Ta</0> is one cat, so the adjective has no <1>-d</1>, like <2>ilus</2>."
+msgstr "<0>Ta</0> — это одна кошка, поэтому прилагательное без <1>-d</1>, как <2>ilus</2>."
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сегодня, завтра, вчера. <3>Üle-</3> добавляет ещё один день."
@@ -888,8 +894,8 @@ msgstr "Утка застряла в ПАТОке"
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "Не путай с английским embarrassed: «смущённый» — это avergonzado."
 
-msgid "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. One verb is new: <0/>, to sleep."
-msgstr "Семья пишет о своём доме в Тарту. Выбери слово для каждого пропуска: слова вокруг подскажут, один или много. Один глагол новый: <0/> — спать."
+msgid "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
+msgstr "Семья пишет о своём доме в Тарту. Выбери слово для каждого пропуска: слова вокруг подскажут, один или много. Два прилагательных — из предыдущего раздела: <0/> — маленький и <1/> — красивый. Один глагол новый: <2/> — спать."
 
 msgid "a federal state."
 msgstr "федеративное государство."
@@ -1540,9 +1546,6 @@ msgstr "После <0>ei</0> идёт форма с ma без -n: <1>loen</1>, <
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "После <0>ei</0> у глагола <1>olema</1> нет окончания: <2>ei ole</2>."
 
-msgid "After <0>nad on</0>, the adjective takes <1>-d</1>, like <2>ilusad</2>."
-msgstr "После <0>nad on</0> прилагательное тоже оканчивается на <1>-d</1>, как <2>ilusad</2>."
-
 msgid "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
 msgstr "После <0>on</0> так же: <1/> <2/> Переключай «Один» и «Много» и нажимай на строку, чтобы её услышать."
 
@@ -1560,9 +1563,6 @@ msgstr "После чисел от двух и больше minut станови
 
 msgid "After a number from two up, the partitive."
 msgstr "После числа от двух — партитив."
-
-msgid "After a number, the noun stays singular: <0>kaks kassi</0>."
-msgstr "После числа существительное остаётся в единственном числе: <0>kaks kassi</0>."
 
 msgid "After ei the verb drops its ending: ei ela."
 msgstr "После ei глагол теряет окончание: ei ela."
@@ -1856,6 +1856,9 @@ msgstr "Анатомия, препараты и термины, которые �
 
 msgid "Anatomy, maps and diagrams with parts hidden. Lymi can’t ask image occlusion cards yet."
 msgstr "Анатомия, карты и схемы, где часть скрыта. Спрашивать по таким картинкам Lymi пока не умеет."
+
+msgid "and"
+msgstr "и"
 
 msgid "And what am I due to review tonight?"
 msgstr "А что мне повторить сегодня вечером?"
@@ -2198,6 +2201,9 @@ msgstr "Директор банка"
 
 msgid "basket"
 msgstr "корзина"
+
+msgid "beautiful"
+msgstr "красивый"
 
 msgid "beautiful rooms"
 msgstr "красивые комнаты"
@@ -7139,6 +7145,9 @@ msgstr "Большинство испанских существительных
 msgid "mother"
 msgstr "мать"
 
+msgid "Mother and father are working."
+msgstr "Мама и папа работают."
+
 msgid "Move the food words into their own section."
 msgstr "Перенеси слова про еду в отдельный раздел."
 
@@ -7201,9 +7210,6 @@ msgstr "Ñ считается отдельной буквой: ¡Feliz año nuev
 
 msgid "Na⁺ − (Cl⁻ + HCO₃⁻); raised in some metabolic acidoses"
 msgstr "Na⁺ − (Cl⁻ + HCO₃⁻); повышена при некоторых метаболических ацидозах"
-
-msgid "Nad magavad: they sleep."
-msgstr "Nad magavad — они спят."
 
 msgid "name"
 msgstr "имя"
@@ -9434,6 +9440,9 @@ msgstr "Слайды, фото или конспект из ноутбука."
 msgid "Slow or stop so others can pass without you forcing them to change speed or path."
 msgstr "Притормози или остановись, чтобы другие проехали, не меняя из-за тебя скорость или направление."
 
+msgid "small"
+msgstr "маленький"
+
 msgid "small cats"
 msgstr "маленькие кошки"
 
@@ -9856,6 +9865,9 @@ msgstr "Бесплатная синхронизация"
 
 msgid "Ta is he or she: “He is Jaan.”"
 msgstr "Ta — это он или она: «Он Яан»."
+
+msgid "Ta magab, nad magavad: he or she sleeps, they sleep."
+msgstr "Ta magab, nad magavad — он или она спит, они спят."
 
 msgid "table"
 msgstr "стол"
@@ -11719,6 +11731,12 @@ msgstr "две кошки"
 
 msgid "two hundred"
 msgstr "двести"
+
+msgid "Two people joined by <0/> count as many too, so the verb takes the form of <1>nad</1>: <2/>"
+msgstr "Два человека, соединённые <0/>, — это тоже много, поэтому глагол стоит в форме для <1>nad</1>: <2/>"
+
+msgid "Two people joined by <0>ja</0> take the verb form of <1>nad</1> too: <2>Ema ja isa töötavad.</2>"
+msgstr "С двумя людьми, соединёнными <0>ja</0>, глагол тоже стоит в форме для <1>nad</1>: <2>Ema ja isa töötavad.</2>"
 
 msgid "two thousand"
 msgstr "две тысячи"

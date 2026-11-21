@@ -101,7 +101,11 @@ const GLOSSARY: Glossary = {
   nad: { en: msg`they` },
   on: { en: msg`is, are`, note: msg`The same for ta and nad.`, clip: false },
   "kaks kassi": { en: msg`two cats`, note: msg`After a number from two up, the partitive.` },
-  magama: { en: msg`to sleep`, note: msg`Nad magavad: they sleep.` },
+  magama: { en: msg`to sleep`, note: msg`Ta magab, nad magavad: he or she sleeps, they sleep.` },
+  väike: { en: msg`small` },
+  ilus: { en: msg`beautiful` },
+  ja: { en: msg`and`, clip: false },
+  "ema ja isa töötavad.": { en: msg`Mother and father are working.`, show: "Ema ja isa töötavad." },
 };
 
 /** A stretch of a line, lit in the stage’s hue when it is what changed. */
@@ -133,12 +137,16 @@ export function litSentence(row: PluralSentence, more: boolean): Piece[] {
 function FlipLine({
   pieces,
   said,
+  means,
   mode,
 }: {
   pieces: readonly Piece[];
   said: string;
+  /** What the line means, in the reader’s language, small under it. */
+  means: string;
   mode: string;
 }) {
+  const { i18n } = useLingui();
   const clip = src(said);
   const playing = usePlaying(clip);
   return (
@@ -148,18 +156,17 @@ function FlipLine({
       onClick={() => void playSound(clip)}
       className="learn-key flex min-h-13 cursor-pointer items-center justify-between gap-3 rounded-tile bg-plate py-2 ps-4 pe-3 text-start hoverable:hover:bg-plate-hover"
     >
-      <span
-        key={mode}
-        lang="et"
-        className="learn-swap text-xl font-medium tracking-tight max-sm:text-lg"
-      >
-        <span className="inline-block">
+      <span key={mode} className="learn-swap grid gap-0.5">
+        <span lang="et" className="text-xl font-medium tracking-tight max-sm:text-lg">
           {pieces.map(([text, lit], i) => (
             // biome-ignore lint/suspicious/noArrayIndexKey: a line’s pieces never reorder
             <span key={i} className={clsx(lit && "text-(--form)")}>
               {text}
             </span>
           ))}
+        </span>
+        <span lang={i18n.locale} className="text-sm text-ink-muted">
+          {means}
         </span>
       </span>
       <span className="grid size-5 shrink-0 place-items-center text-(--form)">
@@ -183,8 +190,8 @@ function FlipNote({ mode, title, tip }: { mode: string; title: ReactNode; tip: R
 
 interface FlipRow {
   key: string;
-  one: { said: string; pieces: readonly Piece[] };
-  many: { said: string; pieces: readonly Piece[] };
+  one: { said: string; pieces: readonly Piece[]; means: string };
+  many: { said: string; pieces: readonly Piece[]; means: string };
 }
 
 /** Lines switched together between one and many, with a note for each side. */
@@ -216,7 +223,15 @@ function OneManyFlip({
       >
         {rows.map((row) => {
           const side = row[mode];
-          return <FlipLine key={row.key} pieces={side.pieces} said={side.said} mode={mode} />;
+          return (
+            <FlipLine
+              key={row.key}
+              pieces={side.pieces}
+              said={side.said}
+              means={side.means}
+              mode={mode}
+            />
+          );
         })}
       </div>
       <FlipNote mode={mode} title={notes[mode].title} tip={notes[mode].tip} />
@@ -226,47 +241,40 @@ function OneManyFlip({
 
 /** The nouns of “Type the plural”, keyed by how the second form differs from the first. */
 export const TYPED: readonly (PluralNoun & { pair: readonly [string, string] })[] = [
-  ...(["kass", "kool", "linn", "raamat", "laps", "uks"] as const).map((one) => ({
+  ...(["linn", "kool", "kass", "raamat", "laps", "uks"] as const).map((one) => ({
     ...(NOUNS.find((noun) => noun.one === one) as PluralNoun),
     pair: ["vowel", one] as const,
   })),
   ...(["pood", "tuba", "mees", "naine"] as const).map((one) => ({
     ...(NOUNS.find((noun) => noun.one === one) as PluralNoun),
-    pair: ["inside", one] as const,
+    pair: ["changed", one] as const,
   })),
 ];
 
-/** “One or many?”: each sentence of the verbs switch, heard for one and for many, keyed by its noun. */
-export const HEARD = MITMUS_SENTENCES.flatMap((row) =>
-  [false, true].map((more) => ({
-    row,
-    more,
-    said: pluralSentence(row, more),
-    pair: [row.one, `${row.one}-${more ? "many" : "one"}`] as const,
-  })),
+/**
+ * “One or many?”: each sentence of the verbs switch, heard for one and for many, keyed by its noun.
+ * It opens on Mehed töötavad, not on the section’s own example.
+ */
+export const HEARD = [...MITMUS_SENTENCES.slice(3), ...MITMUS_SENTENCES.slice(0, 3)].flatMap(
+  (row) =>
+    [true, false].map((more) => ({
+      row,
+      more,
+      said: pluralSentence(row, more),
+      pair: [row.one, `${row.one}-${more ? "many" : "one"}`] as const,
+    })),
 );
 
-/** Another row’s sentence, said for one or many at random. */
-const otherSentence = (row: PluralSentence): string => {
-  const others = MITMUS_SENTENCES.filter((each) => each !== row);
-  const other = shuffle(others)[0] as PluralSentence;
-  return pluralSentence(other, Math.random() < 0.5);
-};
-
-/** The heard noun for one and for many, and one more sentence, in random order. */
-export function threeSentences(row: PluralSentence): string[] {
-  return shuffle([pluralSentence(row, false), pluralSentence(row, true), otherSentence(row)]);
+/** The heard noun’s sentence for one and for many, in random order. */
+export function twoSentences(row: PluralSentence): string[] {
+  return shuffle([pluralSentence(row, false), pluralSentence(row, true)]);
 }
 
-/** The first round’s options, fixed so the page renders the same on the server. */
+/** The first round’s options, fixed so the page renders the same; the answer takes either place. */
 export function firstSentences(i: number): string[] {
-  const row = MITMUS_SENTENCES[Math.floor(i / 2)] as PluralSentence;
-  const next = MITMUS_SENTENCES[
-    (Math.floor(i / 2) + 1) % MITMUS_SENTENCES.length
-  ] as PluralSentence;
-  const three = [pluralSentence(row, false), pluralSentence(row, true), pluralSentence(next, true)];
-  const turn = i % 3;
-  return [...three.slice(turn), ...three.slice(0, turn)];
+  const { row, more, said } = HEARD[i] as (typeof HEARD)[number];
+  const other = pluralSentence(row, !more);
+  return (i + 1) % 2 === 0 ? [said, other] : [other, said];
 }
 
 type HeardItem = ChoiceItem & {
@@ -294,12 +302,25 @@ function Explain({ said }: { said: string }) {
   );
 }
 
-/** The passage “At home”, cut at each gap; the answers sit in every place. */
+/** The passage “At home”, cut at each gap: three gaps want one, three want many, in both places. */
 function gapsOf(): GapItem[] {
   return [
     {
+      id: "vaike-kodu",
+      before: "Me elame Tartus. Meie kodu on",
+      after: ",",
+      answer: "väike",
+      options: ["väikesed", "väike"],
+      why: (
+        <Trans>
+          <span lang="et">Kodu</span> is one home, so the adjective has no <span lang="et">-d</span>
+          : <span lang="et">väike</span>.
+        </Trans>
+      ),
+    },
+    {
       id: "toad",
-      before: "Me elame Tartus. Meie kodu on väike, aga",
+      before: "aga",
       after: "on suured.",
       answer: "toad",
       options: ["toad", "tuba"],
@@ -328,7 +349,7 @@ function gapsOf(): GapItem[] {
       before: "Lapsed",
       after: "koolis.",
       answer: "õpivad",
-      options: ["õpib", "õpime", "õpivad"],
+      options: ["õpivad", "õpib", "õpime"],
       why: (
         <Trans>
           <span lang="et">Lapsed</span> is plural, so the verb takes the form of{" "}
@@ -337,28 +358,28 @@ function gapsOf(): GapItem[] {
       ),
     },
     {
-      id: "kassid",
-      before: "Meie",
-      after: "magavad kodus.",
-      answer: "kassid",
-      options: ["kass", "kassid"],
+      id: "magab",
+      before: "Meie kass",
+      after: "kodus.",
+      answer: "magab",
+      options: ["magab", "magavad"],
       why: (
         <Trans>
-          <span lang="et">Magavad</span> is the form of <span lang="et">nad</span>, so there is more
-          than one cat: <span lang="et">kassid</span>.
+          <span lang="et">Kass</span> is one cat, like <span lang="et">ta</span>, so the verb ends
+          in <span lang="et">-b</span>: <span lang="et">magab</span>.
         </Trans>
       ),
     },
     {
-      id: "vaikesed",
-      before: "Nad on",
-      after: "ja ilusad.",
-      answer: "väikesed",
+      id: "vaike-kass",
+      before: "Ta on",
+      after: "ja ilus.",
+      answer: "väike",
       options: ["väikesed", "väike"],
       why: (
         <Trans>
-          After <span lang="et">nad on</span>, the adjective takes <span lang="et">-d</span>, like{" "}
-          <span lang="et">ilusad</span>.
+          <span lang="et">Ta</span> is one cat, so the adjective has no <span lang="et">-d</span>,
+          like <span lang="et">ilus</span>.
         </Trans>
       ),
     },
@@ -383,12 +404,12 @@ export function MitmusLesson() {
         pair: noun.pair,
         inputMode: "text",
         prompt: t`Type the plural`,
-        listen: <span lang="et">{dictionaryPair(noun)}</span>,
+        listen: <span lang="et">{noun.one}</span>,
         said: (
           <span className="flex items-center gap-3">
-            <span>
+            <span lang="et">
               {dictionaryPair(noun)} <ArrowRight aria-hidden="true" className="inline size-4" />{" "}
-              <b className="font-semibold text-ink">
+              <b lang="et" className="font-semibold text-ink">
                 {noun.second}
                 <span className="text-(--form)">d</span>
               </b>
@@ -414,12 +435,10 @@ export function MitmusLesson() {
     [i18n],
   );
 
-  // Every round but the first draws its third sentence afresh, so no set of options names the answer.
+  // Every round but the first shuffles the two sentences, so the answer has no fixed place.
   const heardRun = (items: readonly HeardItem[], pinned?: HeardItem): HeardItem[] =>
     eachPairFirst(items, pinned).map((item) =>
-      item === pinned
-        ? item
-        : { ...item, options: sentenceOptions(threeSentences(item.row), i18n) },
+      item === pinned ? item : { ...item, options: sentenceOptions(twoSentences(item.row), i18n) },
     );
 
   const stemNotes: Record<(typeof MITMUS_CHANGED)[number]["one"], string> = {
@@ -446,9 +465,10 @@ export function MitmusLesson() {
 
   const nounRows: FlipRow[] = MITMUS_SAME.map(({ one, second, many }) => ({
     key: one,
-    one: { said: one, pieces: [[one, false]] },
+    one: { said: one, pieces: [[one, false]], means: i18n._(NOUN_MEANS[one][0]) },
     many: {
       said: many,
+      means: i18n._(NOUN_MEANS[one][1]),
       pieces: [
         [second, false],
         ["d", true],
@@ -458,14 +478,26 @@ export function MitmusLesson() {
 
   const sentenceRows: FlipRow[] = MITMUS_SENTENCES.map((row) => ({
     key: row.one,
-    one: { said: pluralSentence(row, false), pieces: litSentence(row, false) },
-    many: { said: pluralSentence(row, true), pieces: litSentence(row, true) },
+    one: {
+      said: pluralSentence(row, false),
+      pieces: litSentence(row, false),
+      means: i18n._(MEANS[pluralSentence(row, false)] as MessageDescriptor),
+    },
+    many: {
+      said: pluralSentence(row, true),
+      pieces: litSentence(row, true),
+      means: i18n._(MEANS[pluralSentence(row, true)] as MessageDescriptor),
+    },
   }));
 
   const adjectiveRows: FlipRow[] = MITMUS_ADJECTIVES.map(({ one, many }) => ({
     key: one,
-    one: { said: one, pieces: [[one, false]] },
-    many: { said: many, pieces: litPlural(many) },
+    one: { said: one, pieces: [[one, false]], means: i18n._(MEANS[one] as MessageDescriptor) },
+    many: {
+      said: many,
+      pieces: litPlural(many),
+      means: i18n._(MEANS[many] as MessageDescriptor),
+    },
   }));
 
   const ending = (text: string) => (
@@ -524,7 +556,8 @@ export function MitmusLesson() {
           <b lang="et">suured majad; Majad on suured.</b>
         </Trans>,
         <Trans key="5">
-          After a number, the noun stays singular: <b lang="et">kaks kassi</b>.
+          Two people joined by <b lang="et">ja</b> take the verb form of <b lang="et">nad</b> too:{" "}
+          <b lang="et">Ema ja isa töötavad.</b>
         </Trans>,
       ]}
       sections={[
@@ -665,6 +698,12 @@ export function MitmusLesson() {
                     Many, and tap a sentence to hear it.
                   </Trans>
                 </p>
+                <p>
+                  <Trans>
+                    Two people joined by <Word w="ja" /> count as many too, so the verb takes the
+                    form of <span lang="et">nad</span>: <Word w="Ema ja isa töötavad." />
+                  </Trans>
+                </p>
               </Prose>
               <OneManyFlip
                 rows={sentenceRows}
@@ -793,8 +832,9 @@ export function MitmusLesson() {
                 <p>
                   <Trans>
                     A family writes about its home in Tartu. Pick the word that fits each gap: the
-                    words around it say whether it’s one or many. One verb is new:{" "}
-                    <Word w="magama" />, to sleep.
+                    words around it say whether it’s one or many. Two adjectives come from the
+                    section above, <Word w="väike" />, small, and <Word w="ilus" />, beautiful. One
+                    verb is new: <Word w="magama" />, to sleep.
                   </Trans>
                 </p>
               </Prose>

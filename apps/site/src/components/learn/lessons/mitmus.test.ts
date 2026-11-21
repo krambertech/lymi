@@ -11,7 +11,7 @@ import {
   pluralSentence,
 } from "../../../lib/learn/clips";
 import { eachPairFirst } from "../../../lib/learn/quiz";
-import { firstSentences, HEARD, litPlural, litSentence, TYPED, threeSentences } from "./Mitmus";
+import { firstSentences, HEARD, litPlural, litSentence, TYPED, twoSentences } from "./Mitmus";
 
 const recorded = CLIPS.mitmus ?? {};
 
@@ -74,7 +74,7 @@ describe("plural quizzes", () => {
       const kinds = eachPairFirst(TYPED, TYPED[0])
         .slice(0, 2)
         .map((item) => item.pair[0]);
-      expect(new Set(kinds)).toEqual(new Set(["vowel", "inside"]));
+      expect(new Set(kinds)).toEqual(new Set(["vowel", "changed"]));
     }
   });
 
@@ -87,22 +87,24 @@ describe("plural quizzes", () => {
     }
   });
 
-  it("puts the answer in every place, among options that change", () => {
+  it("offers the heard noun for one and many, the answer in either place", () => {
     const row = MITMUS_SENTENCES[0];
     const answer = pluralSentence(row, true);
     const places = new Set<number>();
-    const sets = new Set<string>();
-    for (let run = 0; run < 300; run++) {
-      const three = threeSentences(row);
-      expect(new Set(three).size).toBe(3);
-      expect(three).toContain(answer);
-      places.add(three.indexOf(answer));
-      sets.add([...three].sort().join("|"));
+    for (let run = 0; run < 200; run++) {
+      const two = twoSentences(row);
+      expect(new Set(two)).toEqual(new Set([pluralSentence(row, false), answer]));
+      places.add(two.indexOf(answer));
     }
-    expect(places.size).toBe(3);
-    expect(sets.size).toBeGreaterThan(1);
-    const firstPlaces = new Set(HEARD.map((item, i) => firstSentences(i).indexOf(item.said)));
-    expect(firstPlaces).toEqual(new Set([0, 1, 2]));
+    expect(places).toEqual(new Set([0, 1]));
+    const firstPlaces = HEARD.map((item, i) => firstSentences(i).indexOf(item.said));
+    expect(new Set(firstPlaces)).toEqual(new Set([0, 1]));
+    expect(firstPlaces[0]).toBe(1);
+    expect(HEARD[0]?.said).not.toBe("Laps loeb.");
+  });
+
+  it("opens “Type the plural” on a noun other than the lesson’s example", () => {
+    expect(TYPED[0]?.one).not.toBe("kass");
   });
 
   it("has a recording for everything the quizzes play", () => {

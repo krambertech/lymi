@@ -490,11 +490,17 @@ msgstr "<0>Jonas</0> added 4 cards to Week 4"
 msgid "<0>Jonas</0> finished Week 2"
 msgstr "<0>Jonas</0> finished Week 2"
 
+msgid "<0>Kass</0> is one cat, like <1>ta</1>, so the verb ends in <2>-b</2>: <3>magab</3>."
+msgstr "<0>Kass</0> is one cat, like <1>ta</1>, so the verb ends in <2>-b</2>: <3>magab</3>."
+
 msgid "<0>kassi</0> + <1>d</1> = <2>kassid</2>"
 msgstr "<0>kassi</0> + <1>d</1> = <2>kassid</2>"
 
 msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgstr "<0>Kes</0> asks about people, <1>mis</1> about things."
+
+msgid "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2>."
+msgstr "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2>."
 
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> asks where you’re from, not where you live."
@@ -510,9 +516,6 @@ msgstr "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
 
 msgid "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
 msgstr "<0>Ma</0> takes <1>-n</1>: <2>õpin</2>."
-
-msgid "<0>Magavad</0> is the form of <1>nad</1>, so there is more than one cat: <2>kassid</2>."
-msgstr "<0>Magavad</0> is the form of <1>nad</1>, so there is more than one cat: <2>kassid</2>."
 
 msgid "<0>marginal cost</0> <1>= cost of 1 more</1>"
 msgstr "<0>marginal cost</0> <1>= cost of 1 more</1>"
@@ -576,6 +579,9 @@ msgstr "<0>Suured</0> ends in <1>-d</1>, so there is more than one room: <2>toad
 
 msgid "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
 msgstr "<0>Ta</0> is both he and she. <1>Te</1> is you, to more than one, and polite you to one person."
+
+msgid "<0>Ta</0> is one cat, so the adjective has no <1>-d</1>, like <2>ilus</2>."
+msgstr "<0>Ta</0> is one cat, so the adjective has no <1>-d</1>, like <2>ilus</2>."
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
@@ -888,8 +894,8 @@ msgstr "A duck asleep in a POT"
 msgid "A false friend. Embarrassed is avergonzado."
 msgstr "A false friend. Embarrassed is avergonzado."
 
-msgid "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. One verb is new: <0/>, to sleep."
-msgstr "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. One verb is new: <0/>, to sleep."
+msgid "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
+msgstr "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
 
 msgid "a federal state."
 msgstr "a federal state."
@@ -1540,9 +1546,6 @@ msgstr "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 
-msgid "After <0>nad on</0>, the adjective takes <1>-d</1>, like <2>ilusad</2>."
-msgstr "After <0>nad on</0>, the adjective takes <1>-d</1>, like <2>ilusad</2>."
-
 msgid "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
 msgstr "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, and tap a line to hear it."
 
@@ -1560,9 +1563,6 @@ msgstr "After a number from two up, minut becomes minutit."
 
 msgid "After a number from two up, the partitive."
 msgstr "After a number from two up, the partitive."
-
-msgid "After a number, the noun stays singular: <0>kaks kassi</0>."
-msgstr "After a number, the noun stays singular: <0>kaks kassi</0>."
 
 msgid "After ei the verb drops its ending: ei ela."
 msgstr "After ei the verb drops its ending: ei ela."
@@ -1856,6 +1856,9 @@ msgstr "Anatomy, drugs and the terms learners meet on the ward."
 
 msgid "Anatomy, maps and diagrams with parts hidden. Lymi can’t ask image occlusion cards yet."
 msgstr "Anatomy, maps and diagrams with parts hidden. Lymi can’t ask image occlusion cards yet."
+
+msgid "and"
+msgstr "and"
 
 msgid "And what am I due to review tonight?"
 msgstr "And what am I due to review tonight?"
@@ -2198,6 +2201,9 @@ msgstr "Bank president"
 
 msgid "basket"
 msgstr "basket"
+
+msgid "beautiful"
+msgstr "beautiful"
 
 msgid "beautiful rooms"
 msgstr "beautiful rooms"
@@ -7139,6 +7145,9 @@ msgstr "Most Spanish nouns ending in -o are masculine and most ending in -a are 
 msgid "mother"
 msgstr "mother"
 
+msgid "Mother and father are working."
+msgstr "Mother and father are working."
+
 msgid "Move the food words into their own section."
 msgstr "Move the food words into their own section."
 
@@ -7201,9 +7210,6 @@ msgstr "Ñ is a letter of its own: ¡Feliz año nuevo!"
 
 msgid "Na⁺ − (Cl⁻ + HCO₃⁻); raised in some metabolic acidoses"
 msgstr "Na⁺ − (Cl⁻ + HCO₃⁻); raised in some metabolic acidoses"
-
-msgid "Nad magavad: they sleep."
-msgstr "Nad magavad: they sleep."
 
 msgid "name"
 msgstr "name"
@@ -9434,6 +9440,9 @@ msgstr "Slides, photos or typed notes."
 msgid "Slow or stop so others can pass without you forcing them to change speed or path."
 msgstr "Slow or stop so others can pass without you forcing them to change speed or path."
 
+msgid "small"
+msgstr "small"
+
 msgid "small cats"
 msgstr "small cats"
 
@@ -9856,6 +9865,9 @@ msgstr "Sync is free"
 
 msgid "Ta is he or she: “He is Jaan.”"
 msgstr "Ta is he or she: “He is Jaan.”"
+
+msgid "Ta magab, nad magavad: he or she sleeps, they sleep."
+msgstr "Ta magab, nad magavad: he or she sleeps, they sleep."
 
 msgid "table"
 msgstr "table"
@@ -11719,6 +11731,12 @@ msgstr "two cats"
 
 msgid "two hundred"
 msgstr "two hundred"
+
+msgid "Two people joined by <0/> count as many too, so the verb takes the form of <1>nad</1>: <2/>"
+msgstr "Two people joined by <0/> count as many too, so the verb takes the form of <1>nad</1>: <2/>"
+
+msgid "Two people joined by <0>ja</0> take the verb form of <1>nad</1> too: <2>Ema ja isa töötavad.</2>"
+msgstr "Two people joined by <0>ja</0> take the verb form of <1>nad</1> too: <2>Ema ja isa töötavad.</2>"
 
 msgid "two thousand"
 msgstr "two thousand"

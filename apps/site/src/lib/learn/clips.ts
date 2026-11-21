@@ -869,14 +869,14 @@ export const MITMUS_ADJECTIVES = [
   { one: "ilus tuba", many: "ilusad toad" },
 ] as const;
 
-/** A home in Tartu, cut into gaps in the lesson. Magama, to sleep, is glossed before it. */
+/** A home in Tartu, cut into gaps in the lesson: three want one, three want many. Magama is glossed before it. */
 export const MITMUS_PASSAGE = [
   "Me elame Tartus.",
   "Meie kodu on väike, aga toad on suured.",
   "Ema ja isa töötavad Tallinnas.",
   "Lapsed õpivad koolis.",
-  "Meie kassid magavad kodus.",
-  "Nad on väikesed ja ilusad.",
+  "Meie kass magab kodus.",
+  "Ta on väike ja ilus.",
 ] as const;
 
 /** Words and lines the plural lesson says outside its lists. */
@@ -889,6 +889,9 @@ export const MITMUS_WORDS = [
   "suur",
   "suure",
   "suured",
+  "väike",
+  "ilus",
+  "Ema ja isa töötavad.",
 ] as const;
 
 const MITMUS_CLIPS: Record<string, Clip> = {

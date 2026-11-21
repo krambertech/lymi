@@ -4739,8 +4739,23 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "mitmus/va2ike": {
+    "text": "väike",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/ilus": {
+    "text": "ilus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/ema-ja-isa-to2o2tavad": {
+    "text": "Ema ja isa töötavad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "mitmus/p-home": {
-    "text": "Me elame Tartus. Meie kodu on väike, aga toad on suured. Ema ja isa töötavad Tallinnas. Lapsed õpivad koolis. Meie kassid magavad kodus. Nad on väikesed ja ilusad.",
+    "text": "Me elame Tartus. Meie kodu on väike, aga toad on suured. Ema ja isa töötavad Tallinnas. Lapsed õpivad koolis. Meie kass magab kodus. Ta on väike ja ilus.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

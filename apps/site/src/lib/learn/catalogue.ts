@@ -416,7 +416,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 12,
         blurb: msg`A free lesson on which case an Estonian verb takes: the third form after ootama and aitama (ootan sind), -st after rääkima and aru saama (räägin sinust), -le after helistama (helistan sulle) and -ga after kohtuma (kohtun sinuga), and how a dictionary shows it with keda, kellest, kellele, kellega. Every sentence is read aloud.`,
       },
-      { name: msg`Practice: a message to the landlord`, et: "Kiri" },
+      {
+        slug: "kiri",
+        name: msg`Practice: a message to the landlord`,
+        title: msg`Estonian practice: write to your landlord about a broken tap`,
+        et: "Kiri",
+        minutes: 12,
+        blurb: msg`A free Estonian practice lesson: read a message to a landlord, hear the reply, and use the perfect (on katki läinud), the conditional (kas te saaksite), the impersonal and the case each verb takes in one real situation. Every sentence is read aloud.`,
+      },
     ],
   },
   {

@@ -2993,6 +2993,60 @@ const GOVERNMENT_CLIPS: Record<string, Clip> = {
   ...GOVERNMENT_DIALOGUE,
 };
 
+export const LETTER_PASSAGES = {
+  kati: [
+    "Tere, proua Tamm!",
+    "Meie köögis on kraan katki läinud.",
+    "Vesi tilgub juba kolm päeva.",
+    "Kas te saaksite homme meistri saata?",
+    "Homme olen ma terve päeva kodus.",
+    "Te võite mulle helistada. Aitäh!",
+  ],
+  tamm: [
+    "Tere, Kati! See on proua Tamm.",
+    "Aitäh, et te mulle kirjutasite.",
+    "Meister tuleb homme kell kümme.",
+    "Selliseid kraane parandatakse kiiresti.",
+    "Kui meister ei saa tulla, helistan ma teile.",
+  ],
+  friend: [
+    "Meie köögis on kraan katki läinud.",
+    "Proua Tamm vastas mulle kohe.",
+    "Homme tuleb meister kell kümme.",
+    "Ma võiksin uue kraani ise osta, aga see on kallis.",
+  ],
+} as const;
+
+export const LETTER_DIALOGUE = {
+  "d-meister-1": { text: "Tere! Mina olen meister. Mis juhtus?", voice: "second" },
+  "d-sina-1": "Köögis on kraan katki läinud.",
+  "d-meister-2": { text: "Kas te olete seda ise parandanud?", voice: "second" },
+  "d-sina-2": "Ei, ma ei ole seda parandanud.",
+  "d-meister-3": { text: "Kas ma võiksin homme hommikul tulla?", voice: "second" },
+  "d-sina-3": "Kas te saaksite pigem õhtul tulla?",
+  "d-meister-4": { text: "Hästi. Ma helistan teile enne.", voice: "second" },
+  "d-sina-4": "Aitäh, ma ootan teid.",
+} as const satisfies Record<string, Clip>;
+
+export const LETTER_WORDS = [
+  "kiri",
+  "üürileandja",
+  "kraan",
+  "katki",
+  "meister",
+  "parandama",
+  "tilkuma",
+  "pigem",
+] as const;
+
+const LETTER_CLIPS: Record<string, Clip> = {
+  ...words(LETTER_WORDS),
+  "p-kati": { sentences: LETTER_PASSAGES.kati },
+  "p-tamm": { sentences: LETTER_PASSAGES.tamm, voice: "second" },
+  "p-friend": { sentences: LETTER_PASSAGES.friend },
+  ...LETTER_DIALOGUE,
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -3965,6 +4019,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "lahme-las": LETS_CLIPS,
   raagitakse: IMPERSONAL_CLIPS,
   "ootan-sind": GOVERNMENT_CLIPS,
+  kiri: LETTER_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

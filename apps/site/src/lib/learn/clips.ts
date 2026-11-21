@@ -1886,7 +1886,7 @@ export const VORMID_CLASS = [
 export const MARKET_PASSAGES = {
   mari: [
     "Tere! Ma lähen täna turule.",
-    "Mul on vaja kilo juustu ja üks leib.",
+    "Mul on vaja kilo juustu ja leiba.",
     "Mulle meeldivad turu õunad.",
     "Kas sa tahad ka tulla?",
     "Ma olen kell kümme turu ees.",

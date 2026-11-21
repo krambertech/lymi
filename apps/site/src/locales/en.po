@@ -3288,6 +3288,9 @@ msgstr "ATP"
 msgid "Auditors use it to spot figures that were made up."
 msgstr "Auditors use it to spot figures that were made up."
 
+msgid "away drinking"
+msgstr "away drinking"
+
 msgid "AWS, Azure and Google Cloud: services, limits and the trade-offs between them."
 msgstr "AWS, Azure and Google Cloud: services, limits and the trade-offs between them."
 
@@ -3654,8 +3657,8 @@ msgstr "bus"
 msgid "but"
 msgstr "but"
 
-msgid "Buying apples"
-msgstr "Buying apples"
+msgid "Buying apples for Jaan"
+msgstr "Buying apples for Jaan"
 
 msgid "Buying books and letting them pile up unread"
 msgstr "Buying books and letting them pile up unread"
@@ -8784,8 +8787,8 @@ msgstr "Jaan is a cook."
 msgid "Jaan is at the door."
 msgstr "Jaan is at the door."
 
-msgid "Jaan is at the market already. Listen for where things are, with the place words of lesson {placeWords}, and for what Mari is out doing, with the <0/> of lesson {going}."
-msgstr "Jaan is at the market already. Listen for where things are, with the place words of lesson {placeWords}, and for what Mari is out doing, with the <0/> of lesson {going}."
+msgid "Jaan is at the market already. Listen for where things are, with the place words of lesson {placeWords}, and for what Mari is out doing, with the -mas form, <0/>, from lesson {going}."
+msgstr "Jaan is at the market already. Listen for where things are, with the place words of lesson {placeWords}, and for what Mari is out doing, with the -mas form, <0/>, from lesson {going}."
 
 msgid "Jaan is coming by train."
 msgstr "Jaan is coming by train."
@@ -11430,9 +11433,6 @@ msgstr "Our school is in Tartu."
 msgctxt "away, doing something"
 msgid "Out"
 msgstr "Out"
-
-msgid "out drinking"
-msgstr "out drinking"
 
 msgid "out eating"
 msgstr "out eating"
@@ -14248,8 +14248,8 @@ msgstr "The -ma form. Its -da form is lugeda."
 msgid "The -ma form. Its -da form is teha."
 msgstr "The -ma form. Its -da form is teha."
 
-msgid "The -mas form of jooma: kohvi joomas, out for coffee."
-msgstr "The -mas form of jooma: kohvi joomas, out for coffee."
+msgid "The -mas form of jooma: kohvi joomas, out having coffee."
+msgstr "The -mas form of jooma: kohvi joomas, out having coffee."
 
 msgid "the -nud form"
 msgstr "the -nud form"
@@ -15856,8 +15856,8 @@ msgstr "This is the current HSK 2.0 format. The syllabus published in 2025 grows
 msgid "This is their picture."
 msgstr "This is their picture."
 
-msgid "This is what you say at a stall. Put a word in each gap: an amount, a price, a verb with the right ending, or <0/> with the verb that goes with more than one."
-msgstr "This is what you say at a stall. Put a word in each gap: an amount, a price, a verb with the right ending, or <0/> with the verb that goes with more than one."
+msgid "This is what you say at a stall. Put a word in each gap: an amount, a price, the word <0>see</0>, a verb with the right ending, or the verb that goes with <1/>."
+msgstr "This is what you say at a stall. Put a word in each gap: an amount, a price, the word <0>see</0>, a verb with the right ending, or the verb that goes with <1/>."
 
 msgid "This is your coffee."
 msgstr "This is your coffee."

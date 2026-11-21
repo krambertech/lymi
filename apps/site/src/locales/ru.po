@@ -2421,7 +2421,7 @@ msgid "After an amount"
 msgstr "После слов количества"
 
 msgid "After an amount or a number from two up, the third form: <0>kilo juustu, kaheksa eurot</0>."
-msgstr "После слова количества или числа от двух — третья форма: <0>kilo juustu, kaheksa eurot</0>. Как по-русски: килограмм сыра, восемь евро."
+msgstr "После слова количества или числа от двух — третья форма: <0>kilo juustu, kaheksa eurot</0>."
 
 msgid "After an amount, the third form: <0>kilo juustu</0>."
 msgstr "После слова количества — третья форма: <0>kilo juustu</0>."
@@ -3289,6 +3289,9 @@ msgstr "АТФ"
 msgid "Auditors use it to spot figures that were made up."
 msgstr "С его помощью аудиторы находят выдуманные цифры."
 
+msgid "away drinking"
+msgstr "ушла пить"
+
 msgid "AWS, Azure and Google Cloud: services, limits and the trade-offs between them."
 msgstr "AWS, Azure и Google Cloud: сервисы, ограничения и компромиссы между ними."
 
@@ -3655,8 +3658,8 @@ msgstr "автобус"
 msgid "but"
 msgstr "но"
 
-msgid "Buying apples"
-msgstr "Покупает яблоки"
+msgid "Buying apples for Jaan"
+msgstr "Покупает яблоки для Яана"
 
 msgid "Buying books and letting them pile up unread"
 msgstr "Покупать книги и складывать их непрочитанными"
@@ -6587,7 +6590,7 @@ msgid "Have you got the *key*?"
 msgstr "У тебя есть *ключ*?"
 
 msgid "Having coffee at the café"
-msgstr "Пьёт кофе в кафе"
+msgstr "Пьёт кофе в кофейне"
 
 msgid "He doesn’t *like* rainy days."
 msgstr "Он не *любит* дождливые дни."
@@ -8785,8 +8788,8 @@ msgstr "Яан — повар."
 msgid "Jaan is at the door."
 msgstr "Яан у двери."
 
-msgid "Jaan is at the market already. Listen for where things are, with the place words of lesson {placeWords}, and for what Mari is out doing, with the <0/> of lesson {going}."
-msgstr "Яан уже на рынке. Слушай, где что лежит, — это слова места из урока {placeWords}, и что Мари сейчас делает, — это <0/> из урока {going}."
+msgid "Jaan is at the market already. Listen for where things are, with the place words of lesson {placeWords}, and for what Mari is out doing, with the -mas form, <0/>, from lesson {going}."
+msgstr "Яан уже на рынке. Слушай, где что лежит, — это слова места из урока {placeWords}, и что Мари ушла делать, — это форма на -mas, <0/>, из урока {going}."
 
 msgid "Jaan is coming by train."
 msgstr "Яан едет на поезде."
@@ -11432,9 +11435,6 @@ msgctxt "away, doing something"
 msgid "Out"
 msgstr "Там"
 
-msgid "out drinking"
-msgstr "пьёт, выйдя куда-то"
-
 msgid "out eating"
 msgstr "сейчас ест"
 
@@ -12304,7 +12304,7 @@ msgid "Read a café sign and a text message, follow a voice message, fill in a p
 msgstr "Прочитай табличку на двери кафе и сообщение, пойми голосовое, заполни план на субботу и ответь подруге в кафе: числа, время и дни в знакомых предложениях."
 
 msgid "Read a friend’s message, follow a voice message, fill in what you say at a stall and buy cheese and bread: places, amounts, prices and likes in sentences you know."
-msgstr "Прочитай сообщение подруги, послушай голосовое, заполни, что ты говоришь у прилавка, и купи сыр и хлеб: места, количество, цены и «нравится» в предложениях, которые ты уже знаешь."
+msgstr "Прочитай сообщение подруги, послушай голосовое, вставь слова во фразы у прилавка и купи сыр и хлеб: места, количество, цены и «нравится» в предложениях, которые ты уже знаешь."
 
 msgid "Read both endings above once more, then try again."
 msgstr "Ещё раз перечитай про оба окончания выше, а потом попробуй снова."
@@ -12699,7 +12699,7 @@ msgid "Say where with <0>-s</0> or <1>-l</1>, and when with <2>täna</2>, <3>hom
 msgstr "Место называй через <0>-s</0> или <1>-l</1>, а день — через <2>täna</2>, <3>homme</3> или название дня с <4>-l</4>: <5>Pühapäeval olen kodus</5>, в воскресенье я дома."
 
 msgid "Say where with the place cases: <0>turule</0>, to the market; <1>turul</1>, at the market; <2>turult</2>, from the market."
-msgstr "Где и куда — через падежи места: <0>turule</0> — на рынок; <1>turul</1> — на рынке; <2>turult</2> — с рынка."
+msgstr "Где, куда и откуда — через падежи места: <0>turule</0> — на рынок; <1>turul</1> — на рынке; <2>turult</2> — с рынка."
 
 msgid "Say where you live and work, with <0>-s</0> or <1>-l</1> on the place: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
 msgstr "Говори, где живёшь и работаешь, добавляя к месту <0>-s</0> или <1>-l</1>: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
@@ -14249,7 +14249,7 @@ msgstr "Форма на -ma. Его форма на -da — lugeda."
 msgid "The -ma form. Its -da form is teha."
 msgstr "Форма на -ma. Его форма на -da — teha."
 
-msgid "The -mas form of jooma: kohvi joomas, out for coffee."
+msgid "The -mas form of jooma: kohvi joomas, out having coffee."
 msgstr "Форма на -mas от jooma: kohvi joomas — ушла пить кофе."
 
 msgid "the -nud form"
@@ -14511,7 +14511,7 @@ msgid "The children are reading."
 msgstr "Дети читают."
 
 msgid "The coffee at the café"
-msgstr "Кофе в кафе"
+msgstr "Кофе в кофейне"
 
 msgid "The coffee is on the windowsill."
 msgstr "Кофе на подоконнике."
@@ -15857,8 +15857,8 @@ msgstr "Это действующий формат HSK 2.0. Программа, 
 msgid "This is their picture."
 msgstr "Это их фото."
 
-msgid "This is what you say at a stall. Put a word in each gap: an amount, a price, a verb with the right ending, or <0/> with the verb that goes with more than one."
-msgstr "Вот что ты говоришь у прилавка. Вставь слово в каждый пропуск: количество, цену, глагол с правильным окончанием или глагол, который подходит к нескольким вещам, как <0/>."
+msgid "This is what you say at a stall. Put a word in each gap: an amount, a price, the word <0>see</0>, a verb with the right ending, or the verb that goes with <1/>."
+msgstr "Вот фразы, которые говорят у прилавка. Вставь слово в каждый пропуск: количество, цену, слово <0>see</0>, глагол с правильным окончанием или глагол для нескольких вещей — к <1/>."
 
 msgid "This is your coffee."
 msgstr "Это твой кофе."

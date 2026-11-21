@@ -31,8 +31,8 @@ const GLOSSARY: Glossary = {
   "midagi veel": { en: msg`anything else` },
   kokku: { en: msg`in total` },
   joomas: {
-    en: msg`out drinking`,
-    note: msg`The -mas form of jooma: kohvi joomas, out for coffee.`,
+    en: msg`away drinking`,
+    note: msg`The -mas form of jooma: kohvi joomas, out having coffee.`,
   },
   "kilo juustu": { en: msg`a kilo of cheese` },
 };
@@ -105,7 +105,7 @@ function useContent() {
       ask: t`What is Mari doing?`,
       options: [
         { id: "coffee", label: t`Having coffee at the café` },
-        { id: "buying", label: t`Buying apples` },
+        { id: "buying", label: t`Buying apples for Jaan` },
         { id: "home", label: t`Going home` },
       ],
       answer: "coffee",
@@ -287,8 +287,8 @@ export function TurulLesson() {
                 <p>
                   <Trans>
                     Jaan is at the market already. Listen for where things are, with the place words
-                    of lesson {placeWords}, and for what Mari is out doing, with the{" "}
-                    <Word w="joomas" /> of lesson {going}.
+                    of lesson {placeWords}, and for what Mari is out doing, with the -mas form,{" "}
+                    <Word w="joomas" />, from lesson {going}.
                   </Trans>
                 </p>
               </Prose>
@@ -311,9 +311,9 @@ export function TurulLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    This is what you say at a stall. Put a word in each gap: an amount, a price, a
-                    verb with the right ending, or <Word w="õunad" /> with the verb that goes with
-                    more than one.
+                    This is what you say at a stall. Put a word in each gap: an amount, a price, the
+                    word <Et>see</Et>, a verb with the right ending, or the verb that goes with{" "}
+                    <Word w="õunad" />.
                   </Trans>
                 </p>
               </Prose>

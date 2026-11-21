@@ -54,16 +54,15 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Sul on õpetaja.": msg`You have a teacher.`,
   "Ta on hea sõber.": msg`He or she is a good friend.`,
   "Tal on hea sõber.": msg`He or she has a good friend.`,
-  "Me oleme kodus.": msg`We’re at home.`,
-  "Meil on kodu.": msg`We have a home.`,
+  "Te olete hea õpetaja.": msg`You’re a good teacher. Polite, to one person.`,
+  "Teil on hea õpetaja.": msg`You have a good teacher. To more than one, or polite.`,
+  "Ta on hea õpetaja.": msg`He or she is a good teacher.`,
   "Ma olen õpetaja.": msg`I’m a teacher.`,
   "Mul on õpetaja.": msg`I have a teacher.`,
   "Sa oled hea sõber.": msg`You’re a good friend.`,
   "Sul on hea sõber.": msg`You have a good friend.`,
   "Ta on laps.": msg`He or she is a child.`,
   "Tal on laps.": msg`He or she has a child.`,
-  "Nad on kodus.": msg`They’re at home.`,
-  "Neil on kodu.": msg`They have a home.`,
   "Maril on kass.": msg`Mari has a cat.`,
   "Jaanil on auto.": msg`Jaan has a car.`,
   "Emal on küsimus.": msg`Mum has a question.`,
@@ -97,16 +96,6 @@ const OWNER_MEANS: Record<MulOnOwner, MessageDescriptor> = {
   meil: msg`we`,
   teil: msg`you, to more than one; polite`,
   neil: msg`they`,
-};
-
-/** The -l form that sounds nearest, offered in every round as the likeliest slip. */
-const NEAR: Record<MulOnOwner, MulOnOwner> = {
-  mul: "meil",
-  meil: "mul",
-  sul: "teil",
-  teil: "sul",
-  tal: "neil",
-  neil: "tal",
 };
 
 /** The long forms' notes in the table. */
@@ -185,7 +174,7 @@ const GLOSSARY: Glossary = {
   aeg: { en: msg`time`, clip: false },
   aega: {
     en: msg`time`,
-    note: msg`A form of aeg. Time takes it after on and after pole.`,
+    note: msg`In Kas sul on aega? and Mul pole aega, time takes this form.`,
     clip: false,
   },
   "hästi, aitäh. aga sul?": {
@@ -274,10 +263,10 @@ const ownerOptions = (owners: readonly MulOnOwner[], i18n: I18n) =>
     sub: i18n._(OWNER_MEANS[owner]),
   }));
 
-/** The answer, the -l form that sounds nearest, and one more at random, in random order. */
+/** The answer and two of the other five forms at random, in random order. */
 export function threeOwners(answer: MulOnOwner): MulOnOwner[] {
-  const rest = OWNERS.filter((each) => each !== answer && each !== NEAR[answer]);
-  return shuffle([answer, NEAR[answer], ...shuffle(rest).slice(0, 1)]);
+  const rest = OWNERS.filter((each) => each !== answer);
+  return shuffle([answer, ...shuffle(rest).slice(0, 2)]);
 }
 
 /** “Who has it?”: each sentence with its first round's options, fixed so the server renders the same. */
@@ -286,14 +275,14 @@ export const WHO_HAS = MUL_ON_HEARD.map(({ owner, said }, i) => ({
   said,
   options: (
     [
-      [owner, NEAR[owner], OWNERS[(OWNERS.indexOf(owner) + 2) % 6]],
-      [NEAR[owner], owner, OWNERS[(OWNERS.indexOf(owner) + 2) % 6]],
-      [OWNERS[(OWNERS.indexOf(owner) + 2) % 6], NEAR[owner], owner],
+      [owner, OWNERS[(OWNERS.indexOf(owner) + 3) % 6], OWNERS[(OWNERS.indexOf(owner) + 2) % 6]],
+      [OWNERS[(OWNERS.indexOf(owner) + 1) % 6], owner, OWNERS[(OWNERS.indexOf(owner) + 4) % 6]],
+      [OWNERS[(OWNERS.indexOf(owner) + 5) % 6], OWNERS[(OWNERS.indexOf(owner) + 3) % 6], owner],
     ] as const
   )[i % 3] as readonly MulOnOwner[],
 }));
 
-/** “Am or have?”: each sentence of the pairs, with what it means and its partner. */
+/** “Am or have?”: each sentence of the pairs, keyed on its pair so a run hears one of each. */
 export const AM_HAVE = MUL_ON_AM_HAVE.flatMap(({ am, have }, i) => [
   { said: am, kind: "am" as const, am, have, haveFirst: i % 2 === 0 },
   { said: have, kind: "have" as const, am, have, haveFirst: i % 2 === 1 },
@@ -307,37 +296,72 @@ type AmHaveItem = ChoiceItem & {
   pair: readonly [string, string];
 };
 
-/** Mari's note: a gap at each owner and at the verb. */
+/**
+ * Mari's note: a gap at each owner and each verb. In four of them the plain pronoun, name or olen
+ * is right, so a learner who always picks the -l form and on scores about half.
+ */
 function useGaps(): GapItem[] {
   const { t } = useLingui();
   return [
     {
+      id: "olen",
+      before: "Mina",
+      answer: "olen",
+      after: "Mari.",
+      options: ["on", "olen"],
+      why: t`Mina olen Mari: I am Mari. Mina takes olen; on goes with mul.`,
+    },
+    {
       id: "mul",
-      before: "Mina olen Mari.",
+      before: "",
       answer: "Mul",
       after: "on kass.",
-      options: ["Ma", "Mul"],
+      options: ["Mul", "Ma"],
       why: t`Mul on kass: I have a cat. Ma would need olen and say I am a cat.`,
     },
     {
+      id: "ema",
+      before: "Minu",
+      answer: "ema",
+      after: "on õpetaja.",
+      options: ["ema", "emal"],
+      why: t`Minu ema on õpetaja: my mum is a teacher. Minu emal on õpetaja would say she has one.`,
+    },
+    {
       id: "emal",
-      before: "Minu ema on õpetaja.",
+      before: "",
       answer: "Emal",
       after: "on auto.",
       options: ["Emal", "Ema"],
       why: t`Emal on auto: Mum has a car. Ema on auto would say Mum is a car.`,
     },
     {
+      id: "jaan",
+      before: "",
+      answer: "Jaan",
+      after: "on minu sõber.",
+      options: ["Jaanil", "Jaan"],
+      why: t`Jaan on minu sõber: Jaan is my friend. Jaanil on minu sõber would say Jaan has my friend.`,
+    },
+    {
       id: "jaanil",
-      before: "Jaan on minu sõber.",
+      before: "",
       answer: "Jaanil",
       after: "on koer.",
       options: ["Jaan", "Jaanil"],
       why: t`Jaanil on koer: Jaan has a dog. Jaan on koer would say Jaan is a dog.`,
     },
     {
+      id: "me",
+      before: "",
+      answer: "Me",
+      after: "elame Tartus.",
+      options: ["Me", "Meil"],
+      why: t`Me elame Tartus: we live in Tartu. The -⁠l form goes with on, not with other verbs.`,
+    },
+    {
       id: "meil-on",
-      before: "Me elame Tartus. Meil",
+      before: "Meil",
       answer: "on",
       after: "hea kodu.",
       options: ["oleme", "on"],
@@ -478,7 +502,7 @@ export function MulOnLesson() {
         have,
         src: src(said),
         answer: kind,
-        pair: [kind, said] as const,
+        pair: [am, said] as const,
         options: amHaveOptions(am, have, haveFirst, i18n),
         explain: explain(said, i18n),
       })),
@@ -522,7 +546,7 @@ export function MulOnLesson() {
       replies: [
         { line: line("d-sina-3"), right: true },
         { line: "Ma olen.", why: t`Ma olen says I am. To say you have it, use mul on.` },
-        { line: "Sul on.", why: t`Sul on says that Liis has it.` },
+        { line: "Sinul.", why: t`Sinul says that Liis has it.` },
       ],
     },
     { who: "them", clip: "d-liis-4", line: line("d-liis-4") },
@@ -531,8 +555,8 @@ export function MulOnLesson() {
       clip: "d-sina-4",
       replies: [
         {
-          line: "Jah, mul pole homme aega.",
-          why: t`Jah says yes, but mul pole aega says you have no time.`,
+          line: "Jah, ma pole homme aega.",
+          why: t`Jah says yes, and ma pole says I am not. For no time, say Ei, mul pole.`,
         },
         { line: line("d-sina-4"), right: true },
         {
@@ -595,8 +619,8 @@ export function MulOnLesson() {
           genitive: <b lang="et">Maril, Jaanil, emal</b>.
         </Trans>,
         <Trans key="3">
-          The verb is <b lang="et">on</b> whoever has the thing, and one thing you can count stays
-          in its first form: <b lang="et">Meil on maja.</b>
+          The verb is <b lang="et">on</b> whoever has the thing, and in a yes sentence one thing you
+          can count stays in its first form: <b lang="et">Meil on maja.</b>
         </Trans>,
         <Trans key="4">
           Ask with <b lang="et">kas</b> or <b lang="et">kellel</b>, and answer with{" "}
@@ -714,10 +738,10 @@ export function MulOnLesson() {
                 </p>
                 <p>
                   <Trans>
-                    One thing you can count stays in its first form, the one lesson {forms} lists
-                    first: <Word w="kass" />, <Word w="auto" />, <Word w="maja" />. Time is an
-                    amount, not one thing, and takes another form: <Word w="Kas sul on aega?" />{" "}
-                    Lesson {partitive} teaches that form.
+                    In a yes sentence, one thing you can count stays in its first form, the one
+                    lesson {forms} lists first: <Word w="kass" />, <Word w="auto" />,{" "}
+                    <Word w="maja" />. Time is an amount, not one thing, and takes another form:{" "}
+                    <Word w="Kas sul on aega?" /> Lesson {partitive} teaches that form.
                   </Trans>
                 </p>
               </Prose>
@@ -747,7 +771,7 @@ export function MulOnLesson() {
                 id="am-or-have"
                 title={<Trans>Am or have?</Trans>}
                 items={amHaveItems}
-                rounds={6}
+                rounds={4}
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>All of them. You told am from have every time.</Trans>

@@ -930,9 +930,6 @@ msgstr "A flat plate on a door says push; a handle says pull."
 msgid "a foot"
 msgstr "a foot"
 
-msgid "A form of aeg. Time takes it after on and after pole."
-msgstr "A form of aeg. Time takes it after on and after pole."
-
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 
@@ -4928,6 +4925,9 @@ msgstr "He or she is a child."
 msgid "He or she is a good friend."
 msgstr "He or she is a good friend."
 
+msgid "He or she is a good teacher."
+msgstr "He or she is a good teacher."
+
 msgid "He or she is a teacher."
 msgstr "He or she is a teacher."
 
@@ -5849,6 +5849,9 @@ msgstr "in a room"
 msgid "in a shop"
 msgstr "in a shop"
 
+msgid "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
+msgstr "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
+
 msgid "In an office"
 msgstr "In an office"
 
@@ -5887,6 +5890,9 @@ msgstr "In Gemini CLI, anywhere. In the Gemini app, Google opens custom apps onl
 
 msgid "in Germany"
 msgstr "in Germany"
+
+msgid "In Kas sul on aega? and Mul pole aega, time takes this form."
+msgstr "In Kas sul on aega? and Mul pole aega, time takes this form."
 
 msgid "in Lasnamäe"
 msgstr "in Lasnamäe"
@@ -6228,6 +6234,9 @@ msgstr "Jaan lives in Pärnu."
 msgid "Jaan on auto says Jaan is a car. For Jaan has a car, say Jaanil on auto."
 msgstr "Jaan on auto says Jaan is a car. For Jaan has a car, say Jaanil on auto."
 
+msgid "Jaan on minu sõber: Jaan is my friend. Jaanil on minu sõber would say Jaan has my friend."
+msgstr "Jaan on minu sõber: Jaan is my friend. Jaanil on minu sõber would say Jaan has my friend."
+
 msgid "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says what isn’t so, then what is."
 msgstr "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says what isn’t so, then what is."
 
@@ -6243,8 +6252,8 @@ msgstr "Jaanil on koer: Jaan has a dog. Jaan on koer would say Jaan is a dog."
 msgid "Jaanil on: Jaan has."
 msgstr "Jaanil on: Jaan has."
 
-msgid "Jah says yes, but mul pole aega says you have no time."
-msgstr "Jah says yes, but mul pole aega says you have no time."
+msgid "Jah says yes, and ma pole says I am not. For no time, say Ei, mul pole."
+msgstr "Jah says yes, and ma pole says I am not. For no time, say Ei, mul pole."
 
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
@@ -7173,6 +7182,9 @@ msgstr "may I…?"
 msgid "May it come easy"
 msgstr "May it come easy"
 
+msgid "Me elame Tartus: we live in Tartu. The -⁠l form goes with on, not with other verbs."
+msgstr "Me elame Tartus: we live in Tartu. The -⁠l form goes with on, not with other verbs."
+
 msgid "Me, we, takes -me: elame."
 msgstr "Me, we, takes -me: elame."
 
@@ -7230,11 +7242,17 @@ msgstr "Microbiology"
 msgid "Milk"
 msgstr "Milk"
 
+msgid "Mina olen Mari: I am Mari. Mina takes olen; on goes with mul."
+msgstr "Mina olen Mari: I am Mari. Mina takes olen; on goes with mul."
+
 msgid "Mina takes -n: loen."
 msgstr "Mina takes -n: loen."
 
 msgid "Mina, I, takes olen."
 msgstr "Mina, I, takes olen."
+
+msgid "Minu ema on õpetaja: my mum is a teacher. Minu emal on õpetaja would say she has one."
+msgstr "Minu ema on õpetaja: my mum is a teacher. Minu emal on õpetaja would say she has one."
 
 msgid "Minute hand"
 msgstr "Minute hand"
@@ -8047,9 +8065,6 @@ msgstr "One shared deck, everyone on their own schedule"
 
 msgid "One spelling, two words."
 msgstr "One spelling, two words."
-
-msgid "One thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
-msgstr "One thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
 
 msgid "One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 msgstr "One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
@@ -9635,6 +9650,9 @@ msgstr "Sina as the one something is done to: Ma ootan sind, I’m waiting for y
 msgid "Sina is you: this says “You are Jaan.”"
 msgstr "Sina is you: this says “You are Jaan.”"
 
+msgid "Sinul says that Liis has it."
+msgstr "Sinul says that Liis has it."
+
 msgid "sit down"
 msgstr "sit down"
 
@@ -10063,9 +10081,6 @@ msgstr "Sugars and amino acids reacting in the heat."
 
 msgid "Sul on auto says that Liis has a car. You don’t have one, so answer Ei ole."
 msgstr "Sul on auto says that Liis has a car. You don’t have one, so answer Ei ole."
-
-msgid "Sul on says that Liis has it."
-msgstr "Sul on says that Liis has it."
 
 msgid "Sul on: you have."
 msgstr "Sul on: you have."
@@ -11159,8 +11174,8 @@ msgstr "The union"
 msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
 msgstr "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
 
-msgid "The verb is <0>on</0> whoever has the thing, and one thing you can count stays in its first form: <1>Meil on maja.</1>"
-msgstr "The verb is <0>on</0> whoever has the thing, and one thing you can count stays in its first form: <1>Meil on maja.</1>"
+msgid "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its first form: <1>Meil on maja.</1>"
+msgstr "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its first form: <1>Meil on maja.</1>"
 
 msgid "The verb stays second, whichever word comes first."
 msgstr "The verb stays second, whichever word comes first."
@@ -11257,9 +11272,6 @@ msgstr "They follow {source}, in the exam’s own words. Lymi wrote the translat
 
 msgid "They have a child."
 msgstr "They have a child."
-
-msgid "They have a home."
-msgstr "They have a home."
 
 msgid "They have a house in Pärnu."
 msgstr "They have a house in Pärnu."
@@ -12176,9 +12188,6 @@ msgstr "We don’t sell your personal data, show ads or track you across other c
 
 msgid "We have a home in Tartu."
 msgstr "We have a home in Tartu."
-
-msgid "We have a home."
-msgstr "We have a home."
 
 msgid "We have a house."
 msgstr "We have a house."
@@ -13211,6 +13220,9 @@ msgstr "You have a car."
 msgid "You have a good friend."
 msgstr "You have a good friend."
 
+msgid "You have a good teacher. To more than one, or polite."
+msgstr "You have a good teacher. To more than one, or polite."
+
 msgid "You have a teacher."
 msgstr "You have a teacher."
 
@@ -13354,6 +13366,9 @@ msgstr "You’re a doctor, arst."
 
 msgid "You’re a good friend."
 msgstr "You’re a good friend."
+
+msgid "You’re a good teacher. Polite, to one person."
+msgstr "You’re a good teacher. Polite, to one person."
 
 msgid "You’re all doing great."
 msgstr "You’re all doing great."

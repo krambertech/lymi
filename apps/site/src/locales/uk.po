@@ -930,9 +930,6 @@ msgstr "Гладка накладка на дверях підказує «шт�
 msgid "a foot"
 msgstr "нога"
 
-msgid "A form of aeg. Time takes it after on and after pole."
-msgstr "Форма слова aeg. Час стоїть у ній і після on, і після pole."
-
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "Безкоштовна колода містить кожен дорожній знак із правил: за малюнком, із польською назвою та номером."
 
@@ -4928,6 +4925,9 @@ msgstr "Він чи вона — дитина."
 msgid "He or she is a good friend."
 msgstr "Він чи вона — добрий друг."
 
+msgid "He or she is a good teacher."
+msgstr "Він чи вона — добрий учитель."
+
 msgid "He or she is a teacher."
 msgstr "Він чи вона — вчитель."
 
@@ -5849,6 +5849,9 @@ msgstr "у кімнаті"
 msgid "in a shop"
 msgstr "у крамниці"
 
+msgid "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
+msgstr "У ствердному реченні одна річ, яку можна порахувати, лишається в першій формі, тій, що в уроці {forms} іде першою: <0/>, <1/>, <2/>. Час — це кількість, а не одна річ, тому він має іншу форму: <3/> Цю форму пояснює урок {partitive}."
+
 msgid "In an office"
 msgstr "В офісі"
 
@@ -5887,6 +5890,9 @@ msgstr "У Gemini CLI — будь-де. У застосунку Gemini Google �
 
 msgid "in Germany"
 msgstr "у Німеччині"
+
+msgid "In Kas sul on aega? and Mul pole aega, time takes this form."
+msgstr "У Kas sul on aega? і Mul pole aega час стоїть саме в цій формі."
 
 msgid "in Lasnamäe"
 msgstr "у Ласнамяе"
@@ -6228,6 +6234,9 @@ msgstr "Яан живе в Пярну."
 msgid "Jaan on auto says Jaan is a car. For Jaan has a car, say Jaanil on auto."
 msgstr "Jaan on auto означає «Яан — це машина». «В Яана є машина» — це Jaanil on auto."
 
+msgid "Jaan on minu sõber: Jaan is my friend. Jaanil on minu sõber would say Jaan has my friend."
+msgstr "Jaan on minu sõber: Яан — мій друг. Jaanil on minu sõber означало б, що мій друг є в Яана."
+
 msgid "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says what isn’t so, then what is."
 msgstr "Яан розповідає про себе і свою подругу Каті. Зверни увагу на <0/>: після заперечення Яан каже, як є насправді."
 
@@ -6243,8 +6252,8 @@ msgstr "Jaanil on koer: в Яана є собака. Jaan on koer означал
 msgid "Jaanil on: Jaan has."
 msgstr "Jaanil on: в Яана є."
 
-msgid "Jah says yes, but mul pole aega says you have no time."
-msgstr "Jah означає «так», а mul pole aega — що часу в тебе немає."
+msgid "Jah says yes, and ma pole says I am not. For no time, say Ei, mul pole."
+msgstr "Jah означає «так», а ma pole — «я не…». Щоб сказати, що часу немає, кажи Ei, mul pole."
 
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
@@ -7173,6 +7182,9 @@ msgstr "можна…?"
 msgid "May it come easy"
 msgstr "Хай буде легко"
 
+msgid "Me elame Tartus: we live in Tartu. The -⁠l form goes with on, not with other verbs."
+msgstr "Me elame Tartus: ми живемо в Тарту. Форма на -⁠l іде з on, а не з іншими дієсловами."
+
 msgid "Me, we, takes -me: elame."
 msgstr "Me, ми, бере -me: elame."
 
@@ -7230,11 +7242,17 @@ msgstr "Мікробіологія"
 msgid "Milk"
 msgstr "Молоко"
 
+msgid "Mina olen Mari: I am Mari. Mina takes olen; on goes with mul."
+msgstr "Mina olen Mari: я Марі. Після mina іде olen, а on — після mul."
+
 msgid "Mina takes -n: loen."
 msgstr "Mina бере -n: loen."
 
 msgid "Mina, I, takes olen."
 msgstr "Mina, я, бере olen."
+
+msgid "Minu ema on õpetaja: my mum is a teacher. Minu emal on õpetaja would say she has one."
+msgstr "Minu ema on õpetaja: моя мама — вчителька. Minu emal on õpetaja означало б, що в неї є вчитель."
 
 msgid "Minute hand"
 msgstr "Хвилинна стрілка"
@@ -8047,9 +8065,6 @@ msgstr "Одна спільна колода, у кожного свій роз�
 
 msgid "One spelling, two words."
 msgstr "Одне написання, два слова."
-
-msgid "One thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
-msgstr "Одна річ, яку можна порахувати, лишається в першій формі, тій, що в уроці {forms} іде першою: <0/>, <1/>, <2/>. Час — це кількість, а не одна річ, тому він має іншу форму: <3/> Цю форму пояснює урок {partitive}."
 
 msgid "One way at a time: the Chinese for its meaning, or the meaning for the Chinese. You think of the answer, turn the card over and say how well you knew it. There’s nothing to type."
 msgstr "По одному напрямку за раз: китайське слово — згадай значення, або значення — згадай китайське. Пригадуєш відповідь, перевертаєш картку і оцінюєш, наскільки легко згадалося. Нічого набирати не треба."
@@ -9635,6 +9650,9 @@ msgstr "Sina, коли дія спрямована на тебе: Ma ootan sind,
 msgid "Sina is you: this says “You are Jaan.”"
 msgstr "Sina — це ти: тут сказано «Ти Яан»."
 
+msgid "Sinul says that Liis has it."
+msgstr "Sinul означає, що він у Ліїс."
+
 msgid "sit down"
 msgstr "сідай"
 
@@ -10063,9 +10081,6 @@ msgstr "Цукри й амінокислоти реагують під дією 
 
 msgid "Sul on auto says that Liis has a car. You don’t have one, so answer Ei ole."
 msgstr "Sul on auto означає, що машина є в Ліїс. У тебе машини немає, тож відповідай Ei ole."
-
-msgid "Sul on says that Liis has it."
-msgstr "Sul on означає, що він у Ліїс."
 
 msgid "Sul on: you have."
 msgstr "Sul on: у тебе є."
@@ -11159,8 +11174,8 @@ msgstr "Профспілка"
 msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
 msgstr "Дієслово втрачає закінчення після <0>ei</0>, а не після <1>kas</1>: <2>elad</2>."
 
-msgid "The verb is <0>on</0> whoever has the thing, and one thing you can count stays in its first form: <1>Meil on maja.</1>"
-msgstr "Дієслово — <0>on</0>, хоч би в кого була річ, а одна річ, яку можна порахувати, лишається в першій формі: <1>Meil on maja.</1>"
+msgid "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its first form: <1>Meil on maja.</1>"
+msgstr "Дієслово — <0>on</0>, хоч би в кого була річ, а в ствердному реченні одна річ, яку можна порахувати, лишається в першій формі: <1>Meil on maja.</1>"
 
 msgid "The verb stays second, whichever word comes first."
 msgstr "Дієслово лишається другим, хоч би яке слово стояло першим."
@@ -11257,9 +11272,6 @@ msgstr "Вони відповідають джерелу {source}, дослів�
 
 msgid "They have a child."
 msgstr "У них є дитина."
-
-msgid "They have a home."
-msgstr "У них є дім."
 
 msgid "They have a house in Pärnu."
 msgstr "У них є будинок у Пярну."
@@ -12175,10 +12187,7 @@ msgid "We don’t sell your personal data, show ads or track you across other co
 msgstr "Ми не продаємо твої персональні дані, не показуємо рекламу й не відстежуємо тебе в застосунках і на сайтах інших компаній. Описані нижче дані потрібні, щоб надавати, захищати й удосконалювати Lymi."
 
 msgid "We have a home in Tartu."
-msgstr "У нас є дім у Тарту."
-
-msgid "We have a home."
-msgstr "У нас є дім."
+msgstr "У нас є свій дім у Тарту."
 
 msgid "We have a house."
 msgstr "У нас є будинок."
@@ -13211,6 +13220,9 @@ msgstr "У тебе є машина."
 msgid "You have a good friend."
 msgstr "У тебе є добрий друг."
 
+msgid "You have a good teacher. To more than one, or polite."
+msgstr "У вас добрий учитель. До кількох людей або ввічливо."
+
 msgid "You have a teacher."
 msgstr "У тебе є вчитель."
 
@@ -13354,6 +13366,9 @@ msgstr "Ти лікар, arst."
 
 msgid "You’re a good friend."
 msgstr "Ти добрий друг."
+
+msgid "You’re a good teacher. Polite, to one person."
+msgstr "Ви добрий учитель. Ввічливо, до однієї людини."
 
 msgid "You’re all doing great."
 msgstr "Ви молодці."

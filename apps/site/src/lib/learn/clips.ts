@@ -707,7 +707,7 @@ export const MUL_ON_SWITCH = [
   { am: "Ma olen kass.", have: "Mul on kass." },
   { am: "Sa oled õpetaja.", have: "Sul on õpetaja." },
   { am: "Ta on hea sõber.", have: "Tal on hea sõber." },
-  { am: "Me oleme kodus.", have: "Meil on kodu." },
+  { am: "Te olete hea õpetaja.", have: "Teil on hea õpetaja." },
 ] as const;
 
 /** “Am or have?”: pairs to tell apart by ear. */
@@ -715,7 +715,7 @@ export const MUL_ON_AM_HAVE = [
   { am: "Ma olen õpetaja.", have: "Mul on õpetaja." },
   { am: "Sa oled hea sõber.", have: "Sul on hea sõber." },
   { am: "Ta on laps.", have: "Tal on laps." },
-  { am: "Nad on kodus.", have: "Neil on kodu." },
+  { am: "Ta on hea õpetaja.", have: "Tal on hea õpetaja." },
 ] as const;
 
 /**
@@ -772,7 +772,7 @@ export const MUL_ON_DIALOGUE = {
   "d-liis-2": { text: "Mul on vaja abi. Kas sul on auto?", voice: "second" },
   "d-sina-2": "Ei ole. Aga Jaanil on auto.",
   "d-liis-3": { text: "Hästi! Kellel on Jaani number?", voice: "second" },
-  "d-sina-3": "Mul on.",
+  "d-sina-3": "Minul.",
   "d-liis-4": { text: "Aitäh! Kas sul on homme aega?", voice: "second" },
   "d-sina-4": "Ei, mul pole homme aega.",
 } as const satisfies Record<string, Clip>;

@@ -21,6 +21,11 @@ export const ALLOWED_NEAR_PAIRS: readonly {
     reason:
       "The quiz asks whether the ending stays after ei: Ei loe against Ei loed is the lesson.",
   },
+  {
+    lesson: "mul-on",
+    quiz: "maris-note",
+    reason: "-l against the bare form is the lesson: Emal against Ema, Jaanil against Jaan.",
+  },
 ];
 
 /**

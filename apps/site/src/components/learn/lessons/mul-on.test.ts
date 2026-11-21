@@ -16,7 +16,7 @@ describe("“to have” quizzes", () => {
     }
   });
 
-  it("offers the answer, its nearest-sounding form and one more, in no fixed place", () => {
+  it("offers the answer and two other forms at random, in no fixed place", () => {
     for (const owner of OWNERS) {
       const places = new Set<number>();
       const others = new Set<string>();
@@ -28,8 +28,8 @@ describe("“to have” quizzes", () => {
         for (const each of three) others.add(each);
       }
       expect(places.size).toBe(3);
-      // The third option is drawn from every other form, so no set names the answer.
-      expect(others.size).toBeGreaterThan(3);
+      // Both wrong options are drawn from all five other forms, so no set names the answer.
+      expect(others.size).toBe(6);
     }
   });
 
@@ -41,12 +41,16 @@ describe("“to have” quizzes", () => {
     expect(new Set(WHO_HAS.map((each) => each.options.indexOf(each.owner))).size).toBe(3);
   });
 
-  it("asks both am and have in every run of “Am or have?”", () => {
-    const items = AM_HAVE.map((each) => ({ ...each, pair: [each.kind, each.said] as const }));
+  it("asks one sentence of each pair in a run of “Am or have?”, am or have at random", () => {
+    const items = AM_HAVE.map((each) => ({ ...each, pair: [each.am, each.said] as const }));
+    const seen = new Set<string>();
     for (let run = 0; run < 200; run++) {
-      const kinds = eachPairFirst(items).slice(0, 6);
-      expect(new Set(kinds.map((item) => item.kind))).toEqual(new Set(["am", "have"]));
+      const asked = eachPairFirst(items, run === 0 ? items[0] : undefined).slice(0, 4);
+      expect(new Set(asked.map((item) => item.am)).size).toBe(4);
+      for (const item of asked.slice(1)) seen.add(`${item.am} ${item.kind}`);
     }
+    // After the first round, either sentence of a pair can come up.
+    expect(seen.size).toBe(8);
   });
 });
 

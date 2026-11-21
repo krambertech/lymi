@@ -411,12 +411,12 @@ msgstr "<0/>, «бути», працює так само. <1/> стає <2/>, і
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> або <1>-ke</1> у кінці"
 
-#. placeholder {0}: item.phrase.whose
+#. placeholder {0}: capital(item.phrase.whose)
 #. placeholder {1}: item.phrase.where
 msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
 msgstr "<0>{0}</0> — це <1>{1}</1> без останньої літери."
 
-#. placeholder {0}: item.phrase.word
+#. placeholder {0}: capital(item.phrase.word)
 msgid "<0>{0}</0> stays as it is."
 msgstr "<0>{0}</0> не змінюється."
 
@@ -465,7 +465,7 @@ msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgstr "<0>Kes</0> питає про людей, <1>mis</1> — про речі."
 
 msgid "<0>Kool</0> gains an i: <1>kooli</1>. It’s the vowel you heard in <2>koolis</2>."
-msgstr "<0>Kool</0> отримує на кінці i: <1>kooli</1>. Це та сама голосна, що в <2>koolis</2>."
+msgstr "У <0>kool</0> на кінці з’являється i: <1>kooli</1>. Це та сама голосна, що в <2>koolis</2>."
 
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> питає, звідки ти, а не де живеш."
@@ -496,6 +496,9 @@ msgstr "Після <0>mina</0> йде <1>olen</1>: <2>Mina olen Andres</2>."
 
 msgid "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
 msgstr "<0>Mina</0>, <1>sina</1> і <2>nemad</2> змінюються: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> і <6>teie</6> лишаються такими самими."
+
+msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same words as the short pronouns. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
+msgstr "<0>Minu</0> і <1>sinu</1> часто скорочуються до <2/> і <3/>. <4>Tema</4>, <5>meie</5> і <6>teie</6> скорочуються до <7>ta, me</7> і <8>te</8> — тих самих слів, що й короткі займенники. В уроці {questions} уже було <9>su</9>: <10/> — «Як тебе звати?»"
 
 msgid "<0>Nende</0> is their. For you and Jaan, say <1>meie</1>, our."
 msgstr "<0>Nende</0> — це «їхній». Про себе і Яана кажи <1>meie</1>, «наш»."
@@ -560,7 +563,7 @@ msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сьогодні, завт�
 msgid "<0>Tartu</0> and <1>haigla</1> stay as they are, and <2>-s</2> or <3>-l</3> goes straight on."
 msgstr "<0>Tartu</0> і <1>haigla</1> не змінюються, і <2>-s</2> чи <3>-l</3> додається просто в кінець."
 
-msgid "<0>Teie</0> is your. About yourself and Jaan, say <1>meie</1>, our."
+msgid "<0>Teie</0> is your. For you and Jaan, say <1>meie</1>, our."
 msgstr "<0>Teie</0> — це «ваш». Про себе і Яана кажи <1>meie</1>, «наш»."
 
 msgid "<0>Tere</0> is hello, and Mari is leaving."
@@ -1018,17 +1021,17 @@ msgstr "Ринок має <0>-l</0> за традицією: <1/>, на ринк
 msgid "A message from Mari"
 msgstr "Повідомлення від Марі"
 
-msgid "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country works the same way: <2/>"
-msgstr "Ім’я на приголосну отримує голосну, часто i: <0/>, <1/>. Так само з назвою країни: <2/>"
+msgid "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country goes first in the same way, and Eesti stays as it is: <2/>"
+msgstr "Ім’я на приголосну отримує голосну, часто i: <0/>, <1/>. Назва країни теж стоїть першою, а Eesti не змінюється: <2/>"
 
 msgid "A name ending in a consonant gains a vowel."
-msgstr "Ім’я на приголосну отримує голосну."
+msgstr "В імені на приголосну з’являється голосна."
 
 msgid "A name ending in a vowel usually stays as it is: <0>Mari raamat</0>. A name ending in a consonant gains a vowel: <1>Jaani kass</1>."
-msgstr "Ім’я на голосну зазвичай не змінюється: <0>Mari raamat</0>. Ім’я на приголосну отримує голосну: <1>Jaani kass</1>."
+msgstr "Ім’я на голосну зазвичай не змінюється: <0>Mari raamat</0>. В імені на приголосну з’являється голосна: <1>Jaani kass</1>."
 
-msgid "A name or a noun owns things the same way: it goes first, in the genitive. <0/> is Mari’s book. Estonian adds no ’s, and Mari stays as it is, as most names ending in a vowel do."
-msgstr "Так само працюють імена й іменники: власник стоїть першим, у родовому відмінку. <0/> — це книга Марі, дослівно «Марі книга». Mari не змінюється, як і більшість імен на голосну."
+msgid "A name or a noun owns things the same way: it goes first, in the genitive. <0/> is Mari’s book. Estonian adds no ’s, and <1>Mari</1> stays as it is, as most names ending in a vowel do."
+msgstr "З іменами й іменниками так само: власник стоїть першим, у родовому відмінку. <0/> — це книга Марі, дослівно «Марі книга». <1>Mari</1> не змінюється, як і більшість імен на голосну."
 
 msgid "A native German AI voice reads every card, so <0>ü</0>, <1>ö</1>, <2>ß</2> and the long words sound the way they should. Tap a word to hear it. If a card has its own recording, that plays instead."
 msgstr "Кожну картку читає AI-голос носія німецької, тож <0>ü</0>, <1>ö</1>, <2>ß</2> і довгі слова звучать як слід. Натисни на слово, щоб послухати. Якщо в картки є власний запис, звучить він."
@@ -1061,7 +1064,7 @@ msgid "A notes field on each card"
 msgstr "Поле нотаток на кожній картці"
 
 msgid "A noun’s genitive is its form before <0>-s</0> or <1>-l</1>: <2>kooli</2> in <3>koolis</3>, <4>poe</4> in <5>poes</5>. A dictionary lists it second: <6>pood, poe</6>."
-msgstr "Родовий відмінок іменника — це його форма перед <0>-s</0> чи <1>-l</1>: <2>kooli</2> у <3>koolis</3>, <4>poe</4> у <5>poes</5>. Словник подає її другою: <6>pood, poe</6>."
+msgstr "Родовий відмінок іменника — це його форма перед <0>-s</0> чи <1>-l</1>: <2>kooli</2> у <3>koolis</3>, <4>poe</4> у <5>poes</5>. У словнику вона йде другою: <6>pood, poe</6>."
 
 msgid "A page that isn’t where the link says it is"
 msgstr "Сторінка, якої немає там, куди веде посилання"
@@ -1634,13 +1637,13 @@ msgid "All of them. You hear who does it."
 msgstr "Усі. Ти чуєш, хто це робить."
 
 msgid "All of them. You heard whose in every sentence."
-msgstr "Усі. Щоразу правильно почуто, чиє це."
+msgstr "Усі. Ти чуєш «чий» у кожному реченні."
 
 msgid "All of them. You matched every answer to its question."
 msgstr "Усі. Кожна відповідь пасує до свого питання."
 
 msgid "All of them. You picked the genitive every time."
-msgstr "Усі. Щоразу вибрано родовий відмінок."
+msgstr "Усі. Родовий відмінок — у кожному раунді."
 
 msgid "All of them. You picked the place in every sentence."
 msgstr "Усі. У кожному реченні місце вибране правильно."
@@ -1955,8 +1958,8 @@ msgstr "Запитай, що чекає на повторення, перш ні
 msgid "Ask what’s waiting and your assistant shows it right in the chat. Then open Lymi to review."
 msgstr "Спитай, що чекає на повторення, і асистент покаже це просто в чаті. Потім відкрий Lymi, щоб повторити."
 
-msgid "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1>"
-msgstr "Питай «чий?» словом <0>kelle</0>: <1>Kelle raamat see on?</1>"
+msgid "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1>, whose book is this?"
+msgstr "Питай «чий?» словом <0>kelle</0>: <1>Kelle raamat see on?</1> — чия це книга?"
 
 msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
 msgstr "Питай словом <0>kus</0>, а відповідай реченням або одним словом: <1>Kus sa elad? Tartus.</1>"
@@ -2189,9 +2192,8 @@ msgstr "Нотатки з біології"
 msgid "Biology study group"
 msgstr "Навчальна група з біології"
 
-#. placeholder {0}: item.phrase.noun
-msgid "blank {0}"
-msgstr "пропуск {0}"
+msgid "blank"
+msgstr "пропуск"
 
 msgid "book"
 msgstr "книга"
@@ -3459,8 +3461,8 @@ msgstr "Кожна відповідь — це наказ або коротка 
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "У кожному раунді — місце. Обери закінчення, а потім послухай речення. Більшість міст, будівель і країн мають <0>-s</0>; робота, ринок і назви на <1>-maa</1> мають <2>-l</2>."
 
-msgid "Each round shows a thing and three forms of its owner. Pick the one that goes in front, then hear the phrase. If you know the form with <0>-s</0> or <1>-l</1>, take off its last letter."
-msgstr "У кожному раунді є річ і три форми її власника. Вибери ту, що стоїть попереду, і послухай словосполучення. Якщо знаєш форму з <0>-s</0> чи <1>-l</1>, відкинь останню літеру."
+msgid "Each round shows a thing and the forms of its owner. Pick the one that goes in front, then hear the phrase. If you know the form with <0>-s</0> or <1>-l</1>, take off its last letter."
+msgstr "У кожному раунді є річ і форми її власника. Вибери ту, що стоїть попереду, і послухай словосполучення. Якщо знаєш форму з <0>-s</0> чи <1>-l</1>, відкинь останню літеру."
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Кожна держава відтоді сама правила своєю землею: так почався сучасний <0>суверенітет</0>."
@@ -3766,7 +3768,7 @@ msgid "Every one, by ear."
 msgstr "Усі до одного, на слух."
 
 msgid "Every pronoun has a genitive, and it goes before the thing it owns. Switch to Whose and tap a word to hear it."
-msgstr "Родовий є в кожного займенника, і він стоїть перед тим, що належить. Перемкни на «Чий» і торкнись слова, щоб його почути."
+msgstr "Родовий є в кожного займенника, і він стоїть перед тим, що йому належить. Перемкни на «Чий» і торкнись слова, щоб його почути."
 
 msgid "Every question has four answers and one is right. Because you learn 310 questions in all, it’s often called the 310-question test."
 msgstr "У кожного питання чотири варіанти відповіді, і правильний лише один. Усього треба вивчити 310 питань, тому його часто називають «тест на 310 питань»."
@@ -4397,7 +4399,7 @@ msgid "Future, “I”"
 msgstr "Майбутній час, «я»"
 
 msgid "Gains a vowel"
-msgstr "Додає голосну"
+msgstr "З’являється голосна"
 
 msgid "Games"
 msgstr "Ігри"
@@ -4547,7 +4549,7 @@ msgid "Go over one lecture before the test"
 msgstr "Повтори одну лекцію перед контрольною"
 
 msgid "Go through the three kinds of word above once more, then try again."
-msgstr "Ще раз переглянь три види слів вище, а потім спробуй знову."
+msgstr "Ще раз переглянь три групи слів вище, а потім спробуй знову."
 
 msgid "Go."
 msgstr "Іди."
@@ -4803,7 +4805,7 @@ msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so list
 msgstr "Послухай речення й вибери, про кого воно. Де займенника немає, слухай кінець дієслова. З <0/> відрізнити <1/> від <2/> можна лише за займенником."
 
 msgid "Hear a sentence and pick whose it’s about. A short <0>mu</0> is <1>minu</1>, and <2>su</2> is <3>sinu</3>."
-msgstr "Послухай речення й вибери, кому належить річ. Коротке <0>mu</0> — це <1>minu</1>, а <2>su</2> — це <3>sinu</3>."
+msgstr "Послухай речення й вибери займенник, який у ньому звучить. Коротке <0>mu</0> — це <1>minu</1>, а <2>su</2> — це <3>sinu</3>."
 
 msgid "Hear a sentence, then pick how to say its no."
 msgstr "Послухай речення й обери, як сказати його із запереченням."
@@ -4947,7 +4949,7 @@ msgid "home"
 msgstr "дім"
 
 msgid "home; of home"
-msgstr "дім; дому"
+msgstr "дім; дому (чого?)"
 
 msgid "Hopefully"
 msgstr "Сподіваюся"
@@ -5606,13 +5608,13 @@ msgid "in Lasnamäe"
 msgstr "у Ласнамяе"
 
 msgid "In lesson {places} you learned <0/>, at school, and <1/>, in Tallinn. Take off the <2>-s</2> and you have the genitive: <3/>, <4/>. The vowel that appeared before the <5>-s</5> belongs to the genitive."
-msgstr "В уроці {places} були <0/>, у школі, і <1/>, у Таллінні. Відкинь <2>-s</2> — і маєш родовий відмінок: <3/>, <4/>. Голосна, що з’являлася перед <5>-s</5>, належить родовому."
+msgstr "В уроці {places} були <0/>, у школі, і <1/>, у Таллінні. Відкинь <2>-s</2> — і маєш родовий відмінок: <3/>, <4/>. Голосна перед <5>-s</5> — частина родового."
 
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "В уроці {pronouns} було дієслово <0/>, «бути»: <1/>, <2/>, <3/>, <4/>. Більшість дієслів мають ті самі закінчення. А там, де в olema стоїть <5/>, у них два власні: <6>-b</6> для «він чи вона» і <7>-vad</7> для «вони»."
 
-msgid "In lesson {questions} you said <0/> The word <1/>, my, is <2/> in the form that says whose. That form is the genitive."
-msgstr "В уроці {questions} було речення <0/> Слово <1/>, «мій», — це <2/> у формі, що відповідає на «чий?». Українська має для цього окреме слово, а естонська змінює сам займенник. Ця форма — родовий відмінок."
+msgid "In lesson {questions} you heard <0/> The word <1/>, my, is <2/> in the form that says whose. That form is the genitive."
+msgstr "В уроці {questions} було речення <0/> Слово <1/>, «мій», — це <2/> у формі, що відповідає на «чий?». Ця форма — родовий відмінок. Українське «мій» — окреме слово, а естонська ставить у родовий сам займенник, як українська робить із «його» та «її»."
 
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "У багатьох реальних наборах даних близько 30% чисел починаються з 1"
@@ -5640,9 +5642,6 @@ msgstr "У деяких дієсловах основа змінюється: <0
 
 msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don’t need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you’ll add a third form, <4>lugeda</4>."
 msgstr "У деяких дієсловах основа змінюється: <0/>, «читати», має основу <1>loe-</1>, тому «я читаю» буде <2/>. Правило для цього поки не потрібне. Запам’ятовуй кожне дієслово разом із формою для «я»: <3>lugema, loen</3>. Відкинь -n, і решта буде основою. В уроці {verbForms} додаси третю форму, <4>lugeda</4>."
-
-msgid "In speech, <0>minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. You met one in lesson {questions}: <4/>, what’s your name?"
-msgstr "У розмові <0>minu</0> і <1>sinu</1> часто скорочуються до <2/> і <3/>. Одне з них уже було в уроці {questions}: <4/>, як тебе звати?"
 
 msgid "In summer the *nights* stay light."
 msgstr "Улітку *ночі* світлі."
@@ -5860,20 +5859,11 @@ msgstr "*Сьогодні* спекотно."
 msgid "It’s in your Downloads folder."
 msgstr "Він у теці «Завантаження»."
 
-msgid "It’s Jaan’s cat."
-msgstr "Це кіт Яана."
-
 msgid "It’s late, so I’ll *take a taxi* home."
 msgstr "Уже пізно, тож додому я поїду на *таксі*."
 
 msgid "It’s made for tutors and small classes. There are no rosters, assignments or grades."
 msgstr "Lymi зроблено для репетиторів і невеликих груп. Тут немає журналів, завдань чи оцінок."
-
-msgid "It’s Mari’s book."
-msgstr "Це книга Марі."
-
-msgid "It’s my book."
-msgstr "Це моя книга."
 
 msgid "It’s OK"
 msgstr "Нічого страшного"
@@ -5925,6 +5915,9 @@ msgstr "Видавець прибрав її з публічних сторін�
 
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Рідкісний, але серйозний ризик — лактоацидоз."
+
+msgid "Jaan is Kati’s brother, so my: <0>minu</0>."
+msgstr "Яан — брат Каті, тож «мій»: <0>minu</0>."
 
 msgid "Jaan lives in Pärnu."
 msgstr "Яан живе в Пярну."
@@ -6009,8 +6002,14 @@ msgstr "Kas sa tuled? Чи ти прийдеш?"
 msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi — партитив від kass, кіт."
 
-msgid "Kati writes about her family. For each gap, pick the one who does something or the one who owns something."
-msgstr "Каті пише про свою родину. Для кожного пропуску вибери: той, хто щось робить, чи той, кому щось належить."
+msgid "Kati asks for your name, so your: <0>sinu</0>."
+msgstr "Каті питає твоє ім’я, тож «твоє»: <0>sinu</0>."
+
+msgid "Kati is the one who lives there, so I: <0>mina</0>."
+msgstr "Живе там сама Каті, тож «я»: <0>mina</0>."
+
+msgid "Kati writes about her family. For each gap, pick who or whose."
+msgstr "Каті пише про свою родину. У кожному пропуску вибери: «хто» чи «чий»."
 
 msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 msgstr "Каті пише про себе. У кожному пропуску — одне з того, що ти вже знаєш: форма <0>olema</0>, закінчення дієслова, дієслово після <1>ei</1>, місце з <2>-l</2> або питальне слово."
@@ -7063,6 +7062,10 @@ msgstr "Мене звати Каті."
 msgid "My name is Mari."
 msgstr "Мене звати Mari."
 
+msgctxt "genitive lesson"
+msgid "My name is Mari."
+msgstr "Мене звати Марі."
+
 msgid "My number is 5 2 0 9 4."
 msgstr "Мій номер — 5 2 0 9 4."
 
@@ -7891,7 +7894,7 @@ msgid "Pick a free deck from the library and send your class its link. Each lear
 msgstr "Обери безкоштовну колоду в каталозі й надішли класу посилання. Кожен учень додасть її одним дотиком."
 
 msgid "Pick a kind of word and tap any form to hear it."
-msgstr "Вибери вид слова й торкнись будь-якої форми, щоб її почути."
+msgstr "Вибери групу слів і торкнись будь-якої форми, щоб її почути."
 
 msgid "Pick a pair. Both words are drawn on one time scale, so the longer one takes more room."
 msgstr "Вибери пару. Обидва слова показано на одній шкалі часу, тож довше займає більше місця."
@@ -8809,6 +8812,9 @@ msgstr "Дай згоду в Lymi"
 msgid "Saying where: -s and -l"
 msgstr "Як сказати, де: закінчення -s і -l"
 
+msgid "Saying whose at home"
+msgstr "Чиє це: розмова вдома"
+
 msgid "Scheduling"
 msgstr "Планування повторень"
 
@@ -9253,7 +9259,7 @@ msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Деякі основи змінюються: <0>lugema, loen</0>. Запам’ятовуй кожне дієслово з формою для «я»."
 
 msgid "Some words change inside before an ending: <0/>, a shop, gives <1/>, in the shop. That changed form is the genitive too: <2/>, the shop door. A dictionary lists the genitive second: <3>pood, poe</3>. Lesson {stems} shows how these changes work."
-msgstr "Деякі слова перед закінченням змінюються всередині: <0/>, магазин, дає <1/>, у магазині. Ця змінена форма — теж родовий: <2/>, двері магазину. Словник подає родовий другим: <3>pood, poe</3>. Як працюють такі зміни, показує урок {stems}."
+msgstr "Деякі слова перед закінченням змінюються всередині: <0/>, магазин, дає <1/>, у магазині. Ця змінена форма — теж родовий: <2/>, двері магазину. У словнику родовий іде другим: <3>pood, poe</3>. Як працюють такі зміни, показує урок {stems}."
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Хтось інший, чоловік чи жінка: одне слово для обох."
@@ -10026,6 +10032,9 @@ msgstr "Браузер"
 msgid "The browser, and a Mac app"
 msgstr "Браузер і застосунок для Mac"
 
+msgid "The café is Jaan’s, so his name takes the genitive."
+msgstr "Кав’ярня належить Яанові, тож його ім’я стоїть у родовому."
+
 msgid "the café’s name"
 msgstr "назва кав’ярні"
 
@@ -10204,7 +10213,7 @@ msgid "The genitive of kass: kassi nimi, the cat’s name."
 msgstr "Родовий від kass: kassi nimi, ім’я кота."
 
 msgid "The genitive of kes, who."
-msgstr "Родовий від kes, «хто». Дослівно «кого»."
+msgstr "Родовий від kes, «хто», як «кого»."
 
 msgid "The genitive of mina. Short: mu."
 msgstr "Родовий від mina. Коротко: mu."
@@ -10317,6 +10326,12 @@ msgstr "Найуживаніші слова, і кожне повертаєть�
 msgid "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 msgstr "Найкорисніші слова зі списку Goethe-Institut для кожного рівня, кожен іменник з артиклем і множиною, з перекладом поруч."
 
+msgid "The name is Kati’s own, so my: <0>minu</0>."
+msgstr "Ім’я належить Каті, тож «моє»: <0>minu</0>."
+
+msgid "The name is the cat’s, so the cat takes the genitive."
+msgstr "Ім’я належить котові, тож «кіт» стоїть у родовому."
+
 msgid "The network of nerves that runs from the neck into the arm"
 msgstr "Сплетення нервів, що йде від шиї до руки"
 
@@ -10410,8 +10425,8 @@ msgstr "Гравець пропустив би хід, якби шахи це д
 msgid "The plural of sõber."
 msgstr "Множина від sõber."
 
-msgid "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. In speech, <1>minu</1> and <2>sinu</2> shorten to <3>mu</3> and <4>su</4>."
-msgstr "Займенники: <0>minu, sinu, tema, meie, teie, nende</0>. У розмові <1>minu</1> і <2>sinu</2> скорочуються до <3>mu</3> і <4>su</4>."
+msgid "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. Their short forms are <1>mu, su, ta, me</1> and <2>te</2>; <3>nende</3> has none."
+msgstr "Займенники: <0>minu, sinu, tema, meie, teie, nende</0>. Їхні короткі форми — <1>mu, su, ta, me</1> і <2>te</2>; у <3>nende</3> короткої немає."
 
 msgid "The push behind ragtime, funk and reggae."
 msgstr "Саме вона дає драйв регтайму, фанку й реґі."
@@ -10830,11 +10845,20 @@ msgstr "Колода більше не опублікована · Lymi"
 msgid "This deck is no longer published."
 msgstr "Ця колода більше не опублікована."
 
+msgid "This is Jaan’s cat."
+msgstr "Це кіт Яана."
+
+msgid "This is Mari’s book."
+msgstr "Це книга Марі."
+
 msgid "This is my *book*."
 msgstr "Це моя *книжка*."
 
 msgid "This is my *friend’s* car."
 msgstr "Це машина мого *друга*."
+
+msgid "This is my book."
+msgstr "Це моя книга."
 
 msgid "This is my Chinese *friend*."
 msgstr "Це мій *друг* із Китаю."
@@ -10843,7 +10867,7 @@ msgid "This is the current HSK 2.0 format. The syllabus published in 2025 grows 
 msgstr "Це чинний формат HSK 2.0. Програма, опублікована 2025 року, збільшує рівень 1 до 300 слів, а рівень 2 — до 500."
 
 msgid "This is their picture."
-msgstr "Це їхня картина."
+msgstr "Це їхнє фото."
 
 msgid "This is your coffee."
 msgstr "Це твоя кава."
@@ -10945,7 +10969,7 @@ msgid "To ask what day it is, say <0/> To answer, put the day after <1>täna on<
 msgstr "Щоб спитати, який сьогодні день, скажи <0/> Щоб відповісти, назви день після <1>täna on</1>: <2/>."
 
 msgid "To ask whose, say <0/>. It’s the genitive of <1/>, who, from lesson {questions}. Tap a line to hear it."
-msgstr "Щоб запитати «чий?», скажи <0/>. Це родовий від <1/>, «хто», з уроку {questions}, дослівно «кого». Торкнись рядка, щоб його почути."
+msgstr "Щоб запитати «чий?», скажи <0/>. Це <1/>, «хто», з уроку {questions}, у родовому — як «кого» від «хто». Торкнись рядка, щоб його почути."
 
 msgid "to be"
 msgstr "бути"
@@ -12194,9 +12218,6 @@ msgstr "Чия це книга?"
 msgid "Whose cat is this?"
 msgstr "Чий це кіт?"
 
-msgid "Whose is it?"
-msgstr "Чиє це?"
-
 msgid "Whose notes"
 msgstr "Чиї нотатки"
 
@@ -12867,8 +12888,14 @@ msgstr "Повідомлення репетитора"
 msgid "Your website"
 msgstr "Твій сайт"
 
+msgid "your, as in sa"
+msgstr "твій"
+
+msgid "your, as in te"
+msgstr "ваш"
+
 msgid "your, to more than one; polite your"
-msgstr "ваш; ввічливе «Ваш»"
+msgstr "ваш, до кількох людей або на «ви»"
 
 msgid "your, to one person"
 msgstr "твій"

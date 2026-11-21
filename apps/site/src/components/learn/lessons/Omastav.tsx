@@ -6,6 +6,7 @@ import { CornerDownRight } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
+  capital,
   clipId,
   clipUrl,
   type GenitiveKind,
@@ -40,32 +41,39 @@ const PERSON: Record<
   Who,
   { who: MessageDescriptor; whose: MessageDescriptor; book: MessageDescriptor }
 > = {
-  mina: { who: msg`I`, whose: msg`my`, book: msg`my book` },
+  mina: { who: msg`I`, whose: msg`my`, short: msg`my`, book: msg`my book` },
   sina: {
     who: msg`you, to one person`,
     whose: msg`your, to one person`,
+    short: msg`your, as in sa`,
     book: msg`your book, to one person`,
   },
-  tema: { who: msg`he or she`, whose: msg`his or her`, book: msg`his or her book` },
-  meie: { who: msg`we`, whose: msg`our`, book: msg`our book` },
+  tema: {
+    who: msg`he or she`,
+    whose: msg`his or her`,
+    short: msg`his or her`,
+    book: msg`his or her book`,
+  },
+  meie: { who: msg`we`, whose: msg`our`, short: msg`our`, book: msg`our book` },
   teie: {
     who: msg`you, to more than one; polite you`,
     whose: msg`your, to more than one; polite your`,
+    short: msg`your, as in te`,
     book: msg`your book, to more than one or polite`,
   },
-  nemad: { who: msg`they`, whose: msg`their`, book: msg`their book` },
+  nemad: { who: msg`they`, whose: msg`their`, short: msg`their`, book: msg`their book` },
 };
 
 /** What each sentence means, by what it says. */
 const MEANS: Record<string, MessageDescriptor> = {
-  "Minu nimi on Mari.": msg`My name is Mari.`,
+  "Minu nimi on Mari.": msg({ message: "My name is Mari.", context: "genitive lesson" }),
   "Mina elan Tartus.": msg`I live in Tartu.`,
   "Mis su nimi on?": msg`What’s your name?`,
   "Kelle raamat see on?": msg`Whose book is this?`,
-  "See on minu raamat.": msg`It’s my book.`,
-  "See on Mari raamat.": msg`It’s Mari’s book.`,
+  "See on minu raamat.": msg`This is my book.`,
+  "See on Mari raamat.": msg`This is Mari’s book.`,
   "Kelle kass see on?": msg`Whose cat is this?`,
-  "See on Jaani kass.": msg`It’s Jaan’s cat.`,
+  "See on Jaani kass.": msg`This is Jaan’s cat.`,
   "Eesti pealinn on Tallinn.": msg`The capital of Estonia is Tallinn.`,
   "Mu nimi on Kati.": msg`My name is Kati.`,
   "See on sinu kohv.": msg`This is your coffee.`,
@@ -495,7 +503,7 @@ function WhoseRound({ item, state, heard, answer, autoplay }: RoundProps<WhoseIt
             key={each.who}
             label={each.whose}
             lang="et"
-            sub={i18n._(PERSON[each.who].whose)}
+            sub={i18n._(PERSON[each.who].short)}
             mark={
               !done
                 ? undefined
@@ -546,7 +554,7 @@ export function firstOrder(phrase: Phrase, i: number): string[] {
   return [...forms.slice(turn), ...forms.slice(0, turn)];
 }
 
-/** See a thing and its owner's three forms; pick the one that goes first, then hear the phrase. */
+/** See a thing and its owner's forms; pick the one that goes first, then hear the phrase. */
 function FormRound({ item, state, heard, answer }: RoundProps<FormItem>) {
   const { t, i18n } = useLingui();
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
@@ -556,6 +564,15 @@ function FormRound({ item, state, heard, answer }: RoundProps<FormItem>) {
   const done = state.status === "answered";
   const picked = done ? state.picked : null;
   const said = phraseOf(item.phrase);
+  // A wrong pick shows in the gap for a moment, then the answer takes its place.
+  const [settled, setSettled] = useState(false);
+  useEffect(() => {
+    setSettled(false);
+    if (!done || picked === item.answer) return;
+    const timer = setTimeout(() => setSettled(true), 900);
+    return () => clearTimeout(timer);
+  }, [done, picked, item.answer]);
+  const filled = !done ? null : settled ? item.answer : picked;
   return (
     <>
       {done && <Listen src={item.src} />}
@@ -567,14 +584,16 @@ function FormRound({ item, state, heard, answer }: RoundProps<FormItem>) {
         className="flex flex-wrap items-baseline gap-x-3 text-[clamp(2.25rem,8vw,3.25rem)] leading-tight font-semibold tracking-tight"
       >
         <span
-          data-mark={picked === null ? undefined : picked === item.answer ? "right" : "wrong"}
+          data-mark={filled === null ? undefined : filled === item.answer ? "right" : "wrong"}
           className="learn-gap inline-block min-w-[3ch] text-center"
         >
-          {done ? item.answer : " "}
+          {filled ?? " "}
         </span>
         <span>{item.phrase.noun}</span>
       </p>
-      <p className="sr-only">{t`blank ${item.phrase.noun}`}</p>
+      <p className="sr-only">
+        <Trans>blank</Trans> <span lang="et">{item.phrase.noun}</span>
+      </p>
       <fieldset className="m-0 flex min-w-0 flex-wrap gap-2.5 border-0 p-0">
         <legend className="sr-only">{t`Fill the gap`}</legend>
         {item.options.map((option) => (
@@ -608,11 +627,11 @@ function FormRound({ item, state, heard, answer }: RoundProps<FormItem>) {
           {i18n._(PHRASE_MEANS[said] as MessageDescriptor)}.{" "}
           {item.phrase.kind === "same" ? (
             <Trans>
-              <span lang="et">{item.phrase.word}</span> stays as it is.
+              <span lang="et">{capital(item.phrase.word)}</span> stays as it is.
             </Trans>
           ) : (
             <Trans>
-              <span lang="et">{item.phrase.whose}</span> is{" "}
+              <span lang="et">{capital(item.phrase.whose)}</span> is{" "}
               <span lang="et">{item.phrase.where}</span> without its last letter.
             </Trans>
           )}
@@ -633,15 +652,43 @@ export const KATI_GAPS: readonly PassageGap[] = [
     after: "nimi on Kati.",
     answer: "Minu",
     options: ["Mina", "Minu"],
+    why: (
+      <Trans>
+        The name is Kati’s own, so my: <b lang="et">minu</b>.
+      </Trans>
+    ),
   },
-  { id: "mina-elan", before: "", after: "elan Tartus.", answer: "Mina", options: ["Mina", "Minu"] },
-  { id: "minu-vend", before: "Jaan on", after: "vend.", answer: "minu", options: ["minu", "mina"] },
+  {
+    id: "mina-elan",
+    before: "",
+    after: "elan Tartus.",
+    answer: "Mina",
+    options: ["Mina", "Minu"],
+    why: (
+      <Trans>
+        Kati is the one who lives there, so I: <b lang="et">mina</b>.
+      </Trans>
+    ),
+  },
+  {
+    id: "minu-vend",
+    before: "Jaan on",
+    after: "vend.",
+    answer: "minu",
+    options: ["minu", "mina"],
+    why: (
+      <Trans>
+        Jaan is Kati’s brother, so my: <b lang="et">minu</b>.
+      </Trans>
+    ),
+  },
   {
     id: "jaani",
     before: "",
     after: "kohvik on Tallinnas.",
     answer: "Jaani",
     options: ["Jaan", "Jaani"],
+    why: <Trans>The café is Jaan’s, so his name takes the genitive.</Trans>,
   },
   {
     id: "kassi",
@@ -649,8 +696,20 @@ export const KATI_GAPS: readonly PassageGap[] = [
     after: "nimi on Miisu.",
     answer: "kassi",
     options: ["kass", "kassi"],
+    why: <Trans>The name is the cat’s, so the cat takes the genitive.</Trans>,
   },
-  { id: "sinu", before: "Mis", after: "nimi on?", answer: "sinu", options: ["sina", "sinu"] },
+  {
+    id: "sinu",
+    before: "Mis",
+    after: "nimi on?",
+    answer: "sinu",
+    options: ["sina", "sinu"],
+    why: (
+      <Trans>
+        Kati asks for your name, so your: <b lang="et">sinu</b>.
+      </Trans>
+    ),
+  },
 ];
 
 const dialogueLine = (id: keyof typeof OMASTAV_DIALOGUE) => {
@@ -762,8 +821,7 @@ export function OmastavLesson() {
           line: "Jah, see on teie kass.",
           why: (
             <Trans>
-              <b lang="et">Teie</b> is your. About yourself and Jaan, say <b lang="et">meie</b>,
-              our.
+              <b lang="et">Teie</b> is your. For you and Jaan, say <b lang="et">meie</b>, our.
             </Trans>
           ),
         },
@@ -836,12 +894,12 @@ export function OmastavLesson() {
           <b lang="et">Mari raamat</b>, Mari’s book.
         </Trans>,
         <Trans key="2">
-          The pronouns: <b lang="et">minu, sinu, tema, meie, teie, nende</b>. In speech,{" "}
-          <b lang="et">minu</b> and <b lang="et">sinu</b> shorten to <b lang="et">mu</b> and{" "}
-          <b lang="et">su</b>.
+          The pronouns: <b lang="et">minu, sinu, tema, meie, teie, nende</b>. Their short forms are{" "}
+          <b lang="et">mu, su, ta, me</b> and <b lang="et">te</b>; <b lang="et">nende</b> has none.
         </Trans>,
         <Trans key="3">
-          Ask whose with <b lang="et">kelle</b>: <b lang="et">Kelle raamat see on?</b>
+          Ask whose with <b lang="et">kelle</b>: <b lang="et">Kelle raamat see on?</b>, whose book
+          is this?
         </Trans>,
         <Trans key="4">
           A noun’s genitive is its form before{" "}
@@ -869,7 +927,7 @@ export function OmastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    In lesson {questions} you said <Word w="Minu nimi on Mari." /> The word{" "}
+                    In lesson {questions} you heard <Word w="Minu nimi on Mari." /> The word{" "}
                     <Word w="minu" />, my, is <Word w="mina" /> in the form that says whose. That
                     form is the genitive.
                   </Trans>
@@ -884,9 +942,12 @@ export function OmastavLesson() {
               <WhoseSwitch />
               <Aside>
                 <Trans>
-                  In speech, <span lang="et">minu</span> and <span lang="et">sinu</span> often
-                  shorten to <Word w="mu" /> and <Word w="su" />. You met one in lesson {questions}:{" "}
-                  <Word w="Mis su nimi on?" />, what’s your name?
+                  <span lang="et">Minu</span> and <span lang="et">sinu</span> often shorten to{" "}
+                  <Word w="mu" /> and <Word w="su" />. <span lang="et">Tema</span>,{" "}
+                  <span lang="et">meie</span> and <span lang="et">teie</span> shorten to{" "}
+                  <span lang="et">ta, me</span> and <span lang="et">te</span>, the same words as the
+                  short pronouns. Lesson {questions} used <span lang="et">su</span>:{" "}
+                  <Word w="Mis su nimi on?" /> means “What’s your name?”
                 </Trans>
               </Aside>
             </>
@@ -937,15 +998,15 @@ export function OmastavLesson() {
                 <p>
                   <Trans>
                     A name or a noun owns things the same way: it goes first, in the genitive.{" "}
-                    <Word w="Mari raamat" /> is Mari’s book. Estonian adds no ’s, and Mari stays as
-                    it is, as most names ending in a vowel do.
+                    <Word w="Mari raamat" /> is Mari’s book. Estonian adds no ’s, and{" "}
+                    <span lang="et">Mari</span> stays as it is, as most names ending in a vowel do.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
                     A name ending in a consonant gains a vowel, often an i: <Word w="Jaan" />,{" "}
-                    <Word w="Jaani" />. A country works the same way:{" "}
-                    <Word w="Eesti pealinn on Tallinn." />
+                    <Word w="Jaani" />. A country goes first in the same way, and Eesti stays as it
+                    is: <Word w="Eesti pealinn on Tallinn." />
                   </Trans>
                 </p>
                 <p>
@@ -1024,7 +1085,7 @@ export function OmastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round shows a thing and three forms of its owner. Pick the one that goes in
+                    Each round shows a thing and the forms of its owner. Pick the one that goes in
                     front, then hear the phrase. If you know the form with{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -s
@@ -1075,10 +1136,7 @@ export function OmastavLesson() {
                   </Trans>
                 </p>
                 <p>
-                  <Trans>
-                    Kati writes about her family. For each gap, pick the one who does something or
-                    the one who owns something.
-                  </Trans>
+                  <Trans>Kati writes about her family. For each gap, pick who or whose.</Trans>
                 </p>
               </Prose>
               <GapPassage
@@ -1093,7 +1151,7 @@ export function OmastavLesson() {
         },
         {
           id: "at-home",
-          title: t`Whose is it?`,
+          title: t`Saying whose at home`,
           quiz: true,
           children: (
             <>

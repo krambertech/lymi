@@ -411,12 +411,12 @@ msgstr "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> or <1>-ke</1> on the end"
 
-#. placeholder {0}: item.phrase.whose
+#. placeholder {0}: capital(item.phrase.whose)
 #. placeholder {1}: item.phrase.where
 msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
 msgstr "<0>{0}</0> is <1>{1}</1> without its last letter."
 
-#. placeholder {0}: item.phrase.word
+#. placeholder {0}: capital(item.phrase.word)
 msgid "<0>{0}</0> stays as it is."
 msgstr "<0>{0}</0> stays as it is."
 
@@ -497,6 +497,9 @@ msgstr "<0>Mina</0> takes <1>olen</1>: <2>Mina olen Andres</2>."
 msgid "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
 msgstr "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
 
+msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same words as the short pronouns. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
+msgstr "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same words as the short pronouns. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
+
 msgid "<0>Nende</0> is their. For you and Jaan, say <1>meie</1>, our."
 msgstr "<0>Nende</0> is their. For you and Jaan, say <1>meie</1>, our."
 
@@ -560,8 +563,8 @@ msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>
 msgid "<0>Tartu</0> and <1>haigla</1> stay as they are, and <2>-s</2> or <3>-l</3> goes straight on."
 msgstr "<0>Tartu</0> and <1>haigla</1> stay as they are, and <2>-s</2> or <3>-l</3> goes straight on."
 
-msgid "<0>Teie</0> is your. About yourself and Jaan, say <1>meie</1>, our."
-msgstr "<0>Teie</0> is your. About yourself and Jaan, say <1>meie</1>, our."
+msgid "<0>Teie</0> is your. For you and Jaan, say <1>meie</1>, our."
+msgstr "<0>Teie</0> is your. For you and Jaan, say <1>meie</1>, our."
 
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> is hello, and Mari is leaving."
@@ -1018,8 +1021,8 @@ msgstr "A market takes <0>-l</0> by habit: <1/>, at the market. So do names endi
 msgid "A message from Mari"
 msgstr "A message from Mari"
 
-msgid "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country works the same way: <2/>"
-msgstr "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country works the same way: <2/>"
+msgid "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country goes first in the same way, and Eesti stays as it is: <2/>"
+msgstr "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country goes first in the same way, and Eesti stays as it is: <2/>"
 
 msgid "A name ending in a consonant gains a vowel."
 msgstr "A name ending in a consonant gains a vowel."
@@ -1027,8 +1030,8 @@ msgstr "A name ending in a consonant gains a vowel."
 msgid "A name ending in a vowel usually stays as it is: <0>Mari raamat</0>. A name ending in a consonant gains a vowel: <1>Jaani kass</1>."
 msgstr "A name ending in a vowel usually stays as it is: <0>Mari raamat</0>. A name ending in a consonant gains a vowel: <1>Jaani kass</1>."
 
-msgid "A name or a noun owns things the same way: it goes first, in the genitive. <0/> is Mari’s book. Estonian adds no ’s, and Mari stays as it is, as most names ending in a vowel do."
-msgstr "A name or a noun owns things the same way: it goes first, in the genitive. <0/> is Mari’s book. Estonian adds no ’s, and Mari stays as it is, as most names ending in a vowel do."
+msgid "A name or a noun owns things the same way: it goes first, in the genitive. <0/> is Mari’s book. Estonian adds no ’s, and <1>Mari</1> stays as it is, as most names ending in a vowel do."
+msgstr "A name or a noun owns things the same way: it goes first, in the genitive. <0/> is Mari’s book. Estonian adds no ’s, and <1>Mari</1> stays as it is, as most names ending in a vowel do."
 
 msgid "A native German AI voice reads every card, so <0>ü</0>, <1>ö</1>, <2>ß</2> and the long words sound the way they should. Tap a word to hear it. If a card has its own recording, that plays instead."
 msgstr "A native German AI voice reads every card, so <0>ü</0>, <1>ö</1>, <2>ß</2> and the long words sound the way they should. Tap a word to hear it. If a card has its own recording, that plays instead."
@@ -1955,8 +1958,8 @@ msgstr "Ask what’s due before you open your editor, and get through it in a fe
 msgid "Ask what’s waiting and your assistant shows it right in the chat. Then open Lymi to review."
 msgstr "Ask what’s waiting and your assistant shows it right in the chat. Then open Lymi to review."
 
-msgid "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1>"
-msgstr "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1>"
+msgid "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1>, whose book is this?"
+msgstr "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1>, whose book is this?"
 
 msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
 msgstr "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
@@ -2189,9 +2192,8 @@ msgstr "Biology notes"
 msgid "Biology study group"
 msgstr "Biology study group"
 
-#. placeholder {0}: item.phrase.noun
-msgid "blank {0}"
-msgstr "blank {0}"
+msgid "blank"
+msgstr "blank"
 
 msgid "book"
 msgstr "book"
@@ -3459,8 +3461,8 @@ msgstr "Each reply is a command or a short answer. Pick the one that fits what M
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 
-msgid "Each round shows a thing and three forms of its owner. Pick the one that goes in front, then hear the phrase. If you know the form with <0>-s</0> or <1>-l</1>, take off its last letter."
-msgstr "Each round shows a thing and three forms of its owner. Pick the one that goes in front, then hear the phrase. If you know the form with <0>-s</0> or <1>-l</1>, take off its last letter."
+msgid "Each round shows a thing and the forms of its owner. Pick the one that goes in front, then hear the phrase. If you know the form with <0>-s</0> or <1>-l</1>, take off its last letter."
+msgstr "Each round shows a thing and the forms of its owner. Pick the one that goes in front, then hear the phrase. If you know the form with <0>-s</0> or <1>-l</1>, take off its last letter."
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
@@ -5611,8 +5613,8 @@ msgstr "In lesson {places} you learned <0/>, at school, and <1/>, in Tallinn. Ta
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 
-msgid "In lesson {questions} you said <0/> The word <1/>, my, is <2/> in the form that says whose. That form is the genitive."
-msgstr "In lesson {questions} you said <0/> The word <1/>, my, is <2/> in the form that says whose. That form is the genitive."
+msgid "In lesson {questions} you heard <0/> The word <1/>, my, is <2/> in the form that says whose. That form is the genitive."
+msgstr "In lesson {questions} you heard <0/> The word <1/>, my, is <2/> in the form that says whose. That form is the genitive."
 
 msgid "In many real data sets, about 30% of numbers start with a 1"
 msgstr "In many real data sets, about 30% of numbers start with a 1"
@@ -5640,9 +5642,6 @@ msgstr "In some verbs the stem changes: <0/>, but <1/>. Start from the ma form, 
 
 msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don’t need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you’ll add a third form, <4>lugeda</4>."
 msgstr "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don’t need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you’ll add a third form, <4>lugeda</4>."
-
-msgid "In speech, <0>minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. You met one in lesson {questions}: <4/>, what’s your name?"
-msgstr "In speech, <0>minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. You met one in lesson {questions}: <4/>, what’s your name?"
 
 msgid "In summer the *nights* stay light."
 msgstr "In summer the *nights* stay light."
@@ -5860,20 +5859,11 @@ msgstr "It’s hot *today*."
 msgid "It’s in your Downloads folder."
 msgstr "It’s in your Downloads folder."
 
-msgid "It’s Jaan’s cat."
-msgstr "It’s Jaan’s cat."
-
 msgid "It’s late, so I’ll *take a taxi* home."
 msgstr "It’s late, so I’ll *take a taxi* home."
 
 msgid "It’s made for tutors and small classes. There are no rosters, assignments or grades."
 msgstr "It’s made for tutors and small classes. There are no rosters, assignments or grades."
-
-msgid "It’s Mari’s book."
-msgstr "It’s Mari’s book."
-
-msgid "It’s my book."
-msgstr "It’s my book."
 
 msgid "It’s OK"
 msgstr "It’s OK"
@@ -5925,6 +5915,9 @@ msgstr "Its publisher took it off Lymi’s public pages. Anyone who already adde
 
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Its rare, serious risk is lactic acidosis."
+
+msgid "Jaan is Kati’s brother, so my: <0>minu</0>."
+msgstr "Jaan is Kati’s brother, so my: <0>minu</0>."
 
 msgid "Jaan lives in Pärnu."
 msgstr "Jaan lives in Pärnu."
@@ -6009,8 +6002,14 @@ msgstr "Kas sa tuled? Are you coming?"
 msgid "Kassi is the partitive of kass, cat."
 msgstr "Kassi is the partitive of kass, cat."
 
-msgid "Kati writes about her family. For each gap, pick the one who does something or the one who owns something."
-msgstr "Kati writes about her family. For each gap, pick the one who does something or the one who owns something."
+msgid "Kati asks for your name, so your: <0>sinu</0>."
+msgstr "Kati asks for your name, so your: <0>sinu</0>."
+
+msgid "Kati is the one who lives there, so I: <0>mina</0>."
+msgstr "Kati is the one who lives there, so I: <0>mina</0>."
+
+msgid "Kati writes about her family. For each gap, pick who or whose."
+msgstr "Kati writes about her family. For each gap, pick who or whose."
 
 msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 msgstr "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
@@ -7060,6 +7059,10 @@ msgstr "My flat is number 16."
 msgid "My name is Kati."
 msgstr "My name is Kati."
 
+msgid "My name is Mari."
+msgstr "My name is Mari."
+
+msgctxt "genitive lesson"
 msgid "My name is Mari."
 msgstr "My name is Mari."
 
@@ -8809,6 +8812,9 @@ msgstr "Say yes in Lymi"
 msgid "Saying where: -s and -l"
 msgstr "Saying where: -s and -l"
 
+msgid "Saying whose at home"
+msgstr "Saying whose at home"
+
 msgid "Scheduling"
 msgstr "Scheduling"
 
@@ -10026,6 +10032,9 @@ msgstr "The browser"
 msgid "The browser, and a Mac app"
 msgstr "The browser, and a Mac app"
 
+msgid "The café is Jaan’s, so his name takes the genitive."
+msgstr "The café is Jaan’s, so his name takes the genitive."
+
 msgid "the café’s name"
 msgstr "the café’s name"
 
@@ -10317,6 +10326,12 @@ msgstr "The most common words, each brought back on the day you'd forget it."
 msgid "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 msgstr "The most useful words of each level’s Goethe-Institut word list, every noun with its article and plural, and a translation beside each."
 
+msgid "The name is Kati’s own, so my: <0>minu</0>."
+msgstr "The name is Kati’s own, so my: <0>minu</0>."
+
+msgid "The name is the cat’s, so the cat takes the genitive."
+msgstr "The name is the cat’s, so the cat takes the genitive."
+
 msgid "The network of nerves that runs from the neck into the arm"
 msgstr "The network of nerves that runs from the neck into the arm"
 
@@ -10410,8 +10425,8 @@ msgstr "The player would pass, if chess allowed it."
 msgid "The plural of sõber."
 msgstr "The plural of sõber."
 
-msgid "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. In speech, <1>minu</1> and <2>sinu</2> shorten to <3>mu</3> and <4>su</4>."
-msgstr "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. In speech, <1>minu</1> and <2>sinu</2> shorten to <3>mu</3> and <4>su</4>."
+msgid "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. Their short forms are <1>mu, su, ta, me</1> and <2>te</2>; <3>nende</3> has none."
+msgstr "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. Their short forms are <1>mu, su, ta, me</1> and <2>te</2>; <3>nende</3> has none."
 
 msgid "The push behind ragtime, funk and reggae."
 msgstr "The push behind ragtime, funk and reggae."
@@ -10830,11 +10845,20 @@ msgstr "This deck is no longer published · Lymi"
 msgid "This deck is no longer published."
 msgstr "This deck is no longer published."
 
+msgid "This is Jaan’s cat."
+msgstr "This is Jaan’s cat."
+
+msgid "This is Mari’s book."
+msgstr "This is Mari’s book."
+
 msgid "This is my *book*."
 msgstr "This is my *book*."
 
 msgid "This is my *friend’s* car."
 msgstr "This is my *friend’s* car."
+
+msgid "This is my book."
+msgstr "This is my book."
 
 msgid "This is my Chinese *friend*."
 msgstr "This is my Chinese *friend*."
@@ -12194,9 +12218,6 @@ msgstr "Whose book is this?"
 msgid "Whose cat is this?"
 msgstr "Whose cat is this?"
 
-msgid "Whose is it?"
-msgstr "Whose is it?"
-
 msgid "Whose notes"
 msgstr "Whose notes"
 
@@ -12866,6 +12887,12 @@ msgstr "Your tutor’s message"
 
 msgid "Your website"
 msgstr "Your website"
+
+msgid "your, as in sa"
+msgstr "your, as in sa"
+
+msgid "your, as in te"
+msgstr "your, as in te"
 
 msgid "your, to more than one; polite your"
 msgstr "your, to more than one; polite your"

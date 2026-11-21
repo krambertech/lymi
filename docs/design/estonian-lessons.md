@@ -69,8 +69,39 @@ A lesson file in `components/learn/lessons` holds its glossary, its sections and
 - One idea per section. When a rule has two halves, such as -teist and -kümmend, give each half a section and its own explorer, then a section that puts them together.
 - Don't give a section to something an explorer already shows. When one explorer holds every item, such as the seven days on one strip, its detail line explains each item: pressing a day says where its name comes from.
 - Every lesson ends the same way: What to remember in three to five rules, then `LessonWords` on the stage's tray: a card with the first words as chips that opens to the full list, and under it, on the same tray, the way on to Lymi's free Estonian decks. Then the next lesson.
-- English is the source; Ukrainian and Russian are transcreated, and a pronunciation tip compares a sound with the reader's own language where the match is accurate.
+- English is the source; Ukrainian and Russian are transcreated, and a comparison uses the reader's own language where the match is accurate, as [Analogies by language](#analogies-by-language) lists.
 - A teacher checks the Estonian before a lesson launches.
+
+## Analogies by language
+
+English is the source, but an English analogy is often the wrong one for a Ukrainian or Russian reader, whose own grammar is closer to Estonian on many points. The uk and ru lines are transcreated, so a line that teaches by comparison says the comparison that works in the reader's language, even when it differs from the English. A comparison must hold: name the point where it stops matching. Russian and Ukrainian get their own comparisons; never translate one from the other.
+
+| Topic | English | Ukrainian | Russian |
+| --- | --- | --- | --- |
+| Cases | Endings do the work of in, on, from, with | Like the seven відмінки, but with endings for places instead of prepositions | Like the six падежей, with endings for places instead of prepositions |
+| Mul on | “At me is”, no verb have | Same shape: у мене є | Same shape: у меня есть |
+| Partitive after numbers | “Some”, “of”: two of the cats | After два, три, чотири the noun changes too (два коти), and after п’ять it is the genitive plural (п’ять котів); Estonian uses one form, singular, for every number | Два кота, пять котов: the noun changes after a number; Estonian uses one form, singular, for every number from two |
+| Partitive for amounts | Some water | Води (налий води) | Воды (налей воды, купи хлеба) |
+| Total and partial object | Finished or not: I read the book (to the end) / I was reading the book | Доконаний і недоконаний вид: прочитав книжку / читав книжку | Совершенный и несовершенный вид: прочитал книгу / читал книгу |
+| Consonant gradation | Like the vowel in mouse, mice, but in the middle consonant | Like чергування: нога, нозі; рука, руці; кінь, коня | Like беглые гласные: день, дня; сон, сна; отец, отца |
+| Mina, mind, mulle | I, me, to me | Я, мене, мені | Я, меня, мне |
+| Mulle meeldib | “To me it pleases” | Мені подобається, same shape | Мне нравится, same shape |
+| Past tense with ei | One form for every person: I didn't go, you didn't go | Я не пішов, ти не пішов: the Ukrainian past does not change for person either | Я не пошёл, ты не пошёл: the Russian past does not change for person either |
+| Hakkama future | Will, going to | Буду вчитися: hakkan õppima | Буду учиться: hakkan õppima |
+| Present for the future | I'm going tomorrow | Завтра йду в кіно | Завтра иду в кино |
+| Translative -ks | Become a doctor | Стати лікарем (орудний) | Стать врачом (творительный) |
+| Essive -na | As a doctor | Працювати лікарем, як лікар | Работать врачом, в качестве врача |
+| Comitative -ga | With | З другом (орудний) | С другом (творительный) |
+| Conditional -ks- | Would | Би: пішов би | Бы: пошёл бы |
+| Let's, let them | Let's go, let him come | Ходімо, нехай прийде | Пойдём, пусть придёт |
+| Impersonal -takse, -ti | They say, it is said | Кажуть; збудовано, зроблено (-но, -то) | Говорят; построили (неопределённо-личные) |
+| Quotative -vat | Reportedly | Нібито, мовляв | Якобы, мол |
+| -gi, -ki | Some-, any- | -сь, будь-: хтось, будь-хто; ніхто не, with a second negative | -то, -нибудь: кто-то, кто-нибудь; никто не, with a second negative |
+| Particle verbs | Phrasal verbs: go away, get up | Префікси: ära minema, піти геть; välja minema, вийти | Приставки: ära minema, уйти; välja minema, выйти |
+| Comparatives | -er, most | -ший, найбільш | -ее, самый |
+| Adjective agreement | English adjectives never change | Like Ukrainian, the adjective takes the case, except before -ni, -na, -ta, -ga | Like Russian, the adjective takes the case, except before -ni, -na, -ta, -ga |
+| Participles | Read book, reading man | Прочитана книжка; for loev, a reading one, Ukrainian prefers a clause: той, хто читає | Прочитанная книга, читающий человек |
+| Verb second | Like questions in English, or German | Unlike Ukrainian's free order | Unlike Russian's free order |
 
 ## Practice parts
 

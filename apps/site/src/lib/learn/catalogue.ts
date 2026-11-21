@@ -214,7 +214,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 10,
         blurb: msg`A free lesson on Estonian’s three “on” cases, the adessive, allative and ablative: kus, kuhu and kust, -l for on and at (laual, tööl), -le for onto and to (lauale, tööle) and -lt for off and from (laualt, töölt), which places take -le and which -sse, and -le and -lt on a person (emale, emalt). Every sentence is read aloud.`,
       },
-      { name: msg`Place words: on, under, behind`, et: "Kass ja kast" },
+      {
+        slug: "peal-all-taga",
+        name: msg`Place words: on, under, behind`,
+        title: msg`Estonian postpositions: on, under, behind`,
+        et: "Kass ja kast",
+        minutes: 12,
+        blurb: msg`A free lesson on Estonian postpositions of place: peal, all, taga, ees, kõrval and sees (on, under, behind, in front of, next to, inside), the genitive before them (laua peal, poe ees), their kuhu and kust forms (peale, pealt; taha, tagant; sisse, seest) and juures for a person’s place. Every sentence is read aloud.`,
+      },
     ],
   },
   {

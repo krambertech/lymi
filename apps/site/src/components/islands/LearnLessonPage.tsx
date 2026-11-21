@@ -17,6 +17,7 @@ import { OmastavLesson } from "../learn/lessons/Omastav";
 import { OsastavLesson } from "../learn/lessons/Osastav";
 import { PaevadLesson } from "../learn/lessons/Paevad";
 import { PaevTallinnasLesson } from "../learn/lessons/PaevTallinnas";
+import { PealAllTagaLesson } from "../learn/lessons/PealAllTaga";
 import { PohivormidLesson } from "../learn/lessons/Pohivormid";
 import { PoodPoeLesson } from "../learn/lessons/PoodPoe";
 import { SobragaRahataLesson } from "../learn/lessons/SobragaRahata";
@@ -42,6 +43,7 @@ export const LESSON_VIEWS = {
   "paev-tallinnas": PaevTallinnasLesson,
   modaalverbid: ModaalverbidLesson,
   "laual-lauale-laualt": LaualLaualeLaualtLesson,
+  "peal-all-taga": PealAllTagaLesson,
   "sobraga-rahata": SobragaRahataLesson,
   "mul-on": MulOnLesson,
   "pood-poe": PoodPoeLesson,

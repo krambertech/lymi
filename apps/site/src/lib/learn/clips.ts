@@ -581,6 +581,73 @@ export const OUTER_PASSAGE = [
 ] as const;
 
 /** Words the lesson glosses on their own, beyond the places' forms. */
+export const PLACE_WORDS = [
+  { id: "peal", kus: "peal", kuhu: "peale", kust: "pealt" },
+  { id: "all", kus: "all", kuhu: "alla", kust: "alt" },
+  { id: "taga", kus: "taga", kuhu: "taha", kust: "tagant" },
+  { id: "ees", kus: "ees", kuhu: "ette", kust: "eest" },
+  { id: "korval", kus: "kõrval", kuhu: "kõrvale", kust: "kõrvalt" },
+  { id: "sees", kus: "sees", kuhu: "sisse", kust: "seest" },
+] as const;
+
+export type PlaceWordId = (typeof PLACE_WORDS)[number]["id"];
+export type PlaceDirection = "kus" | "kuhu" | "kust";
+
+export const placeWordSentence = (
+  word: (typeof PLACE_WORDS)[number],
+  direction: PlaceDirection,
+): string => {
+  if (direction === "kus") return `Kass on kasti ${word.kus}.`;
+  if (direction === "kust")
+    return ["all", "taga", "sees"].includes(word.id)
+      ? `Kass tuleb kasti ${word.kust} välja.`
+      : `Kass tuleb kasti ${word.kust}.`;
+  return word.id === "peal" ? `Kass hüppab kasti ${word.kuhu}.` : `Kass läheb kasti ${word.kuhu}.`;
+};
+
+export const PLACE_WORD_SENTENCES = {
+  "e-laua-peal": "Raamat on laua peal.",
+  "e-laua-all": "Kass on laua all.",
+  "e-maja-taga": "Auto on maja taga.",
+  "e-poe-ees": "Ma ootan poe ees.",
+  "e-kooli-korval": "Kohvik on kooli kõrval.",
+  "e-raamatu-sees": "Raha on raamatu sees.",
+  "e-laual": "Raamat on laual.",
+  "e-kastis": "Kass on kastis.",
+  "j-juures": "Ma olen ema juures.",
+  "j-juurde": "Ma lähen ema juurde.",
+  "j-juurest": "Ma tulen ema juurest.",
+} as const;
+
+export const PLACE_WORD_PASSAGE = [
+  "Kus on Miisu?",
+  "Miisu ei ole laua peal.",
+  "Ta ei ole ka laua all.",
+  "Ta tuleb kasti seest!",
+  "Ta hüppab laua peale.",
+  "Ta hüppab laua pealt.",
+  "Ta tuleb minu kõrvale.",
+] as const;
+
+export const PLACE_WORD_WORDS = [
+  "Miisu",
+  "kast",
+  "kasti",
+  "kass",
+  "kus",
+  "kuhu",
+  "kust",
+  "välja",
+  "juures",
+  "juurde",
+  "juurest",
+  "laud",
+  "laua",
+  "laual",
+  "kastis",
+  ...PLACE_WORDS.flatMap(({ kus, kuhu, kust }) => [kus, kuhu, kust]),
+];
+
 export const OUTER_WORDS = [
   "kus",
   "kuhu",
@@ -2573,6 +2640,19 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ]),
     ...OUTER_SENTENCES,
     "p-saturday": { sentences: OUTER_PASSAGE },
+  },
+  "peal-all-taga": {
+    ...words(PLACE_WORD_WORDS),
+    ...Object.fromEntries(
+      PLACE_WORDS.flatMap((word) =>
+        (["kus", "kuhu", "kust"] as const).map((direction) => [
+          `s-${word.id}-${direction}`,
+          placeWordSentence(word, direction),
+        ]),
+      ),
+    ),
+    ...PLACE_WORD_SENTENCES,
+    "p-miisu": { sentences: PLACE_WORD_PASSAGE },
   },
   "sobraga-rahata": SOBRAGA_CLIPS,
   "mul-on": {

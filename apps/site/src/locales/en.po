@@ -1006,6 +1006,9 @@ msgstr "<0>Kassid</0> is more than one: <1>meeldivad</1>."
 msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgstr "<0>Kes</0> asks about people, <1>mis</1> about things."
 
+msgid "<0>kes</0> for people, <1>mis</1> for things, with a comma before: <2>mees, kes seal seisab</2>."
+msgstr "<0>kes</0> for people, <1>mis</1> for things, with a comma before: <2>mees, kes seal seisab</2>."
+
 msgid "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2>."
 msgstr "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2>."
 
@@ -1167,6 +1170,9 @@ msgstr "<0>Meeldib</0> or <1>meeldivad</1>"
 
 msgid "<0>Meeldivad</0> for more than one"
 msgstr "<0>Meeldivad</0> for more than one"
+
+msgid "<0>Mees, kes seal seisab</0>, the man who is standing there. <1>Film, mida me vaatasime</1>, the film we watched. Who and which, in every case."
+msgstr "<0>Mees, kes seal seisab</0>, the man who is standing there. <1>Film, mida me vaatasime</1>, the film we watched. Who and which, in every case."
 
 msgid "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgstr "<0>Mexican Spanish</0>, <1>informal examples</1>."
@@ -1966,6 +1972,9 @@ msgstr "A flat plate on a door says push; a handle says pull."
 msgid "a foot"
 msgstr "a foot"
 
+msgid "A form of <0>kes</0> or <1>mis</1>?"
+msgstr "A form of <0>kes</0> or <1>mis</1>?"
+
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 
@@ -1992,6 +2001,9 @@ msgstr "A free Estonian lesson on particle verbs whose meaning is new: aru saama
 
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
+
+msgid "A free Estonian lesson on relative clauses, the who and which of a sentence: kes for people and mis for things, and how they take the case the clause needs, just like tema (keda, kellega, mida, milles), plus kus for places. Every sentence is read aloud."
+msgstr "A free Estonian lesson on relative clauses, the who and which of a sentence: kes for people and mis for things, and how they take the case the clause needs, just like tema (keda, kellega, mida, milles), plus kus for places. Every sentence is read aloud."
 
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
 msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
@@ -2136,6 +2148,9 @@ msgstr "A friend you miss is coming to visit."
 
 msgid "A full card in seconds"
 msgstr "A full card in seconds"
+
+msgid "A girl Kati went to school with"
+msgstr "A girl Kati went to school with"
 
 msgid "A glass of *water*, please."
 msgstr "A glass of *water*, please."
@@ -2572,6 +2587,9 @@ msgstr "A weekly check-in"
 msgid "A whole thing that is done is in its dictionary form: <0>pood avatakse</0>, <1>maja ehitati</1>. The third form stays the third form: <2>räägitakse eesti keelt</2>."
 msgstr "A whole thing that is done is in its dictionary form: <0>pood avatakse</0>, <1>maja ehitati</1>. The third form stays the third form: <2>räägitakse eesti keelt</2>."
 
+msgid "A woman who works in a café"
+msgstr "A woman who works in a café"
+
 msgid "a woman’s name"
 msgstr "a woman’s name"
 
@@ -2586,6 +2604,9 @@ msgstr "A word turning into its forms: the letters it drops are struck, the ones
 
 msgid "A year has 365 days."
 msgstr "A year has 365 days."
+
+msgid "A young teacher who lives upstairs"
+msgstr "A young teacher who lives upstairs"
 
 msgid "a, as in “father”"
 msgstr "a, as in “father”"
@@ -3197,6 +3218,9 @@ msgstr "All eight. You can build the stem for every plural case."
 msgid "All eight. You can say while and without in one word."
 msgstr "All eight. You can say while and without in one word."
 
+msgid "All eight. You can say who and which in any case."
+msgstr "All eight. You can say who and which in any case."
+
 msgid "All eight. You can tell doing it from done to it."
 msgstr "All eight. You can tell doing it from done to it."
 
@@ -3489,6 +3513,9 @@ msgstr "Also the genitive of kool."
 msgid "Always"
 msgstr "Always"
 
+msgid "Always put a comma before <0>kes</0> and <1>mis</1>, and another where the clause ends: <2>Film, mida me vaatasime, oli hea</2>. For a place you can also use <3>kus</3>, where: <4>linn, kus ma elan</4>. In speech you will hear <5>mis</5> for people too, but <6>kes</6> is the safe choice."
+msgstr "Always put a comma before <0>kes</0> and <1>mis</1>, and another where the clause ends: <2>Film, mida me vaatasime, oli hea</2>. For a place you can also use <3>kus</3>, where: <4>linn, kus ma elan</4>. In speech you will hear <5>mis</5> for people too, but <6>kes</6> is the safe choice."
+
 msgid "Always the third form after <0>ei</0>, after a number, and after verbs such as <1>ootama, armastama, otsima</1>: <2>Ma ootan sõpra.</2>"
 msgstr "Always the third form after <0>ei</0>, after a number, and after verbs such as <1>ootama, armastama, otsima</1>: <2>Ma ootan sõpra.</2>"
 
@@ -3561,6 +3588,9 @@ msgstr "An offer: you’re happy to."
 
 msgid "An old *castle* stands on the hill."
 msgstr "An old *castle* stands on the hill."
+
+msgid "An old man who was once a sailor"
+msgstr "An old man who was once a sailor"
 
 msgid "an old town"
 msgstr "an old town"
@@ -3900,6 +3930,9 @@ msgstr "Asks how it’s done."
 
 msgid "Asks where someone or something is going."
 msgstr "Asks where someone or something is going."
+
+msgid "Asub vanalinna lähedal, is near the old town."
+msgstr "Asub vanalinna lähedal, is near the old town."
 
 msgid "At 10:00"
 msgstr "At 10:00"
@@ -4534,6 +4567,9 @@ msgstr "By the rule"
 
 msgid "By the sea"
 msgstr "By the sea"
+
+msgid "By the sea, far from town"
+msgstr "By the sea, far from town"
 
 msgid "By the sea, in small villages"
 msgstr "By the sea, in small villages"
@@ -5950,6 +5986,9 @@ msgstr "Each round shows a place. Pick its ending, then hear it in a sentence. M
 msgid "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
 msgstr "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
 
+msgid "Each row has the same ending three times."
+msgstr "Each row has the same ending three times."
+
 msgid "Each row says the same thing twice: once in progress or in part, once done."
 msgstr "Each row says the same thing twice: once in progress or in part, once done."
 
@@ -6151,6 +6190,9 @@ msgstr "English does this with one word, ago: a week ago. The six words for wher
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "English has no õ. Say “o” without rounding your lips."
 
+msgid "English picks who or which. Estonian picks <0>kes</0> for a person and <1>mis</1> for a thing, then gives it the ending the clause needs. The trick: ask which form of <2>tema</2> you would use. <3>Ma nägin teda</3>, so <4>naine, keda ma nägin</4>. <5>Ma töötan temaga</5>, so <6>sõber, kellega ma töötan</6>."
+msgstr "English picks who or which. Estonian picks <0>kes</0> for a person and <1>mis</1> for a thing, then gives it the ending the clause needs. The trick: ask which form of <2>tema</2> you would use. <3>Ma nägin teda</3>, so <4>naine, keda ma nägin</4>. <5>Ma töötan temaga</5>, so <6>sõber, kellega ma töötan</6>."
+
 msgid "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap a form to watch the cat move and hear the sentence."
 msgstr "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap a form to watch the cat move and hear the sentence."
 
@@ -6345,6 +6387,9 @@ msgstr "Estonian pronunciation"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Estonian reading and listening practice: a day in Tallinn"
+
+msgid "Estonian relative clauses: kes, mis, keda, mida, kellega"
+msgstr "Estonian relative clauses: kes, mis, keda, mida, kellega"
 
 msgid "Estonian says I have as “at me is”: <0>Mul on kass.</0>"
 msgstr "Estonian says I have as “at me is”: <0>Mul on kass.</0>"
@@ -6884,6 +6929,9 @@ msgstr "For a new job at a big company"
 
 msgid "For a person’s place, Estonian says <0/>: <1/> It has three forms too: <2/> <3/>"
 msgstr "For a person’s place, Estonian says <0/>: <1/> It has three forms too: <2/> <3/>"
+
+msgid "For a place you can use <0>kus</0>: <1>kohvik, kus me käime</1>."
+msgstr "For a place you can use <0>kus</0>: <1>kohvik, kus me käime</1>."
 
 msgid "For a test"
 msgstr "For a test"
@@ -9939,6 +9987,9 @@ msgstr "In some verbs the stem changes: <0/>, but <1/>. Start from the ma form, 
 msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don’t need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you’ll add a third form, <4>lugeda</4>."
 msgstr "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don’t need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you’ll add a third form, <4>lugeda</4>."
 
+msgid "In something"
+msgstr "In something"
+
 msgid "In summer the *nights* stay light."
 msgstr "In summer the *nights* stay light."
 
@@ -10141,6 +10192,9 @@ msgstr "Is Grok Bot the same as Grok?"
 msgid "Is he or she at home?"
 msgstr "Is he or she at home?"
 
+msgid "Is it a person or a thing, and which ending does the clause need? Pick the word, then hear the sentence."
+msgstr "Is it a person or a thing, and which ending does the clause need? Pick the word, then hear the sentence."
+
 msgid "Is it for schools?"
 msgstr "Is it for schools?"
 
@@ -10251,6 +10305,12 @@ msgstr "It has to be done, and no one is named."
 
 msgid "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
 msgstr "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
+
+msgid "It is about a person, so it starts with <0>ke-</0>, and the clause needs <1>{answer}</1>."
+msgstr "It is about a person, so it starts with <0>ke-</0>, and the clause needs <1>{answer}</1>."
+
+msgid "It is about a thing, so it starts with <0>mi-</0>, and the clause needs <1>{answer}</1>."
+msgstr "It is about a thing, so it starts with <0>mi-</0>, and the clause needs <1>{answer}</1>."
 
 msgid "It is without it"
 msgstr "It is without it"
@@ -10697,6 +10757,9 @@ msgstr "Kati writes about herself. Each gap needs one thing you’ve practised: 
 msgid "Kati writes about what her family does. Look for the <0>-ja</0> and <1>-mine</1> words, and the <2/> she likes most."
 msgstr "Kati writes about what her family does. Look for the <0>-ja</0> and <1>-mine</1> words, and the <2/> she likes most."
 
+msgid "Kati writes about where she lives. Look for <0>kes</0>, <1>mis</1>, <2>kus</2> and <3>kellega</3>, and for <4/>, to be located."
+msgstr "Kati writes about where she lives. Look for <0>kes</0>, <1>mis</1>, <2>kus</2> and <3>kellega</3>, and for <4/>, to be located."
+
 msgid "Kati writes to the landlord"
 msgstr "Kati writes to the landlord"
 
@@ -10723,6 +10786,12 @@ msgstr "Kati’s friends"
 
 msgid "Kati’s message"
 msgstr "Kati’s message"
+
+msgid "Kati’s sister"
+msgstr "Kati’s sister"
+
+msgid "Kati’s street"
+msgstr "Kati’s street"
 
 msgid "Katki minema is to break: kraan on katki läinud, the tap has broken."
 msgstr "Katki minema is to break: kraan on katki läinud, the tap has broken."
@@ -12273,6 +12342,9 @@ msgstr "Most of them. Ask: is it someone, or something you do?"
 msgid "Most of them. Ask: is it what someone says, the reason, or if, when or than?"
 msgstr "Most of them. Ask: is it what someone says, the reason, or if, when or than?"
 
+msgid "Most of them. Ask: person or thing, and which form of <0>tema</0>?"
+msgstr "Most of them. Ask: person or thing, and which form of <0>tema</0>?"
+
 msgid "Most of them. Listen again in the table to the ones you missed."
 msgstr "Most of them. Listen again in the table to the ones you missed."
 
@@ -12532,6 +12604,9 @@ msgstr "Nature"
 msgid "NCLEX pharmacology"
 msgstr "NCLEX pharmacology"
 
+msgid "Near the old town"
+msgstr "Near the old town"
+
 msgid "Nearly. Check which ending the cue asks for, then put it on the genitive."
 msgstr "Nearly. Check which ending the cue asks for, then put it on the genitive."
 
@@ -12667,6 +12742,9 @@ msgstr "next to"
 msgctxt "kõrvale, moving next to"
 msgid "next to"
 msgstr "next to"
+
+msgid "Next to the bus station"
+msgstr "Next to the bus station"
 
 msgid "Next to the bus stop"
 msgstr "Next to the bus stop"
@@ -13324,6 +13402,9 @@ msgstr "Once Lymi is connected, ask in your own words. The assistant finds the r
 
 msgid "Once you add a deck, Lymi schedules each card by how well you remember it."
 msgstr "Once you add a deck, Lymi schedules each card by how well you remember it."
+
+msgid "once, at one time"
+msgstr "once, at one time"
 
 msgid "one"
 msgstr "one"
@@ -15070,6 +15151,9 @@ msgstr "Said to one person, from kandma. Also “of the heel”, from kand."
 
 msgid "Said to one person."
 msgstr "Said to one person."
+
+msgid "sailor"
+msgstr "sailor"
 
 msgid "sale"
 msgstr "sale"
@@ -17778,6 +17862,9 @@ msgstr "The name is Kati’s own, so my: <0>minu</0>."
 msgid "The name is the cat’s, so <0>kass</0> takes the genitive: <1>kassi</1>."
 msgstr "The name is the cat’s, so <0>kass</0> takes the genitive: <1>kassi</1>."
 
+msgid "The neighbour’s grandson"
+msgstr "The neighbour’s grandson"
+
 msgid "The neighbours’ children"
 msgstr "The neighbours’ children"
 
@@ -17805,6 +17892,9 @@ msgstr "The noun is doing it itself, so it takes <0>-v</0>: <1>{answer}</1>."
 msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 msgstr "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 
+msgid "The object"
+msgstr "The object"
+
 msgid "The object is the thing you act on: the book you read, the bread you buy. In Estonian it takes one of two forms, and the choice says something English says with “was reading” and “read to the end”. The third form of lesson {partitive} says part of it, or not done yet. The genitive of lesson {genitive} says the whole thing, done. In the present it says the whole thing will get done: <0>Ma söön koogi ära</0>, I’ll eat the cake up."
 msgstr "The object is the thing you act on: the book you read, the bread you buy. In Estonian it takes one of two forms, and the choice says something English says with “was reading” and “read to the end”. The third form of lesson {partitive} says part of it, or not done yet. The genitive of lesson {genitive} says the whole thing, done. In the present it says the whole thing will get done: <0>Ma söön koogi ära</0>, I’ll eat the cake up."
 
@@ -17828,6 +17918,9 @@ msgstr "The old *castle* on the hill."
 
 msgid "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
+
+msgid "The one who does it"
+msgstr "The one who does it"
 
 msgid "The ones starting to fade"
 msgstr "The ones starting to fade"
@@ -18769,6 +18862,9 @@ msgstr "They stay in Mochi. A card’s first side becomes its term and the rest 
 msgid "They study in Tartu."
 msgstr "They study in Tartu."
 
+msgid "They take the case the clause needs, with the same ending as <0>tema</0>: <1>teda, keda; temaga, kellega</1>."
+msgstr "They take the case the clause needs, with the same ending as <0>tema</0>: <1>teda, keda; temaga, kellega</1>."
+
 msgid "They want to read."
 msgstr "They want to read."
 
@@ -19126,6 +19222,9 @@ msgstr "to be late"
 msgid "To be late"
 msgstr "To be late"
 
+msgid "to be located"
+msgstr "to be located"
+
 msgid "To be needed"
 msgstr "To be needed"
 
@@ -19480,6 +19579,9 @@ msgstr "to sleep"
 
 msgid "To sleep; to go to bed"
 msgstr "To sleep; to go to bed"
+
+msgid "To someone or something"
+msgstr "To someone or something"
 
 msgid "to someone’s place"
 msgstr "to someone’s place"
@@ -21015,6 +21117,9 @@ msgstr "Where is Jaan today?"
 msgid "Where is Jaan’s house?"
 msgstr "Where is Jaan’s house?"
 
+msgid "Where is Kati’s house?"
+msgstr "Where is Kati’s house?"
+
 msgid "Where is Kati’s mum?"
 msgstr "Where is Kati’s mum?"
 
@@ -21135,6 +21240,12 @@ msgstr "Where will she be at ten?"
 msgid "Where you are"
 msgstr "Where you are"
 
+#. placeholder {0}: row.ta
+#. placeholder {1}: row.person
+#. placeholder {2}: row.thing
+msgid "Where you would say <0>{0}</0>, say <1>{1}</1> for a person and <2>{2}</2> for a thing."
+msgstr "Where you would say <0>{0}</0>, say <1>{1}</1> for a person and <2>{2}</2> for a thing."
+
 msgid "Where you’re from"
 msgstr "Where you’re from"
 
@@ -21155,6 +21266,9 @@ msgstr "Where’s the *metro* station?"
 
 msgid "Where’s the *water*?"
 msgstr "Where’s the *water*?"
+
+msgid "Which"
+msgstr "Which"
 
 msgid "Which -nud form?"
 msgstr "Which -nud form?"
@@ -21200,6 +21314,9 @@ msgstr "Which form did you hear?"
 
 msgid "Which form fills the gap?"
 msgstr "Which form fills the gap?"
+
+msgid "Which form fits?"
+msgstr "Which form fits?"
 
 msgid "Which form follows the number?"
 msgstr "Which form follows the number?"
@@ -21336,6 +21453,12 @@ msgstr "who"
 msgid "Who"
 msgstr "Who"
 
+msgid "Who and which"
+msgstr "Who and which"
+
+msgid "Who and which in each case"
+msgstr "Who and which in each case"
+
 msgid "Who and whose"
 msgstr "Who and whose"
 
@@ -21381,6 +21504,9 @@ msgstr "who has; at whom"
 msgid "Who is bringing flowers?"
 msgstr "Who is bringing flowers?"
 
+msgid "Who is her neighbour?"
+msgstr "Who is her neighbour?"
+
 msgid "Who is it about?"
 msgstr "Who is it about?"
 
@@ -21422,6 +21548,9 @@ msgstr "Who speaks Estonian?"
 
 msgid "Who were the first Europeans to reach Canada?"
 msgstr "Who were the first Europeans to reach Canada?"
+
+msgid "Who works at the café?"
+msgstr "Who works at the café?"
 
 msgid "Who would?"
 msgstr "Who would?"

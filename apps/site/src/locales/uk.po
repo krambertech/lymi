@@ -1007,6 +1007,9 @@ msgstr "<0>Kassid</0> — множина: <1>meeldivad</1>."
 msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgstr "<0>Kes</0> питає про людей, <1>mis</1> — про речі."
 
+msgid "<0>kes</0> for people, <1>mis</1> for things, with a comma before: <2>mees, kes seal seisab</2>."
+msgstr "<0>kes</0> — для людей, <1>mis</1> — для речей, перед ними кома: <2>mees, kes seal seisab</2>."
+
 msgid "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2>."
 msgstr "<0>Kodu</0> — це один дім, тому прикметник без <1>-d</1>: <2>väike</2>."
 
@@ -1168,6 +1171,9 @@ msgstr "<0>Meeldib</0> або <1>meeldivad</1>"
 
 msgid "<0>Meeldivad</0> for more than one"
 msgstr "<0>Meeldivad</0>, коли кілька"
+
+msgid "<0>Mees, kes seal seisab</0>, the man who is standing there. <1>Film, mida me vaatasime</1>, the film we watched. Who and which, in every case."
+msgstr "<0>Mees, kes seal seisab</0> — чоловік, який стоїть он там. <1>Film, mida me vaatasime</1> — фільм, який ми дивилися. «Який» і «котрий» у кожному відмінку."
 
 msgid "<0>Mexican Spanish</0>, <1>informal examples</1>."
 msgstr "<0>Мексиканська іспанська</0>, <1>розмовні приклади</1>."
@@ -1967,6 +1973,9 @@ msgstr "Гладка накладка на дверях підказує «шт�
 msgid "a foot"
 msgstr "нога"
 
+msgid "A form of <0>kes</0> or <1>mis</1>?"
+msgstr "Форма <0>kes</0> чи <1>mis</1>?"
+
 msgid "A free deck has every road sign from the regulation, by its picture, with its Polish name and code."
 msgstr "Безкоштовна колода містить кожен дорожній знак із правил: за малюнком, із польською назвою та номером."
 
@@ -1993,6 +2002,9 @@ msgstr "Безкоштовний урок естонської про дієсл
 
 msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про особові займенники: mina, sina, tema та інші в повній і короткій формі, а ще дієслово olema, «бути». Кожне речення можна послухати."
+
+msgid "A free Estonian lesson on relative clauses, the who and which of a sentence: kes for people and mis for things, and how they take the case the clause needs, just like tema (keda, kellega, mida, milles), plus kus for places. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про підрядні означальні речення, естонські «який» і «котрий»: kes для людей і mis для речей, і як вони стають у потрібний відмінок, так само як tema (keda, kellega, mida, milles), а ще kus для місць. Кожне речення озвучене."
 
 msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
 msgstr "Безкоштовний урок естонської про те, як сказати, котра година: повні години, pool, veerand і kolmveerand, що називають наступну годину, і хвилини до та після. Кожен приклад озвучено."
@@ -2137,6 +2149,9 @@ msgstr "До тебе в гості їде друг, за яким ти суму
 
 msgid "A full card in seconds"
 msgstr "Повна картка за секунди"
+
+msgid "A girl Kati went to school with"
+msgstr "Дівчина, з якою Каті ходила до школи"
 
 msgid "A glass of *water*, please."
 msgstr "Склянку *води*, будь ласка."
@@ -2573,6 +2588,9 @@ msgstr "Підсумок тижня"
 msgid "A whole thing that is done is in its dictionary form: <0>pood avatakse</0>, <1>maja ehitati</1>. The third form stays the third form: <2>räägitakse eesti keelt</2>."
 msgstr "Ціла річ, з якою щось роблять, стоїть у словниковій формі: <0>pood avatakse</0>, <1>maja ehitati</1>. Третя форма лишається третьою формою: <2>räägitakse eesti keelt</2>."
 
+msgid "A woman who works in a café"
+msgstr "Жінка, яка працює в кав’ярні"
+
 msgid "a woman’s name"
 msgstr "жіноче ім’я"
 
@@ -2587,6 +2605,9 @@ msgstr "Слово перетворюється на свої форми: літ
 
 msgid "A year has 365 days."
 msgstr "У році 365 днів."
+
+msgid "A young teacher who lives upstairs"
+msgstr "Молодий учитель, який живе поверхом вище"
 
 msgid "a, as in “father”"
 msgstr "а, як у слові «мама»"
@@ -3198,6 +3219,9 @@ msgstr "Усі вісім. Ти вмієш будувати основу для 
 msgid "All eight. You can say while and without in one word."
 msgstr "Усі вісім. Ти вмієш сказати «роблячи» і «не зробивши» одним словом."
 
+msgid "All eight. You can say who and which in any case."
+msgstr "Усі вісім. Ти вмієш сказати «який» у будь-якому відмінку."
+
 msgid "All eight. You can tell doing it from done to it."
 msgstr "Усі вісім. Ти відрізняєш «робить» від «зроблено»."
 
@@ -3490,6 +3514,9 @@ msgstr "Це також родовий відмінок від kool."
 msgid "Always"
 msgstr "Завжди"
 
+msgid "Always put a comma before <0>kes</0> and <1>mis</1>, and another where the clause ends: <2>Film, mida me vaatasime, oli hea</2>. For a place you can also use <3>kus</3>, where: <4>linn, kus ma elan</4>. In speech you will hear <5>mis</5> for people too, but <6>kes</6> is the safe choice."
+msgstr "Перед <0>kes</0> і <1>mis</1> завжди став кому, а ще одну — там, де підрядне речення закінчується: <2>Film, mida me vaatasime, oli hea</2>. Для місця можна вжити й <3>kus</3>, «де»: <4>linn, kus ma elan</4>. У розмові почуєш <5>mis</5> і про людей, але <6>kes</6> — надійний вибір."
+
 msgid "Always the third form after <0>ei</0>, after a number, and after verbs such as <1>ootama, armastama, otsima</1>: <2>Ma ootan sõpra.</2>"
 msgstr "Завжди третя форма після <0>ei</0>, після числа і після дієслів на кшталт <1>ootama, armastama, otsima</1>: <2>Ma ootan sõpra.</2>"
 
@@ -3562,6 +3589,9 @@ msgstr "Пропозиція: ти не проти."
 
 msgid "An old *castle* stands on the hill."
 msgstr "На пагорбі стоїть старий *замок*."
+
+msgid "An old man who was once a sailor"
+msgstr "Старий чоловік, колишній моряк"
 
 msgid "an old town"
 msgstr "старе місто"
@@ -3901,6 +3931,9 @@ msgstr "Питає, як саме."
 
 msgid "Asks where someone or something is going."
 msgstr "Питає, куди хтось або щось іде."
+
+msgid "Asub vanalinna lähedal, is near the old town."
+msgstr "Asub vanalinna lähedal — розташований біля старого міста."
 
 msgid "At 10:00"
 msgstr "О 10:00"
@@ -4535,6 +4568,9 @@ msgstr "За правилом"
 
 msgid "By the sea"
 msgstr "Біля моря"
+
+msgid "By the sea, far from town"
+msgstr "На березі моря, далеко від центру"
 
 msgid "By the sea, in small villages"
 msgstr "Біля моря, в маленьких селах"
@@ -5951,6 +5987,9 @@ msgstr "У кожному раунді — місце. Обери закінче
 msgid "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
 msgstr "У кожному раунді — речення з пропуском. Обери форму, яка туди підходить. Пропуск стоїть після <0>pole</0> чи на початку речення?"
 
+msgid "Each row has the same ending three times."
+msgstr "У кожному рядку тричі те саме закінчення."
+
 msgid "Each row says the same thing twice: once in progress or in part, once done."
 msgstr "Кожен рядок каже те саме двічі: раз — у процесі чи частково, раз — зроблено."
 
@@ -6152,6 +6191,9 @@ msgstr "Українською так поводиться «тому»: «ти�
 msgid "English has no õ. Say “o” without rounding your lips."
 msgstr "Звука õ немає ні в англійській, ні в українській. Скажи «о», але не округлюй губи."
 
+msgid "English picks who or which. Estonian picks <0>kes</0> for a person and <1>mis</1> for a thing, then gives it the ending the clause needs. The trick: ask which form of <2>tema</2> you would use. <3>Ma nägin teda</3>, so <4>naine, keda ma nägin</4>. <5>Ma töötan temaga</5>, so <6>sõber, kellega ma töötan</6>."
+msgstr "Естонська, як і українська з її «який, якого, з яким», ставить це слово в потрібний відмінок. <0>kes</0> — для людини, <1>mis</1> — для речі, а закінчення таке, якого вимагає підрядне речення. Підказка: подумай, яку форму <2>tema</2> ти вжив би. <3>Ma nägin teda</3>, отже <4>naine, keda ma nägin</4>. <5>Ma töötan temaga</5>, отже <6>sõber, kellega ma töötan</6>."
+
 msgid "English puts in, into or out of before the place. Estonian changes the end of the place instead. Tap a form to watch the cat move and hear the sentence."
 msgstr "Українська розрізняє це прийменником і відмінком: у будинку, у будинок, з будинку. Естонська змінює лише кінець слова. Торкнись форми, щоб побачити, як рухається кіт, і почути речення."
 
@@ -6346,6 +6388,9 @@ msgstr "Естонська вимова"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Естонська мова: читання й аудіювання. День у Таллінні"
+
+msgid "Estonian relative clauses: kes, mis, keda, mida, kellega"
+msgstr "Підрядні означальні речення в естонській: «який» і «котрий»"
 
 msgid "Estonian says I have as “at me is”: <0>Mul on kass.</0>"
 msgstr "Естонською «у мене є» кажуть так само, як українською: <0>Mul on kass.</0>"
@@ -6885,6 +6930,9 @@ msgstr "Для нової роботи у великій компанії"
 
 msgid "For a person’s place, Estonian says <0/>: <1/> It has three forms too: <2/> <3/>"
 msgstr "Щоб сказати «у когось», естонська бере <0/>: <1/> У нього теж три форми: <2/> <3/>"
+
+msgid "For a place you can use <0>kus</0>: <1>kohvik, kus me käime</1>."
+msgstr "Для місця можна вжити <0>kus</0>: <1>kohvik, kus me käime</1>."
 
 msgid "For a test"
 msgstr "Для іспиту"
@@ -9940,6 +9988,9 @@ msgstr "У деяких дієсловах основа змінюється: <0
 msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don’t need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you’ll add a third form, <4>lugeda</4>."
 msgstr "У деяких дієсловах основа змінюється: <0/>, «читати», має основу <1>loe-</1>, тому «я читаю» буде <2/>. Правило для цього поки не потрібне. Запам’ятовуй кожне дієслово разом із формою для «я»: <3>lugema, loen</3>. Відкинь -n, і решта буде основою. В уроці {verbForms} додаси третю форму, <4>lugeda</4>."
 
+msgid "In something"
+msgstr "У чомусь"
+
 msgid "In summer the *nights* stay light."
 msgstr "Улітку *ночі* світлі."
 
@@ -10142,6 +10193,9 @@ msgstr "Grok Bot і Grok — це одне й те саме?"
 msgid "Is he or she at home?"
 msgstr "Він чи вона вдома?"
 
+msgid "Is it a person or a thing, and which ending does the clause need? Pick the word, then hear the sentence."
+msgstr "Це людина чи річ, і якого закінчення вимагає підрядне речення? Обери слово, а потім послухай речення."
+
 msgid "Is it for schools?"
 msgstr "Це для шкіл?"
 
@@ -10252,6 +10306,12 @@ msgstr "Треба зробити, і нікого не названо."
 
 msgid "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
 msgstr "Це допомагає. Колода Read Japanese Kana вчить хірагані й катакані, а з ними інші колоди даються легше."
+
+msgid "It is about a person, so it starts with <0>ke-</0>, and the clause needs <1>{answer}</1>."
+msgstr "Ідеться про людину, тож слово починається з <0>ke-</0>, а підрядне речення вимагає <1>{answer}</1>."
+
+msgid "It is about a thing, so it starts with <0>mi-</0>, and the clause needs <1>{answer}</1>."
+msgstr "Ідеться про річ, тож слово починається з <0>mi-</0>, а підрядне речення вимагає <1>{answer}</1>."
 
 msgid "It is without it"
 msgstr "Без цього"
@@ -10698,6 +10758,9 @@ msgstr "Каті пише про себе. У кожному пропуску �
 msgid "Kati writes about what her family does. Look for the <0>-ja</0> and <1>-mine</1> words, and the <2/> she likes most."
 msgstr "Каті пише про те, чим займається її родина. Шукай слова на <0>-ja</0> і <1>-mine</1> та <2/>, хобі, яке їй подобається найбільше."
 
+msgid "Kati writes about where she lives. Look for <0>kes</0>, <1>mis</1>, <2>kus</2> and <3>kellega</3>, and for <4/>, to be located."
+msgstr "Каті пише про те, де живе. Шукай <0>kes</0>, <1>mis</1>, <2>kus</2> і <3>kellega</3>, а ще слово <4/>, «розташовуватися»."
+
 msgid "Kati writes to the landlord"
 msgstr "Каті пише власниці квартири"
 
@@ -10724,6 +10787,12 @@ msgstr "Друзі Каті"
 
 msgid "Kati’s message"
 msgstr "Повідомлення від Каті"
+
+msgid "Kati’s sister"
+msgstr "Сестра Каті"
+
+msgid "Kati’s street"
+msgstr "Вулиця Каті"
 
 msgid "Katki minema is to break: kraan on katki läinud, the tap has broken."
 msgstr "Katki minema — зламатися: kraan on katki läinud, кран зламався."
@@ -12274,6 +12343,9 @@ msgstr "Більшість. Запитай себе: це хтось чи щос
 msgid "Most of them. Ask: is it what someone says, the reason, or if, when or than?"
 msgstr "Більшість. Запитай себе: це те, що хтось каже, причина, чи «якщо», «коли» або «ніж»?"
 
+msgid "Most of them. Ask: person or thing, and which form of <0>tema</0>?"
+msgstr "Більшість. Запитай себе: людина чи річ, і яка форма <0>tema</0>?"
+
 msgid "Most of them. Listen again in the table to the ones you missed."
 msgstr "Більшість. Послухай ще раз у таблиці ті, що не вдалися."
 
@@ -12533,6 +12605,9 @@ msgstr "Природа"
 msgid "NCLEX pharmacology"
 msgstr "Фармакологія NCLEX"
 
+msgid "Near the old town"
+msgstr "Біля старого міста"
+
 msgid "Nearly. Check which ending the cue asks for, then put it on the genitive."
 msgstr "Майже. Перевір, яке закінчення потрібне за підказкою, і додай його до родового відмінка."
 
@@ -12668,6 +12743,9 @@ msgstr "поруч"
 msgctxt "kõrvale, moving next to"
 msgid "next to"
 msgstr "поруч (куди)"
+
+msgid "Next to the bus station"
+msgstr "Поруч з автовокзалом"
 
 msgid "Next to the bus stop"
 msgstr "Біля автобусної зупинки"
@@ -13325,6 +13403,9 @@ msgstr "Коли Lymi підключено, проси своїми словам
 
 msgid "Once you add a deck, Lymi schedules each card by how well you remember it."
 msgstr "Щойно ти додаси колоду, Lymi плануватиме кожну картку залежно від того, як добре ти її пам’ятаєш."
+
+msgid "once, at one time"
+msgstr "колись"
 
 msgid "one"
 msgstr "один"
@@ -15071,6 +15152,9 @@ msgstr "Так кажуть одній людині, від kandma. А ще «п
 
 msgid "Said to one person."
 msgstr "Так кажуть одній людині."
+
+msgid "sailor"
+msgstr "моряк"
 
 msgid "sale"
 msgstr "продаж"
@@ -17779,6 +17863,9 @@ msgstr "Ім’я належить Каті, тож «моє»: <0>minu</0>."
 msgid "The name is the cat’s, so <0>kass</0> takes the genitive: <1>kassi</1>."
 msgstr "Ім’я належить котові, тож <0>kass</0> стоїть у родовому: <1>kassi</1>."
 
+msgid "The neighbour’s grandson"
+msgstr "Онук сусіда"
+
 msgid "The neighbours’ children"
 msgstr "Діти сусідів"
 
@@ -17806,6 +17893,9 @@ msgstr "Іменник робить це сам, тож потрібна <0>-v</
 msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 msgstr "Іменник закінчується на <0>-d</0>, дієслово — на <1>-vad</1>. <2>On</2> не змінюється."
 
+msgid "The object"
+msgstr "Додаток"
+
 msgid "The object is the thing you act on: the book you read, the bread you buy. In Estonian it takes one of two forms, and the choice says something English says with “was reading” and “read to the end”. The third form of lesson {partitive} says part of it, or not done yet. The genitive of lesson {genitive} says the whole thing, done. In the present it says the whole thing will get done: <0>Ma söön koogi ära</0>, I’ll eat the cake up."
 msgstr "Додаток — це те, на що спрямована дія: книжка, яку читаєш, хліб, який купуєш. В естонській він має одну з двох форм, і вибір передає те, що українська передає видом дієслова: «читав» і «прочитав». Третя форма з уроку {partitive} каже про частину чи незавершену дію. Родовий з уроку {genitive} — про ціле, зроблене до кінця. У теперішньому часі він каже, що справу буде зроблено: <0>Ma söön koogi ära</0> — я з’їм тістечко."
 
@@ -17829,6 +17919,9 @@ msgstr "Старий *замок* на горі."
 
 msgid "The one that matches your test or topic. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "Ту, що відповідає твоєму тесту чи темі. Можна додати кілька, і Lymi змішає їхні картки в одне щоденне повторення."
+
+msgid "The one who does it"
+msgstr "Той, хто діє"
 
 msgid "The ones starting to fade"
 msgstr "Ті, які починають забуватися"
@@ -18770,6 +18863,9 @@ msgstr "Вони лишаються в Mochi. Перша сторона карт
 msgid "They study in Tartu."
 msgstr "Вони вчаться в Тарту."
 
+msgid "They take the case the clause needs, with the same ending as <0>tema</0>: <1>teda, keda; temaga, kellega</1>."
+msgstr "Вони стають у відмінок, якого вимагає підрядне речення, з тим самим закінченням, що й <0>tema</0>: <1>teda, keda; temaga, kellega</1>."
+
 msgid "They want to read."
 msgstr "Вони хочуть читати."
 
@@ -19127,6 +19223,9 @@ msgstr "запізнюватися"
 msgid "To be late"
 msgstr "Запізнюватися"
 
+msgid "to be located"
+msgstr "розташовуватися"
+
 msgid "To be needed"
 msgstr "Бути потрібним"
 
@@ -19481,6 +19580,9 @@ msgstr "спати"
 
 msgid "To sleep; to go to bed"
 msgstr "Спати; лягати спати"
+
+msgid "To someone or something"
+msgstr "Комусь чи чомусь"
 
 msgid "to someone’s place"
 msgstr "до когось"
@@ -21016,6 +21118,9 @@ msgstr "Де Яан сьогодні?"
 msgid "Where is Jaan’s house?"
 msgstr "Де дім Яана?"
 
+msgid "Where is Kati’s house?"
+msgstr "Де дім Каті?"
+
 msgid "Where is Kati’s mum?"
 msgstr "Де мама Каті?"
 
@@ -21136,6 +21241,12 @@ msgstr "Де вона буде о десятій?"
 msgid "Where you are"
 msgstr "Де ти"
 
+#. placeholder {0}: row.ta
+#. placeholder {1}: row.person
+#. placeholder {2}: row.thing
+msgid "Where you would say <0>{0}</0>, say <1>{1}</1> for a person and <2>{2}</2> for a thing."
+msgstr "Там, де ти сказав би <0>{0}</0>, скажи <1>{1}</1> про людину і <2>{2}</2> про річ."
+
 msgid "Where you’re from"
 msgstr "Звідки ти"
 
@@ -21156,6 +21267,9 @@ msgstr "Де станція *метро*?"
 
 msgid "Where’s the *water*?"
 msgstr "Де тут *вода*?"
+
+msgid "Which"
+msgstr "Котрий (річ)"
 
 msgid "Which -nud form?"
 msgstr "Яка форма на -nud?"
@@ -21201,6 +21315,9 @@ msgstr "Яку форму ти чуєш?"
 
 msgid "Which form fills the gap?"
 msgstr "Яка форма заповнює пропуск?"
+
+msgid "Which form fits?"
+msgstr "Яка форма підходить?"
 
 msgid "Which form follows the number?"
 msgstr "Яка форма йде після числа?"
@@ -21337,6 +21454,12 @@ msgstr "хто"
 msgid "Who"
 msgstr "Хто"
 
+msgid "Who and which"
+msgstr "Який і котрий"
+
+msgid "Who and which in each case"
+msgstr "«Який» у кожному відмінку"
+
 msgid "Who and whose"
 msgstr "Хто і чий"
 
@@ -21382,6 +21505,9 @@ msgstr "у кого"
 msgid "Who is bringing flowers?"
 msgstr "Хто приносить квіти?"
 
+msgid "Who is her neighbour?"
+msgstr "Хто її сусід?"
+
 msgid "Who is it about?"
 msgstr "Про кого це?"
 
@@ -21423,6 +21549,9 @@ msgstr "Хто говорить естонською?"
 
 msgid "Who were the first Europeans to reach Canada?"
 msgstr "Хто з європейців першим дістався Канади?"
+
+msgid "Who works at the café?"
+msgstr "Хто працює в кав’ярні?"
 
 msgid "Who would?"
 msgstr "Чиє закінчення?"

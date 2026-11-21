@@ -29,11 +29,11 @@ function Et({ children }: { children: ReactNode }) {
 }
 
 const ROLES: Record<Role, MessageDescriptor> = {
-  subject: msg`Does it`,
-  partitive: msg`Has it done to it`,
-  with: msg`With it`,
-  to: msg`To it`,
-  in: msg`In it`,
+  subject: msg`The one who does it`,
+  partitive: msg`The object`,
+  with: msg`With someone or something`,
+  to: msg`To someone or something`,
+  in: msg`In something`,
 };
 
 const GLOSSARY: Glossary = {
@@ -75,29 +75,16 @@ function RelativeTable() {
   );
 }
 
-const FORM_POOL = RELATIVE_FORMS.flatMap((row) => [row.person, row.thing]);
-
 const isPerson = (word: string) => word.startsWith("ke");
 
-const CLASHES: Record<string, readonly string[]> = {
-  mida: ["mis"],
-  kellele: ["kellega"],
-  millega: ["milles"],
-};
-
-const sameKindOf = (answer: string, pair: readonly string[], avoid: readonly string[]) =>
-  FORM_POOL.filter(
-    (word) => !pair.includes(word) && !avoid.includes(word) && isPerson(word) === isPerson(answer),
+const crossOf = (answer: string) =>
+  RELATIVE_FORMS.filter((row) => row.person !== answer && row.thing !== answer).map((row) =>
+    isPerson(answer) ? row.thing : row.person,
   );
 
-function firstOptions(
-  pair: readonly string[],
-  answer: string,
-  index: number,
-  avoid: readonly string[],
-): string[] {
+function firstOptions(pair: readonly string[], answer: string, index: number): string[] {
   const other = pair.find((word) => word !== answer) as string;
-  const third = sameKindOf(answer, pair, avoid).at(index % 3) as string;
+  const third = crossOf(answer).at(index % 4) as string;
   const order = [answer, other, third];
   const turn = (index % 3) + 1;
   return [...order.slice(turn), ...order.slice(0, turn)];
@@ -107,25 +94,22 @@ type GapRun = GapItem & {
   id: string;
   said: string;
   pair: readonly string[];
-  avoid: readonly string[];
 };
 
 function content(t: (descriptor: MessageDescriptor) => string) {
   const why = (answer: string): ReactNode =>
     isPerson(answer) ? (
       <Trans>
-        It is about a person, so it starts with <Et>ke-</Et>, and the clause needs{" "}
-        <Et>{answer}</Et>.
+        It is about a person, so it starts with <Et>ke-</Et>, and the clause needs <Et>{answer}</Et>
+        .
       </Trans>
     ) : (
       <Trans>
-        It is about a thing, so it starts with <Et>mi-</Et>, and the clause needs{" "}
-        <Et>{answer}</Et>.
+        It is about a thing, so it starts with <Et>mi-</Et>, and the clause needs <Et>{answer}</Et>.
       </Trans>
     );
   const gaps: GapRun[] = RELATIVE_GAPS.map((gap, index) => {
     const said = objectGapSaid(gap);
-    const avoid = CLASHES[gap.id] ?? [];
     return {
       id: gap.id,
       said,
@@ -133,8 +117,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       before: gap.before,
       after: gap.after,
       pair: gap.options,
-      avoid,
-      options: firstOptions(gap.options, gap.answer, index, avoid),
+      options: firstOptions(gap.options, gap.answer, index),
       answer: gap.answer,
       explain: why(gap.answer),
     };
@@ -157,7 +140,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       ask: t(msg`Who is her neighbour?`),
       options: [
         { id: "sailor", label: t(msg`An old man who was once a sailor`) },
-        { id: "teacher", label: t(msg`A young teacher`) },
+        { id: "teacher", label: t(msg`A young teacher who lives upstairs`) },
         { id: "cook", label: t(msg`A woman who works in a café`) },
       ],
       answer: "sailor",
@@ -180,7 +163,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
 }
 
 const withThird = (item: GapRun): GapRun => {
-  const third = shuffle(sameKindOf(item.answer, item.pair, item.avoid))[0] as string;
+  const third = shuffle(crossOf(item.answer))[0] as string;
   return { ...item, options: shuffle([...item.pair, third]) };
 };
 
@@ -197,8 +180,8 @@ export function RaamatMilleOstsinLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          <Et>Mees, kes seal seisab</Et>, the man who is standing there. <Et>Film, mida me
-          vaatasime</Et>, the film we watched. Who and which, in every case.
+          <Et>Mees, kes seal seisab</Et>, the man who is standing there.{" "}
+          <Et>Film, mida me vaatasime</Et>, the film we watched. Who and which, in every case.
         </Trans>
       }
       facts={[
@@ -258,8 +241,8 @@ export function RaamatMilleOstsinLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Is it a person or a thing, and which ending does the clause need? Pick the
-                    word, then hear the sentence.
+                    Is it a person or a thing, and which ending does the clause need? Pick the word,
+                    then hear the sentence.
                   </Trans>
                 </p>
               </Prose>

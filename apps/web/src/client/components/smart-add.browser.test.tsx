@@ -42,7 +42,7 @@ test("Find terms on an empty lesson stays pressable and says what is missing", a
   await userEvent.click(findTerms());
   await expect
     .element(page.getByRole("alert"))
-    .toHaveTextContent("Add a photo or PDF of the lesson, or paste its text.");
+    .toHaveTextContent("Add a photo or PDF of the lesson, paste its text or a link.");
 });
 
 test("at the daily limit Find terms stays focusable and points at the notice", async () => {

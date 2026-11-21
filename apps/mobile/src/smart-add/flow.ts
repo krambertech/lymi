@@ -3,13 +3,13 @@
  * learner moves on by hand, its answer no longer moves the screen.
  */
 export type Flow =
-  | { step: "input" | "writing" | "list" }
+  | { step: "input" | "writing" | "linking" | "list" }
   | { step: "reading"; attempt: number }
   | { step: "questions"; showing: number | null };
 
 export type FlowEvent =
   /** The learner moved to a step by hand. */
-  | { type: "go"; step: "input" | "writing" | "questions" | "list" }
+  | { type: "go"; step: "input" | "writing" | "linking" | "questions" | "list" }
   | { type: "read"; attempt: number }
   | { type: "show"; attempt: number }
   /** An attempt's answer, which moves the screen only while that attempt still holds it. */
@@ -17,7 +17,7 @@ export type FlowEvent =
 
 export const START: Flow = { step: "input" };
 
-const at = (step: "input" | "writing" | "questions" | "list"): Flow =>
+const at = (step: "input" | "writing" | "linking" | "questions" | "list"): Flow =>
   step === "questions" ? { step, showing: null } : { step };
 
 export function flow(state: Flow, event: FlowEvent): Flow {

@@ -2,6 +2,7 @@ import {
   AnkiConnectCall,
   AnkiConnectNote,
   CARD_LIMITS,
+  fitSource,
   fitsLanguage,
   pronunciationText,
   type Scope,
@@ -294,18 +295,6 @@ function fitted(text: string, limit: number) {
   return (lastLine > 0 ? cut.slice(0, lastLine) : cut).trim();
 }
 
-/** The page, without its query when that is what makes it too long, or else its site. */
-function fittedSource(url: string) {
-  if (url.length <= CARD_LIMITS.source) return url;
-  try {
-    const parsed = new URL(url);
-    const page = `${parsed.origin}${parsed.pathname}`;
-    return page.length <= CARD_LIMITS.source ? page : parsed.host;
-  } catch {
-    return undefined;
-  }
-}
-
 function tagsOf(note: AnkiConnectNote) {
   const kept = new Map<string, string>();
   for (const tag of note.tags ?? []) {
@@ -351,7 +340,7 @@ function prepare(note: AnkiConnectNote | null, decks: Map<string, Deck>): Prepar
   const reading = plainText(field(note, "Reading"));
   const meaning = fitted(meaningText(field(note, "Meaning")), CARD_LIMITS.meaning);
   const example = fitted(plainText(field(note, "Sentence")), CARD_LIMITS.example);
-  const source = fittedSource(sourceText(field(note, "URL")));
+  const source = fitSource(sourceText(field(note, "URL")));
   const tags = tagsOf(note);
   return {
     ok: true,

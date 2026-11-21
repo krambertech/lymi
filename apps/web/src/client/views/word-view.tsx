@@ -14,6 +14,7 @@ import {
   pronunciationText,
   type ReviewMode,
   readFsrs,
+  sourceLink,
   termShowsPronunciation,
 } from "@lymi/core";
 import { notesToText } from "@lymi/core/notes";
@@ -673,7 +674,7 @@ export function WordView({
             ) : waiting("language") ? (
               <Skeleton key="language" className="h-3 w-16 rounded-sm" />
             ) : null,
-            card.source ?? deckName,
+            <SourceLine key="source" source={card.source} fallback={deckName} />,
             schedules.length > 0
               ? t`asked by ${listOf(
                   schedules.map((x) => i18n._(modeLabel(x.st.mode)).toLocaleLowerCase(i18n.locale)),
@@ -976,5 +977,22 @@ export function WordView({
         </section>
       )}
     </article>
+  );
+}
+
+/** The card's source, as a link to its site when it is a web address. */
+function SourceLine({ source, fallback }: { source: string | null; fallback: string }) {
+  const link = sourceLink(source);
+  if (!link) return <>{source ?? fallback}</>;
+  return (
+    <a
+      href={link.href}
+      title={link.href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="text-ink-secondary underline decoration-edge-strong underline-offset-2 hoverable:hover:decoration-current focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
+    >
+      {link.site}
+    </a>
   );
 }

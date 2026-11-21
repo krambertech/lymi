@@ -21,7 +21,14 @@ export type { Deck, DeckSummary } from "./decks";
 export type { Export } from "./exports";
 export type { Import, ImportPreview } from "./imports";
 export type { ApiKeyCreated, ApiKeySummary } from "./keys";
-export type { LessonEvent, LessonQuestion, LessonRead, LessonTerm } from "./lessons";
+export type {
+  LessonEvent,
+  LessonQuestion,
+  LessonRead,
+  LessonTerm,
+  LinkReadRefusal,
+} from "./lessons";
+export { linkReadRefusal } from "./lessons";
 export type { PushSubscriptionStatus } from "./push";
 export type { Readwise } from "./readwise";
 export {

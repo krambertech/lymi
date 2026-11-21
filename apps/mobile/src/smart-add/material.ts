@@ -119,19 +119,36 @@ export async function chooseFiles(room: number): Promise<Picked> {
   return { pages, text: texts.filter(Boolean).join("\n\n"), over };
 }
 
-/** The read's form: Expo's fetch sends a file it can read the bytes of, not React Native's `{ uri }`. */
+/**
+ * The read's form: Expo's fetch sends a file it can read the bytes of, not React Native's `{ uri }`.
+ * A link is read on its own; `reads` is the count the learner agreed a long article takes.
+ */
 export function lessonForm(
-  pages: Page[],
-  text: string,
+  material: { pages: Page[]; text: string; link: string },
   deckId: string | undefined,
   hint: string | undefined,
+  reads?: number,
 ) {
   const form = new FormData();
-  if (text.trim()) form.append("text", text.trim());
+  const link = material.link.trim();
+  if (link) form.append("link", link);
+  else if (material.text.trim()) form.append("text", material.text.trim());
+  if (reads) form.append("reads", String(reads));
   if (deckId) form.append("deckId", deckId);
   if (hint) form.append("hint", hint);
-  for (const page of pages) form.append("file", new File(page.uri) as unknown as Blob);
+  if (!link)
+    for (const page of material.pages) form.append("file", new File(page.uri) as unknown as Blob);
   return form;
 }
+
+/** A link as the list shows it: its site and path, without the scheme. */
+export const shownLink = (link: string) =>
+  link
+    .trim()
+    .replace(/^https:\/\//i, "")
+    .replace(/^www\./i, "");
+
+/** Whether a pasted link is one Smart add can try: https, with a host. */
+export const usableLink = (link: string) => /^https:\/\/\S+\.\S+/i.test(link.trim());
 
 export const wordCount = (text: string) => (text.trim() ? text.trim().split(/\s+/).length : 0);

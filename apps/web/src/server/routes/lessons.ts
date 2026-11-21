@@ -5,6 +5,7 @@ import { operatorEmails } from "../env";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
 import { decisionModel, termsAgainstAnswer } from "../lessons/keep";
+import { pageMarkdown } from "../lessons/link";
 import type { LessonMaterial } from "../lessons/reader";
 import { createLessonReader, LessonReaderError } from "../lessons/reader";
 import { posthogEnabled, reportServerException } from "../posthog";
@@ -14,6 +15,7 @@ import {
   type LessonEvent,
   lessonAccess,
   prepareLesson,
+  readLink,
   ServiceError,
   streamLesson,
 } from "../services";
@@ -50,9 +52,9 @@ lessonReads.post(
   describe({
     hide: true,
     learnerOnly: true,
-    summary: "Read a lesson into a pick list",
+    summary: "Read a lesson or an article's link into a pick list",
     description:
-      "Newline-delimited JSON: a term event per term as the model writes it, then questions, then done.",
+      "Newline-delimited JSON: a term event per term as the model writes it, then questions, then done. A `link` field reads an https article on its own; a link the site or service refuses is a 400 with code `link_refused`, and an article over 15,000 words is a 409 with code `long_read` until `reads` repeats the count it gives.",
     ok: { schema: LessonEventOut, description: "One line of the stream" },
     errors: [400, 404, 409, 503],
   }),
@@ -87,16 +89,35 @@ lessonReads.post(
       const page = await normalizeBoundedImage(c.env.IMAGES, bytes, PAGE_SIDE);
       material.images.push({ bytes: page.bytes, type: page.type });
     }
-    if (!material.text.trim() && material.images.length === 0 && material.pdfs.length === 0) {
-      throw new ServiceError("invalid", "Paste the lesson or add a photo or PDF of it.");
-    }
     // Refusals happen here, before the stream opens, so they arrive as ordinary errors.
     const deckId = form.get("deckId");
     const hint = form.get("hint");
+    const client = c.get("phone") ? "phone" : "web";
+    const link = form.get("link");
+    if (typeof link === "string" && link.trim()) {
+      if (material.text.trim() || material.images.length > 0 || material.pdfs.length > 0)
+        throw new ServiceError("invalid", "Smart add reads a link on its own.");
+      material.transcript = await readLink(
+        ctxOf(c),
+        link,
+        { request: fetch, toMarkdown: (page) => pageMarkdown(c.env, page) },
+        { client, deck: typeof deckId === "string" && deckId ? "fixed" : "guessed" },
+      );
+    }
+    if (
+      !material.text.trim() &&
+      material.images.length === 0 &&
+      material.pdfs.length === 0 &&
+      !material.transcript
+    ) {
+      throw new ServiceError("invalid", "Paste the lesson or add a photo or PDF of it.");
+    }
+    const reads = Number(form.get("reads"));
     const lesson = await prepareLesson(ctxOf(c), material, deps, {
       deckId: typeof deckId === "string" && deckId ? deckId : undefined,
       hint: typeof hint === "string" && hint ? hint : undefined,
-      client: c.get("phone") ? "phone" : "web",
+      client,
+      reads: Number.isInteger(reads) && reads > 0 ? reads : undefined,
     });
     const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
     const writer = writable.getWriter();

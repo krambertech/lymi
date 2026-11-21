@@ -5,6 +5,8 @@ import {
   errorMessage,
   type LessonQuestion,
   type LessonTerm,
+  type LinkReadRefusal,
+  linkReadRefusal,
   refusalCode,
 } from "@lymi/client/api";
 import { isolate } from "@lymi/core";
@@ -30,10 +32,13 @@ import {
   type Page,
   type Picked,
   scan,
+  shownLink,
+  usableLink,
   wordCount,
 } from "../smart-add/material";
 import {
   InputStep,
+  LinkingStep,
   ListStep,
   OWN_ANSWER,
   QuestionsStep,
@@ -84,13 +89,26 @@ export default function SmartAdd() {
   const attempts = useRef(0);
   // The Show terms under way, cleared by a move by hand so the next tap can start a new one.
   const asking = useRef<number | null>(null);
-  const go = (to: "input" | "writing" | "questions" | "list") => {
+  const go = (to: "input" | "writing" | "linking" | "questions" | "list") => {
     attempts.current++;
     asking.current = null;
     send({ type: "go", step: to });
   };
   const [pages, setPages] = useState<Page[]>([]);
   const [text, setText] = useState("");
+  const [link, setLink] = useState("");
+  /** The link as typed on its own step, kept apart until Done so Back leaves the old one. */
+  const [draftLink, setDraftLink] = useState("");
+  const [linkError, setLinkError] = useState<string>();
+  /** The article a link led to, whose address each added card keeps as its source. */
+  const [source, setSource] = useState<{ title: string; url: string } | null>(null);
+  /**
+   * Why the last link was not read: a long article waits for the learner to agree to its count of
+   * lessons, and a YouTube video offers to paste its transcript instead.
+   */
+  const [refusal, setRefusal] = useState<LinkReadRefusal | null>(null);
+  const longRead = refusal?.kind === "long_read" ? refusal : null;
+  const offerTranscript = refusal?.kind === "refused" && refusal.refused === "youtube";
   const [deckId, setDeckId] = useState(fixedDeck);
   const deck = decks.find((d) => d.id === deckId);
   const [error, setError] = useState<string>();
@@ -119,9 +137,11 @@ export default function SmartAdd() {
   const fresh = useMemo(() => terms.filter((term) => !term.existing), [terms]);
   const existing = useMemo(() => terms.filter((term) => term.existing), [terms]);
   const words = wordCount(text);
-  const empty = pages.length === 0 && words === 0;
+  const article = link.trim();
+  const empty = pages.length === 0 && words === 0 && !article;
+  const tooFewReads = longRead !== null && longRead.left !== null && longRead.left < longRead.reads;
   /** What was read last, so going back and forward with the same lesson keeps its list. */
-  const material = `${pages.map((page) => page.id).join()}|${text.trim()}`;
+  const material = `${pages.map((page) => page.id).join()}|${text.trim()}|${article}`;
   const readOf = useRef<string | null>(null);
 
   useEffect(() => () => stop.current?.abort(), []);
@@ -207,9 +227,63 @@ export default function SmartAdd() {
       hint: t`Paste notes or a transcript`,
       onPress: () => go("writing"),
     },
+    // A link is read on its own, so it is offered only before anything else is added.
+    ...(pages.length === 0 && words === 0
+      ? [
+          {
+            id: "link",
+            icon: "linkOn" as const,
+            label: t`Link`,
+            hint: t`An article on the web`,
+            onPress: () => {
+              setDraftLink(link);
+              setLinkError(undefined);
+              go("linking");
+            },
+          },
+        ]
+      : []),
   ];
 
-  const start = async () => {
+  /** What Smart add says about a link it would not read. */
+  const linkMessage = (refusal: LinkReadRefusal): string => {
+    switch (refusal.kind) {
+      case "refused":
+        if (refusal.refused === "youtube") {
+          return refusal.title
+            ? t`YouTube doesn’t let apps read the captions of “${refusal.title}”. Paste its transcript instead.`
+            : t`YouTube doesn’t let apps read its captions. Paste the video’s transcript instead.`;
+        }
+        if (refusal.refused === "drm") {
+          const service = refusal.service ?? t`This service`;
+          return t`${service} doesn’t let apps read what it plays. Paste the text instead.`;
+        }
+        return t`This site doesn’t allow apps to read it. Paste the text instead.`;
+      case "invalid":
+        return t`Paste a link to a public web page. It starts with https://.`;
+      case "too_long":
+        return t`This article is too long for Smart add. Paste the part you want to learn from.`;
+      case "unreadable":
+      case "long_read":
+        return t`Smart add couldn’t read this page. Paste its text instead.`;
+    }
+  };
+
+  const saveLink = () => {
+    const value = draftLink.trim();
+    if (value && !usableLink(value)) {
+      setLinkError(t`Paste a link to a public web page. It starts with https://.`);
+      return;
+    }
+    if (value !== link) {
+      setRefusal(null);
+      setError(undefined);
+    }
+    setLink(value);
+    go("input");
+  };
+
+  const start = async (reads?: number) => {
     if (decks.length === 0 && !fixedDeck) {
       setError(t`Create a deck first, then add a lesson to it.`);
       return;
@@ -227,6 +301,8 @@ export default function SmartAdd() {
       return;
     }
     setError(undefined);
+    setRefusal(null);
+    setSource(null);
     setTerms([]);
     setQuestions([]);
     setEdits(new Map());
@@ -253,7 +329,7 @@ export default function SmartAdd() {
     wake();
     try {
       await api.readLesson(
-        lessonForm(pages, text, fixedDeck, hint),
+        lessonForm({ pages, text, link }, fixedDeck, hint, reads),
         (event) => {
           wake();
           if (event.type === "deck") {
@@ -261,6 +337,7 @@ export default function SmartAdd() {
             if (!decks.some((d) => d.id === event.deckId))
               void qc.invalidateQueries({ queryKey: ["decks"] });
           }
+          if (event.type === "source") setSource({ title: event.title, url: event.url });
           if (event.type === "term") {
             found = [...found, event.term];
             setTerms(found);
@@ -292,13 +369,18 @@ export default function SmartAdd() {
       if (controller.signal.aborted && !quiet) return;
       send({ type: "settled", attempt, step: "input" });
       void qc.invalidateQueries({ queryKey: LESSON_ACCESS });
+      const declined = quiet ? null : linkReadRefusal(failure);
+      setRefusal(declined);
+      if (declined?.kind === "long_read") return;
       // The notice says the limit is reached; an error line under it would only repeat it.
       setError(
         quiet
           ? t`Couldn’t read the lesson. Try again.`
-          : refusalCode(failure) === "daily_limit"
-            ? undefined
-            : errorMessage(failure),
+          : declined
+            ? linkMessage(declined)
+            : refusalCode(failure) === "daily_limit"
+              ? undefined
+              : errorMessage(failure),
       );
     }
   };
@@ -370,7 +452,11 @@ export default function SmartAdd() {
               term: edit?.term ?? term.term,
               ...meaning,
               ...reading,
-              ...(term.heading ? { source: term.heading } : {}),
+              // The sentence is the article's own, so it stays with the term it was found for.
+              ...(term.example && (!edit || edit.term === term.term)
+                ? { example: term.example, exampleSource: "lesson" as const }
+                : {}),
+              ...(source ? { source: source.url } : term.heading ? { source: term.heading } : {}),
             };
           }),
         },
@@ -409,6 +495,14 @@ export default function SmartAdd() {
             close={{ ...back, onPress: () => go("input") }}
             title={t`Lesson text`}
             action={{ icon: "check", label: t`Done`, onPress: () => go("input") }}
+          />
+        );
+      case "linking":
+        return (
+          <FormHeader
+            close={{ ...back, onPress: () => go("input") }}
+            title={t`Article link`}
+            action={{ icon: "check", label: t`Done`, onPress: saveLink }}
           />
         );
       case "reading":
@@ -477,10 +571,15 @@ export default function SmartAdd() {
             middle={<SmartAddTitle />}
             action={{
               icon: "check",
-              label: t`Find terms`,
+              label:
+                longRead && !tooFewReads
+                  ? t`${plural(longRead.reads, { one: "Read as # lesson", other: "Read as # lessons" })}`
+                  : t`Find terms`,
               disabled:
-                empty || ((atLimit || !online) && !(finished && readOf.current === material)),
-              onPress: () => void start(),
+                empty ||
+                tooFewReads ||
+                ((atLimit || !online) && !(finished && readOf.current === material)),
+              onPress: () => void start(longRead?.reads),
             }}
           />
         );
@@ -506,6 +605,25 @@ export default function SmartAdd() {
             <InputStep
               pages={pages}
               text={text}
+              link={link}
+              onEditLink={() => {
+                setDraftLink(link);
+                setLinkError(undefined);
+                go("linking");
+              }}
+              onRemoveLink={() => {
+                setLink("");
+                setRefusal(null);
+                setError(undefined);
+              }}
+              longRead={longRead}
+              offerTranscript={offerTranscript}
+              onPasteTranscript={() => {
+                setLink("");
+                setRefusal(null);
+                setError(undefined);
+                go("writing");
+              }}
               onRemovePage={(id) => {
                 const removed = pages.find((page) => page.id === id);
                 if (removed) discard(removed.uri);
@@ -520,8 +638,25 @@ export default function SmartAdd() {
             />
           )}
           {step === "writing" && <WritingStep text={text} onChange={setText} inputRef={textRef} />}
+          {step === "linking" && (
+            <LinkingStep
+              link={draftLink}
+              onChange={(value) => {
+                setDraftLink(value);
+                setLinkError(undefined);
+              }}
+              onDone={saveLink}
+              error={linkError}
+            />
+          )}
           {step === "reading" && (
-            <ReadingStep pages={pages} text={text} terms={fresh} finished={finished} />
+            <ReadingStep
+              pages={article ? [] : pages}
+              text={article ? (source?.title ?? shownLink(article)) : text}
+              article={!!article}
+              terms={fresh}
+              finished={finished}
+            />
           )}
           {step === "questions" && (
             <QuestionsStep
@@ -556,6 +691,7 @@ export default function SmartAdd() {
                 )
               }
               onOpen={setEditing}
+              article={!!source}
               error={error}
             />
           )}

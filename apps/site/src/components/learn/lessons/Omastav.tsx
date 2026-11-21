@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { CornerDownRight } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   capital,
   clipId,
@@ -623,7 +623,7 @@ export function OmastavLesson() {
   const questions = lessonBySlug("kusimused")?.n;
   const places = lessonBySlug("kohad")?.n;
   const time = lessonBySlug("kell")?.n;
-  const stems = LESSONS.find((lesson) => lesson.et === "Pood, poe")?.n;
+  const stems = lessonBySlug("pood-poe")?.n;
 
   const whoseItems = useMemo<WhoseItem[]>(
     () =>

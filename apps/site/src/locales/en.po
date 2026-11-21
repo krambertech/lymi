@@ -28,6 +28,9 @@ msgstr "-me now, -sime in the past."
 msgid "-n now, -sin in the past."
 msgstr "-n now, -sin in the past."
 
+msgid "-s and -l go on the stem"
+msgstr "-s and -l go on the stem"
+
 msgid "-s or -l?"
 msgstr "-s or -l?"
 
@@ -151,15 +154,17 @@ msgstr "{0}, next in {1}"
 msgid "{0}, right answer"
 msgstr "{0}, right answer"
 
+#. placeholder {0}: i18n._(WORD_MEANS[noun.word])
+#. placeholder {1}: noun.stem
+msgid "{0}, stem <0>{1}</0>"
+msgstr "{0}, stem <0>{1}</0>"
+
 #. placeholder {0}: place.meaning
 msgid "{0}, your answer"
 msgstr "{0}, your answer"
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {# card added} other {# cards added}}"
-
-msgid "{base} becomes {form}"
-msgstr "{base} becomes {form}"
 
 msgid "{cardCount, plural, one {See the card} other {See all # cards}}"
 msgstr "{cardCount, plural, one {See the card} other {See all # cards}}"
@@ -548,11 +553,20 @@ msgstr "<0>-ne</0> becomes <1>-se</1>, then <2>-st</2>."
 msgid "<0>-ne</0> becomes <1>-st</1>."
 msgstr "<0>-ne</0> becomes <1>-st</1>."
 
+msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
+msgstr "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
+
 msgid "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
 msgstr "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
 
 msgid "<0>-us</0> takes <1>-t</1>."
 msgstr "<0>-us</0> takes <1>-t</1>."
+
+#. placeholder {0}: noun.word
+#. placeholder {1}: noun.stem
+#. placeholder {2}: noun.stem
+msgid "<0>{0}, {1}</0>: the ending goes on <1>{2}</1>."
+msgstr "<0>{0}, {1}</0>: the ending goes on <1>{2}</1>."
 
 #. placeholder {0}: before.word
 #. placeholder {1}: step.word
@@ -573,6 +587,9 @@ msgstr "<0>{0}</0> is <1>{1}</1> without its last letter."
 #. placeholder {1}: said.answer
 msgid "<0>{0}</0>: <1>{1}</1>"
 msgstr "<0>{0}</0>: <1>{1}</1>"
+
+msgid "<0>{base}</0> becomes <1>{form}</1>"
+msgstr "<0>{base}</0> becomes <1>{form}</1>"
 
 msgid "<0>{before}</0> blank <1>{after}</1>"
 msgstr "<0>{before}</0> blank <1>{after}</1>"
@@ -975,6 +992,9 @@ msgstr "2 quizzes"
 msgid "2 quizzes and a conversation"
 msgstr "2 quizzes and a conversation"
 
+msgid "2 quizzes and a passage"
+msgstr "2 quizzes and a passage"
+
 msgid "2 quizzes and a passage with gaps"
 msgstr "2 quizzes and a passage with gaps"
 
@@ -1209,6 +1229,15 @@ msgstr "A dictionary gives a noun in three forms, always in the same order: <0>k
 msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. The second form is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
 msgstr "A dictionary gives a noun in three forms, as lesson {forms} shows. The second form is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
 
+msgid "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as that pair and you can put <1>-s</1> or <2>-l</2> on it. A stem changes a letter inside, gains a vowel at the end, or stays the same as the word. The next sections take one each."
+msgstr "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as that pair and you can put <1>-s</1> or <2>-l</2> on it. A stem changes a letter inside, gains a vowel at the end, or stays the same as the word. The next sections take one each."
+
+msgid "A dictionary gives the stem second. Learn each noun as that pair: <0>pood, poe</0>."
+msgstr "A dictionary gives the stem second. Learn each noun as that pair: <0>pood, poe</0>."
+
+msgid "A dictionary lists a third form too: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
+msgstr "A dictionary lists a third form too: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
+
 msgid "A dictionary lists a verb in its -ma form: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
 msgstr "A dictionary lists a verb in its -ma form: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
 
@@ -1253,6 +1282,9 @@ msgstr "A few words break the rule: <0/>, thank you, puts the stress on its seco
 
 msgid "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
 msgstr "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
+
+msgid "A final vowel is no guarantee: <0>tuba</0> ends in one too, and its stem is <1>toa</1>. The dictionary pair settles it: <2>kodu, kodu</2> but <3>tuba, toa</3>."
+msgstr "A final vowel is no guarantee: <0>tuba</0> ends in one too, and its stem is <1>toa</1>. The dictionary pair settles it: <2>kodu, kodu</2> but <3>tuba, toa</3>."
 
 msgid "A first-line drug for type 2 diabetes; it lowers the glucose the liver makes"
 msgstr "A first-line drug for type 2 diabetes; it lowers the glucose the liver makes"
@@ -1307,6 +1339,9 @@ msgstr "A free flashcard app for Ukrainian. Each card marks its stress until you
 
 msgid "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
 msgstr "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
+
+msgid "A free lesson on Estonian noun stems: why pood becomes poes and tuba becomes toas, words that add a vowel (koolis, raamatus), words that stay the same (kodus), and how a dictionary shows the stem. Every sentence is read aloud."
+msgstr "A free lesson on Estonian noun stems: why pood becomes poes and tuba becomes toas, words that add a vowel (koolis, raamatus), words that stay the same (kodus), and how a dictionary shows the stem. Every sentence is read aloud."
 
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
 msgstr "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
@@ -1401,6 +1436,12 @@ msgstr "A lecture PDF in the folder goes to Gemini with “Make flashcards from 
 
 msgid "A lesson transcript"
 msgstr "A lesson transcript"
+
+msgid "A letter drops or changes inside: <0>pood, poe</0>; <1>tuba, toa</1>."
+msgstr "A letter drops or changes inside: <0>pood, poe</0>; <1>tuba, toa</1>."
+
+msgid "A letter inside drops or changes"
+msgstr "A letter inside drops or changes"
 
 msgid "A link, with viewers and editors"
 msgstr "A link, with viewers and editors"
@@ -1604,6 +1645,9 @@ msgstr "A score for one attempt"
 
 msgid "a shop"
 msgstr "a shop"
+
+msgid "A shop is <0>pood</0>, but in the shop is <1>poes</1>. <2>-s</2> and <3>-l</3> go on the noun’s stem, and the stem can differ from the word."
+msgstr "A shop is <0>pood</0>, but in the shop is <1>poes</1>. <2>-s</2> and <3>-l</3> go on the noun’s stem, and the stem can differ from the word."
 
 msgid "A shop’s opening hours"
 msgstr "A shop’s opening hours"
@@ -2230,6 +2274,9 @@ msgstr "All of them. You can hear what a question asks."
 msgid "All of them. You can hear who it’s about."
 msgstr "All of them. You can hear who it’s about."
 
+msgid "All of them. You found the word behind every form."
+msgstr "All of them. You found the word behind every form."
+
 msgid "All of them. You hear who does it."
 msgstr "All of them. You hear who does it."
 
@@ -2250,6 +2297,9 @@ msgstr "All of them. You picked the place in every sentence."
 
 msgid "All of them. You picked the right ending every time."
 msgstr "All of them. You picked the right ending every time."
+
+msgid "All of them. You put every ending on the stem."
+msgstr "All of them. You put every ending on the stem."
 
 msgid "All of them. You told <0>-s</0>, <1>-sse</1> and <2>-st</2> apart every time."
 msgstr "All of them. You told <0>-s</0>, <1>-sse</1> and <2>-st</2> apart every time."
@@ -2786,6 +2836,9 @@ msgstr "At ten"
 
 msgid "At the café"
 msgstr "At the café"
+
+msgid "at the door"
+msgstr "at the door"
 
 msgid "at the market"
 msgstr "at the market"
@@ -4369,6 +4422,9 @@ msgstr "Each round gives a word and the noun it owns. Type the word’s genitive
 msgid "Each round shows a new word. Type its third form."
 msgstr "Each round shows a new word. Type its third form."
 
+msgid "Each round shows a noun as a dictionary gives it, with its stem, and a meaning such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
+msgstr "Each round shows a noun as a dictionary gives it, with its stem, and a meaning such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
+
 msgid "Each round shows a number. Pick the form of the noun that follows it, then hear the two together."
 msgstr "Each round shows a number. Pick the form of the noun that follows it, then hear the two together."
 
@@ -4404,6 +4460,9 @@ msgstr "Each time you remember a word, Lymi waits longer before showing it again
 
 msgid "Each time you remember a word, Lymi waits longer before showing it again. Forget it, and it comes back soon. You arrive at the next lesson still knowing the last one."
 msgstr "Each time you remember a word, Lymi waits longer before showing it again. Forget it, and it comes back soon. You arrive at the next lesson still knowing the last one."
+
+msgid "Each word gains a vowel at the end: <0>kooli, ukse, raamatu</0>."
+msgstr "Each word gains a vowel at the end: <0>kooli, ukse, raamatu</0>."
 
 msgid "Each word is its second form plus <0>-d</0>."
 msgstr "Each word is its second form plus <0>-d</0>."
@@ -4617,6 +4676,9 @@ msgstr "Estonian is spelled the way it sounds. You say every letter, and each on
 
 msgid "Estonian letters"
 msgstr "Estonian letters"
+
+msgid "Estonian noun stems"
+msgstr "Estonian noun stems"
 
 msgid "Estonian numbers"
 msgstr "Estonian numbers"
@@ -5468,6 +5530,9 @@ msgstr "From tulema, to come."
 msgid "From tuul, wind."
 msgstr "From tuul, wind."
 
+msgid "From ujuma, to swim."
+msgstr "From ujuma, to swim."
+
 msgid "from Ukraine"
 msgstr "from Ukraine"
 
@@ -5911,6 +5976,9 @@ msgstr "He or she is going to work."
 msgid "He or she is having coffee in a café."
 msgstr "He or she is having coffee in a café."
 
+msgid "He or she is in the room."
+msgstr "He or she is in the room."
+
 msgid "He or she is reading a book."
 msgstr "He or she is reading a book."
 
@@ -5955,6 +6023,9 @@ msgstr "he or she went"
 
 msgid "He or she went to work."
 msgstr "He or she went to work."
+
+msgid "He or she works at home."
+msgstr "He or she works at home."
 
 msgid "He or she works from home."
 msgstr "He or she works from home."
@@ -6033,6 +6104,9 @@ msgstr "Hear a sentence and pick the place. Listen for the word that ends in <0>
 msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 msgstr "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
 
+msgid "Hear a sentence and pick the word as a dictionary lists it. You hear <0>toas</0>, and you look up <1>tuba</1>."
+msgstr "Hear a sentence and pick the word as a dictionary lists it. You hear <0>toas</0>, and you look up <1>tuba</1>."
+
 msgid "Hear a sentence and pick what it means: being something, or having it. Between <0>ta on</0> and <1>tal on</1>, only the <2>-l</2> differs."
 msgstr "Hear a sentence and pick what it means: being something, or having it. Between <0>ta on</0> and <1>tal on</1>, only the <2>-l</2> differs."
 
@@ -6101,6 +6175,9 @@ msgstr "Hearing one or many"
 
 msgid "Hearing the place"
 msgstr "Hearing the place"
+
+msgid "Hearing the word behind the form"
+msgstr "Hearing the word behind the form"
 
 msgid "Hearing who has it"
 msgstr "Hearing who has it"
@@ -7143,6 +7220,9 @@ msgstr "In <0/>, to buy, <1>ta</1> takes <2>is</2>: <3/>, I bought, but <4/>, he
 msgid "In <0>kool, kooli, kooli</0> the second and third forms are the same word. Many short words work this way, such as <1/>, town. In some words ending in a vowel all three match: <2/>, house, is <3>maja, maja, maja</3>."
 msgstr "In <0>kool, kooli, kooli</0> the second and third forms are the same word. Many short words work this way, such as <1/>, town. In some words ending in a vowel all three match: <2/>, house, is <3>maja, maja, maja</3>."
 
+msgid "In <0>pood, poe</0> the <1>d</1> drops, the long <2>oo</2> turns short, and an <3>e</3> ends the stem. In <4/>, room, the <5>b</5> drops and the <6>u</6> turns into <7>o</7>: the stem is <8/>, and in the room is <9/>."
+msgstr "In <0>pood, poe</0> the <1>d</1> drops, the long <2>oo</2> turns short, and an <3>e</3> ends the stem. In <4/>, room, the <5>b</5> drops and the <6>u</6> turns into <7>o</7>: the stem is <8/>, and in the room is <9/>."
+
 msgid "In a bar in Spain, you ask them to “put” you one."
 msgstr "In a bar in Spain, you ask them to “put” you one."
 
@@ -7233,6 +7313,9 @@ msgstr "In lesson {days} you met <0/>, yesterday. It goes with the past: <1><2/>
 msgid "In lesson {places} you learned <0/>, at school, and <1/>, in Tallinn. Take off the <2>-s</2> and you have the genitive: <3/>, <4/>. The vowel that appeared before the <5>-s</5> belongs to the genitive."
 msgstr "In lesson {places} you learned <0/>, at school, and <1/>, in Tallinn. Take off the <2>-s</2> and you have the genitive: <3/>, <4/>. The vowel that appeared before the <5>-s</5> belongs to the genitive."
 
+msgid "In lesson {places} you put <0>-s</0> on a place to say in: <1/>, <2/>. A shop is <3/>, but in the shop is <4/>, not <5>poodis</5>."
+msgstr "In lesson {places} you put <0>-s</0> on a place to say in: <1/>, <2/>. A shop is <3/>, but in the shop is <4/>, not <5>poodis</5>."
+
 msgid "In lesson {present} you learned a verb as two forms: <0/>, to read, and its I form, <1/>. A dictionary gives a third between them, the <2>-da</2> form: <3/>."
 msgstr "In lesson {present} you learned a verb as two forms: <0/>, to read, and its I form, <1/>. A dictionary gives a third between them, the <2>-da</2> form: <3/>."
 
@@ -7265,6 +7348,9 @@ msgstr "In progress"
 
 msgid "In Quizlet you choose a set and a study mode. In Lymi you open Today, and spaced repetition has already picked the cards that need you."
 msgstr "In Quizlet you choose a set and a study mode. In Lymi you open Today, and spaced repetition has already picked the cards that need you."
+
+msgid "In some nouns a letter inside drops or changes: <0>tuba, toa, toas</0>."
+msgstr "In some nouns a letter inside drops or changes: <0>tuba, toa, toas</0>."
 
 msgid "In some verbs the stem changes: <0/>, but <1/>. Start from the ma form, not the dictionary form, and the no follows: <2/>."
 msgstr "In some verbs the stem changes: <0/>, but <1/>. Start from the ma form, not the dictionary form, and the no follows: <2/>."
@@ -7570,6 +7656,9 @@ msgstr "It’s okay"
 msgid "It’s raining, so I want to *take a taxi*."
 msgstr "It’s raining, so I want to *take a taxi*."
 
+msgid "It’s Saturday, and the passage says where everyone is. Pick the right form for each gap. When every gap is filled, hear the whole passage."
+msgstr "It’s Saturday, and the passage says where everyone is. Pick the right form for each gap. When every gap is filled, hear the whole passage."
+
 msgid "It’s Saturday, half past ten, and you don’t work on Sundays. Mari speaks first; pick what you say back."
 msgstr "It’s Saturday, half past ten, and you don’t work on Sundays. Mari speaks first; pick what you say back."
 
@@ -7639,6 +7728,9 @@ msgstr "Jaan does."
 
 msgid "Jaan has a car."
 msgstr "Jaan has a car."
+
+msgid "Jaan is at the door."
+msgstr "Jaan is at the door."
 
 msgid "Jaan is Kati’s brother, so my: <0>minu</0>."
 msgstr "Jaan is Kati’s brother, so my: <0>minu</0>."
@@ -8603,6 +8695,9 @@ msgstr "makes a yes-or-no question"
 msgid "Making cards with AI"
 msgstr "Making cards with AI"
 
+msgid "Making the form"
+msgstr "Making the form"
+
 msgid "Making the plural"
 msgstr "Making the plural"
 
@@ -8613,8 +8708,11 @@ msgctxt "plural"
 msgid "Many"
 msgstr "Many"
 
-msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {genitive} shows where the vowel comes from."
-msgstr "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {genitive} shows where the vowel comes from."
+msgid "Many nouns that end in a vowel are their own stem. <0/> is home, and at home is <1/>. The ending goes straight on."
+msgstr "Many nouns that end in a vowel are their own stem. <0/> is home, and at home is <1/>. The ending goes straight on."
+
+msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {stems} shows where the vowel comes from."
+msgstr "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {stems} shows where the vowel comes from."
 
 msgid "Many: the verb form of <0>nad</0>"
 msgstr "Many: the verb form of <0>nad</0>"
@@ -9008,6 +9106,9 @@ msgstr "Mum has a question."
 
 msgid "Mum is at the market."
 msgstr "Mum is at the market."
+
+msgid "Mum is at the shop."
+msgstr "Mum is at the shop."
 
 msgid "music"
 msgstr "music"
@@ -9461,6 +9562,9 @@ msgstr "noun"
 msgid "Nouns and cases"
 msgstr "Nouns and cases"
 
+msgid "Nouns that stay the same"
+msgstr "Nouns that stay the same"
+
 msgid "Now"
 msgstr "Now"
 
@@ -9647,6 +9751,9 @@ msgstr "on the table"
 
 msgid "on the wall"
 msgstr "on the wall"
+
+msgid "on the windowsill"
+msgstr "on the windowsill"
 
 msgid "On your phone"
 msgstr "On your phone"
@@ -9916,6 +10023,9 @@ msgstr "Other MCP apps"
 
 msgid "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
 msgstr "Other minutes, up to twenty past, count from the hour that has struck. <0/> is, word for word, “ten minutes, three passed”: 3:10. <1/> means through or past, and <2/> is the partitive of <3>minut</3>, the form after a number; lesson {partitive} explains it."
+
+msgid "Other nouns keep every letter and gain a vowel at the end. <0/>, school, has the stem <1/>, so at school is <2/>. That’s also where the <3>a</3> in <4/>, from lesson {places}, comes from."
+msgstr "Other nouns keep every letter and gain a vowel at the end. <0/>, school, has the stem <1/>, so at school is <2/>. That’s also where the <3>a</3> in <4/>, from lesson {places}, comes from."
 
 msgid "Other people, not the ones you’re talking to."
 msgstr "Other people, not the ones you’re talking to."
@@ -11662,6 +11772,9 @@ msgstr "Some everyday words also have a short form for where to, with no <0>-sse
 msgid "Some everyday words have a short form for where to: <0>kooli, poodi, linna, majja, koju</0>."
 msgstr "Some everyday words have a short form for where to: <0>kooli, poodi, linna, majja, koju</0>."
 
+msgid "Some gain a vowel at the end, and the vowel can’t be guessed: <0>kool, kooli, koolis</0>."
+msgstr "Some gain a vowel at the end, and the vowel can’t be guessed: <0>kool, kooli, koolis</0>."
+
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 
@@ -11670,6 +11783,9 @@ msgstr "Some places take <0>-l</0> by habit, such as <1>turul</1> and names endi
 
 msgid "Some short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
 msgstr "Some short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
+
+msgid "Some stay as they are: <0>kodu, kodus</0>."
+msgstr "Some stay as they are: <0>kodu, kodus</0>."
 
 msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
 msgstr "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
@@ -12057,6 +12173,21 @@ msgstr "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line 
 
 msgid "Switch between Do and Don’t, and tap a line to hear it."
 msgstr "Switch between Do and Don’t, and tap a line to hear it."
+
+msgid "Switch through the six nouns above once more, then try again."
+msgstr "Switch through the six nouns above once more, then try again."
+
+msgid "Switch through the three sets above once more, then try again."
+msgstr "Switch through the three sets above once more, then try again."
+
+msgid "Switch to “The stem” and watch the end of each word."
+msgstr "Switch to “The stem” and watch the end of each word."
+
+msgid "Switch to “The stem” and watch which letters change."
+msgstr "Switch to “The stem” and watch which letters change."
+
+msgid "Switch to “The stem”: no letter changes."
+msgstr "Switch to “The stem”: no letter changes."
 
 msgid "Switch to I have and watch the start of each line."
 msgstr "Switch to I have and watch the start of each line."
@@ -12742,6 +12873,9 @@ msgstr "The children are playing in the *park*."
 msgid "The children are reading."
 msgstr "The children are reading."
 
+msgid "The coffee is on the windowsill."
+msgstr "The coffee is on the windowsill."
+
 msgid "The command of <0>tulema</0>, to come, from lesson {commands}."
 msgstr "The command of <0>tulema</0>, to come, from lesson {commands}."
 
@@ -12820,6 +12954,9 @@ msgstr "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
 msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 msgstr "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 
+msgid "The ending comes after the vowel: <0>koolis, uksel</0>."
+msgstr "The ending comes after the vowel: <0>koolis, uksel</0>."
+
 msgid "The ending for ma, I."
 msgstr "The ending for ma, I."
 
@@ -12837,6 +12974,15 @@ msgstr "The ending for ta, he or she. Olema has on here."
 
 msgid "The ending for te: you, to more than one; polite you."
 msgstr "The ending for te: you, to more than one; polite you."
+
+msgid "The ending goes on the noun’s stem, as a verb’s endings go on its stem in lesson {present}. The stem of <0>pood</0> is <1/>, and <2>poe</2> with <3>-s</3> is <4>poes</4>. Tap each step to hear it."
+msgstr "The ending goes on the noun’s stem, as a verb’s endings go on its stem in lesson {present}. The stem of <0>pood</0> is <1/>, and <2>poe</2> with <3>-s</3> is <4>poes</4>. Tap each step to hear it."
+
+msgid "The ending goes on the stem: <0>poes</0>, not <1>poodis</1>."
+msgstr "The ending goes on the stem: <0>poes</0>, not <1>poodis</1>."
+
+msgid "The ending goes straight on: <0>kodus, tööl</0>."
+msgstr "The ending goes straight on: <0>kodus, tööl</0>."
 
 msgid "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
 msgstr "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
@@ -13231,6 +13377,9 @@ msgstr "The phone app asks permission before sending your own content to AI. On 
 msgid "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back less often as you learn it."
 msgstr "The phrase your tutor typed in the chat, the word you looked up twice in a novel. Save it in a few seconds, hear how it’s said, and Lymi brings it back less often as you learn it."
 
+msgid "The picture is in the book."
+msgstr "The picture is in the book."
+
 msgid "The picture is on the wall."
 msgstr "The picture is on the wall."
 
@@ -13484,6 +13633,12 @@ msgstr "The soup *is* cold."
 msgid "The steam in a sauna"
 msgstr "The steam in a sauna"
 
+msgid "the stem"
+msgstr "the stem"
+
+msgid "The stem"
+msgstr "The stem"
+
 msgid "The stem alone"
 msgstr "The stem alone"
 
@@ -13498,6 +13653,13 @@ msgstr "The stem is the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>
 
 msgid "The stem is the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
 msgstr "The stem is the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+
+msgid "The stem is the word itself."
+msgstr "The stem is the word itself."
+
+#. placeholder {0}: noun.word
+msgid "The stem of {0}: -s and -l go on it."
+msgstr "The stem of {0}: -s and -l go on it."
 
 msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
 msgstr "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
@@ -13670,11 +13832,20 @@ msgstr "The woman is drinking coffee."
 msgid "The women are drinking coffee."
 msgstr "The women are drinking coffee."
 
+msgid "the word"
+msgstr "the word"
+
 msgid "The word"
 msgstr "The word"
 
 msgid "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
 msgstr "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
+
+msgid "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s second form does."
+msgstr "The word doesn’t show which vowel it gains: <0/>, <1/>; <2/>, <3/>. The dictionary’s second form does."
+
+msgid "The word, its stem or the stem with an ending"
+msgstr "The word, its stem or the stem with an ending"
 
 msgid "The words and phrases from each unit of the course."
 msgstr "The words and phrases from each unit of the course."
@@ -13813,6 +13984,9 @@ msgstr "They worked"
 
 msgid "They’re at home."
 msgstr "They’re at home."
+
+msgid "They’re at the market."
+msgstr "They’re at the market."
 
 msgid "They’re drinking coffee."
 msgstr "They’re drinking coffee."
@@ -14920,6 +15094,12 @@ msgstr "we speak"
 msgid "We study in Tartu."
 msgstr "We study in Tartu."
 
+msgid "we swim"
+msgstr "we swim"
+
+msgid "We swim in the river."
+msgstr "We swim in the river."
+
 msgid "We update this policy when our practices change. The date above shows the latest revision. We provide additional notice when required by law."
 msgstr "We update this policy when our practices change. The date above shows the latest revision. We provide additional notice when required by law."
 
@@ -14946,6 +15126,9 @@ msgstr "We’re going into *town*."
 
 msgid "We’re going to town."
 msgstr "We’re going to town."
+
+msgid "We’re in a café."
+msgstr "We’re in a café."
 
 msgid "We’re looking for a new *flat*."
 msgstr "We’re looking for a new *flat*."
@@ -15486,6 +15669,9 @@ msgstr "Which form follows?"
 msgid "Which form goes first?"
 msgstr "Which form goes first?"
 
+msgid "Which form?"
+msgstr "Which form?"
+
 msgid "Which forms go together?"
 msgstr "Which forms go together?"
 
@@ -15500,6 +15686,9 @@ msgstr "Which language do they speak?"
 
 msgid "Which languages can I learn?"
 msgstr "Which languages can I learn?"
+
+msgid "Which letters change follows rules of its own, and lesson {gradation} teaches them. For now, take the stem from the dictionary."
+msgstr "Which letters change follows rules of its own, and lesson {gradation} teaches them. For now, take the stem from the dictionary."
 
 msgid "Which nerve moves your tongue?"
 msgstr "Which nerve moves your tongue?"
@@ -15542,6 +15731,9 @@ msgstr "Which verb is it?"
 
 msgid "Which word did you hear?"
 msgstr "Which word did you hear?"
+
+msgid "Which word?"
+msgstr "Which word?"
 
 msgid "Which words do I keep forgetting?"
 msgstr "Which words do I keep forgetting?"
@@ -15602,6 +15794,9 @@ msgstr "Who is responsible"
 
 msgid "Who is that?"
 msgstr "Who is that?"
+
+msgid "Who is where on Saturday"
+msgstr "Who is where on Saturday"
 
 msgid "Who knows?"
 msgstr "Who knows?"
@@ -15689,6 +15884,9 @@ msgstr "With -s or -l"
 
 msgid "With A1 if Spanish is new to you, or with Spanish Top 100 Verbs and Spanish Top 1000 Words if you’d rather learn the words you’ll hear most first. You can take both at once."
 msgstr "With A1 if Spanish is new to you, or with Spanish Top 100 Verbs and Spanish Top 1000 Words if you’d rather learn the words you’ll hear most first. You can take both at once."
+
+msgid "With an ending"
+msgstr "With an ending"
 
 msgid "With ma, the verb ends in -n: ma joon."
 msgstr "With ma, the verb ends in -n: ma joon."
@@ -16143,6 +16341,9 @@ msgstr "You have a good teacher. To more than one, or polite."
 
 msgid "You have a teacher."
 msgstr "You have a teacher."
+
+msgid "You have met two of these already: <0/>, on the table, is from <1/>, and <2/>, at the market, is from <3/>. Switch through the three steps for six nouns."
+msgstr "You have met two of these already: <0/>, on the table, is from <1/>, and <2/>, at the market, is from <3/>. Switch through the three steps for six nouns."
 
 msgid "You know <0>{term}</0>. Its pinyin goes from the examples on all your cards."
 msgstr "You know <0>{term}</0>. Its pinyin goes from the examples on all your cards."

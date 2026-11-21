@@ -2,7 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Fragment, type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -234,8 +234,7 @@ type ThirdItem = FormItem & { pair: readonly [string, string] };
 
 export function PohivormidLesson() {
   const { t, i18n } = useLingui();
-  const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
-  const stems = at("Pood, poe");
+  const stems = lessonBySlug("pood-poe")?.n;
   const genitive = lessonBySlug("omastav")?.n;
   const partitive = lessonBySlug("osastav")?.n;
 

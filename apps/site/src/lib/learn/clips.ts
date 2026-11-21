@@ -1249,6 +1249,106 @@ export const INFINITIVE_WORDS = [
   "Ma hakkan täna kodus õppima.",
 ] as const;
 /**
+ * The plural lesson's nouns: the first and second forms a dictionary gives, and the plural, the
+ * second form with -d. `same` words only gain a vowel or nothing; `changed` ones keep lesson 13's
+ * stem change. Checked in ÕS 2025 on Sõnaveeb (EKI morphology, 21 Nov 2026).
+ */
+export const MITMUS_SAME = [
+  { one: "maja", second: "maja", many: "majad" },
+  { one: "auto", second: "auto", many: "autod" },
+  { one: "kass", second: "kassi", many: "kassid" },
+  { one: "kool", second: "kooli", many: "koolid" },
+  { one: "linn", second: "linna", many: "linnad" },
+  { one: "raamat", second: "raamatu", many: "raamatud" },
+  { one: "laps", second: "lapse", many: "lapsed" },
+  { one: "uks", second: "ukse", many: "uksed" },
+] as const;
+
+export const MITMUS_CHANGED = [
+  { one: "pood", second: "poe", many: "poed" },
+  { one: "tuba", second: "toa", many: "toad" },
+  { one: "jõgi", second: "jõe", many: "jõed" },
+  { one: "mees", second: "mehe", many: "mehed" },
+  { one: "naine", second: "naise", many: "naised" },
+  { one: "sõber", second: "sõbra", many: "sõbrad" },
+] as const;
+
+export type PluralNoun = (typeof MITMUS_SAME)[number] | (typeof MITMUS_CHANGED)[number];
+
+/** A dictionary's first two forms, said as one clip: “tuba, toa”. */
+export const dictionaryPair = ({ one, second }: { one: string; second: string }) =>
+  `${one}, ${second}`;
+
+/**
+ * One person or thing and many, with the verb that agrees: the ta form ends in -b, the plural takes
+ * the nad form in -vad, and on stays on. Sõnaveeb: loevad, räägivad, ootavad, töötavad, joovad.
+ */
+export const MITMUS_SENTENCES = [
+  { one: "laps", many: "lapsed", verb: ["loe", "b", "vad"], tail: "" },
+  { one: "õpetaja", many: "õpetajad", verb: ["räägi", "b", "vad"], tail: "" },
+  { one: "sõber", many: "sõbrad", verb: ["oota", "b", "vad"], tail: "" },
+  { one: "mees", many: "mehed", verb: ["tööta", "b", "vad"], tail: "" },
+  { one: "naine", many: "naised", verb: ["joo", "b", "vad"], tail: " kohvi" },
+  { one: "kass", many: "kassid", verb: ["on", "", ""], tail: " kodus" },
+] as const;
+
+export type PluralSentence = (typeof MITMUS_SENTENCES)[number];
+
+/** The sentence for one or for many: “Laps loeb.”, “Lapsed loevad.” */
+export const pluralSentence = ({ one, many, verb, tail }: PluralSentence, more: boolean) =>
+  `${capital(more ? many : one)} ${verb[0]}${more ? verb[2] : verb[1]}${tail}.`;
+
+/** Adjective and noun, one and many. Sõnaveeb: suured, väikesed, uued, vanad, head, ilusad. */
+export const MITMUS_ADJECTIVES = [
+  { one: "suur maja", many: "suured majad" },
+  { one: "väike kass", many: "väikesed kassid" },
+  { one: "uus raamat", many: "uued raamatud" },
+  { one: "vana linn", many: "vanad linnad" },
+  { one: "hea sõber", many: "head sõbrad" },
+  { one: "ilus tuba", many: "ilusad toad" },
+] as const;
+
+/** A home in Tartu, cut into gaps in the lesson: three want one, three want many. Magama is glossed before it. */
+export const MITMUS_PASSAGE = [
+  "Me elame Tartus.",
+  "Meie kodu on väike, aga toad on suured.",
+  "Ema ja isa töötavad Tallinnas.",
+  "Lapsed õpivad koolis.",
+  "Meie kass magab kodus.",
+  "Ta on väike ja ilus.",
+] as const;
+
+/** Words and lines the plural lesson says outside its lists. */
+export const MITMUS_WORDS = [
+  "nad",
+  "kaks kassi",
+  "Maja on suur.",
+  "Majad on suured.",
+  "magama",
+  "suur",
+  "suure",
+  "suured",
+  "väike",
+  "ilus",
+  "Ema ja isa töötavad.",
+] as const;
+
+const MITMUS_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...[...MITMUS_SAME, ...MITMUS_CHANGED].flatMap((noun) => [
+      noun.one,
+      noun.second,
+      noun.many,
+      dictionaryPair(noun),
+    ]),
+    ...MITMUS_SENTENCES.flatMap((row) => [pluralSentence(row, false), pluralSentence(row, true)]),
+    ...MITMUS_ADJECTIVES.flatMap(({ one, many }) => [one, many]),
+    ...MITMUS_WORDS,
+  ]),
+  "p-home": { sentences: MITMUS_PASSAGE },
+};
+
+/**
  * The genitive lesson's pronouns: who, and whose. Checked in ÕS 2025 on Sõnaveeb: minu or mu,
  * sinu or su, tema or ta, meie or me, teie or te, and nende.
  */
@@ -1812,6 +1912,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(INFINITIVE_WORDS),
     "p-message": { sentences: INFINITIVE_MESSAGE },
   },
+  mitmus: MITMUS_CLIPS,
   osastav: OSASTAV_CLIPS,
   lihtminevik: PAST_CLIPS,
   kit: KIT_CLIPS,

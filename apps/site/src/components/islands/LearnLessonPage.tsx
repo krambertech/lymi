@@ -7,6 +7,7 @@ import { KusimusedLesson } from "../learn/lessons/Kusimused";
 import { LihtminevikLesson } from "../learn/lessons/Lihtminevik";
 import { MajasMajjaMajastLesson } from "../learn/lessons/MajasMajjaMajast";
 import { MinaSinaTemaLesson } from "../learn/lessons/MinaSinaTema";
+import { MitmusLesson } from "../learn/lessons/Mitmus";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { OlevikLesson } from "../learn/lessons/Olevik";
 import { OmastavLesson } from "../learn/lessons/Omastav";
@@ -41,6 +42,7 @@ export const LESSON_VIEWS = {
   tegevusnimed: TegevusnimedLesson,
   osastav: OsastavLesson,
   lihtminevik: LihtminevikLesson,
+  mitmus: MitmusLesson,
 } as const;
 
 export default function LearnLessonPage({

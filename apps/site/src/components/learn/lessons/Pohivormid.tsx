@@ -184,7 +184,7 @@ function EntryCard() {
   const { t } = useLingui();
   const [first, setFirst] = useState<First>("pood");
   const forms = formsOf(first);
-  const plural = LESSONS.find((lesson) => lesson.et === "Kassid")?.n;
+  const plural = lessonBySlug("mitmus")?.n;
   return (
     <Panel>
       <Chips

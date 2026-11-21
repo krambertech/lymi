@@ -3536,6 +3536,87 @@ const CONJUNCTION_CLIPS: Record<string, Clip> = {
   "p-kati": { sentences: WHY_ESTONIAN_PASSAGE },
 };
 
+export const RELATIVE_FORMS = [
+  { id: "subject", ta: "tema", person: "kes", thing: "mis" },
+  { id: "partitive", ta: "teda", person: "keda", thing: "mida" },
+  { id: "with", ta: "temaga", person: "kellega", thing: "millega" },
+  { id: "to", ta: "talle", person: "kellele", thing: "millele" },
+  { id: "in", ta: "temas", person: "kelles", thing: "milles" },
+] as const;
+
+export const RELATIVE_GAPS = [
+  {
+    id: "kes",
+    before: "Mees,",
+    after: "seal seisab, on minu õpetaja.",
+    answer: "kes",
+    options: ["kes", "mis"],
+  },
+  {
+    id: "mida",
+    before: "Film,",
+    after: "me eile vaatasime, oli väga hea.",
+    answer: "mida",
+    options: ["mida", "keda"],
+  },
+  {
+    id: "kellega",
+    before: "See on sõber,",
+    after: "ma koos töötan.",
+    answer: "kellega",
+    options: ["kellega", "millega"],
+  },
+  {
+    id: "mis",
+    before: "Pood,",
+    after: "on meie maja kõrval, on täna kinni.",
+    answer: "mis",
+    options: ["mis", "kes"],
+  },
+  {
+    id: "keda",
+    before: "Naine,",
+    after: "sa eile nägid, on minu õde.",
+    answer: "keda",
+    options: ["keda", "mida"],
+  },
+  {
+    id: "milles",
+    before: "Maja,",
+    after: "me elame, on sada aastat vana.",
+    answer: "milles",
+    options: ["milles", "kelles"],
+  },
+  {
+    id: "kellele",
+    before: "Kati on see,",
+    after: "ma kirja kirjutasin.",
+    answer: "kellele",
+    options: ["kellele", "millele"],
+  },
+  {
+    id: "millega",
+    before: "Buss,",
+    after: "ma tööle sõidan, on alati täis.",
+    answer: "millega",
+    options: ["millega", "kellega"],
+  },
+] as const;
+
+export const NEIGHBOURHOOD_PASSAGE = [
+  "Ma elan majas, mis asub vanalinna lähedal.",
+  "Minu naaber on vana mees, kes oli kunagi meremees.",
+  "Kohvik, kus me tihti käime, on kohe nurga taga.",
+  "Seal töötab tüdruk, kellega ma koos koolis käisin.",
+] as const;
+
+const RELATIVE_CLIPS: Record<string, Clip> = {
+  ...words(RELATIVE_FORMS.flatMap((row) => [row.ta, row.person, row.thing])),
+  ...words(RELATIVE_GAPS.map(objectGapSaid)),
+  ...words(["asuma", "kunagi", "meremees"]),
+  "p-kati": { sentences: NEIGHBOURHOOD_PASSAGE },
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -4516,6 +4597,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "lugedes-lugemata": DES_MATA_CLIPS,
   "loetud-raamat": PARTICIPLE_CLIPS,
   "et-sest-kui": CONJUNCTION_CLIPS,
+  "raamat-mille-ostsin": RELATIVE_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

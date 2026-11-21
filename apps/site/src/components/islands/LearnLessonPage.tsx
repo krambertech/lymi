@@ -37,6 +37,7 @@ import { PealAllTagaLesson } from "../learn/lessons/PealAllTaga";
 import { PohivormidLesson } from "../learn/lessons/Pohivormid";
 import { PoodPoeLesson } from "../learn/lessons/PoodPoe";
 import { RaagitakseLesson } from "../learn/lessons/Raagitakse";
+import { RaamatMilleOstsinLesson } from "../learn/lessons/RaamatMilleOstsin";
 import { RaamatuidMajuLesson } from "../learn/lessons/RaamatuidMaju";
 import { RaamatutVoiRaamatuLesson } from "../learn/lessons/RaamatutVoiRaamatu";
 import { SobragaRahataLesson } from "../learn/lessons/SobragaRahata";
@@ -100,6 +101,7 @@ export const LESSON_VIEWS = {
   "lugedes-lugemata": LugedesLugemataLesson,
   "loetud-raamat": LoetudRaamatLesson,
   "et-sest-kui": EtSestKuiLesson,
+  "raamat-mille-ostsin": RaamatMilleOstsinLesson,
   mitmus: MitmusLesson,
 } as const;
 

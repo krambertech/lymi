@@ -1018,6 +1018,72 @@ const TALLINN_CLIPS: Record<string, Clip> = {
   ...TALLINN_DIALOGUE,
 };
 
+/** How a verb's -da form ends: -da, -ta, -la, -na, or a short -a. */
+export type DaPattern = "da" | "ta" | "la" | "na" | "a";
+
+/**
+ * The verbs of the lesson on a verb's three forms: the -ma form, the -da form split before its
+ * ending, the I form, and the command to more than one. Checked in EKI's morphology database on
+ * Sõnaveeb (21 Nov 2026); ÕS lists lugema as “lugeda, loen”.
+ */
+export const VERB_FORMS = [
+  { ma: "elama", da: ["ela", "da"], n: "elan", ge: "Elage!", pattern: "da" },
+  { ma: "lugema", da: ["luge", "da"], n: "loen", ge: "Lugege!", pattern: "da" },
+  { ma: "rääkima", da: ["rääki", "da"], n: "räägin", ge: "Rääkige!", pattern: "da" },
+  { ma: "õppima", da: ["õppi", "da"], n: "õpin", ge: "Õppige!", pattern: "da" },
+  { ma: "istuma", da: ["istu", "da"], n: "istun", ge: "Istuge!", pattern: "da" },
+  { ma: "töötama", da: ["tööta", "da"], n: "töötan", ge: "Töötage!", pattern: "da" },
+  { ma: "armastama", da: ["armasta", "da"], n: "armastan", ge: "Armastage!", pattern: "da" },
+  { ma: "ootama", da: ["ooda", "ta"], n: "ootan", ge: "Oodake!", pattern: "ta" },
+  { ma: "kuulama", da: ["kuula", "ta"], n: "kuulan", ge: "Kuulake!", pattern: "ta" },
+  { ma: "vaatama", da: ["vaada", "ta"], n: "vaatan", ge: "Vaadake!", pattern: "ta" },
+  { ma: "olema", da: ["ol", "la"], n: "olen", ge: "Olge!", pattern: "la" },
+  { ma: "tulema", da: ["tul", "la"], n: "tulen", ge: "Tulge!", pattern: "la" },
+  { ma: "minema", da: ["min", "na"], n: "lähen", ge: "Minge!", pattern: "na" },
+  { ma: "tegema", da: ["teh", "a"], n: "teen", ge: "Tehke!", pattern: "a" },
+  { ma: "nägema", da: ["näh", "a"], n: "näen", ge: "Nähke!", pattern: "a" },
+  { ma: "sööma", da: ["süü", "a"], n: "söön", ge: "Sööge!", pattern: "a" },
+  { ma: "jooma", da: ["juu", "a"], n: "joon", ge: "Jooge!", pattern: "a" },
+] as const satisfies readonly {
+  ma: string;
+  da: readonly [string, string];
+  n: string;
+  ge: string;
+  pattern: DaPattern;
+}[];
+
+export type VerbForms = (typeof VERB_FORMS)[number];
+
+/** A verb's -da form whole: “lugeda”. */
+export const daForm = (verb: VerbForms) => verb.da.join("");
+
+/** The three forms said in a row, as a dictionary lists them: “lugema, lugeda, loen”. */
+export const threeForms = (verb: VerbForms) => `${verb.ma}, ${daForm(verb)}, ${verb.n}`;
+
+/** The commands the lesson builds from a -da form. */
+export const VORMID_COMMANDS = [
+  "lugema",
+  "rääkima",
+  "istuma",
+  "ootama",
+  "olema",
+  "tulema",
+  "tegema",
+];
+
+/**
+ * A teacher to her class, gap by gap: a command takes the -da form's stem, the present the I
+ * form's. Words from lessons 1–11.
+ */
+export const VORMID_CLASS = [
+  "Tere! Istuge, palun.",
+  "Täna me loeme raamatut.",
+  "Lugege, palun.",
+  "Te loete väga hästi.",
+  "Kas te räägite kodus eesti keelt?",
+  "Rääkige kodus eesti keelt!",
+] as const;
+
 /**
  * Nouns of the partitive lesson, each with its third form, the partitive. Checked in ÕS 2025 on
  * Sõnaveeb (EKI morphology, 21 Nov 2026). Later lessons on objects and the plural partitive can
@@ -1305,6 +1371,12 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
       "ujume",
     ]),
     "p-saturday": { sentences: STEM_PASSAGE },
+  },
+  "verbi-pohivormid": {
+    ...words(VERB_FORMS.flatMap((verb) => [verb.ma, daForm(verb), verb.n, threeForms(verb)])),
+    ...words(VERB_FORMS.filter((verb) => VORMID_COMMANDS.includes(verb.ma)).map((verb) => verb.ge)),
+    ...words(["tahan", "Ma tahan lugeda."]),
+    "p-class": { sentences: VORMID_CLASS },
   },
   osastav: OSASTAV_CLIPS,
   kit: KIT_CLIPS,

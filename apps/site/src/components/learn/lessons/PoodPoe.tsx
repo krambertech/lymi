@@ -1,7 +1,7 @@
 import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { type ReactNode, useMemo, useState } from "react";
 import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import { clipId, clipUrl, STEM_PASSAGE, STEM_WORDS, type StemKind } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
@@ -427,18 +427,7 @@ export function PoodPoeLesson() {
       item === pinned ? item : { ...item, options: threeForms(item.noun) },
     );
 
-  // The server renders each gap's options in a fixed order; the browser shuffles them once loaded.
-  const [shuffled, setShuffled] = useState(false);
-  useEffect(() => setShuffled(true), []);
-  const serverGaps = SATURDAY_GAPS((noun) => <StemRule noun={noun} />);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: shuffled once, when the page loads
-  const gaps = useMemo(
-    () =>
-      shuffled
-        ? serverGaps.map((gap) => ({ ...gap, options: shuffle(gap.options ?? [gap.answer]) }))
-        : serverGaps,
-    [shuffled],
-  );
+  const gaps = SATURDAY_GAPS((noun) => <StemRule noun={noun} />);
 
   const kindNotes = {
     inside: {

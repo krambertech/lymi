@@ -1,4 +1,4 @@
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Plus } from "lucide-react";
 import { type ReactNode, useState } from "react";
@@ -245,12 +245,19 @@ function PointKey(props: {
 }
 
 function Example({ example }: { example: TimelineExample }) {
-  const { t } = useLingui();
   const built = new Set(example.build.map((piece) => formText(piece.form).toLowerCase()));
   return (
     <div className="grid gap-3">
       <div className="flex items-start gap-3">
-        <PlayButton src={example.src} label={t`Play ${example.sentence}`} className="mt-0.5" />
+        <PlayButton
+          src={example.src}
+          label={
+            <Trans>
+              Play <span lang="et">{example.sentence}</span>
+            </Trans>
+          }
+          className="mt-0.5"
+        />
         <p className="grid min-w-0 gap-0.5">
           <span
             lang="et"

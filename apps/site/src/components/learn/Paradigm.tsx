@@ -70,7 +70,10 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
 
   return (
     <div className="@container grid gap-4">
+      {/* The table is laid out as a grid, so each part names its role: Safari drops a grid's table semantics. */}
       <table
+        // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+        role="table"
         aria-label={label}
         className={clsx(
           "grid gap-x-3 gap-y-1.5",
@@ -79,25 +82,41 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
         style={{ "--paradigm": template } as React.CSSProperties}
       >
         {columns.length > 0 && (
-          <thead className="contents">
+          <thead
+            // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+            role="rowgroup"
+            className="contents"
+          >
             <tr
+              // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+              role="row"
               className={clsx(
                 "col-span-full grid-cols-subgrid pb-0.5",
                 stacks ? "sr-only @lg:not-sr-only @lg:grid" : "grid",
               )}
             >
               {asks && (
-                <th scope="col">
+                <th
+                  // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                  role="columnheader"
+                  scope="col"
+                >
                   <span className="sr-only">{t`Question`}</span>
                 </th>
               )}
-              <th scope="col">
+              <th
+                // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                role="columnheader"
+                scope="col"
+              >
                 <span className="sr-only">{t`Form`}</span>
               </th>
               {Array.from({ length: width }, (_, column) => (
                 <th
                   // biome-ignore lint/suspicious/noArrayIndexKey: columns never reorder
                   key={column}
+                  // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                  role="columnheader"
                   scope="col"
                   className={clsx(
                     "ps-1 text-start text-sm font-normal",
@@ -112,36 +131,48 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
             </tr>
           </thead>
         )}
-        <tbody className="contents">
+        <tbody
+          // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+          role="rowgroup"
+          className="contents"
+        >
           {rows.map((each, r) => (
-            // On a narrow screen a row wraps: its question and name on a line, its forms under them.
+            // On a narrow screen a row stacks: its question and name share the first line, over its forms.
             <tr
               key={each.id}
+              // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+              role="row"
               className={clsx(
-                "col-span-full items-center gap-x-3",
+                "col-span-full grid items-center gap-x-3",
                 stacks
-                  ? "flex flex-wrap gap-y-1.5 not-first:pt-2 @lg:grid @lg:grid-cols-subgrid @lg:gap-y-0 @lg:pt-0!"
-                  : "grid grid-cols-subgrid",
+                  ? "grid-cols-(--stacked) gap-y-1.5 not-first:pt-2 @lg:grid-cols-subgrid @lg:gap-y-0 @lg:pt-0!"
+                  : "grid-cols-subgrid",
               )}
-              style={
-                {
-                  "--cell": `calc((100% - ${width - 1} * 0.75rem) / ${width})`,
-                } as React.CSSProperties
-              }
+              style={{ "--stacked": `repeat(${width}, minmax(0, 1fr))` } as React.CSSProperties}
             >
               {asks && (
                 <td
+                  // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                  role="cell"
                   lang="et"
-                  className="text-lg font-medium text-(--form) tabular-nums @lg:text-end"
+                  className={clsx(
+                    "text-lg font-medium text-(--form) tabular-nums @lg:text-end",
+                    stacks &&
+                      "col-span-full row-start-1 self-start @lg:col-auto @lg:row-start-auto",
+                  )}
                 >
                   {each.ask}
                 </td>
               )}
               <th
+                // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                role="rowheader"
                 scope="row"
                 className={clsx(
                   "grid min-w-0 text-start leading-tight font-normal",
-                  stacks && "grow",
+                  // Stacked, the name sits beside the question, past the widest question word.
+                  stacks && "col-span-full row-start-1 @lg:col-auto @lg:row-start-auto",
+                  stacks && asks && "ps-26 @lg:ps-0",
                 )}
               >
                 <span
@@ -160,22 +191,20 @@ export function Paradigm({ label, columns = [], rows, highlight, empty }: Paradi
                   </small>
                 )}
               </th>
-              {/* Stacked, the forms start a line of their own, however many columns there are. */}
-              {stacks && <td aria-hidden="true" className="h-0 basis-full p-0 @lg:hidden" />}
               {Array.from({ length: width }, (_, column) => {
                 const form = each.cells[column];
                 return (
                   <td
                     // biome-ignore lint/suspicious/noArrayIndexKey: columns never reorder
                     key={column}
-                    className={clsx("min-w-0", stacks && "basis-(--cell) @lg:basis-auto")}
+                    // biome-ignore lint/a11y/noRedundantRoles: a table laid out as a grid loses its semantics in Safari
+                    role="cell"
+                    className="min-w-0"
                   >
                     {form ? (
                       <FormKey
                         cell={form}
-                        name={[formText(form.form), each.label, columns[column]]
-                          .filter(Boolean)
-                          .join(", ")}
+                        where={[each.label, columns[column]].filter(Boolean).join(", ")}
                         column={stacks ? columns[column] : undefined}
                         tinted={lit(each, column)}
                         pressed={picked?.row === r && picked.column === column}
@@ -233,19 +262,19 @@ export function Lit({ form }: { form: string }) {
 
 function FormKey(props: {
   cell: ParadigmCell;
-  name: string;
+  /** The form's row and column, read after it by a screen reader: “Inessive, One”. */
+  where: string;
   /** The column's heading, shown inside the key when the rows are stacked. */
   column: string | undefined;
   tinted: boolean;
   pressed: boolean;
   onPress: () => void;
 }) {
-  const { cell, name, column, tinted, pressed, onPress } = props;
+  const { cell, where, column, tinted, pressed, onPress } = props;
   const playing = usePlaying(cell.src);
   return (
     <button
       type="button"
-      aria-label={name}
       aria-pressed={pressed}
       data-playing={playing ? "" : undefined}
       onClick={() => {
@@ -269,6 +298,7 @@ function FormKey(props: {
       >
         <Lit form={cell.form} />
       </b>
+      <span className="sr-only">, {where}</span>
       {playing && <Playing className="absolute end-2.5 top-2.5 h-3 text-(--form)" />}
     </button>
   );

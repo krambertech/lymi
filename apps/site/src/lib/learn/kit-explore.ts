@@ -67,7 +67,7 @@ export const KIT_TENSES = [
     id: "present",
     et: "olevik",
     at: 0,
-    examples: [{ sentence: "Praegu ma söön.", build: ["söö|n"] }],
+    examples: [{ sentence: "Praegu söön ma.", build: ["söö|n"] }],
   },
   {
     id: "future",

@@ -10,7 +10,6 @@ import {
   KIT_MORPHS,
   KIT_TENSES,
 } from "../../lib/learn/kit-explore";
-import { eachPairFirst } from "../../lib/learn/quiz";
 import { Panel } from "./Explore";
 import { Morph, type MorphChain } from "./Morph";
 import { Paradigm, type ParadigmRow } from "./Paradigm";
@@ -89,14 +88,13 @@ export function KitExplorers({ Part }: { Part: (props: PartProps) => ReactNode }
     src: src(place.sentence),
   }));
   const boxLabel = t`A cat and a cardboard box`;
-  const rounds: (SceneItem & { pair: readonly [string, string] })[] = boxPlaces
+  const rounds: SceneItem[] = boxPlaces
     .filter((place) => place.id !== "all")
     .map((place) => ({
       scene: "box",
       label: boxLabel,
       places: boxPlaces,
       answer: place.id,
-      pair: [place.id, place.id],
     }));
 
   const tenses: Record<(typeof KIT_TENSES)[number]["id"], string> = {
@@ -110,7 +108,7 @@ export function KitExplorers({ Part }: { Part: (props: PartProps) => ReactNode }
     "Ma olin juba söönud.": t`I had already eaten.`,
     "Eile sõin ma kodus.": t`Yesterday I ate at home.`,
     "Ma olen juba söönud.": t`I have already eaten.`,
-    "Praegu ma söön.": t`I’m eating now.`,
+    "Praegu söön ma.": t`I’m eating now.`,
     "Homme söön ma kodus.": t`Tomorrow I’ll eat at home.`,
     "Ma hakkan sööma.": t`I’m going to eat.`,
   };
@@ -225,7 +223,6 @@ export function KitExplorers({ Part }: { Part: (props: PartProps) => ReactNode }
           title={t`Where is the cat?`}
           items={rounds}
           rounds={rounds.length}
-          order={eachPairFirst}
           recall={(item) => {
             const place = item.places.find((each) => each.id === item.answer);
             return { label: place?.word ?? "", src: place?.src ?? "" };

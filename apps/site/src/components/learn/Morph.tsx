@@ -1,4 +1,4 @@
-import { useLingui } from "@lingui/react/macro";
+import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { Fragment, type ReactNode, useState } from "react";
@@ -51,8 +51,10 @@ export function Morph({ label, chains }: MorphProps) {
           value={chain.id}
           onPick={(value) => {
             setChainId(value);
-            const first = chains.find((each) => each.id === value)?.steps[0];
-            if (first) void playSound(first.src);
+            // A word opens on its first change, so that form is the one heard.
+            const steps = chains.find((each) => each.id === value)?.steps ?? [];
+            const shown = steps[Math.min(1, steps.length - 1)];
+            if (shown) void playSound(shown.src);
           }}
         />
       )}
@@ -103,7 +105,15 @@ function MorphChainView({ chain }: { chain: MorphChain }) {
               )}
             </span>
           </p>
-          <PlayButton src={step.src} label={t`Play ${step.word}`} className="ms-1" />
+          <PlayButton
+            src={step.src}
+            label={
+              <Trans>
+                Play <span lang="et">{step.word}</span>
+              </Trans>
+            }
+            className="ms-1"
+          />
         </div>
         <p className="min-h-6 text-md text-ink-secondary">{step.note ?? step.label}</p>
       </div>

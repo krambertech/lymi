@@ -7950,7 +7950,7 @@ msgstr "Воспроизвести"
 
 #. placeholder {0}: bare(no)
 #. placeholder {0}: bare(yes)
-#. placeholder {0}: example.sentence
+#. placeholder {0}: said(each.a)
 msgid "Play {0}"
 msgstr "Воспроизвести {0}"
 
@@ -7990,6 +7990,12 @@ msgstr "Воспроизвести {text}"
 
 msgid "Play {word}"
 msgstr "Воспроизвести {word}"
+
+#. placeholder {0}: example.sentence
+#. placeholder {0}: shown.sentence
+#. placeholder {0}: step.word
+msgid "Play <0>{0}</0>"
+msgstr "Воспроизвести <0>{0}</0>"
 
 msgid "Play each number twice before you type."
 msgstr "Послушай каждое число дважды, прежде чем писать."

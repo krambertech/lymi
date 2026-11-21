@@ -24,8 +24,11 @@ interface Pose {
 
 interface Place {
   pose: Pose;
-  /** Where a tap on the drawing lands for this place, in viewBox units: x, y, radius. */
-  hit: readonly [number, number, number];
+  /**
+   * What a tap on the drawing takes for this place, in viewBox units: x, y, width, height. It
+   * covers what can be seen of the cat there, and is at least 58 wide and tall: 44 px at 375.
+   */
+  spot: readonly [number, number, number, number];
   /** A place reached by moving, such as into the house: where the cat sets off from. */
   from?: Pose;
   /** No place in a quiz: hidden from view at rest, or a movement rather than a place. */
@@ -36,22 +39,22 @@ export type SceneName = "box" | "house";
 
 const BOX: Record<string, Place> = {
   // Peal, sees and taga sit apart along the box, so a quiz shows each one's outline whole.
-  sees: { pose: { x: 248, y: 184, s: 0.82, layer: "inside" }, hit: [248, 120, 20] },
-  peal: { pose: { x: 210, y: 120, s: 0.84, layer: "front" }, hit: [210, 70, 24] },
+  sees: { pose: { x: 252, y: 184, s: 0.82, layer: "inside" }, spot: [245, 96, 58, 58] },
+  peal: { pose: { x: 214, y: 120, s: 0.84, layer: "front" }, spot: [186, 30, 58, 88] },
   // Under the box can't be seen until the box tilts, so it has no place in a quiz.
-  all: { pose: { x: 236, y: 221, s: 0.5, layer: "behind" }, hit: [262, 214, 20], quiz: false },
-  taga: { pose: { x: 170, y: 162, s: 0.82, layer: "behind" }, hit: [170, 98, 20] },
-  ees: { pose: { x: 170, y: 252, s: 1.04, layer: "front" }, hit: [166, 206, 32] },
-  korval: { pose: { x: 334, y: 222, s: 0.94, layer: "front" }, hit: [334, 176, 36] },
+  all: { pose: { x: 236, y: 221, s: 0.5, layer: "behind" }, spot: [228, 196, 60, 44], quiz: false },
+  taga: { pose: { x: 163, y: 162, s: 0.82, layer: "behind" }, spot: [126, 68, 58, 60] },
+  ees: { pose: { x: 170, y: 252, s: 1.04, layer: "front" }, spot: [126, 140, 86, 116] },
+  korval: { pose: { x: 334, y: 222, s: 0.94, layer: "front" }, spot: [304, 140, 64, 96] },
 };
 
 const YARD: Pose = { x: 338, y: 236, s: 0.78, layer: "front" };
 const DOOR: Pose = { x: 236, y: 224, s: 0.62, layer: "front" };
 const WINDOW: Pose = { x: 167, y: 192, s: 0.44, layer: "inside", window: true };
 const HOUSE: Record<string, Place> = {
-  majja: { pose: WINDOW, from: YARD, hit: [236, 192, 26], quiz: false },
-  majas: { pose: WINDOW, hit: [167, 160, 30] },
-  majast: { pose: YARD, from: WINDOW, hit: [338, 196, 34], quiz: false },
+  majja: { pose: WINDOW, from: YARD, spot: [208, 150, 56, 80], quiz: false },
+  majas: { pose: WINDOW, spot: [130, 138, 74, 66] },
+  majast: { pose: YARD, from: WINDOW, spot: [300, 170, 76, 74], quiz: false },
 };
 
 const PLACES: Record<SceneName, Record<string, Place>> = { box: BOX, house: HOUSE };
@@ -488,14 +491,15 @@ export function Scene({ scene, label, keysLabel, places }: SceneProps) {
         <Drawing scene={scene} layers={layers} lid={lid} label={label}>
           {/* Taps on the drawing; the keys under it are the same places for keyboards. */}
           {places.map((place) => {
-            const hit = PLACES[scene][place.id]?.hit;
-            return hit ? (
+            const spot = PLACES[scene][place.id]?.spot;
+            return spot ? (
               // biome-ignore lint/a11y/noStaticElementInteractions: a pointer shortcut for the keys below
-              <circle
+              <rect
                 key={place.id}
-                cx={hit[0]}
-                cy={hit[1]}
-                r={hit[2]}
+                x={spot[0]}
+                y={spot[1]}
+                width={spot[2]}
+                height={spot[3]}
                 fill="transparent"
                 className="cursor-pointer"
                 onClick={() => press(place)}
@@ -526,7 +530,14 @@ export function Scene({ scene, label, keysLabel, places }: SceneProps) {
       <div aria-live="polite" className="min-h-16">
         {shown ? (
           <div key={shown.id} className="learn-swap flex items-center gap-3">
-            <PlayButton src={shown.src} label={shown.sentence} />
+            <PlayButton
+              src={shown.src}
+              label={
+                <Trans>
+                  Play <span lang="et">{shown.sentence}</span>
+                </Trans>
+              }
+            />
             <p className="grid min-w-0 gap-0.5">
               <span
                 lang="et"
@@ -602,6 +613,8 @@ export function SceneRound({ item, state, heard, answer, autoplay }: RoundProps<
   }, [done, item.answer, stage]);
   if (!right) return null;
   const where = PLACES[item.scene];
+  if (import.meta.env.DEV && where[item.answer]?.quiz === false)
+    throw new Error(`${item.answer} has no place to tap in a ${item.scene} quiz.`);
   const spots = item.places.filter((place) => where[place.id] && where[place.id]?.quiz !== false);
   const markOf = (id: string) =>
     !done ? undefined : id === item.answer ? "right" : id === picked ? "wrong" : undefined;
@@ -635,8 +648,8 @@ export function SceneRound({ item, state, heard, answer, autoplay }: RoundProps<
         <Drawing scene={item.scene} layers={layers} lid={lid} label={item.label} ghosts={ghosts} />
         {/* The places to tap, laid over the drawing as buttons, so a keyboard can reach them. */}
         {spots.map((place) => {
-          const hit = where[place.id]?.hit;
-          if (!hit) return null;
+          const spot = where[place.id]?.spot;
+          if (!spot) return null;
           const mark = markOf(place.id);
           return (
             <button
@@ -656,14 +669,14 @@ export function SceneRound({ item, state, heard, answer, autoplay }: RoundProps<
               onFocus={() => setActive(place.id)}
               onBlur={() => setActive(null)}
               className={clsx(
-                "learn-spot-key absolute -translate-x-1/2 -translate-y-1/2 rounded-full",
+                "learn-spot-key absolute rounded-tile",
                 done ? "cursor-default" : "cursor-pointer",
               )}
               style={{
-                left: `${(hit[0] / 400) * 100}%`,
-                top: `${(hit[1] / 270) * 100}%`,
-                width: `${((hit[2] * 2) / 400) * 100}%`,
-                aspectRatio: "1",
+                left: `${(spot[0] / 400) * 100}%`,
+                top: `${(spot[1] / 270) * 100}%`,
+                width: `${(spot[2] / 400) * 100}%`,
+                height: `${(spot[3] / 270) * 100}%`,
               }}
             >
               {/* Its name shows only while a keyboard is on it; the outline is what the eye taps. */}

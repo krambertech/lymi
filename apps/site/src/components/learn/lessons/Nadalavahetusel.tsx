@@ -325,7 +325,7 @@ export function NadalavahetuselLesson() {
                 id="kati-saturdays"
                 title={<Trans>Fill the gaps</Trans>}
                 gaps={PLAN_GAPS}
-                mode="pick"
+                mode="drag"
                 spare={["olen", "läksin", "töötada"]}
                 clip="p-kati"
               />

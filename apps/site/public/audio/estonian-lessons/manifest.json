@@ -4309,6 +4309,406 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "meeldima/mul-on-kass": {
+    "text": "Mul on kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mulle-meeldib-kass": {
+    "text": "Mulle meeldib kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/sul-on-kass": {
+    "text": "Sul on kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/sulle-meeldib-kass": {
+    "text": "Sulle meeldib kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/tal-on-kass": {
+    "text": "Tal on kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/talle-meeldib-kass": {
+    "text": "Talle meeldib kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meil-on-kass": {
+    "text": "Meil on kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meile-meeldib-kass": {
+    "text": "Meile meeldib kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/teil-on-kass": {
+    "text": "Teil on kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/teile-meeldib-kass": {
+    "text": "Teile meeldib kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/neil-on-kass": {
+    "text": "Neil on kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/neile-meeldib-kass": {
+    "text": "Neile meeldib kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mulle-meeldib-tartu": {
+    "text": "Mulle meeldib Tartu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/kas-sulle-meeldib-kohv": {
+    "text": "Kas sulle meeldib kohv?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/talle-meeldib-tallinn": {
+    "text": "Talle meeldib Tallinn.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meile-meeldib-eesti-keel": {
+    "text": "Meile meeldib eesti keel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/kas-teile-meeldib-pa2rnu": {
+    "text": "Kas teile meeldib Pärnu?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/neile-meeldib-kool": {
+    "text": "Neile meeldib kool.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mulle-meeldivad-kassid": {
+    "text": "Mulle meeldivad kassid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/talle-meeldib-koer": {
+    "text": "Talle meeldib koer.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/talle-meeldivad-koerad": {
+    "text": "Talle meeldivad koerad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meile-meeldib-raamat": {
+    "text": "Meile meeldib raamat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meile-meeldivad-raamatud": {
+    "text": "Meile meeldivad raamatud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/neile-meeldib-o3un": {
+    "text": "Neile meeldib õun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/neile-meeldivad-o3unad": {
+    "text": "Neile meeldivad õunad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mulle-meeldib-lugeda": {
+    "text": "Mulle meeldib lugeda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/talle-meeldib-ujuda": {
+    "text": "Talle meeldib ujuda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/neile-meeldib-ra2a2kida": {
+    "text": "Neile meeldib rääkida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meile-meeldib-eesti-keelt-o3ppida": {
+    "text": "Meile meeldib eesti keelt õppida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/kohv": {
+    "text": "kohv",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/tallinn": {
+    "text": "Tallinn",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/eesti-keel": {
+    "text": "eesti keel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/lugeda": {
+    "text": "lugeda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/ujuda": {
+    "text": "ujuda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/koerad": {
+    "text": "koerad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/raamatud": {
+    "text": "raamatud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/lapsed": {
+    "text": "lapsed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mulle-meeldib-kohv": {
+    "text": "Mulle meeldib kohv.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mulle-ei-meeldi-kohv": {
+    "text": "Mulle ei meeldi kohv.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/talle-ei-meeldi-koerad": {
+    "text": "Talle ei meeldi koerad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/neile-meeldib-ujuda": {
+    "text": "Neile meeldib ujuda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/neile-ei-meeldi-ujuda": {
+    "text": "Neile ei meeldi ujuda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meile-meeldivad-kassid": {
+    "text": "Meile meeldivad kassid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meile-ei-meeldi-kassid": {
+    "text": "Meile ei meeldi kassid.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/kas-sulle-meeldib-tallinn": {
+    "text": "Kas sulle meeldib Tallinn?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/jah-meeldib": {
+    "text": "Jah, meeldib.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/kas-sulle-meeldivad-kassid": {
+    "text": "Kas sulle meeldivad kassid?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/ei-meeldi": {
+    "text": "ei meeldi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/kellele-meeldib-kohv": {
+    "text": "Kellele meeldib kohv?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mulle": {
+    "text": "mulle",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mul-on-ku2lm": {
+    "text": "Mul on külm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mul-on-palav": {
+    "text": "Mul on palav.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mul-on-igav": {
+    "text": "Mul on igav.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mul-on-hea-meel": {
+    "text": "Mul on hea meel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mul-on-kahju": {
+    "text": "Mul on kahju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meeldima": {
+    "text": "meeldima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meeldib": {
+    "text": "meeldib",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meeldivad": {
+    "text": "meeldivad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/kellele": {
+    "text": "kellele",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/sulle": {
+    "text": "sulle",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/talle": {
+    "text": "talle",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/meile": {
+    "text": "meile",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/teile": {
+    "text": "teile",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/neile": {
+    "text": "neile",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/hea-meelega": {
+    "text": "hea meelega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/maitseb": {
+    "text": "maitseb",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/tal-on-igav": {
+    "text": "Tal on igav.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/kas-sul-on-ku2lm": {
+    "text": "Kas sul on külm?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/mulle-maitseb-kohv": {
+    "text": "Mulle maitseb kohv.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/kas-sulle-maitseb": {
+    "text": "Kas sulle maitseb?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/kassid": {
+    "text": "kassid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/p-message": {
+    "text": "Tere, Jaan! Mul on täna igav. Mulle ei meeldi kodus olla. Kas sulle meeldib ujuda? Või tule kohvikusse. Kohvikus on kass. Mulle meeldivad kassid. Kirjuta mulle!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/d-liis-1": {
+    "text": "Tere! Kas sa tuled ujuma?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "meeldima/d-sina-1": {
+    "text": "Ei, mul on külm.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/d-liis-2": {
+    "text": "Väga kahju! Kas sulle meeldib kohv?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "meeldima/d-sina-2": {
+    "text": "Jah, meeldib.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/d-liis-3": {
+    "text": "Mulle ka. Tule kohvikusse!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "meeldima/d-sina-3": {
+    "text": "Jah, hea meelega!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "meeldima/d-liis-4": {
+    "text": "Kohvikus on ka kass.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "meeldima/d-sina-4": {
+    "text": "Mulle meeldivad kassid!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kit/p-jaan": {
     "text": "Tere! Mina olen Jaan. Ma elan Tartus. Ma olen arst. Mari on minu sõber. Ta ei ole arst, ta on õpetaja. Me räägime eesti keelt.",
     "model": "eleven_v4",

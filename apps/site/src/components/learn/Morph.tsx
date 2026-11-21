@@ -64,7 +64,7 @@ export function Morph({ label, chains }: MorphProps) {
 }
 
 function MorphChainView({ chain }: { chain: MorphChain }) {
-  const { t } = useLingui();
+  const { i18n } = useLingui();
   // The chain opens on its first change, so the word shows what it does before any press.
   const [at, setAt] = useState(Math.min(1, chain.steps.length - 1));
   // Counts presses: the change plays on each one, never as the page opens.
@@ -86,8 +86,15 @@ function MorphChainView({ chain }: { chain: MorphChain }) {
             lang="et"
             className="learn-morph min-w-0 text-5xl/tight font-semibold tracking-tight wrap-anywhere max-sm:text-4xl/tight"
           >
-            <span className="sr-only">
-              {before ? t`${before.word} becomes ${step.word}` : step.word}
+            {/* The sentence is in the reader's language; only the forms in it are Estonian. */}
+            <span lang={before ? i18n.locale : undefined} className="sr-only">
+              {before ? (
+                <Trans>
+                  <span lang="et">{before.word}</span> becomes <span lang="et">{step.word}</span>
+                </Trans>
+              ) : (
+                step.word
+              )}
             </span>
             <span aria-hidden="true">
               {parts.map((part, i) =>

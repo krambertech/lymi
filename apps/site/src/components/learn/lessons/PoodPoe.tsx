@@ -1,7 +1,6 @@
 import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useEffect, useMemo, useState } from "react";
 import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
@@ -12,8 +11,9 @@ import { Chips, Panel } from "../Explore";
 import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Morph } from "../Morph";
 import { Answer, type ChoiceItem, ChoiceRound, Feedback, Quiz, type RoundProps } from "../Quiz";
-import { Listen, Playing, PlayMark } from "../Sound";
+import { Listen, PlayMark } from "../Sound";
 import { Word } from "../Word";
 
 const SLUG = "pood-poe";
@@ -217,29 +217,7 @@ function StemSwitch({ kind, notes }: { kind: StemKind; notes: Record<Show, React
   );
 }
 
-/** One step of pood → poe → poes, to tap. */
-function Step({ said, lit, note }: { said: ReactNode; lit: string; note: ReactNode }) {
-  const clip = src(lit);
-  const playing = usePlaying(clip);
-  return (
-    <button
-      type="button"
-      onClick={() => void playSound(clip)}
-      className={clsx(
-        "grid min-w-0 cursor-pointer justify-items-center gap-0.5 rounded-tile px-2 py-2.5 transition-colors duration-150 hoverable:hover:bg-plate-hover",
-        playing && "bg-plate-hover",
-      )}
-    >
-      <span lang="et" className="flex items-center gap-2 text-3xl font-semibold tracking-tight">
-        {said}
-        {playing && <Playing className="h-3 text-(--form)" />}
-      </span>
-      <span className="text-sm text-ink-muted">{note}</span>
-    </button>
-  );
-}
-
-/** Pood to its stem to the stem with -s, each step to tap, and the sentence it ends in. */
+/** Pood turning into its stem and the stem with -s, each form to press, and the sentence it ends in. */
 function PoodSteps() {
   const { t, i18n } = useLingui();
   const pood = nounOf("pood");
@@ -247,29 +225,19 @@ function PoodSteps() {
   const playing = usePlaying(said);
   return (
     <Panel>
-      <div className="grid grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-1 rounded-tile bg-plate p-1.5 shadow-[0_0_0_1px_var(--edge)]">
-        <Step said="pood" lit="pood" note={t`the word`} />
-        <ArrowRight aria-hidden="true" className="size-4 text-ink-muted rtl:-scale-x-100" />
-        <Step
-          said={
-            <span>
-              po<span className="text-(--form)">e</span>
-            </span>
-          }
-          lit="poe"
-          note={t`the stem`}
-        />
-        <ArrowRight aria-hidden="true" className="size-4 text-ink-muted rtl:-scale-x-100" />
-        <Step
-          said={
-            <span>
-              poe<span className="text-(--form)">s</span>
-            </span>
-          }
-          lit="poes"
-          note={i18n._(WHERE_MEANS.poes)}
-        />
-      </div>
+      <Morph
+        label={t`Words`}
+        chains={[
+          {
+            id: "pood",
+            steps: [
+              { word: "pood", label: t`the word`, src: src("pood") },
+              { word: "poe", label: t`the stem`, src: src("poe") },
+              { word: "poes", label: i18n._(WHERE_MEANS.poes), src: src("poes") },
+            ],
+          },
+        ]}
+      />
       <button
         type="button"
         onClick={() => void playSound(said)}

@@ -485,7 +485,7 @@ export function OsastavLesson() {
   const questions = lessonBySlug("kusimused")?.n;
   const present = lessonBySlug("olevik")?.n;
   const forms = lessonBySlug("pohivormid")?.n;
-  const have = LESSONS.find((lesson) => lesson.et === "Mul on")?.n;
+  const have = lessonBySlug("mul-on")?.n;
   const object = LESSONS.find((lesson) => lesson.et === "Raamatut või raamatu")?.n;
 
   const countItems = useMemo<CountItem[]>(

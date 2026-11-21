@@ -19,6 +19,9 @@ msgstr "-b сейчас; в прошлом просто -s."
 msgid "-d now, -sid in the past."
 msgstr "-d сейчас, -sid в прошлом."
 
+msgid "-⁠l form"
+msgstr "Форма на -⁠l"
+
 msgid "-me now, -sime in the past."
 msgstr "-me сейчас, -sime в прошлом."
 
@@ -469,6 +472,9 @@ msgstr "<0/> — это «я», тот, кто что-то делает: <1/> <2
 msgid "<0/> is one cat; <1/> is two cats. After a number from two up, a noun takes its third form, the partitive, and stays singular: <2/> has no plural ending."
 msgstr "<0/> — одна кошка, <1/> — две кошки. После числа от двух и больше существительное стоит в третьей форме, партитиве, и остаётся в единственном числе: у <2/> нет окончания множественного числа."
 
+msgid "<0/> is the <1>-l</1> form of <2/>. That ending says on or at in lesson {places}, as in <3/>. You have met one already: <4/> In it, <5/> is “at you”."
+msgstr "<0/> — это форма на <1>-l</1> от <2/>. Это окончание в уроке {places} значит «на» и «у», как в <3/>. Одно такое слово уже встречалось: <4/> Здесь <5/> значит «у тебя»."
+
 msgid "<0/> is the same for one and many, so with it only the noun changes: <1/> <2/> Switch between One and Many, and tap a sentence to hear it."
 msgstr "<0/> не зависит от числа, поэтому с ним меняется только существительное: <1/> <2/> Переключай «Один» и «Много» и нажимай на предложение, чтобы его услышать."
 
@@ -492,6 +498,9 @@ msgstr "<0/> значит «половина» и смотрит вперёд. <
 
 msgid "<0/> means holy, so this is the holy day."
 msgstr "<0/> значит «святой», так что это святой день."
+
+msgid "<0/> means needed. I need help is <1/> Word for word, that’s “at me is needed help”. Ask with <2>kas</2>, as before."
+msgstr "<0/> значит «нужно». «Мне нужна помощь» — это <1/> Дословно: «у меня есть нужно помощь». Спрашивай с <2>kas</2>, как и раньше."
 
 msgid "<0/> means to be. Its ending changes with the person: <1/> is I am, <2/> is you are. Tap an ending."
 msgstr "<0/> значит «быть». Его окончание меняется по лицам: <1/> — «я есть», <2/> — «ты есть». Нажми на окончание."
@@ -730,6 +739,9 @@ msgstr "<0>Mina</0>, <1>sina</1> и <2>nemad</2> меняются: <3>minu, sinu
 
 msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same short forms you met for he or she, we and you. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
 msgstr "<0>Minu</0> и <1>sinu</1> часто сокращаются до <2/> и <3/>. <4>Tema</4>, <5>meie</5> и <6>teie</6> сокращаются до <7>ta, me</7> и <8>te</8> — тех же кратких форм, что и для «он или она», «мы» и «вы». В уроке {questions} уже было <9>su</9>: <10/> — «Как тебя зовут?»"
+
+msgid "<0>Mul on vaja</0> is I need: <1>Mul on vaja abi.</1>"
+msgstr "<0>Mul on vaja</0> — это «мне нужно»: <1>Mul on vaja abi.</1>"
 
 msgid "<0>Mulle meeldib</0> is I like. Lesson {liking} explains how it works."
 msgstr "<0>Mulle meeldib</0> — это «мне нравится». Как это устроено, объясняет урок {liking}."
@@ -985,6 +997,9 @@ msgstr "2 теста и текст"
 
 msgid "2 quizzes and a passage with gaps"
 msgstr "2 теста и текст с пропусками"
+
+msgid "2 quizzes, a note to fill in and a conversation"
+msgstr "2 теста, записка с пропусками и разговор"
 
 msgid "2 quizzes, a text and a conversation"
 msgstr "2 теста, текст и разговор"
@@ -1340,6 +1355,9 @@ msgstr "Бесплатный урок об эстонских глаголах �
 msgid "A free lesson on Estonian’s three “inside” cases, the inessive, illative and elative: kus, kuhu and kust, -s for in, -sse for into (Tartusse) and -st for out of (koolist), the short forms kooli, poodi and koju, and how to say where you’re from. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о трёх «внутренних» местных падежах — инессиве, иллативе и элативе: kus, kuhu и kust, -s — где (Tartus), -sse — куда (Tartusse), -st — откуда (koolist), короткие формы kooli, poodi и koju, и как сказать, откуда ты. Каждое предложение озвучено."
 
+msgid "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
+msgstr "Бесплатный урок о том, как сказать «у меня есть» по-эстонски: mul, sul, tal, meil, teil и neil on, имена с -l, например Maril on, вопрос kellel on?, mul on vaja — «мне нужно» — и ответы jah, on и ei ole. Каждое предложение озвучено."
+
 msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какие места получают какое окончание и как ответить на kus, «где». Каждое предложение озвучено."
 
@@ -1467,6 +1485,9 @@ msgstr "Машина, на которой работают поды"
 msgid "A major chord with a minor seventh, built on the fifth note of the key"
 msgstr "Мажорный аккорд с малой септимой, построенный на пятой ступени тональности"
 
+msgid "a man’s name"
+msgstr "мужское имя"
+
 msgid "A market takes <0>-l</0> by habit: <1/>, at the market. So do names ending in <2>-maa</2>: <3/>, on Saaremaa, and <4/>, in Germany, though English says in there. A few towns and districts take <5>-l</5> as well, such as <6/> and <7/>."
 msgstr "Рынок получает <0>-l</0> по традиции: <1/>, на рынке. Так же и названия на <2>-maa</2>: <3/>, на Сааремаа, и даже <4/>, в Германии, хотя по-русски тут говорят «в». Ещё <5>-l</5> получают некоторые города и районы, например <6/> и <7/>."
 
@@ -1484,6 +1505,9 @@ msgstr "Имя на гласную обычно не меняется: <0>Mari r
 
 msgid "A name or a noun owns things the same way: it goes first, in the genitive. <0/> is Mari’s book. Estonian adds no ’s, and <1>Mari</1> stays as it is, as most names ending in a vowel do."
 msgstr "С именами и существительными то же самое: владелец стоит первым, в родительном падеже. <0/> — это книга Мари, дословно «Мари книга». <1>Mari</1> не меняется, как и большинство имён на гласную."
+
+msgid "A name or a noun takes the same <0>-l</0>. <1/> Mari has a cat. <2/> Mum has a question."
+msgstr "Имя или существительное получает то же <0>-l</0>. <1/> У Мари есть кошка. <2/> У мамы есть вопрос."
 
 msgid "A native German AI voice reads every card, so <0>ü</0>, <1>ö</1>, <2>ß</2> and the long words sound the way they should. Tap a word to hear it. If a card has its own recording, that plays instead."
 msgstr "Каждую карточку читает AI-голос носителя немецкого, так что <0>ü</0>, <1>ö</1>, <2>ß</2> и длинные слова звучат как надо. Нажми на слово, чтобы послушать. Если у карточки есть своя запись, звучит она."
@@ -1696,6 +1720,9 @@ msgstr "Зацепка, а не ответ."
 
 msgid "A weekly check-in"
 msgstr "Итоги недели"
+
+msgid "a woman’s name"
+msgstr "женское имя"
 
 msgid "A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer shows the word turning into its form."
 msgstr "Слово и подсказка: введи форму, с клавишами õ ä ö ü š ž, или выбери её. Ответ показывает, как слово становится формой."
@@ -2028,6 +2055,9 @@ msgstr "После <0>pean</0> — форма на <1>-ma</1>, даже когд
 msgid "After <0>pean</0>, the <1>-ma</1> form."
 msgstr "После <0>pean</0> — форма на <1>-ma</1>."
 
+msgid "After <0>pole</0> or <1>ei ole</1>, a thing changes form too, and lesson {partitive} teaches that form. For now, answer no with <2>Ei ole</2> or <3>Pole</3> alone. Learn one phrase whole: <4/> It means I don’t have time."
+msgstr "После <0>pole</0> или <1>ei ole</1> вещь тоже меняет форму, и эту форму объясняет урок {partitive}. А пока отвечай «нет» просто <2>Ei ole</2> или <3>Pole</3>. Одну фразу запомни целиком: <4/> Это значит «у меня нет времени»."
+
 msgid "After <0>pole</0>, what isn’t there takes the third form."
 msgstr "После <0>pole</0> то, чего нет, стоит в третьей форме."
 
@@ -2105,6 +2135,9 @@ msgstr "После ei глагол теряет окончание: ei joo."
 
 msgid "After ei, the verb drops its ending: ei tööta."
 msgstr "После ei глагол теряет окончание: ei tööta."
+
+msgid "After meil the verb is on, as after every -⁠l form."
+msgstr "После meil глагол — on, как и после любой формы на -⁠l."
 
 msgid "After today’s lesson"
 msgstr "После сегодняшнего урока"
@@ -2247,6 +2280,9 @@ msgstr "Все. За каждой формой тебе удалось найт�
 msgid "All of them. You hear who does it."
 msgstr "Все. Ты слышишь, кто это делает."
 
+msgid "All of them. You heard who has it in every sentence."
+msgstr "Все верно: ты каждый раз слышишь, у кого что есть."
+
 msgid "All of them. You heard whose in every sentence."
 msgstr "Все. Ты слышишь «чей» в каждом предложении."
 
@@ -2270,6 +2306,9 @@ msgstr "Все. Ты различаешь на слух <0>-s</0>, <1>-sse</1> �
 
 msgid "All of them. You told <0>ära</0> from <1>ei</1> every time."
 msgstr "Все. В каждом предложении <0>ära</0> и <1>ei</1> различены верно."
+
+msgid "All of them. You told am from have every time."
+msgstr "Все верно: ты каждый раз отличаешь «быть» от «иметь»."
 
 msgid "All of them. You understood every command."
 msgstr "Все. Каждая команда понята верно."
@@ -2380,8 +2419,14 @@ msgstr "Всегда"
 msgid "am not, is not, are not"
 msgstr "не быть: я не, он не, они не"
 
+msgid "Am or have?"
+msgstr "Быть или иметь?"
+
 msgid "Amounts"
 msgstr "Слова количества"
+
+msgid "An -⁠l form plays in a sentence; a long form plays on its own."
+msgstr "Форма на -⁠l звучит в предложении, полная — отдельно."
 
 msgid "An .apkg or .colpkg file from Anki, AnkiDroid or AnkiMobile"
 msgstr "Файл .apkg или .colpkg из Anki, AnkiDroid или AnkiMobile"
@@ -2479,6 +2524,9 @@ msgstr "Сначала ответь на все вопросы."
 
 msgid "Answer no with <0>ei</0> and the verb without its ending: <1>Ei, ma ei tööta</1>, no, I don’t work."
 msgstr "Говори «нет» словом <0>ei</0> и глаголом без окончания: <1>Ei, ma ei tööta</1>, нет, я не работаю."
+
+msgid "Answer no with the forms lesson {negation} uses for not: <0/> or <1/>"
+msgstr "Ответ «нет» — это формы отрицания из урока {negation}: <0/> или <1/>"
 
 msgid "Answer, then ask back: <0>Hästi, aitäh. Aga sul?</0>"
 msgstr "Отвечай и спрашивай в ответ: <0>Hästi, aitäh. Aga sul?</0>"
@@ -2654,6 +2702,9 @@ msgstr "Спроси, что ждёт повторения, и ассистен�
 msgid "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1> means “Whose book is this?”"
 msgstr "Спрашивай «чей?» словом <0>kelle</0>: <1>Kelle raamat see on?</1> — «Чья это книга?»"
 
+msgid "Ask with <0>kas</0> or <1>kellel</1>, and answer with <2>Jah, on</2> or <3>Ei ole</3>."
+msgstr "Спрашивай с <0>kas</0> или <1>kellel</1>, отвечай <2>Jah, on</2> или <3>Ei ole</3>."
+
 msgid "Ask with <0>kus</0>, and answer with a sentence or the place alone: <1>Kus sa elad? Tartus.</1>"
 msgstr "Спрашивай словом <0>kus</0>, а отвечай предложением или одним словом: <1>Kus sa elad? Tartus.</1>"
 
@@ -2665,6 +2716,9 @@ msgstr "На вопрос, как дела у колоды «Анатомия»,
 
 msgid "Asked whether you’d like to win the lottery: “Magari!”"
 msgstr "На вопрос «Хочешь выиграть в лотерею?» — «Magari!»"
+
+msgid "Asking and answering"
+msgstr "Вопросы и ответы"
 
 msgid "Asking how many"
 msgstr "Как спросить «сколько»"
@@ -2723,11 +2777,17 @@ msgstr "В 9:00"
 msgid "At a café"
 msgstr "В кафе"
 
+msgid "at a friend"
+msgstr "у друга"
+
 msgid "At a school"
 msgstr "В школе"
 
 msgid "At A2 you also need 45 of the written points and 15 of the oral ones. At B1 each module passes on its own."
 msgstr "На уровне A2 также нужно 45 баллов за письменную часть и 15 за устную. На B1 каждый модуль сдаётся отдельно."
+
+msgid "at Dad"
+msgstr "у папы"
 
 msgid "At eleven"
 msgstr "В одиннадцать"
@@ -2735,11 +2795,32 @@ msgstr "В одиннадцать"
 msgid "At first, every character has pinyin."
 msgstr "Сначала над каждым иероглифом есть пиньинь."
 
+msgid "at him or her"
+msgstr "у него или у неё"
+
+msgid "at him or her, for emphasis"
+msgstr "у него или у неё, чтобы подчеркнуть"
+
 msgid "at home"
 msgstr "дома"
 
 msgid "At home"
 msgstr "Дома"
+
+msgid "at Jaan"
+msgstr "у Яана"
+
+msgid "at Mari"
+msgstr "у Мари"
+
+msgid "at me"
+msgstr "у меня"
+
+msgid "at me, for emphasis"
+msgstr "у меня, чтобы подчеркнуть"
+
+msgid "at Mum"
+msgstr "у мамы"
 
 msgid "At nine"
 msgstr "В девять"
@@ -2768,6 +2849,15 @@ msgstr "На рынке"
 msgid "at the office"
 msgstr "в офисе"
 
+msgid "at the teacher"
+msgstr "у учителя"
+
+msgid "at them"
+msgstr "у них"
+
+msgid "at them, for emphasis"
+msgstr "у них, чтобы подчеркнуть"
+
 msgid "At three"
 msgstr "В три"
 
@@ -2777,11 +2867,23 @@ msgstr "В двенадцать"
 msgid "At two"
 msgstr "В два"
 
+msgid "at us"
+msgstr "у нас"
+
 msgid "at work"
 msgstr "на работе"
 
 msgid "At work"
 msgstr "На работе"
+
+msgid "at you, for emphasis"
+msgstr "у тебя, чтобы подчеркнуть"
+
+msgid "at you, to more than one; polite"
+msgstr "у вас; вежливое «у Вас»"
+
+msgid "at you, to one person"
+msgstr "у тебя"
 
 msgid "ATP"
 msgstr "АТФ"
@@ -3854,6 +3956,12 @@ msgstr "Чехия"
 msgid "da-infinitive"
 msgstr "da-инфинитив"
 
+msgid "dad"
+msgstr "папа"
+
+msgid "Dad has a dog."
+msgstr "У папы есть собака."
+
 msgid "Danke schön! Thank you very much!"
 msgstr "Danke schön! Большое спасибо!"
 
@@ -4004,11 +4112,29 @@ msgstr "Ты *любишь* чай?"
 msgid "Do you drink coffee?"
 msgstr "Ты пьёшь кофе?"
 
+msgid "Do you have a book?"
+msgstr "У тебя есть книга?"
+
+msgid "Do you have a car?"
+msgstr "У тебя есть машина?"
+
+msgid "Do you have a car? To more than one, or polite."
+msgstr "У вас есть машина? Нескольким людям или вежливо."
+
+msgid "Do you have a question? To more than one, or polite."
+msgstr "У вас есть вопрос? Нескольким людям или вежливо."
+
 msgid "Do you have an *appointment* free today?"
 msgstr "У вас есть свободная *запись* на сегодня?"
 
+msgid "Do you have time?"
+msgstr "У тебя есть время?"
+
 msgid "Do you live in Tallinn?"
 msgstr "Ты живёшь в Таллине?"
+
+msgid "Do you need help?"
+msgstr "Тебе нужна помощь?"
 
 msgid "Do you speak Estonian?"
 msgstr "Ты говоришь по-эстонски?"
@@ -4075,6 +4201,9 @@ msgstr "Карточки за меня пишет AI?"
 
 msgid "Does the German deck include my state’s questions?"
 msgstr "Есть ли в немецкой колоде вопросы моей земли?"
+
+msgid "dog"
+msgstr "собака"
 
 msgid "Dog"
 msgstr "Собака"
@@ -4269,11 +4398,17 @@ msgstr "У каждой части есть и минимум: 38 из 120 за 
 msgid "Each person has its own: -n, -d, -b, -me, -te, -vad."
 msgstr "У каждого лица своё: -n, -d, -b, -me, -te, -vad."
 
+msgid "Each pronoun has its <0>-l</0> form. Tap one to hear it in a sentence."
+msgstr "У каждого местоимения своя форма на <0>-l</0>. Нажми на любую, чтобы услышать её в предложении."
+
 msgid "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
 msgstr "У каждого местоимения своё окончание: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, отсюда <1>elan, elad, elab, elame, elate, elavad</1>."
 
 msgid "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the long one, <1>mina</1>, for stress."
 msgstr "У каждого местоимения две формы. Говори краткую, <0>ma</0>, а полную, <1>mina</1>, оставь для выделения."
+
+msgid "Each pronoun took -⁠l, and every verb is on."
+msgstr "Каждое местоимение получило -⁠l, а глагол везде on."
 
 msgid "Each question as New, Learning or Known"
 msgstr "Каждый вопрос — новый, в изучении или выученный"
@@ -4428,6 +4563,12 @@ msgstr "От одиннадцати до девятнадцати"
 msgid "Eleven to nineteen: -teist"
 msgstr "От 11 до 19: -teist"
 
+msgid "Emal on auto: Mum has a car. Ema on auto would say Mum is a car."
+msgstr "Emal on auto: у мамы есть машина. Ema on auto значило бы «мама — это машина»."
+
+msgid "Emal on: Mum has."
+msgstr "Emal on: у мамы есть."
+
 msgid "Ended in 1648 by the <0>Peace of Westphalia</0>."
 msgstr "Завершилась в 1648 году <0>Вестфальским миром</0>."
 
@@ -4515,6 +4656,9 @@ msgstr "Разговорная практика эстонского: знако
 msgid "Estonian grammar lessons"
 msgstr "Уроки эстонской грамматики"
 
+msgid "Estonian has no everyday verb for have. To say I have a cat, it says <0/> Word for word, that’s “at me is a cat”."
+msgstr "Чтобы сказать, что у тебя что-то есть, по-эстонски говорят так же, как по-русски: <0/> Дословно это «у меня есть кошка». Глагола «иметь» здесь нет."
+
 msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
 msgstr "В эстонском одно настоящее время. <0/> значит и «я читаю» вообще, и «я читаю сейчас», а что именно, видно из остального предложения. Нажми на предложение, чтобы его услышать."
 
@@ -4556,6 +4700,9 @@ msgstr "Эстонское произношение"
 
 msgid "Estonian reading and listening practice: a day in Tallinn"
 msgstr "Эстонский язык: чтение и аудирование. День в Таллине"
+
+msgid "Estonian says I have as “at me is”: <0>Mul on kass.</0>"
+msgstr "По-эстонски «у меня есть» говорят так же, как по-русски: <0>Mul on kass.</0>"
 
 msgid "Estonian startup"
 msgstr "Эстонский стартап"
@@ -4992,6 +5139,9 @@ msgstr "Квартиры в Таллине *дорогие*."
 msgid "Flip the six lines above once more, then come back."
 msgstr "Ещё раз переключи шесть строк выше и возвращайся."
 
+msgid "Flip the switch above once more, then try again."
+msgstr "Ещё раз пощёлкай переключатель выше, а потом попробуй снова."
+
 msgid "Flour"
 msgstr "Мука"
 
@@ -5042,6 +5192,9 @@ msgstr "Для заявлений, поданных 20 октября 2025 го�
 msgctxt "deck tag"
 msgid "For beginners"
 msgstr "Для начинающих"
+
+msgid "For emphasis"
+msgstr "Чтобы подчеркнуть"
 
 msgid "For everyone"
 msgstr "Для всех"
@@ -5470,6 +5623,9 @@ msgstr "Карточки и тесты Gemini показывают, что ты 
 msgid "Genetics"
 msgstr "Генетика"
 
+msgid "genitive"
+msgstr "родительный падеж"
+
 msgid "Genitive"
 msgstr "Родительный"
 
@@ -5778,8 +5934,26 @@ msgstr "Он или она ест дома."
 msgid "He or she has a child."
 msgstr "У него или у неё есть ребёнок."
 
+msgid "He or she has a dog."
+msgstr "У него или у неё есть собака."
+
+msgid "He or she has a good friend."
+msgstr "У него или у неё есть хороший друг."
+
+msgid "He or she has a good teacher."
+msgstr "У него или у неё хороший учитель."
+
 msgid "he or she is"
 msgstr "он или она есть"
+
+msgid "He or she is a child."
+msgstr "Он или она — ребёнок."
+
+msgid "He or she is a good friend."
+msgstr "Он или она — хороший друг."
+
+msgid "He or she is a good teacher."
+msgstr "Он или она — хороший учитель."
 
 msgid "He or she is a teacher."
 msgstr "Он или она — учитель."
@@ -5933,11 +6107,17 @@ msgstr "Послушай предложение и выбери глагол и�
 msgid "Hear a sentence and pick the word as a dictionary lists it. You hear <0>toas</0>, and you look up <1>tuba</1>."
 msgstr "Послушай предложение и выбери слово так, как его даёт словарь. Слышишь <0>toas</0> — ищешь <1>tuba</1>."
 
+msgid "Hear a sentence and pick what it means: being something, or having it. Between <0>ta on</0> and <1>tal on</1>, only the <2>-l</2> differs."
+msgstr "Послушай предложение и выбери, что оно значит: «быть» или «иметь». Между <0>ta on</0> и <1>tal on</1> разница только в <2>-l</2>."
+
 msgid "Hear a sentence and pick what it says. Listen to how it starts: with the verb, with <0>ära</0>, or with <1>ma ei</1>."
 msgstr "Послушай предложение и выбери, что оно значит. Обрати внимание, с чего оно начинается: с глагола, с <0>ära</0> или с <1>ma ei</1>."
 
 msgid "Hear a sentence and pick what it says. Listen to the end of the noun and of the verb."
 msgstr "Послушай предложение и выбери, что оно значит. Прислушайся к концу существительного и глагола."
+
+msgid "Hear a sentence and pick who has the thing. Listen to the first word, or to the word after <0/> in a question. <1>Mul</1> and <2>meil</2>, <3>sul</3> and <4>teil</4>, <5>tal</5> and <6>neil</6> differ by a sound or two."
+msgstr "Послушай предложение и выбери, у кого эта вещь. Слушай первое слово, а в вопросе — слово после <0/>. <1>Mul</1> и <2>meil</2>, <3>sul</3> и <4>teil</4>, <5>tal</5> и <6>neil</6> различаются одним-двумя звуками."
 
 msgid "Hear a sentence and pick who it’s about. Some drop the pronoun, so listen to the end of the verb. With <0/>, only the pronoun tells <1/> from <2/>."
 msgstr "Послушай предложение и выбери, о ком оно. Где местоимения нет, слушай конец глагола. С <0/> отличить <1/> от <2/> можно только по местоимению."
@@ -5999,6 +6179,9 @@ msgstr "Место на слух"
 msgid "Hearing the word behind the form"
 msgstr "Слово за формой"
 
+msgid "Hearing who has it"
+msgstr "У кого это есть: на слух"
+
 msgid "Hearing whose"
 msgstr "Чей? На слух"
 
@@ -6025,6 +6208,9 @@ msgstr "Здравствуйте (вежливо)"
 
 msgid "Hello!"
 msgstr "Привет!"
+
+msgid "help"
+msgstr "помощь"
 
 msgid "Here are my notes from today’s pharmacology lecture. Add the drugs."
 msgstr "Вот мои заметки с сегодняшней лекции по фармакологии. Добавь препараты."
@@ -6270,6 +6456,12 @@ msgstr "Как подключить"
 msgid "How to install"
 msgstr "Как установить"
 
+msgid "How to say “I have” in Estonian"
+msgstr "Как сказать «у меня есть» по-эстонски"
+
+msgid "How to say I have in Estonian: <0>mul on</0>, word for word “at me is”, with the owner in the <1>-l</1> form and the verb <2>on</2> whoever has it."
+msgstr "Как сказать «у меня есть» по-эстонски: <0>mul on</0>, где владелец стоит в форме на <1>-l</1>, а глагол — <2>on</2>, у кого бы ни была вещь."
+
 msgid "How to say no in Estonian"
 msgstr "Как сказать «нет» по-эстонски"
 
@@ -6344,6 +6536,19 @@ msgstr "Я добавляю слова через Yomitan. Это будет р�
 msgid "I am"
 msgstr "я есть"
 
+msgctxt "being or having"
+msgid "I am"
+msgstr "Быть"
+
+msgid "I am a cat is <0/> I have a cat is <1/> In the second, the cat is what “is”, so the verb is <2>on</2> whoever has it: <3>mul on, sul on, meil on</3>."
+msgstr "«Я кошка» — это <0/> «У меня есть кошка» — это <1/> Во втором предложении «есть» именно кошка, поэтому глагол всегда <2>on</2>, у кого бы она ни была: <3>mul on, sul on, meil on</3>."
+
+msgid "I am a cat."
+msgstr "Я кошка."
+
+msgid "I am or I have"
+msgstr "Быть или иметь"
+
 msgid "I ate"
 msgstr "я ел, ела"
 
@@ -6404,11 +6609,17 @@ msgstr "я делал, делала; сделал, сделала"
 msgid "I do, I make"
 msgstr "я делаю"
 
+msgid "I do."
+msgstr "У меня."
+
 msgid "I don’t have a *dog*."
 msgstr "У меня нет *собаки*."
 
 msgid "I don’t have a cat."
 msgstr "У меня нет кошки."
+
+msgid "I don’t have time."
+msgstr "У меня нет времени."
 
 msgid "I don’t know"
 msgstr "я не знаю"
@@ -6479,6 +6690,10 @@ msgstr "Мне *звонила* мама."
 msgid "I had already eaten."
 msgstr "Я тогда уже поел."
 
+msgctxt "being or having"
+msgid "I have"
+msgstr "Иметь"
+
 msgid "I have a *dog*."
 msgstr "У меня есть *собака*."
 
@@ -6490,6 +6705,12 @@ msgstr "У меня есть кошка."
 
 msgid "I have a Japanese *friend*."
 msgstr "У меня есть *друг* из Японии."
+
+msgid "I have a question."
+msgstr "У меня есть вопрос."
+
+msgid "I have a teacher."
+msgstr "У меня есть учитель."
 
 msgid "I have already eaten."
 msgstr "Я уже поел."
@@ -6595,6 +6816,12 @@ msgstr "я могу, мне можно"
 
 msgid "I miss it"
 msgstr "Мне этого не хватает"
+
+msgid "I need help."
+msgstr "Мне нужна помощь."
+
+msgid "I need money."
+msgstr "Мне нужны деньги."
 
 msgid "I pay"
 msgstr "Я плачу (деньги)"
@@ -6761,6 +6988,9 @@ msgstr "Я *читаю* газету."
 
 msgid "I’m 34 years old."
 msgstr "Мне 34 года."
+
+msgid "I’m a teacher."
+msgstr "Я учитель."
 
 msgid "I’m allowed to"
 msgstr "мне можно"
@@ -7020,6 +7250,9 @@ msgstr "в комнате"
 msgid "in a shop"
 msgstr "в магазине"
 
+msgid "In a yes sentence, one thing you can count stays in its first form, the one lesson {forms} lists first: <0/>, <1/>, <2/>. Time is an amount, not one thing, and takes another form: <3/> Lesson {partitive} teaches that form."
+msgstr "В утвердительном предложении одна вещь, которую можно посчитать, остаётся в первой форме, той, что в уроке {forms} идёт первой: <0/>, <1/>, <2/>. Время — это количество, а не одна вещь, поэтому у него другая форма: <3/> Эту форму объясняет урок {partitive}."
+
 msgid "in an office"
 msgstr "в офисе"
 
@@ -7064,6 +7297,9 @@ msgstr "В Gemini CLI — где угодно. В приложении Gemini Go
 
 msgid "in Germany"
 msgstr "в Германии"
+
+msgid "In Kas sul on aega? and Mul pole aega, time takes this form."
+msgstr "В Kas sul on aega? и Mul pole aega время стоит именно в этой форме."
 
 msgid "in Lasnamäe"
 msgstr "в Ласнамяэ"
@@ -7320,6 +7556,9 @@ msgstr "Это твой кот?"
 msgid "is, are"
 msgstr "есть"
 
+msgid "Isal on: Dad has."
+msgstr "Isal on: у папы есть."
+
 msgid "Isn’t there"
 msgstr "Нет"
 
@@ -7484,6 +7723,12 @@ msgstr "Редкий, но серьёзный риск — лактоацидо�
 msgid "Its second and third forms are the same."
 msgstr "Вторая и третья формы одинаковые."
 
+msgid "Jaan does."
+msgstr "У Яана."
+
+msgid "Jaan has a car."
+msgstr "У Яана есть машина."
+
 msgid "Jaan is at the door."
 msgstr "Яан у двери."
 
@@ -7495,6 +7740,12 @@ msgstr "Яан прислал тебе голосовое с рынка. Слу�
 
 msgid "Jaan lives in Pärnu."
 msgstr "Яан живёт в Пярну."
+
+msgid "Jaan on auto says Jaan is a car. For Jaan has a car, say Jaanil on auto."
+msgstr "Jaan on auto значит «Яан — это машина». «У Яана есть машина» — это Jaanil on auto."
+
+msgid "Jaan on minu sõber: Jaan is my friend. Jaanil on minu sõber would say Jaan has my friend."
+msgstr "Jaan on minu sõber: Яан — мой друг. Jaanil on minu sõber значило бы, что мой друг есть у Яана."
 
 msgid "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says what isn’t so, then what is."
 msgstr "Яан рассказывает о себе и своей подруге Кати. Обрати внимание на <0/>: после отрицания Яан говорит, как на самом деле."
@@ -7508,8 +7759,20 @@ msgstr "Яан, ещё один друг, присылает тебе голос
 msgid "Jaan’s"
 msgstr "Яана"
 
+msgid "Jaanil on koer: Jaan has a dog. Jaan on koer would say Jaan is a dog."
+msgstr "Jaanil on koer: у Яана есть собака. Jaan on koer значило бы «Яан — это собака»."
+
+msgid "Jaanil on: Jaan has."
+msgstr "Jaanil on: у Яана есть."
+
+msgid "Jah says yes, and ma pole says I am not. For no time, say Ei, mul pole."
+msgstr "Jah значит «да», а ma pole — «я не…». Чтобы сказать, что времени нет, говори Ei, mul pole."
+
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
+
+msgid "Jah, olen answers Kas sa oled? The answer to Kas sul on? is Jah, on."
+msgstr "Jah, olen — это ответ на Kas sa oled? На Kas sul on? отвечают Jah, on."
 
 msgid "Japan"
 msgstr "Япония"
@@ -7575,6 +7838,9 @@ msgstr "Kas превращает фразу в вопрос"
 
 msgid "Kas sa tuled? Are you coming?"
 msgstr "Kas sa tuled? Ты придёшь?"
+
+msgid "Kas sul on? Do you have? The verb stays on for sul too."
+msgstr "Kas sul on? — «У тебя есть?» И после sul глагол остаётся on."
 
 msgid "Kass, kassi, kassi."
 msgstr "Kass, kassi, kassi."
@@ -8002,6 +8268,12 @@ msgstr "библиотека"
 msgid "Light reactions"
 msgstr "Световые реакции"
 
+msgid "Liis"
+msgstr "Лийс"
+
+msgid "Liis shares a flat with you and needs a hand. She speaks first; pick what you say back."
+msgstr "Лийс живёт с тобой в одной квартире, и ей нужна помощь. Она говорит первой, а ты выбирай, что ответить."
+
 msgid "Like <0>küsimus</0>, <1>vastus</1> ends its third form in <2>-ust</2>: <3>vastust</3>."
 msgstr "Как и у <0>küsimus</0>, третья форма <1>vastus</1> оканчивается на <2>-ust</2>: <3>vastust</3>."
 
@@ -8291,8 +8563,14 @@ msgstr "Ma istun значит, что садишься ты. Чтобы попр
 msgid "Ma olen pärit… is I’m from…"
 msgstr "Ma olen pärit… значит «я родом из…»."
 
+msgid "Ma olen says I am. To say you have it, use mul on."
+msgstr "Ma olen — это «я…», о том, кто ты. Чтобы сказать, что это у тебя, говори mul on."
+
 msgid "Ma olen, sa oled, ta on."
 msgstr "Ma olen, sa oled, ta on."
+
+msgid "Ma pole says I am not. For having, it’s mul pole."
+msgstr "Ma pole — это «я не…», о том, кто ты. Чтобы сказать «у меня нет», говорят mul pole."
 
 msgid "Ma tulen kohe! I’m coming right away!"
 msgstr "Ma tulen kohe! Уже иду!"
@@ -8411,6 +8689,9 @@ msgstr "Образуй форму на <0>-da</0>"
 msgid "Make the form"
 msgstr "Образуй форму"
 
+msgid "makes a yes-or-no question"
+msgstr "делает вопрос, на который отвечают «да» или «нет»"
+
 msgid "Making cards with AI"
 msgstr "Создание карточек с AI"
 
@@ -8448,6 +8729,9 @@ msgstr "Мари спрашивает <0/>, <1/> и <2/>. На каждый во
 msgid "Mari goes to the market on Saturday. Pick the first or third form for each gap. The third follows a number from two up, an amount or <0>pole</0>, and marks food or drink someone eats, drinks or wants."
 msgstr "В субботу Мари идёт на рынок. Выбери для каждого пропуска первую или третью форму. Третья стоит после числа от двух, после слова количества и после <0>pole</0>, а также для того, что едят, пьют или хотят."
 
+msgid "Mari has a cat."
+msgstr "У Мари есть кошка."
+
 msgid "Mari is at your home and asks who owns what. Answer with the genitive."
 msgstr "Мари у тебя дома и спрашивает, что кому принадлежит. Отвечай родительным падежом."
 
@@ -8478,6 +8762,9 @@ msgstr "Мари пишет"
 msgid "Mari writes to her friend Jaan. In each gap, pick the <0>-ma</0> form, the <1>-da</1> form or the present. The verb before the gap decides; with no verb before it, the present fits."
 msgstr "Мари пишет другу Яану. В каждый пропуск выбери форму на <0>-ma</0>, на <1>-da</1> или настоящее время. Решает глагол перед пропуском; если его нет, подходит настоящее время."
 
+msgid "Mari wrote about who has what. Pick the word for each gap, then hear the whole note."
+msgstr "Мари написала, у кого что есть. Выбери слово для каждого пропуска, а потом послушай всю записку."
+
 msgid "Mari, a woman’s name"
 msgstr "Мари, женское имя"
 
@@ -8496,8 +8783,14 @@ msgstr "Друг Мари"
 msgid "Mari’s message"
 msgstr "Сообщение от Мари"
 
+msgid "Mari’s note"
+msgstr "Записка Мари"
+
 msgid "Mari’s Saturday"
 msgstr "Суббота Мари"
+
+msgid "Maril on: Mari has."
+msgstr "Maril on: у Мари есть."
 
 msgid "Mark a card important and Lymi shows it more often. The cards you keep forgetting gather in Often forgotten, a round of their own."
 msgstr "Отметь карточку важной, и Lymi будет показывать её чаще. Карточки, которые ты постоянно забываешь, собираются в «Часто забываются» — отдельный круг повторения."
@@ -8547,6 +8840,9 @@ msgstr "можно…?"
 msgid "May it come easy"
 msgstr "Пусть будет легко"
 
+msgid "Me elame Tartus: we live in Tartu. The -⁠l form goes with on, not with other verbs."
+msgstr "Me elame Tartus: мы живём в Тарту. Форма на -⁠l идёт с on, а не с другими глаголами."
+
 msgid "Me, we, takes -me: elame."
 msgstr "Me, мы, берёт -me: elame."
 
@@ -8580,6 +8876,9 @@ msgstr "Знакомство по-эстонски: скажи, кто ты, г�
 msgid "Meeting"
 msgstr "Совещание"
 
+msgid "Meil on: we have."
+msgstr "Meil on: у нас есть."
+
 msgid "Members of a shared deck see its owner’s name and the deck’s content. The owner sees members’ names, roles and when they joined, but not their email addresses or review progress. If someone invites you by email, we receive your address from them and keep an invitation record. Published decks and their publisher’s name are visible on public pages."
 msgstr "Участники общей колоды видят имя владельца и содержимое колоды. Владелец видит имена участников, их роли и время присоединения, но не электронные адреса или прогресс повторений. Если тебя приглашают по электронной почте, мы получаем адрес от приглашающего и храним запись приглашения. Опубликованные колоды и имя издателя доступны на публичных страницах."
 
@@ -8610,11 +8909,17 @@ msgstr "молоко"
 msgid "Milk"
 msgstr "Молоко"
 
+msgid "Mina olen Mari: I am Mari. Mina takes olen; on goes with mul."
+msgstr "Mina olen Mari: я Мари. После mina идёт olen, а on — после mul."
+
 msgid "Mina takes -n: loen."
 msgstr "Mina берёт -n: loen."
 
 msgid "Mina, I, takes olen."
 msgstr "Mina, я, берёт olen."
+
+msgid "Minu ema on õpetaja: my mum is a teacher. Minu emal on õpetaja would say she has one."
+msgstr "Minu ema on õpetaja: моя мама — учительница. Minu emal on õpetaja значило бы, что у неё есть учитель."
 
 msgid "Minute hand"
 msgstr "Минутная стрелка"
@@ -8778,11 +9083,26 @@ msgstr "Переезд с Anki"
 msgid "Moving molecules against the gradient, using energy"
 msgstr "Перенос молекул против градиента с затратой энергии"
 
+msgid "Mul on kass: I have a cat. Ma would need olen and say I am a cat."
+msgstr "Mul on kass: у меня есть кошка. После ma было бы olen, и вышло бы «я кошка»."
+
+msgid "Mul on vaja: I need."
+msgstr "Mul on vaja: мне нужно."
+
+msgid "Mul on: I have."
+msgstr "Mul on: у меня есть."
+
 msgid "Mulle is to me. Learn it as a phrase for now."
 msgstr "Mulle — это «мне». Пока запомни это как готовое выражение."
 
 msgid "multiple-choice questions"
 msgstr "вопросов с вариантами ответа"
+
+msgid "mum"
+msgstr "мама"
+
+msgid "Mum has a question."
+msgstr "У мамы есть вопрос."
 
 msgid "Mum is at the market."
 msgstr "Мама на рынке."
@@ -8820,6 +9140,9 @@ msgstr "Мой дорогой"
 msgid "My flat is number 16."
 msgstr "Моя квартира — номер 16."
 
+msgid "My friend has a house."
+msgstr "У моего друга есть дом."
+
 msgid "My name is Kati."
 msgstr "Меня зовут Кати."
 
@@ -8853,6 +9176,12 @@ msgstr "Названа в честь Уильяма Оккама, монаха X
 
 msgid "Named by two Australian scientists in 1964."
 msgstr "Название предложили двое австралийских учёных в 1964 году."
+
+msgid "Names and nouns"
+msgstr "Имена и существительные"
+
+msgid "Names and nouns with -⁠l"
+msgstr "Имена и существительные с -⁠l"
 
 msgid "Narrow therapeutic range; check levels and potassium"
 msgstr "Узкий терапевтический диапазон; контролируй уровень препарата и калия"
@@ -8899,11 +9228,17 @@ msgstr "Почти. Ещё раз послушай формы прошедшег
 msgid "Nearly. Watch for endings that stay after <0>ei</0>."
 msgstr "Почти. Следи, чтобы после <0>ei</0> не оставалось окончания."
 
+msgid "needed"
+msgstr "нужно"
+
 msgid "Needed; your cards live on Lymi’s servers"
 msgstr "Нужен: карточки хранятся на серверах Lymi"
 
 msgid "Negation"
 msgstr "Отрицание"
+
+msgid "Neil on: they have."
+msgstr "Neil on: у них есть."
 
 msgid "Nerves, vessels, muscles and what each one does."
 msgstr "Нервы, сосуды, мышцы и то, что делает каждый из них."
@@ -9045,6 +9380,9 @@ msgstr "Нет, *спасибо*."
 
 msgid "No, he or she isn’t."
 msgstr "Нет, его или её нет."
+
+msgid "No, I don’t."
+msgstr "Нет, у меня нет."
 
 msgid "No, I’m not reading."
 msgstr "Нет, я не читаю."
@@ -9643,6 +9981,9 @@ msgstr "Открой окно, пожалуйста."
 
 msgid "Opening hours on a door"
 msgstr "Часы работы на двери"
+
+msgid "Õpetajal on: the teacher has."
+msgstr "Õpetajal on: у учителя есть."
 
 msgid "Opinion; thought"
 msgstr "Мнение; мысль"
@@ -10322,6 +10663,9 @@ msgstr "Тыква"
 msgid "Put {picked} here"
 msgstr "Положить {picked} сюда"
 
+msgid "Put <0/> in front to ask: <1/> Answer yes with <2/> It’s <3>on</3>, not <4>olen</4>, because the car is what “is”."
+msgstr "Чтобы спросить, поставь в начало <0/>: <1/> Ответ «да» — <2/> Именно <3>on</3>, а не <4>olen</4>, потому что «есть» здесь машина."
+
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 msgstr "Ставь <0>ei</0> перед глаголом: <1>ma ei loe</1>, я не читаю."
 
@@ -10912,6 +11256,9 @@ msgstr "Отрицание в прошлом"
 msgid "Saying something isn’t there"
 msgstr "Когда чего-то нет"
 
+msgid "Saying what you need"
+msgstr "Как сказать, что тебе нужно"
+
 msgid "Saying where: -s and -l"
 msgstr "Как сказать, где: окончания -s и -l"
 
@@ -11122,6 +11469,9 @@ msgstr "Как поделиться колодой"
 msgid "Sharing and connected apps"
 msgstr "Общие колоды и подключённые приложения"
 
+msgid "She asked whether you have time, not what you have."
+msgstr "Она спрашивала, есть ли у тебя время, а не что у тебя есть."
+
 msgid "She came back from *town*."
 msgstr "Она вернулась из *города*."
 
@@ -11284,6 +11634,9 @@ msgctxt "grammatical number"
 msgid "Singular"
 msgstr "Единственное"
 
+msgid "Sinul says that Liis has it."
+msgstr "Sinul значит, что он у Лийс."
+
 msgid "sit down"
 msgstr "садись"
 
@@ -11406,6 +11759,9 @@ msgstr "Так себе; небрежно"
 
 msgid "So; well then"
 msgstr "Итак; ну что ж"
+
+msgid "Sõbral on: a friend has."
+msgstr "Sõbral on: у друга есть."
 
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre — «над», mesa — «стол». Бывает, что она длится дольше самой еды."
@@ -11770,6 +12126,12 @@ msgstr "Темы"
 msgid "Sugars and amino acids reacting in the heat."
 msgstr "Сахара и аминокислоты реагируют под действием тепла."
 
+msgid "Sul on auto says that Liis has a car. You don’t have one, so answer Ei ole."
+msgstr "Sul on auto значит, что машина есть у Лийс. У тебя машины нет, так что отвечай Ei ole."
+
+msgid "Sul on: you have."
+msgstr "Sul on: у тебя есть."
+
 msgid "Sun; day"
 msgstr "Солнце; день"
 
@@ -11826,6 +12188,9 @@ msgstr "Переключи на «Основа» и смотри, какие б�
 
 msgid "Switch to “The stem”: no letter changes."
 msgstr "Переключи на «Основа»: ни одна буква не изменится."
+
+msgid "Switch to I have and watch the start of each line."
+msgstr "Переключи на «Иметь» и следи за началом каждой строки."
 
 msgid "Switch to In the place and watch the last letters change."
 msgstr "Переключи на «Где?» и смотри, как меняются концы слов."
@@ -11917,6 +12282,9 @@ msgstr "Сфотографировать ещё раз"
 msgid "Take the *metro* to the airport."
 msgstr "До аэропорта езжай на *метро*."
 
+msgid "Tal on: he or she has."
+msgstr "Tal on: у него или у неё есть."
+
 msgid "talk after a meal"
 msgstr "разговор после еды"
 
@@ -11928,6 +12296,9 @@ msgstr "Разговор: вопросы к Мари"
 
 msgid "Talk: at a café"
 msgstr "Разговор: в кафе"
+
+msgid "Talk: at home"
+msgstr "Разговор: дома"
 
 msgid "Talk: coffee with Mari"
 msgstr "Разговор: кофе с Мари"
@@ -12061,6 +12432,9 @@ msgstr "Ещё раз понажимай вопросительные слова
 msgid "Tap the rows above once more, then try again."
 msgstr "Ещё раз нажми на строки выше, а потом попробуй снова."
 
+msgid "Tap the six forms above once more, then try again."
+msgstr "Ещё раз послушай шесть форм выше, а потом попробуй снова."
+
 msgid "Tap the verbs above once more, then try again."
 msgstr "Ещё раз послушай глаголы выше, а потом попробуй снова."
 
@@ -12111,6 +12485,9 @@ msgstr "Команда"
 
 msgid "Technology"
 msgstr "Технологии"
+
+msgid "Teil on: you have."
+msgstr "Teil on: у вас есть."
 
 msgid "Tell a deck how to write, and AI matches it and the cards you wrote yourself."
 msgstr "Скажи колоде, как писать, и AI подстроится под это и под карточки, которые уже есть в колоде."
@@ -12256,6 +12633,9 @@ msgstr "Форма на -da от tegema."
 msgid "The -des and -mata forms"
 msgstr "Формы на -des и -mata"
 
+msgid "The -⁠l form of kes, who."
+msgstr "Форма на -⁠l от kes, «кто»."
+
 msgid "the -ma form"
 msgstr "форма на -ma"
 
@@ -12336,6 +12716,9 @@ msgstr "*Окно* открыто."
 
 msgid "The <0>-da</0> form follows <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> and <2>mulle meeldib</2>."
 msgstr "Форма на <0>-da</0> идёт после <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> и <2>mulle meeldib</2>."
+
+msgid "The <0>-l</0> goes on the genitive, the form lesson {genitive} uses for whose. <1/> becomes <2/>, so Jaan has a car is <3/> Pick a word and tap each step."
+msgstr "<0>-l</0> добавляется к родительному падежу — форме, которую урок {genitive} использует для «чей». <1/> становится <2/>, так что «у Яана есть машина» — это <3/> Выбери слово и нажимай на каждый шаг."
 
 msgid "The <0>-ma</0> form"
 msgstr "Форма на <0>-ma</0>"
@@ -12700,6 +13083,9 @@ msgstr "Родительный падеж"
 msgid "The genitive is the form before -s"
 msgstr "Родительный — это форма перед -s"
 
+msgid "The genitive of Jaan."
+msgstr "Родительный падеж от Jaan."
+
 msgid "The genitive of kass: kassi nimi, the cat’s name."
 msgstr "Родительный от kass: kassi nimi, имя кота."
 
@@ -12717,6 +13103,9 @@ msgstr "Родительный от sina. Коротко: su."
 
 msgid "The genitive says whose, and the owner goes first: <0>minu raamat</0>, my book; <1>Mari raamat</1>, Mari’s book."
 msgstr "Родительный падеж говорит, чьё это, и владелец стоит первым: <0>minu raamat</0>, моя книга; <1>Mari raamat</1>, книга Мари."
+
+msgid "The genitive, the form for whose."
+msgstr "Родительный падеж, форма для «чей»."
 
 msgid "The German, Spanish and Czech decks keep questions and answers in the exam’s language, as the exam does; the notes add an English translation and a short explanation."
 msgstr "В немецкой, испанской и чешской колодах вопросы и ответы на языке экзамена, как и на самом экзамене; в заметках есть перевод на английский и короткое пояснение."
@@ -12822,6 +13211,18 @@ msgstr "Возможно, в ссылке опечатка, или эту кол
 
 msgid "The little *girl* is laughing."
 msgstr "Маленькая *девочка* смеётся."
+
+msgid "The long form of mul."
+msgstr "Полная форма mul."
+
+msgid "The long form of neil."
+msgstr "Полная форма neil."
+
+msgid "The long form of sul."
+msgstr "Полная форма sul."
+
+msgid "The long form of tal."
+msgstr "Полная форма tal."
 
 msgid "The longest chain of dependent tasks; it sets the earliest finish date"
 msgstr "Самая длинная цепочка зависимых задач; она определяет самую раннюю дату завершения"
@@ -12936,6 +13337,9 @@ msgstr "Владелец стоит первым"
 
 msgid "The owner goes first: <0>minu raamat</0>."
 msgstr "Владелец стоит первым: <0>minu raamat</0>."
+
+msgid "The owner takes <0>-l</0>: <1>mul, sul, tal, meil, teil, neil</1>. A name or noun adds it to its genitive: <2>Maril, Jaanil, emal</2>."
+msgstr "Владелец стоит в форме на <0>-l</0>: <1>mul, sul, tal, meil, teil, neil</1>. Имя или существительное добавляет это окончание к форме родительного падежа: <2>Maril, Jaanil, emal</2>."
 
 msgid "The part of a cell that releases energy from food"
 msgstr "Часть клетки, которая высвобождает энергию из пищи"
@@ -13281,6 +13685,9 @@ msgstr "стола"
 msgid "the Tallinn market"
 msgstr "таллинский рынок"
 
+msgid "The teacher has a book."
+msgstr "У учителя есть книга."
+
 msgid "The teacher is speaking."
 msgstr "Учитель говорит."
 
@@ -13382,6 +13789,9 @@ msgstr "Глагол теряет окончание после <0>ei</0>, а н
 
 msgid "The verb ends in <0>-b</0>, or is <1>on</1>."
 msgstr "Глагол с <0>-b</0> на конце или <1>on</1>."
+
+msgid "The verb is <0>on</0> whoever has the thing, and in a yes sentence one thing you can count stays in its first form: <1>Meil on maja.</1>"
+msgstr "Глагол — <0>on</0>, у кого бы ни была вещь, а в утвердительном предложении одна вещь, которую можно посчитать, остаётся в первой форме: <1>Meil on maja.</1>"
 
 msgid "The verb stays second, whichever word comes first."
 msgstr "Глагол остаётся вторым, какое бы слово ни стояло первым."
@@ -13529,6 +13939,12 @@ msgstr "Они соответствуют источнику {source} ({edition}
 
 msgid "They follow {source}, in the exam’s own words. Lymi wrote the translations and notes, isn’t affiliated with {authority} and can’t promise a pass."
 msgstr "Они соответствуют источнику {source}, дословно как на экзамене. Переводы и пояснения написал Lymi; он не связан с {authority} и не может гарантировать, что ты сдашь экзамен."
+
+msgid "They have a child."
+msgstr "У них есть ребёнок."
+
+msgid "They have a house in Pärnu."
+msgstr "У них есть дом в Пярну."
 
 msgid "They have a house."
 msgstr "У них есть дом."
@@ -13809,6 +14225,9 @@ msgstr "Чтобы спросить, который час, скажи <0/> До
 msgid "To ask what day it is, say <0/> To answer, put the day after <1>täna on</1>: <2/>."
 msgstr "Чтобы спросить, какой сегодня день, скажи <0/> Чтобы ответить, назови день после <1>täna on</1>: <2/>."
 
+msgid "To ask who has something, use <0/>, the <1>-l</1> form of <2/>, who. Answer with the owner alone, and for yourself with the long form <3/>."
+msgstr "Чтобы спросить, у кого что-то есть, говори <0/> — форму на <1>-l</1> от <2/>, «кто». В ответе достаточно назвать владельца, а если владелец ты — полную форму <3/>."
+
 msgid "To ask whose, say <0/>. It’s the genitive of <1/>, who, from lesson {questions}. Tap a line to hear it."
 msgstr "Чтобы спросить «чей?», скажи <0/>. Это <1/>, «кто», из урока {questions}, в родительном — как «кого» от «кто». Нажми на строку, чтобы её услышать."
 
@@ -14054,6 +14473,9 @@ msgstr "говорить, разговаривать"
 
 msgid "To stop"
 msgstr "Прекращать; останавливаться"
+
+msgid "To stress who has it, use the long forms: <0/>, <1/>, <2/> and <3/>. They work like the long pronouns lesson {pronouns} teaches, such as <4>mina</4> for <5>ma</5>. <6/> and <7/> have no long form."
+msgstr "Чтобы подчеркнуть, у кого это есть, используй полные формы: <0/>, <1/>, <2/> и <3/>. Они работают как полные местоимения из урока {pronouns}, например <4>mina</4> вместо <5>ma</5>. <6/> и <7/> отдельной полной формы не имеют."
 
 msgid "To study"
 msgstr "Учиться"
@@ -14638,6 +15060,12 @@ msgstr "Мы не продаём твои персональные данные,
 
 msgid "We eat bread."
 msgstr "Мы едим хлеб."
+
+msgid "We have a home in Tartu."
+msgstr "У нас есть свой дом в Тарту."
+
+msgid "We have a house."
+msgstr "У нас есть дом."
 
 msgid "We have one cat."
 msgstr "У нас одна кошка."
@@ -15337,6 +15765,24 @@ msgstr "Кто видит карточки, которые я создаю?"
 msgid "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
 msgstr "Кто в США может голосовать на федеральных выборах, баллотироваться на федеральную должность и быть присяжным?"
 
+msgid "Who has a car?"
+msgstr "У кого есть машина?"
+
+msgid "Who has a question?"
+msgstr "У кого есть вопрос?"
+
+msgid "Who has it"
+msgstr "У кого это есть"
+
+msgid "Who has it: the -⁠l form"
+msgstr "У кого это есть: форма на -⁠l"
+
+msgid "Who has it?"
+msgstr "У кого это есть?"
+
+msgid "who has; at whom"
+msgstr "у кого"
+
 msgid "Who is it about?"
 msgstr "О ком это?"
 
@@ -15499,8 +15945,14 @@ msgstr "Дословно: «как идёт?»"
 msgid "Word for word: “very pleasant”."
 msgstr "Дословно: «очень приятно»."
 
+msgid "Word for word: “well, thanks. But at you?”"
+msgstr "Дословно: «хорошо, спасибо. А у тебя?»"
+
 msgid "Word for word: “what clock is?”"
 msgstr "Дословно: «что часы есть?»"
+
+msgid "Word for word: “yes, is”."
+msgstr "Дословно: «да, есть»."
 
 msgid "Word for word: simple past."
 msgstr "Дословно: «простое прошедшее»."
@@ -15658,6 +16110,9 @@ msgstr "Да, с 9:00 до 18:00"
 
 msgid "Yes, from a Mochi file. Every past review arrives on its original day, Remembered as Good and a forgotten card as Forgot, and each card keeps its due date. Markdown and CSV exports leave the history behind."
 msgstr "Да, из файла Mochi. Каждое прошлое повторение перенесётся в свой день: «помню» станет «Хорошо», а забытая карточка — «Не помню», и у каждой карточки сохранится дата повторения. При экспорте в Markdown и CSV история теряется."
+
+msgid "Yes, I do."
+msgstr "Да, есть."
 
 msgid "Yes, if you tick Include scheduling information when you export from Anki. Every past review arrives on its original day, and each card keeps its due date."
 msgstr "Да, если при экспорте из Anki отметить Include scheduling information. Каждое прошлое повторение перенесётся в свой день, а у каждой карточки сохранится дата повторения."
@@ -15827,6 +16282,9 @@ msgstr "Вы с братом Мартином живёте в одной ква�
 msgid "you are"
 msgstr "ты есть"
 
+msgid "You are a teacher."
+msgstr "Ты учитель."
+
 msgid "You are Andres, from Ukraine. You live in Tartu, work in an office and are learning Estonian."
 msgstr "Ты — Андрес из Украины. Живёшь в Тарту, работаешь в офисе и учишь эстонский."
 
@@ -15874,6 +16332,15 @@ msgstr "Ты пьёшь кофе."
 
 msgid "You have a car."
 msgstr "У тебя есть машина."
+
+msgid "You have a good friend."
+msgstr "У тебя есть хороший друг."
+
+msgid "You have a good teacher. To more than one, or polite."
+msgstr "У вас хороший учитель. Нескольким людям или вежливо."
+
+msgid "You have a teacher."
+msgstr "У тебя есть учитель."
 
 msgid "You have met two of these already: <0/>, on the table, is from <1/>, and <2/>, at the market, is from <3/>. Switch through the three steps for six nouns."
 msgstr "Два таких слова ты уже знаешь: <0/>, на столе, — от <1/>, а <2/>, на рынке, — от <3/>. Пройди все три шага для шести существительных."
@@ -15938,6 +16405,9 @@ msgstr "Твоя колода"
 msgid "You rely on add-ons"
 msgstr "Ты не можешь без дополнений"
 
+msgid "You share a flat with Liis. You don’t have a car, but Jaan does."
+msgstr "Ты живёшь в одной квартире с Лийс. Машины у тебя нет, а у Яана есть."
+
 msgid "You sit at the bottom, talking to Mari and Jaan across the table. Liis and Kadri sit either side of you, and Peeter on the right. Tap a word to see who it means, or tap a person."
 msgstr "Ты сидишь внизу и говоришь с Mari и Jaan напротив. Liis и Kadri сидят по обе стороны от тебя, а Peeter справа. Нажми на слово, чтобы увидеть, кого оно означает, или на человека."
 
@@ -15976,6 +16446,9 @@ msgstr "вы"
 
 msgid "You, the one speaking."
 msgstr "Ты — тот, кто говорит."
+
+msgid "you, to more than one; polite"
+msgstr "вы; вежливое «Вы»"
 
 msgid "you, to more than one; polite you"
 msgstr "вы; вежливое «Вы»"
@@ -16045,6 +16518,9 @@ msgstr "Ты врач, arst."
 
 msgid "You’re a good friend."
 msgstr "Ты хороший друг."
+
+msgid "You’re a good teacher. Polite, to one person."
+msgstr "Вы хороший учитель. Вежливо, одному человеку."
 
 msgid "You’re all doing great."
 msgstr "Вы молодцы."

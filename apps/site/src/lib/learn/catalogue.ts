@@ -174,7 +174,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 12,
         blurb: msg`A free lesson on the Estonian genitive case: minu, sinu, tema, meie, teie and nende for my, your, his or her, our and their, the owner before the noun (Mari raamat), kelle for whose, and the genitive as the form that takes -s and -l (kooli, koolis). Every sentence is read aloud.`,
       },
-      { name: msg`“To have”`, et: "Mul on" },
+      {
+        slug: "mul-on",
+        name: msg`“To have”`,
+        title: msg`How to say “I have” in Estonian`,
+        et: "Mul on",
+        minutes: 12,
+        blurb: msg`A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud.`,
+      },
       {
         slug: "osastav",
         name: msg`The partitive case`,

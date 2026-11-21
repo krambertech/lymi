@@ -76,11 +76,13 @@ export function Sort({ id, title, bins, items }: SortProps) {
   const right = results.filter(Boolean).length;
   const total = items.length;
 
-  // Shuffled after the page loads, so the server's page and the first render match.
+  // Shuffled after the page loads, so the server's page and the first render match. Keyed on the
+  // words, not the array, so a lesson passing them inline doesn't reset a game on each render.
+  const wordsKey = ids.join("\u0001");
   // biome-ignore lint/correctness/useExhaustiveDependencies: shuffles once per set of words
   useEffect(() => {
     dispatch({ type: "restarted", items: shuffle(ids) });
-  }, [items]);
+  }, [wordsKey]);
 
   // biome-ignore lint/correctness/useExhaustiveDependencies: reported once each time it is checked
   useEffect(() => {
@@ -154,6 +156,14 @@ export function Sort({ id, title, bins, items }: SortProps) {
         lang="et"
         aria-pressed={state.checked ? undefined : state.picked === word}
         aria-disabled={state.checked || undefined}
+        aria-keyshortcuts={
+          state.checked
+            ? undefined
+            : [
+                ...bins.map((_, n) => String(n + 1)),
+                ...(state.places[word] !== undefined ? ["Backspace"] : []),
+              ].join(" ")
+        }
         data-mark={mark}
         onPointerDown={start(word)}
         {...handlers}
@@ -184,6 +194,7 @@ export function Sort({ id, title, bins, items }: SortProps) {
         )}
       >
         <span className="text-xl font-semibold tracking-tight">{word}</span>
+        {mark === "right" && <span className="sr-only">{t`, in the right group`}</span>}
         {mark === "wrong" && rightBin && (
           <span className="inline-flex items-center gap-1 text-md font-semibold text-success">
             <ArrowRight aria-hidden="true" className="size-3.5 self-center" strokeWidth={2.5} />

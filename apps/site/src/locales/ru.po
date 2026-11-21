@@ -19,6 +19,9 @@ msgstr "-s или -l?"
 msgid "-teist or -kümmend?"
 msgstr "-teist или -kümmend?"
 
+msgid ", in the right group"
+msgstr ", в правильной группе"
+
 msgid "“J’ai la flemme” is the whole excuse."
 msgstr "«J’ai la flemme» — и никаких других объяснений."
 
@@ -11230,8 +11233,8 @@ msgstr "двести"
 msgid "two thousand"
 msgstr "две тысячи"
 
-msgid "Type {letter}"
-msgstr "Ввести {letter}"
+msgid "Type <0>{letter}</0>"
+msgstr "Ввести <0>{letter}</0>"
 
 msgid "Type <0>でんしゃ</0> or <1>デンシャ</1> and find <2>電車</2>."
 msgstr "Набери <0>でんしゃ</0> или <1>デンシャ</1> и найдёшь <2>電車</2>."

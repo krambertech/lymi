@@ -215,6 +215,7 @@ export function OrderRound({ item, state, heard, answer, autoplay }: RoundProps<
               {!away && landing === i && <Slot />}
               <button
                 type="button"
+                lang="et"
                 data-tile={tile}
                 data-at={away ? undefined : i}
                 data-mark={done ? (right ? "right" : "wrong") : undefined}

@@ -85,14 +85,19 @@ function LetterKeys({ onLetter }: { onLetter: (letter: string) => void }) {
         <button
           key={letter}
           type="button"
-          lang="et"
-          aria-label={t`Type ${letter}`}
           // A press must not take focus from the field, or a phone's keyboard closes.
           onPointerDown={(event) => event.preventDefault()}
           onClick={() => onLetter(letter)}
-          className="learn-key grid h-10 min-w-10 cursor-pointer place-items-center rounded-tile bg-plate px-2 text-xl font-semibold hoverable:hover:bg-plate-hover"
+          className="learn-key grid h-11 min-w-11 cursor-pointer place-items-center rounded-tile bg-plate px-2 text-xl font-semibold hoverable:hover:bg-plate-hover"
         >
-          {letter}
+          <span aria-hidden="true" lang="et">
+            {letter}
+          </span>
+          <span className="sr-only">
+            <Trans>
+              Type <span lang="et">{letter}</span>
+            </Trans>
+          </span>
         </button>
       ))}
     </fieldset>
@@ -185,7 +190,7 @@ export function FormRound({ item, state, heard, answer, autoplay }: RoundProps<F
         </fieldset>
       ) : (
         <form
-          className="grid w-full max-w-md gap-2.5"
+          className="grid w-full max-w-md grid-cols-1 gap-2.5"
           onSubmit={(event) => {
             event.preventDefault();
             if (!done && value.trim()) submit(value);

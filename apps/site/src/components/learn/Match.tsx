@@ -76,8 +76,11 @@ export function Match({ id, title, pairs, columns }: MatchProps) {
       next = shuffle(ids);
     setOrder({ left, right: next });
   };
+  // Keyed on the pairs' ids, not the array, so a lesson passing them inline doesn't reset a game on
+  // each render.
+  const pairsKey = ids.join("\u0001");
   // biome-ignore lint/correctness/useExhaustiveDependencies: shuffles once per set of pairs, after the page loads
-  useEffect(reshuffle, [pairs]);
+  useEffect(reshuffle, [pairsKey]);
 
   useEffect(() => {
     if (!state.wrong) return;
@@ -221,7 +224,7 @@ function MatchItem({
       className={clsx(
         "learn-answer relative flex min-h-13 items-center rounded-tile border border-edge-strong bg-plate py-2 ps-3.5 text-start transition-[background-color,border-color,scale] duration-150",
         matched
-          ? "cursor-default pe-10"
+          ? "cursor-default pe-9"
           : "cursor-pointer pe-3.5 active:scale-[0.98] hoverable:hover:bg-plate-hover",
         chosen && "learn-chosen",
         wrong && "learn-shake",
@@ -231,7 +234,8 @@ function MatchItem({
         lang={lang}
         className={clsx(
           "min-w-0 break-words",
-          big ? "text-xl font-semibold tracking-tight" : "text-md font-medium",
+          // A phone's column is about 150 px, so a long word steps down a size rather than break.
+          big ? "text-xl font-semibold tracking-tight max-sm:text-lg" : "text-md font-medium",
         )}
       >
         {label}

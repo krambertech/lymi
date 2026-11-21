@@ -9,6 +9,7 @@ import { LihtminevikLesson } from "../learn/lessons/Lihtminevik";
 import { MajasMajjaMajastLesson } from "../learn/lessons/MajasMajjaMajast";
 import { MinaSinaTemaLesson } from "../learn/lessons/MinaSinaTema";
 import { MitmusLesson } from "../learn/lessons/Mitmus";
+import { ModaalverbidLesson } from "../learn/lessons/Modaalverbid";
 import { MulOnLesson } from "../learn/lessons/MulOn";
 import { NumbridLesson } from "../learn/lessons/Numbrid";
 import { OlevikLesson } from "../learn/lessons/Olevik";
@@ -39,6 +40,7 @@ export const LESSON_VIEWS = {
   tutvumine: TutvumineLesson,
   kaskiv: KaskivLesson,
   "paev-tallinnas": PaevTallinnasLesson,
+  modaalverbid: ModaalverbidLesson,
   "laual-lauale-laualt": LaualLaualeLaualtLesson,
   "sobraga-rahata": SobragaRahataLesson,
   "mul-on": MulOnLesson,

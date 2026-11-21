@@ -406,7 +406,7 @@ export function TegevusnimedLesson() {
   const { t, i18n } = useLingui();
   const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
   const verbForms = lessonBySlug("verbi-pohivormid")?.n;
-  const canMay = at("Võin, saan, oskan");
+  const canMay = lessonBySlug("modaalverbid")?.n;
   const going = at("Lähen ujuma, olen ujumas");
   const nounForms = lessonBySlug("pohivormid")?.n;
   const wordOrder = at("Täna lähen ma");

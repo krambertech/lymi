@@ -1205,6 +1205,140 @@ const TALLINN_CLIPS: Record<string, Clip> = {
 };
 
 /**
+ * The lesson on can, may and must. Checked in ÕS 2025 on Sõnaveeb: oskama, saama, võima and
+ * tohtima take the -da form (“mida teha”), pidama the -ma form (“mida tegema”), tulema as “has to”
+ * takes “kellel + mida teha”, and vaja takes “mida teha”. ujuma: ujuda, ujun.
+ */
+
+/** Know how or able to: the verbs that follow oskan and saan, each by its -ma and -da form. */
+export const MODAL_SKILLS = [
+  { ma: "ujuma", da: "ujuda" },
+  { ma: "lugema", da: "lugeda" },
+] as const;
+export type ModalSkill = (typeof MODAL_SKILLS)[number];
+export type SkillLead = "oskan" | "saan";
+/** “Ma oskan ujuda.” */
+export const skillSentence = (lead: SkillLead, skill: ModalSkill) => `Ma ${lead} ${skill.da}.`;
+
+/** Have to: the verbs that follow pean, tuleb and on vaja, with `|` before the ending to light. */
+export const MODAL_DUTIES = [
+  { ma: "mine|ma", da: "min|na" },
+  { ma: "oota|ma", da: "ooda|ta" },
+  { ma: "tööta|ma", da: "tööta|da" },
+] as const;
+export type ModalDuty = (typeof MODAL_DUTIES)[number];
+export type DutyLead = "pean" | "tuleb" | "vaja";
+const unlit = (form: string) => form.replace("|", "");
+/** “Ma pean minema.”, “Tuleb minna.”, “Mul on vaja minna.” */
+export function dutySentence(lead: DutyLead, duty: ModalDuty): string {
+  if (lead === "pean") return `Ma pean ${unlit(duty.ma)}.`;
+  return lead === "tuleb" ? `Tuleb ${unlit(duty.da)}.` : `Mul on vaja ${unlit(duty.da)}.`;
+}
+
+/** May and allowed: each key's form and the sentence it plays. */
+export const MODAL_PERMISSION = [
+  { lead: "võin", said: "Ma võin sind oodata." },
+  { lead: "võid", said: "Sa võid siin istuda." },
+  { lead: "tohin", said: "Kas ma tohin siin istuda?" },
+  { lead: "ei tohi", said: "Siin ei tohi süüa." },
+] as const;
+
+/** Can't, mustn't, don't have to, each said about swimming. */
+export const MODAL_NOT = [
+  { lead: "ei oska", said: "Ta ei oska ujuda." },
+  { lead: "ei saa", said: "Ta ei saa täna ujuda." },
+  { lead: "ei tohi", said: "Siin ei tohi ujuda." },
+  { lead: "ei pea", said: "Sa ei pea ujuma." },
+  { lead: "pole vaja", said: "Sul pole vaja ujuda." },
+] as const;
+
+/** The four ways not to, heard in “What does it say?”. */
+export const MODAL_HEARD_KINDS = ["oska", "saa", "tohi", "pea"] as const;
+export type HeardKind = (typeof MODAL_HEARD_KINDS)[number];
+/** The two verbs each way is heard with, by their -da and -ma forms. */
+export const MODAL_HEARD_VERBS = [
+  { da: "ujuda", ma: "ujuma" },
+  { da: "lugeda", ma: "lugema" },
+] as const;
+export type HeardVerb = (typeof MODAL_HEARD_VERBS)[number];
+/** “Ma ei oska ujuda.”, or after pea, the -ma form: “Ma ei pea ujuma.” */
+export const notSaid = (kind: HeardKind, verb: HeardVerb) =>
+  `Ma ei ${kind} ${kind === "pea" ? verb.ma : verb.da}.`;
+
+/** The sentences of “Why this verb?”, each matched with its reason. */
+export const MODAL_REASONS = [
+  "Ma oskan ujuda.",
+  "Ma saan homme tulla.",
+  "Sa võid siin istuda.",
+  "Kas ma tohin siin istuda?",
+  "Tuleb oodata.",
+  "Mul on vaja minna.",
+] as const;
+
+/** Sentences the lesson's prose and asides play. */
+export const MODAL_SENTENCES = [
+  "Ma saan homme tulla.",
+  "Ma oskan eesti keelt.",
+  "Mul tuleb oodata.",
+  "Ta võib homme tulla.",
+  "Sa ei pea tulema.",
+  "Sa ei tohi tulla.",
+  "Ta tuleb ujuma.",
+  "Tuleb ujuda.",
+] as const;
+
+/** Words the lesson glosses and plays on their own. */
+export const MODAL_WORDS = [
+  "oskan",
+  "saan",
+  "võin",
+  "võib",
+  "tohin",
+  "pean",
+  "tuleb",
+  "vaja",
+  "mul on vaja",
+  "ei tohi",
+  "ei pea",
+  "pole vaja",
+  "ujuma",
+  "siin",
+] as const;
+
+/**
+ * Plans with Mari: her lines in the second voice, the learner's in the main one. The learner can
+ * swim, is free today and works tomorrow.
+ */
+export const MODAL_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Kas sa oskad ujuda?", voice: "second" },
+  "d-sina-1": "Jah, ma oskan.",
+  "d-mari-2": { text: "Tore! Kas sa tuled täna ujuma?", voice: "second" },
+  "d-sina-2": "Jah, ma saan tulla.",
+  "d-mari-3": { text: "Ja homme?", voice: "second" },
+  "d-sina-3": "Ei, ma pean homme töötama.",
+} as const satisfies Record<string, Clip>;
+
+const MODAL_CLIPS: Record<string, Clip> = {
+  ...words(MODAL_WORDS),
+  ...words(MODAL_SENTENCES),
+  ...words(
+    MODAL_SKILLS.flatMap((skill) => [skillSentence("oskan", skill), skillSentence("saan", skill)]),
+  ),
+  ...words(
+    MODAL_DUTIES.flatMap((duty) =>
+      (["pean", "tuleb", "vaja"] as const).map((lead) => dutySentence(lead, duty)),
+    ),
+  ),
+  ...words(MODAL_PERMISSION.map(({ said }) => said)),
+  ...words(MODAL_NOT.map(({ said }) => said)),
+  ...words(
+    MODAL_HEARD_KINDS.flatMap((kind) => MODAL_HEARD_VERBS.map((verb) => notSaid(kind, verb))),
+  ),
+  ...words(MODAL_REASONS),
+  ...MODAL_DIALOGUE,
+};
+
+/**
  * Lesson 32, “With, without, until, as”: -ga, -ta, -ni and -na on the genitive. Every form was
  * checked on Sõnaveeb (EKI) in November 2026.
  */
@@ -2430,6 +2564,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  modaalverbid: MODAL_CLIPS,
   "laual-lauale-laualt": {
     ...words([
       ...OUTER_PLACES.flatMap(({ place, kus, kuhu, kust }) => [place, kus, kuhu, kust]),

@@ -4309,6 +4309,371 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "sobraga-rahata/mari-tuleb-so3braga": {
+    "text": "Mari tuleb sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-ra2a2gin-emaga": {
+    "text": "Ma räägin emaga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-la2hen-bussiga-to2o2le": {
+    "text": "Ma lähen bussiga tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jaan-tuleb-rongiga": {
+    "text": "Jaan tuleb rongiga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kellega-sa-ra2a2gid": {
+    "text": "Kellega sa räägid?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kohv-piimaga-palun": {
+    "text": "Kohv piimaga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kohv-piimata-palun": {
+    "text": "Kohv piimata, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tee-suhkruga-palun": {
+    "text": "Tee suhkruga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tee-suhkruta-palun": {
+    "text": "Tee suhkruta, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tee-sidruniga-palun": {
+    "text": "Tee sidruniga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tee-sidrunita-palun": {
+    "text": "Tee sidrunita, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-olen-ta2na-autoga": {
+    "text": "Ma olen täna autoga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-olen-ta2na-autota": {
+    "text": "Ma olen täna autota.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-to2o2tan-kella-viieni": {
+    "text": "Ma töötan kella viieni.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/buss-la2heb-tartuni": {
+    "text": "Buss läheb Tartuni.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/homseni": {
+    "text": "Homseni!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/na2gemiseni": {
+    "text": "Nägemiseni!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kati-on-arst": {
+    "text": "Kati on arst.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kati-to2o2tab-arstina": {
+    "text": "Kati töötab arstina.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/mari-on-o3petaja": {
+    "text": "Mari on õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/mari-to2o2tab-o3petajana": {
+    "text": "Mari töötab õpetajana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jaan-on-kokk": {
+    "text": "Jaan on kokk.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jaan-to2o2tab-kokana": {
+    "text": "Jaan töötab kokana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/lapsena": {
+    "text": "lapsena",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/lapsega": {
+    "text": "lapsega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/piimata": {
+    "text": "piimata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/piimaga": {
+    "text": "piimaga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tartuni": {
+    "text": "Tartuni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/arstina": {
+    "text": "arstina",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/so3ber": {
+    "text": "sõber",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/so3bra": {
+    "text": "sõbra",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/so3braga": {
+    "text": "sõbraga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/laps": {
+    "text": "laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/lapse": {
+    "text": "lapse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/suhkur": {
+    "text": "suhkur",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/suhkru": {
+    "text": "suhkru",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/suhkruta": {
+    "text": "suhkruta",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/poe": {
+    "text": "poe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/poeni": {
+    "text": "poeni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/bussiga": {
+    "text": "bussiga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/raamatuga": {
+    "text": "raamatuga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/sidrunita": {
+    "text": "sidrunita",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/koolini": {
+    "text": "koolini",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jo3eni": {
+    "text": "jõeni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kokana": {
+    "text": "kokana",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/emaga": {
+    "text": "emaga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/rongiga": {
+    "text": "rongiga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kellega": {
+    "text": "kellega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/rahata": {
+    "text": "rahata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ilma": {
+    "text": "ilma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ilma-suhkruta": {
+    "text": "ilma suhkruta",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kelle": {
+    "text": "kelle",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kella-viieni": {
+    "text": "kella viieni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/arst": {
+    "text": "arst",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/arsti": {
+    "text": "arsti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/lapsena-elas-mari-tartus": {
+    "text": "Lapsena elas Mari Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kohvikus": {
+    "text": "kohvikus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/mulle": {
+    "text": "mulle",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kohv": {
+    "text": "kohv",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kohvi": {
+    "text": "kohvi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/palun": {
+    "text": "palun",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/joob": {
+    "text": "joob",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/teed": {
+    "text": "teed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/sidruniga": {
+    "text": "sidruniga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/aga": {
+    "text": "aga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tahab": {
+    "text": "tahab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tuleme": {
+    "text": "tuleme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/mul": {
+    "text": "mul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/aega": {
+    "text": "aega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kolmeni": {
+    "text": "kolmeni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/p-cafe": {
+    "text": "Tere, Kati! Kas sa oled kohvikus? Mulle üks kohv piimaga, palun. Peeter joob teed sidruniga, aga suhkruta. Jaan tahab kohvi ilma piimata. Me tuleme bussiga. Mul on aega kella kolmeni.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "sobraga-rahata/p-kati": {
+    "text": "Tere, Mari! Ma töötan haiglas arstina. Ma lähen bussiga tööle. Ma töötan kella viieni. Ma ei joo piima. Ma joon kohvi piimata. Homseni!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "kit/p-jaan": {
     "text": "Tere! Mina olen Jaan. Ma elan Tartus. Ma olen arst. Mari on minu sõber. Ta ei ole arst, ta on õpetaja. Me räägime eesti keelt.",
     "model": "eleven_v4",

@@ -809,6 +809,158 @@ const TALLINN_CLIPS: Record<string, Clip> = {
   ...TALLINN_DIALOGUE,
 };
 
+/**
+ * Lesson 32, “With, without, until, as”: -ga, -ta, -ni and -na on the genitive. Every form was
+ * checked on Sõnaveeb (EKI) in November 2026.
+ */
+export const SOBRAGA_WITH = [
+  "Mari tuleb sõbraga.",
+  "Ma räägin emaga.",
+  "Ma lähen bussiga tööle.",
+  "Jaan tuleb rongiga.",
+  "Kellega sa räägid?",
+] as const;
+
+/** Four lines said with -ga, then with -ta. */
+export const SOBRAGA_WITHOUT = [
+  { id: "piim", with: "Kohv piimaga, palun.", without: "Kohv piimata, palun." },
+  { id: "suhkur", with: "Tee suhkruga, palun.", without: "Tee suhkruta, palun." },
+  { id: "sidrun", with: "Tee sidruniga, palun.", without: "Tee sidrunita, palun." },
+  { id: "auto", with: "Ma olen täna autoga.", without: "Ma olen täna autota." },
+] as const;
+
+export const SOBRAGA_UNTIL = [
+  "Ma töötan kella viieni.",
+  "Buss läheb Tartuni.",
+  "Homseni!",
+  "Nägemiseni!",
+] as const;
+
+/** Three people, each said with olema and the job, then with töötama and -na. */
+export const SOBRAGA_AS = [
+  { id: "kati", is: "Kati on arst.", as: "Kati töötab arstina." },
+  { id: "mari", is: "Mari on õpetaja.", as: "Mari töötab õpetajana." },
+  { id: "jaan", is: "Jaan on kokk.", as: "Jaan töötab kokana." },
+] as const;
+
+/** Forms to match with their meanings: two pairs share a word, so only the ending tells them apart. */
+export const SOBRAGA_MATCH = [
+  "lapsena",
+  "lapsega",
+  "piimata",
+  "piimaga",
+  "Tartuni",
+  "arstina",
+] as const;
+
+/** A word, its genitive, then the genitive with one of the four endings. */
+export const SOBRAGA_CHAINS = [
+  { id: "sober", steps: ["sõber", "sõbra", "sõbraga"] },
+  { id: "laps", steps: ["laps", "lapse", "lapsena"] },
+  { id: "suhkur", steps: ["suhkur", "suhkru", "suhkruta"] },
+  { id: "pood", steps: ["pood", "poe", "poeni"] },
+] as const;
+
+export type CaseEnding = "ga" | "ta" | "ni" | "na";
+export const CASE_ENDINGS: readonly CaseEnding[] = ["ga", "ta", "ni", "na"];
+
+/**
+ * Words to build a form of: the genitive the ending goes on, and the slip of putting it on the
+ * first form instead, which is not a word.
+ */
+export const SOBRAGA_FORMS = [
+  { id: "buss", base: "buss", genitive: "bussi", ending: "ga", slip: "bussga" },
+  { id: "raamat", base: "raamat", genitive: "raamatu", ending: "ga", slip: "raamatga" },
+  { id: "piim", base: "piim", genitive: "piima", ending: "ta", slip: "piimta" },
+  { id: "sidrun", base: "sidrun", genitive: "sidruni", ending: "ta", slip: "sidrunta" },
+  { id: "kool", base: "kool", genitive: "kooli", ending: "ni", slip: "koolni" },
+  { id: "jogi", base: "jõgi", genitive: "jõe", ending: "ni", slip: "jõgini" },
+  { id: "arst", base: "arst", genitive: "arsti", ending: "na", slip: "arstna" },
+  { id: "kokk", base: "kokk", genitive: "koka", ending: "na", slip: "kokkna" },
+] as const satisfies readonly {
+  id: string;
+  base: string;
+  genitive: string;
+  ending: CaseEnding;
+  slip: string;
+}[];
+
+/** Mari's message with the café order, and Kati's message with gaps. */
+export const SOBRAGA_PASSAGES = {
+  cafe: [
+    "Tere, Kati! Kas sa oled kohvikus?",
+    "Mulle üks kohv piimaga, palun.",
+    "Peeter joob teed sidruniga, aga suhkruta.",
+    "Jaan tahab kohvi ilma piimata.",
+    "Me tuleme bussiga.",
+    "Mul on aega kella kolmeni.",
+  ],
+  kati: [
+    "Tere, Mari!",
+    "Ma töötan haiglas arstina.",
+    "Ma lähen bussiga tööle.",
+    "Ma töötan kella viieni.",
+    "Ma ei joo piima.",
+    "Ma joon kohvi piimata.",
+    "Homseni!",
+  ],
+} as const;
+
+/** The words of “With, without, until, as” with a card, each heard on its own. */
+export const SOBRAGA_WORDS = [
+  "sõbraga",
+  "emaga",
+  "bussiga",
+  "rongiga",
+  "kellega",
+  "piimaga",
+  "piimata",
+  "suhkruta",
+  "rahata",
+  "ilma",
+  "ilma suhkruta",
+  "kelle",
+  "kella viieni",
+  "Tartuni",
+  "Homseni!",
+  "Nägemiseni!",
+  "arst",
+  "arsti",
+  "arstina",
+  "kokana",
+  "lapsena",
+  "Lapsena elas Mari Tartus.",
+  "kohvikus",
+  "mulle",
+  "kohv",
+  "kohvi",
+  "palun",
+  "joob",
+  "teed",
+  "sidruniga",
+  "aga",
+  "tahab",
+  "tuleme",
+  "mul",
+  "aega",
+  "kolmeni",
+] as const;
+
+const SOBRAGA_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...SOBRAGA_WITH,
+    ...SOBRAGA_WITHOUT.flatMap((line) => [line.with, line.without]),
+    ...SOBRAGA_UNTIL,
+    ...SOBRAGA_AS.flatMap((line) => [line.is, line.as]),
+    ...SOBRAGA_MATCH,
+    ...SOBRAGA_CHAINS.flatMap(({ steps }) => steps),
+    ...SOBRAGA_FORMS.map(({ genitive, ending }) => `${genitive}${ending}`),
+    ...SOBRAGA_WORDS,
+  ]),
+  "p-cafe": { sentences: SOBRAGA_PASSAGES.cafe, voice: "second" },
+  "p-kati": { sentences: SOBRAGA_PASSAGES.kati },
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -902,5 +1054,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  "sobraga-rahata": SOBRAGA_CLIPS,
   kit: KIT_CLIPS,
 };

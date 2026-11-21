@@ -185,7 +185,14 @@ export const STAGES: readonly Stage[] = [
     hue: 330,
     goal: msg`Say with whom and without what, give a date and a time, put words in the right order, describe and compare things, and say what someone became.`,
     lessons: [
-      { name: msg`With, without, until, as`, et: "Sõbraga, rahata" },
+      {
+        slug: "sobraga-rahata",
+        name: msg`With, without, until, as`,
+        title: msg`With, without, until and as in Estonian`,
+        et: "Sõbraga, rahata",
+        minutes: 14,
+        blurb: msg`A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud.`,
+      },
       { name: msg`Pronouns in every case`, et: "Mind, mulle, minuga" },
       { name: msg`Ordinals and dates`, et: "Esimene, teine, kolmas" },
       { name: msg`Time expressions: when things happen`, et: "Esmaspäeval, aasta pärast" },

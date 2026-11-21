@@ -4469,6 +4469,11 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "laual-lauale-laualt/po3randal": {
+    "text": "põrandal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "laual-lauale-laualt/po3randale": {
     "text": "põrandale",
     "model": "eleven_v4",
@@ -4554,8 +4559,8 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "laual-lauale-laualt/c-turult-poest": {
-    "text": "Ema tuleb turult, aga isa tuleb poest.",
+  "laual-lauale-laualt/c-toolt-koolist": {
+    "text": "Ema tuleb töölt, aga isa tuleb koolist.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

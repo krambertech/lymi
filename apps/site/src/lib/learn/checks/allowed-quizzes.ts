@@ -26,7 +26,7 @@ export const ALLOWED_NEAR_PAIRS: readonly {
     quiz: "which-question",
     pair: ["kus?", "kust?"],
     reason:
-      "The options are the three question words, each the answer equally often; the learner hears tööl or töölt and tells kus from kust by that ending.",
+      "The options are the three question words, each the answer twice in six rounds; the learner hears tööl or töölt alone and tells kus from kust by that ending.",
   },
   {
     lesson: "osastav",

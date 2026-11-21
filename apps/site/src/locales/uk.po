@@ -1663,11 +1663,17 @@ msgstr "перевага"
 msgid "Aeg, aja, aega."
 msgstr "Aeg, aja, aega."
 
+msgid "After <0/>, the person you call takes <1>-le</1>. After <2/>, the person you ask takes <3>-lt</3>: <4/> is word for word “I ask from Mum”. A word whose stem changes, as in lesson {stems}, takes the ending on its stem: <5/>."
+msgstr "Після <0/> той, кому дзвониш, отримує <1>-le</1>. Після <2/> той, кого питаєш, отримує <3>-lt</3>: <4/> — дослівно «питаю від мами». Якщо основа слова змінюється, як в уроці {stems}, закінчення додається до основи: <5/>."
+
 msgid "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
 msgstr "Після <0>ei</0> іде форма з ma без -n: <1>loen</1>, <2>ei loe</2>."
 
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "Після <0>ei</0> дієслово <1>olema</1> втрачає закінчення: <2>ei ole</2>."
+
+msgid "After <0>helistama</0> and <1>küsima</1>, the person takes <2>-le</2> or <3>-lt</3>: <4>Ma helistan emale. Ma küsin emalt</4>, word for word “I ask from Mum”."
+msgstr "Після <0>helistama</0> і <1>küsima</1> людина отримує <2>-le</2> або <3>-lt</3>: <4>Ma helistan emale. Ma küsin emalt</4>, дослівно «питаю від мами»."
 
 msgid "After <0>läheb</0>, goes, the place answers <1>kuhu</1>, so the market takes <2>-le</2>: <3>turule</3>."
 msgstr "Після <0>läheb</0>, «іде», місце відповідає на <1>kuhu</1>, тож ринок отримує <2>-le</2>: <3>turule</3>."
@@ -6922,8 +6928,8 @@ msgstr "Leib, leiva, leiba."
 msgid "Lesson"
 msgstr "Урок"
 
-msgid "Lesson {have} put <0>-l</0> on a person to say who has something: <1/> On a person, <2>-le</2> says to and <3>-lt</3> says from."
-msgstr "В уроці {have} <0>-l</0> показувало, у кого щось є: <1/> Коли йдеться про людину, <2>-le</2> означає «кому», а <3>-lt</3> — «від кого» чи «у кого»."
+msgid "Lesson {have} put <0>-l</0> on a person to say who has something: <1/> After some verbs a person takes <2>-le</2> or <3>-lt</3> instead."
+msgstr "В уроці {have} <0>-l</0> показувало, у кого щось є: <1/> Після деяких дієслів людина натомість отримує <2>-le</2> або <3>-lt</3>."
 
 msgid "Lesson {number}"
 msgstr "Урок {number}"
@@ -7694,8 +7700,8 @@ msgstr "У мами є кіт."
 msgid "Mum is at the market."
 msgstr "Мама на ринку."
 
-msgid "Mum is coming from the market, but Dad is coming from the shop."
-msgstr "Мама йде з ринку, а тато — з магазину."
+msgid "Mum is coming from work, but Dad is coming from school."
+msgstr "Мама йде з роботи, а тато — зі школи."
 
 msgid "music"
 msgstr "музика"
@@ -8225,9 +8231,6 @@ msgstr "На дверях або на табличці."
 msgid "On a door you’ll also see <0/>, open, and <1/>, closed."
 msgstr "На дверях також побачиш <0/>, відчинено, і <1/>, зачинено."
 
-msgid "On a person, <0>-le</0> is to and <1>-lt</1> is from: <2>Ma helistan emale. Ma küsin emalt</2>, word for word “I ask from Mum”."
-msgstr "Коли йдеться про людину, <0>-le</0> означає «кому», а <1>-lt</1> — «від кого» чи «у кого»: <2>Ma helistan emale. Ma küsin emalt</2>, дослівно «питаю від мами»."
-
 msgid "On a surface, at work or at a market: -l."
 msgstr "На поверхні, на роботі чи на ринку: -l."
 
@@ -8258,6 +8261,9 @@ msgstr "У неділю я відпочиваю."
 
 msgid "On the computer"
 msgstr "На комп’ютері"
+
+msgid "on the floor"
+msgstr "на підлозі"
 
 msgid "On the free plan"
 msgstr "У безкоштовному плані"
@@ -8966,6 +8972,9 @@ msgstr "Pool neli: пів на четверту, 3:30."
 
 msgid "Popular"
 msgstr "Популярне"
+
+msgid "Põrand, floor, with -l."
+msgstr "Põrand, підлога, з -l."
 
 msgid "Põrand, floor, with -le."
 msgstr "Põrand, підлога, з -le."
@@ -10143,7 +10152,7 @@ msgid "So far every command speaks to one person, someone you’d call <0/>. To 
 msgstr "Досі кожен наказ звертався до однієї людини, з якою ти на «ти»: <0/>. До кількох людей або до однієї на «ви» наказ закінчується на <1>-ge</1> або <2>-ke</2>: <3/> <4/> Це той самий поділ, що між <5>sa</5> і <6/> в уроці {pronouns}."
 
 msgid "So one English “to” can be <0>-le</0> or a short form, even in one sentence. Tap a sentence to hear it."
-msgstr "Тут підкаже українська: де «на» (на роботу), там <0>-le</0>; де «до» (до школи, до лікарні), там -sse або коротка форма. Торкнися речення, щоб його почути."
+msgstr "Для слів цього уроку підкаже українська: «на роботу» і «на ринок» — це <0>-le</0>, а «до школи» і «до лікарні» — ні. Це лише підказка, не правило: Німеччина в естонській поводиться як Сааремаа, хоч ми кажемо «до Німеччини». Торкнися речення, щоб його почути."
 
 msgid "So-so"
 msgstr "Так собі"
@@ -11425,9 +11434,6 @@ msgstr "Текст"
 
 msgid "The people you’re talking to, or one person, politely."
 msgstr "Люди, з якими ти говориш, або одна людина, якщо ввічливо."
-
-msgid "The person you call takes <0>-le</0> after <1/>; the person you ask takes <2>-lt</2> after <3/>. A word whose stem changes, as in lesson {stems}, takes the ending on its stem: <4/>."
-msgstr "Після <1/> той, кому дзвониш, отримує <0>-le</0>; після <3/> той, кого питаєш, отримує <2>-lt</2>. Якщо основа слова змінюється, як в уроці {stems}, закінчення додається до основи: <4/>."
 
 msgid "The person you call takes <0>-le</0>: <1>emale</1>."
 msgstr "Той, кому дзвониш, отримує <0>-le</0>: <1>emale</1>."

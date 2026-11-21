@@ -13,7 +13,7 @@ import {
   OUTER_SENTENCES,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
-import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
+import { shuffle, twoCycles } from "../../../lib/learn/quiz";
 import { Panel } from "../Explore";
 import { type GapItem, GapPassage } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
@@ -78,7 +78,7 @@ const MEANS: Record<Id, MessageDescriptor> = {
   "a-tulen-toolt": msg`I’m coming from work.`,
   "a-tulen-turult": msg`I’m coming from the market.`,
   "c-toole-kooli": msg`I’m going to work, but Mari is going to school.`,
-  "c-turult-poest": msg`Mum is coming from the market, but Dad is coming from the shop.`,
+  "c-toolt-koolist": msg`Mum is coming from work, but Dad is coming from school.`,
   "p-emal-on": msg`Mum has a cat.`,
   "p-helistan-emale": msg`I’m calling Mum.`,
   "p-helistan-sobrale": msg`I’m calling a friend.`,
@@ -105,9 +105,15 @@ const TABLE: readonly { id: "lauale" | "laual" | "laualt"; sentence: Id }[] = [
  * “Kus, kuhu or kust?”: each form heard on its own, so no verb around it tells the answer; only its
  * ending does.
  */
-export const HEARD: readonly { form: string; direction: Direction }[] = OUTER_PLACES.flatMap(
-  (place) => DIRECTIONS.map((direction) => ({ form: place[direction], direction })),
-);
+export const HEARD: readonly { form: string; direction: Direction }[] = [
+  // The first round is pinned: turule answers kuhu, the second of the options as the page opens.
+  { form: "turule", direction: "kuhu" },
+  { form: "turul", direction: "kus" },
+  { form: "turult", direction: "kust" },
+  ...OUTER_PLACES.filter((place) => place.place !== "turg").flatMap((place) =>
+    DIRECTIONS.map((direction) => ({ form: place[direction], direction })),
+  ),
+];
 
 /** The sort: four places that take -l and four that take -s, in their dictionary form. */
 export const SORT_ITEMS: readonly { w: string; bin: "le" | "sse" }[] = [
@@ -127,6 +133,7 @@ const GLOSSARY: Glossary = {
   kust: { en: msg`where from`, note: msg`Kus with a t on the end.` },
   kass: { en: msg({ message: "cat", context: "kass, the cat on the table" }) },
   hüppab: { en: msg`jumps`, note: msg`Hüppama with the ta ending.` },
+  põrandal: { en: msg`on the floor`, note: msg`Põrand, floor, with -l.` },
   põrandale: { en: msg`onto the floor`, note: msg`Põrand, floor, with -le.` },
   helistan: { en: msg`I call, I phone`, note: msg`Helistama takes -le: helistan emale.` },
   küsin: { en: msg`I ask`, note: msg`Küsima takes -lt: küsin emalt.` },
@@ -357,9 +364,9 @@ export function LaualLaualeLaualtLesson() {
     }),
   }));
 
-  // Every round but the first shuffles its three questions, so the answer moves around.
+  // Each question twice in six rounds; every round but the first shuffles its three options.
   const heardRun = (items: readonly HeardItem[], pinned?: HeardItem): HeardItem[] =>
-    eachPairFirst(items, pinned).map((item) =>
+    twoCycles(items, pinned).map((item) =>
       item === pinned ? item : { ...item, options: directionOptions(shuffledDirections(), i18n) },
     );
 
@@ -471,16 +478,15 @@ export function LaualLaualeLaualtLesson() {
           lesson works this way.
         </Trans>,
         <Trans key="4">
-          On a person,{" "}
+          After <b lang="et">helistama</b> and <b lang="et">küsima</b>, the person takes{" "}
           <b lang="et" className="whitespace-nowrap">
             -le
           </b>{" "}
-          is to and{" "}
+          or{" "}
           <b lang="et" className="whitespace-nowrap">
             -lt
-          </b>{" "}
-          is from: <b lang="et">Ma helistan emale. Ma küsin emalt</b>, word for word “I ask from
-          Mum”.
+          </b>
+          : <b lang="et">Ma helistan emale. Ma küsin emalt</b>, word for word “I ask from Mum”.
         </Trans>,
       ]}
       sections={[
@@ -743,14 +749,14 @@ export function LaualLaualeLaualtLesson() {
               <Exchanges
                 items={[
                   { q: "c-toole-kooli", a: [] },
-                  { q: "c-turult-poest", a: [] },
+                  { q: "c-toolt-koolist", a: [] },
                 ]}
               />
               <Prose>
                 <p>
                   <Trans>
                     Put each place under the ending it takes for where to. Think of where first:{" "}
-                    <Word w="tööl" />, so <Word w="tööle" />.
+                    <Word w="põrandal" />, so <Word w="põrandale" />.
                   </Trans>
                 </p>
               </Prose>
@@ -802,15 +808,16 @@ export function LaualLaualeLaualtLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -l
                     </b>{" "}
-                    on a person to say who has something: <Word w="Emal on kass." /> On a person,{" "}
+                    on a person to say who has something: <Word w="Emal on kass." /> After some
+                    verbs a person takes{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -le
                     </b>{" "}
-                    says to and{" "}
+                    or{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -lt
                     </b>{" "}
-                    says from.
+                    instead.
                   </Trans>
                 </p>
               </Prose>
@@ -825,16 +832,17 @@ export function LaualLaualeLaualtLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The person you call takes{" "}
+                    After <Word w="helistan" />, the person you call takes{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -le
-                    </b>{" "}
-                    after <Word w="helistan" />; the person you ask takes{" "}
+                    </b>
+                    . After <Word w="küsin" />, the person you ask takes{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -lt
-                    </b>{" "}
-                    after <Word w="küsin" />. A word whose stem changes, as in lesson {stems}, takes
-                    the ending on its stem: <Word w="sõbrale" />.
+                    </b>
+                    : <Word w="Ma küsin emalt." /> is word for word “I ask from Mum”. A word whose
+                    stem changes, as in lesson {stems}, takes the ending on its stem:{" "}
+                    <Word w="sõbrale" />.
                   </Trans>
                 </p>
               </Prose>

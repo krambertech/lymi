@@ -37,6 +37,7 @@ const MEANS: Record<Verb, MessageDescriptor> = {
   minema: msg`to go`,
   tahtma: msg`to want`,
   saama: msg`to get, to be able to`,
+  tulema: msg`to come`,
 };
 
 const PERSONS: Record<string, MessageDescriptor> = {
@@ -86,7 +87,7 @@ function VerbTable() {
       <Paradigm
         key={verb}
         label={t`Present and conditional, person by person`}
-        columns={[t`Does`, t`Would`]}
+        columns={[t`Now`, t`Would`]}
         rows={rows}
         highlight={{ column: 1 }}
         empty={{
@@ -159,16 +160,16 @@ function content() {
       clip: "d-sina-1",
       replies: [
         {
-          line: "Ma tahtsin ühte kohvi ja vett.",
+          line: "Ma tahaksime kohvi, palun.",
           why: (
             <Trans>
-              <Et>Tahtsin</Et> is the past, I wanted. To ask politely now: <Et>tahaksin</Et>.
+              <Et>-ksime</Et> is for <Et>me</Et>. With <Et>ma</Et>: <Et>tahaksin</Et>.
             </Trans>
           ),
         },
         { line: said("d-sina-1"), right: true },
         {
-          line: "Ma tahaksid ühte kohvi ja vett.",
+          line: "Ma tahaksid kohvi, palun.",
           why: (
             <Trans>
               <Et>-ksid</Et> is for <Et>sa</Et> or <Et>nad</Et>. With <Et>ma</Et>: <Et>tahaksin</Et>
@@ -211,7 +212,7 @@ function content() {
           line: "Kas ma saaksin sularahas maksma, palun?",
           why: (
             <Trans>
-              After <Et>saama</Et>, the <Et>-da</Et> form: <Et>maksta</Et>.
+              When <Et>saama</Et> means can, the <Et>-da</Et> form follows: <Et>maksta</Et>.
             </Trans>
           ),
         },

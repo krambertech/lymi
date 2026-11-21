@@ -663,6 +663,9 @@ msgstr "<0>-ge</0> или <1>-ke</1> на конце"
 msgid "<0>-ksid</0> is for <1>sa</1> or <2>nad</2>. With <3>ma</3>: <4>tahaksin</4>."
 msgstr "<0>-ksid</0> — для <1>sa</1> или <2>nad</2>. С <3>ma</3>: <4>tahaksin</4>."
 
+msgid "<0>-ksime</0> is for <1>me</1>. With <2>ma</2>: <3>tahaksin</3>."
+msgstr "<0>-ksime</0> — для <1>me</1>. С <2>ma</2>: <3>tahaksin</3>."
+
 msgid "<0>-ma</0> form"
 msgstr "Форма на <0>-ma</0>"
 
@@ -1194,9 +1197,6 @@ msgstr "<0>Ta</0> — это одна кошка, поэтому прилага�
 
 msgid "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> and <1>mulle meeldib</1> take the <2>-da</2> form."
 msgstr "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> и <1>mulle meeldib</1> требуют формы на <2>-da</2>."
-
-msgid "<0>Tahtsin</0> is the past, I wanted. To ask politely now: <1>tahaksin</1>."
-msgstr "<0>Tahtsin</0> — прошедшее время, «хотелось». Чтобы вежливо попросить сейчас: <1>tahaksin</1>."
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2> — сегодня, завтра, вчера. <3>Üle-</3> добавляет ещё один день."
@@ -2647,9 +2647,6 @@ msgstr "После <0>pole</0> то, чего у кого-то нет или ч�
 
 msgid "After <0>pole</0>, what there is none of in a place takes the third form: <1>pole leiba</1>."
 msgstr "После <0>pole</0> то, чего нет в каком-то месте, стоит в третьей форме: <1>pole leiba</1>."
-
-msgid "After <0>saama</0>, the <1>-da</1> form: <2>maksta</2>."
-msgstr "После <0>saama</0> — форма на <1>-da</1>: <2>maksta</2>."
 
 msgid "After <0>si-</0> come <1>-n, -d, -me, -te</1>, as in the present. <2>Ta</2> has only <3>s</3>, and <4>nad</4> has <5>sid</5>, as <6>sa</6> does: <7>ta elas, nad elasid</7>."
 msgstr "После <0>si-</0> идут <1>-n, -d, -me, -te</1>, как в настоящем времени. У <2>ta</2> только <3>s</3>, а у <4>nad</4> — <5>sid</5>, как у <6>sa</6>: <7>ta elas, nad elasid</7>."
@@ -5116,9 +5113,6 @@ msgstr "врача"
 
 msgid "Doctors, banks and the library all ask for it."
 msgstr "Его спрашивают и врач, и банк, и библиотека."
-
-msgid "Does"
-msgstr "Делает"
 
 msgid "Does every noun come with der, die or das?"
 msgstr "У каждого ли существительного есть der, die или das?"
@@ -12464,7 +12458,7 @@ msgid "One shared deck, everyone on their own schedule"
 msgstr "Одна общая колода, у каждого своё расписание"
 
 msgid "One sign: -ks"
-msgstr "Один признак на всё"
+msgstr "Один признак: -ks"
 
 msgid "One spelling, two words."
 msgstr "Одно написание, два слова."
@@ -19301,6 +19295,9 @@ msgstr "Как тебя зовут?"
 msgid "when"
 msgstr "когда"
 
+msgid "When <0>saama</0> means can, the <1>-da</1> form follows: <2>maksta</2>."
+msgstr "Когда <0>saama</0> значит «мочь», после него идёт форма на <1>-da</1>: <2>maksta</2>."
+
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "Когда показатель становится целью, он перестаёт быть хорошим показателем"
 
@@ -19852,7 +19849,7 @@ msgid "Who were the first Europeans to reach Canada?"
 msgstr "Кто из европейцев первым добрался до Канады?"
 
 msgid "Who would?"
-msgstr "Кто бы это сделал?"
+msgstr "Чьё окончание?"
 
 msgid "Who, what, where"
 msgstr "Кто, что, где"
@@ -20285,7 +20282,7 @@ msgid "Works with"
 msgstr "Работает с"
 
 msgid "Would"
-msgstr "Сделал бы"
+msgstr "Условное"
 
 msgid "Write to me: the <0>-le</0> form says to whom, as in <1>mulle meeldib</1>."
 msgstr "Напиши мне: форма на <0>-le</0> отвечает на вопрос «кому?», как в <1>mulle meeldib</1>."
@@ -20753,7 +20750,7 @@ msgid "You study from its library"
 msgstr "Ты учишь по готовым колодам Noji"
 
 msgid "You use it in two places. To ask politely: <0>ma tahaksin</0>, I would like, and <1>kas sa saaksid</1>, could you, from lesson {modals}. And for what isn’t real, after <2/>, if: both halves of the sentence take it."
-msgstr "Его используют в двух случаях. Чтобы вежливо попросить: <0>ma tahaksin</0>, хотелось бы, и <1>kas sa saaksid</1>, нельзя ли, из урока {modals}. И для того, что нереально, после <2/>, если бы: тогда обе части предложения стоят в условном наклонении."
+msgstr "Его используют в двух случаях. Чтобы вежливо попросить: <0>ma tahaksin</0>, я хотел бы, и <1>kas sa saaksid</1>, ты не мог бы, из урока {modals}. И для того, что нереально, после <2/>, если бы: тогда обе части предложения стоят в условном наклонении."
 
 msgid "You want a coffee and a <0/>, and you’d like to pay in cash."
 msgstr "Тебе хочется кофе и <0/>, а заплатить хочешь наличными."

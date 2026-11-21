@@ -662,6 +662,9 @@ msgstr "<0>-ge</0> or <1>-ke</1> on the end"
 msgid "<0>-ksid</0> is for <1>sa</1> or <2>nad</2>. With <3>ma</3>: <4>tahaksin</4>."
 msgstr "<0>-ksid</0> is for <1>sa</1> or <2>nad</2>. With <3>ma</3>: <4>tahaksin</4>."
 
+msgid "<0>-ksime</0> is for <1>me</1>. With <2>ma</2>: <3>tahaksin</3>."
+msgstr "<0>-ksime</0> is for <1>me</1>. With <2>ma</2>: <3>tahaksin</3>."
+
 msgid "<0>-ma</0> form"
 msgstr "<0>-ma</0> form"
 
@@ -1193,9 +1196,6 @@ msgstr "<0>Ta</0> is one cat, so the adjective has no <1>-d</1>, like <2>ilus</2
 
 msgid "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> and <1>mulle meeldib</1> take the <2>-da</2> form."
 msgstr "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> and <1>mulle meeldib</1> take the <2>-da</2> form."
-
-msgid "<0>Tahtsin</0> is the past, I wanted. To ask politely now: <1>tahaksin</1>."
-msgstr "<0>Tahtsin</0> is the past, I wanted. To ask politely now: <1>tahaksin</1>."
 
 msgid "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
 msgstr "<0>Täna</0>, <1>homme</1>, <2>eile</2>: today, tomorrow, yesterday. <3>Üle-</3> goes one day further."
@@ -2646,9 +2646,6 @@ msgstr "After <0>pole</0>, what someone hasn’t got, or what there is none of i
 
 msgid "After <0>pole</0>, what there is none of in a place takes the third form: <1>pole leiba</1>."
 msgstr "After <0>pole</0>, what there is none of in a place takes the third form: <1>pole leiba</1>."
-
-msgid "After <0>saama</0>, the <1>-da</1> form: <2>maksta</2>."
-msgstr "After <0>saama</0>, the <1>-da</1> form: <2>maksta</2>."
 
 msgid "After <0>si-</0> come <1>-n, -d, -me, -te</1>, as in the present. <2>Ta</2> has only <3>s</3>, and <4>nad</4> has <5>sid</5>, as <6>sa</6> does: <7>ta elas, nad elasid</7>."
 msgstr "After <0>si-</0> come <1>-n, -d, -me, -te</1>, as in the present. <2>Ta</2> has only <3>s</3>, and <4>nad</4> has <5>sid</5>, as <6>sa</6> does: <7>ta elas, nad elasid</7>."
@@ -5115,9 +5112,6 @@ msgstr "doctor’s, of a doctor"
 
 msgid "Doctors, banks and the library all ask for it."
 msgstr "Doctors, banks and the library all ask for it."
-
-msgid "Does"
-msgstr "Does"
 
 msgid "Does every noun come with der, die or das?"
 msgstr "Does every noun come with der, die or das?"
@@ -19299,6 +19293,9 @@ msgstr "What’s your name?"
 
 msgid "when"
 msgstr "when"
+
+msgid "When <0>saama</0> means can, the <1>-da</1> form follows: <2>maksta</2>."
+msgstr "When <0>saama</0> means can, the <1>-da</1> form follows: <2>maksta</2>."
 
 msgid "When a measure becomes a target, it stops being a good measure"
 msgstr "When a measure becomes a target, it stops being a good measure"

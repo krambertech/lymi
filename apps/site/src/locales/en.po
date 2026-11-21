@@ -698,8 +698,8 @@ msgstr "<0>-lik</0> gives a quality: <1>kasulik</1>, useful. <2>-tu</2> means wi
 msgid "<0>-ma</0> form"
 msgstr "<0>-ma</0> form"
 
-msgid "<0>-mata</0> also says something is still not done: <1>kiri on lugemata</1>, the letter is unread. Use <2>-des</2> only when the doer is the same: <3>kodust tulles ostsin ma leiba</3>, I bought bread on my way from home."
-msgstr "<0>-mata</0> also says something is still not done: <1>kiri on lugemata</1>, the letter is unread. Use <2>-des</2> only when the doer is the same: <3>kodust tulles ostsin ma leiba</3>, I bought bread on my way from home."
+msgid "<0>-mata</0> also says something is still not done: <1>kiri on lugemata</1>, the letter is unread. Use <2>-des</2> only when the doer is the same: <3>koju tulles ostsin ma leiba</3>, I bought bread on my way home. It can also say how: <4>raamatuid lugedes õpid palju</4>, you learn a lot by reading books."
+msgstr "<0>-mata</0> also says something is still not done: <1>kiri on lugemata</1>, the letter is unread. Use <2>-des</2> only when the doer is the same: <3>koju tulles ostsin ma leiba</3>, I bought bread on my way home. It can also say how: <4>raamatuid lugedes õpid palju</4>, you learn a lot by reading books."
 
 msgid "<0>-mata</0>: take the <1>-ma</1> form and add <2>ta</2>: <3>söömata</3>, without eating."
 msgstr "<0>-mata</0>: take the <1>-ma</1> form and add <2>ta</2>: <3>söömata</3>, without eating."
@@ -4190,8 +4190,8 @@ msgstr "Borrowed from the Low German or Old Swedish name for Friday. It’s the 
 msgid "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
 msgstr "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
 
-msgid "Both forms come from the two verb forms of lesson {forms}. The <0>-des</0> form says what else you are doing at the same time, like English “while reading”. The <1>-mata</1> form says what you didn’t do, like “without reading”."
-msgstr "Both forms come from the two verb forms of lesson {forms}. The <0>-des</0> form says what else you are doing at the same time, like English “while reading”. The <1>-mata</1> form says what you didn’t do, like “without reading”."
+msgid "Both forms come from the two verb forms of lesson {forms}. The <0>-des</0> form says what else you are doing at the same time, or just as something happens, like English “while reading” or “on arriving”. The <1>-mata</1> form says what you didn’t do, like “without reading”."
+msgstr "Both forms come from the two verb forms of lesson {forms}. The <0>-des</0> form says what else you are doing at the same time, or just as something happens, like English “while reading” or “on arriving”. The <1>-mata</1> form says what you didn’t do, like “without reading”."
 
 msgid "Both schedule reviews with FSRS. Anki lets you shape every detail of a card. Lymi takes most of the work out of making one."
 msgstr "Both schedule reviews with FSRS. Anki lets you shape every detail of a card. Lymi takes most of the work out of making one."
@@ -18219,8 +18219,8 @@ msgstr "The translative case"
 msgid "The two forms often differ by one sound: a long pp or a short p, a d or none. Listen to a form of a word from the table and say whether it is strong, like the dictionary form and the third form, or weak, like the genitive."
 msgstr "The two forms often differ by one sound: a long pp or a short p, a d or none. Listen to a form of a word from the table and say whether it is strong, like the dictionary form and the third form, or weak, like the genitive."
 
-msgid "The two things happen at once, so it takes <0>-des</0>: <1>{answer}</1>."
-msgstr "The two things happen at once, so it takes <0>-des</0>: <1>{answer}</1>."
+msgid "The two things happen together, or one just as the other, so it takes <0>-des</0>: <1>{answer}</1>."
+msgstr "The two things happen together, or one just as the other, so it takes <0>-des</0>: <1>{answer}</1>."
 
 msgid "The union"
 msgstr "The union"

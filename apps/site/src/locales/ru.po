@@ -699,8 +699,8 @@ msgstr "<0>-lik</0> даёт признак: <1>kasulik</1>, полезный. <
 msgid "<0>-ma</0> form"
 msgstr "Форма на <0>-ma</0>"
 
-msgid "<0>-mata</0> also says something is still not done: <1>kiri on lugemata</1>, the letter is unread. Use <2>-des</2> only when the doer is the same: <3>kodust tulles ostsin ma leiba</3>, I bought bread on my way from home."
-msgstr "<0>-mata</0> также говорит, что что-то ещё не сделано: <1>kiri on lugemata</1>, письмо не прочитано. <2>-des</2> используй, только когда действие выполняет тот же человек, как и с «читая»: <3>kodust tulles ostsin ma leiba</3>, идя из дома, я купил хлеб."
+msgid "<0>-mata</0> also says something is still not done: <1>kiri on lugemata</1>, the letter is unread. Use <2>-des</2> only when the doer is the same: <3>koju tulles ostsin ma leiba</3>, I bought bread on my way home. It can also say how: <4>raamatuid lugedes õpid palju</4>, you learn a lot by reading books."
+msgstr "<0>-mata</0> также означает, что что-то ещё не сделано: <1>kiri on lugemata</1>, письмо не прочитано. <2>-des</2> используй только тогда, когда действие выполняет тот же человек: <3>koju tulles ostsin ma leiba</3>, идя домой, я купил хлеб. Она может также означать способ: <4>raamatuid lugedes õpid palju</4>, читая книги, многое узнаёшь."
 
 msgid "<0>-mata</0>: take the <1>-ma</1> form and add <2>ta</2>: <3>söömata</3>, without eating."
 msgstr "<0>-mata</0>: возьми форму на <1>-ma</1> и добавь <2>ta</2>: <3>söömata</3>, не поев."
@@ -4191,8 +4191,8 @@ msgstr "Заимствовано из нижненемецкого или дре
 msgid "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
 msgstr "Оба — спокойные приложения с флеш-карточками, в которых удобно работать с клавиатуры. Mochi хранит заметки и карточки вместе, в Markdown. Lymi делает за тебя большую часть работы над карточками и синхронизирует их бесплатно."
 
-msgid "Both forms come from the two verb forms of lesson {forms}. The <0>-des</0> form says what else you are doing at the same time, like English “while reading”. The <1>-mata</1> form says what you didn’t do, like “without reading”."
-msgstr "Обе формы образуются от двух форм глагола из урока {forms}. Форма на <0>-des</0> — как деепричастие «читая»: что ещё делаешь одновременно. Форма на <1>-mata</1> — как «не читая», «не прочитав»: чего не сделал."
+msgid "Both forms come from the two verb forms of lesson {forms}. The <0>-des</0> form says what else you are doing at the same time, or just as something happens, like English “while reading” or “on arriving”. The <1>-mata</1> form says what you didn’t do, like “without reading”."
+msgstr "Обе формы образуются от двух форм глагола из урока {forms}. Форма <0>-des</0> означает, что ещё ты делаешь в то же время или как раз тогда, когда что-то происходит, как деепричастие «читая» или «придя». Форма <1>-mata</1> означает, что осталось не сделанным, как «не прочитав»."
 
 msgid "Both schedule reviews with FSRS. Anki lets you shape every detail of a card. Lymi takes most of the work out of making one."
 msgstr "Оба планируют повторения по FSRS. В Anki можно настроить каждую мелочь в карточке. Lymi берёт на себя почти всю работу по её созданию."
@@ -10113,7 +10113,7 @@ msgid "It joins your daily review straight away. There is nothing to build."
 msgstr "Она сразу попадает в ежедневное повторение. Ничего не нужно собирать самому."
 
 msgid "It means while or by doing, and the doer is the same as in the rest of the sentence: <0>Raamatut lugedes jäin ma magama.</0>"
-msgstr "Она значит «делая», и действие выполняет тот же человек, что и в остальном предложении: <0>Raamatut lugedes jäin ma magama.</0>"
+msgstr "Она означает «делая» или «тем, что делаешь», и действие выполняет тот же человек, что и в остальном предложении: <0>Raamatut lugedes jäin ma magama.</0>"
 
 msgid "It needs energy from <0>ATP</0>."
 msgstr "Для него нужна энергия <0>АТФ</0>."
@@ -10513,7 +10513,7 @@ msgid "Kati writes"
 msgstr "Кати пишет"
 
 msgid "Kati writes about her day. Look for <0>-des</0> and <1>-mata</1>, and for <2/>, to get somewhere."
-msgstr "Кати пишет о своём дне. Ищи <0>-des</0> и <1>-mata</1> и <2/>, добраться куда-то."
+msgstr "Кати пишет о своём дне. Ищи <0>-des</0> и <1>-mata</1>, и слово <2/>, «добраться куда-то»."
 
 msgid "Kati writes about her family. For each gap, pick who or whose."
 msgstr "Кати пишет о своей семье. В каждом пропуске выбери: «кто» или «чей»."
@@ -18220,8 +18220,8 @@ msgstr "Транслатив"
 msgid "The two forms often differ by one sound: a long pp or a short p, a d or none. Listen to a form of a word from the table and say whether it is strong, like the dictionary form and the third form, or weak, like the genitive."
 msgstr "Две формы часто отличаются одним звуком: долгое pp или короткое p, d или ничего. Послушай форму слова из таблицы и скажи, сильная она, как словарная и третья форма, или слабая, как родительный."
 
-msgid "The two things happen at once, so it takes <0>-des</0>: <1>{answer}</1>."
-msgstr "Два действия происходят одновременно, поэтому <0>-des</0>: <1>{answer}</1>."
+msgid "The two things happen together, or one just as the other, so it takes <0>-des</0>: <1>{answer}</1>."
+msgstr "Два действия происходят вместе или одно как раз тогда, когда другое, поэтому нужна <0>-des</0>: <1>{answer}</1>."
 
 msgid "The union"
 msgstr "Профсоюз"
@@ -18849,7 +18849,7 @@ msgid "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question
 msgstr "Чтобы ответить «нет», скажи <0>ei</0> или <1>ei</1> с глаголом из вопроса: <2>Kas sa loed? Ei loe.</2>"
 
 msgid "to arrive, to get to"
-msgstr "прибывать, добраться"
+msgstr "прибыть, добраться"
 
 msgid "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
 msgstr "Чтобы спросить о формах слова, по-эстонски говорят <0>Mis on sõna … põhivormid?</0>, а на место пропуска ставят слово. <1/> значит «слово». Отвечай всеми тремя формами, по порядку."

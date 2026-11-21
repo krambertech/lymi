@@ -3341,7 +3341,7 @@ export const DES_MATA_VERBS = [
 export const DES_MATA_GAPS = [
   {
     id: "mata-utlema",
-    before: "Ta läks ära, midagi",
+    before: "Ta läks ära, sõnagi",
     after: ".",
     answer: "ütlemata",
     options: ["ütlemata", "öeldes"],
@@ -3349,21 +3349,21 @@ export const DES_MATA_GAPS = [
   {
     id: "des-lugema",
     before: "Raamatut",
-    after: "jäin ma magama.",
+    after: "jäin ma kümnendal leheküljel magama.",
     answer: "lugedes",
     options: ["lugedes", "lugemata"],
   },
   {
     id: "des-tulema",
-    before: "Kodust",
+    before: "Õhtul töölt koju",
     after: "ostsin ma leiba.",
     answer: "tulles",
     options: ["tulles", "tulemata"],
   },
   {
     id: "mata-tegema",
-    before: "Ta tuli tundi kodutööd",
-    after: "ja õpetaja oli pahane.",
+    before: "Ta läks magama kodutööd",
+    after: "ja hommikul oli õpetaja pahane.",
     answer: "tegemata",
     options: ["tegemata", "tehes"],
   },
@@ -3376,7 +3376,7 @@ export const DES_MATA_GAPS = [
   },
   {
     id: "mata-sooma",
-    before: "Ma olin hilja üleval ja läksin hommikul",
+    before: "Kõht oli tühi, sest läksin hommikul",
     after: "kooli.",
     answer: "söömata",
     options: ["söömata", "süües"],
@@ -3400,7 +3400,7 @@ export const DES_MATA_GAPS = [
 export const MORNING_PASSAGE = [
   "Täna ärkasin ma hilja ja läksin söömata tööle.",
   "Bussis istudes lugesin ma uudiseid.",
-  "Tööle jõudes nägin, et telefon jäi koju.",
+  "Tööle jõudes märkasin, et telefon oli koju jäänud.",
   "Õhtul koju tulles ostsin poest leiba ja juustu.",
 ] as const;
 

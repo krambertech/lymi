@@ -101,7 +101,8 @@ function content(t: (descriptor: MessageDescriptor) => string) {
   const why = (kind: string, answer: string): ReactNode =>
     kind === "des" ? (
       <Trans>
-        The two things happen at once, so it takes <Et>-des</Et>: <Et>{answer}</Et>.
+        The two things happen together, or one just as the other, so it takes <Et>-des</Et>:{" "}
+        <Et>{answer}</Et>.
       </Trans>
     ) : (
       <Trans>
@@ -216,9 +217,9 @@ export function LugedesLugemataLesson() {
                 <p>
                   <Trans>
                     Both forms come from the two verb forms of lesson {forms}. The <Et>-des</Et>{" "}
-                    form says what else you are doing at the same time, like English “while
-                    reading”. The <Et>-mata</Et> form says what you didn’t do, like “without
-                    reading”.
+                    form says what else you are doing at the same time, or just as something
+                    happens, like English “while reading” or “on arriving”. The <Et>-mata</Et> form
+                    says what you didn’t do, like “without reading”.
                   </Trans>
                 </p>
               </Prose>
@@ -227,7 +228,8 @@ export function LugedesLugemataLesson() {
                 <Trans>
                   <Et>-mata</Et> also says something is still not done: <Et>kiri on lugemata</Et>,
                   the letter is unread. Use <Et>-des</Et> only when the doer is the same:{" "}
-                  <Et>kodust tulles ostsin ma leiba</Et>, I bought bread on my way from home.
+                  <Et>koju tulles ostsin ma leiba</Et>, I bought bread on my way home. It can also
+                  say how: <Et>raamatuid lugedes õpid palju</Et>, you learn a lot by reading books.
                 </Trans>
               </Aside>
             </>

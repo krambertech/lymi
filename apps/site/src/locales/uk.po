@@ -375,7 +375,7 @@ msgid "<0/> {left, plural, one {due} other {due}}"
 msgstr "<0/> {left, plural, one {картка до повторення} few {картки до повторення} many {карток до повторення} other {картки до повторення}}"
 
 msgid "<0/> <1/> Lesson {going} builds on this: the <2>-ma</2> form after a verb of going says what you’re off to do. Tap a verb to hear it in a sentence."
-msgstr "<0/> <1/> Урок {going} розвиває це далі: форма на <2>-ma</2> після дієслова руху каже, що ти йдеш робити. Торкнися дієслова, щоб почути його в реченні."
+msgstr "<0/> <1/> Докладніше — в уроці {going}: форма на <2>-ma</2> після дієслова руху показує, навіщо ти йдеш. Торкнися дієслова, щоб почути його в реченні."
 
 msgid "<0/> and <1/> both mean not, but they do different jobs. <2>Ei</2> says what someone doesn’t do: <3/>, I’m not sitting down. <4>Ära</4> tells someone not to do it: <5/> A command never starts with <6>ei</6>."
 msgstr "<0/> і <1/> обидва заперечують, але кожне по-своєму. <2>Ei</2> каже, чого людина не робить: <3/>, я не сідаю. <4>Ära</4> просить цього не робити: <5/> Наказ ніколи не починається з <6>ei</6>."
@@ -443,8 +443,8 @@ msgstr "<0/> Ти живеш у Таллінні. <1/> Ти живеш у Тал
 msgid "<0/>, <1/> and <2/> can all translate as I can. Lesson {canMay} tells them apart; the form after them is the same."
 msgstr "<0/>, <1/> і <2/> можна перекласти як «я можу». Чим вони різняться, пояснює урок {canMay}; форма після них однакова."
 
-msgid "<0/>, I like, works the same way: <1/> Tap a verb to hear it in a sentence."
-msgstr "<0/>, «мені подобається», працює так само: <1/> Торкнися дієслова, щоб почути його в реченні."
+msgid "<0/>, I like, takes the <1>-da</1> form too: <2/> Tap a verb to hear it in a sentence."
+msgstr "Після <0/>, «мені подобається», теж іде форма на <1>-da</1>: <2/> Торкнися дієслова, щоб почути його в реченні."
 
 msgid "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
 msgstr "<0/>, «будь ласка», робить наказ ввічливим. Коли естонською говорять надто швидко, скажи: <1/>"
@@ -507,6 +507,9 @@ msgstr "<0>Kust</0> питає, звідки ти, а не де живеш."
 
 msgid "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
 msgstr "<0>Ma ei tea</0> — це «я не знаю». <1>Kuidas läheb?</1> — це «Як справи?»."
+
+msgid "<0>Ma tahan lugeda</0> is I want to read, and <1>Ma pean lugema</1> is I have to read. The first verb decides whether the second takes its <2>-da</2> or its <3>-ma</3> form."
+msgstr "<0>Ma tahan lugeda</0> — це «я хочу читати», а <1>Ma pean lugema</1> — «я мушу читати». Перше дієслово вирішує, у якій формі стоятиме друге: на <2>-da</2> чи на <3>-ma</3>."
 
 msgid "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
 msgstr "Після <0>ma</0> дієслово закінчується на <1>-n</1>: <2>elan</2>."
@@ -1495,10 +1498,10 @@ msgid "After <0/>, I want, comes the <1>-da</1> form: <2/> After <3/>, I have to
 msgstr "Після <0/>, «я хочу», іде форма на <1>-da</1>: <2/> Після <3/>, «я мушу», — форма на <4>-ma</4>: <5/>"
 
 msgid "After <0>{name}</0> comes the <1>-da</1> form."
-msgstr "Після <0>{name}</0> іде форма на <1>-da</1>."
+msgstr "Після <0>{name}</0> йде форма на <1>-da</1>."
 
 msgid "After <0>{name}</0> comes the <1>-ma</1> form."
-msgstr "Після <0>{name}</0> іде форма на <1>-ma</1>."
+msgstr "Після <0>{name}</0> йде форма на <1>-ma</1>."
 
 msgid "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
 msgstr "Після <0>ei</0> іде форма з ma без -n: <1>loen</1>, <2>ei loe</2>."
@@ -2859,6 +2862,7 @@ msgstr "Кава коштує 3,50 €."
 msgid "Colleagues say it in the corridor, in emails and at the end of the day."
 msgstr "Колеги кажуть це в коридорі, у листах і наприкінці дня."
 
+msgctxt "command"
 msgid "come"
 msgstr "приходь"
 
@@ -3573,9 +3577,6 @@ msgstr "Ei ole одним словом."
 
 msgid "eight"
 msgstr "вісім"
-
-msgid "Eight verbs take the <0>-da</0> form after them, <1/> among them: <2/> <3/>"
-msgstr "Форму на <0>-da</0> після себе вимагають вісім дієслів, серед них <1/>: <2/> <3/>"
 
 msgid "Eighteen. The new words will come up a few at a time."
 msgstr "Вісімнадцять. Нові слова з’являтимуться потроху."
@@ -4875,8 +4876,8 @@ msgstr "Послухай речення й вибери, про кого вон�
 msgid "Hear a sentence, then pick how to say its no."
 msgstr "Послухай речення й обери, як сказати його із запереченням."
 
-msgid "Hear a verb and pick the form that follows it. Both choices are one verb, in its <0>-da</0> form and its <1>-ma</1> form."
-msgstr "Послухай дієслово й вибери форму, яка йде після нього. Обидва варіанти — те саме дієслово: у формі на <0>-da</0> і у формі на <1>-ma</1>."
+msgid "Hear a verb and pick the form that follows it. Both choices are the same verb, once in its <0>-da</0> form and once in its <1>-ma</1> form."
+msgstr "Послухай дієслово й вибери форму, яка йде після нього. Обидва варіанти — те саме дієслово: раз у формі на <0>-da</0>, раз у формі на <1>-ma</1>."
 
 msgid "Hear both"
 msgstr "Послухати обидва"
@@ -5517,10 +5518,10 @@ msgid "I’m 34 years old."
 msgstr "Мені 34 роки."
 
 msgid "I’m allowed to"
-msgstr "мені дозволено"
+msgstr "мені можна"
 
 msgid "I’m allowed to work from home."
-msgstr "Мені дозволено працювати з дому."
+msgstr "Мені можна працювати вдома."
 
 msgid "I’m at home."
 msgstr "Я вдома."
@@ -10238,10 +10239,10 @@ msgid "The *window* is open."
 msgstr "*Вікно* відчинене."
 
 msgid "The <0>-da</0> form follows <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> and <2>mulle meeldib</2>."
-msgstr "Форма на <0>-da</0> іде після <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> і <2>mulle meeldib</2>."
+msgstr "Форма на <0>-da</0> йде після <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> і <2>mulle meeldib</2>."
 
-msgid "The <0>-ma</0> form follows <1>pean, hakkan, lähen, tule</1> and <2>jään</2>, and <3>õppima</3> for learning to do something."
-msgstr "Форма на <0>-ma</0> іде після <1>pean, hakkan, lähen, tule</1> і <2>jään</2>, а ще після <3>õppima</3>, коли вчишся щось робити."
+msgid "The <0>-ma</0> form follows <1>pean, hakkan, lähen, tule</1> and <2>jään</2>. <3>Õpin</3> takes it too when you learn to do something: <4>Ma õpin lugema.</4>"
+msgstr "Форма на <0>-ma</0> йде після <1>pean, hakkan, lähen, tule</1> і <2>jään</2>. Після <3>õpin</3> теж, коли вчишся щось робити: <4>Ma õpin lugema.</4>"
 
 msgid "The 1618 revolt in Prague that started the Thirty Years’ War"
 msgstr "Повстання в Празі 1618 року, з якого почалася Тридцятилітня війна"
@@ -10750,9 +10751,6 @@ msgstr "Другий день тижня."
 msgid "The second day. Teisi- sounds like <0/>, second."
 msgstr "Другий день. Teisi- звучить як <0/>, другий."
 
-msgid "The second verb goes last"
-msgstr "Друге дієслово — в кінці"
-
 msgid "The second verb usually goes last: <0>Ma pean homme tööle minema.</0>"
 msgstr "Друге дієслово зазвичай стоїть у кінці: <0>Ma pean homme tööle minema.</0>"
 
@@ -10920,6 +10918,9 @@ msgstr "Поки що нічого не опубліковано."
 
 msgid "There’s a *park* near the station."
 msgstr "Біля вокзалу є *парк*."
+
+msgid "These eight verbs take the <0>-da</0> form, <1/> among them: <2/> <3/>"
+msgstr "Форму на <0>-da</0> вимагають ось ці вісім дієслів, серед них <1/>: <2/> <3/>"
 
 msgid "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
 msgstr "З цих одинадцяти слів будується кожне число до 99. Натисни на кожне. Дві пари звучать схоже: <0/> і <1/>, <2/> і <3/>."
@@ -11212,8 +11213,8 @@ msgstr "Пересісти на іншу лінію (метро, потяг)"
 msgid "To change trains"
 msgstr "Пересідати на інший потяг"
 
-msgid "To check a verb that isn’t here, look it up in <0>Sõnaveeb</0>, as lesson {nounForms} shows. Under <1>Rektsioon</1>, <2>mida teha</2> means the verb takes the <3>-da</3> form, and <4>mida tegema</4> the <5>-ma</5> form. <6/> and <7/> are the <8>-da</8> and <9>-ma</9> forms of to do."
-msgstr "Щоб перевірити дієслово, якого тут немає, знайди його в <0>Sõnaveeb</0>, як показує урок {nounForms}. У рядку <1>Rektsioon</1> напис <2>mida teha</2> означає, що після дієслова іде форма на <3>-da</3>, а <4>mida tegema</4> — форма на <5>-ma</5>. <6/> і <7/> — це «робити» у формі на <8>-da</8> і на <9>-ma</9>."
+msgid "To check a verb that isn’t here, look it up in <0>Sõnaveeb</0>, as lesson {nounForms} shows. <1/> and <2/> are the <3>-da</3> and <4>-ma</4> forms of to do, and <5>Sõnaveeb</5> uses them to say which form a verb takes. Under <6>Rektsioon</6>, <7>mida teha</7> means the <8>-da</8> form and <9>mida tegema</9> the <10>-ma</10> form."
+msgstr "Щоб перевірити дієслово, якого тут немає, знайди його в <0>Sõnaveeb</0>, як показує урок {nounForms}. <1/> і <2/> — це «робити» у формі на <3>-da</3> і на <4>-ma</4>, і <5>Sõnaveeb</5> ними позначає, яку форму вимагає дієслово. У рядку <6>Rektsioon</6> напис <7>mida teha</7> означає форму на <8>-da</8>, а <9>mida tegema</9> — форму на <10>-ma</10>."
 
 msgid "to come"
 msgstr "приходити"
@@ -12192,9 +12193,6 @@ msgstr "Коли його картка в повтореннях стає зас
 msgid "When one verb follows another, the second takes its <0>-da</0> or <1>-ma</1> form: <2>Ma tahan lugeda. Ma pean lugema.</2>"
 msgstr "Коли одне дієслово йде за іншим, друге стоїть у формі на <0>-da</0> або на <1>-ma</1>: <2>Ma tahan lugeda. Ma pean lugema.</2>"
 
-msgid "When one verb follows another, the second takes its <0>-da</0> or its <1>-ma</1> form, and the first verb decides which: <2>Ma tahan lugeda</2>, I want to read, but <3>Ma pean lugema</3>, I have to read."
-msgstr "Коли одне дієслово йде за іншим, друге стоїть у формі на <0>-da</0> або на <1>-ma</1>, і яку саме, вирішує перше: <2>Ma tahan lugeda</2> — «я хочу читати», але <3>Ma pean lugema</3> — «я мушу читати»."
-
 msgid "When the output depends on the history of the input"
 msgstr "Коли результат залежить від того, що було на вході раніше"
 
@@ -12276,6 +12274,9 @@ msgstr "Куди йде кіт"
 msgid "Where the cat is"
 msgstr "Де кіт"
 
+msgid "Where the second verb goes"
+msgstr "Де стоїть друге дієслово"
+
 msgid "Where will he wait for you?"
 msgstr "Де він на тебе чекатиме?"
 
@@ -12325,7 +12326,7 @@ msgid "Which form did you hear?"
 msgstr "Яку форму ти чуєш?"
 
 msgid "Which form follows?"
-msgstr "Яка форма йде після?"
+msgstr "Яка форма після дієслова?"
 
 msgid "Which half hour?"
 msgstr "Пів на яку?"
@@ -12562,7 +12563,7 @@ msgid "Words for travel, renting, work and paperwork, once A1 feels easy."
 msgstr "Слова для подорожей, оренди, роботи й документів, коли A1 вже дається легко."
 
 msgid "Words for when and where usually sit between the two verbs, and the second verb stays at the end: <0/>"
-msgstr "Слова про те, коли й куди, зазвичай стають між двома дієсловами, а друге дієслово лишається в кінці: <0/>"
+msgstr "Слова про час і місце зазвичай стоять між двома дієсловами, а друге дієслово — у кінці: <0/>"
 
 msgid "Words from this lesson"
 msgstr "Слова з цього уроку"

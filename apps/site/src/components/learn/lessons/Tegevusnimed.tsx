@@ -60,7 +60,7 @@ const LEAD_MEANS: Record<Lead, MessageDescriptor> = {
   pean: msg`I have to, I must`,
   hakkan: msg`I start`,
   lähen: msg`I go, I’m going`,
-  tule: msg`come`,
+  tule: msg({ message: "come", context: "command" }),
   jään: msg`I stay`,
 };
 
@@ -92,7 +92,10 @@ const GLOSSARY: Glossary = {
   tohin: { en: msg`I’m allowed to`, note: msg`From tohtima.` },
   hakkan: { en: msg`I start`, note: msg`From hakkama, to start.` },
   lähen: { en: msg`I go, I’m going`, note: msg`From minema, to go.` },
-  tule: { en: msg`come`, note: msg`The command of tulema, to come.` },
+  tule: {
+    en: msg({ message: "come", context: "command" }),
+    note: msg`The command of tulema, to come.`,
+  },
   jään: { en: msg`I stay`, note: msg`From jääma, to stay.` },
   "mulle meeldib": {
     en: msg`I like`,
@@ -472,9 +475,9 @@ export function TegevusnimedLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          When one verb follows another, the second takes its <End>-da</End> or its <End>-ma</End>{" "}
-          form, and the first verb decides which: <span lang="et">Ma tahan lugeda</span>, I want to
-          read, but <span lang="et">Ma pean lugema</span>, I have to read.
+          <span lang="et">Ma tahan lugeda</span> is I want to read, and{" "}
+          <span lang="et">Ma pean lugema</span> is I have to read. The first verb decides whether
+          the second takes its <End>-da</End> or its <End>-ma</End> form.
         </Trans>
       }
       facts={[
@@ -495,7 +498,8 @@ export function TegevusnimedLesson() {
         </Trans>,
         <Trans key="3">
           The <End>-ma</End> form follows <b lang="et">pean, hakkan, lähen, tule</b> and{" "}
-          <b lang="et">jään</b>, and <b lang="et">õppima</b> for learning to do something.
+          <b lang="et">jään</b>. <b lang="et">Õpin</b> takes it too when you learn to do something:{" "}
+          <b lang="et">Ma õpin lugema.</b>
         </Trans>,
         <Trans key="4">
           Only the first verb changes for the person: <b lang="et">nad tahavad lugeda</b>.
@@ -544,9 +548,8 @@ export function TegevusnimedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Eight verbs take the <End>-da</End> form after them, <Word w="tahan" /> among
-                    them: <Word w="Ma tahan süüa." />{" "}
-                    <Word w="Ma oskan natuke eesti keelt rääkida." />
+                    These eight verbs take the <End>-da</End> form, <Word w="tahan" /> among them:{" "}
+                    <Word w="Ma tahan süüa." /> <Word w="Ma oskan natuke eesti keelt rääkida." />
                   </Trans>
                 </p>
                 <p>
@@ -557,7 +560,7 @@ export function TegevusnimedLesson() {
                 </p>
                 <p>
                   <Trans>
-                    <Word w="Mulle meeldib" />, I like, works the same way:{" "}
+                    <Word w="Mulle meeldib" />, I like, takes the <End>-da</End> form too:{" "}
                     <Word w="Mulle meeldib kohvi juua." /> Tap a verb to hear it in a sentence.
                   </Trans>
                 </p>
@@ -597,10 +600,11 @@ export function TegevusnimedLesson() {
               <Aside>
                 <Trans>
                   To check a verb that isn’t here, look it up in <span lang="et">Sõnaveeb</span>, as
-                  lesson {nounForms} shows. Under <span lang="et">Rektsioon</span>,{" "}
-                  <b lang="et">mida teha</b> means the verb takes the <End>-da</End> form, and{" "}
-                  <b lang="et">mida tegema</b> the <End>-ma</End> form. <Word w="Teha" /> and{" "}
-                  <Word w="tegema" /> are the <End>-da</End> and <End>-ma</End> forms of to do.
+                  lesson {nounForms} shows. <Word w="Teha" /> and <Word w="tegema" /> are the{" "}
+                  <End>-da</End> and <End>-ma</End> forms of to do, and{" "}
+                  <span lang="et">Sõnaveeb</span> uses them to say which form a verb takes. Under{" "}
+                  <span lang="et">Rektsioon</span>, <b lang="et">mida teha</b> means the{" "}
+                  <End>-da</End> form and <b lang="et">mida tegema</b> the <End>-ma</End> form.
                 </Trans>
               </Aside>
             </>
@@ -615,8 +619,8 @@ export function TegevusnimedLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Hear a verb and pick the form that follows it. Both choices are one verb, in its{" "}
-                    <End>-da</End> form and its <End>-ma</End> form.
+                    Hear a verb and pick the form that follows it. Both choices are the same verb,
+                    once in its <End>-da</End> form and once in its <End>-ma</End> form.
                   </Trans>
                 </p>
               </Prose>
@@ -643,7 +647,7 @@ export function TegevusnimedLesson() {
         },
         {
           id: "last",
-          title: t`The second verb goes last`,
+          title: t`Where the second verb goes`,
           children: (
             <>
               <Prose>

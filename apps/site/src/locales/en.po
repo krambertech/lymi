@@ -443,8 +443,8 @@ msgstr "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-n
 msgid "<0/>, <1/> and <2/> can all translate as I can. Lesson {canMay} tells them apart; the form after them is the same."
 msgstr "<0/>, <1/> and <2/> can all translate as I can. Lesson {canMay} tells them apart; the form after them is the same."
 
-msgid "<0/>, I like, works the same way: <1/> Tap a verb to hear it in a sentence."
-msgstr "<0/>, I like, works the same way: <1/> Tap a verb to hear it in a sentence."
+msgid "<0/>, I like, takes the <1>-da</1> form too: <2/> Tap a verb to hear it in a sentence."
+msgstr "<0/>, I like, takes the <1>-da</1> form too: <2/> Tap a verb to hear it in a sentence."
 
 msgid "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
 msgstr "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
@@ -507,6 +507,9 @@ msgstr "<0>Kust</0> asks where you’re from, not where you live."
 
 msgid "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
 msgstr "<0>Ma ei tea</0> is I don’t know. <1>Kuidas läheb?</1> asks how you are."
+
+msgid "<0>Ma tahan lugeda</0> is I want to read, and <1>Ma pean lugema</1> is I have to read. The first verb decides whether the second takes its <2>-da</2> or its <3>-ma</3> form."
+msgstr "<0>Ma tahan lugeda</0> is I want to read, and <1>Ma pean lugema</1> is I have to read. The first verb decides whether the second takes its <2>-da</2> or its <3>-ma</3> form."
 
 msgid "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
 msgstr "<0>Ma</0> takes <1>-n</1>: <2>elan</2>."
@@ -2859,6 +2862,7 @@ msgstr "Coffee costs €3.50."
 msgid "Colleagues say it in the corridor, in emails and at the end of the day."
 msgstr "Colleagues say it in the corridor, in emails and at the end of the day."
 
+msgctxt "command"
 msgid "come"
 msgstr "come"
 
@@ -3573,9 +3577,6 @@ msgstr "Ei ole in one word."
 
 msgid "eight"
 msgstr "eight"
-
-msgid "Eight verbs take the <0>-da</0> form after them, <1/> among them: <2/> <3/>"
-msgstr "Eight verbs take the <0>-da</0> form after them, <1/> among them: <2/> <3/>"
 
 msgid "Eighteen. The new words will come up a few at a time."
 msgstr "Eighteen. The new words will come up a few at a time."
@@ -4875,8 +4876,8 @@ msgstr "Hear a sentence and pick who it’s about. Some drop the pronoun, so lis
 msgid "Hear a sentence, then pick how to say its no."
 msgstr "Hear a sentence, then pick how to say its no."
 
-msgid "Hear a verb and pick the form that follows it. Both choices are one verb, in its <0>-da</0> form and its <1>-ma</1> form."
-msgstr "Hear a verb and pick the form that follows it. Both choices are one verb, in its <0>-da</0> form and its <1>-ma</1> form."
+msgid "Hear a verb and pick the form that follows it. Both choices are the same verb, once in its <0>-da</0> form and once in its <1>-ma</1> form."
+msgstr "Hear a verb and pick the form that follows it. Both choices are the same verb, once in its <0>-da</0> form and once in its <1>-ma</1> form."
 
 msgid "Hear both"
 msgstr "Hear both"
@@ -10240,8 +10241,8 @@ msgstr "The *window* is open."
 msgid "The <0>-da</0> form follows <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> and <2>mulle meeldib</2>."
 msgstr "The <0>-da</0> form follows <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> and <2>mulle meeldib</2>."
 
-msgid "The <0>-ma</0> form follows <1>pean, hakkan, lähen, tule</1> and <2>jään</2>, and <3>õppima</3> for learning to do something."
-msgstr "The <0>-ma</0> form follows <1>pean, hakkan, lähen, tule</1> and <2>jään</2>, and <3>õppima</3> for learning to do something."
+msgid "The <0>-ma</0> form follows <1>pean, hakkan, lähen, tule</1> and <2>jään</2>. <3>Õpin</3> takes it too when you learn to do something: <4>Ma õpin lugema.</4>"
+msgstr "The <0>-ma</0> form follows <1>pean, hakkan, lähen, tule</1> and <2>jään</2>. <3>Õpin</3> takes it too when you learn to do something: <4>Ma õpin lugema.</4>"
 
 msgid "The 1618 revolt in Prague that started the Thirty Years’ War"
 msgstr "The 1618 revolt in Prague that started the Thirty Years’ War"
@@ -10750,9 +10751,6 @@ msgstr "The second day of the week."
 msgid "The second day. Teisi- sounds like <0/>, second."
 msgstr "The second day. Teisi- sounds like <0/>, second."
 
-msgid "The second verb goes last"
-msgstr "The second verb goes last"
-
 msgid "The second verb usually goes last: <0>Ma pean homme tööle minema.</0>"
 msgstr "The second verb usually goes last: <0>Ma pean homme tööle minema.</0>"
 
@@ -10920,6 +10918,9 @@ msgstr "There is nothing published yet."
 
 msgid "There’s a *park* near the station."
 msgstr "There’s a *park* near the station."
+
+msgid "These eight verbs take the <0>-da</0> form, <1/> among them: <2/> <3/>"
+msgstr "These eight verbs take the <0>-da</0> form, <1/> among them: <2/> <3/>"
 
 msgid "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
 msgstr "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
@@ -11212,8 +11213,8 @@ msgstr "To change lines (metro, trains)"
 msgid "To change trains"
 msgstr "To change trains"
 
-msgid "To check a verb that isn’t here, look it up in <0>Sõnaveeb</0>, as lesson {nounForms} shows. Under <1>Rektsioon</1>, <2>mida teha</2> means the verb takes the <3>-da</3> form, and <4>mida tegema</4> the <5>-ma</5> form. <6/> and <7/> are the <8>-da</8> and <9>-ma</9> forms of to do."
-msgstr "To check a verb that isn’t here, look it up in <0>Sõnaveeb</0>, as lesson {nounForms} shows. Under <1>Rektsioon</1>, <2>mida teha</2> means the verb takes the <3>-da</3> form, and <4>mida tegema</4> the <5>-ma</5> form. <6/> and <7/> are the <8>-da</8> and <9>-ma</9> forms of to do."
+msgid "To check a verb that isn’t here, look it up in <0>Sõnaveeb</0>, as lesson {nounForms} shows. <1/> and <2/> are the <3>-da</3> and <4>-ma</4> forms of to do, and <5>Sõnaveeb</5> uses them to say which form a verb takes. Under <6>Rektsioon</6>, <7>mida teha</7> means the <8>-da</8> form and <9>mida tegema</9> the <10>-ma</10> form."
+msgstr "To check a verb that isn’t here, look it up in <0>Sõnaveeb</0>, as lesson {nounForms} shows. <1/> and <2/> are the <3>-da</3> and <4>-ma</4> forms of to do, and <5>Sõnaveeb</5> uses them to say which form a verb takes. Under <6>Rektsioon</6>, <7>mida teha</7> means the <8>-da</8> form and <9>mida tegema</9> the <10>-ma</10> form."
 
 msgid "to come"
 msgstr "to come"
@@ -12192,9 +12193,6 @@ msgstr "When its card reaches Known in your reviews. From then on the reading is
 msgid "When one verb follows another, the second takes its <0>-da</0> or <1>-ma</1> form: <2>Ma tahan lugeda. Ma pean lugema.</2>"
 msgstr "When one verb follows another, the second takes its <0>-da</0> or <1>-ma</1> form: <2>Ma tahan lugeda. Ma pean lugema.</2>"
 
-msgid "When one verb follows another, the second takes its <0>-da</0> or its <1>-ma</1> form, and the first verb decides which: <2>Ma tahan lugeda</2>, I want to read, but <3>Ma pean lugema</3>, I have to read."
-msgstr "When one verb follows another, the second takes its <0>-da</0> or its <1>-ma</1> form, and the first verb decides which: <2>Ma tahan lugeda</2>, I want to read, but <3>Ma pean lugema</3>, I have to read."
-
 msgid "When the output depends on the history of the input"
 msgstr "When the output depends on the history of the input"
 
@@ -12275,6 +12273,9 @@ msgstr "Where the cat goes"
 
 msgid "Where the cat is"
 msgstr "Where the cat is"
+
+msgid "Where the second verb goes"
+msgstr "Where the second verb goes"
 
 msgid "Where will he wait for you?"
 msgstr "Where will he wait for you?"

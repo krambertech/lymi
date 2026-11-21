@@ -159,7 +159,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 12,
         blurb: msg`A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the third. Every word is read aloud.`,
       },
-      { name: msg`The genitive case`, et: "Minu raamat" },
+      {
+        slug: "omastav",
+        name: msg`The genitive case`,
+        title: msg`The Estonian genitive case: my, your and whose`,
+        et: "Minu raamat",
+        minutes: 12,
+        blurb: msg`A free lesson on the Estonian genitive case: minu, sinu, tema, meie, teie and nende for my, your, his or her, our and their, the owner before the noun (Mari raamat), kelle for whose, and the genitive as the form that takes -s and -l (kooli, koolis). Every sentence is read aloud.`,
+      },
       { name: msg`“To have”`, et: "Mul on" },
       {
         slug: "osastav",

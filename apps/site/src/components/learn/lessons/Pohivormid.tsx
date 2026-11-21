@@ -236,7 +236,7 @@ export function PohivormidLesson() {
   const { t, i18n } = useLingui();
   const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
   const stems = at("Pood, poe");
-  const genitive = at("Minu raamat");
+  const genitive = lessonBySlug("omastav")?.n;
   const partitive = lessonBySlug("osastav")?.n;
 
   const notes: Record<string, ReactNode> = {

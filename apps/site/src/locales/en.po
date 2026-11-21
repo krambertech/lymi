@@ -1632,8 +1632,8 @@ msgstr "A .mochi file from Mochi"
 msgid "A *hedgehog* lives in the forest."
 msgstr "A *hedgehog* lives in the forest."
 
-msgid "A <0>-mine</0> word changes like <1>inimene</1>, <2>inimese</2>, <3>inimest</3>: <4>lugemine</4>, <5>lugemise</5>, <6>lugemist</6>. So you say <7>mulle meeldib lugemine</7> but <8>ma armastan lugemist</8>."
-msgstr "A <0>-mine</0> word changes like <1>inimene</1>, <2>inimese</2>, <3>inimest</3>: <4>lugemine</4>, <5>lugemise</5>, <6>lugemist</6>. So you say <7>mulle meeldib lugemine</7> but <8>ma armastan lugemist</8>."
+msgid "A <0>-mine</0> word changes like <1>inimene</1>, <2>inimese</2>, <3>inimest</3>: <4>lugemine</4>, <5>lugemise</5>, <6>lugemist</6>. So you say <7>mulle meeldib lugemine</7> but <8>ma armastan lugemist</8>: <9>meeldima</9> takes the first form, <10>armastama</10> the third."
+msgstr "A <0>-mine</0> word changes like <1>inimene</1>, <2>inimese</2>, <3>inimest</3>: <4>lugemine</4>, <5>lugemise</5>, <6>lugemist</6>. So you say <7>mulle meeldib lugemine</7> but <8>ma armastan lugemist</8>: <9>meeldima</9> takes the first form, <10>armastama</10> the third."
 
 msgid "A <0>-mine</0> word changes like <1>inimene</1>: <2>ma armastan lugemist</2>."
 msgstr "A <0>-mine</0> word changes like <1>inimene</1>: <2>ma armastan lugemist</2>."
@@ -2493,8 +2493,8 @@ msgstr "Add {name} to Lymi"
 msgid "Add {title}"
 msgstr "Add {title}"
 
-msgid "Add <0>-ja</0> for the person who does it: <1>lugeja</1>, a reader; <2>müüja</2>, a seller."
-msgstr "Add <0>-ja</0> for the person who does it: <1>lugeja</1>, a reader; <2>müüja</2>, a seller."
+msgid "Add <0>-ja</0>, usually for the person who does it: <1>lugeja</1>, a reader; <2>müüja</2>, a seller."
+msgstr "Add <0>-ja</0>, usually for the person who does it: <1>lugeja</1>, a reader; <2>müüja</2>, a seller."
 
 msgid "Add <0>-mine</0> for the activity: <1>lugemine</1>, reading; <2>ujumine</2>, swimming."
 msgstr "Add <0>-mine</0> for the activity: <1>lugemine</1>, reading; <2>ujumine</2>, swimming."
@@ -3028,11 +3028,11 @@ msgstr "All Chinese decks"
 msgid "All day tomorrow"
 msgstr "All day tomorrow"
 
-msgid "All eight. A person ends in <0>-ja</0>, an activity in <1>-mine</1>."
-msgstr "All eight. A person ends in <0>-ja</0>, an activity in <1>-mine</1>."
-
 msgid "All eight. Before a noun, only mööda wants the third form."
 msgstr "All eight. Before a noun, only mööda wants the third form."
+
+msgid "All eight. Here the person ends in <0>-ja</0> and the activity in <1>-mine</1>."
+msgstr "All eight. Here the person ends in <0>-ja</0> and the activity in <1>-mine</1>."
 
 msgid "All eight. You can build the stem for every plural case."
 msgstr "All eight. You can build the stem for every plural case."
@@ -6405,6 +6405,9 @@ msgstr "Family"
 msgid "father"
 msgstr "father"
 
+msgid "favourite sport"
+msgstr "favourite sport"
+
 msgid "Feeling and liking"
 msgstr "Feeling and liking"
 
@@ -7841,8 +7844,8 @@ msgstr "He or she works from home."
 msgid "he or she; his or her"
 msgstr "he or she; his or her"
 
-msgid "He sells things in a shop"
-msgstr "He sells things in a shop"
+msgid "He sells things"
+msgstr "He sells things"
 
 msgid "He sings in a choir"
 msgstr "He sings in a choir"
@@ -14352,6 +14355,9 @@ msgstr "Read. To more than one, or polite."
 msgid "Reading"
 msgstr "Reading"
 
+msgid "Reading books"
+msgstr "Reading books"
+
 msgid "Reading your notes…"
 msgstr "Reading your notes…"
 
@@ -14610,9 +14616,6 @@ msgstr "Run /mcp auth lymi. Your browser opens on Lymi. Sign in and allow it."
 
 msgid "Run /mcp to see Lymi connected, then ask Gemini for your first cards."
 msgstr "Run /mcp to see Lymi connected, then ask Gemini for your first cards."
-
-msgid "Running in the park"
-msgstr "Running in the park"
 
 msgid "Running in town"
 msgstr "Running in town"
@@ -15226,6 +15229,9 @@ msgstr "Sina means you. To say that you have it, answer Minul."
 msgid "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
 msgstr "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
 
+msgid "Singing"
+msgstr "Singing"
+
 msgctxt "grammatical number"
 msgid "Singular"
 msgstr "Singular"
@@ -15572,9 +15578,6 @@ msgstr "spider"
 msgid "Split a deck into sections, one per unit. Learners start with the first, and the next opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can start the next section early."
 msgstr "Split a deck into sections, one per unit. Learners start with the first, and the next opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can start the next section early."
 
-msgid "sport"
-msgstr "sport"
-
 msgid "Spread your practice over time."
 msgstr "Spread your practice over time."
 
@@ -15854,8 +15857,8 @@ msgstr "Swap <0>-tud</0> for <1>-takse</1> now and <2>-ti</2> in the past; <3>-d
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Swedes use it for coffee and working hours alike."
 
-msgid "Swimming in the sea"
-msgstr "Swimming in the sea"
+msgid "Swimming"
+msgstr "Swimming"
 
 msgid "Swimming plans"
 msgstr "Swimming plans"

@@ -3203,35 +3203,35 @@ export const VERB_NOUNS = [
 export const VERB_NOUN_GAPS = [
   {
     id: "ja-ema",
-    before: "Minu ema on",
-    after: "koolis.",
+    before: "Minu ema on koolis",
+    after: ".",
     answer: "õpetaja",
     options: ["õpetaja", "õpetamine"],
   },
   {
     id: "mine-hobi",
-    before: "Minu hobi on",
+    before: "Ma loen iga õhtu, minu hobi on",
     after: ".",
     answer: "lugemine",
     options: ["lugeja", "lugemine"],
   },
   {
     id: "ja-pood",
-    before: "Poes aitas mind üks noor",
+    before: "Selles poes töötab noor",
     after: ".",
     answer: "müüja",
     options: ["müüja", "müümine"],
   },
   {
     id: "mine-meeldib",
-    before: "Mulle meeldib",
-    after: "meres.",
+    before: "Mulle meeldib meres",
+    after: ".",
     answer: "ujumine",
     options: ["ujuja", "ujumine"],
   },
   {
     id: "ja-kuulus",
-    before: "Ta on kuulus",
+    before: "Ta annab palju kontserte, sest ta on kuulus",
     after: ".",
     answer: "laulja",
     options: ["laulja", "laulmine"],
@@ -3239,20 +3239,20 @@ export const VERB_NOUN_GAPS = [
   {
     id: "mine-hommik",
     before: "Hommikune",
-    after: "on tervislik.",
+    after: "pargis on tervislik.",
     answer: "jooksmine",
     options: ["jooksja", "jooksmine"],
   },
   {
     id: "ja-hea",
-    before: "Kas sa oled hea",
+    before: "Lähme randa! Kas sa oled hea",
     after: "?",
     answer: "ujuja",
     options: ["ujuja", "ujumine"],
   },
   {
     id: "mine-keel",
-    before: "Eesti keele",
+    before: "Ma õpin iga päev, sest eesti keele",
     after: "võtab aega.",
     answer: "õppimine",
     options: ["õppija", "õppimine"],
@@ -3264,10 +3264,10 @@ export const FAMILY_JOBS_PASSAGE = [
   "Mu vend on laulja, ta laulab kooris.",
   "Minu õde on hea ujuja.",
   "Mulle endale meeldib kõige rohkem lugemine.",
-  "Meie pere lemmik sport on jooksmine.",
+  "Meie pere lemmiksport on jooksmine.",
 ] as const;
 
-export const VERB_NOUN_WORDS = ["hobi", "tervislik", "koor", "sport"] as const;
+export const VERB_NOUN_WORDS = ["hobi", "tervislik", "koor", "lemmiksport"] as const;
 
 const VERB_NOUN_CLIPS: Record<string, Clip> = {
   ...words(VERB_NOUN_WORDS),

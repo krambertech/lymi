@@ -40,7 +40,7 @@ const GLOSSARY: Glossary = {
   hobi: { en: msg`hobby` },
   tervislik: { en: msg`healthy, good for you` },
   koor: { en: msg`choir`, note: msg`Kooris, in a choir.` },
-  sport: { en: msg`sport` },
+  lemmiksport: { en: msg`favourite sport` },
 };
 
 function NounTable() {
@@ -81,11 +81,15 @@ function NounTable() {
 
 const NOUN_POOL = [...new Set(VERB_NOUN_GAPS.flatMap((gap) => gap.options))];
 
+const oppositeOf = (answer: string, pair: readonly string[]) =>
+  NOUN_POOL.filter((word) => !pair.includes(word) && word.endsWith("ja") !== answer.endsWith("ja"));
+
 function firstOptions(pair: readonly string[], answer: string, index: number): string[] {
   const other = pair.find((word) => word !== answer) as string;
-  const third = NOUN_POOL.filter((word) => !pair.includes(word))[index % 4] as string;
+  const third = oppositeOf(answer, pair).at(index % 4) as string;
   const order = [answer, other, third];
-  return [...order.slice(3 - (index % 3)), ...order.slice(0, 3 - (index % 3))];
+  const turn = (index % 3) + 1;
+  return [...order.slice(turn), ...order.slice(0, turn)];
 }
 
 type GapRun = GapItem & { id: string; said: string; pair: readonly string[] };
@@ -123,7 +127,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       id: "father",
       ask: t(msg`What does Kati’s father do?`),
       options: [
-        { id: "sells", label: t(msg`He sells things in a shop`) },
+        { id: "sells", label: t(msg`He sells things`) },
         { id: "teaches", label: t(msg`He teaches at a school`) },
         { id: "sings", label: t(msg`He sings in a choir`) },
       ],
@@ -145,9 +149,9 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       id: "likes",
       ask: t(msg`What does Kati like most?`),
       options: [
-        { id: "swim", label: t(msg`Swimming in the sea`) },
-        { id: "run", label: t(msg`Running in the park`) },
-        { id: "read", label: t(msg`Reading`) },
+        { id: "swim", label: t(msg`Swimming`) },
+        { id: "run", label: t(msg`Singing`) },
+        { id: "read", label: t(msg`Reading books`) },
       ],
       answer: "read",
       line: 3,
@@ -158,7 +162,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
 }
 
 const withThird = (item: GapRun): GapRun => {
-  const third = shuffle(NOUN_POOL.filter((word) => !item.pair.includes(word)))[0] as string;
+  const third = shuffle(oppositeOf(item.answer, item.pair))[0] as string;
   return { ...item, options: shuffle([...item.pair, third]) };
 };
 
@@ -185,14 +189,14 @@ export function OpetajaLugemineLesson() {
         <Trans key="q">2 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
-      words={["hobi", "tervislik", "koor", "sport"]}
+      words={["hobi", "tervislik", "koor", "lemmiksport"]}
       recap={[
         <Trans key="1">
           Take the <Et>-ma</Et> form and drop <Et>-ma</Et>: <b lang="et">luge-ma</b> gives the stem{" "}
           <b lang="et">luge-</b>.
         </Trans>,
         <Trans key="2">
-          Add <Et>-ja</Et> for the person who does it: <b lang="et">lugeja</b>, a reader;{" "}
+          Add <Et>-ja</Et>, usually for the person who does it: <b lang="et">lugeja</b>, a reader;{" "}
           <b lang="et">müüja</b>, a seller.
         </Trans>,
         <Trans key="3">
@@ -225,7 +229,8 @@ export function OpetajaLugemineLesson() {
                 <Trans>
                   A <Et>-mine</Et> word changes like <Et>inimene</Et>, <Et>inimese</Et>,{" "}
                   <Et>inimest</Et>: <Et>lugemine</Et>, <Et>lugemise</Et>, <Et>lugemist</Et>. So you
-                  say <Et>mulle meeldib lugemine</Et> but <Et>ma armastan lugemist</Et>.
+                  say <Et>mulle meeldib lugemine</Et> but <Et>ma armastan lugemist</Et>:{" "}
+                  <Et>meeldima</Et> takes the first form, <Et>armastama</Et> the third.
                 </Trans>
               </Aside>
             </>
@@ -257,7 +262,8 @@ export function OpetajaLugemineLesson() {
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>
-                      All eight. A person ends in <Et>-ja</Et>, an activity in <Et>-mine</Et>.
+                      All eight. Here the person ends in <Et>-ja</Et> and the activity in{" "}
+                      <Et>-mine</Et>.
                     </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Most of them. Ask: is it someone, or something you do?</Trans>

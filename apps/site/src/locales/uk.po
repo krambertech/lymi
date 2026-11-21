@@ -1633,8 +1633,8 @@ msgstr "Файл .mochi з Mochi"
 msgid "A *hedgehog* lives in the forest."
 msgstr "У лісі живе *їжачок*."
 
-msgid "A <0>-mine</0> word changes like <1>inimene</1>, <2>inimese</2>, <3>inimest</3>: <4>lugemine</4>, <5>lugemise</5>, <6>lugemist</6>. So you say <7>mulle meeldib lugemine</7> but <8>ma armastan lugemist</8>."
-msgstr "Слово на <0>-mine</0> змінюється, як <1>inimene</1>, <2>inimese</2>, <3>inimest</3>: <4>lugemine</4>, <5>lugemise</5>, <6>lugemist</6>. Тому кажуть <7>mulle meeldib lugemine</7>, але <8>ma armastan lugemist</8>."
+msgid "A <0>-mine</0> word changes like <1>inimene</1>, <2>inimese</2>, <3>inimest</3>: <4>lugemine</4>, <5>lugemise</5>, <6>lugemist</6>. So you say <7>mulle meeldib lugemine</7> but <8>ma armastan lugemist</8>: <9>meeldima</9> takes the first form, <10>armastama</10> the third."
+msgstr "Слово на <0>-mine</0> змінюється, як <1>inimene</1>, <2>inimese</2>, <3>inimest</3>: <4>lugemine</4>, <5>lugemise</5>, <6>lugemist</6>. Тому кажуть <7>mulle meeldib lugemine</7>, але <8>ma armastan lugemist</8>: <9>meeldima</9> вимагає першої форми, а <10>armastama</10> — третьої."
 
 msgid "A <0>-mine</0> word changes like <1>inimene</1>: <2>ma armastan lugemist</2>."
 msgstr "Слово на <0>-mine</0> змінюється, як <1>inimene</1>: <2>ma armastan lugemist</2>."
@@ -2494,8 +2494,8 @@ msgstr "Додати {name} в Lymi"
 msgid "Add {title}"
 msgstr "Додати «{title}»"
 
-msgid "Add <0>-ja</0> for the person who does it: <1>lugeja</1>, a reader; <2>müüja</2>, a seller."
-msgstr "Додай <0>-ja</0> для того, хто це робить: <1>lugeja</1>, читач; <2>müüja</2>, продавець."
+msgid "Add <0>-ja</0>, usually for the person who does it: <1>lugeja</1>, a reader; <2>müüja</2>, a seller."
+msgstr "Додай <0>-ja</0> — зазвичай для того, хто це робить: <1>lugeja</1>, читач; <2>müüja</2>, продавець."
 
 msgid "Add <0>-mine</0> for the activity: <1>lugemine</1>, reading; <2>ujumine</2>, swimming."
 msgstr "Додай <0>-mine</0> для дії: <1>lugemine</1>, читання; <2>ujumine</2>, плавання."
@@ -3029,11 +3029,11 @@ msgstr "Усі колоди з китайської"
 msgid "All day tomorrow"
 msgstr "Завтра весь день"
 
-msgid "All eight. A person ends in <0>-ja</0>, an activity in <1>-mine</1>."
-msgstr "Усі вісім. Людина закінчується на <0>-ja</0>, дія — на <1>-mine</1>."
-
 msgid "All eight. Before a noun, only mööda wants the third form."
 msgstr "Усі вісім. Перед іменником лише mööda вимагає третьої форми."
+
+msgid "All eight. Here the person ends in <0>-ja</0> and the activity in <1>-mine</1>."
+msgstr "Усі вісім. Тут слова про людину закінчуються на <0>-ja</0>, а про дію — на <1>-mine</1>."
 
 msgid "All eight. You can build the stem for every plural case."
 msgstr "Усі вісім. Ти вмієш будувати основу для кожного відмінка множини."
@@ -6406,6 +6406,9 @@ msgstr "Сім’я"
 msgid "father"
 msgstr "батько"
 
+msgid "favourite sport"
+msgstr "улюблений спорт"
+
 msgid "Feeling and liking"
 msgstr "Почуватися й подобатися"
 
@@ -7056,7 +7059,7 @@ msgid "From olema."
 msgstr "Від olema."
 
 msgid "From one verb, two nouns: <0>õpetama</0> gives <1>õpetaja</1>, a teacher, and <2>õpetamine</2>, teaching."
-msgstr "З одного дієслова — два іменники: <0>õpetama</0> дає <1>õpetaja</1>, вчитель, і <2>õpetamine</2>, навчання."
+msgstr "З одного дієслова — два іменники: <0>õpetama</0> дає <1>õpetaja</1>, вчитель, і <2>õpetamine</2>, викладання."
 
 msgid "From ootama, to wait."
 msgstr "Від ootama, чекати."
@@ -7842,8 +7845,8 @@ msgstr "Він чи вона працює вдома."
 msgid "he or she; his or her"
 msgstr "він чи вона; його чи її"
 
-msgid "He sells things in a shop"
-msgstr "Продає речі в магазині"
+msgid "He sells things"
+msgstr "Продає речі"
 
 msgid "He sings in a choir"
 msgstr "Співає в хорі"
@@ -14353,6 +14356,9 @@ msgstr "Читайте. До кількох людей або на «ви»."
 msgid "Reading"
 msgstr "Читання"
 
+msgid "Reading books"
+msgstr "Читання книжок"
+
 msgid "Reading your notes…"
 msgstr "Читаємо нотатки…"
 
@@ -14611,9 +14617,6 @@ msgstr "Запусти /mcp auth lymi. У браузері відкриєтьс�
 
 msgid "Run /mcp to see Lymi connected, then ask Gemini for your first cards."
 msgstr "Запусти /mcp, щоб переконатися, що Lymi підключено, і попроси в Gemini перші картки."
-
-msgid "Running in the park"
-msgstr "Біг у парку"
 
 msgid "Running in town"
 msgstr "Бігає в місті"
@@ -15227,6 +15230,9 @@ msgstr "Sina — це «ти». Щоб сказати, що номер у теб
 msgid "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
 msgstr "Ще з уроку {present} ти кажеш <0/> Ти п’єш каву, не рахуючи чашок, тому <1>kohvi</1> стоїть у третій формі. Так само з усім, що їси, п’єш чи хочеш, не рахуючи. Українською схоже: «хочу молока». Торкнись речення, щоб його почути."
 
+msgid "Singing"
+msgstr "Спів"
+
 msgctxt "grammatical number"
 msgid "Singular"
 msgstr "Однина"
@@ -15573,9 +15579,6 @@ msgstr "павук"
 msgid "Split a deck into sections, one per unit. Learners start with the first, and the next opens once they know most of it, so nobody meets unit six on day one. Anyone ahead can start the next section early."
 msgstr "Поділи колоду на розділи, по одному на тему. Учні починають із першого, а наступний відкривається, коли вони засвоять більшу частину попереднього, тож шоста тема нікого не застане в перший день. Хто йде швидше, може почати наступний розділ раніше."
 
-msgid "sport"
-msgstr "спорт"
-
 msgid "Spread your practice over time."
 msgstr "Повторюй потроху, а не все за раз."
 
@@ -15855,8 +15858,8 @@ msgstr "Заміни <0>-tud</0> на <1>-takse</1> зараз і на <2>-ti</2
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведи кажуть так і про каву, і про робочий час."
 
-msgid "Swimming in the sea"
-msgstr "Плавання в морі"
+msgid "Swimming"
+msgstr "Плавання"
 
 msgid "Swimming plans"
 msgstr "Домовляємося поплавати"
@@ -20084,7 +20087,7 @@ msgid "What does Kati write?"
 msgstr "Що пише Каті?"
 
 msgid "What does Kati’s father do?"
-msgstr "Ким працює тато Каті?"
+msgstr "Чим займається тато Каті?"
 
 msgid "What does Lymi cost?"
 msgstr "Скільки коштує Lymi?"
@@ -21689,7 +21692,7 @@ msgid "You know <0>银行</0>. <1>行</1> loses háng in <2>行长</2> too, but 
 msgstr "Ти знаєш <0>银行</0>. <1>行</1> втрачає háng і в <2>行长</2>, але зберігає xíng у <3>不行</3>."
 
 msgid "You know the <0>-ma</0> form from lesson {maForm}. Drop <1>-ma</1> and you have the stem. Add <2>-ja</2> and you get the person who does it, like English -er: <3>õpetaja</3>, teacher. Add <4>-mine</4> and you get the activity, like English -ing: <5>õpetamine</5>, teaching."
-msgstr "Форму на <0>-ma</0> ти знаєш з уроку {maForm}. Відкинь <1>-ma</1> — і маєш основу. Додай <2>-ja</2> — і маєш того, хто це робить, як «-ач» у «читач»: <3>õpetaja</3>, вчитель. Додай <4>-mine</4> — і маєш саму дію, як «-ння» у «читання»: <5>õpetamine</5>, навчання."
+msgstr "Форму на <0>-ma</0> ти знаєш з уроку {maForm}. Відкинь <1>-ma</1> — і маєш основу. Додай <2>-ja</2> — і маєш того, хто це робить, як «-ач» у «читач»: <3>õpetaja</3>, вчитель. Додай <4>-mine</4> — і маєш саму дію, як «-ння» у «читання»: <5>õpetamine</5>, викладання."
 
 msgid "You know the <0>-nud</0> form from lesson {negativePast}: <1>ma ei lugenud</1>, I didn’t read. Put a form of <2>olema</2> before it and you get two more tenses. With <3>olen</3>, the perfect: <4>ma olen lugenud</4>, I have read. With <5>olin</5>, the pluperfect: <6>ma olin lugenud</6>, I had read."
 msgstr "Форма на <0>-nud</0> тобі знайома з уроку {negativePast}: <1>ma ei lugenud</1>, я не читав. Постав перед нею форму <2>olema</2> — і маєш ще два часи. З <3>olen</3> — перфект: <4>ma olen lugenud</4>, я вже прочитав. З <5>olin</5> — плюсквамперфект: <6>ma olin lugenud</6>, я прочитав ще до того."

@@ -1,6 +1,14 @@
 # Testing
 
-Lymi uses a small set of Playwright journeys to prove that the browser, Worker, authentication, D1 persistence, deck and card creation, and FSRS review path work together. The suite runs entirely against local Cloudflare bindings. It never uses production data or AI credentials.
+Each test guards one behavior that a learner, a caller or a deploy depends on, and goes red only when that behavior regresses.
+
+- Anchor the test to that behavior, one test per behavior ([What a test must depend on](#what-a-test-must-depend-on)).
+- Put it at the cheapest layer that observes the behavior. Journeys are the exception ([Where a test goes](#where-a-test-goes)).
+- Some rules have their own check: [property tests](#rules-a-pure-function-must-keep) for a rule over every input, [the schedule snapshot](#which-schedules-a-scheduler-change-moves) for a scheduler change, [pattern checks](#bugs-a-pattern-can-catch) for a bug a search can find, [the reliability checklist](#check-what-broke-before) for a bug class no check can find, and [lesson checks](#estonian-lesson-checks) for the Estonian course.
+- More of the suite runs the closer a change is to shipping ([What runs when](#what-runs-when)).
+- Also verify the learner's outcome in the running app ([Review coverage](#review-coverage)).
+
+Tests run against local Cloudflare bindings, never production data or AI credentials.
 
 ## Review coverage
 
@@ -92,6 +100,30 @@ A change is production-affecting when `requiresE2E` in `scripts/e2e-impact.mjs` 
 `LYMI_COMPONENT_INSTANCES` names the component instances to run, comma-separated from `desktop`, `touch` and `touch-webkit`; unset runs all three, and an unknown name fails the run. Workers Builds runs no tests, so a merge to `main` deploys whether or not its CI run passes.
 
 The Mac app in `apps/desktop` is tested only where it differs from the web. The contract between it and the page is the types in `packages/client/src/desktop.ts`, so a mismatch fails `pnpm typecheck`. Its rules live in modules that import nothing from Electron (`origin.ts`, `settings.ts`, `callback.ts`, `hand-back.ts`, `term.ts`), whose unit tests run with `pnpm test`. The pages only it shows have component tests with a stand-in for the app (`routes/desktop.add.browser.test.tsx`, `components/this-mac-section.browser.test.tsx`), and the server's side of its sign-in is `server/desktop-sign-in.test.ts`. The Desktop workflow packages the app when a pull request changes `apps/desktop` and launches it on a Mac runner; `apps/desktop/scripts/launch-check.js` passes once a product page has the bridge.
+
+## What a test must depend on
+
+A test depends on intended behavior: what a learner sees, what a caller gets back, and what is stored or sent. Before you add or keep a test, walk this tree:
+
+```text
+Which change to the code turns the test red?
+├── None, or only bringing back code removed on purpose
+│   → Delete it. It tests the past, a library, the browser, a mock or the type system.
+└── A regression of intended behavior
+    ├── A change that keeps the behavior also turns it red?
+    │   → Rewrite it against the behavior.
+    ├── Another test already goes red on the same regression?
+    │   → Keep the stronger one and delete the other.
+    └── Otherwise → keep it.
+```
+
+- Write expected values as literals: `toBe(80)`, not `price - price * 0.2`. A value built with the code's own logic passes a wrong result.
+- Find elements by role and accessible name. Assert what reaches the caller or the server, never private state, call order, class names, log lines or SQL.
+- Before you add a case, search property, conformance and simulation tests, the other layers, and the shared package's test for a re-exported module. Extend the test that covers the behavior. A reducer test owns the rule and a component test owns the wiring, so one flow has both ([CODING_STANDARDS.md](../CODING_STANDARDS.md#give-a-flow-one-state)).
+- A contract that live clients still call keeps its test: a supported phone release ([ADR 0032](adr/0032-the-phone-ships-over-the-air-and-the-api-keeps-every-supported-release-working.md)), a public link or a redirect.
+- Reach code through its public API, and inject a dependency where a test must replace one. Production code has no export, flag or type that only tests read. Two kinds are exempt: a reset that stands in for a restart, such as `resetWriteCache`, when a test proves what survives that restart, and check logic whose only runner is a test, such as the enrichment gate in `enrichment/recorded-run.ts`. Its doc comment names the restart or the check.
+- Pin exact wording, such as a prompt hash, only where something reads its version. `enrichment/prompt.test.ts` goes red until `ENRICHMENT_PROMPT_VERSION` rises, and `enrichment/recorded-run.ts` records that version.
+- A change that removes code removes the tests that only guarded it.
 
 ## Where a test goes
 
@@ -395,4 +427,4 @@ Keep this path real: find controls by accessible roles and labels, call Lymi's o
 
 `e2e/public-deck-page.spec.ts` owns a published deck's public page, read from the site's fixture decks: the page carries its cache headers, its content ETag and a 304, title, canonical and alternate links, JSON-LD, sitemap entry and every card in its HTML, and none of the fixture's private fields; a visitor sees the publisher, reads the sections in order, opens every card in the view that `#cards` also opens and Back closes, turns each card of the hand once to the lantern's ending, and without JavaScript still gets the deck, its sections and a dealt hand; the Ukrainian page carries its own chrome, an unknown deck or locale is 404, and a withdrawn or archived deck is 410 and absent from the sitemap. The site and product keep separate local D1 state, because two local runtimes sharing one crash on `SQLITE_BUSY` ([workers-sdk#14916](https://github.com/cloudflare/workers-sdk/issues/14916)); publishing through the product is covered by `published-deck-add.spec.ts` and the service tests.
 
-`e2e/origin-boundary.spec.ts` proves that the site has no install contract while the product keeps its PWA, that the site exposes only its own indexing and keeps product APIs off its origin; the product origin's own boundary is `app.test.ts`. `e2e/pwa-boundary.spec.ts` runs against the production product package in Chromium and proves that the manifest, installed service worker and offline sign-in shell remain product-owned.
+`e2e/origin-boundary.spec.ts` proves that the site has no install contract while the product keeps its PWA, and that the site exposes only its own indexing and keeps product APIs off its origin; the product origin's own boundary is `app.test.ts`. `e2e/pwa-boundary.spec.ts` runs against the production product package in Chromium and proves that the manifest, installed service worker and offline sign-in shell remain product-owned.

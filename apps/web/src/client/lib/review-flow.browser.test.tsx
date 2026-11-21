@@ -1,6 +1,6 @@
-import { resetGradeCache } from "@lymi/client/grades";
+import { resetGradeCache, settleGrades } from "@lymi/client/grades";
 import { type ReviewFlow, type ReviewPlatform, useReviewFlow } from "@lymi/client/review-flow";
-import { resetWriteCache } from "@lymi/client/writes";
+import { resetWriteCache, SEND_TIMEOUT, settleWrites } from "@lymi/client/writes";
 import type { GradeOut, StreakOut } from "@lymi/core";
 import { QueryClient, QueryClientProvider, QueryObserver } from "@tanstack/react-query";
 import type { ReactNode } from "react";
@@ -92,8 +92,12 @@ beforeEach(() => {
   vi.spyOn(api, "rounds").mockResolvedValue({} as Awaited<ReturnType<typeof api.rounds>>);
 });
 
-afterEach(() => {
+afterEach(async () => {
   vi.useRealTimers();
+  // Let a flush still in flight finish while its mocks are in place, so it lets go of the Web Lock
+  // and stops writing to storage before the next test clears it. Writes first: they flush grades too.
+  await settleWrites();
+  await settleGrades();
   vi.restoreAllMocks();
 });
 
@@ -266,8 +270,9 @@ test("fetches the next day's draw when the day ends during a review", async () =
     delay?: number,
     ...args: unknown[]
   ) => {
-    // The day's timer waits about an hour; short timeouts stay real so the hook can settle.
-    if (typeof fn === "function" && (delay ?? 0) >= 60 * 60_000) {
+    // Anything longer than a send's own timeout is the day's timer; shorter ones stay real so the
+    // hook can settle, and the test never waits on a real day-long timer.
+    if (typeof fn === "function" && (delay ?? 0) > SEND_TIMEOUT) {
       const handle = { long: true };
       longTimers.set(handle, () => fn(...args));
       return handle as unknown as ReturnType<typeof setTimeout>;
@@ -294,7 +299,9 @@ test("fetches the next day's draw when the day ends during a review", async () =
   const calls = draw.mock.calls.length;
   // Midnight passes with the review still open, and only the day's own timer can notice.
   vi.setSystemTime(end + 100);
-  for (const run of longTimers.values()) run();
+  const due = [...longTimers.values()];
+  longTimers.clear();
+  for (const run of due) run();
   await vi.waitFor(() => expect(result.current.leg?.date).toBe(tomorrow.day.date));
   expect(draw.mock.calls.length).toBeGreaterThan(calls);
   await vi.waitFor(() => expect(result.current.current?.card.id).toBe("b"));

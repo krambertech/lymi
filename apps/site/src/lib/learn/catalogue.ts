@@ -263,7 +263,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 12,
         blurb: msg`A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud.`,
       },
-      { name: msg`Practice: at the market`, et: "Turul" },
+      {
+        slug: "turul",
+        name: msg`Practice: at the market`,
+        title: msg`Estonian practice: shopping at the market`,
+        et: "Turul",
+        minutes: 12,
+        blurb: msg`Free Estonian practice at the market: read a friend’s message, follow a voice message about where things are, fill in what you say at a stall and buy cheese and bread, with kilo juustu, kaheksa eurot and mulle meeldivad. Every sentence is read aloud.`,
+      },
       {
         slug: "lihtminevik",
         name: msg`Past tense`,

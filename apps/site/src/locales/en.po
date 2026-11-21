@@ -1269,6 +1269,9 @@ msgstr "33 questions, 17 to pass. 300 general questions and 10 for your state to
 msgid "4 days"
 msgstr "4 days"
 
+msgid "4 exercises"
+msgstr "4 exercises"
+
 msgid "40 and 60 questions. 120 of 200 points to pass."
 msgstr "40 and 60 questions. 120 of 200 points to pass."
 
@@ -2320,6 +2323,9 @@ msgstr "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgid "After <0>helistama</0> and <1>küsima</1>, the person takes <2>-le</2> or <3>-lt</3>: <4>Ma helistan emale. Ma küsin emalt</4>, word for word “I ask from Mum”."
 msgstr "After <0>helistama</0> and <1>küsima</1>, the person takes <2>-le</2> or <3>-lt</3>: <4>Ma helistan emale. Ma küsin emalt</4>, word for word “I ask from Mum”."
 
+msgid "After <0>kilo</0>, the third form: <1>kilo juustu</1>."
+msgstr "After <0>kilo</0>, the third form: <1>kilo juustu</1>."
+
 msgid "After <0>läheb</0>, goes, the place answers <1>kuhu</1>, so the market takes <2>-le</2>: <3>turule</3>."
 msgstr "After <0>läheb</0>, goes, the place answers <1>kuhu</1>, so the market takes <2>-le</2>: <3>turule</3>."
 
@@ -2407,8 +2413,14 @@ msgstr "After a number from two up, the partitive."
 msgid "After a number from two up, the third form: <0>seitse eurot</0>."
 msgstr "After a number from two up, the third form: <0>seitse eurot</0>."
 
+msgid "After a number from two up, the third form: <0>üheksa eurot</0>."
+msgstr "After a number from two up, the third form: <0>üheksa eurot</0>."
+
 msgid "After an amount"
 msgstr "After an amount"
+
+msgid "After an amount or a number from two up, the third form: <0>kilo juustu, kaheksa eurot</0>."
+msgstr "After an amount or a number from two up, the third form: <0>kilo juustu, kaheksa eurot</0>."
 
 msgid "After an amount, the third form: <0>kilo juustu</0>."
 msgstr "After an amount, the third form: <0>kilo juustu</0>."
@@ -2892,6 +2904,9 @@ msgstr "Anyone with the link can join this deck."
 msgid "anything"
 msgstr "anything"
 
+msgid "anything else"
+msgstr "anything else"
+
 msgid "Anything you pick up and want to remember."
 msgstr "Anything you pick up and want to remember."
 
@@ -2909,6 +2924,12 @@ msgstr "apple"
 
 msgid "Apple"
 msgstr "Apple"
+
+msgid "apples"
+msgstr "apples"
+
+msgid "Apples"
+msgstr "Apples"
 
 msgid "Application"
 msgstr "Application"
@@ -3210,6 +3231,9 @@ msgstr "At ten"
 msgid "At the café"
 msgstr "At the café"
 
+msgid "At the cheese stall"
+msgstr "At the cheese stall"
+
 msgid "at the door"
 msgstr "at the door"
 
@@ -3362,6 +3386,9 @@ msgstr "Began in 1618 with the <0>Defenestration of Prague</0>."
 
 msgid "behind"
 msgstr "behind"
+
+msgid "Behind the market"
+msgstr "Behind the market"
 
 msgid "belongs in"
 msgstr "belongs in"
@@ -3627,8 +3654,14 @@ msgstr "bus"
 msgid "but"
 msgstr "but"
 
+msgid "Buying apples"
+msgstr "Buying apples"
+
 msgid "Buying books and letting them pile up unread"
 msgstr "Buying books and letting them pile up unread"
+
+msgid "Buying cheese and bread"
+msgstr "Buying cheese and bread"
 
 msgid "By {publisher}"
 msgstr "By {publisher}"
@@ -3968,6 +4001,9 @@ msgstr "Checked on {date} against {places}."
 
 msgid "cheese"
 msgstr "cheese"
+
+msgid "Cheese and bread"
+msgstr "Cheese and bread"
 
 msgid "Cheese and coffee"
 msgstr "Cheese and coffee"
@@ -5171,6 +5207,9 @@ msgstr "Estonian personal pronouns and “to be”"
 msgid "Estonian plural"
 msgstr "Estonian plural"
 
+msgid "Estonian practice: shopping at the market"
+msgstr "Estonian practice: shopping at the market"
+
 msgid "Estonian present tense"
 msgstr "Estonian present tense"
 
@@ -5835,6 +5874,9 @@ msgstr "Free Estonian decks with a native voice on every card, with meanings in 
 msgid "Free Estonian grammar lessons · Lymi"
 msgstr "Free Estonian grammar lessons · Lymi"
 
+msgid "Free Estonian practice at the market: read a friend’s message, follow a voice message about where things are, fill in what you say at a stall and buy cheese and bread, with kilo juustu, kaheksa eurot and mulle meeldivad. Every sentence is read aloud."
+msgstr "Free Estonian practice at the market: read a friend’s message, follow a voice message about where things are, fill in what you say at a stall and buy cheese and bread, with kilo juustu, kaheksa eurot and mulle meeldivad. Every sentence is read aloud."
+
 msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
 msgstr "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
 
@@ -6080,6 +6122,9 @@ msgstr "From sidrun, lemon."
 
 msgid "From sina, you."
 msgstr "From sina, you."
+
+msgid "From soovima, to wish: Mida te soovite? What would you like?"
+msgstr "From soovima, to wish: Mida te soovite? What would you like?"
 
 msgid "From tahtma, to want."
 msgstr "From tahtma, to want."
@@ -6383,6 +6428,9 @@ msgstr "going for a coffee"
 msgid "going for a run"
 msgstr "going for a run"
 
+msgid "Going home"
+msgstr "Going home"
+
 msgid "going off to eat"
 msgstr "going off to eat"
 
@@ -6536,6 +6584,9 @@ msgstr "Have you eaten? A way to say hello"
 
 msgid "Have you got the *key*?"
 msgstr "Have you got the *key*?"
+
+msgid "Having coffee at the café"
+msgstr "Having coffee at the café"
 
 msgid "He doesn’t *like* rainy days."
 msgstr "He doesn’t *like* rainy days."
@@ -8223,6 +8274,12 @@ msgstr "in Finland"
 msgid "in front"
 msgstr "in front"
 
+msgid "in front of the market"
+msgstr "in front of the market"
+
+msgid "In front of the market"
+msgstr "In front of the market"
+
 msgid "In Gemini CLI, /mcp shows Lymi connected. Asked to add the terms from a README to the Kubernetes deck, Gemini uses Lymi and adds 11 cards."
 msgstr "In Gemini CLI, /mcp shows Lymi connected. Asked to add the terms from a README to the Kubernetes deck, Gemini uses Lymi and adds 11 cards."
 
@@ -8322,6 +8379,9 @@ msgstr "in ten minutes"
 msgid "in the book"
 msgstr "in the book"
 
+msgid "In the box"
+msgstr "In the box"
+
 msgid "In the end"
 msgstr "In the end"
 
@@ -8360,6 +8420,9 @@ msgstr "in the shop"
 
 msgid "In this folder"
 msgstr "In this folder"
+
+msgid "in total"
+msgstr "in total"
 
 msgid "in town"
 msgstr "in town"
@@ -8720,6 +8783,9 @@ msgstr "Jaan is a cook."
 
 msgid "Jaan is at the door."
 msgstr "Jaan is at the door."
+
+msgid "Jaan is at the market already. Listen for where things are, with the place words of lesson {placeWords}, and for what Mari is out doing, with the <0/> of lesson {going}."
+msgstr "Jaan is at the market already. Listen for where things are, with the place words of lesson {placeWords}, and for what Mari is out doing, with the <0/> of lesson {going}."
 
 msgid "Jaan is coming by train."
 msgstr "Jaan is coming by train."
@@ -9848,6 +9914,9 @@ msgstr "Mari is going off to eat."
 msgid "Mari is going swimming."
 msgstr "Mari is going swimming."
 
+msgid "Mari is going to the <0/>, the market. Read her message and answer. The amounts come from lesson {partitive} and the likes from lesson {liking}."
+msgstr "Mari is going to the <0/>, the market. Read her message and answer. The amounts come from lesson {partitive} and the likes from lesson {liking}."
+
 msgid "Mari is on her way to meet Kati at a café, and texts her the order. Read it and answer. Once you’ve answered, tap a word to see what it means."
 msgstr "Mari is on her way to meet Kati at a café, and texts her the order. Read it and answer. Once you’ve answered, tap a word to see what it means."
 
@@ -10058,6 +10127,9 @@ msgstr "milk"
 msgid "Milk"
 msgstr "Milk"
 
+msgid "Milk, coffee and sugar"
+msgstr "Milk, coffee and sugar"
+
 msgid "Mina olen Mari: I am Mari. Mina takes olen; on goes with mul."
 msgstr "Mina olen Mari: I am Mari. Mina takes olen; on goes with mul."
 
@@ -10160,6 +10232,9 @@ msgstr "more than one thing"
 
 msgid "More than one thing takes <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
 msgstr "More than one thing takes <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
+
+msgid "More than one thing you like takes <0>meeldivad</0>: <1>Mulle meeldivad õunad</1>."
+msgstr "More than one thing you like takes <0>meeldivad</0>: <1>Mulle meeldivad õunad</1>."
 
 msgid "More updates"
 msgstr "More updates"
@@ -10991,6 +11066,9 @@ msgstr "On the same genitive: <0>suhkru</0>, <1>suhkruta</1>."
 msgid "on the table"
 msgstr "on the table"
 
+msgid "On the table"
+msgstr "On the table"
+
 msgid "on the wall"
 msgstr "on the wall"
 
@@ -11352,6 +11430,9 @@ msgstr "Our school is in Tartu."
 msgctxt "away, doing something"
 msgid "Out"
 msgstr "Out"
+
+msgid "out drinking"
+msgstr "out drinking"
 
 msgid "out eating"
 msgstr "out eating"
@@ -12221,6 +12302,9 @@ msgstr "Range"
 msgid "Read a café sign and a text message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
 msgstr "Read a café sign and a text message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
 
+msgid "Read a friend’s message, follow a voice message, fill in what you say at a stall and buy cheese and bread: places, amounts, prices and likes in sentences you know."
+msgstr "Read a friend’s message, follow a voice message, fill in what you say at a stall and buy cheese and bread: places, amounts, prices and likes in sentences you know."
+
 msgid "Read both endings above once more, then try again."
 msgstr "Read both endings above once more, then try again."
 
@@ -12613,6 +12697,9 @@ msgstr "Say when with <0>kell</0> and a number: <1>Ma joon kell kümme kohvi</1>
 msgid "Say where with <0>-s</0> or <1>-l</1>, and when with <2>täna</2>, <3>homme</3> or a day’s name with <4>-l</4>: <5>Pühapäeval olen kodus</5>, on Sunday I’m at home."
 msgstr "Say where with <0>-s</0> or <1>-l</1>, and when with <2>täna</2>, <3>homme</3> or a day’s name with <4>-l</4>: <5>Pühapäeval olen kodus</5>, on Sunday I’m at home."
 
+msgid "Say where with the place cases: <0>turule</0>, to the market; <1>turul</1>, at the market; <2>turult</2>, from the market."
+msgstr "Say where with the place cases: <0>turule</0>, to the market; <1>turul</1>, at the market; <2>turult</2>, from the market."
+
 msgid "Say where you live and work, with <0>-s</0> or <1>-l</1> on the place: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
 msgstr "Say where you live and work, with <0>-s</0> or <1>-l</1> on the place: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
 
@@ -12777,6 +12864,12 @@ msgstr "See your decks and cards"
 
 msgid "Select all"
 msgstr "Select all"
+
+msgid "seller"
+msgstr "seller"
+
+msgid "Seller"
+msgstr "Seller"
 
 msgid "Send a lesson plan to your AI assistant, or use Lymi’s public API from your own tools."
 msgstr "Send a lesson plan to your AI assistant, or use Lymi’s public API from your own tools."
@@ -13744,6 +13837,9 @@ msgstr "Talk: at a café"
 msgid "Talk: at home"
 msgstr "Talk: at home"
 
+msgid "Talk: at the market"
+msgstr "Talk: at the market"
+
 msgid "Talk: coffee with Mari"
 msgstr "Talk: coffee with Mari"
 
@@ -14086,6 +14182,9 @@ msgstr "That says where you live. Mari asked how you are."
 msgid "That says you don’t like it. Liis asked you to come."
 msgstr "That says you don’t like it. Liis asked you to come."
 
+msgid "That says you have a kilo, and after <0>kilo</0> comes <1>juustu</1>."
+msgstr "That says you have a kilo, and after <0>kilo</0> comes <1>juustu</1>."
+
 msgid "That says you have cats."
 msgstr "That says you have cats."
 
@@ -14148,6 +14247,9 @@ msgstr "The -ma form. Its -da form is lugeda."
 
 msgid "The -ma form. Its -da form is teha."
 msgstr "The -ma form. Its -da form is teha."
+
+msgid "The -mas form of jooma: kohvi joomas, out for coffee."
+msgstr "The -mas form of jooma: kohvi joomas, out for coffee."
 
 msgid "the -nud form"
 msgstr "the -nud form"
@@ -14218,6 +14320,9 @@ msgstr "The *way* home takes an hour."
 msgid "The *window* is open."
 msgstr "The *window* is open."
 
+msgid "The <0/>, the seller, speaks first. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "The <0/>, the seller, speaks first. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
+
 msgid "The <0>-da</0> form follows <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> and <2>mulle meeldib</2>."
 msgstr "The <0>-da</0> form follows <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> and <2>mulle meeldib</2>."
 
@@ -14265,6 +14370,9 @@ msgstr "the Anki manual"
 
 msgid "the App Store"
 msgstr "the App Store"
+
+msgid "The apples"
+msgstr "The apples"
 
 msgid "The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend."
 msgstr "The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend."
@@ -14386,6 +14494,9 @@ msgstr "the cat’s"
 msgid "The cats are at home."
 msgstr "The cats are at home."
 
+msgid "The cheese"
+msgstr "The cheese"
+
 msgid "The child is reading."
 msgstr "The child is reading."
 
@@ -14397,6 +14508,9 @@ msgstr "The children are playing in the *park*."
 
 msgid "The children are reading."
 msgstr "The children are reading."
+
+msgid "The coffee at the café"
+msgstr "The coffee at the café"
 
 msgid "The coffee is on the windowsill."
 msgstr "The coffee is on the windowsill."
@@ -15158,6 +15272,9 @@ msgstr "The second loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the 
 msgid "The second verb usually goes last: <0>Ma pean homme tööle minema.</0>"
 msgstr "The second verb usually goes last: <0>Ma pean homme tööle minema.</0>"
 
+msgid "The seller said üheksa, nine. Kaheksa is eight."
+msgstr "The seller said üheksa, nine. Kaheksa is eight."
+
 msgid "The sentence starts with it, so it keeps its first form."
 msgstr "The sentence starts with it, so it keeps its first form."
 
@@ -15739,6 +15856,9 @@ msgstr "This is the current HSK 2.0 format. The syllabus published in 2025 grows
 msgid "This is their picture."
 msgstr "This is their picture."
 
+msgid "This is what you say at a stall. Put a word in each gap: an amount, a price, a verb with the right ending, or <0/> with the verb that goes with more than one."
+msgstr "This is what you say at a stall. Put a word in each gap: an amount, a price, a verb with the right ending, or <0/> with the verb that goes with more than one."
+
 msgid "This is your coffee."
 msgstr "This is your coffee."
 
@@ -15861,6 +15981,9 @@ msgstr "Timetable"
 
 msgid "tip"
 msgstr "tip"
+
+msgid "To a café"
+msgstr "To a café"
 
 msgid "to a friend"
 msgstr "to a friend"
@@ -16223,6 +16346,9 @@ msgstr "to the office"
 msgid "to the shop"
 msgstr "to the shop"
 
+msgid "To the shop"
+msgstr "To the shop"
+
 msgid "to them"
 msgstr "to them"
 
@@ -16482,6 +16608,12 @@ msgstr "Turn your tutor lessons into flashcards · Lymi"
 msgid "turns a sentence into a yes-or-no question"
 msgstr "turns a sentence into a yes-or-no question"
 
+msgid "Turu, the genitive of turg, then ees."
+msgstr "Turu, the genitive of turg, then ees."
+
+msgid "Turul, at the market; turule, to the market."
+msgstr "Turul, at the market; turule, to the market."
+
 msgid "Tutor lessons"
 msgstr "Tutor lessons"
 
@@ -16646,6 +16778,9 @@ msgstr "under"
 
 msgid "Under each one is the word as a dictionary gives it."
 msgstr "Under each one is the word as a dictionary gives it."
+
+msgid "Under the table"
+msgstr "Under the table"
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Unfinished tasks stay on your mind more than finished ones"
@@ -17067,6 +17202,9 @@ msgstr "What does Lymi cost?"
 msgid "What does Mari do?"
 msgstr "What does Mari do?"
 
+msgid "What does Mari like at the market?"
+msgstr "What does Mari like at the market?"
+
 msgid "What does Mari write?"
 msgstr "What does Mari write?"
 
@@ -17075,6 +17213,9 @@ msgstr "What does Peeter do instead of reading?"
 
 msgid "What does Peeter drink?"
 msgstr "What does Peeter drink?"
+
+msgid "What does she need?"
+msgstr "What does she need?"
 
 msgid "What every exam deck gives you"
 msgstr "What every exam deck gives you"
@@ -17102,6 +17243,9 @@ msgstr "What is he or she doing?"
 
 msgid "What is her dad doing at five?"
 msgstr "What is her dad doing at five?"
+
+msgid "What is Mari doing?"
+msgstr "What is Mari doing?"
 
 msgid "What is that?"
 msgstr "What is that?"
@@ -17194,6 +17338,12 @@ msgstr "What you need to know for a class or an exam."
 msgid "What you send"
 msgstr "What you send"
 
+msgid "What you want takes the third form too: <0>Ma tahan leiba</0>."
+msgstr "What you want takes the third form too: <0>Ma tahan leiba</0>."
+
+msgid "What you want takes the third form: <0>ma tahan leiba</0>."
+msgstr "What you want takes the third form: <0>ma tahan leiba</0>."
+
 msgid "What’s due in Lymi today?"
 msgstr "What’s due in Lymi today?"
 
@@ -17254,6 +17404,9 @@ msgstr "When does Mari have coffee tomorrow?"
 msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for some of the food and drink someone eats, drinks or wants."
 msgstr "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for some of the food and drink someone eats, drinks or wants."
 
+msgid "When is Jaan coming home?"
+msgstr "When is Jaan coming home?"
+
 msgid "When is the café open?"
 msgstr "When is the café open?"
 
@@ -17293,6 +17446,9 @@ msgstr "Where *are* you?"
 
 msgid "Where a word was wrong, the right one stands beside it."
 msgstr "Where a word was wrong, the right one stands beside it."
+
+msgid "Where are the apples?"
+msgstr "Where are the apples?"
 
 msgid "Where are you coming from?"
 msgstr "Where are you coming from?"
@@ -17366,6 +17522,9 @@ msgstr "Where is Kati’s mum?"
 msgid "Where is Mari at twelve tomorrow?"
 msgstr "Where is Mari at twelve tomorrow?"
 
+msgid "Where is Mari going today?"
+msgstr "Where is Mari going today?"
+
 msgid "Where is Mari?"
 msgstr "Where is Mari?"
 
@@ -17437,6 +17596,9 @@ msgstr "Where to?"
 
 msgid "Where will he wait for you?"
 msgstr "Where will he wait for you?"
+
+msgid "Where will she be at ten?"
+msgstr "Where will she be at ten?"
 
 msgid "Where you are"
 msgstr "Where you are"
@@ -17759,6 +17921,9 @@ msgstr "With <0>-mas</0>, they’re in the middle of it: <1>Mari on ujumas.</1> 
 
 msgid "With <0>-mast</0>, they’re coming back from it: <1>Mari tuleb ujumast.</1>"
 msgstr "With <0>-mast</0>, they’re coming back from it: <1>Mari tuleb ujumast.</1>"
+
+msgid "With <0>ma</0> it’s <1>tahan</1>, and what you want takes the third form: <2>leiba</2>."
+msgstr "With <0>ma</0> it’s <1>tahan</1>, and what you want takes the third form: <2>leiba</2>."
 
 msgid "with a book"
 msgstr "with a book"
@@ -18441,6 +18606,9 @@ msgstr "You study from its library"
 msgid "You want a desktop app on Windows or Linux"
 msgstr "You want a desktop app on Windows or Linux"
 
+msgid "You want a kilo of cheese and some bread. The seller asks <0/>, what you’d like, then <1/>, anything else, and says the price <2/>, in total."
+msgstr "You want a kilo of cheese and some bread. The seller asks <0/>, what you’d like, then <1/>, anything else, and says the price <2/>, in total."
+
 msgid "You want a proven phone app"
 msgstr "You want a proven phone app"
 
@@ -18484,6 +18652,9 @@ msgstr "You, to one person"
 msgctxt "who likes it"
 msgid "You, to one person"
 msgstr "You, to one person"
+
+msgid "you’d like, polite"
+msgstr "you’d like, polite"
 
 msgid "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."
 msgstr "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."

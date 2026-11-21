@@ -1883,6 +1883,61 @@ export const VORMID_CLASS = [
   "Rääkige kodus eesti keelt!",
 ] as const;
 
+export const MARKET_PASSAGES = {
+  mari: [
+    "Tere! Ma lähen täna turule.",
+    "Mul on vaja kilo juustu ja üks leib.",
+    "Mulle meeldivad turu õunad.",
+    "Kas sa tahad ka tulla?",
+    "Ma olen kell kümme turu ees.",
+  ],
+  jaan: [
+    "Tere, see on Jaan!",
+    "Ma olen turul, aga Mari on kohvikus kohvi joomas.",
+    "Õunad on laua peal ja leib on kasti sees.",
+    "Ma tulen kell üksteist turult koju.",
+  ],
+  stall: [
+    "Tere! Mul on vaja kilo juustu.",
+    "Kui palju see maksab?",
+    "Kilo maksab kaheksa eurot.",
+    "Ma tahan ka leiba.",
+    "Mulle meeldivad teie õunad.",
+  ],
+} as const;
+
+export const MARKET_DIALOGUE = {
+  "d-muuja-1": { text: "Tere! Mida te soovite?", voice: "second" },
+  "d-sina-1": "Ma tahan kilo juustu.",
+  "d-muuja-2": { text: "Palun. Midagi veel?", voice: "second" },
+  "d-sina-2": "Jah, ma tahan ka leiba.",
+  "d-muuja-3": { text: "Kokku on üheksa eurot.", voice: "second" },
+  "d-sina-3": "Palun, üheksa eurot.",
+} as const satisfies Record<string, Clip>;
+
+export const MARKET_WORDS = [
+  "turg",
+  "turul",
+  "turule",
+  "turu ees",
+  "õun",
+  "õunad",
+  "müüja",
+  "soovite",
+  "midagi veel",
+  "kokku",
+  "joomas",
+  "kilo juustu",
+] as const;
+
+const MARKET_CLIPS: Record<string, Clip> = {
+  ...words(MARKET_WORDS),
+  "p-mari": { sentences: MARKET_PASSAGES.mari },
+  "p-jaan": { sentences: MARKET_PASSAGES.jaan, voice: "second" },
+  "p-stall": { sentences: MARKET_PASSAGES.stall },
+  ...MARKET_DIALOGUE,
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -2830,6 +2885,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   },
   mitmus: MITMUS_CLIPS,
   osastav: OSASTAV_CLIPS,
+  turul: MARKET_CLIPS,
   lihtminevik: PAST_CLIPS,
   kit: KIT_CLIPS,
 };

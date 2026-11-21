@@ -1270,6 +1270,9 @@ msgstr "33 вопроса, 17 для сдачи. Выучить — 300 общи
 msgid "4 days"
 msgstr "4 дня"
 
+msgid "4 exercises"
+msgstr "4 упражнения"
+
 msgid "40 and 60 questions. 120 of 200 points to pass."
 msgstr "40 и 60 вопросов. 120 из 200 баллов для сдачи."
 
@@ -2321,6 +2324,9 @@ msgstr "После <0>ei</0> у глагола <1>olema</1> нет оконча�
 msgid "After <0>helistama</0> and <1>küsima</1>, the person takes <2>-le</2> or <3>-lt</3>: <4>Ma helistan emale. Ma küsin emalt</4>, word for word “I ask from Mum”."
 msgstr "После <0>helistama</0> и <1>küsima</1> человек получает <2>-le</2> или <3>-lt</3>: <4>Ma helistan emale. Ma küsin emalt</4>, дословно «спрашиваю от мамы»."
 
+msgid "After <0>kilo</0>, the third form: <1>kilo juustu</1>."
+msgstr "После <0>kilo</0> — третья форма: <1>kilo juustu</1>."
+
 msgid "After <0>läheb</0>, goes, the place answers <1>kuhu</1>, so the market takes <2>-le</2>: <3>turule</3>."
 msgstr "После <0>läheb</0>, «идёт», место отвечает на <1>kuhu</1>, поэтому рынок получает <2>-le</2>: <3>turule</3>."
 
@@ -2408,8 +2414,14 @@ msgstr "После числа от двух — партитив."
 msgid "After a number from two up, the third form: <0>seitse eurot</0>."
 msgstr "После числа от двух — третья форма: <0>seitse eurot</0>."
 
+msgid "After a number from two up, the third form: <0>üheksa eurot</0>."
+msgstr "После числа от двух и больше — третья форма: <0>üheksa eurot</0>."
+
 msgid "After an amount"
 msgstr "После слов количества"
+
+msgid "After an amount or a number from two up, the third form: <0>kilo juustu, kaheksa eurot</0>."
+msgstr "После слова количества или числа от двух — третья форма: <0>kilo juustu, kaheksa eurot</0>. Как по-русски: килограмм сыра, восемь евро."
 
 msgid "After an amount, the third form: <0>kilo juustu</0>."
 msgstr "После слова количества — третья форма: <0>kilo juustu</0>."
@@ -2893,6 +2905,9 @@ msgstr "Присоединиться к колоде может любой, у �
 msgid "anything"
 msgstr "своим кодом"
 
+msgid "anything else"
+msgstr "что-нибудь ещё"
+
 msgid "Anything you pick up and want to remember."
 msgstr "Всё, что зацепило и хочется запомнить."
 
@@ -2910,6 +2925,12 @@ msgstr "яблоко"
 
 msgid "Apple"
 msgstr "Яблоко"
+
+msgid "apples"
+msgstr "яблоки"
+
+msgid "Apples"
+msgstr "Яблоки"
 
 msgid "Application"
 msgstr "Заявление"
@@ -3211,6 +3232,9 @@ msgstr "В десять"
 msgid "At the café"
 msgstr "В кафе"
 
+msgid "At the cheese stall"
+msgstr "У прилавка с сыром"
+
 msgid "at the door"
 msgstr "у двери"
 
@@ -3363,6 +3387,9 @@ msgstr "Началась в 1618 году с <0>Пражской дефенес�
 
 msgid "behind"
 msgstr "сзади"
+
+msgid "Behind the market"
+msgstr "За рынком"
 
 msgid "belongs in"
 msgstr "должно быть в"
@@ -3628,8 +3655,14 @@ msgstr "автобус"
 msgid "but"
 msgstr "но"
 
+msgid "Buying apples"
+msgstr "Покупает яблоки"
+
 msgid "Buying books and letting them pile up unread"
 msgstr "Покупать книги и складывать их непрочитанными"
+
+msgid "Buying cheese and bread"
+msgstr "Покупаем сыр и хлеб"
 
 msgid "By {publisher}"
 msgstr "От {publisher}"
@@ -3969,6 +4002,9 @@ msgstr "Проверено {date}. Источники: {places}."
 
 msgid "cheese"
 msgstr "сыр"
+
+msgid "Cheese and bread"
+msgstr "Сыр и хлеб"
 
 msgid "Cheese and coffee"
 msgstr "Сыр и кофе"
@@ -5172,6 +5208,9 @@ msgstr "Эстонские личные местоимения и «быть»"
 msgid "Estonian plural"
 msgstr "Множественное число в эстонском языке"
 
+msgid "Estonian practice: shopping at the market"
+msgstr "Практика эстонского: покупки на рынке"
+
 msgid "Estonian present tense"
 msgstr "Настоящее время в эстонском языке"
 
@@ -5836,6 +5875,9 @@ msgstr "Бесплатные эстонские колоды с голосом �
 msgid "Free Estonian grammar lessons · Lymi"
 msgstr "Бесплатные уроки эстонской грамматики · Lymi"
 
+msgid "Free Estonian practice at the market: read a friend’s message, follow a voice message about where things are, fill in what you say at a stall and buy cheese and bread, with kilo juustu, kaheksa eurot and mulle meeldivad. Every sentence is read aloud."
+msgstr "Бесплатная практика эстонского на рынке: прочитай сообщение подруги, послушай голосовое о том, где что лежит, заполни, что ты говоришь у прилавка, и купи сыр и хлеб — с kilo juustu, kaheksa eurot и mulle meeldivad. Каждое предложение озвучено."
+
 msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
 msgstr "Бесплатная практика эстонского для начинающих: прочитай часы работы и сообщение, пойми голосовое сообщение, где звучат время и дни, заполни план на субботу и поговори с подругой в кафе. Каждое предложение озвучено."
 
@@ -6081,6 +6123,9 @@ msgstr "От sidrun, «лимон»."
 
 msgid "From sina, you."
 msgstr "От sina, «ты»."
+
+msgid "From soovima, to wish: Mida te soovite? What would you like?"
+msgstr "От soovima — желать: Mida te soovite? Что желаете?"
 
 msgid "From tahtma, to want."
 msgstr "От tahtma, хотеть."
@@ -6384,6 +6429,9 @@ msgstr "идёт пить кофе"
 msgid "going for a run"
 msgstr "идёт на пробежку"
 
+msgid "Going home"
+msgstr "Идёт домой"
+
 msgid "going off to eat"
 msgstr "идёт есть"
 
@@ -6537,6 +6585,9 @@ msgstr "Ты уже поел? Так здороваются"
 
 msgid "Have you got the *key*?"
 msgstr "У тебя есть *ключ*?"
+
+msgid "Having coffee at the café"
+msgstr "Пьёт кофе в кафе"
 
 msgid "He doesn’t *like* rainy days."
 msgstr "Он не *любит* дождливые дни."
@@ -8224,6 +8275,12 @@ msgstr "в Финляндии"
 msgid "in front"
 msgstr "впереди"
 
+msgid "in front of the market"
+msgstr "перед рынком"
+
+msgid "In front of the market"
+msgstr "Перед рынком"
+
 msgid "In Gemini CLI, /mcp shows Lymi connected. Asked to add the terms from a README to the Kubernetes deck, Gemini uses Lymi and adds 11 cards."
 msgstr "В Gemini CLI команда /mcp показывает, что Lymi подключён. На просьбу добавить термины из README в колоду «Kubernetes» Gemini использует Lymi и добавляет 11 карточек."
 
@@ -8323,6 +8380,9 @@ msgstr "через десять минут"
 msgid "in the book"
 msgstr "в книге"
 
+msgid "In the box"
+msgstr "В коробке"
+
 msgid "In the end"
 msgstr "В итоге"
 
@@ -8361,6 +8421,9 @@ msgstr "в магазине"
 
 msgid "In this folder"
 msgstr "В этой папке"
+
+msgid "in total"
+msgstr "всего"
 
 msgid "in town"
 msgstr "в городе"
@@ -8721,6 +8784,9 @@ msgstr "Яан — повар."
 
 msgid "Jaan is at the door."
 msgstr "Яан у двери."
+
+msgid "Jaan is at the market already. Listen for where things are, with the place words of lesson {placeWords}, and for what Mari is out doing, with the <0/> of lesson {going}."
+msgstr "Яан уже на рынке. Слушай, где что лежит, — это слова места из урока {placeWords}, и что Мари сейчас делает, — это <0/> из урока {going}."
 
 msgid "Jaan is coming by train."
 msgstr "Яан едет на поезде."
@@ -9849,6 +9915,9 @@ msgstr "Мари идёт есть."
 msgid "Mari is going swimming."
 msgstr "Мари идёт плавать."
 
+msgid "Mari is going to the <0/>, the market. Read her message and answer. The amounts come from lesson {partitive} and the likes from lesson {liking}."
+msgstr "Мари идёт на <0/> — рынок. Прочитай её сообщение и ответь. Слова количества — из урока {partitive}, а «нравится» — из урока {liking}."
+
 msgid "Mari is on her way to meet Kati at a café, and texts her the order. Read it and answer. Once you’ve answered, tap a word to see what it means."
 msgstr "Мари едет на встречу с Кати в кафе и пишет ей заказ. Прочитай и ответь. Когда ответишь, нажми на слово, чтобы увидеть, что оно значит."
 
@@ -10059,6 +10128,9 @@ msgstr "молоко"
 msgid "Milk"
 msgstr "Молоко"
 
+msgid "Milk, coffee and sugar"
+msgstr "Молоко, кофе и сахар"
+
 msgid "Mina olen Mari: I am Mari. Mina takes olen; on goes with mul."
 msgstr "Mina olen Mari: я Мари. После mina идёт olen, а on — после mul."
 
@@ -10161,6 +10233,9 @@ msgstr "несколько"
 
 msgid "More than one thing takes <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
 msgstr "Когда нравится несколько, нужно <0>meeldivad</0>: <1>Mulle meeldivad koerad.</1>"
+
+msgid "More than one thing you like takes <0>meeldivad</0>: <1>Mulle meeldivad õunad</1>."
+msgstr "Когда нравится несколько вещей — <0>meeldivad</0>: <1>Mulle meeldivad õunad</1>."
 
 msgid "More updates"
 msgstr "Другие обновления"
@@ -10992,6 +11067,9 @@ msgstr "Тот же родительный падеж плюс окончани�
 msgid "on the table"
 msgstr "на столе"
 
+msgid "On the table"
+msgstr "На столе"
+
 msgid "on the wall"
 msgstr "на стене"
 
@@ -11353,6 +11431,9 @@ msgstr "Наша школа в Тарту."
 msgctxt "away, doing something"
 msgid "Out"
 msgstr "Там"
+
+msgid "out drinking"
+msgstr "пьёт, выйдя куда-то"
 
 msgid "out eating"
 msgstr "сейчас ест"
@@ -12222,6 +12303,9 @@ msgstr "Диапазон"
 msgid "Read a café sign and a text message, follow a voice message, fill in a plan for Saturday and answer a friend at a café: numbers, times and days in sentences you know."
 msgstr "Прочитай табличку на двери кафе и сообщение, пойми голосовое, заполни план на субботу и ответь подруге в кафе: числа, время и дни в знакомых предложениях."
 
+msgid "Read a friend’s message, follow a voice message, fill in what you say at a stall and buy cheese and bread: places, amounts, prices and likes in sentences you know."
+msgstr "Прочитай сообщение подруги, послушай голосовое, заполни, что ты говоришь у прилавка, и купи сыр и хлеб: места, количество, цены и «нравится» в предложениях, которые ты уже знаешь."
+
 msgid "Read both endings above once more, then try again."
 msgstr "Ещё раз перечитай про оба окончания выше, а потом попробуй снова."
 
@@ -12614,6 +12698,9 @@ msgstr "Время называй через <0>kell</0> и число: <1>Ma jo
 msgid "Say where with <0>-s</0> or <1>-l</1>, and when with <2>täna</2>, <3>homme</3> or a day’s name with <4>-l</4>: <5>Pühapäeval olen kodus</5>, on Sunday I’m at home."
 msgstr "Место называй через <0>-s</0> или <1>-l</1>, а день — через <2>täna</2>, <3>homme</3> или название дня с <4>-l</4>: <5>Pühapäeval olen kodus</5>, в воскресенье я дома."
 
+msgid "Say where with the place cases: <0>turule</0>, to the market; <1>turul</1>, at the market; <2>turult</2>, from the market."
+msgstr "Где и куда — через падежи места: <0>turule</0> — на рынок; <1>turul</1> — на рынке; <2>turult</2> — с рынка."
+
 msgid "Say where you live and work, with <0>-s</0> or <1>-l</1> on the place: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
 msgstr "Говори, где живёшь и работаешь, добавляя к месту <0>-s</0> или <1>-l</1>: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
 
@@ -12778,6 +12865,12 @@ msgstr "Просматривать свои колоды и карточки"
 
 msgid "Select all"
 msgstr "Выбрать все"
+
+msgid "seller"
+msgstr "продавец"
+
+msgid "Seller"
+msgstr "Продавец"
 
 msgid "Send a lesson plan to your AI assistant, or use Lymi’s public API from your own tools."
 msgstr "Отправь план урока AI-ассистенту или используй открытый API Lymi из своих инструментов."
@@ -13745,6 +13838,9 @@ msgstr "Разговор: в кафе"
 msgid "Talk: at home"
 msgstr "Разговор: дома"
 
+msgid "Talk: at the market"
+msgstr "Разговор: на рынке"
+
 msgid "Talk: coffee with Mari"
 msgstr "Разговор: кофе с Мари"
 
@@ -14087,6 +14183,9 @@ msgstr "Это о том, где ты живёшь. Мари спросила, �
 msgid "That says you don’t like it. Liis asked you to come."
 msgstr "Так ты говоришь, что тебе не нравится. А Лийс звала тебя прийти."
 
+msgid "That says you have a kilo, and after <0>kilo</0> comes <1>juustu</1>."
+msgstr "Это значит, что килограмм у тебя есть, а после <0>kilo</0> идёт <1>juustu</1>."
+
 msgid "That says you have cats."
 msgstr "Так ты говоришь, что у тебя есть кошки."
 
@@ -14149,6 +14248,9 @@ msgstr "Форма на -ma. Его форма на -da — lugeda."
 
 msgid "The -ma form. Its -da form is teha."
 msgstr "Форма на -ma. Его форма на -da — teha."
+
+msgid "The -mas form of jooma: kohvi joomas, out for coffee."
+msgstr "Форма на -mas от jooma: kohvi joomas — ушла пить кофе."
 
 msgid "the -nud form"
 msgstr "форма на -nud"
@@ -14219,6 +14321,9 @@ msgstr "*Дорога* домой занимает час."
 msgid "The *window* is open."
 msgstr "*Окно* открыто."
 
+msgid "The <0/>, the seller, speaks first. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Первым говорит <0/> — продавец. Выбери, что ты скажешь. Если выберешь неправильный ответ, увидишь почему, а потом услышишь правильный."
+
 msgid "The <0>-da</0> form follows <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> and <2>mulle meeldib</2>."
 msgstr "Форма на <0>-da</0> идёт после <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> и <2>mulle meeldib</2>."
 
@@ -14266,6 +14371,9 @@ msgstr "руководство Anki"
 
 msgid "the App Store"
 msgstr "App Store"
+
+msgid "The apples"
+msgstr "Яблоки"
 
 msgid "The b becomes a p in sõpra: ma ootan sõpra, I’m waiting for a friend."
 msgstr "В sõpra b превращается в p: ma ootan sõpra — я жду друга."
@@ -14387,6 +14495,9 @@ msgstr "кота"
 msgid "The cats are at home."
 msgstr "Кошки дома."
 
+msgid "The cheese"
+msgstr "Сыр"
+
 msgid "The child is reading."
 msgstr "Ребёнок читает."
 
@@ -14398,6 +14509,9 @@ msgstr "Дети играют в *парке*."
 
 msgid "The children are reading."
 msgstr "Дети читают."
+
+msgid "The coffee at the café"
+msgstr "Кофе в кафе"
 
 msgid "The coffee is on the windowsill."
 msgstr "Кофе на подоконнике."
@@ -15159,6 +15273,9 @@ msgstr "Во второй форме <0>b</0> исчезает, а <1>u</1> ст
 msgid "The second verb usually goes last: <0>Ma pean homme tööle minema.</0>"
 msgstr "Второй глагол обычно стоит в конце: <0>Ma pean homme tööle minema.</0>"
 
+msgid "The seller said üheksa, nine. Kaheksa is eight."
+msgstr "Продавец сказал üheksa — девять. Kaheksa — это восемь."
+
 msgid "The sentence starts with it, so it keeps its first form."
 msgstr "Предложение начинается с этого предмета, поэтому он остаётся в первой форме."
 
@@ -15740,6 +15857,9 @@ msgstr "Это действующий формат HSK 2.0. Программа, 
 msgid "This is their picture."
 msgstr "Это их фото."
 
+msgid "This is what you say at a stall. Put a word in each gap: an amount, a price, a verb with the right ending, or <0/> with the verb that goes with more than one."
+msgstr "Вот что ты говоришь у прилавка. Вставь слово в каждый пропуск: количество, цену, глагол с правильным окончанием или глагол, который подходит к нескольким вещам, как <0/>."
+
 msgid "This is your coffee."
 msgstr "Это твой кофе."
 
@@ -15862,6 +15982,9 @@ msgstr "Расписание"
 
 msgid "tip"
 msgstr "чаевые"
+
+msgid "To a café"
+msgstr "В кофейню"
 
 msgid "to a friend"
 msgstr "другу"
@@ -16224,6 +16347,9 @@ msgstr "в офис"
 msgid "to the shop"
 msgstr "в магазин"
 
+msgid "To the shop"
+msgstr "В магазин"
+
 msgid "to them"
 msgstr "им"
 
@@ -16483,6 +16609,12 @@ msgstr "Уроки с репетитором в карточки · Lymi"
 msgid "turns a sentence into a yes-or-no question"
 msgstr "делает из предложения вопрос «да или нет»"
 
+msgid "Turu, the genitive of turg, then ees."
+msgstr "Turu — родительный от turg, а потом ees."
+
+msgid "Turul, at the market; turule, to the market."
+msgstr "Turul — на рынке; turule — на рынок."
+
 msgid "Tutor lessons"
 msgstr "Уроки с репетитором"
 
@@ -16647,6 +16779,9 @@ msgstr "под"
 
 msgid "Under each one is the word as a dictionary gives it."
 msgstr "Под каждым — слово в том виде, в каком его даёт словарь."
+
+msgid "Under the table"
+msgstr "Под столом"
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершённые дела удерживаются в памяти лучше завершённых"
@@ -17068,6 +17203,9 @@ msgstr "Сколько стоит Lymi?"
 msgid "What does Mari do?"
 msgstr "Кем работает Мари?"
 
+msgid "What does Mari like at the market?"
+msgstr "Что Мари нравится на рынке?"
+
 msgid "What does Mari write?"
 msgstr "Что пишет Мари?"
 
@@ -17076,6 +17214,9 @@ msgstr "Что делает Пеэтер вместо чтения?"
 
 msgid "What does Peeter drink?"
 msgstr "Что пьёт Пеэтер?"
+
+msgid "What does she need?"
+msgstr "Что ей нужно?"
 
 msgid "What every exam deck gives you"
 msgstr "Что даёт каждая колода для экзамена"
@@ -17103,6 +17244,9 @@ msgstr "Что он или она делает?"
 
 msgid "What is her dad doing at five?"
 msgstr "Что делает её папа в пять?"
+
+msgid "What is Mari doing?"
+msgstr "Что делает Мари?"
 
 msgid "What is that?"
 msgstr "Что это?"
@@ -17195,6 +17339,12 @@ msgstr "То, что нужно знать для занятия или экза
 msgid "What you send"
 msgstr "Что ты отправляешь"
 
+msgid "What you want takes the third form too: <0>Ma tahan leiba</0>."
+msgstr "То, чего хочешь, тоже стоит в третьей форме: <0>Ma tahan leiba</0>."
+
+msgid "What you want takes the third form: <0>ma tahan leiba</0>."
+msgstr "То, чего хочешь, стоит в третьей форме: <0>ma tahan leiba</0>."
+
 msgid "What’s due in Lymi today?"
 msgstr "Что сегодня нужно повторить в Lymi?"
 
@@ -17255,6 +17405,9 @@ msgstr "Когда Мари завтра пьёт кофе?"
 msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for some of the food and drink someone eats, drinks or wants."
 msgstr "Когда в эстонском существительное стоит в третьей форме, партитиве: после числа от двух, после слова количества, после <0>pole</0> и для еды и напитков, которые едят, пьют или хотят, не считая."
 
+msgid "When is Jaan coming home?"
+msgstr "Когда Яан придёт домой?"
+
 msgid "When is the café open?"
 msgstr "Когда кафе открыто?"
 
@@ -17294,6 +17447,9 @@ msgstr "Где *ты*?"
 
 msgid "Where a word was wrong, the right one stands beside it."
 msgstr "Где слово неверное, рядом стоит верное."
+
+msgid "Where are the apples?"
+msgstr "Где яблоки?"
 
 msgid "Where are you coming from?"
 msgstr "Откуда ты идёшь?"
@@ -17367,6 +17523,9 @@ msgstr "Где мама Кати?"
 msgid "Where is Mari at twelve tomorrow?"
 msgstr "Где Мари завтра в двенадцать?"
 
+msgid "Where is Mari going today?"
+msgstr "Куда Мари идёт сегодня?"
+
 msgid "Where is Mari?"
 msgstr "Где Мари?"
 
@@ -17438,6 +17597,9 @@ msgstr "Куда?"
 
 msgid "Where will he wait for you?"
 msgstr "Где он будет тебя ждать?"
+
+msgid "Where will she be at ten?"
+msgstr "Где она будет в десять?"
 
 msgid "Where you are"
 msgstr "Где ты"
@@ -17760,6 +17922,9 @@ msgstr "С <0>-mas</0> человек как раз этим занят: <1>Mari
 
 msgid "With <0>-mast</0>, they’re coming back from it: <1>Mari tuleb ujumast.</1>"
 msgstr "С <0>-mast</0> человек возвращается оттуда: <1>Mari tuleb ujumast.</1>"
+
+msgid "With <0>ma</0> it’s <1>tahan</1>, and what you want takes the third form: <2>leiba</2>."
+msgstr "С <0>ma</0> — <1>tahan</1>, а то, чего хочешь, стоит в третьей форме: <2>leiba</2>."
 
 msgid "with a book"
 msgstr "с книгой"
@@ -18442,6 +18607,9 @@ msgstr "Ты учишь по готовым колодам Noji"
 msgid "You want a desktop app on Windows or Linux"
 msgstr "Тебе нужно приложение для Windows или Linux"
 
+msgid "You want a kilo of cheese and some bread. The seller asks <0/>, what you’d like, then <1/>, anything else, and says the price <2/>, in total."
+msgstr "Тебе нужны килограмм сыра и хлеб. Продавец спрашивает <0/> — что желаете, потом <1/> — что-нибудь ещё, и называет цену <2/> — всего."
+
 msgid "You want a proven phone app"
 msgstr "Тебе нужно проверенное приложение для телефона"
 
@@ -18485,6 +18653,9 @@ msgstr "Ты"
 msgctxt "who likes it"
 msgid "You, to one person"
 msgstr "Тебе"
+
+msgid "you’d like, polite"
+msgstr "желаете, вежливо"
 
 msgid "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."
 msgstr "Ещё можно услышать <0/> перед словом: <1/> — без сахара. <2>Ilma</2> усиливает «без», а окончание остаётся."

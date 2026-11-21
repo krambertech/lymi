@@ -112,11 +112,6 @@ msgstr "{0, plural, one {Review all #} other {Review all #}}"
 msgid "{0, plural, one {Your deck} other {Your decks}}"
 msgstr "{0, plural, one {Your deck} other {Your decks}}"
 
-#. placeholder {0}: before.word
-#. placeholder {1}: step.word
-msgid "{0} becomes {1}"
-msgstr "{0} becomes {1}"
-
 #. placeholder {0}: i18n.number(IMPORT_FROM)
 msgid "{0} cards, history kept"
 msgstr "{0} cards, history kept"
@@ -143,6 +138,10 @@ msgstr "{0}, right answer"
 #. placeholder {0}: place.meaning
 msgid "{0}, your answer"
 msgstr "{0}, your answer"
+
+#. placeholder {0}: i18n._(means.word)
+msgid "{0}; genitive <0>{genitive}</0>"
+msgstr "{0}; genitive <0>{genitive}</0>"
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {# card added} other {# cards added}}"
@@ -477,6 +476,9 @@ msgstr "<0/>, please, makes a command polite. When Estonian comes too fast, say 
 msgid "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same for everyone."
 msgstr "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same for everyone."
 
+msgid "<0>-{ending}</0> on the genitive <1>{genitive}</1>."
+msgstr "<0>-{ending}</0> on the genitive <1>{genitive}</1>."
+
 msgid "<0>-ga</0> is with"
 msgstr "<0>-ga</0> is with"
 
@@ -521,6 +523,11 @@ msgstr "<0>-ta</0> is without: <1>kohv piimata</1>, coffee without milk. <2>Ilma
 
 msgid "<0>-ta</0> on the genitive."
 msgstr "<0>-ta</0> on the genitive."
+
+#. placeholder {0}: before.word
+#. placeholder {1}: step.word
+msgid "<0>{0}</0> becomes <1>{1}</1>"
+msgstr "<0>{0}</0> becomes <1>{1}</1>"
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
@@ -766,6 +773,9 @@ msgstr "3 pages"
 
 msgid "3 quizzes"
 msgstr "3 quizzes"
+
+msgid "3 quizzes, a message to read and one to fill in"
+msgstr "3 quizzes, a message to read and one to fill in"
 
 msgid "3 reviews saved"
 msgstr "3 reviews saved"
@@ -1206,9 +1216,6 @@ msgstr "A question you got wrong"
 
 msgid "A quiz round on a scene: hear a sentence, then tap the place on the drawing."
 msgstr "A quiz round on a scene: hear a sentence, then tap the place on the drawing."
-
-msgid "A quiz, a message to read and one to fill in"
-msgstr "A quiz, a message to read and one to fill in"
 
 msgid "a room"
 msgstr "a room"
@@ -1726,6 +1733,9 @@ msgstr "All of Explore"
 msgid "All of them, by ear."
 msgstr "All of them, by ear."
 
+msgid "All of them, each ending on its genitive."
+msgstr "All of them, each ending on its genitive."
+
 msgid "All of them, equally often"
 msgstr "All of them, equally often"
 
@@ -2030,6 +2040,9 @@ msgstr "as a child"
 msgid "As a child, Mari lived in Tartu."
 msgstr "As a child, Mari lived in Tartu."
 
+msgid "as a cook"
+msgstr "as a cook"
+
 msgid "as a doctor"
 msgstr "as a doctor"
 
@@ -2047,6 +2060,12 @@ msgstr "As amended on 30 January 2026"
 
 msgid "as far as Tartu"
 msgstr "as far as Tartu"
+
+msgid "as far as the river"
+msgstr "as far as the river"
+
+msgid "as far as the school"
+msgstr "as far as the school"
 
 msgid "as far as the shop"
 msgstr "as far as the shop"
@@ -2339,6 +2358,9 @@ msgstr "Biology notes"
 msgid "Biology study group"
 msgstr "Biology study group"
 
+msgid "book"
+msgstr "book"
+
 msgid "Book"
 msgstr "Book"
 
@@ -2443,6 +2465,9 @@ msgstr "Build new words from ones you know, read signs, news and forms, and join
 
 msgid "Build the course in order."
 msgstr "Build the course in order."
+
+msgid "Build the form"
+msgstr "Build the form"
 
 msgid "Build the sentence"
 msgstr "Build the sentence"
@@ -3118,6 +3143,9 @@ msgstr "Contract"
 msgctxt "deck tag"
 msgid "Conversation"
 msgstr "Conversation"
+
+msgid "cook"
+msgstr "cook"
 
 msgid "Cookies, device storage and analytics"
 msgstr "Cookies, device storage and analytics"
@@ -4352,6 +4380,9 @@ msgstr "Forms of maja"
 
 msgid "four"
 msgstr "four"
+
+msgid "Four endings, four meanings"
+msgstr "Four endings, four meanings"
 
 msgid "Four ways to ask"
 msgstr "Four ways to ask"
@@ -6592,6 +6623,9 @@ msgstr "Left column"
 msgid "Legal bases"
 msgstr "Legal bases"
 
+msgid "lemon"
+msgstr "lemon"
+
 msgid "Lesson"
 msgstr "Lesson"
 
@@ -7115,6 +7149,9 @@ msgstr "Masculine, though it ends in -a: buenos días."
 msgid "Match"
 msgstr "Match"
 
+msgid "Match each form with what it means. Two words come twice, so read the ending."
+msgstr "Match each form with what it means. Two words come twice, so read the ending."
+
 msgid "Match, Blast and Quizlet Live"
 msgstr "Match, Blast and Quizlet Live"
 
@@ -7183,6 +7220,9 @@ msgstr "Metro; subway"
 
 msgid "Microbiology"
 msgstr "Microbiology"
+
+msgid "milk"
+msgstr "milk"
 
 msgid "Milk"
 msgstr "Milk"
@@ -7405,6 +7445,9 @@ msgstr "Nearly. Play the ones you missed and listen to the ending."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nearly. Put the ending on the genitive, not on the first form."
+msgstr "Nearly. Put the ending on the genitive, not on the first form."
 
 msgid "Nearly. Tap the endings above once more."
 msgstr "Nearly. Tap the endings above once more."
@@ -7721,6 +7764,9 @@ msgstr "Nouns and cases"
 
 msgid "Now"
 msgstr "Now"
+
+msgid "Now build the forms. Each word shows its genitive; type the form its cue asks for, such as by bus."
+msgstr "Now build the forms. Each word shows its genitive; type the form its cue asks for, such as by bus."
 
 msgid "Now hear a line and pick what it means. Listen to how the word ends."
 msgstr "Now hear a line and pick what it means. Listen to how the word ends."
@@ -9079,6 +9125,9 @@ msgstr "Right. And at 50 mph?"
 msgid "Right. And which one closes your eyelids?"
 msgstr "Right. And which one closes your eyelids?"
 
+msgid "river"
+msgstr "river"
+
 msgid "Road"
 msgstr "Road"
 
@@ -10218,6 +10267,9 @@ msgstr "Tap the places above once more, then try again."
 
 msgid "Tap the question words above once more, then try again."
 msgstr "Tap the question words above once more, then try again."
+
+msgid "Tap the words above once more, then try again."
+msgstr "Tap the words above once more, then try again."
 
 msgid "Tap the words in order"
 msgstr "Tap the words in order"
@@ -12763,6 +12815,12 @@ msgctxt "with or without"
 msgid "With"
 msgstr "With"
 
+msgid "with a book"
+msgstr "with a book"
+
+msgid "with a child"
+msgstr "with a child"
+
 msgid "with a friend"
 msgstr "with a friend"
 
@@ -12835,6 +12893,9 @@ msgstr "Without"
 msgctxt "with or without"
 msgid "Without"
 msgstr "Without"
+
+msgid "without lemon"
+msgstr "without lemon"
 
 msgid "without milk"
 msgstr "without milk"

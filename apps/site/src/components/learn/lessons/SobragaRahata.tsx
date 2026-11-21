@@ -8,6 +8,8 @@ import {
   clipUrl,
   SOBRAGA_AS,
   SOBRAGA_CHAINS,
+  SOBRAGA_FORMS,
+  SOBRAGA_MATCH,
   SOBRAGA_PASSAGES,
   SOBRAGA_UNTIL,
   SOBRAGA_WITH,
@@ -16,9 +18,11 @@ import {
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, ListenRows, Panel } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { type GapItem, GapPassage } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Match, type MatchPair } from "../Match";
 import { Morph, type MorphChain } from "../Morph";
 import { type PassageQuestion, Reading } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
@@ -332,6 +336,33 @@ function Explain({ said }: { said: string }) {
   );
 }
 
+/** What each form to match means. */
+const MATCH_MEANS: Record<(typeof SOBRAGA_MATCH)[number], MessageDescriptor> = {
+  lapsena: msg`as a child`,
+  lapsega: msg`with a child`,
+  piimata: msg`without milk`,
+  piimaga: msg`with milk`,
+  Tartuni: msg`as far as Tartu`,
+  arstina: msg`as a doctor`,
+};
+
+/** What each word to build a form of means, and what the form says. */
+const FORM_MEANS: Record<
+  (typeof SOBRAGA_FORMS)[number]["id"],
+  { word: MessageDescriptor; cue: MessageDescriptor }
+> = {
+  buss: { word: msg`bus`, cue: msg`by bus` },
+  raamat: { word: msg`book`, cue: msg`with a book` },
+  piim: { word: msg`milk`, cue: msg`without milk` },
+  sidrun: { word: msg`lemon`, cue: msg`without lemon` },
+  kool: { word: msg`school`, cue: msg`as far as the school` },
+  jogi: { word: msg`river`, cue: msg`as far as the river` },
+  arst: { word: msg`doctor`, cue: msg`as a doctor` },
+  kokk: { word: msg`cook`, cue: msg`as a cook` },
+};
+
+type FormQuizItem = FormItem & { pair: readonly [string, string] };
+
 /** Kati’s message with a gap for each form, cut from `SOBRAGA_PASSAGES.kati`. */
 const KATI_GAPS: readonly GapItem[] = [
   {
@@ -578,6 +609,40 @@ export function SobragaRahataLesson() {
     })),
   }));
 
+  const matchPairs: MatchPair[] = SOBRAGA_MATCH.map((form) => ({
+    id: clipId(form),
+    left: form,
+    right: i18n._(MATCH_MEANS[form]),
+    src: src(form),
+  }));
+
+  // Typed, so no option gives the form away; the word's genitive is shown under it.
+  const formItems = useMemo<FormQuizItem[]>(
+    () =>
+      SOBRAGA_FORMS.map(({ id, base, genitive, ending }) => {
+        const form = `${genitive}${ending}`;
+        const means = FORM_MEANS[id];
+        return {
+          base,
+          gloss: (
+            <Trans>
+              {i18n._(means.word)}; genitive <span lang="et">{genitive}</span>
+            </Trans>
+          ),
+          cue: i18n._(means.cue),
+          answers: [form],
+          src: src(form),
+          pair: [ending, id] as const,
+          explain: (
+            <Trans>
+              <span lang="et">-{ending}</span> on the genitive <span lang="et">{genitive}</span>.
+            </Trans>
+          ),
+        };
+      }),
+    [i18n],
+  );
+
   // The gaps’ words are shuffled after the page loads, so no place holds the answer.
   const [gaps, setGaps] = useState<readonly GapItem[]>(content.gaps);
   // biome-ignore lint/correctness/useExhaustiveDependencies: shuffled once, as the page loads
@@ -602,7 +667,7 @@ export function SobragaRahataLesson() {
       }
       facts={[
         <Trans key="m">14 minutes</Trans>,
-        <Trans key="q">A quiz, a message to read and one to fill in</Trans>,
+        <Trans key="q">3 quizzes, a message to read and one to fill in</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -787,8 +852,26 @@ export function SobragaRahataLesson() {
           ),
         },
         {
+          id: "which-ending",
+          title: t`Four endings, four meanings`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Match each form with what it means. Two words come twice, so read the ending.
+                  </Trans>
+                </p>
+              </Prose>
+              <Match id="which-ending" title={<Trans>Which ending?</Trans>} pairs={matchPairs} />
+            </>
+          ),
+        },
+        {
           id: "genitive",
           title: t`Built on the genitive`,
+          quiz: true,
           children: (
             <>
               <Prose>
@@ -806,6 +889,32 @@ export function SobragaRahataLesson() {
               <Panel>
                 <Morph label={t`Words`} chains={chains} />
               </Panel>
+              <Prose>
+                <p>
+                  <Trans>
+                    Now build the forms. Each word shows its genitive; type the form its cue asks
+                    for, such as by bus.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="build-the-form"
+                title={<Trans>Build the form</Trans>}
+                items={formItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All of them, each ending on its genitive.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Put the ending on the genitive, not on the first form.</Trans>
+                  ) : (
+                    <Trans>Tap the words above once more, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={eachPairFirst}
+                round={(props) => <FormRound {...props} />}
+              />
             </>
           ),
         },

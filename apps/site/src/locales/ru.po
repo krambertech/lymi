@@ -112,11 +112,6 @@ msgstr "{0, plural, one {Повтори все #} few {Повтори все #} 
 msgid "{0, plural, one {Your deck} other {Your decks}}"
 msgstr "{0, plural, one {Твоя колода} few {Твои колоды} many {Твои колоды} other {Твои колоды}}"
 
-#. placeholder {0}: before.word
-#. placeholder {1}: step.word
-msgid "{0} becomes {1}"
-msgstr "{0} становится {1}"
-
 #. placeholder {0}: i18n.number(IMPORT_FROM)
 msgid "{0} cards, history kept"
 msgstr "{0} карточек, история сохранена"
@@ -143,6 +138,10 @@ msgstr "{0}, правильный ответ"
 #. placeholder {0}: place.meaning
 msgid "{0}, your answer"
 msgstr "{0}, твой ответ"
+
+#. placeholder {0}: i18n._(means.word)
+msgid "{0}; genitive <0>{genitive}</0>"
+msgstr "{0}; родительный — <0>{genitive}</0>"
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}}"
@@ -477,6 +476,9 @@ msgstr "<0/>, «пожалуйста», делает команду вежлив
 msgid "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same for everyone."
 msgstr "<0/>, «быть», устроен так же. <1/> становится <2/>, и <3/> одинаково для всех."
 
+msgid "<0>-{ending}</0> on the genitive <1>{genitive}</1>."
+msgstr "<0>-{ending}</0> добавляется к родительному падежу <1>{genitive}</1>."
+
 msgid "<0>-ga</0> is with"
 msgstr "<0>-ga</0> — это «с»"
 
@@ -521,6 +523,11 @@ msgstr "<0>-ta</0> — это «без»: <1>kohv piimata</1> — кофе бе�
 
 msgid "<0>-ta</0> on the genitive."
 msgstr "Родительный падеж плюс <0>-ta</0>."
+
+#. placeholder {0}: before.word
+#. placeholder {1}: step.word
+msgid "<0>{0}</0> becomes <1>{1}</1>"
+msgstr "<0>{0}</0> становится <1>{1}</1>"
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
@@ -766,6 +773,9 @@ msgstr "3 страницы"
 
 msgid "3 quizzes"
 msgstr "3 теста"
+
+msgid "3 quizzes, a message to read and one to fill in"
+msgstr "3 теста, сообщение для чтения и ещё одно с пропусками"
 
 msgid "3 reviews saved"
 msgstr "3 повторения сохранены"
@@ -1206,9 +1216,6 @@ msgstr "Вопрос с ошибкой"
 
 msgid "A quiz round on a scene: hear a sentence, then tap the place on the drawing."
 msgstr "Раунд викторины на сцене: послушай предложение, затем коснись места на рисунке."
-
-msgid "A quiz, a message to read and one to fill in"
-msgstr "Тест, сообщение для чтения и ещё одно с пропусками"
 
 msgid "a room"
 msgstr "комната"
@@ -1726,6 +1733,9 @@ msgstr "Весь каталог"
 msgid "All of them, by ear."
 msgstr "Все верно, на слух."
 
+msgid "All of them, each ending on its genitive."
+msgstr "Все: каждое окончание на своём родительном падеже."
+
 msgid "All of them, equally often"
 msgstr "Все, одинаково часто"
 
@@ -2030,6 +2040,9 @@ msgstr "ребёнком, в детстве"
 msgid "As a child, Mari lived in Tartu."
 msgstr "В детстве Мари жила в Тарту."
 
+msgid "as a cook"
+msgstr "поваром"
+
 msgid "as a doctor"
 msgstr "врачом"
 
@@ -2047,6 +2060,12 @@ msgstr "С изменениями от 30 января 2026 года"
 
 msgid "as far as Tartu"
 msgstr "до Тарту"
+
+msgid "as far as the river"
+msgstr "до реки"
+
+msgid "as far as the school"
+msgstr "до школы"
 
 msgid "as far as the shop"
 msgstr "до магазина"
@@ -2339,6 +2358,9 @@ msgstr "Заметки по биологии"
 msgid "Biology study group"
 msgstr "Учебная группа по биологии"
 
+msgid "book"
+msgstr "книга"
+
 msgid "Book"
 msgstr "Книга"
 
@@ -2443,6 +2465,9 @@ msgstr "Строй новые слова из знакомых, читай вы�
 
 msgid "Build the course in order."
 msgstr "Выстрой курс шаг за шагом."
+
+msgid "Build the form"
+msgstr "Образуй форму"
 
 msgid "Build the sentence"
 msgstr "Собери предложение"
@@ -3118,6 +3143,9 @@ msgstr "Договор"
 msgctxt "deck tag"
 msgid "Conversation"
 msgstr "Разговорная речь"
+
+msgid "cook"
+msgstr "повар"
 
 msgid "Cookies, device storage and analytics"
 msgstr "Файлы cookie, хранилище устройства и аналитика"
@@ -4352,6 +4380,9 @@ msgstr "Формы maja"
 
 msgid "four"
 msgstr "четыре"
+
+msgid "Four endings, four meanings"
+msgstr "Четыре окончания, четыре значения"
 
 msgid "Four ways to ask"
 msgstr "Четыре способа спрашивать"
@@ -6592,6 +6623,9 @@ msgstr "Левая колонка"
 msgid "Legal bases"
 msgstr "Правовые основания"
 
+msgid "lemon"
+msgstr "лимон"
+
 msgid "Lesson"
 msgstr "Урок"
 
@@ -7115,6 +7149,9 @@ msgstr "Мужской род, хотя оканчивается на -a: buenos
 msgid "Match"
 msgstr "Пары"
 
+msgid "Match each form with what it means. Two words come twice, so read the ending."
+msgstr "Соедини каждую форму с её значением. Два слова встречаются дважды, так что смотри на окончание."
+
 msgid "Match, Blast and Quizlet Live"
 msgstr "Match, Blast и Quizlet Live"
 
@@ -7183,6 +7220,9 @@ msgstr "Метро"
 
 msgid "Microbiology"
 msgstr "Микробиология"
+
+msgid "milk"
+msgstr "молоко"
 
 msgid "Milk"
 msgstr "Молоко"
@@ -7405,6 +7445,9 @@ msgstr "Почти. Переслушай те, где были ошибки, и 
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Почти. Переслушай те, где были ошибки."
+
+msgid "Nearly. Put the ending on the genitive, not on the first form."
+msgstr "Почти. Добавляй окончание к родительному падежу, а не к начальной форме."
 
 msgid "Nearly. Tap the endings above once more."
 msgstr "Почти. Ещё раз понажимай окончания выше."
@@ -7721,6 +7764,9 @@ msgstr "Существительные и падежи"
 
 msgid "Now"
 msgstr "Сейчас"
+
+msgid "Now build the forms. Each word shows its genitive; type the form its cue asks for, such as by bus."
+msgstr "Теперь образуй формы. У каждого слова указан родительный падеж; напиши форму, которую просит подсказка, например «на автобусе»."
 
 msgid "Now hear a line and pick what it means. Listen to how the word ends."
 msgstr "Теперь послушай строку и выбери, что она значит. Слушай, как заканчивается слово."
@@ -9079,6 +9125,9 @@ msgstr "Верно. А если там трамвай?"
 msgid "Right. And which one closes your eyelids?"
 msgstr "Верно. А какой закрывает веки?"
 
+msgid "river"
+msgstr "река"
+
 msgid "Road"
 msgstr "Дорога"
 
@@ -10218,6 +10267,9 @@ msgstr "Ещё раз нажми на места выше, а потом поп�
 
 msgid "Tap the question words above once more, then try again."
 msgstr "Ещё раз понажимай вопросительные слова выше, а потом попробуй снова."
+
+msgid "Tap the words above once more, then try again."
+msgstr "Ещё раз нажми на слова выше, а потом попробуй снова."
 
 msgid "Tap the words in order"
 msgstr "Нажимай на слова по порядку"
@@ -12763,6 +12815,12 @@ msgctxt "with or without"
 msgid "With"
 msgstr "С"
 
+msgid "with a book"
+msgstr "с книгой"
+
+msgid "with a child"
+msgstr "с ребёнком"
+
 msgid "with a friend"
 msgstr "с другом"
 
@@ -12835,6 +12893,9 @@ msgstr "Без"
 msgctxt "with or without"
 msgid "Without"
 msgstr "Без"
+
+msgid "without lemon"
+msgstr "без лимона"
 
 msgid "without milk"
 msgstr "без молока"

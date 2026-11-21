@@ -864,26 +864,17 @@ export const SOBRAGA_CHAINS = [
 export type CaseEnding = "ga" | "ta" | "ni" | "na";
 export const CASE_ENDINGS: readonly CaseEnding[] = ["ga", "ta", "ni", "na"];
 
-/**
- * Words to build a form of: the genitive the ending goes on, and the slip of putting it on the
- * first form instead, which is not a word.
- */
+/** Words to build a form of, keyed by the ending: the genitive the ending goes on. */
 export const SOBRAGA_FORMS = [
-  { id: "buss", base: "buss", genitive: "bussi", ending: "ga", slip: "bussga" },
-  { id: "raamat", base: "raamat", genitive: "raamatu", ending: "ga", slip: "raamatga" },
-  { id: "piim", base: "piim", genitive: "piima", ending: "ta", slip: "piimta" },
-  { id: "sidrun", base: "sidrun", genitive: "sidruni", ending: "ta", slip: "sidrunta" },
-  { id: "kool", base: "kool", genitive: "kooli", ending: "ni", slip: "koolni" },
-  { id: "jogi", base: "jõgi", genitive: "jõe", ending: "ni", slip: "jõgini" },
-  { id: "arst", base: "arst", genitive: "arsti", ending: "na", slip: "arstna" },
-  { id: "kokk", base: "kokk", genitive: "koka", ending: "na", slip: "kokkna" },
-] as const satisfies readonly {
-  id: string;
-  base: string;
-  genitive: string;
-  ending: CaseEnding;
-  slip: string;
-}[];
+  { id: "buss", base: "buss", genitive: "bussi", ending: "ga" },
+  { id: "raamat", base: "raamat", genitive: "raamatu", ending: "ga" },
+  { id: "piim", base: "piim", genitive: "piima", ending: "ta" },
+  { id: "sidrun", base: "sidrun", genitive: "sidruni", ending: "ta" },
+  { id: "kool", base: "kool", genitive: "kooli", ending: "ni" },
+  { id: "jogi", base: "jõgi", genitive: "jõe", ending: "ni" },
+  { id: "arst", base: "arst", genitive: "arsti", ending: "na" },
+  { id: "kokk", base: "kokk", genitive: "koka", ending: "na" },
+] as const satisfies readonly { id: string; base: string; genitive: string; ending: CaseEnding }[];
 
 /** Mari's message with the café order, and Kati's message with gaps. */
 export const SOBRAGA_PASSAGES = {

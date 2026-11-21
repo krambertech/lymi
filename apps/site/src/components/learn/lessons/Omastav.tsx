@@ -72,6 +72,13 @@ const PERSON: Record<
   nemad: { who: msg`they`, whose: msg`their`, short: msg`their`, book: msg`their book` },
 };
 
+/** The pronouns whose who and whose are one word, glossed with both meanings. */
+const BOTH: Partial<Record<Who, MessageDescriptor>> = {
+  tema: msg`he or she; his or her`,
+  meie: msg`we; our`,
+  teie: msg`you, to more than one; polite you; your`,
+};
+
 /** What each sentence means, by what it says. */
 const MEANS: Record<string, MessageDescriptor> = {
   "Minu nimi on Mari.": msg({ message: "My name is Mari.", context: "genitive lesson" }),
@@ -106,10 +113,6 @@ const PHRASE_MEANS: Record<string, MessageDescriptor> = {
   "toa aken": msg`the room’s window`,
   "turu kohvik": msg`the market café`,
   "jõe nimi": msg`the river’s name`,
-  "haigla aken": msg`the hospital window`,
-  "Tartu kohvik": msg`a café in Tartu`,
-  "Pärnu turg": msg`the Pärnu market`,
-  "Eesti pealinn": msg`the capital of Estonia`,
 };
 
 /** What each noun of the three-form table means, as a word, as an owner, and with -s or -l. */
@@ -142,7 +145,7 @@ const FORM_MEANS: Record<string, MessageDescriptor> = {
   Tartus: msg`in Tartu`,
   haigla: msg`hospital; the hospital’s`,
   haiglas: msg`in a hospital`,
-  kodu: msg`home; of home`,
+  kodu: msg`home; the home’s`,
   kodus: msg`at home`,
   töö: msg`work; of work`,
   tööl: msg`at work`,
@@ -152,17 +155,16 @@ const FORM_MEANS: Record<string, MessageDescriptor> = {
   jõgi: msg`river`,
   jõe: msg`the river’s, of the river`,
   jões: msg`in the river`,
-  Pärnu: msg`Pärnu, a town by the sea`,
-  Pärnus: msg`in Pärnu`,
   Eesti: msg`Estonia; Estonia’s`,
   Eestis: msg`in Estonia`,
 };
 
 const GLOSSARY: Glossary = {
   ...Object.fromEntries(
+    // Tema, meie and teie are the same word for who and whose, so their card gives both.
     OMASTAV_PRONOUNS.flatMap(({ who, whose }) => [
-      [who, { en: PERSON[who].who }],
-      [whose, { en: PERSON[who].whose }],
+      [who, { en: BOTH[who] ?? PERSON[who].who }],
+      ...(who === whose ? [] : [[whose, { en: PERSON[who].whose }]]),
       [ownedBook(whose), { en: PERSON[who].book }],
     ]),
   ),
@@ -200,6 +202,7 @@ const GLOSSARY: Glossary = {
   mari: { en: msg`Mari, a woman’s name`, show: "Mari" },
   "mari raamat": { en: msg`Mari’s book`, show: "Mari raamat" },
   vend: { en: msg`brother`, clip: false },
+  pilt: { en: msg`picture`, clip: false },
   "kümne minuti pärast": { en: msg`in ten minutes`, show: "kümne minuti pärast" },
   miisu: { en: msg`Miisu, a name for a cat`, show: "Miisu", clip: false },
 };
@@ -405,7 +408,8 @@ function FormTable() {
       tip: (
         <Trans>
           <span lang="et">Pood</span> loses its d, and the second o turns to e:{" "}
-          <span lang="et">poe</span>. Learn these words in pairs.
+          <span lang="et">poe</span>. <span lang="et">Turg</span> and <span lang="et">laud</span>{" "}
+          drop their last letter and gain a vowel: <span lang="et">turu, laua</span>.
         </Trans>
       ),
     },
@@ -547,37 +551,20 @@ interface FormItem {
   phrase: Phrase;
   answer: string;
   options: readonly string[];
-  /** Keyed by how the genitive is made, so a run meets all three kinds early. */
+  /** Keyed by the word, so a run meets every word once. */
   pair: readonly [string, string];
 }
 
-/** The forms a “Which form?” round offers: the word, its genitive and its -s form, once each. */
-export const formsOf = (phrase: Phrase): string[] => [
-  ...new Set([phrase.word, phrase.whose, phrase.where]),
-];
+/** The forms a “Which form goes first?” round offers: the word and its genitive. */
+export const formsOf = (phrase: Phrase): string[] => [phrase.word, phrase.whose];
 
-/**
- * A round's options after the first: the genitive, one of its own word's other forms (the likeliest
- * slip), and either the other one or another owner's genitive, drawn afresh each run so no fixed set
- * or length names the answer.
- */
-export function formOptions(phrase: Phrase): string[] {
-  const own = shuffle([phrase.word, phrase.where].filter((form) => form !== phrase.whose));
-  const others = shuffle(
-    OMASTAV_PHRASES.filter((each) => each.word !== phrase.word).map((each) => each.whose),
-  );
-  const second = own[1] !== undefined && Math.random() < 0.5 ? own[1] : others[0];
-  return shuffle([...new Set([phrase.whose, own[0] as string, second as string])]);
-}
-
-/** The first round's order, turned by the item's place so the answer isn't always in one spot. */
+/** The first round's order, turned by the item's place, as the server renders it. */
 export function firstOrder(phrase: Phrase, i: number): string[] {
   const forms = formsOf(phrase);
-  const turn = i % forms.length;
-  return [...forms.slice(turn), ...forms.slice(0, turn)];
+  return i % 2 === 0 ? forms : [...forms].reverse();
 }
 
-/** See a thing and its owner's forms; pick the one that goes first, then hear the phrase. */
+/** See a thing and its owner with -s or -l; pick the genitive that goes first, then hear the phrase. */
 function FormRound({ item, state, heard, answer }: RoundProps<FormItem>) {
   const { t, i18n } = useLingui();
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
@@ -599,8 +586,13 @@ function FormRound({ item, state, heard, answer }: RoundProps<FormItem>) {
   return (
     <>
       {done && <Listen src={item.src} />}
-      <p className="text-md text-ink-secondary">
-        {i18n._(PHRASE_MEANS[said] as MessageDescriptor)}
+      <p className="grid gap-0.5 text-md text-ink-secondary">
+        <span>{i18n._(PHRASE_MEANS[said] as MessageDescriptor)}</span>
+        <span>
+          <Trans>
+            Start from <b lang="et">{item.phrase.where}</b>.
+          </Trans>
+        </span>
       </p>
       <p
         lang="et"
@@ -648,16 +640,10 @@ function FormRound({ item, state, heard, answer }: RoundProps<FormItem>) {
             {said}
           </span>{" "}
           {i18n._(PHRASE_MEANS[said] as MessageDescriptor)}.{" "}
-          {item.phrase.kind === "same" ? (
-            <Trans>
-              <span lang="et">{capital(item.phrase.word)}</span> stays as it is.
-            </Trans>
-          ) : (
-            <Trans>
-              <span lang="et">{capital(item.phrase.whose)}</span> is{" "}
-              <span lang="et">{item.phrase.where}</span> without its last letter.
-            </Trans>
-          )}
+          <Trans>
+            <span lang="et">{capital(item.phrase.whose)}</span> is{" "}
+            <span lang="et">{item.phrase.where}</span> without its last letter.
+          </Trans>
         </Feedback>
       )}
     </>
@@ -741,6 +727,18 @@ export const KATI_GAPS: readonly PassageGap[] = [
       </Trans>
     ),
   },
+  {
+    id: "sina",
+    before: "Kus",
+    after: "elad?",
+    answer: "sina",
+    options: ["sinu", "sina"],
+    why: (
+      <Trans>
+        Now Kati asks where you live, and you do the living, so you: <b lang="et">sina</b>.
+      </Trans>
+    ),
+  },
 ];
 
 const dialogueLine = (id: keyof typeof OMASTAV_DIALOGUE) => {
@@ -773,7 +771,7 @@ export function OmastavLesson() {
         phrase,
         answer: phrase.whose,
         options: firstOrder(phrase, i),
-        pair: [phrase.kind, phraseOf(phrase)] as const,
+        pair: [phrase.word, phraseOf(phrase)] as const,
       })),
     [],
   );
@@ -781,7 +779,7 @@ export function OmastavLesson() {
   // Every round but the first shuffles its forms afresh, so the answer has no fixed place.
   const formRun = (items: readonly FormItem[], pinned?: FormItem): FormItem[] =>
     eachPairFirst(items, pinned).map((item) =>
-      item === pinned ? item : { ...item, options: formOptions(item.phrase) },
+      item === pinned ? item : { ...item, options: shuffle(formsOf(item.phrase)) },
     );
 
   // The right reply moves between first, second and third place from turn to turn.
@@ -817,10 +815,11 @@ export function OmastavLesson() {
       clip: "d-sina-2",
       replies: [
         {
-          line: "See on Jaan kohv.",
+          line: "See on Martin kohv.",
           why: (
             <Trans>
-              Before a noun, <b lang="et">Jaan</b> takes its genitive: <b lang="et">Jaani kohv</b>.
+              Before a noun, <b lang="et">Martin</b> takes its genitive:{" "}
+              <b lang="et">Martini kohv</b>.
             </Trans>
           ),
         },
@@ -845,7 +844,7 @@ export function OmastavLesson() {
           line: "Jah, see on nende kass.",
           why: (
             <Trans>
-              <b lang="et">Nende</b> is their. For you and Jaan, say <b lang="et">meie</b>, our.
+              <b lang="et">Nende</b> is their. For you and Martin, say <b lang="et">meie</b>, our.
             </Trans>
           ),
         },
@@ -853,7 +852,7 @@ export function OmastavLesson() {
           line: "Jah, see on teie kass.",
           why: (
             <Trans>
-              <b lang="et">Teie</b> is your. For you and Jaan, say <b lang="et">meie</b>, our.
+              <b lang="et">Teie</b> is your. For you and Martin, say <b lang="et">meie</b>, our.
             </Trans>
           ),
         },
@@ -865,7 +864,7 @@ export function OmastavLesson() {
       clip: "d-sina-4",
       replies: [
         {
-          line: "Kass nimi on Miisu.",
+          line: "Kass nimi on Liisu.",
           why: (
             <Trans>
               The cat owns the name, so <b lang="et">kass</b> takes its genitive:{" "}
@@ -875,10 +874,10 @@ export function OmastavLesson() {
         },
         { line: dialogueLine("d-sina-4"), right: true },
         {
-          line: "Miisu nimi on kass.",
+          line: "Liisu nimi on kass.",
           why: (
             <Trans>
-              That says Miisu’s name is <b lang="et">Kass</b>, Cat.
+              That says Liisu’s name is <b lang="et">Kass</b>, Cat.
             </Trans>
           ),
         },
@@ -1126,8 +1125,7 @@ export function OmastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round shows a thing and the forms of its owner. Pick the one that goes in
-                    front, then hear the phrase. If you know the form with{" "}
+                    Each round names a thing and gives its owner with{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -s
                     </b>{" "}
@@ -1135,7 +1133,8 @@ export function OmastavLesson() {
                     <b lang="et" className="whitespace-nowrap">
                       -l
                     </b>
-                    , take off its last letter.
+                    . Take off the last letter, pick the form that goes in front, then hear the
+                    phrase.
                   </Trans>
                 </p>
               </Prose>
@@ -1143,7 +1142,7 @@ export function OmastavLesson() {
                 id="which-form"
                 title={<Trans>Which form goes first?</Trans>}
                 items={formItems}
-                rounds={6}
+                rounds={OMASTAV_PHRASES.length}
                 verdict={(share) =>
                   share === 1 ? (
                     <Trans>All of them. You picked the genitive every time.</Trans>
@@ -1208,8 +1207,8 @@ export function OmastavLesson() {
                 title={<Trans>Talk: whose is it?</Trans>}
                 part={
                   <Trans>
-                    You live with your brother Jaan and your cat Miisu. The book is yours, and the
-                    coffee is Jaan’s. Mari speaks first; pick what you say back.
+                    You and your brother Martin share a flat and a cat, Liisu. The book is yours,
+                    and the coffee is Martin’s. Mari speaks first; pick what you say back.
                   </Trans>
                 }
                 them={t`Mari`}

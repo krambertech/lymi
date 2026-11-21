@@ -850,8 +850,9 @@ export const OMASTAV_FORMS: readonly {
 ];
 
 /**
- * “Which form?”: a noun's three forms and a phrase with its genitive in front. ÕS 2025 on
- * Sõnaveeb: kontori, jõe, Pärnu; Eesti is the same in the genitive.
+ * “Which form goes first?”: a noun as a dictionary gives it, its genitive, the genitive with -s or
+ * -l as the cue, and a phrase with the genitive in front. Only nouns whose genitive differs from the
+ * word: the table shows the ones that don't change. ÕS 2025 on Sõnaveeb: kontori, jõe.
  */
 export const OMASTAV_PHRASES: readonly {
   kind: GenitiveKind;
@@ -868,10 +869,6 @@ export const OMASTAV_PHRASES: readonly {
   { kind: "inside", word: "tuba", whose: "toa", where: "toas", noun: "aken" },
   { kind: "inside", word: "turg", whose: "turu", where: "turul", noun: "kohvik" },
   { kind: "inside", word: "jõgi", whose: "jõe", where: "jões", noun: "nimi" },
-  { kind: "same", word: "haigla", whose: "haigla", where: "haiglas", noun: "aken" },
-  { kind: "same", word: "Tartu", whose: "Tartu", where: "Tartus", noun: "kohvik" },
-  { kind: "same", word: "Pärnu", whose: "Pärnu", where: "Pärnus", noun: "turg" },
-  { kind: "same", word: "Eesti", whose: "Eesti", where: "Eestis", noun: "pealinn" },
 ];
 
 /** A phrase of “Which form?”, as it is said: “kooli uks”. */
@@ -918,6 +915,7 @@ export const OMASTAV_PASSAGE = [
   "Ema ja isa elavad Pärnus.",
   "Nende kassi nimi on Miisu.",
   "Mis sinu nimi on?",
+  "Kus sina elad?",
 ] as const;
 
 /** At home with Mari: her lines in the second voice, the learner's in the main one. */
@@ -925,11 +923,11 @@ export const OMASTAV_DIALOGUE = {
   "d-mari-1": { text: "Kelle raamat see on?", voice: "second" },
   "d-sina-1": "See on minu raamat.",
   "d-mari-2": { text: "Ja kelle kohv see on?", voice: "second" },
-  "d-sina-2": "See on Jaani kohv.",
+  "d-sina-2": "See on Martini kohv.",
   "d-mari-3": { text: "Kas see on teie kass?", voice: "second" },
   "d-sina-3": "Jah, see on meie kass.",
   "d-mari-4": { text: "Mis kassi nimi on?", voice: "second" },
-  "d-sina-4": "Kassi nimi on Miisu.",
+  "d-sina-4": "Kassi nimi on Liisu.",
 } as const satisfies Record<string, Clip>;
 
 /** Words of the genitive lesson heard on their own, outside its lists. */

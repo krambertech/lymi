@@ -7,8 +7,8 @@ import {
   OMASTAV_WHOSE,
 } from "../../../lib/learn/clips";
 import { gapLine } from "../../../lib/learn/passage";
-import { eachPairFirst } from "../../../lib/learn/quiz";
-import { firstOrder, formOptions, formsOf, KATI_GAPS, sharedLength } from "./Omastav";
+import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
+import { firstOrder, formsOf, KATI_GAPS, sharedLength } from "./Omastav";
 
 describe("genitive quizzes", () => {
   it("hears each of the six pronouns once in every run of “Whose?”", () => {
@@ -22,50 +22,45 @@ describe("genitive quizzes", () => {
     }
   });
 
-  it("meets all three kinds of word in every run of “Which form goes first?”", () => {
+  it("meets every word once in every run of “Which form goes first?”", () => {
     const items = OMASTAV_PHRASES.map((each) => ({
       ...each,
-      pair: [each.kind, each.noun] as const,
+      pair: [each.word, each.noun] as const,
     }));
+    const words = new Set(OMASTAV_PHRASES.map((each) => each.word));
     for (let run = 0; run < 200; run++) {
-      const kinds = eachPairFirst(items, items[0])
-        .slice(0, 6)
-        .map((item) => item.kind);
-      expect(new Set(kinds)).toEqual(new Set(["vowel", "inside", "same"]));
+      const asked = eachPairFirst(items, items[0])
+        .slice(0, OMASTAV_PHRASES.length)
+        .map((item) => item.word);
+      expect(new Set(asked)).toEqual(words);
     }
   });
 
-  it("offers each form once, with the genitive among them", () => {
+  it("offers the word and its genitive, never a form that gives the answer by its shape", () => {
     for (const phrase of OMASTAV_PHRASES) {
-      const forms = formsOf(phrase);
-      expect(forms).toContain(phrase.whose);
-      expect(new Set(forms).size).toBe(forms.length);
-      expect(forms.length).toBeGreaterThanOrEqual(2);
+      const options = formsOf(phrase);
+      expect(options).toEqual([phrase.word, phrase.whose]);
+      expect(phrase.word).not.toBe(phrase.whose);
+      // The -s or -l form is the cue, never an option: offered, it would extend the answer by one letter.
+      expect(options).not.toContain(phrase.where);
+      for (const each of options) {
+        expect(options).not.toContain(`${each}s`);
+        expect(options).not.toContain(`${each}l`);
+      }
     }
   });
 
-  it("puts the first round's answer in every place across the items", () => {
-    const places = new Set(
+  it("puts the answer first and second, in the first round and in later ones", () => {
+    const firstPlaces = new Set(
       OMASTAV_PHRASES.map((each, i) => firstOrder(each, i).indexOf(each.whose)),
     );
-    expect(places).toEqual(new Set([0, 1, 2]));
-  });
-
-  it("draws a later round's options afresh: the answer, a slip of its own word, in every place", () => {
-    for (const phrase of OMASTAV_PHRASES) {
-      const places = new Set<number>();
-      const sets = new Set<string>();
-      for (let run = 0; run < 300; run++) {
-        const options = formOptions(phrase);
-        expect(new Set(options).size).toBe(3);
-        expect(options).toContain(phrase.whose);
-        expect(options.some((each) => each === phrase.word || each === phrase.where)).toBe(true);
-        places.add(options.indexOf(phrase.whose));
-        sets.add([...options].sort().join(" "));
-      }
-      expect(places).toEqual(new Set([0, 1, 2]));
-      expect(sets.size).toBeGreaterThan(1);
-    }
+    expect(firstPlaces).toEqual(new Set([0, 1]));
+    // The pinned first round is items[0] as the server renders it; later rounds are shuffled.
+    const pinned = OMASTAV_PHRASES[0] as (typeof OMASTAV_PHRASES)[number];
+    expect(firstOrder(pinned, 0)).toContain(pinned.whose);
+    const later = new Set<number>();
+    for (let run = 0; run < 200; run++) later.add(shuffle(formsOf(pinned)).indexOf(pinned.whose));
+    expect(later).toEqual(new Set([0, 1]));
   });
 });
 

@@ -981,8 +981,8 @@ msgstr "<0>la</0> gives way to <1>nud</1>."
 msgid "<0>Läbi pargi</0>, <1>üle tee</1>, <2>mööda jõge</2>: four small words that come before the noun, and the one form each of them wants."
 msgstr "<0>Läbi pargi</0>, <1>üle tee</1>, <2>mööda jõge</2>: four small words that come before the noun, and the one form each of them wants."
 
-msgid "<0>Läbi</0> and <1>üle</1> can also come after a noun with <2>-st</2>: <3>ma läksin pargist läbi</3>. It means the same, and you will hear both."
-msgstr "<0>Läbi</0> and <1>üle</1> can also come after a noun with <2>-st</2>: <3>ma läksin pargist läbi</3>. It means the same, and you will hear both."
+msgid "<0>Läbi</0> and <1>üle</1> can also come after a noun with <2>-st</2>: <3>ma läksin pargist läbi</3>. It means about the same, and you will hear both. <4>Ümber</4> and <5>mööda</5> can follow the noun too, with the same form: <6>maja ümber</6>, <7>teed mööda</7>. But <8>poest mööda</8> means past the shop."
+msgstr "<0>Läbi</0> and <1>üle</1> can also come after a noun with <2>-st</2>: <3>ma läksin pargist läbi</3>. It means about the same, and you will hear both. <4>Ümber</4> and <5>mööda</5> can follow the noun too, with the same form: <6>maja ümber</6>, <7>teed mööda</7>. But <8>poest mööda</8> means past the shop."
 
 msgid "<0>Läbi</0> is through: to get through together, to get along. The person takes <1>-ga</1>: <2>Katiga</2>."
 msgstr "<0>Läbi</0> is through: to get through together, to get along. The person takes <1>-ga</1>: <2>Katiga</2>."
@@ -2863,6 +2863,9 @@ msgstr "After <0>üks</0> on its own, the first form: <1>üks leib</1>."
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 
+msgid "After a noun with -st it means past: ma läksin poest mööda, I walked past the shop. With a place it can mean all over it: mööda linna, around town."
+msgstr "After a noun with -st it means past: ma läksin poest mööda, I walked past the shop. With a place it can mean all over it: mööda linna, around town."
+
 msgid "After a number from two up"
 msgstr "After a number from two up"
 
@@ -3007,8 +3010,8 @@ msgstr "All Chinese decks"
 msgid "All day tomorrow"
 msgstr "All day tomorrow"
 
-msgid "All eight. Mööda is the only one that wants the third form."
-msgstr "All eight. Mööda is the only one that wants the third form."
+msgid "All eight. Before a noun, only mööda wants the third form."
+msgstr "All eight. Before a noun, only mööda wants the third form."
 
 msgid "All eight. You can build the stem for every plural case."
 msgstr "All eight. You can build the stem for every plural case."
@@ -9852,9 +9855,6 @@ msgstr "Isn’t there"
 msgid "isn’t, aren’t"
 msgstr "isn’t, aren’t"
 
-msgid "It also means past: ma läksin poest mööda, I walked past the shop."
-msgstr "It also means past: ma läksin poest mööda, I walked past the shop."
-
 msgid "It also says what someone was at a time: <0/>, as a child. In <1/>, <2>elas</2> is the past tense from lesson {past}."
 msgstr "It also says what someone was at a time: <0/>, as a child. In <1/>, <2>elas</2> is the past tense from lesson {past}."
 
@@ -11876,8 +11876,8 @@ msgstr "Most Polish words stress the second syllable from the end, so their card
 msgid "Most Spanish nouns ending in -o are masculine and most ending in -a are feminine, but not <0>el día</0> or <1>la mano</1>. The ready-made decks keep every noun with its el or la, and AI notes the gender when the ending doesn’t match."
 msgstr "Most Spanish nouns ending in -o are masculine and most ending in -a are feminine, but not <0>el día</0> or <1>la mano</1>. The ready-made decks keep every noun with its el or la, and AI notes the gender when the ending doesn’t match."
 
-msgid "Most such words come after the noun, like <0>pargi taga</0>. These four are the common ones that come before it."
-msgstr "Most such words come after the noun, like <0>pargi taga</0>. These four are the common ones that come before it."
+msgid "Most such words come after the noun, like <0>pargi taga</0>. These four are among the common ones that come before it."
+msgstr "Most such words come after the noun, like <0>pargi taga</0>. These four are among the common ones that come before it."
 
 msgid "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
 msgstr "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."

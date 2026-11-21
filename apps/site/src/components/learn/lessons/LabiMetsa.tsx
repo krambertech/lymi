@@ -40,7 +40,7 @@ const GLOSSARY: Glossary = {
   ümber: { en: msg`around` },
   mööda: {
     en: msg`along`,
-    note: msg`It also means past: ma läksin poest mööda, I walked past the shop.`,
+    note: msg`After a noun with -st it means past: ma läksin poest mööda, I walked past the shop. With a place it can mean all over it: mööda linna, around town.`,
   },
   park: { en: msg`park`, note: msg`Second form pargi, third form parki.` },
   sild: { en: msg`bridge`, note: msg`Second form silla, third form silda.` },
@@ -214,8 +214,8 @@ export function LabiMetsaLesson() {
           <b lang="et">Mööda</b> takes the third form: <b lang="et">mööda teed, mööda jõge</b>.
         </Trans>,
         <Trans key="3">
-          Most such words come after the noun, like <b lang="et">pargi taga</b>. These four are the
-          common ones that come before it.
+          Most such words come after the noun, like <b lang="et">pargi taga</b>. These four are
+          among the common ones that come before it.
         </Trans>,
       ]}
       sections={[
@@ -239,7 +239,10 @@ export function LabiMetsaLesson() {
               <Aside>
                 <Trans>
                   <Et>Läbi</Et> and <Et>üle</Et> can also come after a noun with <Et>-st</Et>:{" "}
-                  <Et>ma läksin pargist läbi</Et>. It means the same, and you will hear both.
+                  <Et>ma läksin pargist läbi</Et>. It means about the same, and you will hear both.{" "}
+                  <Et>Ümber</Et> and <Et>mööda</Et> can follow the noun too, with the same form:{" "}
+                  <Et>maja ümber</Et>, <Et>teed mööda</Et>. But <Et>poest mööda</Et> means past the
+                  shop.
                 </Trans>
               </Aside>
             </>
@@ -267,7 +270,7 @@ export function LabiMetsaLesson() {
                 rounds={8}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All eight. Mööda is the only one that wants the third form.</Trans>
+                    <Trans>All eight. Before a noun, only mööda wants the third form.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>
                       Most of them. Remember the odd one out: <Et>mööda teed</Et>.

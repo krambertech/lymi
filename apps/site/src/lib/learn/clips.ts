@@ -3149,16 +3149,16 @@ export const PREPOSITION_GAPS = [
     options: ["tänava", "tänavat"],
   },
   {
-    id: "mooda-tanav-2",
-    before: "Jalutame veel natuke mööda",
+    id: "labi-buss",
+    before: "Buss sõidab läbi",
     after: ".",
-    answer: "tänavat",
-    options: ["tänava", "tänavat"],
+    answer: "pargi",
+    options: ["pargi", "parki"],
   },
   {
     id: "mooda-park",
     before: "Koer jooksis mööda",
-    after: ".",
+    after: "ringi.",
     answer: "parki",
     options: ["pargi", "parki"],
   },
@@ -3169,7 +3169,7 @@ export const DIRECTIONS_PASSAGE = [
   "Bussipeatusest mine kõigepealt üle tee.",
   "Siis kõnni natuke aega mööda jõge.",
   "Mine üle silla ja läbi väikese pargi.",
-  "Minu maja on pargi taga, sellel on punane katus.",
+  "Minu maja on pargi taga, punase katusega.",
 ] as const;
 
 export const PREPOSITION_WORDS = [

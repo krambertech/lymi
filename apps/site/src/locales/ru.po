@@ -982,8 +982,8 @@ msgstr "<0>la</0> меняется на <1>nud</1>."
 msgid "<0>Läbi pargi</0>, <1>üle tee</1>, <2>mööda jõge</2>: four small words that come before the noun, and the one form each of them wants."
 msgstr "<0>Läbi pargi</0>, <1>üle tee</1>, <2>mööda jõge</2>: четыре маленьких слова, которые стоят перед существительным, и форма, которой требует каждое."
 
-msgid "<0>Läbi</0> and <1>üle</1> can also come after a noun with <2>-st</2>: <3>ma läksin pargist läbi</3>. It means the same, and you will hear both."
-msgstr "<0>Läbi</0> и <1>üle</1> могут стоять и после существительного с <2>-st</2>: <3>ma läksin pargist läbi</3>. Значение то же, и ты услышишь оба варианта."
+msgid "<0>Läbi</0> and <1>üle</1> can also come after a noun with <2>-st</2>: <3>ma läksin pargist läbi</3>. It means about the same, and you will hear both. <4>Ümber</4> and <5>mööda</5> can follow the noun too, with the same form: <6>maja ümber</6>, <7>teed mööda</7>. But <8>poest mööda</8> means past the shop."
+msgstr "<0>Läbi</0> и <1>üle</1> могут стоять и после существительного с <2>-st</2>: <3>ma läksin pargist läbi</3>. Значение почти то же, и ты услышишь оба варианта. <4>Ümber</4> и <5>mööda</5> тоже могут стоять после существительного, с той же формой: <6>maja ümber</6>, <7>teed mööda</7>. Но <8>poest mööda</8> значит «мимо магазина»."
 
 msgid "<0>Läbi</0> is through: to get through together, to get along. The person takes <1>-ga</1>: <2>Katiga</2>."
 msgstr "<0>Läbi</0> — сквозь: вместе пройти сквозь всё, ладить. Человек получает <1>-ga</1>: <2>Katiga</2>."
@@ -992,7 +992,7 @@ msgid "<0>Läbi</0> says to the end, so the genitive."
 msgstr "<0>Läbi</0> значит «до конца», поэтому родительный."
 
 msgid "<0>Läbi</0> takes the second form: <1>läbi pargi</1>, in one side and out the other."
-msgstr "<0>Läbi</0> требует второй формы: <1>läbi pargi</1>, с одной стороны внутрь, с другой наружу."
+msgstr "<0>Läbi</0> требует второй формы: <1>läbi pargi</1>, входишь с одной стороны, выходишь с другой."
 
 msgid "<0>Läbi</0> takes the second form: <1>pargi</1>."
 msgstr "<0>Läbi</0> требует второй формы: <1>pargi</1>."
@@ -2864,6 +2864,9 @@ msgstr "Только <0>üks</0> — значит, первая форма: <1>�
 msgid "After a lesson on italki, Preply or with a private tutor, paste the chat or snap your notes. Lymi turns the new words into flashcards you review between lessons. Your AI assistant can add them too. Free."
 msgstr "После урока на italki, Preply или с частным репетитором вставь чат или сфотографируй заметки. Lymi превратит новые слова в карточки, которые ты повторяешь между уроками. Добавить их может и AI-ассистент. Бесплатно."
 
+msgid "After a noun with -st it means past: ma läksin poest mööda, I walked past the shop. With a place it can mean all over it: mööda linna, around town."
+msgstr "После существительного с -st значит «мимо»: ma läksin poest mööda, я прошёл мимо магазина. С местом может значить «по всему»: mööda linna, по городу."
+
 msgid "After a number from two up"
 msgstr "После числа от двух"
 
@@ -3008,8 +3011,8 @@ msgstr "Все колоды по китайскому"
 msgid "All day tomorrow"
 msgstr "Весь завтрашний день"
 
-msgid "All eight. Mööda is the only one that wants the third form."
-msgstr "Все восемь. Только mööda требует третьей формы."
+msgid "All eight. Before a noun, only mööda wants the third form."
+msgstr "Все восемь. Перед существительным только mööda требует третьей формы."
 
 msgid "All eight. You can build the stem for every plural case."
 msgstr "Все восемь. Ты умеешь строить основу для каждого падежа множественного."
@@ -6059,7 +6062,7 @@ msgid "Estonian practice: write to your landlord about a broken tap"
 msgstr "Практика эстонского: напиши хозяйке квартиры о сломанном кране"
 
 msgid "Estonian prepositions: läbi, üle, ümber and mööda"
-msgstr "Эстонские предлоги: через, вокруг, вдоль"
+msgstr "Эстонские предлоги: сквозь, через, вокруг, вдоль"
 
 msgid "Estonian present tense"
 msgstr "Настоящее время в эстонском языке"
@@ -9529,7 +9532,7 @@ msgid "in Lasnamäe"
 msgstr "в Ласнамяэ"
 
 msgid "In lesson {behind} the place word came after the noun: <0>pargi taga</0>, behind the park. A few words come before it, as in English. Three of them, <1/>, <2/> and <3/>, take the second form of lesson {genitive}. <4/> takes the third form of lesson {partitive}."
-msgstr "В уроке {behind} слово места стояло после существительного: <0>pargi taga</0>, за парком. Несколько слов стоят перед ним, как русские предлоги. И так же, как «через» и «вдоль» требуют разных падежей, три из них, <1/>, <2/> и <3/>, требуют второй формы из урока {genitive}, а <4/> — третьей формы из урока {partitive}."
+msgstr "В уроке {behind} слово места стояло после существительного: <0>pargi taga</0>, за парком. Несколько слов стоят перед ним, как русские предлоги. Как и русские предлоги, каждое из них требует своего падежа: три из них, <1/>, <2/> и <3/>, — второй формы из урока {genitive}, а <4/> — третьей формы из урока {partitive}."
 
 msgid "In lesson {cases} you added endings to the genitive: <0>maja, majas</0>; <1>raamatu, raamatust</1>. The plural works the same way, with one step first. Make the plural genitive, then add the same endings: <2>majade, majades</2>; <3>raamatute, raamatutest</3>."
 msgstr "В уроке {cases} окончания добавлялись к родительному: <0>maja, majas</0>; <1>raamatu, raamatust</1>. Во множественном всё так же, только сначала один шаг: образуй родительный множественного, а потом добавь те же окончания: <2>majade, majades</2>; <3>raamatute, raamatutest</3>."
@@ -9853,9 +9856,6 @@ msgstr "Нет"
 msgid "isn’t, aren’t"
 msgstr "нет"
 
-msgid "It also means past: ma läksin poest mööda, I walked past the shop."
-msgstr "Также значит «мимо»: ma läksin poest mööda, я прошёл мимо магазина."
-
 msgid "It also says what someone was at a time: <0/>, as a child. In <1/>, <2>elas</2> is the past tense from lesson {past}."
 msgstr "Ещё оно говорит, кем человек был когда-то: <0/> — ребёнком. В предложении <1/> слово <2>elas</2> — прошедшее время из урока {past}."
 
@@ -10111,7 +10111,7 @@ msgid "Jaan says what he bought and what he didn’t. Listen for the third form 
 msgstr "Яан рассказывает, что он купил, а что нет. Слушай третью форму и родительный."
 
 msgid "Jaan sends you a voice message with directions. Listen for <0>üle</0>, <1>mööda</1> and <2>läbi</2>, then answer."
-msgstr "Яан присылает тебе голосовое сообщение с дорогой. Слушай <0>üle</0>, <1>mööda</1> и <2>läbi</2>, а потом ответь."
+msgstr "Яан присылает тебе голосовое сообщение с объяснением, как дойти. Обрати внимание на <0>üle</0>, <1>mööda</1> и <2>läbi</2>, а потом ответь."
 
 msgid "Jaan talks about himself and his friend Kati. Listen for <0/>: Jaan says what isn’t so, then what is."
 msgstr "Яан рассказывает о себе и своей подруге Кати. Обрати внимание на <0/>: после отрицания Яан говорит, как на самом деле."
@@ -11877,8 +11877,8 @@ msgstr "В большинстве польских слов ударение п�
 msgid "Most Spanish nouns ending in -o are masculine and most ending in -a are feminine, but not <0>el día</0> or <1>la mano</1>. The ready-made decks keep every noun with its el or la, and AI notes the gender when the ending doesn’t match."
 msgstr "Большинство испанских существительных на -o мужского рода, а на -a женского, но не <0>el día</0> и не <1>la mano</1>. В готовых колодах каждое существительное стоит со своим el или la, а AI отмечает род, когда окончание его не выдаёт."
 
-msgid "Most such words come after the noun, like <0>pargi taga</0>. These four are the common ones that come before it."
-msgstr "Большинство таких слов стоит после существительного, как <0>pargi taga</0>. Эти четыре — самые частые из тех, что стоят перед ним."
+msgid "Most such words come after the noun, like <0>pargi taga</0>. These four are among the common ones that come before it."
+msgstr "Большинство таких слов стоит после существительного, как <0>pargi taga</0>. Эти четыре — среди самых частых из тех, что стоят перед ним."
 
 msgid "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
 msgstr "Большинство глаголов строит прошедшее время от формы на <0>ma</0>. Отбрось <1>ma</1> и добавь <2>sin</2> для «я»: <3/>, <4/>."
@@ -13276,7 +13276,7 @@ msgid "Over the bridge"
 msgstr "По мосту"
 
 msgid "over, across"
-msgstr "через, над"
+msgstr "через, поверх"
 
 msgid "Own things, count them and put them somewhere. Stems change first, then the genitive, which most other cases build on."
 msgstr "Иметь вещи, считать их и куда-то класть. Сначала меняются основы, затем генитив, на котором строится большинство других падежей."
@@ -13468,7 +13468,7 @@ msgid "phrase"
 msgstr "фраза"
 
 msgid "Phrase"
-msgstr "Сочетание"
+msgstr "Словосочетание"
 
 msgid "Phrases for your first weeks: hello and thanks, the shop, the bus and the doctor."
 msgstr "Фразы на первые недели: поздороваться и поблагодарить, в магазине, в автобусе и у врача."

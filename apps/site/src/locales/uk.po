@@ -13,6 +13,9 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+msgid "-s and -l go on the stem"
+msgstr "-s і -l додаємо до основи"
+
 msgid "-s or -l?"
 msgstr "-s чи -l?"
 
@@ -412,6 +415,9 @@ msgstr "<0/>, «бути», працює так само. <1/> стає <2/>, і
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> або <1>-ke</1> у кінці"
 
+msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
+msgstr "<0>-s</0> і <1>-l</1> додаємо до основи іменника: <2>pood</2>, основа <3>poe</3>, <4>poes</4>."
+
 #. placeholder {0}: noun.word
 #. placeholder {1}: noun.stem
 #. placeholder {2}: noun.stem
@@ -809,10 +815,10 @@ msgid "A dialogue in voice mode"
 msgstr "Діалог у голосовому режимі"
 
 msgid "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as that pair and you can put <1>-s</1> or <2>-l</2> on it. A stem changes a letter inside, gains a vowel at the end, or stays the same as the word. The next sections take one each."
-msgstr "Словник подає основу другою: <0>pood, poe</0>. Запам’ятовуй іменник саме такою парою — тоді до нього можна додати <1>-s</1> чи <2>-l</2>. Основа або змінює літеру всередині, або отримує голосну в кінці, або збігається зі словом. Далі про кожен випадок окремо."
+msgstr "У словнику основа стоїть другою: <0>pood, poe</0>. Запам’ятовуй іменник саме такою парою — тоді до нього можна додати <1>-s</1> чи <2>-l</2>. Основа або змінює літеру всередині, або отримує голосну в кінці, або збігається зі словом. Далі про кожен випадок окремо."
 
 msgid "A dictionary gives the stem second. Learn each noun as that pair: <0>pood, poe</0>."
-msgstr "Словник подає основу другою. Вчи кожен іменник парою: <0>pood, poe</0>."
+msgstr "У словнику основа стоїть другою. Вчи кожен іменник парою: <0>pood, poe</0>."
 
 msgid "A dictionary lists a third form too: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
 msgstr "Словник подає і третю форму: <0>pood, poe, poodi</0>. Про всі три розповідає урок {forms}."
@@ -1100,8 +1106,8 @@ msgstr "Свій розклад для кожної картки"
 msgid "A score for one attempt"
 msgstr "Бали за одну спробу"
 
-msgid "A shop is <0>pood</0>, but in the shop is <1>poes</1>. An ending goes on the noun’s stem, and the stem can differ from the word."
-msgstr "Магазин — <0>pood</0>, а в магазині — <1>poes</1>. Закінчення додаємо до основи іменника, а основа може відрізнятися від слова."
+msgid "A shop is <0>pood</0>, but in the shop is <1>poes</1>. <2>-s</2> and <3>-l</3> go on the noun’s stem, and the stem can differ from the word."
+msgstr "Магазин — <0>pood</0>, а в магазині — <1>poes</1>. <2>-s</2> і <3>-l</3> додаємо до основи іменника, а основа може відрізнятися від слова."
 
 msgid "A shop’s opening hours"
 msgstr "Години роботи магазину"
@@ -1703,12 +1709,6 @@ msgstr "Аматор"
 
 msgid "An app in ChatGPT"
 msgstr "Застосунок у ChatGPT"
-
-msgid "An ending goes on the noun’s stem: <0>pood</0>, stem <1>poe</1>, <2>poes</2>."
-msgstr "Закінчення додаємо до основи іменника: <0>pood</0>, основа <1>poe</1>, <2>poes</2>."
-
-msgid "An ending goes on the stem"
-msgstr "Закінчення додаємо до основи"
 
 msgid "An example deck"
 msgstr "Приклад колоди"
@@ -3426,8 +3426,8 @@ msgstr "Кожне питання — нове, у вивченні чи зас�
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Кожна відповідь — це наказ або коротка репліка. Обирай ту, що пасує до слів Марі."
 
-msgid "Each round shows a noun and a meaning, such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
-msgstr "У кожному раунді — іменник і значення, яке треба передати, наприклад «у магазині». Обери форму з цим значенням, а потім послухай її в реченні. Іменники — з усіх трьох розділів."
+msgid "Each round shows a noun as a dictionary gives it, with its stem, and a meaning such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
+msgstr "У кожному раунді — іменник, як його подає словник, разом з основою, і значення, яке треба передати, наприклад «у магазині». Обери форму з цим значенням, а потім послухай її в реченні. Іменники — з усіх трьох розділів."
 
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "У кожному раунді — місце. Обери закінчення, а потім послухай речення. Більшість міст, будівель і країн мають <0>-s</0>; робота, ринок і назви на <1>-maa</1> мають <2>-l</2>."
@@ -9534,17 +9534,17 @@ msgstr "Ще раз пройди кроки для шести іменників
 msgid "Switch through the three sets above once more, then try again."
 msgstr "Ще раз пройди кроки в трьох наборах вище, а потім спробуй знову."
 
-msgid "Switch to In the place and watch the last letters change."
-msgstr "Перемкни на «Де?» і дивись, як змінюються кінці слів."
-
-msgid "Switch to The stem and watch the end of each word."
+msgid "Switch to “The stem” and watch the end of each word."
 msgstr "Перемкни на «Основа» і дивись на кінець кожного слова."
 
-msgid "Switch to The stem and watch which letters change."
+msgid "Switch to “The stem” and watch which letters change."
 msgstr "Перемкни на «Основа» і дивись, які літери змінюються."
 
-msgid "Switch to The stem: no letter changes."
+msgid "Switch to “The stem”: no letter changes."
 msgstr "Перемкни на «Основа»: жодна літера не зміниться."
+
+msgid "Switch to In the place and watch the last letters change."
+msgstr "Перемкни на «Де?» і дивись, як змінюються кінці слів."
 
 msgid "Switching from"
 msgstr "Перехід з"
@@ -10426,8 +10426,8 @@ msgid "The stem is the word itself."
 msgstr "Основа — саме слово."
 
 #. placeholder {0}: noun.word
-msgid "The stem of {0}: endings go on it."
-msgstr "Основа слова {0}: до неї додаємо закінчення."
+msgid "The stem of {0}: -s and -l go on it."
+msgstr "Основа слова {0}: до неї додаємо -s і -l."
 
 msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
 msgstr "Основа перед закінченням часто змінюється: <0/> стає <1/> Поки що запам’ятовуй ці форми цілими словами. Звідки вони беруться, розповідає урок {verbForms} про три форми дієслова."

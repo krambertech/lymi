@@ -5,6 +5,7 @@ import {
   ASKED,
   changed,
   endingOf,
+  firstWords,
   formsInOrder,
   HEARD,
   threeForms,
@@ -58,15 +59,35 @@ describe("stems quizzes", () => {
     }
   });
 
-  it("offers the word and two others, the answer in no fixed place", () => {
+  it("offers the word, its stem and one other word, the answer in no fixed place", () => {
+    const tuba = HEARD.find((noun) => noun.word === "tuba");
+    if (!tuba) throw new Error("tuba is missing");
     const places = new Set<number>();
     for (let run = 0; run < 200; run++) {
-      const three = threeWords("tuba");
+      const three = threeWords(tuba);
       expect(new Set(three).size).toBe(3);
       expect(three).toContain("tuba");
+      expect(three).toContain("toa");
       places.add(three.indexOf("tuba"));
     }
     expect(places.size).toBe(3);
+  });
+
+  it("opens both quizzes on a noun other than pood, its answer not first", () => {
+    expect(HEARD[0]?.word).not.toBe("pood");
+    expect(ASKED[0]?.noun.word).not.toBe("pood");
+    expect(firstWords(0).indexOf(HEARD[0]?.word ?? "")).not.toBe(0);
+    const first = ASKED[0]?.noun;
+    if (!first) throw new Error("no first noun");
+    expect(formsInOrder(first, 1).indexOf(first.where)).not.toBe(0);
+  });
+
+  it("offers each first-round word with its stem", () => {
+    HEARD.forEach((noun, i) => {
+      expect(firstWords(i)).toContain(noun.word);
+      expect(firstWords(i)).toContain(noun.stem);
+      expect(new Set(firstWords(i)).size).toBe(3);
+    });
   });
 
   it("meets all three kinds in every run of “Which form?”", () => {
@@ -79,7 +100,9 @@ describe("stems quizzes", () => {
   });
 
   it("puts the first round's answer in every place across the nouns", () => {
-    const places = new Set(STEM_WORDS.map((noun, i) => formsInOrder(noun, i).indexOf(noun.where)));
+    const places = new Set(
+      STEM_WORDS.map((noun, i) => formsInOrder(noun, i + 1).indexOf(noun.where)),
+    );
     expect(places).toEqual(new Set([0, 1, 2]));
   });
 

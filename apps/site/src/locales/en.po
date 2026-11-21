@@ -13,6 +13,9 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+msgid "-s and -l go on the stem"
+msgstr "-s and -l go on the stem"
+
 msgid "-s or -l?"
 msgstr "-s or -l?"
 
@@ -411,6 +414,9 @@ msgstr "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same
 
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> or <1>-ke</1> on the end"
+
+msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
+msgstr "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
 
 #. placeholder {0}: noun.word
 #. placeholder {1}: noun.stem
@@ -1100,8 +1106,8 @@ msgstr "A schedule for every card"
 msgid "A score for one attempt"
 msgstr "A score for one attempt"
 
-msgid "A shop is <0>pood</0>, but in the shop is <1>poes</1>. An ending goes on the noun’s stem, and the stem can differ from the word."
-msgstr "A shop is <0>pood</0>, but in the shop is <1>poes</1>. An ending goes on the noun’s stem, and the stem can differ from the word."
+msgid "A shop is <0>pood</0>, but in the shop is <1>poes</1>. <2>-s</2> and <3>-l</3> go on the noun’s stem, and the stem can differ from the word."
+msgstr "A shop is <0>pood</0>, but in the shop is <1>poes</1>. <2>-s</2> and <3>-l</3> go on the noun’s stem, and the stem can differ from the word."
 
 msgid "A shop’s opening hours"
 msgstr "A shop’s opening hours"
@@ -1703,12 +1709,6 @@ msgstr "An amateur"
 
 msgid "An app in ChatGPT"
 msgstr "An app in ChatGPT"
-
-msgid "An ending goes on the noun’s stem: <0>pood</0>, stem <1>poe</1>, <2>poes</2>."
-msgstr "An ending goes on the noun’s stem: <0>pood</0>, stem <1>poe</1>, <2>poes</2>."
-
-msgid "An ending goes on the stem"
-msgstr "An ending goes on the stem"
 
 msgid "An example deck"
 msgstr "An example deck"
@@ -3426,8 +3426,8 @@ msgstr "Each question as New, Learning or Known"
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 
-msgid "Each round shows a noun and a meaning, such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
-msgstr "Each round shows a noun and a meaning, such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
+msgid "Each round shows a noun as a dictionary gives it, with its stem, and a meaning such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
+msgstr "Each round shows a noun as a dictionary gives it, with its stem, and a meaning such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
 
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
@@ -9534,17 +9534,17 @@ msgstr "Switch through the six nouns above once more, then try again."
 msgid "Switch through the three sets above once more, then try again."
 msgstr "Switch through the three sets above once more, then try again."
 
+msgid "Switch to “The stem” and watch the end of each word."
+msgstr "Switch to “The stem” and watch the end of each word."
+
+msgid "Switch to “The stem” and watch which letters change."
+msgstr "Switch to “The stem” and watch which letters change."
+
+msgid "Switch to “The stem”: no letter changes."
+msgstr "Switch to “The stem”: no letter changes."
+
 msgid "Switch to In the place and watch the last letters change."
 msgstr "Switch to In the place and watch the last letters change."
-
-msgid "Switch to The stem and watch the end of each word."
-msgstr "Switch to The stem and watch the end of each word."
-
-msgid "Switch to The stem and watch which letters change."
-msgstr "Switch to The stem and watch which letters change."
-
-msgid "Switch to The stem: no letter changes."
-msgstr "Switch to The stem: no letter changes."
 
 msgid "Switching from"
 msgstr "Switching from"
@@ -10426,8 +10426,8 @@ msgid "The stem is the word itself."
 msgstr "The stem is the word itself."
 
 #. placeholder {0}: noun.word
-msgid "The stem of {0}: endings go on it."
-msgstr "The stem of {0}: endings go on it."
+msgid "The stem of {0}: -s and -l go on it."
+msgstr "The stem of {0}: -s and -l go on it."
 
 msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
 msgstr "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."

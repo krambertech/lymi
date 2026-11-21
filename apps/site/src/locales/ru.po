@@ -13,6 +13,9 @@ msgstr ""
 "Language-Team: \n"
 "Plural-Forms: \n"
 
+msgid "-s and -l go on the stem"
+msgstr "-s и -l добавляем к основе"
+
 msgid "-s or -l?"
 msgstr "-s или -l?"
 
@@ -412,6 +415,9 @@ msgstr "<0/>, «быть», устроен так же. <1/> становитс�
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> или <1>-ke</1> на конце"
 
+msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
+msgstr "<0>-s</0> и <1>-l</1> добавляем к основе существительного: <2>pood</2>, основа <3>poe</3>, <4>poes</4>."
+
 #. placeholder {0}: noun.word
 #. placeholder {1}: noun.stem
 #. placeholder {2}: noun.stem
@@ -809,10 +815,10 @@ msgid "A dialogue in voice mode"
 msgstr "Диалог в голосовом режиме"
 
 msgid "A dictionary gives the stem second: <0>pood, poe</0>. Learn a noun as that pair and you can put <1>-s</1> or <2>-l</2> on it. A stem changes a letter inside, gains a vowel at the end, or stays the same as the word. The next sections take one each."
-msgstr "Словарь даёт основу второй: <0>pood, poe</0>. Запоминай существительное именно такой парой — тогда к нему можно добавить <1>-s</1> или <2>-l</2>. Основа либо меняет букву внутри, либо получает гласную на конце, либо совпадает со словом. Дальше о каждом случае по отдельности."
+msgstr "В словаре основа стоит второй: <0>pood, poe</0>. Запоминай существительное именно такой парой — тогда к нему можно добавить <1>-s</1> или <2>-l</2>. Основа либо меняет букву внутри, либо получает гласную на конце, либо совпадает со словом. Дальше о каждом случае по отдельности."
 
 msgid "A dictionary gives the stem second. Learn each noun as that pair: <0>pood, poe</0>."
-msgstr "Словарь даёт основу второй. Учи каждое существительное парой: <0>pood, poe</0>."
+msgstr "В словаре основа стоит второй. Учи каждое существительное парой: <0>pood, poe</0>."
 
 msgid "A dictionary lists a third form too: <0>pood, poe, poodi</0>. Lesson {forms} teaches all three."
 msgstr "Словарь даёт и третью форму: <0>pood, poe, poodi</0>. Обо всех трёх — в уроке {forms}."
@@ -1100,8 +1106,8 @@ msgstr "Своё расписание у каждой карточки"
 msgid "A score for one attempt"
 msgstr "Баллы за одну попытку"
 
-msgid "A shop is <0>pood</0>, but in the shop is <1>poes</1>. An ending goes on the noun’s stem, and the stem can differ from the word."
-msgstr "Магазин — <0>pood</0>, а в магазине — <1>poes</1>. Окончание добавляем к основе существительного, а основа может отличаться от слова."
+msgid "A shop is <0>pood</0>, but in the shop is <1>poes</1>. <2>-s</2> and <3>-l</3> go on the noun’s stem, and the stem can differ from the word."
+msgstr "Магазин — <0>pood</0>, а в магазине — <1>poes</1>. <2>-s</2> и <3>-l</3> добавляем к основе существительного, а основа может отличаться от слова."
 
 msgid "A shop’s opening hours"
 msgstr "Часы работы магазина"
@@ -1703,12 +1709,6 @@ msgstr "Дилетант"
 
 msgid "An app in ChatGPT"
 msgstr "Приложение в ChatGPT"
-
-msgid "An ending goes on the noun’s stem: <0>pood</0>, stem <1>poe</1>, <2>poes</2>."
-msgstr "Окончание добавляем к основе существительного: <0>pood</0>, основа <1>poe</1>, <2>poes</2>."
-
-msgid "An ending goes on the stem"
-msgstr "Окончание добавляем к основе"
 
 msgid "An example deck"
 msgstr "Пример колоды"
@@ -3426,8 +3426,8 @@ msgstr "Каждый вопрос — новый, в изучении или в�
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Каждый ответ — это команда или короткая реплика. Выбирай тот, что подходит к словам Мари."
 
-msgid "Each round shows a noun and a meaning, such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
-msgstr "В каждом раунде — существительное и смысл, который нужно передать, например «в магазине». Выбери форму с этим значением, а потом послушай её в предложении. Существительные — из всех трёх разделов."
+msgid "Each round shows a noun as a dictionary gives it, with its stem, and a meaning such as “in the shop”. Pick the form that says it, then hear it in a sentence. The nouns come from all three sections."
+msgstr "В каждом раунде — существительное, как его даёт словарь, вместе с основой, и смысл, который нужно передать, например «в магазине». Выбери форму с этим значением, а потом послушай её в предложении. Существительные — из всех трёх разделов."
 
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "В каждом раунде — место. Выбери окончание, а потом послушай предложение. Большинство городов, зданий и стран получают <0>-s</0>; работа, рынок и названия на <1>-maa</1> получают <2>-l</2>."
@@ -9534,17 +9534,17 @@ msgstr "Ещё раз пройди шаги для шести существит
 msgid "Switch through the three sets above once more, then try again."
 msgstr "Ещё раз пройди шаги в трёх наборах выше, а потом попробуй снова."
 
-msgid "Switch to In the place and watch the last letters change."
-msgstr "Переключи на «Где?» и смотри, как меняются концы слов."
-
-msgid "Switch to The stem and watch the end of each word."
+msgid "Switch to “The stem” and watch the end of each word."
 msgstr "Переключи на «Основа» и смотри на конец каждого слова."
 
-msgid "Switch to The stem and watch which letters change."
+msgid "Switch to “The stem” and watch which letters change."
 msgstr "Переключи на «Основа» и смотри, какие буквы меняются."
 
-msgid "Switch to The stem: no letter changes."
+msgid "Switch to “The stem”: no letter changes."
 msgstr "Переключи на «Основа»: ни одна буква не изменится."
+
+msgid "Switch to In the place and watch the last letters change."
+msgstr "Переключи на «Где?» и смотри, как меняются концы слов."
 
 msgid "Switching from"
 msgstr "Переход с"
@@ -10426,8 +10426,8 @@ msgid "The stem is the word itself."
 msgstr "Основа — само слово."
 
 #. placeholder {0}: noun.word
-msgid "The stem of {0}: endings go on it."
-msgstr "Основа слова {0}: к ней добавляем окончания."
+msgid "The stem of {0}: -s and -l go on it."
+msgstr "Основа слова {0}: к ней добавляем -s и -l."
 
 msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
 msgstr "Основа перед окончанием часто меняется: <0/> превращается в <1/> Пока запоминай эти формы целыми словами. Откуда они берутся, рассказывает урок {verbForms} о трёх формах глагола."

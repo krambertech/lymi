@@ -91,7 +91,7 @@ const SAID_MEANS: Record<Noun["said"], MessageDescriptor> = {
   "Ma elan Soomes.": msg`I live in Finland.`,
 };
 
-const stemNote = (noun: Noun) => msg`The stem of ${noun.word}: endings go on it.`;
+const stemNote = (noun: Noun) => msg`The stem of ${noun.word}: -s and -l go on it.`;
 
 const GLOSSARY: Glossary = {
   ...Object.fromEntries(
@@ -290,24 +290,28 @@ function PoodSteps() {
   );
 }
 
-/** “Which word?”: the nouns whose stem changes inside, each heard in its sentence. */
-export const HEARD = ofKind("inside");
+/** “Which word?”: the nouns whose stem changes inside, each heard in its sentence; tuba first. */
+export const HEARD = [...ofKind("inside").slice(1), ...ofKind("inside").slice(0, 1)];
 
-/** The answer and two other words whose stem changes inside, at random, in random order. */
-export function threeWords(answer: Dictionary): Dictionary[] {
-  const others = HEARD.map((each) => each.word).filter((each) => each !== answer);
-  return shuffle([answer, ...shuffle(others).slice(0, 2)]);
+/**
+ * The headword, its stem and one other headword of the same kind, in random order. The stem is the
+ * likeliest slip: a learner who strips the -s from toas looks up toa.
+ */
+export function threeWords(noun: Noun): string[] {
+  const others = HEARD.map((each) => each.word).filter((each) => each !== noun.word);
+  return shuffle([noun.word, noun.stem, ...shuffle(others).slice(0, 1)]);
 }
 
-/** The first round's options, fixed so the page renders the same on the server. */
-const firstWords = (i: number): Dictionary[] => {
-  const three = [0, 2, 4].map((step) => HEARD[(i + step) % HEARD.length]?.word as Dictionary);
-  const turn = i % 3;
+/** The first round's options, fixed so the page renders the same on the server, turned by one. */
+export const firstWords = (i: number): string[] => {
+  const noun = HEARD[i] as Noun;
+  const three = [noun.word, noun.stem, (HEARD[(i + 2) % HEARD.length] as Noun).word];
+  const turn = (i + 1) % 3;
   return [...three.slice(turn), ...three.slice(0, turn)];
 };
 
 /** “Which form?”: every noun, keyed by its kind so a run meets each kind early. */
-export const ASKED = STEM_WORDS.map((noun) => ({
+export const ASKED = [...STEM_WORDS.slice(6), ...STEM_WORDS.slice(0, 6)].map((noun) => ({
   noun,
   pair: [noun.kind, noun.word] as const,
 }));
@@ -340,11 +344,16 @@ interface FormItem {
   pair: readonly [string, string];
 }
 
-const wordOptions = (words: readonly Dictionary[], i18n: I18n) =>
+/** A headword or a stem as an option, each with the meaning of its headword. */
+const wordOptions = (words: readonly string[], i18n: I18n) =>
   words.map((word) => ({
     id: word,
     label: <span lang="et">{word}</span>,
-    sub: i18n._(WORD_MEANS[word]),
+    sub: i18n._(
+      WORD_MEANS[
+        (STEM_WORDS.find((noun) => noun.word === word || noun.stem === word) as Noun).word
+      ],
+    ),
   }));
 
 /** The pair a dictionary gives, and the sentence with its meaning, after an answer. */
@@ -384,7 +393,7 @@ function FormRound({ item, state, heard, answer }: RoundProps<FormItem>) {
       <div className="grid gap-1">
         <p className="flex flex-wrap items-baseline gap-x-3">
           <span lang="et" className="text-[clamp(2.25rem,8vw,3rem)] leading-none font-semibold">
-            {noun.word}
+            {noun.word}, {noun.stem}
           </span>
           <span className="text-md text-ink-muted">{i18n._(WORD_MEANS[noun.word])}</span>
         </p>
@@ -471,9 +480,7 @@ export function PoodPoeLesson() {
   // Every round but the first draws its wrong words afresh, so no set of options names the answer.
   const heardRun = (items: readonly HeardItem[], pinned?: HeardItem): HeardItem[] =>
     eachPairFirst(items, pinned).map((item) =>
-      item === pinned
-        ? item
-        : { ...item, options: wordOptions(threeWords(item.answer as Dictionary), i18n) },
+      item === pinned ? item : { ...item, options: wordOptions(threeWords(item.noun), i18n) },
     );
 
   const formItems = useMemo<FormItem[]>(
@@ -483,7 +490,7 @@ export function PoodPoeLesson() {
         pair,
         src: src(noun.said),
         answer: noun.where,
-        options: formsInOrder(noun, i),
+        options: formsInOrder(noun, i + 1),
       })),
     [],
   );
@@ -494,7 +501,10 @@ export function PoodPoeLesson() {
       item === pinned ? item : { ...item, options: threeForms(item.noun) },
     );
 
-  const gaps = SATURDAY_GAPS((noun) => (
+  // The server renders each gap's options in a fixed order; the browser shuffles them once loaded.
+  const [shuffled, setShuffled] = useState(false);
+  useEffect(() => setShuffled(true), []);
+  const serverGaps = SATURDAY_GAPS((noun) => (
     <Trans>
       <span lang="et">
         {noun.word}, {noun.stem}
@@ -502,10 +512,18 @@ export function PoodPoeLesson() {
       : the ending goes on <span lang="et">{noun.stem}</span>.
     </Trans>
   ));
+  // biome-ignore lint/correctness/useExhaustiveDependencies: shuffled once, when the page loads
+  const gaps = useMemo(
+    () =>
+      shuffled
+        ? serverGaps.map((gap) => ({ ...gap, options: shuffle(gap.options ?? [gap.answer]) }))
+        : serverGaps,
+    [shuffled],
+  );
 
   const kindNotes = {
     inside: {
-      word: <Trans>Switch to The stem and watch which letters change.</Trans>,
+      word: <Trans>Switch to “The stem” and watch which letters change.</Trans>,
       stem: (
         <Trans>
           A letter drops or changes inside: <span lang="et">pood, poe</span>;{" "}
@@ -520,7 +538,7 @@ export function PoodPoeLesson() {
       ),
     },
     vowel: {
-      word: <Trans>Switch to The stem and watch the end of each word.</Trans>,
+      word: <Trans>Switch to “The stem” and watch the end of each word.</Trans>,
       stem: (
         <Trans>
           Each word gains a vowel at the end: <span lang="et">kooli, ukse, raamatu</span>.
@@ -533,7 +551,7 @@ export function PoodPoeLesson() {
       ),
     },
     same: {
-      word: <Trans>Switch to The stem: no letter changes.</Trans>,
+      word: <Trans>Switch to “The stem”: no letter changes.</Trans>,
       stem: <Trans>The stem is the word itself.</Trans>,
       where: (
         <Trans>
@@ -549,8 +567,15 @@ export function PoodPoeLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          A shop is <span lang="et">pood</span>, but in the shop is <span lang="et">poes</span>. An
-          ending goes on the noun’s stem, and the stem can differ from the word.
+          A shop is <span lang="et">pood</span>, but in the shop is <span lang="et">poes</span>.{" "}
+          <b lang="et" className="whitespace-nowrap">
+            -s
+          </b>{" "}
+          and{" "}
+          <b lang="et" className="whitespace-nowrap">
+            -l
+          </b>{" "}
+          go on the noun’s stem, and the stem can differ from the word.
         </Trans>
       }
       facts={[
@@ -574,7 +599,14 @@ export function PoodPoeLesson() {
       ]}
       recap={[
         <Trans key="1">
-          An ending goes on the noun’s stem: <b lang="et">pood</b>, stem <b lang="et">poe</b>,{" "}
+          <b lang="et" className="whitespace-nowrap">
+            -s
+          </b>{" "}
+          and{" "}
+          <b lang="et" className="whitespace-nowrap">
+            -l
+          </b>{" "}
+          go on the noun’s stem: <b lang="et">pood</b>, stem <b lang="et">poe</b>,{" "}
           <b lang="et">poes</b>.
         </Trans>,
         <Trans key="2">
@@ -595,7 +627,7 @@ export function PoodPoeLesson() {
       sections={[
         {
           id: "stem",
-          title: t`An ending goes on the stem`,
+          title: t`-s and -l go on the stem`,
           children: (
             <>
               <Prose>
@@ -776,8 +808,9 @@ export function PoodPoeLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round shows a noun and a meaning, such as “in the shop”. Pick the form that
-                    says it, then hear it in a sentence. The nouns come from all three sections.
+                    Each round shows a noun as a dictionary gives it, with its stem, and a meaning
+                    such as “in the shop”. Pick the form that says it, then hear it in a sentence.
+                    The nouns come from all three sections.
                   </Trans>
                 </p>
               </Prose>

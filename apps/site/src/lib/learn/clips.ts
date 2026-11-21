@@ -1922,6 +1922,80 @@ export const INFINITIVE_WORDS = [
   "Ma tahan homme linna minna.",
   "Ma hakkan täna kodus õppima.",
 ] as const;
+
+export type Way = "ma" | "mas" | "mast";
+export const WAYS: readonly Way[] = ["ma", "mas", "mast"];
+
+export const WAY_LEADS: Record<Way, string> = { ma: "läheb", mas: "on", mast: "tuleb" };
+
+export const GOING_VERBS = [
+  { verb: "ujuma", stem: "uju" },
+  { verb: "jooksma", stem: "jooks" },
+  { verb: "sööma", stem: "söö" },
+  { verb: "kohvi jooma", stem: "kohvi joo" },
+] as const;
+
+export type GoingVerb = (typeof GOING_VERBS)[number];
+
+export const goingForm = (verb: GoingVerb, way: Way) => `${verb.stem}${way}`;
+
+export const goingSentence = (verb: GoingVerb, way: Way) =>
+  `Mari ${WAY_LEADS[way]} ${goingForm(verb, way)}.`;
+
+export const GOING_SCENE = [
+  { id: "majja", word: "sööma", sentence: "Kass läheb sööma." },
+  { id: "majas", word: "söömas", sentence: "Kass on söömas." },
+  { id: "majast", word: "söömast", sentence: "Kass tuleb söömast." },
+] as const;
+
+export const GOING_SORT = [
+  { w: "jooksma", bin: "kuhu" },
+  { w: "koju", bin: "kuhu" },
+  { w: "linna", bin: "kuhu" },
+  { w: "kohvi joomas", bin: "kus" },
+  { w: "kohvikus", bin: "kus" },
+  { w: "Tallinnas", bin: "kus" },
+  { w: "söömast", bin: "kust" },
+  { w: "koolist", bin: "kust" },
+  { w: "kodust", bin: "kust" },
+] as const;
+
+export const GOING_KEYS = [
+  { lead: "lähen", said: "Ma lähen ujuma.", form: "uju|ma" },
+  { lead: "olen", said: "Ma olen ujumas.", form: "uju|mas" },
+  { lead: "käin", said: "Ma käin iga päev ujumas.", form: "uju|mas" },
+  { lead: "tulen", said: "Ma tulen ujumast.", form: "uju|mast" },
+  { lead: "tule", said: "Tule sööma!", form: "söö|ma" },
+] as const;
+
+export const GOING_VOICE = [
+  "Tere, Jaan! Ma olen kodus.",
+  "Ema ei ole kodus, ta on ujumas.",
+  "Ta käib iga päev ujumas.",
+  "Isa tuleb kell viis jooksmast.",
+  "Ma lähen kell kuus sööma.",
+  "Tule ka sööma!",
+] as const;
+
+export const GOING_WORDS = [
+  "majja",
+  "majas",
+  "majast",
+  "poodi",
+  "poes",
+  "poest",
+  "Kus Mari on?",
+  "Kuhu sa lähed?",
+  "Kust sa tuled?",
+  "lähen",
+  "olen",
+  "käin",
+  "käima",
+  "tulen",
+  "tulema",
+  "iga päev",
+] as const;
+
 /**
  * The plural lesson's nouns: the first and second forms a dictionary gives, and the plural, the
  * second form with -d. `same` words only gain a vowel or nothing; `changed` ones keep lesson 13's
@@ -2615,6 +2689,15 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(INFINITIVE_ORDER),
     ...words(INFINITIVE_WORDS),
     "p-message": { sentences: INFINITIVE_MESSAGE },
+  },
+  "ujuma-ujumas-ujumast": {
+    ...words(GOING_VERBS.flatMap((verb) => WAYS.map((way) => goingForm(verb, way)))),
+    ...words(GOING_VERBS.flatMap((verb) => WAYS.map((way) => goingSentence(verb, way)))),
+    ...words(GOING_SCENE.map(({ sentence }) => sentence)),
+    ...words(GOING_SORT.map(({ w }) => w)),
+    ...words(GOING_KEYS.map(({ said }) => said)),
+    ...words(GOING_WORDS),
+    "p-voice": { sentences: GOING_VOICE, voice: "second" },
   },
   mitmus: MITMUS_CLIPS,
   osastav: OSASTAV_CLIPS,

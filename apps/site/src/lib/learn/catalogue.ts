@@ -247,7 +247,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 12,
         blurb: msg`A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and mul on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud.`,
       },
-      { name: msg`Going, being, coming back: -ma, -mas, -mast`, et: "Lähen ujuma, olen ujumas" },
+      {
+        slug: "ujuma-ujumas-ujumast",
+        name: msg`Going, being, coming back: -ma, -mas, -mast`,
+        title: msg`Estonian -ma, -mas and -mast: going, being and coming back`,
+        et: "Lähen ujuma, olen ujumas",
+        minutes: 12,
+        blurb: msg`A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud.`,
+      },
       { name: msg`“To like” and feelings`, et: "Mulle meeldib" },
       { name: msg`Practice: at the market`, et: "Turul" },
       {

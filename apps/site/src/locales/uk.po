@@ -4077,9 +4077,6 @@ msgstr "Почуватися й подобатися"
 msgid "Feeling low; in a slump"
 msgstr "Кепський настрій; занепад сил"
 
-msgid "Feelings such as cold and gladness take the <0>-l</0> form, as having does: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
-msgstr "Із почуттями на кшталт холоду чи радості — форма на <0>-l</0>, як і з «у мене є»: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
-
 msgid "Feelings, travel and polite speech, once N5 feels easy."
 msgstr "Почуття, подорожі й ввічливе мовлення, коли N5 уже дається легко."
 
@@ -7080,8 +7077,8 @@ msgstr "Марі працює в лікарні."
 msgid "Mari writes"
 msgstr "Марі пише"
 
-msgid "Mari writes to Jaan. Fill each gap: the <0>-l</0> form for a feeling, the <1>-le</1> form for liking and for to whom, and <2>meeldib</2> or <3>meeldivad</3> for what she likes."
-msgstr "Марі пише Яану. Заповни кожен пропуск: форма на <0>-l</0> — для почуттів, форма на <1>-le</1> — для «подобається» і «кому», а <2>meeldib</2> чи <3>meeldivad</3> — залежно від того, що їй подобається."
+msgid "Mari writes to Jaan. Fill each gap: the <0>-l</0> form for a feeling, the <1>-le</1> form for liking and for “to me”, and <2>meeldib</2> or <3>meeldivad</3> for what she likes."
+msgstr "Марі пише Яану. Заповни кожен пропуск: форма на <0>-l</0> — для почуттів, форма на <1>-le</1> — для «подобається» і «мені», а <2>meeldib</2> чи <3>meeldivad</3> — залежно від того, що їй подобається."
 
 msgid "Mari’s brother"
 msgstr "Брат Марі"
@@ -9712,6 +9709,9 @@ msgstr "Отже; ну що ж"
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre — «над», mesa — «стіл». Буває, що вона триває довше за саму їжу."
 
+msgid "Some feelings take the <0>-l</0> form, as having does: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
+msgstr "Деякі почуття беруть форму на <0>-l</0>, як і «у мене є»: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
+
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Деякі кандзі в китайському шрифті виглядають інакше. Lymi показує твої картки в японському написанні, як у японських книжках."
 
@@ -11179,7 +11179,7 @@ msgstr "Цілий вечір нема чого робити."
 msgid "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
 msgstr "З цих одинадцяти слів будується кожне число до 99. Натисни на кожне. Дві пари звучать схоже: <0/> і <1/>, <2/> і <3/>."
 
-msgid "These feelings take the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>. Others use <4>ma olen</4>, as in lesson {pronouns}: <5/>, I’m tired."
+msgid "These feelings take the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>. Other feelings use <4>ma olen</4>, as in lesson {pronouns}: <5/>, I’m tired."
 msgstr "З цими почуттями — форма на <0>-l</0> з уроку {mulOn}, як і з «у мене є»: <1/>, мені холодно. Дослівно — «у мене холодно»: <2>mul</2>, а не <3>mulle</3>, хоча українською кажемо «мені». Інші почуття — з <4>ma olen</4>, як в уроці {pronouns}: <5/>, я втомився."
 
 msgid "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."

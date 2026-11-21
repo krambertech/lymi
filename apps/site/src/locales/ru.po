@@ -513,7 +513,7 @@ msgid "<0>Ei meeldi</0> for both"
 msgstr "<0>Ei meeldi</0> в обоих случаях"
 
 msgid "<0>Ei meeldi</0> is the same for one thing or more."
-msgstr "<0>Ei meeldi</0> одно и то же, одно это или несколько."
+msgstr "<0>Ei meeldi</0> — и когда что-то одно, и когда несколько."
 
 msgid "<0>Ei ole</0> in one word"
 msgstr "<0>Ei ole</0> одним словом"
@@ -4077,9 +4077,6 @@ msgstr "Чувствовать себя и нравиться"
 msgid "Feeling low; in a slump"
 msgstr "Плохое настроение; упадок сил"
 
-msgid "Feelings such as cold and gladness take the <0>-l</0> form, as having does: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
-msgstr "С чувствами вроде холода или радости — форма на <0>-l</0>, как и с «у меня есть»: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
-
 msgid "Feelings, travel and polite speech, once N5 feels easy."
 msgstr "Чувства, поездки и вежливая речь, когда N5 уже даётся легко."
 
@@ -7080,8 +7077,8 @@ msgstr "Мари работает в больнице."
 msgid "Mari writes"
 msgstr "Мари пишет"
 
-msgid "Mari writes to Jaan. Fill each gap: the <0>-l</0> form for a feeling, the <1>-le</1> form for liking and for to whom, and <2>meeldib</2> or <3>meeldivad</3> for what she likes."
-msgstr "Мари пишет Яану. Заполни каждый пропуск: форма на <0>-l</0> — для чувств, форма на <1>-le</1> — для «нравится» и «кому», а <2>meeldib</2> или <3>meeldivad</3> — в зависимости от того, что ей нравится."
+msgid "Mari writes to Jaan. Fill each gap: the <0>-l</0> form for a feeling, the <1>-le</1> form for liking and for “to me”, and <2>meeldib</2> or <3>meeldivad</3> for what she likes."
+msgstr "Мари пишет Яану. Заполни каждый пропуск: форма на <0>-l</0> — для чувств, форма на <1>-le</1> — для «нравится» и «мне», а <2>meeldib</2> или <3>meeldivad</3> — в зависимости от того, что ей нравится."
 
 msgid "Mari’s brother"
 msgstr "Брат Мари"
@@ -7667,7 +7664,7 @@ msgid "Not for most certifications yet. Your assistant can turn your study guide
 msgstr "Для большинства сертификаций пока нет. Ассистент может за несколько минут превратить твоё пособие в колоду, а колода из Anki или Mochi импортируется вместе с историей повторений."
 
 msgid "Not liking is <0>ei meeldi</0>, for one thing or more: <1>Mulle ei meeldi koerad.</1>"
-msgstr "«Не нравится» — это <0>ei meeldi</0>, одно это или несколько: <1>Mulle ei meeldi koerad.</1>"
+msgstr "«Не нравится» — это <0>ei meeldi</0>, и для одного, и для нескольких: <1>Mulle ei meeldi koerad.</1>"
 
 msgid "Not marked important"
 msgstr "Не отмечена как важная"
@@ -9712,6 +9709,9 @@ msgstr "Итак; ну что ж"
 msgid "Sobre, over, plus mesa, table. It can outlast the meal."
 msgstr "Sobre — «над», mesa — «стол». Бывает, что она длится дольше самой еды."
 
+msgid "Some feelings take the <0>-l</0> form, as having does: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
+msgstr "Некоторые чувства берут форму на <0>-l</0>, как и «у меня есть»: <1>Mul on külm.</1> <2>Mul on hea meel.</2>"
+
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Некоторые кандзи в китайском шрифте выглядят иначе. Lymi показывает твои карточки в японском написании, как в японских книгах."
 
@@ -10985,7 +10985,7 @@ msgid "The same topic in other languages"
 msgstr "Та же тема на других языках"
 
 msgid "The same whoever likes it: <0>mulle</0>, <1>talle</1>, <2>meile</2> or <3>neile</3>."
-msgstr "Одинаково, кому нравится: <0>mulle</0>, <1>talle</1>, <2>meile</2> или <3>neile</3>."
+msgstr "Неважно, кому нравится: <0>mulle</0>, <1>talle</1>, <2>meile</2> или <3>neile</3>."
 
 msgid "The same with a house: the cat walks in, sits inside, and comes out."
 msgstr "То же с домом: кот заходит, сидит внутри и выходит."
@@ -11179,7 +11179,7 @@ msgstr "Весь вечер нечего делать."
 msgid "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
 msgstr "Из этих одиннадцати слов строится любое число до 99. Нажми на каждое. Две пары звучат похоже: <0/> и <1/>, <2/> и <3/>."
 
-msgid "These feelings take the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>. Others use <4>ma olen</4>, as in lesson {pronouns}: <5/>, I’m tired."
+msgid "These feelings take the <0>-l</0> form of lesson {mulOn}, as having does: <1/>, I’m cold. Word for word, it’s “at me is cold”, with <2>mul</2>, not <3>mulle</3>. Other feelings use <4>ma olen</4>, as in lesson {pronouns}: <5/>, I’m tired."
 msgstr "С этими чувствами — форма на <0>-l</0> из урока {mulOn}, как и с «у меня есть»: <1/>, мне холодно. Дословно — «у меня холодно»: <2>mul</2>, а не <3>mulle</3>, хотя по-русски говорим «мне». Другие чувства — с <4>ma olen</4>, как в уроке {pronouns}: <5/>, я устал."
 
 msgid "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."

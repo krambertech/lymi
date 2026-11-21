@@ -712,8 +712,8 @@ export function MeeldimaLesson() {
           <b lang="et">Kas sulle meeldib Tallinn? Kellele meeldib kohv?</b>
         </Trans>,
         <Trans key="5">
-          Feelings such as cold and gladness take the <End>-l</End> form, as having does:{" "}
-          <b lang="et">Mul on külm.</b> <b lang="et">Mul on hea meel.</b>
+          Some feelings take the <End>-l</End> form, as having does: <b lang="et">Mul on külm.</b>{" "}
+          <b lang="et">Mul on hea meel.</b>
         </Trans>,
       ]}
       sections={[
@@ -910,7 +910,7 @@ export function MeeldimaLesson() {
                   <Trans>
                     These feelings take the <End>-l</End> form of lesson {mulOn}, as having does:{" "}
                     <Word w="Mul on külm" />, I’m cold. Word for word, it’s “at me is cold”, with{" "}
-                    <span lang="et">mul</span>, not <span lang="et">mulle</span>. Others use{" "}
+                    <span lang="et">mul</span>, not <span lang="et">mulle</span>. Other feelings use{" "}
                     <span lang="et">ma olen</span>, as in lesson {pronouns}:{" "}
                     <Word w="Ma olen väsinud" />, I’m tired.
                   </Trans>
@@ -960,7 +960,7 @@ export function MeeldimaLesson() {
                 <p>
                   <Trans>
                     Mari writes to Jaan. Fill each gap: the <End>-l</End> form for a feeling, the{" "}
-                    <End>-le</End> form for liking and for to whom, and{" "}
+                    <End>-le</End> form for liking and for “to me”, and{" "}
                     <span lang="et">meeldib</span> or <span lang="et">meeldivad</span> for what she
                     likes.
                   </Trans>

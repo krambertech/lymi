@@ -7,7 +7,7 @@ const i18n = setupI18n({ locale: "en", messages: { en: {} } });
 
 describe("past-tense quizzes", () => {
   it("asks every person once in a six-round run of endings", () => {
-    const items = endingItems(i18n);
+    const items = endingItems();
     for (let run = 0; run < 200; run++) {
       const six = endingRun(items, run === 0 ? items[0] : undefined).slice(0, 6);
       expect(new Set(six.map((item) => item.pair[0])).size).toBe(6);
@@ -15,7 +15,7 @@ describe("past-tense quizzes", () => {
   });
 
   it("opens on a round that isn't the lesson's first example", () => {
-    const [first] = endingItems(i18n);
+    const [first] = endingItems();
     expect(first?.said).toBe("Te ootasite");
     expect(first?.options.indexOf(first.answer)).toBe(1);
   });

@@ -10,9 +10,9 @@ import {
   PAST_I_VERBS,
   PAST_NOW_OR_THEN,
   PAST_SATURDAY,
-  PAST_SORT,
   PAST_SI_ENDINGS,
   PAST_SI_VERBS,
+  PAST_SORT,
   PAST_TIMELINE,
   PRESENT_ENDINGS,
   presentWithPronoun,
@@ -25,9 +25,9 @@ import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
 import { Morph, type MorphChain } from "../Morph";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
-import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, type GapItem, GapRound, Quiz } from "../Quiz";
+import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Timeline, type TimelinePoint } from "../Timeline";
 import { Word } from "../Word";
 
@@ -205,7 +205,7 @@ const GAP_FITS = 12;
 const FIRST_ENDING = { pronoun: "te", verb: "ootama", turn: 2 } as const;
 
 /** Every -si- verb with every person whose sentence fits the gap, the first round first. */
-export function endingItems(i18n: I18n): EndingItem[] {
+export function endingItems(): EndingItem[] {
   const items = PAST_SI_VERBS.flatMap((verb) => PAST_SI_ENDINGS.map((person) => ({ verb, person })))
     .filter(
       ({ verb, person }) =>
@@ -625,7 +625,7 @@ function useContent() {
       chains,
       bins,
       sort,
-      endings: endingItems(i18n),
+      endings: endingItems(),
       when: whenItems(i18n),
       whenRun,
       saturday,
@@ -704,8 +704,8 @@ export function LihtminevikLesson() {
                 <p>
                   <Trans>
                     In lesson {days} you met <Word w="eile" />, yesterday. It goes with the past:{" "}
-                    <Word w="Eile õppisin eesti keelt" />. With <Word w="täna" />, today, the verb is
-                    in the present: <Word w="Täna õpin eesti keelt" />.
+                    <Word w="Eile õppisin eesti keelt" />. With <Word w="täna" />, today, the verb
+                    is in the present: <Word w="Täna õpin eesti keelt" />.
                   </Trans>
                 </p>
                 <p>

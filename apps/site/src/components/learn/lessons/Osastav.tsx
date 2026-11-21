@@ -22,7 +22,7 @@ import {
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, type KeyItem, Keys, Panel } from "../Explore";
-import { type GapItem as PassageGap, GapPassage } from "../GapPassage";
+import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
 import { Listening, type PassageQuestion } from "../Passage";
@@ -278,13 +278,13 @@ function CountSwitch() {
       <p aria-live="polite" className="text-md text-ink-secondary">
         {number === "üks" ? (
           <Trans>
-            After <b lang="et">üks</b>, each noun keeps its first form. Pick{" "}
-            <b lang="et">kaks</b> and watch the endings.
+            After <b lang="et">üks</b>, each noun keeps its first form. Pick <b lang="et">kaks</b>{" "}
+            and watch the endings.
           </Trans>
         ) : (
           <Trans>
-            From two up, each noun takes its third form. <b lang="et">Maja</b> looks the same,
-            since its third form is <b lang="et">maja</b> too.
+            From two up, each noun takes its third form. <b lang="et">Maja</b> looks the same, since
+            its third form is <b lang="et">maja</b> too.
           </Trans>
         )}
       </p>
@@ -333,13 +333,12 @@ function NoSwitch() {
         {no ? (
           <Trans>
             After <b lang="et">pole</b>, what isn’t there takes its third form:{" "}
-            <b lang="et">kassi, autot, last</b>.{" "}
-            <b lang="et">Maja</b> stays <b lang="et">maja</b>.
+            <b lang="et">kassi, autot, last</b>. <b lang="et">Maja</b> stays <b lang="et">maja</b>.
           </Trans>
         ) : (
           <Trans>
-            What someone has, or what is there, keeps its first form. Pick{" "}
-            <b lang="et">pole</b> to say it isn’t there.
+            What someone has, or what is there, keeps its first form. Pick <b lang="et">pole</b> to
+            say it isn’t there.
           </Trans>
         )}
       </p>
@@ -658,8 +657,8 @@ export function OsastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Mitu" /> asks how many, and the noun after it takes its third form
-                    too. For a price, ask with <b lang="et">kui palju</b>, how much, from lesson{" "}
+                    <Word w="Mitu" /> asks how many, and the noun after it takes its third form too.
+                    For a price, ask with <b lang="et">kui palju</b>, how much, from lesson{" "}
                     {questions}.
                   </Trans>
                 </p>
@@ -778,9 +777,9 @@ export function OsastavLesson() {
               <Aside>
                 <Trans>
                   You can also say <Word w="Mul ei ole kassi." /> It means the same:{" "}
-                  <b lang="et">pole</b> is the short form of <b lang="et">ei ole</b>. A sentence that
-                  starts with the thing keeps its first form: <Word w="Kass pole laual." /> Lesson{" "}
-                  {have} taught <b lang="et">mul on</b>.
+                  <b lang="et">pole</b> is the short form of <b lang="et">ei ole</b>. A sentence
+                  that starts with the thing keeps its first form: <Word w="Kass pole laual." />{" "}
+                  Lesson {have} taught <b lang="et">mul on</b>.
                 </Trans>
               </Aside>
             </>
@@ -871,4 +870,3 @@ export function OsastavLesson() {
     />
   );
 }
-

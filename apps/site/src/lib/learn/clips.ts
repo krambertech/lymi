@@ -954,10 +954,7 @@ const OSASTAV_CLIPS: Record<string, Clip> = {
     ...OSASTAV_COUNT.numbers.flatMap((number) =>
       OSASTAV_COUNT.nouns.map((noun) => counted(number, noun)),
     ),
-    ...OSASTAV_COUNTED.flatMap(({ noun, number }) => [
-      counted("üks", noun),
-      counted(number, noun),
-    ]),
+    ...OSASTAV_COUNTED.flatMap(({ noun, number }) => [counted("üks", noun), counted(number, noun)]),
     ...OSASTAV_EXCHANGES.flatMap(({ q, a }) => [q, a]),
     ...OSASTAV_AMOUNTS.map(({ phrase }) => phrase),
     ...OSASTAV_NO.flatMap(({ yes, no }) => [yes, no]),

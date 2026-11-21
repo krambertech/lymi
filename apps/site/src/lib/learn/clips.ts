@@ -907,7 +907,7 @@ export const MEELDIMA_PASSAGE = [
   "Või tule kohvikusse.",
   "Kohvikus on kass.",
   "Mulle meeldivad kassid.",
-  "Kirjuta mulle!",
+  "Kirjuta mulle homme!",
 ] as const;
 
 /** Making plans with Liis: her lines in the second voice, the learner's in the main one. */

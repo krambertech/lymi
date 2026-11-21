@@ -6125,11 +6125,11 @@ msgstr "Це {right}: <0>{words}</0> — пів шляху до {next}."
 msgid "It’s *cosy* in the sauna."
 msgstr "У сауні *затишно*."
 
-msgid "It’s −15 °C outside."
-msgstr "Надворі −15 °C."
+msgid "It’s −15 °C outside."
+msgstr "Надворі −15 °C."
 
-msgid "It’s 30 °C in the sun."
-msgstr "На сонці 30 °C."
+msgid "It’s 30 °C in the sun."
+msgstr "На сонці 30 °C."
 
 msgid "It’s a cold day, and you like coffee and cats. Liis speaks first; pick what you say back."
 msgstr "День холодний, а ти любиш каву й котів. Лііс говорить першою; обирай, що відповісти."
@@ -6670,6 +6670,9 @@ msgstr "Подобається чи ні"
 
 msgid "Liking takes the <0>-le</0> form, and so does not liking: <1>mulle ei meeldi</1>."
 msgstr "«Подобається» — з формою на <0>-le</0>, і «не подобається» теж: <1>mulle ei meeldi</1>."
+
+msgid "Liking takes the <0>-le</0> form: <1>mulle meeldib</1>, not <2>mul</2>."
+msgstr "«Подобається» — з формою на <0>-le</0>: <1>mulle meeldib</1>, а не <2>mul</2>."
 
 msgid "Liking to do something"
 msgstr "Подобається щось робити"
@@ -10386,9 +10389,6 @@ msgstr "Так ти кажеш, що тобі не подобається. А Л
 
 msgid "That says you have cats."
 msgstr "Так ти кажеш, що в тебе є коти."
-
-msgid "That says you have coffee. Liis asked if you like it."
-msgstr "Так ти кажеш, що в тебе є кава. А Лііс питала, чи вона тобі подобається."
 
 msgid "That says you like the cold."
 msgstr "Так ти кажеш, що тобі подобається холод."

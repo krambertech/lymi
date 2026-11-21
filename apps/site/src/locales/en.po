@@ -6125,11 +6125,11 @@ msgstr "It’s {right}: <0>{words}</0> is halfway to {next}."
 msgid "It’s *cosy* in the sauna."
 msgstr "It’s *cosy* in the sauna."
 
-msgid "It’s −15 °C outside."
-msgstr "It’s −15 °C outside."
+msgid "It’s −15 °C outside."
+msgstr "It’s −15 °C outside."
 
-msgid "It’s 30 °C in the sun."
-msgstr "It’s 30 °C in the sun."
+msgid "It’s 30 °C in the sun."
+msgstr "It’s 30 °C in the sun."
 
 msgid "It’s a cold day, and you like coffee and cats. Liis speaks first; pick what you say back."
 msgstr "It’s a cold day, and you like coffee and cats. Liis speaks first; pick what you say back."
@@ -6670,6 +6670,9 @@ msgstr "Likes or doesn’t like"
 
 msgid "Liking takes the <0>-le</0> form, and so does not liking: <1>mulle ei meeldi</1>."
 msgstr "Liking takes the <0>-le</0> form, and so does not liking: <1>mulle ei meeldi</1>."
+
+msgid "Liking takes the <0>-le</0> form: <1>mulle meeldib</1>, not <2>mul</2>."
+msgstr "Liking takes the <0>-le</0> form: <1>mulle meeldib</1>, not <2>mul</2>."
 
 msgid "Liking to do something"
 msgstr "Liking to do something"
@@ -10386,9 +10389,6 @@ msgstr "That says you don’t like it. Liis asked you to come."
 
 msgid "That says you have cats."
 msgstr "That says you have cats."
-
-msgid "That says you have coffee. Liis asked if you like it."
-msgstr "That says you have coffee. Liis asked if you like it."
 
 msgid "That says you like the cold."
 msgstr "That says you like the cold."

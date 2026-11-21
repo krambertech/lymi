@@ -433,8 +433,8 @@ const FEELING_WHEN: readonly {
   said: (typeof MEELDIMA_FEELINGS)[number];
   when: MessageDescriptor;
 }[] = [
-  { said: "Mul on külm.", when: msg`It’s −15 °C outside.` },
-  { said: "Mul on palav.", when: msg`It’s 30 °C in the sun.` },
+  { said: "Mul on külm.", when: msg`It’s −15 °C outside.` },
+  { said: "Mul on palav.", when: msg`It’s 30 °C in the sun.` },
   { said: "Mul on igav.", when: msg`There’s nothing to do all evening.` },
   { said: "Mul on hea meel.", when: msg`A friend you miss is coming to visit.` },
   { said: "Mul on kahju.", when: msg`Your friend is ill and can’t come.` },
@@ -560,7 +560,7 @@ export function MeeldimaLesson() {
     {
       id: "kirjuta-mulle",
       before: "Kirjuta",
-      after: "!",
+      after: "homme!",
       answer: "mulle",
       options: ["mul", "mulle"],
       why: (
@@ -602,8 +602,13 @@ export function MeeldimaLesson() {
       clip: "d-sina-2",
       replies: [
         {
-          line: "Jah, mul on kohv.",
-          why: <Trans>That says you have coffee. Liis asked if you like it.</Trans>,
+          line: "Jah, mul meeldib.",
+          why: (
+            <Trans>
+              Liking takes the <End>-le</End> form: <span lang="et">mulle meeldib</span>, not{" "}
+              <span lang="et">mul</span>.
+            </Trans>
+          ),
         },
         { line: line("d-sina-2"), right: true },
         {

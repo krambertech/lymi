@@ -245,19 +245,51 @@ export const olemaSentence = (row: (typeof OLEMA_ROWS)[number], mode: OlemaMode)
  * another verb, or both, so the answer takes the rule and the question's verb together.
  */
 export const NO_ANSWERS = [
-  { ask: "Kas sa loed?", answer: "Ei loe.", wrong: ["Ei loed.", "Ei oota.", "Ei ootad."] },
-  { ask: "Kas sa töötad?", answer: "Ei tööta.", wrong: ["Ei töötad.", "Ei joo.", "Ei jood."] },
-  { ask: "Kas te sööte?", answer: "Ei söö.", wrong: ["Ei sööte.", "Ei õpi.", "Ei õpite."] },
+  {
+    ask: "Kas sa loed?",
+    answer: "Ei loe.",
+    wrong: ["Ei loed.", "Ei oota.", "Ei ootad."],
+  },
+  {
+    ask: "Kas sa töötad?",
+    answer: "Ei tööta.",
+    wrong: ["Ei töötad.", "Ei joo.", "Ei jood."],
+  },
+  {
+    ask: "Kas te sööte?",
+    answer: "Ei söö.",
+    wrong: ["Ei sööte.", "Ei õpi.", "Ei õpite."],
+  },
   {
     ask: "Kas ta räägib eesti keelt?",
     answer: "Ei räägi.",
     wrong: ["Ei räägib.", "Ei loe.", "Ei loeb."],
   },
-  { ask: "Kas sa oled väsinud?", answer: "Ei ole.", wrong: ["Ei oled.", "Ei ela.", "Ei elad."] },
-  { ask: "Kas ta on kodus?", answer: "Ei ole.", wrong: ["Ei on.", "Ei oota.", "Ei ootab."] },
-  { ask: "Kas nad joovad?", answer: "Ei joo.", wrong: ["Ei joovad.", "Ei söö.", "Ei söövad."] },
-  { ask: "Kas te ootate?", answer: "Ei oota.", wrong: ["Ei ootate.", "Ei tööta.", "Ei töötate."] },
-  { ask: "Kas sa õpid?", answer: "Ei õpi.", wrong: ["Ei õpid.", "Ei räägi.", "Ei räägid."] },
+  {
+    ask: "Kas sa oled väsinud?",
+    answer: "Ei ole.",
+    wrong: ["Ei oled.", "Ei ela.", "Ei elad."],
+  },
+  {
+    ask: "Kas ta on kodus?",
+    answer: "Ei ole.",
+    wrong: ["Ei on.", "Ei oota.", "Ei ootab."],
+  },
+  {
+    ask: "Kas nad joovad?",
+    answer: "Ei joo.",
+    wrong: ["Ei joovad.", "Ei söö.", "Ei söövad."],
+  },
+  {
+    ask: "Kas te ootate?",
+    answer: "Ei oota.",
+    wrong: ["Ei ootate.", "Ei tööta.", "Ei töötate."],
+  },
+  {
+    ask: "Kas sa õpid?",
+    answer: "Ei õpi.",
+    wrong: ["Ei õpid.", "Ei räägi.", "Ei räägid."],
+  },
 ] as const;
 
 /** Other things the negation lesson says: answers, and a sentence worth keeping. */
@@ -504,7 +536,10 @@ export const KOHAD_SENTENCES = {
  * second voice; the learner, Andres, in the main one.
  */
 export const TUTVUMINE_ANSWERING = {
-  "a-mari-1": { text: "Tere! Mina olen Mari. Mis su nimi on?", voice: "second" },
+  "a-mari-1": {
+    text: "Tere! Mina olen Mari. Mis su nimi on?",
+    voice: "second",
+  },
   "a-sina-1": "Tere! Minu nimi on Andres.",
   "a-mari-2": { text: "Väga meeldiv! Kust sa pärit oled?", voice: "second" },
   "a-sina-2": "Ma olen pärit Ukrainast.",
@@ -669,6 +704,180 @@ export const KASKIV_DIALOGUE = {
   "d-mari-4": { text: "Vaata! Jaan tuleb.", voice: "second" },
   "d-sina-4": "Jaan, tule siia!",
 } as const satisfies Record<string, Clip>;
+
+/** How a noun's stem differs from the word: letters inside change, a vowel is added, or nothing. */
+export type StemKind = "inside" | "vowel" | "same";
+
+/**
+ * The stems lesson's nouns: the word as a dictionary lists it first, its stem (listed second, the
+ * form an ending goes on), how the two differ, the word with -s or -l, a sentence that says it, and
+ * three wrong forms for “Which form?”. Checked in ÕS 2025 on Sõnaveeb (EKI morphology): pood, poe;
+ * tuba, toa; jõgi, jõe; laud, laua; turg, turu; aken, akna; kool, kooli; raamat, raamatu; uks, ukse;
+ * Tallinn, Tallinna; sein, seina; kohvik, kohviku; kodu, haigla, Tartu, töö, Pärnu and Soome unchanged.
+ */
+export const STEM_WORDS = [
+  {
+    word: "pood",
+    stem: "poe",
+    kind: "inside",
+    where: "poes",
+    said: "Ema on poes.",
+    slips: ["poodis", "poods", "pooes"],
+  },
+  {
+    word: "tuba",
+    stem: "toa",
+    kind: "inside",
+    where: "toas",
+    said: "Ta on toas.",
+    slips: ["tubas", "tuas", "tubes"],
+  },
+  {
+    word: "jõgi",
+    stem: "jõe",
+    kind: "inside",
+    where: "jões",
+    said: "Me ujume jões.",
+    slips: ["jõges", "jõs", "jõgias"],
+  },
+  {
+    word: "laud",
+    stem: "laua",
+    kind: "inside",
+    where: "laual",
+    said: "Raamat on laual.",
+    slips: ["laudel", "lauel", "lauil"],
+  },
+  {
+    word: "turg",
+    stem: "turu",
+    kind: "inside",
+    where: "turul",
+    said: "Nad on turul.",
+    slips: ["turgul", "turl", "turgal"],
+  },
+  {
+    word: "aken",
+    stem: "akna",
+    kind: "inside",
+    where: "aknal",
+    said: "Kohv on aknal.",
+    slips: ["akenal", "akenil", "aknul"],
+  },
+  {
+    word: "kool",
+    stem: "kooli",
+    kind: "vowel",
+    where: "koolis",
+    said: "Ta õpib koolis.",
+    slips: ["kools", "koolos", "koolius"],
+  },
+  {
+    word: "raamat",
+    stem: "raamatu",
+    kind: "vowel",
+    where: "raamatus",
+    said: "Pilt on raamatus.",
+    slips: ["raamats", "raamatis", "raamatas"],
+  },
+  {
+    word: "uks",
+    stem: "ukse",
+    kind: "vowel",
+    where: "uksel",
+    said: "Jaan on uksel.",
+    slips: ["uksul", "uksal", "uksol"],
+  },
+  {
+    word: "Tallinn",
+    stem: "Tallinna",
+    kind: "vowel",
+    where: "Tallinnas",
+    said: "Ma elan Tallinnas.",
+    slips: ["Tallinns", "Tallinnis", "Tallinnus"],
+  },
+  {
+    word: "sein",
+    stem: "seina",
+    kind: "vowel",
+    where: "seinal",
+    said: "Pilt on seinal.",
+    slips: ["seinil", "seinel", "seinol"],
+  },
+  {
+    word: "kohvik",
+    stem: "kohviku",
+    kind: "vowel",
+    where: "kohvikus",
+    said: "Me oleme kohvikus.",
+    slips: ["kohvikis", "kohvikas", "kohvikos"],
+  },
+  {
+    word: "kodu",
+    stem: "kodu",
+    kind: "same",
+    where: "kodus",
+    said: "Ta töötab kodus.",
+    slips: ["kodes", "kodas", "koduis"],
+  },
+  {
+    word: "haigla",
+    stem: "haigla",
+    kind: "same",
+    where: "haiglas",
+    said: "Mari töötab haiglas.",
+    slips: ["haiglis", "haiglaas", "haigles"],
+  },
+  {
+    word: "Tartu",
+    stem: "Tartu",
+    kind: "same",
+    where: "Tartus",
+    said: "Nad õpivad Tartus.",
+    slips: ["Tartas", "Tartuis", "Tartes"],
+  },
+  {
+    word: "töö",
+    stem: "töö",
+    kind: "same",
+    where: "tööl",
+    said: "Ma olen tööl.",
+    slips: ["töl", "tööil", "tööel"],
+  },
+  {
+    word: "Pärnu",
+    stem: "Pärnu",
+    kind: "same",
+    where: "Pärnus",
+    said: "Jaan elab Pärnus.",
+    slips: ["Pärnes", "Pärnuis", "Pärnos"],
+  },
+  {
+    word: "Soome",
+    stem: "Soome",
+    kind: "same",
+    where: "Soomes",
+    said: "Ma elan Soomes.",
+    slips: ["Soomis", "Soomeis", "Soomos"],
+  },
+] as const satisfies readonly {
+  word: string;
+  stem: string;
+  kind: StemKind;
+  where: string;
+  said: string;
+  slips: readonly [string, string, string];
+}[];
+
+/** Saturday, who is where: the stems lesson's passage with gaps, recorded as one take. */
+export const STEM_PASSAGE = [
+  "Täna on laupäev.",
+  "Ema on turul ja Jaan on poes.",
+  "Kati on kohvikus.",
+  "Mari on kodus.",
+  "Ta istub toas ja loeb.",
+  "Kohv on laual.",
+] as const;
 
 /**
  * The practice parts' demo on /components/lessons: Jaan introduces himself, Mari writes about
@@ -1890,6 +2099,13 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  "pood-poe": {
+    ...words([
+      ...STEM_WORDS.flatMap(({ word, stem, where, said }) => [word, stem, where, said]),
+      "ujume",
+    ]),
+    "p-saturday": { sentences: STEM_PASSAGE },
+  },
   pohivormid: POHIVORMID_CLIPS,
   omastav: OMASTAV_CLIPS,
   "majas-majja-majast": {

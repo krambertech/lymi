@@ -374,7 +374,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian plural cases: majades, inimestele, sõpradega`,
         et: "Majades, inimestele",
         minutes: 14,
-        blurb: msg`A free lesson on the Estonian plural cases: build the plural genitive with -de or -te (majade, raamatute, inimeste), then add the endings you already know: majades, inimestele, sõpradega. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian plural cases: build the plural genitive by adding -de or -e to the third form (majade, raamatute, inimeste), then add the endings you already know: majades, inimestele, sõpradega. Every sentence is read aloud.`,
       },
       { name: msg`Perfect and pluperfect`, et: "Olen lugenud, olin lugenud" },
       { name: msg`Conditional mood`, et: "Läheksin" },

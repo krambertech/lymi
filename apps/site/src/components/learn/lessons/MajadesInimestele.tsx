@@ -45,6 +45,7 @@ const CASES: { ending: string; label: MessageDescriptor }[] = [
   { ending: "-st", label: msg`out of` },
   { ending: "-le", label: msg`to` },
   { ending: "-l", label: msg`on, at` },
+  { ending: "-lt", label: msg`from, off` },
   { ending: "-ga", label: msg`with` },
 ];
 
@@ -212,7 +213,7 @@ export function MajadesInimesteleLesson() {
       sub={
         <Trans>
           One plural stem and the endings you already know: <Et>majades</Et>, <Et>inimestele</Et>,{" "}
-          <Et>sõpradega</Et>. How to build the stem with <Et>-de</Et> or <Et>-te</Et>.
+          <Et>sõpradega</Et>. How to build the stem with <Et>-de</Et> or <Et>-e</Et>.
         </Trans>
       }
       facts={[
@@ -223,7 +224,7 @@ export function MajadesInimesteleLesson() {
       words={["kingitusi", "müüjatega", "kottidesse", "raamatupoodides"]}
       recap={[
         <Trans key="1">
-          Every plural case is the plural genitive plus the singular ending:{" "}
+          Every other plural case is the plural genitive plus the singular ending:{" "}
           <b lang="et">majade, majades, majadele</b>.
         </Trans>,
         <Trans key="2">
@@ -245,9 +246,9 @@ export function MajadesInimesteleLesson() {
                 <p>
                   <Trans>
                     In lesson {cases} you added endings to the genitive: <Et>maja, majas</Et>;{" "}
-                    <Et>sõbra, sõbrale</Et>. The plural works the same way, with one step first.
+                    <Et>raamatu, raamatust</Et>. The plural works the same way, with one step first.
                     Make the plural genitive, then add the same endings: <Et>majade, majades</Et>;{" "}
-                    <Et>sõprade, sõpradele</Et>.
+                    <Et>raamatute, raamatutest</Et>.
                   </Trans>
                 </p>
                 <p>
@@ -331,8 +332,9 @@ export function MajadesInimesteleLesson() {
               />
               <Aside>
                 <Trans>
-                  A few words such as <Et>auto</Et> and <Et>kino</Et> take <Et>-de</Et> even though
-                  their third form ends in <Et>-t</Et>: <Et>autode</Et>, <Et>kinode</Et>.
+                  Most words follow this. Some common ones take <Et>-de</Et> anyway:{" "}
+                  <Et>auto, autode</Et>; <Et>kino, kinode</Et>; <Et>pere, perede</Et>;{" "}
+                  <Et>aken, akende</Et>.
                 </Trans>
               </Aside>
             </>

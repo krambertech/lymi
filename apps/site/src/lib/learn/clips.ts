@@ -2496,11 +2496,29 @@ const PLURAL_PART_CLIPS: Record<string, Clip> = {
 
 export const PLURAL_CASE_NOUNS = {
   maja: {
-    one: ["maja", "majas", "majja", "majast", "majale", "majal", "majaga"],
-    many: ["majade", "majades", "majadesse", "majadest", "majadele", "majadel", "majadega"],
+    one: ["maja", "majas", "majja", "majast", "majale", "majal", "majalt", "majaga"],
+    many: [
+      "majade",
+      "majades",
+      "majadesse",
+      "majadest",
+      "majadele",
+      "majadel",
+      "majadelt",
+      "majadega",
+    ],
   },
   raamat: {
-    one: ["raamatu", "raamatus", "raamatusse", "raamatust", "raamatule", "raamatul", "raamatuga"],
+    one: [
+      "raamatu",
+      "raamatus",
+      "raamatusse",
+      "raamatust",
+      "raamatule",
+      "raamatul",
+      "raamatult",
+      "raamatuga",
+    ],
     many: [
       "raamatute",
       "raamatutes",
@@ -2508,11 +2526,21 @@ export const PLURAL_CASE_NOUNS = {
       "raamatutest",
       "raamatutele",
       "raamatutel",
+      "raamatutelt",
       "raamatutega",
     ],
   },
   inimene: {
-    one: ["inimese", "inimeses", "inimesesse", "inimesest", "inimesele", "inimesel", "inimesega"],
+    one: [
+      "inimese",
+      "inimeses",
+      "inimesesse",
+      "inimesest",
+      "inimesele",
+      "inimesel",
+      "inimeselt",
+      "inimesega",
+    ],
     many: [
       "inimeste",
       "inimestes",
@@ -2520,12 +2548,22 @@ export const PLURAL_CASE_NOUNS = {
       "inimestest",
       "inimestele",
       "inimestel",
+      "inimestelt",
       "inimestega",
     ],
   },
   sõber: {
-    one: ["sõbra", "sõbras", "sõbrasse", "sõbrast", "sõbrale", "sõbral", "sõbraga"],
-    many: ["sõprade", "sõprades", "sõpradesse", "sõpradest", "sõpradele", "sõpradel", "sõpradega"],
+    one: ["sõbra", "sõbras", "sõbrasse", "sõbrast", "sõbrale", "sõbral", "sõbralt", "sõbraga"],
+    many: [
+      "sõprade",
+      "sõprades",
+      "sõpradesse",
+      "sõpradest",
+      "sõpradele",
+      "sõpradel",
+      "sõpradelt",
+      "sõpradega",
+    ],
   },
 } as const;
 

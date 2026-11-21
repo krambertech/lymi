@@ -1659,9 +1659,6 @@ msgstr "A few words break the rule: <0/>, thank you, puts the stress on its seco
 msgid "A few words go the other way: the dictionary form is weak, and the genitive is strong. <0/>, thought, has the genitive <1/>. The genitive is still the odd one out."
 msgstr "A few words go the other way: the dictionary form is weak, and the genitive is strong. <0/>, thought, has the genitive <1/>. The genitive is still the odd one out."
 
-msgid "A few words such as <0>auto</0> and <1>kino</1> take <2>-de</2> even though their third form ends in <3>-t</3>: <4>autode</4>, <5>kinode</5>."
-msgstr "A few words such as <0>auto</0> and <1>kino</1> take <2>-de</2> even though their third form ends in <3>-t</3>: <4>autode</4>, <5>kinode</5>."
-
 msgid "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
 msgstr "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
 
@@ -1785,8 +1782,8 @@ msgstr "A free lesson on the Estonian partitive case, a noun’s third form: aft
 msgid "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
 
-msgid "A free lesson on the Estonian plural cases: build the plural genitive with -de or -te (majade, raamatute, inimeste), then add the endings you already know: majades, inimestele, sõpradega. Every sentence is read aloud."
-msgstr "A free lesson on the Estonian plural cases: build the plural genitive with -de or -te (majade, raamatute, inimeste), then add the endings you already know: majades, inimestele, sõpradega. Every sentence is read aloud."
+msgid "A free lesson on the Estonian plural cases: build the plural genitive by adding -de or -e to the third form (majade, raamatute, inimeste), then add the endings you already know: majades, inimestele, sõpradega. Every sentence is read aloud."
+msgstr "A free lesson on the Estonian plural cases: build the plural genitive by adding -de or -e to the third form (majade, raamatute, inimeste), then add the endings you already know: majades, inimestele, sõpradega. Every sentence is read aloud."
 
 msgid "A free lesson on the Estonian plural partitive, the third form for more than one: palju raamatuid, poes on õunu, its three endings -id, -sid and a changed last vowel (autosid, raamatuid, maju, koole), and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud."
 msgstr "A free lesson on the Estonian plural partitive, the third form for more than one: palju raamatuid, poes on õunu, its three endings -id, -sid and a changed last vowel (autosid, raamatuid, maju, koole), and how it differs from kaks raamatut and the plural raamatud. Every sentence is read aloud."
@@ -5787,8 +5784,8 @@ msgstr "Every noun ending in -ung takes die."
 msgid "Every one, by ear."
 msgstr "Every one, by ear."
 
-msgid "Every plural case is the plural genitive plus the singular ending: <0>majade, majades, majadele</0>."
-msgstr "Every plural case is the plural genitive plus the singular ending: <0>majade, majades, majadele</0>."
+msgid "Every other plural case is the plural genitive plus the singular ending: <0>majade, majades, majadele</0>."
+msgstr "Every other plural case is the plural genitive plus the singular ending: <0>majade, majades, majadele</0>."
 
 msgid "Every plural form starts with the plural genitive."
 msgstr "Every plural form starts with the plural genitive."
@@ -6747,6 +6744,9 @@ msgstr "From your notes"
 
 msgid "from, by birth"
 msgstr "from, by birth"
+
+msgid "from, off"
+msgstr "from, off"
 
 msgid "FSRS for every card, on every device"
 msgstr "FSRS for every card, on every device"
@@ -9053,8 +9053,8 @@ msgstr "In Kati’s room"
 msgid "in Lasnamäe"
 msgstr "in Lasnamäe"
 
-msgid "In lesson {cases} you added endings to the genitive: <0>maja, majas</0>; <1>sõbra, sõbrale</1>. The plural works the same way, with one step first. Make the plural genitive, then add the same endings: <2>majade, majades</2>; <3>sõprade, sõpradele</3>."
-msgstr "In lesson {cases} you added endings to the genitive: <0>maja, majas</0>; <1>sõbra, sõbrale</1>. The plural works the same way, with one step first. Make the plural genitive, then add the same endings: <2>majade, majades</2>; <3>sõprade, sõpradele</3>."
+msgid "In lesson {cases} you added endings to the genitive: <0>maja, majas</0>; <1>raamatu, raamatust</1>. The plural works the same way, with one step first. Make the plural genitive, then add the same endings: <2>majade, majades</2>; <3>raamatute, raamatutest</3>."
+msgstr "In lesson {cases} you added endings to the genitive: <0>maja, majas</0>; <1>raamatu, raamatust</1>. The plural works the same way, with one step first. Make the plural genitive, then add the same endings: <2>majade, majades</2>; <3>raamatute, raamatutest</3>."
 
 msgid "In lesson {commands} you learned <0/> as a whole word. It comes from the <1>-da</1> form, with <2>-ge</2> in place of its ending: <3/> gives <4/>, and <5/> gives <6/>"
 msgstr "In lesson {commands} you learned <0/> as a whole word. It comes from the <1>-da</1> form, with <2>-ge</2> in place of its ending: <3/> gives <4/>, and <5/> gives <6/>"
@@ -11249,6 +11249,9 @@ msgstr "Most verbs swap <0>-ma</0> for <1>-da</1> on the same stem: <2>elama, el
 msgid "Most verbs: <0>si-</0> on the stem of the <1>ma</1> form."
 msgstr "Most verbs: <0>si-</0> on the stem of the <1>ma</1> form."
 
+msgid "Most words follow this. Some common ones take <0>-de</0> anyway: <1>auto, autode</1>; <2>kino, kinode</2>; <3>pere, perede</3>; <4>aken, akende</4>."
+msgstr "Most words follow this. Some common ones take <0>-de</0> anyway: <1>auto, autode</1>; <2>kino, kinode</2>; <3>pere, perede</3>; <4>aken, akende</4>."
+
 msgid "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
 msgstr "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
 
@@ -12285,8 +12288,8 @@ msgstr "One person or more"
 msgid "One person you’re talking to, such as Mari."
 msgstr "One person you’re talking to, such as Mari."
 
-msgid "One plural stem and the endings you already know: <0>majades</0>, <1>inimestele</1>, <2>sõpradega</2>. How to build the stem with <3>-de</3> or <4>-te</4>."
-msgstr "One plural stem and the endings you already know: <0>majades</0>, <1>inimestele</1>, <2>sõpradega</2>. How to build the stem with <3>-de</3> or <4>-te</4>."
+msgid "One plural stem and the endings you already know: <0>majades</0>, <1>inimestele</1>, <2>sõpradega</2>. How to build the stem with <3>-de</3> or <4>-e</4>."
+msgstr "One plural stem and the endings you already know: <0>majades</0>, <1>inimestele</1>, <2>sõpradega</2>. How to build the stem with <3>-de</3> or <4>-e</4>."
 
 msgid "One present tense for both."
 msgstr "One present tense for both."

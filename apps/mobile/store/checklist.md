@@ -22,7 +22,7 @@ All under App Store Connect, Apps, Lymi.
 4. **Pricing and Availability.** Price **Free** (USD 0). Availability: all countries and regions.
 5. **EU trader status.** App Store Connect home, Business, then the Digital Services Act section. A trader's address, phone and email are shown on the EU store page. Deciding whether Lymi is a trader is yours; distribution in the EU waits until it is answered.
 6. **The version page**, `iOS App 1.0` in the sidebar, per language:
-   - iPhone screenshots: the 6.9" slot takes `out/panorama/<language>/6.9/`, the 6.3" slot takes `out/panorama/<language>/6.3/`, in file order.
+   - iPhone screenshots: the 6.9" slot takes `out/<language>/6.9/`, the 6.3" slot takes `out/<language>/6.3/`, all nine in file order.
    - Promotional Text, Description, Keywords from `listing/<language>.md`.
    - Support URL `https://lymi.app/support`, Marketing URL `https://lymi.app`.
    - What's New stays empty on the first version.
@@ -50,8 +50,8 @@ All under Play Console, Lymi. Do the setup steps in `docs/phone-release.md` firs
    - App name, Short description, Full description from `listing/en.md`.
    - App icon: `apps/mobile/assets/icon.png` resized to 512 × 512, `sips -z 512 512 apps/mobile/assets/icon.png --out icon-512.png`.
    - Feature graphic: `out/play-feature/en.jpg`.
-   - Phone screenshots: `out/panorama/en/play/`, all six. Skip tablet screenshots; the app is phone-only.
-3. **Translations.** On the same page, Manage translations, Add your own translations: Ukrainian and Russian, with the text from `listing/uk.md` and `listing/ru.md`, the feature graphic `out/play-feature/<language>.jpg` and the screenshots `out/panorama/<language>/play/`.
+   - Phone screenshots: `out/en/play/`, all nine in file order. Skip tablet screenshots; the app is phone-only.
+3. **Translations.** On the same page, Manage translations, Add your own translations: Ukrainian and Russian, with the text from `listing/uk.md` and `listing/ru.md`, the feature graphic `out/play-feature/<language>.jpg` and the screenshots `out/<language>/play/`.
 4. **App content**, under Policy and programs. Each declaration below opens from that page:
    - Privacy policy: `https://lymi.app/privacy`.
    - Ads: **No, my app does not contain ads**.
@@ -62,6 +62,11 @@ All under Play Console, Lymi. Do the setup steps in `docs/phone-release.md` firs
    - Data safety: from [`privacy.md`](privacy.md#google-play-console-data-safety).
    - Advertising ID: **No**, the app does not use it.
 5. **Release notes.** When promoting the release, paste the release notes from `listing/<language>.md`.
+
+## Replacing the screenshots later
+
+- App Store screenshots belong to a version. A live version's screenshots are locked, so new ones go on the next version's page (`+` beside iOS App), which then goes to App Review with its build.
+- Play's screenshots and feature graphic change in Main store listing and in each translation at any time; with managed publishing on, the change waits in Publishing overview until you publish it.
 
 ## After approval
 

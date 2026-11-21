@@ -89,7 +89,7 @@ const GLOSSARY: Glossary = {
   oskan: { en: msg`I can, I know how to`, note: msg`From oskama.` },
   saan: { en: msg`I can, I’m able to`, note: msg`From saama, which also means to get.` },
   võin: { en: msg`I may, I can`, note: msg`From võima.` },
-  võib: { en: msg`may, might`, note: msg`Võin with the ta ending.` },
+  võib: { en: msg`may, might`, note: msg`The ta form of võima.` },
   tohin: { en: msg`I’m allowed to`, note: msg`From tohtima.` },
   pean: { en: msg`I have to, I must`, note: msg`From pidama.` },
   tuleb: {
@@ -157,8 +157,8 @@ function KnowOrAble() {
   return (
     <Panel>
       <Paradigm
-        label={t`Know how to, or nothing stops you`}
-        columns={[t`I know how to …`, t`Nothing stops me …`]}
+        label={t`Know how, or nothing stops you`}
+        columns={[t`I know how to …`, t`I’m able to …`]}
         rows={rows}
         empty={{ title: t`Tap a form`, tip: t`You’ll hear the whole sentence.` }}
       />
@@ -174,7 +174,7 @@ function PermissionTip({ lead }: { lead: (typeof MODAL_PERMISSION)[number]["lead
     case "võid":
       return (
         <Trans>
-          <span lang="et">Võin</span> with the <span lang="et">sa</span> ending: you let someone.
+          The <span lang="et">sa</span> form of <span lang="et">võima</span>: you let someone.
         </Trans>
       );
     case "tohin":
@@ -219,8 +219,7 @@ function DutyNote({ lead }: { lead: DutyLead }) {
     case "tuleb":
       return (
         <Trans>
-          Has to be done, with no one named. <span lang="et">Tuleb</span> takes the <End>-da</End>{" "}
-          form.
+          One has to, with no one named. <span lang="et">Tuleb</span> takes the <End>-da</End> form.
         </Trans>
       );
     case "vaja":
@@ -254,7 +253,7 @@ function HaveTo() {
     <Panel>
       <Paradigm
         label={t`Three ways to say have to`}
-        columns={[t`I have to …`, t`Has to be done …`, t`I need to …`]}
+        columns={[t`I have to …`, t`One has to …`, t`I need to …`]}
         rows={rows}
         empty={{ title: t`Tap a form`, tip: t`You’ll hear the whole sentence.` }}
       />
@@ -292,7 +291,7 @@ function CantOrMustnt() {
   return (
     <Panel>
       <Keys
-        label={t`Can’t, mustn’t and don’t have to`}
+        label={t`Can’t, mustn’t, don’t have to`}
         columns={3}
         phoneColumns={2}
         empty={{
@@ -489,10 +488,10 @@ export function ModaalverbidLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Where English says can, Estonian picks the verb by the reason:{" "}
-          <span lang="et">oskan</span> when you know how, <span lang="et">saan</span> when nothing
-          stops you, <span lang="et">võin</span> when you don’t mind or you allow it. Must is{" "}
-          <span lang="et">pean</span>, and mustn’t is <span lang="et">ei tohi</span>.
+          Where English says can, Estonian picks the verb by the reason.{" "}
+          <span lang="et">Oskan</span> is when you know how, <span lang="et">saan</span> when
+          nothing stops you, and <span lang="et">võin</span> when you don’t mind or you allow it.
+          Must is <span lang="et">pean</span>, and mustn’t is <span lang="et">ei tohi</span>.
         </Trans>
       }
       facts={[
@@ -582,8 +581,8 @@ export function ModaalverbidLesson() {
                   <Trans>
                     <Word w="Tohin" /> is about being allowed. With <b lang="et">ei</b> it says
                     mustn’t: <Word w="Siin ei tohi süüa." /> In a question it asks whether you may,
-                    as <Word w="võin" /> can: <Word w="Kas ma tohin siin istuda?" /> Tap a verb to
-                    hear its sentence.
+                    as <Word w="võin" /> does too: <Word w="Kas ma tohin siin istuda?" /> Tap a verb
+                    to hear its sentence.
                   </Trans>
                 </p>
               </Prose>
@@ -637,17 +636,18 @@ export function ModaalverbidLesson() {
                 <p>
                   <Trans>
                     Put <b lang="et">ei</b> before the verb and drop its ending, as in lesson{" "}
-                    {negation}: <b lang="et">oskan</b> becomes <b lang="et">ei oska</b>. The two
-                    kinds of can’t stay apart. You never learned: <Word w="Ma ei oska ujuda." />{" "}
+                    {negation}: <b lang="et">oskan</b> becomes <b lang="et">ei oska</b>.{" "}
+                    <b lang="et">Oskan</b> and <b lang="et">saan</b> stay different with{" "}
+                    <b lang="et">ei</b> too. You never learned: <Word w="Ma ei oska ujuda." />{" "}
                     Something is in the way: <Word w="Ma ei saa täna ujuda." />
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Estonian has one verb for mustn’t and another for don’t have to. This forbids
-                    it: <Word w="Sa ei tohi tulla." /> This leaves it to you:{" "}
-                    <Word w="Sa ei pea tulema." /> So does <Word w="pole vaja" />, no need. Tap a
-                    verb to hear it said about swimming.
+                    <Word w="Pean" /> is must, but <b lang="et">ei pea</b> is don’t have to:{" "}
+                    <Word w="Sa ei pea tulema." /> For mustn’t, Estonian switches to{" "}
+                    <b lang="et">ei tohi</b>: <Word w="Sa ei tohi tulla." /> <Word w="Pole vaja" />,
+                    no need, also leaves it to you. Tap a verb to hear it said about swimming.
                   </Trans>
                 </p>
               </Prose>
@@ -664,7 +664,10 @@ export function ModaalverbidLesson() {
                 rounds={MODAL_HEARD_KINDS.length}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All four. You told can’t, mustn’t and don’t have to apart by ear.</Trans>
+                    <Trans>
+                      All four. You told don’t know how, can’t, mustn’t and don’t have to apart by
+                      ear.
+                    </Trans>
                   ) : (
                     <Trans>Play the ones you missed once more, then try again.</Trans>
                   )

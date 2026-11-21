@@ -431,7 +431,7 @@ msgid "<0/> becomes <1/>, and the verb takes its <2>-ge</2> or <3>-ke</3> form: 
 msgstr "<0/> превращается в <1/>, а глагол тоже стоит в форме на <2>-ge</2> или <3>-ke</3>: <4/> <5/> А для одного человека на «вы» стоит запомнить такую фразу: <6/>"
 
 msgid "<0/> can also say that something might happen. This sentence can mean he or she is allowed to come tomorrow, or might: <1/>"
-msgstr "<0/> говорит ещё и о том, что что-то может случиться. Это предложение значит либо что ему или ей можно прийти завтра, либо что он или она, возможно, придёт: <1/>"
+msgstr "<0/> говорит ещё и о том, что что-то может случиться. Это предложение может значить, что ему или ей можно прийти завтра, а может — что он или она, возможно, придёт: <1/>"
 
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> не имеет окончания и подходит и для «он или она», и для «они». Поэтому <1/> — неправильный глагол: у других глаголов окончание есть и здесь, об этом — в уроке {regularVerbs}."
@@ -448,20 +448,23 @@ msgstr "<0/> — это сто, а <1/> — тысяча, и «один» пер
 msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 msgstr "<0/> — это сто, а <1/> — «отправь». Удвоенная буква — это более долгий звук, и с ним получается другое слово. С согласными так же: <2/> — курица, а <3/> — «неси» (одному человеку)."
 
-msgid "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> can: <4/> Tap a verb to hear its sentence."
+msgid "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> does too: <4/> Tap a verb to hear its sentence."
 msgstr "<0/> — про разрешение. С <1>ei</1> это «нельзя»: <2/> В вопросе так просят разрешения, как и с <3/>: <4/> Коснись глагола, чтобы услышать предложение."
 
 msgid "<0/> is at home. Now answer <1/> six ways: tap a place."
 msgstr "<0/> — это дома. А теперь дай шесть ответов на <1/>: нажми на место."
 
 msgid "<0/> is for what you learned. To say you know how to swim: <1/> <2/> says nothing stops you: <3/>"
-msgstr "<0/> — про умение. Сказать, что ты умеешь плавать: <1/> <2/> говорит, что тебе ничто не мешает: <3/>"
+msgstr "<0/> — про умение. Чтобы сказать, что умеешь плавать: <1/> <2/> говорит, что тебе ничто не мешает: <3/>"
 
 msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 msgstr "<0/> значит и «он», и «она»: у эстонских местоимений нет рода. <1/> — это ещё и вежливое «Вы» к одному человеку, как в русском."
 
 msgid "<0/> is I have to, and it takes the <1>-ma</1> form from lesson {infinitives}: <2/>"
 msgstr "<0/> — это «мне надо», и после него идёт форма на <1>-ma</1> из урока {infinitives}: <2/>"
+
+msgid "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian switches to <3>ei tohi</3>: <4/> <5/>, no need, also leaves it to you. Tap a verb to hear it said about swimming."
+msgstr "<0/> — это «надо», но <1>ei pea</1> — не «нельзя», а «не обязательно»: <2/> Для «нельзя» в эстонском другой глагол, <3>ei tohi</3>: <4/> <5/>, «не нужно», тоже оставляет выбор тебе. Коснись глагола, чтобы услышать, как это говорят о плавании."
 
 msgid "<0/> is one cat; <1/> is two cats. After a number from two up, a noun takes its third form, the partitive, and stays singular: <2/> has no plural ending."
 msgstr "<0/> — одна кошка, <1/> — две кошки. После числа от двух и больше существительное стоит в третьей форме, партитиве, и остаётся в единственном числе: у <2/> нет окончания множественного числа."
@@ -642,7 +645,7 @@ msgid "<0>Oskan</0> is for what you learned: <1>Ma oskan ujuda.</1> <2>Saan</2> 
 msgstr "<0>Oskan</0> — про умение: <1>Ma oskan ujuda.</1> <2>Saan</2> — когда тебе ничто не мешает: <3>Ma saan homme tulla.</3>"
 
 msgid "<0>Oskan</0>: you learned how."
-msgstr "<0>Oskan</0>: ты знаешь, как это делать."
+msgstr "<0>Oskan</0>: ты это умеешь."
 
 msgid "<0>Osmosis</0>: water crosses a membrane toward more dissolved substance."
 msgstr "<0>Осмос</0>: вода проходит через мембрану туда, где больше растворённого вещества."
@@ -709,9 +712,6 @@ msgstr "<0>Veerand neli</0> — четверть пути к четырём, 3:1
 
 msgid "<0>Võin</0> says you don’t mind, or you allow it: <1>Sa võid siin istuda.</1> <2>Tohin</2> is about being allowed, and with <3>ei</3> it says mustn’t: <4>Siin ei tohi süüa.</4>"
 msgstr "<0>Võin</0> значит «я не против» или «можно»: <1>Sa võid siin istuda.</1> <2>Tohin</2> — про разрешение, а с <3>ei</3> значит «нельзя»: <4>Siin ei tohi süüa.</4>"
-
-msgid "<0>Võin</0> with the <1>sa</1> ending: you let someone."
-msgstr "<0>Võin</0> с окончанием для <1>sa</1>: ты кому-то разрешаешь."
 
 msgid "<0>за́мок</0> is a castle."
 msgstr "<0>за́мок</0> — это крепость."
@@ -1840,7 +1840,7 @@ msgstr "Все экзамены"
 msgid "All four. You told a gap after <0>pole</0> from a gap at the start."
 msgstr "Все четыре: ты различаешь пропуск после <0>pole</0> и пропуск в начале."
 
-msgid "All four. You told can’t, mustn’t and don’t have to apart by ear."
+msgid "All four. You told don’t know how, can’t, mustn’t and don’t have to apart by ear."
 msgstr "Все четыре. «Не умею», «не могу», «нельзя» и «не обязательно» ты различаешь на слух."
 
 msgid "All free decks"
@@ -2040,7 +2040,7 @@ msgid "An idea that only sounds good after a few drinks"
 msgstr "Идея, которая кажется гениальной только после пары рюмок"
 
 msgid "An offer: you’re happy to."
-msgstr "Предложение: ты не против."
+msgstr "Ты предлагаешь: тебе не трудно."
 
 msgid "An old *castle* stands on the hill."
 msgstr "На холме стоит старый *замок*."
@@ -2813,11 +2813,8 @@ msgstr "Могу, можно, надо"
 msgid "Can; may"
 msgstr "Можно; мочь"
 
-msgid "Can’t, mustn’t and don’t have to"
-msgstr "«Не умею», «не могу», «нельзя» и «не обязательно»"
-
 msgid "Can’t, mustn’t, don’t have to"
-msgstr "Не могу, нельзя, не обязательно"
+msgstr "Не умею, не могу, нельзя, не обязательно"
 
 msgid "Canada"
 msgstr "Канада"
@@ -4007,9 +4004,6 @@ msgstr "Уроки эстонской грамматики"
 msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
 msgstr "В эстонском одно настоящее время. <0/> значит и «я читаю» вообще, и «я читаю сейчас», а что именно, видно из остального предложения. Нажми на предложение, чтобы его услышать."
 
-msgid "Estonian has one verb for mustn’t and another for don’t have to. This forbids it: <0/> This leaves it to you: <1/> So does <2/>, no need. Tap a verb to hear it said about swimming."
-msgstr "Для «нельзя» и «не обязательно» в эстонском разные глаголы. Это запрещает: <0/> А это оставляет выбор тебе: <1/> Так же и <2/>, «не нужно». Коснись глагола, чтобы услышать, как это говорят о плавании."
-
 msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
 msgstr "В эстонском шесть личных местоимений, и у каждого есть полная и краткая форма с одним значением. <0/> и <1/> — это «я». Краткую, выделенную цветом, ты будешь слышать чаще всего. Нажми на любое слово."
 
@@ -5114,12 +5108,6 @@ msgstr "Трудно"
 msgid "Harder grammar"
 msgstr "Сложная грамматика"
 
-msgid "Has to be done …"
-msgstr "Надо …"
-
-msgid "Has to be done, with no one named. <0>Tuleb</0> takes the <1>-da</1> form."
-msgstr "Надо, и не сказано кому. После <0>tuleb</0> идёт форма на <1>-da</1>."
-
 msgid "has to be done; comes"
 msgstr "надо; приходит"
 
@@ -6021,6 +6009,9 @@ msgstr "Я *читаю* газету."
 msgid "I’m 34 years old."
 msgstr "Мне 34 года."
 
+msgid "I’m able to …"
+msgstr "Я могу …"
+
 msgid "I’m allowed to"
 msgstr "мне можно"
 
@@ -6818,9 +6809,6 @@ msgstr "Всё с клавиатуры"
 
 msgid "kilo"
 msgstr "килограмм"
-
-msgid "Know how to, or nothing stops you"
-msgstr "Умею или могу"
 
 msgid "Know how, or nothing stops you"
 msgstr "Умею или могу"
@@ -8231,9 +8219,6 @@ msgstr "Никаких платных функций"
 msgid "Nothing here by that name."
 msgstr "Такого здесь нет."
 
-msgid "Nothing stops me …"
-msgstr "Я могу …"
-
 msgid "Nothing. Lymi is free on the web, on your phone and on the Mac."
 msgstr "Нисколько. Lymi бесплатно работает в браузере, на телефоне и на Mac."
 
@@ -8475,6 +8460,9 @@ msgstr "Одна форма на все шесть"
 msgid "One form for everyone"
 msgstr "Одна форма для всех"
 
+msgid "One has to …"
+msgstr "Надо …"
+
 msgid "One has to go."
 msgstr "Надо идти."
 
@@ -8483,6 +8471,9 @@ msgstr "Надо подождать."
 
 msgid "One has to work."
 msgstr "Надо работать."
+
+msgid "One has to, with no one named. <0>Tuleb</0> takes the <1>-da</1> form."
+msgstr "Надо, и не сказано кому. После <0>tuleb</0> идёт форма на <1>-da</1>."
 
 msgid "one house"
 msgstr "один дом"
@@ -9254,8 +9245,8 @@ msgstr "Тыква"
 msgid "Put {picked} here"
 msgstr "Положить {picked} сюда"
 
-msgid "Put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1>oskan</1> becomes <2>ei oska</2>. The two kinds of can’t stay apart. You never learned: <3/> Something is in the way: <4/>"
-msgstr "Поставь <0>ei</0> перед глаголом и убери окончание, как в уроке {negation}: <1>oskan</1> становится <2>ei oska</2>. «Не умею» и «не могу» так и остаются разными. Ты не умеешь: <3/> Тебе что-то мешает: <4/>"
+msgid "Put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1>oskan</1> becomes <2>ei oska</2>. <3>Oskan</3> and <4>saan</4> stay different with <5>ei</5> too. You never learned: <6/> Something is in the way: <7/>"
+msgstr "Поставь <0>ei</0> перед глаголом и убери окончание, как в уроке {negation}: <1>oskan</1> становится <2>ei oska</2>. <3>Oskan</3> и <4>saan</4> и с <5>ei</5> остаются разными. Ты не умеешь: <6/> Тебе что-то мешает: <7/>"
 
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 msgstr "Ставь <0>ei</0> перед глаголом: <1>ma ei loe</1>, я не читаю."
@@ -11094,6 +11085,9 @@ msgstr "*Окно* открыто."
 msgid "The <0>-ma</0> form"
 msgstr "Форма на <0>-ma</0>"
 
+msgid "The <0>sa</0> form of <1>võima</1>: you let someone."
+msgstr "Форма <1>võima</1> для <0>sa</0>: ты кому-то разрешаешь."
+
 msgid "The 1618 revolt in Prague that started the Thirty Years’ War"
 msgstr "Восстание в Праге 1618 года, с которого началась Тридцатилетняя война"
 
@@ -11726,6 +11720,9 @@ msgstr "Забастовка"
 
 msgid "The sugar photosynthesis makes"
 msgstr "Сахар, который даёт фотосинтез"
+
+msgid "The ta form of võima."
+msgstr "Форма võima для ta."
 
 msgid "The table isn’t in the room."
 msgstr "Стола нет в комнате."
@@ -12837,9 +12834,6 @@ msgstr "Лексика для уровней 1 и 2 TOPIK I и уровня 3 TO
 msgid "Vocabulary for the first two levels of the Japanese-Language Proficiency Test, with a translation beside each word."
 msgstr "Лексика для первых двух уровней экзамена по японскому языку JLPT, с переводом рядом с каждым словом."
 
-msgid "Võin with the ta ending."
-msgstr "Võin с окончанием для ta."
-
 msgid "Vowels"
 msgstr "Гласные"
 
@@ -13313,8 +13307,8 @@ msgstr "Где Lymi работает с Gemini?"
 msgid "Where each app does more, including the rows where it’s {name}. We check these against {name}’s own pages and update them when either app changes."
 msgstr "Где каждое приложение умеет больше, в том числе там, где впереди {name}. Мы сверяем это с собственными страницами {name} и обновляем, когда меняется любое из приложений."
 
-msgid "Where English says can, Estonian picks the verb by the reason: <0>oskan</0> when you know how, <1>saan</1> when nothing stops you, <2>võin</2> when you don’t mind or you allow it. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
-msgstr "Как русский различает «умею» и «могу», так и эстонский выбирает глагол по причине: <0>oskan</0> — когда умеешь, <1>saan</1> — когда ничто не мешает, <2>võin</2> — когда ты не против или разрешаешь. «Мне надо» — это <3>pean</3>, а «нельзя» — <4>ei tohi</4>."
+msgid "Where English says can, Estonian picks the verb by the reason. <0>Oskan</0> is when you know how, <1>saan</1> when nothing stops you, and <2>võin</2> when you don’t mind or you allow it. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
+msgstr "Как в русском различают «умею» и «могу», так и в эстонском глагол выбирают по причине. <0>Oskan</0> — когда умеешь, <1>saan</1> — когда ничто не мешает, <2>võin</2> — когда ты не против или разрешаешь. «Мне надо» — это <3>pean</3>, а «нельзя» — <4>ei tohi</4>."
 
 msgid "where from"
 msgstr "откуда"

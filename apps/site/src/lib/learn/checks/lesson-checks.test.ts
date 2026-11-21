@@ -9,7 +9,7 @@
 import { appendFileSync } from "node:fs";
 import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { afterAll, describe, expect, it, vi } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import { Island } from "../../../components/islands/Island";
 import { CLIPS, clipText, isPassage } from "../clips";
 import { gapLine } from "../passage";
@@ -285,6 +285,12 @@ function pickUnits(slug: Slug): PickUnit[] {
 const percent = (share: number) => `${Math.round(share * 100)}%`;
 
 describe.each(SLUGS)("lesson %s", (slug) => {
+  // Simulating every pick quiz's runs is the slow part, and pickUnits caches it. Warming it here,
+  // with its own timeout, keeps a loaded CI runner from timing out whichever test comes first.
+  beforeAll(() => {
+    pickUnits(slug);
+  }, 60_000);
+
   it("gives each quiz a fixed id of lowercase letters, digits and hyphens, once", () => {
     const problems: string[] = [];
     const seen = new Set<string>();

@@ -32,7 +32,7 @@
 <script>
   const lang = new URLSearchParams(location.search).get("lang") ?? "en";
   document.documentElement.lang = lang;
-  document.querySelector("p").innerHTML = COPY[lang].shots[0][0].replace("<br>", " ");
+  document.querySelector("p").innerHTML = COPY[lang].shots.hero[0].replace("<br>", " ");
 </script>
 </body>
 </html>

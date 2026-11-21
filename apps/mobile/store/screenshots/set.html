@@ -69,6 +69,9 @@
   .copy h1 em { font-style: normal; color: var(--amber); }
   .copy p { margin-top: 44px; font-size: 54px; font-weight: 450; line-height: 1.28; letter-spacing: -0.01em; color: var(--ivory-2); max-width: 26ch; text-wrap: pretty; }
   .copy.center p { margin-inline: auto; }
+  .hero-copy h1 { font-size: 122px; }
+  .hero-copy p { font-size: 48px; margin-top: 34px; }
+  .hero-copy .badge { margin-top: 32px; font-size: 42px; padding: 18px 38px; }
 
   /* An iPhone drawn around a raw Simulator capture. */
   .phone {
@@ -76,7 +79,7 @@
     background: #0d0c0b; filter: drop-shadow(0 60px 120px #000c);
     box-shadow: inset 0 0 0 calc(var(--pw) * 0.004) #4a4541, 0 0 0 calc(var(--pw) * 0.006) #6f6a65, 0 0 0 calc(var(--pw) * 0.009) #2b2826;
   }
-  .phone img.screen { display: block; width: 100%; border-radius: calc(var(--pw) * 0.13); }
+  .phone .screen { display: block; width: 100%; border-radius: calc(var(--pw) * 0.13); }
   .phone::before { content: ""; position: absolute; left: 50%; translate: -50% 0; top: calc(var(--pw) * 0.052); width: calc(var(--pw) * 0.27); height: calc(var(--pw) * 0.079); background: #000; border-radius: 999px; }
   .phone i { position: absolute; width: calc(var(--pw) * 0.012); background: #3a3633; border-radius: 4px; }
   .phone i.a { left: calc(var(--pw) * -0.017); top: 19%; height: 4%; }
@@ -84,24 +87,13 @@
   .phone i.c { left: calc(var(--pw) * -0.017); top: 35%; height: 7.5%; }
   .phone i.d { right: calc(var(--pw) * -0.017); top: 28%; height: 11%; }
 
-  /* A piece of a capture lifted out of the phone, a little larger. */
-  .callout { position: absolute; background-repeat: no-repeat; background-color: #fff; box-shadow: 0 50px 120px -10px #000000d9, 0 0 0 2px #ffffff14; }
-
   /* Plates, cards and notes drawn in the app's own type and colours. */
   .np { position: absolute; background: var(--plate); color: var(--ivory); border-radius: 72px; box-shadow: 0 0 0 2px #ffffff12, 0 60px 120px -20px #000000d9; }
   .muted { color: var(--ivory-3); }
-  .fc { position: absolute; background: #fff; color: var(--ink); border-radius: 56px; padding: 54px 60px; box-shadow: 0 50px 100px -20px #000000e6; }
-  .fc .d { font-size: 34px; color: var(--ink-3); }
-  .fc .t { font-size: 84px; font-weight: 600; letter-spacing: -0.03em; margin-top: 26px; line-height: 1.05; }
-  .fc .a { font-size: 46px; color: var(--ink-2); margin-top: 18px; padding-top: 22px; border-top: 3px solid #2013081a; }
-  .fc .r { display: block; font-size: 0.36em; color: var(--ink-2); font-weight: 450; letter-spacing: 0.02em; }
   .note { position: absolute; display: flex; align-items: center; gap: 28px; padding: 30px 54px 30px 30px; border-radius: 999px; background: var(--amber); color: var(--amber-ink); font-size: 50px; font-weight: 600; white-space: nowrap; z-index: 9; box-shadow: 0 40px 80px -20px #000000cc, 0 0 90px #fdb44366; }
   .note .dot { width: 116px; height: 116px; border-radius: 50%; background: var(--plate-2); display: grid; place-items: center; overflow: hidden; flex: none; }
-  .mk { border-radius: 50%; background: var(--plate); display: grid; place-items: center; flex: none; }
   .face { position: absolute; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 12px var(--night), 0 40px 80px -10px #000000cc; }
   .face svg { width: 100%; height: 100%; display: block; }
-  .tag { position: absolute; display: flex; align-items: center; gap: 14px; padding: 18px 34px; border-radius: 999px; background: var(--plate-2); font-size: 42px; font-weight: 550; white-space: nowrap; box-shadow: 0 0 0 2px var(--edge); z-index: 7; }
-  .bubble { border-radius: 52px; padding: 40px 52px; font-size: 52px; line-height: 1.3; }
 
   /* Ready decks: languages in their own scripts, then the subjects. */
   .langs { position: absolute; display: grid; gap: 40px; rotate: -8deg; }
@@ -133,12 +125,42 @@
   .wave { display: flex; align-items: center; gap: 18px; }
   .wave i { width: 22px; border-radius: 11px; background: var(--amber); }
   .play { width: 260px; height: 260px; border-radius: 50%; background: var(--amber); display: grid; place-items: center; box-shadow: 0 0 120px #fdb44380; flex: none; }
-  .chip { display: inline-flex; padding: 26px 44px; border-radius: 999px; background: var(--plate-2); font-size: 46px; font-weight: 500; box-shadow: 0 0 0 2px var(--edge); }
 
-  /* Import */
-  .file { position: absolute; width: 560px; padding: 56px 60px; border-radius: 56px; background: var(--plate-2); box-shadow: 0 0 0 2px #ffffff14, 0 50px 100px -20px #000000cc; }
-  .file .nm { font-size: 64px; font-weight: 650; letter-spacing: -0.02em; }
-  .file .mt { font-size: 42px; color: var(--ivory-3); margin-top: 8px; }
+  /* The first shot's price line. */
+  .badge { margin-top: 40px; display: inline-flex; align-items: center; gap: 18px; padding: 22px 44px; border-radius: 999px; background: #fdb44324; color: var(--amber-text); font-size: 48px; font-weight: 600; box-shadow: 0 0 0 3px #fdb44366; }
+
+  /* Works with your AI: the assistants' icons. */
+  .squircle { position: absolute; width: 220px; height: 220px; border-radius: 58px; display: grid; place-items: center; z-index: 4; box-shadow: inset 0 0 0 3px #ffffff38, 0 0 0 2px #ffffff26, 0 40px 80px -16px #000000e6; }
+
+  /* Learn together: who joined. */
+  .joined { position: absolute; z-index: 8; display: flex; align-items: center; gap: 16px; padding: 22px 40px 22px 30px; border-radius: 999px; background: var(--amber); color: var(--amber-ink); font-size: 46px; font-weight: 650; white-space: nowrap; box-shadow: 0 30px 60px -16px #000000d9; }
+  .joined::before { content: "+"; font-weight: 700; }
+
+  /* Made for your language: one card per language and what it gets. */
+  .lc { position: absolute; width: 1080px; background: #fff; color: var(--ink); border-radius: 64px; padding: 60px 70px; box-shadow: 0 60px 120px -20px #000000e6; }
+  .lc .d { font-size: 38px; color: var(--ink-3); }
+  .lc .t { font-weight: 600; letter-spacing: -0.02em; }
+  .lc .a { font-size: 50px; color: var(--ink-2); margin-top: 22px; padding-top: 22px; border-top: 3px solid #2013081a; }
+  .lc .feat { position: absolute; top: 50px; right: 60px; padding: 14px 34px; border-radius: 999px; background: #fdb44333; color: #9f4500; font-size: 40px; font-weight: 650; }
+
+  .lc .a { display: flex; align-items: center; justify-content: space-between; }
+  .say { width: 110px; height: 110px; border-radius: 50%; background: var(--amber); display: grid; place-items: center; flex: none; box-shadow: 0 0 50px #fdb44366; }
+  .voice { position: absolute; z-index: 4; display: flex; align-items: center; gap: 34px; padding: 36px 60px 36px 36px; border-radius: 56px; background: #fff; color: var(--ink); box-shadow: 0 40px 80px -20px #000000e6; }
+  .voice .sp { width: 130px; height: 130px; border-radius: 50%; background: var(--amber); display: grid; place-items: center; flex: none; }
+  .voice .w { font-size: 72px; font-weight: 600; letter-spacing: -0.02em; white-space: nowrap; }
+  .voice .l { font-size: 42px; color: var(--ink-3); margin-top: 2px; }
+  .appcard { position: absolute; z-index: 4; width: 360px; padding: 40px 30px; text-align: center; border-radius: 56px; background: var(--plate-2); box-shadow: 0 0 0 2px #ffffff14, 0 50px 100px -20px #000000cc; }
+  .appcard img { width: 150px; height: 150px; border-radius: 36px; display: block; margin: 0 auto; }
+  .appcard .nm { font-size: 58px; font-weight: 650; letter-spacing: -0.02em; margin-top: 28px; }
+  .appcard .mt { white-space: nowrap; font-size: 38px; color: var(--ivory-3); margin-top: 4px; }
+
+  /* Your goal: the goal picker. */
+  .goal { width: 620px; padding: 50px 50px 40px; }
+  .gr { display: flex; align-items: center; gap: 30px; padding: 26px 34px; border-radius: 36px; font-size: 46px; color: var(--ivory-2); }
+  .gr .n { font-size: 56px; font-weight: 650; color: var(--ivory); min-width: 110px; }
+  .gr.on { background: #fdb44333; color: var(--amber-text); }
+  .gr.on .n { color: var(--amber); }
+  .gr .tick { margin-left: auto; width: 64px; height: 64px; border-radius: 50%; background: var(--amber); display: grid; place-items: center; }
 </style>
 </head>
 <body>
@@ -165,75 +187,46 @@
     stage.append(p);
     shot = p.firstChild;
   }
-  function text(i, { pos = "" } = {}) {
-    const [h, p] = T.shots[i];
-    add(`<div class="copy ${pos}"><h1>${h}</h1><p>${p}</p></div>`);
+  function text(key, { pos = "", extra = "" } = {}) {
+    const [h, p] = T.shots[key];
+    add(`<div class="copy ${pos}"><h1>${h}</h1><p>${p}</p>${extra}</div>`);
   }
   const pool = (x, y, size) => add(`<div class="pool" style="left:${x}px;top:${y}px;width:${size}px;height:${size}px"></div>`);
   function phone(src, { pw = 960, x = (W - pw) / 2, y = 900, rot = 0, z = 2 } = {}) {
     const node = add(`<div class="phone" style="--pw:${pw}px;left:${x}px;top:${y}px;rotate:${rot}deg;z-index:${z}"><img class="screen" src="${src}"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i></div>`);
     return { src, pw, x, y, rot, node };
   }
-  /** Lifts crop [cx, cy, cw, ch] (raw pixels) out of the phone's screen at scale s, centred where it sits. */
-  function callout(ph, [cx, cy, cw, ch], { s = 1, rot = 0, dx = 0, dy = 0, r = 56, z = 3, bg = "#fff" } = {}) {
-    const k = (ph.pw * 0.94) / W;
-    const phoneH = ph.pw * 0.06 + ph.pw * 0.94 * (H / W);
-    const pcx = ph.x + ph.pw / 2, pcy = ph.y + phoneH / 2;
-    let ox = ph.x + ph.pw * 0.03 + (cx + cw / 2) * k - pcx;
-    let oy = ph.y + ph.pw * 0.03 + (cy + ch / 2) * k - pcy;
-    const a = (ph.rot * Math.PI) / 180;
-    [ox, oy] = [ox * Math.cos(a) - oy * Math.sin(a), ox * Math.sin(a) + oy * Math.cos(a)];
-    return add(`<div class="callout" style="left:${pcx + ox - (cw * s) / 2 + dx}px;top:${pcy + oy - (ch * s) / 2 + dy}px;width:${cw * s}px;height:${ch * s}px;background-image:url(${ph.src});background-size:${W * s}px auto;background-position:${-cx * s}px ${-cy * s}px;rotate:${ph.rot + rot}deg;border-radius:${r}px;z-index:${z};background-color:${bg}"></div>`);
-  }
-  const fcard = ({ x, y, w = 520, rot = 0, deck, term, answer, scale = 1, z = 4 }) =>
-    add(`<div class="fc" style="left:${x}px;top:${y}px;width:${w}px;rotate:${rot}deg;scale:${scale};z-index:${z}"><div class="d">${deck}</div><div class="t">${term}</div><div class="a">${answer}</div></div>`);
-  const mark = (name, size) => {
+  const mark = (name, size, fill) => {
     const m = ART.marks[name];
-    return `<svg viewBox="0 0 24 24" width="${size}" height="${size}"><path d="${m.path}" fill-rule="${name === "Grok Bot" ? "evenodd" : "nonzero"}" fill="${m.color ?? "#f1eee7"}"/></svg>`;
+    return `<svg viewBox="0 0 24 24" width="${size}" height="${size}"><path d="${m.path}" fill-rule="${name === "Grok Bot" ? "evenodd" : "nonzero"}" fill="${fill ?? m.color ?? "#f1eee7"}"/></svg>`;
   };
   const check = `<svg viewBox="0 0 24 24" width="48" height="48" fill="none" stroke="#2b1401" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>`;
   const speaker = (size, color, fill) => `<svg viewBox="0 0 24 24" width="${size}" height="${size}" fill="none" stroke="${color}" stroke-width="2.2" stroke-linecap="round"><path d="M11 5 6 9H3v6h3l5 4z" ${fill ? `fill="${color}"` : ""}/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M18.5 5.5a9 9 0 0 1 0 13"/></svg>`;
 
-  // Raw crops, [x, y, width, height] in capture pixels.
-  const crop = { kanji: [40, 390, 330, 220] };
 
   const shots = [
-    // 1 · Learn anything: the lantern over a review, cards from four kinds of subject around it.
+    // 1 · Learn anything: the lantern over the headline, Today in front and a review behind it.
     () => {
-      pool(80, 520, 1500);
-      add(`<img class="abs" src="${brand}lantern-dark.svg" style="width:620px;left:600px;top:820px;z-index:1">`);
-      text(0);
-      phone(raw("02-review"), { pw: 860, x: 230, y: 1560, rot: -6 });
-      const [geo, jp, chem, drive] = T.hero;
-      fcard({ x: 40, y: 1220, w: 480, rot: -11, scale: 0.84, z: 3, ...geo });
-      fcard({ x: 840, y: 1400, w: 420, rot: 9, ...jp, term: `<span class="r">てんき</span>天気` });
-      fcard({ x: -40, y: 1820, w: 420, rot: 6, scale: 0.8, ...chem });
-      fcard({ x: 800, y: 2300, w: 560, rot: -7, scale: 0.8, ...drive });
+      add(`<div class="abs" style="left:-400px;top:-250px;width:2120px;height:2000px;border-radius:50%;background:radial-gradient(closest-side, #fdb44366, #f0a7322e 40%, transparent 70%);z-index:0"></div>`);
+      add(`<img class="abs" src="${brand}lantern-dark.svg" style="width:300px;left:510px;top:70px;z-index:3;filter:drop-shadow(0 0 100px #fdb443aa)">`);
+      add(`<div class="copy center hero-copy" style="top:380px"><h1>${T.shots.hero[0]}</h1><p>${T.shots.hero[1]}</p><span class="badge">${T.free}</span></div>`);
+      phone(raw("02-review"), { pw: 800, x: -10, y: 1230, rot: -7, z: 2 });
+      phone(raw("01-today"), { pw: 800, x: 520, y: 1130, rot: 5, z: 4 });
     },
-    // 2 · Works with your AI: the phone up top, the assistants in one row across it, the words at the foot.
+    // 2 · Ready decks: no phone; the languages in their own scripts and the subjects people study for.
     () => {
-      pool(-150, 300, 1620);
-      phone(raw("05-library"), { pw: 940, x: 190, y: 130, rot: 3, z: 2 });
-      add(`<div class="note" style="left:140px;top:1180px;rotate:-3deg"><span class="dot">${mark("Claude", 70)}</span>${T.ai.note}</div>`);
-      const names = [["Claude", "#d97757"], ["ChatGPT", "#f1eee7"], ["Gemini", "#3186ff"], ["Grok", "#f1eee7"], ["Grok Bot", "#f1eee7"], ["Other apps", "#fdb443"]];
-      add(`<div class="abs" style="left:40px;top:1640px;width:1240px;height:300px;border-radius:150px;background:#1a1613;box-shadow:0 0 0 2px #ffffff14, 0 60px 120px -20px #000;rotate:-4deg;z-index:6;display:flex;align-items:center;justify-content:space-evenly;padding-inline:20px">
-        ${names.map(([n, glow]) => `<div class="mk" style="width:184px;height:184px;box-shadow:0 0 0 2px #ffffff1a, 0 0 80px -6px ${glow}aa">${mark(n, 98)}</div>`).join("")}</div>`);
-      text(1, { pos: "bottom" });
-    },
-    // 3 · Ready decks: no phone; the languages in their own scripts and the subjects people study for.
-    () => {
-      text(2);
+      text("decks");
       pool(-300, 700, 1800);
       add(`<div class="langs" style="left:-380px;top:930px;width:2080px">
         ${T.decks.langs.map((r, k) => `<div style="margin-left:${[60, -120, 30, -80, 0][k]}px">${r.map(([w, size, c]) => `<span class="${c ?? ""}" style="font-size:${size}px">${w}</span>`).join("")}</div>`).join("")}</div>`);
       const tray = ["#f2b8a0", "#b9d3a6", "#c9b8f0", "#9cc5e8", "#e8a6b8", "#d8c79a"];
       let t = 0;
-      add(`<div class="topics" style="left:-260px;top:2200px;width:1900px">
-        ${T.decks.topics.map((r, k) => `<div style="margin-left:${[380, -60, 200, 40][k]}px">${r.map((n) => (n.startsWith("*") ? `<span class="topic lit">${n.slice(1)}</span>` : `<span class="topic"><i style="background:${tray[t++ % tray.length]}"></i>${n}</span>`)).join("")}</div>`).join("")}</div>`);
+      add(`<div class="topics" style="left:-260px;top:2090px;width:3200px">
+        ${T.decks.topics.map((r, k) => `<div style="margin-left:${[-1249, -261, -826, -1106, -696][k]}px">${r.map((n) => (n.startsWith("*") ? `<span class="topic lit">${n.slice(1)}</span>` : `<span class="topic"><i style="background:${tray[t++ % tray.length]}"></i>${n}</span>`)).join("")}</div>`).join("")}</div>`);
     },
-    // 4 · Smart add: a textbook page in the camera's frame, and the terms picked from it.
+    // 3 · Cards from your notes: a textbook page in the camera's frame, and the terms picked from it.
     () => {
-      text(3);
+      text("notes");
       pool(-200, 900, 1700);
       const s = T.smart;
       add(`<div class="page" style="left:120px;top:900px;width:960px;height:1120px;rotate:-5deg;z-index:2">
@@ -246,72 +239,108 @@
         ${s.picked.map(([w, m]) => `<div class="pick"><span class="box">${check}</span><div><div class="tm">${w}</div><div class="mn">${m}</div></div></div>`).join("")}
         <div style="margin-top:34px;height:150px;border-radius:999px;background:var(--amber);color:var(--amber-ink);display:grid;place-items:center;font-size:56px;font-weight:650">${s.button}</div></div>`);
     },
-    // 5 · Learn together: one lit shared deck, cards spilling out, friends arriving around it.
+    // 4 · Works with your AI: the assistants in a row, and what each of them did in Lymi.
     () => {
-      text(4);
-      pool(-250, 950, 1820);
-      const g = T.together;
-      add(`<div class="bubble" style="position:absolute;left:520px;top:860px;max-width:680px;background:var(--amber);color:var(--amber-ink);font-weight:550;rotate:3deg;z-index:8;box-shadow:0 30px 70px -20px #000c">${g.bubble}</div>`);
-      add(`<div class="abs" style="left:210px;top:1500px;width:900px;rotate:-5deg;z-index:3">
-        <div style="position:relative;height:560px;border-radius:64px 64px 0 0;background:linear-gradient(160deg,#f0b072,#d98a45)">
-          ${g.cards.map(([deck, term, answer], k) => `<div class="fc" style="left:${[40, 450, 230][k]}px;top:${[-230, -250, -20][k]}px;width:${[420, 420, 440][k]}px;rotate:${[-13, 11, -2][k]}deg;padding:40px 46px"><div class="d">${deck}</div><div class="t" style="font-size:${k === 2 ? 72 : 66}px;white-space:nowrap">${term}</div><div class="a" style="font-size:36px">${answer}</div></div>`).join("")}
-        </div>
-        <div style="border-radius:0 0 64px 64px;background:var(--plate);padding:50px 60px;box-shadow:0 0 0 2px #ffffff12, 0 60px 120px -20px #000000e6">
-          <div style="font-size:76px;font-weight:650;letter-spacing:-0.03em">Italiano A2</div>
-          <div class="muted" style="font-size:42px;margin-top:6px">${g.deck}</div></div></div>`);
-      [["joining", 10, 1760, 280, -8, "#e8a6b8"], ["polyglot", 880, 1770, 290, 7, "#c9b8f0"], ["streak", 120, 2400, 260, -4, "#f2b8a0"], ["fresh", 850, 2450, 250, 6, "#b9d3a6"]].forEach(([id, x, y, size, rot, glow], k) => {
-        add(`<div class="abs" style="left:${x - 80}px;top:${y - 80}px;width:${size + 160}px;height:${size + 160}px;border-radius:50%;background:radial-gradient(closest-side, ${glow}66, transparent);z-index:5"></div>`);
-        add(`<div class="face" style="left:${x}px;top:${y}px;width:${size}px;height:${size}px;rotate:${rot}deg;z-index:6">${ART.avatars[id]}</div>`);
-        // Tags on the right hang from the face's right edge, so a long translation grows inward.
-        const side = x > W / 2 ? `right:${Math.max(40, W - x - size * 0.95)}px` : `left:${x + size * 0.15}px`;
-        add(`<div class="tag" style="${side};top:${y + size - 30}px;rotate:${-rot / 2}deg"><span style="width:20px;height:20px;border-radius:50%;background:#7fd39f"></span>${g.joined[k]}</div>`);
+      text("ai");
+      pool(-200, 1000, 1720);
+      const icons = [["Claude", "#d97757", "#fff"], ["ChatGPT", "#0d0d0d", "#fff"], ["Gemini", "#ffffff", null], ["Grok", "#0d0d0d", "#fff"], ["Grok Bot", "#f1eee7", "#0d0d0d"], ["Other apps", "#fdb443", "#2b1401"]];
+      icons.forEach(([n, bg, fg], k) => {
+        add(`<div class="squircle" style="width:180px;height:180px;border-radius:48px;left:${70 + k * 200}px;top:${[830, 800, 845, 805, 840, 810][k]}px;background:${bg};rotate:${[-8, 5, -3, 6, -5, 7][k]}deg">${mark(n, 100, fg)}</div>`);
+      });
+      phone(raw("05-library"), { pw: 960, x: 180, y: 1150, rot: 0 });
+      // What each assistant did, as notes on the Library.
+      T.ai.notes.forEach(([n, note], k) => {
+        // One note hangs off each side of the phone.
+        const side = k === 0 ? "left:30px" : "right:30px";
+        add(`<div class="note" style="${side};top:${[1640, 2060][k]}px;rotate:${[-4, 3][k]}deg"><span class="dot">${mark(n, 70)}</span>${note}</div>`);
       });
     },
-    // 6 · Hear every word: the card and its voice up top, the words at the foot.
+    // 5 · Learn together: a shared deck on the phone, the people who joined it gathered on top of it.
     () => {
-      pool(-200, 300, 1700);
+      text("together");
+      pool(-200, 1000, 1720);
+      phone(raw("07-deck"), { pw: 880, x: 250, y: 1000, rot: 3 });
+      const g = T.together;
+      [["japanese", 60, 1180, 250, -8, "#e8a6b8", "left"], ["polyglot", 1000, 1500, 260, 6, "#c9b8f0", "right"], ["streak", 40, 1900, 250, -5, "#f2b8a0", "left"], ["fresh", 1000, 2240, 240, 7, "#b9d3a6", "right"]].forEach(([id, x, y, size, rot, glow, side], k) => {
+        add(`<div class="abs" style="left:${x - 70}px;top:${y - 70}px;width:${size + 140}px;height:${size + 140}px;border-radius:50%;background:radial-gradient(closest-side, ${glow}70, transparent);z-index:5"></div>`);
+        add(`<div class="face" style="left:${x}px;top:${y}px;width:${size}px;height:${size}px;rotate:${rot}deg;z-index:6">${ART.avatars[id]}</div>`);
+        const at = side === "left" ? `left:${x + size * 0.55}px` : `right:${Math.max(30, W - x - size * 0.45)}px`;
+        add(`<div class="joined" style="${at};top:${y + size - 70}px;rotate:${-rot / 2}deg">${g.joined[k]}</div>`);
+      });
+    },
+    // 6 · Hear every word: one card with its voice large, and three more languages speaking under it.
+    () => {
+      text("audio");
+      pool(-200, 800, 1720);
       const a = T.audio;
       const bars = [40, 90, 150, 220, 300, 260, 380, 300, 200, 330, 420, 340, 240, 160, 260];
-      add(`<div class="np" style="left:110px;top:170px;width:1100px;padding:90px;z-index:3">
+      add(`<div class="np" style="left:110px;top:800px;width:1100px;padding:80px 90px;z-index:3">
         <div class="muted" style="font-size:42px">${a.deck}</div>
-        <div style="font-size:150px;font-weight:600;letter-spacing:-0.035em;margin-top:80px">la lampada</div>
-        <div class="muted" style="font-size:58px;margin-top:10px">${a.meaning}</div>
-        <div style="display:flex;align-items:center;gap:60px;margin-top:90px"><div class="play">${speaker(120, "#2b1401", true)}</div>
+        <div style="font-size:140px;font-weight:600;letter-spacing:-0.035em;margin-top:50px">la lampada</div>
+        <div class="muted" style="font-size:56px;margin-top:6px">${a.meaning}</div>
+        <div style="display:flex;align-items:center;gap:60px;margin-top:70px"><div class="play">${speaker(120, "#2b1401", true)}</div>
           <div class="wave">${bars.map((h) => `<i style="height:${h * 0.7}px"></i>`).join("")}</div></div>
-        <div style="height:2px;background:#ffffff12;margin:100px 0 64px"></div>
+        <div style="height:2px;background:#ffffff12;margin:80px 0 56px"></div>
         <div class="muted" style="font-size:40px">${a.example}</div>
-        <div style="font-size:60px;margin-top:14px;line-height:1.3">Accendi la lampada, per favore.</div>
-        <div style="display:flex;align-items:center;gap:24px;margin-top:40px;font-size:42px;color:var(--amber-text)">${speaker(56, "#f9bf60")}${a.play}</div></div>`);
-      add(`<div class="abs" style="left:110px;width:1100px;top:1930px;display:flex;flex-wrap:wrap;gap:20px;justify-content:center;z-index:3">${a.langs.map((l) => `<span class="chip">${l}</span>`).join("")}</div>`);
-      text(5, { pos: "bottom" });
-    },
-    // 7 · Learning Japanese: the card page, its kanji lifted out large with the reading over it.
-    () => {
-      text(6);
-      pool(-100, 1000, 1500);
-      const ph = phone(raw("04-japanese"), { pw: 880, x: 340, y: 1120, rot: 5 });
-      callout(ph, crop.kanji, { s: 2.7, rot: -8, dx: 30, dy: -280, r: 72 });
-    },
-    // 8 · Switching from Anki: other apps' decks falling into one lit deck.
-    () => {
-      text(7);
-      const m = T.import;
-      [["Anki", m.counts[0], 70, 980, -9], ["Quizlet", m.counts[1], 690, 1060, 8], ["Mochi", m.counts[2], 90, 1420, 5], ["Pleco", m.counts[3], 700, 1490, -6]].forEach(([n, c, x, y, r]) => {
-        add(`<div class="file" style="left:${x}px;top:${y}px;rotate:${r}deg"><div class="nm">${n}</div><div class="mt">${c}</div></div>`);
+        <div style="font-size:58px;margin-top:12px;line-height:1.3">Accendi la lampada, per favore.</div>
+        <div style="display:flex;align-items:center;gap:24px;margin-top:34px;font-size:42px;color:var(--amber-text)">${speaker(56, "#f9bf60")}${a.play}</div></div>`);
+      a.more.forEach(([w, l], k) => {
+        add(`<div class="voice" style="left:${[80, 640, 320][k]}px;top:${[2150, 2190, 2430][k]}px;rotate:${[-5, 4, -2][k]}deg"><span class="sp">${speaker(54, "#2b1401", true)}</span><div><div class="w">${w}</div><div class="l">${l}</div></div></div>`);
       });
-      pool(-150, 1600, 1620);
-      add(`<svg class="abs" style="left:560px;top:1920px" width="200" height="200" viewBox="0 0 24 24" fill="none" stroke="#fdb443" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M6 13l6 6 6-6"/></svg>`);
-      add(`<div class="np" style="left:110px;top:2200px;width:1100px;padding:80px 90px;display:flex;align-items:center;gap:50px">
-        <img src="${brand}lantern-dark.svg" width="190" height="190">
-        <div><div style="font-size:76px;font-weight:650;letter-spacing:-0.03em">${m.title}</div>
-        <div class="muted" style="font-size:46px;margin-top:6px">${m.sub}</div></div></div>`);
     },
-    // 9 · Keep the flame lit: two phones, the day and the run of days.
+    // 7 · Made for your language: no phone; a Japanese, a Chinese and a Ukrainian card with what each gets, each with its voice.
     () => {
-      text(8, { pos: "center" });
-      pool(-150, 900, 1620);
-      phone(raw("01-today"), { pw: 760, x: 20, y: 1200, rot: -8, z: 2 });
-      phone(raw("06-streak"), { pw: 800, x: 470, y: 1000, rot: 6, z: 3 });
+      text("langs");
+      pool(-200, 1000, 1720);
+      const L = T.langs;
+      // 天気 is てんき [1]: high on て, low after, and low on the particle that follows; drawn as the app draws it.
+      const pitch = (() => {
+        const xs = [50, 190, 330, 450], ys = [20, 80, 80, 80];
+        const segs = xs.slice(1).map((x, k) => `<line x1="${xs[k]}" y1="${ys[k]}" x2="${x}" y2="${ys[k + 1]}" stroke="#49403a" stroke-width="5" stroke-linecap="round" ${k === 2 ? 'stroke-dasharray="2 12"' : ""}/>`).join("");
+        const dots = xs.map((x, k) => `<circle cx="${x}" cy="${ys[k]}" r="${k === 3 ? 11 : 17}" fill="#fff" stroke="#49403a" stroke-width="5"/>`).join("");
+        const kana = ["て", "ん", "き"].map((k, i) => `<text x="${xs[i]}" y="170" text-anchor="middle" font-size="58" fill="#49403a">${k}</text>`).join("");
+        return `<svg viewBox="0 0 500 190" width="500" height="190">${segs}${dots}${kana}</svg>`;
+      })();
+      const say = `<span class="say">${speaker(54, "#2b1401", true)}</span>`;
+      add(`<div class="lc" style="left:90px;top:840px;rotate:-4deg;z-index:3">
+        <span class="feat">${L.jp}</span><div class="d">日本語 N5</div>
+        <div style="display:flex;align-items:center;gap:80px;margin-top:30px"><div class="t" style="font-size:180px;line-height:1;white-space:nowrap;display:grid;justify-items:center"><span style="font-size:52px;font-weight:450;color:#49403a;letter-spacing:0.1em;margin-bottom:10px">てんき</span>天気</div>${pitch}</div>
+        <div class="a">${L.jpMeaning}${say}</div></div>`);
+      add(`<div class="lc" style="left:170px;top:1500px;rotate:3deg;z-index:4">
+        <span class="feat">${L.zh}</span><div class="d">中文 HSK 1</div>
+        <div class="t" style="display:flex;gap:8px;margin-top:20px">${[["学", "xué"], ["习", "xí"]].map(([h, p]) => `<ruby style="font-size:180px;line-height:1.15">${h}<rt style="font-size:56px;color:#49403a;font-weight:450">${p}</rt></ruby>`).join("")}</div>
+        <div class="a">${L.zhMeaning}${say}</div></div>`);
+      add(`<div class="lc" style="left:110px;top:2160px;rotate:-2deg;z-index:5">
+        <span class="feat">${L.uk}</span><div class="d">Українська A1</div>
+        <div class="t" style="font-size:170px;margin-top:30px;line-height:1.1">дя́кую</div>
+        <div class="a">${L.ukMeaning}${say}</div></div>`);
+    },
+    // 8 · Bring your existing decks: the other apps' icons and what they hold, falling into Lymi.
+    () => {
+      text("import");
+      pool(-150, 1350, 1620);
+      const m = T.import;
+      [["anki", "Anki", 80, 860, -3], ["quizlet", "Quizlet", 480, 860, 0], ["mochi", "Mochi", 880, 860, 3], ["noji", "Noji", 280, 1350, -2], ["pleco", "Pleco", 680, 1350, 2]].forEach(([f, n, x, y, r], k) => {
+        add(`<div class="appcard" style="left:${x}px;top:${y}px;rotate:${r}deg"><img src="../../../site/public/apps/${f}.png" alt=""><div class="nm">${n}</div><div class="mt">${m.counts[k]}</div></div>`);
+      });
+      add(`<svg class="abs" style="left:590px;top:1790px" width="140" height="140" viewBox="0 0 24 24" fill="none" stroke="#fdb443" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 4v15M6 13l6 6 6-6"/></svg>`);
+      add(`<img class="abs" src="${brand}app-icon-rounded.svg" style="left:500px;top:1980px;width:320px;height:320px;z-index:3;filter:drop-shadow(0 0 90px #fdb443aa)">`);
+      add(`<div class="np" style="left:160px;top:2390px;width:1000px;padding:56px 70px;text-align:center;z-index:2">
+        <div style="font-size:72px;font-weight:650;letter-spacing:-0.03em">${m.title}</div>
+        <div class="muted" style="font-size:46px;margin-top:6px">${m.sub}</div></div>`);
+    },
+    // 9 · Your goal, your pace: the month of lit days behind, the goal picker and the streak in front.
+    () => {
+      text("streak", { pos: "center" });
+      // Background only: the lantern's warm light rising from below, as on a slow dawn.
+      add(`<div class="abs" style="left:-500px;top:1300px;width:2320px;height:2600px;border-radius:50%;background:radial-gradient(closest-side, #fdb4436b, #e0862e33 45%, transparent 75%);z-index:0"></div>`);
+      add(`<div class="abs" style="left:-300px;top:200px;width:1100px;height:1100px;border-radius:50%;background:radial-gradient(closest-side, #fdb44324, transparent);z-index:0"></div>`);
+      phone(raw("06-streak"), { pw: 880, x: 400, y: 1080, rot: 5 });
+      const g = T.goal;
+      add(`<div class="np goal" style="left:60px;top:1020px;rotate:-4deg;z-index:5">
+        <div style="font-size:44px;font-weight:600;margin-bottom:20px">${g.title}</div>
+        ${g.rows.map(([n, name], k) => `<div class="gr ${k === 2 ? "on" : ""}"><span class="n">${n}</span><span>${name}</span>${k === 2 ? `<span class="tick">${check}</span>` : ""}</div>`).join("")}
+        <div class="gr"><span class="n">${g.custom}</span></div></div>`);
     },
   ];
 

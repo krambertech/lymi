@@ -663,11 +663,23 @@ msgstr "<0>-ge</0> или <1>-ke</1> на конце"
 msgid "<0>-ja</0> or <1>-mine</1>?"
 msgstr "<0>-ja</0> или <1>-mine</1>?"
 
+msgid "<0>-ke</0> makes something small or dear: <1>kassike</1>, a kitty."
+msgstr "<0>-ke</0> делает что-то маленьким или милым: <1>kassike</1>, котик."
+
+msgid "<0>-ke</0> makes something small or dear: <1>majake</1>, a little house."
+msgstr "<0>-ke</0> делает что-то маленьким или милым, как «-ик» в «домик»: <1>majake</1>."
+
 msgid "<0>-ksid</0> is for <1>sa</1> or <2>nad</2>. With <3>ma</3>: <4>tahaksin</4>."
 msgstr "<0>-ksid</0> — для <1>sa</1> или <2>nad</2>. С <3>ma</3>: <4>tahaksin</4>."
 
 msgid "<0>-ksime</0> is for <1>me</1>. With <2>ma</2>: <3>tahaksin</3>."
 msgstr "<0>-ksime</0> — для <1>me</1>. С <2>ma</2>: <3>tahaksin</3>."
+
+msgid "<0>-lik</0> gives a quality, like English -ly or -ful: <1>sõbralik</1>, friendly."
+msgstr "<0>-lik</0> даёт признак, как прилагательное от существительного: <1>sõbralik</1>, дружелюбный, от «друг»."
+
+msgid "<0>-lik</0> gives a quality: <1>kasulik</1>, useful. <2>-tu</2> means without: <3>kasutu</3>, useless."
+msgstr "<0>-lik</0> даёт признак: <1>kasulik</1>, полезный. <2>-tu</2> значит «без»: <3>kasutu</3>, бесполезный."
 
 msgid "<0>-ma</0> form"
 msgstr "Форма на <0>-ma</0>"
@@ -713,6 +725,9 @@ msgstr "<0>-ta</0> — это «без»: <1>kohv piimata</1> — кофе бе�
 
 msgid "<0>-ta</0> on the genitive."
 msgstr "Родительный падеж плюс <0>-ta</0>."
+
+msgid "<0>-tu</0> means without, like English -less: <1>kodutu</1>, homeless."
+msgstr "<0>-tu</0> значит «без», как «без-» в «бездомный»: <1>kodutu</1>."
 
 msgid "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
 msgstr "<0>-us</0> становится <1>-use</1>, а затем <2>-ust</2>."
@@ -1272,6 +1287,9 @@ msgstr "<0>Sklep</0> — это магазин, а не склеп, а <1>dynia<
 
 msgid "<0>Sõber</0> sounds like “sober”: the friend who gets you home."
 msgstr "<0>Sõber</0> — родственник древнерусского «сябр», то есть друг. Белорусы до сих пор говорят «сябар»."
+
+msgid "<0>Sõbralik</0>, <1>kodutu</1>, <2>majake</2>: three endings that turn a noun into a new word, so one word you know gives you three more."
+msgstr "<0>Sõbralik</0>, <1>kodutu</1>, <2>majake</2>: три окончания, которые делают из существительного новое слово, так что одно знакомое слово даёт ещё три."
 
 msgid "<0>Sõin</0> is the past, and the cake has only just come. With <1>ära</1>, the genitive: <2>koogi</2>."
 msgstr "<0>Sõin</0> — это прошедшее время, а торт только что принесли. С <1>ära</1> — родительный: <2>koogi</2>."
@@ -1882,6 +1900,9 @@ msgstr "Бесплатный урок эстонского о том, как с�
 msgid "A free Estonian lesson on the words that come before a noun: läbi pargi (through the park), üle tee (across the road), ümber maja (around the house) with the genitive, mööda teed (along the road) with the partitive, and how to follow directions with them. Every sentence is read aloud."
 msgstr "Бесплатный урок эстонского о предлогах: läbi pargi (через парк), üle tee (через дорогу), ümber maja (вокруг дома) с родительным падежом, mööda teed (вдоль дороги) с партитивом, и как с ними понимать, куда идти. Каждое предложение озвучено."
 
+msgid "A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), each added to the second form. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о трёх окончаниях, которые образуют новые слова от существительных: -lik для признака (sõber, sõbralik), -tu для «без» (kodu, kodutu) и -ke для уменьшительного (maja, majake). Каждое добавляется ко второй форме. Каждое предложение озвучено."
+
 msgid "A free Estonian practice lesson: read a message to a landlord, hear the reply, and use the perfect (on katki läinud), the conditional (kas te saaksite), the impersonal and the case each verb takes in one real situation. Every sentence is read aloud."
 msgstr "Бесплатный практический урок эстонского: прочитай сообщение хозяйке квартиры, послушай ответ и используй перфект (on katki läinud), условное наклонение (kas te saaksite), безличную форму и падежи после глаголов в одной жизненной ситуации. Каждое предложение озвучено."
 
@@ -2080,6 +2101,9 @@ msgstr "По ссылке, у каждого своё расписание"
 
 msgid "a little"
 msgstr "немного"
+
+msgid "A little house by the sea"
+msgstr "Домик у моря"
 
 msgid "a little milk"
 msgstr "немного молока"
@@ -2346,6 +2370,9 @@ msgstr "На табличке каждый день обозначен перв�
 
 msgid "a small cat"
 msgstr "маленькая кошка"
+
+msgid "A small or dear one"
+msgstr "Что-то маленькое или милое"
 
 msgid "A smaller, checked library"
 msgstr "Меньше, но все проверены"
@@ -3094,6 +3121,9 @@ msgstr "Все уроки"
 
 msgid "All nine. Two, many and the ones you mean, every time."
 msgstr "Все девять. Две, много и именно эти — каждый раз верно."
+
+msgid "All nine. You can read a new word from its ending."
+msgstr "Все девять. Ты можешь понять новое слово по его окончанию."
 
 msgid "All nine. You can suggest and allow."
 msgstr "Все девять. Ты умеешь предлагать и разрешать."
@@ -4346,6 +4376,9 @@ msgstr "Наизусть"
 msgid "By the rule"
 msgstr "По правилу"
 
+msgid "By the sea"
+msgstr "У моря"
+
 msgid "By the sea, in small villages"
 msgstr "У моря, в маленьких деревнях"
 
@@ -4723,6 +4756,9 @@ msgstr "Шахматы · новая"
 
 msgid "child"
 msgstr "ребёнок"
+
+msgid "childish"
+msgstr "детский, ребяческий"
 
 msgid "children"
 msgstr "дети"
@@ -5896,6 +5932,9 @@ msgstr "Emal on: у мамы есть."
 msgid "Ended in 1648 by the <0>Peace of Westphalia</0>."
 msgstr "Завершилась в 1648 году <0>Вестфальским миром</0>."
 
+msgid "Ending"
+msgstr "Окончание"
+
 msgid "Endings"
 msgstr "Окончания"
 
@@ -5913,6 +5952,9 @@ msgstr "Окончания, которые подсказывают третью
 
 msgid "Endings: <0>-ksin, -ksid, -ks, -ksime, -ksite, -ksid</0>. With <1>ei</1>, just <2>-ks</2>: <3>ma ei läheks</3>."
 msgstr "Окончания: <0>-ksin, -ksid, -ks, -ksime, -ksite, -ksid</0>. С <1>ei</1> — просто <2>-ks</2>: <3>ma ei läheks</3>."
+
+msgid "endless"
+msgstr "бесконечный"
 
 msgid "English"
 msgstr "Английский"
@@ -5988,6 +6030,9 @@ msgstr "Эстонский"
 
 msgid "Estonian -ja and -mine: õpetaja, lugemine and other words from verbs"
 msgstr "Эстонские -ja и -mine: как образовать «учитель» и «чтение» от глагола"
+
+msgid "Estonian -lik, -tu and -ke: sõbralik, kodutu, majake"
+msgstr "Эстонские -lik, -tu и -ke: как образовать «дружелюбный», «бездомный», «домик»"
 
 msgid "Estonian -ma, -mas and -mast: going, being and coming back"
 msgstr "Эстонские формы на -ma, -mas и -mast: иду, там, возвращаюсь"
@@ -6898,6 +6943,12 @@ msgstr "Друг"
 
 msgid "friend’s, of a friend"
 msgstr "друга"
+
+msgid "friendly"
+msgstr "дружелюбный"
+
+msgid "Friendly and helpful"
+msgstr "Дружелюбные и всегда помогают"
 
 msgid "friends"
 msgstr "друзья"
@@ -8199,6 +8250,9 @@ msgstr "домой"
 msgid "home; the home’s"
 msgstr "дом; родительный — дома"
 
+msgid "homeless"
+msgstr "бездомный"
+
 msgid "Hopefully"
 msgstr "Надеюсь"
 
@@ -9491,6 +9545,9 @@ msgstr "В кафе услышишь и <0/> Это один кофе, его с
 msgid "In a command the whole thing takes the dictionary form, and more than one the plural with -d: <0>Osta pilet! Ma ostsin piletid.</0>"
 msgstr "В приказе целое стоит в словарной форме, а несколько целых вещей — во множественном числе на -d: <0>Osta pilet! Ma ostsin piletid.</0>"
 
+msgid "In a forest near Tartu"
+msgstr "В лесу под Тарту"
+
 msgid "in a hospital"
 msgstr "в больнице"
 
@@ -9723,6 +9780,9 @@ msgstr "в доме"
 msgid "In the house: -s, and -des for more than one."
 msgstr "В доме: -s, а для нескольких -des."
 
+msgid "In the middle of Tallinn"
+msgstr "В центре Таллина"
+
 msgid "in the old days"
 msgstr "раньше, в старину"
 
@@ -9943,6 +10003,15 @@ msgstr "Lymi делает то же самое, но без запущенног
 msgid "It doesn’t matter"
 msgstr "Ничего страшного"
 
+msgid "It ends in <0>-ke</0>, small or dear."
+msgstr "Оно заканчивается на <0>-ke</0>: маленькое или милое."
+
+msgid "It ends in <0>-lik</0>, a quality."
+msgstr "Оно заканчивается на <0>-lik</0>: признак."
+
+msgid "It ends in <0>-tu</0>, without."
+msgstr "Оно заканчивается на <0>-tu</0>: «без»."
+
 msgid "It had happened before something else"
 msgstr "Это случилось раньше чего-то другого"
 
@@ -9955,11 +10024,17 @@ msgstr "Это уже случилось, и это важно сейчас"
 msgid "It has no meaning of its own, like a spoken question mark."
 msgstr "Своего значения не имеет, это как знак вопроса вслух."
 
+msgid "It has that quality"
+msgstr "Имеет этот признак"
+
 msgid "It has to be done, and no one is named."
 msgstr "Надо сделать, и никто не назван."
 
 msgid "It helps. Read Japanese Kana teaches hiragana and katakana, and the other decks are easier once you can read them."
 msgstr "Это помогает. Колода Read Japanese Kana учит хирагане и катакане, а с ними остальные колоды даются легче."
+
+msgid "It is without it"
+msgstr "Без этого"
 
 msgid "It isn’t allowed."
 msgstr "Это запрещено."
@@ -10367,6 +10442,9 @@ msgstr "Кати пишет"
 msgid "Kati writes about her family. For each gap, pick who or whose."
 msgstr "Кати пишет о своей семье. В каждом пропуске выбери: «кто» или «чей»."
 
+msgid "Kati writes about her family’s summer place. Look for words with <0>-lik</0>, <1>-tu</1> and <2>-ke</2>, and for her <3/>, her neighbours."
+msgstr "Кати пишет о летнем домике своей семьи. Ищи слова с <0>-lik</0>, <1>-tu</1> и <2>-ke</2> и <3/>, соседей."
+
 msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 msgstr "Кати пишет о себе. В каждом пропуске — одно из того, что ты уже знаешь: форма <0>olema</0>, окончание глагола, глагол после <1>ei</1>, место с <2>-l</2> или вопросительное слово."
 
@@ -10495,6 +10573,9 @@ msgstr "килограмм"
 
 msgid "Kinds of change"
 msgstr "Виды изменений"
+
+msgid "kitty"
+msgstr "котик"
 
 msgid "Know where you stand."
 msgstr "Знай, где ты сейчас."
@@ -11025,6 +11106,9 @@ msgstr "Послушай каждое предложение и выбери, ч
 msgid "Listen to each sentence and pick what it says about time. Listen for a form of <0>olema</0>, such as <1>olen</1> or <2>olin</2>, and for a time word."
 msgstr "Послушай каждое предложение и выбери, что оно говорит о времени. Слушай форму <0>olema</0>, например <1>olen</1> или <2>olin</2>, и слова о времени."
 
+msgid "Listen to each word and pick what its ending says. Some of these words are new: the ending is enough."
+msgstr "Послушай каждое слово и выбери, что говорит его окончание. Некоторые слова новые, но окончания достаточно."
+
 msgid "Listen to the end of the verb. Try the table above, then come back."
 msgstr "Слушай конец глагола. Поиграй со столом выше и возвращайся."
 
@@ -11102,6 +11186,15 @@ msgstr "Дословно — «это идёт». Так говорят офиц
 
 msgid "Literally “the one who gives rent”."
 msgstr "Дословно «тот, кто сдаёт в аренду»."
+
+msgid "little book"
+msgstr "книжечка"
+
+msgid "little house"
+msgstr "домик"
+
+msgid "little son"
+msgstr "сынок"
 
 msgid "little, not much"
 msgstr "мало"
@@ -11895,6 +11988,9 @@ msgstr "Когда нравится несколько, нужно <0>meeldivad<
 msgid "More than one thing you like takes <0>meeldivad</0>: <1>Mulle meeldivad õunad</1>."
 msgstr "Когда нравится несколько вещей — <0>meeldivad</0>: <1>Mulle meeldivad õunad</1>."
 
+msgid "More than one: naabrid."
+msgstr "Множественное число: naabrid."
+
 msgid "More updates"
 msgstr "Другие обновления"
 
@@ -11924,6 +12020,9 @@ msgstr "Почти все. Послушай, как начинаются дни,
 
 msgid "Most of them. Listen to the last sound of the third form."
 msgstr "Большинство. Слушай последний звук третьей формы."
+
+msgid "Most of them. Listen to the last sound: <0>-lik</0>, <1>-tu</1> or <2>-ke</2>."
+msgstr "Большинство. Слушай конец слова: <0>-lik</0>, <1>-tu</1> или <2>-ke</2>."
 
 msgid "Most of them. Look at the word before and after each gap."
 msgstr "Большинство. Смотри на слово перед пропуском и после него."
@@ -11996,6 +12095,9 @@ msgstr "мать"
 
 msgid "Mother and father are working."
 msgstr "Мама и папа работают."
+
+msgid "motherly"
+msgstr "материнский"
 
 msgid "Move the food words into their own section."
 msgstr "Перенеси слова про еду в отдельный раздел."
@@ -12220,6 +12322,9 @@ msgstr "Нужен: карточки хранятся на серверах Lymi
 msgid "Negation"
 msgstr "Отрицание"
 
+msgid "neighbour"
+msgstr "сосед"
+
 msgid "Neil on: they have."
 msgstr "Neil on: у них есть."
 
@@ -12259,6 +12364,9 @@ msgstr "Новые карточки появятся здесь."
 
 msgid "New features and improvements in Lymi, the flashcard app with spaced repetition."
 msgstr "Новые возможности и улучшения Lymi — приложения с флеш-карточками и интервальными повторениями."
+
+msgid "New word"
+msgstr "Новое слово"
 
 msgid "New York DMV written test"
 msgstr "Письменный экзамен DMV в Нью-Йорке"
@@ -12479,6 +12587,9 @@ msgstr "Нет. Добавлять и редактировать карточк�
 msgid "No. Quizlet exports a set’s terms and definitions as text, so your cards start as new. Your first answers in Lymi show what you already know, and those cards come back less often."
 msgstr "Нет. Quizlet экспортирует термины и определения набора в виде текста, поэтому карточки начнутся как новые. Первые ответы в Lymi покажут, что ты уже знаешь, и такие карточки будут возвращаться реже."
 
+msgid "Nobody calls them there"
+msgstr "Туда никто не звонит"
+
 msgid "Nobody eats, drinks or wants it here: the sentence starts with it, so the first form."
 msgstr "Здесь это никто не ест, не пьёт и не хочет: предложение начинается с самого предмета, поэтому первая форма."
 
@@ -12621,8 +12732,14 @@ msgstr "Ничего. Lymi бесплатный."
 msgid "noun"
 msgstr "существительное"
 
+msgid "Noun"
+msgstr "Существительное"
+
 msgid "Nouns and cases"
 msgstr "Существительные и падежи"
+
+msgid "Nouns and the words made from them"
+msgstr "Существительные и слова, образованные от них"
 
 msgid "Nouns that stay the same"
 msgstr "Существительные без изменений"
@@ -12781,6 +12898,9 @@ msgstr "Без интернета"
 
 msgid "Offline review"
 msgstr "Повторение без интернета"
+
+msgid "Often away"
+msgstr "Часто в отъезде"
 
 msgid "Often called Iceland’s unofficial motto."
 msgstr "Её часто называют неофициальным девизом Исландии."
@@ -13839,6 +13959,9 @@ msgstr "PMP и PRINCE2: процессы, роли и терминология."
 msgid "Poe- plus -s: in a shop."
 msgstr "Poe- плюс -s: в магазине."
 
+msgid "pointless"
+msgstr "бессмысленный"
+
 msgid "points in all, at either level"
 msgstr "баллов всего на каждом из уровней"
 
@@ -14238,6 +14361,9 @@ msgstr "Хорошее нунчи — уловить настроение, по�
 
 msgid "Quickstart"
 msgstr "Быстрый старт"
+
+msgid "Quiet"
+msgstr "Тихие"
 
 msgid "Quiz me on the cranial nerves I keep missing."
 msgstr "Погоняй меня по черепным нервам, которые я забываю."
@@ -14834,6 +14960,9 @@ msgstr "Вторая и третья"
 
 msgid "second form"
 msgstr "вторая форма"
+
+msgid "Second form"
+msgstr "Вторая форма"
 
 msgid "Second form jõe, third form jõge."
 msgstr "Вторая форма jõe, третья форма jõge."
@@ -15996,6 +16125,9 @@ msgstr "Возьми форму на <0>-ma</0> и отбрось <1>-ma</1>: <2
 msgid "Take the present <0>ma</0> form, swap <1>-n</1> for <2>-ksin</2>: <3>lähen, läheksin</3>."
 msgstr "Возьми форму настоящего времени для <0>ma</0> и замени <1>-n</1> на <2>-ksin</2>: <3>lähen, läheksin</3>."
 
+msgid "Take the second form from lesson {genitive} and add an ending. <0>-lik</0> gives a quality, <1>-tu</1> means without, and <2>-ke</2> makes it small or dear. Pick an ending to see its words."
+msgstr "Возьми вторую форму из урока {genitive} и добавь окончание. <0>-lik</0> даёт признак, <1>-tu</1> значит «без», а <2>-ke</2> делает что-то маленьким или милым, как «-ик» и «-ок» в русском. Выбери окончание, чтобы увидеть слова."
+
 msgid "Tal on: he or she has."
 msgstr "Tal on: у него или у неё есть."
 
@@ -16647,6 +16779,9 @@ msgstr "Начальная форма. Для нескольких добавл�
 msgid "The basics"
 msgstr "Основы"
 
+msgid "The battery is old"
+msgstr "Батарея старая"
+
 msgid "The birds sit in the trees."
 msgstr "Птицы сидят на деревьях."
 
@@ -16946,6 +17081,9 @@ msgstr "Окончание для te: «вы» нескольким людям �
 
 msgid "The ending goes on the noun’s stem, as a verb’s endings go on its stem in lesson {present}. The stem of <0>pood</0> is <1/>, and <2>poe</2> with <3>-s</3> is <4>poes</4>. Tap each step to hear it."
 msgstr "Окончание добавляем к основе существительного — так же, как окончания глагола к его основе в уроке {present}. Основа <0>pood</0> — <1/>, а <2>poe</2> с <3>-s</3> — это <4>poes</4>. Нажми на каждый шаг, чтобы услышать."
+
+msgid "The ending goes on the second form: <0>sõber, sõbra, sõbralik</0>."
+msgstr "Окончание добавляется ко второй форме: <0>sõber, sõbra, sõbralik</0>."
 
 msgid "The ending goes on the stem: <0>poes</0>, not <1>poodis</1>."
 msgstr "Окончание добавляем к основе: <0>poes</0>, а не <1>poodis</1>."
@@ -17645,6 +17783,9 @@ msgstr "Одинаково в обоих"
 msgid "The same kanji sounds different in different words. Lymi shows the reading over the kanji until you know the word, then takes it away so you learn to read it on your own."
 msgstr "Один и тот же кандзи в разных словах звучит по-разному. Lymi показывает чтение над кандзи, пока ты не знаешь слово, а потом убирает его, и дальше ты читаешь без подсказки."
 
+msgid "The same noun can take two endings with opposite meanings: <0>kasulik</0>, useful, and <1>kasutu</1>, useless. In songs you will also hear the longer <2>-kene</2>: <3>majakene</3>."
+msgstr "Одно существительное может иметь два окончания с противоположным значением: <0>kasulik</0>, полезный, и <1>kasutu</1>, бесполезный. В песнях услышишь и более длинное <2>-kene</2>: <3>majakene</3>."
+
 msgid "The same stem gives the person and the activity."
 msgstr "Одна и та же основа даёт и человека, и действие."
 
@@ -18140,6 +18281,9 @@ msgstr "Слишком много *вещей*."
 
 msgid "There is no deck at this address."
 msgstr "По этому адресу нет колоды."
+
+msgid "There is no internet"
+msgstr "Там нет интернета"
 
 msgid "There is nothing published yet."
 msgstr "Пока ничего не опубликовано."
@@ -18910,6 +19054,9 @@ msgstr "Арендовать"
 msgid "to repair, to fix"
 msgstr "чинить, ремонтировать"
 
+msgid "to rest, to be on holiday"
+msgstr "отдыхать"
+
 msgid "to run"
 msgstr "бежать"
 
@@ -19579,6 +19726,9 @@ msgstr "Под столом"
 msgid "Understanding is <0>aru saama</0>, and what you understand takes <1>-st</1>."
 msgstr "Понимать — это <0>aru saama</0>, а то, что понимаешь, получает <1>-st</1>."
 
+msgid "unemployed"
+msgstr "безработный"
+
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершённые дела удерживаются в памяти лучше завершённых"
 
@@ -19624,6 +19774,9 @@ msgstr "Используй все слова."
 
 msgid "Used Lymi"
 msgstr "Использован Lymi"
+
+msgid "useful"
+msgstr "полезный"
 
 msgid "Using Lymi"
 msgstr "Использует Lymi"
@@ -19975,6 +20128,9 @@ msgstr "Как форма предмета подсказывает, что с �
 msgid "What are the children eating?"
 msgstr "Что едят дети?"
 
+msgid "What are the neighbours like?"
+msgstr "Какие соседи?"
+
 msgid "What are you *doing*?"
 msgstr "Что ты *делаешь*?"
 
@@ -20112,6 +20268,9 @@ msgstr "Что пьёт Пеэтер?"
 
 msgid "What does she need?"
 msgstr "Что ей нужно?"
+
+msgid "What does the ending say?"
+msgstr "Что говорит окончание?"
 
 msgid "What every exam deck gives you"
 msgstr "Что даёт каждая колода для экзамена"
@@ -20489,6 +20648,9 @@ msgstr "Где Мийсу?"
 
 msgid "Where is the cat?"
 msgstr "Где кот?"
+
+msgid "Where is the little house?"
+msgstr "Где домик?"
 
 msgid "Where Lymi does more"
 msgstr "Где Lymi умеет больше"
@@ -20921,6 +21083,9 @@ msgstr "Почему Яан не пришёл?"
 
 msgid "Why is he or she learning Estonian?"
 msgstr "Почему он или она учит эстонский?"
+
+msgid "Why is the phone useless there?"
+msgstr "Почему телефон там бесполезен?"
 
 msgid "Why this verb?"
 msgstr "Почему этот глагол?"

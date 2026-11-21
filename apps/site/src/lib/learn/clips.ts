@@ -3277,6 +3277,58 @@ const VERB_NOUN_CLIPS: Record<string, Clip> = {
   "p-kati": { sentences: FAMILY_JOBS_PASSAGE },
 };
 
+export const SUFFIX_KINDS = {
+  lik: [
+    { base: "sõber", second: "sõbra", word: "sõbralik" },
+    { base: "kasu", second: "kasu", word: "kasulik" },
+    { base: "laps", second: "lapse", word: "lapselik" },
+    { base: "ema", second: "ema", word: "emalik" },
+  ],
+  tu: [
+    { base: "kodu", second: "kodu", word: "kodutu" },
+    { base: "töö", second: "töö", word: "töötu" },
+    { base: "lõpp", second: "lõpu", word: "lõputu" },
+    { base: "mõte", second: "mõtte", word: "mõttetu" },
+  ],
+  ke: [
+    { base: "maja", second: "maja", word: "majake" },
+    { base: "kass", second: "kassi", word: "kassike" },
+    { base: "raamat", second: "raamatu", word: "raamatuke" },
+    { base: "poeg", second: "poja", word: "pojake" },
+  ],
+} as const;
+
+export const SUFFIX_HEARD = [
+  { word: "kasutu", kind: "tu" },
+  { word: "isalik", kind: "lik" },
+  { word: "linnake", kind: "ke" },
+  { word: "lapsetu", kind: "tu" },
+  { word: "sõbralik", kind: "lik" },
+  { word: "majake", kind: "ke" },
+  { word: "töötu", kind: "tu" },
+  { word: "kasulik", kind: "lik" },
+  { word: "kassike", kind: "ke" },
+] as const;
+
+export const COTTAGE_PASSAGE = [
+  "Meil on mere ääres väike majake.",
+  "Seal elab ka meie kassike Miisu.",
+  "Naabrid on väga sõbralikud ja aitavad alati.",
+  "Internet seal ei tööta, nii et telefon on kasutu.",
+  "Aga see ei ole probleem, sest me tahame puhata.",
+] as const;
+
+const SUFFIX_CLIPS: Record<string, Clip> = {
+  ...words(
+    Object.values(SUFFIX_KINDS).flatMap((items) =>
+      items.flatMap((item) => [item.base, item.second, item.word]),
+    ),
+  ),
+  ...words(SUFFIX_HEARD.map((item) => item.word)),
+  ...words(["naaber", "puhkama"]),
+  "p-kati": { sentences: COTTAGE_PASSAGE },
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -4253,6 +4305,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "aru-saama": PARTICLE_CLIPS,
   "labi-metsa": PREPOSITION_CLIPS,
   "opetaja-lugemine": VERB_NOUN_CLIPS,
+  "sobralik-kodutu": SUFFIX_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

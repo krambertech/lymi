@@ -108,7 +108,15 @@ afterAll(() => {
 });
 
 const RUNS = 300;
-const QUIZ_PARTS = new Set(["Quiz", "GapPassage", "Dialogue", "Listening", "Reading"]);
+const QUIZ_PARTS = new Set([
+  "Quiz",
+  "GapPassage",
+  "Dialogue",
+  "Listening",
+  "Reading",
+  "Sort",
+  "Match",
+]);
 
 interface QuizProps {
   id: string;

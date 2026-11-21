@@ -404,3 +404,35 @@
     transform: none;
   }
 }
+
+/* A wrong try in a match: a short shake, then both sides open again. */
+.learn-shake {
+  animation: learn-shake 320ms var(--ease-out);
+}
+@keyframes learn-shake {
+  25% {
+    translate: -3px 0;
+  }
+  50% {
+    translate: 3px 0;
+  }
+  75% {
+    translate: -1.5px 0;
+  }
+}
+/* A form's change inside a marked card: the added letters keep the ink, since the stage's hue
+   marks only what the learner acts on there. */
+.learn-morph.learn-morph-ink [data-kind="added"] {
+  color: var(--ink);
+}
+/* Where a dragged tile will land in a sentence. */
+.learn-slot {
+  border: 1.5px dashed var(--form);
+  background: var(--form-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .learn-shake {
+    animation: none;
+  }
+}

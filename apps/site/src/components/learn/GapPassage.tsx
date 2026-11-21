@@ -19,8 +19,10 @@ import {
   spacedBefore,
   wordsLeft,
 } from "../../lib/learn/passage";
+import { shuffle } from "../../lib/learn/quiz";
 import { Button } from "../Button";
 import { SectionContext, useLesson } from "./lesson-context";
+import { fromKeyboard, targetAt, useLift } from "./lift";
 import { PassagePlayer, usePassage } from "./Passage";
 import { Feedback, QuizCard, ResultDots } from "./Quiz";
 
@@ -174,6 +176,15 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
   const [fills, setFills] = useState<Fills>({});
   const [open, setOpen] = useState<string | null>(gaps[0]?.id ?? null);
   const [last, setLast] = useState<GapItem | null>(null);
+  // The server renders each gap's words in the lesson's order; once mounted, and on every Try
+  // again, they shuffle, so the answer's place never gives it away.
+  const [order, setOrder] = useState<Readonly<Record<string, readonly string[]>> | null>(null);
+  const reshuffle = () =>
+    setOrder(
+      Object.fromEntries(gaps.map((item) => [item.id, shuffle(item.options ?? [item.answer])])),
+    );
+  // biome-ignore lint/correctness/useExhaustiveDependencies: once per passage; gaps is a new array each render
+  useEffect(reshuffle, [gaps.map((item) => item.id).join(" ")]);
   const firstOpen = gaps.find((item) => !fills[item.id]) ?? null;
   const current = gaps.find((item) => item.id === open && !fills[item.id]) ?? firstOpen;
   const done = firstOpen === null;
@@ -245,7 +256,7 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
           </p>
           <fieldset className="m-0 flex min-w-0 flex-wrap gap-2 border-0 p-0">
             <legend className="sr-only">{t`Pick the word for the gap`}</legend>
-            {(current.options ?? [current.answer]).map((word, i) => (
+            {(order?.[current.id] ?? current.options ?? [current.answer]).map((word, i) => (
               <button
                 key={word}
                 ref={i === 0 ? firstOption : undefined}
@@ -275,6 +286,7 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
           <Button
             onClick={() => {
               restarted.current = true;
+              reshuffle();
               setFills({});
               setLast(null);
               setOpen(gaps[0]?.id ?? null);
@@ -287,18 +299,6 @@ function PickGaps({ id, title, gaps, clip }: GapPassageProps) {
       )}
     </QuizCard>
   );
-}
-
-interface Lift {
-  word: string;
-  /** "bank", or the gap it came out of. */
-  from: string;
-  x: number;
-  y: number;
-  /** Where the pointer held the word, so it doesn't jump under the finger. */
-  dx: number;
-  dy: number;
-  moved: boolean;
 }
 
 /**
@@ -315,7 +315,6 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
   const [checked, setChecked] = useState(false);
   const [note, setNote] = useState<string | null>(null);
   const [said, setSaid] = useState("");
-  const [lift, setLift] = useState<Lift | null>(null);
   const [over, setOver] = useState<string | null>(null);
   const left = wordsLeft(bank, fills);
   const target = open ?? gaps.find((item) => !fills[item.id])?.id ?? null;
@@ -341,57 +340,6 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
       setSaid(t`${word} in gap ${n}`);
     } else setSaid(t`${word} taken out of the gap`);
   };
-  const gapAt = (x: number, y: number) =>
-    (document.elementFromPoint(x, y)?.closest("[data-gap]") as HTMLElement | null)?.dataset.gap ??
-    null;
-  // The drag lives in a ref, so pointer events arriving faster than React renders see where it is;
-  // `lift` mirrors it for drawing.
-  const drag = useRef<Lift | null>(null);
-  const start = (word: string, from: string) => (event: PointerEvent<HTMLElement>) => {
-    if (checked || event.button !== 0) return;
-    // No text selection or focus ring from a drag.
-    event.preventDefault();
-    const box = event.currentTarget.getBoundingClientRect();
-    event.currentTarget.setPointerCapture(event.pointerId);
-    drag.current = {
-      word,
-      from,
-      x: event.clientX,
-      y: event.clientY,
-      dx: event.clientX - box.left,
-      dy: event.clientY - box.top,
-      moved: false,
-    };
-    setLift(drag.current);
-  };
-  const handlers = {
-    onPointerMove: (event: PointerEvent<HTMLElement>) => {
-      const now = drag.current;
-      if (!now) return;
-      const moved = now.moved || Math.hypot(event.clientX - now.x, event.clientY - now.y) > 6;
-      drag.current = { ...now, x: event.clientX, y: event.clientY, moved };
-      setLift(drag.current);
-      if (moved) setOver(gapAt(event.clientX, event.clientY));
-    },
-    onPointerUp: (event: PointerEvent<HTMLElement>) => {
-      const now = drag.current;
-      drag.current = null;
-      setLift(null);
-      setOver(null);
-      if (!now) return;
-      if (now.moved) {
-        const to = gapAt(event.clientX, event.clientY);
-        // Let go away from any gap: a word from a gap goes back to the bank; one from the bank stays.
-        if (to || now.from !== "bank") move(now.word, now.from, to);
-        setOpen(null);
-      } else tap(now.word, now.from);
-    },
-    onPointerCancel: () => {
-      drag.current = null;
-      setLift(null);
-      setOver(null);
-    },
-  };
   /** A word tapped in the bank goes to the open gap; a tapped filled gap gives its word back. */
   const tap = (word: string, from: string) => {
     if (from === "bank") {
@@ -402,9 +350,19 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
       setOpen(from);
     }
   };
-  // A pointer's taps are handled as it lifts, so a drag can never also count as a tap; a click with
-  // no pointer behind it (detail 0) is a keyboard's Enter or Space.
-  const fromKeyboard = (event: { detail: number }) => event.detail === 0;
+  const { lift, start, handlers } = useLift<{ word: string; from: string }>({
+    disabled: checked,
+    onTap: ({ word, from }) => tap(word, from),
+    onMove: (_, x, y) => setOver(targetAt(x, y, "data-gap")),
+    onDrop: ({ word, from }, x, y) => {
+      setOver(null);
+      const to = targetAt(x, y, "data-gap");
+      // Let go away from any gap: a word from a gap goes back to the bank; one from the bank stays.
+      if (to || from !== "bank") move(word, from, to);
+      setOpen(null);
+    },
+    onCancel: () => setOver(null),
+  });
 
   return (
     <QuizCard
@@ -435,7 +393,7 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
               const placedBefore = bank.slice(0, i).filter((w) => w === word).length;
               const inBank = left.filter((w) => w === word).length > placedBefore;
               const liftedHere =
-                lift?.moved && lift.from === "bank" && lift.word === word && inBank;
+                lift?.moved && lift.value.from === "bank" && lift.value.word === word && inBank;
               return (
                 // biome-ignore lint/suspicious/noArrayIndexKey: the bank's order is fixed and a word can repeat
                 <li key={`${word}-${i}`}>
@@ -444,7 +402,7 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
                       ref={i === 0 ? firstWord : undefined}
                       type="button"
                       lang="et"
-                      onPointerDown={start(word, "bank")}
+                      onPointerDown={start({ word, from: "bank" })}
                       {...handlers}
                       onClick={(event) => fromKeyboard(event) && tap(word, "bank")}
                       className={clsx(
@@ -472,7 +430,7 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
         gaps={gaps}
         gap={(item, n) => {
           const word = fills[item.id];
-          const liftedHere = lift?.moved && lift.from === item.id;
+          const liftedHere = lift?.moved && lift.value.from === item.id;
           return (
             <Gap
               item={item}
@@ -490,7 +448,7 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
                         ? "open"
                         : undefined
               }
-              onPointerDown={word && !checked ? start(word, item.id) : undefined}
+              onPointerDown={word && !checked ? start({ word, from: item.id }) : undefined}
               handlers={word && !checked ? handlers : undefined}
               onClick={(event) => {
                 if (checked) return;
@@ -510,7 +468,7 @@ function DragGaps({ id, title, gaps, spare = [], clip }: GapPassageProps) {
           className="learn-lifted rounded-tile border border-(--form) bg-plate px-4 py-2"
           style={{ left: lift.x - lift.dx, top: lift.y - lift.dy }}
         >
-          <BigWord>{lift.word}</BigWord>
+          <BigWord>{lift.value.word}</BigWord>
         </span>
       )}
       <p aria-live="polite" className="sr-only">

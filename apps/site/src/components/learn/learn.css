@@ -12,6 +12,16 @@
   --learn-lift: 0 1px 2px oklch(0.2 0.03 60 / 0.06), 0 14px 30px -18px oklch(0.2 0.03 60 / 0.3);
   --learn-pop:
     0 14px 32px -14px oklch(0.2 0.03 60 / 0.28), 0 2px 6px -2px oklch(0.2 0.03 60 / 0.12);
+  /* A scene's drawing. */
+  --scene-ground: color-mix(in oklab, var(--form) 13%, transparent);
+  --scene-cat: oklch(1 0 0);
+  --scene-kraft: oklch(0.8 0.075 72);
+  --scene-kraft-side: oklch(0.72 0.075 66);
+  --scene-kraft-in: oklch(0.56 0.06 60);
+  --scene-wall: oklch(0.9 0.045 70);
+  --scene-roof: oklch(0.58 0.11 35);
+  --scene-door: oklch(0.72 0.075 66);
+  --scene-room: oklch(0.95 0.07 92);
 }
 [data-theme="dark"] .learn,
 .learn[data-theme="dark"] {
@@ -19,6 +29,14 @@
   --form: oklch(0.84 0.1 var(--h, 222));
   --form-soft: oklch(0.36 0.075 var(--h, 222));
   --learn-pop: 0 16px 36px -12px oklch(0 0 0 / 0.7), 0 0 0 1px oklch(1 0 0 / 0.06);
+  --scene-cat: oklch(0.24 0.01 64);
+  --scene-kraft: oklch(0.62 0.07 68);
+  --scene-kraft-side: oklch(0.54 0.065 64);
+  --scene-kraft-in: oklch(0.34 0.04 60);
+  --scene-wall: oklch(0.5 0.04 70);
+  --scene-roof: oklch(0.4 0.08 35);
+  --scene-door: oklch(0.54 0.065 64);
+  --scene-room: oklch(0.78 0.1 88);
 }
 .learn-hue {
   --tray: oklch(0.958 0.042 var(--h));
@@ -248,6 +266,124 @@
   }
 }
 
+/* Scene: a flat drawing in the lesson's colours, with a cat that moves between its layers. */
+/* Inside a quiz the hue marks only what the learner acts on, so the ground goes grey. */
+.learn-quiz {
+  --scene-ground: color-mix(in oklab, var(--ink) 9%, transparent);
+}
+.learn-cat,
+.learn-spot {
+  transform-box: view-box;
+  transform-origin: 0 0;
+}
+.learn-lid {
+  transform-box: view-box;
+  transform-origin: 135px 220px;
+}
+/* A place to tap in a scene quiz: the cat's outline, dashed until it is marked. */
+.learn-spot path {
+  fill: color-mix(in oklab, var(--form) 6%, transparent);
+  stroke: var(--ink-muted);
+  stroke-width: 2px;
+  stroke-dasharray: 5 5;
+  vector-effect: non-scaling-stroke;
+  transition:
+    fill 150ms,
+    stroke 150ms;
+}
+.learn-spot[data-active] path {
+  fill: var(--form-soft);
+  stroke: var(--form);
+  stroke-dasharray: none;
+}
+.learn-spot[data-mark="right"] path {
+  fill: var(--success-soft);
+  stroke: var(--success);
+  stroke-dasharray: none;
+}
+.learn-spot[data-mark="wrong"] path {
+  fill: var(--danger-soft);
+  stroke: var(--danger);
+}
+.learn-spot-key:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 2px;
+}
+/* A place's name, shown in its middle only while a keyboard is on it. */
+.learn-spot-name {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
+  padding: 2px 8px;
+  border-radius: 9999px;
+  background: var(--ink);
+  color: var(--plate);
+  font-size: var(--text-xs);
+  white-space: nowrap;
+  opacity: 0;
+  pointer-events: none;
+}
+.learn-spot-key:focus-visible .learn-spot-name {
+  opacity: 1;
+}
+
+/* Morph: a word turning into a form. Dropped letters are struck, added ones grow in, lit. */
+.learn-morph [data-kind="dropped"] {
+  position: relative;
+  display: inline-block;
+  color: var(--ink-faint);
+}
+.learn-morph [data-kind="dropped"]::after {
+  content: "";
+  position: absolute;
+  inset-inline: -0.04em;
+  top: 0.62em;
+  height: 0.07em;
+  border-radius: 9999px;
+  background: var(--ink-muted);
+}
+.learn-morph [data-kind="added"] {
+  display: inline-grid;
+  grid-template-columns: 1fr;
+  color: var(--form);
+  text-decoration: underline;
+  text-decoration-thickness: 0.07em;
+  text-underline-offset: 0.14em;
+}
+.learn-morph [data-kind="added"] > span {
+  min-width: 0;
+  overflow: hidden;
+}
+.learn-morph[data-play] [data-kind="dropped"] {
+  animation: learn-dim 200ms var(--ease-out) both;
+}
+.learn-morph[data-play] [data-kind="dropped"]::after {
+  transform-origin: left;
+  animation: learn-strike 200ms var(--ease-out) both;
+}
+.learn-morph[data-play] [data-kind="added"] {
+  animation: learn-grow 280ms var(--ease-out) 180ms both;
+}
+.learn-morph[data-play] [data-kind="added"] > span {
+  animation: learn-fill 280ms var(--ease-out) 180ms both;
+}
+@keyframes learn-dim {
+  from {
+    color: var(--ink);
+  }
+}
+@keyframes learn-strike {
+  from {
+    transform: scaleX(0);
+  }
+}
+@keyframes learn-grow {
+  from {
+    grid-template-columns: 0fr;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .learn-pop {
     animation: none;
@@ -258,11 +394,45 @@
   }
   .learn-ring::after,
   .learn-swap > *,
+  .learn-morph[data-play] *,
+  .learn-morph[data-play] [data-kind="dropped"]::after,
   .learn-gap[data-mark="right"] {
     animation: none;
   }
   .learn-card,
   .learn-card[data-below] {
     transform: none;
+  }
+}
+
+/* A wrong try in a match: a short shake, then both sides open again. */
+.learn-shake {
+  animation: learn-shake 320ms var(--ease-out);
+}
+@keyframes learn-shake {
+  25% {
+    translate: -3px 0;
+  }
+  50% {
+    translate: 3px 0;
+  }
+  75% {
+    translate: -1.5px 0;
+  }
+}
+/* A form's change inside a marked card: the added letters keep the ink, since the stage's hue
+   marks only what the learner acts on there. */
+.learn-morph.learn-morph-ink [data-kind="added"] {
+  color: var(--ink);
+}
+/* Where a dragged tile will land in a sentence. */
+.learn-slot {
+  border: 1.5px dashed var(--form);
+  background: var(--form-soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .learn-shake {
+    animation: none;
   }
 }

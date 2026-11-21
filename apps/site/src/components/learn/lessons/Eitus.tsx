@@ -4,7 +4,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -354,13 +354,11 @@ function Exchange({
 }
 
 function AnswerKey({ say, en }: { say: string; en: ReactNode }) {
-  const { t } = useLingui();
   const clip = src(say);
   const playing = usePlaying(clip);
   return (
     <button
       type="button"
-      aria-label={t`Play ${say}`}
       data-playing={playing ? "" : undefined}
       onClick={() => void playSound(clip)}
       className="learn-key grid cursor-pointer content-start gap-0.5 rounded-tile bg-plate px-3.5 pt-2.5 pb-2.5 text-start hoverable:hover:bg-plate-hover"
@@ -389,8 +387,8 @@ interface PairedItem extends ChoiceItem {
 
 export function EitusLesson() {
   const { t, i18n } = useLingui();
-  const present = LESSONS.find((lesson) => lesson.et === "Ma loen")?.n;
-  const questions = LESSONS.find((lesson) => lesson.et === "Kas? Mis? Kus?")?.n;
+  const present = lessonBySlug("olevik")?.n;
+  const questions = lessonBySlug("kusimused")?.n;
 
   const makeNo = useMemo<PairedItem[]>(
     () =>

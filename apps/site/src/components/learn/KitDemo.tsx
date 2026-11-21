@@ -2,12 +2,18 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import type { ReactNode } from "react";
-import { KIT_DIALOGUE, KIT_PASSAGES } from "../../lib/learn/clips";
+import { clipUrl, KIT_DIALOGUE, KIT_PASSAGES } from "../../lib/learn/clips";
 import { Dialogue, type DialogueTurn } from "./Dialogue";
+import { type FormItem, FormRound, formRecall } from "./FormRound";
 import { type GapItem, GapPassage } from "./GapPassage";
+import { KitExplorers } from "./KitExplorers";
 import { LearnLayout } from "./LearnLayout";
 import { type Glossary, LessonContext } from "./lesson-context";
+import { Match, type MatchPair } from "./Match";
+import { type OrderItem, OrderRound } from "./OrderRound";
 import { Listening, type PassageQuestion, Reading } from "./Passage";
+import { Quiz } from "./Quiz";
+import { Sort, type SortBin, type SortItem } from "./Sort";
 import { WordCards } from "./Word";
 
 /** The demo's words with a card; the demo has no word clips of its own. */
@@ -29,9 +35,9 @@ function useContent() {
       id: "job",
       ask: t`What does Jaan do?`,
       options: [
-        { id: "teacher", label: t`He's a teacher` },
-        { id: "doctor", label: t`He's a doctor` },
-        { id: "student", label: t`He's a student` },
+        { id: "teacher", label: t`He’s a teacher` },
+        { id: "doctor", label: t`He’s a doctor` },
+        { id: "student", label: t`He’s a student` },
       ],
       answer: "doctor",
       line: 2,
@@ -52,8 +58,8 @@ function useContent() {
       ask: t`Is Mari a doctor?`,
       options: [
         { id: "yes", label: t`Yes, she is` },
-        { id: "teacher", label: t`No, she's a teacher` },
-        { id: "student", label: t`No, she's a student` },
+        { id: "teacher", label: t`No, she’s a teacher` },
+        { id: "student", label: t`No, she’s a student` },
       ],
       answer: "teacher",
       line: 4,
@@ -75,9 +81,9 @@ function useContent() {
       id: "job",
       ask: t`What does Mari do?`,
       options: [
-        { id: "doctor", label: t`She's a doctor` },
-        { id: "teacher", label: t`She's a teacher` },
-        { id: "student", label: t`She's a student` },
+        { id: "doctor", label: t`She’s a doctor` },
+        { id: "teacher", label: t`She’s a teacher` },
+        { id: "student", label: t`She’s a student` },
       ],
       answer: "teacher",
       line: 1,
@@ -86,9 +92,9 @@ function useContent() {
       id: "peeter",
       ask: t`Who is Peeter?`,
       options: [
-        { id: "brother", label: t`Mari's brother` },
-        { id: "friend", label: t`Mari's friend` },
-        { id: "father", label: t`Mari's father` },
+        { id: "brother", label: t`Mari’s brother` },
+        { id: "friend", label: t`Mari’s friend` },
+        { id: "father", label: t`Mari’s father` },
       ],
       answer: "brother",
       line: 4,
@@ -178,7 +184,7 @@ function useContent() {
       clip: "d-sina-3",
       replies: [
         { line: line("d-sina-3"), right: true },
-        { line: "Jah, ma olen õpetaja.", why: t`You're a doctor, arst.` },
+        { line: "Jah, ma olen õpetaja.", why: t`You’re a doctor, arst.` },
         { line: "Ei, ma ei olen arst.", why: t`After ei, olema is ole; and you are a doctor.` },
       ],
     },
@@ -187,13 +193,87 @@ function useContent() {
       who: "you",
       clip: "d-sina-4",
       replies: [
-        { line: "Tere hommikust!", why: t`That's good morning; Mari is leaving.` },
+        { line: "Tere hommikust!", why: t`That’s good morning; Mari is leaving.` },
         { line: "Kes sina oled?", why: t`That asks who she is; she told you.` },
         { line: line("d-sina-4"), right: true },
       ],
     },
   ];
-  return { listening, reading, gaps, dialogue };
+  // The four parts below borrow the lesson on -s and -l's clips.
+  const kohad = (id: string) => clipUrl("kohad", id);
+  const bins: SortBin[] = [
+    {
+      id: "s",
+      label: "-s",
+      hint: t`in, inside`,
+      rule: t`Inside a building, a town or a country: -s.`,
+    },
+    {
+      id: "l",
+      label: "-l",
+      hint: t`on, at`,
+      rule: t`On a surface, at work or at a market: -l.`,
+    },
+  ];
+  const sort: SortItem[] = [
+    { w: "koolis", bin: "s", src: kohad("koolis") },
+    { w: "Tallinnas", bin: "s", src: kohad("tallinnas") },
+    { w: "haiglas", bin: "s", src: kohad("haiglas") },
+    { w: "kontoris", bin: "s", src: kohad("kontoris") },
+    { w: "laual", bin: "l", src: kohad("laual") },
+    { w: "seinal", bin: "l", src: kohad("seinal") },
+    { w: "turul", bin: "l", src: kohad("turul") },
+    {
+      w: "tööl",
+      bin: "l",
+      src: kohad("to2o2l"),
+      why: t`Tööl, at work, takes -l like a market does.`,
+    },
+  ];
+  const order: OrderItem[] = [
+    {
+      answers: ["Ta on kodus."],
+      src: kohad("a-on-kodus"),
+      spare: ["kodu"],
+      explain: t`Kodu is home; kodus, at home.`,
+    },
+    {
+      answers: ["Me elame Eestis.", "Eestis elame me."],
+      src: kohad("h-eestis"),
+      meaning: t`We live in Estonia.`,
+      explain: t`The verb stays second, whichever word comes first.`,
+    },
+    {
+      answers: ["Mari töötab haiglas."],
+      src: kohad("h-haiglas"),
+      tiles: ["Mari", "töötab", "haiglas"],
+    },
+  ];
+  const where = { cue: "kus?", cueLang: "et" };
+  const forms: FormItem[] = [
+    { base: "kool", gloss: t`school`, ...where, answers: ["koolis"], src: kohad("koolis") },
+    { base: "laud", gloss: t`table`, ...where, answers: ["laual"], src: kohad("laual") },
+    { base: "töö", gloss: t`work`, ...where, answers: ["tööl"], src: kohad("to2o2l") },
+    {
+      base: "turg",
+      gloss: t`market`,
+      ...where,
+      answers: ["turul"],
+      options: ["turgul", "turul", "turgus"],
+      src: kohad("turul"),
+      explain: t`Turg becomes turu- before an ending: turul.`,
+    },
+    { base: "Pärnu", gloss: t`a town`, ...where, answers: ["Pärnus"], src: kohad("pa2rnus") },
+  ];
+  const pairs: MatchPair[] = [
+    { id: "koolis", left: "koolis", right: t`at school`, src: kohad("koolis") },
+    { id: "laual", left: "laual", right: t`on the table`, src: kohad("laual") },
+    { id: "tool", left: "tööl", right: t`at work`, src: kohad("to2o2l") },
+    { id: "turul", left: "turul", right: t`at the market`, src: kohad("turul") },
+    { id: "kodus", left: "kodus", right: t`at home`, src: kohad("kodus") },
+    { id: "tallinnas", left: "Tallinnas", right: t`in Tallinn`, src: kohad("tallinnas") },
+  ];
+  return { listening, reading, gaps, dialogue, bins, sort, order, forms, pairs };
 }
 
 function Part({
@@ -248,9 +328,9 @@ export function KitDemo() {
               </h1>
               <p className="max-w-[52ch] text-lg text-ink-secondary">
                 <Trans>
-                  The lesson kit's parts for practice after a rule is taught: listening, a passage
-                  with gaps, reading and a dialogue. docs/design/estonian-lessons.md says when to
-                  use each.
+                  The lesson kit’s parts for practice after a rule is taught: listening, a passage
+                  with gaps, reading, a dialogue, sorting, matching, building a sentence and making
+                  a form. docs/design/estonian-lessons.md says when to use each.
                 </Trans>
               </p>
               <nav aria-label={t`Language`} className="flex gap-1.5">
@@ -291,7 +371,7 @@ export function KitDemo() {
             <Part
               id="gaps-pick"
               title={t`Gaps, one at a time`}
-              use={t`A passage with gaps, the open gap's words under it, each marked as it is filled.`}
+              use={t`A passage with gaps, the open gap’s words under it, each marked as it is filled.`}
             >
               <GapPassage
                 id="kit-gaps-pick"
@@ -345,7 +425,7 @@ export function KitDemo() {
             <Part
               id="dialogue-sound"
               title={t`Dialogue, sound only`}
-              use={t`The same conversation with Mari's lines heard, not shown; each can be read on request.`}
+              use={t`The same conversation with Mari’s lines heard, not shown; each can be read on request.`}
             >
               <Dialogue
                 id="kit-dialogue-sound"
@@ -356,6 +436,52 @@ export function KitDemo() {
                 text="sound"
               />
             </Part>
+            <Part
+              id="sort"
+              title={t`Sort`}
+              use={t`Words into two or three groups, tapped or dragged, checked together; a wrong word shows its group and the rule.`}
+            >
+              <Sort
+                id="kit-sort"
+                title={t`Inside or on?`}
+                bins={content.bins}
+                items={content.sort}
+              />
+            </Part>
+            <Part
+              id="order"
+              title={t`Build the sentence`}
+              use={t`Word tiles tapped into order after hearing the sentence or reading its meaning; every right order counts, and the sentence plays after Check.`}
+            >
+              <Quiz
+                id="kit-order"
+                title={t`Put the words in order`}
+                items={content.order}
+                round={(props) => <OrderRound {...props} />}
+                recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}
+              />
+            </Part>
+            <Part
+              id="form"
+              title={t`Make the form`}
+              use={t`A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer shows the word turning into its form.`}
+            >
+              <Quiz
+                id="kit-form"
+                title={t`Where is it?`}
+                items={content.forms}
+                round={(props) => <FormRound {...props} />}
+                recall={formRecall}
+              />
+            </Part>
+            <Part
+              id="match"
+              title={t`Match`}
+              use={t`Pairs across two columns, tapped one side then the other; a pair locks when it is right, and wrong tries count.`}
+            >
+              <Match id="kit-match" title={t`What does it mean?`} pairs={content.pairs} />
+            </Part>
+            <KitExplorers Part={Part} />
           </div>
         </LearnLayout>
       </WordCards>

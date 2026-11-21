@@ -179,7 +179,10 @@ export function Quiz<Item>({
     if (state.status === "asking" && (restarted.current || advanced.current)) {
       const lost = !document.activeElement || document.activeElement === document.body;
       if (restarted.current || lost)
-        bodyRef.current?.querySelector("button")?.focus({ preventScroll: true });
+        // A typed round's field comes first, so a phone opens its keyboard.
+        bodyRef.current
+          ?.querySelector<HTMLElement>("input:not([readonly]), button")
+          ?.focus({ preventScroll: true });
       restarted.current = false;
       advanced.current = false;
     }
@@ -328,10 +331,12 @@ export function QuizCard({
 /** A word or number from a round, to hear again on the score. */
 export interface Recall {
   label: string;
-  src: string;
+  /** Without a clip the chip only shows the word. */
+  src?: string | undefined;
 }
 
-function Score({
+/** The score at the end of a marked part: how many were right, a line under it, and the run's words. */
+export function Score({
   right,
   total,
   verdict,
@@ -403,16 +408,18 @@ function ScoreWords({
 }
 
 function RecallChip({ word, ok }: { word: Recall; ok: boolean }) {
-  const playing = usePlaying(word.src);
+  const { src } = word;
+  const playing = usePlaying(src ?? "");
+  const Tag = src ? "button" : "span";
   return (
-    <button
-      type="button"
-      onClick={() => void playSound(word.src)}
+    <Tag
+      {...(src ? { type: "button" as const, onClick: () => void playSound(src) } : {})}
       className={clsx(
-        "inline-flex cursor-pointer items-center gap-1.5 rounded-full border py-1 ps-2 pe-3 text-md font-medium transition-colors duration-150",
+        "inline-flex items-center gap-1.5 rounded-full border py-1 ps-2 pe-3 text-md font-medium transition-colors duration-150",
         ok
           ? "border-success/40 bg-success-soft text-ink"
           : "border-dashed border-danger bg-danger-soft text-ink",
+        src && "cursor-pointer",
         playing && "ring-2 ring-(--form)",
       )}
     >
@@ -422,7 +429,7 @@ function RecallChip({ word, ok }: { word: Recall; ok: boolean }) {
         <X aria-hidden="true" className="size-3.5 text-danger" strokeWidth={3} />
       )}
       <span lang="et">{word.label}</span>
-    </button>
+    </Tag>
   );
 }
 
@@ -591,7 +598,12 @@ export function GapRound({
     <>
       {(!pickFirst || done) && <Listen src={item.src} onPlay={heard} />}
       {note}
-      <p className="sr-only">{t`${before} blank ${after}`}</p>
+      {/* The words around the gap are Estonian, so a screen reader reads them as Estonian. */}
+      <p className="sr-only">
+        <Trans>
+          <span lang="et">{before}</span> blank <span lang="et">{after}</span>
+        </Trans>
+      </p>
       <p
         lang="et"
         aria-hidden="true"

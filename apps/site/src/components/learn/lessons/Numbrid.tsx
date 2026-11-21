@@ -2,7 +2,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { Minus, Plus } from "lucide-react";
 import { type ReactNode, useMemo, useRef, useState } from "react";
-import { LESSONS } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import { clipUrl, NUMBER_SENTENCES, numberClip } from "../../../lib/learn/clips";
 import { DIGIT_WORDS, numberParts, numberWords } from "../../../lib/learn/estonian-numbers";
 import { playSound } from "../../../lib/learn/player";
@@ -235,7 +235,7 @@ function Builder() {
 
 export function NumbridLesson() {
   const { t, i18n } = useLingui();
-  const partitive = LESSONS.find((lesson) => lesson.et === "Kaks kassi")?.n;
+  const partitive = lessonBySlug("osastav")?.n;
   const [level, setLevel] = useState(0);
 
   const teistItems = useMemo<ChoiceItem[]>(
@@ -486,7 +486,6 @@ export function NumbridLesson() {
                   lead: n >= 10000 ? n.toLocaleString("et") : String(n),
                   main: <Spoken n={n} />,
                   src: numberSrc(n),
-                  label: t`Play ${n}`,
                 }))}
               />
             </>

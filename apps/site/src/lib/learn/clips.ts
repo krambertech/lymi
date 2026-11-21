@@ -1,5 +1,6 @@
 import { numberWords } from "./estonian-numbers";
 import { ALL_TIMES, timeClip, timeSentence } from "./estonian-time";
+import { KIT_EXPLORE_TEXTS } from "./kit-explore";
 
 /**
  * Every sound a lesson plays, by lesson and clip id, with the Estonian it says. Read by
@@ -717,6 +718,617 @@ const KIT_CLIPS: Record<string, Clip> = {
   "p-mari": { sentences: KIT_PASSAGES.mari, voice: "second" },
   "p-peeter": { sentences: KIT_PASSAGES.peeter },
   ...KIT_DIALOGUE,
+  // The explorers' forms and sentences: Paradigm, Scene, Timeline, Morph.
+  ...words(KIT_EXPLORE_TEXTS),
+};
+
+/**
+ * The practice lesson “A day in Tallinn”: Mari's message, Jaan's voice message, a Saturday with
+ * gaps and a talk at a café. Words from lessons 1–10, plus buss and pühapäeval, which its glossary
+ * explains.
+ */
+export const TALLINN_PASSAGES = {
+  mari: [
+    "Tere! Kuidas läheb?",
+    "Täna on reede ja ma olen tööl.",
+    "Homme on laupäev ja ma ei tööta.",
+    "Ma joon kell kümme kohvikus kohvi.",
+    "Kohv maksab kolm eurot.",
+    "Kell kaksteist olen turul.",
+    "Kas sa oled homme linnas?",
+  ],
+  jaan: [
+    "Tere, see on Jaan!",
+    "Ma olen täna Tartus, aga homme olen Tallinnas.",
+    "Minu buss on Tallinnas kell pool üksteist.",
+    "Ma ootan sind kohvikus.",
+    "Pühapäeval olen kodus.",
+  ],
+  saturday: [
+    "Täna on laupäev.",
+    "Ma ei tööta.",
+    "Ma olen Tallinnas.",
+    "Mari ja Jaan on minu sõbrad.",
+    "Me joome kell kümme kohvikus kohvi.",
+    "Kohv maksab kolm eurot.",
+  ],
+} as const;
+
+/** Meeting Mari at the café: her lines in the second voice, the learner's in the main one. */
+export const TALLINN_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Kuidas läheb?", voice: "second" },
+  "d-sina-1": "Hästi, aitäh. Aga sul?",
+  "d-mari-2": { text: "Hästi! Istu! Kas sa jood kohvi?", voice: "second" },
+  "d-sina-2": "Jah, ma joon kohvi.",
+  "d-mari-3": { text: "Mis kell on?", voice: "second" },
+  "d-sina-3": "Kell on pool üksteist.",
+  "d-mari-4": { text: "Kas sa töötad homme?", voice: "second" },
+  "d-sina-4": "Ei, homme on pühapäev.",
+} as const satisfies Record<string, Clip>;
+
+/** The words of “A day in Tallinn” with a card, each heard on its own. */
+export const TALLINN_WORDS = [
+  "kohvik",
+  "avatud",
+  "suletud",
+  "kohvikus",
+  "turul",
+  "tööl",
+  "linnas",
+  "kodus",
+  "täna",
+  "homme",
+  "reede",
+  "laupäev",
+  "pühapäev",
+  "pühapäeval",
+  "kell",
+  "kümme",
+  "kaksteist",
+  "üksteist",
+  "pool",
+  "pool üksteist",
+  "maksab",
+  "eurot",
+  "buss",
+  "ootan",
+  "sind",
+  "istu",
+  "aga",
+  "olema",
+  "ei",
+  "sõbrad",
+  "Kuidas läheb?",
+] as const;
+
+const TALLINN_CLIPS: Record<string, Clip> = {
+  ...words(TALLINN_WORDS),
+  "p-mari": { sentences: TALLINN_PASSAGES.mari, voice: "second" },
+  "p-jaan": { sentences: TALLINN_PASSAGES.jaan },
+  "p-saturday": { sentences: TALLINN_PASSAGES.saturday },
+  ...TALLINN_DIALOGUE,
+};
+
+/** How a verb's -da form ends: -da, -ta, -la, -na, or a short -a. */
+export type DaPattern = "da" | "ta" | "la" | "na" | "a";
+
+/**
+ * The verbs of the lesson on a verb's three forms: the -ma form, the -da form split before its
+ * ending, the I form, and the command to more than one. Checked in EKI's morphology database on
+ * Sõnaveeb (21 Nov 2026); ÕS lists lugema as “lugeda, loen”.
+ */
+export const VERB_FORMS = [
+  { ma: "elama", da: ["ela", "da"], n: "elan", ge: "Elage!", pattern: "da" },
+  { ma: "lugema", da: ["luge", "da"], n: "loen", ge: "Lugege!", pattern: "da" },
+  { ma: "rääkima", da: ["rääki", "da"], n: "räägin", ge: "Rääkige!", pattern: "da" },
+  { ma: "õppima", da: ["õppi", "da"], n: "õpin", ge: "Õppige!", pattern: "da" },
+  { ma: "istuma", da: ["istu", "da"], n: "istun", ge: "Istuge!", pattern: "da" },
+  { ma: "töötama", da: ["tööta", "da"], n: "töötan", ge: "Töötage!", pattern: "da" },
+  { ma: "armastama", da: ["armasta", "da"], n: "armastan", ge: "Armastage!", pattern: "da" },
+  { ma: "ootama", da: ["ooda", "ta"], n: "ootan", ge: "Oodake!", pattern: "ta" },
+  { ma: "kuulama", da: ["kuula", "ta"], n: "kuulan", ge: "Kuulake!", pattern: "ta" },
+  { ma: "vaatama", da: ["vaada", "ta"], n: "vaatan", ge: "Vaadake!", pattern: "ta" },
+  { ma: "olema", da: ["ol", "la"], n: "olen", ge: "Olge!", pattern: "la" },
+  { ma: "tulema", da: ["tul", "la"], n: "tulen", ge: "Tulge!", pattern: "la" },
+  { ma: "minema", da: ["min", "na"], n: "lähen", ge: "Minge!", pattern: "na" },
+  { ma: "tegema", da: ["teh", "a"], n: "teen", ge: "Tehke!", pattern: "a" },
+  { ma: "nägema", da: ["näh", "a"], n: "näen", ge: "Nähke!", pattern: "a" },
+  { ma: "sööma", da: ["süü", "a"], n: "söön", ge: "Sööge!", pattern: "a" },
+  { ma: "jooma", da: ["juu", "a"], n: "joon", ge: "Jooge!", pattern: "a" },
+] as const satisfies readonly {
+  ma: string;
+  da: readonly [string, string];
+  n: string;
+  ge: string;
+  pattern: DaPattern;
+}[];
+
+export type VerbForms = (typeof VERB_FORMS)[number];
+
+/** A verb's -da form whole: “lugeda”. */
+export const daForm = (verb: VerbForms) => verb.da.join("");
+
+/** The three forms said in a row, as a dictionary lists them: “lugema, lugeda, loen”. */
+export const threeForms = (verb: VerbForms) => `${verb.ma}, ${daForm(verb)}, ${verb.n}`;
+
+/** The commands the lesson builds from a -da form. */
+export const VORMID_COMMANDS = [
+  "lugema",
+  "rääkima",
+  "istuma",
+  "ootama",
+  "olema",
+  "tulema",
+  "tegema",
+];
+
+/**
+ * A teacher to her class, gap by gap: a command takes the -da form's stem, the present the I
+ * form's. Words from lessons 1–11.
+ */
+export const VORMID_CLASS = [
+  "Tere! Istuge, palun.",
+  "Täna me loeme raamatut.",
+  "Lugege, palun.",
+  "Te loete väga hästi.",
+  "Kas te räägite kodus eesti keelt?",
+  "Rääkige kodus eesti keelt!",
+] as const;
+
+/** Which form a verb wants for the verb after it. */
+export type Takes = "da" | "ma";
+
+/**
+ * The verbs of the lesson on infinitives that a second verb follows: the verb, the form a learner
+ * meets it in (`lead`), which form the second verb takes, how a sentence with it starts
+ * (`frame`), and one sentence whose second verb is `form`, written with `|` before its ending.
+ * Sõnaveeb's EKI dictionary names the form under Rektsioon: “mida teha” for the -da form, “mida
+ * tegema” for the -ma form (pidama in its second entry), checked 21 Nov 2026.
+ */
+export const INFINITIVE_LEADS = [
+  {
+    verb: "tahtma",
+    lead: "tahan",
+    takes: "da",
+    frame: "Ma tahan",
+    said: "Ma tahan süüa.",
+    form: "süü|a",
+  },
+  {
+    verb: "võima",
+    lead: "võin",
+    takes: "da",
+    frame: "Ma võin",
+    said: "Ma võin sind oodata.",
+    form: "ooda|ta",
+  },
+  {
+    verb: "saama",
+    lead: "saan",
+    takes: "da",
+    frame: "Ma saan",
+    said: "Ma saan homme tulla.",
+    form: "tul|la",
+  },
+  {
+    verb: "oskama",
+    lead: "oskan",
+    takes: "da",
+    frame: "Ma oskan",
+    said: "Ma oskan natuke eesti keelt rääkida.",
+    form: "rääki|da",
+  },
+  {
+    verb: "tohtima",
+    lead: "tohin",
+    takes: "da",
+    frame: "Ma tohin",
+    said: "Ma tohin kodus töötada.",
+    form: "tööta|da",
+  },
+  {
+    verb: "proovima",
+    lead: "proovin",
+    takes: "da",
+    frame: "Ma proovin",
+    said: "Ma proovin eesti keelt õppida.",
+    form: "õppi|da",
+  },
+  {
+    verb: "armastama",
+    lead: "armastan",
+    takes: "da",
+    frame: "Ma armastan",
+    said: "Ma armastan lugeda.",
+    form: "luge|da",
+  },
+  {
+    verb: "meeldima",
+    lead: "mulle meeldib",
+    takes: "da",
+    frame: "Mulle meeldib",
+    said: "Mulle meeldib kohvi juua.",
+    form: "juu|a",
+  },
+  {
+    verb: "pidama",
+    lead: "pean",
+    takes: "ma",
+    frame: "Ma pean",
+    said: "Ma pean minema.",
+    form: "mine|ma",
+  },
+  {
+    verb: "hakkama",
+    lead: "hakkan",
+    takes: "ma",
+    frame: "Ma hakkan",
+    said: "Ma hakkan eesti keelt õppima.",
+    form: "õppi|ma",
+  },
+  {
+    verb: "minema",
+    lead: "lähen",
+    takes: "ma",
+    frame: "Ma lähen",
+    said: "Ma lähen kohvi jooma.",
+    form: "joo|ma",
+  },
+  { verb: "tulema", lead: "tule", takes: "ma", frame: "Tule", said: "Tule sööma!", form: "söö|ma" },
+  {
+    verb: "jääma",
+    lead: "jään",
+    takes: "ma",
+    frame: "Ma jään",
+    said: "Ma jään koju lugema.",
+    form: "luge|ma",
+  },
+] as const satisfies readonly {
+  verb: string;
+  lead: string;
+  takes: Takes;
+  frame: string;
+  said: string;
+  form: string;
+}[];
+
+export type InfinitiveLead = (typeof INFINITIVE_LEADS)[number];
+
+/** Six verbs in their -ma and -da forms, `|` before the ending, for tahan and pean side by side. */
+export const INFINITIVE_PAIRS = [
+  { ma: "luge|ma", da: "luge|da" },
+  { ma: "söö|ma", da: "süü|a" },
+  { ma: "mine|ma", da: "min|na" },
+  { ma: "tule|ma", da: "tul|la" },
+  { ma: "õppi|ma", da: "õppi|da" },
+  { ma: "tööta|ma", da: "tööta|da" },
+] as const;
+
+/** “Ma tahan lugeda.” or “Ma pean lugema.”: a pair's form after tahan or pean, as one clip. */
+export const wantOrMust = (form: string, takes: Takes) =>
+  `Ma ${takes === "da" ? "tahan" : "pean"} ${form.replace("|", "")}.`;
+
+/** The second verb last, however much comes between it and the first. */
+export const INFINITIVE_ORDER = [
+  "Ma pean minema.",
+  "Ma pean tööle minema.",
+  "Ma pean homme tööle minema.",
+  "Ma tahan täna kodus lugeda.",
+] as const;
+
+/**
+ * Mari's message to Jaan, gap by gap: after pean the -ma form, after tahad and meeldib the -da
+ * form, and with no verb before it the present. Words from lessons 1–22.
+ */
+export const INFINITIVE_MESSAGE = [
+  "Tere, Jaan! Ma pean täna kodus töötama.",
+  "Aga ma lähen kell neli linna.",
+  "Kas sa tahad kohvi juua?",
+  "Ma ootan sind kohvikus.",
+  "Mulle meeldib kohvikus lugeda.",
+  "Ma pean kell kuus koju minema.",
+] as const;
+
+/** Words of the infinitives lesson with a card, and the sentences its build quiz plays. */
+export const INFINITIVE_WORDS = [
+  "lugema",
+  "lugeda",
+  "Nad tahavad lugeda.",
+  "Nad peavad lugema.",
+  "teha",
+  "tegema",
+  "õppima",
+  "Ma õpin lugema.",
+  "Ma tahan homme linna minna.",
+  "Ma hakkan täna kodus õppima.",
+] as const;
+/**
+ * The lesson on in, into and out of: each place in the forms that answer kus?, kuhu? and kust?.
+ * `kuhu` is the form the lesson teaches for where to: the short form for kool, pood, linn, maja
+ * and kodu, with `long` naming the -sse form beside it, and -sse for the rest. Tallinn has a short
+ * form too, Tallinna; the lesson teaches Tallinnasse. Checked in ÕS 2025 on Sõnaveeb (EKI
+ * morphology, 21 Nov 2026): kooli ~ koolisse, poodi ~ poesse, linna ~ linnasse, majja ~ majasse, koju ~ kodusse; Tartu, Pärnu, haigla,
+ * kontor and kohvik have -sse only. `third` is the dictionary's third form where the short form
+ * matches it.
+ */
+export const INNER_PLACES = [
+  { place: "Tallinn", kus: "Tallinnas", kuhu: "Tallinnasse", kust: "Tallinnast" },
+  { place: "Tartu", kus: "Tartus", kuhu: "Tartusse", kust: "Tartust" },
+  { place: "Pärnu", kus: "Pärnus", kuhu: "Pärnusse", kust: "Pärnust" },
+  { place: "haigla", kus: "haiglas", kuhu: "haiglasse", kust: "haiglast" },
+  { place: "kontor", kus: "kontoris", kuhu: "kontorisse", kust: "kontorist" },
+  { place: "kohvik", kus: "kohvikus", kuhu: "kohvikusse", kust: "kohvikust" },
+  {
+    place: "kool",
+    kus: "koolis",
+    kuhu: "kooli",
+    long: "koolisse",
+    kust: "koolist",
+    third: "kool, kooli, kooli",
+  },
+  {
+    place: "pood",
+    kus: "poes",
+    kuhu: "poodi",
+    long: "poesse",
+    kust: "poest",
+    third: "pood, poe, poodi",
+  },
+  {
+    place: "linn",
+    kus: "linnas",
+    kuhu: "linna",
+    long: "linnasse",
+    kust: "linnast",
+    third: "linn, linna, linna",
+  },
+  { place: "maja", kus: "majas", kuhu: "majja", long: "majasse", kust: "majast" },
+  { place: "kodu", kus: "kodus", kuhu: "koju", kust: "kodust" },
+] as const;
+
+/** The sentences of the lesson on in, into and out of. */
+export const INNER_SENTENCES = {
+  "s-majas": "Kass on majas.",
+  "s-majja": "Kass läheb majja.",
+  "s-majast": "Kass tuleb majast.",
+  "q-tuled": "Kust sa tuled?",
+  "a-tulen-koolist": "Ma tulen koolist.",
+  "a-tulen-poest": "Ma tulen poest.",
+  "q-parit": "Kust sa pärit oled?",
+  "p-eestist": "Ma olen pärit Eestist.",
+  "p-soomest": "Ma olen pärit Soomest.",
+  "p-ukrainast": "Ma olen pärit Ukrainast.",
+  "p-tallinnast": "Ma olen pärit Tallinnast.",
+  "q-lahed": "Kuhu sa lähed?",
+  "a-lahen-tartusse": "Ma lähen Tartusse.",
+  "a-lahen-haiglasse": "Ma lähen haiglasse.",
+  "k-kooli": "Ma lähen kooli.",
+  "k-poodi": "Ma lähen poodi.",
+  "k-linna": "Me läheme linna.",
+  "k-koju": "Tule koju!",
+  "k-kodus": "Ma olen kodus.",
+  "k-kodust": "Ma tulen kodust.",
+} as const;
+
+/** Meeting Mari in the street: her lines in the second voice, the learner's in the main one. */
+export const INNER_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Kuhu sa lähed?", voice: "second" },
+  "d-sina-1": "Tere! Ma lähen poodi.",
+  "d-mari-2": { text: "Kust sa tuled?", voice: "second" },
+  "d-sina-2": "Ma tulen koolist.",
+  "d-mari-3": { text: "Kas sa oled homme kodus?", voice: "second" },
+  "d-sina-3": "Ei, ma lähen homme Tartusse.",
+  "d-mari-4": { text: "Kas sa oled pärit Tartust?", voice: "second" },
+  "d-sina-4": "Ei, ma olen pärit Pärnust.",
+  "d-mari-5": { text: "Head aega!", voice: "second" },
+} as const satisfies Record<string, Clip>;
+
+/** Words the lesson plays on their own: the three questions and every place form. */
+export const INNER_WORDS = [
+  "kus",
+  "kuhu",
+  "kust",
+  "kass",
+  "tööl",
+  "pärit",
+  "Eestist",
+  "Soomest",
+  "Ukrainast",
+  ...INNER_PLACES.flatMap((each) => [
+    each.place,
+    each.kus,
+    each.kuhu,
+    each.kust,
+    ...("long" in each ? [each.long] : []),
+  ]),
+];
+
+/**
+ * Nouns of the partitive lesson, each with its third form, the partitive. Checked in ÕS 2025 on
+ * Sõnaveeb (EKI morphology, 21 Nov 2026). Later lessons on objects and the plural partitive can
+ * import it.
+ */
+export const PARTITIVE_NOUNS = {
+  kass: "kassi",
+  raamat: "raamatut",
+  laps: "last",
+  auto: "autot",
+  maja: "maja",
+  euro: "eurot",
+  kool: "kooli",
+  laud: "lauda",
+  kohv: "kohvi",
+  vesi: "vett",
+  juust: "juustu",
+  leib: "leiba",
+  piim: "piima",
+  raha: "raha",
+  aeg: "aega",
+  kohvik: "kohvikut",
+} as const;
+
+export type PartitiveNoun = keyof typeof PARTITIVE_NOUNS;
+
+/** “üks kass”, or from two up “kaks kassi”: a number with a noun in the form it takes. */
+export const counted = (number: string, noun: PartitiveNoun) =>
+  `${number} ${number === "üks" ? noun : PARTITIVE_NOUNS[noun]}`;
+
+/** The counting switch: three numbers over six nouns, maja among them, whose forms look alike. */
+export const OSASTAV_COUNT = {
+  numbers: ["üks", "kaks", "viis"],
+  nouns: ["kass", "raamat", "laps", "auto", "maja", "euro"],
+} as const satisfies { numbers: readonly string[]; nouns: readonly PartitiveNoun[] };
+
+/** “One or more?”: each noun once with üks and once with a number from two up. */
+export const OSASTAV_COUNTED = [
+  { noun: "kass", number: "kolm" },
+  { noun: "auto", number: "kaks" },
+  { noun: "euro", number: "kümme" },
+  { noun: "laps", number: "kolm" },
+  { noun: "kool", number: "neli" },
+  { noun: "laud", number: "viis" },
+] as const satisfies readonly { noun: PartitiveNoun; number: string }[];
+
+/** Asking how many and how much, each with an answer. */
+export const OSASTAV_EXCHANGES = [
+  { q: "Mitu last sul on?", a: "Mul on kaks last." },
+  { q: "Mitu kassi teil on?", a: "Meil on üks kass." },
+  { q: "Kui palju see maksab?", a: "Viis eurot." },
+] as const;
+
+/** An amount and what it measures, in its third form. */
+export const OSASTAV_AMOUNTS = [
+  { phrase: "tass kohvi", noun: "kohv" },
+  { phrase: "klaas vett", noun: "vesi" },
+  { phrase: "kilo juustu", noun: "juust" },
+  { phrase: "natuke piima", noun: "piim" },
+  { phrase: "palju raha", noun: "raha" },
+  { phrase: "vähe aega", noun: "aeg" },
+] as const satisfies readonly { phrase: string; noun: PartitiveNoun }[];
+
+/** Yes and no: the thing someone has, and the same thing when it isn't there. */
+export const OSASTAV_NO = [
+  { yes: "Mul on kass.", no: "Mul pole kassi.", noun: "kass" },
+  { yes: "Sul on auto.", no: "Sul pole autot.", noun: "auto" },
+  { yes: "Tal on laps.", no: "Tal pole last.", noun: "laps" },
+  { yes: "Neil on maja.", no: "Neil pole maja.", noun: "maja" },
+  { yes: "Laual on leib.", no: "Laual pole leiba.", noun: "leib" },
+  { yes: "Toas on laud.", no: "Toas pole lauda.", noun: "laud" },
+  // The thing first: it keeps its first form after pole too.
+  { yes: "Kass on laual.", no: "Kass pole laual.", noun: "kass", first: true },
+] as const satisfies readonly { yes: string; no: string; noun: PartitiveNoun; first?: true }[];
+
+/**
+ * “Which form after pole?”: a sentence with a gap for the noun. Where the noun comes first, it keeps
+ * its first form; each noun comes both ways, so its two forms are both answers.
+ */
+export const OSASTAV_POLE_QUIZ = [
+  { cue: "Mul pole …", noun: "kass", said: "Mul pole kassi." },
+  { cue: "… pole laual", noun: "kass", said: "Kass pole laual.", first: true },
+  { cue: "Sul pole …", noun: "auto", said: "Sul pole autot." },
+  { cue: "… pole Tallinnas", noun: "auto", said: "Auto pole Tallinnas.", first: true },
+  { cue: "Laual pole …", noun: "leib", said: "Laual pole leiba." },
+  { cue: "… pole laual", noun: "leib", said: "Leib pole laual.", first: true },
+  { cue: "Toas pole …", noun: "laud", said: "Toas pole lauda." },
+  { cue: "… pole toas", noun: "laud", said: "Laud pole toas.", first: true },
+] as const satisfies readonly { cue: string; noun: PartitiveNoun; said: string; first?: true }[];
+
+/** “Type the form”: food and drink someone has, and two that are only talked about. */
+export const OSASTAV_FOOD_QUIZ = [
+  { cue: "Ma joon …", noun: "kohv", said: "Ma joon kohvi." },
+  { cue: "Ta joob …", noun: "vesi", said: "Ta joob vett." },
+  { cue: "Me sööme …", noun: "leib", said: "Me sööme leiba." },
+  { cue: "Nad söövad …", noun: "juust", said: "Nad söövad juustu." },
+  { cue: "Ma tahan …", noun: "piim", said: "Ma tahan piima." },
+  { cue: "… maksab kaks eurot", noun: "piim", said: "Piim maksab kaks eurot.", first: true },
+  { cue: "… on laual", noun: "leib", said: "Leib on laual.", first: true },
+] as const satisfies readonly { cue: string; noun: PartitiveNoun; said: string; first?: true }[];
+
+/** Food and drink taken without counting. */
+export const OSASTAV_SOME = [
+  "Ma joon kohvi.",
+  "Ta joob vett.",
+  "Me sööme leiba.",
+  "Nad söövad juustu.",
+  "Ma tahan piima.",
+  "Kohvi, palun.",
+] as const;
+
+/**
+ * Mari at the market, a passage with gaps, and Jaan's voice message from the market. Words from
+ * lessons 1–16 and this lesson's nouns.
+ */
+export const OSASTAV_PASSAGES = {
+  market: [
+    "Täna on laupäev ja Mari on turul.",
+    "Tal on vaja kilo juustu ja üks leib.",
+    "Juust maksab seitse eurot.",
+    "Aga turul pole täna leiba.",
+    "Turul on kohvik.",
+    "Mari joob kohvikus kohvi.",
+    "Kohvikus on üks kass.",
+  ],
+  jaan: [
+    "Tere, see on Jaan! Ma olen turul.",
+    "Täna on palju juustu.",
+    "Kilo juustu maksab kaheksa eurot.",
+    "Leib maksab kaks eurot.",
+    "Aga täna pole piima.",
+    "Kas sa tahad kohvi?",
+  ],
+} as const;
+
+/** Words and lines the partitive lesson says outside its lists. */
+export const OSASTAV_WORDS = [
+  "kass",
+  "kassi",
+  "raamat",
+  "raamatut",
+  "laps",
+  "last",
+  "maja",
+  "kohv",
+  "kohvi",
+  "vesi",
+  "vett",
+  "juust",
+  "juustu",
+  "leib",
+  "leiba",
+  "piim",
+  "piima",
+  "aeg",
+  "aega",
+  "mitu",
+  "tass",
+  "klaas",
+  "kilo",
+  "palju",
+  "natuke",
+  "vähe",
+  "pole",
+  "tahan",
+  "Mul ei ole kassi.",
+  "Üks kohv, palun.",
+  "Ma loen raamatut.",
+] as const;
+
+const OSASTAV_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...OSASTAV_COUNT.numbers.flatMap((number) =>
+      OSASTAV_COUNT.nouns.map((noun) => counted(number, noun)),
+    ),
+    ...OSASTAV_COUNTED.flatMap(({ noun, number }) => [counted("üks", noun), counted(number, noun)]),
+    ...OSASTAV_EXCHANGES.flatMap(({ q, a }) => [q, a]),
+    ...OSASTAV_AMOUNTS.map(({ phrase }) => phrase),
+    ...OSASTAV_NO.flatMap(({ yes, no }) => [yes, no]),
+    ...OSASTAV_SOME,
+    ...OSASTAV_POLE_QUIZ.map(({ said }) => said),
+    ...OSASTAV_FOOD_QUIZ.map(({ said }) => said),
+    ...OSASTAV_WORDS,
+  ]),
+  "p-market": { sentences: OSASTAV_PASSAGES.market },
+  "p-jaan": { sentences: OSASTAV_PASSAGES.jaan },
 };
 
 export const CLIPS: Record<string, Record<string, Clip>> = {
@@ -811,5 +1423,27 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ]),
     ...KASKIV_DIALOGUE,
   },
+  "paev-tallinnas": TALLINN_CLIPS,
+  "majas-majja-majast": {
+    ...words(INNER_WORDS),
+    ...INNER_SENTENCES,
+    ...INNER_DIALOGUE,
+  },
+  "verbi-pohivormid": {
+    ...words(VERB_FORMS.flatMap((verb) => [verb.ma, daForm(verb), verb.n, threeForms(verb)])),
+    ...words(VERB_FORMS.filter((verb) => VORMID_COMMANDS.includes(verb.ma)).map((verb) => verb.ge)),
+    ...words(["tahan", "Ma tahan lugeda."]),
+    "p-class": { sentences: VORMID_CLASS },
+  },
+  tegevusnimed: {
+    ...words(INFINITIVE_LEADS.flatMap(({ lead, said }) => [lead, said])),
+    ...words(
+      INFINITIVE_PAIRS.flatMap(({ ma, da }) => [wantOrMust(da, "da"), wantOrMust(ma, "ma")]),
+    ),
+    ...words(INFINITIVE_ORDER),
+    ...words(INFINITIVE_WORDS),
+    "p-message": { sentences: INFINITIVE_MESSAGE },
+  },
+  osastav: OSASTAV_CLIPS,
   kit: KIT_CLIPS,
 };

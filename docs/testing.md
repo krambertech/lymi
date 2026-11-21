@@ -35,6 +35,7 @@ pnpm deploy:check     # production builds and both deployment-package dry runs
 pnpm deploy:health    # check both production origins and print their deployed versions
 pnpm exec playwright show-report
 pnpm --filter @lymi/mobile e2e # the phone's smoke journey; see The phone app
+pnpm --filter @lymi/site lesson:forms # check new Estonian word forms in Sõnaveeb; see Estonian lesson checks
 ```
 
 Install the configured browsers once on a new machine:
@@ -247,6 +248,12 @@ The test sits beside the year-long simulation's fingerprint check in `src/simula
 ## Bugs a pattern can catch
 
 When a review finds a bug whose shape a search can spot, add the search so the next one fails `pnpm check` instead of waiting for a reviewer. A pattern inside one file is a Grit plugin in `biome-plugins/`, scoped in `biome.json`; a pattern across files, such as a key spelled in two modules, is a check in `scripts/check-regressions.mjs` with a test in its `.test.mjs`. Each message names the pull request that found the bug. Logic bugs, races and wrong copy beyond a known false claim stay with regression tests.
+
+## Estonian lesson checks
+
+`apps/site/src/lib/learn/checks/` holds the mistakes reviews kept catching in Estonian lesson PRs as tests that run with `pnpm --filter @lymi/site test`. `lesson-checks.test.ts` renders every lesson in `LESSON_VIEWS` the way the server does, in en, uk and ru, while the kit's parts record their props, and checks the quizzes (ids, every key asked, the answer in every place round by round, options that never name the answer, no option another plus a letter or two, no cheap rule such as "pick the longest" above chance, a gap passage's answers in more than one place), a page that doesn't change with the clock or a random draw, glosses (one entry per form) and clips, recorded text against shown text, `lang="et"`, button labels, capitals, day names, lesson numbers and every Estonian form against `apps/site/src/lib/learn/verified-forms.json`. `copy-checks.test.ts` runs the tell scan, the uk/ru officialese scan and the curly-apostrophe rule over each lesson file's catalog entries, so it sees a change after `pnpm i18n:extract`. Each failure names the file, the rule and the fix; [the lesson checklists](../.agents/skills/estonian-lesson/references/checklists.md) say which items are automated.
+
+`pnpm --filter @lymi/site lesson:forms` looks each new form up in Sõnaveeb, adds the ones it confirms with their headword, and lists the rest for a person. `allowed-copy.ts` holds scan hits that stay, with reasons, and `allowed-quizzes.ts` the near options a quiz is about; `known-issues.ts` lists lessons merged before a check that still fail it, and a listed lesson that passes fails until it comes off the list.
 
 ## Check what broke before
 

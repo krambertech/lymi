@@ -3510,7 +3510,7 @@ export const CONJUNCTION_GAPS = [
   { id: "kui-raha", before: "Ma ostaksin uue auto,", after: "mul oleks raha.", answer: "kui" },
   { id: "et-utles", before: "Ta ütles,", after: "ta tuleb hiljem.", answer: "et" },
   { id: "kui-pikem", before: "Kati on pikem", after: "tema vend.", answer: "kui" },
-  { id: "sest-kulm", before: "Me ei läinud randa,", after: "oli liiga külm.", answer: "sest" },
+  { id: "sest-kulm", before: "Me ei läinud eile randa,", after: "oli liiga külm.", answer: "sest" },
   { id: "kui-joua", before: "Helista mulle,", after: "sa koju jõuad.", answer: "kui" },
   { id: "et-loodan", before: "Ma loodan,", after: "sul läheb hästi.", answer: "et" },
   {

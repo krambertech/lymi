@@ -1043,8 +1043,8 @@ msgstr "<0>Kuhu?</0> {means}"
 msgid "<0>Kui</0> as “if”: the clause comes first, so the verb <1>jään</1> comes straight after the comma."
 msgstr "<0>Kui</0> в значении «если»: придаточное стоит первым, поэтому глагол <1>jään</1> идёт сразу после запятой."
 
-msgid "<0>Kui</0> as “than”, after a word like <1>suurem</1>, bigger. No comma here."
-msgstr "<0>Kui</0> в значении «чем», после слова вроде <1>suurem</1>, «больше». Запятой здесь нет."
+msgid "<0>Kui</0> as “than”, after a word like <1>suurem</1>, bigger. No comma when it just compares two things."
+msgstr "<0>Kui</0> в значении «чем», после слова вроде <1>suurem</1>, «больше». Когда оно просто сравнивает две вещи, запятой нет."
 
 msgid "<0>Kui</0> as “when”: the same word, and the same verb straight after the comma."
 msgstr "<0>Kui</0> в значении «когда»: то же слово, и так же глагол сразу после запятой."
@@ -1834,8 +1834,8 @@ msgstr "Кофе с молоком, пожалуйста."
 msgid "A coffee without milk, please."
 msgstr "Кофе без молока, пожалуйста."
 
-msgid "A comma goes before <0>et</0>, <1>sest</1>, <2>aga</2> and the <3>kui</3> of if or when, but not before the <4>kui</4> of than."
-msgstr "Запятая ставится перед <0>et</0>, <1>sest</1>, <2>aga</2> и перед <3>kui</3> в значении «если» или «когда», но не перед <4>kui</4> в значении «чем»."
+msgid "A comma goes before <0>et</0>, <1>sest</1>, <2>aga</2> and the <3>kui</3> of if or when, but not before a <4>kui</4> that only compares: <5>suurem kui Tartu</5>."
+msgstr "Запятая ставится перед <0>et</0>, <1>sest</1>, <2>aga</2> и перед <3>kui</3> в значении «если» или «когда», но не перед <4>kui</4>, которое только сравнивает: <5>suurem kui Tartu</5>."
 
 msgid "A command again, built on the <0>-da</0> form: <1>rääkida, rääkige</1>."
 msgstr "Снова команда, значит, от формы на <0>-da</0>: <1>rääkida, rääkige</1>."
@@ -7005,8 +7005,8 @@ msgstr "четыре школы"
 msgid "Four short verbs"
 msgstr "Четыре коротких глагола"
 
-msgid "Four short words do most of the work. <0>Et</0> is that, <1>sest</1> is because and <2>aga</2> is but. <3>Kui</3> has three jobs: if, when, and than. You don’t need to tell if from when: <4>kui sajab</4> is both “if it rains” and “when it rains”. For a real “if” about something unlikely, use the would form from lesson {would}: <5>kui mul oleks raha</5>."
-msgstr "Большую часть работы делают четыре коротких слова. <0>Et</0> — это «что», <1>sest</1> — «потому что», а <2>aga</2> — «но». У <3>Kui</3> целых три значения: «если», «когда» и «чем». Различать «если» и «когда» не нужно: <4>kui sajab</4> — это и «если пойдёт дождь», и «когда идёт дождь». А для настоящего «если бы», о чём-то маловероятном, бери условную форму из урока {would}: <5>kui mul oleks raha</5>."
+msgid "Four short words do most of the work. <0>Et</0> is that, <1>sest</1> is because and <2>aga</2> is but. <3>Kui</3> has three jobs: if, when, and than. You don’t need to tell if from when: <4>kui sajab</4> is both “if it rains” and “when it rains”. For an imagined “if”, about something unlikely or untrue, use the would form from lesson {would}: <5>kui mul oleks raha</5>. For a yes or no “if”, meaning whether, use <6>kas</6>: <7>ma ei tea, kas ta tuleb</7>. The question “when?” is <8>millal</8>."
+msgstr "Чаще всего хватает четырёх коротких слов. <0>Et</0> — это «что», <1>sest</1> — «потому что», а <2>aga</2> — «но». У <3>kui</3> целых три значения: «если», «когда» и «чем». Различать «если» и «когда» не нужно: <4>kui sajab</4> — это и «если идёт дождь», и «когда идёт дождь». А для воображаемого «если бы», о чём-то маловероятном или неправдивом, бери условную форму из урока {would}: <5>kui mul oleks raha</5>. Для «ли» в косвенном вопросе используй <6>kas</6>: <7>ma ei tea, kas ta tuleb</7>, «не знаю, придёт ли он». А вопрос «когда?» — это <8>millal</8>."
 
 msgid "Four times it’s always the third form. After <0>ei</0>, because nothing got done. After a number from two up: <1>kaks piletit</1>. For some of something you can’t count, such as coffee. And after verbs of feeling, waiting and looking for, on their own, because they don’t finish anything: <2>ootama, armastama, otsima</2>."
 msgstr "В четырёх случаях — всегда третья форма. После <0>ei</0>, потому что ничего не сделано. После числа от двух: <1>kaks piletit</1>. Для части того, что не посчитать, например кофе. И после глаголов чувств, ожидания и поиска, когда они одни, потому что они ничего не завершают: <2>ootama, armastama, otsima</2>."
@@ -8336,9 +8336,6 @@ msgstr "Её лучшая подруга родом из Эстонии"
 
 msgid "Her brother"
 msgstr "Её брат"
-
-msgid "Her family moved to Tartu"
-msgstr "Её семья переехала в Тарту"
 
 msgid "Her grandmother"
 msgstr "Её бабушка"
@@ -9765,8 +9762,8 @@ msgstr "в больнице"
 msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 msgstr "В вопросе с kas голос в конце понижается, как в утверждении: kas уже говорит, что это вопрос. В разговоре вместо него ещё услышишь <0/> в конце, что-то вроде «да?»: <1/>"
 
-msgid "In a plain sentence the verb likes to be second: <0>Täna lähen ma tööle</0>, not “today I go”. A whole <1>kui</1> clause at the start counts as the first part, so the verb comes straight after the comma: <2>Kui sajab, jään ma koju</2>. In speech you will also hear <3>täna ma lähen</3>, so this is a habit to pick up, not a strict rule."
-msgstr "В простом предложении глагол любит стоять вторым: <0>Täna lähen ma tööle</0>, дословно «сегодня иду я на работу». Целое предложение с <1>kui</1> в начале считается первой частью, поэтому глагол идёт сразу после запятой: <2>Kui sajab, jään ma koju</2>. В разговоре услышишь и <3>täna ma lähen</3>, так что это привычка, которую стоит усвоить, а не строгое правило."
+msgid "In a plain sentence the verb usually comes second: <0>Täna lähen ma tööle</0>. A whole <1>kui</1> clause at the start counts as the first part, so the verb comes straight after the comma: <2>Kui sajab, jään ma koju</2>. You will often hear <3>siis</3> there too: <4>Kui sajab, siis jään ma koju</4>. In speech you will also hear <5>täna ma lähen</5>, so this is a habit to pick up, not a strict rule."
+msgstr "В простом предложении глагол обычно стоит вторым: <0>Täna lähen ma tööle</0>, дословно «сегодня иду я на работу». Целое предложение с <1>kui</1> в начале считается первой частью, поэтому глагол идёт сразу после запятой: <2>Kui sajab, jään ma koju</2>. Там часто говорят ещё и <3>siis</3>, «то»: <4>Kui sajab, siis jään ma koju</4>. В разговоре услышишь и <5>täna ma lähen</5>, так что это привычка, которую стоит усвоить, а не строгое правило."
 
 msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
 msgstr "В проекте с файлами курса Claude может собрать одну колоду с разделом на каждую лекцию."
@@ -15468,6 +15465,9 @@ msgstr "Здесь кофе не считают чашками: <0>joob kohvi</0
 
 msgid "She looks the word up on her phone"
 msgstr "Ищет слово в словаре на телефоне"
+
+msgid "She moved to Tartu last year"
+msgstr "Она переехала в Тарту"
 
 msgid "She must practise more"
 msgstr "Ей надо больше практиковаться"

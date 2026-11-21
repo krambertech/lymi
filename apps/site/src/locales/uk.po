@@ -1043,8 +1043,8 @@ msgstr "<0>Kuhu?</0> {means}"
 msgid "<0>Kui</0> as “if”: the clause comes first, so the verb <1>jään</1> comes straight after the comma."
 msgstr "<0>Kui</0> у значенні «якщо»: підрядне речення стоїть першим, тож дієслово <1>jään</1> іде одразу після коми."
 
-msgid "<0>Kui</0> as “than”, after a word like <1>suurem</1>, bigger. No comma here."
-msgstr "<0>Kui</0> у значенні «ніж», після слова на кшталт <1>suurem</1>, «більший». Коми тут немає."
+msgid "<0>Kui</0> as “than”, after a word like <1>suurem</1>, bigger. No comma when it just compares two things."
+msgstr "<0>Kui</0> у значенні «ніж», після слова на кшталт <1>suurem</1>, «більший». Коли воно просто порівнює дві речі, коми немає."
 
 msgid "<0>Kui</0> as “when”: the same word, and the same verb straight after the comma."
 msgstr "<0>Kui</0> у значенні «коли»: те саме слово, і так само дієслово одразу після коми."
@@ -1834,8 +1834,8 @@ msgstr "Каву з молоком, будь ласка."
 msgid "A coffee without milk, please."
 msgstr "Каву без молока, будь ласка."
 
-msgid "A comma goes before <0>et</0>, <1>sest</1>, <2>aga</2> and the <3>kui</3> of if or when, but not before the <4>kui</4> of than."
-msgstr "Кома ставиться перед <0>et</0>, <1>sest</1>, <2>aga</2> і перед <3>kui</3> у значенні «якщо» чи «коли», але не перед <4>kui</4> у значенні «ніж»."
+msgid "A comma goes before <0>et</0>, <1>sest</1>, <2>aga</2> and the <3>kui</3> of if or when, but not before a <4>kui</4> that only compares: <5>suurem kui Tartu</5>."
+msgstr "Кома ставиться перед <0>et</0>, <1>sest</1>, <2>aga</2> і перед <3>kui</3> у значенні «якщо» чи «коли», але не перед <4>kui</4>, яке лише порівнює: <5>suurem kui Tartu</5>."
 
 msgid "A command again, built on the <0>-da</0> form: <1>rääkida, rääkige</1>."
 msgstr "Знову наказ, тож від форми на <0>-da</0>: <1>rääkida, rääkige</1>."
@@ -7005,8 +7005,8 @@ msgstr "чотири школи"
 msgid "Four short verbs"
 msgstr "Чотири короткі дієслова"
 
-msgid "Four short words do most of the work. <0>Et</0> is that, <1>sest</1> is because and <2>aga</2> is but. <3>Kui</3> has three jobs: if, when, and than. You don’t need to tell if from when: <4>kui sajab</4> is both “if it rains” and “when it rains”. For a real “if” about something unlikely, use the would form from lesson {would}: <5>kui mul oleks raha</5>."
-msgstr "Більшу частину роботи роблять чотири короткі слова. <0>Et</0> — це «що», <1>sest</1> — «бо», а <2>aga</2> — «але». У <3>Kui</3> аж три значення: «якщо», «коли» і «ніж». Розрізняти «якщо» і «коли» не треба: <4>kui sajab</4> — це і «якщо піде дощ», і «коли йде дощ». А для справжнього «якби», про щось малоймовірне, бери умовну форму з уроку {would}: <5>kui mul oleks raha</5>."
+msgid "Four short words do most of the work. <0>Et</0> is that, <1>sest</1> is because and <2>aga</2> is but. <3>Kui</3> has three jobs: if, when, and than. You don’t need to tell if from when: <4>kui sajab</4> is both “if it rains” and “when it rains”. For an imagined “if”, about something unlikely or untrue, use the would form from lesson {would}: <5>kui mul oleks raha</5>. For a yes or no “if”, meaning whether, use <6>kas</6>: <7>ma ei tea, kas ta tuleb</7>. The question “when?” is <8>millal</8>."
+msgstr "Здебільшого вистачає чотирьох коротких слів. <0>Et</0> — це «що», <1>sest</1> — «бо», а <2>aga</2> — «але». У <3>kui</3> аж три значення: «якщо», «коли» і «ніж». Розрізняти «якщо» і «коли» не треба: <4>kui sajab</4> — це і «якщо йде дощ», і «коли йде дощ». А для уявного «якби», про щось малоймовірне чи неправдиве, бери умовну форму з уроку {would}: <5>kui mul oleks raha</5>. Для «чи» в непрямому питанні вживай <6>kas</6>: <7>ma ei tea, kas ta tuleb</7>, «не знаю, чи прийде він». А питання «коли?» — це <8>millal</8>."
 
 msgid "Four times it’s always the third form. After <0>ei</0>, because nothing got done. After a number from two up: <1>kaks piletit</1>. For some of something you can’t count, such as coffee. And after verbs of feeling, waiting and looking for, on their own, because they don’t finish anything: <2>ootama, armastama, otsima</2>."
 msgstr "У чотирьох випадках — завжди третя форма. Після <0>ei</0>, бо нічого не зроблено. Після числа від двох: <1>kaks piletit</1>. Для частини того, що не порахуєш, як-от кава. І після дієслів почуттів, чекання й пошуку, коли вони самі, бо вони нічого не завершують: <2>ootama, armastama, otsima</2>."
@@ -8336,9 +8336,6 @@ msgstr "Її найкраща подруга родом з Естонії"
 
 msgid "Her brother"
 msgstr "Її брат"
-
-msgid "Her family moved to Tartu"
-msgstr "Її родина переїхала до Тарту"
 
 msgid "Her grandmother"
 msgstr "Її бабуся"
@@ -9765,8 +9762,8 @@ msgstr "у лікарні"
 msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 msgstr "У питанні з kas голос наприкінці знижується, як у звичайному реченні: kas уже каже, що це питання. У розмові замість нього ще почуєш <0/> у кінці, щось на зразок «так?»: <1/>"
 
-msgid "In a plain sentence the verb likes to be second: <0>Täna lähen ma tööle</0>, not “today I go”. A whole <1>kui</1> clause at the start counts as the first part, so the verb comes straight after the comma: <2>Kui sajab, jään ma koju</2>. In speech you will also hear <3>täna ma lähen</3>, so this is a habit to pick up, not a strict rule."
-msgstr "У простому реченні дієслово любить стояти другим: <0>Täna lähen ma tööle</0>, дослівно «сьогодні йду я на роботу». Ціле речення з <1>kui</1> на початку вважається першою частиною, тож дієслово йде одразу після коми: <2>Kui sajab, jään ma koju</2>. У розмові почуєш і <3>täna ma lähen</3>, тож це звичка, якої варто набути, а не суворе правило."
+msgid "In a plain sentence the verb usually comes second: <0>Täna lähen ma tööle</0>. A whole <1>kui</1> clause at the start counts as the first part, so the verb comes straight after the comma: <2>Kui sajab, jään ma koju</2>. You will often hear <3>siis</3> there too: <4>Kui sajab, siis jään ma koju</4>. In speech you will also hear <5>täna ma lähen</5>, so this is a habit to pick up, not a strict rule."
+msgstr "У простому реченні дієслово зазвичай стоїть другим: <0>Täna lähen ma tööle</0>, дослівно «сьогодні йду я на роботу». Ціле речення з <1>kui</1> на початку вважається першою частиною, тож дієслово йде одразу після коми: <2>Kui sajab, jään ma koju</2>. Там часто кажуть ще й <3>siis</3>, «то»: <4>Kui sajab, siis jään ma koju</4>. У розмові почуєш і <5>täna ma lähen</5>, тож це звичка, якої варто набути, а не суворе правило."
 
 msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
 msgstr "У проєкті з файлами курсу Claude може зібрати одну колоду з розділом на кожну лекцію."
@@ -15468,6 +15465,9 @@ msgstr "Тут каву не рахують чашками: <0>joob kohvi</0>."
 
 msgid "She looks the word up on her phone"
 msgstr "Шукає слово в словнику на телефоні"
+
+msgid "She moved to Tartu last year"
+msgstr "Вона торік переїхала до Тарту"
 
 msgid "She must practise more"
 msgstr "Їй треба більше вправлятися"

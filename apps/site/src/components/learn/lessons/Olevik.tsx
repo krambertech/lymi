@@ -340,7 +340,7 @@ export function OlevikLesson() {
   const pronouns = at("Mina, sina, tema");
   const gradation = at("Jalg, jala");
   const where = at("Tallinnas, Tartus");
-  const partitive = at("Kaks kassi");
+  const partitive = lessonBySlug("osastav")?.n;
   const verbForms = lessonBySlug("verbi-pohivormid")?.n;
 
   const endings = useMemo(

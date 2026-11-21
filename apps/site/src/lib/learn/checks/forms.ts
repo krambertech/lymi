@@ -70,6 +70,9 @@ export function lessonForms(page: Rendered): Map<string, string> {
   }
   // Each outermost Estonian element as one text, so a word split across spans stays whole.
   const outermost = (element: Element, inEstonian: boolean) => {
+    // Hidden from screen readers, as text-run checks treat it: Morph's struck-through letters
+    // (ol·ema·in) are a picture of a change, not a word, and its words are in its sr-only line.
+    if (element.attrs["aria-hidden"] === "true") return;
     if (element.lang === "et" && !inEstonian) {
       add(estonianText(element), 'text in lang="et"');
       return;

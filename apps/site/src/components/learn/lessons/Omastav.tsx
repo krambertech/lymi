@@ -709,7 +709,7 @@ export const KATI_GAPS: readonly PassageGap[] = [
     before: "Mis",
     after: "nimi on?",
     answer: "sinu",
-    options: ["sina", "sinu"],
+    options: ["sinu", "sina"],
     why: (
       <Trans>
         Kati asks for your name, so your: <b lang="et">sinu</b>.

@@ -1022,7 +1022,7 @@ msgid "A message from Mari"
 msgstr "Сообщение от Мари"
 
 msgid "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country goes first in the same way, and <2>Eesti</2> stays as it is: <3/>"
-msgstr "Имя на согласную получает гласную, часто i: <0/>, <1/>. Название страны тоже стоит первым, а <2>Eesti</2> не меняется: <3/>"
+msgstr "В имени на согласную появляется гласная, часто i: <0/>, <1/>. Название страны тоже стоит первым, а <2>Eesti</2> не меняется: <3/>"
 
 msgid "A name ending in a consonant gains a vowel."
 msgstr "В имени на согласную появляется гласная."
@@ -5608,7 +5608,7 @@ msgid "in Lasnamäe"
 msgstr "в Ласнамяэ"
 
 msgid "In lesson {places} you learned <0/>, at school, and <1/>, in Tallinn. Take off the <2>-s</2> and you have the genitive: <3/>, <4/>. The vowel that appeared before the <5>-s</5> belongs to the genitive."
-msgstr "В уроке {places} были <0/>, в школе, и <1/>, в Таллине. Отбрось <2>-s</2> — и получишь родительный падеж: <3/>, <4/>. Гласная перед <5>-s</5> — часть родительного."
+msgstr "В уроке {places} были <0/>, в школе, и <1/>, в Таллине. Отбрось <2>-s</2> — и получишь родительный падеж: <3/>, <4/>. Гласная перед <5>-s</5> — часть родительного."
 
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "В уроке {pronouns} был глагол <0/>, «быть»: <1/>, <2/>, <3/>, <4/>. У большинства глаголов те же окончания. А там, где у olema стоит <5/>, у них два своих: <6>-b</6> для «он или она» и <7>-vad</7> для «они»."

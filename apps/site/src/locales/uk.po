@@ -1022,7 +1022,7 @@ msgid "A message from Mari"
 msgstr "Повідомлення від Марі"
 
 msgid "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country goes first in the same way, and <2>Eesti</2> stays as it is: <3/>"
-msgstr "Ім’я на приголосну отримує голосну, часто i: <0/>, <1/>. Назва країни теж стоїть першою, а <2>Eesti</2> не змінюється: <3/>"
+msgstr "В імені на приголосну з’являється голосна, часто i: <0/>, <1/>. Назва країни теж стоїть першою, а <2>Eesti</2> не змінюється: <3/>"
 
 msgid "A name ending in a consonant gains a vowel."
 msgstr "В імені на приголосну з’являється голосна."
@@ -5608,7 +5608,7 @@ msgid "in Lasnamäe"
 msgstr "у Ласнамяе"
 
 msgid "In lesson {places} you learned <0/>, at school, and <1/>, in Tallinn. Take off the <2>-s</2> and you have the genitive: <3/>, <4/>. The vowel that appeared before the <5>-s</5> belongs to the genitive."
-msgstr "В уроці {places} були <0/>, у школі, і <1/>, у Таллінні. Відкинь <2>-s</2> — і маєш родовий відмінок: <3/>, <4/>. Голосна перед <5>-s</5> — частина родового."
+msgstr "В уроці {places} були <0/>, у школі, і <1/>, у Таллінні. Відкинь <2>-s</2> — і маєш родовий відмінок: <3/>, <4/>. Голосна перед <5>-s</5> — частина родового."
 
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "В уроці {pronouns} було дієслово <0/>, «бути»: <1/>, <2/>, <3/>, <4/>. Більшість дієслів мають ті самі закінчення. А там, де в olema стоїть <5/>, у них два власні: <6>-b</6> для «він чи вона» і <7>-vad</7> для «вони»."

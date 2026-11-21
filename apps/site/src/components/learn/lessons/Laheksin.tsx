@@ -1,7 +1,7 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
-import { type ReactNode, useMemo, useState } from "react";
+import { type ReactNode, useState } from "react";
 import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
@@ -116,122 +116,119 @@ function SentenceList({ items }: { items: readonly string[] }) {
 
 type GapRun = GapItem & { id: string; said: string };
 
-function useContent() {
-  const { t } = useLingui();
-  return useMemo(() => {
-    const whys: Record<string, ReactNode> = {
-      sa: (
-        <Trans>
-          With <Et>sa</Et>, the ending is <Et>-ksid</Et>.
-        </Trans>
-      ),
-      me: (
-        <Trans>
-          With <Et>me</Et>, the ending is <Et>-ksime</Et>.
-        </Trans>
-      ),
-      ta: (
-        <Trans>
-          With <Et>ta</Et>, just <Et>-ks</Et>.
-        </Trans>
-      ),
+function content() {
+  const whys: Record<string, ReactNode> = {
+    sa: (
+      <Trans>
+        With <Et>sa</Et>, the ending is <Et>-ksid</Et>.
+      </Trans>
+    ),
+    me: (
+      <Trans>
+        With <Et>me</Et>, the ending is <Et>-ksime</Et>.
+      </Trans>
+    ),
+    ta: (
+      <Trans>
+        With <Et>ta</Et>, just <Et>-ks</Et>.
+      </Trans>
+    ),
+  };
+  const gaps: GapRun[] = CONDITIONAL_GAPS.map((gap) => {
+    const said = objectGapSaid(gap);
+    return {
+      id: gap.id,
+      said,
+      src: src(said),
+      before: gap.before,
+      after: gap.after,
+      options: CONDITIONAL_OPTIONS[gap.verb],
+      answer: gap.answer,
+      explain: whys[gap.id.split("-").at(-1) as string],
     };
-    const gaps: GapRun[] = CONDITIONAL_GAPS.map((gap) => {
-      const said = objectGapSaid(gap);
-      return {
-        id: gap.id,
-        said,
-        src: src(said),
-        before: gap.before,
-        after: gap.after,
-        options: CONDITIONAL_OPTIONS[gap.verb],
-        answer: gap.answer,
-        explain: whys[gap.id.split("-").at(-1) as string],
-      };
-    });
+  });
 
-    const said = (clip: keyof typeof CONDITIONAL_DIALOGUE) => {
-      const line = CONDITIONAL_DIALOGUE[clip];
-      return typeof line === "string" ? line : line.text;
-    };
-    const talk: DialogueTurn[] = [
-      { who: "them", clip: "d-teenindaja-1", line: said("d-teenindaja-1") },
-      {
-        who: "you",
-        clip: "d-sina-1",
-        replies: [
-          {
-            line: "Ma tahtsin ühte kohvi ja vett.",
-            why: (
-              <Trans>
-                <Et>Tahtsin</Et> is the past, I wanted. To ask politely now: <Et>tahaksin</Et>.
-              </Trans>
-            ),
-          },
-          { line: said("d-sina-1"), right: true },
-          {
-            line: "Ma tahaksid ühte kohvi ja vett.",
-            why: (
-              <Trans>
-                <Et>-ksid</Et> is for <Et>sa</Et> or <Et>nad</Et>. With <Et>ma</Et>:{" "}
-                <Et>tahaksin</Et>.
-              </Trans>
-            ),
-          },
-        ],
-      },
-      { who: "them", clip: "d-teenindaja-2", line: said("d-teenindaja-2") },
-      {
-        who: "you",
-        clip: "d-sina-2",
-        replies: [
-          { line: said("d-sina-2"), right: true },
-          {
-            line: "Jah, võtsin ka.",
-            why: (
-              <Trans>
-                <Et>Võtsin</Et> is the past, I took. To order: <Et>võtaksin</Et>.
-              </Trans>
-            ),
-          },
-          {
-            line: "Jah, me võtaksin ka.",
-            why: (
-              <Trans>
-                With <Et>me</Et>, the ending is <Et>-ksime</Et>. For yourself: <Et>ma võtaksin</Et>.
-              </Trans>
-            ),
-          },
-        ],
-      },
-      { who: "them", clip: "d-teenindaja-3", line: said("d-teenindaja-3") },
-      {
-        who: "you",
-        clip: "d-sina-3",
-        replies: [
-          {
-            line: "Kas ma saaksin sularahas maksma, palun?",
-            why: (
-              <Trans>
-                After <Et>saama</Et>, the <Et>-da</Et> form: <Et>maksta</Et>.
-              </Trans>
-            ),
-          },
-          {
-            line: "Kas ma sain?",
-            why: (
-              <Trans>
-                <Et>Sain</Et> is the past. To ask politely: <Et>kas ma saaksin</Et>.
-              </Trans>
-            ),
-          },
-          { line: said("d-sina-3"), right: true },
-        ],
-      },
-    ];
+  const said = (clip: keyof typeof CONDITIONAL_DIALOGUE) => {
+    const line = CONDITIONAL_DIALOGUE[clip];
+    return typeof line === "string" ? line : line.text;
+  };
+  const talk: DialogueTurn[] = [
+    { who: "them", clip: "d-teenindaja-1", line: said("d-teenindaja-1") },
+    {
+      who: "you",
+      clip: "d-sina-1",
+      replies: [
+        {
+          line: "Ma tahtsin ühte kohvi ja vett.",
+          why: (
+            <Trans>
+              <Et>Tahtsin</Et> is the past, I wanted. To ask politely now: <Et>tahaksin</Et>.
+            </Trans>
+          ),
+        },
+        { line: said("d-sina-1"), right: true },
+        {
+          line: "Ma tahaksid ühte kohvi ja vett.",
+          why: (
+            <Trans>
+              <Et>-ksid</Et> is for <Et>sa</Et> or <Et>nad</Et>. With <Et>ma</Et>: <Et>tahaksin</Et>
+              .
+            </Trans>
+          ),
+        },
+      ],
+    },
+    { who: "them", clip: "d-teenindaja-2", line: said("d-teenindaja-2") },
+    {
+      who: "you",
+      clip: "d-sina-2",
+      replies: [
+        { line: said("d-sina-2"), right: true },
+        {
+          line: "Jah, võtsin ka.",
+          why: (
+            <Trans>
+              <Et>Võtsin</Et> is the past, I took. To order: <Et>võtaksin</Et>.
+            </Trans>
+          ),
+        },
+        {
+          line: "Jah, me võtaksin ka.",
+          why: (
+            <Trans>
+              With <Et>me</Et>, the ending is <Et>-ksime</Et>. For yourself: <Et>ma võtaksin</Et>.
+            </Trans>
+          ),
+        },
+      ],
+    },
+    { who: "them", clip: "d-teenindaja-3", line: said("d-teenindaja-3") },
+    {
+      who: "you",
+      clip: "d-sina-3",
+      replies: [
+        {
+          line: "Kas ma saaksin sularahas maksma, palun?",
+          why: (
+            <Trans>
+              After <Et>saama</Et>, the <Et>-da</Et> form: <Et>maksta</Et>.
+            </Trans>
+          ),
+        },
+        {
+          line: "Kas ma sain?",
+          why: (
+            <Trans>
+              <Et>Sain</Et> is the past. To ask politely: <Et>kas ma saaksin</Et>.
+            </Trans>
+          ),
+        },
+        { line: said("d-sina-3"), right: true },
+      ],
+    },
+  ];
 
-    return { gaps, talk };
-  }, [t]);
+  return { gaps, talk };
 }
 
 const gapRun = (items: readonly GapRun[], pinned?: GapRun): GapRun[] =>
@@ -241,7 +238,7 @@ const gapRun = (items: readonly GapRun[], pinned?: GapRun): GapRun[] =>
 
 export function LaheksinLesson() {
   const { t } = useLingui();
-  const content = useContent();
+  const lesson = content();
   const modals = lessonBySlug("modaalverbid")?.n;
 
   return (
@@ -336,7 +333,7 @@ export function LaheksinLesson() {
               <Quiz
                 id="would-endings"
                 title={<Trans>Which ending?</Trans>}
-                items={content.gaps}
+                items={lesson.gaps}
                 rounds={9}
                 verdict={(share) =>
                   share === 1 ? (
@@ -377,7 +374,7 @@ export function LaheksinLesson() {
                   </Trans>
                 }
                 them={t`Waiter`}
-                turns={content.talk}
+                turns={lesson.talk}
               />
             </>
           ),

@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { chunks, messagesIn } from "./catalog";
-import { formsIn } from "./forms";
+import { formsIn, lessonForms } from "./forms";
 import {
   nearPair,
   oneLetterApart,
@@ -27,6 +27,19 @@ describe("the check helpers", () => {
       "To find the form that follows ei, take the ma form from lesson {present} and drop the -n. <0/> becomes <1/>, and <2/> becomes it.";
     expect(chunks(id)[0]).toBe("To find the form that follows ei, take the ma form from lesson");
     expect(messagesIn(source, [{ id }, { id: "Something else entirely" }])).toEqual([{ id }]);
+  });
+
+  it("leaves out Estonian hidden from screen readers, such as Morph's struck letters", () => {
+    const tree = parse(
+      '<p><span class="sr-only"><span lang="et">pood</span> becomes <span lang="et">poe</span></span><span aria-hidden="true" lang="et">po<s>od</s>e</span></p>',
+      "en",
+    );
+    const page = {
+      slug: "none",
+      tree,
+      recording: { words: [], parts: [] },
+    } as unknown as Parameters<typeof lessonForms>[0];
+    expect([...lessonForms(page).keys()]).toEqual(["pood", "poe"]);
   });
 
   it("finds options one is another plus a letter or two at an end", () => {

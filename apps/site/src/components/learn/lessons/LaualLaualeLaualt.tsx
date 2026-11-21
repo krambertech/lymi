@@ -315,9 +315,9 @@ function useSaturday(): GapItem[] {
 export function LaualLaualeLaualtLesson() {
   const { t, i18n } = useLingui();
   const places = lessonBySlug("kohad")?.n;
-  const inner = LESSONS.find((lesson) => lesson.et === "Majas, majja, majast")?.n;
-  const stems = LESSONS.find((lesson) => lesson.et === "Pood, poe")?.n;
-  const have = LESSONS.find((lesson) => lesson.et === "Mul on")?.n;
+  const inner = lessonBySlug("majas-majja-majast")?.n;
+  const stems = lessonBySlug("pood-poe")?.n;
+  const have = lessonBySlug("mul-on")?.n;
   const pronouns = LESSONS.find((lesson) => lesson.et === "Mind, mulle, minuga")?.n;
   const saturday = useSaturday();
 

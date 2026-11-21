@@ -32,10 +32,10 @@ describe("stems data", () => {
     expect(changed("kool", "kooli")).toEqual(["kool", "i", ""]);
   });
 
-  it("has six nouns of each kind, with two wrong forms unlike the answer", () => {
+  it("has six nouns of each kind, with three wrong forms unlike the answer", () => {
     for (const kind of ["inside", "vowel", "same"] as const)
       expect(STEM_WORDS.filter((noun) => noun.kind === kind)).toHaveLength(6);
-    for (const noun of STEM_WORDS) expect(new Set([noun.where, ...noun.slips]).size).toBe(3);
+    for (const noun of STEM_WORDS) expect(new Set([noun.where, ...noun.slips]).size).toBe(4);
   });
 
   it("doesn't let the shortest or longest form give the answer away", () => {

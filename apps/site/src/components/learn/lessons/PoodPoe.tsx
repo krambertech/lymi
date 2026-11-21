@@ -286,17 +286,17 @@ export const ASKED = [...STEM_WORDS.slice(6), ...STEM_WORDS.slice(0, 6)].map((no
 
 /** A noun's form and its two wrong forms, turned so the answer isn't always first. */
 export const formsInOrder = (noun: Noun, turn: number): string[] => {
-  const three = [noun.where, ...noun.slips];
+  const three = [noun.where, noun.slips[0], noun.slips[1]];
   const at = turn % 3;
   return [...three.slice(at), ...three.slice(0, at)];
 };
 
 /**
- * The wrong forms a round can offer: the noun's two made-up forms, the stem with no ending and the
- * word with no ending. Each round after the first draws two, so no set of options names its noun.
+ * The wrong forms a round can offer: three made-up forms with the ending, each from a wrong stem.
+ * The bare word and stem stay out, since the answer is one of them plus a letter. Each round after
+ * the first draws two, so no set of options names its noun.
  */
-export const wrongForms = (noun: Noun): string[] =>
-  [...new Set<string>([...noun.slips, noun.stem, noun.word])].filter((form) => form !== noun.where);
+export const wrongForms = (noun: Noun): string[] => [...noun.slips];
 
 /** The answer and two wrong forms at random, in random order. */
 export const threeForms = (noun: Noun): string[] =>

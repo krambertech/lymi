@@ -711,7 +711,7 @@ export type StemKind = "inside" | "vowel" | "same";
 /**
  * The stems lesson's nouns: the word as a dictionary lists it first, its stem (listed second, the
  * form an ending goes on), how the two differ, the word with -s or -l, a sentence that says it, and
- * two wrong forms for “Which form?”. Checked in ÕS 2025 on Sõnaveeb (EKI morphology): pood, poe;
+ * three wrong forms for “Which form?”. Checked in ÕS 2025 on Sõnaveeb (EKI morphology): pood, poe;
  * tuba, toa; jõgi, jõe; laud, laua; turg, turu; aken, akna; kool, kooli; raamat, raamatu; uks, ukse;
  * Tallinn, Tallinna; sein, seina; kohvik, kohviku; kodu, haigla, Tartu, töö, Pärnu and Soome unchanged.
  */
@@ -722,7 +722,7 @@ export const STEM_WORDS = [
     kind: "inside",
     where: "poes",
     said: "Ema on poes.",
-    slips: ["poodis", "poods"],
+    slips: ["poodis", "poods", "pooes"],
   },
   {
     word: "tuba",
@@ -730,7 +730,7 @@ export const STEM_WORDS = [
     kind: "inside",
     where: "toas",
     said: "Ta on toas.",
-    slips: ["tubas", "tuas"],
+    slips: ["tubas", "tuas", "tubes"],
   },
   {
     word: "jõgi",
@@ -738,7 +738,7 @@ export const STEM_WORDS = [
     kind: "inside",
     where: "jões",
     said: "Me ujume jões.",
-    slips: ["jõges", "jõs"],
+    slips: ["jõges", "jõs", "jõgias"],
   },
   {
     word: "laud",
@@ -746,7 +746,7 @@ export const STEM_WORDS = [
     kind: "inside",
     where: "laual",
     said: "Raamat on laual.",
-    slips: ["laudel", "lauel"],
+    slips: ["laudel", "lauel", "lauil"],
   },
   {
     word: "turg",
@@ -754,7 +754,7 @@ export const STEM_WORDS = [
     kind: "inside",
     where: "turul",
     said: "Nad on turul.",
-    slips: ["turgul", "turl"],
+    slips: ["turgul", "turl", "turgal"],
   },
   {
     word: "aken",
@@ -762,7 +762,7 @@ export const STEM_WORDS = [
     kind: "inside",
     where: "aknal",
     said: "Kohv on aknal.",
-    slips: ["akenal", "akenil"],
+    slips: ["akenal", "akenil", "aknul"],
   },
   {
     word: "kool",
@@ -770,7 +770,7 @@ export const STEM_WORDS = [
     kind: "vowel",
     where: "koolis",
     said: "Ta õpib koolis.",
-    slips: ["kools", "koolos"],
+    slips: ["kools", "koolos", "koolius"],
   },
   {
     word: "raamat",
@@ -778,7 +778,7 @@ export const STEM_WORDS = [
     kind: "vowel",
     where: "raamatus",
     said: "Pilt on raamatus.",
-    slips: ["raamats", "raamatis"],
+    slips: ["raamats", "raamatis", "raamatas"],
   },
   {
     word: "uks",
@@ -786,7 +786,7 @@ export const STEM_WORDS = [
     kind: "vowel",
     where: "uksel",
     said: "Jaan on uksel.",
-    slips: ["uksul", "uksal"],
+    slips: ["uksul", "uksal", "uksol"],
   },
   {
     word: "Tallinn",
@@ -794,7 +794,7 @@ export const STEM_WORDS = [
     kind: "vowel",
     where: "Tallinnas",
     said: "Ma elan Tallinnas.",
-    slips: ["Tallinns", "Tallinnis"],
+    slips: ["Tallinns", "Tallinnis", "Tallinnus"],
   },
   {
     word: "sein",
@@ -802,7 +802,7 @@ export const STEM_WORDS = [
     kind: "vowel",
     where: "seinal",
     said: "Pilt on seinal.",
-    slips: ["seinil", "seinel"],
+    slips: ["seinil", "seinel", "seinol"],
   },
   {
     word: "kohvik",
@@ -810,7 +810,7 @@ export const STEM_WORDS = [
     kind: "vowel",
     where: "kohvikus",
     said: "Me oleme kohvikus.",
-    slips: ["kohvikis", "kohvikas"],
+    slips: ["kohvikis", "kohvikas", "kohvikos"],
   },
   {
     word: "kodu",
@@ -818,7 +818,7 @@ export const STEM_WORDS = [
     kind: "same",
     where: "kodus",
     said: "Ta töötab kodus.",
-    slips: ["kodes", "kodas"],
+    slips: ["kodes", "kodas", "koduis"],
   },
   {
     word: "haigla",
@@ -826,7 +826,7 @@ export const STEM_WORDS = [
     kind: "same",
     where: "haiglas",
     said: "Mari töötab haiglas.",
-    slips: ["haiglis", "haiglaas"],
+    slips: ["haiglis", "haiglaas", "haigles"],
   },
   {
     word: "Tartu",
@@ -834,7 +834,7 @@ export const STEM_WORDS = [
     kind: "same",
     where: "Tartus",
     said: "Nad õpivad Tartus.",
-    slips: ["Tartas", "Tartuis"],
+    slips: ["Tartas", "Tartuis", "Tartes"],
   },
   {
     word: "töö",
@@ -842,7 +842,7 @@ export const STEM_WORDS = [
     kind: "same",
     where: "tööl",
     said: "Ma olen tööl.",
-    slips: ["töl", "tööil"],
+    slips: ["töl", "tööil", "tööel"],
   },
   {
     word: "Pärnu",
@@ -850,7 +850,7 @@ export const STEM_WORDS = [
     kind: "same",
     where: "Pärnus",
     said: "Jaan elab Pärnus.",
-    slips: ["Pärnes", "Pärnuis"],
+    slips: ["Pärnes", "Pärnuis", "Pärnos"],
   },
   {
     word: "Soome",
@@ -858,7 +858,7 @@ export const STEM_WORDS = [
     kind: "same",
     where: "Soomes",
     said: "Ma elan Soomes.",
-    slips: ["Soomis", "Soomeis"],
+    slips: ["Soomis", "Soomeis", "Soomos"],
   },
 ] as const satisfies readonly {
   word: string;
@@ -866,7 +866,7 @@ export const STEM_WORDS = [
   kind: StemKind;
   where: string;
   said: string;
-  slips: readonly [string, string];
+  slips: readonly [string, string, string];
 }[];
 
 /** Saturday, who is where: the stems lesson's passage with gaps, recorded as one take. */

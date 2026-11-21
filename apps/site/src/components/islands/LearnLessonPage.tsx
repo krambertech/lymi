@@ -11,6 +11,7 @@ import { OsastavLesson } from "../learn/lessons/Osastav";
 import { PaevadLesson } from "../learn/lessons/Paevad";
 import { PaevTallinnasLesson } from "../learn/lessons/PaevTallinnas";
 import { PoodPoeLesson } from "../learn/lessons/PoodPoe";
+import { TegevusnimedLesson } from "../learn/lessons/Tegevusnimed";
 import { TutvumineLesson } from "../learn/lessons/Tutvumine";
 import { VerbiPohivormidLesson } from "../learn/lessons/VerbiPohivormid";
 import { Island } from "./Island";
@@ -31,6 +32,7 @@ export const LESSON_VIEWS = {
   "paev-tallinnas": PaevTallinnasLesson,
   "pood-poe": PoodPoeLesson,
   "verbi-pohivormid": VerbiPohivormidLesson,
+  tegevusnimed: TegevusnimedLesson,
   osastav: OsastavLesson,
 } as const;
 

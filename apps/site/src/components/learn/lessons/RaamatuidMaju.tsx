@@ -70,14 +70,15 @@ function KindTable() {
   const tips: Record<Kind, ReactNode> = {
     sid: (
       <Trans>
-        Most words that end in a vowel and have no other change add <Et>-sid</Et>:{" "}
-        <Et>auto, autosid</Et>.
+        Words that keep the same stem in every form add <Et>-sid</Et>: <Et>auto, autosid</Et>;{" "}
+        <Et>ema, emasid</Et>.
       </Trans>
     ),
     id: (
       <Trans>
         Longer words that end in a consonant add <Et>-id</Et> to the genitive:{" "}
-        <Et>raamatu, raamatuid</Et>.
+        <Et>raamatu, raamatuid</Et>. A genitive that ends in <Et>-i</Et> turns it into <Et>-e</Et>:{" "}
+        <Et>tomati, tomateid</Et>.
       </Trans>
     ),
     vowel: (
@@ -88,7 +89,8 @@ function KindTable() {
     ),
     long: (
       <Trans>
-        Words of one long syllable shorten it and add <Et>-id</Et>: <Et>maa, maid</Et>.
+        Words that are just one long vowel shorten it and add <Et>-id</Et>: <Et>maa, maid</Et>;{" "}
+        <Et>puu, puid</Et>.
       </Trans>
     ),
   };
@@ -96,7 +98,7 @@ function KindTable() {
     { value: "sid", label: "-sid", lang: "et" },
     { value: "id", label: "-id", lang: "et" },
     { value: "vowel", label: t`A new last vowel` },
-    { value: "long", label: t`One long syllable` },
+    { value: "long", label: t`One long vowel` },
   ];
   const rows: ParadigmRow[] = PLURAL_PART_KINDS[kind].map((noun) => ({
     id: noun.word,
@@ -277,7 +279,7 @@ export function RaamatuidMajuLesson() {
                 <p>
                   <Trans>
                     It comes after <Word w="palju" />, many, when something is there or isn’t, after{" "}
-                    <Et>ei</Et>, and for things in general.
+                    <Et>ei</Et>, and after verbs such as <Et>armastama</Et> that always take it.
                   </Trans>
                 </p>
               </Prose>
@@ -309,9 +311,8 @@ export function RaamatuidMajuLesson() {
               <KindTable />
               <Aside>
                 <Trans>
-                  Many words with a vowel ending also allow <Et>-sid</Et>: <Et>maju</Et> or{" "}
-                  <Et>majasid</Et>. Both are right, and <Et>-sid</Et> is the safe guess when you’re
-                  not sure.
+                  Some words with a new last vowel also allow <Et>-sid</Et>: <Et>maju</Et> or{" "}
+                  <Et>majasid</Et>. Both are right.
                 </Trans>
               </Aside>
             </>
@@ -383,7 +384,8 @@ export function RaamatuidMajuLesson() {
                 <p>
                   <Trans>
                     Kati is having a <Word w="sünnipäev" />, a birthday party. Read about it and
-                    answer. Every plural third form is there because no number counts the things.
+                    answer. The plural third form is there each time the sentence means some, with
+                    no amount named.
                   </Trans>
                 </p>
               </Prose>

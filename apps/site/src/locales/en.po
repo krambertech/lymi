@@ -9285,8 +9285,8 @@ msgstr "It also says what someone was at a time: <0/>, as a child. In <1/>, <2>e
 msgid "It can have a stem of its own: <0>loe-n</0>, <1>räägi-n</1>, <2>õpi-n</2>. The <3>-da</3> form keeps the <4>-ma</4> form’s stem."
 msgstr "It can have a stem of its own: <0>loe-n</0>, <1>räägi-n</1>, <2>õpi-n</2>. The <3>-da</3> form keeps the <4>-ma</4> form’s stem."
 
-msgid "It comes after <0/>, many, when something is there or isn’t, after <1>ei</1>, and for things in general."
-msgstr "It comes after <0/>, many, when something is there or isn’t, after <1>ei</1>, and for things in general."
+msgid "It comes after <0/>, many, when something is there or isn’t, after <1>ei</1>, and after verbs such as <2>armastama</2> that always take it."
+msgstr "It comes after <0/>, many, when something is there or isn’t, after <1>ei</1>, and after verbs such as <2>armastama</2> that always take it."
 
 msgid "It depends"
 msgstr "It depends"
@@ -9658,8 +9658,8 @@ msgstr "Kati asks for your name, so your: <0>sinu</0>."
 msgid "Kati is a doctor."
 msgstr "Kati is a doctor."
 
-msgid "Kati is having a <0/>, a birthday party. Read about it and answer. Every plural third form is there because no number counts the things."
-msgstr "Kati is having a <0/>, a birthday party. Read about it and answer. Every plural third form is there because no number counts the things."
+msgid "Kati is having a <0/>, a birthday party. Read about it and answer. The plural third form is there each time the sentence means some, with no amount named."
+msgstr "Kati is having a <0/>, a birthday party. Read about it and answer. The plural third form is there each time the sentence means some, with no amount named."
 
 msgid "Kati is the one who lives in Tartu, so I: <0>mina</0>."
 msgstr "Kati is the one who lives in Tartu, so I: <0>mina</0>."
@@ -10359,8 +10359,8 @@ msgstr "Longer gaps, longer memory"
 msgid "Longer sentences"
 msgstr "Longer sentences"
 
-msgid "Longer words that end in a consonant add <0>-id</0> to the genitive: <1>raamatu, raamatuid</1>."
-msgstr "Longer words that end in a consonant add <0>-id</0> to the genitive: <1>raamatu, raamatuid</1>."
+msgid "Longer words that end in a consonant add <0>-id</0> to the genitive: <1>raamatu, raamatuid</1>. A genitive that ends in <2>-i</2> turns it into <3>-e</3>: <4>tomati, tomateid</4>."
+msgstr "Longer words that end in a consonant add <0>-id</0> to the genitive: <1>raamatu, raamatuid</1>. A genitive that ends in <2>-i</2> turns it into <3>-e</3>: <4>tomati, tomateid</4>."
 
 msgid "Longing"
 msgstr "Longing"
@@ -10683,9 +10683,6 @@ msgstr "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which
 
 msgid "Many words have a strong and a weak form of the consonant inside: <0>jalg, jala</0>; <1>kapp, kapi</1>."
 msgstr "Many words have a strong and a weak form of the consonant inside: <0>jalg, jala</0>; <1>kapp, kapi</1>."
-
-msgid "Many words with a vowel ending also allow <0>-sid</0>: <1>maju</1> or <2>majasid</2>. Both are right, and <3>-sid</3> is the safe guess when you’re not sure."
-msgstr "Many words with a vowel ending also allow <0>-sid</0>: <1>maju</1> or <2>majasid</2>. Both are right, and <3>-sid</3> is the safe guess when you’re not sure."
 
 msgid "many, a lot"
 msgstr "many, a lot"
@@ -11161,9 +11158,6 @@ msgstr "Most verbs: <0>si-</0> on the stem of the <1>ma</1> form."
 
 msgid "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
 msgstr "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
-
-msgid "Most words that end in a vowel and have no other change add <0>-sid</0>: <1>auto, autosid</1>."
-msgstr "Most words that end in a vowel and have no other change add <0>-sid</0>: <1>auto, autosid</1>."
 
 msgid "mother"
 msgstr "mother"
@@ -12155,8 +12149,8 @@ msgstr "One letter or two?"
 msgid "One letter or two? Listen, then fill the gap."
 msgstr "One letter or two? Listen, then fill the gap."
 
-msgid "One long syllable"
-msgstr "One long syllable"
+msgid "One long vowel"
+msgstr "One long vowel"
 
 msgid "One more"
 msgstr "One more"
@@ -14422,6 +14416,9 @@ msgstr "Some words change inside before an ending: <0/>, a shop, gives <1/>, in 
 
 msgid "Some words give their third form away. Most words ending in <0>-ne</0> have a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
 msgstr "Some words give their third form away. Most words ending in <0>-ne</0> have a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
+
+msgid "Some words with a new last vowel also allow <0>-sid</0>: <1>maju</1> or <2>majasid</2>. Both are right."
+msgstr "Some words with a new last vowel also allow <0>-sid</0>: <1>maju</1> or <2>majasid</2>. Both are right."
 
 msgid "Somebody, nobody: -gi and -ki"
 msgstr "Somebody, nobody: -gi and -ki"
@@ -19767,14 +19764,17 @@ msgstr "Words in colour open their meaning."
 msgid "Words into two or three groups, tapped or dragged, checked together; a wrong word shows its group and the rule."
 msgstr "Words into two or three groups, tapped or dragged, checked together; a wrong word shows its group and the rule."
 
-msgid "Words of one long syllable shorten it and add <0>-id</0>: <1>maa, maid</1>."
-msgstr "Words of one long syllable shorten it and add <0>-id</0>: <1>maa, maid</1>."
-
 msgid "Words show their reading in kana over the kanji. The kana deck is the one place with romaji, because there the sound is the answer."
 msgstr "Words show their reading in kana over the kanji. The kana deck is the one place with romaji, because there the sound is the answer."
 
+msgid "Words that are just one long vowel shorten it and add <0>-id</0>: <1>maa, maid</1>; <2>puu, puid</2>."
+msgstr "Words that are just one long vowel shorten it and add <0>-id</0>: <1>maa, maid</1>; <2>puu, puid</2>."
+
 msgid "Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new."
 msgstr "Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new."
+
+msgid "Words that keep the same stem in every form add <0>-sid</0>: <1>auto, autosid</1>; <2>ema, emasid</2>."
+msgstr "Words that keep the same stem in every form add <0>-sid</0>: <1>auto, autosid</1>; <2>ema, emasid</2>."
 
 msgid "Words whose ending tells the third form"
 msgstr "Words whose ending tells the third form"

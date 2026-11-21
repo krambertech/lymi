@@ -5,6 +5,7 @@ import {
   compare,
   isDirective,
   measure,
+  nextBaseline,
   proseLines,
   serialize,
 } from "./check-comments.mjs";
@@ -73,4 +74,16 @@ test("a file that grows fails, a file that shrinks asks for a lower baseline", (
 
 test("the baseline is sorted, one file per line", () => {
   assert.equal(serialize({ "b.ts": 1, "a.ts": 2 }), '{\n  "a.ts": 2,\n  "b.ts": 1\n}\n');
+});
+
+test("an update lowers the baseline but never raises it", () => {
+  assert.deepEqual(nextBaseline({ "a.ts": 3 }, { "a.ts": 2 }), { grown: [], next: { "a.ts": 2 } });
+  assert.deepEqual(nextBaseline({ "a.ts": 1 }, { "a.ts": 2, "b.ts": 1 }), {
+    grown: [
+      { file: "a.ts", allowed: 1, actual: 2 },
+      { file: "b.ts", allowed: 0, actual: 1 },
+    ],
+    next: { "a.ts": 1 },
+  });
+  assert.deepEqual(nextBaseline(undefined, { "a.ts": 2 }), { grown: [], next: { "a.ts": 2 } });
 });

@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
 import { execFileSync } from "node:child_process";
-import { readFileSync, writeFileSync } from "node:fs";
+import { existsSync, readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import ts from "typescript";
@@ -92,16 +92,40 @@ export function compare(baseline, counts) {
 
 const byFile = (a, b) => a.file.localeCompare(b.file);
 
+export function nextBaseline(baseline, counts) {
+  if (baseline === undefined) return { grown: [], next: counts };
+  const { grown } = compare(baseline, counts);
+  return { grown, next: grown.length > 0 ? baseline : counts };
+}
+
 export function serialize(counts) {
   const sorted = Object.fromEntries(Object.entries(counts).sort(([a], [b]) => a.localeCompare(b)));
   return `${JSON.stringify(sorted, null, 2)}\n`;
 }
 
+function reportGrown(grown) {
+  for (const { file, allowed, actual } of grown) {
+    console.error(
+      `${file}: ${actual} comment lines, ${allowed} allowed. Put the reason in a name, a type, a test or an ADR instead (CODING_STANDARDS.md#write-no-comments).`,
+    );
+  }
+}
+
 function main(args) {
   const files = trackedSources();
   const counts = measure(files, (file) => readFileSync(resolve(root, file), "utf8"));
+  const baselinePath = resolve(root, BASELINE);
   if (args.includes("--update")) {
-    writeFileSync(resolve(root, BASELINE), serialize(counts));
+    const current = existsSync(baselinePath)
+      ? JSON.parse(readFileSync(baselinePath, "utf8"))
+      : undefined;
+    const { grown, next } = nextBaseline(current, counts);
+    if (grown.length > 0) {
+      reportGrown(grown);
+      console.error("The baseline only falls; delete these comments before updating it.");
+      return 1;
+    }
+    writeFileSync(baselinePath, serialize(next));
     const total = Object.values(counts).reduce((sum, n) => sum + n, 0);
     console.log(`${BASELINE}: ${total} comment lines in ${Object.keys(counts).length} files.`);
     return 0;
@@ -115,13 +139,9 @@ function main(args) {
     }
     return 0;
   }
-  const baseline = JSON.parse(readFileSync(resolve(root, BASELINE), "utf8"));
+  const baseline = JSON.parse(readFileSync(baselinePath, "utf8"));
   const { grown, shrunk } = compare(baseline, counts);
-  for (const { file, allowed, actual } of grown) {
-    console.error(
-      `${file}: ${actual} comment lines, ${allowed} allowed. Put the reason in a name, a type, a test or an ADR instead (CODING_STANDARDS.md#write-no-comments).`,
-    );
-  }
+  reportGrown(grown);
   for (const { file, allowed, actual } of shrunk) {
     console.error(`${file}: ${actual} comment lines, baseline still allows ${allowed}.`);
   }

@@ -4429,16 +4429,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "modaalverbid/ma-oskan-eesti-keelt-ra2a2kida": {
-    "text": "Ma oskan eesti keelt rääkida.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "modaalverbid/ma-saan-eesti-keelt-ra2a2kida": {
-    "text": "Ma saan eesti keelt rääkida.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "modaalverbid/ma-pean-minema": {
     "text": "Ma pean minema.",
     "model": "eleven_v4",

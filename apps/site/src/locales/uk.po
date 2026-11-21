@@ -420,8 +420,8 @@ msgstr "<0/> на початку робить із речення питання
 msgid "<0/> becomes <1/>, and the verb takes its <2>-ge</2> or <3>-ke</3> form: <4/> <5/> Said politely to one person, the sentence to keep is <6/>"
 msgstr "<0/> стає <1/>, а дієслово теж стоїть у формі на <2>-ge</2> або <3>-ke</3>: <4/> <5/> А для однієї людини на «ви» варто запам’ятати таке речення: <6/>"
 
-msgid "<0/> can also say that something might happen. <1/> can mean he or she is allowed to come tomorrow, or might."
-msgstr "<0/> каже ще й про те, що щось може статися. <1/> означає або що йому чи їй можна прийти завтра, або що він чи вона, можливо, прийде."
+msgid "<0/> can also say that something might happen. This sentence can mean he or she is allowed to come tomorrow, or might: <1/>"
+msgstr "<0/> каже ще й про те, що щось може статися. Це речення означає або що йому чи їй можна прийти завтра, або що він чи вона, можливо, прийде: <1/>"
 
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> не має закінчення і підходить і для «він чи вона», і для «вони». Тому <1/> — неправильне дієслово: інші дієслова й тут мають закінчення, про це розповідає урок {regularVerbs}."
@@ -432,20 +432,20 @@ msgstr "<0/> — це сто, а <1/> — тисяча, і «один» пере
 msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
 msgstr "<0/> — це сто, а <1/> — «надішли». Подвоєна літера — це довший звук, і з ним виходить інше слово. З приголосними так само: <2/> — курка, а <3/> — «неси» (до однієї людини)."
 
-msgid "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> can: <4/> Tap a form to hear its sentence."
-msgstr "<0/> — про дозвіл. З <1>ei</1> це «не можна»: <2/> У питанні так просять дозволу, як і з <3/>: <4/> Торкнися форми, щоб почути речення."
+msgid "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> can: <4/> Tap a verb to hear its sentence."
+msgstr "<0/> — про дозвіл. З <1>ei</1> це «не можна»: <2/> У питанні так просять дозволу, як і з <3/>: <4/> Торкнися дієслова, щоб почути речення."
 
 msgid "<0/> is at home. Now answer <1/> six ways: tap a place."
 msgstr "<0/> — це вдома. А тепер дай шість відповідей на <1/>: торкнись місця."
 
-msgid "<0/> is for what you learned: <1/> says you know how to swim. <2/> says nothing stops you: <3/>"
-msgstr "<0/> — про вміння: <1/> означає, що ти вмієш плавати. <2/> каже, що тобі ніщо не заважає: <3/>"
+msgid "<0/> is for what you learned. To say you know how to swim: <1/> <2/> says nothing stops you: <3/>"
+msgstr "<0/> — про вміння. Сказати, що ти вмієш плавати: <1/> <2/> каже, що тобі ніщо не заважає: <3/>"
 
 msgid "<0/> is he and she alike; Estonian pronouns have no gender. <1/> is also the polite you to one person, like French vous."
 msgstr "<0/> означає і «він», і «вона»: в естонських займенниках немає роду. <1/> — це ще й ввічливе «Ви» до однієї людини, як в українській."
 
-msgid "<0/> is I have to, and it takes the <1>-ma</1> form: <2/>"
-msgstr "<0/> — це «я мушу», і після нього йде форма на <1>-ma</1>: <2/>"
+msgid "<0/> is I have to, and it takes the <1>-ma</1> form from lesson {infinitives}: <2/>"
+msgstr "<0/> — це «я мушу», і після нього йде форма на <1>-ma</1> з уроку {infinitives}: <2/>"
 
 msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
 msgstr "<0/> — це місто, а <1/> — у Таллінні. В естонській «в» — не окреме слово, а закінчення: до кінця назви додають <2>-s</2>. «Я живу в Таллінні» — це <3/>"
@@ -477,8 +477,8 @@ msgstr "<0/> саме по собі означає «ні», а <1/> — «та�
 msgid "<0/> repeats the verb from the question, and any verb can answer this way: <1>Kas sa loed? Ei loe.</1> Lesson {negation} covers saying no."
 msgstr "<0/> повторює дієслово з питання, і так можна відповісти з будь-яким дієсловом: <1>Kas sa loed? Ei loe.</1> Про заперечення розповідає урок {negation}."
 
-msgid "<0/> says it’s fine. You can offer with it: <1/> You can also let someone do something: <2/>"
-msgstr "<0/> каже, що все гаразд. Так можна щось запропонувати: <1/> А можна комусь щось дозволити: <2/>"
+msgid "<0/> says you don’t mind, or you allow it. You can offer with it: <1/> You can also let someone do something: <2/>"
+msgstr "<0/> означає «я не проти» або «можна». Так можна щось запропонувати: <1/> А можна комусь щось дозволити: <2/>"
 
 msgid "<0/> with the <1>-da</1> form says something has to be done, without naming who: <2/> Put a person in the <3>-l</3> form from lesson {having} to make it theirs: <4/>"
 msgstr "<0/> з формою на <1>-da</1> каже, що щось треба зробити, не називаючи кому: <2/> Щоб сказати кому, додай людину у формі на <3>-l</3> з уроку {having}: <4/>"
@@ -623,7 +623,7 @@ msgstr "Після <0>sa</0> дієслово закінчується на <1>-
 msgid "<0>Sa</0> takes <1>oled</1>, not <2>on</2>."
 msgstr "Після <0>sa</0> йде <1>oled</1>, а не <2>on</2>."
 
-msgid "<0>Saan</0>: nothing stops you, such as time, a place or your health."
+msgid "<0>Saan</0>: nothing stops you, not time, place or health."
 msgstr "<0>Saan</0>: тобі ніщо не заважає — ні час, ні місце, ні здоров’я."
 
 msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
@@ -650,8 +650,8 @@ msgstr "<0>Tere</0> — це «привіт», а Марі вже йде."
 msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>Veerand neli</0> — чверть шляху до четвертої, 3:15. <1>Kolmveerand neli</1> — три чверті, 3:45."
 
-msgid "<0>Võin</0> says it’s fine: <1>Sa võid siin istuda.</1> <2>Tohin</2> is about being allowed, and with <3>ei</3> it says mustn’t: <4>Siin ei tohi süüa.</4>"
-msgstr "<0>Võin</0> каже, що все гаразд: <1>Sa võid siin istuda.</1> <2>Tohin</2> — про дозвіл, а з <3>ei</3> означає «не можна»: <4>Siin ei tohi süüa.</4>"
+msgid "<0>Võin</0> says you don’t mind, or you allow it: <1>Sa võid siin istuda.</1> <2>Tohin</2> is about being allowed, and with <3>ei</3> it says mustn’t: <4>Siin ei tohi süüa.</4>"
+msgstr "<0>Võin</0> означає «я не проти» або «можна»: <1>Sa võid siin istuda.</1> <2>Tohin</2> — про дозвіл, а з <3>ei</3> означає «не можна»: <4>Siin ei tohi süüa.</4>"
 
 msgid "<0>Võin</0> with the <1>sa</1> ending: you let someone."
 msgstr "<0>Võin</0> із закінченням для <1>sa</1>: ти комусь дозволяєш."
@@ -1005,8 +1005,8 @@ msgstr "Безкоштовні флешкартки для іспанської.
 msgid "A free flashcard app for Ukrainian. Each card marks its stress until you know the word, words told apart only by stress get a card each, and a native voice reads them. Start with the alphabet, then A1 and A2."
 msgstr "Безкоштовний застосунок для вивчення української на картках. Наголос позначено, доки ти не знаєш слово, слова, що різняться лише наголосом, мають окремі картки, а озвучує їх носій мови. Почни з абетки, далі A1 і A2."
 
-msgid "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
-msgstr "Безкоштовний урок про модальні дієслова в естонській мові: oskan — коли вмієш, saan — коли ніщо не заважає, võin і tohin — коли можна, pean, tuleb і on vaja — коли треба, а ще як сказати «не можу», «не можна» й «не обов’язково». Кожне речення можна послухати."
+msgid "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and mul on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
+msgstr "Безкоштовний урок про модальні дієслова в естонській мові: oskan — коли вмієш, saan — коли ніщо не заважає, võin і tohin — коли можна, pean, tuleb і mul on vaja — коли треба, а ще як сказати «не можу», «не можна» й «не обов’язково». Кожне речення можна послухати."
 
 msgid "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
 msgstr "Безкоштовний урок про заперечення в естонській мові в теперішньому часі: ei перед дієсловом, однакове для всіх осіб, ei ole і pole, і як відповісти «ні» на питання. Кожне речення озвучене."
@@ -1198,8 +1198,8 @@ msgstr "Питальне слово стоїть першим, а те, про �
 msgid "A question you got wrong"
 msgstr "Питання з помилкою"
 
-msgid "A question: are you allowed?"
-msgstr "Питання: чи тобі можна?"
+msgid "A question: you ask whether you’re allowed."
+msgstr "Питання: ти просиш дозволу."
 
 msgid "A quiz round on a scene: hear a sentence, then tap the place on the drawing."
 msgstr "Раунд вікторини на сцені: послухай речення, а потім торкнися місця на малюнку."
@@ -1853,7 +1853,7 @@ msgstr "Ідея, що здається геніальною лише після
 msgid "An idea that only sounds good after a few drinks"
 msgstr "Ідея, яка здається геніальною лише після кількох чарок"
 
-msgid "An offer: it’s fine by you."
+msgid "An offer: you’re happy to."
 msgstr "Пропозиція: ти не проти."
 
 msgid "An old *castle* stands on the hill."
@@ -3770,6 +3770,9 @@ msgstr "Уроки естонської граматики"
 msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
 msgstr "В естонській один теперішній час. <0/> означає і «я читаю» взагалі, і «я читаю зараз», а що саме, видно з решти речення. Натисни речення, щоб почути його."
 
+msgid "Estonian has one verb for mustn’t and another for don’t have to. This forbids it: <0/> This leaves it to you: <1/> So does <2/>, no need. Tap a verb to hear it said about swimming."
+msgstr "Для «не можна» й «не обов’язково» в естонській різні дієслова. Це забороняє: <0/> А це залишає вибір тобі: <1/> Так само й <2/>, «не треба». Торкнися дієслова, щоб почути, як це кажуть про плавання."
+
 msgid "Estonian has six words for people, and each comes in a long and a short form that mean the same. <0/> and <1/> are both I. The short one, in colour below, is the one you’ll hear most. Tap any word."
 msgstr "В естонській шість особових займенників, і кожен має повну й коротку форму з однаковим значенням. <0/> і <1/> — це «я». Коротку, виділену кольором, ти чутимеш найчастіше. Натисни будь-яке слово."
 
@@ -3783,16 +3786,13 @@ msgid "Estonian letters"
 msgstr "Естонські літери"
 
 msgid "Estonian modal verbs: can, may, must"
-msgstr "Модальні дієслова в естонській мові: вмію, можу, мушу"
+msgstr "Модальні дієслова в естонській мові: вмію, можу, можна, мушу"
 
 msgid "Estonian numbers"
 msgstr "Числа естонською"
 
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Естонські особові займенники і «бути»"
-
-msgid "Estonian picks the verb by the reason behind it. Match each sentence with its reason. A right pair plays the sentence."
-msgstr "Естонська обирає дієслово за причиною. З’єднай кожне речення з його причиною. Коли пара правильна, речення прозвучить."
 
 msgid "Estonian present tense"
 msgstr "Теперішній час в естонській мові"
@@ -5322,12 +5322,6 @@ msgstr "Я вмію читати."
 msgid "I can read: nothing stops me."
 msgstr "Я можу читати: мені ніщо не заважає."
 
-msgid "I can speak Estonian: I know how."
-msgstr "Я вмію говорити естонською."
-
-msgid "I can speak Estonian: nothing stops me."
-msgstr "Я можу говорити естонською: мені ніщо не заважає."
-
 msgid "I can swim: I know how."
 msgstr "Я вмію плавати."
 
@@ -5636,6 +5630,9 @@ msgstr "Я тобі *подзвоню* пізніше."
 
 msgid "I’ll be waiting in the *park*."
 msgstr "Я чекатиму в *парку*."
+
+msgid "I’ll have to wait."
+msgstr "Мені доведеться почекати."
 
 msgid "I’m *reading* the newspaper."
 msgstr "Я *читаю* газету."
@@ -6146,7 +6143,7 @@ msgid "It’s *cosy* in the sauna."
 msgstr "У сауні *затишно*."
 
 msgid "It’s against the rules."
-msgstr "Так заборонено правилами."
+msgstr "Правила це забороняють."
 
 msgid "It’s fine by me."
 msgstr "Я не проти."
@@ -6389,6 +6386,9 @@ msgstr "Ключ"
 
 msgid "Keyboard first"
 msgstr "Усе з клавіатури"
+
+msgid "Know how to, or nothing stops you"
+msgstr "Вмію чи можу"
 
 msgid "Know how, or nothing stops you"
 msgstr "Вмію чи можу"
@@ -7058,7 +7058,7 @@ msgid "Mari"
 msgstr "Марі"
 
 msgid "Mari asks about swimming. Pick each reply by what it says about you."
-msgstr "Марі питає про плавання. Вибирай відповідь за тим, що вона каже про тебе."
+msgstr "Марі питає про плавання. Вибирай кожну відповідь за тим, що в ній сказано про тебе."
 
 msgid "Mari just said she works a lot. Ask where with <0>kus</0>."
 msgstr "Марі щойно сказала, що багато працює. Щоб спитати де, скажи <0>kus</0>."
@@ -7140,9 +7140,6 @@ msgstr "можна…?"
 
 msgid "May it come easy"
 msgstr "Хай буде легко"
-
-msgid "May, and allowed to"
-msgstr "Можна й дозволено"
 
 msgid "may, might"
 msgstr "може, можна"
@@ -7359,9 +7356,6 @@ msgstr "Уроки музики"
 
 msgid "Music theory"
 msgstr "Теорія музики"
-
-msgid "Mustn’t and don’t have to take different verbs. <0/> forbids it. <1/> leaves it to you, and so does <2/>, no need. Tap a form to hear it said about swimming."
-msgstr "«Не можна» й «не обов’язково» — це різні дієслова. <0/> забороняє. <1/> залишає вибір тобі, як і <2/>, «не треба». Торкнися форми, щоб почути, як це кажуть про плавання."
 
 msgid "mustn’t, not allowed to"
 msgstr "не можна"
@@ -7958,6 +7952,15 @@ msgstr "Одна форма на всі шість"
 
 msgid "One form for everyone"
 msgstr "Одна форма для всіх"
+
+msgid "One has to go."
+msgstr "Треба йти."
+
+msgid "One has to wait."
+msgstr "Треба почекати."
+
+msgid "One has to work."
+msgstr "Треба працювати."
 
 msgid "One kanji, seven sounds."
 msgstr "Один кандзі, сім звучань."
@@ -8702,8 +8705,8 @@ msgstr "Гарбуз"
 msgid "Put {picked} here"
 msgstr "Покласти {picked} сюди"
 
-msgid "Put <0>ei</0> before the verb, as in lesson {negation}, and the two kinds of can’t stay apart. <1/> means you never learned. <2/> means something is in the way."
-msgstr "Постав <0>ei</0> перед дієсловом, як в уроці {negation}, і «не вмію» та «не можу» так і лишаться різними. <1/> означає, що ти не вмієш. <2/> — що щось заважає."
+msgid "Put <0>ei</0> before the verb and drop its ending, as in lesson {negation}: <1>oskan</1> becomes <2>ei oska</2>. The two kinds of can’t stay apart. You never learned: <3/> Something is in the way: <4/>"
+msgstr "Постав <0>ei</0> перед дієсловом і відкинь закінчення, як в уроці {negation}: <1>oskan</1> стає <2>ei oska</2>. «Не вмію» та «не можу» так і лишаються різними. Ти не вмієш: <3/> Тобі щось заважає: <4/>"
 
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 msgstr "Став <0>ei</0> перед дієсловом: <1>ma ei loe</1>, я не читаю."
@@ -10059,8 +10062,8 @@ msgstr "Підтримка й пошта: ми зберігаємо надісл
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведи кажуть так і про каву, і про робочий час."
 
-msgid "Swimming with Mari"
-msgstr "Поплавати з Марі"
+msgid "Swimming plans"
+msgstr "Домовляємося поплавати"
 
 msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
 msgstr "Перемкни <0/> на <1/>, і всі шість речень стануть заперечними. Натисни рядок, щоб послухати."
@@ -10205,6 +10208,9 @@ msgstr "Натисни питальне слово"
 
 msgid "Tap a tense"
 msgstr "Торкнися часу"
+
+msgid "Tap a verb"
+msgstr "Торкнися дієслова"
 
 msgid "Tap a vowel"
 msgstr "Натисни на голосну"
@@ -10914,6 +10920,9 @@ msgstr "Готові німецькі колоди мають значення �
 msgid "The ready-made Spanish decks come with meanings in English, Ukrainian or Russian, and Lymi itself is in all three."
 msgstr "Готові іспанські колоди мають значення українською, російською чи англійською, і сам Lymi теж є всіма трьома мовами."
 
+msgid "The reason behind a sentence picks its verb. Match each sentence with its reason. A right pair plays the sentence."
+msgstr "В естонській дієслово залежить від причини. З’єднай кожне речення з його причиною. Коли пара правильна, речення прозвучить."
+
 msgid "The reference ranges you need to know."
 msgstr "Референтні значення, які треба знати."
 
@@ -11313,11 +11322,8 @@ msgstr "Три чверті шляху до {next}."
 msgid "Three questions to know by heart"
 msgstr "Три питання напам’ять"
 
-msgid "Three skills: know how to, or nothing stops you"
-msgstr "Три дії: вмію чи можу"
-
-msgid "Three verbs: have to, has to be done, need to"
-msgstr "Три дієслова: мушу, треба, потрібно"
+msgid "Three ways to say have to"
+msgstr "Три способи сказати «треба»"
 
 msgid "Three you’ve missed twice: diffusion, mitochondrion and ribosome."
 msgstr "Ось три, що двічі не згадалися: дифузія, мітохондрія і рибосома."
@@ -11594,9 +11600,6 @@ msgstr "Спати; лягати спати"
 
 msgid "to speak"
 msgstr "говорити"
-
-msgid "to speak Estonian"
-msgstr "говорити естонською"
 
 msgid "to speak, to talk"
 msgstr "говорити, розмовляти"
@@ -12091,15 +12094,6 @@ msgstr "У Кельні ми пересідаємо."
 msgid "We don’t sell your personal data, show ads or track you across other companies’ apps and websites. We use the data below to provide, protect and improve Lymi."
 msgstr "Ми не продаємо твої персональні дані, не показуємо рекламу й не відстежуємо тебе в застосунках і на сайтах інших компаній. Описані нижче дані потрібні, щоб надавати, захищати й удосконалювати Lymi."
 
-msgid "We have to go."
-msgstr "Треба йти."
-
-msgid "We have to wait."
-msgstr "Треба почекати."
-
-msgid "We have to work."
-msgstr "Треба працювати."
-
 msgid "we live"
 msgstr "ми живемо"
 
@@ -12488,8 +12482,8 @@ msgstr "Де Lymi працює з Gemini?"
 msgid "Where each app does more, including the rows where it’s {name}. We check these against {name}’s own pages and update them when either app changes."
 msgstr "У чому сильніший кожен застосунок, зокрема там, де виграє {name}. Ми звіряємо все з офіційними сторінками {name} і оновлюємо, коли змінюється будь-який із двох застосунків."
 
-msgid "Where English says can, Estonian picks the verb by the reason: <0>oskan</0> when you know how, <1>saan</1> when nothing stops you, <2>võin</2> when it’s fine. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
-msgstr "Як і українська з її «вмію», «можу» й «можна», естонська обирає дієслово за змістом: <0>oskan</0> — коли вмієш, <1>saan</1> — коли ніщо не заважає, <2>võin</2> — коли можна. «Мушу» — це <3>pean</3>, а «не можна» — <4>ei tohi</4>."
+msgid "Where English says can, Estonian picks the verb by the reason: <0>oskan</0> when you know how, <1>saan</1> when nothing stops you, <2>võin</2> when you don’t mind or you allow it. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
+msgstr "Як українська розрізняє «вмію» і «можу», так і естонська обирає дієслово за причиною: <0>oskan</0> — коли вмієш, <1>saan</1> — коли ніщо не заважає, <2>võin</2> — коли ти не проти або дозволяєш. «Мушу» — це <3>pean</3>, а «не можна» — <4>ei tohi</4>."
 
 msgid "where from"
 msgstr "звідки"
@@ -12525,7 +12519,7 @@ msgid "Where someone goes: tule siia, come here."
 msgstr "Куди: tule siia, «іди сюди»."
 
 msgid "Where something is. Siia is where it goes."
-msgstr "Де щось є. Siia — куди щось іде."
+msgstr "Де щось є. Siia — «сюди», куди рухаються."
 
 msgid "Where the cat goes"
 msgstr "Куди йде кіт"

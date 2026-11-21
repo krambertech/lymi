@@ -819,7 +819,6 @@ const TALLINN_CLIPS: Record<string, Clip> = {
 export const MODAL_SKILLS = [
   { ma: "ujuma", da: "ujuda" },
   { ma: "lugema", da: "lugeda" },
-  { ma: "eesti keelt rääkima", da: "eesti keelt rääkida" },
 ] as const;
 export type ModalSkill = (typeof MODAL_SKILLS)[number];
 export type SkillLead = "oskan" | "saan";

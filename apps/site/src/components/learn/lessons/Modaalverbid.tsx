@@ -43,8 +43,6 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Ma saan ujuda.": msg`I can swim: nothing stops me.`,
   "Ma oskan lugeda.": msg`I can read: I know how.`,
   "Ma saan lugeda.": msg`I can read: nothing stops me.`,
-  "Ma oskan eesti keelt rääkida.": msg`I can speak Estonian: I know how.`,
-  "Ma saan eesti keelt rääkida.": msg`I can speak Estonian: nothing stops me.`,
   "Ma oskan eesti keelt.": msg`I know Estonian.`,
   "Ma saan homme tulla.": msg`I can come tomorrow.`,
   "Ma võin sind oodata.": msg`I can wait for you.`,
@@ -55,10 +53,10 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Ma pean minema.": msg`I have to go.`,
   "Ma pean ootama.": msg`I have to wait.`,
   "Ma pean töötama.": msg`I have to work.`,
-  "Tuleb minna.": msg`We have to go.`,
-  "Tuleb oodata.": msg`We have to wait.`,
-  "Tuleb töötada.": msg`We have to work.`,
-  "Mul tuleb oodata.": msg`I have to wait.`,
+  "Tuleb minna.": msg`One has to go.`,
+  "Tuleb oodata.": msg`One has to wait.`,
+  "Tuleb töötada.": msg`One has to work.`,
+  "Mul tuleb oodata.": msg`I’ll have to wait.`,
   "Mul on vaja minna.": msg`I need to go.`,
   "Mul on vaja oodata.": msg`I need to wait.`,
   "Mul on vaja töötada.": msg`I need to work.`,
@@ -75,7 +73,6 @@ const MEANS: Record<string, MessageDescriptor> = {
 const SKILL_MEANS: Record<(typeof MODAL_SKILLS)[number]["ma"], MessageDescriptor> = {
   ujuma: msg`to swim`,
   lugema: msg`to read`,
-  "eesti keelt rääkima": msg`to speak Estonian`,
 };
 
 /** What each verb of the have-to table means. */
@@ -138,7 +135,7 @@ function SkillNote({ lead }: { lead: SkillLead }) {
     </Trans>
   ) : (
     <Trans>
-      <span lang="et">Saan</span>: nothing stops you, such as time, a place or your health.
+      <span lang="et">Saan</span>: nothing stops you, not time, place or health.
     </Trans>
   );
 }
@@ -160,7 +157,7 @@ function KnowOrAble() {
   return (
     <Panel>
       <Paradigm
-        label={t`Three skills: know how to, or nothing stops you`}
+        label={t`Know how to, or nothing stops you`}
         columns={[t`I know how to …`, t`Nothing stops me …`]}
         rows={rows}
         empty={{ title: t`Tap a form`, tip: t`You’ll hear the whole sentence.` }}
@@ -173,7 +170,7 @@ function KnowOrAble() {
 function PermissionTip({ lead }: { lead: (typeof MODAL_PERMISSION)[number]["lead"] }) {
   switch (lead) {
     case "võin":
-      return <Trans>An offer: it’s fine by you.</Trans>;
+      return <Trans>An offer: you’re happy to.</Trans>;
     case "võid":
       return (
         <Trans>
@@ -181,7 +178,7 @@ function PermissionTip({ lead }: { lead: (typeof MODAL_PERMISSION)[number]["lead
         </Trans>
       );
     case "tohin":
-      return <Trans>A question: are you allowed?</Trans>;
+      return <Trans>A question: you ask whether you’re allowed.</Trans>;
     case "ei tohi":
       return <Trans>A rule. With no person, it holds for everyone.</Trans>;
   }
@@ -197,7 +194,7 @@ function MayOrAllowed() {
         columns={4}
         phoneColumns={2}
         empty={{
-          title: <Trans>Tap a form</Trans>,
+          title: <Trans>Tap a verb</Trans>,
           tip: <Trans>You’ll hear it in a sentence.</Trans>,
         }}
         items={MODAL_PERMISSION.map(({ lead, said }) => ({
@@ -256,7 +253,7 @@ function HaveTo() {
   return (
     <Panel>
       <Paradigm
-        label={t`Three verbs: have to, has to be done, need to`}
+        label={t`Three ways to say have to`}
         columns={[t`I have to …`, t`Has to be done …`, t`I need to …`]}
         rows={rows}
         empty={{ title: t`Tap a form`, tip: t`You’ll hear the whole sentence.` }}
@@ -299,7 +296,7 @@ function CantOrMustnt() {
         columns={3}
         phoneColumns={2}
         empty={{
-          title: <Trans>Tap a form</Trans>,
+          title: <Trans>Tap a verb</Trans>,
           tip: <Trans>You’ll hear it said about swimming.</Trans>,
         }}
         items={MODAL_NOT.map(({ lead, said }) => ({
@@ -494,8 +491,8 @@ export function ModaalverbidLesson() {
         <Trans>
           Where English says can, Estonian picks the verb by the reason:{" "}
           <span lang="et">oskan</span> when you know how, <span lang="et">saan</span> when nothing
-          stops you, <span lang="et">võin</span> when it’s fine. Must is <span lang="et">pean</span>
-          , and mustn’t is <span lang="et">ei tohi</span>.
+          stops you, <span lang="et">võin</span> when you don’t mind or you allow it. Must is{" "}
+          <span lang="et">pean</span>, and mustn’t is <span lang="et">ei tohi</span>.
         </Trans>
       }
       facts={[
@@ -523,9 +520,9 @@ export function ModaalverbidLesson() {
           <b lang="et">Saan</b> says nothing stops you: <b lang="et">Ma saan homme tulla.</b>
         </Trans>,
         <Trans key="2">
-          <b lang="et">Võin</b> says it’s fine: <b lang="et">Sa võid siin istuda.</b>{" "}
-          <b lang="et">Tohin</b> is about being allowed, and with <b lang="et">ei</b> it says
-          mustn’t: <b lang="et">Siin ei tohi süüa.</b>
+          <b lang="et">Võin</b> says you don’t mind, or you allow it:{" "}
+          <b lang="et">Sa võid siin istuda.</b> <b lang="et">Tohin</b> is about being allowed, and
+          with <b lang="et">ei</b> it says mustn’t: <b lang="et">Siin ei tohi süüa.</b>
         </Trans>,
         <Trans key="3">
           <b lang="et">Pean</b>, <b lang="et">tuleb</b> and <b lang="et">mul on vaja</b> say what
@@ -546,8 +543,8 @@ export function ModaalverbidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Oskan" /> is for what you learned: <Word w="Ma oskan ujuda." /> says
-                    you know how to swim. <Word w="Saan" /> says nothing stops you:{" "}
+                    <Word w="Oskan" /> is for what you learned. To say you know how to swim:{" "}
+                    <Word w="Ma oskan ujuda." /> <Word w="Saan" /> says nothing stops you:{" "}
                     <Word w="Ma saan homme tulla." />
                   </Trans>
                 </p>
@@ -570,13 +567,13 @@ export function ModaalverbidLesson() {
         },
         {
           id: "voin-tohin",
-          title: t`May, and allowed to`,
+          title: t`May and allowed to`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Võin" /> says it’s fine. You can offer with it:{" "}
+                    <Word w="Võin" /> says you don’t mind, or you allow it. You can offer with it:{" "}
                     <Word w="Ma võin sind oodata." /> You can also let someone do something:{" "}
                     <Word w="Sa võid siin istuda." />
                   </Trans>
@@ -585,7 +582,7 @@ export function ModaalverbidLesson() {
                   <Trans>
                     <Word w="Tohin" /> is about being allowed. With <b lang="et">ei</b> it says
                     mustn’t: <Word w="Siin ei tohi süüa." /> In a question it asks whether you may,
-                    as <Word w="võin" /> can: <Word w="Kas ma tohin siin istuda?" /> Tap a form to
+                    as <Word w="võin" /> can: <Word w="Kas ma tohin siin istuda?" /> Tap a verb to
                     hear its sentence.
                   </Trans>
                 </p>
@@ -593,9 +590,8 @@ export function ModaalverbidLesson() {
               <MayOrAllowed />
               <Aside>
                 <Trans>
-                  <Word w="Võib" /> can also say that something might happen.{" "}
-                  <Word w="Ta võib homme tulla." /> can mean he or she is allowed to come tomorrow,
-                  or might.
+                  <Word w="Võib" /> can also say that something might happen. This sentence can mean
+                  he or she is allowed to come tomorrow, or might: <Word w="Ta võib homme tulla." />
                 </Trans>
               </Aside>
             </>
@@ -609,8 +605,8 @@ export function ModaalverbidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Pean" /> is I have to, and it takes the <End>-ma</End> form:{" "}
-                    <Word w="Ma pean minema." />
+                    <Word w="Pean" /> is I have to, and it takes the <End>-ma</End> form from lesson{" "}
+                    {infinitives}: <Word w="Ma pean minema." />
                   </Trans>
                 </p>
                 <p>
@@ -640,16 +636,18 @@ export function ModaalverbidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Put <b lang="et">ei</b> before the verb, as in lesson {negation}, and the two
-                    kinds of can’t stay apart. <Word w="Ma ei oska ujuda." /> means you never
-                    learned. <Word w="Ma ei saa täna ujuda." /> means something is in the way.
+                    Put <b lang="et">ei</b> before the verb and drop its ending, as in lesson{" "}
+                    {negation}: <b lang="et">oskan</b> becomes <b lang="et">ei oska</b>. The two
+                    kinds of can’t stay apart. You never learned: <Word w="Ma ei oska ujuda." />{" "}
+                    Something is in the way: <Word w="Ma ei saa täna ujuda." />
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    Mustn’t and don’t have to take different verbs. <Word w="Sa ei tohi tulla." />{" "}
-                    forbids it. <Word w="Sa ei pea tulema." /> leaves it to you, and so does{" "}
-                    <Word w="pole vaja" />, no need. Tap a form to hear it said about swimming.
+                    Estonian has one verb for mustn’t and another for don’t have to. This forbids
+                    it: <Word w="Sa ei tohi tulla." /> This leaves it to you:{" "}
+                    <Word w="Sa ei pea tulema." /> So does <Word w="pole vaja" />, no need. Tap a
+                    verb to hear it said about swimming.
                   </Trans>
                 </p>
               </Prose>
@@ -687,7 +685,7 @@ export function ModaalverbidLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Estonian picks the verb by the reason behind it. Match each sentence with its
+                    The reason behind a sentence picks its verb. Match each sentence with its
                     reason. A right pair plays the sentence.
                   </Trans>
                 </p>
@@ -716,7 +714,7 @@ export function ModaalverbidLesson() {
               </Prose>
               <Dialogue
                 id="plans-with-mari"
-                title={<Trans>Swimming with Mari</Trans>}
+                title={<Trans>Swimming plans</Trans>}
                 part={
                   <Trans>
                     You learned to swim as a child. You’re free today and work tomorrow.

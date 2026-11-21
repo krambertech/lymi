@@ -16,6 +16,8 @@ export const ALLOWED_COPY: readonly { rule: "tell" | "uk" | "ru"; text: string; 
     },
     { rule: "tell", text: "Nice to meet you", reason: "The gloss of Väga meeldiv." },
     { rule: "tell", text: "Perfect tenses", reason: "The lesson's name (copy.md)." },
+    { rule: "tell", text: "Perfect and pluperfect", reason: "The lesson's name: the tenses." },
+    { rule: "tell", text: "Let’s and let them", reason: "The lesson's name: lähme and las." },
     { rule: "uk", text: "Ти молодець.", reason: "The gloss of Sa oled tubli." },
     { rule: "ru", text: "Ты молодец.", reason: "The gloss of Sa oled tubli." },
   ];

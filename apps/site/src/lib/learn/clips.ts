@@ -841,7 +841,7 @@ export const NOUN_FORMS = [
 
 /**
  * Lesson 14's “type the third form” quiz: words whose ending gives the third form away, by
- * pattern. Each plays its first two forms; the learner types the third.
+ * pattern. Each shows its first form; the learner types the third.
  */
 export const POHIVORMID_TYPED = [
   { forms: ["inimene", "inimese", "inimest"], pattern: "ne" },
@@ -852,9 +852,6 @@ export const POHIVORMID_TYPED = [
   { forms: ["tee", "tee", "teed"], pattern: "long" },
   { forms: ["puu", "puu", "puud"], pattern: "long" },
 ] as const satisfies readonly { forms: NounForms; pattern: "ne" | "us" | "long" }[];
-
-/** The first two forms, as the typed quiz plays them: “vastus, vastuse”. */
-export const firstTwo = (forms: NounForms) => forms.slice(0, 2).join(", ");
 
 /**
  * In class: Mari, the teacher, asks for a word's three forms in the second voice; the learner
@@ -878,7 +875,7 @@ const POHIVORMID_CLIPS: Record<string, Clip> = {
     ...new Set([...NOUN_FORMS, ...POHIVORMID_TYPED.map(({ forms }) => forms)].flat()),
   ]),
   ...words(NOUN_FORMS.map(nounEntry)),
-  ...words(POHIVORMID_TYPED.flatMap(({ forms }) => [firstTwo(forms), nounEntry(forms)])),
+  ...words(POHIVORMID_TYPED.map(({ forms }) => nounEntry(forms))),
   ...POHIVORMID_DIALOGUE,
 };
 

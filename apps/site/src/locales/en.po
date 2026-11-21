@@ -480,8 +480,14 @@ msgstr "<0>-ge</0> or <1>-ke</1> on the end"
 msgid "<0>-ne</0> becomes <1>-se</1>, then <2>-st</2>."
 msgstr "<0>-ne</0> becomes <1>-se</1>, then <2>-st</2>."
 
+msgid "<0>-ne</0> becomes <1>-st</1>."
+msgstr "<0>-ne</0> becomes <1>-st</1>."
+
 msgid "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
 msgstr "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
+
+msgid "<0>-us</0> takes <1>-t</1>."
+msgstr "<0>-us</0> takes <1>-t</1>."
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
@@ -3539,8 +3545,8 @@ msgstr "Each question as New, Learning or Known"
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 
-msgid "Each round plays the first two forms of a new word. Type the third."
-msgstr "Each round plays the first two forms of a new word. Type the third."
+msgid "Each round shows a new word. Type its third form."
+msgstr "Each round shows a new word. Type its third form."
 
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
@@ -7247,8 +7253,8 @@ msgstr "Nature"
 msgid "NCLEX pharmacology"
 msgstr "NCLEX pharmacology"
 
-msgid "Nearly. Hear the ones you missed with their third form."
-msgstr "Nearly. Hear the ones you missed with their third form."
+msgid "Nearly. Hear the ones you missed with all three forms."
+msgstr "Nearly. Hear the ones you missed with all three forms."
 
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Nearly. Listen for the verb in the question."
@@ -7833,6 +7839,9 @@ msgstr "One shared deck, everyone on their own schedule"
 
 msgid "One spelling, two words."
 msgstr "One spelling, two words."
+
+msgid "One syllable ending in a long vowel takes <0>-d</0>."
+msgstr "One syllable ending in a long vowel takes <0>-d</0>."
 
 msgid "One syllable ending in a long vowel: the second is the same, the third adds <0>-d</0>."
 msgstr "One syllable ending in a long vowel: the second is the same, the third adds <0>-d</0>."
@@ -11121,9 +11130,8 @@ msgstr "Things to ask Grok Bot."
 msgid "Third"
 msgstr "Third"
 
-#. placeholder {0}: firstTwo(forms)
-msgid "Third form after {0}"
-msgstr "Third form after {0}"
+msgid "Third form"
+msgstr "Third form"
 
 msgid "thirteen"
 msgstr "thirteen"

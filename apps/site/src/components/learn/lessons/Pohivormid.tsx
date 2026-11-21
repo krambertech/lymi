@@ -7,7 +7,6 @@ import { LESSONS } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
-  firstTwo,
   NOUN_FORMS,
   type NounForms,
   nounEntry,
@@ -18,10 +17,11 @@ import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { Chips, type KeyItem, Keys, Panel } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
 import { Paradigm } from "../Paradigm";
-import { type ChoiceItem, ChoiceRound, Quiz, type TypedItem, TypedRound } from "../Quiz";
+import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
 import { Word } from "../Word";
 
 const SLUG = "pohivormid";
@@ -261,7 +261,7 @@ const offersOf = (forms: NounForms, kinds: readonly Offer[]) =>
   kinds.map((kind) => ({ id: kind, label: <span lang="et">{offer(forms, kind)}</span> }));
 
 type NextItem = ChoiceItem & { first: First };
-type ThirdItem = TypedItem & { forms: NounForms; pair: readonly [string, string] };
+type ThirdItem = FormItem & { pair: readonly [string, string] };
 
 export function PohivormidLesson() {
   const { t, i18n } = useLingui();
@@ -383,26 +383,42 @@ export function PohivormidLesson() {
     );
   };
 
-  const thirdItems = useMemo<ThirdItem[]>(
-    () =>
-      POHIVORMID_TYPED.map(({ forms, pattern }) => ({
-        forms,
-        src: clipUrl(SLUG, clipId(firstTwo(forms))),
-        answers: [forms[2]],
-        said: (
-          <>
-            {nounEntry(forms)}{" "}
-            <span lang={i18n.locale} className="text-md text-ink-muted">
-              {i18n._(MEANS[forms[0]])}
-            </span>
-          </>
-        ),
-        prompt: t`Third form after ${firstTwo(forms)}`,
-        keyboard: "text",
-        pair: [pattern, forms[0]] as const,
-      })),
-    [i18n, t],
-  );
+  const thirdItems = useMemo<ThirdItem[]>(() => {
+    const RULES: Record<"ne" | "us" | "long", ReactNode> = {
+      ne: (
+        <Trans>
+          <b lang="et">-ne</b> becomes <b lang="et">-st</b>.
+        </Trans>
+      ),
+      us: (
+        <Trans>
+          <b lang="et">-us</b> takes <b lang="et">-t</b>.
+        </Trans>
+      ),
+      long: (
+        <Trans>
+          One syllable ending in a long vowel takes <b lang="et">-d</b>.
+        </Trans>
+      ),
+    };
+    return POHIVORMID_TYPED.map(({ forms, pattern }) => ({
+      base: forms[0],
+      gloss: i18n._(MEANS[forms[0]]),
+      cue: t`Third form`,
+      answers: [forms[2]],
+      src: entrySrc(forms),
+      explain: RULES[pattern],
+      said: (
+        <>
+          {nounEntry(forms)}{" "}
+          <span lang={i18n.locale} className="text-md text-ink-muted">
+            {i18n._(MEANS[forms[0]])}
+          </span>
+        </>
+      ),
+      pair: [pattern, forms[0]] as const,
+    }));
+  }, [i18n, t]);
 
   const dialogue: DialogueTurn[] = [
     { who: "them", clip: "d-mari-1", line: line("d-mari-1") },
@@ -784,7 +800,7 @@ export function PohivormidLesson() {
               </Aside>
               <Prose>
                 <p>
-                  <Trans>Each round plays the first two forms of a new word. Type the third.</Trans>
+                  <Trans>Each round shows a new word. Type its third form.</Trans>
                 </p>
               </Prose>
               <Quiz
@@ -796,14 +812,14 @@ export function PohivormidLesson() {
                   share === 1 ? (
                     <Trans>All six. You typed the third form right every time.</Trans>
                   ) : share >= 0.6 ? (
-                    <Trans>Nearly. Hear the ones you missed with their third form.</Trans>
+                    <Trans>Nearly. Hear the ones you missed with all three forms.</Trans>
                   ) : (
                     <Trans>Read the three endings above once more, then try again.</Trans>
                   )
                 }
-                recall={(item) => ({ label: nounEntry(item.forms), src: entrySrc(item.forms) })}
+                recall={formRecall}
                 order={eachPairFirst}
-                round={(props) => <TypedRound {...props} />}
+                round={(props) => <FormRound {...props} />}
               />
             </>
           ),

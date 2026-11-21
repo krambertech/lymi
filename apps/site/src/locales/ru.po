@@ -480,8 +480,14 @@ msgstr "<0>-ge</0> или <1>-ke</1> на конце"
 msgid "<0>-ne</0> becomes <1>-se</1>, then <2>-st</2>."
 msgstr "<0>-ne</0> становится <1>-se</1>, а затем <2>-st</2>."
 
+msgid "<0>-ne</0> becomes <1>-st</1>."
+msgstr "<0>-ne</0> становится <1>-st</1>."
+
 msgid "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
 msgstr "<0>-us</0> становится <1>-use</1>, а затем <2>-ust</2>."
+
+msgid "<0>-us</0> takes <1>-t</1>."
+msgstr "<0>-us</0> получает <1>-t</1>."
 
 #. placeholder {0}: said.cue
 #. placeholder {1}: said.answer
@@ -3539,8 +3545,8 @@ msgstr "Каждый вопрос — новый, в изучении или в�
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Каждый ответ — это команда или короткая реплика. Выбирай тот, что подходит к словам Мари."
 
-msgid "Each round plays the first two forms of a new word. Type the third."
-msgstr "В каждом раунде звучат первые две формы нового слова. Напиши третью."
+msgid "Each round shows a new word. Type its third form."
+msgstr "В каждом раунде — новое слово. Напиши его третью форму."
 
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "В каждом раунде — место. Выбери окончание, а потом послушай предложение. Большинство городов, зданий и стран получают <0>-s</0>; работа, рынок и названия на <1>-maa</1> получают <2>-l</2>."
@@ -7247,8 +7253,8 @@ msgstr "Природа"
 msgid "NCLEX pharmacology"
 msgstr "Фармакология NCLEX"
 
-msgid "Nearly. Hear the ones you missed with their third form."
-msgstr "Почти. Переслушай те, где были ошибки, вместе с третьей формой."
+msgid "Nearly. Hear the ones you missed with all three forms."
+msgstr "Почти. Переслушай те, где были ошибки, со всеми тремя формами."
 
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Почти. Вслушивайся в глагол в вопросе."
@@ -7833,6 +7839,9 @@ msgstr "Одна общая колода, у каждого своё распи�
 
 msgid "One spelling, two words."
 msgstr "Одно написание, два слова."
+
+msgid "One syllable ending in a long vowel takes <0>-d</0>."
+msgstr "Один слог с долгой гласной на конце получает <0>-d</0>."
 
 msgid "One syllable ending in a long vowel: the second is the same, the third adds <0>-d</0>."
 msgstr "Один слог с долгой гласной на конце: вторая форма такая же, третья добавляет <0>-d</0>."
@@ -11121,9 +11130,8 @@ msgstr "О чём попросить Grok Bot."
 msgid "Third"
 msgstr "Третья"
 
-#. placeholder {0}: firstTwo(forms)
-msgid "Third form after {0}"
-msgstr "Третья форма после {0}"
+msgid "Third form"
+msgstr "Третья форма"
 
 msgid "thirteen"
 msgstr "тринадцать"

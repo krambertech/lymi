@@ -4694,18 +4694,8 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "pohivormid/inimene-inimese": {
-    "text": "inimene, inimese",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "pohivormid/inimene-inimese-inimest": {
     "text": "inimene, inimese, inimest",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "pohivormid/hobune-hobuse": {
-    "text": "hobune, hobuse",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -4714,18 +4704,8 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "pohivormid/vastus-vastuse": {
-    "text": "vastus, vastuse",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "pohivormid/vastus-vastuse-vastust": {
     "text": "vastus, vastuse, vastust",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "pohivormid/harjutus-harjutuse": {
-    "text": "harjutus, harjutuse",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -4734,28 +4714,13 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "pohivormid/maa-maa": {
-    "text": "maa, maa",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "pohivormid/maa-maa-maad": {
     "text": "maa, maa, maad",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "pohivormid/tee-tee": {
-    "text": "tee, tee",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "pohivormid/tee-tee-teed": {
     "text": "tee, tee, teed",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "pohivormid/puu-puu": {
-    "text": "puu, puu",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

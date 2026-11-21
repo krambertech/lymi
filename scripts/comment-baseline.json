@@ -416,7 +416,6 @@
   "apps/mobile/src/you/learning-emails.tsx": 1,
   "apps/mobile/src/you/profile.tsx": 9,
   "apps/mobile/src/you/reminder.tsx": 12,
-  "apps/mobile/store/screenshots/render.mjs": 4,
   "apps/mobile/targets/controls/expo-target.config.js": 5,
   "apps/mobile/targets/share/expo-target.config.js": 5,
   "apps/mobile/vitest.config.mts": 3,

@@ -341,7 +341,7 @@ export function OlevikLesson() {
   const gradation = at("Jalg, jala");
   const where = at("Tallinnas, Tartus");
   const partitive = lessonBySlug("osastav")?.n;
-  const verbForms = at("Lugema, lugeda, loen");
+  const verbForms = lessonBySlug("verbi-pohivormid")?.n;
 
   const endings = useMemo(
     () =>

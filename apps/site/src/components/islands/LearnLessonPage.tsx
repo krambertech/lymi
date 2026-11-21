@@ -11,6 +11,7 @@ import { OsastavLesson } from "../learn/lessons/Osastav";
 import { PaevadLesson } from "../learn/lessons/Paevad";
 import { PaevTallinnasLesson } from "../learn/lessons/PaevTallinnas";
 import { TutvumineLesson } from "../learn/lessons/Tutvumine";
+import { VerbiPohivormidLesson } from "../learn/lessons/VerbiPohivormid";
 import { Island } from "./Island";
 
 /** Each built lesson by its slug; `LESSON_SLUGS` in the catalogue must name the same ones. */
@@ -27,6 +28,7 @@ export const LESSON_VIEWS = {
   tutvumine: TutvumineLesson,
   kaskiv: KaskivLesson,
   "paev-tallinnas": PaevTallinnasLesson,
+  "verbi-pohivormid": VerbiPohivormidLesson,
   osastav: OsastavLesson,
 } as const;
 

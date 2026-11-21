@@ -1,3 +1,4 @@
+import { AsesonadLesson } from "../learn/lessons/Asesonad";
 import { EitusLesson } from "../learn/lessons/Eitus";
 import { HaaldusLesson } from "../learn/lessons/Haaldus";
 import { KaskivLesson } from "../learn/lessons/Kaskiv";
@@ -44,6 +45,7 @@ export const LESSON_VIEWS = {
   modaalverbid: ModaalverbidLesson,
   "laual-lauale-laualt": LaualLaualeLaualtLesson,
   "sobraga-rahata": SobragaRahataLesson,
+  asesonad: AsesonadLesson,
   "mul-on": MulOnLesson,
   "pood-poe": PoodPoeLesson,
   pohivormid: PohivormidLesson,

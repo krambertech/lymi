@@ -19,6 +19,9 @@ msgstr "-b now; in the past just -s."
 msgid "-d now, -sid in the past."
 msgstr "-d now, -sid in the past."
 
+msgid "-ga on nende, the genitive of nemad."
+msgstr "-ga on nende, the genitive of nemad."
+
 msgid "-⁠l form"
 msgstr "-⁠l form"
 
@@ -494,6 +497,9 @@ msgstr "<0/> is I, the one who does something: <1/> <2/> is my, for what you own
 msgid "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian switches to <3>ei tohi</3>: <4/> <5/>, no need, also leaves it to you. Tap one to hear it said about swimming."
 msgstr "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian switches to <3>ei tohi</3>: <4/> <5/>, no need, also leaves it to you. Tap one to hear it said about swimming."
 
+msgid "<0/> is my, the genitive from lesson {genitive}. Put an ending from lesson {withLesson} on it, and you have with me and without me: <1/>, <2/>."
+msgstr "<0/> is my, the genitive from lesson {genitive}. Put an ending from lesson {withLesson} on it, and you have with me and without me: <1/>, <2/>."
+
 msgid "<0/> is one cat; <1/> is two cats. After a number from two up, a noun takes its third form, the partitive, and stays singular: <2/> has no plural ending."
 msgstr "<0/> is one cat; <1/> is two cats. After a number from two up, a noun takes its third form, the partitive, and stays singular: <2/> has no plural ending."
 
@@ -587,11 +593,18 @@ msgstr "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same
 msgid "<0/>, to learn, takes the <1>-ma</1> form when you learn to do something: <2/>"
 msgstr "<0/>, to learn, takes the <1>-ma</1> form when you learn to do something: <2/>"
 
+#. placeholder {0}: person.genitive
+msgid "<0>-{ending}</0> on the genitive <1>{0}</1>."
+msgstr "<0>-{ending}</0> on the genitive <1>{0}</1>."
+
 msgid "<0>-{ending}</0> on the genitive <1>{genitive}</1>."
 msgstr "<0>-{ending}</0> on the genitive <1>{genitive}</1>."
 
 msgid "<0>-da</0> form"
 msgstr "<0>-da</0> form"
+
+msgid "<0>-ga</0> and <1>-ta</1> go on the genitive: <2>minuga</2>, with me; <3>sinuta</3>, without you; <4>nendega</4>, with them."
+msgstr "<0>-ga</0> and <1>-ta</1> go on the genitive: <2>minuga</2>, with me; <3>sinuta</3>, without you; <4>nendega</4>, with them."
 
 msgid "<0>-ga</0> is with"
 msgstr "<0>-ga</0> is with"
@@ -604,6 +617,15 @@ msgstr "<0>-ga</0> on the genitive."
 
 msgid "<0>-ge</0> or <1>-ke</1> on the end"
 msgstr "<0>-ge</0> or <1>-ke</1> on the end"
+
+msgid "<0>-l</0>, as in <1>mul on</1>. Speech uses the short form."
+msgstr "<0>-l</0>, as in <1>mul on</1>. Speech uses the short form."
+
+msgid "<0>-le</0>, to. Speech uses the short form."
+msgstr "<0>-le</0>, to. Speech uses the short form."
+
+msgid "<0>-lt</0>, from. Speech uses the short form."
+msgstr "<0>-lt</0>, from. Speech uses the short form."
 
 msgid "<0>-ma</0> form"
 msgstr "<0>-ma</0> form"
@@ -637,6 +659,12 @@ msgstr "<0>-ni</0> says how far, in place or in time: <1/> is as far as Tartu. I
 
 msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
 msgstr "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
+
+msgid "<0>-st</0>, out of from lesson {into}, also says what you talk about: <1/> is I’m talking about you. Pick a pronoun, then tap a form to hear it."
+msgstr "<0>-st</0>, out of from lesson {into}, also says what you talk about: <1/> is I’m talking about you. Pick a pronoun, then tap a form to hear it."
+
+msgid "<0>-st</0>, out of, also says what you talk about."
+msgstr "<0>-st</0>, out of, also says what you talk about."
 
 msgid "<0>-ta</0> is the opposite of <1>-ga</1>. <2/> is with milk, and <3/> is without milk. It goes on the same genitive: <4/>, <5/>, <6/>."
 msgstr "<0>-ta</0> is the opposite of <1>-ga</1>. <2/> is with milk, and <3/> is without milk. It goes on the same genitive: <4/>, <5/>, <6/>."
@@ -1191,6 +1219,9 @@ msgstr "3 pages"
 msgid "3 quizzes"
 msgstr "3 quizzes"
 
+msgid "3 quizzes and a message to fill in"
+msgstr "3 quizzes and a message to fill in"
+
 msgid "3 quizzes and a passage"
 msgstr "3 quizzes and a passage"
 
@@ -1518,6 +1549,9 @@ msgstr "A free lesson on Estonian noun stems: why pood becomes poes and tuba bec
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
 msgstr "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
 
+msgid "A free lesson on Estonian personal pronouns in their cases: minuga and sinuta on the genitive, the short forms mulle, mul and mult, and the partitive mind, sind, teda. Every sentence is read aloud."
+msgstr "A free lesson on Estonian personal pronouns in their cases: minuga and sinuta on the genitive, the short forms mulle, mul and mult, and the partitive mind, sind, teda. Every sentence is read aloud."
+
 msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
 msgstr "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
 
@@ -1791,6 +1825,9 @@ msgstr "A printed dictionary puts them on one line instead: <0>pood poe poodi</0
 msgid "A promise; plans to meet"
 msgstr "A promise; plans to meet"
 
+msgid "A pronoun takes the case endings a noun does. Most go on its genitive, so <0>minuga</0> is with me. To, at and from have short forms such as <1>mulle</1>, and the partitive is its own word: <2>mind</2>, <3>sind</3>, <4>teda</4>."
+msgstr "A pronoun takes the case endings a noun does. Most go on its genitive, so <0>minuga</0> is with me. To, at and from have short forms such as <1>mulle</1>, and the partitive is its own word: <2>mind</2>, <3>sind</3>, <4>teda</4>."
+
 msgid "A pun on tsunde oku, to leave piled, and doku, reading."
 msgstr "A pun on tsunde oku, to leave piled, and doku, reading."
 
@@ -1961,6 +1998,9 @@ msgstr "About 3,900, on the computer"
 
 msgid "About these decks"
 msgstr "About these decks"
+
+msgid "about whom"
+msgstr "about whom"
 
 msgid "Accents that land between the beats"
 msgstr "Accents that land between the beats"
@@ -2287,6 +2327,9 @@ msgstr "After <0>on</0> it’s the same: <1/> <2/> Switch between One and Many, 
 msgid "After <0>on</0>, is, the job keeps the form a dictionary lists first: <1>Jaan on kokk</1>."
 msgstr "After <0>on</0>, is, the job keeps the form a dictionary lists first: <1>Jaan on kokk</1>."
 
+msgid "After <0>ootan</0>, the partitive: <1>sind</1>."
+msgstr "After <0>ootan</0>, the partitive: <1>sind</1>."
+
 msgid "After <0>pean</0>, the <1>-ma</1> form, even with words between."
 msgstr "After <0>pean</0>, the <1>-ma</1> form, even with words between."
 
@@ -2352,6 +2395,9 @@ msgstr "After a number from two up, the partitive."
 
 msgid "After a number from two up, the third form: <0>seitse eurot</0>."
 msgstr "After a number from two up, the third form: <0>seitse eurot</0>."
+
+msgid "After a verb such as <0/>, the person takes the partitive from lesson {partitive}: <1/> is I love you. A pronoun’s partitive doesn’t grow from the genitive, so learn the six as they are."
+msgstr "After a verb such as <0/>, the person takes the partitive from lesson {partitive}: <1/> is I love you. A pronoun’s partitive doesn’t grow from the genitive, so learn the six as they are."
 
 msgid "After an amount"
 msgstr "After an amount"
@@ -2532,6 +2578,9 @@ msgstr "All of them. You found the word behind every form."
 
 msgid "All of them. You hear who does it."
 msgstr "All of them. You hear who does it."
+
+msgid "All of them. You heard each ending."
+msgstr "All of them. You heard each ending."
 
 msgid "All of them. You heard the ending of every form."
 msgstr "All of them. You heard the ending of every form."
@@ -2898,11 +2947,17 @@ msgstr "Are you all eating?"
 msgid "Are you all waiting?"
 msgstr "Are you all waiting?"
 
+msgid "Are you coming with us?"
+msgstr "Are you coming with us?"
+
 msgid "Are you reading?"
 msgstr "Are you reading?"
 
 msgid "Are you tired?"
 msgstr "Are you tired?"
+
+msgid "Are you waiting for them?"
+msgstr "Are you waiting for them?"
 
 msgid "Article and plural, the way you write them"
 msgstr "Article and plural, the way you write them"
@@ -3191,6 +3246,9 @@ msgstr "at you, to more than one; polite"
 
 msgid "at you, to one person"
 msgstr "at you, to one person"
+
+msgid "At, has"
+msgstr "At, has"
 
 msgid "ATP"
 msgstr "ATP"
@@ -3593,6 +3651,12 @@ msgstr "California DMV knowledge test: the rules of the road"
 
 msgid "California Driver’s Handbook © California DMV, licensed CC BY-NC 4.0."
 msgstr "California Driver’s Handbook © California DMV, licensed CC BY-NC 4.0."
+
+msgid "Call me."
+msgstr "Call me."
+
+msgid "Call whom? To me: <0>mulle</0>."
+msgstr "Call whom? To me: <0>mulle</0>."
 
 msgid "Calvin cycle"
 msgstr "Calvin cycle"
@@ -4106,6 +4170,9 @@ msgstr "Come home!"
 msgid "Come on; let’s go"
 msgstr "Come on; let’s go"
 
+msgid "Come with me."
+msgstr "Come with me."
+
 msgid "come!"
 msgstr "come!"
 
@@ -4124,6 +4191,9 @@ msgstr "Coming back from his run"
 
 msgid "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards, and sentence translations come along too."
 msgstr "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent stay on the cards, and sentence translations come along too."
+
+msgid "Coming with someone: <0>-ga</0> on <1>minu</1>."
+msgstr "Coming with someone: <0>-ga</0> on <1>minu</1>."
 
 msgid "Commands"
 msgstr "Commands"
@@ -4759,6 +4829,9 @@ msgstr "Each deck is one or the other. Lymi never converts between them, and tra
 msgid "Each deck opens on its own page with every card on it, so you can see what you would learn before you add it."
 msgstr "Each deck opens on its own page with every card on it, so you can see what you would learn before you add it."
 
+msgid "Each form answers the same form of <0>kes</0>: <1>kellega?</1>, <2>kellele?</2>, <3>keda?</3>"
+msgstr "Each form answers the same form of <0>kes</0>: <1>kellega?</1>, <2>kellele?</2>, <3>keda?</3>"
+
 msgid "Each gap becomes a card of its own, with the hidden word as the term and the sentence as its example. Image occlusion notes stay in Anki."
 msgstr "Each gap becomes a card of its own, with the hidden word as the term and the sentence as its example. Image occlusion notes stay in Anki."
 
@@ -4788,6 +4861,12 @@ msgstr "Each pronoun has two forms. Say the short one, <0>ma</0>, and keep the l
 
 msgid "Each pronoun took -⁠l, and every verb is on."
 msgstr "Each pronoun took -⁠l, and every verb is on."
+
+msgid "Each pronoun’s genitive, with -ga and with -ta"
+msgstr "Each pronoun’s genitive, with -ga and with -ta"
+
+msgid "Each pronoun’s short forms for to, at and from"
+msgstr "Each pronoun’s short forms for to, at and from"
 
 msgid "Each question as New, Learning or Known"
 msgstr "Each question as New, Learning or Known"
@@ -5080,6 +5159,9 @@ msgstr "Estonian past tense"
 msgid "Estonian personal pronouns and “to be”"
 msgstr "Estonian personal pronouns and “to be”"
 
+msgid "Estonian personal pronouns in every case"
+msgstr "Estonian personal pronouns in every case"
+
 msgid "Estonian plural"
 msgstr "Estonian plural"
 
@@ -5161,8 +5243,15 @@ msgstr "Every example comes with a translation and keeps its stress marks, and a
 msgid "Every example comes with a translation, and a native voice reads the whole sentence."
 msgstr "Every example comes with a translation, and a native voice reads the whole sentence."
 
+#. placeholder {0}: person.id
+msgid "Every form of {0}"
+msgstr "Every form of {0}"
+
 msgid "Every form of <0>olema</0> becomes <1>ei ole</1>."
 msgstr "Every form of <0>olema</0> becomes <1>ei ole</1>."
+
+msgid "Every form of a pronoun"
+msgstr "Every form of a pronoun"
 
 msgid "Every language"
 msgstr "Every language"
@@ -5190,6 +5279,9 @@ msgstr "Every one, by ear."
 
 msgid "Every pronoun has a genitive, and it goes before the thing it owns. Tap a form to hear it."
 msgstr "Every pronoun has a genitive, and it goes before the thing it owns. Tap a form to hear it."
+
+msgid "Every pronoun works this way: <0/>, without you; <1/>, with him or her. For they, the genitive is <2/>, so with them is <3/>. Tap a line to hear it."
+msgstr "Every pronoun works this way: <0/>, without you; <1/>, with him or her. For they, the genitive is <2/>, so with them is <3/>. Tap a line to hear it."
 
 msgid "Every question has four answers and one is right. Because you learn 310 questions in all, it’s often called the 310-question test."
 msgstr "Every question has four answers and one is right. Because you learn 310 questions in all, it’s often called the 310-question test."
@@ -5629,8 +5721,17 @@ msgstr "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twent
 msgid "For three hours"
 msgstr "For three hours"
 
+msgid "For to, at and from, speech uses a short form: <0/>, to me; <1/>, at me, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem."
+msgstr "For to, at and from, speech uses a short form: <0/>, to me; <1/>, at me, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem."
+
+msgid "For to, at and from, speech uses the short forms: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>."
+msgstr "For to, at and from, speech uses the short forms: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>."
+
 msgid "For with, without, until and as in a role, Estonian adds an ending: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>. Each goes on the genitive: <4>sõbraga</4> is with a friend, and <5>rahata</5> is without money."
 msgstr "For with, without, until and as in a role, Estonian adds an ending: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> or <3>-na</3>. Each goes on the genitive: <4>sõbraga</4> is with a friend, and <5>rahata</5> is without money."
+
+msgid "For you, the one it goes to: <0>sulle</0>."
+msgstr "For you, the one it goes to: <0>sulle</0>."
 
 msgid "Forgot"
 msgstr "Forgot"
@@ -5804,6 +5905,9 @@ msgstr "friends"
 msgid "Friends are waiting."
 msgstr "Friends are waiting."
 
+msgid "From"
+msgstr "From"
+
 msgid "From <0>käima</0>. You go and come back, or go regularly. It takes <1>-mas</1>."
 msgstr "From <0>käima</0>. You go and come back, or go regularly. It takes <1>-mas</1>."
 
@@ -5900,6 +6004,12 @@ msgstr "From lugema, to read."
 msgid "From maksma, to cost; also to pay."
 msgstr "From maksma, to cost; also to pay."
 
+msgid "from me"
+msgstr "from me"
+
+msgid "from me, for emphasis"
+msgstr "from me, for emphasis"
+
 msgid "From minema, to go."
 msgstr "From minema, to go."
 
@@ -5957,6 +6067,9 @@ msgstr "from school"
 msgid "From sidrun, lemon."
 msgstr "From sidrun, lemon."
 
+msgid "From someone"
+msgstr "From someone"
+
 msgid "From tahtma, to want."
 msgstr "From tahtma, to want."
 
@@ -6013,6 +6126,9 @@ msgstr "from Ukraine"
 
 msgid "From võima."
 msgstr "From võima."
+
+msgid "from whom"
+msgstr "from whom"
 
 msgid "from work"
 msgstr "from work"
@@ -6464,6 +6580,9 @@ msgstr "He or she has a good friend."
 msgid "He or she has a good teacher."
 msgstr "He or she has a good teacher."
 
+msgid "He or she has time."
+msgstr "He or she has time."
+
 msgid "he or she is"
 msgstr "he or she is"
 
@@ -6766,6 +6885,9 @@ msgstr "Here are the ten verbs of lesson {present} with their three forms. The <
 msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 msgstr "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 
+msgid "Here is one pronoun in every case from this course, each beside the form of <0>kes</0>, who, that asks for it: <1/>, with whom; <2/>, to whom."
+msgstr "Here is one pronoun in every case from this course, each beside the form of <0>kes</0>, who, that asks for it: <1/>, with whom; <2/>, to whom."
+
 msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
 msgstr "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
 
@@ -6792,6 +6914,9 @@ msgstr "Hi; bye"
 
 msgid "Highly rated iPhone and Android apps"
 msgstr "Highly rated iPhone and Android apps"
+
+msgid "him or her"
+msgstr "him or her"
 
 msgid "Hint"
 msgstr "Hint"
@@ -7320,6 +7445,9 @@ msgstr "I have my car today."
 msgid "I have three cats."
 msgstr "I have three cats."
 
+msgid "I have time."
+msgstr "I have time."
+
 msgid "I have to …"
 msgstr "I have to …"
 
@@ -7634,6 +7762,9 @@ msgstr "I’ll ask Dad."
 msgid "I’ll ask Mum."
 msgstr "I’ll ask Mum."
 
+msgid "I’ll ask you. To more than one, or polite."
+msgstr "I’ll ask you. To more than one, or polite."
+
 msgid "I’ll be waiting in the *park*."
 msgstr "I’ll be waiting in the *park*."
 
@@ -7805,6 +7936,9 @@ msgstr "I’m not allowed to read."
 msgid "I’m not allowed to swim."
 msgstr "I’m not allowed to swim."
 
+msgid "I’m not coming without you."
+msgstr "I’m not coming without you."
+
 msgid "I’m not drinking."
 msgstr "I’m not drinking."
 
@@ -7844,6 +7978,12 @@ msgstr "I’m staying home to read."
 msgid "I’m taking the *dog* for a walk."
 msgstr "I’m taking the *dog* for a walk."
 
+msgid "I’m talking about you."
+msgstr "I’m talking about you."
+
+msgid "I’m talking with him or her."
+msgstr "I’m talking with him or her."
+
 msgid "I’m talking with Mum."
 msgstr "I’m talking with Mum."
 
@@ -7855,6 +7995,12 @@ msgstr "I’m tired"
 
 msgid "I’m trying to learn Estonian."
 msgstr "I’m trying to learn Estonian."
+
+msgid "I’m waiting"
+msgstr "I’m waiting"
+
+msgid "I’m waiting for him or her."
+msgstr "I’m waiting for him or her."
 
 msgid "Ice, jää, plus edge, äär: four ä in a row."
 msgstr "Ice, jää, plus edge, äär: four ä in a row."
@@ -8483,8 +8629,44 @@ msgstr "Jaan has a car."
 msgid "Jaan is a cook."
 msgstr "Jaan is a cook."
 
+msgid "Jaan is asking him or her."
+msgstr "Jaan is asking him or her."
+
+msgid "Jaan is asking me."
+msgstr "Jaan is asking me."
+
+msgid "Jaan is asking them."
+msgstr "Jaan is asking them."
+
+msgid "Jaan is asking us."
+msgstr "Jaan is asking us."
+
+msgid "Jaan is asking you."
+msgstr "Jaan is asking you."
+
+msgid "Jaan is asking you. To more than one, or polite."
+msgstr "Jaan is asking you. To more than one, or polite."
+
 msgid "Jaan is at the door."
 msgstr "Jaan is at the door."
+
+msgid "Jaan is calling him or her."
+msgstr "Jaan is calling him or her."
+
+msgid "Jaan is calling me."
+msgstr "Jaan is calling me."
+
+msgid "Jaan is calling them."
+msgstr "Jaan is calling them."
+
+msgid "Jaan is calling us."
+msgstr "Jaan is calling us."
+
+msgid "Jaan is calling you."
+msgstr "Jaan is calling you."
+
+msgid "Jaan is calling you. To more than one, or polite."
+msgstr "Jaan is calling you. To more than one, or polite."
 
 msgid "Jaan is coming by train."
 msgstr "Jaan is coming by train."
@@ -8619,6 +8801,9 @@ msgstr "Kati"
 
 msgid "Kati asks for your name, so your: <0>sinu</0>."
 msgstr "Kati asks for your name, so your: <0>sinu</0>."
+
+msgid "Kati invites Mari for a coffee. Pick the form for each gap: the words around it say which case fits."
+msgstr "Kati invites Mari for a coffee. Pick the form for each gap: the words around it say which case fits."
 
 msgid "Kati is a doctor."
 msgstr "Kati is a doctor."
@@ -9211,6 +9396,9 @@ msgstr "Locative"
 msgid "Lock"
 msgstr "Lock"
 
+msgid "Long"
+msgstr "Long"
+
 msgctxt "pronoun form"
 msgid "Long"
 msgstr "Long"
@@ -9690,6 +9878,9 @@ msgstr "Masculine, though it ends in -a: buenos días."
 msgid "Match"
 msgstr "Match"
 
+msgid "Match each form with the person it names."
+msgstr "Match each form with the person it names."
+
 msgid "Match each form with what it means. Two words come twice, so read the ending."
 msgstr "Match each form with what it means. Two words come twice, so read the ending."
 
@@ -9722,6 +9913,9 @@ msgstr "May it come easy"
 
 msgid "may, might"
 msgstr "may, might"
+
+msgid "me"
+msgstr "me"
 
 msgid "Me elame Tartus: we live in Tartu. The -⁠l form goes with on, not with other verbs."
 msgstr "Me elame Tartus: we live in Tartu. The -⁠l form goes with on, not with other verbs."
@@ -10102,6 +10296,9 @@ msgstr "Nearly. Check which ending the cue asks for, then put it on the genitive
 msgid "Nearly. Compare the last row of the table once more."
 msgstr "Nearly. Compare the last row of the table once more."
 
+msgid "Nearly. Find the genitive first, then add <0>-ga</0> or <1>-ta</1>."
+msgstr "Nearly. Find the genitive first, then add <0>-ga</0> or <1>-ta</1>."
+
 msgid "Nearly. For the ones you missed, start from the second form."
 msgstr "Nearly. For the ones you missed, start from the second form."
 
@@ -10119,6 +10316,9 @@ msgstr "Nearly. Play the ones you missed and listen for the last sound: <0>a</0>
 
 msgid "Nearly. Play the ones you missed and listen to the ending."
 msgstr "Nearly. Play the ones you missed and listen to the ending."
+
+msgid "Nearly. Play the ones you missed and listen to the last sound."
+msgstr "Nearly. Play the ones you missed and listen to the last sound."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Nearly. Play the ones you missed once more."
@@ -10490,11 +10690,17 @@ msgstr "Nouns that stay the same"
 msgid "Now"
 msgstr "Now"
 
+msgid "Now build the form: put <0>-ga</0> or <1>-ta</1> on the pronoun’s genitive."
+msgstr "Now build the form: put <0>-ga</0> or <1>-ta</1> on the pronoun’s genitive."
+
 msgid "Now build the forms: put the ending the cue asks for on the genitive. Where the genitive changes inside, the word shows it."
 msgstr "Now build the forms: put the ending the cue asks for on the genitive. Where the genitive changes inside, the word shows it."
 
 msgid "Now hear a line and pick what it means. Listen to how the word ends."
 msgstr "Now hear a line and pick what it means. Listen to how the word ends."
+
+msgid "Now hear a line and pick what the pronoun says. The ending tells you: <0>-le</0>, <1>-l</1> or <2>-lt</2>."
+msgstr "Now hear a line and pick what the pronoun says. The ending tells you: <0>-le</0>, <1>-l</1> or <2>-lt</2>."
 
 msgid "Now it’s <0>näen</0>; the g comes back in the past."
 msgstr "Now it’s <0>näen</0>; the g comes back in the past."
@@ -11658,6 +11864,9 @@ msgstr "Programming"
 msgid "Project management"
 msgstr "Project management"
 
+msgid "Pronoun"
+msgstr "Pronoun"
+
 msgid "Pronouns"
 msgstr "Pronouns"
 
@@ -12603,6 +12812,9 @@ msgstr "shop’s, of a shop"
 msgid "shops"
 msgstr "shops"
 
+msgid "Short"
+msgstr "Short"
+
 msgctxt "pronoun form"
 msgid "Short"
 msgstr "Short"
@@ -12630,6 +12842,9 @@ msgstr "Short for teie."
 
 msgid "Short for tema."
 msgstr "Short for tema."
+
+msgid "Short forms for to, at and from"
+msgstr "Short forms for to, at and from"
 
 msgid "Short forms for where to"
 msgstr "Short forms for where to"
@@ -12908,6 +13123,9 @@ msgstr "Someone eats, drinks or wants some of it, uncounted, so the third form."
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Someone else, a man or a woman: one word for both."
+
+msgid "Someone has"
+msgstr "Someone has"
 
 msgid "Someone you’d call <0>sa</0>."
 msgstr "Someone you’d call <0>sa</0>."
@@ -13466,6 +13684,9 @@ msgstr "Tap a form"
 
 msgid "Tap a form to hear it and see what its ending says."
 msgstr "Tap a form to hear it and see what its ending says."
+
+msgid "Tap a form to hear it."
+msgstr "Tap a form to hear it."
 
 msgid "Tap a form to hear the answer."
 msgstr "Tap a form to hear the answer."
@@ -14277,6 +14498,9 @@ msgstr "The genitive of kes, who."
 msgid "The genitive of mina. Short: mu."
 msgstr "The genitive of mina. Short: mu."
 
+msgid "The genitive of nemad."
+msgstr "The genitive of nemad."
+
 msgid "The genitive of nemad. It has no short form."
 msgstr "The genitive of nemad. It has no short form."
 
@@ -14309,6 +14533,9 @@ msgstr "The genitive: the <0>e</0> drops, and an <1>a</1> goes on the end."
 
 msgid "The genitive: the <0>u</0> moves to the end."
 msgstr "The genitive: the <0>u</0> moves to the end."
+
+msgid "The genitive. Most other forms grow from it."
+msgstr "The genitive. Most other forms grow from it."
 
 msgid "The German, Spanish and Czech decks keep questions and answers in the exam’s language, as the exam does; the notes add an English translation and a short explanation."
 msgstr "The German, Spanish and Czech decks keep questions and answers in the exam’s language, as the exam does; the notes add an English translation and a short explanation."
@@ -14421,6 +14648,12 @@ msgstr "The little *girl* is laughing."
 msgid "The long form of mul."
 msgstr "The long form of mul."
 
+msgid "The long form of mulle."
+msgstr "The long form of mulle."
+
+msgid "The long form of mult."
+msgstr "The long form of mult."
+
 msgid "The long form of neil."
 msgstr "The long form of neil."
 
@@ -14429,6 +14662,12 @@ msgstr "The long form of sul."
 
 msgid "The long form of tal."
 msgstr "The long form of tal."
+
+msgid "The long forms <0/>, <1/> and <2/> mean the same and put weight on the person. We and you have only the short form: <3>meile</3>, <4>teile</4>. Tap a line to hear it."
+msgstr "The long forms <0/>, <1/> and <2/> mean the same and put weight on the person. We and you have only the short form: <3>meile</3>, <4>teile</4>. Tap a line to hear it."
+
+msgid "The long forms <0>minule, minul, minult</0> mean the same and put weight on the person."
+msgstr "The long forms <0>minule, minul, minult</0> mean the same and put weight on the person."
 
 msgid "The longest chain of dependent tasks; it sets the earliest finish date"
 msgstr "The longest chain of dependent tasks; it sets the earliest finish date"
@@ -14556,17 +14795,47 @@ msgstr "The part of a cell that releases energy from food"
 msgid "The partitive case"
 msgstr "The partitive case"
 
+msgid "The partitive is a word of its own: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> is I’m waiting for you."
+msgstr "The partitive is a word of its own: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> is I’m waiting for you."
+
 msgid "The partitive of aeg, time."
 msgstr "The partitive of aeg, time."
+
+msgid "The partitive of kes, who."
+msgstr "The partitive of kes, who."
 
 msgid "The partitive of kohv, after a verb such as joob or tahab."
 msgstr "The partitive of kohv, after a verb such as joob or tahab."
 
+msgid "The partitive of meie."
+msgstr "The partitive of meie."
+
+msgid "The partitive of mina."
+msgstr "The partitive of mina."
+
 msgid "The partitive of muusika."
 msgstr "The partitive of muusika."
 
+msgid "The partitive of nemad."
+msgstr "The partitive of nemad."
+
+msgid "The partitive of sina."
+msgstr "The partitive of sina."
+
 msgid "The partitive of tee, after joob."
 msgstr "The partitive of tee, after joob."
+
+msgid "The partitive of teie."
+msgstr "The partitive of teie."
+
+msgid "The partitive of tema."
+msgstr "The partitive of tema."
+
+msgid "The partitive, after a verb such as <0>ootama</0>: a short word of its own."
+msgstr "The partitive, after a verb such as <0>ootama</0>: a short word of its own."
+
+msgid "The partitive: me, you, him or her"
+msgstr "The partitive: me, you, him or her"
 
 msgid "The passage"
 msgstr "The passage"
@@ -14845,6 +15114,15 @@ msgstr "The short form of ei ole."
 msgid "The short form of minu."
 msgstr "The short form of minu."
 
+msgid "The short form of minul. Mul on: I have."
+msgstr "The short form of minul. Mul on: I have."
+
+msgid "The short form of minule."
+msgstr "The short form of minule."
+
+msgid "The short form of minult."
+msgstr "The short form of minult."
+
 msgid "The short form of sinu."
 msgstr "The short form of sinu."
 
@@ -15107,6 +15385,9 @@ msgstr "their book"
 msgid "Their office is in Tallinn."
 msgstr "Their office is in Tallinn."
 
+msgid "them"
+msgstr "them"
+
 msgid "Then open it. macOS asks once whether to open an app from the internet. Choose Open."
 msgstr "Then open it. macOS asks once whether to open an app from the internet. Choose Open."
 
@@ -15167,6 +15448,9 @@ msgstr "they"
 msgid "they are"
 msgstr "they are"
 
+msgid "They are <0/>, <1/>, <2/>, <3/>, <4/> and <5/>. To ask whom, say <6/> Tap a line to hear it."
+msgstr "They are <0/>, <1/>, <2/>, <3/>, <4/> and <5/>. To ask whom, say <6/> Tap a line to hear it."
+
 msgid "They ate and had coffee"
 msgstr "They ate and had coffee"
 
@@ -15196,6 +15480,9 @@ msgstr "They have a house in Pärnu."
 
 msgid "They have a house."
 msgstr "They have a house."
+
+msgid "They have time."
+msgstr "They have time."
 
 msgid "They have to read."
 msgstr "They have to read."
@@ -15230,6 +15517,9 @@ msgstr "They work in an office."
 msgid "They worked"
 msgstr "They worked"
 
+msgid "they; genitive <0>nende</0>"
+msgstr "they; genitive <0>nende</0>"
+
 msgid "They’re at home."
 msgstr "They’re at home."
 
@@ -15244,6 +15534,9 @@ msgstr "They’re the <0>-s</0> and <1>-st</1> of <2>majas</2> and <3>majast</3>
 
 msgid "They’re tired."
 msgstr "They’re tired."
+
+msgid "They’re waiting for us."
+msgstr "They’re waiting for us."
 
 msgid "They’re working today."
 msgstr "They’re working today."
@@ -15467,6 +15760,9 @@ msgstr "Timetable"
 msgid "tip"
 msgstr "tip"
 
+msgid "To"
+msgstr "To"
+
 msgid "to a friend"
 msgstr "to a friend"
 
@@ -15644,6 +15940,12 @@ msgstr "to love"
 msgid "To make the most of something"
 msgstr "To make the most of something"
 
+msgid "to me, for emphasis"
+msgstr "to me, for emphasis"
+
+msgid "to me, for me"
+msgstr "to me, for me"
+
 msgid "To meet"
 msgstr "To meet"
 
@@ -15744,6 +16046,9 @@ msgstr "to sleep"
 msgid "To sleep; to go to bed"
 msgstr "To sleep; to go to bed"
 
+msgid "To someone"
+msgstr "To someone"
+
 msgid "to speak"
 msgstr "to speak"
 
@@ -15816,6 +16121,12 @@ msgstr "To usually do something"
 msgid "to wait"
 msgstr "to wait"
 
+msgid "to whom"
+msgstr "to whom"
+
+msgid "to whom?"
+msgstr "to whom?"
+
 msgid "to work"
 msgstr "to work"
 
@@ -15829,6 +16140,9 @@ msgstr "To work"
 msgctxt "where to"
 msgid "To work"
 msgstr "To work"
+
+msgid "To, at or from?"
+msgstr "To, at or from?"
 
 msgid "Toa- plus -s: in a room."
 msgstr "Toa- plus -s: in a room."
@@ -16237,6 +16551,9 @@ msgstr "Until three"
 msgid "Until when: <0>-ni</0>, until four."
 msgstr "Until when: <0>-ni</0>, until four."
 
+msgid "us"
+msgstr "us"
+
 msgid "US citizenship test"
 msgstr "US citizenship test"
 
@@ -16320,6 +16637,9 @@ msgstr "vs"
 msgid "Wait for her dad at home"
 msgstr "Wait for her dad at home"
 
+msgid "Wait for me."
+msgstr "Wait for me."
+
 msgid "Wait."
 msgstr "Wait."
 
@@ -16385,6 +16705,9 @@ msgstr "We have a house."
 
 msgid "We have one cat."
 msgstr "We have one cat."
+
+msgid "We have time."
+msgstr "We have time."
 
 msgid "we live"
 msgstr "we live"
@@ -16460,6 +16783,9 @@ msgstr "We’re ready."
 
 msgid "We’re waiting for the bus."
 msgstr "We’re waiting for the bus."
+
+msgid "We’re waiting for you. To more than one, or polite."
+msgstr "We’re waiting for you. To more than one, or polite."
 
 msgid "Weather"
 msgstr "Weather"
@@ -17153,6 +17479,9 @@ msgstr "Who can see the cards I make?"
 msgid "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
 msgstr "Who can vote in federal elections, run for federal office, and serve on a jury in the United States?"
 
+msgid "who has"
+msgstr "who has"
+
 msgid "Who has a car?"
 msgstr "Who has a car?"
 
@@ -17173,6 +17502,9 @@ msgstr "who has; at whom"
 
 msgid "Who is it about?"
 msgstr "Who is it about?"
+
+msgid "Who is it?"
+msgstr "Who is it?"
 
 msgid "Who is Peeter?"
 msgstr "Who is Peeter?"
@@ -17206,6 +17538,12 @@ msgstr "Who, what, where"
 
 msgid "Who? Me!"
 msgstr "Who? Me!"
+
+msgid "whom"
+msgstr "whom"
+
+msgid "whom?"
+msgstr "whom?"
 
 msgid "whose"
 msgstr "whose"
@@ -17270,6 +17608,9 @@ msgstr "Will the AI slip into Russian?"
 msgid "window"
 msgstr "window"
 
+msgid "With"
+msgstr "With"
+
 msgctxt "with or without"
 msgid "With"
 msgstr "With"
@@ -17301,6 +17642,9 @@ msgstr "With A1 if Spanish is new to you, or with Spanish Top 100 Verbs and Span
 msgid "With an ending"
 msgstr "With an ending"
 
+msgid "with him or her"
+msgstr "with him or her"
+
 msgid "with lemon"
 msgstr "with lemon"
 
@@ -17309,6 +17653,12 @@ msgstr "With ma, the verb ends in -n: ma joon."
 
 msgid "With masks drawn for you, on Premium"
 msgstr "With masks drawn for you, on Premium"
+
+msgid "with me"
+msgstr "with me"
+
+msgid "With me, without you"
+msgstr "With me, without you"
 
 msgid "with milk"
 msgstr "with milk"
@@ -17349,8 +17699,26 @@ msgstr "With the clock from lesson {clock} it means until: <0/>, until five. Lea
 msgid "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 msgstr "With the deck that fits why you’re learning, such as a trip or your first lessons. You can add more than one, and Lymi mixes their cards into one daily review."
 
+msgid "with them"
+msgstr "with them"
+
+msgid "with us"
+msgstr "with us"
+
+msgid "With us: <0>-ga</0> on <1>meie</1>."
+msgstr "With us: <0>-ga</0> on <1>meie</1>."
+
+msgid "with whom"
+msgstr "with whom"
+
 msgid "with whom?"
 msgstr "with whom?"
+
+msgid "with you"
+msgstr "with you"
+
+msgid "with you, more than one"
+msgstr "with you, more than one"
 
 msgid "With, without, until and as in Estonian"
 msgstr "With, without, until and as in Estonian"
@@ -17368,8 +17736,14 @@ msgctxt "with or without"
 msgid "Without"
 msgstr "Without"
 
+msgid "without him or her"
+msgstr "without him or her"
+
 msgid "without lemon"
 msgstr "without lemon"
+
+msgid "without me"
+msgstr "without me"
 
 msgid "without milk"
 msgstr "without milk"
@@ -17385,6 +17759,21 @@ msgstr "without sugar"
 
 msgid "Without sugar"
 msgstr "Without sugar"
+
+msgid "without them"
+msgstr "without them"
+
+msgid "without us"
+msgstr "without us"
+
+msgid "without whom"
+msgstr "without whom"
+
+msgid "without you"
+msgstr "without you"
+
+msgid "without you, more than one"
+msgstr "without you, more than one"
 
 msgid "woman"
 msgstr "woman"
@@ -17844,6 +18233,12 @@ msgstr "You have a teacher."
 msgid "You have met two of these already: <0/>, on the table, is from <1/>, and <2/>, at the market, is from <3/>. Switch through the three steps for six nouns."
 msgstr "You have met two of these already: <0/>, on the table, is from <1/>, and <2/>, at the market, is from <3/>. Switch through the three steps for six nouns."
 
+msgid "You have time."
+msgstr "You have time."
+
+msgid "You have time. To more than one, or polite."
+msgstr "You have time. To more than one, or polite."
+
 msgid "You know <0>{term}</0>. Its pinyin goes from the examples on all your cards."
 msgstr "You know <0>{term}</0>. Its pinyin goes from the examples on all your cards."
 
@@ -17952,6 +18347,9 @@ msgstr "You wrote this"
 msgid "you, more than one"
 msgstr "you, more than one"
 
+msgid "you, one person"
+msgstr "you, one person"
+
 msgid "You, the one speaking."
 msgstr "You, the one speaking."
 
@@ -17984,6 +18382,9 @@ msgstr "You’ll hear elama with it and who it’s for."
 
 msgid "You’ll hear it and read what its ending does."
 msgstr "You’ll hear it and read what its ending does."
+
+msgid "You’ll hear it and see a sentence with it."
+msgstr "You’ll hear it and see a sentence with it."
 
 msgid "You’ll hear it and see how it changes from the first."
 msgstr "You’ll hear it and see how it changes from the first."

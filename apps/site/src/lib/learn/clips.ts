@@ -1483,6 +1483,170 @@ const SOBRAGA_CLIPS: Record<string, Clip> = {
   "p-kati": { sentences: SOBRAGA_PASSAGES.kati },
 };
 
+export const PRONOUN_CASES = [
+  {
+    id: "mina",
+    short: "ma",
+    genitive: "minu",
+    shortGenitive: "mu",
+    partitive: "mind",
+    le: "minule",
+    shortLe: "mulle",
+    l: "minul",
+    shortL: "mul",
+    lt: "minult",
+    shortLt: "mult",
+    st: "minust",
+    shortSt: "must",
+  },
+  {
+    id: "sina",
+    short: "sa",
+    genitive: "sinu",
+    shortGenitive: "su",
+    partitive: "sind",
+    le: "sinule",
+    shortLe: "sulle",
+    l: "sinul",
+    shortL: "sul",
+    lt: "sinult",
+    shortLt: "sult",
+    st: "sinust",
+    shortSt: "sust",
+  },
+  {
+    id: "tema",
+    short: "ta",
+    genitive: "tema",
+    shortGenitive: "ta",
+    partitive: "teda",
+    le: "temale",
+    shortLe: "talle",
+    l: "temal",
+    shortL: "tal",
+    lt: "temalt",
+    shortLt: "talt",
+    st: "temast",
+    shortSt: null,
+  },
+  {
+    id: "meie",
+    short: "me",
+    genitive: "meie",
+    shortGenitive: "me",
+    partitive: "meid",
+    le: null,
+    shortLe: "meile",
+    l: null,
+    shortL: "meil",
+    lt: null,
+    shortLt: "meilt",
+    st: null,
+    shortSt: "meist",
+  },
+  {
+    id: "teie",
+    short: "te",
+    genitive: "teie",
+    shortGenitive: "te",
+    partitive: "teid",
+    le: null,
+    shortLe: "teile",
+    l: null,
+    shortL: "teil",
+    lt: null,
+    shortLt: "teilt",
+    st: null,
+    shortSt: "teist",
+  },
+  {
+    id: "nemad",
+    short: "nad",
+    genitive: "nende",
+    shortGenitive: null,
+    partitive: "neid",
+    le: "nendele",
+    shortLe: "neile",
+    l: "nendel",
+    shortL: "neil",
+    lt: "nendelt",
+    shortLt: "neilt",
+    st: "nendest",
+    shortSt: "neist",
+  },
+] as const;
+
+export type PronounId = (typeof PRONOUN_CASES)[number]["id"];
+export const pronounWith = (genitive: string, ending: "ga" | "ta") => `${genitive}${ending}`;
+export const PRONOUN_WITH = [
+  "Tule minuga!",
+  "Ma räägin temaga.",
+  "Kas sa tuled meiega?",
+  "Ma ei tule sinuta.",
+] as const;
+export const PRONOUN_SHORT = ["Helista mulle!", "Mul on aega.", "Ma küsin teilt."] as const;
+
+export type PronounWay = "le" | "l" | "lt";
+export const PRONOUN_WAYS: readonly PronounWay[] = ["le", "l", "lt"];
+export function pronounShort(person: (typeof PRONOUN_CASES)[number], way: PronounWay): string {
+  if (way === "le") return person.shortLe;
+  if (way === "lt") return person.shortLt;
+  return person.shortL;
+}
+export function pronounSentence(way: PronounWay, form: string): string {
+  if (way === "le") return `Jaan helistab ${form}.`;
+  if (way === "lt") return `Jaan küsib ${form}.`;
+  return `${form.charAt(0).toUpperCase()}${form.slice(1)} on aega.`;
+}
+export const PRONOUN_PARTITIVE = [
+  "Ma armastan sind.",
+  "Oota mind!",
+  "Ma ootan teda.",
+  "Me ootame teid.",
+  "Nad ootavad meid.",
+  "Kas sa ootad neid?",
+] as const;
+export const PRONOUN_MESSAGE = [
+  "Tere, Mari!",
+  "Kas sa tuled täna minuga kohvikusse?",
+  "Jaan tuleb ka meiega.",
+  "Ma ootan sind kell viis.",
+  "Mul on sulle raamat.",
+  "Helista mulle!",
+] as const;
+export const PRONOUN_WORDS = ["keda", "kellega", "kellele", "ootan", "Ma räägin sinust."] as const;
+const PRONOUN_TABLE_FORMS = PRONOUN_CASES.flatMap((person) => [
+  person.id,
+  person.short,
+  person.genitive,
+  person.shortGenitive,
+  person.partitive,
+  pronounWith(person.genitive, "ga"),
+  pronounWith(person.genitive, "ta"),
+  person.le,
+  person.shortLe,
+  person.l,
+  person.shortL,
+  person.lt,
+  person.shortLt,
+  person.st,
+  person.shortSt,
+]).filter((form): form is string => form !== null);
+
+const PRONOUN_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set(PRONOUN_TABLE_FORMS),
+    ...PRONOUN_WITH,
+    ...PRONOUN_SHORT,
+    ...PRONOUN_CASES.flatMap((person) =>
+      PRONOUN_WAYS.map((way) => pronounSentence(way, pronounShort(person, way))),
+    ),
+    ...PRONOUN_PARTITIVE,
+    ...PRONOUN_WORDS,
+  ]),
+  "p-message": { sentences: PRONOUN_MESSAGE },
+};
+
 /** A noun's three forms in a dictionary's order: first, second, third. */
 export type NounForms = readonly [string, string, string];
 
@@ -2649,6 +2813,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     "p-saturday": { sentences: OUTER_PASSAGE },
   },
   "sobraga-rahata": SOBRAGA_CLIPS,
+  asesonad: PRONOUN_CLIPS,
   "mul-on": {
     ...words([
       ...MUL_ON_WORDS,

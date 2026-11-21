@@ -1,6 +1,6 @@
-import { resetGradeCache, settleGrades } from "@lymi/client/grades";
+import { flushOutbox, resetGradeCache } from "@lymi/client/grades";
 import { type ReviewFlow, type ReviewPlatform, useReviewFlow } from "@lymi/client/review-flow";
-import { resetWriteCache, SEND_TIMEOUT, settleWrites } from "@lymi/client/writes";
+import { flushWrites, resetWriteCache, SEND_TIMEOUT } from "@lymi/client/writes";
 import type { GradeOut, StreakOut } from "@lymi/core";
 import { QueryClient, QueryClientProvider, QueryObserver } from "@tanstack/react-query";
 import type { ReactNode } from "react";
@@ -94,10 +94,13 @@ beforeEach(() => {
 
 afterEach(async () => {
   vi.useRealTimers();
-  // Let a flush still in flight finish while its mocks are in place, so it lets go of the Web Lock
-  // and stops writing to storage before the next test clears it. Writes first: they flush grades too.
-  await settleWrites();
-  await settleGrades();
+  // A flush queues behind the one in flight, under the same Web Lock, so waiting on one more lets a
+  // leftover send finish on its mocks and stop writing to storage before the next test clears it.
+  // Capped, since a send that never answers can't be aborted from here.
+  await Promise.race([
+    Promise.allSettled([flushWrites(), flushOutbox()]),
+    new Promise((resolve) => setTimeout(resolve, 1000)),
+  ]);
   vi.restoreAllMocks();
 });
 

@@ -285,13 +285,6 @@ export function retireGrades(dayStart: string) {
   if (kept.length !== current.length) write(kept);
 }
 
-/** For tests: waits, at most `ms`, for the grade send in flight to finish and let go of its lock. */
-export async function settleGrades(ms = 1000): Promise<void> {
-  let cap: ReturnType<typeof setTimeout> | undefined;
-  await Promise.race([chain, new Promise((resolve) => (cap = setTimeout(resolve, ms)))]);
-  clearTimeout(cap);
-}
-
 /** For tests: forget the in-memory copy so the next read comes from storage, and drop a flush still in flight. */
 export function resetGradeCache() {
   cache = null;

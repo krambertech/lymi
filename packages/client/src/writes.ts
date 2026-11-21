@@ -594,17 +594,6 @@ async function queued(written: Promise<Written<Result>>): Promise<{ queued: bool
   return { queued: (await written).status === "queued" };
 }
 
-/**
- * For tests: waits, at most `ms`, for the flush in flight to finish, so it lets go of the browser
- * lock and stops touching storage before the next test starts. A send that never answers can't be
- * aborted from here, so the wait is capped.
- */
-export async function settleWrites(ms = 1000): Promise<void> {
-  let cap: ReturnType<typeof setTimeout> | undefined;
-  await Promise.race([chain, new Promise((resolve) => (cap = setTimeout(resolve, ms)))]);
-  clearTimeout(cap);
-}
-
 /** For tests: forget the in-memory copy so the next read comes from storage, and drop a flush still in flight. */
 export function resetWriteCache() {
   cache = null;

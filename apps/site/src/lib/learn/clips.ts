@@ -1143,6 +1143,107 @@ const MITMUS_CLIPS: Record<string, Clip> = {
 };
 
 /**
+ * The lesson on in, into and out of: each place in the forms that answer kus?, kuhu? and kust?.
+ * `kuhu` is the form the lesson teaches for where to: the short form for kool, pood, linn, maja
+ * and kodu, with `long` naming the -sse form beside it, and -sse for the rest. Tallinn has a short
+ * form too, Tallinna; the lesson teaches Tallinnasse. Checked in ÕS 2025 on Sõnaveeb (EKI
+ * morphology, 21 Nov 2026): kooli ~ koolisse, poodi ~ poesse, linna ~ linnasse, majja ~ majasse, koju ~ kodusse; Tartu, Pärnu, haigla,
+ * kontor and kohvik have -sse only. `third` is the dictionary's third form where the short form
+ * matches it.
+ */
+export const INNER_PLACES = [
+  { place: "Tallinn", kus: "Tallinnas", kuhu: "Tallinnasse", kust: "Tallinnast" },
+  { place: "Tartu", kus: "Tartus", kuhu: "Tartusse", kust: "Tartust" },
+  { place: "Pärnu", kus: "Pärnus", kuhu: "Pärnusse", kust: "Pärnust" },
+  { place: "haigla", kus: "haiglas", kuhu: "haiglasse", kust: "haiglast" },
+  { place: "kontor", kus: "kontoris", kuhu: "kontorisse", kust: "kontorist" },
+  { place: "kohvik", kus: "kohvikus", kuhu: "kohvikusse", kust: "kohvikust" },
+  {
+    place: "kool",
+    kus: "koolis",
+    kuhu: "kooli",
+    long: "koolisse",
+    kust: "koolist",
+    third: "kool, kooli, kooli",
+  },
+  {
+    place: "pood",
+    kus: "poes",
+    kuhu: "poodi",
+    long: "poesse",
+    kust: "poest",
+    third: "pood, poe, poodi",
+  },
+  {
+    place: "linn",
+    kus: "linnas",
+    kuhu: "linna",
+    long: "linnasse",
+    kust: "linnast",
+    third: "linn, linna, linna",
+  },
+  { place: "maja", kus: "majas", kuhu: "majja", long: "majasse", kust: "majast" },
+  { place: "kodu", kus: "kodus", kuhu: "koju", kust: "kodust" },
+] as const;
+
+/** The sentences of the lesson on in, into and out of. */
+export const INNER_SENTENCES = {
+  "s-majas": "Kass on majas.",
+  "s-majja": "Kass läheb majja.",
+  "s-majast": "Kass tuleb majast.",
+  "q-tuled": "Kust sa tuled?",
+  "a-tulen-koolist": "Ma tulen koolist.",
+  "a-tulen-poest": "Ma tulen poest.",
+  "q-parit": "Kust sa pärit oled?",
+  "p-eestist": "Ma olen pärit Eestist.",
+  "p-soomest": "Ma olen pärit Soomest.",
+  "p-ukrainast": "Ma olen pärit Ukrainast.",
+  "p-tallinnast": "Ma olen pärit Tallinnast.",
+  "q-lahed": "Kuhu sa lähed?",
+  "a-lahen-tartusse": "Ma lähen Tartusse.",
+  "a-lahen-haiglasse": "Ma lähen haiglasse.",
+  "k-kooli": "Ma lähen kooli.",
+  "k-poodi": "Ma lähen poodi.",
+  "k-linna": "Me läheme linna.",
+  "k-koju": "Tule koju!",
+  "k-kodus": "Ma olen kodus.",
+  "k-kodust": "Ma tulen kodust.",
+} as const;
+
+/** Meeting Mari in the street: her lines in the second voice, the learner's in the main one. */
+export const INNER_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Kuhu sa lähed?", voice: "second" },
+  "d-sina-1": "Tere! Ma lähen poodi.",
+  "d-mari-2": { text: "Kust sa tuled?", voice: "second" },
+  "d-sina-2": "Ma tulen koolist.",
+  "d-mari-3": { text: "Kas sa oled homme kodus?", voice: "second" },
+  "d-sina-3": "Ei, ma lähen homme Tartusse.",
+  "d-mari-4": { text: "Kas sa oled pärit Tartust?", voice: "second" },
+  "d-sina-4": "Ei, ma olen pärit Pärnust.",
+  "d-mari-5": { text: "Head aega!", voice: "second" },
+} as const satisfies Record<string, Clip>;
+
+/** Words the lesson plays on their own: the three questions and every place form. */
+export const INNER_WORDS = [
+  "kus",
+  "kuhu",
+  "kust",
+  "kass",
+  "tööl",
+  "pärit",
+  "Eestist",
+  "Soomest",
+  "Ukrainast",
+  ...INNER_PLACES.flatMap((each) => [
+    each.place,
+    each.kus,
+    each.kuhu,
+    each.kust,
+    ...("long" in each ? [each.long] : []),
+  ]),
+];
+
+/**
  * Nouns of the partitive lesson, each with its third form, the partitive. Checked in ÕS 2025 on
  * Sõnaveeb (EKI morphology, 21 Nov 2026). Later lessons on objects and the plural partitive can
  * import it.
@@ -1423,6 +1524,11 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  "majas-majja-majast": {
+    ...words(INNER_WORDS),
+    ...INNER_SENTENCES,
+    ...INNER_DIALOGUE,
+  },
   "verbi-pohivormid": {
     ...words(VERB_FORMS.flatMap((verb) => [verb.ma, daForm(verb), verb.n, threeForms(verb)])),
     ...words(VERB_FORMS.filter((verb) => VORMID_COMMANDS.includes(verb.ma)).map((verb) => verb.ge)),

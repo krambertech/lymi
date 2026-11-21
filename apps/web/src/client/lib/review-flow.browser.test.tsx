@@ -1,5 +1,6 @@
 import { resetGradeCache } from "@lymi/client/grades";
 import { type ReviewFlow, type ReviewPlatform, useReviewFlow } from "@lymi/client/review-flow";
+import { resetWriteCache } from "@lymi/client/writes";
 import type { GradeOut, StreakOut } from "@lymi/core";
 import { QueryClient, QueryClientProvider, QueryObserver } from "@tanstack/react-query";
 import type { ReactNode } from "react";
@@ -77,8 +78,11 @@ function gradeShown(flow: ReviewFlow) {
 }
 
 beforeEach(() => {
+  // Real timers first, in case a previous file on this page left fake ones installed.
+  vi.useRealTimers();
   localStorage.clear();
   resetGradeCache();
+  resetWriteCache();
   qc = new QueryClient({ defaultOptions: { queries: { retry: false } } });
   vi.spyOn(api, "streak").mockResolvedValue({
     reviewedDays: 1,
@@ -249,9 +253,34 @@ test("steps forward again when the server keeps a grade Undo took back", async (
 
 test("fetches the next day's draw when the day ends during a review", async () => {
   // The test owns the clock, so a slow runner cannot reach the day's end before the first draw.
+  // Only Date is faked. Faking setTimeout too stops React Query notifying (it uses setTimeout(0))
+  // and stops fresh() from capping a stuck flush, which is why this test flaked under waitFor.
   const start = new Date("2026-11-01T12:00:00Z").getTime();
   const end = start + 60 * 60_000;
-  vi.useFakeTimers({ now: start, toFake: ["Date", "setTimeout", "clearTimeout"] });
+  vi.useFakeTimers({ now: start, toFake: ["Date"] });
+  const longTimers = new Map<object, () => void>();
+  const realSetTimeout = globalThis.setTimeout.bind(globalThis);
+  const realClearTimeout = globalThis.clearTimeout.bind(globalThis);
+  vi.spyOn(globalThis, "setTimeout").mockImplementation(((
+    fn: TimerHandler,
+    delay?: number,
+    ...args: unknown[]
+  ) => {
+    // The day's timer waits about an hour; short timeouts stay real so the hook can settle.
+    if (typeof fn === "function" && (delay ?? 0) >= 60 * 60_000) {
+      const handle = { long: true };
+      longTimers.set(handle, () => fn(...args));
+      return handle as unknown as ReturnType<typeof setTimeout>;
+    }
+    return realSetTimeout(fn as TimerHandler, delay, ...args);
+  }) as typeof setTimeout);
+  vi.spyOn(globalThis, "clearTimeout").mockImplementation(((
+    handle?: ReturnType<typeof setTimeout>,
+  ) => {
+    if (handle && typeof handle === "object" && longTimers.delete(handle)) return;
+    realClearTimeout(handle);
+  }) as typeof clearTimeout);
+
   const today = drawOf(["a"], dayOf(end - DAY, end));
   const tomorrow = drawOf(["b"], dayOf(end, end + DAY));
   const draw = vi
@@ -264,7 +293,8 @@ test("fetches the next day's draw when the day ends during a review", async () =
   expect(result.current.leg?.date).toBe(today.day.date);
   const calls = draw.mock.calls.length;
   // Midnight passes with the review still open, and only the day's own timer can notice.
-  await vi.advanceTimersByTimeAsync(end - Date.now() + 100);
+  vi.setSystemTime(end + 100);
+  for (const run of longTimers.values()) run();
   await vi.waitFor(() => expect(result.current.leg?.date).toBe(tomorrow.day.date));
   expect(draw.mock.calls.length).toBeGreaterThan(calls);
   await vi.waitFor(() => expect(result.current.current?.card.id).toBe("b"));

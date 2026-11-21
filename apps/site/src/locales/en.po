@@ -37,6 +37,9 @@ msgstr "-teist or -kümmend?"
 msgid "-vad now; -sid in the past, as for sa."
 msgstr "-vad now; -sid in the past, as for sa."
 
+msgid ", in the right group"
+msgstr ", in the right group"
+
 msgid "“J’ai la flemme” is the whole excuse."
 msgstr "“J’ai la flemme” is the whole excuse."
 
@@ -84,6 +87,10 @@ msgstr "{0, plural, one {# section} other {# sections}}"
 #. placeholder {0}: 3
 msgid "{0, plural, one {# selected} other {# selected}}"
 msgstr "{0, plural, one {# selected} other {# selected}}"
+
+#. placeholder {0}: state.mistakes
+msgid "{0, plural, one {# wrong try} other {# wrong tries}}"
+msgstr "{0, plural, one {# wrong try} other {# wrong tries}}"
 
 #. placeholder {0}: 3
 msgid "{0, plural, one {Add # card} other {Add # cards}}"
@@ -139,6 +146,9 @@ msgstr "{0}, your answer"
 
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {# card added} other {# cards added}}"
+
+msgid "{base} becomes {form}"
+msgstr "{base} becomes {form}"
 
 msgid "{before} blank {after}"
 msgstr "{before} blank {after}"
@@ -295,8 +305,26 @@ msgstr "{turned, plural, one {# turned} other {# turned}}"
 msgid "{v}, as in {word}"
 msgstr "{v}, as in {word}"
 
+msgid "{word} added"
+msgstr "{word} added"
+
+msgid "{word} back with the words"
+msgstr "{word} back with the words"
+
+msgid "{word} chosen. Now its match."
+msgstr "{word} chosen. Now its match."
+
+msgid "{word} in {label}"
+msgstr "{word} in {label}"
+
 msgid "{word} in gap {n}"
 msgstr "{word} in gap {n}"
+
+msgid "{word} picked. Choose its group."
+msgstr "{word} picked. Choose its group."
+
+msgid "{word} taken out"
+msgstr "{word} taken out"
 
 msgid "{word} taken out of the gap"
 msgstr "{word} taken out of the gap"
@@ -304,6 +332,12 @@ msgstr "{word} taken out of the gap"
 #. placeholder {0}: i18n._(MEANINGS[word])
 msgid "{word}, {0}, today"
 msgstr "{word}, {0}, today"
+
+msgid "{word}, word {place}"
+msgstr "{word}, word {place}"
+
+msgid "{word}: matched."
+msgstr "{word}: matched."
 
 msgid "*Bread* and butter."
 msgstr "*Bread* and butter."
@@ -1197,6 +1231,9 @@ msgstr "A thing; stuff"
 msgid "a thousand"
 msgstr "a thousand"
 
+msgid "a town"
+msgstr "a town"
+
 msgid "A translation beside each one"
 msgstr "A translation beside each one"
 
@@ -1208,6 +1245,9 @@ msgstr "A way in, never the answer."
 
 msgid "A weekly check-in"
 msgstr "A weekly check-in"
+
+msgid "A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer shows the word turning into its form."
+msgstr "A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer shows the word turning into its form."
 
 msgid "A word list from a spreadsheet"
 msgstr "A word list from a spreadsheet"
@@ -1738,6 +1778,9 @@ msgstr "Also a bell."
 msgid "Also called the frequency illusion."
 msgstr "Also called the frequency illusion."
 
+msgid "Also right:"
+msgstr "Also right:"
+
 msgid "Always"
 msgstr "Always"
 
@@ -2062,6 +2105,9 @@ msgstr "at home"
 msgid "At home"
 msgstr "At home"
 
+msgid "at school"
+msgstr "at school"
+
 msgid "at school, in a school"
 msgstr "at school, in a school"
 
@@ -2169,6 +2215,9 @@ msgstr "Began in 1618 with the <0>Defenestration of Prague</0>."
 
 msgid "behind"
 msgstr "behind"
+
+msgid "belongs in"
+msgstr "belongs in"
 
 msgid "Beta"
 msgstr "Beta"
@@ -2322,6 +2371,9 @@ msgstr "Build new words from ones you know, read signs, news and forms, and join
 
 msgid "Build the course in order."
 msgstr "Build the course in order."
+
+msgid "Build the sentence"
+msgstr "Build the sentence"
 
 msgid "Building something of your own? Lymi has a full API. <0>Read the API docs</0>"
 msgstr "Building something of your own? Lymi has a full API. <0>Read the API docs</0>"
@@ -2763,6 +2815,9 @@ msgstr "Chopsticks"
 msgid "Chords, scales and the theory behind the pieces you play."
 msgstr "Chords, scales and the theory behind the pieces you play."
 
+msgid "Chosen. Now its match."
+msgstr "Chosen. Now its match."
+
 msgid "Citizenship"
 msgstr "Citizenship"
 
@@ -2834,6 +2889,9 @@ msgstr "Clocking off, and the free evening that follows"
 
 msgid "Close menu"
 msgstr "Close menu"
+
+msgid "Close: only the letters with marks are off."
+msgstr "Close: only the letters with marks are off."
 
 msgid "closed"
 msgstr "closed"
@@ -3691,6 +3749,9 @@ msgstr "Estonian imperative: giving commands"
 msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
 msgstr "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
 
+msgid "Estonian letters"
+msgstr "Estonian letters"
+
 msgid "Estonian numbers"
 msgstr "Estonian numbers"
 
@@ -3825,6 +3886,12 @@ msgstr "Every state’s deck"
 
 msgid "Every subject on one schedule."
 msgstr "Every subject on one schedule."
+
+msgid "Every word has a group. Check when you’re ready."
+msgstr "Every word has a group. Check when you're ready."
+
+msgid "Every word is in its group."
+msgstr "Every word is in its group."
 
 msgid "Every word with its forms."
 msgstr "Every word with its forms."
@@ -4857,6 +4924,9 @@ msgstr "Hear each word said aloud."
 msgid "Hear every card read aloud the way a native speaker says it."
 msgstr "Hear every card read aloud the way a native speaker says it."
 
+msgid "Hear it"
+msgstr "Hear it"
+
 msgid "Hear it read"
 msgstr "Hear it read"
 
@@ -5751,6 +5821,9 @@ msgstr "In voice mode, ChatGPT takes your words from Lymi and plays out a scene 
 msgid "In voice mode, Claude can quiz you from your decks while you walk or cook. You answer out loud, and your reviews stay in Lymi."
 msgstr "In voice mode, Claude can quiz you from your decks while you walk or cook. You answer out loud, and your reviews stay in Lymi."
 
+msgid "in, inside"
+msgstr "in, inside"
+
 msgid "In, into, out of"
 msgstr "In, into, out of"
 
@@ -5768,6 +5841,12 @@ msgstr "Injured at the elbow; weak grip and numb little finger"
 
 msgid "inside"
 msgstr "inside"
+
+msgid "Inside a building, a town or a country: -s."
+msgstr "Inside a building, a town or a country: -s."
+
+msgid "Inside or on?"
+msgstr "Inside or on?"
 
 msgid "Insights"
 msgstr "Insights"
@@ -5879,6 +5958,13 @@ msgstr "It splits: in “Ich höre jetzt auf”, auf moves to the end."
 
 msgid "It was {expected}."
 msgstr "It was {expected}."
+
+#. placeholder {0}: item.answers[0]
+msgid "It was <0>{0}</0>"
+msgstr "It was <0>{0}</0>"
+
+msgid "It was <0>{expected}</0>."
+msgstr "It was <0>{expected}</0>."
 
 msgid "It was a really *pleasant* evening."
 msgstr "It was a really *pleasant* evening."
@@ -6147,6 +6233,9 @@ msgctxt "cards in this state"
 msgid "Known"
 msgstr "Known"
 
+msgid "Kodu is home; kodus, at home."
+msgstr "Kodu is home; kodus, at home."
+
 msgid "Kolm, three, and veerand, a quarter."
 msgstr "Kolm, three, and veerand, a quarter."
 
@@ -6343,6 +6432,9 @@ msgstr "Lecture 6"
 
 msgid "lecture-5-slides.pdf"
 msgstr "lecture-5-slides.pdf"
+
+msgid "Left column"
+msgstr "Left column"
 
 msgid "Legal bases"
 msgstr "Legal bases"
@@ -6801,6 +6893,9 @@ msgstr "Make one deck for your study group and share its link. Everyone gets eac
 msgid "Make Spanish flashcards from this post."
 msgstr "Make Spanish flashcards from this post."
 
+msgid "Make the form"
+msgstr "Make the form"
+
 msgid "Making cards with AI"
 msgstr "Making cards with AI"
 
@@ -6869,6 +6964,9 @@ msgstr "Masculine"
 
 msgid "Masculine, though it ends in -a: buenos días."
 msgstr "Masculine, though it ends in -a: buenos días."
+
+msgid "Match"
+msgstr "Match"
 
 msgid "Match, Blast and Quizlet Live"
 msgstr "Match, Blast and Quizlet Live"
@@ -7293,6 +7391,9 @@ msgstr "No reading over <0>次</0> and <1>駅</1>: you already know them."
 msgid "No signal"
 msgstr "No signal"
 
+msgid "No wrong tries."
+msgstr "No wrong tries."
+
 msgid "No, *thank you*."
 msgstr "No, *thank you*."
 
@@ -7385,6 +7486,9 @@ msgstr "None"
 
 msgid "Not “I want well”. It’s how you accept a coffee."
 msgstr "Not “I want well”. It’s how you accept a coffee."
+
+msgid "Not a pair."
+msgstr "Not a pair."
 
 msgid "Not a week, as Russian <0>неде́ля</0> is."
 msgstr "Not a week, as Russian <0>неде́ля</0> is."
@@ -7595,6 +7699,9 @@ msgstr "On a door or a sign."
 msgid "On a door you’ll also see <0/>, open, and <1/>, closed."
 msgstr "On a door you’ll also see <0/>, open, and <1/>, closed."
 
+msgid "On a surface, at work or at a market: -l."
+msgstr "On a surface, at work or at a market: -l."
+
 msgid "On a toilet door, N stands for <0>naistele</0>, for women."
 msgstr "On a toilet door, N stands for <0>naistele</0>, for women."
 
@@ -7636,6 +7743,9 @@ msgstr "on the wall"
 
 msgid "On your phone"
 msgstr "On your phone"
+
+msgid "on, at"
+msgstr "on, at"
 
 msgid "On, onto, off"
 msgstr "On, onto, off"
@@ -7871,6 +7981,12 @@ msgstr "Page not found"
 msgid "Page not found · Lymi"
 msgstr "Page not found · Lymi"
 
+msgid "Pair {number}"
+msgstr "Pair {number}"
+
+msgid "Pairs across two columns, tapped one side then the other; a pair locks when it is right, and wrong tries count."
+msgstr "Pairs across two columns, tapped one side then the other; a pair locks when it is right, and wrong tries count."
+
 msgid "Park"
 msgstr "Park"
 
@@ -8009,6 +8125,9 @@ msgstr "Pick a pair. Both words are drawn on one time scale, so the longer one t
 msgid "Pick a range, listen, and type the number in digits."
 msgstr "Pick a range, listen, and type the number in digits."
 
+msgid "Pick a word first."
+msgstr "Pick a word first."
+
 msgid "Pick each pair above again and hear which word is longer."
 msgstr "Pick each pair above again and hear which word is longer."
 
@@ -8023,6 +8142,9 @@ msgstr "Pick one, add it for free, and start reviewing."
 
 msgid "Pick the ending that goes with the pronoun, then hear the sentence."
 msgstr "Pick the ending that goes with the pronoun, then hear the sentence."
+
+msgid "Pick the form"
+msgstr "Pick the form"
 
 msgid "Pick the word for the gap"
 msgstr "Pick the word for the gap"
@@ -8129,6 +8251,9 @@ msgstr "Play {word}"
 #. placeholder {0}: step.word
 msgid "Play <0>{0}</0>"
 msgstr "Play <0>{0}</0>"
+
+msgid "Play <0>{form}</0>"
+msgstr "Play <0>{form}</0>"
 
 msgid "Play each number twice before you type."
 msgstr "Play each number twice before you type."
@@ -8411,14 +8536,23 @@ msgstr "Pühapäev with the ending that says when, as in esmaspäeval."
 msgid "Pumpkin"
 msgstr "Pumpkin"
 
+msgid "Put {picked} here"
+msgstr "Put {picked} here"
+
 msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 msgstr "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
 
 msgid "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
 msgstr "Put <0>kas</0> in front of a sentence to ask yes or no. Nothing else moves: <1>Kas sa elad Tallinnas?</1>"
 
+msgid "Put every word in a group first."
+msgstr "Put every word in a group first."
+
 msgid "Put Lymi’s address in ~/.gemini/settings.json, with the client ID from the setup guide."
 msgstr "Put Lymi’s address in ~/.gemini/settings.json, with the client ID from the setup guide."
+
+msgid "Put the words in order"
+msgstr "Put the words in order"
 
 msgid "Put them together"
 msgstr "Put them together"
@@ -8799,6 +8933,9 @@ msgstr "Right answer"
 msgid "right away"
 msgstr "right away"
 
+msgid "Right column"
+msgstr "Right column"
+
 msgid "Right."
 msgstr "Right."
 
@@ -8919,6 +9056,9 @@ msgstr "Say it"
 msgctxt "dialogue: say the right reply and go on"
 msgid "Say it"
 msgstr "Say it"
+
+msgid "Say it in Estonian:"
+msgstr "Say it in Estonian:"
 
 msgid "Say no"
 msgstr "Say no"
@@ -9445,6 +9585,9 @@ msgstr "Soon"
 msgid "Sorry; excuse me"
 msgstr "Sorry; excuse me"
 
+msgid "Sort"
+msgstr "Sort"
+
 msgid "Sounds good"
 msgstr "Sounds good"
 
@@ -9916,11 +10059,20 @@ msgstr "Tap a word"
 msgid "Tap a word or a person"
 msgstr "Tap a word or a person"
 
+msgid "Tap a word to add it; drag or use the arrow keys to move it."
+msgstr "Tap a word to add it; drag or use the arrow keys to move it."
+
+msgid "Tap a word, then its group, or drag it there."
+msgstr "Tap a word, then its group, or drag it there."
+
 msgid "Tap an ending"
 msgstr "Tap an ending"
 
 msgid "Tap õ, ä and ü in the vowels above once more, then try again."
 msgstr "Tap õ, ä and ü in the vowels above once more, then try again."
+
+msgid "Tap one side, then its match on the other."
+msgstr "Tap one side, then its match on the other."
 
 msgid "Tap the commands above once more, then try again."
 msgstr "Tap the commands above once more, then try again."
@@ -9933,6 +10085,12 @@ msgstr "Tap the places above once more, then try again."
 
 msgid "Tap the question words above once more, then try again."
 msgstr "Tap the question words above once more, then try again."
+
+msgid "Tap the words in order"
+msgstr "Tap the words in order"
+
+msgid "Tap the words in order first."
+msgstr "Tap the words in order first."
 
 msgid "Tap through the table above once more, then try again."
 msgstr "Tap through the table above once more, then try again."
@@ -10465,8 +10623,8 @@ msgstr "The left column, top to bottom: the first, second and third form. Pick a
 msgid "The lesson chat"
 msgstr "The lesson chat"
 
-msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading and a dialogue. docs/design/estonian-lessons.md says when to use each."
-msgstr "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading and a dialogue. docs/design/estonian-lessons.md says when to use each."
+msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence and making a form. docs/design/estonian-lessons.md says when to use each."
+msgstr "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence and making a form. docs/design/estonian-lessons.md says when to use each."
 
 msgid "The lessons are free and need no account. Your progress stays in this browser."
 msgstr "The lessons are free and need no account. Your progress stays in this browser."
@@ -10824,6 +10982,9 @@ msgstr "The union"
 
 msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
 msgstr "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
+
+msgid "The verb stays second, whichever word comes first."
+msgstr "The verb stays second, whichever word comes first."
 
 msgid "The verb without its ending"
 msgstr "The verb without its ending"
@@ -11423,6 +11584,9 @@ msgstr "Tomorrow."
 msgid "Tonight"
 msgstr "Tonight"
 
+msgid "Tööl, at work, takes -l like a market does."
+msgstr "Tööl, at work, takes -l like a market does."
+
 msgctxt "deck tag"
 msgid "TOPIK I"
 msgstr "TOPIK I"
@@ -11517,6 +11681,9 @@ msgstr "Tuesday Ukrainian class"
 
 msgid "Tuleb says that he’s coming. To call him over, use the stem: tule."
 msgstr "Tuleb says that he’s coming. To call him over, use the stem: tule."
+
+msgid "Turg becomes turu- before an ending: turul."
+msgstr "Turg becomes turu- before an ending: turul."
 
 msgid "Turg, market, takes -l by habit."
 msgstr "Turg, market, takes -l by habit."
@@ -11617,6 +11784,9 @@ msgstr "two hundred"
 msgid "two thousand"
 msgstr "two thousand"
 
+msgid "Type <0>{letter}</0>"
+msgstr "Type <0>{letter}</0>"
+
 msgid "Type <0>でんしゃ</0> or <1>デンシャ</1> and find <2>電車</2>."
 msgstr "Type <0>でんしゃ</0> or <1>デンシャ</1> and find <2>電車</2>."
 
@@ -11634,6 +11804,9 @@ msgstr "Type a word. Lymi adds a meaning, an example and audio in your deck’s 
 
 msgid "Type a word. Lymi adds a meaning, an example and audio, and marks every field it wrote so you can check it."
 msgstr "Type a word. Lymi adds a meaning, an example and audio, and marks every field it wrote so you can check it."
+
+msgid "Type the form"
+msgstr "Type the form"
 
 msgid "Type the number"
 msgstr "Type the number"
@@ -11722,6 +11895,9 @@ msgstr "Use a value without taking it"
 
 msgid "Use cases"
 msgstr "Use cases"
+
+msgid "Use every word."
+msgstr "Use every word."
 
 msgid "Used Lymi"
 msgstr "Used Lymi"
@@ -12214,6 +12390,9 @@ msgstr "where from"
 msgid "Where is he or she?"
 msgstr "Where is he or she?"
 
+msgid "Where is it?"
+msgstr "Where is it?"
+
 msgid "Where is Jaan on Sunday?"
 msgstr "Where is Jaan on Sunday?"
 
@@ -12505,6 +12684,9 @@ msgstr "Word order: the verb comes second"
 msgid "Word pairs"
 msgstr "Word pairs"
 
+msgid "Word tiles tapped into order after hearing the sentence or reading its meaning; every right order counts, and the sentence plays after Check."
+msgstr "Word tiles tapped into order after hearing the sentence or reading its meaning; every right order counts, and the sentence plays after Check."
+
 msgid "Word to look up"
 msgstr "Word to look up"
 
@@ -12552,6 +12734,9 @@ msgstr "Words from your deck"
 
 msgid "Words in colour open their meaning."
 msgstr "Words in colour open their meaning."
+
+msgid "Words into two or three groups, tapped or dragged, checked together; a wrong word shows its group and the rule."
+msgstr "Words into two or three groups, tapped or dragged, checked together; a wrong word shows its group and the rule."
 
 msgid "Words show their reading in kana over the kanji. The kana deck is the one place with romaji, because there the sound is the answer."
 msgstr "Words show their reading in kana over the kanji. The kana deck is the one place with romaji, because there the sound is the answer."
@@ -13087,6 +13272,9 @@ msgstr "Your rights and choices"
 
 msgid "Your Saturday"
 msgstr "Your Saturday"
+
+msgid "Your sentence"
+msgstr "Your sentence"
 
 msgid "Your state"
 msgstr "Your state"

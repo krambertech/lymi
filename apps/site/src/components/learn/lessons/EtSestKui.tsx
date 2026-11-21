@@ -145,9 +145,9 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       id: "reason",
       ask: t(msg`Why is Kati learning Estonian?`),
       options: [
-        { id: "work", label: t(msg`For a new job`) },
+        { id: "work", label: t(msg`For a new job at a big company`) },
         { id: "moved", label: t(msg`Her family moved to Tartu`) },
-        { id: "friend", label: t(msg`Her best friend is Estonian`) },
+        { id: "friend", label: t(msg`Her best friend is from Estonia`) },
       ],
       answer: "moved",
       line: 0,
@@ -167,9 +167,9 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       id: "ask",
       ask: t(msg`What does she do when she doesn’t understand?`),
       options: [
-        { id: "dictionary", label: t(msg`She looks the word up`) },
+        { id: "dictionary", label: t(msg`She looks the word up on her phone`) },
         { id: "quiet", label: t(msg`She stays quiet`) },
-        { id: "again", label: t(msg`She asks again`) },
+        { id: "again", label: t(msg`She asks the teacher again`) },
       ],
       answer: "again",
       line: 2,

@@ -3524,7 +3524,7 @@ export const CONJUNCTION_GAPS = [
 export const WHY_ESTONIAN_PASSAGE = [
   "Ma õpin eesti keelt, sest me kolisime eelmisel aastal Tartusse.",
   "Minu õpetaja ütleb, et ma räägin juba päris hästi.",
-  "Kui ma millestki aru ei saa, küsin ma uuesti.",
+  "Kui ma millestki aru ei saa, küsin ma õpetajalt uuesti.",
   "Eesti keel on raskem kui inglise keel, aga väga ilus.",
 ] as const;
 

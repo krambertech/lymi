@@ -6879,8 +6879,8 @@ msgstr "For a cashier, a builder, or a friend who is studying."
 msgid "For a hard card"
 msgstr "For a hard card"
 
-msgid "For a new job"
-msgstr "For a new job"
+msgid "For a new job at a big company"
+msgstr "For a new job at a big company"
 
 msgid "For a person’s place, Estonian says <0/>: <1/> It has three forms too: <2/> <3/>"
 msgstr "For a person’s place, Estonian says <0/>: <1/> It has three forms too: <2/> <3/>"
@@ -8330,8 +8330,8 @@ msgstr "Hello!"
 msgid "help"
 msgstr "help"
 
-msgid "Her best friend is Estonian"
-msgstr "Her best friend is Estonian"
+msgid "Her best friend is from Estonia"
+msgstr "Her best friend is from Estonia"
 
 msgid "Her brother"
 msgstr "Her brother"
@@ -15447,8 +15447,8 @@ msgstr "She already speaks quite well"
 msgid "She asked whether you have time, not what you have."
 msgstr "She asked whether you have time, not what you have."
 
-msgid "She asks again"
-msgstr "She asks again"
+msgid "She asks the teacher again"
+msgstr "She asks the teacher again"
 
 msgid "She came back from *town*."
 msgstr "She came back from *town*."
@@ -15465,8 +15465,8 @@ msgstr "She doesn’t drink milk, so <0>-ta</0>: without milk."
 msgid "She drinks some coffee, not a counted cup: <0>joob kohvi</0>."
 msgstr "She drinks some coffee, not a counted cup: <0>joob kohvi</0>."
 
-msgid "She looks the word up"
-msgstr "She looks the word up"
+msgid "She looks the word up on her phone"
+msgstr "She looks the word up on her phone"
 
 msgid "She must practise more"
 msgstr "She must practise more"

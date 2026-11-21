@@ -879,6 +879,9 @@ msgstr "<0>Hakkama</0> takes the person’s ending, and the verb after it stays 
 msgid "<0>Hakkama</0> takes the person’s ending; the verb after it stays in its <1>ma</1> form."
 msgstr "<0>Hakkama</0> takes the person’s ending; the verb after it stays in its <1>ma</1> form."
 
+msgid "<0>Helistama</0> and <1>kirjutama</1> go to someone: <2>sulle</2>."
+msgstr "<0>Helistama</0> and <1>kirjutama</1> go to someone: <2>sulle</2>."
+
 msgid "<0>Homme</0> is tomorrow, so the present: <1>olen</1>."
 msgstr "<0>Homme</0> is tomorrow, so the present: <1>olen</1>."
 
@@ -917,6 +920,15 @@ msgstr "<0>Kes</0> asks about people, <1>mis</1> about things."
 
 msgid "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2>."
 msgstr "<0>Kodu</0> is one home, so the adjective has no <1>-d</1>: <2>väike</2>."
+
+msgid "<0>Kohtuma</0> takes <1>-ga</1>, not <2>-le</2>: <3>sinuga</3>."
+msgstr "<0>Kohtuma</0> takes <1>-ga</1>, not <2>-le</2>: <3>sinuga</3>."
+
+msgid "<0>Kohtuma</0> takes <1>-ga</1>: you meet with someone, <2>sinuga</2>."
+msgstr "<0>Kohtuma</0> takes <1>-ga</1>: you meet with someone, <2>sinuga</2>."
+
+msgid "<0>Kohtuma</0>, and <1>rääkima</1> with someone, take <2>-ga</2>: <3>sinuga</3>."
+msgstr "<0>Kohtuma</0>, and <1>rääkima</1> with someone, take <2>-ga</2>: <3>sinuga</3>."
 
 msgid "<0>Kohv</0> is one thing, so it’s <1>meeldib</1>."
 msgstr "<0>Kohv</0> is one thing, so it’s <1>meeldib</1>."
@@ -1089,6 +1101,18 @@ msgstr "<0>Oo</0> turns into <1>õ</1>, then <2>in</2>."
 msgid "<0>Öö</0> turns into <1>õ</1>, then <2>in</2>."
 msgstr "<0>Öö</0> turns into <1>õ</1>, then <2>in</2>."
 
+msgid "<0>Ootama, aitama, armastama, otsima</0> always take the third form."
+msgstr "<0>Ootama, aitama, armastama, otsima</0> always take the third form."
+
+msgid "<0>Ootama</0> always takes the third form: <1>seda</1>."
+msgstr "<0>Ootama</0> always takes the third form: <1>seda</1>."
+
+msgid "<0>Ootama</0> and <1>aitama</1> take the third form: <2>sind</2>."
+msgstr "<0>Ootama</0> and <1>aitama</1> take the third form: <2>sind</2>."
+
+msgid "<0>Ootan sind</0>, <1>räägin sinust</1>, <2>helistan sulle</2>: each verb asks for its own case, and the dictionary tells you which."
+msgstr "<0>Ootan sind</0>, <1>räägin sinust</1>, <2>helistan sulle</2>: each verb asks for its own case, and the dictionary tells you which."
+
 msgid "<0>opportunity cost</0> <1>= what you give up</1>"
 msgstr "<0>opportunity cost</0> <1>= what you give up</1>"
 
@@ -1149,6 +1173,9 @@ msgstr "<0>Praegu</0>, right now: still reading, so the third form."
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>price elasticity</0> ?"
 
+msgid "<0>Rääkima</0>, about, and <1>aru saama</1> take <2>-st</2>: <3>sinust</3>."
+msgstr "<0>Rääkima</0>, about, and <1>aru saama</1> take <2>-st</2>: <3>sinust</3>."
+
 msgid "<0>Sa oled</0> is you are: this tells Mari she’s from Ukraine."
 msgstr "<0>Sa oled</0> is you are: this tells Mari she’s from Ukraine."
 
@@ -1167,6 +1194,9 @@ msgstr "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousa
 msgid "<0>Sain</0> is the past. To ask politely: <1>kas ma saaksin</1>."
 msgstr "<0>Sain</0> is the past. To ask politely: <1>kas ma saaksin</1>."
 
+msgid "<0>Sellest</0> is about it. <1>Ootama</1> takes the third form: <2>seda</2>."
+msgstr "<0>Sellest</0> is about it. <1>Ootama</1> takes the third form: <2>seda</2>."
+
 msgid "<0>sin</0> when it happened; no ending after <1>ei</1>."
 msgstr "<0>sin</0> when it happened; no ending after <1>ei</1>."
 
@@ -1175,6 +1205,9 @@ msgstr "<0>Sinu</0> is your: that says the coffee is Mari’s."
 
 msgid "<0>Sinu</0> is your: this says “Your name is Andres.”"
 msgstr "<0>Sinu</0> is your: this says “Your name is Andres.”"
+
+msgid "<0>Sinust</0> is about you. <1>Vastama</1> answers to someone: <2>sulle</2>."
+msgstr "<0>Sinust</0> is about you. <1>Vastama</1> answers to someone: <2>sulle</2>."
 
 msgid "<0>Sklep</0> is a shop, not a crypt, and <1>dynia</1> is a pumpkin, not a melon. The ready-made decks say in a card’s notes where a Polish word only looks like yours, and AI writes the same note for the words you add."
 msgstr "<0>Sklep</0> is a shop, not a crypt, and <1>dynia</1> is a pumpkin, not a melon. The ready-made decks say in a card’s notes where a Polish word only looks like yours, and AI writes the same note for the words you add."
@@ -1256,6 +1289,9 @@ msgstr "<0>Ujuda</0> is a verb, and a verb takes <1>meeldib</1>."
 
 msgid "<0>vad</0> now, <1>sid</1> in the past, as for <2>sa</2>."
 msgstr "<0>vad</0> now, <1>sid</1> in the past, as for <2>sa</2>."
+
+msgid "<0>Vastama</0> answers to someone: <1>sulle</1>."
+msgstr "<0>Vastama</0> answers to someone: <1>sulle</1>."
 
 msgid "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
 msgstr "<0>Veerand neli</0> is a quarter of the way to four, 3:15. <1>Kolmveerand neli</1> is three quarters, 3:45."
@@ -1863,6 +1899,9 @@ msgstr "A free lesson on the future in Estonian, which has no future tense: the 
 msgid "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da form is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud."
 msgstr "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da form is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud."
 
+msgid "A free lesson on which case an Estonian verb takes: the third form after ootama and aitama (ootan sind), -st after rääkima and aru saama (räägin sinust), -le after helistama (helistan sulle) and -ga after kohtuma (kohtun sinuga), and how a dictionary shows it with keda, kellest, kellele. Every sentence is read aloud."
+msgstr "A free lesson on which case an Estonian verb takes: the third form after ootama and aitama (ootan sind), -st after rääkima and aru saama (räägin sinust), -le after helistama (helistan sulle) and -ga after kohtuma (kohtun sinuga), and how a dictionary shows it with keda, kellest, kellele. Every sentence is read aloud."
+
 msgid "A free lesson on which Estonian verbs take the -da form after them and which take the -ma form: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
 msgstr "A free lesson on which Estonian verbs take the -da form after them and which take the -ma form: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
 
@@ -2300,6 +2339,9 @@ msgstr "About 3,900, on the computer"
 
 msgid "About these decks"
 msgstr "About these decks"
+
+msgid "about whom, from whom"
+msgstr "about whom, from whom"
 
 msgid "Accents that land between the beats"
 msgstr "Accents that land between the beats"
@@ -2850,6 +2892,9 @@ msgstr "All Chinese decks"
 
 msgid "All eight. You can build the stem for every plural case."
 msgstr "All eight. You can build the stem for every plural case."
+
+msgid "All eight. You hear what each verb asks for."
+msgstr "All eight. You hear what each verb asks for."
 
 msgid "All eight. You heard the difference every time."
 msgstr "All eight. You heard the difference every time."
@@ -5439,6 +5484,9 @@ msgstr "Each deck opens on its own page with every card on it, so you can see wh
 msgid "Each gap becomes a card of its own, with the hidden word as the term and the sentence as its example. Image occlusion notes stay in Anki."
 msgstr "Each gap becomes a card of its own, with the hidden word as the term and the sentence as its example. Image occlusion notes stay in Anki."
 
+msgid "Each gap is a form of <0>sina</0>, you. The verb decides which one. Pick it, then hear the sentence."
+msgstr "Each gap is a form of <0>sina</0>, you. The verb decides which one. Pick it, then hear the sentence."
+
 msgid "Each has its own page: the script, the sounds and the free decks that language needs."
 msgstr "Each has its own page: the script, the sounds and the free decks that language needs."
 
@@ -5522,6 +5570,9 @@ msgstr "Each time you remember a word, Lymi waits longer before showing it again
 
 msgid "Each time you remember a word, Lymi waits longer before showing it again. Forget it, and it comes back soon. You arrive at the next lesson still knowing the last one."
 msgstr "Each time you remember a word, Lymi waits longer before showing it again. Forget it, and it comes back soon. You arrive at the next lesson still knowing the last one."
+
+msgid "Each verb has its case"
+msgstr "Each verb has its case"
 
 msgid "Each word gains a vowel at the end: <0>kooli, ukse, raamatu</0>."
 msgstr "Each word gains a vowel at the end: <0>kooli, ukse, raamatu</0>."
@@ -5861,6 +5912,9 @@ msgstr "Estonian Top 100 Verbs"
 
 msgid "Estonian Top 1000 Words"
 msgstr "Estonian Top 1000 Words"
+
+msgid "Estonian verb government: ootan sind, räägin sinust, helistan sulle"
+msgstr "Estonian verb government: ootan sind, räägin sinust, helistan sulle"
 
 msgid "Estonian words change their shape: <0>vesi</0>, <1>vee</1>, <2>vett</2>. Learn the three forms with each word and the other cases follow from them. The verb deck has them on every card, and AI adds them to the words you save."
 msgstr "Estonian words change their shape: <0>vesi</0>, <1>vee</1>, <2>vett</2>. Learn the three forms with each word and the other cases follow from them. The verb deck has them on every card, and AI adds them to the words you save."
@@ -9232,6 +9286,9 @@ msgstr "In Claude Code, turn what you just learned into cards without leaving th
 msgid "In Claude, open Settings, then Connectors, and choose Add custom connector. Paste this address and leave the rest empty."
 msgstr "In Claude, open Settings, then Connectors, and choose Add custom connector. Paste this address and leave the rest empty."
 
+msgid "In English, a little word after the verb does the job: wait for, talk about, call someone. In Estonian, the verb asks for a case. A dictionary shows it with a question word: <0/> for the third form, <1/> for <2>-st</2>, <3/> for <4>-le</4>, <5/> for <6>-ga</6>. Learn the verb and its question together."
+msgstr "In English, a little word after the verb does the job: wait for, talk about, call someone. In Estonian, the verb asks for a case. A dictionary shows it with a question word: <0/> for the third form, <1/> for <2>-st</2>, <3/> for <4>-le</4>, <5/> for <6>-ga</6>. Learn the verb and its question together."
+
 msgid "in Estonia"
 msgstr "in Estonia"
 
@@ -9806,6 +9863,9 @@ msgstr "Its rare, serious risk is lactic acidosis."
 msgid "Its second and third forms are the same."
 msgstr "Its second and third forms are the same."
 
+msgid "Jaan"
+msgstr "Jaan"
+
 msgid "Jaan at the shop"
 msgstr "Jaan at the shop"
 
@@ -9814,6 +9874,9 @@ msgstr "Jaan does."
 
 msgid "Jaan has a car."
 msgstr "Jaan has a car."
+
+msgid "Jaan has written to you. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Jaan has written to you. Pick what you say back. If you pick a wrong reply, you see why, then hear the right one."
 
 msgid "Jaan is a cook."
 msgstr "Jaan is a cook."
@@ -10285,6 +10348,9 @@ msgstr "Law"
 
 msgid "Learn a verb as three forms, the <0>-ma</0> form, the <1>-da</1> form and the I form: <2>lugema, lugeda, loen</2>."
 msgstr "Learn a verb as three forms, the <0>-ma</0> form, the <1>-da</1> form and the I form: <2>lugema, lugeda, loen</2>."
+
+msgid "Learn a verb with its question: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>"
+msgstr "Learn a verb with its question: <0>ootama keda?</0>, <1>rääkima kellest?</1>, <2>helistama kellele?</2>, <3>kohtuma kellega?</3>"
 
 msgid "Learn and Test capped on Free and Plus; unlimited with Plus Unlimited, €44.99 a year"
 msgstr "Learn and Test capped on Free and Plus; unlimited with Plus Unlimited, €44.99 a year"
@@ -10769,6 +10835,9 @@ msgstr "Look at <0>sõber</0>: <1>sõbrale</1>, but <2>sõpradele</2>. The plura
 
 msgid "look forward to"
 msgstr "look forward to"
+
+msgid "Look through the table once more, then try again."
+msgstr "Look through the table once more, then try again."
 
 msgid "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them the first, second and third form."
 msgstr "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them the first, second and third form."
@@ -11512,6 +11581,9 @@ msgstr "Morning"
 
 msgid "Most land plants have one."
 msgstr "Most land plants have one."
+
+msgid "Most of them. Ask the verb its question: <0>keda, kellest, kellele?</0>"
+msgstr "Most of them. Ask the verb its question: <0>keda, kellest, kellele?</0>"
 
 msgid "Most of them. Listen again in the table to the ones you missed."
 msgstr "Most of them. Listen again in the table to the ones you missed."
@@ -13234,6 +13306,9 @@ msgstr "Places with -l"
 
 msgid "Plain text"
 msgstr "Plain text"
+
+msgid "Plans with Jaan"
+msgstr "Plans with Jaan"
 
 msgid "Plans with Mari"
 msgstr "Plans with Mari"
@@ -15536,6 +15611,9 @@ msgstr "Talk: meeting Mari"
 msgid "Talk: plans with Kati"
 msgstr "Talk: plans with Kati"
 
+msgid "Talk: see you tomorrow"
+msgstr "Talk: see you tomorrow"
+
 msgid "Talk: what shall we do?"
 msgstr "Talk: what shall we do?"
 
@@ -16999,6 +17077,9 @@ msgstr "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. Their short fo
 msgid "The push behind ragtime, funk and reggae."
 msgstr "The push behind ragtime, funk and reggae."
 
+msgid "The question for the third form: keda sa ootad?"
+msgstr "The question for the third form: keda sa ootad?"
+
 msgid "The questions and answers are BAMF’s, from its catalogue of 7 May 2025, in German as they appear on the test. The translations and notes are Lymi’s. Lymi isn’t affiliated with BAMF and can’t promise a pass."
 msgstr "The questions and answers are BAMF’s, from its catalogue of 7 May 2025, in German as they appear on the test. The translations and notes are Lymi’s. Lymi isn’t affiliated with BAMF and can’t promise a pass."
 
@@ -17097,6 +17178,9 @@ msgstr "The same table for a verb: persons down, tenses across."
 
 msgid "The same topic in other languages"
 msgstr "The same topic in other languages"
+
+msgid "The same verb can change its meaning with the case: <0>räägin sinust</0>, about you; <1>räägin sinuga</1>, with you."
+msgstr "The same verb can change its meaning with the case: <0>räägin sinust</0>, about you; <1>räägin sinuga</1>, with you."
 
 msgid "The same whoever likes it: <0>mulle</0>, <1>talle</1>, <2>meile</2> or <3>neile</3>."
 msgstr "The same whoever likes it: <0>mulle</0>, <1>talle</1>, <2>meile</2> or <3>neile</3>."
@@ -17600,8 +17684,20 @@ msgstr "These four short verbs end their <0>-da</0> form in a bare <1>-a</1>, an
 msgid "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
 msgstr "These steps are for Gemini CLI, which works anywhere. In the Gemini app, Google opens custom apps only to adults in the US, in English."
 
+msgid "These take <0>-ga</0>, with: <1>ma kohtun sinuga</1>. Question: <2>kellega?</2>"
+msgstr "These take <0>-ga</0>, with: <1>ma kohtun sinuga</1>. Question: <2>kellega?</2>"
+
+msgid "These take <0>-le</0>, to: <1>ma helistan sulle</1>. Question: <2>kellele?</2>"
+msgstr "These take <0>-le</0>, to: <1>ma helistan sulle</1>. Question: <2>kellele?</2>"
+
+msgid "These take <0>-st</0>, about or from: <1>ma räägin sinust</1>. Question: <2>kellest?</2>"
+msgstr "These take <0>-st</0>, about or from: <1>ma räägin sinust</1>. Question: <2>kellest?</2>"
+
 msgid "These three keep slipping. Let’s start with la huelga."
 msgstr "These three keep slipping. Let’s start with la huelga."
+
+msgid "These verbs take the third form, whatever happens: <0>ma ootan sind</0>. Question: <1>keda?</1>"
+msgstr "These verbs take the third form, whatever happens: <0>ma ootan sind</0>. Question: <1>keda?</1>"
 
 msgid "they"
 msgstr "they"
@@ -17994,6 +18090,9 @@ msgstr "To agree"
 msgid "To and from a person"
 msgstr "To and from a person"
 
+msgid "to answer"
+msgstr "to answer"
+
 msgid "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
 msgstr "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
 
@@ -18056,6 +18155,9 @@ msgstr "To buy"
 
 msgid "To call (a strike, a meeting)"
 msgstr "To call (a strike, a meeting)"
+
+msgid "to care about"
+msgstr "to care about"
 
 msgid "To change (trains, buses)"
 msgstr "To change (trains, buses)"
@@ -18168,6 +18270,9 @@ msgstr "to go, to visit"
 msgid "To have fun"
 msgstr "To have fun"
 
+msgid "to help"
+msgstr "to help"
+
 msgid "to him or her"
 msgstr "to him or her"
 
@@ -18189,6 +18294,9 @@ msgstr "to listen"
 msgid "to live"
 msgstr "to live"
 
+msgid "to look for"
+msgstr "to look for"
+
 msgid "to look, to watch"
 msgstr "to look, to watch"
 
@@ -18200,6 +18308,9 @@ msgstr "To make the most of something"
 
 msgid "to me"
 msgstr "to me"
+
+msgid "to meet"
+msgstr "to meet"
 
 msgid "To meet"
 msgstr "To meet"
@@ -18242,6 +18353,9 @@ msgstr "to Pärnu"
 
 msgid "To Pärnu"
 msgstr "To Pärnu"
+
+msgid "to phone"
+msgstr "to phone"
 
 msgid "to please"
 msgstr "to please"
@@ -18370,6 +18484,9 @@ msgstr "To take"
 msgid "To take a taxi"
 msgstr "To take a taxi"
 
+msgid "to talk"
+msgstr "to talk"
+
 msgid "to Tallinn"
 msgstr "to Tallinn"
 
@@ -18390,6 +18507,9 @@ msgstr "To tell someone not to do something, put <0/> before the stem. <1/> is s
 
 msgid "To tell someone what to do, say the verb’s stem: <0>Istu!</0> is sit down. To tell them not to, put <1>ära</1> before it: <2>Ära istu!</2>"
 msgstr "To tell someone what to do, say the verb’s stem: <0>Istu!</0> is sit down. To tell them not to, put <1>ära</1> before it: <2>Ära istu!</2>"
+
+msgid "to tell, to say"
+msgstr "to tell, to say"
 
 msgid "to the café"
 msgstr "to the café"
@@ -18424,6 +18544,9 @@ msgstr "to them"
 msgid "to town"
 msgstr "to town"
 
+msgid "to understand"
+msgstr "to understand"
+
 msgid "to us"
 msgstr "to us"
 
@@ -18432,6 +18555,9 @@ msgstr "To usually do something"
 
 msgid "to wait"
 msgstr "to wait"
+
+msgid "to wait for"
+msgstr "to wait for"
 
 msgid "to wait, the -da form"
 msgstr "to wait, the -da form"
@@ -18970,6 +19096,9 @@ msgstr "Verb"
 msgid "Verbs"
 msgstr "Verbs"
 
+msgid "Verbs and the case they take"
+msgstr "Verbs and the case they take"
+
 msgid "Verbs before the form"
 msgstr "Verbs before the form"
 
@@ -18981,6 +19110,9 @@ msgstr "Verbs of having to, starting and going"
 
 msgid "Verbs of wanting and being able"
 msgstr "Verbs of wanting and being able"
+
+msgid "Verbs such as <0>ootama</0> take the third form from lesson {partitive} always, even when the waiting is over. The whole or part choice of lesson {object} doesn’t apply to them."
+msgstr "Verbs such as <0>ootama</0> take the third form from lesson {partitive} always, even when the waiting is over. The whole or part choice of lesson {object} doesn’t apply to them."
 
 msgid "Verbs weaken the same way. Of the three forms of lesson {verbForms}, the <0>-ma</0> form is the strong one. The <1>-da</1> form, the present, or both can be weak: <2/>, <3>lugeda</3>, <4/>."
 msgstr "Verbs weaken the same way. Of the three forms of lesson {verbForms}, the <0>-ma</0> form is the strong one. The <1>-da</1> form, the present, or both can be weak: <2/>, <3>lugeda</3>, <4/>."
@@ -19937,6 +20069,12 @@ msgstr "Which form follows?"
 msgid "Which form goes first?"
 msgstr "Which form goes first?"
 
+msgid "Which form of sina?"
+msgstr "Which form of sina?"
+
+msgid "Which form of you?"
+msgstr "Which form of you?"
+
 msgid "Which form?"
 msgstr "Which form?"
 
@@ -20135,6 +20273,9 @@ msgstr "Who? Me!"
 msgid "Whole: the genitive"
 msgstr "Whole: the genitive"
 
+msgid "whom"
+msgstr "whom"
+
 msgid "whose"
 msgstr "whose"
 
@@ -20331,8 +20472,14 @@ msgstr "With the present form: las ta tuleb, let him or her come."
 msgid "with the shop assistants"
 msgstr "with the shop assistants"
 
+msgid "with whom"
+msgstr "with whom"
+
 msgid "with whom?"
 msgstr "with whom?"
+
+msgid "With you"
+msgstr "With you"
 
 msgid "With, without, until and as in Estonian"
 msgstr "With, without, until and as in Estonian"
@@ -21103,6 +21250,9 @@ msgstr "you’d like, polite"
 
 msgid "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."
 msgstr "You’ll also hear <0/> before the word: <1/>, without sugar. <2>Ilma</2> stresses the without, and the ending stays."
+
+msgid "You’ll answer Jaan’s letter tonight, you’d like to meet him, and you want to hear about his new job."
+msgstr "You’ll answer Jaan’s letter tonight, you’d like to meet him, and you want to hear about his new job."
 
 msgid "You’ll hear a question with it, and an answer."
 msgstr "You’ll hear a question with it, and an answer."

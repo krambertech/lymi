@@ -2933,6 +2933,65 @@ const IMPERSONAL_CLIPS: Record<string, Clip> = {
   "p-customs": { sentences: IMPERSONAL_CUSTOMS },
 };
 
+export const GOVERNMENT_KINDS = {
+  part: [
+    { verb: "ootama", said: "Ma ootan sind." },
+    { verb: "armastama", said: "Ma armastan sind." },
+    { verb: "aitama", said: "Ma aitan sind." },
+    { verb: "otsima", said: "Ma otsin sind." },
+  ],
+  from: [
+    { verb: "rääkima", said: "Ma räägin sinust." },
+    { verb: "aru saama", said: "Ma saan sinust aru." },
+    { verb: "hoolima", said: "Ma hoolin sinust." },
+  ],
+  to: [
+    { verb: "helistama", said: "Ma helistan sulle." },
+    { verb: "ütlema", said: "Ma ütlen sulle." },
+    { verb: "vastama", said: "Ma vastan sulle." },
+  ],
+  with: [
+    { verb: "kohtuma", said: "Ma kohtun sinuga." },
+    { verb: "rääkima", said: "Ma räägin sinuga." },
+  ],
+} as const;
+
+export const GOVERNMENT_GAPS = [
+  { id: "wait-part", before: "Ma ootan", after: "kell viis.", answer: "sind" },
+  { id: "help-part", before: "Kas ma võin", after: "aidata?", answer: "sind" },
+  { id: "talk-from", before: "Ema räägib", after: "palju.", answer: "sinust" },
+  { id: "understand-from", before: "Ma ei saa", after: "aru.", answer: "sinust" },
+  { id: "call-to", before: "Ma helistan", after: "homme.", answer: "sulle" },
+  { id: "write-to", before: "Kati kirjutab", after: "kirja.", answer: "sulle" },
+  { id: "meet-with", before: "Jaan tahab", after: "kohtuda.", answer: "sinuga" },
+  { id: "talk-with", before: "Kas ma saan", after: "rääkida?", answer: "sinuga" },
+] as const;
+
+export const GOVERNMENT_OPTIONS = ["sind", "sinust", "sulle", "sinuga"] as const;
+
+export const GOVERNMENT_DIALOGUE = {
+  "d-jaan-1": { text: "Tere! Kas sa said minu kirja?", voice: "second" },
+  "d-sina-1": "Jah, aitäh! Ma vastan sulle õhtul.",
+  "d-jaan-2": { text: "Kas me kohtume homme?", voice: "second" },
+  "d-sina-2": "Jah, ma kohtun sinuga hea meelega.",
+  "d-jaan-3": { text: "Siis ma räägin sulle oma uuest tööst.", voice: "second" },
+  "d-sina-3": "Ma ootan seda väga!",
+} as const satisfies Record<string, Clip>;
+
+export const GOVERNMENT_WORDS = ["keda", "kellest", "kellele", "kellega"] as const;
+
+const GOVERNMENT_CLIPS: Record<string, Clip> = {
+  ...words(GOVERNMENT_WORDS),
+  ...words(GOVERNMENT_OPTIONS),
+  ...words(
+    Object.values(GOVERNMENT_KINDS).flatMap((verbs) =>
+      verbs.flatMap((verb) => [verb.verb, verb.said]),
+    ),
+  ),
+  ...words(GOVERNMENT_GAPS.map(objectGapSaid)),
+  ...GOVERNMENT_DIALOGUE,
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -3904,6 +3963,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   laheksin: CONDITIONAL_CLIPS,
   "lahme-las": LETS_CLIPS,
   raagitakse: IMPERSONAL_CLIPS,
+  "ootan-sind": GOVERNMENT_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

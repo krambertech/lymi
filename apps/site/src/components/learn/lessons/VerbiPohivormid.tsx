@@ -995,7 +995,7 @@ export function VerbiPohivormidLesson() {
                 <p>
                   <Trans>
                     See a verb’s <End>-ma</End> form and type its <End>-da</End> form, then hear it.
-                    The keys under the field type õ, ä, ö and ü.
+                    The keys under the field type õ, ä, ö, ü, š and ž.
                   </Trans>
                 </p>
               </Prose>

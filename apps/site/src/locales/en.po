@@ -9202,8 +9202,8 @@ msgstr "Security+ · new"
 msgid "Security+, CISSP and the acronyms that come with them."
 msgstr "Security+, CISSP and the acronyms that come with them."
 
-msgid "See a verb’s <0>-ma</0> form and type its <1>-da</1> form, then hear it. The keys under the field type õ, ä, ö and ü."
-msgstr "See a verb’s <0>-ma</0> form and type its <1>-da</1> form, then hear it. The keys under the field type õ, ä, ö and ü."
+msgid "See a verb’s <0>-ma</0> form and type its <1>-da</1> form, then hear it. The keys under the field type õ, ä, ö, ü, š and ž."
+msgstr "See a verb’s <0>-ma</0> form and type its <1>-da</1> form, then hear it. The keys under the field type õ, ä, ö, ü, š and ž."
 
 msgid "See all"
 msgstr "See all"

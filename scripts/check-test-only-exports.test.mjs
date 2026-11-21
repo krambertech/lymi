@@ -52,6 +52,18 @@ test("does not count a barrel's re-export as a reader", () => {
   assert.match(found[0], /src\/streak\.ts: only tests read bestStreak/);
 });
 
+test("counts a barrel that renames an export as reading the original name", () => {
+  assert.deepEqual(
+    run({
+      "src/a.ts": "export function helper() {}\n",
+      "src/index.ts": 'export { helper as publicHelper } from "./a";\n',
+      "src/app.ts": 'import { publicHelper } from ".";\npublicHelper();\n',
+      "src/a.test.ts": 'import { helper } from "./a";\nhelper();\n',
+    }),
+    [],
+  );
+});
+
 test("counts tests, e2e specs and the test harness as tests", () => {
   for (const reader of [
     "e2e/review.spec.ts",

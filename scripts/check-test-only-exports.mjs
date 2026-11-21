@@ -124,7 +124,18 @@ export function exportsOf(source) {
 export function testOnlyExports(sources, allowed = ALLOWED) {
   const readers = new Map();
   for (const [file, source] of sources) {
-    for (const word of new Set(wordsOf(source.replace(RE_EXPORT, "")))) {
+    const words = new Set(wordsOf(source.replace(RE_EXPORT, "")));
+    // A barrel that renames an export hands its readers to the new name, so it reads the old one.
+    for (const m of source.matchAll(NAMED_RE_EXPORT)) {
+      for (const part of m[1].split(",")) {
+        const [local, exported] = part
+          .replace(/^\s*type\s+/, "")
+          .split(/\s+as\s+/)
+          .map((s) => s.trim());
+        if (local && exported && local !== exported) words.add(local);
+      }
+    }
+    for (const word of words) {
       const files = readers.get(word) ?? [];
       files.push(file);
       readers.set(word, files);

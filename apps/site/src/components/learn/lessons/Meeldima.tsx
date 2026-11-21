@@ -449,7 +449,7 @@ export function MeeldimaLesson() {
   const mulOn = LESSONS.find((lesson) => lesson.et === "Mul on")?.n;
   const plural = LESSONS.find((lesson) => lesson.et === "Kassid")?.n;
   const onto = LESSONS.find((lesson) => lesson.et === "Laual, lauale, laualt")?.n;
-  const verbForms = LESSONS.find((lesson) => lesson.et === "Lugema, lugeda, loen")?.n;
+  const verbForms = lessonBySlug("verbi-pohivormid")?.n;
 
   const whoItems = useMemo<WhoItem[]>(
     () =>

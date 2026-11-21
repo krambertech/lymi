@@ -255,7 +255,14 @@ export const STAGES: readonly Stage[] = [
         minutes: 12,
         blurb: msg`A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud.`,
       },
-      { name: msg`“To like” and feelings`, et: "Mulle meeldib" },
+      {
+        slug: "meeldima",
+        name: msg`“To like” and feelings`,
+        title: msg`How to say “I like” in Estonian`,
+        et: "Mulle meeldib",
+        minutes: 12,
+        blurb: msg`A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud.`,
+      },
       { name: msg`Practice: at the market`, et: "Turul" },
       {
         slug: "lihtminevik",

@@ -7,15 +7,50 @@
  * are in .agents/skills/estonian-lesson/references/checklists.md.
  */
 import { appendFileSync } from "node:fs";
+import { createElement, type ReactNode } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
 import { afterAll, describe, expect, it, vi } from "vitest";
+import { Island } from "../../../components/islands/Island";
 import { CLIPS, clipText, isPassage } from "../clips";
 import { gapLine } from "../passage";
 import { shuffledRun } from "../quiz";
 import VERIFIED from "../verified-forms.json";
+import { ALLOWED_NEAR_PAIRS, ALLOWED_STRATEGIES } from "./allowed-quizzes";
 import { formsIn, lessonForms, VERIFIED_FORMS_PATH } from "./forms";
-import { elements, textOf, textRuns } from "./html";
+import {
+  fairCap,
+  nearPair,
+  type PickRound,
+  placeShares,
+  plain,
+  STRATEGIES,
+  seeded,
+  strategyScore,
+} from "./giveaways";
+import { elements, parse, textOf, textRuns } from "./html";
 import { KNOWN_ISSUES } from "./known-issues";
 import { LOCALES, labelSource, rendered, renderLesson, SLUGS, type Slug, where } from "./lessons";
+
+/**
+ * Every `Object.fromEntries` the lesson modules make while they load. A glossary built from a list
+ * keeps only the last entry for a form, so the glossary check reads what each call was given.
+ */
+const madeEntries = vi.hoisted(() => {
+  const calls: {
+    entries: (readonly [PropertyKey, unknown])[];
+    made: Record<PropertyKey, unknown>;
+  }[] = [];
+  const original = Object.fromEntries;
+  Object.fromEntries = ((entries: Iterable<readonly [PropertyKey, unknown]>) => {
+    const list = [...entries];
+    const made = original(list);
+    calls.push({ entries: list, made });
+    return made;
+  }) as typeof Object.fromEntries;
+  return { calls, original };
+});
+// The lessons have loaded by now; renders don't build glossaries.
+Object.fromEntries = madeEntries.original;
 
 vi.mock("../../../components/learn/Quiz", async (importOriginal) => {
   const kit = await importOriginal<typeof import("../../../components/learn/Quiz")>();
@@ -144,6 +179,111 @@ const total = (quiz: QuizProps) => Math.min(quiz.rounds ?? quiz.items.length, qu
 const optionId = (option: unknown) =>
   typeof option === "string" ? option : String((option as { id: string }).id);
 
+const labelTexts = new WeakMap<object, string>();
+/** An option's visible text: the string itself, or its label rendered the way the page renders it. */
+function shown(option: unknown): string {
+  if (typeof option === "string") return option;
+  const { id, label } = option as { id: string; label?: unknown };
+  if (typeof label === "string" || typeof label === "number") return String(label);
+  if (typeof label !== "object" || label === null) return String(id);
+  let text = labelTexts.get(label);
+  if (text === undefined) {
+    const html = renderToStaticMarkup(
+      // biome-ignore lint/correctness/noChildrenProp: Island's props type requires children, and this .ts file has no JSX.
+      createElement(Island, { locale: "en", children: label as ReactNode }),
+    );
+    text = textOf(parse(html, "en")).trim() || String(id);
+    labelTexts.set(label, text);
+  }
+  return text;
+}
+
+/** A quiz whose every item offers options to pick from: ChoiceRound, GapRound and their kin. */
+const picks = (quiz: QuizProps) =>
+  quiz.items.length > 1 &&
+  quiz.items.every((item) => Array.isArray(item.options) && "answer" in item);
+
+/** A round as the learner sees it, or undefined when its options don't hold the answer. */
+function pickRound(item: Record<string, unknown>): PickRound | undefined {
+  const options = item.options as unknown[];
+  const answer = options.findIndex((option) => optionId(option) === String(item.answer));
+  return answer < 0
+    ? undefined
+    : { options: options.map(shown), answer, heard: heardText(item.src) };
+}
+
+/** What a round's clip says, found from its URL's lesson and id. */
+function heardText(src: unknown): string | undefined {
+  const [, lesson, id] = String(src).match(/([^/]+)\/([^/]+)\.mp3$/) ?? [];
+  const clip = lesson && id ? CLIPS[lesson]?.[id] : undefined;
+  return clip === undefined ? undefined : clipText(clip);
+}
+
+const SIMULATED = 200;
+
+/**
+ * A quiz's runs as learners meet them, drawn from a seeded random source: `first` as the page
+ * opens, its first round pinned to the server's, and `later` after Try again.
+ */
+function simulate(quiz: QuizProps): { first: PickRound[][]; later: PickRound[][] } {
+  const order = quiz.order ?? shuffledRun;
+  const spy = vi.spyOn(Math, "random").mockImplementation(seeded(quiz.id.length * 7919 + 1));
+  try {
+    const run = (pinned: boolean) =>
+      (order(quiz.items, pinned ? quiz.items[0] : undefined) as Record<string, unknown>[])
+        .slice(0, total(quiz))
+        .map(pickRound)
+        .filter((round) => round !== undefined);
+    return {
+      first: Array.from({ length: SIMULATED }, () => run(true)),
+      later: Array.from({ length: SIMULATED }, () => run(false)),
+    };
+  } finally {
+    spy.mockRestore();
+  }
+}
+
+interface GapProps {
+  id: string;
+  mode: "pick" | "drag";
+  gaps: readonly { answer: string; options?: readonly string[] }[];
+}
+
+interface PickUnit {
+  kind: "quiz" | "passage";
+  id: string;
+  /** A quiz's first runs, or a passage's gaps as its one run. */
+  first: PickRound[][];
+  later: PickRound[][];
+}
+
+const unitsBySlug = new Map<Slug, PickUnit[]>();
+
+/** Each place a learner picks from: a pick quiz's simulated runs, or a pick passage's gaps. */
+function pickUnits(slug: Slug): PickUnit[] {
+  const known = unitsBySlug.get(slug);
+  if (known) return known;
+  const units: PickUnit[] = [];
+  unitsBySlug.set(slug, units);
+  for (const { part, props } of rendered(slug, "en").recording.parts) {
+    if (part === "Quiz" && picks(props as unknown as QuizProps)) {
+      const quiz = props as unknown as QuizProps;
+      units.push({ kind: "quiz", id: quiz.id, ...simulate(quiz) });
+    }
+    if (part === "GapPassage" && (props as unknown as GapProps).mode === "pick") {
+      const passage = props as unknown as GapProps;
+      const gaps = passage.gaps
+        .filter((gap) => (gap.options?.length ?? 0) > 1)
+        .map((gap) => pickRound(gap as unknown as Record<string, unknown>))
+        .filter((round) => round !== undefined);
+      units.push({ kind: "passage", id: passage.id, first: [gaps], later: [] });
+    }
+  }
+  return units;
+}
+
+const percent = (share: number) => `${Math.round(share * 100)}%`;
+
 describe.each(SLUGS)("lesson %s", (slug) => {
   it("gives each quiz a fixed id of lowercase letters, digits and hyphens, once", () => {
     const problems: string[] = [];
@@ -179,14 +319,14 @@ describe.each(SLUGS)("lesson %s", (slug) => {
       }
       const key = (item: Record<string, unknown>) => String((item.pair as string[])[0]);
       const keys = new Set(quiz.items.map(key));
-      // Every item its own key: the pairs only stop repeats, and there is nothing to cover.
-      if (keys.size === quiz.items.length) continue;
       if (total(quiz) < keys.size) {
         problems.push(
-          `${at}: quiz "${quiz.id}" has ${keys.size} keys (${[...keys].join(", ")}) but ${total(quiz)} rounds, so a run always leaves one out. Fix: set rounds={${keys.size}}.`,
+          `${at}: quiz "${quiz.id}" has ${keys.size} keys (${[...keys].join(", ")}) but ${total(quiz)} rounds, so a run always leaves one out. Fix: set rounds={${keys.size}}, or key pair on what the quiz tests so fewer keys cover it.`,
         );
         continue;
       }
+      // Every item its own key and every item asked: nothing can be left out.
+      if (keys.size === quiz.items.length) continue;
       let missed = 0;
       const left = new Set<string>();
       for (const run of runs(quiz)) {
@@ -247,6 +387,181 @@ describe.each(SLUGS)("lesson %s", (slug) => {
       "option-sets",
       slug,
     );
+  });
+
+  it("never offers an option that is another plus a letter or two", () => {
+    const problems: string[] = [];
+    const pairKey = (a: string, b: string) => [plain(a), plain(b)].sort().join("|");
+    const allowed = (id: string, a: string, b: string) =>
+      ALLOWED_NEAR_PAIRS.some(
+        (each) =>
+          each.lesson === slug &&
+          each.quiz === id &&
+          (!each.pair || pairKey(a, b) === pairKey(...each.pair)),
+      );
+    for (const unit of pickUnits(slug)) {
+      const found = new Map<string, string>();
+      for (const { options } of [...unit.first, ...unit.later].flat())
+        for (const [i, a] of options.entries())
+          for (const b of options.slice(i + 1)) {
+            if (!nearPair(a, b) || allowed(unit.id, a, b) || found.has(pairKey(a, b))) continue;
+            const [short, long] = [a, b].sort((x, y) => plain(x).length - plain(y).length);
+            found.set(
+              pairKey(a, b),
+              `${where(slug, `id="${unit.id}"`, `"${short}"`)}: ${unit.kind} "${unit.id}" offers ${options.join(", ")}, and ${long} is ${short} with a letter or two more, so a learner can pick by shape, such as the one between the others, without listening. Fix: show the cue outside the options, such as ${short} above the choices and only what changes as the options; or, where telling these two apart is the point, list the pair in ALLOWED_NEAR_PAIRS (apps/site/src/lib/learn/checks/allowed-quizzes.ts) with the reason.`,
+            );
+          }
+      // A few per quiz is enough to see the pattern.
+      problems.push(...[...found.values()].slice(0, 3));
+    }
+    expectNoneUnlessKnown(
+      problems,
+      "No option is another plus a letter or two (checklists.md#quizzes)",
+      "near-options",
+      slug,
+    );
+  });
+
+  it("spreads each answer over every place, round by round", () => {
+    const problems: string[] = [];
+    for (const unit of pickUnits(slug)) {
+      if (unit.kind !== "quiz") continue;
+      const at = where(slug, `id="${unit.id}"`);
+      // The first round of the first run is the server's, fixed by design.
+      const groups: [string, PickRound[]][] = [
+        ["over all its runs", [...unit.first, ...unit.later].flat()],
+      ];
+      const rounds = Math.max(...unit.first.map((run) => run.length));
+      for (let r = 1; r < rounds; r++)
+        groups.push([
+          `in round ${r + 1} as the page opens`,
+          unit.first.map((run) => run[r]).filter((each) => each !== undefined),
+        ]);
+      for (let r = 0; r < rounds; r++)
+        groups.push([
+          `in round ${r + 1} after Try again`,
+          unit.later.map((run) => run[r]).filter((each) => each !== undefined),
+        ]);
+      for (const [when, group] of groups)
+        for (const count of new Set(group.map((round) => round.options.length))) {
+          if (group.filter((round) => round.options.length === count).length < 50) continue;
+          const shares = placeShares(group, count);
+          const off = shares
+            .map((share, place) => ({ share, place }))
+            .filter(({ share }) => share === 0 || share > fairCap(count));
+          if (off.length === 0) continue;
+          problems.push(
+            `${at}: quiz "${unit.id}" ${when} puts the answer ${off
+              .map(
+                ({ share, place }) =>
+                  `in place ${place + 1} of ${count} ${share === 0 ? "never" : `${percent(share)} of the time`}`,
+              )
+              .join(
+                ", ",
+              )}; each place should take about ${percent(1 / count)} and at most ${percent(fairCap(count))}. A learner can find it by its place, or by the place no earlier round used. Fix: shuffle each round's options in the quiz's order function after the first round (heardRun in Kaskiv.tsx), not a fixed order per item.`,
+          );
+          break;
+        }
+    }
+    expectNoneUnlessKnown(
+      problems.slice(0, 12),
+      "The answer's place gives nothing away (checklists.md#quizzes)",
+      "answer-place",
+      slug,
+    );
+  });
+
+  it("scores a learner who doesn't listen at chance", () => {
+    const problems: string[] = [];
+    for (const unit of pickUnits(slug)) {
+      // Two options leave a rule nothing to choose between.
+      const rounds = [...unit.first, ...unit.later]
+        .flat()
+        .filter((round) => round.options.length > 2);
+      for (const strategy of STRATEGIES) {
+        const { score, chance, rounds: scored } = strategyScore(strategy, rounds);
+        if (unit.kind === "passage" ? scored < 4 : scored === 0) continue;
+        const allowed = ALLOWED_STRATEGIES.some(
+          (each) =>
+            each.lesson === slug && each.quiz === unit.id && each.strategy === strategy.name,
+        );
+        if (score <= chance + 0.25 || allowed) continue;
+        const examples = rounds
+          .filter((round) => strategy.applies?.(round) ?? true)
+          .filter((round) => strategy.pick(round.options, round.heard).includes(round.answer))
+          .slice(0, 2)
+          .map(
+            (round) =>
+              `${round.heard ? `hearing “${round.heard}”, ` : ""}${round.options.join(", ")} → ${round.options[round.answer]}`,
+          );
+        problems.push(
+          `${where(slug, `id="${unit.id}"`)}: ${unit.kind} "${unit.id}": “${strategy.name}” scores ${percent(score)} where chance is ${percent(chance)}, so a learner can score without what the quiz tests. Example: ${examples.join("; ")}. Fix: ${strategy.fix}; or, where the rule is the lesson, list the quiz in ALLOWED_STRATEGIES (apps/site/src/lib/learn/checks/allowed-quizzes.ts) with the reason.`,
+        );
+      }
+    }
+    expectNoneUnlessKnown(
+      problems,
+      "No cheap rule beats chance (checklists.md#quizzes)",
+      "cheap-strategy",
+      slug,
+    );
+  });
+
+  it("puts a gap passage's answers in more than one place", () => {
+    const problems: string[] = [];
+    for (const unit of pickUnits(slug)) {
+      if (unit.kind !== "passage") continue;
+      const gaps = unit.first.flat();
+      const places = new Map<number, number>();
+      for (const gap of gaps) places.set(gap.answer, (places.get(gap.answer) ?? 0) + 1);
+      // Two-thirds or more, unless an even split can't do better, as two of three gaps.
+      for (const [place, count] of places)
+        if (count >= (gaps.length * 2) / 3 && count > Math.ceil(gaps.length / 2))
+          problems.push(
+            `${where(slug, `id="${unit.id}"`)}: gap passage "${unit.id}" puts the answer in place ${place + 1} in ${count} of its ${gaps.length} gaps, so a learner can fill it by place. Fix: reorder the gaps' options so each place holds less than two-thirds of the answers.`,
+          );
+    }
+    expectNoneUnlessKnown(
+      problems,
+      "A gap passage's answers move between places (checklists.md#quizzes)",
+      "gap-place",
+      slug,
+    );
+  });
+
+  it("gives each Estonian form one glossary entry", () => {
+    const glossary = (rendered(slug, "en").recording.view?.glossary ?? {}) as Record<
+      string,
+      unknown
+    >;
+    const meaning = (gloss: unknown) => {
+      const en = (gloss as { en?: { message?: string; id?: string } }).en;
+      return en?.message ?? en?.id ?? "?";
+    };
+    const problems = new Set<string>();
+    const at = where(slug, "const GLOSSARY");
+    for (const { entries, made } of madeEntries.calls) {
+      const keys = Object.keys(made);
+      const part = keys.some(
+        (key) => typeof made[key] === "object" && made[key] !== null && glossary[key] === made[key],
+      );
+      if (!part) continue;
+      const seen = new Map<PropertyKey, unknown>();
+      for (const [key, gloss] of entries) {
+        const before = seen.get(key);
+        if (before !== undefined && meaning(before) !== meaning(gloss))
+          problems.add(
+            `${at}: the glossary gives “${String(key)}” twice, so “${meaning(gloss)}” replaced “${meaning(before)}” and the first meaning never shows. Fix: one entry with both meanings, such as ${String(key)}: { en: msg\`${meaning(before)}; ${meaning(gloss)}\` }.`,
+          );
+        seen.set(key, gloss);
+      }
+      for (const key of keys)
+        if (key in glossary && meaning(glossary[key]) !== meaning(made[key]))
+          problems.add(
+            `${at}: the glossary gives “${key}” twice, so “${meaning(glossary[key])}” replaced “${meaning(made[key])}” and the first meaning never shows. Fix: one entry with both meanings.`,
+          );
+    }
+    expectNoneUnlessKnown([...problems], "One glossary entry per form", "glossary-twice", slug);
   });
 
   it("renders the same page whatever the clock and the dice say", () => {

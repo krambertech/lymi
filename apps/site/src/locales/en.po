@@ -1899,8 +1899,8 @@ msgstr "A free Estonian lesson on telling the time: full hours, pool, veerand an
 msgid "A free Estonian lesson on the words that come before a noun: läbi pargi (through the park), üle tee (across the road), ümber maja (around the house) with the genitive, mööda teed (along the road) with the partitive, and how to follow directions with them. Every sentence is read aloud."
 msgstr "A free Estonian lesson on the words that come before a noun: läbi pargi (through the park), üle tee (across the road), ümber maja (around the house) with the genitive, mööda teed (along the road) with the partitive, and how to follow directions with them. Every sentence is read aloud."
 
-msgid "A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), each added to the second form. Every sentence is read aloud."
-msgstr "A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), each added to the second form. Every sentence is read aloud."
+msgid "A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), usually added to the second form. Every sentence is read aloud."
+msgstr "A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), usually added to the second form. Every sentence is read aloud."
 
 msgid "A free Estonian practice lesson: read a message to a landlord, hear the reply, and use the perfect (on katki läinud), the conditional (kas te saaksite), the impersonal and the case each verb takes in one real situation. Every sentence is read aloud."
 msgstr "A free Estonian practice lesson: read a message to a landlord, hear the reply, and use the perfect (on katki läinud), the conditional (kas te saaksite), the impersonal and the case each verb takes in one real situation. Every sentence is read aloud."
@@ -2976,6 +2976,9 @@ msgstr "After ei, the verb drops its ending: ei tööta."
 
 msgid "After meil the verb is on, as after every -⁠l form."
 msgstr "After meil the verb is on, as after every -⁠l form."
+
+msgid "After tahame it is puhata."
+msgstr "After tahame it is puhata."
 
 msgid "After today’s lesson"
 msgstr "After today’s lesson"
@@ -4756,8 +4759,8 @@ msgstr "Chess · new"
 msgid "child"
 msgstr "child"
 
-msgid "childish"
-msgstr "childish"
+msgid "childlike"
+msgstr "childlike"
 
 msgid "children"
 msgstr "children"
@@ -16124,9 +16127,6 @@ msgstr "Take the <0>-ma</0> form and drop <1>-ma</1>: <2>luge-ma</2> gives the s
 msgid "Take the present <0>ma</0> form, swap <1>-n</1> for <2>-ksin</2>: <3>lähen, läheksin</3>."
 msgstr "Take the present <0>ma</0> form, swap <1>-n</1> for <2>-ksin</2>: <3>lähen, läheksin</3>."
 
-msgid "Take the second form from lesson {genitive} and add an ending. <0>-lik</0> gives a quality, <1>-tu</1> means without, and <2>-ke</2> makes it small or dear. Pick an ending to see its words."
-msgstr "Take the second form from lesson {genitive} and add an ending. <0>-lik</0> gives a quality, <1>-tu</1> means without, and <2>-ke</2> makes it small or dear. Pick an ending to see its words."
-
 msgid "Tal on: he or she has."
 msgstr "Tal on: he or she has."
 
@@ -17081,9 +17081,6 @@ msgstr "The ending for te: you, to more than one; polite you."
 msgid "The ending goes on the noun’s stem, as a verb’s endings go on its stem in lesson {present}. The stem of <0>pood</0> is <1/>, and <2>poe</2> with <3>-s</3> is <4>poes</4>. Tap each step to hear it."
 msgstr "The ending goes on the noun’s stem, as a verb’s endings go on its stem in lesson {present}. The stem of <0>pood</0> is <1/>, and <2>poe</2> with <3>-s</3> is <4>poes</4>. Tap each step to hear it."
 
-msgid "The ending goes on the second form: <0>sõber, sõbra, sõbralik</0>."
-msgstr "The ending goes on the second form: <0>sõber, sõbra, sõbralik</0>."
-
 msgid "The ending goes on the stem: <0>poes</0>, not <1>poodis</1>."
 msgstr "The ending goes on the stem: <0>poes</0>, not <1>poodis</1>."
 
@@ -17095,6 +17092,9 @@ msgstr "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>
 
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
+
+msgid "The ending usually goes on the second form: <0>sõber, sõbra, sõbralik</0>."
+msgstr "The ending usually goes on the second form: <0>sõber, sõbra, sõbralik</0>."
 
 msgid "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; of these seven, only <5>minema</5> drops it: <6><7/>.</6> Pick a verb and tap its forms to see what changes."
 msgstr "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; of these seven, only <5>minema</5> drops it: <6><7/>.</6> Pick a verb and tap its forms to see what changes."
@@ -17782,8 +17782,8 @@ msgstr "The same in both"
 msgid "The same kanji sounds different in different words. Lymi shows the reading over the kanji until you know the word, then takes it away so you learn to read it on your own."
 msgstr "The same kanji sounds different in different words. Lymi shows the reading over the kanji until you know the word, then takes it away so you learn to read it on your own."
 
-msgid "The same noun can take two endings with opposite meanings: <0>kasulik</0>, useful, and <1>kasutu</1>, useless. In songs you will also hear the longer <2>-kene</2>: <3>majakene</3>."
-msgstr "The same noun can take two endings with opposite meanings: <0>kasulik</0>, useful, and <1>kasutu</1>, useless. In songs you will also hear the longer <2>-kene</2>: <3>majakene</3>."
+msgid "The same noun can take two endings with opposite meanings: <0>kasulik</0>, useful, and <1>kasutu</1>, useless. In songs and poems you will also hear the longer <2>-kene</2>: <3>majakene</3>. Some <4>-lik</4> words are shorter than the second form: <5>ohtlik</5>, <6>tervislik</6>. And this <7>-ke</7> is not the one in <8>tehke</8>, which tells several people to do something."
+msgstr "The same noun can take two endings with opposite meanings: <0>kasulik</0>, useful, and <1>kasutu</1>, useless. In songs and poems you will also hear the longer <2>-kene</2>: <3>majakene</3>. Some <4>-lik</4> words are shorter than the second form: <5>ohtlik</5>, <6>tervislik</6>. And this <7>-ke</7> is not the one in <8>tehke</8>, which tells several people to do something."
 
 msgid "The same stem gives the person and the activity."
 msgstr "The same stem gives the person and the activity."
@@ -19785,6 +19785,9 @@ msgstr "usually"
 
 msgid "Usually"
 msgstr "Usually"
+
+msgid "Usually you take the second form from lesson {genitive} and add an ending. <0>-lik</0> gives a quality, <1>-tu</1> means without, and <2>-ke</2> makes it small or dear. Pick an ending to see its words."
+msgstr "Usually you take the second form from lesson {genitive} and add an ending. <0>-lik</0> gives a quality, <1>-tu</1> means without, and <2>-ke</2> makes it small or dear. Pick an ending to see its words."
 
 msgid "Veerand neli: a quarter of the way to four, 3:15."
 msgstr "Veerand neli: a quarter of the way to four, 3:15."

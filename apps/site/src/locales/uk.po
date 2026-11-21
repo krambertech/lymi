@@ -667,7 +667,7 @@ msgid "<0>-ke</0> makes something small or dear: <1>kassike</1>, a kitty."
 msgstr "<0>-ke</0> робить щось маленьким або милим: <1>kassike</1>, котик."
 
 msgid "<0>-ke</0> makes something small or dear: <1>majake</1>, a little house."
-msgstr "<0>-ke</0> робить щось маленьким або милим, як «-ок» у «будиночок»: <1>majake</1>."
+msgstr "<0>-ke</0> робить щось маленьким або милим, як «-очок» у «будиночок»: <1>majake</1>."
 
 msgid "<0>-ksid</0> is for <1>sa</1> or <2>nad</2>. With <3>ma</3>: <4>tahaksin</4>."
 msgstr "<0>-ksid</0> — для <1>sa</1> або <2>nad</2>. З <3>ma</3>: <4>tahaksin</4>."
@@ -676,7 +676,7 @@ msgid "<0>-ksime</0> is for <1>me</1>. With <2>ma</2>: <3>tahaksin</3>."
 msgstr "<0>-ksime</0> — для <1>me</1>. З <2>ma</2>: <3>tahaksin</3>."
 
 msgid "<0>-lik</0> gives a quality, like English -ly or -ful: <1>sõbralik</1>, friendly."
-msgstr "<0>-lik</0> дає ознаку, як прикметник від іменника: <1>sõbralik</1>, дружній, від «друг»."
+msgstr "<0>-lik</0> робить з іменника прикметник: <1>sõbralik</1>, дружелюбний, від «друг»."
 
 msgid "<0>-lik</0> gives a quality: <1>kasulik</1>, useful. <2>-tu</2> means without: <3>kasutu</3>, useless."
 msgstr "<0>-lik</0> дає ознаку: <1>kasulik</1>, корисний. <2>-tu</2> означає «без»: <3>kasutu</3>, марний."
@@ -1900,8 +1900,8 @@ msgstr "Безкоштовний урок естонської про те, як
 msgid "A free Estonian lesson on the words that come before a noun: läbi pargi (through the park), üle tee (across the road), ümber maja (around the house) with the genitive, mööda teed (along the road) with the partitive, and how to follow directions with them. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про прийменники: läbi pargi (через парк), üle tee (через дорогу), ümber maja (довкола будинку) з родовим відмінком, mööda teed (уздовж дороги) з партитивом, і як із ними розуміти, куди йти. Кожне речення озвучене."
 
-msgid "A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), each added to the second form. Every sentence is read aloud."
-msgstr "Безкоштовний урок естонської про три закінчення, що утворюють нові слова від іменників: -lik для ознаки (sõber, sõbralik), -tu для «без» (kodu, kodutu) і -ke для зменшувального (maja, majake). Кожне додається до другої форми. Кожне речення озвучене."
+msgid "A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), usually added to the second form. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про три суфікси, що утворюють нові слова від іменників: -lik для ознаки (sõber, sõbralik), -tu для «без» (kodu, kodutu) і -ke для зменшувального й пестливого (maja, majake). Усі три зазвичай додаються до другої форми. Кожне речення озвучене."
 
 msgid "A free Estonian practice lesson: read a message to a landlord, hear the reply, and use the perfect (on katki läinud), the conditional (kas te saaksite), the impersonal and the case each verb takes in one real situation. Every sentence is read aloud."
 msgstr "Безкоштовний практичний урок естонської: прочитай повідомлення власниці квартири, послухай відповідь і використай перфект (on katki läinud), умовний спосіб (kas te saaksite), безособову форму та відмінки після дієслів в одній життєвій ситуації. Кожне речення озвучене."
@@ -2978,6 +2978,9 @@ msgstr "Після ei дієслово втрачає закінчення: ei t
 msgid "After meil the verb is on, as after every -⁠l form."
 msgstr "Після meil дієслово — on, як і після кожної форми на -⁠l."
 
+msgid "After tahame it is puhata."
+msgstr "Після tahame — puhata."
+
 msgid "After today’s lesson"
 msgstr "Після сьогоднішнього уроку"
 
@@ -3123,7 +3126,7 @@ msgid "All nine. Two, many and the ones you mean, every time."
 msgstr "Усі дев’ять. Дві, багато і саме ці — щоразу правильно."
 
 msgid "All nine. You can read a new word from its ending."
-msgstr "Усі дев’ять. Ти можеш зрозуміти нове слово з його закінчення."
+msgstr "Усі дев’ять. Ти можеш зрозуміти нове слово за його закінченням."
 
 msgid "All nine. You can suggest and allow."
 msgstr "Усі дев’ять. Ти вмієш пропонувати й дозволяти."
@@ -4757,8 +4760,8 @@ msgstr "Шахи · нова"
 msgid "child"
 msgstr "дитина"
 
-msgid "childish"
-msgstr "дитячий, по-дитячому"
+msgid "childlike"
+msgstr "дитячий, по-дитячому щирий"
 
 msgid "children"
 msgstr "діти"
@@ -6945,10 +6948,10 @@ msgid "friend’s, of a friend"
 msgstr "друга"
 
 msgid "friendly"
-msgstr "дружній"
+msgstr "дружелюбний"
 
 msgid "Friendly and helpful"
-msgstr "Дружні й завжди допомагають"
+msgstr "Привітні й завжди допомагають"
 
 msgid "friends"
 msgstr "друзі"
@@ -12588,7 +12591,7 @@ msgid "No. Quizlet exports a set’s terms and definitions as text, so your card
 msgstr "Ні. Quizlet експортує терміни й визначення набору як текст, тож картки почнуться як нові. Перші відповіді в Lymi покажуть, що ти вже знаєш, і такі картки повертатимуться рідше."
 
 msgid "Nobody calls them there"
-msgstr "Туди ніхто не дзвонить"
+msgstr "Їм там ніхто не дзвонить"
 
 msgid "Nobody eats, drinks or wants it here: the sentence starts with it, so the first form."
 msgstr "Тут цього ніхто не їсть, не п’є і не хоче: речення починається з самої речі, тому перша форма."
@@ -12900,7 +12903,7 @@ msgid "Offline review"
 msgstr "Повторення офлайн"
 
 msgid "Often away"
-msgstr "Часто їдуть"
+msgstr "Часто їх немає вдома"
 
 msgid "Often called Iceland’s unofficial motto."
 msgstr "Її часто називають неофіційним девізом Ісландії."
@@ -16125,9 +16128,6 @@ msgstr "Візьми форму на <0>-ma</0> і відкинь <1>-ma</1>: <2
 msgid "Take the present <0>ma</0> form, swap <1>-n</1> for <2>-ksin</2>: <3>lähen, läheksin</3>."
 msgstr "Візьми форму теперішнього часу для <0>ma</0> і заміни <1>-n</1> на <2>-ksin</2>: <3>lähen, läheksin</3>."
 
-msgid "Take the second form from lesson {genitive} and add an ending. <0>-lik</0> gives a quality, <1>-tu</1> means without, and <2>-ke</2> makes it small or dear. Pick an ending to see its words."
-msgstr "Візьми другу форму з уроку {genitive} і додай закінчення. <0>-lik</0> дає ознаку, <1>-tu</1> означає «без», а <2>-ke</2> робить щось маленьким чи милим, як «-ок» і «-ик» в українській. Обери закінчення, щоб побачити слова."
-
 msgid "Tal on: he or she has."
 msgstr "Tal on: у нього чи в неї є."
 
@@ -17082,9 +17082,6 @@ msgstr "Закінчення для te: «ви» до кількох людей 
 msgid "The ending goes on the noun’s stem, as a verb’s endings go on its stem in lesson {present}. The stem of <0>pood</0> is <1/>, and <2>poe</2> with <3>-s</3> is <4>poes</4>. Tap each step to hear it."
 msgstr "Закінчення додаємо до основи іменника — так само, як закінчення дієслова до його основи в уроці {present}. Основа <0>pood</0> — <1/>, а <2>poe</2> з <3>-s</3> — це <4>poes</4>. Натисни на кожен крок, щоб почути його."
 
-msgid "The ending goes on the second form: <0>sõber, sõbra, sõbralik</0>."
-msgstr "Закінчення додається до другої форми: <0>sõber, sõbra, sõbralik</0>."
-
 msgid "The ending goes on the stem: <0>poes</0>, not <1>poodis</1>."
 msgstr "Закінчення додаємо до основи: <0>poes</0>, а не <1>poodis</1>."
 
@@ -17096,6 +17093,9 @@ msgstr "Закінчення каже, хто це, тому ma, sa, me і te м
 
 msgid "The ending tells who, so the pronoun can go: <0>Olen Mari.</0>"
 msgstr "Закінчення каже, хто це, тож займенник можна опустити: <0>Olen Mari.</0>"
+
+msgid "The ending usually goes on the second form: <0>sõber, sõbra, sõbralik</0>."
+msgstr "Закінчення зазвичай додається до другої форми: <0>sõber, sõbra, sõbralik</0>."
 
 msgid "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; of these seven, only <5>minema</5> drops it: <6><7/>.</6> Pick a verb and tap its forms to see what changes."
 msgstr "Закінчення ті самі, що після <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. Форма для <2>ta</2> закінчується на <3>i</3>, як <4/>; із цих семи лише <5>minema</5> його губить: <6><7/>.</6> Вибери дієслово й торкайся форм, щоб побачити, що змінюється."
@@ -17783,8 +17783,8 @@ msgstr "Однаково в обох"
 msgid "The same kanji sounds different in different words. Lymi shows the reading over the kanji until you know the word, then takes it away so you learn to read it on your own."
 msgstr "Той самий кандзі в різних словах звучить по-різному. Lymi показує читання над кандзі, доки ти не знаєш слово, а потім прибирає його, і далі ти читаєш без підказки."
 
-msgid "The same noun can take two endings with opposite meanings: <0>kasulik</0>, useful, and <1>kasutu</1>, useless. In songs you will also hear the longer <2>-kene</2>: <3>majakene</3>."
-msgstr "Один іменник може мати два закінчення з протилежним значенням: <0>kasulik</0>, корисний, і <1>kasutu</1>, марний. У піснях почуєш і довше <2>-kene</2>: <3>majakene</3>."
+msgid "The same noun can take two endings with opposite meanings: <0>kasulik</0>, useful, and <1>kasutu</1>, useless. In songs and poems you will also hear the longer <2>-kene</2>: <3>majakene</3>. Some <4>-lik</4> words are shorter than the second form: <5>ohtlik</5>, <6>tervislik</6>. And this <7>-ke</7> is not the one in <8>tehke</8>, which tells several people to do something."
+msgstr "Один іменник може мати два закінчення з протилежним значенням: <0>kasulik</0>, корисний, і <1>kasutu</1>, марний. У піснях і віршах почуєш і довше <2>-kene</2>: <3>majakene</3>. Деякі слова на <4>-lik</4> коротші за другу форму: <5>ohtlik</5>, <6>tervislik</6>. А це <7>-ke</7> — не те, що в <8>tehke</8>, де воно звертається до кількох людей."
 
 msgid "The same stem gives the person and the activity."
 msgstr "Та сама основа дає і людину, і дію."
@@ -19786,6 +19786,9 @@ msgstr "зазвичай"
 
 msgid "Usually"
 msgstr "Зазвичай"
+
+msgid "Usually you take the second form from lesson {genitive} and add an ending. <0>-lik</0> gives a quality, <1>-tu</1> means without, and <2>-ke</2> makes it small or dear. Pick an ending to see its words."
+msgstr "Зазвичай береш другу форму з уроку {genitive} і додаєш закінчення. <0>-lik</0> дає ознаку, <1>-tu</1> означає «без», а <2>-ke</2> робить щось маленьким чи милим, як «-ик» і «-ок» в українській. Обери закінчення, щоб побачити слова."
 
 msgid "Veerand neli: a quarter of the way to four, 3:15."
 msgstr "Veerand neli: чверть на четверту, 3:15."

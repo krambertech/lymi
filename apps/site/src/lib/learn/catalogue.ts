@@ -462,7 +462,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian -lik, -tu and -ke: sõbralik, kodutu, majake`,
         et: "Sõbralik, kodutu",
         minutes: 10,
-        blurb: msg`A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), each added to the second form. Every sentence is read aloud.`,
+        blurb: msg`A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), usually added to the second form. Every sentence is read aloud.`,
       },
       { name: msg`The -des and -mata forms`, et: "Lugedes, lugemata" },
       { name: msg`Participles`, et: "Loetud raamat" },

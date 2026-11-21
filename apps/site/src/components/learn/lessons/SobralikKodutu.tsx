@@ -31,7 +31,7 @@ function Et({ children }: { children: ReactNode }) {
 const MEANS: Record<string, MessageDescriptor> = {
   sõbralik: msg`friendly`,
   kasulik: msg`useful`,
-  lapselik: msg`childish`,
+  lapselik: msg`childlike`,
   emalik: msg`motherly`,
   kodutu: msg`homeless`,
   töötu: msg`unemployed`,
@@ -45,7 +45,7 @@ const MEANS: Record<string, MessageDescriptor> = {
 
 const GLOSSARY: Glossary = {
   naaber: { en: msg`neighbour`, note: msg`More than one: naabrid.` },
-  puhkama: { en: msg`to rest, to be on holiday` },
+  puhkama: { en: msg`to rest, to be on holiday`, note: msg`After tahame it is puhata.` },
 };
 
 function SuffixTable() {
@@ -201,7 +201,7 @@ export function SobralikKodutuLesson() {
       words={["naaber", "puhkama"]}
       recap={[
         <Trans key="1">
-          The ending goes on the second form: <b lang="et">sõber, sõbra, sõbralik</b>.
+          The ending usually goes on the second form: <b lang="et">sõber, sõbra, sõbralik</b>.
         </Trans>,
         <Trans key="2">
           <b lang="et">-lik</b> gives a quality: <b lang="et">kasulik</b>, useful.{" "}
@@ -220,9 +220,9 @@ export function SobralikKodutuLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Take the second form from lesson {genitive} and add an ending. <Et>-lik</Et>{" "}
-                    gives a quality, <Et>-tu</Et> means without, and <Et>-ke</Et> makes it small or
-                    dear. Pick an ending to see its words.
+                    Usually you take the second form from lesson {genitive} and add an ending.{" "}
+                    <Et>-lik</Et> gives a quality, <Et>-tu</Et> means without, and <Et>-ke</Et>{" "}
+                    makes it small or dear. Pick an ending to see its words.
                   </Trans>
                 </p>
               </Prose>
@@ -230,8 +230,10 @@ export function SobralikKodutuLesson() {
               <Aside>
                 <Trans>
                   The same noun can take two endings with opposite meanings: <Et>kasulik</Et>,
-                  useful, and <Et>kasutu</Et>, useless. In songs you will also hear the longer{" "}
-                  <Et>-kene</Et>: <Et>majakene</Et>.
+                  useful, and <Et>kasutu</Et>, useless. In songs and poems you will also hear the
+                  longer <Et>-kene</Et>: <Et>majakene</Et>. Some <Et>-lik</Et> words are shorter
+                  than the second form: <Et>ohtlik</Et>, <Et>tervislik</Et>. And this <Et>-ke</Et>{" "}
+                  is not the one in <Et>tehke</Et>, which tells several people to do something.
                 </Trans>
               </Aside>
             </>

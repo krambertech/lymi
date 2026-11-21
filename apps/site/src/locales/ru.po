@@ -5876,8 +5876,8 @@ msgstr "в Германии"
 msgid "in Lasnamäe"
 msgstr "в Ласнамяэ"
 
-msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1/> With <2/>, today, the verb is in the present: <3/>"
-msgstr "В уроке {days} было слово <0/>, «вчера». С ним глагол стоит в прошедшем времени: <1/> А с <2/>, «сегодня», — в настоящем: <3/>"
+msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1/>. With <2/>, today, the verb is in the present: <3/>."
+msgstr "В уроке {days} было слово <0/>, «вчера». С ним глагол стоит в прошедшем времени: <1/>. А с <2/>, «сегодня», — в настоящем: <3/>."
 
 msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
 msgstr "В уроке {pronouns} был глагол <0/>, «быть»: <1/>, <2/>, <3/>, <4/>. У большинства глаголов те же окончания. А там, где у olema стоит <5/>, у них два своих: <6>-b</6> для «он или она» и <7>-vad</7> для «они»."

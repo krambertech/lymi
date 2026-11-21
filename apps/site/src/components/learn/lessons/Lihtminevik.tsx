@@ -704,8 +704,8 @@ export function LihtminevikLesson() {
                 <p>
                   <Trans>
                     In lesson {days} you met <Word w="eile" />, yesterday. It goes with the past:{" "}
-                    <Word w="Eile õppisin eesti keelt" /> With <Word w="täna" />, today, the verb is
-                    in the present: <Word w="Täna õpin eesti keelt" />
+                    <Word w="Eile õppisin eesti keelt" />. With <Word w="täna" />, today, the verb is
+                    in the present: <Word w="Täna õpin eesti keelt" />.
                   </Trans>
                 </p>
                 <p>

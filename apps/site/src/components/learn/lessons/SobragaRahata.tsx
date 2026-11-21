@@ -94,10 +94,12 @@ const GLOSSARY: Glossary = {
   pood: { en: msg`shop` },
   poe: { en: msg`shop’s, of a shop`, note: msg`The genitive of pood.` },
   poeni: { en: msg`as far as the shop` },
+  poodi: { en: msg`into the shop`, note: msg`The short form for into, from pood.` },
+  kooli: { en: msg`into school, to school`, note: msg`Also the genitive of kool.` },
   kohvikus: { en: msg`in a café` },
   mulle: { en: msg`for me, to me`, note: msg`In an order: mulle üks kohv, a coffee for me.` },
   kohv: { en: msg`coffee` },
-  kohvi: { en: msg`coffee`, note: msg`The partitive of kohv, after joob or tahab.` },
+  kohvi: { en: msg`coffee`, note: msg`The partitive of kohv, after a verb such as joob or tahab.` },
   palun: { en: msg`please` },
   joob: { en: msg`drinks`, note: msg`From jooma, to drink.` },
   teed: { en: msg`tea`, note: msg`The partitive of tee, after joob.` },
@@ -105,7 +107,7 @@ const GLOSSARY: Glossary = {
   aga: { en: msg`but` },
   tahab: { en: msg`wants`, note: msg`From tahtma, to want.` },
   tuleme: { en: msg`we’re coming`, note: msg`From tulema, to come.` },
-  mul: { en: msg`at me; mul on is I have`, note: msg`Mul on aega: I have time.` },
+  mul: { en: msg`mul on: I have`, note: msg`Mul on aega: I have time.` },
   aega: { en: msg`time`, note: msg`The partitive of aeg, time.` },
   kolmeni: { en: msg`until three`, note: msg`From kolm, three; its genitive is kolme.` },
 };
@@ -155,6 +157,7 @@ const meaning = (said: string, i18n: I18n) => i18n._(MEANS[said] as MessageDescr
 
 /** One line to tap. Its words swap in when the switch flips. */
 function FlipLine({ said, mode }: { said: string; mode: string }) {
+  const { i18n } = useLingui();
   const clip = src(said);
   const playing = usePlaying(clip);
   return (
@@ -170,6 +173,12 @@ function FlipLine({ said, mode }: { said: string; mode: string }) {
         className="learn-swap text-xl font-medium tracking-tight max-sm:text-lg"
       >
         <Lit text={said} />
+        <span
+          lang={i18n.locale}
+          className="block text-sm font-normal tracking-normal text-ink-muted"
+        >
+          {meaning(said, i18n)}
+        </span>
       </span>
       <span className="grid size-5 shrink-0 place-items-center text-(--form)">
         {playing && <Playing className="h-3" />}
@@ -342,8 +351,8 @@ const MATCH_MEANS: Record<(typeof SOBRAGA_MATCH)[number], MessageDescriptor> = {
   lapsega: msg`with a child`,
   piimata: msg`without milk`,
   piimaga: msg`with milk`,
-  Tartuni: msg`as far as Tartu`,
-  arstina: msg`as a doctor`,
+  bussini: msg`as far as the bus`,
+  bussiga: msg`by bus`,
 };
 
 /** What each word to build a form of means, and what the form says. */
@@ -363,6 +372,9 @@ const FORM_MEANS: Record<
 
 type FormQuizItem = FormItem & { pair: readonly [string, string] };
 
+/** Words whose genitive changes inside, so the quiz shows it: jõgi, jõe; kokk, koka. */
+const CHANGES_INSIDE = new Set<string>(["jogi", "kokk"]);
+
 /** Kati’s message with a gap for each form, cut from `SOBRAGA_PASSAGES.kati`. */
 const KATI_GAPS: readonly GapItem[] = [
   {
@@ -373,18 +385,18 @@ const KATI_GAPS: readonly GapItem[] = [
     options: ["arstini", "arstina", "arstita"],
   },
   {
-    id: "bussiga",
-    before: "Ma lähen",
-    after: "tööle.",
-    answer: "bussiga",
-    options: ["bussiga", "bussina", "bussini"],
+    id: "rongiga",
+    before: "Ma lähen tööle",
+    after: ".",
+    answer: "rongiga",
+    options: ["rongiga", "rongina", "rongini"],
   },
   {
-    id: "viieni",
+    id: "neljani",
     before: "Ma töötan kella",
     after: ".",
-    answer: "viieni",
-    options: ["viiega", "viiena", "viieni"],
+    answer: "neljani",
+    options: ["neljaga", "neljana", "neljani"],
   },
   {
     id: "piimata",
@@ -410,14 +422,14 @@ function useContent() {
         Her job: <span lang="et">-na</span>, as a doctor.
       </Trans>
     ),
-    bussiga: (
+    rongiga: (
       <Trans>
-        How she gets to work: <span lang="et">-ga</span>, by bus.
+        How she gets to work: <span lang="et">-ga</span>, by train.
       </Trans>
     ),
-    viieni: (
+    neljani: (
       <Trans>
-        Until when: <span lang="et">-ni</span>, until five.
+        Until when: <span lang="et">-ni</span>, until four.
       </Trans>
     ),
     piimata: (
@@ -432,7 +444,8 @@ function useContent() {
     ),
   };
   const gaps = KATI_GAPS.map((gap) => ({ ...gap, why: why[gap.id] }));
-  // Each right answer sits in its own place: first, second, third, then first again.
+  // Each right answer sits in its own place: first, second, third, then first again. In the first
+  // three, a wrong option shares a half with each of the others, so picking the middle one fails.
   const cafe: PassageQuestion[] = [
     {
       id: "coffee",
@@ -440,7 +453,7 @@ function useContent() {
       options: [
         { id: "milk", label: t`With milk` },
         { id: "no-milk", label: t`Without milk` },
-        { id: "sugar", label: t`With sugar` },
+        { id: "no-sugar", label: t`Without sugar` },
       ],
       answer: "milk",
       line: 1,
@@ -451,7 +464,7 @@ function useContent() {
       options: [
         { id: "sugar", label: t`Tea with sugar and no lemon` },
         { id: "lemon", label: t`Tea with lemon and no sugar` },
-        { id: "coffee", label: t`Coffee with lemon and no sugar` },
+        { id: "coffee", label: t`Coffee with sugar and no lemon` },
       ],
       answer: "lemon",
       line: 2,
@@ -461,7 +474,7 @@ function useContent() {
       ask: t`What does Jaan want?`,
       options: [
         { id: "milk", label: t`Coffee with milk` },
-        { id: "tea", label: t`Tea without milk` },
+        { id: "tea", label: t`Tea with milk` },
         { id: "no-milk", label: t`Coffee without milk` },
       ],
       answer: "no-milk",
@@ -490,6 +503,7 @@ export function SobragaRahataLesson() {
   const genitive = LESSONS.find((lesson) => lesson.et === "Minu raamat")?.n;
   const past = LESSONS.find((lesson) => lesson.et === "Lihtminevik")?.n;
   const times = LESSONS.find((lesson) => lesson.et === "Esmaspäeval, aasta pärast")?.n;
+  const into = LESSONS.find((lesson) => lesson.et === "Majas, majja, majast")?.n;
 
   const heardItems = useMemo<HeardItem[]>(() => {
     // The page opens on a -ta order, its answer second.
@@ -497,7 +511,7 @@ export function SobragaRahataLesson() {
     const rest = HEARD.filter((each) => each !== first);
     return [...(first ? [first] : []), ...rest].map(({ said, twin, pair }, i) => {
       const other = HEARD_SAID.find((each) => each !== said && each !== twin) as string;
-      const turn = (i + 1) % 3;
+      const turn = (i + 2) % 3;
       const three = [said, twin, other];
       return {
         said,
@@ -616,7 +630,7 @@ export function SobragaRahataLesson() {
     src: src(form),
   }));
 
-  // Typed, so no option gives the form away; the word's genitive is shown under it.
+  // Typed, so no option gives the form away. The genitive is shown only where it changes inside.
   const formItems = useMemo<FormQuizItem[]>(
     () =>
       SOBRAGA_FORMS.map(({ id, base, genitive, ending }) => {
@@ -624,10 +638,12 @@ export function SobragaRahataLesson() {
         const means = FORM_MEANS[id];
         return {
           base,
-          gloss: (
+          gloss: CHANGES_INSIDE.has(id) ? (
             <Trans>
               {i18n._(means.word)}; genitive <span lang="et">{genitive}</span>
             </Trans>
+          ) : (
+            i18n._(means.word)
           ),
           cue: i18n._(means.cue),
           answers: [form],
@@ -659,7 +675,7 @@ export function SobragaRahataLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          Where English uses with, without, until and as, Estonian adds an ending:{" "}
+          For with, without, until and as in a role, Estonian adds an ending:{" "}
           <span lang="et">-ga</span>, <span lang="et">-ta</span>, <span lang="et">-ni</span> or{" "}
           <span lang="et">-na</span>. Each goes on the genitive: <span lang="et">sõbraga</span> is
           with a friend, and <span lang="et">rahata</span> is without money.
@@ -801,8 +817,10 @@ export function SobragaRahataLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <span lang="et">-ni</span> says how far, in place or in time.{" "}
-                    <Word w="Tartuni" /> is as far as Tartu.
+                    <span lang="et">-ni</span> says how far, in place or in time:{" "}
+                    <Word w="Tartuni" /> is as far as Tartu. It marks where the way stops. Going
+                    into a place is still <Word w="poodi" /> or <Word w="kooli" /> from lesson{" "}
+                    {into}.
                   </Trans>
                 </p>
                 <p>
@@ -896,8 +914,8 @@ export function SobragaRahataLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Now build the forms. Each word comes with its genitive: add the ending its cue
-                    asks for.
+                    Now build the forms: put the ending the cue asks for on the genitive. Where the
+                    genitive changes inside, the word shows it.
                   </Trans>
                 </p>
               </Prose>
@@ -910,7 +928,9 @@ export function SobragaRahataLesson() {
                   share === 1 ? (
                     <Trans>All of them, each ending on its genitive.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Put the ending on the genitive, not on the first form.</Trans>
+                    <Trans>
+                      Nearly. Check which ending the cue asks for, then put it on the genitive.
+                    </Trans>
                   ) : (
                     <Trans>Tap the words above once more, then try again.</Trans>
                   )

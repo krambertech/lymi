@@ -849,8 +849,8 @@ export const SOBRAGA_MATCH = [
   "lapsega",
   "piimata",
   "piimaga",
-  "Tartuni",
-  "arstina",
+  "bussini",
+  "bussiga",
 ] as const;
 
 /** A word, its genitive, then the genitive with one of the four endings. */
@@ -889,8 +889,8 @@ export const SOBRAGA_PASSAGES = {
   kati: [
     "Tere, Mari!",
     "Ma töötan haiglas arstina.",
-    "Ma lähen bussiga tööle.",
-    "Ma töötan kella viieni.",
+    "Ma lähen tööle rongiga.",
+    "Ma töötan kella neljani.",
     "Ma ei joo piima.",
     "Ma joon kohvi piimata.",
     "Homseni!",
@@ -921,6 +921,8 @@ export const SOBRAGA_WORDS = [
   "kokana",
   "lapsena",
   "Lapsena elas Mari Tartus.",
+  "poodi",
+  "kooli",
   "kohvikus",
   "mulle",
   "kohv",

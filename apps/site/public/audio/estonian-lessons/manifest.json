@@ -4949,6 +4949,281 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "ujuma-ujumas-ujumast/ujuma": {
+    "text": "ujuma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/ujumas": {
+    "text": "ujumas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/ujumast": {
+    "text": "ujumast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/jooksma": {
+    "text": "jooksma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/jooksmas": {
+    "text": "jooksmas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/jooksmast": {
+    "text": "jooksmast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/so2o2ma": {
+    "text": "sööma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/so2o2mas": {
+    "text": "söömas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/so2o2mast": {
+    "text": "söömast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/kohvi-jooma": {
+    "text": "kohvi jooma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/kohvi-joomas": {
+    "text": "kohvi joomas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/kohvi-joomast": {
+    "text": "kohvi joomast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-la2heb-ujuma": {
+    "text": "Mari läheb ujuma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-on-ujumas": {
+    "text": "Mari on ujumas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-tuleb-ujumast": {
+    "text": "Mari tuleb ujumast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-la2heb-jooksma": {
+    "text": "Mari läheb jooksma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-on-jooksmas": {
+    "text": "Mari on jooksmas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-tuleb-jooksmast": {
+    "text": "Mari tuleb jooksmast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-la2heb-so2o2ma": {
+    "text": "Mari läheb sööma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-on-so2o2mas": {
+    "text": "Mari on söömas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-tuleb-so2o2mast": {
+    "text": "Mari tuleb söömast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-la2heb-kohvi-jooma": {
+    "text": "Mari läheb kohvi jooma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-on-kohvi-joomas": {
+    "text": "Mari on kohvi joomas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/mari-tuleb-kohvi-joomast": {
+    "text": "Mari tuleb kohvi joomast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/kass-la2heb-so2o2ma": {
+    "text": "Kass läheb sööma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/kass-on-so2o2mas": {
+    "text": "Kass on söömas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/kass-tuleb-so2o2mast": {
+    "text": "Kass tuleb söömast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/koju": {
+    "text": "koju",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/linna": {
+    "text": "linna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/kohvikus": {
+    "text": "kohvikus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/tallinnas": {
+    "text": "Tallinnas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/koolist": {
+    "text": "koolist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/kodust": {
+    "text": "kodust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/ma-la2hen-ujuma": {
+    "text": "Ma lähen ujuma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/ma-olen-ujumas": {
+    "text": "Ma olen ujumas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/ma-ka2in-iga-pa2ev-ujumas": {
+    "text": "Ma käin iga päev ujumas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/ma-tulen-ujumast": {
+    "text": "Ma tulen ujumast.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/tule-so2o2ma": {
+    "text": "Tule sööma!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/majja": {
+    "text": "majja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/majas": {
+    "text": "majas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/majast": {
+    "text": "majast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/poodi": {
+    "text": "poodi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/poes": {
+    "text": "poes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/poest": {
+    "text": "poest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/kus-mari-on": {
+    "text": "Kus Mari on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/kuhu-sa-la2hed": {
+    "text": "Kuhu sa lähed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/kust-sa-tuled": {
+    "text": "Kust sa tuled?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/la2hen": {
+    "text": "lähen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/olen": {
+    "text": "olen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/ka2in": {
+    "text": "käin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/ka2ima": {
+    "text": "käima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/tulen": {
+    "text": "tulen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/tulema": {
+    "text": "tulema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/iga-pa2ev": {
+    "text": "iga päev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "ujuma-ujumas-ujumast/p-voice": {
+    "text": "Tere, Jaan! Ma olen kodus. Ema ei ole kodus, ta on ujumas. Ta käib iga päev ujumas. Isa tuleb kell viis jooksmast. Ma lähen kell kuus sööma. Tule ka sööma!",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
   "osastav/u2ks-kass": {
     "text": "üks kass",
     "model": "eleven_v4",

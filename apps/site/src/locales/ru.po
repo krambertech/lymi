@@ -431,6 +431,9 @@ msgstr "<0/> спрашивает о людях, а <1/> — о вещах: <2/>
 msgid "<0/> asks how many, and the noun after it takes its third form too. For a price, ask with <1>kui palju</1>, how much, from lesson {questions}."
 msgstr "<0/> спрашивает «сколько» о том, что можно посчитать, и существительное после него тоже стоит в третьей форме. Цену спрашивают через <1>kui palju</1> из урока {questions}."
 
+msgid "<0/> asks which one in order, and its answer is an ordinal. <1/>, from lesson {partitive}, asks how many, and its answer is a plain number. <2>Mitmes</2> is built like <3>neljas</3>: <4>mitu, mitme, mitmes</4>."
+msgstr "<0/> спрашивает «который по счёту?», и ответ на него — порядковое числительное. <1/> из урока {partitive} спрашивает «сколько?», и ответ — обычное число. <2>Mitmes</2> образовано так же, как <3>neljas</3>: <4>mitu, mitme, mitmes</4>."
+
 msgid "<0/> at the start turns a sentence into a yes-or-no question. Lesson {questions} covers kas and the question words."
 msgstr "<0/> в начале превращает предложение в вопрос, на который отвечают «да» или «нет». О kas и вопросительных словах рассказывает урок {questions}."
 
@@ -463,6 +466,9 @@ msgstr "<0/> — это «я», тот, кто что-то делает: <1/> <2
 
 msgid "<0/> is one cat; <1/> is two cats. After a number from two up, a noun takes its third form, the partitive, and stays singular: <2/> has no plural ending."
 msgstr "<0/> — одна кошка, <1/> — две кошки. После числа от двух и больше существительное стоит в третьей форме, партитиве, и остаётся в единственном числе: у <2/> нет окончания множественного числа."
+
+msgid "<0/> is the exception. Its genitive is <1/>, but third is <2/>, with an a. Pick a number and tap its forms to see what changes."
+msgstr "Исключение — <0/>. Его родительный падеж — <1/>, но «третий» — это <2/>, с a. Выбери число и нажимай на его формы, чтобы увидеть, что меняется."
 
 msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
 msgstr "<0/> — это город, а <1/> — в Таллине. В эстонском «в» — не отдельное слово, а окончание: в конец названия добавляют <2>-s</2>. «Я живу в Таллине» — это <3/>"
@@ -553,6 +559,9 @@ msgstr "<0>{0}</0>: <1>{1}</1>"
 msgid "<0>{before}</0> blank <1>{after}</1>"
 msgstr "<0>{before}</0> пропуск <1>{after}</1>"
 
+msgid "<0>{number}</0> is its own genitive, so only <1>s</1> is new."
+msgstr "<0>{number}</0> в родительном падеже не меняется, так что новое здесь только <1>s</1>."
+
 msgid "<0>{plannedCount}</0> planned, A1 to B1"
 msgstr "Запланировано: <0>{plannedCount}</0>, от A1 до B1"
 
@@ -564,6 +573,12 @@ msgstr "<0>{said}</0> — это сама форма на <1>-ma</1>, «{means}�
 
 msgid "<0>{said}</0> is the I form of <1>{ma}</1>, {means}."
 msgstr "<0>{said}</0> — форма для «я» от <1>{ma}</1>, «{means}»."
+
+msgid "<0>{stem}</0>, the genitive of <1>{number}</1>, with <2>s</2>."
+msgstr "<0>{stem}</0> — родительный падеж от <1>{number}</1> — плюс <2>s</2>."
+
+msgid "<0>{stem}</0>, the genitive of <1>{tensWord}</1>, then <2>{last}</2>."
+msgstr "<0>{stem}</0> — родительный падеж от <1>{tensWord}</1>, — а затем <2>{last}</2>."
 
 #. placeholder {0}: means(text, i18n)
 msgid "<0>{text}</0>, {0}"
@@ -606,6 +621,9 @@ msgstr "<0>Ei</0> говорит, чего человек не делает; <1>
 msgid "<0>Ei</0>, and the verb without its ending."
 msgstr "<0>Ei</0> и глагол без окончания."
 
+msgid "<0>Esimene</0>, <1>teine</1> and <2>kolmas</2> are words of their own. From four on, an ordinal is the number’s genitive with <3>s</3>: <4>neli, nelja, neljas</4>."
+msgstr "<0>Esimene</0>, <1>teine</1> и <2>kolmas</2> — отдельные слова. Начиная с четырёх, порядковое числительное — это родительный падеж числа плюс <3>s</3>: <4>neli, nelja, neljas</4>."
+
 msgid "<0>in</0> goes on <1>ol-</1>."
 msgstr "<0>in</0> добавляется к <1>ol-</1>."
 
@@ -623,6 +641,12 @@ msgstr "<0>Käin</0> — это настоящее время. Кати спра
 
 msgid "<0>Kes</0> asks about people, <1>mis</1> about things."
 msgstr "<0>Kes</0> спрашивает о людях, <1>mis</1> — о вещах."
+
+msgid "<0>Kolm</0> is the exception: <1>kolmas</1>, with <2>as</2>."
+msgstr "<0>Kolm</0> — исключение: <1>kolmas</1>, с <2>as</2>."
+
+msgid "<0>Kolm</0> with <1>as</1>."
+msgstr "<0>Kolm</0> плюс <1>as</1>."
 
 msgid "<0>Kool</0> gains an i: <1>kooli</1>. It’s the vowel you heard in <2>koolis</2>."
 msgstr "У <0>kool</0> на конце появляется i: <1>kooli</1>. Это та же гласная, что в <2>koolis</2>."
@@ -678,6 +702,9 @@ msgstr "<0>Mina</0>, <1>sina</1> и <2>nemad</2> меняются: <3>minu, sinu
 msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same short forms you met for he or she, we and you. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
 msgstr "<0>Minu</0> и <1>sinu</1> часто сокращаются до <2/> и <3/>. <4>Tema</4>, <5>meie</5> и <6>teie</6> сокращаются до <7>ta, me</7> и <8>te</8> — тех же кратких форм, что и для «он или она», «мы» и «вы». В уроке {questions} уже было <9>su</9>: <10/> — «Как тебя зовут?»"
 
+msgid "<0>Mitu?</0> asks how many; <1>mitmes?</1> asks which one in order."
+msgstr "<0>Mitu?</0> спрашивает «сколько?», а <1>mitmes?</1> — «который по счёту?»."
+
 msgid "<0>Mulle meeldib</0> is I like. Lesson {liking} explains how it works."
 msgstr "<0>Mulle meeldib</0> — это «мне нравится». Как это устроено, объясняет урок {liking}."
 
@@ -692,6 +719,9 @@ msgstr "<0>Nad on</0> — это «они есть», сейчас. Кати с�
 
 msgid "<0>Nad ostavad</0> is they buy, now. Kati asked what you bought."
 msgstr "<0>Nad ostavad</0> — это «они покупают», сейчас. Кати спрашивала о вчерашних покупках."
+
+msgid "<0>ne</0> turns into <1>sel</1>."
+msgstr "<0>ne</0> превращается в <1>sel</1>."
 
 msgid "<0>Nende</0> is their. For you and Martin, say <1>meie</1>, our."
 msgstr "<0>Nende</0> — это «их». Про себя и Мартина говори <1>meie</1>, «наш»."
@@ -746,6 +776,9 @@ msgstr "<0>Pool</0>, <1>veerand</1> и <2>kolmveerand</2> называют на�
 
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>эластичность спроса</0> ?"
+
+msgid "<0>s</0> turns into <1>ndal</1>."
+msgstr "<0>s</0> превращается в <1>ndal</1>."
 
 msgid "<0>Sa oled</0> is you are: this tells Mari she’s from Ukraine."
 msgstr "<0>Sa oled</0> — «ты есть»: так ты говоришь Мари, что она из Украины."
@@ -1029,6 +1062,9 @@ msgstr "Файл .mochi из Mochi"
 msgid "A *hedgehog* lives in the forest."
 msgstr "В лесу живёт *ёжик*."
 
+msgid "A <0/> is a birthday. Match each word with its meaning."
+msgstr "День рождения по-эстонски — <0/>. Соедини каждое слово с его значением."
+
 msgid "A 48-page lecture PDF goes to Claude with “Make flashcards from the key terms in this lecture.” It uses Lymi and adds four cards to a Pharmacology deck: agonist, antagonist, half-life and bioavailability."
 msgstr "PDF лекции на 48 страниц отправляется в Claude с просьбой «Сделай карточки по ключевым терминам из этой лекции». Claude использует Lymi и добавляет четыре карточки в колоду «Фармакология»: agonist, antagonist, half-life и bioavailability."
 
@@ -1111,6 +1147,9 @@ msgstr "Курсы и занятия"
 
 msgid "a cup of coffee"
 msgstr "чашка кофе"
+
+msgid "A date is an ordinal and a month, written with a small letter. The full stop after the numeral makes it an ordinal: <0>21. november</0>, said <1>kahekümne esimene november</1>."
+msgstr "Дата — это порядковое числительное и месяц, который пишут со строчной буквы. Точка после цифры делает число порядковым: <0>21. november</0> читается как <1>kahekümne esimene november</1>."
 
 msgid "A day off"
 msgstr "Выходной"
@@ -1222,6 +1261,9 @@ msgstr "Бесплатный урок об отрицании в эстонск�
 
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
 msgstr "Бесплатный урок об эстонских числах: от нуля до десяти, -teist и -kümmend, сотни и тысячи, а также числа в ценах, возрасте и номерах телефонов. Каждое число озвучено."
+
+msgid "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, saying on a date with -l (viiendal mail) and on which floor. Every sentence is read aloud."
+msgstr "Бесплатный урок о порядковых числительных и датах в эстонском языке: esimene, teine, kolmas и как остальные образуются от родительного падежа, названия месяцев, вопрос mis kuupäev täna on?, запись 21. november, «какого числа» с -l (viiendal mail) и на каком этаже. Каждое предложение озвучено."
 
 msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
 msgstr "Бесплатный урок о вопросах в эстонском: kas для вопросов «да или нет», ответы jah и ei, вопросительные слова kes, mis, kus, millal, miks, kuidas и kui palju и три повседневных вопроса, которые учат целиком. Каждое предложение озвучено."
@@ -1554,11 +1596,23 @@ msgstr "Слово и подсказка: введи форму, с клавиш
 msgid "A word list from a spreadsheet"
 msgstr "Список слов из таблицы"
 
+msgid "A word of its own, not built from <0>kaks</0>. It also means “other”."
+msgstr "Отдельное слово, не от <0>kaks</0>. Ещё значит «другой»."
+
+msgid "A word of its own, not built from <0>üks</0>."
+msgstr "Отдельное слово, не от <0>üks</0>."
+
+msgid "A word of its own."
+msgstr "Отдельное слово."
+
 msgid "A word turning into its forms: the letters it drops are struck, the ones it gains are lit."
 msgstr "Слово превращается в свои формы: буквы, которые оно теряет, зачёркнуты, а новые подсвечены."
 
 msgid "A year has 365 days."
 msgstr "В году 365 дней."
+
+msgid "A year is a plain number: <0/>, in 2026, is said <1>aastal kaks tuhat kakskümmend kuus</1>. You’ll also see <2>2026. aastal</2>, with a full stop, which makes the year an ordinal."
+msgstr "Год — обычное число: <0/>, в 2026 году, произносится <1>aastal kaks tuhat kakskümmend kuus</1>. Встречается и <2>2026. aastal</2>, с точкой: тогда год — порядковое числительное."
 
 msgid "a, as in “father”"
 msgstr "а, как в слове «мама»"
@@ -2118,6 +2172,15 @@ msgstr "Все семь. Прошлое и настоящее — каждый �
 msgid "All shelves"
 msgstr "Все полки"
 
+msgid "All six dates, inside sentences."
+msgstr "Все шесть дат, причём внутри предложений."
+
+msgid "All six ordinals."
+msgstr "Все шесть порядковых числительных."
+
+msgid "All six, by ear."
+msgstr "Все шесть, на слух."
+
 msgid "All six, typed in full."
 msgstr "Все шесть набраны полностью."
 
@@ -2341,6 +2404,9 @@ msgstr "Приложения для iPhone и Android"
 msgid "Apps you connect through MCP, and scripts using your API keys, can access data within the permissions you approve. Their providers receive the data returned to them and handle it under their own policies. Disconnecting an app or revoking a key does not erase copies already received; an app’s current access token can remain valid until it expires."
 msgstr "Приложения, которые ты подключаешь через MCP, и скрипты с твоими API-ключами получают доступ к данным в пределах выданных разрешений. Их поставщики получают данные в ответах и обрабатывают их по собственным правилам. Отключение приложения или отзыв ключа не удаляет уже полученные копии; текущий токен доступа приложения может действовать до истечения своего срока."
 
+msgid "April"
+msgstr "апрель"
+
 msgid "Ära istu tells her not to sit down."
 msgstr "Ära istu просит её не садиться."
 
@@ -2530,6 +2596,9 @@ msgstr "В одиннадцать"
 msgid "At first, every character has pinyin."
 msgstr "Сначала над каждым иероглифом есть пиньинь."
 
+msgid "At half past six"
+msgstr "В половине седьмого"
+
 msgid "at home"
 msgstr "дома"
 
@@ -2544,6 +2613,9 @@ msgstr "в школе"
 
 msgid "at school, in a school"
 msgstr "в школе"
+
+msgid "At seven"
+msgstr "В семь"
 
 msgid "At ten"
 msgstr "В десять"
@@ -2580,6 +2652,9 @@ msgstr "АТФ"
 
 msgid "Auditors use it to spot figures that were made up."
 msgstr "С его помощью аудиторы находят выдуманные цифры."
+
+msgid "August"
+msgstr "август"
 
 msgid "AWS, Azure and Google Cloud: services, limits and the trade-offs between them."
 msgstr "AWS, Azure и Google Cloud: сервисы, ограничения и компромиссы между ними."
@@ -2674,6 +2749,9 @@ msgstr "Велосипед"
 msgid "Big numbers"
 msgstr "Большие числа"
 
+msgid "Bigger numbers follow the same rule. The genitive of <0/> is <1/>, so eleventh is <2><3/>.</2> The genitive of <4/> is <5/>, so twentieth is <6><7/>.</6>"
+msgstr "Большие числа подчиняются тому же правилу. Родительный падеж от <0/> — <1/>, поэтому «одиннадцатый» — это <2><3/>.</2> Родительный от <4/> — <5/>, поэтому «двадцатый» — это <6><7/>.</6>"
+
 msgid "Bill"
 msgstr "Счёт"
 
@@ -2706,6 +2784,9 @@ msgstr "Заметки по биологии"
 
 msgid "Biology study group"
 msgstr "Учебная группа по биологии"
+
+msgid "birthday"
+msgstr "день рождения"
 
 msgid "book"
 msgstr "книга"
@@ -3619,6 +3700,12 @@ msgstr "da-инфинитив"
 msgid "Danke schön! Thank you very much!"
 msgstr "Danke schön! Большое спасибо!"
 
+msgid "date"
+msgstr "дата, число"
+
+msgid "Dates by ear"
+msgstr "Даты на слух"
+
 msgid "Dates, definitions and formulas to know on the day."
 msgstr "Даты, определения и формулы, которые нужно знать на экзамене."
 
@@ -3637,6 +3724,9 @@ msgstr "ДЕНЬ 30"
 msgid "Day by day"
 msgstr "День за днём"
 
+msgid "Day of the month"
+msgstr "Число месяца"
+
 msgid "days in a row"
 msgstr "дней подряд"
 
@@ -3654,6 +3744,9 @@ msgstr "Дорогая"
 
 msgid "Dear; expensive"
 msgstr "Милый; дорогой"
+
+msgid "December"
+msgstr "декабрь"
 
 msgid "Deck instructions"
 msgstr "Инструкции колоды"
@@ -4052,6 +4145,9 @@ msgstr "В каждом раунде — место. Выбери окончан
 msgid "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
 msgstr "В каждом раунде — предложение с пропуском. Выбери подходящую форму. Пропуск стоит после <0>pole</0> или в начале предложения?"
 
+msgid "Each sentence has a date in it, said as it is or with <0>l</0>. Type the date you hear. Digits count, 5.5 for the fifth of May, and so do words, as in <1>5. mai</1> or 5 May."
+msgstr "В каждом предложении есть дата — как есть или с <0>l</0>. Введи дату, которую слышишь. Можно цифрами, 5.5 для пятого мая, а можно словами: <1>5. mai</1> или 5 мая."
+
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Каждое государство теперь само правило своей землёй: так начался современный <0>суверенитет</0>."
 
@@ -4139,6 +4235,9 @@ msgstr "восемь"
 msgid "Eighteen. The new words will come up a few at a time."
 msgstr "Восемнадцать. Новые слова будут появляться понемногу."
 
+msgid "eighth"
+msgstr "восьмой"
+
 msgid "Einbürgerungstest"
 msgstr "Einbürgerungstest"
 
@@ -4174,6 +4273,12 @@ msgstr "От одиннадцати до девятнадцати"
 
 msgid "Eleven to nineteen: -teist"
 msgstr "От 11 до 19: -teist"
+
+msgid "eleventh"
+msgstr "одиннадцатый"
+
+msgid "Eleventh to thirty-first"
+msgstr "С одиннадцатого по тридцать первое"
 
 msgid "Ended in 1648 by the <0>Peace of Westphalia</0>."
 msgstr "Завершилась в 1648 году <0>Вестфальским миром</0>."
@@ -4235,6 +4340,9 @@ msgstr "Эстония; Эстонии"
 msgid "Estonia; Estonian"
 msgstr "Эстония; эстонский"
 
+msgid "Estonia’s birthday, Independence Day, is on 24 February."
+msgstr "День рождения Эстонии, День независимости, — 24 февраля."
+
 msgid "Estonia’s capital"
 msgstr "столица Эстонии"
 
@@ -4280,6 +4388,9 @@ msgstr "Эстонские буквы"
 msgid "Estonian numbers"
 msgstr "Числа на эстонском"
 
+msgid "Estonian ordinal numbers and dates"
+msgstr "Порядковые числительные и даты в эстонском языке"
+
 msgid "Estonian past tense"
 msgstr "Прошедшее время в эстонском языке"
 
@@ -4309,6 +4420,9 @@ msgstr "Эстонские слова меняют форму: <0>vesi</0>, <1>v
 
 msgid "Estonian words you’ll remember."
 msgstr "Эстонские слова, которые ты запомнишь."
+
+msgid "Estonian writes the months with a small letter, as it writes the days: <0/>, <1/>, <2><3/>.</2> <4/> and <5/> differ in one sound, <6>n</6> or <7>l</7>."
+msgstr "Месяцы по-эстонски пишут со строчной буквы, как и дни недели: <0/>, <1/>, <2><3/>.</2> <4/> и <5/> различаются одним звуком: <6>n</6> или <7>l</7>."
 
 msgid "euro"
 msgstr "евро"
@@ -4556,6 +4670,9 @@ msgstr "Семья"
 msgid "father"
 msgstr "отец"
 
+msgid "February"
+msgstr "февраль"
+
 msgid "Feeling low; in a slump"
 msgstr "Плохое настроение; упадок сил"
 
@@ -4579,6 +4696,9 @@ msgstr "Что может заполнить AI"
 
 msgid "Fifteen. The new words will come up a few at a time."
 msgstr "Пятнадцать. Новые слова будут появляться по нескольку за раз."
+
+msgid "fifth"
+msgstr "пятый"
 
 msgid "Fill every gap first."
 msgstr "Сначала заполни все пропуски."
@@ -4634,8 +4754,14 @@ msgstr "первый"
 msgid "First day"
 msgstr "Первый день"
 
+msgid "First to tenth"
+msgstr "С первого по десятый"
+
 msgid "First-line drug for type 2 diabetes. Lowers the glucose the liver makes."
 msgstr "Препарат первой линии при диабете 2 типа. Снижает выработку глюкозы печенью."
+
+msgid "First, second, third"
+msgstr "Первый, второй, третий"
 
 msgid "five"
 msgstr "пять"
@@ -4717,6 +4843,9 @@ msgstr "Квартиры в Таллине *дорогие*."
 
 msgid "Flip the six lines above once more, then come back."
 msgstr "Ещё раз переключи шесть строк выше и возвращайся."
+
+msgid "floor, storey"
+msgstr "этаж"
 
 msgid "Flour"
 msgstr "Мука"
@@ -4839,6 +4968,12 @@ msgstr "Четыре коротких глагола"
 msgid "Four ways to ask"
 msgstr "Четыре способа спрашивать"
 
+msgid "fourth"
+msgstr "четвёртый"
+
+msgid "Fourth, fourteenth and twenty-fourth all have the same digit in them. Listen for <0>teistkümnes</0> and for <1>kahekümne</1>, then pick the day."
+msgstr "В четвёртом, четырнадцатом и двадцать четвёртом — одна и та же цифра. Слушай, есть ли <0>teistkümnes</0> или <1>kahekümne</1>, и выбирай число."
+
 msgid "Français · phrase"
 msgstr "Français · фраза"
 
@@ -4956,6 +5091,9 @@ msgstr "Друг"
 msgid "friends"
 msgstr "друзья"
 
+msgid "From <0>{number}</0>, {means}."
+msgstr "От <0>{number}</0> — {means}."
+
 msgid "From a long PDF"
 msgstr "Из длинного PDF"
 
@@ -4994,6 +5132,15 @@ msgstr "из Эстонии"
 
 msgid "from Finland"
 msgstr "из Финляндии"
+
+msgid "From four on, an ordinal is built on the genitive, the form lesson {genitive} uses for “of”. Take <0/>, four. Its genitive is <1/>, and with <2>s</2> it becomes <3><4/>,</3> fourth. In the same way <5/> goes to <6/> and <7><8/>.</7>"
+msgstr "Начиная с четырёх, порядковое числительное строится на родительном падеже — форме, которой урок {genitive} отвечает на «чей? чего?». Возьми <0/>, четыре. Родительный падеж — <1/>, а с <2>s</2> получается <3><4/>,</3> «четвёртый». Так же <5/> даёт <6/> и <7><8/>.</7>"
+
+msgid "From four on, an ordinal is the number’s genitive with <0>s</0>. A date is an ordinal and a month, and on a date both take <1>l</1>."
+msgstr "Начиная с четырёх, порядковое числительное — это родительный падеж числа плюс <0>s</0>. Дата — порядковое числительное и месяц, а в ответе на «какого числа?» оба слова получают <1>l</1>."
+
+msgid "From four on: the genitive and -s"
+msgstr "С четырёх: родительный падеж и -s"
 
 msgid "From G. K. Chesterton’s 1929 book The Thing."
 msgstr "Из книги Г. К. Честертона «The Thing» 1929 года."
@@ -5288,6 +5435,9 @@ msgstr "Ещё раз пройдись по формам выше, а потом
 
 msgid "Go back to the endings above, then try again."
 msgstr "Вернись к окончаниям выше и попробуй ещё раз."
+
+msgid "Go back to the numbers above, then try again."
+msgstr "Вернись к числам выше, потом попробуй ещё раз."
 
 msgid "Go back to the table above, then try again."
 msgstr "Вернись к таблице выше, а потом попробуй ещё раз."
@@ -5899,6 +6049,12 @@ msgstr "Сколько у вас кошек?"
 msgid "How many children do you have?"
 msgstr "Сколько у тебя детей?"
 
+msgid "How many, which one, on which one"
+msgstr "Сколько, который, какого числа"
+
+msgid "how many?"
+msgstr "сколько?"
+
 msgid "How much coffee do you drink?"
 msgstr "Сколько кофе ты пьёшь?"
 
@@ -6261,6 +6417,9 @@ msgstr "Я живу в Тарту."
 msgid "I live in the *city*."
 msgstr "Я живу в *городе*."
 
+msgid "I live on the third floor."
+msgstr "Я живу на третьем этаже."
+
 msgid "I lived"
 msgstr "я жил, жила"
 
@@ -6511,6 +6670,9 @@ msgstr "Я собираюсь есть."
 msgid "I’m going to school."
 msgstr "Я иду в школу."
 
+msgid "I’m going to Tartu on 8 June."
+msgstr "Восьмого июня я еду в Тарту."
+
 msgid "I’m going to Tartu."
 msgstr "Я еду в Тарту."
 
@@ -6673,6 +6835,9 @@ msgstr "Через {ahead} минут будет {next}."
 msgid "In <0/>, to buy, <1>ta</1> takes <2>is</2>: <3/>, I bought, but <4/>, he or she bought."
 msgstr "В <0/>, «покупать», форма для <1>ta</1> получает <2>is</2>: <3/> — для «я», но <4/> — для «он или она»."
 
+msgid "in 2026"
+msgstr "в 2026 году"
+
 msgid "In a bar in Spain, you ask them to “put” you one."
 msgstr "В испанском баре кофе просят «поставить»."
 
@@ -6690,6 +6855,12 @@ msgstr "в больнице"
 
 msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 msgstr "В вопросе с kas голос в конце понижается, как в утверждении: kas уже говорит, что это вопрос. В разговоре вместо него ещё услышишь <0/> в конце, что-то вроде «да?»: <1/>"
+
+msgid "In a number of two words only the last is an ordinal, and the tens stay in the genitive: <0>kahekümne esimene</0>."
+msgstr "Если в числе два слова, порядковым становится только последнее, а десятки стоят в родительном падеже: <0>kahekümne esimene</0>."
+
+msgid "In a number of two words, only the last becomes an ordinal. The tens before it stay in the genitive: <0><1/>,</0> twenty-first. Slide through the days of a month and hear each one."
+msgstr "Если в числе два слова, порядковым становится только последнее. Десятки перед ним стоят в родительном падеже: <0><1/>,</0> «двадцать первый». Пройдись по дням месяца и послушай каждый."
 
 msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
 msgstr "В проекте с файлами курса Claude может собрать одну колоду с разделом на каждую лекцию."
@@ -6750,6 +6921,9 @@ msgstr "в Ласнамяэ"
 
 msgid "In lesson {commands} you learned <0/> as a whole word. It comes from the <1>-da</1> form, with <2>-ge</2> in place of its ending: <3/> gives <4/>, and <5/> gives <6/>"
 msgstr "В уроке {commands} <0/> нужно было запомнить целым словом. Образуется это слово от формы на <1>-da</1>: её окончание меняется на <2>-ge</2>. Из <3/> получается <4/>, а из <5/> — <6/>"
+
+msgid "In lesson {days} you met <0/> and <1/>: <2/> is the first day of the week. Words like these are ordinals. They say which one in a row, where the numbers from lesson {numbers} say how many."
+msgstr "Слова <0/> и <1/> уже встречались в уроке {days}: <2/> — первый день недели. Такие слова — порядковые числительные. Они говорят, который по счёту, а числа из урока {numbers} — сколько."
 
 msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1><2/>.</1> With <3/>, today, the verb is in the present: <4><5/>.</4>"
 msgstr "В уроке {days} было слово <0/>, «вчера». С ним глагол стоит в прошедшем времени: <1><2/>.</1> А с <3/>, «сегодня», — в настоящем: <4><5/>.</4>"
@@ -7146,6 +7320,9 @@ msgstr "Издатель убрал её с публичных страниц Ly
 msgid "Its rare, serious risk is lactic acidosis."
 msgstr "Редкий, но серьёзный риск — лактоацидоз."
 
+msgid "Jaan is coming on 1 September."
+msgstr "Яан приедет первого сентября."
+
 msgid "Jaan is Kati’s brother, so my: <0>minu</0>."
 msgstr "Яан — брат Кати, поэтому «мой»: <0>minu</0>."
 
@@ -7169,6 +7346,9 @@ msgstr "Яана"
 
 msgid "Jah, ei, ei ole"
 msgstr "Jah, ei, ei ole"
+
+msgid "January"
+msgstr "январь"
 
 msgid "Japan"
 msgstr "Япония"
@@ -7210,6 +7390,12 @@ msgstr "Joob kohvi — «пьёт кофе». Пока запомни это к�
 
 msgid "Journey"
 msgstr "Путешествие"
+
+msgid "July"
+msgstr "июль"
+
+msgid "June"
+msgstr "июнь"
 
 msgid "junk, clutter"
 msgstr "хлам, барахло"
@@ -7255,6 +7441,9 @@ msgstr "Кати пишет о своей семье. В каждом пропу
 
 msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 msgstr "Кати пишет о себе. В каждом пропуске — одно из того, что ты уже знаешь: форма <0>olema</0>, окончание глагола, глагол после <1>ei</1>, место с <2>-l</2> или вопросительное слово."
+
+msgid "Kati’s birthday"
+msgstr "День рождения Кати"
 
 msgid "Keep every word from your tutor lessons."
 msgstr "Сохрани каждое слово с уроков с репетитором."
@@ -7388,6 +7577,9 @@ msgstr "Kus с t на конце."
 
 msgid "Kus with its -s swapped for -st, “out of”."
 msgstr "Kus, где -s заменили на -st, «из»."
+
+msgid "Kuu, month, and päev, day."
+msgstr "Kuu — месяц, päev — день."
 
 msgid "Lab values"
 msgstr "Лабораторные нормы"
@@ -7717,6 +7909,9 @@ msgstr "Аудирование: знакомство с Яаном"
 
 msgid "Listen: what did Mari do?"
 msgstr "Аудирование: что делала Мари?"
+
+msgid "Listen: when and where?"
+msgstr "Аудирование: когда и где?"
 
 msgid "Listen."
 msgstr "Слушай."
@@ -8052,6 +8247,9 @@ msgstr "Создание карточек с AI"
 msgid "Many words gain a vowel before the <0>-s</0>, as Tallinn does, and which vowel is hard to guess for now. So learn each place together with its <1>-s</1> form: <2/>, <3/>; <4/>, <5/>. Lesson {genitive} shows where the vowel comes from."
 msgstr "У многих слов, как у Tallinn, перед <0>-s</0> появляется гласная, и какую именно, пока угадать трудно. Поэтому учи каждое место сразу с <1>-s</1>: <2/>, <3/>; <4/>, <5/>. Откуда берётся гласная, объясняет урок {genitive}."
 
+msgid "March"
+msgstr "март"
+
 msgid "marginal cost"
 msgstr "предельные издержки"
 
@@ -8096,6 +8294,9 @@ msgstr "Мари пишет другу Яану. В каждый пропуск 
 
 msgid "Mari, a woman’s name"
 msgstr "Мари, женское имя"
+
+msgid "Mari’s birthday is on 12 April."
+msgstr "День рождения Мари — 12 апреля."
 
 msgid "Mari’s book"
 msgstr "книга Мари"
@@ -8150,6 +8351,9 @@ msgstr "Match, Blast и Quizlet Live превращают набор в гонк
 
 msgid "Maths and code"
 msgstr "Формулы и код"
+
+msgid "May"
+msgstr "май"
 
 msgid "May I open the *window*?"
 msgstr "Можно открыть *окно*?"
@@ -8247,6 +8451,9 @@ msgstr "минут на ответы"
 msgid "Minutes to: pärast"
 msgstr "Минуты до: pärast"
 
+msgid "Mitmes with -l, as in kolmandal."
+msgstr "Mitmes с -l, как в kolmandal."
+
 msgid "mitochondrion"
 msgstr "митохондрия"
 
@@ -8324,6 +8531,9 @@ msgstr "Почти все. Послушай, как начинаются дни,
 
 msgid "Most of them. Play the ones you missed once more."
 msgstr "Почти все. Переслушай ещё раз те, где были ошибки."
+
+msgid "Most of them. Tap the numbers above once more."
+msgstr "Почти все. Ещё раз нажми на числа выше."
 
 msgid "Most of what Noji keeps for Premium, Lymi gives you on the free plan."
 msgstr "Почти всё, что Noji оставляет для Premium, Lymi даёт бесплатно."
@@ -8408,6 +8618,9 @@ msgstr "мой"
 
 msgid "My *back* hurts."
 msgstr "У меня болит *спина*."
+
+msgid "My birthday is on the fifth of May."
+msgstr "Мой день рождения — пятого мая."
 
 msgid "my book"
 msgstr "моя книга"
@@ -8581,6 +8794,9 @@ msgstr "девять"
 msgid "Nine vowels"
 msgstr "Девять гласных"
 
+msgid "ninth"
+msgstr "девятый"
+
 msgid "No"
 msgstr "Нет"
 
@@ -8725,6 +8941,9 @@ msgstr "Нет"
 msgid "Not “I want well”. It’s how you accept a coffee."
 msgstr "Дословно «хочу хорошо», а значит «да, с удовольствием» — например, в ответ на кофе."
 
+msgid "Not <0>kolmes</0>: third has an a where the genitive has an e."
+msgstr "Не <0>kolmes</0>: в «третьем» стоит a там, где в родительном падеже e."
+
 msgid "Not a pair."
 msgstr "Не пара."
 
@@ -8816,6 +9035,9 @@ msgstr "существительное"
 msgid "Nouns and cases"
 msgstr "Существительные и падежи"
 
+msgid "November"
+msgstr "ноябрь"
+
 msgid "Now"
 msgstr "Сейчас"
 
@@ -8849,6 +9071,9 @@ msgstr "сейчас, для ma"
 msgid "Number"
 msgstr "Число"
 
+msgid "Number to ordinal"
+msgstr "От числа к порядковому"
+
 msgid "Numbers"
 msgstr "Числа"
 
@@ -8869,6 +9094,9 @@ msgstr "Õ или o, ä или a, ü или u"
 
 msgid "Õ, ä, ö and ü stay exactly as you typed them, so <0>tuli</0>, fire, and <1>tüli</1>, a quarrel, are two different cards."
 msgstr "Õ, ä, ö и ü остаются ровно такими, как ты их вводишь, поэтому <0>tuli</0> (огонь) и <1>tüli</1> (ссора) — две разные карточки."
+
+msgid "October"
+msgstr "октябрь"
 
 msgid "of 200 points for level 1"
 msgstr "из 200 баллов для уровня 1"
@@ -8894,6 +9122,15 @@ msgstr "комнаты"
 msgid "of a shop"
 msgstr "магазина"
 
+msgid "of eleven"
+msgstr "одиннадцати"
+
+msgid "of four"
+msgstr "четырёх"
+
+msgid "of seven"
+msgstr "семи"
+
 msgid "Of the house. For one it looks like the base form."
 msgstr "Дома. В единственном числе совпадает с начальной формой."
 
@@ -8905,6 +9142,12 @@ msgstr "города; в город"
 
 msgid "of the wind"
 msgstr "ветра"
+
+msgid "of three"
+msgstr "трёх"
+
+msgid "of twenty"
+msgstr "двадцати"
 
 msgid "office"
 msgstr "офис"
@@ -8949,6 +9192,27 @@ msgstr "Olema, быть"
 msgid "on"
 msgstr "на"
 
+msgid "On 1 March"
+msgstr "1 марта"
+
+msgid "On 13 March"
+msgstr "13 марта"
+
+msgid "On 23 March"
+msgstr "23 марта"
+
+msgid "On 3 May"
+msgstr "3 мая"
+
+msgid "On 30 May"
+msgstr "30 мая"
+
+msgid "On 31 March"
+msgstr "31 марта"
+
+msgid "On a date or a floor both words take <0>l</0>, and the ordinal’s <1>s</1> turns into <2>ndal</2>: <3>viiendal mail</3>, <4>kolmandal korrusel</4>."
+msgstr "Когда говоришь «какого числа» или «на каком этаже», оба слова получают <0>l</0>, а <1>s</1> порядкового числительного превращается в <2>ndal</2>: <3>viiendal mail</3>, <4>kolmandal korrusel</4>."
+
 msgid "On a door or a sign."
 msgstr "На двери или на табличке."
 
@@ -8976,11 +9240,23 @@ msgstr "на Сааремаа"
 msgid "on Sunday"
 msgstr "в воскресенье"
 
+msgid "On Sunday"
+msgstr "В воскресенье"
+
 msgid "On Sunday I rest."
 msgstr "В воскресенье я отдыхаю."
 
 msgid "On the computer"
 msgstr "На компьютере"
+
+msgid "on the fifth"
+msgstr "пятого (числа)"
+
+msgid "on the fifth of May"
+msgstr "пятого мая"
+
+msgid "On the fifth of May"
+msgstr "Пятого мая"
 
 msgid "On the free plan"
 msgstr "На бесплатном тарифе"
@@ -8994,8 +9270,24 @@ msgstr "Ровно: только число часа."
 msgid "on the table"
 msgstr "на столе"
 
+msgid "on the third"
+msgstr "третьего (числа); на третьем (этаже)"
+
+msgctxt "date"
+msgid "on the third"
+msgstr "третьего числа"
+
 msgid "on the wall"
 msgstr "на стене"
+
+msgid "on which day?"
+msgstr "какого числа?"
+
+msgid "On which one"
+msgstr "Какого, на каком"
+
+msgid "on which one?"
+msgstr "какого числа? на каком?"
 
 msgid "On your phone"
 msgstr "На телефоне"
@@ -9160,6 +9452,9 @@ msgstr "От лица зависит только первый глагол: <0>
 msgid "Only the first verb takes the person ending from lesson {present}; the second stays as it is: <0/> <1/> Tap a form to hear the whole sentence."
 msgstr "Личное окончание из урока {present} получает только первый глагол; второй не меняется: <0/> <1/> Коснись формы, чтобы услышать всё предложение."
 
+msgid "Only the last word changes; <0>kahekümne</0> stays as it is."
+msgstr "Меняется только последнее слово, а <0>kahekümne</0> остаётся как есть."
+
 msgid "Only you, unless you share the deck. Cards made from your notes stay in your account."
 msgstr "Только ты, если не поделишься колодой. Карточки из твоих заметок остаются в твоём аккаунте."
 
@@ -9222,6 +9517,9 @@ msgstr "или; в конце предложения что-то вроде «д
 
 msgid "Ordinals and dates"
 msgstr "Порядковые числительные и даты"
+
+msgid "Ordinals, and with -l"
+msgstr "Порядковые числительные и они же с -l"
 
 msgid "Organisms, stains and what they cause."
 msgstr "Возбудители, окраски и что они вызывают."
@@ -9531,7 +9829,7 @@ msgstr "Воспроизвести"
 
 #. placeholder {0}: bare(no)
 #. placeholder {0}: bare(yes)
-#. placeholder {0}: said(each.a)
+#. placeholder {0}: ordinalWords(n)
 msgid "Play {0}"
 msgstr "Воспроизвести {0}"
 
@@ -10436,6 +10734,9 @@ msgstr "Скажи, с кем и без чего, назови дату и вр�
 msgid "Say yes in Lymi"
 msgstr "Дай согласие в Lymi"
 
+msgid "Saying in a month, or from one date to another, takes other endings, which lesson {when} teaches."
+msgstr "«В каком месяце» или «с какого числа по какое» — это уже другие окончания, о них рассказывает урок {when}."
+
 msgid "Saying no in the past"
 msgstr "Отрицание в прошлом"
 
@@ -10583,6 +10884,9 @@ msgstr "Предложение {sentenceNumber} из {sentenceCount}, {time}"
 msgid "Sentences that say something is there, and that it isn’t"
 msgstr "Предложения о том, что что-то есть, и о том, что этого нет"
 
+msgid "September"
+msgstr "сентябрь"
+
 msgid "Ser is for who and what: soy de Valencia, I’m from Valencia."
 msgstr "Ser говорят о том, кто и что: soy de Valencia, я из Валенсии."
 
@@ -10609,6 +10913,9 @@ msgstr "Семь дней"
 
 msgid "Seven keep slipping. First one: how do you say <0>the strike</0>?"
 msgstr "Семь слов постоянно забываются. Первое: как будет <0>забастовка</0>?"
+
+msgid "seventh"
+msgstr "седьмой"
 
 msgid "Shall we *eat* together?"
 msgstr "Давай *поедим* вместе?"
@@ -10831,6 +11138,9 @@ msgstr "Шесть глаголов после «я хочу» и «мне на�
 msgid "Six words for people, each with a long and a short form, and olema, to be, whose ending tells you who."
 msgstr "Шесть личных местоимений, у каждого полная и краткая форма, и глагол olema, «быть», по окончанию которого понятно, о ком речь."
 
+msgid "sixth"
+msgstr "шестой"
+
 msgid "Skills for the jobs you repeat"
 msgstr "Навыки для повторяющихся дел"
 
@@ -10845,6 +11155,9 @@ msgstr "Перейти к загрузкам"
 
 msgid "Skip to the updates"
 msgstr "Перейти к обновлениям"
+
+msgid "Slide through the days above once more, then try again."
+msgstr "Ещё раз пройдись по дням выше, потом попробуй снова."
 
 msgid "Slides and PDFs"
 msgstr "Слайды и PDF"
@@ -11266,6 +11579,9 @@ msgstr "Сахара и аминокислоты реагируют под де�
 msgid "Sun; day"
 msgstr "Солнце; день"
 
+msgid "Sünd, birth, and päev, day."
+msgstr "Sünd — рождение, päev — день."
+
 msgid "Sunday"
 msgstr "Воскресенье"
 
@@ -11455,6 +11771,12 @@ msgstr "Нажми на букву"
 msgid "Tap a line to hear the sentence grow. Lesson {wordOrder} has more on where Estonian puts its words."
 msgstr "Коснись строки и послушай, как растёт предложение. Подробнее о порядке слов в эстонском — в уроке {wordOrder}."
 
+msgid "Tap a month to hear it. Its number is its place in the year."
+msgstr "Нажми на месяц, чтобы его услышать. Число — его номер в году."
+
+msgid "Tap a number"
+msgstr "Нажми на число"
+
 msgid "Tap a place"
 msgstr "Нажми на место"
 
@@ -11625,6 +11947,9 @@ msgstr "Времена sööma"
 
 msgid "Tenses on a line, past to future. Each point plays an example and shows how its verb is built; a band shows what a tense reaches to."
 msgstr "Времена на линии, от прошлого к будущему. Каждая точка проигрывает пример и показывает, как построен глагол; полоса показывает, до чего время дотягивается."
+
+msgid "tenth"
+msgstr "десятый"
 
 msgid "Term"
 msgstr "Термин"
@@ -12082,6 +12407,12 @@ msgstr "Форма говорит, кто"
 msgid "The forms of olema, to be: <0>olen, oled, on, oleme, olete, on</0>."
 msgstr "Формы olema, «быть»: <0>olen, oled, on, oleme, olete, on</0>."
 
+msgid "The fourteenth"
+msgstr "На четырнадцатом"
+
+msgid "The fourth"
+msgstr "На четвёртом"
+
 msgid "The fourth day of the week."
 msgstr "Четвёртый день недели."
 
@@ -12106,11 +12437,17 @@ msgstr "g выпадает, а u становится o: loe-, плюс -n дл�
 msgid "The gaps grow as you learn."
 msgstr "Чем лучше знаешь, тем длиннее паузы."
 
+msgid "the genitive"
+msgstr "родительный падеж"
+
 msgid "The genitive case"
 msgstr "Родительный падеж"
 
 msgid "The genitive is the form before -s"
 msgstr "Родительный — это форма перед -s"
+
+msgid "The genitive of kakskümmend."
+msgstr "Родительный падеж от kakskümmend."
 
 msgid "The genitive of kass: kassi nimi, the cat’s name."
 msgstr "Родительный от kass: kassi nimi, имя кота."
@@ -12118,17 +12455,35 @@ msgstr "Родительный от kass: kassi nimi, имя кота."
 msgid "The genitive of kes, who."
 msgstr "Родительный от kes, «кто», — как «кого» от «кто»."
 
+msgid "The genitive of kolm."
+msgstr "Родительный падеж от kolm."
+
 msgid "The genitive of mina. Short: mu."
 msgstr "Родительный от mina. Коротко: mu."
+
+msgid "The genitive of neli."
+msgstr "Родительный падеж от neli."
 
 msgid "The genitive of nemad. It has no short form."
 msgstr "Родительный от nemad. Краткой формы нет."
 
+msgid "The genitive of seitse."
+msgstr "Родительный падеж от seitse."
+
 msgid "The genitive of sina. Short: su."
 msgstr "Родительный от sina. Коротко: su."
 
+msgid "The genitive of üksteist."
+msgstr "Родительный падеж от üksteist."
+
 msgid "The genitive says whose, and the owner goes first: <0>minu raamat</0>, my book; <1>Mari raamat</1>, Mari’s book."
 msgstr "Родительный падеж говорит, чьё это, и владелец стоит первым: <0>minu raamat</0>, моя книга; <1>Mari raamat</1>, книга Мари."
+
+msgid "The genitive with <0>s</0>."
+msgstr "Родительный падеж плюс <0>s</0>."
+
+msgid "The genitive, the form for “of”: <0>{genitive}</0>."
+msgstr "Родительный падеж, форма на «чего?»: <0>{genitive}</0>."
 
 msgid "The German, Spanish and Czech decks keep questions and answers in the exam’s language, as the exam does; the notes add an English translation and a short explanation."
 msgstr "В немецкой, испанской и чешской колодах вопросы и ответы на языке экзамена, как и на самом экзамене; в заметках есть перевод на английский и короткое пояснение."
@@ -12252,6 +12607,9 @@ msgstr "документация Mochi"
 
 msgid "The molecule a cell uses to store and carry energy"
 msgstr "Молекула, в которой клетка хранит и переносит энергию"
+
+msgid "The months"
+msgstr "Месяцы"
 
 msgid "The most common words, each brought back on the day you’d forget it."
 msgstr "Самые частые слова, и каждое возвращается как раз тогда, когда ты бы его забыл."
@@ -12445,6 +12803,9 @@ msgstr "Правила, о которых спрашивают на теории
 msgid "The rules, and every sign by its picture."
 msgstr "Правила и каждый знак по изображению."
 
+msgid "The same <0>l</0> says which floor: <1><2/>.</1> To ask, use <3/>: <4><5/>.</4> <6/> is a floor."
+msgstr "То же <0>l</0> говорит, на каком этаже: <1><2/>.</1> Чтобы спросить, используй <3/>: <4><5/>.</4> <6/> — этаж."
+
 msgid "The same address works everywhere. Nothing to install."
 msgstr "Один адрес работает везде. Ничего не нужно устанавливать."
 
@@ -12465,6 +12826,9 @@ msgstr "Одинаково в обоих"
 
 msgid "The same kanji sounds different in different words. Lymi shows the reading over the kanji until you know the word, then takes it away so you learn to read it on your own."
 msgstr "Один и тот же кандзи в разных словах звучит по-разному. Lymi показывает чтение над кандзи, пока ты не знаешь слово, а потом убирает его, и дальше ты читаешь без подсказки."
+
+msgid "The same question, word for word “which one is it today?”"
+msgstr "Тот же вопрос, дословно «которое сегодня?»"
 
 msgid "The same stem with <0>-da</0>"
 msgstr "Та же основа с <0>-da</0>"
@@ -12504,6 +12868,9 @@ msgstr "Семь дней, четыре с числами в названии, �
 
 msgid "the shop door"
 msgstr "дверь магазина"
+
+msgid "The shop is closed on 25 December."
+msgstr "25 декабря магазин закрыт."
 
 msgid "the shop’s, of the shop"
 msgstr "магазина"
@@ -12597,6 +12964,9 @@ msgstr "Десятки"
 
 msgid "The tens: -kümmend"
 msgstr "Десятки: -kümmend"
+
+msgid "The third"
+msgstr "На третьем"
 
 msgid "The third day of the week."
 msgstr "Третий день недели."
@@ -12850,6 +13220,9 @@ msgstr "О чём попросить Gemini."
 msgid "Things to ask Grok Bot."
 msgstr "О чём попросить Grok Bot."
 
+msgid "third"
+msgstr "третий"
+
 msgid "thirteen"
 msgstr "тринадцать"
 
@@ -13050,6 +13423,9 @@ msgstr "Чтобы ответить «нет», скажи <0>ei</0> или <1>e
 
 msgid "To ask for more than yes or no, start with a question word instead of kas, and leave out the part you ask about. <0/> You live in Tallinn. <1/> Where do you live?"
 msgstr "Чтобы узнать больше, чем «да» или «нет», начни с вопросительного слова вместо kas, а то, о чём спрашиваешь, убери. <0/> Ты живёшь в Таллине. <1/> Где ты живёшь?"
+
+msgid "To ask the date, say <0><1/>.</0> <2/> is a date. The answer is an ordinal and a month: <3><4/>.</3>"
+msgstr "Чтобы спросить дату, скажи <0><1/>.</0> <2/> — это дата. Ответ — порядковое числительное и месяц: <3><4/>.</3>"
 
 msgid "To ask the time, say <0/> Word for word, it’s “what clock is?” The answer starts with <1/> too: <2/>, it’s three o’clock."
 msgstr "Чтобы спросить, который час, скажи <0/> Дословно — «что часы есть?» Ответ тоже начинается с <1/>: <2/>, три часа."
@@ -13267,6 +13643,9 @@ msgstr "Чтобы сказать «куда», поставь <0>-sse</0> на 
 msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 msgstr "Чтобы сказать «не», поставь <0/> перед глаголом. <1/> — «я читаю», а <2/> — «я не читаю». Глагол теряет окончание, а <3/> одно и то же, о ком бы ни шла речь."
 
+msgid "To say on which day, put <0>l</0> on both words: <1><2/>,</1> on the fifth of May. <3>Mail</3> is <4>mai</4> with <5>l</5>. In the ordinal, the final <6>s</6> turns into <7>ndal</7>: <8>viies</8>, <9/>; <10>kolmas</10>, <11><12/>.</11> <13>Esimene</13> and <14>teine</14> end in <15>sel</15>: <16>esimesel, teisel</16>."
+msgstr "Чтобы сказать «какого числа», добавь <0>l</0> к обоим словам: <1><2/>,</1> пятого мая. <3>Mail</3> — это <4>mai</4> с <5>l</5>. В порядковом числительном конечное <6>s</6> превращается в <7>ndal</7>: <8>viies</8>, <9/>; <10>kolmas</10>, <11><12/>.</11> <13>Esimene</13> и <14>teine</14> заканчиваются на <15>sel</15>: <16>esimesel, teisel</16>."
+
 msgid "To say out of or from, swap the <0>-s</0> for <1>-st</1>: <2/>, <3/>. The rest of the word stays as it was: <4/>, <5/>."
 msgstr "Чтобы сказать «откуда», замени <0>-s</0> на <1>-st</1>: <2/>, <3/>. Остальная часть слова не меняется: <4/>, <5/>."
 
@@ -13379,6 +13758,18 @@ msgstr "Сегодня я учу эстонский."
 msgid "Today is"
 msgstr "Сегодня"
 
+msgid "Today is 1 January."
+msgstr "Сегодня 1 января."
+
+msgid "Today is 2 February."
+msgstr "Сегодня 2 февраля."
+
+msgid "Today is 21 November."
+msgstr "Сегодня 21 ноября."
+
+msgid "Today is 31 October."
+msgstr "Сегодня 31 октября."
+
 msgid "Today is Monday."
 msgstr "Сегодня понедельник."
 
@@ -13390,6 +13781,9 @@ msgstr "Сегодня, 8:00 · проверил Lymi"
 
 msgid "Today, tomorrow, yesterday"
 msgstr "Сегодня, завтра, вчера"
+
+msgid "Today’s date"
+msgstr "Сегодняшняя дата"
 
 msgid "Today’s page from my textbook. Add the new words to my Japanese deck."
 msgstr "Сегодняшняя страница из моего учебника. Добавь новые слова в мою японскую колоду."
@@ -13405,6 +13799,15 @@ msgstr "Завтра я буду есть дома."
 
 msgid "Tomorrow I’m getting up early for work."
 msgstr "Завтра я рано встаю на работу."
+
+msgid "Tomorrow is 13 March."
+msgstr "Завтра 13 марта."
+
+msgid "Tomorrow is 20 July."
+msgstr "Завтра 20 июля."
+
+msgid "Tomorrow is 22 November."
+msgstr "Завтра 22 ноября."
 
 msgid "Tomorrow."
 msgstr "Завтра."
@@ -13588,8 +13991,14 @@ msgstr "двенадцать евро"
 msgid "Twelve. Today’s new words will start coming up a few at a time."
 msgstr "Двенадцать. Новые слова с сегодняшнего урока будут появляться по несколько за раз."
 
+msgid "twentieth"
+msgstr "двадцатый"
+
 msgid "twenty"
 msgstr "двадцать"
+
+msgid "twenty-first"
+msgstr "двадцать первый"
 
 msgid "twenty-one"
 msgstr "двадцать один"
@@ -13651,6 +14060,12 @@ msgstr "Напиши слово. Lymi добавит значение, прим�
 msgid "Type a word. Lymi adds a meaning, an example and audio, and marks every field it wrote so you can check it."
 msgstr "Напиши слово. Lymi добавит значение, пример и аудио и пометит каждое поле, которое написал сам, чтобы его было легко проверить."
 
+msgid "Type the date"
+msgstr "Введи дату"
+
+msgid "Type the date you hear"
+msgstr "Введи дату, которую слышишь"
+
 msgid "Type the form"
 msgstr "Введи форму"
 
@@ -13668,6 +14083,9 @@ msgstr "Введи число"
 
 msgid "Type the number you hear"
 msgstr "Введи число, которое слышишь"
+
+msgid "Type the ordinal of each number."
+msgstr "Введи порядковое числительное для каждого числа."
 
 msgid "Type the time"
 msgstr "Введи время"
@@ -14200,6 +14618,9 @@ msgstr "Что внутри"
 msgid "What’s new in Lymi, and what got better."
 msgstr "Новые возможности Lymi и то, что стало лучше."
 
+msgid "What’s the date today?"
+msgstr "Какое сегодня число?"
+
 msgid "What’s your name?"
 msgstr "Как тебя зовут?"
 
@@ -14242,8 +14663,20 @@ msgstr "Когда Мари завтра пьёт кофе?"
 msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for some of the food and drink someone eats, drinks or wants."
 msgstr "Когда в эстонском существительное стоит в третьей форме, партитиве: после числа от двух, после слова количества, после <0>pole</0> и для еды и напитков, которые едят, пьют или хотят, не считая."
 
+msgid "When is Kati’s birthday?"
+msgstr "Когда день рождения Кати?"
+
+msgid "When is Mari coming?"
+msgstr "Когда придёт Мари?"
+
+msgid "When is Mari’s birthday?"
+msgstr "Когда день рождения Мари?"
+
 msgid "When is the café open?"
 msgstr "Когда кафе открыто?"
+
+msgid "When is your birthday?"
+msgstr "Когда твой день рождения?"
 
 msgid "When its card reaches Known in your reviews. From then on the reading is hidden on that card and in example sentences across your decks. Forget the word once and the reading is back, and turning a card over always shows it."
 msgstr "Когда его карточка в повторениях становится выученной. С этого момента чтение скрыто на этой карточке и в примерах во всех твоих колодах. Забудешь слово — и чтение вернётся, а на обороте карточки оно есть всегда."
@@ -14428,6 +14861,12 @@ msgstr "Какую колоду добавить?"
 msgid "Which ending?"
 msgstr "Какое окончание?"
 
+msgid "Which floor do you live on?"
+msgstr "На каком этаже ты живёшь?"
+
+msgid "Which floor is Kati’s flat on?"
+msgstr "На каком этаже квартира Кати?"
+
 msgid "Which form"
 msgstr "Какая форма"
 
@@ -14463,6 +14902,18 @@ msgstr "Какой нерв двигает языком?"
 
 msgid "Which number did you hear?"
 msgstr "Какое число прозвучало?"
+
+msgid "Which one"
+msgstr "Который"
+
+msgid "which one in order?"
+msgstr "который по счёту?"
+
+msgid "Which one in order?"
+msgstr "Который по счёту?"
+
+msgid "which one, counting in order?"
+msgstr "который по счёту?"
 
 msgid "Which ones do I keep getting wrong?"
 msgstr "В каких я постоянно ошибаюсь?"
@@ -14680,6 +15131,9 @@ msgstr "Дословно: «очень приятно»."
 msgid "Word for word: “what clock is?”"
 msgstr "Дословно: «что часы есть?»"
 
+msgid "Word for word: “which one is it today?”"
+msgstr "Дословно: «которое сегодня?»"
+
 msgid "Word for word: simple past."
 msgstr "Дословно: «простое прошедшее»."
 
@@ -14789,8 +15243,14 @@ msgstr "Работает с"
 msgid "Writing"
 msgstr "Письмо"
 
+msgid "Written in digits, an ordinal takes a full stop: 1. is first, 2. is second. Tap a number to hear its ordinal."
+msgstr "Цифрами порядковое числительное пишут с точкой: 1. — первый, 2. — второй. Нажми на число, чтобы услышать порядковое числительное."
+
 msgid "Written with the characters for tree, leak and sun."
 msgstr "Записывается иероглифами «дерево», «просачиваться» и «солнце»."
+
+msgid "Written, the day is a numeral with a full stop: <0>21. november</0>. The full stop makes the number an ordinal, so you read it as <1>kahekümne esimene</1>. In digits the date is 21.11."
+msgstr "На письме число — цифра с точкой: <0>21. november</0>. Точка делает его порядковым, поэтому читаешь <1>kahekümne esimene</1>. Одними цифрами эта дата — 21.11."
 
 msgid "yes"
 msgstr "да"
@@ -15164,6 +15624,9 @@ msgstr "Услышишь её и прочитаешь, что делает ок�
 msgid "You’ll hear it and see how it’s made."
 msgstr "Услышишь её и увидишь, как она образуется."
 
+msgid "You’ll hear it and see what changes."
+msgstr "Услышишь её и увидишь, что меняется."
+
 msgid "You’ll hear it and see what it means."
 msgstr "Услышишь её и увидишь, что она значит."
 
@@ -15178,6 +15641,9 @@ msgstr "Услышишь её вместе с местоимением и про
 
 msgid "You’ll hear it, and where its name comes from."
 msgstr "Услышишь его и узнаешь, откуда название."
+
+msgid "You’ll hear its ordinal and see where it comes from."
+msgstr "Услышишь порядковое числительное и увидишь, от чего оно."
 
 msgid "You’ll hear the day it stands for."
 msgstr "Услышишь день, который она обозначает."
@@ -15292,6 +15758,9 @@ msgstr "Твоё первое слово — <0>tere</0>."
 
 msgid "Your friend Kati asks what you did yesterday. Answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."
 msgstr "Твоя подруга Кати спрашивает, как прошёл твой вчерашний день. Отвечай по-эстонски. Если выберешь неверный ответ, увидишь почему, а потом услышишь правильный."
+
+msgid "Your friend Kati leaves you a voice message about her birthday. Listen, then answer."
+msgstr "Твоя подруга Кати оставила тебе голосовое сообщение о своём дне рождения. Послушай, потом ответь."
 
 msgid "Your friend Mari sends you a message. Read it and answer the questions. Once you’ve answered, tap a word to see what it means."
 msgstr "Твоя подруга Мари присылает тебе сообщение. Прочитай его и ответь на вопросы. Когда ответишь, нажми на слово, чтобы увидеть, что оно значит."

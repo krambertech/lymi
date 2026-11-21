@@ -6884,6 +6884,486 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "jargarvud/o1": {
+    "text": "esimene",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o2": {
+    "text": "teine",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o3": {
+    "text": "kolmas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o4": {
+    "text": "neljas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o5": {
+    "text": "viies",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o6": {
+    "text": "kuues",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o7": {
+    "text": "seitsmes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o8": {
+    "text": "kaheksas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o9": {
+    "text": "üheksas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o10": {
+    "text": "kümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o11": {
+    "text": "üheteistkümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o12": {
+    "text": "kaheteistkümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o13": {
+    "text": "kolmeteistkümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o14": {
+    "text": "neljateistkümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o15": {
+    "text": "viieteistkümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o16": {
+    "text": "kuueteistkümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o17": {
+    "text": "seitsmeteistkümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o18": {
+    "text": "kaheksateistkümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o19": {
+    "text": "üheksateistkümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o20": {
+    "text": "kahekümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o21": {
+    "text": "kahekümne esimene",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o22": {
+    "text": "kahekümne teine",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o23": {
+    "text": "kahekümne kolmas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o24": {
+    "text": "kahekümne neljas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o25": {
+    "text": "kahekümne viies",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o26": {
+    "text": "kahekümne kuues",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o27": {
+    "text": "kahekümne seitsmes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o28": {
+    "text": "kahekümne kaheksas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o29": {
+    "text": "kahekümne üheksas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o30": {
+    "text": "kolmekümnes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/o31": {
+    "text": "kolmekümne esimene",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/on1": {
+    "text": "esimesel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/on2": {
+    "text": "teisel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/on3": {
+    "text": "kolmandal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/on5": {
+    "text": "viiendal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/on10": {
+    "text": "kümnendal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/on13": {
+    "text": "kolmeteistkümnendal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/on20": {
+    "text": "kahekümnendal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/on21": {
+    "text": "kahekümne esimesel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/kolm": {
+    "text": "kolm",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/neli": {
+    "text": "neli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/viis": {
+    "text": "viis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/kuus": {
+    "text": "kuus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/seitse": {
+    "text": "seitse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/kaheksa": {
+    "text": "kaheksa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/ku2mme": {
+    "text": "kümme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/u2ksteist": {
+    "text": "üksteist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/kaksku2mmend": {
+    "text": "kakskümmend",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/nelja": {
+    "text": "nelja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/viie": {
+    "text": "viie",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/kuue": {
+    "text": "kuue",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/seitsme": {
+    "text": "seitsme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/ku2mne": {
+    "text": "kümne",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/kolme": {
+    "text": "kolme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/u2heteistku2mne": {
+    "text": "üheteistkümne",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/kaheku2mne": {
+    "text": "kahekümne",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/mitu": {
+    "text": "mitu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/mitmes": {
+    "text": "mitmes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/mitmendal": {
+    "text": "mitmendal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/kuupa2ev": {
+    "text": "kuupäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/korrus": {
+    "text": "korrus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/su2nnipa2ev": {
+    "text": "sünnipäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/esmaspa2ev": {
+    "text": "esmaspäev",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/jaanuar": {
+    "text": "jaanuar",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/veebruar": {
+    "text": "veebruar",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/ma2rts": {
+    "text": "märts",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/aprill": {
+    "text": "aprill",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/mai": {
+    "text": "mai",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/juuni": {
+    "text": "juuni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/juuli": {
+    "text": "juuli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/august": {
+    "text": "august",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/september": {
+    "text": "september",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/oktoober": {
+    "text": "oktoober",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/november": {
+    "text": "november",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/detsember": {
+    "text": "detsember",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/viiendal-mail": {
+    "text": "viiendal mail",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/mis-kuupa2ev-ta2na-on": {
+    "text": "Mis kuupäev täna on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/mitmes-ta2na-on": {
+    "text": "Mitmes täna on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/ta2na-on-kaheku2mne-esimene-november": {
+    "text": "Täna on kahekümne esimene november.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/homme-on-kaheku2mne-teine-november": {
+    "text": "Homme on kahekümne teine november.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/ta2na-on-esimene-jaanuar": {
+    "text": "Täna on esimene jaanuar.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/minu-su2nnipa2ev-on-viiendal-mail": {
+    "text": "Minu sünnipäev on viiendal mail.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/millal-sinu-su2nnipa2ev-on": {
+    "text": "Millal sinu sünnipäev on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/ma-elan-kolmandal-korrusel": {
+    "text": "Ma elan kolmandal korrusel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/mitmendal-korrusel-sa-elad": {
+    "text": "Mitmendal korrusel sa elad?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/ta2na-on-teine-veebruar": {
+    "text": "Täna on teine veebruar.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/homme-on-kolmeteistku2mnes-ma2rts": {
+    "text": "Homme on kolmeteistkümnes märts.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/jaan-tuleb-esimesel-septembril": {
+    "text": "Jaan tuleb esimesel septembril.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/pood-on-suletud-kaheku2mne-viiendal-detsembril": {
+    "text": "Pood on suletud kahekümne viiendal detsembril.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/mari-su2nnipa2ev-on-kaheteistku2mnendal-aprillil": {
+    "text": "Mari sünnipäev on kaheteistkümnendal aprillil.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/ta2na-on-kolmeku2mne-esimene-oktoober": {
+    "text": "Täna on kolmekümne esimene oktoober.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/eesti-su2nnipa2ev-on-kaheku2mne-neljandal-veebruaril": {
+    "text": "Eesti sünnipäev on kahekümne neljandal veebruaril.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/ma-la2hen-tartusse-kaheksandal-juunil": {
+    "text": "Ma lähen Tartusse kaheksandal juunil.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/homme-on-kaheku2mnes-juuli": {
+    "text": "Homme on kahekümnes juuli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/c-aastal": {
+    "text": "Aastal kaks tuhat kakskümmend kuus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jargarvud/p-message": {
+    "text": "Tere! Minu sünnipäev on laupäeval, kahekümne kolmandal märtsil. Tule kell kuus. Minu korter on neljandal korrusel. Mari tuleb ka, kell seitse. Tema sünnipäev on kolmekümne esimesel märtsil. Kas sa tuled?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
   "kit/p-jaan": {
     "text": "Tere! Mina olen Jaan. Ma elan Tartus. Ma olen arst. Mari on minu sõber. Ta ei ole arst, ta on õpetaja. Me räägime eesti keelt.",
     "model": "eleven_v4",

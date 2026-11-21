@@ -1,4 +1,5 @@
 import { numberWords } from "./estonian-numbers";
+import { MONTHS, ordinalOn, ordinalWords } from "./estonian-ordinals";
 import { ALL_TIMES, timeClip, timeSentence } from "./estonian-time";
 import { KIT_EXPLORE_TEXTS } from "./kit-explore";
 
@@ -1627,6 +1628,104 @@ const OSASTAV_CLIPS: Record<string, Clip> = {
   "p-jaan": { sentences: OSASTAV_PASSAGES.jaan },
 };
 
+/** The ordinals lesson's clip for an ordinal on its own: o21, kahekümne esimene. */
+export const ordinalClip = (n: number) => `o${n}`;
+/** The same ordinal with -l, as a date or a floor takes it: on21, kahekümne esimesel. */
+export const ordinalOnClip = (n: number) => `on${n}`;
+
+/** The days of a month, which the ordinals lesson says one by one. */
+export const MONTH_DAYS: readonly number[] = Array.from({ length: 31 }, (_, i) => i + 1);
+
+/**
+ * The numbers the ordinals lesson turns into ordinals step by step: the number, its genitive, then
+ * the ordinal. Kolm comes last, since kolmas breaks the pattern.
+ */
+export const JARGARVUD_CHAINS = [
+  { n: 4, genitive: "nelja" },
+  { n: 5, genitive: "viie" },
+  { n: 6, genitive: "kuue" },
+  { n: 7, genitive: "seitsme" },
+  { n: 8, genitive: "kaheksa" },
+  { n: 10, genitive: "kümne" },
+  { n: 3, genitive: "kolme" },
+] as const;
+
+/** The numbers the learner turns into ordinals by typing. */
+export const JARGARVUD_MAKE = [6, 3, 9, 7, 10, 5] as const;
+
+/** The ordinals shown with -l, for “on the …”. */
+export const JARGARVUD_ON = [1, 2, 3, 5, 10, 13, 20, 21] as const;
+
+/** Asking the date and saying it. */
+export const JARGARVUD_DATES = [
+  "Mis kuupäev täna on?",
+  "Mitmes täna on?",
+  "Täna on kahekümne esimene november.",
+  "Homme on kahekümne teine november.",
+  "Täna on esimene jaanuar.",
+] as const;
+
+/** Dates and floors with -l. */
+export const JARGARVUD_ON_SENTENCES = [
+  "Minu sünnipäev on viiendal mail.",
+  "Millal sinu sünnipäev on?",
+  "Ma elan kolmandal korrusel.",
+  "Mitmendal korrusel sa elad?",
+] as const;
+
+/** Dates heard in sentences, for the learner to type: the day, and the month from 1. */
+export const JARGARVUD_HEARD = [
+  { said: "Täna on teine veebruar.", day: 2, month: 2 },
+  { said: "Homme on kolmeteistkümnes märts.", day: 13, month: 3 },
+  { said: "Jaan tuleb esimesel septembril.", day: 1, month: 9 },
+  { said: "Pood on suletud kahekümne viiendal detsembril.", day: 25, month: 12 },
+  { said: "Mari sünnipäev on kaheteistkümnendal aprillil.", day: 12, month: 4 },
+  { said: "Täna on kolmekümne esimene oktoober.", day: 31, month: 10 },
+  { said: "Eesti sünnipäev on kahekümne neljandal veebruaril.", day: 24, month: 2 },
+  { said: "Ma lähen Tartusse kaheksandal juunil.", day: 8, month: 6 },
+  { said: "Homme on kahekümnes juuli.", day: 20, month: 7 },
+] as const;
+
+/** Kati's voice message about her birthday, in the second voice. */
+export const JARGARVUD_MESSAGE = [
+  "Tere! Minu sünnipäev on laupäeval, kahekümne kolmandal märtsil.",
+  "Tule kell kuus.",
+  "Minu korter on neljandal korrusel.",
+  "Mari tuleb ka, kell seitse.",
+  "Tema sünnipäev on kolmekümne esimesel märtsil.",
+  "Kas sa tuled?",
+] as const;
+
+/** Other words and phrases the ordinals lesson says. */
+export const JARGARVUD_WORDS = [
+  ...[3, 4, 5, 6, 7, 8, 10, 11, 20].map((n) => numberWords(n)),
+  ...JARGARVUD_CHAINS.map(({ genitive }) => genitive),
+  "üheteistkümne",
+  "kahekümne",
+  "mitu",
+  "mitmes",
+  "mitmendal",
+  "kuupäev",
+  "korrus",
+  "sünnipäev",
+  "esmaspäev",
+  ...MONTHS.map(({ name }) => name),
+  "viiendal mail",
+];
+
+const JARGARVUD_CLIPS: Record<string, Clip> = {
+  ...Object.fromEntries(MONTH_DAYS.map((n) => [ordinalClip(n), ordinalWords(n)])),
+  ...Object.fromEntries(JARGARVUD_ON.map((n) => [ordinalOnClip(n), ordinalOn(n)])),
+  ...words([
+    ...JARGARVUD_WORDS,
+    ...JARGARVUD_DATES,
+    ...JARGARVUD_ON_SENTENCES,
+    ...JARGARVUD_HEARD.map(({ said }) => said),
+  ]),
+  "c-aastal": "Aastal kaks tuhat kakskümmend kuus.",
+  "p-message": { sentences: JARGARVUD_MESSAGE, voice: "second" },
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -1743,5 +1842,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   },
   osastav: OSASTAV_CLIPS,
   lihtminevik: PAST_CLIPS,
+  jargarvud: JARGARVUD_CLIPS,
   kit: KIT_CLIPS,
 };

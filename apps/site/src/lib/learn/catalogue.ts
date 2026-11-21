@@ -229,7 +229,14 @@ export const STAGES: readonly Stage[] = [
     lessons: [
       { name: msg`With, without, until, as`, et: "Sõbraga, rahata" },
       { name: msg`Pronouns in every case`, et: "Mind, mulle, minuga" },
-      { name: msg`Ordinals and dates`, et: "Esimene, teine, kolmas" },
+      {
+        slug: "jargarvud",
+        name: msg`Ordinals and dates`,
+        title: msg`Estonian ordinal numbers and dates`,
+        et: "Esimene, teine, kolmas",
+        minutes: 14,
+        blurb: msg`A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, saying on a date with -l (viiendal mail) and on which floor. Every sentence is read aloud.`,
+      },
       { name: msg`Time expressions: when things happen`, et: "Esmaspäeval, aasta pärast" },
       { name: msg`Word order: the verb comes second`, et: "Täna lähen ma" },
       { name: msg`Adjective agreement`, et: "Suures majas" },

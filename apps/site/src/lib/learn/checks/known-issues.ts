@@ -7,7 +7,6 @@ export const KNOWN_ISSUES: Readonly<Record<string, readonly string[]>> = {
   /** Bare Estonian in prose, such as “the ma form” or “after ei”, read in the page's voice. */
   "estonian-lang": [
     "eitus",
-    "haaldus",
     "kaskiv",
     "kell",
     "kohad",

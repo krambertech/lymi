@@ -5229,6 +5229,256 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "tegevusnimed/tahan": {
+    "text": "tahan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-su2u2a": {
+    "text": "Ma tahan süüa.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/vo3in": {
+    "text": "võin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-vo3in-sind-oodata": {
+    "text": "Ma võin sind oodata.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/saan": {
+    "text": "saan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-saan-homme-tulla": {
+    "text": "Ma saan homme tulla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/oskan": {
+    "text": "oskan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-oskan-natuke-eesti-keelt-ra2a2kida": {
+    "text": "Ma oskan natuke eesti keelt rääkida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/tohin": {
+    "text": "tohin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tohin-kodus-to2o2tada": {
+    "text": "Ma tohin kodus töötada.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/proovin": {
+    "text": "proovin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-proovin-eesti-keelt-o3ppida": {
+    "text": "Ma proovin eesti keelt õppida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/armastan": {
+    "text": "armastan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-armastan-lugeda": {
+    "text": "Ma armastan lugeda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/mulle-meeldib": {
+    "text": "mulle meeldib",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/mulle-meeldib-kohvi-juua": {
+    "text": "Mulle meeldib kohvi juua.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/pean": {
+    "text": "pean",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-minema": {
+    "text": "Ma pean minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/hakkan": {
+    "text": "hakkan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-hakkan-eesti-keelt-o3ppima": {
+    "text": "Ma hakkan eesti keelt õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/la2hen": {
+    "text": "lähen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-la2hen-kohvi-jooma": {
+    "text": "Ma lähen kohvi jooma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/tule": {
+    "text": "tule",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/tule-so2o2ma": {
+    "text": "Tule sööma!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ja2a2n": {
+    "text": "jään",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-ja2a2n-koju-lugema": {
+    "text": "Ma jään koju lugema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-lugeda": {
+    "text": "Ma tahan lugeda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-lugema": {
+    "text": "Ma pean lugema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-so2o2ma": {
+    "text": "Ma pean sööma.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-minna": {
+    "text": "Ma tahan minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-tulla": {
+    "text": "Ma tahan tulla.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-tulema": {
+    "text": "Ma pean tulema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-o3ppida": {
+    "text": "Ma tahan õppida.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-o3ppima": {
+    "text": "Ma pean õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-to2o2tada": {
+    "text": "Ma tahan töötada.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-to2o2tama": {
+    "text": "Ma pean töötama.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-to2o2le-minema": {
+    "text": "Ma pean tööle minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-pean-homme-to2o2le-minema": {
+    "text": "Ma pean homme tööle minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-ta2na-kodus-lugeda": {
+    "text": "Ma tahan täna kodus lugeda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/lugema": {
+    "text": "lugema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/lugeda": {
+    "text": "lugeda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/nad-tahavad-lugeda": {
+    "text": "Nad tahavad lugeda.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/nad-peavad-lugema": {
+    "text": "Nad peavad lugema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/teha": {
+    "text": "teha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/tegema": {
+    "text": "tegema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/o3ppima": {
+    "text": "õppima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-o3pin-lugema": {
+    "text": "Ma õpin lugema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-tahan-homme-linna-minna": {
+    "text": "Ma tahan homme linna minna.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/ma-hakkan-ta2na-kodus-o3ppima": {
+    "text": "Ma hakkan täna kodus õppima.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "tegevusnimed/p-message": {
+    "text": "Tere, Jaan! Ma pean täna kodus töötama. Aga ma lähen kell neli linna. Kas sa tahad kohvi juua? Ma ootan sind kohvikus. Mulle meeldib kohvikus lugeda. Ma pean kell kuus koju minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "osastav/u2ks-kass": {
     "text": "üks kass",
     "model": "eleven_v4",

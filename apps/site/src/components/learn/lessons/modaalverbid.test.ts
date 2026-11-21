@@ -3,7 +3,7 @@ import { MODAL_HEARD_KINDS } from "../../../lib/learn/clips";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { firstKinds, HEARD, threeKinds } from "./Modaalverbid";
 
-const keyed = HEARD.map((item) => ({ ...item, pair: [item.kind, `${item.kind}-${item.verb.da}`] }));
+const keyed = HEARD.map((item) => ({ ...item, pair: [item.kind, `${item.kind}-${item.verb.da}`] as const }));
 
 describe("What does it say?", () => {
   it("asks each way once in a run of four", () => {

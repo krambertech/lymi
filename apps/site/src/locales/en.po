@@ -19,6 +19,9 @@ msgstr "-b now; in the past just -s."
 msgid "-d now, -sid in the past."
 msgstr "-d now, -sid in the past."
 
+msgid "-da form"
+msgstr "-da form"
+
 msgid "-⁠l form"
 msgstr "-⁠l form"
 
@@ -27,6 +30,9 @@ msgstr "-le means onto or to, -lt off or from"
 
 msgid "-le or -sse"
 msgstr "-le or -sse"
+
+msgid "-ma form"
+msgstr "-ma form"
 
 msgid "-me now, -sime in the past."
 msgstr "-me now, -sime in the past."
@@ -647,6 +653,15 @@ msgstr "<0>-da</0> form"
 msgid "<0>-de</0> or <1>-e</1>?"
 msgstr "<0>-de</0> or <1>-e</1>?"
 
+msgid "<0>-des</0> comes from the <1>-da</1> form, and <2>-mata</2> from the <3>-ma</3> form."
+msgstr "<0>-des</0> comes from the <1>-da</1> form, and <2>-mata</2> from the <3>-ma</3> form."
+
+msgid "<0>-des</0> or <1>-mata</1>?"
+msgstr "<0>-des</0> or <1>-mata</1>?"
+
+msgid "<0>-des</0>: take the <1>-da</1> form and change its last <2>a</2> to <3>es</3>: <4>lugeda, lugedes; tulla, tulles</4>."
+msgstr "<0>-des</0>: take the <1>-da</1> form and change its last <2>a</2> to <3>es</3>: <4>lugeda, lugedes; tulla, tulles</4>."
+
 msgid "<0>-ga</0> is with"
 msgstr "<0>-ga</0> is with"
 
@@ -682,6 +697,12 @@ msgstr "<0>-lik</0> gives a quality: <1>kasulik</1>, useful. <2>-tu</2> means wi
 
 msgid "<0>-ma</0> form"
 msgstr "<0>-ma</0> form"
+
+msgid "<0>-mata</0> also says something is still not done: <1>kiri on lugemata</1>, the letter is unread. Use <2>-des</2> only when the doer is the same: <3>kodust tulles ostsin ma leiba</3>, I bought bread on my way from home."
+msgstr "<0>-mata</0> also says something is still not done: <1>kiri on lugemata</1>, the letter is unread. Use <2>-des</2> only when the doer is the same: <3>kodust tulles ostsin ma leiba</3>, I bought bread on my way from home."
+
+msgid "<0>-mata</0>: take the <1>-ma</1> form and add <2>ta</2>: <3>söömata</3>, without eating."
+msgstr "<0>-mata</0>: take the <1>-ma</1> form and add <2>ta</2>: <3>söömata</3>, without eating."
 
 msgid "<0>-na</0> is as, in a role: <1>Kati töötab arstina</1>, Kati works as a doctor; <2>lapsena</2>, as a child."
 msgstr "<0>-na</0> is as, in a role: <1>Kati töötab arstina</1>, Kati works as a doctor; <2>lapsena</2>, as a child."
@@ -759,6 +780,13 @@ msgstr "<0>{0}</0> ends in <1>-t</1>, so add <2>-e</2>: <3>{1}</3>."
 #. placeholder {1}: item.answer
 msgid "<0>{0}</0> ends in a vowel, so add <1>-de</1>: <2>{1}</2>."
 msgstr "<0>{0}</0> ends in a vowel, so add <1>-de</1>: <2>{1}</2>."
+
+#. placeholder {0}: verb.da
+#. placeholder {1}: verb.des
+#. placeholder {2}: verb.ma
+#. placeholder {3}: verb.mata
+msgid "<0>{0}</0> gives <1>{1}</1>, and <2>{2}</2> gives <3>{3}</3>."
+msgstr "<0>{0}</0> gives <1>{1}</1>, and <2>{2}</2> gives <3>{3}</3>."
 
 #. placeholder {0}: capital(ownedBook(whose))
 #. placeholder {1}: i18n._(PERSON[who].book)
@@ -1238,6 +1266,9 @@ msgstr "<0>Praegu</0>, right now: still reading, so the third form."
 
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>price elasticity</0> ?"
+
+msgid "<0>Raamatut lugedes</0>, while reading a book. <1>Midagi ütlemata</1>, without saying anything. Two forms that save you a whole sentence."
+msgstr "<0>Raamatut lugedes</0>, while reading a book. <1>Midagi ütlemata</1>, without saying anything. Two forms that save you a whole sentence."
 
 msgid "<0>Sa oled</0> is you are: this tells Mari she’s from Ukraine."
 msgstr "<0>Sa oled</0> is you are: this tells Mari she’s from Ukraine."
@@ -1902,6 +1933,9 @@ msgstr "A free Estonian lesson on the words that come before a noun: läbi pargi
 msgid "A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), usually added to the second form. Every sentence is read aloud."
 msgstr "A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), usually added to the second form. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on two verb forms that shorten a sentence: -des for while or by doing (lugedes, tulles, süües) and -mata for without doing (lugemata, söömata, ütlemata), and how to build each from a form you know. Every sentence is read aloud."
+msgstr "A free Estonian lesson on two verb forms that shorten a sentence: -des for while or by doing (lugedes, tulles, süües) and -mata for without doing (lugemata, söömata, ütlemata), and how to build each from a form you know. Every sentence is read aloud."
+
 msgid "A free Estonian practice lesson: read a message to a landlord, hear the reply, and use the perfect (on katki läinud), the conditional (kas te saaksite), the impersonal and the case each verb takes in one real situation. Every sentence is read aloud."
 msgstr "A free Estonian practice lesson: read a message to a landlord, hear the reply, and use the perfect (on katki läinud), the conditional (kas te saaksite), the impersonal and the case each verb takes in one real situation. Every sentence is read aloud."
 
@@ -2202,6 +2236,9 @@ msgstr "A new last vowel"
 
 msgid "A new stem, <0>läks-</0>, then <1>in</1>. Now it’s <2>lähen</2>."
 msgstr "A new stem, <0>läks-</0>, then <1>in</1>. Now it’s <2>lähen</2>."
+
+msgid "A newspaper and some flowers"
+msgstr "A newspaper and some flowers"
 
 msgid "A note from Kati"
 msgstr "A note from Kati"
@@ -3067,6 +3104,9 @@ msgstr "All eight. Here the person ends in <0>-ja</0> and the activity in <1>-mi
 msgid "All eight. You can build the stem for every plural case."
 msgstr "All eight. You can build the stem for every plural case."
 
+msgid "All eight. You can say while and without in one word."
+msgstr "All eight. You can say while and without in one word."
+
 msgid "All eight. You hear what each verb asks for."
 msgstr "All eight. You hear what each verb asks for."
 
@@ -3867,6 +3907,9 @@ msgstr "At the market"
 msgid "at the office"
 msgstr "at the office"
 
+msgid "At the same time, or not at all?"
+msgstr "At the same time, or not at all?"
+
 msgid "at the teacher"
 msgstr "at the teacher"
 
@@ -4147,6 +4190,9 @@ msgstr "Borrowed from the Low German or Old Swedish name for Friday. It’s the 
 msgid "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
 msgstr "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
 
+msgid "Both forms come from the two verb forms of lesson {forms}. The <0>-des</0> form says what else you are doing at the same time, like English “while reading”. The <1>-mata</1> form says what you didn’t do, like “without reading”."
+msgstr "Both forms come from the two verb forms of lesson {forms}. The <0>-des</0> form says what else you are doing at the same time, like English “while reading”. The <1>-mata</1> form says what you didn’t do, like “without reading”."
+
 msgid "Both schedule reviews with FSRS. Anki lets you shape every detail of a card. Lymi takes most of the work out of making one."
 msgstr "Both schedule reviews with FSRS. Anki lets you shape every detail of a card. Lymi takes most of the work out of making one."
 
@@ -4419,6 +4465,9 @@ msgstr "California DMV knowledge test: the rules of the road"
 
 msgid "California Driver’s Handbook © California DMV, licensed CC BY-NC 4.0."
 msgstr "California Driver’s Handbook © California DMV, licensed CC BY-NC 4.0."
+
+msgid "Called a friend on the phone"
+msgstr "Called a friend on the phone"
 
 msgid "Calvin cycle"
 msgstr "Calvin cycle"
@@ -4915,6 +4964,9 @@ msgstr "coffee"
 msgid "Coffee"
 msgstr "Coffee"
 
+msgid "Coffee and a cake"
+msgstr "Coffee and a cake"
+
 msgid "Coffee costs €3.50."
 msgstr "Coffee costs €3.50."
 
@@ -5163,6 +5215,9 @@ msgstr "Create and practise flashcards with Grok Bot."
 msgid "Cross the road at the bus stop"
 msgstr "Cross the road at the bus stop"
 
+msgid "cross, annoyed"
+msgstr "cross, annoyed"
+
 msgid "cup"
 msgstr "cup"
 
@@ -5342,6 +5397,9 @@ msgstr "Did he find his key?"
 msgid "Did Jaan buy milk?"
 msgstr "Did Jaan buy milk?"
 
+msgid "Did Kati have breakfast?"
+msgstr "Did Kati have breakfast?"
+
 msgid "Did Mari go to work?"
 msgstr "Did Mari go to work?"
 
@@ -5454,6 +5512,9 @@ msgstr "Does every noun come with der, die or das?"
 
 msgid "Does he or she speak Estonian?"
 msgstr "Does he or she speak Estonian?"
+
+msgid "Does it happen at the same time, or not at all? Pick the form, then hear the sentence."
+msgstr "Does it happen at the same time, or not at all? Pick the form, then hear the sentence."
 
 msgid "Does it keep õ, ä, ö and ü apart?"
 msgstr "Does it keep õ, ä, ö and ü apart?"
@@ -6029,6 +6090,9 @@ msgstr "Estonia’s capital"
 
 msgid "Estonian"
 msgstr "Estonian"
+
+msgid "Estonian -des and -mata: lugedes (while reading), lugemata (without reading)"
+msgstr "Estonian -des and -mata: lugedes (while reading), lugemata (without reading)"
 
 msgid "Estonian -ja and -mine: õpetaja, lugemine and other words from verbs"
 msgstr "Estonian -ja and -mine: õpetaja, lugemine and other words from verbs"
@@ -9999,6 +10063,9 @@ msgstr "It comes after <0/>, many, when something is there or isn’t, after <1>
 msgid "It depends"
 msgstr "It depends"
 
+msgid "It didn’t happen, so it takes <0>-mata</0>, without: <1>{answer}</1>."
+msgstr "It didn’t happen, so it takes <0>-mata</0>, without: <1>{answer}</1>."
+
 msgid "It does the same job without Anki running on your computer. Lymi is a remote connector, so it works on claude.ai, in the desktop app, on your phone and in Claude Code. If you have Anki decks, Lymi imports them."
 msgstr "It does the same job without Anki running on your computer. Lymi is a remote connector, so it works on claude.ai, in the desktop app, on your phone and in Claude Code. If you have Anki decks, Lymi imports them."
 
@@ -10043,6 +10110,9 @@ msgstr "It isn’t allowed."
 
 msgid "It joins your daily review straight away. There is nothing to build."
 msgstr "It joins your daily review straight away. There is nothing to build."
+
+msgid "It means while or by doing, and the doer is the same as in the rest of the sentence: <0>Raamatut lugedes jäin ma magama.</0>"
+msgstr "It means while or by doing, and the doer is the same as in the rest of the sentence: <0>Raamatut lugedes jäin ma magama.</0>"
 
 msgid "It needs energy from <0>ATP</0>."
 msgstr "It needs energy from <0>ATP</0>."
@@ -10441,6 +10511,9 @@ msgstr "Kati works as a doctor."
 msgid "Kati writes"
 msgstr "Kati writes"
 
+msgid "Kati writes about her day. Look for <0>-des</0> and <1>-mata</1>, and for <2/>, to get somewhere."
+msgstr "Kati writes about her day. Look for <0>-des</0> and <1>-mata</1>, and for <2/>, to get somewhere."
+
 msgid "Kati writes about her family. For each gap, pick who or whose."
 msgstr "Kati writes about her family. For each gap, pick who or whose."
 
@@ -10464,6 +10537,9 @@ msgstr "Kati’s <0/>, her tap, is broken. She writes a <1/> to her <2/>, Mrs Ta
 
 msgid "Kati’s birthday"
 msgstr "Kati’s birthday"
+
+msgid "Kati’s busy day"
+msgstr "Kati’s busy day"
 
 msgid "Kati’s family"
 msgstr "Kati’s family"
@@ -12008,6 +12084,9 @@ msgstr "Most land plants have one."
 msgid "Most of them. Ask the verb its question: <0>keda, kellest, kellele, kellega?</0>"
 msgstr "Most of them. Ask the verb its question: <0>keda, kellest, kellele, kellega?</0>"
 
+msgid "Most of them. Ask: is it happening too, or not happening?"
+msgstr "Most of them. Ask: is it happening too, or not happening?"
+
 msgid "Most of them. Ask: is it someone, or something you do?"
 msgstr "Most of them. Ask: is it someone, or something you do?"
 
@@ -12534,6 +12613,9 @@ msgstr "No, it’s closed"
 
 msgid "No, she didn’t"
 msgstr "No, she didn’t"
+
+msgid "No, she went to work without eating"
+msgstr "No, she went to work without eating"
 
 msgid "No, she’s a student"
 msgstr "No, she’s a student"
@@ -14451,6 +14533,9 @@ msgstr "Read the first section once more, then try again."
 msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 
+msgid "Read the news"
+msgstr "Read the news"
+
 msgid "Read the rule above the quiz once more, then try again."
 msgstr "Read the rule above the quiz once more, then try again."
 
@@ -15430,6 +15515,9 @@ msgstr "Skip to the downloads"
 
 msgid "Skip to the updates"
 msgstr "Skip to the updates"
+
+msgid "Slept"
+msgstr "Slept"
 
 msgid "Slides and PDFs"
 msgstr "Slides and PDFs"
@@ -18131,6 +18219,9 @@ msgstr "The translative case"
 msgid "The two forms often differ by one sound: a long pp or a short p, a d or none. Listen to a form of a word from the table and say whether it is strong, like the dictionary form and the third form, or weak, like the genitive."
 msgstr "The two forms often differ by one sound: a long pp or a short p, a d or none. Listen to a form of a word from the table and say whether it is strong, like the dictionary form and the third form, or weak, like the genitive."
 
+msgid "The two things happen at once, so it takes <0>-des</0>: <1>{answer}</1>."
+msgstr "The two things happen at once, so it takes <0>-des</0>: <1>{answer}</1>."
+
 msgid "The union"
 msgstr "The union"
 
@@ -18756,6 +18847,9 @@ msgstr "to answer"
 msgid "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
 msgstr "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
 
+msgid "to arrive, to get to"
+msgstr "to arrive, to get to"
+
 msgid "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
 msgstr "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
 
@@ -19063,6 +19157,9 @@ msgctxt "the island, where to"
 msgid "to Saaremaa"
 msgstr "to Saaremaa"
 
+msgid "to say"
+msgstr "to say"
+
 msgid "To say"
 msgstr "To say"
 
@@ -19367,6 +19464,9 @@ msgstr "Tonight"
 
 msgid "Tööl, at work, takes -l like a market does."
 msgstr "Tööl, at work, takes -l like a market does."
+
+msgid "Tööle jõudes, on getting to work."
+msgstr "Tööle jõudes, on getting to work."
 
 msgid "tooth"
 msgstr "tooth"
@@ -19825,6 +19925,9 @@ msgstr "Verbs such as <0>ootama</0> take the third form from lesson {partitive} 
 msgid "Verbs weaken the same way. Of the three forms of lesson {verbForms}, the <0>-ma</0> form is the strong one. The <1>-da</1> form, the present, or both can be weak: <2/>, <3>lugeda</3>, <4/>."
 msgstr "Verbs weaken the same way. Of the three forms of lesson {verbForms}, the <0>-ma</0> form is the strong one. The <1>-da</1> form, the present, or both can be weak: <2/>, <3>lugeda</3>, <4/>."
 
+msgid "Verbs with their -des and -mata forms"
+msgstr "Verbs with their -des and -mata forms"
+
 msgid "Version of 5 January 2026"
 msgstr "Version of 5 January 2026"
 
@@ -20175,11 +20278,17 @@ msgstr "What did Mari and Jaan do at home?"
 msgid "What did Mari do on Sunday?"
 msgstr "What did Mari do on Sunday?"
 
+msgid "What did she buy in the evening?"
+msgstr "What did she buy in the evening?"
+
 msgid "What did she buy?"
 msgstr "What did she buy?"
 
 msgid "What did she do at home?"
 msgstr "What did she do at home?"
+
+msgid "What did she do on the bus?"
+msgstr "What did she do on the bus?"
 
 msgid "What did you read?"
 msgstr "What did you read?"
@@ -20936,6 +21045,12 @@ msgstr "Which words do I keep forgetting?"
 msgid "Which words should I ask Marta about on Friday?"
 msgstr "Which words should I ask Marta about on Friday?"
 
+msgid "While doing"
+msgstr "While doing"
+
+msgid "While doing, without doing"
+msgstr "While doing, without doing"
+
 msgid "While you code"
 msgstr "While you code"
 
@@ -21277,6 +21392,9 @@ msgctxt "with or without"
 msgid "Without"
 msgstr "Without"
 
+msgid "Without doing"
+msgstr "Without doing"
+
 msgid "without lemon"
 msgstr "without lemon"
 
@@ -21551,6 +21669,9 @@ msgstr "Yes, in the morning"
 
 msgid "Yes, in the shop"
 msgstr "Yes, in the shop"
+
+msgid "Yes, on the bus"
+msgstr "Yes, on the bus"
 
 msgid "Yes, please"
 msgstr "Yes, please"

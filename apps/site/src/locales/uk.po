@@ -20,6 +20,9 @@ msgstr "-b зараз; у минулому лише -s."
 msgid "-d now, -sid in the past."
 msgstr "-d зараз, -sid у минулому."
 
+msgid "-da form"
+msgstr "Інфінітив"
+
 msgid "-⁠l form"
 msgstr "Форма на -⁠l"
 
@@ -28,6 +31,9 @@ msgstr "-le відповідає на «куди?», -lt — на «звідки
 
 msgid "-le or -sse"
 msgstr "-le чи -sse"
+
+msgid "-ma form"
+msgstr "Словникова форма"
 
 msgid "-me now, -sime in the past."
 msgstr "-me зараз, -sime у минулому."
@@ -648,6 +654,15 @@ msgstr "Форма на <0>-da</0>"
 msgid "<0>-de</0> or <1>-e</1>?"
 msgstr "<0>-de</0> чи <1>-e</1>?"
 
+msgid "<0>-des</0> comes from the <1>-da</1> form, and <2>-mata</2> from the <3>-ma</3> form."
+msgstr "<0>-des</0> утворюється від форми на <1>-da</1>, а <2>-mata</2> — від форми на <3>-ma</3>."
+
+msgid "<0>-des</0> or <1>-mata</1>?"
+msgstr "<0>-des</0> чи <1>-mata</1>?"
+
+msgid "<0>-des</0>: take the <1>-da</1> form and change its last <2>a</2> to <3>es</3>: <4>lugeda, lugedes; tulla, tulles</4>."
+msgstr "<0>-des</0>: візьми форму на <1>-da</1> і заміни останнє <2>a</2> на <3>es</3>: <4>lugeda, lugedes; tulla, tulles</4>."
+
 msgid "<0>-ga</0> is with"
 msgstr "<0>-ga</0> — це «з»"
 
@@ -683,6 +698,12 @@ msgstr "<0>-lik</0> дає ознаку: <1>kasulik</1>, корисний. <2>-t
 
 msgid "<0>-ma</0> form"
 msgstr "Форма на <0>-ma</0>"
+
+msgid "<0>-mata</0> also says something is still not done: <1>kiri on lugemata</1>, the letter is unread. Use <2>-des</2> only when the doer is the same: <3>kodust tulles ostsin ma leiba</3>, I bought bread on my way from home."
+msgstr "<0>-mata</0> також каже, що щось досі не зроблено: <1>kiri on lugemata</1>, лист не прочитаний. <2>-des</2> вживай, лише коли дію виконує та сама людина, як і з «читаючи»: <3>kodust tulles ostsin ma leiba</3>, ідучи з дому, я купив хліб."
+
+msgid "<0>-mata</0>: take the <1>-ma</1> form and add <2>ta</2>: <3>söömata</3>, without eating."
+msgstr "<0>-mata</0>: візьми форму на <1>-ma</1> і додай <2>ta</2>: <3>söömata</3>, не поївши."
 
 msgid "<0>-na</0> is as, in a role: <1>Kati töötab arstina</1>, Kati works as a doctor; <2>lapsena</2>, as a child."
 msgstr "<0>-na</0> каже, у якій ролі: <1>Kati töötab arstina</1> — Каті працює лікаркою; <2>lapsena</2> — дитиною."
@@ -760,6 +781,13 @@ msgstr "<0>{0}</0> закінчується на <1>-t</1>, тому додай 
 #. placeholder {1}: item.answer
 msgid "<0>{0}</0> ends in a vowel, so add <1>-de</1>: <2>{1}</2>."
 msgstr "<0>{0}</0> закінчується на голосний, тому додай <1>-de</1>: <2>{1}</2>."
+
+#. placeholder {0}: verb.da
+#. placeholder {1}: verb.des
+#. placeholder {2}: verb.ma
+#. placeholder {3}: verb.mata
+msgid "<0>{0}</0> gives <1>{1}</1>, and <2>{2}</2> gives <3>{3}</3>."
+msgstr "<0>{0}</0> дає <1>{1}</1>, а <2>{2}</2> дає <3>{3}</3>."
 
 #. placeholder {0}: capital(ownedBook(whose))
 #. placeholder {1}: i18n._(PERSON[who].book)
@@ -1239,6 +1267,9 @@ msgstr "<0>Praegu</0> — саме зараз: читання триває, то
 
 msgid "<0>price elasticity</0> ?"
 msgstr "<0>еластичність попиту</0> ?"
+
+msgid "<0>Raamatut lugedes</0>, while reading a book. <1>Midagi ütlemata</1>, without saying anything. Two forms that save you a whole sentence."
+msgstr "<0>Raamatut lugedes</0> — читаючи книжку. <1>Midagi ütlemata</1> — нічого не сказавши. Дві форми, що заощаджують ціле речення."
 
 msgid "<0>Sa oled</0> is you are: this tells Mari she’s from Ukraine."
 msgstr "<0>Sa oled</0> — «ти є»: так ти кажеш Марі, що вона з України."
@@ -1903,6 +1934,9 @@ msgstr "Безкоштовний урок естонської про прийм
 msgid "A free Estonian lesson on three endings that make new words from nouns: -lik for a quality (sõber, sõbralik), -tu for without (kodu, kodutu) and -ke for small or dear (maja, majake), usually added to the second form. Every sentence is read aloud."
 msgstr "Безкоштовний урок естонської про три суфікси, що утворюють нові слова від іменників: -lik для ознаки (sõber, sõbralik), -tu для «без» (kodu, kodutu) і -ke для зменшувального й пестливого (maja, majake). Усі три зазвичай додаються до другої форми. Кожне речення озвучене."
 
+msgid "A free Estonian lesson on two verb forms that shorten a sentence: -des for while or by doing (lugedes, tulles, süües) and -mata for without doing (lugemata, söömata, ütlemata), and how to build each from a form you know. Every sentence is read aloud."
+msgstr "Безкоштовний урок естонської про дві форми дієслова, що скорочують речення: -des — «роблячи» (lugedes, tulles, süües) і -mata — «не зробивши» (lugemata, söömata, ütlemata), і як утворити кожну з уже знайомої форми. Кожне речення озвучене."
+
 msgid "A free Estonian practice lesson: read a message to a landlord, hear the reply, and use the perfect (on katki läinud), the conditional (kas te saaksite), the impersonal and the case each verb takes in one real situation. Every sentence is read aloud."
 msgstr "Безкоштовний практичний урок естонської: прочитай повідомлення власниці квартири, послухай відповідь і використай перфект (on katki läinud), умовний спосіб (kas te saaksite), безособову форму та відмінки після дієслів в одній життєвій ситуації. Кожне речення озвучене."
 
@@ -2203,6 +2237,9 @@ msgstr "Нова остання голосна"
 
 msgid "A new stem, <0>läks-</0>, then <1>in</1>. Now it’s <2>lähen</2>."
 msgstr "Нова основа, <0>läks-</0>, далі <1>in</1>. У теперішньому — <2>lähen</2>."
+
+msgid "A newspaper and some flowers"
+msgstr "Газету й квіти"
 
 msgid "A note from Kati"
 msgstr "Записка від Каті"
@@ -3068,6 +3105,9 @@ msgstr "Усі вісім. Тут слова про людину закінчу�
 msgid "All eight. You can build the stem for every plural case."
 msgstr "Усі вісім. Ти вмієш будувати основу для кожного відмінка множини."
 
+msgid "All eight. You can say while and without in one word."
+msgstr "Усі вісім. Ти вмієш сказати «роблячи» і «не зробивши» одним словом."
+
 msgid "All eight. You hear what each verb asks for."
 msgstr "Усі вісім. Ти чуєш, чого вимагає кожне дієслово."
 
@@ -3868,6 +3908,9 @@ msgstr "На ринку"
 msgid "at the office"
 msgstr "в офісі"
 
+msgid "At the same time, or not at all?"
+msgstr "Одночасно чи взагалі ні?"
+
 msgid "at the teacher"
 msgstr "у вчителя"
 
@@ -4148,6 +4191,9 @@ msgstr "Запозичене з нижньонімецької чи давньо
 msgid "Both are calm, keyboard-friendly flashcard apps. Mochi keeps your notes and cards together in Markdown. Lymi does more of the card-making for you, and syncs for free."
 msgstr "Обидва — спокійні застосунки з картками, якими зручно керувати з клавіатури. Mochi тримає нотатки й картки разом у Markdown. Lymi бере на себе більше роботи над картками й синхронізує їх безкоштовно."
 
+msgid "Both forms come from the two verb forms of lesson {forms}. The <0>-des</0> form says what else you are doing at the same time, like English “while reading”. The <1>-mata</1> form says what you didn’t do, like “without reading”."
+msgstr "Обидві форми утворюються від двох форм дієслова з уроку {forms}. Форма на <0>-des</0> — як дієприслівник «читаючи»: що ще робиш одночасно. Форма на <1>-mata</1> — як «не читаючи», «не прочитавши»: чого не зробив."
+
 msgid "Both schedule reviews with FSRS. Anki lets you shape every detail of a card. Lymi takes most of the work out of making one."
 msgstr "Обидва планують повторення за FSRS. В Anki можна налаштувати кожну дрібницю картки. Lymi бере на себе більшу частину роботи над нею."
 
@@ -4420,6 +4466,9 @@ msgstr "Теоретичний іспит DMV у Каліфорнії: прав�
 
 msgid "California Driver’s Handbook © California DMV, licensed CC BY-NC 4.0."
 msgstr "California Driver’s Handbook © California DMV, ліцензія CC BY-NC 4.0."
+
+msgid "Called a friend on the phone"
+msgstr "Телефонувала подрузі"
 
 msgid "Calvin cycle"
 msgstr "Цикл Кальвіна"
@@ -4916,6 +4965,9 @@ msgstr "кава"
 msgid "Coffee"
 msgstr "Кава"
 
+msgid "Coffee and a cake"
+msgstr "Каву й тістечко"
+
 msgid "Coffee costs €3.50."
 msgstr "Кава коштує 3,50 €."
 
@@ -5164,6 +5216,9 @@ msgstr "Створюй і повторюй флешкартки з Grok Bot."
 msgid "Cross the road at the bus stop"
 msgstr "Перейти дорогу біля зупинки"
 
+msgid "cross, annoyed"
+msgstr "сердитий"
+
 msgid "cup"
 msgstr "чашка"
 
@@ -5343,6 +5398,9 @@ msgstr "Чи знайшов він ключ?"
 msgid "Did Jaan buy milk?"
 msgstr "Чи купив Яан молоко?"
 
+msgid "Did Kati have breakfast?"
+msgstr "Чи снідала Каті?"
+
 msgid "Did Mari go to work?"
 msgstr "Марі ходила на роботу?"
 
@@ -5455,6 +5513,9 @@ msgstr "Чи кожен іменник має der, die або das?"
 
 msgid "Does he or she speak Estonian?"
 msgstr "Він чи вона говорить естонською?"
+
+msgid "Does it happen at the same time, or not at all? Pick the form, then hear the sentence."
+msgstr "Це відбувається одночасно чи взагалі ні? Обери форму і послухай речення."
 
 msgid "Does it keep õ, ä, ö and ü apart?"
 msgstr "Чи розрізняє Lymi õ, ä, ö і ü?"
@@ -6030,6 +6091,9 @@ msgstr "столиця Естонії"
 
 msgid "Estonian"
 msgstr "Естонська"
+
+msgid "Estonian -des and -mata: lugedes (while reading), lugemata (without reading)"
+msgstr "Естонські форми «читаючи» і «не читаючи»: як їх утворити"
 
 msgid "Estonian -ja and -mine: õpetaja, lugemine and other words from verbs"
 msgstr "Естонські -ja і -mine: як утворити «вчитель» і «читання» від дієслова"
@@ -10000,6 +10064,9 @@ msgstr "Вона стоїть після <0/> — багато, коли щос�
 msgid "It depends"
 msgstr "Залежить від обставин"
 
+msgid "It didn’t happen, so it takes <0>-mata</0>, without: <1>{answer}</1>."
+msgstr "Цього не сталося, тож <0>-mata</0>, «не зробивши»: <1>{answer}</1>."
+
 msgid "It does the same job without Anki running on your computer. Lymi is a remote connector, so it works on claude.ai, in the desktop app, on your phone and in Claude Code. If you have Anki decks, Lymi imports them."
 msgstr "Lymi робить те саме, але Anki не треба тримати запущеним на комп’ютері. Це віддалений конектор, тож він працює на claude.ai, у застосунку для комп’ютера, на телефоні й у Claude Code. Якщо в тебе є колоди з Anki, Lymi їх імпортує."
 
@@ -10044,6 +10111,9 @@ msgstr "Це заборонено."
 
 msgid "It joins your daily review straight away. There is nothing to build."
 msgstr "Вона одразу потрапляє в щоденне повторення. Нічого не треба складати самому."
+
+msgid "It means while or by doing, and the doer is the same as in the rest of the sentence: <0>Raamatut lugedes jäin ma magama.</0>"
+msgstr "Вона означає «роблячи», і дію виконує та сама людина, що й у решті речення: <0>Raamatut lugedes jäin ma magama.</0>"
 
 msgid "It needs energy from <0>ATP</0>."
 msgstr "Для нього потрібна енергія <0>АТФ</0>."
@@ -10442,6 +10512,9 @@ msgstr "Каті працює лікаркою."
 msgid "Kati writes"
 msgstr "Каті пише"
 
+msgid "Kati writes about her day. Look for <0>-des</0> and <1>-mata</1>, and for <2/>, to get somewhere."
+msgstr "Каті пише про свій день. Шукай <0>-des</0> і <1>-mata</1> та <2/>, дістатися кудись."
+
 msgid "Kati writes about her family. For each gap, pick who or whose."
 msgstr "Каті пише про свою родину. У кожному пропуску вибери: «хто» чи «чий»."
 
@@ -10465,6 +10538,9 @@ msgstr "У Каті зламався <0/>, кран. Вона пише <1/>, л�
 
 msgid "Kati’s birthday"
 msgstr "День народження Каті"
+
+msgid "Kati’s busy day"
+msgstr "Насичений день Каті"
 
 msgid "Kati’s family"
 msgstr "Родина Каті"
@@ -12009,6 +12085,9 @@ msgstr "Вона є в більшості наземних рослин."
 msgid "Most of them. Ask the verb its question: <0>keda, kellest, kellele, kellega?</0>"
 msgstr "Більшість. Постав дієслову його питання: <0>keda, kellest, kellele, kellega?</0>"
 
+msgid "Most of them. Ask: is it happening too, or not happening?"
+msgstr "Більшість. Запитай себе: це теж відбувається чи не відбувається?"
+
 msgid "Most of them. Ask: is it someone, or something you do?"
 msgstr "Більшість. Запитай себе: це хтось чи щось, що роблять?"
 
@@ -12535,6 +12614,9 @@ msgstr "Ні, зачинено"
 
 msgid "No, she didn’t"
 msgstr "Ні, не ходила"
+
+msgid "No, she went to work without eating"
+msgstr "Ні, пішла на роботу, не поївши"
 
 msgid "No, she’s a student"
 msgstr "Ні, вона студентка"
@@ -14452,6 +14534,9 @@ msgstr "Ще раз прочитай перший розділ і спробуй
 msgid "Read the meaning, then try to recall the term before you look. Try it on the cards here: they’re from all over the deck."
 msgstr "Прочитай значення й спершу згадай термін, а тоді дивись. Спробуй на цих картках: вони з усієї колоди."
 
+msgid "Read the news"
+msgstr "Читала новини"
+
 msgid "Read the rule above the quiz once more, then try again."
 msgstr "Ще раз прочитай правило над вправою і спробуй знову."
 
@@ -15431,6 +15516,9 @@ msgstr "Перейти до завантажень"
 
 msgid "Skip to the updates"
 msgstr "Перейти до оновлень"
+
+msgid "Slept"
+msgstr "Спала"
 
 msgid "Slides and PDFs"
 msgstr "Слайди й PDF"
@@ -18132,6 +18220,9 @@ msgstr "Транслатив"
 msgid "The two forms often differ by one sound: a long pp or a short p, a d or none. Listen to a form of a word from the table and say whether it is strong, like the dictionary form and the third form, or weak, like the genitive."
 msgstr "Дві форми часто відрізняються одним звуком: довге pp чи коротке p, d чи нічого. Послухай форму слова з таблиці й скажи, сильна вона, як словникова і третя форма, чи слабка, як родовий."
 
+msgid "The two things happen at once, so it takes <0>-des</0>: <1>{answer}</1>."
+msgstr "Дві дії відбуваються одночасно, тож <0>-des</0>: <1>{answer}</1>."
+
 msgid "The union"
 msgstr "Профспілка"
 
@@ -18757,6 +18848,9 @@ msgstr "відповідати"
 msgid "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
 msgstr "Щоб відповісти «ні», скажи <0>ei</0> або <1>ei</1> з дієсловом із питання: <2>Kas sa loed? Ei loe.</2>"
 
+msgid "to arrive, to get to"
+msgstr "прибувати, дістатися"
+
 msgid "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
 msgstr "Щоб запитати про форми слова, естонською кажуть <0>Mis on sõna … põhivormid?</0>, а на місце пропуску ставлять слово. <1/> означає «слово». Відповідай усіма трьома формами, по порядку."
 
@@ -19064,6 +19158,9 @@ msgctxt "the island, where to"
 msgid "to Saaremaa"
 msgstr "на острів Сааремаа"
 
+msgid "to say"
+msgstr "казати"
+
 msgid "To say"
 msgstr "Сказати"
 
@@ -19368,6 +19465,9 @@ msgstr "Сьогодні ввечері"
 
 msgid "Tööl, at work, takes -l like a market does."
 msgstr "Tööl, на роботі, бере -l, як і ринок."
+
+msgid "Tööle jõudes, on getting to work."
+msgstr "Tööle jõudes — діставшись роботи."
 
 msgid "tooth"
 msgstr "зуб"
@@ -19826,6 +19926,9 @@ msgstr "Дієслова на кшталт <0>ootama</0> вимагають тр
 msgid "Verbs weaken the same way. Of the three forms of lesson {verbForms}, the <0>-ma</0> form is the strong one. The <1>-da</1> form, the present, or both can be weak: <2/>, <3>lugeda</3>, <4/>."
 msgstr "Дієслова слабшають так само. З трьох форм уроку {verbForms} форма на <0>-ma</0> сильна. Форма на <1>-da</1>, теперішній час чи обидві можуть бути слабкими: <2/>, <3>lugeda</3>, <4/>."
 
+msgid "Verbs with their -des and -mata forms"
+msgstr "Дієслова та їхні форми «роблячи» і «не зробивши»"
+
 msgid "Version of 5 January 2026"
 msgstr "Версія від 5 січня 2026 року"
 
@@ -20176,11 +20279,17 @@ msgstr "Що Марі та Яан робили вдома?"
 msgid "What did Mari do on Sunday?"
 msgstr "Що Марі робила в неділю?"
 
+msgid "What did she buy in the evening?"
+msgstr "Що вона купила ввечері?"
+
 msgid "What did she buy?"
 msgstr "Що вона купила?"
 
 msgid "What did she do at home?"
 msgstr "Що вона робила вдома?"
+
+msgid "What did she do on the bus?"
+msgstr "Що вона робила в автобусі?"
 
 msgid "What did you read?"
 msgstr "Що ти прочитав?"
@@ -20937,6 +21046,12 @@ msgstr "Які слова я постійно забуваю?"
 msgid "Which words should I ask Marta about on Friday?"
 msgstr "Про які слова спитати Марту в п’ятницю?"
 
+msgid "While doing"
+msgstr "Роблячи"
+
+msgid "While doing, without doing"
+msgstr "Роблячи і не зробивши"
+
 msgid "While you code"
 msgstr "Поки пишеш код"
 
@@ -21278,6 +21393,9 @@ msgctxt "with or without"
 msgid "Without"
 msgstr "Без"
 
+msgid "Without doing"
+msgstr "Не зробивши"
+
 msgid "without lemon"
 msgstr "без лимона"
 
@@ -21552,6 +21670,9 @@ msgstr "Так, уранці"
 
 msgid "Yes, in the shop"
 msgstr "Так, у магазині"
+
+msgid "Yes, on the bus"
+msgstr "Так, в автобусі"
 
 msgid "Yes, please"
 msgstr "Так, будь ласка"

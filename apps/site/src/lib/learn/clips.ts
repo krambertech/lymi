@@ -3329,6 +3329,89 @@ const SUFFIX_CLIPS: Record<string, Clip> = {
   "p-kati": { sentences: COTTAGE_PASSAGE },
 };
 
+export const DES_MATA_VERBS = [
+  { ma: "lugema", da: "lugeda", des: "lugedes", mata: "lugemata" },
+  { ma: "tulema", da: "tulla", des: "tulles", mata: "tulemata" },
+  { ma: "tegema", da: "teha", des: "tehes", mata: "tegemata" },
+  { ma: "sööma", da: "süüa", des: "süües", mata: "söömata" },
+  { ma: "minema", da: "minna", des: "minnes", mata: "minemata" },
+  { ma: "ütlema", da: "öelda", des: "öeldes", mata: "ütlemata" },
+] as const;
+
+export const DES_MATA_GAPS = [
+  {
+    id: "mata-utlema",
+    before: "Ta läks ära, midagi",
+    after: ".",
+    answer: "ütlemata",
+    options: ["ütlemata", "öeldes"],
+  },
+  {
+    id: "des-lugema",
+    before: "Raamatut",
+    after: "jäin ma magama.",
+    answer: "lugedes",
+    options: ["lugedes", "lugemata"],
+  },
+  {
+    id: "des-tulema",
+    before: "Kodust",
+    after: "ostsin ma leiba.",
+    answer: "tulles",
+    options: ["tulles", "tulemata"],
+  },
+  {
+    id: "mata-tegema",
+    before: "Ta tuli tundi kodutööd",
+    after: "ja õpetaja oli pahane.",
+    answer: "tegemata",
+    options: ["tegemata", "tehes"],
+  },
+  {
+    id: "des-tegema",
+    before: "Ema laulab alati süüa",
+    after: ".",
+    answer: "tehes",
+    options: ["tehes", "tegemata"],
+  },
+  {
+    id: "mata-sooma",
+    before: "Ma olin hilja üleval ja läksin hommikul",
+    after: "kooli.",
+    answer: "söömata",
+    options: ["söömata", "süües"],
+  },
+  {
+    id: "des-minema",
+    before: "Tööle",
+    after: "kuulan ma raadiot.",
+    answer: "minnes",
+    options: ["minnes", "minemata"],
+  },
+  {
+    id: "mata-lugema",
+    before: "Kiri on laual veel",
+    after: ".",
+    answer: "lugemata",
+    options: ["lugemata", "lugedes"],
+  },
+] as const;
+
+export const MORNING_PASSAGE = [
+  "Täna ärkasin ma hilja ja läksin söömata tööle.",
+  "Bussis istudes lugesin ma uudiseid.",
+  "Tööle jõudes nägin, et telefon jäi koju.",
+  "Õhtul koju tulles ostsin poest leiba ja juustu.",
+] as const;
+
+const DES_MATA_CLIPS: Record<string, Clip> = {
+  ...words(DES_MATA_VERBS.flatMap((verb) => [verb.ma, verb.da, verb.des, verb.mata])),
+  ...words(DES_MATA_GAPS.flatMap((gap) => gap.options)),
+  ...words(DES_MATA_GAPS.map(objectGapSaid)),
+  ...words(["jõudma", "pahane"]),
+  "p-kati": { sentences: MORNING_PASSAGE },
+};
+
 /** Which form a verb wants for the verb after it. */
 export type Takes = "da" | "ma";
 
@@ -4306,6 +4389,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   "labi-metsa": PREPOSITION_CLIPS,
   "opetaja-lugemine": VERB_NOUN_CLIPS,
   "sobralik-kodutu": SUFFIX_CLIPS,
+  "lugedes-lugemata": DES_MATA_CLIPS,
   "ma-ei-lainud": NO_PAST_CLIPS,
   tulevik: FUTURE_CLIPS,
   kit: KIT_CLIPS,

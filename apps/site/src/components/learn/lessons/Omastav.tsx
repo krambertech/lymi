@@ -36,10 +36,18 @@ const src = (text: string) => clipUrl(SLUG, clipId(text));
 type Who = (typeof OMASTAV_PRONOUNS)[number]["who"];
 type Phrase = (typeof OMASTAV_PHRASES)[number];
 
-/** Each pronoun, and its whose form before raamat, in the reader's language. */
+/**
+ * Each pronoun in the reader's language: who, whose, whose in a quiz answer's short line, and the
+ * whose form before raamat.
+ */
 const PERSON: Record<
   Who,
-  { who: MessageDescriptor; whose: MessageDescriptor; book: MessageDescriptor }
+  {
+    who: MessageDescriptor;
+    whose: MessageDescriptor;
+    short: MessageDescriptor;
+    book: MessageDescriptor;
+  }
 > = {
   mina: { who: msg`I`, whose: msg`my`, short: msg`my`, book: msg`my book` },
   sina: {

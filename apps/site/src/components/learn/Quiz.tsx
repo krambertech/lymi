@@ -179,7 +179,10 @@ export function Quiz<Item>({
     if (state.status === "asking" && (restarted.current || advanced.current)) {
       const lost = !document.activeElement || document.activeElement === document.body;
       if (restarted.current || lost)
-        bodyRef.current?.querySelector("button")?.focus({ preventScroll: true });
+        // A typed round's field comes first, so a phone opens its keyboard.
+        bodyRef.current
+          ?.querySelector<HTMLElement>("input:not([readonly]), button")
+          ?.focus({ preventScroll: true });
       restarted.current = false;
       advanced.current = false;
     }

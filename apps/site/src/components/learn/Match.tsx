@@ -71,8 +71,8 @@ export function Match({ id, title, pairs, columns }: MatchProps) {
   const reshuffle = () => {
     const left = shuffle(ids);
     let next = shuffle(ids);
-    // Never a row of pairs side by side.
-    for (let tries = 0; tries < 5 && next.some((pair, i) => pair === left[i]); tries++)
+    // Avoid a pair side by side in one row; a few tries make it rare.
+    for (let tries = 0; tries < 20 && next.some((pair, i) => pair === left[i]); tries++)
       next = shuffle(ids);
     setOrder({ left, right: next });
   };

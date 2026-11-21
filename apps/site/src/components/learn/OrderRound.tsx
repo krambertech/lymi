@@ -81,6 +81,11 @@ export function OrderRound({ item, state, heard, answer, autoplay }: RoundProps<
   const [landing, setLanding] = useState<number | null>(null);
   const lineRef = useRef<HTMLFieldSetElement>(null);
   const focusTile = useRef<number | null>(null);
+  // Where focus goes after a keyboard takes a tile out of the bank or the line, so it isn't lost
+  // with the button that went away: the next bank tile (or Check), or the tile back in the bank.
+  const focusBank = useRef<"next" | number | null>(null);
+  const bankRef = useRef<HTMLUListElement>(null);
+  const checkRef = useRef<HTMLButtonElement>(null);
   const done = state.status === "answered";
   const words = line.map((tile) => tiles[tile] ?? "");
   const end = sentenceEnd(item.answers[0] ?? "");
@@ -92,6 +97,16 @@ export function OrderRound({ item, state, heard, answer, autoplay }: RoundProps<
       ?.querySelector<HTMLButtonElement>(`[data-tile="${focusTile.current}"]`)
       ?.focus({ preventScroll: true });
     focusTile.current = null;
+  });
+  useEffect(() => {
+    const want = focusBank.current;
+    if (want === null) return;
+    focusBank.current = null;
+    const target =
+      want === "next"
+        ? (bankRef.current?.querySelector<HTMLButtonElement>("button") ?? checkRef.current)
+        : bankRef.current?.querySelector<HTMLButtonElement>(`[data-bank="${want}"]`);
+    target?.focus({ preventScroll: true });
   });
 
   const ready = () => {
@@ -124,6 +139,7 @@ export function OrderRound({ item, state, heard, answer, autoplay }: RoundProps<
 
   const { lift, start, handlers } = useLift<number>({
     disabled: done,
+    onCancel: () => setLanding(null),
     onTap: (tile) => (line.includes(tile) ? remove(tile) : add(tile)),
     onMove: (_, x, y) =>
       setLanding(
@@ -205,7 +221,11 @@ export function OrderRound({ item, state, heard, answer, autoplay }: RoundProps<
                 aria-disabled={done || undefined}
                 onPointerDown={start(tile)}
                 {...handlers}
-                onClick={(event) => fromKeyboard(event) && remove(tile)}
+                onClick={(event) => {
+                  if (!fromKeyboard(event)) return;
+                  focusBank.current = tile;
+                  remove(tile);
+                }}
                 onKeyDown={(event: KeyboardEvent) => {
                   if (done) return;
                   const step = event.key === "ArrowLeft" ? -1 : event.key === "ArrowRight" ? 1 : 0;
@@ -236,7 +256,7 @@ export function OrderRound({ item, state, heard, answer, autoplay }: RoundProps<
           <p className="text-sm text-ink-muted">
             <Trans>Tap a word to add it; drag or use the arrow keys to move it.</Trans>
           </p>
-          <ul className="m-0 flex list-none flex-wrap gap-2 p-0">
+          <ul ref={bankRef} className="m-0 flex list-none flex-wrap gap-2 p-0">
             {bank.map(({ word, tile }) => (
               <li key={tile}>
                 {line.includes(tile) ? (
@@ -253,7 +273,12 @@ export function OrderRound({ item, state, heard, answer, autoplay }: RoundProps<
                     lang="et"
                     onPointerDown={start(tile)}
                     {...handlers}
-                    onClick={(event) => fromKeyboard(event) && add(tile)}
+                    data-bank={tile}
+                    onClick={(event) => {
+                      if (!fromKeyboard(event)) return;
+                      focusBank.current = "next";
+                      add(tile);
+                    }}
                     className={clsx(
                       tileClass(false),
                       lifted === tile && "border-dashed text-transparent",
@@ -322,7 +347,7 @@ export function OrderRound({ item, state, heard, answer, autoplay }: RoundProps<
         </div>
       ) : (
         <div className="flex w-full justify-end">
-          <Button variant="primary" onClick={check}>
+          <Button ref={checkRef} variant="primary" onClick={check}>
             <Trans>Check</Trans>
           </Button>
         </div>

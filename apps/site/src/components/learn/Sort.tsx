@@ -131,6 +131,7 @@ export function Sort({ id, title, bins, items }: SortProps) {
 
   const { lift, start, handlers } = useLift<string>({
     disabled: state.checked,
+    onCancel: () => setOver(null),
     onTap: pick,
     onMove: (_, x, y) => setOver(targetAt(x, y, "data-bin")),
     onDrop: (word, x, y) => {
@@ -164,6 +165,13 @@ export function Sort({ id, title, bins, items }: SortProps) {
           if (bin) {
             event.preventDefault();
             place(word, bin.id, true);
+          } else if (
+            (event.key === "Backspace" || event.key === "Delete") &&
+            state.places[word] !== undefined
+          ) {
+            // Back with the words, for a keyboard.
+            event.preventDefault();
+            place(word, null, true);
           } else if (event.key === "Escape" && state.picked)
             dispatch({ type: "picked", item: state.picked });
         }}
@@ -207,7 +215,7 @@ export function Sort({ id, title, bins, items }: SortProps) {
           <div
             data-bin={POOL}
             data-pool=""
-            onClick={(event) => event.target === event.currentTarget && drop(POOL)}
+            onClick={(event) => !(event.target as HTMLElement).closest("button") && drop(POOL)}
             className={clsx(
               "grid min-h-16 gap-2 rounded-lg bg-plate-nested p-3 transition-colors duration-150",
               over === POOL && "bg-(--form-soft)",

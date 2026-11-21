@@ -21,8 +21,11 @@ export function useLift<T>({
   onTap,
   onMove,
   onDrop,
+  onCancel,
 }: {
   disabled?: boolean;
+  /** The drag ended without a drop, as when the browser takes over the pointer to scroll. */
+  onCancel?: () => void;
   onTap: (value: T) => void;
   onMove?: (value: T, x: number, y: number) => void;
   onDrop: (value: T, x: number, y: number) => void;
@@ -65,7 +68,10 @@ export function useLift<T>({
       if (now.moved) onDrop(now.value, event.clientX, event.clientY);
       else onTap(now.value);
     },
-    onPointerCancel: end,
+    onPointerCancel: () => {
+      end();
+      onCancel?.();
+    },
   };
   return { lift, start, handlers };
 }

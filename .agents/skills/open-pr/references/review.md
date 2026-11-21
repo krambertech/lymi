@@ -4,7 +4,7 @@ Review the scoped change before publishing it. This code review complements the 
 
 Use one available reviewer in a separate subagent or supported review session, with the configured model unless the user names one. Keep it read-only: no edits, commits, pushes, PR comments or nested reviewers. If no independent reviewer is available, report the missing capability rather than relabeling self-review as independent.
 
-Give the reviewer the repository path, intended outcome, base SHA, exact diff and untracked paths, checks already run and known failures, and what `pnpm reliability` printed. Ask it to inspect surrounding code and callers for concrete regressions, missing requirements and unnecessary scope, and to answer each printed checklist item from the code. Keep the reviewed snapshot unchanged while it runs.
+Give the reviewer the repository path, intended outcome, base SHA, exact diff and untracked paths, checks already run and known failures, and what `pnpm reliability` printed. Ask it to inspect surrounding code and callers for concrete regressions, missing requirements and unnecessary scope, to hold every test the diff adds or changes to [What a test must depend on](../../../../docs/testing.md#what-a-test-must-depend-on), and to answer each printed checklist item from the code. Keep the reviewed snapshot unchanged while it runs.
 
 Use at most three rounds by default. The first reviews the full scoped diff; later rounds inspect only changed code and unresolved findings. Extend the budget only at the user's request. Another review is needed after a behavior fix or meaningful conflict resolution, but wording, formatting and declined nits alone do not need a fresh round.
 

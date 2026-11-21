@@ -1,6 +1,14 @@
 # Testing
 
-Lymi uses a small set of Playwright journeys to prove that the browser, Worker, authentication, D1 persistence, deck and card creation, and FSRS review path work together. The suite runs entirely against local Cloudflare bindings. It never uses production data or AI credentials.
+A test in Lymi guards one behavior that a learner, a caller or a deploy depends on, and it fails only when that behavior regresses. The rest of this document applies that rule:
+
+- Each test depends on intended behavior and nothing else, and no two tests guard the same behavior: [What a test must depend on](#what-a-test-must-depend-on).
+- Each test runs at the cheapest layer that can observe its behavior. Unit, service, route and component tests carry most of the suite. A small set of Playwright journeys proves that the browser, Worker, authentication, D1 and the review path work together: [Where a test goes](#where-a-test-goes).
+- Some rules get their own kind of check: [property tests](#rules-a-pure-function-must-keep) for a rule over every input, [the schedule snapshot](#which-schedules-a-scheduler-change-moves) for a scheduler change, [pattern checks](#bugs-a-pattern-can-catch) for a bug a search can find, [the reliability checklist](#check-what-broke-before) for a bug class no check can find, and [lesson checks](#estonian-lesson-checks) for the Estonian course.
+- The closer a change is to shipping, the more of the suite runs: [What runs when](#what-runs-when).
+- Tests do not replace seeing the change work. Feature verification drives the running app, and interface review judges the experience: [Review coverage](#review-coverage).
+
+Every test runs against local Cloudflare bindings. None uses production data or AI credentials.
 
 ## Review coverage
 
@@ -92,6 +100,26 @@ A change is production-affecting when `requiresE2E` in `scripts/e2e-impact.mjs` 
 `LYMI_COMPONENT_INSTANCES` names the component instances to run, comma-separated from `desktop`, `touch` and `touch-webkit`; unset runs all three, and an unknown name fails the run. Workers Builds runs no tests, so a merge to `main` deploys whether or not its CI run passes.
 
 The Mac app in `apps/desktop` is tested only where it differs from the web. The contract between it and the page is the types in `packages/client/src/desktop.ts`, so a mismatch fails `pnpm typecheck`. Its rules live in modules that import nothing from Electron (`origin.ts`, `settings.ts`, `callback.ts`, `hand-back.ts`, `term.ts`), whose unit tests run with `pnpm test`. The pages only it shows have component tests with a stand-in for the app (`routes/desktop.add.browser.test.tsx`, `components/this-mac-section.browser.test.tsx`), and the server's side of its sign-in is `server/desktop-sign-in.test.ts`. The Desktop workflow packages the app when a pull request changes `apps/desktop` and launches it on a Mac runner; `apps/desktop/scripts/launch-check.js` passes once a product page has the bridge.
+
+## What a test must depend on
+
+A test depends on intended behavior: what a learner sees, what a caller gets back, and what is stored or sent. It changes only when that behavior changes, and it fails only when that behavior regresses. Before you add or keep a test, name the change to the code that would make it fail. If no change would, or if a change that keeps the behavior would, the test does not belong.
+
+Do not write a test that depends on any of these:
+
+- **The past.** The test asserts that removed code stays gone: a deleted route answers 404, a removed field is absent, or a moved module is missing from its old path. Bringing the code back would be a decision, not a regression. A contract that live clients still use is behavior and keeps its test: a supported phone release ([ADR 0032](adr/0032-the-phone-ships-over-the-air-and-the-api-keeps-every-supported-release-working.md)), a public link, or a redirect.
+- **Nothing.** No change to Lymi's code can make the test fail. It tests the browser, React, Zod, Base UI or ts-fsrs rather than what Lymi adds on top of them. Or it mocks the unit under test and asserts what the mock returns, or it asserts what TypeScript already guarantees.
+- **The implementation.** The test changes when the code changes, even when the behavior did not. Its expected value comes from the same function as the code, so a wrong result still passes. Or it reads private state, internal call order, which helper ran, a Tailwind class, a log message or a SQL fragment.
+
+Write expected values as literals: `expect(applyDiscount(100, 0.2)).toBe(80)`, not `price - price * 0.2`. Find elements by role and accessible name, not by class. Assert what reaches the caller or the server, not what sits in a module's cache.
+
+One behavior has one test. Before you add a case, search for a test that already covers it: a property, conformance or simulation test, a test at another layer, or the shared package's own test when the module only re-exports it. Extend that test instead of copying it. A reducer test and a component test of the same flow are not copies, because the reducer test owns the rule and the component test owns the wiring that [CODING_STANDARDS.md](../CODING_STANDARDS.md#give-a-flow-one-state) asks for.
+
+Production code exists for production. Do not export a function, add a flag or widen a type only so that a test can reach it. Test through the public API, and inject a dependency where the test must replace one. The one exception is a reset that stands in for a restart, such as `resetWriteCache` or `resetUpdateRequired`, when a test proves what survives that restart. Its doc comment says which restart it stands for.
+
+A test that pins exact wording, such as a hash of a prompt, belongs only where something reads that wording's version. `enrichment/prompt.test.ts` is the model: it fails until `ENRICHMENT_PROMPT_VERSION` goes up, and the recorded eval runs in `enrichment/recorded-run.ts` record that version.
+
+When a change removes code, delete the tests that only guarded it. When a change moves code, move its tests with it.
 
 ## Where a test goes
 
@@ -393,4 +421,4 @@ Keep this path real: find controls by accessible roles and labels, call Lymi's o
 
 `e2e/public-deck-page.spec.ts` owns a published deck's public page, read from the site's fixture decks: the page carries its cache headers, its content ETag and a 304, title, canonical and alternate links, JSON-LD, sitemap entry and every card in its HTML, and none of the fixture's private fields; a visitor sees the publisher, reads the sections in order, opens every card in the view that `#cards` also opens and Back closes, turns each card of the hand once to the lantern's ending, and without JavaScript still gets the deck, its sections and a dealt hand; the Ukrainian page carries its own chrome, an unknown deck or locale is 404, and a withdrawn or archived deck is 410 and absent from the sitemap. The site and product keep separate local D1 state, because two local runtimes sharing one crash on `SQLITE_BUSY` ([workers-sdk#14916](https://github.com/cloudflare/workers-sdk/issues/14916)); publishing through the product is covered by `published-deck-add.spec.ts` and the service tests.
 
-`e2e/origin-boundary.spec.ts` proves that the site has no install contract while the product keeps its PWA, that the site exposes only its own indexing and keeps product APIs off its origin; the product origin's own boundary is `app.test.ts`. `e2e/pwa-boundary.spec.ts` runs against the production product package in Chromium and proves that the manifest, installed service worker and offline sign-in shell remain product-owned.
+`e2e/origin-boundary.spec.ts` proves that the site has no install contract while the product keeps its PWA, and that the site exposes only its own indexing and keeps product APIs off its origin; the product origin's own boundary is `app.test.ts`. `e2e/pwa-boundary.spec.ts` runs against the production product package in Chromium and proves that the manifest, installed service worker and offline sign-in shell remain product-owned.

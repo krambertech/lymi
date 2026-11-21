@@ -70,7 +70,8 @@ function ConjunctionTable() {
     ),
     "kui-than": (
       <Trans>
-        <Et>Kui</Et> as “than”, after a word like <Et>suurem</Et>, bigger. No comma here.
+        <Et>Kui</Et> as “than”, after a word like <Et>suurem</Et>, bigger. No comma when it just
+        compares two things.
       </Trans>
     ),
     aga: (
@@ -146,7 +147,7 @@ function content(t: (descriptor: MessageDescriptor) => string) {
       ask: t(msg`Why is Kati learning Estonian?`),
       options: [
         { id: "work", label: t(msg`For a new job at a big company`) },
-        { id: "moved", label: t(msg`Her family moved to Tartu`) },
+        { id: "moved", label: t(msg`She moved to Tartu last year`) },
         { id: "friend", label: t(msg`Her best friend is from Estonia`) },
       ],
       answer: "moved",
@@ -216,7 +217,8 @@ export function EtSestKuiLesson() {
         </Trans>,
         <Trans key="3">
           A comma goes before <b lang="et">et</b>, <b lang="et">sest</b>, <b lang="et">aga</b> and
-          the <b lang="et">kui</b> of if or when, but not before the <b lang="et">kui</b> of than.
+          the <b lang="et">kui</b> of if or when, but not before a <b lang="et">kui</b> that only
+          compares: <b lang="et">suurem kui Tartu</b>.
         </Trans>,
         <Trans key="4">
           After a <b lang="et">kui</b> clause at the start, the verb usually comes next:{" "}
@@ -235,19 +237,22 @@ export function EtSestKuiLesson() {
                     Four short words do most of the work. <Et>Et</Et> is that, <Et>sest</Et> is
                     because and <Et>aga</Et> is but. <Et>Kui</Et> has three jobs: if, when, and
                     than. You don’t need to tell if from when: <Et>kui sajab</Et> is both “if it
-                    rains” and “when it rains”. For a real “if” about something unlikely, use the
-                    would form from lesson {would}: <Et>kui mul oleks raha</Et>.
+                    rains” and “when it rains”. For an imagined “if”, about something unlikely or
+                    untrue, use the would form from lesson {would}: <Et>kui mul oleks raha</Et>. For
+                    a yes or no “if”, meaning whether, use <Et>kas</Et>:{" "}
+                    <Et>ma ei tea, kas ta tuleb</Et>. The question “when?” is <Et>millal</Et>.
                   </Trans>
                 </p>
               </Prose>
               <ConjunctionTable />
               <Aside>
                 <Trans>
-                  In a plain sentence the verb likes to be second: <Et>Täna lähen ma tööle</Et>, not
-                  “today I go”. A whole <Et>kui</Et> clause at the start counts as the first part,
-                  so the verb comes straight after the comma: <Et>Kui sajab, jään ma koju</Et>. In
-                  speech you will also hear <Et>täna ma lähen</Et>, so this is a habit to pick up,
-                  not a strict rule.
+                  In a plain sentence the verb usually comes second: <Et>Täna lähen ma tööle</Et>. A
+                  whole <Et>kui</Et> clause at the start counts as the first part, so the verb comes
+                  straight after the comma: <Et>Kui sajab, jään ma koju</Et>. You will often hear{" "}
+                  <Et>siis</Et> there too: <Et>Kui sajab, siis jään ma koju</Et>. In speech you will
+                  also hear <Et>täna ma lähen</Et>, so this is a habit to pick up, not a strict
+                  rule.
                 </Trans>
               </Aside>
             </>

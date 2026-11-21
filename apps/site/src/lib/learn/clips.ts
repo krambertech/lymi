@@ -1756,6 +1756,134 @@ const PAST_CLIPS: Record<string, Clip> = {
   ...PAST_DIALOGUE,
 };
 
+export const MEELDIMA_PERSONS = [
+  { id: "ma", long: "mina", has: "mul", likes: "mulle" },
+  { id: "sa", long: "sina", has: "sul", likes: "sulle" },
+  { id: "ta", long: "tema", has: "tal", likes: "talle" },
+  { id: "me", long: "meie", has: "meil", likes: "meile" },
+  { id: "te", long: "teie", has: "teil", likes: "teile" },
+  { id: "nad", long: "nemad", has: "neil", likes: "neile" },
+] as const;
+
+export type MeeldimaPerson = (typeof MEELDIMA_PERSONS)[number];
+
+export const hasCat = (person: MeeldimaPerson) => `${capital(person.has)} on kass.`;
+export const likesCat = (person: MeeldimaPerson) => `${capital(person.likes)} meeldib kass.`;
+
+export const MEELDIMA_WHO: Readonly<Record<MeeldimaPerson["id"], string>> = {
+  ma: "Mulle meeldib Tartu.",
+  sa: "Sulle meeldib kohv.",
+  ta: "Talle meeldib Tallinn.",
+  me: "Meile meeldib eesti keel.",
+  te: "Teile meeldib Pärnu.",
+  nad: "Neile meeldib kool.",
+};
+
+export const MEELDIMA_MORE = [
+  { one: "Mulle meeldib kass.", more: "Mulle meeldivad kassid." },
+  { one: "Talle meeldib koer.", more: "Talle meeldivad koerad." },
+  { one: "Meile meeldib raamat.", more: "Meile meeldivad raamatud." },
+  { one: "Neile meeldib õun.", more: "Neile meeldivad õunad." },
+] as const;
+
+export const MEELDIMA_DOING = [
+  "Mulle meeldib lugeda.",
+  "Talle meeldib ujuda.",
+  "Neile meeldib rääkida.",
+  "Meile meeldib eesti keelt õppida.",
+] as const;
+
+export const MEELDIMA_WHICH = [
+  { w: "kohv", verb: "meeldib" },
+  { w: "Tallinn", verb: "meeldib" },
+  { w: "pood", verb: "meeldib" },
+  { w: "eesti keel", verb: "meeldib" },
+  { w: "lugeda", verb: "meeldib" },
+  { w: "ujuda", verb: "meeldib" },
+  { w: "koerad", verb: "meeldivad" },
+  { w: "raamatud", verb: "meeldivad" },
+  { w: "lapsed", verb: "meeldivad" },
+] as const;
+
+export const MEELDIMA_NO = [
+  { yes: "Mulle meeldib kohv.", no: "Mulle ei meeldi kohv." },
+  { yes: "Talle meeldivad koerad.", no: "Talle ei meeldi koerad." },
+  { yes: "Neile meeldib ujuda.", no: "Neile ei meeldi ujuda." },
+  { yes: "Meile meeldivad kassid.", no: "Meile ei meeldi kassid." },
+] as const;
+
+export const MEELDIMA_ASK = [
+  "Kas sulle meeldib Tallinn?",
+  "Jah, meeldib.",
+  "Kas sulle meeldivad kassid?",
+  "Ei meeldi.",
+  "Kellele meeldib kohv?",
+  "Mulle!",
+] as const;
+
+export const MEELDIMA_FEELINGS = [
+  "Mul on külm.",
+  "Mul on palav.",
+  "Mul on igav.",
+  "Mul on hea meel.",
+  "Mul on kahju.",
+] as const;
+
+export const MEELDIMA_PASSAGE = [
+  "Tere, Jaan!",
+  "Mul on täna igav.",
+  "Mulle ei meeldi kodus olla.",
+  "Kas sulle meeldib ujuda?",
+  "Või tule kohvikusse.",
+  "Kohvikus on kass.",
+  "Mulle meeldivad kassid.",
+  "Kirjuta mulle homme!",
+] as const;
+
+export const MEELDIMA_DIALOGUE = {
+  "d-liis-1": { text: "Tere! Kas sa tuled ujuma?", voice: "second" },
+  "d-sina-1": "Ei, mul on külm.",
+  "d-liis-2": { text: "Väga kahju! Kas sulle meeldib kohv?", voice: "second" },
+  "d-sina-2": "Jah, meeldib.",
+  "d-liis-3": { text: "Mulle ka. Tule kohvikusse!", voice: "second" },
+  "d-sina-3": "Jah, hea meelega!",
+  "d-liis-4": { text: "Kohvikus on ka kass.", voice: "second" },
+  "d-sina-4": "Mulle meeldivad kassid!",
+} as const satisfies Record<string, Clip>;
+
+export const MEELDIMA_WORDS = [
+  "meeldima",
+  "meeldib",
+  "meeldivad",
+  "ei meeldi",
+  "kellele",
+  ...MEELDIMA_PERSONS.map(({ likes }) => likes),
+  "hea meelega",
+  "maitseb",
+  "Tal on igav.",
+  "Kas sul on külm?",
+  "Ma olen väsinud.",
+  "Mulle maitseb kohv.",
+  "Kas sulle maitseb?",
+  "kassid",
+] as const;
+
+const MEELDIMA_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...MEELDIMA_PERSONS.flatMap((person) => [hasCat(person), likesCat(person)]),
+    ...Object.values(MEELDIMA_WHO),
+    ...MEELDIMA_MORE.flatMap(({ one, more }) => [one, more]),
+    ...MEELDIMA_DOING,
+    ...MEELDIMA_WHICH.map(({ w }) => w),
+    ...MEELDIMA_NO.flatMap(({ yes, no }) => [yes, no]),
+    ...MEELDIMA_ASK,
+    ...MEELDIMA_FEELINGS,
+    ...MEELDIMA_WORDS,
+  ]),
+  "p-message": { sentences: MEELDIMA_PASSAGE },
+  ...MEELDIMA_DIALOGUE,
+};
+
 /** How a verb's -da form ends: -da, -ta, -la, -na, or a short -a. */
 export type DaPattern = "da" | "ta" | "la" | "na" | "a";
 
@@ -1989,6 +2117,80 @@ export const INFINITIVE_WORDS = [
   "Ma tahan homme linna minna.",
   "Ma hakkan täna kodus õppima.",
 ] as const;
+
+export type Way = "ma" | "mas" | "mast";
+export const WAYS: readonly Way[] = ["ma", "mas", "mast"];
+
+export const WAY_LEADS: Record<Way, string> = { ma: "läheb", mas: "on", mast: "tuleb" };
+
+export const GOING_VERBS = [
+  { verb: "ujuma", stem: "uju" },
+  { verb: "jooksma", stem: "jooks" },
+  { verb: "sööma", stem: "söö" },
+  { verb: "kohvi jooma", stem: "kohvi joo" },
+] as const;
+
+export type GoingVerb = (typeof GOING_VERBS)[number];
+
+export const goingForm = (verb: GoingVerb, way: Way) => `${verb.stem}${way}`;
+
+export const goingSentence = (verb: GoingVerb, way: Way) =>
+  `Mari ${WAY_LEADS[way]} ${goingForm(verb, way)}.`;
+
+export const GOING_SCENE = [
+  { id: "majja", word: "sööma", sentence: "Kass läheb sööma." },
+  { id: "majas", word: "söömas", sentence: "Kass on söömas." },
+  { id: "majast", word: "söömast", sentence: "Kass tuleb söömast." },
+] as const;
+
+export const GOING_SORT = [
+  { w: "jooksma", bin: "kuhu" },
+  { w: "koju", bin: "kuhu" },
+  { w: "linna", bin: "kuhu" },
+  { w: "kohvi joomas", bin: "kus" },
+  { w: "kohvikus", bin: "kus" },
+  { w: "Tallinnas", bin: "kus" },
+  { w: "söömast", bin: "kust" },
+  { w: "koolist", bin: "kust" },
+  { w: "kodust", bin: "kust" },
+] as const;
+
+export const GOING_KEYS = [
+  { lead: "lähen", said: "Ma lähen ujuma.", form: "uju|ma" },
+  { lead: "olen", said: "Ma olen ujumas.", form: "uju|mas" },
+  { lead: "käin", said: "Ma käin iga päev ujumas.", form: "uju|mas" },
+  { lead: "tulen", said: "Ma tulen ujumast.", form: "uju|mast" },
+  { lead: "tule", said: "Tule sööma!", form: "söö|ma" },
+] as const;
+
+export const GOING_VOICE = [
+  "Tere, Jaan! Ma olen kodus.",
+  "Ema ei ole kodus, ta on ujumas.",
+  "Ta käib iga päev ujumas.",
+  "Isa tuleb kell viis jooksmast.",
+  "Ma lähen kell kuus sööma.",
+  "Tule ka sööma!",
+] as const;
+
+export const GOING_WORDS = [
+  "majja",
+  "majas",
+  "majast",
+  "poodi",
+  "poes",
+  "poest",
+  "Kus Mari on?",
+  "Kuhu sa lähed?",
+  "Kust sa tuled?",
+  "lähen",
+  "olen",
+  "käin",
+  "käima",
+  "tulen",
+  "tulema",
+  "iga päev",
+] as const;
+
 /**
  * The plural lesson's nouns: the first and second forms a dictionary gives, and the plural, the
  * second form with -d. `same` words only gain a vowel or nothing; `changed` ones keep lesson 13's
@@ -2681,6 +2883,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...INNER_SENTENCES,
     ...INNER_DIALOGUE,
   },
+  meeldima: MEELDIMA_CLIPS,
   "verbi-pohivormid": {
     ...words(VERB_FORMS.flatMap((verb) => [verb.ma, daForm(verb), verb.n, threeForms(verb)])),
     ...words(VERB_FORMS.filter((verb) => VORMID_COMMANDS.includes(verb.ma)).map((verb) => verb.ge)),
@@ -2695,6 +2898,15 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(INFINITIVE_ORDER),
     ...words(INFINITIVE_WORDS),
     "p-message": { sentences: INFINITIVE_MESSAGE },
+  },
+  "ujuma-ujumas-ujumast": {
+    ...words(GOING_VERBS.flatMap((verb) => WAYS.map((way) => goingForm(verb, way)))),
+    ...words(GOING_VERBS.flatMap((verb) => WAYS.map((way) => goingSentence(verb, way)))),
+    ...words(GOING_SCENE.map(({ sentence }) => sentence)),
+    ...words(GOING_SORT.map(({ w }) => w)),
+    ...words(GOING_KEYS.map(({ said }) => said)),
+    ...words(GOING_WORDS),
+    "p-voice": { sentences: GOING_VOICE, voice: "second" },
   },
   mitmus: MITMUS_CLIPS,
   osastav: OSASTAV_CLIPS,

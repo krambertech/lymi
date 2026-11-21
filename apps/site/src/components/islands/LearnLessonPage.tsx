@@ -7,6 +7,7 @@ import { KusimusedLesson } from "../learn/lessons/Kusimused";
 import { LaualLaualeLaualtLesson } from "../learn/lessons/LaualLaualeLaualt";
 import { LihtminevikLesson } from "../learn/lessons/Lihtminevik";
 import { MajasMajjaMajastLesson } from "../learn/lessons/MajasMajjaMajast";
+import { MeeldimaLesson } from "../learn/lessons/Meeldima";
 import { MinaSinaTemaLesson } from "../learn/lessons/MinaSinaTema";
 import { MitmusLesson } from "../learn/lessons/Mitmus";
 import { ModaalverbidLesson } from "../learn/lessons/Modaalverbid";
@@ -24,6 +25,7 @@ import { SobragaRahataLesson } from "../learn/lessons/SobragaRahata";
 
 import { TegevusnimedLesson } from "../learn/lessons/Tegevusnimed";
 import { TutvumineLesson } from "../learn/lessons/Tutvumine";
+import { UjumaUjumasUjumastLesson } from "../learn/lessons/UjumaUjumasUjumast";
 import { VerbiPohivormidLesson } from "../learn/lessons/VerbiPohivormid";
 import { Island } from "./Island";
 
@@ -50,8 +52,10 @@ export const LESSON_VIEWS = {
   pohivormid: PohivormidLesson,
   omastav: OmastavLesson,
   "majas-majja-majast": MajasMajjaMajastLesson,
+  meeldima: MeeldimaLesson,
   "verbi-pohivormid": VerbiPohivormidLesson,
   tegevusnimed: TegevusnimedLesson,
+  "ujuma-ujumas-ujumast": UjumaUjumasUjumastLesson,
   osastav: OsastavLesson,
   lihtminevik: LihtminevikLesson,
   mitmus: MitmusLesson,

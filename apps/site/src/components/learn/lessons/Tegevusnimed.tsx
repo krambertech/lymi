@@ -168,7 +168,7 @@ function WantOrMust() {
 
 /** The line under a verb key: the verb it comes from. */
 function LeadTip({ lead }: { lead: InfinitiveLead }) {
-  const liking = LESSONS.find((lesson) => lesson.et === "Mulle meeldib")?.n;
+  const liking = lessonBySlug("meeldima")?.n;
   const future = LESSONS.find((lesson) => lesson.et === "Hakkan õppima")?.n;
   const commands = lessonBySlug("kaskiv")?.n;
   const verb = lead.verb;

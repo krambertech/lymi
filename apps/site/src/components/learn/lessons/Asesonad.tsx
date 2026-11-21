@@ -81,24 +81,30 @@ const GLOSSARY: Glossary = {
   mult: { en: msg`from me`, note: msg`The short form of minult.` },
   minult: { en: msg`from me, for emphasis`, note: msg`The long form of mult.` },
   ootan: { en: msg`I’m waiting`, note: msg`From ootama, to wait.` },
-  "ma armastan sind.": { en: msg`I love you.`, show: "Ma armastan sind." },
+  "ma armastan sind": { en: msg`I love you.`, show: "Ma armastan sind" },
   mind: { en: msg`me`, note: msg`The partitive of mina.` },
-  sind: { en: msg`you`, note: msg`The partitive of sina.` },
+  sind: {
+    en: msg({ message: "you", context: "the partitive sind" }),
+    note: msg`The partitive of sina.`,
+  },
   teda: { en: msg`him or her`, note: msg`The partitive of tema.` },
   meid: { en: msg`us`, note: msg`The partitive of meie.` },
-  teid: { en: msg`you, to more than one; polite`, note: msg`The partitive of teie.` },
+  teid: {
+    en: msg({ message: "you, to more than one; polite", context: "the partitive teid" }),
+    note: msg`The partitive of teie.`,
+  },
   neid: { en: msg`them`, note: msg`The partitive of nemad.` },
   "keda?": { en: msg`whom?`, show: "Keda?", note: msg`The partitive of kes, who.` },
   "kellega?": { en: msg`with whom?`, show: "Kellega?" },
   "kellele?": { en: msg`to whom?`, show: "Kellele?" },
-  "ma räägin sinust.": { en: msg`I’m talking about you.`, show: "Ma räägin sinust." },
+  "ma räägin sinust": { en: msg`I’m talking about you.`, show: "Ma räägin sinust" },
 };
 const PERSON_NAMES: Record<PronounId, MessageDescriptor> = {
   mina: msg`I`,
   sina: msg`you`,
   tema: msg`he or she`,
   meie: msg`we`,
-  teie: msg`you, more than one`,
+  teie: msg`you, to more than one; polite`,
   nemad: msg`they`,
 };
 const WITH_MEANS: Record<PronounId, { ga: MessageDescriptor; ta: MessageDescriptor }> = {
@@ -106,7 +112,10 @@ const WITH_MEANS: Record<PronounId, { ga: MessageDescriptor; ta: MessageDescript
   sina: { ga: msg`with you`, ta: msg`without you` },
   tema: { ga: msg`with him or her`, ta: msg`without him or her` },
   meie: { ga: msg`with us`, ta: msg`without us` },
-  teie: { ga: msg`with you, more than one`, ta: msg`without you, more than one` },
+  teie: {
+    ga: msg`with you, to more than one; polite`,
+    ta: msg`without you, to more than one; polite`,
+  },
   nemad: { ga: msg`with them`, ta: msg`without them` },
 };
 const PARTITIVE_MEANS: Record<PronounId, MessageDescriptor> = {
@@ -114,7 +123,7 @@ const PARTITIVE_MEANS: Record<PronounId, MessageDescriptor> = {
   sina: msg`you, one person`,
   tema: msg`him or her`,
   meie: msg`us`,
-  teie: msg`you, more than one`,
+  teie: msg({ message: "you, to more than one; polite", context: "the partitive teid" }),
   nemad: msg`them`,
 };
 
@@ -214,7 +223,8 @@ function useGaps(): GapItem[] {
     ),
     mulle: (
       <Trans>
-        Call whom? To me: <span lang="et">mulle</span>.
+        <span lang="et">Helista</span>, call, takes the person with <span lang="et">-le</span>:{" "}
+        <span lang="et">mulle</span>, to me.
       </Trans>
     ),
   };
@@ -331,7 +341,7 @@ function CaseTable() {
       />
       <Paradigm
         key={id}
-        label={t`Every form of ${person.id}`}
+        label={t`Forms of ${person.id}`}
         columns={[t`Long`, t`Short`]}
         rows={rows}
         highlight={{ column: 1 }}
@@ -446,7 +456,7 @@ export function AsesonadLesson() {
         "keda?",
         "kellega?",
         "kellele?",
-        "ma räägin sinust.",
+        "ma räägin sinust",
       ]}
       recap={[
         <Trans key="1">
@@ -497,7 +507,11 @@ export function AsesonadLesson() {
               <Panel>
                 <Paradigm
                   label={t`Each pronoun’s genitive, with -ga and with -ta`}
-                  columns={[t`Whose`, t`With`, t`Without`]}
+                  columns={[
+                    t`Whose`,
+                    t({ message: "With", context: "with or without" }),
+                    t({ message: "Without", context: "with or without" }),
+                  ]}
                   rows={PRONOUN_CASES.map((person) => ({
                     id: person.id,
                     label: i18n._(PERSON_NAMES[person.id]),
@@ -568,9 +582,9 @@ export function AsesonadLesson() {
                 <p>
                   <Trans>
                     The long forms <Word w="minule" />, <Word w="minul" /> and <Word w="minult" />{" "}
-                    mean the same and put weight on the person. We and you have only the short form:{" "}
-                    <span lang="et">meile</span>, <span lang="et">teile</span>. Tap a line to hear
-                    it.
+                    mean the same and put weight on the person. For we and you, say{" "}
+                    <span lang="et">meile</span> and <span lang="et">teile</span>. Tap a line to
+                    hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -634,8 +648,9 @@ export function AsesonadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    After a verb such as <Word w="ootan" />, the person takes the partitive from
-                    lesson {partitive}: <Word w="Ma armastan sind." /> is I love you. A pronoun’s
+                    After a verb such as <Word w="ootan" />, I’m waiting, or{" "}
+                    <span lang="et">armastan</span>, I love, the person takes the partitive from
+                    lesson {partitive}: <Word w="Ma armastan sind" /> is I love you. A pronoun’s
                     partitive doesn’t grow from the genitive, so learn the six as they are.
                   </Trans>
                 </p>
@@ -659,22 +674,22 @@ export function AsesonadLesson() {
         },
         {
           id: "every-case",
-          title: t`Every form of a pronoun`,
+          title: t`The forms of a pronoun`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Here is one pronoun in every case from this course, each beside the form of{" "}
+                    Here is one pronoun in the cases of this lesson, each beside the form of{" "}
                     <span lang="et">kes</span>, who, that asks for it: <Word w="kellega?" />, with
                     whom; <Word w="kellele?" />, to whom.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    <span lang="et">-st</span>, out of from lesson {into}, also says what you talk
-                    about: <Word w="Ma räägin sinust." /> is I’m talking about you. Pick a pronoun,
-                    then tap a form to hear it.
+                    The ending <span lang="et">-st</span>, out of, from lesson {into}, also says
+                    what you talk about: <Word w="Ma räägin sinust" /> is I’m talking about you.
+                    Pick a pronoun, then tap a form to hear it.
                   </Trans>
                 </p>
               </Prose>

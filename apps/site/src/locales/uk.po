@@ -21,7 +21,7 @@ msgid "-d now, -sid in the past."
 msgstr "-d зараз, -sid у минулому."
 
 msgid "-ga on nende, the genitive of nemad."
-msgstr "-ga на nende, родовому від nemad."
+msgstr "nende, родовий від nemad, плюс -ga."
 
 msgid "-⁠l form"
 msgstr "Форма на -⁠l"
@@ -596,7 +596,7 @@ msgstr "<0/>, «вчитися», вимагає форми на <1>-ma</1>, к�
 
 #. placeholder {0}: person.genitive
 msgid "<0>-{ending}</0> on the genitive <1>{0}</1>."
-msgstr "<0>-{ending}</0> на родовому <1>{0}</1>."
+msgstr "<0>-{ending}</0> додається до родового <1>{0}</1>."
 
 msgid "<0>-{ending}</0> on the genitive <1>{genitive}</1>."
 msgstr "<0>-{ending}</0> додається до родового відмінка <1>{genitive}</1>."
@@ -660,9 +660,6 @@ msgstr "<0>-ni</0> каже, де межа, — у місці чи в часі: 
 
 msgid "<0>-s</0> and <1>-l</1> go on the noun’s stem: <2>pood</2>, stem <3>poe</3>, <4>poes</4>."
 msgstr "<0>-s</0> і <1>-l</1> додаємо до основи іменника: <2>pood</2>, основа <3>poe</3>, <4>poes</4>."
-
-msgid "<0>-st</0>, out of from lesson {into}, also says what you talk about: <1/> is I’m talking about you. Pick a pronoun, then tap a form to hear it."
-msgstr "<0>-st</0>, «з» з уроку {into}, ще й каже, про кого мова: <1/> — я говорю про тебе. Вибери займенник і торкнися форми, щоб її почути."
 
 msgid "<0>-st</0>, out of, also says what you talk about."
 msgstr "<0>-st</0>, «з», ще й каже, про кого мова."
@@ -787,6 +784,9 @@ msgstr "<0>Ei</0> і дієслово без закінчення."
 
 msgid "<0>Ema ja isa</0> are two people, like <1>nad</1>, so the verb ends in <2>-vad</2>."
 msgstr "<0>Ema ja isa</0> — це двоє людей, як <1>nad</1>, тому дієслово закінчується на <2>-vad</2>."
+
+msgid "<0>Helista</0>, call, takes the person with <1>-le</1>: <2>mulle</2>, to me."
+msgstr "<0>Helista</0>, подзвони, вимагає <1>-le</1>: <2>mulle</2>, мені."
 
 msgid "<0>in</0> goes on <1>ol-</1>."
 msgstr "<0>in</0> додається до <1>ol-</1>."
@@ -2397,8 +2397,8 @@ msgstr "Після числа від двох — партитив."
 msgid "After a number from two up, the third form: <0>seitse eurot</0>."
 msgstr "Після числа від двох — третя форма: <0>seitse eurot</0>."
 
-msgid "After a verb such as <0/>, the person takes the partitive from lesson {partitive}: <1/> is I love you. A pronoun’s partitive doesn’t grow from the genitive, so learn the six as they are."
-msgstr "Після дієслова на кшталт <0/> людина стоїть у партитиві з уроку {partitive}: <1/> — я тебе кохаю. Партитив займенника не утворюється від родового відмінка, тож шість форм варто запам’ятати як є."
+msgid "After a verb such as <0/>, I’m waiting, or <1>armastan</1>, I love, the person takes the partitive from lesson {partitive}: <2/> is I love you. A pronoun’s partitive doesn’t grow from the genitive, so learn the six as they are."
+msgstr "Після дієслова на кшталт <0/>, я чекаю, чи <1>armastan</1>, я кохаю, займенник стоїть у партитиві з уроку {partitive}: <2/> — я тебе кохаю. Партитив займенника не утворюється від родового відмінка, тож шість форм варто запам’ятати як є."
 
 msgid "After an amount"
 msgstr "Після слів кількості"
@@ -3656,9 +3656,6 @@ msgstr "California Driver’s Handbook © California DMV, ліцензія CC BY
 msgid "Call me."
 msgstr "Подзвони мені."
 
-msgid "Call whom? To me: <0>mulle</0>."
-msgstr "Подзвонити кому? Мені: <0>mulle</0>."
-
 msgid "Calvin cycle"
 msgstr "Цикл Кальвіна"
 
@@ -4194,7 +4191,7 @@ msgid "Coming from a deck like Kaishi 1.5k? Word recordings and pitch accent sta
 msgstr "Переходиш із колоди на кшталт Kaishi 1.5k? Записи слів і тональний наголос лишаються на картках, а переклади речень переходять разом із ними."
 
 msgid "Coming with someone: <0>-ga</0> on <1>minu</1>."
-msgstr "Іти з кимось: <0>-ga</0> на <1>minu</1>."
+msgstr "Іти з кимось: <1>minu</1> плюс <0>-ga</0>."
 
 msgid "Commands"
 msgstr "Наказовий спосіб"
@@ -4831,7 +4828,7 @@ msgid "Each deck opens on its own page with every card on it, so you can see wha
 msgstr "Кожна колода має власну сторінку з усіма картками, тож ти бачиш, що вчитимеш, ще до того, як її додаси."
 
 msgid "Each form answers the same form of <0>kes</0>: <1>kellega?</1>, <2>kellele?</2>, <3>keda?</3>"
-msgstr "Кожна форма відповідає на ту саму форму <0>kes</0>: <1>kellega?</1>, <2>kellele?</2>, <3>keda?</3>"
+msgstr "Кожна форма відповідає на питання тією самою формою <0>kes</0>: <1>kellega?</1>, <2>kellele?</2>, <3>keda?</3>"
 
 msgid "Each gap becomes a card of its own, with the hidden word as the term and the sentence as its example. Image occlusion notes stay in Anki."
 msgstr "Кожен пропуск стає окремою карткою: приховане слово — терміном, а речення — прикладом. Нотатки з прихованими ділянками зображень лишаються в Anki."
@@ -5244,15 +5241,8 @@ msgstr "Кожен приклад має переклад і зберігає н
 msgid "Every example comes with a translation, and a native voice reads the whole sentence."
 msgstr "Кожен приклад має переклад, а носійський голос читає все речення."
 
-#. placeholder {0}: person.id
-msgid "Every form of {0}"
-msgstr "Усі форми {0}"
-
 msgid "Every form of <0>olema</0> becomes <1>ei ole</1>."
 msgstr "Кожна форма <0>olema</0> стає <1>ei ole</1>."
-
-msgid "Every form of a pronoun"
-msgstr "Усі форми займенника"
 
 msgid "Every language"
 msgstr "Усі мови"
@@ -5732,7 +5722,7 @@ msgid "For with, without, until and as in a role, Estonian adds an ending: <0>-g
 msgstr "Там, де українська каже «з (кимось чи чимось)», «без», «аж до» чи «як» (у ролі), естонська додає закінчення: <0>-ga</0>, <1>-ta</1>, <2>-ni</2> або <3>-na</3>. Кожне додається до родового відмінка: <4>sõbraga</4> — з другом, а <5>rahata</5> — без грошей."
 
 msgid "For you, the one it goes to: <0>sulle</0>."
-msgstr "Для тебе, тобі: <0>sulle</0>."
+msgstr "Книжка тобі, для тебе: <0>sulle</0>."
 
 msgid "Forgot"
 msgstr "Не пам’ятаю"
@@ -5758,6 +5748,10 @@ msgstr "Формат від 11 квітня 2026 року"
 
 msgid "Forms now and in the past"
 msgstr "Форми в теперішньому й минулому часі"
+
+#. placeholder {0}: person.id
+msgid "Forms of {0}"
+msgstr "Форми {0}"
 
 msgid "Forms of maja"
 msgstr "Форми maja"
@@ -6886,8 +6880,8 @@ msgstr "Ось десять дієслів з уроку {present}, кожне �
 msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
 msgstr "Тут кожне число звучить посеред речення: ціна, вік, номер телефону. Введи число, яке чуєш."
 
-msgid "Here is one pronoun in every case from this course, each beside the form of <0>kes</0>, who, that asks for it: <1/>, with whom; <2/>, to whom."
-msgstr "Ось один займенник у всіх відмінках цього курсу, кожна форма поруч із формою <0>kes</0>, хто, яка про неї питає: <1/> — з ким, <2/> — кому."
+msgid "Here is one pronoun in the cases of this lesson, each beside the form of <0>kes</0>, who, that asks for it: <1/>, with whom; <2/>, to whom."
+msgstr "Ось один займенник у відмінках цього уроку, кожна форма поруч із формою <0>kes</0>, хто, яка про неї питає: <1/> — з ким, <2/> — кому."
 
 msgid "Here the number changes shape: <0>viis</0> becomes <1>viie</1>, <2>kümme</2> becomes <3>kümne</3>, <4>kakskümmend</4> becomes <5>kahekümne</5>. Learn these three as set phrases for now. Lesson {genitive} explains the form."
 msgstr "Тут число змінює форму: <0>viis</0> стає <1>viie</1>, <2>kümme</2> — <3>kümne</3>, <4>kakskümmend</4> — <5>kahekümne</5>. Поки що запам’ятай ці три як готові фрази. Цю форму пояснює урок {genitive}."
@@ -14349,6 +14343,9 @@ msgstr "Закінчення <0>-l</0> означає «на», коли йде�
 msgid "The ending <0>-s</0> says in: <1>Eestis, Tallinnas, koolis</1>."
 msgstr "Закінчення <0>-s</0> означає «в»: <1>Eestis, Tallinnas, koolis</1>."
 
+msgid "The ending <0>-st</0>, out of, from lesson {into}, also says what you talk about: <1/> is I’m talking about you. Pick a pronoun, then tap a form to hear it."
+msgstr "Закінчення <0>-st</0> зі значенням «з» (урок {into}) ще й каже, про кого мова: <1/> — я говорю про тебе. Вибери займенник і торкнися форми, щоб її почути."
+
 msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
 msgstr "З <0>-teist</0> виходять числа від одинадцяти до дев’ятнадцяти, а з <1>-kümmend</1> — десятки."
 
@@ -14447,6 +14444,9 @@ msgstr "Форма після числа"
 
 msgid "The form says who"
 msgstr "Форма каже, хто"
+
+msgid "The forms of a pronoun"
+msgstr "Форми займенника"
 
 msgid "The forms of olema, to be: <0>olen, oled, on, oleme, olete, on</0>."
 msgstr "Форми olema, «бути»: <0>olen, oled, on, oleme, olete, on</0>."
@@ -14664,8 +14664,8 @@ msgstr "Повна форма sul."
 msgid "The long form of tal."
 msgstr "Повна форма tal."
 
-msgid "The long forms <0/>, <1/> and <2/> mean the same and put weight on the person. We and you have only the short form: <3>meile</3>, <4>teile</4>. Tap a line to hear it."
-msgstr "Повні форми <0/>, <1/> і <2/> означають те саме, але наголошують на людині. У «ми» і «ви» є лише коротка форма: <3>meile</3>, <4>teile</4>. Торкнися рядка, щоб його почути."
+msgid "The long forms <0/>, <1/> and <2/> mean the same and put weight on the person. For we and you, say <3>meile</3> and <4>teile</4>. Tap a line to hear it."
+msgstr "Повні форми <0/>, <1/> і <2/> означають те саме, але наголошують на людині. Для «ми» і «ви» кажи <3>meile</3> і <4>teile</4>. Торкнися рядка, щоб його почути."
 
 msgid "The long forms <0>minule, minul, minult</0> mean the same and put weight on the person."
 msgstr "Повні форми <0>minule, minul, minult</0> означають те саме, але наголошують на людині."
@@ -17609,9 +17609,6 @@ msgstr "AI не перейде на російську?"
 msgid "window"
 msgstr "вікно"
 
-msgid "With"
-msgstr "З ким"
-
 msgctxt "with or without"
 msgid "With"
 msgstr "З"
@@ -17707,7 +17704,7 @@ msgid "with us"
 msgstr "з нами"
 
 msgid "With us: <0>-ga</0> on <1>meie</1>."
-msgstr "З нами: <0>-ga</0> на <1>meie</1>."
+msgstr "З нами: <1>meie</1> плюс <0>-ga</0>."
 
 msgid "with whom"
 msgstr "з ким"
@@ -17718,8 +17715,8 @@ msgstr "з ким?"
 msgid "with you"
 msgstr "з тобою"
 
-msgid "with you, more than one"
-msgstr "з вами, з кількома"
+msgid "with you, to more than one; polite"
+msgstr "з вами"
 
 msgid "With, without, until and as in Estonian"
 msgstr "«З», «без», «аж до» і «як» естонською"
@@ -17773,8 +17770,8 @@ msgstr "без кого"
 msgid "without you"
 msgstr "без тебе"
 
-msgid "without you, more than one"
-msgstr "без вас, без кількох"
+msgid "without you, to more than one; polite"
+msgstr "без вас"
 
 msgid "woman"
 msgstr "жінка"
@@ -18144,6 +18141,10 @@ msgstr "Твій учорашній день: удома без компанії
 msgid "you"
 msgstr "ти"
 
+msgctxt "the partitive sind"
+msgid "you"
+msgstr "тебе"
+
 msgid "You"
 msgstr "Ти"
 
@@ -18356,6 +18357,10 @@ msgstr "Ти — той, хто говорить."
 
 msgid "you, to more than one; polite"
 msgstr "ви; ввічливе «Ви»"
+
+msgctxt "the partitive teid"
+msgid "you, to more than one; polite"
+msgstr "вас; ввічливе «Вас»"
 
 msgid "you, to more than one; polite you"
 msgstr "ви; ввічливе «Ви»"

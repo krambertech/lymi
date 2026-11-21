@@ -132,8 +132,8 @@ msgid "{0} of {1} today"
 msgstr "{0} of {1} today"
 
 #. placeholder {0}: means(row.no, i18n)
-msgid "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form after <1>pole</1>."
-msgstr "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form after <1>pole</1>."
+msgid "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form, even with <1>pole</1>."
+msgstr "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form, even with <1>pole</1>."
 
 #. placeholder {0}: g.name
 #. placeholder {1}: g.when
@@ -427,11 +427,11 @@ msgstr "<0/> becomes <1/>, and the verb takes its <2>-ge</2> or <3>-ke</3> form:
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 
-msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (<3>Mul on</3> is lesson {have}.)"
-msgstr "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (<3>Mul on</3> is lesson {have}.)"
+msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (Lesson {have} teaches <3>Mul on</3>.)"
+msgstr "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (Lesson {have} teaches <3>Mul on</3>.)"
 
-msgid "<0/> is a cup of coffee. The amount comes first, in its first form, and what it measures follows in its third: <1/> becomes <2/>."
-msgstr "<0/> is a cup of coffee. The amount comes first, in its first form, and what it measures follows in its third: <1/> becomes <2/>."
+msgid "<0/> is a cup of coffee. The amount comes first, and what it measures follows in its third form: <1/> becomes <2/>."
+msgstr "<0/> is a cup of coffee. The amount comes first, and what it measures follows in its third form: <1/> becomes <2/>."
 
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
@@ -481,8 +481,8 @@ msgstr "<0/> repeats the verb from the question, and any verb can answer this wa
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 
-msgid "<0/>, a lot, <1/>, a little, and <2/>, not much, work the same way. You asked <3>Kui palju kohvi sa jood?</3> in lesson {questions}: that’s this rule too."
-msgstr "<0/>, a lot, <1/>, a little, and <2/>, not much, work the same way. You asked <3>Kui palju kohvi sa jood?</3> in lesson {questions}: that’s this rule too."
+msgid "<0/>, a lot, <1/>, a little, and <2/>, not much, work the same way. The same rule is behind <3>Kui palju kohvi sa jood?</3> from lesson {questions}."
+msgstr "<0/>, a lot, <1/>, a little, and <2/>, not much, work the same way. The same rule is behind <3>Kui palju kohvi sa jood?</3> from lesson {questions}."
 
 msgid "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
 msgstr "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
@@ -1723,8 +1723,8 @@ msgstr "All Estonian decks"
 msgid "All exams"
 msgstr "All exams"
 
-msgid "All four. You told the two kinds of sentence apart."
-msgstr "All four. You told the two kinds of sentence apart."
+msgid "All four. You told a gap after <0>pole</0> from a gap at the start."
+msgstr "All four. You told a gap after <0>pole</0> from a gap at the start."
 
 msgid "All free decks"
 msgstr "All free decks"
@@ -1803,6 +1803,9 @@ msgstr "All Polish decks"
 
 msgid "All Russian decks"
 msgstr "All Russian decks"
+
+msgid "All seven, typed in full."
+msgstr "All seven, typed in full."
 
 msgid "All seven. You know the week by ear."
 msgstr "All seven. You know the week by ear."
@@ -3656,8 +3659,8 @@ msgstr "Each round shows a number. Pick the form of the noun that follows it, th
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 
-msgid "Each round shows a sentence with a gap. Pick the form that fills it: does the sentence say something isn’t there, or does it start with the thing?"
-msgstr "Each round shows a sentence with a gap. Pick the form that fills it: does the sentence say something isn’t there, or does it start with the thing?"
+msgid "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
+msgstr "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
@@ -5853,8 +5856,8 @@ msgstr "in a café"
 msgid "In a café"
 msgstr "In a café"
 
-msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. The third form in <1/> has another reason, which lesson {object} explains."
-msgstr "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. The third form in <1/> has another reason, which lesson {object} explains."
+msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. Lesson {object} explains why the third form appears here too: <1/>"
+msgstr "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. Lesson {object} explains why the third form appears here too: <1/>"
 
 msgid "in a hospital"
 msgstr "in a hospital"
@@ -7453,9 +7456,6 @@ msgstr "NCLEX pharmacology"
 msgid "Nearly. Compare the last row of the table once more."
 msgstr "Nearly. Compare the last row of the table once more."
 
-msgid "Nearly. Hear the sentences above for the ones you missed."
-msgstr "Nearly. Hear the sentences above for the ones you missed."
-
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Nearly. Listen for the verb in the question."
 
@@ -7464,6 +7464,9 @@ msgstr "Nearly. Listen to the first word of the ones you missed."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Nearly. Play the ones you missed once more."
+
+msgid "Nearly. Play the sentences above for the ones you missed."
+msgstr "Nearly. Play the sentences above for the ones you missed."
 
 msgid "Nearly. Tap the amounts above for the ones you missed."
 msgstr "Nearly. Tap the amounts above for the ones you missed."
@@ -7669,8 +7672,8 @@ msgstr "No. Only you add and edit cards. Learners review them, and each keeps th
 msgid "No. Quizlet exports a set’s terms and definitions as text, so your cards start as new. Your first answers in Lymi show what you already know, and those cards come back less often."
 msgstr "No. Quizlet exports a set’s terms and definitions as text, so your cards start as new. Your first answers in Lymi show what you already know, and those cards come back less often."
 
-msgid "Nobody eats or drinks it here: the sentence is about it, so the first form."
-msgstr "Nobody eats or drinks it here: the sentence is about it, so the first form."
+msgid "Nobody eats, drinks or wants it here: the sentence starts with it, so the first form."
+msgstr "Nobody eats, drinks or wants it here: the sentence starts with it, so the first form."
 
 msgid "Noji alternative: Lymi vs Noji, compared · Lymi"
 msgstr "Noji alternative: Lymi vs Noji, compared · Lymi"
@@ -9774,9 +9777,6 @@ msgstr "Sobre, over, plus mesa, table. It can outlast the meal."
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 
-msgid "Some of it, eaten, drunk or wanted, not counted: the third form."
-msgstr "Some of it, eaten, drunk or wanted, not counted: the third form."
-
 msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 msgstr "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 
@@ -9788,6 +9788,9 @@ msgstr "Some third forms change more than an ending: <0/> becomes <1/>, and <2/>
 
 msgid "Somebody, nobody: -gi and -ki"
 msgstr "Somebody, nobody: -gi and -ki"
+
+msgid "Someone eats, drinks or wants some of it, uncounted, so the third form."
+msgstr "Someone eats, drinks or wants some of it, uncounted, so the third form."
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Someone else, a man or a woman: one word for both."
@@ -10131,9 +10134,6 @@ msgstr "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line 
 msgid "Switch between Do and Don’t, and tap a line to hear it."
 msgstr "Switch between Do and Don’t, and tap a line to hear it."
 
-msgid "Switch the numbers above once more, then try again."
-msgstr "Switch the numbers above once more, then try again."
-
 msgid "Switch to In the place and watch the last letters change."
 msgstr "Switch to In the place and watch the last letters change."
 
@@ -10310,6 +10310,9 @@ msgstr "Tap the commands above once more, then try again."
 
 msgid "Tap the Do and Don’t lines above once more, then try again."
 msgstr "Tap the Do and Don’t lines above once more, then try again."
+
+msgid "Tap the forms in the table above once more, then try again."
+msgstr "Tap the forms in the table above once more, then try again."
 
 msgid "Tap the places above once more, then try again."
 msgstr "Tap the places above once more, then try again."
@@ -10610,6 +10613,9 @@ msgstr "The browser"
 
 msgid "The browser, and a Mac app"
 msgstr "The browser, and a Mac app"
+
+msgid "The car isn’t in Tallinn."
+msgstr "The car isn’t in Tallinn."
 
 msgid "The cards from this page will appear here."
 msgstr "The cards from this page will appear here."
@@ -11157,8 +11163,8 @@ msgstr "The third day of the week."
 msgid "The third day. You can hear <0/>, three, from lesson {numbers}."
 msgstr "The third day. You can hear <0/>, three, from lesson {numbers}."
 
-msgid "The third form is the last of the three a dictionary gives, as lesson {forms} shows: <0>kass, kassi, kassi</0>. You’ve heard it in prices since lesson {numbers}: <1/>. Pick a number and watch the nouns."
-msgstr "The third form is the last of the three a dictionary gives, as lesson {forms} shows: <0>kass, kassi, kassi</0>. You’ve heard it in prices since lesson {numbers}: <1/>. Pick a number and watch the nouns."
+msgid "The third form is the last of the three a dictionary gives, as lesson {forms} shows: <0>raamat, raamatu, raamatut</0>. You’ve heard it in prices since lesson {numbers}: <1/>. Tap a form to hear it with its number."
+msgstr "The third form is the last of the three a dictionary gives, as lesson {forms} shows: <0>raamat, raamatu, raamatut</0>. You’ve heard it in prices since lesson {numbers}: <1/>. Tap a form to hear it with its number."
 
 msgid "The third form of aeg."
 msgstr "The third form of aeg."
@@ -12074,8 +12080,8 @@ msgstr "Type the form"
 msgid "Type the form after the amount"
 msgstr "Type the form after the amount"
 
-msgid "Type the form each sentence needs. In two of them, nobody eats or drinks the thing."
-msgstr "Type the form each sentence needs. In two of them, nobody eats or drinks the thing."
+msgid "Type the form each sentence needs. Two of the sentences start with the food itself."
+msgstr "Type the form each sentence needs. Two of the sentences start with the food itself."
 
 msgid "Type the form the sentence needs"
 msgstr "Type the form the sentence needs"
@@ -12545,8 +12551,8 @@ msgstr "What you can see"
 msgid "What you compare"
 msgstr "What you compare"
 
-msgid "What you eat, drink or want, when you don’t count it, takes it too: <0>Ma joon kohvi</0>."
-msgstr "What you eat, drink or want, when you don’t count it, takes it too: <0>Ma joon kohvi</0>."
+msgid "What you eat, drink or want, when you don’t count it, takes the third form too: <0>Ma joon kohvi</0>."
+msgstr "What you eat, drink or want, when you don’t count it, takes the third form too: <0>Ma joon kohvi</0>."
 
 msgid "What you get with Lymi"
 msgstr "What you get with Lymi"
@@ -12623,8 +12629,8 @@ msgstr "When does it open on Saturday?"
 msgid "When does Mari have coffee tomorrow?"
 msgstr "When does Mari have coffee tomorrow?"
 
-msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for food and drink someone eats, drinks or wants."
-msgstr "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for food and drink someone eats, drinks or wants."
+msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for some of the food and drink someone eats, drinks or wants."
+msgstr "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for some of the food and drink someone eats, drinks or wants."
 
 msgid "When is the café open?"
 msgstr "When is the café open?"

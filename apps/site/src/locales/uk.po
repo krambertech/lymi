@@ -132,8 +132,8 @@ msgid "{0} of {1} today"
 msgstr "{0} з {1} сьогодні"
 
 #. placeholder {0}: means(row.no, i18n)
-msgid "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form after <1>pole</1>."
-msgstr "{0} Речення починається з кота, тому <0>kass</0> лишається в першій формі й після <1>pole</1>."
+msgid "{0} The sentence starts with the cat, so <0>kass</0> keeps its first form, even with <1>pole</1>."
+msgstr "{0} Речення починається з кота, тому <0>kass</0> лишається в першій формі, хоч у реченні й є <1>pole</1>."
 
 #. placeholder {0}: g.name
 #. placeholder {1}: g.when
@@ -416,7 +416,7 @@ msgid "<0/> asks about people and <1/> about things: <2/> Who is that? <3/> What
 msgstr "<0/> питає про людей, а <1/> — про речі: <2/> Хто це? <3/> Що це?"
 
 msgid "<0/> asks how many, and the noun after it takes its third form too. For a price, ask with <1>kui palju</1>, how much, from lesson {questions}."
-msgstr "<0/> означає «скільки», і іменник після нього теж стоїть у третій формі. Щоб спитати ціну, питай <1>kui palju</1>, «скільки», з уроку {questions}."
+msgstr "<0/> питає «скільки» про те, що можна порахувати, і іменник після нього теж стоїть у третій формі. Ціну питають через <1>kui palju</1> з уроку {questions}."
 
 msgid "<0/> at the start turns a sentence into a yes-or-no question. Lesson {questions} covers kas and the question words."
 msgstr "<0/> на початку робить із речення питання, на яке відповідають «так» чи «ні». Про kas і питальні слова розповідає урок {questions}."
@@ -427,11 +427,11 @@ msgstr "<0/> стає <1/>, а дієслово теж стоїть у форм�
 msgid "<0/> has no ending, and it serves both he or she and they. That makes <1/> irregular: other verbs add an ending there too, as lesson {regularVerbs} shows."
 msgstr "<0/> не має закінчення і підходить і для «він чи вона», і для «вони». Тому <1/> — неправильне дієслово: інші дієслова й тут мають закінчення, про це розповідає урок {regularVerbs}."
 
-msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (<3>Mul on</3> is lesson {have}.)"
-msgstr "<0/> У мене є кіт. Щоб сказати, що кота немає, візьми <1/> з уроку {negation}, а кіт перейде в третю форму: <2/> (<3>Mul on</3> — це урок {have}.)"
+msgid "<0/> I have a cat. To say you don’t, use <1/> from lesson {negation}, and the cat takes its third form: <2/> (Lesson {have} teaches <3>Mul on</3>.)"
+msgstr "<0/> У мене є кіт. Щоб сказати, що кота немає, візьми <1/> з уроку {negation}, а кіт перейде в третю форму: <2/> (Про <3>Mul on</3> розповідає урок {have}.)"
 
-msgid "<0/> is a cup of coffee. The amount comes first, in its first form, and what it measures follows in its third: <1/> becomes <2/>."
-msgstr "<0/> — чашка кави. Спершу йде слово кількості в першій формі, а за ним те, що міряють, у третій: <1/> стає <2/>. Українською так само: «чашка кави», а не «чашка кава»."
+msgid "<0/> is a cup of coffee. The amount comes first, and what it measures follows in its third form: <1/> becomes <2/>."
+msgstr "<0/> — чашка кави. Спершу йде слово кількості, а за ним те, що міряють, у третій формі: <1/> стає <2/>. Українською так само: «чашка кави», а не «чашка кава»."
 
 msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
 msgstr "<0/> — це сто, а <1/> — тисяча, і «один» перед ними не кажуть. Сотні пишуться разом, <2/>, а тисячі окремо: <3/>."
@@ -481,8 +481,8 @@ msgstr "<0/> повторює дієслово з питання, і так мо
 msgid "<0/> You live in Tallinn. <1/> Do you live in Tallinn? To ask a yes-or-no question, put <2/> in front of the sentence."
 msgstr "<0/> Ти живеш у Таллінні. <1/> Ти живеш у Таллінні? Щоб спитати «так чи ні», постав <2/> перед реченням."
 
-msgid "<0/>, a lot, <1/>, a little, and <2/>, not much, work the same way. You asked <3>Kui palju kohvi sa jood?</3> in lesson {questions}: that’s this rule too."
-msgstr "<0/> (багато), <1/> (трохи) і <2/> (мало) працюють так само. Питання <3>Kui palju kohvi sa jood?</3> з уроку {questions} теж побудоване за цим правилом."
+msgid "<0/>, a lot, <1/>, a little, and <2/>, not much, work the same way. The same rule is behind <3>Kui palju kohvi sa jood?</3> from lesson {questions}."
+msgstr "<0/> (багато), <1/> (трохи) і <2/> (мало) працюють так само. Те саме правило стоїть за <3>Kui palju kohvi sa jood?</3> з уроку {questions}."
 
 msgid "<0/>, please, makes a command polite. When Estonian comes too fast, say <1/>"
 msgstr "<0/>, «будь ласка», робить наказ ввічливим. Коли естонською говорять надто швидко, скажи: <1/>"
@@ -1723,8 +1723,8 @@ msgstr "Усі естонські колоди"
 msgid "All exams"
 msgstr "Усі іспити"
 
-msgid "All four. You told the two kinds of sentence apart."
-msgstr "Усі чотири: обидва види речень розрізнено."
+msgid "All four. You told a gap after <0>pole</0> from a gap at the start."
+msgstr "Усі чотири: ти розрізняєш пропуск після <0>pole</0> і пропуск на початку."
 
 msgid "All free decks"
 msgstr "Усі безкоштовні колоди"
@@ -1804,6 +1804,9 @@ msgstr "Усі польські колоди"
 msgid "All Russian decks"
 msgstr "Усі колоди з російської"
 
+msgid "All seven, typed in full."
+msgstr "Усі сім набрані повністю."
+
 msgid "All seven. You know the week by ear."
 msgstr "Усі сім. Ти знаєш тиждень на слух."
 
@@ -1811,7 +1814,7 @@ msgid "All shelves"
 msgstr "Усі полиці"
 
 msgid "All six, typed in full."
-msgstr "Усі шість, набрані повністю."
+msgstr "Усі шість набрані повністю."
 
 msgid "All six. Every ending was right."
 msgstr "Усі шість. Кожне закінчення правильне."
@@ -3014,7 +3017,7 @@ msgid "Coffee costs €3.50."
 msgstr "Кава коштує 3,50 €."
 
 msgid "Coffee, please."
-msgstr "Каву, будь ласка."
+msgstr "Кави, будь ласка."
 
 msgid "Colleagues say it in the corridor, in emails and at the end of the day."
 msgstr "Колеги кажуть це в коридорі, у листах і наприкінці дня."
@@ -3656,8 +3659,8 @@ msgstr "У кожному раунді — число. Обери форму і�
 msgid "Each round shows a place. Pick its ending, then hear it in a sentence. Most towns, buildings and countries take <0>-s</0>; work, the market and names ending in <1>-maa</1> take <2>-l</2>."
 msgstr "У кожному раунді — місце. Обери закінчення, а потім послухай речення. Більшість міст, будівель і країн мають <0>-s</0>; робота, ринок і назви на <1>-maa</1> мають <2>-l</2>."
 
-msgid "Each round shows a sentence with a gap. Pick the form that fills it: does the sentence say something isn’t there, or does it start with the thing?"
-msgstr "У кожному раунді — речення з пропуском. Обери форму для нього: речення каже, що чогось немає, чи починається з самої речі?"
+msgid "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
+msgstr "У кожному раунді — речення з пропуском. Обери форму, яка туди підходить. Пропуск стоїть після <0>pole</0> чи на початку речення?"
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Кожна держава відтоді сама правила своєю землею: так почався сучасний <0>суверенітет</0>."
@@ -5853,8 +5856,8 @@ msgstr "у кав’ярні"
 msgid "In a café"
 msgstr "У кав’ярні"
 
-msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. The third form in <1/> has another reason, which lesson {object} explains."
-msgstr "У кав’ярні почуєш і <0/> Це одна кава, її рахують, тому вона лишається в першій формі. <1/> Тут третя форма стоїть з іншої причини: про неї розповідає урок {object}."
+msgid "In a café you’ll also hear <0/> That’s one coffee, counted, so it keeps its first form. Lesson {object} explains why the third form appears here too: <1/>"
+msgstr "У кав’ярні почуєш і <0/> Це одна кава, її рахують, тому вона лишається в першій формі. Чому третя форма стоїть і тут, пояснює урок {object}: <1/>"
 
 msgid "in a hospital"
 msgstr "у лікарні"
@@ -6164,7 +6167,7 @@ msgid "It will all work out"
 msgstr "Усе владнається"
 
 msgid "It works the same for a place: <0/> Tap the sentences in each column."
-msgstr "Так само і з місцем: <0/> Торкайся речень у кожному стовпці. Українською схоже: «немає хліба», а не «немає хліб»."
+msgstr "Так само і з місцем: <0/> Українською схоже: «немає хліба», а не «немає хліб». Торкайся речень у кожному стовпці."
 
 msgid "It works the same for towns, buildings and most countries. Try it on three countries and three towns."
 msgstr "Так само з містами, будівлями й більшістю країн. Спробуй на трьох країнах і трьох містах."
@@ -7453,9 +7456,6 @@ msgstr "Фармакологія NCLEX"
 msgid "Nearly. Compare the last row of the table once more."
 msgstr "Майже. Ще раз порівняй останній рядок таблиці."
 
-msgid "Nearly. Hear the sentences above for the ones you missed."
-msgstr "Майже. Для помилок послухай речення вище."
-
 msgid "Nearly. Listen for the verb in the question."
 msgstr "Майже. Прислухайся до дієслова в питанні."
 
@@ -7465,8 +7465,11 @@ msgstr "Майже. Там, де була помилка, послухай пе�
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Майже. Переслухай ті, де були помилки."
 
+msgid "Nearly. Play the sentences above for the ones you missed."
+msgstr "Майже. Ще раз послухай речення вище, особливо ті, де була помилка."
+
 msgid "Nearly. Tap the amounts above for the ones you missed."
-msgstr "Майже. Для помилок торкнись слів кількості вище."
+msgstr "Майже. Торкнись вище слів кількості з раундів, де була помилка."
 
 msgid "Nearly. Tap the endings above once more."
 msgstr "Майже. Ще раз понатискай закінчення вище."
@@ -7669,8 +7672,8 @@ msgstr "Ні. Додавати й редагувати картки можеш �
 msgid "No. Quizlet exports a set’s terms and definitions as text, so your cards start as new. Your first answers in Lymi show what you already know, and those cards come back less often."
 msgstr "Ні. Quizlet експортує терміни й визначення набору як текст, тож картки почнуться як нові. Перші відповіді в Lymi покажуть, що ти вже знаєш, і такі картки повертатимуться рідше."
 
-msgid "Nobody eats or drinks it here: the sentence is about it, so the first form."
-msgstr "Тут це ніхто не їсть і не п’є: речення про саму річ, тому перша форма."
+msgid "Nobody eats, drinks or wants it here: the sentence starts with it, so the first form."
+msgstr "Тут цього ніхто не їсть, не п’є і не хоче: речення починається з самої речі, тому перша форма."
 
 msgid "Noji alternative: Lymi vs Noji, compared · Lymi"
 msgstr "Альтернатива Noji: порівняння Lymi та Noji · Lymi"
@@ -9515,7 +9518,7 @@ msgid "She came back from *town*."
 msgstr "Вона повернулася з *міста*."
 
 msgid "She drinks some coffee, not a counted cup: <0>joob kohvi</0>."
-msgstr "Тут кава — якась кількість, а не порахована чашка: <0>joob kohvi</0>."
+msgstr "Тут каву не рахують чашками: <0>joob kohvi</0>."
 
 msgid "She studies"
 msgstr "Вона вчиться"
@@ -9658,7 +9661,7 @@ msgid "Sina is you: this says “You are Jaan.”"
 msgstr "Sina — це ти: тут сказано «Ти Яан»."
 
 msgid "Since lesson {present} you’ve said <0/> You drink some coffee, not a counted cup, so <1>kohvi</1> is in its third form. Anything you eat, drink or want some of works the same way. Tap a sentence to hear it."
-msgstr "Ще з уроку {present} ти кажеш <0/> Ти п’єш трохи кави, а не пораховану чашку, тому <1>kohvi</1> стоїть у третій формі. Так само з усім, що їси, п’єш чи хочеш трохи. Українською схоже: «хочу молока», тобто трохи молока. Торкнись речення, щоб його почути."
+msgstr "Ще з уроку {present} ти кажеш <0/> Ти п’єш каву, не рахуючи чашок, тому <1>kohvi</1> стоїть у третій формі. Так само з усім, що їси, п’єш чи хочеш, не рахуючи. Українською схоже: «хочу молока». Торкнись речення, щоб його почути."
 
 msgid "sit down"
 msgstr "сідай"
@@ -9774,9 +9777,6 @@ msgstr "Sobre — «над», mesa — «стіл». Буває, що вона �
 msgid "Some kanji look different in a Chinese font. Lymi shows your cards in Japanese forms, the way kanji look in Japanese books."
 msgstr "Деякі кандзі в китайському шрифті виглядають інакше. Lymi показує твої картки в японському написанні, як у японських книжках."
 
-msgid "Some of it, eaten, drunk or wanted, not counted: the third form."
-msgstr "Трохи чогось, що їдять, п’ють чи хочуть, не рахуючи: третя форма."
-
 msgid "Some places take <0>-l</0> by habit, such as <1>turul</1> and names ending in <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 msgstr "Деякі місця мають <0>-l</0> за традицією, як-от <1>turul</1> і назви на <2>-maa</2>: <3>Saaremaal, Saksamaal</3>."
 
@@ -9788,6 +9788,9 @@ msgstr "Деякі треті форми змінюють більше, ніж �
 
 msgid "Somebody, nobody: -gi and -ki"
 msgstr "Хтось, ніхто: -gi і -ki"
+
+msgid "Someone eats, drinks or wants some of it, uncounted, so the third form."
+msgstr "Це їдять, п’ють чи хочуть, не рахуючи, тому третя форма."
 
 msgid "Someone else, a man or a woman: one word for both."
 msgstr "Хтось інший, чоловік чи жінка: одне слово для обох."
@@ -10131,9 +10134,6 @@ msgstr "Перемкни <0/> на <1/>, і всі шість речень ст�
 msgid "Switch between Do and Don’t, and tap a line to hear it."
 msgstr "Перемикай між «Роби» і «Не роби» й торкайся рядка, щоб його почути."
 
-msgid "Switch the numbers above once more, then try again."
-msgstr "Ще раз перемкни числа вище, а потім спробуй знову."
-
 msgid "Switch to In the place and watch the last letters change."
 msgstr "Перемкни на «Де?» і дивись, як змінюються кінці слів."
 
@@ -10288,7 +10288,7 @@ msgid "Tap a word, then its group, or drag it there."
 msgstr "Торкнися слова, потім його групи, або перетягни його туди."
 
 msgid "Tap an amount"
-msgstr "Торкнись слова"
+msgstr "Торкнись слова кількості"
 
 msgid "Tap an ending"
 msgstr "Натисни закінчення"
@@ -10310,6 +10310,9 @@ msgstr "Ще раз торкнися наказів вище, а потім сп
 
 msgid "Tap the Do and Don’t lines above once more, then try again."
 msgstr "Ще раз послухай рядки «Роби» і «Не роби» вище, а потім спробуй знову."
+
+msgid "Tap the forms in the table above once more, then try again."
+msgstr "Ще раз торкнись форм у таблиці вище, а потім спробуй знову."
 
 msgid "Tap the places above once more, then try again."
 msgstr "Ще раз торкнись місць вище, а потім спробуй знову."
@@ -10610,6 +10613,9 @@ msgstr "Браузер"
 
 msgid "The browser, and a Mac app"
 msgstr "Браузер і застосунок для Mac"
+
+msgid "The car isn’t in Tallinn."
+msgstr "Машини немає в Таллінні."
 
 msgid "The cards from this page will appear here."
 msgstr "Картки з цієї сторінки з’являться тут."
@@ -11157,8 +11163,8 @@ msgstr "Третій день тижня."
 msgid "The third day. You can hear <0/>, three, from lesson {numbers}."
 msgstr "Третій день. Чути <0/>, три, з уроку {numbers}."
 
-msgid "The third form is the last of the three a dictionary gives, as lesson {forms} shows: <0>kass, kassi, kassi</0>. You’ve heard it in prices since lesson {numbers}: <1/>. Pick a number and watch the nouns."
-msgstr "Третя форма — остання з трьох, які подає словник, як показує урок {forms}: <0>kass, kassi, kassi</0>. Ти чуєш її в цінах ще з уроку {numbers}: <1/>. Обери число й стеж за іменниками."
+msgid "The third form is the last of the three a dictionary gives, as lesson {forms} shows: <0>raamat, raamatu, raamatut</0>. You’ve heard it in prices since lesson {numbers}: <1/>. Tap a form to hear it with its number."
+msgstr "Третя форма — остання з трьох, які подає словник, як показує урок {forms}: <0>raamat, raamatu, raamatut</0>. Ти чуєш її в цінах ще з уроку {numbers}: <1/>. Торкнись форми, щоб почути її з числом."
 
 msgid "The third form of aeg."
 msgstr "Третя форма слова aeg."
@@ -12074,8 +12080,8 @@ msgstr "Введи форму"
 msgid "Type the form after the amount"
 msgstr "Набери форму після слова кількості"
 
-msgid "Type the form each sentence needs. In two of them, nobody eats or drinks the thing."
-msgstr "Набери форму, потрібну реченню. У двох реченнях цю річ ніхто не їсть і не п’є."
+msgid "Type the form each sentence needs. Two of the sentences start with the food itself."
+msgstr "Набери форму, якої потребує речення. Два речення починаються з самої їжі."
 
 msgid "Type the form the sentence needs"
 msgstr "Набери потрібну форму"
@@ -12141,7 +12147,7 @@ msgid "under"
 msgstr "під"
 
 msgid "Under each one is the word as a dictionary gives it."
-msgstr "Під кожною — слово в тому вигляді, як його подає словник."
+msgstr "Під кожним — слово в тому вигляді, як його подає словник."
 
 msgid "Unfinished tasks stay on your mind more than finished ones"
 msgstr "Незавершені справи тримаються в пам’яті краще за завершені"
@@ -12545,7 +12551,7 @@ msgstr "Що ти бачиш"
 msgid "What you compare"
 msgstr "Що порівнюємо"
 
-msgid "What you eat, drink or want, when you don’t count it, takes it too: <0>Ma joon kohvi</0>."
+msgid "What you eat, drink or want, when you don’t count it, takes the third form too: <0>Ma joon kohvi</0>."
 msgstr "Те, що їдять, п’ють чи хочуть, не рахуючи, теж стоїть у третій формі: <0>Ma joon kohvi</0>."
 
 msgid "What you get with Lymi"
@@ -12623,8 +12629,8 @@ msgstr "О котрій кав’ярня відчиняється в субот
 msgid "When does Mari have coffee tomorrow?"
 msgstr "Коли Марі завтра п’є каву?"
 
-msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for food and drink someone eats, drinks or wants."
-msgstr "Коли в естонській іменник стоїть у третій формі, партитиві: після числа від двох, після слова кількості, після <0>pole</0> і для їжі й напоїв, які їдять, п’ють чи хочуть."
+msgid "When Estonian uses a noun’s third form, the partitive: after a number from two up, after an amount, after <0>pole</0>, and for some of the food and drink someone eats, drinks or wants."
+msgstr "Коли в естонській іменник стоїть у третій формі, партитиві: після числа від двох, після слова кількості, після <0>pole</0> і для їжі й напоїв, які їдять, п’ють чи хочуть, не рахуючи."
 
 msgid "When is the café open?"
 msgstr "Коли кав’ярня відчинена?"
@@ -13270,7 +13276,7 @@ msgid "You build your own card layouts"
 msgstr "Тобі потрібні власні макети карток"
 
 msgid "You can also say <0/> It means the same: <1>pole</1> is the short form of <2>ei ole</2>. A sentence that starts with the thing keeps its first form: <3/>"
-msgstr "Можна сказати й <0/> Це те саме: <1>pole</1> — коротка форма від <2>ei ole</2>. Якщо речення починається з самої речі, вона лишається в першій формі: <3/>"
+msgstr "Можна сказати й <0/> Це те саме: <1>pole</1> — коротка форма від <2>ei ole</2>. Якщо речення починається з самої речі, вона лишається в першій формі, хоч українською й кажемо «кота немає на столі»: <3/>"
 
 msgid "You can delete your account in You › Delete account on the phone or Settings › Delete account on the web, after confirming your identity. Deletion cannot be undone. Your account and private learning records are erased, and file cleanup and requests to erase account-linked analytics run separately. Provider logs, backups and support correspondence can remain under their applicable retention periods; deletion is not an instant purge of every copy."
 msgstr "Видалити обліковий запис можна в розділі Ти › Видалити обліковий запис на телефоні або Налаштування › Видалити обліковий запис у вебзастосунку після підтвердження особи. Скасувати видалення неможливо. Обліковий запис і приватні навчальні записи стираються, а очищення файлів та запити на стирання пов’язаної аналітики виконуються окремо. Журнали постачальників, резервні копії й листування з підтримкою можуть зберігатися протягом відповідних строків; видалення не означає миттєвого стирання кожної копії."

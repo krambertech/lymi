@@ -115,6 +115,7 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Ma loen raamatut.": msg`I’m reading a book.`,
   "Kass on laual.": msg`The cat is on the table.`,
   "Leib pole laual.": msg`The bread isn’t on the table.`,
+  "Auto pole Tallinnas.": msg`The car isn’t in Tallinn.`,
   "Laud pole toas.": msg`The table isn’t in the room.`,
   "Piim maksab kaks eurot.": msg`The milk costs two euros.`,
   "Leib on laual.": msg`The bread is on the table.`,
@@ -247,7 +248,7 @@ function NoTable() {
           "first" in row ? (
             <Trans>
               {means(row.no, i18n)} The sentence starts with the cat, so <b lang="et">kass</b> keeps
-              its first form after <b lang="et">pole</b>.
+              its first form, even with <b lang="et">pole</b>.
             </Trans>
           ) : (
             means(row.no, i18n)
@@ -572,10 +573,10 @@ export function OsastavLesson() {
         explain:
           "first" in row ? (
             <Trans>
-              Nobody eats or drinks it here: the sentence is about it, so the first form.
+              Nobody eats, drinks or wants it here: the sentence starts with it, so the first form.
             </Trans>
           ) : (
-            <Trans>Some of it, eaten, drunk or wanted, not counted: the third form.</Trans>
+            <Trans>Someone eats, drinks or wants some of it, uncounted, so the third form.</Trans>
           ),
       })),
     [i18n],
@@ -605,8 +606,8 @@ export function OsastavLesson() {
       sub={
         <Trans>
           When Estonian uses a noun’s third form, the partitive: after a number from two up, after
-          an amount, after <b lang="et">pole</b>, and for food and drink someone eats, drinks or
-          wants.
+          an amount, after <b lang="et">pole</b>, and for some of the food and drink someone eats,
+          drinks or wants.
         </Trans>
       }
       facts={[
@@ -651,7 +652,7 @@ export function OsastavLesson() {
           starts with the thing, it keeps its first: <b lang="et">Kass pole laual</b>.
         </Trans>,
         <Trans key="5">
-          What you eat, drink or want, when you don’t count it, takes it too:{" "}
+          What you eat, drink or want, when you don’t count it, takes the third form too:{" "}
           <b lang="et">Ma joon kohvi</b>.
         </Trans>,
       ]}
@@ -672,8 +673,9 @@ export function OsastavLesson() {
                 <p>
                   <Trans>
                     The third form is the last of the three a dictionary gives, as lesson {forms}{" "}
-                    shows: <b lang="et">kass, kassi, kassi</b>. You’ve heard it in prices since
-                    lesson {numbers}: <Word w="viis eurot" />. Pick a number and watch the nouns.
+                    shows: <b lang="et">raamat, raamatu, raamatut</b>. You’ve heard it in prices
+                    since lesson {numbers}: <Word w="viis eurot" />. Tap a form to hear it with its
+                    number.
                   </Trans>
                 </p>
               </Prose>
@@ -739,7 +741,7 @@ export function OsastavLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Play the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>Switch the numbers above once more, then try again.</Trans>
+                    <Trans>Tap the forms in the table above once more, then try again.</Trans>
                   )
                 }
                 recall={(item) => ({ label: item.text, src: item.src })}
@@ -758,16 +760,16 @@ export function OsastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Tass kohvi" /> is a cup of coffee. The amount comes first, in its first
-                    form, and what it measures follows in its third: <Word w="kohv" /> becomes{" "}
-                    <Word w="kohvi" />.
+                    <Word w="Tass kohvi" /> is a cup of coffee. The amount comes first, and what it
+                    measures follows in its third form: <Word w="kohv" /> becomes <Word w="kohvi" />
+                    .
                   </Trans>
                 </p>
                 <p>
                   <Trans>
                     <Word w="Palju" />, a lot, <Word w="natuke" />, a little, and <Word w="vähe" />,
-                    not much, work the same way. You asked <b lang="et">Kui palju kohvi sa jood?</b>{" "}
-                    in lesson {questions}: that’s this rule too.
+                    not much, work the same way. The same rule is behind{" "}
+                    <b lang="et">Kui palju kohvi sa jood?</b> from lesson {questions}.
                   </Trans>
                 </p>
               </Prose>
@@ -822,7 +824,7 @@ export function OsastavLesson() {
                   <Trans>
                     <Word w="Mul on kass." /> I have a cat. To say you don’t, use <Word w="pole" />{" "}
                     from lesson {negation}, and the cat takes its third form:{" "}
-                    <Word w="Mul pole kassi." /> (<b lang="et">Mul on</b> is lesson {have}.)
+                    <Word w="Mul pole kassi." /> (Lesson {have} teaches <b lang="et">Mul on</b>.)
                   </Trans>
                 </p>
                 <p>
@@ -843,8 +845,8 @@ export function OsastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round shows a sentence with a gap. Pick the form that fills it: does the
-                    sentence say something isn’t there, or does it start with the thing?
+                    Each round shows a sentence with a gap. Pick the form that fills it. Is the gap
+                    after <b lang="et">pole</b>, or at the start of the sentence?
                   </Trans>
                 </p>
               </Prose>
@@ -855,7 +857,9 @@ export function OsastavLesson() {
                 rounds={4}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All four. You told the two kinds of sentence apart.</Trans>
+                    <Trans>
+                      All four. You told a gap after <b lang="et">pole</b> from a gap at the start.
+                    </Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Compare the last row of the table once more.</Trans>
                   ) : (
@@ -889,15 +893,15 @@ export function OsastavLesson() {
               <Aside>
                 <Trans>
                   In a café you’ll also hear <Word w="Üks kohv, palun." /> That’s one coffee,
-                  counted, so it keeps its first form. The third form in{" "}
-                  <Word w="Ma loen raamatut." /> has another reason, which lesson {object} explains.
+                  counted, so it keeps its first form. Lesson {object} explains why the third form
+                  appears here too: <Word w="Ma loen raamatut." />
                 </Trans>
               </Aside>
               <Prose>
                 <p>
                   <Trans>
-                    Type the form each sentence needs. In two of them, nobody eats or drinks the
-                    thing.
+                    Type the form each sentence needs. Two of the sentences start with the food
+                    itself.
                   </Trans>
                 </p>
               </Prose>
@@ -905,12 +909,12 @@ export function OsastavLesson() {
                 id="food-form"
                 title={<Trans>Type the form the sentence needs</Trans>}
                 items={foodItems}
-                rounds={6}
+                rounds={7}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six, typed in full.</Trans>
+                    <Trans>All seven, typed in full.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Nearly. Hear the sentences above for the ones you missed.</Trans>
+                    <Trans>Nearly. Play the sentences above for the ones you missed.</Trans>
                   ) : (
                     <Trans>Hear the sentences above once more, then try again.</Trans>
                   )

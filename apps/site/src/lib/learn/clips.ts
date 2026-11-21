@@ -892,7 +892,7 @@ export const OSASTAV_POLE_QUIZ = [
   { cue: "Mul pole …", noun: "kass", said: "Mul pole kassi." },
   { cue: "… pole laual", noun: "kass", said: "Kass pole laual.", first: true },
   { cue: "Sul pole …", noun: "auto", said: "Sul pole autot." },
-  { cue: "Sul on …", noun: "auto", said: "Sul on auto.", first: true },
+  { cue: "… pole Tallinnas", noun: "auto", said: "Auto pole Tallinnas.", first: true },
   { cue: "Laual pole …", noun: "leib", said: "Laual pole leiba." },
   { cue: "… pole laual", noun: "leib", said: "Leib pole laual.", first: true },
   { cue: "Toas pole …", noun: "laud", said: "Toas pole lauda." },

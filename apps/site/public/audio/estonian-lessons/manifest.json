@@ -4589,6 +4589,11 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "osastav/auto-pole-tallinnas": {
+    "text": "Auto pole Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "osastav/leib-pole-laual": {
     "text": "Leib pole laual.",
     "model": "eleven_v4",

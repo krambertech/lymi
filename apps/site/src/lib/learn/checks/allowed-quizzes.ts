@@ -22,6 +22,18 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "The quiz asks whether the ending stays after ei: Ei loe against Ei loed is the lesson.",
   },
   {
+    lesson: "laual-lauale-laualt",
+    quiz: "which-question",
+    pair: ["kus?", "kust?"],
+    reason:
+      "The options are the three question words, each the answer twice in six rounds; the learner hears tööl or töölt alone and tells kus from kust by that ending.",
+  },
+  {
+    lesson: "mul-on",
+    quiz: "maris-note",
+    reason: "-l against the bare form is the lesson: Emal against Ema, Jaanil against Jaan.",
+  },
+  {
     lesson: "omastav",
     quiz: "kati-family",
     reason:

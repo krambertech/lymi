@@ -245,19 +245,51 @@ export const olemaSentence = (row: (typeof OLEMA_ROWS)[number], mode: OlemaMode)
  * another verb, or both, so the answer takes the rule and the question's verb together.
  */
 export const NO_ANSWERS = [
-  { ask: "Kas sa loed?", answer: "Ei loe.", wrong: ["Ei loed.", "Ei oota.", "Ei ootad."] },
-  { ask: "Kas sa töötad?", answer: "Ei tööta.", wrong: ["Ei töötad.", "Ei joo.", "Ei jood."] },
-  { ask: "Kas te sööte?", answer: "Ei söö.", wrong: ["Ei sööte.", "Ei õpi.", "Ei õpite."] },
+  {
+    ask: "Kas sa loed?",
+    answer: "Ei loe.",
+    wrong: ["Ei loed.", "Ei oota.", "Ei ootad."],
+  },
+  {
+    ask: "Kas sa töötad?",
+    answer: "Ei tööta.",
+    wrong: ["Ei töötad.", "Ei joo.", "Ei jood."],
+  },
+  {
+    ask: "Kas te sööte?",
+    answer: "Ei söö.",
+    wrong: ["Ei sööte.", "Ei õpi.", "Ei õpite."],
+  },
   {
     ask: "Kas ta räägib eesti keelt?",
     answer: "Ei räägi.",
     wrong: ["Ei räägib.", "Ei loe.", "Ei loeb."],
   },
-  { ask: "Kas sa oled väsinud?", answer: "Ei ole.", wrong: ["Ei oled.", "Ei ela.", "Ei elad."] },
-  { ask: "Kas ta on kodus?", answer: "Ei ole.", wrong: ["Ei on.", "Ei oota.", "Ei ootab."] },
-  { ask: "Kas nad joovad?", answer: "Ei joo.", wrong: ["Ei joovad.", "Ei söö.", "Ei söövad."] },
-  { ask: "Kas te ootate?", answer: "Ei oota.", wrong: ["Ei ootate.", "Ei tööta.", "Ei töötate."] },
-  { ask: "Kas sa õpid?", answer: "Ei õpi.", wrong: ["Ei õpid.", "Ei räägi.", "Ei räägid."] },
+  {
+    ask: "Kas sa oled väsinud?",
+    answer: "Ei ole.",
+    wrong: ["Ei oled.", "Ei ela.", "Ei elad."],
+  },
+  {
+    ask: "Kas ta on kodus?",
+    answer: "Ei ole.",
+    wrong: ["Ei on.", "Ei oota.", "Ei ootab."],
+  },
+  {
+    ask: "Kas nad joovad?",
+    answer: "Ei joo.",
+    wrong: ["Ei joovad.", "Ei söö.", "Ei söövad."],
+  },
+  {
+    ask: "Kas te ootate?",
+    answer: "Ei oota.",
+    wrong: ["Ei ootate.", "Ei tööta.", "Ei töötate."],
+  },
+  {
+    ask: "Kas sa õpid?",
+    answer: "Ei õpi.",
+    wrong: ["Ei õpid.", "Ei räägi.", "Ei räägid."],
+  },
 ] as const;
 
 /** Other things the negation lesson says: answers, and a sentence worth keeping. */
@@ -500,11 +532,79 @@ export const KOHAD_SENTENCES = {
 } as const;
 
 /**
+ * The places of the lesson on -l, -le and -lt, each in the forms that answer kus, kuhu and kust.
+ * Checked in ÕS 2025 on Sõnaveeb (EKI morphology, 21 Nov 2026).
+ */
+export const OUTER_PLACES = [
+  { place: "laud", kus: "laual", kuhu: "lauale", kust: "laualt" },
+  { place: "töö", kus: "tööl", kuhu: "tööle", kust: "töölt" },
+  { place: "turg", kus: "turul", kuhu: "turule", kust: "turult" },
+  { place: "Saaremaa", kus: "Saaremaal", kuhu: "Saaremaale", kust: "Saaremaalt" },
+] as const;
+
+/** Places that take -s, set beside the -l ones: what each says for where and where to. */
+export const OUTER_INNER_PLACES = [
+  { place: "kool", kus: "koolis", kuhu: "kooli" },
+  { place: "pood", kus: "poes", kuhu: "poodi" },
+  { place: "Tartu", kus: "Tartus", kuhu: "Tartusse" },
+  { place: "haigla", kus: "haiglas", kuhu: "haiglasse" },
+] as const;
+
+/** The sentences of the lesson on -l, -le and -lt. */
+export const OUTER_SENTENCES = {
+  "s-lauale": "Kass hüppab lauale.",
+  "s-laual": "Kass on laual.",
+  "s-laualt": "Kass hüppab laualt põrandale.",
+  "q-lahed": "Kuhu sa lähed?",
+  "a-lahen-toole": "Ma lähen tööle.",
+  "a-lahen-turule": "Ma lähen turule.",
+  "q-tuled": "Kust sa tuled?",
+  "a-tulen-toolt": "Ma tulen töölt.",
+  "a-tulen-turult": "Ma tulen turult.",
+  "c-toole-kooli": "Ma lähen tööle, aga Mari läheb kooli.",
+  "c-toolt-koolist": "Ema tuleb töölt, aga isa tuleb koolist.",
+  "p-emal-on": "Emal on kass.",
+  "p-helistan-emale": "Ma helistan emale.",
+  "p-helistan-sobrale": "Ma helistan sõbrale.",
+  "p-kusin-emalt": "Ma küsin emalt.",
+  "p-kusin-isalt": "Ma küsin isalt.",
+} as const;
+
+/** The gap passage: a Saturday with Mari, every gap filled. */
+export const OUTER_PASSAGE = [
+  "Täna on laupäev ja Mari ei lähe tööle.",
+  "Ta läheb turule.",
+  "Ta helistab emale.",
+  "Isa on poes.",
+  "Mari tuleb turult koju.",
+  "Isa tuleb ka poest koju.",
+] as const;
+
+/** Words the lesson glosses on their own, beyond the places' forms. */
+export const OUTER_WORDS = [
+  "kus",
+  "kuhu",
+  "kust",
+  "hüppab",
+  "põrandal",
+  "põrandale",
+  "kass",
+  "helistan",
+  "küsin",
+  "emale",
+  "emalt",
+  "sõbrale",
+] as const;
+
+/**
  * The practice lesson on meeting someone, built only from lessons 1 to 6. Mari speaks in the
  * second voice; the learner, Andres, in the main one.
  */
 export const TUTVUMINE_ANSWERING = {
-  "a-mari-1": { text: "Tere! Mina olen Mari. Mis su nimi on?", voice: "second" },
+  "a-mari-1": {
+    text: "Tere! Mina olen Mari. Mis su nimi on?",
+    voice: "second",
+  },
   "a-sina-1": "Tere! Minu nimi on Andres.",
   "a-mari-2": { text: "Väga meeldiv! Kust sa pärit oled?", voice: "second" },
   "a-sina-2": "Ma olen pärit Ukrainast.",
@@ -669,6 +769,301 @@ export const KASKIV_DIALOGUE = {
   "d-mari-4": { text: "Vaata! Jaan tuleb.", voice: "second" },
   "d-sina-4": "Jaan, tule siia!",
 } as const satisfies Record<string, Clip>;
+
+/** How a noun's stem differs from the word: letters inside change, a vowel is added, or nothing. */
+export type StemKind = "inside" | "vowel" | "same";
+
+/**
+ * The stems lesson's nouns: the word as a dictionary lists it first, its stem (listed second, the
+ * form an ending goes on), how the two differ, the word with -s or -l, a sentence that says it, and
+ * three wrong forms for “Which form?”. Checked in ÕS 2025 on Sõnaveeb (EKI morphology): pood, poe;
+ * tuba, toa; jõgi, jõe; laud, laua; turg, turu; aken, akna; kool, kooli; raamat, raamatu; uks, ukse;
+ * Tallinn, Tallinna; sein, seina; kohvik, kohviku; kodu, haigla, Tartu, töö, Pärnu and Soome unchanged.
+ */
+export const STEM_WORDS = [
+  {
+    word: "pood",
+    stem: "poe",
+    kind: "inside",
+    where: "poes",
+    said: "Ema on poes.",
+    slips: ["poodis", "poods", "pooes"],
+  },
+  {
+    word: "tuba",
+    stem: "toa",
+    kind: "inside",
+    where: "toas",
+    said: "Ta on toas.",
+    slips: ["tubas", "tuas", "tubes"],
+  },
+  {
+    word: "jõgi",
+    stem: "jõe",
+    kind: "inside",
+    where: "jões",
+    said: "Me ujume jões.",
+    slips: ["jõges", "jõs", "jõgias"],
+  },
+  {
+    word: "laud",
+    stem: "laua",
+    kind: "inside",
+    where: "laual",
+    said: "Raamat on laual.",
+    slips: ["laudel", "lauel", "lauil"],
+  },
+  {
+    word: "turg",
+    stem: "turu",
+    kind: "inside",
+    where: "turul",
+    said: "Nad on turul.",
+    slips: ["turgul", "turl", "turgal"],
+  },
+  {
+    word: "aken",
+    stem: "akna",
+    kind: "inside",
+    where: "aknal",
+    said: "Kohv on aknal.",
+    slips: ["akenal", "akenil", "aknul"],
+  },
+  {
+    word: "kool",
+    stem: "kooli",
+    kind: "vowel",
+    where: "koolis",
+    said: "Ta õpib koolis.",
+    slips: ["kools", "koolos", "koolius"],
+  },
+  {
+    word: "raamat",
+    stem: "raamatu",
+    kind: "vowel",
+    where: "raamatus",
+    said: "Pilt on raamatus.",
+    slips: ["raamats", "raamatis", "raamatas"],
+  },
+  {
+    word: "uks",
+    stem: "ukse",
+    kind: "vowel",
+    where: "uksel",
+    said: "Jaan on uksel.",
+    slips: ["uksul", "uksal", "uksol"],
+  },
+  {
+    word: "Tallinn",
+    stem: "Tallinna",
+    kind: "vowel",
+    where: "Tallinnas",
+    said: "Ma elan Tallinnas.",
+    slips: ["Tallinns", "Tallinnis", "Tallinnus"],
+  },
+  {
+    word: "sein",
+    stem: "seina",
+    kind: "vowel",
+    where: "seinal",
+    said: "Pilt on seinal.",
+    slips: ["seinil", "seinel", "seinol"],
+  },
+  {
+    word: "kohvik",
+    stem: "kohviku",
+    kind: "vowel",
+    where: "kohvikus",
+    said: "Me oleme kohvikus.",
+    slips: ["kohvikis", "kohvikas", "kohvikos"],
+  },
+  {
+    word: "kodu",
+    stem: "kodu",
+    kind: "same",
+    where: "kodus",
+    said: "Ta töötab kodus.",
+    slips: ["kodes", "kodas", "koduis"],
+  },
+  {
+    word: "haigla",
+    stem: "haigla",
+    kind: "same",
+    where: "haiglas",
+    said: "Mari töötab haiglas.",
+    slips: ["haiglis", "haiglaas", "haigles"],
+  },
+  {
+    word: "Tartu",
+    stem: "Tartu",
+    kind: "same",
+    where: "Tartus",
+    said: "Nad õpivad Tartus.",
+    slips: ["Tartas", "Tartuis", "Tartes"],
+  },
+  {
+    word: "töö",
+    stem: "töö",
+    kind: "same",
+    where: "tööl",
+    said: "Ma olen tööl.",
+    slips: ["töl", "tööil", "tööel"],
+  },
+  {
+    word: "Pärnu",
+    stem: "Pärnu",
+    kind: "same",
+    where: "Pärnus",
+    said: "Jaan elab Pärnus.",
+    slips: ["Pärnes", "Pärnuis", "Pärnos"],
+  },
+  {
+    word: "Soome",
+    stem: "Soome",
+    kind: "same",
+    where: "Soomes",
+    said: "Ma elan Soomes.",
+    slips: ["Soomis", "Soomeis", "Soomos"],
+  },
+] as const satisfies readonly {
+  word: string;
+  stem: string;
+  kind: StemKind;
+  where: string;
+  said: string;
+  slips: readonly [string, string, string];
+}[];
+
+/** Saturday, who is where: the stems lesson's passage with gaps, recorded as one take. */
+export const STEM_PASSAGE = [
+  "Täna on laupäev.",
+  "Ema on turul ja Jaan on poes.",
+  "Kati on kohvikus.",
+  "Mari on kodus.",
+  "Ta istub toas ja loeb.",
+  "Kohv on laual.",
+] as const;
+
+/**
+ * The owners of the lesson on “to have”: each short pronoun, its -l form, the long -l form said
+ * for stress, and a sentence. Checked in ÕS 2025 on Sõnaveeb (EKI morphology): mul, minul; sul,
+ * sinul; tal, temal; meil; teil; neil, nendel.
+ */
+export const MUL_ON_OWNERS = [
+  { pronoun: "ma", owner: "mul", long: "minul", said: "Mul on kass." },
+  { pronoun: "sa", owner: "sul", long: "sinul", said: "Sul on auto." },
+  { pronoun: "ta", owner: "tal", long: "temal", said: "Tal on koer." },
+  { pronoun: "me", owner: "meil", long: "meil", said: "Meil on maja." },
+  { pronoun: "te", owner: "teil", long: "teil", said: "Kas teil on küsimus?" },
+  { pronoun: "nad", owner: "neil", long: "nendel", said: "Neil on laps." },
+] as const;
+
+export type MulOnOwner = (typeof MUL_ON_OWNERS)[number]["owner"];
+
+/** “Who has it?”: two sentences for each owner, heard and matched to the owner. */
+export const MUL_ON_HEARD = [
+  { owner: "mul", said: "Mul on kass." },
+  { owner: "mul", said: "Mul on küsimus." },
+  { owner: "sul", said: "Sul on auto." },
+  { owner: "sul", said: "Kas sul on raamat?" },
+  { owner: "tal", said: "Tal on koer." },
+  { owner: "tal", said: "Tal on hea õpetaja." },
+  { owner: "meil", said: "Meil on maja." },
+  { owner: "meil", said: "Meil on kodu Tartus." },
+  { owner: "teil", said: "Kas teil on küsimus?" },
+  { owner: "teil", said: "Kas teil on auto?" },
+  { owner: "neil", said: "Neil on laps." },
+  { owner: "neil", said: "Neil on maja Pärnus." },
+] as const satisfies readonly { owner: MulOnOwner; said: string }[];
+
+/** I am, or I have: the same words with the pronoun and olema, and with the -l form and on. */
+export const MUL_ON_SWITCH = [
+  { am: "Ma olen kass.", have: "Mul on kass." },
+  { am: "Sa oled õpetaja.", have: "Sul on õpetaja." },
+  { am: "Ta on hea sõber.", have: "Tal on hea sõber." },
+  { am: "Te olete hea õpetaja.", have: "Teil on hea õpetaja." },
+] as const;
+
+/** “Am or have?”: pairs to tell apart by ear. */
+export const MUL_ON_AM_HAVE = [
+  { am: "Ma olen õpetaja.", have: "Mul on õpetaja." },
+  { am: "Sa oled hea sõber.", have: "Sul on hea sõber." },
+  { am: "Ta on laps.", have: "Tal on laps." },
+  { am: "Ta on hea õpetaja.", have: "Tal on hea õpetaja." },
+] as const;
+
+/**
+ * Names and nouns with -l, on the genitive: Mari, Mari, Maril; Jaan, Jaani, Jaanil; sõber, sõbra,
+ * sõbral. ÕS 2025 on Sõnaveeb: emal, isal, sõbral, õpetajal, kellel; Maril and Jaanil as forms
+ * of the names.
+ */
+export const MUL_ON_NAMES = [
+  { word: "Mari", genitive: "Mari", owner: "Maril", said: "Maril on kass." },
+  { word: "Jaan", genitive: "Jaani", owner: "Jaanil", said: "Jaanil on auto." },
+  { word: "ema", genitive: "ema", owner: "emal", said: "Emal on küsimus." },
+  { word: "isa", genitive: "isa", owner: "isal", said: "Isal on koer." },
+  { word: "sõber", genitive: "sõbra", owner: "sõbral", said: "Minu sõbral on maja." },
+  { word: "õpetaja", genitive: "õpetaja", owner: "õpetajal", said: "Õpetajal on raamat." },
+] as const;
+
+/** Questions and answers: kellel, yes and no, and mul on vaja. */
+export const MUL_ON_LINES = {
+  "q-kellel-auto": "Kellel on auto?",
+  "a-jaanil": "Jaanil.",
+  "q-kellel-kusimus": "Kellel on küsimus?",
+  "a-minul": "Minul.",
+  "q-sul-auto": "Kas sul on auto?",
+  "a-jah-on": "Jah, on.",
+  "a-ei-ole": "Ei ole.",
+  "a-pole": "Pole.",
+  "q-sul-aega": "Kas sul on aega?",
+  "a-pole-aega": "Mul pole aega.",
+  "v-raha": "Mul on vaja raha.",
+  "v-abi": "Mul on vaja abi.",
+  "v-sul-abi": "Kas sul on vaja abi?",
+} as const;
+
+/** Mari's note, with a gap at each owner and each on. */
+export const MUL_ON_PASSAGE = [
+  "Mina olen Mari.",
+  "Mul on kass.",
+  "Minu ema on õpetaja.",
+  "Emal on auto.",
+  "Jaan on minu sõber.",
+  "Jaanil on koer.",
+  "Me elame Tartus.",
+  "Meil on hea kodu.",
+  "Kas sul on kass?",
+] as const;
+
+/**
+ * At home with a flatmate, Liis: her lines in the second voice, the learner's in the main one.
+ * Jaani is Jaan's genitive, from the lesson on the genitive.
+ */
+export const MUL_ON_DIALOGUE = {
+  "d-liis-1": { text: "Tere! Kas sul on aega?", voice: "second" },
+  "d-sina-1": "Jah, on.",
+  "d-liis-2": { text: "Mul on vaja abi. Kas sul on auto?", voice: "second" },
+  "d-sina-2": "Ei ole. Aga Jaanil on auto.",
+  "d-liis-3": { text: "Hästi! Kellel on Jaani number?", voice: "second" },
+  "d-sina-3": "Minul.",
+  "d-liis-4": { text: "Aitäh! Kas sul on homme aega?", voice: "second" },
+  "d-sina-4": "Ei, mul pole homme aega.",
+} as const satisfies Record<string, Clip>;
+
+/** Words the lesson on “to have” says on their own. */
+export const MUL_ON_WORDS = [
+  ...MUL_ON_OWNERS.flatMap(({ owner, long }) => [owner, long]),
+  ...MUL_ON_NAMES.map(({ owner }) => owner),
+  "kellel",
+  "vaja",
+  "koer",
+  "küsimus",
+  "raha",
+  "abi",
+  "Hästi, aitäh. Aga sul?",
+  ...MUL_ON_NAMES.flatMap(({ word, genitive }) => [word, genitive]),
+] as const;
 
 /**
  * The practice parts' demo on /components/lessons: Jaan introduces himself, Mari writes about
@@ -941,6 +1336,221 @@ const MODAL_CLIPS: Record<string, Clip> = {
   ),
   ...words(MODAL_REASONS),
   ...MODAL_DIALOGUE,
+};
+
+/**
+ * Lesson 32, “With, without, until, as”: -ga, -ta, -ni and -na on the genitive. Every form was
+ * checked on Sõnaveeb (EKI) in November 2026.
+ */
+export const SOBRAGA_WITH = [
+  "Mari tuleb sõbraga.",
+  "Ma räägin emaga.",
+  "Ma lähen bussiga tööle.",
+  "Jaan tuleb rongiga.",
+  "Kellega sa räägid?",
+] as const;
+
+/** Four lines said with -ga, then with -ta. */
+export const SOBRAGA_WITHOUT = [
+  { id: "piim", with: "Kohv piimaga, palun.", without: "Kohv piimata, palun." },
+  { id: "suhkur", with: "Tee suhkruga, palun.", without: "Tee suhkruta, palun." },
+  { id: "sidrun", with: "Tee sidruniga, palun.", without: "Tee sidrunita, palun." },
+  { id: "auto", with: "Ma olen täna autoga.", without: "Ma olen täna autota." },
+] as const;
+
+export const SOBRAGA_UNTIL = [
+  "Ma töötan kella viieni.",
+  "Buss läheb Tartuni.",
+  "Homseni!",
+  "Nägemiseni!",
+] as const;
+
+/** Three people, each said with olema and the job, then with töötama and -na. */
+export const SOBRAGA_AS = [
+  { id: "kati", is: "Kati on arst.", as: "Kati töötab arstina." },
+  { id: "mari", is: "Mari on õpetaja.", as: "Mari töötab õpetajana." },
+  { id: "jaan", is: "Jaan on kokk.", as: "Jaan töötab kokana." },
+] as const;
+
+/** Forms to match with their meanings: two pairs share a word, so only the ending tells them apart. */
+export const SOBRAGA_MATCH = [
+  "lapsena",
+  "lapsega",
+  "piimata",
+  "piimaga",
+  "bussini",
+  "bussiga",
+] as const;
+
+/** A word, its genitive, then the genitive with one of the four endings. */
+export const SOBRAGA_CHAINS = [
+  { id: "sober", steps: ["sõber", "sõbra", "sõbraga"] },
+  { id: "laps", steps: ["laps", "lapse", "lapsena"] },
+  { id: "suhkur", steps: ["suhkur", "suhkru", "suhkruta"] },
+  { id: "pood", steps: ["pood", "poe", "poeni"] },
+] as const;
+
+export type CaseEnding = "ga" | "ta" | "ni" | "na";
+export const CASE_ENDINGS: readonly CaseEnding[] = ["ga", "ta", "ni", "na"];
+
+/** Words to build a form of, keyed by the ending: the genitive the ending goes on. */
+export const SOBRAGA_FORMS = [
+  { id: "buss", base: "buss", genitive: "bussi", ending: "ga" },
+  { id: "raamat", base: "raamat", genitive: "raamatu", ending: "ga" },
+  { id: "piim", base: "piim", genitive: "piima", ending: "ta" },
+  { id: "sidrun", base: "sidrun", genitive: "sidruni", ending: "ta" },
+  { id: "kool", base: "kool", genitive: "kooli", ending: "ni" },
+  { id: "jogi", base: "jõgi", genitive: "jõe", ending: "ni" },
+  { id: "arst", base: "arst", genitive: "arsti", ending: "na" },
+  { id: "kokk", base: "kokk", genitive: "koka", ending: "na" },
+] as const satisfies readonly { id: string; base: string; genitive: string; ending: CaseEnding }[];
+
+/** Mari's message with the café order, and Kati's message with gaps. */
+export const SOBRAGA_PASSAGES = {
+  cafe: [
+    "Tere, Kati! Kas sa oled kohvikus?",
+    "Mulle üks kohv piimaga, palun.",
+    "Peeter joob teed sidruniga, aga suhkruta.",
+    "Jaan tahab kohvi ilma piimata.",
+    "Me tuleme bussiga.",
+    "Mul on aega kella kolmeni.",
+  ],
+  kati: [
+    "Tere, Mari!",
+    "Ma töötan haiglas arstina.",
+    "Ma lähen tööle rongiga.",
+    "Ma töötan kella neljani.",
+    "Ma ei joo piima.",
+    "Ma joon kohvi piimata.",
+    "Homseni!",
+  ],
+} as const;
+
+/** The words of “With, without, until, as” with a card, each heard on its own. */
+export const SOBRAGA_WORDS = [
+  "sõbraga",
+  "emaga",
+  "bussiga",
+  "rongiga",
+  "kellega",
+  "piimaga",
+  "piimata",
+  "suhkruta",
+  "rahata",
+  "ilma",
+  "ilma suhkruta",
+  "kelle",
+  "kella viieni",
+  "Tartuni",
+  "Homseni!",
+  "Nägemiseni!",
+  "arst",
+  "arsti",
+  "arstina",
+  "kokana",
+  "lapsena",
+  "Lapsena elas Mari Tartus.",
+  "poodi",
+  "kooli",
+  "kohvikus",
+  "mulle",
+  "kohv",
+  "kohvi",
+  "palun",
+  "joob",
+  "teed",
+  "sidruniga",
+  "aga",
+  "tahab",
+  "tuleme",
+  "mul",
+  "aega",
+  "kolmeni",
+] as const;
+
+const SOBRAGA_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...SOBRAGA_WITH,
+    ...SOBRAGA_WITHOUT.flatMap((line) => [line.with, line.without]),
+    ...SOBRAGA_UNTIL,
+    ...SOBRAGA_AS.flatMap((line) => [line.is, line.as]),
+    ...SOBRAGA_MATCH,
+    ...SOBRAGA_CHAINS.flatMap(({ steps }) => steps),
+    ...SOBRAGA_FORMS.map(({ genitive, ending }) => `${genitive}${ending}`),
+    ...SOBRAGA_WORDS,
+  ]),
+  "p-cafe": { sentences: SOBRAGA_PASSAGES.cafe, voice: "second" },
+  "p-kati": { sentences: SOBRAGA_PASSAGES.kati },
+};
+
+/** A noun's three forms in a dictionary's order: first, second, third. */
+export type NounForms = readonly [string, string, string];
+
+/** A noun's three forms written as a dictionary lists them: “pood, poe, poodi”. */
+export const nounEntry = (forms: NounForms) => forms.join(", ");
+
+/**
+ * Nouns in their three forms, checked in Sõnaveeb. The first ten are lesson 14's table; the rest
+ * show its patterns. Later lessons on the genitive, the partitive and the plural can import them.
+ */
+export const NOUN_FORMS = [
+  ["kool", "kooli", "kooli"],
+  ["pood", "poe", "poodi"],
+  ["raamat", "raamatu", "raamatut"],
+  ["maja", "maja", "maja"],
+  ["auto", "auto", "autot"],
+  ["linn", "linna", "linna"],
+  ["uks", "ukse", "ust"],
+  ["mees", "mehe", "meest"],
+  ["naine", "naise", "naist"],
+  ["laps", "lapse", "last"],
+  ["kodu", "kodu", "kodu"],
+  ["sõna", "sõna", "sõna"],
+  ["tuba", "toa", "tuba"],
+  ["laud", "laua", "lauda"],
+  ["turg", "turu", "turgu"],
+  ["küsimus", "küsimuse", "küsimust"],
+  ["töö", "töö", "tööd"],
+] as const satisfies readonly NounForms[];
+
+/**
+ * Lesson 14's “type the third form” quiz: words whose ending gives the third form away, by
+ * pattern. Each shows its first form; the learner types the third.
+ */
+export const POHIVORMID_TYPED = [
+  { forms: ["inimene", "inimese", "inimest"], pattern: "ne" },
+  { forms: ["hobune", "hobuse", "hobust"], pattern: "ne" },
+  { forms: ["vastus", "vastuse", "vastust"], pattern: "us" },
+  { forms: ["harjutus", "harjutuse", "harjutust"], pattern: "us" },
+  { forms: ["maa", "maa", "maad"], pattern: "long" },
+  { forms: ["tee", "tee", "teed"], pattern: "long" },
+  { forms: ["puu", "puu", "puud"], pattern: "long" },
+] as const satisfies readonly { forms: NounForms; pattern: "ne" | "us" | "long" }[];
+
+/**
+ * In class: Mari, the teacher, asks for a word's three forms in the second voice; the learner
+ * answers in the main one. Words from lessons 2–6 and this lesson's nouns.
+ */
+export const POHIVORMID_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Mis on sõna pood põhivormid?", voice: "second" },
+  "d-sina-1": "Pood, poe, poodi.",
+  "d-mari-2": { text: "Jah. Ja laps?", voice: "second" },
+  "d-sina-2": "Laps, lapse, last.",
+  "d-mari-3": { text: "Jah. Ja maja?", voice: "second" },
+  "d-sina-3": "Maja, maja, maja.",
+  "d-mari-4": { text: "Ja vastus?", voice: "second" },
+  "d-sina-4": "Vastus, vastuse, vastust.",
+} as const satisfies Record<string, Clip>;
+
+const POHIVORMID_CLIPS: Record<string, Clip> = {
+  ...words([
+    "põhivormid",
+    "koolis",
+    ...new Set([...NOUN_FORMS, ...POHIVORMID_TYPED.map(({ forms }) => forms)].flat()),
+  ]),
+  ...words(NOUN_FORMS.map(nounEntry)),
+  ...words(POHIVORMID_TYPED.map(({ forms }) => nounEntry(forms))),
+  ...POHIVORMID_DIALOGUE,
 };
 
 /*
@@ -1312,6 +1922,106 @@ export const INFINITIVE_WORDS = [
   "Ma tahan homme linna minna.",
   "Ma hakkan täna kodus õppima.",
 ] as const;
+/**
+ * The plural lesson's nouns: the first and second forms a dictionary gives, and the plural, the
+ * second form with -d. `same` words only gain a vowel or nothing; `changed` ones keep lesson 13's
+ * stem change. Checked in ÕS 2025 on Sõnaveeb (EKI morphology, 21 Nov 2026).
+ */
+export const MITMUS_SAME = [
+  { one: "maja", second: "maja", many: "majad" },
+  { one: "auto", second: "auto", many: "autod" },
+  { one: "kass", second: "kassi", many: "kassid" },
+  { one: "kool", second: "kooli", many: "koolid" },
+  { one: "linn", second: "linna", many: "linnad" },
+  { one: "raamat", second: "raamatu", many: "raamatud" },
+  { one: "laps", second: "lapse", many: "lapsed" },
+  { one: "uks", second: "ukse", many: "uksed" },
+] as const;
+
+export const MITMUS_CHANGED = [
+  { one: "pood", second: "poe", many: "poed" },
+  { one: "tuba", second: "toa", many: "toad" },
+  { one: "jõgi", second: "jõe", many: "jõed" },
+  { one: "mees", second: "mehe", many: "mehed" },
+  { one: "naine", second: "naise", many: "naised" },
+  { one: "sõber", second: "sõbra", many: "sõbrad" },
+] as const;
+
+export type PluralNoun = (typeof MITMUS_SAME)[number] | (typeof MITMUS_CHANGED)[number];
+
+/** A dictionary's first two forms, said as one clip: “tuba, toa”. */
+export const dictionaryPair = ({ one, second }: { one: string; second: string }) =>
+  `${one}, ${second}`;
+
+/**
+ * One person or thing and many, with the verb that agrees: the ta form ends in -b, the plural takes
+ * the nad form in -vad, and on stays on. Sõnaveeb: loevad, räägivad, ootavad, töötavad, joovad.
+ */
+export const MITMUS_SENTENCES = [
+  { one: "laps", many: "lapsed", verb: ["loe", "b", "vad"], tail: "" },
+  { one: "õpetaja", many: "õpetajad", verb: ["räägi", "b", "vad"], tail: "" },
+  { one: "sõber", many: "sõbrad", verb: ["oota", "b", "vad"], tail: "" },
+  { one: "mees", many: "mehed", verb: ["tööta", "b", "vad"], tail: "" },
+  { one: "naine", many: "naised", verb: ["joo", "b", "vad"], tail: " kohvi" },
+  { one: "kass", many: "kassid", verb: ["on", "", ""], tail: " kodus" },
+] as const;
+
+export type PluralSentence = (typeof MITMUS_SENTENCES)[number];
+
+/** The sentence for one or for many: “Laps loeb.”, “Lapsed loevad.” */
+export const pluralSentence = ({ one, many, verb, tail }: PluralSentence, more: boolean) =>
+  `${capital(more ? many : one)} ${verb[0]}${more ? verb[2] : verb[1]}${tail}.`;
+
+/** Adjective and noun, one and many. Sõnaveeb: suured, väikesed, uued, vanad, head, ilusad. */
+export const MITMUS_ADJECTIVES = [
+  { one: "suur maja", many: "suured majad" },
+  { one: "väike kass", many: "väikesed kassid" },
+  { one: "uus raamat", many: "uued raamatud" },
+  { one: "vana linn", many: "vanad linnad" },
+  { one: "hea sõber", many: "head sõbrad" },
+  { one: "ilus tuba", many: "ilusad toad" },
+] as const;
+
+/** A home in Tartu, cut into gaps in the lesson: three want one, three want many. Magama is glossed before it. */
+export const MITMUS_PASSAGE = [
+  "Me elame Tartus.",
+  "Meie kodu on väike, aga toad on suured.",
+  "Ema ja isa töötavad Tallinnas.",
+  "Lapsed õpivad koolis.",
+  "Meie kass magab kodus.",
+  "Ta on väike ja ilus.",
+] as const;
+
+/** Words and lines the plural lesson says outside its lists. */
+export const MITMUS_WORDS = [
+  "nad",
+  "kaks kassi",
+  "Maja on suur.",
+  "Majad on suured.",
+  "magama",
+  "suur",
+  "suure",
+  "suured",
+  "väike",
+  "ilus",
+  "Ema ja isa töötavad.",
+] as const;
+
+const MITMUS_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...[...MITMUS_SAME, ...MITMUS_CHANGED].flatMap((noun) => [
+      noun.one,
+      noun.second,
+      noun.many,
+      dictionaryPair(noun),
+    ]),
+    ...MITMUS_SENTENCES.flatMap((row) => [pluralSentence(row, false), pluralSentence(row, true)]),
+    ...MITMUS_ADJECTIVES.flatMap(({ one, many }) => [one, many]),
+    ...MITMUS_WORDS,
+  ]),
+  "p-home": { sentences: MITMUS_PASSAGE },
+};
+
 /**
  * The genitive lesson's pronouns: who, and whose. Checked in ÕS 2025 on Sõnaveeb: minu or mu,
  * sinu or su, tema or ta, meie or me, teie or te, and nende.
@@ -1855,6 +2565,36 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   },
   "paev-tallinnas": TALLINN_CLIPS,
   modaalverbid: MODAL_CLIPS,
+  "laual-lauale-laualt": {
+    ...words([
+      ...OUTER_PLACES.flatMap(({ place, kus, kuhu, kust }) => [place, kus, kuhu, kust]),
+      ...OUTER_INNER_PLACES.flatMap(({ place, kus, kuhu }) => [place, kus, kuhu]),
+      ...OUTER_WORDS,
+    ]),
+    ...OUTER_SENTENCES,
+    "p-saturday": { sentences: OUTER_PASSAGE },
+  },
+  "sobraga-rahata": SOBRAGA_CLIPS,
+  "mul-on": {
+    ...words([
+      ...MUL_ON_WORDS,
+      ...MUL_ON_HEARD.map(({ said }) => said),
+      ...MUL_ON_SWITCH.flatMap(({ am, have }) => [am, have]),
+      ...MUL_ON_AM_HAVE.flatMap(({ am, have }) => [am, have]),
+      ...MUL_ON_NAMES.map(({ said }) => said),
+    ]),
+    ...MUL_ON_LINES,
+    "p-mari": { sentences: MUL_ON_PASSAGE },
+    ...MUL_ON_DIALOGUE,
+  },
+  "pood-poe": {
+    ...words([
+      ...STEM_WORDS.flatMap(({ word, stem, where, said }) => [word, stem, where, said]),
+      "ujume",
+    ]),
+    "p-saturday": { sentences: STEM_PASSAGE },
+  },
+  pohivormid: POHIVORMID_CLIPS,
   omastav: OMASTAV_CLIPS,
   "majas-majja-majast": {
     ...words(INNER_WORDS),
@@ -1876,6 +2616,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...words(INFINITIVE_WORDS),
     "p-message": { sentences: INFINITIVE_MESSAGE },
   },
+  mitmus: MITMUS_CLIPS,
   osastav: OSASTAV_CLIPS,
   lihtminevik: PAST_CLIPS,
   kit: KIT_CLIPS,

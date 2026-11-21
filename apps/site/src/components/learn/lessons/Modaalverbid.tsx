@@ -2,7 +2,7 @@ import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import type { ReactNode } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -402,9 +402,8 @@ const dialogueLine = (id: keyof typeof MODAL_DIALOGUE) => {
 
 export function ModaalverbidLesson() {
   const { t, i18n } = useLingui();
-  const at = (et: string) => LESSONS.find((lesson) => lesson.et === et)?.n;
   const infinitives = lessonBySlug("tegevusnimed")?.n;
-  const having = at("Mul on");
+  const having = lessonBySlug("mul-on")?.n;
   const negation = lessonBySlug("eitus")?.n;
 
   const reasons: MatchPair[] = MODAL_REASONS.map((said) => ({

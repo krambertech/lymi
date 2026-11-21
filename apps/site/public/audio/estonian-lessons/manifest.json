@@ -4599,6 +4599,1896 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
+  "laual-lauale-laualt/laud": {
+    "text": "laud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/laual": {
+    "text": "laual",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/lauale": {
+    "text": "lauale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/laualt": {
+    "text": "laualt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/to2o2": {
+    "text": "töö",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/to2o2l": {
+    "text": "tööl",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/to2o2le": {
+    "text": "tööle",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/to2o2lt": {
+    "text": "töölt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/turg": {
+    "text": "turg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/turul": {
+    "text": "turul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/turule": {
+    "text": "turule",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/turult": {
+    "text": "turult",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/saaremaa": {
+    "text": "Saaremaa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/saaremaal": {
+    "text": "Saaremaal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/saaremaale": {
+    "text": "Saaremaale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/saaremaalt": {
+    "text": "Saaremaalt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kool": {
+    "text": "kool",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/koolis": {
+    "text": "koolis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kooli": {
+    "text": "kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/poes": {
+    "text": "poes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/poodi": {
+    "text": "poodi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/tartu": {
+    "text": "Tartu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/tartus": {
+    "text": "Tartus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/tartusse": {
+    "text": "Tartusse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/haigla": {
+    "text": "haigla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/haiglas": {
+    "text": "haiglas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/haiglasse": {
+    "text": "haiglasse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kus": {
+    "text": "kus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kuhu": {
+    "text": "kuhu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kust": {
+    "text": "kust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/hu2ppab": {
+    "text": "hüppab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/po3randal": {
+    "text": "põrandal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/po3randale": {
+    "text": "põrandale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/kass": {
+    "text": "kass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/helistan": {
+    "text": "helistan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/ku2sin": {
+    "text": "küsin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/emale": {
+    "text": "emale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/emalt": {
+    "text": "emalt",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/so3brale": {
+    "text": "sõbrale",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/s-lauale": {
+    "text": "Kass hüppab lauale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/s-laual": {
+    "text": "Kass on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/s-laualt": {
+    "text": "Kass hüppab laualt põrandale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/q-lahed": {
+    "text": "Kuhu sa lähed?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/a-lahen-toole": {
+    "text": "Ma lähen tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/a-lahen-turule": {
+    "text": "Ma lähen turule.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/q-tuled": {
+    "text": "Kust sa tuled?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/a-tulen-toolt": {
+    "text": "Ma tulen töölt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/a-tulen-turult": {
+    "text": "Ma tulen turult.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/c-toole-kooli": {
+    "text": "Ma lähen tööle, aga Mari läheb kooli.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/c-toolt-koolist": {
+    "text": "Ema tuleb töölt, aga isa tuleb koolist.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-emal-on": {
+    "text": "Emal on kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-helistan-emale": {
+    "text": "Ma helistan emale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-helistan-sobrale": {
+    "text": "Ma helistan sõbrale.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-kusin-emalt": {
+    "text": "Ma küsin emalt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-kusin-isalt": {
+    "text": "Ma küsin isalt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "laual-lauale-laualt/p-saturday": {
+    "text": "Täna on laupäev ja Mari ei lähe tööle. Ta läheb turule. Ta helistab emale. Isa on poes. Mari tuleb turult koju. Isa tuleb ka poest koju.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/mari-tuleb-so3braga": {
+    "text": "Mari tuleb sõbraga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-ra2a2gin-emaga": {
+    "text": "Ma räägin emaga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-la2hen-bussiga-to2o2le": {
+    "text": "Ma lähen bussiga tööle.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jaan-tuleb-rongiga": {
+    "text": "Jaan tuleb rongiga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kellega-sa-ra2a2gid": {
+    "text": "Kellega sa räägid?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kohv-piimaga-palun": {
+    "text": "Kohv piimaga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kohv-piimata-palun": {
+    "text": "Kohv piimata, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tee-suhkruga-palun": {
+    "text": "Tee suhkruga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tee-suhkruta-palun": {
+    "text": "Tee suhkruta, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tee-sidruniga-palun": {
+    "text": "Tee sidruniga, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tee-sidrunita-palun": {
+    "text": "Tee sidrunita, palun.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-olen-ta2na-autoga": {
+    "text": "Ma olen täna autoga.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-olen-ta2na-autota": {
+    "text": "Ma olen täna autota.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ma-to2o2tan-kella-viieni": {
+    "text": "Ma töötan kella viieni.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/buss-la2heb-tartuni": {
+    "text": "Buss läheb Tartuni.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/homseni": {
+    "text": "Homseni!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/na2gemiseni": {
+    "text": "Nägemiseni!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kati-on-arst": {
+    "text": "Kati on arst.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kati-to2o2tab-arstina": {
+    "text": "Kati töötab arstina.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/mari-on-o3petaja": {
+    "text": "Mari on õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/mari-to2o2tab-o3petajana": {
+    "text": "Mari töötab õpetajana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jaan-on-kokk": {
+    "text": "Jaan on kokk.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jaan-to2o2tab-kokana": {
+    "text": "Jaan töötab kokana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/lapsena": {
+    "text": "lapsena",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/lapsega": {
+    "text": "lapsega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/piimata": {
+    "text": "piimata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/piimaga": {
+    "text": "piimaga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/bussini": {
+    "text": "bussini",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/bussiga": {
+    "text": "bussiga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/so3ber": {
+    "text": "sõber",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/so3bra": {
+    "text": "sõbra",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/so3braga": {
+    "text": "sõbraga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/laps": {
+    "text": "laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/lapse": {
+    "text": "lapse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/suhkur": {
+    "text": "suhkur",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/suhkru": {
+    "text": "suhkru",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/suhkruta": {
+    "text": "suhkruta",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/poe": {
+    "text": "poe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/poeni": {
+    "text": "poeni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/raamatuga": {
+    "text": "raamatuga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/sidrunita": {
+    "text": "sidrunita",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/koolini": {
+    "text": "koolini",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/jo3eni": {
+    "text": "jõeni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/arstina": {
+    "text": "arstina",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kokana": {
+    "text": "kokana",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/emaga": {
+    "text": "emaga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/rongiga": {
+    "text": "rongiga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kellega": {
+    "text": "kellega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/rahata": {
+    "text": "rahata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ilma": {
+    "text": "ilma",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/ilma-suhkruta": {
+    "text": "ilma suhkruta",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kelle": {
+    "text": "kelle",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kella-viieni": {
+    "text": "kella viieni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tartuni": {
+    "text": "Tartuni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/arst": {
+    "text": "arst",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/arsti": {
+    "text": "arsti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/lapsena-elas-mari-tartus": {
+    "text": "Lapsena elas Mari Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/poodi": {
+    "text": "poodi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kooli": {
+    "text": "kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kohvikus": {
+    "text": "kohvikus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/mulle": {
+    "text": "mulle",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kohv": {
+    "text": "kohv",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kohvi": {
+    "text": "kohvi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/palun": {
+    "text": "palun",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/joob": {
+    "text": "joob",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/teed": {
+    "text": "teed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/sidruniga": {
+    "text": "sidruniga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/aga": {
+    "text": "aga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tahab": {
+    "text": "tahab",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/tuleme": {
+    "text": "tuleme",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/mul": {
+    "text": "mul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/aega": {
+    "text": "aega",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/kolmeni": {
+    "text": "kolmeni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "sobraga-rahata/p-cafe": {
+    "text": "Tere, Kati! Kas sa oled kohvikus? Mulle üks kohv piimaga, palun. Peeter joob teed sidruniga, aga suhkruta. Jaan tahab kohvi ilma piimata. Me tuleme bussiga. Mul on aega kella kolmeni.",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "sobraga-rahata/p-kati": {
+    "text": "Tere, Mari! Ma töötan haiglas arstina. Ma lähen tööle rongiga. Ma töötan kella neljani. Ma ei joo piima. Ma joon kohvi piimata. Homseni!",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/mul": {
+    "text": "mul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/minul": {
+    "text": "minul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/sul": {
+    "text": "sul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/sinul": {
+    "text": "sinul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/tal": {
+    "text": "tal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/temal": {
+    "text": "temal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/meil": {
+    "text": "meil",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/teil": {
+    "text": "teil",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/neil": {
+    "text": "neil",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/nendel": {
+    "text": "nendel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/maril": {
+    "text": "Maril",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/jaanil": {
+    "text": "Jaanil",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/emal": {
+    "text": "emal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/isal": {
+    "text": "isal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/so3bral": {
+    "text": "sõbral",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/o3petajal": {
+    "text": "õpetajal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/kellel": {
+    "text": "kellel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/vaja": {
+    "text": "vaja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/koer": {
+    "text": "koer",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/ku2simus": {
+    "text": "küsimus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/raha": {
+    "text": "raha",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/abi": {
+    "text": "abi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/ha2sti-aita2h-aga-sul": {
+    "text": "Hästi, aitäh. Aga sul?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/mari": {
+    "text": "Mari",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/jaan": {
+    "text": "Jaan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/jaani": {
+    "text": "Jaani",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/ema": {
+    "text": "ema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/isa": {
+    "text": "isa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/so3ber": {
+    "text": "sõber",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/so3bra": {
+    "text": "sõbra",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/o3petaja": {
+    "text": "õpetaja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/mul-on-kass": {
+    "text": "Mul on kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/mul-on-ku2simus": {
+    "text": "Mul on küsimus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/sul-on-auto": {
+    "text": "Sul on auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/kas-sul-on-raamat": {
+    "text": "Kas sul on raamat?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/tal-on-koer": {
+    "text": "Tal on koer.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/tal-on-hea-o3petaja": {
+    "text": "Tal on hea õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/meil-on-maja": {
+    "text": "Meil on maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/meil-on-kodu-tartus": {
+    "text": "Meil on kodu Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/kas-teil-on-ku2simus": {
+    "text": "Kas teil on küsimus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/kas-teil-on-auto": {
+    "text": "Kas teil on auto?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/neil-on-laps": {
+    "text": "Neil on laps.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/neil-on-maja-pa2rnus": {
+    "text": "Neil on maja Pärnus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/ma-olen-kass": {
+    "text": "Ma olen kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/sa-oled-o3petaja": {
+    "text": "Sa oled õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/sul-on-o3petaja": {
+    "text": "Sul on õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/ta-on-hea-so3ber": {
+    "text": "Ta on hea sõber.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/tal-on-hea-so3ber": {
+    "text": "Tal on hea sõber.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/te-olete-hea-o3petaja": {
+    "text": "Te olete hea õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/teil-on-hea-o3petaja": {
+    "text": "Teil on hea õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/ma-olen-o3petaja": {
+    "text": "Ma olen õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/mul-on-o3petaja": {
+    "text": "Mul on õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/sa-oled-hea-so3ber": {
+    "text": "Sa oled hea sõber.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/sul-on-hea-so3ber": {
+    "text": "Sul on hea sõber.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/ta-on-laps": {
+    "text": "Ta on laps.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/tal-on-laps": {
+    "text": "Tal on laps.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/ta-on-hea-o3petaja": {
+    "text": "Ta on hea õpetaja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/maril-on-kass": {
+    "text": "Maril on kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/jaanil-on-auto": {
+    "text": "Jaanil on auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/emal-on-ku2simus": {
+    "text": "Emal on küsimus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/isal-on-koer": {
+    "text": "Isal on koer.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/minu-so3bral-on-maja": {
+    "text": "Minu sõbral on maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/o3petajal-on-raamat": {
+    "text": "Õpetajal on raamat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/q-kellel-auto": {
+    "text": "Kellel on auto?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/a-jaanil": {
+    "text": "Jaanil.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/q-kellel-kusimus": {
+    "text": "Kellel on küsimus?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/a-minul": {
+    "text": "Minul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/q-sul-auto": {
+    "text": "Kas sul on auto?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/a-jah-on": {
+    "text": "Jah, on.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/a-ei-ole": {
+    "text": "Ei ole.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/a-pole": {
+    "text": "Pole.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/q-sul-aega": {
+    "text": "Kas sul on aega?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/a-pole-aega": {
+    "text": "Mul pole aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/v-raha": {
+    "text": "Mul on vaja raha.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/v-abi": {
+    "text": "Mul on vaja abi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/v-sul-abi": {
+    "text": "Kas sul on vaja abi?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/p-mari": {
+    "text": "Mina olen Mari. Mul on kass. Minu ema on õpetaja. Emal on auto. Jaan on minu sõber. Jaanil on koer. Me elame Tartus. Meil on hea kodu. Kas sul on kass?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/d-liis-1": {
+    "text": "Tere! Kas sul on aega?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "mul-on/d-sina-1": {
+    "text": "Jah, on.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/d-liis-2": {
+    "text": "Mul on vaja abi. Kas sul on auto?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "mul-on/d-sina-2": {
+    "text": "Ei ole. Aga Jaanil on auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/d-liis-3": {
+    "text": "Hästi! Kellel on Jaani number?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "mul-on/d-sina-3": {
+    "text": "Minul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/d-liis-4": {
+    "text": "Aitäh! Kas sul on homme aega?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "mul-on/d-sina-4": {
+    "text": "Ei, mul pole homme aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/poe": {
+    "text": "poe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/poes": {
+    "text": "poes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/ema-on-poes": {
+    "text": "Ema on poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/tuba": {
+    "text": "tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/toa": {
+    "text": "toa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/toas": {
+    "text": "toas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/ta-on-toas": {
+    "text": "Ta on toas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/jo3gi": {
+    "text": "jõgi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/jo3e": {
+    "text": "jõe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/jo3es": {
+    "text": "jões",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/me-ujume-jo3es": {
+    "text": "Me ujume jões.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/laud": {
+    "text": "laud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/laua": {
+    "text": "laua",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/laual": {
+    "text": "laual",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/raamat-on-laual": {
+    "text": "Raamat on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/turg": {
+    "text": "turg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/turu": {
+    "text": "turu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/turul": {
+    "text": "turul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/nad-on-turul": {
+    "text": "Nad on turul.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/aken": {
+    "text": "aken",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/akna": {
+    "text": "akna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/aknal": {
+    "text": "aknal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/kohv-on-aknal": {
+    "text": "Kohv on aknal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/kool": {
+    "text": "kool",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/kooli": {
+    "text": "kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/koolis": {
+    "text": "koolis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/ta-o3pib-koolis": {
+    "text": "Ta õpib koolis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/raamat": {
+    "text": "raamat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/raamatu": {
+    "text": "raamatu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/raamatus": {
+    "text": "raamatus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/pilt-on-raamatus": {
+    "text": "Pilt on raamatus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/uks": {
+    "text": "uks",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/ukse": {
+    "text": "ukse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/uksel": {
+    "text": "uksel",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/jaan-on-uksel": {
+    "text": "Jaan on uksel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/tallinn": {
+    "text": "Tallinn",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/tallinna": {
+    "text": "Tallinna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/tallinnas": {
+    "text": "Tallinnas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/ma-elan-tallinnas": {
+    "text": "Ma elan Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/sein": {
+    "text": "sein",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/seina": {
+    "text": "seina",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/seinal": {
+    "text": "seinal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/pilt-on-seinal": {
+    "text": "Pilt on seinal.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/kohvik": {
+    "text": "kohvik",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/kohviku": {
+    "text": "kohviku",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/kohvikus": {
+    "text": "kohvikus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/me-oleme-kohvikus": {
+    "text": "Me oleme kohvikus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/kodu": {
+    "text": "kodu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/kodus": {
+    "text": "kodus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/ta-to2o2tab-kodus": {
+    "text": "Ta töötab kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/haigla": {
+    "text": "haigla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/haiglas": {
+    "text": "haiglas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/mari-to2o2tab-haiglas": {
+    "text": "Mari töötab haiglas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/tartu": {
+    "text": "Tartu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/tartus": {
+    "text": "Tartus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/nad-o3pivad-tartus": {
+    "text": "Nad õpivad Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/to2o2": {
+    "text": "töö",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/to2o2l": {
+    "text": "tööl",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/ma-olen-to2o2l": {
+    "text": "Ma olen tööl.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/pa2rnu": {
+    "text": "Pärnu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/pa2rnus": {
+    "text": "Pärnus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/jaan-elab-pa2rnus": {
+    "text": "Jaan elab Pärnus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/soome": {
+    "text": "Soome",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/soomes": {
+    "text": "Soomes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/ma-elan-soomes": {
+    "text": "Ma elan Soomes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/ujume": {
+    "text": "ujume",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pood-poe/p-saturday": {
+    "text": "Täna on laupäev. Ema on turul ja Jaan on poes. Kati on kohvikus. Mari on kodus. Ta istub toas ja loeb. Kohv on laual.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/po3hivormid": {
+    "text": "põhivormid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/koolis": {
+    "text": "koolis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/kool": {
+    "text": "kool",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/kooli": {
+    "text": "kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/poe": {
+    "text": "poe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/poodi": {
+    "text": "poodi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/raamat": {
+    "text": "raamat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/raamatu": {
+    "text": "raamatu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/raamatut": {
+    "text": "raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/maja": {
+    "text": "maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/auto": {
+    "text": "auto",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/autot": {
+    "text": "autot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/linn": {
+    "text": "linn",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/linna": {
+    "text": "linna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/uks": {
+    "text": "uks",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/ukse": {
+    "text": "ukse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/ust": {
+    "text": "ust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/mees": {
+    "text": "mees",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/mehe": {
+    "text": "mehe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/meest": {
+    "text": "meest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/naine": {
+    "text": "naine",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/naise": {
+    "text": "naise",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/naist": {
+    "text": "naist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/laps": {
+    "text": "laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/lapse": {
+    "text": "lapse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/last": {
+    "text": "last",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/kodu": {
+    "text": "kodu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/so3na": {
+    "text": "sõna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/tuba": {
+    "text": "tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/toa": {
+    "text": "toa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/laud": {
+    "text": "laud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/laua": {
+    "text": "laua",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/lauda": {
+    "text": "lauda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/turg": {
+    "text": "turg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/turu": {
+    "text": "turu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/turgu": {
+    "text": "turgu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/ku2simus": {
+    "text": "küsimus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/ku2simuse": {
+    "text": "küsimuse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/ku2simust": {
+    "text": "küsimust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/to2o2": {
+    "text": "töö",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/to2o2d": {
+    "text": "tööd",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/inimene": {
+    "text": "inimene",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/inimese": {
+    "text": "inimese",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/inimest": {
+    "text": "inimest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/hobune": {
+    "text": "hobune",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/hobuse": {
+    "text": "hobuse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/hobust": {
+    "text": "hobust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/vastus": {
+    "text": "vastus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/vastuse": {
+    "text": "vastuse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/vastust": {
+    "text": "vastust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/harjutus": {
+    "text": "harjutus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/harjutuse": {
+    "text": "harjutuse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/harjutust": {
+    "text": "harjutust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/maa": {
+    "text": "maa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/maad": {
+    "text": "maad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/tee": {
+    "text": "tee",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/teed": {
+    "text": "teed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/puu": {
+    "text": "puu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/puud": {
+    "text": "puud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/kool-kooli-kooli": {
+    "text": "kool, kooli, kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/pood-poe-poodi": {
+    "text": "pood, poe, poodi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/raamat-raamatu-raamatut": {
+    "text": "raamat, raamatu, raamatut",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/maja-maja-maja": {
+    "text": "maja, maja, maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/auto-auto-autot": {
+    "text": "auto, auto, autot",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/linn-linna-linna": {
+    "text": "linn, linna, linna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/uks-ukse-ust": {
+    "text": "uks, ukse, ust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/mees-mehe-meest": {
+    "text": "mees, mehe, meest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/naine-naise-naist": {
+    "text": "naine, naise, naist",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/laps-lapse-last": {
+    "text": "laps, lapse, last",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/kodu-kodu-kodu": {
+    "text": "kodu, kodu, kodu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/so3na-so3na-so3na": {
+    "text": "sõna, sõna, sõna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/tuba-toa-tuba": {
+    "text": "tuba, toa, tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/laud-laua-lauda": {
+    "text": "laud, laua, lauda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/turg-turu-turgu": {
+    "text": "turg, turu, turgu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/ku2simus-ku2simuse-ku2simust": {
+    "text": "küsimus, küsimuse, küsimust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/to2o2-to2o2-to2o2d": {
+    "text": "töö, töö, tööd",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/inimene-inimese-inimest": {
+    "text": "inimene, inimese, inimest",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/hobune-hobuse-hobust": {
+    "text": "hobune, hobuse, hobust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/vastus-vastuse-vastust": {
+    "text": "vastus, vastuse, vastust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/harjutus-harjutuse-harjutust": {
+    "text": "harjutus, harjutuse, harjutust",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/maa-maa-maad": {
+    "text": "maa, maa, maad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/tee-tee-teed": {
+    "text": "tee, tee, teed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/puu-puu-puud": {
+    "text": "puu, puu, puud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/d-mari-1": {
+    "text": "Tere! Mis on sõna pood põhivormid?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "pohivormid/d-sina-1": {
+    "text": "Pood, poe, poodi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/d-mari-2": {
+    "text": "Jah. Ja laps?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "pohivormid/d-sina-2": {
+    "text": "Laps, lapse, last.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/d-mari-3": {
+    "text": "Jah. Ja maja?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "pohivormid/d-sina-3": {
+    "text": "Maja, maja, maja.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "pohivormid/d-mari-4": {
+    "text": "Ja vastus?",
+    "model": "eleven_v4",
+    "voice": "WtzwR2kNGVNuaTGaYLfK"
+  },
+  "pohivormid/d-sina-4": {
+    "text": "Vastus, vastuse, vastust.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
   "omastav/mina": {
     "text": "mina",
     "model": "eleven_v4",
@@ -6196,6 +8086,456 @@
   },
   "tegevusnimed/p-message": {
     "text": "Tere, Jaan! Ma pean täna kodus töötama. Aga ma lähen kell neli linna. Kas sa tahad kohvi juua? Ma ootan sind kohvikus. Mulle meeldib kohvikus lugeda. Ma pean kell kuus koju minema.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/maja": {
+    "text": "maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/majad": {
+    "text": "majad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/maja-maja": {
+    "text": "maja, maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/auto": {
+    "text": "auto",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/autod": {
+    "text": "autod",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/auto-auto": {
+    "text": "auto, auto",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/kass": {
+    "text": "kass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/kassi": {
+    "text": "kassi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/kassid": {
+    "text": "kassid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/kass-kassi": {
+    "text": "kass, kassi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/kool": {
+    "text": "kool",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/kooli": {
+    "text": "kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/koolid": {
+    "text": "koolid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/kool-kooli": {
+    "text": "kool, kooli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/linn": {
+    "text": "linn",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/linna": {
+    "text": "linna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/linnad": {
+    "text": "linnad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/linn-linna": {
+    "text": "linn, linna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/raamat": {
+    "text": "raamat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/raamatu": {
+    "text": "raamatu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/raamatud": {
+    "text": "raamatud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/raamat-raamatu": {
+    "text": "raamat, raamatu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/laps": {
+    "text": "laps",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/lapse": {
+    "text": "lapse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/lapsed": {
+    "text": "lapsed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/laps-lapse": {
+    "text": "laps, lapse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/uks": {
+    "text": "uks",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/ukse": {
+    "text": "ukse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/uksed": {
+    "text": "uksed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/uks-ukse": {
+    "text": "uks, ukse",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/poe": {
+    "text": "poe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/poed": {
+    "text": "poed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/pood-poe": {
+    "text": "pood, poe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/tuba": {
+    "text": "tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/toa": {
+    "text": "toa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/toad": {
+    "text": "toad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/tuba-toa": {
+    "text": "tuba, toa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/jo3gi": {
+    "text": "jõgi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/jo3e": {
+    "text": "jõe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/jo3ed": {
+    "text": "jõed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/jo3gi-jo3e": {
+    "text": "jõgi, jõe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/mees": {
+    "text": "mees",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/mehe": {
+    "text": "mehe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/mehed": {
+    "text": "mehed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/mees-mehe": {
+    "text": "mees, mehe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/naine": {
+    "text": "naine",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/naise": {
+    "text": "naise",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/naised": {
+    "text": "naised",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/naine-naise": {
+    "text": "naine, naise",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/so3ber": {
+    "text": "sõber",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/so3bra": {
+    "text": "sõbra",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/so3brad": {
+    "text": "sõbrad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/so3ber-so3bra": {
+    "text": "sõber, sõbra",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/laps-loeb": {
+    "text": "Laps loeb.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/lapsed-loevad": {
+    "text": "Lapsed loevad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/o3petaja-ra2a2gib": {
+    "text": "Õpetaja räägib.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/o3petajad-ra2a2givad": {
+    "text": "Õpetajad räägivad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/so3ber-ootab": {
+    "text": "Sõber ootab.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/so3brad-ootavad": {
+    "text": "Sõbrad ootavad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/mees-to2o2tab": {
+    "text": "Mees töötab.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/mehed-to2o2tavad": {
+    "text": "Mehed töötavad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/naine-joob-kohvi": {
+    "text": "Naine joob kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/naised-joovad-kohvi": {
+    "text": "Naised joovad kohvi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/kass-on-kodus": {
+    "text": "Kass on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/kassid-on-kodus": {
+    "text": "Kassid on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/suur-maja": {
+    "text": "suur maja",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/suured-majad": {
+    "text": "suured majad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/va2ike-kass": {
+    "text": "väike kass",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/va2ikesed-kassid": {
+    "text": "väikesed kassid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/uus-raamat": {
+    "text": "uus raamat",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/uued-raamatud": {
+    "text": "uued raamatud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/vana-linn": {
+    "text": "vana linn",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/vanad-linnad": {
+    "text": "vanad linnad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/hea-so3ber": {
+    "text": "hea sõber",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/head-so3brad": {
+    "text": "head sõbrad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/ilus-tuba": {
+    "text": "ilus tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/ilusad-toad": {
+    "text": "ilusad toad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/nad": {
+    "text": "nad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/kaks-kassi": {
+    "text": "kaks kassi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/maja-on-suur": {
+    "text": "Maja on suur.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/majad-on-suured": {
+    "text": "Majad on suured.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/magama": {
+    "text": "magama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/suur": {
+    "text": "suur",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/suure": {
+    "text": "suure",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/suured": {
+    "text": "suured",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/va2ike": {
+    "text": "väike",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/ilus": {
+    "text": "ilus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/ema-ja-isa-to2o2tavad": {
+    "text": "Ema ja isa töötavad.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mitmus/p-home": {
+    "text": "Me elame Tartus. Meie kodu on väike, aga toad on suured. Ema ja isa töötavad Tallinnas. Lapsed õpivad koolis. Meie kass magab kodus. Ta on väike ja ilus.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

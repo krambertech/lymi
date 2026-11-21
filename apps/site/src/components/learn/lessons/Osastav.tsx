@@ -99,8 +99,8 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Neil pole maja.": msg`They don’t have a house.`,
   "Laual on leib.": msg`There’s bread on the table.`,
   "Laual pole leiba.": msg`There’s no bread on the table.`,
-  "Linnas on kohvik.": msg`There’s a café in town.`,
-  "Linnas pole kohvikut.": msg`There’s no café in town.`,
+  "Toas on laud.": msg`There’s a table in the room.`,
+  "Toas pole lauda.": msg`There’s no table in the room.`,
   "Ma joon kohvi.": msg`I drink coffee.`,
   "Ta joob vett.": msg`He or she drinks water.`,
   "Me sööme leiba.": msg`We eat bread.`,
@@ -183,17 +183,20 @@ function CountTable() {
     et: noun,
     cells: OSASTAV_COUNT.numbers.map((number) => {
       const text = counted(number, noun);
+      const form = number === "üks" ? noun : PARTITIVE_NOUNS[noun];
       return {
-        form: number === "üks" ? text : litForm(text, noun, PARTITIVE_NOUNS[noun]),
+        form: litForm(form, noun, form),
         src: src(text),
         note:
           noun === "maja" && number !== "üks" ? (
             <Trans>
-              {means(text, i18n)}; its third form is <b lang="et">maja</b> too, so it looks the
-              same.
+              <b lang="et">{text}</b>, {means(text, i18n)}; its third form is <b lang="et">maja</b>{" "}
+              too, so it looks the same.
             </Trans>
           ) : (
-            means(text, i18n)
+            <Trans>
+              <b lang="et">{text}</b>, {means(text, i18n)}
+            </Trans>
           ),
       };
     }),

@@ -141,10 +141,6 @@ msgstr "{0}, right answer"
 msgid "{0}, your answer"
 msgstr "{0}, your answer"
 
-#. placeholder {0}: means(text, i18n)
-msgid "{0}; its third form is <0>maja</0> too, so it looks the same."
-msgstr "{0}; its third form is <0>maja</0> too, so it looks the same."
-
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {# card added} other {# cards added}}"
 
@@ -473,6 +469,14 @@ msgstr "<0>{before}</0> blank <1>{after}</1>"
 
 msgid "<0>{plannedCount}</0> planned, A1 to B1"
 msgstr "<0>{plannedCount}</0> planned, A1 to B1"
+
+#. placeholder {0}: means(text, i18n)
+msgid "<0>{text}</0>, {0}"
+msgstr "<0>{text}</0>, {0}"
+
+#. placeholder {0}: means(text, i18n)
+msgid "<0>{text}</0>, {0}; its third form is <1>maja</1> too, so it looks the same."
+msgstr "<0>{text}</0>, {0}; its third form is <1>maja</1> too, so it looks the same."
 
 msgid "<0>Active transport</0> moves substances against the gradient."
 msgstr "<0>Active transport</0> moves substances against the gradient."
@@ -11055,8 +11059,8 @@ msgstr "There is nothing published yet."
 msgid "There’s a *park* near the station."
 msgstr "There’s a *park* near the station."
 
-msgid "There’s a café in town."
-msgstr "There’s a café in town."
+msgid "There’s a table in the room."
+msgstr "There’s a table in the room."
 
 msgid "There’s bread on the table."
 msgstr "There’s bread on the table."
@@ -11064,8 +11068,8 @@ msgstr "There’s bread on the table."
 msgid "There’s no bread on the table."
 msgstr "There’s no bread on the table."
 
-msgid "There’s no café in town."
-msgstr "There’s no café in town."
+msgid "There’s no table in the room."
+msgstr "There’s no table in the room."
 
 msgid "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
 msgstr "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."

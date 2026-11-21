@@ -879,7 +879,7 @@ export const OSASTAV_NO = [
   { yes: "Tal on laps.", no: "Tal pole last.", noun: "laps" },
   { yes: "Neil on maja.", no: "Neil pole maja.", noun: "maja" },
   { yes: "Laual on leib.", no: "Laual pole leiba.", noun: "leib" },
-  { yes: "Linnas on kohvik.", no: "Linnas pole kohvikut.", noun: "kohvik" },
+  { yes: "Toas on laud.", no: "Toas pole lauda.", noun: "laud" },
   // The thing first: it keeps its first form after pole too.
   { yes: "Kass on laual.", no: "Kass pole laual.", noun: "kass", first: true },
 ] as const satisfies readonly { yes: string; no: string; noun: PartitiveNoun; first?: true }[];

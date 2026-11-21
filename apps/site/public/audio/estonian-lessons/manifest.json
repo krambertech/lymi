@@ -4539,13 +4539,13 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "osastav/linnas-on-kohvik": {
-    "text": "Linnas on kohvik.",
+  "osastav/toas-on-laud": {
+    "text": "Toas on laud.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "osastav/linnas-pole-kohvikut": {
-    "text": "Linnas pole kohvikut.",
+  "osastav/toas-pole-lauda": {
+    "text": "Toas pole lauda.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },

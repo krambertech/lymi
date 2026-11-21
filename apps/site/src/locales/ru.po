@@ -141,10 +141,6 @@ msgstr "{0}, правильный ответ"
 msgid "{0}, your answer"
 msgstr "{0}, твой ответ"
 
-#. placeholder {0}: means(text, i18n)
-msgid "{0}; its third form is <0>maja</0> too, so it looks the same."
-msgstr "{0}; третья форма тоже <0>maja</0>, поэтому слово не меняется."
-
 msgid "{added, plural, one {# card added} other {# cards added}}"
 msgstr "{added, plural, one {Добавлена # карточка} few {Добавлено # карточки} many {Добавлено # карточек} other {Добавлено # карточки}}"
 
@@ -473,6 +469,14 @@ msgstr "<0>{before}</0> пропуск <1>{after}</1>"
 
 msgid "<0>{plannedCount}</0> planned, A1 to B1"
 msgstr "Запланировано: <0>{plannedCount}</0>, от A1 до B1"
+
+#. placeholder {0}: means(text, i18n)
+msgid "<0>{text}</0>, {0}"
+msgstr "<0>{text}</0>, {0}"
+
+#. placeholder {0}: means(text, i18n)
+msgid "<0>{text}</0>, {0}; its third form is <1>maja</1> too, so it looks the same."
+msgstr "<0>{text}</0>, {0}; третья форма тоже <1>maja</1>, поэтому слово не меняется."
 
 msgid "<0>Active transport</0> moves substances against the gradient."
 msgstr "<0>Активный транспорт</0> переносит вещества против градиента."
@@ -11055,8 +11059,8 @@ msgstr "Пока ничего не опубликовано."
 msgid "There’s a *park* near the station."
 msgstr "Возле вокзала есть *парк*."
 
-msgid "There’s a café in town."
-msgstr "В городе есть кафе."
+msgid "There’s a table in the room."
+msgstr "В комнате есть стол."
 
 msgid "There’s bread on the table."
 msgstr "На столе есть хлеб."
@@ -11064,8 +11068,8 @@ msgstr "На столе есть хлеб."
 msgid "There’s no bread on the table."
 msgstr "На столе нет хлеба."
 
-msgid "There’s no café in town."
-msgstr "В городе нет кафе."
+msgid "There’s no table in the room."
+msgstr "В комнате нет стола."
 
 msgid "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
 msgstr "Из этих одиннадцати слов строится любое число до 99. Нажми на каждое. Две пары звучат похоже: <0/> и <1/>, <2/> и <3/>."

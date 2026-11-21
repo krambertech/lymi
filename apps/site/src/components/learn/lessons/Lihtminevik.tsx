@@ -737,7 +737,7 @@ export function LihtminevikLesson() {
           ),
         },
         {
-          id: "si",
+          id: "with-si",
           title: t`The past with -si-`,
           children: (
             <>
@@ -809,7 +809,7 @@ export function LihtminevikLesson() {
           ),
         },
         {
-          id: "i",
+          id: "with-i",
           title: t`The past with -i-`,
           children: (
             <>

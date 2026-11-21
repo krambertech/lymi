@@ -8,7 +8,7 @@ import {
   VORMID_CLASS,
 } from "../../../lib/learn/clips";
 import { eachPairFirst } from "../../../lib/learn/quiz";
-import { ASKED, CLASS_GAPS, HEARD, heardRun, threeVerbs } from "./VerbiPohivormid";
+import { ASKED, CLASS_GAPS, HEARD, heardRun, MADE, threeVerbs } from "./VerbiPohivormid";
 
 const recorded = CLIPS["verbi-pohivormid"] ?? {};
 
@@ -93,6 +93,17 @@ describe("“Which verb is it?”", () => {
       expect(new Set(eachPairFirst(items, items[0]).map((item) => item.ma)).size).toBe(
         ASKED.length,
       );
+  });
+});
+
+describe("“Make the -da form”", () => {
+  it("meets every kind of -da form in a run's first five rounds", () => {
+    for (let run = 0; run < 200; run++) {
+      const five = eachPairFirst(MADE).slice(0, 5);
+      expect(new Set(five.map((item) => item.verb.pattern))).toEqual(
+        new Set(["da", "ta", "la", "na", "a"]),
+      );
+    }
   });
 });
 

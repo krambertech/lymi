@@ -713,9 +713,6 @@ msgstr "2 quizzes"
 msgid "2 quizzes and a conversation"
 msgstr "2 quizzes and a conversation"
 
-msgid "2 quizzes and a passage"
-msgstr "2 quizzes and a passage"
-
 msgid "20 questions asked aloud, 12 to pass. 128 to learn."
 msgstr "20 questions asked aloud, 12 to pass. 128 to learn."
 
@@ -748,6 +745,9 @@ msgstr "3 pages"
 
 msgid "3 quizzes"
 msgstr "3 quizzes"
+
+msgid "3 quizzes and a passage"
+msgstr "3 quizzes and a passage"
 
 msgid "3 reviews saved"
 msgstr "3 reviews saved"
@@ -1749,6 +1749,9 @@ msgstr "All shelves"
 
 msgid "All six. Every ending was right."
 msgstr "All six. Every ending was right."
+
+msgid "All six. You made every kind of <0>-da</0> form."
+msgstr "All six. You made every kind of <0>-da</0> form."
 
 msgid "All six. You matched every pronoun with its ending."
 msgstr "All six. You matched every pronoun with its ending."
@@ -4650,6 +4653,9 @@ msgstr "Gives away a pair of electrons"
 msgid "Gladly"
 msgstr "Gladly"
 
+msgid "Go back through the forms above, then try again."
+msgstr "Go back through the forms above, then try again."
+
 msgid "Go back to the endings above, then try again."
 msgstr "Go back to the endings above, then try again."
 
@@ -6085,6 +6091,9 @@ msgstr "Italiano · phrase"
 msgid "Its -da form is {da}, its I form {n}."
 msgstr "Its -da form is {da}, its I form {n}."
 
+msgid "its <0>-da</0> form"
+msgstr "its <0>-da</0> form"
+
 msgid "its changelog"
 msgstr "its changelog"
 
@@ -6930,6 +6939,9 @@ msgstr "Make one deck for your study group and share its link. Everyone gets eac
 
 msgid "Make Spanish flashcards from this post."
 msgstr "Make Spanish flashcards from this post."
+
+msgid "Make the <0>-da</0> form"
+msgstr "Make the <0>-da</0> form"
 
 msgid "Make the form"
 msgstr "Make the form"
@@ -7844,6 +7856,9 @@ msgstr "One of a mirror-image pair"
 
 msgid "One of the eleven base words."
 msgstr "One of the eleven base words."
+
+msgid "One of the verbs that take <0>-ta</0>: <1>{ma}</1>, <2>{da}</2>."
+msgstr "One of the verbs that take <0>-ta</0>: <1>{ma}</1>, <2>{da}</2>."
 
 msgid "One person"
 msgstr "One person"
@@ -9187,6 +9202,9 @@ msgstr "Security+ · new"
 msgid "Security+, CISSP and the acronyms that come with them."
 msgstr "Security+, CISSP and the acronyms that come with them."
 
+msgid "See a verb’s <0>-ma</0> form and type its <1>-da</1> form, then hear it. The keys under the field type õ, ä, ö and ü."
+msgstr "See a verb’s <0>-ma</0> form and type its <1>-da</1> form, then hear it. The keys under the field type õ, ä, ö and ü."
+
 msgid "See all"
 msgstr "See all"
 
@@ -9911,6 +9929,9 @@ msgstr "Support"
 
 msgid "Support and email: we keep the information you send us so we can respond. We send account and service emails, including sign-in help, deck invitations and deletion confirmations. Resend delivers our email and receives the recipient, subject and message; Cloudflare Email Service is the fallback. Delivery reports help us handle bounced mail and spam complaints."
 msgstr "Support and email: we keep the information you send us so we can respond. We send account and service emails, including sign-in help, deck invitations and deletion confirmations. Resend delivers our email and receives the recipient, subject and message; Cloudflare Email Service is the fallback. Delivery reports help us handle bounced mail and spam complaints."
+
+msgid "Swap <0>-ma</0> for <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
+msgstr "Swap <0>-ma</0> for <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
 
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Swedes use it for coffee and working hours alike."

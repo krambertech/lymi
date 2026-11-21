@@ -18,6 +18,7 @@ import {
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, Panel } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { type GapItem, GapPassage } from "../GapPassage";
 import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
@@ -613,6 +614,30 @@ function ClassWhy({ id }: { id: (typeof CLASS_GAPS)[number]["id"] }) {
 
 const CLASS_ITEMS: GapItem[] = CLASS_GAPS.map((gap) => ({ ...gap, why: <ClassWhy id={gap.id} /> }));
 
+/** Why a verb's -da form is what it is, after the learner types it. */
+function MadeHow({ verb }: { verb: VerbForms }) {
+  const { ma } = verb;
+  const da = daForm(verb);
+  if (verb.pattern === "da")
+    return (
+      <Trans>
+        Swap <End>-ma</End> for <End>-da</End>: <span lang="et">{ma}</span>,{" "}
+        <span lang="et">{da}</span>.
+      </Trans>
+    );
+  if (verb.pattern === "ta")
+    return (
+      <Trans>
+        One of the verbs that take <End>-ta</End>: <span lang="et">{ma}</span>,{" "}
+        <span lang="et">{da}</span>.
+      </Trans>
+    );
+  return <How ma={ma} />;
+}
+
+/** “Type the form”: every verb, keyed by how its -da form ends, so a run meets each kind. */
+export const MADE = VERB_FORMS.map((verb) => ({ verb, pair: [verb.pattern, verb.ma] as const }));
+
 /** Which of the three forms a heard form was, and of which verb. */
 function WhichForm({ verb, kind, said }: { verb: VerbForms; kind: Kind; said: string }) {
   const { i18n } = useLingui();
@@ -697,6 +722,25 @@ export function VerbiPohivormidLesson() {
         : { ...item, options: verbOptions(threeVerbs(item.answer as Asked), i18n) },
     );
 
+  const madeItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
+    () =>
+      MADE.map(({ verb, pair }) => ({
+        pair,
+        base: verb.ma,
+        gloss: i18n._(MEANS[verb.ma]),
+        cue: (
+          <Trans>
+            its <End>-da</End> form
+          </Trans>
+        ),
+        answers: [daForm(verb)],
+        src: src(daForm(verb)),
+        said: <span lang="et">{threeForms(verb)}</span>,
+        explain: <MadeHow verb={verb} />,
+      })),
+    [i18n],
+  );
+
   return (
     <LessonView
       slug={SLUG}
@@ -710,7 +754,7 @@ export function VerbiPohivormidLesson() {
       }
       facts={[
         <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">2 quizzes and a passage</Trans>,
+        <Trans key="q">3 quizzes and a passage</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={VERB_FORMS.map(threeForms)}
@@ -937,6 +981,47 @@ export function VerbiPohivormidLesson() {
                 recall={(item) => ({ label: item.said, src: item.src })}
                 order={askedRun}
                 round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "make",
+          title: t`Type the form`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    See a verb’s <End>-ma</End> form and type its <End>-da</End> form, then hear it.
+                    The keys under the field type õ, ä, ö and ü.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="make-da-form"
+                title={
+                  <Trans>
+                    Make the <End>-da</End> form
+                  </Trans>
+                }
+                items={madeItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>
+                      All six. You made every kind of <End>-da</End> form.
+                    </Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Play the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go back through the forms above, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={eachPairFirst}
+                round={(props) => <FormRound {...props} />}
               />
             </>
           ),

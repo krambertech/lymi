@@ -713,9 +713,6 @@ msgstr "2 тести"
 msgid "2 quizzes and a conversation"
 msgstr "2 тести й розмова"
 
-msgid "2 quizzes and a passage"
-msgstr "2 тести й текст"
-
 msgid "20 questions asked aloud, 12 to pass. 128 to learn."
 msgstr "20 питань усно, 12 для складання. Вивчити — 128."
 
@@ -748,6 +745,9 @@ msgstr "3 сторінки"
 
 msgid "3 quizzes"
 msgstr "3 тести"
+
+msgid "3 quizzes and a passage"
+msgstr "3 тести й текст"
 
 msgid "3 reviews saved"
 msgstr "3 повторення збережено"
@@ -1749,6 +1749,9 @@ msgstr "Усі полиці"
 
 msgid "All six. Every ending was right."
 msgstr "Усі шість. Кожне закінчення правильне."
+
+msgid "All six. You made every kind of <0>-da</0> form."
+msgstr "Усі шість. Кожен вид форми на <0>-da</0> без помилки."
 
 msgid "All six. You matched every pronoun with its ending."
 msgstr "Усі шість. Кожен займенник — зі своїм закінченням."
@@ -4650,6 +4653,9 @@ msgstr "Віддає пару електронів"
 msgid "Gladly"
 msgstr "Охоче"
 
+msgid "Go back through the forms above, then try again."
+msgstr "Ще раз пройдися формами вище, а потім спробуй знову."
+
 msgid "Go back to the endings above, then try again."
 msgstr "Повернися до закінчень вище й спробуй ще раз."
 
@@ -6085,6 +6091,9 @@ msgstr "Italiano · фраза"
 msgid "Its -da form is {da}, its I form {n}."
 msgstr "Форма на -da — {da}, форма для «я» — {n}."
 
+msgid "its <0>-da</0> form"
+msgstr "її форма на <0>-da</0>"
+
 msgid "its changelog"
 msgstr "список змін Mochi"
 
@@ -6930,6 +6939,9 @@ msgstr "Зроби одну колоду для навчальної групи 
 
 msgid "Make Spanish flashcards from this post."
 msgstr "Зроби іспанські флешкартки з цього допису."
+
+msgid "Make the <0>-da</0> form"
+msgstr "Утвори форму на <0>-da</0>"
 
 msgid "Make the form"
 msgstr "Утвори форму"
@@ -7844,6 +7856,9 @@ msgstr "Одна з двох дзеркальних форм"
 
 msgid "One of the eleven base words."
 msgstr "Одне з одинадцяти базових слів."
+
+msgid "One of the verbs that take <0>-ta</0>: <1>{ma}</1>, <2>{da}</2>."
+msgstr "Одне з дієслів, що мають <0>-ta</0>: <1>{ma}</1>, <2>{da}</2>."
 
 msgid "One person"
 msgstr "Одна людина"
@@ -9187,6 +9202,9 @@ msgstr "Security+ · нова"
 msgid "Security+, CISSP and the acronyms that come with them."
 msgstr "Security+, CISSP і всі абревіатури, що до них додаються."
 
+msgid "See a verb’s <0>-ma</0> form and type its <1>-da</1> form, then hear it. The keys under the field type õ, ä, ö and ü."
+msgstr "Подивись на форму дієслова на <0>-ma</0> і надрукуй його форму на <1>-da</1>, а потім послухай її. Кнопки під полем друкують õ, ä, ö та ü."
+
 msgid "See all"
 msgstr "Усі"
 
@@ -9911,6 +9929,9 @@ msgstr "Підтримка"
 
 msgid "Support and email: we keep the information you send us so we can respond. We send account and service emails, including sign-in help, deck invitations and deletion confirmations. Resend delivers our email and receives the recipient, subject and message; Cloudflare Email Service is the fallback. Delivery reports help us handle bounced mail and spam complaints."
 msgstr "Підтримка й пошта: ми зберігаємо надіслану тобою інформацію, щоб відповісти. Ми надсилаємо службові листи, зокрема допомогу зі входом, запрошення до колод і підтвердження видалення облікового запису. Resend доставляє нашу пошту й отримує одержувача, тему й текст листа; Cloudflare Email Service є запасним сервісом. Звіти про доставку допомагають обробляти повернення листів і скарги на спам."
+
+msgid "Swap <0>-ma</0> for <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
+msgstr "Заміни <0>-ma</0> на <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
 
 msgid "Swedes use it for coffee and working hours alike."
 msgstr "Шведи кажуть так і про каву, і про робочий час."

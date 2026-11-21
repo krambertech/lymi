@@ -806,6 +806,167 @@ const TALLINN_CLIPS: Record<string, Clip> = {
   ...TALLINN_DIALOGUE,
 };
 
+/**
+ * The genitive lesson's pronouns: who, and whose. Checked in ÕS 2025 on Sõnaveeb: minu or mu,
+ * sinu or su, tema or ta, meie or me, teie or te, and nende.
+ */
+export const OMASTAV_PRONOUNS = [
+  { who: "mina", whose: "minu", short: "mu" },
+  { who: "sina", whose: "sinu", short: "su" },
+  { who: "tema", whose: "tema" },
+  { who: "meie", whose: "meie" },
+  { who: "teie", whose: "teie" },
+  { who: "nemad", whose: "nende" },
+] as const;
+
+/** A pronoun's whose form before raamat, as the switch says it: “minu raamat”. */
+export const ownedBook = (whose: string) => `${whose} raamat`;
+
+/** How a noun's genitive differs from the word a dictionary gives first. */
+export type GenitiveKind = "vowel" | "inside" | "same";
+
+/**
+ * Nouns in three forms: the word, its genitive, and the genitive with -s or -l. Checked in ÕS 2025
+ * on Sõnaveeb: kooli, Tallinna, kohviku, raamatu, poe, toa, turu, laua, Tartu, haigla, kodu, töö.
+ */
+export const OMASTAV_FORMS: readonly {
+  kind: GenitiveKind;
+  word: string;
+  whose: string;
+  where: string;
+}[] = [
+  { kind: "vowel", word: "kool", whose: "kooli", where: "koolis" },
+  { kind: "vowel", word: "Tallinn", whose: "Tallinna", where: "Tallinnas" },
+  { kind: "vowel", word: "kohvik", whose: "kohviku", where: "kohvikus" },
+  { kind: "vowel", word: "raamat", whose: "raamatu", where: "raamatus" },
+  { kind: "inside", word: "pood", whose: "poe", where: "poes" },
+  { kind: "inside", word: "tuba", whose: "toa", where: "toas" },
+  { kind: "inside", word: "turg", whose: "turu", where: "turul" },
+  { kind: "inside", word: "laud", whose: "laua", where: "laual" },
+  { kind: "same", word: "Tartu", whose: "Tartu", where: "Tartus" },
+  { kind: "same", word: "haigla", whose: "haigla", where: "haiglas" },
+  { kind: "same", word: "kodu", whose: "kodu", where: "kodus" },
+  { kind: "same", word: "töö", whose: "töö", where: "tööl" },
+];
+
+/**
+ * “Which form?”: a noun's three forms and a phrase with its genitive in front. ÕS 2025 on
+ * Sõnaveeb: kontori, jõe, Pärnu; Eesti is the same in the genitive.
+ */
+export const OMASTAV_PHRASES: readonly {
+  kind: GenitiveKind;
+  word: string;
+  whose: string;
+  where: string;
+  noun: string;
+}[] = [
+  { kind: "vowel", word: "kool", whose: "kooli", where: "koolis", noun: "uks" },
+  { kind: "vowel", word: "kohvik", whose: "kohviku", where: "kohvikus", noun: "nimi" },
+  { kind: "vowel", word: "kontor", whose: "kontori", where: "kontoris", noun: "aken" },
+  { kind: "vowel", word: "Tallinn", whose: "Tallinna", where: "Tallinnas", noun: "turg" },
+  { kind: "inside", word: "pood", whose: "poe", where: "poes", noun: "uks" },
+  { kind: "inside", word: "tuba", whose: "toa", where: "toas", noun: "aken" },
+  { kind: "inside", word: "turg", whose: "turu", where: "turul", noun: "kohvik" },
+  { kind: "inside", word: "jõgi", whose: "jõe", where: "jões", noun: "nimi" },
+  { kind: "same", word: "haigla", whose: "haigla", where: "haiglas", noun: "aken" },
+  { kind: "same", word: "Tartu", whose: "Tartu", where: "Tartus", noun: "kohvik" },
+  { kind: "same", word: "Pärnu", whose: "Pärnu", where: "Pärnus", noun: "turg" },
+  { kind: "same", word: "Eesti", whose: "Eesti", where: "Eestis", noun: "pealinn" },
+];
+
+/** A phrase of “Which form?”, as it is said: “kooli uks”. */
+export const phraseOf = (each: { whose: string; noun: string }) => `${each.whose} ${each.noun}`;
+
+/** “Whose?”: sentences with a pronoun's whose form, by the pronoun they use. */
+export const OMASTAV_WHOSE: readonly {
+  who: (typeof OMASTAV_PRONOUNS)[number]["who"];
+  said: string;
+}[] = [
+  { who: "mina", said: "See on minu raamat." },
+  { who: "mina", said: "Mu nimi on Kati." },
+  { who: "sina", said: "See on sinu kohv." },
+  { who: "sina", said: "Kas see on su kass?" },
+  { who: "tema", said: "Tema raamat on laual." },
+  { who: "tema", said: "Tema vend töötab haiglas." },
+  { who: "meie", said: "Meie kool on Tartus." },
+  { who: "meie", said: "Meie ema on õpetaja." },
+  { who: "teie", said: "Kas see on teie kohvik?" },
+  { who: "teie", said: "Teie kass on kodus." },
+  { who: "nemad", said: "Nende kontor on Tallinnas." },
+  { who: "nemad", said: "See on nende pilt." },
+];
+
+/** Whose, asked and answered, and an owner before a noun. Jaan's genitive is Jaani. */
+export const OMASTAV_SENTENCES = [
+  "Minu nimi on Mari.",
+  "Mina elan Tartus.",
+  "Mis su nimi on?",
+  "Kelle raamat see on?",
+  "See on minu raamat.",
+  "See on Mari raamat.",
+  "Kelle kass see on?",
+  "See on Jaani kass.",
+  "Eesti pealinn on Tallinn.",
+] as const;
+
+/** Kati writes about herself and her family: a passage with a gap at each who or whose. */
+export const OMASTAV_PASSAGE = [
+  "Tere! Minu nimi on Kati.",
+  "Mina elan Tartus.",
+  "Jaan on minu vend.",
+  "Jaani kohvik on Tallinnas.",
+  "Ema ja isa elavad Pärnus.",
+  "Nende kassi nimi on Miisu.",
+  "Mis sinu nimi on?",
+] as const;
+
+/** At home with Mari: her lines in the second voice, the learner's in the main one. */
+export const OMASTAV_DIALOGUE = {
+  "d-mari-1": { text: "Kelle raamat see on?", voice: "second" },
+  "d-sina-1": "See on minu raamat.",
+  "d-mari-2": { text: "Ja kelle kohv see on?", voice: "second" },
+  "d-sina-2": "See on Jaani kohv.",
+  "d-mari-3": { text: "Kas see on teie kass?", voice: "second" },
+  "d-sina-3": "Jah, see on meie kass.",
+  "d-mari-4": { text: "Mis kassi nimi on?", voice: "second" },
+  "d-sina-4": "Kassi nimi on Miisu.",
+} as const satisfies Record<string, Clip>;
+
+/** Words of the genitive lesson heard on their own, outside its lists. */
+export const OMASTAV_WORDS = [
+  "kelle",
+  "pealinn",
+  "uks",
+  "aken",
+  "nimi",
+  "kass",
+  "kassi",
+  "Jaan",
+  "Jaani",
+  "Mari",
+  "Mari raamat",
+  "Eesti",
+  "Eestis",
+] as const;
+
+const OMASTAV_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...OMASTAV_PRONOUNS.flatMap((each) => [
+      each.who,
+      each.whose,
+      ownedBook(each.whose),
+      ...("short" in each ? [each.short] : []),
+    ]),
+    ...OMASTAV_FORMS.flatMap(({ word, whose, where }) => [word, whose, where]),
+    ...OMASTAV_PHRASES.flatMap((each) => [each.word, each.whose, each.where, phraseOf(each)]),
+    ...OMASTAV_WHOSE.map(({ said }) => said),
+    ...OMASTAV_SENTENCES,
+    ...OMASTAV_WORDS,
+  ]),
+  "p-kati": { sentences: OMASTAV_PASSAGE, voice: "second" },
+  ...OMASTAV_DIALOGUE,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -899,5 +1060,6 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
     ...KASKIV_DIALOGUE,
   },
   "paev-tallinnas": TALLINN_CLIPS,
+  omastav: OMASTAV_CLIPS,
   kit: KIT_CLIPS,
 };

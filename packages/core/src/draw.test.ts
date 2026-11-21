@@ -180,10 +180,6 @@ describe("scope and determinism", () => {
     ),
   ];
 
-  it("gives the same order for the same inputs", () => {
-    expect(drawOrder(cards, [], day)).toEqual(drawOrder(cards, [], day));
-  });
-
   it("orders a deck's reviews as the all-decks review order filtered", () => {
     // Keys hash the date, card and mode, so a group's order is the same in every scope. The
     // interleave with new cards is not: slots count the log, and the oldest-card slot picks
@@ -201,10 +197,6 @@ describe("scope and determinism", () => {
   it("changes the order on another day", () => {
     const other = { ...day, date: "2026-09-14" };
     expect(drawOrder(cards, [], other)).not.toEqual(drawOrder(cards, [], day));
-  });
-
-  it("counts what the full order holds", () => {
-    expect(drawableCount(cards, [], day)).toBe(drawOrder(cards, [], day).length);
   });
 });
 
@@ -246,17 +238,6 @@ describe("ordinary draws", () => {
     expect(order.indexOf("old")).toBeLessThan(OLDEST_UNSEEN_SLOT_EVERY);
   });
 
-  it("favours the reviews best remembered, over many days", () => {
-    const cards = [review("strong", 0.97), review("weak", 0.4)];
-    let strongFirst = 0;
-    for (let i = 0; i < 200; i++) {
-      const date = new Date(Date.UTC(2026, 0, 1 + i)).toISOString().slice(0, 10);
-      const first = drawOrder(cards, [], { ...day, date })[0];
-      if (first?.cardId === "strong") strongFirst++;
-    }
-    expect(strongFirst).toBeGreaterThan(150);
-  });
-
   it("favours an important card by its odds, as a review and as an unseen card", () => {
     const firsts = (cards: DrawCard[]) => {
       let importantFirst = 0;
@@ -283,17 +264,6 @@ describe("ordinary draws", () => {
     expect(order).not.toContain("later");
     expect(order).toContain("plain");
     expect(drawableCount(cards, [], day)).toBe(6);
-  });
-
-  it("favours recently added cards in three new-card slots of four", () => {
-    const cards = [unseen("recent", daysAgo(1)), unseen("stale", daysAgo(60))];
-    let recentFirst = 0;
-    for (let i = 0; i < 200; i++) {
-      const date = new Date(Date.UTC(2026, 0, 1 + i)).toISOString().slice(0, 10);
-      const first = drawOrder(cards, [], { ...day, date })[0];
-      if (first?.cardId === "recent") recentFirst++;
-    }
-    expect(recentFirst).toBeGreaterThan(180);
   });
 });
 

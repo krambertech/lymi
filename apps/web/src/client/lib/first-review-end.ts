@@ -47,10 +47,3 @@ export function reportFirstReviewEndLeft(properties: EndLeft) {
   } catch {}
   captureAnalytics("first_review_end_left", properties);
 }
-
-/** Test-only: forget that this tab already sent the event. */
-export function resetFirstReviewEndLeftForTests() {
-  try {
-    sessionStorage.removeItem(FIRST_REVIEW_END_LEFT_KEY);
-  } catch {}
-}

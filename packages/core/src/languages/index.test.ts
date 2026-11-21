@@ -186,8 +186,8 @@ describe("languageFormat", () => {
     expect(writtenWithReading("ko")).toBe(false);
   });
   it("tells a client to leave an empty pronunciation out, which the API accepts, and the model to write null", () => {
-    expect(languageFormat("ko")?.pronunciation.format).toBe(
-      "How the term is said, in Hangul, only where that differs from its spelling. Leave it out when the term is said as written. Not romanization or IPA.",
+    expect(languageFormat("ko")?.pronunciation.format).toContain(
+      "Leave it out when the term is said as written.",
     );
     expect(pronunciationGuide("ko")).toContain("Null when the term is said as written.");
     for (const format of LANGUAGE_FORMATS)

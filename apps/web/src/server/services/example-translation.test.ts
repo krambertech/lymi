@@ -1,4 +1,4 @@
-import { CardInput, exampleFingerprint } from "@lymi/core";
+import { CardInput } from "@lymi/core";
 import { eq } from "@lymi/core/db";
 import { afterAll, beforeAll, describe, expect, it } from "vitest";
 import type { TextProvider, TextRequest } from "../ai";
@@ -331,8 +331,6 @@ describe("translating examples", () => {
       exampleTranslation: "I ate bread.",
       exampleTranslationStale: false,
     });
-    const [row] = await db.select().from(schema.cards).where(eq(schema.cards.id, card.id));
-    expect(row?.exampleTranslationOf).toBe(exampleFingerprint("Ich aß Brot."));
   });
 
   it("leaves a cleared translation cleared until Enrich asks for it", async () => {

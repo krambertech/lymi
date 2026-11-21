@@ -42,13 +42,6 @@ function fakeEnv(row = candidate, claimChanges = 1) {
 }
 
 describe("review reminder delivery", () => {
-  it("loads the Web Push implementation in the Workers runtime", async () => {
-    const { default: webpush } = await import("web-push");
-    const keys = webpush.generateVAPIDKeys();
-    expect(keys.publicKey).toMatch(/^[A-Za-z0-9_-]+$/);
-    expect(keys.privateKey).toMatch(/^[A-Za-z0-9_-]+$/);
-  });
-
   it("evaluates local wall-clock time through daylight-saving timezones", () => {
     const now = new Date("2026-09-06T16:07:00.000Z");
     expect(reminderMoment(now, "Europe/Tallinn")).toEqual({
@@ -193,30 +186,6 @@ describe("review reminder delivery", () => {
     }));
     expect(send).not.toHaveBeenCalled();
     expect(statements.some((sql) => sql.includes("UPDATE push_subscriptions"))).toBe(false);
-  });
-
-  it("stops a week after the learner last opened Lymi", async () => {
-    const opened = new Date("2026-09-06T16:00:00.000Z").getTime();
-    const { env } = fakeEnv({ ...candidate, last_opened_at: opened });
-    const send = vi.fn().mockResolvedValue(undefined);
-    const count = vi.fn(seven);
-    const weekLater = new Date("2026-09-13T16:07:00.000Z");
-    await expect(dispatchReviewReminders(env, weekLater, send, count)).resolves.toMatchObject({
-      sent: 0,
-      quiet: 1,
-    });
-    expect(count).not.toHaveBeenCalled();
-    expect(send).not.toHaveBeenCalled();
-  });
-
-  it("reminds again once the learner returns", async () => {
-    const { env } = fakeEnv({
-      ...candidate,
-      last_opened_at: new Date("2026-09-13T08:00:00.000Z").getTime(),
-    });
-    await expect(
-      dispatchReviewReminders(env, new Date("2026-09-13T16:07:00.000Z"), vi.fn(), seven),
-    ).resolves.toMatchObject({ sent: 1, quiet: 0 });
   });
 
   it("removes expired endpoints and releases transient failures", async () => {

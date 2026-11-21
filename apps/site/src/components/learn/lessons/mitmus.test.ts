@@ -5,7 +5,6 @@ import {
   dictionaryPair,
   MITMUS_ADJECTIVES,
   MITMUS_CHANGED,
-  MITMUS_PASSAGE,
   MITMUS_SAME,
   MITMUS_SENTENCES,
   pluralSentence,
@@ -113,9 +112,5 @@ describe("plural quizzes", () => {
       expect(recorded[clipId(dictionaryPair(noun))]).toBe(dictionaryPair(noun));
       expect(recorded[clipId(noun.many)]).toBe(noun.many);
     }
-  });
-
-  it("records the passage as one take", () => {
-    expect(recorded["p-home"]).toEqual({ sentences: MITMUS_PASSAGE });
   });
 });

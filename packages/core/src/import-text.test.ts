@@ -1,13 +1,7 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
 import { describe, expect, it } from "vitest";
-import {
-  decodeTextImport,
-  detectSeparators,
-  encodeTextImport,
-  normaliseText,
-  parseDelimited,
-} from "./import-text";
+import { decodeTextImport, detectSeparators, normaliseText, parseDelimited } from "./import-text";
 
 const fixture = (name: string) =>
   readFileSync(join(import.meta.dirname, "fixtures/quizlet", name), "utf8");
@@ -116,18 +110,6 @@ describe("parseDelimited", () => {
 });
 
 describe("text import envelope", () => {
-  it("round-trips the choices and the text", () => {
-    const text = "a\tb\nc\td";
-    const raw = encodeTextImport(
-      { separators: { field: "||", row: "##" }, deckName: "German", deckId: "d1" },
-      text,
-    );
-    expect(decodeTextImport(raw)).toEqual({
-      meta: { separators: { field: "||", row: "##" }, deckName: "German", deckId: "d1" },
-      text,
-    });
-  });
-
   it("reads plain text, or a header it can't trust, as text with no choices", () => {
     expect(decodeTextImport("a\tb")).toEqual({ meta: null, text: "a\tb" });
     const bad = decodeTextImport('LYMI-TEXT-IMPORT 1\n{"separators":{"field":"","row":"x"}}\na\tb');

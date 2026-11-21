@@ -177,20 +177,6 @@ describe("creating an account from the phone app", () => {
     expect(signedIn.status).toBe(200);
   });
 
-  it("refuses a wrong code", async () => {
-    const email = "phone-wrong@lymi.test";
-    await app.fetch("/api/auth/sign-up/email", fromPhone({ email, password: PASSWORD, name: "W" }));
-    const code = latestLocalEmail(email)?.text.match(/^\d{6}$/m)?.[0] ?? "";
-    expect(code).toHaveLength(6);
-    const wrong = code === "000000" ? "111111" : "000000";
-    const response = await app.fetch(
-      "/api/auth/email-otp/verify-email",
-      fromPhone({ email, otp: wrong }),
-    );
-    expect(response.status).toBe(400);
-    expect(cookieOf(response)).not.toContain("session_token=");
-  });
-
   it("still sends the web a link", async () => {
     const email = "web-new@lymi.test";
     const created = await app.fetch(

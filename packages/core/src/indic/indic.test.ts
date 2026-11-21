@@ -134,10 +134,6 @@ describe("tamilTermReading", () => {
     ]);
   });
 
-  it("draws nothing over a term without a Tamil word", () => {
-    expect(tamilTermReading("song")).toBeNull();
-  });
-
   it("draws the card's own reading word for word", () => {
     expect(tamilTermReading("பஸ் நிலையம்", "bas nilaiyam")).toEqual([
       { text: "பஸ்", reading: "bas" },

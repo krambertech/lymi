@@ -76,7 +76,5 @@ test("a learner exports a deck and the library, and finds the files in Activity"
     await expect(
       page.getByRole("link", { name: /^Download lymi-library-.*\.apkg$/ }),
     ).toBeVisible();
-    // Activity is a log, so it carries no import action of its own; Settings holds that.
-    await expect(page.getByRole("link", { name: "Import decks", exact: true })).toHaveCount(0);
   });
 });

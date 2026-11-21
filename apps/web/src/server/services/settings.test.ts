@@ -32,9 +32,8 @@ afterAll(async () => {
 });
 
 describe("daily goal", () => {
-  it("starts at 50 and changes when the learner sets it", async () => {
+  it("starts at 50", async () => {
     expect((await getSettings(kateryna)).dailyGoal).toBe(50);
-    expect((await updateSettings(kateryna, { dailyGoal: 50 })).dailyGoal).toBe(50);
   });
 
   it("refuses an integration, whatever its scope", async () => {

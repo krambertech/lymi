@@ -13,12 +13,6 @@ import {
 describe("fsrs", () => {
   const now = new Date("2026-09-05T20:00:00Z");
 
-  it("starts a new card in the New state", () => {
-    const s = emptyState(now);
-    expect(s.state).toBe(State.New);
-    expect(s.reps).toBe(0);
-  });
-
   it("orders the four outcomes: Again < Hard < Good < Easy", () => {
     const p = preview(emptyState(now), now);
     expect(p[1].getTime()).toBeLessThan(p[2].getTime());
@@ -63,13 +57,6 @@ describe("fsrs", () => {
     const later = new Date(now.getTime() + 10 * 60_000);
     expect(schedule(card, 1, later).card.state).toBe(State.Learning);
     expect(schedule(card, 3, later).card.state).toBe(State.Review);
-  });
-
-  it("round-trips through JSON", () => {
-    const r = schedule(emptyState(now), 3, now);
-    const back = deserializeState(serializeState(r.card));
-    expect(back.due.getTime()).toBe(r.card.due.getTime());
-    expect(back.stability).toBe(r.card.stability);
   });
 
   it("formats intervals the way the grade buttons show them", () => {

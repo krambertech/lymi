@@ -32,8 +32,9 @@ describe("recording the quick-add shortcut", () => {
   });
 
   it("goes by the key's place, so another layout records the same shortcut", () => {
-    // ⌃⌥ and the key where L is, whatever letter a Ukrainian layout prints on it.
-    expect(acceleratorFrom(press("KeyL", { ctrlKey: true, altKey: true }))).toBe("Control+Alt+L");
+    // ⌃⌥ and the key where L is, though a Ukrainian layout prints Д on it.
+    const ukrainian = { ...press("KeyL", { ctrlKey: true, altKey: true }), key: "д" };
+    expect(acceleratorFrom(ukrainian as KeyboardEvent)).toBe("Control+Alt+L");
   });
 
   it("shows a shortcut in the Mac's symbols", () => {

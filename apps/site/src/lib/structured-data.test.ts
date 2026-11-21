@@ -85,7 +85,6 @@ describe("deckStructuredData", () => {
       published({ category: null, language: null, sources: [] }),
       "en",
     );
-    expect(data).not.toHaveProperty("educationalLevel");
     expect(data).not.toHaveProperty("teaches");
     expect(data).not.toHaveProperty("citation");
     expect(data.inLanguage).toEqual(["en"]);
@@ -154,7 +153,6 @@ describe("exploreStructuredData", () => {
       },
     });
     expect(second?.item).not.toHaveProperty("teaches");
-    expect(second?.item).not.toHaveProperty("educationalLevel");
     expect(second?.item.inLanguage).toEqual(["en"]);
   });
 

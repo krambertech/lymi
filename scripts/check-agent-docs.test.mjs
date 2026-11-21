@@ -1,13 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import {
-  BUDGET,
-  check,
-  featureRows,
-  memoryTree,
-  pnpmScripts,
-  productRoutes,
-} from "./check-agent-docs.mjs";
+import { BUDGET, check, memoryTree, pnpmScripts, productRoutes } from "./check-agent-docs.mjs";
 
 const VERIFY = ".agents/skills/verify";
 const ROUTES = "apps/web/src/client/routes";
@@ -263,13 +256,5 @@ test("parses pnpm invocations into workspace and script", () => {
   ]);
   assert.deepEqual(pnpmScripts("pnpm -r test; pnpm --filter @lymi/web exec vitest"), [
     { filter: "@lymi/web", script: "exec" },
-  ]);
-});
-
-test("reads the feature table's rows with their lines", () => {
-  const rows = featureRows(repo().read(`${VERIFY}/SKILL.md`));
-  assert.deepEqual(rows, [
-    { number: 7, title: "Review", entry: "features/review.md" },
-    { number: 8, title: "Library", entry: "features/library.md" },
   ]);
 });

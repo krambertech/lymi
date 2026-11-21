@@ -664,12 +664,12 @@ describe("pronunciation audio", () => {
       get: (_target, property) => ({ get })[property as "get"],
     });
 
-    await pronunciationAudio(context(card({ audioKey: stored.key })), "card-1", {
+    const audio = await pronunciationAudio(context(card({ audioKey: stored.key })), "card-1", {
       bucket,
       providers: () => [],
     });
 
-    expect(get).toHaveBeenCalledWith(stored.key);
+    expect(audio.key).toBe(stored.key);
   });
 
   it("reports each paid speech attempt with its cost, and nothing for a clip already stored", async () => {

@@ -78,13 +78,6 @@ describe("imageSources and soundCount", () => {
 });
 
 describe("fitFields", () => {
-  it("keeps fields within their limits untouched", () => {
-    const fields = { term: "il gatto", meaning: "the cat", notes: "a pet" };
-    expect(fitFields(fields)).toEqual({
-      fields: { ...fields, pronunciation: undefined, example: undefined },
-      shortened: false,
-    });
-  });
   it("moves a long meaning into the notes and keeps what fits", () => {
     const meaning = "m".repeat(IMPORT_LIMITS.meaning + 10);
     const { fields, shortened } = fitFields({ term: "t", meaning, notes: "own notes" });

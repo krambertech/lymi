@@ -49,7 +49,7 @@ const MEANS: Record<string, MessageDescriptor> = {
   rikas: msg`rich`,
   aed: msg`garden`,
   lugu: msg`story`,
-  kord: msg`time, as in one time`,
+  nurk: msg`corner`,
   tund: msg`hour, lesson`,
   sokk: msg`sock`,
   sild: msg`bridge`,
@@ -64,7 +64,7 @@ const MEANS: Record<string, MessageDescriptor> = {
 const KIND_LABELS: Record<Kind, MessageDescriptor> = {
   double: msg`Double to single`,
   soft: msg`Hard to soft`,
-  gone: msg`Gone`,
+  gone: msg`Dropped`,
   blend: msg`Blended`,
   other: msg`The other way`,
 };
@@ -114,12 +114,12 @@ const ROOM_GAPS: GapItem[] = [
     before: "Õhtul läheb ta",
     after: ".",
     answer: "poodi",
-    options: ["pood", "poest", "poodi"],
+    options: ["pood", "poes", "poodi"],
   },
   {
     id: "poest",
     before: "Ta tuleb",
-    after: "kell viis.",
+    after: "koju kell viis.",
     answer: "poest",
     options: ["poes", "poest", "poodi"],
   },
@@ -136,12 +136,12 @@ function KindTable() {
     ),
     soft: (
       <Trans>
-        k turns into g and p into b: <Et>pank, panga</Et>; <Et>lamp, lambi</Et>.
+        k turns into g, p into b and t into d: <Et>pank, panga</Et>; <Et>lamp, lambi</Et>.
       </Trans>
     ),
     gone: (
       <Trans>
-        g, b or d is gone, and the vowel before it may change: <Et>tuba, toa</Et>.
+        g, b or d is gone, and the vowel next to it may change: <Et>tuba, toa</Et>.
       </Trans>
     ),
     blend: (
@@ -151,7 +151,7 @@ function KindTable() {
     ),
     other: (
       <Trans>
-        Here the dictionary form is the short one, and the genitive is long: <Et>mõte, mõtte</Et>.
+        Here the genitive is the strong one: <Et>mõte, mõtte</Et>; <Et>hammas, hamba</Et>.
       </Trans>
     ),
   };
@@ -309,7 +309,7 @@ export function JalgJalaLesson() {
         <Trans key="2">
           The genitive is the odd one out. The dictionary form and the third form match; the
           genitive and the cases built on it differ: <b lang="et">jalg, jala, jalga</b>;{" "}
-          <b lang="et">jalas</b>.
+          <b lang="et">jalal</b>.
         </Trans>,
         <Trans key="3">
           The weak form goes single, turns soft, drops the letter or blends it:{" "}
@@ -375,7 +375,7 @@ export function JalgJalaLesson() {
                 </li>
                 <li>
                   <Trans>
-                    A hard letter turns soft, k into g and p into b: <Word w="pank" />,{" "}
+                    A hard letter turns soft, k into g, p into b and t into d: <Word w="pank" />,{" "}
                     <Word w="panga" />.
                   </Trans>
                 </li>
@@ -432,7 +432,7 @@ export function JalgJalaLesson() {
                   share === 1 ? (
                     <Trans>All eight. You heard the difference every time.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Most of them. Tap the table once more for the ones you missed.</Trans>
+                    <Trans>Most of them. Listen again in the table to the ones you missed.</Trans>
                   ) : (
                     <Trans>Switch through the kinds in the table, then try again.</Trans>
                   )

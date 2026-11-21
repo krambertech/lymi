@@ -2292,7 +2292,7 @@ export const GRADATION_KINDS = {
 export const GRADATION_MATCH = [
   { word: "aed", of: "aia" },
   { word: "lugu", of: "loo" },
-  { word: "kord", of: "korra" },
+  { word: "nurk", of: "nurga" },
   { word: "tund", of: "tunni" },
   { word: "sokk", of: "soki" },
   { word: "sild", of: "silla" },
@@ -2312,7 +2312,7 @@ export const GRADATION_ROOM = [
   "Kati toas on laud ja kapp.",
   "Raamatud on kapi peal.",
   "Õhtul läheb ta poodi.",
-  "Ta tuleb poest kell viis.",
+  "Ta tuleb poest koju kell viis.",
 ] as const;
 
 const GRADATION_CLIPS: Record<string, Clip> = {

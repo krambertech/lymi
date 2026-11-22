@@ -103,3 +103,17 @@ test("a discarded draft holding only a hint counts as work to bring back", () =>
   expect(draftHasWork(empty)).toBe(false);
   expect(draftHasWork({ ...empty, hint: "Mellow apple" })).toBe(true);
 });
+
+test("the Enter that confirms an input method's word takes no picture link", async () => {
+  await renderAdd();
+  await page.getByRole("button", { name: "Picture" }).click();
+  await page.getByRole("button", { name: "Paste a link" }).click();
+  const link = page.getByRole("textbox", { name: "Link to a picture" });
+  await userEvent.type(link, "https://example.com/mela.png");
+  const confirm = new KeyboardEvent("keydown", { key: "Enter", bubbles: true });
+  Object.defineProperty(confirm, "keyCode", { value: 229 });
+  link.element().dispatchEvent(confirm);
+  await expect.element(link).toBeVisible();
+  await userEvent.keyboard("{Enter}");
+  await expect.element(link).not.toBeInTheDocument();
+});

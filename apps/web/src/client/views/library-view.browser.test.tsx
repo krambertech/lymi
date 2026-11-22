@@ -6,6 +6,7 @@ import { page, userEvent } from "vitest/browser";
 import { messages } from "../../locales/en.po";
 import { ShellChrome } from "../components/layout/shell-chrome";
 import { StaticNavProvider } from "../components/nav-link";
+import { Dialog, DialogContent, DialogTitle } from "../components/ui/dialog";
 import { designChrome } from "../design/chrome";
 import { decks as mock } from "../design/mock";
 import type { DeckSummary, Series } from "../lib/api";
@@ -110,4 +111,28 @@ test("a series' menu makes a new deck inside that series", async () => {
   await page.getByRole("button", { name: "Options for Eesti A1" }).click();
   await page.getByRole("menuitem", { name: "New deck" }).click();
   expect(onCreateDeckInSeries).toHaveBeenCalledWith(series[0]);
+});
+
+test("/ opens the search, but not under an open dialog", async () => {
+  const field = page.getByRole("textbox", { name: "Search decks" });
+  await renderLibrary();
+  const dialog = await render(
+    <I18nProvider i18n={i18n}>
+      <Dialog open onOpenChange={() => {}}>
+        <DialogContent aria-label="Feedback">
+          <DialogTitle>Feedback</DialogTitle>
+          <button type="button">Send</button>
+        </DialogContent>
+      </Dialog>
+    </I18nProvider>,
+  );
+  await expect.element(page.getByRole("heading", { name: "Feedback" })).toBeVisible();
+  page.getByRole("button", { name: "Send" }).element().focus();
+  await userEvent.keyboard("/");
+  await dialog.unmount();
+  await expect.element(page.getByRole("button", { name: "Search decks" })).toBeVisible();
+  await expect.element(field).not.toBeInTheDocument();
+
+  await userEvent.keyboard("/");
+  await expect.element(field).toHaveFocus();
 });

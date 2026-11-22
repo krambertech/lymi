@@ -5,6 +5,7 @@ import { DAILY_GOAL_PRESETS, DailyGoal } from "@lymi/core";
 import { clsx } from "clsx";
 import { CircleAlert } from "lucide-react";
 import { useId, useRef, useState } from "react";
+import { composing } from "../lib/composing";
 import { RadioCard } from "./radio-card";
 import { Input } from "./ui/input";
 import { RadioGroup } from "./ui/radio-group";
@@ -105,7 +106,7 @@ export function GoalPicker({ value, onValueChange, className }: Props) {
                   onChange={(e) => setDraft(e.target.value)}
                   onBlur={commit}
                   onKeyDown={(e) => {
-                    if (e.key === "Enter") e.currentTarget.blur();
+                    if (e.key === "Enter" && !composing(e)) e.currentTarget.blur();
                   }}
                   className="h-9! w-20 text-end tabular-nums [appearance:textfield] [&::-webkit-inner-spin-button]:appearance-none"
                 />

@@ -2,13 +2,13 @@ import { handleFetch } from "./app";
 import { createAuth } from "./auth";
 import type { Db } from "./db";
 import type { Bindings } from "./env";
-import { testDb } from "./services/test-db";
+import { type TestBindings, testDb } from "./services/test-db";
 
 /** A signed-in learner: the account and the cookie header that carries its session. */
 export type Session = { userId: string; email: string; cookie: string };
 
 export type TestApp = {
-  env: Bindings;
+  env: Bindings & TestBindings;
   db: Db;
   /** A request through the Worker's own fetch handler. `as` sends a learner's session cookie. */
   fetch: (path: string, init?: RequestInit & { as?: Session | undefined }) => Promise<Response>;
@@ -45,7 +45,7 @@ export async function testApp(
       },
     },
     ...options.env,
-  } as unknown as Bindings;
+  } as unknown as TestApp["env"];
 
   const fetch: TestApp["fetch"] = async (path, init = {}) => {
     const { as, ...rest } = init;

@@ -6,7 +6,7 @@ MCP connections use sign-in at `/login`, authorization at `/consent` and a compl
 
 The consent screen identifies the app by the HTTPS host of its `client_id` metadata document. Use a known app’s name only for a recognized host. Otherwise use the address as the title and present `client_name` as a claim: “it calls itself X”. Show the host in monospace and state when it is unrecognized. The metadata host establishes domain control, not trust in an arbitrary app name.
 
-Bundle known client marks in their brand colours. Keep those colours inside the mark, with a neutral surrounding panel; monochrome marks use the text token. Never render a client-supplied `logo_uri`. Unknown clients use a monogram so they cannot copy a trusted client’s appearance through metadata.
+Bundle known client marks in their brand colours. Keep those colours inside the mark, with a neutral surrounding panel; monochrome marks use the text token. The paths in `packages/client/src/app-marks.ts` come from simple-icons (CC0), and ChatGPT, Codex, Gemini and Grok from lobe-icons (MIT); the trademarks belong to their owners, and Lymi uses each mark only to name its app. Never render a client-supplied `logo_uri`. Unknown clients use a monogram so they cannot copy a trusted client’s appearance through metadata.
 
 ## Ask for access
 

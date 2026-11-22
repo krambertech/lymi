@@ -3,6 +3,7 @@ import { IMAGE_LIMITS } from "@lymi/core";
 import { and, eq, isNull, lt, or } from "@lymi/core/db";
 import type { UserAvatar } from "@lymi/core/schema";
 import { schema } from "../db";
+import { newAvatarKey, type ObjectKey, type ObjectStore, putObject } from "../storage";
 import { audit } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 import { normalizeSquareImage, readAtMost } from "./images";
@@ -11,7 +12,7 @@ import { normalizeSquareImage, readAtMost } from "./images";
 export const AVATAR_SIZE = 320;
 
 export interface AvatarStorage {
-  bucket: R2Bucket;
+  bucket: ObjectStore<"PRIVATE_IMAGES">;
   images: ImagesBinding;
 }
 
@@ -67,7 +68,7 @@ export async function uploadAvatar(
   const previous = await ensureAvatarRow(ctx);
   if (previous.customRevision !== baseRevision) throw staleChoice();
 
-  const key = newObjectKey();
+  const key = newAvatarKey();
   await putImage(storage, key, image.bytes);
   const [updated] = await ctx.db
     .update(schema.userAvatars)
@@ -154,7 +155,7 @@ export async function importGoogleAvatar(
   const previous = await ensureAvatarRow(ctx);
   if (previous.googleFetchedAt && previous.googleFetchedAt >= startedAt) return "skipped";
 
-  const key = newObjectKey();
+  const key = newAvatarKey();
   await putImage(storage, key, image.bytes);
   const [updated] = await ctx.db
     .update(schema.userAvatars)
@@ -278,14 +279,9 @@ async function ensureAvatarRow(ctx: Pick<ServiceContext, "db" | "userId">) {
   return created;
 }
 
-/** Random, so a key says nothing about whose photo it is or where it came from. */
-function newObjectKey() {
-  return `avatars/${crypto.randomUUID()}.webp`;
-}
-
-async function putImage(storage: AvatarStorage, key: string, bytes: Uint8Array) {
+async function putImage(storage: AvatarStorage, key: ObjectKey<"avatars">, bytes: Uint8Array) {
   try {
-    await storage.bucket.put(key, bytes, { httpMetadata: { contentType: "image/webp" } });
+    await putObject(storage.bucket, key, bytes, { httpMetadata: { contentType: "image/webp" } });
   } catch {
     throw new ServiceError("unavailable", "The photo couldn’t be saved. Try again.");
   }

@@ -1,26 +1,5 @@
 import { CURSOR_CLIENT_PATH, GEMINI_CLI_CLIENT_PATH, GROK_CLIENT_PATH } from "@lymi/core";
 
-/**
- * Who is asking. An MCP client identifies itself with a Client ID Metadata Document, so its
- * `client_id` is an HTTPS URL and the document has to be served from that host. That host is
- * the only claim in the request that cannot be forged: `client_name` is whatever the client
- * typed, and `logo_uri` is an image the client chose.
- *
- * So the host is the trust signal and the mark is recognition, never proof. Marks ship with
- * the app for the clients we can draw; everything else gets a monogram. We deliberately never
- * render `logo_uri`: an attacker-controlled image on a permission screen, shown with the
- * confidence of a verified one, is how consent phishing works.
- *
- * A mark is drawn in its own brand colour where it has one. It is a quotation, not part of
- * Lymi's palette, and recognising it at a glance is the whole job. `brand` is left off for
- * marks whose brand is monochrome, which then take the room's ink.
- */
-
-/**
- * Paths from simple-icons (CC0), and ChatGPT, Codex, Gemini and Grok from lobe-icons (MIT). Trademarks
- * belong to their owners; used here to name them. `clientIds` names a client by the exact
- * document it signs in with, for a client whose host is shared with another app or is Lymi's own.
- */
 const marks = (
   site: (path: string) => string,
 ): {
@@ -48,7 +27,6 @@ const marks = (
     path: "M2.25 1.5a.75.75 0 0 0-.75.75v16.5H0V2.25A2.25 2.25 0 0 1 2.25 0h20.095c1.002 0 1.504 1.212.795 1.92L10.764 14.298h3.486V12.75h1.5v1.922a1.125 1.125 0 0 1-1.125 1.125H9.264l-2.578 2.578h11.689V9h1.5v9.375a1.5 1.5 0 0 1-1.5 1.5H5.185L2.562 22.5H21.75a.75.75 0 0 0 .75-.75V5.25H24v16.5A2.25 2.25 0 0 1 21.75 24H1.655C.653 24 .151 22.788.86 22.08L13.19 9.75H9.75v1.5h-1.5V9.375A1.125 1.125 0 0 1 9.375 8.25h5.314l2.625-2.625H5.625V15h-1.5V5.625a1.5 1.5 0 0 1 1.5-1.5h13.19L21.438 1.5z",
   },
   {
-    // Codex signs in from ChatGPT's own host, so its exact document is what tells the two apart.
     hosts: [],
     clientIds: ["https://chatgpt.com/oauth/codex/client.json"],
     name: "Codex",
@@ -67,7 +45,6 @@ const marks = (
     path: "M20.616 10.835a14.147 14.147 0 01-4.45-3.001 14.111 14.111 0 01-3.678-6.452.503.503 0 00-.975 0 14.134 14.134 0 01-3.679 6.452 14.155 14.155 0 01-4.45 3.001c-.65.28-1.318.505-2.002.678a.502.502 0 000 .975c.684.172 1.35.397 2.002.677a14.147 14.147 0 014.45 3.001 14.112 14.112 0 013.679 6.453.502.502 0 00.975 0c.172-.685.397-1.351.677-2.003a14.145 14.145 0 013.001-4.45 14.113 14.113 0 016.453-3.678.503.503 0 000-.975 13.245 13.245 0 01-2.003-.678z",
   },
   {
-    // The Gemini app signs in with a document Google serves for each connector.
     hosts: ["accountlinking.google.com"],
     name: "Gemini",
     brand: "#3186ff",
@@ -82,30 +59,17 @@ const marks = (
 ];
 
 export interface AppIdentity {
-  /**
-   * What to call it. The recognised name for a host we ship a mark for, else the host
-   * itself, and null when the request carries neither. Never the client's own `client_name`:
-   * that is text the client chose, and the headline of a permission screen is the last place
-   * to put an unverified claim. A screen with no name says so in a sentence of its own rather
-   * than interpolating a placeholder.
-   */
   name: string | null;
-  /** The name the client gave for itself, when it is unverified and adds anything. */
   claimed: string | null;
-  /** The host of the client_id URL. Null when the client_id is not a URL. */
   host: string | null;
-  /** True when the host is one we ship a mark for. Never means "safe", only "recognised". */
   recognised: boolean;
   path: string | null;
-  /** The mark's own colour, or null for a brand that is monochrome. */
   brand: string | null;
 }
 
-/** Read the client's identity from its `client_id` URL and whatever name it sent. */
 export function identifyApp(
   clientId: string | undefined,
   claimedName: string | null | undefined,
-  /** The public site's URL for a path, where some clients' documents are served. */
   site: (path: string) => string,
 ): AppIdentity {
   const host = hostOf(clientId);
@@ -119,8 +83,6 @@ export function identifyApp(
   const claimed = claimedName?.trim() || null;
   return {
     name: known?.name ?? host,
-    // A recognised host names itself; anywhere else the claim is shown as a claim, or not
-    // at all when it only repeats the address.
     claimed: known || !claimed || claimed === host ? null : claimed,
     host,
     recognised: Boolean(known),
@@ -138,19 +100,13 @@ export function hostOf(clientId: string | undefined): string | null {
   }
 }
 
-/** How an app the learner already let in is listed: its name, its host, and how far to trust the name. */
 export type ListedApp = {
-  /** The name the row leads with: a recognised app's, else the one the app gave, else its host. */
   title: string | null;
-  /** The host to show under the title, when the title is not the host already. */
   host: string | null;
-  /** The title is not one Lymi recognised, so the row says Unverified beside the host. */
   unverified: boolean;
-  /** The app gave a known app's name from another host, so Unverified is a warning. */
   borrowed: boolean;
 };
 
-/** A connected app as Settings lists it, led by its own name and marked when unverified. connected-apps.md. */
 export function listedApp(app: AppIdentity): ListedApp {
   const title = app.recognised ? app.name : (app.claimed ?? app.host);
   return {
@@ -161,7 +117,6 @@ export function listedApp(app: AppIdentity): ListedApp {
   };
 }
 
-/** Whether an app's name holds a known app's: a longer one anywhere in its letters, a short one only as a word. */
 export function borrowsKnownName(name: string): boolean {
   const lower = name.toLowerCase();
   const letters = lower.replace(/[^\p{L}\p{N}]/gu, "");
@@ -173,7 +128,6 @@ export function borrowsKnownName(name: string): boolean {
   });
 }
 
-/** Known names shorter than this, such as "zed", are common inside other words. */
 const SHORT_NAME = 4;
 
 const KNOWN_NAMES = [

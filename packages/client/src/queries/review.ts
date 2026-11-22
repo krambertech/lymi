@@ -8,23 +8,19 @@ export const queueQuery = (scope: ReviewScope, round?: Round, cards?: readonly s
   const key = ["queue", scopeKey(scope), round ?? (cards ? `cards:${cards.join(",")}` : "order")];
   return queryOptions({
     queryKey: key,
-    // The server chooses a round's cards, so grades still on their way land first.
     queryFn: () =>
       fresh(key, async () => {
         await flushOutbox();
         return api.queue(scope, round, cards);
       }),
     staleTime: 0,
-    // A review keeps its initial order; a new mount still fetches a freshly shuffled queue.
     refetchOnWindowFocus: false,
     refetchOnReconnect: false,
   });
 };
-/** What the review draws from, stamped with when the request began so an empty draw can be confirmed. */
 export const drawQuery = (scope: ReviewScope) =>
   queryOptions({
     queryKey: ["queue", scopeKey(scope), "draw"],
-    // Card writes still on the device lie over it, so a review reopened offline reads as they will.
     queryFn: () =>
       fresh(["queue", scopeKey(scope), "draw"], async () => {
         const fetchedAt = Date.now();
@@ -33,10 +29,8 @@ export const drawQuery = (scope: ReviewScope) =>
     staleTime: 0,
     refetchOnWindowFocus: false,
   });
-/** How many cards each Today round holds. A review invalidates it with the decks. */
 export const roundsQuery = queryOptions({
   queryKey: ["rounds"],
-  // Through the flush, so grades that land for this read also refresh what they moved.
   queryFn: () => fresh(["rounds"], api.rounds),
   staleTime: 0,
 });

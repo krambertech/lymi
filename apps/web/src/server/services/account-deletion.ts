@@ -20,6 +20,7 @@ import {
 import type { AppleClients } from "../apple-revoke";
 import { type Db, schema } from "../db";
 import { type Bindings, publisherEmails } from "../env";
+import type { ObjectStore } from "../storage";
 import { appleRevocationRow } from "./apple-revocations";
 import { auditStatement } from "./audit";
 import { runBatch } from "./batch";
@@ -29,6 +30,7 @@ import {
   sendTransactionalEmail,
   type TransactionalEmailLanguage,
 } from "./email";
+import { deletionCodeIdentifier, deletionCodeSends, erasureStatements } from "./erasure";
 import { isPublisher } from "./publishers";
 
 /**
@@ -41,9 +43,6 @@ const CODE_SECONDS = 15 * 60;
 const CODE_ATTEMPTS = 5;
 const RESEND_SECONDS = 60;
 const CODES_PER_DAY = 5;
-const codeIdentifier = (userId: string) => `delete-account:${userId}`;
-const sendsKey = (userId: string, day: Date) =>
-  `delete-account-sends:${userId}:${day.toISOString().slice(0, 10)}`;
 
 async function sha256(value: string): Promise<string> {
   const digest = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(value));
@@ -166,7 +165,7 @@ export async function sendDeletionCode(
     .from(schema.user)
     .where(eq(schema.user.id, userId));
   if (!account) throw new ServiceError("not_found", "No such learner.");
-  const identifier = codeIdentifier(userId);
+  const identifier = deletionCodeIdentifier(userId);
   const [last] = await db
     .select({ createdAt: schema.verification.createdAt })
     .from(schema.verification)
@@ -180,7 +179,7 @@ export async function sendDeletionCode(
       "code_sent",
     );
   }
-  const daySends = sendsKey(userId, new Date());
+  const daySends = deletionCodeSends(userId, new Date());
   const [sends] = await db
     .select({ id: schema.verification.id, value: schema.verification.value })
     .from(schema.verification)
@@ -227,7 +226,7 @@ export async function sendDeletionCode(
 
 /** Checks the emailed code. A wrong one counts an attempt; the fifth ends the code. */
 async function checkCode({ db, userId }: ServiceContext, code: string): Promise<void> {
-  const identifier = codeIdentifier(userId);
+  const identifier = deletionCodeIdentifier(userId);
   const [row] = await db
     .select()
     .from(schema.verification)
@@ -507,28 +506,7 @@ export async function deleteAccount(
     ].map((table) =>
       db.update(table).set({ approvedBy: null }).where(eq(table.approvedBy, userId)),
     ),
-    // Invitations to the address hold it in other owners' decks, and an open one would show as
-    // pending; membership is kept on `deck_members`, so none is needed once the account is gone.
-    db
-      .delete(schema.deckInvitations)
-      .where(
-        and(
-          eq(schema.deckInvitations.kind, "named"),
-          eq(schema.deckInvitations.email, account.email.toLowerCase()),
-        ),
-      ),
-    // API keys name their account without a foreign key, so they do not cascade.
-    db.delete(schema.apikey).where(eq(schema.apikey.referenceId, userId)),
-    db.delete(schema.verification).where(
-      // The day's code counter lives two days, so today's and yesterday's may both be there.
-      inArray(schema.verification.identifier, [
-        codeIdentifier(userId),
-        sendsKey(userId, now),
-        sendsKey(userId, new Date(now.getTime() - 24 * 60 * 60 * 1000)),
-      ]),
-    ),
-    // Kept cards stay for their members; the owner's corrections of them go with the owner.
-    db.delete(schema.cardCorrections).where(eq(schema.cardCorrections.userId, userId)),
+    ...erasureStatements(db, { userId, email: account.email, now }),
     db.insert(schema.accountDeletions).values({
       id: userId,
       client: deps.client,
@@ -578,7 +556,10 @@ export async function deleteAccount(
  * for a deck kept before copies existed, because the last one left. Pictures a copy shares stay,
  * and the cards' audio is queued. A deck whose pictures R2 refused waits for the next run.
  */
-export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promise<number> {
+export async function dropUnstudiedFormerDecks(
+  db: Db,
+  images: ObjectStore<"PRIVATE_IMAGES">,
+): Promise<number> {
   const decks = await db
     .select({ id: schema.decks.id })
     .from(schema.decks)

@@ -29,8 +29,26 @@ export function frontmatterKeys(markdown) {
   return front ? [...front[1].matchAll(/^([A-Za-z][\w-]*):/gm)].map((m) => m[1]) : [];
 }
 
-function exportedNames() {
+function exportsOf(source, file) {
   const names = new Set();
+  for (const m of source.matchAll(
+    /export\s+(?:default\s+)?(?:const|function|class|type|interface)\s+([A-Z]\w*)/g,
+  ))
+    names.add(m[1]);
+  for (const m of source.matchAll(/export\s*\{([^}]+)\}/g))
+    for (const part of m[1].split(","))
+      names.add(
+        part
+          .trim()
+          .split(/\s+as\s+/)
+          .pop(),
+      );
+  if (file.endsWith(".astro")) names.add(file.replace(".astro", ""));
+  return names;
+}
+
+function exportedVariants() {
+  const exported = new Map();
   const walk = (dir) => {
     for (const entry of readdirSync(resolve(root, dir), { withFileTypes: true })) {
       const path = join(dir, entry.name);
@@ -38,19 +56,9 @@ function exportedNames() {
         if (entry.name !== "node_modules") walk(path);
       } else if (/\.(tsx?|astro)$/.test(entry.name)) {
         const source = read(path);
-        for (const m of source.matchAll(
-          /export\s+(?:default\s+)?(?:const|function|class|type|interface)\s+([A-Z]\w*)/g,
-        ))
-          names.add(m[1]);
-        for (const m of source.matchAll(/export\s*\{([^}]+)\}/g))
-          for (const part of m[1].split(","))
-            names.add(
-              part
-                .trim()
-                .split(/\s+as\s+/)
-                .pop(),
-            );
-        if (entry.name.endsWith(".astro")) names.add(entry.name.replace(".astro", ""));
+        const variants = variantsIn(source);
+        for (const name of exportsOf(source, entry.name))
+          exported.set(name, [...(exported.get(name) ?? []), ...variants]);
       }
     }
   };
@@ -62,7 +70,34 @@ function exportedNames() {
     "packages/design/src",
   ])
     walk(dir);
-  return names;
+  return exported;
+}
+
+export function variantsIn(source) {
+  const literals = (type) => [...type.matchAll(/"([\w-]+)"/g)].map((m) => m[1]);
+  return [...source.matchAll(/\bvariant\??:\s*([^;,=)]+)/g)].flatMap(([, type]) => [
+    ...literals(type),
+    ...[...type.matchAll(/\b[A-Z]\w*/g)].flatMap(([alias]) =>
+      literals(new RegExp(`type ${alias} =([^;]+);`).exec(source)?.[1] ?? ""),
+    ),
+  ]);
+}
+
+export function namedVariants(markdown) {
+  const correct = markdown.replace(/^\/\/ Incorrect[\s\S]*?(?=^\/\/ Correct|^```)/gm, "");
+  const named = [
+    ...correct.matchAll(
+      /\b([A-Z]\w+)(?:`? with `| )(?:[\w-]+=(?:"[^"]*"|\{[^}]*\}) )*variant="([\w-]+)"/g,
+    ),
+  ].map((m) => [m[1], m[2]]);
+  const prose = correct.replace(/^```[\s\S]*?^```/gm, "");
+  const lists = [
+    ...prose.matchAll(/`([A-Z]\w+)`[^.`\n]*\bvariants?:([^.\n]+)/g),
+    ...prose.matchAll(/^## (\w+) variants\n+Variants:([^.\n]+)/gm),
+  ];
+  for (const [, component, list] of lists)
+    for (const m of list.matchAll(/`([a-z][\w-]*)`/g)) named.push([component, m[1]]);
+  return named;
 }
 
 /** Names in code font outside fenced blocks, whose examples quote interface strings such as t`Search`. */
@@ -117,10 +152,19 @@ if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) 
       `apps/mobile/src/global.css sets the type steps ${phone.join(" ")}; tokens.css names ${steps.join(" ")}`,
     );
 
-  const exported = exportedNames();
-  for (const path of designDocs())
-    for (const name of new Set(namedComponents(read(path))))
+  const exported = exportedVariants();
+  for (const path of designDocs()) {
+    const markdown = read(path);
+    for (const name of new Set(namedComponents(markdown)))
       if (!exported.has(name)) problems.push(`${path} names \`${name}\`, which nothing exports`);
+    for (const [name, variant] of namedVariants(markdown)) {
+      const variants = new Set(exported.get(name));
+      if (variants.size > 0 && !variants.has(variant))
+        problems.push(
+          `${path} gives \`${name}\` the variant \`${variant}\`, but its source has ${[...variants].join(", ")}`,
+        );
+    }
+  }
 
   if (problems.length > 0) {
     console.error(

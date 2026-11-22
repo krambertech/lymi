@@ -1,6 +1,6 @@
 # Components
 
-Look here before building anything: if a component below does the job, use it, and if one nearly does, extend it rather than drawing a second. Paths are under `apps/web/src/client`. `pnpm check:design` fails when a design doc names a component nothing exports.
+Look here before building anything: if a component below does the job, use it, and if one nearly does, extend it rather than drawing a second. Paths are under `apps/web/src/client`. `pnpm check:design` fails when a design doc names a component nothing exports, or a variant its source lacks.
 
 ## Primitives: components/ui
 

@@ -71,7 +71,7 @@ Desktop menus anchor to their trigger. Touch menus use a bottom drawer with the 
 
 A menu's surface, like a popover's and a list's, is the slight `glass` ([surfaces.md](surfaces.md#on-glass)); a dialog or a drawer stays solid.
 
-`DropdownMenuItem` has two variants: `default`, and `destructive` for Archive, Remove or Leave. A destructive row that can be undone acts at once and offers Undo in a toast; one that cannot opens a question.
+`DropdownMenuItem` has two variants: `default`, and `danger` for Archive, Remove, Leave or Sign out. A danger row that can be undone acts at once and offers Undo in a toast; one that cannot opens a question.
 
 A checkbox row keeps its tick in the start slot, so checked and unchecked rows line up; one with its own icon, such as Important among Filter's fields, puts the icon there and the tick at the end, where the rows beside it have their chevron.
 

@@ -4,9 +4,11 @@ import { outputs } from "../packages/design/scripts/generate.mjs";
 import {
   frontmatterKeys,
   namedComponents,
+  namedVariants,
   oklchToHex,
   paletteFrom,
   stepNames,
+  variantsIn,
 } from "./check-design-docs.mjs";
 
 test("converts OKLCH to hex, with alpha as a fourth byte", () => {
@@ -93,4 +95,29 @@ test("names components in code font, but not strings quoted in examples", () => 
   const markdown =
     "Use `StartPanel` or `NoResults`, not `text-ink-muted`.\n\n```tsx\n<NoResults title={t`Nothing`} />\n```\n";
   assert.deepEqual(namedComponents(markdown), ["StartPanel", "NoResults"]);
+});
+
+test("names the variants a doc gives a component, but not those in an incorrect example", () => {
+  const markdown =
+    'The one thing to press is `Button variant="primary"`, and `LearnerMenu` with `variant="rail"`.\n\n' +
+    "`DropdownMenuItem` has two variants: `default`, and `destructive` for Archive.\n\n" +
+    "## Button variants\n\nVariants: `ghost`, `danger`. Leave `variant` off otherwise.\n\n" +
+    '```tsx\n// Correct\n<Button label={t`Close`} variant="secondary">\n\n' +
+    '// Incorrect: no such variant\n<Button variant="outline">\n```\n';
+  assert.deepEqual(namedVariants(markdown), [
+    ["Button", "primary"],
+    ["LearnerMenu", "rail"],
+    ["Button", "secondary"],
+    ["DropdownMenuItem", "default"],
+    ["DropdownMenuItem", "destructive"],
+    ["Button", "ghost"],
+    ["Button", "danger"],
+  ]);
+});
+
+test("reads the variants a component's source allows, through a type alias", () => {
+  const source =
+    'export type ButtonVariant = "primary" | "ghost";\ninterface Props {\n  variant?: ButtonVariant | undefined;\n}\n' +
+    'interface ItemProps {\n  variant?: "default" | "danger" | undefined;\n}\n';
+  assert.deepEqual(variantsIn(source), ["primary", "ghost", "default", "danger"]);
 });

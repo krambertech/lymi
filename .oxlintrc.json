@@ -105,6 +105,23 @@
       }
     },
     {
+      "files": ["packages/client/src/review-flow/use-review-flow.test.ts"],
+      "rules": {
+        "eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "vitest",
+                "importNames": ["vi"],
+                "message": "hookReview() owns the clock, the server, the storage and the locks: a wait or a mock of the test's own can race the hook. Use review.settle, advance, answer or refuse."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "files": ["apps/web/src/client/**"],
       "excludeFiles": ["apps/web/src/client/lib/use-reduce-motion.ts", "**/*.test.tsx"],
       "rules": {

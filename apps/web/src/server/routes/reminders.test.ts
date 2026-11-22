@@ -79,7 +79,7 @@ async function dispatch(who: Session) {
 
 beforeAll(async () => {
   app = await testApp();
-  vi.spyOn(console, "log").mockImplementation(() => undefined);
+  vi.spyOn(console, "info").mockImplementation(() => undefined);
 }, 60_000);
 
 describe("the daily reminder", () => {

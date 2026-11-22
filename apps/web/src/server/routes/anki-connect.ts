@@ -2,6 +2,7 @@ import { AnkiConnectCall } from "@lymi/core";
 import { Hono } from "hono";
 import { ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
+import { bodyJson } from "../parse";
 import { principalForKey } from "../principal";
 import {
   ankiConnectClient,
@@ -38,7 +39,7 @@ ankiConnect.get("/", describe({ hide: true, open: true }), (c) =>
 );
 
 ankiConnect.post("/", describe({ hide: true, open: true }), async (c) => {
-  const parsed = AnkiConnectCall.safeParse(await c.req.json().catch(() => null));
+  const parsed = AnkiConnectCall.safeParse(await bodyJson(c.req));
   if (!parsed.success) {
     return c.json(reply(undefined, null, "Lymi couldn’t read this request."), 200, CORS);
   }

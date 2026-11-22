@@ -26,11 +26,13 @@ import {
   soundSources,
 } from "@lymi/core";
 import { stripPinyin } from "@lymi/core/pinyin";
+import { parseJson } from "../../parse";
 import type { SourceAdapter, SourceNoteType, SourceSummary } from "../adapter";
 import {
   decodeProto,
   ImportFileError,
   isZstd,
+  opens,
   openZip,
   proto,
   type RandomAccess,
@@ -158,11 +160,11 @@ function readModels(db: SqliteFile) {
 
   const [col] = db.rows("col");
   const json = <T>(value: SqlValue | undefined): T => {
-    try {
-      return JSON.parse(text(value) || "{}") as T;
-    } catch {
+    const parsed = parseJson(text(value) || "{}");
+    if (parsed === undefined) {
       throw new ImportFileError("damaged", "The collection's note types are damaged");
     }
+    return parsed as T;
   };
   type LegacyModel = {
     name: string;
@@ -193,10 +195,11 @@ function dueOf(row: SqlRow, crt: number): number | null {
 function memoryOf(row: SqlRow, due: number | null, reviews: number[]) {
   const type = int(row.type);
   if (type !== 2 && type !== 3) return null;
-  let data: { s?: number; d?: number; lrt?: number } = {};
-  try {
-    data = JSON.parse(text(row.data) || "{}");
-  } catch {}
+  const data = (parseJson(text(row.data) || "{}") ?? {}) as {
+    s?: number;
+    d?: number;
+    lrt?: number;
+  };
   const interval = Math.max(int(row.ivl), 1);
   const lastReview = data.lrt
     ? data.lrt * 1000
@@ -312,12 +315,10 @@ async function mediaIndex(file: RandomAccess, zip: Map<string, ZipEntry>) {
   let bytes = await readZipEntry(file, entry, 32 * 1024 * 1024);
   if (isZstd(bytes)) bytes = await zstdDecompressBytes(bytes, 64 * 1024 * 1024);
   if (bytes[0] === 0x7b) {
-    try {
-      for (const [zipName, name] of Object.entries(JSON.parse(new TextDecoder().decode(bytes)))) {
-        if (typeof name === "string") index.set(name, zipName);
-      }
-    } catch {
-      throw new ImportFileError("damaged", "The file's media list is damaged");
+    const names = parseJson(new TextDecoder().decode(bytes));
+    if (!names) throw new ImportFileError("damaged", "The file's media list is damaged");
+    for (const [zipName, name] of Object.entries(names)) {
+      if (typeof name === "string") index.set(name, zipName);
     }
     return index;
   }
@@ -333,12 +334,7 @@ export const anki: SourceAdapter<AnkiNote> = {
   source: "anki",
 
   async detect(file) {
-    try {
-      await openPackage(file);
-      return true;
-    } catch {
-      return false;
-    }
+    return opens(openPackage(file));
   },
 
   async inspect(file) {

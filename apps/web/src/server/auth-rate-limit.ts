@@ -1,6 +1,7 @@
 import type { MiddlewareHandler } from "hono";
 import { isLoopbackUrl } from "../shared/origins";
 import type { AppEnv } from "./index";
+import { bodyFields, parseJson } from "./parse";
 
 export interface Budget {
   /** How many requests the window allows. */
@@ -142,14 +143,10 @@ interface Window {
 
 function parse(stored: string | null): Window | null {
   if (!stored) return null;
-  try {
-    const value = JSON.parse(stored) as Partial<Window>;
-    return typeof value.count === "number" && typeof value.resetAt === "number"
-      ? { count: value.count, resetAt: value.resetAt }
-      : null;
-  } catch {
-    return null;
-  }
+  const value = parseJson(stored) as Partial<Window> | null | undefined;
+  return typeof value?.count === "number" && typeof value.resetAt === "number"
+    ? { count: value.count, resetAt: value.resetAt }
+    : null;
 }
 
 function put(kv: KVNamespace, key: string, window: Window) {
@@ -167,17 +164,8 @@ const UNREADABLE = Symbol("unreadable body");
  */
 async function addressOf(request: Request): Promise<string | null | typeof UNREADABLE> {
   if (request.method !== "POST") return null;
-  const type = request.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase();
-  try {
-    const body = request.clone();
-    if (type === "application/json") return emailIn((await body.json()) as Record<string, unknown>);
-    if (type === "application/x-www-form-urlencoded") {
-      return emailIn(Object.fromEntries(new URLSearchParams(await body.text())));
-    }
-    return UNREADABLE;
-  } catch {
-    return UNREADABLE;
-  }
+  const body = await bodyFields(request);
+  return body ? emailIn(body) : UNREADABLE;
 }
 
 function emailIn(body: Record<string, unknown>): string | null {

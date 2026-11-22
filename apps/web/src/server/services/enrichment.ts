@@ -41,6 +41,7 @@ import {
   type Sample,
 } from "../enrichment/prompt";
 import { addsExampleReadings, enrichmentModel } from "../languages";
+import { log } from "../log";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
@@ -620,13 +621,15 @@ export async function runState(
   let instance: Awaited<ReturnType<NonNullable<EnrichmentQueue["get"]>>>;
   try {
     instance = await queue.get(id);
-  } catch {
+  } catch (error) {
+    log.info("enrichment_run_not_found", { error });
     return "none";
   }
   try {
     return FINISHED_RUN.has((await instance.status()).status) ? "finished" : "live";
-  } catch {
+  } catch (error) {
     // The run exists but will not say how it is doing: its name is taken, and it may still write.
+    log.warn("enrichment_run_status_unknown", { error });
     return "live";
   }
 }
@@ -649,13 +652,7 @@ export async function queueEnrichment(
   } catch (error) {
     // The same add sent twice at once can race for the run's name; the one that lost is answered.
     if ((await runState(queue, id)) === "live") return true;
-    console.error(
-      JSON.stringify({
-        event: "enrichment_not_queued",
-        trigger,
-        error: error instanceof Error ? error.name : "unknown",
-      }),
-    );
+    log.error("enrichment_not_queued", { trigger, error });
     // An edit's run was only to translate; a fill under way belongs to another run.
     if (trigger !== "edit") {
       await failEnrichment(db, userId, cardIds);

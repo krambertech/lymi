@@ -1,6 +1,7 @@
 import type { GenericEndpointContext } from "@better-auth/core";
 import { verifyProviderIdToken } from "@better-auth/core/oauth2";
 import { apple } from "@better-auth/core/social-providers";
+import { jwtClaims } from "./parse";
 
 const APPLE_KEYS_URL = "https://appleid.apple.com/auth/keys";
 /** Apple rotates its keys rarely; an unknown key id refetches sooner, at most once a minute. */
@@ -62,10 +63,6 @@ export function appleIdTokenVerifier(bundleIdentifier: string) {
 
 /** Only the raw value whose hash Apple signed counts: the claim itself can be read off a stolen token. */
 function echoesNonceClaim(token: string, nonce: string): boolean {
-  try {
-    const payload = (token.split(".")[1] ?? "").replace(/-/g, "+").replace(/_/g, "/");
-    return (JSON.parse(atob(payload)) as { nonce?: unknown }).nonce === nonce;
-  } catch {
-    return true;
-  }
+  const claims = jwtClaims(token);
+  return !claims || claims.nonce === nonce;
 }

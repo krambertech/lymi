@@ -1,5 +1,6 @@
 import { and, eq, isNull, lt, ne, or } from "@lymi/core/db";
 import { schema } from "../db";
+import { log } from "../log";
 import { track } from "./analytics";
 import { audit, auditStatementWhen } from "./audit";
 import type { ServiceContext } from "./context";
@@ -13,8 +14,8 @@ export function recordFirstReview(
   ctx.analytics?.later?.(async () => {
     try {
       await record(ctx, deckId, review);
-    } catch {
-      /* A failed analytics marker cannot undo a stored grade. */
+    } catch (error) {
+      log.warn("product_analytics_failed", { marker: "first_review", error });
     }
   });
 }

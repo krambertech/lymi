@@ -26,12 +26,8 @@ async function claudeDomain(mcpUrl: string): Promise<string> {
 
 function isClaude(clientId: string | undefined): boolean {
   if (!clientId) return false;
-  try {
-    const { hostname } = new URL(clientId);
-    return hostname === "claude.ai" || hostname.endsWith(".claude.ai");
-  } catch {
-    return false;
-  }
+  const hostname = URL.parse(clientId)?.hostname ?? "";
+  return hostname === "claude.ai" || hostname.endsWith(".claude.ai");
 }
 
 /**

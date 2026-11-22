@@ -86,14 +86,14 @@ export const ITEMS = [
     id: "swallowed-failure",
     paths: ["apps/web/src/server/**/*.ts"],
     ignore: TESTS,
-    added: /\bcatch\s*(?:\([^)]*\))?\s*\{\s*\}?\s*$|\.catch\(\s*\(\s*\)\s*=>/,
+    added: /\blogFailure\(|\blog\.(?:warn|error)\(/,
     check:
-      "When this fails, does the step retry or fail where someone sees it, and does a log or Error Tracking record it without learner data?",
+      "A catch that drops its error fails `lymi/no-swallowed-failure`; this one logs and goes on. Should the step retry, or the failure reach Error Tracking, instead? Does one item's failure leave the rest of the cron or batch running?",
     why: "Catch-alls hid failed recordings, copies and Readwise pulls, and one deck's failure stopped a whole cron.",
     sources: [896, 941, 1091],
     example: {
-      file: "apps/web/src/server/readwise/pull.ts",
-      line: "  } catch {",
+      file: "apps/web/src/server/services/readwise.ts",
+      line: '    log.warn("readwise_pull_failed", { error });',
     },
   },
   {
@@ -114,8 +114,12 @@ export const ITEMS = [
   },
   {
     id: "telemetry-scrubbed",
-    files: ["packages/core/src/telemetry.ts", "apps/web/src/server/posthog.ts"],
-    paths: ["apps/web/src/**/*.{ts,tsx}", "apps/mobile/src/**/*.{ts,tsx}"],
+    files: [
+      "packages/core/src/telemetry.ts",
+      "apps/web/src/server/posthog.ts",
+      "apps/web/src/server/log.ts",
+    ],
+    paths: ["apps/web/src/client/**/*.{ts,tsx}", "apps/mobile/src/**/*.{ts,tsx}"],
     ignore: TESTS,
     added: /console\.(?:error|warn|log)\(|captureException|reportError\(|\$exception/,
     check:
@@ -123,7 +127,7 @@ export const ITEMS = [
     why: "Logs carried card terms and bound parameters; exceptions lost their class or frames and were dropped or sent twice.",
     sources: [155, 767, 815, 1074, 1146],
     example: {
-      file: "apps/web/src/server/routes/cards.ts",
+      file: "apps/web/src/client/lib/enrich.ts",
       line: "    console.error('enrich failed', error);",
     },
   },

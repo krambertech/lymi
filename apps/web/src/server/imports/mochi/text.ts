@@ -22,7 +22,8 @@ export function attachments(text: string): string[] {
     const raw = match[1] as string;
     try {
       names.push(decodeURIComponent(raw));
-    } catch {
+    } catch (error) {
+      if (!(error instanceof URIError)) throw error;
       names.push(raw);
     }
   }

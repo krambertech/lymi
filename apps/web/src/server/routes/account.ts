@@ -13,7 +13,8 @@ import type { Db } from "../db";
 import { publisherEmails } from "../env";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
-import { erasePostHogPerson } from "../posthog";
+import { log } from "../log";
+import { erasePostHogPerson, reportServerException } from "../posthog";
 import {
   copyFormerDecks,
   type DeletionLeftovers,
@@ -27,6 +28,7 @@ import {
   sendTransactionalEmail,
 } from "../services";
 import { track } from "../services/analytics";
+import { ServiceError } from "../services/context";
 
 /** Ending the learner's own account. Mounted at /api/me; the learner's session only. */
 export const account = new Hono<AppEnv>();
@@ -133,9 +135,12 @@ async function clearLeftovers(
       ? revokeAfterDeletion(db, userId, extra.appleCode, {
           clients: extra.appleClients,
           events: env.EVENTS,
-        }).catch(() => "failed" as const)
+        }).catch(async (error: unknown) => {
+          await reportServerException(env, error, { route: "account/apple", method: "DELETE" });
+          return "failed" as const;
+        })
       : Promise.resolve(apple ? ("skipped" as const) : null);
-  await Promise.allSettled([
+  const cleanups = await Promise.allSettled([
     leftovers.sessionsEnded ? Promise.resolve() : extra.endSessions(userId),
     ...chunks(leftovers.privateImages, 1000).map((keys) => env.PRIVATE_IMAGES.delete(keys)),
     ...chunks(leftovers.audioKeys, 1000).map((keys) => env.AUDIO.delete(keys)),
@@ -153,6 +158,14 @@ async function clearLeftovers(
       }),
     ),
   ]);
+  for (const cleanup of cleanups) {
+    if (cleanup.status !== "rejected" || cleanup.reason instanceof ServiceError) continue;
+    log.error("account_cleanup_failed", { error: cleanup.reason });
+    await reportServerException(env, cleanup.reason, {
+      route: "account/cleanup",
+      method: "DELETE",
+    });
+  }
 }
 
 function chunks<T>(items: T[], size: number): T[][] {

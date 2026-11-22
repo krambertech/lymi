@@ -11,8 +11,9 @@ export class ElevenLabsSpeechError extends Error {
   constructor(
     message: string,
     readonly status?: number,
+    options?: ErrorOptions,
   ) {
-    super(message);
+    super(message, options);
     this.name = "ElevenLabsSpeechError";
   }
 }
@@ -54,8 +55,10 @@ export function createElevenLabsSpeechProvider(
             signal: AbortSignal.timeout(30_000),
           },
         );
-      } catch {
-        throw new ElevenLabsSpeechError("ElevenLabs speech could not be reached");
+      } catch (cause) {
+        throw new ElevenLabsSpeechError("ElevenLabs speech could not be reached", undefined, {
+          cause,
+        });
       }
       if (!response.ok) {
         await response.body?.cancel();

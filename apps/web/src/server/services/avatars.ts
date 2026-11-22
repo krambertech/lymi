@@ -3,6 +3,8 @@ import { IMAGE_LIMITS } from "@lymi/core";
 import { and, eq, isNull, lt, or } from "@lymi/core/db";
 import type { UserAvatar } from "@lymi/core/schema";
 import { schema } from "../db";
+import { log, logFailure } from "../log";
+import { jwtClaims } from "../parse";
 import { audit } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 import { normalizeSquareImage, readAtMost } from "./images";
@@ -191,17 +193,8 @@ export async function importGoogleAvatar(
 
 /** The `picture` claim of a Google ID token, or null when it has none or is not a token. */
 export function pictureFromIdToken(idToken: string): string | null {
-  try {
-    const payload = idToken.split(".")[1];
-    if (!payload) return null;
-    const base64 = payload.replace(/-/g, "+").replace(/_/g, "/");
-    const bytes = Uint8Array.from(atob(base64), (c) => c.charCodeAt(0));
-    const claims: unknown = JSON.parse(new TextDecoder().decode(bytes));
-    const picture = (claims as { picture?: unknown } | null)?.picture;
-    return typeof picture === "string" && picture ? picture : null;
-  } catch {
-    return null;
-  }
+  const picture = jwtClaims(idToken)?.picture;
+  return typeof picture === "string" && picture ? picture : null;
 }
 
 const GOOGLE_PHOTO_TIMEOUT_MS = 5_000;
@@ -286,16 +279,13 @@ function newObjectKey() {
 async function putImage(storage: AvatarStorage, key: string, bytes: Uint8Array) {
   try {
     await storage.bucket.put(key, bytes, { httpMetadata: { contentType: "image/webp" } });
-  } catch {
+  } catch (error) {
+    log.error("avatar_not_stored", { error });
     throw new ServiceError("unavailable", "The photo couldn’t be saved. Try again.");
   }
 }
 
 /** An orphaned object is only storage; failing to delete one must not fail the write. */
 async function discard(storage: AvatarStorage, key: string) {
-  try {
-    await storage.bucket.delete(key);
-  } catch {
-    console.error("Discarding a replaced avatar object failed");
-  }
+  await storage.bucket.delete(key).catch(logFailure("avatar_discard_failed"));
 }

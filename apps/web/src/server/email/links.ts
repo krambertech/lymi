@@ -1,5 +1,6 @@
 import type { ReviewModeKey } from "@lymi/core";
 import type { EMAIL_KINDS } from "@lymi/core/analytics";
+import { decodeBase64, parseJson } from "../parse";
 
 type EmailKind = (typeof EMAIL_KINDS)[number];
 
@@ -34,11 +35,6 @@ function encode(bytes: Uint8Array): string {
     .replaceAll("=", "");
 }
 
-function decode(text: string): Uint8Array<ArrayBuffer> {
-  const raw = atob(text.replaceAll("-", "+").replaceAll("_", "/"));
-  return Uint8Array.from(raw, (c) => c.charCodeAt(0));
-}
-
 /** Each purpose has its own key, so a Flip link can never be replayed as an unsubscribe. */
 function keyFor(secret: string, purpose: Purpose): Promise<CryptoKey> {
   return crypto.subtle.importKey(
@@ -60,14 +56,12 @@ async function seal(secret: string, purpose: Purpose, value: unknown): Promise<s
 async function open(secret: string, purpose: Purpose, token: string): Promise<unknown> {
   const [body, signature, extra] = token.split(".");
   if (!body || !signature || extra !== undefined) return null;
-  try {
-    const bytes = decode(body);
-    const key = await keyFor(secret, purpose);
-    if (!(await crypto.subtle.verify("HMAC", key, decode(signature), bytes))) return null;
-    return JSON.parse(new TextDecoder().decode(bytes));
-  } catch {
-    return null;
-  }
+  const bytes = decodeBase64(body);
+  const signed = decodeBase64(signature);
+  if (!bytes || !signed) return null;
+  const key = await keyFor(secret, purpose);
+  if (!(await crypto.subtle.verify("HMAC", key, signed, bytes))) return null;
+  return parseJson(new TextDecoder().decode(bytes)) ?? null;
 }
 
 export const signFlipLink = (secret: string, link: FlipLink) => seal(secret, "flip", link);

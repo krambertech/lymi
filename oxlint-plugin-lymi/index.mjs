@@ -10,6 +10,7 @@ import noLogicalTextAlign from "./rules/no-logical-text-align.mjs";
 import noNavigatorOnline from "./rules/no-navigator-online.mjs";
 import noRedirectError from "./rules/no-redirect-error.mjs";
 import noSqlLower from "./rules/no-sql-lower.mjs";
+import noSwallowedFailure from "./rules/no-swallowed-failure.mjs";
 import noticePlainText from "./rules/notice-plain-text.mjs";
 import scrollViewPersistTaps from "./rules/scroll-view-persist-taps.mjs";
 import springPresets from "./rules/spring-presets.mjs";
@@ -29,6 +30,7 @@ export default definePlugin({
     "no-navigator-online": noNavigatorOnline,
     "no-redirect-error": noRedirectError,
     "no-sql-lower": noSqlLower,
+    "no-swallowed-failure": noSwallowedFailure,
     "notice-plain-text": noticePlainText,
     "scroll-view-persist-taps": scrollViewPersistTaps,
     "spring-presets": springPresets,

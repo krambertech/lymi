@@ -7,10 +7,12 @@ import {
   imageSources,
   type ReviewModeKey,
 } from "@lymi/core";
+import { parseJson } from "../../parse";
 import type { SourceAdapter, SourceNoteType, SourceSummary } from "../adapter";
 import { clozeAnswer, clozeNumbers, revealCloze } from "../anki/text";
 import {
   ImportFileError,
+  opens,
   openZip,
   type RandomAccess,
   readZipEntry,
@@ -81,10 +83,8 @@ async function readData(file: RandomAccess, entry: ZipEntry): Promise<Json[]> {
     basename(entry.name) === "deck_export_data"
       ? await zstdDecompress(() => zipEntryStream(file, entry), MAX_DATA_BYTES)
       : await readZipEntry(file, entry, MAX_DATA_BYTES);
-  let raw: unknown;
-  try {
-    raw = JSON.parse(new TextDecoder().decode(bytes));
-  } catch {
+  const raw = parseJson(new TextDecoder().decode(bytes));
+  if (raw === undefined) {
     throw new ImportFileError("damaged", "The export's deck data is damaged");
   }
   if (!Array.isArray(raw)) throw new ImportFileError("unrecognized", "The deck data is not Noji's");
@@ -191,12 +191,7 @@ export const noji: SourceAdapter<NojiNote> = {
   source: "noji",
 
   async detect(file) {
-    try {
-      await openExport(file);
-      return true;
-    } catch {
-      return false;
-    }
+    return opens(openExport(file));
   },
 
   async inspect(file) {

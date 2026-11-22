@@ -12,6 +12,7 @@ import { type Bindings, withServedOrigin } from "./env";
 import { fetchConfiguredAsset } from "./html";
 import { body, ctxOf, describe, handleError } from "./http";
 import { addPage, joinPage } from "./join-page";
+import { log } from "./log";
 import { handleMcpRequest } from "./mcp";
 import { advertisePublicResourceMetadata } from "./oauth-metadata";
 import { mountOpenApi } from "./openapi";
@@ -177,8 +178,8 @@ app.use("*", async (c, next) => {
               : "public",
       client: phone ? `${phone.platform} ${phone.version}` : "none",
     });
-  } catch {
-    // Measurement cannot change the response.
+  } catch (error) {
+    log.warn("metric_write_failed", { dataset: "requests", error });
   }
 });
 

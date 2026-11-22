@@ -2,6 +2,7 @@ import { canSpeakExample, LanguageTag, SPOKEN_EXAMPLE_MAX, spokenExample } from 
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
 import type { ExampleAllowance } from "../example-audio-rate-limit";
+import { log } from "../log";
 import { aiAllowedForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
 import { type AudioDependencies, boundedAudio, providerStatus } from "./audio";
@@ -108,15 +109,12 @@ async function voiced(
       lastFailure = error;
       const status = providerStatus(error);
       report(true, status ?? undefined);
-      console.warn(
-        JSON.stringify({
-          event: "example_audio_provider_failed",
-          provider: provider.provider,
-          language,
-          error: error instanceof Error ? error.name : "UnknownError",
-          ...(status === null ? {} : { status }),
-        }),
-      );
+      log.warn("example_audio_provider_failed", {
+        provider: provider.provider,
+        language,
+        error,
+        ...(status === null ? {} : { status }),
+      });
       continue;
     }
     // A failed write is not a provider's failure, so it never buys a second clip from the next one.

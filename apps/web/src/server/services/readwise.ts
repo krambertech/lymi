@@ -3,6 +3,7 @@ import { and, desc, eq, inArray, isNotNull, isNull, lt, lte, or, sql } from "@ly
 import type { ReadwiseBook, ReadwiseConnection } from "@lymi/core/schema";
 import type { TextProvider } from "../ai";
 import { schema } from "../db";
+import { log } from "../log";
 import {
   type ReadwiseApi,
   type ReadwiseExportBook,
@@ -695,7 +696,7 @@ export async function pullDueReadwise(
     .limit(PULLS_PER_RUN);
   // A full tick means more connections are due than one run pulls, so hourly pulls start to slip.
   if (due.length === PULLS_PER_RUN) {
-    console.warn(JSON.stringify({ job: "readwise", atCap: PULLS_PER_RUN }));
+    log.warn("readwise_pulls_at_cap", { job: "readwise", atCap: PULLS_PER_RUN });
   }
   let pulled = 0;
   let failed = 0;
@@ -717,7 +718,7 @@ export async function pullDueReadwise(
       if (await runPull(ctx, deps, "schedule")) pulled += 1;
     } catch (error) {
       failed += 1;
-      console.error(JSON.stringify({ job: "readwise", userId: row.userId, error: String(error) }));
+      log.error("readwise_pull_failed", { job: "readwise", userId: row.userId, error });
     }
   }
   return { pulled, failed };

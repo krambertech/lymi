@@ -62,7 +62,7 @@ WHERE "accountTag" = 'ce6da857aeb521aa2730848a194b8866' AND "blob1" = 'call' AND
    FROM lymi_health WHERE timestamp > NOW() - INTERVAL '2' HOUR
    GROUP BY dependency, outcome, version ORDER BY n DESC
    ```
-3. Read the Worker's logs in Cloudflare (Observability → Logs, script `lymi`) for the same window.
+3. Read the Worker's logs in Cloudflare (Observability → Logs, script `lymi`) for the same window. Each line is JSON whose `event` is one of the names in `apps/web/src/server/log.ts`.
 
 ## A production check is failing
 

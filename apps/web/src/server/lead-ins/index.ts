@@ -4,6 +4,7 @@ import { createLeadInWriter, type LeadInWriter } from "../ai/lead-in-writer";
 import { meteredFetch } from "../dependency-health";
 import type { Bindings } from "../env";
 import { type DecisionModel, decisionModel } from "../lessons/keep";
+import { log } from "../log";
 import { japanese } from "./japanese";
 import type { LeadInPolicy } from "./policy";
 
@@ -41,7 +42,7 @@ export function leadInDependencies(env: Bindings): LeadInDependencies {
     // Speech still works with the writer deciding alone, so this logs once per isolate rather than failing.
     if (!reportedNoGateway) {
       reportedNoGateway = true;
-      console.error(JSON.stringify({ event: "lead_in_decisions_off", error: error.name }));
+      log.error("lead_in_decisions_off", { error });
     }
     decide = undefined;
   }

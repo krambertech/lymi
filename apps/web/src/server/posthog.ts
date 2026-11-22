@@ -4,6 +4,7 @@ import { exceptionProperties, POSTHOG_HOST } from "@lymi/core/telemetry";
 import { PostHog } from "posthog-node";
 import type { Db } from "./db";
 import type { Bindings } from "./env";
+import { log, logFailure } from "./log";
 import { type AnalyticsEvent, type AnalyticsWriter, track } from "./services/analytics";
 import { analyticsContextFor } from "./services/analytics-context";
 
@@ -107,13 +108,13 @@ export function productAnalytics(
             },
           },
         });
-      })().catch(() => {});
+      })().catch(logFailure("posthog_capture_failed"));
       if (defer) defer(work);
       else pending.push(work);
     },
     later: (work) => {
       if (!client) return;
-      const run = work().catch(() => {});
+      const run = work().catch(logFailure("product_analytics_failed", { marker: "later" }));
       if (defer) defer(run);
       else pending.push(run);
     },
@@ -157,8 +158,8 @@ export async function reportServerException(
       route: context.route,
       method: context.method,
     });
-  } catch {
-    // An unavailable monitoring service cannot change the product response.
+  } catch (failure) {
+    log.error("exception_report_failed", { route: context.route, error: failure });
   }
 }
 
@@ -184,8 +185,10 @@ export async function erasePostHogPerson(
         body: JSON.stringify({ distinct_ids: [userId], delete_events: true }),
       },
     );
+    if (!response.ok) log.error("posthog_person_not_erased", { status: response.status });
     return response.ok;
-  } catch {
+  } catch (error) {
+    log.error("posthog_person_not_erased", { error });
     return false;
   }
 }

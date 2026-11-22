@@ -1,5 +1,6 @@
 import { type ProductAnalyticsEvent, speechCallCost, textCallCost } from "@lymi/core/analytics";
 import type { SpeechCall, TextObserver } from "../ai";
+import { log } from "../log";
 
 export type AnalyticsWriter = Pick<AnalyticsEngineDataset, "writeDataPoint"> & {
   capture?: (event: AnalyticsEvent) => void;
@@ -14,8 +15,8 @@ export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEven
   if (!dataset) return;
   try {
     dataset.capture?.(event);
-  } catch {
-    // Analytics never decides whether a product write succeeds.
+  } catch (error) {
+    log.warn("product_analytics_failed", { marker: "capture", error });
   }
   const detail =
     event.name === "card_added"
@@ -43,8 +44,8 @@ export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEven
         : 1;
   try {
     dataset.writeDataPoint({ indexes: [event.name], blobs: [detail], doubles: [value] });
-  } catch {
-    // Metrics never decide whether a product write succeeds.
+  } catch (error) {
+    log.warn("metric_write_failed", { dataset: "events", error });
   }
 }
 
@@ -141,7 +142,7 @@ export function recordRequest(
       blobs: [point.route, method, `${Math.floor(point.status / 100)}xx`, point.client],
       doubles: [point.durationMs],
     });
-  } catch {
-    // Metrics never change an HTTP response.
+  } catch (error) {
+    log.warn("metric_write_failed", { dataset: "requests", error });
   }
 }

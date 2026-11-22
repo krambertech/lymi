@@ -293,7 +293,7 @@ describe("deleting an account", () => {
     expect(await count("former_deck_copies", "deck_id", deck.id)).toBe(0);
 
     const images = { delete: async () => {} } as unknown as R2Bucket;
-    expect(await dropUnstudiedFormerDecks(db, images)).toBe(1);
+    expect(await dropUnstudiedFormerDecks(db, images)).toEqual({ dropped: 1, failed: 0 });
     expect(await count("decks", "id", deck.id)).toBe(0);
     expect(await count("reviews", "user_id", peeter.userId)).toBe(1);
   });
@@ -358,7 +358,7 @@ describe("deleting an account", () => {
         throw new Error("R2 unavailable");
       },
     } as unknown as R2Bucket;
-    await purgeCardAudio(db, refusing);
+    expect(await purgeCardAudio(db, refusing)).toEqual({ cleared: 0, failed: 1 });
     expect(await count("card_audio_purges", "card_id", card.id)).toBe(1);
 
     await purgeCardAudio(db, bindings.AUDIO);
@@ -521,7 +521,7 @@ describe("deleting an account", () => {
     for (let run = 0; run < 5; run++) copied += (await copyFormerDecks(db, undefined)).copied;
     expect(copied).toBeGreaterThanOrEqual(60);
     expect(await count("decks", "user_id", member.userId)).toBe(60);
-    while ((await dropUnstudiedFormerDecks(db, bindings.PRIVATE_IMAGES)) > 0) {}
+    while ((await dropUnstudiedFormerDecks(db, bindings.PRIVATE_IMAGES)).dropped > 0) {}
   });
 
   it("passes over a member whose copy fails, and copies the rest", async () => {
@@ -609,12 +609,12 @@ describe("deleting an account", () => {
         deleted.push(...(Array.isArray(keys) ? keys : [keys]));
       },
     } as unknown as R2Bucket;
-    expect(await dropUnstudiedFormerDecks(db, images)).toBe(0);
+    expect(await dropUnstudiedFormerDecks(db, images)).toEqual({ dropped: 0, failed: 0 });
     expect(await count("decks", "id", deck.id)).toBe(1);
     expect(await count("card_audio_purges", "card_id", card.id)).toBe(0);
 
     await leave(member, deck.id);
-    expect(await dropUnstudiedFormerDecks(db, images)).toBe(1);
+    expect(await dropUnstudiedFormerDecks(db, images)).toEqual({ dropped: 1, failed: 0 });
     expect(await count("decks", "id", deck.id)).toBe(0);
     expect(await count("cards", "id", card.id)).toBe(0);
     expect(deleted).toEqual([`cards/${card.id}/picture`]);

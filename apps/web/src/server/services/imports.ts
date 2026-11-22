@@ -24,6 +24,7 @@ import { mochi } from "../imports/mochi";
 import { noji } from "../imports/noji";
 import { pleco } from "../imports/pleco";
 import { quizlet } from "../imports/quizlet";
+import { log, logFailure } from "../log";
 import { aiAllowedFor } from "./ai-consent";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
@@ -189,7 +190,8 @@ export async function uploadImportPart(
     throw new ServiceError("invalid", `Part ${partNumber} must be exactly ${expected} bytes.`);
   }
   const upload = uploads.resumeMultipartUpload(row.objectKey, row.uploadId);
-  const part = await upload.uploadPart(partNumber, body).catch(() => {
+  const part = await upload.uploadPart(partNumber, body).catch((error: unknown) => {
+    log.warn("import_upload_part_refused", { importId: id, error });
     throw new ServiceError("unavailable", "That part didn’t arrive. Send it again.");
   });
   await ctx.db.run(sql`update imports
@@ -219,16 +221,17 @@ export async function completeImportUpload(
       ),
     });
   }
-  const joined = await uploads
+  const refused = await uploads
     .resumeMultipartUpload(row.objectKey, row.uploadId)
     .complete(parts)
     .then(
-      () => true,
-      () => false,
+      () => null,
+      (error: unknown) => ({ error }),
     );
   // A second request can find the parts already joined by the first, which is not a failure.
   const head = await uploads.head(row.objectKey);
-  if (!joined && !head) {
+  if (refused && !head) {
+    log.error("import_upload_complete_refused", { importId: id, error: refused.error });
     await failImport(ctx.db, id, "upload_incomplete", uploads, ctx.analytics);
     return getImport(ctx, id);
   }
@@ -683,7 +686,7 @@ export async function deleteImportFiles(
       await uploads
         .resumeMultipartUpload(row.objectKey, row.uploadId)
         .abort()
-        .catch(() => {});
+        .catch(logFailure("import_upload_abort_refused"));
     const keys = [row.objectKey];
     let cursor: string | undefined;
     do {
@@ -696,9 +699,8 @@ export async function deleteImportFiles(
     } while (cursor);
     for (let i = 0; i < keys.length; i += 1000) await uploads.delete(keys.slice(i, i + 1000));
     return true;
-  } catch {
-    // The key itself is never logged.
-    console.error("Deleting an import's files failed");
+  } catch (error) {
+    log.error("import_files_not_deleted", { error });
     return false;
   }
 }

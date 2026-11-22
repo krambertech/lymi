@@ -10,8 +10,9 @@ export class ImportFileError extends Error {
   constructor(
     public readonly failure: "unrecognized" | "damaged" | "too_large",
     message: string,
+    options?: ErrorOptions,
   ) {
-    super(message);
+    super(message, options);
     this.name = "ImportFileError";
   }
 }
@@ -43,6 +44,16 @@ export function bytesSource(bytes: Uint8Array): RandomAccess {
       });
     },
   };
+}
+
+export function opens(opening: Promise<unknown>): Promise<boolean> {
+  return opening.then(
+    () => true,
+    (error: unknown) => {
+      if (error instanceof ImportFileError) return false;
+      throw error;
+    },
+  );
 }
 
 export async function r2Source(bucket: R2Bucket, key: string): Promise<RandomAccess> {

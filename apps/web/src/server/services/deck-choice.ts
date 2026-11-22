@@ -3,6 +3,7 @@ import { and, count, desc, eq, isNotNull, isNull, max } from "@lymi/core/db";
 import { z } from "zod";
 import type { TextProvider } from "../ai";
 import { schema } from "../db";
+import { log } from "../log";
 import { aiAllowedFor } from "./ai-consent";
 import type { ServiceContext } from "./context";
 
@@ -52,8 +53,8 @@ export async function termLanguage(
     );
     const tag = reply.success ? reply.data.language?.trim() : undefined;
     return tag && LanguageTag.safeParse(tag).success && languages.includes(tag) ? tag : null;
-  } catch {
-    console.warn("Choosing a deck for a shared term failed; the phone keeps its deck");
+  } catch (error) {
+    log.warn("deck_choice_failed", { error });
     return null;
   }
 }

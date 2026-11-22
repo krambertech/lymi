@@ -30,10 +30,5 @@ export function consentEvent(
 /** A grant ends in a redirect back to the client that carries an authorization code. */
 function issuedCode(returned: unknown): boolean {
   const url = (returned as { url?: unknown } | null)?.url;
-  if (typeof url !== "string") return false;
-  try {
-    return new URL(url).searchParams.has("code");
-  } catch {
-    return false;
-  }
+  return typeof url === "string" && (URL.parse(url)?.searchParams.has("code") ?? false);
 }

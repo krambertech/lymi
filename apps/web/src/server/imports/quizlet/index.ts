@@ -50,11 +50,12 @@ export const quizlet: SourceAdapter<QuizletNote> = {
     if (file.size > MAX_TEXT_IMPORT_BYTES + 4096) {
       throw new ImportFileError("too_large", "The text is larger than a pasted import takes");
     }
+    const bytes = await file.read(0, file.size);
     let raw: string;
     try {
-      raw = new TextDecoder("utf-8", { fatal: true }).decode(await file.read(0, file.size));
-    } catch {
-      throw new ImportFileError("unrecognized", "The text is not UTF-8");
+      raw = new TextDecoder("utf-8", { fatal: true }).decode(bytes);
+    } catch (cause) {
+      throw new ImportFileError("unrecognized", "The text is not UTF-8", { cause });
     }
     const { meta, text } = decodeTextImport(raw);
     const separators = meta?.separators ?? detectSeparators(text);

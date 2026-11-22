@@ -9,6 +9,7 @@ import {
 import type { Bindings } from "./env";
 import { decisionModel, keepScore } from "./lessons/keep";
 import { pingLessonReader } from "./lessons/reader";
+import { bodyJson } from "./parse";
 
 const SPEECH: Record<SpeechProvider["provider"], Dependency> = {
   elevenlabs: "elevenlabs",
@@ -53,7 +54,7 @@ function checks(env: Bindings, hourly: boolean): Check[] {
           "site",
           "canary",
         )(new URL("/api/health", env.PUBLIC_SITE_URL), { signal: AbortSignal.timeout(10_000) });
-        const body = (await response.json().catch(() => null)) as { ok?: unknown } | null;
+        const body = (await bodyJson(response)) as { ok?: unknown } | null | undefined;
         if (!response.ok || body?.ok !== true) throw new CheckFailed("failed");
       },
     },

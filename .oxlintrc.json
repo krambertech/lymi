@@ -228,6 +228,25 @@
       }
     },
     {
+      "files": ["apps/web/src/server/**/*.ts"],
+      "excludeFiles": [
+        "apps/web/src/server/log.ts",
+        "apps/web/src/server/**/*evaluate.ts",
+        "apps/web/src/server/stress-backfill/dry-run.ts",
+        "**/*.test.ts"
+      ],
+      "rules": {
+        "lymi/no-swallowed-failure": "error",
+        "eslint/no-restricted-globals": [
+          "error",
+          {
+            "name": "console",
+            "message": "Use log.info, log.warn, log.error or logFailure from server/log.ts: raw console lines carried SQL, bound parameters and learner text into Workers Logs (#155)."
+          }
+        ]
+      }
+    },
+    {
       "files": ["apps/web/**", "packages/**"],
       "excludeFiles": ["**/*.test.ts"],
       "rules": {

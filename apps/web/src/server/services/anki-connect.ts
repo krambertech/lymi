@@ -16,6 +16,7 @@ import {
 import { and, asc, eq, gte, inArray, isNull, selectIn, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { schema } from "../db";
+import { decodeBase64, languageName } from "../parse";
 import { track } from "./analytics";
 import { meaningText, pictureFiles, plainText, soundFiles, sourceText } from "./anki-connect-text";
 import { type CardImageStorage, storeImportedImage } from "./card-images";
@@ -306,16 +307,6 @@ async function ownedDecks({ db, userId }: ServiceContext): Promise<Deck[]> {
   });
 }
 
-const LANGUAGE_NAMES = new Intl.DisplayNames(["en"], { type: "language" });
-
-function languageName(language: string) {
-  try {
-    return LANGUAGE_NAMES.of(language) ?? language;
-  } catch {
-    return language;
-  }
-}
-
 const chooseNoteType = () => `In Yomitan’s Anki settings, choose the note type “${NOTE_TYPE}”.`;
 const noteUnreadable = () =>
   `Lymi couldn’t read this note. In Yomitan’s Anki settings, choose a Lymi deck and the note type “${NOTE_TYPE}”.`;
@@ -350,13 +341,10 @@ function fitted(text: string, limit: number) {
 /** The page, without its query when that is what makes it too long, or else its site. */
 function fittedSource(url: string) {
   if (url.length <= CARD_LIMITS.source) return url;
-  try {
-    const parsed = new URL(url);
-    const page = `${parsed.origin}${parsed.pathname}`;
-    return page.length <= CARD_LIMITS.source ? page : parsed.host;
-  } catch {
-    return undefined;
-  }
+  const parsed = URL.parse(url);
+  if (!parsed) return undefined;
+  const page = `${parsed.origin}${parsed.pathname}`;
+  return page.length <= CARD_LIMITS.source ? page : parsed.host;
 }
 
 function tagsOf(note: Pick<AnkiConnectNote, "tags">) {
@@ -539,13 +527,8 @@ async function stash(
 ): Promise<void> {
   if (!deps.media || typeof data !== "string") return;
   if (data.length > Math.ceil(IMAGE_LIMITS.maxBytes / 3) * 4) return;
-  let bytes: Uint8Array;
-  try {
-    bytes = Uint8Array.from(atob(data), (c) => c.charCodeAt(0));
-  } catch {
-    return;
-  }
-  if (!uploadKind(bytes)) return;
+  const bytes = decodeBase64(data);
+  if (!bytes || !uploadKind(bytes)) return;
   await deps.media.stash.put(await stashKey(ctx.userId, fileName), bytes);
 }
 

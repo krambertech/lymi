@@ -1,3 +1,4 @@
+import { bodyJson } from "./parse";
 interface ResourceMetadata extends Record<string, unknown> {
   resource?: unknown;
 }
@@ -15,12 +16,7 @@ export async function advertisePublicResourceMetadata(
   if (request.method === "HEAD" || !response.ok) return response;
   if (!response.headers.get("content-type")?.includes("application/json")) return response;
 
-  let metadata: unknown;
-  try {
-    metadata = await response.clone().json();
-  } catch {
-    return response;
-  }
+  const metadata = await bodyJson(response.clone());
   if (!isResourceMetadata(metadata)) return response;
 
   const headers = new Headers(response.headers);

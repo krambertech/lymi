@@ -241,7 +241,11 @@ describe("signing in with Google", () => {
     expect(after?.googleVersion).toBe(row?.googleVersion);
     // The log line names what failed, never the URL, the bytes or the learner.
     for (const call of error.mock.calls) {
-      expect(String(call[0])).toBe("Importing the Google photo failed");
+      expect(Object.keys(JSON.parse(String(call[0]))).sort()).toEqual(
+        expect.arrayContaining(["error", "event"]),
+      );
+      expect(String(call[0])).toContain('"event":"google_photo_import_failed"');
+      expect(String(call[0])).not.toMatch(/https|svg|network down/);
     }
   });
 

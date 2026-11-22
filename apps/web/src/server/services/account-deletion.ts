@@ -20,6 +20,8 @@ import {
 import type { AppleClients } from "../apple-revoke";
 import { type Db, schema } from "../db";
 import { type Bindings, publisherEmails } from "../env";
+import { log } from "../log";
+import { jwtClaims } from "../parse";
 import { appleRevocationRow } from "./apple-revocations";
 import { auditStatement } from "./audit";
 import { runBatch } from "./batch";
@@ -277,7 +279,11 @@ async function checkApple(
       undefined,
       "apple_mismatch",
     );
-  if (!verify || !(await verify(apple.idToken, apple.nonce).catch(() => false))) throw refused();
+  const verified = await verify?.(apple.idToken, apple.nonce).catch((error: unknown) => {
+    log.warn("apple_token_check_failed", { error });
+    return false;
+  });
+  if (!verified) throw refused();
   const sub = subjectOf(apple.idToken);
   const [row] = await db
     .select({ id: schema.account.id })
@@ -293,14 +299,8 @@ async function checkApple(
 }
 
 function subjectOf(token: string): string | null {
-  try {
-    const payload = token.split(".")[1] ?? "";
-    const json = atob(payload.replaceAll("-", "+").replaceAll("_", "/"));
-    const sub = (JSON.parse(json) as { sub?: unknown }).sub;
-    return typeof sub === "string" ? sub : null;
-  } catch {
-    return null;
-  }
+  const sub = jwtClaims(token)?.sub;
+  return typeof sub === "string" ? sub : null;
 }
 
 export interface DeletionDeps {
@@ -548,9 +548,7 @@ export async function deleteAccount(
   const sessionsEnded = await deps.endSessions(userId).then(
     () => true,
     (error: unknown) => {
-      console.error("Ending sessions failed after an account deletion", {
-        error: error instanceof Error ? error.name : "unknown",
-      });
+      log.error("account_sessions_not_ended", { error });
       return false;
     },
   );
@@ -578,7 +576,10 @@ export async function deleteAccount(
  * for a deck kept before copies existed, because the last one left. Pictures a copy shares stay,
  * and the cards' audio is queued. A deck whose pictures R2 refused waits for the next run.
  */
-export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promise<number> {
+export async function dropUnstudiedFormerDecks(
+  db: Db,
+  images: R2Bucket,
+): Promise<{ dropped: number; failed: number }> {
   const decks = await db
     .select({ id: schema.decks.id })
     .from(schema.decks)
@@ -600,6 +601,7 @@ export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promis
     )
     .limit(20);
   let dropped = 0;
+  let failed = 0;
   for (const { id } of decks) {
     const pictures = await db
       .select({ key: schema.cardImages.objectKey })
@@ -618,7 +620,9 @@ export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promis
       for (let i = 0; i < pictures.length; i += 1000) {
         await images.delete(pictures.slice(i, i + 1000).map((picture) => picture.key));
       }
-    } catch {
+    } catch (error) {
+      log.error("former_deck_pictures_kept", { deckId: id, error });
+      failed++;
       continue;
     }
     await db.batch([
@@ -640,5 +644,5 @@ export async function dropUnstudiedFormerDecks(db: Db, images: R2Bucket): Promis
     ]);
     dropped++;
   }
-  return dropped;
+  return { dropped, failed };
 }

@@ -2,6 +2,7 @@ import { WorkflowEntrypoint, type WorkflowEvent, type WorkflowStep } from "cloud
 import { createTextProvider } from "../ai";
 import { createDb } from "../db";
 import type { Bindings } from "../env";
+import { logFailure } from "../log";
 import { productAnalytics, reportServerException } from "../posthog";
 import {
   type EnrichRunParams,
@@ -89,7 +90,7 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
                 userId: params.userId,
               }),
             )
-            .catch(() => {});
+            .catch(logFailure("workflow_report_failed", { step: "deck-style" }));
           return [];
         }
       };
@@ -124,7 +125,7 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
                 userId: params.userId,
               });
             })
-            .catch(() => {});
+            .catch(logFailure("workflow_report_failed", { step: "pitch-accent" }));
         }
       };
       const trigger = params.trigger ?? "add";
@@ -206,7 +207,13 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
           if (fills) await failEnrichment(db, params.userId, params.cardIds);
           await failTranslations(db, params.userId, params.cardIds);
         })
-        .catch(() => {});
+        .catch((error: unknown) =>
+          reportServerException(this.env, error, {
+            route: "enrichment-settle",
+            method: "WORKFLOW",
+            userId: params.userId,
+          }),
+        );
     }
   }
 }

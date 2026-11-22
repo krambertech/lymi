@@ -5,6 +5,7 @@ import type { SpeechProvider } from "../ai";
 import { speechText } from "../ai/speech-text";
 import { type Db, schema } from "../db";
 import { type LeadInDependencies, leadInPolicy } from "../lead-ins";
+import { log } from "../log";
 import { aiAllowedForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
 import { audit } from "./audit";
@@ -161,15 +162,12 @@ async function generatedPronunciation(
       lastFailure = error;
       const status = providerStatus(error);
       report(true, status ?? undefined);
-      console.warn(
-        JSON.stringify({
-          event: "pronunciation_provider_failed",
-          provider: provider.provider,
-          language,
-          error: error instanceof Error ? error.name : "UnknownError",
-          ...(status === null ? {} : { status }),
-        }),
-      );
+      log.warn("pronunciation_provider_failed", {
+        provider: provider.provider,
+        language,
+        error,
+        ...(status === null ? {} : { status }),
+      });
       continue;
     }
 
@@ -315,13 +313,17 @@ const PURGES_PER_RUN = 90;
  * Clears the audio folders of deleted cards, recordings and superseded speech included, a bounded
  * number per cron run. A card R2 refused stays queued for the next run.
  */
-export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> {
+export async function purgeCardAudio(
+  db: Db,
+  bucket: R2Bucket,
+): Promise<{ cleared: number; failed: number }> {
   const queued = await db
     .select({ cardId: schema.cardAudioPurges.cardId })
     .from(schema.cardAudioPurges)
     .orderBy(schema.cardAudioPurges.createdAt)
     .limit(PURGES_PER_RUN);
   const cleared: string[] = [];
+  let failed = 0;
   const worker = async () => {
     for (let next = queued.pop(); next; next = queued.pop()) {
       try {
@@ -336,8 +338,9 @@ export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> 
           cursor = page.truncated ? page.cursor : undefined;
         } while (cursor);
         cleared.push(next.cardId);
-      } catch {
-        // Retried next run; the key is never logged.
+      } catch (error) {
+        log.error("card_audio_purge_failed", { error });
+        failed++;
       }
     }
   };
@@ -345,7 +348,7 @@ export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> 
   if (cleared.length > 0) {
     await db.delete(schema.cardAudioPurges).where(inArray(schema.cardAudioPurges.cardId, cleared));
   }
-  return cleared.length;
+  return { cleared: cleared.length, failed };
 }
 
 /** Only the voice the lead-ins were auditioned on hears them; others speak the term alone. */

@@ -1,3 +1,5 @@
+import { log } from "./log";
+import { bodyJson } from "./parse";
 /** What Lymi needs to talk to Apple as the app: the bundle identifier and a Sign in with Apple key. */
 export interface AppleKey {
   bundleIdentifier: string;
@@ -93,7 +95,8 @@ async function postToApple(
       headers: { "content-type": "application/x-www-form-urlencoded" },
       body: new URLSearchParams(body),
     });
-  } catch {
+  } catch (error) {
+    log.warn("apple_unreachable", { error });
     return null;
   }
 }
@@ -115,7 +118,7 @@ export async function exchangeAppleCode(
   });
   if (!response) return { ok: false, retry: true, status: null };
   if (!response.ok) return { ok: false, retry: response.status >= 500, status: response.status };
-  const { refresh_token: token } = (await response.json().catch(() => ({}))) as {
+  const { refresh_token: token } = ((await bodyJson(response)) ?? {}) as {
     refresh_token?: string;
   };
   return token ? { ok: true, token } : { ok: false, retry: false, status: response.status };
@@ -174,7 +177,8 @@ export async function openAppleToken(key: AppleKey, sealed: string): Promise<str
       bytes(data),
     );
     return new TextDecoder().decode(opened);
-  } catch {
+  } catch (error) {
+    log.error("apple_token_not_opened", { error });
     return null;
   }
 }

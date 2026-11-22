@@ -3,6 +3,8 @@ import { z } from "zod";
 import { LeadInError, type LeadInUsage, type LeadInWriter } from "../ai/lead-in-writer";
 import { DECISION_MODEL, type LeadInInput, type LeadInPolicy, leadInScore } from "../lead-ins";
 import type { DecisionModel } from "../lessons/keep";
+import { log } from "../log";
+import { bodyJson } from "../parse";
 import { type AnalyticsWriter, textCallReporter, track } from "./analytics";
 import { ServiceError } from "./context";
 
@@ -79,8 +81,8 @@ export async function withAudioLease<T>(
         onlyIf: { etagMatches: lock.etag },
         customMetadata: { expiresAt: "0" },
       });
-    } catch {
-      console.warn(JSON.stringify({ event: "pronunciation_lease_release_failed" }));
+    } catch (error) {
+      log.warn("pronunciation_lease_release_failed", { error });
     }
   }
 }
@@ -106,16 +108,16 @@ export async function settleLeadIn(
     writer: writer.model,
   });
   const key = `cards/${card.id}/lead-in/${identity}.json`;
-  const log = (outcome: string, detail: Record<string, number> = {}, write = console.info) =>
-    write(
-      JSON.stringify({
-        event: "lead_in_resolved",
-        outcome,
-        language: policy.language,
-        model: writer.model,
-        ...detail,
-      }),
-    );
+  const report = (
+    outcome: Outcome | "cached" | "cooldown" | "failed" | "invalid_cache",
+    detail: { latencyMs?: number } = {},
+  ) =>
+    log[outcome === "failed" ? "warn" : "info"]("lead_in_resolved", {
+      outcome,
+      language: policy.language,
+      model: writer.model,
+      ...detail,
+    });
   const record = async (value: z.input<typeof LeadInRecord>) =>
     bucket.put(key, JSON.stringify(value), {
       httpMetadata: { contentType: "application/json" },
@@ -125,16 +127,16 @@ export async function settleLeadIn(
     if (!object) return null;
     if (object.size > 4096) {
       await object.body.cancel();
-      log("invalid_cache");
+      report("invalid_cache");
       return null;
     }
-    const parsed = LeadInRecord.safeParse(await object.json().catch(() => null));
+    const parsed = LeadInRecord.safeParse(await bodyJson(object));
     // A record a later, stricter policy would refuse is bought again rather than breaking playback.
     if (
       !parsed.success ||
       (parsed.data.status === "ready" && !policy.accepts(parsed.data.previousText, input))
     ) {
-      log("invalid_cache");
+      report("invalid_cache");
       return null;
     }
     if (parsed.data.status === "failed" && (parsed.data.pendingUntil ?? 0) > Date.now()) {
@@ -144,7 +146,7 @@ export async function settleLeadIn(
       );
     }
     if (parsed.data.status === "failed" && parsed.data.retryAt <= Date.now()) return null;
-    log(parsed.data.status === "ready" ? "cached" : "cooldown");
+    report(parsed.data.status === "ready" ? "cached" : "cooldown");
     return {
       identity,
       previousText: parsed.data.status === "ready" ? parsed.data.previousText : null,
@@ -175,13 +177,13 @@ export async function settleLeadIn(
     const settle = async (outcome: Outcome, previousText: string | null) => {
       await record({ status: "ready", previousText, outcome, score });
       reportDecision(outcome);
-      log(outcome, { latencyMs: Date.now() - started });
+      report(outcome, { latencyMs: Date.now() - started });
       return { identity, previousText };
     };
     if (score !== null && score < policy.threshold) return settle("unambiguous", null);
 
     const writing = Date.now();
-    const report = (usage: LeadInUsage | undefined, error: boolean) =>
+    const reportCall = (usage: LeadInUsage | undefined, error: boolean) =>
       textCallReporter(
         analytics,
         "lead_in",
@@ -202,15 +204,15 @@ export async function settleLeadIn(
     } catch (error) {
       const failure = error instanceof LeadInError ? error : undefined;
       // A refused reply was billed and kept, so it is not an outage.
-      report(failure?.usage, failure?.reason !== "refused");
+      reportCall(failure?.usage, failure?.reason !== "refused");
       // Asking again buys much the same reply, so a refused one is kept as no lead-in.
       if (failure?.reason === "refused") return settle("refused", null);
       await record({ status: "failed", retryAt: Date.now() + FAILURE_COOLDOWN_MS });
       reportDecision("failed");
-      log("failed", { latencyMs: Date.now() - started }, console.warn);
+      report("failed", { latencyMs: Date.now() - started });
       return { identity, previousText: null };
     }
-    report(result, false);
+    reportCall(result, false);
     return settle(result.previousText ? "written" : "no_fragment", result.previousText);
   });
 }

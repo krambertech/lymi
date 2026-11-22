@@ -1,3 +1,4 @@
+import { log } from "../log";
 // A Readwise token is sealed under a key derived from the auth secret; after a rotation the learner pastes it again.
 
 const encoder = new TextEncoder();
@@ -55,7 +56,8 @@ export async function openToken(secret: string, cipher: string): Promise<string 
       bytes.slice(12),
     );
     return new TextDecoder().decode(plain);
-  } catch {
+  } catch (error) {
+    log.warn("readwise_token_not_opened", { error });
     return null;
   }
 }

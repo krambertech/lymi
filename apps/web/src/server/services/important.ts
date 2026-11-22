@@ -1,6 +1,7 @@
 import { newId } from "@lymi/core";
 import { and, eq, inArray } from "@lymi/core/db";
 import { schema } from "../db";
+import { log } from "../log";
 import { track } from "./analytics";
 import { auditStatement } from "./audit";
 import { runBatch, type Statement, selectIn } from "./batch";
@@ -125,9 +126,7 @@ export async function setImportantMany(
         slice.flatMap((write) => write.statements),
       );
     } catch (err) {
-      console.error("Bulk important write failed", {
-        error: err instanceof Error ? err.name : typeof err,
-      });
+      log.error("bulk_important_write_failed", { error: err });
       for (const write of slice) failed.add(write.id);
     }
   }

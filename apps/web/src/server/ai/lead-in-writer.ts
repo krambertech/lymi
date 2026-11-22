@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { parseJson } from "../parse";
 import { type AiGatewayBindings, providerEndpoint } from "./gateway";
 import type { Fetch } from "./types";
 
@@ -123,12 +124,8 @@ export function createLeadInWriter(
         bytes.set(chunk, offset);
         offset += chunk.length;
       }
-      let body: unknown;
-      try {
-        body = JSON.parse(new TextDecoder().decode(bytes));
-      } catch {
-        throw new LeadInError("failed", { ...NO_USAGE, status });
-      }
+      const body = parseJson(new TextDecoder().decode(bytes));
+      if (body === undefined) throw new LeadInError("failed", { ...NO_USAGE, status });
       const metered = Usage.safeParse(body).data?.usage;
       const usage: LeadInUsage = {
         inputTokens: metered?.prompt_tokens ?? 0,
@@ -136,12 +133,10 @@ export function createLeadInWriter(
         reasoningTokens: metered?.completion_tokens_details?.reasoning_tokens ?? 0,
         status,
       };
-      try {
-        const text = Payload.parse(body).choices[0]?.message.content;
-        return { previousText: Reply.parse(JSON.parse(text ?? "")).previousText, ...usage };
-      } catch {
-        throw new LeadInError("refused", usage);
-      }
+      const text = Payload.safeParse(body).data?.choices[0]?.message.content;
+      const reply = Reply.safeParse(parseJson(text ?? ""));
+      if (!reply.success) throw new LeadInError("refused", usage);
+      return { previousText: reply.data.previousText, ...usage };
     },
   };
 }

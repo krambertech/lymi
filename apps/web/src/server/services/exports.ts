@@ -30,6 +30,7 @@ import {
   ZipSegment,
   ZipTooLarge,
 } from "../exports/zip";
+import { log } from "../log";
 import { track } from "./analytics";
 import { auditStatement } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
@@ -735,9 +736,8 @@ export async function deleteExportFiles(
     await deleteObjects(bucket, `${row.objectKey}/`);
     await deleteObjects(bucket, `${row.objectKey}.records/`);
     return true;
-  } catch {
-    // The key itself is never logged.
-    console.error("Deleting an export's files failed");
+  } catch (error) {
+    log.error("export_files_not_deleted", { error });
     return false;
   }
 }

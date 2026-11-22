@@ -27,6 +27,7 @@ import {
   type LessonUsage,
 } from "../lessons/reader";
 import { TermsStream } from "../lessons/terms-stream";
+import { parseJson } from "../parse";
 import { requireAi } from "./ai-consent";
 import { type AnalyticsWriter, textCallReporter, track } from "./analytics";
 import type { ServiceContext } from "./context";
@@ -448,13 +449,9 @@ async function readInto(
   if (!deck) announce(lesson.fallback);
   await queue;
 
-  let reply: Reply | null = null;
-  try {
-    const parsed = Reply.safeParse(JSON.parse(stream.all));
-    if (parsed.success) reply = parsed.data;
-  } catch {
-    // A reply that broke off after its terms still leaves a usable list.
-  }
+  // A reply that broke off after its terms still leaves a usable list.
+  const parsed = Reply.safeParse(parseJson(stream.all));
+  const reply: Reply | null = parsed.success ? parsed.data : null;
   if (!reply && ids.size === 0)
     throw new ServiceError("unavailable", "The lesson could not be read. Try again.");
 

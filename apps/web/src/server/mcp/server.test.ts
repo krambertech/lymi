@@ -1161,8 +1161,16 @@ describe("Lymi MCP server", () => {
       expect(reportError).toHaveBeenCalledWith(error, "get_card");
       expect(JSON.stringify(res.content)).not.toContain("D1_ERROR");
       expect(res.content[0]).toMatchObject({ text: expect.stringContaining("Try again") });
-      expect(JSON.stringify(spy.mock.calls)).not.toContain("D1_ERROR");
-      expect(spy).toHaveBeenCalledWith("MCP tool failed", { tool: "get_card", error: "Error" });
+      expect(JSON.stringify(spy.mock.calls)).not.toContain("no such column");
+      expect(JSON.stringify(spy.mock.calls)).not.toContain("secret");
+      expect(spy).toHaveBeenCalledWith(
+        JSON.stringify({
+          event: "mcp_tool_failed",
+          tool: "get_card",
+          error: "Error",
+          code: "D1_ERROR",
+        }),
+      );
       spy.mockRestore();
     },
   );

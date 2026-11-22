@@ -40,6 +40,7 @@ import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
+import { log } from "../log";
 import { aiAllowedFor, requireAi } from "./ai-consent";
 import { type AnalyticsEvent, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
@@ -767,9 +768,7 @@ async function runCardWrites(db: Db, writes: CardWrite[], now: Date): Promise<Se
     try {
       await runBatch(db, batchOf(db, slice, now));
     } catch (err) {
-      console.error("Bulk card write failed", {
-        error: err instanceof Error ? err.name : typeof err,
-      });
+      log.error("bulk_card_write_failed", { error: err });
       for (const write of slice) failed.add(write.id);
     }
   }

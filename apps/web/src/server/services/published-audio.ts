@@ -2,6 +2,7 @@ import { canSpeakTerm, LanguageTag } from "@lymi/core";
 import { listPublicDeckSlugs, publicDeckFrontCards } from "@lymi/core/catalog/server";
 import { and, eq, inArray, isNull, or, selectIn } from "@lymi/core/db";
 import { type Db, schema } from "../db";
+import { log } from "../log";
 import type { AnalyticsWriter } from "./analytics";
 import { type AudioDependencies, pronunciationAudio } from "./audio";
 
@@ -70,13 +71,7 @@ export async function voicePublishedDecks(
       front = await publicDeckFrontCards(db, slug);
     } catch (error) {
       // One deck's failed read waits for its next turn instead of failing every other deck's.
-      console.warn(
-        JSON.stringify({
-          event: "published_audio_deck_skipped",
-          slug,
-          error: error instanceof Error ? error.name : "UnknownError",
-        }),
-      );
+      log.warn("published_audio_deck_skipped", { slug, error });
       continue;
     }
     for (const id of front) {
@@ -142,12 +137,7 @@ export async function voicePublishedDecks(
         voiced++;
       } catch (error) {
         failed++;
-        console.warn(
-          JSON.stringify({
-            event: "published_audio_failed",
-            error: error instanceof Error ? error.name : "UnknownError",
-          }),
-        );
+        log.warn("published_audio_failed", { error });
       }
     }
   };

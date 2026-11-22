@@ -5,6 +5,7 @@ import { runCanary } from "./canary";
 import { createDb } from "./db";
 import type { Bindings } from "./env";
 import { leadInDependencies } from "./lead-ins";
+import { log } from "./log";
 import { ownerAnalytics, reportServerException } from "./posthog";
 import { dispatchReviewReminders } from "./push-delivery";
 import { readwiseDeps } from "./readwise/deps";
@@ -80,8 +81,18 @@ export default {
       }),
     );
     run("anki-connect-uploads", sweepAnkiConnectUploads(env.IMPORTS, at));
-    run("former-decks", dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES));
-    run("purge-card-audio", purgeCardAudio(createDb(env.DB), env.AUDIO));
+    run(
+      "former-decks",
+      dropUnstudiedFormerDecks(createDb(env.DB), env.PRIVATE_IMAGES).then(({ failed }) => {
+        if (failed > 0) throw new Error(`${failed} former owners' decks kept their pictures`);
+      }),
+    );
+    run(
+      "purge-card-audio",
+      purgeCardAudio(createDb(env.DB), env.AUDIO).then(({ failed }) => {
+        if (failed > 0) throw new Error(`${failed} deleted cards kept their audio`);
+      }),
+    );
     run(
       "apple-revocations",
       retryAppleRevocations(createDb(env.DB), {
@@ -115,7 +126,7 @@ export default {
       run(
         "stress-backfill",
         runStressBackfill(createDb(env.DB), { dryRun: false }).then((counts) =>
-          console.log(JSON.stringify({ job: "stress-backfill", ...counts })),
+          log.info("stress_backfill", { job: "stress-backfill", ...counts }),
         ),
       );
     }

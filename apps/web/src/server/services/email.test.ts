@@ -358,7 +358,12 @@ describe("transactional email", () => {
     );
     await sendAccountEmail(ctx, env, { kind: "test", to: "learner@example.com", language: "en" });
     expect(log).toHaveBeenLastCalledWith(
-      JSON.stringify({ event: "account_email_not_sent", kind: "test", error: "ServiceError" }),
+      JSON.stringify({
+        event: "account_email_not_sent",
+        kind: "test",
+        error: "ServiceError",
+        code: "unavailable",
+      }),
     );
   });
 

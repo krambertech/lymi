@@ -287,6 +287,8 @@ The test sits beside the year-long simulation's fingerprint check in `src/simula
 
 When a review finds a bug whose shape a search can spot, add the search so the next one fails `pnpm check` instead of waiting for a reviewer. A pattern inside one file is a rule in `oxlint-plugin-lymi/rules/` with a test beside it, scoped in `.oxlintrc.json`; a pattern across files, such as a key spelled in two modules, is a check in `scripts/check-regressions.mjs` with a test in its `.test.mjs`. Each message names the pull request that found the bug. Logic bugs, races and wrong copy beyond a known false claim stay with regression tests.
 
+`scripts/check-copy.mjs` reads the public site's English messages outside the lessons, every page under `apps/site/src/content` and the store listing, and fails on phrases that were written and cut again: scheduling claims, promises, things that act, filler, hype, and one slogan repeated with only a name swapped. A new content collection, such as a blog, is covered without being added. `scripts/copy-known.json` holds lines that stay, each with its reason, and an entry whose line is gone fails. Changelog updates from before the check are records and are not read. `pnpm check:copy <file>` reads one file.
+
 `scripts/check-test-only-exports.mjs` holds one such search across the whole repository. It fails when only tests read a production export that its own module does not use, the shape of `writeStore` and `streakLength` before #1266. Its `ALLOWED` list holds the exports that stay, each with its reason: a reset that stands in for a restart, or a check whose only runner is a test.
 
 ## Flow models

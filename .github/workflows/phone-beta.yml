@@ -23,14 +23,13 @@ env:
 jobs:
   setup:
     if: >-
-      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'workflow_dispatch' && github.ref == 'refs/heads/main') ||
       (github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push')
     runs-on: ubuntu-latest
     timeout-minutes: 10
     permissions:
       contents: read
     env:
-      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
       PHONE_PLATFORMS: ${{ vars.PHONE_PLATFORMS }}
     outputs:
       ready: ${{ steps.eas.outputs.ready }}
@@ -42,6 +41,8 @@ jobs:
 
       - name: Check EAS is set up
         id: eas
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: node scripts/phone-release.mjs ready
 
       - uses: pnpm/action-setup@v4
@@ -59,6 +60,8 @@ jobs:
 
       - name: Create the beta and production channels a fresh project lacks
         if: steps.eas.outputs.ready == 'true'
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: node scripts/phone-release.mjs channels
 
   # Each platform has its own runtime, update group and build, so one failing leaves the other shipping.
@@ -75,7 +78,6 @@ jobs:
     permissions:
       contents: read
     env:
-      EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
       PLATFORM: ${{ matrix.platform }}
     steps:
       - uses: actions/checkout@v5
@@ -95,6 +97,8 @@ jobs:
 
       - name: Find the update installs have now
         id: latest
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: node scripts/phone-release.mjs latest beta "$PLATFORM"
 
       - name: Decide what to release
@@ -129,6 +133,8 @@ jobs:
       - name: Look for a beta build of this runtime
         id: build
         if: steps.plan.outputs.release == 'true'
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: node scripts/phone-release.mjs has-build "$PLATFORM" beta "${{ steps.runtime.outputs.runtime }}"
 
       # The free EAS plan allows 15 builds a month per platform, so merges never spend one on their own.
@@ -143,11 +149,14 @@ jobs:
         if: >-
           steps.plan.outputs.release == 'true' && steps.build.outputs.build == 'false' &&
           github.event_name == 'workflow_dispatch'
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
         run: node scripts/phone-release.mjs build "$PLATFORM" beta
 
       - name: Publish the update to beta
         if: steps.plan.outputs.release == 'true'
         env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
           MESSAGE: ${{ steps.plan.outputs.message }}
         run: node scripts/phone-release.mjs publish "$PLATFORM" beta preview "$MESSAGE"
 

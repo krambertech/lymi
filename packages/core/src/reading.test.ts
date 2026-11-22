@@ -9,6 +9,7 @@ import {
   hasReadings,
   kanaReading,
   knownReadings,
+  lettersReading,
   markedTerm,
   markKnownReadings,
   missingReadings,
@@ -44,6 +45,9 @@ describe("termShowsPronunciation", () => {
       termShowsPronunciation({ term: "上手", language: "ja", pronunciation: "じょうず" }),
     ).toBe(true);
     expect(termShowsPronunciation({ term: "мука", language: "ru", pronunciation: "мука́" })).toBe(
+      true,
+    );
+    expect(termShowsPronunciation({ term: "か\u3099", language: "ja", pronunciation: "が" })).toBe(
       true,
     );
     expect(termShowsPronunciation({ term: "мука", language: "ru", pronunciation: "[mʊˈka]" })).toBe(
@@ -84,6 +88,40 @@ describe("alignReading", () => {
       { text: "日", reading: "ひ" },
       { text: "の" },
       { text: "出", reading: "で" },
+    ]);
+    expect(alignReading("日の野原", "ひののはら")).toEqual([
+      { text: "日", reading: "ひ" },
+      { text: "の" },
+      { text: "野原", reading: "のはら" },
+    ]);
+  });
+
+  it("reads the counters ヶ and ヵ and the mark 〆 as kanji", () => {
+    expect(alignReading("三ヶ月ぶり", "さんかげつぶり")[0]).toEqual({
+      text: "三ヶ月",
+      reading: "さんかげつ",
+    });
+    expect(alignReading("三ヵ月ぶり", "さんかげつぶり")[0]).toEqual({
+      text: "三ヵ月",
+      reading: "さんかげつ",
+    });
+    expect(alignReading("〆切り", "しめきり")[0]).toEqual({ text: "〆切", reading: "しめき" });
+  });
+
+  it("lets a space or punctuation of the term be missing from the reading", () => {
+    expect(alignReading("食べる、飲む", "たべるのむ")).toEqual([
+      { text: "食", reading: "た" },
+      { text: "べる、" },
+      { text: "飲", reading: "の" },
+      { text: "む" },
+    ]);
+  });
+
+  it("puts the reading of a term past 80 characters over the whole of it", () => {
+    const kana = "べ".repeat(79);
+    expect(alignReading(`食${kana}`, `た${kana}`)[0]).toEqual({ text: "食", reading: "た" });
+    expect(alignReading(`食${kana}べ`, `た${kana}べ`)).toEqual([
+      { text: `食${kana}べ`, reading: `た${kana}べ` },
     ]);
   });
 
@@ -158,6 +196,14 @@ describe("termReading", () => {
     expect(
       termReading({ term: "食べる · 食べます", language: "ja", pronunciation: "たべる" }),
     ).toEqual([{ text: "食", reading: "た" }, { text: "べる · 食べます" }]);
+    expect(
+      termReading({ term: "食べる · 食べます", language: "ja", pronunciation: "たべる・たべます" }),
+    ).toEqual([
+      { text: "食", reading: "た" },
+      { text: "べる · " },
+      { text: "食", reading: "た" },
+      { text: "べます" },
+    ]);
   });
 });
 
@@ -229,7 +275,6 @@ describe("parseReadings", () => {
       { text: "飯", reading: "はん" },
     ]);
     expect(stripReadings("今日はお弁当[おべんとう]", "ja")).toBe("今日はお弁当");
-    // Here お ends なお, and おお is 多's own reading.
     expect(parseReadings("なお多[おお]く")).toEqual([
       { text: "なお" },
       { text: "多", reading: "おお" },
@@ -247,6 +292,12 @@ describe("parseReadings", () => {
     expect(stripReadings(text, "ja")).toBe(text);
     expect(stripReadings(`${"漢あ".repeat(800)}[${"あ".repeat(30)}]`, "ja")).toHaveLength(1600);
     expect(performance.now() - started).toBeLessThan(500);
+  });
+
+  it("looks back 20 characters for the word a reading belongs to", () => {
+    const word = (kana: number) => `食${"べ".repeat(kana)}[た${"べ".repeat(kana)}]`;
+    expect(parseReadings(word(19))[0]).toEqual({ text: "食", reading: "た" });
+    expect(parseReadings(word(20))).toEqual([{ text: word(20) }]);
   });
 
   it("drops the space Anki puts before a reading, and keeps one between words", () => {
@@ -269,7 +320,6 @@ describe("markKnownReadings", () => {
     language,
     known,
   });
-  /** The kanji whose reading fades in the example, given the learner's cards. */
   const faded = (example: string, cards: Parameters<typeof knownReadings>[0]) =>
     markKnownReadings(parseReadings(example), knownReadings(cards), "ja")
       .filter((segment) => segment.known)
@@ -298,6 +348,18 @@ describe("markKnownReadings", () => {
     expect(faded(example, [card("毎朝", "まいあさ")])).toEqual(["毎朝"]);
     expect(faded("毎[まい]朝[あさ]走[はし]る。", [card("毎朝", "まいあさ")])).toEqual(["毎", "朝"]);
     expect(faded("毎[まい]朝[あさ]走[はし]る。", [card("毎", "まい")])).toEqual(["毎"]);
+  });
+
+  it("joins four readings side by side to meet a Known word, and never five", () => {
+    expect(faded("一[いち]期[ご]一[いち]会[え]", [card("一期一会", "いちごいちえ")])).toEqual([
+      "一",
+      "期",
+      "一",
+      "会",
+    ]);
+    expect(
+      faded("一[いち]期[ご]一[いち]会[え]展[てん]", [card("一期一会展", "いちごいちえてん")]),
+    ).toEqual([]);
   });
 
   it("matches a word read as a whole", () => {
@@ -518,10 +580,14 @@ describe("readingKey", () => {
     expect(readingKey({ term: "食べる · 食べます", language: "ja", pronunciation: "たべる" })).toBe(
       "たべる",
     );
-    // Alignment cannot read a Latin letter, so the reading stands.
     expect(readingKey({ term: "Tシャツ", language: "ja", pronunciation: "ティーシャツ" })).toBe(
       "てぃーしゃつ",
     );
+  });
+  it("keys any reading of a passage past 80 characters, which is never aligned", () => {
+    const key = (term: string) => readingKey({ term, language: "ja", pronunciation: "のむ" });
+    expect(key(`食${"べ".repeat(79)}`)).toBeNull();
+    expect(key(`食${"べ".repeat(80)}`)).toBe("のむ");
   });
 });
 
@@ -537,6 +603,8 @@ describe("splitTermReading", () => {
     expect(splitTermReading("食[ta]べる")).toBeNull();
     expect(splitTermReading("T[てぃー]シャツ")).toBeNull();
     expect(splitTermReading("[sound:a.mp3]食べる")).toBeNull();
+    expect(splitTermReading("食[た]べるTV")).toBeNull();
+    expect(splitTermReading("食[た]べる3")).toBeNull();
   });
 });
 
@@ -554,6 +622,14 @@ describe("toneRuns", () => {
     expect(toneRuns("xuéxí")).toEqual([{ text: "xuéxí", tone: false }]);
     expect(toneRuns("たべる")).toEqual([{ text: "たべる", tone: false }]);
     expect(toneRuns("3")).toEqual([{ text: "3", tone: false }]);
+  });
+});
+
+describe("lettersReading", () => {
+  it("tells a reading in letters, which needs room beside it, from one in kana", () => {
+    expect(lettersReading("xué")).toBe(true);
+    expect(lettersReading("hok6")).toBe(true);
+    expect(lettersReading("たべる")).toBe(false);
   });
 });
 

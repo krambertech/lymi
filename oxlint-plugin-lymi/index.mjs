@@ -8,6 +8,7 @@ import fieldError from "./rules/field-error.mjs";
 import fixedHost from "./rules/fixed-host.mjs";
 import formHeader from "./rules/form-header.mjs";
 import formSheetOptions from "./rules/form-sheet-options.mjs";
+import guardedStateMove from "./rules/guarded-state-move.mjs";
 import isolateLearnerText from "./rules/isolate-learner-text.mjs";
 import languageTags from "./rules/language-tags.mjs";
 import noComments from "./rules/no-comments.mjs";
@@ -36,6 +37,7 @@ export default definePlugin({
     "fixed-host": fixedHost,
     "form-header": formHeader,
     "form-sheet-options": formSheetOptions,
+    "guarded-state-move": guardedStateMove,
     "isolate-learner-text": isolateLearnerText,
     "language-tags": languageTags,
     "no-comments": noComments,

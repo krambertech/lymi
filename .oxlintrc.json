@@ -390,6 +390,13 @@
       "rules": {
         "lymi/isolate-learner-text": "error"
       }
+    },
+    {
+      "files": ["apps/web/src/server/**"],
+      "excludeFiles": ["**/*.test.ts"],
+      "rules": {
+        "lymi/guarded-state-move": "error"
+      }
     }
   ]
 }

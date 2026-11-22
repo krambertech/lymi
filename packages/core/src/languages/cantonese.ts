@@ -1,13 +1,11 @@
 import type { LanguageSupport, Script } from "./types";
 
-/** The script subtag when there is one, else simplified for Guangdong, else traditional. */
 function cantoneseScript(subtags: readonly string[]): Script {
   if (subtags.includes("hans")) return "Hans";
   if (subtags.includes("hant")) return "Hant";
   return subtags.includes("cn") ? "Hans" : "Hant";
 }
 
-/** Cantonese: Jyutping with tone numbers, one syllable over each character. Only yue and zh-yue tags. docs/proposals/cantonese.md. */
 export const cantonese = {
   tag: "yue",
   scripts: ["Hant", "Hans"],
@@ -23,6 +21,5 @@ export const cantonese = {
     sample: { term: "學習", pronunciation: "hok6 zaap6" },
     duplicates: "term-and-reading",
   },
-  // Voices read characters better than Jyutping text; every Cantonese tag, zh-yue too, speaks Hong Kong Cantonese.
   speech: { saysReading: false, leadIn: false, locales: { Hant: "yue-HK", Hans: "yue-HK" } },
 } as const satisfies LanguageSupport;

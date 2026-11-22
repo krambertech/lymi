@@ -1,27 +1,13 @@
 import { State } from "ts-fsrs";
 import type { Rating } from "./types";
 
-/**
- * The review draw, ADR 0019. Nothing about a review is stored: the next card is a pure
- * function of the drawable modes, today's log, the scope and the learner-local day. Every
- * number is a named constant so the docs page and the simulations can read them.
- */
-
-/** Every fifth ordinary draw is a new card while both groups are drawable. */
 export const NEW_CARD_SLOT_EVERY = 5;
-/** Every fourth new-card slot takes the oldest unseen card instead of a weighted one. */
 export const OLDEST_UNSEEN_SLOT_EVERY = 4;
-/** A forgotten mode returns once, this many other attempts later, then waits a day. */
 export const RETURN_GAP = 20;
-/** The gap moves by up to this many attempts either way. */
 export const RETURN_JITTER = 2;
-/** A mode left learning from an earlier day is served this many attempts apart. */
 export const CARRY_OVER_EVERY = 3;
-/** Review odds are retrievability at the start of the day to this power. */
 export const REVIEW_ODDS_POWER = 4;
-/** An unseen card's odds halve every this many days since it was added. */
 export const UNSEEN_HALF_LIFE_DAYS = 7;
-/** An important card's odds are this many times its own, as a review and as an unseen card. */
 export const IMPORTANT_ODDS = 4;
 
 const DAY_MS = 86_400_000;
@@ -31,41 +17,31 @@ export type ModeKey = string;
 
 export interface DrawMode {
   mode: ModeKey;
-  /** FSRS state: 0 New, 1 Learning, 2 Review, 3 Relearning. */
   state: State;
   due: Date;
-  /** Retrievability at the start of the day; 0 for a mode never reviewed. */
   retrievability: number;
-  /** When the mode began to exist for this learner. */
   added: Date;
-  /** False when the card lacks the field this mode shows before reveal. Such a mode is skipped. */
   hasCue: boolean;
 }
 
-/** One card's asked modes, in the order they are introduced. */
 export interface DrawCard {
   cardId: string;
   deckId: string;
-  /** Marked important by this learner. It weights the draw and never moves a due date. */
   important?: boolean | undefined;
   modes: DrawMode[];
 }
 
-/** One accepted, non-undone grade from today, in every scope. */
 export interface DrawLogEntry {
   cardId: string;
   mode: ModeKey;
   rating: Rating;
-  /** FSRS state before the grade. */
   stateBefore: State;
   at: Date;
 }
 
-/** The learner-local day: its date and the instants it runs between. */
 export interface DayWindow {
   date: string;
   start: Date;
-  /** The start of the next day, exclusive. */
   end: Date;
 }
 
@@ -81,22 +57,14 @@ export interface Drawn {
   kind: DrawKind;
 }
 
-/** The one spelling of a card-and-mode key, shared by every map that looks a mode up. */
 export const drawKey = (cardId: string, mode: ModeKey) => `${cardId} ${mode}`;
 
-/**
- * Whether a grade leaves the mode in learning or relearning under the one-step scheduler:
- * Forgot always does, Hard does unless the mode was in Review. The client classifies its
- * outbox grades with the same rule, so the log needs no FSRS state after the grade.
- */
 export function missed(rating: Rating, stateBefore: State): boolean {
   return rating === 1 || (rating === 2 && stateBefore !== State.Review);
 }
 
-/** Only Forgot owes a return: Hard is a recall, so it waits for tomorrow like any other. */
 export const owesReturn = (rating: Rating) => rating === 1;
 
-/** What each grade was when it was drawn: a repeat of a mode is a return, whatever its state. */
 function classify(log: readonly DrawLogEntry[]): DrawKind[] {
   const seen = new Set<string>();
   return log.map((entry) => {
@@ -114,13 +82,10 @@ function classify(log: readonly DrawLogEntry[]): DrawKind[] {
 interface PendingReturn {
   cardId: string;
   mode: ModeKey;
-  /** How many misses today, which is also the return number. */
   misses: number;
-  /** Position in the log of the latest miss. */
   missedAt: number;
 }
 
-/** Modes whose latest grade today owes a return, earliest miss first. */
 function pendingReturns(log: readonly DrawLogEntry[], rule: ReturnRule): PendingReturn[] {
   const pending = new Map<string, PendingReturn>();
   log.forEach((entry, index) => {
@@ -139,7 +104,6 @@ function pendingReturns(log: readonly DrawLogEntry[], rule: ReturnRule): Pending
   return [...pending.values()].sort((a, b) => a.missedAt - b.missedAt);
 }
 
-/** FNV-1a with a final avalanche, so nearby ids do not draw nearby keys. */
 function hash32(input: string): number {
   let h = 0x811c9dc5;
   for (let i = 0; i < input.length; i++) {
@@ -154,12 +118,10 @@ function hash32(input: string): number {
   return h >>> 0;
 }
 
-/** A number in (0, 1) fixed for the day, the card and the mode, so every scope agrees. */
 function unit(date: string, cardId: string, mode: ModeKey, salt = ""): number {
   return (hash32(`${date}|${cardId}|${mode}|${salt}`) + 0.5) / 4_294_967_296;
 }
 
-/** The gap a return waits for, counted in attempts after the miss. */
 export function returnGap(
   date: string,
   cardId: string,
@@ -172,7 +134,6 @@ export function returnGap(
   return base + jitter - rule.jitter;
 }
 
-/** Efraimidis–Spirakis: a larger key wins, and a weight of w makes an item w times as likely. */
 export function weightedKey(date: string, cardId: string, mode: ModeKey, weight: number): number {
   return Math.log(unit(date, cardId, mode)) / Math.max(MIN_WEIGHT, weight);
 }
@@ -183,13 +144,10 @@ export interface Candidate {
   mode: DrawMode;
 }
 
-/** When a missed mode comes back the same day. The simulations compare it with the rules it replaced. */
 export interface ReturnRule {
-  /** The gap before each return; how many there are is how many returns a mode has in a day. */
   gaps: readonly number[];
   jitter: number;
   owes: (rating: Rating, stateBefore: State) => boolean;
-  /** Whether a waiting return is served before its gap when nothing else is drawable. */
   early: boolean;
 }
 
@@ -200,19 +158,13 @@ export const RETURN_RULE: ReturnRule = {
   early: false,
 };
 
-/**
- * How a group is ordered and when a miss returns: a larger key is drawn first. Production always
- * uses `DRAW_POLICY`; the simulations pass another to compare it with the rules ADR 0019 rejected.
- */
 export interface DrawPolicy {
   reviewKey: (c: Candidate, day: DayWindow) => number;
   unseenKey: (c: Candidate, day: DayWindow) => number;
-  /** Every this many new-card slots takes the oldest unseen card. */
   oldestSlotEvery: number;
   returns: ReturnRule;
 }
 
-/** The production policy with an important card's odds multiplied by `importantOdds`. */
 export function weightedPolicy(importantOdds: number): DrawPolicy {
   const odds = (c: Candidate) => (c.important ? importantOdds : 1);
   return {
@@ -238,17 +190,11 @@ export const DRAW_POLICY: DrawPolicy = weightedPolicy(IMPORTANT_ODDS);
 const reachedReview = (mode: DrawMode | undefined) =>
   mode !== undefined && (mode.state === State.Review || mode.state === State.Relearning);
 
-/**
- * Everything about a day that does not depend on the log: which modes are eligible and the
- * order of each group. Built once and read at every attempt, since the keys are the day's.
- */
 interface Plan {
   day: DayWindow;
-  /** Every mode of every card in scope, so a pending return is found whatever its due. */
   modes: Map<string, Candidate>;
   carries: Candidate[];
   reviews: Candidate[];
-  /** Unseen modes by weighted key, and by age for the oldest-card slot. */
   recent: Candidate[];
   oldest: Candidate[];
   oldestSlotEvery: number;
@@ -282,7 +228,6 @@ function plan(
       if (mode.due.getTime() >= day.end.getTime()) return;
       const candidate = { cardId: card.cardId, important: card.important, mode };
       if (mode.state === State.New) {
-        // Modes start one at a time: the next waits until the one before reaches Review.
         if (index === 0 || reachedReview(asked[index - 1])) unseen.push(candidate);
       } else if (mode.state === State.Review) reviews.push(candidate);
       else carries.push(candidate);
@@ -306,13 +251,11 @@ function plan(
 }
 
 interface Returning extends PendingReturn {
-  /** Other attempts since the miss, and how many it waits for. */
   since: number;
   gap: number;
   reached: boolean;
 }
 
-/** Returns still owed today in this scope, earliest miss first; past the cap they are left out. */
 function returning(p: Plan, log: readonly DrawLogEntry[]): Returning[] {
   return pendingReturns(log, p.returns).flatMap((pending) => {
     if (pending.misses > p.returns.gaps.length) return [];
@@ -329,18 +272,11 @@ const pick = (c: Candidate, kind: DrawKind): Drawn => ({
   kind,
 });
 
-/**
- * The next card from a plan. Each attempt takes the first of: a return whose gap is reached;
- * a mode left learning from an earlier day, spaced every few attempts or at once when nothing
- * else is drawable; an ordinary draw. Null when the day is done, which leaves a return short of
- * its gap to Review forgotten.
- */
 function next(p: Plan, log: readonly DrawLogEntry[]): Drawn | null {
   const returns = returning(p, log);
   const reached = returns.find((r) => r.reached);
   if (reached) return { cardId: reached.cardId, mode: reached.mode, kind: "return" };
 
-  // A card reviewed today waits for tomorrow, whichever mode it was.
   const reviewed = new Set(log.map((entry) => entry.cardId));
   const fresh = (c: Candidate) => !reviewed.has(c.cardId);
   const carry = p.carries.find(fresh);
@@ -368,7 +304,6 @@ function next(p: Plan, log: readonly DrawLogEntry[]): Drawn | null {
   return earliest ? { cardId: earliest.cardId, mode: earliest.mode, kind: "return" } : null;
 }
 
-/** The next card, or null when the day is exhausted. The rules are on `next`. */
 export function draw(
   cards: readonly DrawCard[],
   log: readonly DrawLogEntry[],
@@ -378,10 +313,6 @@ export function draw(
   return next(plan(cards, day, scope, DRAW_POLICY), log);
 }
 
-/**
- * `draw` with the day's plan built once, for a caller that draws many times from the same
- * morning's cards. The simulations use it to play a year, and to swap in a rejected policy.
- */
 export function drawer(
   cards: readonly DrawCard[],
   day: DayWindow,
@@ -392,10 +323,6 @@ export function drawer(
   return (log) => next(p, log);
 }
 
-/**
- * The order a review would take if every grade succeeded: the queue as a list. A real grade
- * of Forgot inserts a return, so a client that draws itself recomputes after each grade.
- */
 export function drawOrder(
   cards: readonly DrawCard[],
   log: readonly DrawLogEntry[],
@@ -421,10 +348,6 @@ export function drawOrder(
   return out;
 }
 
-/**
- * Cards with at least one drawable mode. The queue's total, the deck counts and exhaustion.
- * `beyond` is drawable cards known to be missing from `cards`, which still bring returns in reach.
- */
 export function drawableCount(
   cards: readonly DrawCard[],
   log: readonly DrawLogEntry[],
@@ -433,14 +356,12 @@ export function drawableCount(
   beyond = 0,
 ): number {
   const p = plan(cards, day, scope, DRAW_POLICY);
-  // Returns short of their gap may be all that is left, and they are never served early.
   if (!next(p, log)) return 0;
   const reviewed = new Set(log.map((entry) => entry.cardId));
   const ids = new Set<string>();
   for (const group of [p.carries, p.reviews, p.recent]) {
     for (const c of group) if (!reviewed.has(c.cardId)) ids.add(c.cardId);
   }
-  // A return counts when the attempts still to come reach its gap, and each one served adds one.
   let ahead = ids.size + beyond;
   const waiting = returning(p, log).sort((a, b) => a.gap - a.since - (b.gap - b.since));
   for (const r of waiting) {
@@ -451,7 +372,6 @@ export function drawableCount(
   return ids.size;
 }
 
-/** Modes whose latest grade today is Forgot. Review forgotten shows each once. */
 export function forgottenToday(log: readonly DrawLogEntry[]): { cardId: string; mode: ModeKey }[] {
   const latest = new Map<string, DrawLogEntry>();
   for (const entry of log) latest.set(drawKey(entry.cardId, entry.mode), entry);
@@ -460,22 +380,14 @@ export function forgottenToday(log: readonly DrawLogEntry[]): { cardId: string; 
     .map(({ cardId, mode }) => ({ cardId, mode }));
 }
 
-/** The groups Today offers to review on their own, beside the day's draw. */
 export const ROUNDS = ["forgotten", "new", "slipping"] as const;
 export type Round = (typeof ROUNDS)[number];
 
 export interface RoundScope extends DrawScope {
   round: Round;
-  /** Cards that keep slipping, found from their whole review history. Only that round reads it. */
   slipping?: ReadonlySet<string> | undefined;
 }
 
-/**
- * A round: one Today group in the order it is reviewed, each card once. Forgotten cards come
- * in the mode they were forgotten in, even past their returns. New cards are cards never reviewed
- * in any mode, oldest first, in the mode the draw would introduce. A slipping card comes in its
- * weakest reviewed mode whether or not it is due, weakest first, and is graded like any review.
- */
 export function roundOrder(
   cards: readonly DrawCard[],
   log: readonly DrawLogEntry[],
@@ -504,7 +416,6 @@ export function roundOrder(
       break;
     }
     case "new": {
-      // A card whose other mode was reviewed is not new to the learner, only that mode is.
       const untouched = new Set(
         inScope
           .filter((card) => card.modes.every((m) => m.state === State.New))
@@ -520,7 +431,6 @@ export function roundOrder(
     case "slipping": {
       const weakest = inScope.flatMap((card) => {
         if (!scope.slipping?.has(card.cardId) || reviewed.has(card.cardId)) return [];
-        // Any mode that has been reviewed, so a card forgotten from New and still learning counts.
         const [mode] = card.modes
           .filter((m) => m.hasCue && m.state !== State.New)
           .sort((a, b) => a.retrievability - b.retrievability);
@@ -549,7 +459,6 @@ const DATE_PARTS: Intl.DateTimeFormatOptions = {
   hourCycle: "h23",
 };
 
-/** A formatter for the zone, or for UTC when the zone is unknown. */
 function formatter(zone: string): Intl.DateTimeFormat {
   try {
     return new Intl.DateTimeFormat("en-CA", { ...DATE_PARTS, timeZone: zone });
@@ -569,16 +478,10 @@ function wallClock(instant: Date, fmt: Intl.DateTimeFormat) {
   };
 }
 
-/** Resolves an instant to its local calendar date. Falls back to UTC for an unknown zone. */
 export function localDate(instant: Date, zone: string): string {
   return wallClock(instant, formatter(zone)).date;
 }
 
-/**
- * The instant a local date begins: the first the zone formats as that date. The offset at
- * midnight is a first guess, checked against the formatter; a zone that changes clocks at
- * midnight, such as America/Santiago, has no 00:00 that night, so the answer is searched.
- */
 export function startOfLocalDay(date: string, zone: string): Date {
   const fmt = formatter(zone);
   const [year, month, day] = date.split("-").map(Number);
@@ -596,7 +499,6 @@ export function startOfLocalDay(date: string, zone: string): Date {
   return new Date(high);
 }
 
-/** The learner-local day an instant falls in. */
 export function dayWindow(now: Date, zone: string): DayWindow {
   const date = localDate(now, zone);
   const [year, month, day] = date.split("-").map(Number);

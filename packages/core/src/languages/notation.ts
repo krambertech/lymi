@@ -2,15 +2,12 @@ import { JYUTPING_BRACKET } from "../jyutping/notation";
 import { PINYIN_BRACKET } from "../pinyin/notation";
 import type { ReadingEngine } from "./types";
 
-/** How an example carries its readings inline: the words that say so, a match for one reading, and a sentence. */
 export interface ExampleNotation {
   format: string;
-  /** One inline reading, with the reading in group 1. */
   pattern: RegExp;
   sample: string;
 }
 
-/** Each reading style's inline notation, or null while its examples stay plain sentences. */
 export const EXAMPLE_NOTATION = {
   furigana: {
     format:
@@ -30,8 +27,6 @@ export const EXAMPLE_NOTATION = {
     pattern: JYUTPING_BRACKET,
     sample: "我[ngo5]去[heoi3]銀行[ngan4 hong4]攞錢[lo2 cin2]。",
   },
-  // Stress marks stay in the sentence as written, with nothing in brackets.
   stress: null,
-  // Each word's reading comes from its spelling at display, so examples are plain sentences.
   indic: null,
 } as const satisfies Record<ReadingEngine, ExampleNotation | null>;

@@ -24,6 +24,7 @@ import { mochi } from "../imports/mochi";
 import { noji } from "../imports/noji";
 import { pleco } from "../imports/pleco";
 import { quizlet } from "../imports/quizlet";
+import { importStatus, inState, moveState } from "../state-moves";
 import {
   importNotesFolder,
   importNotesKey,
@@ -246,10 +247,16 @@ export async function completeImportUpload(
     await failImport(ctx.db, id, "upload_incomplete", uploads, ctx.analytics);
     return getImport(ctx, id);
   }
-  await ctx.db
-    .update(schema.imports)
-    .set({ status: "inspecting", uploadId: null, parts: null, updatedAt: new Date() })
-    .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "uploading")));
+  const moved = await moveState(ctx.db, importStatus, {
+    from: "uploading",
+    to: "inspecting",
+    set: { uploadId: null, parts: null, updatedAt: new Date() },
+    where: [eq(schema.imports.id, id)],
+  });
+  if (!moved.length) {
+    await discardIfEnded(ctx, row, uploads);
+    return getImport(ctx, id);
+  }
   await start({
     importId: id,
     userId: ctx.userId,
@@ -371,16 +378,23 @@ export async function inspectImport(
       ]),
     ),
   };
+  const read = await moveState(ctx.db, importStatus, {
+    from: "inspecting",
+    to: "ready",
+    set: { source: adapter.source, summary: stored, chunks: chunk, updatedAt: new Date() },
+    where: [eq(schema.imports.id, id)],
+  });
+  if (!read.length) await discardIfEnded(ctx, row, uploads);
+}
+
+async function discardIfEnded(ctx: ServiceContext, row: Import, uploads: ObjectStore<"IMPORTS">) {
+  const { status } = await ownedImport(ctx, row.id);
+  if (status !== "cancelled" && status !== "failed") return;
+  if (await deleteImportFiles(uploads, row)) return;
   await ctx.db
     .update(schema.imports)
-    .set({
-      source: adapter.source,
-      summary: stored,
-      chunks: chunk,
-      status: "ready",
-      updatedAt: new Date(),
-    })
-    .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "inspecting")));
+    .set({ objectKey: row.objectKey, updatedAt: new Date() })
+    .where(eq(schema.imports.id, row.id));
 }
 
 /** The learner's active decks an import names as its target, by the import's deck key. */
@@ -485,20 +499,20 @@ export async function confirmImport(
 ) {
   const work = await readyWork(ctx, id, uploads, input);
   if (work.row.status !== "ready") return getImport(ctx, id);
-  const [claimed] = await ctx.db
-    .update(schema.imports)
-    .set({
+  const [claimed] = await moveState(ctx.db, importStatus, {
+    from: "ready",
+    to: "importing",
+    set: {
       choices: work.choices,
-      status: "importing",
       written: 0,
       mediaTotal: 0,
       mediaDone: 0,
       counts: emptyImportCounts(),
       confirmedAt: new Date(),
       updatedAt: new Date(),
-    })
-    .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "ready")))
-    .returning({ id: schema.imports.id });
+    },
+    where: [eq(schema.imports.id, id)],
+  });
   if (claimed) {
     await start({ importId: id, userId: ctx.userId, actor: ctx.actor, phase: "write" });
     track(ctx.analytics, {
@@ -596,11 +610,12 @@ export async function finishImport(
       schema.imports,
       eligible,
     ),
-    ctx.db
-      .update(schema.imports)
-      .set({ status: "done", counts, finishedAt: now, updatedAt: now })
-      .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "importing")))
-      .returning(),
+    moveState(ctx.db, importStatus, {
+      from: "importing",
+      to: "done",
+      set: { counts, finishedAt: now, updatedAt: now },
+      where: [eq(schema.imports.id, id)],
+    }),
   ]);
   if (!completed.length) return;
   track(ctx.analytics, {
@@ -642,11 +657,12 @@ export async function failImport(
   if (!row || row.status === "done" || row.status === "failed" || row.status === "cancelled")
     return;
   const now = new Date();
-  const failed = await db
-    .update(schema.imports)
-    .set({ status: "failed", failure, finishedAt: now, updatedAt: now })
-    .where(and(eq(schema.imports.id, id), eq(schema.imports.status, row.status)))
-    .returning();
+  const failed = await moveState(db, importStatus, {
+    from: row.status,
+    to: "failed",
+    set: { failure, finishedAt: now, updatedAt: now },
+    where: [eq(schema.imports.id, id)],
+  });
   if (!failed.length) return;
   const card_count = (row.counts as ImportCounts | null)?.added ?? 0;
   track(analytics, {
@@ -669,25 +685,28 @@ export async function cancelImport(
 ) {
   const row = await ownedImport(ctx, id);
   if (row.status === "cancelled") return getImport(ctx, id);
-  if (!["uploading", "inspecting", "ready"].includes(row.status)) {
-    throw new ServiceError(
+  const started = () =>
+    new ServiceError(
       "conflict",
       "An import that has started writing cards can be archived instead.",
     );
-  }
+  if (!["uploading", "inspecting", "ready"].includes(row.status)) throw started();
   const now = new Date();
-  await ctx.db.batch([
-    ctx.db
-      .update(schema.imports)
-      .set({ status: "cancelled", finishedAt: now, updatedAt: now })
-      .where(
-        and(
-          eq(schema.imports.id, id),
-          inArray(schema.imports.status, ["uploading", "inspecting", "ready"]),
-        ),
-      ),
-    auditStatement(ctx, { entity: "import", action: "cancel", id }),
+  const from = ["uploading", "inspecting", "ready"] as const;
+  const waiting = and(eq(schema.imports.id, id), inState(importStatus, from))!;
+  const [, cancelled] = await ctx.db.batch([
+    auditStatementWhen(ctx, { entity: "import", action: "cancel", id }, schema.imports, waiting),
+    moveState(ctx.db, importStatus, {
+      from,
+      to: "cancelled",
+      set: { finishedAt: now, updatedAt: now },
+      where: [eq(schema.imports.id, id)],
+    }),
   ]);
+  if (!cancelled.length) {
+    if ((await ownedImport(ctx, id)).status !== "cancelled") throw started();
+    return getImport(ctx, id);
+  }
   await releaseImportFiles(ctx.db, uploads, row);
   return getImport(ctx, id);
 }
@@ -732,11 +751,16 @@ async function releaseImportFiles(
   uploads: ObjectStore<"IMPORTS">,
   row: Pick<Import, "id" | "objectKey" | "uploadId">,
 ) {
-  if (!row.objectKey || !(await deleteImportFiles(uploads, row))) return;
+  if (!row.objectKey) return;
+  const [ended] = await db
+    .select({ updatedAt: schema.imports.updatedAt })
+    .from(schema.imports)
+    .where(eq(schema.imports.id, row.id));
+  if (!ended || !(await deleteImportFiles(uploads, row))) return;
   await db
     .update(schema.imports)
     .set({ objectKey: null, uploadId: null, updatedAt: new Date() })
-    .where(eq(schema.imports.id, row.id));
+    .where(and(eq(schema.imports.id, row.id), eq(schema.imports.updatedAt, ended.updatedAt)));
 }
 
 /**

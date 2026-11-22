@@ -9,6 +9,7 @@ import {
 import { and, count, desc, eq, inArray, isNotNull, isNull, or, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import type { Bindings } from "../env";
+import { moveState, reportAction } from "../state-moves";
 import { track } from "./analytics";
 import { audit } from "./audit";
 import { archiveCard } from "./cards";
@@ -355,13 +356,13 @@ export async function resolveContentReport(
           ? eq(schema.contentReports.deckId, report.deckId ?? "")
           : eq(schema.contentReports.ownerId, report.ownerId ?? "");
   // Claimed before anything is archived, so two operators settling one report never both act.
-  const settled = await ctx.db
-    .update(schema.contentReports)
-    .set({ resolvedAt: now, action })
-    .where(
-      and(isNull(schema.contentReports.resolvedAt), or(eq(schema.contentReports.id, id), same)),
-    )
-    .returning({ id: schema.contentReports.id, createdAt: schema.contentReports.createdAt });
+  const thisAct = or(eq(schema.contentReports.id, id), same)!;
+  const settled = await moveState(ctx.db, reportAction, {
+    from: null,
+    to: action,
+    set: { resolvedAt: now },
+    where: [isNull(schema.contentReports.resolvedAt), thisAct],
+  });
   if (!again && !settled.some((row) => row.id === id)) {
     const [after] = await ctx.db
       .select({ action: schema.contentReports.action })
@@ -381,16 +382,13 @@ export async function resolveContentReport(
     if (action === "suspend_sharing") await suspendSharing(owner, report.id);
   } catch (error) {
     // The act failed, so the reports it claimed are open again for another try.
-    await ctx.db
-      .update(schema.contentReports)
-      .set({ resolvedAt: null, action: null })
-      .where(
-        and(
-          or(eq(schema.contentReports.id, id), same),
-          eq(schema.contentReports.resolvedAt, now),
-          eq(schema.contentReports.action, action),
-        ),
-      );
+    // oxlint-disable-next-line lymi/guarded-state-move -- the error below is the answer, whoever holds the reports
+    await moveState(ctx.db, reportAction, {
+      from: action,
+      to: null,
+      set: { resolvedAt: null },
+      where: [thisAct, eq(schema.contentReports.resolvedAt, now)],
+    });
     throw error;
   }
   for (const row of settled) {

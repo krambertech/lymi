@@ -5,6 +5,7 @@ import { DECISION_MODEL, type LeadInInput, type LeadInPolicy, leadInScore } from
 import type { DecisionModel } from "../lessons/keep";
 import { log } from "../log";
 import { bodyJson } from "../parse";
+import { cardAudioKey, lockKey, type ObjectKey, type ObjectStore, putObject } from "../storage";
 import { type AnalyticsWriter, textCallReporter, track } from "./analytics";
 import { ServiceError } from "./context";
 
@@ -49,8 +50,8 @@ export async function audioFingerprint(value: unknown): Promise<string> {
 
 /** Conditional R2 writes serialize billable misses across Worker isolates, not only one process. */
 export async function withAudioLease<T>(
-  bucket: R2Bucket,
-  key: string,
+  bucket: ObjectStore<"AUDIO">,
+  key: ObjectKey<"cardAudio">,
   run: () => Promise<T>,
 ): Promise<T> {
   const previous = await bucket.get(key);
@@ -64,7 +65,7 @@ export async function withAudioLease<T>(
     }
   }
   const token = crypto.randomUUID();
-  const lock = await bucket.put(key, token, {
+  const lock = await putObject(bucket, key, token, {
     onlyIf: previous ? { etagMatches: previous.etag } : { etagDoesNotMatch: "*" },
     customMetadata: { expiresAt: String(Date.now() + LEASE_MS) },
   });
@@ -77,7 +78,7 @@ export async function withAudioLease<T>(
     return await run();
   } finally {
     try {
-      await bucket.put(key, `${token}:done`, {
+      await putObject(bucket, key, `${token}:done`, {
         onlyIf: { etagMatches: lock.etag },
         customMetadata: { expiresAt: "0" },
       });
@@ -95,7 +96,7 @@ export async function settleLeadIn(
   card: Card,
   policy: LeadInPolicy,
   input: LeadInInput,
-  bucket: R2Bucket,
+  bucket: ObjectStore<"AUDIO">,
   { writer, decide }: { writer: LeadInWriter; decide: DecisionModel },
   cachedOnly = false,
   analytics?: AnalyticsWriter,
@@ -107,7 +108,7 @@ export async function settleLeadIn(
     decision: [DECISION_MODEL, policy.threshold],
     writer: writer.model,
   });
-  const key = `cards/${card.id}/lead-in/${identity}.json`;
+  const key = cardAudioKey(card.id, `lead-in/${identity}.json`);
   const report = (
     outcome: Outcome | "cached" | "cooldown" | "failed" | "invalid_cache",
     detail: { latencyMs?: number } = {},
@@ -119,7 +120,7 @@ export async function settleLeadIn(
       ...detail,
     });
   const record = async (value: z.input<typeof LeadInRecord>) =>
-    bucket.put(key, JSON.stringify(value), {
+    putObject(bucket, key, JSON.stringify(value), {
       httpMetadata: { contentType: "application/json" },
     });
   const read = async (): Promise<SpokenLeadIn | null> => {
@@ -155,7 +156,7 @@ export async function settleLeadIn(
   const cached = await read();
   if (cached) return cached;
   if (cachedOnly) return undefined;
-  return withAudioLease(bucket, `${key}.lock`, async () => {
+  return withAudioLease(bucket, lockKey(key), async () => {
     const concurrent = await read();
     if (concurrent) return concurrent;
     // Persist a cooldown before billing, so a timeout or failed final write cannot buy it again at once.

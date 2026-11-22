@@ -3,13 +3,14 @@ import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
 import type { ExampleAllowance } from "../example-audio-rate-limit";
 import { log } from "../log";
+import { cardAudioKey, lockKey, type ObjectKey, type ObjectStore, putObject } from "../storage";
 import { aiAllowedForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
 import { type AudioDependencies, boundedAudio, providerStatus } from "./audio";
 import { audit } from "./audit";
 import { seesCaptured } from "./card-view";
 import { getCard } from "./cards";
-import { type ServiceContext, ServiceError } from "./context";
+import { asOwner, type ServiceContext, ServiceError } from "./context";
 import { withAudioLease } from "./lead-in";
 
 // Bump with any change to how an example is voiced, the prompt included, so every clip is made again.
@@ -60,7 +61,7 @@ export async function exampleAudio(
   // One provider call per sentence, however many presses or devices ask at once.
   const clip = await withAudioLease(
     deps.bucket,
-    `${await exampleKey(card, text, preferred)}.lock`,
+    lockKey(await exampleKey(card, text, preferred)),
     () => voiced(ctx, card, text, language.data, providers, deps.bucket, allowance),
   );
   return { clip };
@@ -72,7 +73,7 @@ async function voiced(
   text: string,
   language: string,
   providers: SpeechProvider[],
-  bucket: R2Bucket,
+  bucket: ObjectStore<"AUDIO">,
   allowance: ExampleAllowance,
 ): Promise<R2ObjectBody> {
   // A press that waited out another's lease finds that one's clip.
@@ -118,7 +119,7 @@ async function voiced(
       continue;
     }
     // A failed write is not a provider's failure, so it never buys a second clip from the next one.
-    await bucket.put(key, audio, {
+    await putObject(bucket, key, audio, {
       httpMetadata: {
         contentType: provider.contentType,
         cacheControl: "private, max-age=31536000",
@@ -137,7 +138,7 @@ async function voiced(
     await allowance.spend();
     // The clip is a cache on the owner's card, whoever pressed play. ADR 0011.
     await audit(
-      { ...ctx, userId: card.userId, actor: "ai" },
+      { ...asOwner(ctx, card.userId), actor: "ai" },
       {
         entity: "card",
         action: "generate_audio",
@@ -156,7 +157,11 @@ async function voiced(
 }
 
 /** Keyed on what is said and under the card's folder, so an edit reaches a new clip and deletion takes it. */
-async function exampleKey(card: Card, text: string, provider: SpeechProvider): Promise<string> {
+async function exampleKey(
+  card: Card,
+  text: string,
+  provider: SpeechProvider,
+): Promise<ObjectKey<"cardAudio">> {
   const bytes = new TextEncoder().encode(
     ["example", text, provider.locale, provider.provider, provider.model, provider.voice].join(
       "\u0000",
@@ -167,5 +172,8 @@ async function exampleKey(card: Card, text: string, provider: SpeechProvider): P
     .slice(0, 16)
     .map((byte) => byte.toString(16).padStart(2, "0"))
     .join("");
-  return `cards/${card.id}/example/v${EXAMPLE_AUDIO_VERSION}/${fingerprint}.${provider.extension}`;
+  return cardAudioKey(
+    card.id,
+    `example/v${EXAMPLE_AUDIO_VERSION}/${fingerprint}.${provider.extension}`,
+  );
 }

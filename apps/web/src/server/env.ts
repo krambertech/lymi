@@ -1,4 +1,5 @@
 import { isLoopbackUrl } from "../shared/origins";
+import type { WithObjectStores } from "./storage";
 
 /**
  * Bindings and secrets the Worker expects. `wrangler types` generates the global `Env`
@@ -6,7 +7,7 @@ import { isLoopbackUrl } from "../shared/origins";
  * `wrangler secret` in production.
  */
 export interface Bindings extends Omit<
-  Env,
+  WithObjectStores<Env>,
   | "REQUESTS"
   | "EVENTS"
   | "HEALTH"

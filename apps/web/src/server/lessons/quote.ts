@@ -26,6 +26,20 @@ export function findTerm(sentence: string, term: string): { start: number; end: 
   return null;
 }
 
+function findChangedForm(sentence: string, term: string): { start: number; end: number } | null {
+  const text = sentence.toLowerCase();
+  const words = (term.split(" · ")[0] ?? "").toLowerCase().split(/[\s'’]+/);
+  for (const word of words.filter((w) => [...w].length >= 4)) {
+    for (let length = [...word].length - 3; length >= 3; length--) {
+      const needle = [...word].slice(0, length).join("");
+      for (let at = text.indexOf(needle); at >= 0; at = text.indexOf(needle, at + 1)) {
+        if (wordStart(text, at, needle)) return { start: at, end: at + needle.length };
+      }
+    }
+  }
+  return null;
+}
+
 export function holdsEveryWord(sentence: string, term: string): boolean {
   const words = (term.split(" · ")[0] ?? "").split(/[\s'’]+/).filter(Boolean);
   const long = words.filter((word) => [...word].length >= 4);
@@ -37,7 +51,7 @@ export function quoteAround(sentence: string, term: string): string {
   const text = sentence.replace(/\s+/g, " ").trim();
   if (fitsExample(text)) return text;
   const chars = [...text];
-  const found = findTerm(text, term);
+  const found = findTerm(text, term) ?? findChangedForm(text, term);
   const at = found
     ? {
         start: [...text.slice(0, found.start)].length,

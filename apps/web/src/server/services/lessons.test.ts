@@ -769,6 +769,7 @@ describe("reading an article", () => {
         "Kerkimine",
         "Kerkimine on aeglane.",
         "Magus kevad",
+        `Forno ${"molto ".repeat(60)}caldo è stato spento ieri.`,
       ]),
       {
         reader: fakeReader({
@@ -780,6 +781,10 @@ describe("reading an article", () => {
             term("t4", "lind", { sentence: 1, seen: "Linnud laulavad aias." }),
             term("t5", "kerkimine", { sentence: 4, seen: "Kerkimine" }),
             term("t6", "magus kevad", { sentence: 6, seen: "Magus kevad" }),
+            term("t7", "spegnere", {
+              sentence: 1,
+              seen: `Forno ${"molto ".repeat(60)}caldo è stato spento ieri.`,
+            }),
           ],
           questions: [],
         }),
@@ -793,6 +798,7 @@ describe("reading an article", () => {
     expect(byId.t4).toMatchObject({ example: "Linnud laulavad aias." });
     expect(byId.t5).toMatchObject({ example: "Kerkimine on aeglane." });
     expect(byId.t6).toMatchObject({ example: null });
+    expect(byId.t7?.example).toMatch(/^….*è stato spento ieri\.$/);
     expect(byId.t2).toMatchObject({ example: "Kevad on käes.", at: null });
     const cut = byId.t3?.example ?? "";
     expect([...cut].length).toBeLessThanOrEqual(250);

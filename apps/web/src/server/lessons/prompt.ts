@@ -27,6 +27,8 @@ Write each term as one card: one term, one sense
 Questions
 Most lessons need no question: the learner sees the list and unticks what they do not want. Ask only when one answer unticks several terms at once, such as a page of exercises, a second lesson in the same upload, or the few words the learner marked among many printed ones; never ask when every option keeps nearly the same terms. Ask about marks, highlighting or handwriting only when a photo or PDF shows them on some of the terms and not the rest; glossed and listed words are not "marked". Grammar categories are always kept. Write each question as one plain sentence of at most 12 words, addressed to the learner as "you", and each option as the learner's own short reply to it, in at most 5 words and without repeating the question's nouns. Each option lists the ids of the terms it drops; "default" is the index of the option most learners want.`;
 
+export const SEEN_LENGTH = 500;
+
 export const ARTICLE_TERMS = 60;
 
 export const ARTICLE_RULES = `The material is an article, one numbered sentence per line. An article marks and glosses nothing, so choose by what a learner of its language would meet as new: the words and fixed phrases worth a card, at the level of the deck's own cards. Never list names of people, places or brands, numbers, or words the deck's cards already show. List at most ${ARTICLE_TERMS} terms, in the order the article uses them.
@@ -189,7 +191,7 @@ export const Reply = z.object({
       seen: z
         .string()
         .trim()
-        .transform((seen) => seen.slice(0, 500)),
+        .transform((seen) => seen.slice(0, SEEN_LENGTH).trim()),
       sentence: z.number().int().optional(),
     }),
   ),

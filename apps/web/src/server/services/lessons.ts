@@ -35,6 +35,7 @@ import {
   questionLimit,
   Reply,
   replySchema,
+  SEEN_LENGTH,
 } from "../lessons/prompt";
 import { holdsEveryWord, quoteAround } from "../lessons/quote";
 import {
@@ -502,12 +503,14 @@ function exampleOf(
   if (!transcript) return { example: null, at: null };
   const { sentences } = transcript;
   const headWords = countWords(term.term.split(" · ")[0] ?? "");
-  const holds = (s: { text: string } | undefined) =>
-    !!s && countWords(s.text) > headWords && holdsEveryWord(s.text, term.term);
+  const says = (s: { text: string }) => countWords(s.text) > headWords;
+  const holds = (s: { text: string }) => says(s) && holdsEveryWord(s.text, term.term);
+  const quoted = (s: { text: string }) =>
+    says(s) && s.text.slice(0, SEEN_LENGTH).trim() === term.seen;
   const numbered = term.sentence ? sentences[term.sentence - 1] : undefined;
   const sentence =
-    (holds(numbered) ? numbered : undefined) ??
-    sentences.find((s) => s.text === term.seen && holds(s)) ??
+    sentences.find(quoted) ??
+    (numbered && holds(numbered) ? numbered : undefined) ??
     sentences.find(holds);
   if (!sentence) return { example: null, at: null };
   return { example: quoteAround(sentence.text, term.term), at: sentence.at };

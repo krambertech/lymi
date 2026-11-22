@@ -148,3 +148,16 @@ test("offers no pronunciation choice on a language that draws none", async () =>
     .toBeVisible();
   expect(page.getByRole("switch", { name: "Adaptive pronunciation" }).elements()).toHaveLength(0);
 });
+
+test("the Enter that confirms an input method's word keeps the name open", async () => {
+  const onSave = vi.fn();
+  await renderSettings(deck(), onSave);
+  const name = page.getByRole("textbox", { name: "Name" });
+  await userEvent.fill(name, "日本語");
+  const confirm = new KeyboardEvent("keydown", { key: "Enter", bubbles: true });
+  Object.defineProperty(confirm, "keyCode", { value: 229 });
+  name.element().dispatchEvent(confirm);
+  expect(onSave).not.toHaveBeenCalled();
+  await userEvent.keyboard("{Enter}");
+  expect(onSave).toHaveBeenCalledWith({ name: "日本語" });
+});

@@ -1,6 +1,7 @@
 import { definePlugin } from "@oxlint/plugins";
 import aiConsent from "./rules/ai-consent.mjs";
 import clipOwner from "./rules/clip-owner.mjs";
+import enterComposing from "./rules/enter-composing.mjs";
 import failedWriteSaid from "./rules/failed-write-said.mjs";
 import fieldError from "./rules/field-error.mjs";
 import formHeader from "./rules/form-header.mjs";
@@ -18,12 +19,14 @@ import noSwallowedFailure from "./rules/no-swallowed-failure.mjs";
 import noticePlainText from "./rules/notice-plain-text.mjs";
 import readRequestThroughHttp from "./rules/read-request-through-http.mjs";
 import scrollViewPersistTaps from "./rules/scroll-view-persist-taps.mjs";
+import shortcutOwner from "./rules/shortcut-owner.mjs";
 import springPresets from "./rules/spring-presets.mjs";
 import termText from "./rules/term-text.mjs";
 
 export default definePlugin({
   meta: { name: "lymi" },
   rules: {
+    "enter-composing": enterComposing,
     "failed-write-said": failedWriteSaid,
     "ai-consent": aiConsent,
     "clip-owner": clipOwner,
@@ -43,6 +46,7 @@ export default definePlugin({
     "notice-plain-text": noticePlainText,
     "read-request-through-http": readRequestThroughHttp,
     "scroll-view-persist-taps": scrollViewPersistTaps,
+    "shortcut-owner": shortcutOwner,
     "spring-presets": springPresets,
     "term-text": termText,
   },

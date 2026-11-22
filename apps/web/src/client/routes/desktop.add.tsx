@@ -8,10 +8,12 @@ import { Check, ChevronsUpDown } from "lucide-react";
 import { useEffect, useId, useLayoutEffect, useRef, useState } from "react";
 import { ApiError, api, errorMessage } from "../lib/api";
 import { addInput, refreshAfterCardWrite } from "../lib/card-writes";
+import { composing } from "../lib/composing";
 import { desktop } from "../lib/desktop";
 import { lastDeckId, rememberDeck } from "../lib/last-deck";
 import { decksQuery, meQuery } from "../lib/queries";
 import { shortQuote } from "../lib/short-quote";
+import { useShortcut } from "../lib/use-shortcut";
 
 export const Route = createFileRoute("/desktop/add")({
   component: DesktopAdd,
@@ -151,16 +153,15 @@ function DesktopAdd() {
   }
 
   // Esc closes the deck list first and the panel after, wherever focus is.
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      if (e.key !== "Escape") return;
+  useShortcut(
+    { key: "Escape" },
+    (e) => {
       e.preventDefault();
       if (picking) closeList();
       else desktop()?.hidePanel();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  });
+    },
+    { over: "any", focus: "any" },
+  );
 
   function onListKeyDown(e: React.KeyboardEvent) {
     const last = own.length - 1;
@@ -233,7 +234,7 @@ function DesktopAdd() {
   }
 
   function onKeyDown(e: React.KeyboardEvent) {
-    if (e.nativeEvent.isComposing) return;
+    if (composing(e)) return;
     if (e.key === "Enter") {
       e.preventDefault();
       if (signedOut) return desktop()?.openApp("/login");

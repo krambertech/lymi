@@ -1,7 +1,7 @@
 import { MotionConfig } from "motion/react";
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { StaticNavProvider } from "../components/nav-link";
-import { appleKeyboard } from "../lib/device";
+import { useShortcut } from "../lib/use-shortcut";
 import { useFinePointer, useForcedStates } from "./forced-states";
 import { SPECIMENS, type SpecimenId } from "./specimens";
 
@@ -142,20 +142,11 @@ function keepPageStill() {
   Element.prototype.scrollIntoView = () => {};
 }
 
-/** ⌘K, or Ctrl K. */
-export function isFindKey(e: KeyboardEvent) {
-  if (e.repeat || e.altKey || e.shiftKey) return false;
-  if (appleKeyboard() ? !e.metaKey || e.ctrlKey : !e.ctrlKey || e.metaKey) return false;
-  return e.code === "KeyK" || e.key?.toLowerCase() === "k";
-}
-
 /** A specimen can hold focus from the moment it opens, so the page's search has to hear ⌘K from here. */
 function useFindFromFrame() {
-  useEffect(() => {
-    if (window.parent === window) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (!isFindKey(e)) return;
-      e.preventDefault();
+  useShortcut(
+    { mod: "k" },
+    (e) =>
       window.parent.dispatchEvent(
         new KeyboardEvent("keydown", {
           code: e.code,
@@ -163,11 +154,9 @@ function useFindFromFrame() {
           metaKey: e.metaKey,
           ctrlKey: e.ctrlKey,
         }),
-      );
-    };
-    window.addEventListener("keydown", onKey, true);
-    return () => window.removeEventListener("keydown", onKey, true);
-  }, []);
+      ),
+    { enabled: window.parent !== window, over: "any", focus: "any", phase: "capture" },
+  );
 }
 
 /** The inside of a frame: the specimen on the canvas, in the room and motion of the page around it. */

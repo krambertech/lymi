@@ -8,6 +8,8 @@ The service worker precaches only the shell; API responses go through TanStack Q
 
 Call `useReduceMotion()` for web motion so it honors both the learner's setting and the `/design` switch. Direct imports of `useReducedMotion` or `useReducedMotionConfig` from `motion/react` bypass that contract.
 
+A page's keyboard shortcut goes through `useShortcut` in `src/client/lib/use-shortcut.ts`, which ignores the key under an open overlay, in a field, on repeat, with a modifier and while an input method composes; an exception is a named option there. `lymi/shortcut-owner` rejects a `keydown` listener on the window or document, and `lymi/enter-composing` an Enter handler without `composing(e)`.
+
 ## Server
 
 Routes in `src/server/routes` parse, describe for OpenAPI and return. Services in `src/server/services` hold logic and own database access; routes must not reach into Drizzle. Every write goes through `src/server/services/audit.ts`, taking actor and connected app from service context so integration activity stays visible.

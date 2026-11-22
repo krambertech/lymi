@@ -10,6 +10,7 @@ import { RailHeading, RailNav, RailRow } from "../components/rail-nav";
 import { Segmented } from "../components/segmented";
 import { IconToggle } from "../design/icon-toggle";
 import { devApi, type RenderedEmail } from "../dev/dev-api";
+import { useShortcut } from "../lib/use-shortcut";
 
 type Room = "light" | "dark" | "both";
 type Width = "desktop" | "phone";
@@ -161,20 +162,16 @@ export function EmailPreview() {
   }, [about]);
 
   // J and K move through the kinds, as in a mail client; the arrows keep scrolling the page.
-  useEffect(() => {
-    const onKey = (event: KeyboardEvent) => {
-      if (event.metaKey || event.ctrlKey || event.altKey) return;
-      if (event.target instanceof HTMLElement && event.target.closest("input, select, textarea"))
-        return;
-      const step = event.key === "j" ? 1 : event.key === "k" ? -1 : 0;
-      if (!step) return;
+  useShortcut(
+    { key: ["j", "k"] },
+    (event) => {
+      const step = event.key === "j" ? 1 : -1;
       const at = ORDER.findIndex((k) => k.kind === kind);
       const next = ORDER[(at + step + ORDER.length) % ORDER.length];
       if (next) navigate({ search: (prev) => ({ ...prev, kind: next.kind }), replace: true });
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [kind, navigate]);
+    },
+    { repeat: true },
+  );
 
   return (
     <div className="flex min-h-dvh bg-canvas text-ink">

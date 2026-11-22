@@ -6,6 +6,16 @@
  */
 export * from "drizzle-orm";
 export { drizzle } from "drizzle-orm/d1";
+export type {
+  SQLiteColumn,
+  SQLiteInsertBuilder,
+  SQLiteInsertOnConflictDoUpdateConfig,
+  SQLiteInsertValue,
+  SQLiteTable,
+  SQLiteUpdateBase,
+  SQLiteUpdateBuilder,
+  SQLiteUpdateSetSource,
+} from "drizzle-orm/sqlite-core";
 export { alias, SQLiteAsyncDialect } from "drizzle-orm/sqlite-core";
 
 /**

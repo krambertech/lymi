@@ -19,6 +19,7 @@ import { createSection, listSections } from "./sections";
 import { createSeries } from "./series";
 import { updateSettings } from "./settings";
 import { learner, testDb } from "./test-db";
+import { batchRacedBy } from "./test-race";
 
 /** Localized editions of one published deck. ADR 0015. */
 let db: Db;
@@ -690,6 +691,38 @@ describe("a learner's pinned edition", () => {
       "leib withdrawn-edition": "хліб",
     });
     await expect(addPublishedDeck(bohdan, "withdrawn-edition", "uk")).rejects.toThrow();
+  });
+});
+
+describe("two publishers at once", () => {
+  const edition = async (deckId: string) => {
+    const [row] = await db
+      .select()
+      .from(schema.deckEditions)
+      .where(eq(schema.deckEditions.deckId, deckId));
+    return row;
+  };
+  const actions = async (deckId: string) => (await auditRows(deckId)).map((row) => row.action);
+
+  it("withdraws an edition once", async () => {
+    const deck = await estonian("raced-withdrawal");
+    const published = await publishUkrainian(deck);
+    const second = batchRacedBy(lymi, () => withdrawEdition(lymi, deck.deckId, "uk", publishers));
+    await withdrawEdition(second, deck.deckId, "uk", publishers);
+    expect((await edition(deck.deckId))?.revision).toBe(published.revision + 1);
+    expect((await actions(deck.deckId)).filter((a) => a === "withdraw_edition")).toHaveLength(1);
+  });
+
+  it("dates an edition published over a withdrawal as a new publication", async () => {
+    const deck = await estonian("raced-republish");
+    await publishUkrainian(deck);
+    const first = await edition(deck.deckId);
+    const updating = batchRacedBy(lymi, () => withdrawEdition(lymi, deck.deckId, "uk", publishers));
+    await publishEdition(updating, deck.deckId, "uk", publishers);
+    const after = await edition(deck.deckId);
+    expect(after?.status).toBe("published");
+    expect(after?.publishedAt?.getTime()).toBeGreaterThan(first?.publishedAt?.getTime() ?? 0);
+    expect((await actions(deck.deckId)).filter((a) => a === "publish_edition")).toHaveLength(2);
   });
 });
 

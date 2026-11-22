@@ -73,7 +73,7 @@ export async function storeRecording(
   const put = await putRecording(bucket, cardId, "recorded", await load());
   if (!put) return "skipped";
   const stored = and(eq(schema.cards.id, cardId), eq(schema.cards.audioKey, put.key))!;
-  await ctx.db.batch([
+  const [update] = await ctx.db.batch([
     ctx.db
       .update(schema.cards)
       .set({ audioKey: put.key, audioSource: "recorded", updatedAt: new Date() })
@@ -97,6 +97,15 @@ export async function storeRecording(
       stored,
     ),
   ]);
+  if ((update as D1Result).meta.changes !== 1) {
+    const [now] = await ctx.db
+      .select({ key: schema.cards.audioKey })
+      .from(schema.cards)
+      .where(eq(schema.cards.id, cardId));
+    if (now?.key === put.key) return "kept";
+    await bucket.delete(put.key);
+    return now ? "kept" : "skipped";
+  }
   return "stored";
 }
 

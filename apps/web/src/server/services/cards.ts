@@ -40,6 +40,7 @@ import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
+import { enrichmentStatus, moveState, untilMoved } from "../state-moves";
 import { aiAllowedFor, requireAi } from "./ai-consent";
 import { type AnalyticsEvent, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
@@ -796,6 +797,14 @@ export async function requestEnrichment(
   id: string,
   enrichment: EnrichmentQueue | null,
 ): Promise<CardView> {
+  return untilMoved(() => requestEnrichmentOnce(ctx, id, enrichment));
+}
+
+async function requestEnrichmentOnce(
+  ctx: ServiceContext,
+  id: string,
+  enrichment: EnrichmentQueue | null,
+): Promise<CardView | null> {
   const { db, userId } = ctx;
   const card = await ownedCard(ctx, id);
   if (card.archivedAt) throw new ServiceError("invalid", "An archived card cannot be enriched");
@@ -838,29 +847,36 @@ export async function requestEnrichment(
       .filter((field) => card[field] !== null && allowed.has(field))
       .map((field) => [field, null]),
   );
-  const working = {
-    ...(fills
-      ? {
-          enrichmentStatus: "working" as const,
-          enrichmentFields: fieldsToFill({ ...card, ...reopened }, fields),
-        }
-      : {}),
+  const set = {
     ...(translates
       ? { exampleTranslation: null, exampleTranslationStatus: "working" as const }
       : {}),
     updatedAt: new Date(),
+    ...reopened,
   };
-  await db
-    .update(schema.cards)
-    .set({ ...working, ...reopened })
-    .where(and(eq(schema.cards.id, id), eq(schema.cards.userId, userId)));
+  const asRead = [
+    eq(schema.cards.id, id),
+    eq(schema.cards.userId, userId),
+    eq(schema.cards.updatedAt, card.updatedAt),
+  ] as const;
+  const [asked] = fills
+    ? await moveState(db, enrichmentStatus, {
+        from: card.enrichmentStatus,
+        to: "working",
+        set: { ...set, enrichmentFields: fieldsToFill({ ...card, ...reopened }, fields) },
+        where: asRead,
+      })
+    : await db
+        .update(schema.cards)
+        .set(set)
+        .where(and(...asRead))
+        .returning();
+  if (!asked) return null;
   const queued = await queueEnrichment(ctx, [id], enrichment, "card");
   return presentCard(
     db,
     {
-      ...card,
-      ...working,
-      ...reopened,
+      ...asked,
       ...(queued
         ? {}
         : {

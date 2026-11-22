@@ -24,7 +24,8 @@ import {
   publisherAvatar,
   withdrawDeck,
 } from "./publications";
-import { learner, testDb } from "./test-db";
+import { anyState, learner, testDb } from "./test-db";
+import { batchRacedBy } from "./test-race";
 
 /** A published deck is one live deck anyone can add from its public page. ADR 0015, ADR 0020. */
 let db: Db;
@@ -405,6 +406,31 @@ describe("withdrawing with a redirect", () => {
     expect(await publicDeckRedirect(db, "later-part-01")).toBe("later-merged");
   });
 
+  it("keeps a redirect set while a plain withdrawal was on the way", async () => {
+    await publishedDeck("raced-target");
+    const part = await publishedDeck("raced-part");
+    const plain = batchRacedBy(lymi, () =>
+      withdrawDeck(lymi, part.id, { redirectTo: "raced-target" }),
+    );
+    await withdrawDeck(plain, part.id);
+    expect(await publicDeckRedirect(db, "raced-part")).toBe("raced-target");
+    expect(await auditRows(part.id, "withdraw_publication")).toHaveLength(1);
+  });
+
+  it("dates a withdrawal by itself when the deck was published again meanwhile", async () => {
+    await publishedDeck("redated-target");
+    const part = await publishedDeck("redated-part");
+    const first = await withdrawDeck(lymi, part.id);
+    const moving = batchRacedBy(lymi, () =>
+      publishDeck(lymi, part.id, input("redated-part"), publishers),
+    );
+    const second = await withdrawDeck(moving, part.id, { redirectTo: "redated-target" });
+    expect(second?.withdrawnAt?.getTime()).toBeGreaterThan(first?.withdrawnAt?.getTime() ?? 0);
+    expect(second?.withdrawnAt?.getTime()).toBeGreaterThanOrEqual(
+      second?.publishedAt.getTime() ?? 0,
+    );
+  });
+
   it("stops redirecting when the target goes, and publishing again brings the deck back", async () => {
     const target = await publishedDeck("fading-target");
     const part = await publishedDeck("fading-part");
@@ -440,7 +466,7 @@ describe("withdrawing with a redirect", () => {
     const two = await publishedDeck("loop-two");
     await withdrawDeck(lymi, one.id, { redirectTo: "loop-two" });
     // Withdrawing refuses a target that is not live, so only a hand edit can close the loop.
-    await db
+    await anyState(db)
       .update(schema.deckPublications)
       .set({ status: "withdrawn", redirectSlug: "loop-one" })
       .where(eq(schema.deckPublications.deckId, two.id));

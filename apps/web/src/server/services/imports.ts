@@ -24,6 +24,7 @@ import { mochi } from "../imports/mochi";
 import { noji } from "../imports/noji";
 import { pleco } from "../imports/pleco";
 import { quizlet } from "../imports/quizlet";
+import { importStatus, inState, moveState } from "../state-moves";
 import { aiAllowedFor } from "./ai-consent";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
@@ -236,10 +237,16 @@ export async function completeImportUpload(
     await failImport(ctx.db, id, "upload_incomplete", uploads, ctx.analytics);
     return getImport(ctx, id);
   }
-  await ctx.db
-    .update(schema.imports)
-    .set({ status: "inspecting", uploadId: null, parts: null, updatedAt: new Date() })
-    .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "uploading")));
+  const moved = await moveState(ctx.db, importStatus, {
+    from: "uploading",
+    to: "inspecting",
+    set: { uploadId: null, parts: null, updatedAt: new Date() },
+    where: [eq(schema.imports.id, id)],
+  });
+  if (!moved.length) {
+    await discardIfEnded(ctx, row, uploads);
+    return getImport(ctx, id);
+  }
   await start({
     importId: id,
     userId: ctx.userId,
@@ -356,16 +363,18 @@ export async function inspectImport(
       ]),
     ),
   };
-  await ctx.db
-    .update(schema.imports)
-    .set({
-      source: adapter.source,
-      summary: stored,
-      chunks: chunk,
-      status: "ready",
-      updatedAt: new Date(),
-    })
-    .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "inspecting")));
+  const read = await moveState(ctx.db, importStatus, {
+    from: "inspecting",
+    to: "ready",
+    set: { source: adapter.source, summary: stored, chunks: chunk, updatedAt: new Date() },
+    where: [eq(schema.imports.id, id)],
+  });
+  if (!read.length) await discardIfEnded(ctx, row, uploads);
+}
+
+async function discardIfEnded(ctx: ServiceContext, row: Import, uploads: R2Bucket) {
+  const { status } = await ownedImport(ctx, row.id);
+  if (status === "cancelled" || status === "failed") await deleteImportFiles(uploads, row);
 }
 
 /** The learner's active decks an import names as its target, by the import's deck key. */
@@ -470,20 +479,20 @@ export async function confirmImport(
 ) {
   const work = await readyWork(ctx, id, uploads, input);
   if (work.row.status !== "ready") return getImport(ctx, id);
-  const [claimed] = await ctx.db
-    .update(schema.imports)
-    .set({
+  const [claimed] = await moveState(ctx.db, importStatus, {
+    from: "ready",
+    to: "importing",
+    set: {
       choices: work.choices,
-      status: "importing",
       written: 0,
       mediaTotal: 0,
       mediaDone: 0,
       counts: emptyImportCounts(),
       confirmedAt: new Date(),
       updatedAt: new Date(),
-    })
-    .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "ready")))
-    .returning({ id: schema.imports.id });
+    },
+    where: [eq(schema.imports.id, id)],
+  });
   if (claimed) {
     await start({ importId: id, userId: ctx.userId, actor: ctx.actor, phase: "write" });
     track(ctx.analytics, {
@@ -577,11 +586,12 @@ export async function finishImport(
       schema.imports,
       eligible,
     ),
-    ctx.db
-      .update(schema.imports)
-      .set({ status: "done", counts, finishedAt: now, updatedAt: now })
-      .where(and(eq(schema.imports.id, id), eq(schema.imports.status, "importing")))
-      .returning(),
+    moveState(ctx.db, importStatus, {
+      from: "importing",
+      to: "done",
+      set: { counts, finishedAt: now, updatedAt: now },
+      where: [eq(schema.imports.id, id)],
+    }),
   ]);
   if (!completed.length) return;
   track(ctx.analytics, {
@@ -623,11 +633,12 @@ export async function failImport(
   if (!row || row.status === "done" || row.status === "failed" || row.status === "cancelled")
     return;
   const now = new Date();
-  const failed = await db
-    .update(schema.imports)
-    .set({ status: "failed", failure, finishedAt: now, updatedAt: now })
-    .where(and(eq(schema.imports.id, id), eq(schema.imports.status, row.status)))
-    .returning();
+  const failed = await moveState(db, importStatus, {
+    from: row.status,
+    to: "failed",
+    set: { failure, finishedAt: now, updatedAt: now },
+    where: [eq(schema.imports.id, id)],
+  });
   if (!failed.length) return;
   const card_count = (row.counts as ImportCounts | null)?.added ?? 0;
   track(analytics, {
@@ -646,25 +657,28 @@ export async function failImport(
 export async function cancelImport(ctx: ServiceContext, id: string, uploads: R2Bucket) {
   const row = await ownedImport(ctx, id);
   if (row.status === "cancelled") return getImport(ctx, id);
-  if (!["uploading", "inspecting", "ready"].includes(row.status)) {
-    throw new ServiceError(
+  const started = () =>
+    new ServiceError(
       "conflict",
       "An import that has started writing cards can be archived instead.",
     );
-  }
+  if (!["uploading", "inspecting", "ready"].includes(row.status)) throw started();
   const now = new Date();
-  await ctx.db.batch([
-    ctx.db
-      .update(schema.imports)
-      .set({ status: "cancelled", finishedAt: now, updatedAt: now })
-      .where(
-        and(
-          eq(schema.imports.id, id),
-          inArray(schema.imports.status, ["uploading", "inspecting", "ready"]),
-        ),
-      ),
-    auditStatement(ctx, { entity: "import", action: "cancel", id }),
+  const from = ["uploading", "inspecting", "ready"] as const;
+  const waiting = and(eq(schema.imports.id, id), inState(importStatus, from))!;
+  const [, cancelled] = await ctx.db.batch([
+    auditStatementWhen(ctx, { entity: "import", action: "cancel", id }, schema.imports, waiting),
+    moveState(ctx.db, importStatus, {
+      from,
+      to: "cancelled",
+      set: { finishedAt: now, updatedAt: now },
+      where: [eq(schema.imports.id, id)],
+    }),
   ]);
+  if (!cancelled.length) {
+    if ((await ownedImport(ctx, id)).status !== "cancelled") throw started();
+    return getImport(ctx, id);
+  }
   await releaseImportFiles(ctx.db, uploads, row);
   return getImport(ctx, id);
 }

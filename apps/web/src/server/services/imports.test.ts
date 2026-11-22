@@ -57,7 +57,8 @@ import {
 import { reviewDraw, reviewHistory } from "./review";
 import { streak } from "./review-days";
 import { insights } from "./stats";
-import { learner, type TestBindings, testDb } from "./test-db";
+import { anyState, learner, type TestBindings, testDb } from "./test-db";
+import { batchRacedBy, racedBy } from "./test-race";
 
 let db: Db;
 let env: TestBindings;
@@ -1320,7 +1321,7 @@ describe("importing an Anki package", () => {
     await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});
     const decks = await prepareImportDecks(ctx, id, env.IMPORTS);
     // A failure that lands after the chunk read the file, and before its batch.
-    await db
+    await anyState(db)
       .update(schema.imports)
       .set({ status: "failed", failure: "internal" })
       .where(eq(schema.imports.id, id));
@@ -1426,7 +1427,10 @@ describe("the upload", () => {
     const ctx = await fresh();
     const bytes = fixture("current.apkg");
     const { id } = await upload(ctx, "current.apkg", bytes);
-    await db.update(schema.imports).set({ status: "uploading" }).where(eq(schema.imports.id, id));
+    await anyState(db)
+      .update(schema.imports)
+      .set({ status: "uploading" })
+      .where(eq(schema.imports.id, id));
     const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, id));
     await db
       .update(schema.imports)
@@ -1482,6 +1486,83 @@ describe("the upload", () => {
     await failImport(db, id, "unrecognized", env.IMPORTS);
     expect(await getImport(ctx, id)).toMatchObject({ status: "failed", failure: "unrecognized" });
     expect(await env.IMPORTS.head(row?.objectKey as string)).toBeNull();
+  });
+
+  const cancelRows = (id: string) =>
+    db
+      .select()
+      .from(schema.auditLog)
+      .where(and(eq(schema.auditLog.entityId, id), eq(schema.auditLog.action, "cancel")));
+
+  it("keeps the file of an import confirmed while its cancel was on the way", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    await inspectImport(ctx, id, env.IMPORTS);
+    const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, id));
+    const cancelling = batchRacedBy(ctx, () =>
+      confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {}),
+    );
+    await expect(cancelImport(cancelling, id, env.IMPORTS)).rejects.toMatchObject({
+      code: "conflict",
+    });
+    expect(await objectsUnder(row?.objectKey as string)).toBeGreaterThan(1);
+    expect(await cancelRows(id)).toHaveLength(0);
+    await writeAll(ctx, id, await prepareImportDecks(ctx, id, env.IMPORTS));
+    expect((await cardsOf(ctx)).length).toBeGreaterThan(0);
+  });
+
+  it("logs one cancel when two land together", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    const second = batchRacedBy(ctx, () => cancelImport(ctx, id, env.IMPORTS));
+    expect(await cancelImport(second, id, env.IMPORTS)).toMatchObject({ status: "cancelled" });
+    expect(await cancelRows(id)).toHaveLength(1);
+  });
+
+  it("leaves no note chunks behind when a cancel lands while the file is read", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, id));
+    const reading = {
+      get: env.IMPORTS.get.bind(env.IMPORTS),
+      head: env.IMPORTS.head.bind(env.IMPORTS),
+      list: env.IMPORTS.list.bind(env.IMPORTS),
+      delete: env.IMPORTS.delete.bind(env.IMPORTS),
+      put: async (key: string, value: string) => {
+        await cancelImport(ctx, id, env.IMPORTS);
+        return env.IMPORTS.put(key, value);
+      },
+    } as unknown as R2Bucket;
+    await inspectImport(ctx, id, reading);
+    expect(await getImport(ctx, id)).toMatchObject({ status: "cancelled" });
+    expect(await objectsUnder(row?.objectKey as string)).toBe(0);
+  });
+
+  it("starts no read for an upload cancelled while its parts were joined", async () => {
+    const ctx = await fresh();
+    const bytes = fixture("current.apkg");
+    const started = await startImport(
+      ctx,
+      { fileName: "current.apkg", byteSize: bytes.length },
+      env.IMPORTS,
+    );
+    const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, started.id));
+    await uploadImportPart(ctx, started.id, 1, bytes.buffer, bytes.length, env.IMPORTS);
+    const runs: ImportRunParams[] = [];
+    const completing = racedBy(ctx, schema.imports, () =>
+      cancelImport(ctx, started.id, env.IMPORTS),
+    );
+    const after = await completeImportUpload(
+      completing,
+      started.id,
+      env.IMPORTS,
+      async (params) => {
+        runs.push(params);
+      },
+    );
+    expect(after.status).toBe("cancelled");
+    expect(runs).toEqual([]);
+    expect(await objectsUnder(row?.objectKey as string)).toBe(0);
   });
 
   it("cancels before writing, and expires imports left waiting", async () => {

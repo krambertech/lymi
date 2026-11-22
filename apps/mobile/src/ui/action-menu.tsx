@@ -16,15 +16,13 @@ const TRIGGERS = { ellipsis: "more", plus: "plus" } as const satisfies Record<st
 
 const symbolOf = (icon: IconName) => (icon in SYMBOLS ? `lymi.${icon}` : undefined);
 
-interface ActionMenuProps {
+type ActionMenuProps = {
   label: string;
   symbol: keyof typeof TRIGGERS;
-  look?: "bar" | "primary" | "row";
   items: MenuItem[] | MenuItem[][];
   disabled?: boolean;
   onPrimaryAction?: () => void;
-  target?: number;
-}
+} & ({ look?: "bar" | "primary"; target?: undefined } | { look: "row"; target?: number });
 
 export function ActionMenu({
   label,

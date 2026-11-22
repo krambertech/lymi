@@ -58,24 +58,31 @@ export interface ScreenList<T> {
   onScrollToIndexFailed?: (info: { index: number; averageItemLength: number }) => void;
 }
 
-interface Props<T> {
+interface BaseProps {
   title: string;
   titleLang?: string | null;
-  kind?: "tab" | "page";
-  back?: { label: string; to: Href };
   actions?: ReactNode;
-  header?: ReactNode;
   ground?: { colour: string; shape: "fade" | "pool" };
-  titleAt?: number;
-  actionsArrive?: boolean;
   description?: string;
   onEndReached?: () => void;
   onRefresh?: () => Promise<unknown>;
   past?: { y: number; onChange: (past: boolean) => void } | undefined;
-  scrollKey?: string | number;
-  list?: ScreenList<T> | undefined;
   children: ReactNode;
 }
+
+type KindProps =
+  | { kind: "tab"; back?: undefined }
+  | { kind?: "page"; back?: { label: string; to: Href } };
+
+type HeaderProps =
+  | { header?: ReactElement | undefined; titleAt?: undefined; actionsArrive?: undefined }
+  | { header: ReactElement; titleAt?: number; actionsArrive?: boolean };
+
+type ScrollerProps<T> =
+  | { list?: ScreenList<T> | undefined; scrollKey?: undefined }
+  | { list?: undefined; scrollKey?: string | number };
+
+type Props<T> = BaseProps & KindProps & HeaderProps & ScrollerProps<T>;
 
 const PREVIEW_ROWS = 12;
 const NO_SEPARATORS = {

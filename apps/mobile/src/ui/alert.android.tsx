@@ -38,7 +38,7 @@ export function alert(title: string, message?: string, buttons: AlertButton[] = 
   emit();
 }
 
-type TextStyle = NonNullable<TextProps["style"]>;
+type TextStyle = Omit<NonNullable<TextProps["style"]>, "fontWeight">;
 
 const TITLE: TextStyle = { fontFamily: "Onest", fontSize: 22, lineHeight: 28 };
 const BODY: TextStyle = { fontFamily: "Onest", fontSize: 15, lineHeight: 21 };

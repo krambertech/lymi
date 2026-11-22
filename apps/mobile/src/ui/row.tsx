@@ -1,4 +1,4 @@
-import { Children, Fragment, type ReactNode } from "react";
+import { Children, Fragment, type ReactElement, type ReactNode } from "react";
 import { useWindowDimensions, View } from "react-native";
 import { usePalette } from "../theme/palette";
 import { Icon, type IconName } from "./icons";
@@ -26,15 +26,19 @@ export function Rows({ children }: { children: ReactNode }) {
   );
 }
 
-interface RowFaceProps {
+interface BaseRowFaceProps {
   label: string;
   icon: IconName;
   value?: string | undefined;
-  end?: "open" | "web" | "none";
   stacked?: boolean;
-  control?: ReactNode;
   destructive?: boolean;
 }
+
+type RowEndProps =
+  | { end?: "open" | "web" | "none"; control?: undefined }
+  | { end?: undefined; control: ReactElement };
+
+type RowFaceProps = BaseRowFaceProps & RowEndProps;
 
 export function RowFace({
   label,

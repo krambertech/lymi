@@ -63,6 +63,7 @@ export function EmptyState({
     <View
       className={`items-center ${page ? "justify-center gap-2 px-6 py-8" : "gap-1.5 px-5 py-8"} ${fill ? "flex-1" : ""}`}
       style={page && !fill ? { minHeight: height * 0.62 } : undefined}
+      // oxlint-disable-next-line lymi/announce-live-region -- VoiceOver reaches an empty place by swiping; only Android reads it as it appears.
       accessibilityLiveRegion="polite"
     >
       <View className={page ? "pb-4" : "pb-2"}>{mark}</View>

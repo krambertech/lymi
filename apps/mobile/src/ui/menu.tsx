@@ -30,7 +30,7 @@ function useMenuSheet(
       chosen.current = then;
       setOpen(false);
     },
-    sheet: (title: string | undefined, groups: ReactNode) => (
+    sheet: (title: string, groups: ReactNode) => (
       <Sheet
         title={title}
         open={open}
@@ -47,16 +47,16 @@ function useMenuSheet(
   };
 }
 
-interface SelectProps<T extends string> {
+type Controlled = { open: boolean; onOpenChange: (open: boolean) => void };
+
+type SelectProps<T extends string> = {
   trigger: ReactNode;
   label: string;
   value: T;
   options: { value: T; label: string; detail?: string }[];
   onChange: (value: T) => void;
   onClosed?: () => void;
-  open?: boolean;
-  onOpenChange?: (open: boolean) => void;
-}
+} & (Controlled | { open?: undefined; onOpenChange?: undefined });
 
 export const SEARCHED_PAST = 15;
 
@@ -137,7 +137,7 @@ export function Select<T extends string>({
       setQuery("");
       onClosed?.();
     },
-    open !== undefined && onOpenChange ? { open, onOpenChange } : undefined,
+    open === undefined ? undefined : { open, onOpenChange },
   );
   const chosen = options.find((o) => o.value === value)?.label ?? "";
   const searched = options.length > SEARCHED_PAST;

@@ -1,6 +1,7 @@
 import type { ComponentProps, ReactNode } from "react";
 import { Platform, ScrollView, type ViewStyle } from "react-native";
 import {
+  // oxlint-disable-next-line eslint/no-restricted-imports -- KeyboardScroll is built on it here.
   KeyboardAwareScrollView,
   useReanimatedKeyboardAnimation,
 } from "react-native-keyboard-controller";

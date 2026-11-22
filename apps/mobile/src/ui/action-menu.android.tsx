@@ -3,6 +3,7 @@ import { unisolate } from "@lymi/core";
 import { BlurView } from "expo-blur";
 import { Fragment, useEffect, useRef, useState, useSyncExternalStore } from "react";
 import {
+  // oxlint-disable-next-line eslint/no-restricted-imports -- the menu is drawn at the root, over every screen, and takes Back before the one in front.
   BackHandler,
   I18nManager,
   Platform,

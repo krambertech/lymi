@@ -15,6 +15,7 @@ import {
   Platform,
   Pressable,
   type PressableProps,
+  // oxlint-disable-next-line eslint/no-restricted-imports -- Text is built on it here.
   Text as RNText,
   StyleSheet,
   type TextProps,
@@ -190,20 +191,22 @@ function look(variant: ButtonVariant, p: Palette, strong = false) {
   }
 }
 
-interface ButtonProps {
+interface BaseButtonProps {
   label: string;
   detail?: string;
   variant?: ButtonVariant;
   size?: ButtonSize;
-  icon?: IconName;
   lead?: ReactNode;
   loading?: boolean;
-  busy?: boolean;
   disabled?: boolean;
   strong?: boolean;
   onPress?: () => void;
   testID?: string;
 }
+
+type ButtonIconProps = { icon?: IconName; busy?: undefined } | { icon: IconName; busy?: boolean };
+
+type ButtonProps = BaseButtonProps & ButtonIconProps;
 
 export function Button({
   label,

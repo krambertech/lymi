@@ -12,7 +12,7 @@ export const FULL_SHEET = {
 
 export const SHEET_STACK =
   Platform.OS === "android"
-    ? { screenOptions: { sheetCornerRadius: 28 }, screenLayout: AndroidSheetLayout }
+    ? { screenOptions: { sheetCornerRadius: 28 }, screenLayout: androidSheetLayout }
     : { screenOptions: {}, screenLayout: undefined };
 
 interface Props {
@@ -24,7 +24,7 @@ interface Props {
   children: ReactElement;
 }
 
-function AndroidSheetLayout({ options, children }: Props) {
+function androidSheetLayout({ options, children }: Props) {
   if (options.presentation !== "formSheet") return children;
   const grabber = !!options.sheetGrabberVisible;
   if (options.sheetShouldOverflowTopInset) {

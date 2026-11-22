@@ -41,18 +41,30 @@ const ROW_INSET = 16;
 const GroupMarked = createContext(true);
 const SheetInset = createContext(ROW_INSET);
 
-interface SheetProps {
+interface BaseSheetProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onDismiss?: () => void;
-  title?: string;
-  subtitle?: string;
-  description?: string;
-  back?: { label: string; onPress: () => void };
-  save?: { label: string; onPress: () => void; disabled?: boolean; busy?: boolean };
   children: ReactNode;
   more?: ReactNode;
 }
+
+type Save = { label: string; onPress: () => void; disabled?: boolean; busy?: boolean };
+
+type SheetHeaderProps =
+  | {
+      title?: undefined;
+      subtitle?: undefined;
+      description?: undefined;
+      save?: undefined;
+      back?: undefined;
+    }
+  | ({ title: string; subtitle?: string; description?: string } & (
+      | { save?: undefined; back?: undefined }
+      | { save: Save; back?: { label: string; onPress: () => void } }
+    ));
+
+type SheetProps = BaseSheetProps & SheetHeaderProps;
 
 export function Sheet({
   open,
@@ -279,19 +291,23 @@ export function SheetGroup({ children }: { children: ReactNode }) {
   );
 }
 
-interface SheetRowProps {
+interface BaseSheetRowProps {
   label: string;
-  icon?: IconName | undefined;
   detail?: string | undefined;
   destructive?: boolean | undefined;
   value?: string | undefined;
-  chosen?: boolean | "mixed" | undefined;
-  multiple?: boolean | undefined;
   opens?: boolean | undefined;
   active?: boolean | undefined;
   disabled?: boolean | undefined;
   onPress: () => void;
 }
+
+type SheetRowMarkProps =
+  | { icon?: IconName | undefined; chosen?: undefined; multiple?: undefined }
+  | { icon?: undefined; chosen: boolean; multiple?: false | undefined }
+  | { icon?: undefined; chosen: boolean | "mixed"; multiple: true };
+
+type SheetRowProps = BaseSheetRowProps & SheetRowMarkProps;
 
 export function SheetRow({
   label,

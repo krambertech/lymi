@@ -1,5 +1,6 @@
 import { useFocusEffect } from "expo-router";
 import { useCallback, useRef } from "react";
+// oxlint-disable-next-line eslint/no-restricted-imports -- useSystemBack is built on it here.
 import { BackHandler, Platform } from "react-native";
 
 export function useSystemBack(onBack: () => boolean) {

@@ -11,6 +11,7 @@ export interface TimePickerProps {
 export function TimePicker({ label, value, onChange }: TimePickerProps) {
   const room = useRoom();
   return (
+    // oxlint-disable-next-line lymi/fixed-host -- the picker is as wide as the time it shows, in the phone's own format.
     <Host colorScheme={room} matchContents>
       <DatePicker
         title={label}

@@ -1,14 +1,15 @@
-import type { ReactNode } from "react";
+import type { ReactElement } from "react";
 import { View, type ViewStyle } from "react-native";
 import { GlassButton } from "./glass";
 import type { IconName } from "./icons";
 import { Text } from "./primitives";
 
-interface FormHeaderProps {
+type MiddleProps =
+  | { title: string; subtitle?: string | undefined; middle?: undefined }
+  | { title?: undefined; subtitle?: undefined; middle: ReactElement | undefined };
+
+interface BaseProps {
   close: { label: string; onPress: () => void; icon?: IconName };
-  title?: string;
-  subtitle?: string | undefined;
-  middle?: ReactNode;
   action?: {
     icon: IconName;
     label: string;
@@ -18,6 +19,8 @@ interface FormHeaderProps {
   };
   style?: ViewStyle;
 }
+
+type FormHeaderProps = BaseProps & MiddleProps;
 
 export function FormHeader({ close, title, subtitle, middle, action, style }: FormHeaderProps) {
   return (

@@ -81,3 +81,31 @@ export function isSelfClosingNamed(node, name) {
 export function attributesSpan(attributes) {
   return { range: [attributes[0].range[0], attributes.at(-1).range[1]] };
 }
+
+export function jsxName(node) {
+  if (node.type === "JSXIdentifier") return node.name;
+  if (node.type === "JSXMemberExpression")
+    return `${jsxName(node.object)}.${jsxName(node.property)}`;
+  return "";
+}
+
+export function jsxAttribute(openingElement, name) {
+  return openingElement.attributes.find(
+    (attribute) =>
+      attribute.type === "JSXAttribute" &&
+      attribute.name.type === "JSXIdentifier" &&
+      attribute.name.name === name,
+  );
+}
+
+const functions = new Set(["FunctionDeclaration", "FunctionExpression", "ArrowFunctionExpression"]);
+
+export function isFunction(node) {
+  return functions.has(node.type);
+}
+
+export function outermostFunction(node) {
+  let found = null;
+  for (let at = node; at; at = at.parent) if (isFunction(at)) found = at;
+  return found;
+}

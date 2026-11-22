@@ -167,6 +167,10 @@ Each browser context asks for reduced motion, for the same reason the journeys d
 
 An instance's files run one after another in the same browser page, so a file can leave state behind for the next. On touch Chromium, `page.viewport()` wider than the device leaves the whole page pinch-zoomed after the size is restored, and a later file can pan that zoomed view; Playwright then aims a click a row off and reports another element intercepting it. The test setup resets the page scale before every file.
 
+A component test has no server. The setup refuses every `/api/` request at once, so a test never waits on the Vite process that serves its files: a busy runner answers that late, and it was behind most flakes of the review flow's old browser test. Give the query its data, or spy on an `api` method the query calls late; a spy does not reach `queryFn: api.streak`, which took the method when its module loaded.
+
+A hook that draws nothing is tested in Node. `hookReview()` in `packages/client/src/test/review-hook.ts` runs `useReviewFlow` on a clock, server, storage and locks of its own, with no real time in it, and fails a test that leaves a request unanswered, a send open or the hook moved behind its back.
+
 WebKit does not focus a button that is clicked, so a test about focus return opens the overlay from the keyboard. A swipe is not covered here; it belongs in a Playwright journey on the iPhone project.
 
 ## Service tests on a real D1

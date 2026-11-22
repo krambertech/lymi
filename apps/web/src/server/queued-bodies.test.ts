@@ -39,17 +39,11 @@ const operations: Record<Write["kind"], string> = {
 const GRADE = "POST /api/review/grade";
 const UNDO = "POST /api/review/undo";
 
-const gradeFields = [
-  "cardId",
-  "direction",
-  "mode",
-  "rating",
-  "reviewedAt",
-  "timezone",
-  "aid",
-  "recallMs",
-  "gradeMs",
-  "readingsFaded",
+const keptOnTheDevice = ["stateBefore", "unanswered"];
+
+const rewrittenBeforeSending: { stored: Stored; sent: Stored }[] = [
+  { stored: { direction: "recognition" }, sent: { mode: { cue: "term", target: "meaning" } } },
+  { stored: { direction: "production" }, sent: { mode: { cue: "meaning", target: "term" } } },
 ];
 
 const neverQueued: [reason: string, at: RegExp][] = [
@@ -73,7 +67,7 @@ const neverQueued: [reason: string, at: RegExp][] = [
 function sentBy({ grade, queued }: Entry): Sent {
   if (grade?.undone) return { operation: UNDO, body: { reviewId: grade.reviewId } };
   if (grade) {
-    const body = Object.entries(grade).filter(([field]) => gradeFields.includes(field));
+    const body = Object.entries(grade).filter(([field]) => !keptOnTheDevice.includes(field));
     return { operation: GRADE, body: Object.fromEntries(body) };
   }
   if (!queued) throw new Error("An entry holds a grade or a queued write");
@@ -99,13 +93,27 @@ function sentBy({ grade, queued }: Entry): Sent {
   }
 }
 
+function requestOf({ operation, id = "", query = "" }: Sent): string {
+  return `${operation.replace("{id}", id)}${query}`;
+}
+
+function replayedBody({ body }: Sent): Stored | undefined {
+  if (!body) return undefined;
+  const rewrites = rewrittenBeforeSending.filter(({ stored }) =>
+    Object.entries(stored).every(([field, value]) => body[field] === value),
+  );
+  const replaced = rewrites.flatMap(({ stored }) => Object.keys(stored));
+  const kept = Object.entries(body).filter(([field]) => !replaced.includes(field));
+  return Object.assign(Object.fromEntries(kept), ...rewrites.map(({ sent }) => sent));
+}
+
 let app: TestApp;
 let learner: Session;
 let document: {
   paths: Record<string, Record<string, unknown>>;
   components: { schemas: Record<string, unknown> };
 };
-let answers: { request: string; status: number; issues?: unknown }[] = [];
+let answers: { request: string; body?: unknown; status: number; issues?: unknown }[] = [];
 const storage = new Map<string, string>();
 
 beforeAll(async () => {
@@ -142,11 +150,12 @@ afterAll(() => {
 
 async function answer(path: string, init: RequestInit) {
   const response = await app.fetch(path, init);
-  const body = response.ok ? null : ((await response.clone().json()) as { issues?: unknown });
+  const refusal = response.ok ? null : ((await response.clone().json()) as { issues?: unknown });
   answers.push({
     request: `${init.method} ${path}`,
+    ...(typeof init.body === "string" ? { body: JSON.parse(init.body) } : {}),
     status: response.status,
-    ...(body ? { issues: body.issues ?? body } : {}),
+    ...(refusal ? { issues: refusal.issues ?? refusal } : {}),
   });
   return response;
 }
@@ -284,10 +293,11 @@ function requestSchema(operation: string): Schema | undefined {
 
 describe.each(entries)("$name ($entry.since)", ({ entry }) => {
   it("lands when the build that queued it sends it", async () => {
-    const { operation, id = "", query = "", body } = sentBy(await seeded(entry));
-    const [method = "", template = ""] = operation.split(" ");
+    const sent = sentBy(await seeded(entry));
+    const { operation, body } = sent;
+    const [method = "", path = ""] = requestOf(sent).split(" ");
     answers = [];
-    await answer(`${template.replace("{id}", id)}${query}`, {
+    await answer(path, {
       method,
       headers: { "content-type": "application/json", cookie: learner.cookie },
       ...(body ? { body: JSON.stringify(body) } : {}),
@@ -300,7 +310,7 @@ describe.each(entries)("$name ($entry.since)", ({ entry }) => {
     }).toEqual({ body, refused: [], ignored: [] });
   });
 
-  it("lands when the current build finds it in storage", async () => {
+  it("lands whole when the current build finds it in storage", async () => {
     const waiting = await seeded(entry);
     store(waiting);
     claimWrites(learner.userId);
@@ -308,12 +318,10 @@ describe.each(entries)("$name ($entry.since)", ({ entry }) => {
     await flushWrites();
     const refused = answers.filter(({ status }) => status >= 300);
     const unsent = outboxSize() + pendingWrites();
-    expect({ waiting, requests: answers.length, refused, unsent }).toEqual({
-      waiting,
-      requests: 1,
-      refused: [],
-      unsent: 0,
-    });
+    expect({ refused, unsent }).toEqual({ refused: [], unsent: 0 });
+    const sent = sentBy(waiting);
+    const body = replayedBody(sent);
+    expect(answers).toMatchObject([{ request: requestOf(sent), ...(body ? { body } : {}) }]);
   });
 });
 

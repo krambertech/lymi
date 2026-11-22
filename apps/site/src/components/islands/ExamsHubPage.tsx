@@ -2,7 +2,7 @@ import { ExamsHub } from "../exams/ExamsHub";
 import { Island } from "./Island";
 
 interface Props {
-  locale?: string | undefined;
+  locale: string | undefined;
   counts: Record<string, number>;
 }
 

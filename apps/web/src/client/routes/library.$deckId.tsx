@@ -21,7 +21,6 @@ import { toast } from "../components/ui/toast";
 import { useAddCard } from "../lib/add-card";
 import { ApiError, api, type Card, errorMessage, type Section } from "../lib/api";
 import { useDocumentTitle } from "../lib/document-title";
-import { playAlone } from "../lib/now-playing";
 import { publicSiteUrl } from "../lib/origins";
 import {
   connectedAppsQuery,
@@ -35,6 +34,7 @@ import {
 import { shortQuote } from "../lib/short-quote";
 import { useArchiveDeck } from "../lib/use-archive-deck";
 import { useCardBatch } from "../lib/use-card-batch";
+import { useClip } from "../lib/use-clip";
 import { useLeaveDeck } from "../lib/use-leave-deck";
 import { useSectionActions } from "../lib/use-sections";
 import { useSeriesActions } from "../lib/use-series";
@@ -165,15 +165,18 @@ function DeckPage() {
       // The card opens over the list, so the list keeps its scroll position.
       resetScroll: false,
     });
+  const { load: loadClip } = useClip();
   const playAudio = (card: Card) => {
     toast.close("audio");
-    playAlone(new Audio(api.audioUrl(card.id, card.updatedAt))).catch(() =>
-      toast.add({
-        id: "audio",
-        type: "error",
-        title: t`Couldn’t play the pronunciation. Try again in a moment.`,
-      }),
-    );
+    loadClip(api.audioUrl(card.id, card.updatedAt))
+      .play()
+      .catch(() =>
+        toast.add({
+          id: "audio",
+          type: "error",
+          title: t`Couldn’t play the pronunciation. Try again in a moment.`,
+        }),
+      );
   };
 
   const invalidate = () => {

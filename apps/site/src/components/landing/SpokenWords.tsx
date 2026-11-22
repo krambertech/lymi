@@ -1,8 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import type { Locale } from "../../lib/routes";
+import { useClip } from "../../lib/use-clip";
 import type { EditionWord } from "./language-decks";
 
 /**
@@ -10,17 +10,11 @@ import type { EditionWord } from "./language-decks";
  * side by side share one, so a second tap stops the first clip.
  */
 export function useClipPlayer(folder: string) {
-  const clip = useRef<HTMLAudioElement | null>(null);
-  const [playing, setPlaying] = useState<string>();
-  useEffect(() => () => clip.current?.pause(), []);
-  const play = (id: string) => {
-    clip.current?.pause();
-    clip.current = new Audio(`/audio/${folder}/${id}.mp3`);
-    setPlaying(id);
-    clip.current.onended = () => setPlaying(undefined);
-    void clip.current.play().catch(() => setPlaying(undefined));
+  const { play, playing } = useClip();
+  return {
+    play: (id: string) => play(id, `/audio/${folder}/${id}.mp3`),
+    playing: playing?.id,
   };
-  return { play, playing };
 }
 
 interface Props {

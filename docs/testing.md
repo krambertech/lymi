@@ -163,6 +163,8 @@ pnpm exec playwright install chromium webkit
 pnpm --filter @lymi/web exec vitest run --project components
 ```
 
+The site has its own `components` project in `apps/site/vitest.config.ts`, desktop Chromium only, for what a site component does in the browser and a server render cannot show, such as stopping its sound when it leaves the page.
+
 Each browser context asks for reduced motion, for the same reason the journeys do: a toast that changes opacity and height without travelling holds still long enough to be clicked, where one sliding into a stack does not. `forced-states` rewrites both motion queries into `data-motion` selectors, so the specimens that prove the full and reduced forms are unaffected by what the context asks for. A test that drives full motion wraps its subject in `<MotionConfig reducedMotion="never">` and says why. CI retries a failed test once, matching the journeys, and reports a pass on retry as flaky ([Flaky tests](#flaky-tests)).
 
 An instance's files run one after another in the same browser page, so a file can leave state behind for the next. On touch Chromium, `page.viewport()` wider than the device leaves the whole page pinch-zoomed after the size is restored, and a later file can pan that zoomed view; Playwright then aims a click a row off and reports another element intercepting it. The test setup resets the page scale before every file.
@@ -365,19 +367,25 @@ A response may gain fields and the API may gain endpoints. The check fails when 
 2. If the phone already shows an unknown value safely, mark the field with `.meta(OPEN)` from `packages/core/src/responses/common.ts` and freeze a release that carries the mark. On a schema with an `id`, put the mark in its definition, since a field's own `.meta` is lost behind the reference.
 3. To remove something, raise the minimum version first and delete the frozen releases below it in the same pull request.
 
+`pnpm check:frozen`, part of `pnpm check`, compares the folder with `origin/main` and fails when a frozen release the minimum still serves was deleted, renamed or edited.
+
 The minimum version is `PHONE_MINIMUM_VERSION_IOS` in `apps/web/wrangler.jsonc`, and `PHONE_UPDATE_URL_IOS` is where Update Lymi sends the learner. Raising it needs a Worker deploy and no app build: every request from an older release then gets 426, and the app shows only Update Lymi, keeping its unsent grades and writes for the updated release.
 
 A version is a JavaScript release, and an update can carry a new one, but a fresh install or a roll back to embedded first runs the version inside the App Store binary. Never raise the minimum past the version embedded in the current App Store binary, or new learners get 426 from a store that has nothing newer.
 
 Every fixed list in a phone response is open, except the few in `closedOnPurpose` with their reasons, and the test fails on a new closed one so each is decided when it appears. The shared client leaves a review mode it cannot ask out of the draw and the queue, and every other open field the phone reads falls back to a known state; `phone-client.test.ts` feeds unknown values through those readers.
 
-Freeze by hand, for example to record the baseline after a change to the check itself:
+Freeze by hand, for example to see what the next release would freeze:
 
 ```bash
 pnpm --filter @lymi/mobile contract:freeze
 ```
 
 A freeze that changes a successful response also asks whether the phone's kept query cache is still readable. `pnpm check:cache-shape`, part of `pnpm check`, fails until `CACHE_SHAPE` in `apps/mobile/src/data/cache.ts` is bumped, when a screen now reads a field an earlier cache may lack, or the unchanged shape is confirmed; either way, `node scripts/check-cache-shape.mjs --write` records the decision in `apps/mobile/src/data/cache-shape.json`.
+
+### Queued requests
+
+A grade or write waits in the outbox with no maximum age, so the minimum version does not bound it: one queued on an old release is held through the 426 and sent by the updated app, and the outbox drops whatever the server refuses. `apps/web/src/server/queued-bodies.json` therefore keeps what each build could have stored, dated by the pull request that first wrote it. `queued-bodies.test.ts` sends each entry to the Worker as the build that queued it would and through the current outbox, and fails when one is refused, carries a field the server ignores, or is replayed without something it held. A rewrite the outbox makes on purpose goes in `rewrittenBeforeSending`. It also fails until the file holds an entry for every field and fixed value a queued request accepts, so add one when you add a field; `neverQueued` in the test names the few no client queues. `pnpm check:frozen` keeps entries from being removed or edited. To rename a field or value, keep accepting the old name and map it, as `withHint` and `gradeAid` in `packages/core/src/types.ts` do.
 
 ### The smoke journey
 

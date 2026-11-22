@@ -3,7 +3,8 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { clsx } from "clsx";
 import { Check, Copy, Sparkle, Volume2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { type ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { type ReactNode, useEffect, useMemo, useState } from "react";
+import { useClip } from "../../lib/use-clip";
 import { Pick } from "./Pick";
 import { EASE, usePlayback, useStill } from "./playback";
 import { SourceMark } from "./SourceMark";
@@ -409,9 +410,7 @@ async function peaksOf(url: string): Promise<number[]> {
 export function VoiceDemo({ play }: DemoProps) {
   const { t } = useLingui();
   const [peaks, setPeaks] = useState<Record<string, number[]>>({});
-  const [playing, setPlaying] = useState<{ id: string; at: number } | null>(null);
-  const audio = useRef<HTMLAudioElement | null>(null);
-  const frame = useRef(0);
+  const { play: start, playing } = useClip({ progress: true });
 
   useEffect(() => {
     if (!play) return;
@@ -421,34 +420,6 @@ export function VoiceDemo({ play }: DemoProps) {
         .catch(() => {});
     }
   }, [play]);
-  useEffect(
-    () => () => {
-      const clip = audio.current;
-      audio.current = null;
-      clip?.pause();
-      cancelAnimationFrame(frame.current);
-    },
-    [],
-  );
-
-  const start = (id: string, url: string) => {
-    audio.current?.pause();
-    const clip = new Audio(url);
-    audio.current = clip;
-    cancelAnimationFrame(frame.current);
-    const tick = () => {
-      if (audio.current !== clip) return;
-      setPlaying({ id, at: clip.duration ? clip.currentTime / clip.duration : 0 });
-      frame.current = requestAnimationFrame(tick);
-    };
-    const done = () => {
-      cancelAnimationFrame(frame.current);
-      if (audio.current === clip) setPlaying(null);
-    };
-    clip.addEventListener("ended", done);
-    clip.addEventListener("error", done);
-    clip.play().then(tick, done);
-  };
 
   return (
     <div className="grid w-full max-w-[380px] gap-2">

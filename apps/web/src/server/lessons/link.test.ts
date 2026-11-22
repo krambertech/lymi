@@ -5,7 +5,7 @@ import { findTerm } from "./quote";
 describe("readableHtml", () => {
   it("drops scripts, JSON-LD and styles before the page is converted", () => {
     const html =
-      '<article><script type="application/ld+json">{"@type":"NewsArticle","author":"Mari"}</script><style>p{}</style><p>Kevad on käes.</p></article>';
+      '<article><nav><a href="/">Uudised</a></nav><script type="application/ld+json">{"@type":"NewsArticle","author":"Mari"}</script><style>p{}</style><p>Kevad on käes.</p></article>';
     expect(readableHtml(html)).toBe("<article><p>Kevad on käes.</p></article>");
   });
 });
@@ -21,6 +21,22 @@ describe("markdownSentences", () => {
       "Linnud laulavad.",
     ].join("\n");
     expect(markdownSentences(markdown)).toEqual(["Kevad on käes.", "Linnud laulavad."]);
+  });
+
+  it("leaves out the metadata header and page templates that Workers AI passes through", () => {
+    const markdown =
+      "---\ndescription: Karu nähti.\ntitle: Karu Tartus\nimage: https://s.err.ee/a.png\n---\n\n# Karu Tartus\n\n{{1795381500000 | amCalendar}}\n\nKaru nähti jõe ääres.";
+    expect(markdownSentences(markdown)).toEqual(["Karu Tartus", "Karu nähti jõe ääres."]);
+  });
+
+  it("keeps a sentence that opens with a link or a quotation mark, as the page writes it", () => {
+    const markdown =
+      '[Michal](/k/michal) ütles seda eile.\n\n"Tuleb harjuda," ütles ta.\n\nSee oli 22\\-aastane mees &amp; tema koer.';
+    expect(markdownSentences(markdown)).toEqual([
+      "Michal ütles seda eile.",
+      '"Tuleb harjuda," ütles ta.',
+      "See oli 22-aastane mees & tema koer.",
+    ]);
   });
 });
 

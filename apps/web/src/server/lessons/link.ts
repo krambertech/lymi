@@ -350,17 +350,21 @@ export function articleSelector(html: string): string | undefined {
   return undefined;
 }
 
+const FRONT_MATTER = /^\s*---\n[\s\S]*?\n---\s*(\n|$)/;
+const JSON_LINE = /^\s*(\{\s*("|$)|\[\s*(["{[]|$)|"[^"]*"\s*:)/;
+
 export function markdownSentences(markdown: string): string[] {
   const sentences: string[] = [];
   const segmenter = new Intl.Segmenter(undefined, { granularity: "sentence" });
   let fenced = false;
-  for (const raw of markdown.split(/\n/)) {
+  for (const raw of markdown.replace(FRONT_MATTER, "").split(/\n/)) {
     if (/^\s*(```|~~~)/.test(raw)) {
       fenced = !fenced;
       continue;
     }
-    if (fenced || /^\s*[{["]/.test(raw)) continue;
-    const line = raw
+    if (fenced || JSON_LINE.test(raw)) continue;
+    const line = unescapeHtml(raw)
+      .replace(/\{\{[^}]*\}\}/g, "")
       .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
       .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
       .replace(/<[^>]+>/g, "")
@@ -369,6 +373,7 @@ export function markdownSentences(markdown: string): string[] {
       .replace(/\*\*|__|`+/g, "")
       .replace(/(^|\s)[*_](\S)/g, "$1$2")
       .replace(/(\S)[*_](\s|$|[.,;:!?])/g, "$1$2")
+      .replace(/\\([\\`*_{}[\]()#+\-.!|>~])/g, "$1")
       .replace(/\s*\|\s*/g, " ")
       .replace(/\s+/g, " ")
       .trim();
@@ -389,7 +394,7 @@ export function countWords(text: string): number {
 }
 
 export function readableHtml(html: string): string {
-  return html.replace(/<(script|style|noscript|template)\b[\s\S]*?<\/\1\s*>/gi, "");
+  return html.replace(/<(script|style|noscript|template|nav)\b[\s\S]*?<\/\1\s*>/gi, "");
 }
 
 export async function pageMarkdown(

@@ -26,6 +26,11 @@ export function findTerm(sentence: string, term: string): { start: number; end: 
   return null;
 }
 
+export function holdsEveryWord(sentence: string, term: string): boolean {
+  const words = (term.split(" · ")[0] ?? "").split(/\s+/).filter(Boolean);
+  return words.length > 0 && words.every((word) => findTerm(sentence, word) !== null);
+}
+
 export function quoteAround(sentence: string, term: string): string {
   const text = sentence.replace(/\s+/g, " ").trim();
   if (fitsExample(text)) return text;

@@ -36,7 +36,7 @@ import {
   Reply,
   replySchema,
 } from "../lessons/prompt";
-import { findTerm, quoteAround } from "../lessons/quote";
+import { holdsEveryWord, quoteAround } from "../lessons/quote";
 import {
   type LessonMaterial,
   type LessonReader,
@@ -503,7 +503,7 @@ function exampleOf(
   const { sentences } = transcript;
   const headWords = countWords(term.term.split(" · ")[0] ?? "");
   const holds = (s: { text: string } | undefined) =>
-    !!s && countWords(s.text) > headWords && findTerm(s.text, term.term) !== null;
+    !!s && countWords(s.text) > headWords && holdsEveryWord(s.text, term.term);
   const numbered = term.sentence ? sentences[term.sentence - 1] : undefined;
   const sentence =
     (holds(numbered) ? numbered : undefined) ??

@@ -1609,7 +1609,7 @@ async function pictureDeck(count: number, every = 1) {
 describe("importing a deck of many pictures", () => {
   it("stores every picture several at a time, with one Images call each, and progress moves", async () => {
     const ctx = await fresh();
-    const count = 300;
+    const count = PICTURES_PER_STEP * 2 + 1;
     const { id } = await upload(ctx, "pictures.zip", await pictureDeck(count));
     await inspectImport(ctx, id, env.IMPORTS);
     await confirmImport(ctx, id, { languages: {}, roles: {} }, env.IMPORTS, async () => {});

@@ -2,13 +2,17 @@
 
 // Drive features from the map on a running instance and keep the evidence. See ../SKILL.md.
 
-import { existsSync, mkdirSync, readdirSync, writeFileSync } from "node:fs";
+import { existsSync, mkdirSync, readdirSync, renameSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs, stripVTControlCharacters } from "node:util";
 import { chromium, devices, expect } from "@playwright/test";
+import { captureCrops } from "./crop.mjs";
 import { doctor, git, report } from "./doctor.mjs";
+import { geometryNotes } from "./geometry.mjs";
+import { handOver, returnPath } from "./hand-over.mjs";
+import { measure, settle, watchShifts } from "./measure.mjs";
 import { timedOut } from "./timeouts.mjs";
 
 const here = dirname(fileURLToPath(import.meta.url));
@@ -28,6 +32,7 @@ Features: ${features.join(", ")}
   --pr <n>           Pull request the evidence belongs to (default: the branch name)
   --out <dir>        Evidence root (default: /mnt/project-files/evidence, else the temp dir)
   --phone            Drive at 393 px with touch instead of 1280 px with a pointer
+  --motion           Run with full motion and record a video instead of reducing motion
   --headed           Show the browser
 `;
 
@@ -41,6 +46,7 @@ const { values, positionals } = parseArgs({
     pr: { type: "string" },
     out: { type: "string" },
     phone: { type: "boolean", default: false },
+    motion: { type: "boolean", default: false },
     headed: { type: "boolean", default: false },
     help: { type: "boolean", short: "h" },
   },
@@ -68,7 +74,7 @@ const root =
     : join(tmpdir(), "lymi-evidence"));
 const viewport = values.phone
   ? { ...devices["iPhone 15"], viewport: { width: 393, height: 852 } }
-  : { viewport: { width: 1280, height: 900 } };
+  : { viewport: { width: 1280, height: 900 }, deviceScaleFactor: 2 };
 
 /** The Chromium this Playwright expects, or the preinstalled one a cloud container carries. */
 function executablePath() {
@@ -99,11 +105,17 @@ function slug(text) {
 async function driveFeature(browser, name) {
   const feature = await import(join(featuresDir, `${name}.mjs`));
   const persona = feature.persona ?? "learner";
-  const width = values.phone ? "-phone" : "";
+  const width = `${values.phone ? "-phone" : ""}${values.motion ? "-motion" : ""}`;
   const dir = join(root, owner, `${name}-${where}${width}-${sha.slice(0, 8)}`);
   mkdirSync(dir, { recursive: true });
 
-  const context = await browser.newContext({ ...viewport, baseURL: base, reducedMotion: "reduce" });
+  const context = await browser.newContext({
+    ...viewport,
+    baseURL: base,
+    reducedMotion: values.motion ? "no-preference" : "reduce",
+    ...(values.motion && { recordVideo: { dir, size: viewport.viewport } }),
+  });
+  await context.addInitScript(watchShifts);
   // A dev server compiles each route on first visit, so waits allow for a cold start.
   context.setDefaultTimeout(15_000);
   const page = await context.newPage();
@@ -125,6 +137,24 @@ async function driveFeature(browser, name) {
     return response.json();
   };
 
+  const notes = new Map();
+  const look = async (prefix) => {
+    await page.evaluate(settle);
+    const measured = await page.evaluate(measure);
+    const found = geometryNotes(measured).filter((note) => {
+      if (notes.has(note.key)) return false;
+      notes.set(note.key, note);
+      return true;
+    });
+    for (const note of found) note.step = prefix.slice(0, 2);
+    const boxed = found.filter((note) => note.box);
+    if (boxed.length === 0) return;
+    await captureCrops(page, boxed, measured.viewport, (note, i, png) => {
+      note.file = `${prefix}.${note.rule}-${i + 1}.png`;
+      writeFileSync(join(dir, note.file), png);
+    });
+  };
+
   const steps = [];
   const step = async (action, run) => {
     const n = String(steps.length + 1).padStart(2, "0");
@@ -138,7 +168,11 @@ async function driveFeature(browser, name) {
       record.timedOut = timedOut(error);
       record.error = failure(error);
     }
-    await page.screenshot({ path: join(dir, `${prefix}.png`) }).catch(() => {});
+    record.path = returnPath(page.url(), values.entry);
+    await look(prefix).catch((error) => problems.push(`geometry: ${failure(error)}`));
+    await page
+      .screenshot({ path: join(dir, `${prefix}.png`), scale: values.phone ? "device" : "css" })
+      .catch(() => {});
     const aria = await page
       .locator("main")
       .first()
@@ -180,6 +214,7 @@ async function driveFeature(browser, name) {
       });
   } finally {
     await context.close();
+    if (values.motion) renameSync(await page.video().path(), join(dir, "motion.webm"));
   }
 
   const ok = steps.length > 0 && steps.every((s) => s.ok);
@@ -187,8 +222,19 @@ async function driveFeature(browser, name) {
   const timeoutNote = steps.some((s) => s.timedOut && s.action === "set up")
     ? "TIMEOUT in set up means the start page never loaded, so no step ran. Check that the server is up and read its log, then rerun this feature alone."
     : "TIMEOUT means Playwright waited out its limit for something that never came, which other sessions loading the machine can cause. Rerun this feature alone; a second TIMEOUT means it is likely missing.";
+  const result = ok ? (notes.size > 0 ? "PASS+NOTES" : "PASS") : timeout ? "TIMEOUT" : "FAIL";
+  const start = feature.start ?? "/today";
+  const handed = handOver({
+    origin: base,
+    persona,
+    feature: feature.title ?? name,
+    start,
+    end: steps.findLast((s) => s.path)?.path ?? start,
+    entry: values.entry,
+    steps: steps.filter((s) => s.path).map((s) => s.action),
+  });
   const lines = [
-    `# ${feature.title ?? name}: ${ok ? "PASS" : timeout ? "TIMEOUT" : "FAIL"}`,
+    `# ${feature.title ?? name}: ${result}`,
     "",
     `${base} as ${persona}, ${values.phone ? "393 px touch" : "1280 px pointer"}, ${new Date().toISOString()}`,
     "",
@@ -205,9 +251,18 @@ async function driveFeature(browser, name) {
     problems.length ? "Console and network:" : "No console errors or server failures.",
     ...problems.map((p) => `- ${p}`),
     "",
+    notes.size ? "Geometry, to look at and judge:" : "Geometry: nothing to look at.",
+    ...[...notes.values()].map(
+      (n) =>
+        `- ${n.rule}, step ${n.step}: ${n.detail}${n.box ? ` (\`${n.selector}\`, ${n.file})` : ""}`,
+    ),
+    "",
+    ...(values.motion ? ["Motion: motion.webm", ""] : []),
+    ...handed,
+    "",
   ];
   writeFileSync(join(dir, "verdict.md"), lines.join("\n"));
-  process.stdout.write(`${ok ? "PASS" : timeout ? "TIMEOUT" : "FAIL"} ${name}  ${dir}\n`);
+  process.stdout.write(`${result} ${name}  ${dir}\n${handed.join("\n")}\n`);
   return ok;
 }
 

@@ -121,6 +121,55 @@ test("a condition pins a job only when every way through it does", () => {
   for (const condition of fails) assert.equal(problems(job({ condition })).length, 1, condition);
 });
 
+test("another branch's name does not pin a job, since a run can start from it", () => {
+  for (const on of ["workflow_dispatch", "push", "pull_request"]) {
+    const named = [
+      "github.ref == 'refs/heads/dev'",
+      "github.ref == 'refs/heads/main' || github.ref == 'refs/heads/dev'",
+      "github.ref == 'refs/tags/v1'",
+      "github.ref == 'refs/pull/1/merge'",
+      "github.ref != 'refs/heads/dev'",
+      "github.ref != 'refs/heads/main'",
+      "github.ref_name == 'dev'",
+      "github.ref_name != 'main'",
+      "github.base_ref == 'main'",
+      "github.head_ref == 'main'",
+      "github.head_ref == 'release'",
+      "startsWith(github.ref, 'refs/heads/release')",
+      "contains(github.ref, 'release')",
+      "endsWith(github.ref_name, '-release')",
+      "format('refs/heads/{0}', 'dev') == github.ref",
+      "github.ref == github.event.inputs.ref",
+      "(inputs.ref || github.ref) == 'refs/heads/main'",
+      "github.ref",
+    ];
+    for (const condition of named)
+      assert.equal(problems(job({ on, condition })).length, 1, `${on}: ${condition}`);
+
+    const pinned = [
+      "github.ref == 'refs/heads/main'",
+      "\"'refs/heads/main' == github.ref\"",
+      "github.ref == 'REFS/HEADS/MAIN'",
+      "github.ref_name == 'main'",
+      "\"!(github.ref_name != 'main')\"",
+      "github.ref == 'refs/heads/dev' && github.ref_name == 'main'",
+    ];
+    for (const condition of pinned)
+      assert.deepEqual(problems(job({ on, condition })), [], `${on}: ${condition}`);
+  }
+});
+
+test("naming one outsider does not pin a job to the people who may run it", () => {
+  const cases = [
+    ["pull_request", "github.event.pull_request.head.repo.full_name == 'someone/lymi'"],
+    ["pull_request_target", "github.event.pull_request.author_association == 'CONTRIBUTOR'"],
+    ["issue_comment", "github.event.comment.author_association != 'NONE'"],
+    ["workflow_run", "github.event.workflow_run.event == 'workflow_dispatch'"],
+  ];
+  for (const [on, condition] of cases)
+    assert.equal(problems(job({ on, condition })).length, 1, condition);
+});
+
 test("an environment does not pin a job, since neither environment is limited to main", () => {
   const source = job().replace("    steps:", "    environment: app-preview\n    steps:");
   assert.equal(problems(source).length, 1);

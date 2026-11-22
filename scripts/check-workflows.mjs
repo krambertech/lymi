@@ -30,6 +30,20 @@ export const ALLOWED = [
 ];
 
 const UNKNOWN = Symbol("unknown");
+const SOME_FALSY = Symbol("some falsy value");
+
+class AnyExcept {
+  constructor(...values) {
+    this.values = values.map((value) => value.toLowerCase());
+  }
+}
+
+const SOME_TRUTHY = new AnyExcept();
+
+function truth(value) {
+  if (value === SOME_FALSY) return false;
+  return value === UNKNOWN ? UNKNOWN : Boolean(value);
+}
 
 function tokenize(source) {
   const pattern =
@@ -132,6 +146,11 @@ function* nodesOf(node) {
 }
 
 function equals(a, b) {
+  if ([a, b].some((value) => value === UNKNOWN || value === SOME_FALSY)) return UNKNOWN;
+  if (a instanceof AnyExcept || b instanceof AnyExcept) {
+    const [any, value] = a instanceof AnyExcept ? [a, b] : [b, a];
+    return typeof value === "string" && any.values.includes(value.toLowerCase()) ? false : UNKNOWN;
+  }
   if (typeof a === "string" && typeof b === "string") return a.toLowerCase() === b.toLowerCase();
   return typeof a === typeof b ? a === b : Number(a) === Number(b);
 }
@@ -150,20 +169,18 @@ function evaluate(node, run) {
   if (node.type === "path") return read(node.path, run);
   if (node.type === "call") return node.name === "always" ? true : UNKNOWN;
   const [a, b] = node.args.map((child) => evaluate(child, run));
-  if (node.type === "not") return a === UNKNOWN ? UNKNOWN : !a;
+  if (node.type === "not") return truth(a) === UNKNOWN ? UNKNOWN : !truth(a);
   if (node.operator === "&&") {
-    if (a !== UNKNOWN && !a) return a;
-    if (b !== UNKNOWN && !b) return b;
-    return a === UNKNOWN ? UNKNOWN : b;
+    if (truth(a) === UNKNOWN) return truth(b) === false ? SOME_FALSY : UNKNOWN;
+    return truth(a) ? b : a;
   }
   if (node.operator === "||") {
-    if (a !== UNKNOWN && a) return a;
-    if (b !== UNKNOWN && b) return b;
-    return a === UNKNOWN ? UNKNOWN : b;
+    if (truth(a) === UNKNOWN) return truth(b) === true ? SOME_TRUTHY : UNKNOWN;
+    return truth(a) ? a : b;
   }
-  if (a === UNKNOWN || b === UNKNOWN) return UNKNOWN;
-  if (node.operator === "==") return equals(a, b);
-  if (node.operator === "!=") return !equals(a, b);
+  const same = equals(a, b);
+  if (node.operator === "==") return same;
+  if (node.operator === "!=") return same === UNKNOWN ? UNKNOWN : !same;
   return UNKNOWN;
 }
 
@@ -178,8 +195,7 @@ function condition(value) {
 function mayRun(value, run) {
   const node = condition(value);
   if (!node) return true;
-  const result = evaluate(node, run);
-  return result === UNKNOWN || Boolean(result);
+  return truth(evaluate(node, run)) !== false;
 }
 
 function ignoresNeeds(value) {
@@ -190,56 +206,62 @@ function ignoresNeeds(value) {
   );
 }
 
-const REPOSITORY = { "github.repository": "lymi/lymi" };
-const FORK_HEAD = {
+const REPOSITORY = { "github.repository": "krambertech/lymi" };
+const FORK = new AnyExcept(REPOSITORY["github.repository"]);
+const STRANGER = new AnyExcept("OWNER", "MEMBER", "COLLABORATOR");
+const NOT_MAIN = {
   ...REPOSITORY,
-  "github.event.pull_request.head.repo.full_name": "fork/lymi",
+  "github.ref": new AnyExcept("refs/heads/main"),
+  "github.ref_name": new AnyExcept("main"),
+};
+const ON_MAIN = {
+  ...REPOSITORY,
+  "github.ref": "refs/heads/main",
+  "github.ref_name": "main",
+};
+const FORK_HEAD = {
+  "github.event.pull_request.head.repo.full_name": FORK,
   "github.event.pull_request.head.repo.fork": true,
-  "github.event.pull_request.author_association": "NONE",
+  "github.event.pull_request.author_association": STRANGER,
 };
 
 const RUNS = {
   workflow_dispatch: {
     payload: [],
-    values: { ...REPOSITORY, "github.ref": "refs/heads/other" },
+    values: { ...NOT_MAIN },
     from: "by hand on any branch",
     fix: `add \`${MAIN}\` to the job's \`if\`, or to the job it needs (#967, #1011)`,
   },
   push: {
     payload: [],
-    values: { ...REPOSITORY, "github.ref": "refs/heads/other" },
+    values: { ...NOT_MAIN },
     from: "on a push to any branch",
     fix: `limit \`push\` to \`branches: [main]\`, or add \`${MAIN}\` to the job's \`if\` (#967)`,
   },
   pull_request: {
     payload: ["pull_request"],
-    values: { ...FORK_HEAD, "github.ref": "refs/pull/1/merge" },
+    values: { ...NOT_MAIN, ...FORK_HEAD },
     from: "on any pull request, with the branch's own scripts",
     fix: `move it to a job that runs only when \`${MAIN}\`; if a pull request needs it, add \`${SAME_REPOSITORY}\` to the job's \`if\` (#1205)`,
   },
   pull_request_target: {
     payload: ["pull_request"],
-    values: { ...FORK_HEAD, "github.ref": "refs/heads/main" },
+    values: { ...ON_MAIN, ...FORK_HEAD },
     from: "on a pull request from a fork",
     fix: `add \`${SAME_REPOSITORY}\` to the job's \`if\`; the ref is always main here, so it guards nothing (#1205)`,
   },
   issue_comment: {
     payload: ["issue", "comment"],
-    values: {
-      ...REPOSITORY,
-      "github.ref": "refs/heads/main",
-      "github.event.comment.author_association": "NONE",
-    },
+    values: { ...ON_MAIN, "github.event.comment.author_association": STRANGER },
     from: "on anyone's comment",
     fix: "add `github.event.comment.author_association == 'OWNER'` to the job's `if`; the ref is always main here, so it guards nothing",
   },
   workflow_run: {
     payload: ["workflow_run"],
     values: {
-      ...REPOSITORY,
-      "github.ref": "refs/heads/main",
-      "github.event.workflow_run.event": "pull_request",
-      "github.event.workflow_run.head_repository.full_name": "fork/lymi",
+      ...ON_MAIN,
+      "github.event.workflow_run.event": new AnyExcept("push"),
+      "github.event.workflow_run.head_repository.full_name": FORK,
     },
     from: "after a fork's run",
     fix: "add `github.event.workflow_run.event == 'push'` to the job's `if`; the ref is always main here, so it guards nothing",

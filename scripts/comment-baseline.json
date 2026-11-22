@@ -1684,7 +1684,7 @@
   "packages/core/src/chosen.ts": 5,
   "packages/core/src/client-version.ts": 15,
   "packages/core/src/content-reports.ts": 9,
-  "packages/core/src/db.ts": 10,
+  "packages/core/src/db.ts": 6,
   "packages/core/src/draw.simulation.test.ts": 21,
   "packages/core/src/draw.test.ts": 8,
   "packages/core/src/draw.ts": 97,

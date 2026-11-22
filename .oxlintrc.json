@@ -228,6 +228,24 @@
       }
     },
     {
+      "files": ["apps/web/src/server/**", "apps/site/worker/**", "packages/core/src/**"],
+      "excludeFiles": ["packages/core/src/in-list.ts", "packages/core/src/db.ts"],
+      "rules": {
+        "eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "drizzle-orm",
+                "importNames": ["inArray", "notInArray"],
+                "message": "Drizzle binds one parameter per value and D1 refuses more than 100 (#320, #436, #840, #896, #1058). Import inArray and notInArray from @lymi/core/db, or ./in-list inside packages/core: they bind the whole list as one."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "files": ["apps/web/**", "packages/**"],
       "excludeFiles": ["**/*.test.ts"],
       "rules": {

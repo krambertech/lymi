@@ -238,7 +238,9 @@ function compare(ctx) {
       ["minItems", "maxItems"],
     ]) {
       if (b[low] !== undefined && !(a[low] >= b[low])) fails(`${low} tightened to ${b[low]}`);
-      if (b[high] !== undefined && !(a[high] <= b[high])) fails(`${high} tightened to ${b[high]}`);
+      if (b[high] === undefined || a[high] <= b[high]) continue;
+      if (high === "maxLength" && a[high] === undefined && holdsMachineText(b)) continue;
+      fails(`${high} tightened to ${b[high]}`);
     }
   }
 
@@ -264,6 +266,10 @@ function compare(ctx) {
     }
   }
 }
+
+const MACHINE_TEXT_MIN = 64;
+const holdsMachineText = (schema) =>
+  schema["x-lymi-machine"] === true && schema.maxLength >= MACHINE_TEXT_MIN;
 
 function resolve(schema, document) {
   let current = schema;

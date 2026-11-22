@@ -6,7 +6,7 @@ export const PRIVACY_TITLE = msg`Privacy policy · Lymi`;
 export const PRIVACY_DESCRIPTION = msg`How Lymi uses personal data, who receives it, and your choices.`;
 export const PRIVACY_HEADING = msg`Privacy policy`;
 export const PRIVACY_LEAD = msg`This policy covers Lymi’s website, apps, API and connected assistants.`;
-export const PRIVACY_UPDATED = msg`1 November 2026`;
+export const PRIVACY_UPDATED = msg`22 November 2026`;
 
 function PrivacyPolicyContent() {
   return (
@@ -257,6 +257,14 @@ function PrivacyPolicyContent() {
           to those members. Other owners may retain invitation and Activity records concerning you.
           Publisher accounts require a deletion request by email. Contact us if retained shared
           content contains personal information you want erased.
+        </Trans>
+      </p>
+      <p>
+        <Trans>
+          Reports of content stay after an account is deleted, as a record of moderation. A report
+          about your deck keeps the deck’s name, the name you had when it was reported and the text
+          of a reported card. A report you sent keeps its reason and your note. Neither keeps a link
+          to your account.
         </Trans>
       </p>
       <h2>

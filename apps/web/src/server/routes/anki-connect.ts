@@ -1,8 +1,7 @@
 import { AnkiConnectCall } from "@lymi/core";
 import { Hono } from "hono";
-import { ctxOf, describe } from "../http";
+import { ctxOf, describe, reader, readJson } from "../http";
 import type { AppEnv } from "../index";
-import { bodyJson } from "../parse";
 import { principalForKey } from "../principal";
 import {
   ankiConnectClient,
@@ -11,6 +10,7 @@ import {
   isOpenCall,
   PROTOCOL_VERSION,
   reply,
+  UNREADABLE,
 } from "../services/anki-connect";
 import { enrichmentQueue } from "../services/enrichment";
 
@@ -20,6 +20,8 @@ import { enrichmentQueue } from "../services/enrichment";
  * origin may ask. A refusal is a 200 with the protocol's error, which the client shows as it is.
  */
 export const ankiConnect = new Hono<AppEnv>();
+
+const readCall = reader(AnkiConnectCall, "AnkiConnect call");
 
 const CORS = {
   "access-control-allow-origin": "*",
@@ -39,9 +41,9 @@ ankiConnect.get("/", describe({ hide: true, open: true }), (c) =>
 );
 
 ankiConnect.post("/", describe({ hide: true, open: true }), async (c) => {
-  const parsed = AnkiConnectCall.safeParse(await bodyJson(c.req));
+  const parsed = await readJson(c, readCall);
   if (!parsed.success) {
-    return c.json(reply(undefined, null, "Lymi couldn’t read this request."), 200, CORS);
+    return c.json(reply(undefined, null, UNREADABLE), 200, CORS);
   }
   const call = parsed.data;
   if (isOpenCall(call)) return c.json(answerOpenCall(call), 200, CORS);

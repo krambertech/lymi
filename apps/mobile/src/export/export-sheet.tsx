@@ -85,6 +85,7 @@ export function ExportSheet({
     return () => clearTimeout(timer);
   }, [writing, slow]);
   const start = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (format: ExportFormat) =>
       api.startExport(scope.kind === "deck" ? { format, deckId: scope.deckId } : { format }),
     onSuccess: (started) => {

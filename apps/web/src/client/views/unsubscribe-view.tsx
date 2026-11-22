@@ -8,7 +8,10 @@ import { useDocumentTitle } from "../lib/document-title";
 import { publicSiteUrl } from "../lib/origins";
 
 export function UnsubscribeView({ token }: { token: string }) {
-  const stop = useMutation({ mutationFn: () => api.unsubscribe(token) });
+  const stop = useMutation({
+    meta: { failure: "inline" },
+    mutationFn: () => api.unsubscribe(token),
+  });
   useDocumentTitle("Lymi");
   return (
     <AuthFrame homeHref={publicSiteUrl()}>

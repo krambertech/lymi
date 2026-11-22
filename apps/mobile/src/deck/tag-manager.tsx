@@ -54,6 +54,7 @@ export function useTagManager(deckId: string) {
       .catch((e) => failed(e));
 
   const rename = useMutation({
+    meta: { failure: "caller" },
     mutationFn: async ({ from, to }: { from: string; to: string }) => {
       // Decided before the write, since the list it reads changes once the rename lands.
       const merge = tags.some(

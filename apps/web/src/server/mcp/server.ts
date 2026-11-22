@@ -18,6 +18,7 @@ import {
   Directions,
   EnrichmentStatus,
   FieldSource,
+  Id,
   IMAGE_LIMITS,
   ImageDescription,
   InsightsOut,
@@ -205,7 +206,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Get a deck",
       description: `One deck's summary: its settings, how many active cards it has, how many are due now and how many are new, learning and known, and the term and meaning of its ${DECK_PREVIEW_LIMIT} newest cards. For every card with all its fields, page through search_cards with the deckId; to find one card, search by its term. list_sections has the deck's sections and how far the learner is in each.`,
-      inputSchema: z.object({ deckId: z.string().min(1) }),
+      inputSchema: z.object({ deckId: Id }),
       outputSchema: DeckSummaryResultOut,
       ...withView(readTool, "deck"),
     },
@@ -263,7 +264,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Get a card",
       description: "One card by id, with everything the learner wrote on it.",
-      inputSchema: z.object({ cardId: z.string().min(1) }),
+      inputSchema: z.object({ cardId: Id }),
       outputSchema: CardOut,
       ...withView(readTool, "card"),
     },
@@ -350,7 +351,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Edit a card",
       description:
         "Change fields on one card. Send only what changes; a field left out keeps its text. A meaning or example you change becomes the learner's unless you say it came from the lesson. Setting deckId moves the card. Needs write.",
-      inputSchema: z.object({ cardId: z.string().min(1) }).extend(CardPatch.shape),
+      inputSchema: z.object({ cardId: Id }).extend(CardPatch.shape),
       outputSchema: CardOut,
       ...withView(writeTool({ idempotent: false, overwrites: true }), "card"),
     },
@@ -400,7 +401,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Archive a card",
       description:
         "Hide a card without destroying it. It leaves the deck and the review queue; restore_card brings it back with its schedule intact. Needs write.",
-      inputSchema: z.object({ cardId: z.string().min(1) }),
+      inputSchema: z.object({ cardId: Id }),
       outputSchema: OkOut,
       ...writeTool({ idempotent: false }),
     },
@@ -440,7 +441,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Restore a card",
       description:
         "Bring an archived card back, schedule and all. Find archived cards with search_cards and archived set to true. Needs write.",
-      inputSchema: z.object({ cardId: z.string().min(1) }),
+      inputSchema: z.object({ cardId: Id }),
       outputSchema: OkOut,
       ...writeTool({ idempotent: false }),
     },
@@ -480,7 +481,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Enrich a card",
       description:
         'Ask Lymi to fill a card\'s empty meaning, example, pronunciation and language with AI, including fields cleared on purpose. The card comes back at enrichmentStatus "working"; read it with get_card to see the text land. A card with nothing left to fill is refused. Needs write.',
-      inputSchema: z.object({ cardId: z.string().min(1) }),
+      inputSchema: z.object({ cardId: Id }),
       outputSchema: CardOut,
       ...writeTool({ idempotent: true }),
     },
@@ -514,7 +515,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Edit a deck",
       description:
         "Rename a deck, change its description, default language, purpose or review modes, or move it into or out of a series with seriesId. Send only what changes. Needs write.",
-      inputSchema: z.object({ deckId: z.string().min(1) }).extend(DeckInput.partial().shape),
+      inputSchema: z.object({ deckId: Id }).extend(DeckInput.partial().shape),
       outputSchema: DeckOut,
       ...writeTool({ idempotent: false, overwrites: true }),
     },
@@ -531,7 +532,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Archive a deck",
       description:
         "Hide a deck. Its cards stay and leave the review queue with it; restore_deck brings it back. Needs write.",
-      inputSchema: z.object({ deckId: z.string().min(1) }),
+      inputSchema: z.object({ deckId: Id }),
       outputSchema: OkOut,
       ...writeTool({ idempotent: false }),
     },
@@ -548,7 +549,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Restore a deck",
       description: "Bring an archived deck and its cards back. Needs write.",
-      inputSchema: z.object({ deckId: z.string().min(1) }),
+      inputSchema: z.object({ deckId: Id }),
       outputSchema: OkOut,
       ...writeTool({ idempotent: false }),
     },
@@ -598,7 +599,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       description:
         "Rename a series, or set every deck it holds in order. A deck listed from elsewhere moves in; one left out goes back to the learner's other decks. Sending the same list again changes nothing. Needs write.",
       inputSchema: z.object({
-        seriesId: z.string().min(1),
+        seriesId: Id,
         name: SeriesInput.shape.name.optional(),
         deckIds: SeriesDecksInput.shape.deckIds.optional(),
       }),
@@ -644,7 +645,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Delete a series",
       description:
         'Delete a series. It is gone for good, so ask the learner first, and ask which they want for its decks: with decks "archive" they are archived with it, and with "keep" they stay in Library without a series. Either way the decks and their cards survive. Needs write.',
-      inputSchema: z.object({ seriesId: z.string().min(1) }).extend(SeriesDeleteInput.shape),
+      inputSchema: z.object({ seriesId: Id }).extend(SeriesDeleteInput.shape),
       outputSchema: OkOut,
       ...writeTool({ idempotent: true, overwrites: true }),
     },
@@ -663,7 +664,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       description:
         "A deck's sections in order, each with its card count and the learner's standing: open, ready or locked, with Known and not-started counts. progress names the section the learner is on and the next one. Set archived to true for archived sections.",
       inputSchema: z.object({
-        deckId: z.string().min(1),
+        deckId: Id,
         archived: z.boolean().optional().describe("Archived sections instead of active ones"),
       }),
       outputSchema: SectionListOut,
@@ -681,7 +682,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Create a section",
       description:
         "Make a section, last in the deck, and optionally move cards of the deck into it. Check list_sections first: it may exist. Only the deck's owner can. Needs write.",
-      inputSchema: z.object({ deckId: z.string().min(1) }).extend(SectionInput.shape),
+      inputSchema: z.object({ deckId: Id }).extend(SectionInput.shape),
       outputSchema: SectionItemOut,
       ...writeTool({ idempotent: false }),
     },
@@ -697,7 +698,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Rename a section",
       description: "Give a section a new name. Needs write.",
-      inputSchema: z.object({ sectionId: z.string().min(1), name: SectionInput.shape.name }),
+      inputSchema: z.object({ sectionId: Id, name: SectionInput.shape.name }),
       outputSchema: SectionItemOut,
       ...writeTool({ idempotent: true, overwrites: true }),
     },
@@ -714,7 +715,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Reorder a deck's sections",
       description:
         "Put a deck's active sections in a new order. List every one once; a list that no longer matches fails, so call list_sections again. Reordering never locks a section a learner opened. Needs write.",
-      inputSchema: z.object({ deckId: z.string().min(1) }).extend(SectionOrderInput.shape),
+      inputSchema: z.object({ deckId: Id }).extend(SectionOrderInput.shape),
       outputSchema: SectionListOut,
       ...writeTool({ idempotent: true }),
     },
@@ -731,7 +732,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "List a deck's tags",
       description:
         "The tags on a deck's active cards, with how many carry each, and the tags archived from it. Only the deck's owner can. To put tags on cards, send update_cards with each card's tags.",
-      inputSchema: z.object({ deckId: z.string().min(1) }),
+      inputSchema: z.object({ deckId: Id }),
       outputSchema: DeckTagsOut,
       ...readTool,
     },
@@ -744,7 +745,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Rename or merge a deck's tag",
       description:
         "Rename a tag on one deck's cards; other decks keep it. A name the learner already uses merges the two. A change of case alone respells the tag in every deck. Needs write.",
-      inputSchema: z.object({ deckId: z.string().min(1) }).extend(DeckTagRename.shape),
+      inputSchema: z.object({ deckId: Id }).extend(DeckTagRename.shape),
       outputSchema: DeckTagsOut,
       ...writeTool({ idempotent: false, overwrites: true }),
     },
@@ -761,7 +762,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Archive a deck's tag",
       description:
         "Take a tag off every card of one deck; other decks keep it. restore_tag puts it back on the same cards. Needs write.",
-      inputSchema: z.object({ deckId: z.string().min(1) }).extend(DeckTagRef.shape),
+      inputSchema: z.object({ deckId: Id }).extend(DeckTagRef.shape),
       outputSchema: DeckTagsOut,
       ...writeTool({ idempotent: false }),
     },
@@ -778,7 +779,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Restore a deck's archived tag",
       description:
         "Put an archived tag back on the cards of the deck it came off, in its place. A card that has twenty tags since stays without it. Needs write.",
-      inputSchema: z.object({ deckId: z.string().min(1) }).extend(DeckTagRef.shape),
+      inputSchema: z.object({ deckId: Id }).extend(DeckTagRef.shape),
       outputSchema: DeckTagsOut,
       ...writeTool({ idempotent: false }),
     },
@@ -795,7 +796,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Move cards to a section",
       description:
         "Put up to 500 cards of one deck in a section, or take them out of theirs with sectionId null. Schedules and history stay. Sending the same move again changes nothing. Needs write.",
-      inputSchema: z.object({ deckId: z.string().min(1) }).extend(CardSectionInput.shape),
+      inputSchema: z.object({ deckId: Id }).extend(CardSectionInput.shape),
       outputSchema: SectionListOut,
       ...writeTool({ idempotent: true }),
     },
@@ -812,7 +813,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Archive a section",
       description:
         'Hide a section. With cards "archive" its cards leave the deck and review with it; with "keep" they stay in the deck, without a section. Ask the learner which they want. restore_section undoes either. Needs write.',
-      inputSchema: z.object({ sectionId: z.string().min(1) }).extend(SectionArchiveInput.shape),
+      inputSchema: z.object({ sectionId: Id }).extend(SectionArchiveInput.shape),
       outputSchema: OkOut,
       ...writeTool({ idempotent: true }),
     },
@@ -830,7 +831,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Restore a section",
       description:
         "Bring an archived section back with the cards archived alongside it. Find archived sections with list_sections and archived set to true. Needs write.",
-      inputSchema: z.object({ sectionId: z.string().min(1) }),
+      inputSchema: z.object({ sectionId: Id }),
       outputSchema: OkOut,
       ...writeTool({ idempotent: true }),
     },
@@ -849,7 +850,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       description:
         "Give a card its one picture, replacing any it has. Send a public http or https url, or base64 data. Lymi stores a private, normalized copy and never shows the link. JPEG, PNG, WebP and still GIF up to 10 MB; SVG and animation are refused. Pass the card's imageVersion as version so a newer change is not overwritten. A description that contains the term or meaning is refused with description_reveals_answer and the text it matched. Needs write.",
       inputSchema: z.object({
-        cardId: z.string().min(1),
+        cardId: Id,
         url: CardImageImportInput.shape.url.optional(),
         data: z
           .base64()
@@ -890,7 +891,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Describe a card's picture",
       description:
         "Change what the card's picture description says. Null removes it, which pauses picture review for the card. A description that contains the term or meaning is refused with description_reveals_answer. Needs write.",
-      inputSchema: z.object({ cardId: z.string().min(1) }).extend(CardImagePatch.shape),
+      inputSchema: z.object({ cardId: Id }).extend(CardImagePatch.shape),
       outputSchema: CardOut,
       ...writeTool({ idempotent: false, overwrites: true }),
     },
@@ -907,7 +908,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
       title: "Archive a card's picture",
       description:
         "Hide the card's picture. Picture review pauses with its schedule intact; restore_card_image brings both back. Needs write.",
-      inputSchema: z.object({ cardId: z.string().min(1), version: CardImagePatch.shape.version }),
+      inputSchema: z.object({ cardId: Id, version: CardImagePatch.shape.version }),
       outputSchema: CardOut,
       ...writeTool({ idempotent: false }),
     },
@@ -923,7 +924,7 @@ export function buildMcpServer(principal: McpPrincipal): McpServer {
     {
       title: "Restore a card's picture",
       description: "Bring back the picture archived last, and picture review with it. Needs write.",
-      inputSchema: z.object({ cardId: z.string().min(1), version: CardImagePatch.shape.version }),
+      inputSchema: z.object({ cardId: Id, version: CardImagePatch.shape.version }),
       outputSchema: CardOut,
       ...writeTool({ idempotent: false }),
     },

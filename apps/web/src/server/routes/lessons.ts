@@ -1,8 +1,15 @@
-import { LessonAccessOut, LessonAnswerInput, LessonAnswerOut, LessonEventOut } from "@lymi/core";
+import {
+  ID_MAX,
+  LessonAccessOut,
+  LessonAnswerInput,
+  LessonAnswerOut,
+  LessonEventOut,
+} from "@lymi/core";
 import { Hono } from "hono";
+import { z } from "zod";
 import { meteredFetch } from "../dependency-health";
 import { operatorEmails } from "../env";
-import { body, ctxOf, describe } from "../http";
+import { body, ctxOf, describe, reader, readForm } from "../http";
 import type { AppEnv } from "../index";
 import { decisionModel, termsAgainstAnswer } from "../lessons/keep";
 import type { LessonMaterial } from "../lessons/reader";
@@ -35,6 +42,19 @@ const MAX_PDFS = 3;
 const MAX_PDF_BYTES = 20_000_000;
 const MAX_TEXT = 100_000;
 const MAX_BODY = 60_000_000;
+
+const readLesson = reader(
+  z.object({
+    text: z
+      .string()
+      .overwrite((text) => text.slice(0, MAX_TEXT))
+      .max(MAX_TEXT)
+      .default(""),
+    deckId: z.string().max(ID_MAX).optional(),
+    hint: z.string().max(ID_MAX).optional(),
+  }),
+  "lesson",
+);
 
 lessonReads.get(
   "/access",
@@ -69,13 +89,12 @@ lessonReads.post(
     if (!Number.isFinite(declared) || declared > MAX_BODY) {
       throw new ServiceError("invalid", "Send at most 10 photos and 3 PDFs under 20 MB in all.");
     }
-    const form = await c.req.formData();
+    const { files, fields } = await readForm(c, readLesson);
+    if (!fields.success) throw new ServiceError("invalid", "Invalid lesson", fields.error.issues);
+    const { text, deckId, hint } = fields.data;
     let pdfBytes = 0;
-    const material: LessonMaterial = { images: [], pdfs: [], text: "" };
-    const text = form.get("text");
-    if (typeof text === "string") material.text = text.slice(0, MAX_TEXT);
-    for (const file of form.getAll("file")) {
-      if (!(file instanceof File)) continue;
+    const material: LessonMaterial = { images: [], pdfs: [], text };
+    for (const file of files) {
       const bytes = new Uint8Array(await file.arrayBuffer());
       if (isPdf(bytes)) {
         pdfBytes += bytes.byteLength;
@@ -93,11 +112,9 @@ lessonReads.post(
       throw new ServiceError("invalid", "Paste the lesson or add a photo or PDF of it.");
     }
     // Refusals happen here, before the stream opens, so they arrive as ordinary errors.
-    const deckId = form.get("deckId");
-    const hint = form.get("hint");
     const lesson = await prepareLesson(ctxOf(c), material, deps, {
-      deckId: typeof deckId === "string" && deckId ? deckId : undefined,
-      hint: typeof hint === "string" && hint ? hint : undefined,
+      deckId: deckId || undefined,
+      hint: hint || undefined,
       client: c.get("phone") ? "phone" : "web",
     });
     const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();

@@ -12,4 +12,4 @@ Track each substantive finding with a stable ID, consequence, evidence and outco
 
 Stop when the current diff has no blocking finding and the reviewer has checked any material fixes. If a substantive disagreement survives two exchanges, or the budget ends with a blocker, report both positions and the evidence. A timeout, missing response or exhausted budget is not approval.
 
-Record the reviewer or harness, rounds, verdict and any substantive disagreement under the existing Verification section. Use only reported model identities and usage; omit scores and guessed metadata. After later CI or bot fixes, review material changes within the remaining budget; if it is exhausted, hand off the outstanding review explicitly.
+Record the reviewer or harness, rounds, verdict and any substantive disagreement on Verification's `Review:` line. Use only reported model identities and usage; omit scores and guessed metadata. After later CI or bot fixes, review material changes within the remaining budget; if it is exhausted, hand off the outstanding review explicitly.

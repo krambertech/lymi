@@ -1,6 +1,7 @@
 import { definePlugin } from "@oxlint/plugins";
 import aiConsent from "./rules/ai-consent.mjs";
 import clipOwner from "./rules/clip-owner.mjs";
+import failedWriteSaid from "./rules/failed-write-said.mjs";
 import fieldError from "./rules/field-error.mjs";
 import formHeader from "./rules/form-header.mjs";
 import guardedStateMove from "./rules/guarded-state-move.mjs";
@@ -15,6 +16,7 @@ import noRedirectError from "./rules/no-redirect-error.mjs";
 import noSqlLower from "./rules/no-sql-lower.mjs";
 import noSwallowedFailure from "./rules/no-swallowed-failure.mjs";
 import noticePlainText from "./rules/notice-plain-text.mjs";
+import readRequestThroughHttp from "./rules/read-request-through-http.mjs";
 import scrollViewPersistTaps from "./rules/scroll-view-persist-taps.mjs";
 import springPresets from "./rules/spring-presets.mjs";
 import termText from "./rules/term-text.mjs";
@@ -22,6 +24,7 @@ import termText from "./rules/term-text.mjs";
 export default definePlugin({
   meta: { name: "lymi" },
   rules: {
+    "failed-write-said": failedWriteSaid,
     "ai-consent": aiConsent,
     "clip-owner": clipOwner,
     "field-error": fieldError,
@@ -38,6 +41,7 @@ export default definePlugin({
     "no-sql-lower": noSqlLower,
     "no-swallowed-failure": noSwallowedFailure,
     "notice-plain-text": noticePlainText,
+    "read-request-through-http": readRequestThroughHttp,
     "scroll-view-persist-taps": scrollViewPersistTaps,
     "spring-presets": springPresets,
     "term-text": termText,

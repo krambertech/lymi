@@ -6,9 +6,12 @@ import { settingsQuery, streakQuery } from "./queries";
 
 export type GoalStatus = "saving" | "saved" | "error";
 
-export function useDailyGoal() {
+export function useDailyGoal(): {
+  change: (dailyGoal: number) => void;
+  status: GoalStatus | undefined;
+} {
   const qc = useQueryClient();
-  const [status, setStatus] = useState<GoalStatus | undefined>();
+  const [status, setStatus] = useState<Exclude<GoalStatus, "error"> | undefined>();
   const latest = useRef(0);
   const before = useRef<{
     streak: StreakOut | undefined;
@@ -29,6 +32,7 @@ export function useDailyGoal() {
   };
 
   const mutation = useMutation({
+    meta: { failure: "inline" },
     scope: { id: "daily-goal" },
     mutationFn: ({ dailyGoal }: { dailyGoal: number; id: number }) =>
       api.updateSettings({ dailyGoal }),
@@ -59,7 +63,6 @@ export function useDailyGoal() {
       before.current = null;
       void qc.invalidateQueries({ queryKey: settingsQuery.queryKey });
       void qc.invalidateQueries({ queryKey: streakQuery.queryKey });
-      setStatus("error");
     },
   });
 
@@ -67,5 +70,5 @@ export function useDailyGoal() {
     latest.current += 1;
     mutation.mutate({ dailyGoal, id: latest.current });
   };
-  return { change, status };
+  return { change, status: mutation.isError ? "error" : status };
 }

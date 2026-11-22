@@ -31,6 +31,7 @@ export default function AssistantRoute() {
     byKey ?? (connected ? (assistantOf(connected) ?? assistantByKey("custom")) : undefined);
 
   const disconnect = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (id: string) => api.disconnect(id),
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: connectedAppsQuery.queryKey });

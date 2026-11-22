@@ -1,11 +1,12 @@
 import {
   AnkiConnectCall,
+  AnkiConnectFileData,
+  AnkiConnectFileName,
   type AnkiConnectMedia,
   AnkiConnectNote,
   AnkiConnectNoteUpdate,
   CARD_LIMITS,
   fitsLanguage,
-  IMAGE_LIMITS,
   inspectImage,
   pronunciationText,
   type Scope,
@@ -15,6 +16,7 @@ import {
 } from "@lymi/core";
 import { and, asc, eq, gte, inArray, isNull, selectIn, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
+import { z } from "zod";
 import { schema } from "../db";
 import { decodeBase64, languageName } from "../parse";
 import {
@@ -88,31 +90,9 @@ export const MAX_FILES = 20;
 export const MAX_ACTIONS = 50;
 /** Search alternatives in one request, each a query; a popup sends one or two per entry. */
 export const MAX_SEARCHES = 100;
+const MAX_QUERY = 200_000;
+const MAX_TAGS_TEXT = 10_000;
 const STASH_HOURS = 1;
-
-const SUPPORTED = [
-  "version",
-  "requestPermission",
-  "apiReflect",
-  "deckNames",
-  "modelNames",
-  "modelFieldNames",
-  "canAddNotes",
-  "canAddNotesWithErrorDetail",
-  "addNote",
-  "addNotes",
-  "findNotes",
-  "findCards",
-  "notesInfo",
-  "cardsInfo",
-  "storeMediaFile",
-  "updateNoteFields",
-  "addTags",
-  "guiBrowse",
-  "guiEditNote",
-  "sync",
-  "multi",
-] as const;
 
 export type AnkiConnectDeps = {
   scope: Scope;
@@ -164,13 +144,14 @@ class Budget {
   }
   search(count: number) {
     if (count > this.searches) {
-      throw new Refusal(`Search for at most ${MAX_SEARCHES} alternatives in one request.`);
+      throw new Refusal(tooManySearches());
     }
     this.searches -= count;
   }
 }
 
 const tooManyNotes = () => `Send at most ${MAX_NOTES} notes in one request.`;
+const tooManySearches = () => `Search for at most ${MAX_SEARCHES} alternatives in one request.`;
 const tooManyIds = () => `Ask for at most ${MAX_NOTES} notes in one request.`;
 
 /** Answers one call, and each call inside a `multi`, in the shape its version asks for. */
@@ -181,19 +162,9 @@ export async function answerCall(
   budget = new Budget(),
 ): Promise<unknown> {
   try {
-    if (call.action === "multi") {
-      const inner = AnkiConnectCall.array().max(MAX_ACTIONS).safeParse(call.params?.actions);
-      if (!inner.success) {
-        throw new Refusal(`multi takes a list of up to ${MAX_ACTIONS} actions.`);
-      }
-      if (inner.data.some((each) => each.action === "multi")) {
-        throw new Refusal("multi can’t hold another multi.");
-      }
-      const results: unknown[] = [];
-      for (const each of inner.data) results.push(await answerCall(ctx, each, deps, budget));
-      return reply(call.version, results, null);
-    }
-    return reply(call.version, await run(ctx, call, deps, budget), null);
+    const found = Object.entries(ACTIONS).find(([name]) => name === call.action)?.[1];
+    if (!found) throw new Refusal(REFUSED.get(call.action) ?? UNSUPPORTED);
+    return reply(call.version, await found.answer(call.params, { ctx, deps, budget }), null);
   } catch (error) {
     if (error instanceof Refusal || error instanceof ServiceError) {
       return reply(call.version, null, error.message);
@@ -202,95 +173,164 @@ export async function answerCall(
   }
 }
 
-async function run(
-  ctx: ServiceContext,
-  call: AnkiConnectCall,
-  deps: AnkiConnectDeps,
-  budget: Budget,
+type Run = { ctx: ServiceContext; deps: AnkiConnectDeps; budget: Budget };
+
+export const UNREADABLE = "Lymi couldn’t read this request.";
+const MULTI_LIST = `multi takes a list of up to ${MAX_ACTIONS} actions.`;
+const REFUSED = new Map([
+  [
+    "updateNote",
+    "Lymi doesn’t change a card’s tags and fields together. In Yomitan’s Anki settings, set duplicates to add a new note, and edit the card in Lymi.",
+  ],
+]);
+
+function action<Shape extends z.ZodRawShape>(
+  shape: Shape,
+  answer: (params: z.output<z.ZodObject<Shape>>, run: Run) => unknown,
 ) {
-  const params = call.params ?? {};
-  switch (call.action) {
-    case "version":
-      return PROTOCOL_VERSION;
-    case "requestPermission":
-      return { permission: "granted", requireApikey: true, version: PROTOCOL_VERSION };
-    case "apiReflect": {
-      const asked = Array.isArray(params.actions) ? params.actions : null;
-      return {
-        scopes: ["actions"],
-        actions: SUPPORTED.filter((action) => !asked || asked.includes(action)),
-      };
-    }
-    case "deckNames":
-      return (await ownedDecks(ctx)).map((deck) => deck.name);
-    case "modelNames":
-      return [NOTE_TYPE];
-    case "modelFieldNames":
-      if (params.modelName !== NOTE_TYPE) throw new Refusal(chooseNoteType());
+  const params = z.object(shape, UNREADABLE);
+  return {
+    params,
+    answer(sent: unknown, run: Run): unknown {
+      const parsed = params.safeParse(sent ?? {});
+      if (!parsed.success) throw new Refusal(parsed.error.issues[0]?.message ?? UNREADABLE);
+      return answer(parsed.data, run);
+    },
+  };
+}
+
+function listOf<Item extends z.ZodType>(item: Item, max: number, refusal: string) {
+  return z.preprocess(
+    (sent) => (Array.isArray(sent) ? sent : []),
+    z.array(item.nullable().catch(null)).max(max, refusal),
+  );
+}
+
+function textOf(max: number, refusal: string) {
+  return z.preprocess(
+    (sent) => (typeof sent === "string" ? sent : ""),
+    z.string().max(max, refusal),
+  );
+}
+
+const Notes = listOf(AnkiConnectNote, MAX_NOTES, tooManyNotes());
+const NoteIds = listOf(z.number().int(), MAX_NOTES, tooManyIds());
+const FindQuery = textOf(MAX_QUERY, tooManySearches());
+
+export const ACTIONS = {
+  version: action({}, () => PROTOCOL_VERSION),
+  requestPermission: action({}, () => ({
+    permission: "granted",
+    requireApikey: true,
+    version: PROTOCOL_VERSION,
+  })),
+  apiReflect: action(
+    { actions: z.array(z.string().max(100).catch("")).max(1000).nullish().catch(null) },
+    ({ actions }) => ({
+      scopes: ["actions"],
+      actions: actionNames().filter((name) => !actions || actions.includes(name)),
+    }),
+  ),
+  deckNames: action({}, async (_, { ctx }) => (await ownedDecks(ctx)).map((deck) => deck.name)),
+  modelNames: action({}, () => [NOTE_TYPE]),
+  modelFieldNames: action(
+    { modelName: z.string().max(1000).optional().catch(undefined) },
+    ({ modelName }) => {
+      if (modelName !== NOTE_TYPE) throw new Refusal(chooseNoteType());
       return [...NOTE_FIELDS];
-    case "canAddNotes":
-      return (await canAdd(ctx, notesOf(params.notes, budget))).map((r) => r.canAdd);
-    case "canAddNotesWithErrorDetail":
-      return canAdd(ctx, notesOf(params.notes, budget));
-    case "addNote": {
-      const [outcome] = await add(ctx, notesOf([params.note], budget), deps, budget);
+    },
+  ),
+  canAddNotes: action({ notes: Notes }, async ({ notes }, { ctx, budget }) => {
+    budget.take(notes.length, tooManyNotes());
+    return (await canAdd(ctx, notes)).map((r) => r.canAdd);
+  }),
+  canAddNotesWithErrorDetail: action({ notes: Notes }, ({ notes }, { ctx, budget }) => {
+    budget.take(notes.length, tooManyNotes());
+    return canAdd(ctx, notes);
+  }),
+  addNote: action(
+    { note: AnkiConnectNote.nullable().catch(null) },
+    async ({ note }, { ctx, deps, budget }) => {
+      budget.take(1, tooManyNotes());
+      const [outcome] = await add(ctx, [note], deps, budget);
       if (!outcome || "error" in outcome) throw new Refusal(outcome?.error ?? noteUnreadable());
       return outcome.id;
-    }
-    case "addNotes":
-      return (await add(ctx, notesOf(params.notes, budget), deps, budget)).map((o) =>
-        "id" in o ? o.id : null,
-      );
-    case "findNotes":
-    case "findCards":
-      return findNotes(ctx, typeof params.query === "string" ? params.query : "", budget);
-    case "notesInfo":
-      return notesInfo(ctx, numbers(params.notes, budget));
-    case "cardsInfo":
-      return (await notesInfo(ctx, numbers(params.cards, budget))).map((note) =>
-        "noteId" in note
-          ? {
-              cardId: note.noteId,
-              note: note.noteId,
-              deckName: note.deckName,
-              modelName: NOTE_TYPE,
-              queue: 0,
-              flags: 0,
-            }
-          : {},
-      );
-    case "storeMediaFile":
-      return storeMedia(ctx, params, deps, budget);
-    // Lymi has no window to open, so the client's View note does nothing rather than fail.
-    case "guiBrowse":
-      return [];
-    case "guiEditNote":
-    case "sync":
-      return null;
-    case "updateNoteFields":
-      return updateNoteFields(ctx, params.note, deps, budget);
-    case "addTags":
-      return addTags(ctx, params, deps, budget);
-    case "updateNote":
-      throw new Refusal(
-        "Lymi doesn’t change a card’s tags and fields together. In Yomitan’s Anki settings, set duplicates to add a new note, and edit the card in Lymi.",
-      );
-    default:
-      throw new Refusal(UNSUPPORTED);
-  }
+    },
+  ),
+  addNotes: action({ notes: Notes }, async ({ notes }, { ctx, deps, budget }) => {
+    budget.take(notes.length, tooManyNotes());
+    return (await add(ctx, notes, deps, budget)).map((o) => ("id" in o ? o.id : null));
+  }),
+  findNotes: action({ query: FindQuery }, ({ query }, { ctx, budget }) =>
+    findNotes(ctx, query, budget),
+  ),
+  findCards: action({ query: FindQuery }, ({ query }, { ctx, budget }) =>
+    findNotes(ctx, query, budget),
+  ),
+  notesInfo: action({ notes: NoteIds }, ({ notes }, { ctx, budget }) =>
+    notesInfo(ctx, noteIdsIn(notes, budget)),
+  ),
+  cardsInfo: action({ cards: NoteIds }, async ({ cards }, { ctx, budget }) =>
+    (await notesInfo(ctx, noteIdsIn(cards, budget))).map((note) =>
+      "noteId" in note
+        ? {
+            cardId: note.noteId,
+            note: note.noteId,
+            deckName: note.deckName,
+            modelName: NOTE_TYPE,
+            queue: 0,
+            flags: 0,
+          }
+        : {},
+    ),
+  ),
+  storeMediaFile: action(
+    { filename: AnkiConnectFileName.catch(""), data: AnkiConnectFileData },
+    async ({ filename, data }, { ctx, deps, budget }) => {
+      requireWrite(ctx, deps);
+      if (!filename) throw new Refusal("storeMediaFile needs a filename.");
+      budget.file();
+      await stash(ctx, filename, data, deps);
+      return filename;
+    },
+  ),
+  updateNoteFields: action(
+    { note: AnkiConnectNoteUpdate.nullable().catch(null) },
+    ({ note }, { ctx, deps, budget }) => updateNoteFields(ctx, note, deps, budget),
+  ),
+  addTags: action(
+    { notes: NoteIds, tags: textOf(MAX_TAGS_TEXT, "Send fewer tags in one request.") },
+    ({ notes, tags }, { ctx, deps, budget }) => addTags(ctx, notes, tags, deps, budget),
+  ),
+  // Lymi has no window to open, so the client's View note does nothing rather than fail.
+  guiBrowse: action({}, () => []),
+  guiEditNote: action({}, () => null),
+  sync: action({}, () => null),
+  multi: action(
+    {
+      actions: z
+        .array(AnkiConnectCall.nullable().catch(null), MULTI_LIST)
+        .max(MAX_ACTIONS, MULTI_LIST),
+    },
+    async ({ actions }, { ctx, deps, budget }) => {
+      const calls = actions.flatMap((call) => call ?? []);
+      if (calls.length < actions.length) throw new Refusal(MULTI_LIST);
+      if (calls.some((call) => call.action === "multi")) {
+        throw new Refusal("multi can’t hold another multi.");
+      }
+      const results: unknown[] = [];
+      for (const call of calls) results.push(await answerCall(ctx, call, deps, budget));
+      return results;
+    },
+  ),
+};
+
+function actionNames(): string[] {
+  return Object.keys(ACTIONS);
 }
 
-function notesOf(value: unknown, budget: Budget): (AnkiConnectNote | null)[] {
-  const notes = Array.isArray(value) ? value : [];
-  budget.take(notes.length, tooManyNotes());
-  return notes.map((note) => {
-    const parsed = AnkiConnectNote.safeParse(note);
-    return parsed.success ? parsed.data : null;
-  });
-}
-
-function numbers(value: unknown, budget: Budget): number[] {
-  const ids = (Array.isArray(value) ? value : []).filter((n): n is number => Number.isInteger(n));
+function noteIdsIn(sent: (number | null)[], budget: Budget): number[] {
+  const ids = sent.filter((id) => id !== null);
   budget.take(ids.length, tooManyIds());
   return ids;
 }
@@ -534,28 +574,13 @@ function uploadKind(bytes: Uint8Array): "audio" | "picture" | null {
 async function stash(
   ctx: ServiceContext,
   fileName: string,
-  data: unknown,
+  data: string | undefined,
   deps: AnkiConnectDeps,
 ): Promise<void> {
-  if (!deps.media || typeof data !== "string") return;
-  if (data.length > Math.ceil(IMAGE_LIMITS.maxBytes / 3) * 4) return;
+  if (!deps.media || data === undefined) return;
   const bytes = decodeBase64(data);
   if (!bytes || !uploadKind(bytes)) return;
   await putObject(deps.media.stash, await stashKey(ctx.userId, fileName), bytes);
-}
-
-async function storeMedia(
-  ctx: ServiceContext,
-  params: Record<string, unknown>,
-  deps: AnkiConnectDeps,
-  budget: Budget,
-) {
-  requireWrite(ctx, deps);
-  const fileName = typeof params.filename === "string" ? params.filename : "";
-  if (!fileName) throw new Refusal("storeMediaFile needs a filename.");
-  budget.file();
-  await stash(ctx, fileName, params.data, deps);
-  return fileName;
 }
 
 /**
@@ -708,15 +733,14 @@ async function ownCardOf(ctx: ServiceContext, note: number): Promise<Card> {
  */
 async function updateNoteFields(
   ctx: ServiceContext,
-  value: unknown,
+  note: AnkiConnectNoteUpdate | null,
   deps: AnkiConnectDeps,
   budget: Budget,
 ) {
   requireWrite(ctx, deps);
-  const parsed = AnkiConnectNoteUpdate.safeParse(value);
-  if (!parsed.success) throw new Refusal("updateNoteFields needs a note with an id and fields.");
-  const card = await ownCardOf(ctx, parsed.data.id);
-  const fields = await withFiles(ctx, parsed.data.fields ?? {}, parsed.data, deps, budget);
+  if (!note) throw new Refusal("updateNoteFields needs a note with an id and fields.");
+  const card = await ownCardOf(ctx, note.id);
+  const fields = await withFiles(ctx, note.fields ?? {}, note, deps, budget);
   const patch: ServerCardPatch = {};
   const text = (name: NoteField) => fields[name] ?? "";
   const meaning = fitted(meaningText(text("Meaning")), CARD_LIMITS.meaning);
@@ -744,14 +768,14 @@ async function updateNoteFields(
 /** Adds tags, written as one space-separated string, to each of the learner's own notes. */
 async function addTags(
   ctx: ServiceContext,
-  params: Record<string, unknown>,
+  notes: (number | null)[],
+  tags: string,
   deps: AnkiConnectDeps,
   budget: Budget,
 ) {
   requireWrite(ctx, deps);
-  const ids = numbers(params.notes, budget);
-  const sent = typeof params.tags === "string" ? params.tags.split(/\s+/) : [];
-  const added = tagsOf({ tags: sent });
+  const ids = noteIdsIn(notes, budget);
+  const added = tagsOf({ tags: tags.split(/\s+/) });
   for (const id of ids) {
     // A note that is gone or not the learner's is passed over, as AnkiConnect does.
     const card = await ownCardOf(ctx, id).catch((error: unknown) => {

@@ -83,6 +83,7 @@ function DeckSettingsPage() {
   useEffect(() => () => window.clearTimeout(timer.current), []);
 
   const save = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (patch: DeckSettingsPatch) => writes.updateDeck(deckId, patch),
     onSuccess: async () => {
       await Promise.all([
@@ -97,6 +98,7 @@ function DeckSettingsPage() {
   });
 
   const prefer = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (pronunciationDisplay: PronunciationDisplay) =>
       writes.setDeckPreferences(deckId, { pronunciationDisplay }),
     onSuccess: () => qc.invalidateQueries({ queryKey: ["decks"] }),
@@ -113,6 +115,7 @@ function DeckSettingsPage() {
   const [cancelling, setCancelling] = useState<Invitation | null>(null);
 
   const invite = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (email: string) => api.invite(deckId, email),
     onSuccess: async () => {
       // The dialog closes only once the invitation lands, so a refusal keeps what was typed.
@@ -148,6 +151,7 @@ function DeckSettingsPage() {
   };
 
   const cancelInvite = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (invitation: Invitation) => api.cancelInvitation(deckId, invitation.id),
     onSuccess: async () => {
       setCancelling(null);
@@ -159,6 +163,7 @@ function DeckSettingsPage() {
   });
 
   const remove = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (member: Member) => api.removeMember(deckId, member.userId),
     onSuccess: async () => {
       setRemoving(null);
@@ -172,6 +177,7 @@ function DeckSettingsPage() {
   });
 
   const turnOn = useMutation({
+    meta: { failure: "inline" },
     mutationFn: () => api.turnOnJoinLink(deckId),
     onSuccess: (value) => {
       qc.setQueryData(joinLinkQuery(deckId).queryKey, value);
@@ -180,6 +186,7 @@ function DeckSettingsPage() {
     },
   });
   const turnOff = useMutation({
+    meta: { failure: "inline" },
     mutationFn: () => api.turnOffJoinLink(deckId),
     onSuccess: () => {
       qc.setQueryData(joinLinkQuery(deckId).queryKey, (prev) => ({

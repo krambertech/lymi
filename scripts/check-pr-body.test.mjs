@@ -141,3 +141,25 @@ test("reads the description from the environment, fails a person and only warns 
   assert.equal(bot.status, 0);
   assert.match(bot.stderr, /no “Review: …” line/);
 });
+
+test("shared design styles are rendered UI", () => {
+  for (const file of ["packages/design/tokens.css", "packages/design/tray.css"]) {
+    assert.deepEqual(rules(body({ screenshots: "" }), [file]), ["screenshots", "try"], file);
+  }
+});
+
+test("a label with only formatting after it says nothing", () => {
+  for (const empty of [
+    "**No visible change:**",
+    "**No visible change**:",
+    "No visible change: **",
+  ]) {
+    assert.deepEqual(rules(body({ screenshots: empty }), [SCREEN]), ["screenshots", "try"], empty);
+  }
+  for (const empty of ["**Review:**", "- **Review**: ", "Review: _"]) {
+    assert.deepEqual(rules(body({ verification: empty }), [SERVICE]), ["review"], empty);
+  }
+  for (const said of ["**No visible change:** types only.", "**No visible change**: types only."]) {
+    assert.deepEqual(rules(body({ screenshots: said }), [SCREEN]), [], said);
+  }
+});

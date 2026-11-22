@@ -11,11 +11,13 @@ const AUDIT_SKILL =
   /(?<![\w./-])(?:impeccable|emil-[a-z][a-z-]*|better-ui|unslop|poteto|pstack)(?![\w/-])/i;
 
 const TEST_PATH = /\.(?:test|spec)\.|\/(?:test|tests|__tests__|fixtures)\//;
-const DESIGN_PAGE = /\/design(?:\/|\.)/;
+const DESIGN_PAGE = /^apps\/.*\/design(?:\/|\.)/;
 
 function rendersUi(path) {
   return (
-    /^apps\/(?:web\/src\/client|site\/src|mobile\/src)\/.+\.(?:tsx|astro|css)$/.test(path) &&
+    /^(?:apps\/(?:web\/src\/client|site\/src|mobile\/src)\/.+\.(?:tsx|astro|css)|packages\/design\/[^/]+\.css)$/.test(
+      path,
+    ) &&
     !TEST_PATH.test(path) &&
     !DESIGN_PAGE.test(path)
   );
@@ -66,8 +68,9 @@ function sectionsOf(text) {
 }
 
 function labelled(text, label) {
-  const line = new RegExp(`^[\\s>*-]*(?:${label})(?::\\**|\\**:)[ \\t]*(\\S.*)$`, "im").exec(text);
-  return line?.[1] ?? "";
+  const line = new RegExp(`^[\\s>*_-]*(?:${label})[*_]*:[*_]*(.*)$`, "im").exec(text);
+  const value = line?.[1].trim() ?? "";
+  return /[\p{L}\p{N}]/u.test(value) ? value : "";
 }
 
 export function checkBody({ title, body, files }) {

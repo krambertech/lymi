@@ -5928,6 +5928,9 @@ msgstr "Юридична адреса: Harju maakond, Tallinn, Põhja-Tallinna l
 msgid "Related decks"
 msgstr "Схожі колоди"
 
+msgid "Reload the page"
+msgstr "Оновити сторінку"
+
 msgid "Remembered or Forgot"
 msgstr "«Пам’ятаю» або «Не пам’ятаю»"
 
@@ -7233,6 +7236,9 @@ msgstr "Маленькі слова, з яких складається кожн
 
 msgid "The smallest unit you deploy"
 msgstr "Найменша одиниця, яку розгортаєш"
+
+msgid "The sounds and exercises didn’t load."
+msgstr "Звуки та вправи не завантажилися."
 
 msgid "The soup *is* cold."
 msgstr "Суп *холодний*."

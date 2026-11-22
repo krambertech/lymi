@@ -29,7 +29,9 @@ Each stage has a hue (`hue` in the catalogue). A lesson sets it as `--h` on `.le
 
 The lessons cost every other page nothing. Only the hub, a lesson's page and the kit page import lesson code, and each loads its own part: `LearnPage` in `components/learn/learn-page.tsx` imports the lesson whose file is its slug in PascalCase (`mina-sina-tema` is `MinaSinaTema.tsx`), with its catalog in the reader's language. The page's frontmatter calls `prepareLearnPage` first, so the lesson is ready before the server renders it.
 
-Each lesson has its own Lingui catalogs in `apps/site/src/locales/learn/<File>/`, the kit, hub and course names share `locales/learn/Kit/`, and the site's own catalogs hold no lesson text. `apps/site/lingui.config.ts` finds a new lesson by its file. `lib/learn/isolation.test.ts` fails when another page imports lesson code or a lesson line reaches the site's catalog.
+When a lesson's code or catalog can't load, such as just after a deploy replaced it, the page keeps the article the server rendered and `LearnReload` offers to reload it. Its two lines live in the site's catalog, because the lesson's own may be what failed.
+
+Each lesson has its own Lingui catalogs in `apps/site/src/locales/learn/<File>/`, the kit, hub and course names share `locales/learn/Kit/`, and the site's own catalogs hold no lesson text. `apps/site/lingui.config.ts` finds a new lesson by its file. `lib/learn/isolation.test.ts` fails when another page imports lesson code or a lesson line reaches the site's catalog, and `pnpm check:boundaries` fails when a built page outside the lessons loads a chunk of theirs.
 
 ## Components
 

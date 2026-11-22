@@ -1,10 +1,12 @@
 import { readdirSync, readFileSync } from "node:fs";
+import { setupI18n } from "@lingui/core";
 import { createElement } from "react";
 import { renderToString } from "react-dom/server";
 import { vi } from "vitest";
 import LearnLessonPage from "../../../components/islands/LearnLessonPage";
-import { prepareLearnPage } from "../../../components/learn/learn-page";
+import { lessonName, prepareLearnPage } from "../../../components/learn/learn-page";
 import { LESSON_SLUGS } from "../catalogue";
+import { learnI18n } from "../i18n";
 import { type Element, parse } from "./html";
 import { type Recording, recording, resetRecording } from "./record";
 
@@ -16,6 +18,16 @@ export const SLUGS: readonly Slug[] = LESSON_SLUGS;
 await Promise.all(
   SLUGS.flatMap((slug) =>
     LOCALES.map((locale) => prepareLearnPage({ kind: "lesson", slug }, locale)),
+  ),
+);
+
+export const CHECK_I18N = Object.fromEntries(
+  await Promise.all(
+    LOCALES.map(async (locale) => {
+      const parts = await Promise.all(SLUGS.map((slug) => learnI18n(locale, lessonName(slug))));
+      const messages = Object.assign({}, ...parts.map((part) => part.messages));
+      return [locale, setupI18n({ locale, messages: { [locale]: messages } })];
+    }),
   ),
 );
 

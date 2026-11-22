@@ -69,6 +69,38 @@ for (const dist of [productDist, siteDist]) {
   }
 }
 
+const siteClient = resolve(siteDist, "client");
+const lessonMarker = "/audio/estonian-lessons";
+const lessonPage =
+  /^(?:uk\/|ru\/)?estonian\/learn(?:\/|\.html$)|^components\/lessons(?:\/|\.html$)/;
+const chunkImports = new Map();
+function importsOf(chunk) {
+  if (!chunkImports.has(chunk)) {
+    const source = readFileSync(resolve(siteClient, "_astro", chunk), "utf8");
+    const names = [...source.matchAll(/(?:from|import)\s*["']\.\/([^"']+\.js)["']/g)];
+    chunkImports.set(chunk, {
+      imports: names.map(([, name]) => name),
+      lesson: source.includes(lessonMarker),
+    });
+  }
+  return chunkImports.get(chunk);
+}
+for (const path of siteAssets) {
+  const name = relativeTo(siteClient, path);
+  if (!path.startsWith(siteClient) || !name.endsWith(".html") || lessonPage.test(name)) continue;
+  const page = readFileSync(path, "utf8");
+  const queue = [...page.matchAll(/\/_astro\/([^"'()\s]+\.js)/g)].map(([, chunk]) => chunk);
+  const seen = new Set();
+  while (queue.length > 0) {
+    const chunk = queue.pop();
+    if (seen.has(chunk)) continue;
+    seen.add(chunk);
+    const { imports, lesson } = importsOf(chunk);
+    if (lesson) throw new Error(`${name} loads Estonian lesson code through _astro/${chunk}`);
+    queue.push(...imports);
+  }
+}
+
 process.stdout.write(
-  "Deployment boundary check passed: site has no PWA assets; product has no public pages, preview tools or source maps; no uncompiled Lingui macro.\n",
+  "Deployment boundary check passed: site has no PWA assets; product has no public pages, preview tools or source maps; no uncompiled Lingui macro; lesson code stays on the lessons' pages.\n",
 );

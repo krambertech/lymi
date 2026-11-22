@@ -7,10 +7,10 @@
  * are in .agents/skills/estonian-lesson/references/checklists.md.
  */
 import { appendFileSync, readFileSync } from "node:fs";
+import { I18nProvider } from "@lingui/react";
 import { createElement, type ReactNode } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
 import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
-import { Island } from "../../../components/islands/Island";
 import { CLIPS, clipText, isPassage } from "../clips";
 import { gapLine } from "../passage";
 import { shuffledRun } from "../quiz";
@@ -31,6 +31,7 @@ import { elements, parse, textOf, textRuns } from "./html";
 import { KNOWN_ISSUES } from "./known-issues";
 import {
   type CheckLocale,
+  CHECK_I18N,
   LOCALES,
   labelSource,
   rendered,
@@ -250,8 +251,8 @@ function shown(option: unknown, locale: CheckLocale): string {
   let text = labelTexts.get(label);
   if (text === undefined) {
     const html = renderToStaticMarkup(
-      // oxlint-disable-next-line react/no-children-prop -- Island's props type requires children, and this .ts file has no JSX.
-      createElement(Island, { locale, children: label as ReactNode }),
+      // oxlint-disable-next-line react/no-children-prop -- I18nProvider's props type requires children, and this .ts file has no JSX.
+      createElement(I18nProvider, { i18n: CHECK_I18N[locale], children: label as ReactNode }),
     );
     text = textOf(parse(html, locale)).trim() || String(id);
     labelTexts.set(label, text);

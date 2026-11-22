@@ -2,6 +2,7 @@ import type { I18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { type ComponentType, use } from "react";
 import { learnI18n } from "../../lib/learn/i18n";
+import { reportLoadFailure } from "../../lib/learn/load-failure";
 import { Queries } from "../islands/Queries";
 
 const LESSONS = import.meta.glob<Record<string, ComponentType>>("./lessons/*.tsx");
@@ -11,7 +12,9 @@ interface Page {
   View: ComponentType;
 }
 
-type Load = { status: "loading"; page: Promise<Page> } | { status: "ready"; page: Page };
+type Load =
+  | { status: "loading"; page: Promise<Page>; shown: Promise<Page> }
+  | { status: "ready"; page: Page };
 
 const pages = new Map<string, Load>();
 
@@ -40,6 +43,13 @@ const kitPage = async (locale: string): Promise<Page> => {
 
 export type LearnTarget = { kind: "lesson"; slug: string } | { kind: "hub" } | { kind: "kit" };
 
+const noop = () => {};
+
+function keepServerHtml(): Promise<never> {
+  reportLoadFailure();
+  return new Promise(noop);
+}
+
 function open(target: LearnTarget, locale: string): Load {
   const key = `${locale}/${target.kind}/${target.kind === "lesson" ? target.slug : ""}`;
   const known = pages.get(key);
@@ -50,12 +60,9 @@ function open(target: LearnTarget, locale: string): Load {
       : target.kind === "hub"
         ? hubPage(locale)
         : kitPage(locale);
-  const load: Load = { status: "loading", page };
+  const load: Load = { status: "loading", page, shown: page.catch(keepServerHtml) };
   pages.set(key, load);
-  page.then(
-    (ready) => pages.set(key, { status: "ready", page: ready }),
-    () => pages.delete(key),
-  );
+  page.then((ready) => pages.set(key, { status: "ready", page: ready }), noop);
   return load;
 }
 
@@ -65,7 +72,7 @@ export async function prepareLearnPage(target: LearnTarget, locale: string): Pro
 
 export function LearnPage({ target, locale }: { target: LearnTarget; locale: string }) {
   const load = open(target, locale);
-  const { i18n, View } = load.status === "ready" ? load.page : use(load.page);
+  const { i18n, View } = load.status === "ready" ? load.page : use(load.shown);
   return (
     <I18nProvider i18n={i18n}>
       <Queries>

@@ -5927,6 +5927,9 @@ msgstr "Registered address: Harju maakond, Tallinn, Põhja-Tallinna linnaosa, 3.
 msgid "Related decks"
 msgstr "Related decks"
 
+msgid "Reload the page"
+msgstr "Reload the page"
+
 msgid "Remembered or Forgot"
 msgstr "Remembered or Forgot"
 
@@ -7232,6 +7235,9 @@ msgstr "The small words every sentence is built from."
 
 msgid "The smallest unit you deploy"
 msgstr "The smallest unit you deploy"
+
+msgid "The sounds and exercises didn’t load."
+msgstr "The sounds and exercises didn’t load."
 
 msgid "The soup *is* cold."
 msgstr "The soup *is* cold."

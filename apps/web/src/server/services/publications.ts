@@ -10,7 +10,8 @@ import { activeAvatarVersion, publisherAvatarPath } from "@lymi/core/catalog";
 import { isLivePublicDeck } from "@lymi/core/catalog/server";
 import { and, eq, isNull, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
-import { auditStatement } from "./audit";
+import { inState, moveOnConflict, moveState, publicationStatus, untilMoved } from "../state-moves";
+import { auditStatement, auditStatementWhen } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 import { previewDoor } from "./deck-door";
 import { addableEditions } from "./editions";
@@ -111,7 +112,6 @@ export async function publishDeck(
   const existing = await publicationOf(db, deckId);
   const fields = {
     slug: input.slug,
-    status: "published" as const,
     summary: input.summary,
     category: input.category ?? null,
     // Left out, the tags stand, so a publisher that does not know them yet never clears them.
@@ -135,17 +135,28 @@ export async function publishDeck(
     await db.batch([
       db
         .insert(schema.deckPublications)
-        .values({ id: newId(), deckId, ...fields, revision, publishedAt: now })
-        .onConflictDoUpdate({
-          target: schema.deckPublications.deckId,
-          set: {
-            ...fields,
-            revision: sql`${schema.deckPublications.revision} + 1`,
-            // The first publication date stays; a return from withdrawal is a new one.
-            publishedAt: sql`case when ${schema.deckPublications.status} = 'withdrawn'
-              then ${now.getTime()} else ${schema.deckPublications.publishedAt} end`,
-          },
-        }),
+        .values({
+          id: newId(),
+          deckId,
+          status: "published",
+          ...fields,
+          revision,
+          publishedAt: now,
+        })
+        .onConflictDoUpdate(
+          moveOnConflict(publicationStatus, {
+            target: schema.deckPublications.deckId,
+            from: ["published", "withdrawn"],
+            to: "published",
+            set: {
+              ...fields,
+              revision: sql`${schema.deckPublications.revision} + 1`,
+              // The first publication date stays; a return from withdrawal is a new one.
+              publishedAt: sql`case when ${schema.deckPublications.status} = 'withdrawn'
+                then ${now.getTime()} else ${schema.deckPublications.publishedAt} end`,
+            },
+          }),
+        ),
       ...(summaryChanged
         ? [
             db
@@ -180,11 +191,14 @@ export async function withdrawDeck(
   deckId: string,
   opts: { redirectTo?: string | undefined } = {},
 ) {
-  const { db } = ctx;
   await ownedDeck(ctx, deckId);
+  return untilMoved(() => withdrawOnce(ctx, deckId, opts.redirectTo));
+}
+
+async function withdrawOnce(ctx: ServiceContext, deckId: string, redirectTo: string | undefined) {
+  const { db } = ctx;
   const existing = await publicationOf(db, deckId);
   if (!existing) throw new ServiceError("not_found", "This deck is not published");
-  const { redirectTo } = opts;
   if (redirectTo !== undefined) {
     if (redirectTo === existing.slug) {
       throw new ServiceError("invalid", "A deck cannot redirect to its own page");
@@ -199,25 +213,35 @@ export async function withdrawDeck(
   const redirectSlug = redirectTo ?? existing.redirectSlug;
   if (existing.status === "withdrawn" && redirectSlug === existing.redirectSlug) return existing;
   const now = new Date();
-  await db.batch([
-    db
-      .update(schema.deckPublications)
-      .set({
-        status: "withdrawn",
+  const row = and(
+    eq(schema.deckPublications.id, existing.id),
+    eq(schema.deckPublications.revision, existing.revision),
+  )!;
+  const [, moved] = await db.batch([
+    auditStatementWhen(
+      ctx,
+      {
+        entity: "deck",
+        action: "withdraw_publication",
+        id: deckId,
+        details: { slug: existing.slug, ...(redirectSlug ? { redirectTo: redirectSlug } : {}) },
+      },
+      schema.deckPublications,
+      and(row, inState(publicationStatus, existing.status))!,
+    ),
+    moveState(db, publicationStatus, {
+      from: existing.status,
+      to: "withdrawn",
+      set: {
         withdrawnAt: existing.withdrawnAt ?? now,
         redirectSlug,
         revision: sql`${schema.deckPublications.revision} + 1`,
         updatedAt: now,
-      })
-      .where(eq(schema.deckPublications.id, existing.id)),
-    auditStatement(ctx, {
-      entity: "deck",
-      action: "withdraw_publication",
-      id: deckId,
-      details: { slug: existing.slug, ...(redirectSlug ? { redirectTo: redirectSlug } : {}) },
+      },
+      where: [row],
     }),
   ]);
-  return publicationOf(db, deckId);
+  return moved[0] ?? null;
 }
 
 async function publicationBySlug(db: Db, slug: string) {

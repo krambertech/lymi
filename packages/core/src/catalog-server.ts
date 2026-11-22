@@ -1,5 +1,5 @@
 import { and, asc, eq, isNotNull, isNull, type SQL, sql } from "drizzle-orm";
-import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
+import type { BaseSQLiteDatabase, SQLiteInsertBuilder } from "drizzle-orm/sqlite-core";
 import {
   activeAvatarVersion,
   deckPageHand,
@@ -39,7 +39,11 @@ import {
 } from "./types";
 
 // oxlint-disable-next-line typescript/no-explicit-any -- both Workers pass their own typed D1 database.
-type CatalogDb = BaseSQLiteDatabase<"async", any, any>;
+type CatalogDb = Pick<BaseSQLiteDatabase<"async", any, any>, "select">;
+// oxlint-disable-next-line typescript/no-explicit-any -- both Workers pass their own typed D1 database.
+type CountingDb = CatalogDb & {
+  insert(table: typeof deckPageViews): SQLiteInsertBuilder<typeof deckPageViews, "async", unknown>;
+};
 
 export interface PublicationRow {
   slug: string;
@@ -96,7 +100,7 @@ export interface PublicMediaRow {
  * withdrawn or archived counts nothing. Publisher reports read these rows; ADR 0028.
  */
 export async function countDeckPageView(
-  db: CatalogDb,
+  db: CountingDb,
   slug: string,
   locale: string,
   at: Date = new Date(),

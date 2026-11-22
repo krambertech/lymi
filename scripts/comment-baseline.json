@@ -1446,7 +1446,7 @@
   "apps/web/src/server/services/explore.test.ts": 5,
   "apps/web/src/server/services/explore.ts": 13,
   "apps/web/src/server/services/exports.test.ts": 16,
-  "apps/web/src/server/services/exports.ts": 43,
+  "apps/web/src/server/services/exports.ts": 42,
   "apps/web/src/server/services/feedback.test.ts": 2,
   "apps/web/src/server/services/feedback.ts": 8,
   "apps/web/src/server/services/hint-draft.test.ts": 1,

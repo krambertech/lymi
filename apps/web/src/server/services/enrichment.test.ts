@@ -39,6 +39,7 @@ import {
 import { join } from "./members";
 import { updateSettings } from "./settings";
 import { learner, testDb } from "./test-db";
+import { racedBy } from "./test-race";
 
 const full = {
   meaning: "to hurry up",
@@ -1499,6 +1500,24 @@ describe("requestEnrichment", () => {
       () => "no error",
       (error: unknown) => (error instanceof ServiceError ? error.code : String(error)),
     );
+
+  it("keeps a meaning the learner wrote while the request was on the way", async () => {
+    const { ctx, card } = await bareCard("ask-raced-edit");
+    await updateCard(ctx, card.id, CardPatch.parse({ meaning: "" }));
+    const asking = racedBy(ctx, schema.cards, () =>
+      updateCard(ctx, card.id, CardPatch.parse({ meaning: "to hurry up" })),
+    );
+    await requestEnrichment(asking, card.id, { create: vi.fn().mockResolvedValue(undefined) });
+    expect((await showCard(ctx, card.id)).meaning).toBe("to hurry up");
+  });
+
+  it("starts one run when two requests land together", async () => {
+    const { ctx, card } = await bareCard("ask-raced-ask");
+    const create = vi.fn().mockResolvedValue(undefined);
+    const second = racedBy(ctx, schema.cards, () => requestEnrichment(ctx, card.id, { create }));
+    expect((await requestEnrichment(second, card.id, { create })).enrichmentStatus).toBe("working");
+    expect(create).toHaveBeenCalledTimes(1);
+  });
 
   it("moves the card to working and hands the run over", async () => {
     const { ctx, card } = await bareCard("ask-1");

@@ -48,17 +48,46 @@ testRule("guarded-state-move", {
       code: "await db.run(sql`update imports set media_done = 1 where id = ${id} and status = 'importing'`);",
     },
     { filename, code: "const open = sql`${imports.status} = 'ready'`;" },
+    {
+      filename,
+      code: "sql`update ${schema.imports} set written = 1 where ${schema.imports.status} = 'ready'`;",
+    },
+    {
+      filename,
+      code: "sql`update imports set at = case when status = 'done' then 1 else 2 end`;",
+    },
+    { filename, code: 'const why = "Could not update the status";' },
   ],
   invalid: [
     {
       filename,
       code: "await db.run(sql`update imports set status = 'failed' where id = ${id}`);",
-      errors: ["sql`update imports set status = 'failed' where id = ${id}`"],
+      errors: ["`update imports set status = 'failed' where id = ${id}`"],
+    },
+    {
+      filename,
+      code: "db.run(sql`update ${schema.imports} set status = 'failed'`);",
+      errors: ["`update ${schema.imports} set status = 'failed'`"],
+    },
+    {
+      filename,
+      code: "sql`update ${t} set written = 1, ${schema.cards.enrichmentStatus} = null`;",
+      errors: ["`update ${t} set written = 1, ${schema.cards.enrichmentStatus} = null`"],
+    },
+    {
+      filename,
+      code: "env.DB.prepare(\"UPDATE imports SET status = 'failed' WHERE id = ?\").bind(id);",
+      errors: ["\"UPDATE imports SET status = 'failed' WHERE id = ?\""],
+    },
+    {
+      filename,
+      code: "sql`insert into imports values (1) on conflict do update set status = 'done'`;",
+      errors: ["`insert into imports values (1) on conflict do update set status = 'done'`"],
     },
     {
       filename,
       code: "await db.run(sql`update cards set updated_at = 1,\n enrichment_status = null`);",
-      errors: ["sql`update cards set updated_at = 1,\n enrichment_status = null`"],
+      errors: ["`update cards set updated_at = 1,\n enrichment_status = null`"],
     },
   ],
 });

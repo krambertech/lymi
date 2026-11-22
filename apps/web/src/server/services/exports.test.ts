@@ -50,7 +50,7 @@ import {
 import { join } from "./members";
 import { gradeCard } from "./review";
 import { learner, type TestBindings, testDb } from "./test-db";
-import { batchRacedBy, racedBy } from "./test-race";
+import { batchRacedBy, gate, racedBy } from "./test-race";
 
 let db: Db;
 let env: TestBindings;
@@ -930,6 +930,57 @@ describe("who can reach an export", () => {
       .from(schema.auditLog)
       .where(and(eq(schema.auditLog.entityId, id), eq(schema.auditLog.action, "complete")));
     expect(finished).toHaveLength(0);
+    expect((await env.EXPORTS.list({ prefix })).objects).toHaveLength(0);
+  }, 60_000);
+
+  const noDeletes = () =>
+    ({
+      get: env.EXPORTS.get.bind(env.EXPORTS),
+      put: env.EXPORTS.put.bind(env.EXPORTS),
+      list: env.EXPORTS.list.bind(env.EXPORTS),
+      delete: () => Promise.reject(new Error("R2 is unavailable")),
+    }) as unknown as R2Bucket;
+
+  it("leaves the sweep a file a late finish could not delete", async () => {
+    const { owner, id, prefix, end } = await unfinished();
+    const claimed = gate();
+    const lost = gate();
+    const waiting = {
+      list: async (options?: R2ListOptions) => {
+        claimed.open();
+        await lost.opened;
+        return env.EXPORTS.list(options);
+      },
+      delete: env.EXPORTS.delete.bind(env.EXPORTS),
+    } as unknown as R2Bucket;
+    let failing: Promise<void> | undefined;
+    const finishing = batchRacedBy(owner, () => {
+      failing = failExport(db, id, "internal", waiting);
+      return claimed.opened;
+    });
+    await finishExport(finishing, id, end, noDeletes());
+    lost.open();
+    await failing;
+    const key = async () => {
+      const [row] = await db.select().from(schema.exportFiles).where(eq(schema.exportFiles.id, id));
+      return row?.objectKey;
+    };
+    expect(await key()).toBe(prefix);
+
+    await expireExports(db, env.EXPORTS);
+    expect(await key()).toBeNull();
+    expect((await env.EXPORTS.list({ prefix })).objects).toHaveLength(0);
+  }, 60_000);
+
+  it("leaves the sweep a file whose failed export had already let go of it", async () => {
+    const { owner, id, prefix, end } = await unfinished();
+    const finishing = batchRacedBy(owner, async () => {
+      await failExport(db, id, "internal", env.EXPORTS);
+      await env.EXPORTS.put(`${prefix}/late`, "late");
+    });
+    await finishExport(finishing, id, end, noDeletes());
+    expect((await env.EXPORTS.list({ prefix })).objects).toHaveLength(1);
+    await expireExports(db, env.EXPORTS);
     expect((await env.EXPORTS.list({ prefix })).objects).toHaveLength(0);
   }, 60_000);
 

@@ -374,7 +374,12 @@ export async function inspectImport(
 
 async function discardIfEnded(ctx: ServiceContext, row: Import, uploads: R2Bucket) {
   const { status } = await ownedImport(ctx, row.id);
-  if (status === "cancelled" || status === "failed") await deleteImportFiles(uploads, row);
+  if (status !== "cancelled" && status !== "failed") return;
+  if (await deleteImportFiles(uploads, row)) return;
+  await ctx.db
+    .update(schema.imports)
+    .set({ objectKey: row.objectKey, updatedAt: new Date() })
+    .where(eq(schema.imports.id, row.id));
 }
 
 /** The learner's active decks an import names as its target, by the import's deck key. */
@@ -723,11 +728,16 @@ async function releaseImportFiles(
   uploads: R2Bucket,
   row: Pick<Import, "id" | "objectKey" | "uploadId">,
 ) {
-  if (!row.objectKey || !(await deleteImportFiles(uploads, row))) return;
+  if (!row.objectKey) return;
+  const [ended] = await db
+    .select({ updatedAt: schema.imports.updatedAt })
+    .from(schema.imports)
+    .where(eq(schema.imports.id, row.id));
+  if (!ended || !(await deleteImportFiles(uploads, row))) return;
   await db
     .update(schema.imports)
     .set({ objectKey: null, uploadId: null, updatedAt: new Date() })
-    .where(eq(schema.imports.id, row.id));
+    .where(and(eq(schema.imports.id, row.id), eq(schema.imports.updatedAt, ended.updatedAt)));
 }
 
 /**

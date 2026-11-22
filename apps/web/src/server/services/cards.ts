@@ -13,6 +13,7 @@ import {
   duplicateKey,
   EXAMPLE_LENGTH,
   emptyFields,
+  type EnrichedField,
   enrichmentStalled,
   exampleFingerprint,
   exampleShown,
@@ -842,7 +843,7 @@ async function requestEnrichmentOnce(
   // that has said `working` for too long: a card added months ago must not read as stale.
   // Asking is the learner changing their mind about a field they cleared, so blank becomes unset.
   const allowed = new Set<string>([...fields, "language"]);
-  const reopened = Object.fromEntries(
+  const reopened: Partial<Pick<Card, EnrichedField>> = Object.fromEntries(
     emptyFields(card)
       .filter((field) => card[field] !== null && allowed.has(field))
       .map((field) => [field, null]),

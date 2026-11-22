@@ -11,7 +11,7 @@ const raw =
   "Use moveState, which names the status it leaves.";
 
 const setsStatus =
-  /\bupdate\s+["\w]+\s+set\b(?:(?!\bwhere\b).)*?\b(?:status|\w+_status|outcome)"?\s*=/is;
+  /\bupdate\s+(?:or\s+\w+\s+)?(?:(?:["\w]+|\$\{[^}]*\})\s+)?set\b(?:(?:(?!\bwhere\b).)*?,)?\s*(?:\$\{[\w.]*|")?\w*(?:status|outcome)[}"]?\s*=/is;
 
 const passesItOn = new Set([
   "ArrayExpression",
@@ -51,9 +51,13 @@ export default defineRule({
           context.report({ node: node.callee, message: dropped });
         }
       },
-      TaggedTemplateExpression(node) {
-        if (node.tag.type !== "Identifier" || node.tag.name !== "sql") return;
-        if (setsStatus.test(context.sourceCode.getText(node.quasi))) {
+      TemplateLiteral(node) {
+        if (setsStatus.test(context.sourceCode.getText(node))) {
+          context.report({ node, message: raw });
+        }
+      },
+      Literal(node) {
+        if (typeof node.value === "string" && setsStatus.test(node.value)) {
           context.report({ node, message: raw });
         }
       },

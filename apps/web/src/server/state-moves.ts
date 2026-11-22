@@ -4,10 +4,12 @@ import {
   inArray,
   isNull,
   or,
+  type QueryBuilder,
   type SQL,
   type SQLiteColumn,
   type SQLiteInsertBuilder,
   type SQLiteInsertOnConflictDoUpdateConfig,
+  type SQLiteInsertSelectQueryBuilder,
   type SQLiteInsertValue,
   type SQLiteTable,
   type SQLiteUpdateBase,
@@ -50,14 +52,24 @@ type MovedOnConflict<Table extends SQLiteTable> = SQLiteInsertOnConflictDoUpdate
   Inserted<Table>
 > & { [namesTheStatusItLeaves]: true };
 
-type StatefulInsert<Table extends SQLiteTable> = Omit<Inserted<Table>, "onConflictDoUpdate"> & {
-  onConflictDoUpdate(config: MovedOnConflict<Table>): Inserted<Table>;
-};
+interface StatefulInsert<Table extends SQLiteTable> extends Omit<
+  Inserted<Table>,
+  "onConflictDoNothing" | "onConflictDoUpdate" | "returning" | "$dynamic"
+> {
+  onConflictDoNothing(
+    ...args: Parameters<Inserted<Table>["onConflictDoNothing"]>
+  ): StatefulInsert<Table>;
+  onConflictDoUpdate(config: MovedOnConflict<Table>): StatefulInsert<Table>;
+}
+
+type InsertSelect<Table extends SQLiteTable> = SQLiteInsertSelectQueryBuilder<Table> | SQL;
 
 interface StatefulInsertBuilder<Table extends SQLiteTable> {
   values(value: SQLiteInsertValue<Table>): StatefulInsert<Table>;
   values(values: SQLiteInsertValue<Table>[]): StatefulInsert<Table>;
-  select: SQLiteInsertBuilder<Table, "async", D1Result>["select"];
+  select(
+    selectQuery: InsertSelect<Table> | ((qb: QueryBuilder) => InsertSelect<Table>),
+  ): StatefulInsert<Table>;
 }
 
 export type UpdateBuilder<Table extends SQLiteTable> = [StateOf<Table>] extends [never]

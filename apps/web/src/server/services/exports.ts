@@ -698,7 +698,13 @@ export async function finishExport(
     }),
   ]);
   if (!done.length) {
-    if ((await ownedExport(ctx, id)).status === "failed") await deleteExportFiles(bucket, row);
+    const { status } = await ownedExport(ctx, id);
+    if (status === "failed" && !(await deleteExportFiles(bucket, row))) {
+      await ctx.db
+        .update(schema.exportFiles)
+        .set({ objectKey: row.objectKey, updatedAt: new Date() })
+        .where(eq(schema.exportFiles.id, id));
+    }
     return;
   }
   await deleteObjects(bucket, `${row.objectKey}.records/`);
@@ -717,7 +723,10 @@ export async function failExport(db: Db, id: string, failure: ExportFailure, buc
   });
   if (!failed.length) return;
   if (!(await deleteExportFiles(bucket, row))) return;
-  await db.update(schema.exportFiles).set({ objectKey: null }).where(eq(schema.exportFiles.id, id));
+  await db
+    .update(schema.exportFiles)
+    .set({ objectKey: null })
+    .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.updatedAt, now)));
 }
 
 async function deleteObjects(bucket: R2Bucket, prefix: string) {
@@ -788,7 +797,9 @@ export async function expireExports(db: Db, bucket: R2Bucket, now = new Date()) 
     await db
       .update(schema.exportFiles)
       .set({ objectKey: null, updatedAt: now })
-      .where(eq(schema.exportFiles.id, row.id));
+      .where(
+        and(eq(schema.exportFiles.id, row.id), eq(schema.exportFiles.updatedAt, row.updatedAt)),
+      );
   }
   return ended + stalled.length;
 }

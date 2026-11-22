@@ -213,7 +213,10 @@ async function withdrawOnce(ctx: ServiceContext, deckId: string, redirectTo: str
   const redirectSlug = redirectTo ?? existing.redirectSlug;
   if (existing.status === "withdrawn" && redirectSlug === existing.redirectSlug) return existing;
   const now = new Date();
-  const row = eq(schema.deckPublications.id, existing.id);
+  const row = and(
+    eq(schema.deckPublications.id, existing.id),
+    eq(schema.deckPublications.revision, existing.revision),
+  )!;
   const [, moved] = await db.batch([
     auditStatementWhen(
       ctx,

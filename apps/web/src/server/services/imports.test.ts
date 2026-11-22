@@ -58,7 +58,7 @@ import { reviewDraw, reviewHistory } from "./review";
 import { streak } from "./review-days";
 import { insights } from "./stats";
 import { anyState, learner, type TestBindings, testDb } from "./test-db";
-import { batchRacedBy, racedBy } from "./test-race";
+import { batchRacedBy, gate, racedBy } from "./test-race";
 
 let db: Db;
 let env: TestBindings;
@@ -1536,6 +1536,63 @@ describe("the upload", () => {
     await inspectImport(ctx, id, reading);
     expect(await getImport(ctx, id)).toMatchObject({ status: "cancelled" });
     expect(await objectsUnder(row?.objectKey as string)).toBe(0);
+  });
+
+  it("leaves the sweep the note chunks a cancelled read could not delete", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, id));
+    const prefix = row?.objectKey as string;
+    const reading = {
+      get: env.IMPORTS.get.bind(env.IMPORTS),
+      head: env.IMPORTS.head.bind(env.IMPORTS),
+      list: env.IMPORTS.list.bind(env.IMPORTS),
+      delete: () => Promise.reject(new Error("R2 is unavailable")),
+      put: async (key: string, value: string) => {
+        await cancelImport(ctx, id, env.IMPORTS);
+        return env.IMPORTS.put(key, value);
+      },
+    } as unknown as R2Bucket;
+    await inspectImport(ctx, id, reading);
+    expect(await objectsUnder(prefix)).toBe(1);
+    await expireImports(db, env.IMPORTS);
+    expect(await objectsUnder(prefix)).toBe(0);
+  });
+
+  it("keeps the key a late read put back while its cancel was still deleting", async () => {
+    const ctx = await fresh();
+    const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
+    const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, id));
+    const prefix = row?.objectKey as string;
+    const claimed = gate();
+    const lost = gate();
+    const waiting = {
+      list: async (options?: R2ListOptions) => {
+        const listed = await env.IMPORTS.list(options);
+        claimed.open();
+        await lost.opened;
+        return listed;
+      },
+      delete: env.IMPORTS.delete.bind(env.IMPORTS),
+    } as unknown as R2Bucket;
+    let cancelling: Promise<unknown> | undefined;
+    const reading = {
+      get: env.IMPORTS.get.bind(env.IMPORTS),
+      head: env.IMPORTS.head.bind(env.IMPORTS),
+      list: env.IMPORTS.list.bind(env.IMPORTS),
+      delete: () => Promise.reject(new Error("R2 is unavailable")),
+      put: async (key: string, value: string) => {
+        cancelling ??= cancelImport(ctx, id, waiting);
+        await claimed.opened;
+        return env.IMPORTS.put(key, value);
+      },
+    } as unknown as R2Bucket;
+    await inspectImport(ctx, id, reading);
+    lost.open();
+    await cancelling;
+    expect(await objectsUnder(prefix)).toBe(1);
+    await expireImports(db, env.IMPORTS);
+    expect(await objectsUnder(prefix)).toBe(0);
   });
 
   it("starts no read for an upload cancelled while its parts were joined", async () => {

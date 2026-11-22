@@ -1,4 +1,4 @@
-import { eq, getTableColumns, getTableName, isTable, SQLiteAsyncDialect } from "@lymi/core/db";
+import { eq, getTableColumns, getTableName, isTable, SQLiteAsyncDialect, sql } from "@lymi/core/db";
 import type { Card, ReadwiseConnection } from "@lymi/core/schema";
 import { describe, expect, it } from "vitest";
 import { type Db, schema } from "./db";
@@ -47,6 +47,17 @@ export const doesNotCompile = (
   db
     .insert(schema.deckPublications)
     .values({} as typeof schema.deckPublications.$inferInsert)
+    // @ts-expect-error
+    .onConflictDoUpdate({ target: schema.deckPublications.deckId, set: { status: "published" } }),
+  db
+    .insert(schema.deckPublications)
+    .select(sql`select * from deck_publications`)
+    // @ts-expect-error
+    .onConflictDoUpdate({ target: schema.deckPublications.deckId, set: { status: "published" } }),
+  db
+    .insert(schema.deckPublications)
+    .values({} as typeof schema.deckPublications.$inferInsert)
+    .onConflictDoNothing()
     // @ts-expect-error
     .onConflictDoUpdate({ target: schema.deckPublications.deckId, set: { status: "published" } }),
 ];

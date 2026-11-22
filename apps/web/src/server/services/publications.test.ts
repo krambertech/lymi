@@ -431,6 +431,37 @@ describe("withdrawing with a redirect", () => {
     );
   });
 
+  it("moves a redirect on from the withdrawal that landed last", async () => {
+    await publishedDeck("latest-target");
+    const part = await publishedDeck("latest-part");
+    await withdrawDeck(lymi, part.id);
+    let between: Date | null | undefined;
+    const moving = batchRacedBy(lymi, async () => {
+      await publishDeck(lymi, part.id, input("latest-part"), publishers);
+      between = (await withdrawDeck(lymi, part.id))?.withdrawnAt;
+    });
+    const moved = await withdrawDeck(moving, part.id, { redirectTo: "latest-target" });
+    expect(moved).toMatchObject({ withdrawnAt: between, redirectSlug: "latest-target" });
+  });
+
+  it("runs two redirects at once one after the other", async () => {
+    await publishedDeck("ordered-first");
+    await publishedDeck("ordered-second");
+    const part = await publishedDeck("ordered-part");
+    const second = batchRacedBy(lymi, () =>
+      withdrawDeck(lymi, part.id, { redirectTo: "ordered-first" }),
+    );
+    const moved = await withdrawDeck(second, part.id, { redirectTo: "ordered-second" });
+    expect(moved).toMatchObject({ redirectSlug: "ordered-second", revision: 3 });
+    const audits = await auditRows(part.id, "withdraw_publication");
+    expect(audits.map((row) => row.payload)).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({ redirectTo: "ordered-first" }),
+        expect.objectContaining({ redirectTo: "ordered-second" }),
+      ]),
+    );
+  });
+
   it("stops redirecting when the target goes, and publishing again brings the deck back", async () => {
     const target = await publishedDeck("fading-target");
     const part = await publishedDeck("fading-part");

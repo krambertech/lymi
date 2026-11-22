@@ -1,7 +1,7 @@
 import { CARD_LIMITS, languageKey } from "@lymi/core";
 import { and, desc, eq, inArray, isNotNull, isNull, lt, lte, or, sql } from "@lymi/core/db";
 import type { ReadwiseBook, ReadwiseConnection } from "@lymi/core/schema";
-import type { TextProvider } from "../ai";
+import type { TextProviderFor } from "../ai";
 import { schema } from "../db";
 import {
   type ReadwiseApi,
@@ -14,7 +14,7 @@ import {
 import { termOf } from "../readwise/terms";
 import { openToken, sealToken } from "../readwise/token";
 import { moveState, readwiseStatus } from "../state-moves";
-import { aiAllowedFor } from "./ai-consent";
+import { aiConsentFor } from "./ai-consent";
 import { track } from "./analytics";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
 import { addCards, type ServerCardInput } from "./cards";
@@ -26,7 +26,7 @@ export type ReadwiseDeps = {
   api: ReadwiseApi;
   /** The auth secret, which the token key is derived from. */
   secret: string;
-  languages: TextProvider | null;
+  languages: TextProviderFor;
   enrichment: EnrichmentQueue | null;
 };
 
@@ -163,11 +163,12 @@ async function bookLanguages(
   deps: ReadwiseDeps,
   books: { id: string; title: string; texts: string[] }[],
 ): Promise<Map<string, string>> {
+  const consent = await aiConsentFor(ctx);
   const found = await detectDeckLanguages(
     books
       .filter((b) => b.texts.length > 0)
       .map((b) => ({ key: b.id, name: b.title, terms: b.texts.slice(0, SAMPLE) })),
-    (await aiAllowedFor(ctx)) ? deps.languages : null,
+    consent && deps.languages(consent),
   );
   return new Map(Object.entries(found));
 }

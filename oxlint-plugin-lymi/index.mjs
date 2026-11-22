@@ -1,4 +1,5 @@
 import { definePlugin } from "@oxlint/plugins";
+import aiConsent from "./rules/ai-consent.mjs";
 import announceLiveRegion from "./rules/announce-live-region.mjs";
 import clearText from "./rules/clear-text.mjs";
 import clipOwner from "./rules/clip-owner.mjs";
@@ -32,6 +33,7 @@ export default definePlugin({
     "clear-text": clearText,
     "dismiss-on-drag": dismissOnDrag,
     "edge-swipe": edgeSwipe,
+    "ai-consent": aiConsent,
     "clip-owner": clipOwner,
     "field-error": fieldError,
     "fixed-host": fixedHost,

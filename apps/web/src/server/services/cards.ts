@@ -42,7 +42,7 @@ import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
 import { enrichmentStatus, moveState, untilMoved } from "../state-moves";
-import { aiAllowedFor, requireAi } from "./ai-consent";
+import { aiConsentFor, requireAi } from "./ai-consent";
 import { type AnalyticsEvent, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
@@ -210,7 +210,7 @@ export async function addCards(
   if (inputs.length === 0) return [];
   // Without the learner's yes the card is saved as typed and nothing leaves for the AI.
   const enrichAllowed =
-    !!enrichment && inputs.some((i) => wantsEnrichment(i, actor)) && (await aiAllowedFor(ctx));
+    !!enrichment && inputs.some((i) => wantsEnrichment(i, actor)) && !!(await aiConsentFor(ctx));
 
   // A create sent again with its id returns the card the first one made, before any check that
   // could now refuse it: its deck may have been archived since the first one landed.
@@ -1059,7 +1059,7 @@ async function editLookups(
   ]);
   // Only an edit that changes an example can leave one to translate, and only with the learner's yes.
   const translating =
-    enrichment && edits.some((edit) => edit.example !== undefined) && (await aiAllowedFor(ctx));
+    enrichment && edits.some((edit) => edit.example !== undefined) && (await aiConsentFor(ctx));
   const fieldDecks = translating
     ? [...new Set([...[...cards.values()].map((card) => card.deckId), ...deckIds])]
     : [];

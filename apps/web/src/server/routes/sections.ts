@@ -1,6 +1,7 @@
 import {
   CardSectionInput,
   OkOut,
+  QueryFlag,
   SectionArchiveInput,
   SectionInput,
   SectionOrderInput,
@@ -27,10 +28,9 @@ import {
 export const deckSections = new Hono<AppEnv>();
 
 const ListQuery = z.object({
-  archived: z
-    .stringbool()
-    .optional()
-    .meta({ description: "Archived sections instead of active ones. Off by default." }),
+  archived: QueryFlag.optional().meta({
+    description: "Archived sections instead of active ones. Off by default.",
+  }),
 });
 
 deckSections.get(

@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { boundedRecord, MACHINE } from "./bounds";
 import { EXAMPLE_LENGTH, fitsExample } from "./example";
 import { sourcePitch } from "./pitch";
 import { kanaReading, moraCount } from "./reading";
@@ -846,15 +847,18 @@ export const ImportStartInput = z.object({
 });
 export type ImportStartInput = z.infer<typeof ImportStartInput>;
 
+const ImportKey = z.string().max(1000).meta(MACHINE);
+const IMPORT_KEYS_MAX = 20_000;
+
 export const ImportChoicesInput = z.object({
-  languages: z
-    .record(z.string(), LanguageTag.nullable())
-    .meta({ description: "Language per deck key from the summary; null is a deck of no language" }),
-  roles: z
-    .record(z.string(), z.array(FieldRole).max(64))
-    .meta({ description: "What each field becomes, per note type key from the summary" }),
+  languages: boundedRecord(ImportKey, LanguageTag.nullable(), IMPORT_KEYS_MAX).meta({
+    description: "Language per deck key from the summary; null is a deck of no language",
+  }),
+  roles: boundedRecord(ImportKey, z.array(FieldRole).max(64), IMPORT_KEYS_MAX).meta({
+    description: "What each field becomes, per note type key from the summary",
+  }),
   skipDecks: z
-    .array(z.string())
+    .array(ImportKey)
     .max(5000)
     .optional()
     .meta({ description: "Deck keys from the summary whose cards stay out of the import" }),

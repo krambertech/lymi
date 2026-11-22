@@ -61,6 +61,10 @@ export const ALLOWED = new Map([
     "scripts/api-compat.mjs#closedChoices",
     "the phone contract's open-list check, which runs as phone-contract.test.ts",
   ],
+  [
+    "scripts/request-bounds.mjs#unboundedParts",
+    "the request limits check, which runs as request-bounds.test.ts",
+  ],
 ]);
 
 const DECLARATION =

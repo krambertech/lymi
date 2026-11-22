@@ -21,6 +21,7 @@ export interface Schema {
   allOf?: Schema[];
   minLength?: number;
   maxLength?: number;
+  "x-lymi-machine"?: boolean;
   minimum?: number;
   maximum?: number;
   maxItems?: number;
@@ -165,10 +166,11 @@ export function constraints(schema: Schema | undefined): string[] {
   // A minimum of one character only says the field cannot be empty, which `required` says
   // already, so it is left out.
   const min = target.minLength !== undefined && target.minLength > 1 ? target.minLength : undefined;
-  if (min !== undefined && target.maxLength !== undefined) {
-    out.push(`${min}–${target.maxLength} characters`);
-  } else if (target.maxLength !== undefined) {
-    out.push(`up to ${target.maxLength} characters`);
+  const max = target["x-lymi-machine"] ? undefined : target.maxLength;
+  if (min !== undefined && max !== undefined) {
+    out.push(`${min}–${max} characters`);
+  } else if (max !== undefined) {
+    out.push(`up to ${max} characters`);
   } else if (min !== undefined) {
     out.push(`at least ${min} characters`);
   }

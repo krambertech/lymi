@@ -17,13 +17,14 @@ import {
   OkOut,
   PublicationInput,
   PublicationOut,
+  QueryFlag,
   WithdrawQuery,
 } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
 import { createSpeechProviders } from "../ai";
 import { publisherEmails } from "../env";
-import { body, ctxOf, describe, query } from "../http";
+import { body, ctxOf, describe, query, reader } from "../http";
 import type { AppEnv } from "../index";
 import { limitInvitationSends } from "../invitation-rate-limit";
 import { leadInDependencies } from "../lead-ins";
@@ -69,10 +70,9 @@ import { cancelInvitation } from "../services/invitations";
 export const decks = new Hono<AppEnv>();
 
 const ListQuery = z.object({
-  archived: z
-    .stringbool()
-    .optional()
-    .meta({ description: "Archived decks instead of active ones. Off by default." }),
+  archived: QueryFlag.optional().meta({
+    description: "Archived decks instead of active ones. Off by default.",
+  }),
 });
 
 decks.get(
@@ -427,9 +427,11 @@ decks.delete(
 const EDITION =
   "A meaning-language edition of a published deck. The deck's own fields are the original edition; another edition is typed localizations of them, signed off before anyone reads it. Only Lymi's publishers, and only decks they own, from the app or with their own write-scoped key. ADR 0015.";
 
+const readLanguage = reader(LanguageTag, "edition language");
+
 /** The language in the path, checked the same way a body field would be. */
 function editionLanguage(value: string | undefined) {
-  const parsed = LanguageTag.safeParse(value);
+  const parsed = readLanguage(value);
   if (!parsed.success) throw new ServiceError("invalid", "Invalid language", parsed.error);
   return parsed.data;
 }

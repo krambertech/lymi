@@ -11,6 +11,7 @@ import noNavigatorOnline from "./rules/no-navigator-online.mjs";
 import noRedirectError from "./rules/no-redirect-error.mjs";
 import noSqlLower from "./rules/no-sql-lower.mjs";
 import noticePlainText from "./rules/notice-plain-text.mjs";
+import readRequestThroughHttp from "./rules/read-request-through-http.mjs";
 import scrollViewPersistTaps from "./rules/scroll-view-persist-taps.mjs";
 import springPresets from "./rules/spring-presets.mjs";
 import termText from "./rules/term-text.mjs";
@@ -30,6 +31,7 @@ export default definePlugin({
     "no-redirect-error": noRedirectError,
     "no-sql-lower": noSqlLower,
     "notice-plain-text": noticePlainText,
+    "read-request-through-http": readRequestThroughHttp,
     "scroll-view-persist-taps": scrollViewPersistTaps,
     "spring-presets": springPresets,
     "term-text": termText,

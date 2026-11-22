@@ -16,10 +16,15 @@ describe("a list in a condition", () => {
   });
 
   it("stores each value as its column does", () => {
-    const at = new Date("2026-11-22T10:00:00.500Z");
-    expect(compile(inArray(reviews.reviewedAt, [at])).params).toEqual([
-      JSON.stringify([reviews.reviewedAt.mapToDriverValue(at)]),
+    const days = Array.from({ length: 6 }, (_, i) => new Date(Date.UTC(2026, 10, 22, i)));
+    expect(compile(inArray(reviews.reviewedAt, days)).params).toEqual([
+      JSON.stringify(days.map((day) => reviews.reviewedAt.mapToDriverValue(day))),
     ]);
+  });
+
+  it("binds a list of up to five values one by one, which SQLite plans by its length", () => {
+    expect(compile(inArray(cards.id, ids.slice(0, 5))).params).toEqual(ids.slice(0, 5));
+    expect(compile(inArray(cards.id, ids.slice(0, 6))).params).toHaveLength(1);
   });
 
   it("matches nothing or everything when it is empty, and leaves a subquery alone", () => {

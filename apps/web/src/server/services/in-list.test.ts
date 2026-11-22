@@ -63,6 +63,11 @@ it("matches dates as the column stores them", async () => {
   const same = await test.db
     .select()
     .from(schema.cards)
-    .where(inArray(schema.cards.createdAt, [card?.createdAt as Date]));
+    .where(
+      inArray(schema.cards.createdAt, [
+        card?.createdAt as Date,
+        ...Array.from({ length: 6 }, (_, day) => new Date(Date.UTC(2020, 0, day + 1))),
+      ]),
+    );
   expect(same.map((each) => each.id)).toContain(card?.id);
 });

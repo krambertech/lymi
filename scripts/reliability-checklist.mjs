@@ -16,10 +16,10 @@ export const ITEMS = [
     id: "d1-bound-parameters",
     paths: SERVER,
     ignore: TESTS,
-    added: /\.values\(\s*[A-Za-z[]/,
+    added: /(?<!\bObject)\.values\(\s*[A-Za-z[]|\bin\s*\(\s*\$\{/i,
     check:
       "Can this insert more rows than D1's 100 bound parameters allow, counting every column of every row? Is the list cut to fit, with a test past the cap?",
-    why: "A list in a condition now binds one parameter, but an insert still binds every value.",
+    why: "`inArray` binds at most five parameters, but an insert and a raw `in (${list})` still bind every value.",
     sources: [840, 972],
     example: {
       file: "apps/web/src/server/services/deck-copies.ts",

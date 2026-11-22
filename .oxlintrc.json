@@ -228,7 +228,7 @@
       }
     },
     {
-      "files": ["apps/web/src/server/**", "apps/site/worker/**", "packages/core/src/**"],
+      "files": ["apps/web/src/server/**", "apps/site/src/**", "packages/core/src/**"],
       "excludeFiles": ["packages/core/src/in-list.ts", "packages/core/src/db.ts"],
       "rules": {
         "eslint/no-restricted-imports": [

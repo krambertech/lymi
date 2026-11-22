@@ -102,6 +102,11 @@ describe("pinyinSyllables", () => {
     expect(split("yìdiǎnr")).toEqual(["yì", "diǎnr"]);
     expect(split("yī diǎn r")).toEqual(["yī", "diǎnr"]);
     expect(split("èr")).toEqual(["èr"]);
+    expect(split("zhuàngr")).toEqual(["zhuàngr"]);
+  });
+  it("takes an interjection only as a whole word", () => {
+    expect(split("ê hm")).toEqual(["ê", "hm"]);
+    expect(split("nihm")).toBeNull();
   });
   it("finds nothing in what is not pinyin", () => {
     expect(split("ɕɥɛ̌ɕǐ")).toBeNull();
@@ -119,6 +124,9 @@ describe("pinyinTermReading", () => {
   it("gives 儿 to the erhua syllable before it", () => {
     expect(drawn("一点儿", "yì diǎnr")).toBe("一[yì]点儿[diǎnr]");
     expect(drawn("女儿", "nǚ'ér")).toBe("女[nǚ]儿[ér]");
+  });
+  it("puts a one-form reading over the first of listed forms", () => {
+    expect(drawn("行 · 行走", "xíng")).toBe("行[xíng] · 行走");
   });
   it("leaves letters and digits plain", () => {
     expect(drawn("卡拉OK", "kǎlā OK")).toBe("卡[kǎ]拉[lā]OK");
@@ -138,6 +146,13 @@ describe("pinyinKey", () => {
     expect(pinyinKey("行", "háng")).toBe("háng");
     expect(pinyinKey("行", "xíng")).toBe("xíng");
     expect(pinyinKey("东西", "dōngxi")).not.toBe(pinyinKey("东西", "dōngxī"));
+  });
+  it("keys a one-form reading of listed forms", () => {
+    expect(pinyinKey("行 · 行走", "xíng")).toBe("xíng");
+  });
+  it("keys any toned reading of a passage past 80 characters", () => {
+    expect(pinyinKey("好".repeat(80), "hǎo")).toBeNull();
+    expect(pinyinKey("好".repeat(81), "hǎo")).toBe("hǎo");
   });
   it("gives one key across case, spacing, NFD and tone numbers", () => {
     const keys = ["xuéxí", "Xué xí", "xue2 xi2", "xuéxí"].map((r) => pinyinKey("学习", r));
@@ -163,12 +178,20 @@ describe("inline pinyin", () => {
     { text: "我[wǒ]要一点儿[yì diǎnr]水", plain: "我要一点儿水" },
     { text: "[sound:nihao.mp3]你好", plain: "[sound:nihao.mp3]你好" },
     { text: "好[nǐ hǎo]", plain: "好[nǐ hǎo]" },
+    { text: "A好[nǐ hǎo]", plain: "A好[nǐ hǎo]" },
+    { text: "你[nǐ]好[nǐ hǎo]", plain: "你好[nǐ hǎo]" },
   ];
   it("gives each example back when parsed, written or stripped", () => {
     for (const { text, plain } of examples) {
       expect(formatPinyin(parsePinyin(text))).toBe(text);
       expect(stripPinyin(text)).toBe(plain);
     }
+  });
+  it("reads a bracket of up to 60 characters", () => {
+    const reading = Array.from({ length: 15 }, () => "hǎo").join(" ");
+    const text = (bracket: string) => `${"好".repeat(15)}[${bracket}]`;
+    expect(stripPinyin(text(`${reading} `))).toBe("好".repeat(15));
+    expect(stripPinyin(text(`${reading}  `))).toBe(text(`${reading}  `));
   });
   it("splits a bracket into one run per character, in tone marks", () => {
     expect(pinyinExampleSegments("我说你好[ni3 hao3]。")).toEqual([

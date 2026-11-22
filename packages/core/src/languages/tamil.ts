@@ -1,9 +1,5 @@
 import type { LanguageSupport } from "./types";
 
-/**
- * Tamil: each word's reading worked out from its spelling and drawn over the word, so the field
- * holds a reading only for a word not said as spelled. docs/proposals/tamil.md.
- */
 export const tamil = {
   tag: "ta",
   scripts: ["Taml"],
@@ -18,6 +14,5 @@ export const tamil = {
     sample: { term: "பஸ்", pronunciation: "bas" },
     duplicates: "term",
   },
-  // Gemini's ta-IN Kore reads the script well, and the reading comes from that same spelling.
   speech: { saysReading: false, leadIn: false },
 } as const satisfies LanguageSupport;

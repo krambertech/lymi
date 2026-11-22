@@ -32,12 +32,12 @@ export const ITEMS = [
     ignore: TESTS,
     added: /\.(?:update|delete)\(\s*schema\.|\bUPDATE\s+\w+\s+SET\b|\bDELETE\s+FROM\b/i,
     check:
-      "If another writer, a retry or a replay changes this row between the read and this write, does the write still hold? Does its `WHERE` name the state it leaves, as CODING_STANDARDS.md asks?",
+      "The compiler holds the status columns in `state-machines.ts`, not this write. If another writer, a retry or a replay changes this row between the read and this write, does it still hold? Does its `WHERE` name the state it leaves, as CODING_STANDARDS.md asks, and does the code read whether it landed?",
     why: "Writes keyed by id alone undid takedowns, overwrote newer tokens and landed grades on a moved card state.",
     sources: [793, 1090, 1164],
     example: {
-      file: "apps/web/src/server/services/imports.ts",
-      line: "  await db.update(schema.imports).set({ status: 'done' })",
+      file: "apps/web/src/server/services/review.ts",
+      line: "  await db.update(schema.cardStates).set({ lastReview: reviewedAt })",
     },
   },
   {

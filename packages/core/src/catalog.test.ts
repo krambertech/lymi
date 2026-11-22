@@ -1,11 +1,15 @@
 import { existsSync, readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
+  activeAvatarVersion,
   catalogSearchText,
+  deckPageHand,
+  deckPageSpread,
   isPublicDeckSlug,
   offersDeck,
   offersLanguage,
-  type PublicDeckSummary,
+  PublicDeckOut,
+  PublicDeckSummary,
   previewMode,
   type RelatedCandidate,
   rankRelated,
@@ -13,6 +17,7 @@ import {
   shelfAt,
   shelfRoute,
   shelvesOf,
+  TRAY_HUES,
   taughtLanguage,
   UNCATEGORISED,
 } from "./catalog";
@@ -165,6 +170,112 @@ describe("projectPublicDeck", () => {
       { status: "unavailable" },
     );
     expect(projectPublicDeck(publication(), sections, [])).toEqual({ status: "unavailable" });
+  });
+});
+
+describe("the public schemas", () => {
+  const secret = { ownerEmail: "owner@example.com", userId: "user_secret" };
+  const image = { cardId: "c1", description: "A flag", width: 3, height: 2, ...secret };
+
+  it("let nothing outside their fields through at any level, ADR 0016", () => {
+    const projected = projectPublicDeck(publication(), sections, cards);
+    if (projected.status !== "published") throw new Error(projected.status);
+    const deck = PublicDeckOut.parse({
+      ...projected.deck,
+      ...secret,
+      sections: projected.deck.sections.map((section) => ({
+        ...section,
+        ...secret,
+        cards: section.cards.map((each) => ({
+          ...each,
+          ...secret,
+          image,
+          audio: { cardId: "c1", ...secret },
+        })),
+      })),
+    });
+    const summary = PublicDeckSummary.parse({
+      slug: "flags",
+      name: "Flags",
+      summary: "Every flag",
+      category: "geography",
+      tags: [],
+      language: null,
+      meaningLanguage: "en",
+      cardCount: 1,
+      sectionCount: 0,
+      card: {
+        term: "🇪🇪",
+        meaning: "Estonia",
+        section: null,
+        mode: "image_to_meaning",
+        image,
+        ...secret,
+      },
+      ...secret,
+    });
+    const shown = JSON.stringify([deck, summary]);
+    expect(shown).toContain("A flag");
+    expect(shown).not.toMatch(/owner@example|user_secret/);
+  });
+});
+
+describe("activeAvatarVersion", () => {
+  it("is the photo a publisher chose, then Google's, and never a half-written row", () => {
+    const google = { googleVersion: "g1" };
+    expect(activeAvatarVersion({ customKey: "k", customVersion: "c1", ...google })).toBe("c1");
+    expect(activeAvatarVersion({ customKey: "k", ...google })).toBe("g1");
+    expect(activeAvatarVersion({ customVersion: "c1", ...google })).toBe("g1");
+    expect(activeAvatarVersion({})).toBeNull();
+  });
+});
+
+describe("a deck page's cards", () => {
+  const deck = { slug: "everyday-estonian", revision: 3 };
+  const named = (section: string, count: number) =>
+    Array.from({ length: count }, (_, i) => ({ term: `${section}${i}`, meaning: "m" }));
+  const groups = [named("a", 20), named("b", 20), named("c", 20)];
+
+  it("deal one hand of five distinct cards for a revision, and another for the next", () => {
+    const hand = deckPageHand(deck, groups);
+    expect(new Set(hand).size).toBe(5);
+    expect(deckPageHand(deck, groups)).toEqual(hand);
+    expect(deckPageHand({ ...deck, revision: 4 }, groups)).not.toEqual(hand);
+  });
+
+  it("spread five cards in deck order, the same for a revision and changing with it", () => {
+    const spread = deckPageSpread(deck, groups);
+    expect(spread.map((each) => each.term[0])).toEqual(["a", "a", "b", "b", "c"]);
+    expect(deckPageSpread(deck, groups)).toEqual(spread);
+    expect(deckPageSpread({ ...deck, revision: 4 }, groups)).not.toEqual(spread);
+  });
+
+  it("spread one card from each of five sections spaced evenly through the deck", () => {
+    const sections = Array.from({ length: 9 }, (_, i) => named(String(i), 1));
+    expect(deckPageSpread(deck, sections).map((each) => each.term[0])).toEqual([
+      "0",
+      "2",
+      "4",
+      "6",
+      "8",
+    ]);
+  });
+
+  it("prefer a card short enough to read at a glance", () => {
+    const long = { term: "t".repeat(21), meaning: "m" };
+    const wordy = { term: "t", meaning: "m".repeat(37) };
+    const short = { term: "t", meaning: "m" };
+    for (let revision = 0; revision < 10; revision++) {
+      expect(deckPageSpread({ ...deck, revision }, [[long, wordy, short]], 1)).toEqual([short]);
+    }
+  });
+});
+
+describe("a tray's hue", () => {
+  it("is one the stylesheet both apps import defines", () => {
+    const css = readFileSync(new URL("../../design/tray.css", import.meta.url), "utf8");
+    const defined = new Set([...css.matchAll(/\[data-hue="(\d+)"\]/g)].map((match) => match[1]));
+    expect([...defined].sort()).toEqual(Array.from({ length: TRAY_HUES }, (_, i) => String(i)));
   });
 });
 

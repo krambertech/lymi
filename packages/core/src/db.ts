@@ -6,6 +6,18 @@
  */
 export * from "drizzle-orm";
 export { drizzle } from "drizzle-orm/d1";
+export type {
+  QueryBuilder,
+  SQLiteColumn,
+  SQLiteInsertBuilder,
+  SQLiteInsertOnConflictDoUpdateConfig,
+  SQLiteInsertSelectQueryBuilder,
+  SQLiteInsertValue,
+  SQLiteTable,
+  SQLiteUpdateBase,
+  SQLiteUpdateBuilder,
+  SQLiteUpdateSetSource,
+} from "drizzle-orm/sqlite-core";
 export { alias, SQLiteAsyncDialect } from "drizzle-orm/sqlite-core";
 export { inArray, notInArray } from "./in-list";
 

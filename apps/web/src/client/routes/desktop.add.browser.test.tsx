@@ -151,3 +151,17 @@ test("with no deck of the learner's own, Enter opens Library", async () => {
   expect(app.openApp).toHaveBeenCalledWith("/library");
   expect(writes.addCard).not.toHaveBeenCalled();
 });
+
+test("the Enter that confirms an input method's word adds nothing", async () => {
+  const term = await renderPanel();
+  await userEvent.type(term, "猫");
+  const confirm = new KeyboardEvent("keydown", { key: "Enter", bubbles: true });
+  Object.defineProperty(confirm, "keyCode", { value: 229 });
+  term.element().dispatchEvent(confirm);
+  const cancel = new KeyboardEvent("keydown", { key: "Escape", isComposing: true, bubbles: true });
+  term.element().dispatchEvent(cancel);
+  expect(app.hidePanel).not.toHaveBeenCalled();
+  expect(writes.addCard).not.toHaveBeenCalled();
+  await userEvent.keyboard("{Enter}");
+  expect(writes.addCard).toHaveBeenCalledOnce();
+});

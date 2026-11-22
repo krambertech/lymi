@@ -409,6 +409,7 @@ function ComboboxInput({
           {
             onKeyDown: (e) => {
               // With no row to take, Enter keeps the search open with what was typed.
+              // oxlint-disable-next-line lymi/enter-composing -- here Enter only stays put, which a composing Enter should too
               if (e.key === "Enter" && !e.currentTarget.getAttribute("aria-activedescendant")) {
                 e.preventBaseUIHandler();
                 e.preventDefault();
@@ -462,6 +463,7 @@ function ComboboxList<Item>({ className, children }: ListProps<Item>) {
       hide();
       requestAnimationFrame(remeasure);
     };
+    // oxlint-disable-next-line lymi/shortcut-owner -- every key moves or filters the rows under the pointer, and none is taken
     document.addEventListener("keydown", onKey, true);
     return () => document.removeEventListener("keydown", onKey, true);
   }, [hide, remeasure]);

@@ -1,5 +1,6 @@
 import { chosenReview, type DeckRow } from "@lymi/client/deck-list";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { useShortcut } from "./use-shortcut";
 
 /**
  * Select cards on a card list: the chosen cards, Shift-click ranges, Escape to stop, and what
@@ -57,18 +58,7 @@ export function useCardSelection(
   }, []);
 
   // Escape leaves selection, unless something above the list has it.
-  useEffect(() => {
-    if (!selected) return;
-    const onKey = (e: KeyboardEvent) => {
-      // A menu or dialog open over the list takes this Escape for itself; a toast is a dialog too, but never does.
-      const overlay = document.querySelector(
-        "[role='menu'], [role='dialog']:not([data-slot='toast'])",
-      );
-      if (e.key === "Escape" && !e.defaultPrevented && !overlay) stop();
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [selected, stop]);
+  useShortcut({ key: "Escape" }, stop, { enabled: !!selected, focus: "any" });
 
   // Mark important marks them all unless every chosen card already has the mark.
   const unmarked = !!selected && !!cards?.some((r) => selected.has(r.card.id) && !r.card.important);

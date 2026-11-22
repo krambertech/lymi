@@ -87,6 +87,7 @@ import { Input } from "../components/ui/input";
 import type { DeckSummary, Section, Sections } from "../lib/api";
 import { captureAnalytics } from "../lib/telemetry";
 import { useCardSelection } from "../lib/use-card-selection";
+import { useShortcut } from "../lib/use-shortcut";
 import { Glossary, type SectionEditing, sectionAnchor } from "./deck-glossary";
 import { type WordHistory, WordView } from "./word-view";
 
@@ -712,19 +713,11 @@ export function DeckDetailView({
   };
 
   // "/" puts the caret in the deck's own search, the shortcut PRODUCT.md promises.
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      const t = e.target as HTMLElement | null;
-      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-      if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
-      e.preventDefault();
-      // The desktop field is not drawn in a narrow container, so open the top bar's instead.
-      if (searchRef.current?.offsetParent) searchRef.current.focus();
-      else setSearchOpen(true);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, []);
+  useShortcut({ key: "/" }, () => {
+    // The desktop field is not drawn in a narrow container, so open the top bar's instead.
+    if (searchRef.current?.offsetParent) searchRef.current.focus();
+    else setSearchOpen(true);
+  });
 
   // The list's clock, refreshed with the cards rather than every render, so headings hold still.
   // oxlint-disable-next-line react-hooks/exhaustive-deps -- the cards are the reason to look again
@@ -806,21 +799,16 @@ export function DeckDetailView({
   const shownWord = open ?? lastOpen.current;
 
   // Walking the list with a word open, the way a mail client does.
-  useEffect(() => {
-    if (!open) return;
-    const onKey = (e: KeyboardEvent) => {
-      const t = e.target as HTMLElement | null;
-      if (t && (t.tagName === "INPUT" || t.tagName === "TEXTAREA" || t.isContentEditable)) return;
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
-      // The sheet closes itself on Escape; beside the list, the page does.
-      if (e.key === "Escape" && beside) setOpen(null);
-      const step = e.key === "j" ? 1 : e.key === "k" ? -1 : 0;
-      const next = step && openIndex >= 0 ? ordered[openIndex + step] : undefined;
+  useShortcut(
+    { key: ["j", "k"] },
+    (e) => {
+      const next = openIndex >= 0 ? ordered[openIndex + (e.key === "j" ? 1 : -1)] : undefined;
       if (next) setOpen(next.card.id);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [open, ordered, openIndex, beside, setOpen]);
+    },
+    { enabled: !!open, over: "card-place", repeat: true },
+  );
+  // The sheet closes itself on Escape; beside the list, the page does.
+  useShortcut({ key: "Escape" }, () => setOpen(null), { enabled: !!open && beside });
 
   // Archiving takes away the row that opened the card, so focus moves on to its neighbour.
   const archivedNeighbour = useRef<string | null>(null);

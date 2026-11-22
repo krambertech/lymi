@@ -5,6 +5,7 @@ import clearText from "./rules/clear-text.mjs";
 import clipOwner from "./rules/clip-owner.mjs";
 import dismissOnDrag from "./rules/dismiss-on-drag.mjs";
 import edgeSwipe from "./rules/edge-swipe.mjs";
+import enterComposing from "./rules/enter-composing.mjs";
 import failedWriteSaid from "./rules/failed-write-said.mjs";
 import fieldError from "./rules/field-error.mjs";
 import fixedHost from "./rules/fixed-host.mjs";
@@ -24,6 +25,7 @@ import noticePlainText from "./rules/notice-plain-text.mjs";
 import readRequestThroughHttp from "./rules/read-request-through-http.mjs";
 import scrollViewPersistTaps from "./rules/scroll-view-persist-taps.mjs";
 import sheetFieldFocus from "./rules/sheet-field-focus.mjs";
+import shortcutOwner from "./rules/shortcut-owner.mjs";
 import springPresets from "./rules/spring-presets.mjs";
 import termText from "./rules/term-text.mjs";
 import workletNoElements from "./rules/worklet-no-elements.mjs";
@@ -35,6 +37,7 @@ export default definePlugin({
     "clear-text": clearText,
     "dismiss-on-drag": dismissOnDrag,
     "edge-swipe": edgeSwipe,
+    "enter-composing": enterComposing,
     "failed-write-said": failedWriteSaid,
     "ai-consent": aiConsent,
     "clip-owner": clipOwner,
@@ -56,6 +59,7 @@ export default definePlugin({
     "read-request-through-http": readRequestThroughHttp,
     "scroll-view-persist-taps": scrollViewPersistTaps,
     "sheet-field-focus": sheetFieldFocus,
+    "shortcut-owner": shortcutOwner,
     "spring-presets": springPresets,
     "term-text": termText,
     "worklet-no-elements": workletNoElements,

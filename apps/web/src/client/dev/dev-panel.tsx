@@ -86,6 +86,7 @@ export default function DevPanel() {
       e.preventDefault();
       onOpenChange(!open);
     };
+    // oxlint-disable-next-line lymi/shortcut-owner -- a developer tool that opens over anything and closes from its own empty field
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open, onOpenChange]);

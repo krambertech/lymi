@@ -85,7 +85,7 @@ Menu rows do not scale on press. The hover is one fill that slides between rows 
 - A palette with pages, like the developer palette, passes `onBack`: Escape empties the field first, then leaves the page, and Backspace in an empty field leaves it too; Escape closes only from the first page.
 - On a phone or a touch screen (`compact`) the palette fills the screen without a scrim, and the field waits for a tap so the keyboard doesn't cover the list. No row is highlighted until the keyboard is used, and the pointer never moves the highlight, so Go never runs a row nobody saw.
 - It appears and leaves without motion, since a keyboard opens it.
-- ⌘K is ⌘ on a Mac and Ctrl elsewhere; Ctrl K on a Mac stays the field's delete-to-end. It never opens over another dialog, so it can't stack on a half-written form, nor in review or Welcome, where the shell is closed on purpose.
+- ⌘K is ⌘ on a Mac and Ctrl elsewhere; Ctrl K on a Mac stays the field's delete-to-end. It never opens over another dialog or menu, so it can't stack on a half-written form, nor in review or Welcome, where the shell is closed on purpose.
 - Rows are 40 px, the menu row's type, with the hover fill on the highlighted row only, so pointer and keys never show two.
 - The command menu's add bar is pinned under the list and is its last arrow stop. It waits for three characters, or one Han, kana or Hangul character, and names the deck before anything is added. Before the target deck is checked for the exact term, it promises nothing, and an Enter waits for that check, so a term the deck already has opens instead of adding again.
 

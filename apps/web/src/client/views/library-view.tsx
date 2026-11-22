@@ -48,6 +48,7 @@ import {
 import { Input } from "../components/ui/input";
 import type { DeckSummary, Series } from "../lib/api";
 import { captureAnalytics } from "../lib/telemetry";
+import { useShortcut } from "../lib/use-shortcut";
 
 export interface LibraryProps {
   decks: DeckSummary[] | undefined;
@@ -162,23 +163,16 @@ export function LibraryView({
   }, [deskOpen]);
 
   // "/" puts the caret in Library's search, the shortcut PRODUCT.md promises.
-  useEffect(() => {
-    if (!hasDecks) return;
-    const onKey = (e: globalThis.KeyboardEvent) => {
-      const el = e.target as HTMLElement | null;
-      if (el && (el.tagName === "INPUT" || el.tagName === "TEXTAREA" || el.isContentEditable)) {
-        return;
-      }
-      if (e.key !== "/" || e.metaKey || e.ctrlKey || e.altKey) return;
-      e.preventDefault();
+  useShortcut(
+    { key: "/" },
+    () => {
       // The phone's field is always drawn; the desktop's opens from its button.
       if (phoneSearchRef.current?.offsetParent) phoneSearchRef.current.focus();
       else if (deskSearchRef.current) deskSearchRef.current.focus();
       else setSearchOpen(true);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [hasDecks]);
+    },
+    { enabled: hasDecks },
+  );
 
   const opened = () => {
     if (q) captureAnalytics("library_searched", { matches: matchBand(visible.length) });

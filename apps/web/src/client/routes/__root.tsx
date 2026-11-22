@@ -33,7 +33,6 @@ import { AddCardProvider, useAddCard } from "../lib/add-card";
 import { ApiError, api } from "../lib/api";
 import { LearnerAvatarProvider } from "../lib/avatar";
 import { desktop, isDesktopSurface } from "../lib/desktop";
-import { appleKeyboard } from "../lib/device";
 import { isGuiding } from "../lib/first-run";
 import {
   activate,
@@ -50,6 +49,7 @@ import { shortQuote } from "../lib/short-quote";
 import { Streak, StreakPlace, useDayTurn, useSettleToday } from "../lib/streak";
 import { capturePageview } from "../lib/telemetry";
 import { toggleTheme } from "../lib/theme";
+import { useShortcut } from "../lib/use-shortcut";
 import { SignOutProvider, useSignOut } from "../lib/use-sign-out";
 import { AppShell, Sidebar } from "../views/shell";
 
@@ -108,10 +108,6 @@ function Root() {
     </MotionConfig>
   );
 }
-
-/** An open dialog or sheet, not counting toasts, which Base UI also marks as dialogs. */
-const OVERLAY_OPEN =
-  '[role="dialog"]:not([inert]):not([data-slot="toast"]), [role="alertdialog"]:not([data-slot="toast"])';
 
 function Shell() {
   const { t } = useLingui();
@@ -257,51 +253,20 @@ function Shell() {
     [queryClient, t],
   );
 
-  // Global shortcuts: N adds, R reviews. Ignored while typing.
-  useEffect(() => {
-    if (bare || panel) return;
-    const onKey = (e: KeyboardEvent) => {
-      const target = e.target as HTMLElement | null;
-      if (
-        target &&
-        (target.tagName === "INPUT" ||
-          target.tagName === "TEXTAREA" ||
-          target.tagName === "SELECT" ||
-          target.isContentEditable)
-      )
-        return;
-      if (e.metaKey || e.ctrlKey || e.altKey) return;
-      // By the key's place rather than its letter, so a Ukrainian or Russian layout has them too.
-      if (e.code === "KeyN") {
-        e.preventDefault();
-        add.openCard(activeDeckId);
-      }
-      if (e.code === "KeyR" && !onReview) {
-        e.preventDefault();
-        navigate({ to: "/review" });
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [navigate, onReview, bare, panel, add, activeDeckId]);
+  // By the key's place rather than its letter, so a Ukrainian or Russian layout has them too.
+  useShortcut({ code: "KeyN" }, () => add.openCard(activeDeckId), { enabled: !bare && !panel });
+  useShortcut({ code: "KeyR" }, () => navigate({ to: "/review" }), {
+    enabled: !bare && !panel && !onReview,
+  });
 
   // ⌘K on a Mac, Ctrl K elsewhere, opens the command menu from any field. Not over another
   // dialog, where it would stack a second modal on a half-written form, and not where the shell
   // is closed on purpose (review, Welcome). Ctrl K on a Mac stays the field's "delete to end".
-  useEffect(() => {
-    if (bare || closed || panel) return;
-    const onKey = (e: KeyboardEvent) => {
-      if (e.repeat || e.altKey || e.shiftKey) return;
-      if (appleKeyboard() ? !e.metaKey || e.ctrlKey : !e.ctrlKey || e.metaKey) return;
-      // Picking an autofill suggestion sends a keydown with no key.
-      if (e.code !== "KeyK" && e.key?.toLowerCase() !== "k") return;
-      if (!commandOpen && document.querySelector(OVERLAY_OPEN)) return;
-      e.preventDefault();
-      setCommandOpen((open) => !open);
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [bare, closed, panel, commandOpen]);
+  useShortcut({ mod: "k" }, () => setCommandOpen((open) => !open), {
+    enabled: !bare && !closed && !panel,
+    over: commandOpen ? "any" : undefined,
+    focus: "any",
+  });
 
   const signedIn = me.isSuccess;
   const learnerName = me.data?.name;

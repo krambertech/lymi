@@ -427,6 +427,20 @@
       "rules": {
         "lymi/failed-write-said": "error"
       }
+    },
+    {
+      "files": ["apps/web/src/client/**"],
+      "excludeFiles": ["apps/web/src/client/lib/use-shortcut.ts"],
+      "rules": {
+        "lymi/shortcut-owner": "error"
+      }
+    },
+    {
+      "files": ["apps/web/src/client/**"],
+      "excludeFiles": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "lymi/enter-composing": "error"
+      }
     }
   ]
 }

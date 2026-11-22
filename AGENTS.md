@@ -10,7 +10,9 @@ Fetch the remote default branch before inspecting or changing code. Use the fres
 
 Fix confirmed defects with the smallest correct change; check review findings against the source and push back with evidence when they are wrong. Report a disagreement that remains; silence or an exhausted review budget is not approval.
 
-Posting in Slack, email, GitHub comments or discussions on the user's behalf requires explicit, separate permission, except repository friction reports, verify verdicts and proof on a pull request, and replies to verified agent or bot comments within [the open-PR workflow](.agents/skills/open-pr/SKILL.md#leave-pr-comments). Opening a PR does not authorize merging it. The user runs production deployments and migrations: `pnpm deploy`, `deploy:site`, `deploy:product` and `db:migrate:prod`. Keep `.dev.vars` and its real secrets git-ignored.
+Posting in Slack, email, GitHub comments or discussions on the user's behalf requires explicit, separate permission, except repository friction reports, verify verdicts and proof on a pull request, and replies to verified agent or bot comments within [the open-PR workflow](.agents/skills/open-pr/SKILL.md#leave-pr-comments). Opening a PR does not authorize merging it. A merge to `main` ships itself: each Worker's `deploy:ci` applies pending migrations, then deploys ([Delivery checks](docs/testing.md#delivery-checks)), so a merged migration needs no command. Only the user runs a manual production command: `pnpm deploy`, `deploy:site`, `deploy:product` or `db:migrate:prod`. Keep `.dev.vars` and its real secrets git-ignored.
+
+When you report to the user, name the visible result first and define any code, language or store term. Ask in one plain sentence that says what would change on screen and which option you pick, with no finding IDs.
 
 Report each recurring repository gotcha in [the friction log](docs/guidance.md#report-friction). A proposal in `docs/proposals` never overrides a current document.
 

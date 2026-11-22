@@ -5,7 +5,7 @@ How to capture and attach the visual evidence [`AGENTS.md`](../../../../AGENTS.m
 ## Choose the evidence
 
 - Capture one after screenshot per affected surface. Add a before image when the surface already existed, because a reviewer cannot see a change without the old state.
-- Capture the viewports, themes, and states the [`review-ui` coverage tree](../../review-ui/SKILL.md#choose-the-coverage) selects for the diff, and no others.
+- Capture every viewport, theme, and state the [`review-ui` coverage tree](../../review-ui/SKILL.md#choose-the-coverage) selects for the diff, one labelled sheet per surface and width, and nothing outside the tree.
 - Use local or sanitized data. Keep private content, tokens, email addresses, account identifiers, and production data out of screenshots and filenames.
 
 ## Save files

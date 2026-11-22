@@ -39,7 +39,7 @@ Where the description goes follows its job, not the screen:
 - **It helps fill the box**, a format, a limit, how to type, or who sees what is written, so it sits under the control where the error replaces it: "At least 8 characters."
 - **It describes one option** of a switch, checkbox or radio row, so it sits under that option's own label inside the row.
 
-A field has at most one description; when it seems to need two, the label or the options carry one.
+A field has at most one description; when it seems to need two, the label or the options carry one. Text derived from a field, such as an example’s translation, is shown and edited inside that field.
 
 ```tsx
 // Correct, from new-deck-sheet.tsx

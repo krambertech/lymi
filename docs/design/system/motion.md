@@ -32,7 +32,7 @@ On the phone, a sheet that changes height while it is open glides to the new hei
 
 ## Press
 
-Press scales over 150 ms. Nothing moves up on press.
+Press scales over 150 ms. Nothing moves up on press. A press shows its feedback before any network wait: the press scale, the fill or the pending state.
 
 | Control | Scale |
 | --- | --- |
@@ -134,6 +134,10 @@ A cold start picks up the launch screen's unlit lantern and lights it, in about 
 | 980 ms | The lantern underneath takes over in the same spot. |
 
 The clock counts drawn frames rather than time, so a stall while the app mounts pauses the lantern instead of making it jump, and the lantern leaves the middle only once frames come on time. Everything moves inside Skia, in a window of its own over the app, because Reanimated holds back view transforms while React commits and the native stack mounts its screens over their siblings.
+
+## Site demos
+
+A demo on the public site starts when its stage is in view, not when the page loads.
 
 ## The auth connection
 

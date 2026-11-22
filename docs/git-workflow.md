@@ -41,7 +41,7 @@ docs(repo): explain local setup
 feat(api)!: replace the card response shape
 ```
 
-Fixup commits are fine on an open pull request, because GitHub squashes the branch. The pull request title becomes the commit subject on `main`, so it names one logical change.
+Fixup commits are fine on an open pull request, because GitHub squashes the branch, but every pushed commit must be safe to merge: the pull request may merge as soon as its checks pass. Push a throwaway experiment to a `kateryna/do-not-merge-<name>` branch. The pull request title becomes the commit subject on `main`, so it names one logical change.
 
 ## Write the pull request description
 
@@ -63,9 +63,9 @@ An inline review comment raises one actionable defect, its consequence and the s
 
 ## Merge a pull request
 
-Merge with **Squash and merge** after CI passes and review threads are resolved, and check that the generated commit title matches the pull request title. GitHub uses the pull request description as the commit body and deletes the branch after merging.
+Merge with **Squash and merge** after CI passes and review threads are resolved, and check that the generated commit title matches the pull request title. `main` has no required checks, so `gh pr merge --auto` merges at once: read `gh pr checks <number>`, then run `gh pr merge <number> --squash`. GitHub uses the pull request description as the commit body and deletes the branch after merging.
 
-Opening a pull request does not authorize merging it, with one standing exception from Kateryna: the agent that opened an Estonian lesson pull request merges it with `gh pr merge --squash` once it is approved, green and has no open threads, never with auto-merge.
+Opening a pull request does not authorize merging it, with one standing exception from Kateryna: the agent that opened an Estonian lesson pull request merges it once it is approved, green and has no open threads.
 
 ## Stack pull requests that depend on each other
 

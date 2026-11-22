@@ -26,9 +26,15 @@ Report a breakpoint or token only when it produces an observed failure or breaks
 
 ## Visual system and voice
 
-A visual finding needs one of: a contradiction with a named rule in `DESIGN.md` or `docs/design/system`, hierarchy that hides the task or state, equivalent elements that behave differently, content that becomes unreadable, or a one-off treatment that forks an established pattern. A preference for another density, radius, phrase, or composition is not a finding, because the review judges against Lymi's committed system, not taste.
+A visual finding needs one of: a contradiction with a named rule in `DESIGN.md` or `docs/design/system`, hierarchy that hides the task or state, equivalent elements that behave differently, content that becomes unreadable, a one-off treatment that forks an established pattern, or one of these:
 
-Report wording only when it harms meaning, recovery, trust, or consistency with `CONTEXT.md` and nearby copy. Check polish only after the flow, interaction, and coverage cells pass.
+- **Out of line.** An edge, baseline, centre, or height lines up with nothing beside it, or differs from its sibling. Show a full-resolution crop with both coordinates.
+- **Moves.** Content shifts when the state changes, other than in a move [motion.md](../../../../docs/design/system/motion.md) describes. Show the same crop in both states.
+- **Removable.** List under Verification every divider, caption, badge, label, and repeated word the diff adds, with what breaks without it. One that breaks nothing is a finding, and the fix is to delete it.
+
+Any other preference for a density, radius, phrase, or composition is not a finding, because the review judges against Lymi's committed system, not taste.
+
+Report wording only when it harms meaning, recovery, trust, or consistency with `CONTEXT.md` and nearby copy.
 
 ## Motion
 

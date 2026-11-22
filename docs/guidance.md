@@ -14,7 +14,11 @@ Keep each fact in one place, and update that place when the fact changes.
 | Active work | GitHub issues |
 | A direction still under discussion | [A proposal](proposals/README.md) |
 
+An agent's private memory does not reach other agents, subagents or cloud sessions. A correction that will apply again goes into a check, or else into the owning document, in the same pull request.
+
 ## Write it once, in literal language
+
+A rule that no check can hold asks for something to show, such as a list, a crop or a set of options, because an attitude leaves nothing to review.
 
 State outcomes, constraints, reasons and evidence once, using literal language. Link to the owning source rather than restating it.
 

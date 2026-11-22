@@ -33,7 +33,7 @@ Use short labels and headings, but let clarity decide their length. “New deck�
 
 Apply these checks together, adapted from Rene Wang’s [Wording in Interfaces](https://rene.wang/essay/wording-in-interfaces):
 
-- **Purpose:** Each line adds a useful fact. Remove text that repeats a heading, control or result.
+- **Purpose:** List each new string with the learner’s question it answers. A helper line or description also states what fails if it is deleted; without an answer, or when a heading or control already gives it, delete it.
 - **Precision:** Choose the verb for the actual action. Keep one name for each concept throughout the flow.
 - **Recovery:** A learner can tell what to try next after failure or an empty search.
 - **Consequences:** Explain concrete effects without repeated warnings or fear.
@@ -53,4 +53,4 @@ Follow Lymi’s vocabulary and voice: count cards; use sentence case and curly q
 
 ## Finish
 
-Re-read each changed flow from entry to outcome. Report the main defects and replacements, checks that ran, states or languages not visually checked, and translations needing native review. Distinguish changes made locally from copy verified in production.
+Re-read each changed flow from entry to outcome. Report the list of new strings, the main defects and replacements, checks that ran, states or languages not visually checked, and translations needing native review. Distinguish changes made locally from copy verified in production.

@@ -18,6 +18,10 @@ A flow with steps or phases holds one value: a union tagged by `status` or `kind
 
 Async work that something newer can replace checks that it still owns the state before it writes. On the server, an update that moves a status names the status it leaves in its `WHERE`.
 
+## Play sound through one owner
+
+Audio plays through `useClip()`: `apps/site/src/lib/use-clip.ts` on the site, `apps/web/src/client/lib/use-clip.ts` in the web client. It plays one clip at a time, stops the clip and its frame loop when the component leaves, and starts none after that. `lymi/clip-owner` refuses an audio element made anywhere else. The Estonian lessons keep `lib/learn/player.ts`, because iOS lets a sequence of clips play only on one element that a tap has started.
+
 ## Localize whole sentences
 
 English is the source message: `<Trans>` in JSX, `t` from `useLingui()` for attributes and handlers, `msg` for module constants, and `<Plural>` or `plural` for counts.

@@ -58,7 +58,6 @@ import {
 } from "../lib/first-review-end";
 import { isGuiding } from "../lib/first-run";
 import { lastInputWasKey } from "../lib/last-input";
-import { playAlone } from "../lib/now-playing";
 import { insightsQuery, roundsQuery, sectionsQuery, streakQuery } from "../lib/queries";
 import { recordReveal, useRevealNudge } from "../lib/reveal-nudge";
 import { itemKey } from "../lib/review-modes";
@@ -66,6 +65,7 @@ import { NO_OVERLAY, reviewOverlay } from "../lib/review-overlay";
 import { shortQuote } from "../lib/short-quote";
 import { WEB_DAY } from "../lib/streak";
 import { captureAnalytics } from "../lib/telemetry";
+import { type Clip, useClip } from "../lib/use-clip";
 import { useReduceMotion } from "../lib/use-reduce-motion";
 import { useShortcut } from "../lib/use-shortcut";
 import { useWordHistory } from "../lib/use-word-history";
@@ -177,8 +177,8 @@ function Review() {
   const [audioState, setAudioState] = useState<"idle" | "loading" | "playing">("idle");
   // Tied to the queue item, so a failure never carries onto the next card's button.
   const [audioError, setAudioError] = useState<{ item: string; message: string } | null>(null);
-  const playingAudio = useRef<HTMLAudioElement | null>(null);
-  const loadedAudio = useRef<{ source: string; audio: HTMLAudioElement } | null>(null);
+  const { load: loadClip, stop: stopClip } = useClip();
+  const loadedAudio = useRef<{ source: string; clip: Clip } | null>(null);
   const [animateNextCard, setAnimateNextCard] = useState(true);
   const [animateReveal, setAnimateReveal] = useState(true);
   // Where focus goes when the button holding it unmounts: the grades after a reveal, the next card after a grade.
@@ -286,23 +286,9 @@ function Review() {
   };
 
   const stopAudio = useCallback(() => {
-    playingAudio.current?.pause();
-    playingAudio.current = null;
+    stopClip();
     setAudioState("idle");
-  }, []);
-
-  const watchAudio = useCallback(
-    (audio: HTMLAudioElement) => {
-      // The example's clip pauses this one when it starts, which ends it the same way.
-      for (const done of ["ended", "pause"]) {
-        audio.addEventListener(done, () => {
-          if (playingAudio.current === audio) stopAudio();
-        });
-      }
-      return audio;
-    },
-    [stopAudio],
-  );
+  }, [stopClip]);
 
   // A clip voiced before is loaded with the card, so a tap plays it at once; a missing one is never voiced ahead.
   const preloadCard = current?.card;
@@ -317,16 +303,12 @@ function Review() {
     if (!currentAudioInput) stopAudio();
     let live = true;
     if (preloadSource && currentCardId) {
-      const audio = watchAudio(new Audio());
-      audio.preload = "auto";
-      audio.addEventListener(
-        "canplaythrough",
-        () => {
-          if (live && !loadedAudio.current) loadedAudio.current = { source: preloadSource, audio };
+      const clip = loadClip(api.storedAudioUrl(currentCardId, preloadCard?.updatedAt), {
+        onReady: () => {
+          if (live && !loadedAudio.current) loadedAudio.current = { source: preloadSource, clip };
         },
-        { once: true },
-      );
-      audio.src = api.storedAudioUrl(currentCardId, preloadCard?.updatedAt);
+        onEnd: () => setAudioState("idle"),
+      });
     }
     return () => {
       live = false;
@@ -339,7 +321,7 @@ function Review() {
     preloadSource,
     preloadCard?.updatedAt,
     stopAudio,
-    watchAudio,
+    loadClip,
   ]);
 
   const playAudio = useCallback(async () => {
@@ -348,37 +330,33 @@ function Review() {
     setAudioError(null);
     // The response is no-store, so a replay rewinds the element that already holds it, until an edit changes what it says.
     const source = pronunciationInputKey(current.card);
-    const loaded = loadedAudio.current?.source === source ? loadedAudio.current.audio : null;
+    const loaded = loadedAudio.current?.source === source ? loadedAudio.current.clip : null;
     const pressed = performance.now();
     const timing = () => ({
       preloaded: !!loaded,
       wait_ms: Math.min(60_000, Math.round(performance.now() - pressed)),
     });
-    const audio =
-      loaded ?? watchAudio(new Audio(api.audioUrl(current.card.id, current.card.updatedAt)));
-    if (loaded) audio.currentTime = 0;
-    else setAudioState("loading");
-    playingAudio.current = audio;
+    const clip =
+      loaded ??
+      loadClip(api.audioUrl(current.card.id, current.card.updatedAt), {
+        onEnd: () => setAudioState("idle"),
+      });
+    if (!loaded) setAudioState("loading");
     try {
-      await playAlone(audio);
-      if (playingAudio.current === audio) {
-        loadedAudio.current = { source, audio };
-        setAudioState("playing");
-        captureAnalytics("pronunciation_played", { outcome: "played", revealed, ...timing() });
-      }
+      if (!(await clip.play())) return;
+      loadedAudio.current = { source, clip };
+      setAudioState("playing");
+      captureAnalytics("pronunciation_played", { outcome: "played", revealed, ...timing() });
     } catch {
-      if (loadedAudio.current?.audio === audio) loadedAudio.current = null;
-      if (playingAudio.current === audio) {
-        playingAudio.current = null;
-        setAudioState("idle");
-        setAudioError({
-          item: itemKey(current),
-          message: t`Couldn’t play the pronunciation. Try again in a moment.`,
-        });
-        captureAnalytics("pronunciation_played", { outcome: "failed", revealed, ...timing() });
-      }
+      if (loadedAudio.current?.clip === clip) loadedAudio.current = null;
+      setAudioState("idle");
+      setAudioError({
+        item: itemKey(current),
+        message: t`Couldn’t play the pronunciation. Try again in a moment.`,
+      });
+      captureAnalytics("pronunciation_played", { outcome: "failed", revealed, ...timing() });
     }
-  }, [audioState, current, revealed, stopAudio, t, watchAudio]);
+  }, [audioState, current, revealed, stopAudio, t, loadClip]);
 
   const showing = current ? `${itemKey(current)}-${done}` : "";
   const recallTimes = useRecallClock(showing || null, revealed);

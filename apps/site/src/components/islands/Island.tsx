@@ -3,7 +3,7 @@ import { Localized } from "../Localized";
 import { Queries } from "./Queries";
 
 interface Props {
-  locale?: string | undefined;
+  locale: string | undefined;
   children: ReactNode;
 }
 

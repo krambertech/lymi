@@ -182,17 +182,14 @@
       }
     },
     {
-      "files": ["apps/web/src/client/**"],
-      "excludeFiles": ["apps/web/src/client/lib/use-shortcut.ts"],
+      "files": ["apps/site/src/**", "apps/web/src/client/**"],
+      "excludeFiles": [
+        "apps/site/src/lib/use-clip.ts",
+        "apps/site/src/lib/learn/player.ts",
+        "apps/web/src/client/lib/use-clip.ts"
+      ],
       "rules": {
-        "lymi/shortcut-owner": "error"
-      }
-    },
-    {
-      "files": ["apps/web/src/client/**"],
-      "excludeFiles": ["**/*.test.ts", "**/*.test.tsx"],
-      "rules": {
-        "lymi/enter-composing": "error"
+        "lymi/clip-owner": "error"
       }
     },
     {
@@ -298,6 +295,20 @@
       "excludeFiles": ["**/*.test.ts", "**/*.test.tsx"],
       "rules": {
         "lymi/isolate-learner-text": "error"
+      }
+    },
+    {
+      "files": ["apps/web/src/client/**"],
+      "excludeFiles": ["apps/web/src/client/lib/use-shortcut.ts"],
+      "rules": {
+        "lymi/shortcut-owner": "error"
+      }
+    },
+    {
+      "files": ["apps/web/src/client/**"],
+      "excludeFiles": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "lymi/enter-composing": "error"
       }
     }
   ]

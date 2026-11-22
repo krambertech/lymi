@@ -5,6 +5,14 @@ import type { SpeechProvider } from "../ai";
 import { speechText } from "../ai/speech-text";
 import { type Db, schema } from "../db";
 import { type LeadInDependencies, leadInPolicy } from "../lead-ins";
+import {
+  cardAudioFolder,
+  cardAudioKey,
+  lockKey,
+  type ObjectKey,
+  type ObjectStore,
+  putObject,
+} from "../storage";
 import { aiAllowedForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
 import { audit } from "./audit";
@@ -18,7 +26,7 @@ const AUDIO_CACHE_VERSION = 2;
 
 export interface AudioDependencies {
   leadIns?: LeadInDependencies | undefined;
-  bucket: R2Bucket;
+  bucket: ObjectStore;
   /** In preference order. Building a provider must not parse credentials or reach the network. */
   providers: (language: string) => SpeechProvider[];
   /** Serve only a clip a play would serve without voicing it, so a preload never spends. */
@@ -119,7 +127,7 @@ async function generatedPronunciation(
       if (card.audioKey !== key) await rememberAudioKey(ctx, card, key, false, preferred.provider);
       return cached;
     }
-    return withAudioLease(deps.bucket, `${key}.lock`, () =>
+    return withAudioLease(deps.bucket, lockKey(key), () =>
       generatedPronunciation(ctx, card, deps, providers, language, spoken, true),
     );
   }
@@ -173,7 +181,7 @@ async function generatedPronunciation(
       continue;
     }
 
-    await deps.bucket.put(key, audio, {
+    await putObject(deps.bucket, key, audio, {
       httpMetadata: {
         contentType: provider.contentType,
         cacheControl: "private, max-age=31536000",
@@ -193,7 +201,7 @@ async function generatedPronunciation(
   }
 
   // A clip of the same kana from before lead-ins still beats no sound.
-  const fallbacks = spoken
+  const fallbacks: string[] = spoken
     ? await Promise.all(
         providers.flatMap((provider) => [
           audioKey(card, provider, spoken),
@@ -315,7 +323,7 @@ const PURGES_PER_RUN = 90;
  * Clears the audio folders of deleted cards, recordings and superseded speech included, a bounded
  * number per cron run. A card R2 refused stays queued for the next run.
  */
-export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> {
+export async function purgeCardAudio(db: Db, bucket: ObjectStore): Promise<number> {
   const queued = await db
     .select({ cardId: schema.cardAudioPurges.cardId })
     .from(schema.cardAudioPurges)
@@ -328,7 +336,7 @@ export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> 
         let cursor: string | undefined;
         do {
           const page = await bucket.list({
-            prefix: `cards/${next.cardId}/`,
+            prefix: cardAudioFolder(next.cardId),
             ...(cursor ? { cursor } : {}),
           });
           const keys = page.objects.map((object) => object.key);
@@ -357,7 +365,7 @@ async function audioKey(
   card: Card,
   provider: SpeechProvider,
   spoken?: SpokenLeadIn,
-): Promise<string> {
+): Promise<ObjectKey> {
   const bytes = new TextEncoder().encode(
     `${speechText(spokenText(card))}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}${takesLeadIn(provider) && spoken?.previousText ? `\u0000${spoken.identity}\u0000${spoken.previousText}` : ""}`,
   );
@@ -366,5 +374,5 @@ async function audioKey(
     .slice(0, 16)
     .map((byte) => byte.toString(16).padStart(2, "0"))
     .join("");
-  return `cards/${card.id}/v${AUDIO_CACHE_VERSION}/${fingerprint}.${provider.extension}`;
+  return cardAudioKey(card.id, `v${AUDIO_CACHE_VERSION}/${fingerprint}.${provider.extension}`);
 }

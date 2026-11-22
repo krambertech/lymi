@@ -3,6 +3,7 @@ import { newId, revealedAnswer } from "@lymi/core";
 import { and, desc, eq, type SQL, sql } from "@lymi/core/db";
 import type { Card, CardImage } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
+import { newCardPictureKey, type ObjectStore, putObject } from "../storage";
 import { type AuditAction, auditStatementWhen, insertWhen } from "./audit";
 import { seesCaptured } from "./card-view";
 import { getCard, ownedCard, showCard } from "./cards";
@@ -16,7 +17,7 @@ export const CARD_IMAGE_SIDE = 1600;
 
 /** Where card pictures are stored and how they are re-encoded: the avatars' bucket and binding. */
 export interface CardImageStorage {
-  bucket: R2Bucket;
+  bucket: ObjectStore;
   images: ImagesBinding;
   fetcher?: Fetcher | undefined;
 }
@@ -122,7 +123,7 @@ export async function cardImageFile(
   ctx: ServiceContext,
   cardId: string,
   imageId: string,
-  bucket: R2Bucket,
+  bucket: ObjectStore,
 ) {
   const card = await getCard(ctx, cardId);
   const [image] = await ctx.db
@@ -176,10 +177,9 @@ async function storeImage(
   if (description !== undefined) checkDescription(card, description);
   const normalized = await normalizeBoundedImage(deps.images, input, CARD_IMAGE_SIDE);
   const imageId = newId();
-  // A random key names neither the learner nor the card, as avatar keys do.
-  const objectKey = `cards/${crypto.randomUUID()}.webp`;
+  const objectKey = newCardPictureKey();
   try {
-    await deps.bucket.put(objectKey, normalized.bytes, {
+    await putObject(deps.bucket, objectKey, normalized.bytes, {
       httpMetadata: { contentType: "image/webp" },
     });
   } catch {

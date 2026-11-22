@@ -2,6 +2,7 @@ import { canSpeakTerm, LanguageTag } from "@lymi/core";
 import { and, eq, isNull } from "@lymi/core/db";
 import { livePublicationMedia } from "@lymi/core/publication-media";
 import { type Db, schema } from "../db";
+import type { ObjectStore } from "../storage";
 import type { AnalyticsWriter } from "./analytics";
 import { type AudioDependencies, pronunciationAudio } from "./audio";
 import { ServiceError } from "./context";
@@ -13,7 +14,7 @@ export async function publicMediaFile(
   db: Db,
   cardId: string,
   kind: PublicMediaKind,
-  storage: { images: R2Bucket; audio: R2Bucket },
+  storage: { images: ObjectStore; audio: ObjectStore },
 ): Promise<R2ObjectBody> {
   const [row] = await livePublicationMedia(db, { cardId }, "delivery");
   const key = kind === "image" ? row?.imageKey : row?.audioKey;

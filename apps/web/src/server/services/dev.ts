@@ -16,6 +16,7 @@ import { type Db, schema } from "../db";
 import type { Persona, PersonaCard, PersonaDeck } from "../dev/personas";
 import { accountPersona, accounts, personaEmail } from "../dev/personas";
 import { PICTURES } from "../dev/pictures";
+import type { ObjectStore } from "../storage";
 import { auditStatement } from "./audit";
 import { type CardImageStorage, uploadCardImage } from "./card-images";
 import { addCards } from "./cards";
@@ -76,7 +77,7 @@ export async function devCounts({ db, userId }: ServiceContext): Promise<DevCoun
  */
 export async function resetAccount(
   { db, userId }: ServiceContext,
-  pictures?: R2Bucket,
+  pictures?: ObjectStore,
 ): Promise<void> {
   if (pictures) {
     const keys = await db

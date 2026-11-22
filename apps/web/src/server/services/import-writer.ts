@@ -36,6 +36,7 @@ import { type BatchStatement, batchStatements } from "../batch";
 import { schema } from "../db";
 import type { ImportChoices, SourceAdapter, SourceSummary } from "../imports/adapter";
 import { ImportFileError } from "../imports/files";
+import { importNotesKey, type ObjectStore } from "../storage";
 import { track } from "./analytics";
 import { recordFirstDeck } from "./analytics-deck";
 import { auditStatement } from "./audit";
@@ -62,12 +63,8 @@ type Statement = BatchStatement;
 const JSON_PARAM_BYTES = 900_000;
 const DUPLICATE_EXAMPLES = 20;
 
-export function noteChunkKey(objectKey: string, chunk: number) {
-  return `${objectKey}.notes/${chunk}.json`;
-}
-
-export async function readNoteChunk<Note>(bucket: R2Bucket, objectKey: string, chunk: number) {
-  const object = await bucket.get(noteChunkKey(objectKey, chunk));
+export async function readNoteChunk<Note>(bucket: ObjectStore, objectKey: string, chunk: number) {
+  const object = await bucket.get(importNotesKey(objectKey, chunk));
   if (!object) throw new ServiceError("unavailable", "The import's stored notes are missing");
   return (await object.json()) as Note[];
 }
@@ -377,7 +374,7 @@ export type ImportWork<Note> = {
   summary: StoredSummary;
   choices: ImportChoices;
   adapter: SourceAdapter<Note>;
-  bucket: R2Bucket;
+  bucket: ObjectStore;
 };
 
 function cardLanguage(card: ImportedCard, languages: ImportChoices["languages"]) {
@@ -991,7 +988,7 @@ export async function attachPictures<Note>(
   work: ImportWork<Note>,
   file: Parameters<SourceAdapter<Note>["media"]>[0],
   pending: PendingPicture[],
-  storage: Partial<CardImageStorage> & { audio?: R2Bucket | undefined },
+  storage: Partial<CardImageStorage> & { audio?: ObjectStore | undefined },
 ): Promise<AttachedMedia> {
   const read = await work.adapter.media(file);
   const images = imageStorage(storage);

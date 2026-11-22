@@ -180,17 +180,21 @@ export const ITEMS = [
   },
   {
     id: "account-erasure",
-    files: ["apps/web/src/server/services/account-deletion.ts"],
-    paths: ["packages/core/src/schema/**/*.ts", "apps/web/src/server/**/*.ts"],
+    files: [
+      "apps/web/src/server/services/account-deletion.ts",
+      "apps/web/src/server/services/erasure.ts",
+      "apps/web/src/server/services/takedowns.ts",
+    ],
+    paths: ["apps/web/src/server/**/*.ts"],
     ignore: TESTS,
-    added: /\bsqliteTable\(|\.put\(\s*[`'"][\w-]+\//,
+    added: /\barchivedAt:\s*null\b|\barchived_at\s*=\s*null\b/,
     check:
-      "Does deleting the account, or taking the content down, reach this new data: rows, R2 objects and grants held by another service?",
-    why: "Card audio stayed in R2 after deletion, shared decks and Apple's grant needed handling, and a restore undid a takedown.",
-    sources: [787, 972, 1164],
+      "Can this restore bring back something Lymi took down? Does deleting the account end a grant another service holds, and does a kept row or copy hold only what `erasure.ts` says?",
+    why: "A restore undid a takedown, and shared decks and Apple's grant needed handling. Tables and R2 objects deletion misses fail `erasure.test.ts`.",
+    sources: [972, 1164],
     example: {
-      file: "packages/core/src/schema/app.ts",
-      line: 'export const cardNotes = sqliteTable("card_notes", {',
+      file: "apps/web/src/server/services/sections.ts",
+      line: "    db.update(schema.sections).set({ archivedAt: null })",
     },
   },
 ];

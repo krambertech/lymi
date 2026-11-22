@@ -207,6 +207,17 @@
       }
     },
     {
+      "files": ["apps/site/src/**", "apps/web/src/client/**"],
+      "excludeFiles": [
+        "apps/site/src/lib/use-clip.ts",
+        "apps/site/src/lib/learn/player.ts",
+        "apps/web/src/client/lib/use-clip.ts"
+      ],
+      "rules": {
+        "lymi/clip-owner": "error"
+      }
+    },
+    {
       "files": ["e2e/**"],
       "rules": {
         "lymi/no-flaky-masks": "error"

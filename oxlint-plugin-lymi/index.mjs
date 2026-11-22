@@ -1,6 +1,7 @@
 import { definePlugin } from "@oxlint/plugins";
 import announceLiveRegion from "./rules/announce-live-region.mjs";
 import clearText from "./rules/clear-text.mjs";
+import clipOwner from "./rules/clip-owner.mjs";
 import dismissOnDrag from "./rules/dismiss-on-drag.mjs";
 import edgeSwipe from "./rules/edge-swipe.mjs";
 import fieldError from "./rules/field-error.mjs";
@@ -30,6 +31,7 @@ export default definePlugin({
     "clear-text": clearText,
     "dismiss-on-drag": dismissOnDrag,
     "edge-swipe": edgeSwipe,
+    "clip-owner": clipOwner,
     "field-error": fieldError,
     "fixed-host": fixedHost,
     "form-header": formHeader,

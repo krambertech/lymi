@@ -2,7 +2,7 @@ import { LandingView } from "../landing/LandingView";
 import { Island } from "./Island";
 
 interface Props {
-  locale?: string | undefined;
+  locale: string | undefined;
 }
 
 export default function LandingPage({ locale }: Props) {

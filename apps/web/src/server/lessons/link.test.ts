@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import { markdownSentences, readableHtml } from "./link";
-import { findTerm } from "./quote";
+import { findTerm, holdsEveryWord } from "./quote";
 
 describe("readableHtml", () => {
   it("drops scripts, JSON-LD and styles before the page is converted", () => {
@@ -65,5 +65,20 @@ describe("findTerm", () => {
 
   it("finds a term inside text written without spaces", () => {
     expect(findTerm("毎朝パンを食べます。", "パン")).toMatchObject({ start: 2 });
+  });
+});
+
+describe("holdsEveryWord", () => {
+  it.each([
+    ["Formano un complesso proteico detto glutine.", "il glutine", true],
+    ["Con burro, olio d'oliva e strutto.", "l'olio d'oliva", true],
+    ["Esempi di pani dolci consumati in Europa.", "il pane dolce", true],
+    ["Se stai cercando altri significati, vedi Pane.", "il pane dolce", false],
+    ["Pani con l'uovo.", "l'uovo", true],
+    ["Der Hund schläft.", "der Hund", true],
+    ["Wo ist es?", "es", true],
+    ["毎朝パンを食べます。", "パン", true],
+  ])("%s holds %s: %s", (sentence, term, holds) => {
+    expect(holdsEveryWord(sentence, term)).toBe(holds);
   });
 });

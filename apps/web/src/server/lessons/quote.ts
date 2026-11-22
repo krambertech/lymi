@@ -27,8 +27,10 @@ export function findTerm(sentence: string, term: string): { start: number; end: 
 }
 
 export function holdsEveryWord(sentence: string, term: string): boolean {
-  const words = (term.split(" · ")[0] ?? "").split(/\s+/).filter(Boolean);
-  return words.length > 0 && words.every((word) => findTerm(sentence, word) !== null);
+  const words = (term.split(" · ")[0] ?? "").split(/[\s'’]+/).filter(Boolean);
+  const long = words.filter((word) => [...word].length >= 4);
+  const needed = long.length > 0 ? long : words;
+  return needed.length > 0 && needed.every((word) => findTerm(sentence, word) !== null);
 }
 
 export function quoteAround(sentence: string, term: string): string {

@@ -26,3 +26,13 @@ export function phoneHandOver({ simulator, udid, metroPort, persona, feature, fl
     ...numbered(steps),
   ];
 }
+
+export function returnPath(url, entry) {
+  const at = new URL(url);
+  const secrets = entry ? [...new URL(entry).searchParams.values()].filter(Boolean) : [];
+  const kept = at.search
+    .slice(1)
+    .split("&")
+    .filter((part) => part && !secrets.some((secret) => part.includes(secret)));
+  return `${at.pathname}${kept.length > 0 ? `?${kept.join("&")}` : ""}`;
+}

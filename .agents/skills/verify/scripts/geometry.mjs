@@ -163,8 +163,8 @@ export function cropOf(box, viewport, pad = 24) {
   const x = Math.max(0, box.x - pad);
   const y = Math.max(0, box.y - pad);
   return {
-    x,
-    y,
+    x: x + viewport.scrollX,
+    y: y + viewport.scrollY,
     width: Math.min(viewport.w, box.x + box.w + pad) - x,
     height: Math.min(viewport.h, box.y + box.h + pad) - y,
   };

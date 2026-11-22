@@ -1,6 +1,10 @@
 import assert from "node:assert/strict";
 import { test } from "node:test";
-import { handOver, phoneHandOver } from "../.agents/skills/verify/scripts/hand-over.mjs";
+import {
+  handOver,
+  phoneHandOver,
+  returnPath,
+} from "../.agents/skills/verify/scripts/hand-over.mjs";
 
 test("the hand-over gives a sign-in link for the end and the start, and every step", () => {
   const given = {
@@ -24,6 +28,19 @@ test("the hand-over gives a sign-in link for the end and the start, and every st
       .includes("secret"),
     false,
   );
+});
+
+test("the way back keeps the product's query and drops the preview link's key", () => {
+  const entry = "https://pr-1-lymi.workers.dev/_preview?key=aB3_secret-key";
+  const back = (path, link) => returnPath(`https://pr-1-lymi.workers.dev${path}`, link);
+  assert.equal(back("/library/d1?card=c1", entry), "/library/d1?card=c1");
+  assert.equal(
+    back("/review?deck=d1&cards=%5B%22c1%22%5D", entry),
+    "/review?deck=d1&cards=%5B%22c1%22%5D",
+  );
+  assert.equal(back("/library/d1?key=aB3_secret-key&card=c1", entry), "/library/d1?card=c1");
+  assert.equal(back("/login?returnTo=%2F_preview%3Fkey%3DaB3_secret-key", entry), "/login");
+  assert.equal(back("/review?deck=d1", undefined), "/review?deck=d1");
 });
 
 test("the phone's hand-over names the Simulator and keeps only what a learner does", () => {

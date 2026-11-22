@@ -229,5 +229,6 @@ export function measure() {
 
   const shifts = window.lymiShifts ?? [];
   window.lymiShifts = [];
-  return { viewport: { w: innerWidth, h: innerHeight }, rows, icons, wide, headings, shifts };
+  const viewport = { w: innerWidth, h: innerHeight, scrollX, scrollY };
+  return { viewport, rows, icons, wide, headings, shifts };
 }

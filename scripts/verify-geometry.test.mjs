@@ -1,6 +1,7 @@
 import assert from "node:assert/strict";
 import { after, before, test } from "node:test";
 import { chromium } from "@playwright/test";
+import { captureCrops } from "../.agents/skills/verify/scripts/crop.mjs";
 import { cropOf, geometryNotes } from "../.agents/skills/verify/scripts/geometry.mjs";
 import { measure, watchShifts } from "../.agents/skills/verify/scripts/measure.mjs";
 
@@ -152,10 +153,43 @@ test("the same pair keeps one key while its label changes", async () => {
   assert.equal(keys[0], keys[1]);
 });
 
-test("a crop stays inside the viewport", () => {
-  assert.deepEqual(cropOf({ x: 4, y: 580, w: 100, h: 32 }, { w: 800, h: 600 }), {
+test("a crop of a scrolled page holds the controls it reports", async () => {
+  const red = "border:0;color:transparent;background:rgb(255,0,0)";
+  await page.setContent(
+    `${STYLE}<main style="height:3000px;padding-top:1500px"><div class="row"><button style="${red}">Filter</button><button style="${red};height:34px">Sort</button></div></main>`,
+  );
+  await page.evaluate(() => scrollTo(0, 1300));
+  const measured = await page.evaluate(measure);
+  const found = geometryNotes(measured);
+  assert.equal(found.length, 1);
+  let crop;
+  await captureCrops(page, found, measured.viewport, (_note, _i, png) => {
+    crop = png.toString("base64");
+  });
+  const reds = await page.evaluate(async (png) => {
+    const image = new Image();
+    image.src = `data:image/png;base64,${png}`;
+    await image.decode();
+    const canvas = new OffscreenCanvas(image.width, image.height);
+    const context = canvas.getContext("2d");
+    context.drawImage(image, 0, 0);
+    const { data } = context.getImageData(0, 0, image.width, image.height);
+    let count = 0;
+    for (let i = 0; i < data.length; i += 4) {
+      if (data[i] > 250 && data[i + 1] < 5 && data[i + 2] < 5) count += 1;
+    }
+    return count;
+  }, crop);
+  const [filter, sort] = measured.rows[0].controls.map(({ box }) => box.w * box.h * 9);
+  const share = reds / (filter + sort);
+  assert.ok(share > 0.98 && share < 1.02, `${reds} red pixels of ${filter + sort}`);
+});
+
+test("a crop stays inside the viewport and moves with the page's scroll", () => {
+  const box = { x: 4, y: 580, w: 100, h: 32 };
+  assert.deepEqual(cropOf(box, { w: 800, h: 600, scrollX: 0, scrollY: 1300 }), {
     x: 0,
-    y: 556,
+    y: 1856,
     width: 128,
     height: 44,
   });

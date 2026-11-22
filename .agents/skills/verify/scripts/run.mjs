@@ -8,9 +8,10 @@ import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs, stripVTControlCharacters } from "node:util";
 import { chromium, devices, expect } from "@playwright/test";
+import { captureCrops } from "./crop.mjs";
 import { doctor, git, report } from "./doctor.mjs";
-import { cropOf, geometryNotes } from "./geometry.mjs";
-import { handOver } from "./hand-over.mjs";
+import { geometryNotes } from "./geometry.mjs";
+import { handOver, returnPath } from "./hand-over.mjs";
 import { measure, settle, watchShifts } from "./measure.mjs";
 import { timedOut } from "./timeouts.mjs";
 
@@ -145,17 +146,13 @@ async function driveFeature(browser, name) {
       notes.set(note.key, note);
       return true;
     });
-    if (found.length === 0) return;
-    const cdp = await context.newCDPSession(page);
-    for (const [i, note] of found.entries()) {
-      note.step = prefix.slice(0, 2);
-      if (!note.box) continue;
-      const clip = { ...cropOf(note.box, measured.viewport), scale: 3 };
-      const { data } = await cdp.send("Page.captureScreenshot", { format: "png", clip });
+    for (const note of found) note.step = prefix.slice(0, 2);
+    const boxed = found.filter((note) => note.box);
+    if (boxed.length === 0) return;
+    await captureCrops(page, boxed, measured.viewport, (note, i, png) => {
       note.file = `${prefix}.${note.rule}-${i + 1}.png`;
-      writeFileSync(join(dir, note.file), Buffer.from(data, "base64"));
-    }
-    await cdp.detach();
+      writeFileSync(join(dir, note.file), png);
+    });
   };
 
   const steps = [];
@@ -171,8 +168,7 @@ async function driveFeature(browser, name) {
       record.timedOut = timedOut(error);
       record.error = failure(error);
     }
-    const at = new URL(page.url());
-    record.path = where === "local" ? `${at.pathname}${at.search}` : at.pathname;
+    record.path = returnPath(page.url(), values.entry);
     await look(prefix).catch((error) => problems.push(`geometry: ${failure(error)}`));
     await page
       .screenshot({ path: join(dir, `${prefix}.png`), scale: values.phone ? "device" : "css" })

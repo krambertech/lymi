@@ -242,7 +242,7 @@ function CommandGroup({
   const { skin } = React.useContext(PaletteContext);
   const id = React.useId();
   return (
-    // biome-ignore lint/a11y/useSemanticElements: options grouped inside a listbox; a fieldset groups form controls.
+    // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- options grouped inside a listbox; a fieldset groups form controls.
     <div role="group" aria-labelledby={label ? id : undefined} className="not-first:mt-1.5">
       {label && (
         <p

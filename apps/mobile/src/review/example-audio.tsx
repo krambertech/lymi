@@ -1,8 +1,8 @@
 import { useLingui } from "@lingui/react/macro";
 import { api } from "@lymi/client/api";
 import { canPlayExample } from "@lymi/core";
-import { fetch } from "expo/fetch";
 import { File, Paths } from "expo-file-system";
+import { fetch } from "expo/fetch";
 import { type ReactNode, useEffect, useRef, useState } from "react";
 import { Pressable } from "react-native";
 import { useSessionHeaders } from "../auth/client";
@@ -76,7 +76,7 @@ function useAudioExample(
   const reported = useRef(report);
   reported.current = report;
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a new example, or another card, stops the clip and starts quiet
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- a new example, or another card, stops the clip and starts quiet
   useEffect(() => {
     player.pause();
     loaded.current = null;

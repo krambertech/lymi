@@ -1,12 +1,6 @@
-/** The link scheme the system browser hands the sign-in back on; `DESKTOP_APP_SCHEME` on the server. */
 export const SCHEME = "app.lymi.desktop";
-/** The end of Better Auth's session cookie name, whatever its prefix. */
 export const SESSION_COOKIE = "session_token";
 
-/**
- * The one-time code and state in an `app.lymi.desktop://auth/callback#token=…` link. The page sends
- * `scheme:/auth/callback`; the browser hands macOS `scheme://auth/callback`; both are read.
- */
 export function parseCallback(link: string): { identifier: string; state: string } | null {
   const url = URL.parse(link);
   const path = url && `${url.host ? `/${url.host}` : ""}${url.pathname}`;
@@ -38,7 +32,6 @@ export interface CookieDetails {
   sameSite?: "unspecified" | "no_restriction" | "lax" | "strict";
 }
 
-/** A `Set-Cookie` header as Electron's `cookies.set` takes it, scoped to the product. */
 export function cookieOf(header: string, productUrl: string, now = Date.now()): CookieDetails {
   const [pair = "", ...attributes] = header.split(";").map((part) => part.trim());
   const split = pair.indexOf("=");
@@ -55,7 +48,6 @@ export function cookieOf(header: string, productUrl: string, now = Date.now()): 
     else if (name === "domain") cookie.domain = value;
     else if (name === "httponly") cookie.httpOnly = true;
     else if (name === "secure") cookie.secure = true;
-    // Max-Age wins over Expires, as in a browser; without either the cookie ends with the app.
     else if (name === "max-age") cookie.expirationDate = now / 1000 + Number(value);
     else if (name === "expires" && cookie.expirationDate === undefined) {
       const at = Date.parse(value);
@@ -69,10 +61,6 @@ export function cookieOf(header: string, productUrl: string, now = Date.now()): 
   return cookie;
 }
 
-/**
- * Whether a session cookie change is a sign-in or sign-out, given whether a session was held. The
- * daily refresh rewrites the cookie in place, an overwrite then an insert, and is neither.
- */
 export function sessionChange(
   hasSession: boolean,
   change: { name: string; cause: string; removed: boolean },

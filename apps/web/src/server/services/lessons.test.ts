@@ -278,7 +278,6 @@ describe("reporting a read", () => {
     });
     expect(events).toContainEqual({ name: "cards_added", source: "lesson", count: 1, fields: [] });
 
-    // A card from an article keeps its sentence and link, and says so without their text.
     events.length = 0;
     await addCards(
       ctx,
@@ -454,7 +453,6 @@ describe("worthAsking", () => {
 
 type Site = Record<string, { status?: number; body?: string; headers?: Record<string, string> }>;
 
-/** A web of pages by URL, recording every URL fetched. */
 function fakeWeb(site: Site) {
   const fetched: string[] = [];
   const request = async (input: RequestInfo | URL) => {
@@ -467,7 +465,6 @@ function fakeWeb(site: Site) {
       headers: page.headers ?? { "content-type": "text/html; charset=utf-8" },
     });
   };
-  // The markdown stands in for Workers AI: the page's paragraphs, one per line.
   const toMarkdown = async ({ html }: { html: string }) =>
     [...html.matchAll(/<p>([^<]*)<\/p>/g)].map((m) => m[1]).join("\n");
   return { fetched, deps: { request, toMarkdown } };
@@ -719,7 +716,6 @@ describe("reading an article", () => {
             term("t1", "laulma", { sentence: 2, seen: "The birds are singing." }),
             term("t2", "kevad", { sentence: 0, seen: "Kevad on käes." }),
             term("t3", "turg", { sentence: 3, seen: "turul" }),
-            // A wrong number is not trusted: the sentence that holds the term is used instead.
             term("t4", "lind", { sentence: 1, seen: "Linnud laulavad aias." }),
           ],
           questions: [],

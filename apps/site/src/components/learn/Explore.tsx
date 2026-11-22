@@ -180,7 +180,11 @@ export interface RowItem {
   sub?: ReactNode;
   /** No clip means a row to read, not to play. */
   src: string | null;
-  label: string;
+  /**
+   * Only for a row whose text can't be read as it stands, such as a word split into syllables:
+   * the word and its meaning. Otherwise the row's own text names it, meaning included.
+   */
+  label?: string;
 }
 
 /** A list of things to hear on one white plate. A tap anywhere on a row plays it. */
@@ -202,7 +206,7 @@ export function ListenRows({
       )}
     >
       {items.map((item, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: a lesson's list never reorders
+        // oxlint-disable-next-line react/no-array-index-key -- a lesson's list never reorders
         <Row key={i} item={item} lead={lead} />
       ))}
     </ul>
@@ -374,7 +378,7 @@ function CompareRow(props: {
         >
           {clip?.bars.map((level, i) => (
             <i
-              // biome-ignore lint/suspicious/noArrayIndexKey: a bar's place in the clip is its identity
+              // oxlint-disable-next-line react/no-array-index-key -- a bar's place in the clip is its identity
               key={i}
               style={{ height: `${Math.max(10, Math.round(level * 100))}%` }}
               data-lit={(i + 0.5) / clip.bars.length <= lit ? "" : undefined}

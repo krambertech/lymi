@@ -12,8 +12,6 @@ const YOUTUBE = "https://youtu.be/dQw4w9WgXcQ";
 const vars = fileURLToPath(new URL("../../../../apps/web/.dev.vars", import.meta.url));
 
 export async function env({ api }) {
-  // The route refuses before any link is looked at when no reader is configured; any key reaches
-  // the YouTube refusal, which never calls the reader.
   const key = existsSync(vars) && /^ANTHROPIC_API_KEY=\S+/m.test(readFileSync(vars, "utf8"));
   if (!key)
     throw new Error("Smart add needs ANTHROPIC_API_KEY in apps/web/.dev.vars, even a placeholder");
@@ -42,7 +40,6 @@ export async function env({ api }) {
   return { DECK, TERM, SITE, YOUTUBE };
 }
 
-/** The refusal adds nothing, and the article's card keeps its link. */
 export async function check({ api, poll }) {
   return poll(async () => {
     const { cards } = await api(`/api/cards?query=${encodeURIComponent(TERM)}`);

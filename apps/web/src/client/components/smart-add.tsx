@@ -104,7 +104,6 @@ const LESSON_ACCESS = ["lesson-reads", "access"];
 type Daily = NonNullable<LessonAccessOut["daily"]>;
 type LongRead = Extract<LinkReadRefusal, { kind: "long_read" }>;
 
-/** A link as the list shows it: its site and path, without the scheme. */
 function shownLink(link: string): string {
   return link.replace(/^https:\/\//i, "").replace(/^www\./i, "");
 }
@@ -139,12 +138,7 @@ function SmartAdd({
   const [pages, setPages] = useState<Page[]>([]);
   const [text, setText] = useState("");
   const [link, setLink] = useState("");
-  /** The article a link led to, whose address each added card keeps as its source. */
   const [source, setSource] = useState<{ title: string; url: string } | null>(null);
-  /**
-   * Why the last link was not read: a long article waits for the learner to agree to its count of
-   * lessons, and a YouTube video offers to paste its transcript instead.
-   */
   const [refusal, setRefusal] = useState<LinkReadRefusal | null>(null);
   const longRead = refusal?.kind === "long_read" ? refusal : null;
   const offerTranscript = refusal?.kind === "refused" && refusal.refused === "youtube";
@@ -184,7 +178,6 @@ function SmartAdd({
     [],
   );
 
-  /** What Smart add says about a link it would not read. */
   const linkMessage = (refusal: LinkReadRefusal): string => {
     switch (refusal.kind) {
       case "refused":
@@ -508,13 +501,10 @@ function InputStep(props: {
   onPagesChange: (pages: Page[]) => void;
   text: string;
   onTextChange: (text: string) => void;
-  /** An article's link, read on its own in place of pages and text. */
   link: string;
   onLinkChange: (link: string) => void;
-  /** A YouTube link was refused: offer to paste the video's transcript instead. */
   offerTranscript: boolean;
   onPasteTranscript: () => void;
-  /** A long article's count of reads, waiting for the learner to agree. */
   longRead: LongRead | null;
   error: string | undefined;
   onRead: () => void;
@@ -632,7 +622,6 @@ function InputStep(props: {
       hint: t`Paste notes or a transcript`,
       onClick: () => setWriting(true),
     },
-    // A link is read on its own, so it is offered only before anything else is added.
     ...(pages.length === 0 && words === 0
       ? [
           {
@@ -1000,7 +989,6 @@ export function ReadingStep({
 }: {
   pages: ScanPage[];
   text: string;
-  /** Reading an article from its link, which the server fetches first. */
   article?: boolean;
   found: number;
   finished: boolean;
@@ -1175,7 +1163,6 @@ function ListStep({
   onDeckChange: (deckId: string) => void;
   terms: LessonTerm[];
   dropped: Set<string>;
-  /** Read from an article's link, so each term carries its sentence. */
   article: boolean;
   onBack: () => void;
   onAdd: (terms: LessonTerm[]) => Promise<void>;

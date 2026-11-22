@@ -97,15 +97,9 @@ export default function SmartAdd() {
   const [pages, setPages] = useState<Page[]>([]);
   const [text, setText] = useState("");
   const [link, setLink] = useState("");
-  /** The link as typed on its own step, kept apart until Done so Back leaves the old one. */
   const [draftLink, setDraftLink] = useState("");
   const [linkError, setLinkError] = useState<string>();
-  /** The article a link led to, whose address each added card keeps as its source. */
   const [source, setSource] = useState<{ title: string; url: string } | null>(null);
-  /**
-   * Why the last link was not read: a long article waits for the learner to agree to its count of
-   * lessons, and a YouTube video offers to paste its transcript instead.
-   */
   const [refusal, setRefusal] = useState<LinkReadRefusal | null>(null);
   const longRead = refusal?.kind === "long_read" ? refusal : null;
   const offerTranscript = refusal?.kind === "refused" && refusal.refused === "youtube";
@@ -157,7 +151,7 @@ export default function SmartAdd() {
   // The deck the server names must be on the list, though the web may have changed the decks since.
   useEffect(() => void qc.invalidateQueries({ queryKey: ["decks"] }), [qc]);
   // A new step starts at its top.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: runs on each step
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- runs on each step
   useEffect(() => scroll.current?.scrollTo({ y: 0, animated: false }), [step]);
 
   // A swipe down asks before it throws the lesson away, as a form with something typed does.
@@ -227,7 +221,6 @@ export default function SmartAdd() {
       hint: t`Paste notes or a transcript`,
       onPress: () => go("writing"),
     },
-    // A link is read on its own, so it is offered only before anything else is added.
     ...(pages.length === 0 && words === 0
       ? [
           {
@@ -245,7 +238,6 @@ export default function SmartAdd() {
       : []),
   ];
 
-  /** What Smart add says about a link it would not read. */
   const linkMessage = (refusal: LinkReadRefusal): string => {
     switch (refusal.kind) {
       case "refused":
@@ -452,7 +444,6 @@ export default function SmartAdd() {
               term: edit?.term ?? term.term,
               ...meaning,
               ...reading,
-              // The sentence is the article's own, so it stays with the term it was found for.
               ...(term.example && (!edit || edit.term === term.term)
                 ? { example: term.example, exampleSource: "lesson" as const }
                 : {}),

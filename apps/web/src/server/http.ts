@@ -1,8 +1,6 @@
 import { ErrorOut } from "@lymi/core";
 import { APIError } from "better-auth/api";
 import type { Context, ErrorHandler, MiddlewareHandler, ValidationTargets } from "hono";
-import { HTTPException } from "hono/http-exception";
-import { routePath } from "hono/route";
 import {
   type DescribeRouteOptions,
   describeRoute,
@@ -10,6 +8,8 @@ import {
   uniqueSymbol,
   validator,
 } from "hono-openapi";
+import { HTTPException } from "hono/http-exception";
+import { routePath } from "hono/route";
 import type { ZodType } from "zod";
 import { AiGatewayError } from "./ai/gateway";
 import type { AppEnv } from "./index";

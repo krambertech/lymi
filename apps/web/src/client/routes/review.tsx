@@ -502,6 +502,7 @@ function Review() {
         });
       });
     },
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
     [revealed, current, aid, showing, recallTimes, flow.grade, qc, t],
   );
 
@@ -532,6 +533,7 @@ function Review() {
   const leave = useCallback(() => {
     setCameBack(null);
     if (!flow.pause()) void navigate({ to: "/today" });
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
   }, [flow.pause, navigate]);
 
   useEffect(() => {

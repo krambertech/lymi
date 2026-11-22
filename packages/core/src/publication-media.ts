@@ -2,7 +2,7 @@ import { and, eq, inArray, isNotNull, isNull, ne, or, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
 import { cardImages, cards, deckPublications, decks } from "./schema/app";
 
-// biome-ignore lint/suspicious/noExplicitAny: both Workers pass their own typed D1 database.
+// oxlint-disable-next-line typescript/no-explicit-any -- both Workers pass their own typed D1 database.
 type MediaDb = BaseSQLiteDatabase<"async", any, any>;
 
 type Scope =
@@ -46,6 +46,8 @@ export function livePublicationMedia(
         // The page needs a description to render the picture, so bytes without one stay private.
         isNotNull(cardImages.description),
         ne(cardImages.description, ""),
+        // A frame the learner's own tool captured is theirs alone. CONTEXT.md, Recording.
+        eq(cardImages.captured, false),
       ),
     )
     .where(

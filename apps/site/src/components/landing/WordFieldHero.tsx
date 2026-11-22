@@ -58,7 +58,7 @@ function Word({ children }: { children?: ReactNode }) {
           {text && animate && !still
             ? Array.from(text).map((char, i) => (
                 <motion.span
-                  // biome-ignore lint/suspicious/noArrayIndexKey: a letter's place in the word is its identity
+                  // oxlint-disable-next-line react/no-array-index-key -- a letter's place in the word is its identity
                   key={i}
                   className="inline-block whitespace-pre"
                   initial={{ opacity: 0, y: "0.55em", filter: "blur(8px)" }}

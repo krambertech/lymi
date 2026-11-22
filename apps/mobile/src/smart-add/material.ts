@@ -119,10 +119,7 @@ export async function chooseFiles(room: number): Promise<Picked> {
   return { pages, text: texts.filter(Boolean).join("\n\n"), over };
 }
 
-/**
- * The read's form: Expo's fetch sends a file it can read the bytes of, not React Native's `{ uri }`.
- * A link is read on its own; `reads` is the count the learner agreed a long article takes.
- */
+/** The read's form: Expo's fetch sends a file it can read the bytes of, not React Native's `{ uri }`. */
 export function lessonForm(
   material: { pages: Page[]; text: string; link: string },
   deckId: string | undefined,
@@ -141,14 +138,12 @@ export function lessonForm(
   return form;
 }
 
-/** A link as the list shows it: its site and path, without the scheme. */
 export const shownLink = (link: string) =>
   link
     .trim()
     .replace(/^https:\/\//i, "")
     .replace(/^www\./i, "");
 
-/** Whether a pasted link is one Smart add can try: https, with a host. */
 export const usableLink = (link: string) => /^https:\/\/\S+\.\S+/i.test(link.trim());
 
 export const wordCount = (text: string) => (text.trim() ? text.trim().split(/\s+/).length : 0);

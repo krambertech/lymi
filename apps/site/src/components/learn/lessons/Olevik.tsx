@@ -3,7 +3,7 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { ArrowRight } from "lucide-react";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS } from "../../../lib/learn/catalogue";
+import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -15,8 +15,8 @@ import {
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
-import { Aside, LessonView, Prose } from "../LessonView";
 import type { Glossary } from "../lesson-context";
+import { Aside, LessonView, Prose } from "../LessonView";
 import { type ChoiceItem, ChoiceRound, type GapItem, GapRound, Quiz } from "../Quiz";
 import { Playing } from "../Sound";
 import { Word } from "../Word";
@@ -54,7 +54,7 @@ const ENDING_TIPS: Record<Ending, { tip: MessageDescriptor; elama: MessageDescri
   b: { tip: msg`The ending for ta, he or she. Olema has on here.`, elama: msg`he or she lives` },
   me: { tip: msg`The ending for me, we.`, elama: msg`we live` },
   te: {
-    tip: msg`The ending for te, you to more than one or polite you.`,
+    tip: msg`The ending for te: you, to more than one; polite you.`,
     elama: msg`you live, to more than one; polite you live`,
   },
   vad: { tip: msg`The ending for nad, they. Olema has on here too.`, elama: msg`they live` },
@@ -138,7 +138,7 @@ export const SENTENCES: readonly Sentence[] = [
     id: "s-opin-eesti",
     verb: "õppima",
     ending: "n",
-    en: msg`I'm learning Estonian.`,
+    en: msg`I’m learning Estonian.`,
     listed: true,
   },
   { id: "s-mida-teed", verb: "tegema", ending: "d", en: msg`What are you doing?`, listed: true },
@@ -146,7 +146,7 @@ export const SENTENCES: readonly Sentence[] = [
     id: "s-loen-raamatut",
     verb: "lugema",
     ending: "n",
-    en: msg`I'm reading a book.`,
+    en: msg`I’m reading a book.`,
     listed: true,
   },
   {
@@ -160,7 +160,7 @@ export const SENTENCES: readonly Sentence[] = [
     id: "s-ootame-bussi",
     verb: "ootama",
     ending: "me",
-    en: msg`We're waiting for the bus.`,
+    en: msg`We’re waiting for the bus.`,
     listed: true,
   },
   {
@@ -174,7 +174,7 @@ export const SENTENCES: readonly Sentence[] = [
     id: "s-joovad-kohvi",
     verb: "jooma",
     ending: "vad",
-    en: msg`They're drinking coffee.`,
+    en: msg`They’re drinking coffee.`,
     listed: true,
   },
   {
@@ -209,7 +209,7 @@ export const SENTENCES: readonly Sentence[] = [
     id: "c-opin-eesti",
     verb: "õppima",
     ending: "n",
-    en: msg`I'm learning Estonian.`,
+    en: msg`I’m learning Estonian.`,
     listed: false,
   },
 ];
@@ -232,7 +232,7 @@ const GLOSSARY: Glossary = {
   olete: { en: msg`you are, to more than one; polite you are` },
   on: { en: msg`he or she is; they are` },
   "ma loen": {
-    en: msg`I read; I'm reading`,
+    en: msg`I read; I’m reading`,
     show: "Ma loen",
     note: msg`One present tense for both.`,
   },
@@ -340,7 +340,8 @@ export function OlevikLesson() {
   const pronouns = at("Mina, sina, tema");
   const gradation = at("Jalg, jala");
   const where = at("Tallinnas, Tartus");
-  const partitive = at("Kaks kassi");
+  const partitive = lessonBySlug("osastav")?.n;
+  const verbForms = lessonBySlug("verbi-pohivormid")?.n;
 
   const endings = useMemo(
     () =>
@@ -446,17 +447,18 @@ export function OlevikLesson() {
           on its stem, <b lang="et">ela-</b>.
         </Trans>,
         <Trans key="2">
-          <b lang="et">ma -n, sa -d, ta -b, me -me, te -te, nad -vad</b>:{" "}
+          Each pronoun has its ending:{" "}
+          <b lang="et">ma -n, sa -d, ta -b, me -me, te -te, nad -vad</b>, so{" "}
           <b lang="et">elan, elad, elab, elame, elate, elavad</b>.
         </Trans>,
         <Trans key="3">
           Some stems change: <b lang="et">lugema, loen</b>. Learn each verb with its I form.
         </Trans>,
         <Trans key="4">
-          One present tense: <b lang="et">ma loen</b> is both I read and I'm reading.
+          One present tense: <b lang="et">ma loen</b> is both I read and I’m reading.
         </Trans>,
         <Trans key="5">
-          The ending says who, so ma and sa can go: <b lang="et">Elan Tallinnas.</b>
+          The ending says who, so ma, sa, me and te can go: <b lang="et">Elan Tallinnas.</b>
         </Trans>,
       ]}
       sections={[
@@ -488,7 +490,7 @@ export function OlevikLesson() {
                   phoneColumns={3}
                   empty={{
                     title: t`Tap an ending`,
-                    tip: t`You'll hear elama with it and who it's for.`,
+                    tip: t`You’ll hear elama with it and who it’s for.`,
                   }}
                   items={endings}
                 />
@@ -511,19 +513,20 @@ export function OlevikLesson() {
                 </p>
                 <p>
                   <Trans>
-                    In some verbs the stem changes. <Word w="lugema" />, to read, has the stem{" "}
-                    <b lang="et">loe-</b>, so I read is <Word w="ma loen" />. You don't need the
-                    rule for that yet. Learn each verb with its I form, the way Estonian
-                    dictionaries list it: <b lang="et">lugema, loen</b>. Take off -n and the rest is
-                    the stem.
+                    In some verbs the stem changes: <Word w="lugema" />, to read, has the stem{" "}
+                    <b lang="et">loe-</b>, so I read is <Word w="ma loen" />. You don’t need the
+                    rule for that yet. Learn each verb with its I form:{" "}
+                    <b lang="et">lugema, loen</b>. Take off -n and the rest is the stem. In lesson{" "}
+                    {verbForms} you’ll add a third form, <b lang="et">lugeda</b>.
                   </Trans>
                 </p>
               </Prose>
               <Conjugator />
               <Aside>
                 <Trans>
-                  Stems such as <b lang="et">loe-</b> and <b lang="et">räägi-</b> follow consonant
-                  gradation, which lesson {gradation} explains once you know more words.
+                  Stems such as <b lang="et">loe-</b> and <b lang="et">räägi-</b> lose or change a
+                  consonant inside the word. Lesson {gradation} explains the rule, called consonant
+                  gradation.
                 </Trans>
               </Aside>
             </>
@@ -547,7 +550,7 @@ export function OlevikLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six. You can build any verb in this lesson.</Trans>
+                    <Trans>All six. You matched every pronoun with its ending.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Tap the endings above once more.</Trans>
                   ) : (
@@ -563,15 +566,15 @@ export function OlevikLesson() {
         },
         {
           id: "now",
-          title: t`I read, I'm reading`,
+          title: t`I read, I’m reading`,
           children: (
             <>
               <Prose>
                 <p>
                   <Trans>
-                    Estonian has one present tense. <Word w="Ma loen" /> means both I read and I'm
-                    reading, and the rest of the sentence tells you which. Here are the verbs in
-                    sentences you can use today.
+                    Estonian has one present tense. <Word w="Ma loen" /> means both I read and I’m
+                    reading, and the rest of the sentence tells you which. Tap a sentence to hear
+                    it.
                   </Trans>
                 </p>
               </Prose>
@@ -580,13 +583,12 @@ export function OlevikLesson() {
                   main: PRESENT_SENTENCES[each.id],
                   sub: i18n._(each.en),
                   src: sentenceSrc(each.id),
-                  label: t`Play ${PRESENT_SENTENCES[each.id]}`,
                 }))}
               />
               <Prose>
                 <p>
                   <Trans>
-                    As with olema, the ending already says who, so ma and sa often go:{" "}
+                    As with olema, the ending already says who, so ma, sa, me and te often go:{" "}
                     <Word w="Elan Tallinnas" />. To set two people side by side, use the long
                     pronouns from lesson {pronouns}: <Word w="Mina joon kohvi, tema joob vett" />.
                   </Trans>
@@ -594,8 +596,9 @@ export function OlevikLesson() {
               </Prose>
               <Aside>
                 <Trans>
-                  Tallinnas ends in -s, in, which is lesson {where}. Keelt and raamatut are the
-                  partitive, lesson {partitive}. For now, learn them as phrases.
+                  Tallinnas ends in -s, which means in; lesson {where} explains that ending. Keelt
+                  and raamatut are in the partitive, a form an object often takes, which lesson{" "}
+                  {partitive} explains. For now, learn them as phrases.
                 </Trans>
               </Aside>
             </>
@@ -624,7 +627,7 @@ export function OlevikLesson() {
                   share === 1 ? (
                     <Trans>All of them. You hear who does it.</Trans>
                   ) : share >= 0.7 ? (
-                    <Trans>Good ear. Play the ones you missed once more.</Trans>
+                    <Trans>Most of them. Play the ones you missed once more.</Trans>
                   ) : (
                     <Trans>Listen to the very end of the verb, then try again.</Trans>
                   )

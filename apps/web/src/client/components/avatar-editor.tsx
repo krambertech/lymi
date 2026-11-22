@@ -175,9 +175,10 @@ function CropStage({ image, onCancel, onSave, pending, error }: Props & { image:
 
   return (
     <div className="grid gap-4">
+      {/* oxlint-disable-next-line jsx-a11y/no-noninteractive-element-interactions -- Biome let this pass; triage in #1278 */}
       <div
         ref={stageRef}
-        // biome-ignore lint/a11y/noNoninteractiveTabindex: the stage is the control; as an application a screen reader hands it the arrow keys and plus and minus
+        // oxlint-disable-next-line jsx-a11y/no-noninteractive-tabindex -- the stage is the control; as an application a screen reader hands it the arrow keys and plus and minus
         tabIndex={0}
         role="application"
         aria-label={t`Photo position`}

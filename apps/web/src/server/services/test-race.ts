@@ -14,7 +14,7 @@ export function racedBy(
 ): ServiceContext {
   let raced = false;
   const late = <T extends PromiseLike<unknown>>(query: T) => ({
-    // biome-ignore lint/suspicious/noThenProperty: stands in for Drizzle's thenable query
+    // oxlint-disable-next-line unicorn/no-thenable -- stands in for Drizzle's thenable query
     then: (done: (value: Awaited<T>) => unknown, fail: (error: unknown) => unknown) =>
       rival()
         .then(() => query)

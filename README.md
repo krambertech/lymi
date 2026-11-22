@@ -59,7 +59,7 @@ pnpm check        # lint, formatting, design, styling, regression, cache, agent-
 pnpm check:regressions # bug patterns that reached pull requests before: dead shadows, undefined CSS properties, storage keys spelled twice, retired claims
 pnpm check:design # the phone's values match packages/design; DESIGN.md keeps no tokens in its frontmatter; design docs name real components
 pnpm build        # production build
-pnpm fix          # Biome, writing fixes
+pnpm fix          # oxfmt and Oxlint, writing fixes
 pnpm i18n:extract # pull new interface strings into the uk and ru catalogs
 pnpm i18n:check   # fails when a string was added without extracting
 pnpm typecheck    # tsc across the workspace
@@ -100,6 +100,7 @@ Edit the source and re-run its generator, because the next run overwrites a hand
 | `apps/desktop/assets/icon.png`, `icon.icns` | changing `icon.svg` | `pnpm --filter @lymi/desktop app-icon` (needs `rsvg-convert`) |
 | `apps/desktop/assets/dmg-background.tiff` | changing the download window | `pnpm --filter @lymi/desktop dmg-background` |
 | the clips in `apps/site/public/audio/hand/` | changing a landing card's term | `pnpm --filter @lymi/site hand:audio` (with `OPENAI_API_KEY`) |
+| `apps/site/src/lib/learn/verified-forms.json` | adding Estonian words to a lesson | `pnpm --filter @lymi/site lesson:forms` (looks them up in Sõnaveeb) |
 | recorded live runs in `apps/web/src/server/enrichment/runs/` | any change to what the enrichment model reads or which model reads it | `pnpm --filter @lymi/web eval:enrichment --record` (with `OPENAI_API_KEY` and `AI_GATEWAY_TOKEN`) |
 
 For the phone's frozen API contracts, follow [apps/mobile/AGENTS.md](apps/mobile/AGENTS.md).

@@ -12,7 +12,7 @@ Settings, the **Yomitan** row, which opens `/settings/yomitan`.
 
 ## End state
 
-The address ends in `/api/anki-connect` and the key starts `lymi_`. `version` answers the bare `6`, the deck list holds 日本語 N5–N4, and the fields are Term, Reading, Meaning, Sentence, URL and Audio. `/api/cards?term=散歩` returns one card with the reading さんぽ, the meaning `walk; stroll`, the sentence as its example and the page as its source. The second duplicate check answers `cannot create note because it is a duplicate`, and `trattoria` is refused as not Japanese and is not a card. **Activity** lists the add under **Yomitan**. On reload the page says **Connected**, its own Activity shows "Added 1 card to 日本語 N5–N4" with **Everything Yomitan did, in Activity**, and back in Settings the Yomitan row says when its key was used.
+The address ends in `/api/anki-connect` and the key starts `lymi_`. `version` answers the bare `6`, the deck list holds 日本語 N5–N4, and the fields are Term, Reading, Meaning, Sentence, URL, Audio, Sentence audio and Picture. `/api/cards?term=散歩` returns one card with the reading さんぽ, the meaning `walk; stroll`, the sentence as its example and the page as its source. The second duplicate check answers `cannot create note because it is a duplicate`, and `trattoria` is refused as not Japanese and is not a card. **Activity** lists the add under **Yomitan**. On reload the page says **Connected**, its own Activity shows "Added 1 card to 日本語 N5–N4" with **Everything Yomitan did, in Activity**, and back in Settings the Yomitan row says when its key was used.
 
 ## Gotchas
 

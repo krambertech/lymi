@@ -4,8 +4,8 @@ import { Code } from "../Code";
 import { routesOf } from "../openapi";
 import { OPENAPI_URL, ORIGIN } from "../origin";
 import { Defs, H2, Lead, slug } from "../Prose";
-import { ObjectEntry } from "./ResourcePage";
 import { LoadFailed, ReferenceProvider, useOpenApi } from "./reference";
+import { ObjectEntry } from "./ResourcePage";
 
 /** The resources by group: a name, what it is, and how many routes it has once the document loads. */
 function Directory({ counts }: { counts: Map<string, number> | undefined }) {

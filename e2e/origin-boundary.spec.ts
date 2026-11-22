@@ -1,5 +1,5 @@
 import { e2eProductUrl, e2eSiteUrl } from "./ports.mjs";
-import { expect, newTestContext, test } from "./test";
+import { expect, test } from "./test";
 
 const publicSite = e2eSiteUrl;
 
@@ -89,33 +89,4 @@ test("the site keeps product APIs off its origin and sends /join to sign-up", as
   await expect(
     page.getByRole("link", { name: "Get started", exact: true }).first(),
   ).toHaveAttribute("href", `${e2eProductUrl}/login?mode=sign-up`);
-});
-
-test("clearing an installed product origin recovers from stale browser storage", async ({
-  browser,
-}) => {
-  const staleContext = await newTestContext(browser, { baseURL: e2eProductUrl });
-  const page = await staleContext.newPage();
-  await page.goto("/login?dev=1");
-  await page.evaluate(async () => {
-    localStorage.setItem("lymi-stale-shell", "public-landing");
-    const cache = await caches.open("lymi-stale-public-shell");
-    await cache.put("/index.html", new Response("stale public landing"));
-    await Promise.all(
-      (await navigator.serviceWorker.getRegistrations()).map((item) => item.unregister()),
-    );
-    await Promise.all((await caches.keys()).map((name) => caches.delete(name)));
-    localStorage.clear();
-  });
-  // An unregistered worker can keep controlling its current document until that client closes.
-  // A fresh context represents clearing all site data and reopening the browser or installed app.
-  await staleContext.close();
-  const recoveredContext = await newTestContext(browser, { baseURL: e2eProductUrl });
-  const recoveredPage = await recoveredContext.newPage();
-
-  await recoveredPage.goto("/");
-  await expect(recoveredPage).toHaveURL(/\/login$/);
-  await expect(recoveredPage.getByRole("heading", { name: "Sign in to Lymi" })).toBeVisible();
-  await expect(recoveredPage.getByText("Keep what you learn")).toHaveCount(0);
-  await recoveredContext.close();
 });

@@ -75,16 +75,13 @@ export function InputStep({
 }: {
   pages: Page[];
   text: string;
-  /** An article's link, read on its own in place of pages and text. */
   link: string;
   onRemovePage: (id: string) => void;
   onEditText: () => void;
   onRemoveText: () => void;
   onEditLink: () => void;
   onRemoveLink: () => void;
-  /** A long article's count of reads, waiting for the learner to agree. */
   longRead: LongRead | null;
-  /** A YouTube link was refused: offer to paste the video's transcript instead. */
   offerTranscript: boolean;
   onPasteTranscript: () => void;
   sources: Source[];
@@ -357,7 +354,6 @@ export function WritingStep({
   );
 }
 
-/** An article's link, pasted with the keyboard up. */
 export function LinkingStep({
   link,
   onChange,
@@ -410,7 +406,6 @@ export function ReadingStep({
 }: {
   pages: Page[];
   text: string;
-  /** Reading an article from its link, which the server fetches first. */
   article?: boolean;
   /** The new terms found so far, in the order the model wrote them. */
   terms: LessonTerm[];
@@ -566,7 +561,6 @@ export function ListStep({
   article = false,
   error,
 }: {
-  /** Read from an article's link, so each term carries its sentence. */
   article?: boolean;
   fresh: LessonTerm[];
   existing: LessonTerm[];

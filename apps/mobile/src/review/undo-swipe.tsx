@@ -141,14 +141,9 @@ export function CardStack({
         .reduceMotion(ALWAYS),
     [dir, width],
   );
-  const style = useAnimatedStyle(
-    (): ViewStyle => ({
-      transform: [
-        { translateX: x.value * dir },
-        { rotate: `${(dir * x.value * TILT) / width}deg` },
-      ],
-    }),
-  );
+  const style = useAnimatedStyle((): ViewStyle => ({
+    transform: [{ translateX: x.value * dir }, { rotate: `${(dir * x.value * TILT) / width}deg` }],
+  }));
   // At rest the graded step is hidden, so nothing of it shows past the top card's corners.
   const underStyle = useAnimatedStyle(() => ({
     opacity: x.value > 0.5 || arriving.value > 0 ? 1 : 0,

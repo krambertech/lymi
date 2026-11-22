@@ -21,12 +21,7 @@ export const LessonTermOut = z.object({
   heading: z.string().nullable(),
   /** The text the model read the term from. */
   seen: z.string(),
-  /**
-   * The sentence of an article or transcript the term came from, quoted from it and cut around the
-   * term when it is longer than an example may be; null for a lesson.
-   */
   example: z.string().nullable(),
-  /** Where that sentence starts in the source, in seconds; null when the source has no times. */
   at: z.number().nullable(),
   /** How likely the term is worth its own card, or null when no decision model ran. */
   keep: z.number().nullable(),
@@ -63,10 +58,8 @@ export const LessonReadOut = z
 /** Smart add reads a learner may start in one of their own days. A read that fails is not counted. */
 export const LESSON_READS_PER_DAY = 5;
 
-/** Words one read covers; a longer article counts as one read for each of these, shown before it is read. */
 export const LESSON_READ_WORDS = 15_000;
 
-/** Why Smart add would not read a link, sent as `issues.refused` with the `link_refused` code. */
 export const LINK_REFUSALS = ["robots", "tdm", "drm", "youtube"] as const;
 export type LinkRefusal = (typeof LINK_REFUSALS)[number];
 
@@ -97,7 +90,6 @@ export const LessonEventOut = z
       /** True when Lymi chose it from the lesson, false when the learner opened Smart add from it. */
       guessed: z.boolean(),
     }),
-    /** The article a link led to, sent before its terms; the URL already fits a card's source. */
     z.object({ type: z.literal("source"), title: z.string(), url: z.string() }),
     z.object({ type: z.literal("term"), term: LessonTermOut }),
     z.object({ type: z.literal("questions"), questions: z.array(LessonQuestionOut) }),

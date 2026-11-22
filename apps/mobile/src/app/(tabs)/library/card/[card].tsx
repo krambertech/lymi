@@ -212,7 +212,6 @@ export default function CardPage() {
     label: string;
     value: ReactNode;
     onPress?: (() => void) | undefined;
-    /** A detail that opens a web page rather than editing the card. */
     opens?: boolean;
   }[] = [
     { label: t`Deck`, value: deck?.name ?? "" },

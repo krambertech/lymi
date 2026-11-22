@@ -101,9 +101,9 @@ export function NotFoundView({ locale }: Props) {
       <main className="mx-auto flex w-full max-w-md flex-1 flex-col items-center justify-center pt-8 text-center">
         <div className="hand grid w-full justify-items-center">
           <div className="hand-stage" data-layout="single">
-            {/* biome-ignore lint/a11y/useSemanticElements: the card holds paragraphs, which a button element cannot. */}
             <div
               ref={card}
+              // oxlint-disable-next-line jsx-a11y/prefer-tag-over-role -- the card holds paragraphs, which a button element cannot.
               role="button"
               tabIndex={0}
               aria-label={revealed ? t`Turn the card back` : t`Turn the card over`}

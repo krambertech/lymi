@@ -35,7 +35,7 @@ export function ErrorTip({ anchor, message, nudge = 0, reason, sideOffset, onOpe
     onOpenChange?.(open);
   }, [open, onOpenChange]);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a new nudge reopens the same message.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- a new nudge reopens the same message.
   useEffect(() => {
     setOpen(message !== null);
   }, [message, nudge]);

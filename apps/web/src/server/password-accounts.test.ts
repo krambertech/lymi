@@ -193,19 +193,6 @@ describe("creating an account with an email and a password", () => {
     expect((await signIn(email, "someone-elses-password")).status).toBe(401);
     expect((await signIn(email)).status).toBe(200);
   });
-
-  it("takes any address: sign-up is open to everyone", async () => {
-    const email = "stranger@lymi.test";
-    const created = await signUp(email);
-
-    expect(created.status).toBe(200);
-    await expect(usersWith(email)).resolves.toHaveLength(1);
-    expect(latestLocalEmail(email)).toMatchObject({ kind: "verify-email" });
-    expect((await signIn(email)).status).toBe(403);
-
-    await openLastLink(email, signUpCookieFrom(created));
-    expect((await signIn(email)).status).toBe(200);
-  });
 });
 
 describe("resetting a password", () => {

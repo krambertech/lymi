@@ -1,0 +1,290 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["eslint", "typescript", "unicorn", "oxc", "react", "jsx-a11y", "import"],
+  "jsPlugins": ["./oxlint-plugin-lymi/index.mjs"],
+  "categories": {
+    "correctness": "error"
+  },
+  "ignorePatterns": [
+    "**/dist",
+    "**/node_modules",
+    "**/.wrangler",
+    "**/routeTree.gen.ts",
+    "**/migrations",
+    "design",
+    "**/public",
+    "apps/web/index.html",
+    "**/worker-configuration.d.ts",
+    "apps/mobile/src/uniwind-types.d.ts",
+    "apps/mobile/contract",
+    "apps/web/src/server/enrichment/runs",
+    "packages/core/src/scheduler-snapshot/*.json",
+    ".claude"
+  ],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "react/no-array-index-key": "error",
+    "react-hooks/exhaustive-deps": "error",
+    "typescript/no-explicit-any": "warn",
+    "typescript/consistent-type-imports": [
+      "error",
+      {
+        "disallowTypeAnnotations": false
+      }
+    ],
+    "react/refs": "off",
+    "react/set-state-in-effect": "off",
+    "react/purity": "off",
+    "react/immutability": "off",
+    "react/use-memo": "off",
+    "react/globals": "off",
+    "react/preserve-manual-memoization": "off",
+    "eslint/no-unused-vars": [
+      "warn",
+      {
+        "argsIgnorePattern": "^_",
+        "varsIgnorePattern": "^_",
+        "caughtErrorsIgnorePattern": "^_",
+        "destructuredArrayIgnorePattern": "^_",
+        "ignoreRestSiblings": true
+      }
+    ],
+    "jsx-a11y/prefer-tag-over-role": "off",
+    "jsx-a11y/no-autofocus": "off",
+    "jsx-a11y/control-has-associated-label": "off",
+    "unicorn/no-useless-spread": "off",
+    "unicorn/no-useless-fallback-in-spread": "off",
+    "unicorn/no-new-array": "off",
+    "unicorn/prefer-string-starts-ends-with": "off",
+    "typescript/triple-slash-reference": "off",
+    "oxc/only-used-in-recursion": "off",
+    "oxc/erasing-op": "off",
+    "lymi/no-comments": "error"
+  },
+  "overrides": [
+    {
+      "files": ["apps/web/src/client/**"],
+      "excludeFiles": ["apps/web/src/client/routes/**"],
+      "rules": {
+        "unicorn/filename-case": [
+          "error",
+          {
+            "case": "kebabCase"
+          }
+        ]
+      }
+    },
+    {
+      "files": ["packages/client/src/**"],
+      "excludeFiles": ["packages/client/src/analytics.ts", "packages/client/src/analytics.test.ts"],
+      "rules": {
+        "eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "posthog-js",
+                "message": "Only the browser adapter in analytics.ts may load posthog-js; keep the rest of @lymi/client portable to the phone."
+              }
+            ],
+            "patterns": [
+              {
+                "group": [
+                  "./analytics",
+                  "./analytics.ts",
+                  "../**/analytics",
+                  "../**/analytics.ts",
+                  "../analytics",
+                  "../analytics.ts"
+                ],
+                "message": "analytics.ts is the browser adapter; the phone cannot load it."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["apps/web/src/client/**"],
+      "excludeFiles": ["apps/web/src/client/lib/use-reduce-motion.ts", "**/*.test.tsx"],
+      "rules": {
+        "eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "motion/react",
+                "importNames": ["useReducedMotion", "useReducedMotionConfig"],
+                "message": "Use useReduceMotion() from lib/use-reduce-motion.ts: the app has no MotionConfig provider, so useReducedMotionConfig() alone ignores the learner's setting, and useReducedMotion() alone ignores /design's reduced-motion switch."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["apps/site/**"],
+      "rules": {
+        "eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "motion/react",
+                "importNames": ["useReducedMotionConfig"],
+                "message": "Use useReducedMotion() instead: most of the site has no MotionConfig provider, so useReducedMotionConfig() returns false even when the reader asks for reduced motion."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["apps/mobile/**"],
+      "rules": {
+        "eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "@lymi/client/analytics",
+                "message": "This is the browser's PostHog adapter; the phone sends through src/telemetry/posthog.ts."
+              },
+              {
+                "name": "posthog-js",
+                "message": "The phone uses posthog-react-native through src/telemetry/posthog.ts."
+              },
+              {
+                "name": "@expo/ui/swift-ui",
+                "importNames": ["BottomSheet"],
+                "message": "Use Sheet from src/ui/sheet.tsx: it owns the title, description, save header and the inset every sheet shares."
+              },
+              {
+                "name": "react-native",
+                "importNames": ["Alert"],
+                "message": "Use alert from src/ui/alert.tsx: it shows iOS's alert and, on Android, Material's dialog in Lymi's colours."
+              },
+              {
+                "name": "@expo/ui/jetpack-compose",
+                "importNames": ["ModalBottomSheet"],
+                "message": "Use Sheet from src/ui/sheet.tsx: it owns the title, description, save header and the inset every sheet shares."
+              }
+            ]
+          }
+        ],
+        "eslint/no-restricted-globals": [
+          "error",
+          {
+            "name": "alert",
+            "message": "Import alert from src/ui/alert.tsx: the global one draws Android's AppCompat dialog."
+          }
+        ]
+      }
+    },
+    {
+      "files": ["e2e/**"],
+      "rules": {
+        "lymi/no-flaky-masks": "error"
+      }
+    },
+    {
+      "files": ["apps/mobile/**"],
+      "excludeFiles": ["apps/mobile/src/i18n/list.ts"],
+      "rules": {
+        "lymi/no-intl-list-format": "error"
+      }
+    },
+    {
+      "files": ["apps/mobile/**"],
+      "rules": {
+        "lymi/scroll-view-persist-taps": "error"
+      }
+    },
+    {
+      "files": ["apps/mobile/src/app/**"],
+      "rules": {
+        "lymi/form-header": "error"
+      }
+    },
+    {
+      "files": ["apps/mobile/src/**"],
+      "excludeFiles": ["apps/mobile/src/ui/**"],
+      "rules": {
+        "lymi/field-error": "error"
+      }
+    },
+    {
+      "files": ["apps/mobile/**"],
+      "excludeFiles": ["apps/mobile/src/theme/motion.ts"],
+      "rules": {
+        "lymi/spring-presets": "error",
+        "lymi/no-logical-text-align": "error"
+      }
+    },
+    {
+      "files": ["apps/web/src/server/**", "packages/core/src/**"],
+      "rules": {
+        "lymi/no-sql-lower": "error"
+      }
+    },
+    {
+      "files": ["apps/web/**", "packages/**"],
+      "excludeFiles": ["**/*.test.ts"],
+      "rules": {
+        "lymi/no-redirect-error": "error"
+      }
+    },
+    {
+      "files": ["apps/mobile/**", "packages/client/src/**", "packages/core/src/**"],
+      "excludeFiles": ["packages/client/src/cache.ts", "**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "lymi/no-navigator-online": "error"
+      }
+    },
+    {
+      "files": ["apps/mobile/src/**"],
+      "rules": {
+        "lymi/notice-plain-text": "error"
+      }
+    },
+    {
+      "files": [
+        "packages/core/src/**",
+        "packages/client/src/**",
+        "apps/web/src/**",
+        "apps/mobile/src/**"
+      ],
+      "excludeFiles": [
+        "packages/core/src/languages/**",
+        "apps/mobile/src/i18n/**",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "packages/core/src/enrichment.ts",
+        "apps/web/src/server/ai/speech.ts",
+        "apps/web/src/server/ai/speech-voices.ts"
+      ],
+      "rules": {
+        "lymi/language-tags": "error"
+      }
+    },
+    {
+      "files": ["apps/web/src/client/**", "apps/mobile/src/**"],
+      "excludeFiles": [
+        "apps/web/src/client/components/term-text.tsx",
+        "apps/mobile/src/ui/term-text.tsx",
+        "**/*.test.ts",
+        "**/*.test.tsx"
+      ],
+      "rules": {
+        "lymi/term-text": "error"
+      }
+    },
+    {
+      "files": ["apps/web/src/client/**", "apps/mobile/src/**", "packages/client/src/**"],
+      "excludeFiles": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "lymi/isolate-learner-text": "error"
+      }
+    }
+  ]
+}

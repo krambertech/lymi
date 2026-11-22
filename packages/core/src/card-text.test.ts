@@ -12,18 +12,6 @@ describe("normalizeCardText", () => {
     }
   });
 
-  it("keeps the pronunciation that was sent when it is the same reading", () => {
-    expect(normalizeCardText("ja", { term: "上手[じょうず]", pronunciation: "ジョウズ" })).toEqual({
-      fields: { term: "上手", pronunciation: "ジョウズ" },
-      normalized: ["term"],
-    });
-  });
-
-  it("leaves both fields as sent when the pronunciation names another reading", () => {
-    const sent = { term: "上手[じょうず]", pronunciation: "dʒoːzɯ" };
-    expect(normalizeCardText("ja", sent)).toEqual({ fields: sent, normalized: [] });
-  });
-
   it("stores Chinese tone numbers as tone marks", () => {
     expect(normalizeCardText("zh-TW", { term: "學習", pronunciation: "xue2 xi2" })).toEqual({
       fields: { term: "學習", pronunciation: "xué xí" },

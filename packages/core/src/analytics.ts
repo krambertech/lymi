@@ -620,10 +620,13 @@ export const analyticsEvents = {
   anki_connect_refused: z.object({
     reason: z.enum(["deck", "note_type", "language", "term", "read_only"]),
   }),
+  anki_connect_media: z.object({
+    kind: z.enum(["sentence_audio", "picture"]),
+    action: z.enum(["add", "update"]),
+  }),
   lesson_read: z.object({
     client: z.enum(["web", "phone"]),
     material: z.enum(["lesson", "article"]),
-    /** Reads the material counted as: one, or one per 15,000 words of an article. */
     reads: count,
     refused: z.enum(LINK_REFUSALS).optional(),
     pages: count,
@@ -837,6 +840,7 @@ export const analyticsProducers = {
   readwise_disconnected: ["worker"],
   readwise_pulled: ["worker"],
   anki_connect_refused: ["worker"],
+  anki_connect_media: ["worker"],
   $ai_generation: ["worker"],
   card_importance_set: ["worker"],
   tag_added: ["browser", "phone"],

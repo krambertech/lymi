@@ -1484,6 +1484,9 @@ msgstr "Посилання на статтю"
 msgid "Arts"
 msgstr "Мистецтво"
 
+msgid "asbplayer adds the line you hear in a video, its audio and a picture of the scene to your card. Only you hear that audio and see that picture. People you share the deck with hear Lymi’s voice instead."
+msgstr "asbplayer додає до твоєї картки репліку, яку ти чуєш у відео, її аудіо та зображення сцени. Це аудіо чуєш і це зображення бачиш лише ти. Ті, з ким ти ділишся колодою, натомість чують голос Lymi."
+
 msgid "Ask {assistant} to make cards from your lesson. You’ll find them in your deck and in Activity."
 msgstr "Попроси {assistant} зробити картки з твого уроку. Вони з’являться в колоді та в Активності."
 
@@ -1514,6 +1517,9 @@ msgstr "О {savedTime} за часом {zone}, лише в дні, коли є �
 
 msgid "At least {MIN_PASSWORD_LENGTH} characters."
 msgstr "Щонайменше {MIN_PASSWORD_LENGTH} символів."
+
+msgid "Audio and pictures from videos"
+msgstr "Аудіо й зображення з відео"
 
 msgid "Automatic"
 msgstr "Автоматично"
@@ -1794,6 +1800,10 @@ msgstr "Вибери один варіант"
 
 msgid "Choose the .zip file Lymi exports as a Lymi file, without unzipping it."
 msgstr "Вибери файл .zip, який Lymi експортує як файл Lymi, не розпаковуючи його."
+
+#. placeholder {0}: field("Lymi card")
+msgid "Choose the deck Yomitan adds to, and the note type {0}."
+msgstr "Вибери колоду, до якої додає Yomitan, і тип нотатки {0}."
 
 msgid "Choose the file again"
 msgstr "Вибрати файл ще раз"
@@ -3055,6 +3065,9 @@ msgstr "приблизно через тиждень"
 msgid "In Anki on a computer, choose <0>File</0>, then <1>Export</1>."
 msgstr "В Anki на комп’ютері вибери <0>File</0>, потім <1>Export</1>."
 
+msgid "In asbplayer’s Anki settings, paste Lymi’s address as the AnkiConnect URL and your Yomitan key as the AnkiConnect API Key."
+msgstr "У налаштуваннях Anki в asbplayer встав адресу Lymi в поле AnkiConnect URL, а ключ для Yomitan — у поле AnkiConnect API Key."
+
 msgid "In ChatGPT on the web, turn on <0>Developer mode</0> under <1>Settings → Apps → Advanced settings</1>."
 msgstr "У вебверсії ChatGPT увімкни <0>Developer mode</0> у <1>Settings → Apps → Advanced settings</1>."
 
@@ -3542,6 +3555,13 @@ msgstr "Керувати"
 
 msgid "Manage connected apps"
 msgstr "Керувати підключеними застосунками"
+
+#. placeholder {0}: field("Term")
+#. placeholder {1}: field("Sentence")
+#. placeholder {2}: field("Sentence audio")
+#. placeholder {3}: field("Picture")
+msgid "Map Word to {0}, Sentence to {1}, Audio to {2} and Image to {3}."
+msgstr "Зістав Word з {0}, Sentence з {1}, Audio з {2}, а Image з {3}."
 
 msgid "Mark important"
 msgstr "Позначити важливою"
@@ -5631,6 +5651,10 @@ msgstr "Час"
 msgid "Time each day"
 msgstr "Час щодня"
 
+#. placeholder {0}: field("Update last card")
+msgid "To add them to the word you just looked up, set asbplayer’s mining button to {0}."
+msgstr "Щоб додати їх до слова, щойно знайденого в словнику, вибери для кнопки видобування в asbplayer дію {0}."
+
 msgid "To export every deck at once, open <0>Settings</0> and choose <1>Export everything</1> instead."
 msgstr "Щоб експортувати всі колоди одразу, відкрий <0>Settings</0> і вибери <1>Export everything</1>."
 
@@ -5780,6 +5804,10 @@ msgstr "Вимкнути посилання для приєднання?"
 
 msgid "Turn off these emails"
 msgstr "Вимкнути ці листи"
+
+#. placeholder {0}: field("Re-encode audio as mp3")
+msgid "Turn on {0}. Lymi plays MP3, M4A, AAC and WAV audio."
+msgstr "Увімкни {0}. Lymi відтворює аудіо у форматах MP3, M4A, AAC і WAV."
 
 msgid "Turn the connector on in a chat."
 msgstr "Увімкни конектор у чаті."

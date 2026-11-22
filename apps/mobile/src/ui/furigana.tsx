@@ -191,12 +191,12 @@ function Ruby({
       <View className="flex-row items-start" style={{ height: slot, paddingHorizontal: inset }}>
         {parts.map((part, at) =>
           part.tone ? (
-            // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+            // oxlint-disable-next-line react/no-array-index-key -- runs in a fixed order
             <View key={at}>
               {readingText(part.text, readingSize * TONE_SCALE, readingSize * TONE_SCALE)}
             </View>
           ) : (
-            // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+            // oxlint-disable-next-line react/no-array-index-key -- runs in a fixed order
             <View key={at}>{readingText(part.text, readingSize, slot)}</View>
           ),
         )}
@@ -227,17 +227,17 @@ function Ruby({
     >
       {shown.map((box, i) => (
         // Boxes never reorder, so the index is a stable key.
-        // biome-ignore lint/suspicious/noArrayIndexKey: boxes in a fixed order
+        // oxlint-disable-next-line react/no-array-index-key -- boxes in a fixed order
         <View key={i} className="shrink flex-row items-end" onLayout={keep.onBox(i)}>
           {box.map((run, j) =>
             run.reading === undefined ? (
-              // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+              // oxlint-disable-next-line react/no-array-index-key -- runs in a fixed order
               <View key={j} className="shrink" style={{ paddingTop: slot }}>
                 {text(run.text, run.tail ? tail?.className : className)}
               </View>
             ) : (
               // A reading wider than its kanji centres over them, as the web's ruby does.
-              // biome-ignore lint/suspicious/noArrayIndexKey: runs in a fixed order
+              // oxlint-disable-next-line react/no-array-index-key -- runs in a fixed order
               <View key={j} className="shrink items-center">
                 {run.known ? (
                   // Its height only, so a long reading leaves no gap around a word the learner knows.
@@ -281,7 +281,7 @@ function useClamp(count: number, lines: number | undefined, ellipsis: number, rt
     setKept({ key, count: clampBoxes(frames, lines, lineWidth, endWidth.current + ellipsis) });
   };
   // The width can arrive after the boxes have reported, and a new width measures again.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: settles once per measured key
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- settles once per measured key
   useEffect(settle, [key]);
   return {
     count: settled ? kept.count : null,

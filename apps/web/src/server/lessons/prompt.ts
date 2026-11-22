@@ -2,9 +2,6 @@ import { CARD_LIMITS } from "@lymi/core";
 import { z } from "zod";
 import { lessonReading } from "../languages";
 
-/** Raise with any change to what the model reads, so analytics and evaluations can tell runs apart. */
-export const LESSON_PROMPT_VERSION = 6;
-
 /** The rules come from docs/card-writing.md; change both together. */
 export const INSTRUCTIONS = `You turn one language lesson into a pick list: the terms worth a card in the learner's deck. The learner ticks the terms they want, so list every candidate and let them choose.
 
@@ -30,10 +27,8 @@ Write each term as one card: one term, one sense
 Questions
 Most lessons need no question: the learner sees the list and unticks what they do not want. Ask only when one answer unticks several terms at once, such as a page of exercises, a second lesson in the same upload, or the few words the learner marked among many printed ones; never ask when every option keeps nearly the same terms. Ask about marks, highlighting or handwriting only when a photo or PDF shows them on some of the terms and not the rest; glossed and listed words are not "marked". Grammar categories are always kept. Write each question as one plain sentence of at most 12 words, addressed to the learner as "you", and each option as the learner's own short reply to it, in at most 5 words and without repeating the question's nouns. Each option lists the ids of the terms it drops; "default" is the index of the option most learners want.`;
 
-/** Most articles hold far more candidates than a learner will tick, and the reply has to fit its tokens. */
 export const ARTICLE_TERMS = 60;
 
-/** How to read an article, sent with one in place of a lesson's marks and glosses. */
 export const ARTICLE_RULES = `The material is an article, one numbered sentence per line. An article marks and glosses nothing, so choose by what a learner of its language would meet as new: the words and fixed phrases worth a card, at the level of the deck's own cards. Never list names of people, places or brands, numbers, or words the deck's cards already show. List at most ${ARTICLE_TERMS} terms, in the order the article uses them.
 - "sentence" is the number of the sentence you read the term from, and "seen" is that sentence.
 - "heading" is the section heading the sentence sits under, or "" when the article has none.
@@ -89,7 +84,7 @@ export function decksBrief(
   return lines.join("\n");
 }
 
-/** The reply's shape, with the deck limited to the learner's own; an article's terms name their sentence. */
+/** The reply's shape, with the deck limited to the learner's own. */
 export function replySchema(deckIds: string[], options: { article?: boolean } = {}) {
   const terms = REPLY_SCHEMA.properties.terms;
   return {
@@ -191,7 +186,6 @@ export const Reply = z.object({
       pronunciation: z.string().trim().max(CARD_LIMITS.pronunciation).default(""),
       handwritten: z.boolean(),
       heading: z.string().trim().max(200),
-      // An article's sentence can run long; the list only needs its start.
       seen: z
         .string()
         .trim()

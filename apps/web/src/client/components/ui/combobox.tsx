@@ -202,6 +202,7 @@ function ComboboxTrigger({
         data-slot="combobox-trigger"
         {...mergeProps<"button">({ onClick: handoff.warmUp, onKeyDown }, props)}
         {...a11y}
+        // oxlint-disable-next-line jsx-a11y/role-has-required-aria-props -- Biome let this pass; triage in #1278
         role="combobox"
         aria-haspopup="dialog"
         aria-expanded={open}
@@ -233,7 +234,7 @@ interface ValueProps {
   placeholder?: React.ReactNode | undefined;
   className?: string | undefined;
   /** Renders the chosen value yourself; by default an item's `label` names it. */
-  // biome-ignore lint/suspicious/noExplicitAny: Base UI types the selected value as any here
+  // oxlint-disable-next-line typescript/no-explicit-any -- Base UI types the selected value as any here
   children?: React.ReactNode | ((value: any) => React.ReactNode) | undefined;
 }
 

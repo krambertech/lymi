@@ -87,6 +87,19 @@ export function eachPairFirst<T extends { pair: readonly [string, string] }>(
   return [...(pinned ? [pinned] : []), ...first, ...later];
 }
 
+/**
+ * Items in pairs as two cycles: each pair key once, then each key once more, so a run of twice the
+ * keys asks every key exactly twice. A pinned first item counts as its key's first turn.
+ */
+export function twoCycles<T extends { pair: readonly [string, string] }>(
+  items: readonly T[],
+  pinned?: T,
+): T[] {
+  const keys = new Set(items.map((item) => item.pair[0])).size;
+  const first = eachPairFirst(items, pinned).slice(0, keys);
+  return [...first, ...eachPairFirst(items.filter((item) => !first.includes(item)))];
+}
+
 export const rightCount = (state: QuizState): number => state.results.filter(Boolean).length;
 
 /**

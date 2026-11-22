@@ -361,6 +361,7 @@ function Shell() {
             return command satisfies never;
         }
       }),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
     [openCard, openDeck, onSmartAdd, navigate, activeDeckId],
   );
   const { signOut, busy: signingOut } = leave;
@@ -389,6 +390,7 @@ function Shell() {
       learnerEmail,
       openCard,
       openDeck,
+      // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
       onSmartAdd,
       signOut,
       signingOut,

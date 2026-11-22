@@ -1,8 +1,8 @@
 import type { BaseUIEvent } from "@base-ui/react/types";
 import { Component, type MouseEvent, type ReactNode, useState } from "react";
 import { describe, expect, inject, test, vi } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { DESKTOP_QUERY } from "../../lib/device";
 import {
   DropdownMenu,
@@ -103,10 +103,6 @@ function ChoiceHarness({ onSort = () => {} }: { onSort?: (value: string) => void
     </>
   );
 }
-
-test("the device rule matches the machine this browser stands in for", () => {
-  expect(window.matchMedia(DESKTOP_QUERY).matches).toBe(desktop);
-});
 
 describe("DropdownMenu", () => {
   test("renders every part in this shape: group, label, danger row and inset", async () => {

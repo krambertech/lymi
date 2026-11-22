@@ -138,7 +138,7 @@ function Mark({ assistant, small }: { assistant: Assistant; small?: boolean | un
         {layers.map((paint, i) =>
           typeof paint === "string" ? null : (
             <linearGradient
-              // biome-ignore lint/suspicious/noArrayIndexKey: layers are fixed data, so the index is the identity
+              // oxlint-disable-next-line react/no-array-index-key -- layers are fixed data, so the index is the identity
               key={i}
               id={`${id}-${i}`}
               x1={paint.from[0]}
@@ -156,7 +156,7 @@ function Mark({ assistant, small }: { assistant: Assistant; small?: boolean | un
       </defs>
       {layers.map((paint, i) => (
         <path
-          // biome-ignore lint/suspicious/noArrayIndexKey: layers are fixed data, so the index is the identity
+          // oxlint-disable-next-line react/no-array-index-key -- layers are fixed data, so the index is the identity
           key={i}
           d={assistant.path}
           fill={typeof paint === "string" ? paint : `url(#${id}-${i})`}

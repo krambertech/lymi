@@ -30,7 +30,7 @@ Report each recurring repository gotcha in [the friction log](docs/guidance.md#r
 
 **Instrumentation is part of done.** For each behavior change, state the product question, add or reuse an event at its owning interaction or committed outcome, and document its meaning, allowed properties and producer in [docs/analytics.md](docs/analytics.md).
 
-**Proof matches the change.** Observe the evidence yourself; inherited reports and green mocked tests do not establish runtime behavior. A logic fix needs a regression test that fails on `main` and passes with the fix. A UI change needs a [verify](.agents/skills/verify/SKILL.md) run and [screenshots](.agents/skills/open-pr/references/screenshots.md); the phone uses [verify-phone](.agents/skills/verify-phone/SKILL.md). A server fix also needs a request and response showing the corrected behavior.
+**Proof matches the change.** Observe the evidence yourself; inherited reports and green mocked tests do not establish runtime behavior. A logic fix needs a regression test that fails on `main` and passes with the fix. Before you add or keep a test, walk [What a test must depend on](docs/testing.md#what-a-test-must-depend-on). A UI change needs a [verify](.agents/skills/verify/SKILL.md) run and [screenshots](.agents/skills/open-pr/references/screenshots.md); the phone uses [verify-phone](.agents/skills/verify-phone/SKILL.md). A server fix also needs a request and response showing the corrected behavior.
 
 Update the document that owns any behavior you change.
 

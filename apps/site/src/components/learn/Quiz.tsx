@@ -179,7 +179,10 @@ export function Quiz<Item>({
     if (state.status === "asking" && (restarted.current || advanced.current)) {
       const lost = !document.activeElement || document.activeElement === document.body;
       if (restarted.current || lost)
-        bodyRef.current?.querySelector("button")?.focus({ preventScroll: true });
+        // A typed round's field comes first, so a phone opens its keyboard.
+        bodyRef.current
+          ?.querySelector<HTMLElement>("input:not([readonly]), button")
+          ?.focus({ preventScroll: true });
       restarted.current = false;
       advanced.current = false;
     }
@@ -292,13 +295,48 @@ export function Quiz<Item>({
   );
 }
 
+/**
+ * The card every marked part sits on: white, its title on the stage's band, an optional mark on the
+ * band's end such as the round dots, and the body.
+ */
+export function QuizCard({
+  title,
+  aside,
+  className,
+  children,
+}: {
+  title: ReactNode;
+  aside?: ReactNode;
+  className?: string;
+  children: ReactNode;
+}) {
+  return (
+    <div
+      className={clsx(
+        "learn-quiz grid grid-cols-1 overflow-hidden rounded-xl bg-plate max-sm:-mx-1",
+        className,
+      )}
+    >
+      <div className="flex flex-wrap items-center justify-between gap-3 bg-(--tray) px-5 py-3.5 max-sm:px-4">
+        <h3 className="text-lg font-medium">{title}</h3>
+        {aside}
+      </div>
+      <div className="grid grid-cols-1 justify-items-start gap-4 px-5 pt-5 pb-5 max-sm:px-4">
+        {children}
+      </div>
+    </div>
+  );
+}
+
 /** A word or number from a round, to hear again on the score. */
 export interface Recall {
   label: string;
-  src: string;
+  /** Without a clip the chip only shows the word. */
+  src?: string | undefined;
 }
 
-function Score({
+/** The score at the end of a marked part: how many were right, a line under it, and the run's words. */
+export function Score({
   right,
   total,
   verdict,
@@ -358,7 +396,7 @@ function ScoreWords({
       <ul className="m-0 flex list-none flex-wrap gap-1.5 p-0">
         {recalled.map((word, i) =>
           word ? (
-            // biome-ignore lint/suspicious/noArrayIndexKey: one chip per round, in order
+            // oxlint-disable-next-line react/no-array-index-key -- one chip per round, in order
             <li key={i} className="learn-pop" style={{ animationDelay: `${i * 60}ms` }}>
               <RecallChip word={word} ok={results[i] === true} />
             </li>
@@ -370,16 +408,18 @@ function ScoreWords({
 }
 
 function RecallChip({ word, ok }: { word: Recall; ok: boolean }) {
-  const playing = usePlaying(word.src);
+  const { src } = word;
+  const playing = usePlaying(src ?? "");
+  const Tag = src ? "button" : "span";
   return (
-    <button
-      type="button"
-      onClick={() => void playSound(word.src)}
+    <Tag
+      {...(src ? { type: "button" as const, onClick: () => void playSound(src) } : {})}
       className={clsx(
-        "inline-flex cursor-pointer items-center gap-1.5 rounded-full border py-1 ps-2 pe-3 text-md font-medium transition-colors duration-150",
+        "inline-flex items-center gap-1.5 rounded-full border py-1 ps-2 pe-3 text-md font-medium transition-colors duration-150",
         ok
           ? "border-success/40 bg-success-soft text-ink"
           : "border-dashed border-danger bg-danger-soft text-ink",
+        src && "cursor-pointer",
         playing && "ring-2 ring-(--form)",
       )}
     >
@@ -389,22 +429,41 @@ function RecallChip({ word, ok }: { word: Recall; ok: boolean }) {
         <X aria-hidden="true" className="size-3.5 text-danger" strokeWidth={3} />
       )}
       <span lang="et">{word.label}</span>
-    </button>
+    </Tag>
   );
 }
 
 function Dots({ state, total }: { state: QuizState; total: number }) {
-  const now = state.status === "finished" ? -1 : state.round;
+  return (
+    <ResultDots
+      results={state.results}
+      now={state.status === "finished" ? -1 : state.round}
+      total={total}
+    />
+  );
+}
+
+/** A dot per round on a white pill: green right, red wrong, ringed for the one now. */
+export function ResultDots({
+  results,
+  now,
+  total,
+}: {
+  results: readonly (boolean | undefined)[];
+  /** The round being answered, or -1. */
+  now: number;
+  total: number;
+}) {
   return (
     <span
       aria-hidden="true"
       className="flex items-center gap-1.5 rounded-full bg-plate px-2.5 py-1.5"
     >
       {Array.from({ length: total }, (_, i) => {
-        const result = state.results[i];
+        const result = results[i];
         return (
           <i
-            // biome-ignore lint/suspicious/noArrayIndexKey: one dot per round, in order
+            // oxlint-disable-next-line react/no-array-index-key -- one dot per round, in order
             key={i}
             className={clsx(
               "size-2 rounded-full transition-colors duration-200",
@@ -433,7 +492,7 @@ export function useNudge() {
 
 /** Plays a round's sound as it opens from Next; the first round waits for the learner. */
 export function useAutoplay(src: string, autoplay: boolean, round: number) {
-  // biome-ignore lint/correctness/useExhaustiveDependencies: a new round replays even when its clip is the last one's
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- a new round replays even when its clip is the last one's
   useEffect(() => {
     if (autoplay) void playSound(src);
   }, [autoplay, round, src]);
@@ -520,10 +579,11 @@ export function GapRound({
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
   const pickFirst = listen === "after";
   useAutoplay(item.src, autoplay && !pickFirst, round);
-  // biome-ignore lint/correctness/useExhaustiveDependencies: each round, including a restart, opens answerable
+  // oxlint-disable react-hooks/exhaustive-deps -- each round, including a restart, opens answerable
   useEffect(() => {
     if (pickFirst) heard();
   }, [pickFirst, round]);
+  // oxlint-enable react-hooks/exhaustive-deps
   const done = state.status === "answered";
   const picked = done ? state.picked : null;
   const [settled, setSettled] = useState(false);
@@ -539,7 +599,12 @@ export function GapRound({
     <>
       {(!pickFirst || done) && <Listen src={item.src} onPlay={heard} />}
       {note}
-      <p className="sr-only">{t`${before} blank ${after}`}</p>
+      {/* The words around the gap are Estonian, so a screen reader reads them as Estonian. */}
+      <p className="sr-only">
+        <Trans>
+          <span lang="et">{before}</span> blank <span lang="et">{after}</span>
+        </Trans>
+      </p>
       <p
         lang="et"
         aria-hidden="true"
@@ -595,6 +660,10 @@ export interface TypedItem {
   matches?: (typed: string) => boolean;
   /** The field's label and placeholder, when it asks for something other than a number. */
   prompt?: string;
+  /** What the Listen button shows instead of “Listen”, such as the words it plays. */
+  listen?: ReactNode;
+  /** The phone keyboard: numbers by default, letters for a typed word. */
+  inputMode?: "decimal" | "text";
 }
 
 /** Listen, then type. For numbers, prices and times. */
@@ -604,7 +673,7 @@ export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<
   const [value, setValue] = useState("");
   const input = useRef<HTMLInputElement>(null);
   const round = state.status === "asking" || state.status === "answered" ? state.round : -1;
-  // biome-ignore lint/correctness/useExhaustiveDependencies: each new round clears the field
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- each new round clears the field
   useEffect(() => {
     setValue("");
     if (autoplay) {
@@ -622,7 +691,9 @@ export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<
           heard();
           input.current?.focus({ preventScroll: true });
         }}
-      />
+      >
+        {item.listen}
+      </Listen>
       {note}
       <form
         className="flex w-full max-w-sm gap-2"
@@ -638,7 +709,8 @@ export function TypedRound({ item, state, heard, answer, autoplay }: RoundProps<
           value={value}
           onChange={(event) => setValue(event.target.value)}
           readOnly={done}
-          inputMode="decimal"
+          inputMode={item.inputMode ?? "decimal"}
+          autoCapitalize={item.inputMode === "text" ? "none" : undefined}
           autoComplete="off"
           spellCheck={false}
           aria-label={item.prompt ?? t`Type the number`}

@@ -3,9 +3,8 @@ import { Defs, H2, H3, Lead, NextLinks, Note, Steps, StepTitle } from "../Prose"
 
 /**
  * Written for a learner after a lesson, not for a developer. Every name and number here comes from
- * apps/web/src/client/components/smart-add.tsx, apps/web/src/server/routes/lessons.ts,
- * apps/web/src/server/lessons/link.ts and LESSON_READS_PER_DAY in packages/core; change this page
- * when they change. LymiBot's user agent links to the #lymibot section.
+ * apps/web/src/client/components/smart-add.tsx, apps/web/src/server/routes/lessons.ts and
+ * LESSON_READS_PER_DAY in packages/core; change this page when they change.
  */
 export function SmartAdd() {
   return (

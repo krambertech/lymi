@@ -2,8 +2,8 @@ import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { FileText, Image } from "lucide-react";
 import type { ReactNode } from "react";
-import { LearnerBubble, ToolCall, UsingLymi } from "./ChatParts";
 import type { SampleCard } from "./cards";
+import { LearnerBubble, ToolCall, UsingLymi } from "./ChatParts";
 import { SmallCard } from "./SmallCard";
 
 export type Turn = {
@@ -104,13 +104,13 @@ export function AssistantChat({ conversation = defaultConversation() }: Props) {
     <div className="flex max-w-[460px] flex-col gap-3">
       {conversation.map((turn, i) =>
         turn.from === "you" ? (
-          // biome-ignore lint/suspicious/noArrayIndexKey: the script is fixed, so the index is the identity
+          // oxlint-disable-next-line react/no-array-index-key -- the script is fixed, so the index is the identity
           <div key={i} className="flex flex-col items-end gap-2">
             {turn.attachment}
             <LearnerBubble>{turn.body}</LearnerBubble>
           </div>
         ) : (
-          // biome-ignore lint/suspicious/noArrayIndexKey: the script is fixed, so the index is the identity
+          // oxlint-disable-next-line react/no-array-index-key -- the script is fixed, so the index is the identity
           <div key={i} className="max-w-[88%] self-start text-md text-pretty text-ink">
             {turn.body}
           </div>

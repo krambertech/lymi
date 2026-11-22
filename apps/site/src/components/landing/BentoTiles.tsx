@@ -252,7 +252,7 @@ export function StreakTile({ play }: TileDemoProps) {
           const lit = state === "kept" || (state === "today" && at("lit"));
           return (
             <motion.span
-              // biome-ignore lint/suspicious/noArrayIndexKey: a fixed week
+              // oxlint-disable-next-line react/no-array-index-key -- a fixed week
               key={i}
               animate={{ scale: state === "today" && at("lit") ? [1, 1.35, 1] : 1 }}
               transition={{ duration: 0.5, ease: EASE }}
@@ -397,7 +397,7 @@ export function InsightsTile({ play }: TileDemoProps) {
       >
         {DAYS.map((week, w) => {
           return (
-            // biome-ignore lint/suspicious/noArrayIndexKey: a fixed grid
+            // oxlint-disable-next-line react/no-array-index-key -- a fixed grid
             <div key={w} className="grid gap-[3px]">
               {week.map((level, d) => {
                 const last = w === WEEKS_SHOWN - 1;
@@ -405,7 +405,7 @@ export function InsightsTile({ play }: TileDemoProps) {
                 const today = last && d === TODAY;
                 return (
                   <span
-                    // biome-ignore lint/suspicious/noArrayIndexKey: a fixed grid
+                    // oxlint-disable-next-line react/no-array-index-key -- a fixed grid
                     key={d}
                     style={{ transitionDelay: shown && !still ? `${w * 30 + d * 8}ms` : "0ms" }}
                     className={clsx(

@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from "vitest";
-import type { Bindings } from "../env";
 import { leadInDependencies } from ".";
+import type { Bindings } from "../env";
 
 describe("lead-in dependencies", () => {
   it("logs a missing gateway once and leaves the decision to the writer", () => {

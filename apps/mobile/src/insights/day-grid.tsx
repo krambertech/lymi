@@ -121,7 +121,7 @@ export function DayGrid({ days, today, firstDay, goal }: Props) {
   const chosenAt = daysBetween(from, chosen);
   const ring = { col: Math.floor(chosenAt / 7), row: chosenAt % 7 };
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the sentences follow the data and the locale, which these name.
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- the sentences follow the data and the locale, which these name.
   const cells = useMemo(
     () => (
       <View className="flex-row" style={{ gap: GAP }}>
@@ -137,6 +137,7 @@ export function DayGrid({ days, today, firstDay, goal }: Props) {
                   entry={byDate.get(date)}
                   today={today}
                   goal={goal}
+                  // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
                   label={sentence(date)}
                   onChoose={setChosen}
                 />
@@ -146,6 +147,7 @@ export function DayGrid({ days, today, firstDay, goal }: Props) {
         ))}
       </View>
     ),
+    // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
     [byDate, from, columns, today, goal, p, i18n.locale],
   );
 

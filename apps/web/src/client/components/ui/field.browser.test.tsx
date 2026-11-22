@@ -1,7 +1,7 @@
 import { createRef, useRef, useState } from "react";
 import { describe, expect, inject, test } from "vitest";
-import { page, userEvent } from "vitest/browser";
 import { render } from "vitest-browser-react";
+import { page, userEvent } from "vitest/browser";
 import { z } from "zod";
 import { type FieldErrors, fieldErrors, focusFirstInvalid } from "../../lib/form";
 import { Combobox, ComboboxTrigger, ComboboxValue } from "./combobox";

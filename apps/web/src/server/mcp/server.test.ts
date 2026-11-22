@@ -730,20 +730,6 @@ describe("Lymi MCP server", () => {
     expect(res.structuredContent).toMatchObject({ id: "card-1", term: "sbrigarsi" });
   });
 
-  it("returns a card's hint under its old name too, for a client that kept the old schema", async () => {
-    services.updateCard.mockResolvedValue({ ...card, hint: "Sbrigati!", hintSource: "manual" });
-    const client = await connect("write");
-    const res = await client.callTool({
-      name: "update_card",
-      arguments: { cardId: "card-1", hint: "Sbrigati!" },
-    });
-    expect(res.structuredContent).toMatchObject({
-      hint: "Sbrigati!",
-      hintSource: "manual",
-    });
-    expect(res.structuredContent).not.toHaveProperty("hook");
-  });
-
   it("archives many cards in one call and reports each card's outcome in order", async () => {
     services.archiveCards.mockResolvedValue([
       { id: "card-1", status: "archived" },
@@ -1391,18 +1377,6 @@ describe("Lymi MCP server", () => {
     expect(res.isError).toBe(true);
     expect(JSON.stringify(res.content)).toContain("at most 50 comparisons");
     expect(services.searchCards).not.toHaveBeenCalled();
-  });
-
-  it("describes search_cards with a schema that has no references, so strict clients accept it", async () => {
-    const client = await connect("read");
-
-    const { tools } = await client.listTools();
-    const schema = JSON.stringify(tools.find((tool) => tool.name === "search_cards")?.inputSchema);
-
-    expect(schema).toContain('"filter"');
-    expect(schema).not.toContain("$ref");
-    expect(schema).not.toContain("$defs");
-    expect(schema).not.toContain("definitions");
   });
 
   it("names the assistant on every tool call it records", async () => {

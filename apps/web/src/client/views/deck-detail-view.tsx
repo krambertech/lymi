@@ -236,7 +236,7 @@ function subline(...parts: ReactNode[]) {
   return (
     <span className="flex flex-wrap items-center gap-x-1.5">
       {shown.map((part, index) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: the parts have a fixed order
+        // oxlint-disable-next-line react/no-array-index-key -- the parts have a fixed order
         <Fragment key={index}>
           {index > 0 && <span aria-hidden="true">·</span>}
           <span className="inline-flex items-center gap-1">{part}</span>
@@ -727,7 +727,7 @@ export function DeckDetailView({
   }, []);
 
   // The list's clock, refreshed with the cards rather than every render, so headings hold still.
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the cards are the reason to look again
+  // oxlint-disable-next-line react-hooks/exhaustive-deps -- the cards are the reason to look again
   const now = useMemo(() => Date.now(), [cards]);
   // A section's filters count only its own cards, and offer no Section filter.
   const filterCtx = useMemo<FilterContext>(

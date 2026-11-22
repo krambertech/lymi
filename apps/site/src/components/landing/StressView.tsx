@@ -6,12 +6,13 @@ import type { ReactNode } from "react";
 import type { LanguagePageName } from "../../lib/language-pages";
 import type { Locale } from "../../lib/routes";
 import { Attachment } from "./AssistantChat";
-import { Wide } from "./FeatureSection";
 import type { Question } from "./faq";
-import type { Example } from "./HandExamples";
+import { Wide } from "./FeatureSection";
 import type { HandCard } from "./hand-cards";
+import type { Example } from "./HandExamples";
 import type { PathStep, VoiceWord } from "./japanese";
 import { LandingLayout } from "./LandingLayout";
+import { addDeckUrl, pathSteps } from "./language-decks";
 import { LanguageDecks } from "./LanguageDecks";
 import {
   DetailsSection,
@@ -24,7 +25,6 @@ import {
   TogetherSection,
   VoiceSection,
 } from "./LanguageSections";
-import { addDeckUrl, pathSteps } from "./language-decks";
 import { Questions } from "./Questions";
 import { ReturnLane } from "./ReturnLane";
 import { SignUpSection } from "./SignUpSection";

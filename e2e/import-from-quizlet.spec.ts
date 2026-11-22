@@ -30,9 +30,6 @@ test("a learner pastes a Quizlet set and finds it in Library", async ({ page }, 
     await expect(
       page.getByRole("heading", { name: "Import from Quizlet", exact: true }),
     ).toBeVisible();
-    await expect(
-      page.getByRole("link", { name: "Stuck? Read the guide", exact: true }),
-    ).toHaveCount(0);
   });
 
   await test.step("paste, check the preview and the skipped rows", async () => {

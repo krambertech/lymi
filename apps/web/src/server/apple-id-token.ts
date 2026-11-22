@@ -69,8 +69,3 @@ function echoesNonceClaim(token: string, nonce: string): boolean {
     return true;
   }
 }
-
-/** Forgets the cached keys; tests only. */
-export function forgetAppleKeys(): void {
-  cached = null;
-}

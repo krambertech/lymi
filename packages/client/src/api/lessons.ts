@@ -15,16 +15,13 @@ export type LessonTerm = LessonRead["terms"][number];
 export type LessonQuestion = LessonRead["questions"][number];
 export type LessonEvent = LessonEventOut;
 
-/** Why Smart add would not read the link it was given, for each app to say in its own words. */
 export type LinkReadRefusal =
   | { kind: "refused"; refused: LinkRefusal; title: string | null; service: string | null }
   | { kind: "invalid" }
   | { kind: "unreadable" }
   | { kind: "too_long" }
-  /** An article over 15,000 words, which counts as `reads`; `left` is null without a daily limit. */
   | { kind: "long_read"; reads: number; words: number; left: number | null };
 
-/** A failed read as a link refusal, or null for any other failure. */
 export function linkReadRefusal(error: unknown): LinkReadRefusal | null {
   const number = (key: string) => {
     const value = Number(refusalDetail(error, key));
@@ -73,7 +70,7 @@ export const lessonsApi = {
     }),
   lessonAccess: () => request<LessonAccessOut>("/api/lesson-reads/access"),
   /**
-   * Photos, PDFs and pasted text in one form, or a `link` to an article on its own. Each event arrives as the model writes it, so the
+   * Photos, PDFs and pasted text in one form. Each event arrives as the model writes it, so the
    * list fills in while the pages are read. Nothing is stored.
    */
   readLesson: async (

@@ -5,12 +5,12 @@ import { useMemo } from "react";
 function Inlines({ nodes }: { nodes: readonly NoteInline[] }) {
   return nodes.map((node, i) => {
     if (node.type === "text") return node.value;
-    // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+    // oxlint-disable-next-line react/no-array-index-key -- a note part has no identity beyond its order
     if (node.type === "break") return <br key={i} />;
     if (node.type === "link") {
       return (
         <a
-          // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+          // oxlint-disable-next-line react/no-array-index-key -- a note part has no identity beyond its order
           key={i}
           href={node.href}
           title={node.title}
@@ -26,7 +26,7 @@ function Inlines({ nodes }: { nodes: readonly NoteInline[] }) {
       node.type
     ];
     return (
-      // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+      // oxlint-disable-next-line react/no-array-index-key -- a note part has no identity beyond its order
       <Tag key={i} className={node.type === "strong" ? "font-semibold" : undefined}>
         <Inlines nodes={node.children} />
       </Tag>
@@ -38,7 +38,7 @@ function Blocks({ blocks }: { blocks: readonly NoteBlock[] }) {
   return blocks.map((block, i) => {
     if (block.type === "paragraph") {
       return (
-        // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+        // oxlint-disable-next-line react/no-array-index-key -- a note part has no identity beyond its order
         <p key={i}>
           <Inlines nodes={block.children} />
         </p>
@@ -47,13 +47,13 @@ function Blocks({ blocks }: { blocks: readonly NoteBlock[] }) {
     const List = block.ordered ? "ol" : "ul";
     return (
       <List
-        // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+        // oxlint-disable-next-line react/no-array-index-key -- a note part has no identity beyond its order
         key={i}
         start={block.ordered && block.start !== 1 ? block.start : undefined}
         className={cn("ps-[1.25em]", block.ordered ? "list-decimal" : "list-disc")}
       >
         {block.items.map((item, j) => (
-          // biome-ignore lint/suspicious/noArrayIndexKey: a note part has no identity beyond its order
+          // oxlint-disable-next-line react/no-array-index-key -- a note part has no identity beyond its order
           <li key={j} className="ps-[0.25em] marker:text-ink-muted">
             <Blocks blocks={item} />
           </li>

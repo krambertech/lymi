@@ -176,10 +176,11 @@ export function Screen<T = never>({
   const p = usePalette();
   const y = useSharedValue(0);
   const scroller = useAnimatedRef<Animated.ScrollView>();
-  // biome-ignore lint/correctness/useExhaustiveDependencies: the key is the trigger.
+  // oxlint-disable react-hooks/exhaustive-deps -- the key is the trigger.
   useEffect(() => {
     if (scrollKey !== undefined) scroller.current?.scrollTo({ y: 0, animated: false });
   }, [scrollKey]);
+  // oxlint-enable react-hooks/exhaustive-deps
   const [compact, setCompact] = useState(false);
   const hasEnd = !!onEndReached;
   const endJS = () => onEndReached?.();

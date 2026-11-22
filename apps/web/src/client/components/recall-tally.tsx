@@ -63,7 +63,7 @@ export function RecallTally({
       aria-label={label}
     >
       {Array.from({ length: graded }, (_, i) => i < passed).map((ok, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: a mark is a count, with no identity beyond its place
+        // oxlint-disable-next-line react/no-array-index-key -- a mark is a count, with no identity beyond its place
         <i key={i} className={clsx("block max-w-[14px] flex-1 rounded-[3px]", tone(ok))} />
       ))}
     </div>

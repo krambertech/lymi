@@ -12,9 +12,9 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { getPlatformProxy } from "wrangler";
+import { leadInPolicy, leadInScore } from ".";
 import { evalEnv, requireKeys } from "../ai/eval-env";
 import { createLeadInWriter } from "../ai/lead-in-writer";
-import { leadInPolicy, leadInScore } from ".";
 import type { LeadInInput } from "./policy";
 
 type Case = LeadInInput & { ambiguous: boolean; rivals?: string };

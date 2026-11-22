@@ -49,7 +49,12 @@ async function publishedCard(slug: string) {
   return { deckId: deck.id, cardId: added.card.id, slug };
 }
 
-async function picture(cardId: string, suffix: string, description: string | null = null) {
+async function picture(
+  cardId: string,
+  suffix: string,
+  description: string | null = null,
+  captured = false,
+) {
   const id = newId();
   const objectKey = `test/public-media/${id}`;
   await env.PRIVATE_IMAGES.put(objectKey, new Uint8Array([1, 2, 3, suffix.length]));
@@ -64,6 +69,7 @@ async function picture(cardId: string, suffix: string, description: string | nul
     byteSize: 4,
     description: description ?? `A picture of ${suffix}`,
     sourceKind: "upload",
+    captured,
     createdBy: "user",
   });
   return { id, objectKey };
@@ -129,6 +135,15 @@ describe("public deck media", () => {
   it("keeps a picture with no description private, because the page cannot describe it", async () => {
     const { cardId, slug } = await publishedCard("picture-undescribed");
     await picture(cardId, "unnamed", "");
+    const projected = await loadPublicDeck(db, slug);
+    if (projected.status !== "published") throw new Error("Expected published deck");
+    expect(projected.deck.sections[0]?.cards[0]?.image).toBeUndefined();
+    await expect(publicMediaFile(db, cardId, "image", storage())).rejects.toEqual(missing);
+  });
+
+  it("keeps a frame the publisher's capture tool sent private, described or not", async () => {
+    const { cardId, slug } = await publishedCard("picture-captured");
+    await picture(cardId, "scene", "A train pulling in", true);
     const projected = await loadPublicDeck(db, slug);
     if (projected.status !== "published") throw new Error("Expected published deck");
     expect(projected.deck.sections[0]?.cards[0]?.image).toBeUndefined();

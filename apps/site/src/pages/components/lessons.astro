@@ -1,0 +1,14 @@
+---
+import LessonKitPage from "../../components/islands/LessonKitPage";
+import BaseLayout from "../../layouts/BaseLayout.astro";
+---
+
+<BaseLayout
+  title="Lesson practice parts · Lymi"
+  description="The Estonian lessons' practice parts, working: listening, gaps, reading, dialogue, sorting, matching, sentence building and forms."
+  canonicalPath="/components/lessons"
+  analytics={false}
+>
+  <meta slot="head" name="robots" content="noindex, nofollow" />
+  <LessonKitPage client:only="react" />
+</BaseLayout>

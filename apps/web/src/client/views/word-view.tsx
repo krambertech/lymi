@@ -685,7 +685,7 @@ export function WordView({
             .filter(Boolean)
             .map((part, index) => (
               // Parts come from a fixed list in a fixed order, so the index is a stable key.
-              // biome-ignore lint/suspicious/noArrayIndexKey: fixed-length list in a fixed order
+              // oxlint-disable-next-line react/no-array-index-key -- fixed-length list in a fixed order
               <Fragment key={index}>
                 {index > 0 && <span aria-hidden="true">·</span>}
                 {part}
@@ -980,7 +980,6 @@ export function WordView({
   );
 }
 
-/** The card's source, as a link to its site when it is a web address. */
 function SourceLine({ source, fallback }: { source: string | null; fallback: string }) {
   const link = sourceLink(source);
   if (!link) return <>{source ?? fallback}</>;

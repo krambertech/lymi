@@ -105,7 +105,7 @@ export function Steps({ children }: { children: ReactNode }) {
   return (
     <ol className="my-6 grid list-none gap-6 !ps-0">
       {items.map((child, i) => (
-        // biome-ignore lint/suspicious/noArrayIndexKey: the steps are a fixed, ordered list
+        // oxlint-disable-next-line react/no-array-index-key -- the steps are a fixed, ordered list
         <li key={i} className="relative grid grid-cols-[26px_1fr] gap-x-3.5">
           <span
             aria-hidden="true"
@@ -137,7 +137,7 @@ export function Defs({ items }: { items: { term: ReactNode; def: ReactNode }[] }
     <dl className="my-5 grid rounded-md bg-plate edge sm:grid-cols-[fit-content(16rem)_1fr]">
       {items.map((it, i) => (
         <div
-          // biome-ignore lint/suspicious/noArrayIndexKey: a static list
+          // oxlint-disable-next-line react/no-array-index-key -- a static list
           key={i}
           className="grid gap-y-1 border-edge px-3.5 py-3 sm:col-span-2 sm:grid-cols-subgrid sm:gap-x-6 [&:not(:first-child)]:border-t"
         >

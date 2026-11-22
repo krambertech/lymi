@@ -363,6 +363,7 @@ export async function addCards(
       audioSource: null,
       audioApprovedKey: null,
       exampleRecordingKey: null,
+      exampleRecordingCaptured: false,
       createdBy: actor,
       archivedAt: null,
       createdAt: now,
@@ -441,7 +442,6 @@ export async function addCards(
       name: "cards_added",
       count: groups.length,
       source,
-      // Smart add names them too, so a card from an article, with its example and link, stands apart.
       ...(source === "typed" || source === "lesson"
         ? { fields: TYPED_CARD_FIELDS.filter((f) => filled.has(f)) }
         : {}),
@@ -1257,7 +1257,9 @@ function editWrite(
       ...(revision === undefined ? bumped("card", patch, current) : { revision }),
       normalizedTerm,
       ...(audioStale ? { audioKey: null, audioSource: null } : {}),
-      ...(exampleRecordingStale ? { exampleRecordingKey: null } : {}),
+      ...(exampleRecordingStale
+        ? { exampleRecordingKey: null, exampleRecordingCaptured: false }
+        : {}),
       ...(draftStale ? { hintDraft: null } : {}),
       updatedAt: now,
     })

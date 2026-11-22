@@ -2,17 +2,14 @@ import type { LinkRefusal } from "@lymi/core";
 import type { Fetch } from "../ai/types";
 import { type HealthEnv, metered } from "../dependency-health";
 
-/** Who Lymi says it is when it reads a page, with the page that explains why. */
 export const LYMI_BOT = "LymiBot/1.0 (+https://lymi.app/docs/smart-add#lymibot)";
 const BOT_TOKEN = "lymibot";
 
-/** The whole read of a link, robots.txt and redirects included. */
 const TIMEOUT_MS = 10_000;
 const MAX_PAGE_BYTES = 5_000_000;
 const MAX_ROBOTS_BYTES = 500_000;
 const MAX_REDIRECTS = 5;
 
-/** Services whose terms or DRM forbid reading them, by the site's registrable name. */
 const REFUSED_SITES: Record<string, string> = {
   "netflix.com": "Netflix",
   "disneyplus.com": "Disney+",
@@ -26,7 +23,6 @@ export type LinkKind =
   | { kind: "youtube"; url: URL }
   | { kind: "drm"; service: string };
 
-/** Why a link is not a page Lymi may fetch; the message is the learner's. */
 export class LinkInvalid extends Error {
   constructor(message: string) {
     super(message);
@@ -34,7 +30,6 @@ export class LinkInvalid extends Error {
   }
 }
 
-/** The page could not be read: unreachable, too large, not a web page, or with no text. */
 export class LinkUnreadable extends Error {
   constructor(message: string, options?: ErrorOptions) {
     super(message, options);
@@ -42,7 +37,6 @@ export class LinkUnreadable extends Error {
   }
 }
 
-/** The site does not allow apps to read it, by robots.txt or its TDM reservation. */
 export class LinkRefused extends Error {
   constructor(readonly refused: Extract<LinkRefusal, "robots" | "tdm">) {
     super("This site doesn't allow apps to read it. Paste the text instead.");
@@ -50,10 +44,6 @@ export class LinkRefused extends Error {
   }
 }
 
-/**
- * Whether a host may be fetched: a public name, never an IP literal, a single label or a name
- * reserved for private networks.
- */
 export function publicHost(hostname: string): boolean {
   const host = hostname.toLowerCase().replace(/\.$/, "");
   if (!host || host.startsWith("[") || host.includes(":")) return false;
@@ -64,12 +54,10 @@ export function publicHost(hostname: string): boolean {
   );
 }
 
-/** The last two labels of a host, enough to tell the sites this module names apart. */
 function site(host: string): string {
   return host.toLowerCase().replace(/\.$/, "").split(".").slice(-2).join(".");
 }
 
-/** A pasted link, checked against the URL rules and sorted by what Lymi may read from it. */
 export function classifyLink(raw: string): LinkKind {
   let url: URL;
   try {
@@ -80,7 +68,6 @@ export function classifyLink(raw: string): LinkKind {
   if (url.protocol !== "https:") throw new LinkInvalid("Paste a link that starts with https://.");
   if (url.username || url.password || (url.port && url.port !== "443") || !publicHost(url.hostname))
     throw new LinkInvalid("Smart add reads only public web pages.");
-  // A fragment is the reader's place on the page, never sent to the site.
   url.hash = "";
   const name = site(url.hostname);
   const service = REFUSED_SITES[name];
@@ -89,7 +76,6 @@ export function classifyLink(raw: string): LinkKind {
   return { kind: "article", url };
 }
 
-/** A YouTube video's title from oEmbed, the one thing Lymi reads from YouTube; null when it has none. */
 export async function youtubeTitle(url: URL, request: Fetch = fetch): Promise<string | null> {
   try {
     const response = await request(
@@ -113,7 +99,6 @@ export async function youtubeTitle(url: URL, request: Fetch = fetch): Promise<st
 
 type Rule = { allow: boolean; pattern: string };
 
-/** The rules robots.txt sets for LymiBot: its own group when it has one, otherwise `*`'s. */
 export function robotsRules(text: string): Rule[] {
   const groups: { agents: string[]; rules: Rule[] }[] = [];
   let current: { agents: string[]; rules: Rule[] } | null = null;
@@ -138,10 +123,6 @@ export function robotsRules(text: string): Rule[] {
   return chosen.flatMap((g) => g.rules);
 }
 
-/**
- * A path in the form a URL's own path takes, so a rule written in Cyrillic meets the
- * percent-encoded path it names (RFC 9309, 2.2.2). Escapes already present keep their meaning.
- */
 function encodedPath(path: string): string {
   return path
     .replace(/[^\x21-\x7e]/gu, (c) => encodeURIComponent(c))
@@ -158,7 +139,6 @@ function patternMatches(pattern: string, path: string): boolean {
   return new RegExp(`^${source}${anchored ? "$" : ""}`).test(path);
 }
 
-/** Whether robots.txt lets LymiBot read a path: the longest matching rule wins, and allow wins a tie. */
 export function robotsAllow(rules: Rule[], path: string): boolean {
   let best: Rule | null = null;
   for (const rule of rules) {
@@ -174,7 +154,6 @@ export function robotsAllow(rules: Rule[], path: string): boolean {
   return best?.allow ?? true;
 }
 
-/** A fetch that follows redirects itself, so every hop is held to the URL rules. */
 async function follow(
   request: Fetch,
   start: URL,
@@ -190,8 +169,6 @@ async function follow(
     await response.body?.cancel();
     if (hop >= MAX_REDIRECTS) throw new LinkUnreadable("This link redirects too many times.");
     const next = new URL(location, url);
-    // A redirect meets the pasted link's rules, so a shortener can't lead to a private host or to
-    // a service Smart add never reads.
     let kind: LinkKind | null = null;
     try {
       kind = classifyLink(next.href);
@@ -204,7 +181,6 @@ async function follow(
   }
 }
 
-/** The body up to `limit` bytes, or null when it is longer. */
 async function bounded(response: Response, limit: number): Promise<Uint8Array | null> {
   const declared = Number(response.headers.get("content-length") ?? Number.NaN);
   if (Number.isFinite(declared) && declared > limit) {
@@ -231,7 +207,6 @@ async function bounded(response: Response, limit: number): Promise<Uint8Array | 
   return out;
 }
 
-/** What robots.txt allows on one origin: a 4xx means no rules, and a 5xx or a 429 leaves the page unread. */
 async function robotsFor(request: Fetch, origin: URL, signal: AbortSignal): Promise<Rule[] | null> {
   let response: Response;
   try {
@@ -250,8 +225,6 @@ async function robotsFor(request: Fetch, origin: URL, signal: AbortSignal): Prom
     await response.body?.cancel();
     return [];
   }
-  // RFC 9309 reads a failing robots.txt as a refusal; the page stays unread, but the learner hears
-  // the site is down rather than that it refuses apps.
   if (!response.ok) {
     await response.body?.cancel();
     throw new LinkUnreadable("This site isn't answering. Try again later.");
@@ -261,16 +234,11 @@ async function robotsFor(request: Fetch, origin: URL, signal: AbortSignal): Prom
 }
 
 export type FetchedPage = {
-  /** Where the page was read, after redirects. */
   url: URL;
   html: string;
   title: string;
 };
 
-/**
- * Reads an article for Smart add: robots.txt on every origin it passes through, then the page,
- * which must be HTML without a TDM reservation, inside one 10-second budget.
- */
 export async function fetchArticle(start: URL, request: Fetch = fetch): Promise<FetchedPage> {
   const signal = AbortSignal.timeout(TIMEOUT_MS);
   const robots = new Map<string, Rule[] | null>();
@@ -331,7 +299,6 @@ export async function fetchArticle(start: URL, request: Fetch = fetch): Promise<
   return { url, html, title: pageTitle(html) ?? url.hostname.replace(/^www\./, "") };
 }
 
-/** The page's text in the charset its header or its own meta tag names, UTF-8 otherwise. */
 function decode(bytes: Uint8Array, contentType: string): string {
   try {
     const declared =
@@ -367,7 +334,6 @@ function unescapeHtml(text: string): string {
   });
 }
 
-/** The page's own title: its Open Graph title, or its `<title>`. */
 export function pageTitle(html: string): string | null {
   const og =
     /<meta[^>]+property=["']og:title["'][^>]+content=["']([^"']*)["']/i.exec(html)?.[1] ??
@@ -377,20 +343,17 @@ export function pageTitle(html: string): string | null {
   return clean ? clean.slice(0, 300) : null;
 }
 
-/** Which part of the page holds the article, so menus and footers stay out of the read. */
 export function articleSelector(html: string): string | undefined {
   if (/<article[\s>]/i.test(html)) return "article";
   if (/<main[\s>]/i.test(html)) return "main";
   return undefined;
 }
 
-/** Markdown as plain sentences, in reading order, with links and images reduced to their words. */
 export function markdownSentences(markdown: string): string[] {
   const sentences: string[] = [];
   const segmenter = new Intl.Segmenter(undefined, { granularity: "sentence" });
   let fenced = false;
   for (const raw of markdown.split(/\n/)) {
-    // Code and structured data are not the article's prose.
     if (/^\s*(```|~~~)/.test(raw)) {
       fenced = !fenced;
       continue;
@@ -417,7 +380,6 @@ export function markdownSentences(markdown: string): string[] {
   return sentences;
 }
 
-/** Words in text, counted by the language's own word breaks so text without spaces counts too. */
 export function countWords(text: string): number {
   let n = 0;
   for (const part of new Intl.Segmenter(undefined, { granularity: "word" }).segment(text))
@@ -425,12 +387,10 @@ export function countWords(text: string): number {
   return n;
 }
 
-/** The page without scripts and styles, so JSON-LD and code never become sentences. */
 export function readableHtml(html: string): string {
   return html.replace(/<(script|style|noscript|template)\b[\s\S]*?<\/\1\s*>/gi, "");
 }
 
-/** The page as Markdown through Workers AI, from its article alone where the page marks one. */
 export async function pageMarkdown(
   env: { AI?: Ai | undefined } & HealthEnv,
   page: FetchedPage,
@@ -452,7 +412,6 @@ export async function pageMarkdown(
       },
     ),
   );
-  // The page itself would not convert; an outage throws instead and is not the page's fault.
   if (result.format === "error") throw new LinkUnreadable("Smart add couldn't read this page.");
   return result.data;
 }

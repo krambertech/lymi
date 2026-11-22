@@ -1,6 +1,7 @@
-import { registerSW } from "virtual:pwa-register";
 import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
+import { shouldPersistQuery } from "@lymi/client/cache";
+import { bindWriteCache } from "@lymi/client/writes";
 import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import {
@@ -11,11 +12,10 @@ import {
 } from "@tanstack/react-router";
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import { bootstrapLanguage } from "./lib/i18n";
 import "./lib/pwa-install";
-import { shouldPersistQuery } from "@lymi/client/cache";
-import { bindWriteCache } from "@lymi/client/writes";
+import { registerSW } from "virtual:pwa-register";
 import { BidiTrans } from "./lib/bidi";
+import { bootstrapLanguage } from "./lib/i18n";
 import { queryPersister } from "./lib/query-persister";
 import { isLeavingPage, isStaleChunkError } from "./lib/stale-build";
 import { reportClientException } from "./lib/telemetry";

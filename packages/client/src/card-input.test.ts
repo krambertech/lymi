@@ -41,6 +41,7 @@ describe("addInput", () => {
     expect(addInput({ deckId: "d1", term: "x", reviewModes: null })).not.toHaveProperty(
       "reviewModes",
     );
+    expect(addInput({ deckId: "d1", term: "x", language: null }).language).toBeNull();
   });
 });
 

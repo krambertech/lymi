@@ -294,7 +294,7 @@ export function deckPageSpread<T extends { term: string; meaning: string }>(
       perGroup[at] = 1;
     }
   } else {
-    for (let placed = 0; placed < count; ) {
+    for (let placed = 0; placed < count;) {
       groups.forEach((cards, at) => {
         if (placed < count && (perGroup[at] ?? 0) < cards.length) {
           perGroup[at] = (perGroup[at] ?? 0) + 1;

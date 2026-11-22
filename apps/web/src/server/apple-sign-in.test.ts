@@ -1,7 +1,6 @@
 import { createHash, generateKeyPairSync, sign } from "node:crypto";
 import { and, eq } from "@lymi/core/db";
-import { afterEach, beforeAll, describe, expect, it, vi } from "vitest";
-import { forgetAppleKeys } from "./apple-id-token";
+import { afterEach, beforeAll, describe, expect, it, onTestFinished, vi } from "vitest";
 import { schema } from "./db";
 import * as posthog from "./posthog";
 import { json, type TestApp, testApp } from "./test-app";
@@ -217,8 +216,12 @@ describe("signing in with Apple from the phone app", () => {
     expect(await userWith(email)).toBeUndefined();
   });
 
-  it("fetches Apple's signing keys once, not on every sign-in", async () => {
-    forgetAppleKeys();
+  it("fetches Apple's signing keys once an hour, not on every sign-in", async () => {
+    // An hour on, whatever an earlier sign-in fetched is stale.
+    vi.useFakeTimers({ toFake: ["Date"], now: Date.now() + 61 * 60 * 1000 });
+    onTestFinished(() => {
+      vi.useRealTimers();
+    });
     const fetches = stubAppleKeys();
     for (const sub of ["cached-1", "cached-2", "cached-3"]) {
       const response = await signInWithApple({

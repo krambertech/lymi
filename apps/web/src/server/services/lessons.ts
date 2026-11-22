@@ -138,9 +138,8 @@ function limitReached(ctx: ServiceContext): never {
 }
 
 /**
- * Counts a read, or a long article's several, against today's limit just before the model starts;
- * the release undoes it. The insert carries its own count, so two reads started together cannot
- * both take the last one.
+ * Counts a read against today's limit just before the model starts; the release undoes it. The
+ * insert carries its own count, so two reads started together cannot both take the last one.
  */
 async function claimRead(
   ctx: ServiceContext,
@@ -166,23 +165,16 @@ async function claimRead(
   };
 }
 
-/** How Smart add reaches a link: the fetch it reads pages with, and Workers AI's HTML to Markdown. */
 export type LinkDeps = {
   request: Fetch;
   toMarkdown: (page: FetchedPage) => Promise<string>;
 };
 
-/** Characters of an article the reader takes at most, about 120,000 tokens even in a dense alphabet. */
 const MAX_ARTICLE_CHARACTERS = 300_000;
 
-/** Query parameters that track the reader or unlock a page for them, never part of what it is. */
 const PERSONAL_PARAMETER =
   /^(utm_.*|fbclid|gclid|dclid|msclkid|mc_(cid|eid)|igshid|si|ref|ref_src|smid|sgrp|share.*|gift.*|unlocked_.*|access.*|.*token.*|sk|pwapi.*|_hs.*|mkt_tok)$/i;
 
-/**
- * The article's address as a card keeps it: without the fragment and without parameters that track
- * the reader or carry their access, since the card may be shared. `t`, a moment, always stays.
- */
 export function cardSource(url: URL): string {
   const kept = new URL(url.href);
   kept.hash = "";
@@ -191,17 +183,10 @@ export function cardSource(url: URL): string {
   return kept.href;
 }
 
-/** How many reads material of this many words counts as. */
 export function readsFor(words: number): number {
   return Math.max(1, Math.ceil(words / LESSON_READ_WORDS));
 }
 
-/**
- * Reads a pasted link into an article's sentences, or refuses it before anything counts: a page
- * whose robots.txt or TDM reservation refuses apps, a YouTube video, whose captions only its owner
- * may download, and services whose terms and DRM forbid reading them. ADR-level detail is in
- * docs/proposals/cards-from-links-and-recordings.md.
- */
 export async function readLink(
   ctx: ServiceContext,
   link: string,
@@ -266,7 +251,6 @@ export async function readLink(
   } catch (error) {
     if (error instanceof LinkUnreadable)
       throw unreadable("Smart add couldn't read this page. Paste the text instead.");
-    // Workers AI is down or unconfigured: the page is not at fault, so the learner can try again.
     console.error("Converting a page failed", {
       error: error instanceof Error ? error.name : typeof error,
     });
@@ -339,9 +323,7 @@ export type PreparedLesson = {
   byHead: Map<string, Owned>;
   /** Each candidate deck's language, which decides whether a term's reading counts. */
   languages: Map<string, string | null>;
-  /** The article being read, whose sentences become the terms' examples. */
   transcript: Transcript | undefined;
-  /** Reads this one counted as. */
   reads: number;
   analytics: AnalyticsWriter | undefined;
   pasted: boolean;
@@ -373,7 +355,6 @@ export async function prepareLesson(
     deckId?: string | undefined;
     hint?: string | undefined;
     client?: "web" | "phone";
-    /** The reads the learner agreed a long article counts as. */
     reads?: number | undefined;
   } = {},
 ): Promise<PreparedLesson> {
@@ -436,8 +417,6 @@ export async function prepareLesson(
       : 0;
   const reads = material.transcript ? readsFor(words) : 1;
   const characters = material.transcript?.sentences.reduce((n, s) => n + s.text.length + 8, 0) ?? 0;
-  // Words alone undercount an alphabet that tokenizes densely, such as Cyrillic or Greek, so the
-  // characters keep a day's read inside the reader's context too.
   if (reads > LESSON_READS_PER_DAY || characters > MAX_ARTICLE_CHARACTERS) {
     throw new ServiceError(
       "invalid",
@@ -510,18 +489,12 @@ export async function streamLesson(
   }
 }
 
-/**
- * The sentence a term came from, quoted from the material itself whatever the model wrote, and cut
- * around the term when it is too long for an example. A lesson has none.
- */
 function exampleOf(
   transcript: Transcript | undefined,
   term: { term: string; seen: string; sentence?: number | undefined },
 ): { example: string | null; at: number | null } {
   if (!transcript) return { example: null, at: null };
   const { sentences } = transcript;
-  // A sentence the model named is used only when the term is in it, so a wrong number can't put
-  // another sentence on the card as the lesson's.
   const holds = (s: { text: string } | undefined) => !!s && findTerm(s.text, term.term) !== null;
   const numbered = term.sentence ? sentences[term.sentence - 1] : undefined;
   const sentence =

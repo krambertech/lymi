@@ -1,8 +1,8 @@
 import { msg } from "@lingui/core/macro";
 import { Trans } from "@lingui/react/macro";
 import { ClassHero } from "./ClassHero";
-import { FeatureSection } from "./FeatureSection";
 import { TEACHERS_QUESTIONS } from "./faq";
+import { FeatureSection } from "./FeatureSection";
 import { JoinLinkDemo } from "./JoinLinkDemo";
 import { LandingLayout } from "./LandingLayout";
 import { BENTO_HUES, CheckList, LanguageBento, Tile } from "./LanguageBento";

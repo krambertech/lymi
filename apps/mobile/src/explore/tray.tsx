@@ -162,7 +162,7 @@ export function DeckTray({ deck, cw, flush = false }: TrayProps) {
         <View style={{ width: cw, height: ch }}>
           {PAPER.slice(0, paperFor(deck.cardCount)).map((t, at) => (
             <View
-              // biome-ignore lint/suspicious/noArrayIndexKey: a fixed stack, and the sheets are blank.
+              // oxlint-disable-next-line react/no-array-index-key -- a fixed stack, and the sheets are blank.
               key={at}
               style={{
                 ...sheet,

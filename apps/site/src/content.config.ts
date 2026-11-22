@@ -1,6 +1,6 @@
-import { defineCollection } from "astro:content";
 import { glob } from "astro/loaders";
 import { z } from "astro/zod";
+import { defineCollection } from "astro:content";
 import { CHANGELOG_FIGURES } from "./lib/changelog-figures";
 
 /** One folder per update, named `YYYY-MM-DD-slug`, holding `en.md`, `uk.md` and `ru.md`. */
@@ -11,7 +11,7 @@ const changelog = defineCollection({
     /** One sentence: the page's description, the feed's summary and, later, the in-app notice. */
     summary: z.string().min(1),
     figure: z.enum(CHANGELOG_FIGURES).optional(),
-    /** Links to the phone app's stores under the picture, the named store first. */
+    /** Links to the named phone app's store under the picture. */
     stores: z.enum(["app-store", "google-play"]).optional(),
     /** Shown from `<locale>-<theme>.webp` beside the update; `capture` is the recipe en.md keeps. */
     screenshot: z

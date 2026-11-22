@@ -273,11 +273,6 @@ const LOOKS: Record<string, Look> = {
   },
 };
 
-/** Whether a persona has its own face; the publisher draws the lantern instead. */
-export function hasLook(id: string): boolean {
-  return id in LOOKS || id === "publisher";
-}
-
 /** The publisher is the product itself, so it is the lantern rather than a person. */
 function Lantern() {
   return (

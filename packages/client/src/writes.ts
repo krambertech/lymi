@@ -84,7 +84,6 @@ const KINDS = new Set<Write["kind"]>([
 ]);
 
 let cache: QueuedWrite[] | null = null;
-const listeners = new Set<() => void>();
 const noticeListeners = new Set<(notice: Notice) => void>();
 
 function readable(e: unknown): e is QueuedWrite {
@@ -121,10 +120,6 @@ function read(): QueuedWrite[] {
   return writes;
 }
 
-function changed() {
-  for (const listener of listeners) listener();
-}
-
 function put(entry: QueuedWrite) {
   const { storage } = clientConfig();
   const raw = JSON.stringify(entry);
@@ -137,7 +132,6 @@ function put(entry: QueuedWrite) {
   } catch {
     // Blocked or full storage keeps the write for this page's life.
   }
-  changed();
 }
 
 function remove(key: string) {
@@ -146,7 +140,6 @@ function remove(key: string) {
   try {
     storage.removeItem(WRITE_PREFIX + key);
   } catch {}
-  changed();
 }
 
 let watched: KeyValueStore | null = null;
@@ -156,22 +149,9 @@ function watch(storage: KeyValueStore) {
   if (watched === storage) return;
   watched = storage;
   storage.subscribe?.((key) => {
-    if (key === null || key.startsWith(WRITE_PREFIX)) {
-      cache = null;
-      changed();
-    }
+    if (key === null || key.startsWith(WRITE_PREFIX)) cache = null;
   });
 }
-
-export const writeStore = {
-  subscribe(listener: () => void) {
-    listeners.add(listener);
-    return () => {
-      listeners.delete(listener);
-    };
-  },
-  snapshot: read,
-};
 
 /** Hears about every write that will not land as the learner made it. */
 export function onNotice(listener: (notice: Notice) => void) {
@@ -303,7 +283,6 @@ export function dropWrites() {
   unclaimWrites();
   dropQueued();
   cache = null;
-  changed();
 }
 
 async function flushQueued(): Promise<Flushed> {
@@ -615,7 +594,7 @@ async function queued(written: Promise<Written<Result>>): Promise<{ queued: bool
   return { queued: (await written).status === "queued" };
 }
 
-/** For tests: forget the in-memory copy so the next read comes from storage. */
+/** For tests: forget the in-memory copy so the next read comes from storage, and drop a flush still in flight. */
 export function resetWriteCache() {
   cache = null;
   client = null;
@@ -623,4 +602,6 @@ export function resetWriteCache() {
   awaited.clear();
   settled.clear();
   clearTimeout(timer);
+  timer = undefined;
+  chain = Promise.resolve();
 }

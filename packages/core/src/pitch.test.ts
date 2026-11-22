@@ -67,6 +67,9 @@ describe("pitchPattern", () => {
     expect(pitchPattern({ language: "ja", pronunciation: "/haʃi/" })).toBeNull();
     expect(pitchPattern({ language: "es", pronunciation: "はし [1]" })).toBeNull();
     expect(pitchPattern({ language: "ja", pronunciation: "はし [5]" })).toBeNull();
+    expect(
+      pitchPattern({ language: "ja", pronunciation: `${"あ".repeat(12)} [1]` }),
+    ).not.toBeNull();
     expect(pitchPattern({ language: "ja", pronunciation: `${"あ".repeat(13)} [1]` })).toBeNull();
   });
 

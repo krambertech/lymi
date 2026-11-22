@@ -18,11 +18,6 @@ import {
 import { emptyState, type FsrsCard, schedule } from "./fsrs";
 import type { Rating } from "./types";
 
-/**
- * The draw over generated days, graded through the real scheduler. Each run checks every
- * rule ADR 0019 states as an invariant of the whole day rather than one arranged example.
- */
-
 const DAY = 86_400_000;
 
 interface Attempt extends Drawn {
@@ -31,11 +26,6 @@ interface Attempt extends Drawn {
   stateAfter: State;
 }
 
-/**
- * Play one day: draw, grade through FSRS with a seeded rating, log it, repeat until the
- * draw says the day is exhausted or `cap` attempts have landed. Missing is common so
- * returns are exercised hard.
- */
 function playDay(
   modes: SimMode[],
   day: DayWindow,
@@ -103,7 +93,7 @@ describe("the miss rule is the scheduler's", () => {
   });
 });
 
-describe("a generated day holds every rule", () => {
+describe("a generated day, graded through the real scheduler, holds every rule of ADR 0019", () => {
   for (const seed of SEEDS) {
     it(`seed ${seed}: sibling, cap, gap, precedence and exhaustion hold at every attempt`, () => {
       const modes = collection(seed, day, 120);
@@ -115,35 +105,34 @@ describe("a generated day holds every rule", () => {
         const k = `${a.cardId} ${a.mode}`;
         const before = log.slice(0, i);
 
-        // One mode of a card per day: a card seen already is only ever drawn as a return.
         const cardBefore = before.filter((e) => e.cardId === a.cardId);
         if (cardBefore.length > 0) {
-          expect(a.kind, `attempt ${i}`).toBe("return");
+          expect(a.kind, `attempt ${i} redrew a card reviewed today`).toBe("return");
           expect(
             cardBefore.every((e) => e.mode === a.mode),
-            `attempt ${i}`,
+            `attempt ${i} drew two modes of one card`,
           ).toBe(true);
         } else expect(a.kind).not.toBe("return");
 
-        // A repeat comes only after a Forgot, once, and never before its gap.
         const last = cardBefore.at(-1);
         if (last) {
-          expect(owesReturn(last.rating), `attempt ${i}`).toBe(true);
+          expect(owesReturn(last.rating), `attempt ${i} repeated a card that owed no return`).toBe(
+            true,
+          );
           expect(cardBefore).toHaveLength(1);
           const since = i - before.lastIndexOf(last) - 1;
-          expect(since, `attempt ${i}`).toBeGreaterThanOrEqual(
+          expect(since, `attempt ${i} returned before its gap`).toBeGreaterThanOrEqual(
             returnGap(day.date, a.cardId, a.mode),
           );
         }
 
-        // Whenever some return has reached its gap, the attempt is a return.
         const reached = before.some((e, j) => {
           const once = before.filter((f) => f.cardId === e.cardId).length === 1;
           return once && owesReturn(e.rating) && i - j - 1 >= returnGap(day.date, e.cardId, e.mode);
         });
-        if (reached) expect(a.kind, `attempt ${i}`).toBe("return");
+        if (reached)
+          expect(a.kind, `attempt ${i} passed over a return that was due`).toBe("return");
 
-        // A new card is only introduced once the mode before it has reached Review.
         if (a.kind === "unseen") {
           const card = cards.find((c) => c.cardId === a.cardId) as DrawCard;
           const asked = card.modes.filter((m) => m.hasCue);
@@ -151,23 +140,27 @@ describe("a generated day holds every rule", () => {
           expect(index, `attempt ${i}`).toBeGreaterThanOrEqual(0);
           if (index > 0) {
             const previous = asked[index - 1] as (typeof asked)[number];
-            expect([State.Review, State.Relearning], `attempt ${i}`).toContain(previous.state);
+            expect(
+              [State.Review, State.Relearning],
+              `attempt ${i} introduced a mode too early`,
+            ).toContain(previous.state);
           }
         }
 
         seen.set(k, [...(seen.get(k) ?? []), i]);
       });
 
-      // No mode is seen more than once plus its one return.
-      for (const positions of seen.values()) expect(positions.length).toBeLessThanOrEqual(2);
+      for (const [key, positions] of seen)
+        expect(
+          positions.length,
+          `${key} came more than once plus its one return`,
+        ).toBeLessThanOrEqual(2);
 
-      // The day ended for a reason: nothing is left that the rules allow.
-      expect(exhausted).toBe(true);
+      expect(exhausted, "the day ended with a card left to draw").toBe(true);
       expect(drawableCount(cards, log, day)).toBe(0);
       for (const card of cards) {
         const graded = log.filter((e) => e.cardId === card.cardId);
         if (graded.length > 0) continue;
-        // An untouched card had nothing eligible: due later, no cue, or waiting on its sibling.
         const asked = card.modes.filter((m) => m.hasCue);
         asked.forEach((m, index) => {
           const previous = asked[index - 1];
@@ -190,7 +183,6 @@ describe("a generated day holds every rule", () => {
       const full = drawOrder(cards, log, day);
       expect(full.length).toBeGreaterThan(0);
       expect(drawableCount(cards, log, day)).toBe(new Set(full.map((d) => d.cardId)).size);
-      // The draw and the count never disagree about whether the day is over.
       const played = [...log];
       for (const d of full) {
         expect(drawableCount(cards, played, day)).toBeGreaterThan(0);
@@ -220,12 +212,11 @@ describe("a generated day holds every rule", () => {
     }
   });
 
-  it("gives the same next card from the same log on another device, in another scope", () => {
+  it("gives the same next card from the same log on another device, and in a deck scope that holds it", () => {
     const modes = collection(3, day, 60);
     const { cards, log } = playDay(modes, day, 3, 40);
     const again = draw(cards, [...log], day);
     expect(draw(cards, log, day)).toEqual(again);
-    // A deck scope sees the all-decks pick whenever that pick is in the deck.
     const pick = again as Drawn;
     const deckId = cards.find((c) => c.cardId === pick.cardId)?.deckId;
     expect(draw(cards, log, day, { deckId })).toEqual(pick);
@@ -240,7 +231,6 @@ describe("a generated day holds every rule", () => {
       expect(finished.has(k), `attempt ${i} redrew a finished mode`).toBe(false);
       if (!missed(a.rating, a.stateBefore)) finished.add(k);
     });
-    // Forget the last drawable card with nothing else left: the day ends, and the card waits.
     const last = attempts.at(-1) as Attempt;
     const trimmed = log.slice(0, -1);
     trimmed.push({ ...(log.at(-1) as DrawLogEntry), rating: 1 });
@@ -310,15 +300,13 @@ describe("the weights are the ones the simulations chose", () => {
         },
       ],
     });
-    // The first slot of a day is a weighted one, so the oldest-card slot never interferes.
     const cards = [unseen("fresh", 0), unseen("week", UNSEEN_HALF_LIFE_DAYS)];
     expect(share(cards, "fresh")).toBeCloseTo(2 / 3, 1);
   });
 });
 
 describe("the order is pinned", () => {
-  // A change here changes every learner's order on deploy. Change it on purpose or not at all.
-  it("hashes the date, card and mode to the same keys as before", () => {
+  it("hashes the date, card and mode to the same keys as before, since a change reorders every learner's day on deploy", () => {
     expect(returnGap("2026-09-13", "card-a", "term_to_meaning")).toBe(22);
     expect(returnGap("2026-09-14", "card-a", "term_to_meaning")).toBe(19);
     const modes = collection(42, day, 30);

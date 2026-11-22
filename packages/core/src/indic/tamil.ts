@@ -1,9 +1,3 @@
-/**
- * Tamil spelling read aloud in Latin letters, one word at a time: each consonant with its vowel
- * sign, its pulli or its inherent a, and each stop voiced as a speaker says it, since the script
- * writes க for both k and g. docs/proposals/tamil.md, The reading.
- */
-
 const VOWELS: Readonly<Record<string, string>> = {
   அ: "a",
   ஆ: "ā",
@@ -35,10 +29,8 @@ const SIGNS: Readonly<Record<string, string>> = {
 
 const PULLI = "்";
 const AYTHAM = "ஃ";
-/** Joiners change how a cluster is drawn, never how it is said. */
 const JOINERS = /[\u{200c}\u{200d}]/u;
 
-/** Each consonant as said with no voicing, or as written where voicing never changes it. */
 const CONSONANTS: Readonly<Record<string, string>> = {
   க: "k",
   ங: "ṅ",
@@ -65,7 +57,6 @@ const CONSONANTS: Readonly<Record<string, string>> = {
   ஹ: "h",
 };
 
-/** The five stops the script writes alike voiced and voiceless, each as said between vowels and after a nasal. */
 const VOICED: Readonly<Record<string, { vowel: string; nasal: string }>> = {
   க: { vowel: "g", nasal: "g" },
   ச: { vowel: "s", nasal: "j" },
@@ -75,10 +66,8 @@ const VOICED: Readonly<Record<string, { vowel: string; nasal: string }>> = {
 };
 
 const NASALS = new Set(["ங", "ஞ", "ண", "ந", "ம", "ன"]);
-/** Consonants after which a stop stays voiceless: the stops themselves, ற, and the grantha sibilants. */
 const VOICELESS = new Set(["க", "ச", "ட", "த", "ப", "ற", "ஷ", "ஸ", "ஶ"]);
 
-/** Loanwords write f as ஃப and z as ஃஜ; elsewhere the aytham is a breath, h. */
 const AYTHAM_LOANS: Readonly<Record<string, string>> = { ப: "f", ஜ: "z" };
 
 const TAMIL_DIGITS = "௦௧௨௩௪௫௬௭௮௯";
@@ -90,7 +79,6 @@ type Unit =
   | { kind: "aytham" }
   | { kind: "other"; text: string };
 
-/** A Tamil word as its consonants, vowels and aytham, in NFC so ொ typed as ெ + ா reads as one sign. */
 function units(word: string): Unit[] {
   const out: Unit[] = [];
   const chars = [...word.normalize("NFC")].filter((char) => !JOINERS.test(char));
@@ -116,7 +104,6 @@ function units(word: string): Unit[] {
   return out;
 }
 
-/** How a stop that carries a vowel sounds after what comes before it in the word. */
 function stop(letter: string, before: Unit | undefined): string {
   const plain = CONSONANTS[letter] as string;
   const voiced = VOICED[letter] as { vowel: string; nasal: string };
@@ -128,12 +115,10 @@ function stop(letter: string, before: Unit | undefined): string {
   return voiced.vowel;
 }
 
-/** One consonant as said, from the letters on either side. */
 function consonant(unit: Consonant, before: Unit | undefined, after: Unit | undefined): string {
   const { letter, vowel } = unit;
   const next = after?.kind === "consonant" ? after.letter : null;
   if (letter === "ற") {
-    // ற்ற reads tr and ன்ற ndr, as in காற்று kātru and ஒன்று ondru.
     if (vowel === null && next === "ற") return "t";
     const prior = before?.kind === "consonant" && before.vowel === null ? before.letter : null;
     return prior === "ன" ? "dr" : "r";
@@ -142,12 +127,6 @@ function consonant(unit: Consonant, before: Unit | undefined, after: Unit | unde
   return Object.hasOwn(VOICED, letter) ? stop(letter, before) : (CONSONANTS[letter] as string);
 }
 
-/**
- * One Tamil word read aloud in Lymi's letters: பாடல் → pāḍal, தங்கம் → taṅgam, காற்று → kātru.
- * Long vowels take a macron and retroflex consonants a dot below; ழ is zh and ஷ sh, as Tamils
- * write them in Latin letters. A loanword said against the rule, such as பஸ் bas, needs the card's
- * own reading.
- */
 export function readTamilWord(word: string): string {
   const parts = units(word);
   let out = "";

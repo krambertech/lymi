@@ -8,6 +8,14 @@ describe("readableHtml", () => {
       '<article><nav><a href="/">Uudised</a></nav><script type="application/ld+json">{"@type":"NewsArticle","author":"Mari"}</script><style>p{}</style><p>Kevad on käes.</p></article>';
     expect(readableHtml(html)).toBe("<article><p>Kevad on käes.</p></article>");
   });
+
+  it("unwraps links and drops footnote marks, images and buttons, so an example is the page's words", () => {
+    const html =
+      '<p><b>Può</b> essere una <a href="/wiki/Candela_(illuminazione)" title="Candela (illuminazione)">candela</a> o una lampadina.<sup id="cite_ref-1" class="reference"><a href="#cite_note-1"><span>&#91;</span>1<span>&#93;</span></a></sup> È di 2 m<sup>2</sup>.<img src="a(1).png"><button>Condividi</button></p><abbr>a.C.</abbr>';
+    expect(readableHtml(html)).toBe(
+      "<p>Può essere una candela o una lampadina. È di 2 m<sup>2</sup>.</p><abbr>a.C.</abbr>",
+    );
+  });
 });
 
 describe("markdownSentences", () => {
@@ -37,6 +45,14 @@ describe("markdownSentences", () => {
       '"Tuleb harjuda," ütles ta.',
       "See oli 22-aastane mees & tema koer.",
     ]);
+  });
+
+  it("removes a link whose address has brackets in it", () => {
+    expect(
+      markdownSentences(
+        'Una [candela](/wiki/Candela_(illuminazione) "Candela (illuminazione)") accesa.',
+      ),
+    ).toEqual(["Una candela accesa."]);
   });
 });
 

@@ -365,14 +365,12 @@ export function markdownSentences(markdown: string): string[] {
     if (fenced || JSON_LINE.test(raw)) continue;
     const line = unescapeHtml(raw)
       .replace(/\{\{[^}]*\}\}/g, "")
-      .replace(/!\[[^\]]*\]\([^)]*\)/g, "")
-      .replace(/\[([^\]]*)\]\([^)]*\)/g, "$1")
+      .replace(/!\[[^\]]*\]\((?:[^()]|\([^()]*\))*\)/g, "")
+      .replace(/\[([^\]]*)\]\((?:[^()]|\([^()]*\))*\)/g, "$1")
       .replace(/<[^>]+>/g, "")
       .replace(/^\s{0,3}(#{1,6}\s+|>\s?|[-*+]\s+|\d+[.)]\s+)/, "")
       .replace(/^\s*([-*_]\s*){3,}$/, "")
-      .replace(/\*\*|__|`+/g, "")
-      .replace(/(^|\s)[*_](\S)/g, "$1$2")
-      .replace(/(\S)[*_](\s|$|[.,;:!?])/g, "$1$2")
+      .replace(/\*\*|`+/g, "")
       .replace(/\\([\\`*_{}[\]()#+\-.!|>~])/g, "$1")
       .replace(/\s*\|\s*/g, " ")
       .replace(/\s+/g, " ")
@@ -394,7 +392,13 @@ export function countWords(text: string): number {
 }
 
 export function readableHtml(html: string): string {
-  return html.replace(/<(script|style|noscript|template|nav)\b[\s\S]*?<\/\1\s*>/gi, "");
+  return html
+    .replace(/<(script|style|noscript|template|nav|button|svg)\b[\s\S]*?<\/\1\s*>/gi, "")
+    .replace(/<sup\b[^>]*>([\s\S]*?)<\/sup\s*>/gi, (whole, inner: string) =>
+      /^\[.*\]$/.test(unescapeHtml(inner.replace(/<[^>]+>/g, "")).trim()) ? "" : whole,
+    )
+    .replace(/<img\b[^>]*>/gi, "")
+    .replace(/<\/?(a|em|i|b|strong|u|mark|cite|code|small)(\s[^>]*)?>/gi, "");
 }
 
 export async function pageMarkdown(

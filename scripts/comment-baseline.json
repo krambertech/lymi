@@ -1719,7 +1719,7 @@
   "packages/core/src/languages/direction.ts": 8,
   "packages/core/src/languages/index.ts": 36,
   "packages/core/src/languages/japanese.ts": 1,
-  "packages/core/src/languages/names.ts": 14,
+  "packages/core/src/languages/names.ts": 13,
   "packages/core/src/languages/notation.ts": 5,
   "packages/core/src/languages/russian.ts": 7,
   "packages/core/src/languages/scripts.ts": 9,

@@ -73,6 +73,7 @@ function ReportForm({
   const [missing, setMissing] = useState(false);
 
   const send = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (chosen: ContentReportReason) =>
       api.reportContent({ target, reason: chosen, note: note.trim() || undefined }),
     onSuccess: () => {

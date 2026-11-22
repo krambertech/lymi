@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { testAiConsent } from "../../test/ai-consent";
 import { decisionModel } from "../lessons/keep";
 import { createLessonReader } from "../lessons/reader";
 import { createElevenLabsSpeechProvider } from "./elevenlabs-speech";
@@ -27,7 +28,7 @@ function recorder() {
 
 describe("providerEndpoint", () => {
   it("routes each provider to its gateway path with the gateway's token", () => {
-    expect(providerEndpoint(routed, "openai")).toEqual({
+    expect(providerEndpoint(routed, "openai", testAiConsent)).toEqual({
       base: `${GATEWAY}/openai`,
       headers: {
         "cf-aig-authorization": "Bearer gateway-token",
@@ -35,14 +36,20 @@ describe("providerEndpoint", () => {
         "cf-aig-skip-cache": "true",
       },
     });
-    expect(providerEndpoint(routed, "anthropic").base).toBe(`${GATEWAY}/anthropic/v1`);
-    expect(providerEndpoint(routed, "typesafe").base).toBe(`${GATEWAY}/custom-typesafe`);
-    expect(providerEndpoint(routed, "elevenlabs").base).toBe(`${GATEWAY}/elevenlabs`);
+    expect(providerEndpoint(routed, "anthropic", testAiConsent).base).toBe(
+      `${GATEWAY}/anthropic/v1`,
+    );
+    expect(providerEndpoint(routed, "typesafe", testAiConsent).base).toBe(
+      `${GATEWAY}/custom-typesafe`,
+    );
+    expect(providerEndpoint(routed, "elevenlabs", testAiConsent).base).toBe(
+      `${GATEWAY}/elevenlabs`,
+    );
   });
 
   it.each([{}, { AI_GATEWAY_TOKEN: "gateway-token" }, { AI_GATEWAY_URL: GATEWAY }])(
     "refuses incomplete gateway configuration",
-    (env) => expect(() => providerEndpoint(env, "openai")).toThrow(AiGatewayError),
+    (env) => expect(() => providerEndpoint(env, "openai", testAiConsent)).toThrow(AiGatewayError),
   );
 
   it.each([
@@ -53,23 +60,23 @@ describe("providerEndpoint", () => {
     `${GATEWAY}#ignored`,
     `${GATEWAY}/openai`,
   ])("refuses an unsafe gateway URL without exposing it", (url) => {
-    expect(() => providerEndpoint({ ...routed, AI_GATEWAY_URL: url }, "openai")).toThrow(
-      "AI Gateway URL is invalid",
-    );
+    expect(() =>
+      providerEndpoint({ ...routed, AI_GATEWAY_URL: url }, "openai", testAiConsent),
+    ).toThrow("AI Gateway URL is invalid");
   });
 });
 
 describe("clients through the gateway", () => {
   it("sends OpenAI text, OpenAI speech and ElevenLabs through it", async () => {
     const { calls, request } = recorder();
-    await createOpenAiTextProvider({ OPENAI_API_KEY: "k", ...routed }, request)
+    await createOpenAiTextProvider({ OPENAI_API_KEY: "k", ...routed }, testAiConsent, request)
       .complete({ instructions: "i", input: "x", schema: { name: "s", schema: {} } })
       .catch(() => {});
     await createOpenAiSpeechProvider({ OPENAI_API_KEY: "k", ...routed }, "et", request)
-      .speech({ text: "tere", language: "et" })
+      .speech({ text: "tere", language: "et" }, testAiConsent)
       .catch(() => {});
     await createElevenLabsSpeechProvider({ ELEVENLABS_API_KEY: "k", ...routed }, "et", "v", request)
-      .speech({ text: "tere", language: "et" })
+      .speech({ text: "tere", language: "et" }, testAiConsent)
       .catch(() => {});
     const urls = [...new Set(calls.map((c) => c.url.split("?")[0]))];
     expect(urls).toEqual([
@@ -87,14 +94,17 @@ describe("clients through the gateway", () => {
     const request = vi.fn();
     const env = { OPENAI_API_KEY: "k", ANTHROPIC_API_KEY: "k" };
     await expect(
-      createOpenAiTextProvider(env, request).complete({
+      createOpenAiTextProvider(env, testAiConsent, request).complete({
         instructions: "i",
         input: "x",
         schema: { name: "s", schema: {} },
       }),
     ).rejects.toThrow(AiGatewayError);
     await expect(
-      createOpenAiSpeechProvider(env, "et", request).speech({ text: "tere", language: "et" }),
+      createOpenAiSpeechProvider(env, "et", request).speech(
+        { text: "tere", language: "et" },
+        testAiConsent,
+      ),
     ).rejects.toThrow(AiGatewayError);
     expect(() => createLessonReader(env, request)).toThrow(AiGatewayError);
     expect(request).not.toHaveBeenCalled();
@@ -108,7 +118,11 @@ describe("clients through the gateway", () => {
           new Response("private upstream detail", { status }),
       );
       await expect(
-        createOpenAiTextProvider({ OPENAI_API_KEY: "k", ...routed }, request).complete({
+        createOpenAiTextProvider(
+          { OPENAI_API_KEY: "k", ...routed },
+          testAiConsent,
+          request,
+        ).complete({
           instructions: "i",
           input: "x",
           schema: { name: "s", schema: {} },
@@ -124,7 +138,7 @@ describe("clients through the gateway", () => {
   it("sends lesson reads to the gateway's Anthropic endpoint", async () => {
     const { calls, request } = recorder();
     await createLessonReader({ ANTHROPIC_API_KEY: "k", ...routed }, request)
-      ?.stream({ images: [], pdfs: [], text: "Tund 6" }, "brief", {}, () => {})
+      ?.stream({ images: [], pdfs: [], text: "Tund 6" }, "brief", {}, () => {}, testAiConsent)
       .catch(() => {});
     expect(calls[0]?.url).toBe(`${GATEWAY}/anthropic/v1/messages`);
     expect(calls[0]?.redirect).toBe("manual");
@@ -137,7 +151,13 @@ describe("clients through the gateway", () => {
       async () => new Response("private upstream payload", { status: 403 }),
     );
     await expect(
-      reader?.stream({ images: [], pdfs: [], text: "lesson" }, "brief", {}, () => {}),
+      reader?.stream(
+        { images: [], pdfs: [], text: "lesson" },
+        "brief",
+        {},
+        () => {},
+        testAiConsent,
+      ),
     ).rejects.toMatchObject({ message: "The lesson reader failed (403)", status: 403 });
 
     const stream = createLessonReader(
@@ -151,14 +171,24 @@ describe("clients through the gateway", () => {
         ),
     );
     await expect(
-      stream?.stream({ images: [], pdfs: [], text: "lesson" }, "brief", {}, () => {}),
+      stream?.stream(
+        { images: [], pdfs: [], text: "lesson" },
+        "brief",
+        {},
+        () => {},
+        testAiConsent,
+      ),
     ).rejects.toThrow("The lesson reader stream failed");
   });
 
   it("requires a gateway on Workers AI calls and disables payload storage and caching", async () => {
     const run = vi.fn(async () => ({}));
     const AI = { run } as unknown as Ai;
-    await decisionModel({ AI, AI_GATEWAY_ID: "lymi" })?.run("@cf/cloudflare/clef-flash", {});
+    await decisionModel({ AI, AI_GATEWAY_ID: "lymi" })?.run(
+      "@cf/cloudflare/clef-flash",
+      {},
+      testAiConsent,
+    );
     expect(run).toHaveBeenCalledWith(
       "@cf/cloudflare/clef-flash",
       {},

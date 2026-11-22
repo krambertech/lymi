@@ -5,6 +5,7 @@ import {
   hasStress,
   markedForm,
   missingStress,
+  stressKey,
   stripStress,
   wordStress,
 } from ".";
@@ -42,14 +43,23 @@ describe("markedForm", () => {
     expect(markedForm("из-за", "и́з-за", RU)).toBe("и́з-за");
     expect(markedForm("пол-литра", "по́л-ли́тра", RU)).toBe("по́л-ли́тра");
     expect(markedForm("кто‑то", "кто́‑то", RU)).toBe("кто́‑то");
-    // A hyphen between spaces is no part of a word.
     expect(markedForm("дом - сад", "до́м - са́д", RU)).toBeNull();
   });
   it("lets a word take two acutes, as тво́ро́г does", () => {
     expect(markedForm("творог", "тво́ро́г", RU)).toBe("тво́ро́г");
   });
+  it("restores ё only where the term writes е", () => {
+    expect(markedForm("тетя", "тётя", RU)).toBe("тётя");
+    expect(markedForm("тотя", "тётя", RU)).toBeNull();
+  });
   it("restores nothing where the rules restore nothing", () => {
     expect(markedForm("ежик", "ёжик", { vowels: "аеєиіїоуюя" })).toBeNull();
+  });
+});
+
+describe("stressKey", () => {
+  it("is one key in any case", () => {
+    expect(stressKey("Замок", "За́мок", RU)).toBe("за́мок");
   });
 });
 

@@ -17,13 +17,14 @@ import {
   OkOut,
   PublicationInput,
   PublicationOut,
+  QueryFlag,
   WithdrawQuery,
 } from "@lymi/core";
 import { Hono } from "hono";
 import { z } from "zod";
 import { createSpeechProviders } from "../ai";
 import { publisherEmails } from "../env";
-import { body, ctxOf, describe, query } from "../http";
+import { body, ctxOf, describe, query, reader } from "../http";
 import type { AppEnv } from "../index";
 import { limitInvitationSends } from "../invitation-rate-limit";
 import { leadInDependencies } from "../lead-ins";
@@ -69,10 +70,9 @@ import { cancelInvitation } from "../services/invitations";
 export const decks = new Hono<AppEnv>();
 
 const ListQuery = z.object({
-  archived: z
-    .stringbool()
-    .optional()
-    .meta({ description: "Archived decks instead of active ones. Off by default." }),
+  archived: QueryFlag.optional().meta({
+    description: "Archived decks instead of active ones. Off by default.",
+  }),
 });
 
 decks.get(
@@ -410,7 +410,7 @@ decks.delete(
     summary: "Withdraw a published deck",
     description: `${PUBLICATION} Members keep studying it; nobody new can add it, and it leaves Explore and the sitemap. With \`redirectTo\`, its public page sends visitors to that deck with a permanent redirect; a target that is not published is refused. Withdrawing a withdrawn deck again sets or moves its redirect. Publishing it again brings it back and drops the redirect.`,
     ok: { schema: PublicationOut, description: "The withdrawn publication" },
-    errors: [400, 404],
+    errors: [400, 404, 503],
   }),
   query(WithdrawQuery, "withdrawal"),
   async (c) =>
@@ -427,9 +427,11 @@ decks.delete(
 const EDITION =
   "A meaning-language edition of a published deck. The deck's own fields are the original edition; another edition is typed localizations of them, signed off before anyone reads it. Only Lymi's publishers, and only decks they own, from the app or with their own write-scoped key. ADR 0015.";
 
+const readLanguage = reader(LanguageTag, "edition language");
+
 /** The language in the path, checked the same way a body field would be. */
 function editionLanguage(value: string | undefined) {
-  const parsed = LanguageTag.safeParse(value);
+  const parsed = readLanguage(value);
   if (!parsed.success) throw new ServiceError("invalid", "Invalid language", parsed.error);
   return parsed.data;
 }
@@ -497,7 +499,7 @@ decks.put(
     summary: "Publish an edition",
     description: `${EDITION} An edition missing text, or written from text that has since changed, is refused with what is holding it back.`,
     ok: { schema: EditionOut, description: "The published edition" },
-    errors: [400, 404],
+    errors: [400, 404, 503],
   }),
   async (c) =>
     c.json(
@@ -517,7 +519,7 @@ decks.delete(
     summary: "Withdraw an edition",
     description: `${EDITION} Nobody new can add it; the learners who pinned it keep reading it.`,
     ok: { schema: EditionOut, description: "The withdrawn edition" },
-    errors: [400, 404],
+    errors: [400, 404, 503],
   }),
   async (c) =>
     c.json(

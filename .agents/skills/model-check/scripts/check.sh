@@ -1,5 +1,5 @@
 #!/bin/sh
-# Runs TLC on one model of this skill. Usage: check.sh [Model] [extra TLC config file]
+# Runs TLC on one model of this skill. Usage: [WORKERS=auto] check.sh [Model] [extra TLC config file]
 set -eu
 here=$(cd "$(dirname "$0")/.." && pwd)
 model=${1:-WriteQueue}
@@ -22,4 +22,4 @@ work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 cp "$here/models/$model.tla" "$work/"
 cd "$work"
-exec "$java" -XX:+UseParallelGC -cp "$jar" tlc2.TLC -config "$config" -metadir "$work/states" "$model.tla"
+exec "$java" -XX:+UseParallelGC -cp "$jar" tlc2.TLC -workers "${WORKERS:-1}" -config "$config" -metadir "$work/states" "$model.tla"

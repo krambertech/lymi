@@ -2,6 +2,7 @@ import { type MessageDescriptor, setupI18n } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
 import { ApiError, api } from "@lymi/client/api";
+import type { FailureShown } from "@lymi/client/failed-writes";
 import { exploreQuery } from "@lymi/client/queries";
 import type { PublicationTag } from "@lymi/core";
 import {
@@ -155,9 +156,13 @@ export function useCatalogue() {
  * Adds a published deck in the edition its page showed; the edition is pinned on the membership.
  * As on the web, the cached queue goes so the next review draws the deck's cards too.
  */
-export function useAddDeck(onAdded: (slug: string, deckId: string) => void) {
+export function useAddDeck(
+  onAdded: (slug: string, deckId: string) => void,
+  meta: FailureShown = { failure: "inline" },
+) {
   const client = useQueryClient();
   return useMutation({
+    meta,
     // Adding needs a connection: offline it fails at once and says so, rather than waiting paused
     // behind a spinner that a quit would lose.
     networkMode: "always",

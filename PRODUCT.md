@@ -56,7 +56,7 @@ What Lymi does today, by the learner's job. Each row names where it runs and the
 | Library and decks | Decks, sections inside a deck, series of decks, search and Select cards | Web, phone, MCP | [Library, decks and cards](docs/design/library-decks-and-cards.md) |
 | Tags | Labels that find cards across decks, for filtering and review | Web, phone, MCP | [Library, decks and cards](docs/design/library-decks-and-cards.md) |
 | Card fields | Meaning, example and its translation, notes, hint, picture, recordings | Web, phone, API, MCP | [CONTEXT.md](CONTEXT.md) |
-| Supported languages | Furigana, pinyin, jyutping, Tamil readings, Russian and Ukrainian stress | Web, phone | [`packages/core/src/languages`](packages/core/src/languages) |
+| Supported languages | Furigana, pinyin, jyutping, Tamil readings, Russian and Ukrainian stress | Web, phone | [`packages/core/src/languages`](packages/core/src/languages), [how Lymi reads a pronunciation](docs/card-writing.md#how-lymi-reads-a-pronunciation) |
 | Deck settings | Review modes, what enrichment fills, instructions for the AI, how sections open | Web, phone | [Library, decks and cards](docs/design/library-decks-and-cards.md) |
 | Archive | Every card, deck and section can be archived and restored | Web, phone, MCP | [CONTEXT.md](CONTEXT.md) |
 

@@ -94,12 +94,13 @@ For element screenshots, hide `astro-dev-toolbar` and make `.sticky` static, or 
 
 ## PR contents
 
-- **Summary.** The path and title, what the lesson teaches, its explorers and quizzes, the number of new clips, and the catalogue change.
-- **Screenshots.** Each section and each quiz at desktop light and phone night, plus uk and ru.
-- **Instrumentation.** The product question: do visitors finish this lesson, and which quiz do they get wrong? The lesson reuses `learn_quiz_finished` with its quiz ids and `learn_lesson_finished`, both sent by the kit; name the ids. Change `docs/analytics.md` only for a new event or property.
-- **Verification.** Each form and claim with its source; `pnpm --filter @lymi/site typecheck` and `test`; extract at 0 missing; `pnpm verify:changed`; the drive matrix with its count of states; `pnpm reliability`.
-- **Copy.** The tell scan's remaining hits with their reasons, how many cold review rounds ran, and each line kept against a finding.
-- **Judgement calls.** The title and its uk and ru candidates, what the lesson leaves out and why, and any word from outside earlier lessons.
+The description has the limits of [every other one](../../../../docs/git-workflow.md#write-the-pull-request-description): 150 words of Summary and 600 in all.
+
+- **Summary.** The path and title, what the lesson teaches, and its explorers and quizzes by name.
+- **Screenshots.** Each section and each quiz at desktop light and phone night, plus uk and ru. `Try it:` gives the lesson's path.
+- **Instrumentation.** The lesson reuses `learn_quiz_finished` and `learn_lesson_finished`, both sent by the kit; name the quiz ids. Change `docs/analytics.md` only for a new event or property.
+- **Verification.** The drive matrix with its count of states, the forms and claims no check confirms with their sources, and each `pnpm reliability` item. The site's tests already prove the forms in `verified-forms.json`, the copy scans and the catalogs.
+- **Judgement calls.** At most five: the title, what the lesson leaves out, any word from outside earlier lessons, and each line kept against a review finding or the tell scan.
 
 ## Merge conflicts
 

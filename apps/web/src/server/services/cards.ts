@@ -13,6 +13,7 @@ import {
   duplicateKey,
   EXAMPLE_LENGTH,
   emptyFields,
+  type EnrichedField,
   enrichmentStalled,
   exampleFingerprint,
   exampleShown,
@@ -40,7 +41,8 @@ import { and, asc, desc, eq, inArray, isNull, sql } from "@lymi/core/db";
 import { notesToText } from "@lymi/core/notes";
 import type { Card } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
-import { aiAllowedFor, requireAi } from "./ai-consent";
+import { enrichmentStatus, moveState, untilMoved } from "../state-moves";
+import { aiConsentFor, requireAi } from "./ai-consent";
 import { type AnalyticsEvent, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
@@ -208,7 +210,7 @@ export async function addCards(
   if (inputs.length === 0) return [];
   // Without the learner's yes the card is saved as typed and nothing leaves for the AI.
   const enrichAllowed =
-    !!enrichment && inputs.some((i) => wantsEnrichment(i, actor)) && (await aiAllowedFor(ctx));
+    !!enrichment && inputs.some((i) => wantsEnrichment(i, actor)) && !!(await aiConsentFor(ctx));
 
   // A create sent again with its id returns the card the first one made, before any check that
   // could now refuse it: its deck may have been archived since the first one landed.
@@ -796,6 +798,14 @@ export async function requestEnrichment(
   id: string,
   enrichment: EnrichmentQueue | null,
 ): Promise<CardView> {
+  return untilMoved(() => requestEnrichmentOnce(ctx, id, enrichment));
+}
+
+async function requestEnrichmentOnce(
+  ctx: ServiceContext,
+  id: string,
+  enrichment: EnrichmentQueue | null,
+): Promise<CardView | null> {
   const { db, userId } = ctx;
   const card = await ownedCard(ctx, id);
   if (card.archivedAt) throw new ServiceError("invalid", "An archived card cannot be enriched");
@@ -833,34 +843,41 @@ export async function requestEnrichment(
   // that has said `working` for too long: a card added months ago must not read as stale.
   // Asking is the learner changing their mind about a field they cleared, so blank becomes unset.
   const allowed = new Set<string>([...fields, "language"]);
-  const reopened = Object.fromEntries(
+  const reopened: Partial<Pick<Card, EnrichedField>> = Object.fromEntries(
     emptyFields(card)
       .filter((field) => card[field] !== null && allowed.has(field))
       .map((field) => [field, null]),
   );
-  const working = {
-    ...(fills
-      ? {
-          enrichmentStatus: "working" as const,
-          enrichmentFields: fieldsToFill({ ...card, ...reopened }, fields),
-        }
-      : {}),
+  const set = {
     ...(translates
       ? { exampleTranslation: null, exampleTranslationStatus: "working" as const }
       : {}),
     updatedAt: new Date(),
+    ...reopened,
   };
-  await db
-    .update(schema.cards)
-    .set({ ...working, ...reopened })
-    .where(and(eq(schema.cards.id, id), eq(schema.cards.userId, userId)));
+  const asRead = [
+    eq(schema.cards.id, id),
+    eq(schema.cards.userId, userId),
+    eq(schema.cards.updatedAt, card.updatedAt),
+  ] as const;
+  const [asked] = fills
+    ? await moveState(db, enrichmentStatus, {
+        from: card.enrichmentStatus,
+        to: "working",
+        set: { ...set, enrichmentFields: fieldsToFill({ ...card, ...reopened }, fields) },
+        where: asRead,
+      })
+    : await db
+        .update(schema.cards)
+        .set(set)
+        .where(and(...asRead))
+        .returning();
+  if (!asked) return null;
   const queued = await queueEnrichment(ctx, [id], enrichment, "card");
   return presentCard(
     db,
     {
-      ...card,
-      ...working,
-      ...reopened,
+      ...asked,
       ...(queued
         ? {}
         : {
@@ -1042,7 +1059,7 @@ async function editLookups(
   ]);
   // Only an edit that changes an example can leave one to translate, and only with the learner's yes.
   const translating =
-    enrichment && edits.some((edit) => edit.example !== undefined) && (await aiAllowedFor(ctx));
+    enrichment && edits.some((edit) => edit.example !== undefined) && (await aiConsentFor(ctx));
   const fieldDecks = translating
     ? [...new Set([...[...cards.values()].map((card) => card.deckId), ...deckIds])]
     : [];

@@ -18,6 +18,7 @@
     "./queued": "./src/queued.ts",
     "./review-day": "./src/review-day.ts",
     "./daily-goal": "./src/daily-goal.ts",
+    "./failed-writes": "./src/failed-writes.ts",
     "./analytics": "./src/analytics.ts",
     "./card-input": "./src/card-input.ts",
     "./review-end": "./src/review-end.ts",

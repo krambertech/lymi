@@ -45,11 +45,17 @@ Fixup commits are fine on an open pull request, because GitHub squashes the bran
 
 ## Write the pull request description
 
-Start from [the pull request template](../.github/pull_request_template.md); do not compose a parallel shape from memory. Keep the summary to one short paragraph or at most three bullets and list only checks that ran and their result.
+Start from [the pull request template](../.github/pull_request_template.md) and write for the reviewer: what changed for a learner or caller, and how you know. Link to an owning decision instead of repeating it. Leave out the story of the work, file inventories, passing checks CI already shows, empty sections, decorative emoji and generated-by footers. Include raw output only when it explains a failure.
 
-Every rendered UI change keeps the `Screenshots` section with an attached after image of each affected surface and a before image when the surface already existed, attached with `gh --attach` locally or `pnpm pr:media` in a cloud session ([guide](../.agents/skills/open-pr/references/screenshots.md)); attachment failure leaves the pull request blocked rather than review-ready.
+**`scripts/check-pr-body.mjs` fails a description that breaks the template.** The Pull request workflow runs it, and runs it again when the description is edited, without running CI again. Run it first with `pnpm pr:check <body file> "<title>"`.
 
-Add `Why`, `Risks`, or `Follow-ups` only when material, with one short paragraph or at most three bullets per section. Describe reviewer-relevant behavior and trade-offs, not the implementation journey or a file inventory. Link to an owning decision instead of repeating it. Include raw output only when it explains a failure. Omit decorative emoji, generated-by footers, empty sections, and passing logs already visible in CI.
+| When | The description has |
+| --- | --- |
+| Always | A Summary of at most 150 words and at most 600 words in all, not counting images, screenshot tables and fenced output. It names no audit skill from outside this repository. |
+| The diff touches rendered UI | An image of each affected surface ([guide](../.agents/skills/open-pr/references/screenshots.md)) and a `Try it:` line with the preview path or screen, the persona and the steps; or a `No visible change:` line that says why. A failed attachment leaves the pull request blocked. |
+| The diff changes behavior | A `Review:` line in Verification with the reviewer, the rounds and the verdict, or why none ran. |
+
+A bot's pull request gets the same findings as warnings.
 
 ## Comment on a pull request
 

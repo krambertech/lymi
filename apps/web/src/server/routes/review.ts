@@ -3,6 +3,8 @@ import {
   DrawOut,
   GradeInput,
   GradeOut,
+  ID_MAX,
+  MACHINE,
   QueueOut,
   ReviewDayProgress,
   ROUNDS,
@@ -45,10 +47,12 @@ const HistoryOut = z
   })
   .meta({ id: "ReviewHistory" });
 
+const ScopeId = z.string().max(ID_MAX).meta(MACHINE);
+
 const QueueQuery = z.object({
-  deck: z.string().optional().meta({ description: "Limit to one deck" }),
-  series: z.string().optional().meta({ description: "Limit to the decks of one of your series" }),
-  section: z.string().optional().meta({ description: "Limit to one section of a deck you study" }),
+  deck: ScopeId.optional().meta({ description: "Limit to one deck" }),
+  series: ScopeId.optional().meta({ description: "Limit to the decks of one of your series" }),
+  section: ScopeId.optional().meta({ description: "Limit to one section of a deck you study" }),
   limit: z.coerce.number().int().min(1).max(200).optional().meta({ description: "Default 50" }),
   round: z.enum(ROUNDS).optional().meta({
     description:
@@ -118,15 +122,13 @@ review.get(
 );
 
 const DrawQuery = z.object({
-  deck: z.string().optional().meta({ description: "Limit the cards to one deck" }),
-  series: z
-    .string()
-    .optional()
-    .meta({ description: "Limit the cards to the decks of one of your series" }),
-  section: z
-    .string()
-    .optional()
-    .meta({ description: "Limit the cards to one section of a deck you study" }),
+  deck: ScopeId.optional().meta({ description: "Limit the cards to one deck" }),
+  series: ScopeId.optional().meta({
+    description: "Limit the cards to the decks of one of your series",
+  }),
+  section: ScopeId.optional().meta({
+    description: "Limit the cards to one section of a deck you study",
+  }),
   limit: z.coerce
     .number()
     .int()

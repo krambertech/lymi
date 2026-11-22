@@ -89,11 +89,13 @@ export default function DeckSections() {
   const failed = (e: unknown) => toast.add({ error: true, title: errorMessage(e) });
   const handlers = { onError: failed, onSettled: refresh };
   const create = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (name: string) => api.createSection(id, { name }),
     // Its sheet says what failed, under the field.
     onSettled: refresh,
   });
   const rename = useMutation({
+    meta: { failure: "inline" },
     mutationFn: ({ section, name }: { section: Section; name: string }) =>
       api.renameSection(section.id, name),
     onSettled: refresh,
@@ -121,6 +123,7 @@ export default function DeckSections() {
     onSettled: refresh,
   });
   const restore = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (section: Section) => api.restoreSection(section.id),
     onSuccess: (_r, section) => toast.close(`archive-section-${section.id}`),
     onSettled: refresh,
@@ -280,7 +283,11 @@ export default function DeckSections() {
 
       <NameSheet
         target={naming}
-        onClose={() => setNaming(null)}
+        onClose={() => {
+          setNaming(null);
+          create.reset();
+          rename.reset();
+        }}
         busy={create.isPending || rename.isPending}
         onSubmit={async (name) => {
           if (naming?.section) await rename.mutateAsync({ section: naming.section, name });

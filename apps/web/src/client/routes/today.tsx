@@ -56,6 +56,10 @@ function Today() {
   // starts at 25 and Welcome on the phone is not shown again. docs/design/onboarding.md.
   const qc = useQueryClient();
   const setUp = useMutation({
+    meta: {
+      failure: "silent",
+      because: "the learner did not ask for it and the next visit tries again",
+    },
     mutationFn: () =>
       api.finishOnboarding({
         learningKind: null,

@@ -1,5 +1,6 @@
 import { readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
+import type { SQLiteTable, SQLiteUpdateBuilder } from "@lymi/core/db";
 import { getPlatformProxy } from "wrangler";
 import { createDb, type Db, schema } from "../db";
 import type { ServiceContext } from "./context";
@@ -155,6 +156,12 @@ export async function testDb(opts: { before?: string } = {}): Promise<TestDb> {
     emptyBucket(AUDIO),
   ]);
   return { db: runtime.db, env: runtime.env, raw: runtime.raw, dispose: async () => {} };
+}
+
+export function anyState(db: Db) {
+  return db as unknown as {
+    update<Table extends SQLiteTable>(table: Table): SQLiteUpdateBuilder<Table, "async", D1Result>;
+  };
 }
 
 /** A signed-in learner. Inserts the Better Auth user row the foreign keys need. */

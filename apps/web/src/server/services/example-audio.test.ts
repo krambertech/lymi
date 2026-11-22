@@ -2,12 +2,12 @@ import type { Card } from "@lymi/core/schema";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SpeechProvider, SpeechRequest } from "../ai";
 import type { Db } from "../db";
-import { aiAllowedForOwner } from "./ai-consent";
+import { aiConsentForOwner } from "./ai-consent";
 import type { ServiceContext } from "./context";
 import { ServiceError } from "./context";
 import { exampleAudio } from "./example-audio";
 
-vi.mock("./ai-consent", () => ({ aiAllowedForOwner: vi.fn(async () => true) }));
+vi.mock("./ai-consent", () => ({ aiConsentForOwner: vi.fn(async () => ({})) }));
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -135,7 +135,7 @@ function provider(
     locale: "ja-JP",
     contentType: "audio/mpeg",
     extension: "mp3",
-    speech,
+    speech: (request) => speech(request),
   };
 }
 
@@ -149,7 +149,7 @@ describe("example audio", () => {
     const key = "cards/card-1/example-recorded/clip.mp3";
     await bucket.put(key, new Uint8Array([9, 9, 9]));
     put.mockClear();
-    const consentChecks = vi.mocked(aiAllowedForOwner).mock.calls.length;
+    const consentChecks = vi.mocked(aiConsentForOwner).mock.calls.length;
     const speech = vi.fn(async () => sound());
     const allowance = { left: vi.fn(async () => 60), spend: vi.fn(async () => undefined) };
 
@@ -162,7 +162,7 @@ describe("example audio", () => {
     expect("clip" in played && played.clip.key).toBe(key);
     expect(speech).not.toHaveBeenCalled();
     expect(allowance.left).not.toHaveBeenCalled();
-    expect(vi.mocked(aiAllowedForOwner).mock.calls).toHaveLength(consentChecks);
+    expect(vi.mocked(aiConsentForOwner).mock.calls).toHaveLength(consentChecks);
     expect(put).not.toHaveBeenCalled();
   });
 
@@ -268,12 +268,12 @@ describe("example audio", () => {
     const { bucket } = memoryBucket();
     const speech = vi.fn(async () => sound());
     const allowance = free();
-    vi.mocked(aiAllowedForOwner).mockResolvedValueOnce(false);
+    vi.mocked(aiConsentForOwner).mockResolvedValueOnce(null);
     const deps = { bucket, providers: () => [provider("elevenlabs", speech)] };
     await expect(exampleAudio(context(card()), "card-1", deps, allowance)).rejects.toMatchObject({
       code: "not_found",
     });
-    expect(vi.mocked(aiAllowedForOwner)).toHaveBeenLastCalledWith(expect.anything(), "user-1");
+    expect(vi.mocked(aiConsentForOwner)).toHaveBeenLastCalledWith(expect.anything(), "user-1");
     expect(speech).not.toHaveBeenCalled();
   });
 

@@ -1,11 +1,13 @@
 import { t } from "@lingui/core/macro";
 import { configureClient, type KeyValueStore } from "@lymi/client";
+import { failedWriteCache } from "@lymi/client/failed-writes";
 import { bindWriteCache } from "@lymi/client/writes";
 import { focusManager, onlineManager, QueryClient } from "@tanstack/react-query";
 import { getRandomValues } from "expo-crypto";
 import { addNetworkStateListener, getNetworkStateAsync, type NetworkState } from "expo-network";
 import { AppState } from "react-native";
 import { API_URL, sessionHeaders } from "../auth/client";
+import { toast } from "../ui/toast-host";
 import { CACHE_MAX_AGE } from "./cache";
 import { outboxStore } from "./kept";
 
@@ -53,6 +55,9 @@ focusManager.setEventListener((setFocused) => {
 });
 
 export const queryClient = new QueryClient({
+  mutationCache: failedWriteCache((title) =>
+    toast.addInFront({ id: "failed-write", title, error: true }),
+  ),
   // A read nothing shows stays in the cache as long as the kept copy does, so it is kept too. One
   // retry, as on the web, so a Worker that cannot be reached gives way to what was kept quickly.
   defaultOptions: { queries: { gcTime: CACHE_MAX_AGE, retry: 1 } },

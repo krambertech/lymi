@@ -30,7 +30,10 @@ export default function Feedback() {
   const [kind, setKind] = useState<FeedbackKind>("bug");
   const [message, setMessage] = useState("");
   const [invalid, setInvalid] = useState<string | null>(null);
-  const send = useMutation({ mutationFn: (input: FeedbackInput) => api.sendFeedback(input) });
+  const send = useMutation({
+    meta: { failure: "inline" },
+    mutationFn: (input: FeedbackInput) => api.sendFeedback(input),
+  });
   const overDailyLimit = send.error instanceof ApiError && send.error.status === 409;
 
   const submit = () => {

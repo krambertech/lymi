@@ -13,6 +13,7 @@ export function ReplayChoice() {
   const qc = useQueryClient();
   const settings = useQuery({ ...settingsQuery, refetchOnMount: "always" });
   const save = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (sessionReplay: boolean) => api.updateSettings({ sessionReplay }),
     onSuccess: (next) => qc.setQueryData<Settings>(settingsQuery.queryKey, next),
   });

@@ -1129,9 +1129,6 @@ msgstr "0–10"
 msgid "1 already in Biology, skipped"
 msgstr "1 уже есть в «Биологии», пропущено"
 
-msgid "1 November 2026"
-msgstr "1 ноября 2026 года"
-
 msgid "10 min"
 msgstr "10 мин"
 
@@ -1221,6 +1218,9 @@ msgstr "Версия 2025 года"
 
 msgid "2026 edition"
 msgstr "Издание 2026 года"
+
+msgid "22 November 2026"
+msgstr "22 ноября 2026 года"
 
 msgid "23 metres."
 msgstr "Тот, кто справа."
@@ -12363,6 +12363,9 @@ msgstr "Послушать ещё раз"
 
 msgid "Reported speech"
 msgstr "Косвенная речь"
+
+msgid "Reports of content stay after an account is deleted, as a record of moderation. A report about your deck keeps the deck’s name, the name you had when it was reported and the text of a reported card. A report you sent keeps its reason and your note. Neither keeps a link to your account."
+msgstr "Жалобы на содержимое остаются после удаления аккаунта как запись модерации. Жалоба на твою колоду хранит название колоды, имя владельца на момент жалобы и текст карточки, на которую пожаловались. Твоя собственная жалоба хранит причину и комментарий. Ни та, ни другая не хранит связи с твоим аккаунтом."
 
 msgid "Resources"
 msgstr "Ресурсы"

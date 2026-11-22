@@ -139,7 +139,7 @@ export function staticProblems(models, confirmed, { names, configOf, readFile, e
   return problems;
 }
 
-function runTlc(model, configText) {
+function runTlc(model, configText, workers = "1") {
   const dir = mkdtempSync(join(tmpdir(), "lymi-models-"));
   try {
     const config = join(dir, `${model}.cfg`);
@@ -147,7 +147,11 @@ function runTlc(model, configText) {
     const { status, stdout, stderr } = spawnSync(
       resolve(root, SKILL, "scripts/check.sh"),
       [model, config],
-      { encoding: "utf8", maxBuffer: 64 * 1024 * 1024 },
+      {
+        encoding: "utf8",
+        maxBuffer: 64 * 1024 * 1024,
+        env: { ...process.env, WORKERS: workers },
+      },
     );
     return { ...parseTlc(stdout, status), output: `${stdout}\n${stderr}` };
   } finally {
@@ -160,7 +164,7 @@ export function verdicts(models, configOf, run) {
   const lines = [];
   for (const [model, entry] of Object.entries(models)) {
     const config = configOf(model);
-    const whole = run(model, config);
+    const whole = run(model, config, "auto");
     if (whole.status !== HOLDS) {
       problems.push(
         whole.violated

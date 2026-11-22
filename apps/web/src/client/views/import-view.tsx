@@ -1402,7 +1402,6 @@ export function ImportDoneView({
   archiving,
   onRestore,
   restoring,
-  actionError,
   openLibrary,
   back,
 }: {
@@ -1411,7 +1410,6 @@ export function ImportDoneView({
   archiving?: boolean | undefined;
   onRestore: () => void;
   restoring?: boolean | undefined;
-  actionError?: string | undefined;
   openLibrary: ReactNode;
   back?: Back | undefined;
 }) {
@@ -1546,11 +1544,6 @@ export function ImportDoneView({
             </Trans>
           )}
         </p>
-        {actionError && (
-          <p className="text-sm" role="alert">
-            <InlineError>{actionError}</InlineError>
-          </p>
-        )}
         {archived ? (
           <Button
             variant="secondary"

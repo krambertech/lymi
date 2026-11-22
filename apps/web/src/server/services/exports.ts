@@ -30,8 +30,16 @@ import {
   ZipSegment,
   ZipTooLarge,
 } from "../exports/zip";
+import { exportStatus, inState, moveState } from "../state-moves";
+import {
+  exportRecordsKey,
+  exportSegmentKey,
+  newExportFileKey,
+  type ObjectStore,
+  putObject,
+} from "../storage";
 import { track } from "./analytics";
-import { auditStatement } from "./audit";
+import { auditStatement, auditStatementWhen } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
 import { ownedDeck } from "./members";
@@ -53,9 +61,9 @@ export type StartExportRun = (params: ExportRunParams) => Promise<void>;
 
 /** Where export files are read from and written to. */
 export type ExportStorage = {
-  bucket: R2Bucket;
-  pictures: R2Bucket | undefined;
-  audio: R2Bucket | undefined;
+  bucket: ObjectStore<"EXPORTS">;
+  pictures: ObjectStore<"PRIVATE_IMAGES"> | undefined;
+  audio: ObjectStore<"AUDIO"> | undefined;
 };
 
 /** The file is too large for one step or one zip, so the learner exports per deck instead. */
@@ -165,8 +173,7 @@ export async function startExport(
         now,
         (await getSettings(ctx)).reviewTimezone ?? "UTC",
       ),
-      // A random key names neither the learner nor the deck.
-      objectKey: `exports/${crypto.randomUUID()}`,
+      objectKey: newExportFileKey(),
       createdBy: actor,
     }),
     auditStatement(ctx, {
@@ -181,16 +188,13 @@ export async function startExport(
   } catch (err) {
     // Without a run nothing would ever move the row on, and it would refuse every later request.
     const at = new Date();
-    await db
-      .update(schema.exportFiles)
-      .set({
-        status: "failed",
-        failure: "internal",
-        objectKey: null,
-        finishedAt: at,
-        updatedAt: at,
-      })
-      .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.status, "exporting")));
+    // oxlint-disable-next-line lymi/guarded-state-move -- the error below is the answer, whoever ended the export
+    await moveState(db, exportStatus, {
+      from: "exporting",
+      to: "failed",
+      set: { failure: "internal", objectKey: null, finishedAt: at, updatedAt: at },
+      where: [eq(schema.exportFiles.id, id)],
+    });
     throw err;
   }
   track(ctx.analytics, {
@@ -378,21 +382,23 @@ function exampleSoundName(card: Card, format: "anki" | "lymi") {
     : `lymi-${card.id}-example-recording.${extension}`;
 }
 
-const segmentKey = (row: Export, segment: number) => `${row.objectKey}/${segment}`;
-const recordsKey = (row: Export, segment: number) => `${row.objectKey}.records/${segment}.json`;
+const segmentKey = (row: Export, segment: number) =>
+  exportSegmentKey(String(row.objectKey), segment);
+const recordsKey = (row: Export, segment: number) =>
+  exportRecordsKey(String(row.objectKey), segment);
 
 type StoredRecords = { records: ZipRecord[]; media: [string, string][] };
 
 async function putSegment(
-  bucket: R2Bucket,
+  bucket: ObjectStore<"EXPORTS">,
   row: Export,
   segment: number,
   zip: ZipSegment,
   media: [string, string][] = [],
 ) {
-  await bucket.put(segmentKey(row, segment), zip.bytes());
+  await putObject(bucket, segmentKey(row, segment), zip.bytes());
   const stored: StoredRecords = { records: zip.records, media };
-  await bucket.put(recordsKey(row, segment), JSON.stringify(stored));
+  await putObject(bucket, recordsKey(row, segment), JSON.stringify(stored));
 }
 
 /**
@@ -585,7 +591,11 @@ export async function writeExportMedia(
   const media: [string, string][] = [];
   let number = step.number;
   let missing = 0;
-  const copy = async (bucket: R2Bucket | undefined, key: string, name: string) => {
+  const copy = async (
+    bucket: ObjectStore<"PRIVATE_IMAGES" | "AUDIO"> | undefined,
+    key: string,
+    name: string,
+  ) => {
     const object = bucket ? await bucket.get(key) : null;
     if (!object) {
       missing++;
@@ -640,7 +650,7 @@ export async function finishExport(
   ctx: ServiceContext,
   id: string,
   end: { segment: number; offset: number; missing: number },
-  bucket: R2Bucket,
+  bucket: ObjectStore<"EXPORTS">,
 ) {
   const row = await ownedExport(ctx, id);
   if (row.status !== "exporting" || !row.objectKey) return;
@@ -670,52 +680,73 @@ export async function finishExport(
     if (err instanceof ZipTooLarge) throw new ExportTooLarge();
     throw err;
   }
-  await bucket.put(segmentKey(row, end.segment), zip.bytes());
+  await putObject(bucket, segmentKey(row, end.segment), zip.bytes());
 
   const counts = (row.counts as ExportCounts | null) ?? null;
   const now = new Date();
-  await ctx.db.batch([
-    ctx.db
-      .update(schema.exportFiles)
-      .set({
-        status: "done",
+  const [, done] = await ctx.db.batch([
+    auditStatementWhen(
+      ctx,
+      {
+        entity: "export",
+        action: "complete",
+        id,
+        details: { format: row.format, deckId: row.deckId, ...counts, missing: end.missing },
+      },
+      schema.exportFiles,
+      and(eq(schema.exportFiles.id, id), inState(exportStatus, "exporting"))!,
+    ),
+    moveState(ctx.db, exportStatus, {
+      from: "exporting",
+      to: "done",
+      set: {
         segments: end.segment + 1,
         byteSize: end.offset + zip.length,
         finishedAt: now,
         expiresAt: new Date(now.getTime() + EXPORT_WINDOW_MS),
         updatedAt: now,
-      })
-      .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.status, "exporting"))),
-    auditStatement(ctx, {
-      entity: "export",
-      action: "complete",
-      id,
-      details: { format: row.format, deckId: row.deckId, ...counts, missing: end.missing },
+      },
+      where: [eq(schema.exportFiles.id, id)],
     }),
   ]);
+  if (!done.length) {
+    const { status } = await ownedExport(ctx, id);
+    if (status === "failed" && !(await deleteExportFiles(bucket, row))) {
+      await ctx.db
+        .update(schema.exportFiles)
+        .set({ objectKey: row.objectKey, updatedAt: new Date() })
+        .where(eq(schema.exportFiles.id, id));
+    }
+    return;
+  }
   await deleteObjects(bucket, `${row.objectKey}.records/`);
 }
 
 /** Stops an export with a reason and deletes what it wrote. */
-export async function failExport(db: Db, id: string, failure: ExportFailure, bucket: R2Bucket) {
+export async function failExport(
+  db: Db,
+  id: string,
+  failure: ExportFailure,
+  bucket: ObjectStore<"EXPORTS">,
+) {
   const [row] = await db.select().from(schema.exportFiles).where(eq(schema.exportFiles.id, id));
   if (row?.status !== "exporting") return;
   const now = new Date();
-  const deleted = await deleteExportFiles(bucket, row);
+  const failed = await moveState(db, exportStatus, {
+    from: "exporting",
+    to: "failed",
+    set: { failure, finishedAt: now, updatedAt: now },
+    where: [eq(schema.exportFiles.id, id)],
+  });
+  if (!failed.length) return;
+  if (!(await deleteExportFiles(bucket, row))) return;
   await db
     .update(schema.exportFiles)
-    .set({
-      status: "failed",
-      failure,
-      // The key is kept while its segments are, so the sweep can try the delete again.
-      ...(deleted ? { objectKey: null } : {}),
-      finishedAt: now,
-      updatedAt: now,
-    })
-    .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.status, "exporting")));
+    .set({ objectKey: null })
+    .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.updatedAt, now)));
 }
 
-async function deleteObjects(bucket: R2Bucket, prefix: string) {
+async function deleteObjects(bucket: ObjectStore<"EXPORTS">, prefix: string) {
   let cursor: string | undefined;
   do {
     const page = await bucket.list({ prefix, ...(cursor ? { cursor } : {}) });
@@ -727,7 +758,7 @@ async function deleteObjects(bucket: R2Bucket, prefix: string) {
 
 /** Deletes an export's segments. False when R2 refused, so the caller keeps the key for the sweep. */
 export async function deleteExportFiles(
-  bucket: R2Bucket,
+  bucket: ObjectStore<"EXPORTS">,
   row: Pick<Export, "objectKey">,
 ): Promise<boolean> {
   if (!row.objectKey) return true;
@@ -743,19 +774,23 @@ export async function deleteExportFiles(
 }
 
 /** Deletes files past their window and gives up on exports that stalled. Run from the cron trigger. */
-export async function expireExports(db: Db, bucket: R2Bucket, now = new Date()) {
+export async function expireExports(db: Db, bucket: ObjectStore<"EXPORTS">, now = new Date()) {
   const expired = await db
     .select()
     .from(schema.exportFiles)
     .where(and(eq(schema.exportFiles.status, "done"), lt(schema.exportFiles.expiresAt, now)))
     .limit(50);
+  let ended = 0;
   for (const row of expired) {
     // A row whose delete failed stays done and past its window, so the next sweep finds it again.
     if (!(await deleteExportFiles(bucket, row))) continue;
-    await db
-      .update(schema.exportFiles)
-      .set({ status: "expired", objectKey: null, updatedAt: now })
-      .where(eq(schema.exportFiles.id, row.id));
+    const moved = await moveState(db, exportStatus, {
+      from: "done",
+      to: "expired",
+      set: { objectKey: null, updatedAt: now },
+      where: [eq(schema.exportFiles.id, row.id)],
+    });
+    ended += moved.length;
   }
   const stalled = await db
     .select({ id: schema.exportFiles.id })
@@ -779,16 +814,18 @@ export async function expireExports(db: Db, bucket: R2Bucket, now = new Date()) 
     await db
       .update(schema.exportFiles)
       .set({ objectKey: null, updatedAt: now })
-      .where(eq(schema.exportFiles.id, row.id));
+      .where(
+        and(eq(schema.exportFiles.id, row.id), eq(schema.exportFiles.updatedAt, row.updatedAt)),
+      );
   }
-  return expired.length + stalled.length;
+  return ended + stalled.length;
 }
 
 /** The finished file's segments in order, for the learner who asked for it, within its window. */
 export async function exportFile(
   ctx: ServiceContext,
   id: string,
-  bucket: R2Bucket,
+  bucket: ObjectStore<"EXPORTS">,
   now = new Date(),
 ) {
   const row = await ownedExport(ctx, id);

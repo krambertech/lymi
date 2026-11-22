@@ -1,5 +1,6 @@
 import { Rating as FsrsRating } from "ts-fsrs";
 import { z } from "zod";
+import { boundedRecord, Cursor, Id, ID_MAX, MACHINE, parsedLater } from "./bounds";
 import {
   DECK_ENRICH_FIELDS,
   DECK_PURPOSES,
@@ -7,6 +8,7 @@ import {
   ENRICHED_FIELDS,
 } from "./enrichment";
 import { EXAMPLE_LENGTH, fitsExample } from "./example";
+import { IMAGE_LIMITS } from "./images";
 import { OPEN } from "./responses/common";
 
 /** Which way the card is asked. Recognition: see the term, recall the meaning. Production: the reverse. */
@@ -205,7 +207,7 @@ export const DeckInput = z.object({
   reviewModes: ReviewModes.optional().meta({
     description: "Text modes only. Picture modes are set on each card.",
   }),
-  seriesId: z.string().min(1).nullable().optional().meta({
+  seriesId: Id.nullable().optional().meta({
     description:
       "One of the owner's active series; the deck goes last in it. Null takes the deck out of its series.",
   }),
@@ -296,7 +298,7 @@ const Written = {
 };
 
 export const CardLocalizationInput = CardLocalizationFields.extend({
-  cardId: z.string().min(1),
+  cardId: Id,
   ...Written,
 });
 export type CardLocalizationInput = z.infer<typeof CardLocalizationInput>;
@@ -315,7 +317,7 @@ export const EditionImportInput = z
       description: "The owner's series holding the deck, when it is in one",
     }),
     sections: z
-      .array(SectionLocalizationFields.extend({ sectionId: z.string().min(1), ...Written }))
+      .array(SectionLocalizationFields.extend({ sectionId: Id, ...Written }))
       .max(500)
       .refine(
         (rows) => new Set(rows.map((row) => row.sectionId)).size === rows.length,
@@ -340,8 +342,8 @@ export type EditionImportInput = z.infer<typeof EditionImportInput>;
 /** Which rows a person is signing off. Empty lists mean the whole edition. */
 export const EditionApprovalInput = z
   .object({
-    cardIds: z.array(z.string().min(1)).max(500).optional(),
-    sectionIds: z.array(z.string().min(1)).max(500).optional(),
+    cardIds: z.array(Id).max(500).optional(),
+    sectionIds: z.array(Id).max(500).optional(),
     deck: z.boolean().optional(),
     series: z.boolean().optional(),
   })
@@ -457,7 +459,9 @@ export const PublicationInput = z
       }),
     publisher: z.string().trim().min(1).max(80),
     sources: z
-      .array(z.object({ title: z.string().trim().min(1).max(200), url: z.url().optional() }))
+      .array(
+        z.object({ title: z.string().trim().min(1).max(200), url: z.url().max(2048).optional() }),
+      )
       .max(20)
       .default([]),
     reviewedAt: z.iso
@@ -477,7 +481,7 @@ const SeriesName = z
 
 /** Deck ids in the order they should run. Each deck once. */
 const DeckIds = z
-  .array(z.string().min(1))
+  .array(Id)
   .max(200)
   .refine((ids) => new Set(ids).size === ids.length, "List each deck once.");
 
@@ -507,7 +511,7 @@ export type SeriesDecksInput = z.infer<typeof SeriesDecksInput>;
 
 export const SeriesOrderInput = z.object({
   seriesIds: z
-    .array(z.string().min(1))
+    .array(Id)
     .max(200)
     .refine((ids) => new Set(ids).size === ids.length, "List each series once.")
     .meta({ description: "Every active series, in their new order" }),
@@ -531,7 +535,7 @@ const SectionName = z
 
 /** Card ids, each once. */
 const CardIds = z
-  .array(z.string().min(1))
+  .array(Id)
   .max(500)
   .refine((ids) => new Set(ids).size === ids.length, "List each card once.");
 
@@ -552,7 +556,7 @@ export const sectionLimits = {
 
 export const SectionOrderInput = z.object({
   sectionIds: z
-    .array(z.string().min(1))
+    .array(Id)
     .max(500)
     .refine((ids) => new Set(ids).size === ids.length, "List each section once.")
     .meta({ description: "Every active section of the deck, in the new order" }),
@@ -571,7 +575,7 @@ export type SectionArchiveInput = z.infer<typeof SectionArchiveInput>;
 /** Put many cards of one deck in a section, or take them out of theirs. */
 export const CardSectionInput = z.object({
   cardIds: CardIds.min(1, "Choose at least one card."),
-  sectionId: z.string().min(1).nullable().meta({
+  sectionId: Id.nullable().meta({
     description: "An active section of the same deck. Null takes the cards out of theirs.",
   }),
 });
@@ -616,7 +620,7 @@ export type DeckTagRef = z.infer<typeof DeckTagRef>;
 
 export const CardInput = z.object({
   id: ClientId.optional(),
-  deckId: z.string().min(1, "Choose a deck."),
+  deckId: z.string().min(1, "Choose a deck.").max(ID_MAX).meta(MACHINE),
   term: z
     .string()
     .trim()
@@ -699,7 +703,7 @@ export const CardInput = z.object({
     deprecated: true,
     description: "The old name of `hintSource`, used when `hintSource` is left out.",
   }),
-  sectionId: z.string().min(1).nullable().optional().meta({
+  sectionId: Id.nullable().optional().meta({
     description:
       "An active section of the card's deck. Null or left out: no section. Moving a card to another deck clears it.",
   }),
@@ -782,7 +786,7 @@ export type CardsInput = z.infer<typeof CardsInput>;
 
 /** A page of Activity: where to carry on from, and how many audit rows to read. */
 export const ActivityQuery = z.object({
-  cursor: z.string().min(1).optional(),
+  cursor: Cursor.optional(),
   limit: z.coerce.number().int().min(1).max(200).optional(),
   app: z.string().min(1).max(500).optional().meta({
     description: "Only the writes of one connected app, API key or source, such as `readwise`",
@@ -793,7 +797,7 @@ export type ActivityQuery = z.infer<typeof ActivityQuery>;
 export const CardPatch = CardInput.partial()
   .omit({ id: true, deckId: true, enrich: true })
   .extend({
-    deckId: z.string().min(1).optional(),
+    deckId: Id.optional(),
     // The service checks the shown length of a changed example, so an older, longer one can be sent back as it is.
     example: z
       .string()
@@ -822,7 +826,7 @@ export const CARD_BATCH_LIMIT = 200;
 export const CardImportancesInput = z
   .object({
     cards: z
-      .array(CardImportanceInput.extend({ cardId: z.string().min(1) }))
+      .array(CardImportanceInput.extend({ cardId: Id }))
       .min(1, "Choose at least one card.")
       .max(CARD_BATCH_LIMIT)
       .refine(
@@ -834,7 +838,7 @@ export const CardImportancesInput = z
 export type CardImportancesInput = z.infer<typeof CardImportancesInput>;
 
 /** One card's edit in a bulk edit: which card, and the fields to change on it. */
-export const CardEditInput = CardPatch.extend({ cardId: z.string().min(1) });
+export const CardEditInput = CardPatch.extend({ cardId: Id });
 export type CardEditInput = z.infer<typeof CardEditInput>;
 
 /** A bulk edit. Each card succeeds or fails on its own. */
@@ -898,7 +902,7 @@ const ReviewTime = z.number().int().min(0).max(REVIEW_TIME_LIMIT_MS);
  */
 export const GradeInput = z
   .object({
-    cardId: z.string().min(1),
+    cardId: Id,
     mode: ReviewMode.optional(),
     direction: Direction.optional().meta({
       description: "Legacy. recognition is term → meaning and production is meaning → term.",
@@ -977,7 +981,7 @@ export type CardImageImportInput = z.infer<typeof CardImageImportInput>;
 /** An upload's form fields; the file itself is checked by its bytes. */
 export const CardImageUploadFields = z.object({
   description: ImageDescription.optional(),
-  version: ImageVersion,
+  version: z.preprocess((sent) => (sent === "" ? null : sent), ImageVersion),
 });
 
 export const CardImagePatch = z.object({
@@ -1066,11 +1070,11 @@ export const AccountDeletionInput = z.union([
   }),
   z.object({
     apple: z.object({
-      idToken: z.string().min(1),
+      idToken: z.string().min(1).max(16_384).meta(MACHINE),
       /** The raw nonce the phone hashed into the Apple request. */
-      nonce: z.string().min(1),
+      nonce: z.string().min(1).max(500).meta(MACHINE),
       /** Apple's one-use code, which the server trades for a token to revoke. */
-      authorizationCode: z.string().min(1).optional(),
+      authorizationCode: z.string().min(1).max(4096).meta(MACHINE).optional(),
     }),
   }),
 ]);
@@ -1087,7 +1091,7 @@ export const SettingsPatch = z.object({
 export type SettingsPatch = z.infer<typeof SettingsPatch>;
 
 /** Takes one attempt back: its count, and the card state it replaced. */
-export const UndoInput = z.object({ reviewId: z.string().min(1) });
+export const UndoInput = z.object({ reviewId: Id });
 export type UndoInput = z.infer<typeof UndoInput>;
 
 /** Daily reminders run on quarter-hour boundaries so one shared cron can deliver them. */
@@ -1163,7 +1167,7 @@ export const ReadwisePatchInput = z.object({
   books: z
     .array(
       z.object({
-        id: z.string().min(1),
+        id: Id,
         followed: z.boolean().optional(),
         language: z.string().min(1).max(12).optional().meta({
           description:
@@ -1173,8 +1177,7 @@ export const ReadwisePatchInput = z.object({
     )
     .max(1000)
     .optional(),
-  decks: z
-    .record(z.string().min(1).max(12), z.string().min(1))
+  decks: boundedRecord(z.string().min(1).max(12), Id, 500)
     .optional()
     .meta({ description: "A deck per language, keyed by primary subtag" }),
 });
@@ -1189,35 +1192,47 @@ export const apiKeyLimits = {
  * it at `/api/anki-connect`, with a Lymi key in `key`. `multi` nests further calls in `params`.
  */
 export const AnkiConnectCall = z.object({
-  action: z.string(),
+  action: z.string().max(100),
   version: z.number().int().optional(),
-  params: z.record(z.string(), z.unknown()).optional(),
-  key: z.string().optional(),
+  params: parsedLater("AnkiConnect action").optional(),
+  key: z.string().max(1000).optional(),
 });
 export type AnkiConnectCall = z.infer<typeof AnkiConnectCall>;
+
+export const AnkiConnectFileName = z.string().max(1000);
+
+export const AnkiConnectFileData = z
+  .string()
+  .max(Math.ceil(IMAGE_LIMITS.maxBytes / 3) * 4)
+  .optional()
+  .catch(undefined);
+
+const AnkiConnectFieldName = z.string().max(200);
+
+const AnkiConnectFields = boundedRecord(AnkiConnectFieldName, z.string().max(2_000_000), 100);
 
 /**
  * A file sent inside a note, such as asbplayer's sentence clip or frame: base64 `data` saved as
  * `filename` and referenced from each of `fields`. Lymi never fetches a `url` or reads a `path`.
  */
 export const AnkiConnectMedia = z.object({
-  filename: z.string(),
-  data: z.string().optional(),
-  fields: z.array(z.string()).optional(),
+  filename: AnkiConnectFileName,
+  data: AnkiConnectFileData,
+  fields: z.array(AnkiConnectFieldName).max(100).optional(),
 });
 export type AnkiConnectMedia = z.infer<typeof AnkiConnectMedia>;
 
 /** AnkiConnect takes one file or a list; asbplayer sends one. Read as a list either way. */
 const AnkiConnectMediaList = z
-  .union([AnkiConnectMedia, z.array(AnkiConnectMedia)])
+  .union([AnkiConnectMedia, z.array(AnkiConnectMedia).max(100)])
   .transform((files) => (Array.isArray(files) ? files : [files]));
 
 /** A note as an AnkiConnect client sends it: fields by name, holding the client's HTML. */
 export const AnkiConnectNote = z.object({
-  deckName: z.string(),
-  modelName: z.string(),
-  fields: z.record(z.string(), z.string()),
-  tags: z.array(z.string()).optional(),
+  deckName: z.string().max(1000),
+  modelName: z.string().max(1000),
+  fields: AnkiConnectFields,
+  tags: z.array(z.string().max(1000)).max(1000).optional(),
   options: z.object({ allowDuplicate: z.boolean().optional() }).optional(),
   audio: AnkiConnectMediaList.optional(),
   picture: AnkiConnectMediaList.optional(),
@@ -1227,7 +1242,7 @@ export type AnkiConnectNote = z.infer<typeof AnkiConnectNote>;
 /** `updateNoteFields`' note: the fields to change on the note with this id, and files as a note sends them. */
 export const AnkiConnectNoteUpdate = z.object({
   id: z.number().int(),
-  fields: z.record(z.string(), z.string()).optional(),
+  fields: AnkiConnectFields.optional(),
   audio: AnkiConnectMediaList.optional(),
   picture: AnkiConnectMediaList.optional(),
 });

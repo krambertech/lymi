@@ -194,6 +194,30 @@ test("an old client's request must still be accepted", () => {
   ]);
 });
 
+test("an id or cursor an old client sends may gain a generous maximum, and nothing else may", () => {
+  const bounded = (schema) => {
+    const next = documentWith();
+    const body = next.paths["/api/review/grade"].post.requestBody.content["application/json"];
+    body.schema.properties.cardId = { type: "string", ...schema };
+    return next;
+  };
+  const machine = { "x-lymi-machine": true };
+  assert.deepEqual(breakingChanges(documentWith(), bounded({ ...machine, maxLength: 200 })), []);
+  assert.deepEqual(breakingChanges(documentWith(), bounded({ ...machine, maxLength: 40 })), [
+    "POST /api/review/grade body.cardId: maxLength tightened to 40",
+  ]);
+  assert.deepEqual(breakingChanges(documentWith(), bounded({ maxLength: 200 })), [
+    "POST /api/review/grade body.cardId: maxLength tightened to 200",
+  ]);
+  assert.deepEqual(
+    breakingChanges(
+      bounded({ ...machine, maxLength: 200 }),
+      bounded({ ...machine, maxLength: 100 }),
+    ),
+    ["POST /api/review/grade body.cardId: maxLength tightened to 100"],
+  );
+});
+
 test("an optional request body that becomes required breaks the client", () => {
   const frozen = documentWith();
   frozen.paths["/api/review/grade"].post.requestBody.required = false;

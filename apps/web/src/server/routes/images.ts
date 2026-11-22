@@ -8,7 +8,7 @@ import {
 } from "@lymi/core";
 import type { Context } from "hono";
 import { Hono } from "hono";
-import { body, ctxOf, describe } from "../http";
+import { body, ctxOf, describe, reader, readForm } from "../http";
 import type { AppEnv } from "../index";
 import {
   archiveCardImage,
@@ -24,6 +24,8 @@ import {
 export const images = new Hono<AppEnv>();
 
 const deps = (c: Context<AppEnv>) => ({ bucket: c.env.PRIVATE_IMAGES, images: c.env.IMAGES });
+
+const readUpload = reader(CardImageUploadFields, "picture");
 
 const VERSION_RULE =
   "Send the card's `imageVersion` as `version` to get 409 instead of overwriting a newer change.";
@@ -73,18 +75,13 @@ images.put(
         "Send the picture as multipart/form-data with a file field.",
       );
     }
-    const form = await c.req.formData();
-    const file = form.get("file");
-    if (!(file instanceof File))
-      throw new ServiceError("invalid", "Send the picture in a file field.");
+    const {
+      files: [file],
+      fields,
+    } = await readForm(c, readUpload);
+    if (!file) throw new ServiceError("invalid", "Send the picture in a file field.");
     if (file.size > IMAGE_LIMITS.maxBytes)
       throw new ServiceError("invalid", "Send a picture under 10 MB.");
-    const version = form.get("version");
-    const description = form.get("description");
-    const fields = CardImageUploadFields.safeParse({
-      ...(typeof description === "string" ? { description } : {}),
-      ...(typeof version === "string" ? { version: version === "" ? null : version } : {}),
-    });
     if (!fields.success) throw new ServiceError("invalid", "Invalid picture", fields.error.issues);
     const bytes = new Uint8Array(await file.arrayBuffer());
     return c.json(await uploadCardImage(ctxOf(c), c.req.param("id"), bytes, fields.data, deps(c)));

@@ -16,5 +16,5 @@ The empty press shows **Add a photo or PDF of the lesson, paste its text or a li
 
 ## Gotchas
 
-- The read is stubbed, so the recipe proves the client. The server's link rules, robots.txt and TDM refusals are in `services/lessons.test.ts`; a real article needs a request on a preview with the Anthropic key.
+- The read is stubbed, so the recipe proves the client. The server's link rules, robots.txt and TDM refusals are in `services/lessons.test.ts`; a real read needs a local Worker with `ANTHROPIC_API_KEY`, `AI_GATEWAY_TOKEN` and a Cloudflare login for the remote Workers AI binding. A pull request's app preview has no AI Gateway or Anthropic key, so every read there, pasted text included, answers 503.
 - The question step's **Show terms** only calls the answer check when a question has the learner's own answer, so the recipe types one under **Something else**.

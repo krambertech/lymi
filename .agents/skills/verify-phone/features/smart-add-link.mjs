@@ -12,9 +12,15 @@ const YOUTUBE = "https://youtu.be/dQw4w9WgXcQ";
 const vars = fileURLToPath(new URL("../../../../apps/web/.dev.vars", import.meta.url));
 
 export async function env({ api }) {
-  const key = existsSync(vars) && /^ANTHROPIC_API_KEY=\S+/m.test(readFileSync(vars, "utf8"));
+  const key =
+    existsSync(vars) &&
+    ["ANTHROPIC_API_KEY", "AI_GATEWAY_TOKEN"].every((name) =>
+      new RegExp(`^${name}=\\S+`, "m").test(readFileSync(vars, "utf8")),
+    );
   if (!key)
-    throw new Error("Smart add needs ANTHROPIC_API_KEY in apps/web/.dev.vars, even a placeholder");
+    throw new Error(
+      "Smart add needs ANTHROPIC_API_KEY and AI_GATEWAY_TOKEN in apps/web/.dev.vars, even placeholders",
+    );
   const json = (body) => ({
     method: "POST",
     headers: { "content-type": "application/json" },

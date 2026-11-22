@@ -16,6 +16,6 @@ The refusal names YouTube's captions and offers **Paste the transcript**, which 
 
 ## Gotchas
 
-- The route checks that a reader is configured before it looks at the link, so `apps/web/.dev.vars` needs an `ANTHROPIC_API_KEY`; a placeholder is enough, since a YouTube link is refused before any model runs.
+- The route checks that a reader is configured before it looks at the link, so `apps/web/.dev.vars` needs an `ANTHROPIC_API_KEY` and an `AI_GATEWAY_TOKEN`; placeholders are enough, since a YouTube link is refused before any model runs.
 - The Worker asks YouTube's oEmbed for the title. Offline, the refusal comes without the title; the flow matches either.
-- A real article needs Workers AI's `toMarkdown`, which is remote only, and the Anthropic key; drive that on a preview.
+- A real article needs Workers AI's `toMarkdown`, which is remote only, with the real key and token; an app preview has neither.

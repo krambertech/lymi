@@ -65,7 +65,21 @@ An inline review comment raises one actionable defect, its consequence and the s
 
 Merge with **Squash and merge** after CI passes and review threads are resolved, and check that the generated commit title matches the pull request title. `main` has no required checks, so `gh pr merge --auto` merges at once: read `gh pr checks <number>`, then run `gh pr merge <number> --squash`. GitHub uses the pull request description as the commit body and deletes the branch after merging.
 
-Opening a pull request does not authorize merging it, with one standing exception from Kateryna: the agent that opened an Estonian lesson pull request merges it once it is approved, green and has no open threads.
+The agent that opened a pull request merges it when all of this holds:
+
+- CI is green on the head, and a failure was fixed rather than rerun.
+- The change was verified as its kind needs, and an independent review of that head left nothing open.
+- Its blast radius is small: a mistake would be seen quickly, reach few learners, lose no data, and go away with a revert.
+
+Leave these for Kateryna to try or approve, and say in one line what to look at:
+
+- What learners see, hear or touch in a way a screenshot cannot settle: motion, audio, gestures, a new or rearranged screen, anything on a real phone.
+- Privacy, consent, account deletion, legal text and moderation.
+- Data that a revert does not restore: migrations with a rewrite, deletes, backfills.
+- The public API, what a released phone may send or receive, and release workflows.
+- Changes across most of the server or a client, and the rules agents follow.
+
+When unsure which side a change is on, ask. An Estonian lesson pull request merges once it is approved, green and has no open threads.
 
 ## Stack pull requests that depend on each other
 

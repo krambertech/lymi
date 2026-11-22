@@ -57,7 +57,7 @@ Read this section only when the diff touches `apps/mobile`. [phone.md](../../../
 - A screen sets no inset of its own for a sheet's or a page's text: a sheet's intro is `Sheet`'s `description` and a page's is `Screen`'s, so a `Text` with `px-1` or `-mt-1` at the top of either is a finding.
 - A sheet that saves uses `save` (close, centred title, amber ✓). A full-width button under a field, or a second commit such as the number pad's Done beside a Save, is a finding.
 - Commands from a button are `ActionMenu`; a sheet of command rows from a ⋯ is a finding. A choice that needs a second line, a long list, a search, or editing stays a sheet.
-- A sheet never swaps its content for a second level, and a part-height sheet never opens another sheet over itself; both make iOS jump or hide it.
+- A sheet never swaps its content for a second level, which makes iOS jump. A part-height sheet may open another sheet once it has risen to full height; opened before that, iOS hides the first one, which is a finding.
 - A change of what a control holds moves smoothly: two components swapped for one state (a button that becomes a capsule) need a shared element or an entering animation from a `@lymi/design` preset.
 - Order changes by a handle, never Move up and Move down rows.
 - A layout fix proved in the Simulator, not in code: a `formSheet` route's header beside its scroll view needs `collapsable={false}`, and a multi-line field needs `MULTILINE`.

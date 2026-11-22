@@ -88,6 +88,14 @@ describe("the turn of the day", () => {
     stop();
   });
 
+  it("waits for a day end past the longest timer, which would fire at once", async () => {
+    const qc = cache();
+    const stop = startDayTurn(qc, Date.now() + 40 * 86_400_000, platform(true));
+    await vi.advanceTimersByTimeAsync(1000);
+    expect(refreshed(qc)).toEqual([]);
+    stop();
+  });
+
   it("turns when the app comes back after a timer that slept", async () => {
     const qc = cache();
     const stop = startDayTurn(qc, Date.now() + 1000, platform(true));

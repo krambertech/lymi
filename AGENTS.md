@@ -25,6 +25,7 @@ Report each recurring repository gotcha in [the friction log](docs/guidance.md#r
 | Choose or run tests, or check CI or a deploy | [docs/testing.md](docs/testing.md) |
 | Look up a package, command or generator | [README.md](README.md) |
 | Write a doc, guide, skill or proposal | [docs/guidance.md](docs/guidance.md) |
+| Write a blog post, landing page, email or other public prose | [the public-writing skill](.agents/skills/public-writing/SKILL.md) |
 
 ## Before you push
 

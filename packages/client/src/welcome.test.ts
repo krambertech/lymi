@@ -1,6 +1,6 @@
 import type { PublicDeckSummary } from "@lymi/core/catalog";
 import { describe, expect, it } from "vitest";
-import { startDecks } from "./welcome";
+import { catalogLanguages, decksFor, startDecks } from "./welcome";
 
 function deck(slug: string, language: string | null = "ja"): PublicDeckSummary {
   return {
@@ -87,5 +87,27 @@ describe("startDecks", () => {
   it("keeps Explore's order for a language with no beginner decks", () => {
     const catalog = [deck("everyday-finnish", "fi"), deck("finnish-verbs", "fi")];
     expect(slugs(catalog, "fi")).toEqual(["everyday-finnish", "finnish-verbs"]);
+  });
+});
+
+describe("what Welcome offers", () => {
+  const shelf = (slug: string, category: string) => ({ ...deck(slug, null), category });
+  const catalog = [
+    shelf("life-in-the-uk", "citizenship"),
+    shelf("us-driving", "driving"),
+    shelf("world-capitals", "geography"),
+  ];
+
+  it("keeps a test deck out of the other subjects", () => {
+    expect(decksFor(catalog, "test", null).map((d) => d.slug)).toEqual([
+      "life-in-the-uk",
+      "us-driving",
+    ]);
+    expect(decksFor(catalog, "subject", null).map((d) => d.slug)).toEqual(["world-capitals"]);
+  });
+
+  it("never offers to learn the language meanings are written in", () => {
+    const languages = [deck("ja-1", "ja"), deck("et-1", "et")];
+    expect(catalogLanguages(languages, "et")).toEqual(["ja"]);
   });
 });

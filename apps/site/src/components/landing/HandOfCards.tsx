@@ -15,6 +15,7 @@ import {
   useState,
 } from "react";
 import { HAND_SIZE } from "../../lib/hand";
+import { useClip } from "../../lib/use-clip";
 import { buttonClass } from "../Button";
 import { Furigana } from "./Furigana";
 import { HAND_CARDS, type HandCard } from "./hand-cards";
@@ -424,12 +425,11 @@ export function HandOfCards({
   const [intro, setIntro] = useState(false);
   const [turned, setTurned] = useState(0);
   const [turnedCards, setTurnedCards] = useState<HandCard[]>([]);
-  const [playing, setPlaying] = useState<string | null>(null);
+  const { playing, play: playClip, stop: stopAudio } = useClip();
   const [announce, setAnnounce] = useState<ReactNode>(null);
   const pile = useRef<HandCard[]>([]);
   const nextKey = useRef(0);
   const started = useRef(false);
-  const audio = useRef<HTMLAudioElement | null>(null);
   const frontFlip = useRef<HTMLDivElement | null>(null);
   const [hint, setHint] = useState(false);
   const [finePointer, setFinePointer] = useState(true);
@@ -464,9 +464,7 @@ export function HandOfCards({
       setGone((g) => [...g, ...tossed]);
       window.setTimeout(() => setGone((g) => g.filter((d) => !tossed.includes(d))), TOSS_MS);
     }
-    audio.current?.pause();
-    audio.current = null;
-    setPlaying(null);
+    stopAudio();
     setDealFrom(nextKey.current);
     setHint(false);
     const first: Dealt[] = [];
@@ -487,7 +485,7 @@ export function HandOfCards({
       DEAL_STAGGER_MS * (count - 1) + DEAL_MS,
     );
     return () => window.clearTimeout(settle);
-  }, [cards, given, once, round, ordered]);
+  }, [cards, given, once, round, ordered, stopAudio]);
 
   // A visitor who has not turned the first card after a moment is shown how: the card is pressed
   // and lifts at one edge as if turning, and a line says what to do. Anyone who already knows
@@ -510,28 +508,14 @@ export function HandOfCards({
     return () => window.clearTimeout(wait);
   }, [phase]);
 
-  useEffect(() => () => audio.current?.pause(), []);
-
   useEffect(() => {
     held.current = hand;
   }, [hand]);
 
-  const stopAudio = useCallback(() => {
-    audio.current?.pause();
-    audio.current = null;
-    setPlaying(null);
-  }, []);
-
-  const play = useCallback((card: HandCard) => {
-    audio.current?.pause();
-    const clip = new Audio(card.audio ?? `/audio/hand/${card.id}.mp3`);
-    audio.current = clip;
-    setPlaying(card.id);
-    const done = () => setPlaying((current) => (current === card.id ? null : current));
-    clip.addEventListener("ended", done);
-    clip.addEventListener("error", done);
-    clip.play().catch(done);
-  }, []);
+  const play = useCallback(
+    (card: HandCard) => playClip(card.id, card.audio ?? `/audio/hand/${card.id}.mp3`),
+    [playClip],
+  );
 
   const reveal = useCallback(() => {
     const front = hand[0];
@@ -632,7 +616,7 @@ export function HandOfCards({
               revealed={k === 0 && phase === "back"}
               enter={dealing || key >= dealFrom + size}
               delay={dealing && phase === "dealing" ? DEAL_STAGGER_MS * (size - 1 - k) : 0}
-              playing={k === 0 && playing === card.id}
+              playing={k === 0 && playing?.id === card.id}
               onPlay={play}
               onPress={press}
               hint={

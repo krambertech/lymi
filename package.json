@@ -27,12 +27,12 @@
     "test:e2e": "playwright test",
     "test:e2e:chromium": "playwright test --project=chromium",
     "test:e2e:ui": "playwright test --ui",
-    "check": "oxfmt --check . && oxlint . && pnpm check:design && pnpm check:cache-shape && pnpm check:styling && pnpm check:comments && pnpm check:regressions && pnpm check:copy && pnpm check:test-exports && pnpm check:agent-docs && pnpm --filter @lymi/mobile symbols:check",
+    "check": "oxfmt --check . && oxlint . && pnpm check:design && pnpm check:cache-shape && pnpm check:frozen && pnpm check:styling && pnpm check:comments && pnpm check:regressions && pnpm check:copy && pnpm check:test-exports && pnpm check:agent-docs && pnpm --filter @lymi/mobile symbols:check",
     "check:cache-shape": "node scripts/check-cache-shape.mjs",
+    "check:frozen": "node scripts/check-frozen.mjs",
     "check:styling": "node scripts/check-styling.mjs",
     "check:comments": "node scripts/check-comments.mjs",
     "check:regressions": "node scripts/check-regressions.mjs",
-    "check:copy": "node scripts/check-copy.mjs",
     "check:agent-docs": "node scripts/check-agent-docs.mjs",
     "check:test-exports": "node scripts/check-test-only-exports.mjs",
     "check:design": "node scripts/check-design-docs.mjs",
@@ -51,7 +51,8 @@
     "local": "node scripts/local.mjs",
     "pr:media": "node scripts/pr-media.mjs",
     "friction": "node scripts/friction.mjs",
-    "reliability": "node scripts/reliability.mjs"
+    "reliability": "node scripts/reliability.mjs",
+    "check:copy": "node scripts/check-copy.mjs"
   },
   "devDependencies": {
     "@oxlint/plugins": "1.92.0",

@@ -27,7 +27,7 @@
     "test:e2e": "playwright test",
     "test:e2e:chromium": "playwright test --project=chromium",
     "test:e2e:ui": "playwright test --ui",
-    "check": "oxfmt --check . && oxlint . && pnpm check:design && pnpm check:cache-shape && pnpm check:frozen && pnpm check:styling && pnpm check:comments && pnpm check:regressions && pnpm check:workflows && pnpm check:test-exports && pnpm check:agent-docs && pnpm --filter @lymi/mobile symbols:check",
+    "check": "oxfmt --check . && oxlint . && pnpm check:design && pnpm check:cache-shape && pnpm check:frozen && pnpm check:styling && pnpm check:comments && pnpm check:regressions && pnpm check:workflows && pnpm check:test-exports && pnpm check:models && pnpm check:agent-docs && pnpm --filter @lymi/mobile symbols:check",
     "check:cache-shape": "node scripts/check-cache-shape.mjs",
     "check:frozen": "node scripts/check-frozen.mjs",
     "check:styling": "node scripts/check-styling.mjs",
@@ -37,7 +37,7 @@
     "check:test-exports": "node scripts/check-test-only-exports.mjs",
     "check:design": "node scripts/check-design-docs.mjs",
     "check:migrations": "pnpm --filter @lymi/web db:check && node scripts/check-migrations.mjs && node scripts/check-schema-drift.mjs",
-    "verify": "pnpm check && pnpm i18n:check && pnpm check:migrations && pnpm build && pnpm check:boundaries && pnpm typecheck && pnpm test && pnpm test:workers",
+    "verify": "pnpm check && pnpm check:models --run && pnpm i18n:check && pnpm check:migrations && pnpm build && pnpm check:boundaries && pnpm typecheck && pnpm test && pnpm test:workers",
     "verify:changed": "node scripts/verify-changed.mjs",
     "check:boundaries": "node scripts/check-deployment-boundaries.mjs",
     "fix": "oxfmt . && oxlint --fix .",
@@ -52,6 +52,7 @@
     "pr:media": "node scripts/pr-media.mjs",
     "friction": "node scripts/friction.mjs",
     "reliability": "node scripts/reliability.mjs",
+    "check:models": "node scripts/check-models.mjs",
     "check:workflows": "node scripts/check-workflows.mjs"
   },
   "devDependencies": {

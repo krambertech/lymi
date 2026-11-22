@@ -15,6 +15,7 @@ test("the summary makes browser coverage and failed gates explicit", () => {
     TITLE_OUTCOME: "success",
     DEPENDENCIES_OUTCOME: "success",
     CHECK_OUTCOME: "success",
+    MODELS_OUTCOME: "failure",
     I18N_OUTCOME: "success",
     MIGRATIONS_OUTCOME: "success",
     BUILD_OUTCOME: "success",
@@ -30,6 +31,7 @@ test("the summary makes browser coverage and failed gates explicit", () => {
   assert.match(summary, /\*\*Product-app preview:\*\* Scheduled after quality checks/);
   assert.match(summary, /\| Quality checks \| Failed \|/);
   assert.match(summary, /\| TypeScript \| Failed \|/);
+  assert.match(summary, /\| Flow models \| Failed \|/);
   assert.match(summary, /\| Interface strings \| Passed \|/);
   assert.match(summary, /\| Migration safety \| Passed \|/);
   assert.match(summary, /green Chromium pull-request run is not full cross-browser evidence/);

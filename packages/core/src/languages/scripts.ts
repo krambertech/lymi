@@ -1,7 +1,3 @@
-/**
- * The scripts each language is written in, so a term in another script can be caught before it
- * lands in the wrong deck. Keyed by primary subtag; a language missing here is never refused.
- */
 const LATIN = "Latin";
 const CYRILLIC = "Cyrillic";
 const ARABIC = "Arabic";
@@ -96,11 +92,6 @@ const WRITTEN_IN: Readonly<Record<string, readonly string[]>> = {
 
 const patterns = new Map<string, RegExp>();
 
-/**
- * Whether text could be in the language: it has a letter in one of the language's scripts, or no
- * letters at all. A Japanese deck takes Tシャツ and refuses trattoria; it cannot tell Italian from
- * Spanish, which share a script.
- */
 export function fitsLanguage(text: string, language: string | null | undefined): boolean {
   const primary = (language ?? "").trim().toLowerCase().split(/[-_]/)[0] ?? "";
   const scripts = WRITTEN_IN[primary];

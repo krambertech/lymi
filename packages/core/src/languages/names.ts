@@ -1,4 +1,3 @@
-/** Languages offered by name. Any other BCP 47 tag can still be typed in. */
 export const LANGUAGE_TAGS = [
   "ar",
   "bg",
@@ -59,7 +58,6 @@ function build(): Matcher[] {
       english.of(tag),
       new Intl.DisplayNames([tag], { type: "language" }).of(tag),
     ]) {
-      // "Norwegian Bokmål" and "norsk bokmål" are also found as "Norwegian" and "norsk".
       if (name)
         for (const part of [name, name.split(/[\s(]/)[0] ?? ""]) if (part) names.add(fold(part));
     }
@@ -74,11 +72,6 @@ function build(): Matcher[] {
   });
 }
 
-/**
- * The language a deck's name says it is in, by the language's English or native name:
- * "Italian::Lesson 1" is Italian, "日本語 N5" is Japanese. The leftmost name wins. Null when
- * the name says nothing, so the learner chooses.
- */
 export function guessLanguage(name: string): string | null {
   matchers ??= build();
   const text = fold(name);
@@ -95,7 +88,6 @@ export function guessLanguage(name: string): string | null {
   return (best as { tag: string } | null)?.tag ?? null;
 }
 
-/** Scripts only one language in Lymi's reach is written in, so a sample of terms settles it. */
 const SCRIPTS: [RegExp, string][] = [
   [/[\p{Script=Hiragana}\p{Script=Katakana}]/u, "ja"],
   [/\p{Script=Hangul}/u, "ko"],
@@ -106,12 +98,6 @@ const SCRIPTS: [RegExp, string][] = [
   [/\p{Script=Armenian}/u, "hy"],
 ];
 
-/**
- * The language a deck's terms are written in, when their script says so on its own: kana is
- * Japanese, Hangul Korean. Han, Cyrillic, Arabic and Latin are shared by many languages, so
- * those decks are null here and left to the model. Most terms must agree, so a Japanese loanword
- * in a Spanish deck decides nothing.
- */
 export function languageOfScript(terms: readonly string[]): string | null {
   const counts = new Map<string, number>();
   for (const term of terms) {

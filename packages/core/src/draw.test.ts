@@ -1,7 +1,6 @@
 import { State } from "ts-fsrs";
 import { describe, expect, it } from "vitest";
 import {
-  CARRY_OVER_EVERY,
   type DayWindow,
   type DrawCard,
   type DrawLogEntry,
@@ -15,7 +14,6 @@ import {
   localDate,
   missed,
   NEW_CARD_SLOT_EVERY,
-  OLDEST_UNSEEN_SLOT_EVERY,
   owesReturn,
   RETURN_GAP,
   RETURN_JITTER,
@@ -45,7 +43,6 @@ function mode(partial: Partial<DrawMode> & { mode: string }): DrawMode {
   };
 }
 
-/** A card asked meaning → term first, then term → meaning, as the default order says. */
 function card(
   cardId: string,
   modes: (Partial<DrawMode> & { mode: string })[],
@@ -68,7 +65,6 @@ function grade(
   return { cardId, mode, rating, stateBefore, at: noon };
 }
 
-/** Grade what `draw` gives, `n` times, and return the log with what each attempt was. */
 function play(
   cards: DrawCard[],
   n: number,
@@ -110,7 +106,7 @@ describe("eligibility", () => {
     expect(drawOrder(cards, [], day).map((d) => d.cardId)).toEqual(["late"]);
   });
 
-  it("introduces modes one at a time, in order, once the previous one reaches Review", () => {
+  it("introduces modes one at a time, in order, once the previous one reaches Review, where a lapse counts", () => {
     const fresh = card("fresh", [
       { mode: "meaning_to_term", state: State.New, due: daysAgo(1) },
       { mode: "term_to_meaning", state: State.New, due: daysAgo(1) },
@@ -133,7 +129,6 @@ describe("eligibility", () => {
       { cardId: "known", mode: "term_to_meaning", kind: "unseen" },
     ]);
 
-    // Relearning counts as having reached Review, so a lapse does not hold the next mode back.
     const relearning = card("relearning", [
       { mode: "meaning_to_term", state: State.Relearning, due: day.end },
       { mode: "term_to_meaning", state: State.New, due: daysAgo(1) },
@@ -180,10 +175,7 @@ describe("scope and determinism", () => {
     ),
   ];
 
-  it("orders a deck's reviews as the all-decks review order filtered", () => {
-    // Keys hash the date, card and mode, so a group's order is the same in every scope. The
-    // interleave with new cards is not: slots count the log, and the oldest-card slot picks
-    // the oldest in scope.
+  it("orders a deck's reviews as the all-decks review order filtered, though new cards interleave by scope", () => {
     const all = drawOrder(cards, [], day);
     const deck = drawOrder(cards, [], day, { deckId: "deck-a" });
     const deckIds = new Set(cards.filter((c) => c.deckId === "deck-a").map((c) => c.cardId));
@@ -235,7 +227,7 @@ describe("ordinary draws", () => {
       unseen("old", daysAgo(200)),
     ];
     const order = drawOrder(cards, [], day).map((d) => d.cardId);
-    expect(order.indexOf("old")).toBeLessThan(OLDEST_UNSEEN_SLOT_EVERY);
+    expect(order.indexOf("old")).toBeLessThan(4);
   });
 
   it("favours an important card by its odds, as a review and as an unseen card", () => {
@@ -279,7 +271,6 @@ describe("returns", () => {
     expect(gap).toBe(returnGap(day.date, first, "meaning_to_term"));
     expect(Math.abs(gap - RETURN_GAP)).toBeLessThanOrEqual(RETURN_JITTER);
     expect(played[appearances[1] as number]?.kind).toBe("return");
-    // Forgotten again on its return, it waits for tomorrow: 44 others were reviewed once, 16 are left.
     expect(drawableCount(cards, log, day)).toBe(16);
   });
 
@@ -329,6 +320,24 @@ describe("returns", () => {
     expect(drawableCount(few, log, day)).toBe(3);
   });
 
+  it("counts a waiting return that the one served before it brings into reach", () => {
+    const [first, second] = Array.from({ length: 30 }, (_, i) => `x${i}`).filter(
+      (id) => returnGap(day.date, id, "meaning_to_term") === RETURN_GAP,
+    ) as [string, string];
+    const others = Array.from({ length: RETURN_GAP - 1 }, (_, i) => review(`r${i}`));
+    const cards = [review(first), review(second), ...others];
+    const log = [grade(first, 1), grade(second, 1)];
+    expect(drawableCount(cards, log, day)).toBe(others.length + 2);
+    expect(drawableCount(cards, log, day)).toBe(drawOrder(cards, log, day).length);
+  });
+
+  it("counts a waiting return that cards missing from the list bring into reach", () => {
+    const cards = [review("a"), review("b")];
+    const log = [grade("a", 1)];
+    expect(drawableCount(cards, log, day)).toBe(1);
+    expect(drawableCount(cards, log, day, {}, RETURN_GAP + RETURN_JITTER)).toBe(2);
+  });
+
   it("ignores the clock: a return missed late at night is still due today", () => {
     const cards = [
       card("a", [{ mode: "meaning_to_term", state: State.Relearning, due: day.end }]),
@@ -339,7 +348,14 @@ describe("returns", () => {
   });
 
   it("lists the modes whose latest grade today is Forgot", () => {
-    const log = [grade("a", 1), grade("b", 1), grade("b", 3), grade("c", 3), grade("c", 1)];
+    const log = [
+      grade("a", 1),
+      grade("b", 1),
+      grade("b", 3),
+      grade("c", 3),
+      grade("c", 1),
+      grade("d", 2),
+    ];
     expect(forgottenToday(log)).toEqual([
       { cardId: "a", mode: "meaning_to_term" },
       { cardId: "c", mode: "meaning_to_term" },
@@ -356,8 +372,17 @@ describe("carry-over", () => {
     ];
     const { played } = play(cards, 8);
     expect(played[0]).toEqual({ cardId: "l2", kind: "carry" });
-    expect(played[CARRY_OVER_EVERY]).toEqual({ cardId: "l1", kind: "carry" });
+    expect(played[3]).toEqual({ cardId: "l1", kind: "carry" });
     expect(played.filter((p) => p.kind === "carry")).toHaveLength(2);
+  });
+
+  it("spaces carry-overs from each other, never from a return", () => {
+    const cards = [
+      review("r"),
+      card("l", [{ mode: "meaning_to_term", state: State.Learning, due: daysAgo(1) }]),
+    ];
+    const log = [grade("a", 1), grade("a", 3, State.Relearning)];
+    expect(draw(cards, log, day)).toMatchObject({ cardId: "l", kind: "carry" });
   });
 
   it("serves the carry-overs that are left when nothing else is drawable", () => {
@@ -403,7 +428,6 @@ describe("the learner-local day", () => {
   });
 
   it("finds the day start in a zone whose clocks jump at midnight", () => {
-    // Santiago springs forward at 00:00 on 6 September 2026, so that day has no midnight.
     const zone = "America/Santiago";
     const start = startOfLocalDay("2026-09-06", zone);
     expect(start).toEqual(new Date("2026-09-06T04:00:00Z"));
@@ -415,6 +439,13 @@ describe("the learner-local day", () => {
       start: new Date("2026-09-05T04:00:00Z"),
       end: start,
     });
+  });
+
+  it("finds the day start where the clocks repeat the hour before midnight or skip midnight itself", () => {
+    expect(startOfLocalDay("2026-04-05", "America/Santiago")).toEqual(
+      new Date("2026-04-05T04:00:00Z"),
+    );
+    expect(startOfLocalDay("2026-04-24", "Africa/Cairo")).toEqual(new Date("2026-04-23T22:00:00Z"));
   });
 
   it("falls back to UTC for an unknown zone", () => {

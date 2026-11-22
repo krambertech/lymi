@@ -159,8 +159,19 @@ describe("tamilTermReading", () => {
     ]);
   });
 
+  it("ignores a reading with more or fewer words than the term", () => {
+    const spelled = [
+      { text: "பஸ்", reading: "pas" },
+      { text: " " },
+      { text: "நிலையம்", reading: "nilaiyam" },
+    ];
+    expect(tamilTermReading("பஸ் நிலையம்", "bas nilaiyam pas")).toEqual(spelled);
+    expect(tamilTermReading("பஸ் நிலையம்", "bas")).toEqual(spelled);
+  });
+
   it("ignores a pronunciation that is not a reading", () => {
     const spelled = [{ text: "பாடல்", reading: "pāḍal" }];
+    expect(tamilTermReading("பாடல்", "/pāḍal/")).toEqual(spelled);
     expect(tamilTermReading("பாடல்", "/paːɖal/")).toEqual(spelled);
     expect(tamilTermReading("பாடல்", "பாட்டு")).toEqual(spelled);
   });

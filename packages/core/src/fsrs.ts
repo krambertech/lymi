@@ -12,19 +12,10 @@ import type { Rating } from "./types";
 export type { FsrsCard };
 export { State };
 
-/**
- * One learning and relearning step, ADR 0019. The step sets FSRS state only: a missed mode
- * returns after a number of attempts, not minutes, so `draw` never reads the ten minutes.
- */
 export const LEARNING_STEPS = ["10m"] as const;
 
-/** The recall probability FSRS schedules for: a card falls due when it drops to this. */
 export const DESIRED_RETENTION = 0.9;
 
-/**
- * One scheduler for the whole app. Weights are the FSRS defaults for now;
- * once there is review history they can be optimised per user.
- */
 export const SCHEDULER_PARAMETERS = Object.freeze(
   generatorParameters({
     request_retention: DESIRED_RETENTION,
@@ -43,14 +34,12 @@ const RATING_MAP: Record<Rating, Grade> = {
   4: FsrsRating.Easy,
 };
 
-/** A fresh scheduling state for a card that has never been reviewed. */
 export function emptyState(now: Date = new Date()): FsrsCard {
   return createEmptyCard(now);
 }
 
 export interface ScheduleResult {
   card: FsrsCard;
-  /** What the log needs: elapsed and scheduled days at the moment of review. */
   log: {
     rating: Rating;
     state: State;
@@ -61,7 +50,6 @@ export interface ScheduleResult {
   };
 }
 
-/** Apply one grade to a card state and return the next state plus a log entry. */
 export function schedule(state: FsrsCard, rating: Rating, now: Date = new Date()): ScheduleResult {
   const { card, log } = scheduler.next(state, now, RATING_MAP[rating]);
   return {
@@ -77,9 +65,7 @@ export function schedule(state: FsrsCard, rating: Rating, now: Date = new Date()
   };
 }
 
-/** The four possible outcomes for the grade buttons: "Again 1m · Hard 2d · Good 6d · Easy 15d". */
 export function preview(state: FsrsCard, now: Date = new Date()): Record<Rating, Date> {
-  // A grade from a device clock ahead of this one would make the elapsed time negative.
   const at = state.last_review && state.last_review > now ? state.last_review : now;
   const all = scheduler.repeat(state, at);
   return {
@@ -90,11 +76,9 @@ export function preview(state: FsrsCard, now: Date = new Date()): Record<Rating,
   };
 }
 
-/** "1 min", "2 d", "6 d", "3 mo". For the small text under a grade button. */
 export type IntervalUnit = "minute" | "hour" | "day" | "month" | "year";
 export type Interval = { value: number; unit: IntervalUnit };
 
-/** The interval in the largest unit that reads naturally. The client formats it for its locale. */
 export function interval(from: Date, to: Date): Interval {
   const ms = Math.max(0, to.getTime() - from.getTime());
   const min = Math.round(ms / 60_000);
@@ -108,16 +92,11 @@ export function interval(from: Date, to: Date): Interval {
   return { value: Math.round(days / 365), unit: "year" };
 }
 
-/**
- * How likely the card is to come back if asked right now, 0 to 1. A card that has never been
- * reviewed has nothing to come back from, so it is 0 rather than the model's optimism.
- */
 export function retrievability(state: FsrsCard, now: Date = new Date()): number {
   if (state.state === State.New || !state.last_review) return 0;
   return scheduler.get_retrievability(state, now, false);
 }
 
-/** Serialise for storage. Dates become ISO strings. */
 export function serializeState(card: FsrsCard): string {
   return JSON.stringify(card);
 }
@@ -127,12 +106,10 @@ export function deserializeState(json: string): FsrsCard {
   const card = { ...(raw as unknown as FsrsCard), due: new Date(raw.due as string) };
   if (raw.last_review) card.last_review = new Date(raw.last_review as string);
   else delete (card as Partial<FsrsCard>).last_review;
-  // A card on the old two-step ladder would graduate on Forgot once the ladder has one step.
   card.learning_steps = Math.min(card.learning_steps, LEARNING_STEPS.length - 1);
   return card;
 }
 
-/** The FSRS memory model, or null for a state that has none yet or can't be read. */
 export function readFsrs(state: { fsrs: string } | null): FsrsCard | null {
   if (!state) return null;
   try {

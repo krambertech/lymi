@@ -1,14 +1,8 @@
-/**
- * Pinyin inline in an example, as Anki's Chinese decks write it: `你好[nǐ hǎo]`, where the bracket
- * reads as many Han characters just before it as it has syllables.
- */
 import { alignPinyin, isHan, type PinyinSegment } from "./align";
 import { cleanPinyin, pinyinSyllables, readingTokens } from "./split";
 
-/** A bracket that may hold pinyin: letters, tone marks or numbers, spaces and apostrophes. */
 export const PINYIN_BRACKET = /\[([\p{Script=Latin}\p{M}0-5 '’:]{1,60})\]/gu;
 
-/** How many Han characters a bracket's syllables cover: each syllable one, and 儿 after an erhua one. */
 function baseStart(
   text: string,
   open: number,
@@ -24,11 +18,6 @@ function baseStart(
   return at;
 }
 
-/**
- * Text with inline pinyin as runs to draw: each bracket of pinyin goes over the Han characters
- * just before it, one syllable each. A bracket that is not pinyin or finds too few characters
- * stays as written, so `[sound:ni.mp3]` is plain text.
- */
 export function parsePinyin(text: string): PinyinSegment[] {
   const out: PinyinSegment[] = [];
   let cursor = 0;
@@ -44,10 +33,6 @@ export function parsePinyin(text: string): PinyinSegment[] {
   return out.filter((segment) => segment.text);
 }
 
-/**
- * An example's inline pinyin as one run per Han character, in tone marks, so each syllable can
- * fade on its own: `你好[ni3 hao3]` → 你 nǐ, 好 hǎo.
- */
 export function pinyinExampleSegments(text: string): PinyinSegment[] {
   return parsePinyin(text).flatMap((segment) => {
     if (segment.reading === undefined) return [segment];
@@ -56,14 +41,12 @@ export function pinyinExampleSegments(text: string): PinyinSegment[] {
   });
 }
 
-/** Text with its inline pinyin taken out: `我说你好[nǐ hǎo]` → `我说你好`. */
 export function stripPinyin(text: string): string {
   return parsePinyin(text)
     .map((segment) => segment.text)
     .join("");
 }
 
-/** Runs written back as text with inline pinyin, so `parsePinyin` reads the same runs. */
 export function formatPinyin(segments: readonly PinyinSegment[]): string {
   return segments
     .map(({ text, reading }) => (reading === undefined ? text : `${text}[${reading}]`))

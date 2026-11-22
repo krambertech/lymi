@@ -36,7 +36,6 @@ describe("review modes", () => {
     expect(directionsFromModes(["image_to_term", "image_to_meaning"])).toBe("both");
     expect(directionsFromModes(["image_to_meaning", "meaning_to_term"])).toBe("production");
     expect(effectiveModes("recognition", ["image_to_meaning"])).toEqual(["image_to_meaning"]);
-    // An older Worker switched the card to production after the list was stored.
     expect(effectiveModes("production", ["image_to_term", "term_to_meaning"])).toEqual([
       "image_to_term",
       "meaning_to_term",

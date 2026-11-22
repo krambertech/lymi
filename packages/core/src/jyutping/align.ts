@@ -1,18 +1,14 @@
 import { isHan } from "../pinyin/align";
 import { cleanJyutping, type ReadingToken, readingTokens } from "./split";
 
-/** One run of text, with the Jyutping drawn over it when it has some. */
 export type JyutpingSegment = { text: string; reading?: string };
 
-/** Letters and digits, which stay plain and may be read as written. */
 const WORD = /[\p{L}\p{N}]/u;
 
-/** Past this many characters a term is a passage, and its reading goes over it whole. */
 const ALIGN_MAX = 80;
 
 type Run = { kind: "han" | "word" | "other"; text: string };
 
-/** Each Han character alone, by code point so 𨋢 is one, letters and digits together, and the rest together. */
 function runs(text: string): Run[] {
   const out: Run[] = [];
   for (const char of text) {
@@ -24,12 +20,10 @@ function runs(text: string): Run[] {
   return out;
 }
 
-/** A run of Latin letters, which Cantonese may read a syllable a letter (A貨, ei1 fo3) or as one. */
 const LATIN = /^\p{Script=Latin}+$/u;
 
 type Queued = { text: string; word: boolean };
 
-/** The ways a run of letters or digits may take the reading at `next`: how many items, and whether they are drawn over it. */
 function wordOptions(run: Run, queue: readonly Queued[], next: number) {
   const out: { take: number; drawn: boolean }[] = [];
   if (queue[next]?.text.toLowerCase() === run.text.toLowerCase())
@@ -45,11 +39,6 @@ function wordOptions(run: Run, queue: readonly Queued[], next: number) {
   return out;
 }
 
-/**
- * The term with one syllable over each Han character, or null when they do not fit. Letters take
- * a word of the reading that is them as written (卡拉OK, kaa1 laa1 OK), else a syllable a letter or
- * one for the run (T恤, ti1 seot1), else none; digits stay plain.
- */
 export function alignJyutping(
   term: string,
   tokens: readonly ReadingToken[],
@@ -97,10 +86,6 @@ export function alignJyutping(
   return out;
 }
 
-/**
- * A term and its Jyutping as runs to draw: one syllable over each Han character, or the reading
- * over the whole term when the two do not fit. A term without Han characters carries none.
- */
 export function jyutpingTermSegments(term: string, reading: string): JyutpingSegment[] {
   const clean = cleanJyutping(reading);
   if (![...term].some(isHan) || !clean) return term ? [{ text: term }] : [];

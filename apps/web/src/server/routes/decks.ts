@@ -410,7 +410,7 @@ decks.delete(
     summary: "Withdraw a published deck",
     description: `${PUBLICATION} Members keep studying it; nobody new can add it, and it leaves Explore and the sitemap. With \`redirectTo\`, its public page sends visitors to that deck with a permanent redirect; a target that is not published is refused. Withdrawing a withdrawn deck again sets or moves its redirect. Publishing it again brings it back and drops the redirect.`,
     ok: { schema: PublicationOut, description: "The withdrawn publication" },
-    errors: [400, 404],
+    errors: [400, 404, 503],
   }),
   query(WithdrawQuery, "withdrawal"),
   async (c) =>
@@ -497,7 +497,7 @@ decks.put(
     summary: "Publish an edition",
     description: `${EDITION} An edition missing text, or written from text that has since changed, is refused with what is holding it back.`,
     ok: { schema: EditionOut, description: "The published edition" },
-    errors: [400, 404],
+    errors: [400, 404, 503],
   }),
   async (c) =>
     c.json(
@@ -517,7 +517,7 @@ decks.delete(
     summary: "Withdraw an edition",
     description: `${EDITION} Nobody new can add it; the learners who pinned it keep reading it.`,
     ok: { schema: EditionOut, description: "The withdrawn edition" },
-    errors: [400, 404],
+    errors: [400, 404, 503],
   }),
   async (c) =>
     c.json(

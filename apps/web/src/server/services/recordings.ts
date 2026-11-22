@@ -1,6 +1,7 @@
 import { sameExample } from "@lymi/core";
 import { and, eq, isNull, or } from "@lymi/core/db";
 import { schema } from "../db";
+import { cardAudioKey, type ObjectStore, putObject } from "../storage";
 import { auditStatementWhen } from "./audit";
 import type { ServiceContext } from "./context";
 
@@ -32,7 +33,7 @@ export function recordingFormat(bytes: Uint8Array): RecordingFormat | null {
 
 /** A clip's bytes as an object under the card's folder, or null for one that is not a recording. */
 async function putRecording(
-  bucket: R2Bucket,
+  bucket: ObjectStore<"AUDIO">,
   cardId: string,
   folder: "recorded" | "example-recorded",
   bytes: Uint8Array | null,
@@ -45,8 +46,8 @@ async function putRecording(
   const fingerprint = [...digest.subarray(0, 16)]
     .map((byte) => byte.toString(16).padStart(2, "0"))
     .join("");
-  const key = `cards/${cardId}/${folder}/${fingerprint}.${format.extension}`;
-  await bucket.put(key, bytes, {
+  const key = cardAudioKey(cardId, `${folder}/${fingerprint}.${format.extension}`);
+  await putObject(bucket, key, bytes, {
     httpMetadata: { contentType: format.contentType, cacheControl: "private, max-age=31536000" },
     customMetadata: { source: "import" },
   });
@@ -62,7 +63,7 @@ export async function storeRecording(
   ctx: ServiceContext,
   cardId: string,
   load: () => Promise<Uint8Array | null>,
-  bucket: R2Bucket,
+  bucket: ObjectStore<"AUDIO">,
 ): Promise<"stored" | "kept" | "skipped"> {
   const [card] = await ctx.db
     .select({ deckId: schema.cards.deckId, audioSource: schema.cards.audioSource })
@@ -73,7 +74,7 @@ export async function storeRecording(
   const put = await putRecording(bucket, cardId, "recorded", await load());
   if (!put) return "skipped";
   const stored = and(eq(schema.cards.id, cardId), eq(schema.cards.audioKey, put.key))!;
-  await ctx.db.batch([
+  const [update] = await ctx.db.batch([
     ctx.db
       .update(schema.cards)
       .set({ audioKey: put.key, audioSource: "recorded", updatedAt: new Date() })
@@ -97,6 +98,15 @@ export async function storeRecording(
       stored,
     ),
   ]);
+  if ((update as D1Result).meta.changes !== 1) {
+    const [now] = await ctx.db
+      .select({ key: schema.cards.audioKey })
+      .from(schema.cards)
+      .where(eq(schema.cards.id, cardId));
+    if (now?.key === put.key) return "kept";
+    await bucket.delete(put.key);
+    return now ? "kept" : "skipped";
+  }
   return "stored";
 }
 
@@ -113,7 +123,7 @@ export async function storeExampleRecording(
   cardId: string,
   said: string | undefined,
   load: () => Promise<Uint8Array | null>,
-  bucket: R2Bucket,
+  bucket: ObjectStore<"AUDIO">,
   captured = false,
 ): Promise<"stored" | "kept" | "skipped"> {
   const [card] = await ctx.db

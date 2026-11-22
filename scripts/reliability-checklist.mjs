@@ -32,12 +32,12 @@ export const ITEMS = [
     ignore: TESTS,
     added: /\.(?:update|delete)\(\s*schema\.|\bUPDATE\s+\w+\s+SET\b|\bDELETE\s+FROM\b/i,
     check:
-      "If another writer, a retry or a replay changes this row between the read and this write, does the write still hold? Does its `WHERE` name the state it leaves, as CODING_STANDARDS.md asks?",
+      "The compiler holds the status columns in `state-machines.ts`, not this write. If another writer, a retry or a replay changes this row between the read and this write, does it still hold? Does its `WHERE` name the state it leaves, as CODING_STANDARDS.md asks, and does the code read whether it landed?",
     why: "Writes keyed by id alone undid takedowns, overwrote newer tokens and landed grades on a moved card state.",
     sources: [793, 1090, 1164],
     example: {
-      file: "apps/web/src/server/services/imports.ts",
-      line: "  await db.update(schema.imports).set({ status: 'done' })",
+      file: "apps/web/src/server/services/review.ts",
+      line: "  await db.update(schema.cardStates).set({ lastReview: reviewedAt })",
     },
   },
   {
@@ -180,17 +180,22 @@ export const ITEMS = [
   },
   {
     id: "account-erasure",
-    files: ["apps/web/src/server/services/account-deletion.ts"],
+    files: [
+      "apps/web/src/server/services/account-deletion.ts",
+      "apps/web/src/server/services/erasure.ts",
+      "apps/web/src/server/services/takedowns.ts",
+    ],
     paths: ["packages/core/src/schema/**/*.ts", "apps/web/src/server/**/*.ts"],
     ignore: TESTS,
-    added: /\bsqliteTable\(|\.put\(\s*[`'"][\w-]+\//,
+    added:
+      /\barchivedAt:\s*null\b|\barchived_at\s*=\s*null\b|\b\w*(?:token|cipher|secret|credential|grant)\w*:\s*text\(|\w*(?:connection|grant|revocation)\w*\s*=\s*sqliteTable\(/i,
     check:
-      "Does deleting the account, or taking the content down, reach this new data: rows, R2 objects and grants held by another service?",
-    why: "Card audio stayed in R2 after deletion, shared decks and Apple's grant needed handling, and a restore undid a takedown.",
-    sources: [787, 972, 1164],
+      "Does deleting the account end a grant another service holds, rather than only the row that records it? Can this restore bring back something Lymi took down?",
+    why: "A restore undid a takedown, and shared decks and Apple's grant needed handling. Tables and R2 objects deletion misses fail `erasure.test.ts`.",
+    sources: [972, 1164],
     example: {
       file: "packages/core/src/schema/app.ts",
-      line: 'export const cardNotes = sqliteTable("card_notes", {',
+      line: '  tokenCipher: text("token_cipher").notNull(),',
     },
   },
 ];

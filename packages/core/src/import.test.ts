@@ -7,16 +7,20 @@ import {
   guessFieldRoles,
   htmlToText,
   IMPORT_LIMITS,
+  IMPORT_PART_BYTES,
+  ImportStartInput,
   imageSources,
   importFieldText,
+  importProgress,
   importTags,
+  MAX_IMPORT_BYTES,
   noteRecordings,
   pitchNotation,
   soundCount,
   soundSources,
 } from "./import";
+import { CardInput, DeckInput } from "./types";
 
-/** A mora as Yomitan writes pitch accent for Anki: the kana, then an empty span drawing its line. */
 const mora = (kana: string, line: "high" | "low" | "drop") =>
   `<span style="display:inline-block;position:relative;"><span style="display:inline;">${kana}</span>${
     line === "low"
@@ -58,8 +62,9 @@ describe("htmlToText", () => {
   it("collapses spaces and runs of blank lines", () => {
     expect(htmlToText("  a   b \n\n\n\n c  ")).toBe("a b\n\nc");
   });
-  it("leaves plain text alone", () => {
+  it("leaves plain text alone, but for the private-use mark it keeps for block edges", () => {
     expect(htmlToText("Привіт, 漢字")).toBe("Привіт, 漢字");
+    expect(htmlToText("a\ue000b")).toBe("ab");
   });
 });
 
@@ -95,6 +100,54 @@ describe("fitFields", () => {
   });
   it("treats empty fields as absent", () => {
     expect(fitFields({ term: "a", meaning: "", notes: "" }).fields.meaning).toBeUndefined();
+  });
+});
+
+describe("IMPORT_LIMITS", () => {
+  const card = (over: object) => CardInput.safeParse({ deckId: "d", term: "t", ...over }).success;
+  const deck = (over: object) => DeckInput.safeParse({ name: "n", ...over }).success;
+  const text = (length: number) => "a".repeat(length);
+
+  it.each(["term", "meaning", "pronunciation", "notes", "hint"] as const)(
+    "keeps as much of the %s as a card accepts",
+    (field) => {
+      expect(card({ [field]: text(IMPORT_LIMITS[field]) })).toBe(true);
+      expect(card({ [field]: text(IMPORT_LIMITS[field] + 1) })).toBe(false);
+    },
+  );
+
+  it("keeps as many and as long tags as a card accepts", () => {
+    const tags = (count: number) => Array.from({ length: count }, (_, i) => `tag${i}`);
+    expect(card({ tags: tags(IMPORT_LIMITS.tags) })).toBe(true);
+    expect(card({ tags: tags(IMPORT_LIMITS.tags + 1) })).toBe(false);
+    expect(card({ tags: [text(IMPORT_LIMITS.tag)] })).toBe(true);
+    expect(card({ tags: [text(IMPORT_LIMITS.tag + 1)] })).toBe(false);
+  });
+
+  it("keeps as much of a deck's name and description as a deck accepts", () => {
+    expect(deck({ name: text(IMPORT_LIMITS.deckName) })).toBe(true);
+    expect(deck({ name: text(IMPORT_LIMITS.deckName + 1) })).toBe(false);
+    expect(deck({ description: text(IMPORT_LIMITS.deckDescription) })).toBe(true);
+    expect(deck({ description: text(IMPORT_LIMITS.deckDescription + 1) })).toBe(false);
+  });
+});
+
+describe("an import's upload", () => {
+  it("fits R2 multipart: parts of at least 5 MiB, and at most 10,000 of them", () => {
+    expect(IMPORT_PART_BYTES).toBeGreaterThanOrEqual(5 * 1024 * 1024);
+    expect(Math.ceil(MAX_IMPORT_BYTES / IMPORT_PART_BYTES)).toBeLessThanOrEqual(10_000);
+  });
+
+  it("takes a file of 1 GB and refuses one past it", () => {
+    const fits = (byteSize: number) =>
+      ImportStartInput.safeParse({ fileName: "deck.apkg", byteSize }).success;
+    expect(fits(1_073_741_824)).toBe(true);
+    expect(fits(1_073_741_825)).toBe(false);
+  });
+
+  it("has no progress to show before its size is known, and reads a response without media", () => {
+    expect(importProgress({ written: 0, chunks: 0 })).toBeNull();
+    expect(importProgress({ written: 1, chunks: 2 })).toBe(0.5);
   });
 });
 
@@ -239,7 +292,6 @@ describe("guessFieldRoles", () => {
       "pronunciation",
       "meaning",
     ]);
-    // A deck written only in traditional characters keeps them as its term, and its sentence.
     expect(guessFieldRoles(["Traditional", "Pinyin", "English"])).toEqual([
       "term",
       "pronunciation",
@@ -263,6 +315,14 @@ describe("guessFieldRoles", () => {
       "notes",
       "pronunciation",
       "meaning",
+    ]);
+  });
+  it("keeps one pitch field and leaves a second, such as a graph, out", () => {
+    expect(guessFieldRoles(["Word", "Meaning", "Pitch Accent", "Pitch Graph"])).toEqual([
+      "term",
+      "meaning",
+      "notes",
+      "skip",
     ]);
   });
   it("gives each single role to one field", () => {
@@ -363,6 +423,13 @@ describe("noteRecordings", () => {
     expect(
       noteRecordings(["Term", "Sound"], ["term", "skip"], [[], ["lymi-card1-speech.mp3"]]),
     ).toEqual({ recording: undefined, exampleRecording: undefined, leftOut: 0 });
+    expect(
+      noteRecordings(["Term", "Sound"], ["term", "skip"], [[], ["lymi-card1-recording.mp3"]]),
+    ).toEqual({
+      recording: "lymi-card1-recording.mp3",
+      exampleRecording: undefined,
+      leftOut: 0,
+    });
   });
   it("reads every sound reference in a field", () => {
     expect(soundSources("[sound:a b.mp3] text [sound:R&amp;B.mp3]")).toEqual([
@@ -374,17 +441,14 @@ describe("noteRecordings", () => {
 
 describe("pitchNotation", () => {
   it("marks the downstep and position from Yomitan's lines", () => {
-    // 箸 はし is atamadaka: high, then low.
     expect(pitchNotation(`<ol><li>${mora("は", "drop")}${mora("し", "low")}</li></ol>`)).toBe(
       "はꜜし [1]",
     );
-    // 桜 さくら is heiban: low, then high with no fall.
     expect(pitchNotation(mora("さ", "low") + mora("く", "high") + mora("ら", "high"))).toBe(
       "さくら [0]",
     );
   });
   it("counts morae, so a small kana joins the one before it", () => {
-    // 京都 きょうと is atamadaka, and きょ is one mora.
     expect(pitchNotation(mora("きょ", "drop") + mora("う", "low") + mora("と", "low"))).toBe(
       "きょꜜうと [1]",
     );
@@ -400,6 +464,7 @@ describe("pitchNotation", () => {
     expect(pitchNotation("0")).toBe("[0]");
     expect(pitchNotation("<ol><li>1</li><li>3</li></ol>")).toBe("[1] · [3]");
     expect(pitchNotation('<svg viewBox="0 0 10 10"><path d="M0 0"/></svg>')).toBe("");
+    expect(pitchNotation("<svg><text>はし</text></svg>")).toBe("");
     expect(pitchNotation('<img src="pitch.png">')).toBe("");
   });
 });

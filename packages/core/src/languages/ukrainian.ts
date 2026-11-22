@@ -1,13 +1,7 @@
 import type { LanguageSupport } from "./types";
 
-/**
- * Ukrainian: the term as natives write it, and the pronunciation with its stress marked in place,
- * за́мок or замо́к. ї's dots are part of the letter, not a mark, so nothing is restored.
- * docs/proposals/russian-and-ukrainian.md.
- */
 export const ukrainian = {
   tag: "uk",
-  // Onest draws Cyrillic and U+0301.
   scripts: [],
   written: ["Cyrl"],
   engine: "stress",
@@ -22,7 +16,5 @@ export const ukrainian = {
     sample: { term: "замок", pronunciation: "за́мок" },
     duplicates: "term-and-reading",
   },
-  // The listening test (PR #864) heard this voice stress 8 of 8 marked words, and plain text can't tell за́мок from замо́к.
-  // Without the context, voices read и as Russian и in бра́ти, паляни́ця and кни́жка; PR #910.
   speech: { saysReading: true, leadIn: false, context: "Українською:" },
 } as const satisfies LanguageSupport;

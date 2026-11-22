@@ -152,7 +152,15 @@ function align(term: string, reading: string): ReadingSegment[] | null {
     if (part.kind === "base") {
       for (let end = at + 1; end <= read.length && !found; end++) {
         const rest = visit(i + 1, end);
-        if (rest) found = [{ text: part.text, reading: reading.slice(at, end) }, ...rest];
+        if (!rest) continue;
+        const [next, ...others] = rest;
+        found =
+          parts[i + 1]?.kind === "other" && next?.reading !== undefined
+            ? [
+                { text: part.text + next.text, reading: reading.slice(at, end) + next.reading },
+                ...others,
+              ]
+            : [{ text: part.text, reading: reading.slice(at, end) }, ...rest];
       }
     } else {
       const folded = toHiragana(part.text);
@@ -162,7 +170,10 @@ function align(term: string, reading: string): ReadingSegment[] | null {
       }
       if (!found && part.kind === "other" && !/[\p{L}\p{N}]/u.test(part.text)) {
         const rest = visit(i + 1, at);
-        if (rest) found = [{ text: part.text }, ...rest];
+        const [next, ...others] = rest ?? [];
+        const parted = parts[i - 1]?.kind === "base" && parts[i + 1]?.kind === "base";
+        if (next && parted) found = [{ ...next, text: part.text + next.text }, ...others];
+        else if (rest) found = [{ text: part.text }, ...rest];
       }
     }
     if (!found) failed.add(key);

@@ -52,14 +52,13 @@ const fold = (text: string) => text.normalize("NFC").toLocaleLowerCase();
 
 function build(): Matcher[] {
   const english = new Intl.DisplayNames(["en"], { type: "language" });
-  return LANGUAGE_TAGS.filter((tag) => !tag.includes("-")).map((tag) => {
+  return LANGUAGE_TAGS.map((tag) => {
     const names = new Set<string>();
     for (const name of [
       english.of(tag),
       new Intl.DisplayNames([tag], { type: "language" }).of(tag),
     ]) {
-      if (name)
-        for (const part of [name, name.split(/[\s(]/)[0] ?? ""]) if (part) names.add(fold(part));
+      if (name) names.add(fold(name));
     }
     const all = [...names];
     return {
@@ -75,15 +74,18 @@ function build(): Matcher[] {
 export function guessLanguage(name: string): string | null {
   matchers ??= build();
   const text = fold(name);
-  let best: { tag: string; at: number } | null = null;
-  const consider = (tag: string, at: number) => {
-    if (at >= 0 && (!best || at < best.at)) best = { tag, at };
+  let best: { tag: string; at: number; length: number } | null = null;
+  const consider = (tag: string, at: number, { length }: string) => {
+    if (at < 0) return;
+    if (!best || at < best.at || (at === best.at && length > best.length)) {
+      best = { tag, at, length };
+    }
   };
   const words = [...text.matchAll(/[\p{L}\p{M}]+/gu)];
   for (const matcher of matchers) {
     for (const word of words)
-      if (matcher.words.includes(word[0])) consider(matcher.tag, word.index);
-    for (const phrase of matcher.phrases) consider(matcher.tag, text.indexOf(phrase));
+      if (matcher.words.includes(word[0])) consider(matcher.tag, word.index, word[0]);
+    for (const phrase of matcher.phrases) consider(matcher.tag, text.indexOf(phrase), phrase);
   }
   return (best as { tag: string } | null)?.tag ?? null;
 }

@@ -41,13 +41,18 @@ const BARE = [
   ...["yu", "yue", "yuan", "yun"],
 ];
 
+const SPELLED_BUT_NEVER_READ = new Set(
+  `be bou biu pe piu fe fai fao fi fie fiu fian fin fing din diang ten tiu tin tia tiang
+  no nia len chei shong ra rai rei ruai ruang sei`.split(/\s+/),
+);
+
 export const INTERJECTIONS: ReadonlySet<string> = new Set(["ê", "m", "n", "ng", "hm", "hng"]);
 
 export const SYLLABLES: ReadonlySet<string> = new Set([
   ...BARE,
   ...CLASSES.flatMap(([initials, finals]) =>
     initials.flatMap((initial) => finals.map((final) => initial + final)),
-  ),
+  ).filter((syllable) => !SPELLED_BUT_NEVER_READ.has(syllable)),
 ]);
 
 export const SYLLABLE_MAX = 7;

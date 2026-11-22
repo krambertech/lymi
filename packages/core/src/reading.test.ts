@@ -155,6 +155,22 @@ describe("alignReading", () => {
     ]);
   });
 
+  it("puts one reading over words parted only by a space, which do not say where it divides", () => {
+    expect(alignReading("東京 駅", "とうきょうえき")).toEqual([
+      { text: "東京 駅", reading: "とうきょうえき" },
+    ]);
+    expect(alignReading("お茶、和 菓子", "おちゃわがし")).toEqual([
+      { text: "お" },
+      { text: "茶、和 菓子", reading: "ちゃわがし" },
+    ]);
+    expect(alignReading("食べる、飲む", "たべるのむ")).toEqual([
+      { text: "食", reading: "た" },
+      { text: "べる、" },
+      { text: "飲", reading: "の" },
+      { text: "む" },
+    ]);
+  });
+
   it("draws nothing over a term without kanji", () => {
     expect(alignReading("ありがとう", "ありがとう")).toEqual([{ text: "ありがとう" }]);
     expect(alignReading("コーヒー", "こーひー")).toEqual([{ text: "コーヒー" }]);
@@ -544,6 +560,13 @@ describe("readingKey", () => {
     expect(key("じょう\u3000ず")).toBe("じょうず");
     expect(readingKey({ term: "外", language: "ja", pronunciation: "そと" })).toBe("そと");
     expect(readingKey({ term: "画", language: "ja", pronunciation: "か\u3099" })).toBe("が");
+  });
+  it("keys words parted by a space by their whole reading, and by none too short for them", () => {
+    const key = (pronunciation: string) =>
+      readingKey({ term: "東京 駅", language: "ja", pronunciation });
+    expect(key("とうきょうえき")).toBe("とうきょうえき");
+    expect(key("とうきょう えき")).toBe("とうきょうえき");
+    expect(key("と")).toBeNull();
   });
   it("has no reading where none applies", () => {
     expect(readingKey({ term: "上手", language: "ja", pronunciation: "jōzu" })).toBeNull();

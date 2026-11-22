@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { testAiConsent } from "../../test/ai-consent";
 import { japanese } from "../lead-ins/japanese";
 import { createLeadInWriter, LeadInError } from "./lead-in-writer";
 
@@ -23,7 +24,7 @@ describe("lead-in writer", () => {
     const fetch = vi.fn(async (_url: RequestInfo | URL, _init?: RequestInit) =>
       Response.json(payload("川を渡る")),
     );
-    expect(await createLeadInWriter(env, fetch)?.write(request)).toEqual({
+    expect(await createLeadInWriter(env, fetch)?.write(request, testAiConsent)).toEqual({
       previousText: "川を渡る",
       inputTokens: 300,
       outputTokens: 410,
@@ -51,10 +52,12 @@ describe("lead-in writer", () => {
     const timeout = vi.fn(async () => {
       throw new DOMException("timeout", "TimeoutError");
     });
-    await expect(createLeadInWriter(env, timeout)?.write(request)).rejects.toThrow();
+    await expect(createLeadInWriter(env, timeout)?.write(request, testAiConsent)).rejects.toThrow();
     expect(timeout).toHaveBeenCalledOnce();
     const limited = vi.fn(async () => new Response("limited", { status: 429 }));
-    await expect(createLeadInWriter(env, limited)?.write(request)).rejects.toMatchObject({
+    await expect(
+      createLeadInWriter(env, limited)?.write(request, testAiConsent),
+    ).rejects.toMatchObject({
       reason: "failed",
       usage: { status: 429 },
     });
@@ -64,7 +67,7 @@ describe("lead-in writer", () => {
   it("tells an unusable reply, which would come back the same, from an outage, and keeps its usage", async () => {
     const truncated = payload("川を渡る", "length");
     const error = await createLeadInWriter(env, async () => Response.json(truncated))
-      ?.write(request)
+      ?.write(request, testAiConsent)
       .catch((e: unknown) => e);
     expect(error).toBeInstanceOf(LeadInError);
     expect(error).toMatchObject({
@@ -72,18 +75,23 @@ describe("lead-in writer", () => {
       usage: { inputTokens: 300, outputTokens: 410, reasoningTokens: 400, status: 200 },
     });
     const garbled = createLeadInWriter(env, async () => new Response("not json"));
-    await expect(garbled?.write(request)).rejects.toMatchObject({ reason: "failed" });
+    await expect(garbled?.write(request, testAiConsent)).rejects.toMatchObject({
+      reason: "failed",
+    });
   });
 
   it("fails closed without a key or the gateway and refuses oversized replies", async () => {
     expect(createLeadInWriter({})).toBeNull();
     const fetch = vi.fn(async () => Response.json(payload("川を渡る")));
     await expect(
-      createLeadInWriter({ OPENAI_API_KEY: "test" }, fetch)?.write(request),
+      createLeadInWriter({ OPENAI_API_KEY: "test" }, fetch)?.write(request, testAiConsent),
     ).rejects.toThrow("Gateway");
     expect(fetch).not.toHaveBeenCalled();
     await expect(
-      createLeadInWriter(env, async () => new Response("x".repeat(16_385)))?.write(request),
+      createLeadInWriter(env, async () => new Response("x".repeat(16_385)))?.write(
+        request,
+        testAiConsent,
+      ),
     ).rejects.toMatchObject({ reason: "failed" });
   });
 });

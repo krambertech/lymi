@@ -73,7 +73,10 @@ describe("learnDeckStyles", () => {
       deck.id,
       Array.from({ length: STYLE_LEARN_AFTER - 1 }, (_, i) => `Wort ${i}`),
     );
-    expect(await learnDeckStyles(ctx, early, provider)).toEqual({ learned: 0, deckIds: [] });
+    expect(await learnDeckStyles(ctx, early, async () => provider)).toEqual({
+      learned: 0,
+      deckIds: [],
+    });
     expect(provider.asked).toHaveLength(0);
 
     const [ai] = await write(ctx, deck.id, ["KI-Wort"]);
@@ -83,7 +86,7 @@ describe("learnDeckStyles", () => {
       .where(eq(schema.cards.id, ai ?? ""));
     const last = await write(ctx, deck.id, ["das Haus"]);
     tick();
-    expect(await learnDeckStyles(ctx, last, provider)).toMatchObject({ learned: 1 });
+    expect(await learnDeckStyles(ctx, last, async () => provider)).toMatchObject({ learned: 1 });
 
     const input = JSON.parse(provider.asked[0]?.input ?? "{}");
     expect(input.deck).toMatchObject({ name: "Deutsch", instructions: "Nouns from my A2 course." });
@@ -109,9 +112,12 @@ describe("learnDeckStyles", () => {
       deck.id,
       Array.from({ length: STYLE_RELEARN_AFTER - 1 }, (_, i) => `Neu ${i}`),
     );
-    expect(await learnDeckStyles(ctx, more, provider)).toEqual({ learned: 0, deckIds: [] });
+    expect(await learnDeckStyles(ctx, more, async () => provider)).toEqual({
+      learned: 0,
+      deckIds: [],
+    });
     const enough = await write(ctx, deck.id, ["der Tisch"]);
-    expect(await learnDeckStyles(ctx, enough, provider)).toMatchObject({ learned: 1 });
+    expect(await learnDeckStyles(ctx, enough, async () => provider)).toMatchObject({ learned: 1 });
     expect(JSON.parse(provider.asked[1]?.input ?? "{}").previous).toEqual(stored?.enrichStyle);
   });
 
@@ -126,11 +132,14 @@ describe("learnDeckStyles", () => {
     );
     tick();
     const provider = fakeProvider({ style: null });
-    expect(await learnDeckStyles(ctx, ids, provider)).toMatchObject({ learned: 1 });
+    expect(await learnDeckStyles(ctx, ids, async () => provider)).toMatchObject({ learned: 1 });
     const [stored] = await db.select().from(schema.decks).where(eq(schema.decks.id, deck.id));
     expect(stored?.enrichStyle).toBeNull();
     expect(stored?.enrichStyleAt).not.toBeNull();
-    expect(await learnDeckStyles(ctx, ids, provider)).toEqual({ learned: 0, deckIds: [] });
+    expect(await learnDeckStyles(ctx, ids, async () => provider)).toEqual({
+      learned: 0,
+      deckIds: [],
+    });
   });
 
   it("records each learning call as counts, and a failed call before it rethrows", async () => {
@@ -152,8 +161,8 @@ describe("learnDeckStyles", () => {
         throw new Error("vendor down");
       },
     };
-    await expect(learnDeckStyles(ctx, ids, failing)).rejects.toThrow("vendor down");
-    await learnDeckStyles(ctx, ids, fakeProvider(article));
+    await expect(learnDeckStyles(ctx, ids, async () => failing)).rejects.toThrow("vendor down");
+    await learnDeckStyles(ctx, ids, async () => fakeProvider(article));
     const events = capture.mock.calls
       .map(([event]) => event)
       .filter((event) => event.name === "deck_style_learned");
@@ -225,7 +234,7 @@ describe("learnDeckStyles", () => {
     tick();
 
     const provider = fakeProvider(article);
-    expect(await learnDeckStyles(ctx, ids, provider)).toMatchObject({ learned: 1 });
+    expect(await learnDeckStyles(ctx, ids, async () => provider)).toMatchObject({ learned: 1 });
     const input = JSON.parse(provider.asked[0]?.input ?? "{}");
     expect(input.corrections).toEqual([
       {
@@ -255,18 +264,18 @@ describe("learnDeckStyles", () => {
     await aiExamples(ids.slice(0, 3));
     tick();
     const provider = fakeProvider(article);
-    expect(await learnDeckStyles(ctx, ids, provider)).toMatchObject({ learned: 1 });
+    expect(await learnDeckStyles(ctx, ids, async () => provider)).toMatchObject({ learned: 1 });
 
     // Four plain edits are four changed cards, short of the ten that learn again.
     for (const id of ids.slice(-4)) {
       tick();
       await updateCard(ctx, id, CardPatch.parse({ notes: "Mine." }));
     }
-    expect(await learnDeckStyles(ctx, ids, provider)).toMatchObject({ learned: 0 });
+    expect(await learnDeckStyles(ctx, ids, async () => provider)).toMatchObject({ learned: 0 });
     // Three corrections count as three cards and three corrections.
     for (const id of ids.slice(0, 3)) await correct(ctx, id, "Mein Beispiel.");
     tick();
-    expect(await learnDeckStyles(ctx, ids, provider)).toMatchObject({ learned: 1 });
+    expect(await learnDeckStyles(ctx, ids, async () => provider)).toMatchObject({ learned: 1 });
   });
 
   it("never reads a deck the learner does not own", async () => {
@@ -279,7 +288,10 @@ describe("learnDeckStyles", () => {
       Array.from({ length: STYLE_LEARN_AFTER }, (_, i) => `parola ${i}`),
     );
     const provider = fakeProvider(article);
-    expect(await learnDeckStyles(other, ids, provider)).toEqual({ learned: 0, deckIds: [] });
+    expect(await learnDeckStyles(other, ids, async () => provider)).toEqual({
+      learned: 0,
+      deckIds: [],
+    });
     expect(provider.asked).toHaveLength(0);
   });
 
@@ -299,11 +311,11 @@ describe("learnDeckStyles", () => {
     tick();
     const provider = fakeProvider(article);
     const ids = [...freshIds, ...knownIds];
-    expect(await learnDeckStyles(ctx, ids, provider, { firstOnly: true })).toEqual({
+    expect(await learnDeckStyles(ctx, ids, async () => provider, { firstOnly: true })).toEqual({
       learned: 1,
       deckIds: [fresh.id],
     });
-    expect(await learnDeckStyles(ctx, ids, provider, { skip: [fresh.id] })).toEqual({
+    expect(await learnDeckStyles(ctx, ids, async () => provider, { skip: [fresh.id] })).toEqual({
       learned: 1,
       deckIds: [known.id],
     });

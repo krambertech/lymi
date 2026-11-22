@@ -1,3 +1,5 @@
+import type { AiConsent } from "./consent";
+
 export type AiGatewayBindings = {
   AI_GATEWAY_URL?: string | undefined;
   AI_GATEWAY_TOKEN?: string | undefined;
@@ -17,16 +19,26 @@ export class AiGatewayError extends Error {
   }
 }
 
-export function providerEndpoint(
-  env: AiGatewayBindings,
-  provider: keyof typeof PROVIDERS,
-): { base: string; headers: Record<string, string> } {
+function gatewayOf(env: AiGatewayBindings): { gateway: string; token: string } {
   const token = env.AI_GATEWAY_TOKEN?.trim();
   const gateway = env.AI_GATEWAY_URL?.trim().replace(/\/$/, "");
   if (!token || !gateway) throw new AiGatewayError("AI Gateway is not configured");
   if (!/^https:\/\/gateway\.ai\.cloudflare\.com\/v1\/[a-z0-9]+\/[a-z0-9-]+$/.test(gateway)) {
     throw new AiGatewayError("AI Gateway URL is invalid");
   }
+  return { gateway, token };
+}
+
+export function assertGatewayConfigured(env: AiGatewayBindings): void {
+  gatewayOf(env);
+}
+
+export function providerEndpoint(
+  env: AiGatewayBindings,
+  provider: keyof typeof PROVIDERS,
+  _consent: AiConsent,
+): { base: string; headers: Record<string, string> } {
+  const { gateway, token } = gatewayOf(env);
   return {
     base: `${gateway}/${PROVIDERS[provider]}`,
     headers: {

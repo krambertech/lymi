@@ -23,6 +23,7 @@ import { extname, join, normalize, sep } from "node:path";
 import { fileURLToPath } from "node:url";
 import { runInNewContext } from "node:vm";
 import { z } from "zod";
+import { consentForEvaluation } from "../ai/consent";
 import { createElevenLabsSpeechProvider } from "../ai/elevenlabs-speech";
 import { evalEnv } from "../ai/eval-env";
 import { providerEndpoint } from "../ai/gateway";
@@ -198,7 +199,10 @@ for (const language of languages) {
         return;
       }
       try {
-        const response = await provider.speech({ text: job.spoken.text, language });
+        const response = await provider.speech(
+          { text: job.spoken.text, language },
+          consentForEvaluation(),
+        );
         const audio = new Uint8Array(await response.arrayBuffer());
         writeFileSync(path, dry ? silence() : audio);
         made += 1;
@@ -253,7 +257,7 @@ console.log(
 
 async function listLibrary(language: string) {
   const env = liveEnv();
-  const endpoint = providerEndpoint(env, "elevenlabs");
+  const endpoint = providerEndpoint(env, "elevenlabs", consentForEvaluation());
   const Voices = z.object({
     voices: z.array(
       z.object({

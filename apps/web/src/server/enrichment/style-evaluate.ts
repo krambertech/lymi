@@ -9,6 +9,7 @@
 import { readFileSync } from "node:fs";
 import { type DeckEnrichField, type DeckPurpose, deckEnrichFields } from "@lymi/core";
 import { createTextProvider } from "../ai";
+import { consentForEvaluation } from "../ai/consent";
 import { evalEnv, requireKeys } from "../ai/eval-env";
 import { languageGuide } from "./languages";
 import {
@@ -88,7 +89,7 @@ async function main() {
 
   const env = evalEnv();
   requireKeys(env, ["OPENAI_API_KEY", "AI_GATEWAY_TOKEN"], "run the evaluation");
-  const provider = createTextProvider(env);
+  const provider = createTextProvider(env, consentForEvaluation(), null);
   if (!provider) throw new Error("Set OPENAI_API_KEY to run the evaluation");
   console.log(`Style prompt v${STYLE_PROMPT_VERSION} · model ${provider.model}`);
 

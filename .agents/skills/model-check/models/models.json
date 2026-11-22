@@ -1,0 +1,100 @@
+{
+  "WriteQueue": {
+    "states": 4618,
+    "invariants": ["NoCrossSend"],
+    "guards": {
+      "ReleasesOnSignOut": {
+        "breaks": "NoCrossSend",
+        "fixedIn": 1156
+      },
+      "ChecksClaimOnFailure": {
+        "breaks": "NoCrossSend",
+        "fixedIn": 1156
+      },
+      "ChecksClaimBeforeSend": {
+        "breaks": "NoCrossSend",
+        "fixedIn": 1158
+      }
+    },
+    "covers": {
+      "packages/client/src/writes.ts": [
+        "claimWrites",
+        "unclaimWrites",
+        "dropWrites",
+        "put",
+        "remove",
+        "flushQueued"
+      ],
+      "packages/client/src/queued.ts": ["claimQueued"]
+    },
+    "replays": {
+      "packages/client/src/writes.test.ts": [
+        "sends nothing after a sign-out, even when a retry was waiting",
+        "does not put a write back when the learner signed out while it was in the air",
+        "stops a flush that was mid-way when the learner left",
+        "keeps the queue but holds it while no learner is signed in"
+      ]
+    }
+  },
+  "ReviewDay": {
+    "states": 283161,
+    "invariants": ["ConfirmsOnlyWithoutGrades", "NoLostUpdate"],
+    "guards": {
+      "CompareAndSet": {
+        "breaks": "ConfirmsOnlyWithoutGrades",
+        "fixedIn": 1164
+      },
+      "ReadsDayFirst": {
+        "breaks": "NoLostUpdate",
+        "fixedIn": 1164
+      }
+    },
+    "covers": {
+      "apps/web/src/server/services/review-days.ts": [
+        "openDay",
+        "settleDay",
+        "checkToday",
+        "attemptsOn",
+        "restoreIfLatest",
+        "undoReview"
+      ],
+      "apps/web/src/server/services/review.ts": ["gradeCard"],
+      "packages/core/src/streak.ts": ["nextOutcome"]
+    },
+    "replays": {
+      "apps/web/src/server/services/review-days.test.ts": [
+        "never confirms nothing due over a grade that landed after the visit read the day",
+        "settles a grade on the attempts that are there when it writes",
+        "settles an Undo on the day as it is when the Undo lands, not as it read it",
+        "settles a grade on the day as it is when the grade lands, not as it read it"
+      ]
+    }
+  },
+  "ImportWrites": {
+    "states": 321,
+    "invariants": ["NoCardsAfterEnd", "ArchiveCoversEveryCard"],
+    "guards": {
+      "ChunkChecksStatus": {
+        "breaks": "NoCardsAfterEnd",
+        "fixedIn": 1164
+      }
+    },
+    "covers": {
+      "apps/web/src/server/services/import-writer.ts": ["writeChunk", "archiveImport"],
+      "apps/web/src/server/services/imports.ts": [
+        "readyWork",
+        "writeImportChunk",
+        "confirmImport",
+        "finishImport",
+        "failImport",
+        "failRun",
+        "cancelImport",
+        "expireImports"
+      ],
+      "apps/web/src/server/imports/write-run.ts": ["writeImport"]
+    },
+    "replays": {
+      "apps/web/src/server/services/imports.test.ts": ["writes no chunk once the import has failed"]
+    }
+  }
+}

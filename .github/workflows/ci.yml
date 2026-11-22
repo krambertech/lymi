@@ -78,6 +78,7 @@ jobs:
     outputs:
       dependencies_outcome: ${{ steps.dependencies.outcome }}
       check_outcome: ${{ steps.check.outcome }}
+      models_outcome: ${{ steps.models.outcome }}
       i18n_outcome: ${{ steps.i18n.outcome }}
       migrations_outcome: ${{ steps.migrations.outcome }}
       build_outcome: ${{ steps.build.outcome }}
@@ -109,6 +110,10 @@ jobs:
         env:
           BASE_SHA: ${{ github.event.pull_request.base.sha }}
         run: pnpm check
+
+      - name: Model-check flows that can lose data
+        id: models
+        run: pnpm check:models --run
 
       - name: Check interface strings are extracted
         id: i18n
@@ -335,6 +340,7 @@ jobs:
           TITLE_OUTCOME: ${{ needs.plan.outputs.title_outcome }}
           DEPENDENCIES_OUTCOME: ${{ needs.quality.outputs.dependencies_outcome }}
           CHECK_OUTCOME: ${{ needs.quality.outputs.check_outcome }}
+          MODELS_OUTCOME: ${{ needs.quality.outputs.models_outcome }}
           I18N_OUTCOME: ${{ needs.quality.outputs.i18n_outcome }}
           MIGRATIONS_OUTCOME: ${{ needs.quality.outputs.migrations_outcome }}
           BUILD_OUTCOME: ${{ needs.quality.outputs.build_outcome }}

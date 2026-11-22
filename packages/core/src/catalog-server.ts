@@ -1,4 +1,4 @@
-import { and, asc, eq, inArray, isNotNull, isNull, type SQL, sql } from "drizzle-orm";
+import { and, asc, eq, isNotNull, isNull, type SQL, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase, SQLiteInsertBuilder } from "drizzle-orm/sqlite-core";
 import {
   activeAvatarVersion,
@@ -15,6 +15,7 @@ import {
   stableHash,
 } from "./catalog";
 import { selectIn } from "./db";
+import { inArray } from "./in-list";
 import { askedModes, isImageMode } from "./modes";
 import { livePublicationMedia } from "./publication-media";
 import {

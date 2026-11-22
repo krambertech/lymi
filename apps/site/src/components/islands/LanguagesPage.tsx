@@ -2,7 +2,7 @@ import { LanguagesView } from "../landing/LanguagesView";
 import { Island } from "./Island";
 
 interface Props {
-  locale?: string | undefined;
+  locale: string | undefined;
 }
 
 export default function LanguagesPage({ locale }: Props) {

@@ -1,5 +1,6 @@
-import { and, eq, inArray, isNotNull, isNull, ne, or, sql } from "drizzle-orm";
+import { and, eq, isNotNull, isNull, ne, or, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
+import { inArray } from "./in-list";
 import { cardImages, cards, deckPublications, decks } from "./schema/app";
 
 // oxlint-disable-next-line typescript/no-explicit-any -- both Workers pass their own typed D1 database.

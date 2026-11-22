@@ -2,7 +2,7 @@ import { CertificationsView } from "../landing/CertificationsView";
 import { Island } from "./Island";
 
 interface Props {
-  locale?: string | undefined;
+  locale: string | undefined;
 }
 
 export default function CertificationsPage({ locale }: Props) {

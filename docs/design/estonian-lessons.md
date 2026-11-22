@@ -66,6 +66,49 @@ The parts live in `apps/site/src/components/learn`. A new lesson reaches for the
 
 A lesson file in `components/learn/lessons` holds its glossary, its sections and its recap, and passes them to `LessonView`, which draws a link back to all lessons, the head, the read bar, What to remember, the words, and links to the previous and next lessons, the same size. The read bar shows where the reader is, filling in order up to the section on screen; which sections are done is kept for the hub, not shown in the bar.
 
+## Lesson types
+
+The course should be enough, with Lymi for the words, to learn Estonian to B1 alone. A lesson is one of these types, named in its facts line.
+
+| Type | Job | Holds |
+| --- | --- | --- |
+| Grammar | One rule | Explore, then recognise, tell apart, make, use |
+| Contrast | Two rules learners mix up, such as a whole or a part, or emal and ema juures | The same sentence under each rule, then mixed items that only the meaning decides |
+| Situation | A place or task, such as a café, the doctor, a form to fill | Phrases heard, a dialogue, a listening passage, something to write |
+| Listening | Understanding by ear at the stage's length | Two or more recordings with exam question types |
+| Writing | A short text with a model answer and a checklist the learner marks | A prompt, the model, the checklist |
+| Checkpoint | What a stage taught, mixed | No explanations; a result per rule, each linked to its lesson |
+| Exam | An A2 or B1 paper in Harno's format | Original tasks, timed, recordings played twice |
+
+A tool, such as the form map or a number trainer, is a page of its own that lessons link to. It explains itself to someone who has read no lesson.
+
+## What every lesson holds
+
+A grammar or contrast lesson takes the learner from noticing a rule to using it without looking:
+
+1. **Warm-up.** Up to five questions from earlier lessons, the learner's misses first.
+2. **Explore** the new rule, with nothing to get wrong.
+3. **Recognise** it by ear or eye.
+4. **Tell it apart** from the rule it is confused with.
+5. **Make** it: type the form, then the whole sentence.
+6. **Use** it in a passage, dialogue or short text.
+7. **Drill.** More of the same, missed items returning until each is right twice.
+
+At least six marked parts, two of them typed, one listening and one that tells two rules apart, with at least forty marked items between them. Explanations stay in sentences: a table of forms is something to look up, never the exercise. Errors to fix come from what learners write, as Harno's A2 and B1 handbooks and EKI's grammar profile record them.
+
+## How hard each stage is
+
+| Stage | Sentences | Longest listening | Reading | Typed work |
+| --- | --- | --- | --- | --- |
+| 1 | 2 to 6 words | 10 to 20 s, one voice or a short exchange | 30 to 50 words | Words and numbers |
+| 2 | 3 to 7 | 20 to 30 s, two voices | 50 to 70 | Forms, short sentences |
+| 3 | 4 to 9 | 45 to 60 s, two voices, a voice message | 80 to 100 | Sentences |
+| 4 | 5 to 10 | 60 to 90 s, two or three voices | 100 to 130 | Sentences, a message of 30 words |
+| 5 | 6 to 12, two clauses | about 2 minutes | 130 to 170 | A message of 50 words |
+| 6 | 8 to 15, linked clauses | 2.5 to 3.5 minutes, interviews and news | 200 to 300 | A letter of about 100 words |
+
+Stages 3 to 5 reach what the A2 exam asks and stage 6 what B1 asks, in length and in question types: pick of three, true or false, one or two words, matching, and gaps from a bank.
+
 ## Writing a lesson
 
 [The estonian-lesson skill](../../.agents/skills/estonian-lesson/SKILL.md) builds one lesson end to end, from choosing its content to the PR, with the checks reviews kept asking for.

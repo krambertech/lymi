@@ -1,4 +1,5 @@
 import { definePlugin } from "@oxlint/plugins";
+import aiConsent from "./rules/ai-consent.mjs";
 import clipOwner from "./rules/clip-owner.mjs";
 import failedWriteSaid from "./rules/failed-write-said.mjs";
 import fieldError from "./rules/field-error.mjs";
@@ -22,6 +23,7 @@ export default definePlugin({
   meta: { name: "lymi" },
   rules: {
     "failed-write-said": failedWriteSaid,
+    "ai-consent": aiConsent,
     "clip-owner": clipOwner,
     "field-error": fieldError,
     "form-header": formHeader,

@@ -13,7 +13,7 @@ import {
 } from "@lymi/core";
 import { and, desc, eq, inArray, isNotNull, isNull, lt, or, sql } from "@lymi/core/db";
 import type { Import } from "@lymi/core/schema";
-import type { TextProvider } from "../ai";
+import type { TextProviderFor } from "../ai";
 import { type Db, schema } from "../db";
 import type { ImportChoices, SourceAdapter } from "../imports/adapter";
 import { anki } from "../imports/anki";
@@ -33,7 +33,7 @@ import {
   putObject,
   startUpload,
 } from "../storage";
-import { aiAllowedFor } from "./ai-consent";
+import { aiConsentFor } from "./ai-consent";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
 import type { CardImageStorage } from "./card-images";
@@ -289,7 +289,7 @@ export async function inspectImport(
   ctx: ServiceContext,
   id: string,
   uploads: ObjectStore<"IMPORTS">,
-  provider: TextProvider | null = null,
+  providerFor: TextProviderFor = () => null,
 ) {
   const row = await ownedImport(ctx, id);
   if (row.status !== "inspecting" || !row.objectKey) return;
@@ -344,11 +344,12 @@ export async function inspectImport(
         : guessLanguage(d.name),
     ]),
   );
+  const consent = await aiConsentFor(ctx);
   const detected = await detectDeckLanguages(
     summary.decks
       .filter((d) => named.get(d.key) === null && summary.languages?.[d.key] === undefined)
       .map((d) => ({ key: d.key, name: d.name, terms: [...(terms.get(d.key) ?? [])] })),
-    provider && (await aiAllowedFor(ctx)) ? provider : null,
+    consent && providerFor(consent),
   );
   const fallback = await usualLanguage(ctx);
   // A deck the cards join keeps its own language; one that isn't the learner's is ignored.

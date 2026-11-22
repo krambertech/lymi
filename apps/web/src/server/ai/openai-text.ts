@@ -1,3 +1,4 @@
+import type { AiConsent } from "./consent";
 import { type AiGatewayBindings, providerEndpoint } from "./gateway";
 import type { Fetch, TextObserver, TextProvider, TextRequest } from "./types";
 
@@ -28,8 +29,9 @@ const REASONING_EFFORT = "high";
 /** The text vendor, per docs/stack.md. Structured outputs, so the reply parses or the call fails. */
 export function createOpenAiTextProvider(
   env: OpenAiTextBindings,
+  consent: AiConsent,
   request: Fetch = fetch,
-  observe?: TextObserver,
+  observe: TextObserver | null = null,
 ): TextProvider {
   const fallback = env.OPENAI_TEXT_MODEL || "gpt-6-luna";
   return {
@@ -37,7 +39,7 @@ export function createOpenAiTextProvider(
     model: fallback,
     async complete(input: TextRequest) {
       const model = env.OPENAI_TEXT_MODEL || input.model || fallback;
-      const call = () => completeOnce(env, request, model, input);
+      const call = () => completeOnce(env, consent, request, model, input);
       if (!observe) return (await call()).reply;
       const started = Date.now();
       const report = (usage: Usage | undefined, status?: number) => {
@@ -83,13 +85,14 @@ function statusOf(err: unknown): number {
 
 async function completeOnce(
   env: OpenAiTextBindings,
+  consent: AiConsent,
   request: Fetch,
   model: string,
   input: TextRequest,
 ): Promise<{ reply: unknown; usage: Usage | undefined }> {
   const apiKey = env.OPENAI_API_KEY?.trim();
   if (!apiKey) throw new OpenAiTextError("OpenAI text is not configured");
-  const endpoint = providerEndpoint(env, "openai");
+  const endpoint = providerEndpoint(env, "openai", consent);
   const headers: Record<string, string> = {
     Authorization: `Bearer ${apiKey}`,
     "Content-Type": "application/json",

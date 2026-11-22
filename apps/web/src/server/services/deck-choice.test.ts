@@ -68,11 +68,11 @@ describe("chooseDeck", () => {
     const idioms = await createDeck(ctx, { name: "Idioms", defaultLanguage: "en" });
     const eesti = await createDeck(ctx, { name: "Eesti" });
     await addCards(ctx, [{ deckId: eesti.id, term: "kurb", meaning: "sad", language: "et" }]);
-    expect(await chooseDeck(ctx, { term: "rahulik" }, model("et").provider)).toEqual({
+    expect(await chooseDeck(ctx, { term: "rahulik" }, () => model("et").provider)).toEqual({
       deckId: eesti.id,
       language: "et",
     });
-    expect(await chooseDeck(ctx, { term: "break a leg" }, model("en").provider)).toEqual({
+    expect(await chooseDeck(ctx, { term: "break a leg" }, () => model("en").provider)).toEqual({
       deckId: idioms.id,
       language: "en",
     });
@@ -83,7 +83,7 @@ describe("chooseDeck", () => {
     await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
     await createDeck(ctx, { name: "Köök", defaultLanguage: "et" });
     const { provider, complete } = model("et");
-    expect(await chooseDeck(ctx, { term: "rahulik" }, provider)).toEqual({
+    expect(await chooseDeck(ctx, { term: "rahulik" }, () => provider)).toEqual({
       deckId: null,
       language: null,
     });

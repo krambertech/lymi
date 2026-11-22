@@ -96,5 +96,68 @@
     "replays": {
       "apps/web/src/server/services/imports.test.ts": ["writes no chunk once the import has failed"]
     }
+  },
+  "GradeOutbox": {
+    "states": 1395255,
+    "invariants": ["KeptGradesCount", "TakenBackGradesDoNot", "ScheduleHoldsTheCounted"],
+    "guards": {
+      "MarksBeforeSend": {
+        "breaks": "TakenBackGradesDoNot",
+        "fixedIn": 1307
+      },
+      "ReplaysUnanswered": {
+        "breaks": "TakenBackGradesDoNot",
+        "fixedIn": 1093
+      },
+      "HoldsMode": {
+        "breaks": "KeptGradesCount",
+        "fixedIn": 180
+      },
+      "SeesLateUndo": {
+        "breaks": "TakenBackGradesDoNot",
+        "fixedIn": 1307
+      },
+      "LandsOverRead": {
+        "breaks": "ScheduleHoldsTheCounted",
+        "fixedIn": 1090
+      },
+      "DuplicateNamesAttempt": {
+        "breaks": "TakenBackGradesDoNot",
+        "fixedIn": 1090
+      }
+    },
+    "covers": {
+      "packages/client/src/grades.ts": [
+        "serial",
+        "send",
+        "turnedAway",
+        "mayBeOnServer",
+        "flushQueued",
+        "flushOutbox",
+        "recordGrade",
+        "settleUndos",
+        "undoGrade"
+      ],
+      "apps/web/src/server/services/review.ts": ["gradeCard", "gradeReviewId"],
+      "apps/web/src/server/services/review-days.ts": ["restoreIfLatest", "undoReview"]
+    },
+    "replays": {
+      "packages/client/src/grades.test.ts": [
+        "undoes a grade the server stored and answered %i",
+        "undoes a grade taken back while its send was out when the app was killed",
+        "holds a regrade behind an undo made while the flush waited on another card",
+        "holds a regrade behind an undo the server could not take yet",
+        "undoes a grade whose send got no answer, once the server names its attempt"
+      ],
+      "apps/web/src/server/phone-client.test.ts": [
+        "takes back a grade the Worker stored though it then answered 500",
+        "takes back a grade the Worker stored though its response never arrived"
+      ],
+      "apps/web/src/server/services/review-days.test.ts": [
+        "names the stored attempt when a grade is replayed, even behind a later grade",
+        "ignores an older grade, leaving the newer one's schedule and one audit row",
+        "schedules a newer grade on top of the older one that beat it"
+      ]
+    }
   }
 }

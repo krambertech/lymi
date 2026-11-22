@@ -28,7 +28,8 @@ export function readwiseDeps(
   return {
     api: readwiseApi(env),
     secret: env.BETTER_AUTH_SECRET,
-    languages: createTextProvider(env, textCallReporter(analytics, "readwise_languages")),
+    languages: (consent) =>
+      createTextProvider(env, consent, textCallReporter(analytics, "readwise_languages")),
     enrichment: enrichmentQueue(env),
   };
 }

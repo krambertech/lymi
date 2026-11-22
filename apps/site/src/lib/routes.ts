@@ -72,7 +72,7 @@ export type Locale = (typeof locales)[number];
 const apiReferencePaths = API_RESOURCES.map((r) => `/docs/api/${r.slug}`);
 
 /** Terms, support and developer documentation stay in English on purpose. */
-export const englishOnlyPaths: readonly string[] = [
+const englishOnlyPages = [
   "/terms",
   "/support",
   "/docs",
@@ -103,8 +103,10 @@ export const englishOnlyPaths: readonly string[] = [
   "/docs/authentication",
   "/docs/api",
   "/docs/recipes",
-  ...apiReferencePaths,
-];
+] as const;
+export type EnglishOnlyPath = (typeof englishOnlyPages)[number];
+
+export const englishOnlyPaths: readonly string[] = [...englishOnlyPages, ...apiReferencePaths];
 
 /** The locales a page exists in: a language's page is missing where `offersLanguage` says no. */
 export function pageLocales(page: LocalizedPage): Locale[] {

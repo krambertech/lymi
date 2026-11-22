@@ -21,6 +21,9 @@ Async work that something newer can replace checks that it still owns the state 
 ## Say when a write fails
 
 A mutation that fails shows the app's standard sentence in a toast, from `failedWriteCache` in `packages/client/src/failed-writes.ts`, which both apps' `QueryClient` use. One with its own message opts out with an `onError`, or declares `meta`: `{ failure: "inline" }` when its component renders `error` or `isError`, `{ failure: "caller" }` when the code awaiting `mutateAsync` always says it, and `{ failure: "silent", because }` for a write the learner did not ask for. An inline failure still gets the toast once its component has gone or `reset()` has run, so a sheet resets its mutation as it closes. `lymi/failed-write-said` checks the declaration against the code in the same file. On the web, mutations run with `networkMode: "always"`: a write that works offline queues itself, and one that cannot says so rather than waiting.
+## Play sound through one owner
+
+Audio plays through `useClip()`: `apps/site/src/lib/use-clip.ts` on the site, `apps/web/src/client/lib/use-clip.ts` in the web client. It plays one clip at a time, stops the clip and its frame loop when the component leaves, and starts none after that. `lymi/clip-owner` refuses an audio element made anywhere else. The Estonian lessons keep `lib/learn/player.ts`, because iOS lets a sequence of clips play only on one element that a tap has started.
 
 ## Localize whole sentences
 
@@ -29,6 +32,8 @@ English is the source message: `<Trans>` in JSX, `t` from `useLingui()` for attr
 Localize each complete sentence. Never build one from concatenated fragments or a ternary on `=== 1`, because Ukrainian and Russian need their own word order and three plural forms.
 
 Format dates and numbers with `i18n.date()`, `i18n.number()` or `Intl` with `i18n.locale`, so they follow the interface language. Run `pnpm i18n:extract` after changing a message.
+
+A link on the site keeps the reader's locale and edition. Build it with `localizedPath`, or with `addUrl` for a deck to add, whose edition argument is required; `productUrl` refuses an `/add/` path, and a link that stays in English takes an `EnglishOnlyPath`.
 
 ## Edit the source of a generated file
 

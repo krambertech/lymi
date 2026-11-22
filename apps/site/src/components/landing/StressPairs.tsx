@@ -4,6 +4,7 @@ import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { useClip } from "../../lib/use-clip";
 import { Picker } from "./Picker";
 import { EASE, useStill } from "./playback";
 
@@ -31,7 +32,7 @@ export function StressPairs({ pairs, lang }: Props) {
   const [pairAt, setPairAt] = useState(0);
   const [formAt, setFormAt] = useState(0);
   const heldUntil = useRef(0);
-  const clip = useRef<HTMLAudioElement | null>(null);
+  const clip = useClip();
   const pair = pairs[pairAt] ?? pairs[0];
   const form = pair?.forms[formAt] ?? pair?.forms[0];
 
@@ -54,9 +55,8 @@ export function StressPairs({ pairs, lang }: Props) {
   const play = (at: number) => {
     heldUntil.current = Date.now() + HOLD_MS;
     setFormAt(at);
-    clip.current?.pause();
-    clip.current = new Audio(pair.forms[at]?.audio);
-    void clip.current.play().catch(() => {});
+    const said = pair.forms[at];
+    if (said) clip.play(said.marked, said.audio);
   };
 
   return (

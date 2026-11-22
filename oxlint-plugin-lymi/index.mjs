@@ -1,4 +1,5 @@
 import { definePlugin } from "@oxlint/plugins";
+import clipOwner from "./rules/clip-owner.mjs";
 import failedWriteSaid from "./rules/failed-write-said.mjs";
 import fieldError from "./rules/field-error.mjs";
 import formHeader from "./rules/form-header.mjs";
@@ -20,6 +21,7 @@ export default definePlugin({
   meta: { name: "lymi" },
   rules: {
     "failed-write-said": failedWriteSaid,
+    "clip-owner": clipOwner,
     "field-error": fieldError,
     "form-header": formHeader,
     "isolate-learner-text": isolateLearnerText,

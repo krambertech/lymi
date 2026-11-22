@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 import { pageI18n } from "../lib/i18n";
 
 interface Props {
-  locale?: string | undefined;
+  locale: string | undefined;
   children: ReactNode;
 }
 

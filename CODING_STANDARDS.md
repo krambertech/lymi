@@ -26,6 +26,8 @@ Localize each complete sentence. Never build one from concatenated fragments or 
 
 Format dates and numbers with `i18n.date()`, `i18n.number()` or `Intl` with `i18n.locale`, so they follow the interface language. Run `pnpm i18n:extract` after changing a message.
 
+A link on the site keeps the reader's locale and edition. Build it with `localizedPath`, or with `addUrl` for a deck to add, whose edition argument is required; `productUrl` refuses an `/add/` path, and a link that stays in English takes an `EnglishOnlyPath`.
+
 ## Edit the source of a generated file
 
 Edit a generated file's source and run its generator; [README.md](README.md#generated-files) names each generator. Applied migrations are immutable: change the schema and run `pnpm db:generate` for a new one.

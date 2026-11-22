@@ -103,7 +103,7 @@
     "guards": {
       "MarksBeforeSend": {
         "breaks": "TakenBackGradesDoNot",
-        "fixedIn": 0
+        "fixedIn": 1307
       },
       "ReplaysUnanswered": {
         "breaks": "TakenBackGradesDoNot",
@@ -115,7 +115,7 @@
       },
       "SeesLateUndo": {
         "breaks": "TakenBackGradesDoNot",
-        "fixedIn": 0
+        "fixedIn": 1307
       },
       "LandsOverRead": {
         "breaks": "ScheduleHoldsTheCounted",

@@ -40,6 +40,8 @@ Edit a generated file's source and run its generator; [README.md](README.md#gene
 
 D1's `lower()` folds ASCII only. To match text case-insensitively, compare against the stored folded column (`termKey()` writes `normalized_term` and `tagKey()` writes `normalized_name`, both in `packages/core/src/terms.ts`), or fold in JavaScript with the same function and bind the result.
 
+D1 refuses more than 100 bound parameters in one statement. `inArray` and `notInArray` from `@lymi/core/db` bind a list of more than five values as one JSON parameter, and lint refuses Drizzle's own; a multi-row insert still binds every value.
+
 Workers refuses `redirect: "error"` at runtime, though Node tests pass; reject a redirect with `redirect: "manual"` and a `Location` check.
 
 ## Write no comments

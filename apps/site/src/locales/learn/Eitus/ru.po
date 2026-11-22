@@ -1,0 +1,298 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0/> at the start turns a sentence into a yes-or-no question. Lesson {questions} covers kas and the question words."
+msgstr "<0/> в начале превращает предложение в вопрос, на который отвечают «да» или «нет». О kas и вопросительных словах рассказывает урок {questions}."
+
+msgid "<0/> on its own is no, and <1/> is yes. A fuller answer repeats the verb with ei: asked <2/>, say <3/>. The no has no ending, so the same answer fits whoever is asked."
+msgstr "<0/> само по себе значит «нет», а <1/> — «да». Более полный ответ повторяет глагол с ei: на <2/> отвечай <3/>. В отрицании нет окончания, поэтому тот же ответ подходит, кого бы ни спросили."
+
+msgid "<0/>, to be, works the same way. <1/> becomes <2/>, and <3/> is the same for everyone."
+msgstr "<0/>, «быть», устроен так же. <1/> становится <2/>, и <3/> одинаково для всех."
+
+msgid "<0>Ei ole</0> in one word"
+msgstr "<0>Ei ole</0> одним словом"
+
+msgid "<0>Ei</0> before the verb, and the ending is gone: <1>ei {stem}</1>."
+msgstr "<0>Ei</0> перед глаголом, а окончание пропало: <1>ei {stem}</1>."
+
+msgid "<0>Ei</0>, and the verb without its ending."
+msgstr "<0>Ei</0> и глагол без окончания."
+
+msgid "<0>Olen</0> for I, <1>oled</1> for you, <2>on</2> for he or she and for they."
+msgstr "<0>Olen</0> для «я», <1>oled</1> для «ты», <2>on</2> для «он или она» и для «они»."
+
+msgid "<0>Pole</0> means the same as <1>ei ole</1>. You’ll hear both."
+msgstr "<0>Pole</0> значит то же, что <1>ei ole</1>. Услышишь оба."
+
+msgid "2 quizzes"
+msgstr "2 теста"
+
+msgid "8 minutes"
+msgstr "8 минут"
+
+msgid "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
+msgstr "После <0>ei</0> идёт форма с ma без -n: <1>loen</1>, <2>ei loe</2>."
+
+msgid "All of them. <0>Ei</0>, and the ending goes."
+msgstr "Все. <0>Ei</0>, и окончание уходит."
+
+msgid "All of them. <0>Ei</0>, then the verb from the question."
+msgstr "Все. <0>Ei</0>, а за ним глагол из вопроса."
+
+msgid "am not, is not, are not"
+msgstr "не быть: я не, он не, они не"
+
+msgid "Answering no"
+msgstr "Как ответить «нет»"
+
+msgid "Are they drinking?"
+msgstr "Они пьют?"
+
+msgid "Are you all eating?"
+msgstr "Вы все едите?"
+
+msgid "Are you all waiting?"
+msgstr "Вы все ждёте?"
+
+msgid "Are you reading?"
+msgstr "Ты читаешь?"
+
+msgid "Are you tired?"
+msgstr "Ты устал (устала)?"
+
+msgid "Do you study?"
+msgstr "Ты учишься?"
+
+msgid "Do you work?"
+msgstr "Ты работаешь?"
+
+msgid "Does he or she speak Estonian?"
+msgstr "Он или она говорит по-эстонски?"
+
+msgid "don’t drink, doesn’t drink"
+msgstr "не пью, не пьёт и т. д."
+
+msgid "don’t eat, doesn’t eat"
+msgstr "не ем, не ест и т. д."
+
+msgid "don’t read, doesn’t read"
+msgstr "не читаю, не читает и т. д."
+
+msgid "don’t speak, doesn’t speak"
+msgstr "не говорю, не говорит и т. д."
+
+msgid "don’t work, doesn’t work"
+msgstr "не работаю, не работает и т. д."
+
+msgid "Each person has its own: -n, -d, -b, -me, -te, -vad."
+msgstr "У каждого лица своё: -n, -d, -b, -me, -te, -vad."
+
+msgid "Ei before the verb"
+msgstr "Ei перед глаголом"
+
+msgid "Ei ole and pole"
+msgstr "Ei ole и pole"
+
+msgid "Ei ole in one word."
+msgstr "Ei ole одним словом."
+
+msgid "Every form of <0>olema</0> becomes <1>ei ole</1>."
+msgstr "Любая форма <0>olema</0> становится <1>ei ole</1>."
+
+msgid "Flip the six lines above once more, then come back."
+msgstr "Ещё раз переключи шесть строк выше и возвращайся."
+
+msgid "From lugema, to read."
+msgstr "От lugema, «читать»."
+
+msgid "From rääkima, to speak."
+msgstr "От rääkima, «говорить»."
+
+msgid "Hear a sentence, then pick how to say its no."
+msgstr "Послушай предложение и выбери, как сказать его с отрицанием."
+
+msgid "Hear the question, then pick the short answer that says no."
+msgstr "Послушай вопрос и выбери короткий ответ «нет»."
+
+msgid "Hear the two questions above once more, then try again."
+msgstr "Ещё раз послушай два вопроса выше и попробуй снова."
+
+msgid "I don’t know"
+msgstr "я не знаю"
+
+msgid "I don’t know."
+msgstr "Я не знаю."
+
+msgid "I don’t read"
+msgstr "я не читаю"
+
+msgid "I don’t speak Estonian"
+msgstr "я не говорю по-эстонски"
+
+msgid "I read"
+msgstr "я читаю"
+
+msgid "I speak"
+msgstr "я говорю"
+
+msgid "I’m not tired"
+msgstr "я не устал (не устала)"
+
+msgid "I’m tired"
+msgstr "я устал (устала)"
+
+msgid "In some verbs the stem changes: <0/>, but <1/>. Start from the ma form, not the dictionary form, and the no follows: <2/>."
+msgstr "У некоторых глаголов основа меняется: <0/>, но <1/>. Бери форму с ma, а не словарную форму на -ma, и отрицание получится само: <2/>."
+
+msgid "In the present tense, put <0>ei</0> before the verb and drop its ending. It’s the same for every person, so no is easier than yes."
+msgstr "В настоящем времени поставь <0>ei</0> перед глаголом и убери окончание. Для всех лиц это одинаково, так что сказать «нет» проще, чем «да»."
+
+msgid "Is he or she at home?"
+msgstr "Он или она дома?"
+
+msgid "Its ma form is loen."
+msgstr "Форма с ma: loen."
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Make it no"
+msgstr "Из «да» в «нет»"
+
+msgid "Nearly. Listen for the verb in the question."
+msgstr "Почти. Вслушивайся в глагол в вопросе."
+
+msgid "Nearly. Watch for endings that stay after <0>ei</0>."
+msgstr "Почти. Следи, чтобы после <0>ei</0> не оставалось окончания."
+
+msgid "No, he or she isn’t."
+msgstr "Нет, его или её нет."
+
+msgid "No, I’m not reading."
+msgstr "Нет, я не читаю."
+
+msgid "No, I’m not."
+msgstr "Нет, не читаю."
+
+msgid "No."
+msgstr "Нет."
+
+msgid "not; no"
+msgstr "не; нет"
+
+msgid "Olema gives <0>ei ole</0>, or in one word, <1>pole</1>."
+msgstr "У olema будет <0>ei ole</0>, или одним словом <1>pole</1>."
+
+msgid "One form for all six"
+msgstr "Одна форма на все шесть"
+
+msgid "One form for everyone"
+msgstr "Одна форма для всех"
+
+msgid "One sentence to keep from today: <0/>."
+msgstr "Предложение, которое стоит запомнить уже сегодня: <0/>."
+
+#. placeholder {0}: bare(no)
+#. placeholder {0}: bare(yes)
+msgid "Play {0}"
+msgstr "Воспроизвести {0}"
+
+msgid "Play {ask}"
+msgstr "Воспроизвести {ask}"
+
+msgid "Play {said}"
+msgstr "Воспроизвести {said}"
+
+msgid "Put <0>ei</0> before the verb: <1>ma ei loe</1>, I don’t read."
+msgstr "Ставь <0>ei</0> перед глаголом: <1>ma ei loe</1>, я не читаю."
+
+msgid "Say no"
+msgstr "Ответь «нет»"
+
+msgid "Six endings"
+msgstr "Шесть окончаний"
+
+msgid "Switch between <0/> and <1/> to turn all six from yes to no. Tap a line to hear it."
+msgstr "Переключи <0/> на <1/>, и все шесть предложений станут отрицательными. Нажми на строку, чтобы послушать."
+
+msgid "The form says who"
+msgstr "Форма говорит, кто"
+
+msgid "The no is the same for every person: <0>ma ei loe</0>, <1>nad ei loe</1>."
+msgstr "Отрицание одинаково для всех лиц: <0>ma ei loe</0>, <1>nad ei loe</1>."
+
+msgid "The no of olema, to be."
+msgstr "Отрицание olema, «быть»."
+
+msgid "The same for every person."
+msgstr "Одинаково для всех лиц."
+
+msgid "The verb without its ending"
+msgstr "Глагол без окончания"
+
+msgid "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the question: <2>Kas sa loed? Ei loe.</2>"
+msgstr "Чтобы ответить «нет», скажи <0>ei</0> или <1>ei</1> с глаголом из вопроса: <2>Kas sa loed? Ei loe.</2>"
+
+msgid "to be"
+msgstr "быть"
+
+msgid "to do, to make"
+msgstr "делать"
+
+msgid "to drink"
+msgstr "пить"
+
+msgid "to eat"
+msgstr "есть"
+
+msgid "To find the form that follows ei, take the ma form from lesson {present} and drop the -n. <0/> becomes <1/>, and <2/> becomes <3/>. It works for every verb below. Tap either side to hear it with ma."
+msgstr "Чтобы найти форму после ei, возьми форму с ma из урока {present} и убери -n. <0/> становится <1/>, а <2/> — <3/>. Так со всеми глаголами ниже. Нажми на любую половину, чтобы услышать её с ma."
+
+msgid "to learn, to study"
+msgstr "учить, учиться"
+
+msgid "to live"
+msgstr "жить"
+
+msgid "to love"
+msgstr "любить"
+
+msgid "to read"
+msgstr "читать"
+
+msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
+msgstr "Чтобы сказать «не», поставь <0/> перед глаголом. <1/> — «я читаю», а <2/> — «я не читаю». Глагол теряет окончание, а <3/> одно и то же, о ком бы ни шла речь."
+
+msgid "to speak"
+msgstr "говорить"
+
+msgid "to wait"
+msgstr "ждать"
+
+msgid "to work"
+msgstr "работать"
+
+msgid "turns a sentence into a yes-or-no question"
+msgstr "делает из предложения вопрос «да или нет»"
+
+msgid "Verb"
+msgstr "Глагол"
+
+msgid "yes"
+msgstr "да"
+
+msgid "Yes has six endings to learn, and no has none. That makes the no the easy half."
+msgstr "У «да» шесть окончаний, которые надо выучить, а у «нет» — ни одного. Так что отрицание — лёгкая половина."
+
+msgid "Yes or no"
+msgstr "Да или нет"
+
+msgid "You’ll often hear it as one word, <0/>, which means exactly <1/>. Try all three."
+msgstr "Часто его говорят одним словом, <0/>, и это ровно то же, что <1/>. Попробуй все три."

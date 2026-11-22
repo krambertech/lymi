@@ -19,7 +19,7 @@ git rebase origin/main
 git push --force-with-lease
 ```
 
-Commit or stash local changes first, and rebase rather than merge `main` into the branch. `--force-with-lease` protects remote work that appeared after the last fetch. An Estonian lesson branch merges `main` in instead, as [the estonian-lesson skill](../.agents/skills/estonian-lesson/references/checklists.md#merge-conflicts) says: its catalogue, clip and `.po` conflicts would recur at every commit of a rebase, and the squash merge keeps `main` linear either way.
+Commit or stash local changes first, and rebase rather than merge `main` into the branch. `--force-with-lease` protects remote work that appeared after the last fetch. An Estonian lesson branch merges `main` in instead, as [the estonian-lesson skill](../.agents/skills/estonian-lesson/references/checklists.md#merge-conflicts) says: its catalogue and clip conflicts would recur at every commit of a rebase, and the squash merge keeps `main` linear either way.
 
 ## Name commits and pull requests
 

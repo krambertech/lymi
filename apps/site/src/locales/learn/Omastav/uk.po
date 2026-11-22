@@ -1,0 +1,601 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0/> is I, the one who does something: <1/> <2/> is my, for what you own: <3/>"
+msgstr "<0/> — це «я», той, хто щось робить: <1/> <2/> — це «мій», про те, що тобі належить: <3/>"
+
+#. placeholder {0}: capital(ownedBook(whose))
+#. placeholder {1}: i18n._(PERSON[who].book)
+msgid "<0>{0}</0> is {1}."
+msgstr "<0>{0}</0> — це «{1}»."
+
+#. placeholder {0}: capital(phrase.whose)
+#. placeholder {1}: phrase.where
+msgid "<0>{0}</0> is <1>{1}</1> without its last letter."
+msgstr "<0>{0}</0> — це <1>{1}</1> без останньої літери."
+
+msgid "<0>Kool</0> gains an i: <1>kooli</1>. It’s the vowel you heard in <2>koolis</2>."
+msgstr "У <0>kool</0> на кінці з’являється i: <1>kooli</1>. Це та сама голосна, що в <2>koolis</2>."
+
+msgid "<0>Mina</0> is I. To say my, use <1>minu</1>: <2>minu raamat</2>."
+msgstr "<0>Mina</0> — це «я». «Моя» буде <1>minu</1>: <2>minu raamat</2>."
+
+msgid "<0>Mina</0>, <1>sina</1> and <2>nemad</2> change: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> and <6>teie</6> stay as they are."
+msgstr "<0>Mina</0>, <1>sina</1> і <2>nemad</2> змінюються: <3>minu, sinu, nende</3>. <4>Tema</4>, <5>meie</5> і <6>teie</6> лишаються такими самими."
+
+msgid "<0>Minu</0> and <1>sinu</1> often shorten to <2/> and <3/>. <4>Tema</4>, <5>meie</5> and <6>teie</6> shorten to <7>ta, me</7> and <8>te</8>, the same short forms you met for he or she, we and you. Lesson {questions} used <9>su</9>: <10/> means “What’s your name?”"
+msgstr "<0>Minu</0> і <1>sinu</1> часто скорочуються до <2/> і <3/>. <4>Tema</4>, <5>meie</5> і <6>teie</6> скорочуються до <7>ta, me</7> і <8>te</8> — тих самих коротких форм, що й для «він чи вона», «ми» і «ви». В уроці {questions} уже було <9>su</9>: <10/> — «Як тебе звати?»"
+
+msgid "<0>Nende</0> is their. For you and Martin, say <1>meie</1>, our."
+msgstr "<0>Nende</0> — це «їхній». Про себе і Мартіна кажи <1>meie</1>, «наш»."
+
+msgid "<0>Pood</0> loses its d, and the second o turns to e: <1>poe</1>. <2>Turg</2> and <3>laud</3> drop their last letter and gain a vowel: <4>turu, laua</4>."
+msgstr "<0>Pood</0> втрачає d, а друге o стає e: <1>poe</1>. <2>Turg</2> і <3>laud</3> втрачають останню літеру, і в них з’являється голосна: <4>turu, laua</4>."
+
+msgid "<0>Sinu</0> is your: that says the coffee is Mari’s."
+msgstr "<0>Sinu</0> — це «твій»: так ти кажеш, що це кава Марі."
+
+msgid "<0>Tartu</0> and <1>haigla</1> stay as they are, and <2>-s</2> or <3>-l</3> goes straight on."
+msgstr "<0>Tartu</0> і <1>haigla</1> не змінюються, і <2>-s</2> чи <3>-l</3> додається просто в кінець."
+
+msgid "<0>Teie</0> is your. For you and Martin, say <1>meie</1>, our."
+msgstr "<0>Teie</0> — це «ваш». Про себе і Мартіна кажи <1>meie</1>, «наш»."
+
+msgid "12 minutes"
+msgstr "12 хвилин"
+
+msgid "2 quizzes, a text and a conversation"
+msgstr "2 тести, текст і розмова"
+
+msgid "A change inside"
+msgstr "Зміна всередині слова"
+
+msgid "A name ending in a consonant gains a vowel, often an i: <0/>, <1/>. A country goes first in the same way, and <2>Eesti</2> stays as it is: <3/>"
+msgstr "В імені на приголосну з’являється голосна, часто i: <0/>, <1/>. Назва країни теж стоїть першою, а <2>Eesti</2> не змінюється: <3/>"
+
+msgid "A name ending in a consonant gains a vowel."
+msgstr "В імені на приголосну з’являється голосна."
+
+msgid "A name ending in a vowel usually stays as it is: <0>Mari raamat</0>. A name ending in a consonant gains a vowel: <1>Jaani kass</1>."
+msgstr "Ім’я на голосну зазвичай не змінюється: <0>Mari raamat</0>. В імені на приголосну з’являється голосна: <1>Jaani kass</1>."
+
+msgid "A name or a noun owns things the same way: it goes first, in the genitive. <0/> is Mari’s book. Estonian adds no ’s, and <1>Mari</1> stays as it is, as most names ending in a vowel do."
+msgstr "З іменами й іменниками так само: власник стоїть першим, у родовому відмінку. <0/> — це книга Марі, дослівно «Марі книга». <1>Mari</1> не змінюється, як і більшість імен на голосну."
+
+msgid "A noun’s genitive is its form before <0>-s</0> or <1>-l</1>: <2>kooli</2> in <3>koolis</3>, <4>poe</4> in <5>poes</5>. A dictionary lists it second: <6>pood, poe</6>."
+msgstr "Родовий відмінок іменника — це його форма перед <0>-s</0> чи <1>-l</1>: <2>kooli</2> у <3>koolis</3>, <4>poe</4> у <5>poes</5>. У словнику вона йде другою: <6>pood, poe</6>."
+
+msgid "A vowel at the end"
+msgstr "Голосна в кінці"
+
+msgid "All of them. You heard whose in every sentence."
+msgstr "Усі. Ти чуєш «чий» у кожному реченні."
+
+msgid "All of them. You made the genitive every time."
+msgstr "Усі. Родовий відмінок — у кожному раунді."
+
+msgid "Answers"
+msgstr "Варіанти відповіді"
+
+msgid "Ask whose with <0>kelle</0>: <1>Kelle raamat see on?</1> means “Whose book is this?”"
+msgstr "Питай «чий?» словом <0>kelle</0>: <1>Kelle raamat see on?</1> — «Чия це книга?»"
+
+msgid "at home"
+msgstr "вдома"
+
+msgid "at school, in a school"
+msgstr "у школі"
+
+msgid "at the market"
+msgstr "на ринку"
+
+msgid "at work"
+msgstr "на роботі"
+
+msgid "Before a noun, <0>Martin</0> takes its genitive: <1>Martini kohv</1>."
+msgstr "Перед іменником <0>Martin</0> стоїть у родовому: <1>Martini kohv</1>."
+
+msgid "book"
+msgstr "книжка"
+
+msgid "brother"
+msgstr "брат"
+
+msgid "café"
+msgstr "кав’ярня"
+
+msgid "capital city"
+msgstr "столиця"
+
+msgid "cat"
+msgstr "кіт"
+
+msgid "Changes inside"
+msgstr "Змінюється всередині"
+
+msgid "Choosing the genitive"
+msgstr "Вибір родового відмінка"
+
+msgid "door"
+msgstr "двері"
+
+msgid "Each round gives a word and the noun it owns. Type the word’s genitive, the form that goes in front, and hear the phrase. If you know the word with <0>-s</0> or <1>-l</1>, take off its last letter."
+msgstr "У кожному раунді є слово й іменник, який йому належить. Надрукуй родовий відмінок слова, форму, що стоїть попереду, і послухай словосполучення. Якщо знаєш це слово з <0>-s</0> чи <1>-l</1>, відкинь останню літеру."
+
+msgid "Estonia; Estonia’s"
+msgstr "Естонія; Естонії"
+
+msgid "Every pronoun has a genitive, and it goes before the thing it owns. Tap a form to hear it."
+msgstr "Родовий є в кожного займенника, і він стоїть перед тим, що йому належить. Торкнись форми, щоб її почути."
+
+msgid "Fill the gaps"
+msgstr "Заповни пропуски"
+
+msgid "Gains a vowel"
+msgstr "З’являється голосна"
+
+msgid "Genitive"
+msgstr "Родовий"
+
+msgid "Go through the three kinds of word above once more, then try again."
+msgstr "Ще раз переглянь три групи слів вище, а потім спробуй знову."
+
+msgid "he or she"
+msgstr "він чи вона"
+
+msgid "he or she; his or her"
+msgstr "він чи вона; його чи її"
+
+msgid "Hear a sentence and pick whose it’s about. A short <0>mu</0> is <1>minu</1>, and <2>su</2> is <3>sinu</3>."
+msgstr "Послухай речення й вибери займенник, який у ньому звучить. Коротке <0>mu</0> — це <1>minu</1>, а <2>su</2> — це <3>sinu</3>."
+
+msgid "Hearing whose"
+msgstr "Чий? На слух"
+
+msgid "his or her"
+msgstr "його чи її"
+
+msgid "his or her book"
+msgstr "його чи її книга"
+
+msgid "His or her book is on the table."
+msgstr "Його чи її книга на столі."
+
+msgid "His or her brother works in a hospital."
+msgstr "Його чи її брат працює в лікарні."
+
+msgid "home; the home’s"
+msgstr "дім; родовий — дому"
+
+msgid "hospital; the hospital’s"
+msgstr "лікарня; родовий — лікарні"
+
+msgid "How the genitive is made"
+msgstr "Як утворюється родовий"
+
+msgid "I"
+msgstr "я"
+
+msgid "I live in Tartu."
+msgstr "Я живу в Тарту."
+
+msgid "in a café"
+msgstr "у кав’ярні"
+
+msgid "in a hospital"
+msgstr "у лікарні"
+
+msgid "in an office"
+msgstr "в офісі"
+
+msgid "in Estonia"
+msgstr "в Естонії"
+
+msgid "In lesson {places} you learned <0/>, at school, and <1/>, in Tallinn. Take off the <2>-s</2> and you have the genitive: <3/>, <4/>. The vowel that appeared before the <5>-s</5> belongs to the genitive."
+msgstr "В уроці {places} були <0/>, у школі, і <1/>, у Таллінні. Відкинь <2>-s</2> — і маєш родовий відмінок: <3/>, <4/>. Голосна перед <5>-s</5> — частина родового."
+
+msgid "In lesson {questions} you heard <0/> The word <1/>, my, is <2/> in the form that says whose. That form is the genitive."
+msgstr "В уроці {questions} було речення <0/> Слово <1/>, «мій», — це <2/> у родовому відмінку, формі, що відповідає на «чий?». Українське «мій» — окреме слово, а естонська бере сам займенник у родовому, як «його» — родовий від «він»."
+
+msgid "in Tallinn"
+msgstr "у Таллінні"
+
+msgid "in Tartu"
+msgstr "у Тарту"
+
+msgid "in ten minutes"
+msgstr "через десять хвилин"
+
+msgid "in the book"
+msgstr "у книзі"
+
+msgid "in the river"
+msgstr "у річці"
+
+msgid "in the room"
+msgstr "у кімнаті"
+
+msgid "in the shop"
+msgstr "у магазині"
+
+msgid "Is this your café? To more than one, or polite."
+msgstr "Це ваша кав’ярня? До кількох людей або на «ви»."
+
+msgid "Is this your cat?"
+msgstr "Це твій кіт?"
+
+msgid "Jaan is Kati’s brother, so my: <0>minu</0>."
+msgstr "Яан — брат Каті, тож «мій»: <0>minu</0>."
+
+msgid "Jaan, a man’s name"
+msgstr "Яан, чоловіче ім’я"
+
+msgid "Jaan’s"
+msgstr "Яана, Яанів"
+
+msgid "Kati asks for your name, so your: <0>sinu</0>."
+msgstr "Каті питає, як тебе звати, тож «твоє»: <0>sinu</0>."
+
+msgid "Kati is the one who lives in Tartu, so I: <0>mina</0>."
+msgstr "Каті — та, хто живе в Тарту, тож «я»: <0>mina</0>."
+
+msgid "Kati writes about her family. For each gap, pick who or whose."
+msgstr "Каті пише про свою родину. У кожному пропуску вибери: «хто» чи «чий»."
+
+msgid "Listen first."
+msgstr "Спершу прослухай."
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari is at your home and asks who owns what. Answer with the genitive."
+msgstr "Марі в тебе вдома й питає, що кому належить. Відповідай родовим відмінком."
+
+msgid "Mari, a woman’s name"
+msgstr "Марі, жіноче ім’я"
+
+msgid "Mari’s book"
+msgstr "книга Марі"
+
+msgid "market"
+msgstr "ринок"
+
+msgid "Miisu, a name for a cat"
+msgstr "Мійсу, кличка кота"
+
+msgid "my"
+msgstr "мій"
+
+msgid "my book"
+msgstr "моя книга"
+
+msgid "My name is Kati."
+msgstr "Мене звати Каті."
+
+msgctxt "genitive lesson"
+msgid "My name is Mari."
+msgstr "Мене звати Марі."
+
+msgid "My, your and their"
+msgstr "Мій, твій, їхній"
+
+msgid "name"
+msgstr "ім’я"
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Майже. Переслухай ті, де були помилки."
+
+msgid "No change"
+msgstr "Без змін"
+
+msgid "Now Kati asks where you live, and you do the living, so you: <0>sina</0>."
+msgstr "Тепер Каті питає, де живеш саме ти, тож «ти»: <0>sina</0>."
+
+msgid "Numbers have a genitive too. In lesson {time}, <0/> is in ten minutes: <1>kümne</1> is the genitive of <2>kümme</2>, and <3>minuti</3> of <4>minut</4>."
+msgstr "Родовий є й у числівників. В уроці {time} <0/> — це «через десять хвилин»: <1>kümne</1> — родовий від <2>kümme</2>, а <3>minuti</3> — від <4>minut</4>."
+
+msgid "office"
+msgstr "офіс"
+
+msgid "on the table"
+msgstr "на столі"
+
+msgid "our"
+msgstr "наш"
+
+msgid "our book"
+msgstr "наша книга"
+
+msgid "Our mother is a teacher."
+msgstr "Наша мама вчителька."
+
+msgid "Our school is in Tartu."
+msgstr "Наша школа в Тарту."
+
+msgid "Pea, head, and linn, town."
+msgstr "Pea — голова, linn — місто."
+
+msgid "Pick a kind of word and tap any form to hear it."
+msgstr "Вибери групу слів і торкнись будь-якої форми, щоб її почути."
+
+msgid "picture"
+msgstr "картинка, фото"
+
+msgid "river"
+msgstr "річка"
+
+msgid "room"
+msgstr "кімната"
+
+msgid "Saying whose at home"
+msgstr "Чиє це: розмова вдома"
+
+msgid "school"
+msgstr "школа"
+
+msgid "shop"
+msgstr "магазин"
+
+msgid "So <0/> is the school door, and <1/> is at school. The endings <2>-s</2> and <3>-l</3> go on the genitive."
+msgstr "Тож <0/> — це двері школи, а <1/> — у школі. Закінчення <2>-s</2> і <3>-l</3> додаються до родового."
+
+msgid "Some words change inside before an ending: <0/>, a shop, gives <1/>, in the shop. That changed form is the genitive too: <2/>, the shop door. A dictionary lists the genitive second: <3>pood, poe</3>. Lesson {stems} shows how these changes work."
+msgstr "Деякі слова перед закінченням змінюються всередині: <0/>, магазин, дає <1/>, у магазині. Ця змінена форма — теж родовий: <2/>, двері магазину. У словнику родовий іде другим: <3>pood, poe</3>. Як працюють такі зміни, показує урок {stems}."
+
+msgid "table"
+msgstr "стіл"
+
+msgid "Talk: whose is it?"
+msgstr "Розмова: чиє це?"
+
+msgid "Tallinn"
+msgstr "Таллінн"
+
+msgid "Tallinn’s, of Tallinn"
+msgstr "Таллінна"
+
+msgid "Tap a form"
+msgstr "Торкнися форми"
+
+msgid "Tap the Whose column above once more, then try again."
+msgstr "Ще раз пройдися стовпцем «Чий» вище, а потім спробуй знову."
+
+msgid "Tartu; Tartu’s, of Tartu"
+msgstr "Тарту"
+
+msgid "That says Liisu’s name is <0>Kass</0>, Cat."
+msgstr "Так виходить, що Лійсу звуть <0>Kass</0>, Кіт."
+
+msgid "the book’s, of the book"
+msgstr "книги"
+
+msgid "The café is Jaan’s, so <0>Jaan</0> takes the genitive: <1>Jaani</1>."
+msgstr "Кав’ярня належить Яанові, тож <0>Jaan</0> стоїть у родовому: <1>Jaani</1>."
+
+msgid "the café’s name"
+msgstr "назва кав’ярні"
+
+msgid "the café’s, of the café"
+msgstr "кав’ярні"
+
+msgid "The capital of Estonia is Tallinn."
+msgstr "Столиця Естонії — Таллінн."
+
+msgid "The cat owns the name, so <0>kass</0> takes its genitive: <1>kassi nimi</1>."
+msgstr "Ім’я належить котові, тож <0>kass</0> стоїть у родовому: <1>kassi nimi</1>."
+
+msgid "the cat’s"
+msgstr "кота"
+
+msgid "The genitive is the form before -s"
+msgstr "Родовий — це форма перед -s"
+
+msgid "The genitive of kass: kassi nimi, the cat’s name."
+msgstr "Родовий від kass: kassi nimi, ім’я кота."
+
+msgid "The genitive of kes, who."
+msgstr "Родовий від kes, «хто», — як «кого» від «хто»."
+
+msgid "The genitive of mina. Short: mu."
+msgstr "Родовий від mina. Коротко: mu."
+
+msgid "The genitive of nemad. It has no short form."
+msgstr "Родовий від nemad. Короткої форми немає."
+
+msgid "The genitive of sina. Short: su."
+msgstr "Родовий від sina. Коротко: su."
+
+msgid "The genitive says whose, and the owner goes first: <0>minu raamat</0>, my book; <1>Mari raamat</1>, Mari’s book."
+msgstr "Родовий відмінок каже, чиє це, і власник стоїть першим: <0>minu raamat</0>, моя книга; <1>Mari raamat</1>, книга Марі."
+
+msgid "the market café"
+msgstr "кав’ярня на ринку"
+
+msgid "the market’s, of the market"
+msgstr "ринку"
+
+msgid "The name is Kati’s own, so my: <0>minu</0>."
+msgstr "Ім’я належить Каті, тож «моє»: <0>minu</0>."
+
+msgid "The name is the cat’s, so <0>kass</0> takes the genitive: <1>kassi</1>."
+msgstr "Ім’я належить котові, тож <0>kass</0> стоїть у родовому: <1>kassi</1>."
+
+msgid "the office window"
+msgstr "вікно офісу"
+
+msgid "the office’s, of the office"
+msgstr "офісу"
+
+msgid "The owner comes first"
+msgstr "Власник стоїть першим"
+
+msgid "The owner goes first: <0>minu raamat</0>."
+msgstr "Власник стоїть першим: <0>minu raamat</0>."
+
+msgid "The pronouns: <0>minu, sinu, tema, meie, teie, nende</0>. Their short forms are <1>mu, su, ta, me</1> and <2>te</2>; <3>nende</3> has none."
+msgstr "Займенники: <0>minu, sinu, tema, meie, teie, nende</0>. Їхні короткі форми — <1>mu, su, ta, me</1> і <2>te</2>; у <3>nende</3> короткої немає."
+
+msgid "the river’s name"
+msgstr "назва річки"
+
+msgid "the river’s, of the river"
+msgstr "річки"
+
+msgid "the room’s window"
+msgstr "вікно кімнати"
+
+msgid "the room’s, of the room"
+msgstr "кімнати"
+
+msgid "the school door"
+msgstr "двері школи"
+
+msgid "the school’s, of the school"
+msgstr "школи"
+
+msgid "the shop door"
+msgstr "двері магазину"
+
+msgid "the shop’s, of the shop"
+msgstr "магазину"
+
+msgid "The short form of minu."
+msgstr "Коротка форма minu."
+
+msgid "The short form of sinu."
+msgstr "Коротка форма sinu."
+
+msgid "the table’s, of the table"
+msgstr "стола"
+
+msgid "the Tallinn market"
+msgstr "таллінський ринок"
+
+msgid "The word"
+msgstr "Слово"
+
+msgid "their"
+msgstr "їхній"
+
+msgid "their book"
+msgstr "їхня книга"
+
+msgid "Their office is in Tallinn."
+msgstr "Їхній офіс у Таллінні."
+
+msgid "they"
+msgstr "вони"
+
+msgid "This is Jaan’s cat."
+msgstr "Це кіт Яана."
+
+msgid "This is Mari’s book."
+msgstr "Це книга Марі."
+
+msgid "This is my book."
+msgstr "Це моя книга."
+
+msgid "This is their picture."
+msgstr "Це їхнє фото."
+
+msgid "This is your coffee."
+msgstr "Це твоя кава."
+
+msgid "To ask whose, say <0/>. It’s the genitive of <1/>, who, from lesson {questions}. Tap a line to hear it."
+msgstr "Щоб запитати «чий?», скажи <0/>. Це <1/>, «хто», з уроку {questions}, у родовому — як «кого» від «хто». Торкнись рядка, щоб його почути."
+
+msgid "To say whose something is, put the owner first, in the genitive: <0>minu raamat</0> is my book, and <1>Mari raamat</1> is Mari’s book."
+msgstr "Щоб сказати, чиє щось, постав власника першим, у родовому відмінку: <0>minu raamat</0> — моя книга, а <1>Mari raamat</1> — книга Марі."
+
+msgid "we"
+msgstr "ми"
+
+msgid "we; our"
+msgstr "ми; наш"
+
+msgid "What’s your name?"
+msgstr "Як тебе звати?"
+
+msgid "Which form goes first?"
+msgstr "Яка форма стоїть першою?"
+
+msgid "who"
+msgstr "хто"
+
+msgid "Who"
+msgstr "Хто"
+
+msgid "Who and whose"
+msgstr "Хто і чий"
+
+msgid "Who and whose are the same word."
+msgstr "«Хто» і «чий» тут одне слово."
+
+msgid "Who or whose?"
+msgstr "Хто чи чий?"
+
+msgid "whose"
+msgstr "чий"
+
+msgid "Whose"
+msgstr "Чий"
+
+msgid "Whose book is this?"
+msgstr "Чия це книга?"
+
+msgid "Whose cat is this?"
+msgstr "Чий це кіт?"
+
+msgid "Whose?"
+msgstr "Чий?"
+
+msgid "window"
+msgstr "вікно"
+
+msgid "With -s or -l"
+msgstr "З -s чи -l"
+
+msgid "work; of work"
+msgstr "робота; родовий — роботи"
+
+msgid "You and your brother Martin share a flat and a cat, Liisu. The book is yours, and the coffee is Martin’s. Mari speaks first; pick what you say back."
+msgstr "Ви з братом Мартіном живете в одній квартирі, і у вас спільна кішка Лійсу. Книга твоя, а кава Мартінова. Марі говорить першою; обирай, що відповісти."
+
+msgid "you, to more than one; polite you"
+msgstr "ви; ввічливе «Ви»"
+
+msgid "you, to more than one; polite you; your"
+msgstr "ви; ввічливе «Ви»; ваш"
+
+msgid "you, to one person"
+msgstr "ти"
+
+msgid "your book, to more than one or polite"
+msgstr "ваша книга, до кількох людей або на «ви»"
+
+msgid "your book, to one person"
+msgstr "твоя книга"
+
+msgid "Your cat is at home. To more than one, or polite."
+msgstr "Ваш кіт удома. До кількох людей або на «ви»."
+
+msgid "your, to more than one; polite your"
+msgstr "ваш, до кількох людей або на «ви»"
+
+msgid "your, to one"
+msgstr "твій"
+
+msgid "your, to one person"
+msgstr "твій"
+
+msgid "your, to several"
+msgstr "ваш"

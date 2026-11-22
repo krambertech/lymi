@@ -1,0 +1,344 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>-ne</0> becomes <1>-se</1>, then <2>-st</2>."
+msgstr "<0>-ne</0> becomes <1>-se</1>, then <2>-st</2>."
+
+msgid "<0>-ne</0> becomes <1>-st</1>."
+msgstr "<0>-ne</0> becomes <1>-st</1>."
+
+msgid "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
+msgstr "<0>-us</0> becomes <1>-use</1>, then <2>-ust</2>."
+
+msgid "<0>-us</0> takes <1>-t</1>."
+msgstr "<0>-us</0> takes <1>-t</1>."
+
+msgid "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
+msgstr "<0>Last</0> is the third form, so it comes after <1>lapse</1>."
+
+msgid "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
+msgstr "<0>Majas</0> means in the house: the second form with <1>-s</1>. The second form itself is <2>maja</2>."
+
+msgid "<0>Poe</0> is the second form. The third has the <1>d</1> back: <2>poodi</2>."
+msgstr "<0>Poe</0> is the second form. The third has the <1>d</1> back: <2>poodi</2>."
+
+msgid "<0>Sõnaveeb</0>, the free dictionary of the Institute of the Estonian Language, lists them under <1>Sõnavormid</1>, word forms. Search for a word and scroll to that table: its left column holds the three forms, top to bottom. The right column is the plural."
+msgstr "<0>Sõnaveeb</0>, the free dictionary of the Institute of the Estonian Language, lists them under <1>Sõnavormid</1>, word forms. Search for a word and scroll to that table: its left column holds the three forms, top to bottom. The right column is the plural."
+
+msgid "12 minutes"
+msgstr "12 minutes"
+
+msgid "2 quizzes and a conversation"
+msgstr "2 quizzes and a conversation"
+
+msgid "A dictionary gives a noun in three forms, always in the same order: <0>kool, kooli, kooli</0>."
+msgstr "A dictionary gives a noun in three forms, always in the same order: <0>kool, kooli, kooli</0>."
+
+msgid "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
+msgstr "A final vowel doesn’t promise matching forms, though. <0/>, car, ends in a vowel like <1/>, but its third form is <2/>. And <3/>, book, goes <4>raamatu, raamatut</4>. The dictionary settles it."
+
+msgid "A noun has three forms"
+msgstr "A noun has three forms"
+
+msgid "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its second form the same and adds <1>-d</1> for the third: <2>töö, töö, tööd</2>."
+msgstr "A one-syllable word that ends in a long vowel, such as <0/>, work, keeps its second form the same and adds <1>-d</1> for the third: <2>töö, töö, tööd</2>."
+
+msgid "A printed dictionary puts them on one line instead: <0>pood poe poodi</0>."
+msgstr "A printed dictionary puts them on one line instead: <0>pood poe poodi</0>."
+
+msgid "All six. You typed the third form right every time."
+msgstr "All six. You typed the third form right every time."
+
+msgid "All three forms are the same."
+msgstr "All three forms are the same."
+
+msgid "answer"
+msgstr "answer"
+
+msgid "at school, in a school"
+msgstr "at school, in a school"
+
+msgid "book"
+msgstr "book"
+
+msgid "car"
+msgstr "car"
+
+msgid "child"
+msgstr "child"
+
+msgid "door"
+msgstr "door"
+
+msgid "Each round shows a new word. Type its third form."
+msgstr "Each round shows a new word. Type its third form."
+
+msgid "Endings that tell you the third form"
+msgstr "Endings that tell you the third form"
+
+msgid "exercise"
+msgstr "exercise"
+
+msgid "Finding the forms in a dictionary"
+msgstr "Finding the forms in a dictionary"
+
+msgid "First"
+msgstr "First"
+
+msgid "First form"
+msgstr "First form"
+
+msgctxt "kodu: the place you live"
+msgid "home"
+msgstr "home"
+
+msgid "horse"
+msgstr "horse"
+
+msgid "house"
+msgstr "house"
+
+msgid "In <0>kool, kooli, kooli</0> the second and third forms are the same word. Many short words work this way, such as <1/>, town. In some words ending in a vowel all three match: <2/>, house, is <3>maja, maja, maja</3>."
+msgstr "In <0>kool, kooli, kooli</0> the second and third forms are the same word. Many short words work this way, such as <1/>, town. In some words ending in a vowel all three match: <2/>, house, is <3>maja, maja, maja</3>."
+
+msgid "In the second, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the third ends in <3>-st</3>."
+msgstr "In the second, <0>ee</0> shortens and <1>s</1> becomes <2>h</2>; the third ends in <3>-st</3>."
+
+msgid "Its second and third forms are the same."
+msgstr "Its second and third forms are the same."
+
+msgid "land, country"
+msgstr "land, country"
+
+msgid "Learn the vowel at the end of the third form along with the word: <0>poodi, lauda, turgu</0>."
+msgstr "Learn the vowel at the end of the third form along with the word: <0>poodi, lauda, turgu</0>."
+
+msgid "Lesson {stems} showed letters dropping or changing before an ending: <0/> becomes <1/>. That change is the second form. In these words the third form has the first form’s letters back: <2/>."
+msgstr "Lesson {stems} showed letters dropping or changing before an ending: <0/> becomes <1/>. That change is the second form. In these words the third form has the first form’s letters back: <2/>."
+
+msgid "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
+msgstr "Like <0>küsimus</0>, <1>vastus</1> has a second form in <2>-use</2>: <3>vastuse</3>."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them the first, second and third form."
+msgstr "Look up <0/>, school, and a dictionary gives you three words: <1>kool, kooli, kooli</1>. Every noun is listed this way, in the same order. Most of its other forms are built on one of the three. Estonian calls them <2/>, the main forms. This course calls them the first, second and third form."
+
+msgid "man"
+msgstr "man"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "market"
+msgstr "market"
+
+msgid "Match each word with its second and third forms. A wrong pair counts against you, so look for the letters that change."
+msgstr "Match each word with its second and third forms. A wrong pair counts against you, so look for the letters that change."
+
+msgid "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
+msgstr "Most words in <0>-ne</0> or <1>-us</1> end their third form in <2>-st</2>, and a one-syllable word ending in a long vowel adds <3>-d</3>: <4>naist, küsimust, tööd</4>."
+
+msgid "Nearly. Hear the ones you missed with all three forms."
+msgstr "Nearly. Hear the ones you missed with all three forms."
+
+msgid "On <0>Sõnaveeb</0>, the three forms are the left column under <1>Sõnavormid</1>."
+msgstr "On <0>Sõnaveeb</0>, the three forms are the left column under <1>Sõnavormid</1>."
+
+msgid "One syllable ending in a long vowel takes <0>-d</0>."
+msgstr "One syllable ending in a long vowel takes <0>-d</0>."
+
+msgid "One syllable ending in a long vowel: the second is the same, the third adds <0>-d</0>."
+msgstr "One syllable ending in a long vowel: the second is the same, the third adds <0>-d</0>."
+
+msgid "Other words don’t show their third form, so learn all three together: <0>pood, poe, poodi</0>."
+msgstr "Other words don’t show their third form, so learn all three together: <0>pood, poe, poodi</0>."
+
+msgid "person"
+msgstr "person"
+
+msgctxt "grammatical number"
+msgid "Plural: see lesson {plural}"
+msgstr "Plural: see lesson {plural}"
+
+msgid "Practice: the forms in class"
+msgstr "Practice: the forms in class"
+
+msgid "question"
+msgstr "question"
+
+msgid "Read the three endings above once more, then try again."
+msgstr "Read the three endings above once more, then try again."
+
+msgid "road; also tea"
+msgstr "road; also tea"
+
+msgid "room"
+msgstr "room"
+
+msgid "school"
+msgstr "school"
+
+msgid "Second"
+msgstr "Second"
+
+msgid "Second and third"
+msgstr "Second and third"
+
+msgid "shop"
+msgstr "shop"
+
+msgctxt "grammatical number"
+msgid "Singular"
+msgstr "Singular"
+
+msgid "Some short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
+msgstr "Some short words ending in <0>-s</0> also end their third form in <1>-st</1>, but each changes in its own way: <2>uks, ukse, ust</2>; <3>laps, lapse, last</3>; <4>mees, mehe, meest</4>. Learn all three forms of those."
+
+msgid "Some words give their third form away. Most words ending in <0>-ne</0> have a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
+msgstr "Some words give their third form away. Most words ending in <0>-ne</0> have a second form in <1>-se</1> and a third in <2>-st</2>: <3/>, <4/>, <5/>. Most words ending in <6>-us</6> do the same: <7/>, question, goes <8>küsimuse, küsimust</8>."
+
+msgid "table"
+msgstr "table"
+
+msgid "Talk: in class"
+msgstr "Talk: in class"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap a word"
+msgstr "Tap a word"
+
+msgid "Ten nouns in their three forms"
+msgstr "Ten nouns in their three forms"
+
+msgid "The first form: the word itself."
+msgstr "The first form: the word itself."
+
+msgid "The first is the word on its own. The second is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the second form means by itself, and lesson {partitive} what the third is for."
+msgstr "The first is the word on its own. The second is what lesson {stems} called the stem: put <0>-s</0> on it and you have <1/>. Lesson {genitive} shows what the second form means by itself, and lesson {partitive} what the third is for."
+
+msgid "The left column, top to bottom: the first, second and third form. Pick another word and watch how they change."
+msgstr "The left column, top to bottom: the first, second and third form. Pick another word and watch how they change."
+
+msgid "the main forms: a word’s first, second and third form"
+msgstr "the main forms: a word’s first, second and third form"
+
+msgid "The order is first, second, third, so <0>vastuse</0> comes before <1>vastust</1>."
+msgstr "The order is first, second, third, so <0>vastuse</0> comes before <1>vastust</1>."
+
+msgid "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."
+msgstr "The order is first, second, third. <0>Poe</0>, the one without the <1>d</1>, comes second."
+
+msgid "The second and third form of {first}."
+msgstr "The second and third form of {first}."
+
+msgid "The second drops the <0>d</0> and one <1>o</1>; the third has them back."
+msgstr "The second drops the <0>d</0> and one <1>o</1>; the third has them back."
+
+msgid "The second drops the <0>d</0>; the third has it back."
+msgstr "The second drops the <0>d</0>; the third has it back."
+
+msgid "The second drops the <0>g</0>; the third has it back."
+msgstr "The second drops the <0>g</0>; the third has it back."
+
+msgid "The second form is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
+msgstr "The second form is the one <0>-s</0> and <1>-l</1> go on: <2>kooli</2> gives <3>koolis</3>."
+
+msgid "The second form of {first}."
+msgstr "The second form of {first}."
+
+msgid "The second form of <0>{first}</0>."
+msgstr "The second form of <0>{first}</0>."
+
+msgid "The second loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the third is the first again."
+msgstr "The second loses the <0>b</0> and the <1>u</1> turns into <2>o</2>; the third is the first again."
+
+msgid "The third adds <0>-t</0>."
+msgstr "The third adds <0>-t</0>."
+
+msgid "The third drops the <0>k</0> and ends in <1>-st</1>."
+msgstr "The third drops the <0>k</0> and ends in <1>-st</1>."
+
+msgid "The third drops the <0>p</0> and ends in <1>-st</1>."
+msgstr "The third drops the <0>p</0> and ends in <1>-st</1>."
+
+msgid "The third form of {first}."
+msgstr "The third form of {first}."
+
+msgid "The third form of <0>{first}</0>."
+msgstr "The third form of <0>{first}</0>."
+
+msgid "The third form of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
+msgstr "The third form of <0>laps</0> ends in <1>-st</1>: <2>last</2>."
+
+msgid "The third is the second with <0>-t</0>."
+msgstr "The third is the second with <0>-t</0>."
+
+msgid "Third"
+msgstr "Third"
+
+msgid "Third form"
+msgstr "Third form"
+
+msgid "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
+msgstr "To ask for a word’s forms, Estonian says <0>Mis on sõna … põhivormid?</0>, with the word in the gap. <1/> means word. Answer with all three, in order."
+
+msgid "town, city"
+msgstr "town, city"
+
+msgid "tree"
+msgstr "tree"
+
+msgid "Type the third form"
+msgstr "Type the third form"
+
+msgid "When the third form is the same as the second"
+msgstr "When the third form is the same as the second"
+
+msgid "When the third form takes letters back"
+msgstr "When the third form takes letters back"
+
+msgid "Which forms go together?"
+msgstr "Which forms go together?"
+
+msgid "Why a dictionary gives every Estonian noun in three forms, where to find them, and which endings tell you the third."
+msgstr "Why a dictionary gives every Estonian noun in three forms, where to find them, and which endings tell you the third."
+
+msgid "woman"
+msgstr "woman"
+
+msgid "word"
+msgstr "word"
+
+msgid "Word to look up"
+msgstr "Word to look up"
+
+msgid "Words whose ending tells the third form"
+msgstr "Words whose ending tells the third form"
+
+msgid "Words whose second and third forms match"
+msgstr "Words whose second and third forms match"
+
+msgid "Words whose third form takes letters back"
+msgstr "Words whose third form takes letters back"
+
+msgid "work, job"
+msgstr "work, job"
+
+msgid "You’ll hear it and see how it changes from the first."
+msgstr "You’ll hear it and see how it changes from the first."
+
+msgid "You’ll hear its three forms."
+msgstr "You’ll hear its three forms."
+
+msgid "You’re in an Estonian class. Mari, the teacher, asks for the forms of four words; pick your answer."
+msgstr "You’re in an Estonian class. Mari, the teacher, asks for the forms of four words; pick your answer."

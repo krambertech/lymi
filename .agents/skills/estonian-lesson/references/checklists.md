@@ -108,7 +108,7 @@ Lessons land in parallel, so a second lesson conflicts in the same shared files.
 
 1. `git fetch origin && git merge origin/main`.
 2. `catalogue.ts`: keep main's order and every other lesson's filled fields. Your entry keeps its fields wherever main moved it, and no planned line for the same lesson is left behind.
-3. `clips.ts`, `LESSON_VIEWS` and its imports, and `apps/site/public/audio/estonian-lessons/manifest.json`: keep both sides' entries.
-4. The `.po` files: take main's version, run `pnpm i18n:extract`, then fill your lesson's uk and ru entries again from your side of the merge (`git show HEAD:apps/site/src/locales/uk.po`).
+3. `clips.ts` and `apps/site/public/audio/estonian-lessons/manifest.json`: keep both sides' entries.
+4. The `.po` files: your lesson's catalogs are its own, so a conflict is only in `locales/learn/Kit/`, for the course names. Take main's version, run `pnpm i18n:extract`, then fill your entry's uk and ru lines again.
 5. Run `lesson:audio`. It records nothing; a clip it records means a text changed, so find out which before going on.
 6. Run the site's typecheck and tests, commit the merge and push.

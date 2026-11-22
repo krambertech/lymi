@@ -1,0 +1,389 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> and <1/> both translate as to read. Estonian uses each after different words: after <2/>, I want, comes the <3>-da</3> form, <4/>. Lesson {infinitives} shows which words take which."
+msgstr "<0/> and <1/> both translate as to read. Estonian uses each after different words: after <2/>, I want, comes the <3>-da</3> form, <4/>. Lesson {infinitives} shows which words take which."
+
+msgid "<0/> and <1/> change their long vowel: <2/>, <3/>. Learn these four whole."
+msgstr "<0/> and <1/> change their long vowel: <2/>, <3/>. Learn these four whole."
+
+msgid "<0/>, <1/> and <2/> drop <3>-ema</3> and add <4>-la</4> or <5>-na</5>, repeating the l or n: <6/>, <7/>, <8/>."
+msgstr "<0/>, <1/> and <2/> drop <3>-ema</3> and add <4>-la</4> or <5>-na</5>, repeating the l or n: <6/>, <7/>, <8/>."
+
+msgid "<0>-da</0> form"
+msgstr "<0>-da</0> form"
+
+msgid "<0>-ma</0> form"
+msgstr "<0>-ma</0> form"
+
+msgid "<0>{said}</0> is the <1>-da</1> form of <2>{ma}</2>, {means}."
+msgstr "<0>{said}</0> is the <1>-da</1> form of <2>{ma}</2>, {means}."
+
+msgid "<0>{said}</0> is the <1>-ma</1> form itself, {means}."
+msgstr "<0>{said}</0> is the <1>-ma</1> form itself, {means}."
+
+msgid "<0>{said}</0> is the I form of <1>{ma}</1>, {means}."
+msgstr "<0>{said}</0> is the I form of <1>{ma}</1>, {means}."
+
+msgid "<0>Sööma</0> and <1>jooma</1> break the pattern. Their commands build on the I form: <2>söön, sööge</2>; <3>joon, jooge</3>."
+msgstr "<0>Sööma</0> and <1>jooma</1> break the pattern. Their commands build on the I form: <2>söön, sööge</2>; <3>joon, jooge</3>."
+
+msgid "<0>Teha, näha, süüa</0> and <1>juua</1> end in a bare <2>-a</2> and change their stem. Learn these four whole."
+msgstr "<0>Teha, näha, süüa</0> and <1>juua</1> end in a bare <2>-a</2> and change their stem. Learn these four whole."
+
+msgid "12 minutes"
+msgstr "12 minutes"
+
+msgid "3 quizzes and a passage"
+msgstr "3 quizzes and a passage"
+
+msgid "A command again, built on the <0>-da</0> form: <1>rääkida, rääkige</1>."
+msgstr "A command again, built on the <0>-da</0> form: <1>rääkida, rääkige</1>."
+
+msgid "A command to the class, built on the <0>-da</0> form: <1>istuda, istuge</1>."
+msgstr "A command to the class, built on the <0>-da</0> form: <1>istuda, istuge</1>."
+
+msgid "A command, built on the <0>-da</0> form: <1>lugeda, lugege</1>."
+msgstr "A command, built on the <0>-da</0> form: <1>lugeda, lugege</1>."
+
+msgid "A question about what the class does, so the present: <0>räägin, räägite</0>."
+msgstr "A question about what the class does, so the present: <0>räägin, räägite</0>."
+
+msgid "All nine. You knew which verb each <0>-da</0> form belongs to."
+msgstr "All nine. You knew which verb each <0>-da</0> form belongs to."
+
+msgid "All six. You made every kind of <0>-da</0> form."
+msgstr "All six. You made every kind of <0>-da</0> form."
+
+msgid "All six. You told the three forms apart every time."
+msgstr "All six. You told the three forms apart every time."
+
+msgid "Be. To more than one, or polite."
+msgstr "Be. To more than one, or polite."
+
+msgid "Come. To more than one, or polite."
+msgstr "Come. To more than one, or polite."
+
+msgid "Commands for more than one"
+msgstr "Commands for more than one"
+
+msgid "Do it. To more than one, or polite."
+msgstr "Do it. To more than one, or polite."
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "Four short verbs"
+msgstr "Four short verbs"
+
+msgid "From tahtma, to want."
+msgstr "From tahtma, to want."
+
+msgid "Go back through the forms above, then try again."
+msgstr "Go back through the forms above, then try again."
+
+msgid "Hear a <0>-da</0> form and pick what its verb means. These are the ones that look least like their <1>-ma</1> form."
+msgstr "Hear a <0>-da</0> form and pick what its verb means. These are the ones that look least like their <1>-ma</1> form."
+
+msgid "Hear one form of a verb and pick which of the three it was. Listen to how it ends."
+msgstr "Hear one form of a verb and pick which of the three it was. Listen to how it ends."
+
+msgid "Here are the ten verbs of lesson {present} with their three forms. The <0>-da</0> form is outlined. Tap a form to hear it."
+msgstr "Here are the ten verbs of lesson {present} with their three forms. The <0>-da</0> form is outlined. Tap a form to hear it."
+
+msgid "I am"
+msgstr "I am"
+
+msgid "I come"
+msgstr "I come"
+
+msgid "I do, I make"
+msgstr "I do, I make"
+
+msgid "I drink"
+msgstr "I drink"
+
+msgid "I eat"
+msgstr "I eat"
+
+msgid "I form"
+msgstr "I form"
+
+msgid "I go"
+msgstr "I go"
+
+msgid "I learn, I study"
+msgstr "I learn, I study"
+
+msgid "I listen"
+msgstr "I listen"
+
+msgid "I live"
+msgstr "I live"
+
+msgid "I look, I watch"
+msgstr "I look, I watch"
+
+msgid "I love"
+msgstr "I love"
+
+msgid "I read"
+msgstr "I read"
+
+msgid "I see"
+msgstr "I see"
+
+msgid "I sit"
+msgstr "I sit"
+
+msgid "I speak"
+msgstr "I speak"
+
+msgid "I wait"
+msgstr "I wait"
+
+msgid "I want"
+msgstr "I want"
+
+msgid "I want to read."
+msgstr "I want to read."
+
+msgid "I work"
+msgstr "I work"
+
+msgid "In class"
+msgstr "In class"
+
+msgid "In lesson {commands} you learned <0/> as a whole word. It comes from the <1>-da</1> form, with <2>-ge</2> in place of its ending: <3/> gives <4/>, and <5/> gives <6/>"
+msgstr "In lesson {commands} you learned <0/> as a whole word. It comes from the <1>-da</1> form, with <2>-ge</2> in place of its ending: <3/> gives <4/>, and <5/> gives <6/>"
+
+msgid "In lesson {present} you learned a verb as two forms: <0/>, to read, and its I form, <1/>. A dictionary gives a third between them, the <2>-da</2> form: <3/>."
+msgstr "In lesson {present} you learned a verb as two forms: <0/>, to read, and its I form, <1/>. A dictionary gives a third between them, the <2>-da</2> form: <3/>."
+
+msgid "It can have a stem of its own: <0>loe-n</0>, <1>räägi-n</1>, <2>õpi-n</2>. The <3>-da</3> form keeps the <4>-ma</4> form’s stem."
+msgstr "It can have a stem of its own: <0>loe-n</0>, <1>räägi-n</1>, <2>õpi-n</2>. The <3>-da</3> form keeps the <4>-ma</4> form’s stem."
+
+msgid "Its -da form is {da}, its I form {n}."
+msgstr "Its -da form is {da}, its I form {n}."
+
+msgid "its <0>-da</0> form"
+msgstr "its <0>-da</0> form"
+
+msgid "Learn a verb as three forms, the <0>-ma</0> form, the <1>-da</1> form and the I form: <2>lugema, lugeda, loen</2>."
+msgstr "Learn a verb as three forms, the <0>-ma</0> form, the <1>-da</1> form and the I form: <2>lugema, lugeda, loen</2>."
+
+msgid "Learn every Estonian verb as three forms: <0>lugema, lugeda, loen</0>. Most verbs make the middle one by swapping <1>-ma</1> for <2>-da</2>; some take <3>-ta</3>, and a few take <4>-la</4>, <5>-na</5> or a bare <6>-a</6>."
+msgstr "Learn every Estonian verb as three forms: <0>lugema, lugeda, loen</0>. Most verbs make the middle one by swapping <1>-ma</1> for <2>-da</2>; some take <3>-ta</3>, and a few take <4>-la</4>, <5>-na</5> or a bare <6>-a</6>."
+
+msgid "Lessons {negation} and {commands} called <0/> the <1>ma</1> form, after <2>ma loen</2>. From here on it is the I form, and the <3>-ma</3> form is <4/>."
+msgstr "Lessons {negation} and {commands} called <0/> the <1>ma</1> form, after <2>ma loen</2>. From here on it is the I form, and the <3>-ma</3> form is <4/>."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Make the <0>-da</0> form"
+msgstr "Make the <0>-da</0> form"
+
+msgid "Mari teaches a class. When she tells them what to do, the verb builds on the <0>-da</0> form; when she says what the class does, on the I form. Fill each gap."
+msgstr "Mari teaches a class. When she tells them what to do, the verb builds on the <0>-da</0> form; when she says what the class does, on the I form. Fill each gap."
+
+msgid "Most verbs keep the stem"
+msgstr "Most verbs keep the stem"
+
+msgid "Most verbs make the <0>-da</0> form by swapping <1>-ma</1> for <2>-da</2>: <3/>, <4/>. Whatever sits before <5>-ma</5> usually stays as it is."
+msgstr "Most verbs make the <0>-da</0> form by swapping <1>-ma</1> for <2>-da</2>: <3/>, <4/>. Whatever sits before <5>-ma</5> usually stays as it is."
+
+msgid "Most verbs swap <0>-ma</0> for <1>-da</1> on the same stem: <2>elama, elada</2>. The <3>-da</3> form keeps that stem when the I form changes it: <4>lugeda, loen</4>."
+msgstr "Most verbs swap <0>-ma</0> for <1>-da</1> on the same stem: <2>elama, elada</2>. The <3>-da</3> form keeps that stem when the I form changes it: <4>lugeda, loen</4>."
+
+msgid "Nearly. Play the ones you missed once more."
+msgstr "Nearly. Play the ones you missed once more."
+
+msgid "One of the verbs that take <0>-ta</0>: <1>{ma}</1>, <2>{da}</2>."
+msgstr "One of the verbs that take <0>-ta</0>: <1>{ma}</1>, <2>{da}</2>."
+
+msgid "Only the ending changes: <0>luge-ma</0>, <1>luge-da</1>."
+msgstr "Only the ending changes: <0>luge-ma</0>, <1>luge-da</1>."
+
+msgid "Play all three"
+msgstr "Play all three"
+
+msgid "Play the <0>-ta</0>, <1>-la</1>, <2>-na</2> and <3>-a</3> forms above once more, then try again."
+msgstr "Play the <0>-ta</0>, <1>-la</1>, <2>-na</2> and <3>-a</3> forms above once more, then try again."
+
+msgid "Play the forms above once more, then try again."
+msgstr "Play the forms above once more, then try again."
+
+msgid "Read. To more than one, or polite."
+msgstr "Read. To more than one, or polite."
+
+msgid "See a verb’s <0>-ma</0> form and type its <1>-da</1> form, then hear it. The keys under the field type õ, ä, ö, ü, š and ž."
+msgstr "See a verb’s <0>-ma</0> form and type its <1>-da</1> form, then hear it. The keys under the field type õ, ä, ö, ü, š and ž."
+
+msgid "Sit down. To more than one, or polite."
+msgstr "Sit down. To more than one, or polite."
+
+msgid "Some take <0>-ta</0>: <1>oodata</1>. <2>Olema</2>, <3>tulema</3> and <4>minema</4> take <5>-la</5> or <6>-na</6>: <7>olla, tulla, minna</7>."
+msgstr "Some take <0>-ta</0>: <1>oodata</1>. <2>Olema</2>, <3>tulema</3> and <4>minema</4> take <5>-la</5> or <6>-na</6>: <7>olla, tulla, minna</7>."
+
+msgid "Some verbs take <0>-ta</0>: <1/>, <2/>; <3/>, <4/>; <5/>, <6/>. <7>Ootama</7> and <8>vaatama</8> also turn the t of their stem into d: <9>oota-</9>, <10>ooda-</10>. Lesson {gradation} explains that change; for now, learn these three whole."
+msgstr "Some verbs take <0>-ta</0>: <1/>, <2/>; <3/>, <4/>; <5/>, <6/>. <7>Ootama</7> and <8>vaatama</8> also turn the t of their stem into d: <9>oota-</9>, <10>ooda-</10>. Lesson {gradation} explains that change; for now, learn these three whole."
+
+msgid "Speak. To more than one, or polite."
+msgstr "Speak. To more than one, or polite."
+
+msgid "Swap <0>-ma</0> for <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
+msgstr "Swap <0>-ma</0> for <1>-da</1>: <2>{ma}</2>, <3>{da}</3>."
+
+msgid "Tahan, I want, is followed by the -da form."
+msgstr "Tahan, I want, is followed by the -da form."
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "That holds even when the I form changes the stem: <0/> gives <1/>, though I read is <2/>. The same goes for <3/> and <4/>. Switch between the forms and tap a line to hear it."
+msgstr "That holds even when the I form changes the stem: <0/> gives <1/>, though I read is <2/>. The same goes for <3/> and <4/>. Switch between the forms and tap a line to hear it."
+
+msgid "The -da form of {ma}."
+msgstr "The -da form of {ma}."
+
+msgid "The <0>-ma</0> form"
+msgstr "The <0>-ma</0> form"
+
+msgid "The form a dictionary lists first. Take off <0>-ma</0> and you have its stem, <1>luge-</1>."
+msgstr "The form a dictionary lists first. Take off <0>-ma</0> and you have its stem, <1>luge-</1>."
+
+msgid "The I form"
+msgstr "The I form"
+
+msgid "The I form is <0>joon</0>. Drop <1>-ma</1>, turn <2>oo</2> into <3>uu</3> and add <4>-a</4>."
+msgstr "The I form is <0>joon</0>. Drop <1>-ma</1>, turn <2>oo</2> into <3>uu</3> and add <4>-a</4>."
+
+msgid "The I form is <0>lähen</0>, with a stem of its own. Drop <1>-ema</1> and add <2>-na</2>."
+msgstr "The I form is <0>lähen</0>, with a stem of its own. Drop <1>-ema</1> and add <2>-na</2>."
+
+msgid "The I form is <0>näen</0>. Drop <1>-ema</1>, turn g into h and add <2>-a</2>."
+msgstr "The I form is <0>näen</0>. Drop <1>-ema</1>, turn g into h and add <2>-a</2>."
+
+msgid "The I form is <0>olen</0>. Drop <1>-ema</1> and add <2>-la</2>."
+msgstr "The I form is <0>olen</0>. Drop <1>-ema</1> and add <2>-la</2>."
+
+msgid "The I form is <0>söön</0>. Drop <1>-ma</1>, turn <2>öö</2> into <3>üü</3> and add <4>-a</4>."
+msgstr "The I form is <0>söön</0>. Drop <1>-ma</1>, turn <2>öö</2> into <3>üü</3> and add <4>-a</4>."
+
+msgid "The I form is <0>teen</0>. Drop <1>-ema</1>, turn g into h and add <2>-a</2>."
+msgstr "The I form is <0>teen</0>. Drop <1>-ema</1>, turn g into h and add <2>-a</2>."
+
+msgid "The I form is <0>tulen</0>. Drop <1>-ema</1> and add <2>-la</2>."
+msgstr "The I form is <0>tulen</0>. Drop <1>-ema</1> and add <2>-la</2>."
+
+msgid "The I form of {ma}."
+msgstr "The I form of {ma}."
+
+msgid "The present builds on the I form; for most verbs, the command to more than one builds on the <0>-da</0> form: <1>te loete, lugege!</1>"
+msgstr "The present builds on the I form; for most verbs, the command to more than one builds on the <0>-da</0> form: <1>te loete, lugege!</1>"
+
+msgid "The same stem with <0>-da</0>"
+msgstr "The same stem with <0>-da</0>"
+
+msgid "These four short verbs end their <0>-da</0> form in a bare <1>-a</1>, and the stem changes too. <2/>, to do, and <3/>, to see, turn g into h: <4/>, <5/>."
+msgstr "These four short verbs end their <0>-da</0> form in a bare <1>-a</1>, and the stem changes too. <2/>, to do, and <3/>, to see, turn g into h: <4/>, <5/>."
+
+msgid "Three forms"
+msgstr "Three forms"
+
+msgid "Three verbs"
+msgstr "Three verbs"
+
+msgid "Three verbs with a double l or n"
+msgstr "Three verbs with a double l or n"
+
+msgid "to be"
+msgstr "to be"
+
+msgid "to come"
+msgstr "to come"
+
+msgid "to do, to make"
+msgstr "to do, to make"
+
+msgid "to drink"
+msgstr "to drink"
+
+msgid "to eat"
+msgstr "to eat"
+
+msgid "to go"
+msgstr "to go"
+
+msgid "to learn, to study"
+msgstr "to learn, to study"
+
+msgid "to listen"
+msgstr "to listen"
+
+msgid "to live"
+msgstr "to live"
+
+msgid "to look, to watch"
+msgstr "to look, to watch"
+
+msgid "to love"
+msgstr "to love"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "to see"
+msgstr "to see"
+
+msgid "to sit, to sit down"
+msgstr "to sit, to sit down"
+
+msgid "to speak, to talk"
+msgstr "to speak, to talk"
+
+msgid "to wait"
+msgstr "to wait"
+
+msgid "to work"
+msgstr "to work"
+
+msgid "Type the form"
+msgstr "Type the form"
+
+msgid "Verbs"
+msgstr "Verbs"
+
+msgid "Wait. To more than one, or polite."
+msgstr "Wait. To more than one, or polite."
+
+msgid "What the class does, so the present: <0>loen, loete</0>."
+msgstr "What the class does, so the present: <0>loen, loete</0>."
+
+msgid "What we do today, so the present, built on the I form: <0>loen, loeme</0>."
+msgstr "What we do today, so the present, built on the I form: <0>loen, loeme</0>."
+
+msgid "Where the <0>-da</0> form ends in <1>-ta</1>, or in <2>-a</2> after h, the command takes <3>-ke</3>: <4/>, <5/>; <6/>, <7/> Tap either side of a pair to hear it."
+msgstr "Where the <0>-da</0> form ends in <1>-ta</1>, or in <2>-a</2> after h, the command takes <3>-ke</3>: <4/>, <5/>; <6/>, <7/> Tap either side of a pair to hear it."
+
+msgid "Which form"
+msgstr "Which form"
+
+msgid "Which form did you hear?"
+msgstr "Which form did you hear?"
+
+msgid "Which verb is it?"
+msgstr "Which verb is it?"
+
+msgid "You know their I forms: <0/> from lesson {pronouns}, <1/> and <2/> from lesson {commands}. Tap a form to hear it and see how it’s made."
+msgstr "You know their I forms: <0/> from lesson {pronouns}, <1/> and <2/> from lesson {commands}. Tap a form to hear it and see how it’s made."
+
+msgid "You’ll hear it and see how it’s made."
+msgstr "You’ll hear it and see how it’s made."

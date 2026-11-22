@@ -1,0 +1,532 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "-si- or -i-"
+msgstr "-si- or -i-"
+
+msgid "<0>b</0> now, only <1>s</1> in the past."
+msgstr "<0>b</0> now, only <1>s</1> in the past."
+
+msgid "<0>d</0> now, <1>sid</1> in the past."
+msgstr "<0>d</0> now, <1>sid</1> in the past."
+
+msgid "<0>in</0> goes on <1>ol-</1>."
+msgstr "<0>in</0> goes on <1>ol-</1>."
+
+msgid "<0>in</0> goes on <1>tul-</1>."
+msgstr "<0>in</0> goes on <1>tul-</1>."
+
+msgid "<0>Käin</0> is the present. Kati asked about yesterday."
+msgstr "<0>Käin</0> is the present. Kati asked about yesterday."
+
+msgid "<0>Lugesin</0> is I read, I was reading and I did read: one simple past for all three. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
+msgstr "<0>Lugesin</0> is I read, I was reading and I did read: one simple past for all three. Time words such as <1>eile</1> and <2>eelmisel nädalal</2> say when."
+
+msgid "<0>me</0> now, <1>sime</1> in the past."
+msgstr "<0>me</0> now, <1>sime</1> in the past."
+
+msgid "<0>n</0> now, <1>sin</1> in the past."
+msgstr "<0>n</0> now, <1>sin</1> in the past."
+
+msgid "<0>Nad käivad</0> is they go, now. Kati asked about you, yesterday."
+msgstr "<0>Nad käivad</0> is they go, now. Kati asked about you, yesterday."
+
+msgid "<0>Nad on</0> is they are, now. Kati asked what you did yesterday."
+msgstr "<0>Nad on</0> is they are, now. Kati asked what you did yesterday."
+
+msgid "<0>Nad ostavad</0> is they buy, now. Kati asked what you bought."
+msgstr "<0>Nad ostavad</0> is they buy, now. Kati asked what you bought."
+
+msgid "<0>Oo</0> turns into <1>õ</1>, then <2>in</2>."
+msgstr "<0>Oo</0> turns into <1>õ</1>, then <2>in</2>."
+
+msgid "<0>Öö</0> turns into <1>õ</1>, then <2>in</2>."
+msgstr "<0>Öö</0> turns into <1>õ</1>, then <2>in</2>."
+
+msgid "<0>Ostsid</0> is for <1>sa</1> or <2>nad</2>. With <3>ma</3>, it’s <4>ostsin</4>."
+msgstr "<0>Ostsid</0> is for <1>sa</1> or <2>nad</2>. With <3>ma</3>, it’s <4>ostsin</4>."
+
+msgid "<0>Ta</0> adds nothing after the i."
+msgstr "<0>Ta</0> adds nothing after the i."
+
+msgid "<0>Ta</0> drops the i: <1>läks</1>."
+msgstr "<0>Ta</0> drops the i: <1>läks</1>."
+
+msgid "<0>te</0> now, <1>site</1> in the past."
+msgstr "<0>te</0> now, <1>site</1> in the past."
+
+msgid "<0>vad</0> now, <1>sid</1> in the past, as for <2>sa</2>."
+msgstr "<0>vad</0> now, <1>sid</1> in the past, as for <2>sa</2>."
+
+msgid "14 minutes"
+msgstr "14 minutes"
+
+msgid "5 exercises"
+msgstr "5 exercises"
+
+msgctxt "what was bought"
+msgid "A book"
+msgstr "A book"
+
+msgid "A few everyday verbs take <0>i-</0> instead, and several change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn them one by one, as you learned <5>lugema</5> with <6>loen</6>."
+msgstr "A few everyday verbs take <0>i-</0> instead, and several change their stem too: <1/>, <2/>, I ate; <3/>, <4/>, I went. Learn them one by one, as you learned <5>lugema</5> with <6>loen</6>."
+
+msgid "A few everyday verbs take <0>i-</0> on the stem of the <1>ma</1> form: <2>olin, tulin, tegin, nägin</2>. Three change the stem: <3>läksin, sõin, jõin</3>. <4>Ta</4> ends in <5>i</5>, as in <6>ta oli</6>, except <7>ta läks</7>."
+msgstr "A few everyday verbs take <0>i-</0> on the stem of the <1>ma</1> form: <2>olin, tulin, tegin, nägin</2>. Three change the stem: <3>läksin, sõin, jõin</3>. <4>Ta</4> ends in <5>i</5>, as in <6>ta oli</6>, except <7>ta läks</7>."
+
+msgid "A new stem, <0>läks-</0>, then <1>in</1>. Now it’s <2>lähen</2>."
+msgstr "A new stem, <0>läks-</0>, then <1>in</1>. Now it’s <2>lähen</2>."
+
+msgid "After <0>si-</0> come <1>-n, -d, -me, -te</1>, as in the present. <2>Ta</2> has only <3>s</3>, and <4>nad</4> has <5>sid</5>, as <6>sa</6> does: <7>ta elas, nad elasid</7>."
+msgstr "After <0>si-</0> come <1>-n, -d, -me, -te</1>, as in the present. <2>Ta</2> has only <3>s</3>, and <4>nad</4> has <5>sid</5>, as <6>sa</6> does: <7>ta elas, nad elasid</7>."
+
+msgid "All seven. You told the past from the present every time."
+msgstr "All seven. You told the past from the present every time."
+
+msgid "All six. You matched every pronoun with its past ending."
+msgstr "All six. You matched every pronoun with its past ending."
+
+msgid "as in <0>nägin</0>"
+msgstr "as in <0>nägin</0>"
+
+msgid "as in <0>töötasin</0>"
+msgstr "as in <0>töötasin</0>"
+
+msgid "At eleven"
+msgstr "At eleven"
+
+msgid "At nine"
+msgstr "At nine"
+
+msgid "At two"
+msgstr "At two"
+
+msgid "Bread and cheese"
+msgstr "Bread and cheese"
+
+msgid "Cheese and coffee"
+msgstr "Cheese and coffee"
+
+msgid "Eelmine nädal, last week, with the -l that says when, as in esmaspäeval."
+msgstr "Eelmine nädal, last week, with the -l that says when, as in esmaspäeval."
+
+msgid "Ela- from elama, then -sin."
+msgstr "Ela- from elama, then -sin."
+
+msgid "Endings in the past"
+msgstr "Endings in the past"
+
+msgid "Forms now and in the past"
+msgstr "Forms now and in the past"
+
+msgid "From käima: käisin poes, I went to the shop."
+msgstr "From käima: käisin poes, I went to the shop."
+
+msgid "From rääkima, to speak."
+msgstr "From rääkima, to speak."
+
+msgid "Go back to the table above, then try again."
+msgstr "Go back to the table above, then try again."
+
+msgid "he or she"
+msgstr "he or she"
+
+msgid "he or she ate"
+msgstr "he or she ate"
+
+msgid "He or she ate at home."
+msgstr "He or she ate at home."
+
+msgid "he or she bought"
+msgstr "he or she bought"
+
+msgid "he or she came"
+msgstr "he or she came"
+
+msgid "He or she came home."
+msgstr "He or she came home."
+
+msgid "he or she did, made"
+msgstr "he or she did, made"
+
+msgid "he or she drank"
+msgstr "he or she drank"
+
+msgid "He or she drank coffee."
+msgstr "He or she drank coffee."
+
+msgid "He or she eats at home."
+msgstr "He or she eats at home."
+
+msgid "He or she is at home."
+msgstr "He or she is at home."
+
+msgid "He or she is coming home."
+msgstr "He or she is coming home."
+
+msgid "He or she is drinking coffee."
+msgstr "He or she is drinking coffee."
+
+msgid "He or she is going to work."
+msgstr "He or she is going to work."
+
+msgid "He or she is reading a book."
+msgstr "He or she is reading a book."
+
+msgid "he or she lived"
+msgstr "he or she lived"
+
+msgid "he or she saw"
+msgstr "he or she saw"
+
+msgid "he or she was"
+msgstr "he or she was"
+
+msgid "He or she was at home."
+msgstr "He or she was at home."
+
+msgid "He or she was reading a book."
+msgstr "He or she was reading a book."
+
+msgid "he or she went"
+msgstr "he or she went"
+
+msgid "He or she went to work."
+msgstr "He or she went to work."
+
+msgid "Hear a sentence about someone and pick whether it happens now or happened in the past. Listen to the verb: <0>elab</0> is now, <1>elas</1> is the past."
+msgstr "Hear a sentence about someone and pick whether it happens now or happened in the past. Listen to the verb: <0>elab</0> is now, <1>elas</1> is the past."
+
+msgid "I"
+msgstr "I"
+
+msgid "I ate"
+msgstr "I ate"
+
+msgid "I bought"
+msgstr "I bought"
+
+msgid "I came"
+msgstr "I came"
+
+msgid "I did, I made"
+msgstr "I did, I made"
+
+msgid "I drank"
+msgstr "I drank"
+
+msgid "I lived"
+msgstr "I lived"
+
+msgid "I read, I was reading"
+msgstr "I read, I was reading"
+
+msgctxt "gloss"
+msgid "I read, I’m reading"
+msgstr "I read, I’m reading"
+
+msgid "I saw"
+msgstr "I saw"
+
+msgid "I speak, I’m speaking"
+msgstr "I speak, I’m speaking"
+
+msgid "I spoke, I was speaking"
+msgstr "I spoke, I was speaking"
+
+msgid "I studied Estonian yesterday."
+msgstr "I studied Estonian yesterday."
+
+msgid "I was"
+msgstr "I was"
+
+msgid "I went"
+msgstr "I went"
+
+msgid "I went and came back; I visited"
+msgstr "I went and came back; I visited"
+
+msgid "In <0/>, to buy, <1>ta</1> takes <2>is</2>: <3/>, I bought, but <4/>, he or she bought."
+msgstr "In <0/>, to buy, <1>ta</1> takes <2>is</2>: <3/>, I bought, but <4/>, he or she bought."
+
+msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1><2/>.</1> With <3/>, today, the verb is in the present: <4><5/>.</4>"
+msgstr "In lesson {days} you met <0/>, yesterday. It goes with the past: <1><2/>.</1> With <3/>, today, the verb is in the present: <4><5/>.</4>"
+
+msgid "In the past"
+msgstr "In the past"
+
+#. placeholder {0}: each.past
+msgid "Its past is <0>{0}</0>."
+msgstr "Its past is <0>{0}</0>."
+
+msgid "Kati"
+msgstr "Kati"
+
+msgid "last week"
+msgstr "last week"
+
+msgid "Last week"
+msgstr "Last week"
+
+msgid "Last week I read a lot."
+msgstr "Last week I read a lot."
+
+msgid "Last week, yesterday and today"
+msgstr "Last week, yesterday and today"
+
+msgid "Listen: what did Mari do?"
+msgstr "Listen: what did Mari do?"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari’s Saturday"
+msgstr "Mari’s Saturday"
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Most of them. Play the ones you missed once more."
+
+msgid "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
+msgstr "Most verbs build the past on the <0>ma</0> form. Take off <1>ma</1> and add <2>sin</2> for I: <3/>, <4/>."
+
+msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form; a few everyday verbs take <2>i-</2>. An ending for each person says who did it."
+msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form; a few everyday verbs take <2>i-</2>. An ending for each person says who did it."
+
+msgid "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
+msgstr "Most verbs put <0>si-</0> on the stem of the <1>ma</1> form: <2>elama, elasin</2>; <3>lugema, lugesin</3>."
+
+msgid "Most verbs: <0>si-</0> on the stem of the <1>ma</1> form."
+msgstr "Most verbs: <0>si-</0> on the stem of the <1>ma</1> form."
+
+msgid "Nearly. Tap the past forms in the table once more."
+msgstr "Nearly. Tap the past forms in the table once more."
+
+msgid "Now"
+msgstr "Now"
+
+msgid "Now it’s <0>näen</0>; the g comes back in the past."
+msgstr "Now it’s <0>näen</0>; the g comes back in the past."
+
+msgid "Now it’s <0>teen</0>; the g comes back in the past."
+msgstr "Now it’s <0>teen</0>; the g comes back in the past."
+
+msgid "Now or in the past?"
+msgstr "Now or in the past?"
+
+msgid "One of the seven <0>i-</0> verbs: <1>olema, tulema, minema, tegema, nägema, sööma, jooma</1>."
+msgstr "One of the seven <0>i-</0> verbs: <1>olema, tulema, minema, tegema, nägema, sööma, jooma</1>."
+
+#. placeholder {0}: each.past
+msgid "One of the seven <0>i-</0> verbs: its past is <1>{0}</1>."
+msgstr "One of the seven <0>i-</0> verbs: its past is <1>{0}</1>."
+
+msgid "Pick the ending that goes with the pronoun, then hear the sentence."
+msgstr "Pick the ending that goes with the pronoun, then hear the sentence."
+
+msgid "Present or past"
+msgstr "Present or past"
+
+msgid "Put each verb in the group its past belongs to, then check. Tap a verb to hear it."
+msgstr "Put each verb in the group its past belongs to, then check. Tap a verb to hear it."
+
+msgid "Rääki- from rääkima, then -sin."
+msgstr "Rääki- from rääkima, then -sin."
+
+msgid "Talk: yesterday with Kati"
+msgstr "Talk: yesterday with Kati"
+
+msgid "Talking about yesterday"
+msgstr "Talking about yesterday"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap a time"
+msgstr "Tap a time"
+
+msgid "Tap the verbs above once more, then try again."
+msgstr "Tap the verbs above once more, then try again."
+
+msgid "That’s what you’re doing now. Kati asked about yesterday."
+msgstr "That’s what you’re doing now. Kati asked about yesterday."
+
+msgid "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; of these seven, only <5>minema</5> drops it: <6><7/>.</6> Pick a verb and tap its forms to see what changes."
+msgstr "The endings are the ones that follow <0>si-</0>: <1>sõin, sõid, sõi, sõime, sõite, sõid</1>. <2>Ta</2> ends in <3>i</3>, as in <4/>; of these seven, only <5>minema</5> drops it: <6><7/>.</6> Pick a verb and tap its forms to see what changes."
+
+msgid "The other persons take the present’s endings after <0>si-</0>, with two changes. <1>Ta</1> has only <2>s</2>: <3/>. <4>Nad</4> has <5>sid</5>, the same as <6>sa</6>: <7/>. Pick a verb and tap a form."
+msgstr "The other persons take the present’s endings after <0>si-</0>, with two changes. <1>Ta</1> has only <2>s</2>: <3/>. <4>Nad</4> has <5>sid</5>, the same as <6>sa</6>: <7/>. Pick a verb and tap a form."
+
+msgid "The past keeps the stem of the <0>ma</0> form where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>ma</6> form beside the I form."
+msgstr "The past keeps the stem of the <0>ma</0> form where the present changes it. You say <1/> now but <2/> in the past, because the past comes from <3/>. In the same way, <4/> is now and <5/> the past. Lesson {verbForms} puts the <6>ma</6> form beside the I form."
+
+msgid "The past with -i-"
+msgstr "The past with -i-"
+
+msgid "The past with -si-"
+msgstr "The past with -si-"
+
+msgid "the past, for I"
+msgstr "the past, for I"
+
+msgid "The past: luge- from lugema, then -sin."
+msgstr "The past: luge- from lugema, then -sin."
+
+msgid "the present, for I"
+msgstr "the present, for I"
+
+msgid "The present: the stem changes to loe-."
+msgstr "The present: the stem changes to loe-."
+
+msgid "the simple past"
+msgstr "the simple past"
+
+msgid "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
+msgstr "The simple past is called <0/>. Like the present in lesson {present}, one form covers more than one English form: <1>õppisin</1> is I studied, I was studying and I did study. Tap a time on the line to hear a sentence and see how its verb is built."
+
+msgid "they"
+msgstr "they"
+
+msgid "They ate and had coffee"
+msgstr "They ate and had coffee"
+
+msgid "they lived"
+msgstr "they lived"
+
+msgid "They read and had tea"
+msgstr "They read and had tea"
+
+msgid "They worked"
+msgstr "They worked"
+
+msgid "This lesson says what happened. Saying that something didn’t happen takes another form, which lesson {pastNo} teaches."
+msgstr "This lesson says what happened. Saying that something didn’t happen takes another form, which lesson {pastNo} teaches."
+
+msgid "to be"
+msgstr "to be"
+
+msgid "to buy"
+msgstr "to buy"
+
+msgid "to come"
+msgstr "to come"
+
+msgid "to do, to make"
+msgstr "to do, to make"
+
+msgid "to drink"
+msgstr "to drink"
+
+msgid "to eat"
+msgstr "to eat"
+
+msgid "to go"
+msgstr "to go"
+
+msgid "to learn, to study"
+msgstr "to learn, to study"
+
+msgid "to live"
+msgstr "to live"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "to see"
+msgstr "to see"
+
+msgid "to speak, to talk"
+msgstr "to speak, to talk"
+
+msgid "To the cinema"
+msgstr "To the cinema"
+
+msgid "To the market"
+msgstr "To the market"
+
+msgid "to wait"
+msgstr "to wait"
+
+msgid "to work"
+msgstr "to work"
+
+msgctxt "where to"
+msgid "To work"
+msgstr "To work"
+
+msgid "today"
+msgstr "today"
+
+msgid "Today"
+msgstr "Today"
+
+msgid "Today I’m studying Estonian."
+msgstr "Today I’m studying Estonian."
+
+msgid "Verbs"
+msgstr "Verbs"
+
+msgid "we"
+msgstr "we"
+
+msgid "What did he or she do?"
+msgstr "What did he or she do?"
+
+msgid "What did Mari and Jaan do at home?"
+msgstr "What did Mari and Jaan do at home?"
+
+msgid "What did she buy?"
+msgstr "What did she buy?"
+
+msgid "What is he or she doing?"
+msgstr "What is he or she doing?"
+
+msgid "When did Jaan go home?"
+msgstr "When did Jaan go home?"
+
+msgid "Where did Mari go at ten?"
+msgstr "Where did Mari go at ten?"
+
+msgid "Which ending?"
+msgstr "Which ending?"
+
+msgid "Which past?"
+msgstr "Which past?"
+
+msgid "Word for word: simple past."
+msgstr "Word for word: simple past."
+
+msgid "yesterday"
+msgstr "yesterday"
+
+msgid "Yesterday"
+msgstr "Yesterday"
+
+msgid "Yesterday I studied Estonian."
+msgstr "Yesterday I studied Estonian."
+
+msgid "Yesterday was Saturday. Listen to what your friend Mari did, then answer."
+msgstr "Yesterday was Saturday. Listen to what your friend Mari did, then answer."
+
+msgid "Yesterday you stayed at home on your own, read a book and went to the shop. Kati speaks first; pick what you say back."
+msgstr "Yesterday you stayed at home on your own, read a book and went to the shop. Kati speaks first; pick what you say back."
+
+msgid "you"
+msgstr "you"
+
+msgid "you, to more than one; polite you"
+msgstr "you, to more than one; polite you"
+
+msgid "You’ll hear a sentence and see how its verb is built."
+msgstr "You’ll hear a sentence and see how its verb is built."
+
+msgid "You’ll hear it with its pronoun and read what its ending does."
+msgstr "You’ll hear it with its pronoun and read what its ending does."
+
+msgid "Your friend Kati asks what you did yesterday. Answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."
+msgstr "Your friend Kati asks what you did yesterday. Answer her in Estonian. If you pick a wrong reply, you see why, then hear the right one."

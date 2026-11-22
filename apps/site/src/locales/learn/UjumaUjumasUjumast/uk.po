@@ -1,0 +1,432 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0/> means you’re setting off, so it takes <1>-ma</1>: <2/> <3/>, I am, says where you are now, so it takes <4>-mas</4>: <5/>"
+msgstr "<0/> означає, що ти вирушаєш, тож після нього <1>-ma</1>: <2/> <3/>, форма дієслова «бути», каже, де ти зараз, тож після нього <4>-mas</4>: <5/>"
+
+msgid "<0/>, from <1/>, means you go and come back, or go regularly. It takes <2>-mas</2>, not <3>-ma</3>: <4/>"
+msgstr "<0/>, від <1/>, — це «ходжу»: ти йдеш і повертаєшся або ходиш регулярно. Після нього — <2>-mas</2>, а не <3>-ma</3>: <4/>"
+
+msgid "<0/>, from <1/>, takes <2>-mast</2> when you come back from something: <3/> It takes <4>-ma</4> when you come to do something, as in the command <5/> Tap a verb to hear its sentence."
+msgstr "<0/>, від <1/>, вимагає <2>-mast</2>, коли ти звідкись повертаєшся: <3/> А <4>-ma</4> — коли приходиш, щоб щось зробити, як у наказі <5/> Торкнися дієслова, щоб почути його речення."
+
+msgid "<0>Kuhu?</0> {means}"
+msgstr "<0>Kuhu?</0> {means}"
+
+msgid "<0>Kus?</0> {means}"
+msgstr "<0>Kus?</0> {means}"
+
+msgid "<0>Kust?</0> {means}"
+msgstr "<0>Kust?</0> {means}"
+
+msgid "<0>Lähen ujuma</0> is I’m going swimming, <1>olen ujumas</1> I’m out swimming, and <2>tulen ujumast</2> I’m coming back from swimming. The ending says which."
+msgstr "<0>Lähen ujuma</0> — це «я йду плавати», <1>olen ujumas</1> — «я на плаванні», а <2>tulen ujumast</2> — «я повертаюся з плавання». Яке з трьох — показує закінчення."
+
+msgid "<0>Tulema</0> again, as a command: come here to do it, so <1>-ma</1>."
+msgstr "Знову <0>tulema</0>, але як наказ: прийди сюди, щоб щось зробити, тож <1>-ma</1>."
+
+msgid "<0>Tulema</0> takes <1>-mast</1> or <2>-ma</2>: <3>Ma tulen ujumast. Tule sööma!</3>"
+msgstr "Після <0>tulema</0> буває і <1>-mast</1>, і <2>-ma</2>: <3>Ma tulen ujumast. Tule sööma!</3>"
+
+msgid "12 minutes"
+msgstr "12 хвилин"
+
+msgid "A cat and a house"
+msgstr "Кіт і будинок"
+
+msgid "A place and an activity answer the same three questions. To <0/> you can answer <1/>, to the shop, or <2/>, swimming."
+msgstr "Місце і заняття відповідають на ті самі три питання. На <0/> можна відповісти <1/>, «до магазину», або <2/>, «плавати»."
+
+msgid "A quiz by ear, a sort and a voice message"
+msgstr "Вправа на слух, сортування і голосове повідомлення"
+
+msgid "Add <0>-s</0> and it says someone is in the middle of it, often out doing it: <1/> Add <2>-st</2> and it says what they’re coming back from: <3/>"
+msgstr "Додай <0>-s</0>, і форма скаже, що людина саме цим зайнята, часто не вдома: <1/> Додай <2>-st</2>, і вона скаже, звідки людина повертається: <3/>"
+
+msgid "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2/> You met it after <3>lähen</3> in lesson {infinitives}."
+msgstr "Після <0>läheb</0> форма на <1>-ma</1> каже, що людина йде робити: <2/> Вона вже траплялася після <3>lähen</3> в уроці {infinitives}."
+
+msgid "After <0>läheb</0>, the <1>-ma</1> form says what someone is off to do: <2>Mari läheb ujuma.</2>"
+msgstr "Після <0>läheb</0> форма на <1>-ma</1> каже, що людина йде робити: <2>Mari läheb ujuma.</2>"
+
+msgid "After <0>tulen</0>, only the ending tells you which way: <1>tulen sööma</1> is I’m coming to eat, and <2>tulen söömast</2> is I’m coming back from eating."
+msgstr "Після <0>tulen</0> напрямок видно лише із закінчення: <1>tulen sööma</1> — «приходжу поїсти», а <2>tulen söömast</2> — «повертаюся після їжі»."
+
+msgid "All six. You heard every ending."
+msgstr "Усі шість: кожне закінчення почуте правильно."
+
+msgid "An activity has the same three, built on its <0>-ma</0> form: <1/> <2/> <3/> She’s going swimming, she’s out swimming, and she’s on her way back."
+msgstr "Заняття має ті самі три форми, і всі вони виростають із форми на <0>-ma</0>: <1/> <2/> <3/> Марі йде плавати, вона на плаванні, і вона вже повертається."
+
+msgid "At home"
+msgstr "Удома"
+
+msgid "back from a run"
+msgstr "повертається з пробіжки"
+
+msgid "back from coffee"
+msgstr "повертається після кави"
+
+msgid "back from eating"
+msgstr "повертається після їжі"
+
+msgid "back from swimming"
+msgstr "повертається з плавання"
+
+msgid "Come and eat"
+msgstr "Прийти поїсти"
+
+msgctxt "tulema, come here"
+msgid "Come and eat."
+msgstr "Приходь їсти."
+
+msgctxt "from doing something"
+msgid "Coming back"
+msgstr "Повертається"
+
+msgid "Coming back from his run"
+msgstr "Повертається з пробіжки"
+
+msgid "Each round plays one form on its own, with no sentence around it. Only its ending tells you which: <0>-ma</0>, <1>-mas</1> or <2>-mast</2>. Pick what it says."
+msgstr "У кожному раунді звучить одна форма, без речення довкола. Що вона означає, підкаже тільки закінчення: <0>-ma</0>, <1>-mas</1> чи <2>-mast</2>. Вибери її значення."
+
+msgid "every day"
+msgstr "щодня"
+
+msgid "Four activities: going, out and coming back"
+msgstr "Чотири заняття: іде, там, повертається"
+
+msgid "From <0>käima</0>. You go and come back, or go regularly. It takes <1>-mas</1>."
+msgstr "Від <0>käima</0>. Ти йдеш і повертаєшся або ходиш регулярно. Після нього — <1>-mas</1>."
+
+msgid "From <0>minema</0>. You set off to do it, so <1>-ma</1>."
+msgstr "Від <0>minema</0>. Ти йдеш це робити, тож <1>-ma</1>."
+
+msgid "From <0>olema</0>, to be. You’re there, doing it, so <1>-mas</1>."
+msgstr "Від <0>olema</0>, «бути». Ти зараз там, робиш це, тож <1>-mas</1>."
+
+msgid "From <0>tulema</0>. You’re coming back from it, so <1>-mast</1>."
+msgstr "Від <0>tulema</0>. Ти повертаєшся звідти, тож <1>-mast</1>."
+
+msgid "From käima."
+msgstr "Від käima."
+
+msgid "From minema, to go."
+msgstr "Від minema, «іти»."
+
+msgid "From olema, to be."
+msgstr "Від olema, «бути»."
+
+msgid "from the shop"
+msgstr "з магазину"
+
+msgid "From tulema, to come."
+msgstr "Від tulema, «приходити»."
+
+msgid "Go swimming with her mum"
+msgstr "Піти поплавати з мамою"
+
+msgctxt "setting off to do something"
+msgid "Going"
+msgstr "Іде"
+
+msgid "going for a coffee"
+msgstr "йде на каву"
+
+msgid "going for a run"
+msgstr "йде на пробіжку"
+
+msgid "going off to eat"
+msgstr "йде їсти"
+
+msgid "going swimming"
+msgstr "йде плавати"
+
+msgid "Going, out or back?"
+msgstr "Іде, там чи повертається?"
+
+msgid "Going, out, coming back"
+msgstr "Іти, бути там, повертатися"
+
+msgid "I am"
+msgstr "я є"
+
+msgid "I come, I’m coming"
+msgstr "я приходжу"
+
+msgid "I go and come back; I go regularly"
+msgstr "я ходжу (туди й назад); ходжу регулярно"
+
+msgid "I go swimming every day."
+msgstr "Я щодня ходжу плавати."
+
+msgid "I go, I’m going"
+msgstr "я йду"
+
+msgid "I’m coming back from swimming."
+msgstr "Я повертаюся з плавання."
+
+msgid "I’m going swimming."
+msgstr "Я йду плавати."
+
+msgid "I’m out swimming."
+msgstr "Я на плаванні."
+
+msgid "In lesson {inOut}, a place has a form for each question: <0/> for <1>kuhu?</1>, where to, <2/> for <3>kus?</3>, where, and <4/> for <5>kust?</5>, where from."
+msgstr "В уроці {inOut} місце має форму для кожного питання: <0/> для <1>kuhu?</1> (куди?), <2/> для <3>kus?</3> (де?) і <4/> для <5>kust?</5> (звідки?)."
+
+msgid "in the house"
+msgstr "у будинку"
+
+msgid "in the shop"
+msgstr "у магазині"
+
+msgid "into the house"
+msgstr "у будинок"
+
+msgid "Its I form is käin."
+msgstr "Форма для «я» — käin."
+
+msgid "Its I form is tulen."
+msgstr "Форма для «я» — tulen."
+
+msgid "Kati leaves Jaan a voice message about her family. Listen for where each of them is and what she asks Jaan to do."
+msgstr "Каті залишає Яану голосове повідомлення про свою родину. Слухай, хто де і про що вона просить Яана."
+
+msgid "Kuhu? From maja, a house."
+msgstr "Kuhu? Від maja, «будинок»."
+
+msgid "Kuhu? From pood, a shop."
+msgstr "Kuhu? Від pood, «магазин»."
+
+msgid "Kus? From maja, a house."
+msgstr "Kus? Від maja, «будинок»."
+
+msgid "Kus? From pood, a shop."
+msgstr "Kus? Від pood, «магазин»."
+
+msgid "Kus? The -ma form plus -s."
+msgstr "Kus? Форма на -ma плюс -s."
+
+msgid "Kust? From maja, a house."
+msgstr "Kust? Від maja, «будинок»."
+
+msgid "Kust? From pood, a shop."
+msgstr "Kust? Від pood, «магазин»."
+
+msgid "Kust? The -ma form plus -st."
+msgstr "Kust? Форма на -ma плюс -st."
+
+msgid "Listen: Kati’s message"
+msgstr "Слухання: повідомлення Каті"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Mari is coming back from a run."
+msgstr "Марі повертається з пробіжки."
+
+msgid "Mari is coming back from coffee."
+msgstr "Марі повертається після кави."
+
+msgid "Mari is coming back from eating."
+msgstr "Марі повертається після їжі."
+
+msgid "Mari is coming back from swimming."
+msgstr "Марі повертається з плавання."
+
+msgid "Mari is going for a coffee."
+msgstr "Марі йде на каву."
+
+msgid "Mari is going for a run."
+msgstr "Марі йде на пробіжку."
+
+msgid "Mari is going off to eat."
+msgstr "Марі йде їсти."
+
+msgid "Mari is going swimming."
+msgstr "Марі йде плавати."
+
+msgid "Mari is out eating."
+msgstr "Марі зараз десь їсть."
+
+msgid "Mari is out for a coffee."
+msgstr "Марі зараз п’є каву."
+
+msgid "Mari is out running."
+msgstr "Марі на пробіжці."
+
+msgid "Mari is out swimming."
+msgstr "Марі на плаванні."
+
+msgid "Nearly. Play the ones you missed and listen for the last sound: <0>a</0>, <1>s</1> or <2>t</2>."
+msgstr "Майже. Там, де була помилка, прослухай форму ще раз і зверни увагу на останній звук: <0>a</0>, <1>s</1> чи <2>t</2>."
+
+msgid "On her way to swim"
+msgstr "Ще тільки йде плавати"
+
+msgctxt "away, doing something"
+msgid "Out"
+msgstr "Там"
+
+msgid "out eating"
+msgstr "зараз їсть"
+
+msgid "out for a coffee"
+msgstr "п’є каву"
+
+msgid "out of the house"
+msgstr "з будинку"
+
+msgid "out running"
+msgstr "на пробіжці"
+
+msgid "Out running."
+msgstr "На пробіжці."
+
+msgid "out swimming"
+msgstr "на плаванні"
+
+msgid "Out swimming"
+msgstr "На плаванні"
+
+msgid "Places and activities"
+msgstr "Місця і заняття"
+
+msgid "Put each word under the question it answers. Tap a word to hear it, then tap its question."
+msgstr "Постав кожне слово під питання, на яке воно відповідає. Торкнися слова, щоб його почути, а потім — його питання."
+
+msgid "Running in town"
+msgstr "Бігає в місті"
+
+msgid "Setting off for a run"
+msgstr "Вирушає на пробіжку"
+
+msgid "Tap a form"
+msgstr "Торкнися форми"
+
+msgid "Tap a verb"
+msgstr "Торкнися дієслова"
+
+msgid "Tap a word to hear its sentence and see the cat go in to eat, eat, and come back out."
+msgstr "Торкнися слова, щоб почути речення й побачити, як кіт іде в будинок поїсти, їсть і виходить."
+
+msgid "Tap the forms in the table above once more, then try again."
+msgstr "Ще раз торкнись форм у таблиці вище, а потім спробуй знову."
+
+msgid "The -ma form. After lähen: going swimming."
+msgstr "Форма на -ma. Після lähen — «іду плавати»."
+
+msgid "The cat is coming back from eating."
+msgstr "Кіт повертається після їжі."
+
+msgid "The cat is going off to eat."
+msgstr "Кіт іде їсти."
+
+msgid "The cat is off eating."
+msgstr "Кіт пішов їсти."
+
+msgid "The same goes for <0/>, with <1/> or <2/>, and for <3/>, with <4/> or <5/>."
+msgstr "Так само з <0/>: <1/> або <2/>, і з <3/>: <4/> або <5/>."
+
+msgid "The three answer <0>kuhu?</0>, <1>kus?</1> and <2>kust?</2>, as <3>poodi</3>, <4>poes</4> and <5>poest</5> do."
+msgstr "Ці три форми відповідають на <0>kuhu?</0>, <1>kus?</1> і <2>kust?</2>, як <3>poodi</3>, <4>poes</4> і <5>poest</5>."
+
+msgid "The verb before the form"
+msgstr "Дієслово перед формою"
+
+msgid "They’re the <0>-s</0> and <1>-st</1> of <2>majas</2> and <3>majast</3>. Asked <4/>, you can answer with the form alone: <5/> Tap a form to hear it in a sentence."
+msgstr "Це ті самі <0>-s</0> і <1>-st</1>, що в <2>majas</2> і <3>majast</3>. На питання <4/> можна відповісти самою формою: <5/> Торкнися форми, щоб почути її в реченні."
+
+msgid "to come"
+msgstr "приходити"
+
+msgid "to drink coffee"
+msgstr "пити каву"
+
+msgid "to eat"
+msgstr "їсти"
+
+msgid "to go and come back; to go regularly"
+msgstr "ходити (туди й назад); ходити регулярно"
+
+msgid "to run"
+msgstr "бігти"
+
+msgid "to swim"
+msgstr "плавати"
+
+msgid "to the shop"
+msgstr "до магазину"
+
+msgid "Verbs before the form"
+msgstr "Дієслова перед формою"
+
+msgid "Wait for her dad at home"
+msgstr "Почекати тата вдома"
+
+msgid "What does Kati ask Jaan to do?"
+msgstr "Про що Каті просить Яана?"
+
+msgid "What is her dad doing at five?"
+msgstr "Що робить її тато о п’ятій?"
+
+msgid "where"
+msgstr "де"
+
+msgid "Where are you coming from?"
+msgstr "Звідки ти йдеш?"
+
+msgid "Where are you going?"
+msgstr "Куди ти йдеш?"
+
+msgid "where from"
+msgstr "звідки"
+
+msgid "Where from: an activity in <0>-mast</0>, or a place in <1>-st</1> such as <2>poest</2>."
+msgstr "Звідки: заняття на <0>-mast</0> або місце на <1>-st</1>, як-от <2>poest</2>."
+
+msgid "Where is everyone?"
+msgstr "Хто де?"
+
+msgid "Where is Kati’s mum?"
+msgstr "Де мама Каті?"
+
+msgid "Where is Mari?"
+msgstr "Де Марі?"
+
+msgid "Where the cat is"
+msgstr "Де кіт"
+
+msgid "where to"
+msgstr "куди"
+
+msgid "Where to, where and where from"
+msgstr "Куди, де і звідки"
+
+msgid "Where to: an activity in <0>-ma</0>, or a place such as <1>poodi</1>."
+msgstr "Куди: заняття на <0>-ma</0> або місце, як-от <1>poodi</1>."
+
+msgid "Where: an activity in <0>-mas</0>, or a place in <1>-s</1> such as <2>poes</2>."
+msgstr "Де: заняття на <0>-mas</0> або місце на <1>-s</1>, як-от <2>poes</2>."
+
+msgid "Which question does it answer?"
+msgstr "На яке питання відповідає?"
+
+msgid "With <0>-mas</0>, they’re in the middle of it: <1>Mari on ujumas.</1> <2>Käin</2> takes it too: <3>Ma käin iga päev ujumas.</3>"
+msgstr "З <0>-mas</0> людина саме цим зайнята: <1>Mari on ujumas.</1> Після <2>käin</2> теж стоїть ця форма: <3>Ma käin iga päev ujumas.</3>"
+
+msgid "With <0>-mast</0>, they’re coming back from it: <1>Mari tuleb ujumast.</1>"
+msgstr "З <0>-mast</0> людина повертається звідти: <1>Mari tuleb ujumast.</1>"
+
+msgid "You’ll hear it in a sentence about Mari."
+msgstr "Почуєш її в реченні про Марі."
+
+msgid "You’ll hear it in a sentence."
+msgstr "Почуєш його в реченні."

@@ -1,0 +1,293 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "{v}, as in {word}"
+msgstr "{v}, як у {word}"
+
+msgid "<0/> is a hundred; <1/> means send. A double letter is a longer sound, and it makes a different word. Consonants work the same way: <2/> is a hen, and <3/> tells one person to carry something."
+msgstr "<0/> — це сто, а <1/> — «надішли». Подвоєна літера — це довший звук, і з ним виходить інше слово. З приголосними так само: <2/> — курка, а <3/> — «неси» (до однієї людини)."
+
+msgid "10 minutes"
+msgstr "10 хвилин"
+
+msgid "2 quizzes"
+msgstr "2 тести"
+
+msgid "A double letter is longer, and it makes a different word."
+msgstr "Подвоєна літера звучить довше, і з нею виходить інше слово."
+
+msgid "A few words break the rule: <0/>, thank you, puts the stress on its second half."
+msgstr "Кілька слів порушують правило: у <0/>, «дякую», наголос падає на другу половину."
+
+msgid "a hen"
+msgstr "курка"
+
+msgid "a hundred"
+msgstr "сто"
+
+msgid "a quarrel"
+msgstr "сварка"
+
+msgid "All of them. You can hear length."
+msgstr "Усі правильно. Ти чуєш довготу."
+
+msgid "All of them. You can hear the difference."
+msgstr "Усі правильно. Ти чуєш різницю."
+
+msgid "Also “came”: ta tuli, he or she came."
+msgstr "Ще й «прийшов» чи «прийшла»: ta tuli — він прийшов або вона прийшла."
+
+msgid "Also “to get”, from saama."
+msgstr "Ще й «отримати», від saama."
+
+msgid "apple"
+msgstr "яблуко"
+
+msgid "basket"
+msgstr "кошик"
+
+msgid "bed"
+msgstr "ліжко"
+
+msgid "carry!"
+msgstr "неси!"
+
+msgid "cat"
+msgstr "кіт"
+
+msgid "come!"
+msgstr "приходь!"
+
+msgid "door"
+msgstr "двері"
+
+msgid "ear"
+msgstr "вухо"
+
+msgid "Estonia; Estonian"
+msgstr "Естонія; естонський"
+
+msgid "Estonia’s capital"
+msgstr "столиця Естонії"
+
+msgid "Estonian also has a third, extra-long length, and the spelling doesn’t always show it. <0>Linna</0> means both “of the town” and “into the town”, and the second is held longer."
+msgstr "В естонській є ще й третій ступінь довготи, наддовгий, і на письмі його видно не завжди. <0>Linna</0> означає і «міста», і «в місто», і в другому значенні звук тягнеться довше."
+
+msgid "Estonian is spelled the way it sounds. You say every letter, and each one keeps its sound wherever it stands. Once you know the letters, you can read a new word aloud."
+msgstr "Естонською пишуть так, як вимовляють. Кожну літеру читаєш, і кожна звучить однаково, де б не стояла. Знаючи літери, ти прочитаєш уголос і нове слово."
+
+msgid "father"
+msgstr "батько"
+
+msgid "fire"
+msgstr "вогонь"
+
+msgid "Five look familiar. The four with marks are separate letters, not accents, and swapping one changes the word. English has no sound like <0/>."
+msgstr "П’ять виглядають знайомо. Чотири зі значками — окремі літери, а не різновиди звичних, і якщо замінити одну, вийде інше слово. Звуку, як <0/>, в українській немає."
+
+msgid "From kool, school."
+msgstr "Від kool — школа."
+
+msgid "From linn, town."
+msgstr "Від linn — місто."
+
+msgid "From tuul, wind."
+msgstr "Від tuul — вітер."
+
+msgid "handle, as on a bucket"
+msgstr "дужка, як у відра"
+
+msgid "hello"
+msgstr "привіт"
+
+msgid "How Estonian sounds: nine vowels, letters that always sound the same, and length that changes the word."
+msgstr "Як звучить естонська: дев’ять голосних, літери, що завжди звучать однаково, і довгота, яка змінює слово."
+
+msgid "I"
+msgstr "я"
+
+msgid "junk, clutter"
+msgstr "мотлох, непотріб"
+
+msgid "Kas sa tuled? Are you coming?"
+msgstr "Kas sa tuled? Чи ти прийдеш?"
+
+msgid "land, country; the ground"
+msgstr "земля, країна; ґрунт"
+
+msgid "library"
+msgstr "бібліотека"
+
+msgid "Like the a in “cat”."
+msgstr "Як «a» в англійському «cat»."
+
+msgid "Like the a in “father”, but short."
+msgstr "Як «а» в слові «мама»."
+
+msgid "Like the e in “bed”."
+msgstr "Як «е» в слові «село»."
+
+msgid "Like the ee in “see”, but short, never like “ice”."
+msgstr "Як «і» в слові «ліс»."
+
+msgid "Like the o in “more”, but short."
+msgstr "Як «о» в слові «сон»."
+
+msgid "Like the oo in “food”, but short."
+msgstr "Як «у» в слові «тут»."
+
+msgid "linen; a bedsheet"
+msgstr "льон; простирадло"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Mix these up and you say another word: <0/> is an ear and <1/> a basket. <2/> is one and <3/> a door. Listen and pick the word you hear."
+msgstr "Сплутаєш їх — і скажеш інше слово: <0/> — це вухо, а <1/> — кошик. <2/> — один, а <3/> — двері. Послухай і вибери слово, яке чуєш."
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Майже всі. Переслухай ще раз ті, де були помилки."
+
+msgid "mother"
+msgstr "мати"
+
+msgid "night"
+msgstr "ніч"
+
+msgid "Nine vowels"
+msgstr "Дев’ять голосних"
+
+msgid "No English sound is like it. Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
+msgstr "В українській такого звуку немає. Найближче до нього російське «ы», трохи схоже й українське «и». Скажи «о», потім розтягни губи, а язик залиш на місці."
+
+msgid "Õ or o, ä or a, ü or u"
+msgstr "Õ чи o, ä чи a, ü чи u"
+
+msgid "of the town; into town"
+msgstr "міста; у місто"
+
+msgid "of the wind"
+msgstr "вітру"
+
+msgid "old"
+msgstr "старий"
+
+msgid "one"
+msgstr "один"
+
+msgid "One letter or two?"
+msgstr "Одна літера чи дві?"
+
+msgid "One letter or two? Listen, then fill the gap."
+msgstr "Одна літера чи дві? Послухай і заповни пропуск."
+
+msgid "One word for both."
+msgstr "Одне слово з обома значеннями."
+
+msgid "Pick a pair. Both words are drawn on one time scale, so the longer one takes more room."
+msgstr "Вибери пару. Обидва слова показано на одній шкалі часу, тож довше займає більше місця."
+
+msgid "Pick each pair above again and hear which word is longer."
+msgstr "Ще раз вибери кожну пару вище й послухай, яке слово довше."
+
+msgid "Raamat, book, and kogu, collection."
+msgstr "Raamat — книга, kogu — збірка."
+
+msgid "Read it as it’s written"
+msgstr "Читай, як написано"
+
+msgid "road; tea"
+msgstr "дорога; чай"
+
+msgid "Said to one person, from kandma. Also “of the heel”, from kand."
+msgstr "Так кажуть одній людині, від kandma. А ще «п’яти», від kand."
+
+msgid "Said to one person."
+msgstr "Так кажуть одній людині."
+
+msgid "Say e with rounded lips, as in German “schön”."
+msgstr "Скажи «е», округливши губи, як у німецькому «schön»."
+
+msgid "Say every letter the way it’s written."
+msgstr "Вимовляй кожну літеру так, як написано."
+
+msgid "Say i with rounded lips, as in German “über” or French “tu”."
+msgstr "Скажи «і», округливши губи, як у німецькому «über» чи французькому «tu»."
+
+msgid "Say o, then spread your lips and keep your tongue where it was. Russian ы is close."
+msgstr "Скажи «о», потім розтягни губи, а язик залиш на місці. Близьке до російського «ы», трохи схоже й українське «и»."
+
+msgid "school"
+msgstr "школа"
+
+msgid "send!"
+msgstr "надішли!"
+
+msgid "Short and long"
+msgstr "Короткі й довгі звуки"
+
+msgid "Short for mina."
+msgstr "Скорочено від mina."
+
+msgid "Spell what you hear"
+msgstr "Напиши, що чуєш"
+
+msgid "spider"
+msgstr "павук"
+
+msgid "Stress falls on the <0>first syllable</0>. Tap a word to hear it."
+msgstr "Наголос падає на <0>перший склад</0>. Натисни на слово, щоб його почути."
+
+msgid "Stress the first syllable."
+msgstr "Наголошуй перший склад."
+
+msgid "Tap a vowel"
+msgstr "Натисни на голосну"
+
+msgid "Tap õ, ä and ü in the vowels above once more, then try again."
+msgstr "Ще раз натисни õ, ä і ü серед голосних вище, потім спробуй знову."
+
+msgid "thank you"
+msgstr "дякую"
+
+msgid "the letter õ"
+msgstr "літера õ"
+
+msgid "The letters <0>õ ä ö ü</0> are vowels of their own, and English has no sound like <1>õ</1>."
+msgstr "Літери <0>õ ä ö ü</0> — окремі голосні, а звуку <1>õ</1> в українській немає."
+
+msgid "to school"
+msgstr "до школи"
+
+msgid "town, city"
+msgstr "місто"
+
+msgid "turns a sentence into a yes-or-no question"
+msgstr "робить із речення питання «так чи ні»"
+
+msgid "uncle"
+msgstr "дядько"
+
+msgid "Vowels"
+msgstr "Голосні"
+
+msgid "Which word did you hear?"
+msgstr "Яке слово прозвучало?"
+
+msgid "window"
+msgstr "вікно"
+
+msgid "yes"
+msgstr "так"
+
+msgid "you, to more than one; polite you"
+msgstr "ви; ввічливе «Ви»"
+
+msgid "You’ll hear it in a word, with a note on how to say it."
+msgstr "Почуєш її в слові й дізнаєшся, як її вимовляти."

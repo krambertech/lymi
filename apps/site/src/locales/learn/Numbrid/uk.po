@@ -1,0 +1,263 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "-teist or -kümmend?"
+msgstr "-teist чи -kümmend?"
+
+msgid "<0/> is a hundred and <1/> a thousand, with no “one” in front of either. Hundreds join into one word, <2/>, but thousands stay separate: <3/>."
+msgstr "<0/> — це сто, а <1/> — тисяча, і «один» перед ними не кажуть. Сотні пишуться разом, <2/>, а тисячі окремо: <3/>."
+
+msgid "<0/> is twelve and <1/> is twenty. Both start with kaks, so listen to how the word ends."
+msgstr "<0/> — дванадцять, а <1/> — двадцять. Обидва починаються з kaks, тож слухай, як закінчується слово."
+
+msgid "<0>Sada</0> and <1>tuhat</1> need no “one”. Hundreds join up; thousands stay separate."
+msgstr "Перед <0>sada</0> і <1>tuhat</1> «один» не кажуть. Сотні пишуться разом, тисячі окремо."
+
+msgid "0 to 10"
+msgstr "0–10"
+
+msgid "10 minutes"
+msgstr "10 хвилин"
+
+msgid "11 to 19"
+msgstr "11–19"
+
+msgid "20 to 100"
+msgstr "20–100"
+
+msgid "3 quizzes"
+msgstr "3 тести"
+
+msgid "A digit after the tens is a word of its own: <0/>, twenty-one. Slide to any number and hear how it’s built."
+msgstr "Цифра після десятків — окреме слово: <0/>, двадцять один. Посунь повзунок до будь-якого числа й послухай, як воно складається."
+
+msgid "a hundred"
+msgstr "сто"
+
+msgid "a thousand"
+msgstr "тисяча"
+
+msgid "A year has 365 days."
+msgstr "У році 365 днів."
+
+msgid "Add <0>-teist</0> to a digit and you have eleven to nineteen: <1/>, <2/>, <3/>. Word for word, üksteist is “one of the second ten”."
+msgstr "Додай <0>-teist</0> до цифри — і маєш числа від одинадцяти до дев’ятнадцяти: <1/>, <2/>, <3/>. Дослівно üksteist — «один другого десятка»."
+
+msgid "All of them, by ear."
+msgstr "Усі правильно, на слух."
+
+msgid "All of them, inside real sentences."
+msgstr "Усі правильно, у справжніх реченнях."
+
+msgid "An hour has 60 minutes."
+msgstr "У годині 60 хвилин."
+
+msgid "Big numbers"
+msgstr "Великі числа"
+
+msgid "Built from <0>{teen}</0> and -teist: {digit} in the second ten."
+msgstr "Складається з <0>{teen}</0> і -teist: {digit} у другому десятку."
+
+msgid "Built from <0>{tensWord}</0> and -kümmend: {tens} tens, then <1>{ones}</1> as a word of its own."
+msgstr "Складається з <0>{tensWord}</0> і -kümmend: {tens} × 10, потім <1>{ones}</1> окремим словом."
+
+msgid "Built from <0>{tensWord}</0> and -kümmend: {tens} tens."
+msgstr "Складається з <0>{tensWord}</0> і -kümmend: {tens} × 10."
+
+msgid "Coffee costs €3.50."
+msgstr "Кава коштує 3,50 €."
+
+msgid "eight"
+msgstr "вісім"
+
+msgid "eleven"
+msgstr "одинадцять"
+
+msgid "Eleven to nineteen"
+msgstr "Від одинадцяти до дев’ятнадцяти"
+
+msgid "Eleven to nineteen: -teist"
+msgstr "Від 11 до 19: -teist"
+
+msgid "Eurot is the partitive of euro."
+msgstr "Eurot — партитив від euro."
+
+msgid "five"
+msgstr "п’ять"
+
+msgid "For the tens, add <0>-kümmend</0> to the digit: <1/> is two tens, twenty."
+msgstr "Для десятків додай до цифри <0>-kümmend</0>: <1/> — два десятки, двадцять."
+
+msgid "four"
+msgstr "чотири"
+
+msgid "Here each number comes inside a sentence: a price, an age, a phone number. Type the number you hear."
+msgstr "Тут кожне число звучить посеред речення: ціна, вік, номер телефону. Введи число, яке чуєш."
+
+msgid "Hundreds and thousands"
+msgstr "Сотні й тисячі"
+
+msgid "Hundreds join into one word."
+msgstr "Сотні пишуться разом."
+
+msgid "I have three cats."
+msgstr "У мене три коти."
+
+msgid "I’m 34 years old."
+msgstr "Мені 34 роки."
+
+msgid "Kassi is the partitive of kass, cat."
+msgstr "Kassi — партитив від kass, кіт."
+
+msgid "Learn eleven words, <0>null</0> to <1>kümme</1>. Every number up to 99 is built from them."
+msgstr "Вивчи одинадцять слів, від <0>null</0> до <1>kümme</1>. З них будується кожне число до 99."
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Майже всі. Переслухай ще раз ті, де були помилки."
+
+msgid "My flat is number 16."
+msgstr "Моя квартира — номер 16."
+
+msgid "My number is 5 2 0 9 4."
+msgstr "Мій номер — 5 2 0 9 4."
+
+msgid "nine"
+msgstr "дев’ять"
+
+msgid "Number"
+msgstr "Число"
+
+msgid "Numbers by ear. Eleven words and two endings take you to ninety-nine."
+msgstr "Числа на слух. Одинадцять слів і дві частини, -teist і -kümmend, доведуть тебе до дев’яноста дев’яти."
+
+msgid "Numbers in the wild"
+msgstr "Числа в житті"
+
+msgid "one"
+msgstr "один"
+
+msgid "One less"
+msgstr "На одиницю менше"
+
+msgid "One more"
+msgstr "На одиницю більше"
+
+msgid "One of the eleven base words."
+msgstr "Одне з одинадцяти базових слів."
+
+msgid "Pick a range, listen, and type the number in digits."
+msgstr "Вибери діапазон, послухай і введи число цифрами."
+
+msgid "Play {n}"
+msgstr "Відтворити {n}"
+
+msgid "Play each number twice before you type."
+msgstr "Прослухай кожне число двічі, перш ніж писати."
+
+msgid "Play each sentence twice before you type."
+msgstr "Прослухай кожне речення двічі, перш ніж писати."
+
+msgid "Put them together"
+msgstr "Складаємо разом"
+
+msgid "Range"
+msgstr "Діапазон"
+
+msgid "Sada alone, with no “one” in front."
+msgstr "Лише sada, без «один» перед ним."
+
+msgid "seven"
+msgstr "сім"
+
+msgid "six"
+msgstr "шість"
+
+msgid "ten"
+msgstr "десять"
+
+msgid "Tens and ones are separate words: <0>kakskümmend üks</0>."
+msgstr "Десятки й одиниці — окремі слова: <0>kakskümmend üks</0>."
+
+msgid "The ending <0>-teist</0> makes eleven to nineteen, and <1>-kümmend</1> makes the tens."
+msgstr "З <0>-teist</0> виходять числа від одинадцяти до дев’ятнадцяти, а з <1>-kümmend</1> — десятки."
+
+msgid "The tens"
+msgstr "Десятки"
+
+msgid "The tens: -kümmend"
+msgstr "Десятки: -kümmend"
+
+msgid "The word after the number changes too: <0/>, <1/>. That form is the partitive, which lesson {partitive} explains. For now, listen for the number."
+msgstr "Слово після числа теж змінюється: <0/>, <1/>. Ця форма — партитив, її пояснює урок {partitive}. Поки що слухай число."
+
+msgid "There are 22 pupils in the class."
+msgstr "У класі 22 учні."
+
+msgid "These eleven words build every number up to 99. Tap each one. Two pairs sound alike: <0/> and <1/>, <2/> and <3/>."
+msgstr "З цих одинадцяти слів будується кожне число до 99. Натисни на кожне. Дві пари звучать схоже: <0/> і <1/>, <2/> і <3/>."
+
+msgid "thirteen"
+msgstr "тринадцять"
+
+msgid "This costs twelve euros."
+msgstr "Це коштує дванадцять євро."
+
+msgid "Thousands stay a separate word."
+msgstr "Тисячі пишуться окремо."
+
+msgid "three"
+msgstr "три"
+
+msgid "three cats"
+msgstr "три коти"
+
+msgid "Try"
+msgstr "Спробуй"
+
+msgid "twelve"
+msgstr "дванадцять"
+
+msgid "twelve euros"
+msgstr "дванадцять євро"
+
+msgid "twenty"
+msgstr "двадцять"
+
+msgid "twenty-one"
+msgstr "двадцять один"
+
+msgid "two"
+msgstr "два"
+
+msgid "two hundred"
+msgstr "двісті"
+
+msgid "two thousand"
+msgstr "дві тисячі"
+
+msgid "Type the number you hear"
+msgstr "Введи число, яке чуєш"
+
+msgid "Type what you hear"
+msgstr "Введи почуте"
+
+msgid "What number was in it?"
+msgstr "Яке число було в реченні?"
+
+msgid "Which number did you hear?"
+msgstr "Яке число прозвучало?"
+
+msgid "zero"
+msgstr "нуль"
+
+msgid "Zero to ten"
+msgstr "Від нуля до десяти"

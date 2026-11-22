@@ -1,0 +1,257 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "10 minutes"
+msgstr "10 minutes"
+
+msgid "2 quizzes"
+msgstr "2 quizzes"
+
+msgid "A dictionary lists a verb in its -ma form: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
+msgstr "A dictionary lists a verb in its -ma form: <0/>, to live. Take off -ma and you have the stem, <1>ela-</1>. The ending goes on the stem: <2/>, I live."
+
+msgid "A dictionary lists a verb in its -ma form: <0>elama</0>, to live. The endings go on its stem, <1>ela-</1>."
+msgstr "A dictionary lists a verb in its -ma form: <0>elama</0>, to live. The endings go on its stem, <1>ela-</1>."
+
+msgid "All of them. You hear who does it."
+msgstr "All of them. You hear who does it."
+
+msgid "All six. You matched every pronoun with its ending."
+msgstr "All six. You matched every pronoun with its ending."
+
+msgid "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
+msgstr "As with olema, the ending already says who, so ma, sa, me and te often go: <0/>. To set two people side by side, use the long pronouns from lesson {pronouns}: <1/>."
+
+msgid "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
+msgstr "Each pronoun has its ending: <0>ma -n, sa -d, ta -b, me -me, te -te, nad -vad</0>, so <1>elan, elad, elab, elame, elate, elavad</1>."
+
+msgid "Endings of elama"
+msgstr "Endings of elama"
+
+msgid "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
+msgstr "Estonian has one present tense. <0/> means both I read and I’m reading, and the rest of the sentence tells you which. Tap a sentence to hear it."
+
+msgid "Fill the ending"
+msgstr "Fill the ending"
+
+msgid "Go back to the endings above, then try again."
+msgstr "Go back to the endings above, then try again."
+
+msgid "he or she is; they are"
+msgstr "he or she is; they are"
+
+msgid "he or she lives"
+msgstr "he or she lives"
+
+msgid "He or she speaks Estonian."
+msgstr "He or she speaks Estonian."
+
+msgid "He or she works from home."
+msgstr "He or she works from home."
+
+msgid "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
+msgstr "Hear a sentence and pick the verb in it. The answers differ only in the ending, so listen to the end of the verb."
+
+msgid "Here they are on <0/>, to live. The two new ones are in colour. Tap an ending."
+msgstr "Here they are on <0/>, to live. The two new ones are in colour. Tap an ending."
+
+msgid "I am"
+msgstr "I am"
+
+msgid "I drink coffee, he or she drinks water."
+msgstr "I drink coffee, he or she drinks water."
+
+msgid "I live"
+msgstr "I live"
+
+msgid "I live in Tallinn."
+msgstr "I live in Tallinn."
+
+msgid "I love you."
+msgstr "I love you."
+
+msgid "I read, I’m reading"
+msgstr "I read, I’m reading"
+
+msgid "I read; I’m reading"
+msgstr "I read; I’m reading"
+
+msgid "I’m learning Estonian."
+msgstr "I’m learning Estonian."
+
+msgid "I’m reading a book."
+msgstr "I’m reading a book."
+
+msgid "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
+msgstr "In lesson {pronouns} you met <0/>, to be: <1/>, <2/>, <3/>, <4/>. Most verbs take the same endings. Where olema says <5/>, they have two of their own: <6>-b</6> for he or she and <7>-vad</7> for they."
+
+msgid "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don’t need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you’ll add a third form, <4>lugeda</4>."
+msgstr "In some verbs the stem changes: <0/>, to read, has the stem <1>loe-</1>, so I read is <2/>. You don’t need the rule for that yet. Learn each verb with its I form: <3>lugema, loen</3>. Take off -n and the rest is the stem. In lesson {verbForms} you’ll add a third form, <4>lugeda</4>."
+
+msgid "Listen to the very end of the verb, then try again."
+msgstr "Listen to the very end of the verb, then try again."
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Long forms, because the two people are set side by side."
+msgstr "Long forms, because the two people are set side by side."
+
+msgid "More than one"
+msgstr "More than one"
+
+msgid "Most of them. Play the ones you missed once more."
+msgstr "Most of them. Play the ones you missed once more."
+
+msgid "Nearly. Tap the endings above once more."
+msgstr "Nearly. Tap the endings above once more."
+
+msgid "No ma: the ending -n already says I."
+msgstr "No ma: the ending -n already says I."
+
+msgid "One person"
+msgstr "One person"
+
+msgid "One present tense for both."
+msgstr "One present tense for both."
+
+msgid "One present tense: <0>ma loen</0> is both I read and I’m reading."
+msgstr "One present tense: <0>ma loen</0> is both I read and I’m reading."
+
+msgid "Pick the ending that goes with the pronoun, then hear the sentence."
+msgstr "Pick the ending that goes with the pronoun, then hear the sentence."
+
+msgid "Play {text}"
+msgstr "Play {text}"
+
+msgid "Six endings"
+msgstr "Six endings"
+
+msgid "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
+msgstr "Some stems change: <0>lugema, loen</0>. Learn each verb with its I form."
+
+msgid "Stem {stem}-: ma {form}."
+msgstr "Stem {stem}-: ma {form}."
+
+msgid "Stem and ending"
+msgstr "Stem and ending"
+
+msgid "Stems such as <0>loe-</0> and <1>räägi-</1> lose or change a consonant inside the word. Lesson {gradation} explains the rule, called consonant gradation."
+msgstr "Stems such as <0>loe-</0> and <1>räägi-</1> lose or change a consonant inside the word. Lesson {gradation} explains the rule, called consonant gradation."
+
+msgid "Tallinnas ends in -s, which means in; lesson {where} explains that ending. Keelt and raamatut are in the partitive, a form an object often takes, which lesson {partitive} explains. For now, learn them as phrases."
+msgstr "Tallinnas ends in -s, which means in; lesson {where} explains that ending. Keelt and raamatut are in the partitive, a form an object often takes, which lesson {partitive} explains. For now, learn them as phrases."
+
+msgid "Tap an ending"
+msgstr "Tap an ending"
+
+msgid "Ten everyday verbs, the stem each one builds on, and six endings that say who does it."
+msgstr "Ten everyday verbs, the stem each one builds on, and six endings that say who does it."
+
+msgid "The ending for ma, I."
+msgstr "The ending for ma, I."
+
+msgid "The ending for me, we."
+msgstr "The ending for me, we."
+
+msgid "The ending for nad, they. Olema has on here too."
+msgstr "The ending for nad, they. Olema has on here too."
+
+msgid "The ending for sa, you."
+msgstr "The ending for sa, you."
+
+msgid "The ending for ta, he or she. Olema has on here."
+msgstr "The ending for ta, he or she. Olema has on here."
+
+msgid "The ending for te: you, to more than one; polite you."
+msgstr "The ending for te: you, to more than one; polite you."
+
+msgid "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
+msgstr "The ending says who, so ma, sa, me and te can go: <0>Elan Tallinnas.</0>"
+
+msgid "They eat at home."
+msgstr "They eat at home."
+
+msgid "they live"
+msgstr "they live"
+
+msgid "They’re drinking coffee."
+msgstr "They’re drinking coffee."
+
+msgid "to be"
+msgstr "to be"
+
+msgid "to do, to make"
+msgstr "to do, to make"
+
+msgid "to drink"
+msgstr "to drink"
+
+msgid "to eat"
+msgstr "to eat"
+
+msgid "to learn, to study"
+msgstr "to learn, to study"
+
+msgid "to live"
+msgstr "to live"
+
+msgid "to love"
+msgstr "to love"
+
+msgid "to read"
+msgstr "to read"
+
+msgid "to speak, to talk"
+msgstr "to speak, to talk"
+
+msgid "to wait"
+msgstr "to wait"
+
+msgid "to work"
+msgstr "to work"
+
+msgid "Verbs"
+msgstr "Verbs"
+
+msgid "we are"
+msgstr "we are"
+
+msgid "we live"
+msgstr "we live"
+
+msgid "We’re waiting for the bus."
+msgstr "We’re waiting for the bus."
+
+msgid "What are you doing?"
+msgstr "What are you doing?"
+
+msgid "Which ending?"
+msgstr "Which ending?"
+
+msgid "Which form did you hear?"
+msgstr "Which form did you hear?"
+
+msgid "you are"
+msgstr "you are"
+
+msgid "you are, to more than one; polite you are"
+msgstr "you are, to more than one; polite you are"
+
+msgid "you live"
+msgstr "you live"
+
+msgid "you live, to more than one; polite you live"
+msgstr "you live, to more than one; polite you live"
+
+msgid "You speak very well."
+msgstr "You speak very well."
+
+msgid "You’ll hear elama with it and who it’s for."
+msgstr "You’ll hear elama with it and who it’s for."

@@ -1,0 +1,357 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "<0/> <1/> Lesson {going} explains what the <2>-ma</2> form means after <3>lähen</3>. Tap a verb to hear it in a sentence."
+msgstr "<0/> <1/> Что значит форма на <2>-ma</2> после <3>lähen</3>, объясняет урок {going}. Коснись глагола, чтобы услышать его в предложении."
+
+msgid "<0/> takes the <1>-ma</1> form, and so do <2/>, <3/>, <4/> and <5/>."
+msgstr "<0/> требует формы на <1>-ma</1>, как и <2/>, <3/>, <4/> и <5/>."
+
+msgid "<0/>, <1/> and <2/> can all translate as I can. Lesson {canMay} tells them apart; the form after them is the same."
+msgstr "<0/>, <1/> и <2/> можно перевести как «я могу». Чем они отличаются, объясняет урок {canMay}; форма после них одна и та же."
+
+msgid "<0/>, I like, is the eighth: <1/> Tap a verb to hear it in a sentence."
+msgstr "Восьмой — <0/>, «мне нравится»: <1/> Коснись глагола, чтобы услышать его в предложении."
+
+msgid "<0/>, to learn, takes the <1>-ma</1> form when you learn to do something: <2/>"
+msgstr "<0/>, «учиться», требует формы на <1>-ma</1>, когда учишься что-то делать: <2/>"
+
+msgid "<0>Ma tahan lugeda</0> is I want to read, and <1>Ma pean lugema</1> is I have to read. The first verb decides whether the second takes its <2>-da</2> or its <3>-ma</3> form."
+msgstr "<0>Ma tahan lugeda</0> — это «я хочу читать», а <1>Ma pean lugema</1> — «мне надо читать». Первый глагол решает, в какой форме будет второй: на <2>-da</2> или на <3>-ma</3>."
+
+msgid "<0>Mulle meeldib</0> is I like. Lesson {liking} explains how it works."
+msgstr "<0>Mulle meeldib</0> — это «мне нравится». Как это устроено, объясняет урок {liking}."
+
+msgid "<0>Pean, hakkan, lähen, tule</0> and <1>jään</1> take the <2>-ma</2> form."
+msgstr "<0>Pean, hakkan, lähen, tule</0> и <1>jään</1> требуют формы на <2>-ma</2>."
+
+msgid "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> and <1>mulle meeldib</1> take the <2>-da</2> form."
+msgstr "<0>Tahan, võin, saan, oskan, tohin, proovin, armastan</0> и <1>mulle meeldib</1> требуют формы на <2>-da</2>."
+
+msgid "12 minutes"
+msgstr "12 минут"
+
+msgid "A sort, sentences to build and a message to fill in"
+msgstr "Сортировка, предложения из слов и сообщение с пропусками"
+
+msgid "After <0/>, I want, comes the <1>-da</1> form: <2/> After <3/>, I have to, comes the <4>-ma</4> form: <5/>"
+msgstr "После <0/>, «я хочу», идёт форма на <1>-da</1>: <2/> После <3/>, «мне надо», — форма на <4>-ma</4>: <5/>"
+
+msgid "After <0>{lead}</0>, the <1>-da</1> form, and it goes last."
+msgstr "После <0>{lead}</0> — форма на <1>-da</1>, в конце."
+
+msgid "After <0>{lead}</0>, the <1>-ma</1> form, and it goes last."
+msgstr "После <0>{lead}</0> — форма на <1>-ma</1>, в конце."
+
+msgid "After <0>mulle meeldib</0>, the <1>-da</1> form."
+msgstr "После <0>mulle meeldib</0> — форма на <1>-da</1>."
+
+msgid "After <0>pean</0>, the <1>-ma</1> form, even with words between."
+msgstr "После <0>pean</0> — форма на <1>-ma</1>, даже когда между ними стоят другие слова."
+
+msgid "After <0>pean</0>, the <1>-ma</1> form."
+msgstr "После <0>pean</0> — форма на <1>-ma</1>."
+
+msgid "After <0>tahad</0>, from <1>tahtma</1>, the <2>-da</2> form."
+msgstr "После <0>tahad</0> (от <1>tahtma</1>) — форма на <2>-da</2>."
+
+msgid "After <0>tahan</0>, <1>pean</1> and the other verbs in this lesson, the second verb takes its <2>-da</2> or <3>-ma</3> form: <4>Ma tahan lugeda. Ma pean lugema.</4>"
+msgstr "После <0>tahan</0>, <1>pean</1> и других глаголов этого урока второй глагол стоит в форме на <2>-da</2> или на <3>-ma</3>: <4>Ma tahan lugeda. Ma pean lugema.</4>"
+
+msgid "After <0>tahan</0>, the <1>-da</1> form."
+msgstr "После <0>tahan</0> — форма на <1>-da</1>."
+
+msgid "All three. Each second verb took the right form and went last."
+msgstr "Все три. Второй глагол каждый раз в нужной форме и в конце."
+
+msgid "Build each sentence from what it means. One tile is the wrong form of the second verb and stays out."
+msgstr "Собери каждое предложение по его значению. Одна плитка — неправильная форма второго глагола, она лишняя."
+
+msgid "Build the sentence"
+msgstr "Собери предложение"
+
+msgid "Check which form each second verb takes and where it goes, then try again."
+msgstr "Проверь, в какой форме второй глагол и где он стоит, и попробуй снова."
+
+msgctxt "command"
+msgid "come"
+msgstr "приходи"
+
+msgid "Come and eat."
+msgstr "Иди есть."
+
+msgid "Fill the gaps"
+msgstr "Заполни пропуски"
+
+msgid "From hakkama, to start."
+msgstr "От hakkama, «начинать»."
+
+msgid "From jääma, to stay."
+msgstr "От jääma, «оставаться»."
+
+msgid "From minema, to go."
+msgstr "От minema, «идти»."
+
+msgid "From oskama."
+msgstr "От oskama."
+
+msgid "From pidama, to have to."
+msgstr "От pidama, «быть должным»."
+
+msgid "From saama."
+msgstr "От saama."
+
+msgid "From tahtma, to want."
+msgstr "От tahtma, хотеть."
+
+msgid "From tohtima."
+msgstr "От tohtima."
+
+msgid "From võima."
+msgstr "От võima."
+
+msgid "I can come tomorrow."
+msgstr "Я могу прийти завтра."
+
+msgid "I can speak a little Estonian."
+msgstr "Я немного умею говорить по-эстонски."
+
+msgid "I can wait for you."
+msgstr "Я могу тебя подождать."
+
+msgid "I can, I get to"
+msgstr "я могу, у меня есть возможность"
+
+msgid "I can, I know how to"
+msgstr "я умею"
+
+msgid "I go, I’m going"
+msgstr "я иду"
+
+msgid "I have to …"
+msgstr "Мне надо …"
+
+msgid "I have to go to work tomorrow."
+msgstr "Завтра мне надо идти на работу."
+
+msgid "I have to go to work."
+msgstr "Мне надо идти на работу."
+
+msgid "I have to go."
+msgstr "Мне надо идти."
+
+msgid "I have to read."
+msgstr "Мне надо читать."
+
+msgid "I have to, I must"
+msgstr "мне надо, нужно"
+
+msgid "I like"
+msgstr "мне нравится"
+
+msgid "I like drinking coffee."
+msgstr "Мне нравится пить кофе."
+
+msgid "I love"
+msgstr "я люблю"
+
+msgid "I love reading."
+msgstr "Я люблю читать."
+
+msgid "I may, I can"
+msgstr "я могу, мне можно"
+
+msgid "I start"
+msgstr "я начинаю"
+
+msgid "I stay"
+msgstr "я остаюсь"
+
+msgid "I try"
+msgstr "я пробую"
+
+msgid "I want"
+msgstr "я хочу"
+
+msgid "I want to …"
+msgstr "Я хочу …"
+
+msgid "I want to eat."
+msgstr "Я хочу есть."
+
+msgid "I want to go to town tomorrow."
+msgstr "Завтра я хочу пойти в город."
+
+msgid "I want to read at home today."
+msgstr "Сегодня я хочу почитать дома."
+
+msgid "I want to read."
+msgstr "Я хочу читать."
+
+msgid "I’m allowed to"
+msgstr "мне можно"
+
+msgid "I’m allowed to work from home."
+msgstr "Мне можно работать дома."
+
+msgid "I’m going for a coffee."
+msgstr "Я иду пить кофе."
+
+msgid "I’m learning to read."
+msgstr "Я учусь читать."
+
+msgid "I’m starting to learn Estonian."
+msgstr "Я начинаю учить эстонский."
+
+msgid "I’m staying home to read."
+msgstr "Я остаюсь дома, чтобы почитать."
+
+msgid "I’m trying to learn Estonian."
+msgstr "Я пытаюсь учить эстонский."
+
+msgid "In lesson {verbForms}, <0/> and <1/> both meant to read. Which one you use depends on the verb before it."
+msgstr "В уроке {verbForms} <0/> и <1/> оба значили «читать». Какую из двух форм взять, зависит от глагола перед ней."
+
+msgid "Its <0>-ma</0> form is <1>{verb}</1>."
+msgstr "Его форма на <0>-ma</0> — <1>{verb}</1>."
+
+msgid "Its <0>-ma</0> form is <1>hakkama</1>. Lesson {future} uses it for the future."
+msgstr "Его форма на <0>-ma</0> — <1>hakkama</1>. В уроке {future} с ним строят будущее время."
+
+msgid "Its I form is õpin."
+msgstr "Форма для «я» — õpin."
+
+msgid "Listening only, no microphone"
+msgstr "Только на слух, без микрофона"
+
+msgid "Mari writes to her friend Jaan. In each gap, pick the <0>-ma</0> form, the <1>-da</1> form or the present. The verb before the gap decides; with no verb before it, the present fits."
+msgstr "Мари пишет другу Яану. В каждый пропуск выбери форму на <0>-ma</0>, на <1>-da</1> или настоящее время. Решает глагол перед пропуском; если его нет, подходит настоящее время."
+
+msgid "Mari’s message"
+msgstr "Сообщение от Мари"
+
+msgid "Mulle is to me. Learn it as a phrase for now."
+msgstr "Mulle — это «мне». Пока запомни это как готовое выражение."
+
+msgid "No verb comes before it, so the present: <0>ma lähen</0>."
+msgstr "Перед ним нет другого глагола, поэтому настоящее время: <0>ma lähen</0>."
+
+msgid "No verb comes before it, so the present: <0>ma ootan</0>."
+msgstr "Перед ним нет другого глагола, поэтому настоящее время: <0>ma ootan</0>."
+
+msgid "One verb after another"
+msgstr "Глагол после глагола"
+
+msgid "Only the first verb changes for the person: <0>nad tahavad lugeda</0>."
+msgstr "От лица зависит только первый глагол: <0>nad tahavad lugeda</0>."
+
+msgid "Only the first verb takes the person ending from lesson {present}; the second stays as it is: <0/> <1/> Tap a form to hear the whole sentence."
+msgstr "Личное окончание из урока {present} получает только первый глагол; второй не меняется: <0/> <1/> Коснись формы, чтобы услышать всё предложение."
+
+msgid "Put each verb with the form that follows it. Tap a verb to hear it, then tap its group."
+msgstr "Разложи глаголы по форме, которая идёт после них. Коснись глагола, чтобы услышать его, а потом — его группы."
+
+msgid "Six verbs after I want and I have to"
+msgstr "Шесть глаголов после «я хочу» и «мне надо»"
+
+msgid "Sort the verbs"
+msgstr "Разложи глаголы"
+
+msgid "Tap a form"
+msgstr "Коснись формы"
+
+msgid "Tap a line to hear the sentence grow. Lesson {wordOrder} has more on where Estonian puts its words."
+msgstr "Коснись строки и послушай, как растёт предложение. Подробнее о порядке слов в эстонском — в уроке {wordOrder}."
+
+msgid "Tap a verb"
+msgstr "Коснись глагола"
+
+msgid "The -da form of lugema."
+msgstr "Форма на -da от lugema."
+
+msgid "The -da form of tegema."
+msgstr "Форма на -da от tegema."
+
+msgid "The -ma form. Its -da form is lugeda."
+msgstr "Форма на -ma. Его форма на -da — lugeda."
+
+msgid "The -ma form. Its -da form is teha."
+msgstr "Форма на -ma. Его форма на -da — teha."
+
+msgid "The <0>-da</0> form follows <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> and <2>mulle meeldib</2>."
+msgstr "Форма на <0>-da</0> идёт после <1>tahan, võin, saan, oskan, tohin, proovin, armastan</1> и <2>mulle meeldib</2>."
+
+msgid "The <0>-ma</0> form follows <1>pean, hakkan, lähen, tule</1> and <2>jään</2>. <3>Õpin</3> takes it too when you learn to do something: <4>Ma õpin lugema.</4>"
+msgstr "Форма на <0>-ma</0> идёт после <1>pean, hakkan, lähen, tule</1> и <2>jään</2>. После <3>õpin</3> тоже, когда учишься что-то делать: <4>Ma õpin lugema.</4>"
+
+msgid "The command of <0>tulema</0>, to come, from lesson {commands}."
+msgstr "Команда от <0>tulema</0>, «приходить», из урока {commands}."
+
+msgid "The command of tulema, to come."
+msgstr "Команда от tulema, «приходить»."
+
+msgid "The eight verbs below take the <0>-da</0> form, <1/> among them: <2/> <3/>"
+msgstr "Форму на <0>-da</0> требуют восемь глаголов ниже, среди них <1/>: <2/> <3/>"
+
+msgid "The second verb usually goes last: <0>Ma pean homme tööle minema.</0>"
+msgstr "Второй глагол обычно стоит в конце: <0>Ma pean homme tööle minema.</0>"
+
+msgid "They have to read."
+msgstr "Они должны читать."
+
+msgid "They want to read."
+msgstr "Они хотят читать."
+
+msgid "To check a verb that isn’t here, look it up in <0>Sõnaveeb</0>, as lesson {nounForms} shows. <1/> and <2/> are the <3>-da</3> and <4>-ma</4> forms of to do, and <5>Sõnaveeb</5> uses them to say which form a verb takes. Under <6>Rektsioon</6>, <7>mida teha</7> means the <8>-da</8> form and <9>mida tegema</9> the <10>-ma</10> form."
+msgstr "Чтобы проверить глагол, которого здесь нет, найди его в <0>Sõnaveeb</0>, как показывает урок {nounForms}. <1/> и <2/> — это «делать» в форме на <3>-da</3> и на <4>-ma</4>, и <5>Sõnaveeb</5> ими обозначает, какую форму требует глагол. В строке <6>Rektsioon</6> надпись <7>mida teha</7> означает форму на <8>-da</8>, а <9>mida tegema</9> — форму на <10>-ma</10>."
+
+msgid "to come"
+msgstr "приходить"
+
+msgid "to do, to make"
+msgstr "делать"
+
+msgid "to eat"
+msgstr "есть"
+
+msgid "to go"
+msgstr "идти"
+
+msgid "to learn, to study"
+msgstr "учить, учиться"
+
+msgid "to read"
+msgstr "читать"
+
+msgid "to work"
+msgstr "работать"
+
+msgid "Today I’m starting to study at home."
+msgstr "Сегодня я начинаю заниматься дома."
+
+msgid "Verbs of having to, starting and going"
+msgstr "Глаголы долга, начала и движения"
+
+msgid "Verbs of wanting and being able"
+msgstr "Глаголы желания и возможности"
+
+msgid "Where the second verb goes"
+msgstr "Где стоит второй глагол"
+
+msgid "Which form follows?"
+msgstr "Какая форма после глагола?"
+
+msgid "Words for when and where usually sit between the two verbs, and the second verb stays at the end: <0/>"
+msgstr "Слова о времени и месте обычно стоят между двумя глаголами, а второй глагол — в конце: <0/>"
+
+msgid "You’ll hear it in a sentence."
+msgstr "Услышишь его в предложении."
+
+msgid "You’ll hear the whole sentence."
+msgstr "Услышишь всё предложение."

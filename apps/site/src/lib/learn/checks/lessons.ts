@@ -2,14 +2,22 @@ import { readdirSync, readFileSync } from "node:fs";
 import { createElement } from "react";
 import { renderToString } from "react-dom/server";
 import { vi } from "vitest";
-import LearnLessonPage, { LESSON_VIEWS } from "../../../components/islands/LearnLessonPage";
+import LearnLessonPage from "../../../components/islands/LearnLessonPage";
+import { prepareLearnPage } from "../../../components/learn/learn-page";
+import { LESSON_SLUGS } from "../catalogue";
 import { type Element, parse } from "./html";
 import { type Recording, recording, resetRecording } from "./record";
 
 export const LOCALES = ["en", "uk", "ru"] as const;
 export type CheckLocale = (typeof LOCALES)[number];
-export type Slug = keyof typeof LESSON_VIEWS;
-export const SLUGS = Object.keys(LESSON_VIEWS) as Slug[];
+export type Slug = string;
+export const SLUGS: readonly Slug[] = LESSON_SLUGS;
+
+await Promise.all(
+  SLUGS.flatMap((slug) =>
+    LOCALES.map((locale) => prepareLearnPage({ kind: "lesson", slug }, locale)),
+  ),
+);
 
 const LESSON_DIR = new URL("../../../components/learn/lessons/", import.meta.url);
 /** Repository-relative, so a failure names a path an editor opens. */

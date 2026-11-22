@@ -25,6 +25,12 @@ Each surface means one thing, so a learner can tell from the surface alone wheth
 
 Each stage has a hue (`hue` in the catalogue). A lesson sets it as `--h` on `.learn`, and `learn.css` derives the tray and the lesson's ink from it. Inside a quiz the hue marks only what the learner acts on: Listen, the chosen chip, the band behind the quiz's title. The quiz's round dots sit on a white pill so green and red never land on the hue. A `Scene` drawing has its own pigments, for cardboard, a roof, a lit room and the cat, set beside the hue in `learn.css` (`--scene-*`): they paint an illustration, not an interface, so they stay out of the design tokens. Inside a quiz the drawing's ground turns grey, and only the places to tap carry the hue.
 
+## Loading
+
+The lessons cost every other page nothing. Only the hub, a lesson's page and the kit page import lesson code, and each loads its own part: `LearnPage` in `components/learn/learn-page.tsx` imports the lesson whose file is its slug in PascalCase (`mina-sina-tema` is `MinaSinaTema.tsx`), with its catalog in the reader's language. The page's frontmatter calls `prepareLearnPage` first, so the server renders the lesson without a Suspense boundary.
+
+Each lesson has its own Lingui catalogs in `apps/site/src/locales/learn/<File>/`, the kit, hub and course names share `locales/learn/Kit/`, and the site's own catalogs hold no lesson text. `apps/site/lingui.config.ts` finds a new lesson by its file. `lib/learn/isolation.test.ts` fails when another page imports lesson code or a lesson line reaches the site's catalog.
+
 ## Components
 
 The parts live in `apps/site/src/components/learn`. A new lesson reaches for these before writing markup of its own.

@@ -516,8 +516,6 @@
   "apps/site/src/components/islands/ExploreCatalog.tsx": 14,
   "apps/site/src/components/islands/Island.tsx": 1,
   "apps/site/src/components/islands/LanguageView.tsx": 2,
-  "apps/site/src/components/islands/LearnLessonPage.tsx": 1,
-  "apps/site/src/components/islands/LessonKitPage.tsx": 1,
   "apps/site/src/components/islands/NotFoundPage.tsx": 1,
   "apps/site/src/components/islands/PublicNav.tsx": 4,
   "apps/site/src/components/islands/SiteHeader.tsx": 1,

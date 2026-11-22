@@ -1,0 +1,1476 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 01:14+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: ru\n"
+
+msgid "-b now; in the past just -s."
+msgstr "-b сейчас; в прошлом просто -s."
+
+msgid "-d now, -sid in the past."
+msgstr "-d сейчас, -sid в прошлом."
+
+msgid "-me now, -sime in the past."
+msgstr "-me сейчас, -sime в прошлом."
+
+msgid "-n now, -sin in the past."
+msgstr "-n сейчас, -sin в прошлом."
+
+msgid "-te now, -site in the past."
+msgstr "-te сейчас, -site в прошлом."
+
+msgid "-vad now; -sid in the past, as for sa."
+msgstr "-vad сейчас; -sid в прошлом, как для sa."
+
+msgid ", in the right group"
+msgstr ", в правильной группе"
+
+msgid "“To have”"
+msgstr "«Иметь»"
+
+msgid "“To like” and feelings"
+msgstr "«Нравиться» и чувства"
+
+#. placeholder {0}: state.mistakes
+msgid "{0, plural, one {# wrong try} other {# wrong tries}}"
+msgstr "{0, plural, one {# неверная попытка} few {# неверные попытки} many {# неверных попыток} other {# неверной попытки}}"
+
+#. placeholder {0}: place.meaning
+msgid "{0}, right answer"
+msgstr "{0}, правильный ответ"
+
+#. placeholder {0}: place.meaning
+msgid "{0}, your answer"
+msgstr "{0}, твой ответ"
+
+msgid "{doneCount} of {builtCount} done"
+msgstr "Пройдено {doneCount} из {builtCount}"
+
+msgid "{lessonCount, plural, one {# lesson, coming soon} other {# lessons, coming soon}}"
+msgstr "{lessonCount, plural, one {# урок, скоро} few {# урока, скоро} many {# уроков, скоро} other {# урока, скоро}}"
+
+msgid "{more, plural, one {and # more} other {and # more}}"
+msgstr "{more, plural, one {и ещё #} few {и ещё #} many {и ещё #} other {и ещё #}}"
+
+msgid "{position} of {count}"
+msgstr "{position} из {count}"
+
+msgid "{right} of {total} right"
+msgstr "{right} из {total} правильно"
+
+msgid "{right} of {yours} replies right the first time"
+msgstr "{right} из {yours} ответов верны с первого раза"
+
+msgid "{seconds} s"
+msgstr "{seconds} с"
+
+msgid "{them} spoke."
+msgstr "{them} говорит."
+
+msgid "{title}: a free lesson with audio"
+msgstr "{title}: бесплатный урок с аудио"
+
+msgid "{word} added"
+msgstr "{word} добавлено"
+
+msgid "{word} back with the words"
+msgstr "{word} снова среди слов"
+
+msgid "{word} chosen. Now its match."
+msgstr "{word} выбрано. Теперь его пару."
+
+msgid "{word} in {label}"
+msgstr "{word} в {label}"
+
+msgid "{word} in gap {n}"
+msgstr "{word} в пропуске {n}"
+
+msgid "{word} picked. Choose its group."
+msgstr "{word} выбрано. Теперь его группу."
+
+msgid "{word} taken out"
+msgstr "{word} убрано"
+
+msgid "{word} taken out of the gap"
+msgstr "{word} убрано из пропуска"
+
+msgid "{word}, word {place}"
+msgstr "{word}, слово {place}"
+
+msgid "{word}: matched."
+msgstr "{word}: пара найдена."
+
+#. placeholder {0}: before.word
+#. placeholder {1}: step.word
+msgid "<0>{0}</0> becomes <1>{1}</1>"
+msgstr "<0>{0}</0> превращается в <1>{1}</1>"
+
+msgid "<0>{base}</0> becomes <1>{form}</1>"
+msgstr "<0>{base}</0> становится <1>{form}</1>"
+
+msgid "<0>{before}</0> blank <1>{after}</1>"
+msgstr "<0>{before}</0> пропуск <1>{after}</1>"
+
+msgid "<0>{plannedCount}</0> planned, A1 to B1"
+msgstr "Запланировано: <0>{plannedCount}</0>, от A1 до B1"
+
+msgid "A cat and a cardboard box"
+msgstr "Кот и картонная коробка"
+
+msgid "A cat and a house"
+msgstr "Кот и дом"
+
+msgid "A conversation in two voices: the learner picks each reply. Shown first, then sound only for a harder one."
+msgstr "Разговор в два голоса: ученик выбирает каждый ответ. Сначала с текстом, потом только на слух — уровень посложнее."
+
+msgid "A drawing on the tray: pressing a place, on a key or on the drawing, moves the cat there and plays the sentence."
+msgstr "Рисунок на подложке: нажатие на место, на клавише или на рисунке, переносит туда кота и проигрывает предложение."
+
+msgid "a foot"
+msgstr "нога"
+
+msgid "A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the third. Every word is read aloud."
+msgstr "Бесплатный урок эстонского о трёх основных формах существительного, põhivormid (kool, kooli, kooli; pood, poe, poodi): как их приводят словарь и Sõnaveeb и как большинство слов на -ne и -us, а также односложные слова на долгую гласную, подсказывают третью форму. Каждое слово озвучено."
+
+msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о четырёх падежных окончаниях: -ga — «с» и «на чём» (sõbraga, bussiga), -ta — «без» (piimata), -ni — «до самого» (kella viieni, Tartuni) и -na — «как», в роли (arstina). Все они добавляются к родительному падежу. Каждое предложение озвучено."
+
+msgid "A free Estonian lesson on meeldima, “to like”: mulle meeldib and the other persons, meeldivad for more than one thing, meeldib with a verb, ei meeldi, questions with kas and kellele, and feelings such as mul on külm. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о meeldima, «нравиться»: mulle meeldib и другие лица, meeldivad, когда нравится несколько вещей, meeldib с глаголом, ei meeldi, вопросы с kas и kellele и чувства, например mul on külm. Каждое предложение озвучено."
+
+msgid "A free Estonian lesson on personal pronouns: mina, sina, tema and the rest in their long and short forms, and the verb olema, to be. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о личных местоимениях: mina, sina, tema и другие в полной и краткой форме, и глагол olema, «быть». Каждое предложение озвучено."
+
+msgid "A free Estonian lesson on telling the time: full hours, pool, veerand and kolmveerand, which name the hour that’s coming, and minutes past and to. Every time is read aloud."
+msgstr "Бесплатный урок эстонского о том, как сказать, который час: целые часы, pool, veerand и kolmveerand, которые называют следующий час, и минуты до и после. Каждый пример озвучен."
+
+msgid "A free Estonian pronunciation lesson: the nine vowels with õ, ä, ö and ü, stress on the first syllable, and how a double letter changes a word. Every word is read aloud."
+msgstr "Бесплатный урок эстонского произношения: девять гласных с õ, ä, ö и ü, ударение на первом слоге и то, как удвоенная буква меняет слово. Каждое слово озвучено."
+
+msgid "A free lesson on Estonian modal verbs: oskan for what you know how to do, saan for what nothing stops you doing, võin and tohin for what is allowed, pean, tuleb and mul on vaja for what you have to do, and how to say can’t, mustn’t and don’t have to. Every sentence is read aloud."
+msgstr "Бесплатный урок о модальных глаголах в эстонском языке: oskan — когда умеешь, saan — когда ничто не мешает, võin и tohin — когда можно, pean, tuleb и mul on vaja — когда надо, и как сказать «не могу», «нельзя» и «не обязательно». Каждое предложение можно послушать."
+
+msgid "A free lesson on Estonian negation in the present tense: ei before the verb, the same for every person, ei ole and pole, and how to answer a question with no. Every sentence is read aloud."
+msgstr "Бесплатный урок об отрицании в эстонском языке в настоящем времени: ei перед глаголом, одно для всех лиц, ei ole и pole, и как ответить «нет» на вопрос. Каждое предложение озвучено."
+
+msgid "A free lesson on Estonian noun stems: why pood becomes poes and tuba becomes toas, words that add a vowel (koolis, raamatus), words that stay the same (kodus), and how a dictionary shows the stem. Every sentence is read aloud."
+msgstr "Бесплатный урок об основе эстонских существительных: почему pood становится poes, а tuba — toas, слова, которые получают гласную (koolis, raamatus), слова без изменений (kodus) и как словарь показывает основу. Каждое предложение озвучено."
+
+msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
+msgstr "Бесплатный урок об эстонских числах: от нуля до десяти, -teist и -kümmend, сотни и тысячи, а также числа в ценах, возрасте и номерах телефонов. Каждое число озвучено."
+
+msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
+msgstr "Бесплатный урок о вопросах в эстонском: kas для вопросов «да или нет», ответы jah и ei, вопросительные слова kes, mis, kus, millal, miks, kuidas и kui palju и три повседневных вопроса, которые учат целиком. Каждое предложение озвучено."
+
+msgid "A free lesson on Estonian verbs in the present tense: the -ma form, the stem, and the six endings -n, -d, -b, -me, -te and -vad on ten everyday verbs. Every sentence is read aloud."
+msgstr "Бесплатный урок об эстонских глаголах в настоящем времени: форма на -ma, основа и шесть окончаний -n, -d, -b, -me, -te и -vad на десяти повседневных глаголах. Каждое предложение озвучено."
+
+msgid "A free lesson on Estonian’s three “inside” cases, the inessive, illative and elative: kus, kuhu and kust, -s for in, -sse for into (Tartusse) and -st for out of (koolist), the short forms kooli, poodi and koju, and how to say where you’re from. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о трёх «внутренних» местных падежах — инессиве, иллативе и элативе: kus, kuhu и kust, -s — где (Tartus), -sse — куда (Tartusse), -st — откуда (koolist), короткие формы kooli, poodi и koju, и как сказать, откуда ты. Каждое предложение озвучено."
+
+msgid "A free lesson on Estonian’s three “on” cases, the adessive, allative and ablative: kus, kuhu and kust, -l for on and at (laual, tööl), -le for onto and to (lauale, tööle) and -lt for off and from (laualt, töölt), which places take -le and which -sse, and -le and -lt on a person (emale, emalt). Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о трёх внешнеместных падежах — адессиве, аллативе и аблативе: kus, kuhu и kust, -l — где (laual, tööl), -le — куда (lauale, tööle), -lt — откуда (laualt, töölt), какие места употребляются с -le, а какие с -sse, и -le с -lt, когда речь о человеке (emale, emalt). Каждое предложение озвучено."
+
+msgid "A free lesson on saying “I have” in Estonian: mul, sul, tal, meil, teil and neil on, names with -l such as Maril on, the question kellel on?, mul on vaja for I need, and how to answer with jah, on or ei ole. Every sentence is read aloud."
+msgstr "Бесплатный урок о том, как сказать «у меня есть» по-эстонски: mul, sul, tal, meil, teil и neil on, имена с -l, например Maril on, вопрос kellel on?, mul on vaja — «мне нужно» — и ответы jah, on и ei ole. Каждое предложение озвучено."
+
+msgid "A free lesson on saying where you are in Estonian: -s for in (Tallinnas, koolis), -l for on and at (laual, tööl), which places take which, and how to answer kus, “where”. Every sentence is read aloud."
+msgstr "Бесплатный урок эстонского о том, как сказать, где ты: -s значит «в» (Tallinnas, koolis), -l — «на» (laual, tööl), какие места получают какое окончание и как ответить на kus, «где». Каждое предложение озвучено."
+
+msgid "A free lesson on the Estonian -ma, -mas and -mast forms: lähen ujuma (going swimming), olen ujumas (out swimming) and tulen ujumast (back from swimming). They answer kuhu?, kus? and kust? as places do. Also when to say lähen, käin or tulen. Every sentence is read aloud."
+msgstr "Бесплатный урок об эстонских формах на -ma, -mas и -mast: lähen ujuma (иду плавать), olen ujumas (на плавании) и tulen ujumast (возвращаюсь с плавания). Они отвечают на kuhu?, kus? и kust?, как и названия мест. А ещё — когда говорить lähen, käin или tulen. Каждое предложение озвучено."
+
+msgid "A free lesson on the Estonian days of the week: the seven names, the four with numbers in them, the one-letter days on opening hours, and täna, homme and eile. Every word is read aloud."
+msgstr "Бесплатный урок о днях недели на эстонском: семь названий, четыре с числами внутри, однобуквенные обозначения в часах работы, а ещё täna, homme и eile. Каждое слово озвучено."
+
+msgid "A free lesson on the Estonian genitive case: minu, sinu, tema, meie, teie and nende for my, your, his or her, our and their, the owner before the noun (Mari raamat), kelle for whose, and the genitive as the form that takes -s and -l (kooli, koolis). Every sentence is read aloud."
+msgstr "Бесплатный урок о родительном падеже в эстонском языке: minu, sinu, tema, meie, teie и nende — мой, твой, его или её, наш, ваш, их; владелец перед существительным (Mari raamat); kelle — чей; и родительный как форма, к которой добавляются -s и -l (kooli, koolis). Каждое предложение озвучено."
+
+msgid "A free lesson on the Estonian imperative: the verb’s stem as a command (loe!, istu!, tule siia!), ära for don’t, the -ge and -ke forms for more than one person or polite you, everyday commands such as räägi aeglasemalt, palun, and a short conversation at a café. Every sentence is read aloud."
+msgstr "Бесплатный урок о повелительном наклонении в эстонском языке: основа глагола как команда (loe!, istu!, tule siia!), ära для «не делай», формы на -ge и -ke для нескольких человек или на «вы», повседневные команды вроде räägi aeglasemalt, palun и короткий разговор в кафе. Каждое предложение озвучено."
+
+msgid "A free lesson on the Estonian partitive case, a noun’s third form: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud."
+msgstr "Бесплатный урок о партитиве в эстонском языке, третьей форме существительного: после числительных от двух (kaks kassi, viis eurot), после mitu и слов количества (tass kohvi), после pole (mul pole kassi) и с едой и напитками (ma joon kohvi). Каждое предложение озвучено."
+
+msgid "A free lesson on the Estonian past tense (lihtminevik): -si- on most verbs (elasin, lugesin, rääkisin), -i- on a few everyday ones (olin, läksin, sõin), the endings that say who did it, and eile and eelmisel nädalal. Every sentence is read aloud."
+msgstr "Бесплатный урок о прошедшем времени в эстонском (lihtminevik): -si- у большинства глаголов (elasin, lugesin, rääkisin), -i- у нескольких повседневных (olin, läksin, sõin), окончания, которые показывают, кто это сделал, и слова eile и eelmisel nädalal. Каждое предложение озвучено."
+
+msgid "A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
+msgstr "Бесплатный урок о множественном числе в эстонском языке: вторая форма плюс -d (kassid, raamatud), изменение основы, которое в нём сохраняется (poed, toad, mehed), глагол с существительным во множественном числе (lapsed loevad) и прилагательные во множественном числе (suured majad). Каждое предложение озвучено."
+
+msgid "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da form is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud."
+msgstr "Бесплатный урок о трёх основных формах эстонского глагола — lugema, lugeda, loen: как образуется форма на -da (-da, -ta, -la, -na или -a), в том числе teha, näha, süüa и juua, и команды на -ge и -ke, которые строятся на ней. Каждое слово и предложение озвучено."
+
+msgid "A free lesson on which Estonian verbs take the -da form after them and which take the -ma form: tahan lugeda but pean lugema, with võin, saan, oskan, tohin, proovin, armastan and mulle meeldib on one side and hakkan, lähen, tule and jään on the other. Every sentence is read aloud."
+msgstr "Бесплатный урок о том, после каких эстонских глаголов идёт форма на -da, а после каких — на -ma: tahan lugeda, но pean lugema. Форму на -da требуют ещё võin, saan, oskan, tohin, proovin, armastan и mulle meeldib, форму на -ma — hakkan, lähen, tule и jään. Каждое предложение озвучено."
+
+msgid "a lot, much"
+msgstr "много"
+
+msgid "A noun’s cases on the tray: tap a form to hear it, its ending lit. Question words can head the rows, and one row or column can be tinted. On a phone the rows stack."
+msgstr "Падежи существительного на подложке: коснись формы, чтобы её услышать, окончание подсвечено. Строки могут начинаться с вопросительных слов, а одну строку или столбец можно выделить. На телефоне строки становятся списком."
+
+msgid "A passage with gaps and one bank of words, dragged or tapped into place and checked together."
+msgstr "Текст с пропусками и один набор слов: их перетаскивают или нажимают, а проверяют все вместе."
+
+msgid "A passage with gaps, the open gap’s words under it, each marked as it is filled."
+msgstr "Текст с пропусками: слова для открытого пропуска под ним, каждый проверяется сразу."
+
+msgid "A quiz round on a scene: hear a sentence, then tap the place on the drawing."
+msgstr "Раунд викторины на сцене: послушай предложение, затем коснись места на рисунке."
+
+msgid "a room"
+msgstr "комната"
+
+msgid "a shop"
+msgstr "магазин"
+
+msgid "A short text to read and hear, every question at once; its words open their cards once checked."
+msgstr "Короткий текст, чтобы прочитать и послушать, и все вопросы сразу; карточки слов открываются после проверки."
+
+msgid "a town"
+msgstr "город"
+
+msgid "A word and a cue; type the form, with keys for õ ä ö ü š ž, or pick it. The answer shows the word turning into its form."
+msgstr "Слово и подсказка: введи форму, с клавишами õ ä ö ü š ž, или выбери её. Ответ показывает, как слово становится формой."
+
+msgid "A word turning into its forms: the letters it drops are struck, the ones it gains are lit."
+msgstr "Слово превращается в свои формы: буквы, которые оно теряет, зачёркнуты, а новые подсвечены."
+
+msgid "Adjective agreement"
+msgstr "Согласование прилагательных"
+
+msgid "After ei the verb drops its ending: ei ela."
+msgstr "После ei глагол теряет окончание: ei ela."
+
+msgid "After ei, olema is ole; and you are a doctor."
+msgstr "После ei olema — это ole; и ты врач."
+
+msgid "All lessons"
+msgstr "Все уроки"
+
+msgid "Also right:"
+msgstr "Тоже верно:"
+
+msgid "Answer every question first."
+msgstr "Сначала ответь на все вопросы."
+
+msgid "Answers"
+msgstr "Варианты ответа"
+
+msgid "Asking questions in Estonian"
+msgstr "Вопросы в эстонском языке"
+
+msgid "at home"
+msgstr "дома"
+
+msgid "at school"
+msgstr "в школе"
+
+msgid "at the market"
+msgstr "на рынке"
+
+msgid "at work"
+msgstr "на работе"
+
+msgid "behind"
+msgstr "сзади"
+
+msgid "belongs in"
+msgstr "должно быть в"
+
+msgid "brother"
+msgstr "брат"
+
+msgid "Build new words from ones you know, read signs, news and forms, and join longer sentences."
+msgstr "Строй новые слова из знакомых, читай вывески, новости и бланки и составляй длинные предложения."
+
+msgid "Build the sentence"
+msgstr "Собери предложение"
+
+msgid "Can, may, must"
+msgstr "Могу, можно, надо"
+
+msgid "Check"
+msgstr "Проверить"
+
+msgid "Chosen. Now its match."
+msgstr "Выбрано. Теперь его пару."
+
+msgid "Close: only the letters with marks are off."
+msgstr "Почти: ошибка только в буквах со значками."
+
+msgid "Commands"
+msgstr "Повелительное наклонение"
+
+msgid "Comparatives and superlatives"
+msgstr "Сравнительная и превосходная степень"
+
+msgid "Conditional mood"
+msgstr "Условное наклонение"
+
+msgid "Conjunctions and word order"
+msgstr "Союзы и порядок слов"
+
+msgid "Consonant gradation"
+msgstr "Чередование согласных"
+
+msgid "Continue"
+msgstr "Продолжить"
+
+msgid "Days of the week"
+msgstr "Дни недели"
+
+msgid "Days of the week in Estonian"
+msgstr "Дни недели на эстонском"
+
+msgid "Dialogue"
+msgstr "Диалог"
+
+msgid "Dialogue, sound only"
+msgstr "Диалог только на слух"
+
+msgid "doctor"
+msgstr "врач"
+
+msgid "Done"
+msgstr "Пройдено"
+
+msgid "Drag each word to its gap, or tap it."
+msgstr "Перетащи каждое слово в его пропуск или нажми на него."
+
+msgid "Drag each word to its gap, or tap it. Some words are spare."
+msgstr "Перетащи каждое слово в его пропуск или нажми на него. Некоторые слова лишние."
+
+msgid "Ei before the bare verb says not: ei loe."
+msgstr "Ei перед глаголом без окончания значит «не»: ei loe."
+
+msgid "Elative"
+msgstr "Элатив"
+
+msgid "English"
+msgstr "Английский"
+
+msgid "Estonian"
+msgstr "Эстонский"
+
+msgid "Estonian -ma, -mas and -mast: going, being and coming back"
+msgstr "Эстонские формы на -ma, -mas и -mast: иду, там, возвращаюсь"
+
+msgid "Estonian conversation practice: meeting someone"
+msgstr "Разговорная практика эстонского: знакомство"
+
+msgid "Estonian grammar lessons"
+msgstr "Уроки эстонской грамматики"
+
+msgid "Estonian imperative: giving commands"
+msgstr "Повелительное наклонение в эстонском языке"
+
+msgid "Estonian infinitives after other verbs"
+msgstr "Инфинитив после других глаголов в эстонском языке"
+
+msgid "Estonian letters"
+msgstr "Эстонские буквы"
+
+msgid "Estonian modal verbs: can, may, must"
+msgstr "Модальные глаголы в эстонском языке: умею, могу, можно, надо"
+
+msgid "Estonian noun stems"
+msgstr "Основа слова в эстонском"
+
+msgid "Estonian numbers"
+msgstr "Числа на эстонском"
+
+msgid "Estonian past tense"
+msgstr "Прошедшее время в эстонском языке"
+
+msgid "Estonian personal pronouns and “to be”"
+msgstr "Эстонские личные местоимения и «быть»"
+
+msgid "Estonian plural"
+msgstr "Множественное число в эстонском языке"
+
+msgid "Estonian present tense"
+msgstr "Настоящее время в эстонском языке"
+
+msgid "Estonian pronunciation"
+msgstr "Эстонское произношение"
+
+msgid "Estonian reading and listening practice: a day in Tallinn"
+msgstr "Эстонский язык: чтение и аудирование. День в Таллине"
+
+msgid "Every word has a group. Check when you’re ready."
+msgstr "Все слова в группах. Можно проверять."
+
+msgid "Every word is in its group."
+msgstr "Каждое слово в своей группе."
+
+msgid "Fill every gap first."
+msgstr "Сначала заполни все пропуски."
+
+msgid "Fill the gap"
+msgstr "Заполни пропуск"
+
+msgid "Fill the gaps"
+msgstr "Заполни пропуски"
+
+msgid "Form"
+msgstr "Форма"
+
+msgid "Forms of maja"
+msgstr "Формы maja"
+
+msgid "Free Estonian conversation practice for beginners: say your name, where you’re from, where you live and work, answer yes-or-no questions and ask your own. Every conversation and passage is read aloud."
+msgstr "Бесплатная разговорная практика эстонского для начинающих: скажи, как тебя зовут, откуда ты, где живёшь и работаешь, отвечай на вопросы «да или нет» и задавай свои. Каждый разговор и каждый текст озвучены."
+
+msgid "Free Estonian decks in Lymi"
+msgstr "Бесплатные эстонские колоды в Lymi"
+
+msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
+msgstr "Бесплатная практика эстонского для начинающих: прочитай часы работы и сообщение, пойми голосовое сообщение, где звучат время и дни, заполни план на субботу и поговори с подругой в кафе. Каждое предложение озвучено."
+
+msgid "friend"
+msgstr "друг, подруга"
+
+msgid "From kuulama, to listen."
+msgstr "От kuulama, слушать."
+
+msgid "From rääkima, to speak."
+msgstr "От rääkima, «говорить»."
+
+msgid "Future"
+msgstr "Будущее"
+
+msgid "Gap {lastNumber}: not this one."
+msgstr "Пропуск {lastNumber}: не то."
+
+msgid "Gap {lastNumber}: right."
+msgstr "Пропуск {lastNumber}: верно."
+
+msgid "Gap {n}, empty"
+msgstr "Пропуск {n}, пустой"
+
+msgid "Gap {n}: {word}"
+msgstr "Пропуск {n}: {word}"
+
+msgid "Gap {n}: {word}, right"
+msgstr "Пропуск {n}: {word}, верно"
+
+msgid "Gap {n}: {word}, the answer is {answer}"
+msgstr "Пропуск {n}: {word}, верный ответ — {answer}"
+
+msgid "Gap {openNumber} of {total}"
+msgstr "Пропуск {openNumber} из {total}"
+
+msgid "Gaps from a bank"
+msgstr "Пропуски из набора слов"
+
+msgid "Gaps, one at a time"
+msgstr "Пропуски по одному"
+
+msgid "Genitive"
+msgstr "Родительный"
+
+msgid "Going, being, coming back: -ma, -mas, -mast"
+msgstr "Идти, быть там, возвращаться: -ma, -mas, -mast"
+
+msgid "hakkama, now"
+msgstr "hakkama, сейчас"
+
+msgid "Harder grammar"
+msgstr "Сложная грамматика"
+
+msgid "He listens to music"
+msgstr "Он слушает музыку"
+
+msgid "He works"
+msgstr "Он работает"
+
+msgid "He writes"
+msgstr "Он пишет"
+
+msgid "he, she"
+msgstr "он, она"
+
+msgid "He’s a doctor"
+msgstr "Он врач"
+
+msgid "He’s a student"
+msgstr "Он студент"
+
+msgid "He’s a teacher"
+msgstr "Он учитель"
+
+msgid "Hear both"
+msgstr "Послушать оба"
+
+msgid "Hear it"
+msgstr "Послушать"
+
+msgid "Hear it read"
+msgstr "Послушать текст"
+
+msgid "Hear the whole conversation"
+msgstr "Послушать весь разговор"
+
+msgid "Hear the whole passage"
+msgstr "Послушай весь текст"
+
+msgid "How to say “I have” in Estonian"
+msgstr "Как сказать «у меня есть» по-эстонски"
+
+msgid "How to say “I like” in Estonian"
+msgstr "Как сказать «мне нравится» по-эстонски"
+
+msgid "How to say no in Estonian"
+msgstr "Как сказать «нет» по-эстонски"
+
+msgid "I"
+msgstr "я"
+
+msgid "I had already eaten."
+msgstr "Я тогда уже поел."
+
+msgid "I have already eaten."
+msgstr "Я уже поел."
+
+msgid "I read"
+msgstr "я читаю"
+
+msgid "I’m eating now."
+msgstr "Сейчас я ем."
+
+msgid "I’m going to eat."
+msgstr "Я собираюсь есть."
+
+msgid "Illative"
+msgstr "Иллатив"
+
+msgid "Impersonal voice"
+msgstr "Безличная форма"
+
+msgid "in a room"
+msgstr "в комнате"
+
+msgid "in a shop"
+msgstr "в магазине"
+
+msgid "in front"
+msgstr "впереди"
+
+msgid "In Pärnu"
+msgstr "В Пярну"
+
+msgid "In progress"
+msgstr "Начато"
+
+msgid "in Tallinn"
+msgstr "в Таллине"
+
+msgid "In Tallinn"
+msgstr "В Таллине"
+
+msgid "In Tartu"
+msgstr "В Тарту"
+
+msgid "in the house"
+msgstr "в доме"
+
+msgid "In the house: -s, and -des for more than one."
+msgstr "В доме: -s, а для нескольких -des."
+
+msgid "In the past"
+msgstr "В прошлом"
+
+msgid "in, inside"
+msgstr "в, внутри"
+
+msgid "In, into, out of"
+msgstr "В чём, во что, из чего"
+
+msgid "In, on and at in Estonian: -s and -l"
+msgstr "«В» и «на» по-эстонски: -s и -l"
+
+msgid "Inessive"
+msgstr "Инессив"
+
+msgid "Infinitives after other verbs"
+msgstr "Инфинитив после других глаголов"
+
+msgid "inside"
+msgstr "внутри"
+
+msgid "Inside a building, a town or a country: -s."
+msgstr "Внутри здания, в городе или стране: -s."
+
+msgid "Inside or on?"
+msgstr "Внутри или на?"
+
+msgid "Into and out of in Estonian: -sse and -st"
+msgstr "Куда и откуда по-эстонски: -sse и -st"
+
+msgid "into the house"
+msgstr "в дом"
+
+msgid "Into the house. Majja doubles the j; majasse means the same."
+msgstr "В дом. В majja j удваивается; majasse значит то же самое."
+
+msgid "Is Mari a doctor?"
+msgstr "Мари — врач?"
+
+msgid "It was {expected}."
+msgstr "Прозвучало {expected}."
+
+#. placeholder {0}: item.answers[0]
+msgid "It was <0>{0}</0>"
+msgstr "Правильно: <0>{0}</0>"
+
+msgid "It was <0>{expected}</0>."
+msgstr "Правильно: <0>{expected}</0>."
+
+msgid "Kodu is home; kodus, at home."
+msgstr "Kodu — дом; kodus — дома."
+
+msgid "Language"
+msgstr "Язык"
+
+msgid "Left column"
+msgstr "Левая колонка"
+
+msgid "Lesson {number}"
+msgstr "Урок {number}"
+
+msgid "Lesson {number} · {level}"
+msgstr "Урок {number} · {level}"
+
+msgid "Lesson {number} · {minutes} min"
+msgstr "Урок {number} · {minutes} мин"
+
+msgid "Lesson {number}, coming soon"
+msgstr "Урок {number}, скоро"
+
+msgid "Lesson {previousNumber}"
+msgstr "Урок {previousNumber}"
+
+msgid "Lessons done: <0>{doneCount}</0> of {builtCount}"
+msgstr "Пройдено уроков: <0>{doneCount}</0> из {builtCount}"
+
+msgid "Let’s and let them"
+msgstr "«Пойдём» и «пусть»"
+
+msgid "Listen"
+msgstr "Послушать"
+
+msgid "Listen as many times as you like, then answer."
+msgstr "Слушай сколько хочешь, а потом отвечай."
+
+msgid "Listen first."
+msgstr "Сначала послушай."
+
+msgid "Listen: meet Jaan"
+msgstr "Аудирование: знакомство с Яаном"
+
+msgid "Listening"
+msgstr "Аудирование"
+
+msgid "Listening: a short passage as one recording, every question at once with lettered answers, one Check, then the text."
+msgstr "Аудирование: короткий текст одной записью, все вопросы сразу с ответами под буквами, одна проверка, а потом текст."
+
+msgid "listens"
+msgstr "слушает"
+
+msgid "Longer sentences"
+msgstr "Сложные предложения"
+
+msgid "Lugema now and in the past"
+msgstr "Lugema сейчас и в прошлом"
+
+msgid "Make the form"
+msgstr "Образуй форму"
+
+msgid "Mari"
+msgstr "Мари"
+
+msgid "Mari writes"
+msgstr "Мари пишет"
+
+msgid "Mari’s brother"
+msgstr "Брат Мари"
+
+msgid "Mari’s father"
+msgstr "Отец Мари"
+
+msgid "Mari’s friend"
+msgstr "Друг Мари"
+
+msgid "market"
+msgstr "рынок"
+
+msgid "Match"
+msgstr "Пары"
+
+msgid "Me, we, takes -me: elame."
+msgstr "Me, мы, берёт -me: elame."
+
+msgid "Mina takes -n: loen."
+msgstr "Mina берёт -n: loen."
+
+msgid "Mina, I, takes olen."
+msgstr "Mina, я, берёт olen."
+
+msgid "More are on the way."
+msgstr "Новые уже в работе."
+
+msgid "More cases"
+msgstr "Ещё падежи"
+
+msgid "More than one"
+msgstr "Несколько человек"
+
+msgid "music"
+msgstr "музыка"
+
+msgid "Negation"
+msgstr "Отрицание"
+
+msgid "Next"
+msgstr "Дальше"
+
+msgid "next to"
+msgstr "рядом"
+
+msgid "No wrong tries."
+msgstr "Ни одной неверной попытки."
+
+msgid "No, she’s a student"
+msgstr "Нет, она студентка"
+
+msgid "No, she’s a teacher"
+msgstr "Нет, она учительница"
+
+msgid "Nominative"
+msgstr "Именительный"
+
+msgid "Not a pair."
+msgstr "Не пара."
+
+msgid "Not this one."
+msgstr "Не то."
+
+msgid "Nouns and cases"
+msgstr "Существительные и падежи"
+
+msgid "Now"
+msgstr "Сейчас"
+
+msgid "Now the stem is loe-, in the past luge-."
+msgstr "Сейчас основа loe-, в прошлом luge-."
+
+msgid "now, for ma"
+msgstr "сейчас, для ma"
+
+msgid "Numbers"
+msgstr "Числа"
+
+msgid "of a foot"
+msgstr "ноги"
+
+msgid "of a room"
+msgstr "комнаты"
+
+msgid "of a shop"
+msgstr "магазина"
+
+msgid "Of the house. For one it looks like the base form."
+msgstr "Дома. В единственном числе совпадает с начальной формой."
+
+msgid "olema, now"
+msgstr "olema, сейчас"
+
+msgid "olema, past"
+msgstr "olema, прошедшее"
+
+msgid "on"
+msgstr "на"
+
+msgid "On a surface, at work or at a market: -l."
+msgstr "На поверхности, на работе или на рынке: -l."
+
+msgid "on the table"
+msgstr "на столе"
+
+msgid "on, at"
+msgstr "на"
+
+msgid "On, onto, off"
+msgstr "На чём, на что, с чего"
+
+msgid "One"
+msgstr "Один"
+
+msgid "Onto and off in Estonian: -le and -lt"
+msgstr "На стол и со стола: -le и -lt по-эстонски"
+
+msgid "Ordinals and dates"
+msgstr "Порядковые числительные и даты"
+
+msgid "out of the house"
+msgstr "из дома"
+
+msgid "Out of the house: -st, and -dest for more than one."
+msgstr "Из дома: -st, а для нескольких -dest."
+
+msgid "Own things, count them and put them somewhere. Stems change first, then the genitive, which most other cases build on."
+msgstr "Иметь вещи, считать их и куда-то класть. Сначала меняются основы, затем генитив, на котором строится большинство других падежей."
+
+msgid "Pair {number}"
+msgstr "Пара {number}"
+
+msgid "Pairs across two columns, tapped one side then the other; a pair locks when it is right, and wrong tries count."
+msgstr "Пары из двух колонок: нажми на одну сторону, потом на другую; верная пара закрепляется, а неверные попытки считаются."
+
+msgid "Part of something, and after numbers. Maju swaps the a for -u."
+msgstr "Часть чего-то, а также после числительных. В maju a меняется на -u."
+
+msgid "Participles"
+msgstr "Причастия"
+
+msgid "Particle verbs with new meanings"
+msgstr "Глаголы с частицами: новые значения"
+
+msgid "Particle verbs: up, out, away"
+msgstr "Глаголы с частицами: вверх, наружу, прочь"
+
+msgid "partitive"
+msgstr "партитив"
+
+msgid "Partitive"
+msgstr "Партитив"
+
+msgid "Past"
+msgstr "Прошедшее"
+
+msgid "Past tense"
+msgstr "Прошедшее время"
+
+msgid "past, for ma"
+msgstr "прошедшее, для ma"
+
+msgid "Pause"
+msgstr "Пауза"
+
+msgid "Peeter is ta, he, so: on."
+msgstr "Пеэтер — это ta, он, значит: on."
+
+msgid "Perfect and pluperfect"
+msgstr "Перфект и плюсквамперфект"
+
+msgid "Personal pronouns and “to be”"
+msgstr "Личные местоимения и «быть»"
+
+msgid "Pick a word first."
+msgstr "Сначала выбери слово."
+
+msgid "Pick the form"
+msgstr "Выбери форму"
+
+msgid "Pick the word for the gap"
+msgstr "Выбери слово для пропуска"
+
+msgid "Pick up where you left off"
+msgstr "Продолжи с того же места"
+
+msgid "Place words: on, under, behind"
+msgstr "Где что: на, под, за"
+
+msgid "Play"
+msgstr "Воспроизвести"
+
+msgid "Play {name}: {line}"
+msgstr "Воспроизвести: {name}: {line}"
+
+msgid "Play {show}"
+msgstr "Воспроизвести {show}"
+
+msgid "Play {word}"
+msgstr "Воспроизвести {word}"
+
+#. placeholder {0}: example.sentence
+#. placeholder {0}: shown.sentence
+#. placeholder {0}: step.word
+msgid "Play <0>{0}</0>"
+msgstr "Воспроизвести <0>{0}</0>"
+
+msgid "Play <0>{form}</0>"
+msgstr "Воспроизвести <0>{form}</0>"
+
+msgid "Play what {name} said"
+msgstr "Воспроизвести реплику: {name}"
+
+msgid "Play your line: {line}"
+msgstr "Воспроизвести твою реплику: {line}"
+
+msgid "Pluperfect"
+msgstr "Давнопрошедшее"
+
+msgid "Plural"
+msgstr "Множественное число"
+
+msgid "Plural cases"
+msgstr "Падежи во множественном числе"
+
+msgid "Plural partitive"
+msgstr "Партитив множественного числа"
+
+msgid "Poe- plus -s: in a shop."
+msgstr "Poe- плюс -s: в магазине."
+
+msgid "Practice parts"
+msgstr "Части для практики"
+
+msgid "Practice: a day in Tallinn"
+msgstr "Практика: день в Таллине"
+
+msgid "Practice: a message to the landlord"
+msgstr "Практика: письмо арендодателю"
+
+msgid "Practice: at the market"
+msgstr "Практика: на рынке"
+
+msgid "Practice: last weekend, next week"
+msgstr "Практика: прошлые выходные, следующая неделя"
+
+msgid "Practice: looking for a flat"
+msgstr "Практика: ищем квартиру"
+
+msgid "Practice: meeting someone"
+msgstr "Практика: знакомство"
+
+msgid "Practice: reading the news"
+msgstr "Практика: читаем новости"
+
+msgid "Present"
+msgstr "Настоящее"
+
+msgid "Present perfect"
+msgstr "Перфект"
+
+msgid "Present tense"
+msgstr "Настоящее время"
+
+msgid "Pronouns in every case"
+msgstr "Местоимения во всех падежах"
+
+msgid "Pronunciation"
+msgstr "Произношение"
+
+msgid "Put {picked} here"
+msgstr "Положить {picked} сюда"
+
+msgid "Put every word in a group first."
+msgstr "Сначала разложи все слова по группам."
+
+msgid "Put the words in order"
+msgstr "Расставь слова по порядку"
+
+msgid "Question"
+msgstr "Вопрос"
+
+msgid "Questions"
+msgstr "Вопросы"
+
+msgid "Reading"
+msgstr "Чтение"
+
+msgid "Relative clauses"
+msgstr "Придаточные с «который»"
+
+msgid "Reported speech"
+msgstr "Косвенная речь"
+
+msgid "right answer"
+msgstr "верный ответ"
+
+msgid "Right answer"
+msgstr "Правильный ответ"
+
+msgid "Right column"
+msgstr "Правая колонка"
+
+msgid "Right."
+msgstr "Правильно."
+
+msgid "Round {roundNumber} of {total}"
+msgstr "Раунд {roundNumber} из {total}"
+
+msgid "Russian"
+msgstr "Русский"
+
+msgctxt "dialogue: say the right reply and go on"
+msgid "Say it"
+msgstr "Сказать"
+
+msgid "Say it in Estonian:"
+msgstr "Скажи по-эстонски:"
+
+msgid "Say what you can, must and like to do, where you are going, what you did yesterday and what you will do tomorrow."
+msgstr "Расскажи, что умеешь и любишь делать и что нужно сделать, куда идёшь, как прошёл вчерашний день и что в планах на завтра."
+
+msgid "Say who you are, what you do and where you live, and ask and answer. Then count, tell the time, name the day and tell people what to do."
+msgstr "Скажи, кто ты, чем занимаешься и где живёшь, задай вопрос и ответь. Потом считай, называй время и день недели и говори людям, что делать."
+
+msgid "Say with whom and without what, give a date and a time, put words in the right order, describe and compare things, and say what someone became."
+msgstr "Скажи, с кем и без чего, назови дату и время, ставь слова в правильном порядке, описывай и сравнивай вещи и расскажи, кем кто-то стал."
+
+msgid "Saying no in the past"
+msgstr "Отрицание в прошлом"
+
+msgid "Saying where: -s and -l"
+msgstr "Как сказать, где: окончания -s и -l"
+
+msgid "Scene"
+msgstr "Сцена"
+
+msgid "Scene quiz"
+msgstr "Викторина на сцене"
+
+msgid "Scene with movement"
+msgstr "Сцена с движением"
+
+msgid "school"
+msgstr "школа"
+
+msgid "Sections"
+msgstr "Разделы"
+
+msgid "See how you did"
+msgstr "Посмотреть результат"
+
+msgid "Sentence {sentenceNumber} of {sentenceCount}, {time}"
+msgstr "Предложение {sentenceNumber} из {sentenceCount}, {time}"
+
+msgid "She’s a doctor"
+msgstr "Она врач"
+
+msgid "She’s a student"
+msgstr "Она студентка"
+
+msgid "She’s a teacher"
+msgstr "Она учительница"
+
+msgid "Short, free lessons from the first sounds to B1. Tap any word to hear it, and try each idea as you read."
+msgstr "Короткие бесплатные уроки от первых звуков до B1. Нажми на любое слово, чтобы его услышать, и пробуй каждое правило прямо по ходу чтения."
+
+msgid "Show what {name} said"
+msgstr "Показать реплику: {name}"
+
+msgid "Sina is you: this says “You are Jaan.”"
+msgstr "Sina — это ты: здесь сказано «Ты Яан»."
+
+msgid "Somebody, nobody: -gi and -ki"
+msgstr "Кто-то, никто: -gi и -ki"
+
+msgid "Soon"
+msgstr "Скоро"
+
+msgid "Sort"
+msgstr "Разложи по группам"
+
+msgid "Start"
+msgstr "Начать"
+
+msgid "Start here"
+msgstr "Начни отсюда"
+
+msgid "Start lesson 1"
+msgstr "Начать урок 1"
+
+msgid "Start the conversation"
+msgstr "Начать разговор"
+
+msgid "Stem changes"
+msgstr "Изменение основы"
+
+msgid "Ta is he or she: “He is Jaan.”"
+msgstr "Ta — это он или она: «Он Яан»."
+
+msgid "table"
+msgstr "стол"
+
+msgid "Table of forms"
+msgstr "Таблица форм"
+
+msgid "Table of forms, a verb"
+msgstr "Таблица форм глагола"
+
+msgid "Talk: meeting Mari"
+msgstr "Разговор: знакомство с Мари"
+
+msgid "Tap a filled gap to take its word back."
+msgstr "Нажми на заполненный пропуск, чтобы забрать слово."
+
+msgid "Tap a form"
+msgstr "Коснись формы"
+
+msgid "Tap a place to send the cat there and hear where it is."
+msgstr "Коснись места, чтобы отправить туда кота и услышать, где он."
+
+msgid "Tap a tense"
+msgstr "Коснись времени"
+
+msgid "Tap a word to add it; drag or use the arrow keys to move it."
+msgstr "Нажми на слово, чтобы добавить его; перетащи или сдвинь стрелками."
+
+msgid "Tap a word, then its group, or drag it there."
+msgstr "Нажми на слово, потом на его группу, или перетащи его туда."
+
+msgid "Tap one side, then its match on the other."
+msgstr "Нажми на одну сторону, потом на её пару с другой."
+
+msgid "Tap the words in order"
+msgstr "Нажимай на слова по порядку"
+
+msgid "Tap the words in order first."
+msgstr "Сначала нажми на слова по порядку."
+
+msgid "teacher"
+msgstr "учитель, учительница"
+
+msgid "Telling the time"
+msgstr "Который час"
+
+msgid "Telling the time in Estonian"
+msgstr "Который час по-эстонски"
+
+msgid "Tenses of sööma"
+msgstr "Времена sööma"
+
+msgid "Tenses on a line, past to future. Each point plays an example and shows how its verb is built; a band shows what a tense reaches to."
+msgstr "Времена на линии, от прошлого к будущему. Каждая точка проигрывает пример и показывает, как построен глагол; полоса показывает, до чего время дотягивается."
+
+msgid "That asks who she is; she told you."
+msgstr "Это вопрос, кто она, а она уже сказала."
+
+msgid "That’s good morning; Mari is leaving."
+msgstr "Это «доброе утро», а Мари уходит."
+
+msgid "The -des and -mata forms"
+msgstr "Формы на -des и -mata"
+
+msgid "the -ma form"
+msgstr "форма на -ma"
+
+msgid "the -nud form"
+msgstr "форма на -nud"
+
+msgid "The b drops and the u becomes o."
+msgstr "b выпадает, а u становится o."
+
+msgid "The base form. More than one adds -d."
+msgstr "Начальная форма. Для нескольких добавляется -d."
+
+msgid "The basics"
+msgstr "Основы"
+
+msgid "The cat comes out of the house."
+msgstr "Кот выходит из дома."
+
+msgid "The cat goes into the house."
+msgstr "Кот заходит в дом."
+
+msgid "The cat is behind the box."
+msgstr "Кот за коробкой."
+
+msgid "The cat is in front of the box."
+msgstr "Кот перед коробкой."
+
+msgid "The cat is in the house."
+msgstr "Кот в доме."
+
+msgid "The cat is inside the box."
+msgstr "Кот в коробке."
+
+msgid "The cat is next to the box."
+msgstr "Кот рядом с коробкой."
+
+msgid "The cat is on the box."
+msgstr "Кот на коробке."
+
+msgid "The cat is under the box."
+msgstr "Кот под коробкой."
+
+msgid "The Estonian genitive case: my, your and whose"
+msgstr "Родительный падеж в эстонском языке: мой, твой, чей"
+
+msgid "The Estonian partitive case: after numbers, amounts and negation"
+msgstr "Партитив в эстонском языке: после чисел, слов количества и в отрицании"
+
+msgid "The future"
+msgstr "Будущее"
+
+msgid "The g comes back in the partitive."
+msgstr "В партитиве g возвращается."
+
+msgid "The g drops and an a comes in."
+msgstr "g выпадает, а появляется a."
+
+msgid "The g drops and the u becomes o: loe-, plus -n for ma."
+msgstr "g выпадает, а u становится o: loe-, плюс -n для ma."
+
+msgid "The genitive case"
+msgstr "Родительный падеж"
+
+msgid "The lesson kit’s parts for practice after a rule is taught: listening, a passage with gaps, reading, a dialogue, sorting, matching, building a sentence and making a form. docs/design/estonian-lessons.md says when to use each."
+msgstr "Части набора уроков для практики после правила: аудирование, текст с пропусками, чтение, диалог, группы, пары, сборка предложения и образование формы. Когда что брать, описано в docs/design/estonian-lessons.md."
+
+msgid "The lessons are free and need no account. Your progress stays in this browser."
+msgstr "Уроки бесплатные, аккаунт не нужен. Твой прогресс хранится в этом браузере."
+
+msgid "The m becomes d: -ma turns into -da."
+msgstr "m становится d: -ma превращается в -da."
+
+msgid "The most common words, each brought back on the day you’d forget it."
+msgstr "Самые частые слова, и каждое возвращается как раз тогда, когда ты бы его забыл."
+
+msgid "The object: whole or part"
+msgstr "Дополнение: целое или часть"
+
+msgid "The od drops and an e comes in: poe- carries most forms."
+msgstr "od выпадает, а появляется e: от poe- образуется большинство форм."
+
+msgid "The partitive case"
+msgstr "Партитив"
+
+msgid "The partitive of muusika."
+msgstr "Партитив от muusika."
+
+msgid "The passage"
+msgstr "Текст"
+
+msgid "The same conversation with Mari’s lines heard, not shown; each can be read on request."
+msgstr "Тот же разговор, но реплики Мари только слышно; каждую можно открыть и прочитать."
+
+msgid "The same table for a verb: persons down, tenses across."
+msgstr "Та же таблица для глагола: лица в строках, времена в столбцах."
+
+msgid "The same with a house: the cat walks in, sits inside, and comes out."
+msgstr "То же с домом: кот заходит, сидит внутри и выходит."
+
+msgid "The three forms of a noun"
+msgstr "Три основные формы существительного"
+
+msgid "The three forms of a verb"
+msgstr "Три основные формы глагола"
+
+msgid "The three forms of an Estonian noun"
+msgstr "Три основные формы слова в эстонском"
+
+msgid "The three forms of an Estonian verb"
+msgstr "Три основные формы эстонского глагола"
+
+msgid "The translative case"
+msgstr "Транслатив"
+
+msgid "The verb stays second, whichever word comes first."
+msgstr "Глагол остаётся вторым, какое бы слово ни стояло первым."
+
+msgid "they"
+msgstr "они"
+
+msgid "Through, over, along"
+msgstr "Сквозь, через, вдоль"
+
+msgid "Time expressions: when things happen"
+msgstr "Выражения времени: когда что происходит"
+
+msgid "Timeline"
+msgstr "Линия времени"
+
+msgid "to read"
+msgstr "читать"
+
+msgid "to read, da-form"
+msgstr "читать, форма на -da"
+
+msgid "Toa- plus -s: in a room."
+msgstr "Toa- плюс -s: в комнате."
+
+msgid "Tomorrow I’ll eat at home."
+msgstr "Завтра я буду есть дома."
+
+msgid "Tööl, at work, takes -l like a market does."
+msgstr "Tööl, на работе, берёт -l, как и рынок."
+
+msgid "Try again"
+msgstr "Попробовать ещё раз"
+
+msgid "Turg becomes turu- before an ending: turul."
+msgstr "Перед окончанием turg становится turu-: turul."
+
+msgid "Type <0>{letter}</0>"
+msgstr "Ввести <0>{letter}</0>"
+
+msgid "Type the form"
+msgstr "Введи форму"
+
+msgid "Type the number"
+msgstr "Введи число"
+
+msgid "under"
+msgstr "под"
+
+msgid "Use every word."
+msgstr "Используй все слова."
+
+msgid "Verbs"
+msgstr "Глаголы"
+
+msgid "we"
+msgstr "мы"
+
+msgid "We live in Estonia."
+msgstr "Мы живём в Эстонии."
+
+msgid "we speak"
+msgstr "мы говорим"
+
+msgid "What did you read?"
+msgstr "Что ты прочитал?"
+
+msgid "What does it mean?"
+msgstr "Что это значит?"
+
+msgid "What does Jaan do?"
+msgstr "Кем работает Яан?"
+
+msgid "What does Mari do?"
+msgstr "Кем работает Мари?"
+
+msgid "What does Peeter do instead of reading?"
+msgstr "Что делает Пеэтер вместо чтения?"
+
+msgid "What to remember"
+msgstr "Что запомнить"
+
+msgid "What you heard"
+msgstr "Что ты услышал"
+
+msgid "What you heard. The sentences that held a missed answer are underlined."
+msgstr "Что ты услышал. Предложения с ответами, которые ты пропустил, подчёркнуты."
+
+msgid "Where a word was wrong, the right one stands beside it."
+msgstr "Где слово неверное, рядом стоит верное."
+
+msgid "Where does Jaan live?"
+msgstr "Где живёт Яан?"
+
+msgid "Where is it?"
+msgstr "Где это?"
+
+msgid "Where is the cat?"
+msgstr "Где кот?"
+
+msgid "Where the cat goes"
+msgstr "Куда идёт кот"
+
+msgid "Where the cat is"
+msgstr "Где кот"
+
+msgid "Which case a verb takes"
+msgstr "Какой падеж нужен глаголу"
+
+msgid "Which language do they speak?"
+msgstr "На каком языке они говорят?"
+
+msgid "Who is Peeter?"
+msgstr "Кто такой Пеэтер?"
+
+msgid "With, without, until and as in Estonian"
+msgstr "«С», «без», «до» и «как» по-эстонски"
+
+msgid "With, without, until, as"
+msgstr "С, без, до, как"
+
+msgid "Word changes"
+msgstr "Как меняется слово"
+
+msgid "Word meanings open once you have answered."
+msgstr "Значения слов откроются, когда ответишь."
+
+msgid "Word order: the verb comes second"
+msgstr "Порядок слов: глагол на втором месте"
+
+msgid "Word pairs"
+msgstr "Пары слов"
+
+msgid "Word tiles tapped into order after hearing the sentence or reading its meaning; every right order counts, and the sentence plays after Check."
+msgstr "Плитки слов в правильном порядке: сначала предложение звучит или видно его значение; засчитывается любой верный порядок, а после проверки предложение звучит."
+
+msgid "Words"
+msgstr "Слова"
+
+msgid "Words from this lesson"
+msgstr "Слова из этого урока"
+
+msgid "Words from verbs: -ja, -mine"
+msgstr "Слова от глаголов: -ja, -mine"
+
+msgid "Words from words: -lik, -tu, -ke"
+msgstr "Слова от слов: -lik, -tu, -ke"
+
+msgid "Words in colour open their meaning."
+msgstr "Цветные слова показывают своё значение."
+
+msgid "Words into two or three groups, tapped or dragged, checked together; a wrong word shows its group and the rule."
+msgstr "Слова в две-три группы, нажатием или перетаскиванием, с одной проверкой; неверное слово показывает свою группу и правило."
+
+msgid "Words that change inside, the object’s case, and new tenses and moods. You know every word by now, so only the rule is new."
+msgstr "Слова, которые меняются внутри, падеж дополнения, новые времена и наклонения. Все слова ты уже знаешь, так что новое здесь только правило."
+
+msgid "work"
+msgstr "работа"
+
+msgid "Yes, she is"
+msgstr "Да"
+
+msgid "Yesterday I ate at home."
+msgstr "Вчера я ел дома."
+
+msgid "you"
+msgstr "ты"
+
+msgid "You are Jaan, a doctor from Tartu. Mari speaks first; pick what you say back."
+msgstr "Ты Яан, врач из Тарту. Мари говорит первой; выбирай, что ответить."
+
+msgid "You live in Tartu."
+msgstr "Ты живёшь в Тарту."
+
+msgid "you, more than one"
+msgstr "вы"
+
+msgid "You’ll hear an example and see how its verb is built."
+msgstr "Услышишь пример и увидишь, как построен глагол."
+
+msgid "You’ll hear it and read what its ending does."
+msgstr "Услышишь её и прочитаешь, что делает окончание."
+
+msgid "You’re a doctor, arst."
+msgstr "Ты врач, arst."
+
+msgid "You’ve finished every lesson so far"
+msgstr "Все готовые уроки пройдены"
+
+msgid "your answer"
+msgstr "твой ответ"
+
+msgid "Your answer"
+msgstr "Твой ответ"
+
+msgid "Your reply"
+msgstr "Твой ответ"
+
+msgid "Your sentence"
+msgstr "Твоё предложение"

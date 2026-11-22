@@ -13,7 +13,7 @@ Turn a rough idea into a clear next artifact without implementing it.
 - Search open pull requests, remote branches, and worktrees for earlier work on the same thing. List each hit with its link and state, or the searches that found none.
 - Name the existing field, component, or screen that could do the job, and why it cannot.
 - Restate the learner outcome and what observable result would make it successful.
-- Separate confirmed facts, assumptions, and open decisions. Keep unrequested research notes out of tracked artifacts.
+- Separate confirmed facts, assumptions, and open decisions.
 
 ## Shape through decisions
 
@@ -33,7 +33,7 @@ Lean: b, <the reason in one clause>
 4 settled, 3 open
 ```
 
-- Offer two to four concrete options when the decision permits them, one of them the simplest that could work. For an open question with no fixed options, omit them but keep the lean and the progress count.
+- Offer two to four concrete options when the decision permits them, one of them the simplest that could work.
 - State a lean even when confidence is low; name the uncertainty in one clause instead of adding a long preamble.
 - Ask the user only for decisions that need their judgment; find facts in the repository or the available tools.
 - Treat a delegated reversible choice as settled using the smallest default. Return irreversible or high-risk choices to the user.

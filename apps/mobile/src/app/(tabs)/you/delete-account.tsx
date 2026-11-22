@@ -153,6 +153,7 @@ function Confirm({ apple }: { apple: boolean }) {
   const router = useRouter();
   const appleAvailable = useAppleAvailable();
   const remove = useMutation({
+    meta: { failure: "inline" },
     mutationFn: async () => {
       const credential = await requestAppleCredential();
       if (!credential.authorizationCode) throw new Error("Apple returned no authorization code");

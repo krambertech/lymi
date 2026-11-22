@@ -5,6 +5,7 @@ import clearText from "./rules/clear-text.mjs";
 import clipOwner from "./rules/clip-owner.mjs";
 import dismissOnDrag from "./rules/dismiss-on-drag.mjs";
 import edgeSwipe from "./rules/edge-swipe.mjs";
+import failedWriteSaid from "./rules/failed-write-said.mjs";
 import fieldError from "./rules/field-error.mjs";
 import fixedHost from "./rules/fixed-host.mjs";
 import formHeader from "./rules/form-header.mjs";
@@ -20,6 +21,7 @@ import noNavigatorOnline from "./rules/no-navigator-online.mjs";
 import noRedirectError from "./rules/no-redirect-error.mjs";
 import noSqlLower from "./rules/no-sql-lower.mjs";
 import noticePlainText from "./rules/notice-plain-text.mjs";
+import readRequestThroughHttp from "./rules/read-request-through-http.mjs";
 import scrollViewPersistTaps from "./rules/scroll-view-persist-taps.mjs";
 import sheetFieldFocus from "./rules/sheet-field-focus.mjs";
 import springPresets from "./rules/spring-presets.mjs";
@@ -33,6 +35,7 @@ export default definePlugin({
     "clear-text": clearText,
     "dismiss-on-drag": dismissOnDrag,
     "edge-swipe": edgeSwipe,
+    "failed-write-said": failedWriteSaid,
     "ai-consent": aiConsent,
     "clip-owner": clipOwner,
     "field-error": fieldError,
@@ -50,6 +53,7 @@ export default definePlugin({
     "no-redirect-error": noRedirectError,
     "no-sql-lower": noSqlLower,
     "notice-plain-text": noticePlainText,
+    "read-request-through-http": readRequestThroughHttp,
     "scroll-view-persist-taps": scrollViewPersistTaps,
     "sheet-field-focus": sheetFieldFocus,
     "spring-presets": springPresets,

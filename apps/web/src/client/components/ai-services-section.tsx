@@ -15,6 +15,7 @@ export function AiServicesSection() {
   const qc = useQueryClient();
   const settings = useQuery({ ...settingsQuery, refetchOnMount: "always" });
   const save = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (allowed: boolean) => saveAiChoice(qc, allowed, "settings"),
   });
   const on = save.isPending ? save.variables : aiChoice(settings.data) !== false;

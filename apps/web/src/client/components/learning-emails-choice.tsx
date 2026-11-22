@@ -13,6 +13,7 @@ export function LearningEmailsChoice() {
   const qc = useQueryClient();
   const settings = useQuery({ ...settingsQuery, refetchOnMount: "always" });
   const save = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (learningEmails: boolean) => api.updateSettings({ learningEmails }),
     onSuccess: (next) => qc.setQueryData<Settings>(settingsQuery.queryKey, next),
   });

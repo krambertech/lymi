@@ -24,6 +24,7 @@ export function useAppLanguage() {
   const qc = useQueryClient();
   const settings = useQuery(settingsQuery);
   const mutation = useMutation({
+    meta: { failure: "inline" },
     scope: { id: "app-language" },
     // Saved, never queued: offline it fails at once and goes back.
     networkMode: "always",

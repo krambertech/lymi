@@ -340,6 +340,13 @@
       }
     },
     {
+      "files": ["apps/web/src/server/routes/**", "apps/web/src/server/app.ts"],
+      "excludeFiles": ["**/*.test.ts"],
+      "rules": {
+        "lymi/read-request-through-http": "error"
+      }
+    },
+    {
       "files": ["apps/mobile/**", "packages/client/src/**", "packages/core/src/**"],
       "excludeFiles": ["packages/client/src/cache.ts", "**/*.test.ts", "**/*.test.tsx"],
       "rules": {
@@ -412,6 +419,13 @@
       ],
       "rules": {
         "lymi/ai-consent": "error"
+      }
+    },
+    {
+      "files": ["apps/web/src/client/**", "apps/mobile/src/**", "packages/client/src/**"],
+      "excludeFiles": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "lymi/failed-write-said": "error"
       }
     }
   ]

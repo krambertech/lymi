@@ -32,6 +32,7 @@ function SettingsRoute() {
   const decks = useQuery(decksQuery);
   const qc = useQueryClient();
   const language = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (appLanguage: AppLanguage) => api.updateSettings({ appLanguage }),
     // The interface switches on the tap and rolls back if the server refuses.
     onMutate: async (appLanguage) => {

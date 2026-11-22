@@ -64,6 +64,7 @@ export function ImportStart({ source }: { source: FileSource }) {
   const [refused, setRefused] = useState<string | null>(null);
   const app = SOURCE_NAMES[source];
   const start = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (picked: Picked) => startUpload(uploadSource(picked), qc),
     onSuccess: (item) => router.replace(`/import/${item.id}` as Href),
   });

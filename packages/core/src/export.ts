@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Id } from "./bounds";
 import { OPEN } from "./responses/common";
 import { Actor, FieldSource, Rating, ReviewModeKey } from "./types";
 
@@ -25,11 +26,9 @@ export const EXPORT_EXTENSIONS: Record<ExportFormat, string> = { lymi: "zip", an
 
 export const ExportStartInput = z.object({
   format: ExportFormat,
-  deckId: z
-    .string()
-    .min(1)
-    .optional()
-    .meta({ description: "One deck the learner can see; leave out for the whole library" }),
+  deckId: Id.optional().meta({
+    description: "One deck the learner can see; leave out for the whole library",
+  }),
 });
 export type ExportStartInput = z.infer<typeof ExportStartInput>;
 

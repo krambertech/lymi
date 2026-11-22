@@ -42,7 +42,10 @@ export function FeedbackDialog({ open, onOpenChange }: Props) {
   const [invalid, setInvalid] = useState<FieldErrors>({});
   const formRef = useRef<HTMLFormElement>(null);
 
-  const send = useMutation({ mutationFn: (input: FeedbackInput) => api.sendFeedback(input) });
+  const send = useMutation({
+    meta: { failure: "inline" },
+    mutationFn: (input: FeedbackInput) => api.sendFeedback(input),
+  });
   const overDailyLimit = send.error instanceof ApiError && send.error.status === 409;
 
   const close = () => {

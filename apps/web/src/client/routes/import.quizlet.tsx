@@ -23,6 +23,7 @@ function QuizletImport() {
   const navigate = useNavigate();
   const decks = useQuery(decksQuery);
   const start = useMutation({
+    meta: { failure: "inline" },
     mutationFn: ({ text, separators, deckName, deckId }: QuizletImportRequest) =>
       startUpload(
         new File([encodeTextImport({ separators, deckName, deckId }, text)], "quizlet.txt", {

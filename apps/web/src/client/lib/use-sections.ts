@@ -31,12 +31,14 @@ export function useSectionActions(deckId: string) {
     toast.add({ id, type: "error", title: errorMessage(error) });
 
   const create = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (input: { name: string; cardIds?: string[] | undefined }) =>
       api.createSection(deckId, input),
     onSettled: refresh,
   });
 
   const rename = useMutation({
+    meta: { failure: "inline" },
     mutationFn: ({ id, name }: { id: string; name: string }) => api.renameSection(id, name),
     onSettled: refresh,
   });

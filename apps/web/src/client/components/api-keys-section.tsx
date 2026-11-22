@@ -40,6 +40,7 @@ export function ApiKeysSection() {
   const [fresh, setFresh] = useState<{ id: string; key: string; name: string } | null>(null);
 
   const create = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (input: ApiKeyInput) => api.createKey(input),
     onSuccess: (created, input) => {
       setFresh({ id: created.id, key: created.key, name: created.name ?? input.name });
@@ -48,6 +49,7 @@ export function ApiKeysSection() {
     },
   });
   const revoke = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (id: string) => api.revokeKey(id),
     onSuccess: (_r, id) => {
       if (fresh?.id === id) setFresh(null);

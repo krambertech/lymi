@@ -97,6 +97,7 @@ export function useNewSection(deckId: string) {
   const [moving, setMoving] = useState<{ cardIds: string[]; after?: () => void } | null>(null);
   const [target, setTarget] = useState<{ section?: Section } | null>(null);
   const create = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (name: string) =>
       api.createSection(deckId, { name, ...(moving ? { cardIds: moving.cardIds } : {}) }),
     onSettled: () =>
@@ -115,7 +116,10 @@ export function useNewSection(deckId: string) {
     sheet: (
       <NameSheet
         target={target}
-        onClose={() => setTarget(null)}
+        onClose={() => {
+          setTarget(null);
+          create.reset();
+        }}
         busy={create.isPending}
         description={
           count > 0

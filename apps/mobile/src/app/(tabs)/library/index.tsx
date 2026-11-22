@@ -1,6 +1,6 @@
 import { plural } from "@lingui/core/macro";
 import { useLingui } from "@lingui/react/macro";
-import { type DeckSummary, errorMessage, type Series } from "@lymi/client/api";
+import type { DeckSummary, Series } from "@lymi/client/api";
 import { groupDecks } from "@lymi/client/library-groups";
 import { isolate, unisolate } from "@lymi/core";
 import { type Href, useRouter } from "expo-router";
@@ -192,13 +192,11 @@ function SeriesMenu({ series: s, decks, count }: { series: Series; decks: number
   const actions = useSeriesActions();
   const seriesName = s.name;
   const online = useOnline();
-  // A series write has no place on screen to say it failed, so an alert says it.
-  const failed = (e: unknown) => alert(t`That didn’t go through`, errorMessage(e));
   // Series writes go straight to the Worker, so offline the menu says so instead of waiting.
   const needsConnection = (then: () => void) => () =>
     online ? then() : alert(t`Changing series needs a connection.`);
   const remove = (choice: "archive" | "keep") =>
-    actions.remove.mutate({ series: s, decks: choice }, { onError: failed });
+    actions.remove.mutate({ series: s, decks: choice });
   // Deleting a series is the one series write with no Undo, so an alert asks first, and the learner
   // chooses whether its decks stay in Library or are archived with it.
   const confirmDelete = () => {

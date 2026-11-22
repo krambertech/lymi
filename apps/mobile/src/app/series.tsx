@@ -48,8 +48,9 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
   const p = usePalette();
   const online = useOnline();
   const [name, setName] = useState(series?.name ?? "");
-  const [error, setError] = useState<string | null>(null);
+  const [invalid, setInvalid] = useState<string | null>(null);
   const { name: save, undoMove } = useSeriesActions();
+  const error = invalid ?? (save.error && errorMessage(save.error));
   const listQuery = useSeriesList(true);
   const notice = useMoveNotice();
   const moving = useDecks().data?.find((d) => d.id === deck);
@@ -63,10 +64,10 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
     if (save.isPending || !online || waiting) return;
     const parsed = SeriesInput.safeParse({ name });
     if (!parsed.success) {
-      setError(name.trim() ? t`Keep the name under 80 characters.` : t`Give the series a name.`);
+      setInvalid(name.trim() ? t`Keep the name under 80 characters.` : t`Give the series a name.`);
       return;
     }
-    setError(null);
+    setInvalid(null);
     save.mutate(
       { series, name: parsed.data.name, deckIds: deck ? [deck] : undefined },
       {
@@ -81,7 +82,6 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
           if (moving && back)
             notice(moving.id, moving.name, saved.name, () => undoMove(moving.id, back));
         },
-        onError: (e) => setError(errorMessage(e)),
       },
     );
   };
@@ -107,7 +107,8 @@ function NameForm({ series, deck }: { series: Series | undefined; deck?: string 
           maxLength={seriesLimits.name ?? undefined}
           onChangeText={(v) => {
             setName(v);
-            if (error) setError(null);
+            setInvalid(null);
+            if (save.isError) save.reset();
           }}
           placeholder={t`Learn Estonian`}
           placeholderTextColor={p["ink-muted"]}

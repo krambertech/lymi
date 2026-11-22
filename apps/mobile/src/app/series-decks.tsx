@@ -38,7 +38,6 @@ export default function SeriesDecks() {
     if (series && chosen === null) setChosen(series.deckIds);
   }, [series, chosen]);
   const picked = chosen ?? [];
-  const [error, setError] = useState<string | null>(null);
   const { setDecks } = useSeriesActions();
   const byId = new Map(decks.map((d) => [d.id, d]));
   const seriesName = new Map(all.map((s) => [s.id, s.name]));
@@ -55,10 +54,7 @@ export default function SeriesDecks() {
     });
   const done = () => {
     if (!series || setDecks.isPending || !online) return;
-    setDecks.mutate(
-      { series, deckIds: picked },
-      { onSuccess: () => router.back(), onError: (e) => setError(errorMessage(e)) },
-    );
+    setDecks.mutate({ series, deckIds: picked }, { onSuccess: () => router.back() });
   };
 
   return (
@@ -88,7 +84,7 @@ export default function SeriesDecks() {
               {t`Changing series needs a connection.`}
             </Text>
           )}
-          <FieldError>{error}</FieldError>
+          <FieldError>{setDecks.error && errorMessage(setDecks.error)}</FieldError>
           {rows.length > 0 && (
             <View className="overflow-hidden rounded-xl border border-edge bg-plate">
               {rows.map((d, i) => {

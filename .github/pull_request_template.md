@@ -1,19 +1,23 @@
-<!-- Title: type(scope): imperative summary. Target 60 characters; maximum 72. -->
+<!-- Title: type(scope): imperative summary. Target 60 characters; maximum 72. Keep the whole body under 600 words; `pnpm pr:check <body file> "<title>"` counts them. -->
 
 ## Summary
 
-<!-- One short paragraph or up to three bullets. State the outcome once. -->
+<!-- The outcome, in one short paragraph or up to three bullets: at most 150 words. -->
 
 ## Screenshots
 
-<!-- Required for any rendered UI change. Attach an after image of each affected surface, with a before image when the surface already existed. Cover only the materially affected viewport, theme, and state. Remove this section when the diff has no visible UI effect. -->
+<!-- Required when rendered UI changes: an after image of each affected surface, and a before image when it already existed. Cover only the affected viewport, theme and state. When UI code changed and nothing looks different, put "No visible change: <why>" here instead. Remove the section when the diff has no UI code. -->
+
+Try it: <!-- preview path or screen, persona, steps to the changed state -->
 
 ## Instrumentation
 
-<!-- Required: name the measurement question, new or reused events and their producers, and the evidence that they fire correctly without private content or duplicates. For work that needs no event, state why. -->
+<!-- Required: the question, the new or reused events and their producers, and the evidence that they fire correctly without private content or duplicates. For work that needs no event, state why. -->
 
 ## Verification
 
-<!-- List only checks actually run and their result. Report skipped checks directly. Name the proof this kind of change needs under "Proof matches the change" in AGENTS.md, and give it. Answer each item `pnpm reliability` prints. For a product change, name the features driven with the verify skill and the evidence folder. An independent reviewer adds the live verdict (PASS, PASS+NOTES or FAIL) against the head SHA; a phone change says whether it was driven on the Mac. -->
+<!-- One line per check that ran, with its result and evidence; report skipped checks directly. Give the proof this kind of change needs under "Proof matches the change" in AGENTS.md and answer each item `pnpm reliability` prints. A product change names the features driven and the evidence folder; a phone change says whether it was driven on the Mac. Leave out passing checks CI already shows. -->
 
-<!-- Add Why, Risks, or Follow-ups only when material. Keep each optional section to one short paragraph or up to three bullets. Omit passing logs, implementation inventories, empty sections, decorative emoji, and generated-by footers. -->
+Review: <!-- independent reviewer, rounds, verdict and open findings, or why none ran. An independent reviewer adds the live verdict (PASS, PASS+NOTES or FAIL) against the head SHA. -->
+
+<!-- Add Why, Risks or Follow-ups only when material: one short paragraph or up to three bullets each. -->

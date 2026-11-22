@@ -53,7 +53,7 @@ function useDeckMenu() {
   const { t } = useLingui();
   const router = useRouter();
   const failure = useAddFailure();
-  const add = useAddDeck(() => undefined);
+  const add = useAddDeck(() => undefined, { failure: "caller" });
   return (deck: PublicDeckSummary, deckId: string | undefined): RowMenuItem[] => {
     const name = deck.name;
     const openInLibrary = (id: string) => router.navigate(`/library/${id}` as Href);
@@ -72,17 +72,14 @@ function useDeckMenu() {
             label: t`Add to Library`,
             icon: "plus",
             onSelect: () =>
-              add.mutate(
-                { slug: deck.slug, edition: deck.meaningLanguage },
-                {
-                  onSuccess: ({ deckId: id }) =>
-                    toast.add({
-                      id: `add-deck-${deck.slug}`,
-                      title: t`Added “${{ name: isolate(name) }}” to Library`,
-                      action: { label: t`Open`, onPress: () => openInLibrary(id) },
-                    }),
-                  onError: (e) => toast.add({ error: true, title: failure(e) }),
-                },
+              void add.mutateAsync({ slug: deck.slug, edition: deck.meaningLanguage }).then(
+                ({ deckId: id }) =>
+                  toast.add({
+                    id: `add-deck-${deck.slug}`,
+                    title: t`Added “${{ name: isolate(name) }}” to Library`,
+                    action: { label: t`Open`, onPress: () => openInLibrary(id) },
+                  }),
+                (e) => toast.add({ error: true, title: failure(e) }),
               ),
           },
         ];

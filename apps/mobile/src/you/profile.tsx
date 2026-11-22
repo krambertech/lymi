@@ -21,10 +21,12 @@ export function useProfile() {
   const avatar = useQuery(avatarQuery);
 
   const rename = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (next: string) => api.rename(next),
     onSuccess: (saved) => queryClient.setQueryData(meQuery.queryKey, saved),
   });
   const photo = useMutation({
+    meta: { failure: "inline" },
     mutationFn: async (change: { image: Blob } | "remove") => {
       const revision = avatar.data?.revision ?? 0;
       return change === "remove"

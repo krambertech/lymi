@@ -4,12 +4,16 @@ import { beforeEach, describe, expect, it, vi } from "vitest";
 import { api, type Settings } from "./api";
 import { settingsQuery, streakQuery } from "./queries";
 
-const held = vi.hoisted(() => ({ qc: undefined as unknown, status: undefined as unknown }));
+const held = vi.hoisted(() => ({
+  qc: undefined as unknown,
+  status: undefined as unknown,
+  failed: (): boolean => false,
+}));
 vi.mock("react", async (original) => ({
   ...(await original<typeof import("react")>()),
   useRef: (current: unknown) => ({ current }),
   useState: () => [
-    undefined,
+    held.status,
     (next: unknown) => {
       held.status = next;
     },
@@ -19,10 +23,12 @@ vi.mock("@tanstack/react-query", async (original) => ({
   ...(await original<typeof import("@tanstack/react-query")>()),
   useQueryClient: () => held.qc,
   useMutation: (options: MutationObserverOptions) => ({
-    mutate: (variables: unknown) =>
-      void new MutationObserver(held.qc as QueryClient, options)
-        .mutate(variables as never)
-        .catch(() => {}),
+    isError: held.failed(),
+    mutate: (variables: unknown) => {
+      const observer = new MutationObserver(held.qc as QueryClient, options);
+      held.failed = () => observer.getCurrentResult().isError;
+      void observer.mutate(variables as never).catch(() => {});
+    },
   }),
 }));
 
@@ -42,6 +48,8 @@ const goals = () => [
 beforeEach(() => {
   qc = new QueryClient();
   held.qc = qc;
+  held.status = undefined;
+  held.failed = () => false;
   sent = [];
   qc.setQueryData(streakQuery.queryKey, streak("open"));
   qc.setQueryData(settingsQuery.queryKey, { dailyGoal: 10 } as Settings);
@@ -72,7 +80,7 @@ describe("changing the daily goal", () => {
     sent[1]?.land();
     await settle();
     expect(goals()).toEqual([50, 50]);
-    expect(held.status).toBe("saved");
+    expect(useDailyGoal().status).toBe("saved");
   });
 
   it("goes back to where the first choice began when the last fails, and asks the server", async () => {
@@ -86,7 +94,7 @@ describe("changing the daily goal", () => {
     sent[1]?.fail();
     await settle();
     expect(goals()).toEqual([10, 10]);
-    expect(held.status).toBe("error");
+    expect(useDailyGoal().status).toBe("error");
     expect(qc.getQueryState(settingsQuery.queryKey)?.isInvalidated).toBe(true);
     expect(qc.getQueryState(streakQuery.queryKey)?.isInvalidated).toBe(true);
   });

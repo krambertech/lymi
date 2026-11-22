@@ -1,8 +1,16 @@
-import { LessonAccessOut, LessonAnswerInput, LessonAnswerOut, LessonEventOut } from "@lymi/core";
+import {
+  ID_MAX,
+  LESSON_READS_PER_DAY,
+  LessonAccessOut,
+  LessonAnswerInput,
+  LessonAnswerOut,
+  LessonEventOut,
+} from "@lymi/core";
 import { Hono } from "hono";
+import { z } from "zod";
 import { meteredFetch } from "../dependency-health";
 import { operatorEmails } from "../env";
-import { body, ctxOf, describe } from "../http";
+import { body, ctxOf, describe, reader, readForm } from "../http";
 import type { AppEnv } from "../index";
 import { decisionModel, termsAgainstAnswer } from "../lessons/keep";
 import { pageMarkdown } from "../lessons/link";
@@ -35,7 +43,23 @@ const MAX_PDFS = 3;
 /** All PDFs together, so the request to the reader stays under Anthropic's 32 MB once encoded. */
 const MAX_PDF_BYTES = 20_000_000;
 const MAX_TEXT = 100_000;
+const MAX_LINK = 8_000;
 const MAX_BODY = 60_000_000;
+
+const readLesson = reader(
+  z.object({
+    text: z
+      .string()
+      .overwrite((text) => text.slice(0, MAX_TEXT))
+      .max(MAX_TEXT)
+      .default(""),
+    deckId: z.string().max(ID_MAX).optional(),
+    hint: z.string().max(ID_MAX).optional(),
+    link: z.string().max(MAX_LINK).default(""),
+    reads: z.coerce.number().int().min(1).max(LESSON_READS_PER_DAY).optional(),
+  }),
+  "lesson",
+);
 
 lessonReads.get(
   "/access",
@@ -70,13 +94,12 @@ lessonReads.post(
     if (!Number.isFinite(declared) || declared > MAX_BODY) {
       throw new ServiceError("invalid", "Send at most 10 photos and 3 PDFs under 20 MB in all.");
     }
-    const form = await c.req.formData();
+    const { files, fields } = await readForm(c, readLesson);
+    if (!fields.success) throw new ServiceError("invalid", "Invalid lesson", fields.error.issues);
+    const { text, deckId, hint, link, reads } = fields.data;
     let pdfBytes = 0;
-    const material: LessonMaterial = { images: [], pdfs: [], text: "" };
-    const text = form.get("text");
-    if (typeof text === "string") material.text = text.slice(0, MAX_TEXT);
-    for (const file of form.getAll("file")) {
-      if (!(file instanceof File)) continue;
+    const material: LessonMaterial = { images: [], pdfs: [], text };
+    for (const file of files) {
       const bytes = new Uint8Array(await file.arrayBuffer());
       if (isPdf(bytes)) {
         pdfBytes += bytes.byteLength;
@@ -91,18 +114,15 @@ lessonReads.post(
       material.images.push({ bytes: page.bytes, type: page.type });
     }
     // Refusals happen here, before the stream opens, so they arrive as ordinary errors.
-    const deckId = form.get("deckId");
-    const hint = form.get("hint");
     const client = c.get("phone") ? "phone" : "web";
-    const link = form.get("link");
-    if (typeof link === "string" && link.trim()) {
+    if (link.trim()) {
       if (material.text.trim() || material.images.length > 0 || material.pdfs.length > 0)
         throw new ServiceError("invalid", "Smart add reads a link on its own.");
       material.transcript = await readLink(
         ctxOf(c),
         link,
         { request: fetch, toMarkdown: (page, consent) => pageMarkdown(c.env, page, consent) },
-        { client, deck: typeof deckId === "string" && deckId ? "fixed" : "guessed" },
+        { client, deck: deckId ? "fixed" : "guessed" },
       );
     }
     if (
@@ -113,12 +133,11 @@ lessonReads.post(
     ) {
       throw new ServiceError("invalid", "Paste the lesson or add a photo or PDF of it.");
     }
-    const reads = Number(form.get("reads"));
     const lesson = await prepareLesson(ctxOf(c), material, deps, {
-      deckId: typeof deckId === "string" && deckId ? deckId : undefined,
-      hint: typeof hint === "string" && hint ? hint : undefined,
+      deckId: deckId || undefined,
+      hint: hint || undefined,
       client,
-      reads: Number.isInteger(reads) && reads > 0 ? reads : undefined,
+      reads,
     });
     const { readable, writable } = new TransformStream<Uint8Array, Uint8Array>();
     const writer = writable.getWriter();

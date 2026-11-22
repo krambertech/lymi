@@ -33,12 +33,14 @@ function DeleteAccountRoute() {
   // code step stays, whatever a later resend does.
   const [sentTo, setSentTo] = useState<string | null>(null);
   const send = useMutation({
+    meta: { failure: "inline" },
     mutationFn: api.sendDeletionCode,
     onSuccess: (sent) => setSentTo(sent.sentTo),
     onError: refetchOnPublisher,
   });
 
   const remove = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (code: string) => api.deleteAccount({ code }),
     onError: refetchOnPublisher,
     onSuccess: async () => {

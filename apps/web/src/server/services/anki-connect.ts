@@ -382,7 +382,7 @@ function prepare(note: AnkiConnectNote | null, decks: Map<string, Deck>): Prepar
     };
   }
   if (deck.language && !fitsLanguage(term, deck.language)) {
-    const language = languageName(deck.language);
+    const language = languageName(deck.language) ?? deck.language;
     return {
       ok: false,
       error: `“${term}” isn’t ${language}, and “${deck.name}” is a ${language} deck. In Yomitan’s Anki settings, choose a deck for this language.`,

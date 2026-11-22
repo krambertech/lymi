@@ -1280,7 +1280,7 @@
   "apps/web/src/server/imports/sqlite.ts": 16,
   "apps/web/src/server/imports/workflow.ts": 11,
   "apps/web/src/server/imports/write-run.ts": 22,
-  "apps/web/src/server/index.ts": 6,
+  "apps/web/src/server/index.ts": 5,
   "apps/web/src/server/invitation-rate-limit.ts": 9,
   "apps/web/src/server/join-cookie.ts": 11,
   "apps/web/src/server/join-page.ts": 14,

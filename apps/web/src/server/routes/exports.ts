@@ -4,7 +4,7 @@ import { Hono } from "hono";
 import { z } from "zod";
 import { body, ctxOf, describe } from "../http";
 import type { AppEnv } from "../index";
-import { log, logFailure } from "../log";
+import { log } from "../log";
 import { exportFile, getExport, listExports, type StartExportRun, startExport } from "../services";
 
 /** Taking a deck or the whole library out. A Workflow writes the file; this route hands it over. */
@@ -82,8 +82,10 @@ exports.get(
         }
         await writable.close();
       } catch (error) {
-        log.warn("export_download_broken", { error });
-        await writable.abort(error).catch(logFailure("export_download_broken"));
+        log.info("export_download_broken", { error });
+        await writable.abort(error).catch((failure: unknown) => {
+          if (failure !== error) log.info("export_download_broken", { error: failure });
+        });
       }
     })();
     c.executionCtx.waitUntil(pipe);

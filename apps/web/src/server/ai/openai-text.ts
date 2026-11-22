@@ -1,4 +1,4 @@
-import { log } from "../log";
+import { warnOnce } from "../log";
 import { type AiGatewayBindings, providerEndpoint } from "./gateway";
 import type { Fetch, TextObserver, TextProvider, TextRequest } from "./types";
 
@@ -55,7 +55,7 @@ export function createOpenAiTextProvider(
             status,
           });
         } catch (error) {
-          log.warn("ai_call_not_observed", { error });
+          warnOnce("ai_call_not_observed", { error });
         }
       };
       try {

@@ -1,5 +1,5 @@
 import type { Fetch } from "./ai/types";
-import { log } from "./log";
+import { warnOnce } from "./log";
 
 /** Each outside service a request or background job relies on. docs/operations.md names the alerts. */
 export type Dependency =
@@ -73,7 +73,7 @@ function write(
       doubles: [point.durationMs],
     });
   } catch (error) {
-    log.warn("metric_write_failed", { dataset: "health", error });
+    warnOnce("metric_write_failed", { dataset: "health", error });
   }
 }
 

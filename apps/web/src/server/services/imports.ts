@@ -24,7 +24,7 @@ import { mochi } from "../imports/mochi";
 import { noji } from "../imports/noji";
 import { pleco } from "../imports/pleco";
 import { quizlet } from "../imports/quizlet";
-import { log, logFailure } from "../log";
+import { log } from "../log";
 import { aiAllowedFor } from "./ai-consent";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
@@ -686,7 +686,7 @@ export async function deleteImportFiles(
       await uploads
         .resumeMultipartUpload(row.objectKey, row.uploadId)
         .abort()
-        .catch(logFailure("import_upload_abort_refused"));
+        .catch((error: unknown) => log.info("import_upload_abort_refused", { error }));
     const keys = [row.objectKey];
     let cursor: string | undefined;
     do {

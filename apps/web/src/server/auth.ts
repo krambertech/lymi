@@ -85,6 +85,13 @@ function fromPhoneApp(request: Request | undefined): boolean {
   return request?.headers.get("origin")?.startsWith(PHONE_APP_ORIGIN) ?? false;
 }
 
+function logAuthLibrary(level: string, _message: string, ...details: unknown[]) {
+  const error = details
+    .map((detail) => (detail instanceof Error ? detail : (detail as { error?: unknown })?.error))
+    .find((detail) => detail instanceof Error);
+  log[level === "error" ? "error" : "warn"]("auth_library_failed", error ? { error } : {});
+}
+
 export function createAuth(
   env: Bindings,
   db: Db,
@@ -107,6 +114,7 @@ export function createAuth(
     baseURL: env.PRODUCT_URL,
     basePath: "/api/auth",
     secret: env.BETTER_AUTH_SECRET,
+    logger: { log: logAuthLibrary },
     // The Mac app's scheme is left out on purpose: trusting it would let a callback redirect carry
     // the session cookie there. Its code is traded at `/electron/token` with no cookie to check.
     trustedOrigins: [env.PRODUCT_URL, PHONE_APP_ORIGIN, "https://appleid.apple.com"],

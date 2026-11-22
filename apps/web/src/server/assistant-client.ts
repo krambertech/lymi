@@ -24,7 +24,7 @@ export function assistantClientOf(
   publicSiteUrl: string | undefined,
 ): AssistantClient {
   // A malformed site URL must not fail the MCP request this label rides on.
-  const site = URL.parse(publicSiteUrl || DEFAULT_PUBLIC_SITE_ORIGIN);
+  const site = URL.parse("/", publicSiteUrl || DEFAULT_PUBLIC_SITE_ORIGIN);
   if (!site) return "other";
   const app = identifyApp(clientId ?? undefined, null, (path) => new URL(path, site).toString());
   return (app.recognised && app.name && BY_NAME[app.name]) || "other";

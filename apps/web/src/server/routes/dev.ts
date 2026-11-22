@@ -511,7 +511,7 @@ async function signInPersona(auth: Auth, db: Db, persona: Persona) {
   if (signedIn.ok) return await sessionFrom(signedIn, true);
 
   // The account is there and its password is not this one, so the fixture is stale.
-  log.warn("stale_persona_rebuilt", { personaId: persona.id });
+  log.warn("stale_persona_rebuilt");
   await deletePersonaAccount(db, email);
   const rebuilt = await auth.api.signUpEmail({
     body: { email, password: DEV_PASSWORD, name: persona.name },

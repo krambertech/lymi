@@ -4,7 +4,7 @@ import { exceptionProperties, POSTHOG_HOST } from "@lymi/core/telemetry";
 import { PostHog } from "posthog-node";
 import type { Db } from "./db";
 import type { Bindings } from "./env";
-import { log, logFailure } from "./log";
+import { log, logFailure, warnOnce } from "./log";
 import { type AnalyticsEvent, type AnalyticsWriter, track } from "./services/analytics";
 import { analyticsContextFor } from "./services/analytics-context";
 
@@ -108,7 +108,7 @@ export function productAnalytics(
             },
           },
         });
-      })().catch(logFailure("posthog_capture_failed"));
+      })().catch((error: unknown) => warnOnce("posthog_capture_failed", { error }));
       if (defer) defer(work);
       else pending.push(work);
     },
@@ -159,7 +159,7 @@ export async function reportServerException(
       method: context.method,
     });
   } catch (failure) {
-    log.error("exception_report_failed", { route: context.route, error: failure });
+    log.error("exception_report_failed", { error: failure });
   }
 }
 

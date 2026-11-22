@@ -165,6 +165,23 @@ describe("answerCall", () => {
     ]);
   });
 
+  it("names a deck's language by its tag when the tag is malformed", async () => {
+    await db
+      .update(schema.decks)
+      .set({ defaultLanguage: "ja_x" })
+      .where(eq(schema.decks.id, japanese));
+    const reply = await call("addNote", { note: note({ Term: "trattoria" }) });
+    await db
+      .update(schema.decks)
+      .set({ defaultLanguage: "ja" })
+      .where(eq(schema.decks.id, japanese));
+    expect(reply).toEqual({
+      result: null,
+      error:
+        "“trattoria” isn’t ja_x, and “日本語” is a ja_x deck. In Yomitan’s Anki settings, choose a deck for this language.",
+    });
+  });
+
   it("tells a Japanese homograph by its reading, as adding does", async () => {
     expect(
       await call("canAddNotesWithErrorDetail", {

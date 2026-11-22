@@ -8,25 +8,33 @@ export function parseJson(text: string): unknown {
   try {
     return JSON.parse(text);
   } catch (error) {
-    if (error instanceof SyntaxError) return undefined;
+    if (error instanceof SyntaxError || error instanceof RangeError) return undefined;
     throw error;
   }
 }
 
-function unlessUnreadable<T>(reading: Promise<T>): Promise<T | undefined> {
-  // oxlint-disable-next-line lymi/no-swallowed-failure -- A body that broke off or is not JSON is an answer every caller checks for.
-  return reading.catch(() => undefined);
+async function unlessUnreadable<T>(read: () => Promise<T>): Promise<T | undefined> {
+  try {
+    return await read();
+    // oxlint-disable-next-line lymi/no-swallowed-failure -- A body that broke off, was read before or is not JSON is an answer every caller checks for.
+  } catch {
+    return undefined;
+  }
 }
 
 export function bodyJson(source: { json(): Promise<unknown> }): Promise<unknown> {
-  return unlessUnreadable(source.json());
+  return unlessUnreadable(() => source.json());
+}
+
+export function clonedJson(source: Request | Response): Promise<unknown> {
+  return unlessUnreadable(() => source.clone().json());
 }
 
 export async function bodyFields(request: Request): Promise<Fields | null> {
   const type = request.headers.get("content-type")?.split(";")[0]?.trim().toLowerCase();
-  if (type === "application/json") return fieldsOf(await bodyJson(request.clone()));
+  if (type === "application/json") return fieldsOf(await clonedJson(request));
   if (type !== "application/x-www-form-urlencoded") return null;
-  const text = await unlessUnreadable(request.clone().text());
+  const text = await unlessUnreadable(() => request.clone().text());
   return text === undefined ? null : Object.fromEntries(new URLSearchParams(text));
 }
 

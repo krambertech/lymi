@@ -18,7 +18,7 @@ export interface StoredGrade extends LocalGrade {
   reviewId?: string | undefined;
   /** The FSRS state the server scheduled, once it accepted the grade. */
   stateAfter?: number | undefined;
-  /** A send got no answer, so the server may hold this grade though the device cannot tell. */
+  /** A send left and no answer turned it away, so the server may hold this grade. */
   unanswered?: boolean | undefined;
 }
 
@@ -128,6 +128,9 @@ type Sent = "sent" | "duplicate" | "offline";
 
 /** Sends a queued grade and records the answer, throwing any failure other than being offline. */
 async function send(grade: StoredGrade): Promise<Sent> {
+  const mark = (unanswered: true | undefined) =>
+    write(read().map((g) => (same(g, grade) ? { ...g, unanswered } : g)));
+  if (!grade.unanswered) mark(true);
   try {
     const result = await api.grade(input(grade));
     // With no attempt to name, a later grade reached the server first and this one never counted.
@@ -143,15 +146,14 @@ async function send(grade: StoredGrade): Promise<Sent> {
     );
     return "sent";
   } catch (err) {
-    if (err instanceof ApiError && err.status === 0) {
-      if (!grade.unanswered) {
-        write(read().map((g) => (same(g, grade) ? { ...g, unanswered: true } : g)));
-      }
-      return "offline";
-    }
+    if (err instanceof ApiError && err.status === 0) return "offline";
+    if (turnedAway(err) && !grade.unanswered) mark(undefined);
     throw err;
   }
 }
+
+const turnedAway = (err: unknown): err is ApiError =>
+  err instanceof ApiError && err.status >= 400 && err.status < 500;
 
 const modeOfGrade = (g: LocalGrade) => `${g.cardId} ${modeKey(g.mode)}`;
 
@@ -165,31 +167,30 @@ interface Flushed {
 }
 
 async function flushQueued(before?: string): Promise<Flushed> {
-  const settled = await settleUndos();
-  const offline = settled === "offline";
-  const held = offline ? new Set<string>() : settled;
-  const result: Flushed = { sent: 0, offline, held, refused: [] };
+  const offline = (await settleUndos()) === "offline";
+  const result: Flushed = { sent: 0, offline, held: new Set(), refused: [] };
   const cutoff = before ? new Date(before).getTime() : Number.POSITIVE_INFINITY;
   for (const grade of read().filter(
     (g) => g.sentAt === undefined && !g.undone && new Date(g.reviewedAt).getTime() < cutoff,
   )) {
-    if (result.offline || result.held.has(modeOfGrade(grade))) {
-      result.held.add(modeOfGrade(grade));
+    const mode = modeOfGrade(grade);
+    const beingUndone = read().some((g) => g.undone && modeOfGrade(g) === mode);
+    if (result.offline || beingUndone || result.held.has(mode)) {
+      result.held.add(mode);
       continue;
     }
     try {
       const outcome = await send(grade);
       if (outcome === "offline") {
         result.offline = true;
-        result.held.add(modeOfGrade(grade));
+        result.held.add(mode);
       } else if (outcome === "sent") result.sent += 1;
     } catch (err) {
       // A refused grade can never land, unless the refusal is one to wait out.
-      const refused = err instanceof ApiError && err.status >= 400 && err.status < 500;
-      if (refused && !waitsToSend(err.status)) {
+      if (turnedAway(err) && !waitsToSend(err.status)) {
         write(read().filter((g) => !same(g, grade)));
         result.refused.push({ grade, status: err.status });
-      } else result.held.add(modeOfGrade(grade));
+      } else result.held.add(mode);
     }
   }
   return result;
@@ -224,10 +225,8 @@ export type Undone = "undone" | "pending" | "kept";
  * Tells the server about grades taken back on this device. One never sent is simply dropped; a sent
  * one is undone by its attempt, and one the server will not undo stands again. One that got no
  * answer may be on the server, so it is sent again to learn its attempt and undone like a sent one.
- * Resolves with the modes still waiting on the server, so a later grade of one stays behind its undo.
  */
-async function settleUndos(): Promise<"offline" | Set<string>> {
-  const waiting = new Set<string>();
+async function settleUndos(): Promise<"offline" | "answered"> {
   const forget = (grade: StoredGrade) => write(read().filter((g) => !same(g, grade)));
   const stand = (grade: StoredGrade) =>
     write(read().map((g) => (same(g, grade) ? { ...g, undone: undefined } : g)));
@@ -252,14 +251,13 @@ async function settleUndos(): Promise<"offline" | Set<string>> {
       if (!(err instanceof ApiError)) throw err;
       if (err.status === 0) return "offline";
       // Refused, such as a later grade of the mode from another device; a lapsed session waits.
-      const refused = err.status >= 400 && err.status < 500 && !waitsToSend(err.status);
+      const refused = turnedAway(err) && !waitsToSend(err.status);
       // Still unsent means the replay was the refusal: the grade never landed, so it is gone.
       const unsent = read().find((g) => same(g, undone))?.sentAt === undefined;
       if (refused) (unsent ? forget : stand)(undone);
-      else waiting.add(modeOfGrade(undone));
     }
   }
-  return waiting;
+  return "answered";
 }
 
 /**

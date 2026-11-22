@@ -188,6 +188,76 @@ describe("taking a grade back", () => {
     expect(grades.gradeStore.snapshot()).toEqual([]);
   });
 
+  it.each([500, 503])("undoes a grade the server stored and answered %i", async (status) => {
+    const stored = g("a");
+    grade.mockRejectedValueOnce(new ApiError(status, "failed after the batch"));
+    expect(await grades.recordGrade(stored)).toBe("queued");
+
+    grade.mockResolvedValueOnce({ ok: true, duplicate: true, reviewId: "rev-1", state: 2 });
+    undoReview.mockResolvedValueOnce({ ok: true });
+    expect(await grades.undoGrade(stored)).toBe("undone");
+    expect(undoReview).toHaveBeenCalledWith("rev-1");
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
+  it("undoes a grade taken back while its send was out when the app was killed", async () => {
+    vi.stubGlobal("navigator", {});
+    const sending = g("a");
+    grade.mockReturnValueOnce(new Promise(() => {}));
+    void grades.recordGrade(sending);
+    await vi.waitFor(() => expect(grade).toHaveBeenCalledOnce());
+    void grades.undoGrade(sending);
+    grades.resetGradeCache();
+
+    grade.mockResolvedValueOnce({ ok: true, duplicate: true, reviewId: "rev-1", state: 2 });
+    undoReview.mockResolvedValueOnce({ ok: true });
+    await grades.flushOutbox();
+    vi.unstubAllGlobals();
+    expect(undoReview).toHaveBeenCalledWith("rev-1");
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
+  it.each([401, 426, 400])("forgets a grade the server turned away with %i", async (status) => {
+    const refused = g("a");
+    grade.mockRejectedValueOnce(new ApiError(status, "turned away"));
+    await grades.recordGrade(refused);
+    await grades.undoGrade(refused);
+    expect(grade).toHaveBeenCalledTimes(1);
+    expect(undoReview).not.toHaveBeenCalled();
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
+  it("holds a regrade behind an undo made while the flush waited on another card", async () => {
+    grade.mockResolvedValueOnce(accepted("rev-a"));
+    const other = g("a");
+    await grades.recordGrade(other);
+    undoReview.mockRejectedValueOnce(new ApiError(503, "unavailable"));
+    await grades.undoGrade(other);
+
+    undoReview.mockRejectedValueOnce(new ApiError(503, "unavailable"));
+    grade.mockRejectedValueOnce(offline());
+    const lost = g("b");
+    expect(await grades.recordGrade(lost)).toBe("queued");
+
+    let answer = (_: unknown) => {};
+    undoReview.mockReturnValueOnce(new Promise((resolve) => (answer = resolve)));
+    const flushed = grades.flushOutbox();
+    await vi.waitFor(() => expect(undoReview).toHaveBeenCalledTimes(3));
+    const order: string[] = [];
+    grade.mockImplementation(async (sent: { rating: number }) => {
+      order.push(sent.rating === 4 ? "regrade" : "replay");
+      return sent.rating === 4
+        ? accepted("rev-regrade")
+        : { ok: true, duplicate: true, reviewId: "rev-b", state: 2 };
+    });
+    undoReview.mockImplementation(async () => void order.push("undo"));
+    const undone = grades.undoGrade(lost);
+    const regraded = grades.recordGrade(g("b", 4));
+    answer({ ok: true });
+    await Promise.all([flushed, undone, regraded]);
+    expect(order).toEqual(["replay", "undo", "regrade"]);
+  });
+
   it("waits for the connection to undo a grade whose send got no answer", async () => {
     const unanswered = g("a");
     grade.mockRejectedValueOnce(offline());

@@ -53,7 +53,6 @@ const data = (n: number, deckOf: (i: number) => string = () => "a"): Draw => ({
   log: [],
 });
 
-/** Grades whatever the draw serves, `n` times. */
 function play(d: Draw, n: number, ratingOf: (i: number) => Rating = () => 3) {
   const grades: LocalGrade[] = [];
   for (let i = 0; i < n; i++) {
@@ -157,7 +156,6 @@ describe("what the end of a review offers", () => {
       reviewedAt: new Date(noon.getTime() + second * 1000).toISOString(),
       stateBefore: 2,
     });
-    // c0 is forgotten twice, c1 forgotten and then recalled, c3 forgotten once.
     const grades = [
       graded("c0", 1, 1),
       graded("c1", 1, 2),
@@ -178,7 +176,6 @@ describe("what the end of a review offers", () => {
     expect(drawableLeft(d, play(d, 0), undefined)).toBe(8);
     expect(drawableLeft(d, play(d, 3), undefined)).toBe(5);
     const forgetFirst = (i: number) => (i === 0 ? 1 : 3);
-    // Five cards are too few to reach a return, so the forgotten card waits for Review forgotten.
     expect(drawableLeft(d, play(d, 3, forgetFirst), undefined)).toBe(5);
     const long = data(30);
     expect(drawableLeft(long, play(long, 3, forgetFirst), undefined)).toBe(28);
@@ -201,6 +198,18 @@ describe("what the end of a review offers", () => {
         undefined,
       ),
     ).toBe(148);
+  });
+
+  it("counts once a forgotten card the cards behind the front bring back, as the server's total does", () => {
+    const forgotten = {
+      cardId: "c0",
+      mode: M,
+      rating: 1 as const,
+      stateBefore: 2,
+      at: noon.toISOString(),
+    };
+    const d: Draw = { ...data(8), total: 7 + 20 + 1, log: [forgotten] };
+    expect(drawableLeft(d, play(d, 0), undefined)).toBe(28);
   });
 });
 
@@ -289,7 +298,6 @@ describe("the end of a stretch", () => {
   it("the last deck running out below the goal finishes the day", () => {
     const end = screen({ stretch: "scope", from: 2, attempts: 7, left: 0, elsewhere: 0 });
     expect(end).toMatchObject({ heading: "day_done", satisfied: true, streak: true, offers: [] });
-    // Until the other decks are known, the deck's end claims nothing about the day.
     const unknown = screen({ stretch: "scope", from: 2, attempts: 7, left: 0, elsewhere: null });
     expect(unknown).toMatchObject({ heading: "scope_done", satisfied: false });
     expect(unknown.offers).toEqual([{ kind: "continue", to: "day", note: { kind: "decks" } }]);
@@ -319,10 +327,8 @@ describe("the end of a stretch", () => {
 
   it("claims nothing when the draw ran dry below the goal without a fetch to confirm it", () => {
     expect(reviewEnd(input({ from: 2, attempts: 7, left: 0, confirmed: false }))).toBe("unchecked");
-    // A walked list is still walked; only what else is left stays unknown.
     const list = screen({ stretch: "list", from: 2, attempts: 7, left: 0, confirmed: false });
     expect(list).toMatchObject({ heading: "round_done", satisfied: false });
-    // At the goal the day counts whatever the connection says.
     expect(screen({ from: 2, attempts: 10, left: 0, confirmed: false }).heading).toBe(
       "goal_reached",
     );
@@ -331,7 +337,6 @@ describe("the end of a stretch", () => {
 
 describe("every end, whatever the inputs", () => {
   const cases: EndInput[] = [];
-  // Only the day's draw stops at the goal, so no other stretch ends there.
   for (const stretch of ["day", "scope", "list"] as const)
     for (const ending of ["goal", "empty", "left"] as const)
       for (const [from, attempts] of [
@@ -373,14 +378,12 @@ describe("every end, whatever the inputs", () => {
     );
     if (end === "unchecked") return;
 
-    // The day is called empty only after a confirmed empty draw, with every other deck known empty.
     const dayEmpty = c.left === 0 && c.confirmed && c.elsewhere === 0;
     if (end.heading === "day_done" || end.heading === "nothing_due") expect(dayEmpty).toBe(true);
     if (end.heading === "nothing_due") expect(c.attempts).toBe(0);
     expect(end.heading === "goal_reached").toBe(met && (c.from < GOAL || c.ending === "goal"));
     expect(end.satisfied).toBe(met || (dayEmpty && c.attempts > 0));
 
-    // Embers follow the reviews added; the streak moment follows only the day turning.
     expect(end.streak).toBe(end.satisfied && !c.satisfiedBefore && c.attempts > c.from);
     if (c.attempts <= c.from) expect(end.embers).toBe(0);
     else {
@@ -394,7 +397,6 @@ describe("every end, whatever the inputs", () => {
     for (const o of proceed) expect(o.to).toBe(c.ending === "left" ? "resume" : "day");
     expect(end.offers.filter((o) => o.kind === "forgotten").length).toBe(c.forgotten > 0 ? 1 : 0);
 
-    // A count beside Continue is never more than the goal needs while it is open, and never zero.
     for (const o of proceed) {
       if (o.note?.kind === "goal") {
         expect(end.satisfied).toBe(false);
@@ -423,7 +425,6 @@ describe("how an end finishes its leg", () => {
   });
 
   it("does not finish a round whose page ran out before every card was graded or dropped", () => {
-    // The first page of a longer round used up while the next loads, or after it failed offline.
     const end = reviewEnd(input({ stretch: "list", left: 12, confirmed: true }));
     expect(legFinish(end, "empty", { stretch: "list", walked: false })).toBeNull();
   });
@@ -468,7 +469,6 @@ describe("a round's page running out", () => {
     expect(
       roundWalk({ size: 80, done: 79, left: 0, ask: { at: 1, done: 79 }, fetch: landed }),
     ).toEqual({ walked: true, owed: false, refetch: false });
-    // An answer to an earlier page's ask says nothing about this one.
     expect(
       roundWalk({ size: 80, done: 79, left: 0, ask: { at: 1, done: 50 }, fetch: landed }),
     ).toEqual({ walked: false, owed: true, refetch: true });

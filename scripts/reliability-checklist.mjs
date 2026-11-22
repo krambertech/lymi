@@ -16,14 +16,14 @@ export const ITEMS = [
     id: "d1-bound-parameters",
     paths: SERVER,
     ignore: TESTS,
-    added: /\b(?:not)?[iI]nArray\(|\bIN\s*\(\s*\$\{|\bin\s*\(\s*\$\{/,
+    added: /(?<!\bObject)\.values\(\s*[A-Za-z[]|\bin\s*\(\s*\$\{/i,
     check:
-      "Can this list hold more than D1's 100 bound parameters? Does it go through `selectIn` from `packages/core/src/db.ts` (or `inCalls` on the client, which caps a call at 200 cards), with a test past the cap?",
-    why: "Lists that were short in testing passed the cap in production and answered 500.",
-    sources: [320, 436, 840, 896, 1058],
+      "Can this insert more rows than D1's 100 bound parameters allow, counting every column of every row? Is the list cut to fit, with a test past the cap?",
+    why: "`inArray` binds at most five parameters, but an insert and a raw `in (${list})` still bind every value.",
+    sources: [840, 972],
     example: {
-      file: "apps/web/src/server/services/cards.ts",
-      line: "  .where(inArray(schema.cards.id, ids))",
+      file: "apps/web/src/server/services/deck-copies.ts",
+      line: "  await db.insert(schema.cards).values(copies);",
     },
   },
   {

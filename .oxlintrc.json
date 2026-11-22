@@ -105,6 +105,23 @@
       }
     },
     {
+      "files": ["packages/client/src/review-flow/use-review-flow.test.ts"],
+      "rules": {
+        "eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "vitest",
+                "importNames": ["vi"],
+                "message": "hookReview() owns the clock, the server, the storage and the locks: a wait or a mock of the test's own can race the hook. Use review.settle, advance, answer or refuse."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "files": ["apps/web/src/client/**"],
       "excludeFiles": ["apps/web/src/client/lib/use-reduce-motion.ts", "**/*.test.tsx"],
       "rules": {
@@ -182,6 +199,17 @@
       }
     },
     {
+      "files": ["apps/site/src/**", "apps/web/src/client/**"],
+      "excludeFiles": [
+        "apps/site/src/lib/use-clip.ts",
+        "apps/site/src/lib/learn/player.ts",
+        "apps/web/src/client/lib/use-clip.ts"
+      ],
+      "rules": {
+        "lymi/clip-owner": "error"
+      }
+    },
+    {
       "files": ["e2e/**"],
       "rules": {
         "lymi/no-flaky-masks": "error"
@@ -228,20 +256,19 @@
       }
     },
     {
-      "files": ["apps/web/src/server/**/*.ts"],
-      "excludeFiles": [
-        "apps/web/src/server/log.ts",
-        "apps/web/src/server/**/*evaluate.ts",
-        "apps/web/src/server/stress-backfill/dry-run.ts",
-        "**/*.test.ts"
-      ],
+      "files": ["apps/web/src/server/**", "apps/site/src/**", "packages/core/src/**"],
+      "excludeFiles": ["packages/core/src/in-list.ts", "packages/core/src/db.ts"],
       "rules": {
-        "lymi/no-swallowed-failure": "error",
-        "eslint/no-restricted-globals": [
+        "eslint/no-restricted-imports": [
           "error",
           {
-            "name": "console",
-            "message": "Use log.info, log.warn, log.error or logFailure from server/log.ts: raw console lines carried SQL, bound parameters and learner text into Workers Logs (#155)."
+            "paths": [
+              {
+                "name": "drizzle-orm",
+                "importNames": ["inArray", "notInArray"],
+                "message": "Drizzle binds one parameter per value and D1 refuses more than 100 (#320, #436, #840, #896, #1058). Import inArray and notInArray from @lymi/core/db, or ./in-list inside packages/core: they bind the whole list as one."
+              }
+            ]
           }
         ]
       }
@@ -303,6 +330,25 @@
       "excludeFiles": ["**/*.test.ts", "**/*.test.tsx"],
       "rules": {
         "lymi/isolate-learner-text": "error"
+      }
+    },
+    {
+      "files": ["apps/web/src/server/**/*.ts"],
+      "excludeFiles": [
+        "apps/web/src/server/log.ts",
+        "apps/web/src/server/**/*evaluate.ts",
+        "apps/web/src/server/stress-backfill/dry-run.ts",
+        "**/*.test.ts"
+      ],
+      "rules": {
+        "lymi/no-swallowed-failure": "error",
+        "eslint/no-restricted-globals": [
+          "error",
+          {
+            "name": "console",
+            "message": "Use log.info, log.warn, log.error or logFailure from server/log.ts: raw console lines carried SQL, bound parameters and learner text into Workers Logs (#155)."
+          }
+        ]
       }
     }
   ]

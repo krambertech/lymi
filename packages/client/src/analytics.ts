@@ -18,11 +18,9 @@ import {
 import { POSTHOG_PROXY_PATH } from "@lymi/core/posthog-proxy";
 import { exceptionProperties } from "@lymi/core/telemetry";
 import posthog from "posthog-js/no-external";
-// The SDK loads its web-vitals reader from PostHog's servers unless it is bundled here.
 import "posthog-js/dist/web-vitals";
 
 export const ANALYTICS_READY = "lymi:analytics-ready";
-// Read at load, before client-side navigation rewrites the address and the referrer stops applying.
 const arrival =
   typeof location === "undefined" ? undefined : { url: location.href, referrer: document.referrer };
 let ready = false;
@@ -43,11 +41,6 @@ let directEntry = false;
 let release: string | undefined;
 let replay: "off" | "loading" | "on" = "off";
 
-/**
- * Session replay for the product. The free plan holds 10,000 web recordings a month; lower
- * `sampleRate` before traffic outgrows it. PostHog's remote config is never fetched, so the SDK
- * reads this one instead.
- */
 const REPLAY_CONFIG = {
   hasFeatureFlags: false,
   sessionRecording: { endpoint: "/s/", sampleRate: "1.00", minimumDurationMilliseconds: 2000 },
@@ -60,7 +53,6 @@ const SNAPSHOT_PROPERTIES = [
   "$lib",
   "$lib_version",
 ] as const;
-// A recording never shows these, and they can carry a card's words or a name.
 const HIDDEN_ATTRIBUTES = new Set([
   "aria-label",
   "aria-description",
@@ -69,7 +61,6 @@ const HIDDEN_ATTRIBUTES = new Set([
   "alt",
 ]);
 
-/** Where this page load's visit began, for the sign-up request to carry to the server. */
 export function visitFirstTouch(on: "public" | "product" = surface): Attribution | undefined {
   try {
     return arrival ? firstTouch(arrival.url, arrival.referrer, on) : undefined;
@@ -78,10 +69,6 @@ export function visitFirstTouch(on: "public" | "product" = surface): Attribution
   }
 }
 
-/**
- * The public site counts visitors without identifying them. The product measures a signed-in
- * learner unless their account turned analytics off, and a signed-out visitor anonymously.
- */
 function allowed(): boolean {
   if (surface === "public") return true;
   return accountChecked && (!learner || accountAllowed);
@@ -91,9 +78,7 @@ function forget(): void {
   if (initialized) {
     try {
       posthog.reset();
-    } catch {
-      /* Monitoring is best effort. */
-    }
+    } catch {}
   }
   identifySent = undefined;
   lastPage = undefined;
@@ -110,10 +95,6 @@ function markedEntry(url: string): ArrivalEntry | undefined {
   return kind && { entry: "email", from_email: kind };
 }
 
-/**
- * How this page load began: a reminder's or an email's link, a link from another site, or neither.
- * The address still carries the mark after sign-in, which returns to it.
- */
 function arrivalEntry(): ArrivalEntry {
   try {
     const marked = (arrival && markedEntry(arrival.url)) ?? markedEntry(location.href);
@@ -124,16 +105,13 @@ function arrivalEntry(): ArrivalEntry {
   return { entry: visitFirstTouch("product")?.referrer ? "link" : "direct" };
 }
 
-/** Which of the day's messages this page load came from; a link from before they had names has none. */
 function arrivalMessage(): ReminderMessage | undefined {
   try {
     for (const url of [arrival?.url, location.href]) {
       if (!url || markedEntry(url)?.entry !== "reminder") continue;
       return ReminderMessage.safeParse(new URL(url).searchParams.get(REMINDER_MESSAGE_KEY)).data;
     }
-  } catch {
-    /* No message costs one opening in the per-message count. */
-  }
+  } catch {}
   return undefined;
 }
 
@@ -146,7 +124,6 @@ function sendOpening(): void {
   dropEntryMark();
 }
 
-/** Once the opening is counted, a reload of the same address is not another arrival by that link. */
 function dropEntryMark(): void {
   try {
     const url = new URL(location.href);
@@ -155,15 +132,9 @@ function dropEntryMark(): void {
     url.searchParams.delete(marked.entry === "email" ? EMAIL_ENTRY_KEY : REMINDER_ENTRY.key);
     url.searchParams.delete(REMINDER_MESSAGE_KEY);
     history.replaceState(history.state, "", url);
-  } catch {
-    /* The mark only costs a duplicate opening on reload. */
-  }
+  } catch {}
 }
 
-/**
- * The product reports what was due when it opened, from the deck list it loads anyway, so the
- * opening waits for that list rather than asking for anything.
- */
 export function setAnalyticsOpening(backlog?: Backlog): void {
   opening = backlog ? { backlog } : {};
   sendOpening();
@@ -173,7 +144,6 @@ export function initAnalytics(options: {
   token?: string | undefined;
   surface: "public" | "product";
   enabled: boolean;
-  /** The commit the running bundle was built from, so an error can be matched to its deploy. */
   release?: string | undefined;
 }): void {
   if (initialized || !options.enabled || !/^phc_[A-Za-z0-9]+$/.test(options.token ?? "")) return;
@@ -196,7 +166,6 @@ export function initAnalytics(options: {
     posthog.init(options.token as string, {
       api_host: `${location.origin}${POSTHOG_PROXY_PATH}`,
       ui_host: "https://eu.posthog.com",
-      // Nothing is stored on the device: the public site hashes visitors on PostHog's servers.
       persistence: "memory",
       ...(surface === "public" ? { cookieless_mode: "always" as const } : {}),
       person_profiles: "identified_only",
@@ -205,13 +174,10 @@ export function initAnalytics(options: {
       capture_pageleave: true,
       capture_exceptions: false,
       capture_performance: { web_vitals: true, network_timing: false },
-      // Where public visitors click and scroll; the product has session replay instead.
       enable_heatmaps: surface === "public",
       capture_dead_clicks: false,
       save_campaign_params: false,
       save_referrer: false,
-      // Started once the account allows it. Every word, input and picture is masked: a recording
-      // shows layout, clicks and scrolling only.
       disable_session_recording: true,
       session_recording: {
         maskAllInputs: true,
@@ -219,7 +185,6 @@ export function initAnalytics(options: {
         blockSelector: "img, picture, video, canvas, svg image",
         maskAttributeFn: (name, value) =>
           HIDDEN_ATTRIBUTES.has(name) ? "*".repeat(value.length) : value,
-        // A recorded address keeps only its route, so tokens and IDs in it never leave.
         maskCapturedNetworkRequestFn: (request) => {
           try {
             const url = new URL(request.name, location.origin);
@@ -240,7 +205,6 @@ export function initAnalytics(options: {
         delete event.$set_once;
         delete event.$unset;
         const ui_locale = AnalyticsLocale.catch("en").parse(document.documentElement.lang);
-        // While a session is recorded, its ID lets PostHog open the recording from an event or error.
         const sessionId = event.properties.$session_id;
         const recorded =
           replay === "on" && recordable() && typeof sessionId === "string"
@@ -322,7 +286,6 @@ export function initAnalytics(options: {
             ? {
                 $pathname: properties.pathname,
                 $current_url: `${location.origin}${properties.pathname}`,
-                // PostHog's channel type reads an empty referrer as Unknown, so a direct visit says so.
                 ...(properties.referrer
                   ? { $referring_domain: properties.referrer }
                   : directEntry
@@ -330,7 +293,6 @@ export function initAnalytics(options: {
                     : {}),
               }
             : {}),
-          // PostHog hashes a cookieless visitor from the day, address, host and browser, then drops them.
           ...(cookieless
             ? {
                 $cookieless_mode: true,
@@ -381,7 +343,6 @@ function applyState(): void {
   }
 }
 
-/** Replay records signed-in learners only: a signed-out visitor has no setting to object with. */
 function recordable(): boolean {
   return (
     surface === "product" &&
@@ -392,7 +353,6 @@ function recordable(): boolean {
   );
 }
 
-/** The recorder is a chunk of its own, loaded only when a product page may be recorded. */
 function applyReplay(): void {
   if (!initialized || surface !== "product") return;
   if (!recordable()) {
@@ -423,11 +383,9 @@ function identifyLearner(): void {
   sendOpening();
 }
 
-/** The product reports who is signed in and whether their account turned analytics off. */
 export function setAnalyticsLearner(
   id: string | undefined,
   permitted = false,
-  /** Whether the account left session replay on in Settings. */
   replay = false,
 ): void {
   if ((learner && learner !== id) || (identifySent && !permitted)) forget();
@@ -464,7 +422,6 @@ export function capturePageview(pathname: string): void {
   directEntry = false;
 }
 
-/** The route of an address the SDK reports, or undefined when it can't be read. */
 function routeOf(url: unknown): string | undefined {
   try {
     return analyticsPath(new URL(String(url), location.origin).pathname, surface);
@@ -473,10 +430,6 @@ function routeOf(url: unknown): string | undefined {
   }
 }
 
-/**
- * PostHog's own page-leave, web-vitals and heatmap events name full addresses; these keep only the
- * route, so the catalog's allowlist can take the rest.
- */
 function sdkEventProperties(
   name: string,
   properties: Record<string, unknown>,
@@ -506,18 +459,12 @@ function sdkEventProperties(
   };
 }
 
-/** Which handler caught a browser error, so a report without a stack still says where it surfaced. */
 export type CaughtBy = "window" | "rejection" | "router" | "react";
 const CAUGHT_BY = new Set<unknown>(["window", "rejection", "router", "react"] satisfies CaughtBy[]);
 
 const GLOBAL_HANDLERS = new Set<unknown>(["window", "rejection"] satisfies CaughtBy[]);
 const LYMI_ASSET = "https://my.lymi.app/assets/";
 
-/**
- * Whether an error the page's global handlers caught came from Lymi: a frame in Lymi's own bundle,
- * or a runtime network or chunk failure message. Extensions and injected scripts throw on the page
- * too, with neither. A thrown non-error gets a synthetic stack of the reporting code itself.
- */
 function fromLymi(properties: Record<string, unknown>): boolean {
   const exceptions = properties.$exception_list as {
     value: string;
@@ -538,7 +485,5 @@ export function reportBrowserException(error: unknown, caughtBy?: CaughtBy): voi
   if (!initialized) return;
   try {
     posthog.captureException(error, caughtBy ? { caught_by: caughtBy } : undefined);
-  } catch {
-    /* Monitoring must not recursively report SDK failures. */
-  }
+  } catch {}
 }

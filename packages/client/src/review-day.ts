@@ -3,16 +3,11 @@ import { type DrawData, type DrawState, drawCards, drawLog } from "./review-draw
 
 export type DayOutcome = "goal_met" | "exhausted" | "nothing_due";
 
-/** How a review that stopped leaves the day, by the server's rules in `settleDay`. */
 export function dayOutcome(attempts: number, goal: number): DayOutcome {
   if (attempts >= goal) return "goal_met";
   return attempts > 0 ? "exhausted" : "nothing_due";
 }
 
-/**
- * Today's outcome as a status line reads it. A day confirmed as nothing due keeps protecting the
- * streak, but once cards are due, such as a deck added after the first visit, it reads as open.
- */
 export function shownOutcome(
   outcome: StreakOut["today"]["outcome"],
   due: number,
@@ -20,10 +15,6 @@ export function shownOutcome(
   return outcome === "nothing_due" && due > 0 ? "open" : outcome;
 }
 
-/**
- * The streak once today's attempts are in, before the refetch that confirms them lands. The run
- * grows by one only when today turns satisfied, so a summary that already counts today is kept.
- */
 export function streakWith(summary: StreakOut, attempts: number, counts: boolean): StreakOut {
   const { today } = summary;
   const already = daySatisfied(today.outcome);
@@ -57,10 +48,6 @@ export function streakWith(summary: StreakOut, attempts: number, counts: boolean
   };
 }
 
-/**
- * The streak on the learner's day as the draw counts it: past midnight a summary from yesterday
- * opens a new day, and a grade counts the moment it is made rather than when the refetch lands.
- */
 export function streakToday(
   summary: StreakOut,
   state: Pick<DrawState, "day" | "attempts">,
@@ -71,7 +58,6 @@ export function streakToday(
       ? summary
       : {
           ...summary,
-          // The server's rule, so a day that ended short since this read is a rest day here too.
           ...summariseStreak(summary.days, date),
           today: { date, attempts: 0, goal: summary.goal, outcome: "open" },
         };
@@ -79,13 +65,10 @@ export function streakToday(
   return streakWith(rolled, attempts, attempts >= rolled.today.goal);
 }
 
-/** Cards the draw still holds in scope, the number Today shows beside it. */
 export function drawableLeft(data: DrawData, state: DrawState, deckId: string | undefined): number {
   const cards = drawCards(data);
   const scope = { deckId };
   if (data.day.date !== state.day.date) return drawableCount(cards, state.log, state.day, scope);
-  // The fetch holds only the front of the order; the server's total counts the cards behind it
-  // too, and they bring a waiting return in reach, so the count behind is settled with them.
   const log = drawLog(data, [], state.day);
   let behind = Math.max(0, data.total - drawableCount(cards, log, state.day, scope));
   behind = Math.max(0, data.total - drawableCount(cards, log, state.day, scope, behind));

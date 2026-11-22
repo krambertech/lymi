@@ -121,7 +121,7 @@ Which change to the code turns the test red?
 - Find elements by role and accessible name. Assert what reaches the caller or the server, never private state, call order, class names, log lines or SQL.
 - Before you add a case, search property, conformance and simulation tests, the other layers, and the shared package's test for a re-exported module. Extend the test that covers the behavior. A reducer test owns the rule and a component test owns the wiring, so one flow has both ([CODING_STANDARDS.md](../CODING_STANDARDS.md#give-a-flow-one-state)).
 - A contract that live clients still call keeps its test: a supported phone release ([ADR 0032](adr/0032-the-phone-ships-over-the-air-and-the-api-keeps-every-supported-release-working.md)), a public link or a redirect.
-- Reach code through its public API, and inject a dependency where a test must replace one. Production code has no export, flag or type that only tests read. Two kinds are exempt: a reset that stands in for a restart, such as `resetWriteCache`, when a test proves what survives that restart, and check logic whose only runner is a test, such as the enrichment gate in `enrichment/recorded-run.ts`. Its doc comment names the restart or the check.
+- Reach code through its public API, and inject a dependency where a test must replace one. Production code has no export, flag or type that only tests read. Two kinds are exempt: a reset that stands in for a restart, such as `resetWriteCache`, when a test proves what survives that restart, and check logic whose only runner is a test, such as the enrichment gate in `enrichment/recorded-run.ts`. The test that calls it names the restart or the check.
 - Pin exact wording, such as a prompt hash, only where something reads its version. `enrichment/prompt.test.ts` goes red until `ENRICHMENT_PROMPT_VERSION` rises, and `enrichment/recorded-run.ts` records that version.
 - A change that removes code removes the tests that only guarded it.
 
@@ -163,9 +163,15 @@ pnpm exec playwright install chromium webkit
 pnpm --filter @lymi/web exec vitest run --project components
 ```
 
+The site has its own `components` project in `apps/site/vitest.config.ts`, desktop Chromium only, for what a site component does in the browser and a server render cannot show, such as stopping its sound when it leaves the page.
+
 Each browser context asks for reduced motion, for the same reason the journeys do: a toast that changes opacity and height without travelling holds still long enough to be clicked, where one sliding into a stack does not. `forced-states` rewrites both motion queries into `data-motion` selectors, so the specimens that prove the full and reduced forms are unaffected by what the context asks for. A test that drives full motion wraps its subject in `<MotionConfig reducedMotion="never">` and says why. CI retries a failed test once, matching the journeys, and reports a pass on retry as flaky ([Flaky tests](#flaky-tests)).
 
 An instance's files run one after another in the same browser page, so a file can leave state behind for the next. On touch Chromium, `page.viewport()` wider than the device leaves the whole page pinch-zoomed after the size is restored, and a later file can pan that zoomed view; Playwright then aims a click a row off and reports another element intercepting it. The test setup resets the page scale before every file.
+
+A component test has no server. The setup refuses every `/api/` request at once, so a test never waits on the Vite process that serves its files: a busy runner answers that late, and it was behind most flakes of the review flow's old browser test. Give the query its data, or spy on an `api` method the query calls late; a spy does not reach `queryFn: api.streak`, which took the method when its module loaded.
+
+A hook that draws nothing is tested in Node. `hookReview()` in `packages/client/src/test/review-hook.ts` runs `useReviewFlow` on a clock, server, storage and locks of its own, with no real time in it, and fails a test that leaves a request unanswered, a send open or the hook moved behind its back.
 
 WebKit does not focus a button that is clicked, so a test about focus return opens the overlay from the keyboard. A swipe is not covered here; it belongs in a Playwright journey on the iPhone project.
 
@@ -281,7 +287,15 @@ The test sits beside the year-long simulation's fingerprint check in `src/simula
 
 When a review finds a bug whose shape a search can spot, add the search so the next one fails `pnpm check` instead of waiting for a reviewer. A pattern inside one file is a rule in `oxlint-plugin-lymi/rules/` with a test beside it, scoped in `.oxlintrc.json`; a pattern across files, such as a key spelled in two modules, is a check in `scripts/check-regressions.mjs` with a test in its `.test.mjs`. Each message names the pull request that found the bug. Logic bugs, races and wrong copy beyond a known false claim stay with regression tests.
 
+`scripts/check-copy.mjs` reads the public site's English messages outside the lessons, every page under `apps/site/src/content` and the store listing, and fails on phrases that were written and cut again: scheduling claims, promises, things that act, filler, hype, and one slogan repeated with only a name swapped. A new content collection, such as a blog, is covered without being added. `scripts/copy-known.json` holds lines that stay, each with its reason, and an entry whose line is gone fails. Changelog updates from before the check are records and are not read. `pnpm check:copy <file>` reads one file.
+
 `scripts/check-test-only-exports.mjs` holds one such search across the whole repository. It fails when only tests read a production export that its own module does not use, the shape of `writeStore` and `streakLength` before #1266. Its `ALLOWED` list holds the exports that stay, each with its reason: a reset that stands in for a restart, or a check whose only runner is a test.
+
+## Flow models
+
+Three flows where a wrong order of events loses or leaks data have a TLA+ model in [the model-check skill](../.agents/skills/model-check/SKILL.md): the offline write queue, how the server settles a review day, and how an import's write run stops. A model walks every order of the flow's steps, where a test walks the ones someone thought of. The quality job runs `pnpm check:models --run`, which fails when a rule breaks, when a model reaches a different number of states than recorded, or when turning off a guard no longer breaks the rule it protects, so each model keeps catching the bug it was written for. `pnpm check` fails when the code a model covers changes without anyone confirming that the model still matches it.
+
+Model a flow when a race, retry or lost answer in it has already reached `main` and the orders are too many to write down. A model needs a replay: a test that drives the real code along the path the model found.
 
 ## Estonian lesson checks
 
@@ -291,7 +305,7 @@ When a review finds a bug whose shape a search can spot, add the search so the n
 
 ## Check what broke before
 
-`pnpm reliability` reads the branch's diff against `origin/main` and prints the items of `scripts/reliability-checklist.mjs` it triggers: bug classes that reached `main` or production at least twice, such as a list past D1's 100 bound parameters or a write whose `WHERE` names only the id. Each item has a trigger a diff shows, the question to answer, and the pull requests behind it. **The script loads the checklist from `origin/main`, so a branch cannot loosen the checklist that judges it.** Most changes trigger nothing and none triggers more than a handful, so answer each printed item in the PR's Verification section; [open-pr](../.agents/skills/open-pr/SKILL.md) gives them to the independent reviewer too.
+`pnpm reliability` reads the branch's diff against `origin/main` and prints the items of `scripts/reliability-checklist.mjs` it triggers: bug classes that reached `main` or production at least twice, such as an insert past D1's 100 bound parameters or a write whose `WHERE` names only the id. Each item has a trigger a diff shows, the question to answer, and the pull requests behind it. **The script loads the checklist from `origin/main`, so a branch cannot loosen the checklist that judges it.** Most changes trigger nothing and none triggers more than a handful, so answer each printed item in the PR's Verification section; [open-pr](../.agents/skills/open-pr/SKILL.md) gives them to the independent reviewer too.
 
 Add an item when a fix repairs a class that already broke once before and no automated check can catch it, with a trigger, an `example` that fires it, and both pull requests. When a search can find the bug outright, move it to [a pattern check](#bugs-a-pattern-can-catch) and delete the item. Sharpen a trigger that fires on changes it has nothing to say about.
 
@@ -359,19 +373,25 @@ A response may gain fields and the API may gain endpoints. The check fails when 
 2. If the phone already shows an unknown value safely, mark the field with `.meta(OPEN)` from `packages/core/src/responses/common.ts` and freeze a release that carries the mark. On a schema with an `id`, put the mark in its definition, since a field's own `.meta` is lost behind the reference.
 3. To remove something, raise the minimum version first and delete the frozen releases below it in the same pull request.
 
+`pnpm check:frozen`, part of `pnpm check`, compares the folder with `origin/main` and fails when a frozen release the minimum still serves was deleted, renamed or edited.
+
 The minimum version is `PHONE_MINIMUM_VERSION_IOS` in `apps/web/wrangler.jsonc`, and `PHONE_UPDATE_URL_IOS` is where Update Lymi sends the learner. Raising it needs a Worker deploy and no app build: every request from an older release then gets 426, and the app shows only Update Lymi, keeping its unsent grades and writes for the updated release.
 
 A version is a JavaScript release, and an update can carry a new one, but a fresh install or a roll back to embedded first runs the version inside the App Store binary. Never raise the minimum past the version embedded in the current App Store binary, or new learners get 426 from a store that has nothing newer.
 
 Every fixed list in a phone response is open, except the few in `closedOnPurpose` with their reasons, and the test fails on a new closed one so each is decided when it appears. The shared client leaves a review mode it cannot ask out of the draw and the queue, and every other open field the phone reads falls back to a known state; `phone-client.test.ts` feeds unknown values through those readers.
 
-Freeze by hand, for example to record the baseline after a change to the check itself:
+Freeze by hand, for example to see what the next release would freeze:
 
 ```bash
 pnpm --filter @lymi/mobile contract:freeze
 ```
 
 A freeze that changes a successful response also asks whether the phone's kept query cache is still readable. `pnpm check:cache-shape`, part of `pnpm check`, fails until `CACHE_SHAPE` in `apps/mobile/src/data/cache.ts` is bumped, when a screen now reads a field an earlier cache may lack, or the unchanged shape is confirmed; either way, `node scripts/check-cache-shape.mjs --write` records the decision in `apps/mobile/src/data/cache-shape.json`.
+
+### Queued requests
+
+A grade or write waits in the outbox with no maximum age, so the minimum version does not bound it: one queued on an old release is held through the 426 and sent by the updated app, and the outbox drops whatever the server refuses. `apps/web/src/server/queued-bodies.json` therefore keeps what each build could have stored, dated by the pull request that first wrote it. `queued-bodies.test.ts` sends each entry to the Worker as the build that queued it would and through the current outbox, and fails when one is refused, carries a field the server ignores, or is replayed without something it held. A rewrite the outbox makes on purpose goes in `rewrittenBeforeSending`. It also fails until the file holds an entry for every field and fixed value a queued request accepts, so add one when you add a field; `neverQueued` in the test names the few no client queues. `pnpm check:frozen` keeps entries from being removed or edited. To rename a field or value, keep accepting the old name and map it, as `withHint` and `gradeAid` in `packages/core/src/types.ts` do.
 
 ### The smoke journey
 

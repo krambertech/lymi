@@ -14,7 +14,7 @@ const FIRST_MS = 300;
 
 interface Props {
   /** The steps whose decks are published, with the deck's name and card count in this edition. */
-  steps: (PathStep & { name: string; count: number; edition?: string | undefined })[];
+  steps: (PathStep & { name: string; count: number; edition: string | undefined })[];
   /** The language of the words on the cards. */
   lang: string;
 }

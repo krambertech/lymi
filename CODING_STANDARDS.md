@@ -18,6 +18,10 @@ A flow with steps or phases holds one value: a union tagged by `status` or `kind
 
 Async work that something newer can replace checks that it still owns the state before it writes. On the server, an update that moves a status names the status it leaves in its `WHERE`.
 
+## Play sound through one owner
+
+Audio plays through `useClip()`: `apps/site/src/lib/use-clip.ts` on the site, `apps/web/src/client/lib/use-clip.ts` in the web client. It plays one clip at a time, stops the clip and its frame loop when the component leaves, and starts none after that. `lymi/clip-owner` refuses an audio element made anywhere else. The Estonian lessons keep `lib/learn/player.ts`, because iOS lets a sequence of clips play only on one element that a tap has started.
+
 ## Localize whole sentences
 
 English is the source message: `<Trans>` in JSX, `t` from `useLingui()` for attributes and handlers, `msg` for module constants, and `<Plural>` or `plural` for counts.
@@ -26,6 +30,8 @@ Localize each complete sentence. Never build one from concatenated fragments or 
 
 Format dates and numbers with `i18n.date()`, `i18n.number()` or `Intl` with `i18n.locale`, so they follow the interface language. Run `pnpm i18n:extract` after changing a message.
 
+A link on the site keeps the reader's locale and edition. Build it with `localizedPath`, or with `addUrl` for a deck to add, whose edition argument is required; `productUrl` refuses an `/add/` path, and a link that stays in English takes an `EnglishOnlyPath`.
+
 ## Edit the source of a generated file
 
 Edit a generated file's source and run its generator; [README.md](README.md#generated-files) names each generator. Applied migrations are immutable: change the schema and run `pnpm db:generate` for a new one.
@@ -33,6 +39,8 @@ Edit a generated file's source and run its generator; [README.md](README.md#gene
 ## Write for D1 and Workers, not Node
 
 D1's `lower()` folds ASCII only. To match text case-insensitively, compare against the stored folded column (`termKey()` writes `normalized_term` and `tagKey()` writes `normalized_name`, both in `packages/core/src/terms.ts`), or fold in JavaScript with the same function and bind the result.
+
+D1 refuses more than 100 bound parameters in one statement. `inArray` and `notInArray` from `@lymi/core/db` bind a list of more than five values as one JSON parameter, and lint refuses Drizzle's own; a multi-row insert still binds every value.
 
 Workers refuses `redirect: "error"` at runtime, though Node tests pass; reject a redirect with `redirect: "manual"` and a `Location` check.
 

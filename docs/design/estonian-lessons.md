@@ -80,7 +80,7 @@ The course should be enough, with Lymi for the words, to learn Estonian to B1 al
 | Checkpoint | What a stage taught, mixed | No explanations; a result per rule, each linked to its lesson |
 | Exam | An A2 or B1 paper in Harno's format | Original tasks, timed, recordings played twice |
 
-A tool, such as the form map or a number trainer, is a page of its own that lessons link to. It explains itself to someone who has read no lesson.
+A tool, such as the form map or a number trainer, sits inside the lessons that use it. It is one component with its own data that takes no lesson's state, so it can become a page of its own later.
 
 ## What every lesson holds
 

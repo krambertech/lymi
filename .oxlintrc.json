@@ -228,6 +228,22 @@
       }
     },
     {
+      "files": ["apps/**", "packages/**"],
+      "excludeFiles": [
+        "apps/web/src/server/ai/consent.ts",
+        "apps/web/src/server/services/ai-consent.ts",
+        "apps/web/src/test/ai-consent.ts",
+        "apps/web/src/server/canary.ts",
+        "apps/web/src/server/enrichment/evaluate.ts",
+        "apps/web/src/server/enrichment/style-evaluate.ts",
+        "apps/web/src/server/lead-ins/evaluate.ts",
+        "apps/web/src/server/speech-stress/evaluate.ts"
+      ],
+      "rules": {
+        "lymi/ai-consent": "error"
+      }
+    },
+    {
       "files": ["apps/web/**", "packages/**"],
       "excludeFiles": ["**/*.test.ts"],
       "rules": {

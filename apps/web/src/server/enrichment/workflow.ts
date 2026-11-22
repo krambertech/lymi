@@ -77,11 +77,11 @@ export class EnrichWorkflow extends WorkflowEntrypoint<Bindings, EnrichRunParams
       // A style is extra: a failure is reported once and the cards fill without it.
       const learn = async (name: string, options: LearnStyleOptions): Promise<string[]> => {
         try {
-          const { deckIds } = await step.do(name, STYLE_STEP, async () => {
-            const provider = await providerFor("deck_style");
-            if (!provider) return { deckIds: [] };
-            return analytics.run(() => learnDeckStyles(ctx, params.cardIds, provider, options));
-          });
+          const { deckIds } = await step.do(name, STYLE_STEP, () =>
+            analytics.run(() =>
+              learnDeckStyles(ctx, params.cardIds, () => providerFor("deck_style"), options),
+            ),
+          );
           return deckIds;
         } catch (err) {
           await step

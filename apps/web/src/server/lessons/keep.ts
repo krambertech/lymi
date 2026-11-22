@@ -115,7 +115,7 @@ export async function termsAgainstAnswer(
   question: string,
   answer: string,
   terms: { id: string; term: string; gloss: string }[],
-  consent: AiConsent,
+  consentNow: () => Promise<AiConsent | null>,
 ): Promise<string[]> {
   if (!ai) return [];
   const drop: string[] = [];
@@ -125,6 +125,8 @@ export async function termsAgainstAnswer(
       for (let next = queue.shift(); next; next = queue.shift()) {
         const term = next;
         try {
+          const consent = await consentNow();
+          if (!consent) return;
           const reply = (await ai.run(
             MODEL,
             {

@@ -28,7 +28,7 @@ import {
   type LessonUsage,
 } from "../lessons/reader";
 import { TermsStream } from "../lessons/terms-stream";
-import { requireAi } from "./ai-consent";
+import { aiConsentFor, requireAi } from "./ai-consent";
 import { type AnalyticsWriter, textCallReporter, track } from "./analytics";
 import type { ServiceContext } from "./context";
 import { notFound, ServiceError } from "./context";
@@ -88,9 +88,9 @@ const ANSWER_WINDOW_MS = 2 * 60 * 60 * 1000;
 export async function assertCanCheckAnswers(
   ctx: ServiceContext,
   operators: Set<string>,
-): Promise<AiConsent> {
-  const consent = await requireAi(ctx);
-  if (await isOperator(ctx, operators)) return consent;
+): Promise<void> {
+  await requireAi(ctx);
+  if (await isOperator(ctx, operators)) return;
   const [recent] = await ctx.db
     .select({ id: schema.lessonReads.id })
     .from(schema.lessonReads)
@@ -109,7 +109,6 @@ export async function assertCanCheckAnswers(
       "no_recent_read",
     );
   }
-  return consent;
 }
 
 function limitReached(ctx: ServiceContext): never {
@@ -190,6 +189,7 @@ type Owned = { id: string; term: string; key: string; reading: string | null; de
 export type PreparedLesson = {
   reader: LessonReader;
   consent: AiConsent;
+  consentNow: () => Promise<AiConsent | null>;
   brief: string;
   schema: Record<string, unknown>;
   decks: Map<string, string>;
@@ -294,6 +294,7 @@ export async function prepareLesson(
     release,
     reader,
     consent,
+    consentNow: () => aiConsentFor(ctx),
     pages,
     brief: `${decksBrief(decks, {
       fixed: !!fixed,
@@ -344,6 +345,16 @@ export function worthAsking(options: { drop: string[] }[], fresh: number): boole
   return drops.some((n) => n >= QUESTION_DROPS) && drops.every((n) => n < fresh);
 }
 
+async function scoreTerm(
+  lesson: PreparedLesson,
+  ai: DecisionModel,
+  candidate: Parameters<typeof keepScore>[2],
+): Promise<number | null> {
+  if (!ai) return null;
+  const consent = await lesson.consentNow().catch(() => null);
+  return consent && keepScore(ai, lesson.deckRule, candidate, consent);
+}
+
 async function readInto(
   lesson: PreparedLesson,
   material: LessonMaterial,
@@ -369,17 +380,12 @@ async function readInto(
     const reading = readingKey({ term: t.term, language, pronunciation: t.pronunciation });
     if (seen.has(`${key}\u0000${reading ?? ""}`)) return;
     seen.add(`${key}\u0000${reading ?? ""}`);
-    const scored = keepScore(
-      ai,
-      lesson.deckRule,
-      {
-        id: t.id,
-        term: t.term,
-        meaning: t.meaning,
-        kind: t.kind,
-      },
-      lesson.consent,
-    );
+    const scored = scoreTerm(lesson, ai, {
+      id: t.id,
+      term: t.term,
+      meaning: t.meaning,
+      kind: t.kind,
+    });
     queue = queue.then(async () => {
       const keep = await scored;
       const sameKey = lesson.byKey.get(key);

@@ -333,6 +333,13 @@
       }
     },
     {
+      "files": ["apps/web/src/server/**"],
+      "excludeFiles": ["**/*.test.ts"],
+      "rules": {
+        "lymi/guarded-state-move": "error"
+      }
+    },
+    {
       "files": ["apps/web/src/server/**/*.ts"],
       "excludeFiles": [
         "apps/web/src/server/log.ts",

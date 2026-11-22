@@ -14,6 +14,7 @@ import {
 } from "../readwise/api";
 import { termOf } from "../readwise/terms";
 import { openToken, sealToken } from "../readwise/token";
+import { moveState, readwiseStatus } from "../state-moves";
 import { aiAllowedFor } from "./ai-consent";
 import { track } from "./analytics";
 import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
@@ -187,16 +188,18 @@ export async function connectReadwise(
   const now = new Date();
   const existing = await connectionOf(ctx);
   if (existing) {
-    await ctx.db
-      .update(schema.readwiseConnections)
-      .set({
-        tokenCipher: sealed,
-        tokenHint: hint,
-        status: "active",
-        nextPullAt: now,
-        updatedAt: now,
-      })
-      .where(eq(schema.readwiseConnections.userId, ctx.userId));
+    const replaced = await moveState(ctx.db, readwiseStatus, {
+      from: ["active", "refused", "unreadable"],
+      to: "active",
+      set: { tokenCipher: sealed, tokenHint: hint, nextPullAt: now, updatedAt: now },
+      where: [eq(schema.readwiseConnections.userId, ctx.userId)],
+    });
+    if (!replaced.length) {
+      throw new ServiceError(
+        "unavailable",
+        "Readwise was disconnected meanwhile. Connect it again.",
+      );
+    }
   } else {
     const [summaries, recent, learned] = await Promise.all([
       reaching(deps.api.books(accepted)),
@@ -596,14 +599,29 @@ async function runPull(
   const leased = and(
     eq(schema.readwiseConnections.userId, ctx.userId),
     eq(schema.readwiseConnections.pullingUntil, row.pullingUntil ?? started),
-  );
-  const write = (values: Partial<ReadwiseConnection>) =>
-    runBatch(ctx.db, [
+  )!;
+  const release = ctx.db
+    .update(schema.readwiseConnections)
+    .set({ pullingUntil: null })
+    .where(leased);
+  const sameToken = eq(schema.readwiseConnections.tokenCipher, row.tokenCipher);
+  const write = (values: Omit<Partial<ReadwiseConnection>, "status">) =>
+    ctx.db.batch([
       ctx.db
         .update(schema.readwiseConnections)
         .set({ ...values, pullingUntil: null, updatedAt: new Date() })
-        .where(and(leased, eq(schema.readwiseConnections.tokenCipher, row.tokenCipher))),
-      ctx.db.update(schema.readwiseConnections).set({ pullingUntil: null }).where(leased),
+        .where(and(leased, sameToken)),
+      release,
+    ]);
+  const stop = (to: "refused" | "unreadable") =>
+    ctx.db.batch([
+      moveState(ctx.db, readwiseStatus, {
+        from: "active",
+        to,
+        set: { pullingUntil: null, updatedAt: new Date() },
+        where: [leased, sameToken],
+      }),
+      release,
     ]);
   let result: PullResult;
   try {
@@ -625,10 +643,10 @@ async function runPull(
     const none = { highlights: 0, cards: 0, skipped: 0, duplicates: 0 };
     if (error instanceof ReadwiseRefused) {
       result = { outcome: "refused", ...none };
-      await write({ status: "refused" });
+      await stop("refused");
     } else if (error instanceof ReadwiseTokenUnreadable) {
       result = { outcome: "unreadable", ...none };
-      await write({ status: "unreadable" });
+      await stop("unreadable");
     } else if (error instanceof ReadwiseLimited) {
       result = { outcome: "limited", ...none };
       await write({ nextPullAt: new Date(started.getTime() + error.retryAfter * 1000) });

@@ -42,6 +42,7 @@ import {
 } from "../enrichment/prompt";
 import { addsExampleReadings, enrichmentModel } from "../languages";
 import { log } from "../log";
+import { enrichmentStatus, moveState } from "../state-moves";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement } from "./audit";
 import { selectIn } from "./batch";
@@ -378,23 +379,27 @@ export async function enrichCards(
         );
         continue;
       }
-      const source = field === "language" ? {} : { [SOURCE_COLUMN[field]]: "ai" as const };
+      const text: Partial<Pick<Card, EnrichedField>> = { [field]: value };
+      const source: Partial<Pick<Card, (typeof SOURCE_COLUMN)[TextField]>> =
+        field === "language" ? {} : { [SOURCE_COLUMN[field]]: "ai" };
       // Filling an empty field is text an edition translates, so its localization goes stale.
       // The write is guarded by `unsetColumn`, so the revision only moves when the fill lands.
       const stale = field === "language" ? {} : { revision: sql`revision + 1` };
       writes.push(
         db
           .update(schema.cards)
-          .set({ [field]: value, ...source, ...stale, updatedAt: now })
+          .set({ ...text, ...source, ...stale, updatedAt: now })
           .where(and(stillWorking(userId, card.id), unsetColumn(field))),
       );
     }
     // After that card's fields, so each write still sees `working`.
     writes.push(
-      db
-        .update(schema.cards)
-        .set({ enrichmentStatus: null, enrichmentFields: null })
-        .where(stillWorking(userId, card.id)),
+      moveState(db, enrichmentStatus, {
+        from: "working",
+        to: null,
+        set: { enrichmentFields: null },
+        where: [eq(schema.cards.id, card.id), eq(schema.cards.userId, userId)],
+      }),
     );
   }
   const [firstWrite, ...restWrites] = writes;
@@ -566,18 +571,17 @@ export function settleEnrichment(db: Db, userId: string, cardIds: readonly strin
 
 /** Only a card still waiting moves, so a fill that already landed is never undone. */
 async function settle(db: Db, userId: string, cardIds: readonly string[], status: "failed" | null) {
+  let settled = 0;
   for (const slice of chunked(cardIds, 90)) {
-    await db
-      .update(schema.cards)
-      .set({ enrichmentStatus: status, enrichmentFields: null })
-      .where(
-        and(
-          eq(schema.cards.userId, userId),
-          inArray(schema.cards.id, slice),
-          eq(schema.cards.enrichmentStatus, "working"),
-        ),
-      );
+    const moved = await moveState(db, enrichmentStatus, {
+      from: "working",
+      to: status,
+      set: { enrichmentFields: null },
+      where: [eq(schema.cards.userId, userId), inArray(schema.cards.id, slice)],
+    });
+    settled += moved.length;
   }
+  return settled;
 }
 
 /** The learner's own active cards from the run that are still waiting on it. */

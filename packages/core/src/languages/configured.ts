@@ -1,28 +1,14 @@
-/**
- * Configured languages: a row of data each, with no engine. docs/proposals/supported-languages.md,
- * Tiers, and docs/proposals/long-tail-languages.md for the enrichment gate.
- */
 import type { LanguageFormat } from "./types";
 
-/** A field a language deck lets the AI fill from the start, besides the meaning and the example. */
 type StartingField = "notes" | "pronunciation";
 
 export interface LanguageConfig {
-  /** What the card form calls the field. */
   pronunciation: "pronunciation";
-  /** ISO 15924 codes of the scripts its terms are written in. */
   scripts: readonly string[];
-  /** How its cards are written where that differs from the general way, or null where it does not. */
   format: LanguageFormat | null;
-  /** Other primary subtags learners use for the same language, such as `tl` for Filipino. */
   aliases?: readonly string[];
   starts: readonly StartingField[];
-  /** Words sent silently before every term, so the voice hears the language and not a neighbour's. */
   speechContext?: string;
-  /**
-   * Whether enrichment fills a new language deck's cards unasked. True only while the language's
-   * recorded evaluation passes the bar, which recorded-run.test.ts in apps/web holds it to.
-   */
   enrichByDefault: boolean;
 }
 
@@ -135,7 +121,6 @@ const ROWS = {
       sample: { term: "namas", pronunciation: "nãmas" },
       duplicates: "term",
     },
-    // Its accents miss often enough live that pronunciation waits for the owner to turn it on.
     starts: ["notes"],
     enrichByDefault: true,
   },
@@ -188,7 +173,6 @@ const ROWS = {
     scripts: ["Latn"],
     format: null,
     starts: ["notes"],
-    // As Ukrainian's «Українською:» did in PR #910, so a short word is read with Polish sounds.
     speechContext: "Po polsku:",
     enrichByDefault: true,
   },
@@ -280,12 +264,10 @@ const ROWS = {
   },
 } satisfies Record<string, LanguageConfig>;
 
-/** A configured row's own tag, never one of its aliases. */
 export type ConfiguredTag = keyof typeof ROWS;
 
 export const CONFIGURED: Readonly<Record<string, LanguageConfig>> = ROWS;
 
-/** The row's own tag for each tag a configured row answers to, in lower case, its aliases included. */
 export const CONFIGURED_TAGS: ReadonlyMap<string, string> = new Map(
   Object.entries(CONFIGURED).flatMap(([tag, row]) =>
     [tag, ...(row.aliases ?? [])].map((each) => [each.toLowerCase(), tag] as const),

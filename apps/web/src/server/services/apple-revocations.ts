@@ -8,6 +8,7 @@ import {
 } from "../apple-revoke";
 import { type Db, schema } from "../db";
 import { log } from "../log";
+import { appleRevocationStatus, moveState } from "../state-moves";
 import { type AnalyticsWriter, track } from "./analytics";
 
 type Reason = (typeof schema.APPLE_REVOCATION_REASONS)[number];
@@ -103,22 +104,21 @@ async function settle(
   row: Revocation,
   events: AnalyticsWriter | undefined,
   now: Date,
-  change: Partial<typeof schema.appleRevocations.$inferInsert>,
+  change: Partial<Omit<Revocation, "status">> & { status?: "revoked" | "failed" },
   outcome: AppleRevocationOutcome,
   status?: number | null,
 ): Promise<AppleRevocationOutcome> {
   // Only the run that read this attempt writes it, so two runs never count one attempt twice.
-  const written = await db
-    .update(schema.appleRevocations)
-    .set(change)
-    .where(
-      and(
-        eq(schema.appleRevocations.id, row.id),
-        eq(schema.appleRevocations.status, "pending"),
-        eq(schema.appleRevocations.attempts, row.attempts),
-      ),
-    )
-    .returning({ id: schema.appleRevocations.id });
+  const { status: to = "pending", ...set } = change;
+  const written = await moveState(db, appleRevocationStatus, {
+    from: "pending",
+    to,
+    set,
+    where: [
+      eq(schema.appleRevocations.id, row.id),
+      eq(schema.appleRevocations.attempts, row.attempts),
+    ],
+  });
   if (written.length === 0) return "retrying";
   report(events, outcome, change.attempts ?? row.attempts, change.reason ?? undefined, status);
   if (outcome === "failed") {

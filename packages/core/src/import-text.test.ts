@@ -40,7 +40,6 @@ describe("Quizlet fixtures", () => {
       { term: "Q: largest lake?", definition: "Peipus" },
       { term: "Q: tab\tinside term", definition: 'definition with\ttab and "quotes"' },
     ]);
-    // Detection finds the custom marks too, though the guide tells the learner to set them.
     const seps = detectSeparators(text);
     expect(seps).toMatchObject({ field: "||", row: "##" });
     expect(parseDelimited(text, seps).cards).toEqual(parsed.cards);
@@ -63,10 +62,8 @@ describe("Quizlet fixtures", () => {
     expect(detectSeparators(text)).toMatchObject(TAB_NL);
     const parsed = parseDelimited(text, TAB_NL);
     expect(parsed).toMatchObject({ blank: 2, oneSided: 2, repeated: 0 });
-    // "normal card", 200 numbered words, the quoted row and the three-column row.
     expect(parsed.cards).toHaveLength(203);
     expect(parsed.cards).toContainEqual({ term: "x", definition: "y\tz extra column" });
-    // With Tab, quotes are Quizlet's literal text.
     expect(parsed.cards).toContainEqual({
       term: '"quoted, term"',
       definition: '"quoted ""def"""',
@@ -84,6 +81,12 @@ describe("parseDelimited", () => {
     expect(parsed.cards).toEqual([
       { term: "one, two", definition: 'say "hi"' },
       { term: "plain", definition: '"literal' },
+    ]);
+  });
+
+  it("keeps quotes as written under any other separator", () => {
+    expect(parseDelimited('"one"||"two"', { field: "||", row: "\n" }).cards).toEqual([
+      { term: '"one"', definition: '"two"' },
     ]);
   });
 
@@ -109,10 +112,18 @@ describe("parseDelimited", () => {
   });
 });
 
+describe("detectSeparators", () => {
+  it("reads a short paste that splits either way as Quizlet writes it, by Tab and New line", () => {
+    expect(detectSeparators("gato, felino\tcat")).toMatchObject(TAB_NL);
+  });
+});
+
 describe("text import envelope", () => {
   it("reads plain text, or a header it can't trust, as text with no choices", () => {
     expect(decodeTextImport("a\tb")).toEqual({ meta: null, text: "a\tb" });
     const bad = decodeTextImport('LYMI-TEXT-IMPORT 1\n{"separators":{"field":"","row":"x"}}\na\tb');
     expect(bad).toEqual({ meta: null, text: "a\tb" });
+    const long = JSON.stringify({ separators: { field: "x".repeat(11), row: "\n" } });
+    expect(decodeTextImport(`LYMI-TEXT-IMPORT 1\n${long}\na\tb`).meta).toBeNull();
   });
 });

@@ -262,7 +262,7 @@ const cron: Record<CronJob, () => Promise<unknown>> = {
 
 async function runCron() {
   await copyFormerDecks(app.db, undefined);
-  while ((await dropUnstudiedFormerDecks(app.db, app.env.PRIVATE_IMAGES)) > 0) {}
+  while ((await dropUnstudiedFormerDecks(app.db, app.env.PRIVATE_IMAGES)).dropped > 0) {}
   for (const job of Object.values(cron)) await job();
 }
 

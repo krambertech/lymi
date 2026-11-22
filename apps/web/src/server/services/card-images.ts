@@ -4,6 +4,7 @@ import { and, desc, eq, type SQL, sql } from "@lymi/core/db";
 import type { Card, CardImage } from "@lymi/core/schema";
 import { type Db, schema } from "../db";
 import { log, logFailure } from "../log";
+import { moveState, pictureStatus } from "../state-moves";
 import { newCardPictureKey, type ObjectStore, putObject } from "../storage";
 import { type AuditAction, auditStatementWhen, insertWhen } from "./audit";
 import { seesCaptured } from "./card-view";
@@ -101,7 +102,7 @@ export async function archiveCardImage(
   const card = await writableCard(ctx, cardId, input.version);
   const image = await imageWithStatus(ctx.db, card.id, "active");
   if (!image) throw new ServiceError("not_found", "This card has no picture");
-  return setStatus(ctx, card, image, "archived", "archive_image");
+  return setStatus(ctx, card, image, "archive_image");
 }
 
 /** Bring back the picture archived last, and with it the picture modes' schedules. */
@@ -116,7 +117,7 @@ export async function restoreCardImage(
   }
   const image = await imageWithStatus(ctx.db, card.id, "archived");
   if (!image) throw new ServiceError("not_found", "This card has no archived picture");
-  return setStatus(ctx, card, image, "active", "restore_image");
+  return setStatus(ctx, card, image, "restore_image");
 }
 
 /** The active picture's bytes for anyone who can see the card; replaced and archived versions are not served. */
@@ -194,16 +195,12 @@ async function storeImage(
   try {
     const [claimResult] = await ctx.db.batch([
       claim(ctx.db, card, token),
-      ctx.db
-        .update(schema.cardImages)
-        .set({ status: "replaced", updatedAt: new Date(now) })
-        .where(
-          and(
-            eq(schema.cardImages.cardId, card.id),
-            sql`${schema.cardImages.status} in ('active', 'archived')`,
-            claimed(card.id, token),
-          ),
-        ),
+      moveState(ctx.db, pictureStatus, {
+        from: ["active", "archived"],
+        to: "replaced",
+        set: { updatedAt: new Date(now) },
+        where: [eq(schema.cardImages.cardId, card.id), claimed(card.id, token)],
+      }),
       insertWhen(
         ctx.db,
         schema.cardImages,
@@ -253,16 +250,18 @@ async function setStatus(
   ctx: ServiceContext,
   card: Card,
   image: CardImage,
-  status: "active" | "archived",
   action: "archive_image" | "restore_image",
 ) {
   const token = newId();
+  const move = {
+    set: { updatedAt: new Date() },
+    where: [eq(schema.cardImages.id, image.id), claimed(card.id, token)],
+  } as const;
   const [claimResult] = await ctx.db.batch([
     claim(ctx.db, card, token),
-    ctx.db
-      .update(schema.cardImages)
-      .set({ status, updatedAt: new Date() })
-      .where(and(eq(schema.cardImages.id, image.id), claimed(card.id, token))),
+    action === "archive_image"
+      ? moveState(ctx.db, pictureStatus, { from: "active", to: "archived", ...move })
+      : moveState(ctx.db, pictureStatus, { from: "archived", to: "active", ...move }),
     // Archiving can make a text fallback asked that the card never had a state for.
     ...stateStatementsForCard(ctx.db, card.id),
     auditIfClaimed(ctx, card, token, action, { imageId: image.id }),

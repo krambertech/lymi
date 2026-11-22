@@ -31,6 +31,7 @@ import {
   ZipTooLarge,
 } from "../exports/zip";
 import { log } from "../log";
+import { exportStatus, inState, moveState } from "../state-moves";
 import {
   exportRecordsKey,
   exportSegmentKey,
@@ -39,7 +40,7 @@ import {
   putObject,
 } from "../storage";
 import { track } from "./analytics";
-import { auditStatement } from "./audit";
+import { auditStatement, auditStatementWhen } from "./audit";
 import { notFound, type ServiceContext, ServiceError } from "./context";
 import { dateFormatter } from "./days";
 import { ownedDeck } from "./members";
@@ -188,16 +189,13 @@ export async function startExport(
   } catch (err) {
     // Without a run nothing would ever move the row on, and it would refuse every later request.
     const at = new Date();
-    await db
-      .update(schema.exportFiles)
-      .set({
-        status: "failed",
-        failure: "internal",
-        objectKey: null,
-        finishedAt: at,
-        updatedAt: at,
-      })
-      .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.status, "exporting")));
+    // oxlint-disable-next-line lymi/guarded-state-move -- the error below is the answer, whoever ended the export
+    await moveState(db, exportStatus, {
+      from: "exporting",
+      to: "failed",
+      set: { failure: "internal", objectKey: null, finishedAt: at, updatedAt: at },
+      where: [eq(schema.exportFiles.id, id)],
+    });
     throw err;
   }
   track(ctx.analytics, {
@@ -687,25 +685,41 @@ export async function finishExport(
 
   const counts = (row.counts as ExportCounts | null) ?? null;
   const now = new Date();
-  await ctx.db.batch([
-    ctx.db
-      .update(schema.exportFiles)
-      .set({
-        status: "done",
+  const [, done] = await ctx.db.batch([
+    auditStatementWhen(
+      ctx,
+      {
+        entity: "export",
+        action: "complete",
+        id,
+        details: { format: row.format, deckId: row.deckId, ...counts, missing: end.missing },
+      },
+      schema.exportFiles,
+      and(eq(schema.exportFiles.id, id), inState(exportStatus, "exporting"))!,
+    ),
+    moveState(ctx.db, exportStatus, {
+      from: "exporting",
+      to: "done",
+      set: {
         segments: end.segment + 1,
         byteSize: end.offset + zip.length,
         finishedAt: now,
         expiresAt: new Date(now.getTime() + EXPORT_WINDOW_MS),
         updatedAt: now,
-      })
-      .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.status, "exporting"))),
-    auditStatement(ctx, {
-      entity: "export",
-      action: "complete",
-      id,
-      details: { format: row.format, deckId: row.deckId, ...counts, missing: end.missing },
+      },
+      where: [eq(schema.exportFiles.id, id)],
     }),
   ]);
+  if (!done.length) {
+    const { status } = await ownedExport(ctx, id);
+    if (status === "failed" && !(await deleteExportFiles(bucket, row))) {
+      await ctx.db
+        .update(schema.exportFiles)
+        .set({ objectKey: row.objectKey, updatedAt: new Date() })
+        .where(eq(schema.exportFiles.id, id));
+    }
+    return;
+  }
   await deleteObjects(bucket, `${row.objectKey}.records/`);
 }
 
@@ -719,18 +733,18 @@ export async function failExport(
   const [row] = await db.select().from(schema.exportFiles).where(eq(schema.exportFiles.id, id));
   if (row?.status !== "exporting") return;
   const now = new Date();
-  const deleted = await deleteExportFiles(bucket, row);
+  const failed = await moveState(db, exportStatus, {
+    from: "exporting",
+    to: "failed",
+    set: { failure, finishedAt: now, updatedAt: now },
+    where: [eq(schema.exportFiles.id, id)],
+  });
+  if (!failed.length) return;
+  if (!(await deleteExportFiles(bucket, row))) return;
   await db
     .update(schema.exportFiles)
-    .set({
-      status: "failed",
-      failure,
-      // The key is kept while its segments are, so the sweep can try the delete again.
-      ...(deleted ? { objectKey: null } : {}),
-      finishedAt: now,
-      updatedAt: now,
-    })
-    .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.status, "exporting")));
+    .set({ objectKey: null })
+    .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.updatedAt, now)));
 }
 
 async function deleteObjects(bucket: ObjectStore<"EXPORTS">, prefix: string) {
@@ -766,13 +780,17 @@ export async function expireExports(db: Db, bucket: ObjectStore<"EXPORTS">, now 
     .from(schema.exportFiles)
     .where(and(eq(schema.exportFiles.status, "done"), lt(schema.exportFiles.expiresAt, now)))
     .limit(50);
+  let ended = 0;
   for (const row of expired) {
     // A row whose delete failed stays done and past its window, so the next sweep finds it again.
     if (!(await deleteExportFiles(bucket, row))) continue;
-    await db
-      .update(schema.exportFiles)
-      .set({ status: "expired", objectKey: null, updatedAt: now })
-      .where(eq(schema.exportFiles.id, row.id));
+    const moved = await moveState(db, exportStatus, {
+      from: "done",
+      to: "expired",
+      set: { objectKey: null, updatedAt: now },
+      where: [eq(schema.exportFiles.id, row.id)],
+    });
+    ended += moved.length;
   }
   const stalled = await db
     .select({ id: schema.exportFiles.id })
@@ -796,9 +814,11 @@ export async function expireExports(db: Db, bucket: ObjectStore<"EXPORTS">, now 
     await db
       .update(schema.exportFiles)
       .set({ objectKey: null, updatedAt: now })
-      .where(eq(schema.exportFiles.id, row.id));
+      .where(
+        and(eq(schema.exportFiles.id, row.id), eq(schema.exportFiles.updatedAt, row.updatedAt)),
+      );
   }
-  return expired.length + stalled.length;
+  return ended + stalled.length;
 }
 
 /** The finished file's segments in order, for the learner who asked for it, within its window. */

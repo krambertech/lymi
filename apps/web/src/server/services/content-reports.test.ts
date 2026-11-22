@@ -16,7 +16,7 @@ import { clearLocalEmailOutbox, latestLocalEmail } from "./email";
 import { inviteByEmail, turnOnJoinLink } from "./invitations";
 import { join } from "./members";
 import { archiveSection, createSection, restoreSection } from "./sections";
-import { learner, testDb } from "./test-db";
+import { anyState, learner, testDb } from "./test-db";
 import { batchRacedBy, racedBy } from "./test-race";
 
 type ReportEnv = Pick<Bindings, "PRODUCT_URL" | "EMAIL" | "SESSIONS">;
@@ -253,7 +253,7 @@ describe("moderation", () => {
       reason: "offensive",
     });
     // As a Worker stopped between claiming the report and archiving the card leaves it.
-    await db
+    await anyState(db)
       .update(schema.contentReports)
       .set({ resolvedAt: new Date(), action: "archive_card" })
       .where(eq(schema.contentReports.id, id));

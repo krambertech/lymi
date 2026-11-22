@@ -1,8 +1,3 @@
-/**
- * Card text as stored: input with one possible meaning converted before any write compares or
- * records it, so a converted term still meets its duplicate and a converted Reading is never a
- * correction of the AI. docs/proposals/supported-languages.md, Writes.
- */
 import { sameTamilReading } from "./indic";
 import { jyutpingDigits } from "./jyutping";
 import { type ReadingEngine, readingEngine, stressRules } from "./languages";
@@ -11,16 +6,13 @@ import { storedPitch } from "./pitch";
 import { foldReading, splitTermReading, withoutPitch } from "./reading";
 import { cyrillicStress, hasStress, readStress, stressKey, stripStress } from "./stress";
 
-/** A field `normalizeCardText` may convert. */
 export type NormalizedField = "term" | "pronunciation";
 
-/** The fields a write sends; a field left out is not being written. */
 export type CardText = {
   term?: string | undefined;
   pronunciation?: string | null | undefined;
 };
 
-/** Each engine's conversions, such as pinyin's tone numbers to marks; each returns only the fields it changed. */
 const CONVERT: Record<ReadingEngine, (text: CardText, language: string) => CardText> = {
   furigana: japaneseReading,
   pinyin: markTones,
@@ -29,27 +21,16 @@ const CONVERT: Record<ReadingEngine, (text: CardText, language: string) => CardT
   indic: dropSpelledReading,
 };
 
-/** Jyutping sent with raised or full-width tone numbers stores them plain: nei⁵ hou² → nei5 hou2. */
 function plainToneNumbers({ pronunciation }: CardText): CardText {
   return pronunciation ? { pronunciation: jyutpingDigits(pronunciation) } : {};
 }
 
-/**
- * A Tamil pronunciation that only repeats the reading the spelling gives is left empty, so the
- * field holds only words not said as spelled. An edit that sends no term keeps it as sent.
- */
 function dropSpelledReading({ term, pronunciation }: CardText): CardText {
   return term !== undefined && pronunciation && sameTamilReading(term, pronunciation)
     ? { pronunciation: null }
     : {};
 }
 
-/**
- * Accented Latin look-alikes become Cyrillic vowels with U+0301 (замóк → замо́к), and a stressed
- * term splits into the term as natives write it and its stress as the pronunciation, as a lesson
- * or an import marks it: за́мок → замок stressed за́мок. A pronunciation that says something else,
- * such as IPA or another stress, leaves the term as sent.
- */
 function markStress({ term, pronunciation }: CardText, language: string): CardText {
   const rules = stressRules(language);
   if (!rules) return {};
@@ -60,22 +41,15 @@ function markStress({ term, pronunciation }: CardText, language: string): CardTe
   const plain = stripStress(typed);
   const read = hasStress(typed) ? readStress(plain, typed, rules) : null;
   if (read === null) return typed === term ? out : { ...out, term: typed };
-  // An acute over ё or over a word of one syllable says nothing, so it only leaves the term.
   if (read.marks === 0) return { ...out, term: plain };
   if (!sent?.trim()) return { term: plain, pronunciation: read.form };
   return stressKey(plain, sent, rules) === read.form.toLowerCase() ? { ...out, term: plain } : out;
 }
 
-/** Pinyin sent with tone numbers stores with tone marks: ni3 hao3 → nǐ hǎo. */
 function markTones({ pronunciation }: CardText): CardText {
   return pronunciation ? { pronunciation: toneMarks(pronunciation) } : {};
 }
 
-/**
- * `食[た]べる` sent as the term splits into 食べる and its Reading たべる, unless the card was sent a
- * different pronunciation, which leaves both as written. A Reading's pitch accent stores as its
- * position: としょꜜかん → としょかん [2].
- */
 function japaneseReading({ term, pronunciation }: CardText): CardText {
   const stored = pronunciation ? { pronunciation: storedPitch(pronunciation) } : {};
   const split = term === undefined ? null : splitTermReading(term);
@@ -87,10 +61,6 @@ function japaneseReading({ term, pronunciation }: CardText): CardText {
     : stored;
 }
 
-/**
- * The fields as Lymi stores them in this language, and which of them changed. Only input with one
- * possible meaning converts; a card is never refused for its format.
- */
 export function normalizeCardText<T extends CardText>(
   language: string | null | undefined,
   fields: T,

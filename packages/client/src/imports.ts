@@ -4,7 +4,6 @@ import { useSyncExternalStore } from "react";
 import { ApiError, api, errorMessage, type Import } from "./api";
 import { importQuery } from "./queries";
 
-/** The apps an import comes from, by the names they go by everywhere. */
 export const SOURCE_NAMES: Record<ImportSource, string> = {
   anki: "Anki",
   mochi: "Mochi",
@@ -14,7 +13,6 @@ export const SOURCE_NAMES: Record<ImportSource, string> = {
   pleco: "Pleco",
 };
 
-/** The file names each app's import page accepts, checked before anything is sent. */
 export const SOURCE_FILES: Record<ImportSource, RegExp> = {
   anki: /\.(apkg|colpkg)$/i,
   mochi: /\.mochi$/i,
@@ -24,7 +22,6 @@ export const SOURCE_FILES: Record<ImportSource, RegExp> = {
   pleco: /\.txt$/i,
 };
 
-/** Each app's guide on the public site; Quizlet has none yet. */
 export function importGuidePath(source: ImportSource): string | undefined {
   if (source === "lymi") return "/docs/export";
   if (source === "quizlet") return undefined;
@@ -33,14 +30,8 @@ export function importGuidePath(source: ImportSource): string | undefined {
   return source === "mochi" ? "/docs/import-from-mochi" : "/docs/import-from-anki";
 }
 
-/** Note types that together hold this share of the notes are asked about one by one. */
 const ASKED_SHARE = 0.95;
 
-/**
- * Splits a file's note types into the ones the learner checks card by card and a tail of rare
- * ones, biggest first. A collection with fifteen note types, most holding a handful of notes,
- * should not ask fifteen questions. A tail of one is not worth folding away.
- */
 export function splitNoteTypes<T extends { notes: number }>(types: readonly T[]) {
   const ordered = [...types].sort((a, b) => b.notes - a.notes);
   const total = ordered.reduce((sum, type) => sum + type.notes, 0);
@@ -54,17 +45,14 @@ export function splitNoteTypes<T extends { notes: number }>(types: readonly T[])
   return { asked: ordered.slice(0, cut), rest: ordered.slice(cut) };
 }
 
-/** One part's bytes: a browser's Blob slice, or the bytes a phone read from its file. */
 export type UploadBody = Blob | Uint8Array<ArrayBuffer>;
 
-/** A file to send in parts, read a part at a time so a large file never sits in memory whole. */
 export type UploadSource = {
   name: string;
   size: number;
   part: (start: number, end: number) => UploadBody | Promise<UploadBody>;
 };
 
-/** A browser file, or any Blob, as an upload source. */
 export function blobSource(file: Blob & { name?: string }): UploadSource {
   return {
     name: file.name ?? "file",
@@ -81,7 +69,6 @@ export type SendPart = (part: number, body: UploadBody, signal: AbortSignal) => 
 
 const ATTEMPTS = 4;
 
-/** Waits before a retry, a little longer each time, or rejects at once when aborted. */
 function pause(ms: number, signal: AbortSignal) {
   return new Promise<void>((resolve, reject) => {
     const timer = setTimeout(resolve, ms);
@@ -96,11 +83,6 @@ function pause(ms: number, signal: AbortSignal) {
   });
 }
 
-/**
- * Sends a file in parts, one at a time, so a phone on a weak connection retries one part rather
- * than the whole file. A part that fails for a network or server reason is sent again; a part
- * the server refuses outright stops the upload.
- */
 export async function uploadInParts(
   file: Pick<UploadSource, "size" | "part">,
   partBytes: number,
@@ -112,7 +94,6 @@ export async function uploadInParts(
   }: {
     signal: AbortSignal;
     onProgress?: (progress: UploadProgress) => void;
-    /** The first part to send, when earlier parts already arrived. */
     from?: number;
   },
 ) {
@@ -137,13 +118,8 @@ export async function uploadInParts(
   }
 }
 
-/**
- * An upload in this app. It outlives the import screen, so moving around the app does not stop it.
- * An upload that finished or was stopped has no state: its import says the rest.
- */
 export type UploadState =
   | { status: "sending"; sent: number; total: number }
-  /** Every part arrived and the server is putting the file together. */
   | { status: "joining"; sent: number; total: number }
   | { status: "failed"; sent: number; total: number; error: string };
 
@@ -153,7 +129,6 @@ export type UploadEvent =
   | { type: "failed"; error: string }
   | { type: "retried" };
 
-/** Every move an upload can make; an event its state does not allow changes nothing. */
 export function uploadReducer(state: UploadState, event: UploadEvent): UploadState {
   const { sent, total } = state;
   switch (event.type) {
@@ -179,7 +154,6 @@ function emit() {
   for (const listener of listeners) listener();
 }
 
-/** Starts a run of its own; whatever ran for this import before is stopped and no longer heard. */
 function begin(id: string, file: UploadSource, sent: number): Entry {
   entries.get(id)?.controller.abort();
   const entry: Entry = {
@@ -193,7 +167,6 @@ function begin(id: string, file: UploadSource, sent: number): Entry {
 }
 
 async function run(id: string, entry: Entry, qc: QueryClient, from: number) {
-  // A run that was stopped or replaced says nothing more: the entry is its successor's.
   const live = () => entries.get(id) === entry;
   const step = (event: UploadEvent) => {
     if (!live()) return;
@@ -225,7 +198,6 @@ async function run(id: string, entry: Entry, qc: QueryClient, from: number) {
   }
 }
 
-/** Creates the import and starts sending the file. Resolves once the import exists. */
 export async function startUpload(
   file: UploadSource,
   qc: QueryClient,
@@ -237,15 +209,10 @@ export async function startUpload(
   return created;
 }
 
-/**
- * Picks an upload back up with the same file, from the first part the server has not seen.
- * Parts go one at a time, so the parts that arrived are always the first ones.
- */
 export function resumeUpload(item: Import, file: UploadSource, qc: QueryClient) {
   void run(item.id, begin(item.id, file, 0), qc, item.upload.received + 1);
 }
 
-/** Sends a failed upload's remaining parts; an upload still going is left alone. */
 export function retryUpload(id: string, qc: QueryClient) {
   const failed = entries.get(id);
   if (failed?.state.status !== "failed") return;
@@ -260,7 +227,6 @@ export function stopUpload(id: string) {
   emit();
 }
 
-/** Whether an upload in this app is still going, for a warning before leaving. */
 export function uploading() {
   return [...entries.values()].some((entry) => entry.state.status !== "failed");
 }
@@ -280,5 +246,4 @@ export function useUpload(id: string): UploadState | null {
   );
 }
 
-/** Every screen that counts cards, which an import that finished or was undone has made stale. */
 export const IMPORT_TOUCHES = ["decks", "queue", "rounds", "streak", "insights", "activity"];

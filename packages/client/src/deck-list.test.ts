@@ -3,6 +3,7 @@ import type { Card, CardState, Section } from "./api";
 import {
   chosenReview,
   type DeckRow,
+  deckCsv,
   deckTags,
   dueBucket,
   filterRows,
@@ -367,5 +368,13 @@ describe("scopedFilters", () => {
   it("lists the cards with no section under the empty id", () => {
     const filters = scopedFilters(noFilters, { sectionId: "" });
     expect(ids(filterRows(rows, filters, "", now, sections))).toEqual(["fresh"]);
+  });
+});
+
+describe("deckCsv", () => {
+  it("opens with a byte order mark, without which spreadsheets misread UTF-8", () => {
+    expect(deckCsv([])).toBe(
+      "\uFEFFterm,meaning,pronunciation,example,example_translation,notes,language,source,state,due",
+    );
   });
 });

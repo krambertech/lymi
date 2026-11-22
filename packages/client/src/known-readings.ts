@@ -6,7 +6,6 @@ import { type DeckRow, rowState } from "./deck-list";
 import { gradeStore, type StoredGrade } from "./grades";
 import { deckCardsQuery, decksQuery } from "./queries";
 
-/** The learner's Known pairs, and whether every deck they study was cached to say so. */
 export interface KnownReadingsState {
   known: KnownReadings;
   complete: boolean;
@@ -14,7 +13,6 @@ export interface KnownReadingsState {
 
 type Entry = { row: DeckRow; pairs: string[] };
 
-/** One deck's cards that give pairs, kept while its cached rows are the same rows. */
 const perDeck = new WeakMap<readonly DeckRow[], Entry[]>();
 const latest = new WeakMap<
   QueryClient,
@@ -40,10 +38,6 @@ function entries(rows: readonly DeckRow[]): Entry[] {
 
 const gradeKey = (cardId: string, mode: string) => `${cardId} ${mode}`;
 
-/**
- * Whether a row is Known once this device's latest grade of its side, newer than the row, is laid
- * over it: Forgot takes Known away at once, and any other grade counts once the server has answered.
- */
 function knownAfter(row: DeckRow, graded: ReadonlyMap<string, StoredGrade>): boolean {
   const mode = row.state ? modeKey(row.state.mode) : null;
   const grade = mode
@@ -59,12 +53,6 @@ function knownAfter(row: DeckRow, graded: ReadonlyMap<string, StoredGrade>): boo
 const same = (a: KnownReadings, b: KnownReadings) =>
   a.size === b.size && [...a].every((pair) => b.has(pair));
 
-/**
- * The learner's Known pairs across every deck they study, shared decks included, from the deck card
- * lists the cache already holds, with this device's grades laid over them, so it costs no request
- * and works offline. `complete` is false until the deck list and every deck's cards are cached.
- * The state is the same object until what it says changes.
- */
 export function cachedKnownReadings(qc: QueryClient): KnownReadingsState {
   const decks = qc.getQueryData<DeckSummary[]>(decksQuery.queryKey);
   const studied = decks && new Set(decks.map((deck) => deck.id));
@@ -118,12 +106,10 @@ export function cachedKnownReadings(qc: QueryClient): KnownReadingsState {
   return state;
 }
 
-/** `cachedKnownReadings`'s pairs, kept current as the deck lists and this device's grades change. */
 export function useKnownReadings(): KnownReadings {
   const qc = useQueryClient();
   const subscribe = useCallback(
     (listener: () => void) => {
-      // Batched as TanStack's own hooks are: a query built during another component's render notifies at once.
       const cache = qc.getQueryCache().subscribe(notifyManager.batchCalls(listener));
       const grades = gradeStore.subscribe(listener);
       return () => {
@@ -137,10 +123,6 @@ export function useKnownReadings(): KnownReadings {
   return useSyncExternalStore(subscribe, snapshot, snapshot);
 }
 
-/**
- * What a grade says about the example the answer drew: how many of its readings faded. Left out
- * when the example drew none, or while some deck's cards are not cached, since the count would be a guess.
- */
 export function readingsFadedField(
   qc: QueryClient,
   card: { example?: string | null | undefined; language?: string | null | undefined },

@@ -27,7 +27,7 @@
     "test:e2e": "playwright test",
     "test:e2e:chromium": "playwright test --project=chromium",
     "test:e2e:ui": "playwright test --ui",
-    "check": "oxfmt --check . && oxlint . && pnpm check:design && pnpm check:cache-shape && pnpm check:frozen && pnpm check:styling && pnpm check:comments && pnpm check:regressions && pnpm check:test-exports && pnpm check:models && pnpm check:agent-docs && pnpm --filter @lymi/mobile symbols:check",
+    "check": "oxfmt --check . && oxlint . && pnpm check:design && pnpm check:cache-shape && pnpm check:frozen && pnpm check:styling && pnpm check:comments && pnpm check:regressions && pnpm check:copy && pnpm check:test-exports && pnpm check:models && pnpm check:agent-docs && pnpm --filter @lymi/mobile symbols:check",
     "check:cache-shape": "node scripts/check-cache-shape.mjs",
     "check:frozen": "node scripts/check-frozen.mjs",
     "check:styling": "node scripts/check-styling.mjs",
@@ -52,7 +52,8 @@
     "pr:media": "node scripts/pr-media.mjs",
     "friction": "node scripts/friction.mjs",
     "reliability": "node scripts/reliability.mjs",
-    "check:models": "node scripts/check-models.mjs"
+    "check:models": "node scripts/check-models.mjs",
+    "check:copy": "node scripts/check-copy.mjs"
   },
   "devDependencies": {
     "@oxlint/plugins": "1.92.0",

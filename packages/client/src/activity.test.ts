@@ -8,6 +8,7 @@ import {
   importOutcome,
   importStage,
   mergeActivity,
+  namesCaller,
 } from "./activity";
 import type { ActivityEntry } from "./api";
 
@@ -43,7 +44,6 @@ describe("mergeActivity", () => {
   });
 
   it("joins halves that are not neighbours, as two decks in one call are not", () => {
-    // One call wrote to two decks, so the page is [A, B, A, B].
     const rows = mergeActivity([
       entry("a", 1, ["a1"]),
       entry("b", 1, ["b1"]),
@@ -111,5 +111,22 @@ describe("imports and callers a release does not know", () => {
       kind: "lymi",
     });
     expect(activityCaller(entry("g", 1))).toEqual({ kind: "app", name: "Claude" });
+  });
+});
+
+describe("who the line under a row names", () => {
+  const row = (fields: Record<string, unknown>) =>
+    ({ ...entry("g", 1), ...fields }) as unknown as ActivityEntry;
+
+  it("leaves out a person the sentence names, but says who removed a member", () => {
+    expect(namesCaller(row({ kind: "member_joined" }))).toBe(false);
+    expect(namesCaller(row({ kind: "member_left" }))).toBe(false);
+    expect(namesCaller(row({ kind: "member_removed" }))).toBe(true);
+  });
+
+  it("leaves out the learner on a file they moved, but not an app that moved it", () => {
+    expect(namesCaller(row({ kind: "import", import: {}, actor: "user" }))).toBe(false);
+    expect(namesCaller(row({ kind: "import", import: {}, actor: "api" }))).toBe(true);
+    expect(namesCaller(row({ kind: "cards_added", actor: "user" }))).toBe(true);
   });
 });

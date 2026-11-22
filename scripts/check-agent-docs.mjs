@@ -22,6 +22,7 @@ const ROUTES = "apps/web/src/client/routes";
 /** Skills a doc may name that each machine installs for itself rather than the repo. */
 export const EXTERNAL_SKILLS = {
   impeccable: "a design skill installed per machine, not kept in the repo",
+  "writing-as-kateryna": "Kateryna's own voice, installed per machine, not kept in the repo",
   statechart: "pstack's TLA+ chart skill, installed per machine, not kept in the repo",
 };
 

@@ -1,12 +1,31 @@
 import { markKnownReadings, parseReadings, type ReviewMode } from "@lymi/core";
 import { QueryClient } from "@tanstack/react-query";
-import { beforeEach, describe, expect, it } from "vitest";
+import { beforeEach, describe, expect, it, vi } from "vitest";
 import type { DeckRow } from "./deck-list";
 import { resetGradeCache } from "./grades";
-import { cachedKnownReadings, readingsFadedField } from "./known-readings";
+import { cachedKnownReadings, readingsFadedField, useKnownReadings } from "./known-readings";
 import { deckCardsQuery, decksQuery } from "./queries";
 import { OUTBOX_KEY } from "./queued";
 import { configureForTest } from "./test/configure";
+
+const hook = vi.hoisted(() => ({
+  qc: undefined as unknown,
+  subscribe:
+    (_listener: () => void): (() => void) =>
+    () => {},
+}));
+vi.mock("react", async (original) => ({
+  ...(await original<typeof import("react")>()),
+  useCallback: (callback: unknown) => callback,
+  useSyncExternalStore: (subscribe: typeof hook.subscribe, snapshot: () => unknown) => {
+    hook.subscribe = subscribe;
+    return snapshot();
+  },
+}));
+vi.mock("@tanstack/react-query", async (original) => ({
+  ...(await original<typeof import("@tanstack/react-query")>()),
+  useQueryClient: () => hook.qc,
+}));
 
 const store = new Map<string, string>();
 configureForTest(store);
@@ -22,7 +41,6 @@ const row = (term: string, pronunciation: string, state: number | null, language
       state === null ? null : { state, mode: RECOGNITION, lastReview: state ? YESTERDAY : null },
   }) as unknown as DeckRow;
 
-/** Grades this device made, as the outbox keeps them. */
 const graded = (
   ...grades: {
     cardId: string;
@@ -50,7 +68,6 @@ const faded = (qc: QueryClient, example: string) =>
     .filter((segment) => segment.known)
     .map((segment) => segment.text);
 
-/** A learner studying one deck holding 食べる, Known, and 飲む, Learning. */
 const studying = () => {
   const qc = new QueryClient();
   qc.setQueryData(decksQuery.queryKey, [{ id: "d" }] as never);
@@ -96,7 +113,6 @@ describe("cachedKnownReadings", () => {
   it("stays the same state while what it says is the same, and changes when a card's state does", () => {
     const qc = studying();
     const first = cachedKnownReadings(qc);
-    // A refetch or an edit elsewhere in the deck brings new rows that say the same.
     qc.setQueryData(deckCardsQuery("d").queryKey, [
       row("食べる", "たべる", 2),
       row("飲む", "のむ", 1),
@@ -111,6 +127,12 @@ describe("cachedKnownReadings", () => {
     const qc = studying();
     graded({ cardId: "食べる", rating: 1 });
     expect(faded(qc, EXAMPLE)).toEqual([]);
+  });
+
+  it("keeps a card Known while any grade but Forgot waits for the server", () => {
+    const qc = studying();
+    graded({ cardId: "食べる", rating: 2 });
+    expect(faded(qc, EXAMPLE)).toEqual(["食"]);
   });
 
   it("makes a card Known once the server has scheduled this device's grade as Known", () => {
@@ -170,5 +192,20 @@ describe("readingsFadedField", () => {
     expect(readingsFadedField(qc, { example: null, language: "ja" })).toEqual({});
     qc.setQueryData(decksQuery.queryKey, [{ id: "d" }, { id: "e" }] as never);
     expect(readingsFadedField(qc, { example: EXAMPLE, language: "ja" })).toEqual({});
+  });
+});
+
+describe("useKnownReadings", () => {
+  it("hears a query that another component's render builds only once that render is over", async () => {
+    const qc = studying();
+    hook.qc = qc;
+    expect(useKnownReadings().size).toBe(1);
+    const heard = vi.fn();
+    const stop = hook.subscribe(heard);
+    qc.getQueryCache().build(qc, { queryKey: ["built while rendering"] });
+    expect(heard).not.toHaveBeenCalled();
+    await new Promise((resolve) => setTimeout(resolve));
+    expect(heard).toHaveBeenCalled();
+    stop();
   });
 });

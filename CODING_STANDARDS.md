@@ -18,6 +18,10 @@ A flow with steps or phases holds one value: a union tagged by `status` or `kind
 
 Async work that something newer can replace checks that it still owns the state before it writes. On the server, an update that moves a status names the status it leaves in its `WHERE`.
 
+## Say when a write fails
+
+A mutation that fails shows the app's standard sentence in a toast, from `failedWriteCache` in `packages/client/src/failed-writes.ts`, which both apps' `QueryClient` use. One with its own message opts out with an `onError`, or declares `meta`: `{ failure: "inline" }` when its component renders `error` or `isError`, `{ failure: "caller" }` when the code awaiting `mutateAsync` always says it, and `{ failure: "silent", because }` for a write the learner did not ask for. An inline failure still gets the toast once its component has gone or `reset()` has run, so a sheet resets its mutation as it closes. `lymi/failed-write-said` checks the declaration against the code in the same file. On the web, mutations run with `networkMode: "always"`: a write that works offline queues itself, and one that cannot says so rather than waiting.
+
 ## Localize whole sentences
 
 English is the source message: `<Trans>` in JSX, `t` from `useLingui()` for attributes and handlers, `msg` for module constants, and `<Plural>` or `plural` for counts.

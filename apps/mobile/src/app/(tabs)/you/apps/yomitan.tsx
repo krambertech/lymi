@@ -39,6 +39,7 @@ export default function Yomitan() {
   const current = keys.data ? yomitanKey(keys.data.filter((k) => k.id !== stuck)) : undefined;
   // A new key replaces the one this page shows, so a key thought leaked stops working.
   const make = useMutation({
+    meta: { failure: "inline" },
     mutationFn: async (replacing: string | null) => {
       const made = await api.createKey({ name: YOMITAN_KEY_NAME, scope: "write" });
       // The new key is shown once whatever happens to the old one, which can be revoked by hand.
@@ -48,6 +49,7 @@ export default function Yomitan() {
     onSettled: () => qc.invalidateQueries({ queryKey: keysQuery.queryKey }),
   });
   const revoke = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (id: string) => api.revokeKey(id),
     onSuccess: (_, id) => {
       // Revoking the key just made only takes back that key; revoking the one in use disconnects.

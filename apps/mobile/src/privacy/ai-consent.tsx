@@ -201,6 +201,7 @@ export function AiServicesRow() {
   const settings = useQuery(settingsQuery);
   const [open, setOpen] = useState(false);
   const save = useMutation({
+    meta: { failure: "inline" },
     // Saved, never queued: the choice decides what the next request may send.
     networkMode: "always",
     mutationFn: (allowed: boolean) => saveAiChoice(qc, allowed, "settings"),

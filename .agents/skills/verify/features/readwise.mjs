@@ -44,8 +44,26 @@ export default async function drive({ page, step, api, expect }) {
     return { entries: entries.length };
   });
 
-  await step("Disconnect, and the cards stay", async () => {
+  const connection = "**/api/readwise";
+  await step("A disconnect that cannot reach Lymi says so and stays connected", async () => {
     await page.goBack();
+    await page.route(connection, (route) =>
+      route.request().method() === "DELETE" ? route.abort("failed") : route.fallback(),
+    );
+    await page.getByRole("button", { name: "Disconnect Readwise" }).click();
+    await page.getByRole("button", { name: "Disconnect Readwise" }).click();
+    await expect(
+      page.getByRole("region", { name: "Notifications" }).getByText(/Couldn’t reach Lymi/),
+    ).toBeVisible();
+    await expect(page.getByRole("heading", { level: 1, name: "Readwise" })).toBeVisible();
+    const { connection: kept } = await api("/api/readwise");
+    expect(kept).not.toBeNull();
+    return { status: kept.status };
+  });
+
+  await step("Disconnect, and the cards stay", async () => {
+    await page.unroute(connection);
+    await page.reload();
     await page.getByRole("button", { name: "Disconnect Readwise" }).click();
     await page.getByRole("button", { name: "Disconnect Readwise" }).click();
     await expect(page.getByRole("heading", { level: 1, name: "Settings" })).toBeVisible();

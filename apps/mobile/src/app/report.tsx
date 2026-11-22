@@ -49,6 +49,7 @@ export default function Report() {
   const [missing, setMissing] = useState(false);
 
   const send = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (input: { target: ContentReportTarget; reason: ContentReportReason }) =>
       api.reportContent({ ...input, note: note.trim() || undefined }),
     onSuccess: () => {

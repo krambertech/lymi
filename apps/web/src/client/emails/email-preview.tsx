@@ -392,7 +392,10 @@ function SendToInbox({
 }) {
   const [to, setTo] = useState("");
   const address = to || operators[0] || "";
-  const send = useMutation({ mutationFn: () => devApi.sendEmail(kind, language, address) });
+  const send = useMutation({
+    meta: { failure: "inline" },
+    mutationFn: () => devApi.sendEmail(kind, language, address),
+  });
 
   return (
     <div className="ms-auto flex items-center gap-2">

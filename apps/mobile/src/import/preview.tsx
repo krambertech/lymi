@@ -94,6 +94,7 @@ export function ImportPreviewScreen({
   const { waiting: previewLoading, error: previewError } = usePreviewState(preview);
   const retryPreview = () => void preview.refetch();
   const confirm = useMutation({
+    meta: { failure: "inline" },
     mutationFn: () => api.confirmImport(item.id, choices),
     onSuccess: (next) => qc.setQueryData(importQuery(item.id).queryKey, next),
   });

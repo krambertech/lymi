@@ -281,6 +281,7 @@ export function AccountSection({
 
   // Every screen reads the name from `meQuery`, so writing it updates the rail and menu too.
   const rename = useMutation({
+    meta: { failure: "inline" },
     mutationKey: RENAME,
     mutationFn: (next: string) => api.rename(next),
     onSuccess: (me) => {
@@ -329,6 +330,7 @@ export function AccountSection({
   };
 
   const save = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (square: Blob) => store(square, avatar.data?.revision ?? 0),
     onMutate: () => toast.close(PHOTO_TOAST),
     onSuccess: () => setPicked(null),

@@ -1,9 +1,10 @@
 import { useLingui } from "@lingui/react/macro";
-import { api, type Series } from "@lymi/client/api";
+import { api, errorMessage, type Series } from "@lymi/client/api";
 import { seriesQuery } from "@lymi/client/queries";
 import type { SeriesDeleteInput } from "@lymi/core";
 import { isolate } from "@lymi/core";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { alert } from "../ui/alert";
 import { toast } from "../ui/toast-host";
 import type { MoveBack } from "./move-undo";
 
@@ -12,13 +13,16 @@ import type { MoveBack } from "./move-undo";
  * reviews, so each write refreshes the decks, the series and the review queue once it lands.
  */
 export function useSeriesActions() {
+  const { t } = useLingui();
   const qc = useQueryClient();
+  const alertFailed = (error: unknown) => alert(t`That didn’t go through`, errorMessage(error));
   const refresh = () =>
     Promise.all(
       [["decks"], ["series"], ["queue"]].map((queryKey) => qc.invalidateQueries({ queryKey })),
     );
 
   const name = useMutation({
+    meta: { failure: "inline" },
     // A new series can take its first deck in the same write, so a failure never leaves it empty.
     mutationFn: ({
       series,
@@ -33,6 +37,7 @@ export function useSeriesActions() {
   });
 
   const setDecks = useMutation({
+    meta: { failure: "inline" },
     mutationFn: ({ series, deckIds }: { series: Series; deckIds: string[] }) =>
       api.setSeriesDecks(series.id, { deckIds }),
     onSettled: refresh,
@@ -52,8 +57,9 @@ export function useSeriesActions() {
       }
       return { before };
     },
-    onError: (_error, _ids, context) => {
+    onError: (error, _ids, context) => {
       if (context?.before) qc.setQueryData(seriesQuery.queryKey, context.before);
+      alertFailed(error);
     },
     onSuccess: (saved) => qc.setQueryData(seriesQuery.queryKey, saved),
     onSettled: refresh,
@@ -62,21 +68,28 @@ export function useSeriesActions() {
   const remove = useMutation({
     mutationFn: ({ series, decks }: { series: Series } & SeriesDeleteInput) =>
       api.deleteSeries(series.id, { decks }),
+    onError: alertFailed,
     onSettled: refresh,
   });
 
   // A deck picks its series from the deck, as the web's Move to series does.
   const moveDeck = useMutation({
+    meta: { failure: "caller" },
     mutationFn: ({ deckId, seriesId }: { deckId: string; seriesId: string | null }) =>
       api.updateDeck(deckId, { seriesId }),
     onSettled: refresh,
   });
 
   /** Undo of a move: the old series' order back, or the deck moved back by id. */
-  const undoMove = (deckId: string, back: MoveBack) =>
-    back.kind === "order"
-      ? setDecks.mutate({ series: back.series, deckIds: back.deckIds })
-      : moveDeck.mutate({ deckId, seriesId: back.seriesId });
+  const undo = useMutation({
+    mutationFn: async ({ deckId, back }: { deckId: string; back: MoveBack }) => {
+      if (back.kind === "order")
+        await api.setSeriesDecks(back.series.id, { deckIds: back.deckIds });
+      else await api.updateDeck(deckId, { seriesId: back.seriesId });
+    },
+    onSettled: refresh,
+  });
+  const undoMove = (deckId: string, back: MoveBack) => undo.mutate({ deckId, back });
 
   return { name, setDecks, order, remove, moveDeck, undoMove };
 }

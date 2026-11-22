@@ -1,4 +1,5 @@
 import { definePlugin } from "@oxlint/plugins";
+import failedWriteSaid from "./rules/failed-write-said.mjs";
 import fieldError from "./rules/field-error.mjs";
 import formHeader from "./rules/form-header.mjs";
 import isolateLearnerText from "./rules/isolate-learner-text.mjs";
@@ -18,6 +19,7 @@ import termText from "./rules/term-text.mjs";
 export default definePlugin({
   meta: { name: "lymi" },
   rules: {
+    "failed-write-said": failedWriteSaid,
     "field-error": fieldError,
     "form-header": formHeader,
     "isolate-learner-text": isolateLearnerText,

@@ -25,6 +25,7 @@ import Animated, {
 import { spring, springIn, useReduceMotion } from "../theme/motion";
 import { useAboveTabBar } from "./tab-bar";
 import { Toast } from "./toast";
+import { frontHost, mountHost } from "./toast-hosts";
 
 // The web's timings: long enough to reach Undo with VoiceOver or a switch. phone.md "After an action".
 const ACTION_TIMEOUT = 10_000;
@@ -72,6 +73,10 @@ export const toast = {
     ];
     emit();
     return itemId;
+  },
+  addInFront(options: Omit<ToastOptions, "scope">) {
+    const host = frontHost();
+    if (host) toast.add({ ...options, scope: host.scope });
   },
   close(id: string) {
     items = items.filter((i) => i.id !== id);
@@ -156,6 +161,7 @@ export function ToastHost({ scope: named, bottom: at }: { scope?: string; bottom
   const scope = named ?? provided;
   const shown = useToasts();
   useEffect(() => () => clearToasts(scope), [scope]);
+  useEffect(() => mountHost(scope), [scope]);
   const floor = useFloor(scope);
   const above = useAboveTabBar();
   const bottom = at ?? Math.max(above, floor) + 12;

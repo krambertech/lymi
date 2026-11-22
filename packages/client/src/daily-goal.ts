@@ -12,9 +12,12 @@ export type GoalStatus = "saving" | "saved" | "error";
  * and only the latest choice's response updates the caches; if it fails, both go back to where
  * the first one began.
  */
-export function useDailyGoal() {
+export function useDailyGoal(): {
+  change: (dailyGoal: number) => void;
+  status: GoalStatus | undefined;
+} {
   const qc = useQueryClient();
-  const [status, setStatus] = useState<GoalStatus | undefined>();
+  const [status, setStatus] = useState<Exclude<GoalStatus, "error"> | undefined>();
   const latest = useRef(0);
   const before = useRef<{
     streak: StreakOut | undefined;
@@ -36,6 +39,7 @@ export function useDailyGoal() {
   };
 
   const mutation = useMutation({
+    meta: { failure: "inline" },
     // One queue for every goal control, so requests reach the server in the order they were
     // chosen and the last choice is also the last write. Optimistic updates still run at once.
     scope: { id: "daily-goal" },
@@ -69,7 +73,6 @@ export function useDailyGoal() {
       // An earlier choice may have landed on the server, so ask it rather than trust the rollback.
       void qc.invalidateQueries({ queryKey: settingsQuery.queryKey });
       void qc.invalidateQueries({ queryKey: streakQuery.queryKey });
-      setStatus("error");
     },
   });
 
@@ -77,5 +80,5 @@ export function useDailyGoal() {
     latest.current += 1;
     mutation.mutate({ dailyGoal, id: latest.current });
   };
-  return { change, status };
+  return { change, status: mutation.isError ? "error" : status };
 }

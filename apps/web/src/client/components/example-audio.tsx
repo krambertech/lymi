@@ -2,8 +2,8 @@ import { useLingui } from "@lingui/react/macro";
 import { canPlayExample } from "@lymi/core";
 import { useEffect, useReducer, useRef } from "react";
 import { api, type Card } from "../lib/api";
-import { playAlone } from "../lib/now-playing";
 import { captureAnalytics } from "../lib/telemetry";
+import { type Clip, useClip } from "../lib/use-clip";
 import { AudioButton, AudioPlace } from "./audio-button";
 
 type SpokenCard = Pick<Card, "id" | "example" | "language" | "updatedAt" | "exampleRecorded">;
@@ -12,7 +12,7 @@ type Surface = "review" | "card";
 /** What was pressed: the speaker, or in review the sentence itself. */
 type Control = "speaker" | "sentence";
 
-type Played = { url: string; audio: HTMLAudioElement; objectUrl: string };
+type Played = { url: string; clip: Clip; objectUrl: string };
 
 /**
  * The example's clip, for the address it was pressed for. A new address, from the next card or an
@@ -49,7 +49,9 @@ export function exampleClip(state: ExampleClip, event: ExampleClipEvent): Exampl
     case "play":
       return otherLoading ? state : { status: "playing", url: event.url };
     case "stop":
-      return state.status === "playing" && state.url === event.url ? IDLE : state;
+      return (state.status === "playing" || state.status === "loading") && state.url === event.url
+        ? IDLE
+        : state;
     case "limit":
       return otherLoading ? state : { status: "limited", url: event.url };
     case "fail":
@@ -68,6 +70,7 @@ export function clipFor(state: ExampleClip, url: string): ExampleClip {
  */
 export function useExampleAudio(card: SpokenCard, surface: Surface) {
   const { t } = useLingui();
+  const { load, stop } = useClip();
   const played = useRef<Played | null>(null);
   const [clip, dispatch] = useReducer(exampleClip, IDLE);
   const url = api.exampleAudioUrl(card.id, card.updatedAt);
@@ -88,11 +91,10 @@ export function useExampleAudio(card: SpokenCard, surface: Surface) {
     () => () => {
       const last = played.current;
       played.current = null;
-      if (!last) return;
-      last.audio.pause();
-      URL.revokeObjectURL(last.objectUrl);
+      stop();
+      if (last) URL.revokeObjectURL(last.objectUrl);
     },
-    [url],
+    [url, stop],
   );
 
   if (!canPlayExample(card)) return null;
@@ -110,8 +112,8 @@ export function useExampleAudio(card: SpokenCard, surface: Surface) {
         ...(kept ? {} : { wait_ms: waited() }),
       });
     try {
-      let audio = kept?.audio;
-      if (!audio) {
+      let clip = kept?.clip;
+      if (!clip) {
         dispatch({ type: "load", url });
         const response = await fetch(url, { credentials: "include" });
         if (response.status === 429) {
@@ -126,14 +128,13 @@ export function useExampleAudio(card: SpokenCard, surface: Surface) {
           URL.revokeObjectURL(objectUrl);
           return;
         }
-        audio = new Audio(objectUrl);
-        // Ended, or paused because the term's clip started.
-        for (const done of ["ended", "pause"])
-          audio.addEventListener(done, () => dispatch({ type: "stop", url }));
-        played.current = { url, audio, objectUrl };
+        clip = load(objectUrl, { onEnd: () => dispatch({ type: "stop", url }) });
+        played.current = { url, clip, objectUrl };
       }
-      audio.currentTime = 0;
-      await playAlone(audio);
+      if (!(await clip.play())) {
+        dispatch({ type: "stop", url });
+        return;
+      }
       dispatch({ type: "play", url });
       report("played");
     } catch {

@@ -15,12 +15,12 @@ const absent = Array.from({ length: 400 }, (_, i) => `absent-${i}`);
 beforeAll(async () => {
   test = await testDb();
   ctx = await learner(test.db, "lists", "Lists");
-  const deck = await createDeck(ctx, { name: "Lists", termLanguage: "es" });
+  const deck = await createDeck(ctx, { name: "Lists" });
   const added = await addCards(
     ctx,
     ["uno", "dos", "tres"].map((term) => ({ deckId: deck.id, term, meaning: term })),
   );
-  cardIds = added.map((outcome) => outcome.card.id);
+  cardIds = added.map((outcome) => outcome.id);
 });
 
 afterAll(() => test.dispose());

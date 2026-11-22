@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 import type { ApiKeySummary, ConnectedApp } from "./api";
-import { assistantOf, assistants, pageParams, yomitanKey } from "./apps";
+import { assistantOf, assistants, pageParams, YOMITAN_ACTIVITY_APP, yomitanKey } from "./apps";
 
 const site = (path: string) => `https://lymi.app${path}`;
 const list = assistants(site);
@@ -87,4 +87,8 @@ describe("yomitanKey", () => {
     expect(yomitanKey(keys)?.createdAt).toBe("2026-10-20T00:00:00.000Z");
     expect(yomitanKey([key("Script", "2026-10-30T00:00:00.000Z")])).toBeNull();
   });
+});
+
+it("reads a Yomitan key's Activity under the name the server writes it as", () => {
+  expect(YOMITAN_ACTIVITY_APP).toBe("anki-connect:Yomitan");
 });

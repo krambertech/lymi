@@ -256,19 +256,21 @@
       }
     },
     {
-      "files": ["apps/**", "packages/**"],
-      "excludeFiles": [
-        "apps/web/src/server/ai/consent.ts",
-        "apps/web/src/server/services/ai-consent.ts",
-        "apps/web/src/test/ai-consent.ts",
-        "apps/web/src/server/canary.ts",
-        "apps/web/src/server/enrichment/evaluate.ts",
-        "apps/web/src/server/enrichment/style-evaluate.ts",
-        "apps/web/src/server/lead-ins/evaluate.ts",
-        "apps/web/src/server/speech-stress/evaluate.ts"
-      ],
+      "files": ["apps/web/src/server/**", "apps/site/src/**", "packages/core/src/**"],
+      "excludeFiles": ["packages/core/src/in-list.ts", "packages/core/src/db.ts"],
       "rules": {
-        "lymi/ai-consent": "error"
+        "eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "drizzle-orm",
+                "importNames": ["inArray", "notInArray"],
+                "message": "Drizzle binds one parameter per value and D1 refuses more than 100 (#320, #436, #840, #896, #1058). Import inArray and notInArray from @lymi/core/db, or ./in-list inside packages/core: they bind the whole list as one."
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -328,6 +330,22 @@
       "excludeFiles": ["**/*.test.ts", "**/*.test.tsx"],
       "rules": {
         "lymi/isolate-learner-text": "error"
+      }
+    },
+    {
+      "files": ["apps/**", "packages/**"],
+      "excludeFiles": [
+        "apps/web/src/server/ai/consent.ts",
+        "apps/web/src/server/services/ai-consent.ts",
+        "apps/web/src/test/ai-consent.ts",
+        "apps/web/src/server/canary.ts",
+        "apps/web/src/server/enrichment/evaluate.ts",
+        "apps/web/src/server/enrichment/style-evaluate.ts",
+        "apps/web/src/server/lead-ins/evaluate.ts",
+        "apps/web/src/server/speech-stress/evaluate.ts"
+      ],
+      "rules": {
+        "lymi/ai-consent": "error"
       }
     }
   ]

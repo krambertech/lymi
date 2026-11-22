@@ -2,21 +2,16 @@ import { CURSOR_CLIENT_PATH, GEMINI_CLI_CLIENT_PATH, GROK_CLIENT_PATH } from "@l
 import type { ApiKeySummary, ConnectedApp } from "./api";
 import { type AppIdentity, identifyApp } from "./app-marks";
 
-/** The assistants the Apps group offers to connect, each with its own page. docs/design/app-pages.md. */
 export type AssistantKey = "claude" | "chatgpt" | "gemini" | "grok" | "cursor" | "custom";
 
 export type Assistant = {
   key: AssistantKey;
-  /** Null for Custom MCP, which is any app. */
   app: AppIdentity | null;
-  /** Where the learner adds Lymi in the other app, when it has a web page for it. */
   open: string | null;
-  /** The client ID document Lymi publishes for an app that cannot identify itself. */
   clientId: string | null;
   guide: string;
 };
 
-/** Every assistant in the order the strip shows them, with Custom MCP last; `site` is the public site's URL for a path. */
 export function assistants(site: (path: string) => string): readonly Assistant[] {
   const app = (clientId: string) => identifyApp(clientId, null, site);
   return [
@@ -59,7 +54,6 @@ export function assistants(site: (path: string) => string): readonly Assistant[]
   ];
 }
 
-/** The assistant a connected app is, by the recognised name its client ID resolves to. */
 export function assistantOf(
   list: readonly Assistant[],
   item: ConnectedApp,
@@ -70,10 +64,6 @@ export function assistantOf(
   return list.find((a) => a.key !== "custom" && a.key === key);
 }
 
-/**
- * The page each connected app's row opens, by grant id: its assistant's key while it is the only
- * grant for that assistant, else its own grant id, so two Claude grants never share one page.
- */
 export function pageParams(
   list: readonly Assistant[],
   consents: readonly ConnectedApp[],
@@ -87,19 +77,15 @@ export function pageParams(
   );
 }
 
-/** The name the Apps group gives the key it makes for Yomitan, so the row and the page can find it. */
 export const YOMITAN_KEY_NAME = "Yomitan";
 
-/** The audit client the server records a Yomitan key's AnkiConnect writes under, for its Activity. */
 export const YOMITAN_ACTIVITY_APP = `anki-connect:${YOMITAN_KEY_NAME}`;
 
-/** The newest key named for Yomitan, which is the one Yomitan most likely holds. */
 export function yomitanKey(keys: readonly ApiKeySummary[] | undefined): ApiKeySummary | null {
   const named = (keys ?? []).filter((k) => k.name === YOMITAN_KEY_NAME);
   return named.sort((a, b) => b.createdAt.localeCompare(a.createdAt))[0] ?? null;
 }
 
-/** Names for the apps Lymi runs itself, so Activity filtered to one with no rows yet still says whose it is. */
 export const BUILT_IN_APPS: Readonly<Record<string, string>> = {
   readwise: "Readwise",
   [YOMITAN_ACTIVITY_APP]: "Yomitan",

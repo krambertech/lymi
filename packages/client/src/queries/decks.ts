@@ -2,7 +2,6 @@ import { queryOptions } from "@tanstack/react-query";
 import { api } from "../api";
 import { fresh } from "../writes";
 
-// Counts change with every review, so the persisted copy is only a placeholder until the refetch lands.
 export const decksQuery = queryOptions({
   queryKey: ["decks"],
   queryFn: () => fresh(["decks"], api.decks),

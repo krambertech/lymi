@@ -9,11 +9,6 @@ export const addPreviewQuery = (slug: string) =>
     retry: false,
     meta: { persist: false },
   });
-/**
- * The catalogue changes when Lymi publishes, not when the learner reviews. Neither read is
- * persisted: a deck nobody has added is nothing to review offline, and the cache they would
- * share is the one offline reviews depend on.
- */
 export const exploreQuery = queryOptions({
   queryKey: ["explore"],
   queryFn: api.explore,

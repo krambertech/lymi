@@ -67,6 +67,7 @@ import { shortQuote } from "../lib/short-quote";
 import { WEB_DAY } from "../lib/streak";
 import { captureAnalytics } from "../lib/telemetry";
 import { useReduceMotion } from "../lib/use-reduce-motion";
+import { useShortcut } from "../lib/use-shortcut";
 import { useWordHistory } from "../lib/use-word-history";
 import {
   GradeBar,
@@ -524,11 +525,6 @@ function Review() {
     [gradesTip, comesBack, current, aid, onGrade, teaches],
   );
 
-  // The first review's end while it shows, read by the key handler, which outlives renders.
-  const firstEndKeys = useRef<{ advance?: (() => void) | undefined; close: () => void } | null>(
-    null,
-  );
-
   // Leaving mid-leg ends on the success screen, unless nothing was added since the last one.
   const leave = useCallback(() => {
     setCameBack(null);
@@ -536,77 +532,48 @@ function Review() {
     // oxlint-disable-next-line react-hooks/exhaustive-deps -- Biome let this pass; triage in #1278
   }, [flow.pause, navigate]);
 
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => {
-      // A sheet over the review handles its own keys, Escape included.
-      if (e.metaKey || e.ctrlKey || e.altKey || e.defaultPrevented) return;
-      if (layer !== "none") return;
-      if (e.key === "Escape") {
-        firstEndKeys.current?.close();
-        leave();
-        return;
-      }
-      const target = e.target as HTMLElement | null;
-      const control = target?.closest(
-        "button, a, input, textarea, select, [contenteditable='true']",
-      );
-      if (cameBack) {
-        // The grade just pressed keeps focus for as long as the card takes to leave.
-        const own = control && !control.closest("[data-grade-strip]");
-        if (!own && (e.key === " " || e.key === "Enter")) {
-          e.preventDefault();
-          setCameBack(null);
-        }
-        return;
-      }
-      const advance = firstEndKeys.current?.advance;
-      if (
-        advance &&
-        (e.key === " " || e.key === "Enter") &&
-        !control &&
-        !target?.closest("[role='radio']")
-      ) {
-        e.preventDefault();
-        advance();
-        return;
-      }
-      // The aid's key also reaches the card's reveal button, where grading from the strip leaves
-      // focus, and the aid's own buttons; matched by its place, so every keyboard layout has it.
-      if (current && e.code === AID_KEY.code) {
-        if (control && !control.matches("[data-reveal], [data-aid]")) return;
-        e.preventDefault();
-        const onAid = control?.matches("[data-aid]") ?? false;
-        if (revealed) showAid("keyboard", onAid);
-        else {
-          takeAid("keyboard");
-          // The spent pill turns inert, so focus moves on to the card, as a press on the pill does.
-          if (onAid)
-            document.querySelector<HTMLElement>("[data-reveal]")?.focus({ preventScroll: true });
-        }
-        return;
-      }
+  const uncovered = layer === "none";
+  const onCard = uncovered && !cameBack && !!current;
+  // The grade just pressed keeps focus for as long as the card takes to leave.
+  useShortcut({ key: [" ", "Enter"] }, () => setCameBack(null), {
+    enabled: uncovered && !!cameBack,
+    focus: { apartFrom: "[data-grade-strip] *" },
+  });
+  // The aid's key also reaches the card's reveal button, where grading from the strip leaves
+  // focus, and the aid's own buttons; matched by its place, so every keyboard layout has it.
+  useShortcut(
+    { code: AID_KEY.code },
+    (e) => {
+      const onAid = e.target instanceof Element && !!e.target.closest("[data-aid]");
+      if (revealed) return showAid("keyboard", onAid);
+      takeAid("keyboard");
+      // The spent pill turns inert, so focus moves on to the card, as a press on the pill does.
+      if (onAid)
+        document.querySelector<HTMLElement>("[data-reveal]")?.focus({ preventScroll: true });
+    },
+    { enabled: onCard, focus: { apartFrom: "[data-reveal], [data-aid]" } },
+  );
+  useShortcut(
+    { key: " " },
+    () => {
+      if (revealed) return grade(3, "keyboard");
+      recordReveal();
+      setAnimateReveal(false);
+      setFocusGrades(false);
+      setRevealed(true);
+    },
+    { enabled: onCard },
+  );
+  // A click leaves focus on the speaker, which keeps Space and Enter to replay and lets the
+  // grade keys through.
+  useShortcut(
+    { key: GRADES.map((g) => g.key) },
+    (e) => {
       const g = GRADES.find((x) => x.key === e.key);
-      // A click leaves focus on the speaker, which keeps Space and Enter to replay and lets the
-      // grade keys through.
-      if (control && !(g && control.matches("[data-audio]"))) return;
-      if (!current) return;
-      if (e.key === " ") {
-        e.preventDefault();
-        if (!revealed) {
-          recordReveal();
-          setAnimateReveal(false);
-          setFocusGrades(false);
-          setRevealed(true);
-        } else grade(3, "keyboard");
-      }
-      if (g) {
-        e.preventDefault();
-        grade(g.rating, "keyboard");
-      }
-    };
-    window.addEventListener("keydown", onKey);
-    return () => window.removeEventListener("keydown", onKey);
-  }, [revealed, grade, cameBack, takeAid, showAid, leave, layer, current]);
+      if (g) grade(g.rating, "keyboard");
+    },
+    { enabled: onCard, focus: { apartFrom: "[data-audio]" } },
+  );
 
   // A card often forgotten, or forgotten twice today, with no hint offers one, in a deck the learner
   // owns, since only the owner changes its cards. It waits for the card's deck, which a deck list
@@ -795,9 +762,17 @@ function Review() {
         onPart: setPart,
       })
     : null;
-  firstEndKeys.current = firstEnd
-    ? { advance: firstParts?.advance, close: () => leaveFirstEnd("closed") }
-    : null;
+  useShortcut(
+    { key: "Escape" },
+    () => {
+      if (firstEnd) leaveFirstEnd("closed");
+      leave();
+    },
+    { enabled: uncovered, focus: "any" },
+  );
+  useShortcut({ key: [" ", "Enter"] }, () => firstParts?.advance?.(), {
+    enabled: uncovered && !cameBack && !!firstParts?.advance,
+  });
 
   return (
     <div className="relative mx-auto flex min-h-0 w-full max-w-md flex-1 flex-col overflow-x-clip px-4 @3xl:overflow-x-visible pb-[calc(env(safe-area-inset-bottom)+12px)] @3xl:max-w-2xl @3xl:px-8 @3xl:pb-8 @3xl:pt-4">

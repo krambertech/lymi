@@ -299,7 +299,7 @@ export function CardForm(props: CardFormProps) {
   const openedWithTerm = useRef(startTerm ? performance.now() : null);
   const swallowEcho = (e: React.KeyboardEvent) => {
     const since = openedWithTerm.current;
-    if (e.key !== "Enter" || since === null) return;
+    if (e.key !== "Enter" || since === null || composing(e)) return;
     if (e.repeat || performance.now() - since < ECHO_MS) e.preventDefault();
   };
   const meaningRef = useRef<HTMLTextAreaElement>(null);
@@ -908,7 +908,7 @@ export function CardForm(props: CardFormProps) {
       }}
       onKeyDown={(e) => {
         // ⌘ Enter adds from any field.
-        if (e.key === "Enter" && (e.metaKey || e.ctrlKey)) {
+        if (e.key === "Enter" && (e.metaKey || e.ctrlKey) && !composing(e)) {
           e.preventDefault();
           void submit();
         }

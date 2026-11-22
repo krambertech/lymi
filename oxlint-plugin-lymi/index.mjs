@@ -1,4 +1,5 @@
 import { definePlugin } from "@oxlint/plugins";
+import enterComposing from "./rules/enter-composing.mjs";
 import fieldError from "./rules/field-error.mjs";
 import formHeader from "./rules/form-header.mjs";
 import isolateLearnerText from "./rules/isolate-learner-text.mjs";
@@ -12,12 +13,14 @@ import noRedirectError from "./rules/no-redirect-error.mjs";
 import noSqlLower from "./rules/no-sql-lower.mjs";
 import noticePlainText from "./rules/notice-plain-text.mjs";
 import scrollViewPersistTaps from "./rules/scroll-view-persist-taps.mjs";
+import shortcutOwner from "./rules/shortcut-owner.mjs";
 import springPresets from "./rules/spring-presets.mjs";
 import termText from "./rules/term-text.mjs";
 
 export default definePlugin({
   meta: { name: "lymi" },
   rules: {
+    "enter-composing": enterComposing,
     "field-error": fieldError,
     "form-header": formHeader,
     "isolate-learner-text": isolateLearnerText,
@@ -31,6 +34,7 @@ export default definePlugin({
     "no-sql-lower": noSqlLower,
     "notice-plain-text": noticePlainText,
     "scroll-view-persist-taps": scrollViewPersistTaps,
+    "shortcut-owner": shortcutOwner,
     "spring-presets": springPresets,
     "term-text": termText,
   },

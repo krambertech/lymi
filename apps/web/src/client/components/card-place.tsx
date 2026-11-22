@@ -29,6 +29,7 @@ export function CardPlace({ open, onClose, titleId, finalFocus, children }: Prop
     >
       <DialogContent
         placement="end"
+        data-overlay="card-place"
         aria-labelledby={titleId}
         initialFocus={() => document.getElementById(titleId)}
         finalFocus={finalFocus}

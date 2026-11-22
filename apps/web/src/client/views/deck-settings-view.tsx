@@ -59,6 +59,7 @@ import { Input } from "../components/ui/input";
 import { RadioGroup } from "../components/ui/radio-group";
 import { Textarea } from "../components/ui/textarea";
 import type { DeckSummary, Invitation, Member } from "../lib/api";
+import { composing } from "../lib/composing";
 
 /** What the screen can change. The same shape the deck endpoint takes. */
 export interface DeckSettingsPatch {
@@ -256,6 +257,7 @@ export function DeckSettingsView({
                 onChange={(e) => setName(e.target.value)}
                 onBlur={commitName}
                 onKeyDown={(e) => {
+                  if (composing(e)) return;
                   if (e.key === "Enter") e.currentTarget.blur();
                   if (e.key === "Escape") setName(deck.name);
                 }}

@@ -86,6 +86,7 @@ export default function Onboarding() {
   const { decks: offered, ownFirst } = startDecks(catalog ?? [], kind, language);
 
   const save = useMutation({
+    meta: { failure: "inline" },
     mutationFn: api.finishOnboarding,
     onSuccess: (value: Settings) => qc.setQueryData(settingsQuery.queryKey, value),
   });

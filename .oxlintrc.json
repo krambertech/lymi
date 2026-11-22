@@ -354,6 +354,13 @@
       "rules": {
         "lymi/ai-consent": "error"
       }
+    },
+    {
+      "files": ["apps/web/src/client/**", "apps/mobile/src/**", "packages/client/src/**"],
+      "excludeFiles": ["**/*.test.ts", "**/*.test.tsx"],
+      "rules": {
+        "lymi/failed-write-said": "error"
+      }
     }
   ]
 }

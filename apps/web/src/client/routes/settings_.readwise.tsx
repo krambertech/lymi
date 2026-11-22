@@ -22,8 +22,13 @@ function ReadwiseRoute() {
   const settle = (next: { connection: Readwise | null }) =>
     qc.setQueryData(readwiseQuery.queryKey, next);
 
-  const connect = useMutation({ mutationFn: api.connectReadwise, onSuccess: settle });
+  const connect = useMutation({
+    meta: { failure: "inline" },
+    mutationFn: api.connectReadwise,
+    onSuccess: settle,
+  });
   const update = useMutation({
+    meta: { failure: "inline" },
     mutationFn: api.updateReadwise,
     // A switch moves on the tap and moves back if the server refuses.
     onMutate: async (patch) => {
@@ -64,6 +69,7 @@ function ReadwiseRoute() {
     },
   });
   const pull = useMutation({
+    meta: { failure: "inline" },
     mutationFn: api.pullReadwise,
     onSuccess: (next) => {
       settle(next);

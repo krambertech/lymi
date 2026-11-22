@@ -2,7 +2,6 @@ import { i18n } from "@lingui/core";
 import { I18nProvider } from "@lingui/react";
 import { shouldPersistQuery } from "@lymi/client/cache";
 import { bindWriteCache } from "@lymi/client/writes";
-import { QueryClient } from "@tanstack/react-query";
 import { PersistQueryClientProvider } from "@tanstack/react-query-persist-client";
 import {
   createRouter,
@@ -16,6 +15,7 @@ import "./lib/pwa-install";
 import { registerSW } from "virtual:pwa-register";
 import { BidiTrans } from "./lib/bidi";
 import { bootstrapLanguage } from "./lib/i18n";
+import { queryClient } from "./lib/query-client";
 import { queryPersister } from "./lib/query-persister";
 import { isLeavingPage, isStaleChunkError } from "./lib/stale-build";
 import { reportClientException } from "./lib/telemetry";
@@ -38,18 +38,6 @@ registerSW({
   },
 });
 
-const queryClient = new QueryClient({
-  defaultOptions: {
-    queries: {
-      staleTime: 30_000,
-      gcTime: 1000 * 60 * 60 * 24 * 7,
-      retry: 1,
-      refetchOnWindowFocus: false,
-    },
-    // A write that works offline queues itself, and one that cannot says so rather than waiting.
-    mutations: { networkMode: "always" },
-  },
-});
 bindWriteCache(queryClient);
 
 // Queued writes live in this origin's storage, which a browser may otherwise evict under pressure.

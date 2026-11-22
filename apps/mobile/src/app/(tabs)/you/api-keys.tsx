@@ -35,6 +35,7 @@ export default function ApiKeys() {
   const [fresh, setFresh] = useState<{ id: string; key: string; name: string } | null>(null);
 
   const create = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (input: ApiKeyInput) => api.createKey(input),
     onSuccess: (created, input) => {
       setFresh({ id: created.id, key: created.key, name: created.name ?? input.name });

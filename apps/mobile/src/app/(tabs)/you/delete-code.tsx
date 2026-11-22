@@ -26,6 +26,7 @@ export default function DeleteCode() {
 
   const resend = useSendCode({ onSent: (to) => to && setSentTo(to) });
   const remove = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (value: string) => api.deleteAccount({ code: value }),
     // The server ended every session; signing out here lets the root forget this learner.
     onSuccess: async () => {

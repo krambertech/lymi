@@ -59,6 +59,7 @@ export function NewDeckSheet({ open, onOpenChange, seriesId }: Props) {
   const [formKey, setFormKey] = useState(seed?.purpose ?? "");
   if (open && formKey !== (seed?.purpose ?? "")) setFormKey(seed?.purpose ?? "");
   const create = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (input: DeckInput) => writes.createDeck(input),
     onSuccess: ({ id, queued }) => {
       qc.invalidateQueries({ queryKey: ["decks"] });

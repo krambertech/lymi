@@ -8,6 +8,7 @@ import { Text } from "../ui/primitives";
 export function useSendCode({ onSent }: { onSent: (sentTo: string | null) => void }) {
   const { t } = useLingui();
   const send = useMutation({
+    meta: { failure: "inline" },
     mutationFn: api.sendDeletionCode,
     onSuccess: (data) => onSent(data.sentTo),
     onError: (error) => {

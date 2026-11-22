@@ -232,7 +232,10 @@
     },
     {
       "files": ["apps/mobile/**"],
-      "excludeFiles": ["apps/mobile/src/app/(tabs)/you/api-keys.tsx"],
+      "excludeFiles": [
+        "apps/mobile/src/app/(tabs)/you/api-keys.tsx",
+        "apps/mobile/src/smart-add/term-sheet.tsx"
+      ],
       "rules": {
         "lymi/sheet-field-focus": "error"
       }

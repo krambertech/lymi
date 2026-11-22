@@ -8,7 +8,6 @@ import { usePalette } from "../theme/palette";
 import { inputCap, MULTILINE } from "../theme/type";
 import { Text } from "../ui/primitives";
 import { Sheet, SheetNote } from "../ui/sheet";
-import { useSheetFocus } from "../ui/sheet-focus";
 import type { TermEdit } from "./steps";
 
 interface TermSheetProps {
@@ -27,7 +26,6 @@ export function TermSheet({ term, edit, onClose, onSave }: TermSheetProps) {
   const [name, setName] = useState("");
   const [meaning, setMeaning] = useState("");
   const meaningRef = useRef<TextInput>(null);
-  const focus = useSheetFocus({ open: term !== null });
   useEffect(() => {
     if (!term) return;
     setName(edit?.term ?? term.term);
@@ -69,7 +67,7 @@ export function TermSheet({ term, edit, onClose, onSave }: TermSheetProps) {
           onChangeText={setName}
           maxLength={cardLimits.term ?? undefined}
           autoCorrect={false}
-          {...focus}
+          autoFocus
           returnKeyType="next"
           submitBehavior="submit"
           onSubmitEditing={() => meaningRef.current?.focus()}

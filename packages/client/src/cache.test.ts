@@ -18,7 +18,6 @@ beforeEach(() => {
   asked.length = 0;
   vi.stubGlobal("fetch", (input: RequestInfo | URL) => {
     asked.push(new URL(String(input)).pathname);
-    // Enough of a draw and of a deck's cards for each read to succeed.
     return Promise.resolve(Response.json({ cards: [] }));
   });
 });
@@ -36,6 +35,25 @@ describe("warming the cache", () => {
     qc.setQueryData(deckCardsQuery("d1").queryKey, []);
     await warmCache(qc, ["d1"]);
     expect(asked).toEqual(["/api/review/draw", "/api/decks/d1/sections", "/api/review/draw"]);
+  });
+
+  it("warms each series' draw too when given series", async () => {
+    await warmCache(client(), [], undefined, ["s1"]);
+    expect(asked).toEqual(["/api/review/draw", "/api/review/draw"]);
+  });
+
+  it("asks for one thing at a time, so it never competes with the learner", async () => {
+    let open = 0;
+    let most = 0;
+    vi.stubGlobal("fetch", async () => {
+      open += 1;
+      most = Math.max(most, open);
+      await Promise.resolve();
+      open -= 1;
+      return Response.json({ cards: [] });
+    });
+    await warmCache(client(), ["d1", "d2"]);
+    expect(most).toBe(1);
   });
 
   it("stops once the connection goes", async () => {
@@ -69,6 +87,14 @@ describe("a warm pass", () => {
     await first;
     await warmer.run();
     expect(asked).toHaveLength(4);
+  });
+
+  it("runs once more for decks it was given during a pass", async () => {
+    const warmer = cacheWarmer(client());
+    const pass = warmer.run(["d1"]);
+    void warmer.run(["d1", "d2"]);
+    await pass;
+    await vi.waitFor(() => expect(asked).toContain("/api/decks/d2/cards"));
   });
 
   it("stops when asked", async () => {

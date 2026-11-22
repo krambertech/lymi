@@ -1,9 +1,17 @@
+import type { CardPatch } from "@lymi/core";
 import { QueryClient } from "@tanstack/react-query";
 import { describe, expect, it } from "vitest";
 import type { Card, DeckSummary, Draw } from "./api";
 import { drawableLeft } from "./review-day";
 import { drawState } from "./review-draw";
-import { cacheLookup, localCard, localDeck, rebase, showWrite } from "./write-projections";
+import {
+  cacheLookup,
+  localCard,
+  localDeck,
+  patchCard,
+  rebase,
+  showWrite,
+} from "./write-projections";
 import type { QueuedWrite, Write } from "./writes";
 
 const me = { id: "me", name: "Kateryna", email: "k@example.com" };
@@ -75,6 +83,27 @@ describe("a write on the device", () => {
     expect(moved?.[0]?.card).toMatchObject({ id: "magari", deckId: "et", meaning: "maybe" });
   });
 
+  it("takes a card moved to another deck out of its section, unless the move names one", () => {
+    const move = (patch: CardPatch) => patchCard(card("a", "it", { sectionId: "s1" }), patch);
+    expect(move({ deckId: "et" }).sectionId).toBeNull();
+    expect(move({ deckId: "et", sectionId: "s2" }).sectionId).toBe("s2");
+    expect(move({ meaning: "maybe" }).sectionId).toBe("s1");
+  });
+
+  it("leaves an example's translation as the server will after an edit", () => {
+    const edited = (fields: Partial<Card>, patch: CardPatch) => {
+      const next = patchCard(card("a", "it", { example: "Magari!", ...fields }), patch);
+      return [next.exampleTranslation, next.exampleTranslationStale];
+    };
+    const ai = { exampleTranslation: "Maybe!", exampleTranslationSource: "ai" } as const;
+    const own = { exampleTranslation: "Maybe!", exampleTranslationSource: "manual" } as const;
+    expect(edited(ai, { example: "Magari no." })).toEqual([null, false]);
+    expect(edited(own, { example: "Magari no." })).toEqual(["Maybe!", true]);
+    expect(edited(own, { example: "Magari!" })).toEqual(["Maybe!", false]);
+    expect(edited(own, { example: "" })).toEqual([null, false]);
+    expect(edited(ai, { exampleTranslation: "Perhaps!" })).toEqual(["Perhaps!", false]);
+  });
+
   it("marks a card important in its deck, and unmarks it", () => {
     const qc = cache();
     showWrite(qc, { kind: "card.important", id: "magari", important: true });
@@ -137,7 +166,6 @@ describe("a deck archive in review", () => {
     cards,
     log: [],
   });
-  // What Today, the widgets and the reminders count as left.
   const left = (qc: QueryClient, key: string[]) => {
     const data = qc.getQueryData<Draw>(key);
     return data ? drawableLeft(data, drawState(data, [], noon, undefined), undefined) : undefined;
@@ -199,6 +227,14 @@ describe("a deck archive in review", () => {
     showWrite(qc, { kind: "deck.archive", id: "it" });
     expect(qc.getQueryData<Draw>(own)).toMatchObject({ cards: [], total: 0 });
     expect(qc.getQueryData<Draw>(series)?.total).toBe(4);
+  });
+
+  it("empties a draw of one of the deck's sections", () => {
+    const qc = cache();
+    const section = ["queue", "section:s1", "draw"];
+    qc.setQueryData(section, draw([entry("a", "it")], 40));
+    showWrite(qc, { kind: "deck.archive", id: "it" });
+    expect(qc.getQueryData<Draw>(section)).toMatchObject({ cards: [], total: 0 });
   });
 
   it("takes the deck's cards out of a round", () => {
@@ -343,6 +379,16 @@ describe("a deck archive in review", () => {
       expect(data?.decks).toEqual({ it: 60, et: 100 });
       expect(ids(data?.cards)?.sort()).toEqual(["a", "b"]);
     });
+
+    it("adds nothing on Undo to a draw fetched since that counts the deck again", () => {
+      const qc = twoDecks();
+      const fetched = counted([entry("a", "it"), entry("b", "et")], { it: 60, et: 100 });
+      qc.setQueryData(all, fetched);
+      showWrite(qc, archive);
+      qc.setQueryData(all, fetched);
+      showWrite(qc, { kind: "deck.restore", id: "it" });
+      expect(qc.getQueryData<Draw>(all)?.total).toBe(160);
+    });
   });
 });
 
@@ -359,12 +405,21 @@ describe("a refetch while writes wait", () => {
     const rebased = rebase(["decks", "it", "cards"], server, pending, cacheLookup(qc));
     expect(ids(rebased)).toEqual(["sbrigarsi", "magari"]);
     expect(rebased[1]?.card.meaning).toBe("perhaps");
-    // A server answer that already holds the add is not given a second copy.
     const landed = [{ card: card("sbrigarsi", "it"), state: null }, ...server];
     expect(ids(rebase(["decks", "it", "cards"], landed, pending, cacheLookup(qc)))).toEqual([
       "sbrigarsi",
       "magari",
     ]);
+  });
+
+  it("lays the oldest first, so the latest edit of a field is the one shown", () => {
+    const qc = cache();
+    const pending = ["perhaps", "maybe"].map((meaning) =>
+      queued({ kind: "card.update", id: "magari", patch: { meaning } }),
+    );
+    const server = [{ card: card("magari", "it"), state: null }];
+    const rebased = rebase(["decks", "it", "cards"], server, pending, cacheLookup(qc));
+    expect(rebased[0]?.card.meaning).toBe("maybe");
   });
 
   it("leaves a query no write shows in untouched", () => {
@@ -455,6 +510,15 @@ describe("archived cards a page at a time", () => {
     expect(data?.pages.map((p) => p.cards.map((c) => c.id))).toEqual([["magari", "a"], ["b"]]);
     expect(data?.pages.map((p) => p.nextCursor)).toEqual(["c1", null]);
     expect(data?.pageParams).toEqual([undefined, "c1"]);
+  });
+
+  it("adds no second copy of an archive a later page already holds", () => {
+    const qc = cache();
+    qc.setQueryData(pagesKey, cached());
+    qc.setQueryData(["decks", "it", "cards"], [{ card: card("b", "it"), state: null }]);
+    showWrite(qc, { kind: "card.archive", id: "b" });
+    const data = qc.getQueryData<Pages>(pagesKey);
+    expect(data?.pages.map((p) => p.cards.map((c) => c.id))).toEqual([["a"], ["b"]]);
   });
 
   it("takes a restored card off whichever page holds it", () => {

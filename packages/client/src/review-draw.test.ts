@@ -74,7 +74,6 @@ function grade(cardId: string, rating: Rating, stateBefore?: number): LocalGrade
   };
 }
 
-/** Grades whatever the draw serves, as the review screen does, and returns what it saw. */
 function play(d: Draw, n: number, ratingOf: (cardId: string) => Rating, deckId?: string) {
   const grades: LocalGrade[] = [];
   const seen: { cardId: string; kind: string }[] = [];
@@ -102,6 +101,13 @@ describe("the log", () => {
     ]);
     const log = drawLog(d, [local, fetched], currentDay(d, noon));
     expect(log.map((e) => e.cardId)).toEqual(["r0", "r1"]);
+  });
+
+  it("reads the state before a queued grade that carries none from the card and the log", () => {
+    const d = data([card("a", { state: 0 })]);
+    const { day } = drawState(d, [], noon, undefined);
+    const log = drawLog(d, [grade("a", 1), grade("a", 3)], day);
+    expect(log.map((e) => e.stateBefore)).toEqual([0, 1]);
   });
 
   it("leaves out a grade from before midnight", () => {

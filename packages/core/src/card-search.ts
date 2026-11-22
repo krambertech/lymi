@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { Id, QueryFlag } from "./bounds";
 import { SLIPPING_FORGOTTEN_DAYS, SLIPPING_RECENT_DAYS } from "./slipping";
 import { CARD_LIMITS, EnrichmentStatus, FieldSource, LanguageTag, ReviewModeKey } from "./types";
 
@@ -11,7 +12,6 @@ import { CARD_LIMITS, EnrichmentStatus, FieldSource, LanguageTag, ReviewModeKey 
 export const CARD_FILTER_MAX_CONDITIONS = 50;
 
 const Text = z.string().max(CARD_LIMITS.term);
-const Id = z.string().min(1).max(100);
 const List = <T extends z.ZodType>(item: T) => z.array(item).min(1).max(100);
 
 const DURATION =
@@ -46,6 +46,7 @@ function withinBound(value: string): boolean {
 /** A moment: an ISO 8601 timestamp, or an ISO 8601 duration from now, as Linear takes them. */
 export const DateValue = z
   .string()
+  .max(100)
   .refine(
     (value) => DURATION.test(value) || Timestamp.safeParse(value).success,
     'Use an ISO timestamp like "2026-09-01T00:00:00Z" or a duration from now like "-P30D".',
@@ -310,8 +311,8 @@ export type CardSearchInput = z.infer<typeof CardSearchInput>;
 /** The simple search as a query string, where booleans and numbers arrive as text. */
 export const CardSearchQuery = z.object({
   ...SearchFields,
-  archived: z.stringbool().optional(),
-  stats: z.stringbool().optional(),
+  archived: QueryFlag.optional(),
+  stats: QueryFlag.optional(),
   limit: z.coerce.number().int().min(1).max(200).optional(),
 });
 export type CardSearchQuery = z.infer<typeof CardSearchQuery>;

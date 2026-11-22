@@ -10,7 +10,7 @@ import {
 } from "hono-openapi";
 import { HTTPException } from "hono/http-exception";
 import { routePath } from "hono/route";
-import type { ZodType } from "zod";
+import type { ZodSafeParseResult, ZodType, z } from "zod";
 import { AiGatewayError } from "./ai/gateway";
 import type { AppEnv } from "./index";
 import { posthogEnabled, productAnalytics, reportServerException } from "./posthog";
@@ -78,6 +78,25 @@ function validated<T extends ZodType>(target: keyof ValidationTargets, schema: T
   return validator(target, schema, (result: { success: boolean; error?: unknown }) => {
     if (!result.success) throw new ServiceError("invalid", `Invalid ${what}`, result.error);
   });
+}
+
+export const handParsed: { what: string; schema: ZodType }[] = [];
+
+export function reader<T extends ZodType>(schema: T, what: string) {
+  handParsed.push({ what, schema });
+  return (value: unknown): ZodSafeParseResult<z.output<T>> => schema.safeParse(value);
+}
+
+export async function readJson<R>(c: Context<AppEnv>, read: (value: unknown) => R): Promise<R> {
+  return read(await c.req.json().catch(() => null));
+}
+
+export async function readForm<R>(c: Context<AppEnv>, read: (value: unknown) => R) {
+  const form = await c.req.formData();
+  return {
+    files: form.getAll("file").filter((entry) => entry instanceof File),
+    fields: read(Object.fromEntries([...form].filter(([, entry]) => typeof entry === "string"))),
+  };
 }
 
 function specOf(middleware: object): unknown {

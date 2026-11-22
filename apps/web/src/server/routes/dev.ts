@@ -1,4 +1,4 @@
-import { AppLanguage } from "@lymi/core";
+import { AppLanguage, boundedRecord, parsedLater } from "@lymi/core";
 import { EMAIL_KINDS } from "@lymi/core/analytics";
 import { type Context, Hono } from "hono";
 import { z } from "zod";
@@ -19,7 +19,7 @@ import {
 } from "../dev/personas";
 import { EMAIL_SAMPLES } from "../email/samples";
 import { devToolsEnabled, operatorEmails } from "../env";
-import { body, describe, query } from "../http";
+import { body, describe, query, reader } from "../http";
 import type { AppEnv } from "../index";
 import {
   addSampleCards,
@@ -183,7 +183,10 @@ dev.post(
   "/emails/learning",
   describe({ hide: true, open: true }),
   body(
-    z.object({ as: z.string(), step: z.enum(["first", "how", "nodeck", "next", "back", "last"]) }),
+    z.object({
+      as: z.string().max(100),
+      step: z.enum(["first", "how", "nodeck", "next", "back", "last"]),
+    }),
     "learning email",
   ),
   async (c) => {
@@ -199,10 +202,11 @@ dev.post(
 const SignInQuery = z.object({
   as: z
     .string()
+    .max(100)
     .default("learner")
     .refine((id) => personas.some((p) => p.id === id), "Unknown persona"),
   /** Where to land after sign-in. A product path; anything else falls back to Today. */
-  returnTo: z.string().optional(),
+  returnTo: z.string().max(2048).optional(),
   /** `reset=1` reseeds even when the account already has data. */
   reset: z.literal("1").optional(),
   /** `seed=0` signs in without touching the data. */
@@ -349,6 +353,8 @@ dev.post(
   },
 );
 
+const readLocale = reader(AppLanguage.catch("en"), "app language");
+
 /** The MCP Apps view in a stand-in host, for working on it without an assistant. ADR 0026. */
 dev.get("/mcp-host", describe({ hide: true, open: true }), async (c) => {
   const settings = await getSettings(ctxOf(c));
@@ -357,7 +363,7 @@ dev.get("/mcp-host", describe({ hide: true, open: true }), async (c) => {
     devHostPage({
       view: devHostView(c.req.query("view")),
       origin: c.env.PRODUCT_URL,
-      locale: AppLanguage.catch("en").parse(c.req.query("locale") ?? settings.appLanguage),
+      locale: readLocale(c.req.query("locale") ?? settings.appLanguage).data ?? "en",
       theme: c.req.query("theme") === "dark" ? "dark" : "light",
       width: Number.isFinite(width) ? width : 640,
       deepLink: c.req.query("deeplink"),
@@ -366,8 +372,8 @@ dev.get("/mcp-host", describe({ hide: true, open: true }), async (c) => {
 });
 
 const McpCallBody = z.object({
-  name: z.string().min(1),
-  arguments: z.record(z.string(), z.unknown()).default({}),
+  name: z.string().min(1).max(100),
+  arguments: boundedRecord(z.string().max(100), parsedLater("MCP tool"), 100).default({}),
 });
 
 dev.post(
@@ -384,7 +390,7 @@ dev.post(
 
 const SeedBody = z.object({
   /** Which persona's data to load. Defaults to the account's own persona, then `learner`. */
-  persona: z.string().optional(),
+  persona: z.string().max(100).optional(),
 });
 
 dev.post("/seed", describe({ hide: true, open: true }), body(SeedBody, "seed"), async (c) => {
@@ -467,7 +473,10 @@ dev.post(
 );
 
 const EnrichedBody = z.object({
-  fields: z.array(z.enum(["meaning", "example", "pronunciation"])).min(1),
+  fields: z
+    .array(z.enum(["meaning", "example", "pronunciation"]))
+    .min(1)
+    .max(3),
 });
 
 dev.post(

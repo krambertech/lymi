@@ -96,6 +96,7 @@ function TurningCard({ view }: { view: Shown }) {
   }, []);
 
   const grade = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (rating: Rating) => api.grade({ cardId: card.id, mode, rating }),
     onSuccess: () => window.location.assign(`/review?${from}`),
   });

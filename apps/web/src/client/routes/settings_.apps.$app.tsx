@@ -36,6 +36,7 @@ function AssistantRoute() {
   useDocumentTitle(byKey?.app?.name ?? (identity && listedApp(identity).title) ?? t`Apps`);
 
   const disconnect = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (id: string) => api.disconnect(id),
     onSuccess: async () => {
       await qc.invalidateQueries({ queryKey: connectedAppsQuery.queryKey });

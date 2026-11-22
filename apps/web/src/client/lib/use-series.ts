@@ -67,11 +67,13 @@ export function useSeriesActions() {
     toast.add({ id, type: "error", title: errorMessage(error) });
 
   const create = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (input: SeriesInput) => api.createSeries(input),
     onSettled: refresh,
   });
 
   const rename = useMutation({
+    meta: { failure: "inline" },
     mutationFn: ({ id, name }: { id: string; name: string }) => api.renameSeries(id, name),
     onSettled: refresh,
   });

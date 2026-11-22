@@ -1145,18 +1145,13 @@ function MoveToSeries({
   // New series opens once this sheet has gone, as every sheet's choice does, so its name gets the keyboard.
   const opening = useRef<Href | null>(null);
   const move = (seriesId: string | null, then?: () => void) =>
-    moveDeck.mutate(
-      { deckId: deck.id, seriesId },
-      {
-        onSuccess: then,
-        onError: () =>
-          toast.add({
-            id: `move-deck-${deck.id}`,
-            error: true,
-            title: t`Couldn’t move “${{ deckName: isolate(deckName) }}”.`,
-            action: { label: t`Try again`, onPress: () => move(seriesId, then) },
-          }),
-      },
+    void moveDeck.mutateAsync({ deckId: deck.id, seriesId }).then(then, () =>
+      toast.add({
+        id: `move-deck-${deck.id}`,
+        error: true,
+        title: t`Couldn’t move “${{ deckName: isolate(deckName) }}”.`,
+        action: { label: t`Try again`, onPress: () => move(seriesId, then) },
+      }),
     );
   const pick = (seriesId: string | null) => {
     if (!online || !back) return;

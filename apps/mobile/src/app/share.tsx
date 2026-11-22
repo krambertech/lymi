@@ -83,6 +83,7 @@ export default function ShareDeck() {
   const sentTo = (email: string) => t`Invitation sent to ${email}.`;
 
   const invite = useMutation({
+    meta: { failure: "inline" },
     mutationFn: (email: string) => api.invite(id, email),
     onSuccess: async (_, email) => {
       setDraft("");

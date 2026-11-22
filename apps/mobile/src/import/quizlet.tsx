@@ -69,6 +69,7 @@ export function QuizletStart() {
   ];
 
   const start = useMutation({
+    meta: { failure: "inline" },
     mutationFn: () => {
       const body = new TextEncoder().encode(
         encodeTextImport(

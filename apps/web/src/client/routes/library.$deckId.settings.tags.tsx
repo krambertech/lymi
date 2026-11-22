@@ -38,6 +38,7 @@ function DeckTagsPage() {
     );
 
   const rename = useMutation({
+    meta: { failure: "caller" },
     mutationFn: (input: { from: string; to: string; merge: boolean; undoing?: boolean }) =>
       api.renameDeckTag(deckId, { from: input.from, to: input.to }),
     onSuccess: async (next, { from, to, merge, undoing }) => {

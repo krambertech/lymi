@@ -1128,9 +1128,6 @@ msgstr "0 to 10"
 msgid "1 already in Biology, skipped"
 msgstr "1 already in Biology, skipped"
 
-msgid "1 November 2026"
-msgstr "1 November 2026"
-
 msgid "10 min"
 msgstr "10 min"
 
@@ -1220,6 +1217,9 @@ msgstr "2025 version"
 
 msgid "2026 edition"
 msgstr "2026 edition"
+
+msgid "22 November 2026"
+msgstr "22 November 2026"
 
 msgid "23 metres."
 msgstr "23 metres."
@@ -12362,6 +12362,9 @@ msgstr "Replay pronunciation"
 
 msgid "Reported speech"
 msgstr "Reported speech"
+
+msgid "Reports of content stay after an account is deleted, as a record of moderation. A report about your deck keeps the deck’s name, the name you had when it was reported and the text of a reported card. A report you sent keeps its reason and your note. Neither keeps a link to your account."
+msgstr "Reports of content stay after an account is deleted, as a record of moderation. A report about your deck keeps the deck’s name, the name you had when it was reported and the text of a reported card. A report you sent keeps its reason and your note. Neither keeps a link to your account."
 
 msgid "Resources"
 msgstr "Resources"

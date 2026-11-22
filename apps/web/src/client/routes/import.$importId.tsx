@@ -144,13 +144,6 @@ function ImportRoute() {
           archiving={archive.isPending}
           onRestore={() => restore.mutate()}
           restoring={restore.isPending}
-          actionError={
-            archive.isError
-              ? errorMessage(archive.error)
-              : restore.isError
-                ? errorMessage(restore.error)
-                : undefined
-          }
           openLibrary={
             <Button variant="primary" render={<Link to="/library" />}>
               {t`Open Library`}
@@ -194,6 +187,7 @@ function Ready({
   const preview = useQuery(importPreviewQuery(item.id, choices));
   const previewState = usePreviewState(preview);
   const confirm = useMutation({
+    meta: { failure: "inline" },
     mutationFn: () => api.confirmImport(item.id, choices),
     onSuccess: (next) => qc.setQueryData(importQuery(item.id).queryKey, next),
   });

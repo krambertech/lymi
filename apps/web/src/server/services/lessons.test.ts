@@ -762,7 +762,13 @@ describe("reading an article", () => {
     const long = `Eile ${"väga ".repeat(60)}hommikul käisime turul ja ostsime ${"palju ".repeat(30)}köögivilju.`;
     const read = await readLesson(
       ctx,
-      transcript(["Kevad on käes.", "Linnud laulavad aias.", long]),
+      transcript([
+        "Kevad on käes.",
+        "Linnud laulavad aias.",
+        long,
+        "Kerkimine",
+        "Kerkimine on aeglane.",
+      ]),
       {
         reader: fakeReader({
           deck: deck.id,
@@ -771,6 +777,7 @@ describe("reading an article", () => {
             term("t2", "kevad", { sentence: 0, seen: "Kevad on käes." }),
             term("t3", "turg", { sentence: 3, seen: "turul" }),
             term("t4", "lind", { sentence: 1, seen: "Linnud laulavad aias." }),
+            term("t5", "kerkimine", { sentence: 4, seen: "Kerkimine" }),
           ],
           questions: [],
         }),
@@ -782,6 +789,7 @@ describe("reading an article", () => {
     const byId = Object.fromEntries(read.terms.map((t) => [t.id, t]));
     expect(byId.t1).toMatchObject({ example: "Linnud laulavad aias.", at: null });
     expect(byId.t4).toMatchObject({ example: "Linnud laulavad aias." });
+    expect(byId.t5).toMatchObject({ example: "Kerkimine on aeglane." });
     expect(byId.t2).toMatchObject({ example: "Kevad on käes.", at: null });
     const cut = byId.t3?.example ?? "";
     expect([...cut].length).toBeLessThanOrEqual(250);

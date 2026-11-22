@@ -501,7 +501,9 @@ function exampleOf(
 ): { example: string | null; at: number | null } {
   if (!transcript) return { example: null, at: null };
   const { sentences } = transcript;
-  const holds = (s: { text: string } | undefined) => !!s && findTerm(s.text, term.term) !== null;
+  const headWords = countWords(term.term.split(" · ")[0] ?? "");
+  const holds = (s: { text: string } | undefined) =>
+    !!s && countWords(s.text) > headWords && findTerm(s.text, term.term) !== null;
   const numbered = term.sentence ? sentences[term.sentence - 1] : undefined;
   const sentence =
     (holds(numbered) ? numbered : undefined) ??

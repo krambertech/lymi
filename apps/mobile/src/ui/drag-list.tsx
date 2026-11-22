@@ -17,16 +17,11 @@ import { Icon } from "./icons";
 
 const SETTLE = spring(SNAP_BACK);
 
-/**
- * Every row is one height, so a dragged row's slot is its offset divided by it; the height grows
- * with the text size, so a name and its count never clip.
- */
 export function useDragRow() {
   const { fontScale } = useWindowDimensions();
   return Math.round(24 + 40 * Math.min(fontScale, 2.2));
 }
 
-/** Rows that a handle drags into a new order; the rest make room as it passes. */
 export function DragList<T extends { id: string }>({
   items,
   busy,
@@ -85,12 +80,10 @@ function DragRow({
   render: (handle: ReactNode) => ReactNode;
 }) {
   const p = usePalette();
-  // Black, as the room's ink glows at night; the row fills its plate, so a token's negative spread would hide it.
   const drop = `0 8px 14px #000000${useRoom() === "dark" ? "80" : "2e"}`;
   const y = useSharedValue(start * row);
   const from = useSharedValue(0);
   const lifted = useSharedValue(false);
-  // Another row's drag moves this one to its new slot.
   useAnimatedReaction(
     () => positions.value[id],
     (now, was) => {
@@ -113,7 +106,6 @@ function DragRow({
       const was = positions.value[id] ?? 0;
       const to = Math.round(y.value / row);
       if (to === was) return;
-      // Inserted, not swapped: every row between the old slot and the new one shifts by one.
       const next = { ...positions.value };
       for (const key of Object.keys(next)) {
         const at = next[key] ?? 0;

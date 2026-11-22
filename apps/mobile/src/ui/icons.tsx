@@ -91,7 +91,6 @@ import {
 } from "lucide-react-native";
 import Svg, { Circle, Path } from "react-native-svg";
 
-/** Lucide's `contrast` with its half filled, as the web's state mark draws Learning. */
 function CircleHalf({
   size,
   color,
@@ -116,7 +115,6 @@ function CircleHalf({
   );
 }
 
-/** The same Lucide icons the web uses, named for what they mean here. */
 const ICONS = {
   today: Sun,
   library: BookMarked,
@@ -144,7 +142,6 @@ const ICONS = {
   picture: ImageIcon,
   example: TextQuote,
   pronunciation: Volume2,
-  // Small text over the term, as furigana and pinyin are drawn; the speaker would read as audio.
   reading: Superscript,
   source: Library,
   notes: NotebookPen,
@@ -220,7 +217,6 @@ const ICONS = {
 
 export type IconName = keyof typeof ICONS;
 
-/** Raised by this share of its size, so a full ring centres on Onest's capitals; iOS sets them lower in their line than the web, so this is half the web's nudge. */
 const RAISE: Partial<Record<IconName, number>> = { hint: 0.046875 };
 
 export function Icon({
@@ -234,7 +230,6 @@ export function Icon({
   size?: number;
   colour: string;
   strokeWidth?: number;
-  /** Filled in its own colour, as a set important star is. */
   filled?: boolean;
 }) {
   const Glyph = ICONS[name];

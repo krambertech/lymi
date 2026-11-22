@@ -8,13 +8,11 @@ export interface SheetFrameProps {
   open: boolean;
   onOpenChange: (open: boolean) => void;
   onDismiss: () => void;
-  /** Opens at `peek` and drags up to the full screen, rather than sizing to what it holds. */
   expands: boolean;
   peek: number | null;
   children: ReactElement;
 }
 
-/** The sheet itself, presented by iOS in Liquid Glass; sheet-frame.android.tsx is Android's. */
 export function SheetFrame({
   open,
   onOpenChange,

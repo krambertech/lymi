@@ -3,33 +3,17 @@ import { usePalette } from "../theme/palette";
 import type { IconName } from "./icons";
 import { Button, Icon, Text } from "./primitives";
 
-/**
- * Why a place has nothing to show, which decides how it looks: nothing has been made yet, a search
- * or filter matched nothing, the read failed, or it needs a connection the phone does not have.
- */
 export type EmptyKind = "start" | "noMatch" | "failed" | "offline";
 
-/**
- * Where it sits: `page` when the whole screen is empty, large and centred in the free space;
- * `inline` inside a plate or list that is already on the screen, which is its surface.
- */
 export type EmptySize = "page" | "inline";
 
 interface Props {
   kind: EmptyKind;
   size?: EmptySize;
-  /** What is missing or what went wrong, by name: "No decks match “map”", not "Nothing here". */
   title: string;
-  /** How to fill it, or the fix. */
   body?: string;
-  /** The one thing to press, such as Try again or Clear search. */
   action?: { label: string; onPress: () => void; busy?: boolean };
-  /** Overrides the kind's own icon, for a start state that names its place. */
   icon?: IconName;
-  /**
-   * Fills the room it is given rather than most of the window, for a page whose free space is
-   * smaller than the screen, such as search above the keyboard.
-   */
   fill?: boolean;
 }
 
@@ -40,10 +24,6 @@ const ICON: Record<EmptyKind, IconName> = {
   offline: "offline",
 };
 
-/**
- * A place with nothing to show says why and how to fill it, and looks temporary so it is never
- * mistaken for content. phone.md "Empty states".
- */
 export function EmptyState({
   kind,
   size = "page",
@@ -61,7 +41,6 @@ export function EmptyState({
   const ink = alarm ? p.danger : p["ink-secondary"];
   const disc = alarm ? "bg-danger-soft" : "bg-plate-nested";
 
-  // The icon sits in a soft disc, red for a failure: never the lantern, which only says the streak.
   const mark = (
     <View
       className={`${page ? "size-28" : "size-16"} items-center justify-center rounded-full ${disc}`}
@@ -83,7 +62,6 @@ export function EmptyState({
   return (
     <View
       className={`items-center ${page ? "justify-center gap-2 px-6 py-8" : "gap-1.5 px-5 py-8"} ${fill ? "flex-1" : ""}`}
-      // A whole empty page holds it in the middle of the room the bars leave.
       style={page && !fill ? { minHeight: height * 0.62 } : undefined}
       accessibilityLiveRegion="polite"
     >

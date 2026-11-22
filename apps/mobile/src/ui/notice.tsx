@@ -9,17 +9,12 @@ export type NoticeTone = "neutral" | "good" | "warning" | "danger";
 
 interface Props {
   tone?: NoticeTone;
-  /** The notice in a few words; without one, the body stands alone in `ink`. */
   title?: string;
-  /** Overrides the tone's own icon. */
   icon?: IconName;
-  /** A string is read out with the title; rich text, such as a link, stays for VoiceOver to swipe to. */
   children?: ReactNode;
-  /** Part of the screen from the start, so VoiceOver reaches it by swiping and it doesn't talk over the title. */
   quiet?: boolean;
 }
 
-/** A message inside a screen, read out as it appears. A notice is part of the page, so it stays until its state changes. */
 export function Notice({ tone = "neutral", title, icon, children, quiet = false }: Props) {
   const p = usePalette();
   const look = {
@@ -29,7 +24,6 @@ export function Notice({ tone = "neutral", title, icon, children, quiet = false 
     danger: { box: "bg-danger-soft", icon: "alert" as const, mark: p.danger },
   }[tone];
   const spoken = [title, typeof children === "string" ? children : null].filter(Boolean).join(". ");
-  // iOS ignores accessibilityLiveRegion, so VoiceOver hears the notice through an announcement.
   useEffect(() => {
     if (spoken && !quiet && Platform.OS === "ios") {
       AccessibilityInfo.announceForAccessibility(spoken);

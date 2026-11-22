@@ -1,6 +1,5 @@
 import { View } from "react-native";
 
-/** iOS's grabber, at its size and place, 6 pt below the sheet's top or what it clears. */
 export function Grabber({ below = 0 }: { below?: number }) {
   return (
     <View

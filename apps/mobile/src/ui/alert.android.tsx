@@ -15,9 +15,6 @@ import { afterWindowFocus } from "./window-focus";
 
 export type { AlertButton } from "./alert-buttons";
 
-// Android's counterpart of alert.tsx: Material 3's dialog in the room's colours and Onest, since the
-// system alert React Native shows is the app theme's AppCompat one; phone.md "On Android".
-
 interface Shown {
   id: number;
   title: string;
@@ -25,7 +22,6 @@ interface Shown {
   buttons: AlertButton[];
 }
 
-// One dialog at a time; a second waits for the first to close, so neither covers the other.
 let queue: Shown[] = [];
 let nextId = 0;
 const listeners = new Set<() => void>();
@@ -44,12 +40,10 @@ export function alert(title: string, message?: string, buttons: AlertButton[] = 
 
 type TextStyle = NonNullable<TextProps["style"]>;
 
-// Compose takes Onest as its one regular face, so a weight here would be ignored; Material's title is regular too.
 const TITLE: TextStyle = { fontFamily: "Onest", fontSize: 22, lineHeight: 28 };
 const BODY: TextStyle = { fontFamily: "Onest", fontSize: 15, lineHeight: 21 };
 const LABEL: TextStyle = { fontFamily: "Onest", fontSize: 15, lineHeight: 20 };
 
-/** Draws the waiting alert; mounted once at the root. */
 export function AlertHost() {
   const { t } = useLingui();
   const p = usePalette();
@@ -64,11 +58,9 @@ export function AlertHost() {
     danger: p.danger,
   };
   const choose = (button: AlertButton | undefined) => {
-    // The dialog closes only once React commits, so a second tap or Back before then counts for nothing.
     if (queue[0]?.id !== shown.id) return;
     queue = queue.filter((a) => a.id !== shown.id);
     emit();
-    // What the button does runs once the screen has its window back, so a screen it opens gets its keyboard.
     const run = button?.onPress;
     if (run) afterWindowFocus(run);
   };
@@ -100,7 +92,6 @@ export function AlertHost() {
         </AlertDialog.Title>
         {shown.message ? (
           <AlertDialog.Text>
-            {/* Material caps the text slot's height to keep the buttons on screen but doesn't scroll it, so long text at a large size would be cut off. */}
             <Text color={p["ink-secondary"]} style={BODY} modifiers={[verticalScroll()]}>
               {shown.message}
             </Text>

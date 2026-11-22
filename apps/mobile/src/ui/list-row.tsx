@@ -9,17 +9,11 @@ export interface ListRowFaceProps {
   first: boolean;
   title: string;
   mark?: ReactNode;
-  /** Under the title; left out where the section already says what the count is. */
   line?: string | undefined;
   count?: number | undefined;
   end: "open" | "add" | "none";
 }
 
-/**
- * One row of a list of places, as Today and Library draw them: what it is on the start edge, how
- * many at the end, then a chevron when it opens; a row that adds shows a round plus where its count
- * would be. A row with no chevron keeps the slot so every count ends on the same line.
- */
 export function ListRowFace({ first, title, mark, line, count, end }: ListRowFaceProps) {
   const p = usePalette();
   return (
@@ -44,7 +38,6 @@ export function ListRowFace({ first, title, mark, line, count, end }: ListRowFac
         </Text>
       )}
       {end === "add" && (
-        // In the count column, round, so it lines up with the counts above and below it.
         <View className="size-8 items-center justify-center rounded-full bg-plate-nested">
           <Icon name="plus" size={16} colour={p["ink-secondary"]} strokeWidth={2.5} />
         </View>
@@ -54,7 +47,6 @@ export function ListRowFace({ first, title, mark, line, count, end }: ListRowFac
   );
 }
 
-/** What VoiceOver reads for a row: the title, the count or what it counts, then the line. */
 export function listRowLabel(title: string, count?: number | string, line?: string) {
   return [title, count, line].filter((part) => part !== undefined).join(". ");
 }
@@ -65,7 +57,6 @@ export function ListRow({
   hint,
   ...face
 }: ListRowFaceProps & {
-  /** What VoiceOver reads for the count when no line says it. */
   countLabel?: string;
   onPress?: (() => void) | undefined;
   hint?: string | undefined;

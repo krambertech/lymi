@@ -5,19 +5,11 @@ import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { usePalette } from "../theme/palette";
 import { Grabber } from "./grabber";
 
-/**
- * A full-height form sheet covers the whole window on Android, since react-native-screens otherwise
- * sizes it from a top inset it can miss after a live theme switch, leaving its foot under the keyboard.
- */
 export const FULL_SHEET = {
   sheetAllowedDetents: [1],
   sheetShouldOverflowTopInset: Platform.OS === "android",
 };
 
-/**
- * What the root Stack adds to every screen for its sheets: Android's form sheets are square unless
- * given Material's corner, and Lymi lays them out there; iOS draws its own.
- */
 export const SHEET_STACK =
   Platform.OS === "android"
     ? { screenOptions: { sheetCornerRadius: 28 }, screenLayout: AndroidSheetLayout }
@@ -32,7 +24,6 @@ interface Props {
   children: ReactElement;
 }
 
-/** Android's form sheets, below the status bar and with iOS's grabber, as the Stack's screen layout, which it calls as a function, so no hooks. */
 function AndroidSheetLayout({ options, children }: Props) {
   if (options.presentation !== "formSheet") return children;
   const grabber = !!options.sheetGrabberVisible;
@@ -57,10 +48,6 @@ function BelowStatusBar({ grabber, children }: { grabber: boolean; children: Rea
   );
 }
 
-/**
- * A tab's stack: no header, since every screen builds its own bar with Screen, and the root's sheet
- * setup, so a sheet a tab presents looks like every other.
- */
 export function TabStack({ children }: { children?: ReactNode }) {
   const p = usePalette();
   return (

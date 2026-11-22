@@ -17,7 +17,6 @@ export const GRADES: {
   { rating: 4, label: msg`Easy`, icon: "easy", tint: "grade-easy" },
 ];
 
-/** A grade as the review draws it: its button's icon and colour, in a fixed square so a column lines up. */
 export function GradeMark({ rating, size = "md" }: { rating: number; size?: "sm" | "md" }) {
   const p = usePalette();
   const grade = GRADES.find((g) => g.rating === rating) ?? GRADES[2];

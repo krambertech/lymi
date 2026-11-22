@@ -10,10 +10,6 @@ import { Sheet, SheetGroup, SheetRow } from "./sheet";
 export type { RowMenuAction, RowMenuItem, RowMenuSurface } from "./row-menu";
 export { trackRowMenu };
 
-/**
- * Android's counterpart of row-menu.tsx: expo-router's link menu and preview are iOS-only, so a long
- * press raises the same rows as a sheet, the shape a menu takes on touch. phone.md "Menus".
- */
 export function RowMenu({
   surface,
   href,
@@ -26,9 +22,7 @@ export function RowMenu({
 }: RowMenuProps) {
   const router = useRouter();
   const [open, setOpen] = useState(false);
-  // The sheet mounts on a long press and stays until it has gone, so a long list carries none.
   const [mounted, setMounted] = useState(false);
-  // What a row chose runs once the sheet has gone, so a page it opens or a sheet it raises is not under it.
   const chosen = useRef<RowMenuItem | null>(null);
   const groups = ((Array.isArray(items[0]) ? items : [items]) as RowMenuItem[][]).filter(
     (g) => g.length > 0,
@@ -39,7 +33,6 @@ export function RowMenu({
     item.onSelect();
   };
   const heading = kind === "heading";
-  // A heading does nothing on a tap unless it has `onPress`, as on iOS; a section's opens its page.
   const tap = heading ? onPress : (onPress ?? (() => router.push(href)));
   return (
     <View

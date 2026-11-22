@@ -30,16 +30,12 @@ import { Overlay } from "./overlay";
 import { Press, Text } from "./primitives";
 import { BarButton } from "./screen";
 
-// Android's counterpart of action-menu.tsx, drawn by Lymi as the web's frosted dropdown since Material's takes neither Onest nor Lucide; phone.md "Menus".
-
 const TRIGGERS = { ellipsis: "more", plus: "plus" } as const satisfies Record<string, IconName>;
-/** The web's menu: at least 12rem wide, with the screen's 16 pt kept clear around it. */
 const MIN_WIDTH = 192;
 const MAX_WIDTH = 288;
 const MARGIN = 16;
 const GAP = 6;
 const EASE = Easing.bezier(0.22, 1, 0.36, 1);
-/** The web glass's 12 px blur, as expo-blur's intensity, which Android divides by four. */
 const BLUR = 48;
 
 interface ActionMenuProps {
@@ -59,7 +55,6 @@ type Open = {
   onClosed: () => void;
 };
 
-// The one open menu, drawn by MenuHost at the root, so it sits over every screen in their window.
 let open: Open | null = null;
 const listeners = new Set<() => void>();
 const setOpen = (next: Open | null) => {
@@ -90,7 +85,6 @@ export function ActionMenu({
       setExpanded(true);
       setOpen({ owner, at: { x, y, w, h }, items, onClosed: () => setExpanded(false) });
     });
-  // A menu whose button goes, with its screen, goes too; another button's stays.
   useEffect(
     () => () => {
       if (open?.owner === owner) setOpen(null);
@@ -118,7 +112,6 @@ export function ActionMenu({
             <Icon name={icon} size={18} colour={p["ink-muted"]} />
           </Pressable>
         ) : (
-          // The bar's own button, so it matches the search and streak beside it.
           <BarButton
             icon={icon}
             label={label}
@@ -131,7 +124,6 @@ export function ActionMenu({
   );
 }
 
-/** Draws the open menu over every screen; the root layout holds one. */
 export function MenuHost() {
   const menu = useSyncExternalStore(subscribe, () => open);
   if (!menu) return null;
@@ -154,7 +146,6 @@ function Popover({
   const { t } = useLingui();
   const reduce = useReduceMotion();
   const drop = useShadows()["glass-drop"];
-  // Grows from 0.94 over 140 ms and fades out over 100 ms, as the web's menu does; Reduce Motion only fades.
   const shown = useSharedValue(0);
   useEffect(() => {
     shown.value = withTiming(1, { duration: 140, easing: EASE, reduceMotion: ALWAYS });
@@ -163,7 +154,6 @@ function Popover({
     opacity: shown.value,
     transform: [{ scale: reduce ? 1 : 0.94 + 0.06 * shown.value }],
   }));
-  // One close runs once, however many taps or Backs ask for it during the fade.
   const leaving = useRef(false);
   const leave = (then?: () => void) => {
     if (leaving.current) return;
@@ -176,7 +166,6 @@ function Popover({
       if (done) scheduleOnRN(gone);
     });
   };
-  // Back closes the menu before it reaches the screen.
   // oxlint-disable react-hooks/exhaustive-deps -- it binds once, for as long as the menu is open.
   useEffect(() => {
     const back = BackHandler.addEventListener("hardwareBackPress", () => {
@@ -188,14 +177,11 @@ function Popover({
   // oxlint-enable react-hooks/exhaustive-deps
   const p = usePalette();
   const target = useBlurTarget();
-  // Blur from Android 12; before it, the plate the web falls back to.
   const frosted = !!target && Number(Platform.Version) >= 31;
   const { width, height } = useWindowDimensions();
   const insets = useSafeAreaInsets();
   const groups = (Array.isArray(items[0]) ? items : [items]) as MenuItem[][];
   const rtl = I18nManager.isRTL;
-  // Hangs from the button, or rises from it when the button sits low on the screen; it opens toward
-  // the side with room, lined up with the button's end edge, or its start edge from the start half.
   const below = at.y + at.h / 2 < height / 2;
   const fromStart = (rtl ? width - (at.x + at.w / 2) : at.x + at.w / 2) < width / 2;
   const side = fromStart
@@ -224,7 +210,6 @@ function Popover({
             minWidth: MIN_WIDTH,
             maxWidth: Math.min(MAX_WIDTH, width - 2 * MARGIN),
             transformOrigin: `${corner} ${below ? "top" : "bottom"}`,
-            // The web's glass: a sheen along the top, a hairline ring and a soft drop.
             boxShadow: `inset 0 1px 0 ${p["glass-sheen"]}, 0 0 0 1px ${p["edge-strong"]}, ${drop}`,
             backgroundColor: frosted ? undefined : p.plate,
           },
@@ -257,7 +242,6 @@ function Popover({
   );
 }
 
-/** One command: 48 dp for a finger, the icon iOS's menu shows, and red for a removal. */
 function MenuRow({ item, onPress }: { item: MenuItem; onPress: () => void }) {
   const p = usePalette();
   return (

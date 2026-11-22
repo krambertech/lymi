@@ -99,6 +99,21 @@ describe("recording a grade", () => {
     expect(grade).toHaveBeenCalledTimes(2);
   });
 
+  it("keeps a grade made while the storage was full once it has room again", async () => {
+    const full = vi.spyOn(store, "set").mockImplementation(() => {
+      throw new Error("quota");
+    });
+    grade.mockImplementationOnce(async () => {
+      full.mockRestore();
+      throw offline();
+    });
+    await grades.recordGrade(g("a"));
+    grades.resetGradeCache();
+
+    grade.mockResolvedValueOnce(accepted("rev-a"));
+    expect(await grades.flushOutbox()).toBe(1);
+  });
+
   it("keeps a peek with a queued grade and sends it on replay", async () => {
     grade.mockRejectedValueOnce(offline());
     expect(await grades.recordGrade({ ...g("a"), aid: "hint" })).toBe("queued");
@@ -359,6 +374,46 @@ describe("taking a grade back", () => {
 
     grade.mockRejectedValueOnce(new ApiError(401, "sign in"));
     expect(await grades.undoGrade(unanswered)).toBe("pending");
+  });
+
+  it("still undoes a grade with no answer after a lapsed session refused its replay", async () => {
+    const unanswered = g("a");
+    grade.mockRejectedValueOnce(offline());
+    await grades.recordGrade(unanswered);
+    grade.mockRejectedValueOnce(new ApiError(401, "sign in"));
+    await grades.undoGrade(unanswered);
+
+    grade.mockResolvedValueOnce(accepted("rev-1"));
+    await grades.flushOutbox();
+    expect(undoReview).toHaveBeenCalledWith("rev-1");
+    expect(grades.gradeStore.snapshot()).toEqual([]);
+  });
+
+  it("sends other cards past an undo whose replay got an answer it could not read", async () => {
+    const unread = g("a");
+    grade.mockRejectedValueOnce(new SyntaxError("Unexpected token"));
+    await grades.recordGrade(unread);
+    grade.mockRejectedValueOnce(new SyntaxError("Unexpected token"));
+    expect(await grades.undoGrade(unread)).toBe("pending");
+
+    grade
+      .mockRejectedValueOnce(new SyntaxError("Unexpected token"))
+      .mockResolvedValueOnce(accepted("rev-b"));
+    expect(await grades.recordGrade(g("b"))).toBe("sent");
+  });
+
+  it("holds both of a card's grades behind a replay the server keeps failing, then sends them in order", async () => {
+    grade.mockRejectedValueOnce(new ApiError(500, "broken"));
+    const first = g("a", 1);
+    await grades.recordGrade(first);
+    grade.mockRejectedValueOnce(new ApiError(500, "broken"));
+    const second = g("a", 3);
+    expect(await grades.recordGrade(second)).toBe("queued");
+    expect(grade).toHaveBeenCalledTimes(2);
+
+    grade.mockResolvedValueOnce(accepted("rev-1")).mockResolvedValueOnce(accepted("rev-2"));
+    expect(await grades.flushOutbox()).toBe(2);
+    expect(grade.mock.calls.slice(2).map(([sent]) => sent.rating)).toEqual([1, 3]);
   });
 
   it("undoes a sent grade by the attempt the server named", async () => {

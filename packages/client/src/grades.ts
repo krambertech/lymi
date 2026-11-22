@@ -150,7 +150,10 @@ async function send(grade: StoredGrade): Promise<Sent> {
     );
     return "sent";
   } catch (err) {
-    if (err instanceof ApiError && err.status === 0) return "offline";
+    if (err instanceof ApiError && err.status === 0) {
+      if (!grade.unanswered) mark(true);
+      return "offline";
+    }
     if (turnedAway(err) && !grade.unanswered) mark(undefined);
     throw err;
   }
@@ -255,8 +258,7 @@ async function settleUndos(): Promise<"offline" | "answered"> {
       await api.undoReview(grade.reviewId);
       forget(grade);
     } catch (err) {
-      if (!(err instanceof ApiError)) throw err;
-      if (err.status === 0) return "offline";
+      if (err instanceof ApiError && err.status === 0) return "offline";
       // Refused, such as a later grade of the mode from another device; a lapsed session waits.
       const refused = turnedAway(err) && !waitsToSend(err.status);
       // Still unsent means the replay was the refusal: the grade never landed, so it is gone.

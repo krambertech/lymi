@@ -14,7 +14,7 @@
     "apps/web/src/server/imports/write-run.ts": "0dedac9cf4c3fe78"
   },
   "GradeOutbox": {
-    "packages/client/src/grades.ts": "944ed899d4a4a475",
+    "packages/client/src/grades.ts": "9d2efb4a6ef742d4",
     "apps/web/src/server/services/review.ts": "da1d16fc4a6d860b",
     "apps/web/src/server/services/review-days.ts": "70b08ae23d7ceee0"
   }

@@ -103,7 +103,7 @@ The default config holds: 1,395,255 distinct states. With six requests it held o
 
 Replays live in `packages/client/src/grades.test.ts`, in `apps/web/src/server/phone-client.test.ts` against the real Worker, and in `apps/web/src/server/services/review-days.test.ts`.
 
-**Leaves out:** two tabs sharing one outbox, where the browser's lock keeps their runs apart; a 4xx after a send that got no answer, such as a deck left meanwhile, where the device drops the grade and the server may keep it counted; grades sent before the outbox kept attempts; more than three grades of one card; `retireGrades`; and full storage.
+**Leaves out:** two tabs sharing one outbox, where the browser's lock keeps their runs apart; a 4xx after a send that got no answer, such as a deck left meanwhile, where the device drops the grade and the server may keep it counted; grades sent before the outbox kept attempts; an answer the client cannot read, which it treats like a 5xx; more than three grades of one card; whether a held grade is ever sent; what happens to the outbox at sign-out; `retireGrades`; and full storage. Four requests do not finish the case where both grades are taken back and another device grades too; the six-request run does.
 
 ## Review day
 

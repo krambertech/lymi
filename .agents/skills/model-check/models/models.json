@@ -111,7 +111,7 @@
       },
       "HoldsMode": {
         "breaks": "KeptGradesCount",
-        "fixedIn": 1093
+        "fixedIn": 180
       },
       "SeesLateUndo": {
         "breaks": "TakenBackGradesDoNot",

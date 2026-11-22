@@ -1,6 +1,6 @@
 import type { MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
-import { type LocalizedPage, localizedPath } from "../../lib/routes";
+import { type EnglishOnlyPath, type LocalizedPage, localizedPath } from "../../lib/routes";
 
 export interface Question {
   id: string;
@@ -10,7 +10,7 @@ export interface Question {
    * A page that answers the question in full, shown under the answer and left out of the schema:
    * a translated page by its key, so each edition links to its own language, or an English-only path.
    */
-  link?: ({ page: LocalizedPage } | { href: string }) & { label: MessageDescriptor };
+  link?: ({ page: LocalizedPage } | { href: EnglishOnlyPath }) & { label: MessageDescriptor };
 }
 
 /** Where a question's link goes in this page's language. */

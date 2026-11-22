@@ -3,6 +3,7 @@ import { clsx } from "clsx";
 import { Volume2 } from "lucide-react";
 import { useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { useClip } from "../../lib/use-clip";
 import type { VoiceWord } from "./japanese";
 
 const BARS = 40;
@@ -54,8 +55,7 @@ export function VoiceTiles({ words, lang, folder }: Props) {
   const root = useRef<HTMLDivElement>(null);
   const inView = useInView(root, { once: true, margin: "200px" });
   const [peaks, setPeaks] = useState<Record<string, number[]>>({});
-  const [playing, setPlaying] = useState<{ id: string; at: number } | null>(null);
-  const audio = useRef<HTMLAudioElement | null>(null);
+  const { play, playing } = useClip({ progress: true });
 
   useEffect(() => {
     if (!inView) return;
@@ -66,28 +66,6 @@ export function VoiceTiles({ words, lang, folder }: Props) {
     }
   }, [inView, words, folder]);
 
-  useEffect(() => () => audio.current?.pause(), []);
-
-  const play = (id: string) => {
-    audio.current?.pause();
-    const clip = new Audio(`/audio/${folder}/${id}.mp3`);
-    audio.current = clip;
-    setPlaying({ id, at: 0 });
-    let frame = 0;
-    const tick = () => {
-      if (audio.current !== clip) return;
-      setPlaying({ id, at: clip.duration ? clip.currentTime / clip.duration : 0 });
-      frame = requestAnimationFrame(tick);
-    };
-    const done = () => {
-      cancelAnimationFrame(frame);
-      setPlaying((p) => (p?.id === id ? null : p));
-    };
-    clip.addEventListener("ended", done);
-    clip.addEventListener("error", done);
-    clip.play().then(tick, done);
-  };
-
   return (
     <div ref={root} className="mt-12 grid grid-cols-2 gap-2.5 @2xl:grid-cols-3 @4xl:mt-16">
       {words.map((w) => {
@@ -96,7 +74,7 @@ export function VoiceTiles({ words, lang, folder }: Props) {
           <button
             key={w.id}
             type="button"
-            onClick={() => play(w.id)}
+            onClick={() => play(w.id, `/audio/${folder}/${w.id}.mp3`)}
             aria-label={w.reading ? t`Play ${w.term}, ${w.reading}` : t`Play ${w.term}`}
             className="grid gap-2.5 rounded-lg bg-plate-nested p-3 text-start @md:p-4 edge-inset transition-[background-color,scale] duration-150 ease-out active:scale-[0.98] hoverable:hover:bg-plate-hover"
           >

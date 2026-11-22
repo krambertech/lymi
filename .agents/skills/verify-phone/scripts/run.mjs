@@ -8,6 +8,7 @@ import { tmpdir } from "node:os";
 import { dirname, join, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { parseArgs } from "node:util";
+import { phoneHandOver } from "../../verify/scripts/hand-over.mjs";
 import { BUNDLE_ID, doctor, report, request, signIn } from "./doctor.mjs";
 import { readRecord, root, xcrun } from "./stack.mjs";
 
@@ -205,8 +206,14 @@ async function driveFeature(name) {
     result.checks.every((c) => c.ok) &&
     result.flow?.ok &&
     !result.error;
-  writeFileSync(join(dir, "verdict.md"), verdict(feature, persona, ok, result));
-  process.stdout.write(`${ok ? "PASS" : "FAIL"} ${name}  ${dir}\n`);
+  const handed = phoneHandOver({
+    ...stack,
+    persona,
+    feature: feature.title,
+    flow: result.flow?.steps ?? [],
+  }).join("\n");
+  writeFileSync(join(dir, "verdict.md"), `${verdict(feature, persona, ok, result)}\n${handed}\n`);
+  process.stdout.write(`${ok ? "PASS" : "FAIL"} ${name}  ${dir}\n${handed}\n`);
   return ok;
 }
 

@@ -1,0 +1,919 @@
+{
+  "grade by direction, recognition": {
+    "since": "2026-09-05 af17ad8d6",
+    "grade": {
+      "cardId": "$card",
+      "direction": "recognition",
+      "rating": 1,
+      "reviewedAt": "2026-09-06T07:30:00.000Z"
+    }
+  },
+  "grade by direction, production": {
+    "since": "2026-09-05 af17ad8d6",
+    "grade": {
+      "cardId": "$card",
+      "direction": "production",
+      "rating": 2,
+      "reviewedAt": "2026-09-06T07:30:00.000Z"
+    }
+  },
+  "grade of a picture's term": {
+    "since": "2026-09-13 #147",
+    "grade": {
+      "cardId": "$card",
+      "mode": {
+        "cue": "image",
+        "target": "term"
+      },
+      "rating": 3,
+      "reviewedAt": "2026-09-13T18:02:11.500Z"
+    }
+  },
+  "grade of a picture's meaning": {
+    "since": "2026-09-13 #147",
+    "grade": {
+      "cardId": "$card",
+      "mode": {
+        "cue": "image",
+        "target": "meaning"
+      },
+      "rating": 4,
+      "reviewedAt": "2026-09-13T18:02:11.500Z"
+    }
+  },
+  "grade with a time zone and the state before": {
+    "since": "2026-09-14 #180",
+    "grade": {
+      "cardId": "$card",
+      "mode": {
+        "cue": "meaning",
+        "target": "term"
+      },
+      "rating": 4,
+      "reviewedAt": "2026-09-14T13:00:00.000Z",
+      "stateBefore": 2,
+      "timezone": "Europe/Tallinn"
+    }
+  },
+  "grade aided by a hook": {
+    "since": "2026-09-29 #418",
+    "until": "2026-10-25 #1040",
+    "grade": {
+      "cardId": "$card",
+      "mode": {
+        "cue": "term",
+        "target": "meaning"
+      },
+      "rating": 3,
+      "reviewedAt": "2026-10-01T06:15:00.000Z",
+      "stateBefore": 1,
+      "aid": "hook",
+      "timezone": "Europe/Kyiv"
+    }
+  },
+  "grade with recall and grade times": {
+    "since": "2026-10-11 #562",
+    "grade": {
+      "cardId": "$card",
+      "mode": {
+        "cue": "term",
+        "target": "meaning"
+      },
+      "rating": 3,
+      "reviewedAt": "2026-10-12T06:15:00.000Z",
+      "stateBefore": 2,
+      "recallMs": 600000,
+      "gradeMs": 600000,
+      "timezone": "America/Argentina/ComodRivadavia"
+    }
+  },
+  "grade of faded readings": {
+    "since": "2026-10-17 #810",
+    "grade": {
+      "cardId": "$card",
+      "mode": {
+        "cue": "term",
+        "target": "meaning"
+      },
+      "rating": 3,
+      "reviewedAt": "2026-10-18T06:15:00.000Z",
+      "stateBefore": 2,
+      "recallMs": 0,
+      "gradeMs": 840,
+      "readingsFaded": 0,
+      "timezone": "Asia/Tokyo"
+    }
+  },
+  "grade aided by a hint": {
+    "since": "2026-10-25 #1040",
+    "grade": {
+      "cardId": "$card",
+      "mode": {
+        "cue": "term",
+        "target": "meaning"
+      },
+      "rating": 2,
+      "reviewedAt": "2026-10-26T06:15:00.000Z",
+      "stateBefore": 3,
+      "aid": "hint",
+      "recallMs": 4200,
+      "timezone": "Europe/Kyiv"
+    }
+  },
+  "grade whose send got no answer": {
+    "since": "2026-11-01 #1093",
+    "grade": {
+      "cardId": "$card",
+      "mode": {
+        "cue": "term",
+        "target": "meaning"
+      },
+      "rating": 3,
+      "reviewedAt": "2026-11-02T06:15:00.000Z",
+      "stateBefore": 0,
+      "recallMs": 1200,
+      "gradeMs": 300,
+      "timezone": "Europe/Kyiv",
+      "unanswered": true
+    }
+  },
+  "sent grade taken back": {
+    "since": "2026-10-12 #608",
+    "grade": {
+      "cardId": "$card",
+      "mode": {
+        "cue": "term",
+        "target": "meaning"
+      },
+      "rating": 3,
+      "reviewedAt": "2026-10-13T06:15:00.000Z",
+      "stateBefore": 0,
+      "timezone": "Europe/Kyiv",
+      "sentAt": 1791872101000,
+      "reviewId": "$review",
+      "undone": true
+    }
+  },
+  "add with every field of the first form": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.add",
+        "input": {
+          "id": "$newId",
+          "deckId": "$deck",
+          "term": "$text:500",
+          "language": null,
+          "meaning": "$text:2000",
+          "meaningSource": "manual",
+          "example": "Tere, kuidas läheb?",
+          "exampleSource": "manual",
+          "pronunciation": "$text:200",
+          "pronunciationSource": "manual",
+          "notes": "$text:2000",
+          "source": "$text:200",
+          "tags": ["$text:40"],
+          "reviewModes": [
+            {
+              "cue": "term",
+              "target": "meaning"
+            },
+            {
+              "cue": "meaning",
+              "target": "term"
+            },
+            {
+              "cue": "image",
+              "target": "term"
+            },
+            {
+              "cue": "image",
+              "target": "meaning"
+            }
+          ],
+          "sectionId": "$section"
+        }
+      }
+    }
+  },
+  "add that failed and waits to retry": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "attempts": 3,
+      "failingSince": 1790000001000,
+      "retryAt": 1790000009000,
+      "write": {
+        "kind": "card.add",
+        "input": {
+          "id": "$newId",
+          "deckId": "$deck",
+          "term": "$text:20",
+          "language": "et"
+        }
+      }
+    }
+  },
+  "add with a hook": {
+    "since": "2026-09-29 #418",
+    "until": "2026-10-25 #1040",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.add",
+        "input": {
+          "id": "$newId",
+          "deckId": "$deck",
+          "term": "$text:20",
+          "language": "et",
+          "meaning": "snow",
+          "meaningSource": "manual",
+          "hook": "$text:200",
+          "hookSource": "manual"
+        }
+      }
+    }
+  },
+  "add with a notes source": {
+    "since": "2026-10-12 #573",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.add",
+        "input": {
+          "id": "$newId",
+          "deckId": "$deck",
+          "term": "$text:20",
+          "notes": "Genitive: maja",
+          "notesSource": "manual"
+        }
+      }
+    }
+  },
+  "add with a translation": {
+    "since": "2026-10-24 #949",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.add",
+        "input": {
+          "id": "$newId",
+          "deckId": "$deck",
+          "term": "$text:20",
+          "example": "$text:250",
+          "exampleSource": "manual",
+          "exampleTranslation": "$text:250",
+          "exampleTranslationSource": "manual"
+        }
+      }
+    }
+  },
+  "add from the Mac menu bar": {
+    "since": "2026-10-24 #964",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.add",
+        "input": {
+          "id": "$newId",
+          "deckId": "$deck",
+          "term": "$text:20"
+        },
+        "from": "desktop_panel"
+      }
+    }
+  },
+  "add on the phone with AI off": {
+    "since": "2026-10-24 #973",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.add",
+        "input": {
+          "id": "$newId",
+          "deckId": "$deck",
+          "term": "$text:20",
+          "enrich": false
+        }
+      }
+    }
+  },
+  "add with a hint": {
+    "since": "2026-10-25 #1040",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.add",
+        "input": {
+          "id": "$newId",
+          "deckId": "$deck",
+          "term": "$text:20",
+          "hint": "$text:200",
+          "hintSource": "manual"
+        }
+      }
+    }
+  },
+  "edit of every field of the first form": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "deckId": "$otherDeck",
+          "term": "$text:500",
+          "meaning": "$text:2000",
+          "meaningSource": "manual",
+          "example": "$text:250",
+          "exampleSource": "manual",
+          "pronunciation": "$text:200",
+          "pronunciationSource": "manual",
+          "notes": "$text:2000",
+          "source": "$text:200",
+          "language": "et",
+          "tags": ["$text:40"],
+          "reviewModes": [
+            {
+              "cue": "term",
+              "target": "meaning"
+            },
+            {
+              "cue": "meaning",
+              "target": "term"
+            },
+            {
+              "cue": "image",
+              "target": "term"
+            },
+            {
+              "cue": "image",
+              "target": "meaning"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "edit that moves a card to a section": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "sectionId": "$section"
+        }
+      }
+    }
+  },
+  "edit that clears every field": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "meaning": "",
+          "meaningSource": "manual",
+          "example": "",
+          "exampleSource": "manual",
+          "pronunciation": "",
+          "pronunciationSource": "manual",
+          "notes": "",
+          "source": "",
+          "language": null,
+          "sectionId": null,
+          "tags": [],
+          "reviewModes": null
+        }
+      }
+    }
+  },
+  "edit of a hook": {
+    "since": "2026-09-29 #418",
+    "until": "2026-10-25 #1040",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "hook": "$text:200",
+          "hookSource": "manual"
+        }
+      }
+    }
+  },
+  "edit that clears a hook": {
+    "since": "2026-09-29 #418",
+    "until": "2026-10-25 #1040",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "hook": ""
+        }
+      }
+    }
+  },
+  "Undo back to a lesson's hook": {
+    "since": "2026-10-11 #512",
+    "until": "2026-10-25 #1040",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "hook": "A luminous street",
+          "hookSource": "lesson"
+        }
+      }
+    }
+  },
+  "edit of notes with their source": {
+    "since": "2026-10-12 #573",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "notes": "Genitive: maja",
+          "notesSource": "manual"
+        }
+      }
+    }
+  },
+  "edit of a translation": {
+    "since": "2026-10-24 #949",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "example": "See on minu maja.",
+          "exampleSource": "manual",
+          "exampleTranslation": "$text:250",
+          "exampleTranslationSource": "manual"
+        }
+      }
+    }
+  },
+  "edit that clears a translation": {
+    "since": "2026-10-24 #949",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "exampleTranslation": ""
+        }
+      }
+    }
+  },
+  "edit of a hint": {
+    "since": "2026-10-25 #1040",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "hint": "$text:200",
+          "hintSource": "manual"
+        }
+      }
+    }
+  },
+  "edit that clears a hint": {
+    "since": "2026-10-25 #1040",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "hint": ""
+        }
+      }
+    }
+  },
+  "Undo back to a lesson's hint": {
+    "since": "2026-10-25 #1040",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.update",
+        "id": "$card",
+        "patch": {
+          "hint": "A luminous street",
+          "hintSource": "lesson"
+        }
+      }
+    }
+  },
+  "card archived": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.archive",
+        "id": "$card"
+      }
+    }
+  },
+  "card restored": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.restore",
+        "id": "$card"
+      }
+    }
+  },
+  "card marked important": {
+    "since": "2026-10-12 #570",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "card.important",
+        "id": "$card",
+        "important": true
+      }
+    }
+  },
+  "new deck, one direction": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.create",
+        "input": {
+          "id": "$newId",
+          "name": "$text:80",
+          "defaultLanguage": "et",
+          "directions": "recognition"
+        }
+      }
+    }
+  },
+  "new deck, both directions": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.create",
+        "input": {
+          "id": "$newId",
+          "name": "Lesson 3",
+          "defaultLanguage": null,
+          "directions": "both"
+        }
+      }
+    }
+  },
+  "new deck for a language": {
+    "since": "2026-10-13 #676",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.create",
+        "input": {
+          "id": "$newId",
+          "name": "Estonian",
+          "purpose": "language",
+          "defaultLanguage": "et",
+          "directions": "production"
+        }
+      }
+    }
+  },
+  "new deck for a subject": {
+    "since": "2026-10-13 #676",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.create",
+        "input": {
+          "id": "$newId",
+          "name": "Biology",
+          "purpose": "subject",
+          "defaultLanguage": null,
+          "directions": "recognition"
+        }
+      }
+    }
+  },
+  "new deck for something else": {
+    "since": "2026-10-13 #676",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.create",
+        "input": {
+          "id": "$newId",
+          "name": "My notes",
+          "purpose": "other",
+          "defaultLanguage": null
+        }
+      }
+    }
+  },
+  "new deck in a series": {
+    "since": "2026-10-17 #814",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.create",
+        "input": {
+          "id": "$newId",
+          "name": "Lesson 3",
+          "purpose": "language",
+          "defaultLanguage": "et",
+          "directions": "recognition",
+          "seriesId": "$series"
+        }
+      }
+    }
+  },
+  "deck renamed and described": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "name": "$text:80",
+          "description": "$text:500"
+        }
+      }
+    }
+  },
+  "deck language set": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "defaultLanguage": "pt-BR"
+        }
+      }
+    }
+  },
+  "deck description and language cleared": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "description": null,
+          "defaultLanguage": null
+        }
+      }
+    }
+  },
+  "deck set to recognition": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "directions": "recognition"
+        }
+      }
+    }
+  },
+  "deck sections set to automatic": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "sectionProgression": "automatic"
+        }
+      }
+    }
+  },
+  "deck set to production": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "directions": "production"
+        }
+      }
+    }
+  },
+  "deck sections set to manual": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "sectionProgression": "manual"
+        }
+      }
+    }
+  },
+  "deck set to both": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "directions": "both"
+        }
+      }
+    }
+  },
+  "deck sections set to open": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "sectionProgression": "open"
+        }
+      }
+    }
+  },
+  "deck AI fields": {
+    "since": "2026-10-12 #573",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "enrichFields": ["meaning", "example", "notes", "pronunciation"]
+        }
+      }
+    }
+  },
+  "deck AI fields cleared": {
+    "since": "2026-10-12 #573",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "enrichFields": []
+        }
+      }
+    }
+  },
+  "deck AI instructions": {
+    "since": "2026-10-12 #573",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "enrichInstructions": "$text:1000"
+        }
+      }
+    }
+  },
+  "deck AI instructions cleared": {
+    "since": "2026-10-12 #573",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "enrichInstructions": null
+        }
+      }
+    }
+  },
+  "deck AI fields with the translation": {
+    "since": "2026-10-24 #949",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "enrichFields": ["meaning", "example", "exampleTranslation", "notes", "pronunciation"]
+        }
+      }
+    }
+  },
+  "deck purpose set to language": {
+    "since": "2026-10-13 #676",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "purpose": "language"
+        }
+      }
+    }
+  },
+  "deck purpose set to subject": {
+    "since": "2026-10-13 #676",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "purpose": "subject"
+        }
+      }
+    }
+  },
+  "deck purpose set to other": {
+    "since": "2026-10-13 #676",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.update",
+        "id": "$deck",
+        "patch": {
+          "purpose": "other"
+        }
+      }
+    }
+  },
+  "pronunciation shown adaptive": {
+    "since": "2026-10-27 #1073",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.preferences",
+        "id": "$deck",
+        "preferences": {
+          "pronunciationDisplay": "adaptive"
+        }
+      }
+    }
+  },
+  "pronunciation shown separate": {
+    "since": "2026-10-27 #1073",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.preferences",
+        "id": "$deck",
+        "preferences": {
+          "pronunciationDisplay": "separate"
+        }
+      }
+    }
+  },
+  "deck archived": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.archive",
+        "id": "$deck"
+      }
+    }
+  },
+  "deck restored": {
+    "since": "2026-09-23 #360",
+    "queued": {
+      "v": 1,
+      "write": {
+        "kind": "deck.restore",
+        "id": "$deck"
+      }
+    }
+  }
+}

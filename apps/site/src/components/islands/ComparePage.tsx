@@ -3,7 +3,7 @@ import { ComparePageView } from "../landing/ComparePageView";
 import { Island } from "./Island";
 
 interface Props {
-  locale?: string | undefined;
+  locale: string | undefined;
   compare: CompareKey;
 }
 

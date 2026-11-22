@@ -1,5 +1,6 @@
 import { definePlugin } from "@oxlint/plugins";
 import aiConsent from "./rules/ai-consent.mjs";
+import clipOwner from "./rules/clip-owner.mjs";
 import fieldError from "./rules/field-error.mjs";
 import formHeader from "./rules/form-header.mjs";
 import isolateLearnerText from "./rules/isolate-learner-text.mjs";
@@ -20,6 +21,7 @@ export default definePlugin({
   meta: { name: "lymi" },
   rules: {
     "ai-consent": aiConsent,
+    "clip-owner": clipOwner,
     "field-error": fieldError,
     "form-header": formHeader,
     "isolate-learner-text": isolateLearnerText,

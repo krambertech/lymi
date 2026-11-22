@@ -24,6 +24,14 @@ import { mochi } from "../imports/mochi";
 import { noji } from "../imports/noji";
 import { pleco } from "../imports/pleco";
 import { quizlet } from "../imports/quizlet";
+import {
+  importNotesFolder,
+  importNotesKey,
+  newImportFileKey,
+  type ObjectStore,
+  putObject,
+  startUpload,
+} from "../storage";
 import { aiAllowedFor } from "./ai-consent";
 import { type AnalyticsWriter, track } from "./analytics";
 import { auditStatement, auditStatementWhen } from "./audit";
@@ -34,7 +42,6 @@ import {
   type AttachedMedia,
   attachPictures,
   type MediaTotals,
-  noteChunkKey,
   ownedImport,
   type PendingPicture,
   prepareDecks,
@@ -143,12 +150,15 @@ export async function getImport(ctx: ServiceContext, id: string) {
 }
 
 /** Opens an upload. The file arrives in parts of `IMPORT_PART_BYTES`, each its own request. */
-export async function startImport(ctx: ServiceContext, input: ImportStartInput, uploads: R2Bucket) {
+export async function startImport(
+  ctx: ServiceContext,
+  input: ImportStartInput,
+  uploads: ObjectStore<"IMPORTS">,
+) {
   const { db, userId, actor } = ctx;
   const id = newId();
-  // A random key names neither the learner nor the file.
-  const objectKey = `imports/${crypto.randomUUID()}`;
-  const upload = await uploads.createMultipartUpload(objectKey);
+  const objectKey = newImportFileKey();
+  const upload = await startUpload(uploads, objectKey);
   await db.batch([
     db.insert(schema.imports).values({
       id,
@@ -173,7 +183,7 @@ export async function uploadImportPart(
   partNumber: number,
   body: ReadableStream | ArrayBuffer,
   length: number,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
 ) {
   const row = await ownedImport(ctx, id);
   if (row.status !== "uploading" || !row.objectKey || !row.uploadId) {
@@ -203,7 +213,7 @@ export async function uploadImportPart(
 export async function completeImportUpload(
   ctx: ServiceContext,
   id: string,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
   start: StartRun,
 ) {
   const row = await ownedImport(ctx, id);
@@ -271,7 +281,7 @@ async function usualLanguage(ctx: ServiceContext): Promise<string | null> {
 export async function inspectImport(
   ctx: ServiceContext,
   id: string,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
   provider: TextProvider | null = null,
 ) {
   const row = await ownedImport(ctx, id);
@@ -292,9 +302,14 @@ export async function inspectImport(
   let chunk = 0;
   let batch: unknown[] = [];
   const flush = async () => {
-    await uploads.put(noteChunkKey(row.objectKey as string, chunk), JSON.stringify(batch), {
-      httpMetadata: { contentType: "application/json" },
-    });
+    await putObject(
+      uploads,
+      importNotesKey(row.objectKey as string, chunk),
+      JSON.stringify(batch),
+      {
+        httpMetadata: { contentType: "application/json" },
+      },
+    );
     chunk++;
     batch = [];
   };
@@ -433,7 +448,7 @@ function checkChoices(summary: StoredSummary, input: ImportChoicesInput): Import
 async function readyWork(
   ctx: ServiceContext,
   id: string,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
   input?: ImportChoicesInput,
 ) {
   const row = await ownedImport(ctx, id);
@@ -451,7 +466,7 @@ export async function previewImportChoices(
   ctx: ServiceContext,
   id: string,
   input: ImportChoicesInput,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
 ) {
   const work = await readyWork(ctx, id, uploads, input);
   if (work.row.status !== "ready") {
@@ -465,7 +480,7 @@ export async function confirmImport(
   ctx: ServiceContext,
   id: string,
   input: ImportChoicesInput,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
   start: StartRun,
 ) {
   const work = await readyWork(ctx, id, uploads, input);
@@ -499,7 +514,11 @@ export async function confirmImport(
   return getImport(ctx, id);
 }
 
-export async function prepareImportDecks(ctx: ServiceContext, id: string, uploads: R2Bucket) {
+export async function prepareImportDecks(
+  ctx: ServiceContext,
+  id: string,
+  uploads: ObjectStore<"IMPORTS">,
+) {
   return prepareDecks(ctx, await readyWork(ctx, id, uploads));
 }
 
@@ -508,7 +527,7 @@ export async function writeImportChunk(
   id: string,
   chunk: number,
   decks: Record<string, string>,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
 ) {
   return writeChunk(ctx, await readyWork(ctx, id, uploads), chunk, decks);
 }
@@ -521,8 +540,8 @@ export async function attachImportPictures(
   ctx: ServiceContext,
   id: string,
   pending: PendingPicture[],
-  uploads: R2Bucket,
-  storage: Partial<CardImageStorage> & { audio?: R2Bucket | undefined },
+  uploads: ObjectStore<"IMPORTS">,
+  storage: Partial<CardImageStorage> & { audio?: ObjectStore<"AUDIO"> | undefined },
   handled: number,
 ): Promise<AttachedMedia> {
   const work = await readyWork(ctx, id, uploads);
@@ -551,7 +570,7 @@ export async function finishImport(
   ctx: ServiceContext,
   id: string,
   pictures: MediaTotals,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
   runs?: number,
 ) {
   const row = await ownedImport(ctx, id);
@@ -616,7 +635,7 @@ export async function failImport(
   db: Db,
   id: string,
   failure: ImportFailure,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
   analytics?: AnalyticsWriter,
 ) {
   const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, id));
@@ -643,7 +662,11 @@ export async function failImport(
 }
 
 /** The learner's way out before anything is written. */
-export async function cancelImport(ctx: ServiceContext, id: string, uploads: R2Bucket) {
+export async function cancelImport(
+  ctx: ServiceContext,
+  id: string,
+  uploads: ObjectStore<"IMPORTS">,
+) {
   const row = await ownedImport(ctx, id);
   if (row.status === "cancelled") return getImport(ctx, id);
   if (!["uploading", "inspecting", "ready"].includes(row.status)) {
@@ -674,7 +697,7 @@ export async function cancelImport(ctx: ServiceContext, id: string, uploads: R2B
  * refused, so the caller keeps the key for the sweep.
  */
 export async function deleteImportFiles(
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
   row: Pick<Import, "objectKey" | "uploadId">,
 ): Promise<boolean> {
   if (!row.objectKey) return true;
@@ -688,7 +711,7 @@ export async function deleteImportFiles(
     let cursor: string | undefined;
     do {
       const page = await uploads.list({
-        prefix: `${row.objectKey}.notes/`,
+        prefix: importNotesFolder(row.objectKey),
         ...(cursor ? { cursor } : {}),
       });
       keys.push(...page.objects.map((o) => o.key));
@@ -706,7 +729,7 @@ export async function deleteImportFiles(
 /** Deletes an ended import's files and clears its key; a refused delete keeps it for the sweep. */
 async function releaseImportFiles(
   db: Db,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
   row: Pick<Import, "id" | "objectKey" | "uploadId">,
 ) {
   if (!row.objectKey || !(await deleteImportFiles(uploads, row))) return;
@@ -723,7 +746,7 @@ async function releaseImportFiles(
  */
 export async function expireImports(
   db: Db,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
   now = new Date(),
   analytics?: AnalyticsWriter | ((userId: string) => AnalyticsWriter),
 ) {
@@ -785,7 +808,7 @@ export async function failRun(
   db: Db,
   id: string,
   err: unknown,
-  uploads: R2Bucket,
+  uploads: ObjectStore<"IMPORTS">,
   budget: CallBudget,
   analytics: AnalyticsWriter | undefined,
   report: (err: unknown) => Promise<void>,

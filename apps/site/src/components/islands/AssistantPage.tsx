@@ -3,7 +3,7 @@ import { AssistantPageView } from "../landing/AssistantPageView";
 import { Island } from "./Island";
 
 interface Props {
-  locale?: string | undefined;
+  locale: string | undefined;
   assistant: AssistantKey;
 }
 

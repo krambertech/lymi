@@ -14,6 +14,7 @@ import {
 } from "react";
 import type { SectionStep } from "../../lib/deck-page";
 import { publicMediaUrl } from "../../lib/origins";
+import { useClip } from "../../lib/use-clip";
 import { buttonClass } from "../Button";
 import { Localized } from "../Localized";
 
@@ -289,52 +290,17 @@ function CardsView({
   const index = useRef<HTMLElement>(null);
   const jumping = useRef(0);
   const ticking = useRef(false);
-  const audio = useRef<HTMLAudioElement | null>(null);
-  const [playing, setPlaying] = useState<string | null>(null);
-  const [failedAudio, setFailedAudio] = useState<string | null>(null);
+  const { playing, failed: failedAudio, play, stop: stopAudio } = useClip();
 
-  const stopAudio = useCallback(() => {
-    audio.current?.pause();
-    audio.current = null;
-    setPlaying(null);
-    setFailedAudio(null);
-  }, []);
-
-  const toggleAudio = useCallback(
-    (id: string) => {
-      if (playing === id) {
-        stopAudio();
-        return;
-      }
-      audio.current?.pause();
-      setFailedAudio(null);
-      const clip = new Audio(publicMediaUrl(id, "audio"));
-      audio.current = clip;
-      setPlaying(id);
-      const done = () => {
-        if (audio.current !== clip) return;
-        audio.current = null;
-        setPlaying(null);
-      };
-      const failed = () => {
-        if (audio.current !== clip) return;
-        done();
-        setFailedAudio(id);
-      };
-      clip.addEventListener("ended", done);
-      clip.addEventListener("error", failed);
-      clip.play().catch(failed);
-    },
-    [playing, stopAudio],
-  );
+  const toggleAudio = (id: string) => {
+    if (playing?.id === id) stopAudio();
+    else play(id, publicMediaUrl(id, "audio"));
+  };
 
   useEffect(() => {
     const view = dialogRef.current;
     view?.addEventListener("close", stopAudio);
-    return () => {
-      view?.removeEventListener("close", stopAudio);
-      audio.current?.pause();
-    };
+    return () => view?.removeEventListener("close", stopAudio);
   }, [dialogRef, stopAudio]);
 
   // The section under the bar is the current one; the last counts once the list reaches its end.
@@ -523,14 +489,14 @@ function CardsView({
                               <button
                                 type="button"
                                 aria-label={
-                                  playing === card.audio.cardId
+                                  playing?.id === card.audio.cardId
                                     ? t`Stop pronunciation`
                                     : t`Play pronunciation`
                                 }
                                 onClick={() => card.audio && toggleAudio(card.audio.cardId)}
                                 className="inline-flex size-8 shrink-0 items-center justify-center rounded-full edge text-ink-secondary hoverable:hover:bg-plate-hover"
                               >
-                                {playing === card.audio.cardId ? (
+                                {playing?.id === card.audio.cardId ? (
                                   <Square
                                     aria-hidden="true"
                                     className="size-3"

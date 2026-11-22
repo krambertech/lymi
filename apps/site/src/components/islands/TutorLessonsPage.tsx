@@ -2,7 +2,7 @@ import { TutorLessonsView } from "../landing/TutorLessonsView";
 import { Island } from "./Island";
 
 interface Props {
-  locale?: string | undefined;
+  locale: string | undefined;
 }
 
 export default function TutorLessonsPage({ locale }: Props) {

@@ -33,8 +33,9 @@ interface DeckProps extends LocaleProps {
 }
 
 /** The edition the page was read in rides to the product, which pins it on the membership. */
-export function addUrl(slug: string, edition?: string | undefined): string {
-  return productUrl(`/add/${slug}${edition ? `?edition=${edition}` : ""}`);
+export function addUrl(slug: string, edition: string | undefined): string {
+  const path: string = `/add/${slug}${edition ? `?edition=${edition}` : ""}`;
+  return productUrl(path);
 }
 
 /** The edition a page shows, or nothing when it shows the deck's own words. */

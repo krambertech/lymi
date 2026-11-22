@@ -62,3 +62,31 @@ describe("borrowsKnownName", () => {
     expect(borrowsKnownName("Notes Helper")).toBe(false);
   });
 });
+
+describe("identifyApp", () => {
+  const name = (clientId: string, claimed?: string) => identifyApp(clientId, claimed, site).name;
+
+  it("takes the name from the host, never from what the client calls itself", () => {
+    expect(name("https://evil.example/client.json", "Claude")).toBe("evil.example");
+    expect(name("not-a-url", "Claude")).toBeNull();
+  });
+
+  it("recognises a known host's subdomain, and no host that only ends in its letters", () => {
+    expect(name("https://www.claude.ai/client.json")).toBe("Claude");
+    expect(name("https://auth.claude.ai/client.json")).toBe("Claude");
+    expect(name("https://evilclaude.ai/client.json")).toBe("evilclaude.ai");
+    expect(name("https://claude.ai.evil.example/client.json")).toBe("claude.ai.evil.example");
+  });
+
+  it("tells Codex from ChatGPT, which share a host, by Codex's own document", () => {
+    expect(name("https://chatgpt.com/oauth/codex/client.json")).toBe("Codex");
+    expect(name("https://chatgpt.com/oauth/client.json")).toBe("ChatGPT");
+  });
+
+  it("shows a claim only beside an address that is not recognised and does not repeat it", () => {
+    const claimed = (clientId: string, given: string) => identifyApp(clientId, given, site).claimed;
+    expect(claimed("https://claude.ai/client.json", "Anything")).toBeNull();
+    expect(claimed("https://evil.example/client.json", "Claude")).toBe("Claude");
+    expect(claimed("https://evil.example/client.json", "evil.example")).toBeNull();
+  });
+});

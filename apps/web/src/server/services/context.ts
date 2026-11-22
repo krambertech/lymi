@@ -20,6 +20,11 @@ export interface ServiceContext {
   fromPhone?: boolean | undefined;
 }
 
+export function asOwner(ctx: ServiceContext, ownerId: string): ServiceContext {
+  if (ctx.userId === ownerId) return ctx;
+  return { ...ctx, userId: ownerId, client: undefined, clientName: undefined };
+}
+
 /** A failure the caller turns into an HTTP status or a tool error. */
 export class ServiceError extends Error {
   constructor(

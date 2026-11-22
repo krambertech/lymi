@@ -11,7 +11,6 @@ import {
   stripJyutping,
 } from ".";
 
-/** Runs written as inline Jyutping, the notation `parseJyutping` reads. */
 const inline = (segments: readonly JyutpingSegment[]) =>
   segments
     .map(({ text, reading }) => (reading === undefined ? text : `${text}[${reading}]`))
@@ -45,6 +44,10 @@ describe("jyutpingSyllables", () => {
   it("covers the rounded vowels and labialised initials", () => {
     expect(jyutpingSyllables("zoeng2 ceoi1 jyu4 gwok3 kwaang1 wui5 deu6")).toHaveLength(7);
   });
+  it("takes an interjection only as a whole word", () => {
+    expect(jyutpingSyllables("hm2 hng6")).toEqual(["hm2", "hng6"]);
+    expect(jyutpingSyllables("gwaahm")).toBeNull();
+  });
   it("finds nothing in pinyin, IPA or tones past 6", () => {
     expect(jyutpingSyllables("ni3 hao3")).toBeNull();
     expect(jyutpingSyllables("xue2 xi2")).toBeNull();
@@ -55,6 +58,7 @@ describe("jyutpingSyllables", () => {
   it("reads a labial before a rounded front vowel as no syllable", () => {
     expect(jyutpingSyllables("byu1")).toBeNull();
     expect(jyutpingSyllables("ngi1")).toBeNull();
+    expect(jyutpingSyllables("ngoeng1")).toBeNull();
   });
 });
 
@@ -76,12 +80,19 @@ describe("jyutpingTermReading", () => {
   it("leaves letters plain, taking a word of the reading only when it is them", () => {
     expect(drawn("卡拉OK", "kaa1 laa1 OK")).toBe("卡[kaa1]拉[laa1]OK");
     expect(drawn("T恤", "T seot1")).toBe("T恤[seot1]");
+    expect(jyutpingTermReading("T恤", "seot1")).toEqual([
+      { text: "T" },
+      { text: "恤", reading: "seot1" },
+    ]);
   });
   it("lets letters take a syllable a letter, or one for the run, when the reading says them", () => {
     expect(drawn("T恤", "ti1 seot1")).toBe("T[ti1]恤[seot1]");
     expect(drawn("A貨", "ei1 fo3")).toBe("A[ei1]貨[fo3]");
     expect(drawn("卡拉OK", "kaa1 laa1 ou1 kei1")).toBe("卡[kaa1]拉[laa1]OK[ou1 kei1]");
     expect(drawn("BB仔", "bi4 zai2")).toBe("BB[bi4]仔[zai2]");
+  });
+  it("keeps a digit plain, so its syllable never goes to the character beside it", () => {
+    expect(drawn("3日", "saam1 jat6")).toBe("3日[saam1 jat6]");
   });
   it("puts a one-form reading over the first of listed forms", () => {
     expect(drawn("行 · 行路", "hang4")).toBe("行[hang4] · 行路");
@@ -113,6 +124,11 @@ describe("jyutpingKey", () => {
   it("gives no key unless every character's syllable carries a tone", () => {
     expect(jyutpingKey("香港", "hoeng gong")).toBeNull();
     expect(jyutpingKey("香港", "hoeng1 gong")).toBeNull();
+  });
+  it("keys any toned reading of a passage past 80 characters", () => {
+    expect(jyutpingKey("好".repeat(80), "hou2")).toBeNull();
+    expect(jyutpingKey("好".repeat(81), "hou2")).toBe("hou2");
+    expect(jyutpingKey("好".repeat(81), "hou")).toBeNull();
   });
   it("gives no key to another romanisation, IPA, pinyin or another word's reading", () => {
     expect(jyutpingKey("香港", "heung1 gong2")).toBeNull();
@@ -176,6 +192,21 @@ describe("parseJyutping", () => {
       { text: "T", reading: "ti1" },
       { text: "恤", reading: "seot1" },
     ]);
+  });
+  it("starts a stretch at a word's first letter, never inside the word", () => {
+    expect(parseJyutping("去OK貨[kei1 fo3]")[1]).toEqual({ text: "OK貨", reading: "kei1 fo3" });
+  });
+  it("reaches back over eight letters and no more", () => {
+    const eight = `ABCDEFGH貨[${"ei1 ".repeat(8)}fo3]`;
+    expect(parseJyutping(eight)[0]?.text).toBe("ABCDEFGH貨");
+    const nine = `ABCDEFGHI貨[${"ei1 ".repeat(9)}fo3]`;
+    expect(parseJyutping(nine)).toEqual([{ text: nine }]);
+  });
+  it("reads a bracket of up to 60 characters", () => {
+    const reading = Array.from({ length: 12 }, () => "hou2").join(" ");
+    const text = (bracket: string) => `${"好".repeat(12)}[${bracket}]`;
+    expect(stripJyutping(text(`${reading} `))).toBe("好".repeat(12));
+    expect(stripJyutping(text(`${reading}  `))).toBe(text(`${reading}  `));
   });
   it("leaves a bracket that is not toned Jyutping, or finds too few characters, as written", () => {
     for (const text of ["[sound:hou2.mp3]你好", "我話[ok]", "好[hou2 hou2]", "我[hao3]"])

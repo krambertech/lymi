@@ -5,11 +5,9 @@ import type { Rating, ReviewModeKey } from "./types";
 
 const DAY_MS = 86_400_000;
 
-/** One imported recall as Lymi's scheduler saw it, ready to store as a review row. */
 export type ReplayedReview = {
   rating: Rating;
   reviewedAt: Date;
-  /** FSRS state before the recall. */
   state: State;
   elapsedDays: number;
   scheduledDays: number;
@@ -17,19 +15,12 @@ export type ReplayedReview = {
   difficulty: number;
 };
 
-/**
- * A mode's imported progress run through Lymi's scheduler one grade at a time, so every review
- * row carries Lymi's memory state. The source's due date is kept, so the learner's schedule does
- * not move on import. The source's own memory state is used only for a mode with a schedule and
- * no log, and a mode the source treats as not started stays new with its log as history.
- */
 export function replayProgress(
   progress: ImportedProgress,
   now: Date,
 ): { state: FsrsCard; reviews: ReplayedReview[] } {
   const grades = progress.reviews
     .filter((review) => review.at.getTime() <= now.getTime())
-    // Of two recalls at one moment the lower grade stays, so the file's order cannot change the result.
     .sort((a, b) => a.at.getTime() - b.at.getTime() || a.rating - b.rating)
     .filter((review, i, all) => i === 0 || review.at.getTime() !== all[i - 1]?.at.getTime());
 
@@ -81,10 +72,6 @@ export function replayProgress(
   return { state, reviews };
 }
 
-/**
- * The rank of a mode in the order the card will be taught, lowest first. A card with picture
- * modes keeps its own list; a text-only card is ranked as following its deck, the common case.
- */
 function taughtRank(card: Pick<ImportedCard, "modes"> & Partial<Pick<ImportedCard, "fields">>) {
   const order = card.modes.some(isImageMode)
     ? card.modes
@@ -97,10 +84,6 @@ function taughtRank(card: Pick<ImportedCard, "modes"> & Partial<Pick<ImportedCar
     (mode === "meaning_to_term" && !hasMeaning ? 1000 : 0) + order.indexOf(mode);
 }
 
-/**
- * Whether a card arrives Known: the mode it is taught first replays to Review, the state a deck's
- * list marks Known. A suspended card arrives archived and is not counted.
- */
 export function arrivesKnown(
   card: Pick<ImportedCard, "modes" | "progress" | "archived"> &
     Partial<Pick<ImportedCard, "fields">>,

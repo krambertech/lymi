@@ -1,8 +1,17 @@
-import { describe, expect, it } from "vitest";
+import { afterEach, describe, expect, it, vi } from "vitest";
 import { isolate, unisolate } from "../isolate";
 import { textDirection } from "./direction";
 
+afterEach(() => vi.unstubAllGlobals());
+
 describe("textDirection", () => {
+  it("reads the tag alone, since Firefox and Hermes cannot tell a locale's direction", () => {
+    vi.stubGlobal("Intl", {});
+    expect(textDirection("ar")).toBe("rtl");
+    expect(textDirection("az-Arab")).toBe("rtl");
+    expect(textDirection("en")).toBe("auto");
+  });
+
   it("runs right to left for a language whose default script does", () => {
     for (const tag of ["ar", "ar-EG", "he", "fa-IR", "ur", "ps", "yi", "ckb", "arz", "ary", "dv"]) {
       expect(textDirection(tag)).toBe("rtl");

@@ -1,5 +1,6 @@
 import { describe, expect, it } from "vitest";
 import {
+  EARLIER_EXAMPLE,
   EXAMPLE_LENGTH,
   exampleFingerprint,
   fitsExample,
@@ -14,6 +15,7 @@ describe("an example's length", () => {
   it("counts what a reader sees, not readings or stress marks", () => {
     expect(shownLength("毎朝[まいあさ]パンを食[た]べます。")).toBe(10);
     expect(shownLength("Я люблю́ за́мок.")).toBe(14);
+    expect(shownLength("搭𨋢")).toBe(2);
   });
 
   it("lets a Japanese sentence with readings use the same room as a German one", () => {
@@ -25,12 +27,8 @@ describe("an example's length", () => {
 
   it("is what an add refuses past", () => {
     const card = { deckId: "d1", term: "x" };
-    expect(CardInput.safeParse({ ...card, example: "a".repeat(EXAMPLE_LENGTH) }).success).toBe(
-      true,
-    );
-    expect(CardInput.safeParse({ ...card, example: "a".repeat(EXAMPLE_LENGTH + 1) }).success).toBe(
-      false,
-    );
+    expect(CardInput.safeParse({ ...card, example: "a".repeat(250) }).success).toBe(true);
+    expect(CardInput.safeParse({ ...card, example: "a".repeat(251) }).success).toBe(false);
     expect(
       CardInput.safeParse({ ...card, example: "x", exampleTranslation: "a".repeat(251) }).success,
     ).toBe(false);
@@ -50,6 +48,21 @@ describe("a translation's example", () => {
     expect(exampleFingerprint("Un café.")).not.toBe(exampleFingerprint("Un cafe."));
     expect(exampleFingerprint("Ένα κα\u03b9\u0301ει.")).not.toBe(exampleFingerprint("Ένα καιει."));
     expect(shownLength("Un caf\u0065\u0301.")).toBe(8);
+  });
+
+  it("keeps the fingerprint stored on cards, since a new one would mark every translation stale", () => {
+    expect(exampleFingerprint("Ich esse Brot.")).toBe("qfcb1g22z9");
+  });
+
+  it("is stale for an example no longer known, which no sentence's fingerprint can equal", () => {
+    expect(EARLIER_EXAMPLE).toMatch(/[^0-9a-z]/);
+    expect(
+      translationStale({
+        example: "Ich esse Brot.",
+        exampleTranslation: "I eat bread.",
+        exampleTranslationOf: EARLIER_EXAMPLE,
+      }),
+    ).toBe(true);
   });
 
   it("is stale once the example says something else", () => {

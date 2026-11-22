@@ -12,7 +12,9 @@ A sticky navigation row starts with **All shelves**, followed by a chip for each
 
 Language shelves come first, followed by subject shelves. A shelf with its own page shows one row of decks and **See all**. A shelf without a page shows every deck. Search also shows all matching decks. Hide overflow tiles rather than clipping them so keyboard focus cannot reach invisible links. Keep consistent tile widths across short and full rows.
 
-Each tile shows a real card from the deck’s current revision in a [deck tray](system/surfaces.md#the-deck-tray), followed by the deck name, summary, card count and section count. The deck name is larger than the preview’s cue. Preview the card in an available review mode, with its answer below the divider. Up to two background sheets indicate additional cards and spread on hover. The same revision produces the same preview for every visitor.
+Each tile shows a real card from the deck’s current revision in a [deck tray](system/surfaces.md#the-deck-tray), followed by the deck name, summary, card count and section count. The deck name is larger than the preview’s cue. Preview the card in an available review mode, with its answer below the divider. Up to two background sheets indicate additional cards and spread on hover. The same revision produces the same preview for every visitor. A preview shows a picture mode first, because a picture is the most telling cue a card has, and otherwise steps through the card's modes by its place. A section of an edition with no approved name shows the original's, marked with the original's language.
+
+A deck page's hand and spread (`deckPageHand` and `deckPageSpread` in `packages/core/src/catalog.ts`) are chosen from the slug and revision rather than at random, so everyone who loads one revision gets the same page and its ETag stays honest; the product voices those cards ahead of a first play. The spread takes cards from sections spaced evenly through the deck, preferring cards short enough to read at a glance.
 
 Tray colour is derived from the deck’s slug and reused on its page. Search and shelf membership do not change it.
 

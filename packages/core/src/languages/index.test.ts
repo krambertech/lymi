@@ -6,9 +6,11 @@ import {
   LANGUAGE_FORMATS,
   languageFormat,
   languageScript,
+  LANGUAGE_RECORDS,
   languageSupport,
   pronunciationGuide,
   pronunciationName,
+  saysReading,
   speechContext,
   speechInputs,
   speechLocale,
@@ -110,6 +112,13 @@ describe("speechInputs", () => {
   });
 });
 
+describe("saysReading", () => {
+  it("says the Reading or the stress where plain text can't tell two words apart, and the term where a voice reads the script", () => {
+    for (const tag of ["ja", "ru", "uk"]) expect(saysReading(tag)).toBe(true);
+    for (const tag of ["zh", "yue", "ta", "ko", null]) expect(saysReading(tag)).toBe(false);
+  });
+});
+
 describe("speechLocale", () => {
   it("speaks traditional Chinese with the Taiwan voice and leaves the rest to the default", () => {
     expect(speechLocale("zh-Hant")).toBe("cmn-TW");
@@ -166,6 +175,11 @@ describe("languageFormat", () => {
   });
   it("has none for a language Lymi writes the general way", () => {
     for (const tag of ["it", "en", "", null, "constructor"]) expect(languageFormat(tag)).toBeNull();
+  });
+  it("lists every record first, then the configured languages", () => {
+    const records = Object.keys(LANGUAGE_RECORDS);
+    expect(LANGUAGE_FORMATS.slice(0, records.length).map((format) => format.tag)).toEqual(records);
+    expect(LANGUAGE_FORMATS[records.length]?.tag).toBe("ko");
   });
   it("calls Korean's pronounced Hangul a pronunciation, not a Reading", () => {
     expect(languageFormat("ko")?.pronunciation).toMatchObject({

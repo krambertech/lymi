@@ -10,7 +10,6 @@ import type {
 import type { Deck as DeckRow } from "@lymi/core/schema";
 import { request } from "./request";
 
-/** A deck as the API sends it. `revision` and `enrichStyleAt` are the server's own bookkeeping. */
 export type Deck = Omit<DeckRow, "revision" | "enrichStyleAt">;
 
 export type DeckSummary = Pick<
@@ -25,28 +24,16 @@ export type DeckSummary = Pick<
   | "sectionProgression"
 > & {
   reviewModes: ReviewMode[];
-  /** What the deck is for, inferred from its language until the owner chooses. Null for a member. */
   purpose: DeckPurpose | null;
-  /** What the AI may fill on the deck's cards, with the default already applied. */
   enrichFields: DeckEnrichField[];
-  /** The owner's instructions to the AI. Null for a member. */
   enrichInstructions: string | null;
-  /** What the AI learned from the owner's cards. Null for a member; a cache from before it lacks it. */
   enrichStyle?: string | null;
-  /** The learner's own adaptive pronunciation choice. A cache from before it lacks it, which reads as adaptive. */
   pronunciationDisplay?: PronunciationDisplay;
   total: number;
   due: number;
-  /** When the deck was archived, null while it is active. */
   archivedAt: string | null;
-  /** The learner's role in the deck and who owns it. Only the owner writes. ADR 0011. */
   role: MemberRole;
-  /**
-   * `avatarUrl` is the publisher's photo, which only a published deck has. `former` marks a deck
-   * kept for its members after its owner deleted their account; a cache from before it lacks it.
-   */
   owner: { id: string; name: string; avatarUrl: string | null; former?: boolean };
-  /** True while the deck is published, which makes its owner its publisher. */
   published: boolean;
 };
 

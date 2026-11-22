@@ -60,9 +60,9 @@ export type StartExportRun = (params: ExportRunParams) => Promise<void>;
 
 /** Where export files are read from and written to. */
 export type ExportStorage = {
-  bucket: ObjectStore;
-  pictures: ObjectStore | undefined;
-  audio: ObjectStore | undefined;
+  bucket: ObjectStore<"EXPORTS">;
+  pictures: ObjectStore<"PRIVATE_IMAGES"> | undefined;
+  audio: ObjectStore<"AUDIO"> | undefined;
 };
 
 /** The file is too large for one step or one zip, so the learner exports per deck instead. */
@@ -392,7 +392,7 @@ const recordsKey = (row: Export, segment: number) =>
 type StoredRecords = { records: ZipRecord[]; media: [string, string][] };
 
 async function putSegment(
-  bucket: ObjectStore,
+  bucket: ObjectStore<"EXPORTS">,
   row: Export,
   segment: number,
   zip: ZipSegment,
@@ -593,7 +593,11 @@ export async function writeExportMedia(
   const media: [string, string][] = [];
   let number = step.number;
   let missing = 0;
-  const copy = async (bucket: ObjectStore | undefined, key: string, name: string) => {
+  const copy = async (
+    bucket: ObjectStore<"PRIVATE_IMAGES" | "AUDIO"> | undefined,
+    key: string,
+    name: string,
+  ) => {
     const object = bucket ? await bucket.get(key) : null;
     if (!object) {
       missing++;
@@ -648,7 +652,7 @@ export async function finishExport(
   ctx: ServiceContext,
   id: string,
   end: { segment: number; offset: number; missing: number },
-  bucket: ObjectStore,
+  bucket: ObjectStore<"EXPORTS">,
 ) {
   const row = await ownedExport(ctx, id);
   if (row.status !== "exporting" || !row.objectKey) return;
@@ -705,7 +709,12 @@ export async function finishExport(
 }
 
 /** Stops an export with a reason and deletes what it wrote. */
-export async function failExport(db: Db, id: string, failure: ExportFailure, bucket: ObjectStore) {
+export async function failExport(
+  db: Db,
+  id: string,
+  failure: ExportFailure,
+  bucket: ObjectStore<"EXPORTS">,
+) {
   const [row] = await db.select().from(schema.exportFiles).where(eq(schema.exportFiles.id, id));
   if (row?.status !== "exporting") return;
   const now = new Date();
@@ -723,7 +732,7 @@ export async function failExport(db: Db, id: string, failure: ExportFailure, buc
     .where(and(eq(schema.exportFiles.id, id), eq(schema.exportFiles.status, "exporting")));
 }
 
-async function deleteObjects(bucket: ObjectStore, prefix: string) {
+async function deleteObjects(bucket: ObjectStore<"EXPORTS">, prefix: string) {
   let cursor: string | undefined;
   do {
     const page = await bucket.list({ prefix, ...(cursor ? { cursor } : {}) });
@@ -735,7 +744,7 @@ async function deleteObjects(bucket: ObjectStore, prefix: string) {
 
 /** Deletes an export's segments. False when R2 refused, so the caller keeps the key for the sweep. */
 export async function deleteExportFiles(
-  bucket: ObjectStore,
+  bucket: ObjectStore<"EXPORTS">,
   row: Pick<Export, "objectKey">,
 ): Promise<boolean> {
   if (!row.objectKey) return true;
@@ -751,7 +760,7 @@ export async function deleteExportFiles(
 }
 
 /** Deletes files past their window and gives up on exports that stalled. Run from the cron trigger. */
-export async function expireExports(db: Db, bucket: ObjectStore, now = new Date()) {
+export async function expireExports(db: Db, bucket: ObjectStore<"EXPORTS">, now = new Date()) {
   const expired = await db
     .select()
     .from(schema.exportFiles)
@@ -796,7 +805,7 @@ export async function expireExports(db: Db, bucket: ObjectStore, now = new Date(
 export async function exportFile(
   ctx: ServiceContext,
   id: string,
-  bucket: ObjectStore,
+  bucket: ObjectStore<"EXPORTS">,
   now = new Date(),
 ) {
   const row = await ownedExport(ctx, id);

@@ -556,7 +556,10 @@ export async function deleteAccount(
  * for a deck kept before copies existed, because the last one left. Pictures a copy shares stay,
  * and the cards' audio is queued. A deck whose pictures R2 refused waits for the next run.
  */
-export async function dropUnstudiedFormerDecks(db: Db, images: ObjectStore): Promise<number> {
+export async function dropUnstudiedFormerDecks(
+  db: Db,
+  images: ObjectStore<"PRIVATE_IMAGES">,
+): Promise<number> {
   const decks = await db
     .select({ id: schema.decks.id })
     .from(schema.decks)

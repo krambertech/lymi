@@ -44,7 +44,7 @@ export function nextWriteStep(
 /** What a write run reaches through its Workflow instance. */
 export interface WriteRun {
   ctx: ServiceContext;
-  uploads: ObjectStore;
+  uploads: ObjectStore<"IMPORTS">;
   storage: Parameters<typeof attachImportPictures>[4];
   /** Counts the calls sent through `ctx.db`, `uploads` and `storage`. */
   budget: CallBudget;

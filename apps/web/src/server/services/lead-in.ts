@@ -48,8 +48,8 @@ export async function audioFingerprint(value: unknown): Promise<string> {
 
 /** Conditional R2 writes serialize billable misses across Worker isolates, not only one process. */
 export async function withAudioLease<T>(
-  bucket: ObjectStore,
-  key: ObjectKey,
+  bucket: ObjectStore<"AUDIO">,
+  key: ObjectKey<"cardAudio">,
   run: () => Promise<T>,
 ): Promise<T> {
   const previous = await bucket.get(key);
@@ -94,7 +94,7 @@ export async function settleLeadIn(
   card: Card,
   policy: LeadInPolicy,
   input: LeadInInput,
-  bucket: ObjectStore,
+  bucket: ObjectStore<"AUDIO">,
   { writer, decide }: { writer: LeadInWriter; decide: DecisionModel },
   cachedOnly = false,
   analytics?: AnalyticsWriter,

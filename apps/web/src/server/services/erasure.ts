@@ -2,7 +2,11 @@ import { and, eq, inArray, type Table } from "@lymi/core/db";
 import { type Db, schema } from "../db";
 import type { Statement } from "./batch";
 
-export type CronJob = "purge-card-audio" | "anki-connect-uploads" | "purge-expired-auth";
+export type CronJob =
+  | "purge-card-audio"
+  | "anki-connect-uploads"
+  | "purge-expired-auth"
+  | "apple-revocations";
 
 type TableName = {
   [K in keyof typeof schema]: (typeof schema)[K] extends Table ? K : never;
@@ -14,7 +18,11 @@ type Leaving = { userId: string; email: string; now: Date };
 
 type Eraser = (db: Db, leaving: Leaving) => Statement;
 
-type Leaves<T extends TableName> = { columns: readonly ColumnOf<T>[]; because: string };
+type Leaves<T extends TableName> = {
+  columns: readonly ColumnOf<T>[];
+  because: string;
+  until?: { columns: readonly ColumnOf<T>[]; settledBy: CronJob };
+};
 
 type Erasure<T extends TableName> =
   | { by: "account" }
@@ -121,7 +129,8 @@ export const ERASURE = {
     by: "nothing",
     leaves: {
       columns: ["id"],
-      because: "The record that an account ended, with counts and nothing that names the person",
+      because:
+        "The record that an account ended, with its age and counts and nothing that names the person",
     },
   },
   formerDeckCopies: { by: "cascade" },
@@ -130,7 +139,9 @@ export const ERASURE = {
     by: "nothing",
     leaves: {
       columns: ["id"],
-      because: "Holds the Apple grant until Apple confirms it revoked, with no address or name",
+      because:
+        "The record of whether Apple's grant ended stays for good, whatever its outcome, with no address or name. The refresh token web sign-in stored waits in it, sealed, until Apple revokes it or the retries run out, and longer while no Apple key is configured",
+      until: { columns: ["token"], settledBy: "apple-revocations" },
     },
   },
   cardAudioPurges: { by: "purge-card-audio" },
@@ -145,7 +156,8 @@ export const ERASURE = {
     by: "nothing",
     leaves: {
       columns: ["id", "note", "snapshot", "localDate"],
-      because: "A moderation record outlives the account and deck it is about, without their ids",
+      because:
+        "A moderation record outlives the account and deck it is about, without their ids. Its snapshot keeps the deck's and cards' text and the owner's display name, and its note what the reporter wrote",
     },
   },
   sharingSuspensions: { by: "cascade" },

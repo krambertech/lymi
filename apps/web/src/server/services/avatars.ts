@@ -12,7 +12,7 @@ import { normalizeSquareImage, readAtMost } from "./images";
 export const AVATAR_SIZE = 320;
 
 export interface AvatarStorage {
-  bucket: ObjectStore;
+  bucket: ObjectStore<"PRIVATE_IMAGES">;
   images: ImagesBinding;
 }
 
@@ -279,7 +279,7 @@ async function ensureAvatarRow(ctx: Pick<ServiceContext, "db" | "userId">) {
   return created;
 }
 
-async function putImage(storage: AvatarStorage, key: ObjectKey, bytes: Uint8Array) {
+async function putImage(storage: AvatarStorage, key: ObjectKey<"avatars">, bytes: Uint8Array) {
   try {
     await putObject(storage.bucket, key, bytes, { httpMetadata: { contentType: "image/webp" } });
   } catch {

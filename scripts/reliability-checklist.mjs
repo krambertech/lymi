@@ -185,16 +185,17 @@ export const ITEMS = [
       "apps/web/src/server/services/erasure.ts",
       "apps/web/src/server/services/takedowns.ts",
     ],
-    paths: ["apps/web/src/server/**/*.ts"],
+    paths: ["packages/core/src/schema/**/*.ts", "apps/web/src/server/**/*.ts"],
     ignore: TESTS,
-    added: /\barchivedAt:\s*null\b|\barchived_at\s*=\s*null\b/,
+    added:
+      /\barchivedAt:\s*null\b|\barchived_at\s*=\s*null\b|\b\w*(?:token|cipher|secret|credential|grant)\w*:\s*text\(|\w*(?:connection|grant|revocation)\w*\s*=\s*sqliteTable\(/i,
     check:
-      "Can this restore bring back something Lymi took down? Does deleting the account end a grant another service holds, and does a kept row or copy hold only what `erasure.ts` says?",
+      "Does deleting the account end a grant another service holds, rather than only the row that records it? Can this restore bring back something Lymi took down?",
     why: "A restore undid a takedown, and shared decks and Apple's grant needed handling. Tables and R2 objects deletion misses fail `erasure.test.ts`.",
     sources: [972, 1164],
     example: {
-      file: "apps/web/src/server/services/sections.ts",
-      line: "    db.update(schema.sections).set({ archivedAt: null })",
+      file: "packages/core/src/schema/app.ts",
+      line: '  tokenCipher: text("token_cipher").notNull(),',
     },
   },
 ];

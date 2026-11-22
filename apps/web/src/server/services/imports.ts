@@ -153,7 +153,7 @@ export async function getImport(ctx: ServiceContext, id: string) {
 export async function startImport(
   ctx: ServiceContext,
   input: ImportStartInput,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
 ) {
   const { db, userId, actor } = ctx;
   const id = newId();
@@ -183,7 +183,7 @@ export async function uploadImportPart(
   partNumber: number,
   body: ReadableStream | ArrayBuffer,
   length: number,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
 ) {
   const row = await ownedImport(ctx, id);
   if (row.status !== "uploading" || !row.objectKey || !row.uploadId) {
@@ -213,7 +213,7 @@ export async function uploadImportPart(
 export async function completeImportUpload(
   ctx: ServiceContext,
   id: string,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
   start: StartRun,
 ) {
   const row = await ownedImport(ctx, id);
@@ -281,7 +281,7 @@ async function usualLanguage(ctx: ServiceContext): Promise<string | null> {
 export async function inspectImport(
   ctx: ServiceContext,
   id: string,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
   provider: TextProvider | null = null,
 ) {
   const row = await ownedImport(ctx, id);
@@ -448,7 +448,7 @@ function checkChoices(summary: StoredSummary, input: ImportChoicesInput): Import
 async function readyWork(
   ctx: ServiceContext,
   id: string,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
   input?: ImportChoicesInput,
 ) {
   const row = await ownedImport(ctx, id);
@@ -466,7 +466,7 @@ export async function previewImportChoices(
   ctx: ServiceContext,
   id: string,
   input: ImportChoicesInput,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
 ) {
   const work = await readyWork(ctx, id, uploads, input);
   if (work.row.status !== "ready") {
@@ -480,7 +480,7 @@ export async function confirmImport(
   ctx: ServiceContext,
   id: string,
   input: ImportChoicesInput,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
   start: StartRun,
 ) {
   const work = await readyWork(ctx, id, uploads, input);
@@ -514,7 +514,11 @@ export async function confirmImport(
   return getImport(ctx, id);
 }
 
-export async function prepareImportDecks(ctx: ServiceContext, id: string, uploads: ObjectStore) {
+export async function prepareImportDecks(
+  ctx: ServiceContext,
+  id: string,
+  uploads: ObjectStore<"IMPORTS">,
+) {
   return prepareDecks(ctx, await readyWork(ctx, id, uploads));
 }
 
@@ -523,7 +527,7 @@ export async function writeImportChunk(
   id: string,
   chunk: number,
   decks: Record<string, string>,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
 ) {
   return writeChunk(ctx, await readyWork(ctx, id, uploads), chunk, decks);
 }
@@ -536,8 +540,8 @@ export async function attachImportPictures(
   ctx: ServiceContext,
   id: string,
   pending: PendingPicture[],
-  uploads: ObjectStore,
-  storage: Partial<CardImageStorage> & { audio?: ObjectStore | undefined },
+  uploads: ObjectStore<"IMPORTS">,
+  storage: Partial<CardImageStorage> & { audio?: ObjectStore<"AUDIO"> | undefined },
   handled: number,
 ): Promise<AttachedMedia> {
   const work = await readyWork(ctx, id, uploads);
@@ -566,7 +570,7 @@ export async function finishImport(
   ctx: ServiceContext,
   id: string,
   pictures: MediaTotals,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
   runs?: number,
 ) {
   const row = await ownedImport(ctx, id);
@@ -631,7 +635,7 @@ export async function failImport(
   db: Db,
   id: string,
   failure: ImportFailure,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
   analytics?: AnalyticsWriter,
 ) {
   const [row] = await db.select().from(schema.imports).where(eq(schema.imports.id, id));
@@ -658,7 +662,11 @@ export async function failImport(
 }
 
 /** The learner's way out before anything is written. */
-export async function cancelImport(ctx: ServiceContext, id: string, uploads: ObjectStore) {
+export async function cancelImport(
+  ctx: ServiceContext,
+  id: string,
+  uploads: ObjectStore<"IMPORTS">,
+) {
   const row = await ownedImport(ctx, id);
   if (row.status === "cancelled") return getImport(ctx, id);
   if (!["uploading", "inspecting", "ready"].includes(row.status)) {
@@ -689,7 +697,7 @@ export async function cancelImport(ctx: ServiceContext, id: string, uploads: Obj
  * refused, so the caller keeps the key for the sweep.
  */
 export async function deleteImportFiles(
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
   row: Pick<Import, "objectKey" | "uploadId">,
 ): Promise<boolean> {
   if (!row.objectKey) return true;
@@ -721,7 +729,7 @@ export async function deleteImportFiles(
 /** Deletes an ended import's files and clears its key; a refused delete keeps it for the sweep. */
 async function releaseImportFiles(
   db: Db,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
   row: Pick<Import, "id" | "objectKey" | "uploadId">,
 ) {
   if (!row.objectKey || !(await deleteImportFiles(uploads, row))) return;
@@ -738,7 +746,7 @@ async function releaseImportFiles(
  */
 export async function expireImports(
   db: Db,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
   now = new Date(),
   analytics?: AnalyticsWriter | ((userId: string) => AnalyticsWriter),
 ) {
@@ -800,7 +808,7 @@ export async function failRun(
   db: Db,
   id: string,
   err: unknown,
-  uploads: ObjectStore,
+  uploads: ObjectStore<"IMPORTS">,
   budget: CallBudget,
   analytics: AnalyticsWriter | undefined,
   report: (err: unknown) => Promise<void>,

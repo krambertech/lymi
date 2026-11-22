@@ -1,6 +1,8 @@
+import { generateKeyPairSync } from "node:crypto";
 import { newId } from "@lymi/core";
-import { getTableColumns, getTableName, is, Table } from "@lymi/core/db";
-import { beforeEach, describe, expect, it } from "vitest";
+import { eq, getTableColumns, getTableName, is, Table } from "@lymi/core/db";
+import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
+import { appleClientsOf, openAppleToken } from "../apple-revoke";
 import { schema } from "../db";
 import {
   ankiConnectUploadKey,
@@ -18,18 +20,35 @@ import {
 import { json, type Session, type TestApp, testApp } from "../test-app";
 import { dropUnstudiedFormerDecks } from "./account-deletion";
 import { sweepAnkiConnectUploads } from "./anki-connect";
-import { purgeCardAudio } from "./audio";
+import { retryAppleRevocations } from "./apple-revocations";
+import { pronunciationAudio, purgeCardAudio } from "./audio";
 import { purgeExpiredAuthRows } from "./auth-retention";
+import { runBatch, type Statement } from "./batch";
 import { copyFormerDecks } from "./deck-copies";
 import { clearLocalEmailOutbox, latestLocalEmail } from "./email";
 import { type CronJob, ERASURE } from "./erasure";
+import { exampleAudio } from "./example-audio";
 
 type TableName = keyof typeof ERASURE;
 type Row = Record<string, unknown>;
 type Reference = { column: string; parent: TableName; parentColumn: string };
-type World = { person: Session; marker: string; rows: Partial<Record<TableName, Row>> };
+type World = {
+  person: Session;
+  name: string;
+  marker: string;
+  rows: Partial<Record<TableName, Row>>;
+};
 
 const DAY = 24 * 60 * 60 * 1000;
+const APPLE = {
+  APPLE_APP_BUNDLE_IDENTIFIER: "app.lymi.test",
+  APPLE_CLIENT_ID: "app.lymi.test.web",
+  APPLE_TEAM_ID: "TEAM",
+  APPLE_KEY_ID: "KEY",
+  APPLE_PRIVATE_KEY: generateKeyPairSync("ec", { namedCurve: "prime256v1" })
+    .privateKey.export({ format: "pem", type: "pkcs8" })
+    .toString(),
+};
 const tables = Object.entries(schema).filter(([, value]) => is(value, Table)) as unknown as [
   TableName,
   Table,
@@ -48,7 +67,7 @@ let app: TestApp;
 let references: Record<string, Reference[]>;
 let leaver: World;
 let stayer: World;
-let objects: Record<keyof typeof STORED, ObjectKey[]>;
+let objects: { [N in keyof typeof STORED]: ObjectKey<N>[] };
 let made = 0;
 
 async function readReferences() {
@@ -112,15 +131,10 @@ function rowFor(name: TableName, world: World, given: Row): Row {
   return { ...row, ...given };
 }
 
-async function insert(name: TableName, row: Row): Promise<Row> {
-  const table = tableOf[name] as typeof schema.decks;
-  const [inserted] = await app.db
-    .insert(table)
-    .values(row as typeof schema.decks.$inferInsert)
-    .returning();
-  if (!inserted) throw new Error(`${name} row not inserted`);
-  return inserted;
-}
+const insertion = (name: TableName, row: Row): Statement =>
+  app.db
+    .insert(tableOf[name] as typeof schema.decks)
+    .values(row as typeof schema.decks.$inferInsert);
 
 const primaryKey = (name: TableName) =>
   Object.entries(getTableColumns(tableOf[name])).flatMap(([property, { primary }]) =>
@@ -132,7 +146,7 @@ const isSeeded = (name: TableName) =>
   name !== "appleRevocations" &&
   !["account", "single batch"].includes(ERASURE[name].by);
 
-async function seedLeaver() {
+async function seedLeaver(): Promise<Statement[]> {
   const cardId = newId();
   const [recorded, sentence] = [
     cardAudioKey(cardId, "recorded/term.mp3"),
@@ -150,9 +164,11 @@ async function seedLeaver() {
     ankiConnectUploads: [ankiConnectUploadKey(leaver.person.userId, "clip")],
     exportFiles: [exportSegmentKey(exportFile, 0), exportRecordsKey(exportFile, 0)],
   };
-  for (const name of Object.keys(STORED) as (keyof typeof STORED)[]) {
-    for (const key of objects[name]) await app.env[STORED[name].bucket].put(key, "private");
-  }
+  await Promise.all(
+    (Object.keys(STORED) as (keyof typeof STORED)[]).flatMap((name) =>
+      objects[name].map((key) => app.env[STORED[name].bucket].put(key, "private")),
+    ),
+  );
   const given: Partial<Record<TableName, Row>> = {
     account: { providerId: "apple" },
     verification: { identifier: `email-verification-otp-${leaver.person.email}` },
@@ -163,6 +179,7 @@ async function seedLeaver() {
     exportFiles: { objectKey: exportFile },
     deckInvitations: { kind: "named" },
   };
+  const statements: Statement[] = [];
   for (const name of parentsFirst().filter(
     (each) => isSeeded(each) && ERASURE[each].by !== "no learner data",
   )) {
@@ -170,33 +187,52 @@ async function seedLeaver() {
       ({ column, parent }) => parent === "user" && primaryKey(name).includes(column),
     );
     if (mine && primaryKey(name).length === 1) {
-      await app.env.DB.prepare(`delete from "${getTableName(tableOf[name])}" where user_id = ?`)
-        .bind(leaver.person.userId)
-        .run();
+      const table = tableOf[name] as typeof schema.userSettings;
+      statements.push(app.db.delete(table).where(eq(table.userId, leaver.person.userId)));
     }
-    leaver.rows[name] = await insert(name, rowFor(name, leaver, given[name] ?? {}));
+    const row = rowFor(name, leaver, given[name] ?? {});
+    leaver.rows[name] = row;
+    statements.push(insertion(name, row));
   }
+  return statements;
 }
 
-async function seedStayer() {
+function seedStayer(): Statement[] {
+  const spoken: Partial<Record<TableName, Row>> = {
+    cards: {
+      language: "fi",
+      term: "talo",
+      example: "Talo on suuri.",
+      audioKey: null,
+      exampleRecordingKey: null,
+    },
+  };
   const parents = new Set(tables.flatMap(([name]) => referencesOf(name).map((r) => r.parent)));
-  for (const name of parentsFirst().filter((each) => isSeeded(each) && parents.has(each))) {
-    stayer.rows[name] = await insert(name, rowFor(name, stayer, {}));
-  }
+  return parentsFirst()
+    .filter((name) => isSeeded(name) && parents.has(name))
+    .map((name) => {
+      const row = rowFor(name, stayer, spoken[name] ?? {});
+      stayer.rows[name] = row;
+      return insertion(name, row);
+    });
 }
 
-async function seedLeaverInStayersWorld() {
+function seedLeaverInStayersWorld(): Statement[] {
+  const statements: Statement[] = [];
   for (const name of parentsFirst().filter(isSeeded)) {
     const people = referencesOf(name).filter(({ parent }) => parent === "user");
     if (referencesOf(name).length === people.length && people.length < 2) continue;
     for (const { column } of people) {
       if (primaryKey(name).join() === column) continue;
-      await insert(name, rowFor(name, stayer, { [column]: leaver.person.userId }));
+      statements.push(insertion(name, rowFor(name, stayer, { [column]: leaver.person.userId })));
     }
     if ("email" in getTableColumns(tableOf[name])) {
-      await insert(name, rowFor(name, stayer, { email: leaver.person.email, kind: "named" }));
+      statements.push(
+        insertion(name, rowFor(name, stayer, { email: leaver.person.email, kind: "named" })),
+      );
     }
   }
+  return statements;
 }
 
 async function deleteLeaver() {
@@ -216,6 +252,12 @@ const cron: Record<CronJob, () => Promise<unknown>> = {
   "anki-connect-uploads": () =>
     sweepAnkiConnectUploads(app.env.IMPORTS, new Date(Date.now() + DAY)),
   "purge-expired-auth": () => purgeExpiredAuthRows(app.db, new Date(Date.now() + 2 * DAY)),
+  "apple-revocations": () =>
+    retryAppleRevocations(
+      app.db,
+      { clients: appleClientsOf(app.env), fetcher: async () => new Response(null) },
+      new Date(Date.now() + DAY),
+    ),
 };
 
 async function runCron() {
@@ -224,28 +266,43 @@ async function runCron() {
   for (const job of Object.values(cron)) await job();
 }
 
+async function opened(sealed: unknown) {
+  const clients = appleClientsOf(app.env);
+  return clients && openAppleToken(clients.app, String(sealed));
+}
+
+async function stored(): Promise<{ name: TableName; rows: Row[] }[]> {
+  const read = await app.env.DB.batch<Row>(
+    tables.map(([, table]) => app.env.DB.prepare(`select * from "${getTableName(table)}"`)),
+  );
+  return tables.map(([name], index) => ({ name, rows: read[index]?.results ?? [] }));
+}
+
 async function columnsHolding(texts: string[], skip: TableName[] = []): Promise<string[]> {
   const found = new Set<string>();
-  for (const [name, table] of tables) {
+  for (const { name, rows } of await stored()) {
     if (skip.includes(name)) continue;
-    const { results } = await app.env.DB.prepare(
-      `select * from "${getTableName(table)}"`,
-    ).all<Row>();
-    for (const row of results) {
-      for (const [column, value] of Object.entries(row)) {
-        if (texts.some((text) => String(value).includes(text))) {
-          found.add(`${name}.${propertyOf(name, column)}`);
-        }
-      }
+    for (const [column, value] of rows.flatMap((row) => Object.entries(row))) {
+      const property = propertyOf(name, column);
+      const readable =
+        name === "appleRevocations" && property === "token" && value ? await opened(value) : value;
+      if (texts.some((text) => String(readable).includes(text))) found.add(`${name}.${property}`);
     }
   }
   return [...found].sort();
 }
 
-const declaredLeaves = Object.entries(ERASURE)
-  .flatMap(([name, entry]) =>
-    "leaves" in entry ? entry.leaves.columns.map((column) => `${name}.${column}`) : [],
+const leaves = (Object.entries(ERASURE) as [TableName, (typeof ERASURE)[TableName]][]).flatMap(
+  ([name, entry]) => ("leaves" in entry ? [{ name, ...entry.leaves }] : []),
+);
+const leftForGood = leaves
+  .flatMap(({ name, columns }) => columns.map((column) => `${name}.${column}`))
+  .sort();
+const leftForNow = leaves
+  .flatMap(({ name, ...entry }) =>
+    "until" in entry ? entry.until.columns.map((column) => `${name}.${column}`) : [],
   )
+  .concat(leftForGood)
   .sort();
 
 async function objectsLeft(when: (erased: string) => boolean) {
@@ -263,17 +320,91 @@ async function objectsLeft(when: (erased: string) => boolean) {
   return left;
 }
 
-beforeEach(async () => {
-  app = await testApp();
+async function stayerReportsTheLeaversDeck() {
+  const reported = await app.fetch("/api/content-reports", {
+    ...json({ target: { kind: "deck", deckId: leaver.rows.decks?.id }, reason: "spam" }),
+    as: stayer.person,
+  });
+  expect(reported.status).toBe(200);
+}
+
+async function leaverPlaysTheStayersCardWithAnApiKey() {
+  const ctx = {
+    db: app.db,
+    userId: leaver.person.userId,
+    actor: "api" as const,
+    client: `${leaver.marker}-key`,
+    clientName: leaver.name,
+  };
+  const deps = {
+    bucket: app.env.AUDIO,
+    providers: () => [
+      {
+        provider: "openai" as const,
+        model: "test",
+        voice: "test",
+        locale: "fi",
+        contentType: "audio/mpeg" as const,
+        extension: "mp3" as const,
+        speech: async () => new Response(new Uint8Array([0xff, 0xfb, 0x90, 0x00])),
+      },
+    ],
+  };
+  const cardId = String(stayer.rows.cards?.id);
+  await pronunciationAudio(ctx, cardId, deps);
+  await exampleAudio(ctx, cardId, deps, { left: async () => null, spend: async () => {} });
+  const { results } = await app.env.DB.prepare(
+    "select entity_id from audit_log where action = 'generate_audio' and user_id = ?",
+  )
+    .bind(stayer.person.userId)
+    .all();
+  expect(results).toHaveLength(2);
+}
+
+async function signUp(handle: string, marker: string): Promise<World> {
+  const person = await app.signUp(handle);
+  const name = `Display ${marker.toUpperCase()}`;
+  await app.env.DB.prepare("update user set name = ? where id = ?").bind(name, person.userId).run();
+  return { person, name, marker, rows: {} };
+}
+
+const tracesOf = ({ person, name, marker }: World) => [person.userId, person.email, name, marker];
+
+async function begin(env: Partial<typeof APPLE>) {
+  app = await testApp({ env });
   references = await readReferences();
-  leaver = { person: await app.signUp("leaver"), marker: "leavers-own", rows: {} };
-  stayer = { person: await app.signUp("stayer"), marker: "stayers-own", rows: {} };
-  await seedStayer();
-  await seedLeaver();
-  await seedLeaverInStayersWorld();
-}, 60_000);
+  leaver = await signUp("leaver", "leavers-own");
+  stayer = await signUp("stayer", "stayers-own");
+  await runBatch(app.db, [
+    ...seedStayer(),
+    ...(await seedLeaver()),
+    ...seedLeaverInStayersWorld(),
+    insertion("deckMembers", rowFor("deckMembers", stayer, { deckId: leaver.rows.decks?.id })),
+  ]);
+  await stayerReportsTheLeaversDeck();
+  await leaverPlaysTheStayersCardWithAnApiKey();
+}
+
+const realFetch = globalThis.fetch;
+
+beforeEach(() => {
+  vi.stubGlobal("fetch", async (input: RequestInfo | URL, init?: RequestInit) =>
+    new URL(input instanceof Request ? input.url : input).hostname === "appleid.apple.com"
+      ? new Response(null, { status: 503 })
+      : realFetch(input, init),
+  );
+});
+
+afterEach(() => {
+  vi.unstubAllGlobals();
+});
 
 describe("the erasure registry", () => {
+  beforeEach(async () => {
+    app = await testApp();
+    references = await readReferences();
+  }, 60_000);
+
   it("covers every table the migrations make", async () => {
     const { results } = await app.env.DB.prepare(
       "select name from sqlite_master where type = 'table' and name not like 'sqlite_%' and name not like '_cf_%'",
@@ -296,7 +427,13 @@ describe("the erasure registry", () => {
 
 describe("deleting an account that holds a row in every table and an object under every prefix", () => {
   it("leaves only what the registry declares", async () => {
-    const traces = [leaver.person.userId, leaver.person.email, leaver.marker];
+    await begin(APPLE);
+    const left = await app.fetch(`/api/decks/${leaver.rows.decks?.id}/leave`, {
+      method: "POST",
+      as: stayer.person,
+    });
+    expect(left.status).toBe(200);
+    const traces = tracesOf(leaver);
     const held = (await columnsHolding(traces)).map((column) => column.split(".")[0]);
     expect(tables.flatMap(([name]) => (held.includes(name) ? [] : [name])).sort()).toEqual([
       "accountDeletions",
@@ -310,21 +447,22 @@ describe("deleting an account that holds a row in every table and an object unde
     await deleteLeaver();
 
     const awaitingCron = tables.flatMap(([name]) => (ERASURE[name].by in cron ? [name] : []));
-    expect(await columnsHolding(traces, awaitingCron)).toEqual(declaredLeaves);
+    expect(await columnsHolding(traces, awaitingCron)).toEqual(leftForNow);
     expect(await objectsLeft((erased) => erased === "with the account")).toEqual([]);
 
-    for (const [name, row] of Object.entries(stayer.rows) as [TableName, Row][]) {
-      const kept = await columnsHolding([String(row[primaryKey(name)[0] ?? ""])]);
-      expect(kept.some((column) => column.startsWith(`${name}.`))).toBe(true);
-    }
+    const ids = new Set(
+      (await stored()).flatMap(({ name, rows }) => rows.map((row) => `${name} ${String(row.id)}`)),
+    );
+    const lost = Object.entries(stayer.rows).filter(([name, row]) => !ids.has(`${name} ${row.id}`));
+    expect(lost).toEqual([]);
 
     await runCron();
-    expect(await columnsHolding(traces)).toEqual(declaredLeaves);
+    expect(await columnsHolding(traces)).toEqual(leftForGood);
     expect(await objectsLeft(() => true)).toEqual([]);
-  });
+  }, 60_000);
 
   it("leaves the members of a studied deck its shared content and nothing else", async () => {
-    await insert("deckMembers", rowFor("deckMembers", stayer, { deckId: leaver.rows.decks?.id }));
+    await begin({});
     await deleteLeaver();
     await runCron();
 
@@ -333,6 +471,7 @@ describe("deleting an account that holds a row in every table and an object unde
       "appleRevocations.id",
       "auditLog.payload",
     ]);
+    expect(await columnsHolding([leaver.name])).toEqual(["contentReports.snapshot"]);
     expect(await columnsHolding([leaver.marker])).toEqual([
       "auditLog.entityId",
       "cardImages.contentType",
@@ -366,5 +505,5 @@ describe("deleting an account that holds a row in every table and an object unde
     ]);
     const { results } = await app.env.DB.prepare("select * from deck_copy_ids").all();
     expect(results).toEqual([]);
-  });
+  }, 60_000);
 });

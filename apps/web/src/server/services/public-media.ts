@@ -14,7 +14,7 @@ export async function publicMediaFile(
   db: Db,
   cardId: string,
   kind: PublicMediaKind,
-  storage: { images: ObjectStore; audio: ObjectStore },
+  storage: { images: ObjectStore<"PRIVATE_IMAGES">; audio: ObjectStore<"AUDIO"> },
 ): Promise<R2ObjectBody> {
   const [row] = await livePublicationMedia(db, { cardId }, "delivery");
   const key = kind === "image" ? row?.imageKey : row?.audioKey;

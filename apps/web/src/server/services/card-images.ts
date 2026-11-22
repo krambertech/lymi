@@ -17,7 +17,7 @@ export const CARD_IMAGE_SIDE = 1600;
 
 /** Where card pictures are stored and how they are re-encoded: the avatars' bucket and binding. */
 export interface CardImageStorage {
-  bucket: ObjectStore;
+  bucket: ObjectStore<"PRIVATE_IMAGES">;
   images: ImagesBinding;
   fetcher?: Fetcher | undefined;
 }
@@ -123,7 +123,7 @@ export async function cardImageFile(
   ctx: ServiceContext,
   cardId: string,
   imageId: string,
-  bucket: ObjectStore,
+  bucket: ObjectStore<"PRIVATE_IMAGES">,
 ) {
   const card = await getCard(ctx, cardId);
   const [image] = await ctx.db

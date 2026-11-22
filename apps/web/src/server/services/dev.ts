@@ -77,7 +77,7 @@ export async function devCounts({ db, userId }: ServiceContext): Promise<DevCoun
  */
 export async function resetAccount(
   { db, userId }: ServiceContext,
-  pictures?: ObjectStore,
+  pictures?: ObjectStore<"PRIVATE_IMAGES">,
 ): Promise<void> {
   if (pictures) {
     const keys = await db

@@ -33,7 +33,7 @@ export function recordingFormat(bytes: Uint8Array): RecordingFormat | null {
 
 /** A clip's bytes as an object under the card's folder, or null for one that is not a recording. */
 async function putRecording(
-  bucket: ObjectStore,
+  bucket: ObjectStore<"AUDIO">,
   cardId: string,
   folder: "recorded" | "example-recorded",
   bytes: Uint8Array | null,
@@ -63,7 +63,7 @@ export async function storeRecording(
   ctx: ServiceContext,
   cardId: string,
   load: () => Promise<Uint8Array | null>,
-  bucket: ObjectStore,
+  bucket: ObjectStore<"AUDIO">,
 ): Promise<"stored" | "kept" | "skipped"> {
   const [card] = await ctx.db
     .select({ deckId: schema.cards.deckId, audioSource: schema.cards.audioSource })
@@ -114,7 +114,7 @@ export async function storeExampleRecording(
   cardId: string,
   said: string | undefined,
   load: () => Promise<Uint8Array | null>,
-  bucket: ObjectStore,
+  bucket: ObjectStore<"AUDIO">,
   captured = false,
 ): Promise<"stored" | "kept" | "skipped"> {
   const [card] = await ctx.db

@@ -117,7 +117,11 @@ export type AnkiConnectDeps = {
   scope: Scope;
   enrichment: EnrichmentQueue | null;
   /** Where uploads wait, where recordings are kept, and, when configured, where pictures are. */
-  media: { stash: ObjectStore; audio: ObjectStore; pictures?: CardImageStorage | null } | null;
+  media: {
+    stash: ObjectStore<"IMPORTS">;
+    audio: ObjectStore<"AUDIO">;
+    pictures?: CardImageStorage | null;
+  } | null;
 };
 
 /** A refusal the client shows the learner as it is, so it is written for them. */
@@ -518,7 +522,10 @@ async function add(
   });
 }
 
-async function stashKey(userId: string, fileName: string): Promise<ObjectKey> {
+async function stashKey(
+  userId: string,
+  fileName: string,
+): Promise<ObjectKey<"ankiConnectUploads">> {
   const digest = new Uint8Array(
     await crypto.subtle.digest("SHA-256", new TextEncoder().encode(fileName)),
   );
@@ -603,7 +610,7 @@ async function withFiles(
 async function firstUpload(
   ctx: ServiceContext,
   files: string[],
-  stashed: ObjectStore,
+  stashed: ObjectStore<"IMPORTS">,
 ): Promise<Uint8Array | null> {
   for (const fileName of files) {
     const object = await stashed.get(await stashKey(ctx.userId, fileName));
@@ -779,7 +786,7 @@ async function addTags(
 }
 
 /** Deletes uploads whose note never came. Run from the cron. */
-export async function sweepAnkiConnectUploads(stash: ObjectStore, at: Date) {
+export async function sweepAnkiConnectUploads(stash: ObjectStore<"IMPORTS">, at: Date) {
   const before = at.getTime() - STASH_HOURS * 60 * 60 * 1000;
   let cursor: string | undefined;
   do {

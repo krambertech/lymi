@@ -9,7 +9,7 @@ import { type AudioDependencies, boundedAudio, providerStatus } from "./audio";
 import { audit } from "./audit";
 import { seesCaptured } from "./card-view";
 import { getCard } from "./cards";
-import { type ServiceContext, ServiceError } from "./context";
+import { asOwner, type ServiceContext, ServiceError } from "./context";
 import { withAudioLease } from "./lead-in";
 
 // Bump with any change to how an example is voiced, the prompt included, so every clip is made again.
@@ -72,7 +72,7 @@ async function voiced(
   text: string,
   language: string,
   providers: SpeechProvider[],
-  bucket: ObjectStore,
+  bucket: ObjectStore<"AUDIO">,
   allowance: ExampleAllowance,
 ): Promise<R2ObjectBody> {
   // A press that waited out another's lease finds that one's clip.
@@ -140,7 +140,7 @@ async function voiced(
     await allowance.spend();
     // The clip is a cache on the owner's card, whoever pressed play. ADR 0011.
     await audit(
-      { ...ctx, userId: card.userId, actor: "ai" },
+      { ...asOwner(ctx, card.userId), actor: "ai" },
       {
         entity: "card",
         action: "generate_audio",
@@ -159,7 +159,11 @@ async function voiced(
 }
 
 /** Keyed on what is said and under the card's folder, so an edit reaches a new clip and deletion takes it. */
-async function exampleKey(card: Card, text: string, provider: SpeechProvider): Promise<ObjectKey> {
+async function exampleKey(
+  card: Card,
+  text: string,
+  provider: SpeechProvider,
+): Promise<ObjectKey<"cardAudio">> {
   const bytes = new TextEncoder().encode(
     ["example", text, provider.locale, provider.provider, provider.model, provider.voice].join(
       "\u0000",

@@ -63,7 +63,11 @@ type Statement = BatchStatement;
 const JSON_PARAM_BYTES = 900_000;
 const DUPLICATE_EXAMPLES = 20;
 
-export async function readNoteChunk<Note>(bucket: ObjectStore, objectKey: string, chunk: number) {
+export async function readNoteChunk<Note>(
+  bucket: ObjectStore<"IMPORTS">,
+  objectKey: string,
+  chunk: number,
+) {
   const object = await bucket.get(importNotesKey(objectKey, chunk));
   if (!object) throw new ServiceError("unavailable", "The import's stored notes are missing");
   return (await object.json()) as Note[];
@@ -374,7 +378,7 @@ export type ImportWork<Note> = {
   summary: StoredSummary;
   choices: ImportChoices;
   adapter: SourceAdapter<Note>;
-  bucket: ObjectStore;
+  bucket: ObjectStore<"IMPORTS">;
 };
 
 function cardLanguage(card: ImportedCard, languages: ImportChoices["languages"]) {
@@ -988,7 +992,7 @@ export async function attachPictures<Note>(
   work: ImportWork<Note>,
   file: Parameters<SourceAdapter<Note>["media"]>[0],
   pending: PendingPicture[],
-  storage: Partial<CardImageStorage> & { audio?: ObjectStore | undefined },
+  storage: Partial<CardImageStorage> & { audio?: ObjectStore<"AUDIO"> | undefined },
 ): Promise<AttachedMedia> {
   const read = await work.adapter.media(file);
   const images = imageStorage(storage);

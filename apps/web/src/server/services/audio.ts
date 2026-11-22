@@ -17,7 +17,7 @@ import { aiAllowedForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
 import { audit } from "./audit";
 import { getCard } from "./cards";
-import { type ServiceContext, ServiceError } from "./context";
+import { asOwner, type ServiceContext, ServiceError } from "./context";
 import { type SpokenLeadIn, settleLeadIn, withAudioLease } from "./lead-in";
 
 const MAX_AUDIO_BYTES = 8_000_000;
@@ -26,7 +26,7 @@ const AUDIO_CACHE_VERSION = 2;
 
 export interface AudioDependencies {
   leadIns?: LeadInDependencies | undefined;
-  bucket: ObjectStore;
+  bucket: ObjectStore<"AUDIO">;
   /** In preference order. Building a provider must not parse credentials or reach the network. */
   providers: (language: string) => SpeechProvider[];
   /** Serve only a clip a play would serve without voicing it, so a preload never spends. */
@@ -305,7 +305,7 @@ async function rememberAudioKey(
   if (!generated || !updated) return;
   // The key is a cache on the owner's card, whoever asked for the audio. ADR 0011.
   await audit(
-    { ...ctx, userId: card.userId, actor: "ai" },
+    { ...asOwner(ctx, card.userId), actor: "ai" },
     {
       entity: "card",
       action: "generate_audio",
@@ -323,7 +323,7 @@ const PURGES_PER_RUN = 90;
  * Clears the audio folders of deleted cards, recordings and superseded speech included, a bounded
  * number per cron run. A card R2 refused stays queued for the next run.
  */
-export async function purgeCardAudio(db: Db, bucket: ObjectStore): Promise<number> {
+export async function purgeCardAudio(db: Db, bucket: ObjectStore<"AUDIO">): Promise<number> {
   const queued = await db
     .select({ cardId: schema.cardAudioPurges.cardId })
     .from(schema.cardAudioPurges)
@@ -365,7 +365,7 @@ async function audioKey(
   card: Card,
   provider: SpeechProvider,
   spoken?: SpokenLeadIn,
-): Promise<ObjectKey> {
+): Promise<ObjectKey<"cardAudio">> {
   const bytes = new TextEncoder().encode(
     `${speechText(spokenText(card))}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}${takesLeadIn(provider) && spoken?.previousText ? `\u0000${spoken.identity}\u0000${spoken.previousText}` : ""}`,
   );

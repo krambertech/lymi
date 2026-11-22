@@ -46,7 +46,7 @@ export function bytesSource(bytes: Uint8Array): RandomAccess {
   };
 }
 
-export async function r2Source(bucket: ObjectStore, key: string): Promise<RandomAccess> {
+export async function r2Source(bucket: ObjectStore<"IMPORTS">, key: string): Promise<RandomAccess> {
   const head = await bucket.head(key);
   if (!head) throw new ImportFileError("damaged", "The uploaded file is missing");
   const get = async (offset: number, length: number) => {

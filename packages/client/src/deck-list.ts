@@ -1,7 +1,6 @@
 import { stripReadings, TAG_LIMITS, tagKey } from "@lymi/core";
 import type { Card, CardState, Section } from "./api";
 
-/** How the learner reads an FSRS state: Review is Known, and Relearning is Learning again. */
 export type StateKey = "new" | "learning" | "known";
 
 export function stateKey(state: number | null | undefined): StateKey {
@@ -14,17 +13,13 @@ export type DeckRow = { card: Card; state: CardState | null };
 
 export type DeckSort = "section" | "due" | "added" | "az";
 
-/** Where a card stands in its schedule, as the When it's back headings name it. */
 export type DueBucket = "now" | "week" | "later" | "new";
 
 export interface DeckFilters {
   states: StateKey[];
   due: "today" | "week" | null;
-  /** Section ids; "" is a card with no section. */
   sections: string[];
-  /** Tag keys, from `tagKey`; a card carrying any of them matches. */
   tags: string[];
-  /** Only cards the learner marked important. */
   important: boolean;
 }
 
@@ -36,13 +31,11 @@ export const noFilters: DeckFilters = {
   important: false,
 };
 
-/** What a card list shows: a whole deck, or one of its sections, where "" is the cards with none. */
 export interface DeckScope {
   deckId: string;
   sectionId?: string | undefined;
 }
 
-/** The filters a list applies: a section's list keeps its own section fixed, whatever else is chosen. */
 export function scopedFilters(
   filters: DeckFilters,
   { sectionId }: Pick<DeckScope, "sectionId">,
@@ -81,10 +74,6 @@ export function dueBucket(row: DeckRow, now: number): DueBucket {
   return due - now <= WEEK ? "week" : "later";
 }
 
-/**
- * What Review takes from chosen cards, as the server counts them: each started card not reviewed
- * today, soonest due first, and whether it is due before the day ends.
- */
 export function chosenReview(
   rows: readonly DeckRow[],
   chosen: ReadonlySet<string>,
@@ -114,21 +103,18 @@ export function activeFilterCount(filters: DeckFilters): number {
   );
 }
 
-/** Filters without the tags and sections the deck no longer has, and the same filters when it still has them all. */
 export function liveFilters(
   filters: DeckFilters,
   tagKeys: ReadonlySet<string>,
   sectionIds: ReadonlySet<string>,
 ): DeckFilters {
   const tags = filters.tags.filter((key) => tagKeys.has(key));
-  // "" is No section, which every deck has.
   const sections = filters.sections.filter((id) => id === "" || sectionIds.has(id));
   return tags.length === filters.tags.length && sections.length === filters.sections.length
     ? filters
     : { ...filters, tags, sections };
 }
 
-/** The section a card sorts under: its own when that section is listed, otherwise none. */
 export const sectionOf = (row: DeckRow, sections: readonly Section[]): string =>
   row.card.sectionId && sections.some((s) => s.id === row.card.sectionId) ? row.card.sectionId : "";
 
@@ -161,11 +147,6 @@ export function filterRows(
   });
 }
 
-/**
- * The list's groups. The Section sort shows every section in order, each with its cards oldest
- * first as a lesson was added, then the cards without one; `withEmpty` keeps a section with no
- * cards, so the owner has somewhere to drop them.
- */
 export function groupRows(
   rows: DeckRow[],
   sort: DeckSort,
@@ -223,7 +204,6 @@ export function groupRows(
   });
   const loose = bySection.get("") ?? [];
   if (loose.length > 0) {
-    // A deck without sections is one list, newest first, as it was before sections existed.
     if (sections.length === 0) {
       return [{ kind: "all", key: "all", rows: [...loose].reverse() }];
     }
@@ -232,7 +212,6 @@ export function groupRows(
   return groups;
 }
 
-/** The tags on these cards, most used first, each under its key with the spelling seen first. */
 export function deckTags(rows: readonly DeckRow[]): { key: string; name: string; cards: number }[] {
   const byKey = new Map<string, { key: string; name: string; cards: number }>();
   for (const row of rows)
@@ -245,10 +224,6 @@ export function deckTags(rows: readonly DeckRow[]): { key: string; name: string;
   return [...byKey.values()].sort((a, b) => b.cards - a.cards || a.name.localeCompare(b.name));
 }
 
-/**
- * A card's tags with some taken off and some put on, matched by key. An added tag goes last, and
- * one past the twenty a card holds is left off; `full` says so.
- */
 export function retag(
   tags: readonly string[],
   add: readonly string[],
@@ -271,26 +246,16 @@ export function retag(
   return { tags: next, full };
 }
 
-/** Where a tag ends up on chosen cards: on every one, off every one, or left as it is. */
 export type TagChoice = "all" | "none" | "mixed";
 
 export interface TagPickerInput {
-  /** The chosen cards' tags, each list one card's. */
   cards: readonly (readonly string[])[];
-  /** Tags made in the picker, in the order they were made, which is the order they go on. */
   created: readonly string[];
-  /** Tags in use elsewhere, offered after the ones the cards carry. */
   suggestions: readonly { name: string }[];
-  /** The learner's ticks so far, by tag key. */
   choices: ReadonlyMap<string, TagChoice>;
   query: string;
 }
 
-/**
- * Tags… for chosen cards, as the web's dialog and the phone's sheet both draw it: the tags the
- * cards carry, most carried first, then new and suggested ones, each ticked on every card, on some
- * or on none, and the change a save makes.
- */
 export function tagPicker({ cards, created, suggestions, choices, query }: TagPickerInput) {
   const total = cards.length;
   const carried = new Map<string, { name: string; count: number }>();
@@ -307,7 +272,6 @@ export function tagPicker({ cards, created, suggestions, choices, query }: TagPi
   ].filter((name, i, all) => all.findIndex((other) => tagKey(other) === tagKey(name)) === i);
   const typed = query.trim().slice(0, TAG_LIMITS.length);
   const needle = tagKey(typed);
-  // The name typed first, then names that start with it, then any that hold it, each kept in order.
   const rank = (name: string) => {
     const key = tagKey(name);
     return key === needle ? 0 : key.startsWith(needle) ? 1 : key.includes(needle) ? 2 : 3;
@@ -316,7 +280,6 @@ export function tagPicker({ cards, created, suggestions, choices, query }: TagPi
     ? offered.filter((name) => rank(name) < 3).sort((a, b) => rank(a) - rank(b))
     : offered;
   const fresh = !!typed && !offered.some((name) => tagKey(name) === needle);
-  /** What Return takes: the tag named exactly as typed; any other text is a new tag. */
   const pick = shown[0] !== undefined && rank(shown[0]) === 0 ? shown[0] : undefined;
 
   const count = (name: string) => carried.get(tagKey(name))?.count ?? 0;
@@ -325,14 +288,12 @@ export function tagPicker({ cards, created, suggestions, choices, query }: TagPi
     return n === 0 ? "none" : n === total ? "all" : "mixed";
   };
   const choiceOf = (name: string) => choices.get(tagKey(name)) ?? start(name);
-  /** A tag on some cards goes on all of them first, then off all, then back as it was. */
   const next = (name: string): TagChoice => {
     const now = choiceOf(name);
     if (now === "all") return "none";
     if (now === "mixed") return "all";
     return start(name) === "mixed" ? "mixed" : "all";
   };
-  /** How many of the chosen cards carry the tag once saved. */
   const after = (name: string) => {
     const choice = choiceOf(name);
     return choice === "all" ? total : choice === "none" ? 0 : count(name);
@@ -353,10 +314,6 @@ export function tagPicker({ cards, created, suggestions, choices, query }: TagPi
   };
 }
 
-/**
- * The edits that make a tag change on rows, leaving out a card it would not change; `undo` puts
- * each card's tags back, and `full` counts cards already holding twenty, which a new tag skips.
- */
 export function tagEdits(
   rows: readonly DeckRow[],
   change: { add: readonly string[]; remove: readonly string[] },
@@ -374,14 +331,14 @@ export function tagEdits(
   return { edits, undo, full };
 }
 
-/** A term that lists its forms, "õppima · õppida · õpin", as the word and the forms after it. */
 export function splitForms(term: string): { word: string; forms: string | null } {
   const at = term.indexOf(" · ");
   if (at <= 0) return { word: term, forms: null };
   return { word: term.slice(0, at), forms: term.slice(at + 3) };
 }
 
-/** A deck's word, meaning, status and next review as CSV, with a BOM so spreadsheets read it as UTF-8. */
+const UTF8_BOM = "\uFEFF";
+
 export function deckCsv(rows: readonly DeckRow[]): string {
   const esc = (v: string | null | undefined) => `"${(v ?? "").replace(/"/g, '""')}"`;
   const lines = [
@@ -412,10 +369,9 @@ export function deckCsv(rows: readonly DeckRow[]): string {
       ].join(","),
     ),
   ];
-  return `﻿${lines.join("\n")}`;
+  return `${UTF8_BOM}${lines.join("\n")}`;
 }
 
-/** The name a deck's CSV saves as: "Verbi irregolari" is `verbi-irregolari.csv`. */
 export function deckCsvName(deckName: string): string {
   return `${deckName.replace(/[^\p{L}\p{N}]+/gu, "-").toLowerCase()}.csv`;
 }

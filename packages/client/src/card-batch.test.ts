@@ -96,6 +96,17 @@ describe("marking chosen cards important", () => {
     expect(qc.getQueryState(key)?.isInvalidated).toBe(true);
   });
 
+  it("gives a card the server refused the mark it had", async () => {
+    api.setCardsImportant.mockResolvedValue({
+      results: [
+        { id: "a", status: "updated" },
+        { id: "b", status: "error", code: "unavailable", error: "offline" },
+      ],
+    });
+    await markCards(qc, "d1", ["a", "b"], true).done;
+    expect(marks()).toEqual([true, false, false]);
+  });
+
   it("gives each card back the mark it had on Undo", async () => {
     qc.setQueryData(key, [row("a", true), row("b"), row("c")]);
     api.setCardsImportant.mockImplementation(async (cards: { cardId: string }[]) => ({

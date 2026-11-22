@@ -26,6 +26,8 @@ Free == [phase |-> "free", kind |-> "grade", g |-> 0, saw |-> <<>>, answer |-> "
 VARIABLES made, takenBack,
           entry,      \* the outbox: "none", "queued", "sent" or "gone" for each of Mine
           undone, unanswered, named, \* StoredGrade.undone, .unanswered and whether .reviewId is kept
+          wasUnanswered,    \* whether the grade in the air was unanswered before this send
+          refused,    \* grades the server turned away for good, whose fate the device cannot change
           pc, waiting, \* the one flush or settle in progress, and the request it waits on
           flushing, todoUndos, todoGrades, held,
           req,        \* every request ever sent: free, out, read, answered or lost
@@ -33,7 +35,7 @@ VARIABLES made, takenBack,
           stored, undoneAt, before, \* reviews, review_undos and reviews.state_before
           kills
 
-client == <<made, takenBack, entry, undone, unanswered, named>>
+client == <<made, takenBack, entry, undone, unanswered, named, wasUnanswered, refused>>
 run == <<pc, waiting, flushing, todoUndos, todoGrades, held>>
 server == <<hist, stored, undoneAt, before>>
 vars == <<client, run, req, server, kills>>
@@ -43,6 +45,7 @@ Init ==
   /\ entry = [g \in Mine |-> "none"]
   /\ undone = [g \in Mine |-> FALSE] /\ unanswered = [g \in Mine |-> FALSE]
   /\ named = [g \in Mine |-> FALSE]
+  /\ wasUnanswered = FALSE /\ refused = {}
   /\ pc = "idle" /\ waiting = 0 /\ flushing = FALSE
   /\ todoUndos = {} /\ todoGrades = {} /\ held = FALSE
   /\ req = [i \in Ids |-> Free]
@@ -62,7 +65,7 @@ Make(g) ==
   /\ pc \in Awaits
   /\ g \in Mine \ made /\ \A h \in Mine : h < g => h \in made
   /\ made' = made \cup {g} /\ entry' = [entry EXCEPT ![g] = "queued"]
-  /\ UNCHANGED <<takenBack, undone, unanswered, named, run, req, server, kills>>
+  /\ UNCHANGED <<takenBack, undone, unanswered, named, wasUnanswered, refused, run, req, server, kills>>
 
 \* undoGrade's write. A review offers Undo for the last grade made, once: `last` in review-flow/core.ts.
 TakeBack(g) ==
@@ -70,7 +73,7 @@ TakeBack(g) ==
   /\ g \in made \ takenBack /\ g = Max(made)
   /\ entry[g] \in {"queued", "sent"}
   /\ takenBack' = takenBack \cup {g} /\ undone' = [undone EXCEPT ![g] = TRUE]
-  /\ UNCHANGED <<made, entry, unanswered, named, run, req, server, kills>>
+  /\ UNCHANGED <<made, entry, unanswered, named, wasUnanswered, refused, run, req, server, kills>>
 
 \* ---- The outbox: one run at a time, as serial() allows ----
 
@@ -102,23 +105,15 @@ SettleForgets ==
        /\ entry[g] = "queued" /\ (~unanswered[g] \/ ~ReplaysUnanswered)
        /\ entry' = [entry EXCEPT ![g] = "gone"]
        /\ todoUndos' = todoUndos \ {g}
-  /\ UNCHANGED <<made, takenBack, undone, unanswered, named, pc, waiting, flushing, todoGrades, held, req, server, kills>>
+  /\ UNCHANGED <<made, takenBack, undone, unanswered, named, wasUnanswered, refused, pc, waiting, flushing, todoGrades, held, req, server, kills>>
 
 SettleReplays ==
   /\ pc = "settle" /\ todoUndos # {} /\ CanSend
   /\ LET g == Min(todoUndos) IN
        /\ entry[g] = "queued" /\ unanswered[g] /\ ReplaysUnanswered
        /\ req' = Out("grade", g)
-  /\ waiting' = NextId /\ pc' = "replay"
-  /\ UNCHANGED <<client, flushing, todoUndos, todoGrades, held, server, kills>>
-
-SettleStands ==
-  /\ pc = "settle" /\ todoUndos # {}
-  /\ LET g == Min(todoUndos) IN
-       /\ entry[g] = "sent" /\ ~named[g]
-       /\ undone' = [undone EXCEPT ![g] = FALSE]
-       /\ todoUndos' = todoUndos \ {g}
-  /\ UNCHANGED <<made, takenBack, entry, unanswered, named, pc, waiting, flushing, todoGrades, held, req, server, kills>>
+  /\ waiting' = NextId /\ pc' = "replay" /\ wasUnanswered' = TRUE
+  /\ UNCHANGED <<made, takenBack, entry, undone, unanswered, named, refused, flushing, todoUndos, todoGrades, held, server, kills>>
 
 SettleUndoes ==
   /\ pc = "settle" /\ todoUndos # {} /\ CanSend
@@ -136,15 +131,26 @@ SettleEnds ==
   /\ UNCHANGED <<client, req, server, kills>>
 
 \* flushQueued's loop over its snapshot. With one mode, the first held grade holds the rest.
-Holds == (held /\ HoldsMode) \/ (SeesLateUndo /\ Undos # {})
+MayBeOnServer(g) == entry[g] = "sent" \/ unanswered[g]
+Holds ==
+  \/ held /\ HoldsMode
+  \/ SeesLateUndo /\ \E g \in Undos : MayBeOnServer(g)
+
+\* A grade taken back since the run took its list is left for the next settle.
+FlushSkips ==
+  /\ pc = "flush" /\ todoGrades # {} /\ undone[Min(todoGrades)] /\ SeesLateUndo
+  /\ todoGrades' = todoGrades \ {Min(todoGrades)}
+  /\ UNCHANGED <<client, pc, waiting, flushing, todoUndos, held, req, server, kills>>
 
 FlushSends ==
   /\ pc = "flush" /\ todoGrades # {} /\ ~Holds /\ CanSend
   /\ LET g == Min(todoGrades) IN
+       /\ ~(undone[g] /\ SeesLateUndo)
+       /\ wasUnanswered' = unanswered[g]
        /\ req' = Out("grade", g)
        /\ unanswered' = IF MarksBeforeSend THEN [unanswered EXCEPT ![g] = TRUE] ELSE unanswered
   /\ waiting' = NextId /\ pc' = "send"
-  /\ UNCHANGED <<made, takenBack, entry, undone, named, flushing, todoUndos, todoGrades, held, server, kills>>
+  /\ UNCHANGED <<made, takenBack, entry, undone, named, refused, flushing, todoUndos, todoGrades, held, server, kills>>
 
 FlushEnds ==
   /\ pc = "flush" /\ (todoGrades = {} \/ Holds)
@@ -166,7 +172,7 @@ GradeAnswered ==
               /\ pc' = IF pc = "replay" THEN "settle" ELSE "flush"
               /\ todoGrades' = todoGrades \ {g} /\ UNCHANGED todoUndos
   /\ waiting' = 0
-  /\ UNCHANGED <<made, takenBack, undone, unanswered, flushing, held, req, server, kills>>
+  /\ UNCHANGED <<made, takenBack, undone, unanswered, wasUnanswered, refused, flushing, held, req, server, kills>>
 
 UndoAnswered ==
   /\ pc = "undo" /\ req[waiting].phase = "answered" /\ Answer \in {"ok", "refused"}
@@ -176,7 +182,7 @@ UndoAnswered ==
             ELSE undone' = [undone EXCEPT ![g] = FALSE] /\ UNCHANGED entry
        /\ todoUndos' = todoUndos \ {g}
   /\ pc' = "settle" /\ waiting' = 0
-  /\ UNCHANGED <<made, takenBack, unanswered, named, flushing, todoGrades, held, req, server, kills>>
+  /\ UNCHANGED <<made, takenBack, unanswered, named, wasUnanswered, refused, flushing, todoGrades, held, req, server, kills>>
 
 \* A 5xx, before the server wrote anything or after it did: the mode is held and the run goes on.
 ServerFails ==
@@ -187,12 +193,33 @@ ServerFails ==
   /\ pc' = IF pc = "send" THEN "flush" ELSE "settle"
   /\ UNCHANGED <<client, flushing, server, kills>>
 
+\* A lapsed session or an app too old (401, 426): nothing reached the rows, and the grade waits.
+TurnedAwayForNow ==
+  /\ pc \in {"replay", "send"} /\ req[waiting].phase = "out"
+  /\ req' = [req EXCEPT ![waiting].phase = "lost"]
+  /\ unanswered' = [unanswered EXCEPT ![Current] = wasUnanswered]
+  /\ held' = TRUE /\ waiting' = 0
+  /\ todoUndos' = todoUndos \ {Current} /\ todoGrades' = todoGrades \ {Current}
+  /\ pc' = IF pc = "send" THEN "flush" ELSE "settle"
+  /\ UNCHANGED <<made, takenBack, entry, undone, named, wasUnanswered, refused, flushing, server, kills>>
+
+\* Any other 4xx, such as a deck left meanwhile: the outbox drops the grade.
+TurnedAway ==
+  /\ pc \in {"replay", "send"} /\ req[waiting].phase = "out"
+  /\ req' = [req EXCEPT ![waiting].phase = "lost"]
+  /\ entry' = [entry EXCEPT ![Current] = "gone"]
+  /\ refused' = IF wasUnanswered \/ Current \notin takenBack THEN refused \cup {Current} ELSE refused
+  /\ waiting' = 0
+  /\ todoUndos' = todoUndos \ {Current} /\ todoGrades' = todoGrades \ {Current}
+  /\ pc' = IF pc = "send" THEN "flush" ELSE "settle"
+  /\ UNCHANGED <<made, takenBack, undone, unanswered, named, wasUnanswered, flushing, held, server, kills>>
+
 \* Offline, or the 20 second limit: the run ends, and the request may still land.
 GivesUp ==
   /\ pc \in {"replay", "send", "undo"}
   /\ unanswered' = IF pc = "undo" THEN unanswered ELSE [unanswered EXCEPT ![Current] = TRUE]
   /\ Stops
-  /\ UNCHANGED <<made, takenBack, entry, undone, named, req, server, kills>>
+  /\ UNCHANGED <<made, takenBack, entry, undone, named, wasUnanswered, refused, req, server, kills>>
 
 \* The app is killed while a request is out: storage keeps the outbox and nothing else.
 Killed ==
@@ -264,9 +291,9 @@ Quiet ==
 Next ==
   \/ \E g \in Mine : Make(g) \/ TakeBack(g)
   \/ Starts(TRUE) \/ Starts(FALSE) \/ ElsewhereAnswers
-  \/ SettleForgets \/ SettleReplays \/ SettleStands \/ SettleUndoes \/ SettleEnds
-  \/ FlushSends \/ FlushEnds
-  \/ GradeAnswered \/ UndoAnswered \/ ServerFails \/ GivesUp \/ Killed
+  \/ SettleForgets \/ SettleReplays \/ SettleUndoes \/ SettleEnds
+  \/ FlushSkips \/ FlushSends \/ FlushEnds
+  \/ GradeAnswered \/ UndoAnswered \/ ServerFails \/ TurnedAwayForNow \/ TurnedAway \/ GivesUp \/ Killed
   \/ \E i \in Ids : Lost(i) \/ GradeReads(i) \/ GradeLands(i) \/ UndoReads(i) \/ UndoLands(i)
   \/ \E g \in Others : OtherGrades(g)
 
@@ -276,8 +303,8 @@ Counted == stored \ undoneAt
 \* A later grade from another device, which the server puts before this one.
 Beaten(g) == \E o \in Others : o > g /\ o \in stored
 
-KeptGradesCount == Quiet => \A g \in made \ takenBack : g \in Counted \/ Beaten(g)
-TakenBackGradesDoNot == Quiet => \A g \in takenBack : g \notin Counted \/ Beaten(g)
+KeptGradesCount == Quiet => \A g \in (made \ takenBack) \ refused : g \in Counted \/ Beaten(g)
+TakenBackGradesDoNot == Quiet => \A g \in takenBack \ refused : g \notin Counted \/ Beaten(g)
 ScheduleHoldsTheCounted ==
   Quiet => /\ {hist[n] : n \in DOMAIN hist} = Counted
            /\ \A n \in DOMAIN hist : n > 1 => hist[n - 1] < hist[n]

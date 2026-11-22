@@ -2,6 +2,7 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { Volume2 } from "lucide-react";
 import { AnimatePresence, motion, useInView } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+import { useClip } from "../../lib/use-clip";
 import { Picker } from "./Picker";
 import { EASE, useStill } from "./playback";
 import type { LookAlike } from "./polish";
@@ -27,7 +28,7 @@ export function LookAlikes({ words, reader }: Props) {
   const inView = useInView(stage, { amount: 0.3 });
   const [beat, setBeat] = useState(0);
   const heldUntil = useRef(0);
-  const clip = useRef<HTMLAudioElement | null>(null);
+  const clip = useClip();
   const at = Math.floor(beat / 2) % words.length;
   const revealed = still || beat % 2 === 1;
   const current = words[at] ?? words[0];
@@ -48,11 +49,7 @@ export function LookAlikes({ words, reader }: Props) {
 
   if (!current) return null;
 
-  const play = () => {
-    clip.current?.pause();
-    clip.current = new Audio(`/audio/polish/${current.id}.mp3`);
-    void clip.current.play().catch(() => {});
-  };
+  const play = () => clip.play(current.id, `/audio/polish/${current.id}.mp3`);
 
   return (
     <div

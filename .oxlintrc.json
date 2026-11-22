@@ -105,6 +105,23 @@
       }
     },
     {
+      "files": ["packages/client/src/review-flow/use-review-flow.test.ts"],
+      "rules": {
+        "eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "vitest",
+                "importNames": ["vi"],
+                "message": "hookReview() owns the clock, the server, the storage and the locks: a wait or a mock of the test's own can race the hook. Use review.settle, advance, answer or refuse."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "files": ["apps/web/src/client/**"],
       "excludeFiles": ["apps/web/src/client/lib/use-reduce-motion.ts", "**/*.test.tsx"],
       "rules": {
@@ -179,6 +196,17 @@
             "message": "Import alert from src/ui/alert.tsx: the global one draws Android's AppCompat dialog."
           }
         ]
+      }
+    },
+    {
+      "files": ["apps/site/src/**", "apps/web/src/client/**"],
+      "excludeFiles": [
+        "apps/site/src/lib/use-clip.ts",
+        "apps/site/src/lib/learn/player.ts",
+        "apps/web/src/client/lib/use-clip.ts"
+      ],
+      "rules": {
+        "lymi/clip-owner": "error"
       }
     },
     {

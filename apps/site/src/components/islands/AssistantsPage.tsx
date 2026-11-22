@@ -2,7 +2,7 @@ import { AssistantsView } from "../landing/AssistantsView";
 import { Island } from "./Island";
 
 interface Props {
-  locale?: string | undefined;
+  locale: string | undefined;
 }
 
 export default function AssistantsPage({ locale }: Props) {

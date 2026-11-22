@@ -13,7 +13,15 @@ Each model is a small TLA+ description of one flow, checked by TLC over every or
 | [Review day](#review-day) | Once every request is answered, the day's outcome is the one its reviews call for | Holds since pull request 1164 |
 | [Import writes](#import-writes) | Once an import is failed, cancelled or done, no chunk adds a card | Holds since pull request 1164 |
 
+[`models/models.json`](models/models.json) holds, for each model, its state count, the rule each guard protects and the pull request that fixed it, the functions it covers and the tests that replay its paths. `pnpm check:models` holds the manifest to the code, as part of `pnpm check`: it fails when a covered function changes, when a replay is gone, or when a guard has no rule. CI also runs `pnpm check:models --run`, where every model must hold over the recorded number of states and every guard, turned off alone, must break the rule named for it.
+
 ## Run a check
+
+```bash
+pnpm check:models --run
+```
+
+runs everything CI runs, in about ten seconds. To see one model's output:
 
 ```bash
 .agents/skills/model-check/scripts/check.sh WriteQueue
@@ -34,7 +42,7 @@ Read the path as a sequence of things people and the server do. Then replay it a
 
 ## When you change the covered code
 
-Change the model in the same pull request, so that each step still names one thing the code does in one go: one D1 statement on the server, one synchronous stretch between awaits on the client. Add a variable when the code gains state the rule depends on. Run the check, then record the commit you confirmed in the model's section.
+Change the model in the same pull request, so that each step still names one thing the code does in one go: one D1 statement on the server, one synchronous stretch between awaits on the client. Add a variable when the code gains state the rule depends on. Then run `pnpm check:models --run`, and record the new state count in `models.json` if it moved. `pnpm check:models --confirm` writes `models/confirmed.json`, the fingerprint of the covered code with comments and spacing left out; run it only after comparing every step in the model's table with the new code.
 
 ## Write queue
 
@@ -50,7 +58,7 @@ The invariant is `NoCrossSend` in [`models/WriteQueue.tla`](models/WriteQueue.tl
 | `SessionEnds` | the session ending, with `unclaimWrites` in the cleanup of `Sync`'s effect |
 | `Drops` | `dropWrites` in `writes.ts`, called from `apps/mobile/src/app/(tabs)/you/index.tsx`, `delete-account.tsx` and `delete-code.tsx` |
 
-The model describes the code at `253cd1a37` on `main`. A request takes its session when it leaves (`config.headers()` in `packages/client/src/api/request.ts`), and the flush loop awaits `flushGrades` before each send, so the learner can change between two sends of one flush. The model keeps both facts; do not merge those steps.
+A request takes its session when it leaves (`config.headers()` in `packages/client/src/api/request.ts`), and the flush loop awaits `flushGrades` before each send, so the learner can change between two sends of one flush. The model keeps both facts; do not merge those steps.
 
 Replays live in `packages/client/src/writes.test.ts`: "sends nothing after a sign-out", "does not put a write back when the learner signed out", "stops a flush that was mid-way when the learner left" and "keeps the queue but holds it".
 
@@ -79,7 +87,7 @@ The invariants are `ConfirmsOnlyWithoutGrades` and `NoLostUpdate` in [`models/Re
 | `Counts` | `attemptsOn` and `drawableCount` in `settleDay`, then `nextOutcome` in `packages/core/src/streak.ts` (before 1164, the same rules inlined in `settleDay`) |
 | `Writes`, `Rereads` | `settleDay`'s compare-and-set update, and the next try when it misses, up to `SETTLE_TRIES` |
 
-Two constants are the guards; the default config turns both on and describes the code at `253cd1a37` on `main`. It holds: 283,161 distinct states in a few seconds, and 286,312 with one card due.
+Two constants are the guards; the default config turns both on and describes `main`. It holds: 283,161 distinct states in a few seconds, and 286,312 with one card due.
 
 | Constant | Code | Off |
 | --- | --- | --- |
@@ -116,7 +124,7 @@ The invariants are `NoCardsAfterEnd` and `ArchiveCoversEveryCard` in [`models/Im
 | `CancelReads`, `CancelWrites` | `cancelImport`, which refuses once the import is importing |
 | `ArchiveReads`, `ArchiveWrites` | `archiveImport` in `import-writer.ts`, which archives the cards the import added so far |
 
-The default config describes `main` at `253cd1a37`, where pull request 1164 added `status = 'importing'` to `writeChunk`'s guard and to its last update (`ChunkChecksStatus = TRUE`). The rule holds: 321 distinct states with two chunks, 653 with four.
+The default config describes `main`, where pull request 1164 added `status = 'importing'` to `writeChunk`'s guard and to its last update (`ChunkChecksStatus = TRUE`). The rule holds: 321 distinct states with two chunks, 653 with four.
 
 Before 1164, at `0d80e817a` (`ChunkChecksStatus = FALSE`), the rule broke in five steps. The stall check failed a slow import between a chunk's reads and its batch; the batch checked only `written`, so it landed and added the chunk's cards to a failed import. With an archive between them, the late cards stayed active. Both paths were replayed on a local D1 with `writeImportChunk` held before its batch: ten cards landed in the failed import and nine stayed active after the archive; with the guard, none. "writes no chunk once the import has failed" in `apps/web/src/server/services/imports.test.ts` replays the first path.
 

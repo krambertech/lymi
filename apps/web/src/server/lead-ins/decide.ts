@@ -1,3 +1,4 @@
+import type { AiConsent } from "../ai/consent";
 import type { DecisionModel } from "../lessons/keep";
 import { log } from "../log";
 import type { LeadInInput, LeadInPolicy } from "./policy";
@@ -9,13 +10,18 @@ export async function leadInScore(
   ai: DecisionModel,
   policy: LeadInPolicy,
   input: LeadInInput,
+  consent: AiConsent,
 ): Promise<number | null> {
   if (!ai) return null;
   try {
-    const reply = (await ai.run(DECISION_MODEL, {
-      state: { language: policy.name, ...input },
-      questions: { ambiguous: { type: "noul", instructions: policy.question } },
-    })) as { answers?: { ambiguous?: { noul?: unknown } } };
+    const reply = (await ai.run(
+      DECISION_MODEL,
+      {
+        state: { language: policy.name, ...input },
+        questions: { ambiguous: { type: "noul", instructions: policy.question } },
+      },
+      consent,
+    )) as { answers?: { ambiguous?: { noul?: unknown } } };
     const score = reply.answers?.ambiguous?.noul;
     return typeof score === "number" && score >= 0 && score <= 1 ? score : null;
   } catch (error) {

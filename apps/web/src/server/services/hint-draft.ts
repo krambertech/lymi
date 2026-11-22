@@ -9,7 +9,7 @@ import {
 } from "@lymi/core";
 import { and, eq, isNotNull, isNull, ne } from "@lymi/core/db";
 import { z } from "zod";
-import type { TextProvider } from "../ai";
+import type { TextProvider, TextProviderFor } from "../ai";
 import { schema } from "../db";
 import { languagePrompts } from "../languages";
 import { log } from "../log";
@@ -220,13 +220,13 @@ export async function draftHint(provider: TextProvider, card: HintCard): Promise
 export async function hintDraftFor(
   ctx: ServiceContext,
   cardId: string,
-  provider: TextProvider | null,
+  providerFor: TextProviderFor,
 ): Promise<string | null> {
   const card = await getCard(ctx, cardId);
   if (card.userId !== ctx.userId) {
     throw new ServiceError("forbidden", "Only the deck's owner can change its cards");
   }
-  await requireAi(ctx);
+  const consent = await requireAi(ctx);
   const { meaningLanguage } = await getSettings(ctx);
   const subject = {
     term: card.term,
@@ -256,6 +256,7 @@ export async function hintDraftFor(
     .limit(DECK_MEANINGS);
   const deckMeanings = neighbours.flatMap(({ meaning }) => (meaning?.trim() ? [meaning] : []));
   const hintCard = { ...subject, asked, deckMeanings };
+  const provider = providerFor(consent);
   if (!provider) return null;
 
   // A reply can come back empty or break a rule now and then, so one more try before answering none.

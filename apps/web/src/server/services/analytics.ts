@@ -49,7 +49,7 @@ export function track(dataset: AnalyticsWriter | undefined, event: AnalyticsEven
   }
 }
 
-type AiSpan = Extract<AnalyticsEvent, { name: "$ai_generation" }>["$ai_span_name"];
+export type AiSpan = Extract<AnalyticsEvent, { name: "$ai_generation" }>["$ai_span_name"];
 
 /** Reports each model call's tokens and time as PostHog's LLM analytics expects, never its text. */
 export function textCallReporter(dataset: AnalyticsWriter | undefined, span: AiSpan): TextObserver {

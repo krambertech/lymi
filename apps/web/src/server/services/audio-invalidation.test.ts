@@ -138,10 +138,9 @@ describe("Japanese generated audio invalidation", () => {
     expect(replay.key).toBe(first.key);
     expect(generate).toHaveBeenCalledOnce();
     expect(speech).toHaveBeenCalledOnce();
-    expect(speech).toHaveBeenCalledWith({
-      text: "はし",
-      language: "ja",
-      previousText: "川を渡る",
-    });
+    expect(speech).toHaveBeenCalledWith(
+      { text: "はし", language: "ja", previousText: "川を渡る" },
+      expect.anything(),
+    );
   });
 });

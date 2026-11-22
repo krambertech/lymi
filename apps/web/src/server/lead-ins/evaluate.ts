@@ -13,6 +13,7 @@ import { tmpdir } from "node:os";
 import { join } from "node:path";
 import { getPlatformProxy } from "wrangler";
 import { leadInPolicy, leadInScore } from ".";
+import { consentForEvaluation } from "../ai/consent";
 import { evalEnv, requireKeys } from "../ai/eval-env";
 import { createLeadInWriter } from "../ai/lead-in-writer";
 import type { LeadInInput } from "./policy";
@@ -58,7 +59,7 @@ try {
     const scored = await Promise.all(
       cases.map(async (item) => {
         const started = Date.now();
-        const score = await leadInScore(ai, policy, item);
+        const score = await leadInScore(ai, policy, item, consentForEvaluation());
         return { ...item, score, ms: Date.now() - started };
       }),
     );
@@ -83,10 +84,13 @@ try {
       let previousText: string | null | undefined;
       if (writer && item.score !== null && item.score >= policy.threshold) {
         previousText = await writer
-          .write({
-            instructions: policy.instructions,
-            input: { term: item.term, reading: item.reading, meaning: item.meaning },
-          })
+          .write(
+            {
+              instructions: policy.instructions,
+              input: { term: item.term, reading: item.reading, meaning: item.meaning },
+            },
+            consentForEvaluation(),
+          )
           .then((reply) =>
             policy.accepts(reply.previousText, item) ? reply.previousText : undefined,
           )

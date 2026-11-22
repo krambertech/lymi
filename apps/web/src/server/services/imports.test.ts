@@ -1146,14 +1146,14 @@ describe("importing an Anki package", () => {
     const ctx = await fresh();
     const { id } = await upload(ctx, "current.apkg", fixture("current.apkg"));
     let asked = 0;
-    await inspectImport(ctx, id, env.IMPORTS, {
+    await inspectImport(ctx, id, env.IMPORTS, () => ({
       provider: "openai",
       model: "test",
       complete: async () => {
         asked++;
         return { decks: [] };
       },
-    });
+    }));
     const { summary } = await getImport(ctx, id);
     // In Lesson 1 the suspended card and the one never reviewed are not Known.
     expect(summary?.decks.map((d) => [d.name, d.known])).toEqual([

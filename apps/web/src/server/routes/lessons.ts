@@ -18,6 +18,7 @@ import {
   ServiceError,
   streamLesson,
 } from "../services";
+import { aiConsentFor } from "../services/ai-consent";
 import { normalizeBoundedImage } from "../services/images";
 
 /**
@@ -147,10 +148,13 @@ lessonReads.post(
   }),
   body(LessonAnswerInput, "answer"),
   async (c) => {
-    await assertCanCheckAnswers(ctxOf(c), operatorEmails(c.env));
+    const ctx = ctxOf(c);
+    await assertCanCheckAnswers(ctx, operatorEmails(c.env));
     const { question, answer, terms } = c.req.valid("json");
     return c.json({
-      drop: await termsAgainstAnswer(decisionModel(c.env), question, answer, terms),
+      drop: await termsAgainstAnswer(decisionModel(c.env), question, answer, terms, () =>
+        aiConsentFor(ctx),
+      ),
     });
   },
 );

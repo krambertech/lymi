@@ -50,6 +50,7 @@ export type LogEvent =
   | "lead_in_resolved"
   | "learning_email_failed"
   | "learning_emails_dispatched"
+  | "lesson_consent_unread"
   | "lesson_read_failed"
   | "lesson_terms_unjudged"
   | "mcp_error_report_failed"

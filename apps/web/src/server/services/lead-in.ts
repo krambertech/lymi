@@ -1,5 +1,6 @@
 import type { Card } from "@lymi/core/schema";
 import { z } from "zod";
+import type { AiConsent } from "../ai/consent";
 import { LeadInError, type LeadInUsage, type LeadInWriter } from "../ai/lead-in-writer";
 import { DECISION_MODEL, type LeadInInput, type LeadInPolicy, leadInScore } from "../lead-ins";
 import type { DecisionModel } from "../lessons/keep";
@@ -98,7 +99,7 @@ export async function settleLeadIn(
   input: LeadInInput,
   bucket: ObjectStore<"AUDIO">,
   { writer, decide }: { writer: LeadInWriter; decide: DecisionModel },
-  cachedOnly = false,
+  consent: AiConsent | null,
   analytics?: AnalyticsWriter,
 ): Promise<SpokenLeadIn | undefined> {
   const identity = await audioFingerprint({
@@ -155,7 +156,7 @@ export async function settleLeadIn(
   };
   const cached = await read();
   if (cached) return cached;
-  if (cachedOnly) return undefined;
+  if (!consent) return undefined;
   return withAudioLease(bucket, lockKey(key), async () => {
     const concurrent = await read();
     if (concurrent) return concurrent;
@@ -166,7 +167,7 @@ export async function settleLeadIn(
       pendingUntil: Date.now() + LEASE_MS,
     });
     const started = Date.now();
-    const score = await leadInScore(decide, policy, input);
+    const score = await leadInScore(decide, policy, input, consent);
     const reportDecision = (outcome: Outcome | "failed") =>
       track(analytics, {
         name: "lead_in_decided",
@@ -200,7 +201,7 @@ export async function settleLeadIn(
       });
     let result: Awaited<ReturnType<typeof writer.write>>;
     try {
-      result = await writer.write({ instructions: policy.instructions, input });
+      result = await writer.write({ instructions: policy.instructions, input }, consent);
       if (!policy.accepts(result.previousText, input)) throw new LeadInError("refused", result);
     } catch (error) {
       const failure = error instanceof LeadInError ? error : undefined;

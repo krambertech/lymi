@@ -32,10 +32,10 @@ export function createElevenLabsSpeechProvider(
     locale,
     contentType: "audio/mpeg",
     extension: "mp3",
-    async speech(input) {
+    async speech(input, consent) {
       const key = env.ELEVENLABS_API_KEY?.trim();
       if (!key) throw new ElevenLabsSpeechError("ElevenLabs speech is not configured");
-      const endpoint = providerEndpoint(env, "elevenlabs");
+      const endpoint = providerEndpoint(env, "elevenlabs", consent);
       let response: Response;
       try {
         // An ambiguous timeout may already be billed, so generation has no automatic retry.

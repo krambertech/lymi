@@ -20,6 +20,7 @@ let deckId: string;
 let offline = false;
 /** The Worker answers, but the response never reaches the phone. */
 let lost = false;
+let failing = false;
 /** Changes a response on its way to the client, as a newer Worker's would differ. */
 let rewrite: ((path: string, body: Record<string, unknown>) => void) | null = null;
 
@@ -70,6 +71,7 @@ beforeAll(async () => {
     expect(init?.credentials).toBe("omit");
     const response = await app.fetch(`${url.pathname}${url.search}`, init);
     if (lost) throw new TypeError("Network request failed");
+    if (failing) return Response.json({ error: "Something went wrong" }, { status: 500 });
     if (!rewrite || !response.ok) return response;
     const body = (await response.json()) as Record<string, unknown>;
     rewrite(url.pathname, body);
@@ -129,6 +131,20 @@ describe("the phone's shared client against the Worker", () => {
     lost = true;
     expect(await recordGrade(grade)).toBe("queued");
     lost = false;
+    expect((await api.streak()).today.attempts).toBe(before + 1);
+
+    expect(await undoGrade(grade)).toBe("undone");
+
+    expect((await api.streak()).today.attempts).toBe(before);
+    expect(outboxSize()).toBe(0);
+  });
+
+  it("takes back a grade the Worker stored though it then answered 500", async () => {
+    const before = (await api.streak()).today.attempts;
+    const grade = await nextGrade();
+    failing = true;
+    expect(await recordGrade(grade)).toBe("queued");
+    failing = false;
     expect((await api.streak()).today.attempts).toBe(before + 1);
 
     expect(await undoGrade(grade)).toBe("undone");

@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { parseJson } from "../parse";
+import type { AiConsent } from "./consent";
 import { type AiGatewayBindings, providerEndpoint } from "./gateway";
 import type { Fetch } from "./types";
 
@@ -19,7 +20,10 @@ export interface LeadInRequest {
 
 export interface LeadInWriter {
   model: string;
-  write(request: LeadInRequest): Promise<{ previousText: string | null } & LeadInUsage>;
+  write(
+    request: LeadInRequest,
+    consent: AiConsent,
+  ): Promise<{ previousText: string | null } & LeadInUsage>;
 }
 
 export class LeadInError extends Error {
@@ -70,8 +74,8 @@ export function createLeadInWriter(
   if (!key) return null;
   return {
     model: LEAD_IN_MODEL,
-    async write({ instructions, input }) {
-      const endpoint = providerEndpoint(env, "openai");
+    async write({ instructions, input }, consent) {
+      const endpoint = providerEndpoint(env, "openai", consent);
       const response = await request(`${endpoint.base}/chat/completions`, {
         method: "POST",
         redirect: "manual",

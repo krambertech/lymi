@@ -2,6 +2,7 @@ import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX, speechContext, spokenText }
 import { and, eq, inArray, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
+import type { AiConsent } from "../ai/consent";
 import { speechText } from "../ai/speech-text";
 import { type Db, schema } from "../db";
 import { type LeadInDependencies, leadInPolicy } from "../lead-ins";
@@ -14,7 +15,7 @@ import {
   type ObjectStore,
   putObject,
 } from "../storage";
-import { aiAllowedForOwner } from "./ai-consent";
+import { aiConsentForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
 import { audit } from "./audit";
 import { getCard } from "./cards";
@@ -54,7 +55,9 @@ export async function pronunciationAudio(
     throw new ServiceError("unavailable", "The recorded pronunciation is temporarily unavailable");
   }
   // The card's words are its owner's, so the owner's choice decides whether they are voiced.
-  const deps = (await aiAllowedForOwner(ctx, card.userId)) ? sent : { ...sent, storedOnly: true };
+  const allowed = await aiConsentForOwner(ctx, card.userId);
+  const consent = sent.storedOnly ? null : allowed;
+  const deps = { ...sent, consent };
   const language = LanguageTag.safeParse(card.language);
   if (!language.success) {
     throw new ServiceError("invalid", "Pronunciation audio is only available for language cards");
@@ -80,11 +83,11 @@ export async function pronunciationAudio(
           input,
           deps.bucket,
           { writer, decide },
-          deps.storedOnly,
+          consent,
           ctx.analytics,
         )
       : undefined;
-  if (input && deps.storedOnly && !spoken)
+  if (input && !consent && !spoken)
     throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
   if (spoken) return generatedPronunciation(ctx, card, deps, providers, language.data, spoken);
   const context = speechContext(language.data);
@@ -103,7 +106,7 @@ export async function pronunciationAudio(
 async function generatedPronunciation(
   ctx: ServiceContext,
   card: Card,
-  deps: AudioDependencies,
+  deps: AudioDependencies & { consent: AiConsent | null },
   providers: SpeechProvider[],
   language: string,
   spoken?: SpokenLeadIn,
@@ -121,7 +124,7 @@ async function generatedPronunciation(
     throw new ServiceError("unavailable", "Pronunciation audio is not configured");
   }
 
-  if (spoken && !leased && !deps.storedOnly) {
+  if (spoken && !leased && deps.consent) {
     const key = await audioKey(card, preferred, spoken);
     const cached = await deps.bucket.get(key);
     if (cached) {
@@ -141,8 +144,7 @@ async function generatedPronunciation(
       if (card.audioKey !== key) await rememberAudioKey(ctx, card, key, false, provider.provider);
       return cached;
     }
-    if (deps.storedOnly)
-      throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
+    if (!deps.consent) throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
 
     let audio: Uint8Array;
     const text = speechText(spokenText(card));
@@ -157,13 +159,16 @@ async function generatedPronunciation(
         status,
       });
     try {
-      const generated = await provider.speech({
-        text,
-        language,
-        ...(takesLeadIn(provider) && spoken?.previousText
-          ? { previousText: spoken.previousText }
-          : {}),
-      });
+      const generated = await provider.speech(
+        {
+          text,
+          language,
+          ...(takesLeadIn(provider) && spoken?.previousText
+            ? { previousText: spoken.previousText }
+            : {}),
+        },
+        deps.consent,
+      );
       audio = await boundedAudio(generated);
       report(false);
     } catch (error) {

@@ -1,10 +1,10 @@
 import { LanguageTag, languageOfScript } from "@lymi/core";
 import { and, count, desc, eq, isNotNull, isNull, max } from "@lymi/core/db";
 import { z } from "zod";
-import type { TextProvider } from "../ai";
+import type { TextProvider, TextProviderFor } from "../ai";
 import { schema } from "../db";
 import { log } from "../log";
-import { aiAllowedFor } from "./ai-consent";
+import { aiConsentFor } from "./ai-consent";
 import type { ServiceContext } from "./context";
 
 /** A deck the learner can add to, with the language its cards are in. */
@@ -109,14 +109,15 @@ async function languageDecks(ctx: ServiceContext): Promise<LanguageDeck[]> {
 export async function chooseDeck(
   ctx: ServiceContext,
   input: { term: string; source?: string | undefined },
-  provider: TextProvider | null,
+  providerFor: TextProviderFor,
 ): Promise<{ deckId: string | null; language: string | null }> {
   const decks = await languageDecks(ctx);
   const languages = [...new Set(decks.map((d) => d.language))];
   // One language among the decks gives nothing to choose by.
   if (languages.length < 2) return { deckId: null, language: null };
   // Without the learner's yes only the script decides.
-  const model = (await aiAllowedFor(ctx)) ? provider : null;
+  const consent = await aiConsentFor(ctx);
+  const model = consent && providerFor(consent);
   const language = await termLanguage(input.term, input.source, languages, model);
   return { deckId: deckFor(decks, language), language };
 }

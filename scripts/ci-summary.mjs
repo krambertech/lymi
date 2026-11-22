@@ -184,6 +184,7 @@ export function renderCiSummary(env, shardOutcomes = [], components = []) {
     `| Pull request title | ${outcome(env.TITLE_OUTCOME)} |`,
     `| Quality dependencies | ${outcome(env.DEPENDENCIES_OUTCOME)} |`,
     `| Formatting and lint | ${outcome(env.CHECK_OUTCOME)} |`,
+    `| Flow models | ${outcome(env.MODELS_OUTCOME)} |`,
     `| Interface strings | ${outcome(env.I18N_OUTCOME)} |`,
     `| Migration safety | ${outcome(env.MIGRATIONS_OUTCOME)} |`,
     `| Production build | ${outcome(env.BUILD_OUTCOME)} |`,

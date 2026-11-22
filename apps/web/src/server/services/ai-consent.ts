@@ -1,10 +1,13 @@
 import { AI_CONSENT_REQUIRED, type AiConsentInput } from "@lymi/core";
 import { and, eq, isNull, lt, or } from "@lymi/core/db";
+import type { AiConsent } from "../ai/consent";
 import { type Db, schema } from "../db";
 import { track } from "./analytics";
 import { auditStatementWhen } from "./audit";
 import { type ServiceContext, ServiceError } from "./context";
 import { ensureSettings, getSettings } from "./settings";
+
+const CONSENT = {} as AiConsent;
 
 /**
  * Whether Lymi may send a learner's content to an AI service. The phone app sends nothing until
@@ -23,26 +26,30 @@ async function choiceOf(db: Db, userId: string): Promise<boolean | null> {
 }
 
 /** For the caller's own content. */
-export async function aiAllowedFor(ctx: ServiceContext): Promise<boolean> {
-  return aiAllowed(await choiceOf(ctx.db, ctx.userId), ctx.fromPhone === true);
+export async function aiConsentFor(ctx: ServiceContext): Promise<AiConsent | null> {
+  return aiAllowed(await choiceOf(ctx.db, ctx.userId), ctx.fromPhone === true) ? CONSENT : null;
 }
 
 /**
  * For content `ownerId` wrote, such as a shared or published deck's card. The owner's choice
  * decides; only the owner's own phone treats an unanswered choice as no.
  */
-export async function aiAllowedForOwner(ctx: ServiceContext, ownerId: string): Promise<boolean> {
+export async function aiConsentForOwner(
+  ctx: ServiceContext,
+  ownerId: string,
+): Promise<AiConsent | null> {
   const fromOwnerPhone = ctx.fromPhone === true && ctx.userId === ownerId;
-  return aiAllowed(await choiceOf(ctx.db, ownerId), fromOwnerPhone);
+  return aiAllowed(await choiceOf(ctx.db, ownerId), fromOwnerPhone) ? CONSENT : null;
 }
 
 /** For a run with no request behind it: only an explicit no stops it. */
-export async function aiWithdrawn(db: Db, userId: string): Promise<boolean> {
-  return (await choiceOf(db, userId)) === false;
+export async function aiConsentForRun(db: Db, userId: string): Promise<AiConsent | null> {
+  return aiAllowed(await choiceOf(db, userId), false) ? CONSENT : null;
 }
 
-export async function requireAi(ctx: ServiceContext): Promise<void> {
-  if (await aiAllowedFor(ctx)) return;
+export async function requireAi(ctx: ServiceContext): Promise<AiConsent> {
+  const consent = await aiConsentFor(ctx);
+  if (consent) return consent;
   throw new ServiceError(
     "forbidden",
     "AI services are off for this account. Turn them on to use this.",

@@ -333,8 +333,11 @@ cards.post(
   body(DeckChoiceInput, "term"),
   async (c) => {
     const ctx = ctxOf(c);
-    const provider = createTextProvider(c.env, textCallReporter(ctx.analytics, "deck_choice"));
-    return c.json(await chooseDeck(ctx, c.req.valid("json"), provider));
+    return c.json(
+      await chooseDeck(ctx, c.req.valid("json"), (consent) =>
+        createTextProvider(c.env, consent, textCallReporter(ctx.analytics, "deck_choice")),
+      ),
+    );
   },
 );
 
@@ -353,8 +356,10 @@ cards.post(
   limitHintDrafts,
   async (c) => {
     const ctx = ctxOf(c);
-    const provider = createTextProvider(c.env, textCallReporter(ctx.analytics, "hint"));
-    return c.json({ hint: await hintDraftFor(ctx, c.req.param("id"), provider) });
+    const hint = await hintDraftFor(ctx, c.req.param("id"), (consent) =>
+      createTextProvider(c.env, consent, textCallReporter(ctx.analytics, "hint")),
+    );
+    return c.json({ hint });
   },
 );
 

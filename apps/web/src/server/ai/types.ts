@@ -1,3 +1,5 @@
+import type { AiConsent } from "./consent";
+
 export type SpeechRequest = {
   previousText?: string | undefined;
   text: string;
@@ -22,7 +24,7 @@ export interface SpeechProvider {
   locale: string;
   contentType: "audio/mpeg";
   extension: "mp3";
-  speech(request: SpeechRequest): Promise<Response>;
+  speech(request: SpeechRequest, consent: AiConsent): Promise<Response>;
 }
 
 export type Fetch = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
@@ -62,3 +64,5 @@ export interface TextProvider {
   /** The parsed reply. Callers validate it; a provider only promises valid JSON. */
   complete(request: TextRequest): Promise<unknown>;
 }
+
+export type TextProviderFor = (consent: AiConsent) => TextProvider | null;

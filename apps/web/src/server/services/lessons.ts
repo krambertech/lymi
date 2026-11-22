@@ -11,6 +11,7 @@ import {
 import { textCallCost } from "@lymi/core/analytics";
 import { and, count, desc, eq, gt, isNull, sql } from "@lymi/core/db";
 import type { z } from "zod";
+import type { AiConsent } from "../ai/consent";
 import { schema } from "../db";
 import { type DecisionModel, KEEP_THRESHOLD, keepScore } from "../lessons/keep";
 import {
@@ -87,9 +88,9 @@ const ANSWER_WINDOW_MS = 2 * 60 * 60 * 1000;
 export async function assertCanCheckAnswers(
   ctx: ServiceContext,
   operators: Set<string>,
-): Promise<void> {
-  await requireAi(ctx);
-  if (await isOperator(ctx, operators)) return;
+): Promise<AiConsent> {
+  const consent = await requireAi(ctx);
+  if (await isOperator(ctx, operators)) return consent;
   const [recent] = await ctx.db
     .select({ id: schema.lessonReads.id })
     .from(schema.lessonReads)
@@ -108,6 +109,7 @@ export async function assertCanCheckAnswers(
       "no_recent_read",
     );
   }
+  return consent;
 }
 
 function limitReached(ctx: ServiceContext): never {
@@ -187,6 +189,7 @@ type Owned = { id: string; term: string; key: string; reading: string | null; de
 /** Everything a read needs before the model starts, checked first so a refusal is an ordinary error. */
 export type PreparedLesson = {
   reader: LessonReader;
+  consent: AiConsent;
   brief: string;
   schema: Record<string, unknown>;
   decks: Map<string, string>;
@@ -214,12 +217,12 @@ const DECK_CHOICES = 12;
 export async function assertCanReadLessons(
   ctx: ServiceContext,
   deps: Pick<LessonDeps, "reader" | "operators">,
-): Promise<LessonReader> {
+): Promise<{ reader: LessonReader; consent: AiConsent }> {
   if (!deps.reader) throw new ServiceError("unavailable", "Reading lessons is not configured.");
-  await requireAi(ctx);
+  const consent = await requireAi(ctx);
   const { daily } = await lessonAccess(ctx, deps.operators);
   if (daily && daily.used >= daily.limit) limitReached(ctx);
-  return deps.reader;
+  return { reader: deps.reader, consent };
 }
 
 export async function prepareLesson(
@@ -232,7 +235,7 @@ export async function prepareLesson(
     client?: "web" | "phone";
   } = {},
 ): Promise<PreparedLesson> {
-  const reader = await assertCanReadLessons(ctx, deps);
+  const { reader, consent } = await assertCanReadLessons(ctx, deps);
   const { db, userId } = ctx;
 
   const ownDecks = await db
@@ -290,6 +293,7 @@ export async function prepareLesson(
   return {
     release,
     reader,
+    consent,
     pages,
     brief: `${decksBrief(decks, {
       fixed: !!fixed,
@@ -365,12 +369,17 @@ async function readInto(
     const reading = readingKey({ term: t.term, language, pronunciation: t.pronunciation });
     if (seen.has(`${key}\u0000${reading ?? ""}`)) return;
     seen.add(`${key}\u0000${reading ?? ""}`);
-    const scored = keepScore(ai, lesson.deckRule, {
-      id: t.id,
-      term: t.term,
-      meaning: t.meaning,
-      kind: t.kind,
-    });
+    const scored = keepScore(
+      ai,
+      lesson.deckRule,
+      {
+        id: t.id,
+        term: t.term,
+        meaning: t.meaning,
+        kind: t.kind,
+      },
+      lesson.consent,
+    );
     queue = queue.then(async () => {
       const keep = await scored;
       const sameKey = lesson.byKey.get(key);
@@ -418,13 +427,19 @@ async function readInto(
   const started = Date.now();
   let usage: LessonUsage;
   try {
-    usage = await lesson.reader.stream(material, lesson.brief, lesson.schema, (text) => {
-      if (!deck) {
-        const chosen = /"deck"\s*:\s*"([^"]+)"/.exec(stream.all + text)?.[1];
-        if (chosen && lesson.decks.has(chosen)) announce(chosen);
-      }
-      for (const raw of stream.push(text)) take(raw);
-    });
+    usage = await lesson.reader.stream(
+      material,
+      lesson.brief,
+      lesson.schema,
+      (text) => {
+        if (!deck) {
+          const chosen = /"deck"\s*:\s*"([^"]+)"/.exec(stream.all + text)?.[1];
+          if (chosen && lesson.decks.has(chosen)) announce(chosen);
+        }
+        for (const raw of stream.push(text)) take(raw);
+      },
+      lesson.consent,
+    );
   } catch (error) {
     report({
       provider: "anthropic",

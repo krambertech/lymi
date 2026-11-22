@@ -1,5 +1,6 @@
 import type { Fetch } from "../ai";
-import { type AiGatewayBindings, providerEndpoint } from "../ai/gateway";
+import type { AiConsent } from "../ai/consent";
+import { type AiGatewayBindings, assertGatewayConfigured, providerEndpoint } from "../ai/gateway";
 import { INSTRUCTIONS } from "./prompt";
 
 export type LessonReaderBindings = {
@@ -31,6 +32,7 @@ export interface LessonReader {
     brief: string,
     schema: Record<string, unknown>,
     onText: (text: string) => void,
+    consent: AiConsent,
   ): Promise<LessonUsage>;
 }
 
@@ -53,11 +55,12 @@ export function createLessonReader(
   const key = env.ANTHROPIC_API_KEY?.trim();
   if (!key) return null;
   const model = env.ANTHROPIC_LESSON_MODEL || DEFAULT_MODEL;
-  const endpoint = providerEndpoint(env, "anthropic");
+  assertGatewayConfigured(env);
   return {
     model,
-    async stream(material, brief, schema, onText) {
+    async stream(material, brief, schema, onText, consent) {
       const started = Date.now();
+      const endpoint = providerEndpoint(env, "anthropic", consent);
       const headers = readerHeaders(env, key, endpoint.headers);
       const content = [
         ...material.pdfs.map((bytes) => ({
@@ -145,11 +148,12 @@ function readerHeaders(
  */
 export async function pingLessonReader(
   env: LessonReaderBindings,
+  consent: AiConsent,
   request: Fetch = fetch,
 ): Promise<void> {
   const key = env.ANTHROPIC_API_KEY?.trim();
   if (!key) throw new LessonReaderError("The lesson reader is not configured");
-  const endpoint = providerEndpoint(env, "anthropic");
+  const endpoint = providerEndpoint(env, "anthropic", consent);
   const response = await request(`${endpoint.base}/messages`, {
     method: "POST",
     redirect: "manual",

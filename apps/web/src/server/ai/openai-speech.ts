@@ -34,10 +34,10 @@ export function createOpenAiSpeechProvider(
     locale: language,
     contentType: "audio/mpeg",
     extension: "mp3",
-    async speech(input) {
+    async speech(input, consent) {
       const apiKey = env.OPENAI_API_KEY?.trim();
       if (!apiKey) throw new OpenAiSpeechError("OpenAI speech is not configured");
-      const endpoint = providerEndpoint(env, "openai");
+      const endpoint = providerEndpoint(env, "openai", consent);
       const headers: Record<string, string> = {
         Authorization: `Bearer ${apiKey}`,
         "Content-Type": "application/json",

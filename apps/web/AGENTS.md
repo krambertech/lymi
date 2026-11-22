@@ -11,3 +11,5 @@ Call `useReduceMotion()` for web motion so it honors both the learner's setting 
 ## Server
 
 Routes in `src/server/routes` parse, describe for OpenAPI and return. Services in `src/server/services` hold logic and own database access; routes must not reach into Drizzle. Every write goes through `src/server/services/audit.ts`, taking actor and connected app from service context so integration activity stays visible.
+
+An AI request carries an `AiConsent`, which only a check in `src/server/services/ai-consent.ts` returns ([ADR 0039](../../docs/adr/0039-the-phone-sends-nothing-to-ai-until-the-learner-allows-it.md)). Ask for it in the service, next to the content it sends, and again in each workflow step. `consentForCanary` and `consentForEvaluation` in `src/server/ai/consent.ts` are the only exemptions, for text Lymi wrote itself; never call them on learner content.

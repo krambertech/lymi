@@ -41,7 +41,12 @@ const languages: TextProvider = {
 };
 
 function depsWith(api: ReadwiseApi = createFakeReadwiseApi()): ReadwiseDeps {
-  return { api, secret: "test-secret-of-sufficient-length", languages, enrichment: null };
+  return {
+    api,
+    secret: "test-secret-of-sufficient-length",
+    languages: () => languages,
+    enrichment: null,
+  };
 }
 
 async function reader(id: string): Promise<ServiceContext & { deckId: string }> {
@@ -260,7 +265,7 @@ describe("a pull that fails", () => {
 describe("a book whose language was unknown", () => {
   it("is read again on the next pull and followed once it is in a language the learner studies", async () => {
     const ctx = await reader("rw-unknown");
-    await connectReadwise(ctx, { ...depsWith(), languages: null }, DEV_READWISE_TOKEN);
+    await connectReadwise(ctx, { ...depsWith(), languages: () => null }, DEV_READWISE_TOKEN);
     expect((await getReadwise(ctx))?.books.every((b) => b.language === null)).toBe(true);
 
     await pullReadwiseNow(ctx, depsWith());
@@ -325,7 +330,7 @@ async function holdPullAt(userId: string, at: Date) {
 describe("highlights waiting for their book's language", () => {
   it("come in once a new highlight lets Lymi place the book", async () => {
     const ctx = await reader("rw-wait-detect");
-    const unknown = { ...depsWith(), languages: null };
+    const unknown = { ...depsWith(), languages: () => null };
     await connectReadwise(ctx, unknown, DEV_READWISE_TOKEN);
     const highlights: Timed[] = [{ book: "9001", id: "a", text: "sbadigliare", at: later(1_000) }];
     await pullReadwiseNow(ctx, { ...unknown, api: timedApi(highlights) });
@@ -341,7 +346,7 @@ describe("highlights waiting for their book's language", () => {
   it("come in at once when the learner sets the book's language", async () => {
     const ctx = await reader("rw-wait-set");
     const highlights: Timed[] = [{ book: "9001", id: "c", text: "sbadigliare", at: later(1_000) }];
-    const unknown = { ...depsWith(timedApi(highlights)), languages: null };
+    const unknown = { ...depsWith(timedApi(highlights)), languages: () => null };
     await connectReadwise(ctx, unknown, DEV_READWISE_TOKEN);
     await pullReadwiseNow(ctx, unknown);
     await holdPullAt(ctx.userId, later(10_000));
@@ -434,7 +439,7 @@ describe("a book the learner chose before Lymi knew its language", () => {
 
   it("stays followed once the pull places it in a language with no deck", async () => {
     const ctx = await reader("rw-chosen-follow");
-    await connectReadwise(ctx, { ...depsWith(), languages: null }, DEV_READWISE_TOKEN);
+    await connectReadwise(ctx, { ...depsWith(), languages: () => null }, DEV_READWISE_TOKEN);
     await updateReadwise(ctx, { books: [{ id: "9002", followed: true }] });
 
     await pullReadwiseNow(ctx, depsWith());
@@ -447,7 +452,7 @@ describe("a book the learner chose before Lymi knew its language", () => {
 
   it("stays unfollowed once the pull places it in a language the learner studies", async () => {
     const ctx = await reader("rw-chosen-unfollow");
-    await connectReadwise(ctx, { ...depsWith(), languages: null }, DEV_READWISE_TOKEN);
+    await connectReadwise(ctx, { ...depsWith(), languages: () => null }, DEV_READWISE_TOKEN);
     await updateReadwise(ctx, { books: [{ id: "9001", followed: true }] });
     await updateReadwise(ctx, { books: [{ id: "9001", followed: false }] });
 
@@ -485,7 +490,7 @@ describe("a book whose deck is gone", () => {
   it("waits, and catches up once the learner chooses another deck", async () => {
     const ctx = await reader("rw-no-deck");
     const highlights: Timed[] = [{ book: "9001", id: "d1", text: "sbadigliare", at: later(1_000) }];
-    const unknown = { ...depsWith(timedApi(highlights)), languages: null };
+    const unknown = { ...depsWith(timedApi(highlights)), languages: () => null };
     await connectReadwise(ctx, unknown, DEV_READWISE_TOKEN);
     const replacement = await createDeck(ctx, { name: "Italiano 2", defaultLanguage: "it" });
     // The deck Readwise was given for Italian is archived; another Italian deck remains.
@@ -577,7 +582,7 @@ describe("a learner who turned AI off", () => {
       updated_at: Date.now(),
     });
     const complete = vi.fn(languages.complete);
-    const deps = { ...depsWith(), languages: { ...languages, complete } };
+    const deps = { ...depsWith(), languages: () => ({ ...languages, complete }) };
 
     const view = await connectReadwise(ctx, deps, DEV_READWISE_TOKEN);
     expect(view.books.every((b) => b.language === null && !b.followed)).toBe(true);

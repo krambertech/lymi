@@ -146,10 +146,10 @@ lessonReads.post(
   }),
   body(LessonAnswerInput, "answer"),
   async (c) => {
-    await assertCanCheckAnswers(ctxOf(c), operatorEmails(c.env));
+    const consent = await assertCanCheckAnswers(ctxOf(c), operatorEmails(c.env));
     const { question, answer, terms } = c.req.valid("json");
     return c.json({
-      drop: await termsAgainstAnswer(decisionModel(c.env), question, answer, terms),
+      drop: await termsAgainstAnswer(decisionModel(c.env), question, answer, terms, consent),
     });
   },
 );

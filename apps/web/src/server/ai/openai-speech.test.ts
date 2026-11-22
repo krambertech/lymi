@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { testAiConsent } from "../../test/ai-consent";
 import { testGateway } from "../../test/ai-gateway";
 import { createOpenAiSpeechProvider, OpenAiSpeechError } from "./openai-speech";
 
@@ -14,9 +15,9 @@ describe("OpenAI speech provider", () => {
       request,
     );
 
-    expect(await (await provider.speech({ text: "bore da", language: "cy" })).bytes()).toEqual(
-      new Uint8Array([1, 2]),
-    );
+    expect(
+      await (await provider.speech({ text: "bore da", language: "cy" }, testAiConsent)).bytes(),
+    ).toEqual(new Uint8Array([1, 2]));
     const call = request.mock.calls[0];
     if (!call) throw new Error("OpenAI request was not made");
     expect(call[0]).toBe("https://gateway.ai.cloudflare.com/v1/acct/lymi/openai/audio/speech");
@@ -32,9 +33,9 @@ describe("OpenAI speech provider", () => {
   it("does not make a request when the key is missing", async () => {
     const request = vi.fn();
     const provider = createOpenAiSpeechProvider({}, "cy", request);
-    await expect(provider.speech({ text: "bore da", language: "cy" })).rejects.toBeInstanceOf(
-      OpenAiSpeechError,
-    );
+    await expect(
+      provider.speech({ text: "bore da", language: "cy" }, testAiConsent),
+    ).rejects.toBeInstanceOf(OpenAiSpeechError);
     expect(request).not.toHaveBeenCalled();
   });
 
@@ -46,7 +47,9 @@ describe("OpenAI speech provider", () => {
       request,
     );
 
-    await expect(provider.speech({ text: "tere", language: "et" })).rejects.toMatchObject({
+    await expect(
+      provider.speech({ text: "tere", language: "et" }, testAiConsent),
+    ).rejects.toMatchObject({
       name: "OpenAiSpeechError",
       status: 401,
     });

@@ -14,7 +14,7 @@ vi.mock("../readwise/deps", () => ({
         return createFakeReadwiseApi().exportPage(token, input);
       },
     };
-    return { api, secret: env.BETTER_AUTH_SECRET, languages: null, enrichment: null };
+    return { api, secret: env.BETTER_AUTH_SECRET, languages: () => null, enrichment: null };
   },
 }));
 

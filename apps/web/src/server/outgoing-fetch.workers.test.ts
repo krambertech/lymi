@@ -1,5 +1,6 @@
 import { proxyPostHog } from "@lymi/core/posthog-proxy";
 import { describe, expect, it } from "vitest";
+import { testAiConsent } from "../test/ai-consent";
 import { testGateway } from "../test/ai-gateway";
 import { createElevenLabsSpeechProvider } from "./ai/elevenlabs-speech";
 import { createLeadInWriter } from "./ai/lead-in-writer";
@@ -23,7 +24,10 @@ async function pkcs8Pem(key: CryptoKey): Promise<string> {
 
 describe("outgoing fetches in the Workers runtime", () => {
   it("OpenAI text", async () => {
-    const provider = createOpenAiTextProvider({ ...testGateway, OPENAI_API_KEY: "key" });
+    const provider = createOpenAiTextProvider(
+      { ...testGateway, OPENAI_API_KEY: "key" },
+      testAiConsent,
+    );
     const reply = await provider.complete({
       instructions: "Reply.",
       input: "ok",
@@ -34,7 +38,7 @@ describe("outgoing fetches in the Workers runtime", () => {
 
   it("OpenAI speech", async () => {
     const provider = createOpenAiSpeechProvider({ ...testGateway, OPENAI_API_KEY: "key" }, "uk");
-    const response = await provider.speech({ text: "слово", language: "uk" });
+    const response = await provider.speech({ text: "слово", language: "uk" }, testAiConsent);
     expect(response.headers.get("content-type")).toBe("audio/mpeg");
   });
 
@@ -44,24 +48,31 @@ describe("outgoing fetches in the Workers runtime", () => {
       "uk-UA",
       "voice",
     );
-    const response = await provider.speech({ text: "слово", language: "uk" });
+    const response = await provider.speech({ text: "слово", language: "uk" }, testAiConsent);
     expect(response.headers.get("content-type")).toBe("audio/mpeg");
   });
 
   it("the lead-in writer", async () => {
     const writer = createLeadInWriter({ ...testGateway, OPENAI_API_KEY: "key" });
-    const result = await writer?.write({ instructions: "Write.", input: { term: "слово" } });
+    const result = await writer?.write(
+      { instructions: "Write.", input: { term: "слово" } },
+      testAiConsent,
+    );
     expect(result?.previousText).toBeNull();
   });
 
   it("the lesson reader and its canary ping", async () => {
     const env = { ...testGateway, ANTHROPIC_API_KEY: "key" };
     const text: string[] = [];
-    await createLessonReader(env)?.stream({ images: [], pdfs: [], text: "" }, "Read.", {}, (t) =>
-      text.push(t),
+    await createLessonReader(env)?.stream(
+      { images: [], pdfs: [], text: "" },
+      "Read.",
+      {},
+      (t) => text.push(t),
+      testAiConsent,
     );
     expect(text.join("")).toBe("{}");
-    await expect(pingLessonReader(env)).resolves.toBeUndefined();
+    await expect(pingLessonReader(env, testAiConsent)).resolves.toBeUndefined();
   });
 
   it("the CIMD metadata fetch hands a redirect back unfollowed", async () => {

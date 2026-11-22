@@ -126,11 +126,11 @@ describe("hintDraftFor", () => {
 
   it("drafts afresh on every ask, and marks a hint saved as the latest draft as the AI's", async () => {
     const { ctx, cardId } = await card("hint-draft-1");
-    expect(await hintDraftFor(ctx, cardId, provider("КУРБан плачет").provider)).toBe(
+    expect(await hintDraftFor(ctx, cardId, () => provider("КУРБан плачет").provider)).toBe(
       "КУРБан плачет",
     );
     const first = provider("КУРБан грустит");
-    expect(await hintDraftFor(ctx, cardId, first.provider)).toBe("КУРБан грустит");
+    expect(await hintDraftFor(ctx, cardId, () => first.provider)).toBe("КУРБан грустит");
     expect(first.complete).toHaveBeenCalledOnce();
 
     await updateCard(ctx, cardId, { hint: "КУРБан грустит", hintSource: "manual" });
@@ -140,7 +140,7 @@ describe("hintDraftFor", () => {
 
     await updateCard(ctx, cardId, { meaning: "печальный" });
     const second = provider("КУРБан печалится");
-    expect(await hintDraftFor(ctx, cardId, second.provider)).toBe("КУРБан печалится");
+    expect(await hintDraftFor(ctx, cardId, () => second.provider)).toBe("КУРБан печалится");
     expect(second.complete).toHaveBeenCalledOnce();
   });
 
@@ -155,34 +155,34 @@ describe("hintDraftFor", () => {
     await archiveCard(ctx, archived.card.id);
 
     const drafted = provider("КУРБан грустит");
-    await hintDraftFor(ctx, cardId, drafted.provider);
+    await hintDraftFor(ctx, cardId, () => drafted.provider);
     const [request] = drafted.complete.mock.calls[0] as unknown as [{ input: string }];
     expect(JSON.parse(request.input).deckMeanings).toEqual(["море"]);
   });
 
   it("keeps the last draft when another ask comes back empty, so saving it is still the AI's", async () => {
     const { ctx, cardId } = await card("hint-draft-keep");
-    expect(await hintDraftFor(ctx, cardId, provider("КУРБан грустит").provider)).toBe(
+    expect(await hintDraftFor(ctx, cardId, () => provider("КУРБан грустит").provider)).toBe(
       "КУРБан грустит",
     );
-    expect(await hintDraftFor(ctx, cardId, provider(null).provider)).toBeNull();
+    expect(await hintDraftFor(ctx, cardId, () => provider(null).provider)).toBeNull();
     await updateCard(ctx, cardId, { hint: "КУРБан грустит", hintSource: "manual" });
     expect((await showCard(ctx, cardId)).hintSource).toBe("ai");
   });
 
   it("asks twice before answering none, and drafts nothing without a vendor", async () => {
     const { ctx, cardId } = await card("hint-draft-2");
-    expect(await hintDraftFor(ctx, cardId, null)).toBeNull();
+    expect(await hintDraftFor(ctx, cardId, () => null)).toBeNull();
     const none = provider(null);
-    expect(await hintDraftFor(ctx, cardId, none.provider)).toBeNull();
+    expect(await hintDraftFor(ctx, cardId, () => none.provider)).toBeNull();
     expect(none.complete).toHaveBeenCalledTimes(2);
   });
 
   it("guards the modes the deck asks in now", async () => {
     const { ctx, cardId, deckId } = await card("hint-draft-5");
     await updateDeck(ctx, deckId, { directions: "recognition" });
-    expect(await hintDraftFor(ctx, cardId, provider("КУРБан грустит").provider)).toBeNull();
-    expect(await hintDraftFor(ctx, cardId, provider("КУРБан опустил голову").provider)).toBe(
+    expect(await hintDraftFor(ctx, cardId, () => provider("КУРБан грустит").provider)).toBeNull();
+    expect(await hintDraftFor(ctx, cardId, () => provider("КУРБан опустил голову").provider)).toBe(
       "КУРБан опустил голову",
     );
   });
@@ -194,23 +194,25 @@ describe("hintDraftFor", () => {
     });
     const failing = { provider: "openai", model: "test", complete } as TextProvider;
     const quiet = vi.spyOn(console, "error").mockImplementation(() => {});
-    await expect(hintDraftFor(ctx, cardId, failing)).rejects.toMatchObject({ code: "unavailable" });
+    await expect(hintDraftFor(ctx, cardId, () => failing)).rejects.toMatchObject({
+      code: "unavailable",
+    });
     quiet.mockRestore();
     const after = provider("КУРБан грустит");
-    expect(await hintDraftFor(ctx, cardId, after.provider)).toBe("КУРБан грустит");
+    expect(await hintDraftFor(ctx, cardId, () => after.provider)).toBe("КУРБан грустит");
     expect(after.complete).toHaveBeenCalledOnce();
   });
 
   it("refuses a draft that writes the term the card asks for", async () => {
     const { ctx, cardId } = await card("hint-draft-3");
-    expect(await hintDraftFor(ctx, cardId, provider("kurb is sad").provider)).toBeNull();
+    expect(await hintDraftFor(ctx, cardId, () => provider("kurb is sad").provider)).toBeNull();
   });
 
   it("is the owner's alone", async () => {
     const { cardId } = await card("hint-draft-4");
     const stranger = await learner(db, "hint-draft-stranger", "Someone");
-    await expect(hintDraftFor(stranger, cardId, provider("x").provider)).rejects.toBeInstanceOf(
-      ServiceError,
-    );
+    await expect(
+      hintDraftFor(stranger, cardId, () => provider("x").provider),
+    ).rejects.toBeInstanceOf(ServiceError);
   });
 });

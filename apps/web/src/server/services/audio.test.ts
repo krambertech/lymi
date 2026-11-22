@@ -3,11 +3,11 @@ import { afterEach, describe, expect, it, vi } from "vitest";
 import type { SpeechProvider, SpeechRequest } from "../ai";
 import { LeadInError, type LeadInRequest } from "../ai/lead-in-writer";
 import type { Db } from "../db";
-import { aiAllowedForOwner } from "./ai-consent";
+import { aiConsentForOwner } from "./ai-consent";
 import { pronunciationAudio } from "./audio";
 import type { ServiceContext } from "./context";
 
-vi.mock("./ai-consent", () => ({ aiAllowedForOwner: vi.fn(async () => true) }));
+vi.mock("./ai-consent", () => ({ aiConsentForOwner: vi.fn(async () => ({})) }));
 
 afterEach(() => {
   vi.restoreAllMocks();
@@ -104,7 +104,7 @@ function storedAudio(key = "audio.mp3"): R2ObjectBody {
 
 function provider(
   name: SpeechProvider["provider"],
-  speech: SpeechProvider["speech"],
+  speech: (request: SpeechRequest) => Promise<Response>,
 ): SpeechProvider {
   return {
     provider: name,
@@ -116,7 +116,7 @@ function provider(
     locale: "et-EE",
     contentType: "audio/mpeg",
     extension: "mp3",
-    speech,
+    speech: (request) => speech(request),
   };
 }
 
@@ -579,16 +579,16 @@ describe("pronunciation audio", () => {
     });
     const speech = vi.fn(async () => new Response(new Uint8Array([1, 2, 3])));
     const providers = () => [provider("elevenlabs", speech)];
-    vi.mocked(aiAllowedForOwner).mockResolvedValueOnce(false);
+    vi.mocked(aiConsentForOwner).mockResolvedValueOnce(null);
 
     await expect(
       pronunciationAudio(context(card()), "card-1", { bucket, providers }),
     ).rejects.toMatchObject({ code: "not_found" });
     expect(speech).not.toHaveBeenCalled();
-    expect(vi.mocked(aiAllowedForOwner)).toHaveBeenLastCalledWith(expect.anything(), "user-1");
+    expect(vi.mocked(aiConsentForOwner)).toHaveBeenLastCalledWith(expect.anything(), "user-1");
 
     const played = await pronunciationAudio(context(card()), "card-1", { bucket, providers });
-    vi.mocked(aiAllowedForOwner).mockResolvedValueOnce(false);
+    vi.mocked(aiConsentForOwner).mockResolvedValueOnce(null);
     const replayed = await pronunciationAudio(context(card({ audioKey: played.key })), "card-1", {
       bucket,
       providers,

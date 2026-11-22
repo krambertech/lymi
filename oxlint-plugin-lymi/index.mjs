@@ -1,4 +1,5 @@
 import { definePlugin } from "@oxlint/plugins";
+import aiConsent from "./rules/ai-consent.mjs";
 import clipOwner from "./rules/clip-owner.mjs";
 import enterComposing from "./rules/enter-composing.mjs";
 import fieldError from "./rules/field-error.mjs";
@@ -23,6 +24,7 @@ export default definePlugin({
   meta: { name: "lymi" },
   rules: {
     "enter-composing": enterComposing,
+    "ai-consent": aiConsent,
     "clip-owner": clipOwner,
     "field-error": fieldError,
     "form-header": formHeader,

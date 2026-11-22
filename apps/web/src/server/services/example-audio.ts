@@ -1,9 +1,10 @@
 import { canSpeakExample, LanguageTag, SPOKEN_EXAMPLE_MAX, spokenExample } from "@lymi/core";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
+import type { AiConsent } from "../ai/consent";
 import type { ExampleAllowance } from "../example-audio-rate-limit";
 import { cardAudioKey, lockKey, type ObjectKey, type ObjectStore, putObject } from "../storage";
-import { aiAllowedForOwner } from "./ai-consent";
+import { aiConsentForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
 import { type AudioDependencies, boundedAudio, providerStatus } from "./audio";
 import { audit } from "./audit";
@@ -34,7 +35,8 @@ export async function exampleAudio(
     throw new ServiceError("unavailable", "The example's recording is temporarily unavailable");
   }
   // The sentence is its owner's, so the owner's choice decides whether it is voiced. ADR 0039.
-  const deps = (await aiAllowedForOwner(ctx, card.userId)) ? sent : { ...sent, storedOnly: true };
+  const allowed = await aiConsentForOwner(ctx, card.userId);
+  const consent = sent.storedOnly ? null : allowed;
   const language = LanguageTag.safeParse(card.language);
   if (!language.success || !canSpeakExample(card)) {
     throw new ServiceError(
@@ -43,13 +45,13 @@ export async function exampleAudio(
     );
   }
   const text = spokenExample(card);
-  const providers = deps.providers(language.data);
+  const providers = sent.providers(language.data);
   for (const provider of providers) {
-    const cached = await deps.bucket.get(await exampleKey(card, text, provider));
+    const cached = await sent.bucket.get(await exampleKey(card, text, provider));
     if (cached) return { clip: cached };
   }
   const preferred = providers[0];
-  if (deps.storedOnly || !preferred) {
+  if (!consent || !preferred) {
     throw new ServiceError(
       preferred ? "not_found" : "unavailable",
       preferred ? "Example audio is not stored yet" : "Example audio is not configured",
@@ -59,9 +61,9 @@ export async function exampleAudio(
   if (retryAfter !== null) return { retryAfter };
   // One provider call per sentence, however many presses or devices ask at once.
   const clip = await withAudioLease(
-    deps.bucket,
+    sent.bucket,
     lockKey(await exampleKey(card, text, preferred)),
-    () => voiced(ctx, card, text, language.data, providers, deps.bucket, allowance),
+    () => voiced(ctx, card, text, language.data, providers, sent.bucket, allowance, consent),
   );
   return { clip };
 }
@@ -74,6 +76,7 @@ async function voiced(
   providers: SpeechProvider[],
   bucket: ObjectStore<"AUDIO">,
   allowance: ExampleAllowance,
+  consent: AiConsent,
 ): Promise<R2ObjectBody> {
   // A press that waited out another's lease finds that one's clip.
   for (const provider of providers) {
@@ -99,10 +102,7 @@ async function voiced(
       );
     let audio: Uint8Array;
     try {
-      const generated = await provider.speech({
-        text,
-        language,
-      });
+      const generated = await provider.speech({ text, language }, consent);
       audio = await boundedAudio(generated);
       report(false);
     } catch (error) {

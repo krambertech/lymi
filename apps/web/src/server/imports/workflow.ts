@@ -57,11 +57,12 @@ export class ImportWorkflow extends WorkflowEntrypoint<Bindings, ImportRunParams
         await step.do("inspect", STEP, () =>
           analytics.run(() =>
             fileErrorsStop(() =>
-              inspectImport(
-                ctx,
-                id,
-                uploads,
-                createTextProvider(this.env, textCallReporter(analytics, "import_languages")),
+              inspectImport(ctx, id, uploads, (consent) =>
+                createTextProvider(
+                  this.env,
+                  consent,
+                  textCallReporter(analytics, "import_languages"),
+                ),
               ),
             ),
           ),

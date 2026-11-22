@@ -206,7 +206,7 @@ export type LearnStyleOptions = {
 export async function learnDeckStyles(
   ctx: ServiceContext,
   cardIds: readonly string[],
-  provider: TextProvider,
+  providerFor: () => Promise<TextProvider | null>,
   options: LearnStyleOptions = {},
 ): Promise<{ learned: number; deckIds: string[] }> {
   const { db, userId } = ctx;
@@ -273,6 +273,8 @@ export async function learnDeckStyles(
       cards,
       corrections,
     });
+    const provider = await providerFor();
+    if (!provider) break;
     let reply: unknown;
     try {
       reply = await provider.complete({

@@ -169,6 +169,10 @@ Each browser context asks for reduced motion, for the same reason the journeys d
 
 An instance's files run one after another in the same browser page, so a file can leave state behind for the next. On touch Chromium, `page.viewport()` wider than the device leaves the whole page pinch-zoomed after the size is restored, and a later file can pan that zoomed view; Playwright then aims a click a row off and reports another element intercepting it. The test setup resets the page scale before every file.
 
+A component test has no server. The setup refuses every `/api/` request at once, so a test never waits on the Vite process that serves its files: a busy runner answers that late, and it was behind most flakes of the review flow's old browser test. Give the query its data, or spy on an `api` method the query calls late; a spy does not reach `queryFn: api.streak`, which took the method when its module loaded.
+
+A hook that draws nothing is tested in Node. `hookReview()` in `packages/client/src/test/review-hook.ts` runs `useReviewFlow` on a clock, server, storage and locks of its own, with no real time in it, and fails a test that leaves a request unanswered, a send open or the hook moved behind its back.
+
 WebKit does not focus a button that is clicked, so a test about focus return opens the overlay from the keyboard. A swipe is not covered here; it belongs in a Playwright journey on the iPhone project.
 
 ## Service tests on a real D1
@@ -285,6 +289,12 @@ When a review finds a bug whose shape a search can spot, add the search so the n
 
 `scripts/check-test-only-exports.mjs` holds one such search across the whole repository. It fails when only tests read a production export that its own module does not use, the shape of `writeStore` and `streakLength` before #1266. Its `ALLOWED` list holds the exports that stay, each with its reason: a reset that stands in for a restart, or a check whose only runner is a test.
 
+## Flow models
+
+Three flows where a wrong order of events loses or leaks data have a TLA+ model in [the model-check skill](../.agents/skills/model-check/SKILL.md): the offline write queue, how the server settles a review day, and how an import's write run stops. A model walks every order of the flow's steps, where a test walks the ones someone thought of. The quality job runs `pnpm check:models --run`, which fails when a rule breaks, when a model reaches a different number of states than recorded, or when turning off a guard no longer breaks the rule it protects, so each model keeps catching the bug it was written for. `pnpm check` fails when the code a model covers changes without anyone confirming that the model still matches it.
+
+Model a flow when a race, retry or lost answer in it has already reached `main` and the orders are too many to write down. A model needs a replay: a test that drives the real code along the path the model found.
+
 ## Estonian lesson checks
 
 `apps/site/src/lib/learn/checks/` holds the mistakes reviews kept catching in Estonian lesson PRs as tests that run with `pnpm --filter @lymi/site test`. `lesson-checks.test.ts` renders every lesson in `LESSON_VIEWS` the way the server does, in en, uk and ru, while the kit's parts record their props, and checks the quizzes (ids, every key asked, the answer in every place round by round, options that never name the answer, no option another plus a letter or two, no cheap rule such as "pick the longest" above chance, a gap passage's answers in more than one place), a page that doesn't change with the clock or a random draw, glosses (one entry per form) and clips, recorded text against shown text, `lang="et"`, button labels, capitals, day names, lesson numbers and every Estonian form against `apps/site/src/lib/learn/verified-forms.json`. `copy-checks.test.ts` runs the tell scan, the uk/ru officialese scan and the curly-apostrophe rule over each lesson file's catalog entries, so it sees a change after `pnpm i18n:extract`. Each failure names the file, the rule and the fix; [the lesson checklists](../.agents/skills/estonian-lesson/references/checklists.md) say which items are automated.
@@ -361,19 +371,25 @@ A response may gain fields and the API may gain endpoints. The check fails when 
 2. If the phone already shows an unknown value safely, mark the field with `.meta(OPEN)` from `packages/core/src/responses/common.ts` and freeze a release that carries the mark. On a schema with an `id`, put the mark in its definition, since a field's own `.meta` is lost behind the reference.
 3. To remove something, raise the minimum version first and delete the frozen releases below it in the same pull request.
 
+`pnpm check:frozen`, part of `pnpm check`, compares the folder with `origin/main` and fails when a frozen release the minimum still serves was deleted, renamed or edited.
+
 The minimum version is `PHONE_MINIMUM_VERSION_IOS` in `apps/web/wrangler.jsonc`, and `PHONE_UPDATE_URL_IOS` is where Update Lymi sends the learner. Raising it needs a Worker deploy and no app build: every request from an older release then gets 426, and the app shows only Update Lymi, keeping its unsent grades and writes for the updated release.
 
 A version is a JavaScript release, and an update can carry a new one, but a fresh install or a roll back to embedded first runs the version inside the App Store binary. Never raise the minimum past the version embedded in the current App Store binary, or new learners get 426 from a store that has nothing newer.
 
 Every fixed list in a phone response is open, except the few in `closedOnPurpose` with their reasons, and the test fails on a new closed one so each is decided when it appears. The shared client leaves a review mode it cannot ask out of the draw and the queue, and every other open field the phone reads falls back to a known state; `phone-client.test.ts` feeds unknown values through those readers.
 
-Freeze by hand, for example to record the baseline after a change to the check itself:
+Freeze by hand, for example to see what the next release would freeze:
 
 ```bash
 pnpm --filter @lymi/mobile contract:freeze
 ```
 
 A freeze that changes a successful response also asks whether the phone's kept query cache is still readable. `pnpm check:cache-shape`, part of `pnpm check`, fails until `CACHE_SHAPE` in `apps/mobile/src/data/cache.ts` is bumped, when a screen now reads a field an earlier cache may lack, or the unchanged shape is confirmed; either way, `node scripts/check-cache-shape.mjs --write` records the decision in `apps/mobile/src/data/cache-shape.json`.
+
+### Queued requests
+
+A grade or write waits in the outbox with no maximum age, so the minimum version does not bound it: one queued on an old release is held through the 426 and sent by the updated app, and the outbox drops whatever the server refuses. `apps/web/src/server/queued-bodies.json` therefore keeps what each build could have stored, dated by the pull request that first wrote it. `queued-bodies.test.ts` sends each entry to the Worker as the build that queued it would and through the current outbox, and fails when one is refused, carries a field the server ignores, or is replayed without something it held. A rewrite the outbox makes on purpose goes in `rewrittenBeforeSending`. It also fails until the file holds an entry for every field and fixed value a queued request accepts, so add one when you add a field; `neverQueued` in the test names the few no client queues. `pnpm check:frozen` keeps entries from being removed or edited. To rename a field or value, keep accepting the old name and map it, as `withHint` and `gradeAid` in `packages/core/src/types.ts` do.
 
 ### The smoke journey
 

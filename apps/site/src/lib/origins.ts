@@ -22,8 +22,15 @@ export function publicSiteUrl(path = "/"): string {
   return new URL(path, PUBLIC_SITE_ORIGIN).toString();
 }
 
-export function productUrl(path = "/"): string {
-  return new URL(path, PRODUCT_ORIGIN).toString();
+type AddPath = `/add/${string}`;
+interface UseAddUrl {
+  addUrl: "addUrl(slug, edition) keeps the meanings the reader was shown";
+}
+
+export function productUrl<Path extends string = "/">(
+  path?: Path extends AddPath ? UseAddUrl : Path,
+): string {
+  return new URL(typeof path === "string" ? path : "/", PRODUCT_ORIGIN).toString();
 }
 
 export function publicMediaUrl(cardId: string, kind: "image" | "audio"): string {

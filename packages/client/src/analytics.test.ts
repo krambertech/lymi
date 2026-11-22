@@ -12,6 +12,7 @@ type Options = {
   before_send: (event: Payload) => Payload | null;
   enable_heatmaps?: boolean;
   capture_pageleave?: boolean;
+  disable_external_dependency_loading?: boolean;
   session_recording?: {
     maskAllInputs?: boolean;
     maskTextSelector?: string;
@@ -40,7 +41,6 @@ const sdk = vi.hoisted(() => {
         distinct_id: cookieless ? "$posthog_cookieless" : id,
         email: "never@example.com",
         $raw_user_agent: "Test/1.0",
-        // The SDK lets an event name its own address, as web vitals do.
         $current_url: properties.$current_url ?? "https://my.lymi.app/private?token=secret",
         ...(cookieless ? { $cookieless_mode: true } : {}),
       },
@@ -73,7 +73,11 @@ const sdk = vi.hoisted(() => {
 });
 vi.mock("posthog-js/no-external", () => ({ default: sdk }));
 vi.mock("posthog-js/dist/posthog-recorder", () => ({}));
-vi.mock("posthog-js/dist/web-vitals", () => ({}));
+const bundled = vi.hoisted((): string[] => []);
+vi.mock("posthog-js/dist/web-vitals", () => {
+  bundled.push("web-vitals");
+  return {};
+});
 let cookieWrites: string[];
 let analytics: typeof import("./analytics");
 
@@ -131,7 +135,6 @@ it("measures a signed-in learner by default, keyed to the account, without cooki
       $geoip_disable: true,
     },
   });
-  // The opening waits for the deck list, so it can say what was due.
   expect(sdk.sent.filter((e) => e.event === "app_opened")).toHaveLength(0);
   analytics.setAnalyticsOpening("21-100");
   analytics.setAnalyticsOpening("100+");
@@ -178,6 +181,62 @@ it("tags an error with its route pattern and the release that threw it", async (
   expect(JSON.stringify(sdk.sent.at(-1))).not.toContain("private-deck");
 });
 
+it("names no release that is not a commit", async () => {
+  await load("https://my.lymi.app/today");
+  const release = "kateryna's laptop";
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true, release });
+  analytics.reportBrowserException(new TypeError("private"));
+  expect(sdk.sent.at(-1)?.properties).not.toHaveProperty("release");
+});
+
+it("swallows its own failure to report, so a broken reporter never reports itself", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  sdk.captureException.mockImplementationOnce(() => {
+    throw new Error("blocked");
+  });
+  expect(() => analytics.reportBrowserException(new Error("private"))).not.toThrow();
+});
+
+it("loads nothing from PostHog's servers and collects only what Lymi sends", async () => {
+  await load("https://my.lymi.app/today");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  expect(sdk.options()).toMatchObject({
+    autocapture: false,
+    capture_dead_clicks: false,
+    capture_exceptions: false,
+    disable_session_recording: true,
+    disable_external_dependency_loading: true,
+    advanced_disable_flags: true,
+    disable_surveys: true,
+  });
+  expect((window as Preloaded)._POSTHOG_REMOTE_CONFIG?.phc_test?.config).toMatchObject({
+    hasFeatureFlags: false,
+  });
+  expect(bundled).toContain("web-vitals");
+});
+
+it("takes the first touch from the address the page loaded at, though routing has moved on", async () => {
+  await load("https://lymi.app/teachers?utm_source=lenny", "https://news.example.com/item");
+  vi.stubGlobal("location", new URL("https://lymi.app/explore"));
+  expect(analytics.visitFirstTouch("public")).toEqual({
+    first_landing_page: "/teachers",
+    referrer: "news.example.com",
+    utm_source: "lenny",
+  });
+});
+
+it("counts a reminder's link that comes back after sign-in", async () => {
+  await load("https://my.lymi.app/login", "");
+  analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
+  vi.stubGlobal("location", new URL("https://my.lymi.app/review?lymi_entry=reminder"));
+  vi.stubGlobal("history", { state: null, replaceState: vi.fn() });
+  analytics.setAnalyticsOpening();
+  analytics.setAnalyticsLearner("account-1", true);
+  const [opened] = sdk.sent.filter((e) => e.event === "app_opened");
+  expect(opened?.properties).toMatchObject({ entry: "reminder" });
+});
+
 it("names the handler that caught an error and drops any other label", async () => {
   await load("https://my.lymi.app/review");
   analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
@@ -206,7 +265,6 @@ it("drops what an extension throws on the page but keeps Lymi's own errors", asy
     caught_by: "rejection",
   });
   sdk.capture("$exception", { ...thrown([]), caught_by: "rejection" });
-  // A rejected non-error's stack is the reporting code's own, even though it is Lymi's bundle.
   sdk.capture("$exception", { ...thrown([lymiFrame], "private", true), caught_by: "rejection" });
   expect(sent()).toBe(before);
 
@@ -372,7 +430,7 @@ it("records the product only once the account allows it, and stops on opt-out", 
   expect(sdk.options()?.session_recording).toMatchObject({
     maskAllInputs: true,
     maskTextSelector: "*",
-    blockSelector: expect.stringContaining("img"),
+    blockSelector: "img, picture, video, canvas, svg image",
   });
   await recorderLoaded();
   expect(sdk.startSessionRecording).not.toHaveBeenCalled();
@@ -430,8 +488,11 @@ it("sends a snapshot with only its recording and keeps tokens out of recorded ad
   expect(mask?.({ name: "https://my.lymi.app/join/secret-token?ref=x" }).name).toBe(
     "https://my.lymi.app/join/:item",
   );
+  expect(mask?.({ name: "https://[secret-token" }).name).toBe("https://my.lymi.app");
   const attribute = sdk.options()?.session_recording?.maskAttributeFn;
   expect(attribute?.("aria-label", "Options for Kateryna")).toBe("********************");
+  for (const name of ["aria-description", "aria-valuetext", "title", "alt"])
+    expect(attribute?.(name, "kass")).toBe("****");
   expect(attribute?.("class", "grid gap-1")).toBe("grid gap-1");
   analytics.setAnalyticsLearner("account-1", false);
   const before = sdk.sent.length;
@@ -442,7 +503,7 @@ it("sends a snapshot with only its recording and keeps tokens out of recorded ad
 it("never records a signed-out visitor or an internal account", async () => {
   await load("https://my.lymi.app/login");
   analytics.initAnalytics({ token: "phc_test", surface: "product", enabled: true });
-  analytics.setAnalyticsLearner(undefined);
+  analytics.setAnalyticsLearner(undefined, true, true);
   await recorderLoaded();
   expect(sdk.startSessionRecording).not.toHaveBeenCalled();
   const [internal] = INTERNAL_ACCOUNT_IDS;

@@ -336,7 +336,7 @@ export function useReviewFlow(
 
   const undo: ReviewFlow["undo"] = () => {
     const last = flow.last;
-    if (!last) return null;
+    if (!last || undone.current.has(last.grade.reviewedAt)) return null;
     undone.current.add(last.grade.reviewedAt);
     dispatch({ type: "undone", last });
     gradedAt.current = -1;

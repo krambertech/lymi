@@ -9,8 +9,9 @@ import type {
 import { newId } from "@lymi/core";
 import { and, eq, inArray, sql } from "@lymi/core/db";
 import { type Db, schema } from "../db";
-import { auditStatement } from "./audit";
-import { runBatch, runInBatches, type Statement, selectIn } from "./batch";
+import { editionStatus, inState, moveState, untilMoved } from "../state-moves";
+import { auditStatement, auditStatementWhen } from "./audit";
+import { runInBatches, type Statement, selectIn } from "./batch";
 import { type ServiceContext, ServiceError } from "./context";
 import { ownedDeck } from "./members";
 import { assertPublisher } from "./publishers";
@@ -541,28 +542,38 @@ export async function publishEdition(
     throw new ServiceError("invalid", "This edition is not ready to publish", report.blockers);
   }
   const now = new Date();
-  const existing = await editionRow(db, deckId, language);
-  if (!existing) throw new ServiceError("not_found", "No edition");
-  await runBatch(db, [
-    db
-      .update(schema.deckEditions)
-      .set({
-        status: "published",
-        revision: sql`revision + 1`,
-        // The first publication date stays; a return from withdrawal is a new one.
-        publishedAt: existing.status === "published" ? existing.publishedAt : now,
-        withdrawnAt: null,
-        publishedBy: userId,
-        updatedAt: now,
-      })
-      .where(eq(schema.deckEditions.id, existing.id)),
-    auditStatement(ctx, {
-      entity: "deck",
-      action: existing.status === "published" ? "update_edition" : "publish_edition",
-      id: deckId,
-      details: { language },
-    }),
-  ]);
+  await untilMoved(async () => {
+    const existing = await editionRow(db, deckId, language);
+    if (!existing) throw new ServiceError("not_found", "No edition");
+    const row = eq(schema.deckEditions.id, existing.id);
+    const [, moved] = await db.batch([
+      auditStatementWhen(
+        ctx,
+        {
+          entity: "deck",
+          action: existing.status === "published" ? "update_edition" : "publish_edition",
+          id: deckId,
+          details: { language },
+        },
+        schema.deckEditions,
+        and(row, inState(editionStatus, existing.status))!,
+      ),
+      moveState(db, editionStatus, {
+        from: existing.status,
+        to: "published",
+        set: {
+          revision: sql`revision + 1`,
+          // The first publication date stays; a return from withdrawal is a new one.
+          publishedAt: existing.status === "published" ? existing.publishedAt : now,
+          withdrawnAt: null,
+          publishedBy: userId,
+          updatedAt: now,
+        },
+        where: [row],
+      }),
+    ]);
+    return moved[0] ?? null;
+  });
   return editionView(db, deckId, language, publication.editionFields);
 }
 
@@ -575,28 +586,28 @@ export async function withdrawEdition(
 ): Promise<EditionOut> {
   const { db } = ctx;
   const { publication } = await publishedDeck(ctx, deckId, publishers);
-  const existing = await editionRow(db, deckId, language);
-  if (!existing) throw new ServiceError("not_found", "No edition");
-  if (existing.status !== "withdrawn") {
+  await untilMoved(async () => {
+    const existing = await editionRow(db, deckId, language);
+    if (!existing) throw new ServiceError("not_found", "No edition");
+    if (existing.status === "withdrawn") return existing;
     const now = new Date();
-    await runBatch(db, [
-      db
-        .update(schema.deckEditions)
-        .set({
-          status: "withdrawn",
-          withdrawnAt: now,
-          revision: sql`revision + 1`,
-          updatedAt: now,
-        })
-        .where(eq(schema.deckEditions.id, existing.id)),
-      auditStatement(ctx, {
-        entity: "deck",
-        action: "withdraw_edition",
-        id: deckId,
-        details: { language },
+    const row = eq(schema.deckEditions.id, existing.id);
+    const [, moved] = await db.batch([
+      auditStatementWhen(
+        ctx,
+        { entity: "deck", action: "withdraw_edition", id: deckId, details: { language } },
+        schema.deckEditions,
+        and(row, inState(editionStatus, existing.status))!,
+      ),
+      moveState(db, editionStatus, {
+        from: existing.status,
+        to: "withdrawn",
+        set: { withdrawnAt: now, revision: sql`revision + 1`, updatedAt: now },
+        where: [row],
       }),
     ]);
-  }
+    return moved[0] ?? null;
+  });
   return editionView(db, deckId, language, publication.editionFields);
 }
 

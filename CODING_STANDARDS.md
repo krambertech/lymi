@@ -16,7 +16,11 @@ API payloads come from the Zod schemas in `packages/core/src/types.ts`; parse wi
 
 A flow with steps or phases holds one value: a union tagged by `status` or `kind`, whose members carry only the fields that state has. Its moves live in one pure reducer with a declared return type and no `default`, so a new state or event fails to compile until the reducer handles it; an event the current state does not allow returns the state unchanged. Unit-test the reducer and keep the hook or store to wiring effects. `packages/client/src/review-flow` and `uploadReducer` in `packages/client/src/imports.ts` are the models.
 
-Async work that something newer can replace checks that it still owns the state before it writes. On the server, an update that moves a status names the status it leaves in its `WHERE`.
+Async work that something newer can replace checks that it still owns the state before it writes. On the server, a status moves through `moveState` in `apps/web/src/server/state-moves.ts`, which names the status the row leaves and allows only the moves `state-machines.ts` declares; `Db` does not compile any other write to those columns, and `lymi/guarded-state-move` fails a move whose rows nobody reads. A new status column declares its moves there, and `state-moves.test.ts` lists the columns that do not, with the reason. Any other update that moves a state names the state it leaves in its `WHERE`.
+
+## Play sound through one owner
+
+Audio plays through `useClip()`: `apps/site/src/lib/use-clip.ts` on the site, `apps/web/src/client/lib/use-clip.ts` in the web client. It plays one clip at a time, stops the clip and its frame loop when the component leaves, and starts none after that. `lymi/clip-owner` refuses an audio element made anywhere else. The Estonian lessons keep `lib/learn/player.ts`, because iOS lets a sequence of clips play only on one element that a tap has started.
 
 ## Localize whole sentences
 
@@ -26,6 +30,8 @@ Localize each complete sentence. Never build one from concatenated fragments or 
 
 Format dates and numbers with `i18n.date()`, `i18n.number()` or `Intl` with `i18n.locale`, so they follow the interface language. Run `pnpm i18n:extract` after changing a message.
 
+A link on the site keeps the reader's locale and edition. Build it with `localizedPath`, or with `addUrl` for a deck to add, whose edition argument is required; `productUrl` refuses an `/add/` path, and a link that stays in English takes an `EnglishOnlyPath`.
+
 ## Edit the source of a generated file
 
 Edit a generated file's source and run its generator; [README.md](README.md#generated-files) names each generator. Applied migrations are immutable: change the schema and run `pnpm db:generate` for a new one.
@@ -33,6 +39,8 @@ Edit a generated file's source and run its generator; [README.md](README.md#gene
 ## Write for D1 and Workers, not Node
 
 D1's `lower()` folds ASCII only. To match text case-insensitively, compare against the stored folded column (`termKey()` writes `normalized_term` and `tagKey()` writes `normalized_name`, both in `packages/core/src/terms.ts`), or fold in JavaScript with the same function and bind the result.
+
+D1 refuses more than 100 bound parameters in one statement. `inArray` and `notInArray` from `@lymi/core/db` bind a list of more than five values as one JSON parameter, and lint refuses Drizzle's own; a multi-row insert still binds every value.
 
 Workers refuses `redirect: "error"` at runtime, though Node tests pass; reject a redirect with `redirect: "manual"` and a `Location` check.
 

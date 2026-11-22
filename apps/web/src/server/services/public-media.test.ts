@@ -14,7 +14,7 @@ import { createDeck } from "./decks";
 import { approveEdition, importEdition, publishEdition } from "./editions";
 import { publicMediaFile, publicPronunciation } from "./public-media";
 import { publishDeck, withdrawDeck } from "./publications";
-import { learner, type TestBindings, testDb } from "./test-db";
+import { anyState, learner, type TestBindings, testDb } from "./test-db";
 
 let db: Db;
 let env: TestBindings;
@@ -114,7 +114,7 @@ describe("public deck media", () => {
   it("serves the replacement picture at the same address", async () => {
     const { cardId, slug } = await publishedCard("picture-replaced");
     const first = await picture(cardId, "tree");
-    await db
+    await anyState(db)
       .update(schema.cardImages)
       .set({ status: "replaced" })
       .where(eq(schema.cardImages.id, first.id));
@@ -267,7 +267,7 @@ describe("public deck media", () => {
   it("stops delivery while the picture or card is archived", async () => {
     const { cardId, slug } = await publishedCard("archived-media");
     const image = await picture(cardId, "bridge");
-    await db
+    await anyState(db)
       .update(schema.cardImages)
       .set({ status: "archived" })
       .where(eq(schema.cardImages.id, image.id));
@@ -276,7 +276,7 @@ describe("public deck media", () => {
     if (hidden.status !== "published") throw new Error("Expected published deck");
     expect(hidden.deck.sections[0]?.cards[0]?.image).toBeUndefined();
 
-    await db
+    await anyState(db)
       .update(schema.cardImages)
       .set({ status: "active" })
       .where(eq(schema.cardImages.id, image.id));

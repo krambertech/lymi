@@ -10,6 +10,37 @@ import {
   stripPinyin,
   toneMarks,
 } from ".";
+import { SYLLABLES } from "./syllables";
+
+describe("SYLLABLES", () => {
+  it("holds every syllable a Han character is read with, and no other", () => {
+    const read = `
+      a ai an ang ao ba bai ban bang bao bei ben beng bi bian biao bie bin bing bo bu ca
+      cai can cang cao ce cei cen ceng cha chai chan chang chao che chen cheng chi chong
+      chou chu chua chuai chuan chuang chui chun chuo ci cong cou cu cuan cui cun cuo da
+      dai dan dang dao de dei den deng di dia dian diao die ding diu dong dou du duan dui
+      dun duo e ei en eng er fa fan fang fei fen feng fiao fo fou fu ga gai gan gang gao
+      ge gei gen geng gong gou gu gua guai guan guang gui gun guo ha hai han hang hao he
+      hei hen heng hong hou hu hua huai huan huang hui hun huo ji jia jian jiang jiao jie
+      jin jing jiong jiu ju juan jue jun ka kai kan kang kao ke kei ken keng kong kou ku
+      kua kuai kuan kuang kui kun kuo la lai lan lang lao le lei leng li lia lian liang
+      liao lie lin ling liu lo long lou lu luan lun luo lü lüe ma mai man mang mao me mei
+      men meng mi mian miao mie min ming miu mo mou mu na nai nan nang nao ne nei nen neng
+      ni nian niang niao nie nin ning niu nong nou nu nuan nun nuo nü nüe o ou pa pai pan
+      pang pao pei pen peng pi pian piao pie pin ping po pou pu qi qia qian qiang qiao qie
+      qin qing qiong qiu qu quan que qun ran rang rao re ren reng ri rong rou ru rua ruan
+      rui run ruo sa sai san sang sao se sen seng sha shai shan shang shao she shei shen
+      sheng shi shou shu shua shuai shuan shuang shui shun shuo si song sou su suan sui
+      sun suo ta tai tan tang tao te tei teng ti tian tiao tie ting tong tou tu tuan tui
+      tun tuo wa wai wan wang wei wen weng wo wu xi xia xian xiang xiao xie xin xing xiong
+      xiu xu xuan xue xun ya yan yang yao ye yi yin ying yo yong you yu yuan yue yun za
+      zai zan zang zao ze zei zen zeng zha zhai zhan zhang zhao zhe zhei zhen zheng zhi
+      zhong zhou zhu zhua zhuai zhuan zhuang zhui zhun zhuo zi zong zou zu zuan zui zun
+      zuo
+    `;
+    expect([...SYLLABLES].sort()).toEqual(read.trim().split(/\s+/).sort());
+  });
+});
 
 const drawn = (term: string, reading: string) => {
   const segments = pinyinTermReading(term, reading);
@@ -61,6 +92,8 @@ describe("pinyinSyllables", () => {
     expect(split("Zhōngguó")).toEqual(["Zhōng", "guó"]);
     expect(split("jīnián")).toEqual(["jī", "nián"]);
     expect(split("fangan")).toEqual(["fan", "gan"]);
+    expect(split("tiananmen")).toEqual(["tian", "an", "men"]);
+    expect(split("Tiānānmén")).toEqual(["Tiān", "ān", "mén"]);
   });
   it("never puts two tone marks in one syllable", () => {
     expect(split("xīān")).toEqual(["xī", "ān"]);
@@ -69,6 +102,11 @@ describe("pinyinSyllables", () => {
     expect(split("yìdiǎnr")).toEqual(["yì", "diǎnr"]);
     expect(split("yī diǎn r")).toEqual(["yī", "diǎnr"]);
     expect(split("èr")).toEqual(["èr"]);
+    expect(split("zhuàngr")).toEqual(["zhuàngr"]);
+  });
+  it("takes an interjection only as a whole word", () => {
+    expect(split("ê hm")).toEqual(["ê", "hm"]);
+    expect(split("nihm")).toBeNull();
   });
   it("finds nothing in what is not pinyin", () => {
     expect(split("ɕɥɛ̌ɕǐ")).toBeNull();
@@ -86,6 +124,9 @@ describe("pinyinTermReading", () => {
   it("gives 儿 to the erhua syllable before it", () => {
     expect(drawn("一点儿", "yì diǎnr")).toBe("一[yì]点儿[diǎnr]");
     expect(drawn("女儿", "nǚ'ér")).toBe("女[nǚ]儿[ér]");
+  });
+  it("puts a one-form reading over the first of listed forms", () => {
+    expect(drawn("行 · 行走", "xíng")).toBe("行[xíng] · 行走");
   });
   it("leaves letters and digits plain", () => {
     expect(drawn("卡拉OK", "kǎlā OK")).toBe("卡[kǎ]拉[lā]OK");
@@ -105,6 +146,13 @@ describe("pinyinKey", () => {
     expect(pinyinKey("行", "háng")).toBe("háng");
     expect(pinyinKey("行", "xíng")).toBe("xíng");
     expect(pinyinKey("东西", "dōngxi")).not.toBe(pinyinKey("东西", "dōngxī"));
+  });
+  it("keys a one-form reading of listed forms", () => {
+    expect(pinyinKey("行 · 行走", "xíng")).toBe("xíng");
+  });
+  it("keys any toned reading of a passage past 80 characters", () => {
+    expect(pinyinKey("好".repeat(80), "hǎo")).toBeNull();
+    expect(pinyinKey("好".repeat(81), "hǎo")).toBe("hǎo");
   });
   it("gives one key across case, spacing, NFD and tone numbers", () => {
     const keys = ["xuéxí", "Xué xí", "xue2 xi2", "xuéxí"].map((r) => pinyinKey("学习", r));
@@ -130,12 +178,20 @@ describe("inline pinyin", () => {
     { text: "我[wǒ]要一点儿[yì diǎnr]水", plain: "我要一点儿水" },
     { text: "[sound:nihao.mp3]你好", plain: "[sound:nihao.mp3]你好" },
     { text: "好[nǐ hǎo]", plain: "好[nǐ hǎo]" },
+    { text: "A好[nǐ hǎo]", plain: "A好[nǐ hǎo]" },
+    { text: "你[nǐ]好[nǐ hǎo]", plain: "你好[nǐ hǎo]" },
   ];
   it("gives each example back when parsed, written or stripped", () => {
     for (const { text, plain } of examples) {
       expect(formatPinyin(parsePinyin(text))).toBe(text);
       expect(stripPinyin(text)).toBe(plain);
     }
+  });
+  it("reads a bracket of up to 60 characters", () => {
+    const reading = Array.from({ length: 15 }, () => "hǎo").join(" ");
+    const text = (bracket: string) => `${"好".repeat(15)}[${bracket}]`;
+    expect(stripPinyin(text(`${reading} `))).toBe("好".repeat(15));
+    expect(stripPinyin(text(`${reading}  `))).toBe(text(`${reading}  `));
   });
   it("splits a bracket into one run per character, in tone marks", () => {
     expect(pinyinExampleSegments("我说你好[ni3 hao3]。")).toEqual([

@@ -9,7 +9,6 @@ import { clipFor, exampleClip, useExampleAudio } from "./example-audio";
 i18n.load("en", messages);
 i18n.activate("en");
 
-vi.mock("../lib/now-playing", () => ({ playAlone: () => Promise.resolve() }));
 vi.mock("../lib/telemetry", () => ({ captureAnalytics: () => undefined }));
 
 const wrapper = ({ children }: { children: ReactNode }) => (
@@ -32,6 +31,7 @@ test("an example changed while its clip loads can still be played", async () => 
     // The first clip never arrives; the edited example's does.
     .mockReturnValueOnce(new Promise<Response>(() => {}))
     .mockResolvedValue(new Response(new Blob(["clip"], { type: "audio/mpeg" })));
+  vi.spyOn(HTMLMediaElement.prototype, "play").mockResolvedValue();
   const { result, rerender } = await renderHook(
     (props?: { updatedAt: Date }) =>
       useExampleAudio(card(props?.updatedAt ?? new Date("2026-11-01")), "card"),

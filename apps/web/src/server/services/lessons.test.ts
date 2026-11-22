@@ -1,8 +1,9 @@
-import { afterAll, beforeAll, describe, expect, it } from "vitest";
+import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { Db } from "../db";
 import type { DecisionModel } from "../lessons/keep";
 import { questionLimit } from "../lessons/prompt";
 import { type LessonMaterial, type LessonReader, LessonReaderError } from "../lessons/reader";
+import { updateAiConsent } from "./ai-consent";
 import type { AnalyticsEvent } from "./analytics";
 import { addCards } from "./cards";
 import { createDeck } from "./decks";
@@ -379,6 +380,45 @@ describe("the daily limit", () => {
   });
 });
 
+describe("turning AI off mid-read", () => {
+  it("scores no further term and keeps the reader's choice for it", async () => {
+    const ctx = await learner(db, "lesson-declined", "Kateryna");
+    const deck = await createDeck(ctx, { name: "Eesti", defaultLanguage: "et" });
+    const run = vi.fn(async () => ({ answers: { worth: { noul: 0.9 } } }));
+    const read = await readLesson(
+      ctx,
+      material,
+      {
+        reader: {
+          model: "test",
+          async stream(_material, _brief, _schema, onText) {
+            const reply = {
+              deck: deck.id,
+              terms: [term("t1", "kass"), term("t2", "koer")],
+              questions: [],
+            };
+            const text = JSON.stringify(reply);
+            const second = text.indexOf('{"id":"t2"');
+            onText(text.slice(0, second));
+            await vi.waitFor(() => expect(run).toHaveBeenCalledOnce());
+            await updateAiConsent(ctx, { allowed: false, version: 1, updated_at: Date.now() });
+            onText(text.slice(second));
+            return { model: "test", inputTokens: 1, outputTokens: 1, ms: 1 };
+          },
+        },
+        ai: { run },
+        operators: new Set(["lesson-declined@lymi.test"]),
+      },
+      { deckId: deck.id },
+    );
+    expect(run).toHaveBeenCalledOnce();
+    expect(read.terms.map(({ id, keep, ticked }) => ({ id, keep, ticked }))).toEqual([
+      { id: "t1", keep: 0.9, ticked: true },
+      { id: "t2", keep: null, ticked: true },
+    ]);
+  });
+});
+
 describe("choosing the deck", () => {
   it("streams the deck the model chose, among the learner's own", async () => {
     const ctx = await learner(db, "lesson-chooser", "Kateryna");
@@ -502,6 +542,20 @@ describe("readLink", () => {
         { text: "Ilm on soe.", at: null },
       ],
     });
+  });
+
+  it("sends no page to Workers AI once the learner turns AI off while it is fetched", async () => {
+    const ctx = await learner(db, "link-declined", "Kateryna");
+    const { deps } = fakeWeb({ [ARTICLE]: { body: articleHtml(["Kevad on käes."]) } });
+    const toMarkdown = vi.fn(deps.toMarkdown);
+    const request: typeof deps.request = async (input) => {
+      await updateAiConsent(ctx, { allowed: false, version: 1, updated_at: Date.now() });
+      return deps.request(input);
+    };
+    expect(await refusal(readLink(ctx, ARTICLE, { request, toMarkdown }, read))).toMatchObject({
+      reason: "ai_consent_required",
+    });
+    expect(toMarkdown).not.toHaveBeenCalled();
   });
 
   it("refuses a page robots.txt disallows for LymiBot or for every app", async () => {

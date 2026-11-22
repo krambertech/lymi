@@ -1,12 +1,3 @@
-/**
- * Readings drawn over a term or an example: furigana over kanji, or one syllable over each Han
- * character through `./pinyin` and `./jyutping`; `./stress` draws a term's marks in place instead.
- * A term's reading is its pronunciation, aligned at display; an example carries its readings inline,
- * `食[た]べる`, where a bracketed kana reading belongs to the kanji just before it, `你好[nǐ hǎo]` in
- * Chinese or `你好[nei5 hou2]` in Cantonese.
- * docs/card-writing.md.
- */
-
 import { markKnownTamil, tamilPairs, tamilSegments, tamilTermReading } from "./indic";
 import {
   jyutpingExampleSegments,
@@ -19,12 +10,10 @@ import { pinyinExampleSegments, pinyinKey, pinyinPairs, pinyinTermReading } from
 import { addsStress, markedForm, missingStress, stressKey } from "./stress";
 import type { PronunciationDisplay } from "./types";
 
-/** One run of text, with the reading drawn over it when it has one; `known` fades that reading. */
 export type ReadingSegment = { text: string; reading?: string; known?: boolean };
 
 type Segments = (term: string, pronunciation: string) => ReadingSegment[] | null;
 
-/** An engine that puts one syllable over each Han character and fades character by character. */
 interface SyllableEngine {
   termReading: Segments;
   key: (term: string, pronunciation: string) => string | null;
@@ -47,67 +36,47 @@ const SYLLABLE_ENGINES: Partial<Record<ReadingEngine, SyllableEngine>> = {
   },
 };
 
-/** The language's syllable-per-character engine, or null for kana or stress. */
 function syllableEngine(language: string | null | undefined): SyllableEngine | null {
   const engine = readingEngine(language);
   return (engine && SYLLABLE_ENGINES[engine]) ?? null;
 }
 
-/** A Reading's pitch accent after its kana, `としょかん [2]`, which `./pitch` reads. */
 const PITCH = /\s*(?:\[\d{1,2}\]\s*)+$/u;
 
-/** Characters a reading is drawn over: kanji, their iteration marks, and the counter ヶ. */
 const BASE = /[\p{Script=Han}〆ヵヶ]/u;
-/** Characters a reading is written in. */
 const KANA = /[\p{Script=Hiragana}\p{Script=Katakana}ー]/u;
 const KANA_TEXT = /^[\p{Script=Hiragana}\p{Script=Katakana}ー・\s]+$/u;
-/** An inline reading: up to 30 kana in square brackets. `[sound:…]` and other bracketed text are not. */
 const INLINE = EXAMPLE_NOTATION.furigana.pattern;
 
-/** How far back an inline reading looks for its kanji, so a crafted example stays cheap to read. */
 const LOOK_BACK = 20;
 
-/** Past this many characters a term is a passage, and its reading goes over it whole. */
 const ALIGN_MAX = 80;
 
 const isBase = (char: string) => BASE.test(char);
 const isKana = (char: string) => KANA.test(char) && !isBase(char);
 
-/** Kana that join the mora before them rather than make their own: きょ is one mora. */
 export const SMALL_KANA = /[ゃゅょぁぃぅぇぉゎャュョァィゥェォヮ]/;
 
-/** How many morae a stretch of kana holds, as a pitch accent counts them. */
 export function moraCount(text: string): number {
   return [...text].filter((char) => KANA.test(char) && !SMALL_KANA.test(char)).length;
 }
 
-/** Katakana as hiragana, so a reading written either way compares and shows as one. */
 export function toHiragana(text: string): string {
   return text.replace(/[ァ-ヶ]/g, (char) => String.fromCharCode(char.charCodeAt(0) - 0x60));
 }
 
-/**
- * A kana reading as one form, for duplicates, furigana and audio alike: NFC, no spaces or ・, and
- * katakana folded to hiragana, so ジョウズ, じょう ず and じょうず are one reading.
- */
 export function foldReading(reading: string): string {
   return toHiragana(reading.normalize("NFC").replace(/[\s・]/g, ""));
 }
 
-/** Whether text is kana alone, as a Japanese Reading is. */
 export function isKanaText(text: string): boolean {
   return KANA_TEXT.test(text);
 }
 
-/** Text without the pitch accent after its kana. */
 export function withoutPitch(text: string): string {
   return text.replace(PITCH, "");
 }
 
-/**
- * A Japanese card's pronunciation when it is a kana reading, never IPA, romaji or a hint, and
- * without its pitch accent, so duplicates, furigana and audio read the kana alone.
- */
 export function kanaReading(card: {
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
@@ -118,7 +87,6 @@ export function kanaReading(card: {
   return KANA_TEXT.test(kana) ? kana : null;
 }
 
-/** The pronunciation as a line of text: a chart draws a Japanese Reading's pitch accent, never the line. */
 export function pronunciationText(card: {
   language?: string | null | undefined;
   pronunciation?: string | null | undefined;
@@ -126,7 +94,6 @@ export function pronunciationText(card: {
   return kanaReading(card) ?? card.pronunciation ?? null;
 }
 
-/** Whether a new pronunciation says what the card's says, as a pitch accent alone leaves it. */
 export function sameSpokenReading(
   card: { language?: string | null | undefined; pronunciation?: string | null | undefined },
   pronunciation: string | null,
@@ -134,11 +101,6 @@ export function sameSpokenReading(
   return pronunciationText(card) === pronunciationText({ ...card, pronunciation });
 }
 
-/**
- * The reading the duplicate rule compares: a Japanese card's folded kana reading, a Chinese card's
- * toned pinyin, a Cantonese card's toned Jyutping or a Russian card's marked stress, when it fits the term, else null, so an IPA line
- * or another word's reading never splits one word into two cards.
- */
 export function readingKey(card: {
   term: string;
   language?: string | null | undefined;
@@ -154,10 +116,6 @@ export function readingKey(card: {
   return fitsTerm(card.term, folded) ? folded : null;
 }
 
-/**
- * Whether a folded kana reading can be the term's: it aligns with the term or its first form. A
- * term too long to align, or with letters or digits alignment cannot read, such as Tシャツ, takes it.
- */
 function fitsTerm(term: string, reading: string): boolean {
   const text = term.normalize("NFC").trim();
   if (Array.from(text).length > ALIGN_MAX) return true;
@@ -181,11 +139,6 @@ function runs(text: string): Run[] {
   return out;
 }
 
-/**
- * The term's runs matched to the reading, or null when they do not fit: kana in the term must
- * appear in the reading where they stand, and each run of kanji takes the shortest reading that
- * lets the rest fit. Anything else in the term, such as a space, may be absent from the reading.
- */
 function align(term: string, reading: string): ReadingSegment[] | null {
   const parts = runs(term);
   const read = toHiragana(reading);
@@ -199,7 +152,15 @@ function align(term: string, reading: string): ReadingSegment[] | null {
     if (part.kind === "base") {
       for (let end = at + 1; end <= read.length && !found; end++) {
         const rest = visit(i + 1, end);
-        if (rest) found = [{ text: part.text, reading: reading.slice(at, end) }, ...rest];
+        if (!rest) continue;
+        const [next, ...others] = rest;
+        found =
+          parts[i + 1]?.kind === "other" && next?.reading !== undefined
+            ? [
+                { text: part.text + next.text, reading: reading.slice(at, end) + next.reading },
+                ...others,
+              ]
+            : [{ text: part.text, reading: reading.slice(at, end) }, ...rest];
       }
     } else {
       const folded = toHiragana(part.text);
@@ -207,10 +168,12 @@ function align(term: string, reading: string): ReadingSegment[] | null {
         const rest = visit(i + 1, at + folded.length);
         if (rest) found = [{ text: part.text }, ...rest];
       }
-      // A space or punctuation may be missing from the reading; a digit or a letter has a sound.
       if (!found && part.kind === "other" && !/[\p{L}\p{N}]/u.test(part.text)) {
         const rest = visit(i + 1, at);
-        if (rest) found = [{ text: part.text }, ...rest];
+        const [next, ...others] = rest ?? [];
+        const parted = parts[i - 1]?.kind === "base" && parts[i + 1]?.kind === "base";
+        if (next && parted) found = [{ ...next, text: part.text + next.text }, ...others];
+        else if (rest) found = [{ text: part.text }, ...rest];
       }
     }
     if (!found) failed.add(key);
@@ -219,7 +182,6 @@ function align(term: string, reading: string): ReadingSegment[] | null {
   return visit(0, 0);
 }
 
-/** Plain runs side by side become one. */
 function merged(segments: readonly ReadingSegment[]): ReadingSegment[] {
   const out: ReadingSegment[] = [];
   for (const segment of segments) {
@@ -232,18 +194,11 @@ function merged(segments: readonly ReadingSegment[]): ReadingSegment[] {
   return out;
 }
 
-/** The reading cleaned for drawing: kana as hiragana without spaces or dots; anything else trimmed. */
 function cleanReading(reading: string): string {
   const text = reading.normalize("NFC").trim();
   return KANA_TEXT.test(text) ? foldReading(text) : text;
 }
 
-/**
- * A term and its reading as runs to draw: kana the two share stay plain and each run of kanji
- * carries its part of the reading (食べる, たべる → 食[た]べる). A word read as a whole, such as
- * 今日 read きょう, carries the reading over the whole run. When the two do not fit, the reading
- * goes over the whole term. A term with no kanji carries none.
- */
 export function alignReading(term: string, reading: string): ReadingSegment[] {
   const clean = cleanReading(reading);
   if (![...term].some(isBase) || !clean) return term ? [{ text: term }] : [];
@@ -252,13 +207,6 @@ export function alignReading(term: string, reading: string): ReadingSegment[] {
   return aligned ? merged(aligned) : [{ text: term, reading: clean }];
 }
 
-/**
- * The term as drawn with its reading, or null when nothing is drawn over it: the card is not in
- * a language Lymi draws readings for, it has no reading in its engine's script, or its term has
- * no kanji, hanzi or Tamil word. A Tamil term's reading comes from its spelling, or from its
- * pronunciation where that reads as the word. A term that lists forms (食べる · 食べます) carries a one-form reading over
- * its first form.
- */
 export function termReading(card: {
   term: string;
   language?: string | null | undefined;
@@ -288,11 +236,6 @@ export function termReading(card: {
   return segments.some((segment) => segment.reading !== undefined) ? segments : null;
 }
 
-/**
- * The term with its stress marked in place, за́мок, or null when the card's language draws no marks
- * in place or its pronunciation is not the term with a mark added. A screen that draws a term's
- * first form alone (идти of идти · шёл) takes the first form of the pronunciation.
- */
 export function markedTerm(card: {
   term: string;
   language?: string | null | undefined;
@@ -309,10 +252,6 @@ export function markedTerm(card: {
   );
 }
 
-/**
- * Whether the term as drawn shows the card's pronunciation, over it, in place or as its own kana,
- * so no screen repeats it as a line.
- */
 export function termShowsPronunciation(card: {
   term: string;
   language?: string | null | undefined;
@@ -326,10 +265,6 @@ export function termShowsPronunciation(card: {
   );
 }
 
-/**
- * Whether review draws the term's pronunciation on the term: adaptive draws it always on the answer
- * and before the reveal until the card is Known; separate never does, and gives it its own line.
- */
 export function cueShowsPronunciation({
   revealed,
   known,
@@ -337,25 +272,18 @@ export function cueShowsPronunciation({
 }: {
   revealed: boolean;
   known: boolean;
-  /** Undefined from a deck cached before the choice existed, which reads as adaptive. */
   display: PronunciationDisplay | undefined;
 }): boolean {
   if (display === "separate") return false;
   return revealed || !known;
 }
 
-/** Whether a drawn reading is written in letters, as pinyin and Jyutping are, so it needs room from the reading beside it. */
 export function lettersReading(reading: string): boolean {
   return /\p{Script=Latin}/u.test(reading);
 }
 
-/** A tone number after a letter, as Jyutping writes one after each syllable. */
 const TONE_NUMBER = /(?<=\p{L})[1-6]/gu;
 
-/**
- * A drawn reading as runs, each tone number its own run so a screen can raise it (gwong² dung¹)
- * while the stored text keeps plain digits. A reading without one is a single run.
- */
 export function toneRuns(reading: string): { text: string; tone: boolean }[] {
   const out: { text: string; tone: boolean }[] = [];
   let at = 0;
@@ -368,7 +296,6 @@ export function toneRuns(reading: string): { text: string; tone: boolean }[] {
   return out;
 }
 
-/** Whether a reading is drawn over the card's term, for a screen that lays out around it. */
 export function drawsTermReading(card: {
   term: string;
   language?: string | null | undefined;
@@ -377,12 +304,6 @@ export function drawsTermReading(card: {
   return termReading(card) !== null;
 }
 
-/**
- * Text with inline readings as runs to draw. A reading belongs to the run of kanji just before
- * it, or to a longer stretch when the reading fits it and it starts at a kanji or after a space
- * (`見せ物[みせもの]`, Anki's ` 食べる[たべる]`); the space Anki puts before such a stretch is
- * dropped. A bracket that fits nothing stays as written.
- */
 export function parseReadings(text: string): ReadingSegment[] {
   if (!text.includes("[")) return text ? [{ text }] : [];
   const out: ReadingSegment[] = [];
@@ -397,10 +318,6 @@ export function parseReadings(text: string): ReadingSegment[] {
     ) {
       start -= 1;
     }
-    // A stretch starts at a kanji, at the honorific お or ご right before one, or at kana only
-    // where Anki starts one: after a space or at the start. So で in 駅で電車[でんしゃ] never joins
-    // the word after it, while お茶[おちゃ] mid-sentence still reads お + 茶[ちゃ]. A reading that
-    // begins おお or ごご is the kanji's own, so the お ending なお in なお多[おお]く stays out.
     const read = toHiragana(match[1] as string);
     const honorific = (char: string) => /[おご]/.test(char) && !read.startsWith(char + char);
     const opens = (at: number) =>
@@ -433,26 +350,15 @@ export function parseReadings(text: string): ReadingSegment[] {
   return merged(out);
 }
 
-/**
- * The runs of kanji and their readings on the learner's Known cards, so an example's furigana
- * fades over words they know. A pair is the kanji and its reading together, so 食べます still
- * meets the Known 食べる as 食 read た, while 食事 read しょくじ, sharing only the kanji, does not.
- */
 export type KnownReadings = ReadonlySet<string>;
 
-/** How many readings side by side an example may join to meet one Known word: 毎[まい]朝[あさ]. */
 const JOIN_MAX = 4;
 
 const pairKey = (text: string, reading: string) =>
   `${text.normalize("NFC")}[${foldReading(reading)}]`;
 
-/** 来る is the one verb whose kanji changes its reading as it inflects: 来[き]ます, 来[こ]ない. */
 const INFLECTED: Record<string, readonly string[]> = { "来[く]": ["来[き]", "来[こ]"] };
 
-/**
- * The pairs a card's term gives: each run of kanji with its part of the reading, and for 来る the
- * readings its inflections take. A kana term gives none.
- */
 export function readingPairs(card: {
   term: string;
   language?: string | null | undefined;
@@ -470,7 +376,6 @@ export function readingPairs(card: {
   return keys;
 }
 
-/** The pairs of the cards that are Known, for `markKnownReadings`. */
 export function knownReadings(
   cards: Iterable<{
     term: string;
@@ -486,11 +391,6 @@ export function knownReadings(
   return known;
 }
 
-/**
- * The runs with `known` on each reading whose characters and reading are a Known pair. Furigana
- * also joins the readings beside it, so 毎[まい]朝[あさ] fades for a Known 毎朝 but not for a Known
- * 毎; pinyin and Jyutping fade character by character, and a Tamil reading word by word.
- */
 export function markKnownReadings(
   segments: readonly ReadingSegment[],
   known: KnownReadings | undefined,
@@ -524,11 +424,6 @@ export function markKnownReadings(
   return marked;
 }
 
-/**
- * An example's readings as runs to draw, in its language's notation: one syllable per character
- * for Chinese and Cantonese, each word's reading from its spelling for Tamil, and kana brackets
- * for any other language.
- */
 export function exampleSegments(
   text: string,
   language: string | null | undefined,
@@ -537,7 +432,6 @@ export function exampleSegments(
   return syllableEngine(language)?.example(text) ?? parseReadings(text);
 }
 
-/** How many readings an example draws, and how many of them fade over the learner's Known words. */
 export function exampleReadings(
   example: string | null | undefined,
   language: string | null | undefined,
@@ -549,11 +443,6 @@ export function exampleReadings(
   return { readings: drawn.length, known: drawn.filter((segment) => segment.known).length };
 }
 
-/**
- * A term written with inline readings as the term and its whole reading, `食[た]べる` → 食べる read
- * たべる, or null unless every bracket is a reading and every kanji has one. Kana and punctuation
- * outside the brackets read as written; any other letter or digit leaves it null.
- */
 export function splitTermReading(text: string): { term: string; reading: string } | null {
   const segments = parseReadings(text.normalize("NFC").trim());
   if (!segments.some((segment) => segment.reading !== undefined)) return null;
@@ -573,19 +462,16 @@ export function splitTermReading(text: string): { term: string; reading: string 
   return { term: term.trim(), reading: foldReading(reading) };
 }
 
-/** Text with its inline readings taken out: `毎朝[まいあさ]パンを食[た]べる` → `毎朝パンを食べる`. */
 export function stripReadings(text: string, language: string | null | undefined): string {
   return exampleSegments(text, language)
     .map((segment) => segment.text)
     .join("");
 }
 
-/** Whether text carries any inline reading. */
 export function hasReadings(text: string, language: string | null | undefined): boolean {
   return exampleSegments(text, language).some((segment) => segment.reading !== undefined);
 }
 
-/** Whether text has kanji or hanzi that no inline reading covers, or a word of two or more syllables with no stress shown. */
 export function missingReadings(text: string, language: string | null | undefined): boolean {
   const rules = stressRules(language);
   if (rules) return missingStress(text, rules);
@@ -594,7 +480,6 @@ export function missingReadings(text: string, language: string | null | undefine
   );
 }
 
-/** Runs written back as text with inline readings, so `parseReadings` reads the same runs. */
 export function formatReadings(segments: readonly ReadingSegment[]): string {
   const write = (spaced: boolean) => {
     let out = "";
@@ -616,7 +501,6 @@ export function formatReadings(segments: readonly ReadingSegment[]): string {
   return same(parseReadings(plain), merged(segments)) ? plain : write(true);
 }
 
-/** Whether `after` is `before` with readings added and nothing else changed. */
 export function addsReadingsOnly(
   before: string,
   after: string,

@@ -1,5 +1,5 @@
 #!/bin/sh
-# Runs TLC on one model of this skill. Usage: check.sh [Model] [extra TLC config file]
+# Runs TLC on one model of this skill. Usage: [WORKERS=auto] check.sh [Model] [extra TLC config file]
 set -eu
 here=$(cd "$(dirname "$0")/.." && pwd)
 model=${1:-WriteQueue}
@@ -11,7 +11,7 @@ sum=936a262061c914694dfd669a543be24573c45d5aa0ff20a8b96b23d01e050e88
 jar=${TLA2TOOLS:-${XDG_CACHE_HOME:-$HOME/.cache}/lymi/tla2tools-$version.jar}
 if [ ! -f "$jar" ]; then
   mkdir -p "$(dirname "$jar")"
-  curl -fsSL -o "$jar.part" "https://github.com/tlaplus/tlaplus/releases/download/v$version/tla2tools.jar"
+  curl -fsSL --retry 5 --retry-all-errors -o "$jar.part" "https://github.com/tlaplus/tlaplus/releases/download/v$version/tla2tools.jar"
   echo "$sum  $jar.part" | shasum -a 256 -c - >/dev/null || { echo "tla2tools.jar failed its checksum" >&2; rm -f "$jar.part"; exit 1; }
   mv "$jar.part" "$jar"
 fi
@@ -22,4 +22,4 @@ work=$(mktemp -d)
 trap 'rm -rf "$work"' EXIT
 cp "$here/models/$model.tla" "$work/"
 cd "$work"
-exec "$java" -XX:+UseParallelGC -cp "$jar" tlc2.TLC -config "$config" -metadir "$work/states" "$model.tla"
+exec "$java" -XX:+UseParallelGC -cp "$jar" tlc2.TLC -workers "${WORKERS:-1}" -config "$config" -metadir "$work/states" "$model.tla"

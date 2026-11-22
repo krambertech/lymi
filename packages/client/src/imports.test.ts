@@ -135,7 +135,6 @@ describe("the upload store", () => {
   const item = (received = 0) =>
     ({ id: "i1", upload: { partBytes: 10, parts: 3, received } }) as Import;
   const done = { ...item(3), status: "inspecting" } as Import;
-  /** A send the test settles by hand, so it can act while a part is in the air. */
   function held() {
     const calls: { part: number; resolve: () => void; reject: (err: unknown) => void }[] = [];
     vi.spyOn(api, "uploadImportPart").mockImplementation(
@@ -192,6 +191,21 @@ describe("the upload store", () => {
     await settle();
     expect(uploadState("i1")).toEqual({ status: "sending", sent: 10, total: 25 });
     expect(calls.map((call) => call.part)).toEqual([1, 2, 2]);
+  });
+
+  it("stops the run it replaces, so no part is sent twice", async () => {
+    const qc = new QueryClient();
+    qc.setQueryData(importQuery("i1").queryKey, item());
+    const signals: (AbortSignal | undefined)[] = [];
+    vi.spyOn(api, "uploadImportPart").mockImplementation((_id, _part, _body, signal) => {
+      signals.push(signal);
+      return new Promise<never>(() => {});
+    });
+    resumeUpload(item(), file, qc);
+    await settle();
+    resumeUpload(item(), file, qc);
+    await settle();
+    expect(signals.map((signal) => signal?.aborted)).toEqual([true, false]);
   });
 
   it("keeps the new upload when the one it replaced finishes joining", async () => {

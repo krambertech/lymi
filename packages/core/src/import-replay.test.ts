@@ -66,6 +66,18 @@ describe("replayProgress", () => {
     expect(state.scheduled_days).toBe(30);
   });
 
+  it("leaves the source's memory alone once the mode has a log", () => {
+    const progress = {
+      mode: "term_to_meaning" as const,
+      reviews: [{ at: day(10), rating: 3 as Rating }],
+      due: day(60),
+    };
+    const memory = { stability: 30, difficulty: 3.5, lastReview: day(30) };
+    const { state } = replayProgress({ ...progress, memory }, now);
+    expect(state).toEqual(replayProgress(progress, now).state);
+    expect(state.last_review).toEqual(day(10));
+  });
+
   it("leaves a mode the source reset as new, with its log kept as history", () => {
     const { state, reviews } = replayProgress(
       { mode: "meaning_to_term", reviews: [{ at: day(5), rating: 3 }], unstarted: true },
@@ -83,6 +95,10 @@ describe("guessLanguage", () => {
     expect(guessLanguage("日本語 N5")).toBe("ja");
     expect(guessLanguage("Українська лексика")).toBe("uk");
     expect(guessLanguage("Spanish for English speakers")).toBe("es");
+    expect(guessLanguage("English for Spanish speakers")).toBe("en");
+  });
+  it("matches a name as a whole word", () => {
+    expect(guessLanguage("Polishing nouns")).toBeNull();
   });
   it("says nothing when the name names no language", () => {
     expect(guessLanguage("Lesson 1")).toBeNull();
@@ -126,6 +142,16 @@ describe("arrivesKnown", () => {
         now,
       ),
     ).toBe(true);
+  });
+
+  it("follows a picture card's text mode while its own list puts that first", () => {
+    const picture = { mode: "image_to_term" as const, reviews: learned.reviews };
+    expect(
+      arrivesKnown(
+        { ...both, modes: ["meaning_to_term", "image_to_term"], progress: [fresh, picture] },
+        now,
+      ),
+    ).toBe(false);
   });
 
   it("is not Known when the card arrives archived", () => {

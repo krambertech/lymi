@@ -6,15 +6,9 @@ import { OPEN } from "./responses/common";
 import { tagKey } from "./terms";
 import { type FieldSource, LanguageTag, type Rating, ReviewModeKey } from "./types";
 
-/** Where an import's file came from. Each source is one adapter on the server. */
 export const ImportSource = z.enum(["anki", "mochi", "noji", "lymi", "quizlet", "pleco"]);
 export type ImportSource = z.infer<typeof ImportSource>;
 
-/**
- * Where an import is. `uploading` until every part has landed, `inspecting` while the server
- * reads the file, `ready` while the preview waits for the learner, `importing` while cards
- * are written, then `done`, `failed` or `cancelled`.
- */
 export const ImportStatus = z.enum([
   "uploading",
   "inspecting",
@@ -26,7 +20,6 @@ export const ImportStatus = z.enum([
 ]);
 export type ImportStatus = z.infer<typeof ImportStatus>;
 
-/** Why an import stopped, as a code the app turns into a sentence. Never carries file content. */
 export const ImportFailure = z.enum([
   "unrecognized",
   "damaged",
@@ -38,7 +31,6 @@ export const ImportFailure = z.enum([
 ]);
 export type ImportFailure = z.infer<typeof ImportFailure>;
 
-/** What one source field becomes on a Lymi card. */
 export const FieldRole = z.enum([
   "term",
   "meaning",
@@ -50,7 +42,6 @@ export const FieldRole = z.enum([
 ]);
 export type FieldRole = z.infer<typeof FieldRole>;
 
-/** The text fields an imported card fills. */
 export type ImportedFields = {
   term: string;
   meaning?: string | undefined;
@@ -60,55 +51,33 @@ export type ImportedFields = {
   notes?: string | undefined;
 };
 
-/** One recall from the source's log, in the mode it was asked. */
 export type ImportedReview = { at: Date; rating: Rating };
 
-/** A mode's progress: its log, and the source's own schedule when it has one. */
 export type ImportedProgress = {
   mode: ReviewModeKey;
   reviews: ImportedReview[];
-  /** The source treats the mode as not started, as after a reset; its log is history only. */
   unstarted?: boolean | undefined;
-  /** The due date the source had. Kept so the learner's schedule does not move on import. */
   due?: Date | undefined;
-  /** The source's memory state, used only when the mode has a schedule and no log. */
   memory?: { stability: number; difficulty: number; lastReview: Date } | undefined;
 };
 
-/**
- * The one card shape every source adapter produces and the one writer consumes. `externalId`
- * is stable across exports of the same collection, so importing a file again updates.
- */
 export type ImportedCard = {
   externalId: string;
-  /** The adapter's key for the deck, as listed in the preview. */
   deckKey: string;
-  /** The adapter's key for the kind of note it came from, as listed in the preview. */
   noteTypeKey: string;
   fields: ImportedFields;
   tags: string[];
-  /** Modes the source asked, in the order the source introduced them. */
   modes: ReviewModeKey[];
-  /** A suspended card arrives archived. */
   archived: boolean;
-  /** The adapter's name for the first picture, fetched only while writing. */
   picture?: string | undefined;
-  /** The adapter's name for the term's own recording, fetched only while writing. */
   recording?: string | undefined;
-  /** The adapter's name for the example's own recording, fetched only while writing. */
   exampleRecording?: string | undefined;
-  /** Which of the picture and the example's recording a capture tool sent, kept for the owner alone. */
   captured?: { picture?: boolean | undefined; exampleRecording?: boolean | undefined } | undefined;
-  /** Clips the note held besides the term's and the example's recordings, which are left out. */
   soundsLeftOut?: number | undefined;
-  /** The note had a pitch accent that could not be read as text, which is left out. */
   pitchLeftOut?: boolean | undefined;
   progress: ImportedProgress[];
-  /** Fields cut or moved to fit Lymi's limits, for the preview's count. */
   shortened: boolean;
-  /** The card's own language, where the source records one apart from its deck's. */
   language?: string | null | undefined;
-  /** Where the text came from, from a Lymi zip; other sources' text is manual. */
   fieldSources?:
     | {
         meaning: FieldSource | null;
@@ -118,17 +87,12 @@ export type ImportedCard = {
         notes?: FieldSource | null | undefined;
       }
     | undefined;
-  /** Where the learner found the word, such as "Lesson 14". */
   origin?: string | undefined;
-  /** What the picture shows, so picture modes are asked from the start. */
   pictureDescription?: string | undefined;
-  /** The translation was written for an earlier example, from a Lymi zip. */
   translationStale?: boolean | undefined;
-  /** The card's hint and who wrote it, from a Lymi zip. */
   hint?: { text: string; source: FieldSource } | undefined;
 };
 
-/** The longest text each imported field keeps, from `CardInput` and `DeckInput`. */
 export const IMPORT_LIMITS = {
   term: 500,
   meaning: 2000,
@@ -143,7 +107,6 @@ export const IMPORT_LIMITS = {
   deckDescription: 500,
 } as const;
 
-/** Tags that are the source's own bookkeeping rather than the learner's labels. */
 const DROPPED_TAGS = new Set(["marked", "leech"]);
 
 const ENTITIES: Record<string, string> = {
@@ -183,14 +146,8 @@ function decodeEntities(text: string): string {
 }
 
 const BLOCK_TAGS = /<\/?(div|p|li|ul|ol|tr|table|h[1-6]|hr|blockquote|pre)\b[^>]*>/gi;
-/** Stands for a block edge until adjacent edges merge, so `</div><div>` is one line break. */
 const EDGE = "\ue000";
 
-/**
- * Plain text with line breaks from an HTML field: block tags and `<br>` become newlines,
- * styles, scripts, comments and every other tag go, entities decode. Media references
- * such as `[sound:x.mp3]` are removed; pictures are read separately.
- */
 export function htmlToText(html: string): string {
   const text = decodeEntities(
     html
@@ -213,16 +170,10 @@ export function htmlToText(html: string): string {
     .trim();
 }
 
-/** Cyrillic vowels a deck may mark stressed by setting them in bold or underline. */
 const CYRILLIC_VOWEL = "аеёиоуыэюяієїАЕЁИОУЫЭЮЯІЄЇ";
 const MARKED_VOWEL = new RegExp(`<(b|strong|u)\\b[^>]*>([${CYRILLIC_VOWEL}])</\\1>`, "gi");
 const CYRILLIC_LETTER = /\p{Script=Cyrillic}/u;
 
-/**
- * An HTML field with each bold or underlined Cyrillic vowel inside a word written with U+0301, as
- * many Anki decks mark stress: `з<b>а</b>мок` → `за́мок`. A tag around anything else, or around a
- * vowel standing alone, is left for `htmlToText`.
- */
 export function boldStress(html: string): string {
   return html.replace(MARKED_VOWEL, (match, _tag: string, vowel: string, at: number) => {
     const before = html[at - 1] ?? "";
@@ -231,7 +182,6 @@ export function boldStress(html: string): string {
   });
 }
 
-/** Every `<img src>` in an HTML field, in order, entity-decoded. */
 export function imageSources(html: string): string[] {
   const sources: string[] = [];
   for (const match of html.matchAll(/<img\b[^>]*?\bsrc\s*=\s*("([^"]*)"|'([^']*)'|([^\s>]+))/gi)) {
@@ -241,12 +191,10 @@ export function imageSources(html: string): string[] {
   return sources;
 }
 
-/** How many `[sound:]` references a field holds. */
 export function soundCount(html: string): number {
   return html.match(/\[sound:[^\]]*\]/g)?.length ?? 0;
 }
 
-/** Every `[sound:]` file name in an Anki field, in order. */
 export function soundSources(html: string): string[] {
   return [...html.matchAll(/\[sound:([^\]]*)\]/g)].flatMap((match) => {
     const name = decodeEntities(match[1] ?? "").trim();
@@ -254,23 +202,14 @@ export function soundSources(html: string): string[] {
   });
 }
 
-/** A recording an import can keep by its name; the bytes decide when it is stored. */
 export function playableRecording(name: string): boolean {
   return /\.(mp3|m4a|mp4|aac|wav)$/i.test(name);
 }
 
-/** Lymi's own generated speech in an Anki export, which Lymi makes again rather than keeps. */
 const LYMI_SPEECH = /^lymi-[^/]*-speech\.[a-z0-9]+$/i;
 const AUDIO_FIELD = /\b(audio|sound|voice|recording)s?\b|音声/i;
 const SENTENCE_FIELD = /\b(sentence|example|context|usage)s?\b|例文/i;
 
-/**
- * The term's and the example's own recordings among the clips a note's fields hold, by field.
- * The term's is the first clip of a field named for audio and not for a sentence, then of the
- * term, reading or meaning field; the example's is the first clip of a field named for both a
- * sentence and audio, then of the example field. Every other clip is left out and counted. Lymi's
- * own speech is neither.
- */
 export function noteRecordings(
   names: readonly string[],
   roles: readonly FieldRole[],
@@ -303,11 +242,6 @@ export function noteRecordings(
   };
 }
 
-/**
- * A cloze note's sentence clip: the first in a field named for a sentence, then in `text`, the
- * field the cloze is written in. Any other clip, such as a word's in Back Extra, says the hidden
- * word or something else, so it is left out, and the note has no term recording.
- */
 export function clozeRecordings(
   names: readonly string[],
   clips: readonly (readonly string[])[],
@@ -324,7 +258,6 @@ export function clozeRecordings(
   };
 }
 
-/** A card's share of its note's recordings: the example's only while the card has an example to play it. */
 export function cardRecordings(
   sounds: ReturnType<typeof noteRecordings>,
   example: string | undefined,
@@ -341,11 +274,8 @@ type PitchUnit = { text: string; high: boolean; drop: boolean };
 type PitchFrame = {
   tag: string;
   units: PitchUnit[];
-  /** The element's own text is high, as an overline or `data-pitch="high"` says. */
   high: boolean;
-  /** An empty child drew an overline or a downstep beside this element's text. */
   line: { high: boolean; drop: boolean };
-  /** Drawn by this element when it is empty, as Yomitan draws a mora's line. */
   draws: { high: boolean; drop: boolean };
   drop: boolean;
 };
@@ -365,7 +295,6 @@ function pitchItem(units: PitchUnit[]): string {
       .replace(/[＼\\]/g, DOWNSTEP)
       .trim();
     const positions = plain.match(/\d+/g);
-    // A bare position, such as "0" or "[1][3]", reads as Yomitan writes it.
     return positions && /^[\s\d[\](),、・/]+$/.test(plain)
       ? positions.map((n) => `[${n}]`).join(" ")
       : plain;
@@ -385,11 +314,6 @@ function pitchItem(units: PitchUnit[]): string {
   return `${out.replace(/\s+/g, "")} [${position ?? 0}]`;
 }
 
-/**
- * A pitch accent field as one plain line, such as "はꜜし [1]": overlines and downstep marks in
- * HTML, as Yomitan and the pitch add-ons write them, become a downstep after the last high mora
- * and the accent's position. Graphs are dropped, so a field of graphs alone comes back empty.
- */
 export function pitchNotation(html: string): string {
   const source = html
     .replace(/<!--[\s\S]*?-->/g, "")
@@ -468,10 +392,6 @@ export function pitchNotation(html: string): string {
   return items.filter((item) => /[\p{L}\p{N}]/u.test(item)).join(" · ");
 }
 
-/**
- * A Japanese card's pitch accent line moved out of its notes into its Reading, or the fields as
- * they were when no line of the notes reads as an accent of this Reading.
- */
 export function pitchIntoReading<
   T extends {
     term?: string | undefined;
@@ -494,14 +414,12 @@ export function pitchIntoReading<
   return fields;
 }
 
-/** A field's text as an import keeps it: pitch accent as its notation, a translation as one line. */
 export function importFieldText(
   name: string,
   raw: string,
   toText: (raw: string) => string = htmlToText,
 ): string {
   if (isPitchField(name)) return pitchNotation(raw);
-  // Ruby's annotations would run into the text they annotate: 你nǐ好hǎo.
   const text = toText(raw.replace(/<(rt|rp)\b[^>]*>[\s\S]*?<\/\1>/giu, ""));
   return isTranslationField(name) ? text.replace(/\s*\n\s*/g, " ") : text;
 }
@@ -520,19 +438,12 @@ function length(text: string): number {
   return [...text].length;
 }
 
-/** One text cut to its limit by code point, as `fitFields` cuts a field, and whether it was. */
 export function fitText(text: string, limit: number): { text: string; shortened: boolean } {
   return length(text) <= limit
     ? { text, shortened: false }
     : { text: cut(text, limit), shortened: true };
 }
 
-/**
- * Fields fitted to Lymi's limits. A meaning past its limit keeps what fits and moves the
- * whole text to the top of the notes. An example longer than one shown, or its translation,
- * moves to the end of the notes with the other, so a passage is kept rather than cut. Any other
- * field past its limit is cut. `shortened` says whether anything was cut or moved.
- */
 export function fitFields(fields: ImportedFields): { fields: ImportedFields; shortened: boolean } {
   let shortened = false;
   const bounded = (value: string | undefined, limit: number) => {
@@ -549,7 +460,6 @@ export function fitFields(fields: ImportedFields): { fields: ImportedFields; sho
     shortened = true;
   }
   let example = fields.example || undefined;
-  // A translation belongs to its example, so one without an example is a line of notes.
   let translation = fields.exampleTranslation || undefined;
   if (
     (example && !fitsExample(example)) ||
@@ -573,10 +483,6 @@ export function fitFields(fields: ImportedFields): { fields: ImportedFields; sho
   return { fields: fitted, shortened };
 }
 
-/**
- * A source's tags as Lymi keeps them: bookkeeping tags dropped, each cut to the tag limit,
- * duplicates removed, at most the tag limit kept.
- */
 export function importTags(tags: readonly string[]): { tags: string[]; shortened: boolean } {
   const kept: string[] = [];
   const seen = new Set<string>();
@@ -614,23 +520,17 @@ const TERM_PATTERN =
   /\b(front|word|term|expression|vocab(ulary)?|kanji|question|target|phrase)\b|単語/i;
 const SKIP_PATTERN =
   /\b(audio|sound|image|picture|photo|add reverse|sort|freq(uency)?|rank(ing)?)\b/i;
-/** A translation of the example sentence, such as Kaishi's "Sentence Meaning": the example's translation. */
 const TRANSLATION_PATTERN =
   /\b(sentence|example|context)s?\b.*\b(meaning|translation|english|gloss|definition)$/i;
-/** Switches such as Lapis's `IsSentenceCard`, which choose a template rather than hold text. */
 const FLAG_PATTERN = /^(is|has)\s/i;
-/** A sentence's own pinyin, such as an HSK deck's "SentencePinyin": never the term's Reading. */
 const SENTENCE_PINYIN_PATTERN = /\b(sentence|example|context)s?\b.*\b(pinyin|zhuyin|bopomofo)$/i;
-/** Words naming which characters a Chinese field is written in rather than what it holds. */
 const SCRIPT_WORDS =
   /\b(simplified|simp|traditional|trad|hanzi|characters?)\b|简体字?|簡體字?|繁体字?|繁體字?|汉字|漢字/giu;
 const TRADITIONAL = /\b(traditional|trad)\b|繁体|繁體/iu;
 const SIMPLIFIED = /\b(simplified|simp)\b|简体|簡體/iu;
-/** A field only a Chinese note type names; "Trad" alone is as often a French or Italian translation. */
 const CHINESE_FIELD =
   /\b(pinyin|zhuyin|bopomofo|hanzi|simplified|traditional)\b|拼音|注音|简体|簡體|繁体|繁體|汉字|漢字/iu;
 
-/** "ExpressionFurigana" and "word_audio" as spaced words, so the patterns' word edges find them. */
 function fieldWords(name: string): string {
   return name
     .replace(/(\p{Ll}|\d)(\p{Lu})/gu, "$1 $2")
@@ -638,12 +538,10 @@ function fieldWords(name: string): string {
     .trim();
 }
 
-/** Whether a note type's fields are Chinese, so script names such as "Trad" mean characters. */
 export function looksChinese(names: readonly string[]): boolean {
   return names.some((name) => CHINESE_FIELD.test(fieldWords(name)));
 }
 
-/** A Chinese field's name without its script: "WordTraditional" → "Word", "Hanzi" → "". Null when it names none. */
 function scriptRest(name: string): string | null {
   const words = fieldWords(name);
   const rest = words.replace(SCRIPT_WORDS, " ").replace(/\s+/g, " ").trim();
@@ -655,15 +553,10 @@ function patternRole(text: string): FieldRole | undefined {
   return ROLE_PATTERNS.find(([, pattern]) => pattern.test(text))?.[0];
 }
 
-/**
- * The role a field's name alone names, if any. In a name of several words the last one decides,
- * so "Expression Reading" is a reading and "Main Definition" a meaning.
- */
 export function namedFieldRole(name: string): FieldRole | undefined {
   return fieldRole(name, false);
 }
 
-/** `namedFieldRole`, reading script names as a Chinese note type's. */
 function fieldRole(name: string, chinese: boolean): FieldRole | undefined {
   const words = fieldWords(name);
   if (SKIP_PATTERN.test(words) || FLAG_PATTERN.test(words)) return "skip";
@@ -673,17 +566,12 @@ function fieldRole(name: string, chinese: boolean): FieldRole | undefined {
   }
   if (TRANSLATION_PATTERN.test(words)) return "exampleTranslation";
   if (SENTENCE_PINYIN_PATTERN.test(words)) return "notes";
-  // "SentenceHanzi" is a sentence and "Simplified" the term itself.
   const rest = chinese ? scriptRest(name) : null;
   if (rest === "") return "term";
   const named = rest ?? words;
   return patternRole(named.split(/\s+/).at(-1) ?? "") ?? patternRole(named);
 }
 
-/**
- * A field holding the term's pitch accent, such as Kaishi's "Pitch Accent" or Lapis's
- * "PitchPosition", which an import keeps in the Reading or as one line of notes. "Pitch Accent Notes" is ordinary notes.
- */
 export function isPitchField(name: string): boolean {
   const words = fieldWords(name);
   return (
@@ -692,17 +580,14 @@ export function isPitchField(name: string): boolean {
   );
 }
 
-/** A field translating the example sentence, kept on one line as the example's translation. */
 export function isTranslationField(name: string): boolean {
   return TRANSLATION_PATTERN.test(fieldWords(name));
 }
 
-/** A field of a sentence's pinyin, which a Chinese import draws inline over the sentence. */
 export function isSentencePinyinField(name: string): boolean {
   return SENTENCE_PINYIN_PATTERN.test(fieldWords(name));
 }
 
-/** Whether a field names a script and another field holds the same thing in the other one. */
 function hasTwin(name: string, names: readonly string[], script: RegExp): boolean {
   const rest = scriptRest(name);
   return (
@@ -712,10 +597,6 @@ function hasTwin(name: string, names: readonly string[], script: RegExp): boolea
   );
 }
 
-/**
- * Whether a Chinese note type's term is in traditional characters: a field naming traditional
- * holds the term, with no simplified field beside it.
- */
 export function traditionalTerm(names: readonly string[]): boolean {
   return (
     looksChinese(names) &&
@@ -728,27 +609,16 @@ export function traditionalTerm(names: readonly string[]): boolean {
   );
 }
 
-/**
- * "WordTraditional" beside "WordSimplified", or "Traditional" beside "Hanzi", holds the same text in
- * the script the term is not in, which becomes a notes line; the field it repeats keeps its role.
- */
 function isOtherScriptOf(name: string, names: readonly string[]): boolean {
   return hasTwin(name, names, traditionalTerm(names) ? SIMPLIFIED : TRADITIONAL);
 }
 
-/** "Expression Furigana" beside "Expression" repeats that field with readings over its kanji. */
 function isFuriganaOf(name: string, names: readonly string[]): boolean {
   const match = /^(.+?)\s*furigana$/i.exec(fieldWords(name));
   const base = match?.[1]?.toLowerCase();
   return !!base && names.some((other) => fieldWords(other).toLowerCase() === base);
 }
 
-/**
- * A first guess at what each field is, by its name. A named term field wins; otherwise the
- * first field is the term. A named meaning field wins; otherwise the first unclaimed field
- * with no other role is the meaning. Everything else that is not media becomes notes. The
- * learner corrects this in the preview.
- */
 export function guessFieldRoles(names: readonly string[]): FieldRole[] {
   const chinese = looksChinese(names);
   const roles = names.map((name) =>
@@ -758,7 +628,6 @@ export function guessFieldRoles(names: readonly string[]): FieldRole[] {
         ? "notes"
         : fieldRole(name, chinese),
   );
-  // One pitch line is enough; a second pitch field, such as a graph beside positions, is left out.
   const pitch = names.findIndex((name, i) => roles[i] === "notes" && isPitchField(name));
   names.forEach((name, i) => {
     if (i !== pitch && roles[i] === "notes" && isPitchField(name)) roles[i] = "skip";
@@ -786,10 +655,6 @@ export function guessFieldRoles(names: readonly string[]): FieldRole[] {
   return roles.map((role) => role ?? "notes");
 }
 
-/**
- * Fields from a note's values under the chosen roles. Several fields with the notes role join
- * line by line; any other role takes its first non-empty field.
- */
 export function fieldsFromRoles(
   values: readonly string[],
   roles: readonly FieldRole[],
@@ -802,15 +667,12 @@ export function fieldsFromRoles(
     if (role === "notes") notes.push(value);
     else if (!fields[role]) fields[role] = value;
   });
-  // Each field starts its own line, so a translation and a pitch accent stay one line each.
   if (notes.length > 0) fields.notes = notes.join("\n");
   return fields;
 }
 
-/** The file names an import accepts: Anki's packages, Mochi's export and Lymi's own zip. */
 export const IMPORT_FILE_NAME = /\.(apkg|colpkg|mochi|ofc|zip|txt|tsv|csv)$/i;
 
-/** The source a file name suggests before the file is read; inspection decides. */
 export function sourceOfFileName(fileName: string): ImportSource {
   if (/\.mochi$/i.test(fileName)) return "mochi";
   if (/\.ofc$/i.test(fileName)) return "noji";
@@ -818,10 +680,8 @@ export function sourceOfFileName(fileName: string): ImportSource {
   return /\.zip$/i.test(fileName) ? "lymi" : "anki";
 }
 
-/** The largest file an import accepts. A collection past the database limit is refused on inspection. */
 export const MAX_IMPORT_BYTES = 1024 * 1024 * 1024;
 
-/** Every part of an upload but the last is exactly this size, as R2 multipart uploads require. */
 export const IMPORT_PART_BYTES = 10 * 1024 * 1024;
 
 export const ImportStartInput = z.object({
@@ -866,7 +726,6 @@ export const ImportDuplicate = z.object({
   deckName: z.string().meta({ description: "The deck that already holds the term" }),
 });
 
-/** What an import will write, or wrote. */
 export const ImportCounts = z
   .object({
     added: z.number().int().meta({ description: "New cards" }),
@@ -1076,14 +935,9 @@ export const ImportOut = z
   .meta({ id: "Import" });
 export type ImportOut = z.infer<typeof ImportOut>;
 
-/**
- * How far a write has come, from 0 to 1, or null before it can tell. A chunk of cards and a
- * picture or recording each count as one, so a deck of pictures moves while they land.
- */
 export function importProgress(progress: {
   written: number;
   chunks: number;
-  /** Absent from a response cached before media were counted. */
   media?: { done: number; total: number } | undefined;
 }): number | null {
   const total = progress.chunks + (progress.media?.total ?? 0);

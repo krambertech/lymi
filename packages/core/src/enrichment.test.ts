@@ -1,7 +1,11 @@
 import { describe, expect, it, vi } from "vitest";
-import { deckEnrichFields, defaultEnrichFields, newDeckEnrichFields } from "./enrichment";
+import {
+  deckEnrichFields,
+  defaultEnrichFields,
+  newDeckEnrichFields,
+  wantsTranslation,
+} from "./enrichment";
 
-// A row below the evaluation's bar, since every shipped row passes it today.
 vi.mock("./languages/configured", async (actual) => {
   const real = await actual<typeof import("./languages/configured")>();
   const gated = { ...real.CONFIGURED.vi, aliases: ["xb"], enrichByDefault: false };
@@ -35,5 +39,16 @@ describe("a deck whose owner never chose", () => {
         "exampleTranslation",
         "pronunciation",
       ]);
+  });
+});
+
+describe("an example's translation", () => {
+  it("is asked for while it was never set, and not once someone cleared it", () => {
+    const wants = (exampleTranslation: string | null, example = "Ich esse Brot.") =>
+      wantsTranslation({ example, exampleTranslation }, ["exampleTranslation"]);
+    expect(wants(null)).toBe(true);
+    expect(wants("")).toBe(false);
+    expect(wants(null, " ")).toBe(false);
+    expect(wantsTranslation({ example: "Ich esse Brot." }, ["example"])).toBe(false);
   });
 });

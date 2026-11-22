@@ -105,6 +105,23 @@
       }
     },
     {
+      "files": ["packages/client/src/review-flow/use-review-flow.test.ts"],
+      "rules": {
+        "eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "vitest",
+                "importNames": ["vi"],
+                "message": "hookReview() owns the clock, the server, the storage and the locks: a wait or a mock of the test's own can race the hook. Use review.settle, advance, answer or refuse."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
       "files": ["apps/web/src/client/**"],
       "excludeFiles": ["apps/web/src/client/lib/use-reduce-motion.ts", "**/*.test.tsx"],
       "rules": {
@@ -182,6 +199,17 @@
       }
     },
     {
+      "files": ["apps/site/src/**", "apps/web/src/client/**"],
+      "excludeFiles": [
+        "apps/site/src/lib/use-clip.ts",
+        "apps/site/src/lib/learn/player.ts",
+        "apps/web/src/client/lib/use-clip.ts"
+      ],
+      "rules": {
+        "lymi/clip-owner": "error"
+      }
+    },
+    {
       "files": ["e2e/**"],
       "rules": {
         "lymi/no-flaky-masks": "error"
@@ -225,6 +253,24 @@
       "files": ["apps/web/src/server/**", "packages/core/src/**"],
       "rules": {
         "lymi/no-sql-lower": "error"
+      }
+    },
+    {
+      "files": ["apps/web/src/server/**", "apps/site/src/**", "packages/core/src/**"],
+      "excludeFiles": ["packages/core/src/in-list.ts", "packages/core/src/db.ts"],
+      "rules": {
+        "eslint/no-restricted-imports": [
+          "error",
+          {
+            "paths": [
+              {
+                "name": "drizzle-orm",
+                "importNames": ["inArray", "notInArray"],
+                "message": "Drizzle binds one parameter per value and D1 refuses more than 100 (#320, #436, #840, #896, #1058). Import inArray and notInArray from @lymi/core/db, or ./in-list inside packages/core: they bind the whole list as one."
+              }
+            ]
+          }
+        ]
       }
     },
     {
@@ -284,6 +330,29 @@
       "excludeFiles": ["**/*.test.ts", "**/*.test.tsx"],
       "rules": {
         "lymi/isolate-learner-text": "error"
+      }
+    },
+    {
+      "files": ["apps/web/src/server/**"],
+      "excludeFiles": ["**/*.test.ts"],
+      "rules": {
+        "lymi/guarded-state-move": "error"
+      }
+    },
+    {
+      "files": ["apps/**", "packages/**"],
+      "excludeFiles": [
+        "apps/web/src/server/ai/consent.ts",
+        "apps/web/src/server/services/ai-consent.ts",
+        "apps/web/src/test/ai-consent.ts",
+        "apps/web/src/server/canary.ts",
+        "apps/web/src/server/enrichment/evaluate.ts",
+        "apps/web/src/server/enrichment/style-evaluate.ts",
+        "apps/web/src/server/lead-ins/evaluate.ts",
+        "apps/web/src/server/speech-stress/evaluate.ts"
+      ],
+      "rules": {
+        "lymi/ai-consent": "error"
       }
     }
   ]

@@ -31,28 +31,18 @@ import {
 } from "./index";
 
 interface Fixture {
-  /** Tags that must resolve to the record, each with the script whose face draws it, or null for Onest. */
   tags: Record<string, string | null>;
-  /** Each term with its pronunciation, and how it is drawn in inline notation or in place, or null for plain. */
   terms: { term: string; pronunciation: string; drawn: string | null }[];
-  /** Examples with inline readings, and the text with them taken out. */
   examples: { text: string; plain: string }[];
-  /** Pronunciations of one term that must each give one reading key. */
   keys: { term: string; pronunciations: string[] }[];
-  /** Readings of one term that must each give a different key, so they stay two cards. */
   apart?: { term: string; pronunciations: string[] }[];
-  /** Pronunciations that are not a reading of the term and give no key, so they never split it. */
   noKey: { term: string; pronunciation: string }[];
-  /** What a write sends, what Lymi stores, and which fields it converted. */
   inputs: { sent: CardText; stored: CardText; normalized: string[] }[];
-  /** The Known pairs a term gives, where the engine pairs other than by runs of the term. */
   pairs?: { term: string; pronunciation: string; pairs: string[] }[];
 }
 
 type Card = { term: string; pronunciation: string; language: string };
 
-/** Each engine's inline notation, and the term as it draws it. */
-/** Runs written back as inline readings, text[reading], the notation Jyutping is parsed from. */
 const inline = (segments: readonly ReadingSegment[]) =>
   segments
     .map(({ text, reading }) => (reading === undefined ? text : `${text}[${reading}]`))
@@ -75,14 +65,12 @@ const NOTATION: Record<
   },
   pinyin: { parse: parsePinyin, format: formatPinyin, strip: stripPinyin, draw: overTerm },
   jyutping: { parse: parseJyutping, format: inline, strip: stripJyutping, draw: overTerm },
-  // Marks stay in the text, so an example parses as one run.
   stress: {
     parse: (text) => (text ? [{ text }] : []),
     format: (segments) => segments.map((segment) => segment.text).join(""),
     strip: stripStress,
     draw: markedTerm,
   },
-  // Readings come from the spelling, so an example is plain text and the term draws as word[reading].
   indic: {
     parse: tamilSegments,
     format: (segments) => segments.map((segment) => segment.text).join(""),

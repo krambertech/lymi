@@ -1,3 +1,4 @@
+import type { AiConsent } from "../ai/consent";
 import { AiGatewayError } from "../ai/gateway";
 import { type DependencySource, type HealthEnv, metered } from "../dependency-health";
 
@@ -12,7 +13,9 @@ const MODEL = "@cf/cloudflare/clef-flash";
 type Candidate = { id: string; term: string; meaning: string; kind: "word" | "phrase" };
 
 /** Workers AI as the Worker sees it; absent in tests and wherever the binding is not configured. */
-export type DecisionModel = { run(model: string, input: unknown): Promise<unknown> } | undefined;
+export type DecisionModel =
+  | { run(model: string, input: unknown, consent: AiConsent): Promise<unknown> }
+  | undefined;
 
 /** Workers AI through the named AI Gateway, so its calls are logged beside the reader's. */
 export function decisionModel(
@@ -45,8 +48,9 @@ export async function keepScore(
   ai: DecisionModel,
   deck: string,
   candidate: Candidate,
+  consent: AiConsent,
 ): Promise<number | null> {
-  return (await keepScores(ai, deck, [candidate])).get(candidate.id) ?? null;
+  return (await keepScores(ai, deck, [candidate], consent)).get(candidate.id) ?? null;
 }
 
 /**
@@ -57,6 +61,7 @@ export async function keepScores(
   ai: DecisionModel,
   deck: string,
   candidates: Candidate[],
+  consent: AiConsent,
 ): Promise<Map<string, number>> {
   const scores = new Map<string, number>();
   if (!ai || candidates.length === 0) return scores;
@@ -66,19 +71,27 @@ export async function keepScores(
       for (let next = queue.shift(); next; next = queue.shift()) {
         const candidate = next;
         try {
-          const reply = (await ai.run(MODEL, {
-            state: {
-              deck,
-              candidate: { term: candidate.term, meaning: candidate.meaning, kind: candidate.kind },
-            },
-            questions: {
-              worth: {
-                type: "noul",
-                instructions:
-                  "Is this candidate one term that belongs as its own card in this deck?",
+          const reply = (await ai.run(
+            MODEL,
+            {
+              state: {
+                deck,
+                candidate: {
+                  term: candidate.term,
+                  meaning: candidate.meaning,
+                  kind: candidate.kind,
+                },
+              },
+              questions: {
+                worth: {
+                  type: "noul",
+                  instructions:
+                    "Is this candidate one term that belongs as its own card in this deck?",
+                },
               },
             },
-          })) as { answers?: { worth?: { noul?: number } } };
+            consent,
+          )) as { answers?: { worth?: { noul?: number } } };
           const p = reply.answers?.worth?.noul;
           if (typeof p === "number") scores.set(candidate.id, p);
         } catch {
@@ -102,6 +115,7 @@ export async function termsAgainstAnswer(
   question: string,
   answer: string,
   terms: { id: string; term: string; gloss: string }[],
+  consentNow: () => Promise<AiConsent | null>,
 ): Promise<string[]> {
   if (!ai) return [];
   const drop: string[] = [];
@@ -111,20 +125,26 @@ export async function termsAgainstAnswer(
       for (let next = queue.shift(); next; next = queue.shift()) {
         const term = next;
         try {
-          const reply = (await ai.run(MODEL, {
-            state: {
-              question,
-              learnerAnswer: answer,
-              candidate: { term: term.term, meaning: term.gloss },
-            },
-            questions: {
-              fits: {
-                type: "noul",
-                instructions:
-                  "Given the learner's answer to the question, should this candidate stay on the list of cards to add?",
+          const consent = await consentNow();
+          if (!consent) return;
+          const reply = (await ai.run(
+            MODEL,
+            {
+              state: {
+                question,
+                learnerAnswer: answer,
+                candidate: { term: term.term, meaning: term.gloss },
+              },
+              questions: {
+                fits: {
+                  type: "noul",
+                  instructions:
+                    "Given the learner's answer to the question, should this candidate stay on the list of cards to add?",
+                },
               },
             },
-          })) as { answers?: { fits?: { noul?: number } } };
+            consent,
+          )) as { answers?: { fits?: { noul?: number } } };
           const p = reply.answers?.fits?.noul;
           if (typeof p === "number" && p < FITS_THRESHOLD) drop.push(term.id);
         } catch {

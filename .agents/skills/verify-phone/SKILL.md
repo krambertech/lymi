@@ -105,4 +105,8 @@ Evidence goes to `/mnt/project-files/evidence/pr-<n>/<feature>-phone-<sha>/` whe
 node .agents/skills/verify-phone/scripts/stack.mjs stop
 ```
 
-It ends the Worker process group `start` recorded, then runs `stim stop`, which stops this worktree's Metro and shuts its Simulator down, since a booted Simulator holds about 2 GB. Stop as soon as you stop looking at the app: when the pull request waits on CI or review, and when you are done. Keep the evidence. A failing flow is a finding to report or fix, never a reason to delete its files.
+It ends the Worker process group `start` recorded, then runs `stim stop`, which stops this worktree's Metro and shuts its Simulator down, since a booted Simulator holds about 2 GB. Stop as soon as nobody is looking at the app: when the pull request waits on CI or review, and when you are done. **After asking someone to look, leave the stack up until they have answered**, and give them the hand-over the runner prints for each feature: the Simulator's name, the commands that show it and reopen Lymi on this worktree's Metro, and the steps. Keep the evidence. A failing flow is a finding to report or fix, never a reason to delete its files.
+
+## Answer feedback
+
+Answer a list of what is wrong as [verify](../verify/SKILL.md#answer-feedback) says: point by point, each with a screenshot of the same screen and state recaptured on the same Simulator.

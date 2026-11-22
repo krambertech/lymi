@@ -115,6 +115,10 @@ describe("the recall clock", () => {
     focusManager.setFocused(true);
     now += 200;
     expect(clock.stop()).toEqual({ recallMs: 500 });
+    focusManager.setFocused(false);
+    clock.start();
+    now += 10_000;
+    expect(clock.stop()).toEqual({ recallMs: 0 });
     stop();
   });
 });

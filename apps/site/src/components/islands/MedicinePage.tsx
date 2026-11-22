@@ -2,7 +2,7 @@ import { MedicineView } from "../landing/MedicineView";
 import { Island } from "./Island";
 
 interface Props {
-  locale?: string | undefined;
+  locale: string | undefined;
 }
 
 export default function MedicinePage({ locale }: Props) {

@@ -1,6 +1,6 @@
 ---
 name: model-check
-description: Model-check the few Lymi flows where a wrong order of events loses or leaks data, with TLA+ and TLC. Use when a change touches the offline write queue (packages/client/src/writes.ts, queued.ts, the phone's Sync and sign-out screens), how the server settles a review day (apps/web/src/server/services/review-days.ts, the grade in review.ts, nextOutcome in packages/core/src/streak.ts), or how an import's write run stops (writeChunk in import-writer.ts, finishImport, failImport, cancelImport, archiveImport and expireImports in imports.ts, imports/write-run.ts).
+description: Model-check the few Lymi flows where a wrong order of events loses or leaks data, with TLA+ and TLC. Use when a change touches the offline write queue (packages/client/src/writes.ts, queued.ts, the phone's Sync and sign-out screens), how a grade reaches the server or is taken back (packages/client/src/grades.ts, gradeCard in apps/web/src/server/services/review.ts, undoReview and restoreIfLatest in review-days.ts), how the server settles a review day (apps/web/src/server/services/review-days.ts, the grade in review.ts, nextOutcome in packages/core/src/streak.ts), or how an import's write run stops (writeChunk in import-writer.ts, finishImport, failImport, cancelImport, archiveImport and expireImports in imports.ts, imports/write-run.ts).
 ---
 
 # Model-check the flows that can lose data
@@ -10,18 +10,28 @@ Each model is a small TLA+ description of one flow, checked by TLC over every or
 | Model | Rule | On `main` |
 | --- | --- | --- |
 | [Write queue](#write-queue) | A learner's queued write is never sent on another learner's session | Holds |
+| [Grade outbox](#grade-outbox) | Once nothing waits, every grade the learner kept counts and every one they took back does not | Holds |
 | [Review day](#review-day) | Once every request is answered, the day's outcome is the one its reviews call for | Holds since pull request 1164 |
 | [Import writes](#import-writes) | Once an import is failed, cancelled or done, no chunk adds a card | Holds since pull request 1164 |
+
+[`models/models.json`](models/models.json) holds, for each model, its state count, the rule each guard protects and the pull request that fixed it, the functions it covers and the tests that replay its paths. `pnpm check:models` holds the manifest to the code, as part of `pnpm check`: it fails when a covered function changes, when a replay is gone, or when a guard has no rule. CI also runs `pnpm check:models --run`, where every model must hold over the recorded number of states and every guard, turned off alone, must break the rule named for it.
 
 ## Run a check
 
 ```bash
+pnpm check:models --run
+```
+
+runs everything CI runs, in under a minute. To see one model's output:
+
+```bash
 .agents/skills/model-check/scripts/check.sh WriteQueue
 .agents/skills/model-check/scripts/check.sh ReviewDay
+WORKERS=auto .agents/skills/model-check/scripts/check.sh GradeOutbox
 .agents/skills/model-check/scripts/check.sh ImportWrites
 ```
 
-It needs Java 11 or later (`brew install openjdk`, or set `JAVA`). The first run downloads TLC 1.7.4 to `~/.cache/lymi` and checks its SHA-256; set `TLA2TOOLS` to use a jar you already have. A pass prints `distinct states found`, no `violated` line, and exits 0. A broken rule prints `Invariant <Name> is violated` with the steps, and exits 12. To check another configuration, copy the model's `.cfg`, change a constant and pass the copy's path, relative or absolute, as the second argument.
+It needs Java 11 or later (`brew install openjdk`, or set `JAVA`). The first run downloads TLC 1.7.4 to `~/.cache/lymi` and checks its SHA-256; set `TLA2TOOLS` to use a jar you already have. `WORKERS=auto` checks on every core; leave it out when a rule breaks, so the path found is the same each time. A pass prints `distinct states found`, no `violated` line, and exits 0. A broken rule prints `Invariant <Name> is violated` with the steps, and exits 12. To check another configuration, copy the model's `.cfg`, change a constant and pass the copy's path, relative or absolute, as the second argument.
 
 To read a result as a chart or as a path in plain words, use the pstack statechart skill on the model's `.tla`, its `.cfg` and its `.view.mjs`. It is installed per machine and its commands change between releases, so take them from that skill.
 
@@ -34,7 +44,7 @@ Read the path as a sequence of things people and the server do. Then replay it a
 
 ## When you change the covered code
 
-Change the model in the same pull request, so that each step still names one thing the code does in one go: one D1 statement on the server, one synchronous stretch between awaits on the client. Add a variable when the code gains state the rule depends on. Run the check, then record the commit you confirmed in the model's section.
+Change the model in the same pull request, so that each step still names one thing the code does in one go: one D1 statement on the server, one synchronous stretch between awaits on the client. Add a variable when the code gains state the rule depends on. Then run `pnpm check:models --run`, and record the new state count in `models.json` if it moved. `pnpm check:models --confirm` writes `models/confirmed.json`, the fingerprint of the covered code with comments and spacing left out; run it only after comparing every step in the model's table with the new code.
 
 ## Write queue
 
@@ -50,7 +60,7 @@ The invariant is `NoCrossSend` in [`models/WriteQueue.tla`](models/WriteQueue.tl
 | `SessionEnds` | the session ending, with `unclaimWrites` in the cleanup of `Sync`'s effect |
 | `Drops` | `dropWrites` in `writes.ts`, called from `apps/mobile/src/app/(tabs)/you/index.tsx`, `delete-account.tsx` and `delete-code.tsx` |
 
-The model describes the code at `253cd1a37` on `main`. A request takes its session when it leaves (`config.headers()` in `packages/client/src/api/request.ts`), and the flush loop awaits `flushGrades` before each send, so the learner can change between two sends of one flush. The model keeps both facts; do not merge those steps.
+A request takes its session when it leaves (`config.headers()` in `packages/client/src/api/request.ts`), and the flush loop awaits `flushGrades` before each send, so the learner can change between two sends of one flush. The model keeps both facts; do not merge those steps.
 
 Replays live in `packages/client/src/writes.test.ts`: "sends nothing after a sign-out", "does not put a write back when the learner signed out", "stops a flush that was mid-way when the learner left" and "keeps the queue but holds it".
 
@@ -60,7 +70,40 @@ Replays live in `packages/client/src/writes.test.ts`: "sends nothing after a sig
 - `ChecksClaimBeforeSend`: a flush that was waiting on grades when the learner left sends its next write on the new learner's session.
 - `ChecksClaimOnFailure`: a request that fails after the next learner claimed the queue writes the first learner's entry back, and the next flush sends it.
 
-**Leaves out:** more than two learners, two writes and three claims; the grades outbox in `packages/client/src/grades.ts`; the retry timer and the web's cross-tab lock; the web's sign-out, which reloads the page; and whether the server accepts a write.
+**Leaves out:** more than two learners, two writes and three claims; the grades outbox, which [has its own model](#grade-outbox); the retry timer and the web's cross-tab lock; the web's sign-out, which reloads the page; and whether the server accepts a write.
+
+## Grade outbox
+
+**Rule:** once nothing waits on this device and no request is in the air, every grade the learner made and kept is counted, every grade they took back is not, and the card's schedule holds exactly the counted grades in order. A later grade from another device may beat one of them. **Harm:** a review disappears, a grade the learner undid still moves the card, or a regrade lands before the Undo it replaces.
+
+The invariants are `KeptGradesCount`, `TakenBackGradesDoNot` and `ScheduleHoldsTheCounted` in [`models/GradeOutbox.tla`](models/GradeOutbox.tla). [`models/GradeOutbox.cfg`](models/GradeOutbox.cfg) checks one card in one mode: two grades from this device and one from another, four requests and one kill of the app. Any answer may be lost, and any request may land after the device gave up on it.
+
+| Model step | Code |
+| --- | --- |
+| `Make`, `TakeBack` | the write at the top of `recordGrade` and of `undoGrade` in `packages/client/src/grades.ts`; only the last grade can be taken back, as `last` in `packages/client/src/review-flow/core.ts` |
+| `Starts`, `Stops` | `serial`, around `recordGrade`, `flushOutbox` and `undoGrade` |
+| `SettleForgets`, `SettleReplays`, `SettleUndoes`, `SettleEnds` | the loop in `settleUndos` |
+| `FlushSkips`, `FlushSends`, `FlushEnds` | the loop in `flushQueued` over its snapshot, and the mark `send` stores before the request leaves |
+| `ElsewhereAnswers` | the same loops awaiting a request of another mode |
+| `GradeAnswered`, `UndoAnswered`, `ServerFails`, `TurnedAwayForNow`, `TurnedAway`, `GivesUp` | what `send`, `flushQueued` and `settleUndos` do with each answer: 2xx, 5xx, 401 or 426, another 4xx, and none |
+| `Killed` | the app dying mid-send, with the outbox as storage holds it |
+| `GradeReads`, `GradeLands` | `gradeCard`'s select, then its batch; `gradeReviewId` makes a copy collide |
+| `UndoReads`, `UndoLands` | `undoReview`'s select, then `restoreIfLatest` |
+
+The default config holds: 1,395,255 distinct states. With six requests it held over 74,711,532, checked by hand because it takes too long for CI.
+
+| Constant | Code | Off |
+| --- | --- | --- |
+| `MarksBeforeSend` | `send` stores `unanswered` before its request leaves | `TakenBackGradesDoNot` breaks: a 5xx after the batch, or a kill mid-send, leaves an undone grade counted |
+| `SeesLateUndo` | `flushQueued` reads the outbox again before each send | `TakenBackGradesDoNot` breaks: a regrade overtakes an undo made while the flush waited on another card |
+| `ReplaysUnanswered` | `settleUndos` sends an unanswered grade again to learn its attempt | `TakenBackGradesDoNot` breaks |
+| `HoldsMode` | a grade waits behind one of its mode the server could not take | `KeptGradesCount` breaks |
+| `LandsOverRead` | `gradeCard`'s update lands only over the state it read | `ScheduleHoldsTheCounted` breaks |
+| `DuplicateNamesAttempt` | `gradeCard` names the attempt of a grade it already stored | `TakenBackGradesDoNot` breaks |
+
+Replays live in `packages/client/src/grades.test.ts`, in `apps/web/src/server/phone-client.test.ts` against the real Worker, and in `apps/web/src/server/services/review-days.test.ts`.
+
+**Leaves out:** two tabs sharing one outbox, where the browser's lock keeps their runs apart; a 4xx after a send that got no answer, such as a deck left meanwhile, where the device drops the grade and the server may keep it counted; grades sent before the outbox kept attempts; an answer the client cannot read, which it treats like a 5xx; more than three grades of one card; whether a held grade is ever sent; what happens to the outbox at sign-out; `retireGrades`; and full storage. Four requests do not finish the case where both grades are taken back and another device grades too; the six-request run does.
 
 ## Review day
 
@@ -79,7 +122,7 @@ The invariants are `ConfirmsOnlyWithoutGrades` and `NoLostUpdate` in [`models/Re
 | `Counts` | `attemptsOn` and `drawableCount` in `settleDay`, then `nextOutcome` in `packages/core/src/streak.ts` (before 1164, the same rules inlined in `settleDay`) |
 | `Writes`, `Rereads` | `settleDay`'s compare-and-set update, and the next try when it misses, up to `SETTLE_TRIES` |
 
-Two constants are the guards; the default config turns both on and describes the code at `253cd1a37` on `main`. It holds: 283,161 distinct states in a few seconds, and 286,312 with one card due.
+Two constants are the guards; the default config turns both on and describes `main`. It holds: 283,161 distinct states in a few seconds, and 286,312 with one card due.
 
 | Constant | Code | Off |
 | --- | --- | --- |
@@ -116,7 +159,7 @@ The invariants are `NoCardsAfterEnd` and `ArchiveCoversEveryCard` in [`models/Im
 | `CancelReads`, `CancelWrites` | `cancelImport`, which refuses once the import is importing |
 | `ArchiveReads`, `ArchiveWrites` | `archiveImport` in `import-writer.ts`, which archives the cards the import added so far |
 
-The default config describes `main` at `253cd1a37`, where pull request 1164 added `status = 'importing'` to `writeChunk`'s guard and to its last update (`ChunkChecksStatus = TRUE`). The rule holds: 321 distinct states with two chunks, 653 with four.
+The default config describes `main`, where pull request 1164 added `status = 'importing'` to `writeChunk`'s guard and to its last update (`ChunkChecksStatus = TRUE`). The rule holds: 321 distinct states with two chunks, 653 with four.
 
 Before 1164, at `0d80e817a` (`ChunkChecksStatus = FALSE`), the rule broke in five steps. The stall check failed a slow import between a chunk's reads and its batch; the batch checked only `written`, so it landed and added the chunk's cards to a failed import. With an archive between them, the late cards stayed active. Both paths were replayed on a local D1 with `writeImportChunk` held before its batch: ten cards landed in the failed import and nine stayed active after the archive; with the guard, none. "writes no chunk once the import has failed" in `apps/web/src/server/services/imports.test.ts` replays the first path.
 

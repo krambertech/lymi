@@ -1,4 +1,5 @@
 import type { LinkRefusal } from "@lymi/core";
+import type { AiConsent } from "../ai/consent";
 import type { Fetch } from "../ai/types";
 import { type HealthEnv, metered } from "../dependency-health";
 
@@ -394,6 +395,7 @@ export function readableHtml(html: string): string {
 export async function pageMarkdown(
   env: { AI?: Ai | undefined } & HealthEnv,
   page: FetchedPage,
+  _consent: AiConsent,
 ): Promise<string> {
   const ai = env.AI;
   if (!ai) throw new Error("Workers AI is not configured");

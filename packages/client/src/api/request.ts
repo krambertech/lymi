@@ -2,7 +2,6 @@ import { UpdateRequiredOut } from "@lymi/core";
 import { clientConfig } from "../config";
 import { requireUpdate } from "../update-required";
 
-/** The device's IANA zone. The server decides whether it moves the review day. */
 export function deviceTimezone(): string {
   return Intl.DateTimeFormat().resolvedOptions().timeZone || "UTC";
 }
@@ -11,25 +10,20 @@ export class ApiError extends Error {
   constructor(
     public status: number,
     message: string,
-    /** The server's `issues`: a schema's problems, or a service's reason for refusing. */
     public issues?: unknown,
-    /** The server's stable name for a refusal, such as `code_wrong`. */
     public code?: string,
   ) {
     super(message);
   }
 }
 
-/** A request the network never settled before its deadline; worth trying again later, not at once. */
 export class RequestTimeout extends ApiError {}
 
-/** A path on the product API as this app reaches it: the web's own origin, or the phone's base URL. */
 export function apiUrl(path: string): string {
   return `${clientConfig().baseUrl ?? ""}${path}`;
 }
 
 export type RequestOptions = RequestInit & {
-  /** Milliseconds before a request the network never settles ends as unreachable. */
   timeout?: number;
 };
 
@@ -47,7 +41,6 @@ export async function request<T>(path: string, options?: RequestOptions): Promis
   }
 }
 
-/** Aborts with the caller's signal or after `ms`; the phone's AbortSignal has neither `any` nor `timeout`. */
 function deadline(ms: number, outer?: AbortSignal | null) {
   const controller = new AbortController();
   let expired = false;
@@ -74,14 +67,12 @@ async function send<T>(path: string, init: RequestInit): Promise<T> {
   try {
     if (config.headers) session = await config.headers();
   } catch {
-    // An unreadable session is a signed-out one: the outboxes hold their queue for sign-in.
     throw new ApiError(401, config.messages.signIn());
   }
   let res: Response;
   try {
     res = await fetch(apiUrl(path), {
       ...init,
-      // A form body sets its own multipart boundary.
       headers: {
         ...(init.body instanceof FormData ? {} : { "content-type": "application/json" }),
         ...session,
@@ -90,7 +81,6 @@ async function send<T>(path: string, init: RequestInit): Promise<T> {
       credentials: config.credentials ?? "include",
     });
   } catch {
-    // Status 0 is what the grade outbox reads as offline.
     throw new ApiError(0, unreachable());
   }
   if (res.status === 401) throw new ApiError(401, config.messages.signIn());
@@ -114,10 +104,6 @@ function unreachable() {
   return clientConfig().messages.unreachable();
 }
 
-/**
- * The server's `error` is English and meant for integrations, so the learner sees the app's catalog
- * sentence instead; a 400 keeps the schema's own message, which is written for a person.
- */
 export function failureMessage(status: number, body: { issues?: unknown } | null): string {
   if (status === 400) {
     const issue: unknown = Array.isArray(body?.issues) ? body.issues[0] : undefined;
@@ -132,20 +118,14 @@ export function failureMessage(status: number, body: { issues?: unknown } | null
   return messages.failed();
 }
 
-/**
- * A refusal the outboxes wait out rather than drop: a lapsed session waits for sign-in, and a
- * release too old for the API waits for the update.
- */
 export function waitsToSend(status: number): boolean {
   return status === 401 || status === 426;
 }
 
-/** The sentence to show for a failed request, whatever was thrown. */
 export function errorMessage(error: unknown): string {
   return error instanceof ApiError ? error.message : unreachable();
 }
 
-/** One string the server attached to its refusal, such as why, or whom a link was for. */
 export function refusalDetail(error: unknown, key: string): string | null {
   const issues =
     error instanceof ApiError ? (error.issues as Record<string, unknown> | null) : null;
@@ -153,7 +133,6 @@ export function refusalDetail(error: unknown, key: string): string | null {
   return typeof value === "string" && value ? value : null;
 }
 
-/** The server's stable name for a refusal, such as `code_wrong`, or null. */
 export function refusalCode(error: unknown): string | null {
   return error instanceof ApiError ? (error.code ?? null) : null;
 }

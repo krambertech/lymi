@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { testAiConsent } from "../../test/ai-consent";
 import { testGateway } from "../../test/ai-gateway";
 import { createOpenAiTextProvider, OpenAiTextError } from "./openai-text";
 
@@ -13,7 +14,11 @@ function reply(content: string, finishReason = "stop") {
 describe("OpenAI text provider", () => {
   it("asks GPT-6 Luna at high effort for a strict structured reply", async () => {
     const request = reply('{"cards":[]}');
-    const provider = createOpenAiTextProvider({ ...testGateway, OPENAI_API_KEY: "key" }, request);
+    const provider = createOpenAiTextProvider(
+      { ...testGateway, OPENAI_API_KEY: "key" },
+      testAiConsent,
+      request,
+    );
 
     expect(await provider.complete({ instructions: "fill", input: "{}", schema })).toEqual({
       cards: [],
@@ -32,6 +37,7 @@ describe("OpenAI text provider", () => {
     const request = reply("{}");
     const provider = createOpenAiTextProvider(
       { ...testGateway, OPENAI_API_KEY: "key", OPENAI_TEXT_MODEL: "gpt-5-mini" },
+      testAiConsent,
       request,
     );
 
@@ -43,8 +49,11 @@ describe("OpenAI text provider", () => {
   it("asks the model a request names, and lets the environment override it", async () => {
     const request = reply("{}");
     const calls: string[] = [];
-    await createOpenAiTextProvider({ ...testGateway, OPENAI_API_KEY: "key" }, request, (call) =>
-      calls.push(call.model),
+    await createOpenAiTextProvider(
+      { ...testGateway, OPENAI_API_KEY: "key" },
+      testAiConsent,
+      request,
+      (call) => calls.push(call.model),
     ).complete({ instructions: "fill", input: "{}", schema, model: "gpt-6.1-terra" });
     expect(JSON.parse(String(request.mock.calls[0]?.[1]?.body)).model).toBe("gpt-6.1-terra");
     expect(calls).toEqual(["gpt-6.1-terra"]);
@@ -52,6 +61,7 @@ describe("OpenAI text provider", () => {
     const overridden = reply("{}");
     await createOpenAiTextProvider(
       { ...testGateway, OPENAI_API_KEY: "key", OPENAI_TEXT_MODEL: "gpt-5-mini" },
+      testAiConsent,
       overridden,
     ).complete({ instructions: "fill", input: "{}", schema, model: "gpt-6.1-terra" });
     expect(JSON.parse(String(overridden.mock.calls[0]?.[1]?.body)).model).toBe("gpt-5-mini");
@@ -60,6 +70,7 @@ describe("OpenAI text provider", () => {
   it("fails a reply that was cut off", async () => {
     const provider = createOpenAiTextProvider(
       { ...testGateway, OPENAI_API_KEY: "key" },
+      testAiConsent,
       reply('{"cards":', "length"),
     );
     await expect(
@@ -80,6 +91,7 @@ describe("OpenAI text provider", () => {
     const observe = vi.fn();
     const provider = createOpenAiTextProvider(
       { ...testGateway, OPENAI_API_KEY: "key" },
+      testAiConsent,
       request,
       observe,
     );
@@ -109,7 +121,7 @@ describe("OpenAI text provider", () => {
 
   it("does not make a request when the key is missing", async () => {
     const request = vi.fn();
-    const provider = createOpenAiTextProvider({}, request);
+    const provider = createOpenAiTextProvider({}, testAiConsent, request);
     await expect(
       provider.complete({ instructions: "fill", input: "{}", schema }),
     ).rejects.toBeInstanceOf(OpenAiTextError);

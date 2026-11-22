@@ -4,7 +4,7 @@ import { afterAll, beforeAll, describe, expect, it, vi } from "vitest";
 import type { TextProvider } from "../ai";
 import { type Db, schema } from "../db";
 import type { LessonReader } from "../lessons/reader";
-import { aiAllowed, aiAllowedForOwner, aiWithdrawn, updateAiConsent } from "./ai-consent";
+import { aiAllowed, aiConsentForOwner, aiConsentForRun, updateAiConsent } from "./ai-consent";
 import type { AnalyticsWriter } from "./analytics";
 import { addCards, requestEnrichment } from "./cards";
 import type { ServiceContext } from "./context";
@@ -74,7 +74,7 @@ describe("updateAiConsent", () => {
       .where(eq(schema.auditLog.userId, ctx.userId));
     // The stale answer left no row; the repeated no did, since it is a newer answer.
     expect(audits.filter((row) => row.action === "ai.consent")).toHaveLength(3);
-    expect(await aiWithdrawn(db, ctx.userId)).toBe(true);
+    expect(await aiConsentForRun(db, ctx.userId)).toBeNull();
   });
 
   it("is the learner's alone", async () => {
@@ -150,8 +150,10 @@ describe("other AI requests", () => {
     if (added?.status !== "added") throw new Error("not added");
     const { provider, complete } = model();
 
-    await expect(hintDraftFor(phone(ctx), added.card.id, provider)).rejects.toMatchObject(refused);
-    expect(await chooseDeck(phone(ctx), { term: "rahulik" }, provider)).toEqual({
+    await expect(hintDraftFor(phone(ctx), added.card.id, () => provider)).rejects.toMatchObject(
+      refused,
+    );
+    expect(await chooseDeck(phone(ctx), { term: "rahulik" }, () => provider)).toEqual({
       deckId: null,
       language: null,
     });
@@ -162,23 +164,23 @@ describe("other AI requests", () => {
     expect(complete).not.toHaveBeenCalled();
 
     await answer(ctx, true);
-    expect(await chooseDeck(phone(ctx), { term: "rahulik" }, provider)).toMatchObject({
+    expect(await chooseDeck(phone(ctx), { term: "rahulik" }, () => provider)).toMatchObject({
       language: "et",
     });
     expect(complete).toHaveBeenCalledOnce();
   });
 });
 
-describe("aiAllowedForOwner", () => {
+describe("aiConsentForOwner", () => {
   it("follows the owner's choice, waiting for a yes only on the owner's own phone", async () => {
     const owner = await learner(db, "ai-consent-owner", "Kateryna");
     const member = await learner(db, "ai-consent-member", "Mari");
-    expect(await aiAllowedForOwner(phone(owner), owner.userId)).toBe(false);
-    expect(await aiAllowedForOwner(owner, owner.userId)).toBe(true);
-    expect(await aiAllowedForOwner(phone(member), owner.userId)).toBe(true);
+    expect(await aiConsentForOwner(phone(owner), owner.userId)).toBeNull();
+    expect(await aiConsentForOwner(owner, owner.userId)).not.toBeNull();
+    expect(await aiConsentForOwner(phone(member), owner.userId)).not.toBeNull();
 
     await answer(owner, false);
-    expect(await aiAllowedForOwner(phone(member), owner.userId)).toBe(false);
-    expect(await aiAllowedForOwner({ ...owner, actor: "system" }, owner.userId)).toBe(false);
+    expect(await aiConsentForOwner(phone(member), owner.userId)).toBeNull();
+    expect(await aiConsentForOwner({ ...owner, actor: "system" }, owner.userId)).toBeNull();
   });
 });

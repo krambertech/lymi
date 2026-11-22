@@ -1,9 +1,10 @@
-import { and, eq, inArray, isNotNull, isNull, ne, or, sql } from "drizzle-orm";
+import { and, eq, isNotNull, isNull, ne, or, sql } from "drizzle-orm";
 import type { BaseSQLiteDatabase } from "drizzle-orm/sqlite-core";
+import { inArray } from "./in-list";
 import { cardImages, cards, deckPublications, decks } from "./schema/app";
 
 // oxlint-disable-next-line typescript/no-explicit-any -- both Workers pass their own typed D1 database.
-type MediaDb = BaseSQLiteDatabase<"async", any, any>;
+type MediaDb = Pick<BaseSQLiteDatabase<"async", any, any>, "select">;
 
 type Scope =
   | { publicationId: string; cardId?: never; cardIds?: never }

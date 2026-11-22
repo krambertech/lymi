@@ -17,6 +17,13 @@ import {
 import { and, asc, eq, gte, inArray, isNull, selectIn, sql } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import { schema } from "../db";
+import {
+  ankiConnectUploadKey,
+  type ObjectKey,
+  type ObjectStore,
+  putObject,
+  STORED,
+} from "../storage";
 import { track } from "./analytics";
 import { meaningText, pictureFiles, plainText, soundFiles, sourceText } from "./anki-connect-text";
 import { type CardImageStorage, storeImportedImage } from "./card-images";
@@ -81,8 +88,6 @@ export const MAX_FILES = 20;
 export const MAX_ACTIONS = 50;
 /** Search alternatives in one request, each a query; a popup sends one or two per entry. */
 export const MAX_SEARCHES = 100;
-/** Uploads wait here, in the imports bucket, until their note arrives or the hourly sweep. */
-const STASH = "anki-connect/";
 const STASH_HOURS = 1;
 
 const SUPPORTED = [
@@ -113,7 +118,11 @@ export type AnkiConnectDeps = {
   scope: Scope;
   enrichment: EnrichmentQueue | null;
   /** Where uploads wait, where recordings are kept, and, when configured, where pictures are. */
-  media: { stash: R2Bucket; audio: R2Bucket; pictures?: CardImageStorage | null } | null;
+  media: {
+    stash: ObjectStore<"IMPORTS">;
+    audio: ObjectStore<"AUDIO">;
+    pictures?: CardImageStorage | null;
+  } | null;
 };
 
 /** A refusal the client shows the learner as it is, so it is written for them. */
@@ -502,12 +511,15 @@ async function add(
   });
 }
 
-async function stashKey(userId: string, fileName: string) {
+async function stashKey(
+  userId: string,
+  fileName: string,
+): Promise<ObjectKey<"ankiConnectUploads">> {
   const digest = new Uint8Array(
     await crypto.subtle.digest("SHA-256", new TextEncoder().encode(fileName)),
   );
   const hex = [...digest.subarray(0, 16)].map((b) => b.toString(16).padStart(2, "0")).join("");
-  return `${STASH}${userId}/${hex}`;
+  return ankiConnectUploadKey(userId, hex);
 }
 
 /** What an upload is, by its bytes, or null for anything Lymi keeps neither as a clip nor as a picture. */
@@ -535,7 +547,7 @@ async function stash(
     return;
   }
   if (!uploadKind(bytes)) return;
-  await deps.media.stash.put(await stashKey(ctx.userId, fileName), bytes);
+  await putObject(deps.media.stash, await stashKey(ctx.userId, fileName), bytes);
 }
 
 async function storeMedia(
@@ -587,7 +599,7 @@ async function withFiles(
 async function firstUpload(
   ctx: ServiceContext,
   files: string[],
-  stashed: R2Bucket,
+  stashed: ObjectStore<"IMPORTS">,
 ): Promise<Uint8Array | null> {
   for (const fileName of files) {
     const object = await stashed.get(await stashKey(ctx.userId, fileName));
@@ -763,11 +775,14 @@ async function addTags(
 }
 
 /** Deletes uploads whose note never came. Run from the cron. */
-export async function sweepAnkiConnectUploads(stash: R2Bucket, at: Date) {
+export async function sweepAnkiConnectUploads(stash: ObjectStore<"IMPORTS">, at: Date) {
   const before = at.getTime() - STASH_HOURS * 60 * 60 * 1000;
   let cursor: string | undefined;
   do {
-    const page = await stash.list({ prefix: STASH, ...(cursor ? { cursor } : {}) });
+    const page = await stash.list({
+      prefix: STORED.ankiConnectUploads.prefix,
+      ...(cursor ? { cursor } : {}),
+    });
     const stale = page.objects.filter((o) => o.uploaded.getTime() < before).map((o) => o.key);
     if (stale.length > 0) await stash.delete(stale);
     cursor = page.truncated ? page.cursor : undefined;

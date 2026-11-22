@@ -1,15 +1,8 @@
-/**
- * Pinyin's closed set of toneless syllables, built from initials and finals with the spelling
- * rules: y and w for a missing initial, ü written u after j, q, x and y, and the contracted iu, ui
- * and un. A rare pairing the rules allow, such as fia, is accepted; it only ever widens a split.
- */
-
 const OPEN = ["a", "e", "ai", "ei", "ao", "ou", "an", "en", "ang", "eng"];
 const OPEN_ONG = [...OPEN, "ong"];
 const FRONT = ["i", "ie", "iao", "iu", "ian", "in", "ing"];
 const FRONT_FULL = [...FRONT, "ia", "iang"];
 
-/** The finals each class of initial takes, written as they follow a consonant. */
 const CLASSES: readonly [initials: string[], finals: string[]][] = [
   [
     ["b", "p", "m", "f"],
@@ -41,7 +34,6 @@ const CLASSES: readonly [initials: string[], finals: string[]][] = [
   ],
 ];
 
-/** Syllables with no initial, in their written forms. */
 const BARE = [
   ...[...OPEN, "o", "er"],
   ...["yi", "ya", "ye", "yao", "you", "yan", "yin", "yang", "ying", "yong", "yo"],
@@ -49,15 +41,18 @@ const BARE = [
   ...["yu", "yue", "yuan", "yun"],
 ];
 
-/** Interjections outside the table, accepted only as a whole word so they never cut another apart. */
+const SPELLED_BUT_NEVER_READ = new Set(
+  `be bou biu pe piu fe fai fao fi fie fiu fian fin fing din diang ten tiu tin tia tiang
+  no nia len chei shong ra rai rei ruai ruang sei`.split(/\s+/),
+);
+
 export const INTERJECTIONS: ReadonlySet<string> = new Set(["ê", "m", "n", "ng", "hm", "hng"]);
 
 export const SYLLABLES: ReadonlySet<string> = new Set([
   ...BARE,
   ...CLASSES.flatMap(([initials, finals]) =>
     initials.flatMap((initial) => finals.map((final) => initial + final)),
-  ),
+  ).filter((syllable) => !SPELLED_BUT_NEVER_READ.has(syllable)),
 ]);
 
-/** The longest syllable, zhuang, with an erhua r. */
 export const SYLLABLE_MAX = 7;

@@ -2,14 +2,23 @@ import { canSpeakTerm, LanguageTag, SPOKEN_TERM_MAX, speechContext, spokenText }
 import { and, eq, inArray, isNull, or } from "@lymi/core/db";
 import type { Card } from "@lymi/core/schema";
 import type { SpeechProvider } from "../ai";
+import type { AiConsent } from "../ai/consent";
 import { speechText } from "../ai/speech-text";
 import { type Db, schema } from "../db";
 import { type LeadInDependencies, leadInPolicy } from "../lead-ins";
-import { aiAllowedForOwner } from "./ai-consent";
+import {
+  cardAudioFolder,
+  cardAudioKey,
+  lockKey,
+  type ObjectKey,
+  type ObjectStore,
+  putObject,
+} from "../storage";
+import { aiConsentForOwner } from "./ai-consent";
 import { trackSpeechCall } from "./analytics";
 import { audit } from "./audit";
 import { getCard } from "./cards";
-import { type ServiceContext, ServiceError } from "./context";
+import { asOwner, type ServiceContext, ServiceError } from "./context";
 import { type SpokenLeadIn, settleLeadIn, withAudioLease } from "./lead-in";
 
 const MAX_AUDIO_BYTES = 8_000_000;
@@ -18,7 +27,7 @@ const AUDIO_CACHE_VERSION = 2;
 
 export interface AudioDependencies {
   leadIns?: LeadInDependencies | undefined;
-  bucket: R2Bucket;
+  bucket: ObjectStore<"AUDIO">;
   /** In preference order. Building a provider must not parse credentials or reach the network. */
   providers: (language: string) => SpeechProvider[];
   /** Serve only a clip a play would serve without voicing it, so a preload never spends. */
@@ -45,7 +54,9 @@ export async function pronunciationAudio(
     throw new ServiceError("unavailable", "The recorded pronunciation is temporarily unavailable");
   }
   // The card's words are its owner's, so the owner's choice decides whether they are voiced.
-  const deps = (await aiAllowedForOwner(ctx, card.userId)) ? sent : { ...sent, storedOnly: true };
+  const allowed = await aiConsentForOwner(ctx, card.userId);
+  const consent = sent.storedOnly ? null : allowed;
+  const deps = { ...sent, consent };
   const language = LanguageTag.safeParse(card.language);
   if (!language.success) {
     throw new ServiceError("invalid", "Pronunciation audio is only available for language cards");
@@ -71,11 +82,11 @@ export async function pronunciationAudio(
           input,
           deps.bucket,
           { writer, decide },
-          deps.storedOnly,
+          consent,
           ctx.analytics,
         )
       : undefined;
-  if (input && deps.storedOnly && !spoken)
+  if (input && !consent && !spoken)
     throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
   if (spoken) return generatedPronunciation(ctx, card, deps, providers, language.data, spoken);
   const context = speechContext(language.data);
@@ -94,7 +105,7 @@ export async function pronunciationAudio(
 async function generatedPronunciation(
   ctx: ServiceContext,
   card: Card,
-  deps: AudioDependencies,
+  deps: AudioDependencies & { consent: AiConsent | null },
   providers: SpeechProvider[],
   language: string,
   spoken?: SpokenLeadIn,
@@ -112,14 +123,14 @@ async function generatedPronunciation(
     throw new ServiceError("unavailable", "Pronunciation audio is not configured");
   }
 
-  if (spoken && !leased && !deps.storedOnly) {
+  if (spoken && !leased && deps.consent) {
     const key = await audioKey(card, preferred, spoken);
     const cached = await deps.bucket.get(key);
     if (cached) {
       if (card.audioKey !== key) await rememberAudioKey(ctx, card, key, false, preferred.provider);
       return cached;
     }
-    return withAudioLease(deps.bucket, `${key}.lock`, () =>
+    return withAudioLease(deps.bucket, lockKey(key), () =>
       generatedPronunciation(ctx, card, deps, providers, language, spoken, true),
     );
   }
@@ -132,8 +143,7 @@ async function generatedPronunciation(
       if (card.audioKey !== key) await rememberAudioKey(ctx, card, key, false, provider.provider);
       return cached;
     }
-    if (deps.storedOnly)
-      throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
+    if (!deps.consent) throw new ServiceError("not_found", "Pronunciation audio is not stored yet");
 
     let audio: Uint8Array;
     const text = speechText(spokenText(card));
@@ -148,13 +158,16 @@ async function generatedPronunciation(
         status,
       });
     try {
-      const generated = await provider.speech({
-        text,
-        language,
-        ...(takesLeadIn(provider) && spoken?.previousText
-          ? { previousText: spoken.previousText }
-          : {}),
-      });
+      const generated = await provider.speech(
+        {
+          text,
+          language,
+          ...(takesLeadIn(provider) && spoken?.previousText
+            ? { previousText: spoken.previousText }
+            : {}),
+        },
+        deps.consent,
+      );
       audio = await boundedAudio(generated);
       report(false);
     } catch (error) {
@@ -173,7 +186,7 @@ async function generatedPronunciation(
       continue;
     }
 
-    await deps.bucket.put(key, audio, {
+    await putObject(deps.bucket, key, audio, {
       httpMetadata: {
         contentType: provider.contentType,
         cacheControl: "private, max-age=31536000",
@@ -193,7 +206,7 @@ async function generatedPronunciation(
   }
 
   // A clip of the same kana from before lead-ins still beats no sound.
-  const fallbacks = spoken
+  const fallbacks: string[] = spoken
     ? await Promise.all(
         providers.flatMap((provider) => [
           audioKey(card, provider, spoken),
@@ -297,7 +310,7 @@ async function rememberAudioKey(
   if (!generated || !updated) return;
   // The key is a cache on the owner's card, whoever asked for the audio. ADR 0011.
   await audit(
-    { ...ctx, userId: card.userId, actor: "ai" },
+    { ...asOwner(ctx, card.userId), actor: "ai" },
     {
       entity: "card",
       action: "generate_audio",
@@ -315,7 +328,7 @@ const PURGES_PER_RUN = 90;
  * Clears the audio folders of deleted cards, recordings and superseded speech included, a bounded
  * number per cron run. A card R2 refused stays queued for the next run.
  */
-export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> {
+export async function purgeCardAudio(db: Db, bucket: ObjectStore<"AUDIO">): Promise<number> {
   const queued = await db
     .select({ cardId: schema.cardAudioPurges.cardId })
     .from(schema.cardAudioPurges)
@@ -328,7 +341,7 @@ export async function purgeCardAudio(db: Db, bucket: R2Bucket): Promise<number> 
         let cursor: string | undefined;
         do {
           const page = await bucket.list({
-            prefix: `cards/${next.cardId}/`,
+            prefix: cardAudioFolder(next.cardId),
             ...(cursor ? { cursor } : {}),
           });
           const keys = page.objects.map((object) => object.key);
@@ -357,7 +370,7 @@ async function audioKey(
   card: Card,
   provider: SpeechProvider,
   spoken?: SpokenLeadIn,
-): Promise<string> {
+): Promise<ObjectKey<"cardAudio">> {
   const bytes = new TextEncoder().encode(
     `${speechText(spokenText(card))}\u0000${provider.locale}\u0000${provider.provider}\u0000${provider.model}\u0000${provider.voice}${takesLeadIn(provider) && spoken?.previousText ? `\u0000${spoken.identity}\u0000${spoken.previousText}` : ""}`,
   );
@@ -366,5 +379,5 @@ async function audioKey(
     .slice(0, 16)
     .map((byte) => byte.toString(16).padStart(2, "0"))
     .join("");
-  return `cards/${card.id}/v${AUDIO_CACHE_VERSION}/${fingerprint}.${provider.extension}`;
+  return cardAudioKey(card.id, `v${AUDIO_CACHE_VERSION}/${fingerprint}.${provider.extension}`);
 }

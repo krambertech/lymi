@@ -1,4 +1,5 @@
 import { createOpenAiTextProvider, createSpeechProviders, type SpeechProvider } from "./ai";
+import { consentForCanary } from "./ai/consent";
 import {
   type Dependency,
   type DependencyOutcome,
@@ -64,6 +65,7 @@ function checks(env: Bindings, hourly: boolean): Check[] {
         if (!env.OPENAI_API_KEY?.trim()) throw new CheckFailed("failed");
         const reply = await createOpenAiTextProvider(
           env,
+          consentForCanary(),
           meteredFetch(env, "openai_text", "canary"),
         ).complete({
           instructions: "This is a health check.",
@@ -86,18 +88,23 @@ function checks(env: Bindings, hourly: boolean): Check[] {
       dependency: "anthropic",
       run: async () => {
         if (!env.ANTHROPIC_API_KEY?.trim()) throw new CheckFailed("failed");
-        await pingLessonReader(env, meteredFetch(env, "anthropic", "canary"));
+        await pingLessonReader(env, consentForCanary(), meteredFetch(env, "anthropic", "canary"));
       },
     },
     {
       dependency: "workers_ai",
       run: async () => {
-        const score = await keepScore(decisionModel(env, "canary"), "English", {
-          id: "canary",
-          term: "house",
-          meaning: "a building people live in",
-          kind: "word",
-        });
+        const score = await keepScore(
+          decisionModel(env, "canary"),
+          "English",
+          {
+            id: "canary",
+            term: "house",
+            meaning: "a building people live in",
+            kind: "word",
+          },
+          consentForCanary(),
+        );
         if (score === null) throw new CheckFailed("failed");
       },
     },
@@ -113,7 +120,7 @@ function checks(env: Bindings, hourly: boolean): Check[] {
         list.push({
           dependency: SPEECH[provider.provider],
           run: async () => {
-            const response = await provider.speech({ text: "ok", language });
+            const response = await provider.speech({ text: "ok", language }, consentForCanary());
             await response.body?.cancel();
           },
         });

@@ -1,4 +1,5 @@
 import { describe, expect, it, vi } from "vitest";
+import { testAiConsent } from "../../test/ai-consent";
 import { testGateway } from "../../test/ai-gateway";
 import { createElevenLabsSpeechProvider, ElevenLabsSpeechError } from "./elevenlabs-speech";
 
@@ -20,7 +21,7 @@ describe("ElevenLabs speech", () => {
       "jGja51dd7gcoK0zkxeyg",
       request,
     );
-    await provider.speech({ text: "kooli", language });
+    await provider.speech({ text: "kooli", language }, testAiConsent);
     expect(JSON.parse(String(request.mock.calls[0]?.[1]?.body))).toEqual({
       text: "kooli",
       model_id: "eleven_v4",
@@ -38,7 +39,9 @@ describe("ElevenLabs speech", () => {
       "voice",
       request,
     );
-    await expect(provider.speech({ text: "kooli", language: "et" })).rejects.toMatchObject({
+    await expect(
+      provider.speech({ text: "kooli", language: "et" }, testAiConsent),
+    ).rejects.toMatchObject({
       name: "ElevenLabsSpeechError",
       status: 403,
       message: "ElevenLabs speech request failed",
@@ -53,9 +56,9 @@ describe("ElevenLabs speech", () => {
       "voice",
       async () => Response.json({ error: "bad" }),
     );
-    await expect(provider.speech({ text: "kooli", language: "et" })).rejects.toBeInstanceOf(
-      ElevenLabsSpeechError,
-    );
+    await expect(
+      provider.speech({ text: "kooli", language: "et" }, testAiConsent),
+    ).rejects.toBeInstanceOf(ElevenLabsSpeechError);
   });
 
   it("sends a lead-in only as preceding text, without changing the requested kana", async () => {
@@ -68,7 +71,7 @@ describe("ElevenLabs speech", () => {
       "ja-JP",
       "Hiroki",
       request,
-    ).speech({ text: "はし", language: "ja", previousText: "川を渡る" });
+    ).speech({ text: "はし", language: "ja", previousText: "川を渡る" }, testAiConsent);
     const body = JSON.parse(String(request.mock.calls[0]?.[1]?.body));
     expect(body.text).toBe("はし");
     expect(body.previous_text).toBe("川を渡る");

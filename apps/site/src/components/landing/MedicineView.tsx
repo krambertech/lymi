@@ -1,6 +1,7 @@
 import { msg } from "@lingui/core/macro";
 import { Plural, Trans, useLingui } from "@lingui/react/macro";
 import { ArrowRight, RotateCcw, Star } from "lucide-react";
+import type { EnglishOnlyPath } from "../../lib/routes";
 import { Added, AssistantChat } from "./AssistantChat";
 import { WorksWith } from "./AssistantMarks";
 import type { SampleCard } from "./cards";
@@ -277,7 +278,7 @@ export function MedicineView() {
   );
 }
 
-function GuideLink({ href, label }: { href: string; label: React.ReactNode }) {
+function GuideLink({ href, label }: { href: EnglishOnlyPath; label: React.ReactNode }) {
   return (
     <a
       href={href}

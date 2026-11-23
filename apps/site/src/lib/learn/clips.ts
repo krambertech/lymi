@@ -3452,6 +3452,9 @@ export const OBJECT_FIXES = [
   { wrong: "Osta pileti!", right: "Osta pilet!" },
 ] as const;
 
+export const OBJECT_FIX_ANSWERS: Record<string, readonly [string, ...string[]]> =
+  Object.fromEntries(OBJECT_FIXES.map(({ right }) => [right, [right]]));
+
 export const OBJECT_DIALOGUE = {
   "d-teenindaja-1": { text: "Tere! Mida te soovite?", voice: "second" },
   "d-sina-1": "Ma võtan ühe koogi, palun.",

@@ -1,5 +1,5 @@
 import { msg } from "@lingui/core/macro";
-import { OBJECT_ANSWERS } from "../../../lib/learn/clips";
+import { OBJECT_ANSWERS, OBJECT_FIX_ANSWERS } from "../../../lib/learn/clips";
 import type { ChoiceDrill, DrillBank, DrillOption } from "../../../lib/learn/drill";
 
 const SOME = msg`Some of it: the partitive.`;
@@ -72,7 +72,7 @@ export const DRILLS: DrillBank = {
       id: "fix-one-loaf",
       rule: "some",
       wrong: "Ma ostsin ühe leiba.",
-      answers: ["Ma ostsin ühe leiva."],
+      answers: OBJECT_FIX_ANSWERS["Ma ostsin ühe leiva."],
       say: "Ma ostsin ühe leiva.",
       explain: msg`One whole loaf takes the genitive: <et>ühe leiva</et>.`,
     },
@@ -139,7 +139,7 @@ export const DRILLS: DrillBank = {
       id: "fix-read-through",
       rule: "done",
       wrong: "Ma lugesin raamatut läbi.",
-      answers: ["Ma lugesin raamatu läbi."],
+      answers: OBJECT_FIX_ANSWERS["Ma lugesin raamatu läbi."],
       say: "Ma lugesin raamatu läbi.",
       explain: msg`<et>Läbi</et> says to the end, so the genitive: <et>raamatu</et>.`,
     },
@@ -148,7 +148,7 @@ export const DRILLS: DrillBank = {
       id: "fix-ate-up",
       rule: "done",
       wrong: "Ma sõin kooki ära.",
-      answers: ["Ma sõin koogi ära."],
+      answers: OBJECT_FIX_ANSWERS["Ma sõin koogi ära."],
       say: "Ma sõin koogi ära.",
       explain: msg`<et>Ära</et> says all of it, so the genitive: <et>koogi</et>.`,
     },
@@ -196,7 +196,7 @@ export const DRILLS: DrillBank = {
       id: "fix-looking-key",
       rule: "always",
       wrong: "Ma otsin võtme.",
-      answers: ["Ma otsin võtit."],
+      answers: OBJECT_FIX_ANSWERS["Ma otsin võtit."],
       say: "Ma otsin võtit.",
       explain: msg`On its own, <et>otsima</et> takes the partitive: <et>võtit</et>.`,
     },
@@ -205,7 +205,7 @@ export const DRILLS: DrillBank = {
       id: "fix-waiting-friend",
       rule: "always",
       wrong: "Ma ootan sõbra.",
-      answers: ["Ma ootan sõpra."],
+      answers: OBJECT_FIX_ANSWERS["Ma ootan sõpra."],
       say: "Ma ootan sõpra.",
       explain: msg`On its own, <et>ootama</et> takes the partitive: <et>sõpra</et>.`,
     },
@@ -246,7 +246,7 @@ export const DRILLS: DrillBank = {
       id: "fix-command-ticket",
       rule: "command",
       wrong: "Osta pileti!",
-      answers: ["Osta pilet!"],
+      answers: OBJECT_FIX_ANSWERS["Osta pilet!"],
       say: "Osta pilet!",
       explain: msg`A command for the whole thing takes the nominative: <et>pilet</et>.`,
     },

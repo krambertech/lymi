@@ -10,6 +10,7 @@ import {
   OBJECT_CONVERSATION,
   OBJECT_DIALOGUE,
   OBJECT_FIXES,
+  OBJECT_FIX_ANSWERS,
   OBJECT_FORM_QUIZ,
   OBJECT_FOUND,
   OBJECT_HEARD,
@@ -519,7 +520,7 @@ function useContent() {
       kind: "fix",
       id: `fix-${clipId(item.right)}`,
       wrong: item.wrong,
-      answers: [item.right],
+      answers: OBJECT_FIX_ANSWERS[item.right] ?? [item.right],
       src: src(item.right),
       explain: fixWhy[item.right],
     }));
@@ -797,7 +798,8 @@ export function RaamatutVoiRaamatuLesson() {
         </Trans>,
         <Trans key="2">
           The whole thing, done or sure to get done: for a noun, usually the genitive, often with{" "}
-          <b lang="et">läbi</b> or <b lang="et">ära</b>. <b lang="et">Ma lugesin raamatu läbi. Ma loen raamatu läbi.</b>
+          <b lang="et">läbi</b> or <b lang="et">ära</b>.{" "}
+          <b lang="et">Ma lugesin raamatu läbi. Ma loen raamatu läbi.</b>
         </Trans>,
         <Trans key="3">
           After <b lang="et">ei</b>, always the partitive: <b lang="et">Ma ei ostnud piletit.</b> On
@@ -1012,8 +1014,8 @@ export function RaamatutVoiRaamatuLesson() {
                 <p>
                   <Trans>
                     In a command about a whole thing, a noun object usually takes the nominative,
-                    the form a dictionary lists: <Word w="Osta pilet!" /> Not <b lang="et">pileti</b>. Lesson{" "}
-                    {commands} teaches the command itself.
+                    the form a dictionary lists: <Word w="Osta pilet!" /> Not{" "}
+                    <b lang="et">pileti</b>. Lesson {commands} teaches the command itself.
                   </Trans>
                 </p>
                 <p>

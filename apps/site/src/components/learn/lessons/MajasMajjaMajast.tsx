@@ -9,18 +9,26 @@ import {
   clipId,
   clipUrl,
   INNER_DIALOGUE,
+  INNER_FIX,
   INNER_PLACES,
+  INNER_SAY,
   INNER_SENTENCES,
+  INNER_TALK,
+  INNER_TYPED,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { shuffle, twoCycles } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { type KeyItem, Keys, Panel } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
 import { Paradigm } from "../Paradigm";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz } from "../Quiz";
 import { Scene } from "../Scene";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Sort } from "../Sort";
 import { PlayMark } from "../Sound";
 import { Word } from "../Word";
@@ -53,6 +61,7 @@ const FORM_MEANS: Record<string, MessageDescriptor> = {
   haiglas: msg`in a hospital`,
   haiglasse: msg`to the hospital`,
   haiglast: msg`from the hospital`,
+  kontor: msg`office`,
   kontoris: msg`at the office`,
   kontorisse: msg`to the office`,
   kontorist: msg`from the office`,
@@ -82,7 +91,7 @@ const FORM_MEANS: Record<string, MessageDescriptor> = {
   majast: msg`out of the house`,
   kodu: msg`home`,
   kodus: msg`at home`,
-  koju: msg`home, to home`,
+  koju: msg`home, going home`,
   kodust: msg`from home`,
   Eestist: msg`from Estonia`,
   Soomest: msg`from Finland`,
@@ -273,12 +282,161 @@ export const shuffledDirections = (): Direction[] => shuffle([...DIRECTIONS]);
 
 type HeardItem = ChoiceItem & { form: string; pair: readonly [string, string] };
 
+export function typedItems(i18n: I18n): FormItem[] {
+  return INNER_TYPED.map(({ place, way, also }) => {
+    const forms = placeOf(place);
+    const form = forms[way];
+    const long = way === "kuhu" && "long" in forms ? [forms.long] : [];
+    return {
+      base: place,
+      gloss: i18n._(FORM_MEANS[place] as MessageDescriptor),
+      cue: `${way}?`,
+      cueLang: "et",
+      answers: [form, ...long, ...also],
+      src: wordSrc(form),
+      explain: i18n._(FORM_MEANS[form] as MessageDescriptor),
+    };
+  });
+}
+
+const SAY_MEANS: Record<(typeof INNER_SAY)[number]["id"], MessageDescriptor> = {
+  tartusse: msg`I’m going to Tartu.`,
+  parit: msg`Where are you from?`,
+  poest: msg`I’m coming from the shop.`,
+  majja: msg`The cat goes into the house.`,
+  linna: msg`We’re going to town.`,
+  eestist: msg`I’m from Estonia.`,
+};
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return INNER_SAY.map(({ id, said: text, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_MEANS[id]),
+    src: wordSrc(text),
+    answers: [text, ...also],
+  }));
+}
+
+function FixWhy({ id }: { id: (typeof INNER_FIX)[number]["id"] }) {
+  switch (id) {
+    case "tartusse":
+      return (
+        <Trans>
+          Going there answers <b lang="et">kuhu</b>: <b lang="et">Tartusse</b>.
+        </Trans>
+      );
+    case "poest":
+      return (
+        <Trans>
+          Coming from there answers <b lang="et">kust</b>: <b lang="et">poest</b>.
+        </Trans>
+      );
+    case "soomest":
+      return (
+        <Trans>
+          <b lang="et">Pärit</b> takes the form for where from: <b lang="et">Soomest</b>.
+        </Trans>
+      );
+    case "majas":
+      return (
+        <Trans>
+          Being there answers <b lang="et">kus</b>: <b lang="et">majas</b>.
+        </Trans>
+      );
+    case "koju":
+      return (
+        <Trans>
+          Going home is <b lang="et">koju</b>.
+        </Trans>
+      );
+    case "kodus":
+      return (
+        <Trans>
+          Being at home is <b lang="et">kodus</b>.
+        </Trans>
+      );
+  }
+}
+
+const FIX_MEANS: Record<(typeof INNER_FIX)[number]["id"], MessageDescriptor> = {
+  tartusse: msg`I’m going to Tartu.`,
+  poest: msg`I’m coming from the shop.`,
+  soomest: msg`I’m from Finland.`,
+  majas: msg`The cat is in the house.`,
+  koju: msg`We’re going home.`,
+  kodus: msg`I’m at home.`,
+};
+
+export function fixItems(i18n: I18n): FixItem[] {
+  return INNER_FIX.map(({ id, wrong, right, also }) => ({
+    kind: "fix",
+    id: `fix-${id}`,
+    wrong,
+    prompt: i18n._(FIX_MEANS[id]),
+    answers: [right, ...also],
+    src: wordSrc(right),
+    explain: <FixWhy id={id} />,
+  }));
+}
+
+function useTalkQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    {
+      kind: "short",
+      id: "from",
+      ask: t`Where is Jaan coming from? Write the place in Estonian, with its ending.`,
+      answers: ["haiglast"],
+      line: 2,
+    },
+    {
+      id: "going",
+      ask: t`Where is Jaan going?`,
+      options: [
+        { id: "shop", label: t`To the shop` },
+        { id: "home", label: t`Home` },
+        { id: "hospital", label: t`To the hospital` },
+      ],
+      answer: "home",
+      line: 4,
+    },
+    { kind: "truefalse", id: "cafe", ask: t`Mari is going to a café.`, answer: true, line: 6 },
+    {
+      id: "tomorrow",
+      ask: t`Where is Mari going tomorrow?`,
+      options: [
+        { id: "tallinn", label: t`To Tallinn` },
+        { id: "tartu", label: t`To Tartu` },
+        { id: "parnu", label: t`To Pärnu` },
+      ],
+      answer: "tartu",
+      line: 8,
+    },
+    {
+      kind: "truefalse",
+      id: "mum",
+      ask: t`Mari’s mum lives in Tallinn.`,
+      answer: false,
+      line: 9,
+    },
+    {
+      kind: "short",
+      id: "parit",
+      ask: t`Where is Mari from? Write the place in Estonian, with its ending.`,
+      answers: ["Pärnust"],
+      line: 11,
+    },
+  ];
+}
+
 export function MajasMajjaMajastLesson() {
   const { t, i18n } = useLingui();
   const places = lessonBySlug("kohad")?.n;
   const questions = lessonBySlug("kusimused")?.n;
   const threeForms = lessonBySlug("pohivormid")?.n;
   const onto = lessonBySlug("laual-lauale-laualt")?.n;
+  const talkQuestions = useTalkQuestions();
 
   const keyOf = (label: string, sub: React.ReactNode, id: Id, tip?: React.ReactNode): KeyItem => ({
     label,
@@ -440,8 +598,8 @@ export function MajasMajjaMajastLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">2 quizzes and a conversation</Trans>,
+        <Trans key="m">20 minutes</Trans>,
+        <Trans key="q">7 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -876,6 +1034,110 @@ export function MajasMajjaMajastLesson() {
           ),
         },
         {
+          id: "make-form",
+          title: t`Making the form`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round gives a place and a question. Type the form that answers it:{" "}
+                    <b lang="et">kus</b> takes <b lang="et">-s</b>, <b lang="et">kuhu</b> takes{" "}
+                    <b lang="et">-sse</b> or a short form, and <b lang="et">kust</b> takes{" "}
+                    <b lang="et">-st</b>.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="type-place"
+                title={<Trans>Type the form</Trans>}
+                items={typedItems(i18n)}
+                rounds={8}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All eight typed right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                round={(props) => <FormRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. Ask yourself first: where, where to or where
+                    from?
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-place"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence has one place in the wrong form. Tap it, then write the right
+                    form.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-place"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "street",
           title: t`Talk: in the street`,
           quiz: true,
@@ -900,6 +1162,28 @@ export function MajasMajjaMajastLesson() {
                 }
                 them={t`Mari`}
                 turns={dialogue}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listen: where to and where from`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>Mari meets Jaan in the street. Read the questions, then listen.</Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="mari-jaan-street"
+                title={<Trans>Listen: Mari meets Jaan</Trans>}
+                clip="c-street"
+                turns={INNER_TALK.turns}
+                names={{ third: "Mari", fourth: "Jaan" }}
+                questions={talkQuestions}
               />
             </>
           ),

@@ -46,6 +46,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
     reason: "-l against the bare form is the lesson: Emal against Ema, Jaanil against Jaan.",
   },
   {
+    lesson: "peal-all-taga",
+    quiz: "where-is-miisu",
+    reason:
+      "Each gap offers one place word's kus, kuhu and kust forms: peal against peale and pealt is the lesson, and the verb before each gap decides it.",
+  },
+  {
     lesson: "omastav",
     quiz: "kati-family",
     reason:

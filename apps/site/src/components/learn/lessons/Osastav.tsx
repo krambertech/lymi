@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { useMemo } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -11,16 +11,20 @@ import {
   OSASTAV_COUNT,
   OSASTAV_COUNTED,
   OSASTAV_EXCHANGES,
+  OSASTAV_FIX,
   OSASTAV_FOOD_QUIZ,
   OSASTAV_NO,
   OSASTAV_PASSAGES,
   OSASTAV_POLE_QUIZ,
+  OSASTAV_SAY,
   OSASTAV_SOME,
+  OSASTAV_TALK,
   PARTITIVE_NOUNS,
   type PartitiveNoun,
 } from "../../../lib/learn/clips";
 import { shuffle } from "../../../lib/learn/quiz";
 import { type KeyItem, Keys, ListenRows, Panel, type RowItem } from "../Explore";
+import { type FixItem, FixRound, fixRecall } from "../FixRound";
 import { type FormItem, FormRound, formRecall } from "../FormRound";
 import { GapPassage, type GapItem as PassageGap } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
@@ -28,6 +32,7 @@ import { Aside, LessonView, Prose } from "../LessonView";
 import { Paradigm, type ParadigmRow } from "../Paradigm";
 import { Listening, type PassageQuestion } from "../Passage";
 import { type GapItem, GapRound, Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Word } from "../Word";
 
 const SLUG = "osastav";
@@ -100,7 +105,7 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Tal pole last.": msg`He or she doesn’t have a child.`,
   "Neil on maja.": msg`They have a house.`,
   "Neil pole maja.": msg`They don’t have a house.`,
-  "Laual on leib.": msg`There’s bread on the table.`,
+  "Laual on leib.": msg`There’s a loaf of bread on the table.`,
   "Laual pole leiba.": msg`There’s no bread on the table.`,
   "Toas on laud.": msg`There’s a table in the room.`,
   "Toas pole lauda.": msg`There’s no table in the room.`,
@@ -398,7 +403,7 @@ function useContent() {
       options: ["kohvik", "kohvikut"],
       why: (
         <Trans>
-          What is there keeps its nominative: <b lang="et">Turul on kohvik</b>.
+          A counted thing that is there keeps its nominative: <b lang="et">Turul on kohvik</b>.
         </Trans>
       ),
     },
@@ -477,16 +482,142 @@ function useContent() {
   return { gaps, voice };
 }
 
+const SAY_MEANS: Record<(typeof OSASTAV_SAY)[number]["id"], MessageDescriptor> = {
+  kassi: msg`I have two cats.`,
+  tass: msg`A cup of coffee, please.`,
+  leiba: msg`There’s no bread on the table.`,
+  last: msg`How many children do you have?`,
+  vett: msg`He or she drinks water.`,
+  eurot: msg`Bread costs three euros.`,
+};
+
+export function sayItems(i18n: I18n): SentenceItem[] {
+  return OSASTAV_SAY.map(({ id, said, also }) => ({
+    kind: "translate",
+    id: `say-${id}`,
+    prompt: i18n._(SAY_MEANS[id]),
+    src: src(said),
+    answers: [said, ...also],
+  }));
+}
+
+function FixWhy({ id }: { id: (typeof OSASTAV_FIX)[number]["id"] }) {
+  switch (id) {
+    case "kassi":
+      return (
+        <Trans>
+          After a number from two up, the partitive: <b lang="et">kaks kassi</b>.
+        </Trans>
+      );
+    case "kohvi":
+      return (
+        <Trans>
+          Someone drinks some of it, so the partitive: <b lang="et">kohvi</b>.
+        </Trans>
+      );
+    case "leiba":
+      return (
+        <Trans>
+          After <b lang="et">pole</b>, what isn’t there takes the partitive: <b lang="et">leiba</b>.
+        </Trans>
+      );
+    case "tass":
+      return (
+        <Trans>
+          After an amount, the partitive: <b lang="et">tass kohvi</b>.
+        </Trans>
+      );
+    case "kass":
+      return (
+        <Trans>
+          After <b lang="et">üks</b> on its own, the nominative: <b lang="et">üks kass</b>.
+        </Trans>
+      );
+    case "last":
+      return (
+        <Trans>
+          After <b lang="et">mitu</b>, the partitive: <b lang="et">mitu last</b>.
+        </Trans>
+      );
+  }
+}
+
+const FIX_MEANS: Record<(typeof OSASTAV_FIX)[number]["id"], MessageDescriptor> = {
+  kassi: msg`I have two cats.`,
+  kohvi: msg`I drink coffee.`,
+  leiba: msg`There’s no bread on the table.`,
+  tass: msg`A cup of coffee, please.`,
+  kass: msg`We have one cat.`,
+  last: msg`How many children do you have?`,
+};
+
+export function fixItems(i18n: I18n): FixItem[] {
+  return OSASTAV_FIX.map(({ id, wrong, right }) => ({
+    kind: "fix",
+    id: `fix-${id}`,
+    wrong,
+    prompt: i18n._(FIX_MEANS[id]),
+    answers: [right],
+    src: src(right),
+    explain: <FixWhy id={id} />,
+  }));
+}
+
+function useTalkQuestions(): PassageQuestion[] {
+  const { t } = useLingui();
+  return [
+    { kind: "truefalse", id: "milk", ask: t`There’s milk at home.`, answer: false, line: 1 },
+    {
+      id: "home",
+      ask: t`What is there at home?`,
+      options: [
+        { id: "bread", label: t`Bread` },
+        { id: "water", label: t`Water` },
+        { id: "milk", label: t`Milk` },
+      ],
+      answer: "water",
+      line: 2,
+    },
+    {
+      kind: "short",
+      id: "cheese",
+      ask: t`How much cheese is there? Write it in Estonian.`,
+      answers: ["natuke", "natuke juustu"],
+      line: 5,
+    },
+    {
+      id: "going",
+      ask: t`Where is Mari going?`,
+      options: [
+        { id: "work", label: t`To work` },
+        { id: "market", label: t`To the market` },
+        { id: "shop", label: t`To the shop` },
+      ],
+      answer: "shop",
+      line: 7,
+    },
+    {
+      kind: "short",
+      id: "coffee",
+      ask: t`How much coffee does Jaan need? Write it in Estonian.`,
+      answers: ["kilo", "kilo kohvi", "üks kilo"],
+      line: 10,
+    },
+    { kind: "truefalse", id: "money", ask: t`Jaan has ten euros.`, answer: true, line: 14 },
+  ];
+}
+
 export function OsastavLesson() {
   const { t, i18n } = useLingui();
   const content = useContent();
+  const talkQuestions = useTalkQuestions();
   const numbers = lessonBySlug("numbrid")?.n;
   const negation = lessonBySlug("eitus")?.n;
   const questions = lessonBySlug("kusimused")?.n;
   const present = lessonBySlug("olevik")?.n;
   const forms = lessonBySlug("pohivormid")?.n;
   const have = lessonBySlug("mul-on")?.n;
-  const object = LESSONS.find((lesson) => lesson.et === "Raamatut või raamatu")?.n;
+  const object = lessonBySlug("raamatut-voi-raamatu")?.n;
 
   const countItems = useMemo<CountItem[]>(
     () =>
@@ -610,8 +741,8 @@ export function OsastavLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">16 minutes</Trans>,
-        <Trans key="q">6 exercises</Trans>,
+        <Trans key="m">22 minutes</Trans>,
+        <Trans key="q">9 exercises</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -949,6 +1080,74 @@ export function OsastavLesson() {
           ),
         },
         {
+          id: "say-it",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write each sentence in Estonian. After a number from two up, an amount,{" "}
+                    <b lang="et">mitu</b> or <b lang="et">pole</b>, and for food or drink someone
+                    eats, drinks or wants, the partitive.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="say-partitive"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={sayItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six written right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Read the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "fix",
+          title: t`Fix the sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence has one noun in the wrong form. Tap it, then write the right form.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="fix-partitive"
+                title={<Trans>Find and fix the mistake</Trans>}
+                items={fixItems(i18n)}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six found and fixed.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Look again at the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Go through the sections above once more, then try again.</Trans>
+                  )
+                }
+                recall={fixRecall}
+                round={(props) => <FixRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
           id: "voice",
           title: t`A voice message from the market`,
           quiz: true,
@@ -968,6 +1167,32 @@ export function OsastavLesson() {
                 clip="p-jaan"
                 sentences={OSASTAV_PASSAGES.jaan}
                 questions={content.voice}
+              />
+            </>
+          ),
+        },
+        {
+          id: "shopping",
+          title: t`Listen: a shopping list`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Mari and Jaan check what they have at home. With <b lang="et">on</b>, food or
+                    drink you have some of, uncounted, takes the partitive too:{" "}
+                    <b lang="et">meil on vett</b>. Read the questions, then listen.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="what-we-need"
+                title={<Trans>Listen: Mari and Jaan at home</Trans>}
+                clip="c-shopping"
+                turns={OSASTAV_TALK.turns}
+                names={{ third: "Mari", fourth: "Jaan" }}
+                questions={talkQuestions}
               />
             </>
           ),

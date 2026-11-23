@@ -122,11 +122,11 @@ msgstr "holy; a holiday"
 msgid "In town"
 msgstr "In town"
 
-msgid "Jaan is at home today."
-msgstr "Jaan is at home today."
-
 msgid "Jaan is at work today."
 msgstr "Jaan is at work today."
+
+msgid "Jaan is at work tomorrow."
+msgstr "Jaan is at work tomorrow."
 
 msgid "Jaan tells Mari what day it is and where he is this week."
 msgstr "Jaan tells Mari what day it is and where he is this week."
@@ -350,8 +350,8 @@ msgstr "What day is the day after tomorrow?"
 msgid "What day it is"
 msgstr "What day it is"
 
-msgid "Where is Jaan tomorrow?"
-msgstr "Where is Jaan tomorrow?"
+msgid "Where is Jaan the day after tomorrow?"
+msgstr "Where is Jaan the day after tomorrow?"
 
 msgid "Which day did you hear?"
 msgstr "Which day did you hear?"

@@ -122,11 +122,11 @@ msgstr "святой; праздник"
 msgid "In town"
 msgstr "В городе"
 
-msgid "Jaan is at home today."
-msgstr "Яан сегодня дома."
-
 msgid "Jaan is at work today."
 msgstr "Яан сегодня на работе."
+
+msgid "Jaan is at work tomorrow."
+msgstr "Яан завтра на работе."
 
 msgid "Jaan tells Mari what day it is and where he is this week."
 msgstr "Яан рассказывает Мари, какой сегодня день и где он на этой неделе."
@@ -350,8 +350,8 @@ msgstr "Какой день будет послезавтра?"
 msgid "What day it is"
 msgstr "Какой сегодня день"
 
-msgid "Where is Jaan tomorrow?"
-msgstr "Где Яан будет завтра?"
+msgid "Where is Jaan the day after tomorrow?"
+msgstr "Где Яан будет послезавтра?"
 
 msgid "Which day did you hear?"
 msgstr "Какой день прозвучал?"

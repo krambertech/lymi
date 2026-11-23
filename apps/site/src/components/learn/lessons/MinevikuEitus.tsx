@@ -44,7 +44,6 @@ import { Timeline, type TimelinePoint } from "../Timeline";
 import { Word } from "../Word";
 
 const SLUG = "mineviku-eitus";
-/** A clip by what it says. */
 const src = (text: string) => clipUrl(SLUG, clipId(text));
 
 type Pronoun = (typeof PAST_NO_PERSONS)[number];
@@ -52,7 +51,6 @@ type TableVerb = (typeof PAST_NO_TABLE)[number];
 type WholeVerb = (typeof NUD_WHOLE)[number];
 type Built = VerbForms & { pattern: "da" | "ta" | "la" };
 
-/** An ending in running text: marked as Estonian, and never broken after its hyphen. */
 function End({ children }: { children: ReactNode }) {
   return (
     <span lang="et" className="whitespace-nowrap">
@@ -61,17 +59,14 @@ function End({ children }: { children: ReactNode }) {
   );
 }
 
-/** Keeps a Word and the full stop after it on one line, so the stop never starts a line. */
 function Nowrap({ children }: { children: ReactNode }) {
   return <span className="whitespace-nowrap">{children}</span>;
 }
 
-/** An Estonian word in running text that needs no card, such as a pronoun. */
 function Et({ children }: { children: ReactNode }) {
   return <span lang="et">{children}</span>;
 }
 
-/** What each verb means, by its -ma form. */
 const MEANS: Record<string, MessageDescriptor> = {
   elama: msg`to live`,
   lugema: msg`to read`,
@@ -148,7 +143,6 @@ const GLOSSARY: Glossary = {
   "mul polnud aega": { en: msg`I had no time`, note: msg`Mul pole aega, in the past.` },
 };
 
-/** What each line of the timeline means. */
 const TIME_LABELS: Record<(typeof PAST_NO_TIMELINE)[number]["id"], MessageDescriptor> = {
   "last-week": msg`Last week`,
   yesterday: msg`Yesterday`,
@@ -160,7 +154,6 @@ const TIME_MEANS: Record<(typeof PAST_NO_TIMELINE)[number]["id"], MessageDescrip
   today: msg`Today I’m not working.`,
 };
 
-/** How the -nud form follows from each kind of -da infinitive, after a press or an answer. */
 function NudFrom({ verb }: { verb: Built }) {
   const da = daForm(verb);
   const nud = nudForm(verb);
@@ -173,7 +166,6 @@ function NudFrom({ verb }: { verb: Built }) {
   );
 }
 
-/** Each person in the past, with yes and with no, for one verb. */
 function PersonTable() {
   const { t, i18n } = useLingui();
   const [name, setName] = useState<TableVerb["verb"]>("lugema");
@@ -234,7 +226,6 @@ function PersonTable() {
   );
 }
 
-/** What each verb's sentence on its key means. */
 const WHOLE_MEANS: Record<WholeVerb["verb"], MessageDescriptor> = {
   minema: msg`I didn’t go to work.`,
   tegema: msg`I didn’t do any work.`,
@@ -243,7 +234,6 @@ const WHOLE_MEANS: Record<WholeVerb["verb"], MessageDescriptor> = {
   jooma: msg`I didn’t drink coffee.`,
 };
 
-/** How to remember each -nud form learned whole, under its key. */
 const WHOLE_TIPS: Record<WholeVerb["verb"], ReactNode> = {
   minema: (
     <Trans>
@@ -286,7 +276,6 @@ const kindOptions = (kinds: readonly Kind[], i18n: I18n) =>
     label: <span lang={i18n.locale}>{i18n._(KIND_LABELS[kind])}</span>,
   }));
 
-/** What each sentence of “Now or in the past?” means. */
 const WHEN_MEANS: Record<string, MessageDescriptor> = {
   "Ta pole kodus.": msg`He or she isn’t at home.`,
   "Ta polnud kodus.": msg`He or she wasn’t at home.`,
@@ -304,7 +293,6 @@ const WHEN_MEANS: Record<string, MessageDescriptor> = {
   "Nad ei elanud Tartus.": msg`They didn’t live in Tartu.`,
 };
 
-/** Each sentence of “Now or in the past?”, keyed by its verb: a run hears every verb once. */
 export function whenItems(i18n: I18n): WhenItem[] {
   return PAST_NO_WHEN.flatMap((each, i) =>
     (["past", "now"] as const).map((kind, k) => {
@@ -330,10 +318,8 @@ export function whenItems(i18n: I18n): WhenItem[] {
 
 type MadeItem = FormItem & { pair: readonly [string, string] };
 
-/** “Make the -nud form” opens on tulema, not a verb shown above it. */
 const FIRST_MADE = "tulema";
 
-/** The -da, -ta and -la verbs the explorer doesn't show, keyed by how the -da infinitive ends. */
 export function madeItems(i18n: I18n): MadeItem[] {
   const asked = (NUD_BUILT as readonly Built[]).filter(
     (verb) => !(NUD_SHOWN as readonly string[]).includes(verb.ma),
@@ -357,7 +343,6 @@ export function madeItems(i18n: I18n): MadeItem[] {
   });
 }
 
-/** The long form of each short pronoun, which a sentence may start with instead. */
 const LONG: Record<string, string> = {
   Ma: "Mina",
   Sa: "Sina",
@@ -367,7 +352,6 @@ const LONG: Record<string, string> = {
   Nad: "Nemad",
 };
 
-/** A no in the past as a teacher accepts it: with the long pronoun, and with polnud for ei olnud. */
 export function noAnswers(said: string): [string, ...string[]] {
   const [first, ...rest] = said.split(" ");
   const long = first && LONG[first] ? [[LONG[first], ...rest].join(" ")] : [];
@@ -378,7 +362,6 @@ export function noAnswers(said: string): [string, ...string[]] {
   return [said, ...long, ...polnud];
 }
 
-/** “Say no”: each sentence with yes in the past, to write with no. */
 export function rewriteItems(i18n: I18n): SentenceItem[] {
   return PAST_NO_REWRITE.map(({ id, from, to }) => ({
     kind: "rewrite",
@@ -390,7 +373,6 @@ export function rewriteItems(i18n: I18n): SentenceItem[] {
   }));
 }
 
-/** Why each sentence of “Fix the sentence” was wrong. */
 const FIX_WHY: Record<(typeof PAST_NO_FIX)[number]["id"], ReactNode> = {
   laksin: (
     <Trans>
@@ -424,7 +406,6 @@ const FIX_WHY: Record<(typeof PAST_NO_FIX)[number]["id"], ReactNode> = {
   ),
 };
 
-/** “Fix the sentence”: one wrong word each, as learners write a no in the past. */
 export function fixItems(): FixItem[] {
   return PAST_NO_FIX.map(({ id, wrong, right }) => ({
     kind: "fix",
@@ -436,7 +417,6 @@ export function fixItems(): FixItem[] {
   }));
 }
 
-/** The questions on Kati and Jaan's talk, in the order the answers come. */
 function weekendQuestions(i18n: I18n): PassageQuestion[] {
   const label = (text: MessageDescriptor) => i18n._(text);
   return [

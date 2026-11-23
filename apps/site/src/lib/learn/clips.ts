@@ -2708,19 +2708,8 @@ const OSASTAV_CLIPS: Record<string, Clip> = {
   "p-jaan": { sentences: OSASTAV_PASSAGES.jaan },
 };
 
-/*
- * Saying no in the past, “Ma ei läinud”. Every form was checked against its verb's paradigm in
- * Sõnaveeb's EKI morphology database (ÕS 2025): the simple past's negative column reads
- * “ei lugenud” for every person, and olema's gives “ei olnud ~ polnud”.
- */
-
-/** The six short pronouns, in the order the person table lists them. */
 export const PAST_NO_PERSONS = ["ma", "sa", "ta", "me", "te", "nad"] as const;
 
-/**
- * The verbs of the person table: the past stem, what follows it for each person with yes, and the
- * -nud form written with `|` before -nud.
- */
 export const PAST_NO_TABLE = [
   {
     verb: "lugema",
@@ -2732,15 +2721,12 @@ export const PAST_NO_TABLE = [
   { verb: "minema", stem: "läks", yes: ["in", "id", "", "ime", "ite", "id"], nud: "läi|nud" },
 ] as const;
 
-/** A person's past with yes, as one clip: “Ma lugesin”. */
 export const pastYesSaid = (pronoun: string, stem: string, ending: string) =>
   presentWithPronoun(pronoun, stem, ending);
 
-/** A person's past with no, as one clip: “Ma ei lugenud”. */
 export const pastNoSaid = (pronoun: string, nud: string) =>
   `${capital(pronoun)} ei ${nud.replace("|", "")}`;
 
-/** Time words on a line, each with a no sentence whose verb is built as `build` shows. */
 export const PAST_NO_TIMELINE = [
   {
     id: "last-week",
@@ -2753,16 +2739,12 @@ export const PAST_NO_TIMELINE = [
   { id: "today", et: "täna", at: 0, sentence: "Täna ma ei tööta.", build: "tööta" },
 ] as const;
 
-/** The -nud form of a verb whose -da infinitive ends in -da, -ta or -la: that ending swapped. */
 export const nudForm = (verb: VerbForms) => `${verb.da[0]}nud`;
 
-/** The verbs of the three-forms lesson whose -nud form `nudForm` builds. */
 export const NUD_BUILT = VERB_FORMS.filter((verb) => ["da", "ta", "la"].includes(verb.pattern));
 
-/** The verbs the -nud explorer turns; the quiz asks the other seven. */
 export const NUD_SHOWN = ["elama", "lugema", "töötama", "ootama", "olema"] as const;
 
-/** Minema and the bare -a verbs: their -nud form learned whole, with a sentence for each. */
 export const NUD_WHOLE = [
   { verb: "minema", da: "minna", nud: "läinud", said: "Ma ei läinud tööle." },
   { verb: "tegema", da: "teha", nud: "teinud", said: "Ma ei teinud tööd." },
@@ -2771,7 +2753,6 @@ export const NUD_WHOLE = [
   { verb: "jooma", da: "juua", nud: "joonud", said: "Ma ei joonud kohvi." },
 ] as const;
 
-/** One no said now and in the past, for “Now or in the past?”. */
 export const PAST_NO_WHEN = [
   { verb: "olema", now: "Ta pole kodus.", past: "Ta polnud kodus." },
   { verb: "tulema", now: "Mari ei tule koju.", past: "Mari ei tulnud koju." },
@@ -2782,7 +2763,6 @@ export const PAST_NO_WHEN = [
   { verb: "elama", now: "Nad ei ela Tartus.", past: "Nad ei elanud Tartus." },
 ] as const;
 
-/** The words of “Which one?”: three no now, three yes in the past, three no in the past. */
 export const PAST_NO_SORT = [
   { w: "ei loe", bin: "now" },
   { w: "ei joo", bin: "now" },
@@ -2795,7 +2775,6 @@ export const PAST_NO_SORT = [
   { w: "polnud", bin: "no" },
 ] as const;
 
-/** “Say no”: a sentence with yes in the past, and what it says with no, as the clip says it. */
 export const PAST_NO_REWRITE = [
   { id: "tool", from: "Ma läksin eile tööle.", to: "Ma ei läinud eile tööle." },
   { id: "kodus", from: "Ta oli kodus.", to: "Ta ei olnud kodus." },
@@ -2805,7 +2784,6 @@ export const PAST_NO_REWRITE = [
   { id: "koju", from: "Te tulite koju.", to: "Te ei tulnud koju." },
 ] as const;
 
-/** “Fix the sentence”: the past ending kept after ei, or the present where the past belongs. */
 export const PAST_NO_FIX = [
   { id: "laksin", wrong: "Ma ei läksin poodi.", right: "Ma ei läinud poodi." },
   { id: "oli", wrong: "Ta ei oli tööl.", right: "Ta ei olnud tööl." },
@@ -2815,7 +2793,6 @@ export const PAST_NO_FIX = [
   { id: "lugesite", wrong: "Te ei lugesite raamatut.", right: "Te ei lugenud raamatut." },
 ] as const;
 
-/** Mari asks about yesterday: her lines in the second voice, the learner's in the main one. */
 export const PAST_NO_DIALOGUE = {
   "d-mari-1": { text: "Tere! Kas sa käisid eile poes?", voice: "second" },
   "d-sina-1": "Ei, ma ei käinud.",
@@ -2827,7 +2804,6 @@ export const PAST_NO_DIALOGUE = {
   "d-sina-4": "Ei, ta ei olnud.",
 } as const satisfies Record<string, Clip>;
 
-/** Kati and Jaan on Monday morning: what each did and didn't do at the weekend. */
 export const PAST_NO_TALK = {
   turns: [
     {
@@ -2865,7 +2841,6 @@ export const PAST_NO_TALK = {
   ],
 } as const satisfies Conversation;
 
-/** The drill's sentences, as its clips say them. */
 export const PAST_NO_DRILL = [
   "Ma ei elanud Tartus.",
   "Ta ei rääkinud eesti keelt.",
@@ -2887,7 +2862,6 @@ export const PAST_NO_DRILL = [
   "Ta ei lugenud raamatut.",
 ] as const;
 
-/** The words of the lesson with a card, each heard on its own. */
 export const PAST_NO_WORDS = [
   "ei",
   "eile",
@@ -2939,12 +2913,6 @@ const PAST_NO_CLIPS: Record<string, Clip> = {
   "c-weekend": PAST_NO_TALK,
 };
 
-/*
- * Practice: at the market, “Turul”. Words from lessons 1 to 25 only, plus “Mida te soovite?” and
- * “Midagi veel?”, which its glossary explains.
- */
-
-/** Mari's message to Liis, and Liis's answer with gaps. */
 export const MARKET_PASSAGES = {
   mari: [
     "Tere, Liis!",
@@ -2972,7 +2940,6 @@ export const MARKET_PASSAGES = {
   ],
 } as const;
 
-/** The leads of “Which form follows?”: what takes the -da infinitive, and what takes -ma. */
 export const MARKET_LEADS = [
   { w: "tahan", bin: "da" },
   { w: "võin", bin: "da" },
@@ -2984,7 +2951,6 @@ export const MARKET_LEADS = [
   { w: "hakkan", bin: "ma" },
 ] as const;
 
-/** “Say it in Estonian”: what to write, as its clip says it. */
 export const MARKET_SAY = [
   { id: "juustu", said: "Mul on vaja kilo juustu." },
   { id: "maksab", said: "Kui palju see maksab?" },
@@ -2994,7 +2960,6 @@ export const MARKET_SAY = [
   { id: "leib", said: "Leib maksab kaks eurot." },
 ] as const;
 
-/** “Fix the sentence”: one wrong word each, from rules the course has taught. */
 export const MARKET_FIX = [
   { id: "juust", wrong: "Mul on vaja kilo juust.", right: "Mul on vaja kilo juustu." },
   { id: "minna", wrong: "Ma pean turule minna.", right: "Ma pean turule minema." },
@@ -3004,7 +2969,6 @@ export const MARKET_FIX = [
   { id: "turul", wrong: "Ma lähen täna turul.", right: "Ma lähen täna turule." },
 ] as const;
 
-/** At a stall: the seller's lines in the second voice, the learner's in the main one. */
 export const MARKET_DIALOGUE = {
   "d-muuja-1": { text: "Tere! Mida te soovite?", voice: "second" },
   "d-sina-1": "Tere! Mul on vaja kilo juustu.",
@@ -3014,7 +2978,6 @@ export const MARKET_DIALOGUE = {
   "d-sina-3": "Palun, kümme eurot.",
 } as const satisfies Record<string, Clip>;
 
-/** Mari buys cheese at a stall: Mari in the third voice, the seller in the fourth. */
 export const MARKET_TALK = {
   turns: [
     { voice: "fourth", text: "Tere! Mida te soovite?" },
@@ -3045,7 +3008,6 @@ export const MARKET_TALK = {
   ],
 } as const satisfies Conversation;
 
-/** The drill's sentences and words, as its clips say them. */
 export const MARKET_DRILL = [
   "kilo juustu",
   "Mul on vaja kilo kohvi.",
@@ -3070,7 +3032,6 @@ export const MARKET_DRILL = [
   "Ma tulen turult koju.",
 ] as const;
 
-/** The words of the lesson with a card, each heard on its own. */
 export const MARKET_WORDS = [
   "turg",
   "turule",

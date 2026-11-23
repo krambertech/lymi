@@ -16,7 +16,6 @@ import { madeItems, whenItems } from "./MinevikuEitus";
 const i18n = setupI18n({ locale: "en", messages: { en: {} } });
 
 describe("the -nud form from the -da form", () => {
-  // Each from the verb's paradigm in Sõnaveeb's EKI morphology database, 21 November 2026.
   it("builds what Sõnaveeb lists for every -da, -ta and -la verb of the three-forms lesson", () => {
     expect(Object.fromEntries(NUD_BUILT.map((verb) => [verb.ma, nudForm(verb)]))).toEqual({
       elama: "elanud",

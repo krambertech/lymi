@@ -25,10 +25,8 @@ import { Sort, type SortBin, type SortItem } from "../Sort";
 import { Word } from "../Word";
 
 const SLUG = "turul";
-/** A clip by what it says. */
 const src = (text: string) => clipUrl(SLUG, clipId(text));
 
-/** An ending in running text: marked as Estonian, and never broken after its hyphen. */
 function End({ children }: { children: ReactNode }) {
   return (
     <span lang="et" className="whitespace-nowrap">
@@ -37,7 +35,6 @@ function End({ children }: { children: ReactNode }) {
   );
 }
 
-/** An Estonian word in running text that needs no card. */
 function Et({ children }: { children: ReactNode }) {
   return <span lang="et">{children}</span>;
 }
@@ -64,7 +61,6 @@ const GLOSSARY: Glossary = {
   kohvik: { en: msg`café` },
 };
 
-/** Liis's answer, gap by gap, with why each word goes where it does. */
 function useReplyGaps(): GapItem[] {
   const [hi, yes, at, coffee, apples, eat, home] = MARKET_PASSAGES.liis;
   const cut = (sentence: string, word: string) => {
@@ -135,7 +131,6 @@ function useReplyGaps(): GapItem[] {
   ];
 }
 
-/** “Say it in Estonian”: the English to write from, by item. */
 const SAY_PROMPTS: Record<(typeof MARKET_SAY)[number]["id"], MessageDescriptor> = {
   juustu: msg`I need a kilo of cheese.`,
   maksab: msg`How much does it cost?`,
@@ -145,7 +140,6 @@ const SAY_PROMPTS: Record<(typeof MARKET_SAY)[number]["id"], MessageDescriptor> 
   leib: msg`Bread costs two euros.`,
 };
 
-/** Other ways a teacher accepts each sentence. */
 const SAY_ALSO: Record<(typeof MARKET_SAY)[number]["id"], readonly string[]> = {
   juustu: [],
   maksab: [],
@@ -169,7 +163,6 @@ export function sayItems(i18n: I18n): SentenceItem[] {
   }));
 }
 
-/** Why each sentence of “Fix the sentence” was wrong. */
 const FIX_WHY: Record<(typeof MARKET_FIX)[number]["id"], ReactNode> = {
   juust: (
     <Trans>

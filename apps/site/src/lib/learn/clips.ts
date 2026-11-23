@@ -1296,6 +1296,10 @@ export const TUTVUMINE_TRANSLATED = [
       "Kas elate Tallinnas?",
       "Kas sa Tallinnas elad?",
       "Kas te Tallinnas elate?",
+      "Sa elad Tallinnas või?",
+      "Te elate Tallinnas või?",
+      "Sina elad Tallinnas või?",
+      "Teie elate Tallinnas või?",
     ],
   },
   {

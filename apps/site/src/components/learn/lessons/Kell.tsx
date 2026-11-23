@@ -19,7 +19,6 @@ import {
   timeParts,
   timeSentence,
   timeWords,
-  timeWordsAlso,
   withMinute,
 } from "../../../lib/learn/estonian-time";
 import { playSound, usePlaying } from "../../../lib/learn/player";
@@ -392,7 +391,7 @@ function ClockExplorer() {
   );
 }
 
-const HALVES = [at(7, 30), at(3, 30), at(12, 30), at(9, 30), at(4, 30), at(10, 30)];
+const HALVES = [at(7, 30), at(3, 30), at(12, 30), at(6, 30), at(4, 30), at(10, 30)];
 
 /** Hear “pool …”, pick one of two half hours; the clock sets itself once it's answered. */
 function HalfRound({ item, state, heard, answer, autoplay }: RoundProps<ClockTime>) {
@@ -465,8 +464,8 @@ const IN_WORDS = [
   at(5, 30),
   at(8, 15),
   at(10, 45),
-  at(4, 10),
-  at(7, 20),
+  at(6, 10),
+  at(2, 20),
   at(1, 50),
   at(9, 40),
 ];
@@ -598,10 +597,7 @@ export function KellLesson() {
       IN_WORDS.map((time) => ({
         base: timeDigits(time),
         cue: t`in words`,
-        answers: [timeWords(time), ...timeWordsAlso(time)].flatMap((words) => [
-          words,
-          `kell on ${words}`,
-        ]) as [string, ...string[]],
+        answers: [timeWords(time), `kell on ${timeWords(time)}`],
         src: timeSrc(time),
         said: timeSentence(time),
         pair: [kindOf(time), timeClip(time)] as const,

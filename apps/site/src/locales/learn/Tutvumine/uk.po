@@ -89,7 +89,7 @@ msgid "All six, each with the right question word and verb ending."
 msgstr "Усі шість: у кожному правильне питальне слово й закінчення дієслова."
 
 msgid "All six, every sentence right."
-msgstr "Усі шість речень правильно."
+msgstr "Усі шість речень правильні."
 
 msgid "Answer, then ask back: <0>Hästi, aitäh. Aga sul?</0>"
 msgstr "Відповідай і питай у відповідь: <0>Hästi, aitäh. Aga sul?</0>"

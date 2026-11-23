@@ -31,6 +31,9 @@ msgstr "<et>-teist</et> or <et>-kümmend</et>"
 msgid "<et>Kaks</et> has a short a and a k; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
 msgstr "<et>Kaks</et> has a short a and a k; <et>kuus</et> a long uu. <et>Kaheksa</et> starts with ka, <et>üheksa</et> with ü."
 
+msgid "<et>Tuhat</et> alone, with no “one” in front."
+msgstr "<et>Tuhat</et> alone, with no “one” in front."
+
 msgid "€12.50"
 msgstr "€12.50"
 

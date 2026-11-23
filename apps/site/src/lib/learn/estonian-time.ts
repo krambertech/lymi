@@ -51,28 +51,6 @@ export function timeParts({ hour, minute }: ClockTime): TimePart[] {
   }
 }
 
-const HOUR_GENITIVE = [
-  "",
-  "ühe",
-  "kahe",
-  "kolme",
-  "nelja",
-  "viie",
-  "kuue",
-  "seitsme",
-  "kaheksa",
-  "üheksa",
-  "kümne",
-  "üheteistkümne",
-  "kaheteistkümne",
-];
-
-export function timeWordsAlso({ hour, minute }: ClockTime): string[] {
-  return minute === 5 || minute === 10 || minute === 20
-    ? [`${numberWords(minute)} minutit läbi ${HOUR_GENITIVE[hour]}`]
-    : [];
-}
-
 /** “pool neli” */
 export function timeWords(time: ClockTime): string {
   return timeParts(time)

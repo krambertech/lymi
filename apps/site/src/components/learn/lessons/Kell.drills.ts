@@ -9,7 +9,6 @@ import {
   timeDigits,
   timeSentence,
   timeWords,
-  timeWordsAlso,
 } from "../../../lib/learn/estonian-time";
 
 const HOUR = msg`On the hour, say the hour alone: <et>kell on kolm</et>.`;
@@ -31,10 +30,7 @@ const typed = (time: ClockTime): FormDrill => ({
   base: timeDigits(time),
   gloss: msg`a time`,
   cue: msg`in words`,
-  answers: [timeWords(time), ...timeWordsAlso(time)].flatMap((words) => [
-    words,
-    `kell on ${words}`,
-  ]) as [string, ...string[]],
+  answers: [timeWords(time), `kell on ${timeWords(time)}`],
   say: timeSentence(time),
   explain: WHY[ruleOf(time)] as MessageDescriptor,
 });

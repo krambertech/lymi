@@ -13,14 +13,14 @@ msgstr "<0/> can also say that something might happen. This sentence can mean he
 msgid "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> does too: <4/> Tap one to hear its sentence."
 msgstr "<0/> is about being allowed. With <1>ei</1> it says mustn’t: <2/> In a question it asks whether you may, as <3/> does too: <4/> Tap one to hear its sentence."
 
-msgid "<0/> is for what you learned. To say you know how to swim: <1/> <2/> says nothing stops you: <3/>"
-msgstr "<0/> is for what you learned. To say you know how to swim: <1/> <2/> says nothing stops you: <3/>"
+msgid "<0/> is for what you learned. To say you know how to swim: <1/> <2/> usually says nothing stops you: <3/>"
+msgstr "<0/> is for what you learned. To say you know how to swim: <1/> <2/> usually says nothing stops you: <3/>"
 
 msgid "<0/> is I have to, and it takes the <1>-ma</1> infinitive from lesson {infinitives}: <2/>"
 msgstr "<0/> is I have to, and it takes the <1>-ma</1> infinitive from lesson {infinitives}: <2/>"
 
-msgid "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian switches to <3>ei tohi</3>: <4/> <5/>, no need, also leaves it to you. Tap one to hear it said about swimming."
-msgstr "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian switches to <3>ei tohi</3>: <4/> <5/>, no need, also leaves it to you. Tap one to hear it said about swimming."
+msgid "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian usually switches to <3>ei tohi</3>: <4/> <5/>, no need, means the same as <6>ei pea</6>. Tap one to hear it said about swimming."
+msgstr "<0/> is must, but <1>ei pea</1> is don’t have to: <2/> For mustn’t, Estonian usually switches to <3>ei tohi</3>: <4/> <5/>, no need, means the same as <6>ei pea</6>. Tap one to hear it said about swimming."
 
 msgid "<0/> says something is allowed, and you also offer with it: <1/> To let someone do something: <2/>"
 msgstr "<0/> says something is allowed, and you also offer with it: <1/> To let someone do something: <2/>"
@@ -46,41 +46,80 @@ msgstr "<0>Ei saa</0> says something stops you. She asked whether you know how."
 msgid "<0>Ei tohi</0> says you’re not allowed to swim. Nothing stops you today."
 msgstr "<0>Ei tohi</0> says you’re not allowed to swim. Nothing stops you today."
 
-msgid "<0>Oskan</0> is for what you learned: <1>Ma oskan ujuda.</1> <2>Saan</2> says nothing stops you: <3>Ma saan homme tulla.</3>"
-msgstr "<0>Oskan</0> is for what you learned: <1>Ma oskan ujuda.</1> <2>Saan</2> says nothing stops you: <3>Ma saan homme tulla.</3>"
+msgid "<0>Oskan</0> is for what you learned: <1>Ma oskan ujuda.</1> <2>Saan</2> usually says nothing stops you: <3>Ma saan homme tulla.</3>"
+msgstr "<0>Oskan</0> is for what you learned: <1>Ma oskan ujuda.</1> <2>Saan</2> usually says nothing stops you: <3>Ma saan homme tulla.</3>"
 
 msgid "<0>Oskan</0>: you learned how."
 msgstr "<0>Oskan</0>: you learned how."
 
-msgid "<0>Pean</0> is I have to. <1>Tuleb</1> with the <2>-da</2> infinitive says it has to be done, naming no one. <3>Mul on vaja</3> is I need to."
-msgstr "<0>Pean</0> is I have to. <1>Tuleb</1> with the <2>-da</2> infinitive says it has to be done, naming no one. <3>Mul on vaja</3> is I need to."
+msgid "<0>Pean</0> is I have to. <1>Tuleb</1> with the <2>-da</2> infinitive says it has to be done; on its own it names no one. <3>Mul on vaja</3> is I need to."
+msgstr "<0>Pean</0> is I have to. <1>Tuleb</1> with the <2>-da</2> infinitive says it has to be done; on its own it names no one. <3>Mul on vaja</3> is I need to."
 
 msgid "<0>Pean</0> says you have to come. Nobody makes you; you’re free."
 msgstr "<0>Pean</0> says you have to come. Nobody makes you; you’re free."
 
-msgid "<0>Saan</0>: nothing stops you, not time, place or health."
-msgstr "<0>Saan</0>: nothing stops you, not time, place or health."
+msgid "<0>Saan</0>: usually, nothing stops you, not time, place or health."
+msgstr "<0>Saan</0>: usually, nothing stops you, not time, place or health."
 
 msgid "<0>Võin</0> and <1>tohin</1> both say it’s allowed; <2>võin</2> also offers: <3>Ma võin sind oodata.</3> <4>Tohin</4> is mostly heard with <5>ei</5>: <6>Siin ei tohi süüa.</6>"
 msgstr "<0>Võin</0> and <1>tohin</1> both say it’s allowed; <2>võin</2> also offers: <3>Ma võin sind oodata.</3> <4>Tohin</4> is mostly heard with <5>ei</5>: <6>Siin ei tohi süüa.</6>"
 
-msgid "12 minutes"
-msgstr "12 minutes"
+msgid "<et>Oskan</et> is for what you know how to do; <et>saan</et> usually says nothing stops you. Both take the -da infinitive."
+msgstr "<et>Oskan</et> is for what you know how to do; <et>saan</et> usually says nothing stops you. Both take the -da infinitive."
+
+msgid "<et>Pean</et> and <et>ei pea</et> take the -ma infinitive; <et>mul on vaja</et>, and <et>tuleb</et> meaning has to, take the -da infinitive."
+msgstr "<et>Pean</et> and <et>ei pea</et> take the -ma infinitive; <et>mul on vaja</et>, and <et>tuleb</et> meaning has to, take the -da infinitive."
+
+msgid "<et>Võin</et> also offers: <et>Ma võin sind oodata.</et> It takes the -da infinitive."
+msgstr "<et>Võin</et> also offers: <et>Ma võin sind oodata.</et> It takes the -da infinitive."
+
+msgid "<et>Võin</et> and <et>tohin</et> say it’s allowed, and <et>ei tohi</et> says it isn’t. All take the -da infinitive."
+msgstr "<et>Võin</et> and <et>tohin</et> say it’s allowed, and <et>ei tohi</et> says it isn’t. All take the -da infinitive."
+
+msgid "20 minutes"
+msgstr "20 minutes"
+
+msgid "5 exercises and a recording you can play twice"
+msgstr "5 exercises and a recording you can play twice"
 
 msgid "A question: you ask whether you’re allowed."
 msgstr "A question: you ask whether you’re allowed."
 
-msgid "A quiz, pairs to match and a conversation"
-msgstr "A quiz, pairs to match and a conversation"
-
 msgid "A rule. With no person, it holds for everyone."
 msgstr "A rule. With no person, it holds for everyone."
 
-msgid "All four. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and “don’t have to”."
-msgstr "All four. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and “don’t have to”."
+msgid "After <0>ei pea</0>, the <1>-ma</1> infinitive: <2>tulema</2>."
+msgstr "After <0>ei pea</0>, the <1>-ma</1> infinitive: <2>tulema</2>."
+
+msgid "After <0>ei tohi</0>, the <1>-da</1> infinitive: <2>ujuda</2>."
+msgstr "After <0>ei tohi</0>, the <1>-da</1> infinitive: <2>ujuda</2>."
+
+msgid "After <0>mul on vaja</0>, the <1>-da</1> infinitive: <2>minna</2>."
+msgstr "After <0>mul on vaja</0>, the <1>-da</1> infinitive: <2>minna</2>."
+
+msgid "After <0>pean</0>, the <1>-ma</1> infinitive: <2>töötama</2>."
+msgstr "After <0>pean</0>, the <1>-ma</1> infinitive: <2>töötama</2>."
+
+msgid "All eight. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and “don’t have to”."
+msgstr "All eight. By ear, you told apart “don’t know how”, “can’t”, “mustn’t” and “don’t have to”."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six written right."
+msgstr "All six written right."
 
 msgid "An offer: you’re happy to."
 msgstr "An offer: you’re happy to."
+
+msgid "At what time are they going? Write it in Estonian."
+msgstr "At what time are they going? Write it in Estonian."
+
+msgid "Can you come tomorrow?"
+msgstr "Can you come tomorrow?"
+
+msgid "Can: knowing how or able to"
+msgstr "Can: knowing how or able to"
 
 msgid "Can: you know how, or nothing stops you"
 msgstr "Can: you know how, or nothing stops you"
@@ -91,8 +130,17 @@ msgstr "Can’t, mustn’t, don’t have to"
 msgid "don’t have to"
 msgstr "don’t have to"
 
+msgid "Each sentence has one wrong word: the wrong verb for its reason, or the wrong infinitive after it. Tap it, then write the right one."
+msgstr "Each sentence has one wrong word: the wrong verb for its reason, or the wrong infinitive after it. Tap it, then write the right one."
+
 msgid "English says I can for both. Both take the <0>-da</0> infinitive, as lesson {infinitives} showed. Tap a form to hear its sentence."
 msgstr "English says I can for both. Both take the <0>-da</0> infinitive, as lesson {infinitives} showed. Tap a form to hear its sentence."
+
+msgid "Find and fix the mistake"
+msgstr "Find and fix the mistake"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
 
 msgid "From oskama."
 msgstr "From oskama."
@@ -112,11 +160,20 @@ msgstr "From tulema, to come. Before a -da infinitive it means has to."
 msgid "From võima."
 msgstr "From võima."
 
+msgid "Go through the sections above once more, then try again."
+msgstr "Go through the sections above once more, then try again."
+
 msgid "has to be done; comes"
 msgstr "has to be done; comes"
 
+msgid "Have to and don’t have to"
+msgstr "Have to and don’t have to"
+
 msgid "Have to and need to"
 msgstr "Have to and need to"
+
+msgid "He has to work"
+msgstr "He has to work"
 
 msgid "He or she can’t swim today: something is in the way."
 msgstr "He or she can’t swim today: something is in the way."
@@ -130,8 +187,14 @@ msgstr "He or she is coming to swim."
 msgid "He or she may come tomorrow."
 msgstr "He or she may come tomorrow."
 
+msgid "He’s tired"
+msgstr "He’s tired"
+
 msgid "here"
 msgstr "here"
+
+msgid "His mum is visiting"
+msgstr "His mum is visiting"
 
 msgid "I can come tomorrow."
 msgstr "I can come tomorrow."
@@ -141,6 +204,9 @@ msgstr "I can read: I know how."
 
 msgid "I can read: nothing stops me."
 msgstr "I can read: nothing stops me."
+
+msgid "I can speak Estonian."
+msgstr "I can speak Estonian."
 
 msgid "I can swim: I know how."
 msgstr "I can swim: I know how."
@@ -157,6 +223,9 @@ msgstr "I can, I know how to"
 msgid "I can, I’m able to"
 msgstr "I can, I’m able to"
 
+msgid "I can’t come today."
+msgstr "I can’t come today."
+
 msgid "I don’t have to read."
 msgstr "I don’t have to read."
 
@@ -171,6 +240,9 @@ msgstr "I have to go."
 
 msgid "I have to wait."
 msgstr "I have to wait."
+
+msgid "I have to work tomorrow."
+msgstr "I have to work tomorrow."
 
 msgid "I have to work."
 msgstr "I have to work."
@@ -209,8 +281,8 @@ msgstr "I need to wait."
 msgid "I need to work."
 msgstr "I need to work."
 
-msgid "I need to: there’s a need."
-msgstr "I need to: there’s a need."
+msgid "I need to: the person goes in the <0>-l</0> form, as in <1>mul on</1>."
+msgstr "I need to: the person goes in the <0>-l</0> form, as in <1>mul on</1>."
 
 msgid "I never learned to read."
 msgstr "I never learned to read."
@@ -257,11 +329,32 @@ msgstr "It’s up to you."
 msgid "Its -da infinitive is ujuda."
 msgstr "Its -da infinitive is ujuda."
 
+msgid "Jaan asks Mari to go swimming. Listen for who can, who may and who has to."
+msgstr "Jaan asks Mari to go swimming. Listen for who can, who may and who has to."
+
+msgid "Jaan swims very well."
+msgstr "Jaan swims very well."
+
+msgid "Jaan’s mum"
+msgstr "Jaan’s mum"
+
+msgid "Kati’s best friend"
+msgstr "Kati’s best friend"
+
+msgid "Knowing a language takes <0>oskama</0>: <1>oskab eesti keelt</1>."
+msgstr "Knowing a language takes <0>oskama</0>: <1>oskab eesti keelt</1>."
+
 msgid "Like <0>mul on vaja</0>: the person in the <1>-l</1> form, then the <2>-da</2> infinitive. It means the same as <3>ei pea</3>."
 msgstr "Like <0>mul on vaja</0>: the person in the <1>-l</1> form, then the <2>-da</2> infinitive. It means the same as <3>ei pea</3>."
 
 msgid "Listen to each sentence and pick what it means."
 msgstr "Listen to each sentence and pick what it means."
+
+msgid "Listen: going swimming"
+msgstr "Listen: going swimming"
+
+msgid "Listen: Jaan calls Mari"
+msgstr "Listen: Jaan calls Mari"
 
 msgid "Listening only, no microphone"
 msgstr "Listening only, no microphone"
@@ -272,8 +365,23 @@ msgstr "Mari"
 msgid "Mari asks about swimming. Pick each reply by what it says about you."
 msgstr "Mari asks about swimming. Pick each reply by what it says about you."
 
+msgid "Mari can go swimming today."
+msgstr "Mari can go swimming today."
+
+msgid "Mari says they’ll swim together."
+msgstr "Mari says they’ll swim together."
+
+msgid "Mari’s brother"
+msgstr "Mari’s brother"
+
+msgid "Mari’s brother swims very well."
+msgstr "Mari’s brother swims very well."
+
 msgid "May and allowed to"
 msgstr "May and allowed to"
+
+msgid "May and mustn’t"
+msgstr "May and mustn’t"
 
 msgid "May I sit here?"
 msgstr "May I sit here?"
@@ -281,11 +389,20 @@ msgstr "May I sit here?"
 msgid "may, might"
 msgstr "may, might"
 
+msgid "Most of them. Look again at the ones you missed."
+msgstr "Most of them. Look again at the ones you missed."
+
+msgid "Most of them. Read the ones you missed once more."
+msgstr "Most of them. Read the ones you missed once more."
+
 msgid "Mul on vaja is I need."
 msgstr "Mul on vaja is I need."
 
 msgid "mustn’t, not allowed to"
 msgstr "mustn’t, not allowed to"
+
+msgid "My brother knows Estonian."
+msgstr "My brother knows Estonian."
 
 msgid "needed"
 msgstr "needed"
@@ -301,6 +418,9 @@ msgstr "no need"
 
 msgid "No swimming here."
 msgstr "No swimming here."
+
+msgid "Nothing stops you, so <0>saan</0>, not <1>oskan</1>."
+msgstr "Nothing stops you, so <0>saan</0>, not <1>oskan</1>."
 
 msgid "One has to …"
 msgstr "One has to …"
@@ -334,6 +454,18 @@ msgstr "Reason"
 
 msgid "Sentence"
 msgstr "Sentence"
+
+msgid "She can swim well."
+msgstr "She can swim well."
+
+msgid "She can’t swim"
+msgstr "She can’t swim"
+
+msgid "She has to work today"
+msgstr "She has to work today"
+
+msgid "She isn’t allowed in the water"
+msgstr "She isn’t allowed in the water"
 
 msgid "Something is in the way."
 msgstr "Something is in the way."
@@ -371,11 +503,17 @@ msgstr "There’s no need for you to swim."
 msgid "Three ways to say have to"
 msgstr "Three ways to say have to"
 
+msgid "to come"
+msgstr "to come"
+
 msgid "to go"
 msgstr "to go"
 
 msgid "to read"
 msgstr "to read"
+
+msgid "to sit"
+msgstr "to sit"
 
 msgid "to swim"
 msgstr "to swim"
@@ -389,8 +527,17 @@ msgstr "to work"
 msgid "What does it say?"
 msgstr "What does it say?"
 
-msgid "Where English says can, Estonian picks the verb by the reason. <0>Oskan</0> is when you know how, <1>saan</1> when nothing stops you, and <2>võin</2> when it’s allowed or you offer. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
-msgstr "Where English says can, Estonian picks the verb by the reason. <0>Oskan</0> is when you know how, <1>saan</1> when nothing stops you, and <2>võin</2> when it’s allowed or you offer. Must is <3>pean</3>, and mustn’t is <4>ei tohi</4>."
+msgid "What is the problem with Kati?"
+msgstr "What is the problem with Kati?"
+
+msgid "Where can Kati wait? Write the place in Estonian, with its ending."
+msgstr "Where can Kati wait? Write the place in Estonian, with its ending."
+
+msgid "Where does Mari have to be at three? Write the place in Estonian, with its ending."
+msgstr "Where does Mari have to be at three? Write the place in Estonian, with its ending."
+
+msgid "Where English says can, Estonian picks the verb by the reason. <0>Oskan</0> is when you know how, <1>saan</1> usually when nothing stops you, and <2>võin</2> when it’s allowed or you offer. Must is usually <3>pean</3>, and mustn’t is usually <4>ei tohi</4>."
+msgstr "Where English says can, Estonian picks the verb by the reason. <0>Oskan</0> is when you know how, <1>saan</1> usually when nothing stops you, and <2>võin</2> when it’s allowed or you offer. Must is usually <3>pean</3>, and mustn’t is usually <4>ei tohi</4>."
 
 msgid "Where something is. For where it goes, say siia."
 msgstr "Where something is. For where it goes, say siia."
@@ -398,17 +545,32 @@ msgstr "Where something is. For where it goes, say siia."
 msgid "Which verb, and why"
 msgstr "Which verb, and why"
 
+msgid "Who else may come?"
+msgstr "Who else may come?"
+
+msgid "Why does Jaan have to go home at twelve?"
+msgstr "Why does Jaan have to go home at twelve?"
+
 msgid "Why this verb?"
 msgstr "Why this verb?"
 
 msgid "With a language, <0/> needs no second verb: <1/>"
 msgstr "With a language, <0/> needs no second verb: <1/>"
 
-msgid "With the <0>-ma</0> infinitive, <1/> still means comes: <2/> Only with the <3>-da</3> infinitive does it mean has to: <4/>"
-msgstr "With the <0>-ma</0> infinitive, <1/> still means comes: <2/> Only with the <3>-da</3> infinitive does it mean has to: <4/>"
+msgid "With the <0>-ma</0> infinitive, <1/> usually still means comes: <2/> With the <3>-da</3> infinitive it means has to: <4/>"
+msgstr "With the <0>-ma</0> infinitive, <1/> usually still means comes: <2/> With the <3>-da</3> infinitive it means has to: <4/>"
+
+msgid "Write each sentence in Estonian. Pick the verb by the reason, then give the second verb the infinitive the first one takes."
+msgstr "Write each sentence in Estonian. Pick the verb by the reason, then give the second verb the infinitive the first one takes."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
 
 msgid "You can sit here."
 msgstr "You can sit here."
+
+msgid "You don’t have to come tomorrow."
+msgstr "You don’t have to come tomorrow."
 
 msgid "You don’t have to come."
 msgstr "You don’t have to come."
@@ -419,8 +581,20 @@ msgstr "You don’t have to swim."
 msgid "You learned to swim as a child. You’re free today and work tomorrow."
 msgstr "You learned to swim as a child. You’re free today and work tomorrow."
 
+msgid "You may eat in the water."
+msgstr "You may eat in the water."
+
+msgid "You may wait here."
+msgstr "You may wait here."
+
 msgid "You mustn’t come."
 msgstr "You mustn’t come."
+
+msgid "You mustn’t eat here."
+msgstr "You mustn’t eat here."
+
+msgid "You mustn’t swim here."
+msgstr "You mustn’t swim here."
 
 msgid "You work tomorrow, so you can’t come."
 msgstr "You work tomorrow, so you can’t come."

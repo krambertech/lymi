@@ -16,10 +16,16 @@ describe("realForms", () => {
   });
 
   it("knows what the item lists and shows", () => {
-    expect(mark({ kind: "dictation", answers: ["Ma olen tööl."] }, "Ma olen tool")).toBe("almost");
+    expect(mark({ kind: "dictation", answers: ["Ma olen kodus."] }, "Ma olen koodus")).toBe(
+      "almost",
+    );
     expect(
-      mark({ kind: "dictation", answers: ["Ma olen tööl."], confusable: ["tool"] }, "Ma olen tool"),
+      mark(
+        { kind: "dictation", answers: ["Ma olen kodus."], confusable: ["koodus"] },
+        "Ma olen koodus",
+      ),
     ).toBe("wrong");
+    expect(mark({ kind: "dictation", answers: ["Ma olen tööl."] }, "Ma olen tool")).toBe("wrong");
     expect(
       mark({ kind: "build", answers: ["Ta on vanna."], words: ["ta", "vana"] }, "Ta on vana"),
     ).toBe("wrong");

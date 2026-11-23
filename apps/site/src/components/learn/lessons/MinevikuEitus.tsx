@@ -2,7 +2,7 @@ import type { I18n, MessageDescriptor } from "@lingui/core";
 import { msg } from "@lingui/core/macro";
 import { Trans, useLingui } from "@lingui/react/macro";
 import { type ReactNode, useMemo, useState } from "react";
-import { LESSONS, lessonBySlug } from "../../../lib/learn/catalogue";
+import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   clipId,
   clipUrl,
@@ -700,7 +700,7 @@ export function MinevikuEitusLesson() {
   const verbForms = lessonBySlug("verbi-pohivormid")?.n;
   const infinitives = lessonBySlug("tegevusnimed")?.n;
   const past = lessonBySlug("lihtminevik")?.n;
-  const haveRead = LESSONS.find((lesson) => lesson.et === "Olen lugenud, olin lugenud")?.n;
+  const haveRead = lessonBySlug("olen-lugenud")?.n;
 
   const bins: SortBin[] = [
     {

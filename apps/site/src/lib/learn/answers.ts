@@ -214,8 +214,17 @@ export function onlyOrderDiffers(marked: MarkedAnswer): boolean {
   return off.length > 0 && typed.sort().join(" ") === right.sort().join(" ");
 }
 
+export function lettersOff(marked: MarkedAnswer): number {
+  const typed = marked.parts.flatMap((part) =>
+    part.kind === "missing" ? [] : [answerWord(part.typed)],
+  );
+  return letterDistance(typed.join(" "), answerWords(marked.accepted).join(" "));
+}
+
+export const ALSO_RIGHT_SHOWN = 3;
+
 export const otherAnswers = (marked: MarkedAnswer, accepted: readonly string[]): string[] =>
-  accepted.filter((sentence) => !sameAnswer(sentence, marked.accepted));
+  accepted.filter((sentence) => !sameAnswer(sentence, marked.accepted)).slice(0, ALSO_RIGHT_SHOWN);
 
 export interface SingleChange {
   at: number;

@@ -8,16 +8,24 @@ import {
   capital,
   clipId,
   clipUrl,
+  PRONOUN_BUILT,
+  PRONOUN_HEARD,
+  PRONOUN_PASSAGE,
   PRONOUN_SENTENCES,
   PRONOUNS,
+  pronounOrders,
   pronounWithOlema,
 } from "../../../lib/learn/clips";
 import { playSound, usePlaying } from "../../../lib/learn/player";
 import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import type { Glossary } from "../lesson-context";
 import { Aside, LessonView, Prose } from "../LessonView";
+import { Listening, type PassageQuestion } from "../Passage";
 import { Answer, Feedback, type GapItem, GapRound, Quiz, type RoundProps } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { type SortBin, type SortItem, Sort } from "../Sort";
 import { Listen, Playing } from "../Sound";
 import { Word } from "../Word";
 
@@ -134,6 +142,14 @@ const GLOSSARY: Glossary = {
     ),
   ),
   "kes? mina!": { en: msg`Who? Me!`, show: "Kes? Mina!", clip: "c-kes" },
+  valmis: { en: msg`ready` },
+  väsinud: { en: msg`tired` },
+  õpetaja: { en: msg`teacher` },
+  õpetajad: { en: msg`teachers` },
+  kodus: { en: msg`at home` },
+  sõbrad: { en: msg`friends` },
+  ja: { en: msg`and` },
+  "ma olen valmis": { en: msg`I’m ready.`, show: "Ma olen valmis.", clip: "s-ma-valmis" },
   "mina olen liis ja tema on peeter": {
     en: msg`I’m Liis, and he’s Peeter.`,
     note: msg`Long forms, because the two people are set side by side.`,
@@ -155,6 +171,17 @@ const WHO: readonly { id: keyof typeof PRONOUN_SENTENCES; who: Short; en: Messag
   { id: "s-te-opetajad", who: "te", en: msg`You’re teachers.` },
   { id: "s-nad-kodus", who: "nad", en: msg`They’re at home.` },
   { id: "s-nad-vasinud", who: "nad", en: msg`They’re tired.` },
+];
+
+const KEEP_OR_DROP: readonly (keyof typeof PRONOUN_SENTENCES)[] = [
+  "s-ma-valmis",
+  "s-ta-opetaja",
+  "s-sa-sober",
+  "s-nad-kodus",
+  "s-me-sobrad",
+  "s-ta-vasinud",
+  "s-te-opetajad",
+  "s-nad-vasinud",
 ];
 
 /** The endings a gap offers: the answer and two near misses, so three fit on a phone. */
@@ -553,6 +580,133 @@ export function MinaSinaTemaLesson() {
     [t, i18n],
   );
 
+  const formItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
+    () =>
+      PEOPLE.flatMap((person) =>
+        [person.short, person.long].map((form) => ({
+          base: "olema",
+          gloss: t`to be`,
+          cue: form,
+          cueLang: "et",
+          answers: [person.verb],
+          src: pairSrc(form, person.verb),
+          said: pronounWithOlema(form, person.verb),
+          pair: [person.short, form] as const,
+          explain: (
+            <>
+              <span lang="et" className="font-medium text-ink">
+                {pronounWithOlema(form, person.verb)}
+              </span>{" "}
+              {i18n._(person.is)}
+            </>
+          ),
+        })),
+      ),
+    [t, i18n],
+  );
+
+  const sortBins = useMemo<SortBin[]>(
+    () => [
+      {
+        id: "drop",
+        label: t`The pronoun can go`,
+        lang: i18n.locale,
+        rule: (
+          <Trans>
+            <span lang="et">Olen, oled, oleme, olete</span>: the ending says who.
+          </Trans>
+        ),
+      },
+      {
+        id: "keep",
+        label: t`The pronoun usually stays`,
+        lang: i18n.locale,
+        rule: (
+          <Trans>
+            <span lang="et">On</span> has no ending, so here only <span lang="et">ta</span> or{" "}
+            <span lang="et">nad</span> says who.
+          </Trans>
+        ),
+      },
+    ],
+    [t, i18n],
+  );
+  const sortItems = useMemo<SortItem[]>(
+    () =>
+      KEEP_OR_DROP.map((id) => {
+        const said = PRONOUN_SENTENCES[id];
+        return { w: said, bin: said.includes(" on ") ? "keep" : "drop", src: sentenceSrc(id) };
+      }),
+    [],
+  );
+
+  const writtenItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      PRONOUN_HEARD.map(({ said, who }) => ({
+        kind: "dictation" as const,
+        id: `write-${clipId(said)}`,
+        src: wordSrc(said),
+        answers: [said],
+        pair: [who, said] as const,
+      })),
+    [],
+  );
+
+  const builtItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      PRONOUN_BUILT.slice(0, 6).map(({ pronoun, word, said }) => ({
+        kind: "build" as const,
+        id: `build-${pronoun}`,
+        words: [pronoun, "olema", word],
+        src: wordSrc(said),
+        answers: pronounOrders(said),
+        pair: [pronoun, said] as const,
+      })),
+    [],
+  );
+
+  const passageQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "liis",
+        ask: t`What does Liis say about herself?`,
+        options: [
+          { id: "home", label: t`She’s at home.` },
+          { id: "teacher", label: t`She’s a teacher.` },
+          { id: "tired", label: t`She’s tired.` },
+        ],
+        answer: "teacher",
+        line: 1,
+      },
+      {
+        id: "peeter",
+        ask: t`What does Liis say about Peeter?`,
+        options: [
+          { id: "teacher", label: t`He’s a teacher.` },
+          { id: "home", label: t`He’s at home.` },
+          { id: "tired", label: t`He’s tired.` },
+        ],
+        answer: "tired",
+        line: 3,
+      },
+      {
+        id: "friends",
+        kind: "truefalse",
+        ask: t`Liis and Peeter are friends.`,
+        answer: true,
+        line: 4,
+      },
+      {
+        id: "where",
+        kind: "truefalse",
+        ask: t`Mari and Jaan are at school.`,
+        answer: false,
+        line: 5,
+      },
+    ],
+    [t],
+  );
+
   return (
     <LessonView
       slug={SLUG}
@@ -560,12 +714,12 @@ export function MinaSinaTemaLesson() {
       sub={
         <Trans>
           Six words for people, each with a long and a short form, and olema, to be, whose ending
-          tells you who.
+          usually tells you who.
         </Trans>
       }
       facts={[
-        <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">2 quizzes</Trans>,
+        <Trans key="m">15 minutes</Trans>,
+        <Trans key="q">5 quizzes, a sort and a passage</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -581,11 +735,15 @@ export function MinaSinaTemaLesson() {
         "on",
         "oleme",
         "olete",
+        "kodus",
+        "valmis",
+        "väsinud",
+        "õpetaja",
       ]}
       recap={[
         <Trans key="1">
-          Each pronoun has two forms. Say the short one, <b lang="et">ma</b>, and keep the long one,{" "}
-          <b lang="et">mina</b>, for stress.
+          As the subject, each pronoun has two forms. Usually say the short one, <b lang="et">ma</b>
+          , and keep the long one, <b lang="et">mina</b>, for stress.
         </Trans>,
         <Trans key="2">
           <b lang="et">Ta</b> is both he and she. <b lang="et">Te</b> is you, to more than one, and
@@ -595,10 +753,11 @@ export function MinaSinaTemaLesson() {
           The forms of olema, to be: <b lang="et">olen, oled, on, oleme, olete, on</b>.
         </Trans>,
         <Trans key="4">
-          The ending tells who, so the pronoun can go: <b lang="et">Olen Mari.</b>
+          Where the ending tells who, the pronoun can go: <b lang="et">Olen Mari.</b>
         </Trans>,
         <Trans key="5">
-          <b lang="et">On</b> is both he or she is and they are. Only the pronoun tells them apart.
+          <b lang="et">On</b> is both he or she is and they are. Usually only the pronoun tells them
+          apart.
         </Trans>,
       ]}
       sections={[
@@ -610,9 +769,9 @@ export function MinaSinaTemaLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Estonian has six words for people, and each comes in a long and a short form
-                    that mean the same. <Word w="Mina" /> and <Word w="ma" /> are both I. The short
-                    one, in colour below, is the one you’ll hear most. Tap any word.
+                    Estonian has six words for people, and as the subject each comes in a long and a
+                    short form that mean the same. <Word w="Mina" /> and <Word w="ma" /> are both I.
+                    The short one, in colour below, is the one you’ll hear most. Tap any word.
                   </Trans>
                 </p>
               </Prose>
@@ -663,7 +822,7 @@ export function MinaSinaTemaLesson() {
                 <p>
                   <Trans>
                     Because the ending already says who, the pronoun can go. Both lines below mean
-                    I’m Mari. A sentence can drop the pronoun, but not the verb.
+                    I’m Mari. A sentence can drop the pronoun, but usually not the verb.
                   </Trans>
                 </p>
               </Prose>
@@ -701,7 +860,7 @@ export function MinaSinaTemaLesson() {
               <Table />
               <Aside>
                 <Trans>
-                  Setting two people side by side takes the long forms:{" "}
+                  Setting two people side by side usually takes the long forms:{" "}
                   <Word w="Mina olen Liis ja tema on Peeter" />
                 </Trans>
               </Aside>
@@ -764,6 +923,167 @@ export function MinaSinaTemaLesson() {
                 recall={(item) => ({ label: item.said, src: item.src })}
                 order={eachPairFirst}
                 round={(props) => <GapRound {...props} listen="after" />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "type",
+          title: t`Type the form`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Now type the form of <Word w="olema" /> for each pronoun. A long pronoun takes
+                    the same form as its short one.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="type-olema"
+                title={<Trans>Type the form</Trans>}
+                items={formItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>
+                      All six, each with the right form of <span lang="et">olema</span>.
+                    </Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Tap the endings above once more.</Trans>
+                  ) : (
+                    <Trans>Go back to the endings above, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={eachPairFirst}
+                round={(props) => <FormRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "drop",
+          title: t`When the pronoun can go`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    <Word w="Olen" /> can only mean I am, so <Word w="ma" /> can go. <Word w="On" />{" "}
+                    means both he or she is and they are, so <Word w="ta" /> or <Word w="nad" />{" "}
+                    usually has to stay.
+                  </Trans>
+                </p>
+                <p>
+                  <Trans>Put each sentence where it belongs. Tap a sentence to hear it.</Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="sort-pronoun"
+                title={<Trans>Can the pronoun go?</Trans>}
+                bins={sortBins}
+                items={sortItems}
+              />
+            </>
+          ),
+        },
+        {
+          id: "write",
+          title: t`Write what you hear`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Hear a sentence and write it. Some have no pronoun, so write only what you hear.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="write-olema"
+                title={<Trans>Write the sentence</Trans>}
+                items={writtenItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, every word in place.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Play the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Try again, and tap Slower before you write each sentence.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "build",
+          title: t`Make a sentence`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round gives a pronoun, <Word w="olema" /> and a word. Change{" "}
+                    <span lang="et">olema</span> to the form for that pronoun and write the
+                    sentence: <span lang="et">ma · olema · valmis</span> is{" "}
+                    <Word w="Ma olen valmis" />.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="build-olema"
+                title={<Trans>Make a sentence</Trans>}
+                items={builtItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six sentences, each with the right form.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>
+                      Nearly. Check the form of <span lang="et">olema</span> in the ones you missed.
+                    </Trans>
+                  ) : (
+                    <Trans>Type the forms above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: Liis introduces people`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Liis says who she is, who Peeter is, and where Mari and Jaan are. Listen for the
+                    pronoun and the form of <Word w="olema" />.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="liis-and-friends"
+                title={<Trans>Listen: Liis introduces people</Trans>}
+                clip="p-liis"
+                sentences={PRONOUN_PASSAGE}
+                questions={passageQuestions}
               />
             </>
           ),

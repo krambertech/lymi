@@ -7,6 +7,15 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
+msgid "<0>Kas</0> usually asks yes or no; the answer often starts with <1>jah</1> or <2>ei</2>."
+msgstr "<0>Kas</0> обычно спрашивает «да или нет»; ответ часто начинается с <1>jah</1> или <2>ei</2>."
+
+msgid "<0>Kes</0> asks who, so a person answers it."
+msgstr "<0>Kes</0> спрашивает «кто», поэтому ответ — человек."
+
+msgid "<0>Kus</0> asks where, so a place answers it."
+msgstr "<0>Kus</0> спрашивает «где», поэтому ответ — место."
+
 msgid "<0>Kust</0> asks where you’re from, not where you live."
 msgstr "<0>Kust</0> спрашивает, откуда ты, а не где живёшь."
 
@@ -37,8 +46,20 @@ msgstr "<0>Sinu</0> — это «твоё»: получается «Твоё и�
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — это «привет», а Мари уже уходит."
 
-msgid "10 minutes"
-msgstr "10 минут"
+msgid "<et>Kus</et> asks where, and the verb takes its person’s ending: <et>Kus sa õpid? Kus ta õpib?</et>"
+msgstr "<et>Kus</et> спрашивает «где», а окончание глагола зависит от лица: <et>Kus sa õpid? Kus ta õpib?</et>"
+
+msgid "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
+msgstr "С <et>mina</et> — <et>olen</et>: <et>Mina olen Andres</et>."
+
+msgid "<et>Mis</et> asks what; when the answer says <et>ma</et> or <et>minu</et>, ask with <et>sa</et> or <et>su</et>, or polite <et>te</et>."
+msgstr "<et>Mis</et> спрашивает «что»; если в ответе <et>ma</et> или <et>minu</et>, то в вопросе — <et>sa</et> или <et>su</et>, а вежливо — <et>te</et>."
+
+msgid "20 minutes"
+msgstr "20 минут"
+
+msgid "A <0/> question usually wants yes or no, a <1/> question a place, and a <2/> question a person. Put each answer under the question it fits."
+msgstr "На вопрос с <0/> обычно отвечают «да» или «нет», на вопрос с <1/> — местом, на вопрос с <2/> — человеком. Разложи ответы по вопросам."
 
 msgid "a little"
 msgstr "немного"
@@ -49,11 +70,29 @@ msgstr "много"
 msgid "A note from Kati"
 msgstr "Записка от Кати"
 
-msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
-msgstr "После <0>ei</0> у глагола <1>olema</1> нет окончания: <2>ei ole</2>."
+msgid "A yes-or-no question usually starts with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
+msgstr "Вопрос «да или нет» обычно начинается с <0>kas</0>, а любой другой — с вопросительного слова: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
 
-msgid "After ei the verb has no ending: ei tööta, doesn’t work."
-msgstr "После ei глагол без окончания: ei tööta, «не работает»."
+msgid "A yes-or-no question usually starts with <et>kas</et>; the verb takes the ending for its person, as without <et>kas</et>."
+msgstr "Вопрос с ответом «да» или «нет» обычно начинается с <et>kas</et>; окончание глагола, как и без <et>kas</et>, зависит от лица."
+
+msgid "A yes-or-no question usually starts with <et>kas</et>."
+msgstr "Вопрос с ответом «да» или «нет» обычно начинается с <et>kas</et>."
+
+msgid "After <0>ei</0>, <1>olema</1> usually loses its ending: <2>ei ole</2>."
+msgstr "После <0>ei</0> глагол <1>olema</1> обычно теряет окончание: <2>ei ole</2>."
+
+msgid "After <et>ei</et> the verb usually has no ending; <et>olema</et> is <et>ole</et>."
+msgstr "После <et>ei</et> глагол обычно без окончания; <et>olema</et> становится <et>ole</et>."
+
+msgid "After ei the verb usually has no ending: ei tööta, doesn’t work."
+msgstr "После ei глагол обычно без окончания: ei tööta, «не работает»."
+
+msgid "All six, each with the right question word and verb ending."
+msgstr "Все шесть: в каждом верное вопросительное слово и окончание глагола."
+
+msgid "All six, every sentence right."
+msgstr "Все шесть предложений верны."
 
 msgid "Answer, then ask back: <0>Hästi, aitäh. Aga sul?</0>"
 msgstr "Отвечай и спрашивай в ответ: <0>Hästi, aitäh. Aga sul?</0>"
@@ -61,11 +100,17 @@ msgstr "Отвечай и спрашивай в ответ: <0>Hästi, aitäh. A
 msgid "Answering Mari"
 msgstr "Ответы на вопросы Мари"
 
-msgid "Ask a yes-or-no question with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
-msgstr "Вопрос «да или нет» начинай с <0>kas</0>, а любой другой — с вопросительного слова: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
+msgid "Ask the question"
+msgstr "Задай вопрос"
 
 msgid "Asking Mari"
 msgstr "Вопросы к Мари"
+
+msgid "Asking questions"
+msgstr "Как задавать вопросы"
+
+msgid "Asks Mari a question."
+msgstr "Есть вопрос к Мари."
 
 msgid "At a school"
 msgstr "В школе"
@@ -82,14 +127,32 @@ msgstr "кофе"
 msgid "Coffee"
 msgstr "Кофе"
 
+msgid "Do you live in Tallinn?"
+msgstr "Ты живёшь в Таллине?"
+
 msgid "Do you speak Estonian?"
 msgstr "Ты говоришь по-эстонски?"
+
+msgid "Does he or she speak Estonian?"
+msgstr "Он или она говорит по-эстонски?"
+
+msgid "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0> or <1>minu</1>, ask with <2>sa</2> or <3>su</3>, or polite <4>te</4>."
+msgstr "В каждом раунде есть ответ. Напиши к нему вопрос. Если в ответе <0>ma</0> или <1>minu</1>, то в вопросе — <2>sa</2> или <3>su</3>, а вежливо — <4>te</4>."
+
+msgid "Each sentence needs one thing from lessons {first} to {last}: the verb after <0>ei</0>, a place with its ending, or a question."
+msgstr "В каждом предложении понадобится что-то из уроков {first}–{last}: глагол после <0>ei</0>, место с окончанием или вопрос."
+
+msgid "Fill Kati’s note above once more, then try again."
+msgstr "Ещё раз заполни записку Кати выше, а потом попробуй снова."
 
 msgid "Fill the gaps"
 msgstr "Заполни пропуски"
 
 msgid "Fine, thanks. And you?"
 msgstr "Хорошо, спасибо. А у тебя?"
+
+msgid "Four to six sentences: who you are, where you live, what you do, something you don’t do, and a question for Mari."
+msgstr "От четырёх до шести предложений: кто ты, где живёшь, чем занимаешься, чего не делаешь и вопрос к Мари."
 
 msgid "friend"
 msgstr "друг, подруга"
@@ -103,8 +166,14 @@ msgstr "От jooma, пить."
 msgid "From õppima, to learn, to study."
 msgstr "От õppima, учить, учиться."
 
+msgid "Go through Asking Mari once more, then try again."
+msgstr "Ещё раз пройди «Вопросы к Мари», а потом попробуй снова."
+
 msgid "Goodbye"
 msgstr "До свидания"
+
+msgid "Has a sentence with <0>ei</0> and the verb without its ending for the person."
+msgstr "Есть предложение с <0>ei</0> и глаголом без личного окончания."
 
 msgid "he or she drinks"
 msgstr "он или она пьёт"
@@ -118,17 +187,29 @@ msgstr "он или она учится"
 msgid "How are you?"
 msgstr "Как дела?"
 
+msgid "I don’t work at the office."
+msgstr "Я не работаю в офисе."
+
 msgid "I live"
 msgstr "я живу"
 
 msgid "I work"
 msgstr "я работаю"
 
+msgid "I’m Andres."
+msgstr "Я Андрес."
+
+msgid "I’m not at home."
+msgstr "Меня нет дома."
+
 msgid "in a café"
 msgstr "в кафе"
 
 msgid "In a café"
 msgstr "В кафе"
+
+msgid "In a town or a building, usually <et>-s</et>; at work, <et>-l</et>."
+msgstr "В городе или здании обычно <et>-s</et>; на работе — <et>-l</et>."
 
 msgid "In an office"
 msgstr "В офисе"
@@ -157,14 +238,29 @@ msgstr "Joob kohvi — «пьёт кофе». Пока запомни это к�
 msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 msgstr "Кати пишет о себе. В каждом пропуске — одно из того, что ты уже знаешь: форма <0>olema</0>, окончание глагола, глагол после <1>ei</1>, место с <2>-l</2> или вопросительное слово."
 
+msgid "Liis"
+msgstr "Лийс"
+
+msgid "Liis and Peeter meet. They ask each other where they live and say what they do."
+msgstr "Лийс и Пеэтер знакомятся: спрашивают друг друга, где живут, и рассказывают, чем занимаются."
+
+msgid "Liis works in Tartu."
+msgstr "Лийс работает в Тарту."
+
 msgid "Listen: Jaan and Kati"
 msgstr "Аудирование: Яан и Кати"
+
+msgid "Listen: Liis meets Peeter"
+msgstr "Аудирование: Лийс знакомится с Пеэтером"
 
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
 
 msgid "Listening: Jaan and Kati"
 msgstr "На слух: Яан и Кати"
+
+msgid "Listening: Liis meets Peeter"
+msgstr "На слух: Лийс знакомится с Пеэтером"
 
 msgid "Mari"
 msgstr "Мари"
@@ -190,29 +286,56 @@ msgstr "Знакомство по-эстонски: скажи, кто ты, г�
 msgid "name"
 msgstr "имя"
 
+msgid "Nearly. Check the question word and the verb’s ending."
+msgstr "Почти. Проверь вопросительное слово и окончание глагола."
+
+msgid "Nearly. Check the verb and the place in the ones you missed."
+msgstr "Почти. Там, где была ошибка, проверь глагол и место."
+
 msgid "Nice to meet you"
 msgstr "Приятно познакомиться"
 
 msgid "not; no"
 msgstr "не; нет"
 
-msgid "Now you ask. Pick the question that fits what Mari just said. Ask why with <0/>, and the answer starts with <1/>, because."
-msgstr "Теперь спрашиваешь ты. Выбирай вопрос, который подходит к тому, что Мари только что сказала. «Почему» — это <0/>, а ответ начинается с <1/>, «потому что»."
+msgid "Now you ask. Pick the question that fits what Mari just said. Ask why with <0/>, and the answer usually starts with <1/>, because."
+msgstr "Теперь спрашиваешь ты. Выбирай вопрос, который подходит к тому, что Мари только что сказала. «Почему» — это <0/>, а ответ обычно начинается с <1/>, «потому что»."
 
 msgid "Pärnu takes <0>-s</0>: <1>Pärnus</1>."
 msgstr "Пярну получает <0>-s</0>: <1>Pärnus</1>."
 
+msgid "Peeter"
+msgstr "Пеэтер"
+
+msgid "Peeter speaks a little Estonian."
+msgstr "Пеэтер немного говорит по-эстонски."
+
+msgid "Places with <et>-s</et> and <et>-l</et>"
+msgstr "Места с <et>-s</et> и <et>-l</et>"
+
 msgid "Practice for lessons {first} to {last}"
 msgstr "Практика по урокам {first}–{last}"
 
-msgid "Say no with <0>ei</0> and the verb without its ending: <1>Ma ei tööta. Ei, ma ei ole.</1>"
-msgstr "Чтобы сказать «нет», ставь <0>ei</0>, а глагол — без окончания: <1>Ma ei tööta. Ei, ma ei ole.</1>"
+msgid "Say no with <0>ei</0> and the verb, usually without its ending: <1>Ma ei tööta. Ei, ma ei ole.</1>"
+msgstr "Чтобы сказать «нет», ставь <0>ei</0>, а глагол — обычно без окончания: <1>Ma ei tööta. Ei, ma ei ole.</1>"
 
 msgid "Say where you live and work, with <0>-s</0> or <1>-l</1> on the place: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
 msgstr "Говори, где живёшь и работаешь, добавляя к месту <0>-s</0> или <1>-l</1>: <2>Ma elan Tartus. Ma töötan kontoris. Ta on tööl.</2>"
 
 msgid "Say who you are: <0>Mina olen Andres</0> or <1>Minu nimi on Andres</1>."
 msgstr "Говори, кто ты: <0>Mina olen Andres</0> или <1>Minu nimi on Andres</1>."
+
+msgid "Says what you do."
+msgstr "Сказано, чем ты занимаешься."
+
+msgid "Says where you live, with <0>-s</0> or <1>-l</1> on the place."
+msgstr "Сказано, где ты живёшь, с <0>-s</0> или <1>-l</1> в названии места."
+
+msgid "Says who you are."
+msgstr "Сказано, кто ты."
+
+msgid "She lives in Tartu."
+msgstr "Она живёт в Тарту."
 
 msgid "She studies"
 msgstr "Она учится"
@@ -235,14 +358,29 @@ msgstr "Тарту получает <0>-s</0>: <1>Tartus</1>."
 msgid "Tea"
 msgstr "Чай"
 
-msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
-msgstr "Глагол теряет окончание после <0>ei</0>, а не после <1>kas</1>: <2>elad</2>."
+msgid "The verb usually drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
+msgstr "Глагол обычно теряет окончание после <0>ei</0>, а не после <1>kas</1>: <2>elad</2>."
+
+msgid "They’re at work."
+msgstr "Они на работе."
 
 msgid "This time Mari’s lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
 msgstr "На этот раз реплики Мари только звучат. Нажми на реплику, чтобы услышать её ещё раз, или на «Показать реплику: Мари», чтобы её прочитать."
 
+msgid "usually turns a sentence into a yes-or-no question"
+msgstr "обычно делает из предложения вопрос «да или нет»"
+
+msgid "Verb forms: after <et>ei</et>, and <et>olema</et>"
+msgstr "Глагол после <et>ei</et> и формы <et>olema</et>"
+
 msgid "Water"
 msgstr "Вода"
+
+msgid "We don’t work, we study."
+msgstr "Мы не работаем, мы учимся."
+
+msgid "We live in Tallinn."
+msgstr "Мы живём в Таллине."
 
 msgid "What does Kati do?"
 msgstr "Чем занимается Кати?"
@@ -253,6 +391,9 @@ msgstr "Что Кати много пьёт?"
 msgid "What’s your name?"
 msgstr "Как тебя зовут?"
 
+msgid "where"
+msgstr "где"
+
 msgid "Where are you from?"
 msgstr "Откуда ты?"
 
@@ -262,11 +403,32 @@ msgstr "Где ты живёшь?"
 msgid "Where do you work?"
 msgstr "Где ты работаешь?"
 
+msgid "Where does he work?"
+msgstr "Где он работает?"
+
 msgid "Where does Jaan work?"
 msgstr "Где работает Яан?"
 
 msgid "Where does Kati live?"
 msgstr "Где живёт Кати?"
+
+msgid "Where does Liis live?"
+msgstr "Где живёт Лийс?"
+
+msgid "Where does Mari live?"
+msgstr "Где живёт Мари?"
+
+msgid "Where does Peeter live?"
+msgstr "Где живёт Пеэтер?"
+
+msgid "Where does Peeter work?"
+msgstr "Где работает Пеэтер?"
+
+msgid "Which question does it answer?"
+msgstr "На какой вопрос это ответ?"
+
+msgid "who"
+msgstr "кто"
 
 msgid "why"
 msgstr "почему"
@@ -283,6 +445,21 @@ msgstr "Дословно: «очень приятно»."
 msgctxt "the verb, after ei"
 msgid "work"
 msgstr "работать"
+
+msgid "Write it in Estonian"
+msgstr "Напиши по-эстонски"
+
+msgid "Write Mari a short message about yourself, then compare it with a model and tick what yours does. Nothing is marked for you here."
+msgstr "Напиши Мари короткое сообщение о себе, потом сравни его с образцом и отметь, что в нём есть. Здесь никто не проверяет за тебя."
+
+msgid "Write the question it answers"
+msgstr "Напиши вопрос к ответу"
+
+msgid "Write to Mari"
+msgstr "Напиши Мари"
+
+msgid "yes or no"
+msgstr "да или нет"
 
 msgid "You are Andres, from Ukraine. You live in Tartu, work in an office and are learning Estonian."
 msgstr "Ты — Андрес из Украины. Живёшь в Тарту, работаешь в офисе и учишь эстонский."

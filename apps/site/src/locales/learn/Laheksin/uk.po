@@ -1,0 +1,515 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 12:41+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0/> means I would go. Take the <1>ma</1> form of the present from lesson {present}, <2>lähen</2>, drop its <3>-n</3>, and add <4>-ksin</4>. Every verb works this way. Tap each form in the table to hear it."
+msgstr "<0/> означає «я пішов би». Візьми форму теперішнього часу для <1>ma</1> з уроку {present}, <2>lähen</2>, відкинь <3>-n</3> і додай <4>-ksin</4>. Так працює кожне дієслово. Натисни кожну форму в таблиці, щоб її почути."
+
+msgid "<0/> means if. When the if is imagined, English says “if I had”, then “I would”; Estonian puts both halves in the would form: <1/> For a real if, both usually stay in the present: <2>Kui mul on aega, lähen ma kinno.</2>"
+msgstr "<0/> означає «якщо» і «якби». Коли умова уявна, в естонській обидві половини стоять в умовній формі: <1/> Коли умова реальна, обидві зазвичай лишаються в теперішньому часі: <2>Kui mul on aega, lähen ma kinno.</2>"
+
+msgid "<0>-ks</0> in the verb: would."
+msgstr "<0>-ks</0> у дієслові: умовна форма, «би»."
+
+msgid "<0>-ks</0> is in every person. The form for <1>ta</1> stops at it, and <2>nad</2> ends like <3>sa</3>. After <4>ei</4>, every person takes the form for <5>ta</5>."
+msgstr "<0>-ks</0> є в усіх особах. Форма для <1>ta</1> на ньому закінчується, а <2>nad</2> закінчується так само, як <3>sa</3>. Після <4>ei</4> усі особи беруть форму для <5>ta</5>."
+
+msgid "22 minutes"
+msgstr "22 хвилини"
+
+msgid "8 exercises"
+msgstr "8 вправ"
+
+msgid "A month off"
+msgstr "Місяць відпустки"
+
+msgid "After <0>ei</0>, the form for <1>ta</1>: <2>läheks</2>."
+msgstr "Після <0>ei</0> — форма для <1>ta</1>: <2>läheks</2>."
+
+msgid "After <0>ei</0>, the would form has no person ending: <1>läheks</1>."
+msgstr "Після <0>ei</0> умовна форма не має особового закінчення: <1>läheks</1>."
+
+msgid "After <et>ei</et>, the form for <et>ta</et>, for every person."
+msgstr "Після <et>ei</et> — форма для <et>ta</et>, для всіх осіб."
+
+msgid "All eight, typed in full."
+msgstr "Усі вісім, повністю написані."
+
+msgid "All seven, each with the would form where it belongs."
+msgstr "Усі сім, і скрізь умовна форма там, де треба."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six, each with the would form."
+msgstr "Усі шість, кожне в умовній формі."
+
+msgid "All six: right every time."
+msgstr "Усі шість: щоразу правильно."
+
+msgid "An imagined if takes the would form in both halves: <0>oleks</0>."
+msgstr "Уявна умова — умовна форма в обох половинах: <0>oleks</0>."
+
+msgid "An imagined if: both halves take the would form."
+msgstr "Уявна умова: обидві половини в умовній формі."
+
+msgid "Ask politely with it: <0>Ma tahaksin kohvi. Kas sa saaksid mind aidata?</0>"
+msgstr "З нею ввічливо просять: <0>Ma tahaksin kohvi. Kas sa saaksid mind aidata?</0>"
+
+msgid "Asking politely"
+msgstr "Ввічливе прохання"
+
+msgid "Bake cakes with her grandmother"
+msgstr "Пекла б із бабусею пироги"
+
+msgid "Both forms are correct for every person: <0>ma tahaksin</0> or <1>ma tahaks</1>, <2>me läheksime</2> or <3>me läheks</3>. The short one, like the form for <4>ta</4>, is common in speech."
+msgstr "Обидві форми правильні для кожної особи: <0>ma tahaksin</0> або <1>ma tahaks</1>, <2>me läheksime</2> або <3>me läheks</3>. Коротка, як форма для <4>ta</4>, поширена в розмові."
+
+msgid "can, to get"
+msgstr "могти, отримувати"
+
+msgid "Could you help me?"
+msgstr "Ти не міг би мені допомогти?"
+
+msgid "Could you say that again, please?"
+msgstr "Чи не могли б ви повторити?"
+
+#. placeholder {0}: item.n
+#. placeholder {1}: item.person
+#. placeholder {2}: item.answer
+msgid "Drop the <0>-n</0> of <1>{0}</1> and add <2>-ks</2> with the ending for <3>{1}</3>: <4>{2}</4>."
+msgstr "Відкинь <0>-n</0> у <1>{0}</1> і додай <2>-ks</2> із закінченням для <3>{1}</3>: <4>{2}</4>."
+
+msgid "Drop the <0>-n</0> of the present and add <1>-ksin</1>."
+msgstr "Відкинь <0>-n</0> теперішнього часу і додай <1>-ksin</1>."
+
+msgid "Drop the <et>-n</et> of the present and add <et>-ks</et>, usually with the person’s ending: <et>-in</et>, <et>-id</et>, none for <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
+msgstr "Відкинь <et>-n</et> теперішнього часу і додай <et>-ks</et>, зазвичай із закінченням особи: <et>-in</et>, <et>-id</et>, без закінчення для <et>ta</et>, <et>-ime</et>, <et>-ite</et>, <et>-id</et>."
+
+msgid "Each round gives a sentence and a cue. Write it with the would form."
+msgstr "У кожному раунді — речення і підказка. Напиши його в умовній формі."
+
+msgid "Each round gives a verb, its present for <0>ma</0>, and a person. Type the would form."
+msgstr "У кожному раунді — дієслово, його теперішній час для <0>ma</0> і особа. Напиши умовну форму."
+
+msgid "Each sentence has one verb in the wrong form. Tap it, then type it right."
+msgstr "У кожному реченні одне дієслово в неправильній формі. Натисни на нього і напиши правильно."
+
+msgid "First we should save some money."
+msgstr "Спершу нам варто трохи заощадити."
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "Fix the would form"
+msgstr "Виправ умовну форму"
+
+msgid "For <0>me</0>, the full ending is <1>-me</1>: <2>läheksime</2>."
+msgstr "Для <0>me</0> повне закінчення <1>-me</1>: <2>läheksime</2>."
+
+msgid "For <0>sa</0>, the full ending is <1>-d</1>: <2>saaksid</2>."
+msgstr "Для <0>sa</0> повне закінчення <1>-d</1>: <2>saaksid</2>."
+
+msgid "For <0>te</0>, the full ending is <1>-te</1>: <2>loeksite</2>."
+msgstr "Для <0>te</0> повне закінчення <1>-te</1>: <2>loeksite</2>."
+
+msgid "For <et>me</et>, the full ending is <et>-me</et>: <et>läheksime</et>."
+msgstr "Для <et>me</et> повне закінчення <et>-me</et>: <et>läheksime</et>."
+
+msgid "For <et>sa</et>, the full ending is <et>-d</et>: <et>saaksid</et>."
+msgstr "Для <et>sa</et> повне закінчення <et>-d</et>: <et>saaksid</et>."
+
+msgid "For <et>te</et>, the full ending is <et>-te</et>: <et>loeksite</et>."
+msgstr "Для <et>te</et> повне закінчення <et>-te</et>: <et>loeksite</et>."
+
+msgid "For the other persons, <0>-ks</0> takes <1>-id</1> for <2>sa</2> and <3>nad</3>, <4>-ime</4> for <5>me</5> and <6>-ite</6> for <7>te</7>. The form for <8>ta</8> stops at <9>-ks</9>: <10/>, would be."
+msgstr "Для інших осіб до <0>-ks</0> додається <1>-id</1> для <2>sa</2> і <3>nad</3>, <4>-ime</4> для <5>me</5> і <6>-ite</6> для <7>te</7>. Форма для <8>ta</8> закінчується на <9>-ks</9>: <10/> — був би."
+
+msgid "gladly, I’d love to"
+msgstr "охоче, із задоволенням"
+
+msgid "he or she"
+msgstr "він чи вона"
+
+msgid "He or she bought the car."
+msgstr "Він чи вона купив машину."
+
+msgid "He or she is buying the car."
+msgstr "Він чи вона купує машину."
+
+msgid "He or she would buy the car."
+msgstr "Він чи вона купив би машину."
+
+msgid "He or she would go home."
+msgstr "Він чи вона пішли б додому."
+
+msgid "Hear a sentence, then pick what it means. Listen for <0>-ks</0>. Without it, a changed stem or <1>-s</1> means the past: <2>tulin, oli, ostis</2>."
+msgstr "Послухай речення і вибери, що воно означає. Слухай, чи є <0>-ks</0>. Без нього змінена основа або <1>-s</1> означають минулий час: <2>tulin, oli, ostis</2>."
+
+msgid "How many weeks would Jaan stay there? Write the number as he says it."
+msgstr "Скільки тижнів Яан був би там? Напиши число так, як він його каже."
+
+msgid "I"
+msgstr "я"
+
+msgid "I came home."
+msgstr "Я прийшов додому."
+
+msgid "I do"
+msgstr "я роблю"
+
+msgid "I form and would form of nine verbs"
+msgstr "Форма для «я» і умовна форма дев’яти дієслів"
+
+msgid "I had time."
+msgstr "У мене був час."
+
+msgid "I have time."
+msgstr "У мене є час."
+
+msgid "I would"
+msgstr "я зробив би"
+
+msgid "I would come home."
+msgstr "Я прийшов би додому."
+
+msgid "I would go"
+msgstr "я пішов би"
+
+msgid "I would have time."
+msgstr "У мене був би час."
+
+msgid "I would like"
+msgstr "я хотів би"
+
+msgid "I wouldn’t buy coffee every day."
+msgstr "Я не купував би каву щодня."
+
+msgid "I wouldn’t go far."
+msgstr "Я не поїхала б далеко."
+
+msgid "I wouldn’t go to the cinema."
+msgstr "Я б не пішов у кіно."
+
+msgid "I wouldn’t go."
+msgstr "Я не пішов би."
+
+msgid "I’d learn a little Japanese."
+msgstr "Я трохи вчив би японську."
+
+msgid "I’d like a coffee, please."
+msgstr "Я хотів би кави, будь ласка."
+
+msgid "I’d like a coffee."
+msgstr "Я хотів би кави."
+
+msgid "I’d love to come."
+msgstr "Я охоче поїхав би."
+
+msgid "I’m coming home."
+msgstr "Я йду додому."
+
+msgid "If I had time, I’d go to the cinema."
+msgstr "Якби в мене був час, я пішов би в кіно."
+
+msgid "If I were rich, I’d buy a house."
+msgstr "Якби я був багатий, я купив би будинок."
+
+msgid "If it were warm, we would swim in the sea."
+msgstr "Якби було тепло, ми плавали б у морі."
+
+msgid "If the weather were fine, we’d drive to the sea."
+msgstr "Якби погода була гарна, ми поїхали б до моря."
+
+msgid "If, and would"
+msgstr "Якби"
+
+msgid "if; when; as, than"
+msgstr "якщо, якби; коли; як, ніж"
+
+msgid "In an imagined if sentence, both halves take it: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
+msgstr "У реченні з уявною умовою вона в обох половинах: <0>Kui mul oleks aega, läheksin ma kinno.</0>"
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan thinks he would speak Japanese as well as Estonian."
+msgstr "Яан думає, що говорив би японською так само добре, як естонською."
+
+msgid "Jaan’s grandparents live in the country."
+msgstr "Дідусь і бабуся Яана живуть у селі."
+
+msgid "Lähe-, from lähen, plus -ksin."
+msgstr "Lähe- від lähen, плюс -ksin."
+
+msgid "Lesson {verbForms} gave each verb its present; that’s the one to start from. <0>Õppima</0> gives <1>õpin</1>, so <2>õpiksin</2>, not <3>õppiksin</3>."
+msgstr "Урок {verbForms} дав кожному дієслову теперішній час; від нього й починай. <0>Õppima</0> дає <1>õpin</1>, тож <2>õpiksin</2>, а не <3>õppiksin</3>."
+
+msgid "Listen to the requests above once more, then try again."
+msgstr "Ще раз послухай прохання вище, а тоді спробуй знову."
+
+msgid "Listen to the sentences above once more, then try again."
+msgstr "Ще раз послухай речення вище, а тоді спробуй знову."
+
+msgid "Listen: Mari and Jaan"
+msgstr "Послухай: Марі та Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari asks Jaan what he would do with a month off."
+msgstr "Марі питає Яана, що він робив би з місяцем відпустки."
+
+msgid "Mari would spend the month at her grandmother’s in the country."
+msgstr "Марі провела б місяць у бабусі в селі."
+
+msgid "may, can"
+msgstr "могти, мати змогу"
+
+msgid "Nearly. Check both halves of the if sentences."
+msgstr "Майже. Перевір обидві половини речень з «якби»."
+
+msgid "Nearly. Check the ending in the ones you got wrong."
+msgstr "Майже. Перевір закінчення там, де є помилка."
+
+msgid "Nearly. Check the person’s ending in the ones you got wrong."
+msgstr "Майже. Перевір закінчення особи там, де є помилка."
+
+msgid "Nearly. Play the ones you got wrong once more."
+msgstr "Майже. Ще раз послухай ті, де є помилка."
+
+msgid "Nearly. Read the reason under each one you got wrong."
+msgstr "Майже. Прочитай пояснення під кожною помилкою."
+
+msgid "Now"
+msgstr "Зараз"
+
+msgid "Now or would"
+msgstr "Зараз чи «би»"
+
+msgid "Now or would?"
+msgstr "Зараз чи «би»?"
+
+msgid "Now, would or past"
+msgstr "Зараз, «би» чи минуле"
+
+msgid "Ole-, from olen, plus -ks: the form for ta."
+msgstr "Ole- від olen, плюс -ks: форма для ta."
+
+msgid "Ordering politely"
+msgstr "Ввічливе замовлення"
+
+msgid "Play the sentences you missed once more, then try again."
+msgstr "Ще раз послухай речення, де помилився, а тоді спробуй знову."
+
+msgid "politely"
+msgstr "ввічливо"
+
+msgid "Put each form in its bin. A would form always has <0>-ks</0>."
+msgstr "Розклади форми по кошиках. В умовній формі завжди є <0>-ks</0>."
+
+msgid "Read in the forest"
+msgstr "Читала б у лісі"
+
+msgid "Read What to remember below, then try again."
+msgstr "Прочитай нижче «Що запам’ятати», а тоді спробуй знову."
+
+msgid "Say it with would"
+msgstr "Скажи в умовній формі"
+
+msgid "Server"
+msgstr "Офіціант"
+
+msgid "Swim in the lake"
+msgstr "Плавала б в озері"
+
+msgid "Taha-, from tahan, plus -ksin."
+msgstr "Taha- від tahan, плюс -ksin."
+
+msgid "Take the present’s <0>ma</0> form without <1>-n</1> and add <2>-ks</2>, usually with the person’s ending: <3>lähen, läheksin, läheksid, läheks</3>."
+msgstr "Візьми форму теперішнього часу для <0>ma</0> без <1>-n</1> і додай <2>-ks</2>, зазвичай із закінченням особи: <3>lähen, läheksin, läheksid, läheks</3>."
+
+msgid "Talk: at a café"
+msgstr "Розмова: у кав’ярні"
+
+msgid "Tap a form"
+msgstr "Натисни на форму"
+
+msgid "Tap each form in both tables once more, then try again."
+msgstr "Ще раз натисни кожну форму в обох таблицях, а тоді спробуй знову."
+
+msgid "That sounds abrupt. Ask with the would form: <0>tahaksin</0>."
+msgstr "Це звучить різко. Попроси в умовній формі: <0>tahaksin</0>."
+
+msgid "The conditional, or would form: <0>-ks</0> in the verb, for wishes, polite requests and what would happen if."
+msgstr "Умовний спосіб: <0>-ks</0> у дієслові — для бажань, ввічливих прохань і того, що сталося б, якби."
+
+msgid "The form for <0>ta</0> has no ending: <1>läheks</1>."
+msgstr "Форма для <0>ta</0> закінчення не має: <1>läheks</1>."
+
+msgid "The form for <et>ta</et> has no ending: <et>läheks</et>."
+msgstr "Форма для <et>ta</et> закінчення не має: <et>läheks</et>."
+
+msgid "The other half takes the would form too: <0>ostaksin</0>."
+msgstr "Друга половина теж в умовній формі: <0>ostaksin</0>."
+
+msgid "The person’s ending, and <et>ei</et>"
+msgstr "Закінчення особи і <et>ei</et>"
+
+msgid "The present: no <0>-ks</0>."
+msgstr "Теперішній час: без <0>-ks</0>."
+
+msgid "The simple past: no <0>-ks</0>."
+msgstr "Простий минулий: без <0>-ks</0>."
+
+msgid "The verb takes <0>-ks</0> and usually its person’s ending."
+msgstr "Дієслово отримує <0>-ks</0> і зазвичай закінчення своєї особи."
+
+msgid "The would form"
+msgstr "Умовна форма"
+
+msgid "The would form makes a request polite, as could and would do in English. <0>Saama</0> and <1>võima</1> from lesson {modal} give <2>saaksid</2> and <3>võiksite</3>: could you."
+msgstr "Умовна форма робить прохання ввічливим, як «би» в «чи не міг би ти». <0>Saama</0> і <1>võima</1> з уроку {modal} дають <2>saaksid</2> і <3>võiksite</3>: чи не міг би ти, чи не могли б ви."
+
+msgid "The would form makes a request polite."
+msgstr "Умовна форма робить прохання ввічливим."
+
+msgid "The would form of minema"
+msgstr "Умовна форма дієслова minema"
+
+msgid "they"
+msgstr "вони"
+
+msgid "to be"
+msgstr "бути"
+
+msgid "to do, to make"
+msgstr "робити"
+
+msgid "to eat"
+msgstr "їсти"
+
+msgid "To Finland"
+msgstr "До Фінляндії"
+
+msgid "to go"
+msgstr "іти, їхати"
+
+msgid "To Japan"
+msgstr "До Японії"
+
+msgid "To Lapland, in the far north"
+msgstr "До Лапландії, на далеку північ"
+
+msgid "to live"
+msgstr "жити"
+
+msgid "to read"
+msgstr "читати"
+
+msgid "To say would not, put <0>ei</0> before the form for <1>ta</1>, for every person: <2/>"
+msgstr "Щоб сказати «не …би», постав <0>ei</0> перед формою для <1>ta</1>, для всіх осіб: <2/>"
+
+msgid "To say would not, put <0>ei</0> before the form for <1>ta</1>: <2>ma ei läheks</2>."
+msgstr "Щоб сказати «не …би», постав <0>ei</0> перед формою для <1>ta</1>: <2>ma ei läheks</2>."
+
+msgid "to want"
+msgstr "хотіти"
+
+msgid "Type the would form"
+msgstr "Напиши умовну форму"
+
+msgid "we"
+msgstr "ми"
+
+msgid "We ate cake."
+msgstr "Ми їли торт."
+
+msgid "We would eat cake."
+msgstr "Ми їли б торт."
+
+msgid "We would go to the cinema tomorrow."
+msgstr "Ми пішли б завтра в кіно."
+
+msgid "We would live in Tartu."
+msgstr "Ми жили б у Тарту."
+
+msgid "We’re eating cake."
+msgstr "Ми їмо торт."
+
+msgid "What could Jaan dig in the garden? Write it as Mari says it."
+msgstr "Що Яан міг би копати в городі? Напиши так, як каже Марі."
+
+msgid "What does it mean?"
+msgstr "Що це означає?"
+
+msgid "What would Mari do if the weather were bad?"
+msgstr "Що робила б Марі, якби погода була погана?"
+
+msgid "When the if is imagined, both halves take the would form."
+msgstr "Коли умова уявна, обидві половини в умовній формі."
+
+msgid "Where would Jaan go?"
+msgstr "Куди поїхав би Яан?"
+
+msgid "Who says it?"
+msgstr "Хто це каже?"
+
+msgid "would"
+msgstr "би"
+
+msgid "Would"
+msgstr "Зробив би"
+
+msgid "would be"
+msgstr "був би"
+
+msgid "Would go"
+msgstr "Пішов би"
+
+msgid "Would you read this book?"
+msgstr "Ти прочитав би цю книжку?"
+
+msgid "Wouldn’t go"
+msgstr "Не пішов би"
+
+msgid "Write each sentence in Estonian."
+msgstr "Напиши кожне речення естонською."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "you"
+msgstr "ти"
+
+msgid "You order at a café. Pick what you say back. A wrong reply says why, then you hear the right one."
+msgstr "Ти замовляєш у кав’ярні. Вибери, що відповісти. Неправильна відповідь пояснить чому, а тоді прозвучить правильна."
+
+msgid "You want tea."
+msgstr "Ти хочеш чаю."
+
+msgid "You would read this book."
+msgstr "Ви прочитали б цю книжку."
+
+msgid "you, to more than one; polite you"
+msgstr "ви — кільком людям; ввічливе ви"
+
+msgid "You’d like a sandwich now."
+msgstr "Ти хотів би бутерброд зараз."
+
+msgid "You’d like a sandwich."
+msgstr "Ти хотів би бутерброд."
+
+msgid "You’d like a tea and a sandwich, and you’d like to sit on the terrace."
+msgstr "Ти хотів би чай і бутерброд, а сісти — на терасі."
+
+msgid "You’d like to sit on the terrace."
+msgstr "Ти хотів би сісти на терасі."

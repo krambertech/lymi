@@ -723,6 +723,9 @@ msgstr "<0>Nad ostavad</0> is they buy, now. Kati asked what you bought."
 msgid "<0>ne</0> turns into <1>sel</1>."
 msgstr "<0>ne</0> turns into <1>sel</1>."
 
+msgid "<0>Neljas</0>, <1>neljateistkümnes</1> and <2>kahekümne neljas</2> all have <3>nelja</3> in them. Listen for <4>teistkümnes</4>, <5>kahekümne</5> or <6>kolmekümne</6>, then pick the day."
+msgstr "<0>Neljas</0>, <1>neljateistkümnes</1> and <2>kahekümne neljas</2> all have <3>nelja</3> in them. Listen for <4>teistkümnes</4>, <5>kahekümne</5> or <6>kolmekümne</6>, then pick the day."
+
 msgid "<0>Nende</0> is their. For you and Martin, say <1>meie</1>, our."
 msgstr "<0>Nende</0> is their. For you and Martin, say <1>meie</1>, our."
 
@@ -1062,9 +1065,6 @@ msgstr "A .mochi file from Mochi"
 msgid "A *hedgehog* lives in the forest."
 msgstr "A *hedgehog* lives in the forest."
 
-msgid "A <0/> is a birthday. Match each word with its meaning."
-msgstr "A <0/> is a birthday. Match each word with its meaning."
-
 msgid "A 48-page lecture PDF goes to Claude with “Make flashcards from the key terms in this lecture.” It uses Lymi and adds four cards to a Pharmacology deck: agonist, antagonist, half-life and bioavailability."
 msgstr "A 48-page lecture PDF goes to Claude with “Make flashcards from the key terms in this lecture.” It uses Lymi and adds four cards to a Pharmacology deck: agonist, antagonist, half-life and bioavailability."
 
@@ -1148,8 +1148,8 @@ msgstr "A course or lesson"
 msgid "a cup of coffee"
 msgstr "a cup of coffee"
 
-msgid "A date is an ordinal and a month, written with a small letter. The full stop after the numeral makes it an ordinal: <0>21. november</0>, said <1>kahekümne esimene november</1>."
-msgstr "A date is an ordinal and a month, written with a small letter. The full stop after the numeral makes it an ordinal: <0>21. november</0>, said <1>kahekümne esimene november</1>."
+msgid "A date is an ordinal and a month, and the month takes a small letter. The full stop after the numeral makes it an ordinal: <0>21. november</0>, said <1>kahekümne esimene november</1>."
+msgstr "A date is an ordinal and a month, and the month takes a small letter. The full stop after the numeral makes it an ordinal: <0>21. november</0>, said <1>kahekümne esimene november</1>."
 
 msgid "A day off"
 msgstr "A day off"
@@ -1262,8 +1262,8 @@ msgstr "A free lesson on Estonian negation in the present tense: ei before the v
 msgid "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
 msgstr "A free lesson on Estonian numbers: zero to ten, -teist and -kümmend, hundreds and thousands, and numbers heard in prices, ages and phone numbers. Every number is read aloud."
 
-msgid "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, saying on a date with -l (viiendal mail) and on which floor. Every sentence is read aloud."
-msgstr "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, saying on a date with -l (viiendal mail) and on which floor. Every sentence is read aloud."
+msgid "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, and -l for on a date or a floor (viiendal mail, kolmandal korrusel). Every sentence is read aloud."
+msgstr "A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, and -l for on a date or a floor (viiendal mail, kolmandal korrusel). Every sentence is read aloud."
 
 msgid "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
 msgstr "A free lesson on Estonian questions: kas for yes or no, answers with jah and ei, the question words kes, mis, kus, millal, miks, kuidas and kui palju, and three everyday questions to learn whole. Every sentence is read aloud."
@@ -1611,9 +1611,6 @@ msgstr "A word turning into its forms: the letters it drops are struck, the ones
 msgid "A year has 365 days."
 msgstr "A year has 365 days."
 
-msgid "A year is a plain number: <0/>, in 2026, is said <1>aastal kaks tuhat kakskümmend kuus</1>. You’ll also see <2>2026. aastal</2>, with a full stop, which makes the year an ordinal."
-msgstr "A year is a plain number: <0/>, in 2026, is said <1>aastal kaks tuhat kakskümmend kuus</1>. You’ll also see <2>2026. aastal</2>, with a full stop, which makes the year an ordinal."
-
 msgid "a, as in “father”"
 msgstr "a, as in “father”"
 
@@ -1901,6 +1898,9 @@ msgstr "After <0>{lead}</0>, the <1>-da</1> form, and it goes last."
 
 msgid "After <0>{lead}</0>, the <1>-ma</1> form, and it goes last."
 msgstr "After <0>{lead}</0>, the <1>-ma</1> form, and it goes last."
+
+msgid "After <0>aastal</0>, the year is a plain number: <1/>, in 2026, is said <2>aastal kaks tuhat kakskümmend kuus</2>. Before <3>aastal</3> it takes a full stop and is an ordinal: <4>2026. aastal</4>, said <5>kahe tuhande kahekümne kuuendal aastal</5>."
+msgstr "After <0>aastal</0>, the year is a plain number: <1/>, in 2026, is said <2>aastal kaks tuhat kakskümmend kuus</2>. Before <3>aastal</3> it takes a full stop and is an ordinal: <4>2026. aastal</4>, said <5>kahe tuhande kahekümne kuuendal aastal</5>."
 
 msgid "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
 msgstr "After <0>ei</0> comes the ma form without its -n: <1>loen</1>, <2>ei loe</2>."
@@ -4145,8 +4145,8 @@ msgstr "Each round shows a place. Pick its ending, then hear it in a sentence. M
 msgid "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
 msgstr "Each round shows a sentence with a gap. Pick the form that fills it. Is the gap after <0>pole</0>, or at the start of the sentence?"
 
-msgid "Each sentence has a date in it, said as it is or with <0>l</0>. Type the date you hear. Digits count, 5.5 for the fifth of May, and so do words, as in <1>5. mai</1> or 5 May."
-msgstr "Each sentence has a date in it, said as it is or with <0>l</0>. Type the date you hear. Digits count, 5.5 for the fifth of May, and so do words, as in <1>5. mai</1> or 5 May."
+msgid "Each sentence has a date in it, in its plain form or with <0>l</0>. Type the date you hear. Digits count, 5.5 for the fifth of May, and so do words, as in <1>5. mai</1> or 5 May."
+msgstr "Each sentence has a date in it, in its plain form or with <0>l</0>. Type the date you hear. Digits count, 5.5 for the fifth of May, and so do words, as in <1>5. mai</1> or 5 May."
 
 msgid "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
 msgstr "Each state now ruled its own land: the start of modern <0>sovereignty</0>."
@@ -4971,9 +4971,6 @@ msgstr "Four ways to ask"
 msgid "fourth"
 msgstr "fourth"
 
-msgid "Fourth, fourteenth and twenty-fourth all have the same digit in them. Listen for <0>teistkümnes</0> and for <1>kahekümne</1>, then pick the day."
-msgstr "Fourth, fourteenth and twenty-fourth all have the same digit in them. Listen for <0>teistkümnes</0> and for <1>kahekümne</1>, then pick the day."
-
 msgid "Français · phrase"
 msgstr "Français · phrase"
 
@@ -5136,8 +5133,8 @@ msgstr "from Finland"
 msgid "From four on, an ordinal is built on the genitive, the form lesson {genitive} uses for “of”. Take <0/>, four. Its genitive is <1/>, and with <2>s</2> it becomes <3><4/>,</3> fourth. In the same way <5/> goes to <6/> and <7><8/>.</7>"
 msgstr "From four on, an ordinal is built on the genitive, the form lesson {genitive} uses for “of”. Take <0/>, four. Its genitive is <1/>, and with <2>s</2> it becomes <3><4/>,</3> fourth. In the same way <5/> goes to <6/> and <7><8/>.</7>"
 
-msgid "From four on, an ordinal is the number’s genitive with <0>s</0>. A date is an ordinal and a month, and on a date both take <1>l</1>."
-msgstr "From four on, an ordinal is the number’s genitive with <0>s</0>. A date is an ordinal and a month, and on a date both take <1>l</1>."
+msgid "From four on, an ordinal is the number’s genitive with <0>s</0>. A date is an ordinal and a month, and to say on which day, both take <1>l</1>."
+msgstr "From four on, an ordinal is the number’s genitive with <0>s</0>. A date is an ordinal and a month, and to say on which day, both take <1>l</1>."
 
 msgid "From four on: the genitive and -s"
 msgstr "From four on: the genitive and -s"
@@ -6856,11 +6853,11 @@ msgstr "in a hospital"
 msgid "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 msgstr "In a kas question your voice falls at the end, as in a statement: kas already says it’s a question. In speech you’ll also hear <0/> at the end instead, a bit like “right?”: <1/>"
 
-msgid "In a number of two words only the last is an ordinal, and the tens stay in the genitive: <0>kahekümne esimene</0>."
-msgstr "In a number of two words only the last is an ordinal, and the tens stay in the genitive: <0>kahekümne esimene</0>."
+msgid "In a number of two words only the last is an ordinal, and the tens go into the genitive: <0>kahekümne esimene</0>."
+msgstr "In a number of two words only the last is an ordinal, and the tens go into the genitive: <0>kahekümne esimene</0>."
 
-msgid "In a number of two words, only the last becomes an ordinal. The tens before it stay in the genitive: <0><1/>,</0> twenty-first. Slide through the days of a month and hear each one."
-msgstr "In a number of two words, only the last becomes an ordinal. The tens before it stay in the genitive: <0><1/>,</0> twenty-first. Slide through the days of a month and hear each one."
+msgid "In a number of two words, only the last becomes an ordinal. The tens before it go into the genitive: <0><1/>,</0> twenty-first. Slide to a day, or tap − and +, to hear it."
+msgstr "In a number of two words, only the last becomes an ordinal. The tens before it go into the genitive: <0><1/>,</0> twenty-first. Slide to a day, or tap − and +, to hear it."
 
 msgid "In a Project with your course files, Claude can build one deck with a section for each lecture."
 msgstr "In a Project with your course files, Claude can build one deck with a section for each lecture."
@@ -6922,8 +6919,8 @@ msgstr "in Lasnamäe"
 msgid "In lesson {commands} you learned <0/> as a whole word. It comes from the <1>-da</1> form, with <2>-ge</2> in place of its ending: <3/> gives <4/>, and <5/> gives <6/>"
 msgstr "In lesson {commands} you learned <0/> as a whole word. It comes from the <1>-da</1> form, with <2>-ge</2> in place of its ending: <3/> gives <4/>, and <5/> gives <6/>"
 
-msgid "In lesson {days} you met <0/> and <1/>: <2/> is the first day of the week. Words like these are ordinals. They say which one in a row, where the numbers from lesson {numbers} say how many."
-msgstr "In lesson {days} you met <0/> and <1/>: <2/> is the first day of the week. Words like these are ordinals. They say which one in a row, where the numbers from lesson {numbers} say how many."
+msgid "In lesson {days} you met <0/> and <1/>: <2/>, the first day of the week, sounds like <3>esimene</3>. Words like these are ordinals. They say which one in order, where the numbers from lesson {numbers} say how many."
+msgstr "In lesson {days} you met <0/> and <1/>: <2/>, the first day of the week, sounds like <3>esimene</3>. Words like these are ordinals. They say which one in order, where the numbers from lesson {numbers} say how many."
 
 msgid "In lesson {days} you met <0/>, yesterday. It goes with the past: <1><2/>.</1> With <3/>, today, the verb is in the present: <4><5/>.</4>"
 msgstr "In lesson {days} you met <0/>, yesterday. It goes with the past: <1><2/>.</1> With <3/>, today, the verb is in the present: <4><5/>.</4>"
@@ -8343,6 +8340,9 @@ msgstr "Masculine, though it ends in -a: buenos días."
 msgid "Match"
 msgstr "Match"
 
+msgid "Match each word with its meaning."
+msgstr "Match each word with its meaning."
+
 msgid "Match, Blast and Quizlet Live"
 msgstr "Match, Blast and Quizlet Live"
 
@@ -9210,9 +9210,6 @@ msgstr "On 30 May"
 msgid "On 31 March"
 msgstr "On 31 March"
 
-msgid "On a date or a floor both words take <0>l</0>, and the ordinal’s <1>s</1> turns into <2>ndal</2>: <3>viiendal mail</3>, <4>kolmandal korrusel</4>."
-msgstr "On a date or a floor both words take <0>l</0>, and the ordinal’s <1>s</1> turns into <2>ndal</2>: <3>viiendal mail</3>, <4>kolmandal korrusel</4>."
-
 msgid "On a door or a sign."
 msgstr "On a door or a sign."
 
@@ -9279,9 +9276,6 @@ msgstr "on the third"
 
 msgid "on the wall"
 msgstr "on the wall"
-
-msgid "on which day?"
-msgstr "on which day?"
 
 msgid "On which one"
 msgstr "On which one"
@@ -12803,8 +12797,8 @@ msgstr "The rules the theory test asks about, and every sign of the ПДР by it
 msgid "The rules, and every sign by its picture."
 msgstr "The rules, and every sign by its picture."
 
-msgid "The same <0>l</0> says which floor: <1><2/>.</1> To ask, use <3/>: <4><5/>.</4> <6/> is a floor."
-msgstr "The same <0>l</0> says which floor: <1><2/>.</1> To ask, use <3/>: <4><5/>.</4> <6/> is a floor."
+msgid "The same <0>l</0> says on which floor: <1><2/>.</1> To ask, use <3/>: <4/> <5/> is a floor, and <6/> a birthday."
+msgstr "The same <0>l</0> says on which floor: <1><2/>.</1> To ask, use <3/>: <4/> <5/> is a floor, and <6/> a birthday."
 
 msgid "The same address works everywhere. Nothing to install."
 msgstr "The same address works everywhere. Nothing to install."
@@ -13424,8 +13418,8 @@ msgstr "To answer no, say <0>ei</0>, or <1>ei</1> with the verb from the questio
 msgid "To ask for more than yes or no, start with a question word instead of kas, and leave out the part you ask about. <0/> You live in Tallinn. <1/> Where do you live?"
 msgstr "To ask for more than yes or no, start with a question word instead of kas, and leave out the part you ask about. <0/> You live in Tallinn. <1/> Where do you live?"
 
-msgid "To ask the date, say <0><1/>.</0> <2/> is a date. The answer is an ordinal and a month: <3><4/>.</3>"
-msgstr "To ask the date, say <0><1/>.</0> <2/> is a date. The answer is an ordinal and a month: <3><4/>.</3>"
+msgid "To ask the date, say <0/> <1/> is a date. The answer is an ordinal and a month: <2><3/>.</2>"
+msgstr "To ask the date, say <0/> <1/> is a date. The answer is an ordinal and a month: <2><3/>.</2>"
 
 msgid "To ask the time, say <0/> Word for word, it’s “what clock is?” The answer starts with <1/> too: <2/>, it’s three o’clock."
 msgstr "To ask the time, say <0/> Word for word, it’s “what clock is?” The answer starts with <1/> too: <2/>, it’s three o’clock."
@@ -13643,8 +13637,11 @@ msgstr "To say into or to, put <0>-sse</0> where the <1>-s</1> was: <2/>, <3/>; 
 msgid "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 msgstr "To say not, put <0/> before the verb. <1/> is I read, and <2/> is I don’t read. The verb loses its ending, and <3/> is the same whoever you’re talking about."
 
-msgid "To say on which day, put <0>l</0> on both words: <1><2/>,</1> on the fifth of May. <3>Mail</3> is <4>mai</4> with <5>l</5>. In the ordinal, the final <6>s</6> turns into <7>ndal</7>: <8>viies</8>, <9/>; <10>kolmas</10>, <11><12/>.</11> <13>Esimene</13> and <14>teine</14> end in <15>sel</15>: <16>esimesel, teisel</16>."
-msgstr "To say on which day, put <0>l</0> on both words: <1><2/>,</1> on the fifth of May. <3>Mail</3> is <4>mai</4> with <5>l</5>. In the ordinal, the final <6>s</6> turns into <7>ndal</7>: <8>viies</8>, <9/>; <10>kolmas</10>, <11><12/>.</11> <13>Esimene</13> and <14>teine</14> end in <15>sel</15>: <16>esimesel, teisel</16>."
+msgid "To say on which day or on which floor, both words take <0>l</0>, and the ordinal’s <1>s</1> turns into <2>ndal</2>: <3>viiendal mail</3>, <4>kolmandal korrusel</4>."
+msgstr "To say on which day or on which floor, both words take <0>l</0>, and the ordinal’s <1>s</1> turns into <2>ndal</2>: <3>viiendal mail</3>, <4>kolmandal korrusel</4>."
+
+msgid "To say on which day, put <0>l</0> on both words: <1><2/>,</1> on the fifth of May. <3>Mail</3> is <4>mai</4> with <5>l</5>. In the ordinal, the final <6>s</6> turns into <7>ndal</7>: <8>viies</8>, <9/>; <10>kolmas</10>, <11><12/>.</11> <13>Esimene</13> and <14>teine</14> swap <15>ne</15> for <16>sel</16>: <17>esimesel, teisel</17>."
+msgstr "To say on which day, put <0>l</0> on both words: <1><2/>,</1> on the fifth of May. <3>Mail</3> is <4>mai</4> with <5>l</5>. In the ordinal, the final <6>s</6> turns into <7>ndal</7>: <8>viies</8>, <9/>; <10>kolmas</10>, <11><12/>.</11> <13>Esimene</13> and <14>teine</14> swap <15>ne</15> for <16>sel</16>: <17>esimesel, teisel</17>."
 
 msgid "To say out of or from, swap the <0>-s</0> for <1>-st</1>: <2/>, <3/>. The rest of the word stays as it was: <4/>, <5/>."
 msgstr "To say out of or from, swap the <0>-s</0> for <1>-st</1>: <2/>, <3/>. The rest of the word stays as it was: <4/>, <5/>."
@@ -14911,9 +14908,6 @@ msgstr "which one in order?"
 
 msgid "Which one in order?"
 msgstr "Which one in order?"
-
-msgid "which one, counting in order?"
-msgstr "which one, counting in order?"
 
 msgid "Which ones do I keep getting wrong?"
 msgstr "Which ones do I keep getting wrong?"

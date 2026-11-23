@@ -235,7 +235,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian ordinal numbers and dates`,
         et: "Esimene, teine, kolmas",
         minutes: 14,
-        blurb: msg`A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, saying on a date with -l (viiendal mail) and on which floor. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on Estonian ordinal numbers and dates: esimene, teine, kolmas and how the rest are built from the genitive, the months, asking mis kuupäev täna on?, writing 21. november, and -l for on a date or a floor (viiendal mail, kolmandal korrusel). Every sentence is read aloud.`,
       },
       { name: msg`Time expressions: when things happen`, et: "Esmaspäeval, aasta pärast" },
       { name: msg`Word order: the verb comes second`, et: "Täna lähen ma" },

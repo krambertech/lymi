@@ -675,7 +675,7 @@ export function KaskivLesson() {
           To tell one person what to do, say the verb’s stem: <b lang="et">Loe! Istu!</b>
         </Trans>,
         <Trans key="2">
-          The stem is the ma form without its <b lang="et">-n</b>: <b lang="et">istun</b>,{" "}
+          The stem is usually the ma form without its <b lang="et">-n</b>: <b lang="et">istun</b>,{" "}
           <b lang="et">istu</b>. It’s the form that follows <b lang="et">ei</b>.
         </Trans>,
         <Trans key="3">
@@ -757,7 +757,7 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    The stem is the ma form without its <span lang="et">-n</span>.{" "}
+                    The stem is usually the ma form without its <span lang="et">-n</span>.{" "}
                     <Word w="Istun" /> gives <Word w="Istu!" /> <Word w="Tulen" /> gives{" "}
                     <Word w="Tule siia!" /> <Word w="Siia" /> means here, to this place.
                   </Trans>
@@ -957,8 +957,8 @@ export function KaskivLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Each round gives a verb and its ma form. Type the command to one person: the ma
-                    form without its <span lang="et">-n</span>.
+                    Each round gives a verb and its ma form. Type the command to one person: usually
+                    the ma form without its <span lang="et">-n</span>.
                   </Trans>
                 </p>
               </Prose>

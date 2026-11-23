@@ -143,8 +143,8 @@ msgstr "Каждая из этих шести повседневных кома�
 msgid "Each reply is a command or a short answer. Pick the one that fits what Mari says."
 msgstr "Каждый ответ — это команда или короткая реплика. Выбирай тот, что подходит к словам Мари."
 
-msgid "Each round gives a verb and its ma form. Type the command to one person: the ma form without its <0>-n</0>."
-msgstr "В каждом раунде есть глагол и его форма с ma. Напиши команду одному человеку: форму с ma без <0>-n</0>."
+msgid "Each round gives a verb and its ma form. Type the command to one person: usually the ma form without its <0>-n</0>."
+msgstr "В каждом раунде есть глагол и его форма с ma. Напиши команду одному человеку: обычно это форма с ma без <0>-n</0>."
 
 msgid "Eat."
 msgstr "Ешь."
@@ -367,8 +367,8 @@ msgstr "Так ты говоришь Мари пить кофе. А она сп�
 msgid "The command to one person"
 msgstr "Команда одному человеку"
 
-msgid "The command to one person is the ma form without its <et>-n</et>."
-msgstr "Команда одному человеку — это форма с ma без <et>-n</et>."
+msgid "The command to one person is usually the ma form without its <et>-n</et>."
+msgstr "Команда одному человеку — это обычно форма с ma без <et>-n</et>."
 
 msgid "The stem alone"
 msgstr "Только основа"
@@ -382,11 +382,11 @@ msgstr "Основа не меняется: <0>istu</0>, <1>ära istu</1>."
 msgid "The stem is the command"
 msgstr "Основа — это команда"
 
-msgid "The stem is the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
-msgstr "Основа — это форма с ma без <0>-n</0>: <1>istun</1>, <2>istu</2>. Та же форма идёт после <3>ei</3>."
+msgid "The stem is usually the ma form without its <0>-n</0>: <1>istun</1>, <2>istu</2>. It’s the form that follows <3>ei</3>."
+msgstr "Основа — это обычно форма с ma без <0>-n</0>: <1>istun</1>, <2>istu</2>. Та же форма идёт после <3>ei</3>."
 
-msgid "The stem is the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
-msgstr "Основа — это форма с ma без <0>-n</0>. Из <1/> получается <2/> Из <3/> получается <4/> <5/> значит «сюда»."
+msgid "The stem is usually the ma form without its <0>-n</0>. <1/> gives <2/> <3/> gives <4/> <5/> means here, to this place."
+msgstr "Основа — это обычно форма с ma без <0>-n</0>. Из <1/> получается <2/> Из <3/> получается <4/> <5/> значит «сюда»."
 
 msgid "The stem often changes before the ending: <0/> becomes <1/> Learn these as whole words for now. Lesson {verbForms}, on a verb’s three forms, shows where they come from."
 msgstr "Основа перед окончанием часто меняется: <0/> превращается в <1/> Пока запоминай эти формы целыми словами. Откуда они берутся, рассказывает урок {verbForms} о трёх формах глагола."

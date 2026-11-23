@@ -2019,6 +2019,8 @@ export const TALLINN_TRANSLATED = [
     kind: "kell",
     answers: [
       "Ma olen kell kaksteist turul.",
+      "Kell kaksteist ma olen turul.",
+      "Kell kaksteist mina olen turul.",
       "Ma olen turul kell kaksteist.",
       "Kell kaksteist olen ma turul.",
       "Kell kaksteist olen turul.",
@@ -2033,6 +2035,8 @@ export const TALLINN_TRANSLATED = [
     kind: "kell",
     answers: [
       "Me joome kell üksteist kohvi.",
+      "Kell üksteist me joome kohvi.",
+      "Kell üksteist meie joome kohvi.",
       "Me joome kohvi kell üksteist.",
       "Kell üksteist joome me kohvi.",
       "Kell üksteist joome kohvi.",

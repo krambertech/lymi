@@ -26,7 +26,7 @@ const TYPED = [
   { verb: "vaatama", ma: "vaatan", stem: "vaata" },
 ] as const;
 
-const STEM = msg`The command to one person is the ma form without its <et>-n</et>.`;
+const STEM = msg`The command to one person is usually the ma form without its <et>-n</et>.`;
 const DONT = msg`<et>Ära</et> before the stem tells one person not to do it.`;
 const ARGE = msg`<et>Ära</et> becomes <et>ärge</et>, and the verb takes its <et>-ge</et> or <et>-ke</et> form: <et>Ärge istuge!</et>`;
 const MORE = msg`To more than one, or politely, the command ends in <et>-ge</et> or <et>-ke</et>.`;

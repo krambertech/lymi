@@ -2,10 +2,10 @@ import { msg } from "@lingui/core/macro";
 import { PERFECT_ANSWERS, PERFECT_FIX_ANSWERS } from "../../../lib/learn/clips";
 import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 
-const REGULAR = msg`Drop <et>-da</et> or <et>-a</et> from the <et>-da</et> infinitive and add <et>-nud</et>.`;
+const REGULAR = msg`Usually: drop <et>-da</et> or <et>-a</et> from the <et>-da</et> infinitive and add <et>-nud</et>.`;
 const SHORT = msg`Irregular: learn its <et>-nud</et> form by heart.`;
 const PERFECT = msg`No finished time is named: <et>olema</et> in the present and the <et>-nud</et> form.`;
-const PAST = msg`A finished time is named, so the simple past.`;
+const PAST = msg`A finished time is named, so usually the simple past.`;
 const PLUPERFECT = msg`Before another past event: <et>olema</et> in the past and the <et>-nud</et> form.`;
 
 const nud = (

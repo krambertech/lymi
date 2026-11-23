@@ -37,11 +37,11 @@ msgstr "22 хвилини"
 msgid "7 exercises"
 msgstr "7 вправ"
 
-msgid "A finished time is named, last month, so the simple past: <0>käisin</0>."
-msgstr "Названо завершений час, минулий місяць, тож простий минулий: <0>käisin</0>."
+msgid "A finished time is named, last month, so usually the simple past: <0>käisin</0>."
+msgstr "Названо завершений час, минулий місяць, тож зазвичай простий минулий: <0>käisin</0>."
 
-msgid "A finished time is named, so the simple past."
-msgstr "Названо завершений час, тож простий минулий."
+msgid "A finished time is named, so usually the simple past."
+msgstr "Названо завершений час, тож зазвичай простий минулий."
 
 msgid "A finished time is named, yesterday, so the simple past."
 msgstr "Названо завершений час, учора, тож простий минулий."
@@ -88,17 +88,14 @@ msgstr "До цієї поїздки Каті плавала в морі лиш�
 msgid "Drop <0>-da</0> or <1>-a</1> from the <2>-da</2> infinitive and add <3>-nud</3>."
 msgstr "Прибери <0>-da</0> або <1>-a</1> з інфінітива на <2>-da</2> і додай <3>-nud</3>."
 
-msgid "Drop <et>-da</et> or <et>-a</et> from the <et>-da</et> infinitive and add <et>-nud</et>."
-msgstr "Прибери <et>-da</et> або <et>-a</et> з інфінітива на <et>-da</et> і додай <et>-nud</et>."
-
 msgid "Each round gives a sentence and a cue. Write the sentence in the perfect."
 msgstr "У кожному раунді — речення і підказка. Напиши речення в перфекті."
 
 msgid "Each round gives a verb’s <0>-ma</0> and <1>-da</1> infinitives. Type its <2>-nud</2> form."
 msgstr "У кожному раунді — інфінітиви дієслова на <0>-ma</0> і <1>-da</1>. Напиши його форму на <2>-nud</2>."
 
-msgid "Each row holds the <0>-da</0> infinitive and the <1>-nud</1> form. The first five are regular; the last five are irregular: learn their <2>-nud</2> form by heart."
-msgstr "У кожному рядку інфінітив на <0>-da</0> і форма на <1>-nud</1>. Перші п’ять правильні; останні п’ять неправильні: їхню форму на <2>-nud</2> треба вивчити напам’ять."
+msgid "Each row holds the <0>-da</0> infinitive and the <1>-nud</1> form. The first six follow the rule, and in <2>olla</2> one <3>l</3> goes. The last four are irregular: learn their <4>-nud</4> form by heart."
+msgstr "У кожному рядку інфінітив на <0>-da</0> і форма на <1>-nud</1>. Перші шість ідуть за правилом, а в <2>olla</2> зникає одне <3>l</3>. Останні чотири неправильні: їхню форму на <4>-nud</4> треба вивчити напам’ять."
 
 msgid "Each sentence has one wrong word: a <0>-nud</0> form, or a form of <1>olema</1>. Tap it, then type it right."
 msgstr "У кожному реченні одне неправильне слово: форма на <0>-nud</0> або форма <1>olema</1>. Натисни на нього, потім напиши правильно."
@@ -202,6 +199,11 @@ msgstr "Я ніколи про це не чув."
 msgid "I’ve taken a hundred photos."
 msgstr "Я зробила сто фото."
 
+#. placeholder {0}: verb.da
+#. placeholder {1}: verb.nud
+msgid "In a <0>-lla</0> verb, one <1>l</1> goes: <2>{0}, {1}</2>."
+msgstr "У дієслові на <0>-lla</0> зникає одне <1>l</1>: <2>{0}, {1}</2>."
+
 msgid "In a sentence"
 msgstr "У реченні"
 
@@ -217,8 +219,8 @@ msgstr "Неправильне: його форму на <0>-nud</0> треба 
 msgid "Irregular: learn its <et>-nud</et> form by heart."
 msgstr "Неправильне: його форму на <et>-nud</et> треба вивчити напам’ять."
 
-msgid "It comes from the <0>-da</0> infinitive of lesson {verbForms}: drop <1>-da</1> or <2>-a</2> and add <3>-nud</3>. <4>Lugeda</4> gives <5/>. Some verbs are irregular: <6>süüa</6> gives <7/>. Tap each form in the table to hear it."
-msgstr "Вона походить від інфінітива на <0>-da</0> з уроку {verbForms}: відкинь <1>-da</1> або <2>-a</2> і додай <3>-nud</3>. <4>Lugeda</4> дає <5/>. Деякі дієслова неправильні: <6>süüa</6> дає <7/>. Натисни кожну форму в таблиці, щоб її почути."
+msgid "It comes from the <0>-da</0> infinitive of lesson {verbForms}: usually you drop <1>-da</1> or <2>-a</2> and add <3>-nud</3>. <4>Lugeda</4> gives <5/>. In a <6>-lla</6> verb, one <7>l</7> goes: <8>olla, olnud; tulla, tulnud</8>. Some verbs are irregular: <9>süüa</9> gives <10/>, <11>hakata</11> gives <12>hakanud</12>. Tap each form in the table to hear it."
+msgstr "Вона походить від інфінітива на <0>-da</0> з уроку {verbForms}: зазвичай відкидаєш <1>-da</1> або <2>-a</2> і додаєш <3>-nud</3>. <4>Lugeda</4> дає <5/>. У дієслові на <6>-lla</6> зникає одне <7>l</7>: <8>olla, olnud; tulla, tulnud</8>. Деякі дієслова неправильні: <9>süüa</9> дає <10/>, <11>hakata</11> дає <12>hakanud</12>. Натисни кожну форму в таблиці, щоб її почути."
 
 msgid "it’s done now"
 msgstr "уже зроблено"
@@ -400,9 +402,6 @@ msgstr "Форма на -nud від sööma."
 msgid "The <0>-nud</0> form comes from <1>õppida</1>, so it keeps <2>pp</2>: <3>õppinud</3>."
 msgstr "Форма на <0>-nud</0> утворюється від <1>õppida</1>, тож зберігає <2>pp</2>: <3>õppinud</3>."
 
-msgid "The <0>-nud</0> form comes from the <1>-da</1> infinitive: <2>lugeda, lugenud</2>. Irregular verbs are learned by heart: <3>olnud, läinud, teinud, söönud, näinud</3>."
-msgstr "Форма на <0>-nud</0> походить від інфінітива на <1>-da</1>: <2>lugeda, lugenud</2>. Неправильні дієслова вчать напам’ять: <3>olnud, läinud, teinud, söönud, näinud</3>."
-
 msgid "The <0>-nud</0> form of <1>minema</1> is <2>läinud</2>."
 msgstr "Форма на <0>-nud</0> від <1>minema</1> — <2>läinud</2>."
 
@@ -411,6 +410,9 @@ msgstr "Форма на <0>-nud</0> від <1>nägema</1> — <2>näinud</2>."
 
 msgid "The <0>-nud</0> form of <1>tegema</1> is <2>teinud</2>."
 msgstr "Форма на <0>-nud</0> від <1>tegema</1> — <2>teinud</2>."
+
+msgid "The <0>-nud</0> form usually comes from the <1>-da</1> infinitive: <2>lugeda, lugenud</2>; <3>olla, olnud</3>. Irregular verbs are learned by heart: <4>läinud, teinud, söönud, näinud</4>."
+msgstr "Форма на <0>-nud</0> зазвичай походить від інфінітива на <1>-da</1>: <2>lugeda, lugenud</2>; <3>olla, olnud</3>. Неправильні дієслова вчать напам’ять: <4>läinud, teinud, söönud, näinud</4>."
 
 msgid "The <et>-nud</et> form"
 msgstr "Форма на <et>-nud</et>"
@@ -502,6 +504,9 @@ msgstr "Напиши форму на -nud"
 msgid "up to now"
 msgstr "досі"
 
+msgid "Usually: drop <et>-da</et> or <et>-a</et> from the <et>-da</et> infinitive and add <et>-nud</et>."
+msgstr "Зазвичай: прибери <et>-da</et> або <et>-a</et> з інфінітива на <et>-da</et> і додай <et>-nud</et>."
+
 msgid "was"
 msgstr "був"
 
@@ -511,8 +516,8 @@ msgstr "ми"
 msgid "What should Jaan eat there? Write it in one word."
 msgstr "Що Яанові варто там скуштувати? Напиши одним словом."
 
-msgid "When a finished past time is named, such as <0>eile</0>, use the simple past: <1>Eile käisin ma Tartus.</1>"
-msgstr "Коли названо завершений час у минулому, як-от <0>eile</0>, бери простий минулий: <1>Eile käisin ma Tartus.</1>"
+msgid "When a finished past time is named, such as <0>eile</0>, usually use the simple past: <1>Eile käisin ma Tartus.</1>"
+msgstr "Коли названо завершений час у минулому, як-от <0>eile</0>, зазвичай бери простий минулий: <1>Eile käisin ma Tartus.</1>"
 
 msgid "When I got home, Mari had already eaten."
 msgstr "Коли я прийшов додому, Марі вже поїла."

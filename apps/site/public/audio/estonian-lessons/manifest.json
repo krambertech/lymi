@@ -12869,182 +12869,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "majades-inimestele/c-weekend": {
-    "text": "Tere, Mari! Kuidas nädalavahetus läks? Väga hästi, aitäh! Ma olin kolm päeva Tartus koos sõpradega. Mida te seal tegite? Laupäeval käisime muuseumides ja kohvikutes. Tartu kohvikutes on väga head koogid. Kas muuseumides oli palju inimesi? Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalist saali. Kus te ööbisite? Ühe sõbra juures. Tal on vanalinnas korter. Vanades majades on kõrged laed ja suured aknad. Õhtul istusime köögis ja rääkisime tundide kaupa. Ja pühapäeval? Pühapäeval käisime poodides. Ma ostsin kingitusi oma õdedele. Neile meeldivad raamatud, nii et ma ostsin kaks raamatut. Kas sa rääkisid poodides eesti keelt? Muidugi! Ma rääkisin müüjatega ainult eesti keeles. Nad olid väga sõbralikud. Ühes raamatupoes küsis müüja, kust ma pärit olen. Ta ei uskunud, et ma õpin eesti keelt alles kaks aastat. Tubli! Mina olin terve nädalavahetuse kodus. Mida sa tegid? Kõigepealt kirjutasin kirju oma vanematele ja vendadele. Siis vaatasin vanu fotosid. Vanu fotosid? Kust sa need leidsid? Need olid kastides keldris. Mõnedel piltidel on minu vanaisa ja vanaema. Nad seisavad oma maja ees. Mõnel pildil on ka meie vana koer. Ta magab alati laste voodite all. Kui huvitav! Kas sa näitad neid mulle? Jah, muidugi. Ma panen kõige ilusamad pildid albumitesse. Tule homme minu juurde! Hea mõte! Ma toon Tartust kooke. Kas kell viis sobib? Jah, kell viis sobib väga hästi. Kas ma võin ka oma sõbrad kaasa võtta? Nad tahavad sinuga tuttavaks saada. Muidugi, kõik on oodatud. Ma teen teed ja kohvi kõikidele külalistele. Kohtumiseni!",
-    "model": "eleven_v4",
-    "turns": [
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Tere, Mari!",
-          "Kuidas nädalavahetus läks?"
-        ],
-        "say": "[cheerful] Tere, Mari! Kuidas nädalavahetus läks?"
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Väga hästi, aitäh!",
-          "Ma olin kolm päeva Tartus koos sõpradega."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Mida te seal tegite?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Laupäeval käisime muuseumides ja kohvikutes.",
-          "Tartu kohvikutes on väga head koogid."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kas muuseumides oli palju inimesi?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Jah, väga palju.",
-          "Kõikides saalides olid lapsed ja nende vanemad.",
-          "Lapsed jooksid saalist saali."
-        ],
-        "say": "[laughs] Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalist saali."
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kus te ööbisite?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Ühe sõbra juures.",
-          "Tal on vanalinnas korter.",
-          "Vanades majades on kõrged laed ja suured aknad.",
-          "Õhtul istusime köögis ja rääkisime tundide kaupa."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Ja pühapäeval?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Pühapäeval käisime poodides.",
-          "Ma ostsin kingitusi oma õdedele.",
-          "Neile meeldivad raamatud, nii et ma ostsin kaks raamatut."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kas sa rääkisid poodides eesti keelt?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Muidugi!",
-          "Ma rääkisin müüjatega ainult eesti keeles.",
-          "Nad olid väga sõbralikud.",
-          "Ühes raamatupoes küsis müüja, kust ma pärit olen.",
-          "Ta ei uskunud, et ma õpin eesti keelt alles kaks aastat."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Tubli!",
-          "Mina olin terve nädalavahetuse kodus."
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Mida sa tegid?"
-        ],
-        "say": "[curious] Mida sa tegid?"
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kõigepealt kirjutasin kirju oma vanematele ja vendadele.",
-          "Siis vaatasin vanu fotosid."
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Vanu fotosid?",
-          "Kust sa need leidsid?"
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Need olid kastides keldris.",
-          "Mõnedel piltidel on minu vanaisa ja vanaema.",
-          "Nad seisavad oma maja ees.",
-          "Mõnel pildil on ka meie vana koer.",
-          "Ta magab alati laste voodite all."
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Kui huvitav!",
-          "Kas sa näitad neid mulle?"
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Jah, muidugi.",
-          "Ma panen kõige ilusamad pildid albumitesse.",
-          "Tule homme minu juurde!"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Hea mõte!",
-          "Ma toon Tartust kooke.",
-          "Kas kell viis sobib?"
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Jah, kell viis sobib väga hästi."
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Kas ma võin ka oma sõbrad kaasa võtta?",
-          "Nad tahavad sinuga tuttavaks saada."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Muidugi, kõik on oodatud.",
-          "Ma teen teed ja kohvi kõikidele külalistele.",
-          "Kohtumiseni!"
-        ]
-      }
-    ]
-  },
   "majades-inimestele/pildid-on-raamatutel": {
     "text": "Pildid on raamatutel.",
     "model": "eleven_v4",
@@ -16600,5 +16424,181 @@
     "text": "Kohv maksab kolm eurot.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "majades-inimestele/c-weekend": {
+    "text": "Tere, Mari! Kuidas nädalavahetus läks? Väga hästi, aitäh! Ma olin kolm päeva Tartus koos sõpradega. Mida te seal tegite? Laupäeval käisime muuseumides ja kohvikutes. Tartu kohvikutes on väga head koogid. Kas muuseumides oli palju inimesi? Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalist saali. Kus te ööbisite? Ühe sõbra juures. Tal on vanalinnas korter. Vanades majades on kõrged laed ja suured aknad. Õhtul istusime köögis ja rääkisime tundide kaupa. Ja pühapäeval? Pühapäeval käisime poodides. Ma ostsin kingitusi oma õdedele. Neile meeldivad raamatud, nii et ma ostsin kaks raamatut. Kas sa rääkisid poodides eesti keelt? Muidugi! Ma rääkisin müüjatega ainult eesti keeles. Nad olid väga sõbralikud. Ühes raamatupoes küsis müüja, kust ma pärit olen. Ta ei uskunud, et ma õpin eesti keelt alles kaks aastat. Tubli! Mina olin terve nädalavahetuse kodus. Mida sa tegid? Kõigepealt kirjutasin kirju oma vanematele ja vendadele. Siis vaatasin vanu fotosid. Vanu fotosid? Kust sa need leidsid? Need olid kastides keldris. Mõnedel piltidel on minu vanaisa ja vanaema. Nad seisavad oma maja ees. Mõnel pildil on ka meie vana koer. Ta magab alati laste voodite all. Kui huvitav! Kas sa näitad neid mulle? Jah, muidugi. Ma panen kõige ilusamad pildid albumitesse. Tule homme minu juurde! Hea mõte! Ma toon kooke. Kas kell viis sobib? Jah, kell viis sobib väga hästi. Kas ma võin ka oma sõbrad kaasa võtta? Nad tahavad sinuga tuttavaks saada. Muidugi, kõik on oodatud. Ma teen teed ja kohvi kõikidele külalistele. Kohtumiseni!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Mari!",
+          "Kuidas nädalavahetus läks?"
+        ],
+        "say": "[cheerful] Tere, Mari! Kuidas nädalavahetus läks?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Väga hästi, aitäh!",
+          "Ma olin kolm päeva Tartus koos sõpradega."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mida te seal tegite?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Laupäeval käisime muuseumides ja kohvikutes.",
+          "Tartu kohvikutes on väga head koogid."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas muuseumides oli palju inimesi?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, väga palju.",
+          "Kõikides saalides olid lapsed ja nende vanemad.",
+          "Lapsed jooksid saalist saali."
+        ],
+        "say": "[laughs] Jah, väga palju. Kõikides saalides olid lapsed ja nende vanemad. Lapsed jooksid saalist saali."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kus te ööbisite?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ühe sõbra juures.",
+          "Tal on vanalinnas korter.",
+          "Vanades majades on kõrged laed ja suured aknad.",
+          "Õhtul istusime köögis ja rääkisime tundide kaupa."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja pühapäeval?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Pühapäeval käisime poodides.",
+          "Ma ostsin kingitusi oma õdedele.",
+          "Neile meeldivad raamatud, nii et ma ostsin kaks raamatut."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa rääkisid poodides eesti keelt?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi!",
+          "Ma rääkisin müüjatega ainult eesti keeles.",
+          "Nad olid väga sõbralikud.",
+          "Ühes raamatupoes küsis müüja, kust ma pärit olen.",
+          "Ta ei uskunud, et ma õpin eesti keelt alles kaks aastat."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tubli!",
+          "Mina olin terve nädalavahetuse kodus."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mida sa tegid?"
+        ],
+        "say": "[curious] Mida sa tegid?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kõigepealt kirjutasin kirju oma vanematele ja vendadele.",
+          "Siis vaatasin vanu fotosid."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Vanu fotosid?",
+          "Kust sa need leidsid?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Need olid kastides keldris.",
+          "Mõnedel piltidel on minu vanaisa ja vanaema.",
+          "Nad seisavad oma maja ees.",
+          "Mõnel pildil on ka meie vana koer.",
+          "Ta magab alati laste voodite all."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kui huvitav!",
+          "Kas sa näitad neid mulle?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, muidugi.",
+          "Ma panen kõige ilusamad pildid albumitesse.",
+          "Tule homme minu juurde!"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Hea mõte!",
+          "Ma toon kooke.",
+          "Kas kell viis sobib?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, kell viis sobib väga hästi."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas ma võin ka oma sõbrad kaasa võtta?",
+          "Nad tahavad sinuga tuttavaks saada."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Muidugi, kõik on oodatud.",
+          "Ma teen teed ja kohvi kõikidele külalistele.",
+          "Kohtumiseni!"
+        ]
+      }
+    ]
   }
 }

@@ -1,0 +1,431 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 12:06+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0>-m</0> on the genitive: <1>{answer}</1>."
+msgstr "<0>-m</0> до родового: <1>{answer}</1>."
+
+msgid "18 minutes"
+msgstr "18 хвилин"
+
+msgid "6 exercises, 4 of them typed, and a conversation"
+msgstr "6 вправ, з них 4 з введенням тексту, і розмова"
+
+msgid "A bigger desk and a newer computer"
+msgstr "Більший стіл і новіший комп’ютер"
+
+msgid "A bigger office and more money"
+msgstr "Більший кабінет і більша зарплата"
+
+msgid "A comparative is the genitive with <0>-m</0>: <1>suur, suure, suurem</1>; <2>uus, uue, uuem</2>."
+msgstr "Вищий ступінь — це родовий із <0>-m</0>: <1>suur, suure, suurem</1>; <2>uus, uue, uuem</2>."
+
+msgid "A comparative is the genitive with <et>-m</et>: <et>vana</et>, <et>vanem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>."
+msgstr "Вищий ступінь — це родовий із <et>-m</et>: <et>vana</et>, <et>vanem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>."
+
+msgid "A comparative takes the noun’s case like any adjective from lesson {agree}: <0>suuremas majas</0>, in a bigger house."
+msgstr "Вищий ступінь стоїть у відмінку іменника, як і будь-який прикметник з уроку {agree}: <0>suuremas majas</0> — «у більшому будинку»."
+
+msgid "adjective"
+msgstr "прикметник"
+
+msgid "Adjectives"
+msgstr "Прикметники"
+
+msgid "After <0>kõige</0> comes the comparative: <1>kõige suurem</1>."
+msgstr "Після <0>kõige</0> іде вищий ступінь: <1>kõige suurem</1>."
+
+msgid "After a comparative: suurem kui, bigger than."
+msgstr "Після вищого ступеня: suurem kui — «більший, ніж»."
+
+msgid "All eight comparatives."
+msgstr "Усі вісім форм вищого ступеня."
+
+msgid "All six found and fixed."
+msgstr "Усі шість знайдено й виправлено."
+
+msgid "All six sentences."
+msgstr "Усі шість речень."
+
+msgid "All six, by the ending and by <0>kõige</0>."
+msgstr "Усі шість — за закінченням і за <0>kõige</0>."
+
+msgid "All six, the other thing with <0>-st</0> before the comparative."
+msgstr "Усі шість: те, з чим порівнюєш, із <0>-st</0> перед вищим ступенем."
+
+msgid "As big as is <0/> and the adjective, then <1>kui</1>: <2>sama suur kui</2>. Tap a line to hear it."
+msgstr "«Такий самий великий, як» — це <0/> і прикметник, а потім <1>kui</1>: <2>sama suur kui</2>. Торкнися рядка, щоб послухати."
+
+msgid "As big as is <et>sama suur kui</et>."
+msgstr "«Такий самий великий, як» — це <et>sama suur kui</et>."
+
+msgid "beautiful"
+msgstr "гарний"
+
+msgid "better"
+msgstr "кращий"
+
+msgid "Better is a word of its own: <0>parem</0>."
+msgstr "«Кращий» — окреме слово: <0>parem</0>."
+
+msgid "big"
+msgstr "великий"
+
+msgid "Big, bigger"
+msgstr "Великий, більший"
+
+msgid "Big, bigger or the biggest?"
+msgstr "Великий, більший чи найбільший?"
+
+msgid "bigger"
+msgstr "більший"
+
+msgid "Bigger is <0>suurem</0>: the genitive with <1>-m</1>. Than is <2>kui</2>, and the biggest is <3>kõige suurem</3>."
+msgstr "«Більший» — це <0>suurem</0>: родовий із <1>-m</1>. «Ніж» — це <2>kui</2>, а «найбільший» — <3>kõige suurem</3>."
+
+msgid "Bigger: -m on the genitive"
+msgstr "Більший: -m до родового"
+
+msgid "Bigger: <et>suurem</et>, <et>uuem</et>"
+msgstr "Більший: <et>suurem</et>, <et>uuem</et>"
+
+msgid "Cheap is <et>odav</et>, its genitive <et>odava</et>, so cheaper is <et>odavam</et>."
+msgstr "«Дешевий» — <et>odav</et>, родовий <et>odava</et>, тож «дешевший» — <et>odavam</et>."
+
+msgid "Coffee is dearer than tea."
+msgstr "Кава дорожча за чай."
+
+msgid "cold"
+msgstr "холодний"
+
+msgid "comparative"
+msgstr "вищий ступінь"
+
+msgid "dear, expensive"
+msgstr "дорогий"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "genitive"
+msgstr "родовий"
+
+msgid "good"
+msgstr "хороший"
+
+msgid "Good, better, best"
+msgstr "Хороший, кращий, найкращий"
+
+msgid "Good, better, best: <0>hea, parem, kõige parem</0> or <1>parim</1>. Small, smaller: <2>väike, väiksem</2>."
+msgstr "Хороший, кращий, найкращий: <0>hea, parem, kõige parem</0> або <1>parim</1>. Маленький, менший: <2>väike, väiksem</2>."
+
+msgid "Good, better, best: <et>hea</et>, <et>parem</et>, <et>kõige parem</et> or <et>parim</et>."
+msgstr "Хороший, кращий, найкращий: <et>hea</et>, <et>parem</et>, <et>kõige parem</et> або <et>parim</et>."
+
+msgid "Good, better: <et>parem</et>, <et>väiksem</et>"
+msgstr "Хороший, кращий: <et>parem</et>, <et>väiksem</et>"
+
+msgid "Hear a sentence and pick what it says: big, bigger or the biggest."
+msgstr "Послухай речення й обери, що в ньому: великий, більший чи найбільший."
+
+msgid "How much did a coffee cost in Tartu? Write the number as Mari says it."
+msgstr "Скільки коштувала кава в Тарту? Напиши число так, як каже Марі."
+
+msgid "In a month"
+msgstr "Через місяць"
+
+msgid "In a week"
+msgstr "Через тиждень"
+
+msgid "In each sentence, one word is wrong. Tap it, then type it right."
+msgstr "У кожному реченні одне слово неправильне. Торкнися його, а потім напиши правильно."
+
+msgid "In the centre of Tallinn"
+msgstr "У центрі Таллінна"
+
+msgid "It’s bigger"
+msgstr "Вона більша"
+
+msgid "It’s bigger and cheaper"
+msgstr "Вона більша й дешевша"
+
+msgid "It’s newer and warmer"
+msgstr "Вона новіша й тепліша"
+
+msgid "It’s warmer today than yesterday."
+msgstr "Сьогодні тепліше, ніж учора."
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan is older than Mari."
+msgstr "Яан старший за Марі."
+
+msgid "Jaan is the oldest."
+msgstr "Яан найстарший."
+
+msgid "Listen to the pairs above once more, then try again."
+msgstr "Ще раз послухай пари вище й спробуй знову."
+
+msgid "Listen: Mari and Jaan"
+msgstr "Послухай: Марі й Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari has moved from Tartu to Tallinn. Jaan asks how it is."
+msgstr "Марі переїхала з Тарту до Таллінна. Яан питає, як їй там."
+
+msgid "Mari is my best friend."
+msgstr "Марі — моя найкраща подруга."
+
+msgid "Mari is younger than Kati."
+msgstr "Марі молодша за Каті."
+
+msgid "Mari says Tallinn is bigger than Tartu."
+msgstr "Марі каже, що Таллінн більший за Тарту."
+
+msgid "Mari’s new flat is bigger than her old one."
+msgstr "Нова квартира Марі більша за стару."
+
+msgid "Match each form with what it means."
+msgstr "Зістав кожну форму з її значенням."
+
+msgid "more"
+msgstr "вищий ступінь"
+
+msgid "Most of them. Check the <0>-st</0> form and where it goes."
+msgstr "Більшість. Перевір форму з <0>-st</0> і де вона стоїть."
+
+msgid "Most of them. Check the comparative in the ones you missed."
+msgstr "Більшість. Перевір вищий ступінь у тих, що не вдалися."
+
+msgid "Most of them. Find the genitive first, then add <0>-m</0>."
+msgstr "Більшість. Спершу знайди родовий, потім додай <0>-m</0>."
+
+msgid "Most of them. Listen for <0>-m</0> and for <1>kõige</1>."
+msgstr "Більшість. Прислухайся до <0>-m</0> і до <1>kõige</1>."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Більшість. Прочитай пояснення до тих, що не вдалися."
+
+msgid "My car is newer than your car."
+msgstr "Моя машина новіша за твою."
+
+msgid "My cat is older than your cat."
+msgstr "Мій кіт старший за твого кота."
+
+msgid "My room is as big as your room."
+msgstr "Моя кімната така сама велика, як твоя."
+
+msgid "My room is bigger than your room."
+msgstr "Моя кімната більша за твою."
+
+msgid "new"
+msgstr "новий"
+
+msgid "Next to her house"
+msgstr "Біля її будинку"
+
+msgid "Next to her work"
+msgstr "Біля її роботи"
+
+msgid "Now type the comparative of each adjective."
+msgstr "Тепер напиши вищий ступінь кожного прикметника."
+
+msgid "old"
+msgstr "старий"
+
+msgid "older"
+msgstr "старший"
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Прочитай «Що запам’ятати» наприкінці й спробуй знову."
+
+msgid "Rewrite each sentence with <0>-st</0> instead of <1>kui</1>."
+msgstr "Перепиши кожне речення з <0>-st</0> замість <1>kui</1>."
+
+msgid "Sama suur kui: as big as."
+msgstr "Sama suur kui — «такий самий великий, як»."
+
+msgid "Shorter days and a much nicer boss"
+msgstr "Коротший день і кращий начальник"
+
+msgid "Six mistakes to catch"
+msgstr "Шість помилок"
+
+msgid "small"
+msgstr "маленький"
+
+msgid "Small drops an e: <et>väike</et>, <et>väiksem</et>."
+msgstr "«Маленький» втрачає e: <et>väike</et>, <et>väiksem</et>."
+
+msgid "smaller"
+msgstr "менший"
+
+msgid "Smaller drops an e: <0>väiksem</0>."
+msgstr "«Менший» утрачає e: <0>väiksem</0>."
+
+msgid "Tallinn is bigger than Tartu."
+msgstr "Таллінн більший за Тарту."
+
+msgid "Tallinn is the biggest town in Estonia."
+msgstr "Таллінн — найбільше місто Естонії."
+
+msgid "Tallinn or Tartu?"
+msgstr "Таллінн чи Тарту?"
+
+msgid "Tap the lines above once more, then try again."
+msgstr "Ще раз торкнися рядків вище й спробуй знову."
+
+msgid "Tap the words above once more, then try again."
+msgstr "Ще раз торкнися слів вище, а потім спробуй знову."
+
+msgid "Tartu is older than Tallinn."
+msgstr "Тарту старіше за Таллінн."
+
+msgid "Tartu is smaller than Tallinn."
+msgstr "Тарту менше за Таллінн."
+
+msgid "Than is <0>kui</0>, or the other thing with <1>-st</1> before the comparative: <2>suurem kui Tartu</2>, <3>Tartust suurem</3>."
+msgstr "«Ніж» — це <0>kui</0>, або те, з чим порівнюєш, із <1>-st</1> перед вищим ступенем: <2>suurem kui Tartu</2>, <3>Tartust suurem</3>."
+
+msgid "Than is <0>kui</0>. <1>Nagu</1> means like."
+msgstr "«Ніж» — це <0>kui</0>. <1>Nagu</1> означає «як, наче»."
+
+msgid "Than is <et>kui</et>: <et>suurem kui Tartu</et>."
+msgstr "«Ніж» — це <et>kui</et>: <et>suurem kui Tartu</et>."
+
+msgid "Than is <et>kui</et>. <et>Nagu</et> means like."
+msgstr "«Ніж» — це <et>kui</et>. <et>Nagu</et> означає «як, наче»."
+
+msgid "than; as"
+msgstr "ніж; як"
+
+msgid "Than: <et>kui</et> or <et>-st</et>"
+msgstr "Ніж: <et>kui</et> або <et>-st</et>"
+
+msgid "Than: two ways"
+msgstr "Ніж: два способи"
+
+msgid "the best"
+msgstr "найкращий"
+
+msgid "the biggest"
+msgstr "найбільший"
+
+msgid "The biggest"
+msgstr "Найбільший"
+
+msgid "The biggest: <et>kõige suurem</et>"
+msgstr "Найбільший: <et>kõige suurem</et>"
+
+msgid "The comparative of hea, good."
+msgstr "Вищий ступінь від hea, «хороший»."
+
+msgid "The genitive of <et>kallis</et> is <et>kalli</et>, so dearer is <et>kallim</et>."
+msgstr "Родовий від <et>kallis</et> — <et>kalli</et>, тож «дорожчий» — <et>kallim</et>."
+
+msgid "The genitive of <et>uus</et> is <et>uue</et>, so newer is <et>uuem</et>."
+msgstr "Родовий від <et>uus</et> — <et>uue</et>, тож «новіший» — <et>uuem</et>."
+
+msgid "The most is <0>kõige</0> and the comparative: <1>kõige suurem</1>."
+msgstr "Найвищий ступінь — це <0>kõige</0> і вищий ступінь: <1>kõige suurem</1>."
+
+msgid "The most is <0>kõige</0> before the comparative: <1/>, the biggest; <2/>, the best. There is also a short form, <3/>, the best."
+msgstr "Найвищий ступінь — це <0>kõige</0> перед вищим: <1/> — «найбільший»; <2/> — «найкращий». Є й коротка форма: <3/> — «найкращий»."
+
+msgid "The most is <et>kõige</et> and the comparative: <et>kõige suurem</et>."
+msgstr "Найвищий ступінь — це <et>kõige</et> і вищий ступінь: <et>kõige suurem</et>."
+
+msgid "the oldest"
+msgstr "найстарший"
+
+msgid "the same"
+msgstr "той самий"
+
+msgid "The short form of kõige parem."
+msgstr "Коротка форма від kõige parem."
+
+msgid "The thing you compare with takes <0>-st</0> and goes before the comparative."
+msgstr "Те, з чим порівнюєш, бере <0>-st</0> і стоїть перед вищим ступенем."
+
+msgid "There is a second way to say than. Leave out <0>kui</0>, put the other thing before the comparative, and give it <1>-st</1> from lesson {into}: <2/>. Both mean the same."
+msgstr "«Ніж» можна сказати й інакше. Прибери <0>kui</0>, постав те, з чим порівнюєш, перед вищим ступенем і додай йому <1>-st</1> з уроку {into}: <2/>. Обидва варіанти означають те саме."
+
+msgid "This is the best café."
+msgstr "Це найкраща кав’ярня."
+
+msgid "This one is its own word: <0>{answer}</0>."
+msgstr "Це окреме слово: <0>{answer}</0>."
+
+msgid "To say bigger, take the adjective’s genitive from lesson {forms} and add <0>-m</0>: <1>suur</1>, <2>suure</2>, <3/>. Than is <4/>: <5/>."
+msgstr "Щоб сказати «більший», візьми родовий прикметника з уроку {forms} і додай <0>-m</0>: <1>suur</1>, <2>suure</2>, <3/>. «Ніж» — це <4/>: <5/>."
+
+msgid "Tomorrow"
+msgstr "Завтра"
+
+msgid "Two are different. Good, <0>hea</0>, becomes <1/>, a word of its own, and small, <2>väike</2>, drops an e: <3>väiksem</3>. Pick a word and tap its forms."
+msgstr "Два слова змінюються інакше. «Хороший», <0>hea</0>, стає <1/> — це окреме слово, а «маленький», <2>väike</2>, утрачає e: <3>väiksem</3>. Обери слово й торкнися його форм."
+
+msgid "Until five"
+msgstr "До п’ятої"
+
+msgid "Until seven"
+msgstr "До сьомої"
+
+msgid "Until six"
+msgstr "До шостої"
+
+msgid "Until when does Mari work now?"
+msgstr "До котрої Марі тепер працює?"
+
+msgid "What does it mean?"
+msgstr "Що це означає?"
+
+msgid "What is better about the new flat?"
+msgstr "Чим нова квартира краща?"
+
+msgid "What is better at Mari’s new job?"
+msgstr "Що краще на новій роботі Марі?"
+
+msgid "When is Jaan coming to Tallinn?"
+msgstr "Коли Яан приїде до Таллінна?"
+
+msgid "Where is the best café?"
+msgstr "Де найкраща кав’ярня?"
+
+msgid "Who is Mari’s best friend? Write the name."
+msgstr "Хто найкраща подруга Марі? Напиши ім’я."
+
+msgid "with -st, without kui"
+msgstr "з -st, без kui"
+
+msgid "with <0>-st</0>, without <1>kui</1>"
+msgstr "з <0>-st</0>, без <1>kui</1>"
+
+msgid "With <0>kui</0>, the adjective is a comparative: <1>külmem</1>."
+msgstr "З <0>kui</0> прикметник стоїть у вищому ступені: <1>külmem</1>."
+
+msgid "Without <0>kui</0>"
+msgstr "Без <0>kui</0>"
+
+msgid "Without <0>kui</0>, the town you compare with takes <1>-st</1>: <2>Tartust</2>."
+msgstr "Без <0>kui</0> місто, з яким порівнюєш, бере <1>-st</1>: <2>Tartust</2>."
+
+msgid "Without <et>kui</et>, the other thing takes <et>-st</et> and goes before the comparative: <et>Tartust suurem</et>."
+msgstr "Без <et>kui</et> те, з чим порівнюєш, бере <et>-st</et> і стоїть перед вищим ступенем: <et>Tartust suurem</et>."
+
+msgid "Write each sentence in Estonian."
+msgstr "Напиши кожне речення естонською."
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"

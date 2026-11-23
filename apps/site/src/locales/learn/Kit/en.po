@@ -235,6 +235,9 @@ msgstr "A free Estonian lesson on a noun’s three main forms, põhivormid (kool
 msgid "A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud."
 msgstr "A free Estonian lesson on adjectives with nouns: suures majas and uut raamatut, where the adjective takes the noun’s case, suure autoga with -ga, -ta, -ni and -na, and suured majad in the plural. Every sentence is read aloud."
 
+msgid "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and the two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
+msgstr "A free Estonian lesson on comparing: suurem and uuem built on the genitive, suurem kui Tartu and Tartust suurem, kõige suurem for the biggest, sama suur kui for as big as, and the two odd ones, hea, parem, parim and väike, väiksem. Every sentence is read aloud."
+
 msgid "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 msgstr "A free Estonian lesson on four case endings: -ga for with and by (sõbraga, bussiga), -ta for without (piimata), -ni for until and as far as (kella viieni, Tartuni) and -na for as (arstina), each on the genitive. Every sentence is read aloud."
 
@@ -647,6 +650,9 @@ msgstr "Estonian -ma, -mas and -mast: going, being and coming back"
 
 msgid "Estonian adjectives: agreeing with the noun"
 msgstr "Estonian adjectives: agreeing with the noun"
+
+msgid "Estonian comparatives and superlatives"
+msgstr "Estonian comparatives and superlatives"
 
 msgid "Estonian conversation practice: meeting someone"
 msgstr "Estonian conversation practice: meeting someone"

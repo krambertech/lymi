@@ -1,0 +1,431 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 12:06+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0>-m</0> on the genitive: <1>{answer}</1>."
+msgstr "<0>-m</0> on the genitive: <1>{answer}</1>."
+
+msgid "18 minutes"
+msgstr "18 minutes"
+
+msgid "6 exercises, 4 of them typed, and a conversation"
+msgstr "6 exercises, 4 of them typed, and a conversation"
+
+msgid "A bigger desk and a newer computer"
+msgstr "A bigger desk and a newer computer"
+
+msgid "A bigger office and more money"
+msgstr "A bigger office and more money"
+
+msgid "A comparative is the genitive with <0>-m</0>: <1>suur, suure, suurem</1>; <2>uus, uue, uuem</2>."
+msgstr "A comparative is the genitive with <0>-m</0>: <1>suur, suure, suurem</1>; <2>uus, uue, uuem</2>."
+
+msgid "A comparative is the genitive with <et>-m</et>: <et>vana</et>, <et>vanem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>."
+msgstr "A comparative is the genitive with <et>-m</et>: <et>vana</et>, <et>vanem</et>; <et>uus</et>, <et>uue</et>, <et>uuem</et>."
+
+msgid "A comparative takes the noun’s case like any adjective from lesson {agree}: <0>suuremas majas</0>, in a bigger house."
+msgstr "A comparative takes the noun’s case like any adjective from lesson {agree}: <0>suuremas majas</0>, in a bigger house."
+
+msgid "adjective"
+msgstr "adjective"
+
+msgid "Adjectives"
+msgstr "Adjectives"
+
+msgid "After <0>kõige</0> comes the comparative: <1>kõige suurem</1>."
+msgstr "After <0>kõige</0> comes the comparative: <1>kõige suurem</1>."
+
+msgid "After a comparative: suurem kui, bigger than."
+msgstr "After a comparative: suurem kui, bigger than."
+
+msgid "All eight comparatives."
+msgstr "All eight comparatives."
+
+msgid "All six found and fixed."
+msgstr "All six found and fixed."
+
+msgid "All six sentences."
+msgstr "All six sentences."
+
+msgid "All six, by the ending and by <0>kõige</0>."
+msgstr "All six, by the ending and by <0>kõige</0>."
+
+msgid "All six, the other thing with <0>-st</0> before the comparative."
+msgstr "All six, the other thing with <0>-st</0> before the comparative."
+
+msgid "As big as is <0/> and the adjective, then <1>kui</1>: <2>sama suur kui</2>. Tap a line to hear it."
+msgstr "As big as is <0/> and the adjective, then <1>kui</1>: <2>sama suur kui</2>. Tap a line to hear it."
+
+msgid "As big as is <et>sama suur kui</et>."
+msgstr "As big as is <et>sama suur kui</et>."
+
+msgid "beautiful"
+msgstr "beautiful"
+
+msgid "better"
+msgstr "better"
+
+msgid "Better is a word of its own: <0>parem</0>."
+msgstr "Better is a word of its own: <0>parem</0>."
+
+msgid "big"
+msgstr "big"
+
+msgid "Big, bigger"
+msgstr "Big, bigger"
+
+msgid "Big, bigger or the biggest?"
+msgstr "Big, bigger or the biggest?"
+
+msgid "bigger"
+msgstr "bigger"
+
+msgid "Bigger is <0>suurem</0>: the genitive with <1>-m</1>. Than is <2>kui</2>, and the biggest is <3>kõige suurem</3>."
+msgstr "Bigger is <0>suurem</0>: the genitive with <1>-m</1>. Than is <2>kui</2>, and the biggest is <3>kõige suurem</3>."
+
+msgid "Bigger: -m on the genitive"
+msgstr "Bigger: -m on the genitive"
+
+msgid "Bigger: <et>suurem</et>, <et>uuem</et>"
+msgstr "Bigger: <et>suurem</et>, <et>uuem</et>"
+
+msgid "Cheap is <et>odav</et>, its genitive <et>odava</et>, so cheaper is <et>odavam</et>."
+msgstr "Cheap is <et>odav</et>, its genitive <et>odava</et>, so cheaper is <et>odavam</et>."
+
+msgid "Coffee is dearer than tea."
+msgstr "Coffee is dearer than tea."
+
+msgid "cold"
+msgstr "cold"
+
+msgid "comparative"
+msgstr "comparative"
+
+msgid "dear, expensive"
+msgstr "dear, expensive"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "genitive"
+msgstr "genitive"
+
+msgid "good"
+msgstr "good"
+
+msgid "Good, better, best"
+msgstr "Good, better, best"
+
+msgid "Good, better, best: <0>hea, parem, kõige parem</0> or <1>parim</1>. Small, smaller: <2>väike, väiksem</2>."
+msgstr "Good, better, best: <0>hea, parem, kõige parem</0> or <1>parim</1>. Small, smaller: <2>väike, väiksem</2>."
+
+msgid "Good, better, best: <et>hea</et>, <et>parem</et>, <et>kõige parem</et> or <et>parim</et>."
+msgstr "Good, better, best: <et>hea</et>, <et>parem</et>, <et>kõige parem</et> or <et>parim</et>."
+
+msgid "Good, better: <et>parem</et>, <et>väiksem</et>"
+msgstr "Good, better: <et>parem</et>, <et>väiksem</et>"
+
+msgid "Hear a sentence and pick what it says: big, bigger or the biggest."
+msgstr "Hear a sentence and pick what it says: big, bigger or the biggest."
+
+msgid "How much did a coffee cost in Tartu? Write the number as Mari says it."
+msgstr "How much did a coffee cost in Tartu? Write the number as Mari says it."
+
+msgid "In a month"
+msgstr "In a month"
+
+msgid "In a week"
+msgstr "In a week"
+
+msgid "In each sentence, one word is wrong. Tap it, then type it right."
+msgstr "In each sentence, one word is wrong. Tap it, then type it right."
+
+msgid "In the centre of Tallinn"
+msgstr "In the centre of Tallinn"
+
+msgid "It’s bigger"
+msgstr "It’s bigger"
+
+msgid "It’s bigger and cheaper"
+msgstr "It’s bigger and cheaper"
+
+msgid "It’s newer and warmer"
+msgstr "It’s newer and warmer"
+
+msgid "It’s warmer today than yesterday."
+msgstr "It’s warmer today than yesterday."
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan is older than Mari."
+msgstr "Jaan is older than Mari."
+
+msgid "Jaan is the oldest."
+msgstr "Jaan is the oldest."
+
+msgid "Listen to the pairs above once more, then try again."
+msgstr "Listen to the pairs above once more, then try again."
+
+msgid "Listen: Mari and Jaan"
+msgstr "Listen: Mari and Jaan"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari has moved from Tartu to Tallinn. Jaan asks how it is."
+msgstr "Mari has moved from Tartu to Tallinn. Jaan asks how it is."
+
+msgid "Mari is my best friend."
+msgstr "Mari is my best friend."
+
+msgid "Mari is younger than Kati."
+msgstr "Mari is younger than Kati."
+
+msgid "Mari says Tallinn is bigger than Tartu."
+msgstr "Mari says Tallinn is bigger than Tartu."
+
+msgid "Mari’s new flat is bigger than her old one."
+msgstr "Mari’s new flat is bigger than her old one."
+
+msgid "Match each form with what it means."
+msgstr "Match each form with what it means."
+
+msgid "more"
+msgstr "more"
+
+msgid "Most of them. Check the <0>-st</0> form and where it goes."
+msgstr "Most of them. Check the <0>-st</0> form and where it goes."
+
+msgid "Most of them. Check the comparative in the ones you missed."
+msgstr "Most of them. Check the comparative in the ones you missed."
+
+msgid "Most of them. Find the genitive first, then add <0>-m</0>."
+msgstr "Most of them. Find the genitive first, then add <0>-m</0>."
+
+msgid "Most of them. Listen for <0>-m</0> and for <1>kõige</1>."
+msgstr "Most of them. Listen for <0>-m</0> and for <1>kõige</1>."
+
+msgid "Most of them. Read the reason under each one you missed."
+msgstr "Most of them. Read the reason under each one you missed."
+
+msgid "My car is newer than your car."
+msgstr "My car is newer than your car."
+
+msgid "My cat is older than your cat."
+msgstr "My cat is older than your cat."
+
+msgid "My room is as big as your room."
+msgstr "My room is as big as your room."
+
+msgid "My room is bigger than your room."
+msgstr "My room is bigger than your room."
+
+msgid "new"
+msgstr "new"
+
+msgid "Next to her house"
+msgstr "Next to her house"
+
+msgid "Next to her work"
+msgstr "Next to her work"
+
+msgid "Now type the comparative of each adjective."
+msgstr "Now type the comparative of each adjective."
+
+msgid "old"
+msgstr "old"
+
+msgid "older"
+msgstr "older"
+
+msgid "Read What to remember at the end, then try again."
+msgstr "Read What to remember at the end, then try again."
+
+msgid "Rewrite each sentence with <0>-st</0> instead of <1>kui</1>."
+msgstr "Rewrite each sentence with <0>-st</0> instead of <1>kui</1>."
+
+msgid "Sama suur kui: as big as."
+msgstr "Sama suur kui: as big as."
+
+msgid "Shorter days and a much nicer boss"
+msgstr "Shorter days and a much nicer boss"
+
+msgid "Six mistakes to catch"
+msgstr "Six mistakes to catch"
+
+msgid "small"
+msgstr "small"
+
+msgid "Small drops an e: <et>väike</et>, <et>väiksem</et>."
+msgstr "Small drops an e: <et>väike</et>, <et>väiksem</et>."
+
+msgid "smaller"
+msgstr "smaller"
+
+msgid "Smaller drops an e: <0>väiksem</0>."
+msgstr "Smaller drops an e: <0>väiksem</0>."
+
+msgid "Tallinn is bigger than Tartu."
+msgstr "Tallinn is bigger than Tartu."
+
+msgid "Tallinn is the biggest town in Estonia."
+msgstr "Tallinn is the biggest town in Estonia."
+
+msgid "Tallinn or Tartu?"
+msgstr "Tallinn or Tartu?"
+
+msgid "Tap the lines above once more, then try again."
+msgstr "Tap the lines above once more, then try again."
+
+msgid "Tap the words above once more, then try again."
+msgstr "Tap the words above once more, then try again."
+
+msgid "Tartu is older than Tallinn."
+msgstr "Tartu is older than Tallinn."
+
+msgid "Tartu is smaller than Tallinn."
+msgstr "Tartu is smaller than Tallinn."
+
+msgid "Than is <0>kui</0>, or the other thing with <1>-st</1> before the comparative: <2>suurem kui Tartu</2>, <3>Tartust suurem</3>."
+msgstr "Than is <0>kui</0>, or the other thing with <1>-st</1> before the comparative: <2>suurem kui Tartu</2>, <3>Tartust suurem</3>."
+
+msgid "Than is <0>kui</0>. <1>Nagu</1> means like."
+msgstr "Than is <0>kui</0>. <1>Nagu</1> means like."
+
+msgid "Than is <et>kui</et>: <et>suurem kui Tartu</et>."
+msgstr "Than is <et>kui</et>: <et>suurem kui Tartu</et>."
+
+msgid "Than is <et>kui</et>. <et>Nagu</et> means like."
+msgstr "Than is <et>kui</et>. <et>Nagu</et> means like."
+
+msgid "than; as"
+msgstr "than; as"
+
+msgid "Than: <et>kui</et> or <et>-st</et>"
+msgstr "Than: <et>kui</et> or <et>-st</et>"
+
+msgid "Than: two ways"
+msgstr "Than: two ways"
+
+msgid "the best"
+msgstr "the best"
+
+msgid "the biggest"
+msgstr "the biggest"
+
+msgid "The biggest"
+msgstr "The biggest"
+
+msgid "The biggest: <et>kõige suurem</et>"
+msgstr "The biggest: <et>kõige suurem</et>"
+
+msgid "The comparative of hea, good."
+msgstr "The comparative of hea, good."
+
+msgid "The genitive of <et>kallis</et> is <et>kalli</et>, so dearer is <et>kallim</et>."
+msgstr "The genitive of <et>kallis</et> is <et>kalli</et>, so dearer is <et>kallim</et>."
+
+msgid "The genitive of <et>uus</et> is <et>uue</et>, so newer is <et>uuem</et>."
+msgstr "The genitive of <et>uus</et> is <et>uue</et>, so newer is <et>uuem</et>."
+
+msgid "The most is <0>kõige</0> and the comparative: <1>kõige suurem</1>."
+msgstr "The most is <0>kõige</0> and the comparative: <1>kõige suurem</1>."
+
+msgid "The most is <0>kõige</0> before the comparative: <1/>, the biggest; <2/>, the best. There is also a short form, <3/>, the best."
+msgstr "The most is <0>kõige</0> before the comparative: <1/>, the biggest; <2/>, the best. There is also a short form, <3/>, the best."
+
+msgid "The most is <et>kõige</et> and the comparative: <et>kõige suurem</et>."
+msgstr "The most is <et>kõige</et> and the comparative: <et>kõige suurem</et>."
+
+msgid "the oldest"
+msgstr "the oldest"
+
+msgid "the same"
+msgstr "the same"
+
+msgid "The short form of kõige parem."
+msgstr "The short form of kõige parem."
+
+msgid "The thing you compare with takes <0>-st</0> and goes before the comparative."
+msgstr "The thing you compare with takes <0>-st</0> and goes before the comparative."
+
+msgid "There is a second way to say than. Leave out <0>kui</0>, put the other thing before the comparative, and give it <1>-st</1> from lesson {into}: <2/>. Both mean the same."
+msgstr "There is a second way to say than. Leave out <0>kui</0>, put the other thing before the comparative, and give it <1>-st</1> from lesson {into}: <2/>. Both mean the same."
+
+msgid "This is the best café."
+msgstr "This is the best café."
+
+msgid "This one is its own word: <0>{answer}</0>."
+msgstr "This one is its own word: <0>{answer}</0>."
+
+msgid "To say bigger, take the adjective’s genitive from lesson {forms} and add <0>-m</0>: <1>suur</1>, <2>suure</2>, <3/>. Than is <4/>: <5/>."
+msgstr "To say bigger, take the adjective’s genitive from lesson {forms} and add <0>-m</0>: <1>suur</1>, <2>suure</2>, <3/>. Than is <4/>: <5/>."
+
+msgid "Tomorrow"
+msgstr "Tomorrow"
+
+msgid "Two are different. Good, <0>hea</0>, becomes <1/>, a word of its own, and small, <2>väike</2>, drops an e: <3>väiksem</3>. Pick a word and tap its forms."
+msgstr "Two are different. Good, <0>hea</0>, becomes <1/>, a word of its own, and small, <2>väike</2>, drops an e: <3>väiksem</3>. Pick a word and tap its forms."
+
+msgid "Until five"
+msgstr "Until five"
+
+msgid "Until seven"
+msgstr "Until seven"
+
+msgid "Until six"
+msgstr "Until six"
+
+msgid "Until when does Mari work now?"
+msgstr "Until when does Mari work now?"
+
+msgid "What does it mean?"
+msgstr "What does it mean?"
+
+msgid "What is better about the new flat?"
+msgstr "What is better about the new flat?"
+
+msgid "What is better at Mari’s new job?"
+msgstr "What is better at Mari’s new job?"
+
+msgid "When is Jaan coming to Tallinn?"
+msgstr "When is Jaan coming to Tallinn?"
+
+msgid "Where is the best café?"
+msgstr "Where is the best café?"
+
+msgid "Who is Mari’s best friend? Write the name."
+msgstr "Who is Mari’s best friend? Write the name."
+
+msgid "with -st, without kui"
+msgstr "with -st, without kui"
+
+msgid "with <0>-st</0>, without <1>kui</1>"
+msgstr "with <0>-st</0>, without <1>kui</1>"
+
+msgid "With <0>kui</0>, the adjective is a comparative: <1>külmem</1>."
+msgstr "With <0>kui</0>, the adjective is a comparative: <1>külmem</1>."
+
+msgid "Without <0>kui</0>"
+msgstr "Without <0>kui</0>"
+
+msgid "Without <0>kui</0>, the town you compare with takes <1>-st</1>: <2>Tartust</2>."
+msgstr "Without <0>kui</0>, the town you compare with takes <1>-st</1>: <2>Tartust</2>."
+
+msgid "Without <et>kui</et>, the other thing takes <et>-st</et> and goes before the comparative: <et>Tartust suurem</et>."
+msgstr "Without <et>kui</et>, the other thing takes <et>-st</et> and goes before the comparative: <et>Tartust suurem</et>."
+
+msgid "Write each sentence in Estonian."
+msgstr "Write each sentence in Estonian."
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"

@@ -15626,5 +15626,369 @@
     "text": "Jaan sõidab uue autoga.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/suurem": {
+    "text": "suurem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ko3ige-suurem": {
+    "text": "kõige suurem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/parem": {
+    "text": "parem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ko3ige-parem": {
+    "text": "kõige parem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/parim": {
+    "text": "parim",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kui": {
+    "text": "kui",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/sama": {
+    "text": "sama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tallinn-on-suurem-kui-tartu": {
+    "text": "Tallinn on suurem kui Tartu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tallinn-on-tartust-suurem": {
+    "text": "Tallinn on Tartust suurem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/suur": {
+    "text": "suur",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/suure": {
+    "text": "suure",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/uus": {
+    "text": "uus",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/uue": {
+    "text": "uue",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/uuem": {
+    "text": "uuem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kallis": {
+    "text": "kallis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kalli": {
+    "text": "kalli",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kallim": {
+    "text": "kallim",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/va2ike": {
+    "text": "väike",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/va2ikese": {
+    "text": "väikese",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/va2iksem": {
+    "text": "väiksem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/hea": {
+    "text": "hea",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/vanem": {
+    "text": "vanem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ku2lmem": {
+    "text": "külmem",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ilusam": {
+    "text": "ilusam",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-auto-on-uuem-kui-sinu-auto": {
+    "text": "Minu auto on uuem kui sinu auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kohv-on-kallim-kui-tee": {
+    "text": "Kohv on kallim kui tee.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tartu-on-va2iksem-kui-tallinn": {
+    "text": "Tartu on väiksem kui Tallinn.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ta2na-on-soojem-kui-eile": {
+    "text": "Täna on soojem kui eile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/jaan-on-vanem-kui-mari": {
+    "text": "Jaan on vanem kui Mari.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/jaan-on-marist-vanem": {
+    "text": "Jaan on Marist vanem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kohv-on-teest-kallim": {
+    "text": "Kohv on teest kallim.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-tuba-on-suurem-kui-sinu-tuba": {
+    "text": "Minu tuba on suurem kui sinu tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-tuba-on-sinu-toast-suurem": {
+    "text": "Minu tuba on sinu toast suurem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/mari-on-noorem-kui-kati": {
+    "text": "Mari on noorem kui Kati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/mari-on-katist-noorem": {
+    "text": "Mari on Katist noorem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tartu-on-vanem-kui-tallinn": {
+    "text": "Tartu on vanem kui Tallinn.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tartu-on-tallinnast-vanem": {
+    "text": "Tartu on Tallinnast vanem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tallinn-on-eesti-ko3ige-suurem-linn": {
+    "text": "Tallinn on Eesti kõige suurem linn.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/see-on-ko3ige-parem-kohvik": {
+    "text": "See on kõige parem kohvik.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/jaan-on-ko3ige-vanem": {
+    "text": "Jaan on kõige vanem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/mari-on-minu-parim-so3ber": {
+    "text": "Mari on minu parim sõber.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-tuba-on-sama-suur-kui-sinu-tuba": {
+    "text": "Minu tuba on sama suur kui sinu tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tallinn-on-suur-linn": {
+    "text": "Tallinn on suur linn.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/jaan-on-vana": {
+    "text": "Jaan on vana.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/see-kohvik-on-hea": {
+    "text": "See kohvik on hea.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/see-kohvik-on-parem": {
+    "text": "See kohvik on parem.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/kohv-on-parem-kui-tee": {
+    "text": "Kohv on parem kui tee.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/ta2na-on-ku2lmem-kui-eile": {
+    "text": "Täna on külmem kui eile.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-kass-on-vanem-kui-sinu-kass": {
+    "text": "Minu kass on vanem kui sinu kass.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tee-on-odavam-kui-kohv": {
+    "text": "Tee on odavam kui kohv.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/tallinn-on-palju-suurem-kui-tartu": {
+    "text": "Tallinn on palju suurem kui Tartu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/minu-tuba-on-va2iksem-kui-sinu-tuba": {
+    "text": "Minu tuba on väiksem kui sinu tuba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "vordlus/c-talk": {
+    "text": "Tere, Mari! Kuidas sulle Tallinn meeldib? Tere, Jaan! Tallinn on ilus, aga ta on palju suurem kui Tartu. Ja korter? Kas see on suurem kui sinu vana korter? Ei, uus korter on väiksem. Aga see on uuem ja soojem. Tartus oli mul talvel väga külm. Kas Tallinnas on kõik kallim? Jah, korter on kallim ja kohv on ka kallim. Tartus maksis kohv kaks eurot, siin maksab ta kolm eurot. Kolm eurot! Aga kas kohv on ka parem? Jah, minu maja kõrval on Tallinna kõige parem kohvik. Ma joon seal iga päev kohvi. Ja töö? Kas uus töö on parem kui vana? Jah, palju parem. Mul on seal suurem laud ja uuem arvuti. Aga ma töötan kella üheksast kella kuueni. Tartus töötasid sa kella viieni. Kas Tartu oli parem? Natuke. Tartu on vanem ja väiksem linn. Aga Tallinnas on mu parim sõber Kati. Hästi. Ma tulen nädala pärast Tallinna. Siis joome kõige paremat kohvi!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Mari!",
+          "Kuidas sulle Tallinn meeldib?"
+        ],
+        "say": "[cheerful] Tere, Mari! Kuidas sulle Tallinn meeldib?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Tallinn on ilus, aga ta on palju suurem kui Tartu."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja korter?",
+          "Kas see on suurem kui sinu vana korter?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, uus korter on väiksem.",
+          "Aga see on uuem ja soojem.",
+          "Tartus oli mul talvel väga külm."
+        ],
+        "say": "Ei, uus korter on väiksem. Aga see on uuem ja soojem. [laughs] Tartus oli mul talvel väga külm."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas Tallinnas on kõik kallim?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, korter on kallim ja kohv on ka kallim.",
+          "Tartus maksis kohv kaks eurot, siin maksab ta kolm eurot."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kolm eurot!",
+          "Aga kas kohv on ka parem?"
+        ],
+        "say": "[surprised] Kolm eurot! Aga kas kohv on ka parem?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, minu maja kõrval on Tallinna kõige parem kohvik.",
+          "Ma joon seal iga päev kohvi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja töö?",
+          "Kas uus töö on parem kui vana?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, palju parem.",
+          "Mul on seal suurem laud ja uuem arvuti.",
+          "Aga ma töötan kella üheksast kella kuueni."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tartus töötasid sa kella viieni.",
+          "Kas Tartu oli parem?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Natuke.",
+          "Tartu on vanem ja väiksem linn.",
+          "Aga Tallinnas on mu parim sõber Kati."
+        ],
+        "say": "[sighs] Natuke. Tartu on vanem ja väiksem linn. Aga Tallinnas on mu parim sõber Kati."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi.",
+          "Ma tulen nädala pärast Tallinna.",
+          "Siis joome kõige paremat kohvi!"
+        ]
+      }
+    ]
   }
 }

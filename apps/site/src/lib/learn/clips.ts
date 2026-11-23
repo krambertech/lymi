@@ -3052,6 +3052,206 @@ const ADJ_CLIPS: Record<string, Clip> = {
   "c-talk": ADJ_TALK,
 };
 
+export const CMP_CHAINS = [
+  { id: "suur", steps: ["suur", "suure", "suurem"] },
+  { id: "uus", steps: ["uus", "uue", "uuem"] },
+  { id: "kallis", steps: ["kallis", "kalli", "kallim"] },
+  { id: "vaike", steps: ["väike", "väikese", "väiksem"] },
+  { id: "hea", steps: ["hea", "hea", "parem"] },
+] as const;
+
+export const CMP_THAN = [
+  "Tallinn on suurem kui Tartu.",
+  "Minu auto on uuem kui sinu auto.",
+  "Kohv on kallim kui tee.",
+  "Tartu on väiksem kui Tallinn.",
+  "Täna on soojem kui eile.",
+] as const;
+
+export const CMP_ST = [
+  { kui: "Tallinn on suurem kui Tartu.", st: "Tallinn on Tartust suurem." },
+  { kui: "Jaan on vanem kui Mari.", st: "Jaan on Marist vanem." },
+  { kui: "Kohv on kallim kui tee.", st: "Kohv on teest kallim." },
+  { kui: "Minu tuba on suurem kui sinu tuba.", st: "Minu tuba on sinu toast suurem." },
+  { kui: "Mari on noorem kui Kati.", st: "Mari on Katist noorem." },
+  { kui: "Tartu on vanem kui Tallinn.", st: "Tartu on Tallinnast vanem." },
+] as const;
+
+export const CMP_MOST = [
+  "Tallinn on Eesti kõige suurem linn.",
+  "See on kõige parem kohvik.",
+  "Jaan on kõige vanem.",
+  "Mari on minu parim sõber.",
+  "Minu tuba on sama suur kui sinu tuba.",
+] as const;
+
+export const CMP_MAKE = [
+  { id: "suurem", kind: "plain", base: "suur", answer: "suurem" },
+  { id: "vanem", kind: "plain", base: "vana", answer: "vanem" },
+  { id: "kulmem", kind: "plain", base: "külm", answer: "külmem" },
+  { id: "uuem", kind: "stem", base: "uus", answer: "uuem" },
+  { id: "kallim", kind: "stem", base: "kallis", answer: "kallim" },
+  { id: "ilusam", kind: "stem", base: "ilus", answer: "ilusam" },
+  { id: "parem", kind: "own", base: "hea", answer: "parem" },
+  { id: "vaiksem", kind: "own", base: "väike", answer: "väiksem" },
+] as const;
+
+export const CMP_HEARD = [
+  { said: "Tallinn on suur linn.", word: "suur", kind: "plain" },
+  { said: "Tallinn on suurem kui Tartu.", word: "suur", kind: "more" },
+  { said: "Tallinn on Eesti kõige suurem linn.", word: "suur", kind: "most" },
+  { said: "Jaan on vana.", word: "vana", kind: "plain" },
+  { said: "Jaan on vanem kui Mari.", word: "vana", kind: "more" },
+  { said: "Jaan on kõige vanem.", word: "vana", kind: "most" },
+  { said: "See kohvik on hea.", word: "hea", kind: "plain" },
+  { said: "See kohvik on parem.", word: "hea", kind: "more" },
+  { said: "See on kõige parem kohvik.", word: "hea", kind: "most" },
+] as const;
+
+export const CMP_TRANSLATE = [
+  { id: "suurem-kui", answers: ["Tallinn on suurem kui Tartu.", "Tallinn on Tartust suurem."] },
+  { id: "kallim", answers: ["Kohv on kallim kui tee.", "Kohv on teest kallim."] },
+  { id: "koige-parem", answers: ["See on kõige parem kohvik.", "See on parim kohvik."] },
+  { id: "vanem", answers: ["Jaan on vanem kui Mari.", "Jaan on Marist vanem."] },
+  {
+    id: "sama-suur",
+    answers: [
+      "Minu tuba on sama suur kui sinu tuba.",
+      "Mu tuba on sama suur kui su tuba.",
+      "Minu tuba on sama suur kui sinu oma.",
+    ],
+  },
+  {
+    id: "parim-sober",
+    answers: [
+      "Mari on minu parim sõber.",
+      "Mari on mu parim sõber.",
+      "Mari on minu kõige parem sõber.",
+    ],
+  },
+] as const;
+
+export const CMP_FIX = [
+  {
+    id: "fix-kui",
+    wrong: "Tallinn on suurem nagu Tartu.",
+    answers: ["Tallinn on suurem kui Tartu."],
+  },
+  { id: "fix-parem", wrong: "Kohv on heam kui tee.", answers: ["Kohv on parem kui tee."] },
+  {
+    id: "fix-vaiksem",
+    wrong: "Tartu on väikesem kui Tallinn.",
+    answers: ["Tartu on väiksem kui Tallinn."],
+  },
+  {
+    id: "fix-koige",
+    wrong: "Tallinn on Eesti kõige suur linn.",
+    answers: ["Tallinn on Eesti kõige suurem linn."],
+  },
+  { id: "fix-tartust", wrong: "Tallinn on Tartu suurem.", answers: ["Tallinn on Tartust suurem."] },
+  { id: "fix-kulmem", wrong: "Täna on külm kui eile.", answers: ["Täna on külmem kui eile."] },
+] as const;
+
+export const CMP_TALK: Conversation = {
+  turns: [
+    {
+      voice: "main",
+      text: ["Tere, Mari!", "Kuidas sulle Tallinn meeldib?"],
+      say: "[cheerful] Tere, Mari! Kuidas sulle Tallinn meeldib?",
+    },
+    {
+      voice: "second",
+      text: ["Tere, Jaan!", "Tallinn on ilus, aga ta on palju suurem kui Tartu."],
+    },
+    { voice: "main", text: ["Ja korter?", "Kas see on suurem kui sinu vana korter?"] },
+    {
+      voice: "second",
+      text: [
+        "Ei, uus korter on väiksem.",
+        "Aga see on uuem ja soojem.",
+        "Tartus oli mul talvel väga külm.",
+      ],
+      say: "Ei, uus korter on väiksem. Aga see on uuem ja soojem. [laughs] Tartus oli mul talvel väga külm.",
+    },
+    { voice: "main", text: "Kas Tallinnas on kõik kallim?" },
+    {
+      voice: "second",
+      text: [
+        "Jah, korter on kallim ja kohv on ka kallim.",
+        "Tartus maksis kohv kaks eurot, siin maksab ta kolm eurot.",
+      ],
+    },
+    {
+      voice: "main",
+      text: ["Kolm eurot!", "Aga kas kohv on ka parem?"],
+      say: "[surprised] Kolm eurot! Aga kas kohv on ka parem?",
+    },
+    {
+      voice: "second",
+      text: [
+        "Jah, minu maja kõrval on Tallinna kõige parem kohvik.",
+        "Ma joon seal iga päev kohvi.",
+      ],
+    },
+    { voice: "main", text: ["Ja töö?", "Kas uus töö on parem kui vana?"] },
+    {
+      voice: "second",
+      text: [
+        "Jah, palju parem.",
+        "Mul on seal suurem laud ja uuem arvuti.",
+        "Aga ma töötan kella üheksast kella kuueni.",
+      ],
+    },
+    { voice: "main", text: ["Tartus töötasid sa kella viieni.", "Kas Tartu oli parem?"] },
+    {
+      voice: "second",
+      text: ["Natuke.", "Tartu on vanem ja väiksem linn.", "Aga Tallinnas on mu parim sõber Kati."],
+      say: "[sighs] Natuke. Tartu on vanem ja väiksem linn. Aga Tallinnas on mu parim sõber Kati.",
+    },
+    {
+      voice: "main",
+      text: ["Hästi.", "Ma tulen nädala pärast Tallinna.", "Siis joome kõige paremat kohvi!"],
+    },
+  ],
+};
+
+export const CMP_WORDS = [
+  "suurem",
+  "kõige suurem",
+  "parem",
+  "kõige parem",
+  "parim",
+  "kui",
+  "sama",
+  "Tallinn on suurem kui Tartu",
+  "Tallinn on Tartust suurem",
+  ...CMP_CHAINS.flatMap(({ steps }) => steps),
+  ...CMP_MAKE.map(({ answer }) => answer),
+] as const;
+
+export const CMP_DRILL = [
+  "Minu kass on vanem kui sinu kass.",
+  "Tee on odavam kui kohv.",
+  "Tallinn on palju suurem kui Tartu.",
+  "Minu tuba on väiksem kui sinu tuba.",
+] as const;
+
+const CMP_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...new Set([
+      ...CMP_WORDS,
+      ...CMP_THAN,
+      ...CMP_ST.flatMap(({ kui, st }) => [kui, st]),
+      ...CMP_MOST,
+      ...CMP_HEARD.map(({ said }) => said),
+      ...CMP_TRANSLATE.map(({ answers }) => answers[0]),
+      ...CMP_FIX.map(({ answers }) => answers[0]),
+      ...CMP_DRILL,
+    ]),
+  ]),
+  "c-talk": CMP_TALK,
+};
+
 /** A noun's three forms in a dictionary's order: first, second, third. */
 export type NounForms = readonly [string, string, string];
 
@@ -5065,6 +5265,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   millal: WHEN_CLIPS,
   sonajarg: ORDER_CLIPS,
   omadussonad: ADJ_CLIPS,
+  vordlus: CMP_CLIPS,
   "mul-on": {
     ...words([
       ...MUL_ON_WORDS,

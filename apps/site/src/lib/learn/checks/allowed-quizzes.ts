@@ -35,6 +35,12 @@ export const ALLOWED_NEAR_PAIRS: readonly {
       "Each gap asks which form the adjective takes before the noun: the genitive (vana autoga) against the -s form (uues linnas) is the lesson.",
   },
   {
+    lesson: "vordlus",
+    quiz: "big-bigger-biggest",
+    reason:
+      "The learner hears a sentence and picks big, bigger or the biggest: the three labels for a word are the same every round and each is the answer equally often, so only the ending or kõige they hear tells them apart.",
+  },
+  {
     lesson: "mul-on",
     quiz: "maris-note",
     reason: "-l against the bare form is the lesson: Emal against Ema, Jaanil against Jaan.",

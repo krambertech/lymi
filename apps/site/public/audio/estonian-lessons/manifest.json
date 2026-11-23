@@ -10658,51 +10658,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "raamatut-voi-raamatu/mari-luges-raamatut": {
-    "text": "Mari luges raamatut.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "raamatut-voi-raamatu/mari-luges-raamatu-la2bi": {
-    "text": "Mari luges raamatu läbi.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "raamatut-voi-raamatu/mari-loeb-raamatu-la2bi": {
-    "text": "Mari loeb raamatu läbi.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "raamatut-voi-raamatu/jaan-so3i-suppi": {
-    "text": "Jaan sõi suppi.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "raamatut-voi-raamatu/jaan-so3i-supi-a2ra": {
-    "text": "Jaan sõi supi ära.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "raamatut-voi-raamatu/jaan-so2o2b-supi-a2ra": {
-    "text": "Jaan sööb supi ära.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "raamatut-voi-raamatu/kati-tegi-to2o2d": {
-    "text": "Kati tegi tööd.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "raamatut-voi-raamatu/kati-tegi-to2o2-a2ra": {
-    "text": "Kati tegi töö ära.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "raamatut-voi-raamatu/kati-teeb-to2o2-a2ra": {
-    "text": "Kati teeb töö ära.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
   "raamatut-voi-raamatu/ma-ei-osta-piletit": {
     "text": "Ma ei osta piletit.",
     "model": "eleven_v4",
@@ -10925,21 +10880,6 @@
   },
   "raamatut-voi-raamatu/d-sina-1": {
     "text": "Ma võtan ühe koogi, palun.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "raamatut-voi-raamatu/liis-so3i-leiba": {
-    "text": "Liis sõi leiba.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "raamatut-voi-raamatu/liis-so3i-leiva-a2ra": {
-    "text": "Liis sõi leiva ära.",
-    "model": "eleven_v4",
-    "voice": "jGja51dd7gcoK0zkxeyg"
-  },
-  "raamatut-voi-raamatu/liis-so2o2b-leiva-a2ra": {
-    "text": "Liis sööb leiva ära.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
@@ -13993,6 +13933,91 @@
   },
   "jargarvud/ema-su2nnipa2ev-on-kaheteistku2mnendal-aprillil": {
     "text": "Ema sünnipäev on kaheteistkümnendal aprillil.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/liis-ostab-leiba": {
+    "text": "Liis ostab leiba.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/mari-kirjutas-raamatut": {
+    "text": "Mari kirjutas raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/mari-kirjutas-raamatu": {
+    "text": "Mari kirjutas raamatu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/mari-kirjutab-raamatut": {
+    "text": "Mari kirjutab raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/mari-kirjutab-raamatu": {
+    "text": "Mari kirjutab raamatu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-parandas-auto": {
+    "text": "Jaan parandas auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-parandab-autot": {
+    "text": "Jaan parandab autot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-parandab-auto": {
+    "text": "Jaan parandab auto.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/isa-ehitas-suvilat": {
+    "text": "Isa ehitas suvilat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/isa-ehitas-suvila": {
+    "text": "Isa ehitas suvila.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/isa-ehitab-suvilat": {
+    "text": "Isa ehitab suvilat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/isa-ehitab-suvila": {
+    "text": "Isa ehitab suvila.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/jaan-parandas-autot": {
+    "text": "Jaan parandas autot.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kati-tegi-salatit": {
+    "text": "Kati tegi salatit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kati-tegi-salati": {
+    "text": "Kati tegi salati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kati-teeb-salatit": {
+    "text": "Kati teeb salatit.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/kati-teeb-salati": {
+    "text": "Kati teeb salati.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

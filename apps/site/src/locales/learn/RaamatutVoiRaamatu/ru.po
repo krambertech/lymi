@@ -71,7 +71,7 @@ msgid "A sentence, a command and a don’t"
 msgstr "Предложение, команда и запрет"
 
 msgid "A small word after the verb can give it an end, and then the object takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
-msgstr "Короткое слово после глагола может дать ему конец, и тогда объект стоит в родительном: <0>Ma otsisin hosteli üles</0>, я нашёл хостел, и <1>Me ootame Mari ära</1>, мы дождёмся Мари."
+msgstr "Короткое слово после глагола может делать действие завершённым, и тогда объект стоит в родительном: <0>Ma otsisin hosteli üles</0>, я нашёл хостел, и <1>Me ootame Mari ära</1>, мы дождёмся Мари."
 
 msgid "A voice message from the shop"
 msgstr "Голосовое из магазина"
@@ -166,6 +166,18 @@ msgstr "ребёнок"
 msgid "Compare the object across each row: genitive, nominative, partitive."
 msgstr "Сравни объект в каждой строке: родительный, именительный, партитив."
 
+msgid "Dad built a summer house."
+msgstr "Папа построил дачу."
+
+msgid "Dad is building a summer house."
+msgstr "Папа строит дачу."
+
+msgid "Dad was building a summer house."
+msgstr "Папа строил дачу."
+
+msgid "Dad will build a summer house."
+msgstr "Папа построит дачу."
+
 msgid "Did she buy milk?"
 msgstr "Купила ли она молоко?"
 
@@ -256,8 +268,8 @@ msgstr "Должен был закончить большой отчёт"
 msgid "He or she didn’t read the book."
 msgstr "Он или она не читали книгу."
 
-msgid "Hear a sentence, then pick what it means. Listen for the object’s ending, for <0>läbi</0> or <1>ära</1>, and for the tense of the verb."
-msgstr "Послушай предложение и выбери, что оно значит. Слушай окончание объекта, <0>läbi</0> или <1>ära</1> и время глагола."
+msgid "Hear a sentence, then pick what it means. The verb’s tense narrows it to two; the object’s ending decides."
+msgstr "Послушай предложение и выбери, что оно значит. Время глагола оставляет два варианта, а окончание объекта решает."
 
 msgid "Hear the sentences above once more, then try again."
 msgstr "Ещё раз послушай предложения выше, потом попробуй снова."
@@ -370,29 +382,35 @@ msgstr "Ждёт вечером подругу"
 msgid "Jaan"
 msgstr "Яан"
 
-msgid "Jaan ate all the soup."
-msgstr "Яан съел весь суп."
-
-msgid "Jaan had some soup."
-msgstr "Яан поел супа."
-
 msgid "Jaan has finished Mari’s book."
 msgstr "Яан дочитал книгу Мари."
+
+msgid "Jaan is repairing the car."
+msgstr "Яан ремонтирует машину."
 
 msgid "Jaan loves Mari."
 msgstr "Яан любит Мари."
 
-msgid "Jaan will eat all the soup."
-msgstr "Яан съест весь суп."
+msgid "Jaan repaired the car."
+msgstr "Яан отремонтировал машину."
 
-msgid "Kati got the work done."
-msgstr "Кати доделала работу."
+msgid "Jaan was repairing the car."
+msgstr "Яан ремонтировал машину."
 
-msgid "Kati was working."
-msgstr "Кати работала."
+msgid "Jaan will repair the car."
+msgstr "Яан отремонтирует машину."
 
-msgid "Kati will get the work done."
-msgstr "Кати доделает работу."
+msgid "Kati is making a salad."
+msgstr "Кати делает салат."
+
+msgid "Kati made a salad."
+msgstr "Кати сделала салат."
+
+msgid "Kati was making a salad."
+msgstr "Кати делала салат."
+
+msgid "Kati will make a salad."
+msgstr "Кати сделает салат."
 
 msgid "key"
 msgstr "ключ"
@@ -400,23 +418,17 @@ msgstr "ключ"
 msgid "Kook, koogi, kooki."
 msgstr "Kook, koogi, kooki."
 
-msgid "Liis ate all the bread."
-msgstr "Лийс съела весь хлеб."
-
 msgid "Liis bought a loaf of bread."
 msgstr "Лийс купила буханку хлеба."
 
 msgid "Liis bought some bread."
 msgstr "Лийс купила хлеба."
 
-msgid "Liis had some bread."
-msgstr "Лийс поела хлеба."
+msgid "Liis is buying some bread."
+msgstr "Лийс покупает хлеб."
 
 msgid "Liis will buy a loaf of bread."
 msgstr "Лийс купит буханку хлеба."
-
-msgid "Liis will eat all the bread."
-msgstr "Лийс съест весь хлеб."
 
 msgid "Liisa has found her key."
 msgstr "Лийса нашла свой ключ."
@@ -448,14 +460,17 @@ msgstr "Мари купила несколько вещей. Чего она к�
 msgid "Mari hasn’t eaten the cake yet."
 msgstr "Мари ещё не съела торт."
 
-msgid "Mari read the book to the end."
-msgstr "Мари дочитала книгу до конца."
+msgid "Mari is writing a book."
+msgstr "Мари пишет книгу."
 
-msgid "Mari was reading the book."
-msgstr "Мари читала книгу."
+msgid "Mari was writing a book."
+msgstr "Мари писала книгу."
 
-msgid "Mari will read the book to the end."
-msgstr "Мари дочитает книгу до конца."
+msgid "Mari will write a book."
+msgstr "Мари напишет книгу."
+
+msgid "Mari wrote a book."
+msgstr "Мари написала книгу."
 
 msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
 msgstr "Несколько целых вещей без числа перед ними — множественное число на <0>-d</0> из урока {plural}: <1/> <2/> После числа — партитив единственного числа: <3>kaks piletit</3>. Часть из многих вещей — партитив множественного числа, о нём урок {pluralPartitive}."
@@ -550,8 +565,8 @@ msgstr "Прошедшее время: leidsin — я нашёл."
 msgid "Pilet, pileti, piletit."
 msgstr "Pilet, pileti, piletit."
 
-msgid "Pronouns follow the same rule. For the whole person, the genitive, often the short <0>mu, su, ta</0>: <1>Ta viis mu koju.</1> Lesson {pronouns} has every form."
-msgstr "Местоимения подчиняются тому же правилу. Для человека целиком — родительный, часто короткий <0>mu, su, ta</0>: <1>Ta viis mu koju.</1> Все формы — в уроке {pronouns}."
+msgid "Pronouns are different. <0>Mina, sina, meie</0> and <1>teie</1> can take the partitive even for the whole person: <2>Ta viis mu koju</2> or <3>Ta viis mind koju</3>; <4>Ta viis meid koju</4>. In a command, only the partitive: <5>Vii mind koju!</5> <6>Ta</6> works like a noun: <7>Vii ta koju!</7> Lesson {pronouns} has every form."
+msgstr "С местоимениями иначе. <0>Mina, sina, meie</0> и <1>teie</1> могут стоять в партитиве даже о человеке целиком: <2>Ta viis mu koju</2> или <3>Ta viis mind koju</3>; <4>Ta viis meid koju</4>. В приказе — только партитив: <5>Vii mind koju!</5> <6>Ta</6> ведёт себя как существительное: <7>Vii ta koju!</7> Все формы — в уроке {pronouns}."
 
 msgid "Read the book to the end!"
 msgstr "Дочитай книгу до конца!"
@@ -622,14 +637,14 @@ msgstr "Родительный падеж от kook."
 msgid "The object in a command"
 msgstr "Объект в команде"
 
-msgid "The object, the thing a verb acts on, takes the genitive when the action takes in the whole of it, and the partitive when it takes in only part, or never finishes."
-msgstr "Объект, то есть то, на что направлено действие, стоит в родительном падеже, когда действие охватывает его целиком, и в партитиве, когда только часть или не завершается."
-
-msgid "The partitive: some of it, or not finished."
-msgstr "Партитив: часть или не завершено."
+msgid "The object, the thing a verb acts on, usually takes the genitive when the action takes in the whole of it, and the partitive when it takes in only part, or never finishes."
+msgstr "Объект, то есть то, на что направлено действие, обычно стоит в родительном, когда действие охватывает его целиком, и в партитиве, когда только часть или когда действие не завершается."
 
 msgid "The past with the genitive: all of it, done."
 msgstr "Прошедшее время с родительным: всё, сделано."
+
+msgid "The past with the partitive: some of it, or not finished."
+msgstr "Прошедшее время с партитивом: часть или не завершено."
 
 msgid "The present also covers the future, as lesson {future} says, and the object tells you which. With the partitive, it’s going on, with no end in view. With the genitive, it will get done: <0/>"
 msgstr "Настоящее время передаёт и будущее, об этом — в уроке {future}, а объект показывает, что именно. С партитивом действие идёт, и конца не видно. С родительным оно будет завершено: <0/>"
@@ -639,6 +654,9 @@ msgstr "Настоящее время с родительным значит, ч
 
 msgid "The present with the genitive: it will get done."
 msgstr "Настоящее время с родительным: действие будет завершено."
+
+msgid "The present with the partitive: going on now."
+msgstr "Настоящее время с партитивом: действие идёт сейчас."
 
 msgid "The same choice tells a finished action from one still going on. <0/> means you were reading, maybe not to the end. <1/> means you finished it."
 msgstr "Тот же выбор отличает завершённое действие от того, что ещё идёт. <0/> значит, что ты читал, может быть, не до конца. <1/> — что дочитал."

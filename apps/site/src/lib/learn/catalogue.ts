@@ -339,7 +339,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian plural cases`,
         et: "Majades, inimestele",
         minutes: 22,
-        blurb: msg`A free lesson on the Estonian plural cases: build the plural genitive from the partitive (majade, raamatute, inimeste), then add the endings you know: majades, inimestele, sõpradega. Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian plural cases: build the plural genitive, usually from the partitive (majade, raamatute, inimeste), then add the endings you know: majades, inimestele, sõpradega. Every sentence is read aloud.`,
       },
       {
         slug: "olen-lugenud",

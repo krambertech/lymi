@@ -15,6 +15,7 @@ import {
   PERFECT_REWRITE,
   PERFECT_TIMELINE,
   PERFECT_USES,
+  PERFECT_ANSWERS,
 } from "../../../lib/learn/clips";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
@@ -305,7 +306,7 @@ function useContent() {
       from: item.from,
       cue: cues[item.cue],
       src: src(item.to),
-      answers: [item.to],
+      answers: PERFECT_ANSWERS[item.to] ?? [item.to],
       explain: (
         <Trans>
           <b lang="et">Olema</b> in the present, and the <b lang="et">-nud</b> form, usually at the
@@ -313,20 +314,6 @@ function useContent() {
         </Trans>
       ),
     }));
-    const extra: Record<string, readonly string[]> = {
-      "Ma olen juba söönud.": ["Ma olen juba söönud.", "Olen juba söönud."],
-      "Ma ei ole seda filmi näinud.": [
-        "Ma ei ole seda filmi näinud.",
-        "Ma pole seda filmi näinud.",
-        "Ma ei ole seda filmi veel näinud.",
-        "Ma ei ole seda filmi kunagi näinud.",
-        "Ma pole seda filmi kunagi näinud.",
-      ],
-    };
-    for (const item of rewrites) {
-      const more = extra[item.answers[0] as string];
-      if (more) item.answers = more;
-    }
 
     const translations: (SentenceItem & { pair: readonly [string, string] })[] = [
       {
@@ -334,13 +321,7 @@ function useContent() {
         id: "went-yesterday",
         prompt: t`I went to Tartu yesterday.`,
         src: src("Ma käisin eile Tartus."),
-        answers: [
-          "Ma käisin eile Tartus.",
-          "Eile käisin ma Tartus.",
-          "Eile käisin Tartus.",
-          "Käisin eile Tartus.",
-          "Mina käisin eile Tartus.",
-        ],
+        answers: PERFECT_ANSWERS["Ma käisin eile Tartus."],
         pair: ["past", "went-yesterday"],
         explain: <Trans>A finished time is named, yesterday, so the simple past.</Trans>,
       },
@@ -349,7 +330,7 @@ function useContent() {
         id: "have-been",
         prompt: t`I have been to Tartu.`,
         src: src("Ma olen Tartus käinud."),
-        answers: ["Ma olen Tartus käinud.", "Olen Tartus käinud.", "Mina olen Tartus käinud."],
+        answers: PERFECT_ANSWERS["Ma olen Tartus käinud."],
         pair: ["perfect", "have-been"],
         explain: <Trans>No finished time is named: the perfect.</Trans>,
       },
@@ -358,12 +339,7 @@ function useContent() {
         id: "not-yet",
         prompt: t`I haven’t eaten yet.`,
         src: src("Ma ei ole veel söönud."),
-        answers: [
-          "Ma ei ole veel söönud.",
-          "Ma pole veel söönud.",
-          "Ma ei ole söönud veel.",
-          "Mina ei ole veel söönud.",
-        ],
+        answers: PERFECT_ANSWERS["Ma ei ole veel söönud."],
         pair: ["perfect", "not-yet"],
       },
       {
@@ -371,11 +347,7 @@ function useContent() {
         id: "had-eaten",
         prompt: t`When I got home, Mari had already eaten.`,
         src: src("Kui ma koju jõudsin, oli Mari juba söönud."),
-        answers: [
-          "Kui ma koju jõudsin, oli Mari juba söönud.",
-          "Kui ma koju jõudsin, Mari oli juba söönud.",
-          "Kui ma jõudsin koju, oli Mari juba söönud.",
-        ],
+        answers: PERFECT_ANSWERS["Kui ma koju jõudsin, oli Mari juba söönud."],
         pair: ["pluperfect", "had-eaten"],
         explain: (
           <Trans>
@@ -388,12 +360,7 @@ function useContent() {
         id: "two-years",
         prompt: t`He or she has been learning Estonian for two years.`,
         src: src("Ta on eesti keelt kaks aastat õppinud."),
-        answers: [
-          "Ta on eesti keelt kaks aastat õppinud.",
-          "Ta on kaks aastat eesti keelt õppinud.",
-          "Tema on eesti keelt kaks aastat õppinud.",
-          "Ta õpib eesti keelt kaks aastat.",
-        ],
+        answers: PERFECT_ANSWERS["Ta on eesti keelt kaks aastat õppinud."],
         pair: ["perfect", "two-years"],
       },
       {
@@ -401,12 +368,7 @@ function useContent() {
         id: "seen-film",
         prompt: t`Have you seen this film?`,
         src: src("Kas sa oled seda filmi näinud?"),
-        answers: [
-          "Kas sa oled seda filmi näinud?",
-          "Kas sa oled seda filmi juba näinud?",
-          "Kas te olete seda filmi näinud?",
-          "Oled sa seda filmi näinud?",
-        ],
+        answers: PERFECT_ANSWERS["Kas sa oled seda filmi näinud?"],
         pair: ["perfect", "seen-film"],
       },
       {
@@ -414,11 +376,7 @@ function useContent() {
         id: "last-week",
         prompt: t`Last week I read the book to the end.`,
         src: src("Eelmisel nädalal lugesin ma raamatu läbi."),
-        answers: [
-          "Eelmisel nädalal lugesin ma raamatu läbi.",
-          "Eelmisel nädalal lugesin raamatu läbi.",
-          "Ma lugesin eelmisel nädalal raamatu läbi.",
-        ],
+        answers: PERFECT_ANSWERS["Eelmisel nädalal lugesin ma raamatu läbi."],
         pair: ["past", "last-week"],
         explain: <Trans>Last week is named, so the simple past.</Trans>,
       },

@@ -358,9 +358,6 @@ msgstr "The plural genitive"
 msgid "The plural genitive comes from the partitive <et>sõpra</et>: <et>sõpradele</et>."
 msgstr "The plural genitive comes from the partitive <et>sõpra</et>: <et>sõpradele</et>."
 
-msgid "The plural genitive comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap each form in both columns to hear it."
-msgstr "The plural genitive comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap each form in both columns to hear it."
-
 msgid "The plural genitive is <0>inimeste</0>, so <1>inimestega</1>, not the plural nominative <2>inimesed</2>."
 msgstr "The plural genitive is <0>inimeste</0>, so <1>inimestega</1>, not the plural nominative <2>inimesed</2>."
 
@@ -384,6 +381,9 @@ msgstr "The plural genitive of raamat."
 
 msgid "The plural genitive of sõber."
 msgstr "The plural genitive of sõber."
+
+msgid "The plural genitive usually comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap each form in both columns to hear it."
+msgstr "The plural genitive usually comes from the partitive, the third of lesson {forms}’s three forms. If the partitive ends in <0>-t</0>, add <1>-e</1>: <2/>. If not, drop any <3>-d</3> and add <4>-de</4>: <5/>. Tap each form in both columns to hear it."
 
 msgid "The plurals with <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4> and <5>-ga</5> are the plural genitive plus that ending: <6>majades, inimestele, sõpradega</6>."
 msgstr "The plurals with <0>-s</0>, <1>-st</1>, <2>-sse</2>, <3>-le</3>, <4>-l</4> and <5>-ga</5> are the plural genitive plus that ending: <6>majades, inimestele, sõpradega</6>."

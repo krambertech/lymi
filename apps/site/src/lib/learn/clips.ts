@@ -3647,6 +3647,36 @@ export const PLURAL_CASE_WORDS = [
   "inimestele",
 ] as const;
 
+export const PLURAL_CASE_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Ma räägin inimestega.": [
+    "Ma räägin inimestega.",
+    "Mina räägin inimestega.",
+    "Räägin inimestega.",
+  ],
+  "Ta kirjutab sõpradele.": ["Ta kirjutab sõpradele.", "Tema kirjutab sõpradele."],
+  "Raamatutes on pilte.": ["Raamatutes on pilte."],
+  "Lindudel on puudes pesad.": ["Lindudel on puudes pesad.", "Lindudel on pesad puudes."],
+  "Me käime poodides.": ["Me käime poodides.", "Meie käime poodides.", "Käime poodides."],
+  "Lapsed tulevad koolidest.": ["Lapsed tulevad koolidest.", "Koolidest tulevad lapsed."],
+  "Ma lähen sõpradega kinno.": [
+    "Ma lähen sõpradega kinno.",
+    "Ma lähen kinno sõpradega.",
+    "Mina lähen sõpradega kinno.",
+    "Lähen sõpradega kinno.",
+    "Lähen kinno sõpradega.",
+    "Mina lähen kinno sõpradega.",
+  ],
+  "Me tuleme poodidest.": ["Me tuleme poodidest.", "Meie tuleme poodidest.", "Tuleme poodidest."],
+  "Ta kirjutab sõpradest.": ["Ta kirjutab sõpradest.", "Tema kirjutab sõpradest."],
+  "Ma räägin inimestele.": [
+    "Ma räägin inimestele.",
+    "Mina räägin inimestele.",
+    "Räägin inimestele.",
+  ],
+  "Pildid on raamatus.": ["Pildid on raamatus.", "Raamatus on pildid."],
+  "Me käime poes.": ["Me käime poes.", "Meie käime poes.", "Käime poes."],
+};
+
 const PLURAL_CASE_CLIPS: Record<string, Clip> = {
   ...words([
     ...PLURAL_CASE_WORDS,
@@ -3916,6 +3946,94 @@ export const PERFECT_WORDS = [
   "olen",
   "olin",
 ] as const;
+
+export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
+  "Ma käisin eile Tartus.": [
+    "Ma käisin eile Tartus.",
+    "Eile käisin ma Tartus.",
+    "Eile käisin Tartus.",
+    "Käisin eile Tartus.",
+    "Mina käisin eile Tartus.",
+  ],
+  "Ma olen Tartus käinud.": [
+    "Ma olen Tartus käinud.",
+    "Olen Tartus käinud.",
+    "Mina olen Tartus käinud.",
+  ],
+  "Ma ei ole veel söönud.": [
+    "Ma ei ole veel söönud.",
+    "Ma pole veel söönud.",
+    "Ma ei ole söönud veel.",
+    "Mina ei ole veel söönud.",
+    "Ei ole veel söönud.",
+    "Pole veel söönud.",
+    "Mina pole veel söönud.",
+    "Ei ole söönud veel.",
+    "Mina ei ole söönud veel.",
+  ],
+  "Kui ma koju jõudsin, oli Mari juba söönud.": [
+    "Kui ma koju jõudsin, oli Mari juba söönud.",
+    "Kui ma koju jõudsin, Mari oli juba söönud.",
+    "Kui ma jõudsin koju, oli Mari juba söönud.",
+  ],
+  "Ta on eesti keelt kaks aastat õppinud.": [
+    "Ta on eesti keelt kaks aastat õppinud.",
+    "Ta on kaks aastat eesti keelt õppinud.",
+    "Tema on eesti keelt kaks aastat õppinud.",
+    "Ta õpib eesti keelt kaks aastat.",
+  ],
+  "Kas sa oled seda filmi näinud?": [
+    "Kas sa oled seda filmi näinud?",
+    "Kas sa oled seda filmi juba näinud?",
+    "Kas te olete seda filmi näinud?",
+    "Oled sa seda filmi näinud?",
+  ],
+  "Eelmisel nädalal lugesin ma raamatu läbi.": [
+    "Eelmisel nädalal lugesin ma raamatu läbi.",
+    "Eelmisel nädalal lugesin raamatu läbi.",
+    "Ma lugesin eelmisel nädalal raamatu läbi.",
+    "Lugesin eelmisel nädalal raamatu läbi.",
+    "Mina lugesin eelmisel nädalal raamatu läbi.",
+  ],
+  "Ma olen juba söönud.": ["Ma olen juba söönud.", "Olen juba söönud.", "Mina olen juba söönud."],
+  "Ta on juba koju läinud.": [
+    "Ta on juba koju läinud.",
+    "Ta on koju juba läinud.",
+    "Tema on juba koju läinud.",
+  ],
+  "Nad on piletid ostnud.": ["Nad on piletid ostnud.", "Nemad on piletid ostnud."],
+  "Kui ma jaama jõudsin, oli rong juba läinud.": [
+    "Kui ma jaama jõudsin, oli rong juba läinud.",
+    "Kui ma jõudsin jaama, oli rong juba läinud.",
+    "Kui ma jaama jõudsin, rong oli juba läinud.",
+  ],
+  "Ta pole seda filmi näinud.": [
+    "Ta pole seda filmi näinud.",
+    "Ta ei ole seda filmi näinud.",
+    "Tema pole seda filmi näinud.",
+    "Tema ei ole seda filmi näinud.",
+  ],
+  "Me oleme töö ära teinud.": [
+    "Me oleme töö ära teinud.",
+    "Oleme töö ära teinud.",
+    "Meie oleme töö ära teinud.",
+  ],
+  "Ma ei ole seda filmi näinud.": [
+    "Ma ei ole seda filmi näinud.",
+    "Ma pole seda filmi näinud.",
+    "Ma ei ole seda filmi veel näinud.",
+    "Ma ei ole seda filmi kunagi näinud.",
+    "Ma pole seda filmi kunagi näinud.",
+    "Ei ole seda filmi näinud.",
+    "Pole seda filmi näinud.",
+    "Mina ei ole seda filmi näinud.",
+  ],
+  "Sa oled raamatu läbi lugenud.": [
+    "Sa oled raamatu läbi lugenud.",
+    "Oled raamatu läbi lugenud.",
+    "Sina oled raamatu läbi lugenud.",
+  ],
+};
 
 const PERFECT_CLIPS: Record<string, Clip> = {
   ...words([

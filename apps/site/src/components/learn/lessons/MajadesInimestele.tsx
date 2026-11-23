@@ -14,6 +14,7 @@ import {
   PLURAL_CASE_NOUNS,
   PLURAL_CASE_SORT,
   PLURAL_CASE_STEMS,
+  PLURAL_CASE_ANSWERS,
 } from "../../../lib/learn/clips";
 import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Panel } from "../Explore";
@@ -261,7 +262,7 @@ function useContent() {
         id: "talk-people",
         prompt: t`I’m talking with people.`,
         src: src("Ma räägin inimestega."),
-        answers: ["Ma räägin inimestega.", "Mina räägin inimestega.", "Räägin inimestega."],
+        answers: PLURAL_CASE_ANSWERS["Ma räägin inimestega."],
         pair: ["ga", "talk-people"],
       },
       {
@@ -269,7 +270,7 @@ function useContent() {
         id: "write-friends",
         prompt: t`He or she writes to friends.`,
         src: src("Ta kirjutab sõpradele."),
-        answers: ["Ta kirjutab sõpradele.", "Tema kirjutab sõpradele."],
+        answers: PLURAL_CASE_ANSWERS["Ta kirjutab sõpradele."],
         pair: ["le", "write-friends"],
       },
       {
@@ -277,7 +278,7 @@ function useContent() {
         id: "pictures-books",
         prompt: t`There are pictures in the books.`,
         src: src("Raamatutes on pilte."),
-        answers: ["Raamatutes on pilte."],
+        answers: PLURAL_CASE_ANSWERS["Raamatutes on pilte."],
         pair: ["s", "pictures-books"],
       },
       {
@@ -285,7 +286,7 @@ function useContent() {
         id: "birds-trees",
         prompt: t`The birds have nests in the trees.`,
         src: src("Lindudel on puudes pesad."),
-        answers: ["Lindudel on puudes pesad.", "Lindudel on pesad puudes."],
+        answers: PLURAL_CASE_ANSWERS["Lindudel on puudes pesad."],
         pair: ["l", "birds-trees"],
       },
       {
@@ -293,7 +294,7 @@ function useContent() {
         id: "go-shops",
         prompt: t`We go to the shops.`,
         src: src("Me käime poodides."),
-        answers: ["Me käime poodides.", "Meie käime poodides.", "Käime poodides."],
+        answers: PLURAL_CASE_ANSWERS["Me käime poodides."],
         pair: ["s", "go-shops"],
         explain: (
           <Trans>
@@ -306,7 +307,7 @@ function useContent() {
         id: "from-schools",
         prompt: t`The children are coming from the schools.`,
         src: src("Lapsed tulevad koolidest."),
-        answers: ["Lapsed tulevad koolidest."],
+        answers: PLURAL_CASE_ANSWERS["Lapsed tulevad koolidest."],
         pair: ["st", "from-schools"],
       },
       {
@@ -314,12 +315,7 @@ function useContent() {
         id: "cinema-friends",
         prompt: t`I’m going to the cinema with friends.`,
         src: src("Ma lähen sõpradega kinno."),
-        answers: [
-          "Ma lähen sõpradega kinno.",
-          "Ma lähen kinno sõpradega.",
-          "Mina lähen sõpradega kinno.",
-          "Lähen sõpradega kinno.",
-        ],
+        answers: PLURAL_CASE_ANSWERS["Ma lähen sõpradega kinno."],
         pair: ["ga", "cinema-friends"],
       },
     ];
@@ -517,8 +513,8 @@ export function MajadesInimesteleLesson() {
                 </p>
                 <p>
                   <Trans>
-                    The plural genitive comes from the partitive, the third of lesson {forms}’s
-                    three forms. If the partitive ends in <b lang="et">-t</b>, add{" "}
+                    The plural genitive usually comes from the partitive, the third of lesson{" "}
+                    {forms}’s three forms. If the partitive ends in <b lang="et">-t</b>, add{" "}
                     <b lang="et">-e</b>: <Word w="raamatute" />. If not, drop any{" "}
                     <b lang="et">-d</b> and add <b lang="et">-de</b>: <Word w="sõprade" />. Tap each
                     form in both columns to hear it.

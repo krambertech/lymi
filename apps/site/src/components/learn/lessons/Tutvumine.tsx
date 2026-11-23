@@ -759,7 +759,7 @@ export function TutvumineLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six questions, each with the right word.</Trans>
+                    <Trans>All six, each with the right question word and verb ending.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>Nearly. Check the question word and the verb’s ending.</Trans>
                   ) : (

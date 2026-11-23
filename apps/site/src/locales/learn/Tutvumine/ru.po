@@ -46,8 +46,8 @@ msgstr "<0>Sinu</0> — это «твоё»: получается «Твоё и�
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — это «привет», а Мари уже уходит."
 
-msgid "<et>Kus</et> asks where; with <et>sa</et> the verb takes <et>-d</et>: <et>Kus sa õpid?</et>"
-msgstr "<et>Kus</et> спрашивает «где»; с <et>sa</et> у глагола <et>-d</et>: <et>Kus sa õpid?</et>"
+msgid "<et>Kus</et> asks where, and the verb takes its person’s ending: <et>Kus sa õpid? Kus ta õpib?</et>"
+msgstr "<et>Kus</et> спрашивает «где», а у глагола окончание его лица: <et>Kus sa õpid? Kus ta õpib?</et>"
 
 msgid "<et>Mina</et> takes <et>olen</et>: <et>Mina olen Andres</et>."
 msgstr "С <et>mina</et> — <et>olen</et>: <et>Mina olen Andres</et>."
@@ -85,8 +85,8 @@ msgstr "После <et>ei</et> глагол без окончания; <et>olema
 msgid "After ei the verb has no ending: ei tööta, doesn’t work."
 msgstr "После ei глагол без окончания: ei tööta, «не работает»."
 
-msgid "All six questions, each with the right word."
-msgstr "Все шесть вопросов, и в каждом верное слово."
+msgid "All six, each with the right question word and verb ending."
+msgstr "Все шесть: в каждом верное вопросительное слово и окончание глагола."
 
 msgid "All six, every sentence right."
 msgstr "Все шесть предложений верно."
@@ -183,6 +183,9 @@ msgstr "он или она учится"
 
 msgid "How are you?"
 msgstr "Как дела?"
+
+msgid "I don’t work at the office."
+msgstr "Я не работаю в офисе."
 
 msgid "I live"
 msgstr "я живу"
@@ -327,6 +330,9 @@ msgstr "Сказано, где ты живёшь, с <0>-s</0> в названи
 
 msgid "Says who you are."
 msgstr "Сказано, кто ты."
+
+msgid "She lives in Tartu."
+msgstr "Она живёт в Тарту."
 
 msgid "She studies"
 msgstr "Она учится"

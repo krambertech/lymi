@@ -1229,6 +1229,8 @@ export const TUTVUMINE_ASKED = [
       "Kas räägite eesti keelt?",
       "Sa räägid eesti keelt või?",
       "Te räägite eesti keelt või?",
+      "Kas sa eesti keelt räägid?",
+      "Kas te eesti keelt räägite?",
     ],
   },
   {
@@ -1243,6 +1245,8 @@ export const TUTVUMINE_ASKED = [
       "Kas olete õpetaja?",
       "Sa oled õpetaja või?",
       "Te olete õpetaja või?",
+      "Kas sa õpetaja oled?",
+      "Kas te õpetaja olete?",
     ],
   },
   {

@@ -1900,7 +1900,7 @@ export const TALLINN_PASSAGES = {
     "Tere, see on Jaan!",
     "Ma olen täna Tartus, aga homme olen Tallinnas.",
     "Minu buss on Tallinnas kell pool üksteist.",
-    "Ma ootan sind kohvikus.",
+    "Ma olen homme kohvikus.",
     "Pühapäeval olen kodus.",
   ],
   saturday: [

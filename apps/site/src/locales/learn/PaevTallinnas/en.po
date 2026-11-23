@@ -298,8 +298,8 @@ msgstr "Mari doesn’t work today."
 msgid "Mari writes"
 msgstr "Mari writes"
 
-msgid "Mari’s message ended with a question: <0>Kas sa oled homme linnas?</0> Write her a short reply, then compare it with a model and tick what yours does. Nothing is marked for you here."
-msgstr "Mari’s message ended with a question: <0>Kas sa oled homme linnas?</0> Write her a short reply, then compare it with a model and tick what yours does. Nothing is marked for you here."
+msgid "Mari’s message on Friday ended with a question: <0>Kas sa oled homme linnas?</0> Write her a short reply as if it were still Friday, then compare it with a model and tick what yours does. Nothing is marked for you here."
+msgstr "Mari’s message on Friday ended with a question: <0>Kas sa oled homme linnas?</0> Write her a short reply as if it were still Friday, then compare it with a model and tick what yours does. Nothing is marked for you here."
 
 msgid "Nearly. Hear the ones you missed below, then try again with Slower."
 msgstr "Nearly. Hear the ones you missed below, then try again with Slower."
@@ -508,8 +508,8 @@ msgstr "Where is Jaan when Mari calls?"
 msgid "Where is Mari at twelve tomorrow?"
 msgstr "Where is Mari at twelve tomorrow?"
 
-msgid "Where will he wait for you?"
-msgstr "Where will he wait for you?"
+msgid "Where will he be tomorrow?"
+msgstr "Where will he be tomorrow?"
 
 msgid "Which question does it answer?"
 msgstr "Which question does it answer?"

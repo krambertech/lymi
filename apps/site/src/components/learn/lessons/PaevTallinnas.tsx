@@ -216,7 +216,7 @@ function useContent() {
     },
     {
       id: "wait",
-      ask: t`Where will he wait for you?`,
+      ask: t`Where will he be tomorrow?`,
       options: [
         { id: "cafe", label: t`In a café` },
         { id: "market", label: t`At the market` },
@@ -730,9 +730,10 @@ export function PaevTallinnasLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Mari’s message ended with a question: <b lang="et">Kas sa oled homme linnas?</b>{" "}
-                    Write her a short reply, then compare it with a model and tick what yours does.
-                    Nothing is marked for you here.
+                    Mari’s message on Friday ended with a question:{" "}
+                    <b lang="et">Kas sa oled homme linnas?</b> Write her a short reply as if it were
+                    still Friday, then compare it with a model and tick what yours does. Nothing is
+                    marked for you here.
                   </Trans>
                 </p>
               </Prose>

@@ -298,8 +298,8 @@ msgstr "Мари сегодня не работает."
 msgid "Mari writes"
 msgstr "Мари пишет"
 
-msgid "Mari’s message ended with a question: <0>Kas sa oled homme linnas?</0> Write her a short reply, then compare it with a model and tick what yours does. Nothing is marked for you here."
-msgstr "Сообщение Мари закончилось вопросом: <0>Kas sa oled homme linnas?</0> Напиши ей короткий ответ, потом сравни его с образцом и отметь, что в нём есть. Здесь никто не проверяет за тебя."
+msgid "Mari’s message on Friday ended with a question: <0>Kas sa oled homme linnas?</0> Write her a short reply as if it were still Friday, then compare it with a model and tick what yours does. Nothing is marked for you here."
+msgstr "Сообщение Мари в пятницу закончилось вопросом: <0>Kas sa oled homme linnas?</0> Напиши ей короткий ответ, как будто сейчас ещё пятница, потом сравни его с образцом и отметь, что в нём есть. Здесь никто не проверяет за тебя."
 
 msgid "Nearly. Hear the ones you missed below, then try again with Slower."
 msgstr "Почти. Послушай ниже те, где была ошибка, а потом попробуй ещё раз с кнопкой «Медленнее»."
@@ -508,8 +508,8 @@ msgstr "Где Яан, когда Мари звонит?"
 msgid "Where is Mari at twelve tomorrow?"
 msgstr "Где Мари завтра в двенадцать?"
 
-msgid "Where will he wait for you?"
-msgstr "Где он будет тебя ждать?"
+msgid "Where will he be tomorrow?"
+msgstr "Где он будет завтра?"
 
 msgid "Which question does it answer?"
 msgstr "На какой вопрос это ответ?"

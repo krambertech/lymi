@@ -34,7 +34,7 @@ const typed = ({ verb, ma, stem }: (typeof TYPED)[number]): FormDrill => ({
   kind: "form",
   id: `command-${clipId(stem)}`,
   rule: "one",
-  base: verb,
+  base: ma,
   gloss: MEANS[verb] as MessageDescriptor,
   cue: msg`to one person`,
   answers: [stem, `${stem}!`],

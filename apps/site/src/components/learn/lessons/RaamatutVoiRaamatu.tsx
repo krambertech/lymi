@@ -34,6 +34,16 @@ import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRou
 import { Word } from "../Word";
 
 const SLUG = "raamatut-voi-raamatu";
+
+const PLURAL_COMMANDS: Record<string, readonly string[]> = {
+  "Osta pilet!": ["Ostke pilet!"],
+  "Loe raamat läbi!": ["Lugege raamat läbi!"],
+  "Söö kook ära!": ["Sööge kook ära!"],
+  "Tee töö ära!": ["Tehke töö ära!"],
+  "Ära joo vett!": ["Ärge jooge vett!"],
+  "Ära osta leiba!": ["Ärge ostke leiba!"],
+  "Ära söö suppi!": ["Ärge sööge suppi!"],
+};
 const src = (text: string) => clipUrl(SLUG, clipId(text));
 
 const MEANS: Record<string, MessageDescriptor> = {
@@ -131,6 +141,11 @@ const DONE_MEANS: Record<
     part: msg`Liis had some bread.`,
     whole: msg`Liis ate all the bread.`,
     will: msg`Liis will eat all the bread.`,
+  },
+  ostma: {
+    part: msg`Liis bought some bread.`,
+    whole: msg`Liis bought a loaf of bread.`,
+    will: msg`Liis will buy a loaf of bread.`,
   },
 };
 
@@ -305,16 +320,16 @@ function useContent() {
     );
     const always = (verb: string) => (
       <Trans>
-        <b lang="et">{verb}</b> always takes the partitive.
+        On its own, <b lang="et">{verb}</b> takes the partitive.
       </Trans>
     );
     const formWhy: Record<string, ReactNode> = {
       "Ma ei ostnud piletit.": noFirst,
       "Ma ostsin ühe pileti.": <Trans>One whole ticket, bought: the genitive.</Trans>,
-      "Ma ootan sõpra.": always("Ootama"),
-      "Ma otsin võtit.": always("Otsima"),
+      "Ma ootan sõpra.": always("ootama"),
+      "Ma otsin võtit.": always("otsima"),
       "Ma leidsin võtme.": <Trans>Finding ends the looking: the genitive.</Trans>,
-      "Ma aitan last.": always("Aitama"),
+      "Ma aitan last.": always("aitama"),
       "Me ei söönud kooki.": noFirst,
       "Me sõime koogi ära.": allOfIt,
       "Ma ei teinud tööd.": noFirst,
@@ -343,7 +358,7 @@ function useContent() {
       from: item.from,
       cue: item.not ? t`tell a friend not to` : t`tell a friend to`,
       src: src(item.to),
-      answers: [item.to],
+      answers: [item.to, ...(PLURAL_COMMANDS[item.to] ?? [])],
       pair: [item.not ? "not" : "do", item.to] as const,
       explain: item.not ? (
         <Trans>
@@ -387,7 +402,13 @@ function useContent() {
         id: "will-finish",
         prompt: t`I’ll get the work done.`,
         src: src("Ma teen töö ära."),
-        answers: ["Ma teen töö ära.", "Mina teen töö ära.", "Teen töö ära."],
+        answers: [
+          "Ma teen töö ära.",
+          "Mina teen töö ära.",
+          "Teen töö ära.",
+          "Ma teen oma töö ära.",
+          "Teen oma töö ära.",
+        ],
         pair: ["done", "will-finish"],
         explain: <Trans>The present with the genitive says it will get done.</Trans>,
       },
@@ -438,7 +459,7 @@ function useContent() {
         pair: ["verbs", "waiting"],
         explain: (
           <Trans>
-            <b lang="et">Ootama</b> always takes the partitive.
+            On its own, <b lang="et">ootama</b> takes the partitive.
           </Trans>
         ),
       },
@@ -458,7 +479,7 @@ function useContent() {
         pair: ["verbs", "looking"],
         explain: (
           <Trans>
-            <b lang="et">Otsima</b> always takes the partitive.
+            On its own, <b lang="et">otsima</b> takes the partitive.
           </Trans>
         ),
       },
@@ -483,7 +504,7 @@ function useContent() {
         id: "eat-up",
         prompt: t`Eat up the soup!`,
         src: src("Söö supp ära!"),
-        answers: ["Söö supp ära!"],
+        answers: ["Söö supp ära!", "Sööge supp ära!"],
         pair: ["command", "eat-up"],
         explain: <Trans>A command for the whole thing: the nominative.</Trans>,
       },
@@ -497,12 +518,12 @@ function useContent() {
       ),
       "Ma ootan sõpra.": (
         <Trans>
-          <b lang="et">Ootama</b> always takes the partitive: <b lang="et">sõpra</b>.
+          On its own, <b lang="et">ootama</b> takes the partitive: <b lang="et">sõpra</b>.
         </Trans>
       ),
       "Ma otsin võtit.": (
         <Trans>
-          <b lang="et">Otsima</b> always takes the partitive: <b lang="et">võtit</b>.
+          On its own, <b lang="et">otsima</b> takes the partitive: <b lang="et">võtit</b>.
         </Trans>
       ),
       "Ma lugesin raamatu läbi.": (
@@ -578,50 +599,68 @@ function useContent() {
         kind: "truefalse",
         ask: t`Jaan has finished Mari’s book.`,
         answer: false,
-        line: 5,
+        line: 3,
       },
       {
-        id: "hour",
-        ask: t`How long did Jaan read yesterday?`,
+        id: "why-work",
+        ask: t`Why did Jaan work all day?`,
         options: [
-          { id: "evening", label: t`All evening` },
-          { id: "day", label: t`All day` },
-          { id: "hour", label: t`An hour` },
+          { id: "ill", label: t`A colleague was ill` },
+          { id: "boss", label: t`His boss asked him to` },
+          { id: "report", label: t`He had a big report to finish` },
         ],
-        answer: "hour",
-        line: 6,
+        answer: "ill",
+        line: 7,
       },
       {
-        id: "looked",
+        id: "how-long",
         kind: "short",
-        ask: t`What did Jaan look for in the evening? Write it as he says it.`,
-        answers: ["võtit", "võti", "oma võtit"],
-        line: 10,
+        ask: t`How long did Jaan look for his key? Write it as he says it.`,
+        answers: ["pool tundi"],
+        line: 8,
       },
       {
         id: "where",
-        ask: t`Where did he find it?`,
+        ask: t`Where was the key?`,
         options: [
-          { id: "table", label: t`On the table` },
-          { id: "shop", label: t`At the shop` },
+          { id: "table", label: t`On the kitchen table` },
+          { id: "pocket", label: t`In his pocket` },
           { id: "work", label: t`At work` },
         ],
         answer: "table",
-        line: 12,
+        line: 10,
+      },
+      {
+        id: "one-whole",
+        ask: t`Mari bought several things. Which did she buy one whole one of?`,
+        options: [
+          { id: "bread", label: t`Bread` },
+          { id: "cake", label: t`A cake` },
+          { id: "cheese", label: t`Some cheese` },
+        ],
+        answer: "cake",
+        line: 14,
+      },
+      {
+        id: "milk",
+        kind: "truefalse",
+        ask: t`Mari bought milk.`,
+        answer: false,
+        line: 16,
       },
       {
         id: "cake",
         kind: "truefalse",
         ask: t`Mari hasn’t eaten the cake yet.`,
         answer: true,
-        line: 21,
+        line: 18,
       },
       {
         id: "friend",
         kind: "short",
-        ask: t`What is the name of Mari’s friend?`,
-        answers: ["Kati", "Katit"],
-        line: 23,
+        ask: t`Who is Mari waiting for? Write the name as she says it.`,
+        answers: ["Katit", "Kati"],
+        line: 21,
       },
       {
         id: "who",
@@ -632,11 +671,11 @@ function useContent() {
           { id: "jaan", label: t`Jaan` },
         ],
         statements: [
-          { id: "worked", label: t`Worked all day`, answer: "jaan", line: 9 },
-          { id: "soup", label: t`Ate all the soup`, answer: "jaan", line: 15 },
-          { id: "shop", label: t`Bought a cake`, answer: "mari", line: 17 },
-          { id: "friend", label: t`Is waiting for a friend tonight`, answer: "mari", line: 22 },
-          { id: "tonight", label: t`Will finish the book tonight`, answer: "jaan", line: 28 },
+          { id: "worked", label: t`Worked all day`, answer: "jaan", line: 7 },
+          { id: "soup", label: t`Ate all the soup`, answer: "jaan", line: 12 },
+          { id: "shop", label: t`Bought a cake`, answer: "mari", line: 14 },
+          { id: "friend", label: t`Is waiting for a friend tonight`, answer: "mari", line: 19 },
+          { id: "flowers", label: t`Will buy the flowers`, answer: "jaan", line: 27 },
         ],
       },
     ];
@@ -696,7 +735,7 @@ function useContent() {
             line: "Jah, ma otsin oma võtme.",
             why: (
               <Trans>
-                <b lang="et">Otsima</b> always takes the partitive: <b lang="et">võtit</b>.
+                On its own, <b lang="et">otsima</b> takes the partitive: <b lang="et">võtit</b>.
               </Trans>
             ),
           },
@@ -746,6 +785,7 @@ export function RaamatutVoiRaamatuLesson() {
   const pastNo = LESSONS.find((lesson) => lesson.et === "Ma ei läinud")?.n;
   const gradation = LESSONS.find((lesson) => lesson.et === "Jalg, jala")?.n;
   const pluralPartitive = LESSONS.find((lesson) => lesson.et === "Raamatuid, maju")?.n;
+  const pronouns = LESSONS.find((lesson) => lesson.et === "Mind, mulle, minuga")?.n;
 
   const rowsOf = (texts: readonly string[]): RowItem[] =>
     texts.map((text) => ({ main: text, sub: means(text, i18n), src: src(text) }));
@@ -792,9 +832,9 @@ export function RaamatutVoiRaamatuLesson() {
           or <b lang="et">ära</b>. <b lang="et">Ma lugesin raamatu läbi. Ma loen raamatu läbi.</b>
         </Trans>,
         <Trans key="3">
-          After <b lang="et">ei</b>, and after <b lang="et">ootama, aitama, armastama</b> and{" "}
-          <b lang="et">otsima</b>, always the partitive:{" "}
-          <b lang="et">Ma ei ostnud piletit. Ma ootan sõpra.</b>
+          After <b lang="et">ei</b>, always the partitive: <b lang="et">Ma ei ostnud piletit.</b> On
+          their own, <b lang="et">ootama, aitama, armastama</b> and <b lang="et">otsima</b> take it
+          too: <b lang="et">Ma ootan sõpra.</b>
         </Trans>,
         <Trans key="4">
           In a command, the whole thing takes the nominative, and a command with{" "}
@@ -802,8 +842,9 @@ export function RaamatutVoiRaamatuLesson() {
           <b lang="et">Osta pilet! Ära osta piletit!</b>
         </Trans>,
         <Trans key="5">
-          More than one whole thing takes the plural with <b lang="et">-d</b>:{" "}
-          <b lang="et">Ma ostsin piletid.</b>
+          More than one whole thing, with no number before it, takes the plural with{" "}
+          <b lang="et">-d</b>: <b lang="et">Ma ostsin piletid.</b> After a number, the partitive:{" "}
+          <b lang="et">kaks piletit</b>.
         </Trans>,
       ]}
       sections={[
@@ -834,8 +875,8 @@ export function RaamatutVoiRaamatuLesson() {
                 <p>
                   <Trans>
                     Two small words after a verb often say that it’s done: <Word w="läbi" />,
-                    through to the end, and <Word w="ära" />, all of it. In a statement, the object
-                    before them takes the genitive.
+                    through to the end, and <Word w="ära" />, all of it. In a statement without{" "}
+                    <b lang="et">ei</b>, the object before them takes the genitive.
                   </Trans>
                 </p>
               </Prose>
@@ -843,6 +884,13 @@ export function RaamatutVoiRaamatuLesson() {
                 <Trans>
                   English says this with “some” and “a”, or with “was reading” and “read”. Estonian
                   says it with the object’s case, so the ending carries the meaning.
+                </Trans>
+              </Aside>
+              <Aside>
+                <Trans>
+                  Pronouns follow the same rule. For the whole person, the genitive, often the short{" "}
+                  <b lang="et">mu, su, ta</b>: <b lang="et">Ta viis mu koju.</b> Lesson {pronouns}{" "}
+                  has every form.
                 </Trans>
               </Aside>
             </>
@@ -914,7 +962,7 @@ export function RaamatutVoiRaamatuLesson() {
         },
         {
           id: "always",
-          title: t`Always the partitive`,
+          title: t`After a no, and verbs with no end`,
           quiz: true,
           children: (
             <>
@@ -932,12 +980,19 @@ export function RaamatutVoiRaamatuLesson() {
                 <p>
                   <Trans>
                     Some verbs have no end point: you can wait, help, love or look for as long as
-                    you like. <Word w="Ootama" />, <Word w="aitama" />, <Word w="armastama" /> and{" "}
-                    <Word w="otsima" /> always take the partitive.
+                    you like. On their own, <Word w="ootama" />, <Word w="aitama" />,{" "}
+                    <Word w="armastama" /> and <Word w="otsima" /> take the partitive.
                   </Trans>
                 </p>
               </Prose>
               <ListenRows items={rowsOf(OBJECT_VERBS)} />
+              <Aside>
+                <Trans>
+                  A small word after the verb can give it an end, and then the object takes the
+                  genitive: <b lang="et">Ma otsisin hosteli üles</b>, I found the hostel, and{" "}
+                  <b lang="et">Me ootame Mari ära</b>, we’ll wait until Mari comes.
+                </Trans>
+              </Aside>
               <Prose>
                 <p>
                   <Trans>
@@ -1007,9 +1062,11 @@ export function RaamatutVoiRaamatuLesson() {
               </Aside>
               <Aside>
                 <Trans>
-                  More than one whole thing takes the plural with <b lang="et">-d</b> from lesson{" "}
-                  {plural}: <Word w="Ma ostsin piletid." /> <Word w="Osta piletid!" /> Some of many
-                  things takes the plural partitive, which lesson {pluralPartitive} teaches.
+                  More than one whole thing, with no number before it, takes the plural with{" "}
+                  <b lang="et">-d</b> from lesson {plural}: <Word w="Ma ostsin piletid." />{" "}
+                  <Word w="Osta piletid!" /> After a number, the partitive singular:{" "}
+                  <b lang="et">kaks piletit</b>. Some of many things takes the plural partitive,
+                  which lesson {pluralPartitive} teaches.
                 </Trans>
               </Aside>
               <Prose>

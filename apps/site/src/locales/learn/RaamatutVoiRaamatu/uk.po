@@ -10,9 +10,6 @@ msgstr ""
 msgid "<0/> I bought some bread. <1/> I bought a loaf, the whole of it. The verb is the same. Only the object changed: the bread, the thing the verb acts on."
 msgstr "<0/> Я купив трохи хліба. <1/> Я купив цілу хлібину. Дієслово те саме. Змінився лише об’єкт, тобто хліб: те, на що спрямована дія."
 
-msgid "<0>{verb}</0> always takes the partitive."
-msgstr "Після <0>{verb}</0> завжди партитив."
-
 msgid "<0>Ära</0> says all of it, so the genitive: <1>koogi</1>."
 msgstr "<0>Ära</0> означає «повністю», тому родовий: <1>koogi</1>."
 
@@ -28,21 +25,6 @@ msgstr "<0>Läbi</0> означає «до кінця», тому родовий
 msgid "<0>Leiba</0> is the partitive from lesson {partitive}: part of something, or an action that didn’t take in all of it. <1>Leiva</1> is the genitive from lesson {genitive}: the whole thing, done. Tap the sentences in both columns."
 msgstr "<0>Leiba</0> — це партитив з уроку {partitive}: частина чогось або дія, що не охопила все. <1>Leiva</1> — родовий відмінок з уроку {genitive}: усе ціле, і дію завершено. Натискай речення в обох стовпцях."
 
-msgid "<0>Ootama</0> always takes the partitive: <1>sõpra</1>."
-msgstr "Після <0>ootama</0> завжди партитив: <1>sõpra</1>."
-
-msgid "<0>Ootama</0> always takes the partitive."
-msgstr "Після <0>ootama</0> завжди партитив."
-
-msgid "<0>Otsima</0> always takes the partitive: <1>võtit</1>."
-msgstr "Після <0>otsima</0> завжди партитив: <1>võtit</1>."
-
-msgid "<0>Otsima</0> always takes the partitive."
-msgstr "Після <0>otsima</0> завжди партитив."
-
-msgid "<et>Aitama</et> always takes the partitive."
-msgstr "Після <et>aitama</et> завжди партитив."
-
 msgid "<et>Ära</et> before the verb is a no, so the partitive."
 msgstr "<et>Ära</et> перед дієсловом — це заперечення, тому партитив."
 
@@ -51,18 +33,6 @@ msgstr "<et>Ära</et> означає «повністю», тому родови
 
 msgid "<et>Läbi</et> says to the end, so the genitive: <et>raamatu</et>."
 msgstr "<et>Läbi</et> означає «до кінця», тому родовий: <et>raamatu</et>."
-
-msgid "<et>Ootama</et> always takes the partitive: <et>sõpra</et>."
-msgstr "Після <et>ootama</et> завжди партитив: <et>sõpra</et>."
-
-msgid "<et>Ootama</et> always takes the partitive."
-msgstr "Після <et>ootama</et> завжди партитив."
-
-msgid "<et>Otsima</et> always takes the partitive: <et>võtit</et>."
-msgstr "Після <et>otsima</et> завжди партитив: <et>võtit</et>."
-
-msgid "<et>Otsima</et> always takes the partitive."
-msgstr "Після <et>otsima</et> завжди партитив."
 
 msgid "20 minutes"
 msgstr "20 хвилин"
@@ -75,6 +45,12 @@ msgstr "Великий торт"
 
 msgid "A big piece of cheese"
 msgstr "Великий шматок сиру"
+
+msgid "A cake"
+msgstr "Торт"
+
+msgid "A colleague was ill"
+msgstr "Колега захворів"
 
 msgid "A command for the whole thing takes the nominative: <0>pilet</0>."
 msgstr "У наказі про щось ціле — називний: <0>pilet</0>."
@@ -94,11 +70,14 @@ msgstr "Наказ з <0>ära</0>, «не», — це заперечення, т
 msgid "A sentence, a command and a don’t"
 msgstr "Речення, наказ і заборона"
 
+msgid "A small word after the verb can give it an end, and then the object takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
+msgstr "Коротке слово після дієслова може дати йому кінець, і тоді об’єкт стоїть у родовому: <0>Ma otsisin hosteli üles</0>, я знайшов хостел, і <1>Me ootame Mari ära</1>, ми дочекаємося Марі."
+
 msgid "A voice message from the shop"
 msgstr "Голосове з магазину"
 
-msgid "After <0>ei</0>, and after <1>ootama, aitama, armastama</1> and <2>otsima</2>, always the partitive: <3>Ma ei ostnud piletit. Ma ootan sõpra.</3>"
-msgstr "Після <0>ei</0> і після <1>ootama, aitama, armastama</1> та <2>otsima</2> — завжди партитив: <3>Ma ei ostnud piletit. Ma ootan sõpra.</3>"
+msgid "After <0>ei</0>, always the partitive: <1>Ma ei ostnud piletit.</1> On their own, <2>ootama, aitama, armastama</2> and <3>otsima</3> take it too: <4>Ma ootan sõpra.</4>"
+msgstr "Після <0>ei</0> — завжди партитив: <1>Ma ei ostnud piletit.</1> Самі по собі <2>ootama, aitama, armastama</2> і <3>otsima</3> теж його беруть: <4>Ma ootan sõpra.</4>"
 
 msgid "After <0>ei</0>, the action doesn’t happen, so the object always takes the partitive: <1/> It doesn’t matter whether a whole ticket was meant. Lesson {pastNo} teaches <2>ei ostnud</2>."
 msgstr "Після <0>ei</0> дія не відбувається, тому об’єкт завжди стоїть у партитиві: <1/> Байдуже, чи йшлося про цілий квиток. Форму <2>ei ostnud</2> пояснює урок {pastNo}."
@@ -112,11 +91,14 @@ msgstr "Після <0>ei</0> — партитив: <1>teed</1>."
 msgid "After <0>ei</0>, the partitive."
 msgstr "Після <0>ei</0> — партитив."
 
-msgid "After <et>ei</et> and verbs that never finish"
-msgstr "Після <et>ei</et> і дієслів без завершення"
+msgid "After <et>ei</et>, and verbs with no end"
+msgstr "Після <et>ei</et> і дієслова без кінця"
 
 msgid "After <et>ei</et>, the partitive."
 msgstr "Після <et>ei</et> — партитив."
+
+msgid "After a no, and verbs with no end"
+msgstr "Після заперечення і дієслова без кінця"
 
 msgid "After a verb: lugesin läbi, I read it to the end."
 msgstr "Після дієслова: lugesin läbi — я дочитав до кінця."
@@ -124,17 +106,11 @@ msgstr "Після дієслова: lugesin läbi — я дочитав до к
 msgid "After a verb: sõin ära, I ate it all. Before a verb it means don’t: ära osta."
 msgstr "Після дієслова: sõin ära — я з’їв усе. Перед дієсловом означає «не»: ära osta."
 
-msgid "All day"
-msgstr "Цілий день"
-
 msgid "All eight, each object in the form its meaning needs."
 msgstr "Усі вісім: кожен об’єкт у тій формі, якої вимагає зміст."
 
 msgid "All eight, typed in full."
 msgstr "Усі вісім, написані повністю."
-
-msgid "All evening"
-msgstr "Цілий вечір"
 
 msgid "all of it"
 msgstr "усе повністю"
@@ -151,17 +127,8 @@ msgstr "Усі шість знайдено й виправлено."
 msgid "All six. You heard which actions got done."
 msgstr "Усі шість. Ти почув, які дії завершено."
 
-msgid "Always the partitive"
-msgstr "Завжди партитив"
-
-msgid "An hour"
-msgstr "Годину"
-
 msgid "At a café"
 msgstr "У кав’ярні"
-
-msgid "At the shop"
-msgstr "У магазині"
 
 msgid "At work"
 msgstr "На роботі"
@@ -283,6 +250,9 @@ msgstr "Триває зараз"
 msgid "Going on, not said to be finished: the partitive."
 msgstr "Дія триває, про завершення не сказано: партитив."
 
+msgid "He had a big report to finish"
+msgstr "Мав закінчити великий звіт"
+
 msgid "He or she didn’t read the book."
 msgstr "Він чи вона не читали книгу."
 
@@ -292,8 +262,11 @@ msgstr "Послухай речення й вибери, що воно озна�
 msgid "Hear the sentences above once more, then try again."
 msgstr "Ще раз послухай речення вище, потім спробуй знову."
 
-msgid "How long did Jaan read yesterday?"
-msgstr "Скільки часу Яан читав учора?"
+msgid "His boss asked him to"
+msgstr "Попросив начальник"
+
+msgid "How long did Jaan look for his key? Write it as he says it."
+msgstr "Скільки часу Яан шукав ключ? Напиши так, як він каже."
 
 msgid "I ate all the soup."
 msgstr "Я з’їв увесь суп."
@@ -388,6 +361,9 @@ msgstr "У наказі про щось ціле об’єкт стоїть у �
 msgid "In a command, the whole thing takes the nominative, and a command with <0>ära</0>, don’t, takes the partitive: <1>Osta pilet! Ära osta piletit!</1>"
 msgstr "У наказі щось ціле стоїть у називному, а в наказі з <0>ära</0>, «не», — у партитиві: <1>Osta pilet! Ära osta piletit!</1>"
 
+msgid "In his pocket"
+msgstr "У кишені"
+
 msgid "Is waiting for a friend tonight"
 msgstr "Чекає ввечері на подругу"
 
@@ -427,8 +403,17 @@ msgstr "Kook, koogi, kooki."
 msgid "Liis ate all the bread."
 msgstr "Ліїс з’їла весь хліб."
 
+msgid "Liis bought a loaf of bread."
+msgstr "Ліїс купила буханку хліба."
+
+msgid "Liis bought some bread."
+msgstr "Ліїс купила хліба."
+
 msgid "Liis had some bread."
 msgstr "Ліїс поїла хліба."
+
+msgid "Liis will buy a loaf of bread."
+msgstr "Ліїс купить буханку хліба."
 
 msgid "Liis will eat all the bread."
 msgstr "Ліїс з’їсть весь хліб."
@@ -454,6 +439,12 @@ msgstr "Марі та Яан говорять про вчорашній день
 msgid "Mari and Jaan the next day"
 msgstr "Марі та Яан наступного дня"
 
+msgid "Mari bought milk."
+msgstr "Марі купила молоко."
+
+msgid "Mari bought several things. Which did she buy one whole one of?"
+msgstr "Марі купила кілька речей. Чого вона купила одну цілу штуку?"
+
 msgid "Mari hasn’t eaten the cake yet."
 msgstr "Марі ще не з’їла торт."
 
@@ -466,11 +457,11 @@ msgstr "Марі читала книгу."
 msgid "Mari will read the book to the end."
 msgstr "Марі дочитає книгу до кінця."
 
-msgid "More than one whole thing takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
-msgstr "Кілька цілих речей — це множина на <0>-d</0> з уроку {plural}: <1/> <2/> Частину з багатьох речей передає партитив множини, про нього розповідає урок {pluralPartitive}."
+msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
+msgstr "Кілька цілих речей без числа перед ними — множина на <0>-d</0> з уроку {plural}: <1/> <2/> Після числа — партитив однини: <3>kaks piletit</3>. Частина з багатьох речей — партитив множини, про нього урок {pluralPartitive}."
 
-msgid "More than one whole thing takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1>"
-msgstr "Кілька цілих речей — множина на <0>-d</0>: <1>Ma ostsin piletid.</1>"
+msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1> After a number, the partitive: <2>kaks piletit</2>."
+msgstr "Кілька цілих речей без числа перед ними — множина на <0>-d</0>: <1>Ma ostsin piletid.</1> Після числа — партитив: <2>kaks piletit</2>."
 
 msgid "Nearly. Compare the columns of the table for the ones you missed."
 msgstr "Майже. Для пропущених порівняй стовпці таблиці."
@@ -493,8 +484,38 @@ msgstr "Ні"
 msgid "Now the other way round. Each round gives a sentence in English to write in Estonian. The English says whether it’s some or all, done or going on, and the object’s form follows from that, or from the verb."
 msgstr "Тепер навпаки. У кожному раунді — речення українською, яке треба написати естонською. Зміст підкаже, чи йдеться про частину чи про все, про завершену дію чи ту, що триває. З цього, або з дієслова, випливає форма об’єкта."
 
-msgid "On the table"
-msgstr "На столі"
+msgid "On its own, <0>{verb}</0> takes the partitive."
+msgstr "Саме по собі <0>{verb}</0> бере партитив."
+
+msgid "On its own, <0>ootama</0> takes the partitive: <1>sõpra</1>."
+msgstr "Саме по собі <0>ootama</0> бере партитив: <1>sõpra</1>."
+
+msgid "On its own, <0>ootama</0> takes the partitive."
+msgstr "Саме по собі <0>ootama</0> бере партитив."
+
+msgid "On its own, <0>otsima</0> takes the partitive: <1>võtit</1>."
+msgstr "Саме по собі <0>otsima</0> бере партитив: <1>võtit</1>."
+
+msgid "On its own, <0>otsima</0> takes the partitive."
+msgstr "Саме по собі <0>otsima</0> бере партитив."
+
+msgid "On its own, <et>aitama</et> takes the partitive."
+msgstr "Саме по собі <et>aitama</et> бере партитив."
+
+msgid "On its own, <et>ootama</et> takes the partitive: <et>sõpra</et>."
+msgstr "Саме по собі <et>ootama</et> бере партитив: <et>sõpra</et>."
+
+msgid "On its own, <et>ootama</et> takes the partitive."
+msgstr "Саме по собі <et>ootama</et> бере партитив."
+
+msgid "On its own, <et>otsima</et> takes the partitive: <et>võtit</et>."
+msgstr "Саме по собі <et>otsima</et> бере партитив: <et>võtit</et>."
+
+msgid "On its own, <et>otsima</et> takes the partitive."
+msgstr "Саме по собі <et>otsima</et> бере партитив."
+
+msgid "On the kitchen table"
+msgstr "На кухонному столі"
 
 msgid "One sentence with the partitive and with the genitive"
 msgstr "Одне речення з партитивом і з родовим"
@@ -529,6 +550,9 @@ msgstr "Минулий час: leidsin — я знайшов."
 msgid "Pilet, pileti, piletit."
 msgstr "Pilet, pileti, piletit."
 
+msgid "Pronouns follow the same rule. For the whole person, the genitive, often the short <0>mu, su, ta</0>: <1>Ta viis mu koju.</1> Lesson {pronouns} has every form."
+msgstr "Займенники підкоряються тому ж правилу. Для людини цілком — родовий, часто короткий <0>mu, su, ta</0>: <1>Ta viis mu koju.</1> Усі форми — в уроці {pronouns}."
+
 msgid "Read the book to the end!"
 msgstr "Дочитай книгу до кінця!"
 
@@ -544,6 +568,9 @@ msgstr "Речення в теперішньому часі: дія триває
 msgid "Server"
 msgstr "Офіціантка"
 
+msgid "Some cheese"
+msgstr "Трохи сиру"
+
 msgid "Some objects change more than their ending. <0/> loses a p in the genitive, <1>supi</1>, and <2/> turns its last k into g, <3>koogi</3>. Lesson {gradation} explains why."
 msgstr "Деякі об’єкти змінюють не лише закінчення. <0/> у родовому втрачає одне p, <1>supi</1>, а в <2/> останнє k змінюється на g, <3>koogi</3>. Чому так, пояснює урок {gradation}."
 
@@ -553,8 +580,8 @@ msgstr "Частина чи все ціле"
 msgid "Some of it: the partitive."
 msgstr "Частина: партитив."
 
-msgid "Some verbs have no end point: you can wait, help, love or look for as long as you like. <0/>, <1/>, <2/> and <3/> always take the partitive."
-msgstr "Деякі дієслова не мають кінцевої точки: чекати, допомагати, кохати чи шукати можна скільки завгодно. Після <0/>, <1/>, <2/> і <3/> завжди партитив."
+msgid "Some verbs have no end point: you can wait, help, love or look for as long as you like. On their own, <0/>, <1/>, <2/> and <3/> take the partitive."
+msgstr "Деякі дієслова не мають кінцевої точки: чекати, допомагати, любити чи шукати можна скільки завгодно. Самі по собі <0/>, <1/>, <2/> і <3/> беруть партитив."
 
 msgid "soup"
 msgstr "суп"
@@ -664,8 +691,8 @@ msgstr "«До кінця» — це <0>läbi</0>, з родовим."
 msgid "to wait, to wait for"
 msgstr "чекати"
 
-msgid "Two small words after a verb often say that it’s done: <0/>, through to the end, and <1/>, all of it. In a statement, the object before them takes the genitive."
-msgstr "Два короткі слова після дієслова часто кажуть, що дію завершено: <0/>, до кінця, і <1/>, повністю. У розповідному реченні об’єкт перед ними стоїть у родовому."
+msgid "Two small words after a verb often say that it’s done: <0/>, through to the end, and <1/>, all of it. In a statement without <2>ei</2>, the object before them takes the genitive."
+msgstr "Два короткі слова після дієслова часто кажуть, що дію завершено: <0/>, до кінця, і <1/>, повністю. У ствердному реченні, без <2>ei</2>, об’єкт перед ними стоїть у родовому."
 
 msgid "Type the object"
 msgstr "Напиши об’єкт"
@@ -676,29 +703,29 @@ msgstr "Võti, võtme, võtit."
 msgid "water"
 msgstr "вода"
 
-msgid "What did Jaan look for in the evening? Write it as he says it."
-msgstr "Що Яан шукав увечері? Напиши так, як він каже."
-
 msgid "What did Liisa buy just one of?"
 msgstr "Чого Ліїса купила лише одну штуку?"
 
 msgid "What does she ask you?"
 msgstr "Про що вона тебе просить?"
 
-msgid "What is the name of Mari’s friend?"
-msgstr "Як звати подругу Марі?"
-
-msgid "Where did he find it?"
-msgstr "Де він його знайшов?"
+msgid "Where was the key?"
+msgstr "Де був ключ?"
 
 msgid "Who did it, or will do it?"
 msgstr "Хто це зробив або зробить?"
 
+msgid "Who is Mari waiting for? Write the name as she says it."
+msgstr "Кого чекає Марі? Напиши ім’я так, як вона його каже."
+
+msgid "Why did Jaan work all day?"
+msgstr "Чому Яан працював цілий день?"
+
 msgid "Will be done"
 msgstr "Буде завершено"
 
-msgid "Will finish the book tonight"
-msgstr "Дочитає книгу сьогодні ввечері"
+msgid "Will buy the flowers"
+msgstr "Купить квіти"
 
 msgid "work"
 msgstr "робота"

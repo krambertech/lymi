@@ -2742,6 +2742,12 @@ export const OBJECT_HEARD = [
     whole: "Liis sõi leiva ära.",
     will: "Liis sööb leiva ära.",
   },
+  {
+    noun: "ostma",
+    part: "Liis ostis leiba.",
+    whole: "Liis ostis leiva.",
+    will: "Liis ostab leiva.",
+  },
 ] as const;
 
 export const OBJECT_NO = [
@@ -2831,56 +2837,80 @@ export const OBJECT_CONVERSATION: Conversation = {
   turns: [
     {
       voice: "second",
-      text: ["Tere, Jaan!", "Kuidas läheb?"],
-      say: "[cheerful] Tere, Jaan! Kuidas läheb?",
+      text: ["Tere, Jaan!", "Kas sa lugesid selle raamatu, mille ma sulle andsin, juba läbi?"],
+      say: "[cheerful] Tere, Jaan! Kas sa lugesid selle raamatu, mille ma sulle andsin, juba läbi?",
     },
-    { voice: "main", text: ["Tere!", "Hästi, aitäh."] },
-    { voice: "second", text: "Kas sa lugesid minu raamatu läbi?" },
     {
       voice: "main",
-      text: ["Ei, veel mitte.", "Ma lugesin eile raamatut ainult tund aega."],
-      say: "[sighs] Ei, veel mitte. Ma lugesin eile raamatut ainult tund aega.",
+      text: ["Tere, Mari!", "Ma lugesin eile õhtul sinu raamatut, kuni jäin diivanil magama."],
+      say: "[laughs] Tere, Mari! Ma lugesin eile õhtul sinu raamatut, kuni jäin diivanil magama.",
     },
-    { voice: "second", text: ["Ainult tund?", "Kas sul oli palju tööd?"] },
+    { voice: "second", text: "Nii et sa ei lugenud seda veel läbi?" },
+    { voice: "main", text: "Ei, aga täna õhtul loen ma selle kindlasti läbi." },
+    { voice: "second", text: "Miks sa nii väsinud olid, kas sul oli palju tööd?" },
     {
       voice: "main",
-      text: ["Jah, ma tegin terve päeva tööd.", "Õhtul otsisin ma kaua oma võtit."],
+      text: [
+        "Jah, ma tegin terve päeva tööd, sest kolleeg oli haige.",
+        "Ja õhtul otsisin ma pool tundi oma võtit.",
+      ],
+      say: "[sighs] Jah, ma tegin terve päeva tööd, sest kolleeg oli haige. Ja õhtul otsisin ma pool tundi oma võtit.",
+    },
+    { voice: "second", text: "Kas sa leidsid lõpuks oma võtme?" },
+    { voice: "main", text: "Jah, see oli köögis laua peal, kuhu ma selle hommikul panin." },
+    { voice: "second", text: "Ja kas sa said õhtul ka midagi süüa?" },
+    {
+      voice: "main",
+      text: [
+        "Ma sõin supi ära, mille ema mulle eile tõi.",
+        "Ja siis jõin ma veel kaks tassi teed.",
+      ],
     },
     {
       voice: "second",
-      text: "Ja kas sa leidsid võtme?",
-      say: "[curious] Ja kas sa leidsid võtme?",
+      text: "Mina käisin pärast tööd poes ja ostsin leiba, juustu ja koogi.",
     },
+    { voice: "main", text: "Kas sa ostsid ka piima, mida me hommikuks vajame?" },
+    { voice: "second", text: "Ei, piima ma ei ostnud, sest kodus on veel pool pakki." },
     {
       voice: "main",
-      text: ["Jah, lõpuks leidsin ma selle laualt.", "Aga siis olin ma väsinud."],
-      say: "[laughs] Jah, lõpuks leidsin ma selle laualt. Aga siis olin ma väsinud.",
+      text: "Aga kas sa sõid koogi juba ära?",
+      say: "[curious] Aga kas sa sõid koogi juba ära?",
     },
-    { voice: "second", text: "Kas sa sõid midagi?" },
-    { voice: "main", text: "Jah, ma sõin supi ära ja jõin teed." },
-    {
-      voice: "second",
-      text: ["Mina käisin eile poes.", "Ma ostsin leiba, juustu ja ühe koogi."],
-    },
-    { voice: "main", text: ["Kas sa ostsid ka piima?", "Ja kas sa sõid koogi ära?"] },
     {
       voice: "second",
       text: [
-        "Piima ma ei ostnud, kodus on veel piima.",
-        "Ja ei, ma ei söönud kooki.",
-        "Täna õhtul ootan ma sõpra ja me sööme koogi koos ära.",
+        "Ei, ma ei söönud kooki, see on täna õhtuks.",
+        "Ma ootan kella seitsmeks sõbrannat ja me sööme koogi koos ära.",
       ],
     },
-    { voice: "main", text: "Kas see sõber on Kati?" },
-    { voice: "second", text: "Jah, ma ootan Katit kell seitse." },
-    { voice: "main", text: "Kas ma võin ka tulla?" },
+    { voice: "main", text: "Kas see sõbranna on Kati, kellega sa koos töötasid?" },
+    { voice: "second", text: "Jah, ma ootan Katit, aga ta tuleb võib-olla natuke hiljem." },
+    { voice: "main", text: "Kas ma võin ka tulla, kui ma raamatu enne läbi loen?" },
     {
       voice: "second",
-      text: ["Muidugi!", "Aga loe enne raamat läbi!"],
-      say: "[laughs] Muidugi! Aga loe enne raamat läbi!",
+      text: "Muidugi, aga too siis raamat kaasa ja räägi, kuidas lõpp sulle meeldis.",
+      say: "[laughs] Muidugi, aga too siis raamat kaasa ja räägi, kuidas lõpp sulle meeldis.",
     },
-    { voice: "main", text: "Hästi, ma loen täna õhtul raamatu läbi." },
-    { voice: "second", text: ["Tore.", "Homme räägime.", "Head õhtut!"] },
+    { voice: "main", text: "Hästi, ma toon raamatu kaasa ja ostan teel ühe pudeli mahla." },
+    {
+      voice: "second",
+      text: [
+        "Ära osta mahla, meil on kodus mahla küllalt.",
+        "Osta parem lilli, Kati armastab lilli.",
+      ],
+    },
+    { voice: "main", text: "Hea mõte, ma ostan lilled turult, kus need on odavamad." },
+    {
+      voice: "second",
+      text: "Tore, siis näeme kell seitse, ja ära unusta võtit!",
+      say: "[laughs] Tore, siis näeme kell seitse, ja ära unusta võtit!",
+    },
+    { voice: "main", text: "Ei unusta, ma panen võtme kohe taskusse." },
+    { voice: "second", text: "Kui sa raamatu läbi loed, anna see pärast ka Katile." },
+    { voice: "main", text: "Hea küll, aga enne pean ma selle ise lõpuni lugema." },
+    { voice: "second", text: "Siis loe kiiresti, sest Kati läheb järgmisel nädalal puhkusele." },
+    { voice: "main", text: "Hästi, ma loen täna õhtul kohe pärast sööki." },
   ],
 };
 

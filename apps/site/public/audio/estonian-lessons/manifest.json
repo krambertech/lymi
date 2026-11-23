@@ -10888,144 +10888,6 @@
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   },
-  "raamatut-voi-raamatu/c-book-key-cake": {
-    "text": "Tere, Jaan! Kuidas läheb? Tere! Hästi, aitäh. Kas sa lugesid minu raamatu läbi? Ei, veel mitte. Ma lugesin eile raamatut ainult tund aega. Ainult tund? Kas sul oli palju tööd? Jah, ma tegin terve päeva tööd. Õhtul otsisin ma kaua oma võtit. Ja kas sa leidsid võtme? Jah, lõpuks leidsin ma selle laualt. Aga siis olin ma väsinud. Kas sa sõid midagi? Jah, ma sõin supi ära ja jõin teed. Mina käisin eile poes. Ma ostsin leiba, juustu ja ühe koogi. Kas sa ostsid ka piima? Ja kas sa sõid koogi ära? Piima ma ei ostnud, kodus on veel piima. Ja ei, ma ei söönud kooki. Täna õhtul ootan ma sõpra ja me sööme koogi koos ära. Kas see sõber on Kati? Jah, ma ootan Katit kell seitse. Kas ma võin ka tulla? Muidugi! Aga loe enne raamat läbi! Hästi, ma loen täna õhtul raamatu läbi. Tore. Homme räägime. Head õhtut!",
-    "model": "eleven_v4",
-    "turns": [
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Tere, Jaan!",
-          "Kuidas läheb?"
-        ],
-        "say": "[cheerful] Tere, Jaan! Kuidas läheb?"
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Tere!",
-          "Hästi, aitäh."
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Kas sa lugesid minu raamatu läbi?"
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Ei, veel mitte.",
-          "Ma lugesin eile raamatut ainult tund aega."
-        ],
-        "say": "[sighs] Ei, veel mitte. Ma lugesin eile raamatut ainult tund aega."
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Ainult tund?",
-          "Kas sul oli palju tööd?"
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Jah, ma tegin terve päeva tööd.",
-          "Õhtul otsisin ma kaua oma võtit."
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Ja kas sa leidsid võtme?"
-        ],
-        "say": "[curious] Ja kas sa leidsid võtme?"
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Jah, lõpuks leidsin ma selle laualt.",
-          "Aga siis olin ma väsinud."
-        ],
-        "say": "[laughs] Jah, lõpuks leidsin ma selle laualt. Aga siis olin ma väsinud."
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Kas sa sõid midagi?"
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Jah, ma sõin supi ära ja jõin teed."
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Mina käisin eile poes.",
-          "Ma ostsin leiba, juustu ja ühe koogi."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kas sa ostsid ka piima?",
-          "Ja kas sa sõid koogi ära?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Piima ma ei ostnud, kodus on veel piima.",
-          "Ja ei, ma ei söönud kooki.",
-          "Täna õhtul ootan ma sõpra ja me sööme koogi koos ära."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kas see sõber on Kati?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Jah, ma ootan Katit kell seitse."
-        ]
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Kas ma võin ka tulla?"
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Muidugi!",
-          "Aga loe enne raamat läbi!"
-        ],
-        "say": "[laughs] Muidugi! Aga loe enne raamat läbi!"
-      },
-      {
-        "voice": "jGja51dd7gcoK0zkxeyg",
-        "sentences": [
-          "Hästi, ma loen täna õhtul raamatu läbi."
-        ]
-      },
-      {
-        "voice": "WtzwR2kNGVNuaTGaYLfK",
-        "sentences": [
-          "Tore.",
-          "Homme räägime.",
-          "Head õhtut!"
-        ]
-      }
-    ]
-  },
   "raamatut-voi-raamatu/a2ra": {
     "text": "ära",
     "model": "eleven_v4",
@@ -11078,6 +10940,207 @@
   },
   "raamatut-voi-raamatu/liis-so2o2b-leiva-a2ra": {
     "text": "Liis sööb leiva ära.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/liis-ostis-leiva": {
+    "text": "Liis ostis leiva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/liis-ostab-leiva": {
+    "text": "Liis ostab leiva.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "raamatut-voi-raamatu/c-book-key-cake": {
+    "text": "Tere, Jaan! Kas sa lugesid selle raamatu, mille ma sulle andsin, juba läbi? Tere, Mari! Ma lugesin eile õhtul sinu raamatut, kuni jäin diivanil magama. Nii et sa ei lugenud seda veel läbi? Ei, aga täna õhtul loen ma selle kindlasti läbi. Miks sa nii väsinud olid, kas sul oli palju tööd? Jah, ma tegin terve päeva tööd, sest kolleeg oli haige. Ja õhtul otsisin ma pool tundi oma võtit. Kas sa leidsid lõpuks oma võtme? Jah, see oli köögis laua peal, kuhu ma selle hommikul panin. Ja kas sa said õhtul ka midagi süüa? Ma sõin supi ära, mille ema mulle eile tõi. Ja siis jõin ma veel kaks tassi teed. Mina käisin pärast tööd poes ja ostsin leiba, juustu ja koogi. Kas sa ostsid ka piima, mida me hommikuks vajame? Ei, piima ma ei ostnud, sest kodus on veel pool pakki. Aga kas sa sõid koogi juba ära? Ei, ma ei söönud kooki, see on täna õhtuks. Ma ootan kella seitsmeks sõbrannat ja me sööme koogi koos ära. Kas see sõbranna on Kati, kellega sa koos töötasid? Jah, ma ootan Katit, aga ta tuleb võib-olla natuke hiljem. Kas ma võin ka tulla, kui ma raamatu enne läbi loen? Muidugi, aga too siis raamat kaasa ja räägi, kuidas lõpp sulle meeldis. Hästi, ma toon raamatu kaasa ja ostan teel ühe pudeli mahla. Ära osta mahla, meil on kodus mahla küllalt. Osta parem lilli, Kati armastab lilli. Hea mõte, ma ostan lilled turult, kus need on odavamad. Tore, siis näeme kell seitse, ja ära unusta võtit! Ei unusta, ma panen võtme kohe taskusse. Kui sa raamatu läbi loed, anna see pärast ka Katile. Hea küll, aga enne pean ma selle ise lõpuni lugema. Siis loe kiiresti, sest Kati läheb järgmisel nädalal puhkusele. Hästi, ma loen täna õhtul kohe pärast sööki.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kas sa lugesid selle raamatu, mille ma sulle andsin, juba läbi?"
+        ],
+        "say": "[cheerful] Tere, Jaan! Kas sa lugesid selle raamatu, mille ma sulle andsin, juba läbi?"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Mari!",
+          "Ma lugesin eile õhtul sinu raamatut, kuni jäin diivanil magama."
+        ],
+        "say": "[laughs] Tere, Mari! Ma lugesin eile õhtul sinu raamatut, kuni jäin diivanil magama."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Nii et sa ei lugenud seda veel läbi?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei, aga täna õhtul loen ma selle kindlasti läbi."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Miks sa nii väsinud olid, kas sul oli palju tööd?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, ma tegin terve päeva tööd, sest kolleeg oli haige.",
+          "Ja õhtul otsisin ma pool tundi oma võtit."
+        ],
+        "say": "[sighs] Jah, ma tegin terve päeva tööd, sest kolleeg oli haige. Ja õhtul otsisin ma pool tundi oma võtit."
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kas sa leidsid lõpuks oma võtme?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Jah, see oli köögis laua peal, kuhu ma selle hommikul panin."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ja kas sa said õhtul ka midagi süüa?"
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ma sõin supi ära, mille ema mulle eile tõi.",
+          "Ja siis jõin ma veel kaks tassi teed."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Mina käisin pärast tööd poes ja ostsin leiba, juustu ja koogi."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas sa ostsid ka piima, mida me hommikuks vajame?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, piima ma ei ostnud, sest kodus on veel pool pakki."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Aga kas sa sõid koogi juba ära?"
+        ],
+        "say": "[curious] Aga kas sa sõid koogi juba ära?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, ma ei söönud kooki, see on täna õhtuks.",
+          "Ma ootan kella seitsmeks sõbrannat ja me sööme koogi koos ära."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas see sõbranna on Kati, kellega sa koos töötasid?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, ma ootan Katit, aga ta tuleb võib-olla natuke hiljem."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas ma võin ka tulla, kui ma raamatu enne läbi loen?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi, aga too siis raamat kaasa ja räägi, kuidas lõpp sulle meeldis."
+        ],
+        "say": "[laughs] Muidugi, aga too siis raamat kaasa ja räägi, kuidas lõpp sulle meeldis."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi, ma toon raamatu kaasa ja ostan teel ühe pudeli mahla."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ära osta mahla, meil on kodus mahla küllalt.",
+          "Osta parem lilli, Kati armastab lilli."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hea mõte, ma ostan lilled turult, kus need on odavamad."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tore, siis näeme kell seitse, ja ära unusta võtit!"
+        ],
+        "say": "[laughs] Tore, siis näeme kell seitse, ja ära unusta võtit!"
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ei unusta, ma panen võtme kohe taskusse."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kui sa raamatu läbi loed, anna see pärast ka Katile."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hea küll, aga enne pean ma selle ise lõpuni lugema."
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Siis loe kiiresti, sest Kati läheb järgmisel nädalal puhkusele."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Hästi, ma loen täna õhtul kohe pärast sööki."
+        ]
+      }
+    ]
+  },
+  "raamatut-voi-raamatu/liis-ostis-leiba": {
+    "text": "Liis ostis leiba.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
   }

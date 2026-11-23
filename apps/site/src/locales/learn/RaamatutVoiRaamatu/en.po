@@ -10,9 +10,6 @@ msgstr ""
 msgid "<0/> I bought some bread. <1/> I bought a loaf, the whole of it. The verb is the same. Only the object changed: the bread, the thing the verb acts on."
 msgstr "<0/> I bought some bread. <1/> I bought a loaf, the whole of it. The verb is the same. Only the object changed: the bread, the thing the verb acts on."
 
-msgid "<0>{verb}</0> always takes the partitive."
-msgstr "<0>{verb}</0> always takes the partitive."
-
 msgid "<0>Ära</0> says all of it, so the genitive: <1>koogi</1>."
 msgstr "<0>Ära</0> says all of it, so the genitive: <1>koogi</1>."
 
@@ -28,21 +25,6 @@ msgstr "<0>Läbi</0> says to the end, so the genitive: <1>raamatu</1>."
 msgid "<0>Leiba</0> is the partitive from lesson {partitive}: part of something, or an action that didn’t take in all of it. <1>Leiva</1> is the genitive from lesson {genitive}: the whole thing, done. Tap the sentences in both columns."
 msgstr "<0>Leiba</0> is the partitive from lesson {partitive}: part of something, or an action that didn’t take in all of it. <1>Leiva</1> is the genitive from lesson {genitive}: the whole thing, done. Tap the sentences in both columns."
 
-msgid "<0>Ootama</0> always takes the partitive: <1>sõpra</1>."
-msgstr "<0>Ootama</0> always takes the partitive: <1>sõpra</1>."
-
-msgid "<0>Ootama</0> always takes the partitive."
-msgstr "<0>Ootama</0> always takes the partitive."
-
-msgid "<0>Otsima</0> always takes the partitive: <1>võtit</1>."
-msgstr "<0>Otsima</0> always takes the partitive: <1>võtit</1>."
-
-msgid "<0>Otsima</0> always takes the partitive."
-msgstr "<0>Otsima</0> always takes the partitive."
-
-msgid "<et>Aitama</et> always takes the partitive."
-msgstr "<et>Aitama</et> always takes the partitive."
-
 msgid "<et>Ära</et> before the verb is a no, so the partitive."
 msgstr "<et>Ära</et> before the verb is a no, so the partitive."
 
@@ -51,18 +33,6 @@ msgstr "<et>Ära</et> says all of it, so the genitive: <et>koogi</et>."
 
 msgid "<et>Läbi</et> says to the end, so the genitive: <et>raamatu</et>."
 msgstr "<et>Läbi</et> says to the end, so the genitive: <et>raamatu</et>."
-
-msgid "<et>Ootama</et> always takes the partitive: <et>sõpra</et>."
-msgstr "<et>Ootama</et> always takes the partitive: <et>sõpra</et>."
-
-msgid "<et>Ootama</et> always takes the partitive."
-msgstr "<et>Ootama</et> always takes the partitive."
-
-msgid "<et>Otsima</et> always takes the partitive: <et>võtit</et>."
-msgstr "<et>Otsima</et> always takes the partitive: <et>võtit</et>."
-
-msgid "<et>Otsima</et> always takes the partitive."
-msgstr "<et>Otsima</et> always takes the partitive."
 
 msgid "20 minutes"
 msgstr "20 minutes"
@@ -75,6 +45,12 @@ msgstr "A big cake"
 
 msgid "A big piece of cheese"
 msgstr "A big piece of cheese"
+
+msgid "A cake"
+msgstr "A cake"
+
+msgid "A colleague was ill"
+msgstr "A colleague was ill"
 
 msgid "A command for the whole thing takes the nominative: <0>pilet</0>."
 msgstr "A command for the whole thing takes the nominative: <0>pilet</0>."
@@ -94,11 +70,14 @@ msgstr "A command with <0>ära</0>, don’t, is a no, so its object takes the pa
 msgid "A sentence, a command and a don’t"
 msgstr "A sentence, a command and a don’t"
 
+msgid "A small word after the verb can give it an end, and then the object takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
+msgstr "A small word after the verb can give it an end, and then the object takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
+
 msgid "A voice message from the shop"
 msgstr "A voice message from the shop"
 
-msgid "After <0>ei</0>, and after <1>ootama, aitama, armastama</1> and <2>otsima</2>, always the partitive: <3>Ma ei ostnud piletit. Ma ootan sõpra.</3>"
-msgstr "After <0>ei</0>, and after <1>ootama, aitama, armastama</1> and <2>otsima</2>, always the partitive: <3>Ma ei ostnud piletit. Ma ootan sõpra.</3>"
+msgid "After <0>ei</0>, always the partitive: <1>Ma ei ostnud piletit.</1> On their own, <2>ootama, aitama, armastama</2> and <3>otsima</3> take it too: <4>Ma ootan sõpra.</4>"
+msgstr "After <0>ei</0>, always the partitive: <1>Ma ei ostnud piletit.</1> On their own, <2>ootama, aitama, armastama</2> and <3>otsima</3> take it too: <4>Ma ootan sõpra.</4>"
 
 msgid "After <0>ei</0>, the action doesn’t happen, so the object always takes the partitive: <1/> It doesn’t matter whether a whole ticket was meant. Lesson {pastNo} teaches <2>ei ostnud</2>."
 msgstr "After <0>ei</0>, the action doesn’t happen, so the object always takes the partitive: <1/> It doesn’t matter whether a whole ticket was meant. Lesson {pastNo} teaches <2>ei ostnud</2>."
@@ -112,11 +91,14 @@ msgstr "After <0>ei</0>, the partitive: <1>teed</1>."
 msgid "After <0>ei</0>, the partitive."
 msgstr "After <0>ei</0>, the partitive."
 
-msgid "After <et>ei</et> and verbs that never finish"
-msgstr "After <et>ei</et> and verbs that never finish"
+msgid "After <et>ei</et>, and verbs with no end"
+msgstr "After <et>ei</et>, and verbs with no end"
 
 msgid "After <et>ei</et>, the partitive."
 msgstr "After <et>ei</et>, the partitive."
+
+msgid "After a no, and verbs with no end"
+msgstr "After a no, and verbs with no end"
 
 msgid "After a verb: lugesin läbi, I read it to the end."
 msgstr "After a verb: lugesin läbi, I read it to the end."
@@ -124,17 +106,11 @@ msgstr "After a verb: lugesin läbi, I read it to the end."
 msgid "After a verb: sõin ära, I ate it all. Before a verb it means don’t: ära osta."
 msgstr "After a verb: sõin ära, I ate it all. Before a verb it means don’t: ära osta."
 
-msgid "All day"
-msgstr "All day"
-
 msgid "All eight, each object in the form its meaning needs."
 msgstr "All eight, each object in the form its meaning needs."
 
 msgid "All eight, typed in full."
 msgstr "All eight, typed in full."
-
-msgid "All evening"
-msgstr "All evening"
 
 msgid "all of it"
 msgstr "all of it"
@@ -151,17 +127,8 @@ msgstr "All six found and fixed."
 msgid "All six. You heard which actions got done."
 msgstr "All six. You heard which actions got done."
 
-msgid "Always the partitive"
-msgstr "Always the partitive"
-
-msgid "An hour"
-msgstr "An hour"
-
 msgid "At a café"
 msgstr "At a café"
-
-msgid "At the shop"
-msgstr "At the shop"
 
 msgid "At work"
 msgstr "At work"
@@ -283,6 +250,9 @@ msgstr "Going on now"
 msgid "Going on, not said to be finished: the partitive."
 msgstr "Going on, not said to be finished: the partitive."
 
+msgid "He had a big report to finish"
+msgstr "He had a big report to finish"
+
 msgid "He or she didn’t read the book."
 msgstr "He or she didn’t read the book."
 
@@ -292,8 +262,11 @@ msgstr "Hear a sentence, then pick what it means. Listen for the object’s endi
 msgid "Hear the sentences above once more, then try again."
 msgstr "Hear the sentences above once more, then try again."
 
-msgid "How long did Jaan read yesterday?"
-msgstr "How long did Jaan read yesterday?"
+msgid "His boss asked him to"
+msgstr "His boss asked him to"
+
+msgid "How long did Jaan look for his key? Write it as he says it."
+msgstr "How long did Jaan look for his key? Write it as he says it."
 
 msgid "I ate all the soup."
 msgstr "I ate all the soup."
@@ -388,6 +361,9 @@ msgstr "In a command about a whole thing, the object takes the nominative, the f
 msgid "In a command, the whole thing takes the nominative, and a command with <0>ära</0>, don’t, takes the partitive: <1>Osta pilet! Ära osta piletit!</1>"
 msgstr "In a command, the whole thing takes the nominative, and a command with <0>ära</0>, don’t, takes the partitive: <1>Osta pilet! Ära osta piletit!</1>"
 
+msgid "In his pocket"
+msgstr "In his pocket"
+
 msgid "Is waiting for a friend tonight"
 msgstr "Is waiting for a friend tonight"
 
@@ -427,8 +403,17 @@ msgstr "Kook, koogi, kooki."
 msgid "Liis ate all the bread."
 msgstr "Liis ate all the bread."
 
+msgid "Liis bought a loaf of bread."
+msgstr "Liis bought a loaf of bread."
+
+msgid "Liis bought some bread."
+msgstr "Liis bought some bread."
+
 msgid "Liis had some bread."
 msgstr "Liis had some bread."
+
+msgid "Liis will buy a loaf of bread."
+msgstr "Liis will buy a loaf of bread."
 
 msgid "Liis will eat all the bread."
 msgstr "Liis will eat all the bread."
@@ -454,6 +439,12 @@ msgstr "Mari and Jaan talk about yesterday: a book, a key and a cake."
 msgid "Mari and Jaan the next day"
 msgstr "Mari and Jaan the next day"
 
+msgid "Mari bought milk."
+msgstr "Mari bought milk."
+
+msgid "Mari bought several things. Which did she buy one whole one of?"
+msgstr "Mari bought several things. Which did she buy one whole one of?"
+
 msgid "Mari hasn’t eaten the cake yet."
 msgstr "Mari hasn’t eaten the cake yet."
 
@@ -466,11 +457,11 @@ msgstr "Mari was reading the book."
 msgid "Mari will read the book to the end."
 msgstr "Mari will read the book to the end."
 
-msgid "More than one whole thing takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
-msgstr "More than one whole thing takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
+msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
+msgstr "More than one whole thing, with no number before it, takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
 
-msgid "More than one whole thing takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1>"
-msgstr "More than one whole thing takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1>"
+msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1> After a number, the partitive: <2>kaks piletit</2>."
+msgstr "More than one whole thing, with no number before it, takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1> After a number, the partitive: <2>kaks piletit</2>."
 
 msgid "Nearly. Compare the columns of the table for the ones you missed."
 msgstr "Nearly. Compare the columns of the table for the ones you missed."
@@ -493,8 +484,38 @@ msgstr "No"
 msgid "Now the other way round. Each round gives a sentence in English to write in Estonian. The English says whether it’s some or all, done or going on, and the object’s form follows from that, or from the verb."
 msgstr "Now the other way round. Each round gives a sentence in English to write in Estonian. The English says whether it’s some or all, done or going on, and the object’s form follows from that, or from the verb."
 
-msgid "On the table"
-msgstr "On the table"
+msgid "On its own, <0>{verb}</0> takes the partitive."
+msgstr "On its own, <0>{verb}</0> takes the partitive."
+
+msgid "On its own, <0>ootama</0> takes the partitive: <1>sõpra</1>."
+msgstr "On its own, <0>ootama</0> takes the partitive: <1>sõpra</1>."
+
+msgid "On its own, <0>ootama</0> takes the partitive."
+msgstr "On its own, <0>ootama</0> takes the partitive."
+
+msgid "On its own, <0>otsima</0> takes the partitive: <1>võtit</1>."
+msgstr "On its own, <0>otsima</0> takes the partitive: <1>võtit</1>."
+
+msgid "On its own, <0>otsima</0> takes the partitive."
+msgstr "On its own, <0>otsima</0> takes the partitive."
+
+msgid "On its own, <et>aitama</et> takes the partitive."
+msgstr "On its own, <et>aitama</et> takes the partitive."
+
+msgid "On its own, <et>ootama</et> takes the partitive: <et>sõpra</et>."
+msgstr "On its own, <et>ootama</et> takes the partitive: <et>sõpra</et>."
+
+msgid "On its own, <et>ootama</et> takes the partitive."
+msgstr "On its own, <et>ootama</et> takes the partitive."
+
+msgid "On its own, <et>otsima</et> takes the partitive: <et>võtit</et>."
+msgstr "On its own, <et>otsima</et> takes the partitive: <et>võtit</et>."
+
+msgid "On its own, <et>otsima</et> takes the partitive."
+msgstr "On its own, <et>otsima</et> takes the partitive."
+
+msgid "On the kitchen table"
+msgstr "On the kitchen table"
 
 msgid "One sentence with the partitive and with the genitive"
 msgstr "One sentence with the partitive and with the genitive"
@@ -529,6 +550,9 @@ msgstr "Past: leidsin, I found."
 msgid "Pilet, pileti, piletit."
 msgstr "Pilet, pileti, piletit."
 
+msgid "Pronouns follow the same rule. For the whole person, the genitive, often the short <0>mu, su, ta</0>: <1>Ta viis mu koju.</1> Lesson {pronouns} has every form."
+msgstr "Pronouns follow the same rule. For the whole person, the genitive, often the short <0>mu, su, ta</0>: <1>Ta viis mu koju.</1> Lesson {pronouns} has every form."
+
 msgid "Read the book to the end!"
 msgstr "Read the book to the end!"
 
@@ -544,6 +568,9 @@ msgstr "Sentences in the present, going on and to be done"
 msgid "Server"
 msgstr "Server"
 
+msgid "Some cheese"
+msgstr "Some cheese"
+
 msgid "Some objects change more than their ending. <0/> loses a p in the genitive, <1>supi</1>, and <2/> turns its last k into g, <3>koogi</3>. Lesson {gradation} explains why."
 msgstr "Some objects change more than their ending. <0/> loses a p in the genitive, <1>supi</1>, and <2/> turns its last k into g, <3>koogi</3>. Lesson {gradation} explains why."
 
@@ -553,8 +580,8 @@ msgstr "Some of it, or the whole thing"
 msgid "Some of it: the partitive."
 msgstr "Some of it: the partitive."
 
-msgid "Some verbs have no end point: you can wait, help, love or look for as long as you like. <0/>, <1/>, <2/> and <3/> always take the partitive."
-msgstr "Some verbs have no end point: you can wait, help, love or look for as long as you like. <0/>, <1/>, <2/> and <3/> always take the partitive."
+msgid "Some verbs have no end point: you can wait, help, love or look for as long as you like. On their own, <0/>, <1/>, <2/> and <3/> take the partitive."
+msgstr "Some verbs have no end point: you can wait, help, love or look for as long as you like. On their own, <0/>, <1/>, <2/> and <3/> take the partitive."
 
 msgid "soup"
 msgstr "soup"
@@ -664,8 +691,8 @@ msgstr "To the end is <0>läbi</0>, with the genitive."
 msgid "to wait, to wait for"
 msgstr "to wait, to wait for"
 
-msgid "Two small words after a verb often say that it’s done: <0/>, through to the end, and <1/>, all of it. In a statement, the object before them takes the genitive."
-msgstr "Two small words after a verb often say that it’s done: <0/>, through to the end, and <1/>, all of it. In a statement, the object before them takes the genitive."
+msgid "Two small words after a verb often say that it’s done: <0/>, through to the end, and <1/>, all of it. In a statement without <2>ei</2>, the object before them takes the genitive."
+msgstr "Two small words after a verb often say that it’s done: <0/>, through to the end, and <1/>, all of it. In a statement without <2>ei</2>, the object before them takes the genitive."
 
 msgid "Type the object"
 msgstr "Type the object"
@@ -676,29 +703,29 @@ msgstr "Võti, võtme, võtit."
 msgid "water"
 msgstr "water"
 
-msgid "What did Jaan look for in the evening? Write it as he says it."
-msgstr "What did Jaan look for in the evening? Write it as he says it."
-
 msgid "What did Liisa buy just one of?"
 msgstr "What did Liisa buy just one of?"
 
 msgid "What does she ask you?"
 msgstr "What does she ask you?"
 
-msgid "What is the name of Mari’s friend?"
-msgstr "What is the name of Mari’s friend?"
-
-msgid "Where did he find it?"
-msgstr "Where did he find it?"
+msgid "Where was the key?"
+msgstr "Where was the key?"
 
 msgid "Who did it, or will do it?"
 msgstr "Who did it, or will do it?"
 
+msgid "Who is Mari waiting for? Write the name as she says it."
+msgstr "Who is Mari waiting for? Write the name as she says it."
+
+msgid "Why did Jaan work all day?"
+msgstr "Why did Jaan work all day?"
+
 msgid "Will be done"
 msgstr "Will be done"
 
-msgid "Will finish the book tonight"
-msgstr "Will finish the book tonight"
+msgid "Will buy the flowers"
+msgstr "Will buy the flowers"
 
 msgid "work"
 msgstr "work"

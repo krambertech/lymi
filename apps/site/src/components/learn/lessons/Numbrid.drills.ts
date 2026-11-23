@@ -1,0 +1,104 @@
+import type { MessageDescriptor } from "@lingui/core";
+import { msg } from "@lingui/core/macro";
+import type { ChoiceDrill, DrillBank, FormDrill, SentenceDrill } from "../../../lib/learn/drill";
+import { numberWords } from "../../../lib/learn/estonian-numbers";
+
+const TEIST = msg`<et>-teist</et> makes eleven to nineteen; <et>-kümmend</et> makes the tens.`;
+const BOTH = msg`The tens and the ones are two words.`;
+const BIG = msg`Hundreds join into one word; thousands stay separate.`;
+
+const typed = (n: number, rule: string, explain: MessageDescriptor): FormDrill => ({
+  kind: "form",
+  id: `words-${n}`,
+  rule,
+  base: String(n),
+  gloss: msg`a number`,
+  cue: msg`in words`,
+  answers: [numberWords(n)],
+  say: numberWords(n),
+  explain,
+});
+
+const MEANS: Record<number, MessageDescriptor> = {
+  2: msg`two`,
+  6: msg`six`,
+  8: msg`eight`,
+  9: msg`nine`,
+  12: msg`twelve`,
+  20: msg`twenty`,
+  17: msg`seventeen`,
+  70: msg`seventy`,
+};
+
+const heard = (n: number, other: number, rule: string, explain: MessageDescriptor): ChoiceDrill => {
+  const option = (v: number) => ({
+    id: String(v),
+    label: { et: numberWords(v) },
+    sub: MEANS[v] as MessageDescriptor,
+  });
+  return {
+    kind: "choice",
+    id: `hear-${n}`,
+    rule,
+    say: numberWords(n),
+    answer: option(n),
+    wrong: [option(other)],
+    explain,
+  };
+};
+
+const ALIKE = msg`<et>Kaks</et> and <et>kuus</et> differ in the vowel; <et>kaheksa</et> and <et>üheksa</et> in the first sound.`;
+
+const sentence = (
+  id: string,
+  said: string,
+  item: { kind: "dictation" } | { kind: "translate"; prompt: MessageDescriptor },
+): SentenceDrill => ({
+  ...item,
+  id,
+  rule: "sentence",
+  say: said,
+  answers: [said],
+  explain: msg`The word after the number takes the partitive: <et>kaks kassi</et>, <et>kaks eurot</et>.`,
+});
+
+export const DRILLS: DrillBank = {
+  rules: {
+    teist: { label: msg`<et>-teist</et> or <et>-kümmend</et>`, section: "teist" },
+    words: { label: msg`Numbers in words`, section: "words" },
+    alike: { label: msg`Numbers that sound alike`, section: "alike" },
+    sentence: { label: msg`Numbers in sentences`, section: "wild" },
+  },
+  items: [
+    typed(12, "teist", TEIST),
+    typed(20, "teist", TEIST),
+    typed(15, "teist", TEIST),
+    typed(50, "teist", TEIST),
+    typed(17, "teist", TEIST),
+    typed(70, "teist", TEIST),
+    heard(17, 70, "teist", TEIST),
+    heard(70, 17, "teist", TEIST),
+    typed(27, "words", BOTH),
+    typed(43, "words", BOTH),
+    typed(68, "words", BOTH),
+    typed(91, "words", BOTH),
+    typed(200, "words", BIG),
+    typed(300, "words", BIG),
+    typed(1000, "words", BIG),
+    typed(2000, "words", BIG),
+    heard(2, 6, "alike", ALIKE),
+    heard(6, 2, "alike", ALIKE),
+    heard(8, 9, "alike", ALIKE),
+    heard(9, 8, "alike", ALIKE),
+    sentence("two-cats", "Mul on kaks kassi.", {
+      kind: "translate",
+      prompt: msg`I have two cats.`,
+    }),
+    sentence("six-cats", "Mul on kuus kassi.", { kind: "dictation" }),
+    sentence("coffee-two", "Kohv maksab kaks eurot.", {
+      kind: "translate",
+      prompt: msg`Coffee costs two euros.`,
+    }),
+    sentence("flat-eighteen", "Minu korteri number on kaheksateist.", { kind: "dictation" }),
+  ],
+};

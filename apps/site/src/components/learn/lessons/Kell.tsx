@@ -4,7 +4,7 @@ import { clsx } from "clsx";
 import { Minus, Plus } from "lucide-react";
 import { type ReactNode, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { lessonBySlug } from "../../../lib/learn/catalogue";
-import { clipUrl } from "../../../lib/learn/clips";
+import { clipUrl, KELL_PASSAGE } from "../../../lib/learn/clips";
 import {
   type ClockTime,
   MINUTES,
@@ -22,9 +22,12 @@ import {
   withMinute,
 } from "../../../lib/learn/estonian-time";
 import { playSound, usePlaying } from "../../../lib/learn/player";
+import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import type { Glossary } from "../lesson-context";
 import { LessonView, Prose } from "../LessonView";
+import { Listening, type PassageQuestion } from "../Passage";
 import {
   Answer,
   type ChoiceItem,
@@ -37,6 +40,7 @@ import {
   useAutoplay,
   useNudge,
 } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
 import { Listen, PlayButton, PlayMark } from "../Sound";
 import { Word } from "../Word";
 
@@ -52,6 +56,11 @@ const GLOSSARY: Glossary = {
   },
   kell: { en: msg`clock, watch; o’clock`, note: msg`Also a bell.` },
   "kell on kolm": { en: msg`It’s three o’clock.`, show: "Kell on kolm", clip: timeClip(at(3, 0)) },
+  "kell kolm": {
+    en: msg`at three; three o’clock`,
+    note: msg`Kell with a time also says when: kell kolm, at three.`,
+    clip: false,
+  },
   pool: { en: msg`half`, note: msg`Pool neli: halfway to four, 3:30.` },
   veerand: { en: msg`a quarter`, note: msg`Veerand neli: a quarter of the way to four, 3:15.` },
   kolmveerand: { en: msg`three quarters`, note: msg`Kolm, three, and veerand, a quarter.` },
@@ -438,6 +447,48 @@ function HalfRound({ item, state, heard, answer, autoplay }: RoundProps<ClockTim
 }
 
 /** The times the listening quiz asks, chosen for the mix-ups learners make. */
+const kindOf = ({ minute }: ClockTime) =>
+  minute === 0
+    ? "hour"
+    : minute === 30
+      ? "pool"
+      : minute === 15
+        ? "veerand"
+        : minute === 45
+          ? "kolmveerand"
+          : minute < 30
+            ? "labi"
+            : "parast";
+
+const IN_WORDS = [
+  at(3, 0),
+  at(5, 30),
+  at(8, 15),
+  at(10, 45),
+  at(4, 10),
+  at(7, 20),
+  at(1, 50),
+  at(9, 40),
+];
+
+const PAST_OR_TO = [at(3, 10), at(5, 20), at(8, 5), at(6, 50), at(2, 40), at(11, 55)];
+
+const otherHour = (hour: number, by: number) => ((hour - 1 + by + 12) % 12) + 1;
+
+export const confusedWith = ({ hour, minute }: ClockTime): ClockTime[] =>
+  minute < 30
+    ? [at(otherHour(hour, -1), (60 - minute) as Minute), at(otherHour(hour, 1), minute)]
+    : [at(otherHour(hour, 1), (60 - minute) as Minute), at(hour, (60 - minute) as Minute)];
+
+type PastToItem = ChoiceItem & { pair: readonly [string, string] };
+
+export const pastToRun = (items: readonly PastToItem[], pinned?: PastToItem): PastToItem[] =>
+  eachPairFirst(items, pinned).map((item) =>
+    item === pinned ? item : { ...item, options: shuffle(item.options) },
+  );
+
+const WRITTEN = [at(6, 30), at(2, 15), at(12, 45), at(9, 5), at(11, 20), at(3, 55)];
+
 const HEARD = [
   at(5, 15),
   at(8, 30),
@@ -541,6 +592,95 @@ export function KellLesson() {
       }),
     [],
   );
+  const wordItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
+    () =>
+      IN_WORDS.map((time) => ({
+        base: timeDigits(time),
+        cue: t`in words`,
+        answers: [timeWords(time)],
+        src: timeSrc(time),
+        said: timeSentence(time),
+        pair: [kindOf(time), timeClip(time)] as const,
+      })),
+    [t],
+  );
+
+  const pastToItems = useMemo<PastToItem[]>(
+    () =>
+      PAST_OR_TO.map((time, i) => {
+        const three = [time, ...confusedWith(time)].map((each) => ({
+          id: timeClip(each),
+          label: timeDigits(each),
+        }));
+        const turn = i % 3;
+        return {
+          src: timeSrc(time),
+          answer: timeClip(time),
+          pair: [time.minute < 30 ? "labi" : "parast", timeClip(time)] as const,
+          options: [...three.slice(turn), ...three.slice(0, turn)],
+          explain: (
+            <Trans>
+              It’s {timeDigits(time)}: <b lang="et">{timeWords(time)}</b>.
+            </Trans>
+          ),
+        };
+      }),
+    [],
+  );
+
+  const writtenItems = useMemo<(SentenceItem & { pair: readonly [string, string] })[]>(
+    () =>
+      WRITTEN.map((time) => ({
+        kind: "dictation" as const,
+        id: `write-${timeClip(time)}`,
+        src: timeSrc(time),
+        answers: [timeSentence(time)],
+        pair: [kindOf(time), timeClip(time)] as const,
+      })),
+    [],
+  );
+
+  const passageQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "now",
+        ask: t`What time is it now?`,
+        options: [
+          { id: "1230", label: "12:30" },
+          { id: "130", label: "1:30" },
+          { id: "230", label: "2:30" },
+        ],
+        answer: "130",
+        line: 1,
+      },
+      { id: "work", kind: "truefalse", ask: t`Mari is at work now.`, answer: true, line: 2 },
+      { id: "home", kind: "truefalse", ask: t`Mari is at home at two.`, answer: false, line: 3 },
+      {
+        id: "coffee",
+        ask: t`When do they drink coffee?`,
+        options: [
+          { id: "245", label: "2:45" },
+          { id: "315", label: "3:15" },
+          { id: "430", label: "4:30" },
+        ],
+        answer: "315",
+        line: 4,
+      },
+      {
+        id: "bus",
+        ask: t`When do they wait for the bus?`,
+        options: [
+          { id: "515", label: "5:15" },
+          { id: "330", label: "3:30" },
+          { id: "445", label: "4:45" },
+        ],
+        answer: "445",
+        line: 5,
+      },
+    ],
+    [t],
+  );
+
   const typedItems = useMemo(
     () =>
       TYPED.map((time): TypedItem => ({
@@ -564,8 +704,8 @@ export function KellLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">12 minutes</Trans>,
-        <Trans key="q">3 quizzes</Trans>,
+        <Trans key="m">18 minutes</Trans>,
+        <Trans key="q">6 quizzes and a voice message</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -857,6 +997,143 @@ export function KellLesson() {
                 }
                 recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}
                 round={(props) => <TypedRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "past-or-to",
+          title: t`Läbi or pärast?`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    <Word w="Läbi" /> counts on from the hour that has struck; <Word w="pärast" />{" "}
+                    counts down to the hour that’s coming. Mix them up and the time comes out wrong
+                    by up to an hour. Listen, then pick the clock.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="past-or-to"
+                title={<Trans>Which time did you hear?</Trans>}
+                items={pastToItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, each clock right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Play the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>
+                      Turn the clock above to a few minutes past and to, then try again.
+                    </Trans>
+                  )
+                }
+                recall={(item) => ({
+                  label: item.options.find((o) => o.id === item.answer)?.label as string,
+                  src: item.src,
+                })}
+                order={pastToRun}
+                round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "words",
+          title: t`Write the time in words`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round shows a time in digits. Type how you say it, without{" "}
+                    <span lang="et">kell on</span>.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="time-words"
+                title={<Trans>Type the time in words</Trans>}
+                items={wordItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, every word spelled right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check which hour each one names.</Trans>
+                  ) : (
+                    <Trans>Turn the clock above once more, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={eachPairFirst}
+                round={(props) => <FormRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "write",
+          title: t`Write what you hear`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Hear a time and write the whole sentence. After a number,{" "}
+                    <span lang="et">minut</span> is <span lang="et">minutit</span> before{" "}
+                    <span lang="et">läbi</span> and <span lang="et">minuti</span> before{" "}
+                    <span lang="et">pärast</span>.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="write-times"
+                title={<Trans>Write the sentence</Trans>}
+                items={writtenItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, every word in its place.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Play the ones you missed slower.</Trans>
+                  ) : (
+                    <Trans>Play each sentence slower, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: a message from Mari`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Mari leaves Jaan a message about her afternoon. <Word w="Kell kolm" /> also
+                    means at three. Listen for each time.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="mari-times"
+                title={<Trans>Listen: a message from Mari</Trans>}
+                clip="p-mari"
+                sentences={KELL_PASSAGE}
+                questions={passageQuestions}
               />
             </>
           ),

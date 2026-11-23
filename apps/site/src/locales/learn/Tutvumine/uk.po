@@ -37,8 +37,17 @@ msgstr "<0>Sinu</0> — це «твоє»: виходить «Твоє ім’я
 msgid "<0>Tere</0> is hello, and Mari is leaving."
 msgstr "<0>Tere</0> — це «привіт», а Марі вже йде."
 
-msgid "10 minutes"
-msgstr "10 хвилин"
+msgid "<et>Kus</et> asks where; when the answer says <et>ma</et>, ask with <et>sa</et>."
+msgstr "<et>Kus</et> питає «де»; якщо у відповіді <et>ma</et>, питай через <et>sa</et>."
+
+msgid "<et>Mis</et> asks what; when the answer says <et>ma</et>, ask with <et>sa</et>."
+msgstr "<et>Mis</et> питає «що»; якщо у відповіді <et>ma</et>, питай через <et>sa</et>."
+
+msgid "20 minutes"
+msgstr "20 хвилин"
+
+msgid "A <0/> question wants yes or no. <1/> wants a place, and <2/> a person. Put each answer under the question it fits."
+msgstr "Питання з <0/> чекає «так» чи «ні». <1/> чекає місця, а <2/> — людини. Розклади відповіді за питаннями."
 
 msgid "a little"
 msgstr "трохи"
@@ -49,11 +58,32 @@ msgstr "багато"
 msgid "A note from Kati"
 msgstr "Записка від Каті"
 
+msgid "A yes-or-no question starts with <et>kas</et>; the verb keeps the ending for its pronoun."
+msgstr "Питання з відповіддю «так» чи «ні» починається з <et>kas</et>; дієслово зберігає закінчення свого займенника."
+
+msgid "A yes-or-no question starts with <et>kas</et>."
+msgstr "Питання з відповіддю «так» чи «ні» починається з <et>kas</et>."
+
 msgid "After <0>ei</0>, <1>olema</1> loses its ending: <2>ei ole</2>."
 msgstr "Після <0>ei</0> дієслово <1>olema</1> втрачає закінчення: <2>ei ole</2>."
 
+msgid "After <et>ei</et> the verb has no ending; <et>olema</et> is <et>ole</et>."
+msgstr "Після <et>ei</et> дієслово без закінчення; <et>olema</et> стає <et>ole</et>."
+
 msgid "After ei the verb has no ending: ei tööta, doesn’t work."
 msgstr "Після ei дієслово без закінчення: ei tööta, «не працює»."
+
+msgid "All six questions, each with the right word."
+msgstr "Усі шість питань, і в кожному правильне слово."
+
+msgid "All six, every sentence right."
+msgstr "Усі шість речень правильно."
+
+msgid "Andres"
+msgstr "Андрес"
+
+msgid "Andres speaks Estonian well."
+msgstr "Андрес добре говорить естонською."
 
 msgid "Answer, then ask back: <0>Hästi, aitäh. Aga sul?</0>"
 msgstr "Відповідай і питай у відповідь: <0>Hästi, aitäh. Aga sul?</0>"
@@ -64,8 +94,17 @@ msgstr "Відповіді на запитання Марі"
 msgid "Ask a yes-or-no question with <0>kas</0>, and any other with a question word: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
 msgstr "Запитання «так чи ні» починай з <0>kas</0>, а будь-яке інше — з питального слова: <1>Kas sa räägid eesti keelt? Kus sa töötad? Miks?</1>"
 
+msgid "Ask the question"
+msgstr "Запитай"
+
 msgid "Asking Mari"
 msgstr "Запитання до Марі"
+
+msgid "Asking questions"
+msgstr "Питання"
+
+msgid "Asks Mari a question."
+msgstr "Ставить Марі питання."
 
 msgid "At a school"
 msgstr "У школі"
@@ -85,11 +124,29 @@ msgstr "Кава"
 msgid "Do you speak Estonian?"
 msgstr "Ти говориш естонською?"
 
+msgid "Each round gives an answer. Write the question it answers. When the answer says <0>ma</0>, ask with <1>sa</1>."
+msgstr "У кожному раунді є відповідь. Напиши питання до неї. Якщо у відповіді <0>ma</0>, питай через <1>sa</1>."
+
+msgid "Each sentence needs one thing from lessons {first} to {last}: the verb after <0>ei</0>, a place with its ending, or a question."
+msgstr "У кожному реченні знадобиться щось з уроків {first}–{last}: дієслово після <0>ei</0>, місце із закінченням або питання."
+
+msgid "Fill Kati’s note above once more, then try again."
+msgstr "Ще раз заповни записку Каті вище, а тоді спробуй знову."
+
 msgid "Fill the gaps"
 msgstr "Заповни пропуски"
 
 msgid "Fine, thanks. And you?"
 msgstr "Добре, дякую. А в тебе?"
+
+msgid "For fun"
+msgstr "Для задоволення"
+
+msgid "For Kati"
+msgstr "Заради Каті"
+
+msgid "Four to six sentences: who you are, where you’re from and where you live, what you do, something you don’t do, and a question for Mari."
+msgstr "Чотири–шість речень: хто ти, звідки ти й де живеш, що робиш, чого не робиш, і питання до Марі."
 
 msgid "friend"
 msgstr "друг, подруга"
@@ -103,8 +160,14 @@ msgstr "Від jooma, пити."
 msgid "From õppima, to learn, to study."
 msgstr "Від õppima, вчити, вчитися."
 
+msgid "Go through Asking Mari once more, then try again."
+msgstr "Ще раз пройди «Запитання до Марі», а тоді спробуй знову."
+
 msgid "Goodbye"
 msgstr "До побачення"
+
+msgid "Has a sentence with <0>ei</0> and the verb without its ending."
+msgstr "Є речення з <0>ei</0> і дієсловом без закінчення."
 
 msgid "he or she drinks"
 msgstr "він чи вона п’є"
@@ -115,8 +178,14 @@ msgstr "він чи вона живе"
 msgid "he or she studies"
 msgstr "він чи вона вчиться"
 
+msgid "He works at a school."
+msgstr "Він працює в школі."
+
 msgid "How are you?"
 msgstr "Як справи?"
+
+msgid "I don’t work, I study."
+msgstr "Я не працюю, я навчаюся."
 
 msgid "I live"
 msgstr "я живу"
@@ -129,6 +198,9 @@ msgstr "у кав’ярні"
 
 msgid "In a café"
 msgstr "У кав’ярні"
+
+msgid "In a town or a building, <et>-s</et>; at work, <et>-l</et>."
+msgstr "У місті чи будівлі — <et>-s</et>; на роботі — <et>-l</et>."
 
 msgid "In an office"
 msgstr "В офісі"
@@ -154,17 +226,32 @@ msgstr "Яан розповідає про себе і свою подругу �
 msgid "Joob kohvi: drinks coffee. Learn it as a phrase for now."
 msgstr "Joob kohvi — «п’є каву». Поки що запам’ятай це як фразу."
 
+msgid "Kati"
+msgstr "Каті"
+
+msgid "Kati and Andres meet and ask each other where they live and what they do."
+msgstr "Каті й Андрес знайомляться й питають одне одного, де вони живуть і що роблять."
+
+msgid "Kati studies in Tartu."
+msgstr "Каті навчається в Тарту."
+
 msgid "Kati writes about herself. Each gap needs one thing you’ve practised: a form of <0>olema</0>, a verb ending, the verb after <1>ei</1>, a place with <2>-l</2>, or a question word."
 msgstr "Каті пише про себе. У кожному пропуску — одне з того, що ти вже знаєш: форма <0>olema</0>, закінчення дієслова, дієслово після <1>ei</1>, місце з <2>-l</2> або питальне слово."
 
 msgid "Listen: Jaan and Kati"
 msgstr "Слухання: Яан і Каті"
 
+msgid "Listen: Kati meets Andres"
+msgstr "Слухання: Каті знайомиться з Андресом"
+
 msgid "Listening only, no microphone"
 msgstr "Лише слухання, без мікрофона"
 
 msgid "Listening: Jaan and Kati"
 msgstr "На слух: Яан і Каті"
+
+msgid "Listening: Kati meets Andres"
+msgstr "На слух: Каті знайомиться з Андресом"
 
 msgid "Mari"
 msgstr "Марі"
@@ -190,6 +277,12 @@ msgstr "Знайомство естонською: скажи, хто ти, де
 msgid "name"
 msgstr "ім’я"
 
+msgid "Nearly. Check the question word and the verb’s ending."
+msgstr "Майже. Перевір питальне слово й закінчення дієслова."
+
+msgid "Nearly. Check the verb and the place in the ones you missed."
+msgstr "Майже. Там, де була помилка, перевір дієслово й місце."
+
 msgid "Nice to meet you"
 msgstr "Приємно познайомитися"
 
@@ -202,6 +295,9 @@ msgstr "Тепер питаєш ти. Обирай запитання, яке п
 msgid "Pärnu takes <0>-s</0>: <1>Pärnus</1>."
 msgstr "Пярну має <0>-s</0>: <1>Pärnus</1>."
 
+msgid "Places with <et>-s</et> and <et>-l</et>"
+msgstr "Місця з <et>-s</et> і <et>-l</et>"
+
 msgid "Practice for lessons {first} to {last}"
 msgstr "Практика за уроками {first}–{last}"
 
@@ -213,6 +309,21 @@ msgstr "Кажи, де живеш і працюєш, додаючи до міс�
 
 msgid "Say who you are: <0>Mina olen Andres</0> or <1>Minu nimi on Andres</1>."
 msgstr "Кажи, хто ти: <0>Mina olen Andres</0> або <1>Minu nimi on Andres</1>."
+
+msgid "Saying no with <et>ei</et>"
+msgstr "Заперечення з <et>ei</et>"
+
+msgid "Says what you do."
+msgstr "Каже, що ти робиш."
+
+msgid "Says where you live, with <0>-s</0> on the place."
+msgstr "Каже, де ти живеш, із <0>-s</0> у назві місця."
+
+msgid "Says who you are."
+msgstr "Каже, хто ти."
+
+msgid "She isn’t at home."
+msgstr "Її немає вдома."
 
 msgid "She studies"
 msgstr "Вона вчиться"
@@ -238,11 +349,20 @@ msgstr "Чай"
 msgid "The verb drops its ending after <0>ei</0>, not after <1>kas</1>: <2>elad</2>."
 msgstr "Дієслово втрачає закінчення після <0>ei</0>, а не після <1>kas</1>: <2>elad</2>."
 
+msgid "They’re at work."
+msgstr "Вони на роботі."
+
 msgid "This time Mari’s lines are sound only. Tap a line to hear it again, or tap Show what Mari said to read it."
 msgstr "Цього разу репліки Марі тільки звучать. Натисни на репліку, щоб почути її ще раз, або на «Показати репліку: Марі», щоб її прочитати."
 
+msgid "turns a sentence into a yes-or-no question"
+msgstr "робить з речення питання «так чи ні»"
+
 msgid "Water"
 msgstr "Вода"
+
+msgid "We live in Tallinn."
+msgstr "Ми живемо в Таллінні."
 
 msgid "What does Kati do?"
 msgstr "Чим займається Каті?"
@@ -253,6 +373,9 @@ msgstr "Що Каті багато п’є?"
 msgid "What’s your name?"
 msgstr "Як тебе звати?"
 
+msgid "where"
+msgstr "де"
+
 msgid "Where are you from?"
 msgstr "Звідки ти?"
 
@@ -262,14 +385,29 @@ msgstr "Де ти живеш?"
 msgid "Where do you work?"
 msgstr "Де ти працюєш?"
 
+msgid "Where does Andres live?"
+msgstr "Де живе Андрес?"
+
+msgid "Where does Andres work?"
+msgstr "Де працює Андрес?"
+
 msgid "Where does Jaan work?"
 msgstr "Де працює Яан?"
 
 msgid "Where does Kati live?"
 msgstr "Де живе Каті?"
 
+msgid "Which question does it answer?"
+msgstr "На яке питання це відповідь?"
+
+msgid "who"
+msgstr "хто"
+
 msgid "why"
 msgstr "чому"
+
+msgid "Why is Andres learning Estonian?"
+msgstr "Чому Андрес вивчає естонську?"
 
 msgid "Word for word: “good time”."
 msgstr "Дослівно: «добрий час»."
@@ -283,6 +421,21 @@ msgstr "Дослівно: «дуже приємно»."
 msgctxt "the verb, after ei"
 msgid "work"
 msgstr "працювати"
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "Write Mari a short message about yourself, then compare it with a model and tick what yours does. Nothing is marked for you here."
+msgstr "Напиши Марі коротке повідомлення про себе, а тоді порівняй його із взірцем і познач, що в ньому є. Тут ніхто не оцінює за тебе."
+
+msgid "Write the question it answers"
+msgstr "Напиши питання до відповіді"
+
+msgid "Write to Mari"
+msgstr "Напиши Марі"
+
+msgid "yes or no"
+msgstr "так чи ні"
 
 msgid "You are Andres, from Ukraine. You live in Tartu, work in an office and are learning Estonian."
 msgstr "Ти — Андрес з України. Живеш у Тарту, працюєш в офісі й вчиш естонську."

@@ -3,12 +3,22 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { Minus, Plus } from "lucide-react";
 import { type ReactNode, useMemo, useRef, useState } from "react";
 import { lessonBySlug } from "../../../lib/learn/catalogue";
-import { clipUrl, NUMBER_SENTENCES, numberClip } from "../../../lib/learn/clips";
+import {
+  clipUrl,
+  NUMBER_ALIKE,
+  NUMBER_PASSAGE,
+  NUMBER_SENTENCES,
+  NUMBER_WRITTEN,
+  numberClip,
+} from "../../../lib/learn/clips";
 import { DIGIT_WORDS, numberParts, numberWords } from "../../../lib/learn/estonian-numbers";
 import { playSound } from "../../../lib/learn/player";
+import { eachPairFirst, shuffle } from "../../../lib/learn/quiz";
 import { Chips, Keys, ListenRows, Panel } from "../Explore";
+import { type FormItem, FormRound, formRecall } from "../FormRound";
 import type { Glossary } from "../lesson-context";
 import { LessonView, Prose } from "../LessonView";
+import { Listening, type PassageQuestion } from "../Passage";
 import { type ChoiceItem, ChoiceRound, Quiz, type TypedItem, TypedRound } from "../Quiz";
 import { PlayButton } from "../Sound";
 import { Word } from "../Word";
@@ -78,6 +88,15 @@ const SENTENCES: readonly {
   { id: "c-telefon", answers: ["52094"], en: msg`My number is 5 2 0 9 4.` },
   { id: "c-kohv", answers: ["3.50", "3,50"], en: msg`Coffee costs €3.50.` },
 ];
+
+type AlikeItem = ChoiceItem & { pair: readonly [string, string] };
+
+export const alikeRun = (items: readonly AlikeItem[], pinned?: AlikeItem): AlikeItem[] =>
+  eachPairFirst(items, pinned).map((item) =>
+    item === pinned ? item : { ...item, options: shuffle(item.options) },
+  );
+
+const kindOf = (n: number) => (n < 20 ? "teen" : n % 10 === 0 ? "tens" : "both");
 
 const range = (from: number, to: number) =>
   Array.from({ length: to - from + 1 }, (_, i) => from + i);
@@ -254,6 +273,95 @@ export function NumbridLesson() {
       }),
     [],
   );
+  const alikeItems = useMemo<AlikeItem[]>(
+    () =>
+      NUMBER_ALIKE.flatMap((pair, i) =>
+        pair.map((n, j) => {
+          const options = pair.map((v) => ({
+            id: String(v),
+            label: String(v),
+            sub: numberWords(v),
+          }));
+          return {
+            src: numberSrc(n),
+            answer: String(n),
+            pair: [pair.join("-"), String(n)] as const,
+            options: (i + j) % 2 ? [...options].reverse() : options,
+          };
+        }),
+      ),
+    [],
+  );
+
+  const writtenItems = useMemo<(FormItem & { pair: readonly [string, string] })[]>(
+    () =>
+      NUMBER_WRITTEN.map((n) => ({
+        base: String(n),
+        cue: t`in words`,
+        answers: [numberWords(n)],
+        src: numberSrc(n),
+        pair: [kindOf(n), String(n)] as const,
+      })),
+    [t],
+  );
+
+  const passageQuestions = useMemo<PassageQuestion[]>(
+    () => [
+      {
+        id: "age",
+        ask: t`How old is Jaan?`,
+        options: [
+          { id: "22", label: "22" },
+          { id: "32", label: "32" },
+          { id: "42", label: "42" },
+        ],
+        answer: "32",
+        line: 1,
+      },
+      {
+        id: "flat",
+        ask: t`What is his flat number?`,
+        options: [
+          { id: "8", label: "8" },
+          { id: "80", label: "80" },
+          { id: "18", label: "18" },
+        ],
+        answer: "18",
+        line: 2,
+      },
+      {
+        id: "phone",
+        ask: t`What is his phone number?`,
+        options: [
+          { id: "56209", label: "5 6 2 0 9" },
+          { id: "52609", label: "5 2 6 0 9" },
+          { id: "56290", label: "5 6 2 9 0" },
+        ],
+        answer: "56209",
+        line: 3,
+      },
+      {
+        id: "cats",
+        kind: "truefalse",
+        ask: t`Jaan has six cats.`,
+        answer: false,
+        line: 4,
+      },
+      {
+        id: "coffee",
+        ask: t`What does the coffee cost?`,
+        options: [
+          { id: "250", label: "€2.50" },
+          { id: "215", label: "€2.15" },
+          { id: "1250", label: "€12.50" },
+        ],
+        answer: "250",
+        line: 5,
+      },
+    ],
+    [t],
+  );
+
   const levelItems = useMemo(
     () =>
       LEVELS.map((each) =>
@@ -297,8 +405,8 @@ export function NumbridLesson() {
       glossary={GLOSSARY}
       sub={<Trans>Numbers by ear. Eleven words and two endings take you to ninety-nine.</Trans>}
       facts={[
-        <Trans key="m">10 minutes</Trans>,
-        <Trans key="q">3 quizzes</Trans>,
+        <Trans key="m">15 minutes</Trans>,
+        <Trans key="q">5 quizzes and a passage</Trans>,
         <Trans key="l">Listening only, no microphone</Trans>,
       ]}
       words={[
@@ -560,6 +668,102 @@ export function NumbridLesson() {
                 }
                 recall={(item) => ({ label: item.answers[0] ?? "", src: item.src })}
                 round={(props) => <TypedRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "alike",
+          title: t`Numbers that sound alike`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    <Word w="Kaks" /> and <Word w="kuus" /> differ in their vowel,{" "}
+                    <Word w="kaheksa" /> and <Word w="üheksa" /> in their first sound. The
+                    difference carries into the numbers built from them. Listen, then pick.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="sound-alike"
+                title={<Trans>Which number did you hear?</Trans>}
+                items={alikeItems}
+                rounds={8}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All of them, every pair told apart.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Most of them. Play the ones you missed once more.</Trans>
+                  ) : (
+                    <Trans>Tap zero to ten at the top once more, then try again.</Trans>
+                  )
+                }
+                both={(item) => item.options.map((option) => numberSrc(Number(option.id)))}
+                recall={(item) => ({ label: item.answer, src: item.src })}
+                order={alikeRun}
+                round={(props) => <ChoiceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "words",
+          title: t`Write the number in words`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Now the other way round: each round shows digits, and you type the words. Tens
+                    and ones are two words: <Word w="kakskümmend üks" />.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="number-words"
+                title={<Trans>Type it in words</Trans>}
+                items={writtenItems}
+                rounds={8}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All of them, every word spelled right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check -teist and -kümmend in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Slide through the builder above once more, then try again.</Trans>
+                  )
+                }
+                recall={formRecall}
+                order={eachPairFirst}
+                round={(props) => <FormRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "listen",
+          title: t`Listening: Jaan’s numbers`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Jaan says how old he is, where he lives and what his coffee costs. Listen for
+                    each number.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="jaan-numbers"
+                title={<Trans>Listen: Jaan’s numbers</Trans>}
+                clip="p-jaan"
+                sentences={NUMBER_PASSAGE}
+                questions={passageQuestions}
               />
             </>
           ),

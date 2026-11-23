@@ -3,16 +3,27 @@ import { Trans, useLingui } from "@lingui/react/macro";
 import { lessonBySlug } from "../../../lib/learn/catalogue";
 import {
   type Clip,
+  clipId,
+  clipUrl,
   TUTVUMINE_ANSWERING,
+  TUTVUMINE_ASKED,
   TUTVUMINE_ASKING,
+  TUTVUMINE_MESSAGE,
   TUTVUMINE_PASSAGES,
+  TUTVUMINE_TALK,
+  TUTVUMINE_TRANSLATED,
 } from "../../../lib/learn/clips";
+import { eachPairFirst } from "../../../lib/learn/quiz";
 import { Dialogue, type DialogueTurn } from "../Dialogue";
 import { type GapItem, GapPassage } from "../GapPassage";
 import type { Glossary } from "../lesson-context";
 import { LessonView, Prose } from "../LessonView";
 import { Listening, type PassageQuestion } from "../Passage";
+import { Quiz } from "../Quiz";
+import { type SentenceItem, SentenceRound, sentenceRecall } from "../SentenceRound";
+import { type SortBin, type SortItem, Sort } from "../Sort";
 import { Word } from "../Word";
+import { Writing } from "../Writing";
 
 const SLUG = "tutvumine";
 
@@ -23,6 +34,9 @@ const asking = (id: keyof typeof TUTVUMINE_ASKING) => said(TUTVUMINE_ASKING[id])
 
 const GLOSSARY: Glossary = {
   nimi: { en: msg`name` },
+  kas: { en: msg`turns a sentence into a yes-or-no question` },
+  kus: { en: msg`where` },
+  kes: { en: msg`who` },
   elan: { en: msg`I live`, note: msg`From elama, to live.` },
   elab: { en: msg`he or she lives` },
   pärnus: { en: msg`in Pärnu`, show: "Pärnus" },
@@ -395,9 +409,119 @@ function useContent() {
   return { answers, questions, listening };
 }
 
+const TRANSLATED_MEANS = [
+  msg`I don’t work, I study.`,
+  msg`She isn’t at home.`,
+  msg`We live in Tallinn.`,
+  msg`They’re at work.`,
+  msg`Do you speak Estonian?`,
+  msg`Where do you work?`,
+] as const;
+
+const SORTED: readonly { w: string; bin: string }[] = [
+  { w: "Jah, ma elan.", bin: "kas" },
+  { w: "Tartus.", bin: "kus" },
+  { w: "Mari.", bin: "kes" },
+  { w: "Ei, ma ei ole.", bin: "kas" },
+  { w: "Kontoris.", bin: "kus" },
+  { w: "Minu sõber Jaan.", bin: "kes" },
+  { w: "Jah, natuke.", bin: "kas" },
+  { w: "Haiglas, Pärnus.", bin: "kus" },
+];
+
 export function TutvumineLesson() {
-  const { t } = useLingui();
+  const { t, i18n } = useLingui();
   const content = useContent();
+  const src = (text: string) => clipUrl(SLUG, clipId(text));
+
+  const sortBins: SortBin[] = [
+    { id: "kas", label: "Kas …?", hint: t`yes or no` },
+    { id: "kus", label: "Kus …?", hint: t`where` },
+    { id: "kes", label: "Kes …?", hint: t`who` },
+  ];
+  const sortItems: SortItem[] = SORTED.map(({ w, bin }) => ({ w, bin }));
+
+  const askedItems: (SentenceItem & { pair: readonly [string, string] })[] = TUTVUMINE_ASKED.map(
+    ({ kind, reply, answers }) => ({
+      kind: "ask" as const,
+      id: `ask-${clipId(reply)}`,
+      reply,
+      src: src(answers[0]),
+      answers,
+      pair: [kind, reply] as const,
+    }),
+  );
+
+  const translatedItems: (SentenceItem & { pair: readonly [string, string] })[] =
+    TUTVUMINE_TRANSLATED.map(({ kind, answers }, i) => ({
+      kind: "translate" as const,
+      id: `translate-${clipId(answers[0])}`,
+      prompt: i18n._(TRANSLATED_MEANS[i] as (typeof TRANSLATED_MEANS)[number]),
+      src: src(answers[0]),
+      answers,
+      pair: [kind, answers[0]] as const,
+    }));
+
+  const talkQuestions: PassageQuestion[] = [
+    {
+      id: "andres-lives",
+      ask: t`Where does Andres live?`,
+      options: [
+        { id: "tallinn", label: t`In Tallinn` },
+        { id: "parnu", label: t`In Pärnu` },
+        { id: "tartu", label: t`In Tartu` },
+      ],
+      answer: "tartu",
+      line: 5,
+    },
+    {
+      id: "andres-works",
+      ask: t`Where does Andres work?`,
+      options: [
+        { id: "tartu", label: t`In Tartu` },
+        { id: "tallinn", label: t`In Tallinn` },
+        { id: "parnu", label: t`In Pärnu` },
+      ],
+      answer: "tallinn",
+      line: 5,
+    },
+    {
+      id: "estonian",
+      kind: "truefalse",
+      ask: t`Andres speaks Estonian well.`,
+      answer: false,
+      line: 7,
+    },
+    {
+      id: "why",
+      ask: t`Why is Andres learning Estonian?`,
+      options: [
+        { id: "kati", label: t`For Kati` },
+        { id: "school", label: t`He works at a school.` },
+        { id: "fun", label: t`For fun` },
+      ],
+      answer: "school",
+      line: 10,
+    },
+    {
+      id: "kati-studies",
+      kind: "truefalse",
+      ask: t`Kati studies in Tartu.`,
+      answer: true,
+      line: 13,
+    },
+    {
+      id: "kati-lives",
+      ask: t`Where does Kati live?`,
+      options: [
+        { id: "parnu", label: t`In Pärnu` },
+        { id: "tartu", label: t`In Tartu` },
+        { id: "tallinn", label: t`In Tallinn` },
+      ],
+      answer: "parnu",
+      line: 15,
+    },
+  ];
   const first = lessonBySlug("haaldus")?.n;
   const last = lessonBySlug("kohad")?.n;
 
@@ -412,7 +536,7 @@ export function TutvumineLesson() {
         </Trans>
       }
       facts={[
-        <Trans key="m">10 minutes</Trans>,
+        <Trans key="m">20 minutes</Trans>,
         <Trans key="p">
           Practice for lessons {first} to {last}
         </Trans>,
@@ -568,6 +692,174 @@ export function TutvumineLesson() {
                 mode="drag"
                 spare={KATI_SPARE}
                 clip="p-kati"
+              />
+            </>
+          ),
+        },
+        {
+          id: "which-question",
+          title: t`Which question does it answer?`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    A <Word w="kas" /> question wants yes or no. <Word w="Kus" /> wants a place, and{" "}
+                    <Word w="kes" /> a person. Put each answer under the question it fits.
+                  </Trans>
+                </p>
+              </Prose>
+              <Sort
+                id="sort-answers"
+                title={<Trans>Which question does it answer?</Trans>}
+                bins={sortBins}
+                items={sortItems}
+              />
+            </>
+          ),
+        },
+        {
+          id: "ask",
+          title: t`Ask the question`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each round gives an answer. Write the question it answers. When the answer says{" "}
+                    <span lang="et">ma</span>, ask with <span lang="et">sa</span>.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="ask-question"
+                title={<Trans>Write the question it answers</Trans>}
+                items={askedItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six questions, each with the right word.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the question word and the verb’s ending.</Trans>
+                  ) : (
+                    <Trans>Go through Asking Mari once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "translate",
+          title: t`Write it in Estonian`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Each sentence needs one thing from lessons {first} to {last}: the verb after{" "}
+                    <span lang="et">ei</span>, a place with its ending, or a question.
+                  </Trans>
+                </p>
+              </Prose>
+              <Quiz
+                id="translate-meeting"
+                title={<Trans>Write it in Estonian</Trans>}
+                items={translatedItems}
+                rounds={6}
+                verdict={(share) =>
+                  share === 1 ? (
+                    <Trans>All six, every sentence right.</Trans>
+                  ) : share >= 0.7 ? (
+                    <Trans>Nearly. Check the verb and the place in the ones you missed.</Trans>
+                  ) : (
+                    <Trans>Fill Kati’s note above once more, then try again.</Trans>
+                  )
+                }
+                recall={sentenceRecall}
+                order={eachPairFirst}
+                round={(props) => <SentenceRound {...props} />}
+              />
+            </>
+          ),
+        },
+        {
+          id: "talk",
+          title: t`Listening: Kati meets Andres`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Kati and Andres meet and ask each other where they live and what they do.
+                  </Trans>
+                </p>
+              </Prose>
+              <Listening
+                id="kati-meets-andres"
+                title={<Trans>Listen: Kati meets Andres</Trans>}
+                clip="d-kati"
+                turns={TUTVUMINE_TALK.turns}
+                names={{ second: t`Kati`, main: t`Andres` }}
+                questions={talkQuestions}
+              />
+            </>
+          ),
+        },
+        {
+          id: "write",
+          title: t`Write to Mari`,
+          quiz: true,
+          children: (
+            <>
+              <Prose>
+                <p>
+                  <Trans>
+                    Write Mari a short message about yourself, then compare it with a model and tick
+                    what yours does. Nothing is marked for you here.
+                  </Trans>
+                </p>
+              </Prose>
+              <Writing
+                id="write-to-mari"
+                title={<Trans>Write to Mari</Trans>}
+                prompt={
+                  <Trans>
+                    Four to six sentences: who you are, where you’re from and where you live, what
+                    you do, something you don’t do, and a question for Mari.
+                  </Trans>
+                }
+                model={TUTVUMINE_MESSAGE}
+                src={clipUrl(SLUG, "p-message")}
+                checks={[
+                  { id: "who", label: <Trans>Says who you are.</Trans> },
+                  {
+                    id: "where",
+                    label: (
+                      <Trans>
+                        Says where you live, with <span lang="et">-s</span> on the place.
+                      </Trans>
+                    ),
+                  },
+                  { id: "do", label: <Trans>Says what you do.</Trans> },
+                  {
+                    id: "no",
+                    label: (
+                      <Trans>
+                        Has a sentence with <span lang="et">ei</span> and the verb without its
+                        ending.
+                      </Trans>
+                    ),
+                  },
+                  { id: "ask", label: <Trans>Asks Mari a question.</Trans> },
+                ]}
               />
             </>
           ),

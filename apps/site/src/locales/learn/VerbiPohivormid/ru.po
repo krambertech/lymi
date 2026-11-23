@@ -7,8 +7,8 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "<0/> and <1/> both translate as to read. Each follows different words. After <2/>, I want, comes the <3>-da</3> infinitive: <4/> Lesson {infinitives} shows which words take which."
-msgstr "<0/> и <1/> оба переводятся как «читать». Но ставят их после разных слов. После <2/>, «я хочу», идёт инфинитив на <3>-da</3>: <4/> После каких слов идёт какой инфинитив, объясняет урок {infinitives}."
+msgid "<0/> and <1/> both translate as to read. Each follows different words. After <2/>, I want, comes the <3>-da</3> infinitive: <4/>. Lesson {infinitives} shows which words take which."
+msgstr "<0/> и <1/> оба переводятся как «читать». Но ставят их после разных слов. После <2/>, «я хочу», идёт инфинитив на <3>-da</3>: <4/>. После каких слов идёт какой инфинитив, объясняет урок {infinitives}."
 
 msgid "<0/> and <1/> change their long vowel: <2/>, <3/>. Learn these four whole."
 msgstr "<0/> и <1/> меняют долгий гласный: <2/>, <3/>. Эти четыре запоминай целыми словами."

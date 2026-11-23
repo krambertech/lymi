@@ -3119,6 +3119,10 @@ export const INFINITIVE_SAY = [
       "Pean minema koju.",
       "Koju pean mina minema.",
       "Koju mina pean minema.",
+      "Mul on vaja koju minna.",
+      "Minul on vaja koju minna.",
+      "Koju on mul vaja minna.",
+      "Mul tuleb koju minna.",
     ],
   },
   {

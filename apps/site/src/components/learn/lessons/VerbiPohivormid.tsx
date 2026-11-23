@@ -791,9 +791,12 @@ function useTalkQuestions(): PassageQuestion[] {
         "3",
         "kell 15",
         "15",
-
         "15.00",
         "15:00",
+        "kell 15.00",
+        "kell 15:00",
+        "kell 3.00",
+        "kell 3:00",
         "kell viisteist",
       ],
       line: 6,
@@ -995,7 +998,7 @@ export function VerbiPohivormidLesson() {
                   <Trans>
                     <Word w="Lugema" /> and <Word w="lugeda" /> both translate as to read. Each
                     follows different words. After <Word w="tahan" />, I want, comes the{" "}
-                    <End>-da</End> infinitive: <Word w="Ma tahan lugeda" /> Lesson {infinitives}{" "}
+                    <End>-da</End> infinitive: <Word w="Ma tahan lugeda" />. Lesson {infinitives}{" "}
                     shows which words take which.
                   </Trans>
                 </p>

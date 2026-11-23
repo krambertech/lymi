@@ -11143,5 +11143,679 @@
     "text": "Liis ostis leiba.",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jalg": {
+    "text": "jalg",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jala": {
+    "text": "jala",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tuba": {
+    "text": "tuba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/toa": {
+    "text": "toa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kapp": {
+    "text": "kapp",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kapi": {
+    "text": "kapi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pank": {
+    "text": "pank",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/panga": {
+    "text": "panga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lind": {
+    "text": "lind",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/linnu": {
+    "text": "linnu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/mo3te": {
+    "text": "mõte",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/mo3tte": {
+    "text": "mõtte",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/poodi": {
+    "text": "poodi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lugema": {
+    "text": "lugema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/loen": {
+    "text": "loen",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kappi": {
+    "text": "kappi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kott": {
+    "text": "kott",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/koti": {
+    "text": "koti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kotti": {
+    "text": "kotti",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tu2kk": {
+    "text": "tükk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tu2ki": {
+    "text": "tüki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tu2kki": {
+    "text": "tükki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/panka": {
+    "text": "panka",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/park": {
+    "text": "park",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pargi": {
+    "text": "pargi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/parki": {
+    "text": "parki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lamp": {
+    "text": "lamp",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lambi": {
+    "text": "lambi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lampi": {
+    "text": "lampi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jalga": {
+    "text": "jalga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pood": {
+    "text": "pood",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/poe": {
+    "text": "poe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma2gi": {
+    "text": "mägi",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma2e": {
+    "text": "mäe",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma2ge": {
+    "text": "mäge",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lindu": {
+    "text": "lindu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/rand": {
+    "text": "rand",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ranna": {
+    "text": "ranna",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/randa": {
+    "text": "randa",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kuld": {
+    "text": "kuld",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kulla": {
+    "text": "kulla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kulda": {
+    "text": "kulda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/mo3tet": {
+    "text": "mõtet",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hammas": {
+    "text": "hammas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hamba": {
+    "text": "hamba",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hammast": {
+    "text": "hammast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/rikas": {
+    "text": "rikas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/rikka": {
+    "text": "rikka",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/rikast": {
+    "text": "rikast",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/aed": {
+    "text": "aed",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/aia": {
+    "text": "aia",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lugu": {
+    "text": "lugu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/loo": {
+    "text": "loo",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/nurk": {
+    "text": "nurk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/nurga": {
+    "text": "nurga",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tund": {
+    "text": "tund",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/tunni": {
+    "text": "tunni",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/sokk": {
+    "text": "sokk",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/soki": {
+    "text": "soki",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/sild": {
+    "text": "sild",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/silla": {
+    "text": "silla",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jalal": {
+    "text": "jalal",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jalad": {
+    "text": "jalad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kapis": {
+    "text": "kapis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kapid": {
+    "text": "kapid",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pangas": {
+    "text": "pangas",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pangad": {
+    "text": "pangad",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/linnul": {
+    "text": "linnul",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/linnud": {
+    "text": "linnud",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/poes": {
+    "text": "poes",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/pargis": {
+    "text": "pargis",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kati-on-toas": {
+    "text": "Kati on toas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ema-on-poes": {
+    "text": "Ema on poes.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kott-on-kapis": {
+    "text": "Kott on kapis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/jaan-on-pangas": {
+    "text": "Jaan on pangas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/me-oleme-rannas": {
+    "text": "Me oleme rannas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/maja-on-ma2el": {
+    "text": "Maja on mäel.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/mu-jalad-on-va2sinud": {
+    "text": "Mu jalad on väsinud.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/lugeda": {
+    "text": "lugeda",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ra2a2kima": {
+    "text": "rääkima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ra2a2kida": {
+    "text": "rääkida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ra2a2gin": {
+    "text": "räägin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/o3ppima": {
+    "text": "õppima",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/o3ppida": {
+    "text": "õppida",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/o3pin": {
+    "text": "õpin",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ootama": {
+    "text": "ootama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ootan": {
+    "text": "ootan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/vaatama": {
+    "text": "vaatama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/vaadata": {
+    "text": "vaadata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/vaatan": {
+    "text": "vaatan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hakkama": {
+    "text": "hakkama",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hakata": {
+    "text": "hakata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/hakkan": {
+    "text": "hakkan",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/kass-on-kapis": {
+    "text": "Kass on kapis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/me-oleme-pangas": {
+    "text": "Me oleme pangas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma-loen-raamatut": {
+    "text": "Ma loen raamatut.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma-o3pin-eesti-keelt": {
+    "text": "Ma õpin eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ta-ra2a2gib-eesti-keelt": {
+    "text": "Ta räägib eesti keelt.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma-la2hen-poodi": {
+    "text": "Ma lähen poodi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/mul-pole-kappi": {
+    "text": "Mul pole kappi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/ma-na2en-lindu": {
+    "text": "Ma näen lindu.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/me-la2heme-parki": {
+    "text": "Me läheme parki.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/siin-pole-panka": {
+    "text": "Siin pole panka.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/p-room": {
+    "text": "Kati tuba on väike. Kati toas on laud ja kapp. Raamatud on kapi peal. Õhtul läheb ta poodi. Ta tuleb poest koju kell viis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/c-new-flat": {
+    "text": "Tere, Jaan! Tule sisse. See on minu uus korter. Tere, Kati! Kas su tuba on suur? Ei, tuba on väike. Toas on ainult laud, voodi ja kapp. Kus su raamatud on? Raamatud on kapis. Kapi peal on lamp. Ja kus su kott on? Kott on toas, laua all. Kas siin lähedal on pood? Jah, pood on nurga taga. Ma käin poes iga päev. Ja pank? Kas sa käid tihti pangas? Pank on pargi kõrval. Aga pangas ma ei käi, ma maksan telefoniga. Mis pargis on? Pargis on suured puud ja linnud. Hommikul ma jooksen pargis. Ja rand? Kas rand on ka lähedal? Ei, rand on kaugel. Rannas käin ma ainult laupäeval. Kus su ema elab? Ema elab Tartus, mäe peal. Tema majas on suur aed. Ma käin seal kord kuus. Mu jalad on väsinud. Kas ma võin istuda? Muidugi, istu siia! Ma teen teed.",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Tere, Jaan!",
+          "Tule sisse.",
+          "See on minu uus korter."
+        ],
+        "say": "[cheerful] Tere, Jaan! Tule sisse. See on minu uus korter."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Tere, Kati!",
+          "Kas su tuba on suur?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, tuba on väike.",
+          "Toas on ainult laud, voodi ja kapp."
+        ],
+        "say": "[laughs] Ei, tuba on väike. Toas on ainult laud, voodi ja kapp."
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kus su raamatud on?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Raamatud on kapis.",
+          "Kapi peal on lamp."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja kus su kott on?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Kott on toas, laua all."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kas siin lähedal on pood?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Jah, pood on nurga taga.",
+          "Ma käin poes iga päev."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja pank?",
+          "Kas sa käid tihti pangas?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Pank on pargi kõrval.",
+          "Aga pangas ma ei käi, ma maksan telefoniga."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mis pargis on?"
+        ],
+        "say": "[curious] Mis pargis on?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Pargis on suured puud ja linnud.",
+          "Hommikul ma jooksen pargis."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Ja rand?",
+          "Kas rand on ka lähedal?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ei, rand on kaugel.",
+          "Rannas käin ma ainult laupäeval."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Kus su ema elab?"
+        ]
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Ema elab Tartus, mäe peal.",
+          "Tema majas on suur aed.",
+          "Ma käin seal kord kuus."
+        ]
+      },
+      {
+        "voice": "jGja51dd7gcoK0zkxeyg",
+        "sentences": [
+          "Mu jalad on väsinud.",
+          "Kas ma võin istuda?"
+        ],
+        "say": "[sighs] Mu jalad on väsinud. Kas ma võin istuda?"
+      },
+      {
+        "voice": "WtzwR2kNGVNuaTGaYLfK",
+        "sentences": [
+          "Muidugi, istu siia!",
+          "Ma teen teed."
+        ]
+      }
+    ]
+  },
+  "jalg-jala/lapsed-on-pargis": {
+    "text": "Lapsed on pargis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/linnud-on-pargis": {
+    "text": "Linnud on pargis.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "jalg-jala/oodata": {
+    "text": "oodata",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }

@@ -2958,6 +2958,199 @@ const OBJECT_CLIPS: Record<string, Clip> = {
   "c-book-key-cake": OBJECT_CONVERSATION,
 };
 
+export const GRADATION_KINDS = {
+  double: [
+    { word: "kapp", of: "kapi", part: "kappi" },
+    { word: "kott", of: "koti", part: "kotti" },
+    { word: "tükk", of: "tüki", part: "tükki" },
+  ],
+  soft: [
+    { word: "pank", of: "panga", part: "panka" },
+    { word: "park", of: "pargi", part: "parki" },
+    { word: "lamp", of: "lambi", part: "lampi" },
+  ],
+  gone: [
+    { word: "jalg", of: "jala", part: "jalga" },
+    { word: "tuba", of: "toa", part: "tuba" },
+    { word: "pood", of: "poe", part: "poodi" },
+    { word: "mägi", of: "mäe", part: "mäge" },
+  ],
+  blend: [
+    { word: "lind", of: "linnu", part: "lindu" },
+    { word: "rand", of: "ranna", part: "randa" },
+    { word: "kuld", of: "kulla", part: "kulda" },
+  ],
+  other: [
+    { word: "mõte", of: "mõtte", part: "mõtet" },
+    { word: "hammas", of: "hamba", part: "hammast" },
+    { word: "rikas", of: "rikka", part: "rikast" },
+  ],
+} as const;
+
+export const GRADATION_MATCH = [
+  { word: "aed", of: "aia" },
+  { word: "lugu", of: "loo" },
+  { word: "nurk", of: "nurga" },
+  { word: "tund", of: "tunni" },
+  { word: "sokk", of: "soki" },
+  { word: "sild", of: "silla" },
+] as const;
+
+export const GRADATION_CASES = [
+  { word: "jalg", forms: ["jalg", "jalga", "jala", "jalal", "jalad"] },
+  { word: "kapp", forms: ["kapp", "kappi", "kapi", "kapis", "kapid"] },
+  { word: "pank", forms: ["pank", "panka", "panga", "pangas", "pangad"] },
+  { word: "lind", forms: ["lind", "lindu", "linnu", "linnul", "linnud"] },
+] as const;
+
+export const GRADATION_SORT = [
+  { w: "jalga", strong: true },
+  { w: "jalad", strong: false },
+  { w: "kappi", strong: true },
+  { w: "kapis", strong: false },
+  { w: "poodi", strong: true },
+  { w: "poes", strong: false },
+  { w: "parki", strong: true },
+  { w: "pargis", strong: false },
+  { w: "lindu", strong: true },
+  { w: "linnud", strong: false },
+] as const;
+
+export const GRADATION_FORM_QUIZ = [
+  { word: "tuba", cue: "in", answer: "toas", said: "Kati on toas." },
+  { word: "pood", cue: "in", answer: "poes", said: "Ema on poes." },
+  { word: "kapp", cue: "in", answer: "kapis", said: "Kott on kapis." },
+  { word: "pank", cue: "in", answer: "pangas", said: "Jaan on pangas." },
+  { word: "park", cue: "in", answer: "pargis", said: "Lapsed on pargis." },
+  { word: "rand", cue: "in", answer: "rannas", said: "Me oleme rannas." },
+  { word: "mägi", cue: "on", answer: "mäel", said: "Maja on mäel." },
+  { word: "jalg", cue: "many", answer: "jalad", said: "Mu jalad on väsinud." },
+  { word: "lind", cue: "many", answer: "linnud", said: "Linnud on pargis." },
+] as const;
+
+export const GRADATION_VERBS = [
+  { ma: "lugema", da: "lugeda", present: "loen" },
+  { ma: "rääkima", da: "rääkida", present: "räägin" },
+  { ma: "õppima", da: "õppida", present: "õpin" },
+  { ma: "ootama", da: "oodata", present: "ootan" },
+  { ma: "vaatama", da: "vaadata", present: "vaatan" },
+  { ma: "hakkama", da: "hakata", present: "hakkan" },
+] as const;
+
+export const GRADATION_FIXES = [
+  { wrong: "Kass on kappis.", right: "Kass on kapis.", word: "kappis" },
+  { wrong: "Me oleme pankas.", right: "Me oleme pangas.", word: "pankas" },
+  { wrong: "Kati on tubas.", right: "Kati on toas.", word: "tubas" },
+  { wrong: "Lindud on pargis.", right: "Linnud on pargis.", word: "Lindud" },
+  { wrong: "Ma lugen raamatut.", right: "Ma loen raamatut.", word: "lugen" },
+  { wrong: "Ma õppin eesti keelt.", right: "Ma õpin eesti keelt.", word: "õppin" },
+  { wrong: "Ta rääkib eesti keelt.", right: "Ta räägib eesti keelt.", word: "rääkib" },
+] as const;
+
+export const GRADATION_ROOM = [
+  "Kati tuba on väike.",
+  "Kati toas on laud ja kapp.",
+  "Raamatud on kapi peal.",
+  "Õhtul läheb ta poodi.",
+  "Ta tuleb poest koju kell viis.",
+] as const;
+
+export const GRADATION_CONVERSATION: Conversation = {
+  turns: [
+    {
+      voice: "second",
+      text: ["Tere, Jaan!", "Tule sisse.", "See on minu uus korter."],
+      say: "[cheerful] Tere, Jaan! Tule sisse. See on minu uus korter.",
+    },
+    { voice: "main", text: ["Tere, Kati!", "Kas su tuba on suur?"] },
+    {
+      voice: "second",
+      text: ["Ei, tuba on väike.", "Toas on ainult laud, voodi ja kapp."],
+      say: "[laughs] Ei, tuba on väike. Toas on ainult laud, voodi ja kapp.",
+    },
+    { voice: "main", text: "Kus su raamatud on?" },
+    { voice: "second", text: ["Raamatud on kapis.", "Kapi peal on lamp."] },
+    { voice: "main", text: "Ja kus su kott on?" },
+    { voice: "second", text: "Kott on toas, laua all." },
+    { voice: "main", text: "Kas siin lähedal on pood?" },
+    {
+      voice: "second",
+      text: ["Jah, pood on nurga taga.", "Ma käin poes iga päev."],
+    },
+    { voice: "main", text: ["Ja pank?", "Kas sa käid tihti pangas?"] },
+    {
+      voice: "second",
+      text: ["Pank on pargi kõrval.", "Aga pangas ma ei käi, ma maksan telefoniga."],
+    },
+    { voice: "main", text: "Mis pargis on?", say: "[curious] Mis pargis on?" },
+    {
+      voice: "second",
+      text: ["Pargis on suured puud ja linnud.", "Hommikul ma jooksen pargis."],
+    },
+    { voice: "main", text: ["Ja rand?", "Kas rand on ka lähedal?"] },
+    {
+      voice: "second",
+      text: ["Ei, rand on kaugel.", "Rannas käin ma ainult laupäeval."],
+    },
+    { voice: "main", text: "Kus su ema elab?" },
+    {
+      voice: "second",
+      text: ["Ema elab Tartus, mäe peal.", "Tema majas on suur aed.", "Ma käin seal kord kuus."],
+    },
+    {
+      voice: "main",
+      text: ["Mu jalad on väsinud.", "Kas ma võin istuda?"],
+      say: "[sighs] Mu jalad on väsinud. Kas ma võin istuda?",
+    },
+    { voice: "second", text: ["Muidugi, istu siia!", "Ma teen teed."] },
+  ],
+};
+
+export const GRADATION_WORDS = [
+  "jalg",
+  "jala",
+  "tuba",
+  "toa",
+  "kapp",
+  "kapi",
+  "pank",
+  "panga",
+  "lind",
+  "linnu",
+  "mõte",
+  "mõtte",
+  "poodi",
+  "lugema",
+  "loen",
+] as const;
+
+export const GRADATION_DRILL = [
+  "Ma lähen poodi.",
+  "Mul pole kappi.",
+  "Ma näen lindu.",
+  "Me läheme parki.",
+  "Siin pole panka.",
+  "aia",
+] as const;
+
+const GRADATION_CLIPS: Record<string, Clip> = {
+  ...words([
+    ...GRADATION_WORDS,
+    ...Object.values(GRADATION_KINDS).flatMap((nouns) =>
+      nouns.flatMap((noun) => [noun.word, noun.of, noun.part]),
+    ),
+    ...GRADATION_MATCH.flatMap((noun) => [noun.word, noun.of]),
+    ...GRADATION_CASES.flatMap((noun) => noun.forms),
+    ...GRADATION_SORT.map(({ w }) => w),
+    ...GRADATION_FORM_QUIZ.map(({ said }) => said),
+    ...GRADATION_VERBS.flatMap((verb) => [verb.ma, verb.da, verb.present]),
+    ...GRADATION_FIXES.map(({ right }) => right),
+    ...GRADATION_DRILL,
+  ]),
+  "p-room": { sentences: GRADATION_ROOM },
+  "c-new-flat": GRADATION_CONVERSATION,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -3115,6 +3308,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   },
   mitmus: MITMUS_CLIPS,
   osastav: OSASTAV_CLIPS,
+  "jalg-jala": GRADATION_CLIPS,
   "raamatut-voi-raamatu": OBJECT_CLIPS,
   lihtminevik: PAST_CLIPS,
   kit: KIT_CLIPS,

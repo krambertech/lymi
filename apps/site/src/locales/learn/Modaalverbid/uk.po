@@ -585,7 +585,7 @@ msgid "You may eat in the water."
 msgstr "У воді можна їсти."
 
 msgid "You may wait here."
-msgstr "Тобі можна почекати тут."
+msgstr "Можеш почекати тут."
 
 msgid "You mustn’t come."
 msgstr "Тобі не можна приходити."

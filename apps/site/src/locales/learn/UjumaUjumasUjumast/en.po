@@ -88,8 +88,14 @@ msgstr "back from coffee"
 msgid "back from eating"
 msgstr "back from eating"
 
+msgid "Back from eating: Nad tulevad …"
+msgstr "Back from eating: Nad tulevad …"
+
 msgid "back from swimming"
 msgstr "back from swimming"
+
+msgid "Back from swimming: Ema tuleb …"
+msgstr "Back from swimming: Ema tuleb …"
 
 msgid "Come and eat"
 msgstr "Come and eat"
@@ -352,9 +358,6 @@ msgstr "Most of them. Look again at the ones you missed."
 msgid "Most of them. Read the ones you missed once more."
 msgstr "Most of them. Read the ones you missed once more."
 
-msgid "Mum is coming back from swimming."
-msgstr "Mum is coming back from swimming."
-
 msgid "Mum is out having coffee."
 msgstr "Mum is out having coffee."
 
@@ -463,9 +466,6 @@ msgstr "The verb before the form"
 
 msgid "They go running every day."
 msgstr "They go running every day."
-
-msgid "They’re coming back from eating."
-msgstr "They’re coming back from eating."
 
 msgid "They’re the <0>-s</0> and <1>-st</1> of <2>majas</2> and <3>majast</3>. Asked <4/>, you can answer with the form alone: <5/> Tap a form to hear it in a sentence."
 msgstr "They’re the <0>-s</0> and <1>-st</1> of <2>majas</2> and <3>majast</3>. Asked <4/>, you can answer with the form alone: <5/> Tap a form to hear it in a sentence."

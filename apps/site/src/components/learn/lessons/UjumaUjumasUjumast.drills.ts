@@ -93,9 +93,9 @@ const fixed = ({ id, wrong, right }: (typeof GOING_FIX)[number]): FixDrill => ({
   explain: WHY[FIX_RULE[id]],
 });
 
-const FORM_MEANS: Partial<Record<(typeof GOING_FORMS)[number]["id"], MessageDescriptor>> = {
-  ema: msg`Mum is coming back from swimming.`,
-  nad: msg`They’re coming back from eating.`,
+const FORM_CUES: Partial<Record<(typeof GOING_FORMS)[number]["id"], MessageDescriptor>> = {
+  ema: msg`Back from swimming: Ema tuleb …`,
+  nad: msg`Back from eating: Nad tulevad …`,
 };
 
 const formed = (item: (typeof GOING_FORMS)[number]): FormDrill => ({
@@ -104,9 +104,8 @@ const formed = (item: (typeof GOING_FORMS)[number]): FormDrill => ({
   rule: item.rule,
   base: item.base,
   gloss: BASE_MEANS[item.base],
-  cue: { et: `${item.before}…${item.after === "." ? "" : item.after}` },
+  cue: FORM_CUES[item.id] ?? { et: `${item.before}…${item.after === "." ? "" : item.after}` },
   answers: [item.answer],
-  ...(FORM_MEANS[item.id] ? { means: FORM_MEANS[item.id] } : {}),
   say: goingFormSaid(item),
   explain: WHY[item.rule],
 });

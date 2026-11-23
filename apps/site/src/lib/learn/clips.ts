@@ -2679,6 +2679,9 @@ export const MODAL_SAY = [
       "Te võite oodata siin.",
       "Võid oodata siin.",
       "Siin võib oodata.",
+      "Siin tohib oodata.",
+      "Sa tohid oodata siin.",
+      "Te tohite oodata siin.",
       "Siin sina tohid oodata.",
       "Siin sina võid oodata.",
       "Siin teie tohite oodata.",
@@ -2770,6 +2773,9 @@ export const MODAL_SAY = [
       "Sinul pole vaja homme tulla.",
       "Sinul ei ole vaja homme tulla.",
       "Sul pole homme vaja tulla.",
+      "Teil pole homme vaja tulla.",
+      "Sul ei ole homme vaja tulla.",
+      "Homme pole teil vaja tulla.",
       "Homme pole sul vaja tulla.",
       "Te ei pea tulema homme.",
       "Ei pea tulema homme.",
@@ -2831,6 +2837,7 @@ export const MODAL_DRILL = [
       "Kas saad tulla homme?",
       "Kas te saate tulla homme?",
       "Kas sa homme saad tulla?",
+      "Kas te homme saate tulla?",
       "Võid homme tulla?",
       "Võid sina homme tulla?",
     ],
@@ -2840,6 +2847,8 @@ export const MODAL_DRILL = [
     rule: "allowed",
     said: "Kas ma tohin siin istuda?",
     also: [
+      "Kas siin tohib istuda?",
+      "Kas siia võib istuda?",
       "Kas mina tohin siin istuda?",
       "Kas ma võin siin istuda?",
       "Kas mina võin siin istuda?",
@@ -2876,6 +2885,7 @@ export const MODAL_DRILL = [
     rule: "allowed",
     said: "Ma võin sind oodata.",
     also: [
+      "Ma võin sind ära oodata.",
       "Mina võin sind oodata.",
       "Võin sind oodata.",
       "Ma saan sind oodata.",
@@ -4636,7 +4646,7 @@ export const INFINITIVE_SAY = [
       "Lugeda minule meeldib.",
     ],
   },
-  { id: "sooma", said: "Tule sööma!", also: [] },
+  { id: "sooma", said: "Tule sööma!", also: ["Tulge sööma!"] },
 ] as const;
 
 export const INFINITIVE_FIX = [
@@ -4936,6 +4946,11 @@ export const GOING_SAY = [
     id: "tuled",
     said: "Kas sa tuled ujumast?",
     also: [
+      "Kas te tulete tagasi ujumast?",
+      "Kas tulete tagasi ujumast?",
+      "Kas te tulete ujumast koju?",
+      "Kas tulete ujumast koju?",
+      "Tulete ujumast?",
       "Kas sina tuled ujumast?",
       "Kas te tulete ujumast?",
       "Tuled sa ujumast?",
@@ -4969,14 +4984,14 @@ export const GOING_FIX = [
   { id: "ujuma", wrong: "Ma lähen ujumas.", right: "Ma lähen ujuma." },
   { id: "ujumas", wrong: "Mari on ujuma.", right: "Mari on ujumas." },
   { id: "jooksmast", wrong: "Isa tuleb jooksma tagasi.", right: "Isa tuleb jooksmast tagasi." },
-  { id: "kain", wrong: "Ma käin iga päev ujuma.", right: "Ma käin iga päev ujumas." },
+  { id: "kain", wrong: "Ma käin iga päev ujumast.", right: "Ma käin iga päev ujumas." },
   { id: "sooma", wrong: "Kass läheb söömas.", right: "Kass läheb sööma." },
   { id: "soomast", wrong: "Me tuleme söömas.", right: "Me tuleme söömast." },
 ] as const;
 
 export const GOING_DRILL = [
   { id: "jooksma", rule: "ma", said: "Ta läheb jooksma.", also: ["Tema läheb jooksma."] },
-  { id: "tule", rule: "ma", said: "Tule sööma!", also: [] },
+  { id: "tule", rule: "ma", said: "Tule sööma!", also: ["Tulge sööma!"] },
   {
     id: "joomas",
     rule: "mas",
@@ -4998,6 +5013,8 @@ export const GOING_DRILL = [
       "Iga päev lähevad nad jooksma.",
       "Iga päev käivad nemad jooksmas.",
       "Iga päev nemad käivad jooksmas.",
+      "Nad lähevad jooksma iga päev.",
+      "Iga päev nad lähevad jooksma.",
     ],
   },
   {
@@ -5022,7 +5039,7 @@ export const GOING_DRILL = [
     id: "soomast",
     rule: "mast",
     said: "Kati tuleb söömast.",
-    also: ["Kati tuleb söömast tagasi.", "Kati tuleb tagasi söömast."],
+    also: ["Kati tuleb söömast tagasi.", "Kati tuleb tagasi söömast.", "Kati tuleb söömast koju."],
   },
 ] as const;
 

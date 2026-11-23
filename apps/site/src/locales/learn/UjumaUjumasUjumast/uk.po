@@ -44,7 +44,7 @@ msgid "A cat and a house"
 msgstr "Кіт і будинок"
 
 msgid "A long walk with a friend"
-msgstr "Довга прогулянка з подругою"
+msgstr "З довгої прогулянки з подругою"
 
 msgid "A place and an activity answer the same three questions. To <0/> you can answer <1/>, to the shop, or <2/>, swimming."
 msgstr "Місце і заняття відповідають на ті самі три питання. На <0/> можна відповісти <1/>, «до магазину», або <2/>, «плавати»."
@@ -88,8 +88,14 @@ msgstr "повертається після кави"
 msgid "back from eating"
 msgstr "повертається після їжі"
 
+msgid "Back from eating: Nad tulevad …"
+msgstr "Повертаються з обіду: Nad tulevad …"
+
 msgid "back from swimming"
 msgstr "повертається з плавання"
+
+msgid "Back from swimming: Ema tuleb …"
+msgstr "Повертається з плавання: Ema tuleb …"
 
 msgid "Come and eat"
 msgstr "Прийти поїсти"
@@ -203,7 +209,7 @@ msgid "Going, out, coming back"
 msgstr "Іти, бути там, повертатися"
 
 msgid "Having coffee"
-msgstr "Пила каву"
+msgstr "З кави"
 
 msgid "I am"
 msgstr "я є"
@@ -352,9 +358,6 @@ msgstr "Більшість. Ще раз поглянь на ті, де була 
 msgid "Most of them. Read the ones you missed once more."
 msgstr "Більшість. Ще раз прочитай ті, де була помилка."
 
-msgid "Mum is coming back from swimming."
-msgstr "Мама повертається з плавання."
-
 msgid "Mum is out having coffee."
 msgstr "Мама зараз десь п’є каву."
 
@@ -463,9 +466,6 @@ msgstr "Дієслово перед формою"
 
 msgid "They go running every day."
 msgstr "Вони щодня ходять на пробіжку."
-
-msgid "They’re coming back from eating."
-msgstr "Вони повертаються після їжі."
 
 msgid "They’re the <0>-s</0> and <1>-st</1> of <2>majas</2> and <3>majast</3>. Asked <4/>, you can answer with the form alone: <5/> Tap a form to hear it in a sentence."
 msgstr "Це ті самі <0>-s</0> і <1>-st</1>, що в <2>majas</2> і <3>majast</3>. На питання <4/> можна відповісти самою формою: <5/> Торкнися форми, щоб почути її в реченні."
@@ -579,7 +579,7 @@ msgid "With <0>-mast</0>, they’re coming back from it: <1>Mari tuleb ujumast.<
 msgstr "З <0>-mast</0> людина повертається звідти: <1>Mari tuleb ujumast.</1>"
 
 msgid "Work"
-msgstr "Робота"
+msgstr "З роботи"
 
 msgid "Write each sentence in Estonian. Setting off to do it takes the <0>-ma</0> infinitive, out doing it the <1>-mas</1> form, and coming back from it the <2>-mast</2> form."
 msgstr "Напиши кожне речення естонською. Іти це робити — інфінітив на <0>-ma</0>, бути там і робити це — форма на <1>-mas</1>, повертатися звідти — форма на <2>-mast</2>."

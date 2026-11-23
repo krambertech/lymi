@@ -454,6 +454,10 @@ export const KUSIMUSED_ASKED = [
       "Mida teie teete?",
       "Mis teed?",
       "Mida teed?",
+      "Mis joote?",
+      "Mida joote?",
+      "Mis teete?",
+      "Mida teete?",
     ],
   },
   {
@@ -496,6 +500,10 @@ export const KUSIMUSED_ASKED = [
       "Kus te olete?",
       "Kus sina oled?",
       "Kus teie olete?",
+      "Miks kodus oled?",
+      "Miks kodus olete?",
+      "Kus oled?",
+      "Kus olete?",
     ],
   },
   {

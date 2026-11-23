@@ -197,7 +197,7 @@ msgid "in a café"
 msgstr "у кав’ярні"
 
 msgid "In a café"
-msgstr "У кафе"
+msgstr "У кав’ярні"
 
 msgid "in a hospital"
 msgstr "у лікарні"

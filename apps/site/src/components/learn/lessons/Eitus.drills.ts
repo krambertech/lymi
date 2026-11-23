@@ -174,9 +174,9 @@ const yesNo = (item: (typeof YES_NO)[number]): SentenceDrill => ({
 
 export const DRILLS: DrillBank = {
   rules: {
-    ei: { label: msg`<et>Ei</et> and the verb without its ending`, section: "make-no" },
+    ei: { label: msg`<et>Ei</et> and the verb without its ending`, section: "stem" },
     olema: { label: msg`<et>Ei ole</et> and <et>pole</et>`, section: "ole" },
-    answer: { label: msg`Answering no`, section: "answer-no" },
+    answer: { label: msg`Answering no`, section: "answers" },
     yesno: { label: msg`Yes or no`, section: "yes-or-no" },
   },
   items: [

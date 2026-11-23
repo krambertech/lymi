@@ -1,5 +1,5 @@
 import { msg } from "@lingui/core/macro";
-import { PLURAL_CASE_ANSWERS } from "../../../lib/learn/clips";
+import { PLURAL_CASE_ANSWERS, PLURAL_CASE_FIX_ANSWERS } from "../../../lib/learn/clips";
 import type { DrillBank, FormDrill } from "../../../lib/learn/drill";
 
 const T_E = msg`The partitive ends in <et>-t</et>, so add <et>-e</et>.`;
@@ -155,7 +155,7 @@ export const DRILLS: DrillBank = {
       id: "fix-inimestega",
       rule: "stem",
       wrong: "Ma räägin inimesedega.",
-      answers: ["Ma räägin inimestega."],
+      answers: PLURAL_CASE_FIX_ANSWERS["Ma räägin inimestega."],
       say: "Ma räägin inimestega.",
       explain: NOT_NOM,
     },
@@ -164,7 +164,7 @@ export const DRILLS: DrillBank = {
       id: "fix-sopradele",
       rule: "stem",
       wrong: "Ta kirjutab sõbradele.",
-      answers: ["Ta kirjutab sõpradele."],
+      answers: PLURAL_CASE_FIX_ANSWERS["Ta kirjutab sõpradele."],
       say: "Ta kirjutab sõpradele.",
       explain: msg`The plural genitive comes from the partitive <et>sõpra</et>: <et>sõpradele</et>.`,
     },
@@ -173,7 +173,7 @@ export const DRILLS: DrillBank = {
       id: "fix-raamatutes",
       rule: "stem",
       wrong: "Raamatudes on pilte.",
-      answers: ["Raamatutes on pilte."],
+      answers: PLURAL_CASE_FIX_ANSWERS["Raamatutes on pilte."],
       say: "Raamatutes on pilte.",
       explain: T_E,
     },
@@ -182,7 +182,7 @@ export const DRILLS: DrillBank = {
       id: "fix-lastele",
       rule: "stem",
       wrong: "Me kirjutame kirju lapsedele.",
-      answers: ["Me kirjutame kirju lastele."],
+      answers: PLURAL_CASE_FIX_ANSWERS["Me kirjutame kirju lastele."],
       say: "Me kirjutame kirju lastele.",
       explain: msg`The partitive of <et>laps</et> is <et>last</et>, so <et>laste</et>, <et>lastele</et>.`,
     },
@@ -191,7 +191,7 @@ export const DRILLS: DrillBank = {
       id: "fix-opetajatele",
       rule: "stem",
       wrong: "Õpetajadele meeldib kohv.",
-      answers: ["Õpetajatele meeldib kohv."],
+      answers: PLURAL_CASE_FIX_ANSWERS["Õpetajatele meeldib kohv."],
       say: "Õpetajatele meeldib kohv.",
       explain: NOT_NOM,
     },
@@ -200,7 +200,7 @@ export const DRILLS: DrillBank = {
       id: "fix-sopradega",
       rule: "stem",
       wrong: "Ma lähen sõbradega kinno.",
-      answers: ["Ma lähen sõpradega kinno."],
+      answers: PLURAL_CASE_FIX_ANSWERS["Ma lähen sõpradega kinno."],
       say: "Ma lähen sõpradega kinno.",
       explain: msg`The plural genitive is <et>sõprade</et>: <et>sõpradega</et>.`,
     },

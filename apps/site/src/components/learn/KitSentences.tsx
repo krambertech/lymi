@@ -188,7 +188,7 @@ function useItems() {
       src: clipUrl("numbrid", "c-kassid"),
       explain: (
         <Trans>
-          After a number from two up, the word takes its third form: <b lang="et">kolm kassi</b>.
+          After a number from two up, the word takes the partitive: <b lang="et">kolm kassi</b>.
         </Trans>
       ),
     },

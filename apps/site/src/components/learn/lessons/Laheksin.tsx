@@ -9,6 +9,7 @@ import {
   COND_CONVERSATION,
   COND_DIALOGUE,
   COND_FIXES,
+  COND_FIX_ANSWERS,
   COND_FORM_QUIZ,
   COND_HEARD,
   COND_IF,
@@ -370,7 +371,7 @@ function useContent() {
       kind: "fix",
       id: `fix-${clipId(item.right)}`,
       wrong: item.wrong,
-      answers: [item.right],
+      answers: COND_FIX_ANSWERS[item.right] ?? [item.right],
       src: src(item.right),
       explain: fixWhy[item.right],
     }));

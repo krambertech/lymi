@@ -52,6 +52,9 @@ msgstr "Торт"
 msgid "A colleague was ill"
 msgstr "Колега захворів"
 
+msgid "A command for a whole noun: usually the nominative."
+msgstr "Наказ про щось ціле, іменник: зазвичай називний."
+
 msgid "A command for the whole thing takes the nominative: <0>pilet</0>."
 msgstr "У наказі про щось ціле — називний: <0>pilet</0>."
 
@@ -61,8 +64,8 @@ msgstr "У наказі про щось ціле — називний: <et>pilet
 msgid "A command for the whole thing: the nominative."
 msgstr "Наказ про щось ціле: називний."
 
-msgid "A command for the whole thing: the object takes the nominative."
-msgstr "Наказ про щось ціле: об’єкт стоїть у називному."
+msgid "A command for the whole thing: the noun takes the nominative."
+msgstr "Наказ про щось ціле: іменник стоїть у називному."
 
 msgid "A command with <0>ära</0>, don’t, is a no, so its object takes the partitive: <1/>"
 msgstr "Наказ з <0>ära</0>, «не», — це заперечення, тому об’єкт стоїть у партитиві: <1/>"
@@ -70,8 +73,8 @@ msgstr "Наказ з <0>ära</0>, «не», — це заперечення, т
 msgid "A sentence, a command and a don’t"
 msgstr "Речення, наказ і заборона"
 
-msgid "A small word after the verb can give it an end, and then the object takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
-msgstr "Коротке слово після дієслова може робити дію завершеною, і тоді об’єкт стоїть у родовому: <0>Ma otsisin hosteli üles</0>, я знайшов хостел, і <1>Me ootame Mari ära</1>, ми дочекаємося Марі."
+msgid "A small word after the verb can give it an end, and then a noun object usually takes the genitive: <0>Ma otsisin hosteli üles</0>, I found the hostel, and <1>Me ootame Mari ära</1>, we’ll wait until Mari comes."
+msgstr "Коротке слово після дієслова може робити дію завершеною, і тоді об’єкт-іменник зазвичай стоїть у родовому: <0>Ma otsisin hosteli üles</0>, я знайшов хостел, і <1>Me ootame Mari ära</1>, ми дочекаємося Марі."
 
 msgid "A voice message from the shop"
 msgstr "Голосове з магазину"
@@ -232,11 +235,11 @@ msgstr "В українській «купив хліба» означає «т�
 msgid "Finding ends the looking: the genitive."
 msgstr "Знайти — це кінець пошуку: родовий."
 
-msgid "Finding is different. <0/>, to find, ends the looking, so what you found takes the genitive."
-msgstr "Зі «знайти» інакше. <0/>, знаходити, завершує пошук, тому знайдене стоїть у родовому."
+msgid "Finding is different. <0/>, to find, ends the looking, so what you found usually takes the genitive."
+msgstr "Зі «знайти» інакше. <0/>, знаходити, завершує пошук, тому знайдене зазвичай стоїть у родовому."
 
-msgid "Finished, all of it: the genitive with <et>läbi</et> or <et>ära</et>."
-msgstr "Завершено, усе повністю: родовий з <et>läbi</et> чи <et>ära</et>."
+msgid "Finished, all of it: for a noun, usually the genitive with <et>läbi</et> or <et>ära</et>."
+msgstr "Завершено, усе повністю: в іменника зазвичай родовий з <et>läbi</et> чи <et>ära</et>."
 
 msgid "Finished, or still going on"
 msgstr "Завершено чи ще триває"
@@ -367,11 +370,11 @@ msgstr "Я працюю."
 msgid "In a command"
 msgstr "У наказі"
 
-msgid "In a command about a whole thing, the object takes the nominative, the form a dictionary lists: <0/> Not <1>pileti</1>. Lesson {commands} teaches the command itself."
-msgstr "У наказі про щось ціле об’єкт стоїть у називному відмінку, тобто у формі зі словника: <0/> Не <1>pileti</1>. Як утворити сам наказ, пояснює урок {commands}."
+msgid "In a command about a whole thing, a noun object usually takes the nominative, the form a dictionary lists: <0/> Not <1>pileti</1>. Lesson {commands} teaches the command itself."
+msgstr "У наказі про щось ціле об’єкт-іменник зазвичай стоїть у називному відмінку, тобто у формі зі словника: <0/> Не <1>pileti</1>. Як утворити сам наказ, пояснює урок {commands}."
 
-msgid "In a command, the whole thing takes the nominative, and a command with <0>ära</0>, don’t, takes the partitive: <1>Osta pilet! Ära osta piletit!</1>"
-msgstr "У наказі щось ціле стоїть у називному, а в наказі з <0>ära</0>, «не», — у партитиві: <1>Osta pilet! Ära osta piletit!</1>"
+msgid "In a command, a whole noun usually takes the nominative, and a command with <0>ära</0>, don’t, takes the partitive: <1>Osta pilet! Ära osta piletit!</1>"
+msgstr "У наказі іменник про щось ціле зазвичай стоїть у називному, а в наказі з <0>ära</0>, «не», — у партитиві: <1>Osta pilet! Ära osta piletit!</1>"
 
 msgid "In his pocket"
 msgstr "У кишені"
@@ -472,11 +475,11 @@ msgstr "Марі напише книжку."
 msgid "Mari wrote a book."
 msgstr "Марі написала книжку."
 
-msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
-msgstr "Кілька цілих речей без числа перед ними — множина на <0>-d</0> з уроку {plural}: <1/> <2/> Після числа — партитив однини: <3>kaks piletit</3>. Частина з багатьох речей — партитив множини, про нього урок {pluralPartitive}."
+msgid "More than one whole thing, with no number before it, usually takes the plural with <0>-d</0> from lesson {plural}: <1/> <2/> After a number, the partitive singular: <3>kaks piletit</3>. Some of many things takes the plural partitive, which lesson {pluralPartitive} teaches."
+msgstr "Кілька цілих речей без числа перед ними — зазвичай множина на <0>-d</0> з уроку {plural}: <1/> <2/> Після числа — партитив однини: <3>kaks piletit</3>. Частина з багатьох речей — партитив множини, про нього урок {pluralPartitive}."
 
-msgid "More than one whole thing, with no number before it, takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1> After a number, the partitive: <2>kaks piletit</2>."
-msgstr "Кілька цілих речей без числа перед ними — множина на <0>-d</0>: <1>Ma ostsin piletid.</1> Після числа — партитив: <2>kaks piletit</2>."
+msgid "More than one whole thing, with no number before it, usually takes the plural with <0>-d</0>: <1>Ma ostsin piletid.</1> After a number, the partitive: <2>kaks piletit</2>."
+msgstr "Кілька цілих речей без числа перед ними — зазвичай множина на <0>-d</0>: <1>Ma ostsin piletid.</1> Після числа — партитив: <2>kaks piletit</2>."
 
 msgid "Nearly. Compare the columns of the table for the ones you missed."
 msgstr "Майже. Для пропущених порівняй стовпці таблиці."
@@ -556,8 +559,8 @@ msgstr "Частина чогось або дія, що ще триває: па�
 msgid "Part or whole"
 msgstr "Частина чи ціле"
 
-msgid "Partitive: part, or not finished"
-msgstr "Партитив: частина або не завершено"
+msgid "Partitive: usually part, or not said to be finished"
+msgstr "Партитив: зазвичай частина, або не сказано, що завершено"
 
 msgid "Past: leidsin, I found."
 msgstr "Минулий час: leidsin — я знайшов."
@@ -646,8 +649,8 @@ msgstr "Минулий час із родовим: усе, зроблено."
 msgid "The past with the partitive: some of it, or not finished."
 msgstr "Минулий час із партитивом: частина або не завершено."
 
-msgid "The present also covers the future, as lesson {future} says, and the object tells you which. With the partitive, it’s going on, with no end in view. With the genitive, it will get done: <0/>"
-msgstr "Теперішній час передає й майбутнє, про це розповідає урок {future}, а об’єкт показує, що саме. З партитивом дія триває, і кінця не видно. З родовим її буде завершено: <0/>"
+msgid "The present also covers the future, as lesson {future} says, and the object tells you which. With the partitive, it’s usually going on, with no end in view. With the genitive, it will get done: <0/>"
+msgstr "Теперішній час передає й майбутнє, про це розповідає урок {future}, а об’єкт показує, що саме. З партитивом дія зазвичай триває, і кінця не видно. З родовим її буде завершено: <0/>"
 
 msgid "The present with the genitive says it will get done."
 msgstr "Теперішній час із родовим означає, що дію буде завершено."
@@ -664,11 +667,11 @@ msgstr "Той самий вибір відрізняє завершену ді�
 msgid "The verb is in the present in both columns. The object says whether it gets done."
 msgstr "В обох стовпцях дієслово в теперішньому часі. Об’єкт показує, чи дію буде завершено."
 
-msgid "The whole thing, done or sure to get done: the genitive, often with <0>läbi</0> or <1>ära</1>. <2>Ma lugesin raamatu läbi. Ma loen raamatu läbi.</2>"
-msgstr "Усе ціле, і дію завершено або точно буде завершено: родовий, часто з <0>läbi</0> чи <1>ära</1>. <2>Ma lugesin raamatu läbi. Ma loen raamatu läbi.</2>"
+msgid "The whole thing, done or sure to get done: for a noun, usually the genitive, often with <0>läbi</0> or <1>ära</1>. <2>Ma lugesin raamatu läbi. Ma loen raamatu läbi.</2>"
+msgstr "Усе ціле, і дію завершено або точно буде завершено: в іменника зазвичай родовий, часто з <0>läbi</0> чи <1>ära</1>. <2>Ma lugesin raamatu läbi. Ma loen raamatu läbi.</2>"
 
-msgid "The whole thing: the genitive."
-msgstr "Усе ціле: родовий."
+msgid "The whole thing: for a noun, usually the genitive."
+msgstr "Усе ціле: в іменника зазвичай родовий."
 
 msgid "This <0>ära</0> comes before the verb and means don’t. The <1>ära</1> after a verb means all of it: <2/> Eat up the soup!"
 msgstr "Це <0>ära</0> стоїть перед дієсловом і означає «не». А <1>ära</1> після дієслова означає «повністю»: <2/> З’їж увесь суп!"
@@ -709,8 +712,8 @@ msgstr "«До кінця» — це <0>läbi</0>, з родовим."
 msgid "to wait, to wait for"
 msgstr "чекати"
 
-msgid "Two small words after a verb often say that it’s done: <0/>, through to the end, and <1/>, all of it. In a statement without <2>ei</2>, the object before them takes the genitive."
-msgstr "Два короткі слова після дієслова часто кажуть, що дію завершено: <0/>, до кінця, і <1/>, повністю. У ствердному реченні, без <2>ei</2>, об’єкт перед ними стоїть у родовому."
+msgid "Two small words after a verb often say that it’s done: <0/>, through to the end, and <1/>, all of it. In a statement without <2>ei</2>, a noun object before them usually takes the genitive."
+msgstr "Два короткі слова після дієслова часто кажуть, що дію завершено: <0/>, до кінця, і <1/>, повністю. У ствердному реченні, без <2>ei</2>, об’єкт-іменник перед ними зазвичай стоїть у родовому."
 
 msgid "Type the object"
 msgstr "Напиши об’єкт"

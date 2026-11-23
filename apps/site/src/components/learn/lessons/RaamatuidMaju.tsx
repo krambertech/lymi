@@ -126,7 +126,7 @@ function ThreeTable() {
         highlight={{ column: 1 }}
         empty={{
           title: t`Tap a form`,
-          tip: t`A number from two up takes the singular partitive. Some or many takes the plural partitive.`,
+          tip: t`A number from two up usually takes the singular partitive. Some or many usually takes the plural partitive.`,
         }}
       />
     </Panel>
@@ -158,8 +158,9 @@ function KindTable() {
     ),
     long: (
       <Trans>
-        A one-syllable word with a long vowel shortens it and takes <b lang="et">-id</b>:{" "}
-        <b lang="et">puu, puid</b>.
+        A one-syllable word with a long vowel usually shortens it and takes <b lang="et">-id</b>:{" "}
+        <b lang="et">puu, puid</b>. Most of these also have <b lang="et">-sid</b>:{" "}
+        <b lang="et">puusid</b>.
       </Trans>
     ),
   };
@@ -209,6 +210,8 @@ export const gapRun = <T extends { pair: readonly [string, string]; options: rea
     item === pinned ? item : { ...item, options: shuffle(item.options) },
   );
 
+const BASES: Record<string, string> = { sõber: "sõber, sõbra, sõpra" };
+
 const PARTY_GAPS: PassageGap[] = [
   {
     id: "ounu",
@@ -218,7 +221,7 @@ const PARTY_GAPS: PassageGap[] = [
   },
   { id: "kulalisi", before: "", after: "tuleb palju.", answer: "Külalisi" },
   { id: "sobrad", before: "Kati", after: "toovad lilli.", answer: "sõbrad" },
-  { id: "kooke", before: "Lapsed söövad", after: ".", answer: "kooke" },
+  { id: "laule", before: "Lapsed laulavad", after: ".", answer: "laule" },
 ];
 
 function useContent() {
@@ -228,7 +231,7 @@ function useContent() {
       two: <Trans>After a number from two up, the singular partitive.</Trans>,
       many: (
         <Trans>
-          After <b lang="et">palju</b>, many, the plural partitive.
+          After <b lang="et">palju</b>, many, a noun you can count takes the plural partitive.
         </Trans>
       ),
       where: <Trans>These are the ones you mean, so the plural nominative.</Trans>,
@@ -266,7 +269,7 @@ function useContent() {
       );
       const noun = kind && PLURAL_PART_KINDS[kind].find((each) => each.word === item.word);
       return {
-        base: noun ? `${noun.word}, ${noun.of}, ${noun.part}` : item.word,
+        base: noun ? `${noun.word}, ${noun.of}, ${noun.part}` : (BASES[item.word] ?? item.word),
         gloss: i18n._(NOUNS[item.word] as MessageDescriptor),
         cue: item.cue,
         cueLang: "et",
@@ -282,7 +285,7 @@ function useContent() {
               After <b lang="et">ei</b>, the plural partitive.
             </Trans>
           ) : (
-            <Trans>Some or many, not counted: the plural partitive.</Trans>
+            <Trans>Some or many, not counted: usually the plural partitive.</Trans>
           ),
       };
     });
@@ -351,7 +354,7 @@ function useContent() {
 
     const many = (
       <Trans>
-        After <b lang="et">palju</b>, the plural partitive.
+        After <b lang="et">palju</b>, a noun you can count takes the plural partitive.
       </Trans>
     );
     const fixWhy: Record<string, ReactNode> = {
@@ -359,7 +362,7 @@ function useContent() {
       "Mul on kaks raamatut.": <Trans>After a number, the singular partitive.</Trans>,
       "Mul ei ole lapsi.": (
         <Trans>
-          After <b lang="et">ei</b>, a plural noun takes the plural partitive.
+          After <b lang="et">ei</b>, a plural noun usually takes the plural partitive.
         </Trans>
       ),
       "Ma armastan linde.": (
@@ -370,7 +373,8 @@ function useContent() {
       "Laual on palju õunu.": many,
       "Ma ootan sõpru.": (
         <Trans>
-          <b lang="et">Ootama</b> takes the partitive, so many friends are <b lang="et">sõpru</b>.
+          On its own, <b lang="et">ootama</b> takes the partitive, so many friends are{" "}
+          <b lang="et">sõpru</b>.
         </Trans>
       ),
       "Ma ostsin kaks õuna.": <Trans>After a number, the singular partitive.</Trans>,
@@ -477,7 +481,7 @@ export function RaamatuidMajuLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          The partitive for more than one: some or many things you don’t count, after{" "}
+          The partitive for more than one, usually for some or many things you don’t count, after{" "}
           <b lang="et">ei</b>, and after verbs that take the partitive. How it differs from{" "}
           <b lang="et">kaks raamatut</b> and <b lang="et">raamatud</b>, and how to build it.
         </Trans>
@@ -490,16 +494,18 @@ export function RaamatuidMajuLesson() {
       words={["palju", "raamatuid", "maju", "autosid", "koole", "linde", "lilli"]}
       recap={[
         <Trans key="1">
-          Some or many things you don’t count take the plural partitive:{" "}
-          <b lang="et">Mul on palju raamatuid. Poes on õunu.</b>
+          Some or many things you don’t count usually take the plural partitive:{" "}
+          <b lang="et">Mul on palju raamatuid. Poes on õunu.</b> After <b lang="et">mõned</b>, some,
+          the plural nominative: <b lang="et">mõned raamatud</b>.
         </Trans>,
         <Trans key="2">
-          After a number from two up, the singular partitive stays: <b lang="et">kaks raamatut</b>.
-          The ones you mean take the plural nominative: <b lang="et">raamatud</b>.
+          After a number from two up, the singular partitive usually stays:{" "}
+          <b lang="et">kaks raamatut</b>. The ones you mean usually take the plural nominative:{" "}
+          <b lang="et">raamatud</b>.
         </Trans>,
         <Trans key="3">
-          After <b lang="et">ei</b> and after verbs such as <b lang="et">armastama</b>, the plural
-          partitive too: <b lang="et">Mul ei ole autosid. Ma armastan linde.</b>
+          After <b lang="et">ei</b> and after verbs such as <b lang="et">armastama</b>, usually the
+          plural partitive too: <b lang="et">Mul ei ole autosid. Ma armastan linde.</b>
         </Trans>,
         <Trans key="4">
           The plural partitive ends in <b lang="et">-id</b> (<b lang="et">raamatuid</b>),{" "}
@@ -524,8 +530,8 @@ export function RaamatuidMajuLesson() {
                 </p>
                 <p>
                   <Trans>
-                    The ones you mean take the plural nominative, which lesson {plural} teaches:{" "}
-                    <Word w="raamatud" />, the books. Tap across each row.
+                    The ones you mean usually take the plural nominative, which lesson {plural}{" "}
+                    teaches: <Word w="raamatud" />, the books. Tap across each row.
                   </Trans>
                 </p>
               </Prose>

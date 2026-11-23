@@ -44,6 +44,21 @@ const banks = Object.entries(BANKS).map(([path, { DRILLS }]) => {
   return { slug, file: `apps/site/src/components/learn/lessons/${file}`, bank: DRILLS };
 });
 
+const CATALOGS = new Map(
+  await Promise.all(
+    banks.flatMap(({ slug }) =>
+      LOCALES.map(
+        async (locale) => [`${locale}/${slug}`, await learnI18n(locale, lessonName(slug))] as const,
+      ),
+    ),
+  ),
+);
+const catalog = (locale: (typeof LOCALES)[number], slug: string) => {
+  const i18n = CATALOGS.get(`${locale}/${slug}`);
+  if (!i18n) throw new Error(`No ${locale} catalog loaded for ${slug}`);
+  return i18n;
+};
+
 const MANIFEST = JSON.parse(
   readFileSync(
     new URL("../../../../public/audio/estonian-lessons/manifest.json", import.meta.url),
@@ -164,7 +179,7 @@ describe.each(banks)("drill bank $slug", ({ slug, file, bank }) => {
   });
 
   it("uses only Estonian forms checked in Sõnaveeb", async () => {
-    const i18n = await learnI18n("en", lessonName(slug));
+    const i18n = catalog("en", slug);
     const problems = bank.items.flatMap((item) => {
       const told = [...i18n._(item.explain).matchAll(estonianInExplain)].map(([, et]) => et ?? "");
       return formsIn([estonianOf(item), ...told].join(" "))
@@ -239,7 +254,7 @@ describe.each(banks)("drill bank $slug", ({ slug, file, bank }) => {
   });
 
   it("names its rules and sections that exist", async () => {
-    const i18n = await learnI18n("en", lessonName(slug));
+    const i18n = catalog("en", slug);
     const source = readFileSync(
       new URL(`../../../components/learn/lessons/${lessonName(slug)}.tsx`, import.meta.url),
       "utf8",
@@ -253,10 +268,7 @@ describe.each(banks)("drill bank $slug", ({ slug, file, bank }) => {
   it.each(["uk", "ru"] as const)(
     "labels every rule and explains every item in %s",
     async (locale) => {
-      const [english, i18n] = await Promise.all([
-        learnI18n("en", lessonName(slug)),
-        learnI18n(locale, lessonName(slug)),
-      ]);
+      const [english, i18n] = [catalog("en", slug), catalog(locale, slug)];
       const lines = [
         ...Object.values(bank.rules).map(({ label }) => label),
         ...bank.items.map(({ explain }) => explain),
@@ -276,7 +288,7 @@ describe.each(banks)("drill bank $slug", ({ slug, file, bank }) => {
 
   describe.each(LOCALES)("its options in %s", (locale) => {
     const units = async () => {
-      const i18n = await learnI18n(locale, lessonName(slug));
+      const i18n = catalog(locale, slug);
       const read = (text: DrillText) => ("et" in text ? text.et : i18n._(text));
       const found = new Map<string, { item: DrillItem; pick: Pick }[]>();
       for (const item of bank.items) {

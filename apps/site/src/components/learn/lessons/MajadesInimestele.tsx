@@ -8,6 +8,7 @@ import {
   clipUrl,
   PLURAL_CASE_CONVERSATION,
   PLURAL_CASE_FIXES,
+  PLURAL_CASE_FIX_ANSWERS,
   PLURAL_CASE_FORM_QUIZ,
   PLURAL_CASE_HEARD,
   PLURAL_CASE_MATCH,
@@ -368,7 +369,7 @@ function useContent() {
       kind: "fix",
       id: `fix-${clipId(item.right)}`,
       wrong: item.wrong,
-      answers: [item.right],
+      answers: PLURAL_CASE_FIX_ANSWERS[item.right] ?? [item.right],
       src: src(item.right),
       explain: fixWhy[item.right],
     }));

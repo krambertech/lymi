@@ -22,12 +22,12 @@ const MEANS = {
 
 type Noun = keyof typeof MEANS;
 
-const FROM_TWO = msg`After a number from two up, or <et>mitu</et>, the third form.`;
-const ONE = msg`After <et>üks</et> on its own, the first form.`;
-const AMOUNT = msg`After an amount, the third form.`;
-const NOT_THERE = msg`After <et>pole</et> or <et>ei ole</et>, what isn’t there takes the third form.`;
-const SAID_FIRST = msg`The sentence starts with it, so it keeps its first form.`;
-const SOME = msg`Someone eats, drinks or wants some of it, uncounted, so the third form.`;
+const FROM_TWO = msg`After a number from two up, or <et>mitu</et>, the partitive.`;
+const ONE = msg`After <et>üks</et> on its own, the nominative.`;
+const AMOUNT = msg`After an amount, the partitive.`;
+const NOT_THERE = msg`After <et>pole</et> or <et>ei ole</et>, what isn’t there takes the partitive.`;
+const SAID_FIRST = msg`The sentence starts with it, so it keeps its nominative.`;
+const SOME = msg`Someone eats, drinks or wants some of it, uncounted, so the partitive.`;
 
 interface Made {
   id: string;
@@ -180,10 +180,10 @@ export const DRILLS: DrillBank = {
         { id: "laud-pole", noun: "laud", cue: "… pole toas", say: "Laud pole toas.", first: true },
       ] satisfies Made[]
     ).map((item) => made("pole", item, SAID_FIRST)),
-    heard("hasChild", msg`<et>Tal on laps</et>: with <et>on</et>, the first form.`),
-    heard("noChild", msg`<et>Tal pole last</et>: with <et>pole</et>, the third form.`),
-    heard("hasCar", msg`<et>Sul on auto</et>: with <et>on</et>, the first form.`),
-    heard("noCar", msg`<et>Sul pole autot</et>: with <et>pole</et>, the third form.`),
+    heard("hasChild", msg`<et>Tal on laps</et>: with <et>on</et>, the nominative.`),
+    heard("noChild", msg`<et>Tal pole last</et>: with <et>pole</et>, the partitive.`),
+    heard("hasCar", msg`<et>Sul on auto</et>: with <et>on</et>, the nominative.`),
+    heard("noCar", msg`<et>Sul pole autot</et>: with <et>pole</et>, the partitive.`),
 
     ...(
       [

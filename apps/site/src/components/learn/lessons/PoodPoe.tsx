@@ -582,8 +582,8 @@ export function PoodPoeLesson() {
               </Prose>
               <Aside>
                 <Trans>
-                  A dictionary lists a third form too: <span lang="et">pood, poe, poodi</span>.
-                  Lesson {forms} teaches all three.
+                  A dictionary lists a third form too, the partitive:{" "}
+                  <span lang="et">pood, poe, poodi</span>. Lesson {forms} teaches all three.
                 </Trans>
               </Aside>
             </>
@@ -675,7 +675,7 @@ export function PoodPoeLesson() {
                   <Trans>
                     The word doesn’t show which vowel it gains: <Word w="raamat" />,{" "}
                     <Word w="raamatu" />; <Word w="uks" />, <Word w="ukse" />. The dictionary’s
-                    second form does.
+                    genitive does.
                   </Trans>
                 </p>
               </Prose>

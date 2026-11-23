@@ -141,23 +141,23 @@ const GLOSSARY: Glossary = {
     (Object.keys(MEANS) as string[]).flatMap((text) => Object.entries(said(text))),
   ),
   kass: { en: msg`cat`, note: msg`Kass, kassi, kassi.` },
-  kassi: { en: msg`cat`, note: msg`The third form of kass, the partitive.` },
+  kassi: { en: msg`cat`, note: msg`The partitive of kass.` },
   raamat: { en: msg`book`, note: msg`Raamat, raamatu, raamatut.` },
   laps: { en: msg`child`, note: msg`Laps, lapse, last.` },
-  last: { en: msg`child`, note: msg`The third form of laps.` },
+  last: { en: msg`child`, note: msg`The partitive of laps.` },
   maja: { en: msg`house`, note: msg`Maja, maja, maja: all three forms look alike.` },
   kohv: { en: msg`coffee`, note: msg`Kohv, kohvi, kohvi.` },
-  kohvi: { en: msg`coffee`, note: msg`The third form of kohv.` },
+  kohvi: { en: msg`coffee`, note: msg`The partitive of kohv.` },
   vesi: { en: msg`water`, note: msg`Vesi, vee, vett.` },
-  vett: { en: msg`water`, note: msg`The third form of vesi.` },
+  vett: { en: msg`water`, note: msg`The partitive of vesi.` },
   juust: { en: msg`cheese`, note: msg`Juust, juustu, juustu.` },
-  juustu: { en: msg`cheese`, note: msg`The third form of juust.` },
+  juustu: { en: msg`cheese`, note: msg`The partitive of juust.` },
   leib: { en: msg`bread`, note: msg`Leib, leiva, leiba.` },
-  leiba: { en: msg`bread`, note: msg`The third form of leib.` },
+  leiba: { en: msg`bread`, note: msg`The partitive of leib.` },
   piim: { en: msg`milk`, note: msg`Piim, piima, piima.` },
-  piima: { en: msg`milk`, note: msg`The third form of piim.` },
+  piima: { en: msg`milk`, note: msg`The partitive of piim.` },
   aeg: { en: msg`time`, note: msg`Aeg, aja, aega.` },
-  aega: { en: msg`time`, note: msg`The third form of aeg.` },
+  aega: { en: msg`time`, note: msg`The partitive of aeg.` },
   mitu: { en: msg`how many` },
   tass: { en: msg`cup` },
   klaas: { en: msg`glass` },
@@ -171,7 +171,7 @@ const GLOSSARY: Glossary = {
 
 /**
  * A phrase or sentence as Paradigm writes it, without its full stop and with `|` before what the
- * third form adds to the first: “kaks kass|i”, “Tal pole la|st”. A form like its first lights nothing.
+ * partitive adds to the first: “kaks kass|i”, “Tal pole la|st”. A form like its first lights nothing.
  */
 export function litForm(text: string, base: string, form: string): string {
   const bare = text.replace(/[.?!]$/, "");
@@ -182,7 +182,7 @@ export function litForm(text: string, base: string, form: string): string {
   return `${bare.slice(0, at + same)}|${bare.slice(at + same)}`;
 }
 
-/** Six nouns after üks, kaks and viis, the third form's new letters lit. */
+/** Six nouns after üks, kaks and viis, the partitive's new letters lit. */
 function CountTable() {
   const { t, i18n } = useLingui();
   const rows: ParadigmRow[] = OSASTAV_COUNT.nouns.map((noun) => ({
@@ -198,7 +198,7 @@ function CountTable() {
         note:
           noun === "maja" && number !== "üks" ? (
             <Trans>
-              <b lang="et">{text}</b>, {means(text, i18n)}; its third form is <b lang="et">maja</b>{" "}
+              <b lang="et">{text}</b>, {means(text, i18n)}; its partitive is <b lang="et">maja</b>{" "}
               too, so it looks the same.
             </Trans>
           ) : (
@@ -219,8 +219,8 @@ function CountTable() {
           title: t`Tap a form`,
           tip: (
             <Trans>
-              After <b lang="et">üks</b> on its own, a noun keeps its first form. From two up, it
-              takes its third.
+              After <b lang="et">üks</b> on its own, a noun keeps its nominative. From two up, it
+              takes the partitive.
             </Trans>
           ),
         }}
@@ -229,7 +229,7 @@ function CountTable() {
   );
 }
 
-/** Seven sentences with on and with pole: what isn't there takes its third form, unless it comes first. */
+/** Seven sentences with on and with pole: what isn't there takes its partitive, unless it comes first. */
 function NoTable() {
   const { t, i18n } = useLingui();
   const rows: ParadigmRow[] = OSASTAV_NO.map((row) => ({
@@ -248,7 +248,7 @@ function NoTable() {
           "first" in row ? (
             <Trans>
               {means(row.no, i18n)} The sentence starts with the cat, so <b lang="et">kass</b> keeps
-              its first form, even with <b lang="et">pole</b>.
+              its nominative, even with <b lang="et">pole</b>.
             </Trans>
           ) : (
             means(row.no, i18n)
@@ -275,7 +275,7 @@ function NoTable() {
 type CountItem = GapItem & {
   text: string;
   noun: PartitiveNoun;
-  /** Whether the number is üks, so the noun keeps its first form. */
+  /** Whether the number is üks, so the noun keeps its nominative. */
   one: boolean;
   pair: readonly [string, string];
 };
@@ -312,7 +312,7 @@ export function countRun<
 
 type PoleItem = FormItem & {
   noun: PartitiveNoun;
-  /** Whether the noun comes first, so it keeps its first form after pole. */
+  /** Whether the noun comes first, so it keeps its nominative after pole. */
   first: boolean;
   pair: readonly [string, string];
   options: readonly string[];
@@ -349,7 +349,7 @@ function useContent() {
       options: ["juust", "juustu"],
       why: (
         <Trans>
-          After an amount, the third form: <b lang="et">kilo juustu</b>.
+          After an amount, the partitive: <b lang="et">kilo juustu</b>.
         </Trans>
       ),
     },
@@ -361,7 +361,7 @@ function useContent() {
       options: ["leiba", "leib"],
       why: (
         <Trans>
-          After <b lang="et">üks</b> on its own, the first form: <b lang="et">üks leib</b>.
+          After <b lang="et">üks</b> on its own, the nominative: <b lang="et">üks leib</b>.
         </Trans>
       ),
     },
@@ -373,7 +373,7 @@ function useContent() {
       options: ["euro", "eurot"],
       why: (
         <Trans>
-          After a number from two up, the third form: <b lang="et">seitse eurot</b>.
+          After a number from two up, the partitive: <b lang="et">seitse eurot</b>.
         </Trans>
       ),
     },
@@ -385,7 +385,7 @@ function useContent() {
       options: ["leiba", "leib"],
       why: (
         <Trans>
-          After <b lang="et">pole</b>, what there is none of in a place takes the third form:{" "}
+          After <b lang="et">pole</b>, what there is none of in a place takes the partitive:{" "}
           <b lang="et">pole leiba</b>.
         </Trans>
       ),
@@ -398,7 +398,7 @@ function useContent() {
       options: ["kohvik", "kohvikut"],
       why: (
         <Trans>
-          What is there keeps its first form: <b lang="et">Turul on kohvik</b>.
+          What is there keeps its nominative: <b lang="et">Turul on kohvik</b>.
         </Trans>
       ),
     },
@@ -422,7 +422,7 @@ function useContent() {
       options: ["kassi", "kass"],
       why: (
         <Trans>
-          After <b lang="et">üks</b> on its own, the first form: <b lang="et">üks kass</b>.
+          After <b lang="et">üks</b> on its own, the nominative: <b lang="et">üks kass</b>.
         </Trans>
       ),
     },
@@ -549,10 +549,10 @@ export function OsastavLesson() {
           pair: [row.noun, row.said] as const,
           explain:
             "first" in row ? (
-              <Trans>The sentence starts with it, so it keeps its first form.</Trans>
+              <Trans>The sentence starts with it, so it keeps its nominative.</Trans>
             ) : (
               <Trans>
-                After <b lang="et">pole</b>, what isn’t there takes the third form.
+                After <b lang="et">pole</b>, what isn’t there takes the partitive.
               </Trans>
             ),
         };
@@ -573,10 +573,10 @@ export function OsastavLesson() {
         explain:
           "first" in row ? (
             <Trans>
-              Nobody eats, drinks or wants it here: the sentence starts with it, so the first form.
+              Nobody eats, drinks or wants it here: the sentence starts with it, so the nominative.
             </Trans>
           ) : (
-            <Trans>Someone eats, drinks or wants some of it, uncounted, so the third form.</Trans>
+            <Trans>Someone eats, drinks or wants some of it, uncounted, so the partitive.</Trans>
           ),
       })),
     [i18n],
@@ -605,9 +605,8 @@ export function OsastavLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          When Estonian uses a noun’s third form, the partitive: after a number from two up, after
-          an amount, after <b lang="et">pole</b>, and for some of the food and drink someone eats,
-          drinks or wants.
+          When Estonian uses a noun’s partitive: after a number from two up, after an amount, after{" "}
+          <b lang="et">pole</b>, and for some of the food and drink someone eats, drinks or wants.
         </Trans>
       }
       facts={[
@@ -634,25 +633,25 @@ export function OsastavLesson() {
       ]}
       recap={[
         <Trans key="1">
-          After a number from two up, a noun takes its third form and stays singular:{" "}
+          After a number from two up, a noun takes its partitive and stays singular:{" "}
           <b lang="et">kaks kassi, viis eurot</b>. After <b lang="et">üks</b> on its own, it keeps
-          its first: <b lang="et">üks kass</b>.
+          its nominative: <b lang="et">üks kass</b>.
         </Trans>,
         <Trans key="2">
-          Ask how many with <b lang="et">mitu</b> and the third form:{" "}
+          Ask how many with <b lang="et">mitu</b> and the partitive:{" "}
           <b lang="et">Mitu last sul on?</b>
         </Trans>,
         <Trans key="3">
-          After an amount, what it measures takes the third form:{" "}
+          After an amount, what it measures takes the partitive:{" "}
           <b lang="et">tass kohvi, palju raha</b>.
         </Trans>,
         <Trans key="4">
           After <b lang="et">pole</b>, what someone hasn’t got, or what there is none of in a place,
-          takes the third form: <b lang="et">Mul pole kassi, Laual pole leiba</b>. When the sentence
-          starts with the thing, it keeps its first: <b lang="et">Kass pole laual</b>.
+          takes the partitive: <b lang="et">Mul pole kassi, Laual pole leiba</b>. When the sentence
+          starts with the thing, it keeps its nominative: <b lang="et">Kass pole laual</b>.
         </Trans>,
         <Trans key="5">
-          What you eat, drink or want, when you don’t count it, takes the third form too:{" "}
+          What you eat, drink or want, when you don’t count it, takes the partitive too:{" "}
           <b lang="et">Ma joon kohvi</b>.
         </Trans>,
       ]}
@@ -666,13 +665,13 @@ export function OsastavLesson() {
                 <p>
                   <Trans>
                     <Word w="Üks kass" /> is one cat; <Word w="kaks kassi" /> is two cats. After a
-                    number from two up, a noun takes its third form, the partitive, and stays
-                    singular: <Word w="kassi" /> has no plural ending.
+                    number from two up, a noun takes the partitive and stays singular:{" "}
+                    <Word w="kassi" /> has no plural ending.
                   </Trans>
                 </p>
                 <p>
                   <Trans>
-                    The third form is the last of the three a dictionary gives, as lesson {forms}{" "}
+                    The partitive is the last of the three a dictionary gives, as lesson {forms}{" "}
                     shows: <b lang="et">raamat, raamatu, raamatut</b>. You’ve heard it in prices
                     since lesson {numbers}: <Word w="viis eurot" />. Tap a form to hear it with its
                     number.
@@ -682,9 +681,9 @@ export function OsastavLesson() {
               <CountTable />
               <Aside>
                 <Trans>
-                  Some third forms change more than an ending: <Word w="laps" /> becomes{" "}
+                  Some partitives change more than an ending: <Word w="laps" /> becomes{" "}
                   <Word w="last" />, and <Word w="vesi" /> becomes <Word w="vett" />. So learn each
-                  noun with its third form, as the dictionary lists it.
+                  noun with its partitive, as the dictionary lists it.
                 </Trans>
               </Aside>
             </>
@@ -698,7 +697,7 @@ export function OsastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Mitu" /> asks how many, and the noun after it takes its third form too.
+                    <Word w="Mitu" /> asks how many, and the noun after it takes its partitive too.
                     For a price, ask with <b lang="et">kui palju</b>, how much, from lesson{" "}
                     {questions}.
                   </Trans>
@@ -708,7 +707,7 @@ export function OsastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    An answer with <b lang="et">üks</b> keeps the first form:{" "}
+                    An answer with <b lang="et">üks</b> keeps the nominative:{" "}
                     <Word w="Meil on üks kass." />
                   </Trans>
                 </p>
@@ -761,8 +760,7 @@ export function OsastavLesson() {
                 <p>
                   <Trans>
                     <Word w="Tass kohvi" /> is a cup of coffee. The amount comes first, and what it
-                    measures follows in its third form: <Word w="kohv" /> becomes <Word w="kohvi" />
-                    .
+                    measures follows in its partitive: <Word w="kohv" /> becomes <Word w="kohvi" />.
                   </Trans>
                 </p>
                 <p>
@@ -789,7 +787,7 @@ export function OsastavLesson() {
                 <p>
                   <Trans>
                     Now make the form yourself. Each round shows the word as a dictionary gives it
-                    and the amount before it. Type its third form.
+                    and the amount before it. Type its partitive.
                   </Trans>
                 </p>
               </Prose>
@@ -823,7 +821,7 @@ export function OsastavLesson() {
                 <p>
                   <Trans>
                     <Word w="Mul on kass." /> I have a cat. To say you don’t, use <Word w="pole" />{" "}
-                    from lesson {negation}, and the cat takes its third form:{" "}
+                    from lesson {negation}, and the cat takes its partitive:{" "}
                     <Word w="Mul pole kassi." /> (Lesson {have} teaches <b lang="et">Mul on</b>.)
                   </Trans>
                 </p>
@@ -839,7 +837,7 @@ export function OsastavLesson() {
                 <Trans>
                   You can also say <Word w="Mul ei ole kassi." /> It means the same:{" "}
                   <b lang="et">pole</b> is the short form of <b lang="et">ei ole</b>. A sentence
-                  that starts with the thing keeps its first form: <Word w="Kass pole laual." />
+                  that starts with the thing keeps its nominative: <Word w="Kass pole laual." />
                 </Trans>
               </Aside>
               <Prose>
@@ -883,7 +881,7 @@ export function OsastavLesson() {
                 <p>
                   <Trans>
                     Since lesson {present} you’ve said <Word w="Ma joon kohvi." /> You drink some
-                    coffee, not a counted cup, so <b lang="et">kohvi</b> is in its third form.
+                    coffee, not a counted cup, so <b lang="et">kohvi</b> is in the partitive.
                     Anything you eat, drink or want some of works the same way. Tap a sentence to
                     hear it.
                   </Trans>
@@ -893,7 +891,7 @@ export function OsastavLesson() {
               <Aside>
                 <Trans>
                   In a café you’ll also hear <Word w="Üks kohv, palun." /> That’s one coffee,
-                  counted, so it keeps its first form. Lesson {object} explains why the third form
+                  counted, so it keeps its nominative. Lesson {object} explains why the partitive
                   appears here too: <Word w="Ma loen raamatut." />
                 </Trans>
               </Aside>
@@ -934,9 +932,9 @@ export function OsastavLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Mari goes to the market on Saturday. Pick the first or third form for each gap.
-                    The third follows a number from two up, an amount or <b lang="et">pole</b>, and
-                    marks food or drink someone eats, drinks or wants.
+                    Mari goes to the market on Saturday. Pick the nominative or partitive for each
+                    gap. The partitive follows a number from two up, an amount or{" "}
+                    <b lang="et">pole</b>, and marks food or drink someone eats, drinks or wants.
                   </Trans>
                 </p>
               </Prose>

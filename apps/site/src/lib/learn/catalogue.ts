@@ -164,7 +164,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`The three forms of an Estonian noun`,
         et: "Kolm põhivormi",
         minutes: 12,
-        blurb: msg`A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the third. Every word is read aloud.`,
+        blurb: msg`A free Estonian lesson on a noun’s three main forms, põhivormid (kool, kooli, kooli; pood, poe, poodi): how a dictionary and Sõnaveeb list them, and how most words in -ne and -us, and one-syllable words ending in a long vowel, show the partitive. Every word is read aloud.`,
       },
       {
         slug: "omastav",
@@ -188,7 +188,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`The Estonian partitive case: after numbers, amounts and negation`,
         et: "Kaks kassi",
         minutes: 16,
-        blurb: msg`A free lesson on the Estonian partitive case, a noun’s third form: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian partitive case: after numbers from two up (kaks kassi, viis eurot), after mitu and amounts (tass kohvi), after pole (mul pole kassi) and with food and drink (ma joon kohvi). Every sentence is read aloud.`,
       },
       {
         slug: "mitmus",
@@ -196,7 +196,7 @@ export const STAGES: readonly Stage[] = [
         title: msg`Estonian plural`,
         et: "Kassid",
         minutes: 12,
-        blurb: msg`A free lesson on the Estonian plural: the second form plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud.`,
+        blurb: msg`A free lesson on the Estonian plural: the genitive plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud.`,
       },
       {
         slug: "majas-majja-majast",

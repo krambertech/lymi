@@ -44,8 +44,8 @@ msgid "a big house"
 msgstr "большой дом"
 
 #. placeholder {0}: ending("-d")
-msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. The second form is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
-msgstr "Словарь даёт существительное в трёх формах, об этом — в уроке {forms}. Вторая форма — это родительный падеж, о нём — в уроке {genitive}. Чтобы сказать «больше одного», добавь к ней {0}: <0/>, <1/>, отсюда <2/> — кошки."
+msgid "A dictionary gives a noun in three forms, as lesson {forms} shows. The second of them is the genitive from lesson {genitive}. To say more than one, add {0} to it: <0/>, <1/>, so <2/>, cats."
+msgstr "Словарь даёт существительное в трёх формах, об этом — в уроке {forms}. Вторая из них — родительный, о нём — в уроке {genitive}. Чтобы сказать «больше одного», добавь к нему {0}: <0/>, <1/>, отсюда <2/> — кошки."
 
 msgid "A family writes about its home in Tartu. Pick the word that fits each gap: the words around it say whether it’s one or many. Two adjectives come from the section above, <0/>, small, and <1/>, beautiful. One verb is new: <2/>, to sleep."
 msgstr "Семья пишет о своём доме в Тарту. Выбери слово для каждого пропуска: слова вокруг подскажут, один или много. Два прилагательных — из предыдущего раздела: <0/> — маленький и <1/> — красивый. Один глагол новый: <2/> — спать."
@@ -71,11 +71,11 @@ msgid "a small cat"
 msgstr "маленькая кошка"
 
 #. placeholder {0}: ending("-d")
-msgid "Add the {0} to the second form, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
-msgstr "Добавляй {0} ко второй форме, <0>poe</0>, а не к <1>pood</1>: <2>poed</2>. Выбери слово и нажимай на каждую форму, чтобы увидеть, что меняется."
+msgid "Add the {0} to the genitive, <0>poe</0>, not to <1>pood</1>: <2>poed</2>. Pick a word, then tap each form to see what changes."
+msgstr "Добавляй {0} к родительному, <0>poe</0>, а не к <1>pood</1>: <2>poed</2>. Выбери слово и нажимай на каждую форму, чтобы увидеть, что меняется."
 
-msgid "Adjective and noun in the first form."
-msgstr "Прилагательное и существительное в первой форме."
+msgid "Adjective and noun in the nominative."
+msgstr "Прилагательное и существительное в именительном."
 
 msgid "Adjectives take -d too"
 msgstr "Прилагательные тоже оканчиваются на -d"
@@ -162,8 +162,8 @@ msgstr "дверь"
 msgid "doors"
 msgstr "двери"
 
-msgid "Each word is its second form plus <0>-d</0>."
-msgstr "Каждое слово — это его вторая форма плюс <0>-d</0>."
+msgid "Each word is its genitive plus <0>-d</0>."
+msgstr "Каждое слово — это его родительный плюс <0>-d</0>."
 
 msgid "Fill the gaps"
 msgstr "Заполни пропуски"
@@ -177,11 +177,14 @@ msgstr "друзья"
 msgid "Friends are waiting."
 msgstr "Друзья ждут."
 
+msgid "genitive"
+msgstr "родительный"
+
 msgid "good friends"
 msgstr "хорошие друзья"
 
-msgid "Hear a noun’s first and second forms, then type its plural. Build it on the second form."
-msgstr "Послушай первую и вторую формы существительного, а потом введи его множественное число. Образуй его от второй формы."
+msgid "Hear a noun’s nominative and genitive, then type its plural. Build it on the genitive."
+msgstr "Послушай именительный и родительный существительного, а потом введи его множественное число. Образуй его от родительного."
 
 msgid "Hear a sentence and pick what it says. Listen to the end of the noun and of the verb."
 msgstr "Послушай предложение и выбери, что оно значит. Прислушайся к концу существительного и глагола."
@@ -201,8 +204,8 @@ msgstr "есть"
 msgid "Kass, kassi: a vowel appears at the end."
 msgstr "Kass, kassi: в конце появляется гласная."
 
-msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on that second form, so the change shows again: <2/>, shops."
-msgstr "Урок {stems} показал существительные, у которых основа меняется перед окончанием: <0/> становится <1/>. Множественное число образуется от этой второй формы, поэтому изменение есть и в нём: <2/> — магазины."
+msgid "Lesson {stems} showed nouns whose stem changes before an ending: <0/> becomes <1/>. The plural is built on the genitive, so the change shows again: <2/>, shops."
+msgstr "Урок {stems} показал существительные, у которых основа меняется перед окончанием: <0/> становится <1/>. Множественное число образуется от родительного, поэтому изменение есть и в нём: <2/> — магазины."
 
 msgid "Listening only, no microphone"
 msgstr "Только на слух, без микрофона"
@@ -226,8 +229,8 @@ msgstr "мужчины"
 msgid "Mother and father are working."
 msgstr "Мама и папа работают."
 
-msgid "Nearly. For the ones you missed, start from the second form."
-msgstr "Почти. Там, где была ошибка, начни со второй формы."
+msgid "Nearly. For the ones you missed, start from the genitive."
+msgstr "Почти. Там, где была ошибка, начни с родительного."
 
 msgid "Nearly. Play the ones you missed once more."
 msgstr "Почти. Переслушай те, где были ошибки."
@@ -273,9 +276,6 @@ msgstr "школа"
 msgid "schools"
 msgstr "школы"
 
-msgid "second form"
-msgstr "вторая форма"
-
 msgid "shop"
 msgstr "магазин"
 
@@ -318,14 +318,29 @@ msgstr "Выпадает e, а появляется a."
 msgid "The ee shortens, the s becomes h, and an e comes in."
 msgstr "Долгое ee сокращается, s становится h, и появляется e."
 
-msgid "The first form"
-msgstr "Первая форма"
-
 msgid "The form a dictionary lists first."
 msgstr "Форма, которая в словаре стоит первой."
 
 msgid "The g drops and the i becomes e."
 msgstr "Выпадает g, а i становится e."
+
+msgid "The genitive and -d"
+msgstr "Родительный и -d"
+
+msgid "The genitive and <0>-d</0>"
+msgstr "Родительный и <0>-d</0>"
+
+msgid "the genitive of kass"
+msgstr "родительный слова kass"
+
+msgid "the genitive of pood"
+msgstr "родительный слова pood"
+
+msgid "the genitive of suur"
+msgstr "родительный слова suur"
+
+msgid "The genitive plus -d."
+msgstr "Родительный плюс -d."
 
 msgid "The house is big."
 msgstr "Дом большой."
@@ -342,6 +357,9 @@ msgstr "Мужчины работают."
 msgid "The n becomes s."
 msgstr "Вместо n стоит s."
 
+msgid "The nominative"
+msgstr "Именительный"
+
 msgid "The noun takes <0>-d</0>, the verb <1>-vad</1>. <2>On</2> stays."
 msgstr "Существительное оканчивается на <0>-d</0>, глагол — на <1>-vad</1>. <2>On</2> не меняется."
 
@@ -349,35 +367,17 @@ msgid "The od drops and an e comes in."
 msgstr "Выпадает od, а появляется e."
 
 #. placeholder {0}: ending("-d")
-msgid "The plural is the second form plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
-msgstr "Множественное число — это вторая форма плюс {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
+msgid "The plural is the genitive plus {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
+msgstr "Множественное число — это родительный плюс {0}: <0>kass, kassi → kassid</0>; <1>maja, maja → majad</1>."
 
 msgid "The plural keeps the stem change"
 msgstr "Множественное число сохраняет изменение основы"
 
-msgid "The plural keeps the stem change of the second form: <0>pood, poe → poed; tuba, toa → toad</0>."
-msgstr "Множественное число сохраняет изменение основы из второй формы: <0>pood, poe → poed; tuba, toa → toad</0>."
+msgid "The plural keeps the stem change of the genitive: <0>pood, poe → poed; tuba, toa → toad</0>."
+msgstr "Множественное число сохраняет изменение основы из родительного: <0>pood, poe → poed; tuba, toa → toad</0>."
 
 msgid "The same for ta and nad."
 msgstr "Одинаково для ta и nad."
-
-msgid "The second form and -d"
-msgstr "Вторая форма и -d"
-
-msgid "The second form and <0>-d</0>"
-msgstr "Вторая форма и <0>-d</0>"
-
-msgid "the second form of kass"
-msgstr "вторая форма слова kass"
-
-msgid "the second form of pood"
-msgstr "вторая форма слова pood"
-
-msgid "the second form of suur"
-msgstr "вторая форма слова suur"
-
-msgid "The second form plus -d."
-msgstr "Вторая форма плюс -d."
 
 msgid "The teacher is speaking."
 msgstr "Учитель говорит."
@@ -400,8 +400,8 @@ msgstr "Женщины пьют кофе."
 msgid "they"
 msgstr "они"
 
-msgid "To say more than one, add <0>-d</0> to a noun’s second form: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
-msgstr "Чтобы сказать «больше одного», добавь <0>-d</0> ко второй форме существительного: <1>kass, kassi</1> даёт <2>kassid</2> — кошки. К прилагательному тоже добавляется <3>-d</3>, а глагол стоит в форме для <4>nad</4>: <5>Suured kassid söövad.</5> Большие кошки едят."
+msgid "To say more than one, add <0>-d</0> to a noun’s genitive: <1>kass, kassi</1> gives <2>kassid</2>, cats. An adjective takes <3>-d</3> too, and the verb takes the form of <4>nad</4>: <5>Suured kassid söövad.</5> The big cats are eating."
+msgstr "Чтобы сказать «больше одного», добавь <0>-d</0> к родительному существительного: <1>kass, kassi</1> даёт <2>kassid</2> — кошки. К прилагательному тоже добавляется <3>-d</3>, а глагол стоит в форме для <4>nad</4>: <5>Suured kassid söövad.</5> Большие кошки едят."
 
 msgid "to sleep"
 msgstr "спать"
@@ -425,8 +425,8 @@ msgid "Type the plural"
 msgstr "Введи множественное число"
 
 #. placeholder {0}: ending("-d")
-msgid "When the second form is the same as the first, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
-msgstr "Когда вторая форма такая же, как первая, новое только {0}: <0/> даёт <1/>. Переключай «Один» и «Много» и нажимай на слово, чтобы его услышать."
+msgid "When the genitive is the same as the nominative, only the {0} is new: <0/> gives <1/>. Switch between One and Many, and tap a word to hear it."
+msgstr "Когда родительный такой же, как именительный, новое только {0}: <0/> даёт <1/>. Переключай «Один» и «Много» и нажимай на слово, чтобы его услышать."
 
 msgid "woman"
 msgstr "женщина"

@@ -294,9 +294,16 @@ const LONG: Record<string, string> = {
   Nad: "Nemad",
 };
 
-export function withLong(said: string): [string, ...string[]] {
-  const [first, ...rest] = said.split(" ");
-  return first && LONG[first] ? [said, [LONG[first], ...rest].join(" ")] : [said];
+const DROPS = new Set(["Ma", "Sa", "Me", "Te"]);
+
+function withPronouns(said: string): [string, ...string[]] {
+  const [first, next, ...rest] = said.split(" ");
+  const long = first && LONG[first];
+  if (!long || !next) return [said];
+  const dropped = DROPS.has(first)
+    ? [[next.charAt(0).toUpperCase() + next.slice(1), ...rest].join(" ")]
+    : [];
+  return [said, [long, next, ...rest].join(" "), ...dropped];
 }
 
 export function rewriteItems(i18n: I18n): SentenceItem[] {
@@ -310,7 +317,7 @@ export function rewriteItems(i18n: I18n): SentenceItem[] {
       </Trans>
     ),
     src: src(to),
-    answers: withLong(to),
+    answers: withPronouns(to),
   }));
 }
 

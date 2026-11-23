@@ -1224,7 +1224,13 @@ export const MUL_ON_SAY = [
   {
     id: "abi",
     said: "Mul on vaja abi.",
-    also: ["Minul on vaja abi.", "Mul on abi vaja.", "Ma vajan abi.", "Mina vajan abi."],
+    also: [
+      "Minul on vaja abi.",
+      "Mul on abi vaja.",
+      "Ma vajan abi.",
+      "Mina vajan abi.",
+      "Vajan abi.",
+    ],
   },
 ] as const;
 
@@ -3924,6 +3930,8 @@ export const INNER_SAY = [
       "Kust olete pärit?",
       "Kust sa oled?",
       "Kust te olete?",
+      "Kust teie olete pärit?",
+      "Kust teie olete?",
       "Kust sina oled?",
       "Kust oled?",
       "Kust olete?",

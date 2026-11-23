@@ -35,6 +35,9 @@ msgstr "<et>Homme</et> is tomorrow: the day after today."
 msgid "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
 msgstr "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
 
+msgid "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name comes after."
+msgstr "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name comes after."
+
 msgid "15 minutes"
 msgstr "15 minutes"
 
@@ -50,8 +53,8 @@ msgstr "All eight, each day and each word right."
 msgid "All of them. You can count the week forward."
 msgstr "All of them. You can count the week forward."
 
-msgid "All seven, every day spelled right."
-msgstr "All seven, every day spelled right."
+msgid "All seven sentences right."
+msgstr "All seven sentences right."
 
 msgid "All seven. You know the week by ear."
 msgstr "All seven. You know the week by ear."
@@ -88,9 +91,6 @@ msgstr "Count forward"
 
 msgid "day"
 msgstr "day"
-
-msgid "Day names start with a small letter inside a sentence."
-msgstr "Day names start with a small letter inside a sentence."
 
 msgid "Esmaspäev with an ending that says when."
 msgstr "Esmaspäev with an ending that says when."
@@ -208,6 +208,9 @@ msgstr "Seven days"
 
 msgid "Six days end in <0>päev</0>, day. <1>Reede</1> doesn’t."
 msgstr "Six days end in <0>päev</0>, day. <1>Reede</1> doesn’t."
+
+msgid "Six days end in <et>päev</et>, so listen to how each one starts."
+msgstr "Six days end in <et>päev</et>, so listen to how each one starts."
 
 msgid "Sunday"
 msgstr "Sunday"

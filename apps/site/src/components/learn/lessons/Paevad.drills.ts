@@ -63,7 +63,7 @@ const translated = (said: string): SentenceDrill => ({
   prompt: PROMPTS[said] as MessageDescriptor,
   say: said,
   answers: [said],
-  explain: msg`Day names start with a small letter inside a sentence.`,
+  explain: msg`<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name comes after.`,
 });
 
 const written = (said: string): SentenceDrill => ({
@@ -72,7 +72,7 @@ const written = (said: string): SentenceDrill => ({
   rule: "sentence",
   say: said,
   answers: [said],
-  explain: msg`Day names start with a small letter inside a sentence.`,
+  explain: msg`Six days end in <et>päev</et>, so listen to how each one starts.`,
 });
 
 export const DRILLS: DrillBank = {

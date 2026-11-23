@@ -1967,7 +1967,7 @@ export const TALLINN_TALK: Conversation = {
     { voice: "second", text: "Kas sa töötad homme?" },
     { voice: "main", text: ["Ei, homme ma ei tööta.", "Kell üksteist olen kohvikus."] },
     { voice: "second", text: "Ma olen kell kaksteist turul." },
-    { voice: "main", text: "Hästi, ma tulen kell kaksteist!" },
+    { voice: "main", text: "Hästi, ma tulen kell pool üks!" },
     { voice: "second", text: "Ja pühapäeval?" },
     { voice: "main", text: "Pühapäeval olen kodus." },
   ],

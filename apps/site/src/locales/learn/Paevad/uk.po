@@ -35,6 +35,9 @@ msgstr "<et>Homme</et> — це завтра: день після сьогодн
 msgid "<et>Reede</et> is the one day without <et>päev</et>; <et>laupäev</et> and <et>pühapäev</et> have names of their own."
 msgstr "<et>Reede</et> — єдиний день без <et>päev</et>; <et>laupäev</et> і <et>pühapäev</et> мають власні назви."
 
+msgid "<et>Täna on</et> says what day it is today, <et>homme on</et> what day it is tomorrow; the day’s name comes after."
+msgstr "<et>Täna on</et> каже, який день сьогодні, <et>homme on</et> — який завтра; назва дня йде після них."
+
 msgid "15 minutes"
 msgstr "15 хвилин"
 
@@ -50,8 +53,8 @@ msgstr "Усі вісім: кожен день і кожне слово прав
 msgid "All of them. You can count the week forward."
 msgstr "Усі правильно. Ти вмієш рахувати тиждень уперед."
 
-msgid "All seven, every day spelled right."
-msgstr "Усі сім, кожен день написано правильно."
+msgid "All seven sentences right."
+msgstr "Усі сім речень правильні."
 
 msgid "All seven. You know the week by ear."
 msgstr "Усі сім. Ти знаєш тиждень на слух."
@@ -88,9 +91,6 @@ msgstr "Рахуємо вперед"
 
 msgid "day"
 msgstr "день"
-
-msgid "Day names start with a small letter inside a sentence."
-msgstr "Усередині речення назви днів пишуть з малої літери."
 
 msgid "Esmaspäev with an ending that says when."
 msgstr "Esmaspäev із закінченням, яке відповідає на питання «коли»."
@@ -208,6 +208,9 @@ msgstr "Сім днів"
 
 msgid "Six days end in <0>päev</0>, day. <1>Reede</1> doesn’t."
 msgstr "Шість днів закінчуються на <0>päev</0>, день. <1>Reede</1> — ні."
+
+msgid "Six days end in <et>päev</et>, so listen to how each one starts."
+msgstr "Шість днів закінчуються на <et>päev</et>, тож слухай, як кожен починається."
 
 msgid "Sunday"
 msgstr "Неділя"
@@ -345,7 +348,7 @@ msgid "What day is it today?"
 msgstr "Який сьогодні день?"
 
 msgid "What day it is"
-msgstr "Який сьогодні день"
+msgstr "Який день"
 
 msgid "Where is Jaan the day after tomorrow?"
 msgstr "Де Яан буде післязавтра?"

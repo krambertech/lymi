@@ -409,7 +409,7 @@ msgid "to more than one"
 msgstr "кільком людям"
 
 msgid "To more than one"
-msgstr "До кількох людей"
+msgstr "Кільком людям"
 
 msgid "To more than one person"
 msgstr "До кількох людей"

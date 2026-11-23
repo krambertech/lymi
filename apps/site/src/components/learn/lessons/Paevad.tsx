@@ -777,7 +777,7 @@ export function PaevadLesson() {
                 rounds={7}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All seven, every day spelled right.</Trans>
+                    <Trans>All seven sentences right.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>
                       Nearly. Hear the ones you missed below, then try again with Slower.

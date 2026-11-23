@@ -79,11 +79,11 @@ msgstr "After ei, the verb drops its ending: ei joo."
 msgid "After ei, the verb drops its ending: ei tööta."
 msgstr "After ei, the verb drops its ending: ei tööta."
 
+msgid "All six sentences right."
+msgstr "All six sentences right."
+
 msgid "All six, every sentence right."
 msgstr "All six, every sentence right."
-
-msgid "All six, every word right."
-msgstr "All six, every word right."
 
 msgid "Answer no with <0>ei</0> and the verb without its ending: <1>Ei, ma ei tööta</1>, no, I don’t work."
 msgstr "Answer no with <0>ei</0> and the verb without its ending: <1>Ei, ma ei tööta</1>, no, I don’t work."
@@ -108,6 +108,9 @@ msgstr "At 12:00"
 
 msgid "At 12:30"
 msgstr "At 12:30"
+
+msgid "At 13:00"
+msgstr "At 13:00"
 
 msgid "At 16:00"
 msgstr "At 16:00"
@@ -388,8 +391,8 @@ msgstr "Sina as the one something is done to: Ma ootan sind, I’m waiting for y
 msgid "sit down"
 msgstr "sit down"
 
-msgid "Six short lines: two times, a price, a day, a no and a sign. Write each one as you hear it."
-msgstr "Six short lines: two times, a price, a day, a no and a sign. Write each one as you hear it."
+msgid "Six short lines: two times, a price, a day, a no and a sign. Write each one as you hear it, numbers in words."
+msgstr "Six short lines: two times, a price, a day, a no and a sign. Write each one as you hear it, numbers in words."
 
 msgid "Sunday"
 msgstr "Sunday"
@@ -517,8 +520,8 @@ msgstr "With ma, the verb ends in -n: ma joon."
 msgid "Write back to Mari"
 msgstr "Write back to Mari"
 
-msgid "Write each sentence in Estonian. A time takes <0>kell</0>, a price takes <1>maksab</1> and <2>eurot</2>."
-msgstr "Write each sentence in Estonian. A time takes <0>kell</0>, a price takes <1>maksab</1> and <2>eurot</2>."
+msgid "Write each sentence in Estonian, numbers in words. A time takes <0>kell</0>, a price takes <1>maksab</1> and <2>eurot</2>."
+msgstr "Write each sentence in Estonian, numbers in words. A time takes <0>kell</0>, a price takes <1>maksab</1> and <2>eurot</2>."
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"

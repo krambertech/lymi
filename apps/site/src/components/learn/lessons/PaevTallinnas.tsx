@@ -315,11 +315,11 @@ function useContent() {
       id: "meet",
       ask: t`When does Jaan come to the market?`,
       options: [
-        { id: "1130", label: t`At 11:30` },
         { id: "1200", label: t`At 12:00` },
         { id: "1230", label: t`At 12:30` },
+        { id: "1300", label: t`At 13:00` },
       ],
-      answer: "1200",
+      answer: "1230",
       line: 7,
     },
     {
@@ -595,7 +595,7 @@ export function PaevTallinnasLesson() {
                 <p>
                   <Trans>
                     Six short lines: two times, a price, a day, a no and a sign. Write each one as
-                    you hear it.
+                    you hear it, numbers in words.
                   </Trans>
                 </p>
               </Prose>
@@ -606,7 +606,7 @@ export function PaevTallinnasLesson() {
                 rounds={6}
                 verdict={(share) =>
                   share === 1 ? (
-                    <Trans>All six, every word right.</Trans>
+                    <Trans>All six sentences right.</Trans>
                   ) : share >= 0.7 ? (
                     <Trans>
                       Nearly. Hear the ones you missed below, then try again with Slower.
@@ -631,8 +631,9 @@ export function PaevTallinnasLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Write each sentence in Estonian. A time takes <b lang="et">kell</b>, a price
-                    takes <b lang="et">maksab</b> and <b lang="et">eurot</b>.
+                    Write each sentence in Estonian, numbers in words. A time takes{" "}
+                    <b lang="et">kell</b>, a price takes <b lang="et">maksab</b> and{" "}
+                    <b lang="et">eurot</b>.
                   </Trans>
                 </p>
               </Prose>

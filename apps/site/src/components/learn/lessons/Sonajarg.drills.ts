@@ -11,7 +11,7 @@ const builtAnswers = (id: (typeof ORDER_MEANING)[number]["id"]) =>
   (ORDER_MEANING.find((item) => item.id === id) as (typeof ORDER_MEANING)[number]).answers;
 
 const SECOND = msg`The verb usually comes second; when a time or place starts the sentence, the person usually follows the verb: <et>Täna lähen ma</et>.`;
-const QUESTION = msg`In a question, the short pronoun comes right after the question word: <et>Kus sa elad?</et>`;
+const QUESTION = msg`In a question, the short pronoun usually comes right after the question word: <et>Kus sa elad?</et>`;
 const TWO = msg`With two verbs, the first takes second place and the other usually goes last: <et>Homme pean ma tööle minema.</et>`;
 const NO = msg`With <et>ei</et>, the person usually stays before it: <et>Täna ma ei tööta.</et>`;
 const START = msg`Start with the time word`;

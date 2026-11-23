@@ -149,14 +149,14 @@ function useContent() {
     const meaningWhy: Record<(typeof ORDER_MEANING)[number]["id"], ReactNode> = {
       "kus-elad": (
         <Trans>
-          In a question, the short pronoun comes right after the question word:{" "}
+          In a question, the short pronoun usually comes right after the question word:{" "}
           <span lang="et">Kus sa elad?</span>
         </Trans>
       ),
       "tana-tootan": secondWhy,
       "mida-teed": (
         <Trans>
-          Question word, pronoun, then the verb: <span lang="et">Mida sa täna teed?</span>
+          Question word first, then the pronoun: <span lang="et">Mida sa täna teed?</span>
         </Trans>
       ),
       "homme-pean": (
@@ -271,8 +271,8 @@ function useContent() {
             line: "Ei, laupäeval ei ma tule.",
             why: (
               <Trans>
-                <span lang="et">Ei</span> goes right before the verb, so the person can’t stand
-                between them: <span lang="et">laupäeval ma ei tule</span>.
+                <span lang="et">Ei</span> usually goes right before the verb, so the person doesn’t
+                stand between them: <span lang="et">laupäeval ma ei tule</span>.
               </Trans>
             ),
           },
@@ -418,8 +418,8 @@ export function SonajargLesson() {
       sub={
         <Trans>
           In an Estonian statement the verb usually comes second. Start with a time or a place, and
-          the person moves after the verb: <span lang="et">Täna lähen ma Tartusse</span>, today I’m
-          going to Tartu.
+          the person usually moves after the verb: <span lang="et">Täna lähen ma Tartusse</span>,
+          today I’m going to Tartu.
         </Trans>
       }
       facts={[
@@ -431,10 +431,10 @@ export function SonajargLesson() {
       recap={[
         <Trans key="1">
           In a statement the verb usually comes second. Start with a time or a place, and the person
-          follows the verb: <b lang="et">Täna lähen ma Tartusse.</b>
+          usually follows the verb: <b lang="et">Täna lähen ma Tartusse.</b>
         </Trans>,
         <Trans key="2">
-          In a question, the short pronoun comes right after the question word:{" "}
+          In a question, the short pronoun usually comes right after the question word:{" "}
           <b lang="et">Kus sa elad? Mida sa täna teed?</b>
         </Trans>,
         <Trans key="3">
@@ -458,7 +458,7 @@ export function SonajargLesson() {
                   <Trans>
                     <span lang="et">Ma lähen täna Tartusse</span> is I’m going to Tartu today. Start
                     it with <span lang="et">täna</span> instead, and the verb stays in second place
-                    while the person moves after it: <Word w="Täna lähen ma" />{" "}
+                    while the person usually moves after it: <Word w="Täna lähen ma" />{" "}
                     <span lang="et">Tartusse</span>.
                   </Trans>
                 </p>
@@ -510,9 +510,10 @@ export function SonajargLesson() {
                   <Trans>
                     A question works differently. After a question word from lesson {questions}, the
                     short pronoun, such as <span lang="et">sa</span> or <span lang="et">te</span>,
-                    comes next and the verb after it: <Word w="Kus sa elad?" />, where do you live?
-                    A question with <span lang="et">kas</span> puts <span lang="et">kas</span> in
-                    front of a plain statement: <span lang="et">Kas sa tuled homme?</span>
+                    usually comes next and the verb after it: <Word w="Kus sa elad?" />, where do
+                    you live? A question with <span lang="et">kas</span> puts{" "}
+                    <span lang="et">kas</span> in front of a plain statement:{" "}
+                    <span lang="et">Kas sa tuled homme?</span>
                   </Trans>
                 </p>
                 <p>

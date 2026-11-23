@@ -31,29 +31,38 @@ msgstr "день тому"
 msgid "A day in the genitive before a part of it: <et>esmaspäeva hommikul</et>."
 msgstr "День у родовому перед частиною дня: <et>esmaspäeva hommikul</et>."
 
-msgid "A day, a part of the day or a season takes <0>-l</0>, as in <1>suvel</1>; a month takes <2>-s</2>, as in <3>mais</3>. In a week is <4>nädala pärast</4>, and a week ago is <5>nädal tagasi</5>."
-msgstr "День, частина дня чи пора року отримує <0>-l</0>, як у <1>suvel</1>, а місяць — <2>-s</2>, як у <3>mais</3>. «Через тиждень» — <4>nädala pärast</4>, а «тиждень тому» — <5>nädal tagasi</5>."
-
 msgid "A day, a part of the day or a season takes <0>-l</0>: <1>esmaspäeval, hommikul, suvel</1>. <2>Öö</2> gives <3>öösel</3>."
 msgstr "День, частина дня чи пора року отримує <0>-l</0>: <1>esmaspäeval, hommikul, suvel</1>. Від <2>öö</2> — <3>öösel</3>."
 
-msgid "A day, a part of the day or a season takes <et>-l</et>: <et>hommikul</et>, <et>suvel</et>."
-msgstr "День, частина дня чи пора року отримує <et>-l</et>: <et>hommikul</et>, <et>suvel</et>."
+msgid "A day, a part of the day or a season usually takes <0>-l</0>, as in <1>suvel</1>; a month on its own takes <2>-s</2>, as in <3>mais</3>. In a week is <4>nädala pärast</4>, and a week ago is <5>nädal tagasi</5>."
+msgstr "День, частина дня чи пора року зазвичай отримує <0>-l</0>, як у <1>suvel</1>, а місяць без дати — <2>-s</2>, як у <3>mais</3>. «Через тиждень» — <4>nädala pärast</4>, а «тиждень тому» — <5>nädal tagasi</5>."
 
-msgid "A month takes <0>-s</0>, the ending for “in” from lesson {places}: <1/>, in May; <2/>, in July. The months keep their small letter."
-msgstr "Місяць отримує <0>-s</0>, закінчення зі значенням «в» з уроку {places}: <1/> — «у травні», <2/> — «у липні». Місяці пишуть з малої літери."
+msgid "A day, a part of the day or a season usually takes <et>-l</et>: <et>hommikul</et>, <et>suvel</et>."
+msgstr "День, частина дня чи пора року зазвичай отримує <et>-l</et>: <et>hommikul</et>, <et>suvel</et>."
 
-msgid "A month takes <0>-s</0>: <1>juulis</1>."
-msgstr "Місяць отримує <0>-s</0>: <1>juulis</1>."
+msgid "A month on its own takes <0>-s</0>, the ending for “in” from lesson {places}: <1/>, in May; <2/>, in July. The months keep their small letter."
+msgstr "Місяць без дати отримує <0>-s</0>, закінчення зі значенням «в» з уроку {places}: <1/> — «у травні», <2/> — «у липні». Місяці пишуть з малої літери."
 
-msgid "A month takes <0>-s</0>: <1>mais, juulis</1>. Every morning is <2>hommikuti</2>, with <3>-ti</3>."
-msgstr "Місяць отримує <0>-s</0>: <1>mais, juulis</1>. «Щоранку» — <2>hommikuti</2>, з <3>-ti</3>."
+msgid "A month on its own takes <0>-s</0>: <1>juulis</1>."
+msgstr "Місяць без дати отримує <0>-s</0>: <1>juulis</1>."
 
-msgid "A month takes <et>-s</et>: <et>mais</et>, <et>juulis</et>."
-msgstr "Місяць отримує <et>-s</et>: <et>mais</et>, <et>juulis</et>."
+msgid "A month on its own takes <0>-s</0>: <1>mais, juulis</1>. Every morning is <2>hommikuti</2>, with <3>-ti</3>."
+msgstr "Місяць без дати отримує <0>-s</0>: <1>mais, juulis</1>. «Щоранку» — <2>hommikuti</2>, з <3>-ti</3>."
 
-msgid "A part of the day takes <0>-l</0>: <1>hommikul</1>."
-msgstr "Частина дня отримує <0>-l</0>: <1>hommikul</1>."
+msgid "A month on its own takes <0>-s</0>: <1>mais</1>, in May."
+msgstr "Місяць без дати отримує <0>-s</0>: <1>mais</1> — «у травні»."
+
+msgid "A month on its own takes <0>-s</0>."
+msgstr "Місяць без дати отримує <0>-s</0>."
+
+msgid "A month on its own takes <et>-s</et>: <et>mais</et>, <et>juulis</et>."
+msgstr "Місяць без дати отримує <et>-s</et>: <et>mais</et>, <et>juulis</et>."
+
+msgid "A month, no date: -s"
+msgstr "Місяць без дати: -s"
+
+msgid "A part of the day usually takes <0>-l</0>: <1>hommikul</1>."
+msgstr "Частина дня зазвичай отримує <0>-l</0>: <1>hommikul</1>."
 
 msgid "A season takes <0>-l</0>: <1>suvel</1>."
 msgstr "Пора року отримує <0>-l</0>: <1>suvel</1>."
@@ -88,8 +97,8 @@ msgstr "Після роботи я йду додому."
 msgid "After work: <0>pärast</0> before the partitive, <1>pärast tööd</1>."
 msgstr "Після роботи: <0>pärast</0> перед партитивом, <1>pärast tööd</1>."
 
-msgid "Again and again: <et>-ti</et>, as in <et>hommikuti</et>."
-msgstr "Знову й знову: <et>-ti</et>, як у <et>hommikuti</et>."
+msgid "Again and again: usually <et>-ti</et>, as in <et>hommikuti</et>."
+msgstr "Знову й знову: зазвичай <et>-ti</et>, як у <et>hommikuti</et>."
 
 msgid "Ago"
 msgstr "Тому"
@@ -148,11 +157,11 @@ msgstr "Подзвони мені до п’ятої."
 msgid "day"
 msgstr "день"
 
-msgid "Days, parts of the day and seasons take <0>-l</0>: <1>suvel</1>, in summer."
-msgstr "Дні, частини дня і пори року отримують <0>-l</0>: <1>suvel</1> — «влітку»."
+msgid "Days, parts of the day and seasons usually take <0>-l</0>: <1>suvel</1>, in summer."
+msgstr "Дні, частини дня і пори року зазвичай отримують <0>-l</0>: <1>suvel</1> — «влітку»."
 
-msgid "Days, times of day, seasons: -l"
-msgstr "Дні, пори доби, пори року: -l"
+msgid "Days, times of day, seasons: usually -l"
+msgstr "Дні, пори доби, пори року: зазвичай -l"
 
 msgid "evening"
 msgstr "вечір"
@@ -235,8 +244,8 @@ msgstr "Від õhtu — вечір."
 msgid "From one day to another: <0>-st</0>, then <1>-ni</1>."
 msgstr "Від одного дня до іншого: <0>-st</0>, потім <1>-ni</1>."
 
-msgid "From öö, night: it takes -sel, not -l."
-msgstr "Від öö — ніч: тут -sel, а не -l."
+msgid "From öö, night. At night is usually öösel, with -sel."
+msgstr "Від öö — ніч. «Уночі» зазвичай öösel, з -sel."
 
 msgid "From suvi, summer."
 msgstr "Від suvi — літо."
@@ -297,12 +306,6 @@ msgstr "через день"
 
 msgid "In a month is <0>-s</0>: <1>mais</1>. <2>Mail</2> says on a day of May, as in <3>viiendal mail</3>."
 msgstr "«У місяці» — це <0>-s</0>: <1>mais</1>. <2>Mail</2> означає «якогось числа травня», як у <3>viiendal mail</3>."
-
-msgid "In a month: -s"
-msgstr "У місяці: -s"
-
-msgid "In a month: <0>-s</0>."
-msgstr "У місяці: <0>-s</0>."
 
 msgid "in a week"
 msgstr "через тиждень"
@@ -451,9 +454,6 @@ msgstr "Марі працює по суботах."
 msgid "Mari’s birthday is in May."
 msgstr "У Марі день народження в травні."
 
-msgid "Months take <0>-s</0>: <1>mais</1>, in May."
-msgstr "Місяці отримують <0>-s</0>: <1>mais</1> — «у травні»."
-
 msgid "Most of them. Read the reason under each one you missed."
 msgstr "Більшість. Прочитай пояснення до тих, що не вдалися."
 
@@ -492,9 +492,6 @@ msgstr "школа"
 
 msgid "Six mistakes to catch"
 msgstr "Шість помилок"
-
-msgid "So the place of <0>pärast</0> tells you which it is. <1>Nädala pärast</1> is in a week; <2>pärast tööd</2> is after work. Tap a line to hear it."
-msgstr "Тож місце <0>pärast</0> підказує, що це. <1>Nädala pärast</1> — «через тиждень», <2>pärast tööd</2> — «після роботи». Торкнися рядка, щоб послухати."
 
 msgid "Sort the words: which take -s, and which take -l?"
 msgstr "Розклади слова: які отримують -s, а які -l?"
@@ -592,11 +589,14 @@ msgstr "Коли Яан приїде до Таллінна?"
 msgid "When was Jaan last in Tallinn?"
 msgstr "Коли Яан востаннє був у Таллінні?"
 
-msgid "With a number the difference shows most. Two days ago is <0/>, the partitive after a number as in lesson {partitive}; in two days is <1/>, both words in the genitive. Tap a form to hear it."
-msgstr "З числом різниця найпомітніша. «Два дні тому» — <0/>, партитив після числа, як в уроці {partitive}; «через два дні» — <1/>, обидва слова в родовому. Торкнися форми, щоб послухати."
+msgid "With a length of time, the place of <0>pärast</0> usually tells you which it is. <1>Nädala pärast</1> is in a week; <2>pärast tööd</2> is after work. Tap a line to hear it."
+msgstr "Коли йдеться про проміжок часу, місце <0>pärast</0> зазвичай підказує, що це. <1>Nädala pärast</1> — «через тиждень», <2>pärast tööd</2> — «після роботи». Торкнися рядка, щоб послухати."
 
-msgid "With the clock from lesson {clock}, the hour takes them, and <0>kella</0> comes before it: <1/>, <2/>. Tap a line to hear it."
-msgstr "З годинами з уроку {clock} закінчення отримує число години, а перед ним стоїть <0>kella</0>: <1/>, <2/>. Торкнися рядка, щоб послухати."
+msgid "With a number the difference shows most. Two days ago is <0/>, the partitive after a number from two up, as in lesson {partitive}; in two days is <1/>, both words in the genitive. Tap a form to hear it."
+msgstr "З числом різниця найпомітніша. «Два дні тому» — <0/>, партитив після числа від двох, як в уроці {partitive}; «через два дні» — <1/>, обидва слова в родовому. Торкнися форми, щоб послухати."
+
+msgid "With the clock from lesson {clock}, the hour takes them, and <0>kella</0> usually comes before it: <1/>, <2/>. Tap a line to hear it."
+msgstr "З годинами з уроку {clock} закінчення отримує число години, а перед ним зазвичай стоїть <0>kella</0>: <1/>, <2/>. Торкнися рядка, щоб послухати."
 
 msgid "Write each sentence in Estonian. The time word can go after the verb, as in the lines above."
 msgstr "Напиши кожне речення естонською. Слово часу може стояти після дієслова, як у рядках вище."

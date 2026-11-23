@@ -74,7 +74,7 @@ const GLOSSARY: Glossary = {
   millal: { en: msg`when`, show: "Millal?" },
   hommikul: { en: msg`in the morning`, note: msg`From hommik, morning.` },
   õhtul: { en: msg`in the evening`, note: msg`From õhtu, evening.` },
-  öösel: { en: msg`at night`, note: msg`From öö, night: it takes -sel, not -l.` },
+  öösel: { en: msg`at night`, note: msg`From öö, night. At night is usually öösel, with -sel.` },
   suvel: { en: msg`in summer`, note: msg`From suvi, summer.` },
   talvel: { en: msg`in winter`, note: msg`From talv, winter.` },
   esmaspäeval: { en: msg`on Monday` },
@@ -212,7 +212,7 @@ function useContent() {
       ),
       juulis: (
         <Trans>
-          In a month: <span lang="et">-s</span>.
+          A month on its own takes <span lang="et">-s</span>.
         </Trans>
       ),
     };
@@ -221,12 +221,13 @@ function useContent() {
     const translateWhy: Record<(typeof WHEN_TRANSLATE)[number]["id"], ReactNode> = {
       hommikul: (
         <Trans>
-          A part of the day takes <span lang="et">-l</span>: <span lang="et">hommikul</span>.
+          A part of the day usually takes <span lang="et">-l</span>: <span lang="et">hommikul</span>
+          .
         </Trans>
       ),
       juulis: (
         <Trans>
-          A month takes <span lang="et">-s</span>: <span lang="et">juulis</span>.
+          A month on its own takes <span lang="et">-s</span>: <span lang="et">juulis</span>.
         </Trans>
       ),
       "nadala-parast": (
@@ -412,21 +413,21 @@ export function MillalLesson() {
   const bins: SortBin[] = [
     {
       id: "s",
-      label: t`In a month: -s`,
+      label: t`A month, no date: -s`,
       lang: i18n.locale,
       rule: (
         <Trans>
-          Months take <span lang="et">-s</span>: <span lang="et">mais</span>, in May.
+          A month on its own takes <span lang="et">-s</span>: <span lang="et">mais</span>, in May.
         </Trans>
       ),
     },
     {
       id: "l",
-      label: t`Days, times of day, seasons: -l`,
+      label: t`Days, times of day, seasons: usually -l`,
       lang: i18n.locale,
       rule: (
         <Trans>
-          Days, parts of the day and seasons take <span lang="et">-l</span>:{" "}
+          Days, parts of the day and seasons usually take <span lang="et">-l</span>:{" "}
           <span lang="et">suvel</span>, in summer.
         </Trans>
       ),
@@ -504,8 +505,8 @@ export function MillalLesson() {
       glossary={GLOSSARY}
       sub={
         <Trans>
-          A day, a part of the day or a season takes <span lang="et">-l</span>, as in{" "}
-          <span lang="et">suvel</span>; a month takes <span lang="et">-s</span>, as in{" "}
+          A day, a part of the day or a season usually takes <span lang="et">-l</span>, as in{" "}
+          <span lang="et">suvel</span>; a month on its own takes <span lang="et">-s</span>, as in{" "}
           <span lang="et">mais</span>. In a week is <span lang="et">nädala pärast</span>, and a week
           ago is <span lang="et">nädal tagasi</span>.
         </Trans>
@@ -537,8 +538,8 @@ export function MillalLesson() {
           <b lang="et">öösel</b>.
         </Trans>,
         <Trans key="2">
-          A month takes <b lang="et">-s</b>: <b lang="et">mais, juulis</b>. Every morning is{" "}
-          <b lang="et">hommikuti</b>, with <b lang="et">-ti</b>.
+          A month on its own takes <b lang="et">-s</b>: <b lang="et">mais, juulis</b>. Every morning
+          is <b lang="et">hommikuti</b>, with <b lang="et">-ti</b>.
         </Trans>,
         <Trans key="3">
           In a week, in two days: the genitive before <b lang="et">pärast</b>,{" "}
@@ -590,9 +591,9 @@ export function MillalLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    A month takes <span lang="et">-s</span>, the ending for “in” from lesson{" "}
-                    {places}: <Word w="mais" />, in May; <Word w="juulis" />, in July. The months
-                    keep their small letter.
+                    A month on its own takes <span lang="et">-s</span>, the ending for “in” from
+                    lesson {places}: <Word w="mais" />, in May; <Word w="juulis" />, in July. The
+                    months keep their small letter.
                   </Trans>
                 </p>
                 <p>
@@ -654,9 +655,9 @@ export function MillalLesson() {
                 <p>
                   <Trans>
                     With a number the difference shows most. Two days ago is{" "}
-                    <Word w="kaks päeva tagasi" />, the partitive after a number as in lesson{" "}
-                    {partitive}; in two days is <Word w="kahe päeva pärast" />, both words in the
-                    genitive. Tap a form to hear it.
+                    <Word w="kaks päeva tagasi" />, the partitive after a number from two up, as in
+                    lesson {partitive}; in two days is <Word w="kahe päeva pärast" />, both words in
+                    the genitive. Tap a form to hear it.
                   </Trans>
                 </p>
               </Prose>
@@ -731,8 +732,8 @@ export function MillalLesson() {
                 </p>
                 <p>
                   <Trans>
-                    So the place of <span lang="et">pärast</span> tells you which it is.{" "}
-                    <span lang="et">Nädala pärast</span> is in a week;{" "}
+                    With a length of time, the place of <span lang="et">pärast</span> usually tells
+                    you which it is. <span lang="et">Nädala pärast</span> is in a week;{" "}
                     <span lang="et">pärast tööd</span> is after work. Tap a line to hear it.
                   </Trans>
                 </p>
@@ -783,8 +784,8 @@ export function MillalLesson() {
                 <p>
                   <Trans>
                     With the clock from lesson {clock}, the hour takes them, and{" "}
-                    <span lang="et">kella</span> comes before it: <Word w="kella kaheksast" />,{" "}
-                    <Word w="kella viieni" />. Tap a line to hear it.
+                    <span lang="et">kella</span> usually comes before it:{" "}
+                    <Word w="kella kaheksast" />, <Word w="kella viieni" />. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>

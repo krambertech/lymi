@@ -9,7 +9,13 @@ const PAIRS: Record<string, string> = {
   meie: "me",
   te: "teie",
   teie: "te",
+  ta: "tema",
+  tema: "ta",
+  nad: "nemad",
+  nemad: "nad",
 };
+
+const THIRD = new Set(["ta", "tema", "nad", "nemad"]);
 
 const NEGATIONS = new Set(["ei", "pole"]);
 const JOINS = new Set(["ja", "või"]);
@@ -32,7 +38,7 @@ function variants(sentence: string): string[] {
     if (!(word in PAIRS) || answerWord(text) !== text.toLowerCase()) return;
     out.push([...pieces.slice(0, i), swapped(word, text), ...pieces.slice(i + 1)].join(" "));
     const joined = JOINS.has(words[i - 1] ?? "") || JOINS.has(words[i + 1] ?? "");
-    if (negated || joined || pieces.length < 3) return;
+    if (negated || joined || THIRD.has(word) || pieces.length < 3) return;
     const dropped = [...pieces.slice(0, i), ...pieces.slice(i + 1)].join(" ");
     out.push(i === 0 ? capital(dropped) : dropped);
   });

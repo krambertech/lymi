@@ -2244,7 +2244,14 @@ export const WHEN_SHOP = [
 export const WHEN_TRANSLATE = [
   {
     id: "hommikul",
-    answers: withPronouns(["Ma töötan hommikul.", "Hommikul töötan ma.", "Hommikul ma töötan."]),
+    answers: withPronouns([
+      "Ma töötan hommikul.",
+      "Hommikul töötan ma.",
+      "Hommikul ma töötan.",
+      "Ma töötan hommikuti.",
+      "Hommikuti töötan ma.",
+      "Hommikuti ma töötan.",
+    ]),
   },
   {
     id: "juulis",
@@ -2303,7 +2310,11 @@ export const WHEN_FIX = [
     wrong: "Ma olin Tartus nädala tagasi.",
     answers: ["Ma olin Tartus nädal tagasi."],
   },
-  { id: "fix-suvel", wrong: "Me ujume suves jões.", answers: ["Me ujume suvel jões."] },
+  {
+    id: "fix-suvel",
+    wrong: "Me ujume suves jões.",
+    answers: ["Me ujume suvel jões.", "Me ujume suviti jões."],
+  },
   { id: "fix-mais", wrong: "Mari sünnipäev on mail.", answers: ["Mari sünnipäev on mais."] },
   { id: "fix-tood", wrong: "Ma tulen pärast töö.", answers: ["Ma tulen pärast tööd."] },
   {
@@ -2505,6 +2516,7 @@ export const ORDER_MEANING = [
       "Ma töötan täna kodus.",
       "Täna ma töötan kodus.",
       "Ma töötan kodus täna.",
+      "Ma täna töötan kodus.",
     ]),
   },
   { id: "mida-teed", answers: withPronouns(["Mida sa täna teed?", "Mida sa teed täna?"]) },
@@ -2528,15 +2540,28 @@ export const ORDER_MEANING = [
       "Õhtul ma tahan lugeda raamatut.",
       "Ma tahan õhtul raamatut lugeda.",
       "Ma tahan õhtul lugeda raamatut.",
+      "Ma tahan raamatut lugeda õhtul.",
+      "Ma tahan lugeda raamatut õhtul.",
     ]),
   },
   {
     id: "homme-ei-tule",
-    answers: withPronouns(["Homme me ei tule.", "Homme ei tule me.", "Me ei tule homme."]),
+    answers: withPronouns([
+      "Homme me ei tule.",
+      "Homme ei tule me.",
+      "Me ei tule homme.",
+      "Me homme ei tule.",
+    ]),
   },
   {
     id: "ohtul-ei-ole",
-    answers: ["Õhtul ta ei ole kodus.", "Õhtul ei ole ta kodus.", "Ta ei ole õhtul kodus."],
+    answers: [
+      "Õhtul ta ei ole kodus.",
+      "Õhtul ei ole ta kodus.",
+      "Ta ei ole õhtul kodus.",
+      "Ta õhtul ei ole kodus.",
+      "Ta ei ole kodus õhtul.",
+    ],
   },
   {
     id: "laupaeval-ujuma",
@@ -2589,7 +2614,12 @@ export const ORDER_TRANSLATE = [
   },
   {
     id: "tana-ei-too",
-    answers: withPronouns(["Täna me ei tööta.", "Täna ei tööta me.", "Me ei tööta täna."]),
+    answers: withPronouns([
+      "Täna me ei tööta.",
+      "Täna ei tööta me.",
+      "Me ei tööta täna.",
+      "Me täna ei tööta.",
+    ]),
   },
   {
     id: "hommikul-joob",

@@ -1,13 +1,15 @@
 import { msg } from "@lingui/core/macro";
-import { WHEN_TRANSLATE } from "../../../lib/learn/clips";
+import { WHEN_FIX, WHEN_TRANSLATE } from "../../../lib/learn/clips";
 import type { DrillBank } from "../../../lib/learn/drill";
 import { withPronouns } from "../../../lib/learn/pronouns";
 
 const whenAnswers = (id: (typeof WHEN_TRANSLATE)[number]["id"]) =>
   (WHEN_TRANSLATE.find((item) => item.id === id) as (typeof WHEN_TRANSLATE)[number]).answers;
+const fixAnswers = (id: (typeof WHEN_FIX)[number]["id"]) =>
+  (WHEN_FIX.find((item) => item.id === id) as (typeof WHEN_FIX)[number]).answers;
 
-const L = msg`A day, a part of the day or a season takes <et>-l</et>: <et>hommikul</et>, <et>suvel</et>.`;
-const S = msg`A month takes <et>-s</et>: <et>mais</et>, <et>juulis</et>.`;
+const L = msg`A day, a part of the day or a season usually takes <et>-l</et>: <et>hommikul</et>, <et>suvel</et>.`;
+const S = msg`A month on its own takes <et>-s</et>: <et>mais</et>, <et>juulis</et>.`;
 const IN = msg`In a week, in two days: the genitive, then <et>pärast</et>: <et>nädala pärast</et>, <et>kahe päeva pärast</et>.`;
 const AGO = msg`Ago: the time as it is counted, then <et>tagasi</et>: <et>nädal tagasi</et>, <et>kaks päeva tagasi</et>.`;
 const AROUND = msg`Before or after something: <et>enne</et> or <et>pärast</et>, then its partitive: <et>pärast tööd</et>.`;
@@ -38,7 +40,7 @@ export const DRILLS: DrillBank = {
       id: "when-fix-suvel",
       rule: "when",
       wrong: "Me ujume suves jões.",
-      answers: ["Me ujume suvel jões."],
+      answers: fixAnswers("fix-suvel"),
       say: "Me ujume suvel jões.",
       explain: L,
     },
@@ -47,7 +49,7 @@ export const DRILLS: DrillBank = {
       id: "when-fix-mais",
       rule: "when",
       wrong: "Mari sünnipäev on mail.",
-      answers: ["Mari sünnipäev on mais."],
+      answers: fixAnswers("fix-mais"),
       say: "Mari sünnipäev on mais.",
       explain: S,
     },
@@ -79,7 +81,7 @@ export const DRILLS: DrillBank = {
       cue: msg`every evening`,
       answers: ["õhtuti"],
       say: "Ma töötan õhtuti.",
-      explain: msg`Again and again: <et>-ti</et>, as in <et>hommikuti</et>.`,
+      explain: msg`Again and again: usually <et>-ti</et>, as in <et>hommikuti</et>.`,
     },
 
     {
@@ -95,7 +97,7 @@ export const DRILLS: DrillBank = {
       id: "span-fix-nadala",
       rule: "span",
       wrong: "Ma tulen nädal pärast.",
-      answers: ["Ma tulen nädala pärast."],
+      answers: fixAnswers("fix-nadala"),
       say: "Ma tulen nädala pärast.",
       explain: IN,
     },
@@ -104,7 +106,7 @@ export const DRILLS: DrillBank = {
       id: "span-fix-nadal",
       rule: "span",
       wrong: "Ma olin Tartus nädala tagasi.",
-      answers: ["Ma olin Tartus nädal tagasi."],
+      answers: fixAnswers("fix-nadal"),
       say: "Ma olin Tartus nädal tagasi.",
       explain: AGO,
     },
@@ -160,7 +162,7 @@ export const DRILLS: DrillBank = {
       id: "around-fix-tood",
       rule: "around",
       wrong: "Ma tulen pärast töö.",
-      answers: ["Ma tulen pärast tööd."],
+      answers: fixAnswers("fix-tood"),
       say: "Ma tulen pärast tööd.",
       explain: AROUND,
     },
@@ -220,7 +222,7 @@ export const DRILLS: DrillBank = {
       id: "from-fix-kaheksast",
       rule: "from",
       wrong: "Ma töötan kella kaheksa kella viieni.",
-      answers: ["Ma töötan kella kaheksast kella viieni."],
+      answers: fixAnswers("fix-kaheksast"),
       say: "Ma töötan kella kaheksast kella viieni.",
       explain: FROM,
     },
@@ -248,6 +250,7 @@ export const DRILLS: DrillBank = {
       prompt: msg`I work from eight to five.`,
       answers: withPronouns([
         "Ma töötan kella kaheksast kella viieni.",
+        "Ma töötan kella kaheksast viieni.",
         "Kella kaheksast kella viieni töötan ma.",
         "Kella kaheksast kella viieni ma töötan.",
         "Ma töötan kaheksast viieni.",

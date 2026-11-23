@@ -7,17 +7,17 @@ msgstr ""
 "X-Generator: @lingui/cli\n"
 "Language: ru\n"
 
-msgid "<0>Ei</0> goes right before the verb, so the person can’t stand between them: <1>laupäeval ma ei tule</1>."
-msgstr "<0>Ei</0> стоит прямо перед глаголом, так что подлежащее не может встать между ними: <1>laupäeval ma ei tule</1>."
-
 msgid "<0>Ei</0> goes right before the verb."
 msgstr "<0>Ei</0> стоит прямо перед глаголом."
+
+msgid "<0>Ei</0> usually goes right before the verb, so the person doesn’t stand between them: <1>laupäeval ma ei tule</1>."
+msgstr "<0>Ei</0> обычно стоит прямо перед глаголом, так что подлежащее между ними не встаёт: <1>laupäeval ma ei tule</1>."
 
 msgid "<0>Läheme</0> takes second place, and here <1>ujuma</1> goes last, the usual place."
 msgstr "<0>Läheme</0> встаёт на второе место, а <1>ujuma</1> здесь идёт в конец — на обычное место."
 
-msgid "<0>Ma lähen täna Tartusse</0> is I’m going to Tartu today. Start it with <1>täna</1> instead, and the verb stays in second place while the person moves after it: <2/> <3>Tartusse</3>."
-msgstr "<0>Ma lähen täna Tartusse</0> — «я сегодня еду в Тарту». Начни предложение с <1>täna</1>, и глагол останется на втором месте, а подлежащее — тот, кто действует, — перейдёт за него: <2/> <3>Tartusse</3>."
+msgid "<0>Ma lähen täna Tartusse</0> is I’m going to Tartu today. Start it with <1>täna</1> instead, and the verb stays in second place while the person usually moves after it: <2/> <3>Tartusse</3>."
+msgstr "<0>Ma lähen täna Tartusse</0> — «я сегодня еду в Тарту». Начни предложение с <1>täna</1>, и глагол останется на втором месте, а подлежащее — тот, кто действует, — обычно перейдёт за него: <2/> <3>Tartusse</3>."
 
 msgid "<0>Minema</0> sits in second place, where the first verb, <1>pean</1>, belongs."
 msgstr "<0>Minema</0> стоит на втором месте, а там должен быть первый глагол, <1>pean</1>."
@@ -34,8 +34,8 @@ msgstr "16 минут"
 msgid "5 exercises, 2 of them typed, and a conversation"
 msgstr "5 упражнений, в 2 из них нужно писать, и разговор"
 
-msgid "A question works differently. After a question word from lesson {questions}, the short pronoun, such as <0>sa</0> or <1>te</1>, comes next and the verb after it: <2/>, where do you live? A question with <3>kas</3> puts <4>kas</4> in front of a plain statement: <5>Kas sa tuled homme?</5>"
-msgstr "В вопросе иначе. После вопросительного слова из урока {questions} идёт короткое местоимение, например <0>sa</0> или <1>te</1>, а за ним глагол: <2/> — «где ты живёшь?». Вопрос с <3>kas</3> просто ставит <4>kas</4> перед обычным предложением: <5>Kas sa tuled homme?</5>"
+msgid "A question works differently. After a question word from lesson {questions}, the short pronoun, such as <0>sa</0> or <1>te</1>, usually comes next and the verb after it: <2/>, where do you live? A question with <3>kas</3> puts <4>kas</4> in front of a plain statement: <5>Kas sa tuled homme?</5>"
+msgstr "В вопросе иначе. После вопросительного слова из урока {questions} обычно идёт короткое местоимение, например <0>sa</0> или <1>te</1>, а за ним глагол: <2/> — «где ты живёшь?». Вопрос с <3>kas</3> просто ставит <4>kas</4> перед обычным предложением: <5>Kas sa tuled homme?</5>"
 
 msgid "After <0>et</0>, <1>kui</1> and words like them, the verb usually moves towards the end of its part of the sentence. Lesson {conjunctions} covers it."
 msgstr "После <0>et</0>, <1>kui</1> и похожих слов глагол обычно сдвигается ближе к концу своей части предложения. Об этом — урок {conjunctions}."
@@ -100,20 +100,20 @@ msgstr "Мне нужно завтра идти на работу."
 msgid "I’m going to Tartu today."
 msgstr "Я сегодня еду в Тарту."
 
-msgid "In a question, the short pronoun comes right after the question word: <0>Kus sa elad? Mida sa täna teed?</0>"
-msgstr "В вопросе короткое местоимение стоит сразу после вопросительного слова: <0>Kus sa elad? Mida sa täna teed?</0>"
+msgid "In a question, the short pronoun usually comes right after the question word: <0>Kus sa elad? Mida sa täna teed?</0>"
+msgstr "В вопросе короткое местоимение обычно стоит сразу после вопросительного слова: <0>Kus sa elad? Mida sa täna teed?</0>"
 
-msgid "In a question, the short pronoun comes right after the question word: <0>Kus sa elad?</0>"
-msgstr "В вопросе короткое местоимение стоит сразу после вопросительного слова: <0>Kus sa elad?</0>"
+msgid "In a question, the short pronoun usually comes right after the question word: <0>Kus sa elad?</0>"
+msgstr "В вопросе короткое местоимение обычно стоит сразу после вопросительного слова: <0>Kus sa elad?</0>"
 
-msgid "In a question, the short pronoun comes right after the question word: <et>Kus sa elad?</et>"
-msgstr "В вопросе короткое местоимение стоит сразу после вопросительного слова: <et>Kus sa elad?</et>"
+msgid "In a question, the short pronoun usually comes right after the question word: <et>Kus sa elad?</et>"
+msgstr "В вопросе короткое местоимение обычно стоит сразу после вопросительного слова: <et>Kus sa elad?</et>"
 
-msgid "In a statement the verb usually comes second. Start with a time or a place, and the person follows the verb: <0>Täna lähen ma Tartusse.</0>"
-msgstr "В утверждении глагол обычно стоит вторым. Начни со времени или места — и подлежащее пойдёт за глаголом: <0>Täna lähen ma Tartusse.</0>"
+msgid "In a statement the verb usually comes second. Start with a time or a place, and the person usually follows the verb: <0>Täna lähen ma Tartusse.</0>"
+msgstr "В утверждении глагол обычно стоит вторым. Начни со времени или места — и подлежащее обычно пойдёт за глаголом: <0>Täna lähen ma Tartusse.</0>"
 
-msgid "In an Estonian statement the verb usually comes second. Start with a time or a place, and the person moves after the verb: <0>Täna lähen ma Tartusse</0>, today I’m going to Tartu."
-msgstr "В эстонском утверждении глагол обычно стоит вторым. Начни со времени или места — и подлежащее перейдёт за глагол: <0>Täna lähen ma Tartusse</0> — «сегодня я еду в Тарту»."
+msgid "In an Estonian statement the verb usually comes second. Start with a time or a place, and the person usually moves after the verb: <0>Täna lähen ma Tartusse</0>, today I’m going to Tartu."
+msgstr "В эстонском утверждении глагол обычно стоит вторым. Начни со времени или места — и подлежащее обычно перейдёт за глагол: <0>Täna lähen ma Tartusse</0> — «сегодня я еду в Тарту»."
 
 msgid "In Tartu lives Kati."
 msgstr "В Тарту живёт Кати."
@@ -184,8 +184,8 @@ msgstr "Планы на выходные"
 msgid "Play the ones you missed and listen for where the verb is."
 msgstr "Послушай ещё раз те, что не получились, и обрати внимание, где глагол."
 
-msgid "Question word, pronoun, then the verb: <0>Mida sa täna teed?</0>"
-msgstr "Вопросительное слово, местоимение, потом глагол: <0>Mida sa täna teed?</0>"
+msgid "Question word first, then the pronoun: <0>Mida sa täna teed?</0>"
+msgstr "Сначала вопросительное слово, потом местоимение: <0>Mida sa täna teed?</0>"
 
 msgid "Questions: <et>Kus sa elad?</et>"
 msgstr "Вопросы: <et>Kus sa elad?</et>"

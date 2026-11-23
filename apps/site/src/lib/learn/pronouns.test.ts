@@ -25,9 +25,17 @@ describe("withPronouns", () => {
     ]);
   });
 
-  it("leaves ta, a joined subject and a pronoun on its own alone", () => {
-    expect(withPronouns(["Ta töötab hommikul.", "Ma ja Mari läheme.", "Kes tuli? Mina."])).toEqual([
+  it("swaps but never drops ta or nad, whose verb could be anybody's", () => {
+    expect(withPronouns(["Ta töötab hommikul.", "Nad elavad Tartus."])).toEqual([
       "Ta töötab hommikul.",
+      "Nad elavad Tartus.",
+      "Tema töötab hommikul.",
+      "Nemad elavad Tartus.",
+    ]);
+  });
+
+  it("leaves a pronoun on its own alone and keeps a joined one", () => {
+    expect(withPronouns(["Ma ja Mari läheme.", "Kes tuli? Mina."])).toEqual([
       "Ma ja Mari läheme.",
       "Kes tuli? Mina.",
       "Mina ja Mari läheme.",

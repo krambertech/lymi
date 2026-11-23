@@ -115,8 +115,8 @@ msgstr "«Стає» — <0>-ks</0>: <1>{answer}</1>."
 msgid "Both words: <et>heaks arstiks</et>"
 msgstr "Обидва слова: <et>heaks arstiks</et>"
 
-msgid "By and for a time: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal, a day or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
-msgstr "«До» і «на» якийсь час: <0>reedeks</0> — «до п’ятниці», не пізніше; <1>nädalaks</1> — «на тиждень». З прийомом їжі, днем чи подією <2>-ks</2> каже «на що»: <3>sünnipäevaks</3> — «на день народження»."
+msgid "By and for a time: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
+msgstr "«До» і «на» якийсь час: <0>reedeks</0> — «до п’ятниці», не пізніше; <1>nädalaks</1> — «на тиждень». З прийомом їжі чи подією <2>-ks</2> каже «на що»: <3>sünnipäevaks</3> — «на день народження»."
 
 msgid "By and for: <et>reedeks</et>, <et>nädalaks</et>"
 msgstr "До і на: <et>reedeks</et>, <et>nädalaks</et>"
@@ -448,8 +448,8 @@ msgstr "З <et>-na</et> закінчення отримує лише іменн�
 msgid "With <et>-na</et>, only the noun takes the ending: <et>uue arstina</et>."
 msgstr "З <et>-na</et> закінчення отримує лише іменник: <et>uue arstina</et>."
 
-msgid "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal, a day or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. Tap a line to hear it."
-msgstr "Коли йдеться про час, <0>-ks</0> каже «до коли» або на скільки щось заплановано: <1/> — «до п’ятниці», тобто не пізніше; <2/> — «на тиждень». З прийомом їжі, днем чи подією — «на що»: <3>hommikusöögiks</3> — «на сніданок». Торкнися рядка, щоб послухати."
+msgid "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. A day can take either meaning: <4>reedeks tagasi</4>, back by Friday; <5>laupäevaks</5>, for Saturday. Tap a line to hear it."
+msgstr "Коли йдеться про час, <0>-ks</0> каже «до коли» або на скільки щось заплановано: <1/> — «до п’ятниці», тобто не пізніше; <2/> — «на тиждень». З прийомом їжі чи подією — «на що»: <3>hommikusöögiks</3> — «на сніданок». День може мати обидва значення: <4>reedeks tagasi</4> — «назад до п’ятниці»; <5>laupäevaks</5> — «на суботу». Торкнися рядка, щоб послухати."
 
 msgid "Words"
 msgstr "Слова"

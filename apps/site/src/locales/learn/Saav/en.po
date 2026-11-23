@@ -115,8 +115,8 @@ msgstr "Becomes: <0>-ks</0>, <1>{answer}</1>."
 msgid "Both words: <et>heaks arstiks</et>"
 msgstr "Both words: <et>heaks arstiks</et>"
 
-msgid "By and for a time: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal, a day or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
-msgstr "By and for a time: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal, a day or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
+msgid "By and for a time: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
+msgstr "By and for a time: <0>reedeks</0>, by Friday; <1>nädalaks</1>, for a week. With a meal or an occasion, <2>-ks</2> says what for: <3>sünnipäevaks</3>, for a birthday."
 
 msgid "By and for: <et>reedeks</et>, <et>nädalaks</et>"
 msgstr "By and for: <et>reedeks</et>, <et>nädalaks</et>"
@@ -448,8 +448,8 @@ msgstr "With <et>-na</et>, only the noun takes the ending; the adjective stays i
 msgid "With <et>-na</et>, only the noun takes the ending: <et>uue arstina</et>."
 msgstr "With <et>-na</et>, only the noun takes the ending: <et>uue arstina</et>."
 
-msgid "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal, a day or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. Tap a line to hear it."
-msgstr "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal, a day or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. Tap a line to hear it."
+msgid "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. A day can take either meaning: <4>reedeks tagasi</4>, back by Friday; <5>laupäevaks</5>, for Saturday. Tap a line to hear it."
+msgstr "With a time, <0>-ks</0> says by when, or how long something is planned for: <1/>, by Friday; <2/>, for a week. With a meal or an occasion, it says what for: <3>hommikusöögiks</3>, for breakfast. A day can take either meaning: <4>reedeks tagasi</4>, back by Friday; <5>laupäevaks</5>, for Saturday. Tap a line to hear it."
 
 msgid "Words"
 msgstr "Words"

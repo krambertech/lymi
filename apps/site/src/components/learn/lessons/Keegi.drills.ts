@@ -225,7 +225,7 @@ export const DRILLS: DrillBank = {
       kind: "translate",
       id: "cases-kellegagi",
       rule: "cases",
-      prompt: msg`I’m not talking to anybody.`,
+      prompt: msg`I’m not talking with anybody.`,
       answers: [
         "Ma ei räägi kellegagi.",
         "Mina ei räägi kellegagi.",
@@ -315,7 +315,7 @@ export const DRILLS: DrillBank = {
       id: "giki-fix-kellegagi",
       rule: "giki",
       wrong: "Ma ei räägi kellegaki.",
-      prompt: msg`I’m not talking to anybody.`,
+      prompt: msg`I’m not talking with anybody.`,
       answers: fixAnswers("fix-kellegagi"),
       say: "Ma ei räägi kellegagi.",
       explain: GI,

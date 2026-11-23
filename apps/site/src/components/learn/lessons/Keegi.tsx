@@ -50,8 +50,8 @@ const MEANS: Record<string, MessageDescriptor> = {
   "Ta ei lähe kuhugi.": msg`He or she isn’t going anywhere.`,
   "Kati ostab midagi.": msg`Kati is buying something.`,
   "Kati ei osta midagi.": msg`Kati isn’t buying anything.`,
-  "Ma räägin kellegagi.": msg`I’m talking to somebody.`,
-  "Ma ei räägi kellegagi.": msg`I’m not talking to anybody.`,
+  "Ma räägin kellegagi.": msg`I’m talking with somebody.`,
+  "Ma ei räägi kellegagi.": msg`I’m not talking with anybody.`,
   "Kes tuli? Mitte keegi.": msg`Who came? Nobody.`,
   "Mida sa tahad? Mitte midagi.": msg`What do you want? Nothing.`,
   "Kodus on keegi.": msg`Somebody is at home.`,
@@ -104,7 +104,7 @@ const FIX_PROMPTS: Record<(typeof GI_FIX)[number]["id"], MessageDescriptor> = {
   "fix-kellestki": msg`We talked about somebody.`,
   "fix-midagi": msg`I have nothing.`,
   "fix-kuhugi": msg`She isn’t going anywhere.`,
-  "fix-kellegagi": msg`I’m not talking to anybody.`,
+  "fix-kellegagi": msg`I’m not talking with anybody.`,
 };
 
 const GLOSSARY: Glossary = {

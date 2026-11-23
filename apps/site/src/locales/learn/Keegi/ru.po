@@ -202,10 +202,10 @@ msgstr "Я кого-то вижу."
 msgid "I want to go somewhere."
 msgstr "Я хочу куда-нибудь пойти."
 
-msgid "I’m not talking to anybody."
+msgid "I’m not talking with anybody."
 msgstr "Я ни с кем не разговариваю."
 
-msgid "I’m talking to somebody."
+msgid "I’m talking with somebody."
 msgstr "Я с кем-то разговариваю."
 
 msgid "I’m thinking about something."

@@ -202,11 +202,11 @@ msgstr "I see somebody."
 msgid "I want to go somewhere."
 msgstr "I want to go somewhere."
 
-msgid "I’m not talking to anybody."
-msgstr "I’m not talking to anybody."
+msgid "I’m not talking with anybody."
+msgstr "I’m not talking with anybody."
 
-msgid "I’m talking to somebody."
-msgstr "I’m talking to somebody."
+msgid "I’m talking with somebody."
+msgstr "I’m talking with somebody."
 
 msgid "I’m thinking about something."
 msgstr "I’m thinking about something."

@@ -463,7 +463,7 @@ export function SaavLesson() {
         </Trans>,
         <Trans key="4">
           By and for a time: <b lang="et">reedeks</b>, by Friday; <b lang="et">nädalaks</b>, for a
-          week. With a meal, a day or an occasion, <b lang="et">-ks</b> says what for:{" "}
+          week. With a meal or an occasion, <b lang="et">-ks</b> says what for:{" "}
           <b lang="et">sünnipäevaks</b>, for a birthday.
         </Trans>,
         <Trans key="5">
@@ -595,8 +595,10 @@ export function SaavLesson() {
                   <Trans>
                     With a time, <span lang="et">-ks</span> says by when, or how long something is
                     planned for: <Word w="reedeks" />, by Friday; <Word w="nädalaks" />, for a week.
-                    With a meal, a day or an occasion, it says what for:{" "}
-                    <span lang="et">hommikusöögiks</span>, for breakfast. Tap a line to hear it.
+                    With a meal or an occasion, it says what for:{" "}
+                    <span lang="et">hommikusöögiks</span>, for breakfast. A day can take either
+                    meaning: <span lang="et">reedeks tagasi</span>, back by Friday;{" "}
+                    <span lang="et">laupäevaks</span>, for Saturday. Tap a line to hear it.
                   </Trans>
                 </p>
               </Prose>

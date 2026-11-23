@@ -369,7 +369,10 @@ export function rewriteItems(i18n: I18n): SentenceItem[] {
     from,
     cue: i18n._(msg`say no`),
     src: src(to),
-    answers: id === "tool" ? [...noAnswers(to), "Eile ma ei läinud tööle."] : noAnswers(to),
+    answers:
+      id === "tool"
+        ? [...noAnswers(to), "Eile ma ei läinud tööle.", "Eile mina ei läinud tööle."]
+        : noAnswers(to),
   }));
 }
 

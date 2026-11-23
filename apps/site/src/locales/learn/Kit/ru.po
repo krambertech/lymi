@@ -331,6 +331,9 @@ msgstr "Бесплатный урок о партитиве множествен
 msgid "A free lesson on the Estonian plural: the genitive plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
 msgstr "Бесплатный урок о множественном числе в эстонском языке: родительный плюс -d (kassid, raamatud), изменение основы, которое в нём сохраняется (poed, toad, mehed), глагол с существительным во множественном числе (lapsed loevad) и прилагательные во множественном числе (suured majad). Каждое предложение озвучено."
 
+msgid "A free lesson on the future in Estonian, which has no future tense: the present with a time word (homme lähen Tartusse), hakkama with the -ma infinitive for something that will start (hakkan õppima), kavatsen and plaanin with the -da infinitive for plans, and what saab olema means. Every sentence is read aloud."
+msgstr "Бесплатный урок о будущем в эстонском, где нет будущего времени: настоящее время со словом вроде «завтра» (homme lähen Tartusse), hakkama с инфинитивом на -ma для того, что начнётся (hakkan õppima), kavatsen и plaanin с инфинитивом на -da для планов, а также что значит saab olema. Каждое предложение озвучено."
+
 msgid "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da infinitive is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud."
 msgstr "Бесплатный урок о трёх основных формах эстонского глагола — lugema, lugeda, loen: как образуется инфинитив на -da (-da, -ta, -la, -na или -a), в том числе teha, näha, süüa и juua, и команды на -ge и -ke, которые строятся на нём. Каждое слово и предложение озвучено."
 
@@ -666,6 +669,9 @@ msgstr "Чередование согласных в эстонском язык
 msgid "Estonian conversation practice: meeting someone"
 msgstr "Разговорная практика эстонского: знакомство"
 
+msgid "Estonian future tense: how to say “will”"
+msgstr "Будущее время в эстонском языке: как сказать «буду»"
+
 msgid "Estonian grammar lessons"
 msgstr "Уроки эстонской грамматики"
 
@@ -716,6 +722,9 @@ msgstr "Падежи множественного числа в эстонско
 
 msgid "Estonian plural partitive"
 msgstr "Партитив множественного числа в эстонском языке"
+
+msgid "Estonian practice: last weekend and next week"
+msgstr "Практика эстонского: прошлые выходные и следующая неделя"
 
 msgid "Estonian practice: shopping at the market"
 msgstr "Практика эстонского: покупки на рынке"
@@ -807,6 +816,9 @@ msgstr "Бесплатная практика эстонского на рынк
 
 msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
 msgstr "Бесплатная практика эстонского для начинающих: прочитай часы работы и сообщение, пойми голосовое сообщение, где звучат время и дни, заполни план на субботу и поговори с подругой в кафе. Каждое предложение озвучено."
+
+msgid "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
+msgstr "Бесплатная практика эстонского в прошедшем и будущем: прочитай о выходных подруги и ответь, скажи, что ты делал и чего не делал (olin, ei läinud), что будешь делать (homme lähen, hakkan õppima, kavatsen tulla), исправь глаголы в неверной форме и пойми разговор, который можно прослушать дважды. Каждое предложение озвучено."
 
 msgid "friend"
 msgstr "друг, подруга"

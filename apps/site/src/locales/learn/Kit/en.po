@@ -331,6 +331,9 @@ msgstr "A free lesson on the Estonian plural partitive, the partitive for more t
 msgid "A free lesson on the Estonian plural: the genitive plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
 msgstr "A free lesson on the Estonian plural: the genitive plus -d (kassid, raamatud), the stem change it keeps (poed, toad, mehed), the verb with a plural noun (lapsed loevad), and adjectives in the plural (suured majad). Every sentence is read aloud."
 
+msgid "A free lesson on the future in Estonian, which has no future tense: the present with a time word (homme lähen Tartusse), hakkama with the -ma infinitive for something that will start (hakkan õppima), kavatsen and plaanin with the -da infinitive for plans, and what saab olema means. Every sentence is read aloud."
+msgstr "A free lesson on the future in Estonian, which has no future tense: the present with a time word (homme lähen Tartusse), hakkama with the -ma infinitive for something that will start (hakkan õppima), kavatsen and plaanin with the -da infinitive for plans, and what saab olema means. Every sentence is read aloud."
+
 msgid "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da infinitive is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud."
 msgstr "A free lesson on the three forms of an Estonian verb, lugema, lugeda and loen: how the -da infinitive is made with -da, -ta, -la, -na or -a, including teha, näha, süüa and juua, and the -ge and -ke commands built on it. Every word and sentence is read aloud."
 
@@ -666,6 +669,9 @@ msgstr "Estonian consonant gradation"
 msgid "Estonian conversation practice: meeting someone"
 msgstr "Estonian conversation practice: meeting someone"
 
+msgid "Estonian future tense: how to say “will”"
+msgstr "Estonian future tense: how to say “will”"
+
 msgid "Estonian grammar lessons"
 msgstr "Estonian grammar lessons"
 
@@ -716,6 +722,9 @@ msgstr "Estonian plural cases"
 
 msgid "Estonian plural partitive"
 msgstr "Estonian plural partitive"
+
+msgid "Estonian practice: last weekend and next week"
+msgstr "Estonian practice: last weekend and next week"
 
 msgid "Estonian practice: shopping at the market"
 msgstr "Estonian practice: shopping at the market"
@@ -807,6 +816,9 @@ msgstr "Free Estonian practice at the market: read a friend’s message and answ
 
 msgid "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
 msgstr "Free Estonian practice for beginners: read opening hours and a message, follow a voice message with times and days, fill in a plan for Saturday and talk with a friend at a café. Every sentence is read aloud."
+
+msgid "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
+msgstr "Free Estonian practice in the past and the future: read about a friend’s weekend and write back, say what you did and didn’t do (olin, ei läinud), what you will do (homme lähen, hakkan õppima, kavatsen tulla), fix verbs in the wrong form, and follow a conversation you can play twice. Every sentence is read aloud."
 
 msgid "friend"
 msgstr "friend"

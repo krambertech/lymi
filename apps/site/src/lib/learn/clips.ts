@@ -4525,6 +4525,7 @@ export const PLURAL_CASE_ANSWERS: Record<string, readonly [string, ...string[]]>
     "Läheme poodidesse.",
     "Me käime poodides ringi.",
     "Käime poodides ringi.",
+    "Meie käime poodides ringi.",
   ],
   "Lapsed tulevad koolidest.": ["Lapsed tulevad koolidest.", "Koolidest tulevad lapsed."],
   "Ma lähen sõpradega kinno.": [
@@ -4541,6 +4542,8 @@ export const PLURAL_CASE_ANSWERS: Record<string, readonly [string, ...string[]]>
     "Mina lähen kinno koos sõpradega.",
     "Lähen kinno koos sõpradega.",
     "Ma lähen sõpradega koos kinno.",
+    "Mina lähen sõpradega koos kinno.",
+    "Lähen sõpradega koos kinno.",
   ],
   "Me tuleme poodidest.": [
     "Me tuleme poodidest.",
@@ -4562,6 +4565,7 @@ export const PLURAL_CASE_ANSWERS: Record<string, readonly [string, ...string[]]>
     "Räägin inimestele.",
     "Ma ütlen inimestele.",
     "Ütlen inimestele.",
+    "Mina ütlen inimestele.",
   ],
   "Pildid on raamatus.": ["Pildid on raamatus.", "Raamatus on pildid."],
   "Me käime poes.": [
@@ -4573,6 +4577,7 @@ export const PLURAL_CASE_ANSWERS: Record<string, readonly [string, ...string[]]>
     "Läheme poodi.",
     "Me läheme poesse.",
     "Läheme poesse.",
+    "Meie läheme poesse.",
   ],
 };
 
@@ -4871,6 +4876,12 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Eile ma käisin Tartus.",
     "Eile ma läksin Tartusse.",
     "Ma käisin Tartus eile.",
+    "Eile käisin mina Tartus.",
+    "Eile läksin mina Tartusse.",
+    "Eile mina käisin Tartus.",
+    "Eile mina läksin Tartusse.",
+    "Mina käisin Tartus eile.",
+    "Käisin Tartus eile.",
   ],
   "Ma olen Tartus käinud.": [
     "Ma olen Tartus käinud.",
@@ -4883,6 +4894,8 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Olen käinud Tartus.",
     "Mina olen käinud Tartus.",
     "Ma olen olnud Tartus.",
+    "Mina olen olnud Tartus.",
+    "Olen olnud Tartus.",
   ],
   "Ma ei ole veel söönud.": [
     "Ma ei ole veel söönud.",
@@ -4905,6 +4918,10 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kui ma jõudsin koju, Mari oli juba söönud.",
     "Kui koju jõudsin, oli Mari juba söönud.",
     "Mari oli juba söönud, kui ma koju jõudsin.",
+    "Kui mina jõudsin koju, oli Mari juba söönud.",
+    "Kui jõudsin koju, oli Mari juba söönud.",
+    "Kui mina jõudsin koju, Mari oli juba söönud.",
+    "Kui jõudsin koju, Mari oli juba söönud.",
   ],
   "Ta on eesti keelt kaks aastat õppinud.": [
     "Ta on eesti keelt kaks aastat õppinud.",
@@ -4918,6 +4935,11 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ta õpib juba kaks aastat eesti keelt.",
     "Tema on kaks aastat eesti keelt õppinud.",
     "Ta on õppinud eesti keelt kaks aastat.",
+    "Tema õpib eesti keelt kaks aastat.",
+    "Tema on juba kaks aastat eesti keelt õppinud.",
+    "Tema on eesti keelt juba kaks aastat õppinud.",
+    "Tema õpib juba kaks aastat eesti keelt.",
+    "Tema on õppinud eesti keelt kaks aastat.",
   ],
   "Kas sa oled seda filmi näinud?": [
     "Kas sa oled seda filmi näinud?",
@@ -4928,6 +4950,14 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kas sina oled seda filmi näinud?",
     "Olete te seda filmi näinud?",
     "Kas sa oled näinud seda filmi?",
+    "Kas sina oled seda filmi juba näinud?",
+    "Kas oled seda filmi juba näinud?",
+    "Kas teie olete seda filmi näinud?",
+    "Kas olete seda filmi näinud?",
+    "Oled sina seda filmi näinud?",
+    "Oled seda filmi näinud?",
+    "Kas sina oled näinud seda filmi?",
+    "Kas oled näinud seda filmi?",
   ],
   "Eelmisel nädalal lugesin ma raamatu läbi.": [
     "Eelmisel nädalal lugesin ma raamatu läbi.",
@@ -4937,6 +4967,10 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Mina lugesin eelmisel nädalal raamatu läbi.",
     "Eelmisel nädalal ma lugesin raamatu läbi.",
     "Ma lugesin raamatu eelmisel nädalal läbi.",
+    "Eelmisel nädalal lugesin mina raamatu läbi.",
+    "Eelmisel nädalal mina lugesin raamatu läbi.",
+    "Mina lugesin raamatu eelmisel nädalal läbi.",
+    "Lugesin raamatu eelmisel nädalal läbi.",
   ],
   "Ma olen juba söönud.": ["Ma olen juba söönud.", "Olen juba söönud.", "Mina olen juba söönud."],
   "Ta on juba koju läinud.": [
@@ -4950,6 +4984,8 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Nemad on piletid ostnud.",
     "Nad on piletid juba ostnud.",
     "Nad on piletid ära ostnud.",
+    "Nemad on piletid juba ostnud.",
+    "Nemad on piletid ära ostnud.",
   ],
   "Kui ma jaama jõudsin, oli rong juba läinud.": [
     "Kui ma jaama jõudsin, oli rong juba läinud.",
@@ -4959,6 +4995,10 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kui ma jõudsin jaama, rong oli juba läinud.",
     "Kui jaama jõudsin, oli rong juba läinud.",
     "Rong oli juba läinud, kui ma jaama jõudsin.",
+    "Kui mina jõudsin jaama, oli rong juba läinud.",
+    "Kui jõudsin jaama, oli rong juba läinud.",
+    "Kui mina jõudsin jaama, rong oli juba läinud.",
+    "Kui jõudsin jaama, rong oli juba läinud.",
   ],
   "Ta pole seda filmi näinud.": [
     "Ta pole seda filmi näinud.",
@@ -4971,6 +5011,8 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Oleme töö ära teinud.",
     "Meie oleme töö ära teinud.",
     "Me oleme töö juba ära teinud.",
+    "Meie oleme töö juba ära teinud.",
+    "Oleme töö juba ära teinud.",
   ],
   "Ma ei ole seda filmi näinud.": [
     "Ma ei ole seda filmi näinud.",
@@ -4986,12 +5028,21 @@ export const PERFECT_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ma ei ole kunagi seda filmi näinud.",
     "Ma pole kunagi seda filmi näinud.",
     "Ma ei ole veel seda filmi näinud.",
+    "Mina ei ole seda filmi veel näinud.",
+    "Mina ei ole seda filmi kunagi näinud.",
+    "Mina pole seda filmi kunagi näinud.",
+    "Mina pole seda filmi veel näinud.",
+    "Mina ei ole kunagi seda filmi näinud.",
+    "Mina pole kunagi seda filmi näinud.",
+    "Mina ei ole veel seda filmi näinud.",
   ],
   "Sa oled raamatu läbi lugenud.": [
     "Sa oled raamatu läbi lugenud.",
     "Oled raamatu läbi lugenud.",
     "Sina oled raamatu läbi lugenud.",
     "Sa oled raamatu juba läbi lugenud.",
+    "Sina oled raamatu juba läbi lugenud.",
+    "Oled raamatu juba läbi lugenud.",
   ],
 };
 
@@ -5247,6 +5298,15 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Ma võtaksin ühe kohvi, palun.",
     "Ma tahaks kohvi.",
     "Ma tahaks kohvi, palun.",
+    "Mina sooviksin kohvi.",
+    "Mina sooviksin kohvi, palun.",
+    "Mina võtaksin kohvi.",
+    "Mina võtaksin kohvi, palun.",
+    "Mina tahaksin üht kohvi.",
+    "Tahaksin üht kohvi.",
+    "Mina tahaksin üht kohvi, palun.",
+    "Mina võtaksin ühe kohvi, palun.",
+    "Võtaksin ühe kohvi, palun.",
   ],
   "Kas sa saaksid mind aidata?": [
     "Kas sa saaksid mind aidata?",
@@ -5264,6 +5324,23 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kas sa aitaksid mind?",
     "Kas te aitaksite mind?",
     "Kas sa saaks mind aidata?",
+    "Kas teie saaksite mind aidata?",
+    "Kas sina võiksid mind aidata?",
+    "Kas võiksid mind aidata?",
+    "Kas teie võiksite mind aidata?",
+    "Kas võiksite mind aidata?",
+    "Saaksid sina mind aidata?",
+    "Saaksid mind aidata?",
+    "Kas sina saaksid mulle appi tulla?",
+    "Kas saaksid mulle appi tulla?",
+    "Võiksid sina mind aidata?",
+    "Võiksid mind aidata?",
+    "Kas teie saaksite mulle appi tulla?",
+    "Kas saaksite mulle appi tulla?",
+    "Kas sina aitaksid mind?",
+    "Kas aitaksid mind?",
+    "Kas teie aitaksite mind?",
+    "Kas aitaksite mind?",
   ],
   "Kui mul oleks aega, läheksin ma kinno.": [
     "Kui mul oleks aega, läheksin ma kinno.",
@@ -5278,6 +5355,15 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kui mul aega oleks, läheksin kinno.",
     "Kui mul aega oleks, ma läheksin kinno.",
     "Ma läheksin kinno, kui mul aega oleks.",
+    "Kui mul oleks aega, läheksin mina kinno.",
+    "Kui mul oleks aega, mina läheksin kinno.",
+    "Mina läheksin kinno, kui mul oleks aega.",
+    "Kui mul oleks aega, siis läheksin mina kinno.",
+    "Kui mul oleks aega, siis mina läheksin kinno.",
+    "Kui mul aega oleks, läheksin mina kinno.",
+    "Kui mul aega oleks, mina läheksin kinno.",
+    "Mina läheksin kinno, kui mul aega oleks.",
+    "Läheksin kinno, kui mul aega oleks.",
   ],
   "Ma ei läheks.": ["Ma ei läheks.", "Mina ei läheks.", "Ei läheks."],
   "Me elaksime Tartus.": [
@@ -5294,6 +5380,9 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kas loeksid seda raamatut?",
     "Kas loeksite seda raamatut?",
     "Loeksite te seda raamatut?",
+    "Kas teie loeksite seda raamatut?",
+    "Loeksid sina seda raamatut?",
+    "Loeksid seda raamatut?",
   ],
   "Kui oleks soe, ujuksime me meres.": [
     "Kui oleks soe, ujuksime me meres.",
@@ -5311,6 +5400,14 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Me ujuksime meres, kui ilm oleks soe.",
     "Kui ilm oleks soe, siis me ujuksime meres.",
     "Kui soe oleks, ujuksime me meres.",
+    "Kui oleks soe, meie ujuksime meres.",
+    "Meie ujuksime meres, kui oleks soe.",
+    "Kui oleks soe, siis meie ujuksime meres.",
+    "Kui ilm oleks soe, meie ujuksime meres.",
+    "Meie ujuksime meres, kui ilm oleks soe.",
+    "Ujuksime meres, kui ilm oleks soe.",
+    "Kui ilm oleks soe, siis meie ujuksime meres.",
+    "Kui ilm oleks soe, siis ujuksime meres.",
   ],
   "Ma läheksin kinno.": [
     "Ma läheksin kinno.",
@@ -5330,6 +5427,21 @@ export const COND_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Kas võiksite seda korrata?",
     "Võiksite te seda korrata?",
     "Kas te võiksite seda uuesti öelda?",
+    "Kas teie võiksite seda korrata?",
+    "Kas sina võiksid seda korrata?",
+    "Kas võiksid seda korrata?",
+    "Kas teie saaksite seda korrata?",
+    "Kas saaksite seda korrata?",
+    "Kas sina saaksid seda korrata?",
+    "Kas saaksid seda korrata?",
+    "Kas teie võiksite seda palun korrata?",
+    "Kas võiksite seda palun korrata?",
+    "Kas teie võiksite palun seda korrata?",
+    "Kas võiksite palun seda korrata?",
+    "Kas teie võiksite seda korrata, palun?",
+    "Kas võiksite seda korrata, palun?",
+    "Kas teie võiksite seda uuesti öelda?",
+    "Kas võiksite seda uuesti öelda?",
   ],
 };
 
@@ -5567,12 +5679,15 @@ export const LETS_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Las nemad mängivad õues.",
     "Las nad mängigu õues.",
     "Las nad õues mängigu.",
+    "Las nemad mängivad väljas.",
   ],
   "Las ma aitan sind.": [
     "Las ma aitan sind.",
     "Las mina aitan sind.",
     "Las ma aitan teid.",
     "Las mina aitan teid.",
+    "Las aitan sind.",
+    "Las aitan teid.",
   ],
   "Sööme koos!": ["Sööme koos!", "Sööme üheskoos!"],
   "Las ta otsustab.": [
@@ -5583,6 +5698,7 @@ export const LETS_ANSWERS: Record<string, readonly [string, ...string[]]> = {
     "Las tema ise otsustab.",
     "Las ta otsustagu.",
     "Las ta ise otsustagu.",
+    "Las tema otsustab ise.",
   ],
   "Ostame koogi!": ["Ostame koogi!", "Ostame ühe koogi!"],
   "Vaatame täna õhtul filmi!": [
@@ -5595,7 +5711,7 @@ export const LETS_ANSWERS: Record<string, readonly [string, ...string[]]> = {
   "Sööme pitsat!": ["Sööme pitsat!"],
   "Vaatame filmi!": ["Vaatame filmi!"],
   "Mängime õues!": ["Mängime õues!"],
-  "Las ta magab.": ["Las ta magab.", "Las ta magagu."],
+  "Las ta magab.": ["Las ta magab.", "Las ta magagu.", "Las tema magab."],
   "Las lapsed mängivad õues.": [
     "Las lapsed mängivad õues.",
     "Las lapsed mängivad väljas.",
@@ -6282,6 +6398,368 @@ const MARKET_CLIPS: Record<string, Clip> = {
   "c-stall": MARKET_TALK,
 };
 
+export const FUTURE_TIMELINE = [
+  { id: "yesterday", et: "eile", at: -1, sentences: [["Eile läksin Tartusse.", "läks|in"]] },
+  { id: "today", et: "täna", at: 0, sentences: [["Täna lähen Tartusse.", "lähe|n"]] },
+  { id: "tomorrow", et: "homme", at: 1, sentences: [["Homme lähen Tartusse.", "lähe|n"]] },
+  {
+    id: "next-week",
+    et: "järgmisel nädalal",
+    at: 2,
+    sentences: [
+      ["Järgmisel nädalal lähen Tartusse.", "lähe|n"],
+      ["Järgmisel nädalal hakkan Tartus õppima.", "hakka|n", "õppi|ma"],
+    ],
+  },
+] as const;
+
+export const FUTURE_HAKKAMA = [
+  { lead: "hakkan", said: "Ma hakkan Tartus elama.", form: "ela|ma" },
+  { lead: "hakkad", said: "Kas sa hakkad kodus töötama?", form: "tööta|ma" },
+  { lead: "hakkab", said: "Homme hakkab vihma sadama.", form: "sada|ma" },
+  { lead: "hakkame", said: "Me hakkame eesti keelt rääkima.", form: "rääki|ma" },
+  { lead: "hakkate", said: "Millal te hakkate sööma?", form: "söö|ma" },
+  { lead: "hakkavad", said: "Lapsed hakkavad mängima.", form: "mängi|ma" },
+] as const;
+
+export const FUTURE_BUILD = [
+  { answers: ["Ma hakkan palju lugema."], spare: ["loen"] },
+  {
+    answers: [
+      "Järgmisel nädalal hakkame eesti keelt õppima.",
+      "Eesti keelt hakkame järgmisel nädalal õppima.",
+    ],
+    spare: ["õpime"],
+  },
+  {
+    answers: ["Kati hakkab poes töötama.", "Poes hakkab Kati töötama."],
+    spare: ["töötab"],
+    tiles: ["Kati", "hakkab", "poes", "töötama"],
+  },
+] as const;
+
+export const FUTURE_SORT = [
+  { lead: "hakkan", takes: "ma" },
+  { lead: "kavatsen", takes: "da" },
+  { lead: "plaanin", takes: "da" },
+  { lead: "pean", takes: "ma" },
+  { lead: "tahan", takes: "da" },
+  { lead: "lähen", takes: "ma" },
+  { lead: "oskan", takes: "da" },
+  { lead: "jään", takes: "ma" },
+] as const satisfies readonly { lead: string; takes: Takes }[];
+
+export const FUTURE_WHEN = [
+  { verb: "olema", past: "Eile olin tööl.", now: "Ma olen tööl.", later: "Homme olen tööl." },
+  {
+    verb: "elama",
+    past: "Ta elas Tallinnas.",
+    now: "Ta elab Tallinnas.",
+    later: "Ta hakkab Tallinnas elama.",
+  },
+  {
+    verb: "jooma",
+    past: "Me jõime kohvi.",
+    now: "Me joome kohvi.",
+    later: "Ülehomme joome kohvi.",
+  },
+  {
+    verb: "lugema",
+    past: "Nad lugesid raamatut.",
+    now: "Nad loevad raamatut.",
+    later: "Nad hakkavad raamatut lugema.",
+  },
+  {
+    verb: "sööma",
+    past: "Eile sõime kodus.",
+    now: "Me sööme kodus.",
+    later: "Järgmisel nädalal sööme kodus.",
+  },
+  {
+    verb: "õppima",
+    past: "Ta õppis eesti keelt.",
+    now: "Ta õpib eesti keelt.",
+    later: "Homme õpib ta eesti keelt.",
+  },
+  {
+    verb: "töötama",
+    past: "Ma töötasin kodus.",
+    now: "Ma töötan kodus.",
+    later: "Homme töötan kodus.",
+  },
+] as const;
+
+export const FUTURE_DIALOGUE = {
+  "d-kati-1": { text: "Tere! Mida sa homme teed?", voice: "second" },
+  "d-sina-1": "Homme lähen Tallinnasse.",
+  "d-kati-2": { text: "Mida sa Tallinnas teed?", voice: "second" },
+  "d-sina-2": "Ma hakkan Tallinnas töötama.",
+  "d-kati-3": { text: "Millal sa Tartusse tuled?", voice: "second" },
+  "d-sina-3": "Ma kavatsen järgmisel nädalal tulla.",
+} as const satisfies Record<string, Clip>;
+
+export const FUTURE_WORDS = [
+  "tulevik",
+  "homme",
+  "täna",
+  "ülehomme",
+  "järgmisel nädalal",
+  "eelmisel nädalal",
+  "Homme lähen Tartusse.",
+  "Täna lähen Tartusse.",
+  "Homme saab olema külm.",
+  "Homme on külm.",
+  "hakkama",
+  "hakkan",
+  "kavatsema",
+  "kavatsen",
+  "plaanima",
+  "plaanin",
+  "Ma kavatsen järgmisel nädalal Tallinnasse minna.",
+  "Mida sa plaanid homme teha?",
+  ...FUTURE_SORT.map(({ lead }) => lead),
+] as const;
+
+export const FUTURE_REWRITE = [
+  { id: "lugema", from: "Ma loen palju.", to: "Ma hakkan palju lugema." },
+  { id: "oppima", from: "Me õpime eesti keelt.", to: "Me hakkame eesti keelt õppima." },
+  { id: "tootama", from: "Ta töötab Tallinnas.", to: "Ta hakkab Tallinnas töötama." },
+  { id: "elama", from: "Sa elad Tartus.", to: "Sa hakkad Tartus elama." },
+  { id: "raakima", from: "Nad räägivad eesti keelt.", to: "Nad hakkavad eesti keelt rääkima." },
+  { id: "sooma", from: "Te sööte kodus.", to: "Te hakkate kodus sööma." },
+] as const;
+
+export const FUTURE_FIX = [
+  { id: "tootada", wrong: "Ma hakkan kodus töötada.", right: "Ma hakkan kodus töötama." },
+  {
+    id: "minema",
+    wrong: "Ma kavatsen Tallinnasse minema.",
+    right: "Ma kavatsen Tallinnasse minna.",
+  },
+  { id: "laksin", wrong: "Homme läksin Tartusse.", right: "Homme lähen Tartusse." },
+  {
+    id: "hakkab",
+    wrong: "Nad hakkab eesti keelt õppima.",
+    right: "Nad hakkavad eesti keelt õppima.",
+  },
+  { id: "soome", wrong: "Me hakkame kodus sööme.", right: "Me hakkame kodus sööma." },
+  { id: "tulema", wrong: "Ta plaanib homme tulema.", right: "Ta plaanib homme tulla." },
+] as const;
+
+export const FUTURE_TALK = {
+  turns: [
+    {
+      voice: "third",
+      text: "Tere, Jaan! Mida sa järgmisel nädalal teed?",
+      say: "[curious] Tere, Jaan! Mida sa järgmisel nädalal teed?",
+    },
+    { voice: "main", text: ["Esmaspäeval hakkan Tallinnas töötama.", "Seal hakkan ka elama."] },
+    {
+      voice: "third",
+      text: ["Tallinnas?", "Aga sinu kass?"],
+      say: "[surprised] Tallinnas? Aga sinu kass?",
+    },
+    {
+      voice: "main",
+      text: "Kass tuleb ka Tallinnasse.",
+      say: "[laughs] Kass tuleb ka Tallinnasse.",
+    },
+    { voice: "third", text: "Kas sa hakkad Tallinnas eesti keelt õppima?" },
+    {
+      voice: "main",
+      text: ["Jah, ma hakkan iga päev eesti keelt õppima.", "Ma tahan tööl eesti keelt rääkida."],
+    },
+    { voice: "third", text: "Millal sa Tartusse tuled?" },
+    { voice: "main", text: ["Ma kavatsen reedel tulla.", "Laupäeval olen Tartus."] },
+    { voice: "third", text: ["Laupäeval lähen turule.", "Kas sa tuled ka?"] },
+    { voice: "main", text: ["Jah, ma tulen.", "Kell kümme?"] },
+    { voice: "third", text: ["Kell kümme on hea.", "Kell üksteist joome kohvikus kohvi."] },
+    { voice: "main", text: "Aga pühapäeval pean ma Tallinnas olema." },
+    { voice: "third", text: "Miks?" },
+    { voice: "main", text: "Esmaspäeval hakkan kell kaheksa töötama." },
+    { voice: "third", text: ["Hästi.", "Head aega!"] },
+    { voice: "main", text: "Head aega!" },
+  ],
+} as const satisfies Conversation;
+
+export const FUTURE_DRILL = [
+  "Homme töötan kodus.",
+  "Järgmisel nädalal läheme Tartusse.",
+  "Nad hakkavad õppima.",
+  "Sa hakkad töötama.",
+  "Me hakkame Tartus elama.",
+  "Ta hakkab palju lugema.",
+  "Me hakkame kodus töötama.",
+  "Ma hakkan eesti keelt rääkima.",
+  "Ma kavatsen Tallinnasse minna.",
+  "Mida sa plaanid homme teha?",
+  "Me kavatseme eesti keelt õppida.",
+  "Ta plaanib homme tulla.",
+  "Nad hakkavad Tartus elama.",
+  "Ma hakkan Tartus elama.",
+  "Ma kavatsen Tartusse minna.",
+] as const;
+
+const FUTURE_CLIPS: Record<string, Clip> = {
+  ...words(FUTURE_WORDS),
+  ...words(FUTURE_TIMELINE.flatMap(({ sentences }) => sentences.map(([sentence]) => sentence))),
+  ...words(FUTURE_HAKKAMA.map(({ said }) => said)),
+  ...words(FUTURE_BUILD.map(({ answers }) => answers[0])),
+  ...words(FUTURE_WHEN.flatMap(({ past, now, later }) => [past, now, later])),
+  ...words(FUTURE_REWRITE.map(({ to }) => to)),
+  ...words(FUTURE_FIX.map(({ right }) => right)),
+  ...words(FUTURE_DRILL),
+  ...FUTURE_DIALOGUE,
+  "c-plans": FUTURE_TALK,
+};
+
+export const WEEKEND_PASSAGES = {
+  kati: [
+    "Tere, Mari!",
+    "Eelmisel nädalavahetusel olin ma Tartus.",
+    "Minu ema elab seal.",
+    "Laupäeval käisin turul ja ostsin juustu ja leiba.",
+    "Kell kuus olin kohvikus ja jõin kohvi.",
+    "Pühapäeval ma ei läinud linna.",
+    "Ma olin kodus ja lugesin raamatut.",
+    "Järgmisel nädalal hakkan ma Tallinnas töötama.",
+    "Esmaspäeval lähen Tallinnasse.",
+    "Ma kavatsen seal elada.",
+    "Kas sa tuled järgmisel nädalavahetusel Tallinnasse?",
+    "Me võime seal turule minna.",
+  ],
+  mari: [
+    "Tere, Kati!",
+    "Laupäeval olin ma kodus ja ma ei läinud linna.",
+    "Kodus lugesin raamatut.",
+    "Pühapäeval ma ei olnud kodus.",
+    "Järgmisel nädalal hakkan ma eesti keelt õppima.",
+    "Jah, ma tulen Tallinnasse!",
+    "Ma kavatsen laupäeval turule minna.",
+  ],
+} as const;
+
+export const WEEKEND_SORT = [
+  { w: "olin kodus", bin: "past" },
+  { w: "ma ei läinud", bin: "past" },
+  { w: "käisin turul", bin: "past" },
+  { w: "ei teinud", bin: "past" },
+  { w: "hakkan õppima", bin: "later" },
+  { w: "homme lähen", bin: "later" },
+  { w: "kavatsen tulla", bin: "later" },
+  { w: "järgmisel nädalal", bin: "later" },
+] as const;
+
+export const WEEKEND_SAY = [
+  { id: "tartus", said: "Eelmisel nädalavahetusel olin ma Tartus." },
+  { id: "toole", said: "Ma ei läinud tööle." },
+  { id: "tallinnasse", said: "Järgmisel nädalal lähen ma Tallinnasse." },
+  { id: "oppima", said: "Ma hakkan eesti keelt õppima." },
+  { id: "kodus", said: "Eile sõime kodus." },
+  { id: "raamatut", said: "Ta ei lugenud raamatut." },
+] as const;
+
+export const WEEKEND_FIX = [
+  {
+    id: "kaisin",
+    wrong: "Eelmisel nädalal ma ei käisin turul.",
+    right: "Eelmisel nädalal ma ei käinud turul.",
+  },
+  { id: "olin", wrong: "Homme ma olin kodus.", right: "Homme ma olen kodus." },
+  { id: "lahen", wrong: "Eile ma lähen tööle.", right: "Eile ma läksin tööle." },
+  {
+    id: "tootada",
+    wrong: "Järgmisel nädalal hakkan ma töötada.",
+    right: "Järgmisel nädalal hakkan ma töötama.",
+  },
+  { id: "olid", wrong: "Ta ei olid kodus.", right: "Ta ei olnud kodus." },
+  { id: "soime", wrong: "Pühapäeval me ei sõime kodus.", right: "Pühapäeval me ei söönud kodus." },
+] as const;
+
+export const WEEKEND_DIALOGUE = {
+  "d-mari-1": { text: "Tere! Mida sa nädalavahetusel tegid?", voice: "second" },
+  "d-sina-1": "Ma olin nädalavahetusel Tartus.",
+  "d-mari-2": { text: "Kas sa käisid ka turul?", voice: "second" },
+  "d-sina-2": "Ei, ma ei käinud.",
+  "d-mari-3": { text: "Mida sa järgmisel nädalal teed?", voice: "second" },
+  "d-sina-3": "Ma hakkan Tallinnas töötama.",
+} as const satisfies Record<string, Clip>;
+
+export const WEEKEND_TALK = {
+  turns: [
+    {
+      voice: "third",
+      text: "Tere, Jaan! Kuidas nädalavahetus oli?",
+      say: "[cheerful] Tere, Jaan! Kuidas nädalavahetus oli?",
+    },
+    {
+      voice: "main",
+      text: ["Hea!", "Laupäeval käisin ujumas.", "Vesi oli külm.", "Pühapäeval olin kodus."],
+    },
+    { voice: "third", text: "Kas sa käisid ka turul?" },
+    { voice: "main", text: ["Ei, ma ei käinud.", "Mul polnud aega."] },
+    { voice: "third", text: ["Mina käisin turul.", "Ma ostsin juustu ja leiba."] },
+    { voice: "main", text: "Kui palju juust maksis?" },
+    { voice: "third", text: "Kilo maksis kümme eurot." },
+    { voice: "main", text: "Mida sa järgmisel nädalal teed?" },
+    {
+      voice: "third",
+      text: ["Järgmisel nädalal hakkan ma eesti keelt õppima.", "Kolmapäeval ja reedel kell kuus."],
+    },
+    { voice: "main", text: ["Tore!", "Mina lähen esmaspäeval Tallinnasse."] },
+    { voice: "third", text: "Millal sa Tartusse tuled?" },
+    { voice: "main", text: ["Ma kavatsen reedel tulla.", "Laupäeval olen kodus."] },
+    {
+      voice: "third",
+      text: ["Hästi.", "Tule laupäeval meile!"],
+      say: "Hästi. [warmly] Tule laupäeval meile!",
+    },
+    { voice: "main", text: ["Jah, hea meelega!", "Mis kell?"] },
+    { voice: "third", text: ["Kell neli.", "Head aega!"] },
+  ],
+} as const satisfies Conversation;
+
+export const WEEKEND_DRILL = [
+  "Eile olin kodus.",
+  "Laupäeval käisin turul.",
+  "Me sõime kohvikus.",
+  "Eile ta luges raamatut.",
+  "Eile ma olin kodus.",
+  "Eelmisel laupäeval me käisime turul.",
+  "Eile ma ei läinud tööle.",
+  "Me ei käinud turul.",
+  "Nad ei olnud kodus.",
+  "Sa ei söönud kodus.",
+  "Homme lähen Tartusse.",
+  "Järgmisel nädalal hakkan õppima.",
+  "Ma kavatsen tulla.",
+  "Me hakkame Tallinnas elama.",
+  "Ma ei lugenud raamatut.",
+  "Homme ma lähen tööle.",
+] as const;
+
+export const WEEKEND_WORDS = [
+  "nädalavahetus",
+  "nädalavahetusel",
+  "eelmisel nädalavahetusel",
+  "järgmisel nädalavahetusel",
+  "eelmisel nädalal",
+  "järgmisel nädalal",
+  "hea meelega",
+] as const;
+
+const WEEKEND_CLIPS: Record<string, Clip> = {
+  ...words(WEEKEND_WORDS),
+  ...words(WEEKEND_SORT.map(({ w }) => w)),
+  ...words(WEEKEND_SAY.map(({ said }) => said)),
+  ...words(WEEKEND_FIX.map(({ right }) => right)),
+  ...words(WEEKEND_DRILL),
+  "p-kati": { sentences: WEEKEND_PASSAGES.kati, voice: "third" },
+  "p-mari": { sentences: WEEKEND_PASSAGES.mari, voice: "second" },
+  ...WEEKEND_DIALOGUE,
+  "c-weekend": WEEKEND_TALK,
+};
+
 export const CLIPS: Record<string, Record<string, Clip>> = {
   haaldus: words(HAALDUS_WORDS),
   numbrid: {
@@ -6452,5 +6930,7 @@ export const CLIPS: Record<string, Record<string, Clip>> = {
   turul: MARKET_CLIPS,
   lihtminevik: PAST_CLIPS,
   "mineviku-eitus": PAST_NO_CLIPS,
+  tulevik: FUTURE_CLIPS,
+  nadalavahetusel: WEEKEND_CLIPS,
   kit: KIT_CLIPS,
 };

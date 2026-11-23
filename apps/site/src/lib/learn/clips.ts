@@ -461,7 +461,7 @@ export const KUSIMUSED_ASKED = [
   {
     word: "millal",
     reply: "Nad töötavad homme.",
-    answers: ["Millal nad töötavad?", "Millal nemad töötavad?"],
+    answers: ["Millal nad töötavad?", "Millal nemad töötavad?", "Kes töötab homme?"],
   },
   {
     word: "miks",

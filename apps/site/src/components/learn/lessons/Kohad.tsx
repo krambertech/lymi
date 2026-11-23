@@ -677,8 +677,7 @@ export function KohadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    <Word w="Kodus" /> is at home. Now answer <Word w="Kus sa töötad?" /> six ways:
-                    tap a place.
+                    Now answer <Word w="Kus sa töötad?" /> six ways: tap a place.
                   </Trans>
                 </p>
               </Prose>

@@ -95,7 +95,7 @@ msgid "Are they working today?"
 msgstr "Вони сьогодні працюють?"
 
 msgid "Ask the question"
-msgstr "Запитай"
+msgstr "Постав питання"
 
 msgid "ask with kas"
 msgstr "запитай із kas"

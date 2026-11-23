@@ -10,9 +10,6 @@ msgstr ""
 msgid "-s or -l?"
 msgstr "-s или -l?"
 
-msgid "<0/> is at home. Now answer <1/> six ways: tap a place."
-msgstr "<0/> — это дома. А теперь дай шесть ответов на <1/>: нажми на место."
-
 msgid "<0/> is the town; <1/> is in Tallinn. Estonian says in with an ending, not a word in front: it puts <2>-s</2> on the end of the name. I live in Tallinn is <3/>"
 msgstr "<0/> — это город, а <1/> — в Таллине. В эстонском «в» — не отдельное слово, а окончание: в конец названия добавляют <2>-s</2>. «Я живу в Таллине» — это <3/>"
 
@@ -309,6 +306,9 @@ msgstr "Почти. Переслушай те, где были ошибки."
 
 msgid "Nearly. Play the ones you missed slower."
 msgstr "Почти. Послушай медленнее те, где была ошибка."
+
+msgid "Now answer <0/> six ways: tap a place."
+msgstr "А теперь дай шесть ответов на <0/>: нажми на место."
 
 msgid "office"
 msgstr "офис"

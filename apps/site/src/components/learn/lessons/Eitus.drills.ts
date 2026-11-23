@@ -120,7 +120,7 @@ const YES_NO: readonly {
 }[] = [
   {
     id: "yes-loete",
-    prompt: msg`You read (to more than one).`,
+    prompt: msg`You all read.`,
     stem: "loe",
     person: "te",
     no: false,
@@ -128,7 +128,7 @@ const YES_NO: readonly {
   },
   {
     id: "no-loete",
-    prompt: msg`You don’t read (to more than one).`,
+    prompt: msg`None of you read.`,
     stem: "loe",
     person: "te",
     no: true,
@@ -178,8 +178,8 @@ export const DRILLS: DrillBank = {
     typed("tööta", "ma"),
     ...NEGATION_TURNED.slice(6).map(turned),
     ...NEGATION_FIXES.map(fixed),
-    ...OLEMA_ROWS.map(olema),
-    ...NO_ANSWERS.slice(0, 6).map(answered),
+    ...OLEMA_ROWS.slice(1).map(olema),
+    ...NO_ANSWERS.slice(1, 7).map(answered),
     ...YES_NO.map(yesNo),
   ],
 };

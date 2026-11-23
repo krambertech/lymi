@@ -1,0 +1,818 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 08:56+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: en\n"
+
+msgid "<0/> is my, the genitive from lesson {genitive}. Put <1>-ga</1> or <2>-ta</2> from lesson {withLesson} on it: <3/>, with me; <4/>, without me."
+msgstr "<0/> is my, the genitive from lesson {genitive}. Put <1>-ga</1> or <2>-ta</2> from lesson {withLesson} on it: <3/>, with me; <4/>, without me."
+
+msgid "<0>Helista</0>, call, takes the person with <1>-le</1>: <2>mulle</2>, to me."
+msgstr "<0>Helista</0>, call, takes the person with <1>-le</1>: <2>mulle</2>, to me."
+
+msgid "<0>Helistama</0> takes the person with <1>-le</1>: <2>mulle</2>."
+msgstr "<0>Helistama</0> takes the person with <1>-le</1>: <2>mulle</2>."
+
+msgid "<0>Minu on kass</0> is wrong. <1>Minu</1> is my, and it stands before a noun; to say who has something, use <2>mul on</2>."
+msgstr "<0>Minu on kass</0> is wrong. <1>Minu</1> is my, and it stands before a noun; to say who has something, use <2>mul on</2>."
+
+msgid "<0>Ootama</0> takes the partitive, <1>sind</1>. <2>Sinu</2> is your."
+msgstr "<0>Ootama</0> takes the partitive, <1>sind</1>. <2>Sinu</2> is your."
+
+msgid "<et>Ootama</et> takes the partitive <et>sind</et>. <et>Sinu</et> is your."
+msgstr "<et>Ootama</et> takes the partitive <et>sind</et>. <et>Sinu</et> is your."
+
+msgid "18 minutes"
+msgstr "18 minutes"
+
+msgid "7 exercises, 3 of them typed, and a phone call"
+msgstr "7 exercises, 3 of them typed, and a phone call"
+
+msgid "A book for you: <0>-le</0> marks who gets it, <1>sulle</1>."
+msgstr "A book for you: <0>-le</0> marks who gets it, <1>sulle</1>."
+
+msgid "A pronoun takes the case endings a noun does. Most go on its genitive, so <0>minuga</0> is with me. To, has and from usually take short forms such as <1>mulle</1>, and the partitive is its own word: <2>mind</2>, <3>sind</3>, <4>teda</4>."
+msgstr "A pronoun takes the case endings a noun does. Most go on its genitive, so <0>minuga</0> is with me. To, has and from usually take short forms such as <1>mulle</1>, and the partitive is its own word: <2>mind</2>, <3>sind</3>, <4>teda</4>."
+
+msgid "About someone is <0>-st</0>: <1>sinust</1>."
+msgstr "About someone is <0>-st</0>: <1>sinust</1>."
+
+msgid "about whom"
+msgstr "about whom"
+
+msgid "about whom?"
+msgstr "about whom?"
+
+msgid "After <0>ootan</0>, the partitive <1>sind</1>."
+msgstr "After <0>ootan</0>, the partitive <1>sind</1>."
+
+msgid "After <0>ootan</0>, the partitive: <1>sind</1>."
+msgstr "After <0>ootan</0>, the partitive: <1>sind</1>."
+
+msgid "After <et>ootama</et> or <et>armastama</et>, the person takes the partitive: <et>mind</et>, <et>sind</et>, <et>meid</et>."
+msgstr "After <et>ootama</et> or <et>armastama</et>, the person takes the partitive: <et>mind</et>, <et>sind</et>, <et>meid</et>."
+
+msgid "After a verb such as <0/>, I’m waiting, or <1/>, I love, the person takes the partitive from lesson {partitive}. <2/> is I love you. A pronoun’s partitive isn’t built on the genitive, so learn the six as they are."
+msgstr "After a verb such as <0/>, I’m waiting, or <1/>, I love, the person takes the partitive from lesson {partitive}. <2/> is I love you. A pronoun’s partitive isn’t built on the genitive, so learn the six as they are."
+
+msgid "All five found and fixed."
+msgstr "All five found and fixed."
+
+msgid "All of them, each ending on its genitive."
+msgstr "All of them, each ending on its genitive."
+
+msgid "All of them: whose, who has and whom, each in its form."
+msgstr "All of them: whose, who has and whom, each in its form."
+
+msgid "All of them. You heard each ending."
+msgstr "All of them. You heard each ending."
+
+msgid "All six sentences, each pronoun in its form."
+msgstr "All six sentences, each pronoun in its form."
+
+msgid "Are you coming with us?"
+msgstr "Are you coming with us?"
+
+msgid "Are you going with them?"
+msgstr "Are you going with them?"
+
+msgid "Are you waiting for them?"
+msgstr "Are you waiting for them?"
+
+msgid "Ask what the sentence needs. Whose takes the genitive, who has takes <0>-l</0> with <1>on</1>, and whom after a verb takes the partitive."
+msgstr "Ask what the sentence needs. Whose takes the genitive, who has takes <0>-l</0> with <1>on</1>, and whom after a verb takes the partitive."
+
+msgid "asks, is asking"
+msgstr "asks, is asking"
+
+msgid "At five"
+msgstr "At five"
+
+msgid "At seven"
+msgstr "At seven"
+
+msgid "At six"
+msgstr "At six"
+
+msgid "Call me."
+msgstr "Call me."
+
+msgid "Call me. (To a friend.)"
+msgstr "Call me. (To a friend.)"
+
+msgid "calls, is calling"
+msgstr "calls, is calling"
+
+msgid "Come with me."
+msgstr "Come with me."
+
+msgid "Coming with someone: <0>minu</0> plus <1>-ga</1>."
+msgstr "Coming with someone: <0>minu</0> plus <1>-ga</1>."
+
+msgid "Do you have time?"
+msgstr "Do you have time?"
+
+msgid "Do you have time? (To a friend.)"
+msgstr "Do you have time? (To a friend.)"
+
+msgid "Each form has a question, a form of <0>kes</0>, who: <1>kellega?</1>, with whom; <2>kellele?</2>, to whom; <3>keda?</3>, whom."
+msgstr "Each form has a question, a form of <0>kes</0>, who: <1>kellega?</1>, with whom; <2>kellele?</2>, to whom; <3>keda?</3>, whom."
+
+msgid "Each pronoun’s genitive, with -ga and with -ta"
+msgstr "Each pronoun’s genitive, with -ga and with -ta"
+
+msgid "Each pronoun’s short forms for to, has and from"
+msgstr "Each pronoun’s short forms for to, has and from"
+
+msgid "Each sentence has one pronoun in the wrong form. Tap the wrong word, then type it right."
+msgstr "Each sentence has one pronoun in the wrong form. Tap the wrong word, then type it right."
+
+msgid "Estonian"
+msgstr "Estonian"
+
+msgid "Every pronoun works this way: <0/>, without you; <1/>, with him or her. For they, the genitive is <2/>, so with them is <3/>. Tap a line to hear it."
+msgstr "Every pronoun works this way: <0/>, without you; <1/>, with him or her. For they, the genitive is <2/>, so with them is <3/>. Tap a line to hear it."
+
+msgid "Fill the gaps"
+msgstr "Fill the gaps"
+
+msgid "Five mistakes to catch"
+msgstr "Five mistakes to catch"
+
+msgid "Fix the sentence"
+msgstr "Fix the sentence"
+
+msgid "For to, has and from, the short form is the usual one: <0/>, to me; <1/>, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem. After <7>mu</7>, <8>su</8> and <9>ta</9>, <10>-le</10> doubles its l: <11>mulle</11>, <12>sulle</12>, <13>talle</13>."
+msgstr "For to, has and from, the short form is the usual one: <0/>, to me; <1/>, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem. After <7>mu</7>, <8>su</8> and <9>ta</9>, <10>-le</10> doubles its l: <11>mulle</11>, <12>sulle</12>, <13>talle</13>."
+
+msgid "For to, has and from, the short forms are the usual ones: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>. The long <3>minule, minul, minult</3> stress the person."
+msgstr "For to, has and from, the short forms are the usual ones: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>. The long <3>minule, minul, minult</3> stress the person."
+
+#. placeholder {0}: person.id
+msgid "Forms of {0}"
+msgstr "Forms of {0}"
+
+msgid "From"
+msgstr "From"
+
+msgid "From armastama, to love."
+msgstr "From armastama, to love."
+
+msgid "From helistama, to call. The person called takes -le."
+msgstr "From helistama, to call. The person called takes -le."
+
+msgid "From küsima, to ask. The person asked takes -lt."
+msgstr "From küsima, to ask. The person asked takes -lt."
+
+msgid "from me"
+msgstr "from me"
+
+msgid "From ootama, to wait. The person waited for takes the partitive."
+msgstr "From ootama, to wait. The person waited for takes the partitive."
+
+msgid "From someone"
+msgstr "From someone"
+
+msgid "from whom"
+msgstr "from whom"
+
+msgid "from whom?"
+msgstr "from whom?"
+
+msgid "Having is <0>-l</0> with <1>on</1>: <2>sul on</2>."
+msgstr "Having is <0>-l</0> with <1>on</1>: <2>sul on</2>."
+
+msgid "Having is <0>mul on</0>. <1>Minu</1> is my."
+msgstr "Having is <0>mul on</0>. <1>Minu</1> is my."
+
+msgid "Having is <et>mul on</et>. <et>Minu</et> is my."
+msgstr "Having is <et>mul on</et>. <et>Minu</et> is my."
+
+msgid "he or she"
+msgstr "he or she"
+
+msgid "He or she has a car."
+msgstr "He or she has a car."
+
+msgid "He or she has time."
+msgstr "He or she has time."
+
+msgid "him or her"
+msgstr "him or her"
+
+msgid "him or her, not me"
+msgstr "him or her, not me"
+
+msgid "I"
+msgstr "I"
+
+msgid "I have"
+msgstr "I have"
+
+msgid "I have a cat."
+msgstr "I have a cat."
+
+msgid "I have time."
+msgstr "I have time."
+
+msgid "I love"
+msgstr "I love"
+
+msgid "I love you."
+msgstr "I love you."
+
+msgid "I love you. (To one person.)"
+msgstr "I love you. (To one person.)"
+
+msgid "I’ll ask you, to more than one; polite you."
+msgstr "I’ll ask you, to more than one; polite you."
+
+msgid "I’m not coming without you."
+msgstr "I’m not coming without you."
+
+msgid "I’m talking about you."
+msgstr "I’m talking about you."
+
+msgid "I’m talking with him or her."
+msgstr "I’m talking with him or her."
+
+msgid "I’m talking with him."
+msgstr "I’m talking with him."
+
+msgid "I’m waiting"
+msgstr "I’m waiting"
+
+msgid "I’m waiting for him or her."
+msgstr "I’m waiting for him or her."
+
+msgid "I’m waiting for you. (To a friend.)"
+msgstr "I’m waiting for you. (To a friend.)"
+
+msgid "Jaan"
+msgstr "Jaan"
+
+msgid "Jaan has time today."
+msgstr "Jaan has time today."
+
+msgid "Jaan is asking her."
+msgstr "Jaan is asking her."
+
+msgid "Jaan is asking him or her."
+msgstr "Jaan is asking him or her."
+
+msgid "Jaan is asking me."
+msgstr "Jaan is asking me."
+
+msgid "Jaan is asking them."
+msgstr "Jaan is asking them."
+
+msgid "Jaan is asking us."
+msgstr "Jaan is asking us."
+
+msgid "Jaan is asking you, to more than one; polite you."
+msgstr "Jaan is asking you, to more than one; polite you."
+
+msgid "Jaan is asking you."
+msgstr "Jaan is asking you."
+
+msgid "Jaan is calling him or her."
+msgstr "Jaan is calling him or her."
+
+msgid "Jaan is calling me."
+msgstr "Jaan is calling me."
+
+msgid "Jaan is calling them."
+msgstr "Jaan is calling them."
+
+msgid "Jaan is calling us."
+msgstr "Jaan is calling us."
+
+msgid "Jaan is calling you, to more than one; polite you."
+msgstr "Jaan is calling you, to more than one; polite you."
+
+msgid "Jaan is calling you."
+msgstr "Jaan is calling you."
+
+msgid "Jaan is coming by bus."
+msgstr "Jaan is coming by bus."
+
+msgid "Jaan is waiting for me."
+msgstr "Jaan is waiting for me."
+
+msgid "Kati"
+msgstr "Kati"
+
+msgid "Kati invites Mari for a coffee. Pick the form for each gap: the words around it say which case fits."
+msgstr "Kati invites Mari for a coffee. Pick the form for each gap: the words around it say which case fits."
+
+msgid "Kati’s message"
+msgstr "Kati’s message"
+
+msgid "Listen: Mari and Jaan"
+msgstr "Listen: Mari and Jaan"
+
+msgid "Listening only, no microphone"
+msgstr "Listening only, no microphone"
+
+msgid "Long"
+msgstr "Long"
+
+msgid "Mari"
+msgstr "Mari"
+
+msgid "Mari calls Jaan"
+msgstr "Mari calls Jaan"
+
+msgid "Mari phones Jaan about this evening. Read the questions, then listen. As in the exam, the call plays twice and doesn’t stop."
+msgstr "Mari phones Jaan about this evening. Read the questions, then listen. As in the exam, the call plays twice and doesn’t stop."
+
+msgid "Match each form with the person it names."
+msgstr "Match each form with the person it names."
+
+msgid "me"
+msgstr "me"
+
+msgid "Most of them. Check the form the verb asks for in the ones you missed."
+msgstr "Most of them. Check the form the verb asks for in the ones you missed."
+
+msgid "Most of them. Read why each one you missed is wrong."
+msgstr "Most of them. Read why each one you missed is wrong."
+
+msgid "my"
+msgstr "my"
+
+msgid "My is the genitive, having is <0>-l</0>, and whom is the partitive: <1>minu kass</1>, <2>mul on kass</2>, <3>Jaan ootab mind</3>."
+msgstr "My is the genitive, having is <0>-l</0>, and whom is the partitive: <1>minu kass</1>, <2>mul on kass</2>, <3>Jaan ootab mind</3>."
+
+msgid "My name: the genitive <0>minu</0>, as in <1>minu raamat</1>."
+msgstr "My name: the genitive <0>minu</0>, as in <1>minu raamat</1>."
+
+msgid "My, I have or me"
+msgstr "My, I have or me"
+
+msgid "My, I have or me: <et>minu</et>, <et>mul</et>, <et>mind</et>"
+msgstr "My, I have or me: <et>minu</et>, <et>mul</et>, <et>mind</et>"
+
+msgid "My, I have or me?"
+msgstr "My, I have or me?"
+
+msgid "Nearly. Ask whose, who has or whom before you pick."
+msgstr "Nearly. Ask whose, who has or whom before you pick."
+
+msgid "Nearly. Find the genitive first, then add <0>-ga</0> or <1>-ta</1>."
+msgstr "Nearly. Find the genitive first, then add <0>-ga</0> or <1>-ta</1>."
+
+msgid "Nearly. Play the ones you missed and listen to how the pronoun ends."
+msgstr "Nearly. Play the ones you missed and listen to how the pronoun ends."
+
+msgid "Nende, the genitive of nemad, plus -ga."
+msgstr "Nende, the genitive of nemad, plus -ga."
+
+msgid "Now hear a line and pick what the pronoun means: to someone, someone has, or from someone. The ending tells you: <0>-le</0>, <1>-l</1> or <2>-lt</2>."
+msgstr "Now hear a line and pick what the pronoun means: to someone, someone has, or from someone. The ending tells you: <0>-le</0>, <1>-l</1> or <2>-lt</2>."
+
+msgid "Now type the form: put <0>-ga</0> or <1>-ta</1> on the pronoun’s genitive."
+msgstr "Now type the form: put <0>-ga</0> or <1>-ta</1> on the pronoun’s genitive."
+
+msgid "Now write each sentence in Estonian. Each one needs a different form, so ask with whom, to whom, who has, from whom, about whom or whom first."
+msgstr "Now write each sentence in Estonian. Each one needs a different form, so ask with whom, to whom, who has, from whom, about whom or whom first."
+
+msgid "One pronoun in nine forms"
+msgstr "One pronoun in nine forms"
+
+msgid "Peeter"
+msgstr "Peeter"
+
+msgid "Peeter is going to the café as well."
+msgstr "Peeter is going to the café as well."
+
+msgid "Pick a pronoun in the table and tap its forms, then try again."
+msgstr "Pick a pronoun in the table and tap its forms, then try again."
+
+msgid "Pick the form the sentence needs."
+msgstr "Pick the form the sentence needs."
+
+msgid "Pronoun"
+msgstr "Pronoun"
+
+msgid "Read the reason under each one you missed, then try again."
+msgstr "Read the reason under each one you missed, then try again."
+
+msgid "Read the three sentences above once more, then try again."
+msgstr "Read the three sentences above once more, then try again."
+
+msgid "Short"
+msgstr "Short"
+
+msgid "Short forms for to, has and from"
+msgstr "Short forms for to, has and from"
+
+msgid "Some verbs set the person’s ending. In Estonian you phone to someone, so <0/> takes <1>-le</1>, and you ask from someone, so <2/> takes <3>-lt</3>. Tap a line to hear it."
+msgstr "Some verbs set the person’s ending. In Estonian you phone to someone, so <0/> takes <1>-le</1>, and you ask from someone, so <2/> takes <3>-lt</3>. Tap a line to hear it."
+
+msgid "Someone has"
+msgstr "Someone has"
+
+msgid "Tallinn"
+msgstr "Tallinn"
+
+msgid "Tap a form"
+msgstr "Tap a form"
+
+msgid "Tap a form to hear it."
+msgstr "Tap a form to hear it."
+
+msgid "Tap the forms in the table once more, then try again."
+msgstr "Tap the forms in the table once more, then try again."
+
+msgid "Tartu"
+msgstr "Tartu"
+
+#. placeholder {0}: person.genitive
+msgid "The ending <0>-{ending}</0> goes on the genitive <1>{0}</1>."
+msgstr "The ending <0>-{ending}</0> goes on the genitive <1>{0}</1>."
+
+msgid "The ending <0>-ga</0> goes on the genitive <1>minu</1>, not on <2>mina</2>."
+msgstr "The ending <0>-ga</0> goes on the genitive <1>minu</1>, not on <2>mina</2>."
+
+msgid "The ending <0>-l</0>, as in <1>mul on</1>. The short form is the usual one."
+msgstr "The ending <0>-l</0>, as in <1>mul on</1>. The short form is the usual one."
+
+msgid "The ending <0>-le</0>, to. The short form is the usual one."
+msgstr "The ending <0>-le</0>, to. The short form is the usual one."
+
+msgid "The ending <0>-lt</0>, from. The short form is the usual one."
+msgstr "The ending <0>-lt</0>, from. The short form is the usual one."
+
+msgid "The ending <0>-st</0>, out of, also says who you talk about. <1>Mina</1>, <2>sina</2> and <3>tema</3> have short forms here too, <4>must</4>, <5>sust</5> and <6>tast</6>, but they are rarer."
+msgstr "The ending <0>-st</0>, out of, also says who you talk about. <1>Mina</1>, <2>sina</2> and <3>tema</3> have short forms here too, <4>must</4>, <5>sust</5> and <6>tast</6>, but they are rarer."
+
+msgid "The ending <0>-st</0>, out of, from lesson {into}, also says who you talk about: <1/> is I’m talking about you. Pick a pronoun, then tap a form to hear it."
+msgstr "The ending <0>-st</0>, out of, from lesson {into}, also says who you talk about: <1/> is I’m talking about you. Pick a pronoun, then tap a form to hear it."
+
+msgid "The ending <et>-ga</et> goes on the genitive <et>minu</et>, not on <et>mina</et>."
+msgstr "The ending <et>-ga</et> goes on the genitive <et>minu</et>, not on <et>mina</et>."
+
+msgid "The endings <0>-ga</0> and <1>-ta</1> go on the genitive: <2>minuga</2>, with me; <3>sinuta</3>, without you; <4>nendega</4>, with them."
+msgstr "The endings <0>-ga</0> and <1>-ta</1> go on the genitive: <2>minuga</2>, with me; <3>sinuta</3>, without you; <4>nendega</4>, with them."
+
+msgid "The endings <et>-ga</et> and <et>-ta</et> go on the genitive: <et>minu</et>, <et>minuga</et>."
+msgstr "The endings <et>-ga</et> and <et>-ta</et> go on the genitive: <et>minu</et>, <et>minuga</et>."
+
+msgid "The form a dictionary lists first."
+msgstr "The form a dictionary lists first."
+
+msgid "The genitive <et>sinu</et> plus <et>-ta</et>: <et>sinuta</et>."
+msgstr "The genitive <et>sinu</et> plus <et>-ta</et>: <et>sinuta</et>."
+
+msgid "The genitive of <et>nemad</et> is <et>nende</et>, so with them is <et>nendega</et>."
+msgstr "The genitive of <et>nemad</et> is <et>nende</et>, so with them is <et>nendega</et>."
+
+msgid "The genitive of mina. Short: mu."
+msgstr "The genitive of mina. Short: mu."
+
+msgid "The genitive of nemad."
+msgstr "The genitive of nemad."
+
+msgid "The genitive plus <0>-ga</0>."
+msgstr "The genitive plus <0>-ga</0>."
+
+msgid "The genitive plus <0>-ta</0>."
+msgstr "The genitive plus <0>-ta</0>."
+
+msgid "The genitive. The endings -ga and -ta go on it."
+msgstr "The genitive. The endings -ga and -ta go on it."
+
+msgid "The long form of mulle. It stresses me: to me, not to someone else."
+msgstr "The long form of mulle. It stresses me: to me, not to someone else."
+
+msgid "The long form of mult. It stresses me: from me, not from someone else."
+msgstr "The long form of mult. It stresses me: from me, not from someone else."
+
+msgid "The long forms <0/>, <1/> and <2/> mean the same and stress the person: to me, not to you. For <3>meie</3> and <4>teie</4>, standard Estonian has only the short form: <5>meile</5>, <6>teile</6>."
+msgstr "The long forms <0/>, <1/> and <2/> mean the same and stress the person: to me, not to you. For <3>meie</3> and <4>teie</4>, standard Estonian has only the short form: <5>meile</5>, <6>teile</6>."
+
+msgid "The partitive is a word of its own: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> is I’m waiting for you."
+msgstr "The partitive is a word of its own: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> is I’m waiting for you."
+
+msgid "The partitive of <et>tema</et> is <et>teda</et>."
+msgstr "The partitive of <et>tema</et> is <et>teda</et>."
+
+msgid "The partitive of kes, who."
+msgstr "The partitive of kes, who."
+
+msgid "The partitive of meie."
+msgstr "The partitive of meie."
+
+msgid "The partitive of mina."
+msgstr "The partitive of mina."
+
+msgid "The partitive of nemad."
+msgstr "The partitive of nemad."
+
+msgid "The partitive of sina."
+msgstr "The partitive of sina."
+
+msgid "The partitive of teie."
+msgstr "The partitive of teie."
+
+msgid "The partitive of tema."
+msgstr "The partitive of tema."
+
+msgid "The partitive, used after a verb such as <0>ootama</0>. It isn’t built on the genitive."
+msgstr "The partitive, used after a verb such as <0>ootama</0>. It isn’t built on the genitive."
+
+msgid "The partitive: me, you, him or her"
+msgstr "The partitive: me, you, him or her"
+
+msgid "The short form is ma."
+msgstr "The short form is ma."
+
+msgid "The short form of minule."
+msgstr "The short form of minule."
+
+msgid "The short form of minult."
+msgstr "The short form of minult."
+
+msgid "The table shows one pronoun in each case of this lesson. Beside each form is the question that asks for it, a form of <0>kes</0>, who: <1/>, with whom; <2/>, to whom."
+msgstr "The table shows one pronoun in each case of this lesson. Beside each form is the question that asks for it, a form of <0>kes</0>, who: <1/>, with whom; <2/>, to whom."
+
+msgid "their"
+msgstr "their"
+
+msgid "them"
+msgstr "them"
+
+msgid "they"
+msgstr "they"
+
+msgid "They are <0/>, <1/>, <2/>, <3/>, <4/> and <5/>. To ask whom, say <6/> Tap a line to hear it."
+msgstr "They are <0/>, <1/>, <2/>, <3/>, <4/> and <5/>. To ask whom, say <6/> Tap a line to hear it."
+
+msgid "They have time."
+msgstr "They have time."
+
+msgid "they; genitive <0>nende</0>"
+msgstr "they; genitive <0>nende</0>"
+
+msgid "They’re talking about us."
+msgstr "They’re talking about us."
+
+msgid "They’re waiting for us."
+msgstr "They’re waiting for us."
+
+msgid "This is my cat."
+msgstr "This is my cat."
+
+msgid "This is their car."
+msgstr "This is their car."
+
+msgid "Three forms of one pronoun look alike and say different things. <0/> means this is my cat. <1/> means I have a cat. <2/> means Jaan is waiting for me."
+msgstr "Three forms of one pronoun look alike and say different things. <0/> means this is my cat. <1/> means I have a cat. <2/> means Jaan is waiting for me."
+
+msgid "To"
+msgstr "To"
+
+msgid "To a café"
+msgstr "To a café"
+
+msgid "to me, for me"
+msgstr "to me, for me"
+
+msgid "To someone"
+msgstr "To someone"
+
+msgid "To someone takes <et>-le</et>: <et>mulle</et>, <et>talle</et>, <et>meile</et>."
+msgstr "To someone takes <et>-le</et>: <et>mulle</et>, <et>talle</et>, <et>meile</et>."
+
+msgid "To Tartu"
+msgstr "To Tartu"
+
+msgid "To the shop"
+msgstr "To the shop"
+
+msgid "to whom"
+msgstr "to whom"
+
+msgid "to whom?"
+msgstr "to whom?"
+
+msgid "To, has and from: <et>mulle</et>, <et>mul</et>, <et>mult</et>"
+msgstr "To, has and from: <et>mulle</et>, <et>mul</et>, <et>mult</et>"
+
+msgid "To, has or from?"
+msgstr "To, has or from?"
+
+msgid "us"
+msgstr "us"
+
+msgid "Wait for me."
+msgstr "Wait for me."
+
+msgid "Wait for me. (To a friend.)"
+msgstr "Wait for me. (To a friend.)"
+
+msgid "we"
+msgstr "we"
+
+msgid "We have a cat."
+msgstr "We have a cat."
+
+msgid "We have time."
+msgstr "We have time."
+
+msgid "We’re talking about you. (To a friend.)"
+msgstr "We’re talking about you. (To a friend.)"
+
+msgid "We’re waiting for you, to more than one; polite you."
+msgstr "We’re waiting for you, to more than one; polite you."
+
+msgid "What has Jaan got for Peeter? Write it as Jaan says it."
+msgstr "What has Jaan got for Peeter? Write it as Jaan says it."
+
+msgid "What is the book about?"
+msgstr "What is the book about?"
+
+msgid "When do they expect Jaan at the café?"
+msgstr "When do they expect Jaan at the café?"
+
+msgid "Where are Mari and Kati going?"
+msgstr "Where are Mari and Kati going?"
+
+msgid "Where is his or her book?"
+msgstr "Where is his or her book?"
+
+msgid "who"
+msgstr "who"
+
+msgid "who has"
+msgstr "who has"
+
+msgid "Who has"
+msgstr "Who has"
+
+msgid "Who has takes <et>-l</et> with <et>on</et>: <et>mul on</et>, <et>neil on</et>."
+msgstr "Who has takes <et>-l</et> with <et>on</et>: <et>mul on</et>, <et>neil on</et>."
+
+msgid "Who has: <0>-l</0> with <1>on</1>."
+msgstr "Who has: <0>-l</0> with <1>on</1>."
+
+msgid "who has?"
+msgstr "who has?"
+
+msgid "Who is going to phone Jaan tomorrow?"
+msgstr "Who is going to phone Jaan tomorrow?"
+
+msgid "Who is it?"
+msgstr "Who is it?"
+
+msgid "Who wants to talk with Jaan?"
+msgstr "Who wants to talk with Jaan?"
+
+msgid "whom"
+msgstr "whom"
+
+msgid "Whom is <et>keda</et>, the partitive of <et>kes</et>, like <et>teda</et>."
+msgstr "Whom is <et>keda</et>, the partitive of <et>kes</et>, like <et>teda</et>."
+
+msgid "Whom: <et>mind</et>, <et>sind</et>, <et>teda</et>"
+msgstr "Whom: <et>mind</et>, <et>sind</et>, <et>teda</et>"
+
+msgid "Whom: after a verb such as <0>ootama</0>, the partitive."
+msgstr "Whom: after a verb such as <0>ootama</0>, the partitive."
+
+msgid "whom?"
+msgstr "whom?"
+
+msgid "whose"
+msgstr "whose"
+
+msgid "Whose"
+msgstr "Whose"
+
+msgid "Whose takes the genitive, the form that means my, your, his or her: <et>minu</et>, <et>sinu</et>, <et>tema</et>."
+msgstr "Whose takes the genitive, the form that means my, your, his or her: <et>minu</et>, <et>sinu</et>, <et>tema</et>."
+
+msgid "Whose: the genitive, the form that means my, your, his or her."
+msgstr "Whose: the genitive, the form that means my, your, his or her."
+
+msgctxt "with or without"
+msgid "With"
+msgstr "With"
+
+msgid "With and without: <et>minuga</et>, <et>sinuta</et>"
+msgstr "With and without: <et>minuga</et>, <et>sinuta</et>"
+
+msgid "with him or her"
+msgstr "with him or her"
+
+msgid "with me"
+msgstr "with me"
+
+msgid "With me, without you"
+msgstr "With me, without you"
+
+msgid "With me: the genitive <0>minu</0> plus <1>-ga</1>."
+msgstr "With me: the genitive <0>minu</0> plus <1>-ga</1>."
+
+msgid "With on: minul on aega, I have time. The long form of mul; it stresses me."
+msgstr "With on: minul on aega, I have time. The long form of mul; it stresses me."
+
+msgid "With on: mul on aega, I have time. The short form of minul."
+msgstr "With on: mul on aega, I have time. The short form of minul."
+
+msgid "With or without"
+msgstr "With or without"
+
+msgid "with them"
+msgstr "with them"
+
+msgid "with us"
+msgstr "with us"
+
+msgid "With us: <0>meie</0> plus <1>-ga</1>."
+msgstr "With us: <0>meie</0> plus <1>-ga</1>."
+
+msgid "With us: <et>meie</et> plus <et>-ga</et>."
+msgstr "With us: <et>meie</et> plus <et>-ga</et>."
+
+msgid "with whom"
+msgstr "with whom"
+
+msgid "with whom?"
+msgstr "with whom?"
+
+msgid "with you"
+msgstr "with you"
+
+msgid "with you, to more than one; polite you"
+msgstr "with you, to more than one; polite you"
+
+msgctxt "with or without"
+msgid "Without"
+msgstr "Without"
+
+msgid "without him or her"
+msgstr "without him or her"
+
+msgid "without me"
+msgstr "without me"
+
+msgid "without them"
+msgstr "without them"
+
+msgid "without us"
+msgstr "without us"
+
+msgid "without whom"
+msgstr "without whom"
+
+msgid "without you"
+msgstr "without you"
+
+msgid "without you, to more than one; polite you"
+msgstr "without you, to more than one; polite you"
+
+msgid "Write it in Estonian"
+msgstr "Write it in Estonian"
+
+msgid "you"
+msgstr "you"
+
+msgctxt "the partitive sind"
+msgid "you"
+msgstr "you"
+
+msgid "You ask from someone, so <et>küsima</et> takes <et>-lt</et>: <et>mult</et>, <et>meilt</et>."
+msgstr "You ask from someone, so <et>küsima</et> takes <et>-lt</et>: <et>mult</et>, <et>meilt</et>."
+
+msgid "You ask from someone: <0>-lt</0>, <1>temalt</1> or <2>talt</2>."
+msgstr "You ask from someone: <0>-lt</0>, <1>temalt</1> or <2>talt</2>."
+
+msgid "You call to someone: <0>mulle</0>, the short form with <1>-le</1>."
+msgstr "You call to someone: <0>mulle</0>, the short form with <1>-le</1>."
+
+msgid "You have time, to more than one; polite you."
+msgstr "You have time, to more than one; polite you."
+
+msgid "You have time."
+msgstr "You have time."
+
+msgid "you, one person"
+msgstr "you, one person"
+
+msgid "you, to more than one; polite you"
+msgstr "you, to more than one; polite you"
+
+msgctxt "the partitive teid"
+msgid "you, to more than one; polite you"
+msgstr "you, to more than one; polite you"
+
+msgid "You’ll hear a sentence with it and see what it means."
+msgstr "You’ll hear a sentence with it and see what it means."
+
+msgid "You’ll hear it and see what it means."
+msgstr "You’ll hear it and see what it means."

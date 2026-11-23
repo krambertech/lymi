@@ -1,0 +1,818 @@
+msgid ""
+msgstr ""
+"POT-Creation-Date: 2026-11-23 08:56+0200\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: @lingui/cli\n"
+"Language: uk\n"
+
+msgid "<0/> is my, the genitive from lesson {genitive}. Put <1>-ga</1> or <2>-ta</2> from lesson {withLesson} on it: <3/>, with me; <4/>, without me."
+msgstr "<0/> — це «мій», родовий відмінок з уроку {genitive}. Додай до нього <1>-ga</1> чи <2>-ta</2> з уроку {withLesson}: <3/> — «зі мною», <4/> — «без мене»."
+
+msgid "<0>Helista</0>, call, takes the person with <1>-le</1>: <2>mulle</2>, to me."
+msgstr "<0>Helista</0>, подзвони, вимагає <1>-le</1>: <2>mulle</2>, мені."
+
+msgid "<0>Helistama</0> takes the person with <1>-le</1>: <2>mulle</2>."
+msgstr "Після <0>helistama</0> людина отримує <1>-le</1>: <2>mulle</2>."
+
+msgid "<0>Minu on kass</0> is wrong. <1>Minu</1> is my, and it stands before a noun; to say who has something, use <2>mul on</2>."
+msgstr "<0>Minu on kass</0> — помилка. <1>Minu</1> — це «мій», воно стоїть перед іменником. Щоб сказати, у кого щось є, кажи <2>mul on</2>, як «у мене є»."
+
+msgid "<0>Ootama</0> takes the partitive, <1>sind</1>. <2>Sinu</2> is your."
+msgstr "Після <0>ootama</0> — партитив, <1>sind</1>. <2>Sinu</2> — це «твій»."
+
+msgid "<et>Ootama</et> takes the partitive <et>sind</et>. <et>Sinu</et> is your."
+msgstr "Після <et>ootama</et> — партитив <et>sind</et>. <et>Sinu</et> — це «твій»."
+
+msgid "18 minutes"
+msgstr "18 хвилин"
+
+msgid "7 exercises, 3 of them typed, and a phone call"
+msgstr "7 вправ, у 3 з них треба писати, і телефонна розмова"
+
+msgid "A book for you: <0>-le</0> marks who gets it, <1>sulle</1>."
+msgstr "Книжка для тебе: <0>-le</0> показує, хто її отримує, — <1>sulle</1>."
+
+msgid "A pronoun takes the case endings a noun does. Most go on its genitive, so <0>minuga</0> is with me. To, has and from usually take short forms such as <1>mulle</1>, and the partitive is its own word: <2>mind</2>, <3>sind</3>, <4>teda</4>."
+msgstr "Займенник має ті самі відмінкові закінчення, що й іменник. Більшість додається до родового, тож <0>minuga</0> — «зі мною». Для «кому», «у кого» і «від кого» зазвичай уживають короткі форми, як-от <1>mulle</1>, а партитив — окреме слово: <2>mind</2>, <3>sind</3>, <4>teda</4>."
+
+msgid "About someone is <0>-st</0>: <1>sinust</1>."
+msgstr "Про когось — <0>-st</0>: <1>sinust</1>."
+
+msgid "about whom"
+msgstr "про кого"
+
+msgid "about whom?"
+msgstr "про кого?"
+
+msgid "After <0>ootan</0>, the partitive <1>sind</1>."
+msgstr "Після <0>ootan</0> — партитив <1>sind</1>."
+
+msgid "After <0>ootan</0>, the partitive: <1>sind</1>."
+msgstr "Після <0>ootan</0> — партитив: <1>sind</1>."
+
+msgid "After <et>ootama</et> or <et>armastama</et>, the person takes the partitive: <et>mind</et>, <et>sind</et>, <et>meid</et>."
+msgstr "Після <et>ootama</et> чи <et>armastama</et> людина стоїть у партитиві: <et>mind</et>, <et>sind</et>, <et>meid</et>."
+
+msgid "After a verb such as <0/>, I’m waiting, or <1/>, I love, the person takes the partitive from lesson {partitive}. <2/> is I love you. A pronoun’s partitive isn’t built on the genitive, so learn the six as they are."
+msgstr "Після дієслова на кшталт <0/>, «чекаю», чи <1/>, «кохаю», людина стоїть у партитиві з уроку {partitive}. <2/> — «я тебе кохаю». Партитив займенника не утворюється від родового, тож запам’ятай ці шість слів як є."
+
+msgid "All five found and fixed."
+msgstr "Усі п’ять знайдено й виправлено."
+
+msgid "All of them, each ending on its genitive."
+msgstr "Усі: ти щоразу додаєш закінчення до родового відмінка."
+
+msgid "All of them: whose, who has and whom, each in its form."
+msgstr "Усі: чий, у кого і кого — кожне у своїй формі."
+
+msgid "All of them. You heard each ending."
+msgstr "Усі. Кожне закінчення розпізнано."
+
+msgid "All six sentences, each pronoun in its form."
+msgstr "Усі шість речень, кожен займенник у своїй формі."
+
+msgid "Are you coming with us?"
+msgstr "Ти підеш з нами?"
+
+msgid "Are you going with them?"
+msgstr "Ти йдеш із ними?"
+
+msgid "Are you waiting for them?"
+msgstr "Ти чекаєш на них?"
+
+msgid "Ask what the sentence needs. Whose takes the genitive, who has takes <0>-l</0> with <1>on</1>, and whom after a verb takes the partitive."
+msgstr "Спитай, чого потребує речення. «Чий» — це родовий, «у кого є» — <0>-l</0> разом з <1>on</1>, а «кого» після дієслова — партитив."
+
+msgid "asks, is asking"
+msgstr "питає"
+
+msgid "At five"
+msgstr "О п’ятій"
+
+msgid "At seven"
+msgstr "О сьомій"
+
+msgid "At six"
+msgstr "О шостій"
+
+msgid "Call me."
+msgstr "Подзвони мені."
+
+msgid "Call me. (To a friend.)"
+msgstr "Подзвони мені. (Другові.)"
+
+msgid "calls, is calling"
+msgstr "дзвонить"
+
+msgid "Come with me."
+msgstr "Ходи зі мною."
+
+msgid "Coming with someone: <0>minu</0> plus <1>-ga</1>."
+msgstr "Іти з кимось: <0>minu</0> плюс <1>-ga</1>."
+
+msgid "Do you have time?"
+msgstr "У тебе є час?"
+
+msgid "Do you have time? (To a friend.)"
+msgstr "У тебе є час? (Другові.)"
+
+msgid "Each form has a question, a form of <0>kes</0>, who: <1>kellega?</1>, with whom; <2>kellele?</2>, to whom; <3>keda?</3>, whom."
+msgstr "Кожна форма має своє питання — форму <0>kes</0>, «хто»: <1>kellega?</1> — «з ким?», <2>kellele?</2> — «кому?», <3>keda?</3> — «кого?»."
+
+msgid "Each pronoun’s genitive, with -ga and with -ta"
+msgstr "Родовий відмінок кожного займенника, з -ga і з -ta"
+
+msgid "Each pronoun’s short forms for to, has and from"
+msgstr "Короткі форми кожного займенника: кому, у кого, від кого"
+
+msgid "Each sentence has one pronoun in the wrong form. Tap the wrong word, then type it right."
+msgstr "У кожному реченні один займенник стоїть у хибній формі. Торкнися хибного слова, потім напиши його правильно."
+
+msgid "Estonian"
+msgstr "Естонська мова"
+
+msgid "Every pronoun works this way: <0/>, without you; <1/>, with him or her. For they, the genitive is <2/>, so with them is <3/>. Tap a line to hear it."
+msgstr "Так працює кожен займенник: <0/> — без тебе, <1/> — з ним чи з нею. Родовий відмінок від «вони» — <2/>, тож «з ними» — <3/>. Торкнися рядка, щоб його почути."
+
+msgid "Fill the gaps"
+msgstr "Заповни пропуски"
+
+msgid "Five mistakes to catch"
+msgstr "П’ять помилок"
+
+msgid "Fix the sentence"
+msgstr "Виправ речення"
+
+msgid "For to, has and from, the short form is the usual one: <0/>, to me; <1/>, as in <2>mul on</2> from lesson {have}; <3/>, from me. These are the endings <4>-le</4>, <5>-l</5> and <6>-lt</6> from lesson {onto}, on a short stem. After <7>mu</7>, <8>su</8> and <9>ta</9>, <10>-le</10> doubles its l: <11>mulle</11>, <12>sulle</12>, <13>talle</13>."
+msgstr "Для «кому», «у кого» і «від кого» зазвичай кажуть коротку форму: <0/> — «мені»; <1/>, як у <2>mul on</2> з уроку {have}; <3/> — «від мене». Це закінчення <4>-le</4>, <5>-l</5> і <6>-lt</6> з уроку {onto} на короткій основі. Після <7>mu</7>, <8>su</8> і <9>ta</9> закінчення <10>-le</10> подвоює l: <11>mulle</11>, <12>sulle</12>, <13>talle</13>."
+
+msgid "For to, has and from, the short forms are the usual ones: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>. The long <3>minule, minul, minult</3> stress the person."
+msgstr "Для «кому», «у кого» і «від кого» зазвичай кажуть короткі форми: <0>mulle, mul, mult</0>; <1>talle, tal, talt</1>; <2>meile, meil, meilt</2>. Повні <3>minule, minul, minult</3> наголошують на людині."
+
+#. placeholder {0}: person.id
+msgid "Forms of {0}"
+msgstr "Форми {0}"
+
+msgid "From"
+msgstr "Від кого"
+
+msgid "From armastama, to love."
+msgstr "Від armastama — кохати, любити."
+
+msgid "From helistama, to call. The person called takes -le."
+msgstr "Від helistama — дзвонити. Той, кому дзвонять, стоїть з -le."
+
+msgid "From küsima, to ask. The person asked takes -lt."
+msgstr "Від küsima — питати. Того, кого питають, ставлять з -lt."
+
+msgid "from me"
+msgstr "від мене"
+
+msgid "From ootama, to wait. The person waited for takes the partitive."
+msgstr "Від ootama — чекати. Той, на кого чекають, стоїть у партитиві."
+
+msgid "From someone"
+msgstr "Від когось"
+
+msgid "from whom"
+msgstr "від кого"
+
+msgid "from whom?"
+msgstr "від кого?"
+
+msgid "Having is <0>-l</0> with <1>on</1>: <2>sul on</2>."
+msgstr "«У когось є» — це <0>-l</0> разом з <1>on</1>: <2>sul on</2>."
+
+msgid "Having is <0>mul on</0>. <1>Minu</1> is my."
+msgstr "«У мене є» — це <0>mul on</0>. <1>Minu</1> — «мій»."
+
+msgid "Having is <et>mul on</et>. <et>Minu</et> is my."
+msgstr "«У мене є» — це <et>mul on</et>. <et>Minu</et> — «мій»."
+
+msgid "he or she"
+msgstr "він чи вона"
+
+msgid "He or she has a car."
+msgstr "У нього чи в неї є машина."
+
+msgid "He or she has time."
+msgstr "У нього чи в неї є час."
+
+msgid "him or her"
+msgstr "його чи її"
+
+msgid "him or her, not me"
+msgstr "його чи її, а не мене"
+
+msgid "I"
+msgstr "я"
+
+msgid "I have"
+msgstr "у мене є"
+
+msgid "I have a cat."
+msgstr "У мене є кіт."
+
+msgid "I have time."
+msgstr "У мене є час."
+
+msgid "I love"
+msgstr "я кохаю, люблю"
+
+msgid "I love you."
+msgstr "Я тебе кохаю."
+
+msgid "I love you. (To one person.)"
+msgstr "Я тебе кохаю. (Одній людині.)"
+
+msgid "I’ll ask you, to more than one; polite you."
+msgstr "Я спитаю у вас — кількох людей або ввічливо."
+
+msgid "I’m not coming without you."
+msgstr "Я не піду без тебе."
+
+msgid "I’m talking about you."
+msgstr "Я говорю про тебе."
+
+msgid "I’m talking with him or her."
+msgstr "Я розмовляю з ним чи з нею."
+
+msgid "I’m talking with him."
+msgstr "Я розмовляю з ним."
+
+msgid "I’m waiting"
+msgstr "я чекаю"
+
+msgid "I’m waiting for him or her."
+msgstr "Я чекаю на нього чи на неї."
+
+msgid "I’m waiting for you. (To a friend.)"
+msgstr "Я чекаю на тебе. (Другові.)"
+
+msgid "Jaan"
+msgstr "Яан"
+
+msgid "Jaan has time today."
+msgstr "Яан сьогодні має час."
+
+msgid "Jaan is asking her."
+msgstr "Яан питає в неї."
+
+msgid "Jaan is asking him or her."
+msgstr "Яан питає в нього чи в неї."
+
+msgid "Jaan is asking me."
+msgstr "Яан питає в мене."
+
+msgid "Jaan is asking them."
+msgstr "Яан питає в них."
+
+msgid "Jaan is asking us."
+msgstr "Яан питає в нас."
+
+msgid "Jaan is asking you, to more than one; polite you."
+msgstr "Яан питає у вас — кількох людей або ввічливо."
+
+msgid "Jaan is asking you."
+msgstr "Яан питає в тебе."
+
+msgid "Jaan is calling him or her."
+msgstr "Яан дзвонить йому чи їй."
+
+msgid "Jaan is calling me."
+msgstr "Яан дзвонить мені."
+
+msgid "Jaan is calling them."
+msgstr "Яан дзвонить їм."
+
+msgid "Jaan is calling us."
+msgstr "Яан дзвонить нам."
+
+msgid "Jaan is calling you, to more than one; polite you."
+msgstr "Яан дзвонить вам — кільком людям або ввічливо."
+
+msgid "Jaan is calling you."
+msgstr "Яан дзвонить тобі."
+
+msgid "Jaan is coming by bus."
+msgstr "Яан приїде автобусом."
+
+msgid "Jaan is waiting for me."
+msgstr "Яан чекає на мене."
+
+msgid "Kati"
+msgstr "Каті"
+
+msgid "Kati invites Mari for a coffee. Pick the form for each gap: the words around it say which case fits."
+msgstr "Каті кличе Марі на каву. Вибери форму для кожного пропуску: слова довкола підкажуть відмінок."
+
+msgid "Kati’s message"
+msgstr "Повідомлення від Каті"
+
+msgid "Listen: Mari and Jaan"
+msgstr "Послухай: Марі й Яан"
+
+msgid "Listening only, no microphone"
+msgstr "Лише слухання, без мікрофона"
+
+msgid "Long"
+msgstr "Повна"
+
+msgid "Mari"
+msgstr "Марі"
+
+msgid "Mari calls Jaan"
+msgstr "Марі дзвонить Яанові"
+
+msgid "Mari phones Jaan about this evening. Read the questions, then listen. As in the exam, the call plays twice and doesn’t stop."
+msgstr "Марі дзвонить Яанові щодо сьогоднішнього вечора. Прочитай запитання, потім слухай. Як на іспиті, розмова звучить двічі й не зупиняється."
+
+msgid "Match each form with the person it names."
+msgstr "З’єднай кожну форму з тим, кого вона називає."
+
+msgid "me"
+msgstr "мене"
+
+msgid "Most of them. Check the form the verb asks for in the ones you missed."
+msgstr "Більшість. У тих, що не вдалися, перевір, якої форми вимагає дієслово."
+
+msgid "Most of them. Read why each one you missed is wrong."
+msgstr "Більшість. Прочитай пояснення до тих, що не вдалися."
+
+msgid "my"
+msgstr "мій"
+
+msgid "My is the genitive, having is <0>-l</0>, and whom is the partitive: <1>minu kass</1>, <2>mul on kass</2>, <3>Jaan ootab mind</3>."
+msgstr "«Мій» — це родовий, «у мене є» — <0>-l</0>, а «кого» — партитив: <1>minu kass</1>, <2>mul on kass</2>, <3>Jaan ootab mind</3>."
+
+msgid "My name: the genitive <0>minu</0>, as in <1>minu raamat</1>."
+msgstr "«Моє ім’я» — родовий <0>minu</0>, як у <1>minu raamat</1>."
+
+msgid "My, I have or me"
+msgstr "Мій, у мене чи мене"
+
+msgid "My, I have or me: <et>minu</et>, <et>mul</et>, <et>mind</et>"
+msgstr "Мій, у мене чи мене: <et>minu</et>, <et>mul</et>, <et>mind</et>"
+
+msgid "My, I have or me?"
+msgstr "Мій, у мене чи мене?"
+
+msgid "Nearly. Ask whose, who has or whom before you pick."
+msgstr "Майже. Перш ніж обрати, спитай: чий, у кого чи кого?"
+
+msgid "Nearly. Find the genitive first, then add <0>-ga</0> or <1>-ta</1>."
+msgstr "Майже. Спершу знайди родовий відмінок, потім додай <0>-ga</0> чи <1>-ta</1>."
+
+msgid "Nearly. Play the ones you missed and listen to how the pronoun ends."
+msgstr "Майже. Послухай ще раз ті, що не вдалися, і зверни увагу, як закінчується займенник."
+
+msgid "Nende, the genitive of nemad, plus -ga."
+msgstr "Nende, родовий від nemad, плюс -ga."
+
+msgid "Now hear a line and pick what the pronoun means: to someone, someone has, or from someone. The ending tells you: <0>-le</0>, <1>-l</1> or <2>-lt</2>."
+msgstr "Тепер послухай рядок і обери, що означає займенник: комусь, у когось є чи від когось. Підкаже закінчення: <0>-le</0>, <1>-l</1> чи <2>-lt</2>."
+
+msgid "Now type the form: put <0>-ga</0> or <1>-ta</1> on the pronoun’s genitive."
+msgstr "Тепер напиши форму: додай <0>-ga</0> чи <1>-ta</1> до родового відмінка займенника."
+
+msgid "Now write each sentence in Estonian. Each one needs a different form, so ask with whom, to whom, who has, from whom, about whom or whom first."
+msgstr "Тепер напиши кожне речення естонською. Кожне потребує іншої форми, тож спершу спитай: з ким, кому, у кого, від кого, про кого чи кого?"
+
+msgid "One pronoun in nine forms"
+msgstr "Один займенник у дев’яти формах"
+
+msgid "Peeter"
+msgstr "Пеетер"
+
+msgid "Peeter is going to the café as well."
+msgstr "Пеетер теж іде в кав’ярню."
+
+msgid "Pick a pronoun in the table and tap its forms, then try again."
+msgstr "Обери займенник у таблиці, торкнися його форм і спробуй ще раз."
+
+msgid "Pick the form the sentence needs."
+msgstr "Обери форму, якої потребує речення."
+
+msgid "Pronoun"
+msgstr "Займенник"
+
+msgid "Read the reason under each one you missed, then try again."
+msgstr "Прочитай пояснення до тих, що не вдалися, і спробуй ще раз."
+
+msgid "Read the three sentences above once more, then try again."
+msgstr "Ще раз прочитай три речення вище й спробуй знову."
+
+msgid "Short"
+msgstr "Коротка"
+
+msgid "Short forms for to, has and from"
+msgstr "Короткі форми: кому, у кого, від кого"
+
+msgid "Some verbs set the person’s ending. In Estonian you phone to someone, so <0/> takes <1>-le</1>, and you ask from someone, so <2/> takes <3>-lt</3>. Tap a line to hear it."
+msgstr "Деякі дієслова самі визначають закінчення: дзвонять комусь, тож <0/> вимагає <1>-le</1>; питають у когось, тож <2/> вимагає <3>-lt</3>. Торкнися рядка, щоб послухати."
+
+msgid "Someone has"
+msgstr "У когось є"
+
+msgid "Tallinn"
+msgstr "Таллінн"
+
+msgid "Tap a form"
+msgstr "Торкнися форми"
+
+msgid "Tap a form to hear it."
+msgstr "Торкнися форми, щоб її почути."
+
+msgid "Tap the forms in the table once more, then try again."
+msgstr "Ще раз послухай форми в таблиці, а тоді спробуй знову."
+
+msgid "Tartu"
+msgstr "Тарту"
+
+#. placeholder {0}: person.genitive
+msgid "The ending <0>-{ending}</0> goes on the genitive <1>{0}</1>."
+msgstr "Закінчення <0>-{ending}</0> додається до родового <1>{0}</1>."
+
+msgid "The ending <0>-ga</0> goes on the genitive <1>minu</1>, not on <2>mina</2>."
+msgstr "Закінчення <0>-ga</0> додається до родового <1>minu</1>, а не до <2>mina</2>."
+
+msgid "The ending <0>-l</0>, as in <1>mul on</1>. The short form is the usual one."
+msgstr "Закінчення <0>-l</0>, як у <1>mul on</1>. Зазвичай кажуть коротку форму."
+
+msgid "The ending <0>-le</0>, to. The short form is the usual one."
+msgstr "Закінчення <0>-le</0> — «кому». Зазвичай кажуть коротку форму."
+
+msgid "The ending <0>-lt</0>, from. The short form is the usual one."
+msgstr "Закінчення <0>-lt</0> — «від кого». Зазвичай кажуть коротку форму."
+
+msgid "The ending <0>-st</0>, out of, also says who you talk about. <1>Mina</1>, <2>sina</2> and <3>tema</3> have short forms here too, <4>must</4>, <5>sust</5> and <6>tast</6>, but they are rarer."
+msgstr "Закінчення <0>-st</0>, «з», також каже, про кого говорять. У <1>Mina</1>, <2>sina</2> і <3>tema</3> тут теж є короткі форми — <4>must</4>, <5>sust</5> і <6>tast</6>, — але вони рідші."
+
+msgid "The ending <0>-st</0>, out of, from lesson {into}, also says who you talk about: <1/> is I’m talking about you. Pick a pronoun, then tap a form to hear it."
+msgstr "Закінчення <0>-st</0>, «з», з уроку {into} також каже, про кого говорять: <1/> — «я говорю про тебе». Обери займенник і торкнися форми, щоб послухати."
+
+msgid "The ending <et>-ga</et> goes on the genitive <et>minu</et>, not on <et>mina</et>."
+msgstr "Закінчення <et>-ga</et> додається до родового <et>minu</et>, а не до <et>mina</et>."
+
+msgid "The endings <0>-ga</0> and <1>-ta</1> go on the genitive: <2>minuga</2>, with me; <3>sinuta</3>, without you; <4>nendega</4>, with them."
+msgstr "Закінчення <0>-ga</0> і <1>-ta</1> додаються до родового: <2>minuga</2> — «зі мною», <3>sinuta</3> — «без тебе», <4>nendega</4> — «з ними»."
+
+msgid "The endings <et>-ga</et> and <et>-ta</et> go on the genitive: <et>minu</et>, <et>minuga</et>."
+msgstr "Закінчення <et>-ga</et> і <et>-ta</et> додаються до родового: <et>minu</et>, <et>minuga</et>."
+
+msgid "The form a dictionary lists first."
+msgstr "Форма, яку словник подає першою."
+
+msgid "The genitive <et>sinu</et> plus <et>-ta</et>: <et>sinuta</et>."
+msgstr "Родовий <et>sinu</et> плюс <et>-ta</et>: <et>sinuta</et>."
+
+msgid "The genitive of <et>nemad</et> is <et>nende</et>, so with them is <et>nendega</et>."
+msgstr "Родовий від <et>nemad</et> — <et>nende</et>, тож «з ними» — <et>nendega</et>."
+
+msgid "The genitive of mina. Short: mu."
+msgstr "Родовий від mina. Коротко: mu."
+
+msgid "The genitive of nemad."
+msgstr "Родовий від nemad."
+
+msgid "The genitive plus <0>-ga</0>."
+msgstr "Родовий плюс <0>-ga</0>."
+
+msgid "The genitive plus <0>-ta</0>."
+msgstr "Родовий плюс <0>-ta</0>."
+
+msgid "The genitive. The endings -ga and -ta go on it."
+msgstr "Родовий відмінок. До нього додаються закінчення -ga і -ta."
+
+msgid "The long form of mulle. It stresses me: to me, not to someone else."
+msgstr "Повна форма mulle. Наголошує: саме мені, а не комусь іншому."
+
+msgid "The long form of mult. It stresses me: from me, not from someone else."
+msgstr "Повна форма mult. Наголошує: саме від мене, а не від когось іншого."
+
+msgid "The long forms <0/>, <1/> and <2/> mean the same and stress the person: to me, not to you. For <3>meie</3> and <4>teie</4>, standard Estonian has only the short form: <5>meile</5>, <6>teile</6>."
+msgstr "Повні форми <0/>, <1/> і <2/> означають те саме, але наголошують на людині: саме мені, а не тобі. Для <3>meie</3> і <4>teie</4> нормативна естонська має лише коротку форму: <5>meile</5>, <6>teile</6>."
+
+msgid "The partitive is a word of its own: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> is I’m waiting for you."
+msgstr "Партитив — окреме слово: <0>mind, sind, teda, meid, teid, neid</0>. <1>Ma ootan sind</1> — я чекаю на тебе."
+
+msgid "The partitive of <et>tema</et> is <et>teda</et>."
+msgstr "Партитив від <et>tema</et> — <et>teda</et>."
+
+msgid "The partitive of kes, who."
+msgstr "Партитив від kes, хто."
+
+msgid "The partitive of meie."
+msgstr "Партитив від meie."
+
+msgid "The partitive of mina."
+msgstr "Партитив від mina."
+
+msgid "The partitive of nemad."
+msgstr "Партитив від nemad."
+
+msgid "The partitive of sina."
+msgstr "Партитив від sina."
+
+msgid "The partitive of teie."
+msgstr "Партитив від teie."
+
+msgid "The partitive of tema."
+msgstr "Партитив від tema."
+
+msgid "The partitive, used after a verb such as <0>ootama</0>. It isn’t built on the genitive."
+msgstr "Партитив, після дієслова на кшталт <0>ootama</0>. Він не утворюється від родового."
+
+msgid "The partitive: me, you, him or her"
+msgstr "Партитив: мене, тебе, його чи її"
+
+msgid "The short form is ma."
+msgstr "Коротка форма: ma."
+
+msgid "The short form of minule."
+msgstr "Коротка форма minule."
+
+msgid "The short form of minult."
+msgstr "Коротка форма minult."
+
+msgid "The table shows one pronoun in each case of this lesson. Beside each form is the question that asks for it, a form of <0>kes</0>, who: <1/>, with whom; <2/>, to whom."
+msgstr "Ось один займенник у відмінках цього уроку. Поруч із кожною формою — питання, форма <0>kes</0> («хто»): <1/> — з ким, <2/> — кому."
+
+msgid "their"
+msgstr "їхній"
+
+msgid "them"
+msgstr "їх"
+
+msgid "they"
+msgstr "вони"
+
+msgid "They are <0/>, <1/>, <2/>, <3/>, <4/> and <5/>. To ask whom, say <6/> Tap a line to hear it."
+msgstr "Ось вони: <0/>, <1/>, <2/>, <3/>, <4/> і <5/>. Щоб спитати «кого?», скажи <6/> Торкнися рядка, щоб його почути."
+
+msgid "They have time."
+msgstr "У них є час."
+
+msgid "they; genitive <0>nende</0>"
+msgstr "вони; родовий <0>nende</0>"
+
+msgid "They’re talking about us."
+msgstr "Вони говорять про нас."
+
+msgid "They’re waiting for us."
+msgstr "Вони чекають на нас."
+
+msgid "This is my cat."
+msgstr "Це мій кіт."
+
+msgid "This is their car."
+msgstr "Це їхня машина."
+
+msgid "Three forms of one pronoun look alike and say different things. <0/> means this is my cat. <1/> means I have a cat. <2/> means Jaan is waiting for me."
+msgstr "Три форми одного займенника схожі, але кажуть різне. <0/> — «це мій кіт». <1/> — «у мене є кіт». <2/> — «Яан чекає на мене»."
+
+msgid "To"
+msgstr "Кому"
+
+msgid "To a café"
+msgstr "У кав’ярню"
+
+msgid "to me, for me"
+msgstr "мені, для мене"
+
+msgid "To someone"
+msgstr "Комусь"
+
+msgid "To someone takes <et>-le</et>: <et>mulle</et>, <et>talle</et>, <et>meile</et>."
+msgstr "«Комусь» — з <et>-le</et>: <et>mulle</et>, <et>talle</et>, <et>meile</et>."
+
+msgid "To Tartu"
+msgstr "До Тарту"
+
+msgid "To the shop"
+msgstr "У магазин"
+
+msgid "to whom"
+msgstr "кому"
+
+msgid "to whom?"
+msgstr "кому?"
+
+msgid "To, has and from: <et>mulle</et>, <et>mul</et>, <et>mult</et>"
+msgstr "Кому, у кого, від кого: <et>mulle</et>, <et>mul</et>, <et>mult</et>"
+
+msgid "To, has or from?"
+msgstr "Кому, у кого чи від кого?"
+
+msgid "us"
+msgstr "нас"
+
+msgid "Wait for me."
+msgstr "Зачекай на мене."
+
+msgid "Wait for me. (To a friend.)"
+msgstr "Зачекай на мене. (Другові.)"
+
+msgid "we"
+msgstr "ми"
+
+msgid "We have a cat."
+msgstr "У нас є кіт."
+
+msgid "We have time."
+msgstr "У нас є час."
+
+msgid "We’re talking about you. (To a friend.)"
+msgstr "Ми говоримо про тебе. (Другові.)"
+
+msgid "We’re waiting for you, to more than one; polite you."
+msgstr "Ми чекаємо на вас — кількох людей або ввічливо."
+
+msgid "What has Jaan got for Peeter? Write it as Jaan says it."
+msgstr "Що Яан має для Пеетера? Напиши так, як каже Яан."
+
+msgid "What is the book about?"
+msgstr "Про що книжка?"
+
+msgid "When do they expect Jaan at the café?"
+msgstr "Коли Яана чекають у кав’ярні?"
+
+msgid "Where are Mari and Kati going?"
+msgstr "Куди йдуть Марі й Каті?"
+
+msgid "Where is his or her book?"
+msgstr "Де його чи її книжка?"
+
+msgid "who"
+msgstr "хто"
+
+msgid "who has"
+msgstr "у кого"
+
+msgid "Who has"
+msgstr "У кого"
+
+msgid "Who has takes <et>-l</et> with <et>on</et>: <et>mul on</et>, <et>neil on</et>."
+msgstr "«У кого є» — <et>-l</et> разом з <et>on</et>: <et>mul on</et>, <et>neil on</et>."
+
+msgid "Who has: <0>-l</0> with <1>on</1>."
+msgstr "У кого є: <0>-l</0> разом з <1>on</1>."
+
+msgid "who has?"
+msgstr "у кого є?"
+
+msgid "Who is going to phone Jaan tomorrow?"
+msgstr "Хто завтра подзвонить Яанові?"
+
+msgid "Who is it?"
+msgstr "Хто це?"
+
+msgid "Who wants to talk with Jaan?"
+msgstr "Хто хоче поговорити з Яаном?"
+
+msgid "whom"
+msgstr "кого"
+
+msgid "Whom is <et>keda</et>, the partitive of <et>kes</et>, like <et>teda</et>."
+msgstr "«Кого» — це <et>keda</et>, партитив від <et>kes</et>, як <et>teda</et>."
+
+msgid "Whom: <et>mind</et>, <et>sind</et>, <et>teda</et>"
+msgstr "Кого: <et>mind</et>, <et>sind</et>, <et>teda</et>"
+
+msgid "Whom: after a verb such as <0>ootama</0>, the partitive."
+msgstr "Кого: після дієслова на кшталт <0>ootama</0> — партитив."
+
+msgid "whom?"
+msgstr "кого?"
+
+msgid "whose"
+msgstr "чий"
+
+msgid "Whose"
+msgstr "Чий"
+
+msgid "Whose takes the genitive, the form that means my, your, his or her: <et>minu</et>, <et>sinu</et>, <et>tema</et>."
+msgstr "«Чий» — це родовий, форма, що означає «мій», «твій», «його» чи «її»: <et>minu</et>, <et>sinu</et>, <et>tema</et>."
+
+msgid "Whose: the genitive, the form that means my, your, his or her."
+msgstr "Чий: родовий, форма, що означає «мій», «твій», «його» чи «її»."
+
+msgctxt "with or without"
+msgid "With"
+msgstr "З"
+
+msgid "With and without: <et>minuga</et>, <et>sinuta</et>"
+msgstr "З і без: <et>minuga</et>, <et>sinuta</et>"
+
+msgid "with him or her"
+msgstr "з ним чи з нею"
+
+msgid "with me"
+msgstr "зі мною"
+
+msgid "With me, without you"
+msgstr "Зі мною, без тебе"
+
+msgid "With me: the genitive <0>minu</0> plus <1>-ga</1>."
+msgstr "Зі мною: родовий <0>minu</0> плюс <1>-ga</1>."
+
+msgid "With on: minul on aega, I have time. The long form of mul; it stresses me."
+msgstr "З on: minul on aega — у мене є час. Повна форма mul, наголошує, що саме в мене."
+
+msgid "With on: mul on aega, I have time. The short form of minul."
+msgstr "З on: mul on aega — у мене є час. Коротка форма minul."
+
+msgid "With or without"
+msgstr "З чи без"
+
+msgid "with them"
+msgstr "з ними"
+
+msgid "with us"
+msgstr "з нами"
+
+msgid "With us: <0>meie</0> plus <1>-ga</1>."
+msgstr "З нами: <0>meie</0> плюс <1>-ga</1>."
+
+msgid "With us: <et>meie</et> plus <et>-ga</et>."
+msgstr "З нами: <et>meie</et> плюс <et>-ga</et>."
+
+msgid "with whom"
+msgstr "з ким"
+
+msgid "with whom?"
+msgstr "з ким?"
+
+msgid "with you"
+msgstr "з тобою"
+
+msgid "with you, to more than one; polite you"
+msgstr "з вами — кількома людьми або ввічливо"
+
+msgctxt "with or without"
+msgid "Without"
+msgstr "Без"
+
+msgid "without him or her"
+msgstr "без нього чи без неї"
+
+msgid "without me"
+msgstr "без мене"
+
+msgid "without them"
+msgstr "без них"
+
+msgid "without us"
+msgstr "без нас"
+
+msgid "without whom"
+msgstr "без кого"
+
+msgid "without you"
+msgstr "без тебе"
+
+msgid "without you, to more than one; polite you"
+msgstr "без вас — кількох людей або ввічливо"
+
+msgid "Write it in Estonian"
+msgstr "Напиши естонською"
+
+msgid "you"
+msgstr "ти"
+
+msgctxt "the partitive sind"
+msgid "you"
+msgstr "тебе"
+
+msgid "You ask from someone, so <et>küsima</et> takes <et>-lt</et>: <et>mult</et>, <et>meilt</et>."
+msgstr "Питають у когось, тож <et>küsima</et> бере <et>-lt</et>: <et>mult</et>, <et>meilt</et>."
+
+msgid "You ask from someone: <0>-lt</0>, <1>temalt</1> or <2>talt</2>."
+msgstr "Питають у когось: <0>-lt</0>, <1>temalt</1> чи <2>talt</2>."
+
+msgid "You call to someone: <0>mulle</0>, the short form with <1>-le</1>."
+msgstr "Дзвонять комусь: <0>mulle</0>, коротка форма з <1>-le</1>."
+
+msgid "You have time, to more than one; polite you."
+msgstr "У вас є час — кількох людей або ввічливо."
+
+msgid "You have time."
+msgstr "У тебе є час."
+
+msgid "you, one person"
+msgstr "тебе"
+
+msgid "you, to more than one; polite you"
+msgstr "ви; ввічливе «Ви»"
+
+msgctxt "the partitive teid"
+msgid "you, to more than one; polite you"
+msgstr "вас; ввічливе «Вас»"
+
+msgid "You’ll hear a sentence with it and see what it means."
+msgstr "Почуєш речення з нею й побачиш, що воно означає."
+
+msgid "You’ll hear it and see what it means."
+msgstr "Почуєш її й побачиш, що вона означає."

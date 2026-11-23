@@ -74,13 +74,22 @@ const heard = (name: Verb["verb"], ending: Ending, wrong: readonly Ending[]): Ch
   };
 };
 
-const STEM = msg`The ending goes on the stem of the I form, not of the -ma form.`;
+const STEM = msg`The ending goes on the stem of the I form, not of the -ma infinitive.`;
 const ENDING = msg`The ending goes with the pronoun at the start of the sentence.`;
+
+const FIX_MEANS: Record<string, MessageDescriptor> = {
+  "Nad elab Tallinnas.": msg`They live in Tallinn.`,
+  "Ta räägivad eesti keelt.": msg`He speaks Estonian.`,
+  "Me ootavad bussi.": msg`We’re waiting for the bus.`,
+  "Te räägid väga hästi.": msg`You all speak very well.`,
+  "Ta töötavad kodus.": msg`She works at home.`,
+};
 
 const fixed = ({ wrong, said, kind }: (typeof PRESENT_FIXES)[number]): FixDrill => ({
   kind: "fix",
   id: `fix-${ascii(wrong)}`,
   rule: kind === "stem" ? "stem" : "ending",
+  ...(FIX_MEANS[wrong] ? { prompt: FIX_MEANS[wrong] } : {}),
   wrong,
   say: said,
   answers: [said],
@@ -97,7 +106,7 @@ const turned = ({ from, to, said }: (typeof PRESENT_TURNED)[number]): SentenceDr
     id: `turn-${ascii(said)}`,
     rule: "ending",
     from: PRESENT_SENTENCES[from],
-    cue: msg`with ${to}`,
+    cue: msg`with <et>${to}</et>`,
     say: said,
     answers: [said, `${LONG[to]} ${rest}`, ...dropped],
     explain: msg`The verb takes the ending for <et>${to}</et>.`,

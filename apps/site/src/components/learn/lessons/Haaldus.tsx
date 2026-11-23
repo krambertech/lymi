@@ -39,8 +39,8 @@ const GLOSSARY: Glossary = {
   },
   kõrv: { en: msg`ear` },
   korv: { en: msg`basket` },
-  säng: { en: msg`bed` },
-  sang: { en: msg`handle, as on a bucket` },
+  jälg: { en: msg`a footprint, a track` },
+  jalg: { en: msg`a leg; a foot`, note: msg`One word for both.` },
   tüli: { en: msg`a quarrel` },
   tuli: { en: msg`fire`, note: msg`Also “came”: ta tuli, he or she came.` },
   sada: { en: msg`a hundred` },
@@ -82,7 +82,7 @@ const GLOSSARY: Glossary = {
 const VOWEL_PAIRS = [
   ["kõrv", "korv"],
   ["üks", "uks"],
-  ["säng", "sang"],
+  ["jälg", "jalg"],
   ["tüli", "tuli"],
 ] as const;
 
@@ -355,7 +355,7 @@ export function HaaldusLesson() {
         "öö",
         "üks",
         "kõrv",
-        "säng",
+        "jälg",
         "kool",
         "kass",
         "maa",

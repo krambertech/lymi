@@ -1020,7 +1020,7 @@ export function MinaSinaTemaLesson() {
                   ) : share >= 0.7 ? (
                     <Trans>Most of them. Play the ones you missed once more.</Trans>
                   ) : (
-                    <Trans>Play each sentence slower, then try again.</Trans>
+                    <Trans>Try again, and tap Slower before you write each sentence.</Trans>
                   )
                 }
                 recall={sentenceRecall}

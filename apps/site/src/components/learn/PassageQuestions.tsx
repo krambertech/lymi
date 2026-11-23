@@ -375,8 +375,7 @@ export function PassageQuestions({
         {questions.map((question, n) => (
           <fieldset key={question.id} className="m-0 grid min-w-0 gap-2.5 border-0 p-0">
             <legend className="mb-2.5 text-lg font-medium">
-              <span className="me-2 text-ink-muted tabular-nums">{n + 1}.</span>
-              {question.ask}
+              <span className="me-1 text-ink-muted tabular-nums">{n + 1}.</span> {question.ask}
             </legend>
             <QuestionField
               question={question}

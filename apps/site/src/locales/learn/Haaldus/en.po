@@ -40,11 +40,20 @@ msgstr "A double letter is longer, and it makes a different word."
 msgid "A few words break the rule: <0/>, thank you, puts the stress on its second half."
 msgstr "A few words break the rule: <0/>, thank you, puts the stress on its second half."
 
+msgid "a footprint"
+msgstr "a footprint"
+
+msgid "a footprint, a track"
+msgstr "a footprint, a track"
+
 msgid "a hen"
 msgstr "a hen"
 
 msgid "a hundred"
 msgstr "a hundred"
+
+msgid "a leg; a foot"
+msgstr "a leg; a foot"
 
 msgid "A pear"
 msgstr "A pear"
@@ -87,12 +96,6 @@ msgstr "Back home"
 
 msgid "basket"
 msgstr "basket"
-
-msgid "bed"
-msgstr "bed"
-
-msgid "bucket handle"
-msgstr "bucket handle"
 
 msgid "carry!"
 msgstr "carry!"
@@ -147,9 +150,6 @@ msgstr "From tuul, wind."
 
 msgid "Go back to the vowels and the pairs above, then try again."
 msgstr "Go back to the vowels and the pairs above, then try again."
-
-msgid "handle, as on a bucket"
-msgstr "handle, as on a bucket"
 
 msgid "He should carry it home."
 msgstr "He should carry it home."

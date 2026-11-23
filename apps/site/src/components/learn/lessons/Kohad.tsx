@@ -976,7 +976,7 @@ export function KohadLesson() {
               <Prose>
                 <p>
                   <Trans>
-                    Write each sentence in Estonian. A town, a country or a building takes{" "}
+                    Write each sentence in Estonian. Most towns, countries and buildings take{" "}
                     <b lang="et" className="whitespace-nowrap">
                       -s
                     </b>

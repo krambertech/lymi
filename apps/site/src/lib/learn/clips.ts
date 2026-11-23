@@ -477,6 +477,10 @@ export const KUSIMUSED_ASKED = [
       "Miks teie kodus olete?",
       "Miks oled kodus?",
       "Miks olete kodus?",
+      "Kus sa oled?",
+      "Kus te olete?",
+      "Kus sina oled?",
+      "Kus teie olete?",
     ],
   },
   {

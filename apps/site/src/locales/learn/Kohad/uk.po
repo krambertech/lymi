@@ -205,9 +205,6 @@ msgstr "у лікарні"
 msgid "In a hospital"
 msgstr "У лікарні"
 
-msgid "In a town, a country or a building: <et>-s</et>."
-msgstr "У місті, країні чи будівлі: <et>-s</et>."
-
 msgid "in Estonia"
 msgstr "в Естонії"
 
@@ -285,6 +282,9 @@ msgstr "Марі працює в лікарні."
 
 msgid "market"
 msgstr "ринок"
+
+msgid "Most towns, countries and buildings: <et>-s</et>."
+msgstr "Більшість міст, країн і будівель: <et>-s</et>."
 
 msgid "Mum"
 msgstr "Мама"
@@ -472,8 +472,8 @@ msgstr "Хто в Тарту?"
 msgid "work"
 msgstr "робота"
 
-msgid "Write each sentence in Estonian. A town, a country or a building takes <0>-s</0>. A surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
-msgstr "Напиши кожне речення естонською. Місто, країна чи будівля мають <0>-s</0>. Поверхня має <1>-l</1>, як і робота, ринок і назви на <2>-maa</2>."
+msgid "Write each sentence in Estonian. Most towns, countries and buildings take <0>-s</0>. A surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+msgstr "Напиши кожне речення естонською. Більшість міст, країн і будівель мають <0>-s</0>. Поверхня має <1>-l</1>, як і робота, ринок і назви на <2>-maa</2>."
 
 msgid "Write it in Estonian"
 msgstr "Напиши естонською"

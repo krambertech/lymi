@@ -19,7 +19,7 @@ const MEANS: Partial<Record<Place["place"], MessageDescriptor>> = {
   Eesti: msg`Estonia`,
 };
 
-const IN = msg`In a town, a country or a building: <et>-s</et>.`;
+const IN = msg`Most towns, countries and buildings: <et>-s</et>.`;
 const ON = msg`On something, at work, at the market, and names ending in <et>-maa</et>: <et>-l</et>.`;
 
 const placeOf = (place: Place["place"]) =>

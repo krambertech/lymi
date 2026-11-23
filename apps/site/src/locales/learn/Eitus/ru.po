@@ -257,7 +257,7 @@ msgid "Listening: Mari’s questions"
 msgstr "На слух: вопросы Мари"
 
 msgid "make it no"
-msgstr "сделай отрицательным"
+msgstr "преврати в отрицание"
 
 msgid "Make it no"
 msgstr "Из «да» в «нет»"

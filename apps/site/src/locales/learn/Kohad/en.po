@@ -205,9 +205,6 @@ msgstr "in a hospital"
 msgid "In a hospital"
 msgstr "In a hospital"
 
-msgid "In a town, a country or a building: <et>-s</et>."
-msgstr "In a town, a country or a building: <et>-s</et>."
-
 msgid "in Estonia"
 msgstr "in Estonia"
 
@@ -285,6 +282,9 @@ msgstr "Mari works in a hospital."
 
 msgid "market"
 msgstr "market"
+
+msgid "Most towns, countries and buildings: <et>-s</et>."
+msgstr "Most towns, countries and buildings: <et>-s</et>."
 
 msgid "Mum"
 msgstr "Mum"
@@ -472,8 +472,8 @@ msgstr "Who is in Tartu?"
 msgid "work"
 msgstr "work"
 
-msgid "Write each sentence in Estonian. A town, a country or a building takes <0>-s</0>. A surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
-msgstr "Write each sentence in Estonian. A town, a country or a building takes <0>-s</0>. A surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+msgid "Write each sentence in Estonian. Most towns, countries and buildings take <0>-s</0>. A surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
+msgstr "Write each sentence in Estonian. Most towns, countries and buildings take <0>-s</0>. A surface takes <1>-l</1>, and so do work, the market and names ending in <2>-maa</2>."
 
 msgid "Write it in Estonian"
 msgstr "Write it in Estonian"

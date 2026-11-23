@@ -14477,5 +14477,271 @@
     "text": "linnas",
     "model": "eleven_v4",
     "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/minu": {
+    "text": "minu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/sinu": {
+    "text": "sinu",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/tema": {
+    "text": "tema",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/meie": {
+    "text": "meie",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/nende": {
+    "text": "nende",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/kas-sul-on-auto": {
+    "text": "Kas sul on auto?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/maril-on-ku2simus": {
+    "text": "Maril on küsimus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/meil-pole-aega": {
+    "text": "Meil pole aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/kellel-on-koer": {
+    "text": "Kellel on koer?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/mul-on-vaja-abi": {
+    "text": "Mul on vaja abi.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/kas-sul-on-aega": {
+    "text": "Kas sul on aega?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/mul-ei-ole-aega": {
+    "text": "Mul ei ole aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/c-car": {
+    "text": "Tere, Jaan! Kas sul on täna aega? Jah, on. Miks? Mul on vaja abi. Kas sul on auto? Ei ole. Aga minu isal on auto. Kas sinu isal on täna aega? Ei, isal pole aega. Ta on tööl. Aga Kati? Kas Katil on auto? Jah, Katil on auto. Ja tal on aega. Väga hea! Aitäh!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Tere, Jaan!",
+          "Kas sul on täna aega?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, on.",
+          "Miks?"
+        ],
+        "say": "Jah, on. [curious] Miks?"
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Mul on vaja abi.",
+          "Kas sul on auto?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei ole.",
+          "Aga minu isal on auto."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas sinu isal on täna aega?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, isal pole aega.",
+          "Ta on tööl."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Aga Kati?",
+          "Kas Katil on auto?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Jah, Katil on auto.",
+          "Ja tal on aega."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Väga hea!",
+          "Aitäh!"
+        ],
+        "say": "[relieved] Väga hea! Aitäh!"
+      }
+    ]
+  },
+  "omastav/see-on-jaani-raamat": {
+    "text": "See on Jaani raamat.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/kelle-kohv-see-on": {
+    "text": "Kelle kohv see on?",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/minu-vend-elab-tallinnas": {
+    "text": "Minu vend elab Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/nende-kass-on-kodus": {
+    "text": "Nende kass on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/mari-kohvik-on-tartus": {
+    "text": "Mari kohvik on Tartus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/meie-o3petaja-nimi-on-kati": {
+    "text": "Meie õpetaja nimi on Kati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/minu-nimi-on-kati": {
+    "text": "Minu nimi on Kati.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/nende-kass-on-pa2rnus": {
+    "text": "Nende kass on Pärnus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/jaani-kass-on-kodus": {
+    "text": "Jaani kass on kodus.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/see-on-poe-uks": {
+    "text": "See on poe uks.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/ma-elan-tallinnas": {
+    "text": "Ma elan Tallinnas.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "omastav/c-photo": {
+    "text": "Jaan, kelle pilt see on? See on minu pilt. Kes see on? See on minu vend Martin. Ta elab Tartus. Ja kelle kass see on? See on Martini kass. Kassi nimi on Miisu. Kas see on teie maja? Ei, see on minu ema maja. Ta elab Pärnus. Ja kelle auto see on? See on minu auto!",
+    "model": "eleven_v4",
+    "turns": [
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Jaan, kelle pilt see on?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on minu pilt."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kes see on?"
+        ],
+        "say": "[curious] Kes see on?"
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on minu vend Martin.",
+          "Ta elab Tartus."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja kelle kass see on?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on Martini kass.",
+          "Kassi nimi on Miisu."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Kas see on teie maja?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "Ei, see on minu ema maja.",
+          "Ta elab Pärnus."
+        ]
+      },
+      {
+        "voice": "xd3ufyLcuKKZZXDZO9H7",
+        "sentences": [
+          "Ja kelle auto see on?"
+        ]
+      },
+      {
+        "voice": "0cuaFlR2we1Gl3woPjeJ",
+        "sentences": [
+          "See on minu auto!"
+        ],
+        "say": "[laughs] See on minu auto!"
+      }
+    ]
+  },
+  "mul-on/mul-pole-aega": {
+    "text": "Mul pole aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
+  },
+  "mul-on/ei-mul-pole-homme-aega": {
+    "text": "Ei, mul pole homme aega.",
+    "model": "eleven_v4",
+    "voice": "jGja51dd7gcoK0zkxeyg"
   }
 }
